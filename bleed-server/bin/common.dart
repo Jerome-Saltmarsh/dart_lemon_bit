@@ -44,6 +44,8 @@ const keyStartY = 'sy';
 const keyNpcTarget = 'nt';
 const keyRange = 'range';
 const keyHealth = 'h';
+const keyVelocityX = 'vX';
+const keyVelocityY = 'vY';
 
 const double bulletRadius = 3;
 const double characterRadius = 7;

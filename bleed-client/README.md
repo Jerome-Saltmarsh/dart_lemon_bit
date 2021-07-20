@@ -2,11 +2,12 @@
 [ ] Ping Check
 [ ] Persist World on firebase
 [ ] Sprint
-[ ] Zombie inertia
+[ ] Weapon Shotgun
 [ ] Zombie NPC Wander
 [ ] Shot Animation
 [ ] Shot Sound
 [ ] Bullet Hit Animation
+[ ] Zombie inertia
 [x] Zombie Health
 [x] Zombie Npc
 [x] Bullet Max Range

@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'common.dart';
+import 'functions/spawn_character.dart';
 import 'maths.dart';
 import 'settings.dart';
 import 'state.dart';
@@ -87,28 +90,6 @@ double getSpeed(dynamic character){
   return zombieSpeed;
 }
 
-spawnCharacter(double x, double y, {String name = "", bool npc = false, required int health}) {
-  if (x == double.nan) {
-    throw Exception("x is nan");
-  }
-  Map<String, dynamic> character = new Map();
-  character[keyPositionX] = x;
-  character[keyPositionY] = y;
-  character[keyCharacterId] = id;
-  character[keyDirection] = directionDown;
-  character[keyState] = characterStateIdle;
-  character[keyType] = npc ? typeNpc : typeHuman;
-  character[keyHealth] = health;
-  if (name != "") {
-    character[keyPlayerName] = name;
-  }
-  if (!npc) {
-    character[keyLastUpdateFrame] = frame;
-  }
-  characters.add(character);
-  id++;
-  return character;
-}
 
 dynamic spawnPlayer(double x, double y, String name){
   return spawnCharacter(x, y, name: name, npc: false, health: playerHealth);
@@ -118,6 +99,14 @@ dynamic spawnZombie(double x, double y){
   return spawnCharacter(y, x, npc: true, health: zombieHealth);
 }
 
-dynamic spawnRandomZombie() {
-  return spawnZombie(randomBetween(-spawnRadius, spawnRadius), randomBetween(-spawnRadius, spawnRadius));
+double velX(double rotation, double speed){
+  return -cos(rotation + (pi * 0.5)) * speed;
+}
+double velY(double rotation, double speed){
+  return -sin(rotation + (pi * 0.5)) * speed;
+}
+
+void setVelocity(dynamic target, double rotation, double speed){
+  target[keyVelocityX] = velX(rotation, bulletSpeed);
+  target[keyVelocityY] = velY(rotation, bulletSpeed);
 }

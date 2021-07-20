@@ -7,6 +7,7 @@ import 'package:shelf_web_socket/shelf_web_socket.dart';
 
 import 'common.dart';
 import 'common_functions.dart';
+import 'functions/spawn_random_zombie.dart';
 import 'maths.dart';
 import 'physics.dart';
 import 'settings.dart';
@@ -20,9 +21,8 @@ void main() {
     for (int i = 0; i < bullets.length; i++) {
       dynamic bullet = bullets[i];
       bullet[keyFrame]++;
-      double bulletRotation = bullet[keyRotation];
-      bullet[keyPositionX] -= cos(bulletRotation + (pi * 0.5)) * bulletSpeed;
-      bullet[keyPositionY] -= sin(bulletRotation + (pi * 0.5)) * bulletSpeed;
+      bullet[keyPositionX] += bullet[keyVelocityX];
+      bullet[keyPositionY] += bullet[keyVelocityY];
 
       if (bulletDistanceTravelled(bullet) > bulletRange) {
         bullets.removeAt(i);
@@ -35,13 +35,17 @@ void main() {
         if (isDead(characters[j])) continue;
         double dis = distanceBetween(characters[j], bullet);
         if (dis < characterBulletRadius) {
+          dynamic characterJ = characters[j];
           bullets.removeAt(i);
           i--;
-          characters[j][keyHealth]--;
-          if (characters[j][keyHealth] <= 0) {
-            characters[j][keyState] = characterStateDead;
-            characters[j][keyFrameOfDeath] = frame;
+          characterJ[keyHealth]--;
+          if (characterJ[keyHealth] <= 0) {
+            characterJ[keyState] = characterStateDead;
+            characterJ[keyFrameOfDeath] = frame;
           }
+
+
+
           break;
         }
       }
@@ -74,6 +78,7 @@ void main() {
       dynamic character = characters[i];
       // TODO Remove this hack
       if (character[keyPositionX] == double.nan) {
+        print("character x is nan");
         character[keyPositionX] = 0;
         character[keyPositionY] = 0;
       }
@@ -95,6 +100,11 @@ void main() {
           setDirection(character, convertAngleToDirection(angle));
         }
       }
+
+      character[keyPositionX] += character[keyVelocityX];
+      character[keyPositionY] += character[keyVelocityY];
+      character[keyVelocityX] *= velocityFriction;
+      character[keyVelocityY] *= velocityFriction;
 
       switch (character[keyState]) {
         case characterStateIdle:
@@ -213,6 +223,7 @@ void main() {
           bullet[keyPositionY] = playerCharacter[keyPositionY];
           bullet[keyStartX] = playerCharacter[keyPositionX];
           bullet[keyStartY] = playerCharacter[keyPositionY];
+          setVelocity(bullet, request[keyRotation], bulletSpeed);
           bullet[keyRotation] = request[keyRotation];
           bullet[keyFrame] = 0;
           bullet[keyCharacterId] = playerId;
