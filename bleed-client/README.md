@@ -3,8 +3,11 @@
 [ ] Persist World on firebase
 [ ] Sprint
 [ ] Zombie inertia
-[ ] Zombie Health
+[ ] Zombie NPC Wander
+[ ] Shot Animation
 [ ] Shot Sound
+[ ] Bullet Hit Animation
+[x] Zombie Health
 [x] Zombie Npc
 [x] Bullet Max Range
 [x] Aim (Right Click)

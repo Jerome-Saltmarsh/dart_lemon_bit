@@ -37,8 +37,11 @@ void main() {
         if (dis < characterBulletRadius) {
           bullets.removeAt(i);
           i--;
-          characters[j][keyState] = characterStateDead;
-          characters[j][keyFrameOfDeath] = frame;
+          characters[j][keyHealth]--;
+          if (characters[j][keyHealth] <= 0) {
+            characters[j][keyState] = characterStateDead;
+            characters[j][keyFrameOfDeath] = frame;
+          }
           break;
         }
       }
@@ -140,8 +143,8 @@ void main() {
     updateBullets();
   }
 
-  void spawnZombieJob(){
-    if(getNpcs().length >= maxZombies) return;
+  void spawnZombieJob() {
+    if (getNpcs().length >= maxZombies) return;
     spawnRandomZombie();
   }
 
@@ -159,8 +162,7 @@ void main() {
     }
 
     void handleCommandSpawn(dynamic request) {
-      var character =
-          spawnCharacter(0, 0, name: request[keyPlayerName], npc: false);
+      var character = spawnPlayer(0, 0, request[keyPlayerName]);
       Map<String, dynamic> response = Map();
       response[keyCharacterId] = getId(character);
       response[keyCharacters] = characters;

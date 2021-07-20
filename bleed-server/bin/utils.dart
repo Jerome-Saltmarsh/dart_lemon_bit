@@ -87,7 +87,7 @@ double getSpeed(dynamic character){
   return zombieSpeed;
 }
 
-spawnCharacter(double x, double y, {String name = "", bool npc = false}) {
+spawnCharacter(double x, double y, {String name = "", bool npc = false, required int health}) {
   if (x == double.nan) {
     throw Exception("x is nan");
   }
@@ -98,6 +98,7 @@ spawnCharacter(double x, double y, {String name = "", bool npc = false}) {
   character[keyDirection] = directionDown;
   character[keyState] = characterStateIdle;
   character[keyType] = npc ? typeNpc : typeHuman;
+  character[keyHealth] = health;
   if (name != "") {
     character[keyPlayerName] = name;
   }
@@ -109,6 +110,14 @@ spawnCharacter(double x, double y, {String name = "", bool npc = false}) {
   return character;
 }
 
-void spawnRandomZombie() {
-  spawnCharacter(randomBetween(-spawnRadius, spawnRadius), randomBetween(-spawnRadius, spawnRadius), npc: true);
+dynamic spawnPlayer(double x, double y, String name){
+  return spawnCharacter(x, y, name: name, npc: false, health: playerHealth);
+}
+
+dynamic spawnZombie(double x, double y){
+  return spawnCharacter(y, x, npc: true, health: zombieHealth);
+}
+
+dynamic spawnRandomZombie() {
+  return spawnZombie(randomBetween(-spawnRadius, spawnRadius), randomBetween(-spawnRadius, spawnRadius));
 }
