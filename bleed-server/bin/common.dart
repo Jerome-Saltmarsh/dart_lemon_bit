@@ -39,9 +39,13 @@ const keyLastUpdateFrame = 'luf';
 const keyAimAngle = 'aim';
 const typeNpc = 'npc';
 const typeHuman = 'human';
+const keyStartX = 'sx';
+const keyStartY = 'sy';
+const keyRange = 'range';
 
 const double characterSpeed = 1.5;
 const double bulletRadius = 3;
 const double characterRadius = 7;
 const double characterRadius2 = characterRadius * 2;
 const double characterBulletRadius = characterRadius + bulletRadius;
+const double bulletRange = 220;

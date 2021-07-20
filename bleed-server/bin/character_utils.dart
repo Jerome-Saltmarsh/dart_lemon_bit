@@ -34,3 +34,7 @@ bool connectionExpired(dynamic character) {
 bool isDead(dynamic character) {
   return character[keyState] == characterStateDead;
 }
+
+bool isAiming(dynamic character) {
+  return character[keyState] == characterStateAiming;
+}

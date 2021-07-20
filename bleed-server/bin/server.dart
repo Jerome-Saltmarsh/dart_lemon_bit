@@ -9,6 +9,8 @@ import 'character_utils.dart';
 import 'common.dart';
 import 'game_maths.dart';
 import 'game_physics.dart';
+import 'settings.dart';
+import 'utils.dart';
 import 'variables.dart';
 
 void main() {
@@ -24,14 +26,15 @@ void main() {
       dynamic bullet = bullets[i];
       bullet[keyFrame]++;
 
-      if (bullet[keyFrame] > 300) {
+      if(bulletDistanceTravelled(bullet) > bulletRange){
         bullets.removeAt(i);
         i--;
         continue;
       }
+
       double bulletRotation = bullet[keyRotation];
-      bullet[keyPositionX] -= cos(bulletRotation + (pi * 0.5)) * 6;
-      bullet[keyPositionY] -= sin(bulletRotation + (pi * 0.5)) * 6;
+      bullet[keyPositionX] -= cos(bulletRotation + (pi * 0.5)) * bulletSpeed;
+      bullet[keyPositionY] -= sin(bulletRotation + (pi * 0.5)) * bulletSpeed;
 
       for (int j = 0; j < characters.length; j++) {
         if (bullet[keyCharacterId] == characters[j][keyCharacterId]) continue;
@@ -212,10 +215,12 @@ void main() {
           int playerId = request[keyCharacterId];
           dynamic playerCharacter = findCharacterById(playerId);
           if (playerCharacter == null) return;
-          if (isDead(playerCharacter)) return;
+          if (!isAiming(playerCharacter)) return;
           Map<String, dynamic> bullet = Map();
           bullet[keyPositionX] = playerCharacter[keyPositionX];
           bullet[keyPositionY] = playerCharacter[keyPositionY];
+          bullet[keyStartX] = playerCharacter[keyPositionX];
+          bullet[keyStartY] = playerCharacter[keyPositionY];
           bullet[keyRotation] = request[keyRotation];
           bullet[keyFrame] = 0;
           bullet[keyCharacterId] = playerId;

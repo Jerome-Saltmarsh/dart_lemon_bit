@@ -41,7 +41,7 @@ class MultiplayerClient extends GameWidget {
   static const idNotConnected = -1;
   static const String localhost = "ws://localhost:8080";
   static const gpc = 'wss://bleed-1-osbmaezptq-ey.a.run.app/:8080';
-  static const host = gpc;
+  static const host = localhost;
 
   Uri get hostURI => Uri.parse(host);
 
@@ -350,15 +350,17 @@ class MultiplayerClient extends GameWidget {
           radius: 5, x: mousePosX + cameraX, y: mousePosY + cameraY);
     }
 
-    if (playerAssigned) {
-      dynamic player = getPlayerCharacter();
-      drawCircleOutline(
-          radius: 100, x: player[keyPositionX], y: player[keyPositionY]);
-    }
-
     drawTiles();
     drawBullets();
     drawCharacters();
+    drawBulletRange();
+  }
+
+  void drawBulletRange() {
+    if (!playerAssigned) return;
+    dynamic player = getPlayerCharacter();
+    drawCircleOutline(
+        radius: bulletRange, x: player[keyPositionX], y: player[keyPositionY]);
   }
 
   void drawCircleOutline({int sides = 16, double radius, double x, double y}) {

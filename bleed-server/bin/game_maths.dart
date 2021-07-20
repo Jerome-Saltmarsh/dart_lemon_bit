@@ -25,6 +25,10 @@ double distanceBetween(dynamic characterA, dynamic characterB){
   return magnitude(xDiff, yDiff);
 }
 
+double distance(double x1, double y1, double x2, double y2){
+  return magnitude(x1 - x2, y1 - y2);
+}
+
 double abs(double value){
   if(value < 0) return -value;
   return value;
@@ -59,4 +63,3 @@ double convertVectorToDegrees(double x, double y) {
   }
   return atan2(x, y) * radionsToDegrees;
 }
-
