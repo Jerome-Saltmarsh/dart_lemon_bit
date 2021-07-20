@@ -1,0 +1,20 @@
+# TODO
+[ ] Ping Check
+[ ] Persist World on firebase
+[ ] Zombie Npc
+[ ] Sprint
+[ ] Shot Sound
+[ ] Aim (Right Click)
+[x] Character Names
+[x] Respawn player characters after death
+[x] Destroy Dead Zombies after
+[x] buy play-bleed.com
+[x] Death on bullet
+[x] Refactor Client
+[x] Shoot Weapon
+[x] Camera Follow
+[x] Fix draw order
+[x] Merge update and player commands
+[x] Websocket client / server
+[x] Deploy Server on GCP
+[x] Isometric characters
