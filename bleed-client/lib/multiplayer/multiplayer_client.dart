@@ -5,7 +5,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_game_engine/game_engine/game_input.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
-
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'common.dart';
 import 'multiplayer_resources.dart';
@@ -41,8 +40,8 @@ class MultiplayerClient extends GameWidget {
 
   static const idNotConnected = -1;
   static const String localhost = "ws://localhost:8080";
-  static const gpc = 'wss:///zombie-9-osbmaezptq-ey.a.run.app/:8080';
-  static const host = localhost;
+  static const gpc = 'wss://bleed-1-osbmaezptq-ey.a.run.app/:8080';
+  static const host = gpc;
 
   Uri get hostURI => Uri.parse(host);
 
@@ -59,6 +58,9 @@ class MultiplayerClient extends GameWidget {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
+                Text('WASD keys to move'),
+                Text('Hold SPACE to aim'),
+                Text('Left click to shoot'),
                 Text('Please enter a name'),
                 TextField(
                   autofocus: true,
@@ -203,10 +205,8 @@ class MultiplayerClient extends GameWidget {
     double playerScreenY = playerCharacter[keyPositionY] - cameraY;
     double halfScreenWidth = size.width * 0.5;
     double halfScreenHeight = size.height * 0.5;
-
     double xOffset = halfScreenWidth - playerScreenX;
     double yOffset = halfScreenHeight - playerScreenY;
-
     cameraX -= (xOffset * cameraFollow);
     cameraY -= (yOffset * cameraFollow);
 
@@ -216,6 +216,10 @@ class MultiplayerClient extends GameWidget {
     }
 
     requestCharacterState = characterStateWalking;
+
+    if (keyPressedSpace) {
+      requestCharacterState = characterStateAiming;
+    }
 
     if (keyPressedW) {
       if (keyPressedD) {
@@ -238,9 +242,10 @@ class MultiplayerClient extends GameWidget {
     } else if (keyPressedD) {
       requestDirection = directionRight;
     } else {
-      requestCharacterState = characterStateIdle;
+      if (!keyPressedSpace) {
+        requestCharacterState = characterStateIdle;
+      }
     }
-
     sendCommandUpdate();
   }
 
@@ -290,6 +295,9 @@ class MultiplayerClient extends GameWidget {
       request[keyState] = requestCharacterState;
       request[keyDirection] = requestDirection;
       request[keyCharacterId] = id;
+      if (requestCharacterState == characterStateAiming && mouseAvailable) {
+        request[keyAimAngle] = getMouseRotation();
+      }
     }
     sendToServer(request);
   }
@@ -337,24 +345,31 @@ class MultiplayerClient extends GameWidget {
       drawFrame++;
     }
 
-    if(mousePosX != null){
-      drawCircleOutline(radius: 5, x: mousePosX + cameraX, y: mousePosY + cameraY);
+    if (mousePosX != null) {
+      drawCircleOutline(
+          radius: 5, x: mousePosX + cameraX, y: mousePosY + cameraY);
     }
 
-    // drawCi
+    if (playerAssigned) {
+      dynamic player = getPlayerCharacter();
+      drawCircleOutline(
+          radius: 100, x: player[keyPositionX], y: player[keyPositionY]);
+    }
+
     drawTiles();
     drawBullets();
     drawCharacters();
   }
 
-  void drawCircleOutline({int sides = 16, double radius, double x, double y}){
+  void drawCircleOutline({int sides = 16, double radius, double x, double y}) {
     double r = (pi * 2) / sides;
     List<Offset> points = [];
     double d = 200;
     Offset z = Offset(x, y);
     for (int i = 0; i <= sides; i++) {
       double a1 = i * r;
-      points.add(Offset(cos(a1) * radius - cameraX, sin(a1) * radius - cameraY));
+      points
+          .add(Offset(cos(a1) * radius - cameraX, sin(a1) * radius - cameraY));
     }
     for (int i = 0; i < points.length - 1; i++) {
       canvas.drawLine(points[i] + z, points[i + 1] + z, globalPaint);
@@ -512,10 +527,39 @@ class MultiplayerClient extends GameWidget {
             startFrame = 19;
             break;
         }
+        break;
+      case characterStateAiming:
+        double eight = pi / 8.0;
+        double quarter = pi / 4.0;
+
+        if (character[keyAimAngle] == null) {
+          throw Exception("character aim angle is null");
+        }
+
+        if (character[keyAimAngle] < eight) {
+          startFrame = 23;
+        } else if (character[keyAimAngle] < eight + (quarter * 1)) {
+          startFrame = 24;
+        } else if (character[keyAimAngle] < eight + (quarter * 2)) {
+          startFrame = 25;
+        } else if (character[keyAimAngle] < eight + (quarter * 3)) {
+          startFrame = 26;
+        } else if (character[keyAimAngle] < eight + (quarter * 4)) {
+          startFrame = 27;
+        } else if (character[keyAimAngle] < eight + (quarter * 5)) {
+          startFrame = 20;
+        } else if (character[keyAimAngle] < eight + (quarter * 6)) {
+          startFrame = 21;
+        } else if (character[keyAimAngle] < eight + (quarter * 7)) {
+          startFrame = 22;
+        } else {
+          startFrame = 23;
+        }
+        break;
     }
 
     int spriteFrame = (drawFrame % totalFrames) + startFrame;
-    int frameCount = 20;
+    int frameCount = 28;
 
     drawCharacterCircle(
         character, character[keyCharacterId] == id ? Colors.blue : Colors.red);

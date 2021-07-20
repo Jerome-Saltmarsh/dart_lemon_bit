@@ -199,6 +199,7 @@ void main() {
               playerCharacter[keyState] = characterState;
               playerCharacter[keyDirection] = direction;
               playerCharacter[keyLastUpdateFrame] = frame;
+              playerCharacter[keyAimAngle] = request[keyAimAngle];
             }
           }
           sendToClient(response);

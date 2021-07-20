@@ -8,6 +8,8 @@ bool get keyPressedRightArrow => keyPressed(LogicalKeyboardKey.arrowRight);
 bool get keyPressedDownArrow => keyPressed(LogicalKeyboardKey.arrowDown);
 bool get keyPressedLeftArrow => keyPressed(LogicalKeyboardKey.arrowLeft);
 
+
+bool get keyPressedSpace => keyPressed(LogicalKeyboardKey.space);
 bool get keyPressedW => keyPressed(w);
 bool get keyPressedA => keyPressed(LogicalKeyboardKey.keyA);
 bool get keyPressedS => keyPressed(LogicalKeyboardKey.keyS);

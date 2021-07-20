@@ -6,6 +6,7 @@ const commandSpawnZombie = 4;
 const characterStateIdle = 0;
 const characterStateWalking = 1;
 const characterStateDead = 2;
+const characterStateAiming = 3;
 
 const directionUp = 0;
 const directionUpRight = 1;
@@ -35,9 +36,9 @@ const keyFrameOfDeath = 'z';
 const keyPlayerName = 'name';
 const keyType = 'type';
 const keyLastUpdateFrame = 'luf';
+const keyAimAngle = 'aim';
 const typeNpc = 'npc';
 const typeHuman = 'human';
-
 
 const double characterSpeed = 1.5;
 const double bulletRadius = 3;

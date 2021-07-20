@@ -26,6 +26,7 @@ Offset get previousMousePosition => _previousMousePosition;
 Offset get mouseVelocity => _mouseDelta;
 double get mousePosX => _mousePosition?.dx;
 double get mousePosY => _mousePosition?.dy;
+bool get mouseAvailable => mousePosX != null;
 bool get mouseClicked => _lastLeftClicked != null && millisecondsSince(_lastLeftClicked) < 500;
 Color white = mat.Colors.white;
 Color red = mat.Colors.red;

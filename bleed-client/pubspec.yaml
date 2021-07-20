@@ -1,6 +1,5 @@
 name: flutter_game_engine
 description: A 2D Game Engine for Flutter
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
 version: 1.0.0+1
 
