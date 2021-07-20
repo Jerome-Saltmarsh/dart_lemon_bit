@@ -182,6 +182,10 @@ class _GameWidgetState extends State<GameWidget> {
         _mouseDelta = pointerHoverEvent.delta;
       },
       child: PositionedTapDetector(
+        onLongPress: (position) {
+          _previousMousePosition = _mousePosition;
+          _mousePosition = position.relative;
+        },
         onTap: (position) {
           _lastLeftClicked = DateTime.now();
           widget.onMouseClick();

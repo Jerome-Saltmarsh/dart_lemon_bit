@@ -97,34 +97,35 @@ void main() {
         case characterStateIdle:
           break;
         case characterStateWalking:
+          double speed = getSpeed(character);
           switch (character[keyDirection]) {
             case directionUp:
-              character[keyPositionY] -= characterSpeed;
+              character[keyPositionY] -= speed;
               break;
             case directionUpRight:
-              character[keyPositionX] += characterSpeed * 0.5;
-              character[keyPositionY] -= characterSpeed * 0.5;
+              character[keyPositionX] += speed * 0.5;
+              character[keyPositionY] -= speed * 0.5;
               break;
             case directionRight:
-              character[keyPositionX] += characterSpeed;
+              character[keyPositionX] += speed;
               break;
             case directionDownRight:
-              character[keyPositionX] += characterSpeed * 0.5;
-              character[keyPositionY] += characterSpeed * 0.5;
+              character[keyPositionX] += speed * 0.5;
+              character[keyPositionY] += speed * 0.5;
               break;
             case directionDown:
-              character[keyPositionY] += characterSpeed;
+              character[keyPositionY] += speed;
               break;
             case directionDownLeft:
-              character[keyPositionX] -= characterSpeed * 0.5;
-              character[keyPositionY] += characterSpeed * 0.5;
+              character[keyPositionX] -= speed * 0.5;
+              character[keyPositionY] += speed * 0.5;
               break;
             case directionLeft:
-              character[keyPositionX] -= characterSpeed;
+              character[keyPositionX] -= speed;
               break;
             case directionUpLeft:
-              character[keyPositionX] -= characterSpeed * 0.5;
-              character[keyPositionY] -= characterSpeed * 0.5;
+              character[keyPositionX] -= speed * 0.5;
+              character[keyPositionY] -= speed * 0.5;
               break;
           }
           break;
@@ -139,38 +140,18 @@ void main() {
     updateBullets();
   }
 
+  void spawnZombieJob(){
+    if(getNpcs().length >= maxZombies) return;
+    spawnRandomZombie();
+  }
+
   Timer.periodic(Duration(milliseconds: 1000 ~/ 60), (timer) {
     fixedUpdate();
   });
 
-  spawnCharacter(double x, double y, {String name = "", bool npc = false}) {
-    if (x == double.nan) {
-      throw Exception("x is nan");
-    }
-    Map<String, dynamic> character = new Map();
-    character[keyPositionX] = x;
-    character[keyPositionY] = y;
-    character[keyCharacterId] = id;
-    character[keyDirection] = directionDown;
-    character[keyState] = characterStateIdle;
-    character[keyType] = npc ? typeNpc : typeHuman;
-    if (name != "") {
-      character[keyPlayerName] = name;
-    }
-    if (!npc) {
-      character[keyLastUpdateFrame] = frame;
-    }
-    characters.add(character);
-    id++;
-    return character;
-  }
-
-  spawnCharacter(100, 100, npc: true);
-
-  void spawnRandomZombie() {
-    double r = 500;
-    spawnCharacter(randomBetween(-r, r), randomBetween(-r, r), npc: true);
-  }
+  Timer.periodic(Duration(seconds: 5), (timer) {
+    spawnZombieJob();
+  });
 
   var handler = webSocketHandler((webSocket) {
     void sendToClient(dynamic response) {

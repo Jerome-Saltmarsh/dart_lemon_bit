@@ -1,9 +1,11 @@
 # TODO
 [ ] Ping Check
 [ ] Persist World on firebase
-[ ] Zombie Npc
 [ ] Sprint
+[ ] Zombie inertia
+[ ] Zombie Health
 [ ] Shot Sound
+[x] Zombie Npc
 [x] Bullet Max Range
 [x] Aim (Right Click)
 [x] Character Names

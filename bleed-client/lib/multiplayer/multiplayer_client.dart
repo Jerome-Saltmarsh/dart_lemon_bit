@@ -41,7 +41,7 @@ class MultiplayerClient extends GameWidget {
 
   static const idNotConnected = -1;
   static const String localhost = "ws://localhost:8080";
-  static const gpc = 'wss://bleed-1-osbmaezptq-ey.a.run.app/:8080';
+  static const gpc = 'wss://bleed-2-osbmaezptq-ey.a.run.app/:8080';
   static const host = localhost;
 
   Uri get hostURI => Uri.parse(host);

@@ -79,3 +79,36 @@ bool isDead(dynamic character) {
 bool isAiming(dynamic character) {
   return character[keyState] == characterStateAiming;
 }
+
+double getSpeed(dynamic character){
+  if(isHuman(character)){
+    return characterSpeed;
+  }
+  return zombieSpeed;
+}
+
+spawnCharacter(double x, double y, {String name = "", bool npc = false}) {
+  if (x == double.nan) {
+    throw Exception("x is nan");
+  }
+  Map<String, dynamic> character = new Map();
+  character[keyPositionX] = x;
+  character[keyPositionY] = y;
+  character[keyCharacterId] = id;
+  character[keyDirection] = directionDown;
+  character[keyState] = characterStateIdle;
+  character[keyType] = npc ? typeNpc : typeHuman;
+  if (name != "") {
+    character[keyPlayerName] = name;
+  }
+  if (!npc) {
+    character[keyLastUpdateFrame] = frame;
+  }
+  characters.add(character);
+  id++;
+  return character;
+}
+
+void spawnRandomZombie() {
+  spawnCharacter(randomBetween(-spawnRadius, spawnRadius), randomBetween(-spawnRadius, spawnRadius), npc: true);
+}
