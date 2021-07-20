@@ -1,6 +1,6 @@
-import 'character_utils.dart';
 import 'common.dart';
-import 'game_maths.dart';
+import 'maths.dart';
+import 'utils.dart';
 
 void updateCollisions(List<dynamic> characters) {
   for (int i = 0; i < characters.length; i++) {

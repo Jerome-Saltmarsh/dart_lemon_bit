@@ -1,0 +1,4 @@
+int frame = 0;
+int id = 0;
+List<dynamic> characters = [];
+List<dynamic> bullets = [];

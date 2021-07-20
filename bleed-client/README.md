@@ -4,7 +4,7 @@
 [ ] Zombie Npc
 [ ] Sprint
 [ ] Shot Sound
-[ ] Bullet Max Range
+[x] Bullet Max Range
 [x] Aim (Right Click)
 [x] Character Names
 [x] Respawn player characters after death

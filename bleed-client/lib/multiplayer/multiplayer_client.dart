@@ -4,6 +4,7 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_game_engine/game_engine/game_input.dart';
+import 'package:flutter_game_engine/game_engine/game_maths.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'common.dart';
@@ -164,13 +165,7 @@ class MultiplayerClient extends GameWidget {
     dynamic player = getPlayerCharacter();
     double playerScreenPositionX = player[keyPositionX] - cameraX;
     double playerScreenPositionY = player[keyPositionY] - cameraY;
-    double x = playerScreenPositionX - mousePosX;
-    double y = playerScreenPositionY - mousePosY;
-    if (x < 0) {
-      return (atan2(x, y) * -1);
-    } else {
-      return (pi + pi) - atan2(x, y);
-    }
+    return getRadionsBetween(playerScreenPositionX, playerScreenPositionY, mousePosX, mousePosY);
   }
 
   void sendCommandAttack() {
@@ -347,7 +342,7 @@ class MultiplayerClient extends GameWidget {
 
     if (mousePosX != null) {
       drawCircleOutline(
-          radius: 5, x: mousePosX + cameraX, y: mousePosY + cameraY);
+          radius: 5, x: mousePosX + cameraX, y: mousePosY + cameraY, color: white);
     }
 
     drawTiles();
@@ -360,14 +355,18 @@ class MultiplayerClient extends GameWidget {
     if (!playerAssigned) return;
     dynamic player = getPlayerCharacter();
     drawCircleOutline(
-        radius: bulletRange, x: player[keyPositionX], y: player[keyPositionY]);
+        radius: bulletRange, x: player[keyPositionX], y: player[keyPositionY], color: white);
   }
 
-  void drawCircleOutline({int sides = 16, double radius, double x, double y}) {
+  void setColor(Color value){
+    globalPaint.color = value;
+  }
+
+  void drawCircleOutline({int sides = 16, double radius, double x, double y, Color color}) {
     double r = (pi * 2) / sides;
     List<Offset> points = [];
-    double d = 200;
     Offset z = Offset(x, y);
+    setColor(color);
     for (int i = 0; i <= sides; i++) {
       double a1 = i * r;
       points

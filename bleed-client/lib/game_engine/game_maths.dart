@@ -23,3 +23,12 @@ double convertVectorToDegrees(double x, double y) {
   }
   return atan2(x, y) * radionsToDegrees;
 }
+
+double getRadionsBetween(double x1, double y1, double x2, double y2) {
+  double x = x1 - x2;
+  double y = y1 - y2;
+  if (x < 0) {
+    return (atan2(x, y) * -1);
+  }
+  return (pi + pi) - atan2(x, y);
+}

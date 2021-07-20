@@ -5,36 +5,30 @@ import 'dart:math';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 
-import 'character_utils.dart';
 import 'common.dart';
-import 'game_maths.dart';
-import 'game_physics.dart';
+import 'common_functions.dart';
+import 'maths.dart';
+import 'physics.dart';
 import 'settings.dart';
 import 'utils.dart';
-import 'variables.dart';
+import 'state.dart';
 
 void main() {
   print('starting web socket server');
-  int id = 0;
-  List<dynamic> characters = [];
-  List<dynamic> bullets = [];
-  const host = '0.0.0.0';
-  const port = 8080;
 
   void updateBullets() {
     for (int i = 0; i < bullets.length; i++) {
       dynamic bullet = bullets[i];
       bullet[keyFrame]++;
+      double bulletRotation = bullet[keyRotation];
+      bullet[keyPositionX] -= cos(bulletRotation + (pi * 0.5)) * bulletSpeed;
+      bullet[keyPositionY] -= sin(bulletRotation + (pi * 0.5)) * bulletSpeed;
 
-      if(bulletDistanceTravelled(bullet) > bulletRange){
+      if (bulletDistanceTravelled(bullet) > bulletRange) {
         bullets.removeAt(i);
         i--;
         continue;
       }
-
-      double bulletRotation = bullet[keyRotation];
-      bullet[keyPositionX] -= cos(bulletRotation + (pi * 0.5)) * bulletSpeed;
-      bullet[keyPositionY] -= sin(bulletRotation + (pi * 0.5)) * bulletSpeed;
 
       for (int j = 0; j < characters.length; j++) {
         if (bullet[keyCharacterId] == characters[j][keyCharacterId]) continue;
@@ -55,16 +49,48 @@ void main() {
     for (int i = 0; i < characters.length; i++) {
       dynamic character = characters[i];
 
+      if (isHuman(character) && connectionExpired(character)) {
+        characters.removeAt(i);
+        i--;
+        continue;
+      }
+      if (isDead(character)) {
+        if (frame - character[keyFrameOfDeath] > 120) {
+          if (isNpc(character)) {
+            characters.removeAt(i);
+            i--;
+          } else {
+            character[keyState] = characterStateIdle;
+            setPosition(character, x: 0, y: 0);
+          }
+        }
+      }
+    }
+
+    for (int i = 0; i < characters.length; i++) {
+      dynamic character = characters[i];
       // TODO Remove this hack
       if (character[keyPositionX] == double.nan) {
         character[keyPositionX] = 0;
         character[keyPositionY] = 0;
       }
 
-      if (isHuman(character) && connectionExpired(character)) {
-        characters.removeAt(i);
-        i--;
-        continue;
+      if (isNpc(character) && isAlive(character)) {
+        if (!npcTargetSet(character)) {
+          for (int j = 0; j < characters.length; j++) {
+            if (isNpc(characters[j])) continue;
+            dynamic characterJ = characters[j];
+            if (distanceBetween(character, characterJ) < 300) {
+              character[keyNpcTarget] = characterJ[keyCharacterId];
+              break;
+            }
+          }
+        } else {
+          dynamic target = npcTarget(character);
+          double angle = radionsBetweenObject(character, target);
+          setCharacterState(character, characterStateWalking);
+          setDirection(character, convertAngleToDirection(angle));
+        }
       }
 
       switch (character[keyState]) {
@@ -102,16 +128,6 @@ void main() {
               break;
           }
           break;
-        case characterStateDead:
-          if (frame - character[keyFrameOfDeath] > 120) {
-            if (isNpc(character)) {
-              characters.removeAt(i);
-              i--;
-            } else {
-              character[keyState] = characterStateIdle;
-              setPosition(character, x: 0, y: 0);
-            }
-          }
       }
     }
   }
@@ -126,13 +142,6 @@ void main() {
   Timer.periodic(Duration(milliseconds: 1000 ~/ 60), (timer) {
     fixedUpdate();
   });
-
-  dynamic findCharacterById(int id) {
-    return characters.firstWhere((element) => element[keyCharacterId] == id,
-        orElse: () {
-      return null;
-    });
-  }
 
   spawnCharacter(double x, double y, {String name = "", bool npc = false}) {
     if (x == double.nan) {

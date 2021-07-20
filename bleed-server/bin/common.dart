@@ -41,6 +41,7 @@ const typeNpc = 'npc';
 const typeHuman = 'human';
 const keyStartX = 'sx';
 const keyStartY = 'sy';
+const keyNpcTarget = 'nt';
 const keyRange = 'range';
 
 const double characterSpeed = 1.5;
