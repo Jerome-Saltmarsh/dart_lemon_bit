@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'common.dart';
 
-double eight = pi / 8.0;
-double quarter = pi / 4.0;
+const double eight = pi / 8.0;
+const double quarter = pi / 4.0;
 
 int convertAngleToDirection(double angle) {
   if (angle < eight) {

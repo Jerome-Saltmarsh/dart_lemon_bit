@@ -90,7 +90,6 @@ double getSpeed(dynamic character){
   return zombieSpeed;
 }
 
-
 dynamic spawnPlayer(double x, double y, String name){
   return spawnCharacter(x, y, name: name, npc: false, health: playerHealth);
 }

@@ -43,9 +43,8 @@ void main() {
             characterJ[keyState] = characterStateDead;
             characterJ[keyFrameOfDeath] = frame;
           }
-
-
-
+          characterJ[keyVelocityX] += bullet[keyVelocityX] * 0.25;
+          characterJ[keyVelocityY] += bullet[keyVelocityY] * 0.25;
           break;
         }
       }
