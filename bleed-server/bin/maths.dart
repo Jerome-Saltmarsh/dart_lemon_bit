@@ -52,6 +52,10 @@ double radionsBetweenObject(dynamic a, dynamic b) {
   return radionsBetween(a[keyPositionX], a[keyPositionY], b[keyPositionX], b[keyPositionY]);
 }
 
+double radionsBetween2(dynamic a, double x, double y) {
+  return radionsBetween(a[keyPositionX], a[keyPositionY], x, y);
+}
+
 double convertVectorToDegrees(double x, double y) {
   if (x < 0)
   {

@@ -3,11 +3,11 @@
 [ ] Persist World on firebase
 [ ] Sprint
 [ ] Weapon Shotgun
-[ ] Zombie NPC Wander
 [ ] Shot Animation
-[ ] Shot cooldown
+[ ] Shot cool-down
 [ ] Bullet Hit Animation
 [ ] Shot Sound
+[ ] NPC Wander
 [x] Icon
 [x] Zombie inertia
 [x] Zombie Health

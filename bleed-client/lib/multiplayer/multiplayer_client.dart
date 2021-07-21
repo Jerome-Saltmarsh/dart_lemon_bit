@@ -38,7 +38,7 @@ class MultiplayerClient extends GameWidget {
   BuildContext context;
 
   static const String localhost = "ws://localhost:8080";
-  static const gpc = 'wss://bleed-2-osbmaezptq-ey.a.run.app/:8080';
+  static const gpc = 'wss://bleed-3-osbmaezptq-ey.a.run.app/:8080';
   static const host = localhost;
 
   Uri get hostURI => Uri.parse(host);
@@ -73,6 +73,7 @@ class MultiplayerClient extends GameWidget {
               child: const Text('PLAY'),
               onPressed: playerNameController.text.trim().length > 2
                   ? () {
+                      loadAudioFiles();
                       requestSpawn(playerNameController.text.trim());
                       Navigator.of(context).pop();
                     }
@@ -242,8 +243,6 @@ class MultiplayerClient extends GameWidget {
     connect();
     // requestSpawn();
     Timer(Duration(milliseconds: 100), showChangeNameDialog);
-
-
   }
 
   void connect() {
@@ -316,27 +315,48 @@ class MultiplayerClient extends GameWidget {
 
     if (mousePosX != null) {
       drawCircleOutline(
-          radius: 5, x: mousePosX + cameraX, y: mousePosY + cameraY, color: white);
+          radius: 5,
+          x: mousePosX + cameraX,
+          y: mousePosY + cameraY,
+          color: white);
     }
 
     drawTiles();
     drawBullets();
     drawCharacters();
     drawBulletRange();
+
+    if (debugMode) {
+      drawNpcDebug();
+    }
+  }
+
+  void drawNpcDebug() {
+    for (dynamic npc in getNpcs()) {
+      if (npc[keyNpcTarget] != null) {
+      } else if (npc[keyDestinationX] != null) {
+        drawLine(npc[keyPositionX], npc[keyPositionY], npc[keyDestinationX],
+            npc[keyDestinationY]);
+      }
+    }
   }
 
   void drawBulletRange() {
     if (!playerAssigned) return;
     dynamic player = getPlayerCharacter();
     drawCircleOutline(
-        radius: bulletRange, x: player[keyPositionX], y: player[keyPositionY], color: white);
+        radius: bulletRange,
+        x: player[keyPositionX],
+        y: player[keyPositionY],
+        color: white);
   }
 
-  void setColor(Color value){
+  void setColor(Color value) {
     globalPaint.color = value;
   }
 
-  void drawCircleOutline({int sides = 16, double radius, double x, double y, Color color}) {
+  void drawCircleOutline(
+      {int sides = 16, double radius, double x, double y, Color color}) {
     double r = (pi * 2) / sides;
     List<Offset> points = [];
     Offset z = Offset(x, y);

@@ -91,6 +91,16 @@ void main() {
               break;
             }
           }
+
+          if (npcDestinationSet(character)) {
+            if (npcArrivedAtDestination(character)) {
+              setCharacterStateIdle(character);
+              npcClearDestination(character);
+            } else {
+              npcFaceDestination(character);
+              setCharacterStateWalk(character);
+            }
+          }
         } else {
           dynamic target = npcTarget(character);
           if (target == null || isDead(target)) {
@@ -160,13 +170,18 @@ void main() {
     spawnRandomZombie();
   }
 
-  Timer.periodic(Duration(milliseconds: 1000 ~/ 60), (timer) {
-    fixedUpdate();
-  });
+  void npcWanderJob() {
+    for (dynamic npc in getNpcs()){
+       if(npcTargetSet(npc)) continue;
+       if(npcDestinationSet(npc)) continue;
+       npcSetRandomDestination(npc);
+    }
+  }
 
-  Timer.periodic(Duration(seconds: 5), (timer) {
-    spawnZombieJob();
-  });
+  createJob(fixedUpdate, ms: 1000 ~/ 60);
+  createJob(spawnZombieJob, seconds: 5);
+  createJob(npcWanderJob, seconds: 10);
+
 
   var handler = webSocketHandler((webSocket) {
     void sendToClient(dynamic response) {

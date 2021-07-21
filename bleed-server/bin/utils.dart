@@ -1,10 +1,20 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'common.dart';
+import 'common_functions.dart';
 import 'functions/spawn_character.dart';
 import 'maths.dart';
 import 'settings.dart';
 import 'state.dart';
+
+double posX(dynamic value){
+  return value[keyPositionX];
+}
+
+double posY(dynamic value){
+  return value[keyPositionY];
+}
 
 double bulletDistanceTravelled(dynamic bullet) {
   return distance(bullet[keyPositionX], bullet[keyPositionY], bullet[keyStartX],
@@ -35,6 +45,14 @@ void setCharacterState(dynamic character, int value) {
   character[keyState] = value;
 }
 
+void setCharacterStateWalk(dynamic character){
+  setCharacterState(character, characterStateWalking);
+}
+
+void setCharacterStateIdle(dynamic character){
+  setCharacterState(character, characterStateIdle);
+}
+
 void setDirection(dynamic character, int value) {
   character[keyDirection] = value;
 }
@@ -56,6 +74,28 @@ dynamic findCharacterById(int id) {
 
 bool npcTargetSet(dynamic npc) {
   return npc[keyNpcTarget] != null;
+}
+
+void npcClearDestination(dynamic npc){
+  npc[keyDestinationX] = null;
+  npc[keyDestinationY] = null;
+}
+
+bool npcDestinationSet(dynamic npc){
+  return npc[keyDestinationX] != null;
+}
+
+void npcSetDestination(dynamic npc, double x, double y){
+  npc[keyDestinationX] = x;
+  npc[keyDestinationY] = y;
+}
+
+void npcSetRandomDestination(dynamic npc){
+  npcSetDestination(npc, randomBetween(-100, 100), randomBetween(-100, 100));
+}
+
+bool npcArrivedAtDestination(dynamic npc){
+  return npcDistanceFromDestination(npc) <= destinationArrivedDistance;
 }
 
 void npcSetTarget(dynamic npc, dynamic value) {
@@ -122,3 +162,27 @@ void setVelocity(dynamic target, double rotation, double speed) {
   target[keyVelocityX] = velX(rotation, bulletSpeed);
   target[keyVelocityY] = velY(rotation, bulletSpeed);
 }
+
+double npcDistanceFromDestination(dynamic npc){
+  return objectDistanceFrom(npc, npc[keyDestinationX], npc[keyDestinationY]);
+}
+
+double objectDistanceFrom(dynamic character, double x, double y){
+  return distance(character[keyPositionX], character[keyPositionY], character[keyDestinationX], character[keyDestinationY]);
+}
+
+void npcFaceDestination(dynamic npc){
+  characterFace(npc, npc[keyDestinationX], npc[keyDestinationY]);
+}
+
+void characterFace(dynamic character, double x, double y){
+  setDirection(character, convertAngleToDirection(radionsBetween2(character, x, y)));
+}
+
+void createJob(Function function, {int seconds = 0, int ms = 0}) {
+  Timer.periodic(Duration(seconds: seconds, milliseconds: ms), (timer) {
+    function();
+  });
+}
+
+

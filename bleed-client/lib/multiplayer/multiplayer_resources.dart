@@ -11,22 +11,23 @@ Howl pistolFireAudio;
 Future loadResources() async {
   tileGrass01 = await loadImage("images/tile-grass-01.png");
   spriteTemplate = await loadImage("images/iso-character.png");
-  shotgunFireAudio = Howl(
-      src: [
-        'audio/shotgun-fire.mp3',
-      ], // source in MP3 and WAV fallback
-      loop: false, // Loops the sound when play ends.
-      volume: 0.60, // Play with 60% of original volume.
-      preload: true // Automatically loads source.
-  );
-  pistolFireAudio = Howl(
-      src: [
-        'audio/Pistol Shot_22.wav',
-      ], // source in MP3 and WAV fallback
-      loop: false, // Loops the sound when play ends.
-      volume: 0.60, // Play with 60% of original volume.
-      preload: true // Automatically loads source.
-  );
-  shotgunFireAudio.load();
-  pistolFireAudio.load();
 }
+
+Future loadAudioFiles(){
+  print("loading audio files");
+  shotgunFireAudio = loadAudio('audio/shotgun-fire.mp3');
+  pistolFireAudio = loadAudio('audio/pistol-fire.mp3');
+}
+
+Howl loadAudio(String fileName, {double volume = 0.6}){
+  Howl howl =  Howl(
+      src: [fileName],
+      loop: false,
+      volume: volume,
+      preload: true,
+      html5: false,
+  );
+  howl.load();
+  return howl;
+}
+
