@@ -9,4 +9,5 @@ const double zombieSpeed = 0.75;
 const double characterSpeed = 1.5;
 const int zombieHealth = 5;
 const int playerHealth = 3;
-const double velocityFriction = 0.95;
+const double velocityFriction = 0.94;
+const double zombieViewRange = 300;

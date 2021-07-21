@@ -43,6 +43,10 @@ dynamic npcTarget(dynamic character) {
   return findCharacterById(character[keyNpcTarget]);
 }
 
+void npcClearTarget(character) {
+  character[keyNpcTarget] = null;
+}
+
 dynamic findCharacterById(int id) {
   return characters.firstWhere((element) => element[keyCharacterId] == id,
       orElse: () {
@@ -50,8 +54,16 @@ dynamic findCharacterById(int id) {
   });
 }
 
-bool npcTargetSet(dynamic character) {
-  return character[keyNpcTarget] != null;
+bool npcTargetSet(dynamic npc) {
+  return npc[keyNpcTarget] != null;
+}
+
+void npcSetTarget(dynamic npc, dynamic value) {
+  if (value is int) {
+    npc[keyNpcTarget] = value;
+  } else {
+    npc[keyNpcTarget] = value[keyCharacterId];
+  }
 }
 
 void setPosition(dynamic character, {double? x, double? y}) {
@@ -83,29 +95,30 @@ bool isAiming(dynamic character) {
   return character[keyState] == characterStateAiming;
 }
 
-double getSpeed(dynamic character){
-  if(isHuman(character)){
+double getSpeed(dynamic character) {
+  if (isHuman(character)) {
     return characterSpeed;
   }
   return zombieSpeed;
 }
 
-dynamic spawnPlayer(double x, double y, String name){
+dynamic spawnPlayer(double x, double y, String name) {
   return spawnCharacter(x, y, name: name, npc: false, health: playerHealth);
 }
 
-dynamic spawnZombie(double x, double y){
+dynamic spawnZombie(double x, double y) {
   return spawnCharacter(y, x, npc: true, health: zombieHealth);
 }
 
-double velX(double rotation, double speed){
+double velX(double rotation, double speed) {
   return -cos(rotation + (pi * 0.5)) * speed;
 }
-double velY(double rotation, double speed){
+
+double velY(double rotation, double speed) {
   return -sin(rotation + (pi * 0.5)) * speed;
 }
 
-void setVelocity(dynamic target, double rotation, double speed){
+void setVelocity(dynamic target, double rotation, double speed) {
   target[keyVelocityX] = velX(rotation, bulletSpeed);
   target[keyVelocityY] = velY(rotation, bulletSpeed);
 }

@@ -5,9 +5,11 @@
 [ ] Weapon Shotgun
 [ ] Zombie NPC Wander
 [ ] Shot Animation
-[ ] Shot Sound
+[ ] Shot cooldown
 [ ] Bullet Hit Animation
-[ ] Zombie inertia
+[ ] Shot Sound
+[x] Icon
+[x] Zombie inertia
 [x] Zombie Health
 [x] Zombie Npc
 [x] Bullet Max Range

@@ -11,6 +11,7 @@ import 'common.dart';
 import 'multiplayer_resources.dart';
 import 'multiplayer_input.dart';
 import 'mutliplayer_ui.dart';
+import 'package:howler/howler.dart';
 
 class MultiplayerClient extends GameWidget {
   WebSocketChannel webSocketChannel;
@@ -168,13 +169,20 @@ class MultiplayerClient extends GameWidget {
     return getRadionsBetween(playerScreenPositionX, playerScreenPositionY, mousePosX, mousePosY);
   }
 
+
+
   void sendCommandAttack() {
     if (!playerAssigned) return;
+    playShotgunAudio();
     Map<String, dynamic> request = Map();
     request[keyCommand] = commandAttack;
     request[keyCharacterId] = id;
     request[keyRotation] = getMouseRotation();
     sendToServer(request);
+  }
+
+  void playShotgunAudio() {
+    shotgunFireAudio.play();
   }
 
   void sendCommand(int value) {
@@ -266,10 +274,12 @@ class MultiplayerClient extends GameWidget {
 
   @override
   Future init() async {
-    loadImages();
+    loadResources();
     connect();
     // requestSpawn();
     Timer(Duration(milliseconds: 100), showChangeNameDialog);
+
+
   }
 
   void connect() {

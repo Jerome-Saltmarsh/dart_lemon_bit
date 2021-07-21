@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
@@ -87,13 +86,16 @@ void main() {
           for (int j = 0; j < characters.length; j++) {
             if (isNpc(characters[j])) continue;
             dynamic characterJ = characters[j];
-            if (distanceBetween(character, characterJ) < 300) {
-              character[keyNpcTarget] = characterJ[keyCharacterId];
+            if (distanceBetween(character, characterJ) < zombieViewRange) {
+              npcSetTarget(character, characterJ);
               break;
             }
           }
         } else {
           dynamic target = npcTarget(character);
+          if(target == null){
+            npcClearTarget(character);
+          }
           double angle = radionsBetweenObject(character, target);
           setCharacterState(character, characterStateWalking);
           setDirection(character, convertAngleToDirection(angle));
@@ -238,3 +240,5 @@ void main() {
     print('Serving at wss://${server.address.host}:${server.port}');
   });
 }
+
+
