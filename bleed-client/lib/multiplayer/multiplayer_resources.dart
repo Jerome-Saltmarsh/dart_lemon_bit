@@ -6,6 +6,7 @@ import 'package:howler/howler.dart';
 Image spriteTemplate;
 Image tileGrass01;
 Howl shotgunFireAudio;
+Howl pistolFireAudio;
 
 Future loadResources() async {
   tileGrass01 = await loadImage("images/tile-grass-01.png");
@@ -18,5 +19,14 @@ Future loadResources() async {
       volume: 0.60, // Play with 60% of original volume.
       preload: true // Automatically loads source.
   );
+  pistolFireAudio = Howl(
+      src: [
+        'audio/Pistol Shot_22.wav',
+      ], // source in MP3 and WAV fallback
+      loop: false, // Loops the sound when play ends.
+      volume: 0.60, // Play with 60% of original volume.
+      preload: true // Automatically loads source.
+  );
   shotgunFireAudio.load();
+  pistolFireAudio.load();
 }

@@ -4,27 +4,24 @@ import 'dart:math';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_game_engine/game_engine/game_input.dart';
-import 'package:flutter_game_engine/game_engine/game_maths.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
+import 'package:flutter_game_engine/multiplayer/settings.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'common.dart';
 import 'multiplayer_resources.dart';
 import 'multiplayer_input.dart';
 import 'mutliplayer_ui.dart';
-import 'package:howler/howler.dart';
+
+import 'state.dart';
+import 'utils.dart';
 
 class MultiplayerClient extends GameWidget {
   WebSocketChannel webSocketChannel;
-  List<dynamic> characters = [];
-  List<dynamic> bullets = [];
   bool initialized = false;
-  int id = idNotConnected;
   int fps = 60;
   int milliSecondsPerSecond = 1000;
   Canvas canvas;
   Size size;
-  double cameraSpeed = 2;
-  double cameraFollow = 0.02;
   int drawFrame = 0;
   int frameRate = 5;
   int frameRateValue = 0;
@@ -40,7 +37,6 @@ class MultiplayerClient extends GameWidget {
 
   BuildContext context;
 
-  static const idNotConnected = -1;
   static const String localhost = "ws://localhost:8080";
   static const gpc = 'wss://bleed-2-osbmaezptq-ey.a.run.app/:8080';
   static const host = localhost;
@@ -136,14 +132,6 @@ class MultiplayerClient extends GameWidget {
     debugUIVisible = false;
   }
 
-  bool get playerAssigned =>
-      characters.any((element) => element[keyCharacterId] == id);
-
-  dynamic getPlayerCharacter() {
-    return characters.firstWhere((element) => element[keyCharacterId] == id,
-        orElse: () => null);
-  }
-
   void requestSpawn(String playerName) {
     Map<String, dynamic> request = Map();
     request[keyCommand] = commandSpawn;
@@ -151,38 +139,14 @@ class MultiplayerClient extends GameWidget {
     sendToServer(request);
   }
 
-  double playerScreenPositionX() {
-    dynamic player = getPlayerCharacter();
-    return player[keyPositionX] - cameraX;
-  }
-
-  double playerScreenPositionY() {
-    if (!playerAssigned) return null;
-    dynamic player = getPlayerCharacter();
-    return player[keyPositionY] - cameraY;
-  }
-
-  double getMouseRotation() {
-    dynamic player = getPlayerCharacter();
-    double playerScreenPositionX = player[keyPositionX] - cameraX;
-    double playerScreenPositionY = player[keyPositionY] - cameraY;
-    return getRadionsBetween(playerScreenPositionX, playerScreenPositionY, mousePosX, mousePosY);
-  }
-
-
-
   void sendCommandAttack() {
     if (!playerAssigned) return;
-    playShotgunAudio();
+    playPistolAudio();
     Map<String, dynamic> request = Map();
     request[keyCommand] = commandAttack;
     request[keyCharacterId] = id;
     request[keyRotation] = getMouseRotation();
     sendToServer(request);
-  }
-
-  void playShotgunAudio() {
-    shotgunFireAudio.play();
   }
 
   void sendCommand(int value) {

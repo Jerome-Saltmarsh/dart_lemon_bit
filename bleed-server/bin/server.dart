@@ -93,12 +93,13 @@ void main() {
           }
         } else {
           dynamic target = npcTarget(character);
-          if(target == null){
+          if (target == null || isDead(target)) {
             npcClearTarget(character);
+          } else {
+            double angle = radionsBetweenObject(character, target);
+            setCharacterState(character, characterStateWalking);
+            setDirection(character, convertAngleToDirection(angle));
           }
-          double angle = radionsBetweenObject(character, target);
-          setCharacterState(character, characterStateWalking);
-          setDirection(character, convertAngleToDirection(angle));
         }
       }
 
@@ -240,5 +241,3 @@ void main() {
     print('Serving at wss://${server.address.host}:${server.port}');
   });
 }
-
-
