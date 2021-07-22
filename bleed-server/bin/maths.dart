@@ -15,6 +15,10 @@ double randomBetween(num a, num b){
   return (random.nextDouble() * (b - a)) + a;
 }
 
+double giveOrTake(double value){
+  return randomBetween(-value, value);
+}
+
 double magnitude(double a, double b){
   return sqrt((a * a) + (b * b));
 }

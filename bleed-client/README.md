@@ -2,12 +2,19 @@
 [ ] Ping Check
 [ ] Persist World on firebase
 [ ] Sprint
+[ ] Ammo
+[ ] Reload
+[ ] Shotgun
+[ ] Zombie Attack
+[ ] Zombie Death Sound
 [ ] Weapon Shotgun
 [ ] Shot Animation
-[ ] Shot cool-down
 [ ] Bullet Hit Animation
 [ ] Shot Sound
-[ ] NPC Wander
+[ ] Shot cool-down
+[x] Aim Accuracy
+[x] Draw Debug UI Toggle 
+[x] NPC Wander
 [x] Icon
 [x] Zombie inertia
 [x] Zombie Health

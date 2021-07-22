@@ -1,14 +1,15 @@
 import '../common.dart';
 import '../state.dart';
+import '../utils.dart';
 
 spawnCharacter(double x, double y, {required bool npc, required int health, String? name}) {
   if (x == double.nan) {
     throw Exception("x is nan");
   }
   Map<String, dynamic> character = new Map();
+  assignId(character);
   character[keyPositionX] = x;
   character[keyPositionY] = y;
-  character[keyCharacterId] = id;
   character[keyDirection] = directionDown;
   character[keyState] = characterStateIdle;
   character[keyType] = npc ? typeNpc : typeHuman;
@@ -22,6 +23,5 @@ spawnCharacter(double x, double y, {required bool npc, required int health, Stri
     character[keyLastUpdateFrame] = frame;
   }
   characters.add(character);
-  id++;
   return character;
 }

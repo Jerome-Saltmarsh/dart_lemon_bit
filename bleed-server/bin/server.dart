@@ -1,5 +1,5 @@
-import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
@@ -50,6 +50,112 @@ void main() {
     }
   }
 
+  void updateCharacter(dynamic character){
+    // TODO Remove this hack
+    if (character[keyPositionX] == double.nan) {
+      print("character x is nan");
+      character[keyPositionX] = 0;
+      character[keyPositionY] = 0;
+    }
+
+    if (isNpc(character) && isAlive(character)) {
+      if (!npcTargetSet(character)) {
+        for (int j = 0; j < characters.length; j++) {
+          if (isNpc(characters[j])) continue;
+          dynamic characterJ = characters[j];
+          if (distanceBetween(character, characterJ) < zombieViewRange) {
+            npcSetTarget(character, characterJ);
+            break;
+          }
+        }
+
+        if (npcDestinationSet(character)) {
+          if (npcArrivedAtDestination(character)) {
+            setCharacterStateIdle(character);
+            npcClearDestination(character);
+          } else {
+            npcFaceDestination(character);
+            setCharacterStateWalk(character);
+          }
+        }
+      } else {
+        dynamic target = npcTarget(character);
+        if (target == null || isDead(target)) {
+          npcClearTarget(character);
+        } else {
+          double angle = radionsBetweenObject(character, target);
+          setCharacterState(character, characterStateWalking);
+          setDirection(character, convertAngleToDirection(angle));
+        }
+      }
+    }
+
+    character[keyPositionX] += character[keyVelocityX];
+    character[keyPositionY] += character[keyVelocityY];
+    character[keyVelocityX] *= velocityFriction;
+    character[keyVelocityY] *= velocityFriction;
+
+    switch (character[keyState]) {
+      case characterStateAiming:
+        if (character[keyPreviousState] != characterStateAiming) {
+          character[keyAccuracy] = startingAccuracy;
+        }
+        if (character[keyAccuracy] > 0.05) {
+          character[keyAccuracy] -= 0.005;
+        }
+        break;
+      case characterStateFiring:
+        character[keyShotCoolDown]--;
+        if(character[keyShotCoolDown] <= 0){
+          setCharacterStateIdle(character);
+        }
+        break;
+      case characterStateIdle:
+        break;
+      case characterStateWalking:
+        double speed = getSpeed(character);
+        switch (character[keyDirection]) {
+          case directionUp:
+            character[keyPositionY] -= speed;
+            break;
+          case directionUpRight:
+            character[keyPositionX] += speed * 0.5;
+            character[keyPositionY] -= speed * 0.5;
+            break;
+          case directionRight:
+            character[keyPositionX] += speed;
+            break;
+          case directionDownRight:
+            character[keyPositionX] += speed * 0.5;
+            character[keyPositionY] += speed * 0.5;
+            break;
+          case directionDown:
+            character[keyPositionY] += speed;
+            break;
+          case directionDownLeft:
+            character[keyPositionX] -= speed * 0.5;
+            character[keyPositionY] += speed * 0.5;
+            break;
+          case directionLeft:
+            character[keyPositionX] -= speed;
+            break;
+          case directionUpLeft:
+            character[keyPositionX] -= speed * 0.5;
+            character[keyPositionY] -= speed * 0.5;
+            break;
+        }
+        break;
+    }
+
+    if (character[keyPreviousState] != character[keyState]) {
+      character[keyPreviousState] = character[keyState];
+      character[keyStateDuration] = 0;
+    } else {
+      character[keyStateDuration]++;
+    }
+  }
+
+
   void updateCharacters() {
     for (int i = 0; i < characters.length; i++) {
       dynamic character = characters[i];
@@ -72,90 +178,7 @@ void main() {
       }
     }
 
-    for (int i = 0; i < characters.length; i++) {
-      dynamic character = characters[i];
-      // TODO Remove this hack
-      if (character[keyPositionX] == double.nan) {
-        print("character x is nan");
-        character[keyPositionX] = 0;
-        character[keyPositionY] = 0;
-      }
-
-      if (isNpc(character) && isAlive(character)) {
-        if (!npcTargetSet(character)) {
-          for (int j = 0; j < characters.length; j++) {
-            if (isNpc(characters[j])) continue;
-            dynamic characterJ = characters[j];
-            if (distanceBetween(character, characterJ) < zombieViewRange) {
-              npcSetTarget(character, characterJ);
-              break;
-            }
-          }
-
-          if (npcDestinationSet(character)) {
-            if (npcArrivedAtDestination(character)) {
-              setCharacterStateIdle(character);
-              npcClearDestination(character);
-            } else {
-              npcFaceDestination(character);
-              setCharacterStateWalk(character);
-            }
-          }
-        } else {
-          dynamic target = npcTarget(character);
-          if (target == null || isDead(target)) {
-            npcClearTarget(character);
-          } else {
-            double angle = radionsBetweenObject(character, target);
-            setCharacterState(character, characterStateWalking);
-            setDirection(character, convertAngleToDirection(angle));
-          }
-        }
-      }
-
-      character[keyPositionX] += character[keyVelocityX];
-      character[keyPositionY] += character[keyVelocityY];
-      character[keyVelocityX] *= velocityFriction;
-      character[keyVelocityY] *= velocityFriction;
-
-      switch (character[keyState]) {
-        case characterStateIdle:
-          break;
-        case characterStateWalking:
-          double speed = getSpeed(character);
-          switch (character[keyDirection]) {
-            case directionUp:
-              character[keyPositionY] -= speed;
-              break;
-            case directionUpRight:
-              character[keyPositionX] += speed * 0.5;
-              character[keyPositionY] -= speed * 0.5;
-              break;
-            case directionRight:
-              character[keyPositionX] += speed;
-              break;
-            case directionDownRight:
-              character[keyPositionX] += speed * 0.5;
-              character[keyPositionY] += speed * 0.5;
-              break;
-            case directionDown:
-              character[keyPositionY] += speed;
-              break;
-            case directionDownLeft:
-              character[keyPositionX] -= speed * 0.5;
-              character[keyPositionY] += speed * 0.5;
-              break;
-            case directionLeft:
-              character[keyPositionX] -= speed;
-              break;
-            case directionUpLeft:
-              character[keyPositionX] -= speed * 0.5;
-              character[keyPositionY] -= speed * 0.5;
-              break;
-          }
-          break;
-      }
-    }
+    characters.forEach(updateCharacter);
   }
 
   void fixedUpdate() {
@@ -171,17 +194,16 @@ void main() {
   }
 
   void npcWanderJob() {
-    for (dynamic npc in getNpcs()){
-       if(npcTargetSet(npc)) continue;
-       if(npcDestinationSet(npc)) continue;
-       npcSetRandomDestination(npc);
+    for (dynamic npc in getNpcs()) {
+      if (npcTargetSet(npc)) continue;
+      if (npcDestinationSet(npc)) continue;
+      npcSetRandomDestination(npc);
     }
   }
 
   createJob(fixedUpdate, ms: 1000 ~/ 60);
   createJob(spawnZombieJob, seconds: 5);
   createJob(npcWanderJob, seconds: 10);
-
 
   var handler = webSocketHandler((webSocket) {
     void sendToClient(dynamic response) {
@@ -211,17 +233,17 @@ void main() {
           response[keyBullets] = bullets;
           if (request[keyCharacterId] != null) {
             int playerId = request[keyCharacterId];
-            dynamic playerCharacter = findCharacterById(playerId);
-            if (playerCharacter == null) {
+            dynamic character = findCharacterById(playerId);
+            if (character == null) {
               handleCommandSpawn(request);
               return;
-            } else if (playerCharacter[keyState] != characterStateDead) {
+            } else if (isAlive(character) && !isFiring(character)) {
               int direction = request[keyDirection];
               int characterState = request[keyState];
-              playerCharacter[keyState] = characterState;
-              playerCharacter[keyDirection] = direction;
-              playerCharacter[keyLastUpdateFrame] = frame;
-              playerCharacter[keyAimAngle] = request[keyAimAngle];
+              character[keyState] = characterState;
+              character[keyDirection] = direction;
+              character[keyLastUpdateFrame] = frame;
+              character[keyAimAngle] = request[keyAimAngle];
             }
           }
           sendToClient(response);
@@ -232,19 +254,25 @@ void main() {
         case commandAttack:
           if (request[keyCharacterId] == null) return;
           int playerId = request[keyCharacterId];
-          dynamic playerCharacter = findCharacterById(playerId);
-          if (playerCharacter == null) return;
-          if (!isAiming(playerCharacter)) return;
+          dynamic character = findCharacterById(playerId);
+          if (character == null) return;
+          if (!isAiming(character)) return;
           Map<String, dynamic> bullet = Map();
-          bullet[keyPositionX] = playerCharacter[keyPositionX];
-          bullet[keyPositionY] = playerCharacter[keyPositionY];
-          bullet[keyStartX] = playerCharacter[keyPositionX];
-          bullet[keyStartY] = playerCharacter[keyPositionY];
-          setVelocity(bullet, request[keyRotation], bulletSpeed);
-          bullet[keyRotation] = request[keyRotation];
+          bullet[keyPositionX] = character[keyPositionX];
+          bullet[keyPositionY] = character[keyPositionY];
+          bullet[keyStartX] = character[keyPositionX];
+          bullet[keyStartY] = character[keyPositionY];
+          assignId(bullet);
+          double accuracy = character[keyAccuracy];
+          double angle = request[keyRotation] + giveOrTake(accuracy * 0.5);
+          setVelocity(bullet, angle, bulletSpeed);
+          bullet[keyRotation] = angle;
           bullet[keyFrame] = 0;
           bullet[keyCharacterId] = playerId;
           bullets.add(bullet);
+          character[keyAccuracy] = startingAccuracy;
+          setCharacterStateFiring(character);
+          character[keyShotCoolDown] = pistolCoolDown;
       }
     }
 

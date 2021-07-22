@@ -41,6 +41,10 @@ bool isAlive(dynamic character) {
   return character[keyState] != characterStateDead;
 }
 
+bool isFiring(dynamic character){
+  return character[keyState] == characterStateFiring;
+}
+
 void setCharacterState(dynamic character, int value) {
   character[keyState] = value;
 }
@@ -51,6 +55,10 @@ void setCharacterStateWalk(dynamic character){
 
 void setCharacterStateIdle(dynamic character){
   setCharacterState(character, characterStateIdle);
+}
+
+void setCharacterStateFiring(dynamic character){
+  setCharacterState(character, characterStateFiring);
 }
 
 void setDirection(dynamic character, int value) {
@@ -185,4 +193,7 @@ void createJob(Function function, {int seconds = 0, int ms = 0}) {
   });
 }
 
-
+void assignId(dynamic object){
+  id++;
+  object[keyCharacterId] = id;
+}

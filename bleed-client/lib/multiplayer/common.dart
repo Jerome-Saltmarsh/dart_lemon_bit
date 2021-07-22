@@ -7,6 +7,7 @@ const characterStateIdle = 0;
 const characterStateWalking = 1;
 const characterStateDead = 2;
 const characterStateAiming = 3;
+const characterStateFiring = 4;
 
 const directionUp = 0;
 const directionUpRight = 1;
@@ -48,6 +49,10 @@ const keyVelocityX = 'vX';
 const keyVelocityY = 'vY';
 const keyDestinationX = 'dX';
 const keyDestinationY = 'dY';
+const keyAccuracy = 'ka';
+const keyPreviousState = 'ps';
+const keyStateDuration = 'sd';
+const keyShotCoolDown = 'scd';
 
 const double bulletRadius = 3;
 const double characterRadius = 7;

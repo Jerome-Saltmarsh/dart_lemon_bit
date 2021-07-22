@@ -30,7 +30,7 @@ class MultiplayerClient extends GameWidget {
   int errors = 0;
   int dones = 0;
   bool connected = false;
-  bool debugUIVisible = false;
+  bool debugMode = false;
   int requestDirection = directionDown;
   int requestCharacterState = characterStateIdle;
   TextEditingController playerNameController = TextEditingController();
@@ -38,7 +38,7 @@ class MultiplayerClient extends GameWidget {
   BuildContext context;
 
   static const String localhost = "ws://localhost:8080";
-  static const gpc = 'wss://bleed-3-osbmaezptq-ey.a.run.app/:8080';
+  static const gpc = 'wss://bleed-4-osbmaezptq-ey.a.run.app/:8080';
   static const host = localhost;
 
   Uri get hostURI => Uri.parse(host);
@@ -94,9 +94,9 @@ class MultiplayerClient extends GameWidget {
       [
         if (connected) button("Disconnect", disconnect),
         if (!connected) button("Connect", connect),
-        if (!debugUIVisible) button("Show Debug", showDebug),
-        if (debugUIVisible) button("Hide Debug", hideDebug),
-        if (debugUIVisible)
+        if (!debugMode) button("Show Debug", showDebug),
+        if (debugMode) button("Hide Debug", hideDebug),
+        if (debugMode)
           column([
             text("Server Host: $host"),
             text("Connected. Id: $id"),
@@ -126,11 +126,11 @@ class MultiplayerClient extends GameWidget {
   }
 
   void showDebug() {
-    debugUIVisible = true;
+    debugMode = true;
   }
 
   void hideDebug() {
-    debugUIVisible = false;
+    debugMode = false;
   }
 
   void requestSpawn(String playerName) {
@@ -142,7 +142,6 @@ class MultiplayerClient extends GameWidget {
 
   void sendCommandAttack() {
     if (!playerAssigned) return;
-    playPistolAudio();
     Map<String, dynamic> request = Map();
     request[keyCommand] = commandAttack;
     request[keyCharacterId] = id;
@@ -282,7 +281,16 @@ class MultiplayerClient extends GameWidget {
       cameraX = playerCharacter[keyPositionX] - (size.width * 0.5);
       cameraY = playerCharacter[keyPositionY] - (size.height * 0.5);
     }
+
     if (valueObject[keyBullets] != null) {
+      // find new bullets
+      List<dynamic> b = valueObject[keyBullets];
+      b.where((a) => !bullets.any((b) {
+        return idsMatch(a, b);
+      })).forEach((element) {
+        // at that bullet position
+        playPistolAudio();
+      });
       bullets = valueObject[keyBullets];
     }
   }
@@ -326,19 +334,22 @@ class MultiplayerClient extends GameWidget {
     drawCharacters();
     drawBulletRange();
 
+    dynamic player = getPlayerCharacter();
+    if (player != null && player[keyState] == characterStateAiming){
+      double accuracy = player[keyAccuracy];
+      double l = player[keyAimAngle] - (accuracy * 0.5);
+      double r = player[keyAimAngle] + (accuracy * 0.5);
+      drawLineRotation(player, l, bulletRange);
+      drawLineRotation(player, r, bulletRange);
+    }
+
     if (debugMode) {
       drawNpcDebug();
     }
   }
 
   void drawNpcDebug() {
-    for (dynamic npc in getNpcs()) {
-      if (npc[keyNpcTarget] != null) {
-      } else if (npc[keyDestinationX] != null) {
-        drawLine(npc[keyPositionX], npc[keyPositionY], npc[keyDestinationX],
-            npc[keyDestinationY]);
-      }
-    }
+    getNpcs().forEach(drawNpcDebugLines);
   }
 
   void drawBulletRange() {
