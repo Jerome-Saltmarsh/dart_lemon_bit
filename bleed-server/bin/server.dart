@@ -30,7 +30,7 @@ void main() {
       }
 
       for (int j = 0; j < characters.length; j++) {
-        if (bullet[keyCharacterId] == characters[j][keyCharacterId]) continue;
+        if (bullet[keyId] == characters[j][keyId]) continue;
         if (isDead(characters[j])) continue;
         double dis = distanceBetween(characters[j], bullet);
         if (dis < characterBulletRadius) {
@@ -205,14 +205,6 @@ void main() {
     spawnRandomZombie();
   }
 
-  void npcWanderJob() {
-    for (dynamic npc in getNpcs()) {
-      if (npcTargetSet(npc)) continue;
-      if (npcDestinationSet(npc)) continue;
-      npcSetRandomDestination(npc);
-    }
-  }
-
   createJob(fixedUpdate, ms: 1000 ~/ 60);
   createJob(spawnZombieJob, seconds: 5);
   createJob(npcWanderJob, seconds: 10);
@@ -225,11 +217,59 @@ void main() {
     void handleCommandSpawn(dynamic request) {
       var character = spawnPlayer(0, 0, request[keyPlayerName]);
       Map<String, dynamic> response = Map();
-      response[keyCharacterId] = getId(character);
+      response[keyId] = getId(character);
       response[keyCharacters] = characters;
       response[keyBullets] = bullets;
       sendToClient(response);
       return;
+    }
+
+    void handleCommandUpdate(dynamic request){
+      Map<String, dynamic> response = Map();
+      response[keyCommand] = commandUpdate;
+      response[keyCharacters] = characters;
+      response[keyBullets] = bullets;
+      if (request[keyId] != null) {
+        int playerId = request[keyId];
+        dynamic character = findCharacterById(playerId);
+        if (character == null) {
+          handleCommandSpawn(request);
+          return;
+        } else if (isAlive(character) && !isFiring(character)) {
+          int direction = request[keyDirection];
+          int characterState = request[keyState];
+          character[keyState] = characterState;
+          character[keyDirection] = direction;
+          character[keyLastUpdateFrame] = frame;
+          character[keyAimAngle] = request[keyAimAngle];
+        }
+      }
+      sendToClient(response);
+    }
+
+    void handleCommandAttack(dynamic request){
+      if (request[keyId] == null) return;
+      int playerId = request[keyId];
+      dynamic character = findCharacterById(playerId);
+      if (character == null) return;
+      if (!isAiming(character)) return;
+      character[keyRotation] = request[keyRotation];
+      fireWeapon(character);
+    }
+
+    void handleRequestEquip(dynamic request){
+      if (request[keyId] == null) return;
+      int playerId = request[keyId];
+      dynamic character = findCharacterById(playerId);
+      if (character == null) return;
+      switch (request[keyEquipValue]) {
+        case weaponHandgun:
+          character[keyWeapon] = weaponHandgun;
+          break;
+        case weaponShotgun:
+          character[keyWeapon] = weaponShotgun;
+          break;
+      }
     }
 
     void onEvent(data) {
@@ -237,58 +277,22 @@ void main() {
       switch (request[keyCommand]) {
         case commandSpawn:
           handleCommandSpawn(request);
-          return;
+          break;
         case commandUpdate:
-          Map<String, dynamic> response = Map();
-          response[keyCommand] = commandUpdate;
-          response[keyCharacters] = characters;
-          response[keyBullets] = bullets;
-          if (request[keyCharacterId] != null) {
-            int playerId = request[keyCharacterId];
-            dynamic character = findCharacterById(playerId);
-            if (character == null) {
-              handleCommandSpawn(request);
-              return;
-            } else if (isAlive(character) && !isFiring(character)) {
-              int direction = request[keyDirection];
-              int characterState = request[keyState];
-              character[keyState] = characterState;
-              character[keyDirection] = direction;
-              character[keyLastUpdateFrame] = frame;
-              character[keyAimAngle] = request[keyAimAngle];
-            }
-          }
-          sendToClient(response);
-          return;
+          handleCommandUpdate(request);
+          break;
         case commandSpawnZombie:
           spawnRandomZombie();
-          return;
+          break;
         case commandAttack:
-          if (request[keyCharacterId] == null) return;
-          int playerId = request[keyCharacterId];
-          dynamic character = findCharacterById(playerId);
-          if (character == null) return;
-          if (!isAiming(character)) return;
-          Map<String, dynamic> bullet = Map();
-          bullet[keyPositionX] = character[keyPositionX];
-          bullet[keyPositionY] = character[keyPositionY];
-          bullet[keyStartX] = character[keyPositionX];
-          bullet[keyStartY] = character[keyPositionY];
-          assignId(bullet);
-          double accuracy = character[keyAccuracy];
-          double angle = request[keyRotation] + giveOrTake(accuracy * 0.5);
-          setVelocity(bullet, angle, bulletSpeed);
-          bullet[keyRotation] = angle;
-          bullet[keyFrame] = 0;
-          bullet[keyCharacterId] = playerId;
-          bullets.add(bullet);
-          character[keyAccuracy] = startingAccuracy;
-          setCharacterStateFiring(character);
-          character[keyShotCoolDown] = pistolCoolDown;
+          handleCommandAttack(request);
+          break;
+        case commandEquip:
+          handleRequestEquip(request);
+          break;
       }
     }
 
-    // onEvent
     webSocket.stream.listen(onEvent);
   });
 

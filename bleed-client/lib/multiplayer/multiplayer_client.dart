@@ -156,7 +156,7 @@ class MultiplayerClient extends GameWidget {
     if (!playerAssigned) return;
     Map<String, dynamic> request = Map();
     request[keyCommand] = commandAttack;
-    request[keyCharacterId] = id;
+    request[keyId] = id;
     request[keyRotation] = getMouseRotation();
     sendToServer(request);
   }
@@ -202,6 +202,14 @@ class MultiplayerClient extends GameWidget {
 
     if (keyPressedSpace) {
       requestCharacterState = characterStateAiming;
+    }
+
+    if (keyEquipHandGun) {
+      sendCommandEquipHandGun();
+    }
+
+    if (keyEquipShotgun) {
+      sendCommandEquipShotgun();
     }
 
     if (keyPressedW) {
@@ -269,14 +277,29 @@ class MultiplayerClient extends GameWidget {
     }
   }
 
+  void sendCommandEquipHandGun() {
+    sendCommandEquip(weaponHandgun);
+  }
+
+  void sendCommandEquipShotgun() {
+    sendCommandEquip(weaponShotgun);
+  }
+
+  void sendCommandEquip(int weapon) {
+    Map<String, dynamic> request = Map();
+    request[keyCommand] = commandEquip;
+    request[keyEquipValue] = weapon;
+    request[keyId] = id;
+    sendToServer(request);
+  }
+
   void sendCommandUpdate() {
-    if (!connected) return;
     Map<String, dynamic> request = Map();
     request[keyCommand] = commandUpdate;
     if (playerAssigned) {
       request[keyState] = requestCharacterState;
       request[keyDirection] = requestDirection;
-      request[keyCharacterId] = id;
+      request[keyId] = id;
       if (requestCharacterState == characterStateAiming && mouseAvailable) {
         request[keyAimAngle] = getMouseRotation();
       }
@@ -294,8 +317,8 @@ class MultiplayerClient extends GameWidget {
     if (valueObject[keyCharacters] != null) {
       characters = valueObject[keyCharacters];
     }
-    if (valueObject[keyCharacterId] != null) {
-      id = valueObject[keyCharacterId];
+    if (valueObject[keyId] != null) {
+      id = valueObject[keyId];
       dynamic playerCharacter = getPlayerCharacter();
       cameraX = playerCharacter[keyPositionX] - (size.width * 0.5);
       cameraY = playerCharacter[keyPositionY] - (size.height * 0.5);
@@ -303,14 +326,10 @@ class MultiplayerClient extends GameWidget {
 
     // Play bullet audio
     if (valueObject[keyBullets] != null) {
-      List<dynamic> b = valueObject[keyBullets];
-      b
-          .where((a) => !bullets.any((b) {
-                return idsMatch(a, b);
-              }))
-          .forEach((element) {
+      if((valueObject[keyBullets] as List).length > bullets.length){
         playPistolAudio();
-      });
+      }
+      bullets.clear();
       bullets = valueObject[keyBullets];
     }
 

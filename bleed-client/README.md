@@ -3,7 +3,8 @@
 [ ] Sprint
 [ ] Ammo
 [ ] Reload
-[ ] Shotgun
+[ ] Sniper Rifle
+[ ] Oozie
 [ ] Zombie Attack
 [ ] Zombie Death Sound
 [ ] Weapon Shotgun
@@ -11,6 +12,8 @@
 [ ] Bullet Hit Animation
 [ ] Shot Sound
 [ ] Shot kickback
+[ ] Investigate http2
+[x] Shotgun
 [x] Ping Check
 [x] Shot cool-down
 [x] Reduce Client Lag

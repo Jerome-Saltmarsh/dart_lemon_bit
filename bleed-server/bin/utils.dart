@@ -74,7 +74,7 @@ void npcClearTarget(character) {
 }
 
 dynamic findCharacterById(int id) {
-  return characters.firstWhere((element) => element[keyCharacterId] == id,
+  return characters.firstWhere((element) => element[keyId] == id,
       orElse: () {
     return null;
   });
@@ -110,7 +110,7 @@ void npcSetTarget(dynamic npc, dynamic value) {
   if (value is int) {
     npc[keyNpcTarget] = value;
   } else {
-    npc[keyNpcTarget] = value[keyCharacterId];
+    npc[keyNpcTarget] = value[keyId];
   }
 }
 
@@ -124,7 +124,7 @@ void setPosition(dynamic character, {double? x, double? y}) {
 }
 
 int getId(dynamic character) {
-  return character[keyCharacterId];
+  return character[keyId];
 }
 
 int lastUpdateFrame(dynamic character) {
@@ -151,11 +151,11 @@ double getSpeed(dynamic character) {
 }
 
 dynamic spawnPlayer(double x, double y, String name) {
-  return spawnCharacter(x, y, name: name, npc: false, health: playerHealth);
+  return spawnCharacter(x, y, name: name, npc: false, health: playerHealth, weapon: weaponHandgun);
 }
 
 dynamic spawnZombie(double x, double y) {
-  return spawnCharacter(y, x, npc: true, health: zombieHealth);
+  return spawnCharacter(y, x, npc: true, health: zombieHealth, weapon: weaponUnarmed);
 }
 
 double velX(double rotation, double speed) {
@@ -195,7 +195,7 @@ void createJob(Function function, {int seconds = 0, int ms = 0}) {
 
 void assignId(dynamic object){
   id++;
-  object[keyCharacterId] = id;
+  object[keyId] = id;
 }
 
 
@@ -205,4 +205,52 @@ double round(double value, {int decimals = 1}){
 
 void roundKey(dynamic object, String key, {int decimals = 1}){
   object[key] = round(object[key], decimals: decimals);
+}
+
+double getShotAngle(character) {
+  double accuracy = character[keyAccuracy];
+  double angle = character[keyRotation] + giveOrTake(accuracy * 0.5);
+  character[keyAccuracy] = startingAccuracy;
+  return angle;
+}
+
+void fireWeapon(dynamic character){
+  switch (character[keyWeapon]) {
+    case weaponHandgun:
+      double angle = getShotAngle(character);
+      spawnBullet(character[keyPositionX], character[keyPositionY],
+          angle, character[keyId]);
+      setCharacterStateFiring(character);
+      character[keyShotCoolDown] = pistolCoolDown;
+      break;
+    case weaponShotgun:
+      for(int i = 0; i < 5; i++){
+        spawnBullet(character[keyPositionX], character[keyPositionY],
+            getShotAngle(character), character[keyId]);
+      }
+      setCharacterStateFiring(character);
+      character[keyShotCoolDown] = shotgunCoolDown;
+      break;
+  }
+}
+void npcWanderJob() {
+  for (dynamic npc in getNpcs()) {
+    if (npcTargetSet(npc)) continue;
+    if (npcDestinationSet(npc)) continue;
+    npcSetRandomDestination(npc);
+  }
+}
+
+void spawnBullet(double x, double y, double angle, int characterId) {
+  Map<String, dynamic> bullet = Map();
+  bullet[keyPositionX] = x;
+  bullet[keyPositionY] = y;
+  bullet[keyStartX] = x;
+  bullet[keyStartY] = y;
+  assignId(bullet);
+  setVelocity(bullet, angle, bulletSpeed);
+  bullet[keyRotation] = angle;
+  bullet[keyFrame] = 0;
+  bullet[keyId] = characterId;
+  bullets.add(bullet);
 }

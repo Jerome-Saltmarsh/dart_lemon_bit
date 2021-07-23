@@ -14,3 +14,4 @@ const double zombieViewRange = 300;
 const double destinationArrivedDistance = 5.0;
 const double startingAccuracy = 3.14 * 0.1;
 const int pistolCoolDown = 15;
+const int shotgunCoolDown = 45;

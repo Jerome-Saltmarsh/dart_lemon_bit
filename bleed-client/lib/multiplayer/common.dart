@@ -2,6 +2,7 @@ const commandSpawn = 1;
 const commandUpdate = 2;
 const commandAttack = 3;
 const commandSpawnZombie = 4;
+const commandEquip = 5;
 
 const characterStateIdle = 0;
 const characterStateWalking = 1;
@@ -18,13 +19,17 @@ const directionDownLeft = 5;
 const directionLeft = 6;
 const directionUpLeft = 7;
 
+const weaponUnarmed = 0;
+const weaponHandgun = 1;
+const weaponShotgun = 2;
+
 const keyFrame = 'f';
 const keyPositionX = 'x';
 const keyPositionY = 'y';
 const keyDirection = 'd';
 const keyState = 's';
 const keyCommand = 'c';
-const keyCharacterId = 'i';
+const keyId = 'i';
 const keyErrorCode = 'error';
 const keyRotation = 'r';
 const keyCharacters = 'characters';
@@ -51,6 +56,8 @@ const keyAccuracy = 'ka';
 const keyPreviousState = 'ps';
 const keyStateDuration = 'sd';
 const keyShotCoolDown = 'sc';
+const keyWeapon = 'w';
+const keyEquipValue = 'equip';
 
 const double bulletRadius = 3;
 const double characterRadius = 7;

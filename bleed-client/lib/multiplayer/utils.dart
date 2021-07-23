@@ -37,12 +37,12 @@ double getMouseRotation() {
 }
 
 dynamic getPlayerCharacter() {
-  return characters.firstWhere((element) => element[keyCharacterId] == id,
+  return characters.firstWhere((element) => element[keyId] == id,
       orElse: () => null);
 }
 
 bool get playerAssigned =>
-    characters.any((element) => element[keyCharacterId] == id);
+    characters.any((element) => element[keyId] == id);
 
 bool isNpc(dynamic character) {
   return character[keyType] == typeNpc;
@@ -106,7 +106,7 @@ dynamic npcTarget(dynamic character) {
 }
 
 dynamic findCharacterById(int id) {
-  return characters.firstWhere((element) => element[keyCharacterId] == id,
+  return characters.firstWhere((element) => element[keyId] == id,
       orElse: () {
     return null;
   });
@@ -121,5 +121,5 @@ dynamic rotationToPosY(double rotation, double distance) {
 }
 
 bool idsMatch(dynamic a, dynamic b){
-  return a[keyCharacterId] == b[keyCharacterId];
+  return a[keyId] == b[keyId];
 }

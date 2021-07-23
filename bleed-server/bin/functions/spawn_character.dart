@@ -2,7 +2,12 @@ import '../common.dart';
 import '../state.dart';
 import '../utils.dart';
 
-spawnCharacter(double x, double y, {required bool npc, required int health, String? name}) {
+spawnCharacter(double x, double y, {
+  required bool npc,
+  required int health,
+  required int weapon,
+  String? name
+}) {
   if (x == double.nan) {
     throw Exception("x is nan");
   }
@@ -10,6 +15,7 @@ spawnCharacter(double x, double y, {required bool npc, required int health, Stri
   assignId(character);
   character[keyPositionX] = x;
   character[keyPositionY] = y;
+  character[keyWeapon] = weapon;
   character[keyDirection] = directionDown;
   character[keyState] = characterStateIdle;
   character[keyType] = npc ? typeNpc : typeHuman;
