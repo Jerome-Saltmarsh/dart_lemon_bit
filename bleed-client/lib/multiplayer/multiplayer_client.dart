@@ -46,7 +46,7 @@ class MultiplayerClient extends GameWidget {
   BuildContext context;
 
   static const String localhost = "ws://localhost:8080";
-  static const gpc = 'wss://bleed-7-osbmaezptq-ey.a.run.app/:8080';
+  static const gpc = 'wss://test-osbmaezptq-ey.a.run.app/:8080';
   static const host = localhost;
 
   Uri get hostURI => Uri.parse(host);
@@ -559,7 +559,6 @@ class MultiplayerClient extends GameWidget {
       case characterStateAiming:
         double eight = pi / 8.0;
         double quarter = pi / 4.0;
-
         if (character[keyAimAngle] < eight) {
           startFrame = 23;
         } else if (character[keyAimAngle] < eight + (quarter * 1)) {
@@ -580,10 +579,33 @@ class MultiplayerClient extends GameWidget {
           startFrame = 23;
         }
         break;
+      case characterStateFiring:
+        double eight = pi / 8.0;
+        double quarter = pi / 4.0;
+        if (character[keyAimAngle] < eight) {
+          startFrame = 31;
+        } else if (character[keyAimAngle] < eight + (quarter * 1)) {
+          startFrame = 32;
+        } else if (character[keyAimAngle] < eight + (quarter * 2)) {
+          startFrame = 33;
+        } else if (character[keyAimAngle] < eight + (quarter * 3)) {
+          startFrame = 34;
+        } else if (character[keyAimAngle] < eight + (quarter * 4)) {
+          startFrame = 35;
+        } else if (character[keyAimAngle] < eight + (quarter * 5)) {
+          startFrame = 28;
+        } else if (character[keyAimAngle] < eight + (quarter * 6)) {
+          startFrame = 29;
+        } else if (character[keyAimAngle] < eight + (quarter * 7)) {
+          startFrame = 30;
+        } else {
+          startFrame = 31;
+        }
+        break;
     }
 
     int spriteFrame = (drawFrame % totalFrames) + startFrame;
-    int frameCount = 28;
+    int frameCount = 36;
 
     // drawCharacterCircle(
     //     character, character[keyCharacterId] == id ? Colors.blue : Colors.red);
