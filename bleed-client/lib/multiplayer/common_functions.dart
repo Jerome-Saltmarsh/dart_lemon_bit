@@ -1,5 +1,7 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:archive/archive.dart';
+
 import 'common.dart';
 
 const double eight = pi / 8.0;
@@ -33,10 +35,13 @@ int convertAngleToDirection(double angle) {
   return directionUp;
 }
 
-String encode(dynamic data){
-  return base64.encode(utf8.encode(jsonEncode(data)));
+GZipEncoder gZipEncoder = GZipEncoder();
+GZipDecoder gZipDecoder = GZipDecoder();
+
+String encode(dynamic data) {
+  return base64.encode(gZipEncoder.encode(utf8.encode(jsonEncode(data))));
 }
 
-dynamic decode(String data){
-  return jsonDecode(utf8.decode(base64.decode(data).toList()));
+dynamic decode(String data) {
+  return jsonDecode((utf8.decode(gZipDecoder.decodeBytes(base64.decode(data).toList()))));
 }
