@@ -197,3 +197,12 @@ void assignId(dynamic object){
   id++;
   object[keyCharacterId] = id;
 }
+
+
+double round(double value, {int decimals = 1}){
+  return double.parse(value.toStringAsFixed(decimals));
+}
+
+void roundKey(dynamic object, String key, {int decimals = 1}){
+  object[key] = round(object[key], decimals: decimals);
+}

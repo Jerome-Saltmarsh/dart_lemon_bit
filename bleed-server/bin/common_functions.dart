@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 import 'common.dart';
 
@@ -30,4 +31,12 @@ int convertAngleToDirection(double angle) {
     return directionUpLeft;
   }
   return directionUp;
+}
+
+String encode(dynamic data){
+  return base64.encode(utf8.encode(jsonEncode(data)));
+}
+
+dynamic decode(String data){
+  return jsonDecode(utf8.decode(base64.decode(data).toList()));
 }

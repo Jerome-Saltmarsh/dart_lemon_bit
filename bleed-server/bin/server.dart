@@ -50,7 +50,7 @@ void main() {
     }
   }
 
-  void updateCharacter(dynamic character){
+  void updateCharacter(dynamic character) {
     // TODO Remove this hack
     if (character[keyPositionX] == double.nan) {
       print("character x is nan");
@@ -106,7 +106,7 @@ void main() {
         break;
       case characterStateFiring:
         character[keyShotCoolDown]--;
-        if(character[keyShotCoolDown] <= 0){
+        if (character[keyShotCoolDown] <= 0) {
           setCharacterStateIdle(character);
         }
         break;
@@ -155,7 +155,6 @@ void main() {
     }
   }
 
-
   void updateCharacters() {
     for (int i = 0; i < characters.length; i++) {
       dynamic character = characters[i];
@@ -186,6 +185,19 @@ void main() {
     updateCharacters();
     updateCollisions(characters);
     updateBullets();
+
+    for (dynamic character in characters) {
+      roundKey(character, keyPositionX);
+      roundKey(character, keyPositionY);
+      if (character[keyDestinationX] != null) {
+        roundKey(character, keyDestinationX);
+        roundKey(character, keyDestinationY);
+      }
+      if (character[keyVelocityX] != null) {
+        roundKey(character, keyVelocityX, decimals: 2);
+        roundKey(character, keyVelocityY, decimals: 2);
+      }
+    }
   }
 
   void spawnZombieJob() {
@@ -207,7 +219,7 @@ void main() {
 
   var handler = webSocketHandler((webSocket) {
     void sendToClient(dynamic response) {
-      webSocket.sink.add(jsonEncode(response));
+      webSocket.sink.add(encode(response));
     }
 
     void handleCommandSpawn(dynamic request) {
@@ -220,8 +232,8 @@ void main() {
       return;
     }
 
-    void onEvent(requestString) {
-      dynamic request = jsonDecode(requestString);
+    void onEvent(data) {
+      dynamic request = decode(data);
       switch (request[keyCommand]) {
         case commandSpawn:
           handleCommandSpawn(request);

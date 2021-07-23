@@ -1,10 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:math';
+import 'dart:typed_data';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_game_engine/game_engine/game_input.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
+import 'package:flutter_game_engine/multiplayer/common_functions.dart';
 import 'package:flutter_game_engine/multiplayer/settings.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'common.dart';
@@ -44,7 +46,7 @@ class MultiplayerClient extends GameWidget {
   BuildContext context;
 
   static const String localhost = "ws://localhost:8080";
-  static const gpc = 'wss://bleed-5-osbmaezptq-ey.a.run.app/:8080';
+  static const gpc = 'wss://bleed-7-osbmaezptq-ey.a.run.app/:8080';
   static const host = localhost;
 
   Uri get hostURI => Uri.parse(host);
@@ -288,7 +290,7 @@ class MultiplayerClient extends GameWidget {
     previousEvent = DateTime.now();
     packagesReceived++;
     event = valueString;
-    valueObject = jsonDecode(valueString);
+    valueObject = decode(valueString);
     if (valueObject[keyCharacters] != null) {
       characters = valueObject[keyCharacters];
     }
@@ -326,7 +328,7 @@ class MultiplayerClient extends GameWidget {
 
   void sendToServer(dynamic event) {
     if (!connected) return;
-    webSocketChannel.sink.add(jsonEncode(event));
+    webSocketChannel.sink.add(encode(event));
     packagesSent++;
   }
 
