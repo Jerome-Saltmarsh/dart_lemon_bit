@@ -1,5 +1,4 @@
 # TODO
-[ ] Ping Check
 [ ] Persist World on firebase
 [ ] Sprint
 [ ] Ammo
@@ -11,7 +10,10 @@
 [ ] Shot Animation
 [ ] Bullet Hit Animation
 [ ] Shot Sound
-[ ] Shot cool-down
+[ ] Shot kickback
+[x] Ping Check
+[x] Shot cool-down
+[x] Reduce Client Lag
 [x] Aim Accuracy
 [x] Draw Debug UI Toggle 
 [x] NPC Wander

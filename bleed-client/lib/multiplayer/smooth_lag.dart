@@ -1,3 +1,4 @@
+
 import 'common.dart';
 import 'maths.dart';
 import 'utils.dart';
@@ -28,6 +29,15 @@ void updateCollisions(List<dynamic> characters) {
       }
     }
   }
+}
+const double zombieSpeed = 0.75;
+const double characterSpeed = 1.5;
+
+double getSpeed(dynamic character) {
+  if (isHuman(character)) {
+    return characterSpeed;
+  }
+  return zombieSpeed;
 }
 
 void updateMovement(dynamic character){

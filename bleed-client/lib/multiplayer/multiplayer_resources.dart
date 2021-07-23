@@ -25,7 +25,7 @@ Howl loadAudio(String fileName, {double volume = 0.6}){
       loop: false,
       volume: volume,
       preload: true,
-      html5: false,
+      html5: true,
   );
   howl.load();
   return howl;

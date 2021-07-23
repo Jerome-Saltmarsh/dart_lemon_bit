@@ -110,7 +110,13 @@ abstract class GameWidget extends StatefulWidget {
 
   @override
   _GameWidgetState createState() => _GameWidgetState();
+
+  void forceRedraw(){
+    drawStream.add(true);
+  }
 }
+
+StreamController drawStream = StreamController();
 
 class _GameWidgetState extends State<GameWidget> {
 
@@ -121,6 +127,9 @@ class _GameWidgetState extends State<GameWidget> {
 
   @override
   void initState() {
+    drawStream.stream.listen((event) {
+      setState(_doNothing);
+    });
     updateTimer = Timer.periodic(Duration(milliseconds: 1000 ~/ widget.fps), (timer) {
       widget.fixedUpdate();
       setState(_doNothing);
@@ -134,8 +143,6 @@ class _GameWidgetState extends State<GameWidget> {
   void _doNothing(){
 
   }
-
-
 
   @override
   Widget build(BuildContext context) {

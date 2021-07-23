@@ -48,6 +48,14 @@ bool isNpc(dynamic character) {
   return character[keyType] == typeNpc;
 }
 
+bool isHuman(dynamic character) {
+  return character[keyType] == typeHuman;
+}
+
+bool isDead(dynamic character) {
+  return character[keyState] == characterStateDead;
+}
+
 List<dynamic> getNpcs() {
   return characters.where(isNpc).toList();
 }

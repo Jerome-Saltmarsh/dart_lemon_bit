@@ -34,12 +34,18 @@ class MultiplayerClient extends GameWidget {
   int requestDirection = directionDown;
   int requestCharacterState = characterStateIdle;
   TextEditingController playerNameController = TextEditingController();
+  DateTime previousEvent = DateTime.now();
+  Duration ping;
+  String event = "";
+  dynamic valueObject;
+  DateTime lastRefresh = DateTime.now();
+  Duration refreshDuration;
 
   BuildContext context;
 
   static const String localhost = "ws://localhost:8080";
-  static const gpc = 'wss://bleed-4-osbmaezptq-ey.a.run.app/:8080';
-  static const host = localhost;
+  static const gpc = 'wss://bleed-5-osbmaezptq-ey.a.run.app/:8080';
+  static const host = gpc;
 
   Uri get hostURI => Uri.parse(host);
 
@@ -100,13 +106,17 @@ class MultiplayerClient extends GameWidget {
           column([
             text("Server Host: $host"),
             text("Connected. Id: $id"),
+            if (ping != null) text("Ping: ${ping.inMilliseconds}"),
+            if (refreshDuration != null)
+              text("Refresh: ${refreshDuration.inMilliseconds}"),
+            text("Date Size: ${event.length}"),
             text("Characters: ${characters.length}"),
             text("Packages Sent: $packagesSent"),
             text("Packages Received: $packagesReceived"),
             if (mousePosX != null) text("mousePosX: ${mousePosX.round()}"),
             if (mousePosY != null) text("mousePosY: ${mousePosY.round()}"),
             if (playerAssigned && mousePosX != null)
-              text('mouseRotation: ${getMouseRotation()}'),
+              text('mouseRotation: ${getMouseRotation().toStringAsFixed(2)}'),
             text("cameraX: ${cameraX.round()}"),
             text("cameraY: ${cameraY.round()}"),
             if (playerAssigned)
@@ -158,6 +168,10 @@ class MultiplayerClient extends GameWidget {
 
   @override
   void fixedUpdate() {
+    DateTime now = DateTime.now();
+    refreshDuration = now.difference(lastRefresh);
+    lastRefresh = DateTime.now();
+
     controlCamera();
 
     if (!initialized) {
@@ -240,7 +254,6 @@ class MultiplayerClient extends GameWidget {
   Future init() async {
     loadResources();
     connect();
-    // requestSpawn();
     Timer(Duration(milliseconds: 100), showChangeNameDialog);
   }
 
@@ -270,8 +283,12 @@ class MultiplayerClient extends GameWidget {
   }
 
   void onEvent(dynamic valueString) {
+    DateTime now = DateTime.now();
+    ping = now.difference(previousEvent);
+    previousEvent = DateTime.now();
     packagesReceived++;
-    dynamic valueObject = jsonDecode(valueString);
+    event = valueString;
+    valueObject = jsonDecode(valueString);
     if (valueObject[keyCharacters] != null) {
       characters = valueObject[keyCharacters];
     }
@@ -282,17 +299,20 @@ class MultiplayerClient extends GameWidget {
       cameraY = playerCharacter[keyPositionY] - (size.height * 0.5);
     }
 
+    // Play bullet audio
     if (valueObject[keyBullets] != null) {
-      // find new bullets
       List<dynamic> b = valueObject[keyBullets];
-      b.where((a) => !bullets.any((b) {
-        return idsMatch(a, b);
-      })).forEach((element) {
-        // at that bullet position
+      b
+          .where((a) => !bullets.any((b) {
+                return idsMatch(a, b);
+              }))
+          .forEach((element) {
         playPistolAudio();
       });
       bullets = valueObject[keyBullets];
     }
+
+    forceRedraw();
   }
 
   void onError(dynamic value) {
@@ -332,10 +352,10 @@ class MultiplayerClient extends GameWidget {
     drawTiles();
     drawBullets();
     drawCharacters();
-    drawBulletRange();
+    // drawBulletRange();
 
     dynamic player = getPlayerCharacter();
-    if (player != null && player[keyState] == characterStateAiming){
+    if (player != null && player[keyState] == characterStateAiming) {
       double accuracy = player[keyAccuracy];
       double l = player[keyAimAngle] - (accuracy * 0.5);
       double r = player[keyAimAngle] + (accuracy * 0.5);
@@ -538,10 +558,6 @@ class MultiplayerClient extends GameWidget {
         double eight = pi / 8.0;
         double quarter = pi / 4.0;
 
-        if (character[keyAimAngle] == null) {
-          throw Exception("character aim angle is null");
-        }
-
         if (character[keyAimAngle] < eight) {
           startFrame = 23;
         } else if (character[keyAimAngle] < eight + (quarter * 1)) {
@@ -567,16 +583,14 @@ class MultiplayerClient extends GameWidget {
     int spriteFrame = (drawFrame % totalFrames) + startFrame;
     int frameCount = 28;
 
-    drawCharacterCircle(
-        character, character[keyCharacterId] == id ? Colors.blue : Colors.red);
+    // drawCharacterCircle(
+    //     character, character[keyCharacterId] == id ? Colors.blue : Colors.red);
 
     drawSprite(spriteTemplate, frameCount, spriteFrame, character[keyPositionX],
         character[keyPositionY]);
 
-    if (character[keyPlayerName] != "") {
-      drawText(character[keyPlayerName], character[keyPositionX],
-          character[keyPositionY], Colors.white);
-    }
+    drawText(character[keyPlayerName], character[keyPositionX],
+        character[keyPositionY], Colors.white);
   }
 
   void drawCharacterCircle(dynamic value, Color color) {
