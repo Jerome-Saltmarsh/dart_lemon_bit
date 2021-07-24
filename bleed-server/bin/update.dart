@@ -5,7 +5,7 @@ import 'settings.dart';
 import 'state.dart';
 import 'utils.dart';
 
-void initUpdateLoop(){
+void initUpdateLoop() {
   createJob(fixedUpdate, ms: 1000 ~/ 60);
   createJob(spawnZombieJob, seconds: 5);
   createJob(npcWanderJob, seconds: 10);
@@ -37,12 +37,18 @@ void updateBullets() {
           characterJ[keyState] = characterStateDead;
           characterJ[keyFrameOfDeath] = frame;
         }
-        characterJ[keyVelocityX] += bullet[keyVelocityX] * 0.25;
-        characterJ[keyVelocityY] += bullet[keyVelocityY] * 0.25;
+
+        dynamic characterJPrivate = getCharacterPrivate(characterJ);
+        characterJPrivate[keyVelocityX] += bullet[keyVelocityX] * 0.25;
+        characterJPrivate[keyVelocityY] += bullet[keyVelocityY] * 0.25;
         break;
       }
     }
   }
+}
+
+dynamic getCharacterPrivate(dynamic character){
+  return charactersPrivate.firstWhere((element) => element[keyId] == character[keyId]);
 }
 
 void updateCharacter(dynamic character) {
@@ -85,10 +91,11 @@ void updateCharacter(dynamic character) {
     }
   }
 
-  character[keyPositionX] += character[keyVelocityX];
-  character[keyPositionY] += character[keyVelocityY];
-  character[keyVelocityX] *= velocityFriction;
-  character[keyVelocityY] *= velocityFriction;
+  dynamic characterPrivate = getCharacterPrivate(character);
+  character[keyPositionX] += characterPrivate[keyVelocityX];
+  character[keyPositionY] += characterPrivate[keyVelocityY];
+  characterPrivate[keyVelocityX] *= velocityFriction;
+  characterPrivate[keyVelocityY] *= velocityFriction;
 
   switch (character[keyState]) {
     case characterStateAiming:
@@ -150,19 +157,24 @@ void updateCharacter(dynamic character) {
   }
 }
 
+void removeCharacter(dynamic character){
+  characters.removeWhere((element) => element[keyId] == character[keyId]);
+  charactersPrivate.removeWhere((element) => element[keyId] == character[keyId]);
+}
+
 void updateCharacters() {
   for (int i = 0; i < characters.length; i++) {
     dynamic character = characters[i];
 
     if (isHuman(character) && connectionExpired(character)) {
-      characters.removeAt(i);
+      removeCharacter(character);
       i--;
       continue;
     }
     if (isDead(character)) {
       if (frame - character[keyFrameOfDeath] > 120) {
         if (isNpc(character)) {
-          characters.removeAt(i);
+          removeCharacter(character);
           i--;
         } else {
           character[keyState] = characterStateIdle;
@@ -180,7 +192,10 @@ void fixedUpdate() {
   updateCharacters();
   updateCollisions();
   updateBullets();
+  compressData();
+}
 
+void compressData() {
   for (dynamic character in characters) {
     roundKey(character, keyPositionX);
     roundKey(character, keyPositionY);
@@ -188,13 +203,12 @@ void fixedUpdate() {
       roundKey(character, keyDestinationX);
       roundKey(character, keyDestinationY);
     }
-    if (character[keyVelocityX] != null) {
-      roundKey(character, keyVelocityX, decimals: 2);
-      roundKey(character, keyVelocityY, decimals: 2);
-    }
+    // if (character[keyVelocityX] != null) {
+    //   roundKey(character, keyVelocityX, decimals: 2);
+    //   roundKey(character, keyVelocityY, decimals: 2);
+    // }
   }
 }
-
 
 void updateCollisions() {
   for (int i = 0; i < characters.length; i++) {
@@ -224,7 +238,7 @@ void updateCollisions() {
   }
 }
 
-void updateMovement(dynamic character){
+void updateMovement(dynamic character) {
   const double velocityFriction = 0.94;
   character[keyPositionX] += character[keyVelocityX];
   character[keyPositionY] += character[keyVelocityY];
@@ -267,4 +281,3 @@ void updateMovement(dynamic character){
       break;
   }
 }
-

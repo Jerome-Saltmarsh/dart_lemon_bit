@@ -197,7 +197,6 @@ void assignId(dynamic object){
   object[keyId] = id;
 }
 
-
 double round(double value, {int decimals = 1}){
   return double.parse(value.toStringAsFixed(decimals));
 }
@@ -269,10 +268,15 @@ dynamic spawnCharacter(double x, double y,
   character[keyWeapon] = weapon;
   character[keyDirection] = directionDown;
   character[keyState] = characterStateIdle;
-  character[keyType] = npc ? typeNpc : typeHuman;
   character[keyHealth] = health;
-  character[keyVelocityX] = 0;
-  character[keyVelocityY] = 0;
+  character[keyType] = npc ? typeNpc : typeHuman;
+  character[keyId] = character[keyId];
+
+  Map<String, dynamic> characterPrivate = new Map();
+  characterPrivate[keyVelocityX] = 0;
+  characterPrivate[keyVelocityY] = 0;
+  characterPrivate[keyId] = character[keyId];
+
   if (name != null) {
     character[keyPlayerName] = name;
   }
@@ -280,6 +284,7 @@ dynamic spawnCharacter(double x, double y,
     character[keyLastUpdateFrame] = frame;
   }
   characters.add(character);
+  charactersPrivate.add(characterPrivate);
   return character;
 }
 
