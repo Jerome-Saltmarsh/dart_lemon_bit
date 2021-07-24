@@ -2,7 +2,7 @@
 const host = '0.0.0.0';
 const port = 8080;
 const int expiration = 200;
-const double bulletSpeed = 14.0;
+const double bulletSpeed = 28.0;
 const int maxZombies = 10;
 const double spawnRadius = 500;
 const double zombieSpeed = 2;

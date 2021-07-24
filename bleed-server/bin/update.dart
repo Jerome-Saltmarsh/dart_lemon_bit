@@ -10,6 +10,25 @@ void initUpdateLoop() {
   createJob(spawnZombieJob, seconds: 5);
   createJob(npcWanderJob, seconds: 10);
   createJob(deleteDeadAndExpiredCharacters, seconds: 6);
+  createJob(updateNpcTarget, ms: 500);
+}
+
+void updateNpcTarget() {
+  List<dynamic> players = charactersPrivate.where(isHuman).toList();
+  List<dynamic> npcs = charactersPrivate.where(isNpc).toList();
+
+  for (int i = 0; i < npcs.length; i++) {
+    dynamic npc = npcs[i];
+    if (!npcTargetSet(npc)) {
+      for (dynamic player in players) {
+        dynamic npcPublic = getCharacterPublic(npc);
+        dynamic playerPublic = getCharacterPublic(player);
+        if (distanceBetween(npcPublic, playerPublic) < zombieViewRange) {
+          npcSetTarget(npc, player);
+        }
+      }
+    }
+  }
 }
 
 void deleteDeadAndExpiredCharacters() {
@@ -76,6 +95,10 @@ dynamic getCharacterPrivate(dynamic character) {
       .firstWhere((element) => element[keyId] == character[keyId]);
 }
 
+dynamic getCharacterPublic(dynamic character) {
+  return characters.firstWhere((element) => element[keyId] == character[keyId]);
+}
+
 void updateCharacter(dynamic character) {
   // TODO Remove this hack
   if (character[keyPositionX] == double.nan) {
@@ -85,19 +108,8 @@ void updateCharacter(dynamic character) {
   }
 
   dynamic characterPrivate = getCharacterPrivate(character);
-
   if (isNpc(characterPrivate) && isAlive(character)) {
     if (!npcTargetSet(characterPrivate)) {
-      for (int j = 0; j < characters.length; j++) {
-        dynamic characterJ = characters[j];
-        dynamic characterJPrivate = getCharacterPrivate(characterJ);
-        if (isNpc(characterJPrivate)) continue;
-        if (distanceBetween(character, characterJ) < zombieViewRange) {
-          npcSetTarget(characterPrivate, characterJ);
-          break;
-        }
-      }
-
       if (npcDestinationSet(characterPrivate)) {
         if (npcArrivedAtDestination(character)) {
           setCharacterStateIdle(character);
@@ -110,7 +122,7 @@ void updateCharacter(dynamic character) {
     } else {
       dynamic target = npcTarget(characterPrivate);
       if (target == null || isDead(target)) {
-         npcClearTarget(characterPrivate);
+        npcClearTarget(characterPrivate);
       } else {
         double angle = radionsBetweenObject(character, target);
         setCharacterState(character, characterStateWalking);
@@ -235,4 +247,3 @@ void updateCollisions() {
     }
   }
 }
-
