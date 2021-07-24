@@ -9,7 +9,7 @@ void initUpdateLoop() {
   createJob(fixedUpdate, ms: 1000 ~/ 30);
   createJob(spawnZombieJob, seconds: 5);
   createJob(npcWanderJob, seconds: 10);
-  createJob(deleteDeadAndExpiredCharacters, seconds: 6);
+  // createJob(deleteDeadAndExpiredCharacters, seconds: 6);
   createJob(updateNpcTarget, ms: 500);
 }
 
@@ -47,7 +47,7 @@ void deleteDeadAndExpiredCharacters() {
           removeCharacter(character);
           i--;
         } else {
-          character[keyState] = characterStateIdle;
+          setCharacterStateIdle(character);
           setPosition(character, x: 0, y: 0);
         }
       }
@@ -59,8 +59,8 @@ void updateBullets() {
   for (int i = 0; i < bullets.length; i++) {
     dynamic bullet = bullets[i];
     bullet[keyFrame]++;
-    bullet[keyPositionX] += bullet[keyVelocityX];
-    bullet[keyPositionY] += bullet[keyVelocityY];
+    bullet['x'] += bullet[keyVelocityX];
+    bullet['y'] += bullet[keyVelocityY];
 
     if (bulletDistanceTravelled(bullet) > bulletRange) {
       bullets.removeAt(i);
@@ -79,7 +79,7 @@ void updateBullets() {
         i--;
         characterJPrivate[keyHealth]--;
         if (characterJPrivate[keyHealth] <= 0) {
-          characterJ[keyState] = characterStateDead;
+          setCharacterStateDead(characterJ);
           characterJ[keyFrameOfDeath] = frame;
         }
         characterJPrivate[keyVelocityX] += bullet[keyVelocityX] * 0.25;
@@ -92,20 +92,20 @@ void updateBullets() {
 
 dynamic getCharacterPrivate(dynamic character) {
   return charactersPrivate
-      .firstWhere((element) => element[keyId] == character[keyId]);
+      .firstWhere((characterPrivate) => characterPrivate[keyId] == character[indexId]);
 }
 
 dynamic getCharacterPublic(dynamic character) {
-  return characters.firstWhere((element) => element[keyId] == character[keyId]);
+  return characters.firstWhere((element) => element[indexId] == character[keyId]);
 }
 
 void updateCharacter(dynamic character) {
   // TODO Remove this hack
-  if (character[keyPositionX] == double.nan) {
-    print("character x is nan");
-    character[keyPositionX] = 0;
-    character[keyPositionY] = 0;
-  }
+  // if (character[keyPositionX] == double.nan) {
+  //   print("character x is nan");
+  //   character[keyPositionX] = 0;
+  //   character[keyPositionY] = 0;
+  // }
 
   dynamic characterPrivate = getCharacterPrivate(character);
   if (isNpc(characterPrivate) && isAlive(character)) {
@@ -131,12 +131,12 @@ void updateCharacter(dynamic character) {
     }
   }
 
-  character[keyPositionX] += characterPrivate[keyVelocityX];
-  character[keyPositionY] += characterPrivate[keyVelocityY];
+  character[indexPosX] += characterPrivate[keyVelocityX];
+  character[indexPosY] += characterPrivate[keyVelocityY];
   characterPrivate[keyVelocityX] *= velocityFriction;
   characterPrivate[keyVelocityY] *= velocityFriction;
 
-  switch (character[keyState]) {
+  switch (getState(character)) {
     case characterStateAiming:
       if (character[keyAccuracy] > 0.05) {
         character[keyAccuracy] -= 0.005;
@@ -152,34 +152,34 @@ void updateCharacter(dynamic character) {
       break;
     case characterStateWalking:
       double speed = getSpeed(characterPrivate);
-      switch (character[keyDirection]) {
+      switch (getDirection(character)) {
         case directionUp:
-          character[keyPositionY] -= speed;
+          character[indexPosY] -= speed;
           break;
         case directionUpRight:
-          character[keyPositionX] += speed * 0.5;
-          character[keyPositionY] -= speed * 0.5;
+          character[indexPosX] += speed * 0.5;
+          character[indexPosY] -= speed * 0.5;
           break;
         case directionRight:
-          character[keyPositionX] += speed;
+          character[indexPosX] += speed;
           break;
         case directionDownRight:
-          character[keyPositionX] += speed * 0.5;
-          character[keyPositionY] += speed * 0.5;
+          character[indexPosX] += speed * 0.5;
+          character[indexPosY] += speed * 0.5;
           break;
         case directionDown:
-          character[keyPositionY] += speed;
+          character[indexPosY] += speed;
           break;
         case directionDownLeft:
-          character[keyPositionX] -= speed * 0.5;
-          character[keyPositionY] += speed * 0.5;
+          character[indexPosX] -= speed * 0.5;
+          character[indexPosY] += speed * 0.5;
           break;
         case directionLeft:
-          character[keyPositionX] -= speed;
+          character[indexPosX] -= speed;
           break;
         case directionUpLeft:
-          character[keyPositionX] -= speed * 0.5;
-          character[keyPositionY] -= speed * 0.5;
+          character[indexPosX] -= speed * 0.5;
+          character[indexPosY] -= speed * 0.5;
           break;
       }
       break;
@@ -206,13 +206,13 @@ void fixedUpdate() {
 
 void compressData() {
   for (dynamic character in characters) {
-    roundKey(character, keyPositionX);
-    roundKey(character, keyPositionY);
+    roundKey(character, indexPosX);
+    roundKey(character, indexPosY);
   }
 }
 
 int compareCharacters(dynamic a, dynamic b) {
-  if (a[keyPositionX] < b[keyPositionX]) {
+  if (posX(a) < posX(b)) {
     return -1;
   }
   return 1;
@@ -226,9 +226,9 @@ void updateCollisions() {
     for (int j = i + 1; j < characters.length; j++) {
       dynamic characterJ = characters[j];
       if (isDead(characterJ)) continue;
-      double xDiff = characterI[keyPositionX] - characterJ[keyPositionX];
+      double xDiff = posX(characterI) - posX(characterJ);
       if (abs(xDiff) > characterRadius2) break;
-      double yDiff = characterI[keyPositionY] - characterJ[keyPositionY];
+      double yDiff = posY(characterI) - posY(characterJ);
       if (abs(yDiff) > characterRadius2) continue;
       double distance = distanceBetween(characterI, characterJ);
       if (distance >= characterRadius2) continue;
@@ -240,10 +240,10 @@ void updateCollisions() {
       double yDiffNormalized = yDiff * ratio;
       double targetX = xDiffNormalized * halfOverlap;
       double targetY = yDiffNormalized * halfOverlap;
-      characterI[keyPositionX] += targetX;
-      characterI[keyPositionY] += targetY;
-      characterJ[keyPositionX] -= targetX;
-      characterJ[keyPositionY] -= targetY;
+      characterI[indexPosX] += targetX;
+      characterI[indexPosY] += targetY;
+      characterJ[indexPosX] -= targetX;
+      characterJ[indexPosY] -= targetY;
     }
   }
 }

@@ -39,11 +39,12 @@ void main() {
           handleCommandSpawn(request);
           return;
         } else if (isAlive(character) && !isFiring(character)) {
-          int direction = request[keyDirection];
-          setCharacterState(character, request[keyState]);
-          character[keyDirection] = direction;
-          character[keyLastUpdateFrame] = frame;
-          character[keyAimAngle] = request[keyAimAngle];
+          setCharacterState(character, request['s']);
+          setDirection(character, request['d']);
+          // TODO
+          // set that in privateCharacter
+          // character[keyLastUpdateFrame] = frame;
+          // character[keyAimAngle] = request[keyAimAngle];
         }
       }
       sendToClient(response);

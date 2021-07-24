@@ -19,30 +19,30 @@ void playPistolAudio() {
 
 double playerScreenPositionX() {
   dynamic player = getPlayerCharacter();
-  return player[keyPositionX] - cameraX;
+  return posX(player) - cameraX;
 }
 
 double playerScreenPositionY() {
   if (!playerAssigned) return null;
   dynamic player = getPlayerCharacter();
-  return player[keyPositionY] - cameraY;
+  return posY(player) - cameraY;
 }
 
 double getMouseRotation() {
   dynamic player = getPlayerCharacter();
-  double playerScreenPositionX = player[keyPositionX] - cameraX;
-  double playerScreenPositionY = player[keyPositionY] - cameraY;
+  double playerScreenPositionX = posX(player) - cameraX;
+  double playerScreenPositionY = posY(player) - cameraY;
   return getRadionsBetween(
       playerScreenPositionX, playerScreenPositionY, mousePosX, mousePosY);
 }
 
 dynamic getPlayerCharacter() {
-  return characters.firstWhere((element) => element[keyId] == id,
+  return characters.firstWhere((element) => element[indexId] == id,
       orElse: () => null);
 }
 
 bool get playerAssigned =>
-    characters.any((element) => element[keyId] == id);
+    characters.any((element) => element[indexId] == id);
 
 bool isNpc(dynamic character) {
   return character[keyType] == typeNpc;
@@ -53,7 +53,7 @@ bool isHuman(dynamic character) {
 }
 
 bool isDead(dynamic character) {
-  return character[keyState] == characterStateDead;
+  return getState(character) == characterStateDead;
 }
 
 List<dynamic> getNpcs() {
@@ -69,20 +69,20 @@ Offset offset(double x, double y){
 }
 
 void drawLineFrom(dynamic object, double x, double y) {
-  drawLine(object[keyPositionX], object[keyPositionY], x, y);
+  drawLine(posX(object), posY(object), x, y);
 }
 
 void drawLineRotation(dynamic object, double rotation, double distance) {
   drawLine(
-      object[keyPositionX],
-      object[keyPositionY],
-      object[keyPositionX] + rotationToPosX(rotation, distance),
-      object[keyPositionY] + rotationToPosY(rotation, distance)
+      posX(object),
+      posY(object),
+      posX(object) + rotationToPosX(rotation, distance),
+      posY(object) + rotationToPosY(rotation, distance)
   );
 }
 
 void drawLineBetween(dynamic a, dynamic b) {
-  drawLineFrom(a, b[keyPositionX], b[keyPositionY]);
+  drawLineFrom(a, posX(b), posY(b));
 }
 
 void drawLineNpcDestination(dynamic npc) {
@@ -106,7 +106,7 @@ dynamic npcTarget(dynamic character) {
 }
 
 dynamic findCharacterById(int id) {
-  return characters.firstWhere((element) => element[keyId] == id,
+  return characters.firstWhere((element) => element[indexId] == id,
       orElse: () {
     return null;
   });
@@ -121,5 +121,21 @@ dynamic rotationToPosY(double rotation, double distance) {
 }
 
 bool idsMatch(dynamic a, dynamic b){
-  return a[keyId] == b[keyId];
+  return a[indexId] == b[indexId];
+}
+
+int getState(dynamic character){
+  return character[indexState];
+}
+
+int getDirection(dynamic character){
+  return character[indexDirection];
+}
+
+double posX(dynamic value) {
+  return value[indexPosX];
+}
+
+double posY(dynamic value) {
+  return value[indexPosY];
 }

@@ -9,15 +9,15 @@ import 'state.dart';
 import 'update.dart';
 
 double posX(dynamic value) {
-  return value[keyPositionX];
+  return value[indexPosX];
 }
 
 double posY(dynamic value) {
-  return value[keyPositionY];
+  return value[indexPosY];
 }
 
 double bulletDistanceTravelled(dynamic bullet) {
-  return distance(bullet[keyPositionX], bullet[keyPositionY], bullet[keyStartX],
+  return distance(bullet['x'], bullet['y'], bullet[keyStartX],
       bullet[keyStartY]);
 }
 
@@ -38,15 +38,23 @@ bool isNpc(dynamic character) {
 }
 
 bool isAlive(dynamic character) {
-  return character[keyState] != characterStateDead;
+  return getState(character) != characterStateDead;
 }
 
 bool isFiring(dynamic character) {
-  return character[keyState] == characterStateFiring;
+  return getState(character) == characterStateFiring;
+}
+
+int getState(dynamic character){
+  return character[indexState];
+}
+
+int getDirection(dynamic character){
+  return character[indexDirection];
 }
 
 void setCharacterState(dynamic character, int value) {
-  if (character[keyState] == value) return;
+  if (getState(character) == value) return;
 
   switch (value) {
     case characterStateAiming:
@@ -54,7 +62,11 @@ void setCharacterState(dynamic character, int value) {
       break;
   }
 
-  character[keyState] = value;
+  character[indexState] = value;
+}
+
+void setDirection(dynamic character, int value){
+  character[indexDirection] = value;
 }
 
 void setCharacterStateWalk(dynamic character) {
@@ -62,7 +74,6 @@ void setCharacterStateWalk(dynamic character) {
 }
 
 void setCharacterStateAim(dynamic character) {
-  if (character[keyState] == characterStateAiming) return;
   setCharacterState(character, characterStateAiming);
 }
 
@@ -70,12 +81,12 @@ void setCharacterStateIdle(dynamic character) {
   setCharacterState(character, characterStateIdle);
 }
 
-void setCharacterStateFiring(dynamic character) {
-  setCharacterState(character, characterStateFiring);
+void setCharacterStateDead(dynamic character) {
+  setCharacterState(character, characterStateDead);
 }
 
-void setDirection(dynamic character, int value) {
-  character[keyDirection] = value;
+void setCharacterStateFiring(dynamic character) {
+  setCharacterState(character, characterStateFiring);
 }
 
 dynamic npcTarget(dynamic character) {
@@ -87,7 +98,7 @@ void npcClearTarget(character) {
 }
 
 dynamic findCharacterById(int id) {
-  return characters.firstWhere((element) => element[keyId] == id, orElse: () {
+  return characters.firstWhere((element) => element[indexId] == id, orElse: () {
     return null;
   });
 }
@@ -128,15 +139,15 @@ void npcSetTarget(dynamic npc, dynamic value) {
 
 void setPosition(dynamic character, {double? x, double? y}) {
   if (x != null) {
-    character[keyPositionX] = x;
+    character[indexPosX] = x;
   }
   if (y != null) {
-    character[keyPositionY] = y;
+    character[indexPosY] = y;
   }
 }
 
 int getId(dynamic character) {
-  return character[keyId];
+  return  character[indexId];
 }
 
 int lastUpdateFrame(dynamic character) {
@@ -148,11 +159,11 @@ bool connectionExpired(dynamic character) {
 }
 
 bool isDead(dynamic character) {
-  return character[keyState] == characterStateDead;
+  return getState(character) == characterStateDead;
 }
 
 bool isAiming(dynamic character) {
-  return character[keyState] == characterStateAiming;
+  return getState(character) == characterStateAiming;
 }
 
 double getSpeed(dynamic character) {
@@ -192,7 +203,7 @@ double npcDistanceFromDestination(dynamic npc) {
 }
 
 double objectDistanceFrom(dynamic character, double x, double y) {
-  return distance(character[keyPositionX], character[keyPositionY], x, y);
+  return distance(posY(character), posY(character), x, y);
 }
 
 void npcFaceDestination(dynamic npc, dynamic npcPrivate) {
@@ -219,7 +230,7 @@ double round(double value, {int decimals = 1}) {
   return double.parse(value.toStringAsFixed(decimals));
 }
 
-void roundKey(dynamic object, String key, {int decimals = 1}) {
+void roundKey(dynamic object, int key, {int decimals = 1}) {
   object[key] = round(object[key], decimals: decimals);
 }
 
@@ -236,14 +247,14 @@ void fireWeapon(dynamic character) {
   switch (character[keyWeapon]) {
     case weaponHandgun:
       double angle = getShotAngle(character);
-      spawnBullet(character[keyPositionX], character[keyPositionY], angle,
+      spawnBullet(posX(character), posY(character), angle,
           character[keyId]);
       setCharacterStateFiring(character);
       characterPrivate[keyShotCoolDown] = pistolCoolDown;
       break;
     case weaponShotgun:
       for (int i = 0; i < 5; i++) {
-        spawnBullet(character[keyPositionX], character[keyPositionY],
+        spawnBullet(posX(character), posY(character),
             getShotAngle(character), character[keyId]);
       }
       setCharacterStateFiring(character);
@@ -262,8 +273,8 @@ void npcWanderJob() {
 
 void spawnBullet(double x, double y, double angle, int characterId) {
   Map<String, dynamic> bullet = Map();
-  bullet[keyPositionX] = x;
-  bullet[keyPositionY] = y;
+  bullet['x'] = x;
+  bullet['y'] = y;
   bullet[keyStartX] = x;
   bullet[keyStartY] = y;
   assignId(bullet);
@@ -282,28 +293,26 @@ dynamic spawnCharacter(double x, double y,
   if (x == double.nan) {
     throw Exception("x is nan");
   }
-  Map<String, dynamic> character = new Map();
-  assignId(character);
-  character[keyPositionX] = x;
-  character[keyPositionY] = y;
-  character[keyWeapon] = weapon;
-  character[keyDirection] = directionDown;
-  character[keyState] = characterStateIdle;
-  character[keyId] = character[keyId];
+  dynamic character = [
+    id++,
+    characterStateIdle,
+    directionUp,
+    x,
+    y,
+    weapon,
+    if(name != null)
+      name,
+    if(name != null)
+      frame, // last update frame
+  ];
 
   Map<String, dynamic> characterPrivate = new Map();
   characterPrivate[keyType] = npc ? typeNpc : typeHuman;
   characterPrivate[keyHealth] = health;
   characterPrivate[keyVelocityX] = 0;
   characterPrivate[keyVelocityY] = 0;
-  characterPrivate[keyId] = character[keyId];
+  characterPrivate[keyId] = getId(character);
 
-  if (name != null) {
-    character[keyPlayerName] = name;
-  }
-  if (!npc) {
-    character[keyLastUpdateFrame] = frame;
-  }
   characters.add(character);
   charactersPrivate.add(characterPrivate);
   return character;

@@ -185,8 +185,8 @@ class MultiplayerClient extends GameWidget {
     if (!playerAssigned) return;
 
     dynamic playerCharacter = getPlayerCharacter();
-    double playerScreenX = playerCharacter[keyPositionX] - cameraX;
-    double playerScreenY = playerCharacter[keyPositionY] - cameraY;
+    double playerScreenX = posX(playerCharacter) - cameraX;
+    double playerScreenY = posY(playerCharacter) - cameraY;
     double halfScreenWidth = size.width * 0.5;
     double halfScreenHeight = size.height * 0.5;
     double xOffset = halfScreenWidth - playerScreenX;
@@ -298,8 +298,8 @@ class MultiplayerClient extends GameWidget {
     Map<String, dynamic> request = Map();
     request[keyCommand] = commandUpdate;
     if (playerAssigned) {
-      request[keyState] = requestCharacterState;
-      request[keyDirection] = requestDirection;
+      request['s'] = requestCharacterState;
+      request['d'] = requestDirection;
       request[keyId] = id;
       if (requestCharacterState == characterStateAiming && mouseAvailable) {
         request[keyAimAngle] = getMouseRotation();
@@ -321,8 +321,8 @@ class MultiplayerClient extends GameWidget {
     if (valueObject[keyId] != null) {
       id = valueObject[keyId];
       dynamic playerCharacter = getPlayerCharacter();
-      cameraX = playerCharacter[keyPositionX] - (size.width * 0.5);
-      cameraY = playerCharacter[keyPositionY] - (size.height * 0.5);
+      cameraX = posX(playerCharacter) - (size.width * 0.5);
+      cameraY = posY(playerCharacter) - (size.height * 0.5);
     }
 
     // Play bullet audio
@@ -377,7 +377,7 @@ class MultiplayerClient extends GameWidget {
     // drawBulletRange();
 
     dynamic player = getPlayerCharacter();
-    if (player != null && player[keyState] == characterStateAiming) {
+    if (player != null && getState(player) == characterStateAiming) {
       double accuracy = player[keyAccuracy];
       double l = player[keyAimAngle] - (accuracy * 0.5);
       double r = player[keyAimAngle] + (accuracy * 0.5);
@@ -399,8 +399,8 @@ class MultiplayerClient extends GameWidget {
     dynamic player = getPlayerCharacter();
     drawCircleOutline(
         radius: bulletRange,
-        x: player[keyPositionX],
-        y: player[keyPositionY],
+        x: posX(player),
+        y: posY(player),
         color: white);
   }
 
@@ -426,7 +426,7 @@ class MultiplayerClient extends GameWidget {
 
   void drawBullets() {
     bullets.forEach((bullet) {
-      drawCircle(bullet[keyPositionX], bullet[keyPositionY], 2, Colors.white);
+      drawCircle(bullet['x'], bullet['y'], 2, Colors.white);
     });
   }
 
@@ -472,27 +472,27 @@ class MultiplayerClient extends GameWidget {
 
   void drawCharacters() {
     if (spriteTemplate == null) return;
-    characters.sort((a, b) => a[keyPositionY] > b[keyPositionY] ? 1 : -1);
+    characters.sort((a, b) => posY(a) > posY(b) ? 1 : -1);
     characters.where(isDead).forEach((drawCharacter));
     characters.where(isAlive).forEach((drawCharacter));
   }
 
   bool isAlive(dynamic character) {
-    return character[keyState] != characterStateDead;
+    return getState(character) != characterStateDead;
   }
 
   bool isDead(dynamic character) {
-    return character[keyState] == characterStateDead;
+    return getState(character) == characterStateDead;
   }
 
   void drawCharacter(dynamic character) {
     int totalFrames = 1;
     int startFrame = 0;
 
-    switch (character[keyState]) {
+    switch (getState(character)) {
       case characterStateIdle:
         totalFrames = 1;
-        switch (character[keyDirection]) {
+        switch (getDirection(character)) {
           case directionUp:
             startFrame = 3;
             break;
@@ -521,7 +521,7 @@ class MultiplayerClient extends GameWidget {
         break;
       case characterStateWalking:
         totalFrames = 3;
-        switch (character[keyDirection]) {
+        switch (getDirection(character)) {
           case directionUp:
             startFrame = 13;
             break;
@@ -549,7 +549,7 @@ class MultiplayerClient extends GameWidget {
         }
         break;
       case characterStateDead:
-        switch (character[keyDirection]) {
+        switch (getDirection(character)) {
           case directionUp:
             startFrame = 19;
             break;
@@ -630,15 +630,15 @@ class MultiplayerClient extends GameWidget {
     // drawCharacterCircle(
     //     character, character[keyCharacterId] == id ? Colors.blue : Colors.red);
 
-    drawSprite(spriteTemplate, frameCount, spriteFrame, character[keyPositionX],
-        character[keyPositionY]);
+    drawSprite(spriteTemplate, frameCount, spriteFrame, posX(character),
+        posY(character));
 
-    drawText(character[keyPlayerName], character[keyPositionX],
-        character[keyPositionY], Colors.white);
+    // drawText(character[keyPlayerName], posX(character),
+    //     posY(character), Colors.white);
   }
 
   void drawCharacterCircle(dynamic value, Color color) {
     drawCircle(
-        value[keyPositionX], value[keyPositionY], characterRadius, color);
+        posX(value), posY(value), characterRadius, color);
   }
 }

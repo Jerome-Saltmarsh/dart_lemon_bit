@@ -39,6 +39,7 @@ GZipEncoder gZipEncoder = GZipEncoder();
 GZipDecoder gZipDecoder = GZipDecoder();
 
 String encode(dynamic data) {
+  // List<int>? i = gZipEncoder.encode(utf8.encode(jsonEncode(data).replaceAll(" ", "")));
   List<int>? i = gZipEncoder.encode(utf8.encode(jsonEncode(data)));
   if (i != null) {
     return base64.encode(i);

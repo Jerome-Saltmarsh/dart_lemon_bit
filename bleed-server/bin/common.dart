@@ -26,11 +26,15 @@ const weaponShotgun = 2;
 const typeNpc = 1;
 const typeHuman = 0;
 
+// [id, state, direction, positionX, positionY, weapon]
+const indexId = 0;
+const indexState = 1;
+const indexDirection = 2;
+const indexPosX = 3;
+const indexPosY = 4;
+const indexWeapon = 5;
+
 const keyFrame = 'f';
-const keyPositionX = 'x';
-const keyPositionY = 'y';
-const keyDirection = 'd';
-const keyState = 's';
 const keyCommand = 'c';
 const keyId = 'i';
 const keyRotation = 'r';
@@ -46,6 +50,8 @@ const keyRange = 'ra';
 const keyAccuracy = 'ka';
 const keyEquipValue = 'equip';
 const keyWeapon = 'w';
+
+
 // private
 const keyHealth = 'h';
 const keyType = 't';

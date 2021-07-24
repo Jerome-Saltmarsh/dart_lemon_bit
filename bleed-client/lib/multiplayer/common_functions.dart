@@ -39,9 +39,14 @@ GZipEncoder gZipEncoder = GZipEncoder();
 GZipDecoder gZipDecoder = GZipDecoder();
 
 String encode(dynamic data) {
-  return base64.encode(gZipEncoder.encode(utf8.encode(jsonEncode(data))));
+  List<int> i = gZipEncoder.encode(utf8.encode(jsonEncode(data).replaceAll(" ", "")));
+  if (i != null) {
+    return base64.encode(i);
+  }
+  return "";
 }
 
 dynamic decode(String data) {
-  return jsonDecode((utf8.decode(gZipDecoder.decodeBytes(base64.decode(data).toList()))));
+  return jsonDecode(
+      (utf8.decode(gZipDecoder.decodeBytes(base64.decode(data).toList()))));
 }
