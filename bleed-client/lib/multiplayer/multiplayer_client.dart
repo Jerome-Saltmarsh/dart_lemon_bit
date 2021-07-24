@@ -20,7 +20,7 @@ import 'utils.dart';
 class MultiplayerClient extends GameWidget {
   WebSocketChannel webSocketChannel;
   bool initialized = false;
-  int fps = 60;
+  int fps = 30;
   int milliSecondsPerSecond = 1000;
   Canvas canvas;
   Size size;
@@ -46,8 +46,8 @@ class MultiplayerClient extends GameWidget {
   BuildContext context;
 
   static const String localhost = "ws://localhost:8080";
-  static const gpc = 'wss://bleed8-osbmaezptq-ey.a.run.app/:8080';
-  static const host = localhost;
+  static const gpc = 'wss://bleed-10-osbmaezptq-ey.a.run.app/:8080';
+  static const host = gpc;
 
   Uri get hostURI => Uri.parse(host);
 

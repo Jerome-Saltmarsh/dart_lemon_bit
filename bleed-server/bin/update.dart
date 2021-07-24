@@ -6,7 +6,7 @@ import 'state.dart';
 import 'utils.dart';
 
 void initUpdateLoop() {
-  createJob(fixedUpdate, ms: 1000 ~/ 60);
+  createJob(fixedUpdate, ms: 1000 ~/ 30);
   createJob(spawnZombieJob, seconds: 5);
   createJob(npcWanderJob, seconds: 10);
 }
@@ -190,30 +190,32 @@ void compressData() {
   for (dynamic character in characters) {
     roundKey(character, keyPositionX);
     roundKey(character, keyPositionY);
-    // if (character[keyDestinationX] != null) {
-    //   roundKey(character, keyDestinationX);
-    //   roundKey(character, keyDestinationY);
-    // }
-    // if (character[keyVelocityX] != null) {
-    //   roundKey(character, keyVelocityX, decimals: 2);
-    //   roundKey(character, keyVelocityY, decimals: 2);
-    // }
   }
 }
 
+int compareCharacters(dynamic a, dynamic b){
+  if(a[keyPositionX] < b[keyPositionX]) {
+    return -1;
+  }
+  return 1;
+}
+
 void updateCollisions() {
-  for (int i = 0; i < characters.length; i++) {
+  characters.sort(compareCharacters);
+  for (int i = 0; i < characters.length - 1; i++) {
     dynamic characterI = characters[i];
     if (isDead(characterI)) continue;
     for (int j = i + 1; j < characters.length; j++) {
       dynamic characterJ = characters[j];
       if (isDead(characterJ)) continue;
+      double xDiff = characterI[keyPositionX] - characterJ[keyPositionX];
+      if(abs(xDiff) > characterRadius2) break;
+      double yDiff = characterI[keyPositionY] - characterJ[keyPositionY];
+      if(abs(yDiff) > characterRadius2) continue;
       double distance = distanceBetween(characterI, characterJ);
       if (distance < characterRadius2) {
         double overlap = characterRadius2 - distance;
         double halfOverlap = overlap * 0.5;
-        double xDiff = characterI[keyPositionX] - characterJ[keyPositionX];
-        double yDiff = characterI[keyPositionY] - characterJ[keyPositionY];
         double mag = magnitude(xDiff, yDiff);
         double ratio = 1.0 / mag;
         double xDiffNormalized = xDiff * ratio;
