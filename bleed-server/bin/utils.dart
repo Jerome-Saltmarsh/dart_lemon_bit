@@ -26,7 +26,7 @@ List<dynamic> getHumans() {
 }
 
 List<dynamic> getNpcs() {
-  return characters.where(isNpc).toList();
+  return charactersPrivate.where(isNpc).toList();
 }
 
 bool isHuman(dynamic character) {
@@ -254,10 +254,9 @@ void fireWeapon(dynamic character) {
 
 void npcWanderJob() {
   for (dynamic npc in getNpcs()) {
-    dynamic npcPrivate = getCharacterPrivate(npc);
-    if (npcTargetSet(npcPrivate)) continue;
-    if (npcDestinationSet(npcPrivate)) continue;
-    npcSetRandomDestination(npcPrivate);
+    if (npcTargetSet(npc)) continue;
+    if (npcDestinationSet(npc)) continue;
+    npcSetRandomDestination(npc);
   }
 }
 
@@ -290,10 +289,10 @@ dynamic spawnCharacter(double x, double y,
   character[keyWeapon] = weapon;
   character[keyDirection] = directionDown;
   character[keyState] = characterStateIdle;
-  character[keyType] = npc ? typeNpc : typeHuman;
   character[keyId] = character[keyId];
 
   Map<String, dynamic> characterPrivate = new Map();
+  characterPrivate[keyType] = npc ? typeNpc : typeHuman;
   characterPrivate[keyHealth] = health;
   characterPrivate[keyVelocityX] = 0;
   characterPrivate[keyVelocityY] = 0;

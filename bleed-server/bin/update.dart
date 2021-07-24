@@ -15,15 +15,16 @@ void initUpdateLoop() {
 void deleteDeadAndExpiredCharacters() {
   for (int i = 0; i < characters.length; i++) {
     dynamic character = characters[i];
+    dynamic characterPrivate = getCharacterPrivate(character);
 
-    if (isHuman(character) && connectionExpired(character)) {
+    if (isHuman(characterPrivate) && connectionExpired(character)) {
       removeCharacter(character);
       i--;
       continue;
     }
     if (isDead(character)) {
       if (frame - character[keyFrameOfDeath] > 120) {
-        if (isNpc(character)) {
+        if (isNpc(characterPrivate)) {
           removeCharacter(character);
           i--;
         } else {
@@ -85,11 +86,12 @@ void updateCharacter(dynamic character) {
 
   dynamic characterPrivate = getCharacterPrivate(character);
 
-  if (isNpc(character) && isAlive(character)) {
+  if (isNpc(characterPrivate) && isAlive(character)) {
     if (!npcTargetSet(characterPrivate)) {
       for (int j = 0; j < characters.length; j++) {
-        if (isNpc(characters[j])) continue;
         dynamic characterJ = characters[j];
+        dynamic characterJPrivate = getCharacterPrivate(characterJ);
+        if (isNpc(characterJPrivate)) continue;
         if (distanceBetween(character, characterJ) < zombieViewRange) {
           npcSetTarget(characterPrivate, characterJ);
           break;
@@ -137,7 +139,7 @@ void updateCharacter(dynamic character) {
     case characterStateIdle:
       break;
     case characterStateWalking:
-      double speed = getSpeed(character);
+      double speed = getSpeed(characterPrivate);
       switch (character[keyDirection]) {
         case directionUp:
           character[keyPositionY] -= speed;
@@ -234,46 +236,3 @@ void updateCollisions() {
   }
 }
 
-void updateMovement(dynamic character) {
-  const double velocityFriction = 0.94;
-  character[keyPositionX] += character[keyVelocityX];
-  character[keyPositionY] += character[keyVelocityY];
-  character[keyVelocityX] *= velocityFriction;
-  character[keyVelocityY] *= velocityFriction;
-
-  switch (character[keyState]) {
-    case characterStateWalking:
-      double speed = getSpeed(character);
-      switch (character[keyDirection]) {
-        case directionUp:
-          character[keyPositionY] -= speed;
-          break;
-        case directionUpRight:
-          character[keyPositionX] += speed * 0.5;
-          character[keyPositionY] -= speed * 0.5;
-          break;
-        case directionRight:
-          character[keyPositionX] += speed;
-          break;
-        case directionDownRight:
-          character[keyPositionX] += speed * 0.5;
-          character[keyPositionY] += speed * 0.5;
-          break;
-        case directionDown:
-          character[keyPositionY] += speed;
-          break;
-        case directionDownLeft:
-          character[keyPositionX] -= speed * 0.5;
-          character[keyPositionY] += speed * 0.5;
-          break;
-        case directionLeft:
-          character[keyPositionX] -= speed;
-          break;
-        case directionUpLeft:
-          character[keyPositionX] -= speed * 0.5;
-          character[keyPositionY] -= speed * 0.5;
-          break;
-      }
-      break;
-  }
-}
