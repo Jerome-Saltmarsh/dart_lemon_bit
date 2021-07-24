@@ -3,6 +3,7 @@
 [ ] Sprint
 [ ] Ammo
 [ ] Reload
+[ ] Investigate http2
 [ ] Sniper Rifle
 [ ] Oozie
 [ ] Zombie Attack
@@ -12,7 +13,6 @@
 [ ] Bullet Hit Animation
 [ ] Shot Sound
 [ ] Shot kickback
-[ ] Investigate http2
 [x] Shotgun
 [x] Ping Check
 [x] Shot cool-down

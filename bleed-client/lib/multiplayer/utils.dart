@@ -94,7 +94,7 @@ void drawLineNpcTarget(dynamic npc) {
 }
 
 void drawNpcDebugLines(dynamic npc) {
-  if (npc[keyNpcTarget] != null) {
+  if (npc[keyNpcTargetId] != null) {
     drawLineNpcTarget(npc);
   } else if (npc[keyDestinationX] != null) {
     drawLineNpcDestination(npc);
@@ -102,7 +102,7 @@ void drawNpcDebugLines(dynamic npc) {
 }
 
 dynamic npcTarget(dynamic character) {
-  return findCharacterById(character[keyNpcTarget]);
+  return findCharacterById(character[keyNpcTargetId]);
 }
 
 dynamic findCharacterById(int id) {

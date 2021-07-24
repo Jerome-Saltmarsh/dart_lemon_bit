@@ -5,12 +5,6 @@ const double degreesToRadions = 0.0174533;
 const double radionsToDegrees =  57.29578;
 final Random random = Random();
 
-class Vector2 {
-  double x;
-  double y;
-  Vector2(this.x, this.y);
-}
-
 double randomBetween(num a, num b){
   return (random.nextDouble() * (b - a)) + a;
 }
@@ -45,11 +39,6 @@ int millisecondsSince(DateTime value){
 
 Duration durationSince(DateTime value){
   return DateTime.now().difference(value);
-}
-
-Vector2 convertRadionsToVector(num radions){
-  num r = radions - (pi * 0.5);
-  return Vector2(cos(r), sin(r));
 }
 
 double radionsBetweenObject(dynamic a, dynamic b) {

@@ -66,11 +66,11 @@ void setDirection(dynamic character, int value) {
 }
 
 dynamic npcTarget(dynamic character) {
-  return findCharacterById(character[keyNpcTarget]);
+  return findCharacterById(character[keyNpcTargetId]);
 }
 
 void npcClearTarget(character) {
-  character[keyNpcTarget] = null;
+  character[keyNpcTargetId] = null;
 }
 
 dynamic findCharacterById(int id) {
@@ -81,7 +81,7 @@ dynamic findCharacterById(int id) {
 }
 
 bool npcTargetSet(dynamic npc) {
-  return npc[keyNpcTarget] != null;
+  return npc[keyNpcTargetId] != null;
 }
 
 void npcClearDestination(dynamic npc){
@@ -108,9 +108,9 @@ bool npcArrivedAtDestination(dynamic npc){
 
 void npcSetTarget(dynamic npc, dynamic value) {
   if (value is int) {
-    npc[keyNpcTarget] = value;
+    npc[keyNpcTargetId] = value;
   } else {
-    npc[keyNpcTarget] = value[keyId];
+    npc[keyNpcTargetId] = value[keyId];
   }
 }
 

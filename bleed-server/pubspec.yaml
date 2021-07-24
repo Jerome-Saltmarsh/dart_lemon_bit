@@ -10,3 +10,4 @@ dependencies:
   shelf_web_socket: ^1.0.1
   shelf_router: ^1.1.0
   archive: ^3.1.2
+  http2: ^2.0.0
