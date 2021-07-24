@@ -6,6 +6,7 @@ import 'common_functions.dart';
 import 'maths.dart';
 import 'settings.dart';
 import 'state.dart';
+import 'update.dart';
 
 double posX(dynamic value){
   return value[keyPositionX];
@@ -171,15 +172,16 @@ void setVelocity(dynamic target, double rotation, double speed) {
 }
 
 double npcDistanceFromDestination(dynamic npc){
-  return objectDistanceFrom(npc, npc[keyDestinationX], npc[keyDestinationY]);
+  dynamic npcPrivate = getCharacterPrivate(npc);
+  return objectDistanceFrom(npc, npcPrivate[keyDestinationX], npcPrivate[keyDestinationY]);
 }
 
 double objectDistanceFrom(dynamic character, double x, double y){
-  return distance(character[keyPositionX], character[keyPositionY], character[keyDestinationX], character[keyDestinationY]);
+  return distance(character[keyPositionX], character[keyPositionY], x, y);
 }
 
-void npcFaceDestination(dynamic npc){
-  characterFace(npc, npc[keyDestinationX], npc[keyDestinationY]);
+void npcFaceDestination(dynamic npc, dynamic npcPrivate){
+  characterFace(npc, npcPrivate[keyDestinationX], npcPrivate[keyDestinationY]);
 }
 
 void characterFace(dynamic character, double x, double y){
@@ -234,8 +236,9 @@ void fireWeapon(dynamic character){
 void npcWanderJob() {
   for (dynamic npc in getNpcs()) {
     if (npcTargetSet(npc)) continue;
-    if (npcDestinationSet(npc)) continue;
-    npcSetRandomDestination(npc);
+    dynamic npcPrivate = getCharacterPrivate(npc);
+    if (npcDestinationSet(npcPrivate)) continue;
+    npcSetRandomDestination(npcPrivate);
   }
 }
 

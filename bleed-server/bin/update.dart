@@ -59,6 +59,9 @@ void updateCharacter(dynamic character) {
     character[keyPositionY] = 0;
   }
 
+
+  dynamic characterPrivate = getCharacterPrivate(character);
+
   if (isNpc(character) && isAlive(character)) {
     if (!npcTargetSet(character)) {
       for (int j = 0; j < characters.length; j++) {
@@ -70,12 +73,12 @@ void updateCharacter(dynamic character) {
         }
       }
 
-      if (npcDestinationSet(character)) {
+      if (npcDestinationSet(characterPrivate)) {
         if (npcArrivedAtDestination(character)) {
           setCharacterStateIdle(character);
-          npcClearDestination(character);
+          npcClearDestination(characterPrivate);
         } else {
-          npcFaceDestination(character);
+          npcFaceDestination(character, characterPrivate);
           setCharacterStateWalk(character);
         }
       }
@@ -91,7 +94,6 @@ void updateCharacter(dynamic character) {
     }
   }
 
-  dynamic characterPrivate = getCharacterPrivate(character);
   character[keyPositionX] += characterPrivate[keyVelocityX];
   character[keyPositionY] += characterPrivate[keyVelocityY];
   characterPrivate[keyVelocityX] *= velocityFriction;
