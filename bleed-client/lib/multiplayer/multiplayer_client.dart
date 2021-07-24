@@ -112,6 +112,7 @@ class MultiplayerClient extends GameWidget {
             if (refreshDuration != null)
               text("Refresh: ${refreshDuration.inMilliseconds}"),
             text("Date Size: ${event.length}"),
+            text("Date Size Per Ch: ${(event.length / characters.length).round()}"),
             text("Characters: ${characters.length}"),
             text("Packages Sent: $packagesSent"),
             text("Packages Received: $packagesReceived"),

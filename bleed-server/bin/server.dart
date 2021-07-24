@@ -30,7 +30,6 @@ void main() {
 
     void handleCommandUpdate(dynamic request){
       Map<String, dynamic> response = Map();
-      response[keyCommand] = commandUpdate;
       response[keyCharacters] = characters;
       response[keyBullets] = bullets;
       if (request[keyId] != null) {
