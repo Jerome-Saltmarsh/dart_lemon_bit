@@ -231,13 +231,15 @@ double getShotAngle(character) {
 }
 
 void fireWeapon(dynamic character) {
+  dynamic characterPrivate = getCharacterPrivate(character);
+
   switch (character[keyWeapon]) {
     case weaponHandgun:
       double angle = getShotAngle(character);
       spawnBullet(character[keyPositionX], character[keyPositionY], angle,
           character[keyId]);
       setCharacterStateFiring(character);
-      character[keyShotCoolDown] = pistolCoolDown;
+      characterPrivate[keyShotCoolDown] = pistolCoolDown;
       break;
     case weaponShotgun:
       for (int i = 0; i < 5; i++) {
@@ -245,7 +247,7 @@ void fireWeapon(dynamic character) {
             getShotAngle(character), character[keyId]);
       }
       setCharacterStateFiring(character);
-      character[keyShotCoolDown] = shotgunCoolDown;
+      characterPrivate[keyShotCoolDown] = shotgunCoolDown;
       break;
   }
 }
@@ -288,11 +290,11 @@ dynamic spawnCharacter(double x, double y,
   character[keyWeapon] = weapon;
   character[keyDirection] = directionDown;
   character[keyState] = characterStateIdle;
-  character[keyHealth] = health;
   character[keyType] = npc ? typeNpc : typeHuman;
   character[keyId] = character[keyId];
 
   Map<String, dynamic> characterPrivate = new Map();
+  characterPrivate[keyHealth] = health;
   characterPrivate[keyVelocityX] = 0;
   characterPrivate[keyVelocityY] = 0;
   characterPrivate[keyId] = character[keyId];

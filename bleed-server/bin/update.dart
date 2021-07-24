@@ -30,15 +30,14 @@ void updateBullets() {
       double dis = distanceBetween(characters[j], bullet);
       if (dis < characterBulletRadius) {
         dynamic characterJ = characters[j];
+        dynamic characterJPrivate = getCharacterPrivate(characterJ);
         bullets.removeAt(i);
         i--;
-        characterJ[keyHealth]--;
-        if (characterJ[keyHealth] <= 0) {
+        characterJPrivate[keyHealth]--;
+        if (characterJPrivate[keyHealth] <= 0) {
           characterJ[keyState] = characterStateDead;
           characterJ[keyFrameOfDeath] = frame;
         }
-
-        dynamic characterJPrivate = getCharacterPrivate(characterJ);
         characterJPrivate[keyVelocityX] += bullet[keyVelocityX] * 0.25;
         characterJPrivate[keyVelocityY] += bullet[keyVelocityY] * 0.25;
         break;
@@ -106,8 +105,8 @@ void updateCharacter(dynamic character) {
       }
       break;
     case characterStateFiring:
-      character[keyShotCoolDown]--;
-      if (character[keyShotCoolDown] <= 0) {
+      characterPrivate[keyShotCoolDown]--;
+      if (characterPrivate[keyShotCoolDown] <= 0) {
         setCharacterStateIdle(character);
       }
       break;
@@ -191,10 +190,10 @@ void compressData() {
   for (dynamic character in characters) {
     roundKey(character, keyPositionX);
     roundKey(character, keyPositionY);
-    if (character[keyDestinationX] != null) {
-      roundKey(character, keyDestinationX);
-      roundKey(character, keyDestinationY);
-    }
+    // if (character[keyDestinationX] != null) {
+    //   roundKey(character, keyDestinationX);
+    //   roundKey(character, keyDestinationY);
+    // }
     // if (character[keyVelocityX] != null) {
     //   roundKey(character, keyVelocityX, decimals: 2);
     //   roundKey(character, keyVelocityY, decimals: 2);

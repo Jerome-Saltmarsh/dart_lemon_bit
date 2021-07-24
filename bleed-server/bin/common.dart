@@ -43,11 +43,11 @@ const keyAimAngle = 'a';
 const keyStartX = 'sx';
 const keyStartY = 'sy';
 const keyRange = 'ra';
-const keyHealth = 'h';
 const keyAccuracy = 'ka';
 const keyEquipValue = 'equip';
 const keyWeapon = 'w';
 // private
+const keyHealth = 'h';
 const keyType = 't';
 const keyNpcTargetId = 'nt';
 const keyVelocityX = 'vX';
