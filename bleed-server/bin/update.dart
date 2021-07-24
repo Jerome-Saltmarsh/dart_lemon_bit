@@ -63,12 +63,12 @@ void updateCharacter(dynamic character) {
   dynamic characterPrivate = getCharacterPrivate(character);
 
   if (isNpc(character) && isAlive(character)) {
-    if (!npcTargetSet(character)) {
+    if (!npcTargetSet(characterPrivate)) {
       for (int j = 0; j < characters.length; j++) {
         if (isNpc(characters[j])) continue;
         dynamic characterJ = characters[j];
         if (distanceBetween(character, characterJ) < zombieViewRange) {
-          npcSetTarget(character, characterJ);
+          npcSetTarget(characterPrivate, characterJ);
           break;
         }
       }
@@ -83,9 +83,9 @@ void updateCharacter(dynamic character) {
         }
       }
     } else {
-      dynamic target = npcTarget(character);
+      dynamic target = npcTarget(characterPrivate);
       if (target == null || isDead(target)) {
-        npcClearTarget(character);
+        characterPrivate(character);
       } else {
         double angle = radionsBetweenObject(character, target);
         setCharacterState(character, characterStateWalking);

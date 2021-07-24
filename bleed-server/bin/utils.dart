@@ -252,8 +252,8 @@ void fireWeapon(dynamic character) {
 
 void npcWanderJob() {
   for (dynamic npc in getNpcs()) {
-    if (npcTargetSet(npc)) continue;
     dynamic npcPrivate = getCharacterPrivate(npc);
+    if (npcTargetSet(npcPrivate)) continue;
     if (npcDestinationSet(npcPrivate)) continue;
     npcSetRandomDestination(npcPrivate);
   }
