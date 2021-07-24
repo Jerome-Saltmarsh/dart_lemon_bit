@@ -3,7 +3,6 @@ import 'dart:math';
 
 import 'common.dart';
 import 'common_functions.dart';
-import 'functions/spawn_character.dart';
 import 'maths.dart';
 import 'settings.dart';
 import 'state.dart';
@@ -254,3 +253,43 @@ void spawnBullet(double x, double y, double angle, int characterId) {
   bullet[keyId] = characterId;
   bullets.add(bullet);
 }
+
+dynamic spawnCharacter(double x, double y,
+    {required bool npc,
+      required int health,
+      required int weapon,
+      String? name}) {
+  if (x == double.nan) {
+    throw Exception("x is nan");
+  }
+  Map<String, dynamic> character = new Map();
+  assignId(character);
+  character[keyPositionX] = x;
+  character[keyPositionY] = y;
+  character[keyWeapon] = weapon;
+  character[keyDirection] = directionDown;
+  character[keyState] = characterStateIdle;
+  character[keyType] = npc ? typeNpc : typeHuman;
+  character[keyHealth] = health;
+  character[keyVelocityX] = 0;
+  character[keyVelocityY] = 0;
+  if (name != null) {
+    character[keyPlayerName] = name;
+  }
+  if (!npc) {
+    character[keyLastUpdateFrame] = frame;
+  }
+  characters.add(character);
+  return character;
+}
+
+void spawnZombieJob() {
+  if (getNpcs().length >= maxZombies) return;
+  spawnRandomZombie();
+}
+
+dynamic spawnRandomZombie() {
+  return spawnZombie(randomBetween(-spawnRadius, spawnRadius), randomBetween(-spawnRadius, spawnRadius));
+}
+
+

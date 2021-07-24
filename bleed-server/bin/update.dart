@@ -5,6 +5,12 @@ import 'settings.dart';
 import 'state.dart';
 import 'utils.dart';
 
+void initUpdateLoop(){
+  createJob(fixedUpdate, ms: 1000 ~/ 60);
+  createJob(spawnZombieJob, seconds: 5);
+  createJob(npcWanderJob, seconds: 10);
+}
+
 void updateBullets() {
   for (int i = 0; i < bullets.length; i++) {
     dynamic bullet = bullets[i];
@@ -261,3 +267,4 @@ void updateMovement(dynamic character){
       break;
   }
 }
+

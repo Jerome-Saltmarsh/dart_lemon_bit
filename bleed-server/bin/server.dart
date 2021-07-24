@@ -3,7 +3,6 @@ import 'package:shelf_web_socket/shelf_web_socket.dart';
 
 import 'common.dart';
 import 'common_functions.dart';
-import 'functions/spawn_random_zombie.dart';
 import 'settings.dart';
 import 'update.dart';
 import 'utils.dart';
@@ -12,14 +11,7 @@ import 'state.dart';
 void main() {
   print('starting web socket server');
 
-  void spawnZombieJob() {
-    if (getNpcs().length >= maxZombies) return;
-    spawnRandomZombie();
-  }
-
-  createJob(fixedUpdate, ms: 1000 ~/ 60);
-  createJob(spawnZombieJob, seconds: 5);
-  createJob(npcWanderJob, seconds: 10);
+  initUpdateLoop();
 
   var handler = webSocketHandler((webSocket) {
     void sendToClient(dynamic response) {
