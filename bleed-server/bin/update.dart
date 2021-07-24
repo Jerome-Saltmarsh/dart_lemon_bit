@@ -9,6 +9,30 @@ void initUpdateLoop() {
   createJob(fixedUpdate, ms: 1000 ~/ 30);
   createJob(spawnZombieJob, seconds: 5);
   createJob(npcWanderJob, seconds: 10);
+  createJob(deleteDeadAndExpiredCharacters, seconds: 6);
+}
+
+void deleteDeadAndExpiredCharacters() {
+  for (int i = 0; i < characters.length; i++) {
+    dynamic character = characters[i];
+
+    if (isHuman(character) && connectionExpired(character)) {
+      removeCharacter(character);
+      i--;
+      continue;
+    }
+    if (isDead(character)) {
+      if (frame - character[keyFrameOfDeath] > 120) {
+        if (isNpc(character)) {
+          removeCharacter(character);
+          i--;
+        } else {
+          character[keyState] = characterStateIdle;
+          setPosition(character, x: 0, y: 0);
+        }
+      }
+    }
+  }
 }
 
 void updateBullets() {
@@ -46,8 +70,9 @@ void updateBullets() {
   }
 }
 
-dynamic getCharacterPrivate(dynamic character){
-  return charactersPrivate.firstWhere((element) => element[keyId] == character[keyId]);
+dynamic getCharacterPrivate(dynamic character) {
+  return charactersPrivate
+      .firstWhere((element) => element[keyId] == character[keyId]);
 }
 
 void updateCharacter(dynamic character) {
@@ -57,7 +82,6 @@ void updateCharacter(dynamic character) {
     character[keyPositionX] = 0;
     character[keyPositionY] = 0;
   }
-
 
   dynamic characterPrivate = getCharacterPrivate(character);
 
@@ -84,7 +108,7 @@ void updateCharacter(dynamic character) {
     } else {
       dynamic target = npcTarget(characterPrivate);
       if (target == null || isDead(target)) {
-        characterPrivate(character);
+         npcClearTarget(characterPrivate);
       } else {
         double angle = radionsBetweenObject(character, target);
         setCharacterState(character, characterStateWalking);
@@ -148,33 +172,13 @@ void updateCharacter(dynamic character) {
   }
 }
 
-void removeCharacter(dynamic character){
+void removeCharacter(dynamic character) {
   characters.removeWhere((element) => element[keyId] == character[keyId]);
-  charactersPrivate.removeWhere((element) => element[keyId] == character[keyId]);
+  charactersPrivate
+      .removeWhere((element) => element[keyId] == character[keyId]);
 }
 
 void updateCharacters() {
-  for (int i = 0; i < characters.length; i++) {
-    dynamic character = characters[i];
-
-    if (isHuman(character) && connectionExpired(character)) {
-      removeCharacter(character);
-      i--;
-      continue;
-    }
-    if (isDead(character)) {
-      if (frame - character[keyFrameOfDeath] > 120) {
-        if (isNpc(character)) {
-          removeCharacter(character);
-          i--;
-        } else {
-          character[keyState] = characterStateIdle;
-          setPosition(character, x: 0, y: 0);
-        }
-      }
-    }
-  }
-
   characters.forEach(updateCharacter);
 }
 
@@ -193,8 +197,8 @@ void compressData() {
   }
 }
 
-int compareCharacters(dynamic a, dynamic b){
-  if(a[keyPositionX] < b[keyPositionX]) {
+int compareCharacters(dynamic a, dynamic b) {
+  if (a[keyPositionX] < b[keyPositionX]) {
     return -1;
   }
   return 1;
@@ -209,24 +213,23 @@ void updateCollisions() {
       dynamic characterJ = characters[j];
       if (isDead(characterJ)) continue;
       double xDiff = characterI[keyPositionX] - characterJ[keyPositionX];
-      if(abs(xDiff) > characterRadius2) break;
+      if (abs(xDiff) > characterRadius2) break;
       double yDiff = characterI[keyPositionY] - characterJ[keyPositionY];
-      if(abs(yDiff) > characterRadius2) continue;
+      if (abs(yDiff) > characterRadius2) continue;
       double distance = distanceBetween(characterI, characterJ);
-      if (distance < characterRadius2) {
-        double overlap = characterRadius2 - distance;
-        double halfOverlap = overlap * 0.5;
-        double mag = magnitude(xDiff, yDiff);
-        double ratio = 1.0 / mag;
-        double xDiffNormalized = xDiff * ratio;
-        double yDiffNormalized = yDiff * ratio;
-        double targetX = xDiffNormalized * halfOverlap;
-        double targetY = yDiffNormalized * halfOverlap;
-        characterI[keyPositionX] += targetX;
-        characterI[keyPositionY] += targetY;
-        characterJ[keyPositionX] -= targetX;
-        characterJ[keyPositionY] -= targetY;
-      }
+      if (distance >= characterRadius2) continue;
+      double overlap = characterRadius2 - distance;
+      double halfOverlap = overlap * 0.5;
+      double mag = magnitude(xDiff, yDiff);
+      double ratio = 1.0 / mag;
+      double xDiffNormalized = xDiff * ratio;
+      double yDiffNormalized = yDiff * ratio;
+      double targetX = xDiffNormalized * halfOverlap;
+      double targetY = yDiffNormalized * halfOverlap;
+      characterI[keyPositionX] += targetX;
+      characterI[keyPositionY] += targetY;
+      characterJ[keyPositionX] -= targetX;
+      characterJ[keyPositionY] -= targetY;
     }
   }
 }
