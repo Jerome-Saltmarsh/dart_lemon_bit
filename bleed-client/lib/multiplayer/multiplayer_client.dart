@@ -46,8 +46,8 @@ class MultiplayerClient extends GameWidget {
   BuildContext context;
 
   static const String localhost = "ws://localhost:8080";
-  static const gpc = 'wss://bleed-10-osbmaezptq-ey.a.run.app/:8080';
-  static const host = localhost;
+  static const gpc = 'wss://bleed-11-osbmaezptq-ey.a.run.app/:8080';
+  static const host = gpc;
 
   Uri get hostURI => Uri.parse(host);
 
