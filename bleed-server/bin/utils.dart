@@ -8,11 +8,11 @@ import 'settings.dart';
 import 'state.dart';
 import 'update.dart';
 
-double posX(dynamic value){
+double posX(dynamic value) {
   return value[keyPositionX];
 }
 
-double posY(dynamic value){
+double posY(dynamic value) {
   return value[keyPositionY];
 }
 
@@ -41,23 +41,36 @@ bool isAlive(dynamic character) {
   return character[keyState] != characterStateDead;
 }
 
-bool isFiring(dynamic character){
+bool isFiring(dynamic character) {
   return character[keyState] == characterStateFiring;
 }
 
 void setCharacterState(dynamic character, int value) {
+  if (character[keyState] == value) return;
+
+  switch (value) {
+    case characterStateAiming:
+      character[keyAccuracy] = startingAccuracy;
+      break;
+  }
+
   character[keyState] = value;
 }
 
-void setCharacterStateWalk(dynamic character){
+void setCharacterStateWalk(dynamic character) {
   setCharacterState(character, characterStateWalking);
 }
 
-void setCharacterStateIdle(dynamic character){
+void setCharacterStateAim(dynamic character) {
+  if (character[keyState] == characterStateAiming) return;
+  setCharacterState(character, characterStateAiming);
+}
+
+void setCharacterStateIdle(dynamic character) {
   setCharacterState(character, characterStateIdle);
 }
 
-void setCharacterStateFiring(dynamic character){
+void setCharacterStateFiring(dynamic character) {
   setCharacterState(character, characterStateFiring);
 }
 
@@ -74,8 +87,7 @@ void npcClearTarget(character) {
 }
 
 dynamic findCharacterById(int id) {
-  return characters.firstWhere((element) => element[keyId] == id,
-      orElse: () {
+  return characters.firstWhere((element) => element[keyId] == id, orElse: () {
     return null;
   });
 }
@@ -84,25 +96,25 @@ bool npcTargetSet(dynamic npc) {
   return npc[keyNpcTargetId] != null;
 }
 
-void npcClearDestination(dynamic npc){
+void npcClearDestination(dynamic npc) {
   npc[keyDestinationX] = null;
   npc[keyDestinationY] = null;
 }
 
-bool npcDestinationSet(dynamic npc){
+bool npcDestinationSet(dynamic npc) {
   return npc[keyDestinationX] != null;
 }
 
-void npcSetDestination(dynamic npc, double x, double y){
+void npcSetDestination(dynamic npc, double x, double y) {
   npc[keyDestinationX] = x;
   npc[keyDestinationY] = y;
 }
 
-void npcSetRandomDestination(dynamic npc){
+void npcSetRandomDestination(dynamic npc) {
   npcSetDestination(npc, randomBetween(-100, 100), randomBetween(-100, 100));
 }
 
-bool npcArrivedAtDestination(dynamic npc){
+bool npcArrivedAtDestination(dynamic npc) {
   return npcDistanceFromDestination(npc) <= destinationArrivedDistance;
 }
 
@@ -151,11 +163,13 @@ double getSpeed(dynamic character) {
 }
 
 dynamic spawnPlayer(double x, double y, String name) {
-  return spawnCharacter(x, y, name: name, npc: false, health: playerHealth, weapon: weaponHandgun);
+  return spawnCharacter(x, y,
+      name: name, npc: false, health: playerHealth, weapon: weaponHandgun);
 }
 
 dynamic spawnZombie(double x, double y) {
-  return spawnCharacter(y, x, npc: true, health: zombieHealth, weapon: weaponUnarmed);
+  return spawnCharacter(y, x,
+      npc: true, health: zombieHealth, weapon: weaponUnarmed);
 }
 
 double velX(double rotation, double speed) {
@@ -171,21 +185,23 @@ void setVelocity(dynamic target, double rotation, double speed) {
   target[keyVelocityY] = velY(rotation, bulletSpeed);
 }
 
-double npcDistanceFromDestination(dynamic npc){
+double npcDistanceFromDestination(dynamic npc) {
   dynamic npcPrivate = getCharacterPrivate(npc);
-  return objectDistanceFrom(npc, npcPrivate[keyDestinationX], npcPrivate[keyDestinationY]);
+  return objectDistanceFrom(
+      npc, npcPrivate[keyDestinationX], npcPrivate[keyDestinationY]);
 }
 
-double objectDistanceFrom(dynamic character, double x, double y){
+double objectDistanceFrom(dynamic character, double x, double y) {
   return distance(character[keyPositionX], character[keyPositionY], x, y);
 }
 
-void npcFaceDestination(dynamic npc, dynamic npcPrivate){
+void npcFaceDestination(dynamic npc, dynamic npcPrivate) {
   characterFace(npc, npcPrivate[keyDestinationX], npcPrivate[keyDestinationY]);
 }
 
-void characterFace(dynamic character, double x, double y){
-  setDirection(character, convertAngleToDirection(radionsBetween2(character, x, y)));
+void characterFace(dynamic character, double x, double y) {
+  setDirection(
+      character, convertAngleToDirection(radionsBetween2(character, x, y)));
 }
 
 void createJob(Function function, {int seconds = 0, int ms = 0}) {
@@ -194,16 +210,16 @@ void createJob(Function function, {int seconds = 0, int ms = 0}) {
   });
 }
 
-void assignId(dynamic object){
+void assignId(dynamic object) {
   id++;
   object[keyId] = id;
 }
 
-double round(double value, {int decimals = 1}){
+double round(double value, {int decimals = 1}) {
   return double.parse(value.toStringAsFixed(decimals));
 }
 
-void roundKey(dynamic object, String key, {int decimals = 1}){
+void roundKey(dynamic object, String key, {int decimals = 1}) {
   object[key] = round(object[key], decimals: decimals);
 }
 
@@ -214,17 +230,17 @@ double getShotAngle(character) {
   return angle;
 }
 
-void fireWeapon(dynamic character){
+void fireWeapon(dynamic character) {
   switch (character[keyWeapon]) {
     case weaponHandgun:
       double angle = getShotAngle(character);
-      spawnBullet(character[keyPositionX], character[keyPositionY],
-          angle, character[keyId]);
+      spawnBullet(character[keyPositionX], character[keyPositionY], angle,
+          character[keyId]);
       setCharacterStateFiring(character);
       character[keyShotCoolDown] = pistolCoolDown;
       break;
     case weaponShotgun:
-      for(int i = 0; i < 5; i++){
+      for (int i = 0; i < 5; i++) {
         spawnBullet(character[keyPositionX], character[keyPositionY],
             getShotAngle(character), character[keyId]);
       }
@@ -233,6 +249,7 @@ void fireWeapon(dynamic character){
       break;
   }
 }
+
 void npcWanderJob() {
   for (dynamic npc in getNpcs()) {
     if (npcTargetSet(npc)) continue;
@@ -258,9 +275,9 @@ void spawnBullet(double x, double y, double angle, int characterId) {
 
 dynamic spawnCharacter(double x, double y,
     {required bool npc,
-      required int health,
-      required int weapon,
-      String? name}) {
+    required int health,
+    required int weapon,
+    String? name}) {
   if (x == double.nan) {
     throw Exception("x is nan");
   }
@@ -297,7 +314,6 @@ void spawnZombieJob() {
 }
 
 dynamic spawnRandomZombie() {
-  return spawnZombie(randomBetween(-spawnRadius, spawnRadius), randomBetween(-spawnRadius, spawnRadius));
+  return spawnZombie(randomBetween(-spawnRadius, spawnRadius),
+      randomBetween(-spawnRadius, spawnRadius));
 }
-
-

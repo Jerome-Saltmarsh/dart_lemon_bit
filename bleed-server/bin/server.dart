@@ -41,8 +41,7 @@ void main() {
           return;
         } else if (isAlive(character) && !isFiring(character)) {
           int direction = request[keyDirection];
-          int characterState = request[keyState];
-          character[keyState] = characterState;
+          setCharacterState(character, request[keyState]);
           character[keyDirection] = direction;
           character[keyLastUpdateFrame] = frame;
           character[keyAimAngle] = request[keyAimAngle];

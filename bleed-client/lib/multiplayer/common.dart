@@ -38,7 +38,6 @@ const keyCharacters = 'characters';
 const keyBullets = 'bullets';
 const keyFrameOfDeath = 'z';
 const keyPlayerName = 'n';
-const keyType = 't';
 const keyLastUpdateFrame = 'lf';
 const keyAimAngle = 'a';
 const keyStartX = 'sx';
@@ -49,13 +48,12 @@ const keyAccuracy = 'ka';
 const keyEquipValue = 'equip';
 const keyWeapon = 'w';
 // private
+const keyType = 't';
 const keyNpcTargetId = 'nt';
 const keyVelocityX = 'vX';
 const keyVelocityY = 'vY';
 const keyDestinationX = 'dX';
 const keyDestinationY = 'dY';
-const keyPreviousState = 'ps';
-const keyStateDuration = 'sd';
 const keyShotCoolDown = 'sc';
 
 const double bulletRadius = 3;

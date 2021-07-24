@@ -54,8 +54,6 @@ const keyVelocityX = 'vX';
 const keyVelocityY = 'vY';
 const keyDestinationX = 'dX';
 const keyDestinationY = 'dY';
-const keyPreviousState = 'ps';
-const keyStateDuration = 'sd';
 const keyShotCoolDown = 'sc';
 
 const double bulletRadius = 3;

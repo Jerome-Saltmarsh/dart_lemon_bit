@@ -101,9 +101,6 @@ void updateCharacter(dynamic character) {
 
   switch (character[keyState]) {
     case characterStateAiming:
-      if (character[keyPreviousState] != characterStateAiming) {
-        character[keyAccuracy] = startingAccuracy;
-      }
       if (character[keyAccuracy] > 0.05) {
         character[keyAccuracy] -= 0.005;
       }
@@ -149,13 +146,6 @@ void updateCharacter(dynamic character) {
           break;
       }
       break;
-  }
-
-  if (character[keyPreviousState] != character[keyState]) {
-    character[keyPreviousState] = character[keyState];
-    character[keyStateDuration] = 0;
-  } else {
-    character[keyStateDuration]++;
   }
 }
 
