@@ -37,12 +37,13 @@ double getMouseRotation() {
 }
 
 dynamic getPlayerCharacter() {
-  return characters.firstWhere((element) => element[indexId] == id,
-      orElse: () => null);
+  // return characters.firstWhere((element) => element[indexId] == id,
+  //     orElse: () => null);
+  return playerCharacter;
 }
 
 bool get playerAssigned =>
-    characters.any((element) => element[indexId] == id);
+    playerCharacter != null;
 
 bool isNpc(dynamic character) {
   return character[keyType] == typeNpc;
@@ -125,17 +126,17 @@ bool idsMatch(dynamic a, dynamic b){
 }
 
 int getState(dynamic character){
-  return character[indexState];
+  return character[0];
 }
 
 int getDirection(dynamic character){
-  return character[indexDirection];
+  return character[1];
 }
 
 double posX(dynamic value) {
-  return value[indexPosX];
+  return value[2];
 }
 
 double posY(dynamic value) {
-  return value[indexPosY];
+  return value[3];
 }

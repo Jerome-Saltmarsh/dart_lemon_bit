@@ -1,3 +1,4 @@
+dynamic playerCharacter;
 List<dynamic> characters = [];
 List<dynamic> bullets = [];
 int id = idNotConnected;

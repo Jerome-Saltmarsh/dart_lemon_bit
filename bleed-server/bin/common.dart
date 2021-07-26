@@ -26,7 +26,27 @@ const weaponShotgun = 2;
 const typeNpc = 1;
 const typeHuman = 0;
 
-// [id, state, direction, positionX, positionY, weapon]
+// only the players accuracy is actually needed
+// player only
+// [id, accuracy, weapon]
+
+/**
+[
+  [], zombies
+  [], players
+  [], bullets
+  0, playerId
+  1, accuracy
+  2, weapon
+  3, posX
+  4, posY
+]
+**/
+
+// zombies have no weapon
+// "[0, 1, 12.5, 90.5]"
+// "0 1 12.5 90.5"
+// [state, direction, positionX, positionY]
 const indexId = 0;
 const indexState = 1;
 const indexDirection = 2;
@@ -39,6 +59,7 @@ const keyCommand = 'c';
 const keyId = 'i';
 const keyRotation = 'r';
 const keyCharacters = 'c';
+const keyParsedCharacter = 'pc';
 const keyBullets = 'b';
 const keyFrameOfDeath = 'z';
 const keyPlayerName = 'n';

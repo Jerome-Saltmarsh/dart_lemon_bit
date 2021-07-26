@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:math';
 import 'package:archive/archive.dart';
 
 import 'common.dart';
+import 'state.dart';
+import 'utils.dart';
 
 const double eight = pi / 8.0;
 const double quarter = pi / 4.0;
@@ -50,4 +53,44 @@ String encode(dynamic data) {
 dynamic decode(String data) {
   return jsonDecode(
       (utf8.decode(gZipDecoder.decodeBytes(base64.decode(data).toList()))));
+}
+
+
+
+/**
+    [
+    [], zombies
+    [], players
+    [], bullets
+    0, playerId
+    1, accuracy
+    2, weapon
+    3, posX
+    4, posY
+    ]
+ **/
+
+
+/// [state, direction, positionX, positionY]
+String parseCharacterToString(dynamic character){
+  return "${character[indexState]} ${character[indexDirection]} ${character[indexPosX]} ${character[indexPosY]}";
+}
+
+List<String> parseCharacters(){
+  return characters.map(parseCharacterToString).toList();
+}
+
+List<dynamic> unparseCharacters(List<String> parsedCharacters){
+  return parsedCharacters.map(unparseCharacter).toList();
+}
+
+dynamic unparseCharacter(String parsedCharacter){
+  List<String> attributes = parsedCharacter.split(" ");
+  return [
+    int.parse(attributes[0]),
+    int.parse(attributes[1]),
+    double.parse(attributes[2]),
+    double.parse(attributes[3]),
+    double.parse(attributes[4]),
+  ];
 }

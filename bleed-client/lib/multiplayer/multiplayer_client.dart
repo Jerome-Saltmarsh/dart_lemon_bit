@@ -46,7 +46,7 @@ class MultiplayerClient extends GameWidget {
   BuildContext context;
 
   static const String localhost = "ws://localhost:8080";
-  static const gpc = 'wss://bleed-11-osbmaezptq-ey.a.run.app/:8080';
+  static const gpc = 'wss://bleed-12-osbmaezptq-ey.a.run.app/:8080';
   static const host = gpc;
 
   Uri get hostURI => Uri.parse(host);
@@ -104,6 +104,11 @@ class MultiplayerClient extends GameWidget {
         if (!connected) button("Connect", connect),
         if (!debugMode) button("Show Debug", showDebug),
         if (debugMode) button("Hide Debug", hideDebug),
+        text("Date Size: ${event.length}"),
+        if(characters != null && event.length > 0)
+        text("Date Size Per Ch: ${(event.length / characters.length).round()}"),
+        if(characters != null) text("Characters: ${characters.length}"),
+
         if (debugMode)
           column([
             text("Server Host: $host"),
@@ -113,7 +118,6 @@ class MultiplayerClient extends GameWidget {
               text("Refresh: ${refreshDuration.inMilliseconds}"),
             text("Date Size: ${event.length}"),
             text("Date Size Per Ch: ${(event.length / characters.length).round()}"),
-            text("Characters: ${characters.length}"),
             text("Packages Sent: $packagesSent"),
             text("Packages Received: $packagesReceived"),
             if (mousePosX != null) text("mousePosX: ${mousePosX.round()}"),
@@ -316,11 +320,13 @@ class MultiplayerClient extends GameWidget {
     event = valueString;
     valueObject = decode(valueString);
     if (valueObject[keyCharacters] != null) {
-      characters = valueObject[keyCharacters];
+      characters = unparseCharacters(valueObject[keyCharacters]);
+    }
+    if (valueObject['p'] != null){
+      playerCharacter = unparseCharacter(valueObject['p']);
     }
     if (valueObject[keyId] != null) {
       id = valueObject[keyId];
-      dynamic playerCharacter = getPlayerCharacter();
       cameraX = posX(playerCharacter) - (size.width * 0.5);
       cameraY = posY(playerCharacter) - (size.height * 0.5);
     }
@@ -333,7 +339,6 @@ class MultiplayerClient extends GameWidget {
       bullets.clear();
       bullets = valueObject[keyBullets];
     }
-
     forceRedraw();
   }
 

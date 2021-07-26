@@ -22,16 +22,19 @@ void main() {
       var character = spawnPlayer(0, 0, request[keyPlayerName]);
       Map<String, dynamic> response = Map();
       response[keyId] = getId(character);
-      response[keyCharacters] = characters;
+      response[keyCharacters] = parseCharacters();
       response[keyBullets] = bullets;
+      response['p'] = parseCharacterToString(character);
       sendToClient(response);
       return;
     }
 
     void handleCommandUpdate(dynamic request){
       Map<String, dynamic> response = Map();
-      response[keyCharacters] = characters;
+      // response[keyCharacters] = characters;
       response[keyBullets] = bullets;
+      response[keyCharacters] = parseCharacters();
+
       if (request[keyId] != null) {
         int playerId = request[keyId];
         dynamic character = findCharacterById(playerId);
@@ -41,6 +44,8 @@ void main() {
         } else if (isAlive(character) && !isFiring(character)) {
           setCharacterState(character, request['s']);
           setDirection(character, request['d']);
+          response['p'] = parseCharacterToString(character);
+
           // TODO
           // set that in privateCharacter
           // character[keyLastUpdateFrame] = frame;

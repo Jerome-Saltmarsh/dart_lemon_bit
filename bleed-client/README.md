@@ -13,6 +13,7 @@
 [ ] Bullet Hit Animation
 [ ] Shot Sound
 [ ] Shot kickback
+[ ] Frame Smoothing (50ms before previous package)
 [x] Shotgun
 [x] Ping Check
 [x] Shot cool-down

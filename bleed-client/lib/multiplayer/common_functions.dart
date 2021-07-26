@@ -50,3 +50,18 @@ dynamic decode(String data) {
   return jsonDecode(
       (utf8.decode(gZipDecoder.decodeBytes(base64.decode(data).toList()))));
 }
+
+/// [state, direction, positionX, positionY]
+List<dynamic> unparseCharacters(List<dynamic> parsedCharacters){
+  return parsedCharacters.map(unparseCharacter).toList();
+}
+
+dynamic unparseCharacter(dynamic parsedCharacter){
+  List<String> attributes = parsedCharacter.split(" ");
+  return [
+    int.parse(attributes[0]),
+    int.parse(attributes[1]),
+    double.parse(attributes[2]),
+    double.parse(attributes[3]),
+  ];
+}
