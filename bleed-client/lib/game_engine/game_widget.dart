@@ -99,9 +99,7 @@ abstract class GameWidget extends StatefulWidget {
   }
 
   /// used to build the ui
-  Widget buildUI(BuildContext context) {
-    return Text("ui", style: TextStyle(color: Colors.red),);
-  }
+  Widget buildUI(BuildContext context);
 
   bool uiVisible() => false;
   mat.Color getBackgroundColor() => mat.Colors.black;
@@ -124,15 +122,21 @@ class _GameWidgetState extends State<GameWidget> {
   Size screenSize;
   FocusNode keyboardFocusNode;
   Timer updateTimer;
+  StateSetter drawGame;
+  StateSetter drawUI;
 
   @override
   void initState() {
     drawStream.stream.listen((event) {
-      setState(_doNothing);
+      // setState(_doNothing);
+      drawGame(_doNothing);
+      drawUI(_doNothing);
     });
     updateTimer = Timer.periodic(Duration(milliseconds: 1000 ~/ widget.fps), (timer) {
       widget.fixedUpdate();
-      setState(_doNothing);
+      // setState(_doNothing);
+      drawGame(_doNothing);
+      drawUI(_doNothing);
     });
     keyboardFocusNode = FocusNode();
     widget.init();
@@ -170,7 +174,7 @@ class _GameWidgetState extends State<GameWidget> {
               return Stack(
                 children: [
                   buildBody(context),
-                  if (widget.uiVisible()) widget.buildUI(context),
+                  if (widget.uiVisible()) _buildUI(),
                 ],
               );
             },
@@ -179,6 +183,14 @@ class _GameWidgetState extends State<GameWidget> {
       ),
       debugShowCheckedModeBanner: false,
     );
+  }
+
+  Widget _buildUI(){
+    return StatefulBuilder(
+        builder: (context, drawUI){
+          this.drawUI = drawUI;
+          return widget.buildUI(context);
+        });
   }
 
   Widget buildBody(BuildContext context) {
@@ -203,14 +215,19 @@ class _GameWidgetState extends State<GameWidget> {
               // game.handleMouseScroll(pointerSignalEvent.scrollDelta.dy);
             }
           },
-          child: Container(
-            color: widget.getBackgroundColor(),
-            width: screenSize.width,
-            height: screenSize.height,
-            child: CustomPaint(
-              size: screenSize,
-              painter: GameUIPainter(paintGame: widget.draw),
-            ),
+          child: StatefulBuilder(
+            builder: (context, drawGame){
+              this.drawGame = drawGame;
+              return Container(
+                color: widget.getBackgroundColor(),
+                width: screenSize.width,
+                height: screenSize.height,
+                child: CustomPaint(
+                  size: screenSize,
+                  painter: GameUIPainter(paintGame: widget.draw),
+                ),
+              );
+            },
           ),
         ),
       ),

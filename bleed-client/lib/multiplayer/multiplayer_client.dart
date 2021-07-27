@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:math';
-import 'dart:typed_data';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_game_engine/game_engine/game_input.dart';
@@ -269,7 +267,11 @@ class MultiplayerClient extends GameWidget {
   Future init() async {
     loadResources();
     connect();
-    Timer(Duration(milliseconds: 100), showChangeNameDialog);
+    // Timer(Duration(milliseconds: 100), showChangeNameDialog);
+    Timer(Duration(seconds: 2), (){
+      requestSpawn('hello');
+    });
+
   }
 
   void connect() {
