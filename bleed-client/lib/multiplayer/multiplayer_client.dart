@@ -41,6 +41,7 @@ class MultiplayerClient extends GameWidget {
   dynamic valueObject;
   DateTime lastRefresh = DateTime.now();
   Duration refreshDuration;
+  bool smooth = true;
 
   BuildContext context;
 
@@ -109,6 +110,7 @@ class MultiplayerClient extends GameWidget {
         text("Npcs: ${npcs.length}"),
         text("Player Assigned: $playerAssigned"),
         text("Direction: $requestDirection"),
+        button("smoothing $smooth", () => smooth = !smooth),
         if (debugMode)
           column([
             text("Server Host: $host"),
@@ -173,6 +175,49 @@ class MultiplayerClient extends GameWidget {
     sendToServer(request);
   }
 
+  void smoothings() {
+    if (framesSinceEvent > 10) return;
+    
+    for (dynamic character in players) {
+      double speed = 2;
+
+      if (character[0] != characterStateWalking) {
+        continue;
+      }
+      switch (getDirection(character)) {
+        case directionUp:
+          character[3] -= speed;
+          break;
+        case directionUpRight:
+          character[2] += speed * 0.5;
+          character[3] -= speed * 0.5;
+          break;
+        case directionRight:
+          character[2] += speed;
+          break;
+        case directionDownRight:
+          character[2] += speed * 0.5;
+          character[3] += speed * 0.5;
+          break;
+        case directionDown:
+          character[3] += speed;
+          break;
+        case directionDownLeft:
+          character[2] -= speed * 0.5;
+          character[3] += speed * 0.5;
+          break;
+        case directionLeft:
+          character[2] -= speed;
+          break;
+        case directionUpLeft:
+          character[2] -= speed * 0.5;
+          character[3] -= speed * 0.5;
+          break;
+      }
+      break;
+    }
+  }
+
   @override
   void fixedUpdate() {
     DateTime now = DateTime.now();
@@ -180,42 +225,9 @@ class MultiplayerClient extends GameWidget {
     lastRefresh = DateTime.now();
     framesSinceEvent++;
 
-    // if(framesSinceEvent < 10){
-    //   for(dynamic character in characters){
-    //     double speed = 2;
-    //     switch (getDirection(character)) {
-    //       case directionUp:
-    //         character[3] -= speed;
-    //         break;
-    //       case directionUpRight:
-    //         character[2] += speed * 0.5;
-    //         character[3] -= speed * 0.5;
-    //         break;
-    //       case directionRight:
-    //         character[2] += speed;
-    //         break;
-    //       case directionDownRight:
-    //         character[2] += speed * 0.5;
-    //         character[3] += speed * 0.5;
-    //         break;
-    //       case directionDown:
-    //         character[2] += speed;
-    //         break;
-    //       case directionDownLeft:
-    //         character[2] -= speed * 0.5;
-    //         character[3] += speed * 0.5;
-    //         break;
-    //       case directionLeft:
-    //         character[2] -= speed;
-    //         break;
-    //       case directionUpLeft:
-    //         character[2] -= speed * 0.5;
-    //         character[3] -= speed * 0.5;
-    //         break;
-    //     }
-    //     break;
-    //   }
-    // }
+    if (smooth) {
+      smoothings();
+    }
 
     controlCamera();
 
