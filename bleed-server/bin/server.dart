@@ -45,9 +45,11 @@ void main() {
               setCharacterState(character, CharacterState.values[request['s']]);
             }
             if (character.aiming) {
-              character.direction = convertAngleToDirection(request[keyAimAngle]);
+              if(request[keyAimAngle] != null){
+                character.direction = convertAngleToDirection(request[keyAimAngle]);
+              }
             } else {
-              setDirection(character, Direction.values[request['d']]);
+              character.direction =  Direction.values[request['d']];
             }
           }
         } catch (exception) {
