@@ -94,11 +94,11 @@ bool idsMatch(dynamic a, dynamic b){
 }
 
 int getState(dynamic character){
-  return character[0];
+  return character[state];
 }
 
 int getDirection(dynamic character){
-  return character[1];
+  return character[direction];
 }
 
 bool isAlive(dynamic character) {

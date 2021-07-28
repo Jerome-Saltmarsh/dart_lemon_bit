@@ -14,9 +14,8 @@ void drawCharacter(dynamic character) {
   int startFrame = 0;
   int direction = getDirection(character);
 
-  switch (getState(character)) {
+  switch (character[state]) {
     case characterStateIdle:
-      totalFrames = 1;
       startFrame = getStartFrameIdle(direction);
       break;
     case characterStateWalking:
@@ -37,11 +36,11 @@ void drawCharacter(dynamic character) {
   int spriteFrame = (drawFrame % totalFrames) + startFrame;
   int frameCount = 36;
 
-  // drawCharacterCircle(
-  //     character, character[keyCharacterId] == id ? Colors.blue : Colors.red);
-
   drawSprite(spriteTemplate, frameCount, spriteFrame, character[posX],
       character[posY]);
+
+  // drawCharacterCircle(
+  //     character, character[keyCharacterId] == id ? Colors.blue : Colors.red);
 
   // drawText(character[keyPlayerName], posX(character),
   //     posY(character), Colors.white);

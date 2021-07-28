@@ -438,14 +438,14 @@ class BleedClient extends GameWidget {
     }
 
 
-    dynamic player = getPlayerCharacter();
-    if (player != null && getState(player) == characterStateAiming) {
-      double accuracy = player[keyAccuracy];
-      double l = player[keyAimAngle] - (accuracy * 0.5);
-      double r = player[keyAimAngle] + (accuracy * 0.5);
-      drawLineRotation(player, l, bulletRange);
-      drawLineRotation(player, r, bulletRange);
-    }
+    // dynamic player = getPlayerCharacter();
+    // if (player != null && getState(player) == characterStateAiming) {
+    //   double accuracy = player[keyAccuracy];
+    //   double l = player[keyAimAngle] - (accuracy * 0.5);
+    //   double r = player[keyAimAngle] + (accuracy * 0.5);
+    //   drawLineRotation(player, l, bulletRange);
+    //   drawLineRotation(player, r, bulletRange);
+    // }
   }
 
   void drawBulletRange() {
