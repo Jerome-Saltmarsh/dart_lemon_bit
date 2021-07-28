@@ -1,6 +1,5 @@
 import 'dart:math';
 import 'keys.dart';
-import 'utils.dart';
 
 const double degreesToRadions = 0.0174533;
 const double radionsToDegrees =  57.29578;

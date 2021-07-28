@@ -100,3 +100,7 @@ int getState(dynamic character){
 int getDirection(dynamic character){
   return character[1];
 }
+
+bool isAlive(dynamic character) {
+  return getState(character) != characterStateDead;
+}

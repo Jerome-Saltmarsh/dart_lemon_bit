@@ -1,6 +1,10 @@
+import 'dart:ui';
+
 List<dynamic> players = [];
 List<dynamic> npcs = [];
 List<dynamic> bullets = [];
+int drawFrame = 0;
+Canvas canvas;
 int id = idNotConnected;
 const idNotConnected = -1;
 
