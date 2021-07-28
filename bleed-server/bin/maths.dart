@@ -1,6 +1,5 @@
 import 'dart:math';
-import 'common.dart';
-import 'utils.dart';
+import 'classes.dart';
 
 const double degreesToRadions = 0.0174533;
 const double radionsToDegrees =  57.29578;
@@ -18,9 +17,9 @@ double magnitude(double a, double b){
   return sqrt((a * a) + (b * b));
 }
 
-double distanceBetween(dynamic characterA, dynamic characterB){
-  double xDiff = posX(characterA) - posX(characterB);
-  double yDiff = posY(characterA) - posY(characterB);
+double distanceBetween(GameObject a, GameObject b){
+  double xDiff = a.x - b.x;
+  double yDiff = a.y - b.y;
   return magnitude(xDiff, yDiff);
 }
 
@@ -42,12 +41,12 @@ Duration durationSince(DateTime value){
   return DateTime.now().difference(value);
 }
 
-double radionsBetweenObject(dynamic a, dynamic b) {
-  return radionsBetween(posX(a), posY(a), posX(b), posY(b));
+double radionsBetweenObject(GameObject a, GameObject b) {
+  return radionsBetween(a.x, a.y, b.x, b.y);
 }
 
-double radionsBetween2(dynamic a, double x, double y) {
-  return radionsBetween(posX(a), posY(a), x, y);
+double radionsBetween2(GameObject a, double x, double y) {
+  return radionsBetween(a.x, a.y, x, y);
 }
 
 double convertVectorToDegrees(double x, double y) {
@@ -65,4 +64,12 @@ double radionsBetween(double x1, double y1, double x2, double y2) {
     return (atan2(x, y) * -1);
   }
   return (pi + pi) - atan2(x, y);
+}
+
+double velX(double rotation, double speed) {
+  return -cos(rotation + (pi * 0.5)) * speed;
+}
+
+double velY(double rotation, double speed) {
+  return -sin(rotation + (pi * 0.5)) * speed;
 }

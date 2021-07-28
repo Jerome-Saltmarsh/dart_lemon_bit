@@ -35,6 +35,7 @@ class MultiplayerClient extends GameWidget {
   int requestCharacterState = characterStateIdle;
   TextEditingController playerNameController = TextEditingController();
   DateTime previousEvent = DateTime.now();
+  int framesSinceEvent = 0;
   Duration ping;
   String event = "";
   dynamic valueObject;
@@ -45,7 +46,7 @@ class MultiplayerClient extends GameWidget {
 
   static const String localhost = "ws://localhost:8080";
   static const gpc = 'wss://bleed-12-osbmaezptq-ey.a.run.app/:8080';
-  static const host = gpc;
+  static const host = localhost;
 
   Uri get hostURI => Uri.parse(host);
 
@@ -103,10 +104,10 @@ class MultiplayerClient extends GameWidget {
         if (!debugMode) button("Show Debug", showDebug),
         if (debugMode) button("Hide Debug", hideDebug),
         text("Date Size: ${event.length}"),
-        if(characters != null && event.length > 0)
-        text("Date Size Per Ch: ${(event.length / characters.length).round()}"),
-        if(characters != null) text("Characters: ${characters.length}"),
-
+        text("Frames since event: $framesSinceEvent"),
+        text("Players: ${players.length}"),
+        text("Npcs: ${npcs.length}"),
+        text("Player Assigned: $playerAssigned"),
         if (debugMode)
           column([
             text("Server Host: $host"),
@@ -115,7 +116,6 @@ class MultiplayerClient extends GameWidget {
             if (refreshDuration != null)
               text("Refresh: ${refreshDuration.inMilliseconds}"),
             text("Date Size: ${event.length}"),
-            text("Date Size Per Ch: ${(event.length / characters.length).round()}"),
             text("Packages Sent: $packagesSent"),
             text("Packages Received: $packagesReceived"),
             if (mousePosX != null) text("mousePosX: ${mousePosX.round()}"),
@@ -149,6 +149,7 @@ class MultiplayerClient extends GameWidget {
   }
 
   void requestSpawn(String playerName) {
+    print("request spawn");
     Map<String, dynamic> request = Map();
     request[keyCommand] = commandSpawn;
     request[keyPlayerName] = playerName;
@@ -176,6 +177,44 @@ class MultiplayerClient extends GameWidget {
     DateTime now = DateTime.now();
     refreshDuration = now.difference(lastRefresh);
     lastRefresh = DateTime.now();
+    framesSinceEvent++;
+
+    // if(framesSinceEvent < 10){
+    //   for(dynamic character in characters){
+    //     double speed = 2;
+    //     switch (getDirection(character)) {
+    //       case directionUp:
+    //         character[3] -= speed;
+    //         break;
+    //       case directionUpRight:
+    //         character[2] += speed * 0.5;
+    //         character[3] -= speed * 0.5;
+    //         break;
+    //       case directionRight:
+    //         character[2] += speed;
+    //         break;
+    //       case directionDownRight:
+    //         character[2] += speed * 0.5;
+    //         character[3] += speed * 0.5;
+    //         break;
+    //       case directionDown:
+    //         character[2] += speed;
+    //         break;
+    //       case directionDownLeft:
+    //         character[2] -= speed * 0.5;
+    //         character[3] += speed * 0.5;
+    //         break;
+    //       case directionLeft:
+    //         character[2] -= speed;
+    //         break;
+    //       case directionUpLeft:
+    //         character[2] -= speed * 0.5;
+    //         character[3] -= speed * 0.5;
+    //         break;
+    //     }
+    //     break;
+    //   }
+    // }
 
     controlCamera();
 
@@ -268,10 +307,9 @@ class MultiplayerClient extends GameWidget {
     loadResources();
     connect();
     // Timer(Duration(milliseconds: 100), showChangeNameDialog);
-    Timer(Duration(seconds: 2), (){
+    Timer(Duration(seconds: 2), () {
       requestSpawn('hello');
     });
-
   }
 
   void connect() {
@@ -315,19 +353,21 @@ class MultiplayerClient extends GameWidget {
   }
 
   void onEvent(dynamic valueString) {
+    print("on event");
+    framesSinceEvent = 0;
     DateTime now = DateTime.now();
     ping = now.difference(previousEvent);
     previousEvent = DateTime.now();
     packagesReceived++;
     event = valueString;
     valueObject = decode(valueString);
-    if (valueObject[keyCharacters] != null) {
-      characters = unparseCharacters(valueObject[keyCharacters]);
+    if (valueObject[keyNpcs] != null) {
+      npcs = unparseNpcs(valueObject[keyNpcs]);
     }
-    if (valueObject['p'] != null){
-      playerCharacter = unparseCharacter(valueObject['p']);
+    if (valueObject[keyPlayers] != null) {
+      players = unparsePlayers(valueObject[keyPlayers]);
     }
-    if (valueObject[keyId] != null) {
+    if (id < 0 && valueObject[keyId] != null) {
       id = valueObject[keyId];
       cameraX = posX(playerCharacter) - (size.width * 0.5);
       cameraY = posY(playerCharacter) - (size.height * 0.5);
@@ -335,7 +375,7 @@ class MultiplayerClient extends GameWidget {
 
     // Play bullet audio
     if (valueObject[keyBullets] != null) {
-      if((valueObject[keyBullets] as List).length > bullets.length){
+      if ((valueObject[keyBullets] as List).length > bullets.length) {
         playPistolAudio();
       }
       bullets.clear();
@@ -381,7 +421,6 @@ class MultiplayerClient extends GameWidget {
     drawTiles();
     drawBullets();
     drawCharacters();
-    // drawBulletRange();
 
     dynamic player = getPlayerCharacter();
     if (player != null && getState(player) == characterStateAiming) {
@@ -391,24 +430,13 @@ class MultiplayerClient extends GameWidget {
       drawLineRotation(player, l, bulletRange);
       drawLineRotation(player, r, bulletRange);
     }
-
-    if (debugMode) {
-      drawNpcDebug();
-    }
-  }
-
-  void drawNpcDebug() {
-    getNpcs().forEach(drawNpcDebugLines);
   }
 
   void drawBulletRange() {
     if (!playerAssigned) return;
     dynamic player = getPlayerCharacter();
     drawCircleOutline(
-        radius: bulletRange,
-        x: posX(player),
-        y: posY(player),
-        color: white);
+        radius: bulletRange, x: posX(player), y: posY(player), color: white);
   }
 
   void setColor(Color value) {
@@ -479,9 +507,12 @@ class MultiplayerClient extends GameWidget {
 
   void drawCharacters() {
     if (spriteTemplate == null) return;
-    characters.sort((a, b) => posY(a) > posY(b) ? 1 : -1);
-    characters.where(isDead).forEach((drawCharacter));
-    characters.where(isAlive).forEach((drawCharacter));
+    players.sort((a, b) => posY(a) > posY(b) ? 1 : -1);
+    players.where(isDead).forEach((drawCharacter));
+    players.where(isAlive).forEach((drawCharacter));
+    npcs.sort((a, b) => posY(a) > posY(b) ? 1 : -1);
+    npcs.where(isDead).forEach((drawCharacter));
+    npcs.where(isAlive).forEach((drawCharacter));
   }
 
   bool isAlive(dynamic character) {
@@ -645,7 +676,6 @@ class MultiplayerClient extends GameWidget {
   }
 
   void drawCharacterCircle(dynamic value, Color color) {
-    drawCircle(
-        posX(value), posY(value), characterRadius, color);
+    drawCircle(posX(value), posY(value), characterRadius, color);
   }
 }

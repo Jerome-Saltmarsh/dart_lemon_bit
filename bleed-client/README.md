@@ -13,7 +13,10 @@
 [ ] Bullet Hit Animation
 [ ] Shot Sound
 [ ] Shot kickback
+[ ] Fix Shooting
+[ ] Server send on screen characters only
 [ ] Frame Smoothing (50ms before previous package)
+[ ] Cache character array
 [x] Shotgun
 [x] Ping Check
 [x] Shot cool-down

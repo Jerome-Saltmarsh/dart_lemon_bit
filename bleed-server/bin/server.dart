@@ -1,8 +1,9 @@
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 
+import 'classes.dart';
 import 'common.dart';
-import 'common_functions.dart';
+import 'conversion.dart';
 import 'settings.dart';
 import 'update.dart';
 import 'utils.dart';
@@ -19,65 +20,53 @@ void main() {
     }
 
     void handleCommandSpawn(dynamic request) {
-      var character = spawnPlayer(0, 0, request[keyPlayerName]);
+      var character = spawnPlayer("test");
       Map<String, dynamic> response = Map();
-      response[keyId] = getId(character);
-      response[keyCharacters] = parseCharacters();
+      response[keyId] = character.id;
+      response[keyNpcs] = parseNpcs();
+      response[keyPlayers] = parsePlayers();
       response[keyBullets] = bullets;
-      response['p'] = parseCharacterToString(character);
       sendToClient(response);
       return;
     }
 
-    void handleCommandUpdate(dynamic request){
+    void handleCommandUpdate(dynamic request) {
       Map<String, dynamic> response = Map();
-      // response[keyCharacters] = characters;
       response[keyBullets] = bullets;
-      response[keyCharacters] = parseCharacters();
+      response[keyNpcs] = parseNpcs();
+      response[keyPlayers] = parsePlayers();
 
       if (request[keyId] != null) {
         int playerId = request[keyId];
-        dynamic character = findCharacterById(playerId);
-        if (character == null) {
-          handleCommandSpawn(request);
-          return;
-        } else if (isAlive(character) && !isFiring(character)) {
-          setCharacterState(character, request['s']);
-          setDirection(character, request['d']);
-          response['p'] = parseCharacterToString(character);
-
-          // TODO
-          // set that in privateCharacter
-          // character[keyLastUpdateFrame] = frame;
-          // character[keyAimAngle] = request[keyAimAngle];
+        try {
+          Character character = findPlayerById(playerId);
+          if (character.alive && !character.firing) {
+            if(request[keyAimAngle] != null){
+              character.aimAngle = request[keyAimAngle];
+            }
+            setCharacterState(character, CharacterState.values[request['s']]);
+            setDirection(character, Direction.values[request['d']]);
+          }
+        } catch (exception) {
+          print(exception);
         }
       }
       sendToClient(response);
     }
 
-    void handleCommandAttack(dynamic request){
+    void handleCommandAttack(dynamic request) {
       if (request[keyId] == null) return;
       int playerId = request[keyId];
-      dynamic character = findCharacterById(playerId);
-      if (character == null) return;
-      if (!isAiming(character)) return;
-      character[keyRotation] = request[keyRotation];
-      fireWeapon(character);
+      Character player = findPlayerById(playerId);
+      if (!isAiming(player)) return;
+      player.aimAngle = request[keyRotation];
+      fireWeapon(player);
     }
 
-    void handleRequestEquip(dynamic request){
+    void handleRequestEquip(dynamic request) {
       if (request[keyId] == null) return;
-      int playerId = request[keyId];
-      dynamic character = findCharacterById(playerId);
-      if (character == null) return;
-      switch (request[keyEquipValue]) {
-        case weaponHandgun:
-          character[keyWeapon] = weaponHandgun;
-          break;
-        case weaponShotgun:
-          character[keyWeapon] = weaponShotgun;
-          break;
-      }
+      Character player = findPlayerById(request[keyId]);
+      player.weapon = Weapon.values[request[keyEquipValue]];
     }
 
     void onEvent(data) {
@@ -90,7 +79,7 @@ void main() {
           handleCommandUpdate(request);
           break;
         case commandSpawnZombie:
-          spawnRandomZombie();
+          spawnRandomNpc();
           break;
         case commandAttack:
           handleCommandAttack(request);

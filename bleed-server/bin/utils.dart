@@ -1,110 +1,58 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'classes.dart';
 import 'common.dart';
-import 'common_functions.dart';
 import 'maths.dart';
 import 'settings.dart';
 import 'state.dart';
-import 'update.dart';
-
-double posX(dynamic value) {
-  return value[indexPosX];
-}
-
-double posY(dynamic value) {
-  return value[indexPosY];
-}
 
 double bulletDistanceTravelled(dynamic bullet) {
   return distance(bullet['x'], bullet['y'], bullet[keyStartX],
       bullet[keyStartY]);
 }
 
-List<dynamic> getHumans() {
-  return characters.where(isHuman).toList();
-}
-
-List<dynamic> getNpcs() {
-  return charactersPrivate.where(isNpc).toList();
-}
-
-bool isHuman(dynamic character) {
-  return character[keyType] == typeHuman;
-}
-
-bool isNpc(dynamic character) {
-  return character[keyType] == typeNpc;
-}
-
-bool isAlive(dynamic character) {
-  return getState(character) != characterStateDead;
-}
-
-bool isFiring(dynamic character) {
-  return getState(character) == characterStateFiring;
-}
-
-int getState(dynamic character){
-  return character[indexState];
-}
-
-int getDirection(dynamic character){
-  return character[indexDirection];
-}
-
-void setCharacterState(dynamic character, int value) {
-  if (getState(character) == value) return;
+void setCharacterState(Character character, CharacterState value) {
+  if (character.state == value) return;
 
   switch (value) {
-    case characterStateAiming:
-      character[keyAccuracy] = startingAccuracy;
+    case CharacterState.Aiming:
+      character.accuracy = 0;
       break;
   }
-
-  character[indexState] = value;
+  character.state = value;
 }
 
-void setDirection(dynamic character, int value){
-  character[indexDirection] = value;
+void setDirection(Character character, Direction value){
+  character.direction = value;
 }
 
-void setCharacterStateWalk(dynamic character) {
-  setCharacterState(character, characterStateWalking);
+bool withinViewRange(Npc npc, GameObject target){
+  return distanceBetween(npc, target) < zombieViewRange;
 }
 
-void setCharacterStateAim(dynamic character) {
-  setCharacterState(character, characterStateAiming);
+Character npcTarget(Npc npc) {
+  return findPlayerById(npc.targetId);
 }
 
-void setCharacterStateIdle(dynamic character) {
-  setCharacterState(character, characterStateIdle);
+void npcClearTarget(Npc npc) {
+  npc.targetId = -1;
 }
 
-void setCharacterStateDead(dynamic character) {
-  setCharacterState(character, characterStateDead);
-}
-
-void setCharacterStateFiring(dynamic character) {
-  setCharacterState(character, characterStateFiring);
-}
-
-dynamic npcTarget(dynamic character) {
-  return findCharacterById(character[keyNpcTargetId]);
-}
-
-void npcClearTarget(character) {
-  character[keyNpcTargetId] = null;
-}
-
-dynamic findCharacterById(int id) {
-  return characters.firstWhere((element) => element[indexId] == id, orElse: () {
-    return null;
+Npc findNpcById(int id){
+  return npcs.firstWhere((npc) => npc.id == id, orElse: () {
+    throw Exception("could not find npc with id $id");
   });
 }
 
-bool npcTargetSet(dynamic npc) {
-  return npc[keyNpcTargetId] != null;
+Character findPlayerById(int id){
+  return players.firstWhere((player) => player.id == id, orElse: () {
+    throw PlayerNotFoundException();
+  });
+}
+
+class PlayerNotFoundException implements Exception {
+
 }
 
 void npcClearDestination(dynamic npc) {
@@ -125,8 +73,8 @@ void npcSetRandomDestination(dynamic npc) {
   npcSetDestination(npc, randomBetween(-100, 100), randomBetween(-100, 100));
 }
 
-bool npcArrivedAtDestination(dynamic npc) {
-  return npcDistanceFromDestination(npc) <= destinationArrivedDistance;
+bool arrivedAtDestination(Npc npc) {
+  return distanceFromDestination(npc) <= destinationArrivedDistance;
 }
 
 void npcSetTarget(dynamic npc, dynamic value) {
@@ -158,72 +106,43 @@ bool connectionExpired(dynamic character) {
   return frame - lastUpdateFrame(character) > expiration;
 }
 
-bool isDead(dynamic character) {
-  return getState(character) == characterStateDead;
+bool isDead(Character character) {
+  return character.state == characterStateDead;
 }
 
-bool isAiming(dynamic character) {
-  return getState(character) == characterStateAiming;
+bool isAiming(Character character) {
+  return character.state == characterStateAiming;
 }
 
-double getSpeed(dynamic character) {
-  if (isHuman(character)) {
-    return characterSpeed;
-  }
-  return zombieSpeed;
+void setVelocity(PhysicsGameObject target, double rotation, double speed) {
+  target.xVel = velX(rotation, bulletSpeed);
+  target.yVel = velY(rotation, bulletSpeed);
 }
 
-dynamic spawnPlayer(double x, double y, String name) {
-  return spawnCharacter(x, y,
-      name: name, npc: false, health: playerHealth, weapon: weaponHandgun);
+double distanceFromDestination(Npc npc) {
+  return objectDistanceFrom(npc, npc.xDes, npc.yDes);
 }
 
-dynamic spawnZombie(double x, double y) {
-  return spawnCharacter(y, x,
-      npc: true, health: zombieHealth, weapon: weaponUnarmed);
+double objectDistanceFrom(GameObject gameObject, double x, double y) {
+  return distance(gameObject.x, gameObject.y, x, y);
 }
 
-double velX(double rotation, double speed) {
-  return -cos(rotation + (pi * 0.5)) * speed;
+void faceDestination(Npc npc) {
+  characterFace(npc, npc.xDes, npc.yDes);
 }
 
-double velY(double rotation, double speed) {
-  return -sin(rotation + (pi * 0.5)) * speed;
+void characterFace(Character character, double x, double y) {
+  setDirection(character, convertAngleToDirection(radionsBetween2(character, x, y)));
 }
 
-void setVelocity(dynamic target, double rotation, double speed) {
-  target[keyVelocityX] = velX(rotation, bulletSpeed);
-  target[keyVelocityY] = velY(rotation, bulletSpeed);
-}
-
-double npcDistanceFromDestination(dynamic npc) {
-  dynamic npcPrivate = getCharacterPrivate(npc);
-  return objectDistanceFrom(
-      npc, npcPrivate[keyDestinationX], npcPrivate[keyDestinationY]);
-}
-
-double objectDistanceFrom(dynamic character, double x, double y) {
-  return distance(posY(character), posY(character), x, y);
-}
-
-void npcFaceDestination(dynamic npc, dynamic npcPrivate) {
-  characterFace(npc, npcPrivate[keyDestinationX], npcPrivate[keyDestinationY]);
-}
-
-void characterFace(dynamic character, double x, double y) {
-  setDirection(
-      character, convertAngleToDirection(radionsBetween2(character, x, y)));
+void characterFaceObject(Character character, GameObject target) {
+  characterFace(character, target.x, target.y);
 }
 
 void createJob(Function function, {int seconds = 0, int ms = 0}) {
   Timer.periodic(Duration(seconds: seconds, milliseconds: ms), (timer) {
     function();
   });
-}
-
-void assignId(dynamic object) {
-  id++;
-  object[keyId] = id;
 }
 
 double round(double value, {int decimals = 1}) {
@@ -234,96 +153,91 @@ void roundKey(dynamic object, int key, {int decimals = 1}) {
   object[key] = round(object[key], decimals: decimals);
 }
 
-double getShotAngle(character) {
-  double accuracy = character[keyAccuracy];
-  double angle = character[keyRotation] + giveOrTake(accuracy * 0.5);
-  character[keyAccuracy] = startingAccuracy;
-  return angle;
+double getShotAngle(Character character) {
+  return character.aimAngle + giveOrTake(character.accuracy * 0.5);
 }
 
-void fireWeapon(dynamic character) {
-  dynamic characterPrivate = getCharacterPrivate(character);
-
-  switch (character[keyWeapon]) {
-    case weaponHandgun:
-      double angle = getShotAngle(character);
-      spawnBullet(posX(character), posY(character), angle,
-          character[keyId]);
-      setCharacterStateFiring(character);
-      characterPrivate[keyShotCoolDown] = pistolCoolDown;
+void fireWeapon(Character character) {
+  switch (character.weapon) {
+    case Weapon.HandGun:
+      characterSpawnBullet(character);
+      character.fire();
+      character.shotCoolDown = pistolCoolDown;
       break;
-    case weaponShotgun:
+    case Weapon.Shotgun:
       for (int i = 0; i < 5; i++) {
-        spawnBullet(posX(character), posY(character),
-            getShotAngle(character), character[keyId]);
+        characterSpawnBullet(character);
       }
-      setCharacterStateFiring(character);
-      characterPrivate[keyShotCoolDown] = shotgunCoolDown;
+      character.fire();
+      character.shotCoolDown = shotgunCoolDown;
       break;
   }
 }
 
 void npcWanderJob() {
-  for (dynamic npc in getNpcs()) {
-    if (npcTargetSet(npc)) continue;
+  for (Npc npc in npcs) {
+    if (npc.targetSet) continue;
     if (npcDestinationSet(npc)) continue;
     npcSetRandomDestination(npc);
   }
 }
 
 void spawnBullet(double x, double y, double angle, int characterId) {
-  Map<String, dynamic> bullet = Map();
-  bullet['x'] = x;
-  bullet['y'] = y;
-  bullet[keyStartX] = x;
-  bullet[keyStartY] = y;
-  assignId(bullet);
+  Bullet bullet = Bullet(x, y, velX(angle, bulletSpeed), velY(angle, bulletSpeed), characterId);
+  bullet.xStart = x;
+  bullet.yStart = y;
   setVelocity(bullet, angle, bulletSpeed);
-  bullet[keyRotation] = angle;
-  bullet[keyFrame] = 0;
-  bullet[keyId] = characterId;
   bullets.add(bullet);
 }
 
-dynamic spawnCharacter(double x, double y,
-    {required bool npc,
-    required int health,
-    required int weapon,
-    String? name}) {
-  if (x == double.nan) {
-    throw Exception("x is nan");
-  }
-  dynamic character = [
-    id++,
-    characterStateIdle,
-    directionUp,
-    x,
-    y,
-    weapon,
-    if(name != null)
-      name,
-    if(name != null)
-      frame, // last update frame
-  ];
-
-  Map<String, dynamic> characterPrivate = new Map();
-  characterPrivate[keyType] = npc ? typeNpc : typeHuman;
-  characterPrivate[keyHealth] = health;
-  characterPrivate[keyVelocityX] = 0;
-  characterPrivate[keyVelocityY] = 0;
-  characterPrivate[keyId] = getId(character);
-
-  characters.add(character);
-  charactersPrivate.add(characterPrivate);
-  return character;
+void characterSpawnBullet(Character character){
+  spawnBullet(character.x, character.y, getShotAngle(character), character.id);
 }
 
-void spawnZombieJob() {
-  if (getNpcs().length >= maxZombies) return;
-  spawnRandomZombie();
+Npc spawnNpc(double x, double y) {
+  Npc npc = Npc(x, y);
+  npcs.add(npc);
+  return npc;
 }
 
-dynamic spawnRandomZombie() {
-  return spawnZombie(randomBetween(-spawnRadius, spawnRadius),
+Npc spawnRandomNpc() {
+  return spawnNpc(randomBetween(-spawnRadius, spawnRadius),
       randomBetween(-spawnRadius, spawnRadius));
+}
+
+Character spawnPlayer(String name){
+  Character player = Character(0.01, 0.02, Weapon.HandGun, 5, playerSpeed, name);
+  players.add(player);
+  return player;
+}
+
+const double eight = pi / 8.0;
+const double quarter = pi / 4.0;
+
+Direction convertAngleToDirection(double angle) {
+  if (angle < eight) {
+    return Direction.Up;
+  }
+  if (angle < eight + (quarter * 1)) {
+    return Direction.UpRight;
+  }
+  if (angle < eight + (quarter * 2)) {
+    return Direction.Right;
+  }
+  if (angle < eight + (quarter * 3)) {
+    return Direction.DownRight;
+  }
+  if (angle < eight + (quarter * 4)) {
+    return Direction.Down;
+  }
+  if (angle < eight + (quarter * 5)) {
+    return Direction.DownLeft;
+  }
+  if (angle < eight + (quarter * 6)) {
+    return Direction.Left;
+  }
+  if (angle < eight + (quarter * 7)) {
+    return Direction.UpLeft;
+  }
+  return Direction.Up;
 }

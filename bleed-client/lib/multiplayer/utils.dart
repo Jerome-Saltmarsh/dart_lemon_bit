@@ -57,9 +57,6 @@ bool isDead(dynamic character) {
   return getState(character) == characterStateDead;
 }
 
-List<dynamic> getNpcs() {
-  return characters.where(isNpc).toList();
-}
 
 void drawLine(double x1, double y1, double x2, double y2) {
   globalCanvas.drawLine(offset(x1, y1), offset(x2, y2), globalPaint);
@@ -88,29 +85,6 @@ void drawLineBetween(dynamic a, dynamic b) {
 
 void drawLineNpcDestination(dynamic npc) {
   drawLineFrom(npc, npc[keyDestinationX], npc[keyDestinationY]);
-}
-
-void drawLineNpcTarget(dynamic npc) {
-  drawLineBetween(npc, npcTarget(npc));
-}
-
-void drawNpcDebugLines(dynamic npc) {
-  if (npc[keyNpcTargetId] != null) {
-    drawLineNpcTarget(npc);
-  } else if (npc[keyDestinationX] != null) {
-    drawLineNpcDestination(npc);
-  }
-}
-
-dynamic npcTarget(dynamic character) {
-  return findCharacterById(character[keyNpcTargetId]);
-}
-
-dynamic findCharacterById(int id) {
-  return characters.firstWhere((element) => element[indexId] == id,
-      orElse: () {
-    return null;
-  });
 }
 
 dynamic rotationToPosX(double rotation, double distance) {

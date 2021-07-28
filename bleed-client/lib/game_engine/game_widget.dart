@@ -86,6 +86,7 @@ abstract class GameWidget extends StatefulWidget {
 
   final int fps;
   final String title;
+  Size screenSize;
 
   Future init();
 
@@ -119,7 +120,6 @@ StreamController drawStream = StreamController();
 class _GameWidgetState extends State<GameWidget> {
 
   // variables
-  Size screenSize;
   FocusNode keyboardFocusNode;
   Timer updateTimer;
   StateSetter drawGame;
@@ -128,13 +128,11 @@ class _GameWidgetState extends State<GameWidget> {
   @override
   void initState() {
     drawStream.stream.listen((event) {
-      // setState(_doNothing);
       drawGame(_doNothing);
       drawUI(_doNothing);
     });
     updateTimer = Timer.periodic(Duration(milliseconds: 1000 ~/ widget.fps), (timer) {
       widget.fixedUpdate();
-      // setState(_doNothing);
       drawGame(_doNothing);
       drawUI(_doNothing);
     });
@@ -170,7 +168,7 @@ class _GameWidgetState extends State<GameWidget> {
           // appBar: game.buildAppBar(context),
           body: Builder(
             builder: (context){
-              screenSize = MediaQuery.of(context).size;
+              widget.screenSize = MediaQuery.of(context).size;
               return Stack(
                 children: [
                   buildBody(context),
@@ -220,10 +218,10 @@ class _GameWidgetState extends State<GameWidget> {
               this.drawGame = drawGame;
               return Container(
                 color: widget.getBackgroundColor(),
-                width: screenSize.width,
-                height: screenSize.height,
+                width: widget.screenSize.width,
+                height: widget.screenSize.height,
                 child: CustomPaint(
-                  size: screenSize,
+                  size: widget.screenSize,
                   painter: GameUIPainter(paintGame: widget.draw),
                 ),
               );

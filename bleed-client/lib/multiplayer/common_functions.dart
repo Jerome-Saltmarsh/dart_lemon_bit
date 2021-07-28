@@ -52,16 +52,31 @@ dynamic decode(String data) {
 }
 
 /// [state, direction, positionX, positionY]
-List<dynamic> unparseCharacters(List<dynamic> parsedCharacters){
-  return parsedCharacters.map(unparseCharacter).toList();
+List<dynamic> unparseNpcs(List<dynamic> parsedCharacters){
+  return parsedCharacters.map(unparseNpc).toList();
 }
 
-dynamic unparseCharacter(dynamic parsedCharacter){
+List<dynamic> unparsePlayers(List<dynamic> parsedCharacters){
+  return parsedCharacters.map(unparsePlayer).toList();
+}
+
+dynamic unparseNpc(dynamic parsedCharacter){
   List<String> attributes = parsedCharacter.split(" ");
   return [
     int.parse(attributes[0]),
     int.parse(attributes[1]),
     double.parse(attributes[2]),
     double.parse(attributes[3]),
+  ];
+}
+
+dynamic unparsePlayer(dynamic parsedCharacter){
+  List<String> attributes = parsedCharacter.split(" ");
+  return [
+    int.parse(attributes[0]),
+    int.parse(attributes[1]),
+    double.parse(attributes[2]),
+    double.parse(attributes[3]),
+    int.parse(attributes[4]),
   ];
 }

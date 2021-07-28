@@ -1,5 +1,5 @@
+import 'classes.dart';
 import 'common.dart';
-import 'common_functions.dart';
 import 'maths.dart';
 import 'settings.dart';
 import 'state.dart';
@@ -7,60 +7,53 @@ import 'utils.dart';
 
 void initUpdateLoop() {
   createJob(fixedUpdate, ms: 1000 ~/ 30);
-  createJob(spawnZombieJob, seconds: 5);
+  // createJob(spawnZombieJob, seconds: 5);
   createJob(npcWanderJob, seconds: 10);
   // createJob(deleteDeadAndExpiredCharacters, seconds: 6);
   createJob(updateNpcTarget, ms: 500);
 }
 
 void updateNpcTarget() {
-  List<dynamic> players = charactersPrivate.where(isHuman).toList();
-  List<dynamic> npcs = charactersPrivate.where(isNpc).toList();
-
   for (int i = 0; i < npcs.length; i++) {
-    dynamic npc = npcs[i];
-    if (!npcTargetSet(npc)) {
-      for (dynamic player in players) {
-        dynamic npcPublic = getCharacterPublic(npc);
-        dynamic playerPublic = getCharacterPublic(player);
-        if (distanceBetween(npcPublic, playerPublic) < zombieViewRange) {
-          npcSetTarget(npc, player);
-        }
+    Npc npc = npcs[i];
+    if (npc.targetSet) continue;
+    for (Character player in players) {
+      if (distanceBetween(npc, player) < zombieViewRange) {
+        npcSetTarget(npc, player);
       }
     }
   }
 }
 
-void deleteDeadAndExpiredCharacters() {
-  for (int i = 0; i < characters.length; i++) {
-    dynamic character = characters[i];
-    dynamic characterPrivate = getCharacterPrivate(character);
-
-    if (isHuman(characterPrivate) && connectionExpired(character)) {
-      removeCharacter(character);
-      i--;
-      continue;
-    }
-    if (isDead(character)) {
-      if (frame - character[keyFrameOfDeath] > 120) {
-        if (isNpc(characterPrivate)) {
-          removeCharacter(character);
-          i--;
-        } else {
-          setCharacterStateIdle(character);
-          setPosition(character, x: 0, y: 0);
-        }
-      }
-    }
-  }
-}
+// void deleteDeadAndExpiredCharacters() {
+//   for (int i = 0; i < characters.length; i++) {
+//     dynamic character = characters[i];
+//     dynamic characterPrivate = getCharacterPrivate(character);
+//
+//     if (isHuman(characterPrivate) && connectionExpired(character)) {
+//       removeCharacter(character);
+//       i--;
+//       continue;
+//     }
+//     if (isDead(character)) {
+//       if (frame - character[keyFrameOfDeath] > 120) {
+//         if (isNpc(characterPrivate)) {
+//           removeCharacter(character);
+//           i--;
+//         } else {
+//           setCharacterStateIdle(character);
+//           setPosition(character, x: 0, y: 0);
+//         }
+//       }
+//     }
+//   }
+// }
 
 void updateBullets() {
   for (int i = 0; i < bullets.length; i++) {
-    dynamic bullet = bullets[i];
-    bullet[keyFrame]++;
-    bullet['x'] += bullet[keyVelocityX];
-    bullet['y'] += bullet[keyVelocityY];
+    Bullet bullet = bullets[i];
+    bullet.x += bullet.xVel;
+    bullet.y += bullet.yVel;
 
     if (bulletDistanceTravelled(bullet) > bulletRange) {
       bullets.removeAt(i);
@@ -68,182 +61,192 @@ void updateBullets() {
       continue;
     }
 
-    for (int j = 0; j < characters.length; j++) {
-      if (bullet[keyId] == characters[j][keyId]) continue;
-      if (isDead(characters[j])) continue;
-      double dis = distanceBetween(characters[j], bullet);
+    for (int j = 0; j < npcs.length; j++) {
+      Npc npc = npcs[j];
+      if (npc.dead) continue;
+      double dis = distanceBetween(npcs[j], bullet);
       if (dis < characterBulletRadius) {
-        dynamic characterJ = characters[j];
-        dynamic characterJPrivate = getCharacterPrivate(characterJ);
         bullets.removeAt(i);
         i--;
-        characterJPrivate[keyHealth]--;
-        if (characterJPrivate[keyHealth] <= 0) {
-          setCharacterStateDead(characterJ);
-          characterJ[keyFrameOfDeath] = frame;
+        npc.health--;
+        if (npc.health <= 0) {
+          npc.state = CharacterState.Dead;
+          npc.frameOfDeath = frame;
         }
-        characterJPrivate[keyVelocityX] += bullet[keyVelocityX] * 0.25;
-        characterJPrivate[keyVelocityY] += bullet[keyVelocityY] * 0.25;
+        npc.xVel += bullet.xVel * 0.25;
+        npc.yVel += bullet.yVel * 0.25;
         break;
       }
     }
   }
 }
 
-dynamic getCharacterPrivate(dynamic character) {
-  return charactersPrivate
-      .firstWhere((characterPrivate) => characterPrivate[keyId] == character[indexId]);
-}
+void updateNpc(Npc npc) {
+  if (npc.dead) return;
 
-dynamic getCharacterPublic(dynamic character) {
-  return characters.firstWhere((element) => element[indexId] == character[keyId]);
-}
-
-void updateCharacter(dynamic character) {
-  // TODO Remove this hack
-  // if (character[keyPositionX] == double.nan) {
-  //   print("character x is nan");
-  //   character[keyPositionX] = 0;
-  //   character[keyPositionY] = 0;
-  // }
-
-  dynamic characterPrivate = getCharacterPrivate(character);
-  if (isNpc(characterPrivate) && isAlive(character)) {
-    if (!npcTargetSet(characterPrivate)) {
-      if (npcDestinationSet(characterPrivate)) {
-        if (npcArrivedAtDestination(character)) {
-          setCharacterStateIdle(character);
-          npcClearDestination(characterPrivate);
-        } else {
-          npcFaceDestination(character, characterPrivate);
-          setCharacterStateWalk(character);
-        }
-      }
+  if (npc.targetSet) {
+    Character target = npcTarget(npc);
+    if (isDead(target)) {
+      npc.clearTarget();
     } else {
-      dynamic target = npcTarget(characterPrivate);
-      if (target == null || isDead(target)) {
-        npcClearTarget(characterPrivate);
+      npc.walk();
+      characterFaceObject(npc, target);
+    }
+  } else {
+    if (npc.destinationSet) {
+      if (arrivedAtDestination(npc)) {
+        npc.idle();
+        npc.clearDestination();
       } else {
-        double angle = radionsBetweenObject(character, target);
-        setCharacterState(character, characterStateWalking);
-        setDirection(character, convertAngleToDirection(angle));
+        faceDestination(npc);
+        npc.walk();
       }
     }
   }
+}
 
-  character[indexPosX] += characterPrivate[keyVelocityX];
-  character[indexPosY] += characterPrivate[keyVelocityY];
-  characterPrivate[keyVelocityX] *= velocityFriction;
-  characterPrivate[keyVelocityY] *= velocityFriction;
+void updateCharacter(Character character) {
+  character.x += character.xVel;
+  character.y += character.yVel;
+  character.xVel *= velocityFriction;
+  character.yVel *= velocityFriction;
 
-  switch (getState(character)) {
-    case characterStateAiming:
-      if (character[keyAccuracy] > 0.05) {
-        character[keyAccuracy] -= 0.005;
+  switch (character.state) {
+    case CharacterState.Aiming:
+      if (character.accuracy > 0.05) {
+        character.accuracy -= 0.005;
       }
       break;
-    case characterStateFiring:
-      characterPrivate[keyShotCoolDown]--;
-      if (characterPrivate[keyShotCoolDown] <= 0) {
-        setCharacterStateIdle(character);
+    case CharacterState.Firing:
+      character.shotCoolDown--;
+      if (character.shotCoolDown <= 0) {
+        character.idle();
       }
       break;
-    case characterStateIdle:
-      break;
-    case characterStateWalking:
-      double speed = getSpeed(characterPrivate);
-      switch (getDirection(character)) {
-        case directionUp:
-          character[indexPosY] -= speed;
+    case CharacterState.Walking:
+      switch (character.direction) {
+        case Direction.Up:
+          character.y -= character.speed;
           break;
-        case directionUpRight:
-          character[indexPosX] += speed * 0.5;
-          character[indexPosY] -= speed * 0.5;
+        case Direction.UpRight:
+          character.x -= character.speed * 0.5;
+          character.y -= character.speed * 0.5;
           break;
-        case directionRight:
-          character[indexPosX] += speed;
+        case Direction.Right:
+          character.x += character.speed;
           break;
-        case directionDownRight:
-          character[indexPosX] += speed * 0.5;
-          character[indexPosY] += speed * 0.5;
+        case Direction.DownRight:
+          character.x += character.speed * 0.5;
+          character.y += character.speed * 0.5;
           break;
-        case directionDown:
-          character[indexPosY] += speed;
+        case Direction.Down:
+          character.y += character.speed;
           break;
-        case directionDownLeft:
-          character[indexPosX] -= speed * 0.5;
-          character[indexPosY] += speed * 0.5;
+        case Direction.DownLeft:
+          character.x -= character.speed * 0.5;
+          character.y += character.speed * 0.5;
           break;
-        case directionLeft:
-          character[indexPosX] -= speed;
+        case Direction.Left:
+          character.x -= character.speed;
           break;
-        case directionUpLeft:
-          character[indexPosX] -= speed * 0.5;
-          character[indexPosY] -= speed * 0.5;
+        case Direction.UpLeft:
+          character.x -= character.speed * 0.5;
+          character.y -= character.speed * 0.5;
           break;
       }
       break;
   }
 }
 
-void removeCharacter(dynamic character) {
-  characters.removeWhere((element) => element[keyId] == character[keyId]);
-  charactersPrivate
-      .removeWhere((element) => element[keyId] == character[keyId]);
+void updateCharacters() {
+
+  for(int i =0 ; i < players.length; i++){
+    if(players[i].x.isNaN || players[i].y.isNaN){
+      players[i].x = 0;
+      players[i].y = 0;
+    }
+  }
+
+  players.forEach(updateCharacter);
+  npcs.forEach(updateCharacter);
 }
 
-void updateCharacters() {
-  characters.forEach(updateCharacter);
+void detectCorruptData(){
+  for(int i =0 ; i < players.length; i++){
+    if(players[i].x.isNaN || players[i].y.isNaN){
+      print("removing player because invalid position");
+    }
+  }
 }
 
 void fixedUpdate() {
   frame++;
   updateCharacters();
-  updateCollisions();
-  updateBullets();
-  compressData();
+  // updateCollisions();
+  // updateBullets();
+  // compressData();
+  detectCorruptData();
 }
 
 void compressData() {
-  for (dynamic character in characters) {
-    roundKey(character, indexPosX);
-    roundKey(character, indexPosY);
-  }
+  players.forEach(compressCharacter);
+  npcs.forEach(compressCharacter);
 }
 
-int compareCharacters(dynamic a, dynamic b) {
-  if (posX(a) < posX(b)) {
+void compressCharacter(Character character) {
+  character.x = round(character.x);
+  character.y = round(character.y);
+}
+
+int compareCharacters(GameObject a, GameObject b) {
+  if (a.x < b.x) {
     return -1;
   }
   return 1;
 }
 
-void updateCollisions() {
-  characters.sort(compareCharacters);
+void updateCollisionBetween(List<Character> characters) {
   for (int i = 0; i < characters.length - 1; i++) {
-    dynamic characterI = characters[i];
-    if (isDead(characterI)) continue;
+    if (characters[i].dead) continue;
     for (int j = i + 1; j < characters.length; j++) {
-      dynamic characterJ = characters[j];
-      if (isDead(characterJ)) continue;
-      double xDiff = posX(characterI) - posX(characterJ);
-      if (abs(xDiff) > characterRadius2) break;
-      double yDiff = posY(characterI) - posY(characterJ);
-      if (abs(yDiff) > characterRadius2) continue;
-      double distance = distanceBetween(characterI, characterJ);
-      if (distance >= characterRadius2) continue;
-      double overlap = characterRadius2 - distance;
-      double halfOverlap = overlap * 0.5;
-      double mag = magnitude(xDiff, yDiff);
-      double ratio = 1.0 / mag;
-      double xDiffNormalized = xDiff * ratio;
-      double yDiffNormalized = yDiff * ratio;
-      double targetX = xDiffNormalized * halfOverlap;
-      double targetY = yDiffNormalized * halfOverlap;
-      characterI[indexPosX] += targetX;
-      characterI[indexPosY] += targetY;
-      characterJ[indexPosX] -= targetX;
-      characterJ[indexPosY] -= targetY;
+      resolveCollision(characters[i], characters[j]);
+    }
+  }
+}
+
+void resolveCollision(Character a, Character b) {
+  if (isDead(a)) return;
+  if (isDead(b)) return;
+  double xDiff = a.x - a.x;
+  if (abs(xDiff) > characterRadius2) return;
+  double yDiff = a.y - b.y;
+  if (abs(yDiff) > characterRadius2) return;
+  double distance = distanceBetween(a, b);
+  if (distance >= characterRadius2) return;
+  double overlap = characterRadius2 - distance;
+  double halfOverlap = overlap * 0.5;
+  double mag = magnitude(xDiff, yDiff);
+  double ratio = 1.0 / mag;
+  double xDiffNormalized = xDiff * ratio;
+  double yDiffNormalized = yDiff * ratio;
+  double targetX = xDiffNormalized * halfOverlap;
+  double targetY = yDiffNormalized * halfOverlap;
+  a.x += targetX;
+  a.y += targetY;
+  b.x -= targetX;
+  b.y -= targetY;
+}
+
+void updateCollisions() {
+  npcs.sort(compareCharacters);
+  players.sort(compareCharacters);
+
+  updateCollisionBetween(npcs);
+  updateCollisionBetween(players);
+
+  for (int i = 0; i < npcs.length; i++) {
+    for (int j = 0; j < players.length; j++) {
+      resolveCollision(npcs[i], players[j]);
     }
   }
 }
