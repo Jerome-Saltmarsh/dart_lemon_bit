@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'multiplayer/multiplayer_client.dart';
+
+import 'bleed/client.dart';
 
 
 
 void main() {
-  runApp(MultiplayerClient());
+  runApp(BleedClient());
 }
 
