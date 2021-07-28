@@ -13,7 +13,7 @@ class GameObject {
 class PhysicsGameObject extends GameObject {
   double xVel = 0;
   double yVel = 0;
-  PhysicsGameObject(double x, double y, this.xVel, this.yVel) : super(0.0, 0.0);
+  PhysicsGameObject(double x, double y, this.xVel, this.yVel) : super(x, y);
 }
 
 class Character extends PhysicsGameObject {
@@ -32,6 +32,7 @@ class Character extends PhysicsGameObject {
   get alive => state != CharacterState.Dead;
   get dead => state == CharacterState.Dead;
   get firing => state == CharacterState.Firing;
+  get aiming => state == CharacterState.Aiming;
 
   Character(double x, double y, this.weapon, this.health, this.speed, [String name = ""]) : super(x, y, 0, 0) {
     this.id = _id++;

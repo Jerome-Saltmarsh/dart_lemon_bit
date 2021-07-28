@@ -55,47 +55,15 @@ class PlayerNotFoundException implements Exception {
 
 }
 
-void npcClearDestination(dynamic npc) {
-  npc[keyDestinationX] = null;
-  npc[keyDestinationY] = null;
-}
 
-bool npcDestinationSet(dynamic npc) {
-  return npc[keyDestinationX] != null;
-}
 
-void npcSetDestination(dynamic npc, double x, double y) {
-  npc[keyDestinationX] = x;
-  npc[keyDestinationY] = y;
-}
-
-void npcSetRandomDestination(dynamic npc) {
-  npcSetDestination(npc, randomBetween(-100, 100), randomBetween(-100, 100));
+void npcSetRandomDestination(Npc npc) {
+  npc.xDes = randomBetween(-100, 100);
+  npc.yDes = randomBetween(-100, 100);
 }
 
 bool arrivedAtDestination(Npc npc) {
   return distanceFromDestination(npc) <= destinationArrivedDistance;
-}
-
-void npcSetTarget(dynamic npc, dynamic value) {
-  if (value is int) {
-    npc[keyNpcTargetId] = value;
-  } else {
-    npc[keyNpcTargetId] = value[keyId];
-  }
-}
-
-void setPosition(dynamic character, {double? x, double? y}) {
-  if (x != null) {
-    character[indexPosX] = x;
-  }
-  if (y != null) {
-    character[indexPosY] = y;
-  }
-}
-
-int getId(dynamic character) {
-  return  character[indexId];
 }
 
 int lastUpdateFrame(dynamic character) {
@@ -149,10 +117,6 @@ double round(double value, {int decimals = 1}) {
   return double.parse(value.toStringAsFixed(decimals));
 }
 
-void roundKey(dynamic object, int key, {int decimals = 1}) {
-  object[key] = round(object[key], decimals: decimals);
-}
-
 double getShotAngle(Character character) {
   return character.aimAngle + giveOrTake(character.accuracy * 0.5);
 }
@@ -177,7 +141,7 @@ void fireWeapon(Character character) {
 void npcWanderJob() {
   for (Npc npc in npcs) {
     if (npc.targetSet) continue;
-    if (npcDestinationSet(npc)) continue;
+    if (npc.destinationSet) continue;
     npcSetRandomDestination(npc);
   }
 }

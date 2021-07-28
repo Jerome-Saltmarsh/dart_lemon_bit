@@ -46,7 +46,7 @@ List<String> parsePlayers(){
 }
 
 String parseNpcToString(Npc npc){
-  return "${npc.state.index} ${npc.direction.index} ${npc.x} ${npc.y}}";
+  return "${npc.state.index} ${npc.direction.index} ${npc.x} ${npc.y}";
 }
 
 String parsePlayerToString(Character character){

@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'keys.dart';
 import 'utils.dart';
 
 const double degreesToRadions = 0.0174533;
@@ -23,9 +24,9 @@ double magnitude(double a, double b){
   return sqrt((a * a) + (b * b));
 }
 
-double distanceBetween(dynamic characterA, dynamic characterB){
-  double xDiff = posX(characterA) - posX(characterB);
-  double yDiff = posY(characterA) - posY(characterB);
+double distanceBetween(dynamic a, dynamic b){
+  double xDiff = a[posX] - b[posX];
+  double yDiff = a[posY] - b[posY];
   return magnitude(xDiff, yDiff);
 }
 
@@ -53,11 +54,11 @@ Vector2 convertRadionsToVector(num radions){
 }
 
 double radionsBetweenObject(dynamic a, dynamic b) {
-  return radionsBetween(posX(a), posY(a), posX(b), posY(b));
+  return radionsBetween(a[posX], a[posY], b[posX], b[posY]);
 }
 
 double radionsBetween2(dynamic a, double x, double y) {
-  return radionsBetween(posX(a), posY(a), x, y);
+  return radionsBetween(a[posX], a[posY], x, y);
 }
 
 double convertVectorToDegrees(double x, double y) {

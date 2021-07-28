@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter_game_engine/game_engine/game_maths.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
+import 'package:flutter_game_engine/multiplayer/keys.dart';
 
 import 'common.dart';
 import 'multiplayer_resources.dart';
@@ -17,28 +18,21 @@ void playPistolAudio() {
   pistolFireAudio.play();
 }
 
+double getMouseRotation() {
+  return getRadionsBetween(playerScreenPositionX(), playerScreenPositionY(), mousePosX, mousePosY);
+}
 double playerScreenPositionX() {
   dynamic player = getPlayerCharacter();
-  return posX(player) - cameraX;
+  return player[posX] - cameraX;
 }
 
 double playerScreenPositionY() {
   if (!playerAssigned) return null;
   dynamic player = getPlayerCharacter();
-  return posY(player) - cameraY;
-}
-
-double getMouseRotation() {
-  dynamic player = getPlayerCharacter();
-  double playerScreenPositionX = posX(player) - cameraX;
-  double playerScreenPositionY = posY(player) - cameraY;
-  return getRadionsBetween(
-      playerScreenPositionX, playerScreenPositionY, mousePosX, mousePosY);
+  return player[posY] - cameraY;
 }
 
 dynamic getPlayerCharacter() {
-  // return characters.firstWhere((element) => element[indexId] == id,
-  //     orElse: () => null);
   return playerCharacter;
 }
 
@@ -67,20 +61,20 @@ Offset offset(double x, double y){
 }
 
 void drawLineFrom(dynamic object, double x, double y) {
-  drawLine(posX(object), posY(object), x, y);
+  drawLine(object[posX], object[posY], x, y);
 }
 
 void drawLineRotation(dynamic object, double rotation, double distance) {
   drawLine(
-      posX(object),
-      posY(object),
-      posX(object) + rotationToPosX(rotation, distance),
-      posY(object) + rotationToPosY(rotation, distance)
+      object[posX],
+      object[posY],
+      object[posX] + rotationToPosX(rotation, distance),
+      object[posY] + rotationToPosY(rotation, distance)
   );
 }
 
 void drawLineBetween(dynamic a, dynamic b) {
-  drawLineFrom(a, posX(b), posY(b));
+  drawLineFrom(a, b[posX], b[posY]);
 }
 
 void drawLineNpcDestination(dynamic npc) {
@@ -105,12 +99,4 @@ int getState(dynamic character){
 
 int getDirection(dynamic character){
   return character[1];
-}
-
-double posX(dynamic value) {
-  return value[2];
-}
-
-double posY(dynamic value) {
-  return value[3];
 }

@@ -41,11 +41,14 @@ void main() {
         try {
           Character character = findPlayerById(playerId);
           if (character.alive && !character.firing) {
-            if(request[keyAimAngle] != null){
-              character.aimAngle = request[keyAimAngle];
+            if (request['s'] != null){
+              setCharacterState(character, CharacterState.values[request['s']]);
             }
-            setCharacterState(character, CharacterState.values[request['s']]);
-            setDirection(character, Direction.values[request['d']]);
+            if (character.aiming) {
+              character.direction = convertAngleToDirection(request[keyAimAngle]);
+            } else {
+              setDirection(character, Direction.values[request['d']]);
+            }
           }
         } catch (exception) {
           print(exception);

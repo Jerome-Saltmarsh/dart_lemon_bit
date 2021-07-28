@@ -19,7 +19,7 @@ void updateNpcTarget() {
     if (npc.targetSet) continue;
     for (Character player in players) {
       if (distanceBetween(npc, player) < zombieViewRange) {
-        npcSetTarget(npc, player);
+        npc.targetId = player.id;
       }
     }
   }
@@ -217,7 +217,7 @@ void updateCollisionBetween(List<Character> characters) {
 void resolveCollision(Character a, Character b) {
   if (isDead(a)) return;
   if (isDead(b)) return;
-  double xDiff = a.x - a.x;
+  double xDiff = a.x - b.x;
   if (abs(xDiff) > characterRadius2) return;
   double yDiff = a.y - b.y;
   if (abs(yDiff) > characterRadius2) return;

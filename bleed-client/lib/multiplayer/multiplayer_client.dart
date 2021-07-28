@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_game_engine/game_engine/game_input.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'package:flutter_game_engine/multiplayer/common_functions.dart';
+import 'package:flutter_game_engine/multiplayer/keys.dart';
 import 'package:flutter_game_engine/multiplayer/settings.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'common.dart';
@@ -12,6 +13,7 @@ import 'multiplayer_resources.dart';
 import 'multiplayer_input.dart';
 import 'mutliplayer_ui.dart';
 
+import 'keys.dart';
 import 'state.dart';
 import 'utils.dart';
 
@@ -177,10 +179,9 @@ class MultiplayerClient extends GameWidget {
 
   void smoothings() {
     if (framesSinceEvent > 10) return;
-    
+
     for (dynamic character in players) {
       double speed = 2;
-
       if (character[0] != characterStateWalking) {
         continue;
       }
@@ -239,8 +240,8 @@ class MultiplayerClient extends GameWidget {
     if (!playerAssigned) return;
 
     dynamic playerCharacter = getPlayerCharacter();
-    double playerScreenX = posX(playerCharacter) - cameraX;
-    double playerScreenY = posY(playerCharacter) - cameraY;
+    double playerScreenX = playerCharacter[posX] - cameraX;
+    double playerScreenY = playerCharacter[posY] - cameraY;
     double halfScreenWidth = size.width * 0.5;
     double halfScreenHeight = size.height * 0.5;
     double xOffset = halfScreenWidth - playerScreenX;
@@ -381,8 +382,8 @@ class MultiplayerClient extends GameWidget {
     }
     if (id < 0 && valueObject[keyId] != null) {
       id = valueObject[keyId];
-      cameraX = posX(playerCharacter) - (size.width * 0.5);
-      cameraY = posY(playerCharacter) - (size.height * 0.5);
+      cameraX = playerCharacter[posX] - (size.width * 0.5);
+      cameraY = playerCharacter[posY] - (size.height * 0.5);
     }
 
     // Play bullet audio
@@ -448,7 +449,7 @@ class MultiplayerClient extends GameWidget {
     if (!playerAssigned) return;
     dynamic player = getPlayerCharacter();
     drawCircleOutline(
-        radius: bulletRange, x: posX(player), y: posY(player), color: white);
+        radius: bulletRange, x: player[posX], y: player[posY], color: white);
   }
 
   void setColor(Color value) {
@@ -519,10 +520,10 @@ class MultiplayerClient extends GameWidget {
 
   void drawCharacters() {
     if (spriteTemplate == null) return;
-    players.sort((a, b) => posY(a) > posY(b) ? 1 : -1);
+    players.sort((a, b) => a[posY] > b[posY] ? 1 : -1);
     players.where(isDead).forEach((drawCharacter));
     players.where(isAlive).forEach((drawCharacter));
-    npcs.sort((a, b) => posY(a) > posY(b) ? 1 : -1);
+    npcs.sort((a, b) => a[posY] > b[posY] ? 1 : -1);
     npcs.where(isDead).forEach((drawCharacter));
     npcs.where(isAlive).forEach((drawCharacter));
   }
@@ -534,6 +535,52 @@ class MultiplayerClient extends GameWidget {
   bool isDead(dynamic character) {
     return getState(character) == characterStateDead;
   }
+
+  int getAimingSprite(int direction) {
+    switch (direction) {
+      case directionUp:
+        return 23;
+      case directionUpRight:
+        return 24;
+      case directionRight:
+        return 25;
+      case directionDownRight:
+        return 26;
+      case directionDown:
+        return 27;
+      case directionDownLeft:
+        return 20;
+      case directionLeft:
+        return 21;
+      case directionUpLeft:
+        return 22;
+    }
+    return 23;
+  }
+
+  int getFiringSprite(int direction) {
+    switch (direction) {
+      case directionUp:
+        return 31;
+      case directionUpRight:
+        return 32;
+      case directionRight:
+        return 33;
+      case directionDownRight:
+        return 34;
+      case directionDown:
+        return 35;
+      case directionDownLeft:
+        return 28;
+      case directionLeft:
+        return 29;
+      case directionUpLeft:
+        return 30;
+    }
+    return 31;
+  }
+
+
 
   void drawCharacter(dynamic character) {
     int totalFrames = 1;
@@ -627,50 +674,10 @@ class MultiplayerClient extends GameWidget {
         }
         break;
       case characterStateAiming:
-        double eight = pi / 8.0;
-        double quarter = pi / 4.0;
-        if (character[keyAimAngle] < eight) {
-          startFrame = 23;
-        } else if (character[keyAimAngle] < eight + (quarter * 1)) {
-          startFrame = 24;
-        } else if (character[keyAimAngle] < eight + (quarter * 2)) {
-          startFrame = 25;
-        } else if (character[keyAimAngle] < eight + (quarter * 3)) {
-          startFrame = 26;
-        } else if (character[keyAimAngle] < eight + (quarter * 4)) {
-          startFrame = 27;
-        } else if (character[keyAimAngle] < eight + (quarter * 5)) {
-          startFrame = 20;
-        } else if (character[keyAimAngle] < eight + (quarter * 6)) {
-          startFrame = 21;
-        } else if (character[keyAimAngle] < eight + (quarter * 7)) {
-          startFrame = 22;
-        } else {
-          startFrame = 23;
-        }
+        startFrame = getAimingSprite(character[direction]);
         break;
       case characterStateFiring:
-        double eight = pi / 8.0;
-        double quarter = pi / 4.0;
-        if (character[keyAimAngle] < eight) {
-          startFrame = 31;
-        } else if (character[keyAimAngle] < eight + (quarter * 1)) {
-          startFrame = 32;
-        } else if (character[keyAimAngle] < eight + (quarter * 2)) {
-          startFrame = 33;
-        } else if (character[keyAimAngle] < eight + (quarter * 3)) {
-          startFrame = 34;
-        } else if (character[keyAimAngle] < eight + (quarter * 4)) {
-          startFrame = 35;
-        } else if (character[keyAimAngle] < eight + (quarter * 5)) {
-          startFrame = 28;
-        } else if (character[keyAimAngle] < eight + (quarter * 6)) {
-          startFrame = 29;
-        } else if (character[keyAimAngle] < eight + (quarter * 7)) {
-          startFrame = 30;
-        } else {
-          startFrame = 31;
-        }
+        startFrame = getFiringSprite(character[direction]);
         break;
     }
 
@@ -680,14 +687,14 @@ class MultiplayerClient extends GameWidget {
     // drawCharacterCircle(
     //     character, character[keyCharacterId] == id ? Colors.blue : Colors.red);
 
-    drawSprite(spriteTemplate, frameCount, spriteFrame, posX(character),
-        posY(character));
+    drawSprite(spriteTemplate, frameCount, spriteFrame, character[posX],
+        character[posY]);
 
     // drawText(character[keyPlayerName], posX(character),
     //     posY(character), Colors.white);
   }
 
   void drawCharacterCircle(dynamic value, Color color) {
-    drawCircle(posX(value), posY(value), characterRadius, color);
+    drawCircle(value[posX], value[posY], characterRadius, color);
   }
 }
