@@ -129,7 +129,7 @@ void updateCharacter(Character character) {
           character.y -= character.speed;
           break;
         case Direction.UpRight:
-          character.x -= character.speed * 0.5;
+          character.x += character.speed * 0.5;
           character.y -= character.speed * 0.5;
           break;
         case Direction.Right:
@@ -182,9 +182,9 @@ void detectCorruptData(){
 void fixedUpdate() {
   frame++;
   updateCharacters();
-  // updateCollisions();
+  updateCollisions();
   // updateBullets();
-  // compressData();
+  compressData();
   detectCorruptData();
 }
 

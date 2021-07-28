@@ -108,6 +108,7 @@ class MultiplayerClient extends GameWidget {
         text("Players: ${players.length}"),
         text("Npcs: ${npcs.length}"),
         text("Player Assigned: $playerAssigned"),
+        text("Direction: $requestDirection"),
         if (debugMode)
           column([
             text("Server Host: $host"),
@@ -353,7 +354,6 @@ class MultiplayerClient extends GameWidget {
   }
 
   void onEvent(dynamic valueString) {
-    print("on event");
     framesSinceEvent = 0;
     DateTime now = DateTime.now();
     ping = now.difference(previousEvent);
