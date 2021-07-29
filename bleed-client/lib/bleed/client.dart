@@ -5,7 +5,7 @@ import 'package:flutter_game_engine/game_engine/game_input.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'common.dart';
-import 'common_functions.dart';
+import 'parsing.dart';
 import 'connection.dart';
 import 'draw.dart';
 import 'resources.dart';

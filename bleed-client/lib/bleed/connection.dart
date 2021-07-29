@@ -3,7 +3,7 @@ import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'common.dart';
-import 'common_functions.dart';
+import 'parsing.dart';
 import 'keys.dart';
 import 'settings.dart';
 import 'state.dart';
