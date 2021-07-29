@@ -55,29 +55,29 @@ void updateBullets() {
     bullet.x += bullet.xVel;
     bullet.y += bullet.yVel;
 
-    if (bulletDistanceTravelled(bullet) > bulletRange) {
-      bullets.removeAt(i);
-      i--;
-      continue;
-    }
-
-    for (int j = 0; j < npcs.length; j++) {
-      Npc npc = npcs[j];
-      if (npc.dead) continue;
-      double dis = distanceBetween(npcs[j], bullet);
-      if (dis < characterBulletRadius) {
-        bullets.removeAt(i);
-        i--;
-        npc.health--;
-        if (npc.health <= 0) {
-          npc.state = CharacterState.Dead;
-          npc.frameOfDeath = frame;
-        }
-        npc.xVel += bullet.xVel * 0.25;
-        npc.yVel += bullet.yVel * 0.25;
-        break;
-      }
-    }
+    // if (bulletDistanceTravelled(bullet) > bulletRange) {
+    //   bullets.removeAt(i);
+    //   i--;
+    //   continue;
+    // }
+    //
+    // for (int j = 0; j < npcs.length; j++) {
+    //   Npc npc = npcs[j];
+    //   if (npc.dead) continue;
+    //   double dis = distanceBetween(npcs[j], bullet);
+    //   if (dis < characterBulletRadius) {
+    //     bullets.removeAt(i);
+    //     i--;
+    //     npc.health--;
+    //     if (npc.health <= 0) {
+    //       npc.state = CharacterState.Dead;
+    //       npc.frameOfDeath = frame;
+    //     }
+    //     npc.xVel += bullet.xVel * 0.25;
+    //     npc.yVel += bullet.yVel * 0.25;
+    //     break;
+    //   }
+    // }
   }
 }
 
@@ -183,7 +183,7 @@ void fixedUpdate() {
   frame++;
   updateCharacters();
   updateCollisions();
-  // updateBullets();
+  updateBullets();
   compressData();
   detectCorruptData();
 }

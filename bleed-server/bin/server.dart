@@ -32,7 +32,7 @@ void main() {
 
     void handleCommandUpdate(dynamic request) {
       Map<String, dynamic> response = Map();
-      response[keyBullets] = bullets;
+      response[keyBullets] = parseBullets();
       response[keyNpcs] = parseNpcs();
       response[keyPlayers] = parsePlayers();
 

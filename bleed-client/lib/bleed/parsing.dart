@@ -27,6 +27,11 @@ List<dynamic> unparsePlayers(List<dynamic> parsedCharacters){
   return parsedCharacters.map(unparsePlayer).toList();
 }
 
+List<dynamic> unparseBullets(List<dynamic> parseBullets){
+  if(parseBullets.isEmpty) return [];
+  return parseBullets.map(unparseBullet).toList();
+}
+
 dynamic unparseNpc(dynamic parsedCharacter){
   List<dynamic> attributes = parsedCharacter.split(" ");
   return [
@@ -55,3 +60,10 @@ dynamic unparsePlayer(dynamic playerString){
     int.parse(id),
   ];
 }
+
+dynamic unparseBullet(dynamic bullet){
+  List<String> b = bullet.split(" ");
+  return [double.parse(b[0]), double.parse(b[1])];
+}
+
+

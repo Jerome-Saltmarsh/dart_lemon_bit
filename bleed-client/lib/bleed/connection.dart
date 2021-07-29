@@ -51,7 +51,7 @@ void onEvent(dynamic valueString) {
   framesSinceEvent = 0;
   DateTime now = DateTime.now();
   ping = now.difference(previousEvent);
-  previousEvent = DateTime.now();
+  previousEvent = now;
   packagesReceived++;
   event = valueString;
   valueObject = decode(valueString);
@@ -66,14 +66,9 @@ void onEvent(dynamic valueString) {
     cameraX = playerCharacter[posX] - (size.width * 0.5);
     cameraY = playerCharacter[posY] - (size.height * 0.5);
   }
-
   // Play bullet audio
   if (valueObject[keyBullets] != null) {
-    if ((valueObject[keyBullets] as List).length > bullets.length) {
-      playPistolAudio();
-    }
-    bullets.clear();
-    bullets = valueObject[keyBullets];
+    bullets = unparseBullets(valueObject[keyBullets]);
   }
   // forceRedraw();
 }

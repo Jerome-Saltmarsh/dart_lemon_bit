@@ -36,6 +36,10 @@ dynamic decode(String data) {
  **/
 
 
+List<String> parseBullets(){
+  return bullets.map(parseBulletToString).toList();
+}
+
 /// [state, direction, positionX, positionY]
 List<String> parseNpcs(){
   return npcs.map(parseNpcToString).toList();
@@ -53,3 +57,6 @@ String parsePlayerToString(Character character){
   return "${character.state.index} ${character.direction.index} ${character.x} ${character.y} ${character.id}";
 }
 
+String parseBulletToString(Bullet bullet){
+ return "${bullet.x} ${bullet.y}";
+}
