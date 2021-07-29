@@ -15,8 +15,9 @@
 [ ] Shot kickback
 [ ] Fix Shooting
 [ ] Server send on screen characters only
-[ ] Frame Smoothing (50ms before previous package)
-[ ] Cache character array
+[ ] Client should not compress sending to server (too expensive)
+[ ] Remove JSON Object mapping
+[x] Frame Smoothing (50ms before previous package)
 [x] Shotgun
 [x] Ping Check
 [x] Shot cool-down

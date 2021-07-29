@@ -88,62 +88,63 @@ class BleedClient extends GameWidget {
       return;
     }
 
-    if (!playerAssigned) return;
-
     dynamic playerCharacter = getPlayerCharacter();
-    double playerScreenX = playerCharacter[posX] - cameraX;
-    double playerScreenY = playerCharacter[posY] - cameraY;
-    double halfScreenWidth = size.width * 0.5;
-    double halfScreenHeight = size.height * 0.5;
-    double xOffset = halfScreenWidth - playerScreenX;
-    double yOffset = halfScreenHeight - playerScreenY;
-    cameraX -= (xOffset * cameraFollow);
-    cameraY -= (yOffset * cameraFollow);
+    if (playerCharacter != null) {
+      double playerScreenX = playerCharacter[posX] - cameraX;
+      double playerScreenY = playerCharacter[posY] - cameraY;
+      double halfScreenWidth = size.width * 0.5;
+      double halfScreenHeight = size.height * 0.5;
+      double xOffset = halfScreenWidth - playerScreenX;
+      double yOffset = halfScreenHeight - playerScreenY;
+      cameraX -= (xOffset * cameraFollow);
+      cameraY -= (yOffset * cameraFollow);
 
-    if (keyPressedSpawnZombie) {
-      sendCommand(commandSpawnZombie);
-      return;
-    }
+      if (keyPressedSpawnZombie) {
+        sendCommand(commandSpawnZombie);
+        return;
+      }
 
-    requestCharacterState = characterStateWalking;
+      requestCharacterState = characterStateWalking;
 
-    if (keyPressedSpace) {
-      requestCharacterState = characterStateAiming;
-    }
+      if (keyPressedSpace) {
+        requestCharacterState = characterStateAiming;
+      }
 
-    if (keyEquipHandGun) {
-      sendCommandEquipHandGun();
-    }
+      if (keyEquipHandGun) {
+        sendCommandEquipHandGun();
+      }
 
-    if (keyEquipShotgun) {
-      sendCommandEquipShotgun();
-    }
+      if (keyEquipShotgun) {
+        sendCommandEquipShotgun();
+      }
 
-    if (keyPressedW) {
-      if (keyPressedD) {
-        requestDirection = directionUpRight;
+      if (keyPressedW) {
+        if (keyPressedD) {
+          requestDirection = directionUpRight;
+        } else if (keyPressedA) {
+          requestDirection = directionUpLeft;
+        } else {
+          requestDirection = directionUp;
+        }
+      } else if (keyPressedS) {
+        if (keyPressedD) {
+          requestDirection = directionDownRight;
+        } else if (keyPressedA) {
+          requestDirection = directionDownLeft;
+        } else {
+          requestDirection = directionDown;
+        }
       } else if (keyPressedA) {
-        requestDirection = directionUpLeft;
+        requestDirection = directionLeft;
+      } else if (keyPressedD) {
+        requestDirection = directionRight;
       } else {
-        requestDirection = directionUp;
-      }
-    } else if (keyPressedS) {
-      if (keyPressedD) {
-        requestDirection = directionDownRight;
-      } else if (keyPressedA) {
-        requestDirection = directionDownLeft;
-      } else {
-        requestDirection = directionDown;
-      }
-    } else if (keyPressedA) {
-      requestDirection = directionLeft;
-    } else if (keyPressedD) {
-      requestDirection = directionRight;
-    } else {
-      if (!keyPressedSpace) {
-        requestCharacterState = characterStateIdle;
+        if (!keyPressedSpace) {
+          requestCharacterState = characterStateIdle;
+        }
       }
     }
+
     sendCommandUpdate();
   }
 

@@ -15,6 +15,15 @@ String encode(dynamic data) {
   return "";
 }
 
+String compressText(String data){
+  List<int>? i = gZipEncoder.encode(utf8.encode(data));
+  if (i != null) {
+    return base64.encode(i);
+  }
+  return "";
+}
+
+
 dynamic decode(String data) {
   return jsonDecode(
       (utf8.decode(gZipDecoder.decodeBytes(base64.decode(data).toList()))));
@@ -36,27 +45,44 @@ dynamic decode(String data) {
  **/
 
 
+String compileState(){
+  StringBuffer compiledText = StringBuffer();
+  compiledText.write(compilePlayers());
+  return compiledText.toString();
+}
+
+
 List<String> parseBullets(){
-  return bullets.map(parseBulletToString).toList();
+  return bullets.map(compileBulletToString).toList();
 }
 
 /// [state, direction, positionX, positionY]
 List<String> parseNpcs(){
-  return npcs.map(parseNpcToString).toList();
+  return npcs.map(compileNpcToString).toList();
 }
 
 List<String> parsePlayers(){
-  return players.map(parsePlayerToString).toList();
+  return players.map(compilePlayerToString).toList();
 }
 
-String parseNpcToString(Npc npc){
+String compilePlayers(){
+  StringBuffer stringBuffer = StringBuffer("p: ");
+  for(Character character in players){
+    stringBuffer.write(compilePlayerToString(character));
+    stringBuffer.write(" ");
+  }
+  stringBuffer.write(";");
+  return stringBuffer.toString();
+}
+
+String compileNpcToString(Npc npc){
   return "${npc.state.index} ${npc.direction.index} ${npc.x} ${npc.y}";
 }
 
-String parsePlayerToString(Character character){
+String compilePlayerToString(Character character){
   return "${character.state.index} ${character.direction.index} ${character.x} ${character.y} ${character.id}";
 }
 
-String parseBulletToString(Bullet bullet){
+String compileBulletToString(Bullet bullet){
  return "${bullet.x} ${bullet.y}";
 }

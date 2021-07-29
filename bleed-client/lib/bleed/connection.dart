@@ -54,22 +54,23 @@ void onEvent(dynamic valueString) {
   previousEvent = now;
   packagesReceived++;
   event = valueString;
-  valueObject = decode(valueString);
-  if (valueObject[keyNpcs] != null) {
-    npcs = unparseNpcs(valueObject[keyNpcs]);
-  }
-  if (valueObject[keyPlayers] != null) {
-    players = unparsePlayers(valueObject[keyPlayers]);
-  }
-  if (id < 0 && valueObject[keyId] != null) {
-    id = valueObject[keyId];
-    cameraX = playerCharacter[posX] - (size.width * 0.5);
-    cameraY = playerCharacter[posY] - (size.height * 0.5);
-  }
-  // Play bullet audio
-  if (valueObject[keyBullets] != null) {
-    bullets = unparseBullets(valueObject[keyBullets]);
-  }
+  parseState(decompress(valueString));
+  //
+  // if (valueObject[keyNpcs] != null) {
+  //   npcs = unparseNpcs(valueObject[keyNpcs]);
+  // }
+  // if (valueObject[keyPlayers] != null) {
+  //   players = unparsePlayers(valueObject[keyPlayers]);
+  // }
+  // if (id < 0 && valueObject[keyId] != null) {
+  //   id = valueObject[keyId];
+  //   cameraX = playerCharacter[posX] - (size.width * 0.5);
+  //   cameraY = playerCharacter[posY] - (size.height * 0.5);
+  // }
+  // // Play bullet audio
+  // if (valueObject[keyBullets] != null) {
+  //   bullets = unparseBullets(valueObject[keyBullets]);
+  // }
   // forceRedraw();
 }
 

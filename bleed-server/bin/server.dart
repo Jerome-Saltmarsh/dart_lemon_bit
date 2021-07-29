@@ -7,7 +7,6 @@ import 'conversion.dart';
 import 'settings.dart';
 import 'update.dart';
 import 'utils.dart';
-import 'state.dart';
 
 void main() {
   print('starting web socket server');
@@ -15,27 +14,19 @@ void main() {
   initUpdateLoop();
 
   var handler = webSocketHandler((webSocket) {
-    void sendToClient(dynamic response) {
-      webSocket.sink.add(encode(response));
+
+    void sendToClient(String response) {
+      webSocket.sink.add(compressText(response));
     }
 
-    void handleCommandSpawn(dynamic request) {
+    void handleRequestSpawn(dynamic request) {
       var character = spawnPlayer("test");
-      Map<String, dynamic> response = Map();
-      response[keyId] = character.id;
-      response[keyNpcs] = parseNpcs();
-      response[keyPlayers] = parsePlayers();
-      response[keyBullets] = bullets;
+      String response = "id:${character.id};";
       sendToClient(response);
       return;
     }
 
-    void handleCommandUpdate(dynamic request) {
-      Map<String, dynamic> response = Map();
-      response[keyBullets] = parseBullets();
-      response[keyNpcs] = parseNpcs();
-      response[keyPlayers] = parsePlayers();
-
+    void handleRequestUpdate(dynamic request) {
       if (request[keyId] != null) {
         int playerId = request[keyId];
         try {
@@ -56,10 +47,14 @@ void main() {
           print(exception);
         }
       }
-      sendToClient(response);
+      // Map<String, dynamic> response = Map();
+      // response[keyBullets] = parseBullets();
+      // response[keyNpcs] = parseNpcs();
+      // response[keyPlayers] = parsePlayers();
+      sendToClient(compileState());
     }
 
-    void handleCommandAttack(dynamic request) {
+    void handleRequestAttack(dynamic request) {
       if (request[keyId] == null) return;
       if (request[keyRotation] == null) return;
       double angle = request[keyRotation];
@@ -80,16 +75,16 @@ void main() {
       dynamic request = decode(data);
       switch (request[keyCommand]) {
         case commandSpawn:
-          handleCommandSpawn(request);
+          handleRequestSpawn(request);
           break;
         case commandUpdate:
-          handleCommandUpdate(request);
+          handleRequestUpdate(request);
           break;
         case commandSpawnZombie:
           spawnRandomNpc();
           break;
         case commandAttack:
-          handleCommandAttack(request);
+          handleRequestAttack(request);
           break;
         case commandEquip:
           handleRequestEquip(request);

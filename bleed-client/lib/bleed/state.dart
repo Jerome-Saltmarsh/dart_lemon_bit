@@ -37,6 +37,8 @@ int id = idNotConnected;
 const idNotConnected = -1;
 
 get playerCharacter {
+  if(id == idNotConnected) return null;
+
   return players.firstWhere((element) => element[4] == id, orElse: (){
     return null;
   });

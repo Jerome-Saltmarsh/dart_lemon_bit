@@ -36,8 +36,7 @@ dynamic getPlayerCharacter() {
   return playerCharacter;
 }
 
-bool get playerAssigned =>
-    playerCharacter != null;
+bool get playerAssigned =>     playerCharacter != null;
 
 bool isNpc(dynamic character) {
   return character[keyType] == typeNpc;
