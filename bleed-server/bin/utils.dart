@@ -121,7 +121,7 @@ double getShotAngle(Character character) {
   return character.aimAngle + giveOrTake(character.accuracy * 0.5);
 }
 
-void fireWeapon(Character character) {
+void fireWeapon(Character character, double angle) {
   switch (character.weapon) {
     case Weapon.HandGun:
       characterSpawnBullet(character);

@@ -1,4 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_game_engine/game_engine/game_widget.dart';
+
+import 'connection.dart';
+import 'resources.dart';
+import 'settings.dart';
+import 'state.dart';
+import 'utils.dart';
+
+
+TextEditingController playerNameController = TextEditingController();
 
 Widget text(String value) {
   return Text(value, style: TextStyle(color: Colors.white));
@@ -19,4 +29,92 @@ Widget button(String value, Function onPressed) {
 Widget column(List<Widget> children) {
   return Column(
       crossAxisAlignment: CrossAxisAlignment.start, children: children);
+}
+
+Future<void> showChangeNameDialog() async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: false, // user must tap button!
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Welcome to Bleed'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text('WASD keys to move'),
+              Text('Hold SPACE to aim'),
+              Text('Left click to shoot'),
+              Text('Please enter a name'),
+              TextField(
+                autofocus: true,
+                focusNode: FocusNode(),
+                controller: playerNameController,
+              )
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('PLAY'),
+            onPressed: playerNameController.text.trim().length > 2
+                ? () {
+              loadAudioFiles();
+              requestSpawn(playerNameController.text.trim());
+              Navigator.of(context).pop();
+            }
+                : null,
+          ),
+        ],
+      );
+    },
+  );
+}
+
+
+Widget buildDebugUI(BuildContext context){
+  if (!connected) return text("Connecting");
+  return column(
+    [
+      if (!connected) button("Connect", connect),
+      if (!debugMode) button("Show Debug", showDebug),
+      if (debugMode) button("Hide Debug", hideDebug),
+      text("Date Size: ${event.length}"),
+      text("Frames since event: $framesSinceEvent"),
+      text("Players: ${players.length}"),
+      text("Npcs: ${npcs.length}"),
+      text("Player Assigned: $playerAssigned"),
+      button("smoothing $smooth", () => smooth = !smooth),
+      if (debugMode)
+        column([
+          text("Server Host: $host"),
+          text("Connected. Id: $id"),
+          if (ping != null) text("Ping: ${ping.inMilliseconds}"),
+          if (refreshDuration != null)
+            text("Refresh: ${refreshDuration.inMilliseconds}"),
+          text("Date Size: ${event.length}"),
+          text("Packages Sent: $packagesSent"),
+          text("Packages Received: $packagesReceived"),
+          if (mousePosX != null) text("mousePosX: ${mousePosX.round()}"),
+          if (mousePosY != null) text("mousePosY: ${mousePosY.round()}"),
+          if (playerAssigned && mousePosX != null)
+            text('mouseRotation: ${getMouseRotation().toStringAsFixed(2)}'),
+          text("cameraX: ${cameraX.round()}"),
+          text("cameraY: ${cameraY.round()}"),
+          if (playerAssigned)
+            text("playerScreenPositionX: ${playerScreenPositionX().round()}"),
+          if (playerAssigned)
+            text("playerScreenPositionY: ${playerScreenPositionY().round()}"),
+          text("Errors: $errors"),
+          text("Dones: $dones"),
+        ])
+    ],
+  );
+}
+
+void showDebug() {
+  debugMode = true;
+}
+
+void hideDebug() {
+  debugMode = false;
 }

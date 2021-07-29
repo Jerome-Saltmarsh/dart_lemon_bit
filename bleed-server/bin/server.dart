@@ -61,11 +61,13 @@ void main() {
 
     void handleCommandAttack(dynamic request) {
       if (request[keyId] == null) return;
+      if (request[keyRotation] == null) return;
+      double angle = request[keyRotation];
       int playerId = request[keyId];
       Character player = findPlayerById(playerId);
-      if (!isAiming(player)) return;
-      player.aimAngle = request[keyRotation];
-      fireWeapon(player);
+      if (!player.aiming) return;
+      player.direction = convertAngleToDirection(angle);
+      fireWeapon(player, angle);
     }
 
     void handleRequestEquip(dynamic request) {

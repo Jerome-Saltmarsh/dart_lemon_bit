@@ -238,3 +238,11 @@ void drawGrassTile(double x, double y) {
 void setColor(Color value) {
   globalPaint.color = value;
 }
+
+
+void drawBulletRange() {
+  if (!playerAssigned) return;
+  dynamic player = getPlayerCharacter();
+  drawCircleOutline(
+      radius: bulletRange, x: player[posX], y: player[posY], color: white);
+}

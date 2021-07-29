@@ -29,10 +29,10 @@ class Character extends PhysicsGameObject {
   int frameOfDeath = 0;
   double speed;
 
-  get alive => state != CharacterState.Dead;
-  get dead => state == CharacterState.Dead;
-  get firing => state == CharacterState.Firing;
-  get aiming => state == CharacterState.Aiming;
+  bool get alive => state != CharacterState.Dead;
+  bool get dead => state == CharacterState.Dead;
+  bool get firing => state == CharacterState.Firing;
+  bool get aiming => state == CharacterState.Aiming;
 
   Character(double x, double y, this.weapon, this.health, this.speed, [String name = ""]) : super(x, y, 0, 0) {
     this.id = _id++;
