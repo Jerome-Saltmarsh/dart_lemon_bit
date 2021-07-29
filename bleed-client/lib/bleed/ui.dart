@@ -59,7 +59,7 @@ Future<void> showChangeNameDialog() async {
             onPressed: playerNameController.text.trim().length > 2
                 ? () {
               loadAudioFiles();
-              requestSpawn(playerNameController.text.trim());
+              // sendRequestSpawn(playerNameController.text.trim());
               Navigator.of(context).pop();
             }
                 : null,
@@ -78,6 +78,7 @@ Widget buildDebugUI(BuildContext context){
       if (!connected) button("Connect", connect),
       if (!debugMode) button("Show Debug", showDebug),
       if (debugMode) button("Hide Debug", hideDebug),
+      button("Respawn", sendRequestSpawn),
       text("Date Size: ${event.length}"),
       text("Frames since event: $framesSinceEvent"),
       text("Players: ${players.length}"),

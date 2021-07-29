@@ -2,20 +2,7 @@ import 'dart:convert';
 import 'package:archive/archive.dart';
 import 'package:flutter_game_engine/bleed/state.dart';
 
-GZipEncoder _gZipEncoder = GZipEncoder();
 GZipDecoder _gZipDecoder = GZipDecoder();
-
-String encode(dynamic data) {
-  List<int> i = _gZipEncoder.encode(utf8.encode(jsonEncode(data)));
-  if (i != null) {
-    return base64.encode(i);
-  }
-  return "";
-}
-
-// dynamic decode(String data) {
-//   return jsonDecode((utf8.decode(_gZipDecoder.decodeBytes(base64.decode(data).toList()))));
-// }
 
 String decompress(String data){
   return utf8.decode(_gZipDecoder.decodeBytes(base64.decode(data).toList()));

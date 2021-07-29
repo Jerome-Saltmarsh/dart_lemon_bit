@@ -1,60 +1,34 @@
 
-import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'common.dart';
 import 'parsing.dart';
-import 'keys.dart';
 import 'settings.dart';
 import 'state.dart';
 import 'utils.dart';
 
-void requestSpawn(String playerName) {
-  print("request spawn");
-  Map<String, dynamic> request = Map();
-  request[keyCommand] = commandSpawn;
-  request[keyPlayerName] = playerName;
-  sendToServer(request);
-}
-
-void sendCommandFire() {
-  if (!playerAssigned) return;
-  print("send command fire");
-  Map<String, dynamic> request = Map();
-  request[keyCommand] = commandAttack;
-  request[keyId] = id;
-  request[keyRotation] = getMouseRotation();
-  sendToServer(request);
-}
-
-void sendCommand(int value) {
-  if (!connected) return;
-  Map<String, dynamic> request = Map();
-  request[keyCommand] = value;
-  sendToServer(request);
-}
+Uri get hostURI => Uri.parse(host);
 
 void disconnect() {
   connected = false;
   webSocketChannel.sink.close();
 }
 
-
-void sendToServer(dynamic event) {
+void sendToServer(String message) {
   if (!connected) return;
-  webSocketChannel.sink.add(encode(event));
+  webSocketChannel.sink.add(message);
   packagesSent++;
 }
 
 
-void onEvent(dynamic valueString) {
+void onEvent(dynamic response) {
   framesSinceEvent = 0;
   DateTime now = DateTime.now();
   ping = now.difference(previousEvent);
   previousEvent = now;
   packagesReceived++;
-  event = valueString;
-  parseState(decompress(valueString));
+  event = response;
+  parseState(decompress(response));
   //
   // if (valueObject[keyNpcs] != null) {
   //   npcs = unparseNpcs(valueObject[keyNpcs]);
@@ -98,22 +72,26 @@ void sendCommandEquip(int weapon) {
   request[keyCommand] = commandEquip;
   request[keyEquipValue] = weapon;
   request[keyId] = id;
-  sendToServer(request);
+  // sendToServer(request);
+}
+
+void sendRequestUpdatePlayer() {
+  sendToServer("u: $id $requestCharacterState $requestDirection");
 }
 
 void sendCommandUpdate() {
-  Map<String, dynamic> request = Map();
-  request[keyCommand] = commandUpdate;
-  if (playerAssigned) {
-    request['s'] = requestCharacterState;
-    request[keyId] = id;
-    if (requestCharacterState == characterStateAiming && mouseAvailable) {
-      request[keyAimAngle] = getMouseRotation();
-    }else{
-      request['d'] = requestDirection;
-    }
-  }
-  sendToServer(request);
+  sendToServer("update");
+}
+
+void sendRequestSpawn() {
+  print("requestSpawn()");
+  sendToServer('spawn');
+}
+
+void sendCommandFire() {
+  if (!playerAssigned) return;
+  print("sendCommandFire()");
+  sendToServer("$id $commandAttack ${getMouseRotation()}");
 }
 
 void onError(dynamic value) {
@@ -125,4 +103,3 @@ void onDone() {
   connected = false;
 }
 
-Uri get hostURI => Uri.parse(host);

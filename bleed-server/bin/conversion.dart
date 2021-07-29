@@ -86,3 +86,11 @@ String compilePlayerToString(Character character){
 String compileBulletToString(Bullet bullet){
  return "${bullet.x} ${bullet.y}";
 }
+
+CharacterState parseCharacterState(int value){
+  return CharacterState.values[value];
+}
+
+Direction parseDirection(int value){
+  return Direction.values[value];
+}

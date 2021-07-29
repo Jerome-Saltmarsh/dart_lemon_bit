@@ -19,9 +19,13 @@ void main() {
       webSocket.sink.add(compressText(response));
     }
 
-    void handleRequestSpawn(dynamic request) {
+    void sendCompiledState() {
+      sendToClient(compileState());
+    }
+
+    void handleRequestSpawn() {
       var character = spawnPlayer("test");
-      String response = "id:${character.id};";
+      String response = "id: ${character.id};";
       sendToClient(response);
       return;
     }
@@ -71,25 +75,51 @@ void main() {
       player.weapon = Weapon.values[request[keyEquipValue]];
     }
 
-    void onEvent(data) {
-      dynamic request = decode(data);
-      switch (request[keyCommand]) {
-        case commandSpawn:
-          handleRequestSpawn(request);
-          break;
-        case commandUpdate:
-          handleRequestUpdate(request);
-          break;
-        case commandSpawnZombie:
-          spawnRandomNpc();
-          break;
-        case commandAttack:
-          handleRequestAttack(request);
-          break;
-        case commandEquip:
-          handleRequestEquip(request);
-          break;
+    void onEvent(requestD) {
+      String request = requestD;
+
+      if (request.startsWith("u:")) {
+        List<String> attributes = request.split(" ");
+        int id = int.parse(attributes[1]);
+        CharacterState state = CharacterState.values[int.parse(attributes[2])];
+        Direction direction =  Direction.values[int.parse(attributes[3])];
+        Character player = findPlayerById(id);
+        if (player.dead) return;
+        setCharacterState(player, state);
+        setDirection(player, direction);
+        sendCompiledState();
+        return;
       }
+      if (request == "spawn"){
+        handleRequestSpawn();
+        return;
+      }
+      if(request == "update"){
+        sendCompiledState();
+        return;
+      }
+
+
+
+
+      // dynamic request = decode(data);
+      // switch (request[keyCommand]) {
+      //   case commandSpawn:
+      //     handleRequestSpawn(request);
+      //     break;
+      //   case commandUpdate:
+      //     handleRequestUpdate(request);
+      //     break;
+      //   case commandSpawnZombie:
+      //     spawnRandomNpc();
+      //     break;
+      //   case commandAttack:
+      //     handleRequestAttack(request);
+      //     break;
+      //   case commandEquip:
+      //     handleRequestEquip(request);
+      //     break;
+      // }
     }
 
     webSocket.stream.listen(onEvent);

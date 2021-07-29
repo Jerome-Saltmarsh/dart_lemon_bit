@@ -1,24 +1,22 @@
 import 'dart:async';
 import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_game_engine/game_engine/game_input.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
+
 import 'common.dart';
-import 'parsing.dart';
 import 'connection.dart';
 import 'draw.dart';
-import 'resources.dart';
 import 'input.dart';
-import 'ui.dart';
-
 import 'keys.dart';
+import 'resources.dart';
 import 'settings.dart';
 import 'state.dart';
+import 'ui.dart';
 import 'utils.dart';
 
 class BleedClient extends GameWidget {
-
   @override
   bool uiVisible() => true;
 
@@ -88,36 +86,51 @@ class BleedClient extends GameWidget {
       return;
     }
 
+    updatePlayerCharacter();
+
+    if (playerAssigned) {
+      sendRequestUpdatePlayer();
+    } else {
+      sendCommandUpdate();
+    }
+  }
+
+  void updatePlayerCharacter() {
     dynamic playerCharacter = getPlayerCharacter();
-    if (playerCharacter != null) {
-      double playerScreenX = playerCharacter[posX] - cameraX;
-      double playerScreenY = playerCharacter[posY] - cameraY;
-      double halfScreenWidth = size.width * 0.5;
-      double halfScreenHeight = size.height * 0.5;
-      double xOffset = halfScreenWidth - playerScreenX;
-      double yOffset = halfScreenHeight - playerScreenY;
-      cameraX -= (xOffset * cameraFollow);
-      cameraY -= (yOffset * cameraFollow);
+    if (playerCharacter == null) return;
+    double playerScreenX = playerCharacter[posX] - cameraX;
+    double playerScreenY = playerCharacter[posY] - cameraY;
+    double halfScreenWidth = size.width * 0.5;
+    double halfScreenHeight = size.height * 0.5;
+    double xOffset = halfScreenWidth - playerScreenX;
+    double yOffset = halfScreenHeight - playerScreenY;
+    cameraX -= (xOffset * cameraFollow);
+    cameraY -= (yOffset * cameraFollow);
 
-      if (keyPressedSpawnZombie) {
-        sendCommand(commandSpawnZombie);
-        return;
+    if (keyPressedSpawnZombie) {
+      // sendCommand(commandSpawnZombie);
+      return;
+    }
+
+    requestCharacterState = characterStateWalking;
+
+    if (keyPressedSpace) {
+      requestCharacterState = characterStateAiming;
+    }
+
+    if (keyEquipHandGun) {
+      sendCommandEquipHandGun();
+    }
+
+    if (keyEquipShotgun) {
+      sendCommandEquipShotgun();
+    }
+
+    if (playerCharacter[state] == characterStateAiming) {
+      if (mouseAvailable) {
+        requestDirection = convertAngleToDirection(getMouseRotation());
       }
-
-      requestCharacterState = characterStateWalking;
-
-      if (keyPressedSpace) {
-        requestCharacterState = characterStateAiming;
-      }
-
-      if (keyEquipHandGun) {
-        sendCommandEquipHandGun();
-      }
-
-      if (keyEquipShotgun) {
-        sendCommandEquipShotgun();
-      }
-
+    } else {
       if (keyPressedW) {
         if (keyPressedD) {
           requestDirection = directionUpRight;
@@ -144,8 +157,6 @@ class BleedClient extends GameWidget {
         }
       }
     }
-
-    sendCommandUpdate();
   }
 
   void controlCamera() {
@@ -174,7 +185,7 @@ class BleedClient extends GameWidget {
     connect();
     // Timer(Duration(milliseconds: 100), showChangeNameDialog);
     Timer(Duration(seconds: 2), () {
-      requestSpawn('hello');
+      sendRequestSpawn();
     });
   }
 
@@ -199,9 +210,9 @@ class BleedClient extends GameWidget {
 
     drawTiles();
     drawBullets();
-    try{
+    try {
       drawCharacters();
-    }catch(e){
+    } catch (e) {
       print(e);
     }
     // dynamic player = getPlayerCharacter();

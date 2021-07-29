@@ -19,7 +19,7 @@ void playPistolAudio() {
 }
 
 double getMouseRotation() {
-  return getRadionsBetween(playerScreenPositionX(), playerScreenPositionY(), mousePosX, mousePosY);
+  return round(getRadionsBetween(playerScreenPositionX(), playerScreenPositionY(), mousePosX, mousePosY));
 }
 double playerScreenPositionX() {
   dynamic player = getPlayerCharacter();
@@ -102,4 +102,40 @@ int getDirection(dynamic character){
 
 bool isAlive(dynamic character) {
   return getState(character) != characterStateDead;
+}
+
+double round(double value, {int decimals = 1}) {
+  return double.parse(value.toStringAsFixed(decimals));
+}
+
+
+const double _eight = pi / 8.0;
+const double _quarter = pi / 4.0;
+
+int convertAngleToDirection(double angle) {
+  if (angle < _eight) {
+    return directionUp;
+  }
+  if (angle < _eight + (_quarter * 1)) {
+    return directionUpRight;
+  }
+  if (angle < _eight + (_quarter * 2)) {
+    return directionRight;
+  }
+  if (angle < _eight + (_quarter * 3)) {
+    return directionDownRight;
+  }
+  if (angle < _eight + (_quarter * 4)) {
+    return directionDown;
+  }
+  if (angle < _eight + (_quarter * 5)) {
+    return directionDownLeft;
+  }
+  if (angle < _eight + (_quarter * 6)) {
+    return directionLeft;
+  }
+  if (angle < _eight + (_quarter * 7)) {
+    return directionUpLeft;
+  }
+  return directionUp;
 }
