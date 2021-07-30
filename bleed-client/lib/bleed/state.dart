@@ -24,7 +24,6 @@ DateTime lastRefresh = DateTime.now();
 Duration refreshDuration;
 bool smooth = true;
 BuildContext context;
-bool initialized = false;
 WebSocketChannel webSocketChannel;
 List<dynamic> players = [];
 List<dynamic> npcs = [];

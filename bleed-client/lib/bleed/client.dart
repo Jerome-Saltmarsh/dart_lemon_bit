@@ -24,68 +24,14 @@ class BleedClient extends GameWidget {
     return buildDebugUI(context);
   }
 
-  void smoothings() {
-    if (framesSinceEvent > smoothingFrames) return;
-
-    for (dynamic character in players) {
-      double speed = 2;
-      if (character[0] != characterStateWalking) {
-        continue;
-      }
-      switch (getDirection(character)) {
-        case directionUp:
-          character[3] -= speed;
-          break;
-        case directionUpRight:
-          character[2] += speed * 0.5;
-          character[3] -= speed * 0.5;
-          break;
-        case directionRight:
-          character[2] += speed;
-          break;
-        case directionDownRight:
-          character[2] += speed * 0.5;
-          character[3] += speed * 0.5;
-          break;
-        case directionDown:
-          character[3] += speed;
-          break;
-        case directionDownLeft:
-          character[2] -= speed * 0.5;
-          character[3] += speed * 0.5;
-          break;
-        case directionLeft:
-          character[2] -= speed;
-          break;
-        case directionUpLeft:
-          character[2] -= speed * 0.5;
-          character[3] -= speed * 0.5;
-          break;
-      }
-      break;
-    }
-  }
-
   @override
   void fixedUpdate() {
     DateTime now = DateTime.now();
     refreshDuration = now.difference(lastRefresh);
     lastRefresh = DateTime.now();
     framesSinceEvent++;
-
-    if (smooth) {
-      smoothings();
-    }
-
+    smoothing();
     controlCamera();
-
-    if (!initialized) {
-      initialized = true;
-      return;
-    }
-
-
-
     readPlayerInput();
 
     if (playerAssigned) {

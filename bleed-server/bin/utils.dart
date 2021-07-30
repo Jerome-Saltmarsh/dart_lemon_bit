@@ -122,17 +122,23 @@ double getShotAngle(Character character) {
   return character.aimAngle + giveOrTake(character.accuracy * 0.5);
 }
 
+void faceAimDirection(Character character){
+  setDirection(character, convertAngleToDirection(character.aimAngle));
+}
+
 void fireWeapon(Character character, double angle) {
   if (!character.aiming) return;
+  character.aimAngle = angle;
+  faceAimDirection(character);
   switch (character.weapon) {
     case Weapon.HandGun:
-      characterSpawnBullet(character);
+      spawnBullet(character);
       character.fire();
       character.shotCoolDown = pistolCoolDown;
       break;
     case Weapon.Shotgun:
       for (int i = 0; i < 5; i++) {
-        characterSpawnBullet(character);
+        spawnBullet(character);
       }
       character.fire();
       character.shotCoolDown = shotgunCoolDown;
@@ -148,16 +154,10 @@ void npcWanderJob() {
   }
 }
 
-void spawnBullet(double x, double y, double angle, int characterId) {
-  Bullet bullet = Bullet(x, y, velX(angle, bulletSpeed), velY(angle, bulletSpeed), characterId);
-  bullet.xStart = x;
-  bullet.yStart = y;
-  setVelocity(bullet, angle, bulletSpeed);
+void spawnBullet(Character character) {
+  Bullet bullet = Bullet(character.x, character.y, velX(character.aimAngle, bulletSpeed), velY(character.aimAngle, bulletSpeed), character.id);
   bullets.add(bullet);
-}
-
-void characterSpawnBullet(Character character){
-  spawnBullet(character.x, character.y, getShotAngle(character), character.id);
+  print("Bullet spawned");
 }
 
 Npc spawnNpc(double x, double y) {

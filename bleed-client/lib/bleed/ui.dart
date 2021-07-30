@@ -82,6 +82,7 @@ Widget buildDebugUI(BuildContext context){
       text("Date Size: ${event.length}"),
       text("Frames since event: $framesSinceEvent"),
       text("Players: ${players.length}"),
+      text("Bullets: ${bullets.length}"),
       text("Npcs: ${npcs.length}"),
       text("Player Assigned: $playerAssigned"),
       text('Request Direction $requestDirection'),

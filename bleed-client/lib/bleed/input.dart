@@ -33,7 +33,9 @@ void readPlayerInput() {
     // sendCommand(commandSpawnZombie);
     return;
   }
-
+  if (mouseAvailable) {
+    requestAim = getMouseRotation();
+  }
 
   if(mouseClicked) {
     sendRequestFire();
@@ -41,10 +43,7 @@ void readPlayerInput() {
 
   if (keyAimPressed) {
     requestCharacterState = characterStateAiming;
-    if (mouseAvailable) {
-      requestAim = getMouseRotation();
-      requestDirection = convertAngleToDirection(requestAim);
-    }
+    requestDirection = convertAngleToDirection(requestAim);
     return;
   }
 

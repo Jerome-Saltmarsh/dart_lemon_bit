@@ -41,6 +41,7 @@ void main() {
         int id = int.parse(attributes[1]);
         Character player = findPlayerById(id);
         if (player.dead) return;
+        if (player.shotCoolDown > 0) return;
         CharacterState requestedState = CharacterState.values[int.parse(attributes[2])];
         Direction requestedDirection =  Direction.values[int.parse(attributes[3])];
         setCharacterState(player, requestedState);
