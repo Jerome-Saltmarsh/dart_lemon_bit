@@ -4,36 +4,43 @@ import 'package:flutter_game_engine/bleed/state.dart';
 
 GZipDecoder _gZipDecoder = GZipDecoder();
 
-String decompress(String data){
+String decompress(String data) {
   return utf8.decode(_gZipDecoder.decodeBytes(base64.decode(data).toList()));
 }
 
-void parseState(String stateText){
+void parseState(String stateText) {
   parsingText = stateText;
   parsingIndex = 0;
-  while(parsingIndex < stateText.length){
+  while (parsingIndex < stateText.length) {
     String term = consumeString();
-    if (term == "p:"){
+    if (term == "p:") {
       parsePlayers();
-    }
-    else
-    if (term == "id:"){
+    } else if (term == "id:") {
       parsePlayerId();
+    } else if (term == "b:") {
+      parseBullets();
     }
   }
 }
 
-void parsePlayerId(){
+void parseBullets(){
+  bullets.clear();
+  while (!simiColonConsumed()) {
+    parseBullet();
+  }
+}
+
+void parsePlayerId() {
   id = consumeInt();
   print('player id: $id');
 }
 
-String parseTerm(String text, String term){
+String parseTerm(String text, String term) {
   int start = text.indexOf(term);
-  if(start == -1) return "";
+  if (start == -1) return "";
   start += term.length;
   int end = start;
-  while(text[end] != ";"){
+  while (text[end] != ";") {
     end++;
   }
   return text.substring(start, end);
@@ -44,31 +51,31 @@ int parsingIndex = 0;
 
 String get currentCharacter => parsingText[parsingIndex];
 
-void incrementIndex(){
+void incrementIndex() {
   parsingIndex++;
 }
 
-void consumeSpace(){
-  while(currentCharacter == " "){
+void consumeSpace() {
+  while (currentCharacter == " ") {
     incrementIndex();
   }
 }
 
-String consumeNextAvailableChar(){
+String consumeNextAvailableChar() {
   consumeSpace();
   String character = parsingText[parsingIndex];
   incrementIndex();
   return character;
 }
 
-int consumeInt(){
+int consumeInt() {
   return int.parse(consumeNextAvailableChar());
 }
 
-String consumeString(){
+String consumeString() {
   consumeSpace();
   StringBuffer buffer = StringBuffer();
-  while(currentCharacter != " "){
+  while (currentCharacter != " ") {
     buffer.write(currentCharacter);
     parsingIndex++;
   }
@@ -76,28 +83,28 @@ String consumeString(){
   return buffer.toString();
 }
 
-double consumeDouble(){
+double consumeDouble() {
   return double.parse(consumeString());
 }
 
-bool simiColonConsumed(){
+bool simiColonConsumed() {
   consumeSpace();
-  if (currentCharacter == ";"){
+  if (currentCharacter == ";") {
     parsingIndex++;
     return true;
   }
   return false;
 }
 
-void parsePlayers(){
+void parsePlayers() {
   players.clear();
-  while(!simiColonConsumed()){
+  while (!simiColonConsumed()) {
     parsePlayer();
   }
 }
 
-void parsePlayer(){
-  return players.add([
+void parsePlayer() {
+  players.add([
     consumeInt(),
     consumeInt(),
     consumeDouble(),
@@ -105,53 +112,10 @@ void parsePlayer(){
     consumeInt(),
   ]);
 }
-//
-// /// [state, direction, positionX, positionY]
-// List<dynamic> unparseNpcs(List<dynamic> parsedCharacters){
-//   return parsedCharacters.map(unparseNpc).toList();
-// }
 
-// List<dynamic> unparsePlayers(List<dynamic> parsedCharacters){
-//   return parsedCharacters.map(unparsePlayer).toList();
-// }
-//
-// List<dynamic> unparseBullets(List<dynamic> parseBullets){
-//   if(parseBullets.isEmpty) return [];
-//   return parseBullets.map(unparseBullet).toList();
-// }
-
-// dynamic unparseNpc(dynamic parsedCharacter){
-//   List<dynamic> attributes = parsedCharacter.split(" ");
-//   return [
-//     int.parse(attributes[state]),
-//     int.parse(attributes[direction]),
-//     double.parse(attributes[posX]),
-//     double.parse(attributes[posY]),
-//   ];
-// }
-
-// // 0 0 12.5 3.5 0
-// dynamic unparsePlayer(dynamic playerString){
-//   String p = playerString;
-//   int xLength = 1;
-//   while (playerString[4 + xLength] != " ") xLength++;
-//   int yLength = p.length - xLength - 7;
-//   int yStart = p.length - 3 - yLength;
-//   String x = p.substring(4, 4 + xLength);
-//   String y = p.substring(yStart, yStart + yLength + 1);
-//   String id = p.substring(p.length - 1, p.length);
-//   return [
-//     int.parse(playerString[0]),
-//     int.parse(playerString[2]),
-//     double.parse(x),
-//     double.parse(y),
-//     int.parse(id),
-//   ];
-// }
-
-dynamic unparseBullet(dynamic bullet){
-  List<String> b = bullet.split(" ");
-  return [double.parse(b[0]), double.parse(b[1])];
+void parseBullet(){
+  bullets.add([
+    consumeDouble(),
+    consumeDouble()
+  ]);
 }
-
-

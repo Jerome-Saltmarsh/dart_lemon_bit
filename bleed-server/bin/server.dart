@@ -5,7 +5,7 @@ import 'package:shelf_web_socket/shelf_web_socket.dart';
 
 import 'classes.dart';
 import 'common.dart';
-import 'conversion.dart';
+import 'compiler.dart';
 import 'settings.dart';
 import 'update.dart';
 import 'utils.dart';
@@ -18,7 +18,7 @@ void main() {
   var handler = webSocketHandler((webSocket) {
 
     void sendToClient(String response) {
-      webSocket.sink.add(compressText(response));
+      webSocket.sink.add(compress(response));
     }
 
     void sendCompiledState() {
@@ -51,6 +51,9 @@ void main() {
           sendCompiledState();
         });
         Future.delayed(Duration(milliseconds: 14),(){
+          sendCompiledState();
+        });
+        Future.delayed(Duration(milliseconds: 28),(){
           sendCompiledState();
         });
 
