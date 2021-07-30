@@ -7,11 +7,9 @@ import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'connection.dart';
 import 'draw.dart';
-import 'input.dart';
 import 'resources.dart';
 import 'state.dart';
 import 'ui.dart';
-import 'utils.dart';
 
 class BleedClient extends GameWidget {
 

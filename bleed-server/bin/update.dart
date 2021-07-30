@@ -101,10 +101,6 @@ void updateBullets() {
   }
 }
 
-void checkBulletCollision(Bullet bullet, List<Character> values){
-
-}
-
 void updateNpc(Npc npc) {
   if (npc.dead) return;
 
@@ -183,14 +179,12 @@ void updateCharacter(Character character) {
 }
 
 void updateCharacters() {
-
   for(int i =0 ; i < players.length; i++){
     if(players[i].x.isNaN || players[i].y.isNaN){
       players[i].x = 0;
       players[i].y = 0;
     }
   }
-
   players.forEach(updateCharacter);
   npcs.forEach(updateCharacter);
 }
@@ -208,8 +202,14 @@ void fixedUpdate() {
   updateCharacters();
   updateCollisions();
   updateBullets();
+  updateNpcs();
   compressData();
   detectCorruptData();
+}
+
+
+void updateNpcs(){
+  npcs.forEach(updateNpc);
 }
 
 void compressData() {

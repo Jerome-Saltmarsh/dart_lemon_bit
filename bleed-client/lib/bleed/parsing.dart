@@ -14,7 +14,7 @@ void parseState(String stateText) {
   while (parsingIndex < stateText.length) {
     String term = consumeString();
     if (term == "p:") {
-      parsePlayers();
+      parsePlayers2();
     } else if (term == "id:") {
       parsePlayerId();
     } else if (term == "b:") {
@@ -25,7 +25,7 @@ void parseState(String stateText) {
   }
 }
 
-void parseBullets(){
+void parseBullets() {
   bullets.clear();
   while (!simiColonConsumed()) {
     parseBullet();
@@ -98,7 +98,7 @@ bool simiColonConsumed() {
   return false;
 }
 
-void parseNpcs(){
+void parseNpcs() {
   npcs.clear();
   while (!simiColonConsumed()) {
     parseNpc();
@@ -114,13 +114,33 @@ void parseNpc() {
   ]);
 }
 
-
 void parsePlayers() {
   players.clear();
   while (!simiColonConsumed()) {
     parsePlayer();
   }
 }
+
+void parsePlayers2() {
+  int index = 0;
+  while (!simiColonConsumed()) {
+    if (index >= players.length) {
+      players.add(getAvailablePlayerArray());
+    }
+    parsePlayer2(players[index]);
+    index++;
+  }
+  while (index < players.length) {
+    _playerCache.add(players.removeLast());
+  }
+}
+
+List getAvailablePlayerArray() {
+  if (_playerCache.isEmpty) return [0, 0, 0.0, 0.0, 0];
+  return _playerCache.removeLast();
+}
+
+List _playerCache = [];
 
 void parsePlayer() {
   players.add([
@@ -132,9 +152,14 @@ void parsePlayer() {
   ]);
 }
 
-void parseBullet(){
-  bullets.add([
-    consumeDouble(),
-    consumeDouble()
-  ]);
+void parsePlayer2(List<dynamic> array) {
+  array[0] = consumeInt();
+  array[1] = consumeInt();
+  array[2] = consumeDouble();
+  array[3] = consumeDouble();
+  array[4] = consumeInt();
+}
+
+void parseBullet() {
+  bullets.add([consumeDouble(), consumeDouble()]);
 }
