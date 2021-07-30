@@ -20,7 +20,7 @@ void parseState(String stateText) {
     } else if (term == "b:") {
       parseBullets();
     } else if (term == "n:") {
-      parseNpcs();
+      parseNpcs2();
     }
   }
 }
@@ -135,12 +135,32 @@ void parsePlayers2() {
   }
 }
 
+void parseNpcs2() {
+  int index = 0;
+  while (!simiColonConsumed()) {
+    if (index >= npcs.length) {
+      npcs.add(getAvailableNpcArray());
+    }
+    parseNpc2(npcs[index]);
+    index++;
+  }
+  while (index < npcs.length) {
+    _npcCache.add(npcs.removeLast());
+  }
+}
+
 List getAvailablePlayerArray() {
   if (_playerCache.isEmpty) return [0, 0, 0.0, 0.0, 0];
   return _playerCache.removeLast();
 }
 
+List getAvailableNpcArray() {
+  if (_npcCache.isEmpty) return [0, 0, 0.0, 0.0];
+  return _npcCache.removeLast();
+}
+
 List _playerCache = [];
+List _npcCache = [];
 
 void parsePlayer() {
   players.add([
@@ -158,6 +178,13 @@ void parsePlayer2(List<dynamic> array) {
   array[2] = consumeDouble();
   array[3] = consumeDouble();
   array[4] = consumeInt();
+}
+
+void parseNpc2(List<dynamic> array) {
+  array[0] = consumeInt();
+  array[1] = consumeInt();
+  array[2] = consumeDouble();
+  array[3] = consumeDouble();
 }
 
 void parseBullet() {
