@@ -73,8 +73,11 @@ void sendCommandUpdate() {
 }
 
 void sendRequestSpawn() {
-  print("requestSpawn()");
   sendToServer('spawn');
+}
+
+void sendRequestSpawnNpc(){
+  sendToServer('spawn-npc');
 }
 
 void onError(dynamic value) {

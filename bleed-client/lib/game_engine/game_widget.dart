@@ -16,6 +16,7 @@ Offset _mousePosition;
 Offset _previousMousePosition;
 Offset _mouseDelta;
 DateTime _lastLeftClicked;
+bool _clickProcessed = true;
 
 double cameraX = 0;
 double cameraY = 0;
@@ -27,7 +28,7 @@ Offset get mouseVelocity => _mouseDelta;
 double get mousePosX => _mousePosition?.dx;
 double get mousePosY => _mousePosition?.dy;
 bool get mouseAvailable => mousePosX != null;
-bool get mouseClicked => _lastLeftClicked != null && millisecondsSince(_lastLeftClicked) < 500;
+bool get mouseClicked => !_clickProcessed;
 Color white = mat.Colors.white;
 Color red = mat.Colors.red;
 
@@ -82,13 +83,24 @@ void drawText(String text, double x, double y, Color color){
   tp.paint(globalCanvas, new Offset(x - cameraX, y - cameraY));
 }
 
-abstract class GameWidget extends StatefulWidget {
+int _millisecondsSinceLastFrame = 0;
+int get millisecondsSinceLastFrame => _millisecondsSinceLastFrame;
 
-  final int fps;
+abstract class GameWidget extends StatefulWidget {
   final String title;
   Size screenSize;
+  DateTime previousUpdateTime = DateTime.now();
+  Duration frameDuration = Duration();
 
   Future init();
+
+  void _internalUpdate(){
+    DateTime now = DateTime.now();
+    _millisecondsSinceLastFrame = now.difference(previousUpdateTime).inMilliseconds;
+    previousUpdateTime = now;
+    fixedUpdate();
+    _clickProcessed = true;
+  }
 
   /// used to update the game logic
   void fixedUpdate();
@@ -105,7 +117,7 @@ abstract class GameWidget extends StatefulWidget {
   bool uiVisible() => false;
   mat.Color getBackgroundColor() => mat.Colors.black;
 
-  GameWidget({this.fps = 60, this.title = 'BLEED'});
+  GameWidget({this.title = 'BLEED'});
 
   @override
   _GameWidgetState createState() => _GameWidgetState();
@@ -137,15 +149,14 @@ class _GameWidgetState extends State<GameWidget> {
   FocusNode keyboardFocusNode;
   Timer updateTimer;
 
-
   @override
   void initState() {
     drawStream.stream.listen((event) {
       redrawGame();
       redrawUI();
     });
-    updateTimer = Timer.periodic(Duration(milliseconds: 1000 ~/ widget.fps), (timer) {
-      widget.fixedUpdate();
+    updateTimer = Timer.periodic(Duration(milliseconds: 1000 ~/ 30), (timer) {
+      widget._internalUpdate();
       gameSetState(_doNothing);
       uiSetState(_doNothing);
     });
@@ -213,6 +224,7 @@ class _GameWidgetState extends State<GameWidget> {
           _mousePosition = position.relative;
         },
         onTap: (position) {
+          _clickProcessed = false;
           _lastLeftClicked = DateTime.now();
           widget.onMouseClick();
         },

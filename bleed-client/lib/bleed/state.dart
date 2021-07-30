@@ -33,6 +33,7 @@ Canvas canvas;
 bool connected = false;
 bool debugMode = false;
 int id = idNotConnected;
+int actualFPS;
 const idNotConnected = -1;
 
 get playerCharacter {

@@ -32,7 +32,6 @@ void main() {
       return;
     }
 
-
     void onEvent(requestD) {
       String request = requestD;
 
@@ -50,16 +49,16 @@ void main() {
         setCharacterState(player, requestedState);
         sendCompiledState();
 
-        Future.delayed(Duration(milliseconds: 3),(){
-          sendCompiledState();
-        });
-        Future.delayed(Duration(milliseconds: 7),(){
-          sendCompiledState();
-        });
-        Future.delayed(Duration(milliseconds: 13),(){
-          sendCompiledState();
-        });
-        Future.delayed(Duration(milliseconds: 29),(){
+        // Future.delayed(Duration(milliseconds: 3),(){
+        //   sendCompiledState();
+        // });
+        // Future.delayed(Duration(milliseconds: 7),(){
+        //   sendCompiledState();
+        // });
+        // Future.delayed(Duration(milliseconds: 13),(){
+        //   sendCompiledState();
+        // });
+        Future.delayed(Duration(milliseconds: 30),(){
           sendCompiledState();
         });
         return;
@@ -68,16 +67,13 @@ void main() {
         handleRequestSpawn();
         return;
       }
+      if (request == "spawn-npc"){
+        spawnRandomNpc();
+      }
       if(request == "update"){
         sendCompiledState();
         return;
       }
-      // if(request.startsWith("fire:")){
-      //   List<String> attributes = request.split(" ");
-      //   int id = int.parse(attributes[1]);
-      //   Character player = findPlayerById(id);
-      //   fireWeapon(player, double.parse(attributes[2]));
-      // }
     }
 
     webSocket.stream.listen(onEvent);

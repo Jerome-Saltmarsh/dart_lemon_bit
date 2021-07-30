@@ -7,9 +7,8 @@ import 'maths.dart';
 import 'settings.dart';
 import 'state.dart';
 
-double bulletDistanceTravelled(dynamic bullet) {
-  return distance(bullet['x'], bullet['y'], bullet[keyStartX],
-      bullet[keyStartY]);
+double bulletDistanceTravelled(Bullet bullet) {
+  return distance(bullet.x, bullet.y, bullet.xStart, bullet.yStart);
 }
 
 void setCharacterState(Character character, CharacterState value) {

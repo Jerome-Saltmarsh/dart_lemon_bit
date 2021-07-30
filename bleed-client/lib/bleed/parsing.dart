@@ -19,6 +19,8 @@ void parseState(String stateText) {
       parsePlayerId();
     } else if (term == "b:") {
       parseBullets();
+    } else if (term == "n:") {
+      parseNpcs();
     }
   }
 }
@@ -95,6 +97,23 @@ bool simiColonConsumed() {
   }
   return false;
 }
+
+void parseNpcs(){
+  npcs.clear();
+  while (!simiColonConsumed()) {
+    parseNpc();
+  }
+}
+
+void parseNpc() {
+  npcs.add([
+    consumeInt(),
+    consumeInt(),
+    consumeDouble(),
+    consumeDouble(),
+  ]);
+}
+
 
 void parsePlayers() {
   players.clear();

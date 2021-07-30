@@ -46,7 +46,7 @@ void drawCharacter(dynamic character) {
   //     posY(character), Colors.white);
 }
 
-int getStartFrameWalking(int direction){
+int getStartFrameWalking(int direction) {
   switch (direction) {
     case directionUp:
       return 13;
@@ -68,7 +68,7 @@ int getStartFrameWalking(int direction){
   return 13;
 }
 
-int getStartFrameIdle(int direction){
+int getStartFrameIdle(int direction) {
   switch (direction) {
     case directionUp:
       return 3;
@@ -90,7 +90,7 @@ int getStartFrameIdle(int direction){
   return 3;
 }
 
-int getStartFrameDead(int direction){
+int getStartFrameDead(int direction) {
   switch (direction) {
     case directionUp:
       return 19;
@@ -160,7 +160,6 @@ void drawCharacterCircle(dynamic value, Color color) {
   drawCircle(value[posX], value[posY], characterRadius, color);
 }
 
-
 void drawCharacters() {
   if (spriteTemplate == null) return;
   players.sort((a, b) => a[posY] > b[posY] ? 1 : -1);
@@ -171,7 +170,6 @@ void drawCharacters() {
   npcs.where(isAlive).forEach((drawCharacter));
 }
 
-
 void drawCircleOutline(
     {int sides = 16, double radius, double x, double y, Color color}) {
   double r = (pi * 2) / sides;
@@ -180,8 +178,7 @@ void drawCircleOutline(
   setColor(color);
   for (int i = 0; i <= sides; i++) {
     double a1 = i * r;
-    points
-        .add(Offset(cos(a1) * radius - cameraX, sin(a1) * radius - cameraY));
+    points.add(Offset(cos(a1) * radius - cameraX, sin(a1) * radius - cameraY));
   }
   for (int i = 0; i < points.length - 1; i++) {
     canvas.drawLine(points[i] + z, points[i + 1] + z, globalPaint);
@@ -192,6 +189,12 @@ void drawBullets() {
   bullets.forEach((bullet) {
     drawCircle(bullet[0], bullet[1], 2, white);
   });
+}
+
+void drawMouse() {
+  if (!mouseAvailable) return;
+  drawCircleOutline(
+      radius: 5, x: mousePosX + cameraX, y: mousePosY + cameraY, color: white);
 }
 
 void drawTiles() {
@@ -234,11 +237,9 @@ void drawGrassTile(double x, double y) {
   drawImage(tileGrass01, x, y);
 }
 
-
 void setColor(Color value) {
   globalPaint.color = value;
 }
-
 
 void drawBulletRange() {
   if (!playerAssigned) return;

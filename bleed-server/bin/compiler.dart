@@ -18,6 +18,7 @@ String compress(String data){
 String compileState(){
   StringBuffer buffer = StringBuffer();
   compilePlayers(buffer);
+  compileNpcs(buffer);
   compileBullets(buffer);
   return buffer.toString();
 }
@@ -25,7 +26,16 @@ String compileState(){
 void compilePlayers(StringBuffer buffer){
   buffer.write("p: ");
   for(Character character in players){
-    compilePlayer(buffer, character);
+    compileCharacter(buffer, character);
+    buffer.write(" ");
+  }
+  buffer.write(";");
+}
+
+void compileNpcs(StringBuffer buffer){
+  buffer.write("n: ");
+  for(Npc npc in npcs){
+    compileNpc(buffer, npc);
     buffer.write(" ");
   }
   buffer.write(";");
@@ -39,12 +49,12 @@ void compileBullets(StringBuffer buffer){
   buffer.write(";");
 }
 
-String compileNpcToString(Npc npc){
-  return "${npc.state.index} ${npc.direction.index} ${npc.x} ${npc.y}";
+void compileCharacter(StringBuffer buffer, Character character){
+  buffer.write("${character.state.index} ${character.direction.index} ${character.x} ${character.y} ${character.id}");
 }
 
-void compilePlayer(StringBuffer buffer, Character character){
-  buffer.write("${character.state.index} ${character.direction.index} ${character.x} ${character.y} ${character.id}");
+void compileNpc(StringBuffer buffer, Npc npc){
+  buffer.write("${npc.state.index} ${npc.direction.index} ${npc.x} ${npc.y}");
 }
 
 String compileBulletToString(Bullet bullet){

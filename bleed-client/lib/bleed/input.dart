@@ -37,7 +37,7 @@ void readPlayerInput() {
     requestAim = getMouseRotation();
   }
 
-  if(mouseClicked) {
+  if (mouseClicked || keyPressedF) {
     requestCharacterState = characterStateFiring;
     return;
   }else if (keyAimPressed) {

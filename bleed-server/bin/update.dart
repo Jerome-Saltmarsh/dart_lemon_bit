@@ -54,31 +54,55 @@ void updateBullets() {
     Bullet bullet = bullets[i];
     bullet.x += bullet.xVel;
     bullet.y += bullet.yVel;
+    if (bulletDistanceTravelled(bullet) > bulletRange) {
+      bullets.removeAt(i);
+      i--;
+      continue;
+    }
+    compressBullet(bullet);
 
-    // if (bulletDistanceTravelled(bullet) > bulletRange) {
-    //   bullets.removeAt(i);
-    //   i--;
-    //   continue;
-    // }
-    //
-    // for (int j = 0; j < npcs.length; j++) {
-    //   Npc npc = npcs[j];
-    //   if (npc.dead) continue;
-    //   double dis = distanceBetween(npcs[j], bullet);
-    //   if (dis < characterBulletRadius) {
-    //     bullets.removeAt(i);
-    //     i--;
-    //     npc.health--;
-    //     if (npc.health <= 0) {
-    //       npc.state = CharacterState.Dead;
-    //       npc.frameOfDeath = frame;
-    //     }
-    //     npc.xVel += bullet.xVel * 0.25;
-    //     npc.yVel += bullet.yVel * 0.25;
-    //     break;
-    //   }
-    // }
+    for (int j = 0; j < npcs.length; j++) {
+      Npc npc = npcs[j];
+      if (npc.dead) continue;
+      if (npc.id == bullet.ownerId) continue;
+      double dis = distanceBetween(npcs[j], bullet);
+      if (dis < characterBulletRadius) {
+        bullets.removeAt(i);
+        i--;
+        npc.health--;
+        if (npc.health <= 0) {
+          npc.state = CharacterState.Dead;
+          npc.frameOfDeath = frame;
+        }
+        npc.xVel += bullet.xVel * 0.25;
+        npc.yVel += bullet.yVel * 0.25;
+        break;
+      }
+    }
+
+    for (int j = 0; j < players.length; j++) {
+      Character character = players[j];
+      if (character.dead) continue;
+      if (character.id == bullet.ownerId) continue;
+      double dis = distanceBetween(character, bullet);
+      if (dis < characterBulletRadius) {
+        bullets.removeAt(i);
+        i--;
+        character.health--;
+        if (character.health <= 0) {
+          character.state = CharacterState.Dead;
+          character.frameOfDeath = frame;
+        }
+        character.xVel += bullet.xVel * 0.15;
+        character.yVel += bullet.yVel * 0.15;
+        break;
+      }
+    }
   }
+}
+
+void checkBulletCollision(Bullet bullet, List<Character> values){
+
 }
 
 void updateNpc(Npc npc) {
@@ -120,7 +144,7 @@ void updateCharacter(Character character) {
     case CharacterState.Firing:
       character.shotCoolDown--;
       if (character.shotCoolDown <= 0) {
-        character.idle();
+        setCharacterState(character, CharacterState.Aiming);
       }
       break;
     case CharacterState.Walking:
@@ -196,6 +220,11 @@ void compressData() {
 void compressCharacter(Character character) {
   character.x = round(character.x);
   character.y = round(character.y);
+}
+
+void compressBullet(Bullet bullet){
+  bullet.x = round(bullet.x);
+  bullet.y = round(bullet.y);
 }
 
 int compareCharacters(GameObject a, GameObject b) {

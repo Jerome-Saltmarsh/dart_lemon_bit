@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_game_engine/bleed/update.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'connection.dart';
@@ -13,6 +14,9 @@ import 'ui.dart';
 import 'utils.dart';
 
 class BleedClient extends GameWidget {
+
+
+
   @override
   bool uiVisible() => true;
 
@@ -24,34 +28,19 @@ class BleedClient extends GameWidget {
 
   @override
   void fixedUpdate() {
-    DateTime now = DateTime.now();
-    refreshDuration = now.difference(lastRefresh);
-    lastRefresh = DateTime.now();
-    framesSinceEvent++;
-    smoothing();
-    controlCamera();
-    readPlayerInput();
-
-    if (playerAssigned) {
-      sendRequestUpdatePlayer();
-    } else {
-      sendCommandUpdate();
-    }
+    update();
   }
 
   @override
   void onMouseClick() {
-    // sendRequestFire();
+
   }
 
   @override
   Future init() async {
     loadResources();
     connect();
-    // Timer(Duration(milliseconds: 100), showChangeNameDialog);
-    Timer(Duration(seconds: 2), () {
-      sendRequestSpawn();
-    });
+    sendRequestSpawn();
   }
 
   @override
@@ -65,21 +54,11 @@ class BleedClient extends GameWidget {
       drawFrame++;
     }
 
-    if (mousePosX != null) {
-      drawCircleOutline(
-          radius: 5,
-          x: mousePosX + cameraX,
-          y: mousePosY + cameraY,
-          color: white);
-    }
 
+    drawMouse();
     drawTiles();
     drawBullets();
-    try {
-      drawCharacters();
-    } catch (e) {
-      print(e);
-    }
+    drawCharacters();
     // dynamic player = getPlayerCharacter();
     // if (player != null && getState(player) == characterStateAiming) {
     //   double accuracy = player[keyAccuracy];

@@ -27,26 +27,6 @@ const weaponShotgun = 2;
 const typeNpc = 1;
 const typeHuman = 0;
 
-// only the players accuracy is actually needed
-// player only
-// [id, accuracy, weapon]
-
-/**
-    [
-    [], zombies
-    [], players
-    [], bullets
-    0, playerId
-    1, accuracy
-    2, weapon
-    3, posX
-    4, posY
-    ]
- **/
-
-// zombies have no weapon
-// "[0, 1, 12.5, 90.5]"
-// "0 1 12.5 90.5"
 // [state, direction, positionX, positionY]
 const indexId = 0;
 const indexState = 1;

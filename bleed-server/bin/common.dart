@@ -88,4 +88,4 @@ const double bulletRadius = 3;
 const double characterRadius = 7;
 const double characterRadius2 = characterRadius * 2;
 const double characterBulletRadius = characterRadius + bulletRadius;
-const double bulletRange = 220;
+const double bulletRange = 320;
