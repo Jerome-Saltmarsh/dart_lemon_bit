@@ -109,41 +109,50 @@ abstract class GameWidget extends StatefulWidget {
 
   @override
   _GameWidgetState createState() => _GameWidgetState();
+}
 
-  void forceRedraw(){
-    drawStream.add(true);
-  }
+void forceRedraw(){
+  drawStream.add(true);
 }
 
 StreamController drawStream = StreamController();
+StateSetter gameSetState;
+StateSetter uiSetState;
+
+void redrawGame(){
+  gameSetState(_doNothing);
+}
+
+void redrawUI(){
+  uiSetState(_doNothing);
+}
+
+void _doNothing(){
+
+}
 
 class _GameWidgetState extends State<GameWidget> {
 
   // variables
   FocusNode keyboardFocusNode;
   Timer updateTimer;
-  StateSetter drawGame;
-  StateSetter drawUI;
+
 
   @override
   void initState() {
     drawStream.stream.listen((event) {
-      drawGame(_doNothing);
-      drawUI(_doNothing);
+      redrawGame();
+      redrawUI();
     });
     updateTimer = Timer.periodic(Duration(milliseconds: 1000 ~/ widget.fps), (timer) {
       widget.fixedUpdate();
-      drawGame(_doNothing);
-      drawUI(_doNothing);
+      gameSetState(_doNothing);
+      uiSetState(_doNothing);
     });
     keyboardFocusNode = FocusNode();
     widget.init();
     disableRightClick();
     super.initState();
-  }
-
-  void _doNothing(){
-
   }
 
   @override
@@ -186,7 +195,7 @@ class _GameWidgetState extends State<GameWidget> {
   Widget _buildUI(){
     return StatefulBuilder(
         builder: (context, drawUI){
-          this.drawUI = drawUI;
+          uiSetState = drawUI;
           return widget.buildUI(context);
         });
   }
@@ -214,8 +223,8 @@ class _GameWidgetState extends State<GameWidget> {
             }
           },
           child: StatefulBuilder(
-            builder: (context, drawGame){
-              this.drawGame = drawGame;
+            builder: (context, _drawGame){
+              gameSetState = _drawGame;
               return Container(
                 color: widget.getBackgroundColor(),
                 width: widget.screenSize.width,

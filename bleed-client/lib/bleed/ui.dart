@@ -84,6 +84,8 @@ Widget buildDebugUI(BuildContext context){
       text("Players: ${players.length}"),
       text("Npcs: ${npcs.length}"),
       text("Player Assigned: $playerAssigned"),
+      text('Request Direction $requestDirection'),
+      text('Request State $requestCharacterState'),
       button("smoothing $smooth", () => smooth = !smooth),
       if (debugMode)
         column([

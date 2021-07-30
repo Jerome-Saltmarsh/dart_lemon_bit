@@ -18,6 +18,7 @@ const directionDown = 4;
 const directionDownLeft = 5;
 const directionLeft = 6;
 const directionUpLeft = 7;
+const directionNone = 8;
 
 const weaponUnarmed = 0;
 const weaponHandgun = 1;

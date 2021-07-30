@@ -24,6 +24,7 @@ void setCharacterState(Character character, CharacterState value) {
 }
 
 void setDirection(Character character, Direction value){
+  if (value == Direction.None) return;
   character.direction = value;
 }
 
@@ -122,6 +123,7 @@ double getShotAngle(Character character) {
 }
 
 void fireWeapon(Character character, double angle) {
+  if (!character.aiming) return;
   switch (character.weapon) {
     case Weapon.HandGun:
       characterSpawnBullet(character);

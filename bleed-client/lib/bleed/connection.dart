@@ -1,4 +1,5 @@
 
+import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'common.dart';
@@ -29,6 +30,7 @@ void onEvent(dynamic response) {
   packagesReceived++;
   event = response;
   parseState(decompress(response));
+  redrawGame();
   //
   // if (valueObject[keyNpcs] != null) {
   //   npcs = unparseNpcs(valueObject[keyNpcs]);
@@ -45,7 +47,6 @@ void onEvent(dynamic response) {
   // if (valueObject[keyBullets] != null) {
   //   bullets = unparseBullets(valueObject[keyBullets]);
   // }
-  // forceRedraw();
 }
 
 
@@ -79,6 +80,10 @@ void sendRequestUpdatePlayer() {
   sendToServer("u: $id $requestCharacterState $requestDirection");
 }
 
+void sendRequestFire(){
+  sendToServer("fire: $id $requestAim");
+}
+
 void sendCommandUpdate() {
   sendToServer("update");
 }
@@ -86,12 +91,6 @@ void sendCommandUpdate() {
 void sendRequestSpawn() {
   print("requestSpawn()");
   sendToServer('spawn');
-}
-
-void sendCommandFire() {
-  if (!playerAssigned) return;
-  print("sendCommandFire()");
-  sendToServer("$id $commandAttack ${getMouseRotation()}");
 }
 
 void onError(dynamic value) {

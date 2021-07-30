@@ -2,14 +2,12 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_game_engine/game_engine/game_input.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'common.dart';
 import 'connection.dart';
 import 'draw.dart';
 import 'input.dart';
-import 'keys.dart';
 import 'resources.dart';
 import 'settings.dart';
 import 'state.dart';
@@ -27,7 +25,7 @@ class BleedClient extends GameWidget {
   }
 
   void smoothings() {
-    if (framesSinceEvent > 10) return;
+    if (framesSinceEvent > smoothingFrames) return;
 
     for (dynamic character in players) {
       double speed = 2;
@@ -86,7 +84,9 @@ class BleedClient extends GameWidget {
       return;
     }
 
-    updatePlayerCharacter();
+
+
+    readPlayerInput();
 
     if (playerAssigned) {
       sendRequestUpdatePlayer();
@@ -95,88 +95,9 @@ class BleedClient extends GameWidget {
     }
   }
 
-  void updatePlayerCharacter() {
-    dynamic playerCharacter = getPlayerCharacter();
-    if (playerCharacter == null) return;
-    double playerScreenX = playerCharacter[posX] - cameraX;
-    double playerScreenY = playerCharacter[posY] - cameraY;
-    double halfScreenWidth = size.width * 0.5;
-    double halfScreenHeight = size.height * 0.5;
-    double xOffset = halfScreenWidth - playerScreenX;
-    double yOffset = halfScreenHeight - playerScreenY;
-    cameraX -= (xOffset * cameraFollow);
-    cameraY -= (yOffset * cameraFollow);
-
-    if (keyPressedSpawnZombie) {
-      // sendCommand(commandSpawnZombie);
-      return;
-    }
-
-    requestCharacterState = characterStateWalking;
-
-    if (keyPressedSpace) {
-      requestCharacterState = characterStateAiming;
-    }
-
-    if (keyEquipHandGun) {
-      sendCommandEquipHandGun();
-    }
-
-    if (keyEquipShotgun) {
-      sendCommandEquipShotgun();
-    }
-
-    if (playerCharacter[state] == characterStateAiming) {
-      if (mouseAvailable) {
-        requestDirection = convertAngleToDirection(getMouseRotation());
-      }
-    } else {
-      if (keyPressedW) {
-        if (keyPressedD) {
-          requestDirection = directionUpRight;
-        } else if (keyPressedA) {
-          requestDirection = directionUpLeft;
-        } else {
-          requestDirection = directionUp;
-        }
-      } else if (keyPressedS) {
-        if (keyPressedD) {
-          requestDirection = directionDownRight;
-        } else if (keyPressedA) {
-          requestDirection = directionDownLeft;
-        } else {
-          requestDirection = directionDown;
-        }
-      } else if (keyPressedA) {
-        requestDirection = directionLeft;
-      } else if (keyPressedD) {
-        requestDirection = directionRight;
-      } else {
-        if (!keyPressedSpace) {
-          requestCharacterState = characterStateIdle;
-        }
-      }
-    }
-  }
-
-  void controlCamera() {
-    if (keyPressedRightArrow) {
-      cameraX += cameraSpeed;
-    }
-    if (keyPressedLeftArrow) {
-      cameraX -= cameraSpeed;
-    }
-    if (keyPressedDownArrow) {
-      cameraY += cameraSpeed;
-    }
-    if (keyPressedUpArrow) {
-      cameraY -= cameraSpeed;
-    }
-  }
-
   @override
   void onMouseClick() {
-    sendCommandFire();
+    sendRequestFire();
   }
 
   @override
