@@ -31,22 +31,6 @@ void onEvent(dynamic response) {
   event = response;
   parseState(decompress(response));
   redrawGame();
-  //
-  // if (valueObject[keyNpcs] != null) {
-  //   npcs = unparseNpcs(valueObject[keyNpcs]);
-  // }
-  // if (valueObject[keyPlayers] != null) {
-  //   players = unparsePlayers(valueObject[keyPlayers]);
-  // }
-  // if (id < 0 && valueObject[keyId] != null) {
-  //   id = valueObject[keyId];
-  //   cameraX = playerCharacter[posX] - (size.width * 0.5);
-  //   cameraY = playerCharacter[posY] - (size.height * 0.5);
-  // }
-  // // Play bullet audio
-  // if (valueObject[keyBullets] != null) {
-  //   bullets = unparseBullets(valueObject[keyBullets]);
-  // }
 }
 
 
@@ -77,7 +61,7 @@ void sendCommandEquip(int weapon) {
 }
 
 void sendRequestUpdatePlayer() {
-  sendToServer("u: $id $requestCharacterState $requestDirection");
+  sendToServer("u: $id $requestCharacterState $requestDirection $requestAim");
 }
 
 void sendRequestFire(){

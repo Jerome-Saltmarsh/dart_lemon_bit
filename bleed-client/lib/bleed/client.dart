@@ -4,12 +4,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
-import 'common.dart';
 import 'connection.dart';
 import 'draw.dart';
 import 'input.dart';
 import 'resources.dart';
-import 'settings.dart';
 import 'state.dart';
 import 'ui.dart';
 import 'utils.dart';
@@ -43,7 +41,7 @@ class BleedClient extends GameWidget {
 
   @override
   void onMouseClick() {
-    sendRequestFire();
+    // sendRequestFire();
   }
 
   @override

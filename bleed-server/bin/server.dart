@@ -44,20 +44,24 @@ void main() {
         if (player.shotCoolDown > 0) return;
         CharacterState requestedState = CharacterState.values[int.parse(attributes[2])];
         Direction requestedDirection =  Direction.values[int.parse(attributes[3])];
-        setCharacterState(player, requestedState);
+        double aim = double.parse(attributes[4]);
+        player.aimAngle = aim;
         setDirection(player, requestedDirection);
+        setCharacterState(player, requestedState);
         sendCompiledState();
 
+        Future.delayed(Duration(milliseconds: 3),(){
+          sendCompiledState();
+        });
         Future.delayed(Duration(milliseconds: 7),(){
           sendCompiledState();
         });
-        Future.delayed(Duration(milliseconds: 14),(){
+        Future.delayed(Duration(milliseconds: 13),(){
           sendCompiledState();
         });
-        Future.delayed(Duration(milliseconds: 28),(){
+        Future.delayed(Duration(milliseconds: 29),(){
           sendCompiledState();
         });
-
         return;
       }
       if (request == "spawn"){
@@ -68,12 +72,12 @@ void main() {
         sendCompiledState();
         return;
       }
-      if(request.startsWith("fire:")){
-        List<String> attributes = request.split(" ");
-        int id = int.parse(attributes[1]);
-        Character player = findPlayerById(id);
-        fireWeapon(player, double.parse(attributes[2]));
-      }
+      // if(request.startsWith("fire:")){
+      //   List<String> attributes = request.split(" ");
+      //   int id = int.parse(attributes[1]);
+      //   Character player = findPlayerById(id);
+      //   fireWeapon(player, double.parse(attributes[2]));
+      // }
     }
 
     webSocket.stream.listen(onEvent);

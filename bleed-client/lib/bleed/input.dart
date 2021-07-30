@@ -38,10 +38,9 @@ void readPlayerInput() {
   }
 
   if(mouseClicked) {
-    sendRequestFire();
-  }
-
-  if (keyAimPressed) {
+    requestCharacterState = characterStateFiring;
+    return;
+  }else if (keyAimPressed) {
     requestCharacterState = characterStateAiming;
     requestDirection = convertAngleToDirection(requestAim);
     return;

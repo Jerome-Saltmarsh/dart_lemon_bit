@@ -13,11 +13,16 @@ double bulletDistanceTravelled(dynamic bullet) {
 }
 
 void setCharacterState(Character character, CharacterState value) {
+  if (character.dead) return;
   if (character.state == value) return;
+  if (character.shotCoolDown > 0) return;
 
   switch (value) {
     case CharacterState.Aiming:
       character.accuracy = 0;
+      break;
+    case CharacterState.Firing:
+      fireWeapon(character);
       break;
   }
   character.state = value;
@@ -25,6 +30,8 @@ void setCharacterState(Character character, CharacterState value) {
 
 void setDirection(Character character, Direction value){
   if (value == Direction.None) return;
+  if (character.firing) return;
+  if (character.dead) return;
   character.direction = value;
 }
 
@@ -126,9 +133,8 @@ void faceAimDirection(Character character){
   setDirection(character, convertAngleToDirection(character.aimAngle));
 }
 
-void fireWeapon(Character character, double angle) {
+void fireWeapon(Character character) {
   if (!character.aiming) return;
-  character.aimAngle = angle;
   faceAimDirection(character);
   switch (character.weapon) {
     case Weapon.HandGun:
