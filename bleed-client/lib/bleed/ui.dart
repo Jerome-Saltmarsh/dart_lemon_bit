@@ -84,7 +84,8 @@ Widget buildDebugUI(BuildContext context){
       text("Date Size: ${event.length}"),
       text("Frames since event: $framesSinceEvent"),
       text("Milliseconds Since Last Frame: $millisecondsSinceLastFrame"),
-      text("FPS: ${ (1000 / millisecondsSinceLastFrame).round() }"),
+      if(millisecondsSinceLastFrame > 0)
+        text("FPS: ${ (1000 / millisecondsSinceLastFrame).round() }"),
       text("Players: ${players.length}"),
       text("Bullets: ${bullets.length}"),
       text("Npcs: ${npcs.length}"),
@@ -109,10 +110,10 @@ Widget buildDebugUI(BuildContext context){
             text('mouseRotation: ${getMouseRotation().toStringAsFixed(2)}'),
           text("cameraX: ${cameraX.round()}"),
           text("cameraY: ${cameraY.round()}"),
-          if (playerAssigned)
-            text("playerScreenPositionX: ${playerScreenPositionX().round()}"),
-          if (playerAssigned)
-            text("playerScreenPositionY: ${playerScreenPositionY().round()}"),
+          // if (playerAssigned)
+          //   text("playerScreenPositionX: ${playerScreenPositionX().round()}"),
+          // if (playerAssigned)
+          //   text("playerScreenPositionY: ${playerScreenPositionY().round()}"),
           text("Errors: $errors"),
           text("Dones: $dones"),
         ])

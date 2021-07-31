@@ -27,6 +27,7 @@ void parseState() {
 
 void _parsePlayerId() {
   playerId = _consumeInt();
+  _consumeSemiColon();
 }
 
 void _incrementIndex() {
@@ -63,6 +64,13 @@ String _consumeString() {
 
 double _consumeDouble() {
   return double.parse(_consumeString());
+}
+
+void _consumeSemiColon(){
+  while (currentCharacter != ";") {
+    _index++;
+  }
+  _index++;
 }
 
 bool _simiColonConsumed() {
