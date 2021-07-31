@@ -296,16 +296,64 @@ Rect getHumanIdleRect(dynamic character) {
   throw Exception("Could not get character walking sprite rect");
 }
 
+Rect getHumanDeadRect(dynamic character) {
+  switch (character[direction]) {
+    case directionUp:
+      return rectHumanDeadDown;
+    case directionUpRight:
+      return rectHumanDeadUpRight;
+    case directionRight:
+      return rectHumanDeadRight;
+    case directionDownRight:
+      return rectHumanDeadDownRight;
+    case directionDown:
+      return rectHumanDeadDown;
+    case directionDownLeft:
+      return rectHumanDeadUpRight;
+    case directionLeft:
+      return rectHumanDeadRight;
+    case directionUpLeft:
+      return rectHumanDeadDownRight;
+  }
+  throw Exception("Could not get character dead sprite rect");
+}
+
+Rect getHumanAimRect(dynamic character) {
+  switch (character[direction]) {
+    case directionUp:
+      return rectHumanAimingUp;
+    case directionUpRight:
+      return rectHumanAimingUpRight;
+    case directionRight:
+      return rectHumanAimingRight;
+    case directionDownRight:
+      return rectHumanAimingDownRight;
+    case directionDown:
+      return rectHumanAimingDown;
+    case directionDownLeft:
+      return rectHumanAimingDownLeft;
+    case directionLeft:
+      return rectHumanAimingLeft;
+    case directionUpLeft:
+      return rectHumanAimingUpLeft;
+  }
+  throw Exception("Could not get character dead sprite rect");
+}
+
+
+
 Rect getCharacterSpriteRect(dynamic character) {
   switch (character[state]) {
     case characterStateIdle:
       return getHumanIdleRect(character);
     case characterStateWalking:
       return getHumanWalkingRect(character);
+    case characterStateDead:
+      return getHumanDeadRect(character);
+    case characterStateAiming:
+      return getHumanAimRect(character);
   }
-
-  // throw Exception("Could not get character sprite rect");
-  return getHumanIdleRect(character);
+  throw Exception("Could not get character sprite rect");
 }
 
 Rect _getFrame(List<Rect> frames) {
@@ -317,11 +365,6 @@ const int humanSpriteImageWidth = 1728;
 const double humanSpriteFrameWidth = humanSpriteImageWidth / humanSpriteFrames;
 const double humanSpriteFrameHeight = 72;
 
-Rect getHumanSprite(int index) {
-  return Rect.fromLTWH(index * humanSpriteFrameWidth, 0.0,
-      humanSpriteFrameWidth, humanSpriteFrameHeight);
-}
-
 Rect rectHumanIdleDownLeft = getHumanSprite(0);
 Rect rectHumanIdleLeft = getHumanSprite(1);
 Rect rectHumanIdleUpLeft = getHumanSprite(2);
@@ -330,6 +373,21 @@ Rect rectHumanIdleUpRight = rectHumanIdleDownLeft;
 Rect rectHumanIdleRight = rectHumanIdleLeft;
 Rect rectHumanIdleDownRight = rectHumanIdleUpLeft;
 Rect rectHumanIdleDown = rectHumanIdleUp;
+
+Rect rectHumanDeadUpRight = getHumanSprite(16);
+Rect rectHumanDeadRight = getHumanSprite(17);
+Rect rectHumanDeadDownRight = getHumanSprite(18);
+Rect rectHumanDeadDown = getHumanSprite(19);
+
+Rect rectHumanAimingDownLeft = getHumanSprite(20);
+Rect rectHumanAimingLeft = getHumanSprite(21);
+Rect rectHumanAimingUpLeft = getHumanSprite(22);
+Rect rectHumanAimingUp = getHumanSprite(23);
+Rect rectHumanAimingUpRight = getHumanSprite(24);
+Rect rectHumanAimingRight = getHumanSprite(25);
+Rect rectHumanAimingDownRight = getHumanSprite(26);
+Rect rectHumanAimingDown = getHumanSprite(27);
+
 
 List<Rect> rectHumanWalkingDownLeftFrames = [
   getHumanSprite(4),
@@ -354,6 +412,11 @@ List<Rect> rectHumanWalkingUpFrames = [
   getHumanSprite(14),
   getHumanSprite(15)
 ];
+
+Rect getHumanSprite(int index) {
+  return Rect.fromLTWH(index * humanSpriteFrameWidth, 0.0,
+      humanSpriteFrameWidth, humanSpriteFrameHeight);
+}
 
 RSTransform getCharacterTransform(dynamic character) {
   return RSTransform.fromComponents(

@@ -48,15 +48,6 @@ void main() {
         setCharacterState(player, requestedState);
         sendCompiledState();
 
-        // Future.delayed(Duration(milliseconds: 3),(){
-        //   sendCompiledState();
-        // });
-        // Future.delayed(Duration(milliseconds: 7),(){
-        //   sendCompiledState();
-        // });
-        // Future.delayed(Duration(milliseconds: 13),(){
-        //   sendCompiledState();
-        // });
         Future.delayed(Duration(milliseconds: 30),(){
           sendCompiledState();
         });
@@ -68,6 +59,10 @@ void main() {
       }
       if (request == "spawn-npc"){
         spawnRandomNpc();
+        return;
+      }
+      if (request == "clear-npcs"){
+        clearNpcs();
       }
       if(request == "update"){
         sendCompiledState();

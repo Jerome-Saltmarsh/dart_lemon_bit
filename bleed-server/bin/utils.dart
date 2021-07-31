@@ -176,6 +176,10 @@ Npc spawnRandomNpc() {
       randomBetween(-spawnRadius, spawnRadius));
 }
 
+void clearNpcs(){
+  npcs.clear();
+}
+
 Character spawnPlayer(String name){
   Character player = Character(0.01, 0.02, Weapon.HandGun, 5, playerSpeed, name);
   players.add(player);

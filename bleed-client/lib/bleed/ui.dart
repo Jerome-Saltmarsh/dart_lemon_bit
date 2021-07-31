@@ -81,6 +81,7 @@ Widget buildDebugUI(BuildContext context){
       if (debugMode) button("Hide Debug", hideDebug),
       button("Respawn", sendRequestSpawn),
       button("Spawn NPC", sendRequestSpawnNpc),
+      button("Clear NPCS", sendRequestClearNpcs),
       text("Date Size: ${event.length}"),
       text("Frames since event: $framesSinceEvent"),
       text("Milliseconds Since Last Frame: $millisecondsSinceLastFrame"),

@@ -80,6 +80,10 @@ void sendRequestSpawnNpc(){
   sendToServer('spawn-npc');
 }
 
+void sendRequestClearNpcs(){
+  sendToServer("clear-npcs");
+}
+
 void onError(dynamic value) {
   errors++;
 }
