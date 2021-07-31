@@ -41,8 +41,6 @@ void _consumeSpace() {
   }
 }
 
-
-
 String _consumeNextAvailableChar() {
   _consumeSpace();
   String character = _text[_index];
@@ -51,7 +49,11 @@ String _consumeNextAvailableChar() {
 }
 
 int _consumeInt() {
-  return int.parse(_consumeNextAvailableChar());
+  return parseInt(_consumeString());
+}
+
+int parseInt(String value){
+  return int.parse(value);
 }
 
 String _consumeString() {

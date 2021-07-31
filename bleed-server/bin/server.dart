@@ -26,7 +26,7 @@ void main() {
 
     void handleRequestSpawn() {
       var character = spawnPlayer("test");
-      String response = "id: ${character.id};";
+      String response = "id: ${character.id} ;";
       sendToClient(response);
       return;
     }
@@ -54,14 +54,17 @@ void main() {
         return;
       }
       if (request == "spawn"){
+        print("received spawn request");
         handleRequestSpawn();
         return;
       }
       if (request == "spawn-npc"){
+        print("received spawn npc request");
         spawnRandomNpc();
         return;
       }
       if (request == "clear-npcs"){
+        print("received clear npcs request");
         clearNpcs();
       }
       if(request == "update"){
