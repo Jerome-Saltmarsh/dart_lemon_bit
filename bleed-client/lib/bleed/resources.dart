@@ -3,14 +3,14 @@ import 'dart:ui';
 import 'package:flutter_game_engine/game_engine/game_resources.dart';
 import 'package:howler/howler.dart';
 
-Image spriteTemplate;
+Image imageHuman;
 Image tileGrass01;
 Howl shotgunFireAudio;
 Howl pistolFireAudio;
 
 Future loadResources() async {
   tileGrass01 = await loadImage("images/tile-grass-01.png");
-  spriteTemplate = await loadImage("images/iso-character.png");
+  imageHuman = await loadImage("images/iso-character.png");
 }
 
 Future loadAudioFiles(){

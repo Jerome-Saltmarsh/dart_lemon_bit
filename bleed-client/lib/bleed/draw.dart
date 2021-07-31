@@ -38,8 +38,8 @@ void drawCharacter(dynamic character) {
   int spriteFrame = (drawFrame % totalFrames) + startFrame;
   int frameCount = 36;
 
-  drawSprite(spriteTemplate, frameCount, spriteFrame, character[posX],
-      character[posY]);
+  drawSprite(
+      imageHuman, frameCount, spriteFrame, character[posX], character[posY]);
 
   // drawCharacterCircle(
   //     character, character[keyCharacterId] == id ? Colors.blue : Colors.red);
@@ -163,13 +163,147 @@ void drawCharacterCircle(dynamic value, Color color) {
 }
 
 void drawCharacters() {
-  if (spriteTemplate == null) return;
-  players.sort((a, b) => a[posY] > b[posY] ? 1 : -1);
-  players.where(isDead).forEach((drawCharacter));
-  players.where(isAlive).forEach((drawCharacter));
-  npcs.sort((a, b) => a[posY] > b[posY] ? 1 : -1);
-  npcs.where(isDead).forEach((drawCharacter));
-  npcs.where(isAlive).forEach((drawCharacter));
+  if (imageHuman == null) return;
+  // players.sort((a, b) => a[posY] > b[posY] ? 1 : -1);
+  // players.where(isDead).forEach((drawCharacter));
+  // players.where(isAlive).forEach((drawCharacter));
+  // npcs.sort((a, b) => a[posY] > b[posY] ? 1 : -1);
+  // npcs.where(isDead).forEach((drawCharacter));
+  // npcs.where(isAlive).forEach((drawCharacter));
+  drawCharacterList(players);
+  drawCharacterList(npcs);
+}
+
+void drawCharacterList(List<dynamic> characters){
+  globalCanvas.drawAtlas(
+      imageHuman,
+      characters.map(getCharacterTransform).toList(),
+      characters.map(getCharacterSpriteRect).toList(),
+      null,
+      null,
+      null,
+      globalPaint);
+}
+
+
+Rect getHumanWalkingRect(dynamic character){
+  switch (character[direction]) {
+    case directionUp:
+      return _getFrame(rectHumanWalkingUpFrames);
+    case directionUpRight:
+      return _getFrame(rectHumanWalkingDownLeftFrames);
+    case directionRight:
+      return _getFrame(rectHumanWalkingLeftFrames);
+    case directionDownRight:
+      return _getFrame(rectHumanWalkingUpLeftFrames);
+    case directionDown:
+      return _getFrame(rectHumanWalkingUpFrames);
+    case directionDownLeft:
+      return _getFrame(rectHumanWalkingDownLeftFrames);
+    case directionLeft:
+      return _getFrame(rectHumanWalkingLeftFrames);
+    case directionUpLeft:
+      return _getFrame(rectHumanWalkingUpLeftFrames);
+  }
+  throw Exception("Could not get character walking sprite rect");
+}
+
+Rect getHumanIdleRect(dynamic character){
+  switch (character[direction]) {
+    case directionUp:
+      return rectHumanIdleUp;
+    case directionUpRight:
+      return rectHumanIdleUpRight;
+    case directionRight:
+      return rectHumanIdleRight;
+    case directionDownRight:
+      return rectHumanIdleDownRight;
+    case directionDown:
+      return rectHumanIdleDown;
+    case directionDownLeft:
+      return rectHumanIdleDownLeft;
+    case directionLeft:
+      return rectHumanIdleLeft;
+    case directionUpLeft:
+      return rectHumanIdleUpLeft;
+  }
+  throw Exception("Could not get character walking sprite rect");
+}
+
+Rect getCharacterSpriteRect(dynamic character) {
+  switch (character[state]) {
+    case characterStateIdle:
+      return getHumanIdleRect(character);
+    case characterStateWalking:
+      return getHumanWalkingRect(character);
+  }
+
+  // throw Exception("Could not get character sprite rect");
+  return getHumanIdleRect(character);
+}
+
+
+Rect _getFrame(List<Rect> frames){
+  return frames[drawFrame % frames.length];
+}
+
+
+const int humanSpriteFrames = 36;
+const int humanSpriteImageWidth = 1728;
+const double humanSpriteFrameWidth = humanSpriteImageWidth / humanSpriteFrames;
+const double humanSpriteFrameHeight = 72;
+
+Rect getHumanSprite(int index) {
+  return Rect.fromLTWH(
+      index * humanSpriteFrameWidth, 0.0, humanSpriteFrameWidth,
+      humanSpriteFrameHeight);
+}
+
+Rect rectHumanIdleDownLeft = getHumanSprite(0);
+Rect rectHumanIdleLeft = getHumanSprite(1);
+Rect rectHumanIdleUpLeft = getHumanSprite(2);
+Rect rectHumanIdleUp = getHumanSprite(3);
+Rect rectHumanIdleUpRight = rectHumanIdleDownLeft;
+Rect rectHumanIdleRight = rectHumanIdleLeft;
+Rect rectHumanIdleDownRight = rectHumanIdleUpLeft;
+Rect rectHumanIdleDown = rectHumanIdleUp;
+
+List<Rect> rectHumanWalkingDownLeftFrames = [
+  getHumanSprite(4),
+  getHumanSprite(5),
+  getHumanSprite(6),
+];
+
+List<Rect> rectHumanWalkingLeftFrames = [
+  getHumanSprite(7),
+  getHumanSprite(8),
+  getHumanSprite(9),
+];
+
+List<Rect> rectHumanWalkingUpLeftFrames = [
+  getHumanSprite(10),
+  getHumanSprite(11),
+  getHumanSprite(12),
+];
+
+List<Rect> rectHumanWalkingUpFrames = [
+  getHumanSprite(13),
+  getHumanSprite(14),
+  getHumanSprite(15)
+];
+
+
+RSTransform getCharacterTransform(dynamic character) {
+  return RSTransform.fromComponents(
+    rotation: 0.0,
+    scale: 1.0,
+    // Center of the sprite relative to its rect
+    anchorX: 5.0,
+    anchorY: 5.0,
+    // Location at which to draw the center of the sprite
+    translateX: character[x] - cameraX,
+    translateY: character[y] - cameraY,
+  );
 }
 
 void drawCircleOutline(
