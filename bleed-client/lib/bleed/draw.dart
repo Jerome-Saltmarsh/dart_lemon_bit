@@ -297,10 +297,8 @@ RSTransform getCharacterTransform(dynamic character) {
   return RSTransform.fromComponents(
     rotation: 0.0,
     scale: 1.0,
-    // Center of the sprite relative to its rect
     anchorX: 5.0,
     anchorY: 5.0,
-    // Location at which to draw the center of the sprite
     translateX: character[x] - cameraX,
     translateY: character[y] - cameraY,
   );
