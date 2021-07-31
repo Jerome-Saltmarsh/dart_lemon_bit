@@ -3,7 +3,7 @@ import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'common.dart';
-import 'parsing.dart';
+import 'parser.dart';
 import 'settings.dart';
 import 'state.dart';
 import 'utils.dart';
@@ -29,7 +29,7 @@ void onEvent(dynamic response) {
   previousEvent = now;
   packagesReceived++;
   event = response;
-  parseState(decompress(response));
+  parseState();
   redrawGame();
 }
 
@@ -56,16 +56,16 @@ void sendCommandEquip(int weapon) {
   Map<String, dynamic> request = Map();
   request[keyCommand] = commandEquip;
   request[keyEquipValue] = weapon;
-  request[keyId] = id;
+  request[keyId] = playerId;
   // sendToServer(request);
 }
 
 void sendRequestUpdatePlayer() {
-  sendToServer("u: $id $requestCharacterState $requestDirection $requestAim");
+  sendToServer("u: $playerId $requestCharacterState $requestDirection $requestAim");
 }
 
 void sendRequestFire(){
-  sendToServer("fire: $id $requestAim");
+  sendToServer("fire: $playerId $requestAim");
 }
 
 void sendCommandUpdate() {

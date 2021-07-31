@@ -4,7 +4,6 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 
 import 'classes.dart';
-import 'common.dart';
 import 'compiler.dart';
 import 'settings.dart';
 import 'update.dart';
@@ -18,7 +17,7 @@ void main() {
   var handler = webSocketHandler((webSocket) {
 
     void sendToClient(String response) {
-      webSocket.sink.add(compress(response));
+      webSocket.sink.add(response);
     }
 
     void sendCompiledState() {

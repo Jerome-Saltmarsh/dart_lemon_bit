@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_game_engine/bleed/parser.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'connection.dart';
@@ -70,7 +71,6 @@ Future<void> showChangeNameDialog() async {
   );
 }
 
-
 Widget buildDebugUI(BuildContext context){
   if (!connected) return text("Connecting");
   return column(
@@ -90,11 +90,12 @@ Widget buildDebugUI(BuildContext context){
       text("Player Assigned: $playerAssigned"),
       text('Request Direction $requestDirection'),
       text('Request State $requestCharacterState'),
+      text('Cache Size $cacheSize'),
       button("smoothing $smooth", () => smooth = !smooth),
       if (debugMode)
         column([
           text("Server Host: $host"),
-          text("Connected. Id: $id"),
+          text("Connected. Id: $playerId"),
           if (ping != null) text("Ping: ${ping.inMilliseconds}"),
           if (refreshDuration != null)
             text("Refresh: ${refreshDuration.inMilliseconds}"),

@@ -30,7 +30,7 @@ void readPlayerInput() {
   cameraY -= (yOffset * cameraFollow);
 
   if (keyPressedSpawnZombie) {
-    // sendCommand(commandSpawnZombie);
+    sendRequestSpawnNpc();
     return;
   }
   if (mouseAvailable) {

@@ -32,14 +32,14 @@ int drawFrame = 0;
 Canvas canvas;
 bool connected = false;
 bool debugMode = false;
-int id = idNotConnected;
+int playerId = idNotConnected;
 int actualFPS;
 const idNotConnected = -1;
 
 get playerCharacter {
-  if(id == idNotConnected) return null;
+  if(playerId == idNotConnected) return null;
 
-  return players.firstWhere((element) => element[4] == id, orElse: (){
+  return players.firstWhere((element) => element[4] == playerId, orElse: (){
     return null;
   });
 }

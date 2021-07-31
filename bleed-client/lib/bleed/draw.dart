@@ -187,7 +187,7 @@ void drawCircleOutline(
 
 void drawBullets() {
   bullets.forEach((bullet) {
-    drawCircle(bullet[0], bullet[1], 2, white);
+    drawCircle(bullet[x], bullet[y], 2, white);
   });
 }
 
