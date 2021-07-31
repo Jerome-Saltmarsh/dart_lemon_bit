@@ -3,23 +3,18 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as mat;
 import 'package:flutter_game_engine/game_engine/web_functions.dart';
-import 'dart:ui' as ui;
 import 'package:positioned_tap_detector/positioned_tap_detector.dart';
-import 'game_functions.dart';
+
+import 'engine_state.dart';
 
 
 typedef PaintGame = Function(Canvas canvas, Size size);
-Canvas globalCanvas;
 
 // private global variables
 Offset _mousePosition;
 Offset _previousMousePosition;
 Offset _mouseDelta;
-DateTime _lastLeftClicked;
 bool _clickProcessed = true;
-
-double cameraX = 0;
-double cameraY = 0;
 
 // global properties
 Offset get mousePosition => _mousePosition;
@@ -39,49 +34,6 @@ final Paint globalPaint = Paint()
   ..style = PaintingStyle.fill
   ..isAntiAlias = false
   ..strokeWidth = 1;
-
-void drawImage(ui.Image image, double x, double y, {double rotation = 0, double anchorX = 0.5, double anchorY = 0.5, double scale = 1.0}){
-  globalCanvas.drawAtlas(
-      image,
-      <RSTransform>[
-        RSTransform.fromComponents(
-          rotation: rotation,
-          scale: scale,
-          anchorX: image.width * anchorX,
-          anchorY: image.height * anchorY,
-          translateX: x - cameraX,
-          translateY: y - cameraY,
-        )
-      ],
-      [
-        Rect.fromLTWH(
-            0, 0, image.width as double, image.height as double)
-      ],
-      null,
-      BlendMode.color,
-      null,
-      globalPaint);
-}
-
-
-void drawCircle(double x, double y, double radius, Color color){
-  globalPaint.color = color;
-  globalCanvas.drawCircle(Offset(x - cameraX, y - cameraY), radius, globalPaint);
-}
-
-void drawSprite(ui.Image image, int frames, int frame, double x, double y, {double scale = 1.0}){
-  double frameWidth = image.width / frames;
-  double frameHeight = image.height as double;
-  globalCanvas.drawImageRect(image, Rect.fromLTWH(frame * frameWidth, 0, frameWidth, frameHeight),
-      Rect.fromCenter(center: Offset(x - cameraX, y - cameraY), width: frameWidth * scale, height: frameHeight * scale), globalPaint);
-}
-
-void drawText(String text, double x, double y, Color color){
-  TextSpan span = new TextSpan(style: new TextStyle(color: color), text: text);
-  TextPainter tp = new TextPainter(text: span, textAlign: TextAlign.center, textDirection: TextDirection.ltr);
-  tp.layout();
-  tp.paint(globalCanvas, new Offset(x - cameraX, y - cameraY));
-}
 
 int _millisecondsSinceLastFrame = 0;
 int get millisecondsSinceLastFrame => _millisecondsSinceLastFrame;
@@ -225,7 +177,6 @@ class _GameWidgetState extends State<GameWidget> {
         },
         onTap: (position) {
           _clickProcessed = false;
-          _lastLeftClicked = DateTime.now();
           widget.onMouseClick();
         },
         child: Listener(
