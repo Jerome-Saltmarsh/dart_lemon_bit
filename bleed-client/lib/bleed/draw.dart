@@ -170,11 +170,12 @@ void drawCharacters() {
   // npcs.sort((a, b) => a[posY] > b[posY] ? 1 : -1);
   // npcs.where(isDead).forEach((drawCharacter));
   // npcs.where(isAlive).forEach((drawCharacter));
-  drawCharacterList(players);
-  drawCharacterList(npcs);
+  // drawCharacterList(players);
+  drawPlayers();
+  drawList(npcs, npcsTransformMemory, npcsRectMemory);
 }
 
-void drawCharacterList(List<dynamic> characters){
+void drawCharacterList(List<dynamic> characters) {
   globalCanvas.drawAtlas(
       imageHuman,
       characters.map(getCharacterTransform).toList(),
@@ -185,8 +186,73 @@ void drawCharacterList(List<dynamic> characters){
       globalPaint);
 }
 
+List<RSTransform> playersTransformMemory = [];
+List<Rect> playersRectMemory = [];
 
-Rect getHumanWalkingRect(dynamic character){
+void drawPlayers() {
+  drawList(players, playersTransformMemory, playersRectMemory);
+  // for (int i = 0; i < players.length; i++) {
+  //   if (i >= playersTransformMemory.length) {
+  //     playersTransformMemory.add(getCharacterTransform(players[i]));
+  //   } else {
+  //     playersTransformMemory[i] = getCharacterTransform(players[i]);
+  //   }
+  //   if (i >= playersRectMemory.length) {
+  //     playersRectMemory.add(getCharacterSpriteRect(players[i]));
+  //   } else {
+  //     playersRectMemory[i] = getCharacterSpriteRect(players[i]);
+  //   }
+  // }
+  // while(playersTransformMemory.length > players.length){
+  //   playersTransformMemory.removeLast();
+  // }
+  // while(playersRectMemory.length > players.length){
+  //   playersRectMemory.removeLast();
+  // }
+  // globalCanvas.drawAtlas(
+  //     imageHuman,
+  //     playersTransformMemory,
+  //     playersRectMemory,
+  //     null,
+  //     null,
+  //     null,
+  //     globalPaint);
+}
+
+
+List<RSTransform> npcsTransformMemory = [];
+List<Rect> npcsRectMemory = [];
+
+void drawList(List<dynamic> values, List<RSTransform> transforms, List<Rect> rects) {
+  for (int i = 0; i < values.length; i++) {
+    if (i >= transforms.length) {
+      transforms.add(getCharacterTransform(values[i]));
+    } else {
+      transforms[i] = getCharacterTransform(values[i]);
+    }
+    if (i >= rects.length) {
+      rects.add(getCharacterSpriteRect(values[i]));
+    } else {
+      rects[i] = getCharacterSpriteRect(values[i]);
+    }
+  }
+  while(transforms.length > values.length){
+    transforms.removeLast();
+  }
+  while(rects.length > values.length){
+    rects.removeLast();
+  }
+  globalCanvas.drawAtlas(
+      imageHuman,
+      transforms,
+      rects,
+      null,
+      null,
+      null,
+      globalPaint);
+}
+
+Rect getHumanWalkingRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
       return _getFrame(rectHumanWalkingUpFrames);
@@ -208,7 +274,7 @@ Rect getHumanWalkingRect(dynamic character){
   throw Exception("Could not get character walking sprite rect");
 }
 
-Rect getHumanIdleRect(dynamic character){
+Rect getHumanIdleRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
       return rectHumanIdleUp;
@@ -242,11 +308,9 @@ Rect getCharacterSpriteRect(dynamic character) {
   return getHumanIdleRect(character);
 }
 
-
-Rect _getFrame(List<Rect> frames){
+Rect _getFrame(List<Rect> frames) {
   return frames[drawFrame % frames.length];
 }
-
 
 const int humanSpriteFrames = 36;
 const int humanSpriteImageWidth = 1728;
@@ -254,9 +318,8 @@ const double humanSpriteFrameWidth = humanSpriteImageWidth / humanSpriteFrames;
 const double humanSpriteFrameHeight = 72;
 
 Rect getHumanSprite(int index) {
-  return Rect.fromLTWH(
-      index * humanSpriteFrameWidth, 0.0, humanSpriteFrameWidth,
-      humanSpriteFrameHeight);
+  return Rect.fromLTWH(index * humanSpriteFrameWidth, 0.0,
+      humanSpriteFrameWidth, humanSpriteFrameHeight);
 }
 
 Rect rectHumanIdleDownLeft = getHumanSprite(0);
@@ -291,7 +354,6 @@ List<Rect> rectHumanWalkingUpFrames = [
   getHumanSprite(14),
   getHumanSprite(15)
 ];
-
 
 RSTransform getCharacterTransform(dynamic character) {
   return RSTransform.fromComponents(
