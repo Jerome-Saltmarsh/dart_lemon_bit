@@ -18,8 +18,8 @@ bool get keyAimPressed => keyPressedSpace;
 void readPlayerInput() {
   dynamic playerCharacter = getPlayerCharacter();
   if (playerCharacter == null) return;
-  double playerScreenX = playerCharacter[posX] - cameraX;
-  double playerScreenY = playerCharacter[posY] - cameraY;
+  double playerScreenX = playerCharacter[x] - cameraX;
+  double playerScreenY = playerCharacter[y] - cameraY;
   double halfScreenWidth = size.width * 0.5;
   double halfScreenHeight = size.height * 0.5;
   double xOffset = halfScreenWidth - playerScreenX;

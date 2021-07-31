@@ -2,6 +2,7 @@ import 'package:flutter_game_engine/bleed/keys.dart';
 import 'package:flutter_game_engine/bleed/state.dart';
 
 final List _cache = [];
+
 String get _text => event;
 int _index = 0;
 
@@ -30,20 +31,22 @@ void _parsePlayerId() {
   _consumeSemiColon();
 }
 
-void _incrementIndex() {
+void _next(){
   _index++;
 }
 
 void _consumeSpace() {
   while (currentCharacter == " ") {
-    _incrementIndex();
+    _next();
   }
 }
+
+
 
 String _consumeNextAvailableChar() {
   _consumeSpace();
   String character = _text[_index];
-  _incrementIndex();
+  _next();
   return character;
 }
 
@@ -58,7 +61,7 @@ String _consumeString() {
     buffer.write(currentCharacter);
     _index++;
   }
-  _incrementIndex();
+  _index++;
   return buffer.toString();
 }
 
@@ -66,7 +69,7 @@ double _consumeDouble() {
   return double.parse(_consumeString());
 }
 
-void _consumeSemiColon(){
+void _consumeSemiColon() {
   while (currentCharacter != ";") {
     _index++;
   }
@@ -124,7 +127,7 @@ void _parseNpcs() {
   }
 }
 
-void _cacheLast(List list){
+void _cacheLast(List list) {
   _cache.add(list.removeLast());
 }
 
@@ -143,7 +146,7 @@ void _consumeNpc(dynamic memory) {
   memory[y] = _consumeDouble();
 }
 
-void _consumeBullet(dynamic memory){
+void _consumeBullet(dynamic memory) {
   memory[x] = _consumeDouble();
   memory[y] = _consumeDouble();
 }
