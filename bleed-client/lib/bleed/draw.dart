@@ -352,8 +352,32 @@ Rect getCharacterSpriteRect(dynamic character) {
       return getHumanDeadRect(character);
     case characterStateAiming:
       return getHumanAimRect(character);
+    case characterStateFiring:
+      return getHumanFiringRect(character);
   }
   throw Exception("Could not get character sprite rect");
+}
+
+Rect getHumanFiringRect(character) {
+  switch (character[direction]) {
+    case directionUp:
+      return rectHumanFiringUp;
+    case directionUpRight:
+      return rectHumanFiringUpRight;
+    case directionRight:
+      return rectHumanFiringRight;
+    case directionDownRight:
+      return rectHumanFiringDownRight;
+    case directionDown:
+      return rectHumanFiringDown;
+    case directionDownLeft:
+      return rectHumanFiringDownLeft;
+    case directionLeft:
+      return rectHumanFiringLeft;
+    case directionUpLeft:
+      return rectHumanFiringUpLeft;
+  }
+  throw Exception("could not get firing frame from direction");
 }
 
 Rect _getFrame(List<Rect> frames) {
@@ -387,6 +411,15 @@ Rect rectHumanAimingUpRight = getHumanSprite(24);
 Rect rectHumanAimingRight = getHumanSprite(25);
 Rect rectHumanAimingDownRight = getHumanSprite(26);
 Rect rectHumanAimingDown = getHumanSprite(27);
+
+Rect rectHumanFiringDownLeft = getHumanSprite(28);
+Rect rectHumanFiringLeft = getHumanSprite(29);
+Rect rectHumanFiringUpLeft = getHumanSprite(30);
+Rect rectHumanFiringUp = getHumanSprite(31);
+Rect rectHumanFiringUpRight = getHumanSprite(32);
+Rect rectHumanFiringRight = getHumanSprite(33);
+Rect rectHumanFiringDownRight = getHumanSprite(34);
+Rect rectHumanFiringDown = getHumanSprite(35);
 
 
 List<Rect> rectHumanWalkingDownLeftFrames = [
@@ -470,26 +503,6 @@ void drawTiles() {
 
   return;
 
-  double d = 250;
-  drawGrassTile(d + (sizeH * 3), d + (sizeH * 0));
-  drawGrassTile(d + (sizeH * 2), d + (sizeH * 1));
-  drawGrassTile(d + (sizeH * 1), d + (sizeH * 2));
-  drawGrassTile(d + (sizeH * 0), d + (sizeH * 3));
-
-  drawGrassTile(d + (sizeH * 4), d + (sizeH * 1));
-  drawGrassTile(d + (sizeH * 3), d + (sizeH * 2));
-  drawGrassTile(d + (sizeH * 2), d + (sizeH * 3));
-  drawGrassTile(d + (sizeH * 1), d + (sizeH * 4));
-
-  drawGrassTile(d + (sizeH * 5), d + (sizeH * 2));
-  drawGrassTile(d + (sizeH * 4), d + (sizeH * 3));
-  drawGrassTile(d + (sizeH * 3), d + (sizeH * 4));
-  drawGrassTile(d + (sizeH * 2), d + (sizeH * 5));
-
-  drawGrassTile(d + (sizeH * 6), d + (sizeH * 3));
-  drawGrassTile(d + (sizeH * 5), d + (sizeH * 4));
-  drawGrassTile(d + (sizeH * 4), d + (sizeH * 5));
-  drawGrassTile(d + (sizeH * 3), d + (sizeH * 6));
 }
 
 void drawGrassTile(double x, double y) {
