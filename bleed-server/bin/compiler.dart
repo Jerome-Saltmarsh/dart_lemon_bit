@@ -5,7 +5,7 @@ void compileState(){
   buffer.clear();
   _compilePlayers();
   _compileNpcs();
-  _compileBullets();
+  // _compileBullets();
   _compileFPS();
   compiledState = buffer.toString();
 }
@@ -15,28 +15,26 @@ void _compileFPS(){
 }
 
 void _compilePlayers(){
-  buffer.write("p: ");
-  for(Character character in players){
-    _compileCharacter(character);
-  }
+  _write("p:");
+  players.forEach(_compileCharacter);
   _end();
 }
 
 void _compileNpcs(){
-  buffer.write("n: ");
-  for(Npc npc in npcs){
-    _compileNpc(npc);
-  }
+  _write("n:");
+  npcs.forEach(_compileNpc);
   _end();
 }
 
 void _compileBullets(){
-  buffer.write("b: ");
-  for (Bullet bullet in bullets){
-    _write(bullet.x);
-    _write(bullet.y);
-  }
+  _write("b:");
+  bullets.forEach(_compileBullet);
   _end();
+}
+
+void _compileBullet(Bullet bullet){
+  _write(bullet.x);
+  _write(bullet.y);
 }
 
 void _compileCharacter(Character character){

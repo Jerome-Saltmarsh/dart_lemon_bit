@@ -6,7 +6,6 @@ import 'common.dart';
 import 'parser.dart';
 import 'settings.dart';
 import 'state.dart';
-import 'utils.dart';
 
 Uri get hostURI => Uri.parse(host);
 
@@ -57,15 +56,22 @@ void sendCommandEquip(int weapon) {
   request[keyCommand] = commandEquip;
   request[keyEquipValue] = weapon;
   request[keyId] = playerId;
-  // sendToServer(request);
+}
+
+StringBuffer _buffer = StringBuffer();
+void _write(dynamic value){
+  _buffer.write(value);
+  _buffer.write(" ");
 }
 
 void sendRequestUpdatePlayer() {
-  sendToServer("u: $playerId $requestCharacterState $requestDirection $requestAim");
-}
-
-void sendRequestFire(){
-  sendToServer("fire: $playerId $requestAim");
+  _buffer.clear();
+  _write("u:");
+  _write(playerId);
+  _write(requestCharacterState);
+  _write(requestDirection);
+  _write(requestAim);
+  sendToServer(_buffer.toString());
 }
 
 void sendCommandUpdate() {

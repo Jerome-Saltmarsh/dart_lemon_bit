@@ -11,8 +11,11 @@ import 'state.dart';
 import 'utils.dart';
 
 bool get keyPressedSpawnZombie => keyPressed(LogicalKeyboardKey.keyP);
+
 bool get keyEquipHandGun => keyPressed(LogicalKeyboardKey.digit1);
+
 bool get keyEquipShotgun => keyPressed(LogicalKeyboardKey.digit2);
+
 bool get keyAimPressed => keyPressedSpace;
 
 void readPlayerInput() {
@@ -34,21 +37,18 @@ void readPlayerInput() {
   if (mouseAvailable) {
     requestAim = getMouseRotation();
   }
-
   if (mouseClicked || keyPressedF) {
     requestCharacterState = characterStateFiring;
-    return;
-  }else if (keyAimPressed) {
+  } else if (keyAimPressed) {
     requestCharacterState = characterStateAiming;
     requestDirection = convertAngleToDirection(requestAim);
-    return;
-  }
-
-  requestDirection = getKeyDirection();
-  if (requestDirection == directionNone) {
-    requestCharacterState = characterStateIdle;
   } else {
-    requestCharacterState = characterStateWalking;
+    requestDirection = getKeyDirection();
+    if (requestDirection == directionNone) {
+      requestCharacterState = characterStateIdle;
+    } else {
+      requestCharacterState = characterStateWalking;
+    }
   }
   if (keyEquipHandGun) {
     sendCommandEquipHandGun();

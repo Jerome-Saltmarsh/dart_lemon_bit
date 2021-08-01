@@ -180,8 +180,8 @@ void updateCharacter(Character character) {
 }
 
 void updateCharacters() {
-  for(int i =0 ; i < players.length; i++){
-    if(players[i].x.isNaN || players[i].y.isNaN){
+  for (int i = 0; i < players.length; i++) {
+    if (players[i].x.isNaN || players[i].y.isNaN) {
       players[i].x = 0;
       players[i].y = 0;
     }
@@ -190,9 +190,9 @@ void updateCharacters() {
   npcs.forEach(updateCharacter);
 }
 
-void detectCorruptData(){
-  for(int i =0 ; i < players.length; i++){
-    if(players[i].x.isNaN || players[i].y.isNaN){
+void detectCorruptData() {
+  for (int i = 0; i < players.length; i++) {
+    if (players[i].x.isNaN || players[i].y.isNaN) {
       print("removing player because invalid position");
     }
   }
@@ -202,6 +202,9 @@ void fixedUpdate() {
   frame++;
   DateTime now = DateTime.now();
   frameDuration = now.difference(frameTime);
+  if (frameDuration.inMilliseconds > 0) {
+    fps = 1000 ~/ frameDuration.inMilliseconds;
+  }
   frameTime = now;
   updateCharacters();
   updateCollisions();
@@ -210,10 +213,13 @@ void fixedUpdate() {
   compressData();
   detectCorruptData();
   compileState();
+
+  if (fps < 20) {
+    print("Warning FPS Drop: $fps");
+  }
 }
 
-
-void updateNpcs(){
+void updateNpcs() {
   npcs.forEach(updateNpc);
 }
 
@@ -227,7 +233,7 @@ void compressCharacter(Character character) {
   character.y = round(character.y);
 }
 
-void compressBullet(Bullet bullet){
+void compressBullet(Bullet bullet) {
   bullet.x = round(bullet.x);
   bullet.y = round(bullet.y);
 }
