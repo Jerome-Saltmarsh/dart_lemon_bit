@@ -29,7 +29,7 @@ void drawCharacters() {
 }
 
 void drawNpcs() {
-  drawList(npcs, npcsTransformMemory, npcsRectMemory);
+  drawList(npcs, npcsTransforms, npcsRects);
 }
 
 void drawCharacterList(List<dynamic> characters) {
@@ -44,10 +44,8 @@ void drawCharacterList(List<dynamic> characters) {
 }
 
 void drawPlayers() {
-  drawList(players, playersTransformMemory, playersRectMemory);
+  drawList(players, playersTransforms, playersRects);
 }
-
-
 
 void drawList(List<dynamic> values, List<RSTransform> transforms, List<Rect> rects) {
   for (int i = 0; i < values.length; i++) {
@@ -214,6 +212,8 @@ const int humanSpriteFrames = 36;
 const int humanSpriteImageWidth = 1728;
 const double humanSpriteFrameWidth = humanSpriteImageWidth / humanSpriteFrames;
 const double humanSpriteFrameHeight = 72;
+const double halfHumanSpriteFrameWidth = humanSpriteFrameWidth * 0.5;
+const double halfHumanSpriteFrameHeight = humanSpriteFrameHeight * 0.5;
 
 Rect rectHumanIdleDownLeft = getHumanSprite(0);
 Rect rectHumanIdleLeft = getHumanSprite(1);
@@ -281,8 +281,8 @@ RSTransform getCharacterTransform(dynamic character) {
   return RSTransform.fromComponents(
     rotation: 0.0,
     scale: 1.0,
-    anchorX: 5.0,
-    anchorY: 5.0,
+    anchorX: halfHumanSpriteFrameWidth,
+    anchorY: halfHumanSpriteFrameHeight,
     translateX: character[x] - cameraX,
     translateY: character[y] - cameraY,
   );

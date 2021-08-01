@@ -6,9 +6,9 @@ import 'package:flutter_game_engine/game_engine/game_maths.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'common.dart';
+import 'constants.dart';
 import 'keys.dart';
 import 'resources.dart';
-import 'settings.dart';
 import 'state.dart';
 
 void playShotgunAudio() {
@@ -140,4 +140,11 @@ int convertAngleToDirection(double angle) {
     return directionUpLeft;
   }
   return directionUp;
+}
+
+get playerCharacter {
+  if (playerId == idNotConnected) return null;
+  return players.firstWhere((element) => element[4] == playerId, orElse: () {
+    return null;
+  });
 }

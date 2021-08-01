@@ -13,7 +13,8 @@
 [ ] Shot Sound
 [ ] Shot kickback
 [ ] Server send on screen characters only
-[ ] Fix bullet stutter
+[x] Fix Character draw center
+[x] Fix bullet stutter
 [x] Fix Shooting
 [x] Client should not compress sending to server (too expensive)
 [x] Remove JSON Object mapping

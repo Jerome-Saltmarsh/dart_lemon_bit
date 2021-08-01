@@ -1,0 +1,1 @@
+const idNotConnected = -1;

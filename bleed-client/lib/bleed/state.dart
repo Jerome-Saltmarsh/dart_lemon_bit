@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'common.dart';
+import 'constants.dart';
 
 Size size;
 int frameRate = 5;
@@ -36,17 +37,9 @@ int playerId = idNotConnected;
 int serverFramesMS = 0;
 int actualFPS;
 
-List<RSTransform> playersTransformMemory = [];
-List<Rect> playersRectMemory = [];
-List<RSTransform> npcsTransformMemory = [];
-List<Rect> npcsRectMemory = [];
+List<RSTransform> playersTransforms = [];
+List<Rect> playersRects = [];
+List<RSTransform> npcsTransforms = [];
+List<Rect> npcsRects = [];
 
-const idNotConnected = -1;
 
-get playerCharacter {
-  if(playerId == idNotConnected) return null;
-
-  return players.firstWhere((element) => element[4] == playerId, orElse: (){
-    return null;
-  });
-}
