@@ -39,14 +39,7 @@ void main() {
         List<String> attributes = request.split(" ");
         int id = int.parse(attributes[1]);
         Character player = findPlayerById(id);
-        if (player.dead) return;
-        if (player.shotCoolDown > 0) return;
         CharacterState requestedState = CharacterState.values[int.parse(attributes[2])];
-
-        // if(requestedState == CharacterState.Firing){
-        //   requestedState = CharacterState.Aiming;
-        //   spawnBullet(player);
-        // }
         Direction requestedDirection =  Direction.values[int.parse(attributes[3])];
         double aim = double.parse(attributes[4]);
         player.aimAngle = aim;

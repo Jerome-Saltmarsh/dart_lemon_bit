@@ -21,8 +21,7 @@ void setCharacterState(Character character, CharacterState value) {
       character.accuracy = 0;
       break;
     case CharacterState.Firing:
-      spawnBullet(character);
-      // fireWeapon(character);
+      fireWeapon(character);
       break;
   }
   character.state = value;
