@@ -33,7 +33,14 @@ Canvas canvas;
 bool connected = false;
 bool debugMode = false;
 int playerId = idNotConnected;
+int serverFramesMS = 0;
 int actualFPS;
+
+List<RSTransform> playersTransformMemory = [];
+List<Rect> playersRectMemory = [];
+List<RSTransform> npcsTransformMemory = [];
+List<Rect> npcsRectMemory = [];
+
 const idNotConnected = -1;
 
 get playerCharacter {

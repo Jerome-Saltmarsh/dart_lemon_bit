@@ -11,152 +11,6 @@ import 'resources.dart';
 import 'state.dart';
 import 'utils.dart';
 
-void drawCharacter(dynamic character) {
-  int totalFrames = 1;
-  int startFrame = 0;
-  int direction = getDirection(character);
-
-  switch (character[state]) {
-    case characterStateIdle:
-      startFrame = getStartFrameIdle(direction);
-      break;
-    case characterStateWalking:
-      totalFrames = 3;
-      startFrame = getStartFrameWalking(direction);
-      break;
-    case characterStateDead:
-      startFrame = getStartFrameDead(direction);
-      break;
-    case characterStateAiming:
-      startFrame = getStartFrameAiming(direction);
-      break;
-    case characterStateFiring:
-      startFrame = getStartFrameFiring(direction);
-      break;
-  }
-
-  int spriteFrame = (drawFrame % totalFrames) + startFrame;
-  int frameCount = 36;
-
-  drawSprite(
-      imageHuman, frameCount, spriteFrame, character[posX], character[posY]);
-
-  // drawCharacterCircle(
-  //     character, character[keyCharacterId] == id ? Colors.blue : Colors.red);
-
-  // drawText(character[keyPlayerName], posX(character),
-  //     posY(character), Colors.white);
-}
-
-int getStartFrameWalking(int direction) {
-  switch (direction) {
-    case directionUp:
-      return 13;
-    case directionUpRight:
-      return 4;
-    case directionRight:
-      return 7;
-    case directionDownRight:
-      return 10;
-    case directionDown:
-      return 13;
-    case directionDownLeft:
-      return 4;
-    case directionLeft:
-      return 7;
-    case directionUpLeft:
-      return 10;
-  }
-  return 13;
-}
-
-int getStartFrameIdle(int direction) {
-  switch (direction) {
-    case directionUp:
-      return 3;
-    case directionUpRight:
-      return 0;
-    case directionRight:
-      return 1;
-    case directionDownRight:
-      return 2;
-    case directionDown:
-      return 3;
-    case directionDownLeft:
-      return 0;
-    case directionLeft:
-      return 1;
-    case directionUpLeft:
-      return 2;
-  }
-  return 3;
-}
-
-int getStartFrameDead(int direction) {
-  switch (direction) {
-    case directionUp:
-      return 19;
-    case directionUpRight:
-      return 16;
-    case directionRight:
-      return 17;
-    case directionDownRight:
-      return 19;
-    case directionDown:
-      return 19;
-    case directionDownLeft:
-      return 16;
-    case directionLeft:
-      return 17;
-    case directionUpLeft:
-      return 19;
-  }
-  return 19;
-}
-
-int getStartFrameAiming(int direction) {
-  switch (direction) {
-    case directionUp:
-      return 23;
-    case directionUpRight:
-      return 24;
-    case directionRight:
-      return 25;
-    case directionDownRight:
-      return 26;
-    case directionDown:
-      return 27;
-    case directionDownLeft:
-      return 20;
-    case directionLeft:
-      return 21;
-    case directionUpLeft:
-      return 22;
-  }
-  return 23;
-}
-
-int getStartFrameFiring(int direction) {
-  switch (direction) {
-    case directionUp:
-      return 31;
-    case directionUpRight:
-      return 32;
-    case directionRight:
-      return 33;
-    case directionDownRight:
-      return 34;
-    case directionDown:
-      return 35;
-    case directionDownLeft:
-      return 28;
-    case directionLeft:
-      return 29;
-    case directionUpLeft:
-      return 30;
-  }
-  return 31;
-}
 
 void drawCharacterCircle(dynamic value, Color color) {
   drawCircle(value[posX], value[posY], characterRadius, color);
@@ -172,6 +26,10 @@ void drawCharacters() {
   // npcs.where(isAlive).forEach((drawCharacter));
   // drawCharacterList(players);
   drawPlayers();
+  drawNpcs();
+}
+
+void drawNpcs() {
   drawList(npcs, npcsTransformMemory, npcsRectMemory);
 }
 
@@ -186,42 +44,11 @@ void drawCharacterList(List<dynamic> characters) {
       globalPaint);
 }
 
-List<RSTransform> playersTransformMemory = [];
-List<Rect> playersRectMemory = [];
-
 void drawPlayers() {
   drawList(players, playersTransformMemory, playersRectMemory);
-  // for (int i = 0; i < players.length; i++) {
-  //   if (i >= playersTransformMemory.length) {
-  //     playersTransformMemory.add(getCharacterTransform(players[i]));
-  //   } else {
-  //     playersTransformMemory[i] = getCharacterTransform(players[i]);
-  //   }
-  //   if (i >= playersRectMemory.length) {
-  //     playersRectMemory.add(getCharacterSpriteRect(players[i]));
-  //   } else {
-  //     playersRectMemory[i] = getCharacterSpriteRect(players[i]);
-  //   }
-  // }
-  // while(playersTransformMemory.length > players.length){
-  //   playersTransformMemory.removeLast();
-  // }
-  // while(playersRectMemory.length > players.length){
-  //   playersRectMemory.removeLast();
-  // }
-  // globalCanvas.drawAtlas(
-  //     imageHuman,
-  //     playersTransformMemory,
-  //     playersRectMemory,
-  //     null,
-  //     null,
-  //     null,
-  //     globalPaint);
 }
 
 
-List<RSTransform> npcsTransformMemory = [];
-List<Rect> npcsRectMemory = [];
 
 void drawList(List<dynamic> values, List<RSTransform> transforms, List<Rect> rects) {
   for (int i = 0; i < values.length; i++) {

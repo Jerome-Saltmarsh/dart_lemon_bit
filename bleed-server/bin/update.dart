@@ -199,6 +199,9 @@ void detectCorruptData(){
 
 void fixedUpdate() {
   frame++;
+  DateTime now = DateTime.now();
+  frameDuration = now.difference(frameTime);
+  frameTime = now;
   updateCharacters();
   updateCollisions();
   updateBullets();

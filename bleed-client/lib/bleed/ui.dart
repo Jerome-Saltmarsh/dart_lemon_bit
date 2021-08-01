@@ -88,6 +88,8 @@ Widget buildDebugUI(BuildContext context){
       text("Milliseconds Since Last Frame: $millisecondsSinceLastFrame"),
       if(millisecondsSinceLastFrame > 0)
         text("FPS: ${ (1000 / millisecondsSinceLastFrame).round() }"),
+      if (serverFramesMS > 0)
+        text("Server FPS: ${ (1000 / serverFramesMS).round() }"),
       text("Players: ${players.length}"),
       text("Bullets: ${bullets.length}"),
       text("Npcs: ${npcs.length}"),

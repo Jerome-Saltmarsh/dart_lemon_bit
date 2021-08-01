@@ -48,7 +48,13 @@ void main() {
         setCharacterState(player, requestedState);
         sendCompiledState();
 
+        Future.delayed(Duration(milliseconds: 15),(){
+          sendCompiledState();
+        });
         Future.delayed(Duration(milliseconds: 30),(){
+          sendCompiledState();
+        });
+        Future.delayed(Duration(milliseconds: 45),(){
           sendCompiledState();
         });
         return;

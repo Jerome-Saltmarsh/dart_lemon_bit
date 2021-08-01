@@ -20,7 +20,12 @@ String compileState(){
   compilePlayers(buffer);
   compileNpcs(buffer);
   compileBullets(buffer);
+  compileFPS(buffer);
   return buffer.toString();
+}
+
+void compileFPS(StringBuffer buffer){
+   buffer.write("fms: ${ frameDuration.inMilliseconds } ;");
 }
 
 void compilePlayers(StringBuffer buffer){

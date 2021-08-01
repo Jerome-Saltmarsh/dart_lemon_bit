@@ -55,7 +55,7 @@ class BleedClient extends GameWidget {
 
     drawMouse();
     drawTiles();
-    // drawBullets();
+    drawBullets();
     drawCharacters();
     // dynamic player = getPlayerCharacter();
     // if (player != null && getState(player) == characterStateAiming) {

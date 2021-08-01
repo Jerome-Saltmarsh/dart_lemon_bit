@@ -22,8 +22,15 @@ void parseState() {
       _parseBullets();
     } else if (term == "n:") {
       _parseNpcs();
+    } else if (term == "fms:"){
+      _parseFrameMS();
     }
   }
+}
+
+void _parseFrameMS(){
+  serverFramesMS = _consumeInt();
+  _consumeSemiColon();
 }
 
 void _parsePlayerId() {
