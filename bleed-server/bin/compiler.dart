@@ -5,7 +5,7 @@ void compileState(){
   buffer.clear();
   _compilePlayers();
   _compileNpcs();
-  // _compileBullets();
+  _compileBullets();
   _compileFPS();
   compiledState = buffer.toString();
 }
