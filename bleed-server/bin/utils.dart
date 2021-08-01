@@ -7,6 +7,7 @@ import 'maths.dart';
 import 'settings.dart';
 import 'spawn.dart';
 import 'state.dart';
+import 'update.dart';
 
 double bulletDistanceTravelled(Bullet bullet) {
   return distance(bullet.x, bullet.y, bullet.xStart, bullet.yStart);
@@ -26,6 +27,13 @@ void setCharacterState(Character character, CharacterState value) {
       break;
   }
   character.state = value;
+}
+
+void changeCharacterHealth(Character character, double amount){
+  character.health += amount;
+  if (character.health <= 0) {
+    setCharacterState(character, CharacterState.Dead);
+  }
 }
 
 void setDirection(Character character, Direction value){

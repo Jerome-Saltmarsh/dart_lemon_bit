@@ -37,6 +37,7 @@ int playerId = idNotConnected;
 String playerUUID = "";
 int serverFramesMS = 0;
 int actualFPS;
+double playerHealth = 0;
 
 List<RSTransform> playersTransforms = [];
 List<Rect> playersRects = [];

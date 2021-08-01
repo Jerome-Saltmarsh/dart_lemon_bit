@@ -92,6 +92,7 @@ Widget buildDebugUI(BuildContext context){
       button("Spawn NPC", sendRequestSpawnNpc),
       button("Clear NPCS", sendRequestClearNpcs),
       text("Player Id: $playerId"),
+      text("Player Health: $playerHealth"),
       text("Date Size: ${event.length}"),
       text("Frames since event: $framesSinceEvent"),
       text("Milliseconds Since Last Frame: $millisecondsSinceLastFrame"),

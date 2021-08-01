@@ -34,10 +34,17 @@ void parseState() {
       respawnRequestSent = true;
     } else if (term == 'invalid--uuid'){
       print("invalid uuid");
+    } else if (term == 'player:'){
+      _parsePlayer();
     }
   }
 }
 
+
+void _parsePlayer(){
+  playerHealth = _consumeDouble();
+  _consumeSemiColon();
+}
 
 void _parseFrameMS(){
   serverFramesMS = _consumeInt();

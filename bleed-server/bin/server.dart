@@ -4,6 +4,7 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 
 import 'classes.dart';
+import 'compiler.dart';
 import 'constants.dart';
 import 'settings.dart';
 import 'spawn.dart';
@@ -23,6 +24,10 @@ void main() {
 
     void sendCompiledState() {
       sendToClient(compiledState);
+    }
+
+    void sendCompiledPlayerState(Character player){
+      sendToClient(compilePlayer(player));
     }
 
     void handleRequestSpawn() {
@@ -55,11 +60,12 @@ void main() {
         player.aimAngle = aim;
         setDirection(player, requestedDirection);
         setCharacterState(player, requestedState);
-        sendCompiledState();
-        Future.delayed(duration15ms, sendCompiledState);
-        Future.delayed(duration30ms, sendCompiledState);
-        Future.delayed(duration45ms, sendCompiledState);
-        Future.delayed(duration90ms, sendCompiledState);
+        // sendCompiledState();
+        sendCompiledPlayerState(player);
+        Future.delayed(duration15ms, () => sendCompiledPlayerState(player));
+        // Future.delayed(duration30ms, sendCompiledState);
+        // Future.delayed(duration45ms, sendCompiledState);
+        // Future.delayed(duration90ms, sendCompiledState);
         return;
       }
       if (request == "spawn") {

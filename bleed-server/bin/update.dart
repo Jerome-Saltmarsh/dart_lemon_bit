@@ -113,6 +113,7 @@ void updateNpc(Npc npc) {
       npc.walk();
     } else {
       setCharacterState(npc, CharacterState.Striking);
+      changeCharacterHealth(target, -0.01);
     }
     return;
   }
@@ -202,7 +203,6 @@ void fixedUpdate() {
   updateBullets();
   updateBullets(); // called twice to fix collision detection
   updateNpcs();
-  compressData();
   compileState();
 
   if (fps < 20) {
@@ -212,16 +212,6 @@ void fixedUpdate() {
 
 void updateNpcs() {
   npcs.forEach(updateNpc);
-}
-
-void compressData() {
-  players.forEach(compressCharacter);
-  npcs.forEach(compressCharacter);
-}
-
-void compressCharacter(Character character) {
-  character.x = round(character.x);
-  character.y = round(character.y);
 }
 
 void compressBullet(Bullet bullet) {

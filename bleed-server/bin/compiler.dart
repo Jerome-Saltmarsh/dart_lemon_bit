@@ -1,4 +1,5 @@
 import 'classes.dart';
+import 'settings.dart';
 import 'state.dart';
 
 void compileState(){
@@ -8,6 +9,13 @@ void compileState(){
   _compileBullets();
   _compileFPS();
   compiledState = buffer.toString();
+}
+
+String compilePlayer(Character character){
+  StringBuffer buffer = StringBuffer();
+  buffer.write("player: ${character.health.toStringAsFixed(2)} ; ");
+  buffer.write(compiledState);
+  return buffer.toString();
 }
 
 void _compileFPS(){
@@ -40,16 +48,16 @@ void _compileBullet(Bullet bullet){
 void _compileCharacter(Character character){
   _write(character.state.index);
   _write(character.direction.index);
-  _write(character.x);
-  _write(character.y);
+  _write(character.x.toStringAsFixed(compilePositionDecimals));
+  _write(character.y.toStringAsFixed(compilePositionDecimals));
   _write(character.id);
 }
 
 void _compileNpc(Npc npc){
   _write(npc.state.index);
   _write(npc.direction.index);
-  _write(npc.x);
-  _write(npc.y);
+  _write(npc.x.toStringAsFixed(compilePositionDecimals));
+  _write(npc.y.toStringAsFixed(compilePositionDecimals));
 }
 
 void _write(dynamic value){

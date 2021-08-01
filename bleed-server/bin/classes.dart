@@ -25,7 +25,7 @@ class Character extends PhysicsGameObject {
   double aimAngle = 0;
   double accuracy = 0;
   int shotCoolDown = 0;
-  int health;
+  double health;
   int frameOfDeath = 0;
   double speed;
   String name;

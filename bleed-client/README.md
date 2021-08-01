@@ -11,7 +11,8 @@
 [ ] Bullet Hit Animation
 [ ] Shot Sound
 [ ] Shot kickback
-[ ] Zombie Attack
+[ ] Show Health UI
+[x] Zombie Attack
 [x] Security (UUID)
 [x] Auto Reconnect
 [x] Handle Player Not Found
