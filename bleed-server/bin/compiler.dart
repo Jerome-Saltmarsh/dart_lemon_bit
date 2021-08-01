@@ -1,67 +1,64 @@
-import 'dart:convert';
-import 'package:archive/archive.dart';
-
 import 'classes.dart';
 import 'state.dart';
 
-GZipEncoder gZipEncoder = GZipEncoder();
-GZipDecoder gZipDecoder = GZipDecoder();
-
-String compress(String data){
-  List<int>? i = gZipEncoder.encode(utf8.encode(data));
-  if (i != null) {
-    return base64.encode(i);
-  }
-  return "";
-}
-
 void compileState(){
-  StringBuffer buffer = StringBuffer();
-  compilePlayers(buffer);
-  compileNpcs(buffer);
-  compileBullets(buffer);
-  compileFPS(buffer);
+  buffer.clear();
+  _compilePlayers();
+  _compileNpcs();
+  _compileBullets();
+  _compileFPS();
   compiledState = buffer.toString();
 }
 
-void compileFPS(StringBuffer buffer){
+void _compileFPS(){
    buffer.write("fms: ${ frameDuration.inMilliseconds } ;");
 }
 
-void compilePlayers(StringBuffer buffer){
+void _compilePlayers(){
   buffer.write("p: ");
   for(Character character in players){
-    compileCharacter(buffer, character);
-    buffer.write(" ");
+    _compileCharacter(character);
   }
-  buffer.write(";");
+  _end();
 }
 
-void compileNpcs(StringBuffer buffer){
+void _compileNpcs(){
   buffer.write("n: ");
   for(Npc npc in npcs){
-    compileNpc(buffer, npc);
-    buffer.write(" ");
+    _compileNpc(npc);
   }
-  buffer.write(";");
+  _end();
 }
 
-void compileBullets(StringBuffer buffer){
+void _compileBullets(){
   buffer.write("b: ");
   for (Bullet bullet in bullets){
-    buffer.write("${bullet.x} ${bullet.y} ");
+    _write(bullet.x);
+    _write(bullet.y);
   }
-  buffer.write(";");
+  _end();
 }
 
-void compileCharacter(StringBuffer buffer, Character character){
-  buffer.write("${character.state.index} ${character.direction.index} ${character.x} ${character.y} ${character.id}");
+void _compileCharacter(Character character){
+  _write(character.state.index);
+  _write(character.direction.index);
+  _write(character.x);
+  _write(character.y);
+  _write(character.id);
 }
 
-void compileNpc(StringBuffer buffer, Npc npc){
-  buffer.write("${npc.state.index} ${npc.direction.index} ${npc.x} ${npc.y}");
+void _compileNpc(Npc npc){
+  _write(npc.state.index);
+  _write(npc.direction.index);
+  _write(npc.x);
+  _write(npc.y);
 }
 
-String compileBulletToString(Bullet bullet){
- return "${bullet.x} ${bullet.y}";
+void _write(dynamic value){
+  buffer.write(value);
+  buffer.write(" ");
+}
+
+void _end(){
+  buffer.write("; ");
 }

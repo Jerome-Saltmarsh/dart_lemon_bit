@@ -24,7 +24,6 @@ void drawCharacters() {
   // npcs.sort((a, b) => a[posY] > b[posY] ? 1 : -1);
   // npcs.where(isDead).forEach((drawCharacter));
   // npcs.where(isAlive).forEach((drawCharacter));
-  // drawCharacterList(players);
   drawPlayers();
   drawNpcs();
 }

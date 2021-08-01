@@ -54,12 +54,14 @@ Npc findNpcById(int id){
 
 Character findPlayerById(int id){
   return players.firstWhere((player) => player.id == id, orElse: () {
-    throw PlayerNotFoundException();
+    throw PlayerNotFoundException(id);
   });
 }
 
 class PlayerNotFoundException implements Exception {
+    final int id;
 
+  PlayerNotFoundException(this.id);
 }
 
 
