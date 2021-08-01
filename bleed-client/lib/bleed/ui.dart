@@ -79,7 +79,7 @@ Widget buildDebugUI(BuildContext context){
       width: size.width,
       height: size.height,
       alignment: Alignment.center,
-      child: Container(child: text("Connection Lost", fontSize: 30)),
+      child: Container(child: text("Reconnecting...", fontSize: 30)),
     );
   }
 

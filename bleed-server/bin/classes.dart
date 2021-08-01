@@ -17,8 +17,8 @@ class PhysicsGameObject extends GameObject {
 }
 
 class Character extends PhysicsGameObject {
-  static int _id = 0;
-  late int id;
+  final int id;
+  final String uuid;
   CharacterState state = CharacterState.Idle;
   Direction direction = Direction.Down;
   Weapon weapon;
@@ -28,15 +28,23 @@ class Character extends PhysicsGameObject {
   int health;
   int frameOfDeath = 0;
   double speed;
+  String name;
 
   bool get alive => state != CharacterState.Dead;
   bool get dead => state == CharacterState.Dead;
   bool get firing => state == CharacterState.Firing;
   bool get aiming => state == CharacterState.Aiming;
 
-  Character(double x, double y, this.weapon, this.health, this.speed, [String name = ""]) : super(x, y, 0, 0) {
-    this.id = _id++;
-  }
+  Character({
+    required this.id,
+    required this.uuid,
+    required double x,
+    required double y,
+    required this.weapon,
+    required this.health,
+    required this.speed,
+    required this.name
+  }) : super(x, y, 0, 0);
 
   void idle(){
     state = CharacterState.Idle;
@@ -56,7 +64,16 @@ class Npc extends Character {
   double xDes = 0;
   double yDes = 0;
 
-  Npc(double x, double y) : super(x, y, Weapon.Unarmed, 5, zombieSpeed);
+  Npc({required double x, required double y, required int id}) : super(
+    id: id,
+    uuid: "",
+    x: x,
+    y: y,
+    weapon: Weapon.Unarmed,
+    health: 5,
+    speed: zombieSpeed,
+    name: "Npc"
+  );
   get targetSet => targetId != -1;
   get destinationSet => xDes == 0;
 

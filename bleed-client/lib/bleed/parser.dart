@@ -43,6 +43,7 @@ void _parseFrameMS(){
 
 void _parsePlayerId() {
   playerId = _consumeInt();
+  playerUUID = _consumeString();
   _consumeSemiColon();
 }
 

@@ -25,8 +25,8 @@ void main() {
     }
 
     void handleRequestSpawn() {
-      var character = spawnPlayer("test");
-      String response = "id: ${character.id} ;";
+      var character = spawnPlayer(name: "Test");
+      String response = "id: ${character.id} ${character.uuid} ;";
       sendToClient(response);
       return;
     }

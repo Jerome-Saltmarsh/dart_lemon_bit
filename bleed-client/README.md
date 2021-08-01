@@ -13,8 +13,8 @@
 [ ] Shot Sound
 [ ] Shot kickback
 [ ] Security (UUID)
-[ ] Auto Reconnect
-[ ] Handle Player Not Found
+[x] Auto Reconnect
+[x] Handle Player Not Found
 [x] Fix Bullet collision detection
 [x] Fix Character draw center
 [x] Fix bullet stutter
