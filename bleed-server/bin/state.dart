@@ -6,3 +6,4 @@ List<Character> players = [];
 List<Bullet> bullets = [];
 DateTime frameTime = DateTime.now();
 Duration frameDuration = Duration();
+String compiledState = "";

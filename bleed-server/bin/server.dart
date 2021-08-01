@@ -5,7 +5,9 @@ import 'package:shelf_web_socket/shelf_web_socket.dart';
 
 import 'classes.dart';
 import 'compiler.dart';
+import 'constants.dart';
 import 'settings.dart';
+import 'state.dart';
 import 'update.dart';
 import 'utils.dart';
 
@@ -21,7 +23,7 @@ void main() {
     }
 
     void sendCompiledState() {
-      sendToClient(compileState());
+      sendToClient(compiledState);
     }
 
     void handleRequestSpawn() {
@@ -47,16 +49,9 @@ void main() {
         setDirection(player, requestedDirection);
         setCharacterState(player, requestedState);
         sendCompiledState();
-
-        Future.delayed(Duration(milliseconds: 15),(){
-          sendCompiledState();
-        });
-        Future.delayed(Duration(milliseconds: 30),(){
-          sendCompiledState();
-        });
-        Future.delayed(Duration(milliseconds: 45),(){
-          sendCompiledState();
-        });
+        Future.delayed(duration15ms, sendCompiledState);
+        Future.delayed(duration30ms, sendCompiledState);
+        Future.delayed(duration45ms, sendCompiledState);
         return;
       }
       if (request == "spawn"){

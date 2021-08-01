@@ -15,13 +15,13 @@ String compress(String data){
   return "";
 }
 
-String compileState(){
+void compileState(){
   StringBuffer buffer = StringBuffer();
   compilePlayers(buffer);
   compileNpcs(buffer);
   compileBullets(buffer);
   compileFPS(buffer);
-  return buffer.toString();
+  compiledState = buffer.toString();
 }
 
 void compileFPS(StringBuffer buffer){
