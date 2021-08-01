@@ -10,20 +10,25 @@ void initUpdateLoop() {
   createJob(fixedUpdate, ms: 1000 ~/ 30);
   createJob(npcWanderJob, seconds: 10);
   // createJob(deleteDeadAndExpiredCharacters, seconds: 6);
-  createJob(updateNpcTarget, ms: 500);
+  createJob(updateNpcTargets, ms: 500);
 }
 
-void updateNpcTarget() {
-  for (int i = 0; i < npcs.length; i++) {
-    Npc npc = npcs[i];
+void updateNpcTargets() {
+  for(Npc npc in npcs){
     if (npc.targetSet) continue;
-    for (Character player in players) {
-      if (distanceBetween(npc, player) < zombieViewRange) {
-        npc.targetId = player.id;
-      }
-    }
+    updateNpcTarget(npc);
   }
 }
+
+void updateNpcTarget(Npc npc){
+  for (Character player in players) {
+    if (player.dead) continue;
+    if (distanceBetween(npc, player) > zombieViewRange) continue;
+    npc.targetId = player.id;
+    return;
+  }
+}
+
 
 // void deleteDeadAndExpiredCharacters() {
 //   for (int i = 0; i < characters.length; i++) {
@@ -60,41 +65,30 @@ void updateBullets() {
       continue;
     }
     compressBullet(bullet);
+  }
 
-    for (int j = 0; j < npcs.length; j++) {
-      Npc npc = npcs[j];
-      if (npc.dead) continue;
-      if (npc.id == bullet.ownerId) continue;
-      double dis = distanceBetween(npcs[j], bullet);
+  checkBulletCollision(npcs);
+  checkBulletCollision(players);
+}
+
+void checkBulletCollision(List<Character> list){
+  for(int i = 0; i < bullets.length; i++){
+    Bullet bullet = bullets[i];
+    for (int j = 0; j < list.length; j++) {
+      Character characters = list[j];
+      if (characters.dead) continue;
+      if (characters.id == bullet.ownerId) continue;
+      double dis = distanceBetween(list[j], bullet);
       if (dis < characterBulletRadius) {
         bullets.removeAt(i);
         i--;
-        npc.health--;
-        if (npc.health <= 0) {
-          npc.state = CharacterState.Dead;
-          npc.frameOfDeath = frame;
+        characters.health--;
+        if (characters.health <= 0) {
+          characters.state = CharacterState.Dead;
+          characters.frameOfDeath = frame;
         }
-        npc.xVel += bullet.xVel * 0.25;
-        npc.yVel += bullet.yVel * 0.25;
-        break;
-      }
-    }
-
-    for (int j = 0; j < players.length; j++) {
-      Character character = players[j];
-      if (character.dead) continue;
-      if (character.id == bullet.ownerId) continue;
-      double dis = distanceBetween(character, bullet);
-      if (dis < characterBulletRadius) {
-        bullets.removeAt(i);
-        i--;
-        character.health--;
-        if (character.health <= 0) {
-          character.state = CharacterState.Dead;
-          character.frameOfDeath = frame;
-        }
-        character.xVel += bullet.xVel * 0.15;
-        character.yVel += bullet.yVel * 0.15;
+        characters.xVel += bullet.xVel * 0.25;
+        characters.yVel += bullet.yVel * 0.25;
         break;
       }
     }
@@ -106,7 +100,7 @@ void updateNpc(Npc npc) {
 
   if (npc.targetSet) {
     Character? target = npcTarget(npc);
-    if (target == null || isDead(target)) {
+    if (target == null || target.dead) {
       npc.clearTarget();
       npc.idle();
       return;
@@ -115,7 +109,7 @@ void updateNpc(Npc npc) {
     characterFaceObject(npc, target);
     double targetDistance = objectDistanceFrom(npc, target.x, target.y);
 
-    if(targetDistance > 20){
+    if (targetDistance > 20) {
       npc.walk();
     } else {
       setCharacterState(npc, CharacterState.Striking);
@@ -252,8 +246,8 @@ void updateCollisionBetween(List<Character> characters) {
 }
 
 void resolveCollision(Character a, Character b) {
-  if (isDead(a)) return;
-  if (isDead(b)) return;
+  if (a.dead) return;
+  if (b.dead) return;
   double xDiff = a.x - b.x;
   if (abs(xDiff) > characterRadius2) return;
   double yDiff = a.y - b.y;
