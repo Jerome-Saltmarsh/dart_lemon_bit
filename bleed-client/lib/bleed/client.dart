@@ -52,18 +52,9 @@ class BleedClient extends GameWidget {
       drawFrame++;
     }
 
-
     drawMouse();
     drawTiles();
     drawBullets();
     drawCharacters();
-    // dynamic player = getPlayerCharacter();
-    // if (player != null && getState(player) == characterStateAiming) {
-    //   double accuracy = player[keyAccuracy];
-    //   double l = player[keyAimAngle] - (accuracy * 0.5);
-    //   double r = player[keyAimAngle] + (accuracy * 0.5);
-    //   drawLineRotation(player, l, bulletRange);
-    //   drawLineRotation(player, r, bulletRange);
-    // }
   }
 }

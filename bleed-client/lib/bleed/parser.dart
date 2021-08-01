@@ -1,5 +1,8 @@
+import 'package:flutter_game_engine/bleed/connection.dart';
 import 'package:flutter_game_engine/bleed/keys.dart';
 import 'package:flutter_game_engine/bleed/state.dart';
+
+import 'constants.dart';
 
 final List _cache = [];
 
@@ -7,7 +10,6 @@ String get _text => event;
 int _index = 0;
 
 int get cacheSize => _cache.length;
-
 String get currentCharacter => _text[_index];
 
 void parseState() {
@@ -24,9 +26,15 @@ void parseState() {
       _parseNpcs();
     } else if (term == "fms:"){
       _parseFrameMS();
+    } else if (term == 'player-not-found') {
+      playerId = idNotConnected;
+      if (respawnRequestSent) return;
+      sendRequestSpawn();
+      respawnRequestSent = true;
     }
   }
 }
+
 
 void _parseFrameMS(){
   serverFramesMS = _consumeInt();
@@ -46,13 +54,6 @@ void _consumeSpace() {
   while (currentCharacter == " ") {
     _next();
   }
-}
-
-String _consumeNextAvailableChar() {
-  _consumeSpace();
-  String character = _text[_index];
-  _next();
-  return character;
 }
 
 int _consumeInt() {

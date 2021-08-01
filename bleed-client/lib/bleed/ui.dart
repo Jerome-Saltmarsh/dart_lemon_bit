@@ -9,11 +9,10 @@ import 'settings.dart';
 import 'state.dart';
 import 'utils.dart';
 
-
 TextEditingController playerNameController = TextEditingController();
 
-Widget text(String value) {
-  return Text(value, style: TextStyle(color: Colors.white));
+Widget text(String value, { fontSize = 18}) {
+  return Text(value, style: TextStyle(color: Colors.white, fontSize: fontSize));
 }
 
 Widget button(String value, Function onPressed) {
@@ -74,6 +73,16 @@ Future<void> showChangeNameDialog() async {
 
 Widget buildDebugUI(BuildContext context){
   if (!connected) return text("Connecting");
+
+  if (framesSinceEvent > 30){
+    return Container(
+      width: size.width,
+      height: size.height,
+      alignment: Alignment.center,
+      child: Container(child: text("Connection Lost", fontSize: 30)),
+    );
+  }
+
   return column(
     [
       if (!connected) button("Connect", connect),

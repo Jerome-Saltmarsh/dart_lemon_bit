@@ -16,7 +16,6 @@ void main() {
   initUpdateLoop();
 
   var handler = webSocketHandler((webSocket) {
-
     void sendToClient(String response) {
       webSocket.sink.add(response);
     }
@@ -36,15 +35,21 @@ void main() {
       String request = requestD;
 
       if (request.startsWith("u:")) {
-        List<String> attributes = request.split(" ");
-        int id = int.parse(attributes[1]);
-        Character player = findPlayerById(id);
-        CharacterState requestedState = CharacterState.values[int.parse(attributes[2])];
-        Direction requestedDirection =  Direction.values[int.parse(attributes[3])];
-        double aim = double.parse(attributes[4]);
-        player.aimAngle = aim;
-        setDirection(player, requestedDirection);
-        setCharacterState(player, requestedState);
+        try {
+          List<String> attributes = request.split(" ");
+          int id = int.parse(attributes[1]);
+          Character player = findPlayerById(id);
+          CharacterState requestedState =
+              CharacterState.values[int.parse(attributes[2])];
+          Direction requestedDirection =
+              Direction.values[int.parse(attributes[3])];
+          double aim = double.parse(attributes[4]);
+          player.aimAngle = aim;
+          setDirection(player, requestedDirection);
+          setCharacterState(player, requestedState);
+        } on PlayerNotFoundException {
+          sendToClient('player-not-found ');
+        }
         sendCompiledState();
         Future.delayed(duration15ms, sendCompiledState);
         Future.delayed(duration30ms, sendCompiledState);
@@ -52,21 +57,21 @@ void main() {
         Future.delayed(duration90ms, sendCompiledState);
         return;
       }
-      if (request == "spawn"){
+      if (request == "spawn") {
         print("received spawn request");
         handleRequestSpawn();
         return;
       }
-      if (request == "spawn-npc"){
+      if (request == "spawn-npc") {
         print("received spawn npc request");
         spawnRandomNpc();
         return;
       }
-      if (request == "clear-npcs"){
+      if (request == "clear-npcs") {
         print("received clear npcs request");
         clearNpcs();
       }
-      if(request == "update"){
+      if (request == "update") {
         sendCompiledState();
         return;
       }

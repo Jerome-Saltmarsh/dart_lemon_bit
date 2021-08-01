@@ -41,5 +41,6 @@ List<RSTransform> playersTransforms = [];
 List<Rect> playersRects = [];
 List<RSTransform> npcsTransforms = [];
 List<Rect> npcsRects = [];
+bool respawnRequestSent = false;
 
 

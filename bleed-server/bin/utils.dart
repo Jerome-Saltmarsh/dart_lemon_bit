@@ -185,7 +185,7 @@ void clearNpcs(){
 }
 
 Character spawnPlayer(String name){
-  Character player = Character(0.01, 0.02, Weapon.HandGun, 5, playerSpeed, name);
+  Character player = Character(giveOrTake(50), giveOrTake(50), Weapon.HandGun, 5, playerSpeed, name);
   players.add(player);
   return player;
 }

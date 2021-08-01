@@ -13,6 +13,8 @@
 [ ] Shot Sound
 [ ] Shot kickback
 [ ] Security (UUID)
+[ ] Auto Reconnect
+[ ] Handle Player Not Found
 [x] Fix Bullet collision detection
 [x] Fix Character draw center
 [x] Fix bullet stutter
@@ -46,3 +48,9 @@
 [x] Websocket client / server
 [x] Deploy Server on GCP
 [x] Isometric characters
+
+#Ideas
+Auto aim: The player doesn't have to hold to aim, rather it reduces automatically
+When the player fires it gets larger. Standing still causes the focus to go faster than running
+
+

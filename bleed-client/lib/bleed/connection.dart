@@ -1,4 +1,3 @@
-
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -20,7 +19,6 @@ void sendToServer(String message) {
   packagesSent++;
 }
 
-
 void onEvent(dynamic response) {
   framesSinceEvent = 0;
   DateTime now = DateTime.now();
@@ -32,14 +30,20 @@ void onEvent(dynamic response) {
   redrawGame();
 }
 
+int attempts = 0;
 
 void connect() {
   try {
+    attempts++;
     webSocketChannel = WebSocketChannel.connect(hostURI);
     webSocketChannel.stream.listen(onEvent, onError: onError, onDone: onDone);
+    attempts = 0;
     connected = true;
+    respawnRequestSent = false;
   } catch (error) {
     errors++;
+    if (attempts > 10) return;
+    Future.delayed(Duration(seconds: 1), connect);
   }
 }
 
@@ -59,7 +63,8 @@ void sendCommandEquip(int weapon) {
 }
 
 StringBuffer _buffer = StringBuffer();
-void _write(dynamic value){
+
+void _write(dynamic value) {
   _buffer.write(value);
   _buffer.write(" ");
 }
@@ -82,11 +87,11 @@ void sendRequestSpawn() {
   sendToServer('spawn');
 }
 
-void sendRequestSpawnNpc(){
+void sendRequestSpawnNpc() {
   sendToServer('spawn-npc');
 }
 
-void sendRequestClearNpcs(){
+void sendRequestClearNpcs() {
   sendToServer("clear-npcs");
 }
 
@@ -95,7 +100,8 @@ void onError(dynamic value) {
 }
 
 void onDone() {
+  attempts = 0;
   dones++;
   connected = false;
+  connect();
 }
-

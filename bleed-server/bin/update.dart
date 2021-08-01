@@ -180,22 +180,8 @@ void updateCharacter(Character character) {
 }
 
 void updateCharacters() {
-  for (int i = 0; i < players.length; i++) {
-    if (players[i].x.isNaN || players[i].y.isNaN) {
-      players[i].x = 0;
-      players[i].y = 0;
-    }
-  }
   players.forEach(updateCharacter);
   npcs.forEach(updateCharacter);
-}
-
-void detectCorruptData() {
-  for (int i = 0; i < players.length; i++) {
-    if (players[i].x.isNaN || players[i].y.isNaN) {
-      print("removing player because invalid position");
-    }
-  }
 }
 
 void fixedUpdate() {
@@ -212,7 +198,6 @@ void fixedUpdate() {
   updateBullets(); // called twice to fix collision detection
   updateNpcs();
   compressData();
-  detectCorruptData();
   compileState();
 
   if (fps < 20) {
