@@ -1,10 +1,11 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'classes.dart';
 import 'common.dart';
+import 'constants.dart';
 import 'maths.dart';
 import 'settings.dart';
+import 'spawn.dart';
 import 'state.dart';
 
 double bulletDistanceTravelled(Bullet bullet) {
@@ -58,14 +59,6 @@ Character? findPlayerById(int id){
   }
   return null;
 }
-
-class PlayerNotFoundException implements Exception {
-    final int id;
-
-  PlayerNotFoundException(this.id);
-}
-
-
 
 void npcSetRandomDestination(Npc npc) {
   npc.xDes = randomBetween(-100, 100);
@@ -164,79 +157,33 @@ void npcWanderJob() {
   }
 }
 
-void spawnBullet(Character character) {
-  Bullet bullet = Bullet(character.x, character.y, velX(character.aimAngle, bulletSpeed), velY(character.aimAngle, bulletSpeed), character.id);
-  bullets.add(bullet);
-  print("Bullet spawned");
-}
-
-Npc spawnNpc(double x, double y) {
-  Npc npc = Npc(x: x, y: y, id: generateId());
-  npcs.add(npc);
-  return npc;
-}
-
-int generateId(){
-  id++;
-  return id;
-}
-
-String generateUUID(){
-  return uuidGenerator.v4();
-}
-
-Npc spawnRandomNpc() {
-  return spawnNpc(randomBetween(-spawnRadius, spawnRadius),
-      randomBetween(-spawnRadius, spawnRadius));
-}
-
 void clearNpcs(){
   npcs.clear();
 }
 
-Character spawnPlayer({required String name}){
-  Character player = Character(
-    id: generateId(),
-    uuid: generateUUID(),
-    x: giveOrTake(50),
-    y: giveOrTake(50),
-    weapon: Weapon.HandGun,
-    health: 5,
-    speed: playerSpeed,
-    name: name
-  );
-
-
-  players.add(player);
-  return player;
-}
-
-const double eight = pi / 8.0;
-const double quarter = pi / 4.0;
-
 Direction convertAngleToDirection(double angle) {
-  if (angle < eight) {
+  if (angle < piEighth) {
     return Direction.Up;
   }
-  if (angle < eight + (quarter * 1)) {
+  if (angle < piEighth + (piQuarter * 1)) {
     return Direction.UpRight;
   }
-  if (angle < eight + (quarter * 2)) {
+  if (angle < piEighth + (piQuarter * 2)) {
     return Direction.Right;
   }
-  if (angle < eight + (quarter * 3)) {
+  if (angle < piEighth + (piQuarter * 3)) {
     return Direction.DownRight;
   }
-  if (angle < eight + (quarter * 4)) {
+  if (angle < piEighth + (piQuarter * 4)) {
     return Direction.Down;
   }
-  if (angle < eight + (quarter * 5)) {
+  if (angle < piEighth + (piQuarter * 5)) {
     return Direction.DownLeft;
   }
-  if (angle < eight + (quarter * 6)) {
+  if (angle < piEighth + (piQuarter * 6)) {
     return Direction.Left;
   }
-  if (angle < eight + (quarter * 7)) {
+  if (angle < piEighth + (piQuarter * 7)) {
     return Direction.UpLeft;
   }
   return Direction.Up;

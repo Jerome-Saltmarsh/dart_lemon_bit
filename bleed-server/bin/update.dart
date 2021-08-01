@@ -8,7 +8,6 @@ import 'utils.dart';
 
 void initUpdateLoop() {
   createJob(fixedUpdate, ms: 1000 ~/ 30);
-  // createJob(spawnZombieJob, seconds: 5);
   createJob(npcWanderJob, seconds: 10);
   // createJob(deleteDeadAndExpiredCharacters, seconds: 6);
   createJob(updateNpcTarget, ms: 500);
@@ -112,8 +111,15 @@ void updateNpc(Npc npc) {
       npc.idle();
       return;
     }
+
     characterFaceObject(npc, target);
-    npc.walk();
+    double targetDistance = objectDistanceFrom(npc, target.x, target.y);
+
+    if(targetDistance > 20){
+      npc.walk();
+    } else {
+      setCharacterState(npc, CharacterState.Striking);
+    }
     return;
   }
 

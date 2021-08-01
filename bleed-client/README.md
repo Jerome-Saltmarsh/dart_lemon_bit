@@ -5,13 +5,13 @@
 [ ] Reload
 [ ] Sniper Rifle
 [ ] Oozie
-[ ] Zombie Attack
 [ ] Zombie Death Sound
 [ ] Weapon Shotgun
 [ ] Shot Animation
 [ ] Bullet Hit Animation
 [ ] Shot Sound
 [ ] Shot kickback
+[ ] Zombie Attack
 [x] Security (UUID)
 [x] Auto Reconnect
 [x] Handle Player Not Found

@@ -6,6 +6,7 @@ import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'classes.dart';
 import 'constants.dart';
 import 'settings.dart';
+import 'spawn.dart';
 import 'state.dart';
 import 'update.dart';
 import 'utils.dart';
