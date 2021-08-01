@@ -12,7 +12,8 @@
 [ ] Bullet Hit Animation
 [ ] Shot Sound
 [ ] Shot kickback
-[ ] Fix Bullet collision detection
+[ ] Security (UUID)
+[x] Fix Bullet collision detection
 [x] Fix Character draw center
 [x] Fix bullet stutter
 [x] Fix Shooting

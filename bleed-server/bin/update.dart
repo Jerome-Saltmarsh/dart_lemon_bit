@@ -209,6 +209,7 @@ void fixedUpdate() {
   updateCharacters();
   updateCollisions();
   updateBullets();
+  updateBullets(); // called twice to fix collision detection
   updateNpcs();
   compressData();
   detectCorruptData();
