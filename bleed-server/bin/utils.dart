@@ -135,7 +135,9 @@ void faceAimDirection(Character character){
 }
 
 void fireWeapon(Character character) {
-  if (!character.aiming) return;
+  // if (!character.aiming) return;
+  if (character.dead) return;
+  if (character.shotCoolDown > 0) return;
   faceAimDirection(character);
   switch (character.weapon) {
     case Weapon.HandGun:

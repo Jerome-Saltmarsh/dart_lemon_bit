@@ -49,6 +49,7 @@ void main() {
         Future.delayed(duration15ms, sendCompiledState);
         Future.delayed(duration30ms, sendCompiledState);
         Future.delayed(duration45ms, sendCompiledState);
+        Future.delayed(duration90ms, sendCompiledState);
         return;
       }
       if (request == "spawn"){

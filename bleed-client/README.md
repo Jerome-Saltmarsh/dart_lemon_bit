@@ -12,7 +12,7 @@
 [ ] Bullet Hit Animation
 [ ] Shot Sound
 [ ] Shot kickback
-[ ] Server send on screen characters only
+[ ] Fix Bullet collision detection
 [x] Fix Character draw center
 [x] Fix bullet stutter
 [x] Fix Shooting

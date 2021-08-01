@@ -3,7 +3,6 @@
 import 'common.dart';
 import 'connection.dart';
 import 'input.dart';
-import 'keys.dart';
 import 'settings.dart';
 import 'state.dart';
 import 'utils.dart';
@@ -16,10 +15,6 @@ void update(){
   smoothing();
   controlCamera();
   readPlayerInput();
-
-  // for(dynamic bullet in bullets){
-  //   bullet[x] += 0.01;
-  // }
 
   if (playerAssigned) {
     sendRequestUpdatePlayer();
