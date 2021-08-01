@@ -12,7 +12,7 @@
 [ ] Bullet Hit Animation
 [ ] Shot Sound
 [ ] Shot kickback
-[ ] Security (UUID)
+[x] Security (UUID)
 [x] Auto Reconnect
 [x] Handle Player Not Found
 [x] Fix Bullet collision detection

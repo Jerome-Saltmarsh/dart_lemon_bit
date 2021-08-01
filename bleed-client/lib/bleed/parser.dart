@@ -27,10 +27,13 @@ void parseState() {
     } else if (term == "fms:"){
       _parseFrameMS();
     } else if (term == 'player-not-found') {
+      print('server error: player-not-found');
       playerId = idNotConnected;
       if (respawnRequestSent) return;
       sendRequestSpawn();
       respawnRequestSent = true;
+    } else if (term == 'invalid--uuid'){
+      print("invalid uuid");
     }
   }
 }

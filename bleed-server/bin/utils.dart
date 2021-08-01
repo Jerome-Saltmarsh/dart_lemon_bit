@@ -38,7 +38,7 @@ bool withinViewRange(Npc npc, GameObject target){
   return distanceBetween(npc, target) < zombieViewRange;
 }
 
-Character npcTarget(Npc npc) {
+Character? npcTarget(Npc npc) {
   return findPlayerById(npc.targetId);
 }
 
@@ -52,10 +52,11 @@ Npc findNpcById(int id){
   });
 }
 
-Character findPlayerById(int id){
-  return players.firstWhere((player) => player.id == id, orElse: () {
-    throw PlayerNotFoundException(id);
-  });
+Character? findPlayerById(int id){
+  for(Character character in players){
+    if(character.id == id) return character;
+  }
+  return null;
 }
 
 class PlayerNotFoundException implements Exception {

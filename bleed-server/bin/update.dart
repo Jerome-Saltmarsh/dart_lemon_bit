@@ -106,24 +106,29 @@ void updateNpc(Npc npc) {
   if (npc.dead) return;
 
   if (npc.targetSet) {
-    Character target = npcTarget(npc);
-    if (isDead(target)) {
+    Character? target = npcTarget(npc);
+    if (target == null || isDead(target)) {
       npc.clearTarget();
-    } else {
-      npc.walk();
-      characterFaceObject(npc, target);
+      npc.idle();
+      return;
     }
-  } else {
-    if (npc.destinationSet) {
-      if (arrivedAtDestination(npc)) {
-        npc.idle();
-        npc.clearDestination();
-      } else {
-        faceDestination(npc);
-        npc.walk();
-      }
-    }
+    characterFaceObject(npc, target);
+    npc.walk();
+    return;
   }
+
+  if (npc.destinationSet) {
+    if (arrivedAtDestination(npc)) {
+      npc.clearDestination();
+      npc.idle();
+    } else {
+      faceDestination(npc);
+      npc.walk();
+    }
+    return;
+  }
+
+  npc.idle();
 }
 
 void updateCharacter(Character character) {

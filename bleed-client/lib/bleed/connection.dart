@@ -73,6 +73,7 @@ void sendRequestUpdatePlayer() {
   _buffer.clear();
   _write("u:");
   _write(playerId);
+  _write(playerUUID);
   _write(requestCharacterState);
   _write(requestDirection);
   _write(requestAim);
