@@ -26,6 +26,7 @@ class Character extends PhysicsGameObject {
   double accuracy = 0;
   int shotCoolDown = 0;
   double health;
+  double maxHealth;
   int frameOfDeath = 0;
   double speed;
   String name;
@@ -42,6 +43,7 @@ class Character extends PhysicsGameObject {
     required double y,
     required this.weapon,
     required this.health,
+    required this.maxHealth,
     required this.speed,
     required this.name
   }) : super(x, y, 0, 0);
@@ -64,13 +66,14 @@ class Npc extends Character {
   double xDes = 0;
   double yDes = 0;
 
-  Npc({required double x, required double y, required int id}) : super(
+  Npc({required double x, required double y, required int id, required double health, required double maxHealth}) : super(
     id: id,
     uuid: "",
     x: x,
     y: y,
     weapon: Weapon.Unarmed,
-    health: 5,
+    health: health,
+    maxHealth: maxHealth,
     speed: zombieSpeed,
     name: "Npc"
   );

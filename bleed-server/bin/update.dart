@@ -1,6 +1,6 @@
 import 'classes.dart';
 import 'common.dart';
-import 'compiler.dart';
+import 'compile.dart';
 import 'maths.dart';
 import 'settings.dart';
 import 'state.dart';

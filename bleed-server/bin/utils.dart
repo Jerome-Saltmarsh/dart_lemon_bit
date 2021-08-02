@@ -29,21 +29,28 @@ void setCharacterState(Character character, CharacterState value) {
   character.state = value;
 }
 
-void changeCharacterHealth(Character character, double amount){
+void changeCharacterHealth(Character character, double amount) {
   character.health += amount;
+  character.health = clamp(character.health, 0, character.maxHealth);
   if (character.health <= 0) {
     setCharacterState(character, CharacterState.Dead);
   }
 }
 
-void setDirection(Character character, Direction value){
+double clamp(double value, double min, double max) {
+  if (value < min) return min;
+  if (value > max) return max;
+  return value;
+}
+
+void setDirection(Character character, Direction value) {
   if (value == Direction.None) return;
   if (character.firing) return;
   if (character.dead) return;
   character.direction = value;
 }
 
-bool withinViewRange(Npc npc, GameObject target){
+bool withinViewRange(Npc npc, GameObject target) {
   return distanceBetween(npc, target) < zombieViewRange;
 }
 
@@ -55,15 +62,15 @@ void npcClearTarget(Npc npc) {
   npc.targetId = -1;
 }
 
-Npc findNpcById(int id){
+Npc findNpcById(int id) {
   return npcs.firstWhere((npc) => npc.id == id, orElse: () {
     throw Exception("could not find npc with id $id");
   });
 }
 
-Character? findPlayerById(int id){
-  for(Character character in players){
-    if(character.id == id) return character;
+Character? findPlayerById(int id) {
+  for (Character character in players) {
+    if (character.id == id) return character;
   }
   return null;
 }
@@ -111,7 +118,8 @@ void faceDestination(Npc npc) {
 }
 
 void characterFace(Character character, double x, double y) {
-  setDirection(character, convertAngleToDirection(radionsBetween2(character, x, y)));
+  setDirection(
+      character, convertAngleToDirection(radionsBetween2(character, x, y)));
 }
 
 void characterFaceObject(Character character, GameObject target) {
@@ -132,7 +140,7 @@ double getShotAngle(Character character) {
   return character.aimAngle + giveOrTake(character.accuracy * 0.5);
 }
 
-void faceAimDirection(Character character){
+void faceAimDirection(Character character) {
   setDirection(character, convertAngleToDirection(character.aimAngle));
 }
 
@@ -165,7 +173,7 @@ void npcWanderJob() {
   }
 }
 
-void clearNpcs(){
+void clearNpcs() {
   npcs.clear();
 }
 

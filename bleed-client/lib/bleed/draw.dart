@@ -13,6 +13,7 @@ import 'utils.dart';
 
 
 void drawCharacterCircle(dynamic value, Color color) {
+  if (value == null) return;
   drawCircle(value[posX], value[posY], characterRadius, color);
 }
 

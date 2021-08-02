@@ -3,6 +3,7 @@
 import 'common.dart';
 import 'connection.dart';
 import 'input.dart';
+import 'send.dart';
 import 'settings.dart';
 import 'state.dart';
 import 'utils.dart';

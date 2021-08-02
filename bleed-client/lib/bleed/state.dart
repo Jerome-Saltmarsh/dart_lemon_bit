@@ -38,6 +38,7 @@ String playerUUID = "";
 int serverFramesMS = 0;
 int actualFPS;
 double playerHealth = 0;
+double playerMaxHealth = 0;
 
 List<RSTransform> playersTransforms = [];
 List<Rect> playersRects = [];
@@ -45,4 +46,7 @@ List<RSTransform> npcsTransforms = [];
 List<Rect> npcsRects = [];
 bool respawnRequestSent = false;
 
-
+bool firstPass = true;
+bool secondPass = true;
+bool thirdPass = true;
+bool fourthPass = true;

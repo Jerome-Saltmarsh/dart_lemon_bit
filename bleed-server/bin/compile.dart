@@ -7,19 +7,28 @@ void compileState(){
   _compilePlayers();
   _compileNpcs();
   _compileBullets();
+  _compilePasses();
   _compileFPS();
   compiledState = buffer.toString();
 }
 
 String compilePlayer(Character character){
   StringBuffer buffer = StringBuffer();
-  buffer.write("player: ${character.health.toStringAsFixed(2)} ; ");
+  buffer.write("player: ");
+  buffer.write(character.health.toStringAsFixed(2));
+  buffer.write(' ');
+  buffer.write(character.maxHealth.toStringAsFixed(2));
+  buffer.write(' ; ');
   buffer.write(compiledState);
   return buffer.toString();
 }
 
 void _compileFPS(){
    buffer.write("fms: ${ frameDuration.inMilliseconds } ;");
+}
+
+void _compilePasses(){
+  buffer.write("passes: $firstPass $secondPass $thirdPass $fourthPass ; ");
 }
 
 void _compilePlayers(){

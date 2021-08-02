@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_game_engine/bleed/parser.dart';
+import 'package:flutter_game_engine/bleed/parse.dart';
 import 'package:flutter_game_engine/game_engine/engine_state.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'connection.dart';
 import 'resources.dart';
+import 'send.dart';
 import 'settings.dart';
 import 'state.dart';
 import 'utils.dart';
@@ -92,7 +93,7 @@ Widget buildDebugUI(BuildContext context){
       button("Spawn NPC", sendRequestSpawnNpc),
       button("Clear NPCS", sendRequestClearNpcs),
       text("Player Id: $playerId"),
-      text("Player Health: $playerHealth"),
+      text("Player Health: $playerHealth / $playerMaxHealth"),
       text("Date Size: ${event.length}"),
       text("Frames since event: $framesSinceEvent"),
       text("Milliseconds Since Last Frame: $millisecondsSinceLastFrame"),
@@ -107,6 +108,12 @@ Widget buildDebugUI(BuildContext context){
       text('Request Direction $requestDirection'),
       text('Request State $requestCharacterState'),
       text('Cache Size $cacheSize'),
+      button('First Pass: $firstPass', sendTogglePass1),
+      button('Second Pass: $secondPass', sendTogglePass2),
+      button('Third Pass: $thirdPass', sendTogglePass3),
+      button('Fourth Pass: $fourthPass', sendTogglePass4),
+      // text('First Pass $firstPassMS'),
+      // text('Second Pass $firstPassMS'),
       button("smoothing $smooth", () => smooth = !smooth),
       if (debugMode)
         column([

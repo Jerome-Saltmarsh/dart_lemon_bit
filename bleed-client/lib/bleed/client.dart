@@ -3,11 +3,13 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_game_engine/bleed/update.dart';
+import 'package:flutter_game_engine/bleed/utils.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'connection.dart';
 import 'draw.dart';
 import 'resources.dart';
+import 'send.dart';
 import 'state.dart';
 import 'ui.dart';
 
@@ -54,6 +56,16 @@ class BleedClient extends GameWidget {
 
     drawMouse();
     drawTiles();
+    double health = playerHealth / playerMaxHealth;
+    double halfMaxHealth = playerMaxHealth * 0.5;
+
+    if(health > 0.5){
+      drawCharacterCircle(playerCharacter, Color.lerp(Colors.yellow, Colors.green, (playerHealth - halfMaxHealth) / halfMaxHealth));
+    }else{
+      drawCharacterCircle(playerCharacter, Color.lerp(Colors.red, Colors.yellow, playerHealth / halfMaxHealth));
+    }
+
+
     drawBullets();
     drawCharacters();
   }

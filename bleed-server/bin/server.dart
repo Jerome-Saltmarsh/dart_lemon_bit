@@ -4,7 +4,7 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 
 import 'classes.dart';
-import 'compiler.dart';
+import 'compile.dart';
 import 'constants.dart';
 import 'settings.dart';
 import 'spawn.dart';
@@ -62,7 +62,20 @@ void main() {
         setCharacterState(player, requestedState);
         // sendCompiledState();
         sendCompiledPlayerState(player);
-        Future.delayed(duration15ms, () => sendCompiledPlayerState(player));
+
+        if(firstPass){
+          Future.delayed(Duration(milliseconds: firstPassMS), () => sendCompiledPlayerState(player));
+        }
+        if(secondPass){
+          Future.delayed(Duration(milliseconds: secondPassMS), () => sendCompiledPlayerState(player));
+        }
+        if(thirdPass){
+          Future.delayed(Duration(milliseconds: thirdPassMS), () => sendCompiledPlayerState(player));
+        }
+        if(fourthPass){
+          Future.delayed(Duration(milliseconds: fourthPassMS), () => sendCompiledPlayerState(player));
+        }
+
         // Future.delayed(duration30ms, sendCompiledState);
         // Future.delayed(duration45ms, sendCompiledState);
         // Future.delayed(duration90ms, sendCompiledState);
@@ -85,6 +98,20 @@ void main() {
       if (request == "update") {
         sendCompiledState();
         return;
+      }
+      if (request == 'toggle-pass-1'){
+        firstPass = !firstPass;
+        print('first pass toggled: $firstPass');
+      }
+      if (request == 'toggle-pass-2'){
+        secondPass = !secondPass;
+        print('second pass toggled: $secondPass');
+      }
+      if (request == 'toggle-pass-3'){
+        thirdPass = !thirdPass;
+      }
+      if (request == 'toggle-pass-4'){
+        fourthPass = !fourthPass;
       }
     }
 

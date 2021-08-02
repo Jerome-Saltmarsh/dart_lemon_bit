@@ -3,6 +3,7 @@ import 'package:flutter_game_engine/bleed/keys.dart';
 import 'package:flutter_game_engine/bleed/state.dart';
 
 import 'constants.dart';
+import 'send.dart';
 
 final List _cache = [];
 
@@ -36,6 +37,8 @@ void parseState() {
       print("invalid uuid");
     } else if (term == 'player:'){
       _parsePlayer();
+    } else if (term == 'passes:'){
+      _parsePasses();
     }
   }
 }
@@ -43,7 +46,15 @@ void parseState() {
 
 void _parsePlayer(){
   playerHealth = _consumeDouble();
+  playerMaxHealth = _consumeDouble();
   _consumeSemiColon();
+}
+
+void _parsePasses(){
+  firstPass = _consumeBool();
+  secondPass = _consumeBool();
+  thirdPass = _consumeBool();
+  fourthPass = _consumeBool();
 }
 
 void _parseFrameMS(){
@@ -73,6 +84,10 @@ int _consumeInt() {
 
 int parseInt(String value){
   return int.parse(value);
+}
+
+bool _consumeBool(){
+  return _consumeString() == 'true';
 }
 
 String _consumeString() {

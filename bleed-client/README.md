@@ -11,7 +11,8 @@
 [ ] Bullet Hit Animation
 [ ] Shot Sound
 [ ] Shot kickback
-[ ] Show Health UI
+[ ] Optimize Server
+[x] Show Health UI
 [x] Zombie Attack
 [x] Security (UUID)
 [x] Auto Reconnect
