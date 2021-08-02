@@ -2,23 +2,34 @@ import 'settings.dart';
 
 enum CharacterState { Idle, Walking, Dead, Aiming, Firing, Striking }
 enum Weapon { Unarmed, HandGun, Shotgun }
-enum Direction { Up, UpRight, Right, DownRight, Down, DownLeft, Left, UpLeft, None }
+enum Direction {
+  Up,
+  UpRight,
+  Right,
+  DownRight,
+  Down,
+  DownLeft,
+  Left,
+  UpLeft,
+  None
+}
 
 class GameObject {
   double x;
   double y;
+
   GameObject(this.x, this.y);
 }
 
 class PhysicsGameObject extends GameObject {
   double xVel = 0;
   double yVel = 0;
+
   PhysicsGameObject(double x, double y, this.xVel, this.yVel) : super(x, y);
 }
 
 class Character extends PhysicsGameObject {
   final int id;
-  final String uuid;
   CharacterState state = CharacterState.Idle;
   Direction direction = Direction.Down;
   Weapon weapon;
@@ -31,13 +42,15 @@ class Character extends PhysicsGameObject {
   String name;
 
   bool get alive => state != CharacterState.Dead;
+
   bool get dead => state == CharacterState.Dead;
+
   bool get firing => state == CharacterState.Firing;
+
   bool get aiming => state == CharacterState.Aiming;
 
   Character({
     required this.id,
-    required this.uuid,
     required double x,
     required double y,
     required this.weapon,
@@ -47,15 +60,15 @@ class Character extends PhysicsGameObject {
     required this.name
   }) : super(x, y, 0, 0);
 
-  void idle(){
+  void idle() {
     state = CharacterState.Idle;
   }
 
-  void walk(){
+  void walk() {
     state = CharacterState.Walking;
   }
 
-  void fire(){
+  void fire() {
     state = CharacterState.Firing;
   }
 }
@@ -65,28 +78,50 @@ class Npc extends Character {
   double xDes = 0;
   double yDes = 0;
 
-  Npc({required double x, required double y, required int id, required double health, required double maxHealth}) : super(
-    id: id,
-    uuid: "",
-    x: x,
-    y: y,
-    weapon: Weapon.Unarmed,
-    health: health,
-    maxHealth: maxHealth,
-    speed: zombieSpeed,
-    name: "Npc"
+  Npc(
+      {required double x, required double y, required int id, required double health, required double maxHealth})
+      : super(
+      id: id,
+      x: x,
+      y: y,
+      weapon: Weapon.Unarmed,
+      health: health,
+      maxHealth: maxHealth,
+      speed: zombieSpeed,
+      name: "Npc"
   );
+
   get targetSet => targetId != -1;
+
   get destinationSet => xDes != 0;
 
-  void clearTarget(){
+  void clearTarget() {
     targetId = -1;
   }
 
-  void clearDestination(){
+  void clearDestination() {
     xDes = 0;
     yDes = 0;
   }
+}
+
+class Player extends Character {
+  final String uuid;
+
+  Player({
+    required this.uuid,
+    required int id,
+    required double x,
+    required double y,
+    required String name})
+      : super(id: id,
+      x: x,
+      y: y,
+      weapon: Weapon.HandGun,
+      health: settingsPlayerStartHealth,
+      maxHealth: settingsPlayerStartHealth,
+      speed: playerSpeed,
+      name: name);
 }
 
 class Bullet extends PhysicsGameObject {
@@ -94,7 +129,8 @@ class Bullet extends PhysicsGameObject {
   late double yStart;
   int ownerId;
 
-  Bullet(double x, double y, double xVel, double yVel, this.ownerId) : super(x, y, xVel, yVel){
+  Bullet(double x, double y, double xVel, double yVel, this.ownerId)
+      : super(x, y, xVel, yVel) {
     xStart = x;
     yStart = y;
   }

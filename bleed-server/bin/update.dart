@@ -11,6 +11,7 @@ import 'utils.dart';
 void initUpdateLoop() {
   periodic(fixedUpdate, ms: 1000 ~/ 30);
   periodic(jobNpcWander, seconds: 3);
+  periodic(jobRemoveDisconnectedPlayers, seconds: 5);
   periodic(updateNpcTargets, ms: 500);
 }
 

@@ -22,16 +22,12 @@ Npc spawnRandomNpc() {
       randomBetween(-spawnRadius, spawnRadius));
 }
 
-Character spawnPlayer({required String name}){
-  Character player = Character(
+Player spawnPlayer({required String name}){
+  Player player = Player(
       id: _generateId(),
       uuid: _generateUUID(),
       x: giveOrTake(50),
       y: giveOrTake(50),
-      weapon: Weapon.HandGun,
-      health: 5,
-      maxHealth: 5,
-      speed: playerSpeed,
       name: name
   );
   players.add(player);

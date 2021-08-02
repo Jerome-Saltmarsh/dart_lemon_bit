@@ -67,9 +67,9 @@ Npc findNpcById(int id) {
   });
 }
 
-Character? findPlayerById(int id) {
-  for (Character character in players) {
-    if (character.id == id) return character;
+Player? findPlayerById(int id) {
+  for (Player player in players) {
+    if (player.id == id) return player;
   }
   return null;
 }

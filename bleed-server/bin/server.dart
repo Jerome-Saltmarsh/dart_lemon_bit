@@ -32,8 +32,8 @@ void main() {
     }
 
     void handleRequestSpawn() {
-      var character = spawnPlayer(name: "Test");
-      String response = "id: ${character.id} ${character.uuid} ;";
+      var player = spawnPlayer(name: "Test");
+      String response = "id: ${player.id} ${player.uuid} ;";
       sendToClient(response);
       return;
     }
@@ -44,7 +44,7 @@ void main() {
       if (request.startsWith("u:")) {
         List<String> attributes = request.split(" ");
         int id = int.parse(attributes[1]);
-        Character? player = findPlayerById(id);
+        Player? player = findPlayerById(id);
         if (player == null) {
           sendToClient('player-not-found');
           return;
