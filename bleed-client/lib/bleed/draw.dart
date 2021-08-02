@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:flutter_game_engine/bleed/enums.dart';
 import 'package:flutter_game_engine/bleed/rects.dart';
 import 'package:flutter_game_engine/game_engine/engine_draw.dart';
 import 'package:flutter_game_engine/game_engine/engine_state.dart';
@@ -43,6 +44,39 @@ void drawCharacterList(List<dynamic> characters) {
       null,
       null,
       globalPaint);
+}
+
+void drawTileList(){
+  processTileTransforms();
+  if(tileRects.isEmpty){
+    processRects();
+  }
+  globalCanvas.drawAtlas(
+      imageTiles,
+      tileTransforms,
+      tileRects,
+      null,
+      null,
+      null,
+      globalPaint);
+}
+
+void processTileTransforms(){
+  tileTransforms.clear();
+  for(int x = 0; x < tiles.length; x++){
+    for(int y = 0; y < tiles[0].length; y++){
+      tileTransforms.add(getTileTransform(x, y));
+    }
+  }
+}
+
+List<Rect> processRects(){
+  tileRects.clear();
+  for(int x = 0; x < tiles.length; x++){
+    for(int y = 0; y < tiles[0].length; y++){
+      tileRects.add(getTileSpriteRect(tiles[x][y]));
+    }
+  }
 }
 
 void drawPlayers() {
@@ -164,6 +198,26 @@ Rect getHumanAimRect(dynamic character) {
       return rectHumanAimingUpLeft;
   }
   throw Exception("Could not get character dead sprite rect");
+}
+
+Rect tileRectConcrete = getTileSpriteRectByIndex(0);
+Rect tileRectGrass = getTileSpriteRectByIndex(1);
+
+Rect getTileSpriteRectByIndex(int index) {
+  return rectByIndex(index, tileCanvasWidth.toDouble(), tileCanvasHeight.toDouble());
+}
+
+Rect rectByIndex(int index, double frameWidth, double height){
+  return Rect.fromLTWH(index * frameWidth, 0.0, frameWidth, height);
+}
+
+Rect getTileSpriteRect(Tile tile){
+  switch(tile){
+    case Tile.Concrete:
+      return tileRectConcrete;
+    case Tile.Grass:
+      return tileRectGrass;
+  }
 }
 
 Rect getCharacterSpriteRect(dynamic character) {
@@ -419,14 +473,15 @@ RSTransform getCharacterTransform(dynamic character) {
   );
 }
 
-RSTransform getTileTransform(dynamic tile) {
+
+RSTransform getTileTransform(int x, int y) {
   return RSTransform.fromComponents(
     rotation: 0.0,
     scale: 1.0,
-    anchorX: halfHumanSpriteFrameWidth,
-    anchorY: halfHumanSpriteFrameHeight,
-    translateX: tile[x] - cameraX,
-    translateY: tile[y] - cameraY,
+    anchorX: halfTileSize,
+    anchorY: 74,
+    translateX: (-y * halfTileSize) + (x * halfTileSize) - cameraX,
+    translateY: (y * halfTileSize) + (x * halfTileSize) - cameraY,
   );
 }
 
@@ -461,22 +516,22 @@ void drawTiles() {
   if (tileGrass01 == null) return;
   if (imageTiles == null) return;
   if (tiles == null || tiles.isEmpty) return;
-
-  double size = tileGrass01.width * 1.0;
-  double halfSize = size * 0.5;
-
-  for (int x = 0; x < tiles.length; x++) {
-    for(int y = 0; y < tiles[0].length; y++){
-      double xCoord = (-y * halfSize) + (x * halfSize);
-      double yCoord = (y * halfSize) + (x * halfSize);
-      drawGrassTile(xCoord, yCoord);
-    }
-  }
-  return;
+  drawTileList();
+  // double size = tileGrass01.width * 1.0;
+  // double halfSize = size * 0.5;
+  //
+  // for (int x = 0; x < tiles.length; x++) {
+  //   for(int y = 0; y < tiles[0].length; y++){
+  //     double xCoord = (-y * halfSize) + (x * halfSize);
+  //     double yCoord = (y * halfSize) + (x * halfSize);
+  //     drawGrassTile(xCoord, yCoord);
+  //   }
+  // }
+  // return;
 }
 
 void drawTile(int x, int y){
-  drawGrassTile((tileWidth * (tilesX - x).toDouble()), (tileHeight * x).toDouble());
+  drawGrassTile((tileCanvasWidth * (tilesX - x).toDouble()), (tileCanvasHeight * x).toDouble());
 }
 
 void drawGrassTile(double x, double y) {

@@ -56,3 +56,6 @@ bool fourthPass = true;
 int tilesX = 0;
 int tilesY = 0;
 List<List<Tile>> tiles = [];
+
+List<RSTransform> tileTransforms = [];
+List<Rect> tileRects = [];
