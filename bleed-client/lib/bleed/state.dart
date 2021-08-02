@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_game_engine/bleed/enums.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'common.dart';
@@ -50,3 +51,8 @@ bool firstPass = true;
 bool secondPass = true;
 bool thirdPass = true;
 bool fourthPass = true;
+
+
+int tilesX = 0;
+int tilesY = 0;
+List<List<Tile>> tiles = [];

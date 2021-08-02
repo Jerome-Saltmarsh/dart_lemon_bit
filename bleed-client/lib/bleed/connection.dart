@@ -1,3 +1,4 @@
+import 'package:flutter_game_engine/bleed/send.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -20,7 +21,11 @@ void onEvent(dynamic response) {
   previousEvent = now;
   packagesReceived++;
   event = response;
-  parseState();
+  try {
+    parseState();
+  }catch(error){
+    print(error);
+  }
   redrawGame();
 }
 
@@ -34,7 +39,9 @@ void connect() {
     attempts = 0;
     connected = true;
     respawnRequestSent = false;
+    sendRequestTiles();
   } catch (error) {
+    print(error);
     errors++;
     if (attempts > 10) return;
     Future.delayed(Duration(seconds: 1), connect);

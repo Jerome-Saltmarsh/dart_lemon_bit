@@ -1,7 +1,9 @@
 import 'package:uuid/uuid.dart';
 
 import 'classes.dart';
+import 'enums.dart';
 
+List<List<Tile>> tiles = [];
 int frame = 0;
 List<Npc> npcs = [];
 List<Player> players = [];

@@ -3,6 +3,7 @@ import 'package:flutter_game_engine/bleed/keys.dart';
 import 'package:flutter_game_engine/bleed/state.dart';
 
 import 'constants.dart';
+import 'enums.dart';
 import 'send.dart';
 
 final List _cache = [];
@@ -11,10 +12,12 @@ String get _text => event;
 int _index = 0;
 
 int get cacheSize => _cache.length;
+
 String get currentCharacter => _text[_index];
 
 void parseState() {
   _index = 0;
+  event = event.trim();
   while (_index < _text.length) {
     String term = _consumeString();
     if (term == "p:") {
@@ -25,7 +28,7 @@ void parseState() {
       _parseBullets();
     } else if (term == "n:") {
       _parseNpcs();
-    } else if (term == "fms:"){
+    } else if (term == "fms:") {
       _parseFrameMS();
     } else if (term == 'player-not-found') {
       print('server error: player-not-found');
@@ -33,31 +36,50 @@ void parseState() {
       if (respawnRequestSent) return;
       sendRequestSpawn();
       respawnRequestSent = true;
-    } else if (term == 'invalid--uuid'){
+    } else if (term == 'invalid--uuid') {
       print("invalid uuid");
-    } else if (term == 'player:'){
+    } else if (term == 'player:') {
       _parsePlayer();
-    } else if (term == 'passes:'){
+    } else if (term == 'passes:') {
       _parsePasses();
+    } else if (term == 'tiles:') {
+      _parseTiles();
+    } else {
+      throw Exception("term not found: $term");
     }
   }
 }
 
+void _parseTiles() {
+  print('parseTiles()');
+  tilesX = _consumeInt();
+  tilesY = _consumeInt();
+  tiles.clear();
+  for (int x = 0; x < tilesX; x++) {
+    List<Tile> column = [];
+    tiles.add(column);
+    for (int y = 0; y < tilesY; y++) {
+      column.add(Tile.values[_consumeInt()]);
+    }
+  }
+  _consumeSemiColon();
+}
 
-void _parsePlayer(){
+void _parsePlayer() {
   playerHealth = _consumeDouble();
   playerMaxHealth = _consumeDouble();
   _consumeSemiColon();
 }
 
-void _parsePasses(){
+void _parsePasses() {
   firstPass = _consumeBool();
   secondPass = _consumeBool();
   thirdPass = _consumeBool();
   fourthPass = _consumeBool();
+  _consumeSemiColon();
 }
 
-void _parseFrameMS(){
+void _parseFrameMS() {
   serverFramesMS = _consumeInt();
   _consumeSemiColon();
 }
@@ -68,7 +90,7 @@ void _parsePlayerId() {
   _consumeSemiColon();
 }
 
-void _next(){
+void _next() {
   _index++;
 }
 
@@ -82,11 +104,11 @@ int _consumeInt() {
   return parseInt(_consumeString());
 }
 
-int parseInt(String value){
+int parseInt(String value) {
   return int.parse(value);
 }
 
-bool _consumeBool(){
+bool _consumeBool() {
   return _consumeString() == 'true';
 }
 

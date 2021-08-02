@@ -1,7 +1,5 @@
 # TODO
 [ ] Persist World on firebase
-[ ] Sprint
-[ ] Ammo
 [ ] Reload
 [ ] Sniper Rifle
 [ ] Oozie
@@ -9,10 +7,13 @@
 [ ] Weapon Shotgun
 [ ] Shot Animation
 [ ] Bullet Hit Animation
-[ ] Shot Sound
 [ ] Shot kickback
 [ ] spawn shell on fire bullet
-[ ] Optimize Server
+[ ] Optimize Server Collision Detection
+[ ] Sprint
+[ ] Ammo
+[ ] Fix Sound
+[ ] Design Town Center
 [x] Player respawn after death
 [x] Players disappear after prolonged disconnect
 [x] Animate fire weapon

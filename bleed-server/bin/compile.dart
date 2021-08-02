@@ -12,6 +12,23 @@ void compileState(){
   compiledState = buffer.toString();
 }
 
+String compileTiles(){
+  StringBuffer buffer = StringBuffer();
+  buffer.write("tiles: ");
+  buffer.write(tiles.length);
+  buffer.write(" ");
+  buffer.write(tiles[0].length);
+  buffer.write(" ");
+  for(int x = 0; x < tiles.length; x++){
+    for(int y = 0; y < tiles[0].length; y++){
+      buffer.write(tiles[x][y].index);
+      buffer.write(" ");
+    }
+  }
+  buffer.write("; ");
+  return buffer.toString();
+}
+
 String compilePlayer(Character character){
   StringBuffer buffer = StringBuffer();
   buffer.write("player: ");

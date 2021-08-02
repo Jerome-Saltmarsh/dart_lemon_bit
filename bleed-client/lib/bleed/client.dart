@@ -15,8 +15,6 @@ import 'ui.dart';
 
 class BleedClient extends GameWidget {
 
-
-
   @override
   bool uiVisible() => true;
 
@@ -54,7 +52,6 @@ class BleedClient extends GameWidget {
       drawFrame++;
     }
 
-    drawMouse();
     drawTiles();
     double health = playerHealth / playerMaxHealth;
     double halfMaxHealth = playerMaxHealth * 0.5;
@@ -68,5 +65,6 @@ class BleedClient extends GameWidget {
 
     drawBullets();
     drawCharacters();
+    drawMouse();
   }
 }

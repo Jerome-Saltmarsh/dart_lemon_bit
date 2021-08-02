@@ -1,6 +1,7 @@
 import 'classes.dart';
 import 'common.dart';
 import 'compile.dart';
+import 'enums.dart';
 import 'jobs.dart';
 import 'language.dart';
 import 'maths.dart';

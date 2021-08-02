@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:flutter_game_engine/bleed/rects.dart';
 import 'package:flutter_game_engine/game_engine/engine_draw.dart';
 import 'package:flutter_game_engine/game_engine/engine_state.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
@@ -418,6 +419,17 @@ RSTransform getCharacterTransform(dynamic character) {
   );
 }
 
+RSTransform getTileTransform(dynamic tile) {
+  return RSTransform.fromComponents(
+    rotation: 0.0,
+    scale: 1.0,
+    anchorX: halfHumanSpriteFrameWidth,
+    anchorY: halfHumanSpriteFrameHeight,
+    translateX: tile[x] - cameraX,
+    translateY: tile[y] - cameraY,
+  );
+}
+
 void drawCircleOutline(
     {int sides = 16, double radius, double x, double y, Color color}) {
   double r = (pi * 2) / sides;
@@ -447,18 +459,24 @@ void drawMouse() {
 
 void drawTiles() {
   if (tileGrass01 == null) return;
+  if (imageTiles == null) return;
+  if (tiles == null || tiles.isEmpty) return;
 
   double size = tileGrass01.width * 1.0;
-  double sizeH = size * 0.5;
+  double halfSize = size * 0.5;
 
-  int tiles = 5;
-
-  for (int x = 0; x < tiles; x++) {
-    drawGrassTile((sizeH * (5 - x)), (sizeH * x));
+  for (int x = 0; x < tiles.length; x++) {
+    for(int y = 0; y < tiles[0].length; y++){
+      double xCoord = (-y * halfSize) + (x * halfSize);
+      double yCoord = (y * halfSize) + (x * halfSize);
+      drawGrassTile(xCoord, yCoord);
+    }
   }
-
   return;
+}
 
+void drawTile(int x, int y){
+  drawGrassTile((tileWidth * (tilesX - x).toDouble()), (tileHeight * x).toDouble());
 }
 
 void drawGrassTile(double x, double y) {

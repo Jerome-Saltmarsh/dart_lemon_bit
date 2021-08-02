@@ -6,6 +6,7 @@ import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'classes.dart';
 import 'compile.dart';
 import 'constants.dart';
+import 'enums.dart';
 import 'events.dart';
 import 'maths.dart';
 import 'settings.dart';
@@ -16,6 +17,7 @@ import 'utils.dart';
 
 void main() {
   print('starting web socket server');
+  generateTiles();
   initUpdateLoop();
   initEvents();
 
@@ -133,6 +135,9 @@ void main() {
       }
       if (request == 'toggle-pass-4'){
         fourthPass = !fourthPass;
+      }
+      if (request == 'get-tiles'){
+        sendToClient(compileTiles()) ;
       }
     }
 

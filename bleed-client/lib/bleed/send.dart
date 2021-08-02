@@ -5,6 +5,10 @@ import 'state.dart';
 
 StringBuffer _buffer = StringBuffer();
 
+void sendRequestTiles(){
+  sendToServer('get-tiles');
+}
+
 void sendTogglePass1(){
   sendToServer('toggle-pass-1');
 }

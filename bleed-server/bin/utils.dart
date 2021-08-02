@@ -1,6 +1,7 @@
 import 'classes.dart';
 import 'common.dart';
 import 'constants.dart';
+import 'enums.dart';
 import 'events.dart';
 import 'maths.dart';
 import 'settings.dart';
@@ -186,10 +187,23 @@ Direction convertAngleToDirection(double angle) {
   return Direction.Up;
 }
 
-void revive(Character character){
+void revive(Character character) {
   print('revive(${character.id})');
   character.state = CharacterState.Idle;
   character.health = character.maxHealth;
   character.x = giveOrTake(settingsPlayerStartRadius);
   character.y = giveOrTake(settingsPlayerStartRadius);
+}
+
+void generateTiles() {
+  tiles.clear();
+  for (int x = 0; x < 9; x++) {
+    List<Tile> column = [];
+    tiles.add(column);
+    for (int y = 0; y < 9; y++) {
+      column.add(Tile.Concrete);
+    }
+  }
+  tiles[4][4] = Tile.Grass;
+  tiles[4][5] = Tile.Grass;
 }
