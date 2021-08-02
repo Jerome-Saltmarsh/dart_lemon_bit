@@ -185,3 +185,11 @@ Direction convertAngleToDirection(double angle) {
   }
   return Direction.Up;
 }
+
+void revive(Character character){
+  print('revive(${character.id})');
+  character.state = CharacterState.Idle;
+  character.health = character.maxHealth;
+  character.x = giveOrTake(settingsPlayerStartRadius);
+  character.y = giveOrTake(settingsPlayerStartRadius);
+}

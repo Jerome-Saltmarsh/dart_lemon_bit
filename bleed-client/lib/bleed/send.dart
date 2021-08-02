@@ -21,6 +21,11 @@ void sendTogglePass4(){
   sendToServer('toggle-pass-4');
 }
 
+void sendRequestRevive(){
+  print('sendRequestRevive()');
+  sendToServer('revive: $playerId $playerUUID');
+}
+
 void sendCommandEquipHandGun() {
   sendCommandEquip(weaponHandgun);
 }

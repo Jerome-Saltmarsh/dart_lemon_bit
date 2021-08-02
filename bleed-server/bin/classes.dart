@@ -107,6 +107,7 @@ class Npc extends Character {
 
 class Player extends Character {
   final String uuid;
+  int lastEventFrame = 0;
 
   Player({
     required this.uuid,

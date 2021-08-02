@@ -7,6 +7,7 @@ import 'classes.dart';
 import 'compile.dart';
 import 'constants.dart';
 import 'events.dart';
+import 'maths.dart';
 import 'settings.dart';
 import 'spawn.dart';
 import 'state.dart';
@@ -52,7 +53,9 @@ void main() {
         String uuid = attributes[2];
         if (uuid != player.uuid) {
           sendToClient('invalid-uuid');
+          return;
         }
+        player.lastEventFrame = frame;
         CharacterState requestedState =
             CharacterState.values[int.parse(attributes[3])];
         Direction requestedDirection =
@@ -76,12 +79,29 @@ void main() {
         if(fourthPass){
           Future.delayed(Duration(milliseconds: fourthPassMS), () => sendCompiledPlayerState(player));
         }
-
-        // Future.delayed(duration30ms, sendCompiledState);
-        // Future.delayed(duration45ms, sendCompiledState);
-        // Future.delayed(duration90ms, sendCompiledState);
         return;
       }
+      if (request.startsWith('revive:')){
+        List<String> attributes = request.split(" ");
+        int id = int.parse(attributes[1]);
+        Player? player = findPlayerById(id);
+        if (player == null) {
+          sendToClient('player-not-found');
+          return;
+        }
+        String uuid = attributes[2];
+        if (uuid != player.uuid) {
+          print('invalid-uuid');
+          sendToClient('invalid-uuid');
+          return;
+        }
+        if (player.alive) {
+          sendToClient('player-alive');
+          return;
+        }
+        revive(player);
+      }
+
       if (request == "spawn") {
         print("received spawn request");
         handleRequestSpawn();

@@ -13,7 +13,8 @@
 [ ] Shot kickback
 [ ] spawn shell on fire bullet
 [ ] Optimize Server
-[ ] Player respawn after death
+[x] Player respawn after death
+[x] Players disappear after prolonged disconnect
 [x] Animate fire weapon
 [x] Player Auto aim when cursor near zombie
 [x] Fix Npc Roaming

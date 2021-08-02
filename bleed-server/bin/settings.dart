@@ -19,3 +19,5 @@ const int compilePositionDecimals = 0;
 const Duration npcDeathVanishDuration = Duration(seconds: 5);
 const double settingsNpcRoamRange = 50;
 const double settingsPlayerStartHealth = 5;
+const int settingsPlayerDisconnectFrames = 300;
+const double settingsPlayerStartRadius = 50;

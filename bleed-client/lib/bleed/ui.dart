@@ -16,9 +16,9 @@ Widget text(String value, { fontSize = 18}) {
   return Text(value, style: TextStyle(color: Colors.white, fontSize: fontSize));
 }
 
-Widget button(String value, Function onPressed) {
+Widget button(String value, Function onPressed, { fontSize = 18 }) {
   return OutlinedButton(
-    child: Text(value, style: TextStyle(color: Colors.white)),
+    child: Text(value, style: TextStyle(color: Colors.white, fontSize: fontSize)),
     style: OutlinedButton.styleFrom(
       side: BorderSide(color: Colors.white, width: 2),
       shape: const RoundedRectangleBorder(
@@ -81,6 +81,15 @@ Widget buildDebugUI(BuildContext context){
       height: size.height,
       alignment: Alignment.center,
       child: Container(child: text("Reconnecting...", fontSize: 30)),
+    );
+  }
+  dynamic player = getPlayerCharacter();
+  if (player != null && isDead(player)){
+    return Container(
+      width: size.width,
+      height: size.height,
+      alignment: Alignment.center,
+      child: button("Revive", sendRequestRevive, fontSize: 30),
     );
   }
 

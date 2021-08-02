@@ -1,5 +1,6 @@
 import 'classes.dart';
 import 'maths.dart';
+import 'settings.dart';
 import 'state.dart';
 import 'utils.dart';
 
@@ -13,6 +14,11 @@ void jobNpcWander() {
 }
 
 void jobRemoveDisconnectedPlayers(){
-  for(int i = 0; i < players.length; i++){
+  for (int i = 0; i < players.length; i++){
+    if (frame - players[i].lastEventFrame > settingsPlayerDisconnectFrames){
+      print('Removing disconnected player ${players[i].id}');
+      players.removeAt(i);
+      i--;
+    }
   }
 }
