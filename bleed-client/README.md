@@ -13,6 +13,8 @@
 [ ] Shot kickback
 [ ] Optimize Server
 [ ] Player respawn after death
+[ ] Player Auto aim when cursor near zombie
+[x] Fix Npc Roaming
 [x] Zombies disappear after death
 [x] Show Health UI
 [x] Zombie Attack

@@ -17,3 +17,4 @@ const int pistolCoolDown = 8;
 const int shotgunCoolDown = 20;
 const int compilePositionDecimals = 0;
 const Duration npcDeathVanishDuration = Duration(seconds: 5);
+const double settingsNpcRoamRange = 50;

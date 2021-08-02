@@ -77,7 +77,7 @@ class Npc extends Character {
     name: "Npc"
   );
   get targetSet => targetId != -1;
-  get destinationSet => xDes == 0;
+  get destinationSet => xDes != 0;
 
   void clearTarget(){
     targetId = -1;

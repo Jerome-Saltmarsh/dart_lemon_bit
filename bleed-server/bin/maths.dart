@@ -9,6 +9,10 @@ double randomBetween(num a, num b){
   return (random.nextDouble() * (b - a)) + a;
 }
 
+bool randomBool(){
+  return random.nextDouble() > 0.5;
+}
+
 double giveOrTake(double value){
   return randomBetween(-value, value);
 }

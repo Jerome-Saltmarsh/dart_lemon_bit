@@ -1,16 +1,17 @@
 import 'classes.dart';
 import 'common.dart';
 import 'compile.dart';
+import 'jobs.dart';
+import 'language.dart';
 import 'maths.dart';
 import 'settings.dart';
 import 'state.dart';
 import 'utils.dart';
 
 void initUpdateLoop() {
-  createJob(fixedUpdate, ms: 1000 ~/ 30);
-  createJob(npcWanderJob, seconds: 10);
-  // createJob(deleteDeadAndExpiredCharacters, seconds: 6);
-  createJob(updateNpcTargets, ms: 500);
+  periodic(fixedUpdate, ms: 1000 ~/ 30);
+  periodic(jobNpcWander, seconds: 3);
+  periodic(updateNpcTargets, ms: 500);
 }
 
 void updateNpcTargets() {
@@ -28,31 +29,6 @@ void updateNpcTarget(Npc npc){
     return;
   }
 }
-
-
-// void deleteDeadAndExpiredCharacters() {
-//   for (int i = 0; i < characters.length; i++) {
-//     dynamic character = characters[i];
-//     dynamic characterPrivate = getCharacterPrivate(character);
-//
-//     if (isHuman(characterPrivate) && connectionExpired(character)) {
-//       removeCharacter(character);
-//       i--;
-//       continue;
-//     }
-//     if (isDead(character)) {
-//       if (frame - character[keyFrameOfDeath] > 120) {
-//         if (isNpc(characterPrivate)) {
-//           removeCharacter(character);
-//           i--;
-//         } else {
-//           setCharacterStateIdle(character);
-//           setPosition(character, x: 0, y: 0);
-//         }
-//       }
-//     }
-//   }
-// }
 
 void updateBullets() {
   for (int i = 0; i < bullets.length; i++) {

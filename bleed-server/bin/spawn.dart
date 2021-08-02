@@ -1,4 +1,5 @@
 import 'classes.dart';
+import 'events.dart';
 import 'maths.dart';
 import 'settings.dart';
 import 'state.dart';
@@ -12,6 +13,7 @@ void spawnBullet(Character character) {
 Npc spawnNpc(double x, double y) {
   Npc npc = Npc(x: x, y: y, id: _generateId(), health: 5, maxHealth: 5);
   npcs.add(npc);
+  onNpcSpawned.add(npc);
   return npc;
 }
 

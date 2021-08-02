@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'classes.dart';
 import 'common.dart';
 import 'constants.dart';
@@ -8,7 +6,6 @@ import 'maths.dart';
 import 'settings.dart';
 import 'spawn.dart';
 import 'state.dart';
-import 'update.dart';
 
 double bulletDistanceTravelled(Bullet bullet) {
   return distance(bullet.x, bullet.y, bullet.xStart, bullet.yStart);
@@ -78,8 +75,8 @@ Character? findPlayerById(int id) {
 }
 
 void npcSetRandomDestination(Npc npc) {
-  npc.xDes = randomBetween(-100, 100);
-  npc.yDes = randomBetween(-100, 100);
+  npc.xDes = npc.x + giveOrTake(settingsNpcRoamRange);
+  npc.yDes = npc.y + giveOrTake(settingsNpcRoamRange);
 }
 
 bool arrivedAtDestination(Npc npc) {
@@ -128,16 +125,6 @@ void characterFaceObject(Character character, GameObject target) {
   characterFace(character, target.x, target.y);
 }
 
-void createJob(Function function, {int seconds = 0, int ms = 0}) {
-  Timer.periodic(Duration(seconds: seconds, milliseconds: ms), (timer) {
-    function();
-  });
-}
-
-double round(double value, {int decimals = 1}) {
-  return double.parse(value.toStringAsFixed(decimals));
-}
-
 double getShotAngle(Character character) {
   return character.aimAngle + giveOrTake(character.accuracy * 0.5);
 }
@@ -164,14 +151,6 @@ void fireWeapon(Character character) {
       character.fire();
       character.shotCoolDown = shotgunCoolDown;
       break;
-  }
-}
-
-void npcWanderJob() {
-  for (Npc npc in npcs) {
-    if (npc.targetSet) continue;
-    if (npc.destinationSet) continue;
-    npcSetRandomDestination(npc);
   }
 }
 
