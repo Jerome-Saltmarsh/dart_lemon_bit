@@ -1,4 +1,5 @@
 import 'package:flutter/services.dart';
+import 'package:flutter_game_engine/bleed/maths.dart';
 import 'package:flutter_game_engine/game_engine/engine_state.dart';
 import 'package:flutter_game_engine/game_engine/game_input.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
@@ -38,15 +39,22 @@ void readPlayerInput() {
   if (mouseAvailable) {
     requestAim = getMouseRotation();
   }
-  if (mouseClicked || keyPressedF) {
+  if (mouseClicked || keyPressedF || keyPressedSpace) {
     requestCharacterState = characterStateFiring;
-  } else if (keyAimPressed) {
-    requestCharacterState = characterStateAiming;
-    requestDirection = convertAngleToDirection(requestAim);
   } else {
     requestDirection = getKeyDirection();
     if (requestDirection == directionNone) {
       requestCharacterState = characterStateIdle;
+      if (mouseAvailable) {
+        double mouseWorldX = mousePosX + cameraX;
+        double mouseWorldY = mousePosY + cameraY;
+        for (dynamic npc in npcs) {
+          if (distance(npc[x], npc[y], mouseWorldX, mouseWorldY) > playerAutoAimDistance) continue;
+          requestCharacterState = characterStateAiming;
+          requestDirection = convertAngleToDirection(requestAim);
+          break;
+        }
+      }
     } else {
       requestCharacterState = characterStateWalking;
     }

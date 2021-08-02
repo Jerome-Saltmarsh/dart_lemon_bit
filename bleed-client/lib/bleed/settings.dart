@@ -1,3 +1,4 @@
+const double playerAutoAimDistance = 40;
 const double cameraSpeed = 2;
 const double cameraFollow = 0.02;
 const int fps = 30;

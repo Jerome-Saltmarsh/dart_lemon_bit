@@ -11,9 +11,11 @@
 [ ] Bullet Hit Animation
 [ ] Shot Sound
 [ ] Shot kickback
+[ ] spawn shell on fire bullet
 [ ] Optimize Server
 [ ] Player respawn after death
-[ ] Player Auto aim when cursor near zombie
+[x] Animate fire weapon
+[x] Player Auto aim when cursor near zombie
 [x] Fix Npc Roaming
 [x] Zombies disappear after death
 [x] Show Health UI
@@ -55,8 +57,16 @@
 [x] Deploy Server on GCP
 [x] Isometric characters
 
-#Ideas
-Auto aim: The player doesn't have to hold to aim, rather it reduces automatically
-When the player fires it gets larger. Standing still causes the focus to go faster than running
 
 
+
+
+#Attributes
+- sprint duration
+- bag size
+- reload speed
+- accuracy
+- luck (critical damage chance)
+- merchant (item cost)
+- health regen
+- max health
