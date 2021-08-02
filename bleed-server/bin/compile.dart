@@ -40,6 +40,10 @@ String compilePlayer(Character character){
   return buffer.toString();
 }
 
+String compilePass(int value){
+  return 'pass: $value ; ';
+}
+
 void _compileFPS(){
    buffer.write("fms: ${ frameDuration.inMilliseconds } ;");
 }

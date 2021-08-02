@@ -1,5 +1,5 @@
-name: flutter_game_engine
-description: A 2D Game Engine for Flutter
+name: bleedclient
+description: A client for the game BLEED
 
 version: 1.0.0+1
 
@@ -16,7 +16,6 @@ dependencies:
   shelf_web_socket: ^1.0.1
   shelf_router: ^1.1.0
   howler: ^1.1.2
-  archive: ^3.1.2
 
 flutter:
   uses-material-design: true

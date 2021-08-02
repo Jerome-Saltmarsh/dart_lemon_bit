@@ -30,8 +30,8 @@ void main() {
       sendToClient(compiledState);
     }
 
-    void sendCompiledPlayerState(Character player){
-      sendToClient(compilePlayer(player));
+    void sendCompiledPlayerState(Character player, { int pass = 1 }){
+      sendToClient(compilePlayer(player) + compilePass(pass));
     }
 
     void handleRequestSpawn() {
@@ -49,12 +49,12 @@ void main() {
         int id = int.parse(attributes[1]);
         Player? player = findPlayerById(id);
         if (player == null) {
-          sendToClient('player-not-found');
+          sendToClient('player-not-found ; ');
           return;
         }
         String uuid = attributes[2];
         if (uuid != player.uuid) {
-          sendToClient('invalid-uuid');
+          sendToClient('invalid-uuid ; ');
           return;
         }
         player.lastEventFrame = frame;
@@ -67,19 +67,19 @@ void main() {
         setDirection(player, requestedDirection);
         setCharacterState(player, requestedState);
         // sendCompiledState();
-        sendCompiledPlayerState(player);
+        sendCompiledPlayerState(player, pass: 0);
 
         if(firstPass){
-          Future.delayed(Duration(milliseconds: firstPassMS), () => sendCompiledPlayerState(player));
+          Future.delayed(Duration(milliseconds: firstPassMS), () => sendCompiledPlayerState(player, pass: 1));
         }
         if(secondPass){
-          Future.delayed(Duration(milliseconds: secondPassMS), () => sendCompiledPlayerState(player));
+          Future.delayed(Duration(milliseconds: secondPassMS), () => sendCompiledPlayerState(player, pass: 2));
         }
         if(thirdPass){
-          Future.delayed(Duration(milliseconds: thirdPassMS), () => sendCompiledPlayerState(player));
+          Future.delayed(Duration(milliseconds: thirdPassMS), () => sendCompiledPlayerState(player, pass: 3));
         }
         if(fourthPass){
-          Future.delayed(Duration(milliseconds: fourthPassMS), () => sendCompiledPlayerState(player));
+          Future.delayed(Duration(milliseconds: fourthPassMS), () => sendCompiledPlayerState(player, pass: 4));
         }
         return;
       }
@@ -88,24 +88,22 @@ void main() {
         int id = int.parse(attributes[1]);
         Player? player = findPlayerById(id);
         if (player == null) {
-          sendToClient('player-not-found');
+          sendToClient('player-not-found ; ');
           return;
         }
         String uuid = attributes[2];
         if (uuid != player.uuid) {
-          print('invalid-uuid');
-          sendToClient('invalid-uuid');
+          sendToClient('invalid-uuid ; ');
           return;
         }
         if (player.alive) {
-          sendToClient('player-alive');
+          sendToClient('player-alive ;');
           return;
         }
         revive(player);
       }
 
       if (request == "spawn") {
-        print("received spawn request");
         handleRequestSpawn();
         return;
       }

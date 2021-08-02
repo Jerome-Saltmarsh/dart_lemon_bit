@@ -84,12 +84,21 @@ Widget buildDebugUI(BuildContext context){
     );
   }
   dynamic player = getPlayerCharacter();
-  if (player != null && isDead(player)){
+  if (player != null){
+    if(isDead(player)) {
+      return Container(
+        width: size.width,
+        height: size.height,
+        alignment: Alignment.center,
+        child: button("Revive", sendRequestRevive, fontSize: 40),
+      );
+    }
+  }else{
     return Container(
       width: size.width,
       height: size.height,
       alignment: Alignment.center,
-      child: button("Revive", sendRequestRevive, fontSize: 30),
+      child: button("Spawn", sendRequestSpawn, fontSize: 40),
     );
   }
 
@@ -101,6 +110,8 @@ Widget buildDebugUI(BuildContext context){
       button("Respawn", sendRequestSpawn),
       button("Spawn NPC", sendRequestSpawnNpc),
       button("Clear NPCS", sendRequestClearNpcs),
+      text("Ping: ${ping.inMilliseconds}"),
+      text("Pass: $pass"),
       text("Player Id: $playerId"),
       text("Player Health: $playerHealth / $playerMaxHealth"),
       text("Date Size: ${event.length}"),

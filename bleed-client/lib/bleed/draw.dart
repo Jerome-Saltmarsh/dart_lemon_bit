@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_game_engine/bleed/enums.dart';
 import 'package:flutter_game_engine/bleed/rects.dart';
 import 'package:flutter_game_engine/game_engine/engine_draw.dart';
@@ -21,12 +22,6 @@ void drawCharacterCircle(dynamic value, Color color) {
 
 void drawCharacters() {
   if (imageHuman == null) return;
-  // players.sort((a, b) => a[posY] > b[posY] ? 1 : -1);
-  // players.where(isDead).forEach((drawCharacter));
-  // players.where(isAlive).forEach((drawCharacter));
-  // npcs.sort((a, b) => a[posY] > b[posY] ? 1 : -1);
-  // npcs.where(isDead).forEach((drawCharacter));
-  // npcs.where(isAlive).forEach((drawCharacter));
   drawPlayers();
   drawNpcs();
 }
@@ -473,6 +468,17 @@ RSTransform getCharacterTransform(dynamic character) {
   );
 }
 
+void drawPlayerHealth() {
+  if(playerAssigned){
+    double health = playerHealth / playerMaxHealth;
+    double halfMaxHealth = playerMaxHealth * 0.5;
+    if(health > 0.5){
+      drawCharacterCircle(playerCharacter, Color.lerp(Colors.yellow, Colors.green, (playerHealth - halfMaxHealth) / halfMaxHealth));
+    }else{
+      drawCharacterCircle(playerCharacter, Color.lerp(Colors.red, Colors.yellow, playerHealth / halfMaxHealth));
+    }
+  }
+}
 
 RSTransform getTileTransform(int x, int y) {
   return RSTransform.fromComponents(

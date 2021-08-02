@@ -197,10 +197,10 @@ void revive(Character character) {
 
 void generateTiles() {
   tiles.clear();
-  for (int x = 0; x < 9; x++) {
+  for (int x = 0; x < tilesX; x++) {
     List<Tile> column = [];
     tiles.add(column);
-    for (int y = 0; y < 9; y++) {
+    for (int y = 0; y < tilesY; y++) {
       column.add(Tile.Concrete);
     }
   }

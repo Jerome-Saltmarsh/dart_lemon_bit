@@ -53,16 +53,7 @@ class BleedClient extends GameWidget {
     }
 
     drawTiles();
-    double health = playerHealth / playerMaxHealth;
-    double halfMaxHealth = playerMaxHealth * 0.5;
-
-    if(health > 0.5){
-      drawCharacterCircle(playerCharacter, Color.lerp(Colors.yellow, Colors.green, (playerHealth - halfMaxHealth) / halfMaxHealth));
-    }else{
-      drawCharacterCircle(playerCharacter, Color.lerp(Colors.red, Colors.yellow, playerHealth / halfMaxHealth));
-    }
-
-
+    drawPlayerHealth();
     drawBullets();
     drawCharacters();
     drawMouse();

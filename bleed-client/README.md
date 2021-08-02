@@ -13,7 +13,7 @@
 [ ] Sprint
 [ ] Ammo
 [ ] Fix Sound
-[ ] Design Town Center
+[x] Implement tiles on server
 [x] Player respawn after death
 [x] Players disappear after prolonged disconnect
 [x] Animate fire weapon
@@ -60,10 +60,10 @@
 [x] Isometric characters
 
 
+# IDEA
+Run send commands on a separate thread to the receive commands
 
-
-
-#Attributes
+# Attributes
 - sprint duration
 - bag size
 - reload speed

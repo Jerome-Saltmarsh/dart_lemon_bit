@@ -2,7 +2,6 @@ import 'package:flutter_game_engine/bleed/send.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import 'common.dart';
 import 'parse.dart';
 import 'settings.dart';
 import 'state.dart';

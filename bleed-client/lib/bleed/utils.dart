@@ -21,8 +21,10 @@ void playPistolAudio() {
 }
 
 double getMouseRotation() {
-  return round(getRadionsBetween(playerScreenPositionX(), playerScreenPositionY(), mousePosX, mousePosY));
+  return round(getRadionsBetween(
+      playerScreenPositionX(), playerScreenPositionY(), mousePosX, mousePosY));
 }
+
 double playerScreenPositionX() {
   dynamic player = getPlayerCharacter();
   return player[posX] - cameraX;
@@ -38,7 +40,7 @@ dynamic getPlayerCharacter() {
   return playerCharacter;
 }
 
-bool get playerAssigned =>     playerCharacter != null;
+bool get playerAssigned => playerCharacter != null;
 
 bool isNpc(dynamic character) {
   return character[keyType] == typeNpc;
@@ -52,12 +54,11 @@ bool isDead(dynamic character) {
   return getState(character) == characterStateDead;
 }
 
-
 void drawLine(double x1, double y1, double x2, double y2) {
   globalCanvas.drawLine(offset(x1, y1), offset(x2, y2), globalPaint);
 }
 
-Offset offset(double x, double y){
+Offset offset(double x, double y) {
   return Offset(x - cameraX, y - cameraY);
 }
 
@@ -70,8 +71,7 @@ void drawLineRotation(dynamic object, double rotation, double distance) {
       object[posX],
       object[posY],
       object[posX] + rotationToPosX(rotation, distance),
-      object[posY] + rotationToPosY(rotation, distance)
-  );
+      object[posY] + rotationToPosY(rotation, distance));
 }
 
 void drawLineBetween(dynamic a, dynamic b) {
@@ -90,15 +90,15 @@ dynamic rotationToPosY(double rotation, double distance) {
   return -sin(rotation + (pi * 0.5)) * distance;
 }
 
-bool idsMatch(dynamic a, dynamic b){
+bool idsMatch(dynamic a, dynamic b) {
   return a[indexId] == b[indexId];
 }
 
-int getState(dynamic character){
+int getState(dynamic character) {
   return character[state];
 }
 
-int getDirection(dynamic character){
+int getDirection(dynamic character) {
   return character[direction];
 }
 
@@ -109,7 +109,6 @@ bool isAlive(dynamic character) {
 double round(double value, {int decimals = 1}) {
   return double.parse(value.toStringAsFixed(decimals));
 }
-
 
 const double _eight = pi / 8.0;
 const double _quarter = pi / 4.0;

@@ -13,6 +13,7 @@ int frameRateValue = 0;
 int packagesSent = 0;
 int packagesReceived = 0;
 int errors = 0;
+int pass = 0;
 int dones = 0;
 int requestDirection = directionDown;
 int requestCharacterState = characterStateIdle;

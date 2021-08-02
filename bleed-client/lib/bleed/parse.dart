@@ -31,19 +31,19 @@ void parseState() {
     } else if (term == "fms:") {
       _parseFrameMS();
     } else if (term == 'player-not-found') {
-      print('server error: player-not-found');
       playerId = idNotConnected;
-      if (respawnRequestSent) return;
-      sendRequestSpawn();
-      respawnRequestSent = true;
+      _consumeSemiColon();
     } else if (term == 'invalid--uuid') {
-      print("invalid uuid");
+      _consumeSemiColon();
     } else if (term == 'player:') {
       _parsePlayer();
     } else if (term == 'passes:') {
       _parsePasses();
     } else if (term == 'tiles:') {
       _parseTiles();
+    } else if (term == "pass:"){
+      pass = _consumeInt();
+      _consumeSemiColon();
     } else {
       throw Exception("term not found: $term");
     }
