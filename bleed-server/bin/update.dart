@@ -75,20 +75,16 @@ void checkBulletCollision(List<Character> list){
   for(int i = 0; i < bullets.length; i++){
     Bullet bullet = bullets[i];
     for (int j = 0; j < list.length; j++) {
-      Character characters = list[j];
-      if (characters.dead) continue;
-      if (characters.id == bullet.ownerId) continue;
+      Character character = list[j];
+      if (character.dead) continue;
+      if (character.id == bullet.ownerId) continue;
       double dis = distanceBetween(list[j], bullet);
       if (dis < characterBulletRadius) {
         bullets.removeAt(i);
         i--;
-        characters.health--;
-        if (characters.health <= 0) {
-          characters.state = CharacterState.Dead;
-          characters.frameOfDeath = frame;
-        }
-        characters.xVel += bullet.xVel * 0.25;
-        characters.yVel += bullet.yVel * 0.25;
+        changeCharacterHealth(character, -1);
+        character.xVel += bullet.xVel * 0.25;
+        character.yVel += bullet.yVel * 0.25;
         break;
       }
     }

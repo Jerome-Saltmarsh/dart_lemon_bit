@@ -12,6 +12,8 @@
 [ ] Shot Sound
 [ ] Shot kickback
 [ ] Optimize Server
+[ ] Player respawn after death
+[x] Zombies disappear after death
 [x] Show Health UI
 [x] Zombie Attack
 [x] Security (UUID)

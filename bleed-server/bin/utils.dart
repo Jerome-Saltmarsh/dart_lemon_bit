@@ -3,6 +3,7 @@ import 'dart:async';
 import 'classes.dart';
 import 'common.dart';
 import 'constants.dart';
+import 'events.dart';
 import 'maths.dart';
 import 'settings.dart';
 import 'spawn.dart';
@@ -34,6 +35,7 @@ void changeCharacterHealth(Character character, double amount) {
   character.health = clamp(character.health, 0, character.maxHealth);
   if (character.health <= 0) {
     setCharacterState(character, CharacterState.Dead);
+    onDeath.add(character);
   }
 }
 

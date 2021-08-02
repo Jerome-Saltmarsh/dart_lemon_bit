@@ -6,6 +6,7 @@ import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'classes.dart';
 import 'compile.dart';
 import 'constants.dart';
+import 'events.dart';
 import 'settings.dart';
 import 'spawn.dart';
 import 'state.dart';
@@ -14,8 +15,8 @@ import 'utils.dart';
 
 void main() {
   print('starting web socket server');
-
   initUpdateLoop();
+  initEvents();
 
   var handler = webSocketHandler((webSocket) {
     void sendToClient(String response) {
