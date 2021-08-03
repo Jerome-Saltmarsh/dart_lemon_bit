@@ -68,7 +68,12 @@ void checkBulletCollision(List<Character> list) {
         character.xVel += bullet.xVel * 0.25;
         character.yVel += bullet.yVel * 0.25;
 
-        gameEvents.add(GameEvent(character.x, character.y, GameEventType.Zombie_Hit, 10));
+        if (character.alive) {
+          gameEvents.add(GameEvent(character.x, character.y, GameEventType.Zombie_Hit));
+        }else{
+          gameEvents.add(GameEvent(character.x, character.y, GameEventType.Zombie_Killed));
+        }
+
 
         for (int i = 0; i < randomBetween(2, 5).toInt(); i++) {
           blood.add(Blood(

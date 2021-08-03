@@ -4,7 +4,6 @@
 [ ] Sniper Rifle
 [ ] Keep aiming for duration after shot fired
 [ ] Oozie
-[ ] Zombie Death Sound
 [ ] Shot Animation
 [ ] Bullet Hit Animation
 [ ] Shot kickback
@@ -15,7 +14,9 @@
 [ ] Accuracy
 [ ] Fix center camera on spawn
 [ ] Design Town Center
-[ ] Zombie Hurt Audio
+[ ] Zombie target set audio (talk)
+[ ] Zombie Death Audio
+[x] Zombie Hurt Audio
 [x] Shotgun Audio
 [x] spawn shell on fire bullet
 [x] Shotgun bullet range
