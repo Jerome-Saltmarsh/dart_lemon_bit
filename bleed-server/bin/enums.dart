@@ -23,4 +23,5 @@ enum Direction {
 enum GameEventType {
   Handgun_Fired,
   Shotgun_Fired,
+  Hit
 }

@@ -46,9 +46,18 @@ void parseState() {
       _consumeFrame();
     } else if (term == "events:") {
       _consumeEvents();
+    } else if (term == "blood:") {
+      _consumeBlood();
     } else {
       throw Exception("term not found: $term");
     }
+  }
+}
+
+void _consumeBlood(){
+  blood.clear();
+  while (!_simiColonConsumed()) {
+    blood.add(_consumeDouble());
   }
 }
 

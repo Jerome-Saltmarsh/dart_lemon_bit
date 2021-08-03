@@ -15,13 +15,10 @@ double getMouseRotation() {
 }
 
 double playerScreenPositionX() {
-  dynamic player = getPlayerCharacter();
   return player[x] - cameraX;
 }
 
 double playerScreenPositionY() {
-  if (!playerAssigned) return null;
-  dynamic player = getPlayerCharacter();
   return player[y] - cameraY;
 }
 

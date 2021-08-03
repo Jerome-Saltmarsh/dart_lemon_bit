@@ -63,6 +63,15 @@ void checkBulletCollision(List<Character> list) {
         changeCharacterHealth(character, -1);
         character.xVel += bullet.xVel * 0.25;
         character.yVel += bullet.yVel * 0.25;
+
+        for (int i = 0; i < 5; i++) {
+          blood.add(Blood(
+              character.x,
+              character.y,
+              bullet.xVel * (0.35 + giveOrTake(0.1)) + giveOrTake(1.3),
+              bullet.yVel * (0.35 + giveOrTake(0.1)) + giveOrTake(1.3)));
+        }
+
         break;
       }
     }
@@ -184,17 +193,33 @@ void fixedUpdate() {
   updateBullets();
   updateBullets(); // called twice to fix collision detection
   updateNpcs();
-
-  for (int i = 0; i < gameEvents.length; i++) {
-    if (gameEvents[i].frameDuration-- > 0) continue;
-    gameEvents.removeAt(i);
-    i--;
-  }
+  updateBlood();
+  updateGameEvents();
 
   compileState();
 
   if (fps < 20) {
     print("Warning FPS Drop: $fps");
+  }
+}
+
+void updateGameEvents() {
+  for (int i = 0; i < gameEvents.length; i++) {
+    if (gameEvents[i].frameDuration-- > 0) continue;
+    gameEvents.removeAt(i);
+    i--;
+  }
+}
+
+void updateBlood() {
+  for (int i = 0; i < blood.length; i++) {
+    if (blood[i].lifeTime-- < 0) {
+      blood.removeAt(i);
+      i--;
+      continue;
+    }
+    blood[i].x += blood[i].xVel;
+    blood[i].y += blood[i].yVel;
   }
 }
 

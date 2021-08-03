@@ -14,6 +14,8 @@
 [ ] Ammo
 [ ] Shotgun Audio
 [ ] Design Town Center
+[ ] Fix shot body position
+[x] Blood Effect
 [x] Weapon Shotgun
 [x] Fix Sound
 [x] Implement tiles on server

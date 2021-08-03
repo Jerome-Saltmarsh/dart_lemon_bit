@@ -118,6 +118,11 @@ class Bullet extends PhysicsGameObject {
   }
 }
 
+class Blood extends PhysicsGameObject {
+  int lifeTime = 10;
+  Blood(double x, double y, double xVel, double yVel) : super(x, y, xVel, yVel);
+}
+
 class GameEvent extends GameObject {
   final GameEventType type;
   int frameDuration;

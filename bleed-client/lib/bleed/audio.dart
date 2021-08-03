@@ -3,7 +3,7 @@ import 'package:audioplayers/audioplayers.dart';
 AudioPlayer _audioPlayer = AudioPlayer();
 
 void playAudioShotgunShot() {
-  _playMp3('shotgun-fire');
+  _playMp3('shotgun-shot');
 }
 
 void playAudioHandgunShot() {

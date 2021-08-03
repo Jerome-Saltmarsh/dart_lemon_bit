@@ -538,3 +538,9 @@ void drawBulletRange() {
   drawCircleOutline(
       radius: bulletRange, x: player[x], y: player[y], color: white);
 }
+
+void drawBlood() {
+  for (int i = 0; i < blood.length; i += 2) {
+    drawCircle(blood[i], blood[i + 1], 2, Colors.red);
+  }
+}
