@@ -64,4 +64,4 @@ List<RSTransform> tileTransforms = [];
 List<Rect> tileRects = [];
 
 
-Map<int, bool> bulletEventsFired = Map();
+Map<int, bool> gameEvents = Map();

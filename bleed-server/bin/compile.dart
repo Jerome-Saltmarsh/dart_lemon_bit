@@ -10,7 +10,21 @@ void compileState(){
   _compilePasses();
   _compileFPS();
   _compileFrame();
+  _compileGameEvents();
   compiledState = buffer.toString();
+}
+
+void _compileGameEvents(){
+  if (gameEvents.isEmpty) return;
+
+  _write("events:");
+  for (GameEvent gameEvent in gameEvents) {
+    _write(gameEvent.id);
+    _write(gameEvent.type.index);
+    _write(gameEvent.x.toInt());
+    _write(gameEvent.y.toInt());
+  }
+  _end();
 }
 
 String compileTiles(){

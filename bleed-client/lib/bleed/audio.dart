@@ -2,9 +2,15 @@ import 'package:audioplayers/audioplayers.dart';
 
 AudioPlayer _audioPlayer = AudioPlayer();
 
-void playAudioShotgunShot() {}
+void playAudioShotgunShot() {
+  _playMp3('shotgun-fire');
+}
 
-void playAudioPistolShot() {
-  _audioPlayer.play('assets/audio/handgun-shot.mp3', isLocal: true);
+void playAudioHandgunShot() {
+  _playMp3('handgun-shot');
+}
+
+void _playMp3(String name){
+  _audioPlayer.play('assets/audio/$name.mp3', isLocal: true);
 }
 

@@ -26,7 +26,7 @@ Player spawnPlayer({required String name}){
   Player player = Player(
       uuid: _generateUUID(),
       x: giveOrTake(50),
-      y: giveOrTake(50),
+      y: 1000 + giveOrTake(50),
       name: name
   );
   players.add(player);

@@ -5,3 +5,8 @@ enum Tile {
 }
 
 enum Weapon { Unarmed, HandGun, Shotgun }
+
+enum GameEventType {
+  Handgun_Fired,
+  Shotgun_Fired,
+}

@@ -16,12 +16,6 @@ void update(){
   controlCamera();
   readPlayerInput();
 
-  for(int i = 0; i < bullets.length; i++){
-    if(bulletEventsFired.containsKey(bullets[i][id])) continue;
-    bulletEventsFired[bullets[i][id]] = true;
-    playAudioPistolShot();
-  }
-
   if (playerAssigned) {
     sendRequestUpdatePlayer();
   } else {

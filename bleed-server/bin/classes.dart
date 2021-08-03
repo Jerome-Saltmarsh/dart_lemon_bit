@@ -117,3 +117,9 @@ class Bullet extends PhysicsGameObject {
     yStart = y;
   }
 }
+
+class GameEvent extends GameObject {
+  final GameEventType type;
+  int frameDuration;
+  GameEvent(double x, double y, this.type, this.frameDuration) : super(x, y);
+}

@@ -8,6 +8,7 @@ int frame = 0;
 List<Npc> npcs = [];
 List<Player> players = [];
 List<Bullet> bullets = [];
+List<GameEvent> gameEvents = [];
 DateTime frameTime = DateTime.now();
 Duration frameDuration = Duration();
 int fps = 30;

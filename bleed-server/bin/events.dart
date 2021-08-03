@@ -24,3 +24,4 @@ void _onCharacterDeath(Character character) {
     });
   }
 }
+

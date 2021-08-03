@@ -19,3 +19,8 @@ enum Direction {
   UpLeft,
   None
 }
+
+enum GameEventType {
+  Handgun_Fired,
+  Shotgun_Fired,
+}

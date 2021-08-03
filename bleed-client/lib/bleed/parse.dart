@@ -1,3 +1,4 @@
+import 'package:flutter_game_engine/bleed/audio.dart';
 import 'package:flutter_game_engine/bleed/keys.dart';
 import 'package:flutter_game_engine/bleed/state.dart';
 import 'package:flutter_game_engine/bleed/utils.dart';
@@ -43,6 +44,8 @@ void parseState() {
       _consumePass();
     } else if (term == "f:") {
       _consumeFrame();
+    } else if (term == "events:") {
+      _consumeEvents();
     } else {
       throw Exception("term not found: $term");
     }
@@ -177,6 +180,32 @@ void _parsePlayers() {
   }
 
   player = getPlayerCharacter();
+}
+
+void _consumeEvents() {
+  int events = 0;
+  while (!_simiColonConsumed()) {
+    events++;
+    int id = _consumeInt();
+    GameEventType type = _consumeEventType();
+    int x = _consumeInt();
+    int y = _consumeInt();
+    if (!gameEvents.containsKey(id)) {
+      gameEvents[id] = true;
+      if (type == GameEventType.Handgun_Fired) {
+        playAudioHandgunShot();
+      } else if (type == GameEventType.Shotgun_Fired) {
+        playAudioShotgunShot();
+      }
+    }
+  }
+  if (events == 0) {
+    gameEvents.clear(); // free up some memory
+  }
+}
+
+GameEventType _consumeEventType() {
+  return GameEventType.values[_consumeInt()];
 }
 
 void _parseBullets() {

@@ -12,7 +12,9 @@
 [ ] Sprint
 [ ] HUD
 [ ] Ammo
-[ ] Weapon Shotgun
+[ ] Shotgun Audio
+[ ] Design Town Center
+[x] Weapon Shotgun
 [x] Fix Sound
 [x] Implement tiles on server
 [x] Player respawn after death

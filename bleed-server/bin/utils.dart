@@ -149,6 +149,7 @@ void fireWeapon(Character character) {
       spawnBullet(character);
       character.fire();
       character.shotCoolDown = pistolCoolDown;
+      gameEvents.add(GameEvent(character.x, character.y, GameEventType.Handgun_Fired, 3));
       break;
     case Weapon.Shotgun:
       for (int i = 0; i < 5; i++) {
@@ -156,6 +157,7 @@ void fireWeapon(Character character) {
       }
       character.fire();
       character.shotCoolDown = shotgunCoolDown;
+      gameEvents.add(GameEvent(character.x, character.y, GameEventType.Shotgun_Fired, 3));
       break;
   }
 }

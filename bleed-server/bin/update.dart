@@ -17,13 +17,13 @@ void initUpdateLoop() {
 }
 
 void updateNpcTargets() {
-  for(Npc npc in npcs){
+  for (Npc npc in npcs) {
     if (npc.targetSet) continue;
     updateNpcTarget(npc);
   }
 }
 
-void updateNpcTarget(Npc npc){
+void updateNpcTarget(Npc npc) {
   for (Character player in players) {
     if (player.dead) continue;
     if (distanceBetween(npc, player) > zombieViewRange) continue;
@@ -49,8 +49,8 @@ void updateBullets() {
   checkBulletCollision(players);
 }
 
-void checkBulletCollision(List<Character> list){
-  for(int i = 0; i < bullets.length; i++){
+void checkBulletCollision(List<Character> list) {
+  for (int i = 0; i < bullets.length; i++) {
     Bullet bullet = bullets[i];
     for (int j = 0; j < list.length; j++) {
       Character character = list[j];
@@ -163,8 +163,8 @@ void updateCharacters() {
   players.forEach(updateCharacter);
   npcs.forEach(updateCharacter);
 
-  for(Player player in players) {
-    if(frame - player.lastEventFrame > 5 && player.walking){
+  for (Player player in players) {
+    if (frame - player.lastEventFrame > 5 && player.walking) {
       setCharacterStateIdle(player);
       print("no event from player. Idling; ${player.lastEventFrame}");
     }
@@ -184,6 +184,13 @@ void fixedUpdate() {
   updateBullets();
   updateBullets(); // called twice to fix collision detection
   updateNpcs();
+
+  for (int i = 0; i < gameEvents.length; i++) {
+    if (gameEvents[i].frameDuration-- > 0) continue;
+    gameEvents.removeAt(i);
+    i--;
+  }
+
   compileState();
 
   if (fps < 20) {
