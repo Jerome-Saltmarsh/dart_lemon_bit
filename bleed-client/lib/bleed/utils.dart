@@ -8,6 +8,7 @@ import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'common.dart';
 import 'constants.dart';
 import 'keys.dart';
+import 'maths.dart';
 import 'state.dart';
 
 double getMouseRotation() {
@@ -116,3 +117,6 @@ int convertAngleToDirection(double angle) {
   return directionUp;
 }
 
+bool randomBool(){
+  return random.nextDouble() > 0.5;
+}

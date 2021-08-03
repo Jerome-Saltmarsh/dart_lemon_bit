@@ -1,11 +1,15 @@
+import 'dart:math';
+
 import 'classes.dart';
 import 'common.dart';
 import 'compile.dart';
+import 'constants.dart';
 import 'enums.dart';
 import 'jobs.dart';
 import 'language.dart';
 import 'maths.dart';
 import 'settings.dart';
+import 'spawn.dart';
 import 'state.dart';
 import 'utils.dart';
 
@@ -64,7 +68,9 @@ void checkBulletCollision(List<Character> list) {
         character.xVel += bullet.xVel * 0.25;
         character.yVel += bullet.yVel * 0.25;
 
-        for (int i = 0; i < 5; i++) {
+        gameEvents.add(GameEvent(character.x, character.y, GameEventType.Zombie_Hit, 10));
+
+        for (int i = 0; i < randomBetween(2, 5).toInt(); i++) {
           blood.add(Blood(
               character.x,
               character.y,
@@ -131,6 +137,12 @@ void updateCharacter(Character character) {
       character.shotCoolDown--;
       if (character.shotCoolDown <= 0) {
         setCharacterState(character, CharacterState.Aiming);
+      }
+      break;
+    case CharacterState.Dead:
+      if(frame % 10 == 0){
+        double speed = 0.75;
+        spawnBlood(character, randomRadion(), speed);
       }
       break;
     case CharacterState.Walking:

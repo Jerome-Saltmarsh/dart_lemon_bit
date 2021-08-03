@@ -5,6 +5,7 @@ import 'common.dart';
 import 'constants.dart';
 import 'enums.dart';
 import 'events.dart';
+import 'language.dart';
 import 'maths.dart';
 import 'settings.dart';
 import 'spawn.dart';
@@ -156,7 +157,9 @@ void fireWeapon(Character character) {
       for (int i = 0; i < settingsShotgunBulletsPerShot; i++) {
         spawnBullet(character);
       }
-      spawnShell(character.x, character.y, character.aimAngle + (pi + giveOrTake(piHalf)));
+      delayed((){
+        spawnShell(character.x, character.y, character.aimAngle + (pi + giveOrTake(piHalf)));
+      }, ms: 500);
       character.state = CharacterState.Firing;
       character.shotCoolDown = shotgunCoolDown;
       gameEvents.add(GameEvent(character.x, character.y, GameEventType.Shotgun_Fired, 3));

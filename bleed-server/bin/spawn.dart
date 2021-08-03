@@ -23,6 +23,10 @@ void spawnShell(double x, double y, double rotation) {
   particles.add(Particle(x, y, velX(rotation, speed), velY(rotation, speed), 40, 0, 0.7));
 }
 
+void spawnBlood(Character character, double rotation, speed){
+  blood.add(Blood(character.x, character.y, velX(rotation, speed), velY(rotation, speed)));
+}
+
 Npc spawnNpc(double x, double y) {
   Npc npc = Npc(x: x, y: y, health: 5, maxHealth: 5);
   npcs.add(npc);

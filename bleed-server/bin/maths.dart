@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'classes.dart';
+import 'constants.dart';
 
 const double degreesToRadions = 0.0174533;
 const double radionsToDegrees =  57.29578;
@@ -11,6 +12,10 @@ double randomBetween(num a, num b){
 
 bool randomBool(){
   return random.nextDouble() > 0.5;
+}
+
+double randomRadion(){
+  return random.nextDouble() * pi2;
 }
 
 double giveOrTake(double value){

@@ -210,10 +210,18 @@ void _consumeEvents() {
     int y = _consumeInt();
     if (!gameEvents.containsKey(id)) {
       gameEvents[id] = true;
-      if (type == GameEventType.Handgun_Fired) {
-        playAudioHandgunShot();
-      } else if (type == GameEventType.Shotgun_Fired) {
-        playAudioShotgunShot();
+      switch(type){
+        case GameEventType.Handgun_Fired:
+          playAudioHandgunShot();
+          break;
+        case GameEventType.Shotgun_Fired:
+          playAudioShotgunShot();
+          break;
+        case GameEventType.Zombie_Hit:
+          if(randomBool()){
+            playAudioZombieHit();
+          }
+          break;
       }
     }
   }

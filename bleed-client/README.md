@@ -13,10 +13,11 @@
 [ ] HUD
 [ ] Ammo
 [ ] Accuracy
-[ ] Shotgun Audio
-[ ] Design Town Center
 [ ] Fix center camera on spawn
-[ ] spawn shell on fire bullet
+[ ] Design Town Center
+[ ] Zombie Hurt Audio
+[x] Shotgun Audio
+[x] spawn shell on fire bullet
 [x] Shotgun bullet range
 [x] Fix zombie spawn position
 [x] Fix shot body position
