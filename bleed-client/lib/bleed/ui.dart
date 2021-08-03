@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_game_engine/bleed/parse.dart';
 import 'package:flutter_game_engine/game_engine/engine_state.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
+import 'package:flutter_game_engine/game_engine/web_functions.dart';
 
 import 'connection.dart';
 import 'resources.dart';
@@ -106,7 +107,16 @@ Widget buildDebugUI(BuildContext context){
       if (!connected) button("Connect", connect),
       if (!debugMode) button("Show Debug", showDebug),
       if (debugMode) button("Hide Debug", hideDebug),
-      button("Load Audio", loadAudioFiles),
+      button("FullScreen", requestFullScreen),
+      if(audioElementPistolShot == null)
+      button("Load Html Audio", loadHtmlAudioFiles),
+      if(howlPistolFireAudio == null)
+      button("Load Howl Audio", loadHowlAudio),
+      if(audioElementPistolShot != null)
+      button("Play Html Audio Shot", playHtmlAudioShot),
+      if(howlPistolFireAudio != null)
+      button("Play Howl Audio Shot", playHowlAudioShot),
+      button("Play Audio Player", playerAudioPlayer),
       button("Respawn", sendRequestSpawn),
       button("Spawn NPC", sendRequestSpawnNpc),
       button("Clear NPCS", sendRequestClearNpcs),

@@ -3,6 +3,7 @@
 import 'common.dart';
 import 'input.dart';
 import 'keys.dart';
+import 'resources.dart';
 import 'send.dart';
 import 'settings.dart';
 import 'state.dart';

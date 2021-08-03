@@ -11,17 +11,6 @@ import 'keys.dart';
 import 'resources.dart';
 import 'state.dart';
 
-void playAudioShotgunShot() {
-
-}
-
-void playAudioPistolShot() {
-  // if (pistolFireAudio == null) return;
-  // pistolFireAudio.play();
-  if(handgunPistolShot == null) return;
-  handgunPistolShot.play();
-}
-
 double getMouseRotation() {
   return round(getRadionsBetween(
       playerScreenPositionX(), playerScreenPositionY(), mousePosX, mousePosY));

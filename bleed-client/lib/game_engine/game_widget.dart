@@ -107,7 +107,7 @@ class _GameWidgetState extends State<GameWidget> {
       redrawGame();
       redrawUI();
     });
-    updateTimer = Timer.periodic(Duration(milliseconds: 1000 ~/ 30), (timer) {
+    updateTimer = Timer.periodic(Duration(milliseconds: 1000 ~/ 45), (timer) {
       widget._internalUpdate();
       gameSetState(_doNothing);
       uiSetState(_doNothing);
