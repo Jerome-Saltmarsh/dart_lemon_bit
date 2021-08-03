@@ -48,6 +48,8 @@ void parseState() {
       _consumeEvents();
     } else if (term == "blood:") {
       _consumeBlood();
+    } else if (term == "particles") {
+      _consumeParticles();
     } else {
       throw Exception("term not found: $term");
     }
@@ -58,6 +60,13 @@ void _consumeBlood(){
   blood.clear();
   while (!_simiColonConsumed()) {
     blood.add(_consumeDouble());
+  }
+}
+
+void _consumeParticles(){
+  particles.clear();
+  while (!_simiColonConsumed()) {
+    particles.add(_consumeDouble());
   }
 }
 

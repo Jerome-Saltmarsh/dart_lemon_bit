@@ -55,6 +55,7 @@ class BleedClient extends GameWidget {
     drawPlayerHealth();
     drawBullets();
     drawBlood();
+    drawParticles();
     drawCharacters();
     drawMouse();
   }

@@ -9,11 +9,18 @@ void spawnBullet(Character character) {
   Bullet bullet = Bullet(
       character.x,
       character.y,
-      velX(character.aimAngle + giveOrTake(getWeaponAccuracy(character.weapon)), bulletSpeed),
-      velY(character.aimAngle + giveOrTake(getWeaponAccuracy(character.weapon)), bulletSpeed),
+      velX(character.aimAngle + giveOrTake(getWeaponAccuracy(character.weapon)),
+          bulletSpeed),
+      velY(character.aimAngle + giveOrTake(getWeaponAccuracy(character.weapon)),
+          bulletSpeed),
       character.id,
       getWeaponRange(character.weapon));
   bullets.add(bullet);
+}
+
+void spawnShell(double x, double y, double rotation) {
+  double speed = 8;
+  particles.add(Particle(x, y, velX(rotation, speed), velY(rotation, speed), 40, 0, 0.7));
 }
 
 Npc spawnNpc(double x, double y) {

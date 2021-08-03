@@ -12,6 +12,7 @@ void compileState() {
   _compileFrame();
   _compileGameEvents();
   _compileBlood();
+  _compileParticles();
   compiledState = buffer.toString();
 }
 
@@ -83,6 +84,15 @@ void _compileBlood() {
   blood.forEach((drop) {
     _write(drop.x.toInt());
     _write(drop.y.toInt());
+  });
+  _end();
+}
+
+void _compileParticles() {
+  _write('particles');
+  particles.forEach((particle) {
+    _write(particle.x.toInt());
+    _write(particle.y.toInt());
   });
   _end();
 }

@@ -7,3 +7,4 @@ const Duration duration90ms = Duration(milliseconds: 90);
 
 const double piEighth = pi / 8.0;
 const double piQuarter = pi / 4.0;
+const double piHalf = pi / 2.0;

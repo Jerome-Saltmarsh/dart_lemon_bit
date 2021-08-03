@@ -7,12 +7,14 @@ class GameObject {
   final int id = _idGenerator++;
   double x;
   double y;
+
   GameObject(this.x, this.y);
 }
 
 class PhysicsGameObject extends GameObject {
   double xVel = 0;
   double yVel = 0;
+
   PhysicsGameObject(double x, double y, this.xVel, this.yVel) : super(x, y);
 }
 
@@ -29,20 +31,24 @@ class Character extends PhysicsGameObject {
   String name;
 
   bool get alive => state != CharacterState.Dead;
+
   bool get dead => state == CharacterState.Dead;
+
   bool get firing => state == CharacterState.Firing;
+
   bool get aiming => state == CharacterState.Aiming;
+
   bool get walking => state == CharacterState.Walking;
 
-  Character({
-    required double x,
-    required double y,
-    required this.weapon,
-    required this.health,
-    required this.maxHealth,
-    required this.speed,
-    required this.name
-  }) : super(x, y, 0, 0);
+  Character(
+      {required double x,
+      required double y,
+      required this.weapon,
+      required this.health,
+      required this.maxHealth,
+      required this.speed,
+      required this.name})
+      : super(x, y, 0, 0);
 
   void idle() {
     state = CharacterState.Idle;
@@ -59,16 +65,18 @@ class Npc extends Character {
   double yDes = 0;
 
   Npc(
-      {required double x, required double y, required double health, required double maxHealth})
+      {required double x,
+      required double y,
+      required double health,
+      required double maxHealth})
       : super(
-      x: x,
-      y: y,
-      weapon: Weapon.Unarmed,
-      health: health,
-      maxHealth: maxHealth,
-      speed: zombieSpeed,
-      name: "Npc"
-  );
+            x: x,
+            y: y,
+            weapon: Weapon.Unarmed,
+            health: health,
+            maxHealth: maxHealth,
+            speed: zombieSpeed,
+            name: "Npc");
 
   get targetSet => targetId != -1;
 
@@ -88,19 +96,19 @@ class Player extends Character {
   final String uuid;
   int lastEventFrame = 0;
 
-  Player({
-    required this.uuid,
-    required double x,
-    required double y,
-    required String name})
+  Player(
+      {required this.uuid,
+      required double x,
+      required double y,
+      required String name})
       : super(
-      x: x,
-      y: y,
-      weapon: Weapon.HandGun,
-      health: settingsPlayerStartHealth,
-      maxHealth: settingsPlayerStartHealth,
-      speed: playerSpeed,
-      name: name);
+            x: x,
+            y: y,
+            weapon: Weapon.HandGun,
+            health: settingsPlayerStartHealth,
+            maxHealth: settingsPlayerStartHealth,
+            speed: playerSpeed,
+            name: name);
 }
 
 class Bullet extends PhysicsGameObject {
@@ -118,17 +126,22 @@ class Bullet extends PhysicsGameObject {
 
 class Blood extends PhysicsGameObject {
   int lifeTime = randomBetween(45, 90).toInt();
+
   Blood(double x, double y, double xVel, double yVel) : super(x, y, xVel, yVel);
 }
 
 class Particle extends PhysicsGameObject {
   int lifeTime;
   double rotation;
-  Particle(double x, double y, double xVel, double yVel, this.lifeTime, this.rotation) : super(x, y, xVel, yVel);
+  double friction;
+  Particle(double x, double y, double xVel, double yVel, this.lifeTime,
+      this.rotation, this.friction)
+      : super(x, y, xVel, yVel);
 }
 
 class GameEvent extends GameObject {
   final GameEventType type;
   int frameDuration;
+
   GameEvent(double x, double y, this.type, this.frameDuration) : super(x, y);
 }

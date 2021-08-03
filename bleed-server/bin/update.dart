@@ -194,6 +194,7 @@ void fixedUpdate() {
   updateBullets(); // called twice to fix collision detection
   updateNpcs();
   updateBlood();
+  updateParticles();
   updateGameEvents();
 
   compileState();
@@ -223,6 +224,20 @@ void updateBlood() {
 
     blood[i].xVel *= 0.85;
     blood[i].yVel *= 0.85;
+  }
+}
+
+void updateParticles(){
+  for (int i = 0; i < particles.length; i++) {
+    if (particles[i].lifeTime-- < 0) {
+      particles.removeAt(i);
+      i--;
+      continue;
+    }
+    particles[i].x += particles[i].xVel;
+    particles[i].y += particles[i].yVel;
+    particles[i].xVel *= particles[i].friction;
+    particles[i].yVel *= particles[i].friction;
   }
 }
 

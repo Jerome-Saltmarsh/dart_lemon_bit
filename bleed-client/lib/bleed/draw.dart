@@ -533,3 +533,9 @@ void drawBlood() {
     drawCircle(blood[i], blood[i + 1], 2, Colors.red);
   }
 }
+
+void drawParticles() {
+  for (int i = 0; i < particles.length; i += 2) {
+    drawCircle(particles[i], particles[i + 1], 1.33, Colors.white);
+  }
+}

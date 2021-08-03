@@ -147,6 +147,7 @@ void fireWeapon(Character character) {
   switch (character.weapon) {
     case Weapon.HandGun:
       spawnBullet(character);
+      spawnShell(character.x, character.y, character.aimAngle + (pi + giveOrTake(piHalf)));
       character.state = CharacterState.Firing;
       character.shotCoolDown = pistolCoolDown;
       gameEvents.add(GameEvent(character.x, character.y, GameEventType.Handgun_Fired, 3));
@@ -155,6 +156,7 @@ void fireWeapon(Character character) {
       for (int i = 0; i < settingsShotgunBulletsPerShot; i++) {
         spawnBullet(character);
       }
+      spawnShell(character.x, character.y, character.aimAngle + (pi + giveOrTake(piHalf)));
       character.state = CharacterState.Firing;
       character.shotCoolDown = shotgunCoolDown;
       gameEvents.add(GameEvent(character.x, character.y, GameEventType.Shotgun_Fired, 3));

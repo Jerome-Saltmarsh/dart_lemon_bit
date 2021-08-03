@@ -33,6 +33,7 @@ List<List<dynamic>> players = [];
 List<List<dynamic>> npcs = [];
 List<List<dynamic>> bullets = [];
 List<double> blood = [];
+List<double> particles = [];
 int drawFrame = 0;
 Canvas canvas;
 bool connected = false;
