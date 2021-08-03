@@ -120,3 +120,7 @@ int convertAngleToDirection(double angle) {
 bool randomBool(){
   return random.nextDouble() > 0.5;
 }
+
+T randomItem<T>(List<T> list){
+  return list[random.nextInt(list.length)];
+}
