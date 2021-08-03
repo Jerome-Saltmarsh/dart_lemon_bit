@@ -7,14 +7,17 @@
 [ ] Shot Animation
 [ ] Bullet Hit Animation
 [ ] Shot kickback
-[ ] spawn shell on fire bullet
 [ ] Optimize Server Collision Detection
 [ ] Sprint
 [ ] HUD
 [ ] Ammo
 [ ] Shotgun Audio
 [ ] Design Town Center
-[ ] Fix shot body position
+[ ] Shotgun bullet distance
+[ ] Fix center camera on spawn
+[ ] spawn shell on fire bullet
+[x] Fix zombie spawn position
+[x] Fix shot body position
 [x] Blood Effect
 [x] Weapon Shotgun
 [x] Fix Sound

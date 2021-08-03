@@ -68,8 +68,8 @@ void checkBulletCollision(List<Character> list) {
           blood.add(Blood(
               character.x,
               character.y,
-              bullet.xVel * (0.35 + giveOrTake(0.1)) + giveOrTake(1.3),
-              bullet.yVel * (0.35 + giveOrTake(0.1)) + giveOrTake(1.3)));
+              bullet.xVel * (0.35 + giveOrTake(0.1)) + giveOrTake(1.6),
+              bullet.yVel * (0.35 + giveOrTake(0.1)) + giveOrTake(1.6)));
         }
 
         break;
@@ -220,6 +220,9 @@ void updateBlood() {
     }
     blood[i].x += blood[i].xVel;
     blood[i].y += blood[i].yVel;
+
+    blood[i].xVel *= 0.85;
+    blood[i].yVel *= 0.85;
   }
 }
 

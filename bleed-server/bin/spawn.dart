@@ -19,7 +19,7 @@ Npc spawnNpc(double x, double y) {
 
 Npc spawnRandomNpc() {
   return spawnNpc(randomBetween(-spawnRadius, spawnRadius),
-      randomBetween(-spawnRadius, spawnRadius));
+      randomBetween(-spawnRadius, spawnRadius) + 1000);
 }
 
 Player spawnPlayer({required String name}){

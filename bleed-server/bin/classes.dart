@@ -1,4 +1,5 @@
 import 'enums.dart';
+import 'maths.dart';
 import 'settings.dart';
 
 class GameObject {
@@ -119,7 +120,7 @@ class Bullet extends PhysicsGameObject {
 }
 
 class Blood extends PhysicsGameObject {
-  int lifeTime = 10;
+  int lifeTime = randomBetween(45, 90).toInt();
   Blood(double x, double y, double xVel, double yVel) : super(x, y, xVel, yVel);
 }
 

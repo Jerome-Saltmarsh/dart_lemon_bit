@@ -17,7 +17,7 @@ import 'utils.dart';
 
 void drawCharacterCircle(dynamic value, Color color) {
   if (value == null) return;
-  drawCircle(value[x], value[y], characterRadius, color);
+  drawCircle(value[x], value[y] + 5, characterRadius, color);
 }
 
 void drawCharacters() {
@@ -442,7 +442,7 @@ RSTransform getCharacterTransform(dynamic character) {
     rotation: 0.0,
     scale: 1.0,
     anchorX: halfHumanSpriteFrameWidth,
-    anchorY: halfHumanSpriteFrameHeight,
+    anchorY: halfHumanSpriteFrameHeight - 5,
     translateX: character[x] - cameraX,
     translateY: character[y] - cameraY,
   );
@@ -506,17 +506,6 @@ void drawTiles() {
   if (imageTiles == null) return;
   if (tiles == null || tiles.isEmpty) return;
   drawTileList();
-  // double size = tileGrass01.width * 1.0;
-  // double halfSize = size * 0.5;
-  //
-  // for (int x = 0; x < tiles.length; x++) {
-  //   for(int y = 0; y < tiles[0].length; y++){
-  //     double xCoord = (-y * halfSize) + (x * halfSize);
-  //     double yCoord = (y * halfSize) + (x * halfSize);
-  //     drawGrassTile(xCoord, yCoord);
-  //   }
-  // }
-  // return;
 }
 
 void drawTile(int x, int y) {
