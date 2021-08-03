@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_game_engine/bleed/parse.dart';
-import 'package:flutter_game_engine/game_engine/engine_state.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'package:flutter_game_engine/game_engine/web_functions.dart';
 
 import 'connection.dart';
-import 'resources.dart';
 import 'send.dart';
 import 'settings.dart';
 import 'state.dart';
@@ -108,66 +105,32 @@ Widget buildDebugUI(BuildContext context){
       if (!debugMode) button("Show Debug", showDebug),
       if (debugMode) button("Hide Debug", hideDebug),
       button("FullScreen", requestFullScreen),
-      if(audioElementPistolShot == null)
-      button("Load Html Audio", loadHtmlAudioFiles),
-      if(howlPistolFireAudio == null)
-      button("Load Howl Audio", loadHowlAudio),
-      if(audioElementPistolShot != null)
-      button("Play Html Audio Shot", playHtmlAudioShot),
-      if(howlPistolFireAudio != null)
-      button("Play Howl Audio Shot", playHowlAudioShot),
-      button("Play Audio Player", playerAudioPlayer),
-      button("Respawn", sendRequestSpawn),
-      button("Spawn NPC", sendRequestSpawnNpc),
-      button("Clear NPCS", sendRequestClearNpcs),
-      text("Ping: ${ping.inMilliseconds}"),
-      text("Pass: $pass"),
-      text("Player Id: $playerId"),
-      text("Player Health: $playerHealth / $playerMaxHealth"),
-      text("Date Size: ${event.length}"),
-      text("Frames since event: $framesSinceEvent"),
-      text("Milliseconds Since Last Frame: $millisecondsSinceLastFrame"),
-      if(millisecondsSinceLastFrame > 0)
-        text("FPS: ${ (1000 / millisecondsSinceLastFrame).round() }"),
-      if (serverFramesMS > 0)
-        text("Server FPS: ${ (1000 / serverFramesMS).round() }"),
-      text("Players: ${players.length}"),
-      text("Bullets: ${bullets.length}"),
-      text("Npcs: ${npcs.length}"),
-      text("Player Assigned: $playerAssigned"),
-      text('Request Direction $requestDirection'),
-      text('Request State $requestCharacterState'),
-      text('Cache Size $cacheSize'),
-      button('First Pass: $firstPass', sendTogglePass1),
-      button('Second Pass: $secondPass', sendTogglePass2),
-      button('Third Pass: $thirdPass', sendTogglePass3),
-      button('Fourth Pass: $fourthPass', sendTogglePass4),
-      // text('First Pass $firstPassMS'),
-      // text('Second Pass $firstPassMS'),
-      button("smoothing $smooth", () => smooth = !smooth),
-      if (debugMode)
-        column([
-          text("Server Host: $host"),
-          text("Connected. Id: $playerId"),
-          if (ping != null) text("Ping: ${ping.inMilliseconds}"),
-          if (refreshDuration != null)
-            text("Refresh: ${refreshDuration.inMilliseconds}"),
-          text("Date Size: ${event.length}"),
-          text("Packages Sent: $packagesSent"),
-          text("Packages Received: $packagesReceived"),
-          if (mousePosX != null) text("mousePosX: ${mousePosX.round()}"),
-          if (mousePosY != null) text("mousePosY: ${mousePosY.round()}"),
-          if (playerAssigned && mousePosX != null)
-            text('mouseRotation: ${getMouseRotation().toStringAsFixed(2)}'),
-          text("cameraX: ${cameraX.round()}"),
-          text("cameraY: ${cameraY.round()}"),
-          // if (playerAssigned)
-          //   text("playerScreenPositionX: ${playerScreenPositionX().round()}"),
-          // if (playerAssigned)
-          //   text("playerScreenPositionY: ${playerScreenPositionY().round()}"),
-          text("Errors: $errors"),
-          text("Dones: $dones"),
-        ])
+      if(debugMode) column([
+        button("Respawn", sendRequestSpawn),
+        button("Spawn NPC", sendRequestSpawnNpc),
+        button("Clear NPCS", sendRequestClearNpcs),
+        text("Server Host: $host"),
+        text("Ping: ${ping.inMilliseconds}"),
+        text("Pass: $pass"),
+        text("Player Id: $playerId"),
+        text("Player Health: $playerHealth / $playerMaxHealth"),
+        text("Data Size: ${event.length}"),
+        text("Frames since event: $framesSinceEvent"),
+        text("Milliseconds Since Last Frame: $millisecondsSinceLastFrame"),
+        if(millisecondsSinceLastFrame > 0)
+          text("FPS: ${ (1000 / millisecondsSinceLastFrame).round() }"),
+        if (serverFramesMS > 0)
+          text("Server FPS: ${ (1000 / serverFramesMS).round() }"),
+        text("Players: ${players.length}"),
+        text("Bullets: ${bullets.length}"),
+        text("Npcs: ${npcs.length}"),
+        text("Player Assigned: $playerAssigned"),
+        // button('First Pass: $firstPass', sendTogglePass1),
+        // button('Second Pass: $secondPass', sendTogglePass2),
+        // button('Third Pass: $thirdPass', sendTogglePass3),
+        // button('Fourth Pass: $fourthPass', sendTogglePass4),
+        button("smoothing $smooth", () => smooth = !smooth),
+      ]),
     ],
   );
 }

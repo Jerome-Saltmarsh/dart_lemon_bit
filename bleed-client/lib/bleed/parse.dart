@@ -1,5 +1,6 @@
 import 'package:flutter_game_engine/bleed/keys.dart';
 import 'package:flutter_game_engine/bleed/state.dart';
+import 'package:flutter_game_engine/bleed/utils.dart';
 
 import 'constants.dart';
 import 'enums.dart';
@@ -174,6 +175,8 @@ void _parsePlayers() {
   while (index < players.length) {
     _cacheLast(players);
   }
+
+  player = getPlayerCharacter();
 }
 
 void _parseBullets() {

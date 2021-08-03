@@ -37,6 +37,7 @@ Canvas canvas;
 bool connected = false;
 bool debugMode = false;
 int playerId = idNotConnected;
+dynamic player;
 String playerUUID = "";
 int serverFramesMS = 0;
 int actualFPS;

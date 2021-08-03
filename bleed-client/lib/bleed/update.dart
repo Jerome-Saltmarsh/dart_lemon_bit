@@ -1,9 +1,7 @@
-
-
+import 'audio.dart';
 import 'common.dart';
 import 'input.dart';
 import 'keys.dart';
-import 'resources.dart';
 import 'send.dart';
 import 'settings.dart';
 import 'state.dart';
@@ -22,7 +20,6 @@ void update(){
     if(bulletEventsFired.containsKey(bullets[i][id])) continue;
     bulletEventsFired[bullets[i][id]] = true;
     playAudioPistolShot();
-    print('playing bullet ${bullets[i][id]}');
   }
 
   if (playerAssigned) {

@@ -20,10 +20,9 @@ bool get keyEquipShotgun => keyPressed(LogicalKeyboardKey.digit2);
 bool get keyAimPressed => keyPressedSpace;
 
 void readPlayerInput() {
-  dynamic playerCharacter = getPlayerCharacter();
-  if (playerCharacter == null) return;
-  double playerScreenX = playerCharacter[x] - cameraX;
-  double playerScreenY = playerCharacter[y] - cameraY;
+  if (player == null) return;
+  double playerScreenX = player[x] - cameraX;
+  double playerScreenY = player[y] - cameraY;
   double halfScreenWidth = size.width * 0.5;
   double halfScreenHeight = size.height * 0.5;
   double xOffset = halfScreenWidth - playerScreenX;

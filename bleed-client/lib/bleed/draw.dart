@@ -14,7 +14,6 @@ import 'resources.dart';
 import 'state.dart';
 import 'utils.dart';
 
-
 void drawCharacterCircle(dynamic value, Color color) {
   if (value == null) return;
   drawCircle(value[posX], value[posY], characterRadius, color);
@@ -41,34 +40,28 @@ void drawCharacterList(List<dynamic> characters) {
       globalPaint);
 }
 
-void drawTileList(){
+void drawTileList() {
   processTileTransforms();
-  if(tileRects.isEmpty){
+  if (tileRects.isEmpty) {
     processRects();
   }
   globalCanvas.drawAtlas(
-      imageTiles,
-      tileTransforms,
-      tileRects,
-      null,
-      null,
-      null,
-      globalPaint);
+      imageTiles, tileTransforms, tileRects, null, null, null, globalPaint);
 }
 
-void processTileTransforms(){
+void processTileTransforms() {
   tileTransforms.clear();
-  for(int x = 0; x < tiles.length; x++){
-    for(int y = 0; y < tiles[0].length; y++){
+  for (int x = 0; x < tiles.length; x++) {
+    for (int y = 0; y < tiles[0].length; y++) {
       tileTransforms.add(getTileTransform(x, y));
     }
   }
 }
 
-void processRects(){
+void processRects() {
   tileRects.clear();
-  for(int x = 0; x < tiles.length; x++){
-    for(int y = 0; y < tiles[0].length; y++){
+  for (int x = 0; x < tiles.length; x++) {
+    for (int y = 0; y < tiles[0].length; y++) {
       tileRects.add(getTileSpriteRect(tiles[x][y]));
     }
   }
@@ -78,7 +71,8 @@ void drawPlayers() {
   drawList(players, playersTransforms, playersRects);
 }
 
-void drawList(List<dynamic> values, List<RSTransform> transforms, List<Rect> rects) {
+void drawList(
+    List<dynamic> values, List<RSTransform> transforms, List<Rect> rects) {
   for (int i = 0; i < values.length; i++) {
     if (i >= transforms.length) {
       transforms.add(getCharacterTransform(values[i]));
@@ -91,20 +85,14 @@ void drawList(List<dynamic> values, List<RSTransform> transforms, List<Rect> rec
       rects[i] = getCharacterSpriteRect(values[i]);
     }
   }
-  while(transforms.length > values.length){
+  while (transforms.length > values.length) {
     transforms.removeLast();
   }
-  while(rects.length > values.length){
+  while (rects.length > values.length) {
     rects.removeLast();
   }
   globalCanvas.drawAtlas(
-      imageHuman,
-      transforms,
-      rects,
-      null,
-      null,
-      null,
-      globalPaint);
+      imageHuman, transforms, rects, null, null, null, globalPaint);
 }
 
 Rect getHumanWalkingRect(dynamic character) {
@@ -199,15 +187,16 @@ Rect tileRectConcrete = getTileSpriteRectByIndex(0);
 Rect tileRectGrass = getTileSpriteRectByIndex(1);
 
 Rect getTileSpriteRectByIndex(int index) {
-  return rectByIndex(index, tileCanvasWidth.toDouble(), tileCanvasHeight.toDouble());
+  return rectByIndex(
+      index, tileCanvasWidth.toDouble(), tileCanvasHeight.toDouble());
 }
 
-Rect rectByIndex(int index, double frameWidth, double height){
+Rect rectByIndex(int index, double frameWidth, double height) {
   return Rect.fromLTWH(index * frameWidth, 0.0, frameWidth, height);
 }
 
-Rect getTileSpriteRect(Tile tile){
-  switch(tile){
+Rect getTileSpriteRect(Tile tile) {
+  switch (tile) {
     case Tile.Concrete:
       return tileRectConcrete;
     case Tile.Grass:
@@ -283,20 +272,14 @@ List<Rect> humanStrikingDownLeftFrames = [
   rectHumanIdleDownLeft
 ];
 
-List<Rect> humanStrikingLeftFrames = [
-  rectHumanStrikingLeft,
-  rectHumanIdleLeft
-];
+List<Rect> humanStrikingLeftFrames = [rectHumanStrikingLeft, rectHumanIdleLeft];
 
 List<Rect> humanStrikingUpLeftFrames = [
   rectHumanStrikingUpLeft,
   rectHumanIdleUpLeft
 ];
 
-List<Rect> humanStrikingUpFrames = [
-  rectHumanStrikingUp,
-  rectHumanIdleUp
-];
+List<Rect> humanStrikingUpFrames = [rectHumanStrikingUp, rectHumanIdleUp];
 
 List<Rect> humanStrikingUpRightFrames = [
   rectHumanStrikingUpRight,
@@ -313,11 +296,7 @@ List<Rect> humanStrikingDownRightFrames = [
   rectHumanIdleDownRight
 ];
 
-List<Rect> humanStrikingDownFrames = [
-  rectHumanStrikingDown,
-  rectHumanIdleDown
-];
-
+List<Rect> humanStrikingDownFrames = [rectHumanStrikingDown, rectHumanIdleDown];
 
 Rect _getFrame(List<Rect> frames) {
   return frames[drawFrame % frames.length];
@@ -428,7 +407,6 @@ List<Rect> rectHumanFiringDownFrames = [
   rectHumanAimingDown,
 ];
 
-
 List<Rect> rectHumanWalkingDownLeftFrames = [
   getHumanSpriteRect(4),
   getHumanSpriteRect(5),
@@ -470,14 +448,17 @@ RSTransform getCharacterTransform(dynamic character) {
 }
 
 void drawPlayerHealth() {
-  if(playerAssigned){
-    double health = playerHealth / playerMaxHealth;
-    double halfMaxHealth = playerMaxHealth * 0.5;
-    if(health > 0.5){
-      drawCharacterCircle(playerCharacter, Color.lerp(Colors.yellow, Colors.green, (playerHealth - halfMaxHealth) / halfMaxHealth));
-    }else{
-      drawCharacterCircle(playerCharacter, Color.lerp(Colors.red, Colors.yellow, playerHealth / halfMaxHealth));
-    }
+  if (!playerAssigned) return;
+  double health = playerHealth / playerMaxHealth;
+  double halfMaxHealth = playerMaxHealth * 0.5;
+  if (health > 0.5) {
+    drawCharacterCircle(
+        player,
+        Color.lerp(Colors.yellow, Colors.green,
+            (playerHealth - halfMaxHealth) / halfMaxHealth));
+  } else {
+    drawCharacterCircle(player,
+        Color.lerp(Colors.red, Colors.yellow, playerHealth / halfMaxHealth));
   }
 }
 
@@ -537,8 +518,9 @@ void drawTiles() {
   // return;
 }
 
-void drawTile(int x, int y){
-  drawGrassTile((tileCanvasWidth * (tilesX - x).toDouble()), (tileCanvasHeight * x).toDouble());
+void drawTile(int x, int y) {
+  drawGrassTile((tileCanvasWidth * (tilesX - x).toDouble()),
+      (tileCanvasHeight * x).toDouble());
 }
 
 void drawGrassTile(double x, double y) {

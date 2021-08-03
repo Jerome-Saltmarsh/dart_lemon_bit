@@ -8,12 +8,10 @@ import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'common.dart';
 import 'constants.dart';
 import 'keys.dart';
-import 'resources.dart';
 import 'state.dart';
 
 double getMouseRotation() {
-  return round(getRadionsBetween(
-      playerScreenPositionX(), playerScreenPositionY(), mousePosX, mousePosY));
+  return round(getRadionsBetween(playerScreenPositionX(), playerScreenPositionY(), mousePosX, mousePosY));
 }
 
 double playerScreenPositionX() {
@@ -28,10 +26,13 @@ double playerScreenPositionY() {
 }
 
 dynamic getPlayerCharacter() {
-  return playerCharacter;
+  if (playerId == idNotConnected) return null;
+  return players.firstWhere((element) => element[4] == playerId, orElse: () {
+    return null;
+  });
 }
 
-bool get playerAssigned => playerCharacter != null;
+bool get playerAssigned => player != null;
 
 bool isNpc(dynamic character) {
   return character[keyType] == typeNpc;
@@ -132,9 +133,3 @@ int convertAngleToDirection(double angle) {
   return directionUp;
 }
 
-get playerCharacter {
-  if (playerId == idNotConnected) return null;
-  return players.firstWhere((element) => element[4] == playerId, orElse: () {
-    return null;
-  });
-}

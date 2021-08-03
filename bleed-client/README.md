@@ -4,7 +4,6 @@
 [ ] Sniper Rifle
 [ ] Oozie
 [ ] Zombie Death Sound
-[ ] Weapon Shotgun
 [ ] Shot Animation
 [ ] Bullet Hit Animation
 [ ] Shot kickback
@@ -13,7 +12,8 @@
 [ ] Sprint
 [ ] HUD
 [ ] Ammo
-[ ] Fix Sound
+[ ] Weapon Shotgun
+[x] Fix Sound
 [x] Implement tiles on server
 [x] Player respawn after death
 [x] Players disappear after prolonged disconnect
