@@ -31,42 +31,42 @@ void update(){
 
 void smoothing() {
   if (!smooth) return;
-  if (fps < 25) return;
+  if (fps < settingsSmoothingMinFPS) return;
   if (framesSinceEvent > smoothingFrames) return;
 
   for (dynamic character in players) {
     double speed = 2;
-    if (character[0] != characterStateWalking) {
+    if (character[state] != characterStateWalking) {
       continue;
     }
     switch (getDirection(character)) {
       case directionUp:
-        character[3] -= speed;
+        character[y] -= speed;
         break;
       case directionUpRight:
-        character[2] += speed * 0.5;
-        character[3] -= speed * 0.5;
+        character[x] += speed * 0.5;
+        character[y] -= speed * 0.5;
         break;
       case directionRight:
-        character[2] += speed;
+        character[x] += speed;
         break;
       case directionDownRight:
-        character[2] += speed * 0.5;
-        character[3] += speed * 0.5;
+        character[x] += speed * 0.5;
+        character[y] += speed * 0.5;
         break;
       case directionDown:
-        character[3] += speed;
+        character[y] += speed;
         break;
       case directionDownLeft:
-        character[2] -= speed * 0.5;
-        character[3] += speed * 0.5;
+        character[x] -= speed * 0.5;
+        character[y] += speed * 0.5;
         break;
       case directionLeft:
-        character[2] -= speed;
+        character[x] -= speed;
         break;
       case directionUpLeft:
-        character[2] -= speed * 0.5;
-        character[3] -= speed * 0.5;
+        character[x] -= speed * 0.5;
+        character[y] -= speed * 0.5;
         break;
     }
     break;

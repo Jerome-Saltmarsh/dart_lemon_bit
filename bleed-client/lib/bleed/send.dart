@@ -1,5 +1,4 @@
 
-import 'common.dart';
 import 'state.dart';
 
 
@@ -31,18 +30,11 @@ void sendRequestRevive(){
 }
 
 void sendCommandEquipHandGun() {
-  sendCommandEquip(weaponHandgun);
+  sendToServer('equip handgun: $playerId $playerUUID');
 }
 
 void sendCommandEquipShotgun() {
-  sendCommandEquip(weaponShotgun);
-}
-
-void sendCommandEquip(int weapon) {
-  Map<String, dynamic> request = Map();
-  request[keyCommand] = commandEquip;
-  request[keyEquipValue] = weapon;
-  request[keyId] = playerId;
+  sendToServer('equip shotgun: $playerId $playerUUID');
 }
 
 void sendRequestUpdatePlayer() {

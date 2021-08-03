@@ -16,13 +16,13 @@ double getMouseRotation() {
 
 double playerScreenPositionX() {
   dynamic player = getPlayerCharacter();
-  return player[posX] - cameraX;
+  return player[x] - cameraX;
 }
 
 double playerScreenPositionY() {
   if (!playerAssigned) return null;
   dynamic player = getPlayerCharacter();
-  return player[posY] - cameraY;
+  return player[y] - cameraY;
 }
 
 dynamic getPlayerCharacter() {
@@ -33,14 +33,6 @@ dynamic getPlayerCharacter() {
 }
 
 bool get playerAssigned => player != null;
-
-bool isNpc(dynamic character) {
-  return character[keyType] == typeNpc;
-}
-
-bool isHuman(dynamic character) {
-  return character[keyType] == typeHuman;
-}
 
 bool isDead(dynamic character) {
   return getState(character) == characterStateDead;
@@ -55,23 +47,19 @@ Offset offset(double x, double y) {
 }
 
 void drawLineFrom(dynamic object, double x, double y) {
-  drawLine(object[posX], object[posY], x, y);
+  drawLine(object[x], object[y], x, y);
 }
 
 void drawLineRotation(dynamic object, double rotation, double distance) {
   drawLine(
-      object[posX],
-      object[posY],
-      object[posX] + rotationToPosX(rotation, distance),
-      object[posY] + rotationToPosY(rotation, distance));
+      object[x],
+      object[y],
+      object[x] + rotationToPosX(rotation, distance),
+      object[y] + rotationToPosY(rotation, distance));
 }
 
 void drawLineBetween(dynamic a, dynamic b) {
-  drawLineFrom(a, b[posX], b[posY]);
-}
-
-void drawLineNpcDestination(dynamic npc) {
-  drawLineFrom(npc, npc[keyDestinationX], npc[keyDestinationY]);
+  drawLineFrom(a, b[x], b[y]);
 }
 
 dynamic rotationToPosX(double rotation, double distance) {
@@ -80,10 +68,6 @@ dynamic rotationToPosX(double rotation, double distance) {
 
 dynamic rotationToPosY(double rotation, double distance) {
   return -sin(rotation + (pi * 0.5)) * distance;
-}
-
-bool idsMatch(dynamic a, dynamic b) {
-  return a[indexId] == b[indexId];
 }
 
 int getState(dynamic character) {

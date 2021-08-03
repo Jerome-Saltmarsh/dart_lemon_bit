@@ -11,12 +11,13 @@ import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'common.dart';
 import 'keys.dart';
 import 'resources.dart';
+import 'settings.dart';
 import 'state.dart';
 import 'utils.dart';
 
 void drawCharacterCircle(dynamic value, Color color) {
   if (value == null) return;
-  drawCircle(value[posX], value[posY], characterRadius, color);
+  drawCircle(value[x], value[y], characterRadius, color);
 }
 
 void drawCharacters() {
@@ -535,5 +536,5 @@ void drawBulletRange() {
   if (!playerAssigned) return;
   dynamic player = getPlayerCharacter();
   drawCircleOutline(
-      radius: bulletRange, x: player[posX], y: player[posY], color: white);
+      radius: bulletRange, x: player[x], y: player[y], color: white);
 }

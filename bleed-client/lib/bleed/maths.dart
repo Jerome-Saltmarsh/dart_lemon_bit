@@ -24,8 +24,8 @@ double magnitude(double a, double b){
 }
 
 double distanceBetween(dynamic a, dynamic b){
-  double xDiff = a[posX] - b[posX];
-  double yDiff = a[posY] - b[posY];
+  double xDiff = a[x] - b[x];
+  double yDiff = a[y] - b[y];
   return magnitude(xDiff, yDiff);
 }
 
@@ -53,11 +53,11 @@ Vector2 convertRadionsToVector(num radions){
 }
 
 double radionsBetweenObject(dynamic a, dynamic b) {
-  return radionsBetween(a[posX], a[posY], b[posX], b[posY]);
+  return radionsBetween(a[x], a[y], b[x], b[y]);
 }
 
 double radionsBetween2(dynamic a, double x, double y) {
-  return radionsBetween(a[posX], a[posY], x, y);
+  return radionsBetween(a[x], a[y], x, y);
 }
 
 double convertVectorToDegrees(double x, double y) {
