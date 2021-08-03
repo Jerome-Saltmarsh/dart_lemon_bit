@@ -147,15 +147,15 @@ void fireWeapon(Character character) {
   switch (character.weapon) {
     case Weapon.HandGun:
       spawnBullet(character);
-      character.fire();
+      character.state = CharacterState.Firing;
       character.shotCoolDown = pistolCoolDown;
       gameEvents.add(GameEvent(character.x, character.y, GameEventType.Handgun_Fired, 3));
       break;
     case Weapon.Shotgun:
-      for (int i = 0; i < 5; i++) {
-        spawnBullet(character, accuracy: pi * 0.05);
+      for (int i = 0; i < settingsShotgunBulletsPerShot; i++) {
+        spawnBullet(character);
       }
-      character.fire();
+      character.state = CharacterState.Firing;
       character.shotCoolDown = shotgunCoolDown;
       gameEvents.add(GameEvent(character.x, character.y, GameEventType.Shotgun_Fired, 3));
       break;
@@ -221,6 +221,17 @@ double getWeaponRange(Weapon weapon){
       return settingsWeaponRangeHandgun;
     case Weapon.Shotgun:
       return settingsWeaponRangeShotgun;
+    default:
+      throw Exception("no range found for $weapon");
+  }
+}
+
+double getWeaponAccuracy(Weapon weapon){
+  switch (weapon){
+    case Weapon.HandGun:
+      return settingsWeaponAccuracyHandgun;
+    case Weapon.Shotgun:
+      return settingsWeaponAccurayShotgun;
     default:
       throw Exception("no range found for $weapon");
   }

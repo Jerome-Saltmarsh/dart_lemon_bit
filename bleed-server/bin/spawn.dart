@@ -5,10 +5,15 @@ import 'settings.dart';
 import 'state.dart';
 import 'utils.dart';
 
-void spawnBullet(Character character, { double accuracy = 0}) {
-  Bullet bullet = Bullet(character.x, character.y, velX(character.aimAngle + giveOrTake(accuracy), bulletSpeed), velY(character.aimAngle + giveOrTake(accuracy), bulletSpeed), character.id, getWeaponRange(character.weapon));
+void spawnBullet(Character character) {
+  Bullet bullet = Bullet(
+      character.x,
+      character.y,
+      velX(character.aimAngle + giveOrTake(getWeaponAccuracy(character.weapon)), bulletSpeed),
+      velY(character.aimAngle + giveOrTake(getWeaponAccuracy(character.weapon)), bulletSpeed),
+      character.id,
+      getWeaponRange(character.weapon));
   bullets.add(bullet);
-  print("Bullet spawned");
 }
 
 Npc spawnNpc(double x, double y) {
@@ -23,18 +28,16 @@ Npc spawnRandomNpc() {
       randomBetween(-spawnRadius, spawnRadius) + 1000);
 }
 
-Player spawnPlayer({required String name}){
+Player spawnPlayer({required String name}) {
   Player player = Player(
       uuid: _generateUUID(),
       x: giveOrTake(50),
       y: 1000 + giveOrTake(50),
-      name: name
-  );
+      name: name);
   players.add(player);
   return player;
 }
 
-String _generateUUID(){
+String _generateUUID() {
   return uuidGenerator.v4().substring(0, 8);
 }
-

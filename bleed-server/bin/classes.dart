@@ -51,10 +51,6 @@ class Character extends PhysicsGameObject {
   void walk() {
     state = CharacterState.Walking;
   }
-
-  void fire() {
-    state = CharacterState.Firing;
-  }
 }
 
 class Npc extends Character {
@@ -123,6 +119,12 @@ class Bullet extends PhysicsGameObject {
 class Blood extends PhysicsGameObject {
   int lifeTime = randomBetween(45, 90).toInt();
   Blood(double x, double y, double xVel, double yVel) : super(x, y, xVel, yVel);
+}
+
+class Particle extends PhysicsGameObject {
+  int lifeTime;
+  double rotation;
+  Particle(double x, double y, double xVel, double yVel, this.lifeTime, this.rotation) : super(x, y, xVel, yVel);
 }
 
 class GameEvent extends GameObject {

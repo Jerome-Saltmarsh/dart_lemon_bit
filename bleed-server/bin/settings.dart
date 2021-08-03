@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 const host = '0.0.0.0';
 const port = 8080;
 const int expiration = 200;
@@ -23,6 +25,9 @@ const int settingsPlayerDisconnectFrames = 300;
 const double settingsPlayerStartRadius = 50;
 const double settingsWeaponRangeHandgun = 320;
 const double settingsWeaponRangeShotgun = 180;
+const double settingsWeaponAccuracyHandgun = 0;
+const double settingsWeaponAccurayShotgun = pi * 0.06;
+const int settingsShotgunBulletsPerShot = 5;
 
 const int tilesX = 40;
 const int tilesY = 40;
