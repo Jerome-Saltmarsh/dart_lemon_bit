@@ -60,7 +60,6 @@ Future<void> showChangeNameDialog() async {
             child: const Text('PLAY'),
             onPressed: playerNameController.text.trim().length > 2
                 ? () {
-              loadAudioFiles();
               // sendRequestSpawn(playerNameController.text.trim());
               Navigator.of(context).pop();
             }
@@ -107,6 +106,7 @@ Widget buildDebugUI(BuildContext context){
       if (!connected) button("Connect", connect),
       if (!debugMode) button("Show Debug", showDebug),
       if (debugMode) button("Hide Debug", hideDebug),
+      button("Load Audio", loadAudioFiles),
       button("Respawn", sendRequestSpawn),
       button("Spawn NPC", sendRequestSpawnNpc),
       button("Clear NPCS", sendRequestClearNpcs),

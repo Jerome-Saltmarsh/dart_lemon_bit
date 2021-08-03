@@ -26,6 +26,7 @@ void onEvent(dynamic response) {
     print(error);
   }
   redrawGame();
+  redrawUI();
 }
 
 int attempts = 0;

@@ -3,7 +3,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_game_engine/bleed/update.dart';
-import 'package:flutter_game_engine/bleed/utils.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'connection.dart';

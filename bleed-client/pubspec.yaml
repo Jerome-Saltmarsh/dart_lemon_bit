@@ -1,4 +1,4 @@
-name: bleedclient
+name: flutter_game_engine
 description: A client for the game BLEED
 
 version: 1.0.0+1
@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  universal_html: ^2.0.8
   positioned_tap_detector: ^1.0.3
   vector_math: ^2.0.8
   web_socket_channel: ^2.1.0

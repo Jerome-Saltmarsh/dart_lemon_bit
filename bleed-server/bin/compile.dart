@@ -9,6 +9,7 @@ void compileState(){
   _compileBullets();
   _compilePasses();
   _compileFPS();
+  _compileFrame();
   compiledState = buffer.toString();
 }
 
@@ -52,6 +53,10 @@ void _compilePasses(){
   buffer.write("passes: $firstPass $secondPass $thirdPass $fourthPass ; ");
 }
 
+void _compileFrame(){
+  buffer.write('f: $frame ; ');
+}
+
 void _compilePlayers(){
   _write("p:");
   players.forEach(_compileCharacter);
@@ -71,6 +76,7 @@ void _compileBullets(){
 }
 
 void _compileBullet(Bullet bullet){
+  _write(bullet.id);
   _write(bullet.x);
   _write(bullet.y);
 }

@@ -11,7 +11,7 @@ void spawnBullet(Character character) {
 }
 
 Npc spawnNpc(double x, double y) {
-  Npc npc = Npc(x: x, y: y, id: _generateId(), health: 5, maxHealth: 5);
+  Npc npc = Npc(x: x, y: y, health: 5, maxHealth: 5);
   npcs.add(npc);
   onNpcSpawned.add(npc);
   return npc;
@@ -24,7 +24,6 @@ Npc spawnRandomNpc() {
 
 Player spawnPlayer({required String name}){
   Player player = Player(
-      id: _generateId(),
       uuid: _generateUUID(),
       x: giveOrTake(50),
       y: giveOrTake(50),
@@ -35,10 +34,6 @@ Player spawnPlayer({required String name}){
 }
 
 String _generateUUID(){
-  return uuidGenerator.v4();
+  return uuidGenerator.v4().substring(0, 8);
 }
 
-int _generateId(){
-  id++;
-  return id;
-}

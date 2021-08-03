@@ -45,7 +45,6 @@ void sendCommandEquip(int weapon) {
   request[keyId] = playerId;
 }
 
-
 void sendRequestUpdatePlayer() {
   _buffer.clear();
   _write("u:");
@@ -53,7 +52,8 @@ void sendRequestUpdatePlayer() {
   _write(playerUUID);
   _write(requestCharacterState);
   _write(requestDirection);
-  _write(requestAim);
+  _write(requestAim.toStringAsFixed(1));
+  _write(serverFrame);
   sendToServer(_buffer.toString());
 }
 

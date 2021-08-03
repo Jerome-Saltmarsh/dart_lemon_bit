@@ -14,6 +14,7 @@ int packagesSent = 0;
 int packagesReceived = 0;
 int errors = 0;
 int pass = 0;
+int serverFrame = 0;
 int dones = 0;
 int requestDirection = directionDown;
 int requestCharacterState = characterStateIdle;
@@ -28,9 +29,9 @@ Duration refreshDuration;
 bool smooth = true;
 BuildContext context;
 WebSocketChannel webSocketChannel;
-List<List> players = [];
-List<List> npcs = [];
-List<List> bullets = [];
+List<List<dynamic>> players = [];
+List<List<dynamic>> npcs = [];
+List<List<dynamic>> bullets = [];
 int drawFrame = 0;
 Canvas canvas;
 bool connected = false;
@@ -60,3 +61,6 @@ List<List<Tile>> tiles = [];
 
 List<RSTransform> tileTransforms = [];
 List<Rect> tileRects = [];
+
+
+Map<int, bool> bulletEventsFired = Map();

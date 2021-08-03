@@ -5,10 +5,8 @@ import 'package:shelf_web_socket/shelf_web_socket.dart';
 
 import 'classes.dart';
 import 'compile.dart';
-import 'constants.dart';
 import 'enums.dart';
 import 'events.dart';
-import 'maths.dart';
 import 'settings.dart';
 import 'spawn.dart';
 import 'state.dart';
@@ -30,7 +28,7 @@ void main() {
       sendToClient(compiledState);
     }
 
-    void sendCompiledPlayerState(Character player, { int pass = 1 }){
+    void sendCompiledPlayerState(Character player, {int pass = 1}) {
       sendToClient(compilePlayer(player) + compilePass(pass));
     }
 
@@ -64,26 +62,28 @@ void main() {
             Direction.values[int.parse(attributes[4])];
         double aim = double.parse(attributes[5]);
         player.aimAngle = aim;
+        // int lastServerFrame = int.parse(attributes[6]);
+        // find all the events since then and send them to the server
+
         setDirection(player, requestedDirection);
         setCharacterState(player, requestedState);
-        // sendCompiledState();
         sendCompiledPlayerState(player, pass: 0);
 
-        if(firstPass){
-          Future.delayed(Duration(milliseconds: firstPassMS), () => sendCompiledPlayerState(player, pass: 1));
-        }
-        if(secondPass){
-          Future.delayed(Duration(milliseconds: secondPassMS), () => sendCompiledPlayerState(player, pass: 2));
-        }
-        if(thirdPass){
-          Future.delayed(Duration(milliseconds: thirdPassMS), () => sendCompiledPlayerState(player, pass: 3));
-        }
-        if(fourthPass){
-          Future.delayed(Duration(milliseconds: fourthPassMS), () => sendCompiledPlayerState(player, pass: 4));
-        }
+        // if(firstPass){
+        //   Future.delayed(Duration(milliseconds: firstPassMS), () => sendCompiledPlayerState(player, pass: 1));
+        // }
+        // if(secondPass){
+        //   Future.delayed(Duration(milliseconds: secondPassMS), () => sendCompiledPlayerState(player, pass: 2));
+        // }
+        // if(thirdPass){
+        //   Future.delayed(Duration(milliseconds: thirdPassMS), () => sendCompiledPlayerState(player, pass: 3));
+        // }
+        // if(fourthPass){
+        //   Future.delayed(Duration(milliseconds: fourthPassMS), () => sendCompiledPlayerState(player, pass: 4));
+        // }
         return;
       }
-      if (request.startsWith('revive:')){
+      if (request.startsWith('revive:')) {
         List<String> attributes = request.split(" ");
         int id = int.parse(attributes[1]);
         Player? player = findPlayerById(id);
@@ -120,22 +120,22 @@ void main() {
         sendCompiledState();
         return;
       }
-      if (request == 'toggle-pass-1'){
+      if (request == 'toggle-pass-1') {
         firstPass = !firstPass;
         print('first pass toggled: $firstPass');
       }
-      if (request == 'toggle-pass-2'){
+      if (request == 'toggle-pass-2') {
         secondPass = !secondPass;
         print('second pass toggled: $secondPass');
       }
-      if (request == 'toggle-pass-3'){
+      if (request == 'toggle-pass-3') {
         thirdPass = !thirdPass;
       }
-      if (request == 'toggle-pass-4'){
+      if (request == 'toggle-pass-4') {
         fourthPass = !fourthPass;
       }
-      if (request == 'get-tiles'){
-        sendToClient(compileTiles()) ;
+      if (request == 'get-tiles') {
+        sendToClient(compileTiles());
       }
     }
 

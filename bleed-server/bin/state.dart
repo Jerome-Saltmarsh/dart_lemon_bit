@@ -13,7 +13,6 @@ Duration frameDuration = Duration();
 int fps = 30;
 StringBuffer buffer = StringBuffer();
 String compiledState = "";
-int id = 0;
 Uuid uuidGenerator = Uuid();
 
 bool firstPass = true;
@@ -24,3 +23,4 @@ int firstPassMS = 30;
 int secondPassMS = 60;
 int thirdPassMS = 120;
 int fourthPassMS = 240;
+

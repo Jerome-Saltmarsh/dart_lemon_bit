@@ -11,6 +11,7 @@
 [ ] spawn shell on fire bullet
 [ ] Optimize Server Collision Detection
 [ ] Sprint
+[ ] HUD
 [ ] Ammo
 [ ] Fix Sound
 [x] Implement tiles on server

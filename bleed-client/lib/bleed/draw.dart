@@ -65,7 +65,7 @@ void processTileTransforms(){
   }
 }
 
-List<Rect> processRects(){
+void processRects(){
   tileRects.clear();
   for(int x = 0; x < tiles.length; x++){
     for(int y = 0; y < tiles[0].length; y++){
@@ -213,6 +213,7 @@ Rect getTileSpriteRect(Tile tile){
     case Tile.Grass:
       return tileRectGrass;
   }
+  throw Exception("could not find rect for tile $tile");
 }
 
 Rect getCharacterSpriteRect(dynamic character) {

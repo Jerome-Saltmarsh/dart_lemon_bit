@@ -2,21 +2,20 @@ import 'enums.dart';
 import 'settings.dart';
 
 class GameObject {
+  static int _idGenerator = 0;
+  final int id = _idGenerator++;
   double x;
   double y;
-
   GameObject(this.x, this.y);
 }
 
 class PhysicsGameObject extends GameObject {
   double xVel = 0;
   double yVel = 0;
-
   PhysicsGameObject(double x, double y, this.xVel, this.yVel) : super(x, y);
 }
 
 class Character extends PhysicsGameObject {
-  final int id;
   CharacterState state = CharacterState.Idle;
   Direction direction = Direction.Down;
   Weapon weapon;
@@ -29,15 +28,12 @@ class Character extends PhysicsGameObject {
   String name;
 
   bool get alive => state != CharacterState.Dead;
-
   bool get dead => state == CharacterState.Dead;
-
   bool get firing => state == CharacterState.Firing;
-
   bool get aiming => state == CharacterState.Aiming;
+  bool get walking => state == CharacterState.Walking;
 
   Character({
-    required this.id,
     required double x,
     required double y,
     required this.weapon,
@@ -66,9 +62,8 @@ class Npc extends Character {
   double yDes = 0;
 
   Npc(
-      {required double x, required double y, required int id, required double health, required double maxHealth})
+      {required double x, required double y, required double health, required double maxHealth})
       : super(
-      id: id,
       x: x,
       y: y,
       weapon: Weapon.Unarmed,
@@ -98,11 +93,10 @@ class Player extends Character {
 
   Player({
     required this.uuid,
-    required int id,
     required double x,
     required double y,
     required String name})
-      : super(id: id,
+      : super(
       x: x,
       y: y,
       weapon: Weapon.HandGun,

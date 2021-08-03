@@ -28,6 +28,10 @@ void setCharacterState(Character character, CharacterState value) {
   character.state = value;
 }
 
+void setCharacterStateIdle(Character character){
+  setCharacterState(character, CharacterState.Idle);
+}
+
 void changeCharacterHealth(Character character, double amount) {
   character.health += amount;
   character.health = clamp(character.health, 0, character.maxHealth);

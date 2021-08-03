@@ -11,13 +11,15 @@ import 'keys.dart';
 import 'resources.dart';
 import 'state.dart';
 
-void playShotgunAudio() {
-  shotgunFireAudio.play();
+void playAudioShotgunShot() {
+
 }
 
-void playPistolAudio() {
-  if (pistolFireAudio == null) return;
-  pistolFireAudio.play();
+void playAudioPistolShot() {
+  // if (pistolFireAudio == null) return;
+  // pistolFireAudio.play();
+  if(handgunPistolShot == null) return;
+  handgunPistolShot.play();
 }
 
 double getMouseRotation() {

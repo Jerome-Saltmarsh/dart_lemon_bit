@@ -5,7 +5,6 @@ import 'package:flutter_game_engine/game_engine/game_input.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'common.dart';
-import 'connection.dart';
 import 'keys.dart';
 import 'send.dart';
 import 'settings.dart';

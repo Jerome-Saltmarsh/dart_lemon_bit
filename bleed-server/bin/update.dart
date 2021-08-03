@@ -162,6 +162,13 @@ void updateCharacter(Character character) {
 void updateCharacters() {
   players.forEach(updateCharacter);
   npcs.forEach(updateCharacter);
+
+  for(Player player in players) {
+    if(frame - player.lastEventFrame > 5 && player.walking){
+      setCharacterStateIdle(player);
+      print("no event from player. Idling; ${player.lastEventFrame}");
+    }
+  }
 }
 
 void fixedUpdate() {

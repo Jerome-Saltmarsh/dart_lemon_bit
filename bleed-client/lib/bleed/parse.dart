@@ -1,10 +1,8 @@
-import 'package:flutter_game_engine/bleed/connection.dart';
 import 'package:flutter_game_engine/bleed/keys.dart';
 import 'package:flutter_game_engine/bleed/state.dart';
 
 import 'constants.dart';
 import 'enums.dart';
-import 'send.dart';
 
 final List _cache = [];
 
@@ -31,23 +29,44 @@ void parseState() {
     } else if (term == "fms:") {
       _parseFrameMS();
     } else if (term == 'player-not-found') {
-      playerId = idNotConnected;
-      _consumeSemiColon();
+      _consumePlayerNotFound();
     } else if (term == 'invalid--uuid') {
-      _consumeSemiColon();
+      _consumeInvalidUUID();
     } else if (term == 'player:') {
       _parsePlayer();
     } else if (term == 'passes:') {
       _parsePasses();
     } else if (term == 'tiles:') {
       _parseTiles();
-    } else if (term == "pass:"){
-      pass = _consumeInt();
-      _consumeSemiColon();
+    } else if (term == "pass:") {
+      _consumePass();
+    } else if (term == "f:") {
+      _consumeFrame();
     } else {
       throw Exception("term not found: $term");
     }
   }
+}
+
+void _consumePlayerNotFound() {
+  playerId = idNotConnected;
+  _consumeSemiColon();
+}
+
+void _consumeInvalidUUID() {
+  playerId = idNotConnected;
+  playerUUID = "";
+  _consumeSemiColon();
+}
+
+void _consumePass() {
+  pass = _consumeInt();
+  _consumeSemiColon();
+}
+
+void _consumeFrame() {
+  serverFrame = _consumeInt();
+  _consumeSemiColon();
 }
 
 void _parseTiles() {
@@ -205,6 +224,7 @@ void _consumeNpc(dynamic memory) {
 }
 
 void _consumeBullet(dynamic memory) {
+  memory[id] = _consumeInt();
   memory[x] = _consumeDouble();
   memory[y] = _consumeDouble();
 }
