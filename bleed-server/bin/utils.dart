@@ -214,3 +214,14 @@ void generateTiles() {
   tiles[4][4] = Tile.Grass;
   tiles[4][5] = Tile.Grass;
 }
+
+double getWeaponRange(Weapon weapon){
+  switch (weapon){
+    case Weapon.HandGun:
+      return settingsWeaponRangeHandgun;
+    case Weapon.Shotgun:
+      return settingsWeaponRangeShotgun;
+    default:
+      throw Exception("no range found for $weapon");
+  }
+}

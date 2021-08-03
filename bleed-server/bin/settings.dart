@@ -21,6 +21,8 @@ const double settingsNpcRoamRange = 50;
 const double settingsPlayerStartHealth = 5;
 const int settingsPlayerDisconnectFrames = 300;
 const double settingsPlayerStartRadius = 50;
+const double settingsWeaponRangeHandgun = 320;
+const double settingsWeaponRangeShotgun = 180;
 
 const int tilesX = 40;
 const int tilesY = 40;

@@ -37,7 +37,7 @@ void updateBullets() {
     Bullet bullet = bullets[i];
     bullet.x += bullet.xVel;
     bullet.y += bullet.yVel;
-    if (bulletDistanceTravelled(bullet) > bulletRange) {
+    if (bulletDistanceTravelled(bullet) > bullet.range) {
       bullets.removeAt(i);
       i--;
       continue;

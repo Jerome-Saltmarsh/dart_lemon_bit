@@ -111,8 +111,9 @@ class Bullet extends PhysicsGameObject {
   late double xStart;
   late double yStart;
   int ownerId;
+  final double range;
 
-  Bullet(double x, double y, double xVel, double yVel, this.ownerId)
+  Bullet(double x, double y, double xVel, double yVel, this.ownerId, this.range)
       : super(x, y, xVel, yVel) {
     xStart = x;
     yStart = y;

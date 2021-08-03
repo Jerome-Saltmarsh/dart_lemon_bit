@@ -2,6 +2,7 @@
 [ ] Persist World on firebase
 [ ] Reload
 [ ] Sniper Rifle
+[ ] Keep aiming for duration after shot fired
 [ ] Oozie
 [ ] Zombie Death Sound
 [ ] Shot Animation
@@ -11,11 +12,12 @@
 [ ] Sprint
 [ ] HUD
 [ ] Ammo
+[ ] Accuracy
 [ ] Shotgun Audio
 [ ] Design Town Center
-[ ] Shotgun bullet distance
 [ ] Fix center camera on spawn
 [ ] spawn shell on fire bullet
+[x] Shotgun bullet range
 [x] Fix zombie spawn position
 [x] Fix shot body position
 [x] Blood Effect
