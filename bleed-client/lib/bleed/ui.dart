@@ -3,6 +3,7 @@ import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'package:flutter_game_engine/game_engine/web_functions.dart';
 
 import 'connection.dart';
+import 'keys.dart';
 import 'send.dart';
 import 'settings.dart';
 import 'state.dart';
@@ -105,6 +106,8 @@ Widget buildDebugUI(BuildContext context){
       if (!debugMode) button("Show Debug", showDebug),
       if (debugMode) button("Hide Debug", hideDebug),
       button("FullScreen", requestFullScreen),
+      if (playerAssigned)
+      text("X: $playerX Y: $playerY"),
       if(debugMode) column([
         button("Respawn", sendRequestSpawn),
         button("Spawn NPC", sendRequestSpawnNpc),

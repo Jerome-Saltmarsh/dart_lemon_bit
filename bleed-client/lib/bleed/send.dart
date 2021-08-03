@@ -1,4 +1,6 @@
 
+import 'package:flutter_game_engine/bleed/enums.dart';
+
 import 'state.dart';
 
 
@@ -29,12 +31,16 @@ void sendRequestRevive(){
   sendToServer('revive: $playerId $playerUUID');
 }
 
-void sendCommandEquipHandGun() {
-  sendToServer('equip handgun: $playerId $playerUUID');
+void sendRequestEquip(Weapon weapon) {
+  sendToServer('equip $playerId $playerUUID ${weapon.index}');
 }
 
-void sendCommandEquipShotgun() {
-  sendToServer('equip shotgun: $playerId $playerUUID');
+void sendRequestEquipHandgun() {
+  sendRequestEquip(Weapon.HandGun);
+}
+
+void sendRequestEquipShotgun() {
+  sendRequestEquip(Weapon.Shotgun);
 }
 
 void sendRequestUpdatePlayer() {

@@ -33,6 +33,8 @@ dynamic getPlayerCharacter() {
 }
 
 bool get playerAssigned => player != null;
+double get playerX => player[x];
+double get playerY => player[y];
 
 bool isDead(dynamic character) {
   return getState(character) == characterStateDead;

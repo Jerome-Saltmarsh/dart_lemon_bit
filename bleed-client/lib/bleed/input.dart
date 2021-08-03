@@ -58,10 +58,10 @@ void readPlayerInput() {
     }
   }
   if (keyEquipHandGun) {
-    sendCommandEquipHandGun();
+    sendRequestEquipHandgun();
   }
   if (keyEquipShotgun) {
-    sendCommandEquipShotgun();
+    sendRequestEquipShotgun();
   }
 }
 

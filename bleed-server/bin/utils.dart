@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'classes.dart';
 import 'common.dart';
 import 'constants.dart';
@@ -139,7 +141,6 @@ void faceAimDirection(Character character) {
 }
 
 void fireWeapon(Character character) {
-  // if (!character.aiming) return;
   if (character.dead) return;
   if (character.shotCoolDown > 0) return;
   faceAimDirection(character);
@@ -151,7 +152,7 @@ void fireWeapon(Character character) {
       break;
     case Weapon.Shotgun:
       for (int i = 0; i < 5; i++) {
-        spawnBullet(character);
+        spawnBullet(character, accuracy: pi * 0.05);
       }
       character.fire();
       character.shotCoolDown = shotgunCoolDown;

@@ -4,8 +4,8 @@ import 'maths.dart';
 import 'settings.dart';
 import 'state.dart';
 
-void spawnBullet(Character character) {
-  Bullet bullet = Bullet(character.x, character.y, velX(character.aimAngle, bulletSpeed), velY(character.aimAngle, bulletSpeed), character.id);
+void spawnBullet(Character character, { double accuracy = 0}) {
+  Bullet bullet = Bullet(character.x, character.y, velX(character.aimAngle + giveOrTake(accuracy), bulletSpeed), velY(character.aimAngle + giveOrTake(accuracy), bulletSpeed), character.id);
   bullets.add(bullet);
   print("Bullet spawned");
 }
