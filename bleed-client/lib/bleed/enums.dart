@@ -9,5 +9,7 @@ enum Weapon { Unarmed, HandGun, Shotgun }
 enum GameEventType {
   Handgun_Fired,
   Shotgun_Fired,
-  Zombie_Hit
+  Zombie_Hit,
+  Zombie_Killed,
+  Zombie_Target_Acquired
 }

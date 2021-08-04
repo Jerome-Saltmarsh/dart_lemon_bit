@@ -1,4 +1,5 @@
 import 'package:flutter_game_engine/bleed/audio.dart';
+import 'package:flutter_game_engine/bleed/events.dart';
 import 'package:flutter_game_engine/bleed/keys.dart';
 import 'package:flutter_game_engine/bleed/state.dart';
 import 'package:flutter_game_engine/bleed/utils.dart';
@@ -210,19 +211,7 @@ void _consumeEvents() {
     int y = _consumeInt();
     if (!gameEvents.containsKey(id)) {
       gameEvents[id] = true;
-      switch(type){
-        case GameEventType.Handgun_Fired:
-          playAudioHandgunShot();
-          break;
-        case GameEventType.Shotgun_Fired:
-          playAudioShotgunShot();
-          break;
-        case GameEventType.Zombie_Hit:
-          if(randomBool()){
-            playAudioZombieHit();
-          }
-          break;
-      }
+      onGameEvent(type);
     }
   }
   if (events == 0) {

@@ -24,5 +24,6 @@ enum GameEventType {
   Handgun_Fired,
   Shotgun_Fired,
   Zombie_Hit,
-  Zombie_Killed
+  Zombie_Killed,
+  Zombie_Target_Acquired
 }

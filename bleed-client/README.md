@@ -7,6 +7,8 @@
 [ ] Shot Animation
 [ ] Bullet Hit Animation
 [ ] Shot kickback
+[ ] Publish dart-blade-game-engine
+[ ] Create bleed-common library
 [ ] Optimize Server Collision Detection
 [ ] Sprint
 [ ] HUD
@@ -14,8 +16,10 @@
 [ ] Accuracy
 [ ] Fix center camera on spawn
 [ ] Design Town Center
-[ ] Zombie target set audio (talk)
-[ ] Zombie Death Audio
+[ ] Zombie ragdoll death
+[ ] Zombie Strike Audio
+[x] Zombie target set audio (talk)
+[x] Zombie Death Audio
 [x] Zombie Hurt Audio
 [x] Shotgun Audio
 [x] spawn shell on fire bullet

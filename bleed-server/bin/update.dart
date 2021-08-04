@@ -32,6 +32,7 @@ void updateNpcTarget(Npc npc) {
     if (player.dead) continue;
     if (distanceBetween(npc, player) > zombieViewRange) continue;
     npc.targetId = player.id;
+    dispatch(GameEventType.Zombie_Target_Acquired, npc.x, npc.y);
     return;
   }
 }
