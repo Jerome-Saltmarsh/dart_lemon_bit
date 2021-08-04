@@ -167,29 +167,29 @@ void updateCharacter(Character character) {
           character.y -= character.speed;
           break;
         case Direction.UpRight:
-          character.x += character.speed * 0.5;
-          character.y -= character.speed * 0.5;
+          character.x += velX(piQuarter, character.speed);
+          character.y += velY(piQuarter, character.speed);
           break;
         case Direction.Right:
           character.x += character.speed;
           break;
         case Direction.DownRight:
-          character.x += character.speed * 0.5;
-          character.y += character.speed * 0.5;
+          character.x += velX(piQuarter, character.speed);
+          character.y -= velY(piQuarter, character.speed);
           break;
         case Direction.Down:
           character.y += character.speed;
           break;
         case Direction.DownLeft:
-          character.x -= character.speed * 0.5;
-          character.y += character.speed * 0.5;
+          character.x -= velX(piQuarter, character.speed);
+          character.y -= velY(piQuarter, character.speed);
           break;
         case Direction.Left:
           character.x -= character.speed;
           break;
         case Direction.UpLeft:
-          character.x -= character.speed * 0.5;
-          character.y -= character.speed * 0.5;
+          character.x -= velX(piQuarter, character.speed);
+          character.y += velY(piQuarter, character.speed);
           break;
       }
       break;

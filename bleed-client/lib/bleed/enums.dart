@@ -4,7 +4,21 @@ enum Tile {
   Water
 }
 
+enum CharacterState { Idle, Walking, Dead, Aiming, Firing, Striking }
+
 enum Weapon { Unarmed, HandGun, Shotgun }
+
+enum Direction {
+  Up,
+  UpRight,
+  Right,
+  DownRight,
+  Down,
+  DownLeft,
+  Left,
+  UpLeft,
+  None
+}
 
 enum GameEventType {
   Handgun_Fired,
@@ -14,7 +28,7 @@ enum GameEventType {
   Zombie_Target_Acquired,
   Bullet_Hole,
   Zombie_Strike,
-  Player_Death
+  Player_Death,
 }
 
 enum ParticleType {
