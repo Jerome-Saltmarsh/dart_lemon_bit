@@ -1,9 +1,11 @@
 
+import 'package:flutter_game_engine/bleed/state.dart';
+
 import 'audio.dart';
 import 'enums.dart';
 import 'utils.dart';
 
-void onGameEvent(GameEventType type){
+void onGameEvent(GameEventType type, int x, int y){
   switch(type){
     case GameEventType.Handgun_Fired:
       playAudioHandgunShot();
@@ -22,6 +24,9 @@ void onGameEvent(GameEventType type){
     case GameEventType.Zombie_Target_Acquired:
       playAudioZombieTargetAcquired();
       break;
+    case GameEventType.Bullet_Hole:
+      bulletHoles.add(x.toDouble());
+      bulletHoles.add(y.toDouble());
+      break;
   }
-
 }

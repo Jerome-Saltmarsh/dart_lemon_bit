@@ -535,6 +535,12 @@ void drawBlood() {
   }
 }
 
+void drawBulletHoles(){
+  for(int i = 0; i < bulletHoles.length; i += 2){
+    drawCircle(bulletHoles[i], bulletHoles[i + 1], 2, Colors.black);
+  }
+}
+
 void drawParticles() {
   for (int i = 0; i < particles.length; i += 4) {
     switch(ParticleType.values[particles[i + 2].toInt()]){

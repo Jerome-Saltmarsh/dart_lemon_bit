@@ -13,14 +13,14 @@
 [ ] Sprint
 [ ] HUD
 [ ] Ammo
-[ ] Particle Bullet Hole
 [ ] Particle Smoke
 [ ] Accuracy
 [ ] Critical Damage
 [ ] Fix center camera on spawn
 [ ] Design Town Center
-[ ] Zombie ragdoll death
 [ ] Zombie Strike Audio
+[ ] Particle Bullet Hole
+[x] Zombie ragdoll death
 [x] Zombie target set audio (talk)
 [x] Zombie Death Audio
 [x] Zombie Hurt Audio

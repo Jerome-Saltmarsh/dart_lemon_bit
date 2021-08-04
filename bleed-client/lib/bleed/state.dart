@@ -32,6 +32,7 @@ WebSocketChannel webSocketChannel;
 List<List<dynamic>> players = [];
 List<List<dynamic>> npcs = [];
 List<List<dynamic>> bullets = [];
+List<double> bulletHoles = [];
 List<double> blood = [];
 List<double> particles = [];
 int drawFrame = 0;

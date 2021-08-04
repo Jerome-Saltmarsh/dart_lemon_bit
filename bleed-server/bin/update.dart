@@ -43,6 +43,7 @@ void updateBullets() {
     bullet.x += bullet.xVel;
     bullet.y += bullet.yVel;
     if (bulletDistanceTravelled(bullet) > bullet.range) {
+      dispatch(GameEventType.Bullet_Hole, bullet.x, bullet.y);
       bullets.removeAt(i);
       i--;
       continue;
