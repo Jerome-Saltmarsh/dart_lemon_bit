@@ -6,10 +6,10 @@
 [ ] Oozie
 [ ] Shot Animation
 [ ] Bullet Hit Animation
-[ ] Shot kickback
 [ ] Publish dart-blade-game-engine
 [ ] Create bleed-common library
 [ ] Optimize Server Collision Detection
+[ ] Design Town Center
 [ ] Sprint
 [ ] HUD
 [ ] Ammo
@@ -17,9 +17,10 @@
 [ ] Accuracy
 [ ] Critical Damage
 [ ] Fix center camera on spawn
-[ ] Design Town Center
 [ ] Zombie Strike Audio
-[ ] Particle Bullet Hole
+[ ] Weapon: Machine Gun
+[x] Shot kickback
+[x] Particle Bullet Hole
 [x] Zombie ragdoll death
 [x] Zombie target set audio (talk)
 [x] Zombie Death Audio
