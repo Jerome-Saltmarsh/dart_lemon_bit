@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'bleed/client.dart';
+import 'bleed/widget.dart';
 
 
 
 void main() {
-  runApp(BleedClient());
+  runApp(BleedWidget());
 }
 

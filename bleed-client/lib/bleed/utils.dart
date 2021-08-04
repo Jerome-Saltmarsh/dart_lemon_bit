@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
@@ -135,4 +136,10 @@ bool randomBool(){
 
 T randomItem<T>(List<T> list){
   return list[random.nextInt(list.length)];
+}
+
+Timer periodic(Function function, {int seconds = 0, int ms = 0}) {
+  return Timer.periodic(Duration(seconds: seconds, milliseconds: ms), (timer) {
+    function();
+  });
 }

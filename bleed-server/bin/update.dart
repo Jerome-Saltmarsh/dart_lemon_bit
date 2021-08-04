@@ -148,8 +148,8 @@ void updateCharacter(Character character) {
       }
       break;
     case CharacterState.Dead:
-      if (frame % 10 == 0) {
-        double speed = 0.75;
+      if (frame % 2 == 0) {
+        double speed = randomBetween(0.5, 1.25);
         spawnBlood(character, randomRadion(), speed);
       }
       break;

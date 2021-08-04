@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_game_engine/bleed/update.dart';
+import 'package:flutter_game_engine/bleed/utils.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'connection.dart';
@@ -12,7 +13,7 @@ import 'send.dart';
 import 'state.dart';
 import 'ui.dart';
 
-class BleedClient extends GameWidget {
+class BleedWidget extends GameWidget {
 
   @override
   bool uiVisible() => true;
@@ -24,6 +25,21 @@ class BleedClient extends GameWidget {
   }
 
   @override
+  Future init() async {
+    loadResources();
+    connect();
+    sendRequestSpawn();
+    periodic(checkBulletHoles, ms: 500);
+  }
+
+  void checkBulletHoles(){
+    if (bulletHoles.length > 4){
+      bulletHoles.removeAt(0);
+      bulletHoles.removeAt(0);
+    }
+  }
+
+  @override
   void fixedUpdate() {
     update();
   }
@@ -31,13 +47,6 @@ class BleedClient extends GameWidget {
   @override
   void onMouseClick() {
 
-  }
-
-  @override
-  Future init() async {
-    loadResources();
-    connect();
-    sendRequestSpawn();
   }
 
   @override
