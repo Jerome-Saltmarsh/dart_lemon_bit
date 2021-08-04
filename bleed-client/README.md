@@ -16,9 +16,10 @@
 [ ] Accuracy
 [ ] Critical Damage
 [ ] Fix center camera on spawn
-[ ] Zombies eat dead players bodies
 [ ] Sprint
 [ ] Weapon: Machine Gun
+[ ] Player Death Audio
+[x] Zombies eat dead players bodies
 [x] Zombie Strike Audio
 [x] Fix Zombie Strike animation
 [x] Shot kickback

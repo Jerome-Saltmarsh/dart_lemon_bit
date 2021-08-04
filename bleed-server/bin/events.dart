@@ -34,9 +34,8 @@ void _onCharacterDeath(Character character) {
         npcs.remove(character);
       });
     }
-
-
-
+  } else {
+    dispatch(GameEventType.Player_Death, character.x, character.y);
   }
 }
 

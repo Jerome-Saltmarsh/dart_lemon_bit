@@ -13,7 +13,8 @@ enum GameEventType {
   Zombie_Killed,
   Zombie_Target_Acquired,
   Bullet_Hole,
-  Zombie_Strike
+  Zombie_Strike,
+  Player_Death
 }
 
 enum ParticleType {

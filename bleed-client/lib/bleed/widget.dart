@@ -28,7 +28,7 @@ class BleedWidget extends GameWidget {
   Future init() async {
     loadResources();
     connect();
-    sendRequestSpawn();
+    // sendRequestSpawn();
     periodic(checkBulletHoles, ms: 500);
   }
 

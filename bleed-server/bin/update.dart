@@ -82,8 +82,9 @@ void checkBulletCollision(List<Character> list) {
           blood.add(Blood(
               character.x,
               character.y,
-              bullet.xVel * (0.35 + giveOrTake(0.1)) + giveOrTake(1.6),
-              bullet.yVel * (0.35 + giveOrTake(0.1)) + giveOrTake(1.6)));
+              bullet.xVel * randomBetween(0, 0.5) + giveOrTake(pi),
+              bullet.yVel * randomBetween(0, 0.5) + giveOrTake(pi))
+          );
         }
 
         break;
@@ -95,8 +96,8 @@ void checkBulletCollision(List<Character> list) {
 void updateNpc(Npc npc) {
   if (npc.dead) return;
 
-  if (npc.state == CharacterState.Striking){
-    if(npc.shotCoolDown-- > 0) return;
+  if (npc.state == CharacterState.Striking) {
+    if (npc.shotCoolDown-- > 0) return;
     setCharacterStateIdle(npc);
   }
 
@@ -266,13 +267,16 @@ void updateParticles() {
     particles[i].xVel *= particles[i].friction;
     particles[i].yVel *= particles[i].friction;
     particles[i].rotation += particles[i].rotationSpeed;
-    if (particles[i].type == ParticleType.Head && particles[i].lifeTime & 2 == 0) {
+    if (particles[i].type == ParticleType.Head &&
+        particles[i].lifeTime & 2 == 0) {
       blood.add(Blood(particles[i].x, particles[i].y, 0.0, 0.0));
     }
-    if (particles[i].type == ParticleType.Arm && particles[i].lifeTime & 2 == 0) {
+    if (particles[i].type == ParticleType.Arm &&
+        particles[i].lifeTime & 2 == 0) {
       blood.add(Blood(particles[i].x, particles[i].y, 0.0, 0.0));
     }
-    if (particles[i].type == ParticleType.Organ && particles[i].lifeTime & 2 == 0) {
+    if (particles[i].type == ParticleType.Organ &&
+        particles[i].lifeTime & 2 == 0) {
       blood.add(Blood(particles[i].x, particles[i].y, 0.0, 0.0));
     }
   }

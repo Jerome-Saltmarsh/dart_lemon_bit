@@ -31,5 +31,8 @@ void onGameEvent(GameEventType type, int x, int y){
     case GameEventType.Zombie_Strike:
       playAudioZombieBite();
       break;
+    case GameEventType.Player_Death:
+      playPlayerDeathAudio();
+      break;
   }
 }
