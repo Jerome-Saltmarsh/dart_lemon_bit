@@ -2,8 +2,10 @@ import 'dart:math';
 import 'classes.dart';
 import 'constants.dart';
 
-const double degreesToRadions = 0.0174533;
-const double radionsToDegrees =  57.29578;
+const double goldenRatio = 1.61803398875;
+const double goldenRatioInverse = 1.0 / goldenRatio;
+const double degreesToRadians = 0.0174533;
+const double radiansToDegrees =  57.29578;
 final Random random = Random();
 
 double randomBetween(num a, num b){
@@ -51,27 +53,21 @@ int millisecondsSince(DateTime value){
 }
 
 Duration durationSince(DateTime value){
-  return DateTime.now().difference(value);
+  return now().difference(value);
 }
 
-double radionsBetweenObject(GameObject a, GameObject b) {
-  return radionsBetween(a.x, a.y, b.x, b.y);
+DateTime now() => DateTime.now();
+
+double radiansBetweenObject(GameObject a, GameObject b) {
+  return radiansBetween(a.x, a.y, b.x, b.y);
 }
 
-double radionsBetween2(GameObject a, double x, double y) {
-  return radionsBetween(a.x, a.y, x, y);
+double radiansBetween2(GameObject a, double x, double y) {
+  return radiansBetween(a.x, a.y, x, y);
 }
 
-double convertVectorToDegrees(double x, double y) {
-  if (x < 0)
-  {
-    return 360 - (atan2(x, y) * radionsToDegrees * -1);
-  }
-  return atan2(x, y) * radionsToDegrees;
-}
-
-double radionsBetween(double x1, double y1, double x2, double y2) {
-  return radions(x1 - x2, y1 - y2);
+double radiansBetween(double x1, double y1, double x2, double y2) {
+  return radians(x1 - x2, y1 - y2);
 }
 
 double velX(double rotation, double speed) {
@@ -82,7 +78,7 @@ double velY(double rotation, double speed) {
   return -sin(rotation + piHalf) * speed;
 }
 
-double radions(double x, double y){
+double radians(double x, double y){
   if (x < 0) {
     return (atan2(x, y) * -1);
   }
@@ -94,12 +90,6 @@ double adj(double rotation, double magnitude) {
 }
 double opp(double rotation, double magnitude) {
   return -sin(rotation + piHalf) * magnitude;
-}
-
-class Vector2 {
-  double x;
-  double y;
-  Vector2(this.x, this.y);
 }
 
 double normalize(double x, double y){

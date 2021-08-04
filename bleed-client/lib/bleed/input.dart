@@ -13,12 +13,10 @@ import 'state.dart';
 import 'utils.dart';
 
 bool get keyPressedSpawnZombie => keyPressed(LogicalKeyboardKey.keyP);
-
 bool get keyEquipHandGun => keyPressed(LogicalKeyboardKey.digit1);
-
 bool get keyEquipShotgun => keyPressed(LogicalKeyboardKey.digit2);
-
 bool get keyAimPressed => keyPressedSpace;
+bool get keySprintPressed => keyPressed(LogicalKeyboardKey.shiftLeft);
 
 void readPlayerInput() {
   if (player == null) return;
@@ -59,7 +57,11 @@ void readPlayerInput() {
         }
       }
     } else {
-      requestCharacterState = characterStateWalking;
+      if(keySprintPressed){
+        requestCharacterState = characterStateRunning;
+      }else{
+        requestCharacterState = characterStateWalking;
+      }
     }
   }
   if (keyEquipHandGun) {

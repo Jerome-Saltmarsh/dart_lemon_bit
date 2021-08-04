@@ -221,6 +221,8 @@ Rect getCharacterSpriteRect(dynamic character) {
       return getHumanFiringRect(character);
     case characterStateStriking:
       return getHumanStrikingRect(character);
+    case characterStateRunning:
+      return getHumanWalkingRect(character);
   }
   throw Exception("Could not get character sprite rect");
 }

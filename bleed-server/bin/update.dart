@@ -193,6 +193,39 @@ void updateCharacter(Character character) {
           break;
       }
       break;
+    case CharacterState.Running:
+      double runRatio = character.speed * (1.0 + goldenRatioInverse);
+      switch (character.direction) {
+        case Direction.Up:
+          character.y -= runRatio;
+          break;
+        case Direction.UpRight:
+          character.x += velX(piQuarter, runRatio);
+          character.y += velY(piQuarter, runRatio);
+          break;
+        case Direction.Right:
+          character.x += runRatio;
+          break;
+        case Direction.DownRight:
+          character.x += velX(piQuarter, runRatio);
+          character.y -= velY(piQuarter, runRatio);
+          break;
+        case Direction.Down:
+          character.y += runRatio;
+          break;
+        case Direction.DownLeft:
+          character.x -= velX(piQuarter, runRatio);
+          character.y -= velY(piQuarter, runRatio);
+          break;
+        case Direction.Left:
+          character.x -= runRatio;
+          break;
+        case Direction.UpLeft:
+          character.x -= velX(piQuarter, runRatio);
+          character.y += velY(piQuarter, runRatio);
+          break;
+      }
+      break;
   }
 }
 

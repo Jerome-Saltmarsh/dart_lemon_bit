@@ -131,7 +131,7 @@ void faceDestination(Npc npc) {
 
 void characterFace(Character character, double x, double y) {
   setDirection(
-      character, convertAngleToDirection(radionsBetween2(character, x, y)));
+      character, convertAngleToDirection(radiansBetween2(character, x, y)));
 }
 
 void characterFaceObject(Character character, GameObject target) {
