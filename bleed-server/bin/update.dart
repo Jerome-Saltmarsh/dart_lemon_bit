@@ -118,7 +118,7 @@ void updateNpc(Npc npc) {
       setCharacterState(npc, CharacterState.Striking);
       changeCharacterHealth(target, -0.1);
       dispatch(GameEventType.Zombie_Strike, npc.x, npc.y);
-      blood.add(Blood(target.x, target.y + 5, giveOrTake(1), giveOrTake(1)));
+      blood.add(Blood(target.x, target.y + 5, giveOrTake(5), giveOrTake(5)));
     }
     return;
   }

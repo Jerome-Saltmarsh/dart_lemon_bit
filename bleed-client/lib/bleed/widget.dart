@@ -9,7 +9,6 @@ import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'connection.dart';
 import 'draw.dart';
 import 'resources.dart';
-import 'send.dart';
 import 'state.dart';
 import 'ui.dart';
 
@@ -27,7 +26,7 @@ class BleedWidget extends GameWidget {
   @override
   Future init() async {
     loadResources();
-    connect();
+    // connect();
     // sendRequestSpawn();
     periodic(checkBulletHoles, ms: 500);
   }

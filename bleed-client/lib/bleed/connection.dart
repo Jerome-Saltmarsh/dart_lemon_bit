@@ -3,17 +3,57 @@ import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'parse.dart';
-import 'settings.dart';
 import 'state.dart';
 
-Uri get hostURI => Uri.parse(host);
+
+// state
+WebSocketChannel _webSocketChannel;
+bool connected = false;
+bool connecting = false;
+
+// public
 
 void disconnect() {
+  print('disconnect()');
   connected = false;
-  webSocketChannel.sink.close();
+  connecting = false;
+  if (_webSocketChannel == null) return;
+  _webSocketChannel.sink.close();
 }
 
-void onEvent(dynamic response) {
+void connectLocalHost({int port = 8080}) {
+  connect('ws://localhost:$port');
+}
+
+void connect(String uri) {
+  print('connection.connect($uri)');
+  try {
+    connecting = true;
+    _webSocketChannel = WebSocketChannel.connect(Uri.parse(uri));
+    _webSocketChannel.stream
+        .listen(_onEvent, onError: _onError, onDone: _onDone);
+    connected = true;
+    connecting = false;
+    sendRequestTiles();
+    print("connection established");
+  } catch (error) {
+    print("connection failed");
+    print(error);
+    errors++;
+    connected = false;
+    connecting = false;
+  }
+}
+
+void send(String message) {
+  if (!connected) return;
+  _webSocketChannel.sink.add(message);
+  packagesSent++;
+}
+
+// private
+
+void _onEvent(dynamic response) {
   framesSinceEvent = 0;
   DateTime now = DateTime.now();
   ping = now.difference(previousEvent);
@@ -22,39 +62,22 @@ void onEvent(dynamic response) {
   event = response;
   try {
     parseState();
-  }catch(error){
+  } catch (error) {
     print(error);
   }
   redrawGame();
   redrawUI();
 }
 
-int attempts = 0;
-
-void connect() {
-  try {
-    attempts++;
-    webSocketChannel = WebSocketChannel.connect(hostURI);
-    webSocketChannel.stream.listen(onEvent, onError: onError, onDone: onDone);
-    attempts = 0;
-    connected = true;
-    respawnRequestSent = false;
-    sendRequestTiles();
-  } catch (error) {
-    print(error);
-    errors++;
-    if (attempts > 10) return;
-    Future.delayed(Duration(seconds: 1), connect);
-  }
-}
-
-void onError(dynamic value) {
+void _onError(dynamic value) {
+  print("connection error");
   errors++;
+  connected = false;
+  connecting = false;
 }
 
-void onDone() {
-  attempts = 0;
-  dones++;
+void _onDone() {
+  print("connection done");
   connected = false;
-  connect();
+  connecting = false;
 }

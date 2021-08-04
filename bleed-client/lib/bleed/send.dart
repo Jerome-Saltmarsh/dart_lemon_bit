@@ -1,38 +1,39 @@
 
 import 'package:flutter_game_engine/bleed/enums.dart';
 
+import 'connection.dart';
 import 'state.dart';
 
 
 StringBuffer _buffer = StringBuffer();
 
 void sendRequestTiles(){
-  sendToServer('get-tiles');
+  send('get-tiles');
 }
 
 void sendTogglePass1(){
-  sendToServer('toggle-pass-1');
+  send('toggle-pass-1');
 }
 
 void sendTogglePass2(){
-  sendToServer('toggle-pass-2');
+  send('toggle-pass-2');
 }
 
 void sendTogglePass3(){
-  sendToServer('toggle-pass-3');
+  send('toggle-pass-3');
 }
 
 void sendTogglePass4(){
-  sendToServer('toggle-pass-4');
+  send('toggle-pass-4');
 }
 
 void sendRequestRevive(){
   print('sendRequestRevive()');
-  sendToServer('revive: $playerId $playerUUID');
+  send('revive: $playerId $playerUUID');
 }
 
 void sendRequestEquip(Weapon weapon) {
-  sendToServer('equip $playerId $playerUUID ${weapon.index}');
+  send('equip $playerId $playerUUID ${weapon.index}');
 }
 
 void sendRequestEquipHandgun() {
@@ -52,23 +53,23 @@ void sendRequestUpdatePlayer() {
   _write(requestDirection);
   _write(requestAim.toStringAsFixed(1));
   _write(serverFrame);
-  sendToServer(_buffer.toString());
+  send(_buffer.toString());
 }
 
 void sendCommandUpdate() {
-  sendToServer("update");
+  send("update");
 }
 
 void sendRequestSpawn() {
-  sendToServer('spawn');
+  send('spawn');
 }
 
 void sendRequestSpawnNpc() {
-  sendToServer('spawn-npc');
+  send('spawn-npc');
 }
 
 void sendRequestClearNpcs() {
-  sendToServer("clear-npcs");
+  send("clear-npcs");
 }
 
 void _write(dynamic value) {
@@ -76,8 +77,3 @@ void _write(dynamic value) {
   _buffer.write(" ");
 }
 
-void sendToServer(String message) {
-  if (!connected) return;
-  webSocketChannel.sink.add(message);
-  packagesSent++;
-}

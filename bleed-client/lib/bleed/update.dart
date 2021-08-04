@@ -1,3 +1,5 @@
+import 'package:flutter_game_engine/bleed/connection.dart';
+
 import 'common.dart';
 import 'input.dart';
 import 'keys.dart';
@@ -15,10 +17,12 @@ void update(){
   controlCamera();
   readPlayerInput();
 
-  if (playerAssigned) {
-    sendRequestUpdatePlayer();
-  } else {
-    sendCommandUpdate();
+  if(connected){
+    if (playerAssigned) {
+      sendRequestUpdatePlayer();
+    } else {
+      sendCommandUpdate();
+    }
   }
 }
 

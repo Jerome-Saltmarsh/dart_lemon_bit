@@ -39,6 +39,8 @@ void setCharacterStateIdle(Character character){
 }
 
 void changeCharacterHealth(Character character, double amount) {
+  if (character.dead && amount < 0) return;
+
   character.health += amount;
   character.health = clamp(character.health, 0, character.maxHealth);
   if (character.health <= 0) {

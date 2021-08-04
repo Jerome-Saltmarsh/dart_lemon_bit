@@ -10,13 +10,14 @@ import 'utils.dart';
 
 TextEditingController playerNameController = TextEditingController();
 
-Widget text(String value, { fontSize = 18}) {
+Widget text(String value, {fontSize = 18}) {
   return Text(value, style: TextStyle(color: Colors.white, fontSize: fontSize));
 }
 
-Widget button(String value, Function onPressed, { fontSize = 18 }) {
+Widget button(String value, Function onPressed, {fontSize = 18}) {
   return OutlinedButton(
-    child: Text(value, style: TextStyle(color: Colors.white, fontSize: fontSize)),
+    child:
+        Text(value, style: TextStyle(color: Colors.white, fontSize: fontSize)),
     style: OutlinedButton.styleFrom(
       side: BorderSide(color: Colors.white, width: 2),
       shape: const RoundedRectangleBorder(
@@ -28,7 +29,15 @@ Widget button(String value, Function onPressed, { fontSize = 18 }) {
 
 Widget column(List<Widget> children) {
   return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start, children: children);
+}
+
+Widget row(List<Widget> children) {
+  return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: children);
 }
 
 Future<void> showChangeNameDialog() async {
@@ -58,9 +67,9 @@ Future<void> showChangeNameDialog() async {
             child: const Text('PLAY'),
             onPressed: playerNameController.text.trim().length > 2
                 ? () {
-              // sendRequestSpawn(playerNameController.text.trim());
-              Navigator.of(context).pop();
-            }
+                    // sendRequestSpawn(playerNameController.text.trim());
+                    Navigator.of(context).pop();
+                  }
                 : null,
           ),
         ],
@@ -69,10 +78,41 @@ Future<void> showChangeNameDialog() async {
   );
 }
 
-Widget buildDebugUI(BuildContext context){
-  if (!connected) return text("Connecting");
+void connectToGCP() {
+  connect(gpc);
+}
 
-  if (framesSinceEvent > 30){
+Widget center(Widget child) {
+  return Container(
+    width: size.width,
+    height: size.height,
+    alignment: Alignment.center,
+    child: child,
+  );
+}
+
+Widget buildDebugUI(BuildContext context) {
+  if (connecting) {
+    return center(text("Connecting"));
+  } else if (!connected) {
+    return center(
+      column([
+        row([
+          text("BLEED", fontSize: 120),
+        ]),
+        Container(height: 50,),
+        row([
+          button('Localhost', connectLocalHost, fontSize: 21),
+          Container(width: 10,),
+          button('GCP', connectToGCP, fontSize: 21),
+          Container(width: 10,),
+          button('FULLSCREEN', requestFullScreen, fontSize: 21)
+        ]),
+      ]),
+    );
+  }
+
+  if (framesSinceEvent > 30) {
     return Container(
       width: size.width,
       height: size.height,
@@ -81,8 +121,8 @@ Widget buildDebugUI(BuildContext context){
     );
   }
   dynamic player = getPlayerCharacter();
-  if (player != null){
-    if(isDead(player)) {
+  if (player != null) {
+    if (isDead(player)) {
       return Container(
         width: size.width,
         height: size.height,
@@ -90,7 +130,7 @@ Widget buildDebugUI(BuildContext context){
         child: button("Revive", sendRequestRevive, fontSize: 40),
       );
     }
-  }else{
+  } else {
     return Container(
       width: size.width,
       height: size.height,
@@ -105,34 +145,34 @@ Widget buildDebugUI(BuildContext context){
       if (!debugMode) button("Show Debug", showDebug),
       if (debugMode) button("Hide Debug", hideDebug),
       button("FullScreen", requestFullScreen),
-      if (playerAssigned)
-      text("X: $playerX Y: $playerY"),
-      if(debugMode) column([
-        button("Respawn", sendRequestSpawn),
-        button("Spawn NPC", sendRequestSpawnNpc),
-        button("Clear NPCS", sendRequestClearNpcs),
-        text("Server Host: $host"),
-        text("Ping: ${ping.inMilliseconds}"),
-        text("Pass: $pass"),
-        text("Player Id: $playerId"),
-        text("Player Health: $playerHealth / $playerMaxHealth"),
-        text("Data Size: ${event.length}"),
-        text("Frames since event: $framesSinceEvent"),
-        text("Milliseconds Since Last Frame: $millisecondsSinceLastFrame"),
-        if(millisecondsSinceLastFrame > 0)
-          text("FPS: ${ (1000 / millisecondsSinceLastFrame).round() }"),
-        if (serverFramesMS > 0)
-          text("Server FPS: ${ (1000 / serverFramesMS).round() }"),
-        text("Players: ${players.length}"),
-        text("Bullets: ${bullets.length}"),
-        text("Npcs: ${npcs.length}"),
-        text("Player Assigned: $playerAssigned"),
-        // button('First Pass: $firstPass', sendTogglePass1),
-        // button('Second Pass: $secondPass', sendTogglePass2),
-        // button('Third Pass: $thirdPass', sendTogglePass3),
-        // button('Fourth Pass: $fourthPass', sendTogglePass4),
-        button("smoothing $smooth", () => smooth = !smooth),
-      ]),
+      if (playerAssigned) text("X: $playerX Y: $playerY"),
+      if (debugMode)
+        column([
+          button("Respawn", sendRequestSpawn),
+          button("Spawn NPC", sendRequestSpawnNpc),
+          button("Clear NPCS", sendRequestClearNpcs),
+          text("Server Host: $host"),
+          text("Ping: ${ping.inMilliseconds}"),
+          text("Pass: $pass"),
+          text("Player Id: $playerId"),
+          text("Player Health: $playerHealth / $playerMaxHealth"),
+          text("Data Size: ${event.length}"),
+          text("Frames since event: $framesSinceEvent"),
+          text("Milliseconds Since Last Frame: $millisecondsSinceLastFrame"),
+          if (millisecondsSinceLastFrame > 0)
+            text("FPS: ${(1000 / millisecondsSinceLastFrame).round()}"),
+          if (serverFramesMS > 0)
+            text("Server FPS: ${(1000 / serverFramesMS).round()}"),
+          text("Players: ${players.length}"),
+          text("Bullets: ${bullets.length}"),
+          text("Npcs: ${npcs.length}"),
+          text("Player Assigned: $playerAssigned"),
+          // button('First Pass: $firstPass', sendTogglePass1),
+          // button('Second Pass: $secondPass', sendTogglePass2),
+          // button('Third Pass: $thirdPass', sendTogglePass3),
+          // button('Fourth Pass: $fourthPass', sendTogglePass4),
+          button("smoothing $smooth", () => smooth = !smooth),
+        ]),
     ],
   );
 }

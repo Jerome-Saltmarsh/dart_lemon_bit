@@ -8,5 +8,5 @@ const double characterRadius = 7;
 const int settingsSmoothingMinFPS = 20;
 const String localhost = "ws://localhost:8080";
 const gpcUrl = 'https://bleed-60-osbmaezptq-ey.a.run.app';
-String gpc = gpcUrl.replaceAll("https", "wss") + "/:8080";
+final String gpc = gpcUrl.replaceAll("https", "wss") + "/:8080";
 String host = localhost;
