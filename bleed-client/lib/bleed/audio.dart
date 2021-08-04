@@ -24,6 +24,18 @@ List<String> _zombieTalking = [
   'zombie-talking-05.wav',
 ];
 
+List<String> _zombieBite = [
+   'zombie-bite-04.wav',
+   'zombie-bite-05.wav',
+   'bloody-punches-1.wav',
+   'bloody-punches-2.wav',
+   'bloody-punches-3.wav',
+];
+
+void playAudioZombieBite(){
+  _playRandom(_zombieBite, _zombieAudioPlayer);
+}
+
 void playAudioZombieTargetAcquired(){
   _playRandom(_zombieTalking, _zombieAudioPlayer);
 }

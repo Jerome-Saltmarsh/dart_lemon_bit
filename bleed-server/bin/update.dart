@@ -95,9 +95,14 @@ void checkBulletCollision(List<Character> list) {
 void updateNpc(Npc npc) {
   if (npc.dead) return;
 
+  if (npc.state == CharacterState.Striking){
+    if(npc.shotCoolDown-- > 0) return;
+    setCharacterStateIdle(npc);
+  }
+
   if (npc.targetSet) {
     Character? target = npcTarget(npc);
-    if (target == null || target.dead) {
+    if (target == null) {
       npc.clearTarget();
       npc.idle();
       return;
@@ -106,11 +111,13 @@ void updateNpc(Npc npc) {
     characterFaceObject(npc, target);
     double targetDistance = objectDistanceFrom(npc, target.x, target.y);
 
-    if (targetDistance > 20) {
+    if (targetDistance > settingsZombieStrikeRange) {
       npc.walk();
     } else {
       setCharacterState(npc, CharacterState.Striking);
-      changeCharacterHealth(target, -0.01);
+      changeCharacterHealth(target, -0.1);
+      dispatch(GameEventType.Zombie_Strike, npc.x, npc.y);
+      blood.add(Blood(target.x, target.y + 5, giveOrTake(1), giveOrTake(1)));
     }
     return;
   }

@@ -27,6 +27,9 @@ void setCharacterState(Character character, CharacterState value) {
     case CharacterState.Firing:
       fireWeapon(character);
       break;
+    case CharacterState.Striking:
+      character.shotCoolDown = 10;
+      break;
   }
   character.state = value;
 }

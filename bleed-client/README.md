@@ -10,15 +10,17 @@
 [ ] Create bleed-common library
 [ ] Optimize Server Collision Detection
 [ ] Design Town Center
-[ ] Sprint
 [ ] HUD
 [ ] Ammo
 [ ] Particle Smoke
 [ ] Accuracy
 [ ] Critical Damage
 [ ] Fix center camera on spawn
-[ ] Zombie Strike Audio
+[ ] Zombies eat dead players bodies
+[ ] Sprint
 [ ] Weapon: Machine Gun
+[x] Zombie Strike Audio
+[x] Fix Zombie Strike animation
 [x] Shot kickback
 [x] Particle Bullet Hole
 [x] Zombie ragdoll death

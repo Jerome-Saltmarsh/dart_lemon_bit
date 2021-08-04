@@ -28,5 +28,8 @@ void onGameEvent(GameEventType type, int x, int y){
       bulletHoles.add(x.toDouble());
       bulletHoles.add(y.toDouble());
       break;
+    case GameEventType.Zombie_Strike:
+      playAudioZombieBite();
+      break;
   }
 }
