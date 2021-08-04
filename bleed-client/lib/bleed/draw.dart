@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_game_engine/bleed/enums.dart';
+import 'package:flutter_game_engine/bleed/maths.dart';
 import 'package:flutter_game_engine/bleed/rects.dart';
 import 'package:flutter_game_engine/game_engine/engine_draw.dart';
 import 'package:flutter_game_engine/game_engine/engine_state.dart';
@@ -535,7 +536,28 @@ void drawBlood() {
 }
 
 void drawParticles() {
-  for (int i = 0; i < particles.length; i += 2) {
-    drawCircle(particles[i], particles[i + 1], 1.33, Colors.white);
+  for (int i = 0; i < particles.length; i += 4) {
+    switch(ParticleType.values[particles[i + 2].toInt()]){
+      case ParticleType.Shell:
+        drawCircle(particles[i], particles[i + 1], 1.33, Colors.white);
+        break;
+      case ParticleType.Blood:
+        drawCircle(particles[i], particles[i + 1], 2, Colors.red);
+        break;
+      case ParticleType.Head:
+        drawCircle(particles[i], particles[i + 1], 5, Colors.white);
+        break;
+      case ParticleType.Arm:
+        double rotation = particles[i + 3];
+        double length = 5;
+        double handX = particles[i] + velX(rotation, length);
+        double handY = particles[i + 1] + velY(rotation, length);
+        drawLine3(particles[i], particles[i + 1], handX, handY);
+        drawCircle(handX, handY, 2, Colors.white);
+        break;
+      case ParticleType.Organ:
+        drawCircle(particles[i], particles[i + 1], 2, Colors.white);
+        break;
+    }
   }
 }

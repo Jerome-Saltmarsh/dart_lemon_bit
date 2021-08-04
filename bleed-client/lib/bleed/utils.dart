@@ -42,6 +42,18 @@ void drawLine(double x1, double y1, double x2, double y2) {
   globalCanvas.drawLine(offset(x1, y1), offset(x2, y2), globalPaint);
 }
 
+void drawLine2(double x1, double y1, double x2, double y2) {
+  globalCanvas.drawLine(offset(x1, y1), offset(x2, y2), paint2);
+}
+
+void drawLine3(double x1, double y1, double x2, double y2) {
+  globalCanvas.drawLine(offset(x1, y1), offset(x2, y2), paint3);
+}
+
+void drawCustomLine(double x1, double y1, double x2, double y2, Paint paint) {
+  globalCanvas.drawLine(offset(x1, y1), offset(x2, y2), paint);
+}
+
 Offset offset(double x, double y) {
   return Offset(x - cameraX, y - cameraY);
 }

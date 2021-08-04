@@ -1,4 +1,5 @@
 import 'classes.dart';
+import 'enums.dart';
 import 'events.dart';
 import 'maths.dart';
 import 'settings.dart';
@@ -19,16 +20,29 @@ void spawnBullet(Character character) {
 }
 
 void spawnShell(double x, double y, double rotation) {
-  double speed = 8;
-  particles.add(Particle(x, y, velX(rotation, speed), velY(rotation, speed), 40, 0, 0.7));
+  particles.add(Particle(
+      x,
+      y,
+      velX(rotation, settingsParticleShellSpeed),
+      velY(rotation, settingsParticleShellSpeed),
+      40,
+      0,
+      0.7,
+      ParticleType.Shell,
+      0.1));
 }
 
-void spawnBlood(Character character, double rotation, speed){
-  blood.add(Blood(character.x, character.y, velX(rotation, speed), velY(rotation, speed)));
+void spawnBlood(Character character, double rotation, speed) {
+  blood.add(Blood(
+      character.x, character.y, velX(rotation, speed), velY(rotation, speed)));
+}
+
+void spawnBlood2(double x, double y, double rotation, speed) {
+  blood.add(Blood(x, y, velX(rotation, speed), velY(rotation, speed)));
 }
 
 Npc spawnNpc(double x, double y) {
-  Npc npc = Npc(x: x, y: y, health: 5, maxHealth: 5);
+  Npc npc = Npc(x: x, y: y, health: 3, maxHealth: 3);
   npcs.add(npc);
   onNpcSpawned.add(npc);
   return npc;

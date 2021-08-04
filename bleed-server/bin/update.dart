@@ -70,11 +70,12 @@ void checkBulletCollision(List<Character> list) {
         character.yVel += bullet.yVel * 0.25;
 
         if (character.alive) {
-          gameEvents.add(GameEvent(character.x, character.y, GameEventType.Zombie_Hit));
-        }else{
-          gameEvents.add(GameEvent(character.x, character.y, GameEventType.Zombie_Killed));
+          gameEvents.add(
+              GameEvent(character.x, character.y, GameEventType.Zombie_Hit));
+        } else {
+          gameEvents.add(
+              GameEvent(character.x, character.y, GameEventType.Zombie_Killed));
         }
-
 
         for (int i = 0; i < randomBetween(2, 5).toInt(); i++) {
           blood.add(Blood(
@@ -146,7 +147,7 @@ void updateCharacter(Character character) {
       }
       break;
     case CharacterState.Dead:
-      if(frame % 10 == 0){
+      if (frame % 10 == 0) {
         double speed = 0.75;
         spawnBlood(character, randomRadion(), speed);
       }
@@ -245,7 +246,7 @@ void updateBlood() {
   }
 }
 
-void updateParticles(){
+void updateParticles() {
   for (int i = 0; i < particles.length; i++) {
     if (particles[i].lifeTime-- < 0) {
       particles.removeAt(i);
@@ -256,6 +257,16 @@ void updateParticles(){
     particles[i].y += particles[i].yVel;
     particles[i].xVel *= particles[i].friction;
     particles[i].yVel *= particles[i].friction;
+    particles[i].rotation += particles[i].rotationSpeed;
+    if (particles[i].type == ParticleType.Head && particles[i].lifeTime & 2 == 0) {
+      blood.add(Blood(particles[i].x, particles[i].y, 0.0, 0.0));
+    }
+    if (particles[i].type == ParticleType.Arm && particles[i].lifeTime & 2 == 0) {
+      blood.add(Blood(particles[i].x, particles[i].y, 0.0, 0.0));
+    }
+    if (particles[i].type == ParticleType.Organ && particles[i].lifeTime & 2 == 0) {
+      blood.add(Blood(particles[i].x, particles[i].y, 0.0, 0.0));
+    }
   }
 }
 

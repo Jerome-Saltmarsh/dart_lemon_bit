@@ -27,3 +27,11 @@ enum GameEventType {
   Zombie_Killed,
   Zombie_Target_Acquired
 }
+
+enum ParticleType {
+  Blood,
+  Shell,
+  Head,
+  Arm,
+  Organ,
+}

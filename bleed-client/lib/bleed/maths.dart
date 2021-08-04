@@ -76,3 +76,11 @@ double radionsBetween(double x1, double y1, double x2, double y2) {
   }
   return (pi + pi) - atan2(x, y);
 }
+
+double velX(double rotation, double speed) {
+  return -cos(rotation + (pi * 0.5)) * speed;
+}
+
+double velY(double rotation, double speed) {
+  return -sin(rotation + (pi * 0.5)) * speed;
+}

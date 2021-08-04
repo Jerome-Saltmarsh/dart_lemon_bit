@@ -9,7 +9,6 @@ const int maxZombies = 5;
 const double spawnRadius = 500;
 const double zombieSpeed = 2;
 const double playerSpeed = 3;
-const int zombieHealth = 5;
 const int playerHealth = 3;
 const double velocityFriction = 0.94;
 const double zombieViewRange = 300;
@@ -28,6 +27,7 @@ const double settingsWeaponRangeShotgun = 180;
 const double settingsWeaponAccuracyHandgun = 0;
 const double settingsWeaponAccurayShotgun = pi * 0.06;
 const int settingsShotgunBulletsPerShot = 5;
+const double settingsParticleShellSpeed = 8;
 
 const int tilesX = 40;
 const int tilesY = 40;

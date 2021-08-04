@@ -14,6 +14,10 @@ bool randomBool(){
   return random.nextDouble() > 0.5;
 }
 
+int randomInt(int min, int max){
+  return random.nextInt(max - min) + min;
+}
+
 double randomRadion(){
   return random.nextDouble() * pi2;
 }

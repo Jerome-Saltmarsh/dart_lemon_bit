@@ -133,9 +133,12 @@ class Blood extends PhysicsGameObject {
 class Particle extends PhysicsGameObject {
   int lifeTime;
   double rotation;
+  double rotationSpeed;
   double friction;
+  ParticleType type;
+
   Particle(double x, double y, double xVel, double yVel, this.lifeTime,
-      this.rotation, this.friction)
+      this.rotation, this.friction, this.type, this.rotationSpeed)
       : super(x, y, xVel, yVel);
 }
 

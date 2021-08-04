@@ -35,6 +35,20 @@ final Paint globalPaint = Paint()
   ..isAntiAlias = false
   ..strokeWidth = 1;
 
+final Paint paint2 = Paint()
+  ..color = white
+  ..strokeCap = StrokeCap.round
+  ..style = PaintingStyle.fill
+  ..isAntiAlias = false
+  ..strokeWidth = 2;
+
+final Paint paint3 = Paint()
+  ..color = white
+  ..strokeCap = StrokeCap.round
+  ..style = PaintingStyle.fill
+  ..isAntiAlias = false
+  ..strokeWidth = 3;
+
 int _millisecondsSinceLastFrame = 0;
 int get millisecondsSinceLastFrame => _millisecondsSinceLastFrame;
 
