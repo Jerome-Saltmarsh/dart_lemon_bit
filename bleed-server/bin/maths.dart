@@ -71,20 +71,29 @@ double convertVectorToDegrees(double x, double y) {
 }
 
 double radionsBetween(double x1, double y1, double x2, double y2) {
-  double x = x1 - x2;
-  double y = y1 - y2;
-  if (x < 0) {
-    return (atan2(x, y) * -1);
-  }
-  return (pi + pi) - atan2(x, y);
+  return radions(x1 - x2, y1 - y2);
 }
 
 double velX(double rotation, double speed) {
-  return -cos(rotation + (pi * 0.5)) * speed;
+  return -cos(rotation + piHalf) * speed;
 }
 
 double velY(double rotation, double speed) {
-  return -sin(rotation + (pi * 0.5)) * speed;
+  return -sin(rotation + piHalf) * speed;
+}
+
+double radions(double x, double y){
+  if (x < 0) {
+    return (atan2(x, y) * -1);
+  }
+  return pi2 - atan2(x, y);
+}
+
+double adj(double rotation, double magnitude) {
+  return -cos(rotation + piHalf) * magnitude;
+}
+double opp(double rotation, double magnitude) {
+  return -sin(rotation + piHalf) * magnitude;
 }
 
 class Vector2 {

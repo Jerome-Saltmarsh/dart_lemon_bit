@@ -4,7 +4,7 @@ enum Tile {
   Water
 }
 
-enum CharacterState { Idle, Walking, Dead, Aiming, Firing, Striking }
+enum CharacterState { Idle, Walking, Dead, Aiming, Firing, Striking, Running }
 
 enum Weapon { Unarmed, HandGun, Shotgun }
 
