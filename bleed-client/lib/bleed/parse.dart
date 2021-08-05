@@ -135,6 +135,10 @@ int _consumeInt() {
   return parseInt(_consumeString());
 }
 
+Weapon _consumeWeapon(){
+  return Weapon.values[_consumeInt()];
+}
+
 int parseInt(String value) {
   return int.parse(value);
 }
@@ -246,6 +250,7 @@ void _consumePlayer(dynamic memory) {
   memory[x] = _consumeDouble();
   memory[y] = _consumeDouble();
   memory[id] = _consumeInt();
+  memory[weapon] = _consumeWeapon();
 }
 
 void _consumeNpc(dynamic memory) {
@@ -262,6 +267,6 @@ void _consumeBullet(dynamic memory) {
 }
 
 List _getUnusedMemory() {
-  if (_cache.isEmpty) return [0, 0, 0.0, 0.0, 0];
+  if (_cache.isEmpty) return [0, 0, 0.0, 0.0, 0, 0];
   return _cache.removeLast();
 }

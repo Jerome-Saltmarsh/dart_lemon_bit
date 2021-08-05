@@ -62,6 +62,7 @@ void sendCommandUpdate() {
 }
 
 void sendRequestSpawn() {
+  print("sendRequestSpawn()");
   send('spawn');
 }
 

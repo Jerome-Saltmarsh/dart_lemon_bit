@@ -9,17 +9,19 @@
 [ ] Create bleed-common library
 [ ] Optimize Server Collision Detection
 [ ] Design Town Center
-[ ] HUD
+[ ] Use particles to show blood
+[ ] Explosions
 [ ] Ammo
 [ ] Particle Smoke
 [ ] Adjustable FPS (Client)
 [ ] Accuracy
 [ ] Critical Damage
+[ ] Compile Bullet remove id
 [ ] Fix center camera on spawn
 [ ] Weapon: Machine Gun
 [ ] BUG: Bullet hole sometimes doesn't appear
-[ ] Use particles to show blood
-[ ] Connection Failed Error dialog
+[ ] HUD
+[x] Connection Failed Error dialog
 [x] Sprint
 [x] Player Death Audio
 [x] Zombies eat dead players bodies

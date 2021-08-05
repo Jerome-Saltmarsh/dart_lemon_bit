@@ -3,6 +3,7 @@ import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'package:flutter_game_engine/game_engine/web_functions.dart';
 
 import 'connection.dart';
+import 'enums.dart';
 import 'send.dart';
 import 'settings.dart';
 import 'state.dart';
@@ -10,7 +11,7 @@ import 'utils.dart';
 
 TextEditingController playerNameController = TextEditingController();
 
-void initUI(){
+void initUI() {
   onConnectError.stream.listen((event) {
     showConnectFailedDialog();
     forceRedraw();
@@ -21,23 +22,33 @@ Widget text(String value, {fontSize = 18}) {
   return Text(value, style: TextStyle(color: Colors.white, fontSize: fontSize));
 }
 
-Widget button(String value, Function onPressed, {fontSize = 18}) {
+ButtonStyle _buttonStyle = buildButtonStyle(Colors.white, 2);
+ButtonStyle _selectedWeaponButtonStyle = buildButtonStyle(Colors.white, 4);
+ButtonStyle _notSelectedWeaponButtonStyle = buildButtonStyle(Colors.white, 2);
+
+Widget button(String value, Function onPressed,
+    {double fontSize = 18.0, ButtonStyle buttonStyle}) {
   return OutlinedButton(
     child:
         Text(value, style: TextStyle(color: Colors.white, fontSize: fontSize)),
-    style: OutlinedButton.styleFrom(
-      side: BorderSide(color: Colors.white, width: 2),
-      shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10))),
-    ),
+    style: buttonStyle ?? _buttonStyle,
     onPressed: onPressed,
+  );
+}
+
+ButtonStyle buildButtonStyle(Color borderColor, double borderWidth) {
+  OutlinedButton.styleFrom(
+    side: BorderSide(color: borderColor, width: borderWidth),
+    shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10))),
   );
 }
 
 Widget column(List<Widget> children) {
   return Column(
       mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start, children: children);
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: children);
 }
 
 Widget row(List<Widget> children) {
@@ -94,17 +105,15 @@ Future<void> showConnectFailedDialog() async {
         title: const Text('Connection Failed'),
         actions: <Widget>[
           TextButton(
-            child: const Text('Okay'),
-            onPressed: (){
-              Navigator.of(context).pop();
-            }
-          ),
+              child: const Text('Okay'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              }),
         ],
       );
     },
   );
 }
-
 
 void connectToGCP() {
   connect(gpc);
@@ -119,9 +128,8 @@ Widget center(Widget child) {
   );
 }
 
-Widget buildDebugUI(BuildContext context) {
-
-  if(size == null){
+Widget buildGameUI(BuildContext context) {
+  if (size == null) {
     return text("loading");
   }
   if (connecting) {
@@ -132,12 +140,18 @@ Widget buildDebugUI(BuildContext context) {
         row([
           text("BLEED", fontSize: 120),
         ]),
-        Container(height: 50,),
+        Container(
+          height: 50,
+        ),
         row([
           button('Localhost', connectLocalHost, fontSize: 21),
-          Container(width: 10,),
+          Container(
+            width: 10,
+          ),
           button('GCP', connectToGCP, fontSize: 21),
-          Container(width: 10,),
+          Container(
+            width: 10,
+          ),
           button('FULLSCREEN', requestFullScreen, fontSize: 21)
         ]),
       ]),
@@ -171,41 +185,72 @@ Widget buildDebugUI(BuildContext context) {
     );
   }
 
+  return buildHud();
+}
+
+Widget buildHud() {
   return column(
     [
-      if (!connected) button("Connect", connect),
-      if (!debugMode) button("Show Debug", showDebug),
-      if (debugMode) button("Hide Debug", hideDebug),
       button("FullScreen", requestFullScreen),
-      if (playerAssigned) text("X: $playerX Y: $playerY"),
-      if (debugMode)
-        column([
-          button("Respawn", sendRequestSpawn),
-          button("Spawn NPC", sendRequestSpawnNpc),
-          button("Clear NPCS", sendRequestClearNpcs),
-          text("Ping: ${ping.inMilliseconds}"),
-          text("Pass: $pass"),
-          text("Player Id: $playerId"),
-          text("Player Health: $playerHealth / $playerMaxHealth"),
-          text("Data Size: ${event.length}"),
-          text("Frames since event: $framesSinceEvent"),
-          text("Milliseconds Since Last Frame: $millisecondsSinceLastFrame"),
-          if (millisecondsSinceLastFrame > 0)
-            text("FPS: ${(1000 / millisecondsSinceLastFrame).round()}"),
-          if (serverFramesMS > 0)
-            text("Server FPS: ${(1000 / serverFramesMS).round()}"),
-          text("Players: ${players.length}"),
-          text("Bullets: ${bullets.length}"),
-          text("Npcs: ${npcs.length}"),
-          text("Player Assigned: $playerAssigned"),
-          // button('First Pass: $firstPass', sendTogglePass1),
-          // button('Second Pass: $secondPass', sendTogglePass2),
-          // button('Third Pass: $thirdPass', sendTogglePass3),
-          // button('Fourth Pass: $fourthPass', sendTogglePass4),
-          button("smoothing $smooth", () => smooth = !smooth),
-        ]),
+      // if (!debugMode) button("Show Debug", showDebug),
+      // if (debugMode) button("Hide Debug", hideDebug),
+      // text("X: $playerX Y: $playerY Weapon: $playerWeapon"),
+      if (debugMode) buildDebugPanel(),
+
+      GestureDetector(
+        onTap: sendRequestEquipHandgun,
+        child: Container(
+          width: 100,
+            height: 50,
+            decoration: BoxDecoration(
+                border: playerWeapon == Weapon.HandGun ? Border.all(
+                    color: Colors.black, width: 5.0, style: BorderStyle.solid) : null,
+                image: DecorationImage(
+                  image: AssetImage('images/weapon-handgun.png'),
+                ))),
+      ),
+      GestureDetector(
+        onTap: sendRequestEquipShotgun,
+        child: Container(
+            width: 150,
+            height: 50,
+            decoration: BoxDecoration(
+                border: playerWeapon == Weapon.Shotgun ? Border.all(
+                    color: Colors.black, width: 5.0, style: BorderStyle.solid) : null,
+                image: DecorationImage(
+                  image: AssetImage('images/weapon-shotgun.png'),
+                ))),
+      )
     ],
   );
+}
+
+Widget buildDebugPanel() {
+  return column([
+    button("Respawn", sendRequestSpawn),
+    button("Spawn NPC", sendRequestSpawnNpc),
+    button("Clear NPCS", sendRequestClearNpcs),
+    text("Ping: ${ping.inMilliseconds}"),
+    text("Pass: $pass"),
+    text("Player Id: $playerId"),
+    text("Player Health: $playerHealth / $playerMaxHealth"),
+    text("Data Size: ${event.length}"),
+    text("Frames since event: $framesSinceEvent"),
+    text("Milliseconds Since Last Frame: $millisecondsSinceLastFrame"),
+    if (millisecondsSinceLastFrame > 0)
+      text("FPS: ${(1000 / millisecondsSinceLastFrame).round()}"),
+    if (serverFramesMS > 0)
+      text("Server FPS: ${(1000 / serverFramesMS).round()}"),
+    text("Players: ${players.length}"),
+    text("Bullets: ${bullets.length}"),
+    text("Npcs: ${npcs.length}"),
+    text("Player Assigned: $playerAssigned"),
+    // button('First Pass: $firstPass', sendTogglePass1),
+    // button('Second Pass: $secondPass', sendTogglePass2),
+    // button('Third Pass: $thirdPass', sendTogglePass3),
+    // button('Fourth Pass: $fourthPass', sendTogglePass4),
+    button("smoothing $smooth", () => smooth = !smooth),
+  ]);
 }
 
 void showDebug() {

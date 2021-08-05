@@ -244,7 +244,7 @@ double getWeaponAccuracy(Weapon weapon){
     case Weapon.HandGun:
       return settingsWeaponAccuracyHandgun;
     case Weapon.Shotgun:
-      return settingsWeaponAccurayShotgun;
+      return settingsWeaponAccuracyShotgun;
     default:
       throw Exception("no range found for $weapon");
   }

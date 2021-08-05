@@ -20,7 +20,7 @@ class BleedWidget extends GameWidget {
   @override
   Widget buildUI(BuildContext bc) {
     context = bc;
-    return buildDebugUI(context);
+    return buildGameUI(context);
   }
 
   @override

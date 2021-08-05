@@ -116,9 +116,10 @@ void _compileBullet(Bullet bullet) {
 void _compileCharacter(Character character) {
   _write(character.state.index);
   _write(character.direction.index);
-  _write(character.x.toStringAsFixed(compilePositionDecimals));
-  _write(character.y.toStringAsFixed(compilePositionDecimals));
+  _write(character.x.toInt());
+  _write(character.y.toInt());
   _write(character.id);
+  _write(character.weapon.index);
 }
 
 void _compileNpc(Npc npc) {

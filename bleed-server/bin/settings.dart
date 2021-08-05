@@ -15,7 +15,7 @@ const double zombieViewRange = 300;
 const double settingsZombieStrikeRange = 20;
 const double destinationArrivedDistance = 5.0;
 const double startingAccuracy = 3.14 * 0.1;
-const double settingsWeaponRangeVariation = 5.0;
+const double settingsWeaponRangeVariation = 10.0;
 const int pistolCoolDown = 8;
 const int shotgunCoolDown = 20;
 const int compilePositionDecimals = 0;
@@ -27,7 +27,7 @@ const double settingsPlayerStartRadius = 50;
 const double settingsWeaponRangeHandgun = 320;
 const double settingsWeaponRangeShotgun = 180;
 const double settingsWeaponAccuracyHandgun = 0;
-const double settingsWeaponAccurayShotgun = pi * 0.06;
+const double settingsWeaponAccuracyShotgun = pi * 0.06;
 const int settingsShotgunBulletsPerShot = 5;
 const double settingsParticleShellSpeed = 8;
 

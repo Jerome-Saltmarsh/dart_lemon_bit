@@ -8,6 +8,7 @@ import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'common.dart';
 import 'constants.dart';
+import 'enums.dart';
 import 'keys.dart';
 import 'maths.dart';
 import 'state.dart';
@@ -35,8 +36,8 @@ dynamic getPlayerCharacter() {
 bool get playerAssigned => player != null;
 
 double get playerX => player[x];
-
 double get playerY => player[y];
+Weapon get playerWeapon => player[weapon];
 
 bool isDead(dynamic character) {
   return getState(character) == characterStateDead;
