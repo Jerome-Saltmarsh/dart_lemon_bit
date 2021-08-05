@@ -119,6 +119,29 @@ Rect getHumanWalkingRect(dynamic character) {
   throw Exception("Could not get character walking sprite rect");
 }
 
+Rect getHumanRunningRect(dynamic character) {
+  switch (character[direction]) {
+    case directionUp:
+      return _getFrame(rectHumanRunningUpFrames);
+    case directionUpRight:
+      return _getFrame(rectHumanRunningUpRightFrames);
+    case directionRight:
+      return _getFrame(rectHumanRunningRightFrames);
+    case directionDownRight:
+      return _getFrame(rectHumanRunningDownRightFrames);
+    case directionDown:
+      return _getFrame(rectHumanRunningDownFrames);
+    case directionDownLeft:
+      return _getFrame(rectHumanRunningDownLeftFrames);
+    case directionLeft:
+      return _getFrame(rectHumanRunningLeftFrames);
+    case directionUpLeft:
+      return _getFrame(rectHumanRunningUpLeftFrames);
+  }
+  throw Exception("Could not get character walking sprite rect");
+}
+
+
 Rect getHumanIdleRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
@@ -222,7 +245,7 @@ Rect getCharacterSpriteRect(dynamic character) {
     case characterStateStriking:
       return getHumanStrikingRect(character);
     case characterStateRunning:
-      return getHumanWalkingRect(character);
+      return getHumanRunningRect(character);
   }
   throw Exception("Could not get character sprite rect");
 }
@@ -306,7 +329,7 @@ Rect _getFrame(List<Rect> frames) {
   return frames[drawFrame % frames.length];
 }
 
-const int humanSpriteFrames = 52;
+const int humanSpriteFrames = 73;
 const int humanSpriteFrameWidth = 48;
 const int humanSpriteFrameHeight = 72;
 const int humanSpriteImageWidth = humanSpriteFrames * humanSpriteFrameWidth;
@@ -321,6 +344,38 @@ Rect rectHumanIdleUpRight = rectHumanIdleDownLeft;
 Rect rectHumanIdleRight = rectHumanIdleLeft;
 Rect rectHumanIdleDownRight = rectHumanIdleUpLeft;
 Rect rectHumanIdleDown = rectHumanIdleUp;
+
+Rect rectHumanRunningDownLeft1 = _humanRect(53);
+Rect rectHumanRunningDownLeft2 = _humanRect(54);
+Rect rectHumanRunningDownLeft3 = _humanRect(55);
+
+Rect rectHumanRunningLeft1 = _humanRect(56);
+Rect rectHumanRunningLeft2 = _humanRect(57);
+Rect rectHumanRunningLeft3 = _humanRect(58);
+
+Rect rectHumanRunningUpLeft1 = _humanRect(59);
+Rect rectHumanRunningUpLeft2 = _humanRect(60);
+Rect rectHumanRunningUpLeft3 = _humanRect(61);
+
+Rect rectHumanRunningUp1 = _humanRect(62);
+Rect rectHumanRunningUp2 = _humanRect(63);
+Rect rectHumanRunningUp3 = _humanRect(64);
+
+Rect rectHumanRunningUpRight1 = _humanRect(65);
+Rect rectHumanRunningUpRight2 = _humanRect(66);
+Rect rectHumanRunningUpRight3 = _humanRect(67);
+
+Rect rectHumanRunningRight1 = _humanRect(68);
+Rect rectHumanRunningRight2 = _humanRect(69);
+Rect rectHumanRunningRight3 = _humanRect(70);
+
+Rect rectHumanRunningDownRight1 = _humanRect(71);
+Rect rectHumanRunningDownRight2 = _humanRect(72);
+Rect rectHumanRunningDownRight3 = _humanRect(73);
+
+Rect rectHumanRunningDown1 = rectHumanRunningUp1;
+Rect rectHumanRunningDown2 = rectHumanRunningUp2;
+Rect rectHumanRunningDown3 = rectHumanRunningUp3;
 
 Rect rectHumanDeadUpRight = getHumanSpriteRect(16);
 Rect rectHumanDeadRight = getHumanSpriteRect(17);
@@ -435,9 +490,63 @@ List<Rect> rectHumanWalkingUpFrames = [
   getHumanSpriteRect(15)
 ];
 
+// RUNNING
+
+List<Rect> rectHumanRunningDownLeftFrames = [
+  rectHumanRunningDownLeft1,
+  rectHumanRunningDownLeft2,
+  rectHumanRunningDownLeft3,
+];
+
+List<Rect> rectHumanRunningLeftFrames = [
+  rectHumanRunningLeft1,
+  rectHumanRunningLeft2,
+  rectHumanRunningLeft3,
+];
+
+List<Rect> rectHumanRunningUpLeftFrames = [
+  rectHumanRunningUpLeft1,
+  rectHumanRunningUpLeft2,
+  rectHumanRunningUpLeft3,
+];
+
+List<Rect> rectHumanRunningUpFrames = [
+  rectHumanRunningUp1,
+  rectHumanRunningUp2,
+  rectHumanRunningUp3,
+];
+
+List<Rect> rectHumanRunningUpRightFrames = [
+  rectHumanRunningUpRight1,
+  rectHumanRunningUpRight2,
+  rectHumanRunningUpRight3,
+];
+
+List<Rect> rectHumanRunningRightFrames = [
+  rectHumanRunningRight1,
+  rectHumanRunningRight2,
+  rectHumanRunningRight3,
+];
+
+List<Rect> rectHumanRunningDownRightFrames = [
+  rectHumanRunningDownRight1,
+  rectHumanRunningDownRight2,
+  rectHumanRunningDownRight3,
+];
+
+List<Rect> rectHumanRunningDownFrames = [
+  rectHumanRunningDown1,
+  rectHumanRunningDown2,
+  rectHumanRunningDown3,
+];
+
 Rect getHumanSpriteRect(int index) {
   return Rect.fromLTWH((index * humanSpriteFrameWidth).toDouble(), 0.0,
       humanSpriteFrameWidth.toDouble(), humanSpriteFrameHeight.toDouble());
+}
+
+Rect _humanRect(int index){
+  return getHumanSpriteRect(index - 1);
 }
 
 RSTransform getCharacterTransform(dynamic character) {

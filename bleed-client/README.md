@@ -16,9 +16,9 @@
 [ ] Accuracy
 [ ] Critical Damage
 [ ] Fix center camera on spawn
-[ ] Sprint
 [ ] Weapon: Machine Gun
-[ ] Player Death Audio
+[x] Sprint
+[x] Player Death Audio
 [x] Zombies eat dead players bodies
 [x] Zombie Strike Audio
 [x] Fix Zombie Strike animation
