@@ -177,6 +177,11 @@ Widget buildGameUI(BuildContext context) {
       );
     }
   } else {
+
+    if(playerUUID.isEmpty){
+       return Text("loading");
+    }
+
     return Container(
       width: size.width,
       height: size.height,
