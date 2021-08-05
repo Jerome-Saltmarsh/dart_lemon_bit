@@ -20,6 +20,7 @@
 [ ] Fix center camera on spawn
 [ ] Weapon: Machine Gun
 [ ] BUG: Bullet hole sometimes doesn't appear
+[ ] Equip weapon audio
 [ ] HUD
 [x] Connection Failed Error dialog
 [x] Sprint

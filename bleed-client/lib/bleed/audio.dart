@@ -5,6 +5,7 @@ import 'utils.dart';
 AudioPlayer _weaponAudioPlayer = AudioPlayer();
 AudioPlayer _zombieAudioPlayer = AudioPlayer();
 AudioPlayer _playerAudioPlayer = AudioPlayer();
+AudioPlayer _equipAudioPlayer = AudioPlayer();
 
 List<String> _zombieHits = [
   'zombie-hit-01.wav',
@@ -38,6 +39,14 @@ List<String> _maleScreams = [
   'male-screams-05.wav',
   'male-screams-06.wav',
 ];
+
+void playAudioReload(){
+  _play('reload-06.wav', _equipAudioPlayer);
+}
+
+void playAudioCockShotgun(){
+  _play('cock-shotgun-03.wav', _equipAudioPlayer);
+}
 
 void playPlayerDeathAudio(){
   _playRandom(_maleScreams, _playerAudioPlayer);
