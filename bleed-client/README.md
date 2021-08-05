@@ -13,15 +13,16 @@
 [ ] Explosions
 [ ] Ammo
 [ ] Particle Smoke
+[ ] Weapon: Machine Gun
 [ ] Adjustable FPS (Client)
 [ ] Accuracy
 [ ] Critical Damage
 [ ] Compile Bullet remove id
-[ ] Fix center camera on spawn
-[ ] Weapon: Machine Gun
+[ ] Equip Weapon Animation
 [ ] BUG: Bullet hole sometimes doesn't appear
-[ ] Equip weapon audio
 [ ] HUD
+[x] Fix center camera on spawn
+[x] Equip weapon audio
 [x] Connection Failed Error dialog
 [x] Sprint
 [x] Player Death Audio

@@ -151,3 +151,8 @@ repeat(Function function, int times, int milliseconds) {
     Future.delayed(Duration(milliseconds: milliseconds * times), function);
   }
 }
+
+void cameraCenter(double x, double y){
+    cameraX = x - (size.width * 0.5);
+    cameraY = y - (size.height * 0.5);
+}

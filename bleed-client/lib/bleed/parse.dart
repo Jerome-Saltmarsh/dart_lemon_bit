@@ -118,7 +118,10 @@ void _parseFrameMS() {
 void _parsePlayerId() {
   playerId = _consumeInt();
   playerUUID = _consumeString();
-  _consumeSemiColon();
+  int x = _consumeInt();
+  int y = _consumeInt();
+  // HACK: doesn't belong here
+  cameraCenter(x.toDouble(), y.toDouble());
 }
 
 void _next() {

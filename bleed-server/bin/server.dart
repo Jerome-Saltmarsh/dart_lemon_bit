@@ -34,7 +34,7 @@ void main() {
 
     void handleRequestSpawn() {
       var player = spawnPlayer(name: "Test");
-      String response = "id: ${player.id} ${player.uuid} ;";
+      String response = "id: ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt() } ;";
       sendToClient(response);
       return;
     }
