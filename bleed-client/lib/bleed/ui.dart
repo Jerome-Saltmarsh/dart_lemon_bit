@@ -120,6 +120,10 @@ Widget center(Widget child) {
 }
 
 Widget buildDebugUI(BuildContext context) {
+
+  if(size == null){
+    return text("loading");
+  }
   if (connecting) {
     return center(text("Connecting"));
   } else if (!connected) {

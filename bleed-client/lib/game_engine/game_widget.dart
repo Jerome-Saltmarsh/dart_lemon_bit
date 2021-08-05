@@ -134,6 +134,7 @@ class _GameWidgetState extends State<GameWidget> {
 
   @override
   Widget build(BuildContext context) {
+    globalContext = context;
 
     if (!keyboardFocusNode.hasFocus) {
       FocusScope.of(context).requestFocus(keyboardFocusNode);
