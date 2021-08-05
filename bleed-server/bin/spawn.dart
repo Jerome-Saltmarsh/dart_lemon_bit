@@ -15,7 +15,7 @@ void spawnBullet(Character character) {
       velY(character.aimAngle + giveOrTake(getWeaponAccuracy(character.weapon)),
           bulletSpeed),
       character.id,
-      getWeaponRange(character.weapon));
+      getWeaponRange(character.weapon) + giveOrTake(settingsWeaponRangeVariation));
   bullets.add(bullet);
 }
 

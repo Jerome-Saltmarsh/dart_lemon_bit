@@ -144,7 +144,7 @@ class Particle extends PhysicsGameObject {
 
 class GameEvent extends GameObject {
   final GameEventType type;
-  int frameDuration = 5;
+  int frameDuration = 8;
 
   GameEvent(double x, double y, this.type) : super(x, y);
 }

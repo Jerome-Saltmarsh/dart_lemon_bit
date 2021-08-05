@@ -13,6 +13,7 @@
 [ ] HUD
 [ ] Ammo
 [ ] Particle Smoke
+[ ] Adjustable FPS
 [ ] Accuracy
 [ ] Critical Damage
 [ ] Fix center camera on spawn
@@ -95,3 +96,7 @@ Run send commands on a separate thread to the receive commands
 - merchant (item cost)
 - health regen
 - max health
+
+## IDEA
+Only redraw game when an event arrives (this will save a lot of draw calls)
+- The drawback is you cannot have client side effects

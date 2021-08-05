@@ -159,7 +159,6 @@ void fireWeapon(Character character) {
       gameEvents.add(GameEvent(character.x, character.y, GameEventType.Handgun_Fired));
       break;
     case Weapon.Shotgun:
-
       character.xVel += velX(character.aimAngle + pi, 1);
       character.yVel += velY(character.aimAngle + pi, 1);
 
@@ -252,5 +251,6 @@ double getWeaponAccuracy(Weapon weapon){
 }
 
 void dispatch(GameEventType type, double x, double y){
+  print('dispatch($type)');
   gameEvents.add(GameEvent(x, y, type));
 }

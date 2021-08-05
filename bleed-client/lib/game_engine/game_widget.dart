@@ -58,6 +58,8 @@ abstract class GameWidget extends StatefulWidget {
   DateTime previousUpdateTime = DateTime.now();
   Duration frameDuration = Duration();
 
+  int targetFPS() => 60;
+
   Future init();
 
   void _internalUpdate(){
@@ -121,10 +123,8 @@ class _GameWidgetState extends State<GameWidget> {
       redrawGame();
       redrawUI();
     });
-    updateTimer = Timer.periodic(Duration(milliseconds: 1000 ~/ 45), (timer) {
+    updateTimer = Timer.periodic(Duration(milliseconds: 1000 ~/ widget.targetFPS()), (timer) {
       widget._internalUpdate();
-      gameSetState(_doNothing);
-      uiSetState(_doNothing);
     });
     keyboardFocusNode = FocusNode();
     widget.init();
@@ -138,7 +138,6 @@ class _GameWidgetState extends State<GameWidget> {
     if (!keyboardFocusNode.hasFocus) {
       FocusScope.of(context).requestFocus(keyboardFocusNode);
     }
-
     return MaterialApp(
       title: widget.title,
       theme: ThemeData(
