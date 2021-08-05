@@ -11,7 +11,6 @@ int frameRate = 5;
 int frameRateValue = 0;
 int packagesSent = 0;
 int packagesReceived = 0;
-int errors = 0;
 int pass = 0;
 int serverFrame = 0;
 int requestDirection = directionDown;
@@ -24,7 +23,7 @@ String event = "";
 dynamic valueObject;
 DateTime lastRefresh = DateTime.now();
 Duration refreshDuration;
-bool smooth = true;
+bool smooth = false;
 BuildContext context;
 List<List<dynamic>> players = [];
 List<List<dynamic>> npcs = [];
@@ -47,12 +46,6 @@ List<RSTransform> playersTransforms = [];
 List<Rect> playersRects = [];
 List<RSTransform> npcsTransforms = [];
 List<Rect> npcsRects = [];
-
-bool firstPass = true;
-bool secondPass = true;
-bool thirdPass = true;
-bool fourthPass = true;
-
 
 int tilesX = 0;
 int tilesY = 0;

@@ -10,6 +10,13 @@ import 'utils.dart';
 
 TextEditingController playerNameController = TextEditingController();
 
+void initUI(){
+  onConnectError.stream.listen((event) {
+    showConnectFailedDialog();
+    forceRedraw();
+  });
+}
+
 Widget text(String value, {fontSize = 18}) {
   return Text(value, style: TextStyle(color: Colors.white, fontSize: fontSize));
 }
@@ -77,6 +84,27 @@ Future<void> showChangeNameDialog() async {
     },
   );
 }
+
+Future<void> showConnectFailedDialog() async {
+  return showDialog<void>(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Connection Failed'),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Okay'),
+            onPressed: (){
+              Navigator.of(context).pop();
+            }
+          ),
+        ],
+      );
+    },
+  );
+}
+
 
 void connectToGCP() {
   connect(gpc);
@@ -151,7 +179,6 @@ Widget buildDebugUI(BuildContext context) {
           button("Respawn", sendRequestSpawn),
           button("Spawn NPC", sendRequestSpawnNpc),
           button("Clear NPCS", sendRequestClearNpcs),
-          text("Server Host: $host"),
           text("Ping: ${ping.inMilliseconds}"),
           text("Pass: $pass"),
           text("Player Id: $playerId"),

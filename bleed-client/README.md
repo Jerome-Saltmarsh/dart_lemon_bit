@@ -5,7 +5,6 @@
 [ ] Keep aiming for duration after shot fired
 [ ] Oozie
 [ ] Shot Animation
-[ ] Bullet Hit Animation
 [ ] Publish dart-blade-game-engine
 [ ] Create bleed-common library
 [ ] Optimize Server Collision Detection
@@ -13,11 +12,14 @@
 [ ] HUD
 [ ] Ammo
 [ ] Particle Smoke
-[ ] Adjustable FPS
+[ ] Adjustable FPS (Client)
 [ ] Accuracy
 [ ] Critical Damage
 [ ] Fix center camera on spawn
 [ ] Weapon: Machine Gun
+[ ] BUG: Bullet hole sometimes doesn't appear
+[ ] Use particles to show blood
+[ ] Connection Failed Error dialog
 [x] Sprint
 [x] Player Death Audio
 [x] Zombies eat dead players bodies

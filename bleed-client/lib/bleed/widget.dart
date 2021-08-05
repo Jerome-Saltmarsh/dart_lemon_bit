@@ -9,11 +9,11 @@ import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'connection.dart';
 import 'draw.dart';
 import 'resources.dart';
+import 'send.dart';
 import 'state.dart';
 import 'ui.dart';
 
 class BleedWidget extends GameWidget {
-
   @override
   bool uiVisible() => true;
 
@@ -26,13 +26,23 @@ class BleedWidget extends GameWidget {
   @override
   Future init() async {
     loadResources();
-    // connect();
-    // sendRequestSpawn();
     periodic(checkBulletHoles, ms: 500);
+
+    periodic(() {
+      if (!connected) {
+        forceRedraw();
+      }
+    }, ms: 100);
+
+    onConnected.stream.listen((event) {
+      sendRequestTiles();
+    });
+
+    initUI();
   }
 
-  void checkBulletHoles(){
-    if (bulletHoles.length > 4){
+  void checkBulletHoles() {
+    if (bulletHoles.length > 4) {
       bulletHoles.removeAt(0);
       bulletHoles.removeAt(0);
     }
@@ -44,9 +54,7 @@ class BleedWidget extends GameWidget {
   }
 
   @override
-  void onMouseClick() {
-
-  }
+  void onMouseClick() {}
 
   @override
   void draw(Canvas canvass, Size _size) {
@@ -67,5 +75,10 @@ class BleedWidget extends GameWidget {
     drawParticles();
     drawCharacters();
     drawMouse();
+  }
+
+  @override
+  int targetFPS() {
+    return 60;
   }
 }

@@ -62,25 +62,9 @@ void main() {
             Direction.values[int.parse(attributes[4])];
         double aim = double.parse(attributes[5]);
         player.aimAngle = aim;
-        // int lastServerFrame = int.parse(attributes[6]);
-        // find all the events since then and send them to the server
-
         setDirection(player, requestedDirection);
         setCharacterState(player, requestedState);
         sendCompiledPlayerState(player, pass: 0);
-
-        // if(firstPass){
-        //   Future.delayed(Duration(milliseconds: firstPassMS), () => sendCompiledPlayerState(player, pass: 1));
-        // }
-        // if(secondPass){
-        //   Future.delayed(Duration(milliseconds: secondPassMS), () => sendCompiledPlayerState(player, pass: 2));
-        // }
-        // if(thirdPass){
-        //   Future.delayed(Duration(milliseconds: thirdPassMS), () => sendCompiledPlayerState(player, pass: 3));
-        // }
-        // if(fourthPass){
-        //   Future.delayed(Duration(milliseconds: fourthPassMS), () => sendCompiledPlayerState(player, pass: 4));
-        // }
         return;
       }
       if (request.startsWith('revive:')) {

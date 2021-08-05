@@ -7,7 +7,7 @@ void compileState() {
   _compilePlayers();
   _compileNpcs();
   _compileBullets();
-  _compilePasses();
+  // _compilePasses();
   _compileFPS();
   _compileFrame();
   _compileGameEvents();
@@ -63,10 +63,6 @@ String compilePass(int value) {
 
 void _compileFPS() {
   buffer.write("fms: ${frameDuration.inMilliseconds} ;");
-}
-
-void _compilePasses() {
-  buffer.write("passes: $firstPass $secondPass $thirdPass $fourthPass ; ");
 }
 
 void _compileFrame() {

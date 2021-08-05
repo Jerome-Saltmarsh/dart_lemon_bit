@@ -8,6 +8,7 @@ import 'state.dart';
 StringBuffer _buffer = StringBuffer();
 
 void sendRequestTiles(){
+  print('sendRequestTiles()');
   send('get-tiles');
 }
 

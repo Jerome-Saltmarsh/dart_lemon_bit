@@ -13,7 +13,8 @@ import 'maths.dart';
 import 'state.dart';
 
 double getMouseRotation() {
-  return round(getRadionsBetween(playerScreenPositionX(), playerScreenPositionY(), mousePosX, mousePosY));
+  return round(getRadionsBetween(
+      playerScreenPositionX(), playerScreenPositionY(), mousePosX, mousePosY));
 }
 
 double playerScreenPositionX() {
@@ -32,7 +33,9 @@ dynamic getPlayerCharacter() {
 }
 
 bool get playerAssigned => player != null;
+
 double get playerX => player[x];
+
 double get playerY => player[y];
 
 bool isDead(dynamic character) {
@@ -64,10 +67,7 @@ void drawLineFrom(dynamic object, double x, double y) {
 }
 
 void drawLineRotation(dynamic object, double rotation, double distance) {
-  drawLine(
-      object[x],
-      object[y],
-      object[x] + rotationToPosX(rotation, distance),
+  drawLine(object[x], object[y], object[x] + rotationToPosX(rotation, distance),
       object[y] + rotationToPosY(rotation, distance));
 }
 
@@ -130,11 +130,11 @@ int convertAngleToDirection(double angle) {
   return directionUp;
 }
 
-bool randomBool(){
+bool randomBool() {
   return random.nextDouble() > 0.5;
 }
 
-T randomItem<T>(List<T> list){
+T randomItem<T>(List<T> list) {
   return list[random.nextInt(list.length)];
 }
 
@@ -142,4 +142,10 @@ Timer periodic(Function function, {int seconds = 0, int ms = 0}) {
   return Timer.periodic(Duration(seconds: seconds, milliseconds: ms), (timer) {
     function();
   });
+}
+
+repeat(Function function, int times, int milliseconds) {
+  for (int i = 0; i < times; i++) {
+    Future.delayed(Duration(milliseconds: milliseconds * times), function);
+  }
 }

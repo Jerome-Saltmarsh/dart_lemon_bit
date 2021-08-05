@@ -1,15 +1,21 @@
-import 'package:flutter_game_engine/bleed/send.dart';
+import 'dart:async';
+
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'parse.dart';
 import 'state.dart';
 
-
 // state
 WebSocketChannel _webSocketChannel;
 bool connected = false;
 bool connecting = false;
+final StreamController onConnected = StreamController();
+final StreamController onDisconnected = StreamController();
+final StreamController onError = StreamController();
+final StreamController onConnectError = StreamController();
+final StreamController onDone = StreamController();
+final StreamController onEvent = StreamController();
 
 // public
 
@@ -27,22 +33,11 @@ void connectLocalHost({int port = 8080}) {
 
 void connect(String uri) {
   print('connection.connect($uri)');
-  try {
     connecting = true;
     _webSocketChannel = WebSocketChannel.connect(Uri.parse(uri));
     _webSocketChannel.stream
         .listen(_onEvent, onError: _onError, onDone: _onDone);
-    connected = true;
-    connecting = false;
-    sendRequestTiles();
-    print("connection established");
-  } catch (error) {
-    print("connection failed");
-    print(error);
-    errors++;
-    connected = false;
-    connecting = false;
-  }
+  _webSocketChannel.sink.add('get-tiles');
 }
 
 void send(String message) {
@@ -54,6 +49,14 @@ void send(String message) {
 // private
 
 void _onEvent(dynamic response) {
+  if (connecting) {
+    print("connection established");
+    connected = true;
+    connecting = false;
+    onConnected.add(response);
+  }
+
+  onEvent.add(response);
   framesSinceEvent = 0;
   DateTime now = DateTime.now();
   ping = now.difference(previousEvent);
@@ -70,8 +73,13 @@ void _onEvent(dynamic response) {
 }
 
 void _onError(dynamic value) {
-  print("connection error");
-  errors++;
+  if (connecting) {
+    print("connection connect error");
+    onConnectError.add(value);
+  } else {
+    print("connection error");
+    onError.add(value);
+  }
   connected = false;
   connecting = false;
 }
@@ -80,4 +88,5 @@ void _onDone() {
   print("connection done");
   connected = false;
   connecting = false;
+  onDone.add(true);
 }

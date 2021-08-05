@@ -36,8 +36,6 @@ void parseState() {
       _consumeInvalidUUID();
     } else if (term == 'player:') {
       _parsePlayer();
-    } else if (term == 'passes:') {
-      _parsePasses();
     } else if (term == 'tiles:') {
       _parseTiles();
     } else if (term == "pass:") {
@@ -112,14 +110,6 @@ void _parsePlayer() {
   _consumeSemiColon();
 }
 
-void _parsePasses() {
-  firstPass = _consumeBool();
-  secondPass = _consumeBool();
-  thirdPass = _consumeBool();
-  fourthPass = _consumeBool();
-  _consumeSemiColon();
-}
-
 void _parseFrameMS() {
   serverFramesMS = _consumeInt();
   _consumeSemiColon();
@@ -147,10 +137,6 @@ int _consumeInt() {
 
 int parseInt(String value) {
   return int.parse(value);
-}
-
-bool _consumeBool() {
-  return _consumeString() == 'true';
 }
 
 String _consumeString() {
