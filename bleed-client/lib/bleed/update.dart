@@ -1,5 +1,6 @@
 import 'package:flutter_game_engine/bleed/audio.dart';
 import 'package:flutter_game_engine/bleed/connection.dart';
+import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'enums.dart';
 import 'input.dart';
@@ -28,6 +29,8 @@ void update() {
           case Weapon.Shotgun:
             playAudioCockShotgun();
         }
+
+        redrawUI();
       }
     } else {
       sendCommandUpdate();

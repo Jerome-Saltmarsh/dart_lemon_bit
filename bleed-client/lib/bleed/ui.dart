@@ -46,7 +46,7 @@ ButtonStyle buildButtonStyle(Color borderColor, double borderWidth) {
 
 Widget column(List<Widget> children) {
   return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: children);
 }
@@ -192,15 +192,12 @@ Widget buildHud() {
   return column(
     [
       button("FullScreen", requestFullScreen),
-      // if (!debugMode) button("Show Debug", showDebug),
-      // if (debugMode) button("Hide Debug", hideDebug),
-      // text("X: $playerX Y: $playerY Weapon: $playerWeapon"),
       if (debugMode) buildDebugPanel(),
 
       GestureDetector(
         onTap: sendRequestEquipHandgun,
         child: Container(
-          width: 100,
+          width: 80,
             height: 50,
             decoration: BoxDecoration(
                 border: playerWeapon == Weapon.HandGun ? Border.all(
@@ -212,7 +209,7 @@ Widget buildHud() {
       GestureDetector(
         onTap: sendRequestEquipShotgun,
         child: Container(
-            width: 150,
+            width: 120,
             height: 50,
             decoration: BoxDecoration(
                 border: playerWeapon == Weapon.Shotgun ? Border.all(

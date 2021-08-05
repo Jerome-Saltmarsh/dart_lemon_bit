@@ -33,10 +33,9 @@ void connectLocalHost({int port = 8080}) {
 
 void connect(String uri) {
   print('connection.connect($uri)');
-    connecting = true;
-    _webSocketChannel = WebSocketChannel.connect(Uri.parse(uri));
-    _webSocketChannel.stream
-        .listen(_onEvent, onError: _onError, onDone: _onDone);
+  connecting = true;
+  _webSocketChannel = WebSocketChannel.connect(Uri.parse(uri));
+  _webSocketChannel.stream.listen(_onEvent, onError: _onError, onDone: _onDone);
   _webSocketChannel.sink.add('get-tiles');
 }
 
@@ -54,6 +53,7 @@ void _onEvent(dynamic response) {
     connected = true;
     connecting = false;
     onConnected.add(response);
+    redrawUI();
   }
 
   onEvent.add(response);
@@ -63,13 +63,9 @@ void _onEvent(dynamic response) {
   previousEvent = now;
   packagesReceived++;
   event = response;
-  try {
-    parseState();
-  } catch (error) {
-    print(error);
-  }
+  parseState();
   redrawGame();
-  redrawUI();
+  // redrawUI();
 }
 
 void _onError(dynamic value) {
