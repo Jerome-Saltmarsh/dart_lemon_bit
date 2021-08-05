@@ -11,7 +11,7 @@ import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'common.dart';
 import 'keys.dart';
-import 'resources.dart';
+import 'images.dart';
 import 'settings.dart';
 import 'state.dart';
 import 'utils.dart';
@@ -560,8 +560,20 @@ RSTransform getCharacterTransform(dynamic character) {
   );
 }
 
+RSTransform rsTransform({double x, double y, double anchorX, double anchorY, double scale = 1}){
+  return RSTransform.fromComponents(
+    rotation: 0.0,
+    scale: scale,
+    anchorX: anchorX,
+    anchorY: anchorY,
+    translateX: x - cameraX,
+    translateY: y - cameraY,
+  );
+}
+
 void drawPlayerHealth() {
   if (!playerAssigned) return;
+
   double health = playerHealth / playerMaxHealth;
   double halfMaxHealth = playerMaxHealth * 0.5;
   if (health > 0.5) {
@@ -597,14 +609,8 @@ void drawCircleOutline(
     points.add(Offset(cos(a1) * radius - cameraX, sin(a1) * radius - cameraY));
   }
   for (int i = 0; i < points.length - 1; i++) {
-    canvas.drawLine(points[i] + z, points[i + 1] + z, globalPaint);
+    globalCanvas.drawLine(points[i] + z, points[i + 1] + z, globalPaint);
   }
-}
-
-void drawBullets() {
-  bullets.forEach((bullet) {
-    drawCircle(bullet[x], bullet[y], 2, white);
-  });
 }
 
 void drawMouse() {

@@ -1,5 +1,6 @@
 
 import 'package:flutter_game_engine/bleed/enums.dart';
+import 'package:flutter_game_engine/bleed/utils.dart';
 
 import 'connection.dart';
 import 'state.dart';
@@ -7,25 +8,14 @@ import 'state.dart';
 
 StringBuffer _buffer = StringBuffer();
 
+void requestThrowGrenade(){
+  if (!playerAssigned) return;
+  send('grenade $playerId $playerUUID');
+}
+
 void sendRequestTiles(){
   print('sendRequestTiles()');
   send('get-tiles');
-}
-
-void sendTogglePass1(){
-  send('toggle-pass-1');
-}
-
-void sendTogglePass2(){
-  send('toggle-pass-2');
-}
-
-void sendTogglePass3(){
-  send('toggle-pass-3');
-}
-
-void sendTogglePass4(){
-  send('toggle-pass-4');
 }
 
 void sendRequestRevive(){

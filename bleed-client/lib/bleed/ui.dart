@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_game_engine/game_engine/engine_state.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'package:flutter_game_engine/game_engine/web_functions.dart';
 
@@ -9,7 +10,8 @@ import 'settings.dart';
 import 'state.dart';
 import 'utils.dart';
 
-TextEditingController playerNameController = TextEditingController();
+TextEditingController _playerNameController = TextEditingController();
+ButtonStyle _buttonStyle = buildButtonStyle(Colors.white, 2);
 
 void initUI() {
   onConnectError.stream.listen((event) {
@@ -22,10 +24,6 @@ Widget text(String value, {fontSize = 18}) {
   return Text(value, style: TextStyle(color: Colors.white, fontSize: fontSize));
 }
 
-ButtonStyle _buttonStyle = buildButtonStyle(Colors.white, 2);
-ButtonStyle _selectedWeaponButtonStyle = buildButtonStyle(Colors.white, 4);
-ButtonStyle _notSelectedWeaponButtonStyle = buildButtonStyle(Colors.white, 2);
-
 Widget button(String value, Function onPressed,
     {double fontSize = 18.0, ButtonStyle buttonStyle}) {
   return OutlinedButton(
@@ -37,7 +35,7 @@ Widget button(String value, Function onPressed,
 }
 
 ButtonStyle buildButtonStyle(Color borderColor, double borderWidth) {
-  OutlinedButton.styleFrom(
+  return OutlinedButton.styleFrom(
     side: BorderSide(color: borderColor, width: borderWidth),
     shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -75,7 +73,7 @@ Future<void> showChangeNameDialog() async {
               TextField(
                 autofocus: true,
                 focusNode: FocusNode(),
-                controller: playerNameController,
+                controller: _playerNameController,
               )
             ],
           ),
@@ -83,7 +81,7 @@ Future<void> showChangeNameDialog() async {
         actions: <Widget>[
           TextButton(
             child: const Text('PLAY'),
-            onPressed: playerNameController.text.trim().length > 2
+            onPressed: _playerNameController.text.trim().length > 2
                 ? () {
                     // sendRequestSpawn(playerNameController.text.trim());
                     Navigator.of(context).pop();
@@ -121,15 +119,15 @@ void connectToGCP() {
 
 Widget center(Widget child) {
   return Container(
-    width: size.width,
-    height: size.height,
+    width: globalSize.width,
+    height: globalSize.height,
     alignment: Alignment.center,
     child: child,
   );
 }
 
 Widget buildGameUI(BuildContext context) {
-  if (size == null) {
+  if (globalSize == null) {
     return text("loading");
   }
   if (connecting) {
@@ -160,8 +158,8 @@ Widget buildGameUI(BuildContext context) {
 
   if (framesSinceEvent > 30) {
     return Container(
-      width: size.width,
-      height: size.height,
+      width: globalSize.width,
+      height: globalSize.height,
       alignment: Alignment.center,
       child: Container(child: text("Reconnecting...", fontSize: 30)),
     );
@@ -170,21 +168,21 @@ Widget buildGameUI(BuildContext context) {
   if (player != null) {
     if (isDead(player)) {
       return Container(
-        width: size.width,
-        height: size.height,
+        width: globalSize.width,
+        height: globalSize.height,
         alignment: Alignment.center,
         child: button("Revive", sendRequestRevive, fontSize: 40),
       );
     }
   } else {
 
-    if(playerUUID.isEmpty){
-       return Text("loading");
+    if(playerUUID.isNotEmpty){
+       return Text("Loading Players");
     }
 
     return Container(
-      width: size.width,
-      height: size.height,
+      width: globalSize.width,
+      height: globalSize.height,
       alignment: Alignment.center,
       child: button("Spawn", sendRequestSpawn, fontSize: 40),
     );

@@ -52,6 +52,10 @@ void playPlayerDeathAudio(){
   _playRandom(_maleScreams, _playerAudioPlayer);
 }
 
+void playAudioExplosion(){
+
+}
+
 void playAudioZombieBite(){
   _playRandom(_zombieBite, _zombieAudioPlayer);
 }

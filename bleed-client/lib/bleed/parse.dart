@@ -49,6 +49,8 @@ void parseState() {
       _consumeBlood();
     } else if (term == "particles") {
       _consumeParticles();
+    } else if (term == "grenades") {
+      _parseGrenades();
     } else {
       throw Exception("term not found: $term");
     }
@@ -134,6 +136,13 @@ void _parsePlayerId() {
   // HACK DOESN"T BELONG HERE
   redrawUI();
   print("parsePlayerId() - finished");
+}
+
+void _parseGrenades(){
+  grenades.clear();
+  while (!_simiColonConsumed()) {
+    grenades.add(_consumeDouble());
+  }
 }
 
 void _next() {

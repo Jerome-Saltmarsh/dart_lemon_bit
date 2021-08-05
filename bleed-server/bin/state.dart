@@ -10,6 +10,7 @@ List<Player> players = [];
 List<Bullet> bullets = [];
 List<Blood> blood = [];
 List<Particle> particles = [];
+List<Grenade> grenades = [];
 List<GameEvent> gameEvents = [];
 DateTime frameTime = DateTime.now();
 Duration frameDuration = Duration();

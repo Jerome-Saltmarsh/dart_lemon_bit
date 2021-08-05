@@ -11,6 +11,7 @@ void compileState() {
   _compileFPS();
   _compileFrame();
   _compileGameEvents();
+  _compileGrenades();
   _compileBlood();
   _compileParticles();
   compiledState = buffer.toString();
@@ -18,13 +19,22 @@ void compileState() {
 
 void _compileGameEvents() {
   if (gameEvents.isEmpty) return;
-
   _write("events:");
   for (GameEvent gameEvent in gameEvents) {
     _write(gameEvent.id);
     _write(gameEvent.type.index);
     _write(gameEvent.x.toInt());
     _write(gameEvent.y.toInt());
+  }
+  _end();
+}
+
+void _compileGrenades(){
+  if(grenades.isEmpty) return;
+  _write('grenades');
+  for(Grenade grenade in grenades){
+    _write(grenade.x.toInt());
+    _write(grenade.y.toInt());
   }
   _end();
 }

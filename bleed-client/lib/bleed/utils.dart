@@ -153,6 +153,6 @@ repeat(Function function, int times, int milliseconds) {
 }
 
 void cameraCenter(double x, double y){
-    cameraX = x - (size.width * 0.5);
-    cameraY = y - (size.height * 0.5);
+    cameraX = x - (globalSize.width * 0.5);
+    cameraY = y - (globalSize.height * 0.5);
 }

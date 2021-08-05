@@ -2,10 +2,10 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_game_engine/bleed/enums.dart';
+import 'classes.dart';
 import 'common.dart';
 import 'constants.dart';
 
-Size size;
 int frameRate = 5;
 int frameRateValue = 0;
 int packagesSent = 0;
@@ -30,8 +30,9 @@ List<List<dynamic>> bullets = [];
 List<double> bulletHoles = [];
 List<double> blood = [];
 List<double> particles = [];
+List<double> grenades = [];
+List<SpriteAnimation> animations = [];
 int drawFrame = 0;
-Canvas canvas;
 bool debugMode = false;
 int playerId = idNotConnected;
 dynamic player;

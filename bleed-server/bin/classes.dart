@@ -148,3 +148,8 @@ class GameEvent extends GameObject {
 
   GameEvent(double x, double y, this.type) : super(x, y);
 }
+
+class Grenade extends PhysicsGameObject {
+  Grenade(double x, double y, double xVel, double yVel) : super(x, y, xVel, yVel);
+}
+

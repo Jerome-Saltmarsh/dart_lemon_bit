@@ -37,10 +37,6 @@ void spawnBlood(Character character, double rotation, speed) {
       character.x, character.y, velX(rotation, speed), velY(rotation, speed)));
 }
 
-void spawnBlood2(double x, double y, double rotation, speed) {
-  blood.add(Blood(x, y, velX(rotation, speed), velY(rotation, speed)));
-}
-
 Npc spawnNpc(double x, double y) {
   Npc npc = Npc(x: x, y: y, health: 3, maxHealth: 3);
   npcs.add(npc);

@@ -11,6 +11,7 @@
 [ ] Design Town Center
 [ ] Use particles to show blood
 [ ] Explosions
+[ ] Shotgun Animation
 [ ] Ammo
 [ ] Particle Smoke
 [ ] Weapon: Machine Gun
@@ -20,7 +21,10 @@
 [ ] Compile Bullet remove id
 [ ] Equip Weapon Animation
 [ ] BUG: Bullet hole sometimes doesn't appear
-[ ] HUD
+[ ] Boundary
+[ ] Stamina
+[ ] Throw Grenade
+[x] HUD
 [x] Fix center camera on spawn
 [x] Equip weapon audio
 [x] Connection Failed Error dialog

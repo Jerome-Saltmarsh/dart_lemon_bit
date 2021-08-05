@@ -1,6 +1,7 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_game_engine/bleed/connection.dart';
 import 'package:flutter_game_engine/bleed/maths.dart';
+import 'package:flutter_game_engine/bleed/spawn.dart';
 import 'package:flutter_game_engine/game_engine/engine_state.dart';
 import 'package:flutter_game_engine/game_engine/game_input.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
@@ -22,8 +23,8 @@ void readPlayerInput() {
   if (player == null) return;
   double playerScreenX = player[x] - cameraX;
   double playerScreenY = player[y] - cameraY;
-  double halfScreenWidth = size.width * 0.5;
-  double halfScreenHeight = size.height * 0.5;
+  double halfScreenWidth = globalSize.width * 0.5;
+  double halfScreenHeight = globalSize.height * 0.5;
   double xOffset = halfScreenWidth - playerScreenX;
   double yOffset = halfScreenHeight - playerScreenY;
   cameraX -= (xOffset * cameraFollow);
@@ -36,7 +37,9 @@ void readPlayerInput() {
   if (keyPressed(LogicalKeyboardKey.escape)){
     disconnect();
   }
-
+  if (keyPressed(LogicalKeyboardKey.keyG)){
+    requestThrowGrenade();
+  }
   if (mouseAvailable) {
     requestAim = getMouseRotation();
   }

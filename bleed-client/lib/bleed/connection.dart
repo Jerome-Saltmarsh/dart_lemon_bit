@@ -54,6 +54,7 @@ void _onEvent(dynamic response) {
     connecting = false;
     onConnected.add(response);
     redrawUI();
+    Future.delayed(Duration(seconds: 1), redrawUI);
   }
 
   onEvent.add(response);

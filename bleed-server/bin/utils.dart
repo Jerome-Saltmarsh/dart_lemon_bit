@@ -254,3 +254,8 @@ void dispatch(GameEventType type, double x, double y){
   print('dispatch($type)');
   gameEvents.add(GameEvent(x, y, type));
 }
+
+void applyMovement(PhysicsGameObject physicsGameObject){
+  physicsGameObject.x += physicsGameObject.xVel;
+  physicsGameObject.y += physicsGameObject.yVel;
+}

@@ -258,6 +258,10 @@ void fixedUpdate() {
   updateParticles();
   updateGameEvents();
 
+  for(Grenade grenade in grenades){
+    applyMovement(grenade);
+  }
+
   compileState();
 
   if (fps < 20) {

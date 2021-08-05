@@ -2,13 +2,14 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_game_engine/bleed/functions/drawCanvas.dart';
 import 'package:flutter_game_engine/bleed/update.dart';
 import 'package:flutter_game_engine/bleed/utils.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'connection.dart';
-import 'draw.dart';
-import 'resources.dart';
+import 'images.dart';
+import 'rects.dart';
 import 'send.dart';
 import 'state.dart';
 import 'ui.dart';
@@ -25,8 +26,11 @@ class BleedWidget extends GameWidget {
 
   @override
   Future init() async {
-    loadResources();
+    loadImages();
+    loadRects();
     periodic(checkBulletHoles, ms: 500);
+
+    periodic(redrawUI, seconds: 1);
 
     periodic(() {
       if (!connected) {
@@ -59,23 +63,7 @@ class BleedWidget extends GameWidget {
 
   @override
   void draw(Canvas canvass, Size _size) {
-    size = _size;
-    canvas = canvass;
-    if (!connected) return;
-
-    frameRateValue++;
-    if (frameRateValue % frameRate == 0) {
-      drawFrame++;
-    }
-
-    drawTiles();
-    drawPlayerHealth();
-    drawBullets();
-    drawBulletHoles();
-    drawBlood();
-    drawParticles();
-    drawCharacters();
-    drawMouse();
+    drawCanvas(canvass, _size);
   }
 
   @override

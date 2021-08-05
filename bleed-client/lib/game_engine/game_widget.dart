@@ -235,6 +235,7 @@ class GameUIPainter extends CustomPainter {
   @override
   void paint(Canvas canvass, Size size) {
     globalCanvas = canvass;
+    globalSize = size;
     paintGame(canvass, size);
   }
 

@@ -1,4 +1,5 @@
 
+import 'package:flutter_game_engine/bleed/spawn.dart';
 import 'package:flutter_game_engine/bleed/state.dart';
 
 import 'audio.dart';
@@ -33,6 +34,9 @@ void onGameEvent(GameEventType type, int x, int y){
       break;
     case GameEventType.Player_Death:
       playPlayerDeathAudio();
+      break;
+    case GameEventType.Explosion:
+      spawnExplosion(x.toDouble(), y.toDouble());
       break;
   }
 }

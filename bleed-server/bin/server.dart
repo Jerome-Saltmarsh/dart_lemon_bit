@@ -7,6 +7,8 @@ import 'classes.dart';
 import 'compile.dart';
 import 'enums.dart';
 import 'events.dart';
+import 'language.dart';
+import 'maths.dart';
 import 'settings.dart';
 import 'spawn.dart';
 import 'state.dart';
@@ -121,9 +123,6 @@ void main() {
       if (request == 'get-tiles') {
         sendToClient(compileTiles());
       }
-      if (request == 'equip shotgun'){
-
-      }
       if(request.startsWith('equip')){
         List<String> attributes = request.split(" ");
         int id = int.parse(attributes[1]);
@@ -137,10 +136,32 @@ void main() {
           sendToClient('invalid-uuid ; ');
           return;
         }
-
         Weapon weapon = Weapon.values[int.parse(attributes[3])];
         player.weapon = weapon;
         print('player equipped $weapon');
+      }
+      if(request.startsWith('grenade')){
+        List<String> attributes = request.split(" ");
+        int id = int.parse(attributes[1]);
+        Player? player = findPlayerById(id);
+        if (player == null) {
+          sendToClient('player-not-found ; ');
+          return;
+        }
+        String uuid = attributes[2];
+        if (uuid != player.uuid) {
+          sendToClient('invalid-uuid ; ');
+          return;
+        }
+        // throw grenade
+
+        Grenade grenade = Grenade(player.x, player.y, adj(player.aimAngle, 5), opp(player.aimAngle, 2));
+        grenades.add(grenade);
+        delayed(() {
+          grenades.remove(grenade);
+          dispatch(GameEventType.Explosion, grenade.x, grenade.y);
+        }, seconds: 2);
+        print("grenade spawned");
       }
     }
 

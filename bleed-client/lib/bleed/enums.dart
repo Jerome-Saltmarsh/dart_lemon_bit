@@ -29,6 +29,7 @@ enum GameEventType {
   Bullet_Hole,
   Zombie_Strike,
   Player_Death,
+  Explosion,
 }
 
 enum ParticleType {
