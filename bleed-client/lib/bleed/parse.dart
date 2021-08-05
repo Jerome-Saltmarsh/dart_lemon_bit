@@ -2,6 +2,7 @@ import 'package:flutter_game_engine/bleed/events.dart';
 import 'package:flutter_game_engine/bleed/keys.dart';
 import 'package:flutter_game_engine/bleed/state.dart';
 import 'package:flutter_game_engine/bleed/utils.dart';
+import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'constants.dart';
 import 'enums.dart';
@@ -51,6 +52,18 @@ void parseState() {
     } else {
       throw Exception("term not found: $term");
     }
+
+    while(_index < _text.length){
+      if(currentCharacter == " "){
+        _index++;
+        continue;
+      }
+      if(currentCharacter == ";"){
+        _index++;
+        break;
+      }
+      break;
+    }
   }
 }
 
@@ -70,23 +83,19 @@ void _consumeParticles(){
 
 void _consumePlayerNotFound() {
   playerId = idNotConnected;
-  _consumeSemiColon();
 }
 
 void _consumeInvalidUUID() {
   playerId = idNotConnected;
   playerUUID = "";
-  _consumeSemiColon();
 }
 
 void _consumePass() {
   pass = _consumeInt();
-  _consumeSemiColon();
 }
 
 void _consumeFrame() {
   serverFrame = _consumeInt();
-  _consumeSemiColon();
 }
 
 void _parseTiles() {
@@ -101,27 +110,30 @@ void _parseTiles() {
       column.add(Tile.values[_consumeInt()]);
     }
   }
-  _consumeSemiColon();
+  print('parseTiles() - finished');
 }
 
 void _parsePlayer() {
   playerHealth = _consumeDouble();
   playerMaxHealth = _consumeDouble();
-  _consumeSemiColon();
 }
 
 void _parseFrameMS() {
   serverFramesMS = _consumeInt();
-  _consumeSemiColon();
 }
 
 void _parsePlayerId() {
+  print("parsePlayerId()");
   playerId = _consumeInt();
   playerUUID = _consumeString();
   int x = _consumeInt();
   int y = _consumeInt();
-  // HACK: doesn't belong here
+  // _consumeSemiColon();
+  // HACK DOESN"T BELONG HERE
   cameraCenter(x.toDouble(), y.toDouble());
+  // HACK DOESN"T BELONG HERE
+  redrawUI();
+  print("parsePlayerId() - finished");
 }
 
 void _next() {
@@ -159,13 +171,6 @@ String _consumeString() {
 
 double _consumeDouble() {
   return double.parse(_consumeString());
-}
-
-void _consumeSemiColon() {
-  while (currentCharacter != ";") {
-    _index++;
-  }
-  _index++;
 }
 
 bool _simiColonConsumed() {

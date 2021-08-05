@@ -36,8 +36,9 @@ class BleedWidget extends GameWidget {
 
     onConnected.stream.listen((event) {
       sendRequestTiles();
+      sendRequestSpawn();
+      redrawUI();
     });
-
     initUI();
   }
 

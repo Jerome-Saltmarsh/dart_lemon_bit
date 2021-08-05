@@ -5,10 +5,6 @@ import 'audio.dart';
 import 'enums.dart';
 import 'utils.dart';
 
-void onPlayerSpawned(){
-
-}
-
 void onGameEvent(GameEventType type, int x, int y){
   switch(type){
     case GameEventType.Handgun_Fired:

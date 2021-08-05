@@ -201,9 +201,9 @@ Widget buildHud() {
             height: 50,
             decoration: BoxDecoration(
                 border: playerWeapon == Weapon.HandGun ? Border.all(
-                    color: Colors.black, width: 5.0, style: BorderStyle.solid) : null,
-                image: DecorationImage(
-                  image: AssetImage('images/weapon-handgun.png'),
+                    color: Colors.white, width: 5.0, style: BorderStyle.solid) : null,
+                image: const DecorationImage(
+                  image: const AssetImage('images/weapon-handgun.png'),
                 ))),
       ),
       GestureDetector(
@@ -213,9 +213,9 @@ Widget buildHud() {
             height: 50,
             decoration: BoxDecoration(
                 border: playerWeapon == Weapon.Shotgun ? Border.all(
-                    color: Colors.black, width: 5.0, style: BorderStyle.solid) : null,
-                image: DecorationImage(
-                  image: AssetImage('images/weapon-shotgun.png'),
+                    color: Colors.white, width: 5.0, style: BorderStyle.solid) : null,
+                image: const DecorationImage(
+                  image: const AssetImage('images/weapon-shotgun.png'),
                 ))),
       )
     ],
