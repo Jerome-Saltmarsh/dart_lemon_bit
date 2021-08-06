@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'classes.dart';
+import 'classes/Particle.dart';
 import 'common.dart';
 import 'compile.dart';
 import 'constants.dart';
@@ -48,7 +49,6 @@ void updateBullets() {
       i--;
       continue;
     }
-    compressBullet(bullet);
   }
 
   checkBulletCollision(npcs);
@@ -66,7 +66,7 @@ void checkBulletCollision(List<Character> list) {
       if (dis < characterBulletRadius) {
         bullets.removeAt(i);
         i--;
-        changeCharacterHealth(character, -1);
+        changeCharacterHealth(character, -2);
         character.xVel += bullet.xVel * 0.25;
         character.yVel += bullet.yVel * 0.25;
 
@@ -265,7 +265,7 @@ void fixedUpdate() {
   compileState();
 
   if (fps < 20) {
-    print("Warning FPS Drop: $fps");
+    // print("Warning FPS Drop: $fps");
   }
 }
 
@@ -294,38 +294,64 @@ void updateBlood() {
 
 void updateParticles() {
   for (int i = 0; i < particles.length; i++) {
-    if (particles[i].lifeTime-- < 0) {
+    Particle particle = particles[i];
+    if (particle.lifeTime-- < 0) {
       particles.removeAt(i);
       i--;
       continue;
     }
-    particles[i].x += particles[i].xVel;
-    particles[i].y += particles[i].yVel;
-    particles[i].xVel *= particles[i].friction;
-    particles[i].yVel *= particles[i].friction;
-    particles[i].rotation += particles[i].rotationSpeed;
-    if (particles[i].type == ParticleType.Head &&
-        particles[i].lifeTime & 2 == 0) {
-      blood.add(Blood(particles[i].x, particles[i].y, 0.0, 0.0));
+
+    double gravity = 0.04;
+    double bounceFriction = 0.99;
+    double bounceHeightFriction = 0.3;
+    double airFriction = 0.98;
+    double rotationFriction = 0.93;
+    double floorFriction = 0.9;
+
+    bool airBorn = particle.height > 0.01;
+    particle.height = particle.height + particle.heightVelocity;
+    if(particle.height <= 0.0001){
+      particle.height = 0;
     }
-    if (particles[i].type == ParticleType.Arm &&
-        particles[i].lifeTime & 2 == 0) {
-      blood.add(Blood(particles[i].x, particles[i].y, 0.0, 0.0));
+    bool bounce = airBorn && particle.height <= 0;
+
+    if (bounce) {
+      particle.heightVelocity = -particle.heightVelocity * bounceHeightFriction;
+      particle.xVel = particle.xVel * bounceFriction;
+      particle.yVel = particle.yVel * bounceFriction;
+      particle.rotationSpeed *= rotationFriction;
+      print('bounce');
+    }else if(airBorn){
+      particle.heightVelocity -= gravity;
+      particle.xVel *= airFriction;
+      particle.yVel *= airFriction;
+    }else{ // on floor
+      particle.xVel *= floorFriction;
+      particle.yVel *= floorFriction;
+      particle.rotationSpeed *= rotationFriction;
     }
-    if (particles[i].type == ParticleType.Organ &&
-        particles[i].lifeTime & 2 == 0) {
-      blood.add(Blood(particles[i].x, particles[i].y, 0.0, 0.0));
+    particle.x += particle.xVel;
+    particle.y += particle.yVel;
+    particle.rotation += particle.rotationSpeed;
+
+    if (particle.type == ParticleType.Head &&
+        particle.lifeTime & 2 == 0) {
+      blood.add(Blood(particle.x, particle.y, 0.0, 0.0));
+    }
+
+    if (particle.type == ParticleType.Arm &&
+        particle.lifeTime & 2 == 0) {
+      blood.add(Blood(particle.x, particle.y, 0.0, 0.0));
+    }
+    if (particle.type == ParticleType.Organ &&
+        particle.lifeTime & 2 == 0) {
+      blood.add(Blood(particle.x, particle.y, 0.0, 0.0));
     }
   }
 }
 
 void updateNpcs() {
   npcs.forEach(updateNpc);
-}
-
-void compressBullet(Bullet bullet) {
-  bullet.x = round(bullet.x);
-  bullet.y = round(bullet.y);
 }
 
 int compareCharacters(GameObject a, GameObject b) {

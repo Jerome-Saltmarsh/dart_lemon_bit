@@ -5,6 +5,7 @@ import 'common.dart';
 import 'constants.dart';
 import 'enums.dart';
 import 'events.dart';
+import 'functions/spawnShell.dart';
 import 'language.dart';
 import 'maths.dart';
 import 'settings.dart';
@@ -153,9 +154,10 @@ void fireWeapon(Character character) {
   switch (character.weapon) {
     case Weapon.HandGun:
       spawnBullet(character);
-      spawnShell(character.x, character.y, character.aimAngle + (pi + giveOrTake(piHalf)));
+
+      spawnShell(character.x + adj(character.aimAngle, 9), character.y + opp(character.aimAngle, 9), character.aimAngle + (pi + giveOrTake(piHalf)));
       character.state = CharacterState.Firing;
-      character.shotCoolDown = pistolCoolDown;
+      character.shotCoolDown = settingsHandgunCooldown;
       gameEvents.add(GameEvent(character.x, character.y, GameEventType.Handgun_Fired));
       break;
     case Weapon.Shotgun:
@@ -251,7 +253,6 @@ double getWeaponAccuracy(Weapon weapon){
 }
 
 void dispatch(GameEventType type, double x, double y){
-  print('dispatch($type)');
   gameEvents.add(GameEvent(x, y, type));
 }
 

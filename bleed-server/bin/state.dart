@@ -1,6 +1,7 @@
 import 'package:uuid/uuid.dart';
 
 import 'classes.dart';
+import 'classes/Particle.dart';
 import 'enums.dart';
 
 List<List<Tile>> tiles = [];

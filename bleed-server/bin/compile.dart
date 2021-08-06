@@ -100,6 +100,7 @@ void _compileParticles() {
     _write(particle.y.toInt());
     _write(particle.type.index);
     _write(particle.rotation.toStringAsFixed(1));
+    _write(particle.height.toStringAsFixed(1));
   });
   _end();
 }

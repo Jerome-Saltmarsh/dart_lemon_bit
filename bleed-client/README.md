@@ -24,9 +24,11 @@
 [ ] Boundary
 [ ] Stamina
 [ ] Throw Grenade
-[ ] Explosion
-[ ] Fix bug grenade remains after explosion
-[ ] Fix throws multiple grenades on press
+[ ] Fix explosion doesn't render sometimes
+[ ] Particle height 
+[x] Explosion
+[x] Fix bug grenade remains after explosion
+[x] Fix throws multiple grenades on press
 [x] HUD
 [x] Fix center camera on spawn
 [x] Equip weapon audio
@@ -114,3 +116,5 @@
 ## IDEA
 Only redraw game when an event arrives (this will save a lot of draw calls)
 - The drawback is you cannot have client side effects
+
+- physics effect particles

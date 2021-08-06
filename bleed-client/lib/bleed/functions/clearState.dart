@@ -13,4 +13,5 @@ void clearState(){
   gameEvents.clear();
   playersTransforms.clear();
   tileTransforms.clear();
+  player = null;
 }

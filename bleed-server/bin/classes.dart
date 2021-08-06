@@ -130,18 +130,6 @@ class Blood extends PhysicsGameObject {
   Blood(double x, double y, double xVel, double yVel) : super(x, y, xVel, yVel);
 }
 
-class Particle extends PhysicsGameObject {
-  int lifeTime;
-  double rotation;
-  double rotationSpeed;
-  double friction;
-  ParticleType type;
-
-  Particle(double x, double y, double xVel, double yVel, this.lifeTime,
-      this.rotation, this.friction, this.type, this.rotationSpeed)
-      : super(x, y, xVel, yVel);
-}
-
 class GameEvent extends GameObject {
   final GameEventType type;
   int frameDuration = 8;

@@ -1,4 +1,5 @@
 import 'classes.dart';
+import 'classes/Particle.dart';
 import 'enums.dart';
 import 'events.dart';
 import 'maths.dart';
@@ -17,19 +18,6 @@ void spawnBullet(Character character) {
       character.id,
       getWeaponRange(character.weapon) + giveOrTake(settingsWeaponRangeVariation));
   bullets.add(bullet);
-}
-
-void spawnShell(double x, double y, double rotation) {
-  particles.add(Particle(
-      x,
-      y,
-      velX(rotation, settingsParticleShellSpeed),
-      velY(rotation, settingsParticleShellSpeed),
-      40,
-      0,
-      0.7,
-      ParticleType.Shell,
-      0.1));
 }
 
 void spawnBlood(Character character, double rotation, speed) {

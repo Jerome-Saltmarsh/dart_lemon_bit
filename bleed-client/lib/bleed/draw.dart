@@ -654,27 +654,38 @@ void drawBulletHoles(){
 }
 
 void drawParticles() {
-  for (int i = 0; i < particles.length; i += 4) {
-    switch(ParticleType.values[particles[i + 2].toInt()]){
+  for (int i = 0; i < particles.length; i += 5) {
+    double x = particles[i];
+    double y = particles[i + 1];
+    ParticleType type = ParticleType.values[particles[i + 2].toInt()];
+    double rotation = particles[i + 3];
+    double height = particles[i + 4];
+    double scale = 1 + (height * 0.4);
+    double heightShift = -height * 20;
+
+    switch(type){
       case ParticleType.Shell:
-        drawCircle(particles[i], particles[i + 1], 1.33, Colors.white);
+        double size = 2;
+        drawCircle(x, y, size / scale, Colors.black38);
+        drawCircle(x, y + heightShift, size * scale, Colors.white);
         break;
       case ParticleType.Blood:
-        drawCircle(particles[i], particles[i + 1], 2, Colors.red);
+        drawCircle(x, y, 2, Colors.red);
         break;
       case ParticleType.Head:
-        drawCircle(particles[i], particles[i + 1], 5, Colors.white);
+        double size = 5;
+        drawCircle(x, y, size / scale, Colors.black38);
+        drawCircle(x, y + heightShift, size * scale, Colors.white);
         break;
       case ParticleType.Arm:
-        double rotation = particles[i + 3];
         double length = 5;
-        double handX = particles[i] + velX(rotation, length);
-        double handY = particles[i + 1] + velY(rotation, length);
-        drawLine3(particles[i], particles[i + 1], handX, handY);
-        drawCircle(handX, handY, 2, Colors.white);
+        double handX = x + velX(rotation, length);
+        double handY = y + velY(rotation, length);
+        drawLine3(x, y, handX, handY);
+        drawCircle(handX, handY  + heightShift, 2 * scale, Colors.white);
         break;
       case ParticleType.Organ:
-        drawCircle(particles[i], particles[i + 1], 2, Colors.white);
+        drawCircle(x, y  + heightShift, 2 * scale, Colors.white);
         break;
     }
   }
