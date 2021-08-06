@@ -320,7 +320,6 @@ void updateParticles() {
       particle.xVel = particle.xVel * bounceFriction;
       particle.yVel = particle.yVel * bounceFriction;
       particle.rotationSpeed *= rotationFriction;
-      print('bounce');
     }else if(airBorn){
       particle.heightVelocity -= gravity;
       particle.xVel *= airFriction;

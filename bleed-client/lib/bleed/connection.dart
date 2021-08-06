@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter_game_engine/bleed/functions/clearState.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -34,6 +35,7 @@ void connectLocalHost({int port = 8080}) {
 
 void connect(String uri) {
   print('connection.connect($uri)');
+  clearState();
   connecting = true;
   _webSocketChannel = WebSocketChannel.connect(Uri.parse(uri));
   _webSocketChannel.stream.listen(_onEvent, onError: _onError, onDone: _onDone);

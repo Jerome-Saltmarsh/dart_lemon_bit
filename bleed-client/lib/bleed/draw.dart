@@ -674,18 +674,24 @@ void drawParticles() {
         break;
       case ParticleType.Head:
         double size = 5;
-        drawCircle(x, y, size / scale, Colors.black38);
-        drawCircle(x, y + heightShift, size * scale, Colors.white);
+        drawCircle(x, y, size / scale, Colors.black45);
+        drawCircle(x, y + heightShift, size * scale, white);
         break;
       case ParticleType.Arm:
-        double length = 5;
+        double length = randomBetween(4, 6);
         double handX = x + velX(rotation, length);
         double handY = y + velY(rotation, length);
+        globalPaint.color = Colors.black45;
         drawLine3(x, y, handX, handY);
-        drawCircle(handX, handY  + heightShift, 2 * scale, Colors.white);
+        drawCircle(handX, handY, 2 / scale, Colors.black45);
+        globalPaint.color = white;
+        drawLine3(x, y + heightShift, handX, handY + heightShift);
+        drawCircle(handX, handY  + heightShift, 2 * scale, white);
         break;
       case ParticleType.Organ:
-        drawCircle(x, y  + heightShift, 2 * scale, Colors.white);
+        globalPaint.color = Colors.black45;
+        drawCircle(x, y, scale / 2, white);
+        drawCircle(x, y  + heightShift, 2 * scale, white);
         break;
     }
   }

@@ -41,7 +41,7 @@ void readPlayerInput() {
   if (keyPressed(LogicalKeyboardKey.escape)){
     disconnect();
   }
-  if (keyPressed(LogicalKeyboardKey.keyQ)){
+  if (keyPressed(LogicalKeyboardKey.keyG)){
     if(!_throwingGrenade && mouseAvailable) {
       _throwingGrenade = true;
       double mouseDistance = distance(playerX, playerY, mouseWorldX, mouseWorldY);
