@@ -98,7 +98,8 @@
 
 
 # IDEA
-Run send commands on a separate thread to the receive commands
+- Run send commands on a separate thread to the receive commands
+- Add height attribute which effects scale (used for effects to add 3d look)
 
 # Attributes
 - sprint duration
