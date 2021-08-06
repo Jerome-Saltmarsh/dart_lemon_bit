@@ -41,6 +41,8 @@ void readPlayerInput() {
   if (keyPressed(LogicalKeyboardKey.escape)){
     disconnect();
   }
+
+
   if (keyPressed(LogicalKeyboardKey.keyG)){
     if(!_throwingGrenade && mouseAvailable) {
       _throwingGrenade = true;
@@ -59,6 +61,17 @@ void readPlayerInput() {
   if (mouseClicked || keyPressedF || keyPressedSpace) {
     requestCharacterState = characterStateFiring;
   } else {
+
+    if (keyPressed(LogicalKeyboardKey.keyQ) && mouseAvailable){
+      requestDirection = convertAngleToDirection(requestAim);
+      if(keySprintPressed){
+        requestCharacterState = characterStateRunning;
+      }else{
+        requestCharacterState = characterStateWalking;
+      }
+      return;
+    }
+
     requestDirection = getKeyDirection();
     if (requestDirection == directionNone) {
       requestCharacterState = characterStateIdle;

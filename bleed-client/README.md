@@ -23,6 +23,7 @@
 [ ] BUG: Bullet hole sometimes doesn't appear
 [ ] Boundary
 [ ] Stamina
+[x] run to mouse key
 [x] Throw Grenade
 [x] Fix explosion doesn't render sometimes
 [x] Particle height 
