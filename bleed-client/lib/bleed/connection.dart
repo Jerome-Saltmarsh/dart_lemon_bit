@@ -8,23 +8,24 @@ import 'state.dart';
 
 // state
 WebSocketChannel _webSocketChannel;
-bool connected = false;
-bool connecting = false;
 final StreamController onConnected = StreamController();
 final StreamController onDisconnected = StreamController();
 final StreamController onError = StreamController();
 final StreamController onConnectError = StreamController();
 final StreamController onDone = StreamController();
 final StreamController onEvent = StreamController();
+bool connected = false;
+bool connecting = false;
 
 // public
-
 void disconnect() {
   print('disconnect()');
+  if (!connected) return;
   connected = false;
   connecting = false;
   if (_webSocketChannel == null) return;
   _webSocketChannel.sink.close();
+  onDisconnected.add(true);
 }
 
 void connectLocalHost({int port = 8080}) {

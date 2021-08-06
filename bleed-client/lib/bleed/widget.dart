@@ -43,6 +43,14 @@ class BleedWidget extends GameWidget {
       sendRequestSpawn();
       redrawUI();
     });
+
+    onDisconnected.stream.listen((event) {
+      playerId = -1;
+      playerUUID = "";
+      npcs.clear();
+      players.clear();
+    });
+
     initUI();
   }
 

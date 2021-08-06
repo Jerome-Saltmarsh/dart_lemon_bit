@@ -330,8 +330,8 @@ Rect _getFrame(List<Rect> frames) {
 }
 
 const int humanSpriteFrames = 73;
-const int humanSpriteFrameWidth = 48;
-const int humanSpriteFrameHeight = 72;
+const int humanSpriteFrameWidth = 36;
+const int humanSpriteFrameHeight = 35;
 const int humanSpriteImageWidth = humanSpriteFrames * humanSpriteFrameWidth;
 const double halfHumanSpriteFrameWidth = humanSpriteFrameWidth * 0.5;
 const double halfHumanSpriteFrameHeight = humanSpriteFrameHeight * 0.5;

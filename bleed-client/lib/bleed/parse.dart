@@ -7,15 +7,15 @@ import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'constants.dart';
 import 'enums.dart';
 
+// state
 final List _cache = [];
-
-String get _text => event;
 int _index = 0;
 
-int get cacheSize => _cache.length;
+// properties
+String get _text => event;
+String get _currentCharacter => _text[_index];
 
-String get currentCharacter => _text[_index];
-
+// functions
 void parseState() {
   _index = 0;
   event = event.trim();
@@ -56,11 +56,11 @@ void parseState() {
     }
 
     while(_index < _text.length){
-      if(currentCharacter == " "){
+      if(_currentCharacter == " "){
         _index++;
         continue;
       }
-      if(currentCharacter == ";"){
+      if(_currentCharacter == ";"){
         _index++;
         break;
       }
@@ -150,7 +150,7 @@ void _next() {
 }
 
 void _consumeSpace() {
-  while (currentCharacter == " ") {
+  while (_currentCharacter == " ") {
     _next();
   }
 }
@@ -170,8 +170,8 @@ int parseInt(String value) {
 String _consumeString() {
   _consumeSpace();
   StringBuffer buffer = StringBuffer();
-  while (currentCharacter != " ") {
-    buffer.write(currentCharacter);
+  while (_currentCharacter != " ") {
+    buffer.write(_currentCharacter);
     _index++;
   }
   _index++;
@@ -184,7 +184,7 @@ double _consumeDouble() {
 
 bool _simiColonConsumed() {
   _consumeSpace();
-  if (currentCharacter == ";") {
+  if (_currentCharacter == ";") {
     _index++;
     return true;
   }
