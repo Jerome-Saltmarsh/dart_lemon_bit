@@ -30,9 +30,6 @@ const double settingsWeaponRangeShotgun = 180;
 const double settingsWeaponBulletSpeedHandGun = 14.0;
 const double settingsWeaponBulletSpeedShotGun = 12.0;
 const double settingsWeaponBulletSpeedSniperRifle = 24.0;
-const double settingsWeaponAccuracyHandgun = 0.05;
-const double settingsWeaponAccuracySniperRifle = 0;
-const double settingsWeaponAccuracyShotgun = pi * 0.06;
 const double settingsWeaponDamageHandgun = 1;
 const double settingsWeaponDamageShotgun = 0.75;
 const double settingsWeaponDamageSniperRifle = 5;
@@ -40,6 +37,7 @@ const int settingsHandgunCooldown = 14;
 const int settingsSniperCooldown = 45;
 const int settingsShotgunBulletsPerShot = 5;
 const double settingsParticleShellSpeed = 3;
+
 
 const int tilesX = 40;
 const int tilesY = 40;

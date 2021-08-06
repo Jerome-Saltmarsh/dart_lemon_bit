@@ -37,6 +37,9 @@ void update() {
           case Weapon.SniperRifle:
             playAudioSniperEquipped();
             break;
+          case Weapon.MachineGun:
+            playAudioReload();
+            break;
         }
 
         redrawUI();

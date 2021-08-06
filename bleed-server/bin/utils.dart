@@ -8,6 +8,7 @@ import 'enums/Weapons.dart';
 import 'events.dart';
 import 'functions/characterFireWeapon.dart';
 import 'functions/spawnShell.dart';
+import 'instances/settings.dart';
 import 'language.dart';
 import 'maths.dart';
 import 'settings.dart';
@@ -210,6 +211,8 @@ double getWeaponDamage(Weapon weapon){
       return settingsWeaponDamageShotgun;
     case Weapon.SniperRifle:
       return settingsWeaponDamageSniperRifle;
+    case Weapon.MachineGun:
+      return settings.machineGunDamage;
     default:
       throw Exception("no range found for $weapon");
   }
@@ -224,6 +227,8 @@ double getWeaponRange(Weapon weapon){
       return settingsWeaponRangeShotgun;
     case Weapon.SniperRifle:
       return settingsWeaponRangeSniperRifle;
+    case Weapon.MachineGun:
+      return settings.machineGunRange;
     default:
       throw Exception("no range found for $weapon");
   }
@@ -237,23 +242,14 @@ double getWeaponBulletSpeed(Weapon weapon){
       return settingsWeaponBulletSpeedShotGun;
     case Weapon.SniperRifle:
       return settingsWeaponBulletSpeedSniperRifle;
+    case Weapon.MachineGun:
+      return settings.machineGunBulletSpeed;
     default:
       throw Exception("no range found for $weapon");
   }
 }
 
-double getWeaponAccuracy(Weapon weapon){
-  switch (weapon){
-    case Weapon.HandGun:
-      return settingsWeaponAccuracyHandgun;
-    case Weapon.Shotgun:
-      return settingsWeaponAccuracyShotgun;
-    case Weapon.SniperRifle:
-      return settingsWeaponAccuracySniperRifle;
-    default:
-      throw Exception("no range found for $weapon");
-  }
-}
+
 
 void dispatch(GameEventType type, double x, double y){
   gameEvents.add(GameEvent(x, y, type));

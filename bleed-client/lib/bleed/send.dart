@@ -32,6 +32,10 @@ void sendRequestEquipSniperRifle() {
   sendRequestEquip(Weapon.SniperRifle);
 }
 
+void sendRequestEquipMachineGun() {
+  sendRequestEquip(Weapon.MachineGun);
+}
+
 void sendRequestUpdatePlayer() {
   _buffer.clear();
   _write("u:");

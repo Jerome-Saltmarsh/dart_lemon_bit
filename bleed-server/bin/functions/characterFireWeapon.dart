@@ -4,13 +4,13 @@ import '../classes.dart';
 import '../constants.dart';
 import '../enums.dart';
 import '../enums/Weapons.dart';
+import '../instances/settings.dart';
 import '../language.dart';
 import '../maths.dart';
 import '../settings.dart';
 import '../spawn.dart';
 import '../state.dart';
 import '../utils.dart';
-import 'spawnShell.dart';
 
 void characterFireWeapon(Character character) {
   if (character.dead) return;
@@ -19,7 +19,7 @@ void characterFireWeapon(Character character) {
   switch (character.weapon) {
     case Weapon.HandGun:
       spawnBullet(character);
-      spawnShell(character.x + adj(character.aimAngle, 9), character.y + opp(character.aimAngle, 9), character.aimAngle + (pi + giveOrTake(piHalf)));
+      characterSpawnShell(character);
       character.state = CharacterState.Firing;
       character.shotCoolDown = settingsHandgunCooldown;
       gameEvents.add(GameEvent(character.x, character.y, GameEventType.Handgun_Fired));
@@ -32,7 +32,7 @@ void characterFireWeapon(Character character) {
         spawnBullet(character);
       }
       delayed((){
-        spawnShell(character.x, character.y, character.aimAngle + (pi + giveOrTake(piHalf)));
+        characterSpawnShell(character);
       }, ms: 500);
       character.state = CharacterState.Firing;
       character.shotCoolDown = shotgunCoolDown;
@@ -40,10 +40,17 @@ void characterFireWeapon(Character character) {
       break;
     case Weapon.SniperRifle:
       spawnBullet(character);
-      spawnShell(character.x + adj(character.aimAngle, 9), character.y + opp(character.aimAngle, 9), character.aimAngle + (pi + giveOrTake(piHalf)));
+      characterSpawnShell(character);
       character.state = CharacterState.Firing;
       character.shotCoolDown = settingsSniperCooldown;;
       gameEvents.add(GameEvent(character.x, character.y, GameEventType.SniperRifle_Fired));
+      break;
+    case Weapon.MachineGun:
+      spawnBullet(character);
+      characterSpawnShell(character);
+      character.state = CharacterState.Firing;
+      character.shotCoolDown = settings.machineGunCoolDown;;
+      gameEvents.add(GameEvent(character.x, character.y, GameEventType.MachineGun_Fired));
       break;
   }
 

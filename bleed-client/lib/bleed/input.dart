@@ -19,6 +19,7 @@ bool get keyPressedSpawnZombie => keyPressed(LogicalKeyboardKey.keyP);
 bool get keyEquipHandGun => keyPressed(LogicalKeyboardKey.digit1);
 bool get keyEquipShotgun => keyPressed(LogicalKeyboardKey.digit2);
 bool get keyEquipSniperRifle => keyPressed(LogicalKeyboardKey.digit3);
+bool get keyEquipMachineGun => keyPressed(LogicalKeyboardKey.digit4);
 bool get keyAimPressed => keyPressedSpace;
 bool get keySprintPressed => keyPressed(LogicalKeyboardKey.shiftLeft);
 
@@ -94,15 +95,10 @@ void readPlayerInput() {
       }
     }
   }
-  if (keyEquipHandGun) {
-    sendRequestEquipHandgun();
-  }
-  if (keyEquipShotgun) {
-    sendRequestEquipShotgun();
-  }
-  if (keyEquipSniperRifle) {
-    sendRequestEquipSniperRifle();
-  }
+  if (keyEquipHandGun) sendRequestEquipHandgun();
+  if (keyEquipShotgun) sendRequestEquipShotgun();
+  if (keyEquipSniperRifle) sendRequestEquipSniperRifle();
+  if (keyEquipMachineGun) sendRequestEquipMachineGun();
 }
 
 int getKeyDirection() {

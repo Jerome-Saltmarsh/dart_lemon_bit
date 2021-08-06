@@ -50,6 +50,10 @@ void playAudioSniperShot(){
   _play('sniper-shot-04.wav', _weaponAudioPlayer);
 }
 
+void playAudioAssaultRifleShot(){
+  _play('assault-rifle-shot-04.wav', _weaponAudioPlayer);
+}
+
 void playAudioExplosion(){
   _playRandom(grenadeExplosions, _explosionAudioPlayer);
 }

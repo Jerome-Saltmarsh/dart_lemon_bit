@@ -18,10 +18,12 @@ enum Direction {
   None
 }
 
+
 enum GameEventType {
   Handgun_Fired,
   Shotgun_Fired,
   SniperRifle_Fired,
+  MachineGun_Fired,
   Zombie_Hit,
   Zombie_Killed,
   Zombie_Target_Acquired,

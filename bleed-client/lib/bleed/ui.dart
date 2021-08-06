@@ -202,6 +202,11 @@ const DecorationImage _sniperImage = const DecorationImage(
   image: const AssetImage('images/weapon-sniper-rifle.png'),
 );
 
+const DecorationImage _machineGunImage = const DecorationImage(
+  image: const AssetImage('images/weapon-machine-gun.png'),
+);
+
+
 DecorationImage _getDecorationImage(Weapon weapon) {
   switch (weapon) {
     case Weapon.HandGun:
@@ -210,6 +215,8 @@ DecorationImage _getDecorationImage(Weapon weapon) {
       return _shotgunImage;
     case Weapon.SniperRifle:
       return _sniperImage;
+    case Weapon.MachineGun:
+      return _machineGunImage;
   }
   throw Exception("no image available for $weapon");
 }
@@ -237,6 +244,7 @@ Widget buildHud() {
       buildWeaponButton(Weapon.HandGun),
       buildWeaponButton(Weapon.Shotgun),
       buildWeaponButton(Weapon.SniperRifle),
+      buildWeaponButton(Weapon.MachineGun),
     ],
   );
 }

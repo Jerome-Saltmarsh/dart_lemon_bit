@@ -1,9 +1,19 @@
+import 'dart:math';
+
 import 'classes.dart';
+import 'constants.dart';
 import 'events.dart';
+import 'extensions/settings-extensions.dart';
+import 'functions/spawnShell.dart';
+import 'instances/settings.dart';
 import 'maths.dart';
 import 'settings.dart';
 import 'state.dart';
 import 'utils.dart';
+
+void characterSpawnShell(Character character){
+  spawnShell(character.x + adj(character.aimAngle, 9), character.y + opp(character.aimAngle, 9), character.aimAngle + (pi + giveOrTake(piHalf)));
+}
 
 void spawnBullet(Character character) {
   Bullet bullet = Bullet(

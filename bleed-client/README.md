@@ -17,9 +17,10 @@
 [ ] Boundary
 [ ] Stamina
 [ ] Process Particles on client
-[ ] Weapon: Machine Gun
 [ ] Weapon: Bazooka
-[ ] Particle Smoke
+[ ] Make grenade 3d;
+[x] Weapon: Machine Gun
+[x] Particle Smoke
 [x] Weapon: Sniper Rifle
 [x] BUG: Bullet hole sometimes doesn't appear
 [x] run to mouse key
