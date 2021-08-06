@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_game_engine/bleed/enums.dart';
 import 'package:flutter_game_engine/bleed/maths.dart';
@@ -44,11 +46,15 @@ void drawCharacterList(List<dynamic> characters) {
 
 void drawTileList() {
   processTileTransforms();
+  // todo optimize
   if (tileRects.isEmpty) {
-    processRects();
+    loadTileRects();
   }
-  globalCanvas.drawAtlas(
-      imageTiles, tileTransforms, tileRects, null, null, null, globalPaint);
+  drawAtlases(imageTiles, tileTransforms, tileRects);
+}
+
+void drawAtlases(ui.Image image, List<RSTransform> transforms, List<Rect> rects){
+  globalCanvas.drawAtlas(image, transforms, rects, null, null, null, globalPaint);
 }
 
 void processTileTransforms() {
@@ -60,7 +66,7 @@ void processTileTransforms() {
   }
 }
 
-void processRects() {
+void loadTileRects() {
   tileRects.clear();
   for (int x = 0; x < tiles.length; x++) {
     for (int y = 0; y < tiles[0].length; y++) {
@@ -212,8 +218,7 @@ Rect tileRectConcrete = getTileSpriteRectByIndex(0);
 Rect tileRectGrass = getTileSpriteRectByIndex(1);
 
 Rect getTileSpriteRectByIndex(int index) {
-  return rectByIndex(
-      index, tileCanvasWidth.toDouble(), tileCanvasHeight.toDouble());
+  return rectByIndex(index, tileCanvasWidth.toDouble(), tileCanvasHeight.toDouble());
 }
 
 Rect rectByIndex(int index, double frameWidth, double height) {
@@ -592,7 +597,7 @@ RSTransform getTileTransform(int x, int y) {
     rotation: 0.0,
     scale: 1.0,
     anchorX: halfTileSize,
-    anchorY: 74,
+    anchorY: 36,
     translateX: (-y * halfTileSize) + (x * halfTileSize) - cameraX,
     translateY: (y * halfTileSize) + (x * halfTileSize) - cameraY,
   );
@@ -620,19 +625,9 @@ void drawMouse() {
 }
 
 void drawTiles() {
-  if (tileGrass01 == null) return;
   if (imageTiles == null) return;
   if (tiles == null || tiles.isEmpty) return;
   drawTileList();
-}
-
-void drawTile(int x, int y) {
-  drawGrassTile((tileCanvasWidth * (tilesX - x).toDouble()),
-      (tileCanvasHeight * x).toDouble());
-}
-
-void drawGrassTile(double x, double y) {
-  drawImage(tileGrass01, x, y);
 }
 
 void setColor(Color value) {

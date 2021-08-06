@@ -8,6 +8,7 @@ import 'package:flutter_game_engine/bleed/utils.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'connection.dart';
+import 'draw.dart';
 import 'images.dart';
 import 'rects.dart';
 import 'send.dart';
@@ -26,10 +27,9 @@ class BleedWidget extends GameWidget {
 
   @override
   Future init() async {
-    loadImages();
+    await loadImages();
     loadRects();
     periodic(checkBulletHoles, ms: 500);
-
     periodic(redrawUI, seconds: 1);
 
     periodic(() {
