@@ -6,6 +6,7 @@ AudioPlayer _weaponAudioPlayer = AudioPlayer();
 AudioPlayer _zombieAudioPlayer = AudioPlayer();
 AudioPlayer _playerAudioPlayer = AudioPlayer();
 AudioPlayer _equipAudioPlayer = AudioPlayer();
+AudioPlayer _explosionAudioPlayer = AudioPlayer();
 
 List<String> _zombieHits = [
   'zombie-hit-01.wav',
@@ -40,6 +41,15 @@ List<String> _maleScreams = [
   'male-screams-06.wav',
 ];
 
+List<String> grenadeExplosions = [
+  'explosion-grenade-01.wav',
+  'explosion-grenade-04.wav'
+];
+
+void playAudioExplosion(){
+  _playRandom(grenadeExplosions, _explosionAudioPlayer);
+}
+
 void playAudioReload(){
   _play('reload-06.wav', _equipAudioPlayer);
 }
@@ -50,10 +60,6 @@ void playAudioCockShotgun(){
 
 void playPlayerDeathAudio(){
   _playRandom(_maleScreams, _playerAudioPlayer);
-}
-
-void playAudioExplosion(){
-
 }
 
 void playAudioZombieBite(){

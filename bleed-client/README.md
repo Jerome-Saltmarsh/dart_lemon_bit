@@ -23,9 +23,9 @@
 [ ] BUG: Bullet hole sometimes doesn't appear
 [ ] Boundary
 [ ] Stamina
-[ ] Throw Grenade
-[ ] Fix explosion doesn't render sometimes
-[ ] Particle height 
+[x] Throw Grenade
+[x] Fix explosion doesn't render sometimes
+[x] Particle height 
 [x] Explosion
 [x] Fix bug grenade remains after explosion
 [x] Fix throws multiple grenades on press
