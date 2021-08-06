@@ -1,6 +1,7 @@
 
+import 'package:flutter_game_engine/bleed/functions/spawnBulletHole.dart';
+import 'package:flutter_game_engine/bleed/functions/spawnSmoke.dart';
 import 'package:flutter_game_engine/bleed/spawn.dart';
-import 'package:flutter_game_engine/bleed/state.dart';
 
 import 'audio.dart';
 import 'enums.dart';
@@ -29,8 +30,7 @@ void onGameEvent(GameEventType type, int x, int y){
       playAudioZombieTargetAcquired();
       break;
     case GameEventType.Bullet_Hole:
-      bulletHoles.add(x.toDouble());
-      bulletHoles.add(y.toDouble());
+      spawnBulletHole(x.toDouble(), y.toDouble());
       break;
     case GameEventType.Zombie_Strike:
       playAudioZombieBite();

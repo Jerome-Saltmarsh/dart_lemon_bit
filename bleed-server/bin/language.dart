@@ -14,3 +14,4 @@ Future<T> delayed<T>(FutureOr<T> computation()?, {int seconds = 0, int ms = 0}) 
 double round(double value, {int decimals = 1}) {
   return double.parse(value.toStringAsFixed(decimals));
 }
+

@@ -8,6 +8,8 @@ const int tileFrames = 1;
 
 List<Rect> rectsExplosion;
 
+Rect rectParticleSmoke = Rect.fromLTWH(0, 0, 64, 64);
+
 void loadRects() {
   print("loadRects()");
   _loadExplosionRects();

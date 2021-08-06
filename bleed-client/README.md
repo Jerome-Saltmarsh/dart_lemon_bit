@@ -8,21 +8,19 @@
 [ ] Create bleed-common library
 [ ] Optimize Server Collision Detection
 [ ] Design Town Center
-[ ] Use particles to show blood
-[ ] Explosions
 [ ] Shotgun Animation
 [ ] Critical Damage
 [ ] Ammo
 [ ] Accuracy
-[ ] Draw Explosion
 [ ] Compile Bullet remove id
 [ ] Equip Weapon Animation
 [ ] Boundary
 [ ] Stamina
-[ ] Particle Smoke
+[ ] Process Particles on client
 [ ] Weapon: Machine Gun
 [ ] Weapon: Bazooka
-[ ] Weapon: Sniper Rifle
+[ ] Particle Smoke
+[x] Weapon: Sniper Rifle
 [x] BUG: Bullet hole sometimes doesn't appear
 [x] run to mouse key
 [x] Throw Grenade

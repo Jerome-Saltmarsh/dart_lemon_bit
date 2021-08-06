@@ -7,16 +7,18 @@ import 'classes/SpriteSheet.dart';
 
 Image imageHuman;
 Image imageTiles;
-Image imagesExplosion;
+Image imageExplosion;
+Image imageParticles;
 SpriteSheet spritesExplosion;
 
 Future loadImages() async {
   print("loading images");
   imageHuman = await loadImage("images/iso-character.png");
   imageTiles = await loadImage("images/Tiles.png");
-  imagesExplosion = await loadImage('images/explosion.png');
+  imageExplosion = await loadImage('images/explosion.png');
+  imageParticles = await loadImage('images/particles.png');
   print("loading images complete");
-  spritesExplosion = SpriteSheet(32, imagesExplosion, 8, 4);
+  spritesExplosion = SpriteSheet(32, imageExplosion, 8, 4);
 }
 
 

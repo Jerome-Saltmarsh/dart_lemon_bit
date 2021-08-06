@@ -98,9 +98,11 @@ void drawList(
   while (rects.length > values.length) {
     rects.removeLast();
   }
-  globalCanvas.drawAtlas(
-      imageHuman, transforms, rects, null, null, null, globalPaint);
+
+  drawAtlases(imageHuman, transforms, rects);
 }
+
+
 
 Rect getHumanWalkingRect(dynamic character) {
   switch (character[direction]) {

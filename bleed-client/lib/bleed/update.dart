@@ -1,4 +1,5 @@
 import 'package:flutter_game_engine/bleed/audio.dart';
+import 'package:flutter_game_engine/bleed/classes/Particle.dart';
 import 'package:flutter_game_engine/bleed/connection.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
@@ -17,9 +18,13 @@ void update() {
   readPlayerInput();
 
   if (connected) {
+
+    updateParticles2();
+
     if (playerAssigned) {
       sendRequestUpdatePlayer();
 
+      // on player weapon changed
       if (previousWeapon != playerWeapon) {
         previousWeapon = playerWeapon;
         switch (playerWeapon) {
@@ -39,5 +44,21 @@ void update() {
     } else {
       sendCommandUpdate();
     }
+  }
+}
+
+void updateParticles2() {
+  for(int i = 0; i < particles2.length; i++){
+    if (particles2[i].duration-- <= 0){
+      particles2.removeAt(i);
+      i--;
+      continue;
+    }
+    Particle particle = particles2[i];
+    particle.x += particle.xv;
+    particle.y += particle.yv;
+    particle.z += particle.zv;
+    particle.zv += particle.weight;
+    particle.scale *= particle.scaleV;
   }
 }

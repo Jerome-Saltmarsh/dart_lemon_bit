@@ -148,7 +148,7 @@ Timer periodic(Function function, {int seconds = 0, int ms = 0}) {
 
 repeat(Function function, int times, int milliseconds) {
   for (int i = 0; i < times; i++) {
-    Future.delayed(Duration(milliseconds: milliseconds * times), function);
+    Future.delayed(Duration(milliseconds: milliseconds * i), function);
   }
 }
 

@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_game_engine/bleed/classes/Particle.dart';
 import 'package:flutter_game_engine/bleed/enums.dart';
 import 'classes/SpriteAnimation.dart';
 import 'common.dart';
@@ -30,6 +31,7 @@ List<List<dynamic>> bullets = [];
 List<double> bulletHoles = [];
 List<double> blood = [];
 List<double> particles = [];
+List<Particle> particles2 = [];
 List<double> grenades = [];
 List<SpriteAnimation> animations = [];
 int drawFrame = 0;
@@ -44,6 +46,8 @@ double playerMaxHealth = 0;
 List<RSTransform> playersTransforms = [];
 List<Rect> playersRects = [];
 List<RSTransform> npcsTransforms = [];
+List<Rect> particleRects = [];
+List<RSTransform> particleTransforms = [];
 List<Rect> npcsRects = [];
 int tilesX = 0;
 int tilesY = 0;
