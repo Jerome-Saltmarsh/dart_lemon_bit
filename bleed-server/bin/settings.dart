@@ -29,7 +29,7 @@ const int settingsHandgunCooldown = 14;
 const double settingsWeaponAccuracyHandgun = 0;
 const double settingsWeaponAccuracyShotgun = pi * 0.06;
 const int settingsShotgunBulletsPerShot = 5;
-const double settingsParticleShellSpeed = 5;
+const double settingsParticleShellSpeed = 3;
 
 const int tilesX = 40;
 const int tilesY = 40;

@@ -20,7 +20,7 @@ import 'utils.dart';
 
 void drawCharacterCircle(dynamic value, Color color) {
   if (value == null) return;
-  drawCircle(value[x], value[y] + 5, characterRadius, color);
+  drawCircle(value[x], value[y] + 12, 10, color);
 }
 
 void drawCharacters() {
@@ -665,8 +665,8 @@ void drawParticles() {
 
     switch(type){
       case ParticleType.Shell:
-        double size = 2;
-        drawCircle(x, y, size / scale, Colors.black38);
+        double size = 1.33;
+        drawCircle(x, y, 2 / scale, Colors.black38);
         drawCircle(x, y + heightShift, size * scale, Colors.white);
         break;
       case ParticleType.Blood:
