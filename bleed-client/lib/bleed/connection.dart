@@ -8,7 +8,7 @@ import 'state.dart';
 
 // state
 WebSocketChannel _webSocketChannel;
-final StreamController onConnected = StreamController();
+final StreamController onConnectedController = StreamController();
 final StreamController onDisconnected = StreamController();
 final StreamController onError = StreamController();
 final StreamController onConnectError = StreamController();
@@ -53,7 +53,7 @@ void _onEvent(dynamic response) {
     print("connection established");
     connected = true;
     connecting = false;
-    onConnected.add(response);
+    onConnectedController.add(response);
     redrawUI();
     Future.delayed(Duration(seconds: 1), redrawUI);
   }

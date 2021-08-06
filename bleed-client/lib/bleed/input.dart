@@ -1,12 +1,14 @@
+import 'dart:math';
+
 import 'package:flutter/services.dart';
 import 'package:flutter_game_engine/bleed/connection.dart';
 import 'package:flutter_game_engine/bleed/maths.dart';
-import 'package:flutter_game_engine/bleed/spawn.dart';
 import 'package:flutter_game_engine/game_engine/engine_state.dart';
 import 'package:flutter_game_engine/game_engine/game_input.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'common.dart';
+import 'functions/requestThrowGrenade.dart';
 import 'keys.dart';
 import 'send.dart';
 import 'settings.dart';
@@ -18,6 +20,8 @@ bool get keyEquipHandGun => keyPressed(LogicalKeyboardKey.digit1);
 bool get keyEquipShotgun => keyPressed(LogicalKeyboardKey.digit2);
 bool get keyAimPressed => keyPressedSpace;
 bool get keySprintPressed => keyPressed(LogicalKeyboardKey.shiftLeft);
+
+bool _throwingGrenade = false;
 
 void readPlayerInput() {
   if (player == null) return;
@@ -37,8 +41,17 @@ void readPlayerInput() {
   if (keyPressed(LogicalKeyboardKey.escape)){
     disconnect();
   }
-  if (keyPressed(LogicalKeyboardKey.keyG)){
-    requestThrowGrenade();
+  if (keyPressed(LogicalKeyboardKey.keyQ)){
+    if(!_throwingGrenade && mouseAvailable) {
+      _throwingGrenade = true;
+      double mouseDistance = distance(playerX, playerY, mouseWorldX, mouseWorldY);
+      double maxRange = 400;
+      double throwDistance = min(mouseDistance, maxRange);
+      double strength = throwDistance / maxRange;
+      requestThrowGrenade(strength);
+    }
+  } else if (_throwingGrenade){
+    _throwingGrenade = false;
   }
   if (mouseAvailable) {
     requestAim = getMouseRotation();
@@ -50,8 +63,8 @@ void readPlayerInput() {
     if (requestDirection == directionNone) {
       requestCharacterState = characterStateIdle;
       if (mouseAvailable) {
-        double mouseWorldX = mousePosX + cameraX;
-        double mouseWorldY = mousePosY + cameraY;
+        double mouseWorldX = mouseX + cameraX;
+        double mouseWorldY = mouseY + cameraY;
         for (dynamic npc in npcs) {
           if (distance(npc[x], npc[y], mouseWorldX, mouseWorldY) > playerAutoAimDistance) continue;
           requestCharacterState = characterStateAiming;

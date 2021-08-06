@@ -1,17 +1,11 @@
 
 import 'package:flutter_game_engine/bleed/enums.dart';
-import 'package:flutter_game_engine/bleed/utils.dart';
 
 import 'connection.dart';
 import 'state.dart';
 
 
 StringBuffer _buffer = StringBuffer();
-
-void requestThrowGrenade(){
-  if (!playerAssigned) return;
-  send('grenade $playerId $playerUUID');
-}
 
 void sendRequestTiles(){
   print('sendRequestTiles()');

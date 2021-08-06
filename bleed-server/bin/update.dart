@@ -83,8 +83,7 @@ void checkBulletCollision(List<Character> list) {
               character.x,
               character.y,
               bullet.xVel * randomBetween(0, 0.5) + giveOrTake(pi),
-              bullet.yVel * randomBetween(0, 0.5) + giveOrTake(pi))
-          );
+              bullet.yVel * randomBetween(0, 0.5) + giveOrTake(pi)));
         }
 
         break;
@@ -258,8 +257,9 @@ void fixedUpdate() {
   updateParticles();
   updateGameEvents();
 
-  for(Grenade grenade in grenades){
+  for (Grenade grenade in grenades) {
     applyMovement(grenade);
+    applyFriction(grenade, settingsGrenadeFriction);
   }
 
   compileState();

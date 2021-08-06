@@ -7,6 +7,7 @@ import 'classes.dart';
 import 'compile.dart';
 import 'enums.dart';
 import 'events.dart';
+import 'functions/throwGrenade.dart';
 import 'language.dart';
 import 'maths.dart';
 import 'settings.dart';
@@ -36,7 +37,8 @@ void main() {
 
     void handleRequestSpawn() {
       var player = spawnPlayer(name: "Test");
-      String response = "id: ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt() } ; ";
+      String response =
+          "id: ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ; ";
       sendToClient(response);
       return;
     }
@@ -106,24 +108,7 @@ void main() {
         sendCompiledState();
         return;
       }
-      if (request == 'toggle-pass-1') {
-        firstPass = !firstPass;
-        print('first pass toggled: $firstPass');
-      }
-      if (request == 'toggle-pass-2') {
-        secondPass = !secondPass;
-        print('second pass toggled: $secondPass');
-      }
-      if (request == 'toggle-pass-3') {
-        thirdPass = !thirdPass;
-      }
-      if (request == 'toggle-pass-4') {
-        fourthPass = !fourthPass;
-      }
-      if (request == 'get-tiles') {
-        sendToClient(compileTiles());
-      }
-      if(request.startsWith('equip')){
+      if (request.startsWith('equip')) {
         List<String> attributes = request.split(" ");
         int id = int.parse(attributes[1]);
         Player? player = findPlayerById(id);
@@ -140,7 +125,7 @@ void main() {
         player.weapon = weapon;
         print('player equipped $weapon');
       }
-      if(request.startsWith('grenade')){
+      if (request.startsWith('grenade')) {
         List<String> attributes = request.split(" ");
         int id = int.parse(attributes[1]);
         Player? player = findPlayerById(id);
@@ -153,15 +138,11 @@ void main() {
           sendToClient('invalid-uuid ; ');
           return;
         }
-        // throw grenade
-
-        Grenade grenade = Grenade(player.x, player.y, adj(player.aimAngle, 5), opp(player.aimAngle, 2));
-        grenades.add(grenade);
-        delayed(() {
-          grenades.remove(grenade);
-          dispatch(GameEventType.Explosion, grenade.x, grenade.y);
-        }, seconds: 2);
-        print("grenade spawned");
+        double strength = double.parse(attributes[3]);
+        throwGrenade(player.x, player.y, player.aimAngle, strength);
+      }
+      if (request == 'get-tiles') {
+        sendToClient(compileTiles());
       }
     }
 

@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_game_engine/bleed/enums.dart';
-import 'classes.dart';
+import 'classes/SpriteAnimation.dart';
 import 'common.dart';
 import 'constants.dart';
 
@@ -41,18 +41,13 @@ int serverFramesMS = 0;
 int actualFPS;
 double playerHealth = 0;
 double playerMaxHealth = 0;
-
 List<RSTransform> playersTransforms = [];
 List<Rect> playersRects = [];
 List<RSTransform> npcsTransforms = [];
 List<Rect> npcsRects = [];
-
 int tilesX = 0;
 int tilesY = 0;
 List<List<Tile>> tiles = [];
-
 List<RSTransform> tileTransforms = [];
 List<Rect> tileRects = [];
-
-
 Map<int, bool> gameEvents = Map();

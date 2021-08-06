@@ -259,3 +259,8 @@ void applyMovement(PhysicsGameObject physicsGameObject){
   physicsGameObject.x += physicsGameObject.xVel;
   physicsGameObject.y += physicsGameObject.yVel;
 }
+
+void applyFriction(PhysicsGameObject physicsGameObject, double value){
+  physicsGameObject.xVel *= value;
+  physicsGameObject.yVel *= value;
+}

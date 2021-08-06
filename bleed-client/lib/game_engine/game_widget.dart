@@ -20,9 +20,12 @@ bool _clickProcessed = true;
 Offset get mousePosition => _mousePosition;
 Offset get previousMousePosition => _previousMousePosition;
 Offset get mouseVelocity => _mouseDelta;
-double get mousePosX => _mousePosition?.dx;
-double get mousePosY => _mousePosition?.dy;
-bool get mouseAvailable => mousePosX != null;
+double get mouseX => _mousePosition?.dx;
+double get mouseY => _mousePosition?.dy;
+double get mouseWorldX => mouseX + cameraX;
+double get mouseWorldY => mouseY + cameraY;
+
+bool get mouseAvailable => mouseX != null;
 bool get mouseClicked => !_clickProcessed;
 Color white = mat.Colors.white;
 Color red = mat.Colors.red;

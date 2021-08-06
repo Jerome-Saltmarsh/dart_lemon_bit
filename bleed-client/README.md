@@ -24,6 +24,9 @@
 [ ] Boundary
 [ ] Stamina
 [ ] Throw Grenade
+[ ] Explosion
+[ ] Fix bug grenade remains after explosion
+[ ] Fix throws multiple grenades on press
 [x] HUD
 [x] Fix center camera on spawn
 [x] Equip weapon audio

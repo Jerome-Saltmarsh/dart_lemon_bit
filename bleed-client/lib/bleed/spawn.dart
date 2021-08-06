@@ -1,7 +1,7 @@
 
 
 import 'audio.dart';
-import 'classes.dart';
+import 'classes/SpriteAnimation.dart';
 import 'images.dart';
 import 'state.dart';
 

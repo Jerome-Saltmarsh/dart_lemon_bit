@@ -8,7 +8,7 @@ import 'package:flutter_game_engine/bleed/utils.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'connection.dart';
-import 'draw.dart';
+import 'functions/clearState.dart';
 import 'images.dart';
 import 'rects.dart';
 import 'send.dart';
@@ -38,17 +38,14 @@ class BleedWidget extends GameWidget {
       }
     }, ms: 100);
 
-    onConnected.stream.listen((event) {
+    onConnectedController.stream.listen((event) {
       sendRequestTiles();
       sendRequestSpawn();
       redrawUI();
     });
 
     onDisconnected.stream.listen((event) {
-      playerId = -1;
-      playerUUID = "";
-      npcs.clear();
-      players.clear();
+      clearState();
     });
 
     initUI();

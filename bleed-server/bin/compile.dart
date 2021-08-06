@@ -30,7 +30,6 @@ void _compileGameEvents() {
 }
 
 void _compileGrenades(){
-  if(grenades.isEmpty) return;
   _write('grenades');
   for(Grenade grenade in grenades){
     _write(grenade.x.toInt());

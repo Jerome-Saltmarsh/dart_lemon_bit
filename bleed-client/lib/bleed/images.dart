@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:flutter_game_engine/bleed/classes.dart';
 import 'package:flutter_game_engine/game_engine/game_resources.dart';
+
+import 'classes/SpriteSheet.dart';
 
 Image imageHuman;
 Image imageTiles;

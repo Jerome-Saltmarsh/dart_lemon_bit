@@ -1,5 +1,6 @@
 
-import '../classes.dart';
+import 'package:flutter_game_engine/bleed/classes/SpriteAnimation.dart';
+
 import '../state.dart';
 import 'drawSpriteAnimation.dart';
 

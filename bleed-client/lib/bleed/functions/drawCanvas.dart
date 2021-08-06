@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_game_engine/bleed/functions/drawBullet.dart';
+import 'package:flutter_game_engine/bleed/functions/drawGrenade.dart';
 import 'package:flutter_game_engine/game_engine/engine_draw.dart';
 
 import '../connection.dart';
@@ -27,14 +28,17 @@ void drawCanvas(Canvas canvass, Size _size) {
   _drawBullets();
   drawBulletHoles();
   drawBlood();
-  for (int i = 0; i < grenades.length; i += 2) {
-    drawCircle(grenades[i], grenades[i + 1], 4, Colors.green);
-  }
-
+  _drawGrenades();
   drawAnimations();
   drawParticles();
   drawCharacters();
   drawMouse();
+}
+
+void _drawGrenades() {
+  for (int i = 0; i < grenades.length; i += 2) {
+    drawGrenade(grenades[i], grenades[i + 1]);
+  }
 }
 
 void _drawBullets() {
