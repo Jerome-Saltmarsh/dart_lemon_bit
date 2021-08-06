@@ -1,6 +1,4 @@
 import 'classes.dart';
-import 'classes/Particle.dart';
-import 'enums.dart';
 import 'events.dart';
 import 'maths.dart';
 import 'settings.dart';
@@ -12,11 +10,13 @@ void spawnBullet(Character character) {
       character.x,
       character.y,
       velX(character.aimAngle + giveOrTake(getWeaponAccuracy(character.weapon)),
-          bulletSpeed),
+          getWeaponBulletSpeed(character.weapon)),
       velY(character.aimAngle + giveOrTake(getWeaponAccuracy(character.weapon)),
-          bulletSpeed),
+          getWeaponBulletSpeed(character.weapon)),
       character.id,
-      getWeaponRange(character.weapon) + giveOrTake(settingsWeaponRangeVariation));
+      getWeaponRange(character.weapon) + giveOrTake(settingsWeaponRangeVariation),
+      getWeaponDamage(character.weapon)
+  );
   bullets.add(bullet);
 }
 

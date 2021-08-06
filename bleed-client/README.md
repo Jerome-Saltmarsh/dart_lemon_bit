@@ -1,7 +1,6 @@
 # TODO
 [ ] Persist World on firebase
 [ ] Reload
-[ ] Sniper Rifle
 [ ] Keep aiming for duration after shot fired
 [ ] Oozie
 [ ] Shot Animation
@@ -12,17 +11,19 @@
 [ ] Use particles to show blood
 [ ] Explosions
 [ ] Shotgun Animation
-[ ] Ammo
-[ ] Particle Smoke
-[ ] Weapon: Machine Gun
-[ ] Adjustable FPS (Client)
-[ ] Accuracy
 [ ] Critical Damage
+[ ] Ammo
+[ ] Accuracy
+[ ] Draw Explosion
 [ ] Compile Bullet remove id
 [ ] Equip Weapon Animation
-[ ] BUG: Bullet hole sometimes doesn't appear
 [ ] Boundary
 [ ] Stamina
+[ ] Particle Smoke
+[ ] Weapon: Machine Gun
+[ ] Weapon: Bazooka
+[ ] Weapon: Sniper Rifle
+[x] BUG: Bullet hole sometimes doesn't appear
 [x] run to mouse key
 [x] Throw Grenade
 [x] Fix explosion doesn't render sometimes

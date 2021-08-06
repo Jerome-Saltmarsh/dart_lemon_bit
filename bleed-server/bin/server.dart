@@ -1,4 +1,3 @@
-import 'dart:async';
 
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
@@ -6,10 +5,9 @@ import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'classes.dart';
 import 'compile.dart';
 import 'enums.dart';
+import 'enums/Weapons.dart';
 import 'events.dart';
 import 'functions/throwGrenade.dart';
-import 'language.dart';
-import 'maths.dart';
 import 'settings.dart';
 import 'spawn.dart';
 import 'state.dart';

@@ -14,6 +14,9 @@ void onGameEvent(GameEventType type, int x, int y){
     case GameEventType.Shotgun_Fired:
       playAudioShotgunShot();
       break;
+    case GameEventType.SniperRifle_Fired:
+      playAudioSniperShot();
+      break;
     case GameEventType.Zombie_Hit:
       if(randomBool()){
         playAudioZombieHit();

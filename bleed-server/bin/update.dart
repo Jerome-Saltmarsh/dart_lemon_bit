@@ -66,7 +66,7 @@ void checkBulletCollision(List<Character> list) {
       if (dis < characterBulletRadius) {
         bullets.removeAt(i);
         i--;
-        changeCharacterHealth(character, -2);
+        changeCharacterHealth(character, -bullet.damage);
         character.xVel += bullet.xVel * 0.25;
         character.yVel += bullet.yVel * 0.25;
 

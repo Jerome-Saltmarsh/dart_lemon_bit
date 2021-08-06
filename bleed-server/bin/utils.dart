@@ -4,7 +4,9 @@ import 'classes.dart';
 import 'common.dart';
 import 'constants.dart';
 import 'enums.dart';
+import 'enums/Weapons.dart';
 import 'events.dart';
+import 'functions/characterFireWeapon.dart';
 import 'functions/spawnShell.dart';
 import 'language.dart';
 import 'maths.dart';
@@ -26,7 +28,7 @@ void setCharacterState(Character character, CharacterState value) {
       character.accuracy = 0;
       break;
     case CharacterState.Firing:
-      fireWeapon(character);
+      characterFireWeapon(character);
       break;
     case CharacterState.Striking:
       character.shotCoolDown = 10;
@@ -114,8 +116,8 @@ bool isAiming(Character character) {
 }
 
 void setVelocity(PhysicsGameObject target, double rotation, double speed) {
-  target.xVel = velX(rotation, bulletSpeed);
-  target.yVel = velY(rotation, bulletSpeed);
+  target.xVel = velX(rotation, speed);
+  target.yVel = velY(rotation, speed);
 }
 
 double distanceFromDestination(Npc npc) {
@@ -145,36 +147,6 @@ double getShotAngle(Character character) {
 
 void faceAimDirection(Character character) {
   setDirection(character, convertAngleToDirection(character.aimAngle));
-}
-
-void fireWeapon(Character character) {
-  if (character.dead) return;
-  if (character.shotCoolDown > 0) return;
-  faceAimDirection(character);
-  switch (character.weapon) {
-    case Weapon.HandGun:
-      spawnBullet(character);
-
-      spawnShell(character.x + adj(character.aimAngle, 9), character.y + opp(character.aimAngle, 9), character.aimAngle + (pi + giveOrTake(piHalf)));
-      character.state = CharacterState.Firing;
-      character.shotCoolDown = settingsHandgunCooldown;
-      gameEvents.add(GameEvent(character.x, character.y, GameEventType.Handgun_Fired));
-      break;
-    case Weapon.Shotgun:
-      character.xVel += velX(character.aimAngle + pi, 1);
-      character.yVel += velY(character.aimAngle + pi, 1);
-
-      for (int i = 0; i < settingsShotgunBulletsPerShot; i++) {
-        spawnBullet(character);
-      }
-      delayed((){
-        spawnShell(character.x, character.y, character.aimAngle + (pi + giveOrTake(piHalf)));
-      }, ms: 500);
-      character.state = CharacterState.Firing;
-      character.shotCoolDown = shotgunCoolDown;
-      gameEvents.add(GameEvent(character.x, character.y, GameEventType.Shotgun_Fired));
-      break;
-  }
 }
 
 void clearNpcs() {
@@ -230,12 +202,41 @@ void generateTiles() {
   tiles[4][5] = Tile.Grass;
 }
 
+double getWeaponDamage(Weapon weapon){
+  switch (weapon){
+    case Weapon.HandGun:
+      return settingsWeaponDamageHandgun;
+    case Weapon.Shotgun:
+      return settingsWeaponDamageShotgun;
+    case Weapon.SniperRifle:
+      return settingsWeaponDamageSniperRifle;
+    default:
+      throw Exception("no range found for $weapon");
+  }
+}
+
+
 double getWeaponRange(Weapon weapon){
   switch (weapon){
     case Weapon.HandGun:
       return settingsWeaponRangeHandgun;
     case Weapon.Shotgun:
       return settingsWeaponRangeShotgun;
+    case Weapon.SniperRifle:
+      return settingsWeaponRangeSniperRifle;
+    default:
+      throw Exception("no range found for $weapon");
+  }
+}
+
+double getWeaponBulletSpeed(Weapon weapon){
+  switch (weapon){
+    case Weapon.HandGun:
+      return settingsWeaponBulletSpeedHandGun;
+    case Weapon.Shotgun:
+      return settingsWeaponBulletSpeedShotGun;
+    case Weapon.SniperRifle:
+      return settingsWeaponBulletSpeedSniperRifle;
     default:
       throw Exception("no range found for $weapon");
   }
@@ -247,6 +248,8 @@ double getWeaponAccuracy(Weapon weapon){
       return settingsWeaponAccuracyHandgun;
     case Weapon.Shotgun:
       return settingsWeaponAccuracyShotgun;
+    case Weapon.SniperRifle:
+      return settingsWeaponAccuracySniperRifle;
     default:
       throw Exception("no range found for $weapon");
   }

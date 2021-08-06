@@ -6,8 +6,6 @@ enum Tile {
 
 enum CharacterState { Idle, Walking, Dead, Aiming, Firing, Striking, Running }
 
-enum Weapon { Unarmed, HandGun, Shotgun }
-
 enum Direction {
   Up,
   UpRight,
@@ -23,6 +21,7 @@ enum Direction {
 enum GameEventType {
   Handgun_Fired,
   Shotgun_Fired,
+  SniperRifle_Fired,
   Zombie_Hit,
   Zombie_Killed,
   Zombie_Target_Acquired,

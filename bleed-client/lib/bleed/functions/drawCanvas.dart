@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_game_engine/bleed/functions/drawBullet.dart';
 import 'package:flutter_game_engine/bleed/functions/drawGrenade.dart';
-import 'package:flutter_game_engine/game_engine/engine_draw.dart';
 
 import '../connection.dart';
 import '../draw.dart';

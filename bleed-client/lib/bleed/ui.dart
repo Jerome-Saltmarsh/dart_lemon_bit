@@ -4,7 +4,7 @@ import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'package:flutter_game_engine/game_engine/web_functions.dart';
 
 import 'connection.dart';
-import 'enums.dart';
+import 'enums/Weapons.dart';
 import 'send.dart';
 import 'settings.dart';
 import 'state.dart';
@@ -175,9 +175,8 @@ Widget buildGameUI(BuildContext context) {
       );
     }
   } else {
-
-    if(playerUUID.isNotEmpty){
-       return Text("Loading Players");
+    if (playerUUID.isNotEmpty) {
+      return Text("Loading Players");
     }
 
     return Container(
@@ -191,36 +190,53 @@ Widget buildGameUI(BuildContext context) {
   return buildHud();
 }
 
+const DecorationImage _handgunImage = const DecorationImage(
+  image: const AssetImage('images/weapon-handgun.png'),
+);
+
+const DecorationImage _shotgunImage = const DecorationImage(
+  image: const AssetImage('images/weapon-shotgun.png'),
+);
+
+const DecorationImage _sniperImage = const DecorationImage(
+  image: const AssetImage('images/weapon-sniper-rifle.png'),
+);
+
+DecorationImage _getDecorationImage(Weapon weapon) {
+  switch (weapon) {
+    case Weapon.HandGun:
+      return _handgunImage;
+    case Weapon.Shotgun:
+      return _shotgunImage;
+    case Weapon.SniperRifle:
+      return _sniperImage;
+  }
+  throw Exception("no image available for $weapon");
+}
+
+Widget buildWeaponButton(Weapon weapon) {
+  return GestureDetector(
+    onTap: () => sendRequestEquip(weapon),
+    child: Container(
+        width: 120,
+        height: 50,
+        decoration: BoxDecoration(
+            border: playerWeapon == weapon
+                ? Border.all(
+                    color: Colors.white, width: 5.0, style: BorderStyle.solid)
+                : null,
+            image: _getDecorationImage(weapon))),
+  );
+}
+
 Widget buildHud() {
   return column(
     [
       button("FullScreen", requestFullScreen),
       if (debugMode) buildDebugPanel(),
-
-      GestureDetector(
-        onTap: sendRequestEquipHandgun,
-        child: Container(
-          width: 80,
-            height: 50,
-            decoration: BoxDecoration(
-                border: playerWeapon == Weapon.HandGun ? Border.all(
-                    color: Colors.white, width: 5.0, style: BorderStyle.solid) : null,
-                image: const DecorationImage(
-                  image: const AssetImage('images/weapon-handgun.png'),
-                ))),
-      ),
-      GestureDetector(
-        onTap: sendRequestEquipShotgun,
-        child: Container(
-            width: 120,
-            height: 50,
-            decoration: BoxDecoration(
-                border: playerWeapon == Weapon.Shotgun ? Border.all(
-                    color: Colors.white, width: 5.0, style: BorderStyle.solid) : null,
-                image: const DecorationImage(
-                  image: const AssetImage('images/weapon-shotgun.png'),
-                ))),
-      )
+      buildWeaponButton(Weapon.HandGun),
+      buildWeaponButton(Weapon.Shotgun),
+      buildWeaponButton(Weapon.SniperRifle),
     ],
   );
 }
@@ -245,10 +261,6 @@ Widget buildDebugPanel() {
     text("Bullets: ${bullets.length}"),
     text("Npcs: ${npcs.length}"),
     text("Player Assigned: $playerAssigned"),
-    // button('First Pass: $firstPass', sendTogglePass1),
-    // button('Second Pass: $secondPass', sendTogglePass2),
-    // button('Third Pass: $thirdPass', sendTogglePass3),
-    // button('Fourth Pass: $fourthPass', sendTogglePass4),
     button("smoothing $smooth", () => smooth = !smooth),
   ]);
 }

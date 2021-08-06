@@ -8,7 +8,7 @@ import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'common.dart';
 import 'constants.dart';
-import 'enums.dart';
+import 'enums/Weapons.dart';
 import 'keys.dart';
 import 'maths.dart';
 import 'state.dart';

@@ -6,6 +6,7 @@ import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'constants.dart';
 import 'enums.dart';
+import 'enums/Weapons.dart';
 
 // state
 final List _cache = [];

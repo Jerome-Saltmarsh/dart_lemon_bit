@@ -1,4 +1,5 @@
 import 'enums.dart';
+import 'enums/Weapons.dart';
 import 'maths.dart';
 import 'settings.dart';
 
@@ -116,8 +117,9 @@ class Bullet extends PhysicsGameObject {
   late double yStart;
   int ownerId;
   final double range;
+  final double damage;
 
-  Bullet(double x, double y, double xVel, double yVel, this.ownerId, this.range)
+  Bullet(double x, double y, double xVel, double yVel, this.ownerId, this.range, this.damage)
       : super(x, y, xVel, yVel) {
     xStart = x;
     yStart = y;

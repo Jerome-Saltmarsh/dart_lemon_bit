@@ -1,7 +1,6 @@
 
-import 'package:flutter_game_engine/bleed/enums.dart';
-
 import 'connection.dart';
+import 'enums/Weapons.dart';
 import 'state.dart';
 
 
@@ -29,6 +28,10 @@ void sendRequestEquipShotgun() {
   sendRequestEquip(Weapon.Shotgun);
 }
 
+void sendRequestEquipSniperRifle() {
+  sendRequestEquip(Weapon.SniperRifle);
+}
+
 void sendRequestUpdatePlayer() {
   _buffer.clear();
   _write("u:");
@@ -36,7 +39,7 @@ void sendRequestUpdatePlayer() {
   _write(playerUUID);
   _write(requestCharacterState);
   _write(requestDirection);
-  _write(requestAim.toStringAsFixed(1));
+  _write(requestAim.toStringAsFixed(2));
   _write(serverFrame);
   send(_buffer.toString());
 }

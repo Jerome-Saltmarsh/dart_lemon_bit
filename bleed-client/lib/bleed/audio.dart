@@ -46,8 +46,16 @@ List<String> grenadeExplosions = [
   'explosion-grenade-04.wav'
 ];
 
+void playAudioSniperShot(){
+  _play('sniper-shot-04.wav', _weaponAudioPlayer);
+}
+
 void playAudioExplosion(){
   _playRandom(grenadeExplosions, _explosionAudioPlayer);
+}
+
+void playAudioSniperEquipped(){
+  _play("gun-pickup-01.wav", _weaponAudioPlayer);
 }
 
 void playAudioReload(){

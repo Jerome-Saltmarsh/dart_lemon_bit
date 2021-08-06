@@ -14,7 +14,6 @@ import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import 'common.dart';
 import 'keys.dart';
 import 'images.dart';
-import 'settings.dart';
 import 'state.dart';
 import 'utils.dart';
 

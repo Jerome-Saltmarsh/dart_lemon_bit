@@ -4,7 +4,6 @@ import 'dart:math';
 const host = '0.0.0.0';
 const port = 8080;
 const int expiration = 200;
-const double bulletSpeed = 14.0;
 const int maxZombies = 5;
 const double spawnRadius = 500;
 const double zombieSpeed = 2;
@@ -23,11 +22,22 @@ const double settingsNpcRoamRange = 50;
 const double settingsPlayerStartHealth = 5;
 const int settingsPlayerDisconnectFrames = 300;
 const double settingsPlayerStartRadius = 50;
+
+// Weapon
+const double settingsWeaponRangeSniperRifle = 500;
 const double settingsWeaponRangeHandgun = 320;
 const double settingsWeaponRangeShotgun = 180;
-const int settingsHandgunCooldown = 14;
-const double settingsWeaponAccuracyHandgun = 0;
+const double settingsWeaponBulletSpeedHandGun = 14.0;
+const double settingsWeaponBulletSpeedShotGun = 12.0;
+const double settingsWeaponBulletSpeedSniperRifle = 24.0;
+const double settingsWeaponAccuracyHandgun = 0.05;
+const double settingsWeaponAccuracySniperRifle = 0;
 const double settingsWeaponAccuracyShotgun = pi * 0.06;
+const double settingsWeaponDamageHandgun = 1;
+const double settingsWeaponDamageShotgun = 0.75;
+const double settingsWeaponDamageSniperRifle = 5;
+const int settingsHandgunCooldown = 14;
+const int settingsSniperCooldown = 45;
 const int settingsShotgunBulletsPerShot = 5;
 const double settingsParticleShellSpeed = 3;
 
