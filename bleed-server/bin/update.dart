@@ -256,16 +256,26 @@ void fixedUpdate() {
   updateBlood();
   updateParticles();
   updateGameEvents();
-
-  for (Grenade grenade in grenades) {
-    applyMovement(grenade);
-    applyFriction(grenade, settingsGrenadeFriction);
-  }
+  updateGrenades();
 
   compileState();
 
   if (fps < 20) {
     // print("Warning FPS Drop: $fps");
+  }
+}
+
+
+void updateGrenades() {
+  for (Grenade grenade in grenades) {
+    applyMovement(grenade);
+    applyFriction(grenade, settingsGrenadeFriction);
+    double gravity = 0.06;
+    grenade.zVel -= gravity;
+    if(grenade.z < 0){
+      grenade.z = 0;
+    }
+    print('grenade: z: ${grenade.z} zv: ${grenade.zVel}');
   }
 }
 

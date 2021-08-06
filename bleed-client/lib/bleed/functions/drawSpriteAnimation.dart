@@ -5,8 +5,6 @@ import 'package:flutter_game_engine/game_engine/game_widget.dart';
 import '../draw.dart';
 
 void drawSpriteAnimation(SpriteAnimation animation){
-  print('drawing sprite animation ${animation.currentFrame}  ${animation.rect}');
-
   globalCanvas.drawAtlas(
       animation.sprite.image,
       [

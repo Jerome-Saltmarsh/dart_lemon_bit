@@ -697,3 +697,12 @@ void drawParticles() {
     }
   }
 }
+
+double shiftHeight(double z){
+  return -z * 20;
+}
+
+
+double shiftScale(double z){
+  return 1 + (z * 0.15);
+}

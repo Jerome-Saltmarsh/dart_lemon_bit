@@ -258,6 +258,7 @@ void dispatch(GameEventType type, double x, double y){
 void applyMovement(PhysicsGameObject physicsGameObject){
   physicsGameObject.x += physicsGameObject.xVel;
   physicsGameObject.y += physicsGameObject.yVel;
+  physicsGameObject.z += physicsGameObject.zVel;
 }
 
 void applyFriction(PhysicsGameObject physicsGameObject, double value){

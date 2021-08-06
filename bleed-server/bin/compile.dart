@@ -34,6 +34,7 @@ void _compileGrenades(){
   for(Grenade grenade in grenades){
     _write(grenade.x.toInt());
     _write(grenade.y.toInt());
+    _write(grenade.z.toStringAsFixed(1));
   }
   _end();
 }

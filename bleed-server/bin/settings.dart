@@ -1,6 +1,3 @@
-
-import 'dart:math';
-
 const host = '0.0.0.0';
 const port = 8080;
 const int expiration = 200;
@@ -37,7 +34,6 @@ const int settingsHandgunCooldown = 14;
 const int settingsSniperCooldown = 45;
 const int settingsShotgunBulletsPerShot = 5;
 const double settingsParticleShellSpeed = 3;
-
 
 const int tilesX = 40;
 const int tilesY = 40;

@@ -40,8 +40,8 @@ void drawCanvas(Canvas canvass, Size _size) {
 }
 
 void _drawGrenades() {
-  for (int i = 0; i < grenades.length; i += 2) {
-    drawGrenade(grenades[i], grenades[i + 1]);
+  for (int i = 0; i < grenades.length; i += 3) {
+    drawGrenade(grenades[i], grenades[i + 1], grenades[i + 2]);
   }
 }
 

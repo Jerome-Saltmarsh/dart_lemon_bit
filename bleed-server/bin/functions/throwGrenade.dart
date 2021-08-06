@@ -7,7 +7,7 @@ import 'spawnExplosion.dart';
 
 void throwGrenade(double x, double y, double angle, double strength){
   double speed = settingsGrenadeSpeed * strength;
-  Grenade grenade = Grenade(x, y, adj(angle, speed), opp(angle, speed));
+  Grenade grenade = Grenade(x, y, adj(angle, speed), opp(angle, speed), 0.8 * strength);
   grenades.add(grenade);
   delayed(() {
     grenades.remove(grenade);

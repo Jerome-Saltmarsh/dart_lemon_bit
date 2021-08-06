@@ -8,6 +8,7 @@ class GameObject {
   final int id = _idGenerator++;
   double x;
   double y;
+  double z = 0;
 
   GameObject(this.x, this.y);
 }
@@ -15,6 +16,7 @@ class GameObject {
 class PhysicsGameObject extends GameObject {
   double xVel = 0;
   double yVel = 0;
+  double zVel = 0;
 
   PhysicsGameObject(double x, double y, this.xVel, this.yVel) : super(x, y);
 }
@@ -140,6 +142,8 @@ class GameEvent extends GameObject {
 }
 
 class Grenade extends PhysicsGameObject {
-  Grenade(double x, double y, double xVel, double yVel) : super(x, y, xVel, yVel);
+  Grenade(double x, double y, double xVel, double yVel, double zVel) : super(x, y, xVel, yVel) {
+    this.zVel = zVel;
+  }
 }
 
