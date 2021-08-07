@@ -21,6 +21,7 @@
 [ ] Stamina
 [ ] Particle Gunshot smoke
 [ ] Ammo
+[ ] Reload Animation  
 [ ] FIX BUG: Sniper Aim 
 [x] Bug: Npc bodies don't always dissappear
 [x] Process Particles on client

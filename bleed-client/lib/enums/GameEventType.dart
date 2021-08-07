@@ -11,4 +11,5 @@ enum GameEventType {
   Zombie_Strike,
   Player_Death,
   Explosion,
+  Clip_Empty,
 }

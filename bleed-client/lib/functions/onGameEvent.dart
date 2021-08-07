@@ -76,5 +76,8 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv){
     case GameEventType.Explosion:
       spawnExplosion(x.toDouble(), y.toDouble());
       break;
+    case GameEventType.Clip_Empty:
+      playAudioClipEmpty();
+      return;
   }
 }

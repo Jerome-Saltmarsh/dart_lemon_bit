@@ -25,7 +25,8 @@ void setCharacterState(Character character, CharacterState value) {
       character.accuracy = 0;
       break;
     case CharacterState.Firing:
-      characterFireWeapon(character);
+      // TODO Fix hack
+      characterFireWeapon(character as Player);
       break;
     case CharacterState.Striking:
       character.shotCoolDown = 10;

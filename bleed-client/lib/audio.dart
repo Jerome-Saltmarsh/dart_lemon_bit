@@ -73,6 +73,10 @@ void playPlayerDeathAudio(){
   _playRandom(_maleScreams, _playerAudioPlayer);
 }
 
+void playAudioClipEmpty(){
+  _play('dry-shot-02.wav', _equipAudioPlayer);
+}
+
 void playAudioZombieBite(){
   _playRandom(_zombieBite, _zombieAudioPlayer);
 }

@@ -242,6 +242,7 @@ Widget buildHud() {
       button("FullScreen", requestFullScreen),
       if (debugMode) buildDebugPanel(),
       buildWeaponButton(Weapon.HandGun),
+      text('$handgunRounds / $handgunClipSize - $handgunClips'),
       buildWeaponButton(Weapon.Shotgun),
       buildWeaponButton(Weapon.SniperRifle),
       buildWeaponButton(Weapon.MachineGun),

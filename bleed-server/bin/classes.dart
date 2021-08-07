@@ -1,3 +1,4 @@
+import 'classes/Ammunication.dart';
 import 'enums.dart';
 import 'enums/GameEventType.dart';
 import 'enums/Weapons.dart';
@@ -94,6 +95,7 @@ class Npc extends Character {
 
 class Player extends Character {
   final String uuid;
+  final Ammunition handgunAmmunition = Ammunition();
   int lastEventFrame = 0;
 
   Player(

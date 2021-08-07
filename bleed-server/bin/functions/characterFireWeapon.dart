@@ -11,7 +11,7 @@ import '../spawn.dart';
 import '../state.dart';
 import '../utils.dart';
 
-void characterFireWeapon(Character character) {
+void characterFireWeapon(Player character) {
   if (character.dead) return;
   if (character.shotCoolDown > 0) return;
   faceAimDirection(character);
@@ -22,6 +22,12 @@ void characterFireWeapon(Character character) {
 
   switch (character.weapon) {
     case Weapon.HandGun:
+      character.shotCoolDown = settingsClipEmptyCooldown;
+      if(character.handgunAmmunition.rounds <= 0){
+        dispatch(GameEventType.Clip_Empty, x, y, 0, 0);
+        return;
+      }
+      character.handgunAmmunition.rounds--;
       Bullet bullet = spawnBullet(character);
       character.state = CharacterState.Firing;
       character.shotCoolDown = settingsHandgunCooldown;

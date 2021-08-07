@@ -29,8 +29,8 @@ void main() {
       sendToClient(compiledState);
     }
 
-    void sendCompiledPlayerState(Character player, {int pass = 1}) {
-      sendToClient(compilePlayer(player) + compilePass(pass));
+    void sendCompiledPlayerState(Player player) {
+      sendToClient(compilePlayer(player));
     }
 
     void handleRequestSpawn() {
@@ -66,7 +66,7 @@ void main() {
         player.aimAngle = aim;
         setDirection(player, requestedDirection);
         setCharacterState(player, requestedState);
-        sendCompiledPlayerState(player, pass: 0);
+        sendCompiledPlayerState(player);
         return;
       }
       if (request.startsWith('revive:')) {

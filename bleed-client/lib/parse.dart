@@ -39,7 +39,7 @@ void parseState() {
     } else if (term == 'invalid--uuid') {
       print('invalid uuid');
       _consumeInvalidUUID();
-    } else if (term == 'player:') {
+    } else if (term == 'player') {
       _parsePlayer();
     } else if (term == 'tiles:') {
       _parseTiles();
@@ -104,6 +104,10 @@ void _parseTiles() {
 void _parsePlayer() {
   playerHealth = _consumeDouble();
   playerMaxHealth = _consumeDouble();
+  handgunClips = _consumeInt();
+  handgunClipSize = _consumeInt();
+  handgunMaxClips = _consumeInt();
+  handgunRounds = _consumeInt();
 }
 
 void _parseFrameMS() {

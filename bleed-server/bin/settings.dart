@@ -30,6 +30,7 @@ const double settingsWeaponBulletSpeedSniperRifle = 24.0;
 const double settingsWeaponDamageHandgun = 1;
 const double settingsWeaponDamageShotgun = 0.75;
 const double settingsWeaponDamageSniperRifle = 5;
+const int settingsClipEmptyCooldown = 14;
 const int settingsHandgunCooldown = 14;
 const int settingsSniperCooldown = 45;
 const int settingsShotgunBulletsPerShot = 5;

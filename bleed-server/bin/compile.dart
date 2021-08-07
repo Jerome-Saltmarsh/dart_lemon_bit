@@ -55,19 +55,23 @@ String compileTiles() {
   return buffer.toString();
 }
 
-String compilePlayer(Character character) {
+String compilePlayer(Player player) {
   StringBuffer buffer = StringBuffer();
-  buffer.write("player: ");
-  buffer.write(character.health.toStringAsFixed(2));
+  buffer.write("player ");
+  buffer.write(player.health.toStringAsFixed(2));
   buffer.write(' ');
-  buffer.write(character.maxHealth.toStringAsFixed(2));
+  buffer.write(player.maxHealth.toStringAsFixed(2));
+  buffer.write(' ');
+  buffer.write(player.handgunAmmunition.clips);
+  buffer.write(' ');
+  buffer.write(player.handgunAmmunition.clipSize);
+  buffer.write(' ');
+  buffer.write(player.handgunAmmunition.maxClips);
+  buffer.write(' ');
+  buffer.write(player.handgunAmmunition.rounds);
   buffer.write(' ; ');
   buffer.write(compiledState);
   return buffer.toString();
-}
-
-String compilePass(int value) {
-  return 'pass: $value ; ';
 }
 
 void _compileFPS() {
