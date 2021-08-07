@@ -1,4 +1,3 @@
-import 'package:bleed_client/game_engine/game_variables.dart';
 import 'package:bleed_client/spawners/spawnBlood.dart';
 
 import '../../common.dart';

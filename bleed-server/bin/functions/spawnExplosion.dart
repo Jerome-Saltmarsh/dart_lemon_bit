@@ -29,7 +29,7 @@ void spawnExplosion(double x, double y){
         if (randomBool()) {
           dispatch(GameEventType.Zombie_Killed, character.x, character.y, forceX, forceY);
           characterFace(character, x, y);
-          delayed(() => character.active = false, ms: randomInt(300, 1200));
+          delayed(() => character.active = false, ms: randomInt(1000, 2000));
         } else {
           character.active = false;
           dispatch(GameEventType.Zombie_killed_Explosion, character.x, character.y, forceX, forceY);

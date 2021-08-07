@@ -30,6 +30,7 @@ void drawCanvas(Canvas canvass, Size _size) {
   _drawGrenades();
   drawAnimations();
   _drawParticles();
+  // drawParticles2();
   drawCharacters();
   drawMouse();
 }

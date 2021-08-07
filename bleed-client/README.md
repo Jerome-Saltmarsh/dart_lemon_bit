@@ -18,10 +18,11 @@
 [ ] Player Name Text
 [ ] Boundary
 [ ] Reload
-[ ] Ammo
 [ ] Stamina
 [ ] Particle Gunshot smoke
-[ ] Bug: Npc bodies don't always dissappear
+[ ] Ammo
+[ ] FIX BUG: Sniper Aim 
+[x] Bug: Npc bodies don't always dissappear
 [x] Process Particles on client
 [x] Make grenade 3d;
 [x] Weapon: Machine Gun
