@@ -6,9 +6,9 @@ import 'package:flutter_game_engine/bleed/utils.dart';
 
 import '../state.dart';
 
-void spawnHead(double x, double y, double z, {double xv = 0, double yv = 0 }){
+void spawnOrgan(double x, double y, double z, {double xv = 0, double yv = 0 }){
   particles.add(Particle(
-      ParticleType.Head,
+      ParticleType.Organ,
       x,
       y,
       z,
