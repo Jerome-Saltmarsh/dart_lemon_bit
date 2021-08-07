@@ -1,22 +1,26 @@
 # TODO
-[ ] Persist World on firebase
-[ ] Reload
-[ ] Keep aiming for duration after shot fired
 [ ] Oozie
 [ ] Shot Animation
 [ ] Publish dart-blade-game-engine
 [ ] Create bleed-common library
-[ ] Optimize Server Collision Detection
-[ ] Design Town Center
 [ ] Shotgun Animation
 [ ] Critical Damage
-[ ] Ammo
 [ ] Accuracy
 [ ] Compile Bullet remove id
 [ ] Equip Weapon Animation
-[ ] Boundary
-[ ] Stamina
+[ ] Optimize Server Collision Detection
 [ ] Weapon: Bazooka
+[ ] Game Type: Open World
+[ ] Game Type: Death Match
+[ ] Game Type: Capture The Flag
+[ ] Game Type: Base Defense
+[ ] Create Game / Join Game
+[ ] Player Name Text
+[ ] Boundary
+[ ] Reload
+[ ] Ammo
+[ ] Stamina
+[ ] Particle Gunshot smoke
 [x] Process Particles on client
 [x] Make grenade 3d;
 [x] Weapon: Machine Gun

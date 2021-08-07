@@ -7,11 +7,11 @@ import 'package:flutter_game_engine/bleed/spawners/spawnHead.dart';
 import 'package:flutter_game_engine/bleed/spawners/spawnOrgan.dart';
 import 'package:flutter_game_engine/bleed/spawners/spawnShell.dart';
 
-import 'audio.dart';
-import 'enums/GameEventType.dart';
-import 'maths.dart';
-import 'spawners/spawnArm.dart';
-import 'utils.dart';
+import '../audio.dart';
+import '../enums/GameEventType.dart';
+import '../maths.dart';
+import '../spawners/spawnArm.dart';
+import '../utils.dart';
 
 void onGameEvent(GameEventType type, double x, double y, double xv, double yv){
   switch(type){

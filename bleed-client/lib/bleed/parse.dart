@@ -1,4 +1,4 @@
-import 'package:flutter_game_engine/bleed/events.dart';
+import 'package:flutter_game_engine/bleed/functions/onGameEvent.dart';
 import 'package:flutter_game_engine/bleed/keys.dart';
 import 'package:flutter_game_engine/bleed/state.dart';
 import 'package:flutter_game_engine/bleed/utils.dart';

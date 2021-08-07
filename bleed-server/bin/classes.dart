@@ -12,8 +12,9 @@ class GameObject {
   double xv = 0;
   double yv = 0;
   double zv = 0;
+  double radius;
 
-  GameObject(this.x, this.y, {this.z = 0, this.xv = 0, this.yv = 0, this.zv = 0});
+  GameObject(this.x, this.y, {this.z = 0, this.xv = 0, this.yv = 0, this.zv = 0, this.radius = 5});
 }
 
 class Character extends GameObject {

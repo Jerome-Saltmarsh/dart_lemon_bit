@@ -1,4 +1,5 @@
 import 'classes.dart';
+import 'classes/Collision.dart';
 import 'common.dart';
 import 'compile.dart';
 import 'constants.dart';
@@ -68,15 +69,18 @@ void checkBulletCollision(List<Character> characters) {
         character.yv += bullet.yv * 0.25;
 
         if (character.alive) {
-          dispatch(GameEventType.Zombie_Hit, character.x, character.y, bullet.xv, bullet.yv);
+          dispatch(GameEventType.Zombie_Hit, character.x, character.y,
+              bullet.xv, bullet.yv);
         } else {
-          if(randomBool()){
-            dispatch(GameEventType.Zombie_Killed, character.x, character.y, bullet.xv, bullet.yv);
+          if (randomBool()) {
+            dispatch(GameEventType.Zombie_Killed, character.x, character.y,
+                bullet.xv, bullet.yv);
             delayed(() => characters.remove(character), seconds: 3);
-          }else{
+          } else {
             characters.removeAt(j);
             j--;
-            dispatch(GameEventType.Zombie_killed_Explosion, character.x, character.y, bullet.xv, bullet.yv);
+            dispatch(GameEventType.Zombie_killed_Explosion, character.x,
+                character.y, bullet.xv, bullet.yv);
           }
         }
         break;
@@ -226,6 +230,10 @@ void updateCharacters() {
   }
 }
 
+void handleCollision(GameObject a, GameObject b){
+
+}
+
 void fixedUpdate() {
   frame++;
   DateTime now = DateTime.now();
@@ -234,6 +242,20 @@ void fixedUpdate() {
     fps = 1000 ~/ frameDuration.inMilliseconds;
   }
   frameTime = now;
+
+  // gameObjects.sort(compareGameObjects);
+  //
+  // for (int i = 0; i < gameObjects.length - 1; i++) {
+  //   for (int j = i + 1; i < gameObjects.length; i++) {
+  //     if (gameObjects[i].radius + gameObjects[j].radius >
+  //         (gameObjects[j].x - gameObjects[i].x)) {
+  //       handleCollision(gameObjects[i], gameObjects[j]);
+  //     } else {
+  //       break;
+  //     }
+  //   }
+  // }
+
   updateCharacters();
   updateCollisions();
   updateBullets();
@@ -241,14 +263,8 @@ void fixedUpdate() {
   updateNpcs();
   updateGameEvents();
   updateGrenades();
-
   compileState();
-
-  if (fps < 20) {
-    // print("Warning FPS Drop: $fps");
-  }
 }
-
 
 void updateGrenades() {
   for (Grenade grenade in grenades) {
@@ -256,7 +272,7 @@ void updateGrenades() {
     applyFriction(grenade, settingsGrenadeFriction);
     double gravity = 0.06;
     grenade.zv -= gravity;
-    if(grenade.z < 0){
+    if (grenade.z < 0) {
       grenade.z = 0;
     }
   }
@@ -274,7 +290,7 @@ void updateNpcs() {
   npcs.forEach(updateNpc);
 }
 
-int compareCharacters(GameObject a, GameObject b) {
+int compareGameObjects(GameObject a, GameObject b) {
   if (a.x < b.x) {
     return -1;
   }
@@ -314,8 +330,8 @@ void resolveCollision(Character a, Character b) {
 }
 
 void updateCollisions() {
-  npcs.sort(compareCharacters);
-  players.sort(compareCharacters);
+  npcs.sort(compareGameObjects);
+  players.sort(compareGameObjects);
 
   updateCollisionBetween(npcs);
   updateCollisionBetween(players);

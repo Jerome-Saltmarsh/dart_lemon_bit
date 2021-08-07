@@ -5,6 +5,7 @@ import 'enums.dart';
 
 List<List<Tile>> tiles = [];
 int frame = 0;
+List<GameObject> gameObjects = [];
 List<Npc> npcs = [];
 List<Player> players = [];
 List<Bullet> bullets = [];

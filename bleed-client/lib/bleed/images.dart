@@ -14,7 +14,7 @@ SpriteSheet spritesExplosion;
 Future loadImages() async {
   print("loading images");
   imageCharacter = await loadImage("images/character.png");
-  imageTiles = await loadImage("images/Tiles.png");
+  imageTiles = await loadImage("images/tiles.png");
   imageExplosion = await loadImage('images/explosion.png');
   imageParticles = await loadImage('images/particles.png');
   print("loading images complete");
