@@ -7,13 +7,10 @@ void compileState() {
   _compilePlayers();
   _compileNpcs();
   _compileBullets();
-  // _compilePasses();
   _compileFPS();
   _compileFrame();
   _compileGameEvents();
   _compileGrenades();
-  _compileBlood();
-  _compileParticles();
   compiledState = buffer.toString();
 }
 
@@ -25,6 +22,8 @@ void _compileGameEvents() {
     _write(gameEvent.type.index);
     _write(gameEvent.x.toInt());
     _write(gameEvent.y.toInt());
+    _write(gameEvent.xv.toStringAsFixed(1));
+    _write(gameEvent.yv.toStringAsFixed(1));
   }
   _end();
 }
@@ -82,27 +81,6 @@ void _compileFrame() {
 void _compilePlayers() {
   _write("p:");
   players.forEach(_compileCharacter);
-  _end();
-}
-
-void _compileBlood() {
-  _write('blood:');
-  blood.forEach((drop) {
-    _write(drop.x.toInt());
-    _write(drop.y.toInt());
-  });
-  _end();
-}
-
-void _compileParticles() {
-  _write('particles');
-  particles.forEach((particle) {
-    _write(particle.x.toInt());
-    _write(particle.y.toInt());
-    _write(particle.type.index);
-    _write(particle.rotation.toStringAsFixed(1));
-    _write(particle.height.toStringAsFixed(1));
-  });
   _end();
 }
 

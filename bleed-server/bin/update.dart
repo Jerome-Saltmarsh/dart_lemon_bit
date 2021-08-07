@@ -1,16 +1,13 @@
-import 'dart:math';
-
 import 'classes.dart';
-import 'classes/Particle.dart';
 import 'common.dart';
 import 'compile.dart';
 import 'constants.dart';
 import 'enums.dart';
+import 'enums/GameEventType.dart';
 import 'jobs.dart';
 import 'language.dart';
 import 'maths.dart';
 import 'settings.dart';
-import 'spawn.dart';
 import 'state.dart';
 import 'utils.dart';
 
@@ -33,7 +30,7 @@ void updateNpcTarget(Npc npc) {
     if (player.dead) continue;
     if (distanceBetween(npc, player) > zombieViewRange) continue;
     npc.targetId = player.id;
-    dispatch(GameEventType.Zombie_Target_Acquired, npc.x, npc.y);
+    dispatch(GameEventType.Zombie_Target_Acquired, npc.x, npc.y, 0, 0);
     return;
   }
 }
@@ -41,10 +38,10 @@ void updateNpcTarget(Npc npc) {
 void updateBullets() {
   for (int i = 0; i < bullets.length; i++) {
     Bullet bullet = bullets[i];
-    bullet.x += bullet.xVel;
-    bullet.y += bullet.yVel;
+    bullet.x += bullet.xv;
+    bullet.y += bullet.yv;
     if (bulletDistanceTravelled(bullet) > bullet.range) {
-      dispatch(GameEventType.Bullet_Hole, bullet.x, bullet.y);
+      dispatch(GameEventType.Bullet_Hole, bullet.x, bullet.y, 0, 0);
       bullets.removeAt(i);
       i--;
       continue;
@@ -67,25 +64,20 @@ void checkBulletCollision(List<Character> list) {
         bullets.removeAt(i);
         i--;
         changeCharacterHealth(character, -bullet.damage);
-        character.xVel += bullet.xVel * 0.25;
-        character.yVel += bullet.yVel * 0.25;
+        character.xv += bullet.xv * 0.25;
+        character.yv += bullet.yv * 0.25;
 
         if (character.alive) {
-          gameEvents.add(
-              GameEvent(character.x, character.y, GameEventType.Zombie_Hit));
+          dispatch(GameEventType.Zombie_Hit, character.x, character.y, bullet.xv, bullet.yv);
         } else {
-          gameEvents.add(
-              GameEvent(character.x, character.y, GameEventType.Zombie_Killed));
+          if(randomBool()){
+            dispatch(GameEventType.Zombie_Killed, character.x, character.y, bullet.xv, bullet.yv);
+          }else{
+            list.removeAt(j);
+            j--;
+            dispatch(GameEventType.Zombie_killed_Explosion, character.x, character.y, bullet.xv, bullet.yv);
+          }
         }
-
-        for (int i = 0; i < randomBetween(2, 5).toInt(); i++) {
-          blood.add(Blood(
-              character.x,
-              character.y,
-              bullet.xVel * randomBetween(0, 0.5) + giveOrTake(pi),
-              bullet.yVel * randomBetween(0, 0.5) + giveOrTake(pi)));
-        }
-
         break;
       }
     }
@@ -116,8 +108,7 @@ void updateNpc(Npc npc) {
     } else {
       setCharacterState(npc, CharacterState.Striking);
       changeCharacterHealth(target, -0.1);
-      dispatch(GameEventType.Zombie_Strike, npc.x, npc.y);
-      blood.add(Blood(target.x, target.y + 5, giveOrTake(5), giveOrTake(5)));
+      dispatch(GameEventType.Zombie_Strike, npc.x, npc.y, 0, 0);
     }
     return;
   }
@@ -137,10 +128,10 @@ void updateNpc(Npc npc) {
 }
 
 void updateCharacter(Character character) {
-  character.x += character.xVel;
-  character.y += character.yVel;
-  character.xVel *= velocityFriction;
-  character.yVel *= velocityFriction;
+  character.x += character.xv;
+  character.y += character.yv;
+  character.xv *= velocityFriction;
+  character.yv *= velocityFriction;
 
   switch (character.state) {
     case CharacterState.Aiming:
@@ -152,12 +143,6 @@ void updateCharacter(Character character) {
       character.shotCoolDown--;
       if (character.shotCoolDown <= 0) {
         setCharacterState(character, CharacterState.Aiming);
-      }
-      break;
-    case CharacterState.Dead:
-      if (frame % 2 == 0) {
-        double speed = randomBetween(0.5, 1.25);
-        spawnBlood(character, randomRadion(), speed);
       }
       break;
     case CharacterState.Walking:
@@ -253,8 +238,6 @@ void fixedUpdate() {
   updateBullets();
   updateBullets(); // called twice to fix collision detection
   updateNpcs();
-  updateBlood();
-  updateParticles();
   updateGameEvents();
   updateGrenades();
 
@@ -271,7 +254,7 @@ void updateGrenades() {
     applyMovement(grenade);
     applyFriction(grenade, settingsGrenadeFriction);
     double gravity = 0.06;
-    grenade.zVel -= gravity;
+    grenade.zv -= gravity;
     if(grenade.z < 0){
       grenade.z = 0;
     }
@@ -283,78 +266,6 @@ void updateGameEvents() {
     if (gameEvents[i].frameDuration-- > 0) continue;
     gameEvents.removeAt(i);
     i--;
-  }
-}
-
-void updateBlood() {
-  for (int i = 0; i < blood.length; i++) {
-    if (blood[i].lifeTime-- < 0) {
-      blood.removeAt(i);
-      i--;
-      continue;
-    }
-    blood[i].x += blood[i].xVel;
-    blood[i].y += blood[i].yVel;
-
-    blood[i].xVel *= 0.85;
-    blood[i].yVel *= 0.85;
-  }
-}
-
-void updateParticles() {
-  for (int i = 0; i < particles.length; i++) {
-    Particle particle = particles[i];
-    if (particle.lifeTime-- < 0) {
-      particles.removeAt(i);
-      i--;
-      continue;
-    }
-
-    double gravity = 0.04;
-    double bounceFriction = 0.99;
-    double bounceHeightFriction = 0.3;
-    double airFriction = 0.98;
-    double rotationFriction = 0.93;
-    double floorFriction = 0.9;
-
-    bool airBorn = particle.height > 0.01;
-    particle.height = particle.height + particle.heightVelocity;
-    if(particle.height <= 0.0001){
-      particle.height = 0;
-    }
-    bool bounce = airBorn && particle.height <= 0;
-
-    if (bounce) {
-      particle.heightVelocity = -particle.heightVelocity * bounceHeightFriction;
-      particle.xVel = particle.xVel * bounceFriction;
-      particle.yVel = particle.yVel * bounceFriction;
-      particle.rotationSpeed *= rotationFriction;
-    }else if(airBorn){
-      particle.heightVelocity -= gravity;
-      particle.xVel *= airFriction;
-      particle.yVel *= airFriction;
-    }else{ // on floor
-      particle.xVel *= floorFriction;
-      particle.yVel *= floorFriction;
-      particle.rotationSpeed *= rotationFriction;
-    }
-    particle.x += particle.xVel;
-    particle.y += particle.yVel;
-    particle.rotation += particle.rotationSpeed;
-
-    if (particle.type == ParticleType.Head &&
-        particle.lifeTime & 2 == 0) {
-      blood.add(Blood(particle.x, particle.y, 0.0, 0.0));
-    }
-
-    if (particle.type == ParticleType.Arm &&
-        particle.lifeTime & 2 == 0) {
-      blood.add(Blood(particle.x, particle.y, 0.0, 0.0));
-    }
-    if (particle.type == ParticleType.Organ &&
-        particle.lifeTime & 2 == 0) {
-      blood.add(Blood(particle.x, particle.y, 0.0, 0.0));
-    }
   }
 }
 

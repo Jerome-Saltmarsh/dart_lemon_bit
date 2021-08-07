@@ -1,7 +1,6 @@
 import 'package:uuid/uuid.dart';
 
 import 'classes.dart';
-import 'classes/Particle.dart';
 import 'enums.dart';
 
 List<List<Tile>> tiles = [];
@@ -9,8 +8,6 @@ int frame = 0;
 List<Npc> npcs = [];
 List<Player> players = [];
 List<Bullet> bullets = [];
-List<Blood> blood = [];
-List<Particle> particles = [];
 List<Grenade> grenades = [];
 List<GameEvent> gameEvents = [];
 DateTime frameTime = DateTime.now();

@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_game_engine/bleed/classes/Particle.dart';
 import 'package:flutter_game_engine/bleed/enums.dart';
 import 'package:flutter_game_engine/bleed/maths.dart';
 import 'package:flutter_game_engine/bleed/rects.dart';
@@ -649,12 +650,6 @@ void drawBulletRange() {
       radius: bulletRange, x: player[x], y: player[y], color: white);
 }
 
-void drawBlood() {
-  for (int i = 0; i < blood.length; i += 2) {
-    drawCircle(blood[i], blood[i + 1], 2, Colors.red);
-  }
-}
-
 void drawBulletHoles(){
   for(int i = 0; i < bulletHoles.length; i += 2){
     drawCircle(bulletHoles[i], bulletHoles[i + 1], 2, Colors.black);
@@ -662,19 +657,17 @@ void drawBulletHoles(){
 }
 
 void drawParticles() {
-  for (int i = 0; i < particles.length; i += 5) {
-    double x = particles[i];
-    double y = particles[i + 1];
-    ParticleType type = ParticleType.values[particles[i + 2].toInt()];
-    double rotation = particles[i + 3];
-    double height = particles[i + 4];
-    double scale = 1 + (height * 0.4);
-    double heightShift = -height * 20;
+  for (Particle particle in particles) {
+    double scale = 1 + (particle.z * 0.4);
+    double heightShift = -particle.z * 20;
+    double x = particle.x;
+    double y = particle.y;
+    double rotation = particle.rotation;
 
-    switch(type){
+    switch(particle.type){
       case ParticleType.Shell:
         double size = 1.33;
-        drawCircle(x, y, 2 / scale, Colors.black38);
+        // drawCircle(x, y, 2 / scale, Colors.black38);
         drawCircle(x, y + heightShift, size * scale, Colors.white);
         break;
       case ParticleType.Blood:

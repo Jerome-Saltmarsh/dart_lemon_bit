@@ -4,18 +4,12 @@ import 'classes.dart';
 import 'constants.dart';
 import 'events.dart';
 import 'extensions/settings-extensions.dart';
-import 'functions/spawnShell.dart';
-import 'instances/settings.dart';
 import 'maths.dart';
 import 'settings.dart';
 import 'state.dart';
 import 'utils.dart';
 
-void characterSpawnShell(Character character){
-  spawnShell(character.x + adj(character.aimAngle, 9), character.y + opp(character.aimAngle, 9), character.aimAngle + (pi + giveOrTake(piHalf)));
-}
-
-void spawnBullet(Character character) {
+Bullet spawnBullet(Character character) {
   Bullet bullet = Bullet(
       character.x,
       character.y,
@@ -28,11 +22,7 @@ void spawnBullet(Character character) {
       getWeaponDamage(character.weapon)
   );
   bullets.add(bullet);
-}
-
-void spawnBlood(Character character, double rotation, speed) {
-  blood.add(Blood(
-      character.x, character.y, velX(rotation, speed), velY(rotation, speed)));
+  return bullet;
 }
 
 Npc spawnNpc(double x, double y) {

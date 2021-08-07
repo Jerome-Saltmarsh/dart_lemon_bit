@@ -5,6 +5,7 @@ import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'enums/Weapons.dart';
 import 'input.dart';
+import 'modifiers/updateParticle.dart';
 import 'send.dart';
 import 'state.dart';
 import 'utils.dart';
@@ -19,7 +20,7 @@ void update() {
 
   if (connected) {
 
-    updateParticles2();
+    updateParticles();
 
     if (playerAssigned) {
       sendRequestUpdatePlayer();
@@ -50,18 +51,3 @@ void update() {
   }
 }
 
-void updateParticles2() {
-  for(int i = 0; i < particles2.length; i++){
-    if (particles2[i].duration-- <= 0){
-      particles2.removeAt(i);
-      i--;
-      continue;
-    }
-    Particle particle = particles2[i];
-    particle.x += particle.xv;
-    particle.y += particle.yv;
-    particle.z += particle.zv;
-    particle.zv += particle.weight;
-    particle.scale *= particle.scaleV;
-  }
-}

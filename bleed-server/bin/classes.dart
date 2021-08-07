@@ -1,6 +1,6 @@
 import 'enums.dart';
+import 'enums/GameEventType.dart';
 import 'enums/Weapons.dart';
-import 'maths.dart';
 import 'settings.dart';
 
 class GameObject {
@@ -9,19 +9,14 @@ class GameObject {
   double x;
   double y;
   double z = 0;
+  double xv = 0;
+  double yv = 0;
+  double zv = 0;
 
-  GameObject(this.x, this.y);
+  GameObject(this.x, this.y, {this.z = 0, this.xv = 0, this.yv = 0, this.zv = 0});
 }
 
-class PhysicsGameObject extends GameObject {
-  double xVel = 0;
-  double yVel = 0;
-  double zVel = 0;
-
-  PhysicsGameObject(double x, double y, this.xVel, this.yVel) : super(x, y);
-}
-
-class Character extends PhysicsGameObject {
+class Character extends GameObject {
   CharacterState state = CharacterState.Idle;
   Direction direction = Direction.Down;
   Weapon weapon;
@@ -43,15 +38,15 @@ class Character extends PhysicsGameObject {
 
   bool get walking => state == CharacterState.Walking;
 
-  Character(
-      {required double x,
+  Character({
+      required double x,
       required double y,
       required this.weapon,
       required this.health,
       required this.maxHealth,
       required this.speed,
       required this.name})
-      : super(x, y, 0, 0);
+      : super(x, y);
 
   void idle() {
     state = CharacterState.Idle;
@@ -114,7 +109,7 @@ class Player extends Character {
             name: name);
 }
 
-class Bullet extends PhysicsGameObject {
+class Bullet extends GameObject {
   late double xStart;
   late double yStart;
   int ownerId;
@@ -122,28 +117,22 @@ class Bullet extends PhysicsGameObject {
   final double damage;
 
   Bullet(double x, double y, double xVel, double yVel, this.ownerId, this.range, this.damage)
-      : super(x, y, xVel, yVel) {
+      : super(x, y, xv: xVel, yv: yVel) {
     xStart = x;
     yStart = y;
   }
-}
-
-class Blood extends PhysicsGameObject {
-  int lifeTime = randomBetween(45, 90).toInt();
-
-  Blood(double x, double y, double xVel, double yVel) : super(x, y, xVel, yVel);
 }
 
 class GameEvent extends GameObject {
   final GameEventType type;
   int frameDuration = 8;
 
-  GameEvent(double x, double y, this.type) : super(x, y);
+  GameEvent(this.type, double x, double y, double xv, double yv) : super(x, y, xv: xv, yv: yv);
 }
 
-class Grenade extends PhysicsGameObject {
-  Grenade(double x, double y, double xVel, double yVel, double zVel) : super(x, y, xVel, yVel) {
-    this.zVel = zVel;
+class Grenade extends GameObject {
+  Grenade(double x, double y, double xv, double yv, double zVel) : super(x, y, xv:xv, yv: yv) {
+    this.zv = zVel;
   }
 }
 

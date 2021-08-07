@@ -1,18 +1,14 @@
-import 'dart:math';
-
 import 'classes.dart';
 import 'common.dart';
 import 'constants.dart';
 import 'enums.dart';
+import 'enums/GameEventType.dart';
 import 'enums/Weapons.dart';
 import 'events.dart';
 import 'functions/characterFireWeapon.dart';
-import 'functions/spawnShell.dart';
 import 'instances/settings.dart';
-import 'language.dart';
 import 'maths.dart';
 import 'settings.dart';
-import 'spawn.dart';
 import 'state.dart';
 
 double bulletDistanceTravelled(Bullet bullet) {
@@ -116,9 +112,9 @@ bool isAiming(Character character) {
   return character.state == characterStateAiming;
 }
 
-void setVelocity(PhysicsGameObject target, double rotation, double speed) {
-  target.xVel = velX(rotation, speed);
-  target.yVel = velY(rotation, speed);
+void setVelocity(GameObject gameObject, double rotation, double speed) {
+  gameObject.xv = velX(rotation, speed);
+  gameObject.yv = velY(rotation, speed);
 }
 
 double distanceFromDestination(Npc npc) {
@@ -249,19 +245,17 @@ double getWeaponBulletSpeed(Weapon weapon){
   }
 }
 
-
-
-void dispatch(GameEventType type, double x, double y){
-  gameEvents.add(GameEvent(x, y, type));
+void dispatch(GameEventType type, double x, double y, double xv, double xy){
+  gameEvents.add(GameEvent(type, x, y, xv, xy));
 }
 
-void applyMovement(PhysicsGameObject physicsGameObject){
-  physicsGameObject.x += physicsGameObject.xVel;
-  physicsGameObject.y += physicsGameObject.yVel;
-  physicsGameObject.z += physicsGameObject.zVel;
+void applyMovement(GameObject gameObject){
+  gameObject.x += gameObject.xv;
+  gameObject.y += gameObject.yv;
+  gameObject.z += gameObject.zv;
 }
 
-void applyFriction(PhysicsGameObject physicsGameObject, double value){
-  physicsGameObject.xVel *= value;
-  physicsGameObject.yVel *= value;
+void applyFriction(GameObject gameObject, double value){
+  gameObject.xv *= value;
+  gameObject.yv *= value;
 }

@@ -6,7 +6,7 @@ import 'package:flutter_game_engine/bleed/utils.dart';
 
 import 'audio.dart';
 import 'classes/SpriteAnimation.dart';
-import 'functions/spawnSmoke.dart';
+import 'spawners/spawnSmoke.dart';
 import 'images.dart';
 import 'state.dart';
 

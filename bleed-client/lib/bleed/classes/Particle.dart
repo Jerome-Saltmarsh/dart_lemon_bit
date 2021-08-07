@@ -15,18 +15,19 @@ class Particle {
   double scaleV;
   ParticleType type;
 
-  Particle(this.type, {
-      this.x,
-      this.y,
-      this.z,
-      this.xv,
-      this.yv,
-      this.zv,
-      this.weight,
-      this.duration,
-      this.rotation = 0,
-      this.rotationV = 0,
-      this.scale = 1,
-      this.scaleV = 1,
+  Particle(
+    this.type,
+    this.x,
+    this.y,
+    this.z,
+    this.xv,
+    this.yv,
+    this.zv, {
+    this.weight,
+    this.duration,
+    this.rotation = 0,
+    this.rotationV = 0,
+    this.scale = 1,
+    this.scaleV = 1,
   });
 }

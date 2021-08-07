@@ -1,9 +1,7 @@
-
-
 import '../classes.dart';
 import '../maths.dart';
 
-void applyForce(PhysicsGameObject gameObject, double rotation, double amount){
-  gameObject.xVel += adj(rotation, amount);
-  gameObject.yVel += opp(rotation, amount);
+void applyForce(GameObject gameObject, double rotation, double amount){
+  gameObject.xv += adj(rotation, amount);
+  gameObject.yv += opp(rotation, amount);
 }

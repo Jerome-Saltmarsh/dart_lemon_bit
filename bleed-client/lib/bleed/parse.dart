@@ -6,6 +6,7 @@ import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'constants.dart';
 import 'enums.dart';
+import 'enums/GameEventType.dart';
 import 'enums/Weapons.dart';
 
 // state
@@ -33,8 +34,10 @@ void parseState() {
     } else if (term == "fms:") {
       _parseFrameMS();
     } else if (term == 'player-not-found') {
+      print('player not found');
       _consumePlayerNotFound();
     } else if (term == 'invalid--uuid') {
+      print('invalid uuid');
       _consumeInvalidUUID();
     } else if (term == 'player:') {
       _parsePlayer();
@@ -46,10 +49,6 @@ void parseState() {
       _consumeFrame();
     } else if (term == "events:") {
       _consumeEvents();
-    } else if (term == "blood:") {
-      _consumeBlood();
-    } else if (term == "particles") {
-      _consumeParticles();
     } else if (term == "grenades") {
       _parseGrenades();
     } else {
@@ -67,20 +66,6 @@ void parseState() {
       }
       break;
     }
-  }
-}
-
-void _consumeBlood(){
-  blood.clear();
-  while (!_simiColonConsumed()) {
-    blood.add(_consumeDouble());
-  }
-}
-
-void _consumeParticles(){
-  particles.clear();
-  while (!_simiColonConsumed()) {
-    particles.add(_consumeDouble());
   }
 }
 
@@ -214,11 +199,13 @@ void _consumeEvents() {
     events++;
     int id = _consumeInt();
     GameEventType type = _consumeEventType();
-    int x = _consumeInt();
-    int y = _consumeInt();
+    double x = _consumeDouble();
+    double y = _consumeDouble();
+    double xv = _consumeDouble();
+    double yv = _consumeDouble();
     if (!gameEvents.containsKey(id)) {
       gameEvents[id] = true;
-      onGameEvent(type, x, y);
+      onGameEvent(type, x, y, xv, yv);
     }
   }
   if (events == 0) {

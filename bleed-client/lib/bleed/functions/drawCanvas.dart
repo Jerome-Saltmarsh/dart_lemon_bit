@@ -9,7 +9,6 @@ import '../draw.dart';
 import '../keys.dart';
 import '../state.dart';
 import 'drawAnimations.dart';
-import 'drawParticles.dart';
 
 void drawCanvas(Canvas canvass, Size _size) {
   if (!connected) return;
@@ -27,11 +26,10 @@ void drawCanvas(Canvas canvass, Size _size) {
   }
   _drawBullets();
   drawBulletHoles();
-  drawBlood();
   _drawGrenades();
   drawAnimations();
   drawParticles();
-  drawParticles2();
+  // drawParticles2();
   drawCharacters();
   drawMouse();
 }
