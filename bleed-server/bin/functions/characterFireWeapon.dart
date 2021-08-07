@@ -5,7 +5,6 @@ import '../enums.dart';
 import '../enums/GameEventType.dart';
 import '../enums/Weapons.dart';
 import '../instances/settings.dart';
-import '../language.dart';
 import '../maths.dart';
 import '../settings.dart';
 import '../spawn.dart';
@@ -17,12 +16,16 @@ void characterFireWeapon(Character character) {
   if (character.shotCoolDown > 0) return;
   faceAimDirection(character);
 
+  double d = 15;
+  double x = character.x + adj(character.aimAngle, d);
+  double y = character.y + opp(character.aimAngle, d);
+
   switch (character.weapon) {
     case Weapon.HandGun:
       Bullet bullet = spawnBullet(character);
       character.state = CharacterState.Firing;
       character.shotCoolDown = settingsHandgunCooldown;
-      dispatch(GameEventType.Handgun_Fired, character.x, character.y, bullet.xv, bullet.yv);
+      dispatch(GameEventType.Handgun_Fired, x, y, bullet.xv, bullet.yv);
       break;
     case Weapon.Shotgun:
       character.xv += velX(character.aimAngle + pi, 1);

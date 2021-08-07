@@ -28,6 +28,7 @@ class Character extends GameObject {
   double maxHealth;
   double speed;
   String name;
+  bool active = true;
 
   bool get alive => state != CharacterState.Dead;
 

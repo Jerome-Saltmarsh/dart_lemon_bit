@@ -84,3 +84,24 @@ double velX(double rotation, double speed) {
 double velY(double rotation, double speed) {
   return -sin(rotation + (pi * 0.5)) * speed;
 }
+
+
+double normalize(double x, double y){
+  return 1.0 / magnitude(x, y);
+}
+
+double normalizeX(double x, double y){
+  return normalize(x, y) * x;
+}
+
+double normalizeY(double x, double y){
+  return normalize(x, y) * y;
+}
+
+double clampMagnitudeX(double x, double y, double value){
+  return normalizeX(x, y) * value;
+}
+
+double clampMagnitudeY(double x, double y, double value){
+  return normalizeY(x, y) * value;
+}

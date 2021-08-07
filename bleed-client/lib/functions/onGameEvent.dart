@@ -2,6 +2,7 @@ import 'package:bleed_client/spawners/spawnBlood.dart';
 import 'package:bleed_client/spawners/spawnHead.dart';
 import 'package:bleed_client/spawners/spawnOrgan.dart';
 import 'package:bleed_client/spawners/spawnShell.dart';
+import 'package:bleed_client/spawners/spawnShotSmoke.dart';
 
 import '../audio.dart';
 import '../enums/GameEventType.dart';
@@ -16,6 +17,7 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv){
     case GameEventType.Handgun_Fired:
       playAudioHandgunShot();
       spawnShell(x, y);
+      spawnShotSmoke(x, y, xv, yv);
       break;
     case GameEventType.Shotgun_Fired:
       playAudioShotgunShot();

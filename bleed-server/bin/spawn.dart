@@ -10,9 +10,13 @@ import 'state.dart';
 import 'utils.dart';
 
 Bullet spawnBullet(Character character) {
+  double d = 5;
+  double x = character.x + adj(character.aimAngle, d);
+  double y = character.y + opp(character.aimAngle, d);
+
   Bullet bullet = Bullet(
-      character.x,
-      character.y,
+      x,
+      y,
       velX(character.aimAngle + giveOrTake(getWeaponAccuracy(character.weapon)),
           getWeaponBulletSpeed(character.weapon)),
       velY(character.aimAngle + giveOrTake(getWeaponAccuracy(character.weapon)),

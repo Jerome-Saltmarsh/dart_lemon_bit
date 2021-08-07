@@ -75,10 +75,11 @@ void checkBulletCollision(List<Character> characters) {
           if (randomBool()) {
             dispatch(GameEventType.Zombie_Killed, character.x, character.y,
                 bullet.xv, bullet.yv);
-            delayed(() => characters.remove(character), seconds: 3);
+            delayed(() =>  character.active = false, ms: randomInt(200, 800));
           } else {
-            characters.removeAt(j);
-            j--;
+            // characters.removeAt(j);
+            // j--;
+            character.active = false;
             dispatch(GameEventType.Zombie_killed_Explosion, character.x,
                 character.y, bullet.xv, bullet.yv);
           }
@@ -219,6 +220,13 @@ void updateCharacter(Character character) {
 }
 
 void updateCharacters() {
+  for (int i = 0; i < npcs.length; i++){
+    if(!npcs[i].active){
+      npcs.removeAt(i);
+      i--;
+    }
+  }
+
   players.forEach(updateCharacter);
   npcs.forEach(updateCharacter);
 

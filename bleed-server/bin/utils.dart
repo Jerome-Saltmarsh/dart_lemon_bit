@@ -45,7 +45,6 @@ void changeCharacterHealth(Character character, double amount) {
   character.health = clamp(character.health, 0, character.maxHealth);
   if (character.health <= 0) {
     setCharacterState(character, CharacterState.Dead);
-    onDeath.add(character);
   }
 }
 
