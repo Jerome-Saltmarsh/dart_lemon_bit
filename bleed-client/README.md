@@ -16,9 +16,9 @@
 [ ] Equip Weapon Animation
 [ ] Boundary
 [ ] Stamina
-[ ] Process Particles on client
 [ ] Weapon: Bazooka
-[ ] Make grenade 3d;
+[ ] Process Particles on client
+[x] Make grenade 3d;
 [x] Weapon: Machine Gun
 [x] Particle Smoke
 [x] Weapon: Sniper Rifle

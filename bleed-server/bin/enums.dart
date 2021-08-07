@@ -38,4 +38,5 @@ enum ParticleType {
   Head,
   Arm,
   Organ,
+  Smoke
 }

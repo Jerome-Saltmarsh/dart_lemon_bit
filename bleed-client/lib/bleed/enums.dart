@@ -33,10 +33,3 @@ enum GameEventType {
   Explosion,
 }
 
-enum ParticleType {
-  Blood,
-  Shell,
-  Head,
-  Arm,
-  Organ,
-}

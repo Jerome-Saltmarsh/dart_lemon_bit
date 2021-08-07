@@ -1,6 +1,5 @@
 
 import 'package:flutter_game_engine/bleed/functions/spawnBulletHole.dart';
-import 'package:flutter_game_engine/bleed/functions/spawnSmoke.dart';
 import 'package:flutter_game_engine/bleed/spawn.dart';
 
 import 'audio.dart';

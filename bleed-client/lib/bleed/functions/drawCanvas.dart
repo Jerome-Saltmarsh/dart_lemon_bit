@@ -1,15 +1,12 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_game_engine/bleed/classes/Particle.dart';
 import 'package:flutter_game_engine/bleed/functions/drawBullet.dart';
 import 'package:flutter_game_engine/bleed/functions/drawGrenade.dart';
-import 'package:flutter_game_engine/bleed/images.dart';
 
 import '../connection.dart';
 import '../draw.dart';
 import '../keys.dart';
-import '../rects.dart';
 import '../state.dart';
 import 'drawAnimations.dart';
 import 'drawParticles.dart';

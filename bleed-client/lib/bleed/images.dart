@@ -5,7 +5,7 @@ import 'package:flutter_game_engine/game_engine/game_resources.dart';
 
 import 'classes/SpriteSheet.dart';
 
-Image imageHuman;
+Image imageCharacter;
 Image imageTiles;
 Image imageExplosion;
 Image imageParticles;
@@ -13,7 +13,7 @@ SpriteSheet spritesExplosion;
 
 Future loadImages() async {
   print("loading images");
-  imageHuman = await loadImage("images/iso-character.png");
+  imageCharacter = await loadImage("images/character.png");
   imageTiles = await loadImage("images/Tiles.png");
   imageExplosion = await loadImage('images/explosion.png');
   imageParticles = await loadImage('images/particles.png');

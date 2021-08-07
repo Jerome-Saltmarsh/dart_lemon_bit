@@ -12,6 +12,7 @@ import 'package:flutter_game_engine/game_engine/engine_state.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'common.dart';
+import 'enums/ParticleType.dart';
 import 'keys.dart';
 import 'images.dart';
 import 'state.dart';
@@ -23,7 +24,7 @@ void drawCharacterCircle(dynamic value, Color color) {
 }
 
 void drawCharacters() {
-  if (imageHuman == null) return;
+  if (imageCharacter == null) return;
   drawPlayers();
   drawNpcs();
 }
@@ -34,7 +35,7 @@ void drawNpcs() {
 
 void drawCharacterList(List<dynamic> characters) {
   globalCanvas.drawAtlas(
-      imageHuman,
+      imageCharacter,
       characters.map(getCharacterTransform).toList(),
       characters.map(getCharacterSpriteRect).toList(),
       null,
@@ -99,7 +100,7 @@ void drawList(
     rects.removeLast();
   }
 
-  drawAtlases(imageHuman, transforms, rects);
+  drawAtlases(imageCharacter, transforms, rects);
 }
 
 
@@ -124,6 +125,12 @@ Rect getHumanWalkingRect(dynamic character) {
       return _getFrame(rectHumanWalkingUpLeftFrames);
   }
   throw Exception("Could not get character walking sprite rect");
+}
+
+List<int> characterRunningUp = [12, 51, 55];
+
+List<int> getCharacterRunningFrames(Direction direction){
+
 }
 
 Rect getHumanRunningRect(dynamic character) {

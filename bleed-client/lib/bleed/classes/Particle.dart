@@ -1,3 +1,5 @@
+import 'package:flutter_game_engine/bleed/enums/ParticleType.dart';
+
 class Particle {
   double x;
   double y;
@@ -11,8 +13,9 @@ class Particle {
   double rotationV;
   double scale;
   double scaleV;
+  ParticleType type;
 
-  Particle({
+  Particle(this.type, {
       this.x,
       this.y,
       this.z,
@@ -24,6 +27,6 @@ class Particle {
       this.rotation = 0,
       this.rotationV = 0,
       this.scale = 1,
-      this.scaleV = 1
+      this.scaleV = 1,
   });
 }

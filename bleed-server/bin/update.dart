@@ -275,7 +275,6 @@ void updateGrenades() {
     if(grenade.z < 0){
       grenade.z = 0;
     }
-    print('grenade: z: ${grenade.z} zv: ${grenade.zVel}');
   }
 }
 
