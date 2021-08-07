@@ -17,7 +17,7 @@
 [ ] Boundary
 [ ] Stamina
 [ ] Weapon: Bazooka
-[ ] Process Particles on client
+[x] Process Particles on client
 [x] Make grenade 3d;
 [x] Weapon: Machine Gun
 [x] Particle Smoke

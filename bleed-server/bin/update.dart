@@ -52,14 +52,14 @@ void updateBullets() {
   checkBulletCollision(players);
 }
 
-void checkBulletCollision(List<Character> list) {
+void checkBulletCollision(List<Character> characters) {
   for (int i = 0; i < bullets.length; i++) {
     Bullet bullet = bullets[i];
-    for (int j = 0; j < list.length; j++) {
-      Character character = list[j];
+    for (int j = 0; j < characters.length; j++) {
+      Character character = characters[j];
       if (character.dead) continue;
       if (character.id == bullet.ownerId) continue;
-      double dis = distanceBetween(list[j], bullet);
+      double dis = distanceBetween(characters[j], bullet);
       if (dis < characterBulletRadius) {
         bullets.removeAt(i);
         i--;
@@ -72,8 +72,9 @@ void checkBulletCollision(List<Character> list) {
         } else {
           if(randomBool()){
             dispatch(GameEventType.Zombie_Killed, character.x, character.y, bullet.xv, bullet.yv);
+            delayed(() => characters.remove(character), seconds: 3);
           }else{
-            list.removeAt(j);
+            characters.removeAt(j);
             j--;
             dispatch(GameEventType.Zombie_killed_Explosion, character.x, character.y, bullet.xv, bullet.yv);
           }

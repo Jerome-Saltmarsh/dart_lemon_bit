@@ -7,6 +7,7 @@ import 'package:flutter_game_engine/bleed/spawners/spawnBlood.dart';
 import 'package:flutter_game_engine/bleed/spawners/spawnHead.dart';
 import 'package:flutter_game_engine/bleed/spawners/spawnOrgan.dart';
 import 'package:flutter_game_engine/bleed/spawners/spawnShell.dart';
+import 'package:flutter_game_engine/bleed/spawners/spawnSmoke.dart';
 
 import 'audio.dart';
 import 'enums/GameEventType.dart';
