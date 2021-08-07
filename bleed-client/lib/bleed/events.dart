@@ -36,7 +36,7 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv){
       if(randomBool()){
         playAudioZombieHit();
       }
-      double s = 0.15;
+      double s = 0.1;
       double r = 1;
       for(int i = 0; i < randomInt(2, 5); i++){
         spawnBlood(x, y, 0.3, xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r), zv: randomBetween(0, 0.07));
