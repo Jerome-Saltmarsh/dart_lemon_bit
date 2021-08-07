@@ -1,6 +1,5 @@
 import 'package:flutter_game_engine/bleed/classes/Particle.dart';
 import 'package:flutter_game_engine/bleed/enums/ParticleType.dart';
-import 'package:flutter_game_engine/bleed/maths.dart';
 import 'package:flutter_game_engine/bleed/utils.dart';
 
 import '../state.dart';

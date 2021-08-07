@@ -1,8 +1,8 @@
 enum ParticleType {
-  Blood,
-  Shell,
+  Smoke,
   Head,
+  Shell,
   Arm,
   Organ,
-  Smoke
+  Blood,
 }

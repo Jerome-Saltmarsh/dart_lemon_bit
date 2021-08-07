@@ -1,22 +1,17 @@
 import 'dart:math';
 import 'dart:ui';
-
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
-import 'package:flutter_game_engine/bleed/classes/Particle.dart';
 import 'package:flutter_game_engine/bleed/enums.dart';
-import 'package:flutter_game_engine/bleed/functions/drawParticle.dart';
-import 'package:flutter_game_engine/bleed/maths.dart';
 import 'package:flutter_game_engine/bleed/rects.dart';
 import 'package:flutter_game_engine/game_engine/engine_draw.dart';
 import 'package:flutter_game_engine/game_engine/engine_state.dart';
 import 'package:flutter_game_engine/game_engine/game_widget.dart';
 
 import 'common.dart';
-import 'enums/ParticleType.dart';
-import 'keys.dart';
 import 'images.dart';
+import 'keys.dart';
 import 'state.dart';
 import 'utils.dart';
 
