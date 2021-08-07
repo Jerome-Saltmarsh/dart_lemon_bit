@@ -6,6 +6,7 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_game_engine/bleed/classes/Particle.dart';
 import 'package:flutter_game_engine/bleed/enums.dart';
+import 'package:flutter_game_engine/bleed/functions/drawParticle.dart';
 import 'package:flutter_game_engine/bleed/maths.dart';
 import 'package:flutter_game_engine/bleed/rects.dart';
 import 'package:flutter_game_engine/game_engine/engine_draw.dart';
@@ -653,48 +654,6 @@ void drawBulletRange() {
 void drawBulletHoles(){
   for(int i = 0; i < bulletHoles.length; i += 2){
     drawCircle(bulletHoles[i], bulletHoles[i + 1], 2, Colors.black);
-  }
-}
-
-void drawParticles() {
-  for (Particle particle in particles) {
-    double scale = 1 + (particle.z * 0.4);
-    double heightShift = -particle.z * 20;
-    double x = particle.x;
-    double y = particle.y;
-    double rotation = particle.rotation;
-
-    switch(particle.type){
-      case ParticleType.Shell:
-        double size = 1.33;
-        // drawCircle(x, y, 2 / scale, Colors.black38);
-        drawCircle(x, y + heightShift, size * scale, Colors.white);
-        break;
-      case ParticleType.Blood:
-        drawCircle(x, y, 2, Colors.red);
-        break;
-      case ParticleType.Head:
-        double size = 5;
-        drawCircle(x, y, size / scale, Colors.black45);
-        drawCircle(x, y + heightShift, size * scale, white);
-        break;
-      case ParticleType.Arm:
-        double length = randomBetween(4, 6);
-        double handX = x + velX(rotation, length);
-        double handY = y + velY(rotation, length);
-        globalPaint.color = Colors.black45;
-        drawLine3(x, y, handX, handY);
-        drawCircle(handX, handY, 2 / scale, Colors.black45);
-        globalPaint.color = white;
-        drawLine3(x, y + heightShift, handX, handY + heightShift);
-        drawCircle(handX, handY  + heightShift, 2 * scale, white);
-        break;
-      case ParticleType.Organ:
-        globalPaint.color = Colors.black45;
-        drawCircle(x, y, scale / 2, white);
-        drawCircle(x, y  + heightShift, 2 * scale, white);
-        break;
-    }
   }
 }
 

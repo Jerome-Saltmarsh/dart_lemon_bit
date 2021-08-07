@@ -10,12 +10,12 @@ void spawnSmoke(double x, double y, double z, {double xv = 0, double yv = 0 }){
     z,
     xv,
     yv,
-    -0.25,
-    weight: 0,
+    0.015,
+    weight: 0.0,
     duration: 120,
     rotation: 0,
     rotationV: 0,
-    scale: 0.1,
-    scaleV: 1.02
+    scale: 0.2,
+    scaleV: 0.005
   ));
 }

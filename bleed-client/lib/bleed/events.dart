@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter_game_engine/bleed/functions/spawnBulletHole.dart';
 import 'package:flutter_game_engine/bleed/spawn.dart';
 import 'package:flutter_game_engine/bleed/spawners/spawnBlood.dart';
+import 'package:flutter_game_engine/bleed/spawners/spawnHead.dart';
 import 'package:flutter_game_engine/bleed/spawners/spawnShell.dart';
 
 import 'audio.dart';
@@ -33,15 +34,28 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv){
       if(randomBool()){
         playAudioZombieHit();
       }
-      spawnBlood(x, y, 0.3, xv: xv, yv: yv);
+      double s = 0.15;
+      double r = 1;
+      for(int i = 0; i < randomInt(2, 5); i++){
+        spawnBlood(x, y, 0.3, xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
+      }
       break;
     case GameEventType.Zombie_Killed:
       playAudioZombieDeath();
-      // spawn blood
+      double s = 0.15;
+      double r = 1;
+      for(int i = 0; i < randomInt(2, 5); i++){
+        spawnBlood(x, y, 0.3, xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
+      }
       break;
     case GameEventType.Zombie_killed_Explosion:
       playAudioZombieDeath();
-      // spawn blood
+      double s = 0.15;
+      double r = 1;
+      for(int i = 0; i < randomInt(2, 5); i++){
+        spawnBlood(x, y, 0.3, xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
+      }
+      spawnHead(x, y, 0.3, xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
       break;
     case GameEventType.Zombie_Target_Acquired:
       playAudioZombieTargetAcquired();

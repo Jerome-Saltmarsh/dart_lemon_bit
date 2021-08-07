@@ -16,8 +16,9 @@ void spawnExplosion(double x, double y){
   animations.add(SpriteAnimation(spritesExplosion, x.toDouble(), y.toDouble(), scale: 0.5)
   );
   spawnBulletHole(x, y);
+  double r = 0.2;
   repeat((){
-    spawnSmoke(x, y, 0, xv: giveOrTake(0.1), yv: giveOrTake(0.1));
+    spawnSmoke(x, y, 0.01, xv: giveOrTake(r), yv: giveOrTake(r));
   }, 15, 120);
 }
 

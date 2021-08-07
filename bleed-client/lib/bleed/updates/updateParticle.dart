@@ -1,5 +1,3 @@
-
-
 import 'package:flutter_game_engine/bleed/classes/Particle.dart';
 import 'package:flutter_game_engine/bleed/enums/ParticleType.dart';
 import 'package:flutter_game_engine/bleed/spawners/spawnBlood.dart';
@@ -21,43 +19,45 @@ void updateParticles() {
     double airFriction = 0.98;
     double rotationFriction = 0.93;
     double floorFriction = 0.9;
-
     bool airBorn = particle.z > 0.01;
-    particle.z = particle.z + particle.zv;
-    if(particle.z <= 0.0001){
-      particle.z = 0;
-    }
-    bool bounce = airBorn && particle.z <= 0;
+    bool falling = particle.zv < 0;
+
+    particle.z += particle.zv;
+    particle.x += particle.xv;
+    particle.y += particle.yv;
+    particle.rotation += particle.rotationV;
+    particle.scale += particle.scaleV;
+
+    bool bounce = falling && airBorn && particle.z <= 0;
 
     if (bounce) {
-      particle..zv = -particle.zv * bounceHeightFriction;
+      particle.zv = -particle.zv * bounceHeightFriction;
       particle.xv = particle.xv * bounceFriction;
       particle.yv = particle.yv * bounceFriction;
       particle.rotationV *= rotationFriction;
-    }else if(airBorn){
-      particle..zv -= gravity;
+    } else if (airBorn) {
+      particle.zv -= gravity * particle.weight;
       particle.xv *= airFriction;
       particle.yv *= airFriction;
-    }else{ // on floor
+    } else {
+      // on floor
       particle.xv *= floorFriction;
       particle.yv *= floorFriction;
       particle.rotationV *= rotationFriction;
     }
-    particle.x += particle.xv;
-    particle.y += particle.yv;
-    particle.rotation += particle.rotationV;
-
-    if (particle.type == ParticleType.Head &&
-        particle.duration & 2 == 0) {
-        spawnBlood(particle.x, particle.y, particle.z);
+    if (particle.scale < 0) {
+      particle.scale = 0;
     }
-
-    if (particle.type == ParticleType.Arm &&
-        particle.duration & 2 == 0) {
+    if (particle.z <= 0) {
+      particle.z = 0;
+    }
+    if (particle.type == ParticleType.Head && particle.duration & 2 == 0) {
       spawnBlood(particle.x, particle.y, particle.z);
     }
-    if (particle.type == ParticleType.Organ &&
-        particle.duration & 2 == 0) {
+    if (particle.type == ParticleType.Arm && particle.duration & 2 == 0) {
+      spawnBlood(particle.x, particle.y, particle.z);
+    }
+    if (particle.type == ParticleType.Organ && particle.duration & 2 == 0) {
       spawnBlood(particle.x, particle.y, particle.z);
     }
   }

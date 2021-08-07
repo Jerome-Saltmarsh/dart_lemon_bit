@@ -9,6 +9,7 @@ import '../draw.dart';
 import '../keys.dart';
 import '../state.dart';
 import 'drawAnimations.dart';
+import 'drawParticle.dart';
 
 void drawCanvas(Canvas canvass, Size _size) {
   if (!connected) return;
@@ -28,8 +29,7 @@ void drawCanvas(Canvas canvass, Size _size) {
   drawBulletHoles();
   _drawGrenades();
   drawAnimations();
-  drawParticles();
-  // drawParticles2();
+  _drawParticles();
   drawCharacters();
   drawMouse();
 }
@@ -38,6 +38,10 @@ void _drawGrenades() {
   for (int i = 0; i < grenades.length; i += 3) {
     drawGrenade(grenades[i], grenades[i + 1], grenades[i + 2]);
   }
+}
+
+void _drawParticles() {
+  particles.forEach(drawParticle);
 }
 
 void _drawBullets() {

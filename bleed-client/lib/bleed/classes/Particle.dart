@@ -28,6 +28,6 @@ class Particle {
     this.rotation = 0,
     this.rotationV = 0,
     this.scale = 1,
-    this.scaleV = 1,
+    this.scaleV = 0,
   });
 }
