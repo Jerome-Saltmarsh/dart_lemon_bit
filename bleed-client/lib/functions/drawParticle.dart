@@ -49,5 +49,9 @@ void drawParticle(Particle particle){
       drawCircle(x, y, scaleShift / 2, white);
       drawCircle(x, y  + heightShift, 2 * scaleShift, white);
       break;
+    case ParticleType.Shrapnel:
+      double size = 2.5;
+      drawCircle(x, y + heightShift, size * scaleShift, Colors.black);
+      break;
   }
 }
