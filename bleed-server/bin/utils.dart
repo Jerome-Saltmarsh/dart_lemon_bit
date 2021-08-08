@@ -31,6 +31,9 @@ void setCharacterState(Character character, CharacterState value) {
     case CharacterState.Striking:
       character.shotCoolDown = 10;
       break;
+    case CharacterState.Reloading:
+      character.shotCoolDown = 20;
+      break;
   }
   character.state = value;
 }

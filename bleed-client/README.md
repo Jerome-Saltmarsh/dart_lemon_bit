@@ -20,9 +20,10 @@
 [ ] Reload
 [ ] Stamina
 [ ] Particle Gunshot smoke
-[ ] Ammo
-[ ] Reload Animation  
+[ ] Cache Particles
 [ ] FIX BUG: Sniper Aim 
+[ ] Reload Animation  
+[ ] Ammo
 [x] Bug: Npc bodies don't always dissappear
 [x] Process Particles on client
 [x] Make grenade 3d;

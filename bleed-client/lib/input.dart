@@ -15,6 +15,9 @@ import 'maths.dart';
 import 'state.dart';
 import 'utils.dart';
 
+
+LogicalKeyboardKey _keyReload = LogicalKeyboardKey.keyR;
+
 bool get keyPressedSpawnZombie => keyPressed(LogicalKeyboardKey.keyP);
 bool get keyEquipHandGun => keyPressed(LogicalKeyboardKey.digit1);
 bool get keyEquipShotgun => keyPressed(LogicalKeyboardKey.digit2);
@@ -22,6 +25,7 @@ bool get keyEquipSniperRifle => keyPressed(LogicalKeyboardKey.digit3);
 bool get keyEquipMachineGun => keyPressed(LogicalKeyboardKey.digit4);
 bool get keyAimPressed => keyPressedSpace;
 bool get keySprintPressed => keyPressed(LogicalKeyboardKey.shiftLeft);
+bool get keyPressedReload => keyPressed(_keyReload);
 
 bool _throwingGrenade = false;
 
@@ -60,6 +64,12 @@ void readPlayerInput() {
   if (mouseAvailable) {
     requestAim = getMouseRotation();
   }
+
+  if (keyPressedReload) {
+    requestCharacterState = characterStateReloading;
+    return;
+  }
+
   if (mouseClicked || keyPressedF || keyPressedSpace) {
     requestCharacterState = characterStateFiring;
   } else {

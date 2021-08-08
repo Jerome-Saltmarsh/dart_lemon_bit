@@ -151,6 +151,14 @@ void updateCharacter(Character character) {
         setCharacterState(character, CharacterState.Aiming);
       }
       break;
+    case CharacterState.Reloading:
+      character.shotCoolDown--;
+      if (character.shotCoolDown <= 0) {
+        setCharacterState(character, CharacterState.Aiming);
+        (character as Player).handgunAmmunition.rounds = character.handgunAmmunition.clipSize;
+        dispatch(GameEventType.Reloaded, character.x, character.y, 0, 0);
+      }
+      break;
     case CharacterState.Walking:
       switch (character.direction) {
         case Direction.Up:

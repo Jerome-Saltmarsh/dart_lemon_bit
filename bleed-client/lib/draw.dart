@@ -50,8 +50,10 @@ void drawTileList() {
   drawAtlases(imageTiles, tileTransforms, tileRects);
 }
 
-void drawAtlases(ui.Image image, List<RSTransform> transforms, List<Rect> rects){
-  globalCanvas.drawAtlas(image, transforms, rects, null, null, null, globalPaint);
+void drawAtlases(
+    ui.Image image, List<RSTransform> transforms, List<Rect> rects) {
+  globalCanvas.drawAtlas(
+      image, transforms, rects, null, null, null, globalPaint);
 }
 
 void processTileTransforms() {
@@ -100,8 +102,6 @@ void drawList(
   drawAtlases(imageCharacter, transforms, rects);
 }
 
-
-
 Rect getHumanWalkingRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
@@ -124,11 +124,29 @@ Rect getHumanWalkingRect(dynamic character) {
   throw Exception("Could not get character walking sprite rect");
 }
 
-List<int> characterRunningUp = [12, 51, 55];
-
-List<int> getCharacterRunningFrames(Direction direction){
-
+Rect getHumanReloadingRect(dynamic character) {
+  switch (character[direction]) {
+    case directionUp:
+      return _getFrame(rectsHumanReloadingUp);
+    case directionUpRight:
+      return _getFrame(rectsHumanReloadingUpRight);
+    case directionRight:
+      return _getFrame(rectsHumanReloadingRight);
+    case directionDownRight:
+      return _getFrame(rectsHumanReloadingDownRight);
+    case directionDown:
+      return _getFrame(rectsHumanReloadingDown);
+    case directionDownLeft:
+      return _getFrame(rectsHumanReloadingDownLeft);
+    case directionLeft:
+      return _getFrame(rectsHumanReloadingLeft);
+    case directionUpLeft:
+      return _getFrame(rectsHumanReloadingUpLeft);
+  }
+  throw Exception("Could not get character reloading sprite rect");
 }
+
+List<int> characterRunningUp = [12, 51, 55];
 
 Rect getHumanRunningRect(dynamic character) {
   switch (character[direction]) {
@@ -151,7 +169,6 @@ Rect getHumanRunningRect(dynamic character) {
   }
   throw Exception("Could not get character walking sprite rect");
 }
-
 
 Rect getHumanIdleRect(dynamic character) {
   switch (character[direction]) {
@@ -223,7 +240,8 @@ Rect tileRectConcrete = getTileSpriteRectByIndex(0);
 Rect tileRectGrass = getTileSpriteRectByIndex(1);
 
 Rect getTileSpriteRectByIndex(int index) {
-  return rectByIndex(index, tileCanvasWidth.toDouble(), tileCanvasHeight.toDouble());
+  return rectByIndex(
+      index, tileCanvasWidth.toDouble(), tileCanvasHeight.toDouble());
 }
 
 Rect rectByIndex(int index, double frameWidth, double height) {
@@ -256,6 +274,8 @@ Rect getCharacterSpriteRect(dynamic character) {
       return getHumanStrikingRect(character);
     case characterStateRunning:
       return getHumanRunningRect(character);
+    case characterStateReloading:
+      return getHumanReloadingRect(character);
   }
   throw Exception("Could not get character sprite rect");
 }
@@ -339,7 +359,7 @@ Rect _getFrame(List<Rect> frames) {
   return frames[drawFrame % frames.length];
 }
 
-const int humanSpriteFrames = 73;
+const int humanSpriteFrames = 89;
 const int humanSpriteFrameWidth = 36;
 const int humanSpriteFrameHeight = 35;
 const int humanSpriteImageWidth = humanSpriteFrames * humanSpriteFrameWidth;
@@ -500,6 +520,27 @@ List<Rect> rectHumanWalkingUpFrames = [
   getHumanSpriteRect(15)
 ];
 
+// Reloading
+
+List<Rect> rectsHumanReloadingDownLeft = humanRects([74, 74, 74, 75, 75, 75]);
+List<Rect> rectsHumanReloadingLeft = humanRects([76, 76, 76, 77, 77, 77]);
+List<Rect> rectsHumanReloadingUpLeft = humanRects([78, 78, 78, 79, 79, 79]);
+List<Rect> rectsHumanReloadingUp = humanRects([80, 80, 80, 81, 81, 81]);
+List<Rect> rectsHumanReloadingUpRight = humanRects([82, 82, 82, 83, 83, 83]);
+List<Rect> rectsHumanReloadingRight = humanRects([84, 84, 84, 85, 85, 85]);
+List<Rect> rectsHumanReloadingDownRight = humanRects([86, 86, 86, 87, 87, 87]);
+List<Rect> rectsHumanReloadingDown = humanRects([88, 88, 88, 89, 89, 89]);
+
+// List<Rect> rectHumanReloadingFrames
+
+List<Rect> humanRects(List<int> indexes) {
+  List<Rect> rects = [];
+  for (int i in indexes) {
+    rects.add(getHumanSpriteRect(i - 1));
+  }
+  return rects;
+}
+
 // RUNNING
 
 List<Rect> rectHumanRunningDownLeftFrames = [
@@ -555,7 +596,7 @@ Rect getHumanSpriteRect(int index) {
       humanSpriteFrameWidth.toDouble(), humanSpriteFrameHeight.toDouble());
 }
 
-Rect _humanRect(int index){
+Rect _humanRect(int index) {
   return getHumanSpriteRect(index - 1);
 }
 
@@ -570,7 +611,8 @@ RSTransform getCharacterTransform(dynamic character) {
   );
 }
 
-RSTransform rsTransform({double x, double y, double anchorX, double anchorY, double scale = 1}){
+RSTransform rsTransform(
+    {double x, double y, double anchorX, double anchorY, double scale = 1}) {
   return RSTransform.fromComponents(
     rotation: 0.0,
     scale: scale,
@@ -646,17 +688,16 @@ void drawBulletRange() {
       radius: bulletRange, x: player[x], y: player[y], color: white);
 }
 
-void drawBulletHoles(){
-  for(int i = 0; i < bulletHoles.length; i += 2){
+void drawBulletHoles() {
+  for (int i = 0; i < bulletHoles.length; i += 2) {
     drawCircle(bulletHoles[i], bulletHoles[i + 1], 2, Colors.black);
   }
 }
 
-double shiftHeight(double z){
+double shiftHeight(double z) {
   return -z * 20;
 }
 
-
-double shiftScale(double z){
+double shiftScale(double z) {
   return 1 + (z * 0.15);
 }

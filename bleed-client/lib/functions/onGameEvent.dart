@@ -79,5 +79,8 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv){
     case GameEventType.Clip_Empty:
       playAudioClipEmpty();
       return;
+    case GameEventType.Reloaded:
+      playAudioReloadHandgun();
+      return;
   }
 }

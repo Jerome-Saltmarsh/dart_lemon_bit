@@ -12,4 +12,5 @@ enum GameEventType {
   Player_Death,
   Explosion,
   Clip_Empty,
+  Reloaded
 }

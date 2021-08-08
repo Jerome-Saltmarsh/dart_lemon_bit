@@ -73,6 +73,10 @@ void playPlayerDeathAudio(){
   _playRandom(_maleScreams, _playerAudioPlayer);
 }
 
+void playAudioReloadHandgun(){
+  _play('mag-in-02.wav', _equipAudioPlayer);
+}
+
 void playAudioClipEmpty(){
   _play('dry-shot-02.wav', _equipAudioPlayer);
 }

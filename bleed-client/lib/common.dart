@@ -5,6 +5,7 @@ const characterStateAiming = 3;
 const characterStateFiring = 4;
 const characterStateStriking = 5;
 const characterStateRunning = 6;
+const characterStateReloading = 7;
 
 const directionUp = 0;
 const directionUpRight = 1;
