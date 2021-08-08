@@ -21,6 +21,9 @@ void setCharacterState(Character character, CharacterState value) {
   if (character.shotCoolDown > 0) return;
 
   switch (value) {
+    case CharacterState.ChangingWeapon:
+      character.shotCoolDown = 10;
+      break;
     case CharacterState.Aiming:
       character.accuracy = 0;
       break;

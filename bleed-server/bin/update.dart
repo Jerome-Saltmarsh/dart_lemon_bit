@@ -140,6 +140,12 @@ void updateCharacter(Character character) {
   character.yv *= velocityFriction;
 
   switch (character.state) {
+    case CharacterState.ChangingWeapon:
+      character.shotCoolDown--;
+      if (character.shotCoolDown <= 0) {
+        setCharacterState(character, CharacterState.Aiming);
+      }
+      break;
     case CharacterState.Aiming:
       if (character.accuracy > 0.05) {
         character.accuracy -= 0.005;

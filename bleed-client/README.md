@@ -24,7 +24,8 @@
 [ ] Cache Particles
 [ ] FIX BUG: Sniper Aim 
 [ ] Ammo
-[ ] Explosion Shrapnel Particle
+[x] Animate Change Weapon 
+[x] Explosion Shrapnel Particle
 [x] Reload Animation  
 [x] Bug: Npc bodies don't always dissappear
 [x] Process Particles on client
