@@ -105,9 +105,10 @@ void _parsePlayer() {
   playerHealth = _consumeDouble();
   playerMaxHealth = _consumeDouble();
   handgunClips = _consumeInt();
+
   handgunClipSize = _consumeInt();
   handgunMaxClips = _consumeInt();
-  handgunRounds = _consumeInt();
+  setHandgunRounds(_consumeInt());
 }
 
 void _parseFrameMS() {

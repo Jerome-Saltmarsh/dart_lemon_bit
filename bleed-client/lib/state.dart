@@ -58,3 +58,4 @@ int handgunRounds = 0;
 int handgunClipSize = 0;
 int handgunClips = 0;
 int handgunMaxClips = 0;
+

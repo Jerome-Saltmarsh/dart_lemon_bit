@@ -14,6 +14,7 @@
 [ ] Game Type: Death Match
 [ ] Game Type: Capture The Flag
 [ ] Game Type: Base Defense
+[ ] Throw Animation
 [ ] Create Game / Join Game
 [ ] Player Name Text
 [ ] Boundary
@@ -22,8 +23,8 @@
 [ ] Particle Gunshot smoke
 [ ] Cache Particles
 [ ] FIX BUG: Sniper Aim 
-[ ] Reload Animation  
 [ ] Ammo
+[x] Reload Animation  
 [x] Bug: Npc bodies don't always dissappear
 [x] Process Particles on client
 [x] Make grenade 3d;

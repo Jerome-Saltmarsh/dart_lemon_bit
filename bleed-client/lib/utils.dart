@@ -160,3 +160,9 @@ void cameraCenter(double x, double y){
     cameraX = x - (globalSize.width * 0.5);
     cameraY = y - (globalSize.height * 0.5);
 }
+
+void setHandgunRounds(int value){
+  if(handgunRounds == value) return;
+  handgunRounds = value;
+  redrawUI();
+}
