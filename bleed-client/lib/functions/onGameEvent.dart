@@ -15,25 +15,25 @@ import 'spawnBulletHole.dart';
 void onGameEvent(GameEventType type, double x, double y, double xv, double yv){
   switch(type){
     case GameEventType.Handgun_Fired:
-      playAudioHandgunShot();
+      playAudioHandgunShot(x, y);
       spawnShell(x, y);
       spawnShotSmoke(x, y, xv, yv);
       break;
     case GameEventType.Shotgun_Fired:
-      playAudioShotgunShot();
+      playAudioShotgunShot(x, y);
       spawnShell(x, y);
       break;
     case GameEventType.SniperRifle_Fired:
-      playAudioSniperShot();
+      playAudioSniperShot(x, y);
       spawnShell(x, y);
       break;
     case GameEventType.MachineGun_Fired:
-      playAudioAssaultRifleShot();
+      playAudioAssaultRifleShot(x, y);
       spawnShell(x, y);
       break;
     case GameEventType.Zombie_Hit:
       if(randomBool()){
-        playAudioZombieHit();
+        playAudioZombieHit(x, y);
       }
       double s = 0.1;
       double r = 1;
@@ -42,7 +42,7 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv){
       }
       break;
     case GameEventType.Zombie_Killed:
-      playAudioZombieDeath();
+      playAudioZombieDeath(x, y);
       double s = 0.15;
       double r = 1;
       for(int i = 0; i < randomInt(2, 5); i++){
@@ -50,7 +50,7 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv){
       }
       break;
     case GameEventType.Zombie_killed_Explosion:
-      playAudioZombieDeath();
+      playAudioZombieDeath(x, y);
       double s = 0.15;
       double r = 1;
       for(int i = 0; i < randomInt(2, 5); i++){
@@ -62,25 +62,25 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv){
       spawnOrgan(x, y, 0.3, xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
       break;
     case GameEventType.Zombie_Target_Acquired:
-      playAudioZombieTargetAcquired();
+      playAudioZombieTargetAcquired(x, y);
       break;
     case GameEventType.Bullet_Hole:
       spawnBulletHole(x.toDouble(), y.toDouble());
       break;
     case GameEventType.Zombie_Strike:
-      playAudioZombieBite();
+      playAudioZombieBite(x, y);
       break;
     case GameEventType.Player_Death:
-      playPlayerDeathAudio();
+      playPlayerDeathAudio(x, y);
       break;
     case GameEventType.Explosion:
       spawnExplosion(x.toDouble(), y.toDouble());
       break;
     case GameEventType.Clip_Empty:
-      playAudioClipEmpty();
+      playAudioClipEmpty(x, y);
       return;
     case GameEventType.Reloaded:
-      playAudioReloadHandgun();
+      playAudioReloadHandgun(x, y);
       return;
   }
 }

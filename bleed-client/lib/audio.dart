@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/utils.dart';
 
 AudioPlayer _weaponAudioPlayer = AudioPlayer();
@@ -45,73 +46,76 @@ List<String> grenadeExplosions = [
   'explosion-grenade-04.wav'
 ];
 
-void playAudioSniperShot() {
-  _play('sniper-shot-04.wav', _weaponAudioPlayer);
+void playAudioSniperShot(double x, double y) {
+  _play('sniper-shot-04.wav', _weaponAudioPlayer, x, y);
 }
 
-void playAudioAssaultRifleShot() {
-  _play('assault-rifle-shot-04.wav', _weaponAudioPlayer);
+void playAudioAssaultRifleShot(double x, double y) {
+  _play('assault-rifle-shot-04.wav', _weaponAudioPlayer, x, y);
 }
 
-void playAudioExplosion() {
-  _playRandom(grenadeExplosions, _explosionAudioPlayer);
+void playAudioExplosion(double x, double y) {
+  _playRandom(grenadeExplosions, _explosionAudioPlayer, x, y);
 }
 
-void playAudioSniperEquipped() {
-  _play("gun-pickup-01.wav", _weaponAudioPlayer);
+void playAudioSniperEquipped(double x, double y) {
+  _play("gun-pickup-01.wav", _weaponAudioPlayer, x, y);
 }
 
-void playAudioReload() {
-  _play('reload-06.wav', _equipAudioPlayer);
+void playAudioReload(double x, double y) {
+  _play('reload-06.wav', _equipAudioPlayer, x, y);
 }
 
-void playAudioCockShotgun() {
-  _play('cock-shotgun-03.wav', _equipAudioPlayer);
+void playAudioCockShotgun(double x, double y) {
+  _play('cock-shotgun-03.wav', _equipAudioPlayer, x, y);
 }
 
-void playPlayerDeathAudio() {
-  _playRandom(_maleScreams, _playerAudioPlayer);
+void playPlayerDeathAudio(double x, double y) {
+  _playRandom(_maleScreams, _playerAudioPlayer, x, y);
 }
 
-void playAudioReloadHandgun() {
-  _play('mag-in-02.wav', _equipAudioPlayer);
+void playAudioReloadHandgun(double x, double y) {
+  _play('mag-in-02.wav', _equipAudioPlayer, x, y);
 }
 
-void playAudioClipEmpty() {
-  _play('dry-shot-02.wav', _equipAudioPlayer);
+void playAudioClipEmpty(double x, double y) {
+  _play('dry-shot-02.wav', _equipAudioPlayer, x, y);
 }
 
-void playAudioZombieBite() {
-  _playRandom(_zombieBite, _zombieAudioPlayer);
+void playAudioZombieBite(double x, double y) {
+  _playRandom(_zombieBite, _zombieAudioPlayer, x, y);
 }
 
-void playAudioZombieTargetAcquired() {
-  _playRandom(_zombieTalking, _zombieAudioPlayer);
+void playAudioZombieTargetAcquired(double x, double y) {
+  _playRandom(_zombieTalking, _zombieAudioPlayer, x, y);
 }
 
-void playAudioZombieDeath() {
-  _playRandom(_zombieDeath, _zombieAudioPlayer);
+void playAudioZombieDeath(double x, double y) {
+  _playRandom(_zombieDeath, _zombieAudioPlayer, x, y);
 }
 
-void playAudioZombieHit() {
-  _playRandom(_zombieHits, _zombieAudioPlayer);
+void playAudioZombieHit(double x, double y) {
+  _playRandom(_zombieHits, _zombieAudioPlayer, x, y);
 }
 
-void playAudioShotgunShot() {
-  _play('shotgun-shot.mp3', _weaponAudioPlayer);
+void playAudioShotgunShot(double x, double y) {
+  _play('shotgun-shot.mp3', _weaponAudioPlayer, x, y);
 }
 
-void playAudioHandgunShot() {
-  _play('handgun-shot.mp3', _weaponAudioPlayer);
+void playAudioHandgunShot(double x, double y) {
+  _play('handgun-shot.mp3', _weaponAudioPlayer, x, y);
 }
 
-void _playRandom(List<String> values, AudioPlayer audioPlayer) {
-  _play(randomItem(values), audioPlayer);
+void _playRandom(List<String> values, AudioPlayer audioPlayer, double x, double y) {
+  _play(randomItem(values), audioPlayer, x, y);
 }
 
-void _play(String name, AudioPlayer audioPlayer) {
+void _play(String name, AudioPlayer audioPlayer, double x, double y) {
   try {
-    audioPlayer.play('assets/audio/$name', isLocal: true);
+    double d = distance(x, y, centerX, centerY);
+    double volume = 1.0 / ((d * 0.005) + 1);
+    if (volume < 0.05) return;
+    audioPlayer.play('assets/audio/$name', isLocal: true, volume: volume);
   } catch (error) {
     audioPlayer.resume();
   }

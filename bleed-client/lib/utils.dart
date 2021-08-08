@@ -166,3 +166,6 @@ void setHandgunRounds(int value){
   handgunRounds = value;
   redrawUI();
 }
+
+double get centerX => cameraX + (globalSize.width * 0.5);
+double get centerY => cameraY + (globalSize.height * 0.5);

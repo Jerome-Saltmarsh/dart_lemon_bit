@@ -21,9 +21,12 @@
 [ ] Reload
 [ ] Stamina
 [ ] Particle Gunshot smoke
-[ ] Cache Particles
+[ ] Throw Grenade Audio
 [ ] FIX BUG: Sniper Aim 
 [ ] Ammo
+[ ] ROMME STUDIOS
+[ ] Cache Particles
+[x] Audio Distance
 [x] Animate Change Weapon 
 [x] Explosion Shrapnel Particle
 [x] Reload Animation  

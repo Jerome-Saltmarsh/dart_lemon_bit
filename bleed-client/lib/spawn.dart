@@ -17,7 +17,7 @@ int get shrapnelCount => randomInt(4, 15);
 
 void spawnExplosion(double x, double y){
   print("spawnExplosion()");
-  playAudioExplosion();
+  playAudioExplosion(x, y);
   animations.add(SpriteAnimation(spritesExplosion, x.toDouble(), y.toDouble(), scale: 0.5)
   );
   spawnBulletHole(x, y);
