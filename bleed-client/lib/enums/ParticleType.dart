@@ -5,5 +5,6 @@ enum ParticleType {
   Arm,
   Organ,
   Blood,
-  Shrapnel
+  Shrapnel,
+  FireYellow,
 }

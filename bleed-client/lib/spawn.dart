@@ -1,6 +1,7 @@
 
 
 
+import 'package:bleed_client/spawners/spawnFireYellow.dart';
 import 'package:bleed_client/spawners/spawnShrapnel.dart';
 import 'package:bleed_client/utils.dart';
 
@@ -22,6 +23,9 @@ void spawnExplosion(double x, double y){
   spawnBulletHole(x, y);
   for(int i = 0; i < randomInt(4, 10); i++){
     spawnShrapnel(x, y);
+  }
+  for(int i = 0; i < randomInt(4, 10); i++){
+    spawnFireYellow(x, y);
   }
   double r = 0.2;
   repeat((){

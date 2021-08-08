@@ -53,5 +53,9 @@ void drawParticle(Particle particle){
       double size = 2.5;
       drawCircle(x, y + heightShift, size * scaleShift, Colors.black);
       break;
+    case ParticleType.FireYellow:
+      double size = 2.5;
+      drawCircle(x, y + heightShift, size * scaleShift, Colors.yellow);
+      break;
   }
 }
