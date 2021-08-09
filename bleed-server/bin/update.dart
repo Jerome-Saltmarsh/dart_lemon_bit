@@ -142,14 +142,12 @@ void updateNpc(Npc npc) {
       return;
     }
     characterFaceObject(npc, npc.target);
-    double targetDistance = objectDistanceFrom(npc, npc.target.x, npc.target.y);
-
-    if (targetDistance > settingsZombieStrikeRange) {
-      npc.walk();
-    } else {
+    if (npcWithinStrikeRange(npc, npc.target)) {
       setCharacterState(npc, CharacterState.Striking);
       changeCharacterHealth(npc.target, -zombieStrikeDamage);
       dispatch(GameEventType.Zombie_Strike, npc.x, npc.y, 0, 0);
+    } else {
+      npc.walk();
     }
     return;
   }

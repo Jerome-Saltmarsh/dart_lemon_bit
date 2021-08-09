@@ -260,3 +260,9 @@ void applyFriction(GameObject gameObject, double value){
   gameObject.xv *= value;
   gameObject.yv *= value;
 }
+
+bool npcWithinStrikeRange(Npc npc, GameObject target){
+  if(abs(npc.x - npc.target.x) > settingsZombieStrikeRange) return false;
+  if(abs(npc.y - npc.target.y) > settingsZombieStrikeRange) return false;
+  return true;
+}

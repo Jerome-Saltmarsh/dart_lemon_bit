@@ -25,7 +25,7 @@
 [ ] Cache Particles
 [ ] Stamina
 [ ] Ammo
-[ ] Optimize Server Collision Detection
+[x] Optimize Server Collision Detection
 [x] Audio Distance
 [x] Animate Change Weapon 
 [x] Explosion Shrapnel Particle
