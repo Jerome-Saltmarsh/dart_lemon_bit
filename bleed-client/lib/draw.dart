@@ -617,8 +617,8 @@ RSTransform getCharacterTransform(dynamic character) {
     scale: 1.0,
     anchorX: halfHumanSpriteFrameWidth,
     anchorY: halfHumanSpriteFrameHeight - 5,
-    translateX: character[x] - cameraX,
-    translateY: character[y] - cameraY,
+    translateX: character[x],
+    translateY: character[y],
   );
 }
 
@@ -656,8 +656,8 @@ RSTransform getTileTransform(int x, int y) {
     scale: 1.0,
     anchorX: halfTileSize,
     anchorY: 36,
-    translateX: (-y * halfTileSize) + (x * halfTileSize) - cameraX,
-    translateY: (y * halfTileSize) + (x * halfTileSize) - cameraY + tileCanvasWidth,
+    translateX: (-y * halfTileSize) + (x * halfTileSize),
+    translateY: (y * halfTileSize) + (x * halfTileSize) + tileCanvasWidth,
   );
 }
 

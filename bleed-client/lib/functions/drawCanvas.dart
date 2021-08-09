@@ -20,6 +20,8 @@ void drawCanvas(Canvas canvass, Size _size) {
     drawFrame++;
   }
 
+
+  canvass.translate(-cameraX, -cameraY);
   drawTiles();
   try {
     drawPlayerHealth();

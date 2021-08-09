@@ -30,7 +30,7 @@ void drawImage(ui.Image image, double x, double y, {double rotation = 0, double 
 
 void drawCircle(double x, double y, double radius, Color color){
   globalPaint.color = color;
-  globalCanvas.drawCircle(Offset(x - cameraX, y - cameraY), radius, globalPaint);
+  globalCanvas.drawCircle(Offset(x, y), radius, globalPaint);
 }
 
 void drawSprite(ui.Image image, int frames, int frame, double x, double y, {double scale = 1.0}){
