@@ -23,6 +23,7 @@
 [ ] Cache Particles
 [ ] Ammo
 [ ] Stamina UI
+[ ] Lobby
 [x] FIX BUG: Sniper Aim 
 [x] Tile Boundaries
 [x] Stamina

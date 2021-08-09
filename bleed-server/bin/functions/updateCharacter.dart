@@ -13,36 +13,31 @@ void updateCharacter(Character character) {
   character.xv *= velocityFriction;
   character.yv *= velocityFriction;
 
-  if(character.y < 0){
-    character.y = 0;
-  }
-
-  if(character.y < tilesLeftY){
-    if(character.x < tilesTopX){
-      while(!isLeft(character.x, character.y, tilesLeftX, tilesLeftY, tilesTopX, tilesTopY)){
-        character.x += 1;
-        character.y += 1;
-      }
-    }else{
-      while(isLeft(character.x, character.y, tilesRightX, tilesRightY, tilesTopX, tilesTopY)){
-        character.x -= 1;
-        character.y += 1;
-      }
+  if (character.y < tilesLeftY) {
+    if (-character.x > character.y) {
+      character.x = -character.y;
+      character.y++;
+    } else if (character.x > character.y) {
+      character.x = character.y;
+      character.y++;
     }
-  }else{
-    if(character.x < tilesTopX){
-      while(isLeft(character.x, character.y, tilesLeftX, tilesLeftY, tilesBottomX, tilesBottomY)){
-        character.x += 1;
-        character.y -= 1;
+  } else {
+    if (character.x > 0) {
+      double m = tilesRightX + tilesRightX;
+      double d = character.x + character.y;
+      if (d > m) {
+        character.x = m - character.y;
+        character.y--;
       }
     }else{
-      while(!isLeft(character.x, character.y, tilesRightX, tilesRightY, tilesBottomX, tilesBottomY)){
-        character.x -= 1;
-        character.y -= 1;
+      double m = tilesRightX + tilesRightX;
+      double d = -character.x + character.y;
+      if (d > m) {
+        character.x = -(m - character.y);
+        character.y--;
       }
     }
   }
-
 
   switch (character.state) {
     case CharacterState.ChangingWeapon:
