@@ -27,8 +27,13 @@ void drawCharacters() {
 }
 
 void drawNpcs() {
+  npcs.sort((a, b){
+    if(a[y] < b[y]) return -1;
+    return 1;
+  });
   drawList(npcs, npcsTransforms, npcsRects);
 }
+
 
 void drawCharacterList(List<dynamic> characters) {
   globalCanvas.drawAtlas(
@@ -75,6 +80,10 @@ void loadTileRects() {
 }
 
 void drawPlayers() {
+  players.sort((a, b){
+    if(a[y] < b[y]) return -1;
+    return 1;
+  });
   drawList(players, playersTransforms, playersRects);
 }
 

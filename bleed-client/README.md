@@ -20,6 +20,7 @@
 [ ] Throw Grenade Audio
 [ ] Game Max 32 Players / new games spawn automatically
 [ ] FIX BUG: Sniper Aim 
+[ ] FIX BUG: Character Draw Order
 [ ] Boundary
 [ ] Cache Particles
 [ ] Stamina
