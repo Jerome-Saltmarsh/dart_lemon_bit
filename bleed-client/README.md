@@ -23,8 +23,9 @@
 [ ] FIX BUG: Character Draw Order
 [ ] Boundary
 [ ] Cache Particles
-[ ] Stamina
 [ ] Ammo
+[x] Stamina
+[x] FIX BUG: Player hurt audio makes zombie sound
 [x] Optimize Server Collision Detection
 [x] Audio Distance
 [x] Animate Change Weapon 

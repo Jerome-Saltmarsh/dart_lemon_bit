@@ -62,6 +62,10 @@ String compilePlayer(Player player) {
   buffer.write(' ');
   buffer.write(player.maxHealth.toStringAsFixed(2));
   buffer.write(' ');
+  buffer.write(player.stamina);
+  buffer.write(' ');
+  buffer.write(player.maxStamina);
+  buffer.write(' ');
   buffer.write(player.handgunAmmunition.clips);
   buffer.write(' ');
   buffer.write(player.handgunAmmunition.clipSize);

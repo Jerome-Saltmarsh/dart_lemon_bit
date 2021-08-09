@@ -15,6 +15,11 @@ List<String> _zombieHits = [
   'zombie-hit-05.wav'
 ];
 
+List<String> _humanHurt = [
+  'male-hurt-01.wav',
+  'male-hurt-02.wav',
+];
+
 List<String> _zombieDeath = [
   'zombie-death-02.wav',
   'zombie-death-09.wav',
@@ -96,6 +101,10 @@ void playAudioZombieDeath(double x, double y) {
 
 void playAudioZombieHit(double x, double y) {
   _playRandom(_zombieHits, _zombieAudioPlayer, x, y);
+}
+
+void playAudioPlayerHurt(double x, double y){
+  _playRandom(_humanHurt, _playerAudioPlayer, x, y);
 }
 
 void playAudioShotgunShot(double x, double y) {

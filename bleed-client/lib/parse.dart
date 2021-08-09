@@ -104,8 +104,14 @@ void _parseTiles() {
 void _parsePlayer() {
   playerHealth = _consumeDouble();
   playerMaxHealth = _consumeDouble();
+  int stamina = _consumeInt();
+  // TODO Logic does not belong here
+  if (playerStamina != stamina) {
+    playerStamina = stamina;
+    redrawUI();
+  }
+  playerMaxStamina = _consumeInt();
   handgunClips = _consumeInt();
-
   handgunClipSize = _consumeInt();
   handgunMaxClips = _consumeInt();
   setHandgunRounds(_consumeInt());

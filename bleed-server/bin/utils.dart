@@ -5,6 +5,7 @@ import 'enums.dart';
 import 'enums/GameEventType.dart';
 import 'enums/Weapons.dart';
 import 'functions/characterFireWeapon.dart';
+import 'functions/setCharacterState.dart';
 import 'instances/settings.dart';
 import 'maths.dart';
 import 'settings.dart';
@@ -12,35 +13,6 @@ import 'state.dart';
 
 double bulletDistanceTravelled(Bullet bullet) {
   return distance(bullet.x, bullet.y, bullet.xStart, bullet.yStart);
-}
-
-void setCharacterState(Character character, CharacterState value) {
-  if (character.dead) return;
-  if (character.state == value) return;
-  if (value != CharacterState.Dead && character.shotCoolDown > 0) return;
-
-  switch (value) {
-    case CharacterState.Dead:
-      character.collidable = false;
-      break;
-    case CharacterState.ChangingWeapon:
-      character.shotCoolDown = 10;
-      break;
-    case CharacterState.Aiming:
-      character.accuracy = 0;
-      break;
-    case CharacterState.Firing:
-      // TODO Fix hack
-      characterFireWeapon(character as Player);
-      break;
-    case CharacterState.Striking:
-      character.shotCoolDown = 10;
-      break;
-    case CharacterState.Reloading:
-      character.shotCoolDown = 20;
-      break;
-  }
-  character.state = value;
 }
 
 void setCharacterStateIdle(Character character){
@@ -58,6 +30,12 @@ void changeCharacterHealth(Character character, double amount) {
 }
 
 double clamp(double value, double min, double max) {
+  if (value < min) return min;
+  if (value > max) return max;
+  return value;
+}
+
+int clampInt(int value, int min, int max) {
   if (value < min) return min;
   if (value > max) return max;
   return value;

@@ -41,6 +41,16 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv){
         spawnBlood(x, y, 0.3, xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r), zv: randomBetween(0, 0.07));
       }
       break;
+    case GameEventType.Player_Hit:
+      if(randomBool()){
+        playAudioPlayerHurt(x, y);
+      }
+      double s = 0.1;
+      double r = 1;
+      for(int i = 0; i < randomInt(2, 5); i++){
+        spawnBlood(x, y, 0.3, xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r), zv: randomBetween(0, 0.07));
+      }
+      break;
     case GameEventType.Zombie_Killed:
       playAudioZombieDeath(x, y);
       double s = 0.15;

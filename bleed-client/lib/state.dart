@@ -41,6 +41,8 @@ int serverFramesMS = 0;
 int actualFPS;
 double playerHealth = 0;
 double playerMaxHealth = 0;
+int playerStamina = 0;
+int playerMaxStamina = 0;
 List<RSTransform> playersTransforms = [];
 List<Rect> playersRects = [];
 List<RSTransform> npcsTransforms = [];

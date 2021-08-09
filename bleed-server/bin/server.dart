@@ -7,6 +7,7 @@ import 'compile.dart';
 import 'enums.dart';
 import 'enums/Weapons.dart';
 import 'events.dart';
+import 'functions/setCharacterState.dart';
 import 'functions/throwGrenade.dart';
 import 'settings.dart';
 import 'spawn.dart';

@@ -5,6 +5,8 @@ import 'compile.dart';
 import 'constants.dart';
 import 'enums.dart';
 import 'enums/GameEventType.dart';
+import 'functions/setCharacterState.dart';
+import 'functions/updateCharacter.dart';
 import 'jobs.dart';
 import 'language.dart';
 import 'maths.dart';
@@ -47,18 +49,18 @@ void sortGameObjects() {
 void updateNpcTargets() {
   int minP = 0;
   Npc npc;
-  for(int i = 0; i < npcs.length; i++){
-    if(npcs[i].targetSet) continue;
+  for (int i = 0; i < npcs.length; i++) {
+    if (npcs[i].targetSet) continue;
     npc = npcs[i];
-    for(int p = minP; p < players.length; p++){
-      if (players[p].x < npc.x - zombieViewRange){
+    for (int p = minP; p < players.length; p++) {
+      if (players[p].x < npc.x - zombieViewRange) {
         minP++;
         break;
       }
-      if (players[p].x > npc.x + zombieViewRange){
+      if (players[p].x > npc.x + zombieViewRange) {
         break;
       }
-      if(abs(players[p].y - npc.y) > zombieViewRange){
+      if (abs(players[p].y - npc.y) > zombieViewRange) {
         continue;
       }
 
@@ -104,12 +106,18 @@ void checkBulletCollision(List<Character> characters) {
       bullets.removeAt(i);
       i--;
       changeCharacterHealth(character, -bullet.damage);
-      character.xv += bullet.xv * 0.25;
-      character.yv += bullet.yv * 0.25;
+      character.xv += bullet.xv * bulletImpactVelocityTransfer;
+      character.yv += bullet.yv * bulletImpactVelocityTransfer;
+
+      if (character is Player) {
+        dispatch(GameEventType.Player_Hit, character.x, character.y, bullet.xv,
+            bullet.yv);
+        return;
+      }
 
       if (character.alive) {
-        dispatch(GameEventType.Zombie_Hit, character.x, character.y,
-            bullet.xv, bullet.yv);
+        dispatch(GameEventType.Zombie_Hit, character.x, character.y, bullet.xv,
+            bullet.yv);
       } else {
         if (randomBool()) {
           dispatch(GameEventType.Zombie_Killed, character.x, character.y,
@@ -166,123 +174,42 @@ void updateNpc(Npc npc) {
   npc.idle();
 }
 
-void updateCharacter(Character character) {
-  character.x += character.xv;
-  character.y += character.yv;
-  character.xv *= velocityFriction;
-  character.yv *= velocityFriction;
-
-  switch (character.state) {
-    case CharacterState.ChangingWeapon:
-      character.shotCoolDown--;
-      if (character.shotCoolDown <= 0) {
-        setCharacterState(character, CharacterState.Aiming);
-      }
-      break;
-    case CharacterState.Aiming:
-      if (character.accuracy > 0.05) {
-        character.accuracy -= 0.005;
-      }
-      break;
-    case CharacterState.Firing:
-      character.shotCoolDown--;
-      if (character.shotCoolDown <= 0) {
-        setCharacterState(character, CharacterState.Aiming);
-      }
-      break;
-    case CharacterState.Reloading:
-      character.shotCoolDown--;
-      if (character.shotCoolDown <= 0) {
-        setCharacterState(character, CharacterState.Aiming);
-        (character as Player).handgunAmmunition.rounds =
-            character.handgunAmmunition.clipSize;
-        dispatch(GameEventType.Reloaded, character.x, character.y, 0, 0);
-      }
-      break;
-    case CharacterState.Walking:
-      switch (character.direction) {
-        case Direction.Up:
-          character.y -= character.speed;
-          break;
-        case Direction.UpRight:
-          character.x += velX(piQuarter, character.speed);
-          character.y += velY(piQuarter, character.speed);
-          break;
-        case Direction.Right:
-          character.x += character.speed;
-          break;
-        case Direction.DownRight:
-          character.x += velX(piQuarter, character.speed);
-          character.y -= velY(piQuarter, character.speed);
-          break;
-        case Direction.Down:
-          character.y += character.speed;
-          break;
-        case Direction.DownLeft:
-          character.x -= velX(piQuarter, character.speed);
-          character.y -= velY(piQuarter, character.speed);
-          break;
-        case Direction.Left:
-          character.x -= character.speed;
-          break;
-        case Direction.UpLeft:
-          character.x -= velX(piQuarter, character.speed);
-          character.y += velY(piQuarter, character.speed);
-          break;
-      }
-      break;
-    case CharacterState.Running:
-      double runRatio = character.speed * (1.0 + goldenRatioInverse);
-      switch (character.direction) {
-        case Direction.Up:
-          character.y -= runRatio;
-          break;
-        case Direction.UpRight:
-          character.x += velX(piQuarter, runRatio);
-          character.y += velY(piQuarter, runRatio);
-          break;
-        case Direction.Right:
-          character.x += runRatio;
-          break;
-        case Direction.DownRight:
-          character.x += velX(piQuarter, runRatio);
-          character.y -= velY(piQuarter, runRatio);
-          break;
-        case Direction.Down:
-          character.y += runRatio;
-          break;
-        case Direction.DownLeft:
-          character.x -= velX(piQuarter, runRatio);
-          character.y -= velY(piQuarter, runRatio);
-          break;
-        case Direction.Left:
-          character.x -= runRatio;
-          break;
-        case Direction.UpLeft:
-          character.x -= velX(piQuarter, runRatio);
-          character.y += velY(piQuarter, runRatio);
-          break;
-      }
-      break;
-  }
+void updateCharacters() {
+  removeInactiveNpcs();
+  players.forEach(updatePlayer);
+  players.forEach(updateCharacter);
+  npcs.forEach(updateCharacter);
 }
 
-void updateCharacters() {
+void removeInactiveNpcs() {
   for (int i = 0; i < npcs.length; i++) {
     if (!npcs[i].active) {
       npcs.removeAt(i);
       i--;
     }
   }
+}
 
-  players.forEach(updateCharacter);
-  npcs.forEach(updateCharacter);
-
-  for (Player player in players) {
-    if (frame - player.lastEventFrame > 5 && player.walking) {
-      setCharacterStateIdle(player);
-    }
+void updatePlayer(Player player) {
+  if (frame - player.lastEventFrame > 5 && player.walking) {
+    setCharacterStateIdle(player);
   }
+
+  if (player.running) {
+    player.stamina -= 3;
+    if (player.stamina <= 0) {
+      setCharacterState(player, CharacterState.Walking);
+    }
+  } else if (player.walking) {
+    player.stamina++;
+  } else if (player.idling) {
+    player.stamina += 2;
+  } else if (player.aiming) {
+    player.stamina += 2;
+  } else if (player.firing) {
+    player.stamina += 1;
+  }
+  player.stamina = clampInt(player.stamina, 0, player.maxStamina);
 }
 
 void updateGrenades() {
@@ -329,13 +256,13 @@ void updateCollisionBetween(List<GameObject> gameObjects) {
   }
 }
 
-double collisionOverlap(GameObject a, GameObject b){
+double collisionOverlap(GameObject a, GameObject b) {
   return a.radius + b.radius - distanceBetween(a, b);
 }
 
 void resolveCollision(GameObject a, GameObject b) {
   double overlap = collisionOverlap(a, b);
-  if(overlap < 0) return;
+  if (overlap < 0) return;
   double xDiff = a.x - b.x;
   double yDiff = a.y - b.y;
   double halfOverlap = overlap * 0.5;
@@ -359,7 +286,8 @@ void updateCollisions() {
   resolveCollisionBetween(npcs, players);
 }
 
-void resolveCollisionBetween(List<GameObject> gameObjectsA, List<GameObject> gameObjectsB) {
+void resolveCollisionBetween(
+    List<GameObject> gameObjectsA, List<GameObject> gameObjectsB) {
   int minJ = 0;
   for (int i = 0; i < gameObjectsA.length; i++) {
     if (!gameObjectsA[i].collidable) continue;

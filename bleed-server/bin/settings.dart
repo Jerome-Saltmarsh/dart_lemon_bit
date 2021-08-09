@@ -36,6 +36,7 @@ const int settingsHandgunCooldown = 14;
 const int settingsSniperCooldown = 45;
 const int settingsShotgunBulletsPerShot = 5;
 const double settingsParticleShellSpeed = 3;
+const double bulletImpactVelocityTransfer = 0.25;
 
 const int tilesX = 40;
 const int tilesY = 40;
@@ -45,3 +46,5 @@ const double settingsGrenadeExplosionRadius = 100;
 const double settingsGrenadeExplosionDamage = 100;
 const double settingsGrenadeSpeed = 18;
 const double settingsGrenadeFriction = 0.98;
+
+const double minStamina = 60;

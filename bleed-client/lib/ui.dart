@@ -241,6 +241,7 @@ Widget buildHud() {
     [
       button("FullScreen", requestFullScreen),
       text('x: $playerX, y: $playerY'),
+      text('Stamina: $playerStamina / $playerMaxStamina'),
       if (debugMode) buildDebugPanel(),
       buildWeaponButton(Weapon.HandGun),
       text('$handgunRounds / $handgunClipSize - $handgunClips'),

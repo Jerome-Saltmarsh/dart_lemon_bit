@@ -47,6 +47,10 @@ class Character extends GameObject {
 
   bool get walking => state == CharacterState.Walking;
 
+  bool get running => state == CharacterState.Running;
+
+  bool get idling => state == CharacterState.Idle;
+
   Character({
       required double x,
       required double y,
@@ -106,6 +110,8 @@ class Player extends Character {
   final Ammunition handgunAmmunition = Ammunition(8, 8, 3, 3);
   final Ammunition shotgunAmmunition = Ammunition(4, 4, 3, 3);
   int lastEventFrame = 0;
+  int stamina = 0;
+  int maxStamina = 200;
 
   Player(
       {required this.uuid,
@@ -119,7 +125,9 @@ class Player extends Character {
             health: settingsPlayerStartHealth,
             maxHealth: settingsPlayerStartHealth,
             speed: playerSpeed,
-            name: name);
+            name: name){
+    stamina = maxStamina;
+  }
 }
 
 class Bullet extends GameObject {
