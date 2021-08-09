@@ -313,25 +313,25 @@ int compareGameObjects(GameObject a, GameObject b) {
   return 1;
 }
 
-void updateCollisionBetween(List<Character> characters) {
-  for (int i = 0; i < characters.length - 1; i++) {
-    if (characters[i].dead) continue;
-    for (int j = i + 1; j < characters.length; j++) {
-      resolveCollision(characters[i], characters[j]);
+void updateCollisionBetween(List<GameObject> gameObjects) {
+  for (int i = 0; i < gameObjects.length - 1; i++) {
+    if (!gameObjects[i].collidable) continue;
+    for (int j = i + 1; j < gameObjects.length; j++) {
+      if (gameObjects[j].left > gameObjects[i].right) break;
+      resolveCollision(gameObjects[i], gameObjects[j]);
     }
   }
 }
 
+double collisionOverlap(GameObject a, GameObject b){
+  return a.radius + b.radius - distanceBetween(a, b);
+}
+
 void resolveCollision(GameObject a, GameObject b) {
-  if (!a.collidable) return;
-  if (!b.collidable) return;
+  double overlap = collisionOverlap(a, b);
+  if(overlap < 0) return;
   double xDiff = a.x - b.x;
-  if (abs(xDiff) > characterRadius2) return;
   double yDiff = a.y - b.y;
-  if (abs(yDiff) > characterRadius2) return;
-  double distance = distanceBetween(a, b);
-  if (distance >= characterRadius2) return;
-  double overlap = characterRadius2 - distance;
   double halfOverlap = overlap * 0.5;
   double mag = magnitude(xDiff, yDiff);
   double ratio = 1.0 / mag;
@@ -353,16 +353,23 @@ void updateCollisions() {
   resolveCollisionBetween(npcs, players);
 }
 
-void resolveCollisionBetween(List<GameObject> a, List<GameObject> b) {
-  int s = 0;
-  for (int i = 0; i < a.length; i++) {
-    for (int j = s; j < b.length; j++) {
-      if (b[j].left > a[i].right) break;
-      if (b[j].right < a[i].left) {
-        s++;
+void resolveCollisionBetween(List<GameObject> gameObjectsA, List<GameObject> gameObjectsB) {
+  int minJ = 0;
+  for (int i = 0; i < gameObjectsA.length; i++) {
+    if (!gameObjectsA[i].collidable) continue;
+    for (int j = minJ; j < gameObjectsB.length; j++) {
+      if (!gameObjectsB[minJ].collidable) {
+        minJ++;
+        break;
+      }
+      if (gameObjectsB[j].left > gameObjectsA[i].right) break;
+      if (gameObjectsB[j].right < gameObjectsA[i].left) {
+        minJ++;
         continue;
       }
-      resolveCollision(a[i], b[j]);
+      if (gameObjectsA[i].top > gameObjectsB[j].bottom) continue;
+      if (gameObjectsA[i].bottom < gameObjectsB[j].top) continue;
+      resolveCollision(gameObjectsA[i], gameObjectsB[j]);
     }
   }
 }

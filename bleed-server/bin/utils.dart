@@ -192,6 +192,7 @@ void revive(Character character) {
   character.health = character.maxHealth;
   character.x = giveOrTake(settingsPlayerStartRadius);
   character.y = giveOrTake(settingsPlayerStartRadius);
+  character.collidable = true;
 }
 
 void generateTiles() {
