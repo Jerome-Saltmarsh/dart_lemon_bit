@@ -30,7 +30,7 @@ class Character extends GameObject {
   Weapon weapon;
   double aimAngle = 0;
   double accuracy = 0;
-  int shotCoolDown = 0;
+  int stateDuration = 0;
   double health;
   double maxHealth;
   double speed;

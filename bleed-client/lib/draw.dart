@@ -657,7 +657,7 @@ RSTransform getTileTransform(int x, int y) {
     anchorX: halfTileSize,
     anchorY: 36,
     translateX: (-y * halfTileSize) + (x * halfTileSize) - cameraX,
-    translateY: (y * halfTileSize) + (x * halfTileSize) - cameraY,
+    translateY: (y * halfTileSize) + (x * halfTileSize) - cameraY + tileCanvasWidth,
   );
 }
 

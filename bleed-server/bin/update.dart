@@ -139,7 +139,7 @@ void updateNpc(Npc npc) {
 
   // todo this belongs in update character
   if (npc.state == CharacterState.Striking) {
-    if (npc.shotCoolDown-- > 0) return;
+    if (npc.stateDuration-- > 0) return;
     setCharacterStateIdle(npc);
   }
 

@@ -13,10 +13,41 @@ void updateCharacter(Character character) {
   character.xv *= velocityFriction;
   character.yv *= velocityFriction;
 
+  if(character.y < 0){
+    character.y = 0;
+  }
+
+  if(character.y < tilesLeftY){
+    if(character.x < tilesTopX){
+      while(!isLeft(character.x, character.y, tilesLeftX, tilesLeftY, tilesTopX, tilesTopY)){
+        character.x += 1;
+        character.y += 1;
+      }
+    }else{
+      while(isLeft(character.x, character.y, tilesRightX, tilesRightY, tilesTopX, tilesTopY)){
+        character.x -= 1;
+        character.y += 1;
+      }
+    }
+  }else{
+    if(character.x < tilesTopX){
+      while(isLeft(character.x, character.y, tilesLeftX, tilesLeftY, tilesBottomX, tilesBottomY)){
+        character.x += 1;
+        character.y -= 1;
+      }
+    }else{
+      while(!isLeft(character.x, character.y, tilesRightX, tilesRightY, tilesBottomX, tilesBottomY)){
+        character.x -= 1;
+        character.y -= 1;
+      }
+    }
+  }
+
+
   switch (character.state) {
     case CharacterState.ChangingWeapon:
-      character.shotCoolDown--;
-      if (character.shotCoolDown <= 0) {
+      character.stateDuration--;
+      if (character.stateDuration <= 0) {
         setCharacterState(character, CharacterState.Aiming);
       }
       break;
@@ -26,14 +57,14 @@ void updateCharacter(Character character) {
       }
       break;
     case CharacterState.Firing:
-      character.shotCoolDown--;
-      if (character.shotCoolDown <= 0) {
+      character.stateDuration--;
+      if (character.stateDuration <= 0) {
         setCharacterState(character, CharacterState.Aiming);
       }
       break;
     case CharacterState.Reloading:
-      character.shotCoolDown--;
-      if (character.shotCoolDown <= 0) {
+      character.stateDuration--;
+      if (character.stateDuration <= 0) {
         setCharacterState(character, CharacterState.Aiming);
         (character as Player).handgunAmmunition.rounds =
             character.handgunAmmunition.clipSize;

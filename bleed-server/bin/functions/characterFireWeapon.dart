@@ -13,7 +13,7 @@ import '../utils.dart';
 
 void characterFireWeapon(Player character) {
   if (character.dead) return;
-  if (character.shotCoolDown > 0) return;
+  if (character.stateDuration > 0) return;
   faceAimDirection(character);
 
   double d = 15;
@@ -22,7 +22,7 @@ void characterFireWeapon(Player character) {
 
   switch (character.weapon) {
     case Weapon.HandGun:
-      character.shotCoolDown = settingsClipEmptyCooldown;
+      character.stateDuration = settingsClipEmptyCooldown;
       if(character.handgunAmmunition.rounds <= 0){
         dispatch(GameEventType.Clip_Empty, x, y, 0, 0);
         return;
@@ -30,7 +30,7 @@ void characterFireWeapon(Player character) {
       character.handgunAmmunition.rounds--;
       Bullet bullet = spawnBullet(character);
       character.state = CharacterState.Firing;
-      character.shotCoolDown = settingsHandgunCooldown;
+      character.stateDuration = settingsHandgunCooldown;
       dispatch(GameEventType.Handgun_Fired, x, y, bullet.xv, bullet.yv);
       break;
     case Weapon.Shotgun:
@@ -41,19 +41,19 @@ void characterFireWeapon(Player character) {
       }
       Bullet bullet = bullets.last;
       character.state = CharacterState.Firing;
-      character.shotCoolDown = shotgunCoolDown;
+      character.stateDuration = shotgunCoolDown;
       dispatch(GameEventType.Shotgun_Fired, character.x, character.y, bullet.xv, bullet.yv);
       break;
     case Weapon.SniperRifle:
       Bullet bullet = spawnBullet(character);
       character.state = CharacterState.Firing;
-      character.shotCoolDown = settingsSniperCooldown;;
+      character.stateDuration = settingsSniperCooldown;;
       dispatch(GameEventType.SniperRifle_Fired, character.x, character.y, bullet.xv, bullet.yv);
       break;
     case Weapon.MachineGun:
       Bullet bullet = spawnBullet(character);
       character.state = CharacterState.Firing;
-      character.shotCoolDown = settings.machineGunCoolDown;;
+      character.stateDuration = settings.machineGunCoolDown;;
       dispatch(GameEventType.MachineGun_Fired, character.x, character.y, bullet.xv, bullet.yv);
       break;
   }

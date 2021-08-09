@@ -6,7 +6,7 @@ import 'characterFireWeapon.dart';
 void setCharacterState(Character character, CharacterState value) {
   if (character.dead) return;
   if (character.state == value) return;
-  if (value != CharacterState.Dead && character.shotCoolDown > 0) return;
+  if (value != CharacterState.Dead && character.stateDuration > 0) return;
 
   switch (value) {
     case CharacterState.Running:
@@ -19,7 +19,7 @@ void setCharacterState(Character character, CharacterState value) {
       character.collidable = false;
       break;
     case CharacterState.ChangingWeapon:
-      character.shotCoolDown = 10;
+      character.stateDuration = 10;
       break;
     case CharacterState.Aiming:
       character.accuracy = 0;
@@ -29,10 +29,10 @@ void setCharacterState(Character character, CharacterState value) {
       characterFireWeapon(character as Player);
       break;
     case CharacterState.Striking:
-      character.shotCoolDown = 10;
+      character.stateDuration = 10;
       break;
     case CharacterState.Reloading:
-      character.shotCoolDown = 20;
+      character.stateDuration = 20;
       break;
   }
   character.state = value;

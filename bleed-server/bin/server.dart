@@ -121,7 +121,7 @@ void main() {
           return;
         }
         Weapon weapon = Weapon.values[int.parse(attributes[3])];
-        if(player.shotCoolDown > 0) return;
+        if(player.stateDuration > 0) return;
         if(player.weapon == weapon) return;
         player.weapon = weapon;
         setCharacterState(player, CharacterState.ChangingWeapon);

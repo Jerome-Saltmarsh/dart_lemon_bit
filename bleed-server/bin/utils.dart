@@ -165,6 +165,15 @@ void revive(Character character) {
   character.collidable = true;
 }
 
+double tilesTopX = 0;
+double tilesTopY = 0;
+double tilesRightX = 0;
+double tilesRightY = 0;
+double tilesBottomX = 0;
+double tilesBottomY = 0;
+double tilesLeftX = 0;
+double tilesLeftY = 0;
+
 void generateTiles() {
   tiles.clear();
   for (int x = 0; x < tilesX; x++) {
@@ -176,6 +185,13 @@ void generateTiles() {
   }
   tiles[4][4] = Tile.Grass;
   tiles[4][5] = Tile.Grass;
+
+  tilesLeftX = -24 * tilesX.toDouble();
+  tilesLeftY = 24 * tilesY.toDouble();
+  tilesRightX = 24 * tilesX.toDouble();
+  tilesRightY = 24 * tilesY.toDouble();
+  tilesBottomY = 48 * tilesY.toDouble();
+
 }
 
 double getWeaponDamage(Weapon weapon){

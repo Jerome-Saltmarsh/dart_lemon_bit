@@ -21,9 +21,10 @@
 [ ] Game Max 32 Players / new games spawn automatically
 [ ] FIX BUG: Sniper Aim 
 [ ] FIX BUG: Character Draw Order
-[ ] Boundary
 [ ] Cache Particles
 [ ] Ammo
+[ ] Stamina UI
+[x] Tile Boundaries
 [x] Stamina
 [x] FIX BUG: Player hurt audio makes zombie sound
 [x] Optimize Server Collision Detection
