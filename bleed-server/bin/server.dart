@@ -94,7 +94,7 @@ void main() {
         return;
       }
       if (request == "spawn-npc") {
-        print("received spawn npc request");
+        print("received spawn npc request. Npcs: ${npcs.length}");
         spawnRandomNpc();
         return;
       }

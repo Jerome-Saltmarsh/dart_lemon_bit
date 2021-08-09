@@ -317,7 +317,10 @@ void updateCollisionBetween(List<GameObject> gameObjects) {
   for (int i = 0; i < gameObjects.length - 1; i++) {
     if (!gameObjects[i].collidable) continue;
     for (int j = i + 1; j < gameObjects.length; j++) {
+      if (!gameObjects[j].collidable) continue;
       if (gameObjects[j].left > gameObjects[i].right) break;
+      if (gameObjects[j].top > gameObjects[i].bottom) continue;
+      if (gameObjects[j].bottom < gameObjects[i].top) continue;
       resolveCollision(gameObjects[i], gameObjects[j]);
     }
   }
