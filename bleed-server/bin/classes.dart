@@ -1,4 +1,4 @@
-import 'classes/Ammunication.dart';
+import 'classes/Ammunition.dart';
 import 'enums.dart';
 import 'enums/GameEventType.dart';
 import 'enums/Weapons.dart';
@@ -14,6 +14,12 @@ class GameObject {
   double yv = 0;
   double zv = 0;
   double radius;
+  bool collidable = true;
+
+  double get left => x - radius;
+  double get right => x + radius;
+  double get top => y - radius;
+  double get bottom => y + radius;
 
   GameObject(this.x, this.y, {this.z = 0, this.xv = 0, this.yv = 0, this.zv = 0, this.radius = 5});
 }
@@ -95,7 +101,8 @@ class Npc extends Character {
 
 class Player extends Character {
   final String uuid;
-  final Ammunition handgunAmmunition = Ammunition();
+  final Ammunition handgunAmmunition = Ammunition(8, 8, 3, 3);
+  final Ammunition shotgunAmmunition = Ammunition(4, 4, 3, 3);
   int lastEventFrame = 0;
 
   Player(

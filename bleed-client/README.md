@@ -8,24 +8,23 @@
 [ ] Accuracy
 [ ] Compile Bullet remove id
 [ ] Equip Weapon Animation
-[ ] Optimize Server Collision Detection
 [ ] Weapon: Bazooka
 [ ] Game Type: Open World
 [ ] Game Type: Death Match
 [ ] Game Type: Capture The Flag
-[ ] Game Type: Base Defense
+[ ] Game Type: Fortress
 [ ] Throw Animation
 [ ] Create Game / Join Game
 [ ] Player Name Text
-[ ] Boundary
-[ ] Reload
-[ ] Stamina
 [ ] Particle Gunshot smoke
 [ ] Throw Grenade Audio
+[ ] Game Max 32 Players / new games spawn automatically
 [ ] FIX BUG: Sniper Aim 
-[ ] Ammo
-[ ] ROMME STUDIOS
+[ ] Boundary
 [ ] Cache Particles
+[ ] Stamina
+[ ] Ammo
+[ ] Optimize Server Collision Detection
 [x] Audio Distance
 [x] Animate Change Weapon 
 [x] Explosion Shrapnel Particle

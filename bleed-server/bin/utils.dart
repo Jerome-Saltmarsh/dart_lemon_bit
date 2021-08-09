@@ -4,7 +4,6 @@ import 'constants.dart';
 import 'enums.dart';
 import 'enums/GameEventType.dart';
 import 'enums/Weapons.dart';
-import 'events.dart';
 import 'functions/characterFireWeapon.dart';
 import 'instances/settings.dart';
 import 'maths.dart';
@@ -18,9 +17,12 @@ double bulletDistanceTravelled(Bullet bullet) {
 void setCharacterState(Character character, CharacterState value) {
   if (character.dead) return;
   if (character.state == value) return;
-  if (character.shotCoolDown > 0) return;
+  if (value != CharacterState.Dead && character.shotCoolDown > 0) return;
 
   switch (value) {
+    case CharacterState.Dead:
+      character.collidable = false;
+      break;
     case CharacterState.ChangingWeapon:
       character.shotCoolDown = 10;
       break;

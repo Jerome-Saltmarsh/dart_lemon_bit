@@ -19,6 +19,31 @@ void initUpdateLoop() {
   periodic(updateNpcTargets, ms: 500);
 }
 
+void fixedUpdate() {
+  frame++;
+  DateTime now = DateTime.now();
+  frameDuration = now.difference(frameTime);
+  if (frameDuration.inMilliseconds > 0) {
+    fps = 1000 ~/ frameDuration.inMilliseconds;
+  }
+  frameTime = now;
+
+  updateCharacters();
+  updateCollisions();
+  updateBullets();
+  updateBullets(); // called twice to fix collision detection
+  updateNpcs();
+  updateGameEvents();
+  updateGrenades();
+  compileState();
+}
+
+void sortGameObjects() {
+  npcs.sort(compareGameObjects);
+  players.sort(compareGameObjects);
+  bullets.sort(compareGameObjects);
+}
+
 void updateNpcTargets() {
   for (Npc npc in npcs) {
     if (npc.targetSet) continue;
@@ -49,16 +74,24 @@ void updateBullets() {
     }
   }
 
+  bullets.sort(compareGameObjects);
   checkBulletCollision(npcs);
   checkBulletCollision(players);
 }
 
 void checkBulletCollision(List<Character> characters) {
+  int s = 0;
   for (int i = 0; i < bullets.length; i++) {
     Bullet bullet = bullets[i];
-    for (int j = 0; j < characters.length; j++) {
+    for (int j = s; j < characters.length; j++) {
       Character character = characters[j];
+      if (!character.active) continue;
+      if (character.left > bullet.right) break;
       if (character.dead) continue;
+      if (bullet.left > character.right) {
+        s++;
+        continue;
+      }
       if (character.id == bullet.ownerId) continue;
       double dis = distanceBetween(characters[j], bullet);
       if (dis < characterBulletRadius) {
@@ -75,7 +108,7 @@ void checkBulletCollision(List<Character> characters) {
           if (randomBool()) {
             dispatch(GameEventType.Zombie_Killed, character.x, character.y,
                 bullet.xv, bullet.yv);
-            delayed(() =>  character.active = false, ms: randomInt(200, 800));
+            delayed(() => character.active = false, ms: randomInt(200, 800));
           } else {
             // characters.removeAt(j);
             // j--;
@@ -161,7 +194,8 @@ void updateCharacter(Character character) {
       character.shotCoolDown--;
       if (character.shotCoolDown <= 0) {
         setCharacterState(character, CharacterState.Aiming);
-        (character as Player).handgunAmmunition.rounds = character.handgunAmmunition.clipSize;
+        (character as Player).handgunAmmunition.rounds =
+            character.handgunAmmunition.clipSize;
         dispatch(GameEventType.Reloaded, character.x, character.y, 0, 0);
       }
       break;
@@ -234,8 +268,8 @@ void updateCharacter(Character character) {
 }
 
 void updateCharacters() {
-  for (int i = 0; i < npcs.length; i++){
-    if(!npcs[i].active){
+  for (int i = 0; i < npcs.length; i++) {
+    if (!npcs[i].active) {
       npcs.removeAt(i);
       i--;
     }
@@ -247,45 +281,8 @@ void updateCharacters() {
   for (Player player in players) {
     if (frame - player.lastEventFrame > 5 && player.walking) {
       setCharacterStateIdle(player);
-      print("no event from player. Idling; ${player.lastEventFrame}");
     }
   }
-}
-
-void handleCollision(GameObject a, GameObject b){
-
-}
-
-void fixedUpdate() {
-  frame++;
-  DateTime now = DateTime.now();
-  frameDuration = now.difference(frameTime);
-  if (frameDuration.inMilliseconds > 0) {
-    fps = 1000 ~/ frameDuration.inMilliseconds;
-  }
-  frameTime = now;
-
-  // gameObjects.sort(compareGameObjects);
-  //
-  // for (int i = 0; i < gameObjects.length - 1; i++) {
-  //   for (int j = i + 1; i < gameObjects.length; i++) {
-  //     if (gameObjects[i].radius + gameObjects[j].radius >
-  //         (gameObjects[j].x - gameObjects[i].x)) {
-  //       handleCollision(gameObjects[i], gameObjects[j]);
-  //     } else {
-  //       break;
-  //     }
-  //   }
-  // }
-
-  updateCharacters();
-  updateCollisions();
-  updateBullets();
-  updateBullets(); // called twice to fix collision detection
-  updateNpcs();
-  updateGameEvents();
-  updateGrenades();
-  compileState();
 }
 
 void updateGrenades() {
@@ -328,9 +325,9 @@ void updateCollisionBetween(List<Character> characters) {
   }
 }
 
-void resolveCollision(Character a, Character b) {
-  if (a.dead) return;
-  if (b.dead) return;
+void resolveCollision(GameObject a, GameObject b) {
+  if (!a.collidable) return;
+  if (!b.collidable) return;
   double xDiff = a.x - b.x;
   if (abs(xDiff) > characterRadius2) return;
   double yDiff = a.y - b.y;
@@ -354,13 +351,21 @@ void resolveCollision(Character a, Character b) {
 void updateCollisions() {
   npcs.sort(compareGameObjects);
   players.sort(compareGameObjects);
-
   updateCollisionBetween(npcs);
   updateCollisionBetween(players);
+  resolveCollisionBetween(npcs, players);
+}
 
-  for (int i = 0; i < npcs.length; i++) {
-    for (int j = 0; j < players.length; j++) {
-      resolveCollision(npcs[i], players[j]);
+void resolveCollisionBetween(List<GameObject> a, List<GameObject> b) {
+  int s = 0;
+  for (int i = 0; i < a.length; i++) {
+    for (int j = s; j < b.length; j++) {
+      if (b[j].left > a[i].right) break;
+      if (b[j].right < a[i].left) {
+        s++;
+        continue;
+      }
+      resolveCollision(a[i], b[j]);
     }
   }
 }

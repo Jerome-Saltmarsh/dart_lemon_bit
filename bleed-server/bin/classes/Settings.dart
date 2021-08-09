@@ -7,5 +7,5 @@ class Settings {
 
   final double handgunAccuracy = 0.05;
   final double sniperRifleAccuracy = 0;
-  final double shotgunAccuracy = 0.01;
+  final double shotgunAccuracy = 0.15;
 }
