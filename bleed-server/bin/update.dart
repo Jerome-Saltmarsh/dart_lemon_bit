@@ -92,33 +92,30 @@ void checkBulletCollision(List<Character> characters) {
         s++;
         continue;
       }
-      if (character.id == bullet.ownerId) continue;
-      double dis = distanceBetween(characters[j], bullet);
-      if (dis < characterBulletRadius) {
-        bullets.removeAt(i);
-        i--;
-        changeCharacterHealth(character, -bullet.damage);
-        character.xv += bullet.xv * 0.25;
-        character.yv += bullet.yv * 0.25;
+      if (bullet.top > character.bottom) continue;
+      if (bullet.bottom < character.top) continue;
 
-        if (character.alive) {
-          dispatch(GameEventType.Zombie_Hit, character.x, character.y,
+      bullets.removeAt(i);
+      i--;
+      changeCharacterHealth(character, -bullet.damage);
+      character.xv += bullet.xv * 0.25;
+      character.yv += bullet.yv * 0.25;
+
+      if (character.alive) {
+        dispatch(GameEventType.Zombie_Hit, character.x, character.y,
+            bullet.xv, bullet.yv);
+      } else {
+        if (randomBool()) {
+          dispatch(GameEventType.Zombie_Killed, character.x, character.y,
               bullet.xv, bullet.yv);
+          delayed(() => character.active = false, ms: randomInt(200, 800));
         } else {
-          if (randomBool()) {
-            dispatch(GameEventType.Zombie_Killed, character.x, character.y,
-                bullet.xv, bullet.yv);
-            delayed(() => character.active = false, ms: randomInt(200, 800));
-          } else {
-            // characters.removeAt(j);
-            // j--;
-            character.active = false;
-            dispatch(GameEventType.Zombie_killed_Explosion, character.x,
-                character.y, bullet.xv, bullet.yv);
-          }
+          character.active = false;
+          dispatch(GameEventType.Zombie_killed_Explosion, character.x,
+              character.y, bullet.xv, bullet.yv);
         }
-        break;
       }
+      break;
     }
   }
 }
