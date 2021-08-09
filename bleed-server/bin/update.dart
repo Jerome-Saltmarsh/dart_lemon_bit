@@ -45,9 +45,25 @@ void sortGameObjects() {
 }
 
 void updateNpcTargets() {
-  for (Npc npc in npcs) {
-    if (npc.targetSet) continue;
-    updateNpcTarget(npc);
+  int minP = 0;
+  Npc npc;
+  for(int i = 0; i < npcs.length; i++){
+    if(npcs[i].targetSet) continue;
+    npc = npcs[i];
+    for(int p = minP; p < players.length; p++){
+      if (players[p].x < npc.x - zombieViewRange){
+        minP++;
+        break;
+      }
+      if (players[p].x > npc.x + zombieViewRange){
+        break;
+      }
+      if(abs(players[p].y - npc.y) > zombieViewRange){
+        continue;
+      }
+
+      npc.targetId = players[p].id;
+    }
   }
 }
 
