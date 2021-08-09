@@ -14,8 +14,7 @@ import 'maths.dart';
 import 'state.dart';
 
 double getMouseRotation() {
-  return round(getRadionsBetween(
-      playerScreenPositionX(), playerScreenPositionY(), mouseX, mouseY));
+  return getRadionsBetween(playerScreenPositionX(), playerScreenPositionY(), mouseX, mouseY);
 }
 
 double playerScreenPositionX() {

@@ -48,7 +48,6 @@ void readPlayerInput() {
     disconnect();
   }
 
-
   if (keyPressed(LogicalKeyboardKey.keyG)){
     if(!_throwingGrenade && mouseAvailable) {
       _throwingGrenade = true;
@@ -62,7 +61,7 @@ void readPlayerInput() {
     _throwingGrenade = false;
   }
   if (mouseAvailable) {
-    requestAim = getMouseRotation();
+    requestAim = round(getMouseRotation(), decimals: 3);
   }
 
   if (keyPressedReload) {

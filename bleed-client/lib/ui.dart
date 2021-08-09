@@ -242,6 +242,15 @@ Widget buildHud() {
       button("FullScreen", requestFullScreen),
       text('x: $playerX, y: $playerY'),
       text('Stamina: $playerStamina / $playerMaxStamina'),
+      if(playerMaxStamina > 0)
+      Container(
+        height: 50,
+        width: 200,
+        color: Colors.white,
+        alignment: Alignment.centerLeft,
+        padding: EdgeInsets.symmetric(horizontal: 5),
+        child: Container(height: 40, width: 200 * (playerStamina / playerMaxStamina), color: Colors.yellow,),
+      ),
       if (debugMode) buildDebugPanel(),
       buildWeaponButton(Weapon.HandGun),
       text('$handgunRounds / $handgunClipSize - $handgunClips'),
