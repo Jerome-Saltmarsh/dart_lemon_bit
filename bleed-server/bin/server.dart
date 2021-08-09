@@ -2,40 +2,40 @@
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 
+import 'classes/Game.dart';
 import 'classes.dart';
 import 'compile.dart';
-import 'enums.dart';
 import 'enums/Weapons.dart';
-import 'events.dart';
-import 'functions/setCharacterState.dart';
-import 'functions/throwGrenade.dart';
+import 'enums.dart';
+import 'instances/game.dart';
 import 'settings.dart';
-import 'spawn.dart';
 import 'state.dart';
 import 'update.dart';
 import 'utils.dart';
 
 void main() {
   print('starting web socket server');
-  generateTiles();
+  generateTiles(game);
   initUpdateLoop();
-  initEvents();
+  // initEvents();
 
   var handler = webSocketHandler((webSocket) {
     void sendToClient(String response) {
       webSocket.sink.add(response);
     }
 
-    void sendCompiledState() {
-      sendToClient(compiledState);
+    void sendCompiledState(Game game) {
+      sendToClient(game.compiled);
     }
 
-    void sendCompiledPlayerState(Player player) {
-      sendToClient(compilePlayer(player));
+    void sendCompiledPlayerState(Game game, Player player) {
+      StringBuffer buffer = StringBuffer(game.compiled);
+      compilePlayer(buffer, player);
+      sendToClient(buffer.toString());
     }
 
     void handleRequestSpawn() {
-      var player = spawnPlayer(name: "Test");
+      var player = game.spawnPlayer(name: "Test");
       String response =
           "id: ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ; ";
       sendToClient(response);
@@ -48,7 +48,7 @@ void main() {
       if (request.startsWith("u:")) {
         List<String> attributes = request.split(" ");
         int id = int.parse(attributes[1]);
-        Player? player = findPlayerById(id);
+        Player? player = game.findPlayerById(id);
         if (player == null) {
           sendToClient('player-not-found ; ');
           return;
@@ -66,14 +66,14 @@ void main() {
         double aim = double.parse(attributes[5]);
         player.aimAngle = aim;
         setDirection(player, requestedDirection);
-        setCharacterState(player, requestedState);
-        sendCompiledPlayerState(player);
+        game.setCharacterState(player, requestedState);
+        sendCompiledPlayerState(game, player);
         return;
       }
       if (request.startsWith('revive:')) {
         List<String> attributes = request.split(" ");
         int id = int.parse(attributes[1]);
-        Player? player = findPlayerById(id);
+        Player? player = game.findPlayerById(id);
         if (player == null) {
           sendToClient('player-not-found ; ');
           return;
@@ -95,22 +95,22 @@ void main() {
         return;
       }
       if (request == "spawn-npc") {
-        print("received spawn npc request. Npcs: ${npcs.length}");
-        spawnRandomNpc();
+        print("received spawn npc request. Npcs: ${game.npcs.length}");
+        game.spawnRandomNpc();
         return;
       }
       if (request == "clear-npcs") {
         print("received clear npcs request");
-        clearNpcs();
+        game.clearNpcs();
       }
       if (request == "update") {
-        sendCompiledState();
+        sendCompiledState(game);
         return;
       }
       if (request.startsWith('equip')) {
         List<String> attributes = request.split(" ");
         int id = int.parse(attributes[1]);
-        Player? player = findPlayerById(id);
+        Player? player = game.findPlayerById(id);
         if (player == null) {
           sendToClient('player-not-found ; ');
           return;
@@ -124,13 +124,13 @@ void main() {
         if(player.stateDuration > 0) return;
         if(player.weapon == weapon) return;
         player.weapon = weapon;
-        setCharacterState(player, CharacterState.ChangingWeapon);
+        game.setCharacterState(player, CharacterState.ChangingWeapon);
         print('player equipped $weapon');
       }
       if (request.startsWith('grenade')) {
         List<String> attributes = request.split(" ");
         int id = int.parse(attributes[1]);
-        Player? player = findPlayerById(id);
+        Player? player = game.findPlayerById(id);
         if (player == null) {
           sendToClient('player-not-found ; ');
           return;
@@ -141,10 +141,10 @@ void main() {
           return;
         }
         double strength = double.parse(attributes[3]);
-        throwGrenade(player.x, player.y, player.aimAngle, strength);
+        game.throwGrenade(player.x, player.y, player.aimAngle, strength);
       }
       if (request == 'get-tiles') {
-        sendToClient(compileTiles());
+        sendToClient(compileTiles(StringBuffer(), game.tiles));
       }
     }
 

@@ -1,10 +1,10 @@
 import 'classes.dart';
+import 'classes/Game.dart';
 import 'common.dart';
 import 'constants.dart';
 import 'enums.dart';
 import 'enums/GameEventType.dart';
 import 'enums/Weapons.dart';
-import 'functions/setCharacterState.dart';
 import 'instances/settings.dart';
 import 'maths.dart';
 import 'settings.dart';
@@ -12,20 +12,6 @@ import 'state.dart';
 
 double bulletDistanceTravelled(Bullet bullet) {
   return distance(bullet.x, bullet.y, bullet.xStart, bullet.yStart);
-}
-
-void setCharacterStateIdle(Character character){
-  setCharacterState(character, CharacterState.Idle);
-}
-
-void changeCharacterHealth(Character character, double amount) {
-  if (character.dead && amount < 0) return;
-
-  character.health += amount;
-  character.health = clamp(character.health, 0, character.maxHealth);
-  if (character.health <= 0) {
-    setCharacterState(character, CharacterState.Dead);
-  }
 }
 
 double clamp(double value, double min, double max) {
@@ -49,19 +35,6 @@ void setDirection(Character character, Direction value) {
 
 bool withinViewRange(Npc npc, GameObject target) {
   return distanceBetween(npc, target) < zombieViewRange;
-}
-
-Npc findNpcById(int id) {
-  return npcs.firstWhere((npc) => npc.id == id, orElse: () {
-    throw Exception("could not find npc with id $id");
-  });
-}
-
-Player? findPlayerById(int id) {
-  for (Player player in players) {
-    if (player.id == id) return player;
-  }
-  return null;
 }
 
 void npcSetRandomDestination(Npc npc) {
@@ -123,10 +96,6 @@ void faceAimDirection(Character character) {
   setDirection(character, convertAngleToDirection(character.aimAngle));
 }
 
-void clearNpcs() {
-  npcs.clear();
-}
-
 Direction convertAngleToDirection(double angle) {
   if (angle < piEighth) {
     return Direction.Up;
@@ -173,17 +142,17 @@ double tilesBottomY = 0;
 double tilesLeftX = 0;
 double tilesLeftY = 0;
 
-void generateTiles() {
-  tiles.clear();
+void generateTiles(Game game) {
+  game.tiles.clear();
   for (int x = 0; x < tilesX; x++) {
     List<Tile> column = [];
-    tiles.add(column);
+    game.tiles.add(column);
     for (int y = 0; y < tilesY; y++) {
       column.add(Tile.Concrete);
     }
   }
-  tiles[4][4] = Tile.Grass;
-  tiles[4][5] = Tile.Grass;
+  game.tiles[4][4] = Tile.Grass;
+  game.tiles[4][5] = Tile.Grass;
 
   tilesLeftX = -24 * tilesX.toDouble();
   tilesLeftY = 24 * tilesY.toDouble();
@@ -237,10 +206,6 @@ double getWeaponBulletSpeed(Weapon weapon){
     default:
       throw Exception("no range found for $weapon");
   }
-}
-
-void dispatch(GameEventType type, double x, double y, double xv, double xy){
-  gameEvents.add(GameEvent(type, x, y, xv, xy));
 }
 
 void applyMovement(GameObject gameObject){

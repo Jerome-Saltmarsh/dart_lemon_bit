@@ -1,45 +1,44 @@
 import 'classes.dart';
+import 'classes/Game.dart';
+import 'enums.dart';
 import 'settings.dart';
 import 'state.dart';
 
-void compileState() {
-  buffer.clear();
-  _compilePlayers();
-  _compileNpcs();
-  _compileBullets();
-  _compileFPS();
-  _compileFrame();
-  _compileGameEvents();
-  _compileGrenades();
-  compiledState = buffer.toString();
+void compileState(Game game) {
+  game.buffer.clear();
+  _compilePlayers(game.buffer, game.players);
+  _compileNpcs(game.buffer, game.npcs);
+  _compileBullets(game.buffer, game.bullets);
+  _compileGameEvents(game.buffer, game.gameEvents);
+  _compileGrenades(game.buffer, game.grenades);
+  game.compiled = game.buffer.toString();
 }
 
-void _compileGameEvents() {
+void _compileGameEvents(StringBuffer buffer, List<GameEvent> gameEvents) {
   if (gameEvents.isEmpty) return;
-  _write("events:");
+  _write(buffer, "events:");
   for (GameEvent gameEvent in gameEvents) {
-    _write(gameEvent.id);
-    _write(gameEvent.type.index);
-    _write(gameEvent.x.toInt());
-    _write(gameEvent.y.toInt());
-    _write(gameEvent.xv.toStringAsFixed(1));
-    _write(gameEvent.yv.toStringAsFixed(1));
+    _write(buffer, gameEvent.id);
+    _write(buffer, gameEvent.type.index);
+    _write(buffer, gameEvent.x.toInt());
+    _write(buffer, gameEvent.y.toInt());
+    _write(buffer, gameEvent.xv.toStringAsFixed(1));
+    _write(buffer, gameEvent.yv.toStringAsFixed(1));
   }
-  _end();
+  _end(buffer);
 }
 
-void _compileGrenades(){
-  _write('grenades');
+void _compileGrenades(StringBuffer buffer, List<Grenade> grenades){
+  _write(buffer, 'grenades');
   for(Grenade grenade in grenades){
-    _write(grenade.x.toInt());
-    _write(grenade.y.toInt());
-    _write(grenade.z.toStringAsFixed(1));
+    _write(buffer, grenade.x.toInt());
+    _write(buffer, grenade.y.toInt());
+    _write(buffer, grenade.z.toStringAsFixed(1));
   }
-  _end();
+  _end(buffer);
 }
 
-String compileTiles() {
-  StringBuffer buffer = StringBuffer();
+String compileTiles(StringBuffer buffer, List<List<Tile>> tiles) {
   buffer.write("tiles: ");
   buffer.write(tiles.length);
   buffer.write(" ");
@@ -55,8 +54,7 @@ String compileTiles() {
   return buffer.toString();
 }
 
-String compilePlayer(Player player) {
-  StringBuffer buffer = StringBuffer();
+void compilePlayer(StringBuffer buffer, Player player) {
   buffer.write("player ");
   buffer.write(player.health.toStringAsFixed(2));
   buffer.write(' ');
@@ -74,63 +72,61 @@ String compilePlayer(Player player) {
   buffer.write(' ');
   buffer.write(player.handgunAmmunition.rounds);
   buffer.write(' ; ');
-  buffer.write(compiledState);
-  return buffer.toString();
 }
 
-void _compileFPS() {
-  buffer.write("fms: ${frameDuration.inMilliseconds} ;");
+// void _compileFPS() {
+//   buffer.write("fms: ${frameDuration.inMilliseconds} ;");
+// }
+
+// void _compileFrame() {
+//   buffer.write('f: $frame ; ');
+// }
+
+void _compilePlayers(StringBuffer buffer, List<Player> players) {
+  _write(buffer, "p:");
+  players.forEach((player) => _compileCharacter(buffer, player));
+  _end(buffer);
 }
 
-void _compileFrame() {
-  buffer.write('f: $frame ; ');
+void _compileNpcs(StringBuffer buffer, List<Npc> npcs) {
+  _write(buffer, "n:");
+  npcs.forEach((npc) => _compileNpc(buffer, npc));
+  _end(buffer);
 }
 
-void _compilePlayers() {
-  _write("p:");
-  players.forEach(_compileCharacter);
-  _end();
+void _compileBullets(StringBuffer buffer, List<Bullet> bullets) {
+  _write(buffer, "b:");
+  bullets.forEach((bullet) => _compileBullet(buffer, bullet));
+  _end(buffer);
 }
 
-void _compileNpcs() {
-  _write("n:");
-  npcs.forEach(_compileNpc);
-  _end();
+void _compileBullet(StringBuffer buffer, Bullet bullet) {
+  _write(buffer, bullet.id);
+  _write(buffer, bullet.x);
+  _write(buffer, bullet.y);
 }
 
-void _compileBullets() {
-  _write("b:");
-  bullets.forEach(_compileBullet);
-  _end();
+void _compileCharacter(StringBuffer buffer, Character character) {
+  _write(buffer, character.state.index);
+  _write(buffer, character.direction.index);
+  _write(buffer, character.x.toInt());
+  _write(buffer, character.y.toInt());
+  _write(buffer, character.id);
+  _write(buffer, character.weapon.index);
 }
 
-void _compileBullet(Bullet bullet) {
-  _write(bullet.id);
-  _write(bullet.x);
-  _write(bullet.y);
+void _compileNpc(StringBuffer buffer, Npc npc) {
+  _write(buffer, npc.state.index);
+  _write(buffer, npc.direction.index);
+  _write(buffer, npc.x.toStringAsFixed(compilePositionDecimals));
+  _write(buffer, npc.y.toStringAsFixed(compilePositionDecimals));
 }
 
-void _compileCharacter(Character character) {
-  _write(character.state.index);
-  _write(character.direction.index);
-  _write(character.x.toInt());
-  _write(character.y.toInt());
-  _write(character.id);
-  _write(character.weapon.index);
-}
-
-void _compileNpc(Npc npc) {
-  _write(npc.state.index);
-  _write(npc.direction.index);
-  _write(npc.x.toStringAsFixed(compilePositionDecimals));
-  _write(npc.y.toStringAsFixed(compilePositionDecimals));
-}
-
-void _write(dynamic value) {
+void _write(StringBuffer buffer, dynamic value) {
   buffer.write(value);
   buffer.write(" ");
 }
 
-void _end() {
+void _end(StringBuffer buffer) {
   buffer.write("; ");
 }
