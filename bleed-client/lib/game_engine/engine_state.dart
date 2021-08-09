@@ -7,3 +7,4 @@ Canvas globalCanvas;
 Size globalSize;
 double cameraX = 0;
 double cameraY = 0;
+double zoom = 1;

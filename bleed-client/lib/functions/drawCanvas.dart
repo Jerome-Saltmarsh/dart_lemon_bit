@@ -12,6 +12,8 @@ import 'drawBullet.dart';
 import 'drawGrenade.dart';
 import 'drawParticle.dart';
 
+
+
 void drawCanvas(Canvas canvass, Size _size) {
   if (!connected) return;
 
@@ -20,8 +22,8 @@ void drawCanvas(Canvas canvass, Size _size) {
     drawFrame++;
   }
 
-
   canvass.translate(-cameraX, -cameraY);
+  canvass.scale(zoom, zoom);
   drawTiles();
   try {
     drawPlayerHealth();
