@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'classes.dart';
-import 'constants.dart';
 import 'events.dart';
 import 'extensions/settings-extensions.dart';
 import 'maths.dart';

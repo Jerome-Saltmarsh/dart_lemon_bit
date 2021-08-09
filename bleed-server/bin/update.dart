@@ -1,10 +1,7 @@
 import 'classes.dart';
-import 'classes/Collision.dart';
-import 'common.dart';
 import 'compile.dart';
-import 'constants.dart';
-import 'enums.dart';
 import 'enums/GameEventType.dart';
+import 'enums.dart';
 import 'functions/setCharacterState.dart';
 import 'functions/updateCharacter.dart';
 import 'jobs.dart';

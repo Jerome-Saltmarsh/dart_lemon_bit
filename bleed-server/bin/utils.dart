@@ -4,7 +4,6 @@ import 'constants.dart';
 import 'enums.dart';
 import 'enums/GameEventType.dart';
 import 'enums/Weapons.dart';
-import 'functions/characterFireWeapon.dart';
 import 'functions/setCharacterState.dart';
 import 'instances/settings.dart';
 import 'maths.dart';
@@ -161,7 +160,7 @@ void revive(Character character) {
   character.state = CharacterState.Idle;
   character.health = character.maxHealth;
   character.x = giveOrTake(settingsPlayerStartRadius);
-  character.y = giveOrTake(settingsPlayerStartRadius);
+  character.y = tilesLeftY + giveOrTake(settingsPlayerStartRadius);
   character.collidable = true;
 }
 
