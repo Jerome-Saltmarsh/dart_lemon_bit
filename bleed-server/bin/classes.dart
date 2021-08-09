@@ -66,8 +66,10 @@ class Character extends GameObject {
   }
 }
 
+final Character _nonTarget = Character(x: 0, y: 0, weapon: Weapon.MachineGun, health: 0, maxHealth: 0, speed: 0, name: "");
+
 class Npc extends Character {
-  int targetId = -1;
+  Character target = _nonTarget;
   double xDes = 0;
   double yDes = 0;
 
@@ -85,12 +87,12 @@ class Npc extends Character {
             speed: zombieSpeed,
             name: "Npc");
 
-  get targetSet => targetId != -1;
+  get targetSet => target != _nonTarget;
 
   get destinationSet => xDes != 0;
 
   void clearTarget() {
-    targetId = -1;
+    target = _nonTarget;
   }
 
   void clearDestination() {

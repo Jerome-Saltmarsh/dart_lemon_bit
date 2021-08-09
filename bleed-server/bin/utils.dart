@@ -74,14 +74,6 @@ bool withinViewRange(Npc npc, GameObject target) {
   return distanceBetween(npc, target) < zombieViewRange;
 }
 
-Character? npcTarget(Npc npc) {
-  return findPlayerById(npc.targetId);
-}
-
-void npcClearTarget(Npc npc) {
-  npc.targetId = -1;
-}
-
 Npc findNpcById(int id) {
   return npcs.firstWhere((npc) => npc.id == id, orElse: () {
     throw Exception("could not find npc with id $id");

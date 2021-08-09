@@ -62,18 +62,8 @@ void updateNpcTargets() {
         continue;
       }
 
-      npc.targetId = players[p].id;
+      npc.target = players[p];
     }
-  }
-}
-
-void updateNpcTarget(Npc npc) {
-  for (Character player in players) {
-    if (player.dead) continue;
-    if (distanceBetween(npc, player) > zombieViewRange) continue;
-    npc.targetId = player.id;
-    dispatch(GameEventType.Zombie_Target_Acquired, npc.x, npc.y, 0, 0);
-    return;
   }
 }
 
@@ -139,27 +129,26 @@ void checkBulletCollision(List<Character> characters) {
 void updateNpc(Npc npc) {
   if (npc.dead) return;
 
+  // todo this belongs in update character
   if (npc.state == CharacterState.Striking) {
     if (npc.shotCoolDown-- > 0) return;
     setCharacterStateIdle(npc);
   }
 
   if (npc.targetSet) {
-    Character? target = npcTarget(npc);
-    if (target == null) {
+    if (!npc.target.active) {
       npc.clearTarget();
       npc.idle();
       return;
     }
-
-    characterFaceObject(npc, target);
-    double targetDistance = objectDistanceFrom(npc, target.x, target.y);
+    characterFaceObject(npc, npc.target);
+    double targetDistance = objectDistanceFrom(npc, npc.target.x, npc.target.y);
 
     if (targetDistance > settingsZombieStrikeRange) {
       npc.walk();
     } else {
       setCharacterState(npc, CharacterState.Striking);
-      changeCharacterHealth(target, -0.1);
+      changeCharacterHealth(npc.target, -zombieStrikeDamage);
       dispatch(GameEventType.Zombie_Strike, npc.x, npc.y, 0, 0);
     }
     return;
