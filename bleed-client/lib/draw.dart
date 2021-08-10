@@ -668,7 +668,7 @@ void drawCircleOutline(
   setColor(color);
   for (int i = 0; i <= sides; i++) {
     double a1 = i * r;
-    points.add(Offset(cos(a1) * radius - cameraX, sin(a1) * radius - cameraY));
+    points.add(Offset(cos(a1) * radius, sin(a1) * radius));
   }
   for (int i = 0; i < points.length - 1; i++) {
     globalCanvas.drawLine(points[i] + z, points[i + 1] + z, globalPaint);
