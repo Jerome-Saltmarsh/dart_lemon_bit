@@ -57,7 +57,7 @@ void drawCustomLine(double x1, double y1, double x2, double y2, Paint paint) {
 }
 
 Offset offset(double x, double y) {
-  return Offset(x - cameraX, y - cameraY);
+  return Offset(x, y);
 }
 
 void drawLineFrom(dynamic object, double x, double y) {

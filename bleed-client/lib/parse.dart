@@ -45,7 +45,7 @@ void parseState() {
 
       case ServerResponse.Error:
         print(event);
-        break;
+        return;
 
       case ServerResponse.Bullets:
         _parseBullets();

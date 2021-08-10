@@ -159,7 +159,7 @@ void main() {
             sendToClient('$errorIndex - game-not-found ; ');
             return;
           }
-
+          game.spawnRandomNpc();
           return;
 
         case ClientRequest.Player_Equip:
@@ -169,18 +169,18 @@ void main() {
             sendToClient('$errorIndex - game-not-found ; ');
             return;
           }
-          int id = int.parse(arguments[1]);
+          int id = int.parse(arguments[2]);
           Player? player = game.findPlayerById(id);
           if (player == null) {
             sendToClient('$errorIndex - player-not-found ; ');
             return;
           }
-          String uuid = arguments[2];
+          String uuid = arguments[3];
           if (uuid != player.uuid) {
             sendToClient('$errorIndex - invalid-uuid ; ');
             return;
           }
-          Weapon weapon = Weapon.values[int.parse(arguments[3])];
+          Weapon weapon = Weapon.values[int.parse(arguments[4])];
           if (player.stateDuration > 0) return;
           if (player.weapon == weapon) return;
           player.weapon = weapon;
