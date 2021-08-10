@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bleed_client/enums/Weapons.dart';
 import 'package:flutter/material.dart';
 import 'classes/Particle.dart';
 import 'classes/SpriteAnimation.dart';
@@ -34,16 +35,9 @@ List<double> grenades = [];
 List<SpriteAnimation> animations = [];
 int drawFrame = 0;
 bool debugMode = false;
-int playerId = idNotConnected;
-dynamic player;
-String playerUUID = "";
 int gameId = -1;
 int serverFramesMS = 0;
 int actualFPS;
-double playerHealth = 0;
-double playerMaxHealth = 0;
-int playerStamina = 0;
-int playerMaxStamina = 0;
 List<RSTransform> playersTransforms = [];
 List<Rect> playersRects = [];
 List<RSTransform> npcsTransforms = [];
@@ -61,4 +55,15 @@ int handgunRounds = 0;
 int handgunClipSize = 0;
 int handgunClips = 0;
 int handgunMaxClips = 0;
+
+// Player State
+int playerId = idNotConnected;
+String playerUUID = "";
+double playerHealth = 0;
+double playerMaxHealth = 0;
+int playerStamina = 0;
+int playerMaxStamina = 0;
+double playerX = -1;
+double playerY = -1;
+Weapon playerWeapon = Weapon.Unarmed;
 

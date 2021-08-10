@@ -1,3 +1,5 @@
+import 'package:bleed_client/utils.dart';
+
 import '../state.dart';
 
 void clearState(){
@@ -13,5 +15,6 @@ void clearState(){
   gameEvents.clear();
   playersTransforms.clear();
   tileTransforms.clear();
-  player = null;
+  playerX = -1;
+  playerY = -1;
 }

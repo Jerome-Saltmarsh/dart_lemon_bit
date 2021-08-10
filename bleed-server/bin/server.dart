@@ -62,6 +62,7 @@ void main() {
           compileTiles(buffer, gameManager.openWorldGame.tiles);
           compileState(gameManager.openWorldGame);
           buffer.write(gameManager.openWorldGame.compiled);
+          buffer.write('${ServerResponse.Player_Created.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ; ');
           sendToClient(buffer.toString());
           break;
 
@@ -69,26 +70,25 @@ void main() {
           int gameId = int.parse(arguments[1]);
           Game? game = gameManager.findGameById(gameId);
           if (game == null) {
-            sendToClient('game-not-found ; ');
+            sendToClient('${ServerResponse.Error.index} - game-not-found');
             return;
           }
           int id = int.parse(arguments[2]);
           Player? player = game.findPlayerById(id);
           if (player == null) {
-            sendToClient('player-not-found ; ');
+            sendToClient('${ServerResponse.Error.index} - player-not-found');
             return;
           }
           String uuid = arguments[3];
           if (uuid != player.uuid) {
-            sendToClient('invalid-uuid ; ');
+            sendToClient('${ServerResponse.Error.index} : invalid-player-uuid');
             return;
           }
-          player.lastEventFrame = frame;
-          CharacterState requestedState =
-              CharacterState.values[int.parse(arguments[3])];
+          player.lastEventFrame = 0;
+          CharacterState requestedState = CharacterState.values[int.parse(arguments[4])];
           Direction requestedDirection =
-              Direction.values[int.parse(arguments[4])];
-          double aim = double.parse(arguments[5]);
+              Direction.values[int.parse(arguments[5])];
+          double aim = double.parse(arguments[6]);
           player.aimAngle = aim;
           setDirection(player, requestedDirection);
           game.setCharacterState(player, requestedState);

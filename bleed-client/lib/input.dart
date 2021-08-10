@@ -30,9 +30,9 @@ bool get keyPressedReload => keyPressed(_keyReload);
 bool _throwingGrenade = false;
 
 void readPlayerInput() {
-  if (player == null) return;
-  double playerScreenX = player[x] - cameraX;
-  double playerScreenY = player[y] - cameraY;
+  if (!playerAssigned) return;
+  double playerScreenX = playerX - cameraX;
+  double playerScreenY = playerY - cameraY;
   double halfScreenWidth = globalSize.width * 0.5;
   double halfScreenHeight = globalSize.height * 0.5;
   double xOffset = halfScreenWidth - playerScreenX;

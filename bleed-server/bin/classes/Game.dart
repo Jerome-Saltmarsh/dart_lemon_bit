@@ -273,7 +273,7 @@ extension GameFunctions on Game {
   }
 
   void updatePlayer(Player player) {
-    if (frame - player.lastEventFrame > 5 && player.walking) {
+    if (player.lastEventFrame++ > 5 && player.walking) {
       setCharacterStateIdle(player);
     }
 
@@ -589,7 +589,7 @@ extension GameFunctions on Game {
 
   void jobRemoveDisconnectedPlayers() {
     for (int i = 0; i < players.length; i++) {
-      if (frame - players[i].lastEventFrame > settingsPlayerDisconnectFrames) {
+      if (players[i].lastEventFrame > settingsPlayerDisconnectFrames) {
         print('Removing disconnected player ${players[i].id}');
         players.removeAt(i);
         i--;

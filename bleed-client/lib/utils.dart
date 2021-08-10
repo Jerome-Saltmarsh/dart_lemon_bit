@@ -18,11 +18,11 @@ double getMouseRotation() {
 }
 
 double playerScreenPositionX() {
-  return player[x] - cameraX;
+  return playerX - cameraX;
 }
 
 double playerScreenPositionY() {
-  return player[y] - cameraY;
+  return playerY - cameraY;
 }
 
 dynamic getPlayerCharacter() {
@@ -32,11 +32,8 @@ dynamic getPlayerCharacter() {
   });
 }
 
-bool get playerAssigned => player != null;
+bool get playerAssigned => playerId >= 0;
 
-double get playerX => player[x];
-double get playerY => player[y];
-Weapon get playerWeapon => player[weapon];
 Weapon previousWeapon;
 
 bool isDead(dynamic character) {

@@ -170,6 +170,10 @@ Widget buildGameUI(BuildContext context) {
     );
   }
 
+  if (playerId == -1) {
+    return text("player id not assigned");
+  }
+
   if (framesSinceEvent > 30) {
     return Container(
       width: globalSize.width,

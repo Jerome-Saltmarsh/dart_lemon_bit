@@ -68,6 +68,10 @@ void parseState() {
         connecting = false;
         break;
 
+      case ServerResponse.Player_Created:
+        _parsePlayerCreated();
+        break;
+
       default:
         print("parser not implemented $serverResponse");
     }
@@ -105,6 +109,9 @@ void _parseTiles() {
 }
 
 void _parsePlayer() {
+  playerX = _consumeDouble();
+  playerY = _consumeDouble();
+  playerWeapon = _consumeWeapon();
   playerHealth = _consumeDouble();
   playerMaxHealth = _consumeDouble();
   int stamina = _consumeInt();
@@ -126,6 +133,14 @@ void _parseGrenades() {
   while (!_simiColonConsumed()) {
     grenades.add(_consumeDouble());
   }
+}
+
+void _parsePlayerCreated(){
+  print("_parsePlayerCreated()");
+  playerId = _consumeInt();
+  playerUUID = _consumeString();
+  playerX = _consumeDouble();
+  playerY = _consumeDouble();
 }
 
 void _next() {
@@ -199,8 +214,6 @@ void _parsePlayers() {
   while (index < players.length) {
     _cacheLast(players);
   }
-
-  player = getPlayerCharacter();
 }
 
 void _consumeEvents() {

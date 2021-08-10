@@ -25,8 +25,9 @@ void update() {
     updateParticles();
     updateCharacters();
 
-    if (playerAssigned) {
+    if (playerId >= 0) {
       sendRequestUpdatePlayer();
+      cameraCenter(playerX, playerY);
 
       // on player weapon changed
       if (previousWeapon != playerWeapon) {

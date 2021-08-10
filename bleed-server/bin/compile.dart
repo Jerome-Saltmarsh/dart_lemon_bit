@@ -63,6 +63,12 @@ String compileTiles(StringBuffer buffer, List<List<Tile>> tiles) {
 void compilePlayer(StringBuffer buffer, Player player) {
   buffer.write(ServerResponse.Player.index);
   buffer.write(_space);
+  buffer.write(player.x.toStringAsFixed(1));
+  buffer.write(_space);
+  buffer.write(player.y.toStringAsFixed(1));
+  buffer.write(_space);
+  buffer.write(player.weapon.index);
+  buffer.write(_space);
   buffer.write(player.health.toStringAsFixed(2));
   buffer.write(_space);
   buffer.write(player.maxHealth.toStringAsFixed(2));

@@ -15,9 +15,8 @@ import 'rects.dart';
 import 'state.dart';
 import 'utils.dart';
 
-void drawCharacterCircle(dynamic value, Color color) {
-  if (value == null) return;
-  drawCircle(value[x], value[y] + 12, 10, color);
+void drawCharacterCircle(double x, double y, Color color) {
+  drawCircle(x, y + 12, 10, color);
 }
 
 void drawCharacters() {
@@ -27,13 +26,12 @@ void drawCharacters() {
 }
 
 void drawNpcs() {
-  npcs.sort((a, b){
-    if(a[y] < b[y]) return -1;
+  npcs.sort((a, b) {
+    if (a[y] < b[y]) return -1;
     return 1;
   });
   drawList(npcs, npcsTransforms, npcsRects);
 }
-
 
 void drawCharacterList(List<dynamic> characters) {
   globalCanvas.drawAtlas(
@@ -80,8 +78,8 @@ void loadTileRects() {
 }
 
 void drawPlayers() {
-  players.sort((a, b){
-    if(a[y] < b[y]) return -1;
+  players.sort((a, b) {
+    if (a[y] < b[y]) return -1;
     return 1;
   });
   drawList(players, playersTransforms, playersRects);
@@ -641,11 +639,12 @@ void drawPlayerHealth() {
   double halfMaxHealth = playerMaxHealth * 0.5;
   if (health > 0.5) {
     drawCharacterCircle(
-        player,
+        playerX,
+        playerY,
         Color.lerp(Colors.yellow, Colors.green,
             (playerHealth - halfMaxHealth) / halfMaxHealth));
   } else {
-    drawCharacterCircle(player,
+    drawCharacterCircle(playerX, playerY,
         Color.lerp(Colors.red, Colors.yellow, playerHealth / halfMaxHealth));
   }
 }

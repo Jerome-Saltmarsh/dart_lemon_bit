@@ -5,13 +5,14 @@ class GameManager {
   List<Game> games = [];
   Game openWorldGame = Game();
 
-  GameManager(){
+  GameManager() {
     generateTiles(openWorldGame);
+    games.add(openWorldGame);
   }
 
   Game? findGameById(int id) {
-    for(Game game in games){
-      if(game.id == id){
+    for (Game game in games) {
+      if (game.id == id) {
         return game;
       }
     }
@@ -20,15 +21,14 @@ class GameManager {
 }
 
 extension GameManagerFunctions on GameManager {
-
-  Game createGame(){
+  Game createGame() {
     Game game = Game();
     generateTiles(game);
     games.add(game);
     return game;
   }
 
-  void updateAndCompileGames(){
+  void updateAndCompileGames() {
     games.forEach((game) => game.updateAndCompile());
   }
 }
