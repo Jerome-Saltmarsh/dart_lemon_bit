@@ -67,3 +67,5 @@ double playerX = -1;
 double playerY = -1;
 Weapon playerWeapon = Weapon.Unarmed;
 
+// TODO Expensive string build
+String get session => '$gameId $playerId $playerUUID';

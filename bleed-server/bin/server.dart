@@ -196,19 +196,19 @@ void main() {
             return;
           }
 
-          int id = int.parse(arguments[1]);
+          int id = int.parse(arguments[2]);
           Player? player = game.findPlayerById(id);
           if (player == null) {
             sendToClient('$errorIndex - player-not-found ; ');
             return;
           }
 
-          String uuid = arguments[2];
+          String uuid = arguments[3];
           if (uuid != player.uuid) {
             sendToClient('$errorIndex - invalid-uuid ; ');
             return;
           }
-          double strength = double.parse(arguments[3]);
+          double strength = double.parse(arguments[4]);
           game.throwGrenade(player.x, player.y, player.aimAngle, strength);
           return;
       }

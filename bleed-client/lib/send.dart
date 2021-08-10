@@ -8,8 +8,6 @@ import 'state.dart';
 
 StringBuffer _buffer = StringBuffer();
 const String _space = " ";
-// TODO Expensive string build
-String get session => '$gameId $playerId $playerUUID';
 
 void sendRequestRevive(){
   send('${ClientRequest.Player_Revive.index} $session');
