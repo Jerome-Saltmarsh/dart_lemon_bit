@@ -15,6 +15,8 @@ import 'state.dart';
 import 'update.dart';
 import 'utils.dart';
 
+const String _space = " ";
+
 void main() {
   print('Bleed Game Server Starting');
   initUpdateLoop();
@@ -32,21 +34,21 @@ void main() {
 
     void onEvent(requestD) {
       String requestString = requestD;
-      List<String> arguments = requestString.split(" ");
+      List<String> arguments = requestString.split(_space);
 
       if (arguments.isEmpty) {
-        sendToClient('${ServerResponse.Error} arguments required');
+        sendToClient('${ServerResponse.Error.index} arguments required');
         return;
       }
 
       int? clientRequestInt = int.tryParse(arguments[0]);
       if (clientRequestInt == null) {
-        sendToClient('${ServerResponse.Error} client request (int) required. Received $requestString');
+        sendToClient('${ServerResponse.Error.index} client request (int) required. Received $requestString');
         return;
       }
 
       if (clientRequestInt >= ClientRequest.values.length) {
-        sendToClient('${ServerResponse.Error} invalid client request int');
+        sendToClient('${ServerResponse.Error.index} invalid client request int');
         return;
       }
 
@@ -117,6 +119,10 @@ void main() {
           sendToClient(
               "game-joined ${game.id} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ; ");
           return;
+
+        case ClientRequest.Ping:
+          sendToClient('${ServerResponse.Pong.index} ;');
+          break;
 
         case ClientRequest.Player_Revive:
           int gameId = int.parse(arguments[1]);

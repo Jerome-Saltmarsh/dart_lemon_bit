@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bleed_client/enums/ClientRequest.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -39,7 +40,7 @@ void connect(String uri) {
   connecting = true;
   _webSocketChannel = WebSocketChannel.connect(Uri.parse(uri));
   _webSocketChannel.stream.listen(_onEvent, onError: _onError, onDone: _onDone);
-  _webSocketChannel.sink.add('get-tiles');
+  _webSocketChannel.sink.add(ClientRequest.Ping.index);
 }
 
 void send(String message) {

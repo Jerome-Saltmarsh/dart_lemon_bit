@@ -1,23 +1,22 @@
 
+import 'package:bleed_client/enums/ClientRequest.dart';
+
 import 'connection.dart';
 import 'enums/Weapons.dart';
 import 'state.dart';
 
 
 StringBuffer _buffer = StringBuffer();
-
-void sendRequestTiles(){
-  print('sendRequestTiles()');
-  send('get-tiles');
-}
+const String _space = " ";
+// TODO Expensive string build
+String get session => '$gameId $playerId $playerUUID';
 
 void sendRequestRevive(){
-  print('sendRequestRevive()');
-  send('revive: $playerId $playerUUID');
+  send('${ClientRequest.Player_Revive.index} $session');
 }
 
 void sendRequestEquip(Weapon weapon) {
-  send('equip $playerId $playerUUID ${weapon.index}');
+  send('${ClientRequest.Player_Equip.index} $session ${weapon.index}');
 }
 
 void sendRequestEquipHandgun() {
@@ -38,7 +37,8 @@ void sendRequestEquipMachineGun() {
 
 void sendRequestUpdatePlayer() {
   _buffer.clear();
-  _write("u:");
+  _write(ClientRequest.Game_Update.index);
+  _write(gameId);
   _write(playerId);
   _write(playerUUID);
   _write(requestCharacterState);
@@ -63,6 +63,9 @@ void sendRequestClearNpcs() {
 
 void _write(dynamic value) {
   _buffer.write(value);
-  _buffer.write(" ");
+  _buffer.write(_space);
 }
 
+void request(ClientRequest request, String value){
+  send('${request.index} $value');
+}

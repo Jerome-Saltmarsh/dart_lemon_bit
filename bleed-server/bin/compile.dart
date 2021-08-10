@@ -20,6 +20,7 @@ void compileState(Game game) {
 
 void _compileGameEvents(StringBuffer buffer, List<GameEvent> gameEvents) {
   buffer.write(ServerResponse.Game_Events.index);
+  buffer.write(_space);
   for (GameEvent gameEvent in gameEvents) {
     _write(buffer, gameEvent.id);
     _write(buffer, gameEvent.type.index);
@@ -33,6 +34,7 @@ void _compileGameEvents(StringBuffer buffer, List<GameEvent> gameEvents) {
 
 void _compileGrenades(StringBuffer buffer, List<Grenade> grenades){
   buffer.write(ServerResponse.Grenades.index);
+  buffer.write(_space);
   for(Grenade grenade in grenades){
     _write(buffer, grenade.x.toInt());
     _write(buffer, grenade.y.toInt());
