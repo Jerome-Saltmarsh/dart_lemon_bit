@@ -1,14 +1,9 @@
+import '../enums/GameType.dart';
 import '../utils.dart';
 import 'Game.dart';
 
 class GameManager {
   List<Game> games = [];
-  Game openWorldGame = Game();
-
-  GameManager() {
-    generateTiles(openWorldGame);
-    games.add(openWorldGame);
-  }
 
   Game? findGameById(String id) {
     for (Game game in games) {
@@ -18,17 +13,28 @@ class GameManager {
     }
     return null;
   }
-}
 
-extension GameManagerFunctions on GameManager {
-  Game createGame() {
-    Game game = Game();
-    generateTiles(game);
-    games.add(game);
-    return game;
+  Game getAvailableDeathMatch() {
+    for (Game game in games) {
+      if (game.type != GameType.DeathMatch) continue;
+      if (game.players.length < game.maxPlayers) {
+        return game;
+      }
+    }
+    Game deathMatch = Game(GameType.DeathMatch, generateTiles(), 16);
+    games.add(deathMatch);
+    return deathMatch;
   }
 
-  void updateAndCompileGames() {
-    games.forEach((game) => game.updateAndCompile());
+  Game getAvailableOpenWorld() {
+    for (Game game in games) {
+      if (game.type != GameType.OpenWorld) continue;
+      if (game.players.length < game.maxPlayers) {
+        return game;
+      }
+    }
+    Game deathMatch = Game(GameType.OpenWorld, generateTiles(), 64);
+    games.add(deathMatch);
+    return deathMatch;
   }
 }

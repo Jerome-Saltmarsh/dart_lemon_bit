@@ -141,24 +141,23 @@ double tilesBottomY = 0;
 double tilesLeftX = 0;
 double tilesLeftY = 0;
 
-void generateTiles(Game game) {
-  game.tiles.clear();
+List<List<Tile>> generateTiles() {
+  List<List<Tile>> tiles = [];
   for (int x = 0; x < tilesX; x++) {
     List<Tile> column = [];
-    game.tiles.add(column);
+    tiles.add(column);
     for (int y = 0; y < tilesY; y++) {
       column.add(Tile.Concrete);
     }
   }
-  game.tiles[4][4] = Tile.Grass;
-  game.tiles[4][5] = Tile.Grass;
-
+  tiles[4][4] = Tile.Grass;
+  tiles[4][5] = Tile.Grass;
   tilesLeftX = -24 * tilesX.toDouble();
   tilesLeftY = 24 * tilesY.toDouble();
   tilesRightX = 24 * tilesX.toDouble();
   tilesRightY = 24 * tilesY.toDouble();
   tilesBottomY = 48 * tilesY.toDouble();
-
+  return tiles;
 }
 
 double getWeaponDamage(Weapon weapon){

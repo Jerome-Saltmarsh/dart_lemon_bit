@@ -5,6 +5,7 @@ import '../compile.dart';
 import '../constants.dart';
 import '../enums.dart';
 import '../enums/GameEventType.dart';
+import '../enums/GameType.dart';
 import '../enums/Weapons.dart';
 import '../extensions/settings-extensions.dart';
 import '../functions/applyForce.dart';
@@ -19,14 +20,17 @@ import '../utils.dart';
 class Game {
   static int _id = 0;
   final String id = (_id++).toString();
+  final GameType type;
+  final List<List<Tile>> tiles;
+  final int maxPlayers;
   List<Npc> npcs = [];
   List<Player> players = [];
   List<Bullet> bullets = [];
   List<Grenade> grenades = [];
   List<GameEvent> gameEvents = [];
-  List<List<Tile>> tiles = [];
   String compiled = "";
   StringBuffer buffer = StringBuffer();
+  Game(this.type, this.tiles, this.maxPlayers);
 }
 
 extension GameFunctions on Game {

@@ -5,6 +5,7 @@ import 'package:bleed_client/game_engine/game_widget.dart';
 
 import 'constants.dart';
 import 'enums.dart';
+import 'enums/GameError.dart';
 import 'enums/GameEventType.dart';
 import 'enums/Weapons.dart';
 import 'functions/onGameEvent.dart';
@@ -44,7 +45,8 @@ void parseState() {
         break;
 
       case ServerResponse.Error:
-        print(event);
+        GameError error = _consumeError();
+        print(error);
         return;
 
       case ServerResponse.Bullets:
@@ -214,6 +216,10 @@ void _parsePlayers() {
   while (index < players.length) {
     _cacheLast(players);
   }
+}
+
+GameError _consumeError(){
+  return GameError.values[_consumeInt()];
 }
 
 void _consumeEvents() {

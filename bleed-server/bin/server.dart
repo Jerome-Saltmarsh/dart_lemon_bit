@@ -6,6 +6,7 @@ import 'classes/Game.dart';
 import 'classes.dart';
 import 'compile.dart';
 import 'enums/ClientRequest.dart';
+import 'enums/GameError.dart';
 import 'enums/ServerResponse.dart';
 import 'enums/Weapons.dart';
 import 'enums.dart';
@@ -32,25 +33,51 @@ void main() {
       sendToClient(buffer.toString());
     }
 
+    void joinGame(Game game){
+      Player player = game.spawnPlayer(name: 'test');
+      StringBuffer buffer = StringBuffer();
+      compilePlayer(buffer, player);
+      compileTiles(buffer, game.tiles);
+      compileState(game);
+      buffer.write(game.compiled);
+      buffer.write(
+          '${ServerResponse.Player_Created.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ; ');
+      sendToClient(buffer.toString());
+    }
+
+    void error(GameError error){
+      sendToClient('$errorIndex ${error.index}');
+    }
+
+    void errorGameNotFound(){
+      error(GameError.GameNotFound);
+    }
+
+    void errorPlayerNotFound(){
+      error(GameError.PlayerNotFound);
+    }
+
+    void errorInvalidPlayerUUID(){
+      error(GameError.InvalidPlayerUUID);
+    }
+
     void onEvent(requestD) {
       String requestString = requestD;
       List<String> arguments = requestString.split(_space);
 
       if (arguments.isEmpty) {
-        sendToClient('$errorIndex arguments required');
+        error(GameError.ClientRequestArgumentsEmpty);
         return;
       }
 
       int? clientRequestInt = int.tryParse(arguments[0]);
       if (clientRequestInt == null) {
-        sendToClient(
-            '$errorIndex client request (int) required. Received $requestString');
+        error(GameError.ClientRequestRequired);
         return;
       }
 
       if (clientRequestInt >= ClientRequest.values.length) {
-        sendToClient(
-            '$errorIndex invalid client request int');
+        error(GameError.UnrecognizedClientRequest);
         return;
       }
 
@@ -58,30 +85,23 @@ void main() {
 
       switch (request) {
         case ClientRequest.Game_Join_Open_World:
-          Player player = gameManager.openWorldGame.spawnPlayer(name: 'test');
-          StringBuffer buffer = StringBuffer();
-          compilePlayer(buffer, player);
-          compileTiles(buffer, gameManager.openWorldGame.tiles);
-          compileState(gameManager.openWorldGame);
-          buffer.write(gameManager.openWorldGame.compiled);
-          buffer.write(
-              '${ServerResponse.Player_Created.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ; ');
-          sendToClient(buffer.toString());
+          Game openWorld = gameManager.getAvailableOpenWorld();
+          joinGame(openWorld);
           break;
 
         case ClientRequest.Game_Update:
           Game? game = gameManager.findGameById(arguments[1]);
           if (game == null) {
-            sendToClient('$errorIndex - game-not-found');
+            errorGameNotFound();
             return;
           }
           Player? player = game.findPlayerById(int.parse(arguments[2]));
           if (player == null) {
-            sendToClient('$errorIndex - player-not-found');
+            errorPlayerNotFound();
             return;
           }
           if (arguments[3] != player.uuid) {
-            sendToClient('$errorIndex : invalid-player-uuid');
+            errorInvalidPlayerUUID();
             return;
           }
           player.lastEventFrame = 0;
@@ -95,28 +115,32 @@ void main() {
           return;
 
         case ClientRequest.Game_Create:
-          print("ClientRequest.Game_Create");
-          Game game = Game();
-          generateTiles(game);
-          gameManager.games.add(game);
-          sendToClient('game-created ${game.id}');
+          // print("ClientRequest.Game_Create");
+          // Game game = Game(GameType.DeathMatch);
+          // generateTiles(game);
+          // gameManager.games.add(game);
+          // sendToClient('game-created ${game.id}');
           return;
 
-        case ClientRequest.Game_Join:
-          print("ClientRequest.Game_Join");
-          if (arguments.length <= 1) {
-            sendToClient('$errorIndex game uuid required');
-            return;
-          }
-          String gameId = arguments[1];
-          Game? game = gameManager.findGameById(gameId);
-          if (game == null) {
-            sendToClient('$errorIndex : game not found: $gameId ;');
-            return;
-          }
-          Player player = game.spawnPlayer(name: "Test");
-          sendToClient("game-joined ${game.id} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ; ");
-          return;
+        case ClientRequest.Game_Join_Random:
+          Game deathMatch = gameManager.getAvailableDeathMatch();
+          joinGame(deathMatch);
+          break;
+
+        // case ClientRequest.Game_Join:
+        //   if (arguments.length <= 1) {
+        //     error('game uuid required');
+        //     return;
+        //   }
+        //   String gameId = arguments[1];
+        //   Game? game = gameManager.findGameById(gameId);
+        //   if (game == null) {
+        //     error('game not found: $gameId ;');
+        //     return;
+        //   }
+        //   Player player = game.spawnPlayer(name: "Test");
+        //   sendToClient("game-joined ${game.id} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ; ");
+        //   return;
 
         case ClientRequest.Ping:
           sendToClient('${ServerResponse.Pong.index} ;');
@@ -126,22 +150,22 @@ void main() {
           String gameId = arguments[1];
           Game? game = gameManager.findGameById(gameId);
           if (game == null) {
-            sendToClient('$errorIndex - game-not-found ; ');
+            errorGameNotFound();
             return;
           }
           int id = int.parse(arguments[2]);
           Player? player = game.findPlayerById(id);
           if (player == null) {
-            sendToClient('$errorIndex - player-not-found ; ');
+            errorPlayerNotFound();
             return;
           }
           String uuid = arguments[3];
           if (uuid != player.uuid) {
-            sendToClient('$errorIndex - invalid-uuid ; ');
+            errorInvalidPlayerUUID();
             return;
           }
           if (player.alive) {
-            sendToClient('$errorIndex - player-alive ; ');
+            error(GameError.PlayerStillAlive);
             return;
           }
           revive(player);
@@ -151,7 +175,7 @@ void main() {
           String gameId = arguments[1];
           Game? game = gameManager.findGameById(gameId);
           if (game == null) {
-            sendToClient('$errorIndex - game-not-found ; ');
+            errorGameNotFound();
             return;
           }
           game.spawnRandomNpc();
@@ -161,18 +185,18 @@ void main() {
           String gameId = arguments[1];
           Game? game = gameManager.findGameById(gameId);
           if (game == null) {
-            sendToClient('$errorIndex - game-not-found ; ');
+            errorGameNotFound();
             return;
           }
           int id = int.parse(arguments[2]);
           Player? player = game.findPlayerById(id);
           if (player == null) {
-            sendToClient('$errorIndex - player-not-found ; ');
+            errorPlayerNotFound();
             return;
           }
           String uuid = arguments[3];
           if (uuid != player.uuid) {
-            sendToClient('$errorIndex - invalid-uuid ; ');
+            errorInvalidPlayerUUID();
             return;
           }
           Weapon weapon = Weapon.values[int.parse(arguments[4])];
@@ -180,27 +204,26 @@ void main() {
           if (player.weapon == weapon) return;
           player.weapon = weapon;
           game.setCharacterState(player, CharacterState.ChangingWeapon);
-          print('player equipped $weapon');
           return;
 
         case ClientRequest.Player_Throw_Grenade:
           String gameId = arguments[1];
           Game? game = gameManager.findGameById(gameId);
           if (game == null) {
-            sendToClient('$errorIndex - game-not-found ; ');
+            error(GameError.GameNotFound);
             return;
           }
 
           int id = int.parse(arguments[2]);
           Player? player = game.findPlayerById(id);
           if (player == null) {
-            sendToClient('$errorIndex - player-not-found ; ');
+            error(GameError.PlayerNotFound);
             return;
           }
 
           String uuid = arguments[3];
           if (uuid != player.uuid) {
-            sendToClient('$errorIndex - invalid-uuid ; ');
+            error(GameError.InvalidPlayerUUID);
             return;
           }
           double strength = double.parse(arguments[4]);

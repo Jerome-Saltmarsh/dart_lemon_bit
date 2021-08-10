@@ -160,12 +160,14 @@ Widget buildGameUI(BuildContext context) {
   if (gameId < 0) {
     return column(
       [
-        button('Play Open World', (){
+        button('Open World', (){
           send(ClientRequest.Game_Join_Open_World.index.toString());
         }),
-        button('Join Random', (){}),
-        button('Create Game', (){}),
-        button('Join Game', (){})
+        button('Death Match', (){
+          send(ClientRequest.Game_Join_Random.index.toString());
+        }),
+        // button('Create Game', (){}),
+        // button('Join Game', (){})
       ]
     );
   }
