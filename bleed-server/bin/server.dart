@@ -1,31 +1,27 @@
-
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'classes/Game.dart';
 import 'classes.dart';
 import 'compile.dart';
+import 'enums/ClientRequest.dart';
+import 'enums/ServerResponse.dart';
 import 'enums/Weapons.dart';
 import 'enums.dart';
-import 'instances/game.dart';
+import 'instances/gameManager.dart';
 import 'settings.dart';
 import 'state.dart';
 import 'update.dart';
 import 'utils.dart';
 
 void main() {
-  print('starting web socket server');
-  generateTiles(game);
+  print('Bleed Game Server Starting');
   initUpdateLoop();
-  // initEvents();
 
-  var handler = webSocketHandler((webSocket) {
+  var handler = webSocketHandler((WebSocketChannel webSocket) {
     void sendToClient(String response) {
       webSocket.sink.add(response);
-    }
-
-    void sendCompiledState(Game game) {
-      sendToClient(game.compiled);
     }
 
     void sendCompiledPlayerState(Game game, Player player) {
@@ -34,117 +30,173 @@ void main() {
       sendToClient(buffer.toString());
     }
 
-    void handleRequestSpawn() {
-      var player = game.spawnPlayer(name: "Test");
-      String response =
-          "id: ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ; ";
-      sendToClient(response);
-      return;
-    }
-
     void onEvent(requestD) {
-      String request = requestD;
+      String requestString = requestD;
+      List<String> arguments = requestString.split(" ");
 
-      if (request.startsWith("u:")) {
-        List<String> attributes = request.split(" ");
-        int id = int.parse(attributes[1]);
-        Player? player = game.findPlayerById(id);
-        if (player == null) {
-          sendToClient('player-not-found ; ');
-          return;
-        }
-        String uuid = attributes[2];
-        if (uuid != player.uuid) {
-          sendToClient('invalid-uuid ; ');
-          return;
-        }
-        player.lastEventFrame = frame;
-        CharacterState requestedState =
-            CharacterState.values[int.parse(attributes[3])];
-        Direction requestedDirection =
-            Direction.values[int.parse(attributes[4])];
-        double aim = double.parse(attributes[5]);
-        player.aimAngle = aim;
-        setDirection(player, requestedDirection);
-        game.setCharacterState(player, requestedState);
-        sendCompiledPlayerState(game, player);
+      if (arguments.isEmpty) {
+        sendToClient('${ServerResponse.Error} arguments required');
         return;
-      }
-      if (request.startsWith('revive:')) {
-        List<String> attributes = request.split(" ");
-        int id = int.parse(attributes[1]);
-        Player? player = game.findPlayerById(id);
-        if (player == null) {
-          sendToClient('player-not-found ; ');
-          return;
-        }
-        String uuid = attributes[2];
-        if (uuid != player.uuid) {
-          sendToClient('invalid-uuid ; ');
-          return;
-        }
-        if (player.alive) {
-          sendToClient('player-alive ;');
-          return;
-        }
-        revive(player);
       }
 
-      if (request == "spawn") {
-        handleRequestSpawn();
+      int? clientRequestInt = int.tryParse(arguments[0]);
+      if (clientRequestInt == null) {
+        sendToClient('${ServerResponse.Error} client request (int) required. Received $requestString');
         return;
       }
-      if (request == "spawn-npc") {
-        print("received spawn npc request. Npcs: ${game.npcs.length}");
-        game.spawnRandomNpc();
+
+      if (clientRequestInt >= ClientRequest.values.length) {
+        sendToClient('${ServerResponse.Error} invalid client request int');
         return;
       }
-      if (request == "clear-npcs") {
-        print("received clear npcs request");
-        game.clearNpcs();
-      }
-      if (request == "update") {
-        sendCompiledState(game);
-        return;
-      }
-      if (request.startsWith('equip')) {
-        List<String> attributes = request.split(" ");
-        int id = int.parse(attributes[1]);
-        Player? player = game.findPlayerById(id);
-        if (player == null) {
-          sendToClient('player-not-found ; ');
+
+      ClientRequest request = ClientRequest.values[clientRequestInt];
+
+      switch (request) {
+        case ClientRequest.Game_Join_Open_World:
+          Player player = gameManager.openWorldGame.spawnPlayer(name: 'test');
+          StringBuffer buffer = StringBuffer();
+          compilePlayer(buffer, player);
+          compileTiles(buffer, gameManager.openWorldGame.tiles);
+          compileState(gameManager.openWorldGame);
+          buffer.write(gameManager.openWorldGame.compiled);
+          sendToClient(buffer.toString());
+          break;
+
+        case ClientRequest.Game_Update:
+          int gameId = int.parse(arguments[1]);
+          Game? game = gameManager.findGameById(gameId);
+          if (game == null) {
+            sendToClient('game-not-found ; ');
+            return;
+          }
+          int id = int.parse(arguments[2]);
+          Player? player = game.findPlayerById(id);
+          if (player == null) {
+            sendToClient('player-not-found ; ');
+            return;
+          }
+          String uuid = arguments[3];
+          if (uuid != player.uuid) {
+            sendToClient('invalid-uuid ; ');
+            return;
+          }
+          player.lastEventFrame = frame;
+          CharacterState requestedState =
+              CharacterState.values[int.parse(arguments[3])];
+          Direction requestedDirection =
+              Direction.values[int.parse(arguments[4])];
+          double aim = double.parse(arguments[5]);
+          player.aimAngle = aim;
+          setDirection(player, requestedDirection);
+          game.setCharacterState(player, requestedState);
+          sendCompiledPlayerState(game, player);
           return;
-        }
-        String uuid = attributes[2];
-        if (uuid != player.uuid) {
-          sendToClient('invalid-uuid ; ');
+
+        case ClientRequest.Game_Create:
+          print("ClientRequest.Game_Create");
+          Game game = Game();
+          generateTiles(game);
+          gameManager.games.add(game);
+          sendToClient('game-created ${game.id}');
           return;
-        }
-        Weapon weapon = Weapon.values[int.parse(attributes[3])];
-        if(player.stateDuration > 0) return;
-        if(player.weapon == weapon) return;
-        player.weapon = weapon;
-        game.setCharacterState(player, CharacterState.ChangingWeapon);
-        print('player equipped $weapon');
-      }
-      if (request.startsWith('grenade')) {
-        List<String> attributes = request.split(" ");
-        int id = int.parse(attributes[1]);
-        Player? player = game.findPlayerById(id);
-        if (player == null) {
-          sendToClient('player-not-found ; ');
+
+        case ClientRequest.Game_Join:
+          print("ClientRequest.Game_Join");
+          if (arguments.length <= 1) {
+            sendToClient('game-join-error: game uuid required');
+            return;
+          }
+          int gameUuid = int.parse(arguments[1]);
+          Game? game = gameManager.findGameById(gameUuid);
+          if (game == null) {
+            sendToClient('game-join-error: game not found: $gameUuid');
+            return;
+          }
+          Player player = game.spawnPlayer(name: "Test");
+          sendToClient(
+              "game-joined ${game.id} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ; ");
           return;
-        }
-        String uuid = attributes[2];
-        if (uuid != player.uuid) {
-          sendToClient('invalid-uuid ; ');
+
+        case ClientRequest.Player_Revive:
+          int gameId = int.parse(arguments[1]);
+          Game? game = gameManager.findGameById(gameId);
+          if (game == null) {
+            sendToClient('game-not-found ; ');
+            return;
+          }
+          int id = int.parse(arguments[2]);
+          Player? player = game.findPlayerById(id);
+          if (player == null) {
+            sendToClient('player-not-found ; ');
+            return;
+          }
+          String uuid = arguments[3];
+          if (uuid != player.uuid) {
+            sendToClient('invalid-uuid ; ');
+            return;
+          }
+          if (player.alive) {
+            sendToClient('player-alive ;');
+            return;
+          }
+          revive(player);
           return;
-        }
-        double strength = double.parse(attributes[3]);
-        game.throwGrenade(player.x, player.y, player.aimAngle, strength);
-      }
-      if (request == 'get-tiles') {
-        sendToClient(compileTiles(StringBuffer(), game.tiles));
+
+        case ClientRequest.Spawn_Npc:
+        // print("received spawn npc request. Npcs: ${game.npcs.length}");
+        // game.spawnRandomNpc();
+          return;
+
+        case ClientRequest.Player_Equip:
+          int gameId = int.parse(arguments[1]);
+          Game? game = gameManager.findGameById(gameId);
+          if (game == null) {
+            sendToClient('game-not-found ; ');
+            return;
+          }
+          int id = int.parse(arguments[1]);
+          Player? player = game.findPlayerById(id);
+          if (player == null) {
+            sendToClient('player-not-found ; ');
+            return;
+          }
+          String uuid = arguments[2];
+          if (uuid != player.uuid) {
+            sendToClient('invalid-uuid ; ');
+            return;
+          }
+          Weapon weapon = Weapon.values[int.parse(arguments[3])];
+          if (player.stateDuration > 0) return;
+          if (player.weapon == weapon) return;
+          player.weapon = weapon;
+          game.setCharacterState(player, CharacterState.ChangingWeapon);
+          print('player equipped $weapon');
+          return;
+
+        case ClientRequest.Player_Throw_Grenade:
+          int gameId = int.parse(arguments[1]);
+          Game? game = gameManager.findGameById(gameId);
+          if (game == null) {
+            sendToClient('game-not-found ; ');
+            return;
+          }
+
+          int id = int.parse(arguments[1]);
+          Player? player = game.findPlayerById(id);
+          if (player == null) {
+            sendToClient('player-not-found ; ');
+            return;
+          }
+
+          String uuid = arguments[2];
+          if (uuid != player.uuid) {
+            sendToClient('invalid-uuid ; ');
+            return;
+          }
+          double strength = double.parse(arguments[3]);
+          game.throwGrenade(player.x, player.y, player.aimAngle, strength);
+          return;
       }
     }
 

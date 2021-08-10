@@ -3,7 +3,6 @@ import 'classes/Game.dart';
 import 'common.dart';
 import 'constants.dart';
 import 'enums.dart';
-import 'enums/GameEventType.dart';
 import 'enums/Weapons.dart';
 import 'instances/settings.dart';
 import 'maths.dart';

@@ -1,18 +1,31 @@
 import 'classes/Game.dart';
 import 'classes.dart';
-import 'instances/game.dart';
-import 'jobs.dart';
+import 'instances/gameManager.dart';
 import 'language.dart';
 import 'maths.dart';
-import 'settings.dart';
 import 'state.dart';
 
 void initUpdateLoop() {
+  print("initUpdateLoop()");
   periodic(fixedUpdate, ms: 1000 ~/ 30);
   periodic(jobNpcWander, seconds: 3);
   periodic(jobRemoveDisconnectedPlayers, seconds: 5);
   periodic(updateNpcTargets, ms: 500);
 }
+
+void updateNpcTargets(){
+  gameManager.games.forEach((game) => game.updateNpcTargets());
+}
+
+void jobRemoveDisconnectedPlayers(){
+  gameManager.games.forEach((game) => game.jobRemoveDisconnectedPlayers());
+}
+
+void jobNpcWander(){
+  gameManager.games.forEach((game) => game.jobNpcWander());
+}
+
+
 
 void fixedUpdate() {
   frame++;
@@ -22,31 +35,7 @@ void fixedUpdate() {
     fps = 1000 ~/ frameDuration.inMilliseconds;
   }
   frameTime = now;
-  game.updateAndCompile();
-}
-
-void updateNpcTargets() {
-  int minP = 0;
-  Npc npc;
-
-  for (int i = 0; i < game.npcs.length; i++) {
-    if (game.npcs[i].targetSet) continue;
-    npc = game.npcs[i];
-    for (int p = minP; p < game.players.length; p++) {
-      if (game.players[p].x < npc.x - zombieViewRange) {
-        minP++;
-        break;
-      }
-      if (game.players[p].x > npc.x + zombieViewRange) {
-        break;
-      }
-      if (abs(game.players[p].y - npc.y) > zombieViewRange) {
-        continue;
-      }
-
-      npc.target = game.players[p];
-    }
-  }
+  gameManager.games.forEach((game) => game.updateAndCompile());
 }
 
 

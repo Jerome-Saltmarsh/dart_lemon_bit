@@ -17,6 +17,8 @@ import 'drawParticle.dart';
 void drawCanvas(Canvas canvass, Size _size) {
   if (!connected) return;
 
+  if (gameId < 0) return;
+
   frameRateValue++;
   if (frameRateValue % frameRate == 0) {
     drawFrame++;

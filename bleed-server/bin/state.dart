@@ -1,7 +1,5 @@
 import 'package:uuid/uuid.dart';
 
-import 'enums.dart';
-
 int frame = 0;
 DateTime frameTime = DateTime.now();
 Duration frameDuration = Duration();

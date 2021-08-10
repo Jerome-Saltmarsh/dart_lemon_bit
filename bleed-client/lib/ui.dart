@@ -1,3 +1,4 @@
+import 'package:bleed_client/enums/ClientRequest.dart';
 import 'package:flutter/material.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
@@ -153,6 +154,19 @@ Widget buildGameUI(BuildContext context) {
           button('FULLSCREEN', requestFullScreen, fontSize: 21)
         ]),
       ]),
+    );
+  }
+
+  if (gameId < 0) {
+    return column(
+      [
+        button('Play Open World', (){
+          send(ClientRequest.Game_Join_Open_World.index.toString());
+        }),
+        button('Join Random', (){}),
+        button('Create Game', (){}),
+        button('Join Game', (){})
+      ]
     );
   }
 

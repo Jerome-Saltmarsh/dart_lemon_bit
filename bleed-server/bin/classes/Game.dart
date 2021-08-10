@@ -1,4 +1,3 @@
-
 import 'dart:math';
 
 import '../classes.dart';
@@ -18,7 +17,8 @@ import '../update.dart';
 import '../utils.dart';
 
 class Game {
-  String uuid = uuidGenerator.v4();
+  static int _id = 0;
+  final int id = _id++;
   List<Npc> npcs = [];
   List<Player> players = [];
   List<Bullet> bullets = [];
@@ -30,8 +30,7 @@ class Game {
 }
 
 extension GameFunctions on Game {
-
-  void updateAndCompile(){
+  void updateAndCompile() {
     updateCharacters();
     updateCollisions();
     updateBullets();
@@ -115,7 +114,7 @@ extension GameFunctions on Game {
     switch (character.weapon) {
       case Weapon.HandGun:
         character.stateDuration = settingsClipEmptyCooldown;
-        if(character.handgunAmmunition.rounds <= 0){
+        if (character.handgunAmmunition.rounds <= 0) {
           dispatch(GameEventType.Clip_Empty, x, y, 0, 0);
           return;
         }
@@ -134,19 +133,24 @@ extension GameFunctions on Game {
         Bullet bullet = bullets.last;
         character.state = CharacterState.Firing;
         character.stateDuration = shotgunCoolDown;
-        dispatch(GameEventType.Shotgun_Fired, character.x, character.y, bullet.xv, bullet.yv);
+        dispatch(GameEventType.Shotgun_Fired, character.x, character.y,
+            bullet.xv, bullet.yv);
         break;
       case Weapon.SniperRifle:
         Bullet bullet = spawnBullet(character);
         character.state = CharacterState.Firing;
-        character.stateDuration = settingsSniperCooldown;;
-        dispatch(GameEventType.SniperRifle_Fired, character.x, character.y, bullet.xv, bullet.yv);
+        character.stateDuration = settingsSniperCooldown;
+        ;
+        dispatch(GameEventType.SniperRifle_Fired, character.x, character.y,
+            bullet.xv, bullet.yv);
         break;
       case Weapon.MachineGun:
         Bullet bullet = spawnBullet(character);
         character.state = CharacterState.Firing;
-        character.stateDuration = settings.machineGunCoolDown;;
-        dispatch(GameEventType.MachineGun_Fired, character.x, character.y, bullet.xv, bullet.yv);
+        character.stateDuration = settings.machineGunCoolDown;
+        ;
+        dispatch(GameEventType.MachineGun_Fired, character.x, character.y,
+            bullet.xv, bullet.yv);
         break;
     }
   }
@@ -158,7 +162,7 @@ extension GameFunctions on Game {
 
     switch (value) {
       case CharacterState.Running:
-        if (character is Player && character.stamina <= minStamina){
+        if (character is Player && character.stamina <= minStamina) {
           character.state = CharacterState.Walking;
           return;
         }
@@ -173,7 +177,7 @@ extension GameFunctions on Game {
         character.accuracy = 0;
         break;
       case CharacterState.Firing:
-      // TODO Fix hack
+        // TODO Fix hack
         characterFireWeapon(character as Player);
         break;
       case CharacterState.Striking:
@@ -186,7 +190,7 @@ extension GameFunctions on Game {
     character.state = value;
   }
 
-  void setCharacterStateIdle(Character character){
+  void setCharacterStateIdle(Character character) {
     setCharacterState(character, CharacterState.Idle);
   }
 
@@ -223,29 +227,33 @@ extension GameFunctions on Game {
     checkBulletCollision(players);
   }
 
-  void spawnExplosion(double x, double y){
+  void spawnExplosion(double x, double y) {
     dispatch(GameEventType.Explosion, x, y, 0, 0);
-    for(Character character in npcs){
-      if(objectDistanceFrom(character, x, y) > settingsGrenadeExplosionRadius) continue;
+    for (Character character in npcs) {
+      if (objectDistanceFrom(character, x, y) > settingsGrenadeExplosionRadius)
+        continue;
       double rotation = radiansBetween2(character, x, y);
       double magnitude = 10;
       applyForce(character, rotation + pi, magnitude);
 
-      if(character.alive){
+      if (character.alive) {
         changeCharacterHealth(character, -settingsGrenadeExplosionDamage);
 
-        if(!character.alive){
-
-          double forceX = clampMagnitudeX(character.x - x, character.y - y, magnitude);
-          double forceY = clampMagnitudeY(character.x - x, character.y - y, magnitude);
+        if (!character.alive) {
+          double forceX =
+              clampMagnitudeX(character.x - x, character.y - y, magnitude);
+          double forceY =
+              clampMagnitudeY(character.x - x, character.y - y, magnitude);
 
           if (randomBool()) {
-            dispatch(GameEventType.Zombie_Killed, character.x, character.y, forceX, forceY);
+            dispatch(GameEventType.Zombie_Killed, character.x, character.y,
+                forceX, forceY);
             characterFace(character, x, y);
             delayed(() => character.active = false, ms: randomInt(1000, 2000));
           } else {
             character.active = false;
-            dispatch(GameEventType.Zombie_killed_Explosion, character.x, character.y, forceX, forceY);
+            dispatch(GameEventType.Zombie_killed_Explosion, character.x,
+                character.y, forceX, forceY);
           }
         }
       }
@@ -263,7 +271,6 @@ extension GameFunctions on Game {
   void updateNpcs() {
     npcs.forEach(updateNpc);
   }
-
 
   void updatePlayer(Player player) {
     if (frame - player.lastEventFrame > 5 && player.walking) {
@@ -322,14 +329,14 @@ extension GameFunctions on Game {
         character.yv += bullet.yv * bulletImpactVelocityTransfer;
 
         if (character is Player) {
-          dispatch(GameEventType.Player_Hit, character.x, character.y, bullet.xv,
-              bullet.yv);
+          dispatch(GameEventType.Player_Hit, character.x, character.y,
+              bullet.xv, bullet.yv);
           return;
         }
 
         if (character.alive) {
-          dispatch(GameEventType.Zombie_Hit, character.x, character.y, bullet.xv,
-              bullet.yv);
+          dispatch(GameEventType.Zombie_Hit, character.x, character.y,
+              bullet.xv, bullet.yv);
         } else {
           if (randomBool()) {
             dispatch(GameEventType.Zombie_Killed, character.x, character.y,
@@ -381,7 +388,7 @@ extension GameFunctions on Game {
           character.x = m - character.y;
           character.y--;
         }
-      }else{
+      } else {
         double m = tilesRightX + tilesRightX;
         double d = -character.x + character.y;
         if (d > m) {
@@ -486,9 +493,10 @@ extension GameFunctions on Game {
     }
   }
 
-  void throwGrenade(double x, double y, double angle, double strength){
+  void throwGrenade(double x, double y, double angle, double strength) {
     double speed = settingsGrenadeSpeed * strength;
-    Grenade grenade = Grenade(x, y, adj(angle, speed), opp(angle, speed), 0.8 * strength);
+    Grenade grenade =
+        Grenade(x, y, adj(angle, speed), opp(angle, speed), 0.8 * strength);
     grenades.add(grenade);
     delayed(() {
       grenades.remove(grenade);
@@ -504,14 +512,18 @@ extension GameFunctions on Game {
     Bullet bullet = Bullet(
         x,
         y,
-        velX(character.aimAngle + giveOrTake(getWeaponAccuracy(character.weapon)),
+        velX(
+            character.aimAngle +
+                giveOrTake(getWeaponAccuracy(character.weapon)),
             getWeaponBulletSpeed(character.weapon)),
-        velY(character.aimAngle + giveOrTake(getWeaponAccuracy(character.weapon)),
+        velY(
+            character.aimAngle +
+                giveOrTake(getWeaponAccuracy(character.weapon)),
             getWeaponBulletSpeed(character.weapon)),
         character.id,
-        getWeaponRange(character.weapon) + giveOrTake(settingsWeaponRangeVariation),
-        getWeaponDamage(character.weapon)
-    );
+        getWeaponRange(character.weapon) +
+            giveOrTake(settingsWeaponRangeVariation),
+        getWeaponDamage(character.weapon));
     bullets.add(bullet);
     return bullet;
   }
@@ -538,8 +550,51 @@ extension GameFunctions on Game {
     return player;
   }
 
-  void dispatch(GameEventType type, double x, double y, double xv, double xy){
+  void dispatch(GameEventType type, double x, double y, double xv, double xy) {
     gameEvents.add(GameEvent(type, x, y, xv, xy));
+  }
+
+  void updateNpcTargets() {
+    int minP = 0;
+    Npc npc;
+
+    for (int i = 0; i < npcs.length; i++) {
+      if (npcs[i].targetSet) continue;
+      npc = npcs[i];
+      for (int p = minP; p < players.length; p++) {
+        if (players[p].x < npc.x - zombieViewRange) {
+          minP++;
+          break;
+        }
+        if (players[p].x > npc.x + zombieViewRange) {
+          break;
+        }
+        if (abs(players[p].y - npc.y) > zombieViewRange) {
+          continue;
+        }
+
+        npc.target = players[p];
+      }
+    }
+  }
+
+  void jobNpcWander() {
+    for (Npc npc in npcs) {
+      if (npc.targetSet) continue;
+      if (npc.destinationSet) continue;
+      if (randomBool()) return;
+      npcSetRandomDestination(npc);
+    }
+  }
+
+  void jobRemoveDisconnectedPlayers() {
+    for (int i = 0; i < players.length; i++) {
+      if (frame - players[i].lastEventFrame > settingsPlayerDisconnectFrames) {
+        print('Removing disconnected player ${players[i].id}');
+        players.removeAt(i);
+        i--;
+      }
+    }
   }
 }
 

@@ -19,6 +19,9 @@ void update() {
   readPlayerInput();
 
   if (connected) {
+
+    if(gameId < 0) return;
+
     updateParticles();
     updateCharacters();
 
@@ -45,8 +48,6 @@ void update() {
 
         redrawUI();
       }
-    } else {
-      sendCommandUpdate();
     }
   }
 }

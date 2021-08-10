@@ -1,3 +1,4 @@
+import 'package:bleed_client/enums/ServerResponse.dart';
 import 'package:bleed_client/keys.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 
@@ -15,6 +16,7 @@ int _index = 0;
 
 // properties
 String get _text => event;
+
 String get _currentCharacter => _text[_index];
 
 // functions
@@ -22,45 +24,90 @@ void parseState() {
   _index = 0;
   event = event.trim();
   while (_index < _text.length) {
-    String term = _consumeString();
-    if (term == "p:") {
-      _parsePlayers();
-    } else if (term == "id:") {
-      _parsePlayerId();
-    } else if (term == "b:") {
-      _parseBullets();
-    } else if (term == "n:") {
-      _parseNpcs();
-    } else if (term == "fms:") {
-      _parseFrameMS();
-    } else if (term == 'player-not-found') {
-      print('player not found');
-      _consumePlayerNotFound();
-    } else if (term == 'invalid--uuid') {
-      print('invalid uuid');
-      _consumeInvalidUUID();
-    } else if (term == 'player') {
-      _parsePlayer();
-    } else if (term == 'tiles:') {
-      _parseTiles();
-    } else if (term == "pass:") {
-      _consumePass();
-    } else if (term == "f:") {
-      _consumeFrame();
-    } else if (term == "events:") {
-      _consumeEvents();
-    } else if (term == "grenades") {
-      _parseGrenades();
-    } else {
-      throw Exception("term not found: $term");
+    ServerResponse serverResponse = _consumeServerResponse();
+
+    switch (serverResponse) {
+      case ServerResponse.Game_Id:
+        _parseGameId();
+        break;
+
+      case ServerResponse.Tiles:
+        _parseTiles();
+        break;
+
+      case ServerResponse.Player:
+        _parsePlayer();
+        break;
+
+      case ServerResponse.Players:
+        _parsePlayers();
+        break;
+
+      case ServerResponse.Error:
+        print(event);
+        break;
+
+      case ServerResponse.Bullets:
+        _parseBullets();
+        break;
+
+      case ServerResponse.Npcs:
+        _parseNpcs();
+        break;
+
+      case ServerResponse.Game_Events:
+        _consumeEvents();
+        break;
+
+      case ServerResponse.Grenades:
+        _parseGrenades();
+        break;
+
+      default:
+        print("parser not implemented $serverResponse");
     }
 
-    while(_index < _text.length){
-      if(_currentCharacter == " "){
+    // if (term == "p:") {
+    //   _parsePlayers();
+    // } else if (term == "game-joined") {
+    //   _parsePlayerId();
+    // } else if (term == "error:") {
+    //   print(event);
+    //   return;
+    // } else if (term == "b:") {
+    //   _parseBullets();
+    // } else if (term == "n:") {
+    //   _parseNpcs();
+    // } else if (term == "fms:") {
+    //   _parseFrameMS();
+    // } else if (term == 'player-not-found') {
+    //   print('player not found');
+    //   _consumePlayerNotFound();
+    // } else if (term == 'invalid--uuid') {
+    //   print('invalid uuid');
+    //   _consumeInvalidUUID();
+    // } else if (term == 'player') {
+    //   _parsePlayer();
+    // } else if (term == 'tiles:') {
+    //   _parseTiles();
+    // } else if (term == "pass:") {
+    //   _consumePass();
+    // } else if (term == "f:") {
+    //   _consumeFrame();
+    // } else if (term == "events:") {
+    //   _consumeEvents();
+    // } else if (term == "grenades") {
+    //   _parseGrenades();
+    // } else {
+    //   throw Exception("term not found: $term");
+    // }
+
+    while (_index < _text.length) {
+      if (_currentCharacter == " ") {
         _index++;
         continue;
       }
-      if(_currentCharacter == ";"){
+      if (_currentCharacter == ";") {
         _index++;
         break;
       }
@@ -84,6 +131,10 @@ void _consumePass() {
 
 void _consumeFrame() {
   serverFrame = _consumeInt();
+}
+
+void _parseGameId() {
+  gameId = _consumeInt();
 }
 
 void _parseTiles() {
@@ -117,25 +168,20 @@ void _parsePlayer() {
   setHandgunRounds(_consumeInt());
 }
 
-void _parseFrameMS() {
-  serverFramesMS = _consumeInt();
-}
-
 void _parsePlayerId() {
   print("parsePlayerId()");
   playerId = _consumeInt();
   playerUUID = _consumeString();
   int x = _consumeInt();
   int y = _consumeInt();
-  // _consumeSemiColon();
-  // HACK DOESN"T BELONG HERE
+  // TODO HACK DOESN"T BELONG HERE
   cameraCenter(x.toDouble(), y.toDouble());
-  // HACK DOESN"T BELONG HERE
+  // TODO HACK DOESN"T BELONG HERE
   redrawUI();
-  print("parsePlayerId() - finished");
+  print("Joined Game: $gameId, PlayerId: $playerId");
 }
 
-void _parseGrenades(){
+void _parseGrenades() {
   grenades.clear();
   while (!_simiColonConsumed()) {
     grenades.add(_consumeDouble());
@@ -156,12 +202,20 @@ int _consumeInt() {
   return parseInt(_consumeString());
 }
 
-Weapon _consumeWeapon(){
+Weapon _consumeWeapon() {
   return Weapon.values[_consumeInt()];
 }
 
 int parseInt(String value) {
   return int.parse(value);
+}
+
+ServerResponse _consumeServerResponse() {
+  int responseInt = _consumeInt();
+  if (responseInt >= ServerResponse.values.length) {
+    throw Exception('$responseInt is not a valid server response');
+  }
+  return ServerResponse.values[responseInt];
 }
 
 String _consumeString() {

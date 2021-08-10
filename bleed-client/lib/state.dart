@@ -37,6 +37,7 @@ bool debugMode = false;
 int playerId = idNotConnected;
 dynamic player;
 String playerUUID = "";
+int gameId = -1;
 int serverFramesMS = 0;
 int actualFPS;
 double playerHealth = 0;

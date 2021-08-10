@@ -48,10 +48,6 @@ void sendRequestUpdatePlayer() {
   send(_buffer.toString());
 }
 
-void sendCommandUpdate() {
-  send("update");
-}
-
 void sendRequestSpawn() {
   print("sendRequestSpawn()");
   send('spawn');
