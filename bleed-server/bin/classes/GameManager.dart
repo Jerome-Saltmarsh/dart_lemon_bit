@@ -10,7 +10,7 @@ class GameManager {
     games.add(openWorldGame);
   }
 
-  Game? findGameById(int id) {
+  Game? findGameById(String id) {
     for (Game game in games) {
       if (game.id == id) {
         return game;

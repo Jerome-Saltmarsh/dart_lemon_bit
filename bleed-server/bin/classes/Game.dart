@@ -18,7 +18,7 @@ import '../utils.dart';
 
 class Game {
   static int _id = 0;
-  final int id = _id++;
+  final String id = (_id++).toString();
   List<Npc> npcs = [];
   List<Player> players = [];
   List<Bullet> bullets = [];

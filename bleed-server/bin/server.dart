@@ -70,28 +70,23 @@ void main() {
           break;
 
         case ClientRequest.Game_Update:
-          int gameId = int.parse(arguments[1]);
-          Game? game = gameManager.findGameById(gameId);
+          Game? game = gameManager.findGameById(arguments[1]);
           if (game == null) {
             sendToClient('$errorIndex - game-not-found');
             return;
           }
-          int id = int.parse(arguments[2]);
-          Player? player = game.findPlayerById(id);
+          Player? player = game.findPlayerById(int.parse(arguments[2]));
           if (player == null) {
             sendToClient('$errorIndex - player-not-found');
             return;
           }
-          String uuid = arguments[3];
-          if (uuid != player.uuid) {
+          if (arguments[3] != player.uuid) {
             sendToClient('$errorIndex : invalid-player-uuid');
             return;
           }
           player.lastEventFrame = 0;
-          CharacterState requestedState =
-              CharacterState.values[int.parse(arguments[4])];
-          Direction requestedDirection =
-              Direction.values[int.parse(arguments[5])];
+          CharacterState requestedState = CharacterState.values[int.parse(arguments[4])];
+          Direction requestedDirection = Direction.values[int.parse(arguments[5])];
           double aim = double.parse(arguments[6]);
           player.aimAngle = aim;
           setDirection(player, requestedDirection);
@@ -113,10 +108,10 @@ void main() {
             sendToClient('$errorIndex game uuid required');
             return;
           }
-          int gameUuid = int.parse(arguments[1]);
-          Game? game = gameManager.findGameById(gameUuid);
+          String gameId = arguments[1];
+          Game? game = gameManager.findGameById(gameId);
           if (game == null) {
-            sendToClient('$errorIndex : game not found: $gameUuid ;');
+            sendToClient('$errorIndex : game not found: $gameId ;');
             return;
           }
           Player player = game.spawnPlayer(name: "Test");
@@ -128,7 +123,7 @@ void main() {
           break;
 
         case ClientRequest.Player_Revive:
-          int gameId = int.parse(arguments[1]);
+          String gameId = arguments[1];
           Game? game = gameManager.findGameById(gameId);
           if (game == null) {
             sendToClient('$errorIndex - game-not-found ; ');
@@ -153,7 +148,7 @@ void main() {
           return;
 
         case ClientRequest.Spawn_Npc:
-          int gameId = int.parse(arguments[1]);
+          String gameId = arguments[1];
           Game? game = gameManager.findGameById(gameId);
           if (game == null) {
             sendToClient('$errorIndex - game-not-found ; ');
@@ -163,7 +158,7 @@ void main() {
           return;
 
         case ClientRequest.Player_Equip:
-          int gameId = int.parse(arguments[1]);
+          String gameId = arguments[1];
           Game? game = gameManager.findGameById(gameId);
           if (game == null) {
             sendToClient('$errorIndex - game-not-found ; ');
@@ -189,7 +184,7 @@ void main() {
           return;
 
         case ClientRequest.Player_Throw_Grenade:
-          int gameId = int.parse(arguments[1]);
+          String gameId = arguments[1];
           Game? game = gameManager.findGameById(gameId);
           if (game == null) {
             sendToClient('$errorIndex - game-not-found ; ');
