@@ -54,7 +54,7 @@ void sendRequestSpawn() {
 }
 
 void sendRequestSpawnNpc() {
-  send('spawn-npc');
+  send('${ClientRequest.Spawn_Npc.index} $session');
 }
 
 void sendRequestClearNpcs() {

@@ -1,4 +1,5 @@
 import 'package:bleed_client/audio.dart';
+import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 
 import 'connection.dart';
@@ -25,9 +26,16 @@ void update() {
     updateParticles();
     updateCharacters();
 
+    if (globalSize != null){
+      double x = cameraX - playerX + (globalSize.width * 0.5);
+      double y = cameraY - playerY + (globalSize.height * 0.5);
+      cameraX -= x * 0.01;
+      cameraY -= y * 0.01;
+    }
+
     if (playerId >= 0) {
       sendRequestUpdatePlayer();
-      cameraCenter(playerX, playerY);
+
 
       // on player weapon changed
       if (previousWeapon != playerWeapon) {
