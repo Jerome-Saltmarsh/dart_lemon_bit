@@ -73,6 +73,10 @@ void parseState() {
         _parseObjects();
         break;
 
+      case ServerResponse.Blocks:
+        _parseBlocks();
+        break;
+
       case ServerResponse.Player_Created:
         _parsePlayerCreated();
         break;
@@ -145,6 +149,16 @@ void _parseObjects(){
   while (!_simiColonConsumed()) {
     gameObjects.add(_consumeInt());
     gameObjects.add(_consumeInt());
+  }
+}
+
+void _parseBlocks(){
+  blocks.clear();
+  while (!_simiColonConsumed()) {
+    blocks.add(_consumeDouble());
+    blocks.add(_consumeDouble());
+    blocks.add(_consumeDouble());
+    blocks.add(_consumeDouble());
   }
 }
 

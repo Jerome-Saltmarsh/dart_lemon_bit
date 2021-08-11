@@ -2,6 +2,7 @@ import '../classes.dart';
 import '../enums/GameType.dart';
 import '../maths.dart';
 import '../utils.dart';
+import 'Block.dart';
 import 'Game.dart';
 
 class GameManager {
@@ -25,7 +26,7 @@ class GameManager {
     }
     Game deathMatch = Game(GameType.DeathMatch, generateTiles(), 16);
     for (int i = 0; i < 10; i++) {
-      deathMatch.objects.add(GameObject(giveOrTake(500), 1000 + giveOrTake(500)));
+      deathMatch.blocks.add(Block(giveOrTake(500), 1000 + giveOrTake(500), 100, 100));
     }
     games.add(deathMatch);
     return deathMatch;

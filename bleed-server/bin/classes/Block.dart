@@ -1,15 +1,18 @@
+class Block {
+  final double x;
+  final double y;
+  final double width;
+  final double height;
 
-import '../classes.dart';
+  late final double top;
+  late final double right;
+  late final double bottom;
+  late final double left;
 
-class Block extends GameObject {
-  double width = 24;
-  double height = 24;
-  late double topX;
-  late double topY;
-
-  Block(double x, double y) : super(x, y){
-    topX = x;
-    topY = y - width * 0.5;
-    // right
+  Block(this.x, this.y, this.width, this.height){
+    top = y - height * 0.5;
+    right = x + width * 0.5;
+    bottom = y + height * 0.5;
+    left = x - width * 0.5;
   }
 }

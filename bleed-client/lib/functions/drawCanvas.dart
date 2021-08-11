@@ -39,7 +39,8 @@ void drawCanvas(Canvas canvass, Size _size) {
   _drawBullets();
   drawBulletHoles();
   _drawGrenades();
-  _drawObjects();
+  // _drawObjects();
+  _drawBlocks();
   drawAnimations();
   _drawParticles();
   // drawParticles2();
@@ -50,26 +51,49 @@ void drawCanvas(Canvas canvass, Size _size) {
   // globalCanvas.drawPath(path, globalPaint);
 }
 
+final Paint _blockPaint = Paint()
+  ..color = white
+  ..strokeCap = StrokeCap.round
+  ..style = PaintingStyle.fill
+  ..isAntiAlias = false
+  ..strokeWidth = 0.1;
+
+void _drawBlocks(){
+
+  for(int i = 0; i < blocks.length; i += 4){
+    double x = blocks[i];
+    double y = blocks[i + 1];
+    double width = blocks[i + 2] * 0.5;
+    double height = blocks[i + 3] * 0.5;
+
+    Path path = Path();
+    path.moveTo(x, y + height);
+    path.lineTo(x - width, y);
+    path.lineTo(x, y - height);
+    path.lineTo(x + width, y);
+    globalCanvas.drawPath(path, _blockPaint);
+  }
+}
 
 void _drawObjects(){
-  List<RSTransform> transforms = [];
-  List<Rect> rects = [];
+  // List<RSTransform> transforms = [];
+  // List<Rect> rects = [];
   for(int i = 0; i < gameObjects.length; i += 2){
-    // double x = gameObjects[i].toDouble();
-    // double y = gameObjects[i + 1].toDouble();
+    double x = gameObjects[i].toDouble();
+    double y = gameObjects[i + 1].toDouble();
+    // transforms.add(rsTransform(x: gameObjects[i].toDouble(), y: gameObjects[i + 1].toDouble(), anchorX: 24, anchorY: 24));
+    // rects.add(getTileSpriteRect(Tile.Grass));
 
-    transforms.add(rsTransform(x: gameObjects[i].toDouble(), y: gameObjects[i + 1].toDouble(), anchorX: 24, anchorY: 24));
-    rects.add(getTileSpriteRect(Tile.Grass));
-
-    // Path path = Path();
-    // path.moveTo(gameOb, y);
-    // path.lineTo(0, 0 + y);
-    // path.lineTo(25, 25 + y);
-    // path.lineTo(50, 0 + y);
-    // path.lineTo(25, -25 + y);
-
+    globalPaint.color = Colors.white;
+    Path path = Path();
+    path.moveTo(x, y);
+    path.lineTo(x, y + 25);
+    path.lineTo(x + 25, y + 25);
+    path.lineTo(x + 50, y);
+    path.lineTo(x + 25, -25 + y);
+    globalCanvas.drawPath(path, globalPaint);
   }
-  drawAtlases(imageTiles, transforms, rects);
+  // drawAtlases(imageTiles, transforms, rects);
 
 
 

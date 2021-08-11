@@ -16,6 +16,7 @@ import '../settings.dart';
 import '../state.dart';
 import '../update.dart';
 import '../utils.dart';
+import 'Block.dart';
 
 class Game {
   static int _id = 0;
@@ -28,9 +29,11 @@ class Game {
   List<Bullet> bullets = [];
   List<Grenade> grenades = [];
   List<GameObject> objects = [];
+  List<Block> blocks = [];
   List<GameEvent> gameEvents = [];
   String compiled = "";
   StringBuffer buffer = StringBuffer();
+
   Game(this.type, this.tiles, this.maxPlayers);
 }
 
@@ -44,13 +47,46 @@ extension GameFunctions on Game {
     updateGameEvents();
     updateGrenades();
 
-    for(Player player in players){
-      for(GameObject gameObject in objects){
+    for (Player player in players) {
+      for (Block block in blocks) {
+        if (player.y < block.top) continue;
+        if (player.y > block.bottom) continue;
+        if (player.x < block.left) continue;
+        if (player.x > block.right) continue;
 
-        if(player.y < gameObject.y){
-
+        if (player.x < block.x) {
+          if (player.y < block.y) {
+            double xd = block.x - player.x;
+            double yd = player.y - block.top;
+            if (yd > xd) {
+              player.x -= yd - xd;
+              player.y--;
+            }
+          } else {
+            double xd = player.x - block.left ;
+            double yd = player.y - block.y;
+            if(xd > yd){
+              player.x -= xd - yd;
+              player.y++;
+            }
+          }
+        } else {
+          if (player.y < block.y) {
+            double xd = player.x - block.x;
+            double yd = player.y - block.top;
+            if (yd > xd) {
+              player.x += yd - xd;
+              player.y--;
+            }
+          } else {
+            double xd = block.right - player.x;
+            double yd = player.y - block.y;
+            if(xd > yd){
+              player.x += xd - yd;
+              player.y++;
+            }
+          }
         }
-
       }
     }
 
@@ -106,6 +142,7 @@ extension GameFunctions on Game {
   void updateCollisions() {
     npcs.sort(compareGameObjects);
     players.sort(compareGameObjects);
+    blocks.sort((a, b) => a.x > b.x ? 1 : -1);
     updateCollisionBetween(npcs);
     updateCollisionBetween(players);
     resolveCollisionBetween(npcs, players);

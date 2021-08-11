@@ -13,6 +13,7 @@
 [ ] Game Type: Death Match
 [ ] Game Type: Capture The Flag
 [ ] Game Type: Fortress
+[ ] Game Type: Sandbox
 [ ] Throw Animation
 [ ] Create Game / Join Game
 [ ] Player Name Text
@@ -25,6 +26,7 @@
 [ ] Ammo
 [ ] Stamina UI
 [ ] Lobby
+[ ] Object Collision
 [x] FIX BUG: Sniper Aim 
 [x] Tile Boundaries
 [x] Stamina

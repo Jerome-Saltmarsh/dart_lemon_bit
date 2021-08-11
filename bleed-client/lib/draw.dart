@@ -16,7 +16,7 @@ import 'state.dart';
 import 'utils.dart';
 
 void drawCharacterCircle(double x, double y, Color color) {
-  drawCircle(x, y + 12, 10, color);
+  drawCircle(x, y, 10, color);
 }
 
 void drawCharacters() {
@@ -615,7 +615,7 @@ RSTransform getCharacterTransform(dynamic character) {
     rotation: 0.0,
     scale: 1.0,
     anchorX: halfHumanSpriteFrameWidth,
-    anchorY: halfHumanSpriteFrameHeight - 5,
+    anchorY: halfHumanSpriteFrameHeight + 5,
     translateX: character[x],
     translateY: character[y],
   );

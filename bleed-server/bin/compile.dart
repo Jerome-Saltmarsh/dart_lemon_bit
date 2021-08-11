@@ -1,4 +1,5 @@
 import 'classes.dart';
+import 'classes/Block.dart';
 import 'classes/Game.dart';
 import 'enums.dart';
 import 'enums/ServerResponse.dart';
@@ -16,6 +17,7 @@ void compileState(Game game) {
   _compileGameEvents(game.buffer, game.gameEvents);
   _compileGrenades(game.buffer, game.grenades);
   _compileObjects(game.buffer, game.objects);
+  _compileBlocks(game.buffer,game.blocks);
   game.compiled = game.buffer.toString();
 }
 
@@ -29,6 +31,18 @@ void _compileGameEvents(StringBuffer buffer, List<GameEvent> gameEvents) {
     _write(buffer, gameEvent.y.toInt());
     _write(buffer, gameEvent.xv.toStringAsFixed(1));
     _write(buffer, gameEvent.yv.toStringAsFixed(1));
+  }
+  buffer.write(_semiColon);
+}
+
+void _compileBlocks(StringBuffer buffer, List<Block> blocks){
+  buffer.write(ServerResponse.Blocks.index);
+  buffer.write(_space);
+  for(Block block in blocks){
+    _write(buffer, block.x.toInt());
+    _write(buffer, block.y.toInt());
+    _write(buffer, block.width.toInt());
+    _write(buffer, block.height.toInt());
   }
   buffer.write(_semiColon);
 }

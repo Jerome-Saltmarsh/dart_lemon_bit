@@ -28,6 +28,7 @@ bool smooth = false;
 BuildContext context;
 List<List<dynamic>> players = [];
 List<int> gameObjects = [];
+List<double> blocks = [];
 List<List<dynamic>> npcs = [];
 List<List<dynamic>> bullets = [];
 List<double> bulletHoles = [];
