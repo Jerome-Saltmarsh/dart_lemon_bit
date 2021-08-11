@@ -10,7 +10,6 @@ import 'functions/clearState.dart';
 import 'functions/drawCanvas.dart';
 import 'images.dart';
 import 'rects.dart';
-import 'send.dart';
 import 'state.dart';
 import 'ui.dart';
 import 'utils.dart';

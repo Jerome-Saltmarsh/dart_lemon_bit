@@ -3,7 +3,6 @@ import 'package:bleed_client/enums/ServerResponse.dart';
 import 'package:bleed_client/keys.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 
-import 'constants.dart';
 import 'enums.dart';
 import 'enums/GameError.dart';
 import 'enums/GameEventType.dart';
@@ -70,6 +69,10 @@ void parseState() {
         connecting = false;
         break;
 
+      case ServerResponse.Objects:
+        _parseObjects();
+        break;
+
       case ServerResponse.Player_Created:
         _parsePlayerCreated();
         break;
@@ -134,6 +137,14 @@ void _parseGrenades() {
   grenades.clear();
   while (!_simiColonConsumed()) {
     grenades.add(_consumeDouble());
+  }
+}
+
+void _parseObjects(){
+  gameObjects.clear();
+  while (!_simiColonConsumed()) {
+    gameObjects.add(_consumeInt());
+    gameObjects.add(_consumeInt());
   }
 }
 

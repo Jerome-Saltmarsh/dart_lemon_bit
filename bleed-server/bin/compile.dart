@@ -15,6 +15,7 @@ void compileState(Game game) {
   _compileBullets(game.buffer, game.bullets);
   _compileGameEvents(game.buffer, game.gameEvents);
   _compileGrenades(game.buffer, game.grenades);
+  _compileObjects(game.buffer, game.objects);
   game.compiled = game.buffer.toString();
 }
 
@@ -39,6 +40,16 @@ void _compileGrenades(StringBuffer buffer, List<Grenade> grenades){
     _write(buffer, grenade.x.toInt());
     _write(buffer, grenade.y.toInt());
     _write(buffer, grenade.z.toStringAsFixed(1));
+  }
+  buffer.write(_semiColon);
+}
+
+void _compileObjects(StringBuffer buffer, List<GameObject> objects){
+  buffer.write(ServerResponse.Objects.index);
+  buffer.write(_space);
+  for(GameObject object in objects){
+    _write(buffer, object.x.toInt());
+    _write(buffer, object.y.toInt());
   }
   buffer.write(_semiColon);
 }

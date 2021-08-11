@@ -1,6 +1,10 @@
 import 'dart:ui';
 
+import 'package:bleed_client/enums.dart';
+import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
+import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/images.dart';
 import 'package:flutter/material.dart';
 
 import '../connection.dart';
@@ -35,11 +39,40 @@ void drawCanvas(Canvas canvass, Size _size) {
   _drawBullets();
   drawBulletHoles();
   _drawGrenades();
+  _drawObjects();
   drawAnimations();
   _drawParticles();
   // drawParticles2();
   drawCharacters();
   drawMouse();
+
+
+  // globalCanvas.drawPath(path, globalPaint);
+}
+
+
+void _drawObjects(){
+  List<RSTransform> transforms = [];
+  List<Rect> rects = [];
+  for(int i = 0; i < gameObjects.length; i += 2){
+    // double x = gameObjects[i].toDouble();
+    // double y = gameObjects[i + 1].toDouble();
+
+    transforms.add(rsTransform(x: gameObjects[i].toDouble(), y: gameObjects[i + 1].toDouble(), anchorX: 24, anchorY: 24));
+    rects.add(getTileSpriteRect(Tile.Grass));
+
+    // Path path = Path();
+    // path.moveTo(gameOb, y);
+    // path.lineTo(0, 0 + y);
+    // path.lineTo(25, 25 + y);
+    // path.lineTo(50, 0 + y);
+    // path.lineTo(25, -25 + y);
+
+  }
+  drawAtlases(imageTiles, transforms, rects);
+
+
+
 }
 
 void _drawGrenades() {

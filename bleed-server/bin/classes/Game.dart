@@ -27,6 +27,7 @@ class Game {
   List<Player> players = [];
   List<Bullet> bullets = [];
   List<Grenade> grenades = [];
+  List<GameObject> objects = [];
   List<GameEvent> gameEvents = [];
   String compiled = "";
   StringBuffer buffer = StringBuffer();
@@ -42,6 +43,17 @@ extension GameFunctions on Game {
     updateNpcs();
     updateGameEvents();
     updateGrenades();
+
+    for(Player player in players){
+      for(GameObject gameObject in objects){
+
+        if(player.y < gameObject.y){
+
+        }
+
+      }
+    }
+
     compileState(this);
   }
 

@@ -45,8 +45,9 @@ void drawCharacterList(List<dynamic> characters) {
 }
 
 void drawTileList() {
-  processTileTransforms();
-  // todo optimize
+  if(tileTransforms.isEmpty){
+    processTileTransforms();
+  }
   if (tileRects.isEmpty) {
     loadTileRects();
   }
@@ -627,8 +628,8 @@ RSTransform rsTransform(
     scale: scale,
     anchorX: anchorX,
     anchorY: anchorY,
-    translateX: x - cameraX,
-    translateY: y - cameraY,
+    translateX: x,
+    translateY: y,
   );
 }
 

@@ -5,6 +5,9 @@ const int tileCanvasWidth = 48;
 const int tileCanvasHeight = 72;
 const int tileFrames = 1;
 
+Rect concreteRect = rect(0, 48, 48);
+Rect grassRect = rect(1, 48, 48);
+
 List<Rect> rectsExplosion;
 List<Rect> rectsCharacter;
 Rect rectParticleSmoke = rect(0, 64, 64);

@@ -20,6 +20,7 @@
 [ ] Throw Grenade Audio
 [ ] Game Max 32 Players / new games spawn automatically
 [ ] FIX BUG: Character Draw Order
+[ ] Zombie Hurt Animation
 [ ] Cache Particles
 [ ] Ammo
 [ ] Stamina UI
