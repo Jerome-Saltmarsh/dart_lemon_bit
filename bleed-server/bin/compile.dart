@@ -17,7 +17,6 @@ void compileState(Game game) {
   _compileGameEvents(game.buffer, game.gameEvents);
   _compileGrenades(game.buffer, game.grenades);
   _compileObjects(game.buffer, game.objects);
-  _compileBlocks(game.buffer,game.blocks);
   game.compiled = game.buffer.toString();
 }
 
@@ -35,7 +34,7 @@ void _compileGameEvents(StringBuffer buffer, List<GameEvent> gameEvents) {
   buffer.write(_semiColon);
 }
 
-void _compileBlocks(StringBuffer buffer, List<Block> blocks){
+void compileBlocks(StringBuffer buffer, List<Block> blocks){
   buffer.write(ServerResponse.Blocks.index);
   buffer.write(_space);
   for(Block block in blocks){

@@ -80,21 +80,13 @@ final Paint _blockBlueGrey = Paint()
   ..strokeWidth = 0.1;
 
 void _drawBlocks(){
-
   for(int i = 0; i < blocks.length; i += 4){
     double x = blocks[i];
     double y = blocks[i + 1];
     double width = blocks[i + 2] * 0.5;
     double height = blocks[i + 3] * 0.5;
 
-    // Path path = Path();
-    // path.moveTo(x, y + height);
-    // path.lineTo(x - width, y);
-    // path.lineTo(x, y - height);
-    // path.lineTo(x + width, y);
-    // globalCanvas.drawPath(path, _blockPaint);
-
-    double h = -20;
+    double h = -80;
     Path path2 = Path();
     path2.moveTo(x, y + height + h);
     path2.lineTo(x - width, y + h);

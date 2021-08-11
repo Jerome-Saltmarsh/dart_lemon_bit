@@ -38,6 +38,7 @@ void main() {
       StringBuffer buffer = StringBuffer();
       compilePlayer(buffer, player);
       compileTiles(buffer, game.tiles);
+      compileBlocks(buffer, game.blocks);
       compileState(game);
       buffer.write(game.compiled);
       buffer.write(
