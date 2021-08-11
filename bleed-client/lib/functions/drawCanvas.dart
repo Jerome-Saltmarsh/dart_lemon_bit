@@ -58,6 +58,27 @@ final Paint _blockPaint = Paint()
   ..isAntiAlias = false
   ..strokeWidth = 0.1;
 
+final Paint _blockGrey = Paint()
+  ..color = Colors.grey
+  ..strokeCap = StrokeCap.round
+  ..style = PaintingStyle.fill
+  ..isAntiAlias = false
+  ..strokeWidth = 0.1;
+
+final Paint _blockBlue = Paint()
+  ..color = Colors.blueAccent
+  ..strokeCap = StrokeCap.round
+  ..style = PaintingStyle.fill
+  ..isAntiAlias = false
+  ..strokeWidth = 0.1;
+
+final Paint _blockBlueGrey = Paint()
+  ..color = Colors.blueGrey
+  ..strokeCap = StrokeCap.round
+  ..style = PaintingStyle.fill
+  ..isAntiAlias = false
+  ..strokeWidth = 0.1;
+
 void _drawBlocks(){
 
   for(int i = 0; i < blocks.length; i += 4){
@@ -66,12 +87,34 @@ void _drawBlocks(){
     double width = blocks[i + 2] * 0.5;
     double height = blocks[i + 3] * 0.5;
 
-    Path path = Path();
-    path.moveTo(x, y + height);
-    path.lineTo(x - width, y);
-    path.lineTo(x, y - height);
-    path.lineTo(x + width, y);
-    globalCanvas.drawPath(path, _blockPaint);
+    // Path path = Path();
+    // path.moveTo(x, y + height);
+    // path.lineTo(x - width, y);
+    // path.lineTo(x, y - height);
+    // path.lineTo(x + width, y);
+    // globalCanvas.drawPath(path, _blockPaint);
+
+    double h = -20;
+    Path path2 = Path();
+    path2.moveTo(x, y + height + h);
+    path2.lineTo(x - width, y + h);
+    path2.lineTo(x, y - height + h);
+    path2.lineTo(x + width, y + h);
+    globalCanvas.drawPath(path2, _blockBlueGrey);
+
+    Path path3 = Path();
+    path3.moveTo(x, y + height + h);
+    path3.lineTo(x - width, y + h);
+    path3.lineTo(x - width, y);
+    path3.lineTo(x, y + height);
+    globalCanvas.drawPath(path3, _blockGrey);
+
+    Path path4 = Path();
+    path4.moveTo(x, y + height + h);
+    path4.lineTo(x + width, y + h);
+    path4.lineTo(x + width, y);
+    path4.lineTo(x, y + height);
+    globalCanvas.drawPath(path4, _blockPaint);
   }
 }
 
