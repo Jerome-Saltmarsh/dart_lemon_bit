@@ -25,9 +25,10 @@ class GameManager {
       }
     }
     Game deathMatch = Game(GameType.DeathMatch, generateTiles(), 16);
-    for (int i = 0; i < 10; i++) {
-      deathMatch.blocks.add(Block(giveOrTake(500), 1000 + giveOrTake(500), 100, 100));
-    }
+    // for (int i = 0; i < 2; i++) {
+    //   deathMatch.blocks.add(Block(giveOrTake(500), 1000 + giveOrTake(500), 200, 100));
+    // }
+    deathMatch.blocks.add(Block(0, 1000, 200, 100));
     games.add(deathMatch);
     return deathMatch;
   }

@@ -38,10 +38,14 @@ void compileBlocks(StringBuffer buffer, List<Block> blocks){
   buffer.write(ServerResponse.Blocks.index);
   buffer.write(_space);
   for(Block block in blocks){
-    _write(buffer, block.x.toInt());
-    _write(buffer, block.y.toInt());
-    _write(buffer, block.width.toInt());
-    _write(buffer, block.height.toInt());
+    _write(buffer, block.topX.toInt());
+    _write(buffer, block.topY.toInt());
+    _write(buffer, block.rightX.toInt());
+    _write(buffer, block.rightY.toInt());
+    _write(buffer, block.bottomX.toInt());
+    _write(buffer, block.bottomY.toInt());
+    _write(buffer, block.leftX.toInt());
+    _write(buffer, block.leftY.toInt());
   }
   buffer.write(_semiColon);
 }

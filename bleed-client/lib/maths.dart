@@ -3,13 +3,9 @@ import 'keys.dart';
 
 const double degreesToRadions = 0.0174533;
 const double radionsToDegrees =  57.29578;
+const double piHalf = pi / 2.0;
+const double piQuarter = pi * 0.25;
 final Random random = Random();
-
-class Vector2 {
-  double x;
-  double y;
-  Vector2(this.x, this.y);
-}
 
 double randomBetween(num a, num b){
   return (random.nextDouble() * (b - a)) + a;
@@ -45,11 +41,6 @@ int millisecondsSince(DateTime value){
 
 Duration durationSince(DateTime value){
   return DateTime.now().difference(value);
-}
-
-Vector2 convertRadionsToVector(num radions){
-  num r = radions - (pi * 0.5);
-  return Vector2(cos(r), sin(r));
 }
 
 double radionsBetweenObject(dynamic a, dynamic b) {
@@ -104,4 +95,12 @@ double clampMagnitudeX(double x, double y, double value){
 
 double clampMagnitudeY(double x, double y, double value){
   return normalizeY(x, y) * value;
+}
+
+double adj(double rotation, double magnitude) {
+  return -cos(rotation + piHalf) * magnitude;
+}
+
+double opp(double rotation, double magnitude) {
+  return -sin(rotation + piHalf) * magnitude;
 }

@@ -25,8 +25,6 @@ void jobNpcWander(){
   gameManager.games.forEach((game) => game.jobNpcWander());
 }
 
-
-
 void fixedUpdate() {
   frame++;
   DateTime now = DateTime.now();

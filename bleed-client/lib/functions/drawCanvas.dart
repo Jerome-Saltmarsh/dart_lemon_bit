@@ -1,22 +1,20 @@
 import 'dart:ui';
 
-import 'package:bleed_client/enums.dart';
-import 'package:bleed_client/game_engine/engine_draw.dart';
+import 'package:bleed_client/classes/Block.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
+import 'package:bleed_client/game_engine/game_input.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
-import 'package:bleed_client/images.dart';
+import 'package:bleed_client/maths.dart';
 import 'package:flutter/material.dart';
 
+import '../../keys.dart';
 import '../connection.dart';
 import '../draw.dart';
-import '../../keys.dart';
 import '../state.dart';
 import 'drawAnimations.dart';
 import 'drawBullet.dart';
 import 'drawGrenade.dart';
 import 'drawParticle.dart';
-
-
 
 void drawCanvas(Canvas canvass, Size _size) {
   if (!connected) return;
@@ -46,17 +44,28 @@ void drawCanvas(Canvas canvass, Size _size) {
   // drawParticles2();
   drawCharacters();
   drawMouse();
-
-
-  // globalCanvas.drawPath(path, globalPaint);
 }
 
-final Paint _blockPaint = Paint()
-  ..color = white
+final Paint paintRed = Paint()
+  ..color = Colors.red
   ..strokeCap = StrokeCap.round
   ..style = PaintingStyle.fill
   ..isAntiAlias = false
-  ..strokeWidth = 0.1;
+  ..strokeWidth = 1;
+
+final Paint paintGreen = Paint()
+  ..color = Colors.green
+  ..strokeCap = StrokeCap.round
+  ..style = PaintingStyle.fill
+  ..isAntiAlias = false
+  ..strokeWidth = 1;
+
+final Paint paintDeepPurple = Paint()
+  ..color = Colors.deepPurple
+  ..strokeCap = StrokeCap.round
+  ..style = PaintingStyle.fill
+  ..isAntiAlias = false
+  ..strokeWidth = 1;
 
 final Paint _blockGrey = Paint()
   ..color = Colors.grey
@@ -79,59 +88,61 @@ final Paint _blockBlueGrey = Paint()
   ..isAntiAlias = false
   ..strokeWidth = 0.1;
 
-void _drawBlocks(){
-  for(int i = 0; i < blocks.length; i += 4){
-    double x = blocks[i];
-    double y = blocks[i + 1];
-    double width = blocks[i + 2] * 0.5;
-    double height = blocks[i + 3] * 0.5;
-
-    double h = -80;
-    Path path2 = Path();
-    path2.moveTo(x, y + height + h);
-    path2.lineTo(x - width, y + h);
-    path2.lineTo(x, y - height + h);
-    path2.lineTo(x + width, y + h);
-    globalCanvas.drawPath(path2, _blockBlueGrey);
-
-    Path path3 = Path();
-    path3.moveTo(x, y + height + h);
-    path3.lineTo(x - width, y + h);
-    path3.lineTo(x - width, y);
-    path3.lineTo(x, y + height);
-    globalCanvas.drawPath(path3, _blockGrey);
-
-    Path path4 = Path();
-    path4.moveTo(x, y + height + h);
-    path4.lineTo(x + width, y + h);
-    path4.lineTo(x + width, y);
-    path4.lineTo(x, y + height);
-    globalCanvas.drawPath(path4, _blockPaint);
-  }
+void _drawBlocks() {
+  blockHouses.forEach(drawBlock);
 }
 
-void _drawObjects(){
-  // List<RSTransform> transforms = [];
-  // List<Rect> rects = [];
-  for(int i = 0; i < gameObjects.length; i += 2){
-    double x = gameObjects[i].toDouble();
-    double y = gameObjects[i + 1].toDouble();
-    // transforms.add(rsTransform(x: gameObjects[i].toDouble(), y: gameObjects[i + 1].toDouble(), anchorX: 24, anchorY: 24));
-    // rects.add(getTileSpriteRect(Tile.Grass));
+void drawBlock(Block block) {
+  // globalCanvas.drawPath(block.wall1, _blockBlueGrey);
+  // globalCanvas.drawPath(block.wall2, _blockBlue);
+  // globalCanvas.drawPath(block.wall3, _blockGrey);
+  // _drawLine(block.center, block.a, Colors.red);
+  // _drawLine(block.center, block.b, Colors.green);
+  // _drawLine(block.center, block.top, Colors.deepPurple);
+  // _drawLine(block.center, block.right, Colors.orange);
 
-    globalPaint.color = Colors.white;
-    Path path = Path();
-    path.moveTo(x, y);
-    path.lineTo(x, y + 25);
-    path.lineTo(x + 25, y + 25);
-    path.lineTo(x + 50, y);
-    path.lineTo(x + 25, -25 + y);
-    globalCanvas.drawPath(path, globalPaint);
-  }
-  // drawAtlases(imageTiles, transforms, rects);
+  globalPaint.strokeWidth = 2;
+  _drawLine(block.top, block.right, Colors.white);
+  _drawLine(block.right, block.bottom, Colors.white);
+  _drawLine(block.bottom, block.left, Colors.white);
+  _drawLine(block.left, block.top, Colors.white);
 
 
+}
 
+void _drawLine(Offset a, Offset b, Color color){
+  globalPaint.color = color;
+  globalCanvas.drawLine(a, b, globalPaint);
+}
+
+Block createBlock(double topX, double topY, double rightX, double rightY, double bottomX, double bottomY, double leftX, double leftY) {
+  // width *= 0.5;
+  // length *= 0.5;
+  //
+  // Path path1 = Path();
+  // path1.moveTo(x, y + length - height);
+  // path1.lineTo(x - width, y - height);
+  // path1.lineTo(x, y - length - height);
+  // path1.lineTo(x + width, y - height);
+  //
+  // Path path2 = Path();
+  // path2.moveTo(x, y + length);
+  // path2.lineTo(x, y + length - height);
+  // path2.lineTo(x - width, y - height);
+  // path2.lineTo(x - width, y);
+  //
+  // Path path3 = Path();
+  // path3.moveTo(x, y + length);
+  // path3.lineTo(x, y + length - height);
+  // path3.lineTo(x + width, y - height);
+  // path3.lineTo(x + width, y);
+
+  Offset top = Offset(topX, topY);
+  Offset right = Offset(rightX, rightY);
+  Offset bottom = Offset(bottomX, bottomY);
+  Offset left = Offset(leftX, leftY);
+
+  return Block(top, right, bottom, left);
 }
 
 void _drawGrenades() {

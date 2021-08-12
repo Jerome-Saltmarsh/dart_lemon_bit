@@ -1,5 +1,6 @@
 import 'package:bleed_client/connection.dart';
 import 'package:bleed_client/enums/ServerResponse.dart';
+import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/keys.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 
@@ -136,7 +137,6 @@ void _parsePlayer() {
   setHandgunRounds(_consumeInt());
 }
 
-
 void _parseGrenades() {
   grenades.clear();
   while (!_simiColonConsumed()) {
@@ -144,7 +144,7 @@ void _parseGrenades() {
   }
 }
 
-void _parseObjects(){
+void _parseObjects() {
   gameObjects.clear();
   while (!_simiColonConsumed()) {
     gameObjects.add(_consumeInt());
@@ -152,17 +152,23 @@ void _parseObjects(){
   }
 }
 
-void _parseBlocks(){
-  blocks.clear();
+void _parseBlocks() {
+  blockHouses.clear();
   while (!_simiColonConsumed()) {
-    blocks.add(_consumeDouble());
-    blocks.add(_consumeDouble());
-    blocks.add(_consumeDouble());
-    blocks.add(_consumeDouble());
+    blockHouses.add(createBlock(
+      _consumeDouble(),
+      _consumeDouble(),
+      _consumeDouble(),
+      _consumeDouble(),
+      _consumeDouble(),
+      _consumeDouble(),
+      _consumeDouble(),
+      _consumeDouble(),
+    ));
   }
 }
 
-void _parsePlayerCreated(){
+void _parsePlayerCreated() {
   print("_parsePlayerCreated()");
   playerId = _consumeInt();
   playerUUID = _consumeString();
@@ -183,7 +189,7 @@ void _consumeSpace() {
 int _consumeInt() {
   String string = _consumeString();
   int value = int.tryParse(string);
-  if(value == null){
+  if (value == null) {
     throw Exception("could not parse $string to int");
   }
   return value;
@@ -208,7 +214,7 @@ ServerResponse _consumeServerResponse() {
 String _consumeString() {
   _consumeSpace();
   StringBuffer buffer = StringBuffer();
-  while (_currentCharacter != " ") {
+  while (_currentCharacter != " " && _index < event.length) {
     buffer.write(_currentCharacter);
     _index++;
   }
@@ -243,7 +249,7 @@ void _parsePlayers() {
   }
 }
 
-GameError _consumeError(){
+GameError _consumeError() {
   return GameError.values[_consumeInt()];
 }
 

@@ -49,44 +49,32 @@ extension GameFunctions on Game {
 
     for (Player player in players) {
       for (Block block in blocks) {
-        if (player.y < block.top) continue;
-        if (player.y > block.bottom) continue;
-        if (player.x < block.left) continue;
-        if (player.x > block.right) continue;
+        if (player.y < block.topY) continue;
+        if (player.y > block.bottomY) continue;
+        if (player.x < block.leftX) continue;
+        if (player.x > block.rightX) continue;
 
-        if (player.x < block.x) {
-          if (player.y < block.y) {
-            double xd = block.x - player.x;
-            double yd = player.y - block.top;
-            if (yd > xd) {
-              player.x -= yd - xd;
-              player.y--;
-            }
-          } else {
-            double xd = player.x - block.left ;
-            double yd = player.y - block.y;
-            if(xd > yd){
-              player.x -= xd - yd;
-              player.y++;
-            }
+        if (player.x < block.topX && player.y < block.leftY) {
+          double xd = block.topX - player.x;
+          double yd = player.y - block.topY;
+          if (yd > xd) {
+            player.x -= yd - xd;
+            player.y--;
           }
-        } else {
-          if (player.y < block.y) {
-            double xd = player.x - block.x;
-            double yd = player.y - block.top;
-            if (yd > xd) {
-              player.x += yd - xd;
-              player.y--;
-            }
-          } else {
-            double xd = block.right - player.x;
-            double yd = player.y - block.y;
-            if(xd > yd){
-              player.x += xd - yd;
-              player.y++;
-            }
-          }
+          continue;
         }
+
+        if (player.x < block.bottomX && player.y > block.leftY) {
+          double xd = player.x - block.leftX;
+          double yd = player.y - block.leftY;
+          if (xd > yd) {
+            player.x -= xd - yd;
+            player.y++;
+          }
+          continue;
+        }
+
+
       }
     }
 
