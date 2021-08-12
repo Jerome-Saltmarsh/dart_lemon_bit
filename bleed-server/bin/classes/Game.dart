@@ -74,6 +74,25 @@ extension GameFunctions on Game {
           continue;
         }
 
+        if (player.x > block.topX && player.y < block.rightY) {
+          double xd = player.x - block.topX;
+          double yd = player.y - block.topY;
+          if (yd > xd) {
+            player.x += yd - xd;
+            player.y--;
+          }
+          continue;
+        }
+
+        if (player.x > block.bottomX && player.y > block.rightY) {
+          double xd = block.rightX - player.x;
+          double yd = player.y - block.rightY;
+          if (xd > yd) {
+            player.x += xd - yd;
+            player.y++;
+          }
+          continue;
+        }
 
       }
     }
