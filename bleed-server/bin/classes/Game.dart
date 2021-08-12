@@ -58,28 +58,34 @@ extension GameFunctions on Game {
           double xd = block.topX - player.x;
           double yd = player.y - block.topY;
           if (yd > xd) {
-            player.x -= yd - xd;
+            player.x = block.topX - yd;
             player.y--;
           }
           continue;
         }
 
         if (player.x < block.bottomX && player.y > block.leftY) {
-          double xd = player.x - block.leftX;
-          double yd = player.y - block.leftY;
-          if (xd > yd) {
-            player.x -= xd - yd;
-            player.y++;
+
+          if(player.x > block.x && player.y < block.y){
+            
+          }else{
+            double xd = player.x - block.leftX;
+            double yd = player.y - block.leftY;
+            if (xd > yd) {
+              player.x -= xd - yd;
+              player.y += xd - yd;
+            }
+            continue;
           }
-          continue;
         }
 
         if (player.x > block.topX && player.y < block.rightY) {
           double xd = player.x - block.topX;
           double yd = player.y - block.topY;
+
           if (yd > xd) {
             player.x += yd - xd;
-            player.y--;
+            player.y -= yd - xd;
           }
           continue;
         }
@@ -89,7 +95,7 @@ extension GameFunctions on Game {
           double yd = player.y - block.rightY;
           if (xd > yd) {
             player.x += xd - yd;
-            player.y++;
+            player.y += xd - yd;
           }
           continue;
         }
