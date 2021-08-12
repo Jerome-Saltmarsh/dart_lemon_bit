@@ -104,12 +104,9 @@ extension GameFunctions on Game {
     int minJ = 0;
     for (int i = 0; i < gameObjects.length; i++) {
       GameObject gameObject = gameObjects[i];
-      for (int j = minJ; j < blocks.length; j++) {
+      for (int j = 0; j < blocks.length; j++) {
         Block block = blocks[j];
-        if (gameObject.right < block.leftX) {
-          minJ++;
-          break;
-        }
+        if (block.rightX < gameObject.left) continue;
         if (gameObject.right < block.leftX) break;
         if (gameObject.y < block.topY) continue;
         if (gameObject.y > block.bottomY) continue;
