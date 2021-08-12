@@ -38,6 +38,7 @@ class Game {
 }
 
 extension GameFunctions on Game {
+
   void updateAndCompile() {
     updateCharacters();
     updateCollisions();
@@ -46,64 +47,11 @@ extension GameFunctions on Game {
     updateNpcs();
     updateGameEvents();
     updateGrenades();
-
-    for (Player player in players) {
-      for (Block block in blocks) {
-        if (player.y < block.topY) continue;
-        if (player.y > block.bottomY) continue;
-        if (player.x < block.leftX) continue;
-        if (player.x > block.rightX) continue;
-
-        if (player.x < block.topX && player.y < block.leftY) {
-          double xd = block.topX - player.x;
-          double yd = player.y - block.topY;
-          if (yd > xd) {
-            player.x = block.topX - yd;
-            player.y--;
-          }
-          continue;
-        }
-
-        if (player.x < block.bottomX && player.y > block.leftY) {
-
-          if(player.x > block.x && player.y < block.y){
-            
-          }else{
-            double xd = player.x - block.leftX;
-            double yd = player.y - block.leftY;
-            if (xd > yd) {
-              player.x -= xd - yd;
-              player.y += xd - yd;
-            }
-            continue;
-          }
-        }
-
-        if (player.x > block.topX && player.y < block.rightY) {
-          double xd = player.x - block.topX;
-          double yd = player.y - block.topY;
-
-          if (yd > xd) {
-            player.x += yd - xd;
-            player.y -= yd - xd;
-          }
-          continue;
-        }
-
-        if (player.x > block.bottomX && player.y > block.rightY) {
-          double xd = block.rightX - player.x;
-          double yd = player.y - block.rightY;
-          if (xd > yd) {
-            player.x += xd - yd;
-            player.y += xd - yd;
-          }
-          continue;
-        }
-
-      }
-    }
-
     compileState(this);
+  }
+
+  void sortBlocks(){
+    blocks.sort((a, b) => a.leftX < b.leftX ? -1 : 1);
   }
 
   void updateNpc(Npc npc) {
@@ -152,13 +100,76 @@ extension GameFunctions on Game {
     npcs.forEach(updateCharacter);
   }
 
+  void handleBlockCollisions(List<GameObject> gameObjects){
+    int minJ = 0;
+    for (int i = 0; i < gameObjects.length; i++) {
+      GameObject gameObject = gameObjects[i];
+      for (int j = minJ; j < blocks.length; j++) {
+        Block block = blocks[j];
+        if (gameObject.right < block.leftX) {
+          minJ++;
+          break;
+        }
+        if (gameObject.right < block.leftX) break;
+        if (gameObject.y < block.topY) continue;
+        if (gameObject.y > block.bottomY) continue;
+
+        if (gameObject.x < block.topX && gameObject.y < block.leftY) {
+          double xd = block.topX - gameObject.x;
+          double yd = gameObject.y - block.topY;
+          if (yd > xd) {
+            gameObject.x = block.topX - yd;
+            gameObject.y--;
+          }
+          continue;
+        }
+
+        if (gameObject.x < block.bottomX && gameObject.y > block.leftY) {
+          if(gameObject.x > block.x && gameObject.y < block.y){
+
+          }else{
+            double xd = gameObject.x - block.leftX;
+            double yd = gameObject.y - block.leftY;
+            if (xd > yd) {
+              gameObject.x -= xd - yd;
+              gameObject.y += xd - yd;
+            }
+            continue;
+          }
+        }
+        if (gameObject.x > block.topX && gameObject.y < block.rightY) {
+          double xd = gameObject.x - block.topX;
+          double yd = gameObject.y - block.topY;
+
+          if (yd > xd) {
+            gameObject.x += yd - xd;
+            gameObject.y -= yd - xd;
+          }
+          continue;
+        }
+
+        if (gameObject.x > block.bottomX && gameObject.y > block.rightY) {
+          double xd = block.rightX - gameObject.x;
+          double yd = gameObject.y - block.rightY;
+          if (xd > yd) {
+            gameObject.x += xd - yd;
+            gameObject.y += xd - yd;
+          }
+          continue;
+        }
+      }
+    }
+  }
+
   void updateCollisions() {
     npcs.sort(compareGameObjects);
     players.sort(compareGameObjects);
-    blocks.sort((a, b) => a.x > b.x ? 1 : -1);
     updateCollisionBetween(npcs);
     updateCollisionBetween(players);
     resolveCollisionBetween(npcs, players);
+
+    handleBlockCollisions(players);
+    handleBlockCollisions(npcs);
   }
 
   Player? findPlayerById(int id) {
@@ -289,6 +300,67 @@ extension GameFunctions on Game {
       }
     }
     bullets.sort(compareGameObjects);
+
+
+    int jMin = 0;
+    for (int i = 0; i < bullets.length; i++) {
+      Bullet bullet = bullets[i];
+      for (int j = jMin; j < blocks.length; j++) {
+        Block block = blocks[j];
+        if (bullet.x > block.rightX) {
+          jMin++;
+          break;
+        }
+        if (bullet.x < block.leftX) break;
+        if (bullet.y < block.topY) continue;
+        if (bullet.y > block.bottomY) continue;
+
+        if (bullet.x < block.topX && bullet.y < block.leftY) {
+          double xd = block.topX - bullet.x;
+          double yd = bullet.y - block.topY;
+          if (yd > xd) {
+            bullets.removeAt(i);
+            i--;
+          }
+          continue;
+        }
+
+        if (bullet.x < block.bottomX && bullet.y > block.leftY) {
+          if(bullet.x > block.x && bullet.y < block.y){
+
+          }else{
+            double xd = bullet.x - block.leftX;
+            double yd = bullet.y - block.leftY;
+            if (xd > yd) {
+              bullets.removeAt(i);
+              i--;
+            }
+            continue;
+          }
+        }
+        if (bullet.x > block.topX && bullet.y < block.rightY) {
+          double xd = bullet.x - block.topX;
+          double yd = bullet.y - block.topY;
+
+          if (yd > xd) {
+            bullets.removeAt(i);
+            i--;
+          }
+          continue;
+        }
+
+        if (bullet.x > block.bottomX && bullet.y > block.rightY) {
+          double xd = block.rightX - bullet.x;
+          double yd = bullet.y - block.rightY;
+          if (xd > yd) {
+            bullets.removeAt(i);
+            i--;
+          }
+          continue;
+        }
+      }
+    }
+
     checkBulletCollision(npcs);
     checkBulletCollision(players);
   }

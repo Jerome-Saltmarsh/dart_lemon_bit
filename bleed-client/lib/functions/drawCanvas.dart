@@ -106,8 +106,6 @@ void drawBlock(Block block) {
   _drawLine(block.right, block.bottom, Colors.white);
   _drawLine(block.bottom, block.left, Colors.white);
   _drawLine(block.left, block.top, Colors.white);
-
-
 }
 
 void _drawLine(Offset a, Offset b, Color color){
