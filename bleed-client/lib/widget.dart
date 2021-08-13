@@ -23,6 +23,7 @@ class BleedWidget extends GameWidget {
   void onMouseScroll(double amount) {
     zoom -= amount * 0.0005;
     if (zoom < 0.5) zoom = 0.5;
+    print('zoom: $zoom');
   }
 
   @override

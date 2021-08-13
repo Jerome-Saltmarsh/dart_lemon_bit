@@ -2,10 +2,8 @@ import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/properties.dart';
-import 'package:bleed_client/spawners/spawnFireYellow.dart';
 
 import 'connection.dart';
-import 'enums/Mode.dart';
 import 'enums/Weapons.dart';
 import 'input.dart';
 import 'send.dart';
@@ -34,7 +32,7 @@ void updatePlayMode() {
   readPlayerInput();
   updateParticles();
   updateCharacters();
-  updateCamera();
+  cameraTrackPlayer();
   updatePlayer();
 }
 
@@ -64,10 +62,10 @@ void updatePlayer() {
   }
 }
 
-void updateCamera() {
+void cameraTrackPlayer() {
   if (globalSize == null) return;
-  double x = cameraX - playerX + (globalSize.width * 0.5 / scale);
-  double y = cameraY - playerY + (globalSize.height * 0.5 / scale);
+  double x = cameraX - playerX + (globalSize.width * 0.5 * zoom);
+  double y = cameraY - playerY + (globalSize.height * 0.5 * zoom);
   cameraX -= x * 0.01;
   cameraY -= y * 0.01;
 }

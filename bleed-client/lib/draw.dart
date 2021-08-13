@@ -678,8 +678,7 @@ void drawCircleOutline(
 
 void drawMouse() {
   if (!mouseAvailable) return;
-  drawCircleOutline(
-      radius: 5, x: mouseX + cameraX, y: mouseY + cameraY, color: white);
+  drawCircleOutline(radius: 5, x: mouseWorldX, y: mouseWorldY, color: white);
 }
 
 void drawTiles() {

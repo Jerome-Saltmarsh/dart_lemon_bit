@@ -270,6 +270,9 @@ Widget buildHud() {
     [
       button("FullScreen", requestFullScreen),
       text('x: $playerX, y: $playerY'),
+      text('cameraX: ${cameraX.toInt()}, cameraY: ${cameraY.toInt()}'),
+      text('mouseX: ${mouseX.toInt()}, mouseY: ${mouseY.toInt()}'),
+      text('zoom: ${zoom.toStringAsFixed(2)}'),
       text('Stamina: $playerStamina / $playerMaxStamina'),
       button(playMode ? 'Edit' : "Play", toggleMode),
       if(editMode)

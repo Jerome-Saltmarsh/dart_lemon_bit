@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:bleed_client/classes/Block.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_input.dart';
@@ -163,6 +162,7 @@ void updateEditMode() {
     editState.selectedBlock.bottom += dragUpdateDetails.delta;
     editState.selectedBlock.left += dragUpdateDetails.delta;
   }
+
 
   redrawGame();
 }

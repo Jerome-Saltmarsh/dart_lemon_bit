@@ -1,13 +1,10 @@
 # TODO
-[ ] Oozie
 [ ] Shot Animation
-[ ] Publish dart-blade-game-engine
-[ ] Create bleed-common library
 [ ] Shotgun Animation
 [ ] Critical Damage
 [ ] Accuracy
 [ ] Compile Bullet remove id
-[ ] Equip Weapon Animation
+[ ] Weapon Oozie
 [ ] Weapon: Bazooka
 [ ] Game Type: Open World
 [ ] Game Type: Death Match
@@ -19,16 +16,22 @@
 [ ] Player Name Text
 [ ] Particle Gunshot smoke
 [ ] Throw Grenade Audio
-[ ] Game Max 32 Players / new games spawn automatically
+[ ] Static painter (tiles, buildings etc) / non static painter
+
+RELEASE OPEN WORLD
 [ ] FIX BUG: Character Draw Order
 [ ] Zombie Hurt Animation
 [ ] Cache Particles
+[ ] Map Editor
+
+RELEASE DEATH MATCH
+[ ] Spawn Points
 [ ] Ammo
 [ ] Stamina UI
 [ ] Lobby
-[ ] Map Editor
+[ ] Grenade building collision
 [ ] Zoom in / out
-[ ] Static painter (tiles, buildings etc) / non static painter
+[ ] Resize Structures
 [x] Object Collision
 [x] FIX BUG: Sniper Aim 
 [x] Tile Boundaries

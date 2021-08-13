@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:bleed_client/game_engine/game_functions.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as mat;
@@ -22,8 +23,8 @@ Offset get previousMousePosition => _previousMousePosition;
 Offset get mouseVelocity => _mouseDelta;
 double get mouseX => _mousePosition?.dx;
 double get mouseY => _mousePosition?.dy;
-double get mouseWorldX => mouseX + cameraX;
-double get mouseWorldY => mouseY + cameraY;
+double get mouseWorldX => convertScreenToWorldX(mouseX);
+double get mouseWorldY => convertScreenToWorldY(mouseY);
 
 bool get mouseAvailable => mouseX != null;
 bool get mouseClicked => !_clickProcessed;
