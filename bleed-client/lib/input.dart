@@ -34,14 +34,6 @@ bool _throwingGrenade = false;
 
 void readPlayerInput() {
   if (!playerAssigned) return;
-  // double playerScreenX = playerX - cameraX;
-  // double playerScreenY = playerY - cameraY;
-  // double halfScreenWidth = globalSize.width * 0.5;
-  // double halfScreenHeight = globalSize.height * 0.5;
-  // double xOffset = halfScreenWidth - playerScreenX;
-  // double yOffset = halfScreenHeight - playerScreenY;
-  // cameraX -= (xOffset * cameraFollow);
-  // cameraY -= (yOffset * cameraFollow);
 
   if (keyPressedSpawnZombie) {
     sendRequestSpawnNpc();
@@ -65,7 +57,7 @@ void readPlayerInput() {
     _throwingGrenade = false;
   }
   if (mouseAvailable) {
-    requestAim = round(getMouseRotation(), decimals: 3);
+    requestAim = getMouseRotation();
   }
 
   if (keyPressedReload) {
