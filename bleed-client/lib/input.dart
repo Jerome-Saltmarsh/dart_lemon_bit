@@ -34,14 +34,14 @@ bool _throwingGrenade = false;
 
 void readPlayerInput() {
   if (!playerAssigned) return;
-  double playerScreenX = playerX - cameraX;
-  double playerScreenY = playerY - cameraY;
-  double halfScreenWidth = globalSize.width * 0.5;
-  double halfScreenHeight = globalSize.height * 0.5;
-  double xOffset = halfScreenWidth - playerScreenX;
-  double yOffset = halfScreenHeight - playerScreenY;
-  cameraX -= (xOffset * cameraFollow);
-  cameraY -= (yOffset * cameraFollow);
+  // double playerScreenX = playerX - cameraX;
+  // double playerScreenY = playerY - cameraY;
+  // double halfScreenWidth = globalSize.width * 0.5;
+  // double halfScreenHeight = globalSize.height * 0.5;
+  // double xOffset = halfScreenWidth - playerScreenX;
+  // double yOffset = halfScreenHeight - playerScreenY;
+  // cameraX -= (xOffset * cameraFollow);
+  // cameraY -= (yOffset * cameraFollow);
 
   if (keyPressedSpawnZombie) {
     sendRequestSpawnNpc();

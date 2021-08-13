@@ -1,5 +1,6 @@
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
+import 'package:bleed_client/game_engine/game_functions.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/properties.dart';
 
@@ -64,8 +65,8 @@ void updatePlayer() {
 
 void cameraTrackPlayer() {
   if (globalSize == null) return;
-  double x = cameraX - playerX + (globalSize.width * 0.5 * zoom);
-  double y = cameraY - playerY + (globalSize.height * 0.5 * zoom);
-  cameraX -= x * 0.01;
-  cameraY -= y * 0.01;
+  double xDiff = screenCenterWorldX - playerX;
+  double yDiff = screenCenterWorldY - playerY;
+  cameraX -= xDiff * 0.025;
+  cameraY -= yDiff * 0.025;
 }

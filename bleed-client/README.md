@@ -30,8 +30,10 @@ RELEASE DEATH MATCH
 [ ] Stamina UI
 [ ] Lobby
 [ ] Grenade building collision
-[ ] Zoom in / out
 [ ] Resize Structures
+[ ] Fix Zoom out aim bug
+[x] Fix Zoom out camera follow
+[x] Zoom in / out
 [x] Object Collision
 [x] FIX BUG: Sniper Aim 
 [x] Tile Boundaries

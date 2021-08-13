@@ -662,7 +662,7 @@ RSTransform getTileTransform(int x, int y) {
 }
 
 void drawCircleOutline(
-    {int sides = 16, double radius, double x, double y, Color color}) {
+    {int sides = 6, double radius, double x, double y, Color color}) {
   double r = (pi * 2) / sides;
   List<Offset> points = [];
   Offset z = Offset(x, y);

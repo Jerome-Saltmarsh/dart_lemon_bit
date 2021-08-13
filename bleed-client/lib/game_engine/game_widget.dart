@@ -25,6 +25,10 @@ double get mouseX => _mousePosition?.dx;
 double get mouseY => _mousePosition?.dy;
 double get mouseWorldX => convertScreenToWorldX(mouseX);
 double get mouseWorldY => convertScreenToWorldY(mouseY);
+double get screenCenterX => globalSize.width * 0.5;
+double get screenCenterY => globalSize.height * 0.5;
+double get screenCenterWorldX => convertScreenToWorldX(screenCenterX);
+double get screenCenterWorldY => convertScreenToWorldY(screenCenterY);
 
 bool get mouseAvailable => mouseX != null;
 bool get mouseClicked => !_clickProcessed;
