@@ -3,6 +3,8 @@ import 'dart:ui';
 import 'package:bleed_client/classes/Block.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/instances/editState.dart';
+import 'package:bleed_client/properties.dart';
 import 'package:flutter/material.dart';
 
 import '../../keys.dart';
@@ -41,6 +43,13 @@ void drawCanvas(Canvas canvass, Size _size) {
   _drawParticles();
   // drawParticles2();
   drawCharacters();
+
+  if (editMode) {
+    if (editState.selectedBlock != null) {
+      drawBlockSelected(editState.selectedBlock);
+    }
+  }
+
   drawMouse();
 }
 
@@ -65,7 +74,6 @@ final Paint paintDeepPurple = Paint()
   ..isAntiAlias = false
   ..strokeWidth = 1;
 
-
 void _drawBlocks() {
   blockHouses.forEach(drawBlock);
 }
@@ -86,12 +94,29 @@ void drawBlock(Block block) {
   _drawLine(block.left, block.top, Colors.white);
 }
 
-void _drawLine(Offset a, Offset b, Color color){
+void drawBlockSelected(Block block) {
+  // globalCanvas.drawPath(block.wall1, _blockBlueGrey);
+  // globalCanvas.drawPath(block.wall2, _blockBlue);
+  // globalCanvas.drawPath(block.wall3, _blockGrey);
+  // _drawLine(block.center, block.a, Colors.red);
+  // _drawLine(block.center, block.b, Colors.green);
+  // _drawLine(block.center, block.top, Colors.deepPurple);
+  // _drawLine(block.center, block.right, Colors.orange);
+
+  globalPaint.strokeWidth = 3;
+  _drawLine(block.top, block.right, Colors.red);
+  _drawLine(block.right, block.bottom, Colors.red);
+  _drawLine(block.bottom, block.left, Colors.red);
+  _drawLine(block.left, block.top, Colors.red);
+}
+
+void _drawLine(Offset a, Offset b, Color color) {
   globalPaint.color = color;
   globalCanvas.drawLine(a, b, globalPaint);
 }
 
-Block createBlock(double topX, double topY, double rightX, double rightY, double bottomX, double bottomY, double leftX, double leftY) {
+Block createBlock(double topX, double topY, double rightX, double rightY,
+    double bottomX, double bottomY, double leftX, double leftY) {
   // width *= 0.5;
   // length *= 0.5;
   //

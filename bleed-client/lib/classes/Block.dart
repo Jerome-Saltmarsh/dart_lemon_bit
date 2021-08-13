@@ -2,10 +2,10 @@
 import 'dart:ui';
 
 class Block {
-  final Offset top;
-  final Offset right;
-  final Offset bottom;
-  final Offset left;
+  Offset top;
+  Offset right;
+  Offset bottom;
+  Offset left;
 
   Block(this.top, this.right, this.bottom, this.left);
 }

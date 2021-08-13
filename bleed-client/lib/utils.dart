@@ -6,6 +6,7 @@ import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_maths.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 
+import 'classes/Block.dart';
 import 'common.dart';
 import 'constants.dart';
 import 'enums/Weapons.dart';
@@ -162,6 +163,54 @@ void setHandgunRounds(int value){
   handgunRounds = value;
   redrawUI();
 }
+
+Block getBlockAt(double x, double y){
+  for (Block block in blockHouses) {
+    if (block.right.dx < x) continue;
+    if (block.left.dx > x) continue;
+    if (block.top.dy > y) continue;
+    if (block.bottom.dy < y) continue;
+
+    if (x < block.top.dx && y < block.left.dy) {
+      double xd = block.top.dx - x;
+      double yd = y - block.top.dy;
+      if (yd > xd) {
+        return block;
+      }
+      continue;
+    }
+
+    if (x < block.bottom.dx && y > block.left.dy) {
+      double xd = x - block.left.dx;
+      double yd = y - block.left.dy;
+      if (xd > yd) {
+        return block;
+      }
+      continue;
+    }
+    if (x > block.top.dx && y < block.right.dy) {
+      double xd = x - block.top.dx;
+      double yd = y - block.top.dy;
+
+      if (yd > xd) {
+        return block;
+      }
+      continue;
+    }
+
+    if (x > block.bottom.dx && y > block.right.dy) {
+      double xd = block.right.dx - x;
+      double yd = y - block.right.dy;
+      if (xd > yd) {
+        return block;
+      }
+      continue;
+    }
+  }
+  return null;
+}
+
+
 
 double get centerX => cameraX + (globalSize.width * 0.5);
 double get centerY => cameraY + (globalSize.height * 0.5);

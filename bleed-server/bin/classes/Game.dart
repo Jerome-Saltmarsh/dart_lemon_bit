@@ -283,16 +283,12 @@ extension GameFunctions on Game {
     bullets.sort(compareGameObjects);
 
 
-    int jMin = 0;
     for (int i = 0; i < bullets.length; i++) {
       Bullet bullet = bullets[i];
-      for (int j = jMin; j < scene.blocks.length; j++) {
+      for (int j = 0; j < scene.blocks.length; j++) {
         Block block = scene.blocks[j];
-        if (bullet.x > block.rightX) {
-          jMin++;
-          break;
-        }
-        if (bullet.x < block.leftX) break;
+        if (bullet.x > block.rightX) continue;
+        if (bullet.x < block.leftX) continue;
         if (bullet.y < block.topY) continue;
         if (bullet.y > block.bottomY) continue;
 

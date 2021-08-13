@@ -202,23 +202,38 @@ class _GameWidgetState extends State<GameWidget> {
         },
         child: Listener(
           onPointerSignal: (pointerSignalEvent) {
+            print('onPointerSignal($pointerSignalEvent)');
             if (pointerSignalEvent is PointerScrollEvent) {
               widget.onMouseScroll(pointerSignalEvent.scrollDelta.dy);
             }
           },
-          child: StatefulBuilder(
-            builder: (context, _drawGame){
-              gameSetState = _drawGame;
-              return Container(
-                color: widget.getBackgroundColor(),
-                width: widget.screenSize.width,
-                height: widget.screenSize.height,
-                child: CustomPaint(
-                  size: widget.screenSize,
-                  painter: GameUIPainter(paintGame: widget.draw),
-                ),
-              );
+          child: GestureDetector(
+            onPanStart: (start){
+              print('onPanStart($start)');
+              mouseDragging = true;
             },
+            onPanEnd: (value){
+              print('onPanEnd($value)');
+              mouseDragging = false;
+            },
+            onPanUpdate:(DragUpdateDetails value){
+              print('onPanUpdate($value)');
+              dragUpdateDetails = value;
+            },
+            child: StatefulBuilder(
+              builder: (context, _drawGame){
+                gameSetState = _drawGame;
+                return Container(
+                  color: widget.getBackgroundColor(),
+                  width: widget.screenSize.width,
+                  height: widget.screenSize.height,
+                  child: CustomPaint(
+                    size: widget.screenSize,
+                    painter: GameUIPainter(paintGame: widget.draw),
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ),

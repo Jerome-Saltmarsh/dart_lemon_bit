@@ -35,9 +35,11 @@ class BleedWidget extends GameWidget {
   Future init() async {
     await loadImages();
     loadRects();
+    // todo move this
     periodic(checkBulletHoles, ms: 500);
     periodic(redrawUI, seconds: 1);
 
+    // TODO this job is expensive, use reaction instead
     periodic(() {
       if (!connected) {
         forceRedraw();
@@ -45,9 +47,6 @@ class BleedWidget extends GameWidget {
     }, ms: 100);
 
     onConnectedController.stream.listen((event) {
-      // sendRequestTiles();
-      // sendRequestSpawn();
-      // redrawUI();
     });
 
     onDisconnected.stream.listen((event) {
@@ -57,6 +56,7 @@ class BleedWidget extends GameWidget {
     initUI();
   }
 
+  // TODO move this
   void checkBulletHoles() {
     if (bulletHoles.length > 4) {
       bulletHoles.removeAt(0);

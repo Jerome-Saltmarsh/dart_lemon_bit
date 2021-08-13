@@ -28,6 +28,7 @@
 [ ] Lobby
 [ ] Map Editor
 [ ] Zoom in / out
+[ ] Static painter (tiles, buildings etc) / non static painter
 [x] Object Collision
 [x] FIX BUG: Sniper Aim 
 [x] Tile Boundaries

@@ -14,6 +14,7 @@ import 'functions/requestThrowGrenade.dart';
 import '../keys.dart';
 import '../send.dart';
 import '../settings.dart';
+import 'instances/editState.dart';
 import 'maths.dart';
 import 'state.dart';
 import 'utils.dart';
@@ -144,13 +145,31 @@ void updateEditMode() {
 
   if (mouseClicked) {
     // spawn block at mouse
-    createBlock2(mouseWorldX, mouseWorldY, 200, 300);
+    Block block = getBlockAt(mouseWorldX, mouseWorldY);
+    if (block == null){
+      editState.selectedBlock = createBlock2(mouseWorldX, mouseWorldY, 200, 300);
+    }else{
+      if(editState.selectedBlock != block){
+        editState.selectedBlock = block;
+      }else{
+        editState.selectedBlock = null;
+      }
+    }
+  }
+
+  if (mouseDragging && editState.selectedBlock != null) {
+    editState.selectedBlock.top += dragUpdateDetails.delta;
+    editState.selectedBlock.right += dragUpdateDetails.delta;
+    editState.selectedBlock.bottom += dragUpdateDetails.delta;
+    editState.selectedBlock.left += dragUpdateDetails.delta;
   }
 
   redrawGame();
 }
 
-void createBlock2(double x, double y, double width, double length){
+
+
+Block createBlock2(double x, double y, double width, double length){
 
   double halfWidth = width * 0.5;
   double halfLength = length * 0.5;
@@ -176,6 +195,7 @@ void createBlock2(double x, double y, double width, double length){
   Block block = createBlock(topX, topY, rightX, rightY, bottomX, bottomY, leftX, leftY);
 
   blockHouses.add(block);
+  return block;
 }
 
 void controlCameraEditMode() {
