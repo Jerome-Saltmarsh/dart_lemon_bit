@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:flutter/material.dart';
 import 'package:bleed_client/update.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
@@ -17,6 +18,12 @@ import 'utils.dart';
 class BleedWidget extends GameWidget {
   @override
   bool uiVisible() => true;
+
+  @override
+  void onMouseScroll(double amount) {
+    zoom -= amount * 0.0005;
+    if (zoom < 0.5) zoom = 0.5;
+  }
 
   @override
   Widget buildUI(BuildContext bc) {

@@ -82,6 +82,10 @@ abstract class GameWidget extends StatefulWidget {
 
   }
 
+  void onMouseScroll(double amount){
+
+  }
+
   /// used to build the ui
   Widget buildUI(BuildContext context);
 
@@ -199,7 +203,7 @@ class _GameWidgetState extends State<GameWidget> {
         child: Listener(
           onPointerSignal: (pointerSignalEvent) {
             if (pointerSignalEvent is PointerScrollEvent) {
-              // game.handleMouseScroll(pointerSignalEvent.scrollDelta.dy);
+              widget.onMouseScroll(pointerSignalEvent.scrollDelta.dy);
             }
           },
           child: StatefulBuilder(

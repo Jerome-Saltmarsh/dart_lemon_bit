@@ -1,9 +1,14 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+import 'classes/Block.dart';
 import 'classes/Game.dart';
 import 'classes.dart';
+import 'classes/Scene.dart';
 import 'compile.dart';
 import 'enums/ClientRequest.dart';
 import 'enums/GameError.dart';
@@ -11,6 +16,7 @@ import 'enums/ServerResponse.dart';
 import 'enums/Weapons.dart';
 import 'enums.dart';
 import 'instances/gameManager.dart';
+import 'instances/scenes.dart';
 import 'settings.dart';
 import 'update.dart';
 import 'utils.dart';
@@ -18,9 +24,40 @@ import 'utils.dart';
 const String _space = " ";
 final int errorIndex = ServerResponse.Error.index;
 
+void loadScenes() {
+  print("loadScenes()");
+  String dir = Directory.current.path;
+  File file = File('$dir/scenes/town.json');
+  file.readAsString().then((value) {
+    scenesTown = mapStringToScene(value);
+  });
+}
+
+Scene mapStringToScene(String text) {
+  Map<String, dynamic> json = JsonDecoder().convert(text);
+  List<dynamic> jsonBlocks = json['blocks'];
+  List<Block> blocks = jsonBlocks.map(mapJsonBlockToBlock).toList();
+  sortBlocks(blocks);
+  return Scene([], generateTiles(), blocks);
+}
+
+Block mapJsonBlockToBlock(dynamic jsonBlock) {
+  return Block(
+      jsonBlock['tx'],
+      jsonBlock['ty'],
+      jsonBlock['rx'],
+      jsonBlock['ry'],
+      jsonBlock['bx'],
+      jsonBlock['by'],
+      jsonBlock['lx'],
+      jsonBlock['ly'],
+  );
+}
+
 void main() {
   print('Bleed Game Server Starting');
   initUpdateLoop();
+  loadScenes();
 
   var handler = webSocketHandler((WebSocketChannel webSocket) {
     void sendToClient(String response) {
@@ -33,32 +70,33 @@ void main() {
       sendToClient(buffer.toString());
     }
 
-    void joinGame(Game game){
+    void joinGame(Game game) {
       Player player = game.spawnPlayer(name: 'test');
       StringBuffer buffer = StringBuffer();
       compilePlayer(buffer, player);
-      compileTiles(buffer, game.tiles);
-      compileBlocks(buffer, game.blocks);
+      compileTiles(buffer, game.scene.tiles);
+      compileBlocks(buffer, game.scene.blocks);
       compileState(game);
       buffer.write(game.compiled);
       buffer.write(
-          '${ServerResponse.Player_Created.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ; ');
+          '${ServerResponse.Player_Created.index} ${player.id} ${player
+              .uuid} ${player.x.toInt()} ${player.y.toInt()} ; ');
       sendToClient(buffer.toString());
     }
 
-    void error(GameError error){
+    void error(GameError error) {
       sendToClient('$errorIndex ${error.index}');
     }
 
-    void errorGameNotFound(){
+    void errorGameNotFound() {
       error(GameError.GameNotFound);
     }
 
-    void errorPlayerNotFound(){
+    void errorPlayerNotFound() {
       error(GameError.PlayerNotFound);
     }
 
-    void errorInvalidPlayerUUID(){
+    void errorInvalidPlayerUUID() {
       error(GameError.InvalidPlayerUUID);
     }
 
@@ -106,8 +144,10 @@ void main() {
             return;
           }
           player.lastEventFrame = 0;
-          CharacterState requestedState = CharacterState.values[int.parse(arguments[4])];
-          Direction requestedDirection = Direction.values[int.parse(arguments[5])];
+          CharacterState requestedState = CharacterState.values[int.parse(
+              arguments[4])];
+          Direction requestedDirection = Direction.values[int.parse(
+              arguments[5])];
           double aim = double.parse(arguments[6]);
           player.aimAngle = aim;
           setDirection(player, requestedDirection);
@@ -116,11 +156,11 @@ void main() {
           return;
 
         case ClientRequest.Game_Create:
-          // print("ClientRequest.Game_Create");
-          // Game game = Game(GameType.DeathMatch);
-          // generateTiles(game);
-          // gameManager.games.add(game);
-          // sendToClient('game-created ${game.id}');
+        // print("ClientRequest.Game_Create");
+        // Game game = Game(GameType.DeathMatch);
+        // generateTiles(game);
+        // gameManager.games.add(game);
+        // sendToClient('game-created ${game.id}');
           return;
 
         case ClientRequest.Game_Join_Random:
@@ -128,20 +168,20 @@ void main() {
           joinGame(deathMatch);
           break;
 
-        // case ClientRequest.Game_Join:
-        //   if (arguments.length <= 1) {
-        //     error('game uuid required');
-        //     return;
-        //   }
-        //   String gameId = arguments[1];
-        //   Game? game = gameManager.findGameById(gameId);
-        //   if (game == null) {
-        //     error('game not found: $gameId ;');
-        //     return;
-        //   }
-        //   Player player = game.spawnPlayer(name: "Test");
-        //   sendToClient("game-joined ${game.id} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ; ");
-        //   return;
+      // case ClientRequest.Game_Join:
+      //   if (arguments.length <= 1) {
+      //     error('game uuid required');
+      //     return;
+      //   }
+      //   String gameId = arguments[1];
+      //   Game? game = gameManager.findGameById(gameId);
+      //   if (game == null) {
+      //     error('game not found: $gameId ;');
+      //     return;
+      //   }
+      //   Player player = game.spawnPlayer(name: "Test");
+      //   sendToClient("game-joined ${game.id} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ; ");
+      //   return;
 
         case ClientRequest.Ping:
           sendToClient('${ServerResponse.Pong.index} ;');

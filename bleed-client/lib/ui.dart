@@ -1,11 +1,14 @@
 import 'package:bleed_client/enums/ClientRequest.dart';
+import 'package:bleed_client/properties.dart';
 import 'package:flutter/material.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/game_engine/web_functions.dart';
 
 import 'connection.dart';
+import 'enums/Mode.dart';
 import 'enums/Weapons.dart';
+import 'functions/saveScene.dart';
 import 'send.dart';
 import 'settings.dart';
 import 'state.dart';
@@ -158,18 +161,17 @@ Widget buildGameUI(BuildContext context) {
   }
 
   if (gameId < 0) {
-    return column(
-      [
-        button('Open World', (){
-          send(ClientRequest.Game_Join_Open_World.index.toString());
-        }),
-        button('Death Match', (){
-          send(ClientRequest.Game_Join_Random.index.toString());
-        }),
-        // button('Create Game', (){}),
-        // button('Join Game', (){})
-      ]
-    );
+    return column([
+      button('Open World', () {
+        send(ClientRequest.Game_Join_Open_World.index.toString());
+      }),
+      button('Death Match', () {
+        send(ClientRequest.Game_Join_Random.index.toString());
+      }),
+
+      // button('Create Game', (){}),
+      // button('Join Game', (){})
+    ]);
   }
 
   if (playerId == -1) {
@@ -226,7 +228,6 @@ const DecorationImage _machineGunImage = const DecorationImage(
   image: const AssetImage('images/weapon-machine-gun.png'),
 );
 
-
 DecorationImage _getDecorationImage(Weapon weapon) {
   switch (weapon) {
     case Weapon.HandGun:
@@ -256,21 +257,36 @@ Widget buildWeaponButton(Weapon weapon) {
   );
 }
 
+void toggleMode() {
+  if (playMode) {
+    mode = Mode.Edit;
+  } else {
+    mode = Mode.Play;
+  }
+}
+
 Widget buildHud() {
   return column(
     [
       button("FullScreen", requestFullScreen),
       text('x: $playerX, y: $playerY'),
       text('Stamina: $playerStamina / $playerMaxStamina'),
-      if(playerMaxStamina > 0)
-      Container(
-        height: 50,
-        width: 200,
-        color: Colors.white,
-        alignment: Alignment.centerLeft,
-        padding: EdgeInsets.symmetric(horizontal: 5),
-        child: Container(height: 40, width: 200 * (playerStamina / playerMaxStamina), color: Colors.yellow,),
-      ),
+      button(playMode ? 'Edit' : "Play", toggleMode),
+      if(editMode)
+        button('save', saveScene),
+      if (playerMaxStamina > 0)
+        Container(
+          height: 50,
+          width: 200,
+          color: Colors.white,
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.symmetric(horizontal: 5),
+          child: Container(
+            height: 40,
+            width: 200 * (playerStamina / playerMaxStamina),
+            color: Colors.yellow,
+          ),
+        ),
       if (debugMode) buildDebugPanel(),
       buildWeaponButton(Weapon.HandGun),
       text('$handgunRounds / $handgunClipSize - $handgunClips'),

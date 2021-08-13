@@ -13,6 +13,7 @@ void initUpdateLoop() {
   periodic(updateNpcTargets, ms: 500);
 }
 
+
 void updateNpcTargets(){
   gameManager.games.forEach((game) => game.updateNpcTargets());
 }

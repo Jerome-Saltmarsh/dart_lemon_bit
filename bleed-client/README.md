@@ -26,7 +26,9 @@
 [ ] Ammo
 [ ] Stamina UI
 [ ] Lobby
-[ ] Object Collision
+[ ] Map Editor
+[ ] Zoom in / out
+[x] Object Collision
 [x] FIX BUG: Sniper Aim 
 [x] Tile Boundaries
 [x] Stamina

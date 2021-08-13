@@ -2,44 +2,46 @@ import '../constants.dart';
 import '../maths.dart';
 
 class Block {
-  final double x;
-  final double y;
-  final double width;
-  final double length;
+  // final num x;
+  // final num y;
+  // final num width;
+  // final num length;
 
-  late final double topX;
-  late final double topY;
-  late final double rightX;
-  late final double rightY;
-  late final double bottomX;
-  late final double bottomY;
-  late final double leftX;
-  late final double leftY;
+  late final num topX;
+  late final num topY;
+  late final num rightX;
+  late final num rightY;
+  late final num bottomX;
+  late final num bottomY;
+  late final num leftX;
+  late final num leftY;
 
-  Block(this.x, this.y, this.width, this.length){
+  static Block build(num x, num y, num width, num length){
 
-    double halfWidth = width * 0.5;
-    double halfLength = length * 0.5;
+    num halfWidth = width * 0.5;
+    num halfLength = length * 0.5;
 
-    double aX = adj(piQuarter * 5, halfLength);
-    double aY = opp(piQuarter * 5, halfLength);
-    double bX = adj(piQuarter * 3, halfWidth);
-    double bY = opp(piQuarter * 3, halfWidth);
-    double cX = adj(piQuarter * 1, halfLength);
-    double cY = opp(piQuarter * 1, halfLength);
-    double dX = adj(piQuarter * 7, halfWidth);
-    double dY = opp(piQuarter * 7, halfWidth);
+    num aX = adj(piQuarter * 5, halfLength);
+    num aY = opp(piQuarter * 5, halfLength);
+    num bX = adj(piQuarter * 3, halfWidth);
+    num bY = opp(piQuarter * 3, halfWidth);
+    num cX = adj(piQuarter * 1, halfLength);
+    num cY = opp(piQuarter * 1, halfLength);
+    num dX = adj(piQuarter * 7, halfWidth);
+    num dY = opp(piQuarter * 7, halfWidth);
 
-    topX = x + cX + dX;
-    topY = y + cY + dY;
+    num topX = x + cX + dX;
+    num topY = y + cY + dY;
+    num rightX = x + cX + bX;
+    num rightY = y + cY + bY;
+    num bottomX = x + bX + aX;
+    num bottomY = y + bY + aY;
+    num leftX = x + dX + aX;
+    num leftY = y + dY + aY;
 
-    rightX = x + cX + bX;
-    rightY = y + cY + bY;
-
-    bottomX = x + bX + aX;
-    bottomY = y + bY + aY;
-
-    leftX = x + dX + aX;
-    leftY = y + dY + aY;
+    return Block(topX, topY, rightX, rightY, bottomX, bottomY, leftX, leftY);
   }
+
+  Block(this.topX, this.topY, this.rightX, this.rightY, this.bottomX,
+      this.bottomY, this.leftX, this.leftY);
 }

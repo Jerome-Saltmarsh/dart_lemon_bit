@@ -17,24 +17,23 @@ import '../state.dart';
 import '../update.dart';
 import '../utils.dart';
 import 'Block.dart';
+import 'Scene.dart';
 
 class Game {
   static int _id = 0;
   final String id = (_id++).toString();
   final GameType type;
-  final List<List<Tile>> tiles;
   final int maxPlayers;
+  final Scene scene;
   List<Npc> npcs = [];
   List<Player> players = [];
   List<Bullet> bullets = [];
   List<Grenade> grenades = [];
-  List<GameObject> objects = [];
-  List<Block> blocks = [];
   List<GameEvent> gameEvents = [];
   String compiled = "";
   StringBuffer buffer = StringBuffer();
 
-  Game(this.type, this.tiles, this.maxPlayers);
+  Game(this.type, this.scene, this.maxPlayers);
 }
 
 extension GameFunctions on Game {
@@ -48,10 +47,6 @@ extension GameFunctions on Game {
     updateGameEvents();
     updateGrenades();
     compileState(this);
-  }
-
-  void sortBlocks(){
-    blocks.sort((a, b) => a.leftX < b.leftX ? -1 : 1);
   }
 
   void updateNpc(Npc npc) {
@@ -101,11 +96,10 @@ extension GameFunctions on Game {
   }
 
   void handleBlockCollisions(List<GameObject> gameObjects){
-    int minJ = 0;
     for (int i = 0; i < gameObjects.length; i++) {
       GameObject gameObject = gameObjects[i];
-      for (int j = 0; j < blocks.length; j++) {
-        Block block = blocks[j];
+      for (int j = 0; j < scene.blocks.length; j++) {
+        Block block = scene.blocks[j];
         if (block.rightX < gameObject.left) continue;
         if (gameObject.right < block.leftX) break;
         if (gameObject.y < block.topY) continue;
@@ -122,17 +116,13 @@ extension GameFunctions on Game {
         }
 
         if (gameObject.x < block.bottomX && gameObject.y > block.leftY) {
-          if(gameObject.x > block.x && gameObject.y < block.y){
-
-          }else{
-            double xd = gameObject.x - block.leftX;
-            double yd = gameObject.y - block.leftY;
-            if (xd > yd) {
-              gameObject.x -= xd - yd;
-              gameObject.y += xd - yd;
-            }
-            continue;
+          double xd = gameObject.x - block.leftX;
+          double yd = gameObject.y - block.leftY;
+          if (xd > yd) {
+            gameObject.x -= xd - yd;
+            gameObject.y += xd - yd;
           }
+          continue;
         }
         if (gameObject.x > block.topX && gameObject.y < block.rightY) {
           double xd = gameObject.x - block.topX;
@@ -278,12 +268,6 @@ extension GameFunctions on Game {
     }
   }
 
-  Npc findNpcById(int id) {
-    return npcs.firstWhere((npc) => npc.id == id, orElse: () {
-      throw Exception("could not find npc with id $id");
-    });
-  }
-
   void updateBullets() {
     for (int i = 0; i < bullets.length; i++) {
       Bullet bullet = bullets[i];
@@ -302,8 +286,8 @@ extension GameFunctions on Game {
     int jMin = 0;
     for (int i = 0; i < bullets.length; i++) {
       Bullet bullet = bullets[i];
-      for (int j = jMin; j < blocks.length; j++) {
-        Block block = blocks[j];
+      for (int j = jMin; j < scene.blocks.length; j++) {
+        Block block = scene.blocks[j];
         if (bullet.x > block.rightX) {
           jMin++;
           break;
@@ -323,17 +307,13 @@ extension GameFunctions on Game {
         }
 
         if (bullet.x < block.bottomX && bullet.y > block.leftY) {
-          if(bullet.x > block.x && bullet.y < block.y){
-
-          }else{
-            double xd = bullet.x - block.leftX;
-            double yd = bullet.y - block.leftY;
-            if (xd > yd) {
-              bullets.removeAt(i);
-              i--;
-            }
-            continue;
+          double xd = bullet.x - block.leftX;
+          double yd = bullet.y - block.leftY;
+          if (xd > yd) {
+            bullets.removeAt(i);
+            i--;
           }
+          continue;
         }
         if (bullet.x > block.topX && bullet.y < block.rightY) {
           double xd = bullet.x - block.topX;

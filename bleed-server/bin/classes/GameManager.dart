@@ -1,9 +1,11 @@
-import '../classes.dart';
+import 'dart:io';
+
 import '../enums/GameType.dart';
-import '../maths.dart';
+import '../instances/scenes.dart';
 import '../utils.dart';
 import 'Block.dart';
 import 'Game.dart';
+import 'Scene.dart';
 
 class GameManager {
   List<Game> games = [];
@@ -17,6 +19,22 @@ class GameManager {
     return null;
   }
 
+  Scene buildDeathMatchScene() {
+    List<Block> blocks = [];
+    blocks.add(Block.build(50, 800, 200, 150));
+    Scene scene = Scene([], generateTiles(), blocks);
+    scene.sortBlocks();
+    return scene;
+  }
+
+  Scene buildOpenWorldScene() {
+    List<Block> blocks = [];
+    blocks.add(Block.build(50, 800, 200, 150));
+    Scene scene = Scene([], generateTiles(), blocks);
+    scene.sortBlocks();
+    return scene;
+  }
+
   Game getAvailableDeathMatch() {
     for (Game game in games) {
       if (game.type != GameType.DeathMatch) continue;
@@ -24,11 +42,8 @@ class GameManager {
         return game;
       }
     }
-    Game deathMatch = Game(GameType.DeathMatch, generateTiles(), 16);
-    for (int i = 0; i < 3; i++) {
-      deathMatch.blocks.add(Block(giveOrTake(500), 1000 + giveOrTake(500), 200 + giveOrTake(50), 100 + giveOrTake(50)));
-    }
-    deathMatch.sortBlocks();
+
+    Game deathMatch = Game(GameType.DeathMatch, scenesTown, 16);
     games.add(deathMatch);
     return deathMatch;
   }
@@ -40,7 +55,7 @@ class GameManager {
         return game;
       }
     }
-    Game deathMatch = Game(GameType.OpenWorld, generateTiles(), 64);
+    Game deathMatch = Game(GameType.OpenWorld, buildOpenWorldScene(), 64);
     games.add(deathMatch);
     return deathMatch;
   }

@@ -1,4 +1,5 @@
 import 'classes.dart';
+import 'classes/Block.dart';
 import 'classes/Game.dart';
 import 'common.dart';
 import 'constants.dart';
@@ -221,4 +222,8 @@ bool npcWithinStrikeRange(Npc npc, GameObject target){
   if(abs(npc.x - npc.target.x) > settingsZombieStrikeRange) return false;
   if(abs(npc.y - npc.target.y) > settingsZombieStrikeRange) return false;
   return true;
+}
+
+void sortBlocks(List<Block> blocks){
+  blocks.sort((a, b) => a.leftX < b.leftX ? -1 : 1);
 }

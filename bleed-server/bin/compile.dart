@@ -1,6 +1,7 @@
 import 'classes.dart';
 import 'classes/Block.dart';
 import 'classes/Game.dart';
+import 'classes/Scene.dart';
 import 'enums.dart';
 import 'enums/ServerResponse.dart';
 import 'settings.dart';
@@ -16,7 +17,7 @@ void compileState(Game game) {
   _compileBullets(game.buffer, game.bullets);
   _compileGameEvents(game.buffer, game.gameEvents);
   _compileGrenades(game.buffer, game.grenades);
-  _compileObjects(game.buffer, game.objects);
+  _compileObjects(game.buffer, game.scene.objects);
   game.compiled = game.buffer.toString();
 }
 

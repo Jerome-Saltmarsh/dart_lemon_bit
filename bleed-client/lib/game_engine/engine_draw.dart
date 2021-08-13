@@ -14,8 +14,6 @@ void drawImage(ui.Image image, double x, double y, {double rotation = 0, double 
           scale: scale,
           anchorX: image.width * anchorX,
           anchorY: image.height * anchorY,
-          translateX: x - cameraX,
-          translateY: y - cameraY,
         )
       ],
       [

@@ -214,7 +214,7 @@ ServerResponse _consumeServerResponse() {
 String _consumeString() {
   _consumeSpace();
   StringBuffer buffer = StringBuffer();
-  while (_currentCharacter != " " && _index < event.length) {
+  while (_index < event.length && _currentCharacter != " ") {
     buffer.write(_currentCharacter);
     _index++;
   }

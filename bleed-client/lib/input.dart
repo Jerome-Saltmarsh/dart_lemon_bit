@@ -1,5 +1,8 @@
 import 'dart:math';
 
+import 'package:bleed_client/classes/Block.dart';
+import 'package:bleed_client/functions/drawCanvas.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_input.dart';
@@ -44,6 +47,7 @@ void readPlayerInput() {
     sendRequestSpawnNpc();
     return;
   }
+
   if (keyPressed(LogicalKeyboardKey.escape)){
     disconnect();
   }
@@ -135,17 +139,56 @@ int getKeyDirection() {
   return directionNone;
 }
 
-void controlCamera() {
-  if (keyPressedRightArrow) {
-    cameraX += cameraSpeed;
+void updateEditMode() {
+  controlCameraEditMode();
+
+  if (mouseClicked) {
+    // spawn block at mouse
+    createBlock2(mouseWorldX, mouseWorldY, 200, 300);
   }
-  if (keyPressedLeftArrow) {
+
+  redrawGame();
+}
+
+void createBlock2(double x, double y, double width, double length){
+
+  double halfWidth = width * 0.5;
+  double halfLength = length * 0.5;
+
+  double aX = adj(piQuarter * 5, halfLength);
+  double aY = opp(piQuarter * 5, halfLength);
+  double bX = adj(piQuarter * 3, halfWidth);
+  double bY = opp(piQuarter * 3, halfWidth);
+  double cX = adj(piQuarter * 1, halfLength);
+  double cY = opp(piQuarter * 1, halfLength);
+  double dX = adj(piQuarter * 7, halfWidth);
+  double dY = opp(piQuarter * 7, halfWidth);
+
+  double topX = x + cX + dX;
+  double topY = y + cY + dY;
+  double rightX = x + cX + bX;
+  double rightY = y + cY + bY;
+  double bottomX = x + bX + aX;
+  double bottomY = y + bY + aY;
+  double leftX = x + dX + aX;
+  double leftY = y + dY + aY;
+
+  Block block = createBlock(topX, topY, rightX, rightY, bottomX, bottomY, leftX, leftY);
+
+  blockHouses.add(block);
+}
+
+void controlCameraEditMode() {
+  if (keyPressedA) {
     cameraX -= cameraSpeed;
   }
-  if (keyPressedDownArrow) {
+  if (keyPressedD) {
+    cameraX += cameraSpeed;
+  }
+  if (keyPressedS) {
     cameraY += cameraSpeed;
   }
-  if (keyPressedUpArrow) {
+  if (keyPressedW) {
     cameraY -= cameraSpeed;
   }
 }

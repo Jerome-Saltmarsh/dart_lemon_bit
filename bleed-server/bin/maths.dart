@@ -85,11 +85,11 @@ double radians(double x, double y) {
   return pi2 - atan2(x, y);
 }
 
-double adj(double rotation, double magnitude) {
+double adj(double rotation, num magnitude) {
   return -cos(rotation + piHalf) * magnitude;
 }
 
-double opp(double rotation, double magnitude) {
+double opp(double rotation, num magnitude) {
   return -sin(rotation + piHalf) * magnitude;
 }
 

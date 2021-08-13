@@ -2,9 +2,7 @@ import 'dart:ui';
 
 import 'package:bleed_client/classes/Block.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
-import 'package:bleed_client/game_engine/game_input.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
-import 'package:bleed_client/maths.dart';
 import 'package:flutter/material.dart';
 
 import '../../keys.dart';
@@ -26,8 +24,8 @@ void drawCanvas(Canvas canvass, Size _size) {
     drawFrame++;
   }
 
-  canvass.translate(-cameraX, -cameraY);
   canvass.scale(zoom, zoom);
+  canvass.translate(-cameraX / zoom, -cameraY * zoom);
   drawTiles();
   try {
     drawPlayerHealth();
@@ -67,26 +65,6 @@ final Paint paintDeepPurple = Paint()
   ..isAntiAlias = false
   ..strokeWidth = 1;
 
-final Paint _blockGrey = Paint()
-  ..color = Colors.grey
-  ..strokeCap = StrokeCap.round
-  ..style = PaintingStyle.fill
-  ..isAntiAlias = false
-  ..strokeWidth = 0.1;
-
-final Paint _blockBlue = Paint()
-  ..color = Colors.blueAccent
-  ..strokeCap = StrokeCap.round
-  ..style = PaintingStyle.fill
-  ..isAntiAlias = false
-  ..strokeWidth = 0.1;
-
-final Paint _blockBlueGrey = Paint()
-  ..color = Colors.blueGrey
-  ..strokeCap = StrokeCap.round
-  ..style = PaintingStyle.fill
-  ..isAntiAlias = false
-  ..strokeWidth = 0.1;
 
 void _drawBlocks() {
   blockHouses.forEach(drawBlock);

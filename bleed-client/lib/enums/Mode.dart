@@ -1,0 +1,4 @@
+enum Mode {
+  Play,
+  Edit
+}

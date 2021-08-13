@@ -8,7 +8,9 @@ import 'classes/SpriteAnimation.dart';
 import '../common.dart';
 import '../constants.dart';
 import 'enums.dart';
+import 'enums/Mode.dart';
 
+Mode mode = Mode.Play;
 int frameRate = 5;
 int frameRateValue = 0;
 int packagesSent = 0;
