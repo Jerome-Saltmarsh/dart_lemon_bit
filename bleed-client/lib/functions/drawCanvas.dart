@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Block.dart';
+import 'package:bleed_client/enums/EditMode.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/instances/editState.dart';
@@ -43,14 +44,23 @@ void drawCanvas(Canvas canvass, Size _size) {
   _drawParticles();
   // drawParticles2();
   drawCharacters();
+  drawEditMode();
+  drawMouse();
+}
 
-  if (editMode) {
-    if (editState.selectedBlock != null) {
+void drawEditMode() {
+  if (!editMode) return;
+
+  if (editState.selectedBlock != null) {
+    if (editState.editMode == EditMode.Translate) {
       drawBlockSelected(editState.selectedBlock);
+    } else {
+      if (editState.editMode == EditMode.AdjustTop) {
+        _drawLine(editState.selectedBlock.top, editState.selectedBlock.right,
+            Colors.red);
+      }
     }
   }
-
-  drawMouse();
 }
 
 final Paint paintRed = Paint()

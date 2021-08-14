@@ -68,6 +68,14 @@ double radionsBetween(double x1, double y1, double x2, double y2) {
   return (pi + pi) - atan2(x, y);
 }
 
+double toRadions(double x, double y) {
+  if (x < 0)
+  {
+    return 360 - (atan2(x, y)  * -1);
+  }
+  return atan2(x, y);
+}
+
 double velX(double rotation, double speed) {
   return -cos(rotation + (pi * 0.5)) * speed;
 }

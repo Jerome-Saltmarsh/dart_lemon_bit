@@ -1,4 +1,5 @@
 import 'package:bleed_client/audio.dart';
+import 'package:bleed_client/editor.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_functions.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';

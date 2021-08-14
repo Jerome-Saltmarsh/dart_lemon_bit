@@ -216,14 +216,17 @@ class _GameWidgetState extends State<GameWidget> {
             onPanStart: (start){
               print('onPanStart($start)');
               mouseDragging = true;
+              _previousMousePosition = _mousePosition;
+              _mousePosition = start.globalPosition;
             },
             onPanEnd: (value){
               print('onPanEnd($value)');
               mouseDragging = false;
             },
             onPanUpdate:(DragUpdateDetails value){
-              print('onPanUpdate($value)');
               dragUpdateDetails = value;
+              _previousMousePosition = _mousePosition;
+              _mousePosition = value.globalPosition;
             },
             child: StatefulBuilder(
               builder: (context, _drawGame){

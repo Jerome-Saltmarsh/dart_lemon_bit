@@ -45,7 +45,7 @@ void drawCharacterList(List<dynamic> characters) {
 }
 
 void drawTileList() {
-  if(tileTransforms.isEmpty){
+  if (tileTransforms.isEmpty) {
     processTileTransforms();
   }
   if (tileRects.isEmpty) {
@@ -56,8 +56,7 @@ void drawTileList() {
 
 void drawAtlases(
     ui.Image image, List<RSTransform> transforms, List<Rect> rects) {
-  globalCanvas.drawAtlas(
-      image, transforms, rects, null, null, null, globalPaint);
+  globalCanvas.drawAtlas(image, transforms, rects, null, null, null, globalPaint);
 }
 
 void processTileTransforms() {

@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:bleed_client/classes/Block.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
@@ -9,6 +10,7 @@ import 'package:bleed_client/game_engine/game_widget.dart';
 
 import '../common.dart';
 import 'connection.dart';
+import 'enums/EditMode.dart';
 import 'functions/requestThrowGrenade.dart';
 import '../keys.dart';
 import '../send.dart';
@@ -131,36 +133,6 @@ int getKeyDirection() {
   return directionNone;
 }
 
-void updateEditMode() {
-  controlCameraEditMode();
-
-  if (mouseClicked) {
-    // spawn block at mouse
-    Block block = getBlockAt(mouseWorldX, mouseWorldY);
-    if (block == null){
-      editState.selectedBlock = createBlock2(mouseWorldX, mouseWorldY, 200, 300);
-    }else{
-      if(editState.selectedBlock != block){
-        editState.selectedBlock = block;
-      }else{
-        editState.selectedBlock = null;
-      }
-    }
-  }
-
-  if (mouseDragging && editState.selectedBlock != null) {
-    editState.selectedBlock.top += dragUpdateDetails.delta;
-    editState.selectedBlock.right += dragUpdateDetails.delta;
-    editState.selectedBlock.bottom += dragUpdateDetails.delta;
-    editState.selectedBlock.left += dragUpdateDetails.delta;
-  }
-
-
-  redrawGame();
-}
-
-
-
 Block createBlock2(double x, double y, double width, double length){
 
   double halfWidth = width * 0.5;
@@ -188,19 +160,4 @@ Block createBlock2(double x, double y, double width, double length){
 
   blockHouses.add(block);
   return block;
-}
-
-void controlCameraEditMode() {
-  if (keyPressedA) {
-    cameraX -= cameraSpeed;
-  }
-  if (keyPressedD) {
-    cameraX += cameraSpeed;
-  }
-  if (keyPressedS) {
-    cameraY += cameraSpeed;
-  }
-  if (keyPressedW) {
-    cameraY -= cameraSpeed;
-  }
 }

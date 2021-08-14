@@ -38,8 +38,8 @@ const int settingsShotgunBulletsPerShot = 5;
 const double settingsParticleShellSpeed = 3;
 const double bulletImpactVelocityTransfer = 0.25;
 
-const int tilesX = 40;
-const int tilesY = 40;
+const int tilesX = 32;
+const int tilesY = 32;
 
 const int settingsGrenadeDuration = 800;
 const double settingsGrenadeExplosionRadius = 100;

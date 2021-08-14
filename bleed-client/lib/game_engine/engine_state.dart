@@ -10,3 +10,4 @@ double cameraY = 0;
 double zoom = 1;
 bool mouseDragging = false;
 DragUpdateDetails dragUpdateDetails;
+

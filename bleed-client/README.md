@@ -31,7 +31,7 @@ RELEASE DEATH MATCH
 [ ] Lobby
 [ ] Grenade building collision
 [ ] Resize Structures
-[ ] Fix Zoom out aim bug
+[x] Fix Zoom out aim bug
 [x] Fix Zoom out camera follow
 [x] Zoom in / out
 [x] Object Collision

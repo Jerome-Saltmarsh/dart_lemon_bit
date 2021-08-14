@@ -270,13 +270,13 @@ Widget buildHud() {
     [
       button("FullScreen", requestFullScreen),
       text('x: $playerX, y: $playerY'),
-      text('cameraX: ${cameraX.toInt()}, cameraY: ${cameraY.toInt()}'),
-      text('playerX: ${playerX.toInt()}, playerY: ${playerY.toInt()}'),
-      text('mouseX: ${mouseX.toInt()}, mouseY: ${mouseY.toInt()}'),
+      // text('cameraX: ${cameraX.toInt()}, cameraY: ${cameraY.toInt()}'),
+      // text('playerX: ${playerX.toInt()}, playerY: ${playerY.toInt()}'),
+      // text('mouseX: ${mouseX.toInt()}, mouseY: ${mouseY.toInt()}'),
       text('mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
       // text('screenCenterX: $screenCenterX, screenCenterY: $screenCenterY'),
-      text('screenCenterWorldX: ${screenCenterWorldX.toInt()}, screenCenterWorldY: ${screenCenterWorldY.toInt()}'),
-      text('zoom: ${zoom.toStringAsFixed(2)}'),
+      // text('screenCenterWorldX: ${screenCenterWorldX.toInt()}, screenCenterWorldY: ${screenCenterWorldY.toInt()}'),
+      // text('zoom: ${zoom.toStringAsFixed(2)}'),
       text('Stamina: $playerStamina / $playerMaxStamina'),
       button(playMode ? 'Edit' : "Play", toggleMode),
       if(editMode)
