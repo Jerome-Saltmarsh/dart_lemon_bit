@@ -1,4 +1,8 @@
+import 'dart:math';
 import 'dart:ui';
+
+import 'package:bleed_client/game_engine/game_maths.dart';
+import 'package:bleed_client/maths.dart';
 
 import 'classes/Block.dart';
 import 'enums/EditMode.dart';
@@ -9,9 +13,8 @@ import 'instances/editState.dart';
 import 'settings.dart';
 import 'state.dart';
 
-Offset get _mouseOffset => Offset(mouseWorldX, mouseWorldY);
+Offset get _mouseWorld => Offset(mouseWorldX, mouseWorldY);
 Offset translateOffset;
-
 
 void updateEditMode() {
   _controlCameraEditMode();
@@ -26,71 +29,60 @@ void _handleMouseDrag() {
 
   Block block = editState.selectedBlock;
 
-  if (editState.editMode == EditMode.Translate){
-    Offset currentMouseOffset = block.top - _mouseOffset;
-    Offset difference =  translateOffset - currentMouseOffset;
+  if (editState.editMode == EditMode.Translate) {
+    Offset currentMouseOffset = block.top - _mouseWorld;
+    Offset difference = translateOffset - currentMouseOffset;
     translateBlock(block, difference);
     return;
   }
 
-
-  Offset mouseVel = mousePosition - previousMousePosition;
-  Offset mouseWorldVelocity = Offset(mouseVel.dx / zoom, mouseVel.dy / zoom);
+  Offset off = translateOffset - _mouseWorld;
+  double distance = magnitude(off.dx, off.dy);
 
 
   switch (editState.editMode) {
-    case EditMode.Translate:
-      block.top += mouseWorldVelocity;
-      block.right += mouseWorldVelocity;
-      block.bottom += mouseWorldVelocity;
-      block.left += mouseWorldVelocity;
-      break;
+  // double r = (pi2 - toRadian(off.dx, off.dy));
+  // if(r < piQuarter){
+  // double d = adj(piQuarter - r, distance);
+  // double dd = acos(piQuarter - r) * d;
     case EditMode.AdjustTop:
-      // double radionDiff = piQuarter - radions;
-      // double angleDiff = radionDiff * radionsToDegrees;
-      // double distance = adj(angleDiff, hyp);
-      // double translateX = adj(piQuarter, distance);
-      // double translateY = opp(piQuarter, distance);
-      // Offset translation = Offset(translateX, translateY);
-      // editState.selectedBlock.top -= translation;
-      // editState.selectedBlock.right -= translation;
-      double xd = block.top.dx - mouseWorldX;
-      double yd = block.top.dy - mouseWorldY;
-
-      double d = xd - yd;
-
-      // if(yd > xd){
-      Offset translation = Offset(d, d);
-      block.top += translation;
-      block.right += translation;
-      // }
-
+      double ad = adj(piQuarter, distance);
+      double op = opp(piQuarter, distance);
+      Offset o = Offset(ad, op);
+      block.top = block.left + o;
+      block.right = block.bottom + o;
+      break;
+    case EditMode.AdjustLeft:
+      double ad = adj(pi2 - piQuarter, distance);
+      double op = opp(pi2 - piQuarter, distance);
+      Offset o = Offset(ad, op);
+      block.top = block.right + o;
+      block.left = block.bottom + o;
+      break;
+    case EditMode.AdjustRight:
+      double ad = adj(piQuarter + piHalf, distance);
+      double op = opp(piQuarter + piHalf, distance);
+      Offset o = Offset(ad, op);
+      block.right = block.top + o;
+      block.bottom = block.left + o;
+      break;
+    case EditMode.AdjustBottom:
+      double ad = adj(piQuarter + pi, distance);
+      double op = opp(piQuarter + pi, distance);
+      Offset o = Offset(ad, op);
+      block.left = block.top + o;
+      block.bottom = block.right + o;
       break;
   }
 }
 
 void _handleMouseClick() {
   if (!mouseClicked) return;
-  // spawn block at mouse
+
   _getBlockAt(mouseWorldX, mouseWorldY);
-  // if (block == null) {
-  //   if (editState.selectedBlock == null) {
-  //     editState.selectedBlock =
-  //         createBlock2(mouseWorldX, mouseWorldY, 200, 300);
-  //   } else {
-  //     editState.selectedBlock = null;
-  //   }
-  // } else {
-  //   if (editState.selectedBlock != block) {
-  //     editState.selectedBlock = block;
-  //   } else {
-  //     editState.selectedBlock = null;
-  //   }
-  // }
 }
 
 void _getBlockAt(double x, double y) {
-
   for (Block block in blockHouses) {
     if (block.right.dx < x) continue;
     if (block.left.dx > x) continue;
@@ -105,11 +97,12 @@ void _getBlockAt(double x, double y) {
       if (yd > xd) {
         if (yd - xd < r) {
           editState.editMode = EditMode.AdjustLeft;
+          translateOffset = block.bottom;
+          editState.selectedBlock = block;
         } else {
           selectTransferBlock(block);
           return;
         }
-
         return;
       }
       continue;
@@ -121,6 +114,8 @@ void _getBlockAt(double x, double y) {
       if (xd > yd) {
         if (xd - yd < r) {
           editState.editMode = EditMode.AdjustBottom;
+          translateOffset = block.top;
+          editState.selectedBlock = block;
         } else {
           selectTransferBlock(block);
         }
@@ -135,6 +130,8 @@ void _getBlockAt(double x, double y) {
       if (yd > xd) {
         if (yd - xd < r) {
           editState.editMode = EditMode.AdjustTop;
+          translateOffset = block.left;
+          editState.selectedBlock = block;
         } else {
           selectTransferBlock(block);
         }
@@ -149,7 +146,9 @@ void _getBlockAt(double x, double y) {
       double yd = y - block.right.dy;
       if (xd > yd) {
         if (xd - yd < r) {
-          editState.editMode = EditMode.AdjustBottom;
+          translateOffset = block.left;
+          editState.selectedBlock = block;
+          editState.editMode = EditMode.AdjustRight;
         } else {
           selectTransferBlock(block);
         }
@@ -158,7 +157,6 @@ void _getBlockAt(double x, double y) {
       continue;
     }
   }
-  return null;
 }
 
 void _controlCameraEditMode() {
@@ -176,13 +174,23 @@ void _controlCameraEditMode() {
   }
 }
 
-void selectTransferBlock(Block block){
+void selectTransferBlock(Block block) {
   editState.editMode = EditMode.Translate;
-  translateOffset = block.top - _mouseOffset;
+  translateOffset = block.top - _mouseWorld;
   editState.selectedBlock = block;
 }
 
-void translateBlock(Block block, Offset value){
+void setTranslateOffset(Block block) {
+  translateOffset = block.top - _mouseWorld;
+  editState.selectedBlock = block;
+}
+
+void setTranslate(Block block, Offset offset) {
+  translateOffset = block.top;
+  editState.selectedBlock = block;
+}
+
+void translateBlock(Block block, Offset value) {
   block.top += value;
   block.right += value;
   block.bottom += value;

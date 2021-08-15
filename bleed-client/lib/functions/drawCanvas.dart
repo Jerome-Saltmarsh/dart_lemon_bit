@@ -50,16 +50,28 @@ void drawCanvas(Canvas canvass, Size _size) {
 
 void drawEditMode() {
   if (!editMode) return;
+  if (editState.selectedBlock == null) return;
 
-  if (editState.selectedBlock != null) {
-    if (editState.editMode == EditMode.Translate) {
-      drawBlockSelected(editState.selectedBlock);
-    } else {
-      if (editState.editMode == EditMode.AdjustTop) {
-        _drawLine(editState.selectedBlock.top, editState.selectedBlock.right,
-            Colors.red);
-      }
-    }
+  if (editState.editMode == EditMode.Translate) {
+    drawBlockSelected(editState.selectedBlock);
+    return;
+  }
+
+  Block block = editState.selectedBlock;
+
+  switch(editState.editMode){
+    case EditMode.AdjustTop:
+      _drawLine(block.top, block.right, Colors.red);
+      break;
+    case EditMode.AdjustLeft:
+      _drawLine(block.top, block.left, Colors.red);
+      break;
+    case EditMode.AdjustBottom:
+      _drawLine(block.left, block.bottom, Colors.red);
+      break;
+    case EditMode.AdjustRight:
+      _drawLine(block.bottom, block.right, Colors.red);
+      break;
   }
 }
 

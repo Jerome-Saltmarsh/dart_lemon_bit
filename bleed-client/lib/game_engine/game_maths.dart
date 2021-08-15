@@ -3,6 +3,8 @@ import 'dart:math';
 
 import 'package:vector_math/vector_math.dart';
 
+import '../maths.dart';
+
 const double degreesToRadions = 0.0174533;
 const double radionsToDegrees =  57.29578;
 
@@ -24,8 +26,6 @@ double convertVectorToDegrees(double x, double y) {
   return atan2(x, y) * radionsToDegrees;
 }
 
-
-const double pi2  = pi + pi;
 
 double getRadionsBetween(double x1, double y1, double x2, double y2) {
   double x = x1 - x2;

@@ -151,8 +151,7 @@ List<List<Tile>> generateTiles() {
       column.add(Tile.Concrete);
     }
   }
-  tiles[4][4] = Tile.Grass;
-  tiles[4][5] = Tile.Grass;
+  tiles[1][0] = Tile.Grass;
   tilesLeftX = -24 * tilesX.toDouble();
   tilesLeftY = 24 * tilesY.toDouble();
   tilesRightX = 24 * tilesX.toDouble();
