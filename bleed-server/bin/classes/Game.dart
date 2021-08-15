@@ -37,7 +37,6 @@ class Game {
 }
 
 extension GameFunctions on Game {
-
   void updateAndCompile() {
     updateCharacters();
     updateCollisions();
@@ -95,7 +94,7 @@ extension GameFunctions on Game {
     npcs.forEach(updateCharacter);
   }
 
-  void handleBlockCollisions(List<GameObject> gameObjects){
+  void handleBlockCollisions(List<GameObject> gameObjects) {
     for (int i = 0; i < gameObjects.length; i++) {
       GameObject gameObject = gameObjects[i];
       for (int j = 0; j < scene.blocks.length; j++) {
@@ -248,7 +247,20 @@ extension GameFunctions on Game {
         character.stateDuration = 10;
         break;
       case CharacterState.Reloading:
-        character.stateDuration = 20;
+        switch (character.weapon) {
+          case Weapon.HandGun:
+            if (character is Player &&
+                character.handgunAmmunition.rounds <
+                    character.handgunAmmunition.clipSize &&
+                character.handgunAmmunition.clips > 0) {
+              character.handgunAmmunition.rounds =
+                  character.handgunAmmunition.clipSize;
+              character.handgunAmmunition.clips--;
+              character.stateDuration = settingsHandgunReloadDuration;
+              break;
+            }
+            return;
+        }
         break;
     }
     character.state = value;
@@ -281,7 +293,6 @@ extension GameFunctions on Game {
       }
     }
     bullets.sort(compareGameObjects);
-
 
     for (int i = 0; i < bullets.length; i++) {
       Bullet bullet = bullets[i];
@@ -531,8 +542,6 @@ extension GameFunctions on Game {
         character.stateDuration--;
         if (character.stateDuration <= 0) {
           setCharacterState(character, CharacterState.Aiming);
-          (character as Player).handgunAmmunition.rounds =
-              character.handgunAmmunition.clipSize;
           dispatch(GameEventType.Reloaded, character.x, character.y, 0, 0);
         }
         break;

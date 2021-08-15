@@ -26,11 +26,13 @@ RELEASE OPEN WORLD
 
 RELEASE DEATH MATCH
 [ ] Spawn Points
-[ ] Ammo
 [ ] Stamina UI
 [ ] Lobby
 [ ] Grenade building collision
-[ ] Resize Structures
+[ ] Space bar pan camera
+[ ] Ammo
+[ ] Health
+[x] Resize Structures
 [x] Fix Zoom out aim bug
 [x] Fix Zoom out camera follow
 [x] Zoom in / out
