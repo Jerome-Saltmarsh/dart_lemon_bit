@@ -4,6 +4,7 @@ import '../classes.dart';
 import '../compile.dart';
 import '../constants.dart';
 import '../enums.dart';
+import '../enums/CollectableType.dart';
 import '../enums/GameEventType.dart';
 import '../enums/GameType.dart';
 import '../enums/Weapons.dart';
@@ -35,8 +36,8 @@ class Game {
   String compiled = "";
   StringBuffer buffer = StringBuffer();
 
-  Game(this.type, this.scene, this.maxPlayers){
-    for(Collectable collectable in scene.collectables){
+  Game(this.type, this.scene, this.maxPlayers) {
+    for (Collectable collectable in scene.collectables) {
       collectables.add(collectable);
     }
   }
@@ -51,6 +52,25 @@ extension GameFunctions on Game {
     updateNpcs();
     updateGameEvents();
     updateGrenades();
+
+    for (Player player in players) {
+      for (int i = 0; i < collectables.length; i++) {
+        if (abs(player.x - collectables[i].x) > 5) continue;
+        if (abs(player.y - collectables[i].y) > 5) continue;
+
+        switch(collectables[i].type){
+          case CollectableType.Health:
+            player.health = player.maxHealth;
+            break;
+          case CollectableType.Handgun_Ammo:
+            player.handgunAmmunition.clips = player.handgunAmmunition.maxClips;
+            break;
+        }
+        collectables.removeAt(i);
+        i--;
+      }
+    }
+
     compileState(this);
   }
 
