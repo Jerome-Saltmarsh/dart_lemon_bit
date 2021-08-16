@@ -8,9 +8,9 @@ class Scene {
   List<GameObject> objects = [];
   final List<List<Tile>> tiles;
   List<Block> blocks = [];
-  List<Collectable> collectable;
+  List<Collectable> collectables;
 
-  Scene(this.objects, this.tiles, this.blocks, this.collectable);
+  Scene(this.objects, this.tiles, this.blocks, this.collectables);
 }
 
 extension SceneFunctions on Scene {

@@ -29,7 +29,8 @@ RELEASE DEATH MATCH
 [ ] Lobby
 [ ] Grenade building collision
 [ ] Space bar pan camera
-[ ] Spawn Points
+[ ] Player Spawn Points
+[ ] Zombie Spawn Points
 [ ] Ammo
 [ ] Health
 [x] Resize Structures

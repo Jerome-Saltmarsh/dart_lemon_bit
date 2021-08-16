@@ -1,10 +1,10 @@
-
 import 'dart:convert';
 import 'dart:io';
 
 import '../classes/Block.dart';
 import '../classes/Collectable.dart';
 import '../classes/Scene.dart';
+import '../enums/CollectableType.dart';
 import '../instances/scenes.dart';
 import '../utils.dart';
 
@@ -21,10 +21,19 @@ void loadScenes() {
 
 Scene _mapStringToScene(String text) {
   Map<String, dynamic> json = _decoder.convert(text);
-  List<dynamic> jsonBlocks = json['blocks'];
+  List jsonBlocks = json['blocks'];
+  List collectablesInts = json['collectables'];
+  List<Collectable> collectables = [];
+
+  for (int i = 0; i < collectablesInts.length; i += 3) {
+    CollectableType type = CollectableType.values[collectablesInts[i]];
+    double x = collectablesInts[i + 1].toDouble();
+    double y = collectablesInts[i + 2].toDouble();
+    collectables.add(Collectable(x, y, type));
+  }
+
   List<Block> blocks = jsonBlocks.map(_mapJsonBlockToBlock).toList();
   sortBlocks(blocks);
-  List<Collectable> collectables = [];
   return Scene([], generateTiles(), blocks, collectables);
 }
 

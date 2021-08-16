@@ -22,7 +22,7 @@ void compileState(Game game) {
   _compileGameEvents(game.buffer, game.gameEvents);
   _compileGrenades(game.buffer, game.grenades);
   _compileObjects(game.buffer, game.scene.objects);
-  _compileCollectables(game.buffer, game.collectable);
+  _compileCollectables(game.buffer, game.collectables);
   game.compiled = game.buffer.toString();
 }
 
@@ -107,10 +107,10 @@ void _compileGameEvents(StringBuffer buffer, List<GameEvent> gameEvents) {
 void _compileCollectables(StringBuffer buffer, List<Collectable> collectables){
   buffer.write(ServerResponse.Collectables.index);
   buffer.write(_space);
-  for (Collectable gameEvent in collectables) {
-    _write(buffer, gameEvent.type.index);
-    _write(buffer, gameEvent.x.toInt());
-    _write(buffer, gameEvent.y.toInt());
+  for (Collectable collectable in collectables) {
+    _write(buffer, collectable.type.index);
+    _write(buffer, collectable.x.toInt());
+    _write(buffer, collectable.y.toInt());
   }
   buffer.write(_semiColon);
 }

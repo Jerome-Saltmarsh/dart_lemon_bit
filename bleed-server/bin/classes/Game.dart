@@ -31,11 +31,15 @@ class Game {
   List<Bullet> bullets = [];
   List<Grenade> grenades = [];
   List<GameEvent> gameEvents = [];
-  List<Collectable> collectable = [];
+  List<Collectable> collectables = [];
   String compiled = "";
   StringBuffer buffer = StringBuffer();
 
-  Game(this.type, this.scene, this.maxPlayers);
+  Game(this.type, this.scene, this.maxPlayers){
+    for(Collectable collectable in scene.collectables){
+      collectables.add(collectable);
+    }
+  }
 }
 
 extension GameFunctions on Game {
