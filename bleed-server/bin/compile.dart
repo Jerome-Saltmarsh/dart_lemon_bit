@@ -2,6 +2,8 @@ import 'classes.dart';
 import 'classes/Block.dart';
 import 'classes/Collectable.dart';
 import 'classes/Game.dart';
+import 'classes/Inventory.dart';
+import 'classes/Player.dart';
 import 'enums.dart';
 import 'enums/ServerResponse.dart';
 import 'settings.dart';
@@ -25,10 +27,10 @@ void compileState(Game game) {
   game.compiled = game.buffer.toString();
 }
 
-void compileBlocks(StringBuffer buffer, List<Block> blocks){
+void compileBlocks(StringBuffer buffer, List<Block> blocks) {
   buffer.write(ServerResponse.Blocks.index);
   buffer.write(_space);
-  for(Block block in blocks){
+  for (Block block in blocks) {
     _write(buffer, block.topX.toInt());
     _write(buffer, block.topY.toInt());
     _write(buffer, block.rightX.toInt());
@@ -40,7 +42,6 @@ void compileBlocks(StringBuffer buffer, List<Block> blocks){
   }
   buffer.write(_semiColon);
 }
-
 
 String compileTiles(StringBuffer buffer, List<List<Tile>> tiles) {
   buffer.write(ServerResponse.Tiles.index);
@@ -80,10 +81,21 @@ void compilePlayer(StringBuffer buffer, Player player) {
   buffer.write(_space);
   buffer.write(player.handgunAmmunition.clipSize);
   buffer.write(_space);
-  buffer.write(player.handgunAmmunition.maxClips);
-  buffer.write(_space);
   buffer.write(player.handgunAmmunition.rounds);
   buffer.write(_space);
+  buffer.write(_semiColon);
+  _compileInventory(buffer, player.inventory);
+}
+
+void _compileInventory(StringBuffer buffer, Inventory inventory) {
+  _write(buffer, ServerResponse.Inventory.index);
+  _write(buffer, inventory.rows);
+  _write(buffer, inventory.columns);
+  for (InventoryItem item in inventory.items) {
+    _write(buffer, item.type.index);
+    _write(buffer, item.x);
+    _write(buffer, item.y);
+  }
   buffer.write(_semiColon);
 }
 
@@ -103,7 +115,7 @@ void _compileGameEvents(StringBuffer buffer, List<GameEvent> gameEvents) {
   buffer.write(_semiColon);
 }
 
-void _compileCollectables(StringBuffer buffer, List<Collectable> collectables){
+void _compileCollectables(StringBuffer buffer, List<Collectable> collectables) {
   buffer.write(ServerResponse.Collectables.index);
   buffer.write(_space);
   for (Collectable collectable in collectables) {
@@ -115,10 +127,10 @@ void _compileCollectables(StringBuffer buffer, List<Collectable> collectables){
   buffer.write(_semiColon);
 }
 
-void _compileGrenades(StringBuffer buffer, List<Grenade> grenades){
+void _compileGrenades(StringBuffer buffer, List<Grenade> grenades) {
   buffer.write(ServerResponse.Grenades.index);
   buffer.write(_space);
-  for(Grenade grenade in grenades){
+  for (Grenade grenade in grenades) {
     _write(buffer, grenade.x.toInt());
     _write(buffer, grenade.y.toInt());
     _write(buffer, grenade.z.toStringAsFixed(1));
@@ -133,7 +145,7 @@ void _compilePlayers(StringBuffer buffer, List<Player> players) {
   buffer.write(_semiColon);
 }
 
-void _compileGameId(StringBuffer buffer, Game game){
+void _compileGameId(StringBuffer buffer, Game game) {
   _write(game.buffer, '${ServerResponse.Game_Id.index} ${game.id} ;');
 }
 

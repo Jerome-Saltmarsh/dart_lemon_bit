@@ -105,31 +105,6 @@ class Npc extends Character {
   }
 }
 
-class Player extends Character {
-  final String uuid;
-  final Ammunition handgunAmmunition = Ammunition(8, 8, 3, 3);
-  final Ammunition shotgunAmmunition = Ammunition(4, 4, 3, 3);
-  int lastEventFrame = 0;
-  int stamina = 0;
-  int maxStamina = 200;
-
-  Player(
-      {required this.uuid,
-      required double x,
-      required double y,
-      required String name})
-      : super(
-            x: x,
-            y: y,
-            weapon: Weapon.HandGun,
-            health: settingsPlayerStartHealth,
-            maxHealth: settingsPlayerStartHealth,
-            speed: playerSpeed,
-            name: name){
-    stamina = maxStamina;
-  }
-}
-
 class Bullet extends GameObject {
   late double xStart;
   late double yStart;

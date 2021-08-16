@@ -1,3 +1,4 @@
+import 'package:bleed_client/classes/Inventory.dart';
 import 'package:bleed_client/enums/ClientRequest.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:flutter/material.dart';
@@ -5,10 +6,13 @@ import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/game_engine/web_functions.dart';
 
+import 'classes/InventoryItem.dart';
 import 'connection.dart';
+import 'enums/InventoryItemType.dart';
 import 'enums/Mode.dart';
 import 'enums/Weapons.dart';
-import 'functions/saveScene.dart';
+import 'images.dart';
+import 'instances/inventory.dart';
 import 'send.dart';
 import 'settings.dart';
 import 'state.dart';
@@ -265,43 +269,92 @@ void toggleMode() {
   }
 }
 
-Widget buildHud() {
-  return column(
-    [
-      button("FullScreen", requestFullScreen),
-      text('x: $playerX, y: $playerY'),
-      // text('cameraX: ${cameraX.toInt()}, cameraY: ${cameraY.toInt()}'),
-      // text('playerX: ${playerX.toInt()}, playerY: ${playerY.toInt()}'),
-      // text('mouseX: ${mouseX.toInt()}, mouseY: ${mouseY.toInt()}'),
-      text('mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
-      // text('screenCenterX: $screenCenterX, screenCenterY: $screenCenterY'),
-      // text('screenCenterWorldX: ${screenCenterWorldX.toInt()}, screenCenterWorldY: ${screenCenterWorldY.toInt()}'),
-      // text('zoom: ${zoom.toStringAsFixed(2)}'),
-      text('Stamina: $playerStamina / $playerMaxStamina'),
-      button(playMode ? 'Edit' : "Play", toggleMode),
-      if(editMode)
-        button('save', saveScene),
-      if (playerMaxStamina > 0)
-        Container(
-          height: 50,
-          width: 200,
-          color: Colors.white,
-          alignment: Alignment.centerLeft,
-          padding: EdgeInsets.symmetric(horizontal: 5),
-          child: Container(
-            height: 40,
-            width: 200 * (playerStamina / playerMaxStamina),
-            color: Colors.yellow,
-          ),
+Widget buildInventory(){
+
+  double squareSize = 80;
+  double halfSquareSize = squareSize * 0.5;
+  double padding = 3;
+
+  return StatefulBuilder(
+    builder: (context, _drawGame){
+      gameSetState = _drawGame;
+      double w = squareSize * inventory.columns + padding;
+      double h = squareSize * inventory.rows + padding;
+
+      return Container(
+        color: Colors.grey,
+        width: w,
+        height: h,
+        child: CustomPaint(
+          size: Size(w, h),
+          painter: CustomCustomPainter((Canvas canvas, Size size){
+            paint2.color = Colors.black12;
+            for(int x = 0; x < inventory.columns; x++){
+              for(int y = 0; y < inventory.rows; y++){
+                canvas.drawRect(Rect.fromLTWH(padding + squareSize * x, padding + squareSize * y, squareSize - padding, squareSize - padding), paint2);
+              }
+            }
+
+            for(int i = 0; i < inventory.items.length; i++){
+              InventoryItem item = inventory.items[i];
+
+              Offset o = Offset(item.x * squareSize + halfSquareSize + (padding * 0.5), item.y * squareSize + halfSquareSize + padding);
+
+              switch(item.type){
+                case InventoryItemType.HealthPack:
+                  paint2.color = Colors.red;
+                  canvas.drawCircle(o, 20, paint2);
+                  break;
+                case InventoryItemType.HandgunClip:
+                  canvas.drawImage(imageHandgunAmmo, Offset(item.x * squareSize + (padding * 0.5), item.y * squareSize + padding), paint2);
+                  break;
+                case InventoryItemType.Handgun:
+                  paint2.color = Colors.white;
+                  canvas.drawImage(imageHandgun, Offset(item.x * squareSize + (padding * 0.5), item.y * squareSize + padding), paint2);
+                  break;
+              }
+            }
+          }),
         ),
-      if (debugMode) buildDebugPanel(),
-      buildWeaponButton(Weapon.HandGun),
-      text('$handgunRounds / $handgunClipSize - $handgunClips'),
-      buildWeaponButton(Weapon.Shotgun),
-      buildWeaponButton(Weapon.SniperRifle),
-      buildWeaponButton(Weapon.MachineGun),
+      );
+    },
+  );
+}
+
+Widget buildHud() {
+  Column topLeft = Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              button(playMode ? 'Edit' : "Play", toggleMode),
+              text(
+                  'mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
+              text('Stamina: $playerStamina / $playerMaxStamina'),
+              text('x: $playerX, y: $playerY'),
+            ],
+          ),
+          Column(
+            children: [button("FullScreen", requestFullScreen), buildInventory()],
+          ),
+        ],
+      ),
     ],
   );
+
+  Column bottomLeft = Column(
+    children: [buildWeaponButton(playerWeapon)],
+  );
+
+  return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [topLeft, bottomLeft]);
 }
 
 Widget buildDebugPanel() {

@@ -1,4 +1,6 @@
+import 'package:bleed_client/classes/InventoryItem.dart';
 import 'package:bleed_client/connection.dart';
+import 'package:bleed_client/enums/InventoryItemType.dart';
 import 'package:bleed_client/enums/ServerResponse.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/instances/game.dart';
@@ -10,6 +12,7 @@ import 'enums/GameError.dart';
 import 'enums/GameEventType.dart';
 import 'enums/Weapons.dart';
 import 'functions/onGameEvent.dart';
+import 'instances/inventory.dart';
 import 'state.dart';
 import 'utils.dart';
 
@@ -39,6 +42,10 @@ void parseState() {
 
       case ServerResponse.Player:
         _parsePlayer();
+        break;
+
+      case ServerResponse.Inventory:
+        _parseInventory();
         break;
 
       case ServerResponse.Players:
@@ -135,11 +142,37 @@ void _parsePlayer() {
   playerMaxStamina = _consumeInt();
   setHandgunClips(_consumeInt());
   handgunClipSize = _consumeInt();
-  handgunMaxClips = _consumeInt();
   setHandgunRounds(_consumeInt());
 }
 
-void _parseCollectables(){
+void _parseInventory() {
+  inventory.rows = _consumeInt();
+  inventory.columns = _consumeInt();
+  int i = 0;
+  while (!_simiColonConsumed()) {
+    if (i < inventory.items.length) {
+      inventory.items[i].type = _consumeInventoryItemType();
+      inventory.items[i].x = _consumeInt();
+      inventory.items[i].y = _consumeInt();
+    } else {
+      InventoryItemType type = _consumeInventoryItemType();
+      int x = _consumeInt();
+      int y = _consumeInt();
+      inventory.items.add(InventoryItem(x, y, type));
+    }
+    i++;
+  }
+
+  while (inventory.items.length - i > 0) {
+    inventory.items.removeLast();
+  }
+}
+
+InventoryItemType _consumeInventoryItemType() {
+  return InventoryItemType.values[_consumeInt()];
+}
+
+void _parseCollectables() {
   game.collectables.clear();
   while (!_simiColonConsumed()) {
     game.collectables.add(_consumeInt());

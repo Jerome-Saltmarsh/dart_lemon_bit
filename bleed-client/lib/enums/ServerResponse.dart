@@ -12,5 +12,6 @@ enum ServerResponse {
   Player_Created,
   Blocks,
   Scene,
-  Collectables
+  Collectables,
+  Inventory,
 }

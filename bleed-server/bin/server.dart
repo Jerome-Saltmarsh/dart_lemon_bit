@@ -5,6 +5,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'classes/Game.dart';
 import 'classes.dart';
+import 'classes/Player.dart';
 import 'compile.dart';
 import 'enums/ClientRequest.dart';
 import 'enums/GameError.dart';

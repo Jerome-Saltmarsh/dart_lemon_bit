@@ -3,6 +3,5 @@ class Ammunition {
   int rounds = 8;
   int clipSize = 8;
   int clips = 3;
-  int maxClips = 3;
-  Ammunition(this.rounds, this.clipSize, this.clips, this.maxClips);
+  Ammunition(this.rounds, this.clipSize, this.clips);
 }

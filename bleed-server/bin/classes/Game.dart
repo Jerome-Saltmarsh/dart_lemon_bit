@@ -19,6 +19,8 @@ import '../update.dart';
 import '../utils.dart';
 import 'Block.dart';
 import 'Collectable.dart';
+import 'Inventory.dart';
+import 'Player.dart';
 import 'Scene.dart';
 import 'Vector2.dart';
 
@@ -45,7 +47,6 @@ class Game {
 }
 
 extension GameFunctions on Game {
-
   void updateAndCompile() {
     _updateCharacters();
     _updateCollisions();
@@ -58,12 +59,13 @@ extension GameFunctions on Game {
     compileState(this);
   }
 
-
   void _updateCollectables() {
     for (Player player in players) {
       for (int i = 0; i < collectables.length; i++) {
-        if (abs(player.x - collectables[i].x) > settings.itemCollectRadius) continue;
-        if (abs(player.y - collectables[i].y) > settings.itemCollectRadius) continue;
+        if (abs(player.x - collectables[i].x) > settings.itemCollectRadius)
+          continue;
+        if (abs(player.y - collectables[i].y) > settings.itemCollectRadius)
+          continue;
 
         switch (collectables[i].type) {
           case CollectableType.Health:
@@ -71,8 +73,9 @@ extension GameFunctions on Game {
             player.health = player.maxHealth;
             break;
           case CollectableType.Handgun_Ammo:
-            if(player.handgunAmmunition.clips >= player.handgunAmmunition.maxClips) continue;
-            player.handgunAmmunition.clips++;
+            for (int i = 0; i < player.inventory.items.length; i++) {
+              // player.inventory.items[i] =
+            }
             break;
         }
         collectables[i].active = false;
@@ -285,10 +288,9 @@ extension GameFunctions on Game {
             if (character is Player &&
                 character.handgunAmmunition.rounds <
                     character.handgunAmmunition.clipSize &&
-                character.handgunAmmunition.clips > 0) {
-              character.handgunAmmunition.rounds =
-                  character.handgunAmmunition.clipSize;
-              character.handgunAmmunition.clips--;
+                character.inventory.handgunClips > 0) {
+              character.handgunAmmunition.rounds = settings.handgunClipSize;
+              character.inventory.remove(InventoryItemType.HandgunClip);
               character.stateDuration = settingsHandgunReloadDuration;
               break;
             }
@@ -698,7 +700,13 @@ extension GameFunctions on Game {
     Player player = Player(
         uuid: _generateUUID(),
         x: spawnPoint.x + giveOrTake(3),
-        y: spawnPoint.y + giveOrTake(3),
+        y: spawnPoint.y + giveOrTake(2),
+        inventory: Inventory(3, 3, [
+          InventoryItem(0, 0, InventoryItemType.Handgun),
+          InventoryItem(1, 0, InventoryItemType.HandgunClip),
+          InventoryItem(2, 0, InventoryItemType.HandgunClip),
+          InventoryItem(0, 1, InventoryItemType.HealthPack),
+        ]),
         name: name);
     players.add(player);
     return player;

@@ -17,22 +17,21 @@
 [ ] Particle Gunshot smoke
 [ ] Throw Grenade Audio
 [ ] Static painter (tiles, buildings etc) / non static painter
+[ ] Fix zoom in / out bug
+[ ] Cache Particles
 
 RELEASE OPEN WORLD
-[ ] FIX BUG: Character Draw Order
 [ ] Zombie Hurt Animation
-[ ] Cache Particles
-[ ] Map Editor
-[ ] Stamina UI
+[ ] Npc Text
 
 RELEASE DEATH MATCH
-
 [ ] Lobby
 [ ] Grenade building collision
 [ ] Space bar pan camera
 [ ] Zombie Spawn Points
 [ ] NPC Pathfinding
 [ ] Collect Audio
+[ ] Inventory
 [ ] FIX Zombies npcs keep attacking after player vanishes
 [x] Player Spawn Points
 [x] Ammo
@@ -137,7 +136,6 @@ RELEASE DEATH MATCH
 
 # IDEA
 - Run send commands on a separate thread to the receive commands
-- Add height attribute which effects scale (used for effects to add 3d look)
 
 # Attributes
 - sprint duration
@@ -149,8 +147,29 @@ RELEASE DEATH MATCH
 - health regen
 - max health
 
-## IDEA
-Only redraw game when an event arrives (this will save a lot of draw calls)
-- The drawback is you cannot have client side effects
+# Open World
+Diablo clone
 
-- physics effect particles
+# Death Match - Free for all
+No teams, last man standing wins
+
+# Death Match - Coop Survival
+Two players per team, last team alive wins
+
+# Death Match - Teams
+Two teams
+
+# Fortress Defense
+Survive against waves of enemy zombies
+
+# Fortress Battle
+Two teams 
+
+Death Match
+When the player joins the game they have to wait until the current round is finished.
+Once the all 32 players have joined the lobby the game begins. The player spawns in a random
+location and must try their best to survive as long as possible
+
+Open World
+The player begins playing instantly and does not have to wait for the round to finish
+

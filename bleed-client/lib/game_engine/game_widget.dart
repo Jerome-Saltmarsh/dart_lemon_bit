@@ -277,3 +277,27 @@ class GameUIPainter extends CustomPainter {
     return true;
   }
 }
+
+class CustomCustomPainter extends CustomPainter {
+
+  final PaintGame paintGame;
+
+  CustomCustomPainter(this.paintGame);
+
+  @override
+  void paint(Canvas canvass, Size size) {
+    paintGame(canvass, size);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return true;
+  }
+}
+
+
+
+
+
+
+

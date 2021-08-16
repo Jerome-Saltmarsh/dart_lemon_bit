@@ -59,7 +59,6 @@ Map<int, bool> gameEvents = Map();
 int handgunRounds = 0;
 int handgunClipSize = 0;
 int handgunClips = 0;
-int handgunMaxClips = 0;
 
 // Player State
 int playerId = idNotConnected;

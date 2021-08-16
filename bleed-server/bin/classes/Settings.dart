@@ -10,4 +10,6 @@ class Settings {
   final double shotgunAccuracy = 0.15;
 
   final double itemCollectRadius = 10;
+
+  final int handgunClipSize = 24;
 }
