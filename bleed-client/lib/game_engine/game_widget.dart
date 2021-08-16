@@ -25,6 +25,7 @@ double get mouseX => _mousePosition?.dx;
 double get mouseY => _mousePosition?.dy;
 double get mouseWorldX => convertScreenToWorldX(mouseX);
 double get mouseWorldY => convertScreenToWorldY(mouseY);
+Offset get mouseWorld => Offset(mouseWorldX, mouseWorldY);
 double get screenCenterX => globalSize.width * 0.5;
 double get screenCenterY => globalSize.height * 0.5;
 double get screenCenterWorldX => convertScreenToWorldX(screenCenterX);
@@ -141,6 +142,7 @@ class _GameWidgetState extends State<GameWidget> {
     keyboardFocusNode = FocusNode();
     widget.init();
     disableRightClick();
+
     super.initState();
   }
 

@@ -1,10 +1,13 @@
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Block.dart';
-import 'package:bleed_client/enums/EditMode.dart';
+import 'package:bleed_client/enums/CollectableType.dart';
+import 'package:bleed_client/editor/EditMode.dart';
+import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/instances/editState.dart';
+import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:flutter/material.dart';
 
@@ -38,13 +41,19 @@ void drawCanvas(Canvas canvass, Size _size) {
   _drawBullets();
   drawBulletHoles();
   _drawGrenades();
-  // _drawObjects();
   _drawBlocks();
   drawAnimations();
   _drawParticles();
-  // drawParticles2();
   drawCharacters();
   drawEditMode();
+
+  for (int i = 0; i < game.collectables.length; i += 3) {
+    CollectableType type = CollectableType.values[game.collectables[i]];
+    int x = game.collectables[i + 1];
+    int y = game.collectables[i + 2];
+    drawCircle(x.toDouble(), y.toDouble(), 10, Colors.blue);
+  }
+
   drawMouse();
 }
 
@@ -59,7 +68,7 @@ void drawEditMode() {
 
   Block block = editState.selectedBlock;
 
-  switch(editState.editMode){
+  switch (editState.editMode) {
     case EditMode.AdjustTop:
       _drawLine(block.top, block.right, Colors.red);
       break;

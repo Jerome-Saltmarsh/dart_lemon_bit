@@ -1,21 +1,18 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:bleed_client/classes/Block.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
-import 'package:flutter/services.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_input.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:flutter/services.dart';
 
 import '../common.dart';
-import 'connection.dart';
-import 'enums/EditMode.dart';
-import 'functions/requestThrowGrenade.dart';
 import '../keys.dart';
 import '../send.dart';
 import '../settings.dart';
-import 'instances/editState.dart';
+import 'connection.dart';
+import 'functions/requestThrowGrenade.dart';
 import 'maths.dart';
 import 'state.dart';
 import 'utils.dart';

@@ -2,16 +2,13 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:bleed_client/enums/EditMode.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_maths.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 
-import 'classes/Block.dart';
 import 'common.dart';
 import 'constants.dart';
 import 'enums/Weapons.dart';
-import 'instances/editState.dart';
 import 'keys.dart';
 import 'maths.dart';
 import 'state.dart';

@@ -1,6 +1,7 @@
 import 'package:bleed_client/connection.dart';
 import 'package:bleed_client/enums/ServerResponse.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
+import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/keys.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 
@@ -82,8 +83,13 @@ void parseState() {
         _parsePlayerCreated();
         break;
 
+      case ServerResponse.Collectables:
+        _parseCollectables();
+        break;
+
       default:
         print("parser not implemented $serverResponse");
+        return;
     }
 
     while (_index < _text.length) {
@@ -135,6 +141,13 @@ void _parsePlayer() {
   handgunClipSize = _consumeInt();
   handgunMaxClips = _consumeInt();
   setHandgunRounds(_consumeInt());
+}
+
+void _parseCollectables(){
+  game.collectables.clear();
+  while (!_simiColonConsumed()) {
+    game.collectables.add(_consumeInt());
+  }
 }
 
 void _parseGrenades() {

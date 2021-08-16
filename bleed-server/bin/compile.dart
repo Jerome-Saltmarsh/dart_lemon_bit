@@ -1,13 +1,17 @@
 import 'classes.dart';
 import 'classes/Block.dart';
+import 'classes/Collectable.dart';
 import 'classes/Game.dart';
-import 'classes/Scene.dart';
 import 'enums.dart';
 import 'enums/ServerResponse.dart';
 import 'settings.dart';
 
+// constants
+
 const String _space = ' ';
 const String _semiColon = '; ';
+
+// public
 
 void compileState(Game game) {
   game.buffer.clear();
@@ -18,21 +22,8 @@ void compileState(Game game) {
   _compileGameEvents(game.buffer, game.gameEvents);
   _compileGrenades(game.buffer, game.grenades);
   _compileObjects(game.buffer, game.scene.objects);
+  _compileCollectables(game.buffer, game.collectable);
   game.compiled = game.buffer.toString();
-}
-
-void _compileGameEvents(StringBuffer buffer, List<GameEvent> gameEvents) {
-  buffer.write(ServerResponse.Game_Events.index);
-  buffer.write(_space);
-  for (GameEvent gameEvent in gameEvents) {
-    _write(buffer, gameEvent.id);
-    _write(buffer, gameEvent.type.index);
-    _write(buffer, gameEvent.x.toInt());
-    _write(buffer, gameEvent.y.toInt());
-    _write(buffer, gameEvent.xv.toStringAsFixed(1));
-    _write(buffer, gameEvent.yv.toStringAsFixed(1));
-  }
-  buffer.write(_semiColon);
 }
 
 void compileBlocks(StringBuffer buffer, List<Block> blocks){
@@ -51,26 +42,6 @@ void compileBlocks(StringBuffer buffer, List<Block> blocks){
   buffer.write(_semiColon);
 }
 
-void _compileGrenades(StringBuffer buffer, List<Grenade> grenades){
-  buffer.write(ServerResponse.Grenades.index);
-  buffer.write(_space);
-  for(Grenade grenade in grenades){
-    _write(buffer, grenade.x.toInt());
-    _write(buffer, grenade.y.toInt());
-    _write(buffer, grenade.z.toStringAsFixed(1));
-  }
-  buffer.write(_semiColon);
-}
-
-void _compileObjects(StringBuffer buffer, List<GameObject> objects){
-  buffer.write(ServerResponse.Objects.index);
-  buffer.write(_space);
-  for(GameObject object in objects){
-    _write(buffer, object.x.toInt());
-    _write(buffer, object.y.toInt());
-  }
-  buffer.write(_semiColon);
-}
 
 String compileTiles(StringBuffer buffer, List<List<Tile>> tiles) {
   buffer.write(ServerResponse.Tiles.index);
@@ -114,6 +85,54 @@ void compilePlayer(StringBuffer buffer, Player player) {
   buffer.write(_space);
   buffer.write(player.handgunAmmunition.rounds);
   buffer.write(_space);
+  buffer.write(_semiColon);
+}
+
+// private
+
+void _compileGameEvents(StringBuffer buffer, List<GameEvent> gameEvents) {
+  buffer.write(ServerResponse.Game_Events.index);
+  buffer.write(_space);
+  for (GameEvent gameEvent in gameEvents) {
+    _write(buffer, gameEvent.id);
+    _write(buffer, gameEvent.type.index);
+    _write(buffer, gameEvent.x.toInt());
+    _write(buffer, gameEvent.y.toInt());
+    _write(buffer, gameEvent.xv.toStringAsFixed(1));
+    _write(buffer, gameEvent.yv.toStringAsFixed(1));
+  }
+  buffer.write(_semiColon);
+}
+
+void _compileCollectables(StringBuffer buffer, List<Collectable> collectables){
+  buffer.write(ServerResponse.Collectables.index);
+  buffer.write(_space);
+  for (Collectable gameEvent in collectables) {
+    _write(buffer, gameEvent.type.index);
+    _write(buffer, gameEvent.x.toInt());
+    _write(buffer, gameEvent.y.toInt());
+  }
+  buffer.write(_semiColon);
+}
+
+void _compileGrenades(StringBuffer buffer, List<Grenade> grenades){
+  buffer.write(ServerResponse.Grenades.index);
+  buffer.write(_space);
+  for(Grenade grenade in grenades){
+    _write(buffer, grenade.x.toInt());
+    _write(buffer, grenade.y.toInt());
+    _write(buffer, grenade.z.toStringAsFixed(1));
+  }
+  buffer.write(_semiColon);
+}
+
+void _compileObjects(StringBuffer buffer, List<GameObject> objects){
+  buffer.write(ServerResponse.Objects.index);
+  buffer.write(_space);
+  for(GameObject object in objects){
+    _write(buffer, object.x.toInt());
+    _write(buffer, object.y.toInt());
+  }
   buffer.write(_semiColon);
 }
 

@@ -17,6 +17,7 @@ import '../state.dart';
 import '../update.dart';
 import '../utils.dart';
 import 'Block.dart';
+import 'Collectable.dart';
 import 'Scene.dart';
 
 class Game {
@@ -30,6 +31,7 @@ class Game {
   List<Bullet> bullets = [];
   List<Grenade> grenades = [];
   List<GameEvent> gameEvents = [];
+  List<Collectable> collectable = [];
   String compiled = "";
   StringBuffer buffer = StringBuffer();
 

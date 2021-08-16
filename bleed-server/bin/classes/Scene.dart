@@ -2,13 +2,15 @@
 import '../classes.dart';
 import '../enums.dart';
 import 'Block.dart';
+import 'Collectable.dart';
 
 class Scene {
   List<GameObject> objects = [];
   final List<List<Tile>> tiles;
   List<Block> blocks = [];
+  List<Collectable> collectable;
 
-  Scene(this.objects, this.tiles, this.blocks);
+  Scene(this.objects, this.tiles, this.blocks, this.collectable);
 }
 
 extension SceneFunctions on Scene {

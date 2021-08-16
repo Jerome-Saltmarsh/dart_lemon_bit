@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import '../enums/GameType.dart';
 import '../instances/scenes.dart';
 import '../utils.dart';
@@ -19,18 +17,10 @@ class GameManager {
     return null;
   }
 
-  Scene buildDeathMatchScene() {
-    List<Block> blocks = [];
-    blocks.add(Block.build(50, 800, 200, 150));
-    Scene scene = Scene([], generateTiles(), blocks);
-    scene.sortBlocks();
-    return scene;
-  }
-
   Scene buildOpenWorldScene() {
     List<Block> blocks = [];
     blocks.add(Block.build(50, 800, 200, 150));
-    Scene scene = Scene([], generateTiles(), blocks);
+    Scene scene = Scene([], generateTiles(), blocks, []);
     scene.sortBlocks();
     return scene;
   }

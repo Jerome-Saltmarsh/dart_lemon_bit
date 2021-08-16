@@ -12,5 +12,6 @@ enum ServerResponse {
   Pong,
   Player_Created,
   Blocks,
-  Scene
+  Scene,
+  Collectables
 }

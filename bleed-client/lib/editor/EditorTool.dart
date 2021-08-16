@@ -1,0 +1,5 @@
+
+enum EditorTool {
+  Block,
+  Health
+}

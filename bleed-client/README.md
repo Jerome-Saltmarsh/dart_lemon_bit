@@ -25,11 +25,11 @@ RELEASE OPEN WORLD
 [ ] Map Editor
 
 RELEASE DEATH MATCH
-[ ] Spawn Points
 [ ] Stamina UI
 [ ] Lobby
 [ ] Grenade building collision
 [ ] Space bar pan camera
+[ ] Spawn Points
 [ ] Ammo
 [ ] Health
 [x] Resize Structures

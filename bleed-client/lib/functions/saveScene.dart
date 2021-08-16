@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:bleed_client/classes/Block.dart';
+import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/state.dart';
 import 'package:clipboard/clipboard.dart';
 
@@ -12,7 +13,8 @@ void saveScene() {
 String _compileScene(){
   List jsonBlocks = blockHouses.map(mapBlockToJson).toList();
   return JsonEncoder().convert({
-    "blocks": jsonBlocks
+    "blocks": jsonBlocks,
+    "collectables": game.collectables
   });
 }
 

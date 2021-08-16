@@ -1,22 +1,18 @@
-import 'dart:convert';
-import 'dart:io';
 
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import 'classes/Block.dart';
 import 'classes/Game.dart';
 import 'classes.dart';
-import 'classes/Scene.dart';
 import 'compile.dart';
 import 'enums/ClientRequest.dart';
 import 'enums/GameError.dart';
 import 'enums/ServerResponse.dart';
 import 'enums/Weapons.dart';
 import 'enums.dart';
+import 'functions/loadScenes.dart';
 import 'instances/gameManager.dart';
-import 'instances/scenes.dart';
 import 'settings.dart';
 import 'update.dart';
 import 'utils.dart';
@@ -24,35 +20,6 @@ import 'utils.dart';
 const String _space = " ";
 final int errorIndex = ServerResponse.Error.index;
 
-void loadScenes() {
-  print("loadScenes()");
-  String dir = Directory.current.path;
-  File file = File('$dir/scenes/town.json');
-  file.readAsString().then((value) {
-    scenesTown = mapStringToScene(value);
-  });
-}
-
-Scene mapStringToScene(String text) {
-  Map<String, dynamic> json = JsonDecoder().convert(text);
-  List<dynamic> jsonBlocks = json['blocks'];
-  List<Block> blocks = jsonBlocks.map(mapJsonBlockToBlock).toList();
-  sortBlocks(blocks);
-  return Scene([], generateTiles(), blocks);
-}
-
-Block mapJsonBlockToBlock(dynamic jsonBlock) {
-  return Block(
-      jsonBlock['tx'],
-      jsonBlock['ty'],
-      jsonBlock['rx'],
-      jsonBlock['ry'],
-      jsonBlock['bx'],
-      jsonBlock['by'],
-      jsonBlock['lx'],
-      jsonBlock['ly'],
-  );
-}
 
 void main() {
   print('Bleed Game Server Starting');

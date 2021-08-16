@@ -7,6 +7,7 @@ import 'package:bleed_client/update.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 
 import 'connection.dart';
+import 'editor/editor.dart';
 import 'functions/clearState.dart';
 import 'functions/drawCanvas.dart';
 import 'images.dart';
@@ -36,6 +37,7 @@ class BleedWidget extends GameWidget {
   Future init() async {
     await loadImages();
     loadRects();
+    initEditor();
     // todo move this
     periodic(checkBulletHoles, ms: 500);
     periodic(redrawUI, seconds: 1);

@@ -1,20 +1,36 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:bleed_client/game_engine/game_maths.dart';
+import 'package:bleed_client/enums/CollectableType.dart';
+import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/maths.dart';
+import 'package:bleed_client/properties.dart';
+import 'package:flutter/services.dart';
 
-import 'classes/Block.dart';
-import 'enums/EditMode.dart';
-import 'game_engine/engine_state.dart';
-import 'game_engine/game_input.dart';
-import 'game_engine/game_widget.dart';
-import 'instances/editState.dart';
-import 'settings.dart';
-import 'state.dart';
+import '../classes/Block.dart';
+import 'EditMode.dart';
+import '../game_engine/engine_state.dart';
+import '../game_engine/game_input.dart';
+import '../game_engine/game_widget.dart';
+import '../instances/editState.dart';
+import '../settings.dart';
+import '../state.dart';
 
-Offset get _mouseWorld => Offset(mouseWorldX, mouseWorldY);
-Offset translateOffset;
+Offset _translateOffset;
+
+void initEditor() {
+  RawKeyboard.instance.addListener((value) {
+    if (!editMode) return;
+
+    if (value is RawKeyDownEvent) {
+      if (value.logicalKey == LogicalKeyboardKey.keyH) {
+        game.collectables.add(CollectableType.Health.index);
+        game.collectables.add(mouseWorldX.toInt());
+        game.collectables.add(mouseWorldY.toInt());
+      }
+    }
+  });
+}
 
 void updateEditMode() {
   _controlCameraEditMode();
@@ -30,21 +46,16 @@ void _handleMouseDrag() {
   Block block = editState.selectedBlock;
 
   if (editState.editMode == EditMode.Translate) {
-    Offset currentMouseOffset = block.top - _mouseWorld;
-    Offset difference = translateOffset - currentMouseOffset;
-    translateBlock(block, difference);
+    Offset currentMouseOffset = block.top - mouseWorld;
+    Offset difference = _translateOffset - currentMouseOffset;
+    _translateBlock(block, difference);
     return;
   }
 
-  Offset off = translateOffset - _mouseWorld;
+  Offset off = _translateOffset - mouseWorld;
   double distance = magnitude(off.dx, off.dy);
 
-
   switch (editState.editMode) {
-  // double r = (pi2 - toRadian(off.dx, off.dy));
-  // if(r < piQuarter){
-  // double d = adj(piQuarter - r, distance);
-  // double dd = acos(piQuarter - r) * d;
     case EditMode.AdjustTop:
       double ad = adj(piQuarter, distance);
       double op = opp(piQuarter, distance);
@@ -97,10 +108,10 @@ void _getBlockAt(double x, double y) {
       if (yd > xd) {
         if (yd - xd < r) {
           editState.editMode = EditMode.AdjustLeft;
-          translateOffset = block.bottom;
+          _translateOffset = block.bottom;
           editState.selectedBlock = block;
         } else {
-          selectTransferBlock(block);
+          _selectTransferBlock(block);
           return;
         }
         return;
@@ -114,10 +125,10 @@ void _getBlockAt(double x, double y) {
       if (xd > yd) {
         if (xd - yd < r) {
           editState.editMode = EditMode.AdjustBottom;
-          translateOffset = block.top;
+          _translateOffset = block.top;
           editState.selectedBlock = block;
         } else {
-          selectTransferBlock(block);
+          _selectTransferBlock(block);
         }
         return;
       }
@@ -130,10 +141,10 @@ void _getBlockAt(double x, double y) {
       if (yd > xd) {
         if (yd - xd < r) {
           editState.editMode = EditMode.AdjustTop;
-          translateOffset = block.left;
+          _translateOffset = block.left;
           editState.selectedBlock = block;
         } else {
-          selectTransferBlock(block);
+          _selectTransferBlock(block);
         }
 
         return;
@@ -146,11 +157,11 @@ void _getBlockAt(double x, double y) {
       double yd = y - block.right.dy;
       if (xd > yd) {
         if (xd - yd < r) {
-          translateOffset = block.left;
+          _translateOffset = block.left;
           editState.selectedBlock = block;
           editState.editMode = EditMode.AdjustRight;
         } else {
-          selectTransferBlock(block);
+          _selectTransferBlock(block);
         }
         return;
       }
@@ -174,23 +185,13 @@ void _controlCameraEditMode() {
   }
 }
 
-void selectTransferBlock(Block block) {
+void _selectTransferBlock(Block block) {
   editState.editMode = EditMode.Translate;
-  translateOffset = block.top - _mouseWorld;
+  _translateOffset = block.top - mouseWorld;
   editState.selectedBlock = block;
 }
 
-void setTranslateOffset(Block block) {
-  translateOffset = block.top - _mouseWorld;
-  editState.selectedBlock = block;
-}
-
-void setTranslate(Block block, Offset offset) {
-  translateOffset = block.top;
-  editState.selectedBlock = block;
-}
-
-void translateBlock(Block block, Offset value) {
+void _translateBlock(Block block, Offset value) {
   block.top += value;
   block.right += value;
   block.bottom += value;
