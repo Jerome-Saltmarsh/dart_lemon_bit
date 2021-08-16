@@ -20,6 +20,7 @@ import '../utils.dart';
 import 'Block.dart';
 import 'Collectable.dart';
 import 'Scene.dart';
+import 'Vector2.dart';
 
 class Game {
   static int _id = 0;
@@ -44,34 +45,40 @@ class Game {
 }
 
 extension GameFunctions on Game {
-  void updateAndCompile() {
-    updateCharacters();
-    updateCollisions();
-    updateBullets();
-    updateBullets(); // called twice to fix collision detection
-    updateNpcs();
-    updateGameEvents();
-    updateGrenades();
 
+  void updateAndCompile() {
+    _updateCharacters();
+    _updateCollisions();
+    _updateBullets();
+    _updateBullets(); // called twice to fix collision detection
+    _updateNpcs();
+    _updateGameEvents();
+    _updateGrenades();
+    _updateCollectables();
+    compileState(this);
+  }
+
+
+  void _updateCollectables() {
     for (Player player in players) {
       for (int i = 0; i < collectables.length; i++) {
-        if (abs(player.x - collectables[i].x) > 5) continue;
-        if (abs(player.y - collectables[i].y) > 5) continue;
+        if (abs(player.x - collectables[i].x) > settings.itemCollectRadius) continue;
+        if (abs(player.y - collectables[i].y) > settings.itemCollectRadius) continue;
 
-        switch(collectables[i].type){
+        switch (collectables[i].type) {
           case CollectableType.Health:
+            if (player.health >= player.maxStamina) continue;
             player.health = player.maxHealth;
             break;
           case CollectableType.Handgun_Ammo:
-            player.handgunAmmunition.clips = player.handgunAmmunition.maxClips;
+            if(player.handgunAmmunition.clips >= player.handgunAmmunition.maxClips) continue;
+            player.handgunAmmunition.clips++;
             break;
         }
-        collectables.removeAt(i);
-        i--;
+        collectables[i].active = false;
+        delayed(() => collectables[i].active = true, seconds: 60);
       }
     }
-
-    compileState(this);
   }
 
   void updateNpc(Npc npc) {
@@ -113,7 +120,7 @@ extension GameFunctions on Game {
     npc.idle();
   }
 
-  void updateCharacters() {
+  void _updateCharacters() {
     removeInactiveNpcs();
     players.forEach(updatePlayer);
     players.forEach(updateCharacter);
@@ -173,7 +180,7 @@ extension GameFunctions on Game {
     }
   }
 
-  void updateCollisions() {
+  void _updateCollisions() {
     npcs.sort(compareGameObjects);
     players.sort(compareGameObjects);
     updateCollisionBetween(npcs);
@@ -306,7 +313,7 @@ extension GameFunctions on Game {
     }
   }
 
-  void updateBullets() {
+  void _updateBullets() {
     for (int i = 0; i < bullets.length; i++) {
       Bullet bullet = bullets[i];
       bullet.x += bullet.xv;
@@ -408,7 +415,7 @@ extension GameFunctions on Game {
     }
   }
 
-  void updateGameEvents() {
+  void _updateGameEvents() {
     for (int i = 0; i < gameEvents.length; i++) {
       if (gameEvents[i].frameDuration-- > 0) continue;
       gameEvents.removeAt(i);
@@ -416,7 +423,7 @@ extension GameFunctions on Game {
     }
   }
 
-  void updateNpcs() {
+  void _updateNpcs() {
     npcs.forEach(updateNpc);
   }
 
@@ -442,7 +449,7 @@ extension GameFunctions on Game {
     player.stamina = clampInt(player.stamina, 0, player.maxStamina);
   }
 
-  void updateGrenades() {
+  void _updateGrenades() {
     for (Grenade grenade in grenades) {
       applyMovement(grenade);
       applyFriction(grenade, settingsGrenadeFriction);
@@ -687,10 +694,11 @@ extension GameFunctions on Game {
   }
 
   Player spawnPlayer({required String name}) {
+    Vector2 spawnPoint = scene.randomPlayerSpawnPoint();
     Player player = Player(
         uuid: _generateUUID(),
-        x: giveOrTake(50),
-        y: 1000 + giveOrTake(50),
+        x: spawnPoint.x + giveOrTake(3),
+        y: spawnPoint.y + giveOrTake(3),
         name: name);
     players.add(player);
     return player;
@@ -741,6 +749,22 @@ extension GameFunctions on Game {
         i--;
       }
     }
+  }
+
+  void revive(Character character) {
+    print('revive(${character.id})');
+    character.state = CharacterState.Idle;
+    character.health = character.maxHealth;
+
+    if (scene.playerSpawnPoints.isEmpty) {
+      character.x = giveOrTake(settingsPlayerStartRadius);
+      character.y = tilesLeftY + giveOrTake(settingsPlayerStartRadius);
+    } else {
+      Vector2 spawnPoint = scene.randomPlayerSpawnPoint();
+      character.x = spawnPoint.x;
+      character.y = spawnPoint.y;
+    }
+    character.collidable = true;
   }
 }
 

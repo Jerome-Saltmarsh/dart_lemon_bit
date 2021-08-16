@@ -4,6 +4,7 @@ import 'package:bleed_client/classes/Block.dart';
 import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/state.dart';
 import 'package:clipboard/clipboard.dart';
+import 'package:flutter/cupertino.dart';
 
 void saveScene() {
   print("saveScene()");
@@ -11,11 +12,22 @@ void saveScene() {
 }
 
 String _compileScene(){
-  List jsonBlocks = blockHouses.map(mapBlockToJson).toList();
   return JsonEncoder().convert({
-    "blocks": jsonBlocks,
-    "collectables": game.collectables
+    "blocks": _mapBlocks(),
+    "collectables": game.collectables,
+    "player-spawn-points": _mapPlayerSpawnPoints(),
   });
+}
+
+List<dynamic> _mapBlocks() => blockHouses.map(mapBlockToJson).toList();
+
+List<int> _mapPlayerSpawnPoints(){
+  List<int> points = [];
+  for(Offset offset in game.playerSpawnPoints){
+    points.add(offset.dx.toInt());
+    points.add(offset.dy.toInt());
+  }
+  return points;
 }
 
 dynamic mapBlockToJson(Block block){

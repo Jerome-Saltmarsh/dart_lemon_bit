@@ -17,19 +17,45 @@ import '../settings.dart';
 import '../state.dart';
 
 Offset _translateOffset;
+bool _panning = false;
+Offset _mouseWorldStart;
+Offset _cameraStart;
 
 void initEditor() {
-  RawKeyboard.instance.addListener((value) {
-    if (!editMode) return;
+  RawKeyboard.instance.addListener(_handleKeyPressed);
+}
 
-    if (value is RawKeyDownEvent) {
-      if (value.logicalKey == LogicalKeyboardKey.keyH) {
-        game.collectables.add(CollectableType.Health.index);
-        game.collectables.add(mouseWorldX.toInt());
-        game.collectables.add(mouseWorldY.toInt());
-      }
+void _addCollectable(CollectableType type){
+  game.collectables.add(type.index);
+  game.collectables.add(mouseWorldX.toInt());
+  game.collectables.add(mouseWorldY.toInt());
+}
+
+void _handleKeyPressed(RawKeyEvent event) {
+  if (!editMode) return;
+
+  if (event is RawKeyDownEvent) {
+    if (event.logicalKey == LogicalKeyboardKey.keyO) {
+      _addCollectable(CollectableType.Health);
     }
-  });
+    if (event.logicalKey == LogicalKeyboardKey.keyI) {
+      _addCollectable(CollectableType.Handgun_Ammo);
+    }
+    if (event.logicalKey == LogicalKeyboardKey.keyP) {
+      game.playerSpawnPoints.add(mouseWorld);
+    }
+
+    if (event.logicalKey == LogicalKeyboardKey.space && !_panning) {
+      _panning = true;
+      _mouseWorldStart = mouseWorld;
+      _cameraStart = camera;
+    }
+  }
+  if (event is RawKeyUpEvent) {
+    if (event.logicalKey == LogicalKeyboardKey.space) {
+      _panning = false;
+    }
+  }
 }
 
 void updateEditMode() {
@@ -37,6 +63,12 @@ void updateEditMode() {
   _handleMouseClick();
   _handleMouseDrag();
   redrawGame();
+
+  if (_panning) {
+    Offset mouseWorldDiff = _mouseWorldStart - mouseWorld;
+    cameraX = _cameraStart.dx + mouseWorldDiff.dx;
+    cameraY = _cameraStart.dy + mouseWorldDiff.dy;
+  }
 }
 
 void _handleMouseDrag() {

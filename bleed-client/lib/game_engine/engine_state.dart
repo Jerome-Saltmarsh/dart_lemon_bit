@@ -11,3 +11,5 @@ double zoom = 1;
 bool mouseDragging = false;
 DragUpdateDetails dragUpdateDetails;
 
+Offset get camera => Offset(cameraX, cameraY);
+

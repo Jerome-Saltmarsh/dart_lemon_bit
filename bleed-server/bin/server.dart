@@ -176,7 +176,7 @@ void main() {
             error(GameError.PlayerStillAlive);
             return;
           }
-          revive(player);
+          game.revive(player);
           return;
 
         case ClientRequest.Spawn_Npc:

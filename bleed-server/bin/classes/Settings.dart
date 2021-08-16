@@ -8,4 +8,6 @@ class Settings {
   final double handgunAccuracy = 0.05;
   final double sniperRifleAccuracy = 0;
   final double shotgunAccuracy = 0.15;
+
+  final double itemCollectRadius = 10;
 }

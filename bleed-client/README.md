@@ -23,16 +23,20 @@ RELEASE OPEN WORLD
 [ ] Zombie Hurt Animation
 [ ] Cache Particles
 [ ] Map Editor
+[ ] Stamina UI
 
 RELEASE DEATH MATCH
-[ ] Stamina UI
+
 [ ] Lobby
 [ ] Grenade building collision
 [ ] Space bar pan camera
-[ ] Player Spawn Points
 [ ] Zombie Spawn Points
-[ ] Ammo
-[ ] Health
+[ ] NPC Pathfinding
+[ ] Collect Audio
+[ ] FIX Zombies npcs keep attacking after player vanishes
+[x] Player Spawn Points
+[x] Ammo
+[x] Health
 [x] Resize Structures
 [x] Fix Zoom out aim bug
 [x] Fix Zoom out camera follow

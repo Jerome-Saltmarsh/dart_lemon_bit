@@ -45,29 +45,42 @@ void drawCanvas(Canvas canvass, Size _size) {
   drawAnimations();
   _drawParticles();
   drawCharacters();
-  drawEditMode();
-
-  for (int i = 0; i < game.collectables.length; i += 3) {
-    CollectableType type = CollectableType.values[game.collectables[i]];
-    int x = game.collectables[i + 1];
-    int y = game.collectables[i + 2];
-    drawCircle(x.toDouble(), y.toDouble(), 10, Colors.blue);
-  }
+  _drawEditMode();
+  _drawCollectables();
 
   drawMouse();
 }
 
-void drawEditMode() {
-  if (!editMode) return;
-  if (editState.selectedBlock == null) return;
+void _drawCollectables() {
+  for (int i = 0; i < game.collectables.length; i += 3) {
+    CollectableType type = CollectableType.values[game.collectables[i]];
+    int x = game.collectables[i + 1];
+    int y = game.collectables[i + 2];
+    switch(type){
+      case CollectableType.Handgun_Ammo:
+        drawCircle(x.toDouble(), y.toDouble(), 10, Colors.blue);
+        break;
+      case CollectableType.Health:
+        drawCircle(x.toDouble(), y.toDouble(), 10, Colors.red);
+        break;
+    }
 
+  }
+}
+
+void _drawEditMode() {
+  if (!editMode) return;
+
+  for(Offset offset in game.playerSpawnPoints){
+    drawCircleOffset(offset, 10, Colors.yellow);
+  }
+
+  if (editState.selectedBlock == null) return;
   if (editState.editMode == EditMode.Translate) {
     drawBlockSelected(editState.selectedBlock);
     return;
   }
-
   Block block = editState.selectedBlock;
-
   switch (editState.editMode) {
     case EditMode.AdjustTop:
       _drawLine(block.top, block.right, Colors.red);

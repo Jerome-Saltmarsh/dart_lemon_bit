@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/enums/Weapons.dart';
 import 'package:flutter/material.dart';
 import 'classes/Block.dart';
@@ -30,7 +31,6 @@ Duration refreshDuration;
 bool smooth = false;
 BuildContext context;
 List<List<dynamic>> players = [];
-List<int> gameObjects = [];
 List<List<dynamic>> npcs = [];
 List<List<dynamic>> bullets = [];
 List<double> bulletHoles = [];
@@ -74,3 +74,11 @@ Weapon playerWeapon = Weapon.Unarmed;
 
 // TODO Expensive string build
 String get session => '$gameId $playerId $playerUUID';
+
+void setHandgunClips(int value){
+  if (value == handgunClips) return;
+  if (value > handgunClips){
+    playAudioReloadHandgun(playerX, playerY);
+  }
+  handgunClips = value;
+}

@@ -31,6 +31,11 @@ void drawCircle(double x, double y, double radius, Color color){
   globalCanvas.drawCircle(Offset(x, y), radius, globalPaint);
 }
 
+void drawCircleOffset(Offset offset, double radius, Color color){
+  globalPaint.color = color;
+  globalCanvas.drawCircle(offset, radius, globalPaint);
+}
+
 void drawSprite(ui.Image image, int frames, int frame, double x, double y, {double scale = 1.0}){
   double frameWidth = image.width / frames;
   double frameHeight = image.height as double;

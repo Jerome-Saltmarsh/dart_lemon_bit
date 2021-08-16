@@ -23,6 +23,7 @@ Offset get previousMousePosition => _previousMousePosition;
 Offset get mouseVelocity => _mouseDelta;
 double get mouseX => _mousePosition?.dx;
 double get mouseY => _mousePosition?.dy;
+Offset get mouse => Offset(mouseX, mouseY);
 double get mouseWorldX => convertScreenToWorldX(mouseX);
 double get mouseWorldY => convertScreenToWorldY(mouseY);
 Offset get mouseWorld => Offset(mouseWorldX, mouseWorldY);

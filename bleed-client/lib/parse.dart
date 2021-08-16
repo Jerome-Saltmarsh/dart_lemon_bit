@@ -71,10 +71,6 @@ void parseState() {
         connecting = false;
         break;
 
-      case ServerResponse.Objects:
-        _parseObjects();
-        break;
-
       case ServerResponse.Blocks:
         _parseBlocks();
         break;
@@ -137,7 +133,7 @@ void _parsePlayer() {
     redrawUI();
   }
   playerMaxStamina = _consumeInt();
-  handgunClips = _consumeInt();
+  setHandgunClips(_consumeInt());
   handgunClipSize = _consumeInt();
   handgunMaxClips = _consumeInt();
   setHandgunRounds(_consumeInt());
@@ -154,14 +150,6 @@ void _parseGrenades() {
   grenades.clear();
   while (!_simiColonConsumed()) {
     grenades.add(_consumeDouble());
-  }
-}
-
-void _parseObjects() {
-  gameObjects.clear();
-  while (!_simiColonConsumed()) {
-    gameObjects.add(_consumeInt());
-    gameObjects.add(_consumeInt());
   }
 }
 

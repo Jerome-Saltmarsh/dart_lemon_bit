@@ -123,15 +123,6 @@ Direction convertAngleToDirection(double angle) {
   return Direction.Up;
 }
 
-void revive(Character character) {
-  print('revive(${character.id})');
-  character.state = CharacterState.Idle;
-  character.health = character.maxHealth;
-  character.x = giveOrTake(settingsPlayerStartRadius);
-  character.y = tilesLeftY + giveOrTake(settingsPlayerStartRadius);
-  character.collidable = true;
-}
-
 double tilesTopX = 0;
 double tilesTopY = 0;
 double tilesRightX = 0;
