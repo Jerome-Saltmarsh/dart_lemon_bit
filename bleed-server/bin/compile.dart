@@ -63,27 +63,20 @@ String compileTiles(StringBuffer buffer, List<List<Tile>> tiles) {
 void compilePlayer(StringBuffer buffer, Player player) {
   buffer.write(ServerResponse.Player.index);
   buffer.write(_space);
-  buffer.write(player.x.toStringAsFixed(1));
+  buffer.write(player.x.toInt());
   buffer.write(_space);
-  buffer.write(player.y.toStringAsFixed(1));
+  buffer.write(player.y.toInt());
   buffer.write(_space);
   buffer.write(player.weapon.index);
   buffer.write(_space);
-  buffer.write(player.health.toStringAsFixed(2));
+  buffer.write(player.health.toInt());
   buffer.write(_space);
-  buffer.write(player.maxHealth.toStringAsFixed(2));
+  buffer.write(player.maxHealth.toInt());
   buffer.write(_space);
   buffer.write(player.stamina);
   buffer.write(_space);
   buffer.write(player.maxStamina);
   buffer.write(_space);
-  buffer.write(player.handgunAmmunition.clips);
-  buffer.write(_space);
-  buffer.write(player.handgunAmmunition.clipSize);
-  buffer.write(_space);
-  buffer.write(player.handgunAmmunition.rounds);
-  buffer.write(_space);
-  buffer.write(_semiColon);
   _compileInventory(buffer, player.inventory);
 }
 
@@ -120,9 +113,7 @@ void _compileCollectables(StringBuffer buffer, List<Collectable> collectables) {
   buffer.write(_space);
   for (Collectable collectable in collectables) {
     if (!collectable.active) continue;
-    _write(buffer, collectable.type.index);
-    _write(buffer, collectable.x.toInt());
-    _write(buffer, collectable.y.toInt());
+    buffer.write(collectable.compiled);
   }
   buffer.write(_semiColon);
 }

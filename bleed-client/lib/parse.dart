@@ -144,9 +144,6 @@ void _parsePlayer() {
     redrawUI();
   }
   playerMaxStamina = _consumeInt();
-  setHandgunClips(_consumeInt());
-  handgunClipSize = _consumeInt();
-  setHandgunRounds(_consumeInt());
 }
 
 void _parseInventory() {
