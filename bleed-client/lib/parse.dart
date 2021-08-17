@@ -2,6 +2,7 @@ import 'package:bleed_client/classes/InventoryItem.dart';
 import 'package:bleed_client/connection.dart';
 import 'package:bleed_client/enums/InventoryItemType.dart';
 import 'package:bleed_client/enums/ServerResponse.dart';
+import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/keys.dart';
@@ -55,6 +56,9 @@ void parseState() {
       case ServerResponse.Error:
         GameError error = _consumeError();
         print(error);
+        if(error == GameError.PlayerNotFound){
+          clearState();
+        }
         return;
 
       case ServerResponse.Bullets:

@@ -70,7 +70,6 @@ void _onEvent(dynamic response) {
   event = response;
   parseState();
   redrawGame();
-  // redrawUI();
 }
 
 void _onError(dynamic value) {

@@ -45,7 +45,8 @@ class BleedWidget extends GameWidget {
     // TODO this job is expensive, use reaction instead
     periodic(() {
       if (!connected) {
-        forceRedraw();
+        redrawGame();
+        redrawUI();
       }
     }, ms: 100);
 

@@ -192,14 +192,6 @@ Widget buildGameUI(BuildContext context) {
   }
   dynamic player = getPlayerCharacter();
   if (player != null) {
-    if (isDead(player)) {
-      return Container(
-        width: globalSize.width,
-        height: globalSize.height,
-        alignment: Alignment.center,
-        child: button("Revive", sendRequestRevive, fontSize: 40),
-      );
-    }
   } else {
     if (playerUUID.isNotEmpty) {
       return Text("Loading Players");
@@ -333,6 +325,7 @@ Widget buildHud() {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               button(playMode ? 'Edit' : "Play", toggleMode),
+              button("respawn", sendRequestRevive),
               text(
                   'mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
               text('Stamina: $playerStamina / $playerMaxStamina'),

@@ -53,10 +53,11 @@ extension GameFunctions on Game {
     _updateBullets();
     _updateBullets(); // called twice to fix collision detection
     _updateNpcs();
-    _updateGameEvents();
+    // _updateGameEvents();
     _updateGrenades();
     _updateCollectables();
     compileState(this);
+    gameEvents.clear();
   }
 
   void _updateCollectables() {
@@ -127,10 +128,15 @@ extension GameFunctions on Game {
   }
 
   void _updateCharacters() {
+    for (int i = 0; i < players.length; i++) {
+      updatePlayer(players[i]);
+      updateCharacter(players[i]);
+    }
+
     removeInactiveNpcs();
-    players.forEach(updatePlayer);
-    players.forEach(updateCharacter);
-    npcs.forEach(updateCharacter);
+    for (int i = 0; i < npcs.length; i++) {
+      updateCharacter(npcs[i]);
+    }
   }
 
   void handleBlockCollisions(List<GameObject> gameObjects) {
@@ -429,7 +435,9 @@ extension GameFunctions on Game {
   }
 
   void _updateNpcs() {
-    npcs.forEach(updateNpc);
+    for (Npc npc in npcs) {
+      updateNpc(npc);
+    }
   }
 
   void updatePlayer(Player player) {
@@ -739,6 +747,7 @@ extension GameFunctions on Game {
         }
 
         npc.target = players[p];
+        break;
       }
     }
   }
@@ -755,13 +764,14 @@ extension GameFunctions on Game {
   void jobRemoveDisconnectedPlayers() {
     for (int i = 0; i < players.length; i++) {
       if (players[i].lastEventFrame > settingsPlayerDisconnectFrames) {
-        print('Removing disconnected player ${players[i].id}');
+        print('Removing disconnected player: ${players[i].id}');
         Player player = players[i];
-        for(Npc npc in npcs){
-          if(npc.target == player){
+        for (Npc npc in npcs) {
+          if (npc.target == player) {
             npc.clearTarget();
           }
         }
+        player.active = false;
         players.removeAt(i);
         i--;
       }
@@ -772,6 +782,12 @@ extension GameFunctions on Game {
     print('revive(${character.id})');
     character.state = CharacterState.Idle;
     character.health = character.maxHealth;
+
+    for(Npc npc in npcs){
+      if(npc.target == character){
+        npc.clearTarget();
+      }
+    }
 
     if (scene.playerSpawnPoints.isEmpty) {
       character.x = giveOrTake(settingsPlayerStartRadius);

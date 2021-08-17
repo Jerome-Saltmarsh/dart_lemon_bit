@@ -29,9 +29,13 @@ RELEASE DEATH MATCH
 [ ] Grenade building collision
 [ ] Space bar pan camera
 [ ] Zombie Spawn Points
-[ ] NPC Pathfinding
 [ ] Collect Audio
+[ ] NPC Pathfinding
 [ ] Inventory
+[ ] Join Random Game
+[ ] Find / Join Game 
+[ ] Create Game
+[ ] FIX Game crashes on death
 [x] FIX Zombies npcs keep attacking after player vanishes
 [x] Player Spawn Points
 [x] Ammo

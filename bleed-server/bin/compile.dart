@@ -141,7 +141,10 @@ void _compileGrenades(StringBuffer buffer, List<Grenade> grenades) {
 void _compilePlayers(StringBuffer buffer, List<Player> players) {
   buffer.write(ServerResponse.Players.index);
   buffer.write(_space);
-  players.forEach((player) => _compileCharacter(buffer, player));
+  for (Player player in players) {
+    _compileCharacter(buffer, player);
+  }
+
   buffer.write(_semiColon);
 }
 
@@ -152,14 +155,18 @@ void _compileGameId(StringBuffer buffer, Game game) {
 void _compileNpcs(StringBuffer buffer, List<Npc> npcs) {
   buffer.write(ServerResponse.Npcs.index);
   buffer.write(_space);
-  npcs.forEach((npc) => _compileNpc(buffer, npc));
+  for (Npc npc in npcs) {
+    _compileNpc(buffer, npc);
+  }
   buffer.write(_semiColon);
 }
 
 void _compileBullets(StringBuffer buffer, List<Bullet> bullets) {
   buffer.write(ServerResponse.Bullets.index);
   buffer.write(_space);
-  bullets.forEach((bullet) => _compileBullet(buffer, bullet));
+  for (Bullet bullet in bullets) {
+    _compileBullet(buffer, bullet);
+  }
   buffer.write(_semiColon);
 }
 
@@ -181,8 +188,8 @@ void _compileCharacter(StringBuffer buffer, Character character) {
 void _compileNpc(StringBuffer buffer, Npc npc) {
   _write(buffer, npc.state.index);
   _write(buffer, npc.direction.index);
-  _write(buffer, npc.x.toStringAsFixed(compilePositionDecimals));
-  _write(buffer, npc.y.toStringAsFixed(compilePositionDecimals));
+  _write(buffer, npc.x.toInt());
+  _write(buffer, npc.y.toInt());
 }
 
 void _write(StringBuffer buffer, dynamic value) {

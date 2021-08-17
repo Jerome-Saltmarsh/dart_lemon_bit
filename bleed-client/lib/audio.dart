@@ -126,6 +126,6 @@ void _play(String name, AudioPlayer audioPlayer, double x, double y) {
     if (volume < 0.05) return;
     audioPlayer.play('assets/audio/$name', isLocal: true, volume: volume);
   } catch (error) {
-    audioPlayer.resume();
+    // audioPlayer.resume();
   }
 }

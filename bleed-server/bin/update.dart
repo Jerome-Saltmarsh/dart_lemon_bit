@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'classes/Game.dart';
 import 'classes.dart';
 import 'instances/gameManager.dart';
@@ -13,28 +15,35 @@ void initUpdateLoop() {
   periodic(updateNpcTargets, ms: 500);
 }
 
-
-void updateNpcTargets(){
-  gameManager.games.forEach((game) => game.updateNpcTargets());
-}
-
-void jobRemoveDisconnectedPlayers(){
-  gameManager.games.forEach((game) => game.jobRemoveDisconnectedPlayers());
-}
-
-void jobNpcWander(){
-  gameManager.games.forEach((game) => game.jobNpcWander());
-}
-
-void fixedUpdate() {
-  frame++;
-  DateTime now = DateTime.now();
-  frameDuration = now.difference(frameTime);
-  if (frameDuration.inMilliseconds > 0) {
-    fps = 1000 ~/ frameDuration.inMilliseconds;
+void updateNpcTargets(Timer timer){
+  for(Game game in gameManager.games){
+    game.updateNpcTargets();
   }
-  frameTime = now;
-  gameManager.games.forEach((game) => game.updateAndCompile());
+}
+
+void jobRemoveDisconnectedPlayers(Timer timer){
+  for(Game game in gameManager.games){
+    game.jobRemoveDisconnectedPlayers();
+  }
+}
+
+void jobNpcWander(Timer timer){
+  for(Game game in gameManager.games){
+    game.jobNpcWander();
+  }
+}
+
+void fixedUpdate(Timer timer) {
+  frame++;
+  // DateTime now = DateTime.now();
+  // frameDuration = now.difference(frameTime);
+  // if (frameDuration.inMilliseconds > 0) {
+  //   fps = 1000 ~/ frameDuration.inMilliseconds;
+  // }
+  // frameTime = now;
+  for(Game game in games){
+    game.updateAndCompile();
+  }
 }
 
 
