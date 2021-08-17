@@ -32,7 +32,7 @@ RELEASE DEATH MATCH
 [ ] NPC Pathfinding
 [ ] Collect Audio
 [ ] Inventory
-[ ] FIX Zombies npcs keep attacking after player vanishes
+[x] FIX Zombies npcs keep attacking after player vanishes
 [x] Player Spawn Points
 [x] Ammo
 [x] Health

@@ -756,6 +756,12 @@ extension GameFunctions on Game {
     for (int i = 0; i < players.length; i++) {
       if (players[i].lastEventFrame > settingsPlayerDisconnectFrames) {
         print('Removing disconnected player ${players[i].id}');
+        Player player = players[i];
+        for(Npc npc in npcs){
+          if(npc.target == player){
+            npc.clearTarget();
+          }
+        }
         players.removeAt(i);
         i--;
       }
