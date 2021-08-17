@@ -7,6 +7,7 @@ import '../enums.dart';
 import '../enums/CollectableType.dart';
 import '../enums/GameEventType.dart';
 import '../enums/GameType.dart';
+import '../enums/ServerResponse.dart';
 import '../enums/Weapons.dart';
 import '../extensions/settings-extensions.dart';
 import '../functions/applyForce.dart';
@@ -39,10 +40,14 @@ class Game {
   String compiled = "";
   StringBuffer buffer = StringBuffer();
 
+  // this saves us rewriting the same text each frame
+  late final String gameIdString;
+
   Game(this.type, this.scene, this.maxPlayers) {
     for (Collectable collectable in scene.collectables) {
       collectables.add(collectable);
     }
+    gameIdString =  '${ServerResponse.Game_Id.index} $id ; ';
   }
 }
 

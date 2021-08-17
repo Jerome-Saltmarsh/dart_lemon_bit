@@ -17,7 +17,7 @@ const String _semiColon = '; ';
 
 void compileState(Game game) {
   game.buffer.clear();
-  _compileGameId(game.buffer, game);
+  game.buffer.write(game.gameIdString);
   _compilePlayers(game.buffer, game.players);
   _compileNpcs(game.buffer, game.npcs);
   _compileBullets(game.buffer, game.bullets);
@@ -95,8 +95,7 @@ void _compileInventory(StringBuffer buffer, Inventory inventory) {
 // private
 
 void _compileGameEvents(StringBuffer buffer, List<GameEvent> gameEvents) {
-  buffer.write(ServerResponse.Game_Events.index);
-  buffer.write(_space);
+  _write(buffer, ServerResponse.Game_Events.index);
   for (GameEvent gameEvent in gameEvents) {
     _write(buffer, gameEvent.id);
     _write(buffer, gameEvent.type.index);
