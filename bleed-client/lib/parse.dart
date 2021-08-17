@@ -364,7 +364,6 @@ void _consumeNpc(dynamic memory) {
 }
 
 void _consumeBullet(dynamic memory) {
-  memory[id] = _consumeInt();
   memory[x] = _consumeDouble();
   memory[y] = _consumeDouble();
 }

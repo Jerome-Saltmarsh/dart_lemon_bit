@@ -171,9 +171,8 @@ void _compileBullets(StringBuffer buffer, List<Bullet> bullets) {
 }
 
 void _compileBullet(StringBuffer buffer, Bullet bullet) {
-  _write(buffer, bullet.id);
-  _write(buffer, bullet.x);
-  _write(buffer, bullet.y);
+  _write(buffer, bullet.x.toInt());
+  _write(buffer, bullet.y.toInt());
 }
 
 void _compileCharacter(StringBuffer buffer, Character character) {
