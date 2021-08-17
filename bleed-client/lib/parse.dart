@@ -152,8 +152,8 @@ void _parseInventory() {
   while (!_simiColonConsumed()) {
     if (i < inventory.items.length) {
       inventory.items[i].type = _consumeInventoryItemType();
-      inventory.items[i].x = _consumeInt();
-      inventory.items[i].y = _consumeInt();
+      inventory.items[i].row = _consumeInt();
+      inventory.items[i].column = _consumeInt();
     } else {
       InventoryItemType type = _consumeInventoryItemType();
       int x = _consumeInt();

@@ -298,7 +298,7 @@ Widget buildInventory(){
             for(int i = 0; i < inventory.items.length; i++){
               InventoryItem item = inventory.items[i];
 
-              Offset o = Offset(item.x * squareSize + halfSquareSize + (padding * 0.5), item.y * squareSize + halfSquareSize + padding);
+              Offset o = Offset(item.column * squareSize + halfSquareSize + (padding * 0.5), item.row * squareSize + halfSquareSize + padding);
 
               switch(item.type){
                 case InventoryItemType.HealthPack:
@@ -306,11 +306,11 @@ Widget buildInventory(){
                   canvas.drawCircle(o, 20, paint2);
                   break;
                 case InventoryItemType.HandgunClip:
-                  canvas.drawImage(imageHandgunAmmo, Offset(item.x * squareSize + (padding * 0.5), item.y * squareSize + padding), paint2);
+                  canvas.drawImage(imageHandgunAmmo, Offset(item.column * squareSize + (padding * 0.5), item.row * squareSize + padding), paint2);
                   break;
                 case InventoryItemType.Handgun:
                   paint2.color = Colors.white;
-                  canvas.drawImage(imageHandgun, Offset(item.x * squareSize + (padding * 0.5), item.y * squareSize + padding), paint2);
+                  canvas.drawImage(imageHandgun, Offset(item.column * squareSize + (padding * 0.5), item.row * squareSize + padding), paint2);
                   break;
               }
             }

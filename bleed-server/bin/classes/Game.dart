@@ -62,6 +62,8 @@ extension GameFunctions on Game {
   void _updateCollectables() {
     for (Player player in players) {
       for (int i = 0; i < collectables.length; i++) {
+        if (!collectables[i].active) continue;
+
         if (abs(player.x - collectables[i].x) > settings.itemCollectRadius)
           continue;
         if (abs(player.y - collectables[i].y) > settings.itemCollectRadius)
@@ -69,12 +71,13 @@ extension GameFunctions on Game {
 
         switch (collectables[i].type) {
           case CollectableType.Health:
-            if (player.health >= player.maxStamina) continue;
-            player.health = player.maxHealth;
+            if (!player.inventory.acquire(InventoryItemType.HealthPack)) {
+              continue;
+            }
             break;
           case CollectableType.Handgun_Ammo:
-            for (int i = 0; i < player.inventory.items.length; i++) {
-              // player.inventory.items[i] =
+            if (!player.inventory.acquire(InventoryItemType.HandgunClip)) {
+              continue;
             }
             break;
         }
@@ -703,9 +706,9 @@ extension GameFunctions on Game {
         y: spawnPoint.y + giveOrTake(2),
         inventory: Inventory(3, 3, [
           InventoryItem(0, 0, InventoryItemType.Handgun),
-          InventoryItem(1, 0, InventoryItemType.HandgunClip),
-          InventoryItem(2, 0, InventoryItemType.HandgunClip),
           InventoryItem(0, 1, InventoryItemType.HealthPack),
+          InventoryItem(1, 0, InventoryItemType.HandgunClip),
+          InventoryItem(2, 2, InventoryItemType.HandgunClip),
         ]),
         name: name);
     players.add(player);

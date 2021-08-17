@@ -93,8 +93,8 @@ void _compileInventory(StringBuffer buffer, Inventory inventory) {
   _write(buffer, inventory.columns);
   for (InventoryItem item in inventory.items) {
     _write(buffer, item.type.index);
-    _write(buffer, item.x);
-    _write(buffer, item.y);
+    _write(buffer, item.row);
+    _write(buffer, item.column);
   }
   buffer.write(_semiColon);
 }

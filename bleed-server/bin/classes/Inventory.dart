@@ -1,3 +1,5 @@
+import 'Vector2.dart';
+
 class Inventory {
   int rows;
   int columns;
@@ -21,14 +23,50 @@ extension InventoryExtensions on Inventory {
       }
     }
   }
+
+  bool acquire(InventoryItemType type) {
+    if (type.width == 1 && type.height == 1) {
+      Slot? emptySlot = findEmptySingleSlot();
+      if (emptySlot == null) return false;
+      items.add(InventoryItem(emptySlot.row, emptySlot.column, type));
+      return true;
+    }
+    return false;
+  }
+
+  List<List<InventoryItem?>> getSlots() {
+    List<List<InventoryItem?>> grid = [];
+
+    for(int row = 0; row < rows; row++){
+      List<InventoryItem?> row = List.filled(columns, null);
+      grid.add(row);
+    }
+
+    for (InventoryItem item in items) {
+      grid[item.row][item.column] = item;
+    }
+    return grid;
+  }
+
+  Slot? findEmptySingleSlot() {
+    List<List<InventoryItem?>> slots = getSlots();
+    for (int row = 0; row < slots.length; row++) {
+      for (int column = 0; column < slots[0].length; column++) {
+        if (slots[row][column] == null) {
+          return Slot(row, column);
+        }
+      }
+    }
+    return null;
+  }
 }
 
 class InventoryItem {
-  int x;
-  int y;
+  int row;
+  int column;
   InventoryItemType type;
 
-  InventoryItem(this.x, this.y, this.type);
+  InventoryItem(this.row, this.column, this.type);
 }
 
 enum InventoryItemType {
