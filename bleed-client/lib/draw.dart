@@ -666,7 +666,7 @@ RSTransform getTileTransform(int x, int y) {
       anchorY: 48,
       translateX: perspectiveProjectX(x * halfTileSize, y * halfTileSize),
       translateY:
-          perspectiveProjectY(x * halfTileSize, y * halfTileSize) + tileSize);
+          perspectiveProjectY(x * halfTileSize, y * halfTileSize) + halfTileSize);
 }
 
 double perspectiveProjectX(double x, double y) {
