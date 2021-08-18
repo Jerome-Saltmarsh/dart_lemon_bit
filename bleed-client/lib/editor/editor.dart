@@ -99,6 +99,12 @@ void _handleKeyPressed(RawKeyEvent event) {
     if (event.logicalKey == LogicalKeyboardKey.keyP) {
       game.playerSpawnPoints.add(mouseWorld);
     }
+    if (event.logicalKey == LogicalKeyboardKey.delete) {
+      if(editState.selectedBlock != null){
+        blockHouses.remove(editState.selectedBlock);
+        editState.selectedBlock = null;
+      }
+    }
 
     if (event.logicalKey == LogicalKeyboardKey.space && !_panning) {
       _panning = true;

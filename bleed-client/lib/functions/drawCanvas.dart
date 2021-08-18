@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Block.dart';
@@ -30,6 +31,7 @@ void drawCanvas(Canvas canvass, Size _size) {
 
   canvass.scale(zoom, zoom);
   canvass.translate(-cameraX / zoom, -cameraY * zoom);
+
   drawTiles();
   try {
     drawPlayerHealth();

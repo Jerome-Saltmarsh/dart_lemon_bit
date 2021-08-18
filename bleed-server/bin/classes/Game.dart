@@ -25,6 +25,8 @@ import 'Player.dart';
 import 'Scene.dart';
 import 'Vector2.dart';
 
+const int tileSize = 48;
+
 class Game {
   static int _id = 0;
   final String id = (_id++).toString();
@@ -47,7 +49,7 @@ class Game {
     for (Collectable collectable in scene.collectables) {
       collectables.add(collectable);
     }
-    gameIdString =  '${ServerResponse.Game_Id.index} $id ; ';
+    gameIdString = '${ServerResponse.Game_Id.index} $id ; ';
   }
 }
 
@@ -538,10 +540,29 @@ extension GameFunctions on Game {
   }
 
   void updateCharacter(Character character) {
-    character.x += character.xv;
-    character.y += character.yv;
-    character.xv *= velocityFriction;
-    character.yv *= velocityFriction;
+    if (abs(character.xv) > 0.005) {
+      character.x += character.xv;
+      character.y += character.yv;
+      character.xv *= velocityFriction;
+      character.yv *= velocityFriction;
+    }
+
+    while (tileBoundaryAt(character.left, character.top)) {
+      character.x++;
+      character.y++;
+    }
+    while (tileBoundaryAt(character.right, character.top)) {
+      character.x--;
+      character.y++;
+    }
+    while (tileBoundaryAt(character.left, character.bottom)) {
+      character.x++;
+      character.y--;
+    }
+    while (tileBoundaryAt(character.right, character.bottom)) {
+      character.x--;
+      character.y--;
+    }
 
     // if (character.y < tilesLeftY) {
     //   if (-character.x > character.y) {
@@ -788,8 +809,8 @@ extension GameFunctions on Game {
     character.state = CharacterState.Idle;
     character.health = character.maxHealth;
 
-    for(Npc npc in npcs){
-      if(npc.target == character){
+    for (Npc npc in npcs) {
+      if (npc.target == character) {
         npc.clearTarget();
       }
     }
@@ -803,6 +824,35 @@ extension GameFunctions on Game {
       character.y = spawnPoint.y;
     }
     character.collidable = true;
+  }
+
+  Tile tileAt(double x, double y) {
+    double projectedX = projectedToWorldX(x, y);
+    if(projectedX < 0) return Tile.Boundary;
+
+    double projectedY = projectedToWorldY(x, y);
+    if(projectedY < 0) return Tile.Boundary;
+
+    int tileX = projectedX ~/ tileSize;
+    int tileY = projectedY ~/ tileSize;
+    if (tileX < 0) return Tile.Boundary;
+    if (tileY < 0) return Tile.Boundary;
+    if (tileX > scene.tiles.length) return Tile.Boundary;
+    if (tileY > scene.tiles[0].length) return Tile.Boundary;
+    return scene.tiles[tileY][tileX];
+  }
+
+  bool tileBoundaryAt(double x, double y) {
+    Tile tile = tileAt(x, y);
+    return tile == Tile.Grass || tile == Tile.Boundary;
+  }
+
+  double projectedToWorldX(double x, double y) {
+    return y - x;
+  }
+
+  double projectedToWorldY(double x, double y) {
+    return x + y;
   }
 }
 

@@ -1,3 +1,5 @@
+import 'package:bleed_client/enums/Mode.dart';
+
 import '../state.dart';
 
 void clearState(){
@@ -16,4 +18,5 @@ void clearState(){
   tileTransforms.clear();
   playerX = -1;
   playerY = -1;
+  mode = Mode.Play;
 }
