@@ -151,6 +151,7 @@ class _GameWidgetState extends State<GameWidget> {
     keyboardFocusNode = FocusNode();
     widget.init();
     disableRightClick();
+    globalPaint.isAntiAlias = false;
     super.initState();
   }
 

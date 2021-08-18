@@ -380,6 +380,7 @@ Widget buildHud() {
 }
 
 Widget buildDebugPanel() {
+
   return column([
     button("Respawn", sendRequestSpawn),
     button("Spawn NPC", sendRequestSpawnNpc),
