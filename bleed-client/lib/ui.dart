@@ -180,7 +180,6 @@ Widget buildGameUI(BuildContext context) {
 
   if (editMode) return buildEditorUI();
 
-
   if (playerId == -1) {
     return text("player id not assigned");
   }
@@ -259,44 +258,59 @@ void toggleMode() {
   }
 }
 
-
 double squareSize = 80;
 double halfSquareSize = squareSize * 0.5;
 double padding = 3;
 double w = squareSize * inventory.columns + padding;
 double h = squareSize * inventory.rows + padding;
 
-Widget buildInventory(){
+Widget buildInventory() {
   return Container(
     color: Colors.grey,
     width: w,
     height: h,
     child: CustomPaint(
       size: Size(w, h),
-      painter: CustomCustomPainter((Canvas canvas, Size size){
+      painter: CustomCustomPainter((Canvas canvas, Size size) {
         paint2.color = Colors.black12;
-        for(int x = 0; x < inventory.columns; x++){
-          for(int y = 0; y < inventory.rows; y++){
-            canvas.drawRect(Rect.fromLTWH(padding + squareSize * x, padding + squareSize * y, squareSize - padding, squareSize - padding), paint2);
+        for (int x = 0; x < inventory.columns; x++) {
+          for (int y = 0; y < inventory.rows; y++) {
+            canvas.drawRect(
+                Rect.fromLTWH(
+                    padding + squareSize * x,
+                    padding + squareSize * y,
+                    squareSize - padding,
+                    squareSize - padding),
+                paint2);
           }
         }
 
-        for(int i = 0; i < inventory.items.length; i++){
+        for (int i = 0; i < inventory.items.length; i++) {
           InventoryItem item = inventory.items[i];
 
-          Offset o = Offset(item.column * squareSize + halfSquareSize + (padding * 0.5), item.row * squareSize + halfSquareSize + padding);
+          Offset o = Offset(
+              item.column * squareSize + halfSquareSize + (padding * 0.5),
+              item.row * squareSize + halfSquareSize + padding);
 
-          switch(item.type){
+          switch (item.type) {
             case InventoryItemType.HealthPack:
               paint2.color = Colors.red;
               canvas.drawCircle(o, 20, paint2);
               break;
             case InventoryItemType.HandgunClip:
-              canvas.drawImage(imageHandgunAmmo, Offset(item.column * squareSize + (padding * 0.5), item.row * squareSize + padding), paint2);
+              canvas.drawImage(
+                  imageHandgunAmmo,
+                  Offset(item.column * squareSize + (padding * 0.5),
+                      item.row * squareSize + padding),
+                  paint2);
               break;
             case InventoryItemType.Handgun:
               paint2.color = Colors.white;
-              canvas.drawImage(imageHandgun, Offset(item.column * squareSize + (padding * 0.5), item.row * squareSize + padding), paint2);
+              canvas.drawImage(
+                  imageHandgun,
+                  Offset(item.column * squareSize + (padding * 0.5),
+                      item.row * squareSize + padding),
+                  paint2);
               break;
           }
         }
@@ -306,49 +320,63 @@ Widget buildInventory(){
 }
 
 Widget buildHud() {
-  Column topLeft = Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                  button(playMode ? 'Edit' : "Play", toggleMode),
-                  button("respawn", sendRequestRevive),
-                  text('mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
-                  text('Stamina: $playerStamina / $playerMaxStamina'),
-                  text('x: $playerX, y: $playerY'),
-                ],)
-            ],
-          ),
-          Container(
-            child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                button("FullScreen", requestFullScreen),
-                button(settings.audioMuted ? 'Unmute Audio' : 'Mute Audio', settings.toggleAudioMuted),
-                buildInventory()
-              ],
-            ),
-          ),
-        ],
-      ),
-    ],
-  );
-
-  Column bottomLeft = Column(
-    children: [buildWeaponButton(playerWeapon)],
-  );
-
-  return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Positioned topLeft = Positioned(
+    top: 0,
+    left: 0,
+    child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [topLeft, bottomLeft]);
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            button(playMode ? 'Edit' : "Play", toggleMode),
+            text(
+                'mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
+            text('Stamina: $playerStamina / $playerMaxStamina'),
+            text('x: $playerX, y: $playerY'),
+          ],
+        )
+      ],
+    ),
+  );
+
+  Positioned topRight = Positioned(
+      top: 0,
+      right: 0,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          button("FullScreen", requestFullScreen),
+          button(settings.audioMuted ? 'Unmute Audio' : 'Mute Audio',
+              settings.toggleAudioMuted),
+        ],
+      ));
+
+  Positioned bottomLeft = Positioned(
+    left: 0,
+    bottom: 0,
+    child: buildWeaponButton(playerWeapon),
+  );
+
+  Positioned bottomRight = Positioned(
+    right: 0,
+    bottom: 0,
+    child: buildInventory(),
+  );
+
+  Positioned center = Positioned(
+      child: Container(
+    width: globalSize.width,
+    height: globalSize.height,
+    color: Colors.black45,
+    child: button("respawn", sendRequestRevive, fontSize: 30),
+  ));
+
+  return Stack(
+    children: [topLeft, topRight, bottomLeft, bottomRight,
+      if(playerHealth <= 0)
+      center],
+  );
 }
 
 Widget buildDebugPanel() {

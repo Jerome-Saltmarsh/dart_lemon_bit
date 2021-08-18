@@ -26,13 +26,14 @@
 [ ] Space bar pan camera
 [ ] Collect Audio
 [ ] NPC Pathfinding
-[ ] Inventory
 [ ] Join Random Game
 [ ] Find / Join Game 
 [ ] Create Game
 [ ] Menu Screen Game
-[ ] Zombie Spawn Points
 [ ] Fix Block Collision Bug
+[ ] Refactor inventory painter
+[ ] Inventory Shotgun
+[x] Zombie Spawn Points
 [x] Editor Modify Tiles
 [x] Editor Pan Camera
 [x] FIX Game crashes on death
