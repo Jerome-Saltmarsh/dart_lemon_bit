@@ -1,5 +1,6 @@
 
 enum EditorTool {
   Block,
-  Health
+  Health,
+  TileGrass
 }

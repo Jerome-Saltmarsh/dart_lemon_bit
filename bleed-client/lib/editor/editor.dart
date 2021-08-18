@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:bleed_client/draw.dart';
+import 'package:bleed_client/editor/EditorTool.dart';
 import 'package:bleed_client/enums/CollectableType.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/functions/saveScene.dart';
@@ -27,48 +28,61 @@ import '../state.dart';
 Offset _translateOffset;
 bool _panning = false;
 Offset _mouseWorldStart;
-Offset _cameraStart;
 
 void initEditor() {
   RawKeyboard.instance.addListener(_handleKeyPressed);
 }
 
-void _addCollectable(CollectableType type){
+void _addCollectable(CollectableType type) {
   game.collectables.add(type.index);
   game.collectables.add(mouseWorldX.toInt());
   game.collectables.add(mouseWorldY.toInt());
 }
 
-Widget buildEditorUI(){
+Widget buildEditorUI() {
   return Container(
     width: globalSize.width,
     height: globalSize.height,
     alignment: Alignment.center,
-    child: Stack(children: [
-      Positioned(
-        left: 0,
-        top: 0,
-        child: Column(
-          children: [
-            button("Save Scene", saveScene),
-            button("Increase Tiles X", (){
-              for(List<Tile> row in game.tiles){
-                row.add(Tile.Grass);
-              }
-              updateTiles();
-            }),
-            button("Increase Tiles Y", (){
-              List<Tile> row = [];
-              for(int i = 0; i < game.tiles[0].length; i++){
-                row.add(Tile.Grass);
-              }
-              game.tiles.add(row);
-              updateTiles();
-            }),
-          ],
-        ),
-      )
-    ],),
+    child: Stack(
+      children: [
+        Positioned(
+          left: 0,
+          top: 0,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              text(
+                  "Mouse X: ${mouseWorldX.toInt()}, mouse Y: ${mouseWorldY.toInt()}"),
+              text(
+                  "MousePro X: ${mouseUnprojectPositionX.toInt()}, mouseProY: ${mouseUnprojectPositionY.toInt()}"),
+              text("Tile X: $mouseTileX, Tile Y: $mouseTileY"),
+              button("GRASS", () {
+                editState.tool = EditorTool.TileGrass;
+              }),
+              button("BLOCK", () {
+                editState.tool = EditorTool.Block;
+              }),
+              button("Save Scene", saveScene),
+              button("Increase Tiles X", () {
+                for (List<Tile> row in game.tiles) {
+                  row.add(Tile.Grass);
+                }
+                updateTiles();
+              }),
+              button("Increase Tiles Y", () {
+                List<Tile> row = [];
+                for (int i = 0; i < game.tiles[0].length; i++) {
+                  row.add(Tile.Grass);
+                }
+                game.tiles.add(row);
+                updateTiles();
+              }),
+            ],
+          ),
+        )
+      ],
+    ),
   );
 }
 
@@ -89,7 +103,6 @@ void _handleKeyPressed(RawKeyEvent event) {
     if (event.logicalKey == LogicalKeyboardKey.space && !_panning) {
       _panning = true;
       _mouseWorldStart = mouseWorld;
-      _cameraStart = camera;
     }
   }
   if (event is RawKeyUpEvent) {
@@ -100,7 +113,6 @@ void _handleKeyPressed(RawKeyEvent event) {
 }
 
 void updateEditMode() {
-
   onKeyPressed(LogicalKeyboardKey.escape, disconnect);
 
   _controlCameraEditMode();
@@ -115,11 +127,10 @@ void updateEditMode() {
   }
 }
 
-
 void drawEditMode() {
   if (!editMode) return;
 
-  for(Offset offset in game.playerSpawnPoints){
+  for (Offset offset in game.playerSpawnPoints) {
     drawCircleOffset(offset, 10, Colors.yellow);
   }
 
@@ -196,7 +207,24 @@ void _handleMouseDrag() {
 void _handleMouseClick() {
   if (!mouseClicked) return;
 
-  _getBlockAt(mouseWorldX, mouseWorldY);
+  switch (editState.tool) {
+    case EditorTool.Block:
+      _getBlockAt(mouseWorldX, mouseWorldY);
+      break;
+    case EditorTool.TileGrass:
+      // get the tile at the mouse position
+
+      int row = mouseTileY;
+      int column = mouseTileX;
+
+      if (row < 0) return;
+      if (column < 0) return;
+
+      if (row < game.tiles.length && row < game.tiles[0].length) {
+        game.tiles[row][column] = Tile.Grass;
+        updateTiles();
+      }
+  }
 }
 
 void _getBlockAt(double x, double y) {

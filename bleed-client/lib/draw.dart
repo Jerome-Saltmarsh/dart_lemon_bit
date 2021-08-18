@@ -55,14 +55,15 @@ void drawTileList() {
   drawAtlases(imageTiles, tileTransforms, tileRects);
 }
 
-void updateTiles(){
+void updateTiles() {
   processTileTransforms();
   loadTileRects();
 }
 
 void drawAtlases(
     ui.Image image, List<RSTransform> transforms, List<Rect> rects) {
-  globalCanvas.drawAtlas(image, transforms, rects, null, null, null, globalPaint);
+  globalCanvas.drawAtlas(
+      image, transforms, rects, null, null, null, globalPaint);
 }
 
 void processTileTransforms() {
@@ -657,13 +658,43 @@ void drawPlayerHealth() {
 
 RSTransform getTileTransform(int x, int y) {
   return RSTransform.fromComponents(
-    rotation: 0.0,
-    scale: 1.0,
-    anchorX: halfTileSize,
-    anchorY: 36,
-    translateX: (-y * halfTileSize) + (x * halfTileSize),
-    translateY: (y * halfTileSize) + (x * halfTileSize) + tileCanvasWidth,
-  );
+      rotation: 0.0,
+      scale: 1.0,
+      anchorX: halfTileSize,
+      anchorY: 48,
+      translateX: perspectiveProjectX(x * halfTileSize, y * halfTileSize),
+      translateY:
+          perspectiveProjectY(x * halfTileSize, y * halfTileSize) + tileSize);
+}
+
+double perspectiveProjectX(double x, double y) {
+  return -y + x;
+}
+
+double perspectiveProjectY(double x, double y) {
+  return x + y;
+}
+
+double projectedToWorldX(double x, double y) {
+  return y - x;
+}
+
+double projectedToWorldY(double x, double y) {
+  return x + y;
+}
+
+double get mouseUnprojectPositionX =>
+    projectedToWorldX(mouseWorldX, mouseWorldY);
+
+double get mouseUnprojectPositionY =>
+    projectedToWorldY(mouseWorldX, mouseWorldY);
+
+int get mouseTileX {
+  return mouseUnprojectPositionX ~/ tileSize;
+}
+
+int get mouseTileY {
+  return mouseUnprojectPositionY ~/ tileSize;
 }
 
 void drawCircleOutline(

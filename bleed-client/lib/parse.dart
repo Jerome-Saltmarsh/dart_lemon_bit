@@ -15,7 +15,6 @@ import 'enums/Weapons.dart';
 import 'functions/onGameEvent.dart';
 import 'instances/inventory.dart';
 import 'state.dart';
-import 'utils.dart';
 
 // state
 final List _cache = [];

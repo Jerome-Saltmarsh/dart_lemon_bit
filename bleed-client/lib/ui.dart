@@ -1,12 +1,10 @@
-import 'package:bleed_client/classes/Inventory.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/enums/ClientRequest.dart';
-import 'package:bleed_client/functions/saveScene.dart';
-import 'package:bleed_client/properties.dart';
-import 'package:flutter/material.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/game_engine/web_functions.dart';
+import 'package:bleed_client/properties.dart';
+import 'package:flutter/material.dart';
 
 import 'classes/InventoryItem.dart';
 import 'connection.dart';

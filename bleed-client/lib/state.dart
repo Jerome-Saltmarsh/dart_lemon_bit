@@ -8,7 +8,6 @@ import 'classes/Particle.dart';
 import 'classes/SpriteAnimation.dart';
 import '../common.dart';
 import '../constants.dart';
-import 'enums.dart';
 import 'enums/Mode.dart';
 
 Mode mode = Mode.Play;

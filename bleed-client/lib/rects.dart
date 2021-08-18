@@ -1,8 +1,11 @@
 import 'dart:ui';
 
+const int tileSize = 48;
 const double halfTileSize = 24;
 const int tileCanvasWidth = 48;
 const int tileCanvasHeight = 72;
+const int tileCanvasWidthHalf = tileCanvasWidth ~/ 2;
+const int tileCanvasHeightHalf = tileCanvasHeight ~/ 2;
 const int tileFrames = 1;
 
 Rect concreteRect = rect(0, 48, 48);
