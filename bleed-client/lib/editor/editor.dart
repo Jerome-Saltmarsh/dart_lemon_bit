@@ -2,12 +2,16 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:bleed_client/enums/CollectableType.dart';
+import 'package:bleed_client/functions/drawCanvas.dart';
+import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/properties.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../classes/Block.dart';
+import '../connection.dart';
 import 'EditMode.dart';
 import '../game_engine/engine_state.dart';
 import '../game_engine/game_input.dart';
@@ -59,6 +63,9 @@ void _handleKeyPressed(RawKeyEvent event) {
 }
 
 void updateEditMode() {
+
+  onKeyPressed(LogicalKeyboardKey.escape, disconnect);
+
   _controlCameraEditMode();
   _handleMouseClick();
   _handleMouseDrag();
@@ -66,8 +73,43 @@ void updateEditMode() {
 
   if (_panning) {
     Offset mouseWorldDiff = _mouseWorldStart - mouseWorld;
-    cameraX = _cameraStart.dx + mouseWorldDiff.dx;
-    cameraY = _cameraStart.dy + mouseWorldDiff.dy;
+    cameraY += mouseWorldDiff.dy * zoom;
+    cameraX += mouseWorldDiff.dx * zoom;
+  }
+}
+
+
+void drawEditMode() {
+  if (!editMode) return;
+
+  if (_panning) {
+    Offset mouseWorldDiff =  mouseWorld - _mouseWorldStart;
+    _drawLine(_mouseWorldStart, _mouseWorldStart + mouseWorldDiff, Colors.red);
+  }
+
+  for(Offset offset in game.playerSpawnPoints){
+    drawCircleOffset(offset, 10, Colors.yellow);
+  }
+
+  if (editState.selectedBlock == null) return;
+  if (editState.editMode == EditMode.Translate) {
+    drawBlockSelected(editState.selectedBlock);
+    return;
+  }
+  Block block = editState.selectedBlock;
+  switch (editState.editMode) {
+    case EditMode.AdjustTop:
+      _drawLine(block.top, block.right, Colors.red);
+      break;
+    case EditMode.AdjustLeft:
+      _drawLine(block.top, block.left, Colors.red);
+      break;
+    case EditMode.AdjustBottom:
+      _drawLine(block.left, block.bottom, Colors.red);
+      break;
+    case EditMode.AdjustRight:
+      _drawLine(block.bottom, block.right, Colors.red);
+      break;
   }
 }
 
@@ -228,4 +270,9 @@ void _translateBlock(Block block, Offset value) {
   block.right += value;
   block.bottom += value;
   block.left += value;
+}
+
+void _drawLine(Offset a, Offset b, Color color) {
+  globalPaint.color = color;
+  globalCanvas.drawLine(a, b, globalPaint);
 }

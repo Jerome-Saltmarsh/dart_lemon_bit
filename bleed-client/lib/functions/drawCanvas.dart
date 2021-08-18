@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Block.dart';
+import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/enums/CollectableType.dart';
 import 'package:bleed_client/editor/EditMode.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
@@ -45,7 +46,7 @@ void drawCanvas(Canvas canvass, Size _size) {
   drawAnimations();
   _drawParticles();
   drawCharacters();
-  _drawEditMode();
+  drawEditMode();
   _drawCollectables();
   drawMouse();
 }
@@ -64,35 +65,6 @@ void _drawCollectables() {
         break;
     }
 
-  }
-}
-
-void _drawEditMode() {
-  if (!editMode) return;
-
-  for(Offset offset in game.playerSpawnPoints){
-    drawCircleOffset(offset, 10, Colors.yellow);
-  }
-
-  if (editState.selectedBlock == null) return;
-  if (editState.editMode == EditMode.Translate) {
-    drawBlockSelected(editState.selectedBlock);
-    return;
-  }
-  Block block = editState.selectedBlock;
-  switch (editState.editMode) {
-    case EditMode.AdjustTop:
-      _drawLine(block.top, block.right, Colors.red);
-      break;
-    case EditMode.AdjustLeft:
-      _drawLine(block.top, block.left, Colors.red);
-      break;
-    case EditMode.AdjustBottom:
-      _drawLine(block.left, block.bottom, Colors.red);
-      break;
-    case EditMode.AdjustRight:
-      _drawLine(block.bottom, block.right, Colors.red);
-      break;
   }
 }
 

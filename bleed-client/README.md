@@ -36,8 +36,8 @@ RELEASE DEATH MATCH
 [ ] Create Game
 [ ] Menu Screen Game
 [ ] Zombie Spawn Points
-[ ] Editor Pan Camera
 [ ] Fix Block Collision Bug
+[x] Editor Pan Camera
 [x] FIX Game crashes on death
 [x] FIX Zombies npcs keep attacking after player vanishes
 [x] Player Spawn Points

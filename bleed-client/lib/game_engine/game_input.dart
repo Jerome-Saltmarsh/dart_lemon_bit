@@ -20,3 +20,7 @@ bool get keyPressedF => keyPressed(LogicalKeyboardKey.keyF);
 bool keyPressed(LogicalKeyboardKey key) {
   return RawKeyboard.instance.keysPressed.contains(key);
 }
+
+void onKeyPressed(LogicalKeyboardKey key, Function function){
+  if(keyPressed(key)) function();
+}
