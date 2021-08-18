@@ -13,7 +13,13 @@ class Scene {
   final List<Vector2> playerSpawnPoints;
   final List<Vector2> zombieSpawnPoints;
 
-  Scene(this.tiles, this.blocks, this.collectables, this.playerSpawnPoints, this.zombieSpawnPoints);
+  late int rows;
+  late int columns;
+
+  Scene(this.tiles, this.blocks, this.collectables, this.playerSpawnPoints, this.zombieSpawnPoints){
+    rows = tiles.length;
+    columns = tiles[0].length;
+  }
 }
 
 extension SceneFunctions on Scene {

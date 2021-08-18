@@ -52,10 +52,8 @@ Widget buildEditorUI() {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              text(
-                  "Mouse X: ${mouseWorldX.toInt()}, mouse Y: ${mouseWorldY.toInt()}"),
-              text(
-                  "MousePro X: ${mouseUnprojectPositionX.toInt()}, mouseProY: ${mouseUnprojectPositionY.toInt()}"),
+              text("Mouse X: ${mouseWorldX.toInt()}, mouse Y: ${mouseWorldY.toInt()}"),
+              text("MousePro X: ${mouseUnprojectPositionX.toInt()}, mouseProY: ${mouseUnprojectPositionY.toInt()}"),
               text("Tile X: $mouseTileX, Tile Y: $mouseTileY"),
               button("GRASS", () {
                 editState.tool = EditorTool.TileGrass;
@@ -64,6 +62,14 @@ Widget buildEditorUI() {
                 editState.tool = EditorTool.Block;
               }),
               button("Save Scene", saveScene),
+              button("Reset Tiles", (){
+                for(int row = 0; row < game.tiles.length; row++){
+                  for(int column = 0; column < game.tiles[0].length; column++){
+                    game.tiles[row][column] = Tile.Concrete;
+                  }
+                }
+                updateTiles();
+              }),
               button("Increase Tiles X", () {
                 for (List<Tile> row in game.tiles) {
                   row.add(Tile.Grass);

@@ -81,7 +81,7 @@ abstract class GameWidget extends StatefulWidget {
   DateTime previousUpdateTime = DateTime.now();
   Duration frameDuration = Duration();
 
-  int targetFPS() => 60;
+  int targetFPS() => 45;
 
   Future init();
 

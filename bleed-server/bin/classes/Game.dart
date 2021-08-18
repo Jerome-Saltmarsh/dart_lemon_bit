@@ -828,18 +828,21 @@ extension GameFunctions on Game {
 
   Tile tileAt(double x, double y) {
     double projectedX = projectedToWorldX(x, y);
-    if(projectedX < 0) return Tile.Boundary;
+    if (projectedX < 0) return Tile.Boundary;
 
     double projectedY = projectedToWorldY(x, y);
-    if(projectedY < 0) return Tile.Boundary;
+    if (projectedY < 0) return Tile.Boundary;
 
-    int tileX = projectedX ~/ tileSize;
-    int tileY = projectedY ~/ tileSize;
-    if (tileX < 0) return Tile.Boundary;
-    if (tileY < 0) return Tile.Boundary;
-    if (tileX > scene.tiles.length) return Tile.Boundary;
-    if (tileY > scene.tiles[0].length) return Tile.Boundary;
-    return scene.tiles[tileY][tileX];
+    double tileX = projectedX / tileSize;
+    double tileY = projectedY / tileSize;
+
+    int tileXInt = tileX.toInt();
+    int tileYInt = tileY.toInt();
+
+    if (tileX > scene.columns) return Tile.Boundary;
+    if (tileY > scene.rows) return Tile.Boundary;
+
+    return scene.tiles[tileYInt][tileXInt];
   }
 
   bool tileBoundaryAt(double x, double y) {
