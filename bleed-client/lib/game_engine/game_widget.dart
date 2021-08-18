@@ -100,6 +100,8 @@ abstract class GameWidget extends StatefulWidget {
   /// used to draw the game
   void draw(Canvas canvas, Size size);
 
+  void drawForeground(Canvas canvas, Size size);
+
   void onMouseClick() {}
 
   void onMouseScroll(double amount) {}
@@ -117,10 +119,7 @@ abstract class GameWidget extends StatefulWidget {
   _GameWidgetState createState() => _GameWidgetState();
 }
 
-StateSetter gameSetState;
 StateSetter uiSetState;
-
-GameUIPainter gameUIPainter;
 
 void redrawGame() {
   _frame.value++;
@@ -133,15 +132,14 @@ void redrawUI() {
 void _doNothing() {}
 
 final _frame = ValueNotifier<int>(0);
+final _foregroundFrame = ValueNotifier<int>(0);
 
 class _GameWidgetState extends State<GameWidget> {
   // variables
   FocusNode keyboardFocusNode;
   Timer updateTimer;
-  CustomPaint customPaint;
 
-
-  void _update(Timer timer){
+  void _update(Timer timer) {
     widget._internalUpdate();
   }
 
@@ -158,9 +156,6 @@ class _GameWidgetState extends State<GameWidget> {
   @override
   Widget build(BuildContext context) {
     globalContext = context;
-
-    gameUIPainter = GameUIPainter(paintGame: widget.draw, repaint: _frame);
-    customPaint = CustomPaint(painter: gameUIPainter);
 
     if (!keyboardFocusNode.hasFocus) {
       FocusScope.of(context).requestFocus(keyboardFocusNode);
@@ -243,7 +238,12 @@ class _GameWidgetState extends State<GameWidget> {
                 color: widget.getBackgroundColor(),
                 width: widget.screenSize.width,
                 height: widget.screenSize.height,
-                child: customPaint,
+                child: CustomPaint(
+                    painter:
+                        GamePainter(paintGame: widget.draw, repaint: _frame),
+                    foregroundPainter: GamePainter(
+                        paintGame: widget.drawForeground,
+                        repaint: _foregroundFrame)),
               )),
         ),
       ),
@@ -258,10 +258,11 @@ class _GameWidgetState extends State<GameWidget> {
   }
 }
 
-class GameUIPainter extends CustomPainter {
+class GamePainter extends CustomPainter {
   final PaintGame paintGame;
 
-  const GameUIPainter({this.paintGame, Listenable repaint}) : super (repaint: repaint);
+  const GamePainter({this.paintGame, Listenable repaint})
+      : super(repaint: repaint);
 
   @override
   void paint(Canvas _canvas, Size _size) {

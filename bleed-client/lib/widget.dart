@@ -24,7 +24,6 @@ class BleedWidget extends GameWidget {
   void onMouseScroll(double amount) {
     zoom -= amount * 0.0005;
     if (zoom < 0.1) zoom = 0.1;
-    print('zoom: $zoom');
   }
 
   @override
@@ -84,5 +83,9 @@ class BleedWidget extends GameWidget {
   @override
   int targetFPS() {
     return 60;
+  }
+
+  @override
+  void drawForeground(Canvas canvas, Size size) {
   }
 }

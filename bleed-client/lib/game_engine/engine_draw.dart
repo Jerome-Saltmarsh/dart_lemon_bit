@@ -5,26 +5,6 @@ import 'package:flutter/material.dart';
 import 'engine_state.dart';
 import 'game_widget.dart';
 
-void drawImage(ui.Image image, double x, double y, {double rotation = 0, double anchorX = 0.5, double anchorY = 0.5, double scale = 1.0}){
-  globalCanvas.drawAtlas(
-      image,
-      <RSTransform>[
-        RSTransform.fromComponents(
-          rotation: rotation,
-          scale: scale,
-          anchorX: image.width * anchorX,
-          anchorY: image.height * anchorY,
-        )
-      ],
-      [
-        Rect.fromLTWH(
-            0, 0, image.width as double, image.height as double)
-      ],
-      null,
-      BlendMode.color,
-      null,
-      globalPaint);
-}
 
 void drawCircle(double x, double y, double radius, Color color){
   globalPaint.color = color;
