@@ -22,8 +22,18 @@ class BleedWidget extends GameWidget {
 
   @override
   void onMouseScroll(double amount) {
+
+    Offset screenCenter1 = screenCenterWorld;
+
     zoom -= amount * 0.0005;
     if (zoom < 0.1) zoom = 0.1;
+
+    Offset screenCenter2 = screenCenterWorld;
+
+    Offset diff = screenCenter1 - screenCenter2;
+    cameraX += diff.dx;
+    cameraY += diff.dy;
+
   }
 
   @override

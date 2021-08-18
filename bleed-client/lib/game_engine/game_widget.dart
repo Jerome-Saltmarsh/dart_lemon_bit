@@ -40,8 +40,9 @@ double get screenCenterX => globalSize.width * 0.5;
 double get screenCenterY => globalSize.height * 0.5;
 
 double get screenCenterWorldX => convertScreenToWorldX(screenCenterX);
-
 double get screenCenterWorldY => convertScreenToWorldY(screenCenterY);
+
+Offset get screenCenterWorld => Offset(screenCenterWorldX, screenCenterWorldY);
 
 bool get mouseAvailable => mouseX != null;
 
