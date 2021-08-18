@@ -79,8 +79,7 @@ void faceDestination(Npc npc) {
 }
 
 void characterFace(Character character, double x, double y) {
-  setDirection(
-      character, convertAngleToDirection(radiansBetween2(character, x, y)));
+  setDirection(character, convertAngleToDirection(radiansBetween2(character, x, y)));
 }
 
 void characterFaceObject(Character character, GameObject target) {
@@ -99,7 +98,7 @@ Direction convertAngleToDirection(double angle) {
   if (angle < piEighth) {
     return Direction.Up;
   }
-  if (angle < piEighth + (piQuarter * 1)) {
+  if (angle < piEighth + (piQuarter)) {
     return Direction.UpRight;
   }
   if (angle < piEighth + (piQuarter * 2)) {

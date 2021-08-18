@@ -12,4 +12,8 @@ class Settings {
   final double itemCollectRadius = 10;
 
   final int handgunClipSize = 24;
+
+  final double grenadeGravity = 0.06;
+
+  final int maxZombies = 2500;
 }

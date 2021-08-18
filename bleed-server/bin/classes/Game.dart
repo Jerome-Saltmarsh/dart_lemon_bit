@@ -471,8 +471,7 @@ extension GameFunctions on Game {
     for (Grenade grenade in grenades) {
       applyMovement(grenade);
       applyFriction(grenade, settingsGrenadeFriction);
-      double gravity = 0.06;
-      grenade.zv -= gravity;
+      grenade.zv -= settings.grenadeGravity;
       if (grenade.z < 0) {
         grenade.z = 0;
       }
@@ -545,31 +544,31 @@ extension GameFunctions on Game {
     character.xv *= velocityFriction;
     character.yv *= velocityFriction;
 
-    if (character.y < tilesLeftY) {
-      if (-character.x > character.y) {
-        character.x = -character.y;
-        character.y++;
-      } else if (character.x > character.y) {
-        character.x = character.y;
-        character.y++;
-      }
-    } else {
-      if (character.x > 0) {
-        double m = tilesRightX + tilesRightX;
-        double d = character.x + character.y;
-        if (d > m) {
-          character.x = m - character.y;
-          character.y--;
-        }
-      } else {
-        double m = tilesRightX + tilesRightX;
-        double d = -character.x + character.y;
-        if (d > m) {
-          character.x = -(m - character.y);
-          character.y--;
-        }
-      }
-    }
+    // if (character.y < tilesLeftY) {
+    //   if (-character.x > character.y) {
+    //     character.x = -character.y;
+    //     character.y++;
+    //   } else if (character.x > character.y) {
+    //     character.x = character.y;
+    //     character.y++;
+    //   }
+    // } else {
+    //   if (character.x > 0) {
+    //     double m = tilesRightX + tilesRightX;
+    //     double d = character.x + character.y;
+    //     if (d > m) {
+    //       character.x = m - character.y;
+    //       character.y--;
+    //     }
+    //   } else {
+    //     double m = tilesRightX + tilesRightX;
+    //     double d = -character.x + character.y;
+    //     if (d > m) {
+    //       character.x = -(m - character.y);
+    //       character.y--;
+    //     }
+    //   }
+    // }
 
     switch (character.state) {
       case CharacterState.ChangingWeapon:
@@ -706,8 +705,10 @@ extension GameFunctions on Game {
     return npc;
   }
 
-  Npc spawnRandomNpc() {
-    return spawnNpc(randomBetween(-spawnRadius, spawnRadius),
+  void spawnRandomNpc() {
+    if (npcs.length >= settings.maxZombies) return;
+
+    spawnNpc(randomBetween(-spawnRadius, spawnRadius),
         randomBetween(-spawnRadius, spawnRadius) + 1000);
   }
 

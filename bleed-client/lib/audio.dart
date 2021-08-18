@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:bleed_client/instances/settings.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/utils.dart';
 
@@ -120,6 +121,8 @@ void _playRandom(List<String> values, AudioPlayer audioPlayer, double x, double 
 }
 
 void _play(String name, AudioPlayer audioPlayer, double x, double y) {
+  if (settings.audioMuted) return;
+
   try {
     double d = distance(x, y, centerX, centerY);
     double volume = 1.0 / ((d * 0.005) + 1);

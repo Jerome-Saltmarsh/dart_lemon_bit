@@ -1,5 +1,6 @@
 import 'package:bleed_client/classes/Inventory.dart';
 import 'package:bleed_client/enums/ClientRequest.dart';
+import 'package:bleed_client/functions/saveScene.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:flutter/material.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
@@ -13,6 +14,7 @@ import 'enums/Mode.dart';
 import 'enums/Weapons.dart';
 import 'images.dart';
 import 'instances/inventory.dart';
+import 'instances/settings.dart';
 import 'send.dart';
 import 'settings.dart';
 import 'state.dart';
@@ -24,7 +26,6 @@ ButtonStyle _buttonStyle = buildButtonStyle(Colors.white, 2);
 void initUI() {
   onConnectError.stream.listen((event) {
     showConnectFailedDialog();
-    forceRedraw();
   });
 }
 
@@ -261,55 +262,49 @@ void toggleMode() {
   }
 }
 
+
+double squareSize = 80;
+double halfSquareSize = squareSize * 0.5;
+double padding = 3;
+double w = squareSize * inventory.columns + padding;
+double h = squareSize * inventory.rows + padding;
+
 Widget buildInventory(){
+  return Container(
+    color: Colors.grey,
+    width: w,
+    height: h,
+    child: CustomPaint(
+      size: Size(w, h),
+      painter: CustomCustomPainter((Canvas canvas, Size size){
+        paint2.color = Colors.black12;
+        for(int x = 0; x < inventory.columns; x++){
+          for(int y = 0; y < inventory.rows; y++){
+            canvas.drawRect(Rect.fromLTWH(padding + squareSize * x, padding + squareSize * y, squareSize - padding, squareSize - padding), paint2);
+          }
+        }
 
-  double squareSize = 80;
-  double halfSquareSize = squareSize * 0.5;
-  double padding = 3;
+        for(int i = 0; i < inventory.items.length; i++){
+          InventoryItem item = inventory.items[i];
 
-  return StatefulBuilder(
-    builder: (context, _drawGame){
-      gameSetState = _drawGame;
-      double w = squareSize * inventory.columns + padding;
-      double h = squareSize * inventory.rows + padding;
+          Offset o = Offset(item.column * squareSize + halfSquareSize + (padding * 0.5), item.row * squareSize + halfSquareSize + padding);
 
-      return Container(
-        color: Colors.grey,
-        width: w,
-        height: h,
-        child: CustomPaint(
-          size: Size(w, h),
-          painter: CustomCustomPainter((Canvas canvas, Size size){
-            paint2.color = Colors.black12;
-            for(int x = 0; x < inventory.columns; x++){
-              for(int y = 0; y < inventory.rows; y++){
-                canvas.drawRect(Rect.fromLTWH(padding + squareSize * x, padding + squareSize * y, squareSize - padding, squareSize - padding), paint2);
-              }
-            }
-
-            for(int i = 0; i < inventory.items.length; i++){
-              InventoryItem item = inventory.items[i];
-
-              Offset o = Offset(item.column * squareSize + halfSquareSize + (padding * 0.5), item.row * squareSize + halfSquareSize + padding);
-
-              switch(item.type){
-                case InventoryItemType.HealthPack:
-                  paint2.color = Colors.red;
-                  canvas.drawCircle(o, 20, paint2);
-                  break;
-                case InventoryItemType.HandgunClip:
-                  canvas.drawImage(imageHandgunAmmo, Offset(item.column * squareSize + (padding * 0.5), item.row * squareSize + padding), paint2);
-                  break;
-                case InventoryItemType.Handgun:
-                  paint2.color = Colors.white;
-                  canvas.drawImage(imageHandgun, Offset(item.column * squareSize + (padding * 0.5), item.row * squareSize + padding), paint2);
-                  break;
-              }
-            }
-          }),
-        ),
-      );
-    },
+          switch(item.type){
+            case InventoryItemType.HealthPack:
+              paint2.color = Colors.red;
+              canvas.drawCircle(o, 20, paint2);
+              break;
+            case InventoryItemType.HandgunClip:
+              canvas.drawImage(imageHandgunAmmo, Offset(item.column * squareSize + (padding * 0.5), item.row * squareSize + padding), paint2);
+              break;
+            case InventoryItemType.Handgun:
+              paint2.color = Colors.white;
+              canvas.drawImage(imageHandgun, Offset(item.column * squareSize + (padding * 0.5), item.row * squareSize + padding), paint2);
+              break;
+          }
+        }
+      }),
+    ),
   );
 }
 
@@ -325,6 +320,8 @@ Widget buildHud() {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               button(playMode ? 'Edit' : "Play", toggleMode),
+              if(editMode)
+                button("Save Scene", saveScene),
               button("respawn", sendRequestRevive),
               text(
                   'mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
@@ -332,8 +329,14 @@ Widget buildHud() {
               text('x: $playerX, y: $playerY'),
             ],
           ),
-          Column(
-            children: [button("FullScreen", requestFullScreen), buildInventory()],
+          Container(
+            child: Column(mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                button("FullScreen", requestFullScreen),
+                button(settings.audioMuted ? 'Unmute Audio' : 'Mute Audio', settings.toggleAudioMuted),
+                buildInventory()
+              ],
+            ),
           ),
         ],
       ),

@@ -8,7 +8,6 @@ import 'package:positioned_tap_detector/positioned_tap_detector.dart';
 
 import 'engine_state.dart';
 
-
 typedef PaintGame = Function(Canvas canvas, Size size);
 
 // private global variables
@@ -19,20 +18,33 @@ bool _clickProcessed = true;
 
 // global properties
 Offset get mousePosition => _mousePosition;
+
 Offset get previousMousePosition => _previousMousePosition;
+
 Offset get mouseVelocity => _mouseDelta;
+
 double get mouseX => _mousePosition?.dx;
+
 double get mouseY => _mousePosition?.dy;
+
 Offset get mouse => Offset(mouseX, mouseY);
+
 double get mouseWorldX => convertScreenToWorldX(mouseX);
+
 double get mouseWorldY => convertScreenToWorldY(mouseY);
+
 Offset get mouseWorld => Offset(mouseWorldX, mouseWorldY);
+
 double get screenCenterX => globalSize.width * 0.5;
+
 double get screenCenterY => globalSize.height * 0.5;
+
 double get screenCenterWorldX => convertScreenToWorldX(screenCenterX);
+
 double get screenCenterWorldY => convertScreenToWorldY(screenCenterY);
 
 bool get mouseAvailable => mouseX != null;
+
 bool get mouseClicked => !_clickProcessed;
 Color white = mat.Colors.white;
 Color red = mat.Colors.red;
@@ -60,6 +72,7 @@ final Paint paint3 = Paint()
   ..strokeWidth = 3;
 
 int _millisecondsSinceLastFrame = 0;
+
 int get millisecondsSinceLastFrame => _millisecondsSinceLastFrame;
 
 abstract class GameWidget extends StatefulWidget {
@@ -72,9 +85,10 @@ abstract class GameWidget extends StatefulWidget {
 
   Future init();
 
-  void _internalUpdate(){
+  void _internalUpdate() {
     DateTime now = DateTime.now();
-    _millisecondsSinceLastFrame = now.difference(previousUpdateTime).inMilliseconds;
+    _millisecondsSinceLastFrame =
+        now.difference(previousUpdateTime).inMilliseconds;
     previousUpdateTime = now;
     fixedUpdate();
     _clickProcessed = true;
@@ -82,21 +96,19 @@ abstract class GameWidget extends StatefulWidget {
 
   /// used to update the game logic
   void fixedUpdate();
+
   /// used to draw the game
   void draw(Canvas canvas, Size size);
 
-  void onMouseClick(){
+  void onMouseClick() {}
 
-  }
-
-  void onMouseScroll(double amount){
-
-  }
+  void onMouseScroll(double amount) {}
 
   /// used to build the ui
   Widget buildUI(BuildContext context);
 
   bool uiVisible() => false;
+
   mat.Color getBackgroundColor() => mat.Colors.black;
 
   GameWidget({this.title = 'BLEED'});
@@ -105,51 +117,50 @@ abstract class GameWidget extends StatefulWidget {
   _GameWidgetState createState() => _GameWidgetState();
 }
 
-void forceRedraw(){
-  drawStream.add(true);
-}
-
-StreamController drawStream = StreamController();
 StateSetter gameSetState;
 StateSetter uiSetState;
 
-void redrawGame(){
-  gameSetState(_doNothing);
+GameUIPainter gameUIPainter;
+
+void redrawGame() {
+  _frame.value++;
 }
 
-void redrawUI(){
+void redrawUI() {
   uiSetState(_doNothing);
 }
 
-void _doNothing(){
+void _doNothing() {}
 
-}
+final _frame = ValueNotifier<int>(0);
 
 class _GameWidgetState extends State<GameWidget> {
-
   // variables
   FocusNode keyboardFocusNode;
   Timer updateTimer;
+  CustomPaint customPaint;
+
+
+  void _update(Timer timer){
+    widget._internalUpdate();
+  }
 
   @override
   void initState() {
-    drawStream.stream.listen((event) {
-      redrawGame();
-      redrawUI();
-    });
-    updateTimer = Timer.periodic(Duration(milliseconds: 1000 ~/ widget.targetFPS()), (timer) {
-      widget._internalUpdate();
-    });
+    updateTimer = Timer.periodic(
+        Duration(milliseconds: 1000 ~/ widget.targetFPS()), _update);
     keyboardFocusNode = FocusNode();
     widget.init();
     disableRightClick();
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     globalContext = context;
+
+    gameUIPainter = GameUIPainter(paintGame: widget.draw, repaint: _frame);
+    customPaint = CustomPaint(painter: gameUIPainter);
 
     if (!keyboardFocusNode.hasFocus) {
       FocusScope.of(context).requestFocus(keyboardFocusNode);
@@ -168,7 +179,7 @@ class _GameWidgetState extends State<GameWidget> {
         child: Scaffold(
           // appBar: game.buildAppBar(context),
           body: Builder(
-            builder: (context){
+            builder: (context) {
               widget.screenSize = MediaQuery.of(context).size;
               return Stack(
                 children: [
@@ -184,17 +195,16 @@ class _GameWidgetState extends State<GameWidget> {
     );
   }
 
-  Widget _buildUI(){
-    return StatefulBuilder(
-        builder: (context, drawUI){
-          uiSetState = drawUI;
-          return widget.buildUI(context);
-        });
+  Widget _buildUI() {
+    return StatefulBuilder(builder: (context, drawUI) {
+      uiSetState = drawUI;
+      return widget.buildUI(context);
+    });
   }
 
   Widget buildBody(BuildContext context) {
     return MouseRegion(
-      onHover: (PointerHoverEvent pointerHoverEvent){
+      onHover: (PointerHoverEvent pointerHoverEvent) {
         _previousMousePosition = _mousePosition;
         _mousePosition = pointerHoverEvent.position;
         _mouseDelta = pointerHoverEvent.delta;
@@ -216,36 +226,25 @@ class _GameWidgetState extends State<GameWidget> {
             }
           },
           child: GestureDetector(
-            onPanStart: (start){
-              print('onPanStart($start)');
-              mouseDragging = true;
-              _previousMousePosition = _mousePosition;
-              _mousePosition = start.globalPosition;
-            },
-            onPanEnd: (value){
-              print('onPanEnd($value)');
-              mouseDragging = false;
-            },
-            onPanUpdate:(DragUpdateDetails value){
-              dragUpdateDetails = value;
-              _previousMousePosition = _mousePosition;
-              _mousePosition = value.globalPosition;
-            },
-            child: StatefulBuilder(
-              builder: (context, _drawGame){
-                gameSetState = _drawGame;
-                return Container(
-                  color: widget.getBackgroundColor(),
-                  width: widget.screenSize.width,
-                  height: widget.screenSize.height,
-                  child: CustomPaint(
-                    size: widget.screenSize,
-                    painter: GameUIPainter(paintGame: widget.draw),
-                  ),
-                );
+              onPanStart: (start) {
+                mouseDragging = true;
+                _previousMousePosition = _mousePosition;
+                _mousePosition = start.globalPosition;
               },
-            ),
-          ),
+              onPanEnd: (value) {
+                mouseDragging = false;
+              },
+              onPanUpdate: (DragUpdateDetails value) {
+                dragUpdateDetails = value;
+                _previousMousePosition = _mousePosition;
+                _mousePosition = value.globalPosition;
+              },
+              child: Container(
+                color: widget.getBackgroundColor(),
+                width: widget.screenSize.width,
+                height: widget.screenSize.height,
+                child: customPaint,
+              )),
         ),
       ),
     );
@@ -260,16 +259,15 @@ class _GameWidgetState extends State<GameWidget> {
 }
 
 class GameUIPainter extends CustomPainter {
-
   final PaintGame paintGame;
 
-  GameUIPainter({this.paintGame});
+  const GameUIPainter({this.paintGame, Listenable repaint}) : super (repaint: repaint);
 
   @override
-  void paint(Canvas canvass, Size size) {
-    globalCanvas = canvass;
-    globalSize = size;
-    paintGame(canvass, size);
+  void paint(Canvas _canvas, Size _size) {
+    globalCanvas = _canvas;
+    globalSize = _size;
+    paintGame(_canvas, _size);
   }
 
   @override
@@ -279,14 +277,13 @@ class GameUIPainter extends CustomPainter {
 }
 
 class CustomCustomPainter extends CustomPainter {
-
   final PaintGame paintGame;
 
   CustomCustomPainter(this.paintGame);
 
   @override
-  void paint(Canvas canvass, Size size) {
-    paintGame(canvass, size);
+  void paint(Canvas canvas, Size size) {
+    paintGame(canvas, size);
   }
 
   @override
@@ -294,10 +291,3 @@ class CustomCustomPainter extends CustomPainter {
     return true;
   }
 }
-
-
-
-
-
-
-
