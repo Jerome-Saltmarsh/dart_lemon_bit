@@ -121,10 +121,10 @@ void _parseTiles() {
   print('parseTiles()');
   tilesX = _consumeInt();
   tilesY = _consumeInt();
-  tiles.clear();
+  game.tiles.clear();
   for (int x = 0; x < tilesX; x++) {
     List<Tile> column = [];
-    tiles.add(column);
+    game.tiles.add(column);
     for (int y = 0; y < tilesY; y++) {
       column.add(Tile.values[_consumeInt()]);
     }

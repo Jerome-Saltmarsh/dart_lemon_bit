@@ -5,6 +5,7 @@ import '../classes/Block.dart';
 import '../classes/Collectable.dart';
 import '../classes/Scene.dart';
 import '../classes/Vector2.dart';
+import '../enums.dart';
 import '../enums/CollectableType.dart';
 import '../instances/scenes.dart';
 import '../utils.dart';
@@ -42,10 +43,21 @@ Scene _mapStringToScene(String text) {
     }
   }
 
+  List compiledTiles = json['tiles'];
+  List<List<Tile>> tiles = [];
+
+  for(int row = 0; row < compiledTiles.length; row++){
+    List<Tile> _row = [];
+    for(int column = 0; column < compiledTiles[0].length; column++){
+      _row.add(Tile.values[compiledTiles[row][column]]);
+    }
+    tiles.add(_row);
+  }
+
   List jsonBlocks = json['blocks'];
   List<Block> blocks = jsonBlocks.map(_mapJsonBlockToBlock).toList();
   sortBlocks(blocks);
-  return Scene(generateTiles(), blocks, collectables, playerSpawnPoints, []);
+  return Scene(tiles, blocks, collectables, playerSpawnPoints, []);
 }
 
 Block _mapJsonBlockToBlock(dynamic jsonBlock) {

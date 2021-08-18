@@ -36,6 +36,7 @@ RELEASE DEATH MATCH
 [ ] Create Game
 [ ] Menu Screen Game
 [ ] Zombie Spawn Points
+[ ] Editor Modify Tiles
 [ ] Fix Block Collision Bug
 [x] Editor Pan Camera
 [x] FIX Game crashes on death

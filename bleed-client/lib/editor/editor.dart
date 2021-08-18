@@ -1,8 +1,10 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/enums/CollectableType.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
+import 'package:bleed_client/functions/saveScene.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/maths.dart';
@@ -12,6 +14,8 @@ import 'package:flutter/services.dart';
 
 import '../classes/Block.dart';
 import '../connection.dart';
+import '../enums.dart';
+import '../ui.dart';
 import 'EditMode.dart';
 import '../game_engine/engine_state.dart';
 import '../game_engine/game_input.dart';
@@ -33,6 +37,39 @@ void _addCollectable(CollectableType type){
   game.collectables.add(type.index);
   game.collectables.add(mouseWorldX.toInt());
   game.collectables.add(mouseWorldY.toInt());
+}
+
+Widget buildEditorUI(){
+  return Container(
+    width: globalSize.width,
+    height: globalSize.height,
+    alignment: Alignment.center,
+    child: Stack(children: [
+      Positioned(
+        left: 0,
+        top: 0,
+        child: Column(
+          children: [
+            button("Save Scene", saveScene),
+            button("Increase Tiles X", (){
+              for(List<Tile> row in game.tiles){
+                row.add(Tile.Grass);
+              }
+              updateTiles();
+            }),
+            button("Increase Tiles Y", (){
+              List<Tile> row = [];
+              for(int i = 0; i < game.tiles[0].length; i++){
+                row.add(Tile.Grass);
+              }
+              game.tiles.add(row);
+              updateTiles();
+            }),
+          ],
+        ),
+      )
+    ],),
+  );
 }
 
 void _handleKeyPressed(RawKeyEvent event) {
@@ -81,11 +118,6 @@ void updateEditMode() {
 
 void drawEditMode() {
   if (!editMode) return;
-
-  if (_panning) {
-    Offset mouseWorldDiff =  mouseWorld - _mouseWorldStart;
-    _drawLine(_mouseWorldStart, _mouseWorldStart + mouseWorldDiff, Colors.red);
-  }
 
   for(Offset offset in game.playerSpawnPoints){
     drawCircleOffset(offset, 10, Colors.yellow);

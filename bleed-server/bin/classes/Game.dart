@@ -58,7 +58,6 @@ extension GameFunctions on Game {
     _updateBullets();
     _updateBullets(); // called twice to fix collision detection
     _updateNpcs();
-    // _updateGameEvents();
     _updateGrenades();
     _updateCollectables();
     compileState(this);

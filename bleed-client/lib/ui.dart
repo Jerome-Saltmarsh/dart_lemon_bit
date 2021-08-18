@@ -1,4 +1,5 @@
 import 'package:bleed_client/classes/Inventory.dart';
+import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/enums/ClientRequest.dart';
 import 'package:bleed_client/functions/saveScene.dart';
 import 'package:bleed_client/properties.dart';
@@ -47,7 +48,7 @@ ButtonStyle buildButtonStyle(Color borderColor, double borderWidth) {
   return OutlinedButton.styleFrom(
     side: BorderSide(color: borderColor, width: borderWidth),
     shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(10))),
+        borderRadius: BorderRadius.all(Radius.circular(5))),
   );
 }
 
@@ -179,6 +180,9 @@ Widget buildGameUI(BuildContext context) {
     ]);
   }
 
+  if (editMode) return buildEditorUI();
+
+
   if (playerId == -1) {
     return text("player id not assigned");
   }
@@ -192,17 +196,12 @@ Widget buildGameUI(BuildContext context) {
     );
   }
   dynamic player = getPlayerCharacter();
-  if (player != null) {
-  } else {
-    if (playerUUID.isNotEmpty) {
-      return Text("Loading Players");
-    }
-
+  if (player == null) {
     return Container(
       width: globalSize.width,
       height: globalSize.height,
       alignment: Alignment.center,
-      child: button("Spawn", sendRequestSpawn, fontSize: 40),
+      child: button("Spawn", sendRequestSpawn, fontSize: 100),
     );
   }
 
@@ -319,14 +318,15 @@ Widget buildHud() {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              button(playMode ? 'Edit' : "Play", toggleMode),
-              if(editMode)
-                button("Save Scene", saveScene),
-              button("respawn", sendRequestRevive),
-              text(
-                  'mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
-              text('Stamina: $playerStamina / $playerMaxStamina'),
-              text('x: $playerX, y: $playerY'),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                  button(playMode ? 'Edit' : "Play", toggleMode),
+                  button("respawn", sendRequestRevive),
+                  text('mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
+                  text('Stamina: $playerStamina / $playerMaxStamina'),
+                  text('x: $playerX, y: $playerY'),
+                ],)
             ],
           ),
           Container(

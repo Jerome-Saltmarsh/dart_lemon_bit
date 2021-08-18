@@ -10,6 +10,7 @@ import 'package:bleed_client/game_engine/game_widget.dart';
 import 'common.dart';
 import '../images.dart';
 import 'enums.dart';
+import 'instances/game.dart';
 import 'keys.dart';
 import 'rects.dart';
 import 'state.dart';
@@ -54,6 +55,11 @@ void drawTileList() {
   drawAtlases(imageTiles, tileTransforms, tileRects);
 }
 
+void updateTiles(){
+  processTileTransforms();
+  loadTileRects();
+}
+
 void drawAtlases(
     ui.Image image, List<RSTransform> transforms, List<Rect> rects) {
   globalCanvas.drawAtlas(image, transforms, rects, null, null, null, globalPaint);
@@ -61,8 +67,8 @@ void drawAtlases(
 
 void processTileTransforms() {
   tileTransforms.clear();
-  for (int x = 0; x < tiles.length; x++) {
-    for (int y = 0; y < tiles[0].length; y++) {
+  for (int x = 0; x < game.tiles.length; x++) {
+    for (int y = 0; y < game.tiles[0].length; y++) {
       tileTransforms.add(getTileTransform(x, y));
     }
   }
@@ -70,9 +76,9 @@ void processTileTransforms() {
 
 void loadTileRects() {
   tileRects.clear();
-  for (int x = 0; x < tiles.length; x++) {
-    for (int y = 0; y < tiles[0].length; y++) {
-      tileRects.add(getTileSpriteRect(tiles[x][y]));
+  for (int x = 0; x < game.tiles.length; x++) {
+    for (int y = 0; y < game.tiles[0].length; y++) {
+      tileRects.add(getTileSpriteRect(game.tiles[x][y]));
     }
   }
 }
@@ -682,7 +688,7 @@ void drawMouse() {
 
 void drawTiles() {
   if (imageTiles == null) return;
-  if (tiles == null || tiles.isEmpty) return;
+  if (game.tiles == null || game.tiles.isEmpty) return;
   drawTileList();
 }
 

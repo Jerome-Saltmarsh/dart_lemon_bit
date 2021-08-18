@@ -6,31 +6,50 @@ import 'package:bleed_client/state.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../enums.dart';
+
 void saveScene() {
   print("saveScene()");
-  FlutterClipboard.copy(_compileScene());
+  try {
+    FlutterClipboard.copy(_compileScene());
+  }catch(e){
+    print(_compileScene());
+  }
 }
 
-String _compileScene(){
+String _compileScene() {
   return JsonEncoder().convert({
-    "blocks": _mapBlocks(),
+    "blocks": _compileBlocks(),
     "collectables": game.collectables,
-    "player-spawn-points": _mapPlayerSpawnPoints(),
+    "player-spawn-points": _compilePlayerSpawnPoints(),
+    "tiles": _compileTiles(game.tiles)
   });
 }
 
-List<dynamic> _mapBlocks() => blockHouses.map(mapBlockToJson).toList();
+List<dynamic> _compileBlocks() => blockHouses.map(mapBlockToJson).toList();
 
-List<int> _mapPlayerSpawnPoints(){
+List<List<int>> _compileTiles(List<List<Tile>> tiles) {
+  List<List<int>> _tiles = [];
+  for (int row = 0; row < tiles.length; row++) {
+    List<int> _row = [];
+    for (int column = 0; column < tiles[0].length; column++) {
+      _row.add(tiles[row][column].index);
+    }
+    _tiles.add(_row);
+  }
+  return _tiles;
+}
+
+List<int> _compilePlayerSpawnPoints() {
   List<int> points = [];
-  for(Offset offset in game.playerSpawnPoints){
+  for (Offset offset in game.playerSpawnPoints) {
     points.add(offset.dx.toInt());
     points.add(offset.dy.toInt());
   }
   return points;
 }
 
-dynamic mapBlockToJson(Block block){
+dynamic mapBlockToJson(Block block) {
   return {
     "tx": block.top.dx.toInt(),
     "ty": block.top.dy.toInt(),

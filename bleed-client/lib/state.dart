@@ -50,7 +50,6 @@ List<RSTransform> particleTransforms = [];
 List<Rect> npcsRects = [];
 int tilesX = 0;
 int tilesY = 0;
-List<List<Tile>> tiles = [];
 List<Block> blockHouses = [];
 List<RSTransform> tileTransforms = [];
 List<Rect> tileRects = [];

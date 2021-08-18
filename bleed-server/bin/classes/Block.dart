@@ -2,12 +2,7 @@ import '../constants.dart';
 import '../maths.dart';
 
 class Block {
-  // final num x;
-  // final num y;
-  // final num width;
-  // final num length;
-
-  late final num topX;
+   late final num topX;
   late final num topY;
   late final num rightX;
   late final num rightY;
