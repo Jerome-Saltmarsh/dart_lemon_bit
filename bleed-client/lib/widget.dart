@@ -28,9 +28,7 @@ class BleedWidget extends GameWidget {
     zoom -= amount * 0.0005;
     if (zoom < 0.1) zoom = 0.1;
 
-    Offset screenCenter2 = screenCenterWorld;
-
-    Offset diff = screenCenter1 - screenCenter2;
+    Offset diff = screenCenter1 - screenCenterWorld;
     cameraX += diff.dx;
     cameraY += diff.dy;
 

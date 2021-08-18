@@ -22,6 +22,7 @@ String _compileScene() {
     "blocks": _compileBlocks(),
     "collectables": game.collectables,
     "player-spawn-points": _compilePlayerSpawnPoints(),
+    "zombie-spawn-points": _compileZombieSpawnPoints(),
     "tiles": _compileTiles(game.tiles)
   });
 }
@@ -41,13 +42,22 @@ List<List<int>> _compileTiles(List<List<Tile>> tiles) {
 }
 
 List<int> _compilePlayerSpawnPoints() {
+  return _compileOffsets(game.playerSpawnPoints);
+}
+
+List<int> _compileZombieSpawnPoints() {
+  return _compileOffsets(game.zombieSpawnPoints);
+}
+
+List<int> _compileOffsets(List<Offset> offsets) {
   List<int> points = [];
-  for (Offset offset in game.playerSpawnPoints) {
+  for (Offset offset in offsets) {
     points.add(offset.dx.toInt());
     points.add(offset.dy.toInt());
   }
   return points;
 }
+
 
 dynamic mapBlockToJson(Block block) {
   return {

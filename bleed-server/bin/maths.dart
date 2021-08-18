@@ -8,6 +8,10 @@ const double degreesToRadians = 0.0174533;
 const double radiansToDegrees = 57.29578;
 final Random random = Random();
 
+T randomValue<T>(List<T> list){
+  return list[randomInt(0, list.length)];
+}
+
 double randomBetween(num a, num b) {
   return (random.nextDouble() * (b - a)) + a;
 }

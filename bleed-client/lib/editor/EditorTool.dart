@@ -2,5 +2,8 @@
 enum EditorTool {
   Block,
   Health,
-  TileGrass
+  TileGrass,
+  TileConcrete,
+  ZombieSpawn,
+  PlayerSpawn
 }

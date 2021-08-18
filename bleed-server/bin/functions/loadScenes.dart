@@ -43,6 +43,17 @@ Scene _mapStringToScene(String text) {
     }
   }
 
+  List<Vector2> zombieSpawnPoints = [];
+
+  if (json.containsKey('zombie-spawn-points')) {
+    List zombieSpawnPointsInts = json['zombie-spawn-points'];
+    for (int i = 0; i < zombieSpawnPointsInts.length; i += 2) {
+      int x = zombieSpawnPointsInts[i];
+      int y = zombieSpawnPointsInts[i + 1];
+      zombieSpawnPoints.add(Vector2(x.toDouble(), y.toDouble()));
+    }
+  }
+
   List compiledTiles = json['tiles'];
   List<List<Tile>> tiles = [];
 
@@ -57,7 +68,7 @@ Scene _mapStringToScene(String text) {
   List jsonBlocks = json['blocks'];
   List<Block> blocks = jsonBlocks.map(_mapJsonBlockToBlock).toList();
   sortBlocks(blocks);
-  return Scene(tiles, blocks, collectables, playerSpawnPoints, []);
+  return Scene(tiles, blocks, collectables, playerSpawnPoints, zombieSpawnPoints);
 }
 
 Block _mapJsonBlockToBlock(dynamic jsonBlock) {

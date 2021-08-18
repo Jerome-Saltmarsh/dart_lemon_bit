@@ -52,19 +52,25 @@ Widget buildEditorUI() {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              text("Mouse X: ${mouseWorldX.toInt()}, mouse Y: ${mouseWorldY.toInt()}"),
-              text("MousePro X: ${mouseUnprojectPositionX.toInt()}, mouseProY: ${mouseUnprojectPositionY.toInt()}"),
+              text(
+                  "Mouse X: ${mouseWorldX.toInt()}, mouse Y: ${mouseWorldY
+                      .toInt()}"),
+              text(
+                  "MousePro X: ${mouseUnprojectPositionX
+                      .toInt()}, mouseProY: ${mouseUnprojectPositionY
+                      .toInt()}"),
               text("Tile X: $mouseTileX, Tile Y: $mouseTileY"),
-              button("GRASS", () {
-                editState.tool = EditorTool.TileGrass;
-              }),
-              button("BLOCK", () {
-                editState.tool = EditorTool.Block;
-              }),
+              column(EditorTool.values.map((e) {
+                return button(e.toString(), () {
+                  editState.tool = e;
+                });
+              }).toList()),
               button("Save Scene", saveScene),
-              button("Reset Tiles", (){
-                for(int row = 0; row < game.tiles.length; row++){
-                  for(int column = 0; column < game.tiles[0].length; column++){
+              button("Reset Tiles", () {
+                for (int row = 0; row < game.tiles.length; row++) {
+                  for (int column = 0;
+                  column < game.tiles[0].length;
+                  column++) {
                     game.tiles[row][column] = Tile.Concrete;
                   }
                 }
@@ -106,7 +112,7 @@ void _handleKeyPressed(RawKeyEvent event) {
       game.playerSpawnPoints.add(mouseWorld);
     }
     if (event.logicalKey == LogicalKeyboardKey.delete) {
-      if(editState.selectedBlock != null){
+      if (editState.selectedBlock != null) {
         blockHouses.remove(editState.selectedBlock);
         editState.selectedBlock = null;
       }
@@ -146,6 +152,10 @@ void drawEditMode() {
     drawCircleOffset(offset, 10, Colors.yellow);
   }
 
+  for (Offset offset in game.zombieSpawnPoints) {
+    drawCircleOffset(offset, 10, Colors.deepPurple);
+  }
+
   if (editState.selectedBlock == null) return;
   if (editState.editMode == EditMode.Translate) {
     drawBlockSelected(editState.selectedBlock);
@@ -170,6 +180,21 @@ void drawEditMode() {
 
 void _handleMouseDrag() {
   if (!mouseDragging) return;
+
+  switch (editState.tool) {
+    case EditorTool.Block:
+      _handleDragBlock();
+      break;
+    case EditorTool.TileGrass:
+      setTileAtMouse(Tile.Grass);
+      break;
+    case EditorTool.TileConcrete:
+      setTileAtMouse(Tile.Concrete);
+      break;
+  }
+}
+
+void _handleDragBlock(){
   if (editState.selectedBlock == null) return;
 
   Block block = editState.selectedBlock;
@@ -224,18 +249,25 @@ void _handleMouseClick() {
       _getBlockAt(mouseWorldX, mouseWorldY);
       break;
     case EditorTool.TileGrass:
-      // get the tile at the mouse position
+      setTileAtMouse(Tile.Grass);
+      break;
+    case EditorTool.TileConcrete:
+      setTileAtMouse(Tile.Concrete);
+      break;
+    case EditorTool.ZombieSpawn:
+      game.zombieSpawnPoints.add(mouseWorld);
+      break;
+  }
+}
 
-      int row = mouseTileY;
-      int column = mouseTileX;
-
-      if (row < 0) return;
-      if (column < 0) return;
-
-      if (row < game.tiles.length && row < game.tiles[0].length) {
-        game.tiles[row][column] = Tile.Grass;
-        updateTiles();
-      }
+void setTileAtMouse(Tile tile) {
+  int row = mouseTileY;
+  int column = mouseTileX;
+  if (row < 0) return;
+  if (column < 0) return;
+  if (row < game.tiles.length && row < game.tiles[0].length) {
+    game.tiles[row][column] = tile;
+    updateTiles();
   }
 }
 

@@ -19,12 +19,8 @@
 [ ] Static painter (tiles, buildings etc) / non static painter
 [ ] Fix zoom in / out bug
 [ ] Cache Particles
-
-RELEASE OPEN WORLD
 [ ] Zombie Hurt Animation
 [ ] Npc Text
-
-RELEASE DEATH MATCH
 [ ] Lobby
 [ ] Grenade building collision
 [ ] Space bar pan camera
@@ -36,8 +32,8 @@ RELEASE DEATH MATCH
 [ ] Create Game
 [ ] Menu Screen Game
 [ ] Zombie Spawn Points
-[ ] Editor Modify Tiles
 [ ] Fix Block Collision Bug
+[x] Editor Modify Tiles
 [x] Editor Pan Camera
 [x] FIX Game crashes on death
 [x] FIX Zombies npcs keep attacking after player vanishes

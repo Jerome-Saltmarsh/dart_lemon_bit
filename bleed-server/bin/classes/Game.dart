@@ -64,6 +64,10 @@ extension GameFunctions on Game {
     _updateCollectables();
     compileState(this);
     gameEvents.clear();
+
+    if(frame % 5 == 0 && npcs.length < 300){
+      spawnRandomNpc();
+    }
   }
 
   void _updateCollectables() {
@@ -342,6 +346,14 @@ extension GameFunctions on Game {
         continue;
       }
     }
+
+    for (int i = 0; i < bullets.length; i++) {
+      if (tileBoundaryAt(bullets[i].x, bullets[i].y)){
+        bullets.removeAt(i);
+        i--;
+      }
+    }
+
     bullets.sort(compareGameObjects);
 
     for (int i = 0; i < bullets.length; i++) {
@@ -726,10 +738,11 @@ extension GameFunctions on Game {
   }
 
   void spawnRandomNpc() {
+    if (scene.zombieSpawnPoints.isEmpty) return;
     if (npcs.length >= settings.maxZombies) return;
 
-    spawnNpc(randomBetween(-spawnRadius, spawnRadius),
-        randomBetween(-spawnRadius, spawnRadius) + 1000);
+    Vector2 spawnPoint = randomValue(scene.zombieSpawnPoints);
+    spawnNpc(spawnPoint.x + giveOrTake(5), spawnPoint.y + giveOrTake(5));
   }
 
   Player spawnPlayer({required String name}) {
