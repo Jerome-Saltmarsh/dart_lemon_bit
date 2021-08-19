@@ -1,9 +1,7 @@
 # TODO
-[ ] Shot Animation
 [ ] Shotgun Animation
 [ ] Critical Damage
 [ ] Accuracy
-[ ] Compile Bullet remove id
 [ ] Weapon Oozie
 [ ] Weapon: Bazooka
 [ ] Game Type: Open World
@@ -12,28 +10,28 @@
 [ ] Game Type: Fortress
 [ ] Game Type: Sandbox
 [ ] Throw Animation
-[ ] Create Game / Join Game
 [ ] Player Name Text
 [ ] Particle Gunshot smoke
 [ ] Throw Grenade Audio
-[ ] Static painter (tiles, buildings etc) / non static painter
 [ ] Fix zoom in / out bug
 [ ] Cache Particles
 [ ] Zombie Hurt Animation
 [ ] Npc Text
+[ ] Fix Shot Animation
 [ ] Lobby
 [ ] Grenade building collision
-[ ] Space bar pan camera
 [ ] Collect Audio
-[ ] NPC Pathfinding
-[ ] Join Random Game
 [ ] Find / Join Game 
 [ ] Create Game
+[ ] Inventory Grenade
 [ ] Menu Screen Game
 [ ] Fix Block Collision Bug
 [ ] Refactor inventory painter
 [ ] Inventory Shotgun
-[ ] On Spawn - center camera
+[ ] NPC Pathfinding
+[ ] UI Show rounds remaining
+[x] On Spawn - center camera
+[x] Space bar pan camera
 [x] Auto join sandbox on connect
 [x] AudioPlayer Pool
 [x] Zombie Spawn Points

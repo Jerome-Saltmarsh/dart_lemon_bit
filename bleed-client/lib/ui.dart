@@ -334,11 +334,14 @@ Widget buildHud() {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             button(playMode ? 'Edit' : "Play", toggleMode),
+            // text('mouseScreenX: ${mouseX.toInt()}, mouseScreenY: ${mouseY.toInt()}'),
             text('mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
             text('Stamina: $playerStamina / $playerMaxStamina'),
             text('x: ${game.playerX}, y: ${game.playerY}'),
             text("zombies: ${game.npcs.length}"),
             text("players: ${game.players.length}"),
+            text("zoom: ${zoom.toStringAsFixed(2)}"),
+            text("cameraX: ${cameraX.toInt()}, cameraY: ${cameraY.toInt()}")
           ],
         )
       ],

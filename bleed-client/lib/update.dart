@@ -66,7 +66,6 @@ void updatePlayer() {
 }
 
 void cameraTrackPlayer() {
-  if (globalSize == null) return;
   double xDiff = screenCenterWorldX - game.playerX;
   double yDiff = screenCenterWorldY - game.playerY;
   cameraX -= xDiff * settings.cameraFollow;

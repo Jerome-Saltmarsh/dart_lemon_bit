@@ -220,54 +220,54 @@ extension GameFunctions on Game {
     return null;
   }
 
-  void characterFireWeapon(Player character) {
-    if (character.dead) return;
-    if (character.stateDuration > 0) return;
-    faceAimDirection(character);
+  void characterFireWeapon(Player player) {
+    if (player.dead) return;
+    if (player.stateDuration > 0) return;
+    faceAimDirection(player);
 
     double d = 15;
-    double x = character.x + adj(character.aimAngle, d);
-    double y = character.y + opp(character.aimAngle, d);
+    double x = player.x + adj(player.aimAngle, d);
+    double y = player.y + opp(player.aimAngle, d);
 
-    switch (character.weapon) {
+    switch (player.weapon) {
       case Weapon.HandGun:
-        character.stateDuration = settingsClipEmptyCooldown;
-        if (character.handgunAmmunition.rounds <= 0) {
+        if (player.handgunRounds <= 0) {
+          player.stateDuration = settingsClipEmptyCooldown;
           dispatch(GameEventType.Clip_Empty, x, y, 0, 0);
           return;
         }
-        character.handgunAmmunition.rounds--;
-        Bullet bullet = spawnBullet(character);
-        character.state = CharacterState.Firing;
-        character.stateDuration = settingsHandgunCooldown;
+        player.handgunRounds--;
+        Bullet bullet = spawnBullet(player);
+        player.state = CharacterState.Firing;
+        player.stateDuration = settingsHandgunCooldown;
         dispatch(GameEventType.Handgun_Fired, x, y, bullet.xv, bullet.yv);
         break;
       case Weapon.Shotgun:
-        character.xv += velX(character.aimAngle + pi, 1);
-        character.yv += velY(character.aimAngle + pi, 1);
+        player.xv += velX(player.aimAngle + pi, 1);
+        player.yv += velY(player.aimAngle + pi, 1);
         for (int i = 0; i < settingsShotgunBulletsPerShot; i++) {
-          spawnBullet(character);
+          spawnBullet(player);
         }
         Bullet bullet = bullets.last;
-        character.state = CharacterState.Firing;
-        character.stateDuration = shotgunCoolDown;
-        dispatch(GameEventType.Shotgun_Fired, character.x, character.y,
+        player.state = CharacterState.Firing;
+        player.stateDuration = shotgunCoolDown;
+        dispatch(GameEventType.Shotgun_Fired, player.x, player.y,
             bullet.xv, bullet.yv);
         break;
       case Weapon.SniperRifle:
-        Bullet bullet = spawnBullet(character);
-        character.state = CharacterState.Firing;
-        character.stateDuration = settingsSniperCooldown;
+        Bullet bullet = spawnBullet(player);
+        player.state = CharacterState.Firing;
+        player.stateDuration = settingsSniperCooldown;
         ;
-        dispatch(GameEventType.SniperRifle_Fired, character.x, character.y,
+        dispatch(GameEventType.SniperRifle_Fired, player.x, player.y,
             bullet.xv, bullet.yv);
         break;
       case Weapon.MachineGun:
-        Bullet bullet = spawnBullet(character);
-        character.state = CharacterState.Firing;
-        character.stateDuration = settings.machineGunCoolDown;
+        Bullet bullet = spawnBullet(player);
+        player.state = CharacterState.Firing;
+        player.stateDuration = settings.machineGunCoolDown;
         ;
-        dispatch(GameEventType.MachineGun_Fired, character.x, character.y,
+        dispatch(GameEventType.MachineGun_Fired, player.x, player.y,
             bullet.xv, bullet.yv);
         break;
     }
@@ -305,10 +305,10 @@ extension GameFunctions on Game {
         switch (character.weapon) {
           case Weapon.HandGun:
             if (character is Player &&
-                character.handgunAmmunition.rounds <
-                    character.handgunAmmunition.clipSize &&
+                character.handgunRounds <
+                    settings.handgunClipSize &&
                 character.inventory.handgunClips > 0) {
-              character.handgunAmmunition.rounds = settings.handgunClipSize;
+              character.handgunRounds = settings.handgunClipSize;
               character.inventory.remove(InventoryItemType.HandgunClip);
               character.stateDuration = settingsHandgunReloadDuration;
               break;

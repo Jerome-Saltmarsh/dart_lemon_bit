@@ -223,7 +223,6 @@ class _GameWidgetState extends State<GameWidget> {
         },
         child: Listener(
           onPointerSignal: (pointerSignalEvent) {
-            print('onPointerSignal($pointerSignalEvent)');
             if (pointerSignalEvent is PointerScrollEvent) {
               widget.onMouseScroll(pointerSignalEvent.scrollDelta.dy);
             }

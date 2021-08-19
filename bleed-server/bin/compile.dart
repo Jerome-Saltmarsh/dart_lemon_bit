@@ -61,22 +61,14 @@ String compileTiles(StringBuffer buffer, List<List<Tile>> tiles) {
 }
 
 void compilePlayer(StringBuffer buffer, Player player) {
-  buffer.write(ServerResponse.Player.index);
-  buffer.write(_space);
-  buffer.write(player.x.toInt());
-  buffer.write(_space);
-  buffer.write(player.y.toInt());
-  buffer.write(_space);
-  buffer.write(player.weapon.index);
-  buffer.write(_space);
-  buffer.write(player.health.toInt());
-  buffer.write(_space);
-  buffer.write(player.maxHealth.toInt());
-  buffer.write(_space);
-  buffer.write(player.stamina);
-  buffer.write(_space);
-  buffer.write(player.maxStamina);
-  buffer.write(_space);
+  _write(buffer, ServerResponse.Player.index);
+  _write(buffer, player.x.toInt());
+  _write(buffer, player.y.toInt());
+  _write(buffer, player.weapon.index);
+  _write(buffer, player.health.toInt());
+  _write(buffer, player.maxHealth.toInt());
+  _write(buffer, player.stamina);
+  _write(buffer, player.maxStamina);
   _compileInventory(buffer, player.inventory);
 }
 
