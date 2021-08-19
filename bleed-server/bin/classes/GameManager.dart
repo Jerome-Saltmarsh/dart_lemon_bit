@@ -1,5 +1,6 @@
 import '../enums/GameType.dart';
 import '../instances/scenes.dart';
+import '../instances/settings.dart';
 import '../utils.dart';
 import 'Block.dart';
 import 'Game.dart';
@@ -33,7 +34,7 @@ class GameManager {
       }
     }
 
-    Game deathMatch = Game(GameType.DeathMatch, scenesTown, 16);
+    Game deathMatch = Game(GameType.DeathMatch, scenesTown, settings.deathMatchMaxPlayers);
     games.add(deathMatch);
     return deathMatch;
   }

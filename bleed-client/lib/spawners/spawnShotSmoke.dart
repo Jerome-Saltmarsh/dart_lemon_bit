@@ -1,16 +1,15 @@
 
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
+import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/maths.dart';
-
-import '../state.dart';
 
 void spawnShotSmoke(double x, double y, double xv, double yv){
   double speed = 0.5;
   double cx = clampMagnitudeX(xv, yv, speed);
   double cy = clampMagnitudeY(xv, yv, speed);
 
-  particles.add(Particle(
+  game.particles.add(Particle(
       ParticleType.Smoke,
       x,
       y,

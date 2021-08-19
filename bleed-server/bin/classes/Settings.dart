@@ -16,4 +16,6 @@ class Settings {
   final double grenadeGravity = 0.06;
 
   final int maxZombies = 2500;
+
+  final int deathMatchMaxPlayers = 32;
 }

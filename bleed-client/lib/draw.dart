@@ -2,14 +2,14 @@ import 'dart:math';
 import 'dart:ui';
 import 'dart:ui' as ui;
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-import 'common.dart';
 import '../images.dart';
+import 'common.dart';
 import 'enums.dart';
 import 'instances/game.dart';
 import 'keys.dart';
@@ -28,11 +28,11 @@ void drawCharacters() {
 }
 
 void drawNpcs() {
-  npcs.sort((a, b) {
+  game.npcs.sort((a, b) {
     if (a[y] < b[y]) return -1;
     return 1;
   });
-  drawList(npcs, npcsTransforms, npcsRects);
+  drawList(game.npcs, npcsTransforms, npcsRects);
 }
 
 void drawCharacterList(List<dynamic> characters) {
@@ -86,11 +86,11 @@ void loadTileRects() {
 }
 
 void drawPlayers() {
-  players.sort((a, b) {
+  game.players.sort((a, b) {
     if (a[y] < b[y]) return -1;
     return 1;
   });
-  drawList(players, playersTransforms, playersRects);
+  drawList(game.players, playersTransforms, playersRects);
 }
 
 void drawList(
@@ -735,7 +735,7 @@ void drawBulletRange() {
       radius: bulletRange, x: player[x], y: player[y], color: white);
 }
 
-void drawBulletHoles() {
+void drawBulletHoles(List<double> bulletHoles) {
   for (int i = 0; i < bulletHoles.length; i += 2) {
     drawCircle(bulletHoles[i], bulletHoles[i + 1], 2, Colors.black);
   }

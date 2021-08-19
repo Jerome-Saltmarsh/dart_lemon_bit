@@ -1,5 +1,7 @@
 import 'dart:ui';
+
 import 'package:bleed_client/enums/ParticleType.dart';
+
 import '../rects.dart';
 
 Rect mapParticleTypeToRect(ParticleType particleType){

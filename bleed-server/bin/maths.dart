@@ -2,6 +2,8 @@ import 'dart:math';
 import 'classes.dart';
 import 'constants.dart';
 
+
+const double _0 = 0;
 const double goldenRatio = 1.61803398875;
 const double goldenRatioInverse = 1.0 / goldenRatio;
 const double degreesToRadians = 0.0174533;
@@ -37,9 +39,7 @@ double magnitude(double a, double b) {
 }
 
 double distanceBetween(GameObject a, GameObject b) {
-  double xDiff = a.x - b.x;
-  double yDiff = a.y - b.y;
-  return magnitude(xDiff, yDiff);
+  return magnitude(a.x - b.x, a.y - b.y);
 }
 
 double distance(double x1, double y1, double x2, double y2) {
@@ -47,7 +47,7 @@ double distance(double x1, double y1, double x2, double y2) {
 }
 
 double abs(double value) {
-  if (value < 0) return -value;
+  if (value < _0) return -value;
   return value;
 }
 
@@ -83,9 +83,7 @@ double velY(double rotation, double speed) {
 }
 
 double radians(double x, double y) {
-  if (x < 0) {
-    return (atan2(x, y) * -1);
-  }
+  if (x < _0) return -atan2(x, y);
   return pi2 - atan2(x, y);
 }
 
@@ -118,5 +116,5 @@ double clampMagnitudeY(double x, double y, double value) {
 }
 
 bool isLeft(double aX, double aY, double bX, double bY, double cX, double cY) {
-  return ((bX - aX) * (cY - aY) - (bY - aY) * (cX - aX)) > 0;
+  return ((bX - aX) * (cY - aY) - (bY - aY) * (cX - aX)) > _0;
 }

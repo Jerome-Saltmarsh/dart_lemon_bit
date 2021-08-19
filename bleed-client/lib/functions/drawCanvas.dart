@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Block.dart';
+import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/enums/CollectableType.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
@@ -37,12 +38,12 @@ void drawCanvas(Canvas canvass, Size _size) {
   } catch (error) {
     print("draw player health error");
   }
-  _drawBullets();
-  drawBulletHoles();
-  _drawGrenades();
+  _drawBullets(game.bullets);
+  drawBulletHoles(game.bulletHoles);
+  _drawGrenades(game.grenades);
   _drawBlocks();
   drawAnimations();
-  _drawParticles();
+  _drawParticles(game.particles);
   drawCharacters();
   drawEditMode();
   _drawCollectables();
@@ -159,17 +160,17 @@ Block createBlock(double topX, double topY, double rightX, double rightY,
   return Block(top, right, bottom, left);
 }
 
-void _drawGrenades() {
+void _drawGrenades(List<double> grenades) {
   for (int i = 0; i < grenades.length; i += 3) {
     drawGrenade(grenades[i], grenades[i + 1], grenades[i + 2]);
   }
 }
 
-void _drawParticles() {
+void _drawParticles(List<Particle> particles) {
   particles.forEach(drawParticle);
 }
 
-void _drawBullets() {
+void _drawBullets(List bullets) {
   bullets.forEach((bullet) {
     drawBullet(bullet[x], bullet[y]);
   });

@@ -3,10 +3,10 @@ import 'dart:ui';
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/enums/Weapons.dart';
 import 'package:flutter/material.dart';
-import 'classes/Block.dart';
-import 'classes/Particle.dart';
-import 'classes/SpriteAnimation.dart';
+
 import '../common.dart';
+import 'classes/Block.dart';
+import 'classes/SpriteAnimation.dart';
 import 'enums/Mode.dart';
 import 'instances/game.dart';
 
@@ -27,14 +27,6 @@ String event = "";
 dynamic valueObject;
 DateTime lastRefresh = DateTime.now();
 Duration refreshDuration;
-bool smooth = false;
-BuildContext context;
-List<List<dynamic>> players = [];
-List<List<dynamic>> npcs = [];
-List<List<dynamic>> bullets = [];
-List<double> bulletHoles = [];
-List<Particle> particles = [];
-List<double> grenades = [];
 List<SpriteAnimation> animations = [];
 int drawFrame = 0;
 bool debugMode = false;

@@ -1,9 +1,10 @@
 import 'dart:async';
+
 import 'package:bleed_client/game_engine/game_functions.dart';
+import 'package:bleed_client/game_engine/web_functions.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as mat;
-import 'package:bleed_client/game_engine/web_functions.dart';
 import 'package:positioned_tap_detector/positioned_tap_detector.dart';
 
 import 'engine_state.dart';
@@ -35,11 +36,16 @@ double get mouseWorldY => convertScreenToWorldY(mouseY);
 
 Offset get mouseWorld => Offset(mouseWorldX, mouseWorldY);
 
-double get screenCenterX => globalSize.width * 0.5;
+double get screenCenterX => screenWidth * 0.5;
 
-double get screenCenterY => globalSize.height * 0.5;
+double get screenCenterY => screenHeight * 0.5;
+
+double get screenWidth => globalSize.width;
+
+double get screenHeight => globalSize.height;
 
 double get screenCenterWorldX => convertScreenToWorldX(screenCenterX);
+
 double get screenCenterWorldY => convertScreenToWorldY(screenCenterY);
 
 Offset get screenCenterWorld => Offset(screenCenterWorldX, screenCenterWorldY);

@@ -1,9 +1,9 @@
 
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
-import 'package:flutter/material.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:flutter/material.dart';
 
 import '../maths.dart';
 import '../utils.dart';

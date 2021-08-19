@@ -3,6 +3,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:bleed_client/game_engine/engine_state.dart';
+import 'package:bleed_client/game_engine/game_functions.dart';
 import 'package:bleed_client/game_engine/game_maths.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 
@@ -15,7 +16,8 @@ import 'maths.dart';
 import 'state.dart';
 
 double getMouseRotation() {
-  return getRadionsBetween(game.playerX, game.playerY, mouseWorldX, mouseWorldY);
+  return getRadiansBetween(
+      game.playerX, game.playerY, mouseWorldX, mouseWorldY);
 }
 
 double playerScreenPositionX() {
@@ -28,7 +30,8 @@ double playerScreenPositionY() {
 
 dynamic getPlayerCharacter() {
   if (game.playerId == idNotConnected) return null;
-  return players.firstWhere((element) => element[4] == game.playerId, orElse: () {
+  return game.players.firstWhere((element) => element[4] == game.playerId,
+      orElse: () {
     return null;
   });
 }
@@ -133,7 +136,7 @@ bool randomBool() {
   return random.nextDouble() > 0.5;
 }
 
-int randomInt(int min, int max){
+int randomInt(int min, int max) {
   return random.nextInt(max - min) + min;
 }
 
@@ -153,16 +156,14 @@ repeat(Function function, int times, int milliseconds) {
   }
 }
 
-void cameraCenter(double x, double y){
-    cameraX = x - (globalSize.width * 0.5);
-    cameraY = y - (globalSize.height * 0.5);
+void cameraCenter(double x, double y) {
+  cameraX = x - (screenCenterX * convertScreenToWorldDistance);
+  cameraY = y - (screenCenterY * convertScreenToWorldDistance);
 }
 
-void setHandgunRounds(int value){
-  if(handgunRounds == value) return;
+void setHandgunRounds(int value) {
+  if (handgunRounds == value) return;
   handgunRounds = value;
   redrawUI();
 }
 
-double get centerX => cameraX + (globalSize.width * 0.5);
-double get centerY => cameraY + (globalSize.height * 0.5);

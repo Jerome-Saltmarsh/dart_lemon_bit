@@ -1,17 +1,16 @@
 
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
+import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/utils.dart';
 
-import '../state.dart';
-
 void spawnBulletHole(double x, double y){
-  bulletHoles.add(x);
-  bulletHoles.add(y);
+  game.bulletHoles.add(x);
+  game.bulletHoles.add(y);
   double r = 0.1;
   repeat((){
-    particles.add(Particle(
+    game.particles.add(Particle(
         ParticleType.Smoke,
         x,
         y,

@@ -67,7 +67,7 @@ Widget row(List<Widget> children) {
 
 Future<void> showChangeNameDialog() async {
   return showDialog<void>(
-    context: context,
+    context: globalContext,
     barrierDismissible: false, // user must tap button!
     builder: (BuildContext context) {
       return AlertDialog(
@@ -105,7 +105,7 @@ Future<void> showChangeNameDialog() async {
 
 Future<void> showConnectFailedDialog() async {
   return showDialog<void>(
-    context: context,
+    context: globalContext,
     barrierDismissible: true,
     builder: (BuildContext context) {
       return AlertDialog(
@@ -337,8 +337,8 @@ Widget buildHud() {
             text('mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
             text('Stamina: $playerStamina / $playerMaxStamina'),
             text('x: ${game.playerX}, y: ${game.playerY}'),
-            text("zombies: ${npcs.length}"),
-            text("players: ${players.length}"),
+            text("zombies: ${game.npcs.length}"),
+            text("players: ${game.players.length}"),
           ],
         )
       ],
@@ -400,9 +400,9 @@ Widget buildDebugPanel() {
       text("FPS: ${(1000 / millisecondsSinceLastFrame).round()}"),
     if (serverFramesMS > 0)
       text("Server FPS: ${(1000 / serverFramesMS).round()}"),
-    text("Players: ${players.length}"),
-    text("Bullets: ${bullets.length}"),
-    text("Npcs: ${npcs.length}"),
+    text("Players: ${game.players.length}"),
+    text("Bullets: ${game.bullets.length}"),
+    text("Npcs: ${game.npcs.length}"),
     text("Player Assigned: $playerAssigned"),
   ]);
 }

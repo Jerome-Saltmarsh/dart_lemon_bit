@@ -16,6 +16,8 @@ double convertScreenToWorldY(double value) {
   return (cameraY / (1.0 / zoom)) + (value / zoom);
 }
 
+double get convertScreenToWorldDistance => 1 / zoom;
+
 double convertWorldToScreenX(double value) {
   return (value * zoom) - (cameraX * zoom);
 }

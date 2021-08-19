@@ -1,11 +1,10 @@
 
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
-
-import '../state.dart';
+import 'package:bleed_client/instances/game.dart';
 
 void spawnParticle(ParticleType type, double x, double y, double z, double xv, double yv, double zv, double weight, int duration, double scale, double scaleV){
-  particles.add(Particle(
+  game.particles.add(Particle(
     type,
     x,
     y,

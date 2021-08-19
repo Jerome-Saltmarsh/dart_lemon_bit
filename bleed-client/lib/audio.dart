@@ -1,4 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
+import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/instances/settings.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/utils.dart';
@@ -137,7 +138,7 @@ void _play(String name, double x, double y) {
   if (settings.audioMuted) return;
 
   try {
-    double d = distance(x, y, centerX, centerY);
+    double d = distance(x, y, screenCenterWorldX, screenCenterWorldY);
     double volume = 1.0 / ((d * 0.005) + 1);
     if (volume < 0.1) return;
     _getAudioPlayer().play('assets/audio/$name', isLocal: true, volume: volume);

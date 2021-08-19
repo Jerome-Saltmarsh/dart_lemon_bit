@@ -49,16 +49,16 @@ void updatePlayer() {
     previousWeapon = playerWeapon;
     switch (playerWeapon) {
       case Weapon.HandGun:
-        playAudioReload(centerX, centerY);
+        playAudioReload(screenCenterWorldX, screenCenterWorldY);
         break;
       case Weapon.Shotgun:
-        playAudioCockShotgun(centerX, centerY);
+        playAudioCockShotgun(screenCenterWorldX, screenCenterWorldY);
         break;
       case Weapon.SniperRifle:
-        playAudioSniperEquipped(centerX, centerY);
+        playAudioSniperEquipped(screenCenterWorldX, screenCenterWorldY);
         break;
       case Weapon.MachineGun:
-        playAudioReload(centerX, centerY);
+        playAudioReload(screenCenterWorldX, screenCenterWorldY);
         break;
     }
     redrawUI();

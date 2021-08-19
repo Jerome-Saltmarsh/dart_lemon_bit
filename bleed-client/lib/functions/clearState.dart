@@ -1,4 +1,5 @@
 import 'package:bleed_client/enums/Mode.dart';
+import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/instances/game.dart';
 
 import '../state.dart';
@@ -9,13 +10,14 @@ void clearState(){
   game.playerUUID = "";
   game.playerX = -1;
   game.playerY = -1;
+  game.npcs.clear();
+  game.players.clear();
+  game.bullets.clear();
+  game.bulletHoles.clear();
+  game.particles.clear();
+  game.grenades.clear();
+  zoom = 1;
   gameId = -1;
-  npcs.clear();
-  players.clear();
-  bullets.clear();
-  bulletHoles.clear();
-  particles.clear();
-  grenades.clear();
   gameEvents.clear();
   playersTransforms.clear();
   tileTransforms.clear();

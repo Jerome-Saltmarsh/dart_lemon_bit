@@ -1,7 +1,7 @@
-import '../classes/SpriteAnimation.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 
+import '../classes/SpriteAnimation.dart';
 import '../draw.dart';
 
 void drawSpriteAnimation(SpriteAnimation animation){

@@ -4,17 +4,18 @@ import 'dart:ui';
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/bleed.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
-import 'package:flutter/material.dart';
-import 'package:bleed_client/update.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/update.dart';
+import 'package:flutter/material.dart';
 
 import 'connection.dart';
 import 'editor/editor.dart';
 import 'functions/clearState.dart';
 import 'functions/drawCanvas.dart';
 import 'images.dart';
+import 'instances/game.dart';
+import 'instances/settings.dart';
 import 'rects.dart';
-import 'state.dart';
 import 'ui.dart';
 import 'utils.dart';
 
@@ -24,22 +25,16 @@ class BleedWidget extends GameWidget {
 
   @override
   void onMouseScroll(double amount) {
-
     Offset screenCenter1 = screenCenterWorld;
-
-    zoom -= amount * 0.0005;
-    if (zoom < 0.1) zoom = 0.1;
-
-    Offset diff = screenCenter1 - screenCenterWorld;
-    cameraX += diff.dx;
-    cameraY += diff.dy;
-
+    zoom -= amount * settings.zoomSpeed;
+    if (zoom < settings.maxZoom) zoom = settings.maxZoom;
+    cameraCenter(screenCenter1.dx, screenCenter1.dy);
   }
 
   @override
   Widget buildUI(BuildContext bc) {
-    context = bc;
-    return buildGameUI(context);
+    globalContext = bc;
+    return buildGameUI(bc);
   }
 
   @override
@@ -73,9 +68,9 @@ class BleedWidget extends GameWidget {
 
   // TODO move this
   void checkBulletHoles() {
-    if (bulletHoles.length > 4) {
-      bulletHoles.removeAt(0);
-      bulletHoles.removeAt(0);
+    if (game.bulletHoles.length > 4) {
+      game.bulletHoles.removeAt(0);
+      game.bulletHoles.removeAt(0);
     }
   }
 

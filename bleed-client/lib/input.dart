@@ -85,7 +85,7 @@ void readPlayerInput() {
       if (mouseAvailable) {
         double mouseWorldX = mouseX + cameraX;
         double mouseWorldY = mouseY + cameraY;
-        for (dynamic npc in npcs) {
+        for (dynamic npc in game.npcs) {
           if (distance(npc[x], npc[y], mouseWorldX, mouseWorldY) > playerAutoAimDistance) continue;
           requestCharacterState = characterStateAiming;
           requestDirection = convertAngleToDirection(requestAim);

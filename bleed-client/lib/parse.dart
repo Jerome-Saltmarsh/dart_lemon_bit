@@ -4,14 +4,14 @@ import 'package:bleed_client/enums/InventoryItemType.dart';
 import 'package:bleed_client/enums/ServerResponse.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
+import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/keys.dart';
-import 'package:bleed_client/game_engine/game_widget.dart';
 
-import 'enums.dart';
 import 'enums/GameError.dart';
 import 'enums/GameEventType.dart';
 import 'enums/Weapons.dart';
+import 'enums.dart';
 import 'functions/onGameEvent.dart';
 import 'instances/inventory.dart';
 import 'state.dart';
@@ -181,9 +181,9 @@ void _parseCollectables() {
 }
 
 void _parseGrenades() {
-  grenades.clear();
+  game.grenades.clear();
   while (!_simiColonConsumed()) {
-    grenades.add(_consumeDouble());
+    game.grenades.add(_consumeDouble());
   }
 }
 
@@ -273,14 +273,14 @@ bool _simiColonConsumed() {
 void _parsePlayers() {
   int index = 0;
   while (!_simiColonConsumed()) {
-    if (index >= players.length) {
-      players.add(_getUnusedMemory());
+    if (index >= game.players.length) {
+      game.players.add(_getUnusedMemory());
     }
-    _consumePlayer(players[index]);
+    _consumePlayer(game.players[index]);
     index++;
   }
-  while (index < players.length) {
-    _cacheLast(players);
+  while (index < game.players.length) {
+    _cacheLast(game.players);
   }
 }
 
@@ -315,28 +315,28 @@ GameEventType _consumeEventType() {
 void _parseBullets() {
   int index = 0;
   while (!_simiColonConsumed()) {
-    if (index >= bullets.length) {
-      bullets.add(_getUnusedMemory());
+    if (index >= game.bullets.length) {
+      game.bullets.add(_getUnusedMemory());
     }
-    _consumeBullet(bullets[index]);
+    _consumeBullet(game.bullets[index]);
     index++;
   }
-  while (index < bullets.length) {
-    _cacheLast(bullets);
+  while (index < game.bullets.length) {
+    _cacheLast(game.bullets);
   }
 }
 
 void _parseNpcs() {
   int index = 0;
   while (!_simiColonConsumed()) {
-    if (index >= npcs.length) {
-      npcs.add(_getUnusedMemory());
+    if (index >= game.npcs.length) {
+      game.npcs.add(_getUnusedMemory());
     }
-    _consumeNpc(npcs[index]);
+    _consumeNpc(game.npcs[index]);
     index++;
   }
-  while (index < npcs.length) {
-    _cacheLast(npcs);
+  while (index < game.npcs.length) {
+    _cacheLast(game.npcs);
   }
 }
 

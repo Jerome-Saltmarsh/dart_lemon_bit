@@ -16,14 +16,14 @@ import 'package:flutter/services.dart';
 import '../classes/Block.dart';
 import '../connection.dart';
 import '../enums.dart';
-import '../ui.dart';
-import 'EditMode.dart';
 import '../game_engine/engine_state.dart';
 import '../game_engine/game_input.dart';
 import '../game_engine/game_widget.dart';
 import '../instances/editState.dart';
 import '../settings.dart';
 import '../state.dart';
+import '../ui.dart';
+import 'EditMode.dart';
 
 Offset _translateOffset;
 bool _panning = false;
