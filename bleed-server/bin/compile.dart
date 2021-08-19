@@ -69,6 +69,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.maxHealth.toInt());
   _write(buffer, player.stamina);
   _write(buffer, player.maxStamina);
+  _write(buffer, player.handgunRounds);
   _compileInventory(buffer, player.inventory);
 }
 

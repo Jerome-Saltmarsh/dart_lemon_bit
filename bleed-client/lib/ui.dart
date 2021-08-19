@@ -363,7 +363,17 @@ Widget buildHud() {
   Positioned bottomLeft = Positioned(
     left: 0,
     bottom: 0,
-    child: buildWeaponButton(playerWeapon),
+    child: Row(
+      children: [
+        buildWeaponButton(playerWeapon),
+        Container(
+            color: Colors.black87,
+            alignment: Alignment.center,
+            height: 50,
+            width: 100,
+            child: text(handgunRounds.toString(), fontSize: 28)),
+      ],
+    ),
   );
 
   Positioned bottomRight = Positioned(

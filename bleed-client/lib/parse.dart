@@ -7,6 +7,7 @@ import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/keys.dart';
+import 'package:bleed_client/utils.dart';
 
 import 'enums/GameError.dart';
 import 'enums/GameEventType.dart';
@@ -144,6 +145,7 @@ void _parsePlayer() {
     redrawUI();
   }
   playerMaxStamina = _consumeInt();
+  setHandgunRounds(_consumeInt());
 }
 
 void _parseInventory() {
