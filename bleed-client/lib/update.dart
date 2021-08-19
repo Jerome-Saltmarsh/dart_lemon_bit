@@ -8,6 +8,7 @@ import 'connection.dart';
 import 'enums/Weapons.dart';
 import 'input.dart';
 import 'instances/game.dart';
+import 'instances/settings.dart';
 import 'send.dart';
 import 'state.dart';
 import 'updates/updateCharacters.dart';
@@ -66,8 +67,8 @@ void updatePlayer() {
 
 void cameraTrackPlayer() {
   if (globalSize == null) return;
-  double xDiff = screenCenterWorldX - playerX;
-  double yDiff = screenCenterWorldY - playerY;
-  cameraX -= xDiff * 0.025;
-  cameraY -= yDiff * 0.025;
+  double xDiff = screenCenterWorldX - game.playerX;
+  double yDiff = screenCenterWorldY - game.playerY;
+  cameraX -= xDiff * settings.cameraFollow;
+  cameraY -= yDiff * settings.cameraFollow;
 }

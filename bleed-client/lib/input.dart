@@ -13,6 +13,7 @@ import '../send.dart';
 import '../settings.dart';
 import 'connection.dart';
 import 'functions/requestThrowGrenade.dart';
+import 'instances/game.dart';
 import 'maths.dart';
 import 'state.dart';
 import 'utils.dart';
@@ -46,7 +47,7 @@ void readPlayerInput() {
   if (keyPressed(LogicalKeyboardKey.keyG)){
     if(!_throwingGrenade && mouseAvailable) {
       _throwingGrenade = true;
-      double mouseDistance = distance(playerX, playerY, mouseWorldX, mouseWorldY);
+      double mouseDistance = distance(game.playerX, game.playerY, mouseWorldX, mouseWorldY);
       double maxRange = 400;
       double throwDistance = min(mouseDistance, maxRange);
       double strength = throwDistance / maxRange;

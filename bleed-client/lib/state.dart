@@ -59,22 +59,19 @@ int handgunClipSize = 0;
 int handgunClips = 0;
 
 // Player State
-String playerUUID = "";
 double playerHealth = 0;
 double playerMaxHealth = 0;
 int playerStamina = 0;
 int playerMaxStamina = 0;
-double playerX = -1;
-double playerY = -1;
 Weapon playerWeapon = Weapon.Unarmed;
 
 // TODO Expensive string build
-String get session => '$gameId ${game.playerId} $playerUUID';
+String get session => '$gameId ${game.playerId} ${game.playerUUID}';
 
 void setHandgunClips(int value){
   if (value == handgunClips) return;
   if (value > handgunClips){
-    playAudioReloadHandgun(playerX, playerY);
+    playAudioReloadHandgun(game.playerX, game.playerY);
   }
   handgunClips = value;
 }

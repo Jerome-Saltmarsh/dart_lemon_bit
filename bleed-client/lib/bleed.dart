@@ -2,7 +2,6 @@
 
 import 'package:bleed_client/connection.dart';
 import 'package:bleed_client/instances/game.dart';
-import 'package:bleed_client/state.dart';
 import 'package:bleed_client/utils.dart';
 
 import 'enums/ClientRequest.dart';
@@ -19,10 +18,10 @@ void _onConnected(_event){
 
 void _onPlayerCreated(OnPlayerCreated event){
   game.playerId = event.id;
-  playerUUID = event.uuid;
-  playerX = event.x;
-  playerY = event.y;
-  cameraCenter(playerX, playerY);
+  game.playerUUID = event.uuid;
+  game.playerX = event.x;
+  game.playerY = event.y;
+  cameraCenter(game.playerX, game.playerY);
 }
 
 void _joinRandomGame() {

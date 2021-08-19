@@ -132,8 +132,8 @@ void _parseTiles() {
 }
 
 void _parsePlayer() {
-  playerX = _consumeDouble();
-  playerY = _consumeDouble();
+  game.playerX = _consumeDouble();
+  game.playerY = _consumeDouble();
   playerWeapon = _consumeWeapon();
   playerHealth = _consumeDouble();
   playerMaxHealth = _consumeDouble();

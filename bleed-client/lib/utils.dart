@@ -15,15 +15,15 @@ import 'maths.dart';
 import 'state.dart';
 
 double getMouseRotation() {
-  return getRadionsBetween(playerX, playerY, mouseWorldX, mouseWorldY);
+  return getRadionsBetween(game.playerX, game.playerY, mouseWorldX, mouseWorldY);
 }
 
 double playerScreenPositionX() {
-  return playerX - cameraX;
+  return game.playerX - cameraX;
 }
 
 double playerScreenPositionY() {
-  return playerY - cameraY;
+  return game.playerY - cameraY;
 }
 
 dynamic getPlayerCharacter() {

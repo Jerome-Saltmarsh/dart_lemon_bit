@@ -6,8 +6,10 @@ import '../state.dart';
 void clearState(){
   print('clearState()');
   game.playerId = -1;
+  game.playerUUID = "";
+  game.playerX = -1;
+  game.playerY = -1;
   gameId = -1;
-  playerUUID = "";
   npcs.clear();
   players.clear();
   bullets.clear();
@@ -17,7 +19,5 @@ void clearState(){
   gameEvents.clear();
   playersTransforms.clear();
   tileTransforms.clear();
-  playerX = -1;
-  playerY = -1;
   mode = Mode.Play;
 }

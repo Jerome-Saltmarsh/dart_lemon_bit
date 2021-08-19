@@ -647,12 +647,12 @@ void drawPlayerHealth() {
   double halfMaxHealth = playerMaxHealth * 0.5;
   if (health > 0.5) {
     drawCharacterCircle(
-        playerX,
-        playerY,
+        game.playerX,
+        game.playerY,
         Color.lerp(Colors.yellow, Colors.green,
             (playerHealth - halfMaxHealth) / halfMaxHealth));
   } else {
-    drawCharacterCircle(playerX, playerY,
+    drawCharacterCircle(game.playerX, game.playerY,
         Color.lerp(Colors.red, Colors.yellow, playerHealth / halfMaxHealth));
   }
 }
