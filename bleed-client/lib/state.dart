@@ -7,8 +7,8 @@ import 'classes/Block.dart';
 import 'classes/Particle.dart';
 import 'classes/SpriteAnimation.dart';
 import '../common.dart';
-import '../constants.dart';
 import 'enums/Mode.dart';
+import 'instances/game.dart';
 
 Mode mode = Mode.Play;
 int frameRate = 5;
@@ -59,7 +59,6 @@ int handgunClipSize = 0;
 int handgunClips = 0;
 
 // Player State
-int playerId = idNotConnected;
 String playerUUID = "";
 double playerHealth = 0;
 double playerMaxHealth = 0;
@@ -70,7 +69,7 @@ double playerY = -1;
 Weapon playerWeapon = Weapon.Unarmed;
 
 // TODO Expensive string build
-String get session => '$gameId $playerId $playerUUID';
+String get session => '$gameId ${game.playerId} $playerUUID';
 
 void setHandgunClips(int value){
   if (value == handgunClips) return;

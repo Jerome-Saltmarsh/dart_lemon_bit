@@ -8,4 +8,6 @@ class Game {
   List<Offset> playerSpawnPoints = [];
   List<Offset> zombieSpawnPoints = [];
   List<List<Tile>> tiles = [];
+
+  int playerId = -1;
 }

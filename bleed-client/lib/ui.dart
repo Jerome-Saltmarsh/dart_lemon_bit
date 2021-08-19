@@ -12,6 +12,7 @@ import 'enums/InventoryItemType.dart';
 import 'enums/Mode.dart';
 import 'enums/Weapons.dart';
 import 'images.dart';
+import 'instances/game.dart';
 import 'instances/inventory.dart';
 import 'instances/settings.dart';
 import 'send.dart';
@@ -166,13 +167,12 @@ Widget buildGameUI(BuildContext context) {
 
   if (gameId < 0) {
     return column([
-      button('Open World', () {
-        send(ClientRequest.Game_Join_Open_World.index.toString());
-      }),
+      // button('Open World', () {
+      //   send(ClientRequest.Game_Join_Open_World.index.toString());
+      // }),
       button('Death Match', () {
-        send(ClientRequest.Game_Join_Random.index.toString());
+        requestJoinRandomGame();
       }),
-
       // button('Create Game', (){}),
       // button('Join Game', (){})
     ]);
@@ -180,7 +180,7 @@ Widget buildGameUI(BuildContext context) {
 
   if (editMode) return buildEditorUI();
 
-  if (playerId == -1) {
+  if (game.playerId == -1) {
     return text("player id not assigned");
   }
 
@@ -203,6 +203,10 @@ Widget buildGameUI(BuildContext context) {
   }
 
   return buildHud();
+}
+
+void requestJoinRandomGame() {
+  send(ClientRequest.Game_Join_Random.index.toString());
 }
 
 const DecorationImage _handgunImage = const DecorationImage(
@@ -387,7 +391,7 @@ Widget buildDebugPanel() {
     button("Spawn NPC", sendRequestSpawnNpc),
     button("Clear NPCS", sendRequestClearNpcs),
     text("Ping: ${ping.inMilliseconds}"),
-    text("Player Id: $playerId"),
+    text("Player Id: ${game.playerId}"),
     text("Player Health: $playerHealth / $playerMaxHealth"),
     text("Data Size: ${event.length}"),
     text("Frames since event: $framesSinceEvent"),

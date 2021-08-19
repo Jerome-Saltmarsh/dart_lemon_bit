@@ -7,6 +7,7 @@ import 'package:bleed_client/properties.dart';
 import 'connection.dart';
 import 'enums/Weapons.dart';
 import 'input.dart';
+import 'instances/game.dart';
 import 'send.dart';
 import 'state.dart';
 import 'updates/updateCharacters.dart';
@@ -38,7 +39,7 @@ void updatePlayMode() {
 }
 
 void updatePlayer() {
-  if (playerId < 0) return;
+  if (game.playerId < 0) return;
 
   sendRequestUpdatePlayer();
 

@@ -9,6 +9,7 @@ import 'package:bleed_client/game_engine/game_widget.dart';
 import 'common.dart';
 import 'constants.dart';
 import 'enums/Weapons.dart';
+import 'instances/game.dart';
 import 'keys.dart';
 import 'maths.dart';
 import 'state.dart';
@@ -26,13 +27,13 @@ double playerScreenPositionY() {
 }
 
 dynamic getPlayerCharacter() {
-  if (playerId == idNotConnected) return null;
-  return players.firstWhere((element) => element[4] == playerId, orElse: () {
+  if (game.playerId == idNotConnected) return null;
+  return players.firstWhere((element) => element[4] == game.playerId, orElse: () {
     return null;
   });
 }
 
-bool get playerAssigned => playerId >= 0;
+bool get playerAssigned => game.playerId >= 0;
 
 Weapon previousWeapon;
 

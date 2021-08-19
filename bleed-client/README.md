@@ -33,6 +33,8 @@
 [ ] Fix Block Collision Bug
 [ ] Refactor inventory painter
 [ ] Inventory Shotgun
+[ ] On Spawn - center camera
+[x] Auto join sandbox on connect
 [x] AudioPlayer Pool
 [x] Zombie Spawn Points
 [x] Editor Modify Tiles

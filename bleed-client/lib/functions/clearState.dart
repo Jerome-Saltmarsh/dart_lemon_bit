@@ -1,10 +1,11 @@
 import 'package:bleed_client/enums/Mode.dart';
+import 'package:bleed_client/instances/game.dart';
 
 import '../state.dart';
 
 void clearState(){
   print('clearState()');
-  playerId = -1;
+  game.playerId = -1;
   gameId = -1;
   playerUUID = "";
   npcs.clear();

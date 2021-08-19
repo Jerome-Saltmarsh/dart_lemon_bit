@@ -10,12 +10,12 @@ import 'state.dart';
 
 // state
 WebSocketChannel _webSocketChannel;
-final StreamController onConnectedController = StreamController();
-final StreamController onDisconnected = StreamController();
-final StreamController onError = StreamController();
-final StreamController onConnectError = StreamController();
-final StreamController onDone = StreamController();
-final StreamController onEvent = StreamController();
+final StreamController onConnectedController = StreamController.broadcast();
+final StreamController onDisconnected = StreamController.broadcast();
+final StreamController onError = StreamController.broadcast();
+final StreamController onConnectError = StreamController.broadcast();
+final StreamController onDone = StreamController.broadcast();
+final StreamController onEvent = StreamController.broadcast();
 bool connected = false;
 bool connecting = false;
 

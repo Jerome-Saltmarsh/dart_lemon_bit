@@ -15,6 +15,7 @@ import 'enums/Weapons.dart';
 import 'functions/onGameEvent.dart';
 import 'instances/inventory.dart';
 import 'state.dart';
+import 'streams/onPlayerCreated.dart';
 
 // state
 final List _cache = [];
@@ -203,11 +204,11 @@ void _parseBlocks() {
 }
 
 void _parsePlayerCreated() {
-  print("_parsePlayerCreated()");
-  playerId = _consumeInt();
-  playerUUID = _consumeString();
-  playerX = _consumeDouble();
-  playerY = _consumeDouble();
+  int id = _consumeInt();
+  String uuid = _consumeString();
+  double x = _consumeDouble();
+  double y = _consumeDouble();
+  onPlayerCreated.add(OnPlayerCreated(uuid, id, x, y));
 }
 
 void _next() {

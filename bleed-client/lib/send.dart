@@ -1,8 +1,10 @@
 
+import 'package:bleed_client/common.dart';
 import 'package:bleed_client/enums/ClientRequest.dart';
 
 import 'connection.dart';
 import 'enums/Weapons.dart';
+import 'instances/game.dart';
 import 'state.dart';
 
 
@@ -37,11 +39,15 @@ void sendRequestUpdatePlayer() {
   _buffer.clear();
   _write(ClientRequest.Game_Update.index);
   _write(gameId);
-  _write(playerId);
+  _write(game.playerId);
   _write(playerUUID);
   _write(requestCharacterState);
   _write(requestDirection);
-  _write(requestAim.toStringAsFixed(2));
+  if(requestCharacterState == characterStateFiring){
+    _write(requestAim.toStringAsFixed(2));
+  }else{
+    _write(requestAim.toInt());
+  }
   _write(serverFrame);
   send(_buffer.toString());
 }
