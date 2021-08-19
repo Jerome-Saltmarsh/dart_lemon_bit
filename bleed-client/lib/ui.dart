@@ -246,7 +246,7 @@ Widget buildWeaponButton(Weapon weapon) {
         width: 120,
         height: 50,
         decoration: BoxDecoration(
-            border: playerWeapon == weapon
+            border: game.playerWeapon == weapon
                 ? Border.all(
                     color: Colors.white, width: 5.0, style: BorderStyle.solid)
                 : null,
@@ -365,13 +365,13 @@ Widget buildHud() {
     bottom: 0,
     child: Row(
       children: [
-        buildWeaponButton(playerWeapon),
+        buildWeaponButton(game.playerWeapon),
         Container(
             color: Colors.black87,
             alignment: Alignment.center,
             height: 50,
             width: 100,
-            child: text(handgunRounds.toString(), fontSize: 28)),
+            child: text(game.roundsRemaining.toString(), fontSize: 28)),
       ],
     ),
   );

@@ -243,6 +243,12 @@ extension GameFunctions on Game {
         dispatch(GameEventType.Handgun_Fired, x, y, bullet.xv, bullet.yv);
         break;
       case Weapon.Shotgun:
+        if (player.shotgunRounds <= 0) {
+          player.stateDuration = settingsClipEmptyCooldown;
+          dispatch(GameEventType.Clip_Empty, x, y, 0, 0);
+          return;
+        }
+        player.shotgunRounds--;
         player.xv += velX(player.aimAngle + pi, 1);
         player.yv += velY(player.aimAngle + pi, 1);
         for (int i = 0; i < settingsShotgunBulletsPerShot; i++) {
@@ -303,6 +309,12 @@ extension GameFunctions on Game {
         break;
       case CharacterState.Reloading:
         switch (character.weapon) {
+          case Weapon.Shotgun:
+            if(character is Player){
+                character.shotgunRounds = settings.shotgunClipSize;
+                character.stateDuration = settingsHandgunReloadDuration;
+            }
+            break;
           case Weapon.HandGun:
             if (character is Player &&
                 character.handgunRounds <
@@ -759,6 +771,7 @@ extension GameFunctions on Game {
         ]),
         name: name);
     players.add(player);
+    player.shotgunRounds = settings.shotgunClipSize;
     return player;
   }
 

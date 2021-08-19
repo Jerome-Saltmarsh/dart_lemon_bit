@@ -135,7 +135,7 @@ void _parseTiles() {
 void _parsePlayer() {
   game.playerX = _consumeDouble();
   game.playerY = _consumeDouble();
-  playerWeapon = _consumeWeapon();
+  game.playerWeapon = _consumeWeapon();
   playerHealth = _consumeDouble();
   playerMaxHealth = _consumeDouble();
   int stamina = _consumeInt();
@@ -146,6 +146,7 @@ void _parsePlayer() {
   }
   playerMaxStamina = _consumeInt();
   setHandgunRounds(_consumeInt());
+  game.shotgunRounds = _consumeInt();
 }
 
 void _parseInventory() {

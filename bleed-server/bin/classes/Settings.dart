@@ -12,6 +12,7 @@ class Settings {
   final double itemCollectRadius = 10;
 
   final int handgunClipSize = 24;
+  final int shotgunClipSize = 6;
 
   final double grenadeGravity = 0.06;
 

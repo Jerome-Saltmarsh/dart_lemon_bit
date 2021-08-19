@@ -46,24 +46,12 @@ List<RSTransform> tileTransforms = [];
 List<Rect> tileRects = [];
 Map<int, bool> gameEvents = Map();
 
-int handgunRounds = 0;
-int handgunClipSize = 0;
-int handgunClips = 0;
-
 // Player State
 double playerHealth = 0;
 double playerMaxHealth = 0;
 int playerStamina = 0;
 int playerMaxStamina = 0;
-Weapon playerWeapon = Weapon.Unarmed;
 
 // TODO Expensive string build
 String get session => '$gameId ${game.playerId} ${game.playerUUID}';
 
-void setHandgunClips(int value){
-  if (value == handgunClips) return;
-  if (value > handgunClips){
-    playAudioReloadHandgun(game.playerX, game.playerY);
-  }
-  handgunClips = value;
-}

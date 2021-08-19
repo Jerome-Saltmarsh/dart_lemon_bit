@@ -162,8 +162,9 @@ void cameraCenter(double x, double y) {
 }
 
 void setHandgunRounds(int value) {
-  if (handgunRounds == value) return;
-  handgunRounds = value;
+  if (game.handgunRounds == value) return;
+  game.handgunRounds = value;
+  // TODO only redraw ammo box
   redrawUI();
 }
 

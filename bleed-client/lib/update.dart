@@ -45,9 +45,9 @@ void updatePlayer() {
   sendRequestUpdatePlayer();
 
   // on player weapon changed
-  if (previousWeapon != playerWeapon) {
-    previousWeapon = playerWeapon;
-    switch (playerWeapon) {
+  if (previousWeapon != game.playerWeapon) {
+    previousWeapon = game.playerWeapon;
+    switch (game.playerWeapon) {
       case Weapon.HandGun:
         playAudioReload(screenCenterWorldX, screenCenterWorldY);
         break;

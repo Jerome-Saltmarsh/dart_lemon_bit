@@ -1,6 +1,8 @@
 
 import 'dart:ui';
 
+import 'package:bleed_client/enums/Weapons.dart';
+
 import '../enums.dart';
 import 'Particle.dart';
 
@@ -20,4 +22,19 @@ class Game {
   String playerUUID = "";
   double playerX = -1;
   double playerY = -1;
+  Weapon playerWeapon = Weapon.Unarmed;
+  int handgunRounds = 0;
+  int shotgunRounds = 0;
+
+  int get roundsRemaining{
+    switch(playerWeapon){
+      case Weapon.HandGun:
+        return handgunRounds;
+      case Weapon.Shotgun:
+        return shotgunRounds;
+      default:
+        return 0;
+    }
+  }
 }
+
