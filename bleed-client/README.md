@@ -33,6 +33,7 @@
 [ ] Fix Block Collision Bug
 [ ] Refactor inventory painter
 [ ] Inventory Shotgun
+[x] AudioPlayer Pool
 [x] Zombie Spawn Points
 [x] Editor Modify Tiles
 [x] Editor Pan Camera

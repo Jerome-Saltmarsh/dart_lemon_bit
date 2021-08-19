@@ -330,10 +330,11 @@ Widget buildHud() {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             button(playMode ? 'Edit' : "Play", toggleMode),
-            text(
-                'mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
+            text('mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
             text('Stamina: $playerStamina / $playerMaxStamina'),
             text('x: $playerX, y: $playerY'),
+            text("zombies: ${npcs.length}"),
+            text("players: ${players.length}"),
           ],
         )
       ],

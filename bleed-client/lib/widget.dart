@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:flutter/material.dart';
 import 'package:bleed_client/update.dart';
@@ -43,6 +44,7 @@ class BleedWidget extends GameWidget {
   @override
   Future init() async {
     await loadImages();
+    initAudioPlayers();
     loadRects();
     initEditor();
     // todo move this
