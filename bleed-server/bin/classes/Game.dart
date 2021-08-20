@@ -65,7 +65,7 @@ extension GameFunctions on Game {
     compileState(this);
     gameEvents.clear();
 
-    if (frame % 5 == 0 && npcs.length < 1){
+    if (frame % 5 == 0 && npcs.length < 1) {
       spawnRandomNpc();
     }
   }
@@ -113,13 +113,33 @@ extension GameFunctions on Game {
         npc.idle();
         return;
       }
+
       characterFaceObject(npc, npc.target);
       if (npcWithinStrikeRange(npc, npc.target)) {
         setCharacterState(npc, CharacterState.Striking);
         changeCharacterHealth(npc.target, -zombieStrikeDamage);
         dispatch(GameEventType.Zombie_Strike, npc.x, npc.y, 0, 0);
       } else {
-        npc.walk();
+        if (scene.pathClear(npc.x, npc.y, npc.target.x, npc.target.y)) {
+          npc.walk();
+          return;
+        }
+        Vector2 left = scene.getLeft(npc.x, npc.y, npc.target.x, npc.target.y);
+        if (scene.pathClear(npc.x, npc.y, left.x, left.y)) {
+          characterFace(npc, left.x, left.y);
+          npc.walk();
+          return;
+        }
+
+        Vector2 right = scene.getRight(npc.x, npc.y, npc.target.x, npc.target.y);
+        if (scene.pathClear(npc.x, npc.y, right.x, right.y)) {
+          characterFace(npc, right.x, right.y);
+          npc.walk();
+          return;
+        }
+
+        npc.idle();
+        return;
       }
       return;
     }
@@ -257,24 +277,24 @@ extension GameFunctions on Game {
         Bullet bullet = bullets.last;
         player.state = CharacterState.Firing;
         player.stateDuration = shotgunCoolDown;
-        dispatch(GameEventType.Shotgun_Fired, player.x, player.y,
-            bullet.xv, bullet.yv);
+        dispatch(GameEventType.Shotgun_Fired, player.x, player.y, bullet.xv,
+            bullet.yv);
         break;
       case Weapon.SniperRifle:
         Bullet bullet = spawnBullet(player);
         player.state = CharacterState.Firing;
         player.stateDuration = settingsSniperCooldown;
         ;
-        dispatch(GameEventType.SniperRifle_Fired, player.x, player.y,
-            bullet.xv, bullet.yv);
+        dispatch(GameEventType.SniperRifle_Fired, player.x, player.y, bullet.xv,
+            bullet.yv);
         break;
       case Weapon.MachineGun:
         Bullet bullet = spawnBullet(player);
         player.state = CharacterState.Firing;
         player.stateDuration = settings.machineGunCoolDown;
         ;
-        dispatch(GameEventType.MachineGun_Fired, player.x, player.y,
-            bullet.xv, bullet.yv);
+        dispatch(GameEventType.MachineGun_Fired, player.x, player.y, bullet.xv,
+            bullet.yv);
         break;
     }
   }
@@ -310,15 +330,14 @@ extension GameFunctions on Game {
       case CharacterState.Reloading:
         switch (character.weapon) {
           case Weapon.Shotgun:
-            if(character is Player){
-                character.shotgunRounds = settings.shotgunClipSize;
-                character.stateDuration = settingsHandgunReloadDuration;
+            if (character is Player) {
+              character.shotgunRounds = settings.shotgunClipSize;
+              character.stateDuration = settingsHandgunReloadDuration;
             }
             break;
           case Weapon.HandGun:
             if (character is Player &&
-                character.handgunRounds <
-                    settings.handgunClipSize &&
+                character.handgunRounds < settings.handgunClipSize &&
                 character.inventory.handgunClips > 0) {
               character.handgunRounds = settings.handgunClipSize;
               character.inventory.remove(InventoryItemType.HandgunClip);
@@ -360,7 +379,7 @@ extension GameFunctions on Game {
     }
 
     for (int i = 0; i < bullets.length; i++) {
-      if (scene.tileBoundaryAt(bullets[i].x, bullets[i].y)){
+      if (scene.tileBoundaryAt(bullets[i].x, bullets[i].y)) {
         bullets.removeAt(i);
         i--;
       }
@@ -776,7 +795,7 @@ extension GameFunctions on Game {
     Npc npc;
 
     for (int i = 0; i < npcs.length; i++) {
-      if (npcs[i].targetSet) continue;
+      if (npcs[i].targetSet) ;
       npc = npcs[i];
       for (int p = minP; p < players.length; p++) {
         if (players[p].x < npc.x - zombieViewRange) {
@@ -784,8 +803,9 @@ extension GameFunctions on Game {
           break;
         }
         if (players[p].x > npc.x + zombieViewRange) continue;
-        if (abs(players[p].y - npc.y) > zombieViewRange) continue;
-        if (!scene.pathClear(npc.x, npc.y, players[p].x, players[p].y)) continue;
+        if (diff(players[p].y, npc.y) > zombieViewRange) continue;
+        if (!scene.pathClear(npc.x, npc.y, players[p].x, players[p].y))
+          continue;
         npc.target = players[p];
         break;
       }
@@ -841,13 +861,11 @@ extension GameFunctions on Game {
   }
 
   void npcSetRandomDestination(Npc npc) {
-    npcSetDestination(npc,
-        npc.x + giveOrTake(settingsNpcRoamRange),
-        npc.y + giveOrTake(settingsNpcRoamRange)
-    );
+    npcSetDestination(npc, npc.x + giveOrTake(settingsNpcRoamRange),
+        npc.y + giveOrTake(settingsNpcRoamRange));
   }
 
-  void npcSetDestination(Npc npc, double x, double y){
+  void npcSetDestination(Npc npc, double x, double y) {
     if (!scene.pathClear(npc.x, npc.y, x, y)) return;
     npc.xDes = x;
     npc.yDes = y;

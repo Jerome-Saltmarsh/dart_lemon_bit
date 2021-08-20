@@ -28,10 +28,10 @@
 [ ] Fix Block Collision Bug
 [ ] Refactor inventory painter
 [ ] Inventory Shotgun
-[ ] NPC Pathfinding
-[ ] Use Health Kit
 [ ] Fix Npc Wander
 [ ] FIX Throw Grenade Angle
+[ ] NPC Pathfinding
+[x] Use Health Kit
 [x] UI Show rounds remaining
 [x] On Spawn - center camera
 [x] Space bar pan camera
