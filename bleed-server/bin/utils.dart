@@ -36,11 +36,6 @@ bool withinViewRange(Npc npc, GameObject target) {
   return distanceBetween(npc, target) < zombieViewRange;
 }
 
-void npcSetRandomDestination(Npc npc) {
-  npc.xDes = npc.x + giveOrTake(settingsNpcRoamRange);
-  npc.yDes = npc.y + giveOrTake(settingsNpcRoamRange);
-}
-
 // Expensive method
 bool arrivedAtDestination(Npc npc) {
   if (diff(npc.x, npc.xDes) > destinationArrivedDistance) return false;
@@ -82,7 +77,8 @@ void faceDestination(Npc npc) {
 }
 
 void characterFace(Character character, double x, double y) {
-  setDirection(character, convertAngleToDirection(radiansBetween2(character, x, y)));
+  setDirection(
+      character, convertAngleToDirection(radiansBetween2(character, x, y)));
 }
 
 void characterFaceObject(Character character, GameObject target) {
@@ -152,8 +148,8 @@ List<List<Tile>> generateTiles() {
   return tiles;
 }
 
-double getWeaponDamage(Weapon weapon){
-  switch (weapon){
+double getWeaponDamage(Weapon weapon) {
+  switch (weapon) {
     case Weapon.HandGun:
       return settingsWeaponDamageHandgun;
     case Weapon.Shotgun:
@@ -167,9 +163,8 @@ double getWeaponDamage(Weapon weapon){
   }
 }
 
-
-double getWeaponRange(Weapon weapon){
-  switch (weapon){
+double getWeaponRange(Weapon weapon) {
+  switch (weapon) {
     case Weapon.HandGun:
       return settingsWeaponRangeHandgun;
     case Weapon.Shotgun:
@@ -183,8 +178,8 @@ double getWeaponRange(Weapon weapon){
   }
 }
 
-double getWeaponBulletSpeed(Weapon weapon){
-  switch (weapon){
+double getWeaponBulletSpeed(Weapon weapon) {
+  switch (weapon) {
     case Weapon.HandGun:
       return settingsWeaponBulletSpeedHandGun;
     case Weapon.Shotgun:
@@ -198,23 +193,24 @@ double getWeaponBulletSpeed(Weapon weapon){
   }
 }
 
-void applyMovement(GameObject gameObject){
+void applyMovement(GameObject gameObject) {
   gameObject.x += gameObject.xv;
   gameObject.y += gameObject.yv;
   gameObject.z += gameObject.zv;
 }
 
-void applyFriction(GameObject gameObject, double value){
+void applyFriction(GameObject gameObject, double value) {
   gameObject.xv *= value;
   gameObject.yv *= value;
 }
 
-bool npcWithinStrikeRange(Npc npc, GameObject target){
-  if(abs(npc.x - npc.target.x) > settingsZombieStrikeRange) return false;
-  if(abs(npc.y - npc.target.y) > settingsZombieStrikeRange) return false;
+bool npcWithinStrikeRange(Npc npc, GameObject target) {
+  if (diff(npc.x, npc.target.x) > settingsZombieStrikeRange) return false;
+  if (diff(npc.y, npc.target.y) > settingsZombieStrikeRange) return false;
   return true;
 }
 
-void sortBlocks(List<Block> blocks){
+void sortBlocks(List<Block> blocks) {
   blocks.sort((a, b) => a.leftX < b.leftX ? -1 : 1);
 }
+

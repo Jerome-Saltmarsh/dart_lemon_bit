@@ -31,6 +31,7 @@
 [ ] NPC Pathfinding
 [ ] Use Health Kit
 [ ] Fix Npc Wander
+[ ] FIX Throw Grenade Angle
 [x] UI Show rounds remaining
 [x] On Spawn - center camera
 [x] Space bar pan camera

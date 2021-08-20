@@ -55,7 +55,7 @@ class Game {
 
 extension GameFunctions on Game {
   void updateAndCompile() {
-    _updatePlayers();
+    _updatePlayersAndNpcs();
     _updateCollisions();
     _updateBullets();
     _updateBullets(); // called twice to fix collision detection
@@ -65,7 +65,7 @@ extension GameFunctions on Game {
     compileState(this);
     gameEvents.clear();
 
-    if(frame % 5 == 0 && npcs.length < 300){
+    if (frame % 5 == 0 && npcs.length < 1){
       spawnRandomNpc();
     }
   }
@@ -125,7 +125,6 @@ extension GameFunctions on Game {
     }
 
     if (npc.destinationSet) {
-      // refactor t
       if (arrivedAtDestination(npc)) {
         npc.clearDestination();
         npc.idle();
@@ -138,7 +137,7 @@ extension GameFunctions on Game {
     npc.idle();
   }
 
-  void _updatePlayers() {
+  void _updatePlayersAndNpcs() {
     for (int i = 0; i < players.length; i++) {
       updatePlayer(players[i]);
       updateCharacter(players[i]);
@@ -361,7 +360,7 @@ extension GameFunctions on Game {
     }
 
     for (int i = 0; i < bullets.length; i++) {
-      if (tileBoundaryAt(bullets[i].x, bullets[i].y)){
+      if (scene.tileBoundaryAt(bullets[i].x, bullets[i].y)){
         bullets.removeAt(i);
         i--;
       }
@@ -454,14 +453,6 @@ extension GameFunctions on Game {
           }
         }
       }
-    }
-  }
-
-  void _updateGameEvents() {
-    for (int i = 0; i < gameEvents.length; i++) {
-      if (gameEvents[i].frameDuration-- > 0) continue;
-      gameEvents.removeAt(i);
-      i--;
     }
   }
 
@@ -572,19 +563,19 @@ extension GameFunctions on Game {
       character.yv *= velocityFriction;
     }
 
-    while (tileBoundaryAt(character.left, character.top)) {
+    while (scene.tileBoundaryAt(character.left, character.top)) {
       character.x++;
       character.y++;
     }
-    while (tileBoundaryAt(character.right, character.top)) {
+    while (scene.tileBoundaryAt(character.right, character.top)) {
       character.x--;
       character.y++;
     }
-    while (tileBoundaryAt(character.left, character.bottom)) {
+    while (scene.tileBoundaryAt(character.left, character.bottom)) {
       character.x++;
       character.y--;
     }
-    while (tileBoundaryAt(character.right, character.bottom)) {
+    while (scene.tileBoundaryAt(character.right, character.bottom)) {
       character.x--;
       character.y--;
     }
@@ -792,13 +783,9 @@ extension GameFunctions on Game {
           minP++;
           break;
         }
-        if (players[p].x > npc.x + zombieViewRange) {
-          break;
-        }
-        if (abs(players[p].y - npc.y) > zombieViewRange) {
-          continue;
-        }
-
+        if (players[p].x > npc.x + zombieViewRange) continue;
+        if (abs(players[p].y - npc.y) > zombieViewRange) continue;
+        if (!scene.pathClear(npc.x, npc.y, players[p].x, players[p].y)) continue;
         npc.target = players[p];
         break;
       }
@@ -811,10 +798,6 @@ extension GameFunctions on Game {
       if (npc.destinationSet) continue;
       if (randomBool()) return;
       npcSetRandomDestination(npc);
-
-      if(!npc.destinationSet){
-        throw Exception("hello");
-      }
     }
   }
 
@@ -857,36 +840,17 @@ extension GameFunctions on Game {
     character.collidable = true;
   }
 
-  Tile tileAt(double x, double y) {
-    double projectedX = projectedToWorldX(x, y);
-    if (projectedX < 0) return Tile.Boundary;
-
-    double projectedY = projectedToWorldY(x, y);
-    if (projectedY < 0) return Tile.Boundary;
-
-    double tileX = projectedX / tileSize;
-    double tileY = projectedY / tileSize;
-
-    int tileXInt = tileX.toInt();
-    int tileYInt = tileY.toInt();
-
-    if (tileX > scene.columns) return Tile.Boundary;
-    if (tileY > scene.rows) return Tile.Boundary;
-
-    return scene.tiles[tileYInt][tileXInt];
+  void npcSetRandomDestination(Npc npc) {
+    npcSetDestination(npc,
+        npc.x + giveOrTake(settingsNpcRoamRange),
+        npc.y + giveOrTake(settingsNpcRoamRange)
+    );
   }
 
-  bool tileBoundaryAt(double x, double y) {
-    Tile tile = tileAt(x, y);
-    return tile == Tile.Grass || tile == Tile.Boundary;
-  }
-
-  double projectedToWorldX(double x, double y) {
-    return y - x;
-  }
-
-  double projectedToWorldY(double x, double y) {
-    return x + y;
+  void npcSetDestination(Npc npc, double x, double y){
+    if (!scene.pathClear(npc.x, npc.y, x, y)) return;
+    npc.xDes = x;
+    npc.yDes = y;
   }
 }
 

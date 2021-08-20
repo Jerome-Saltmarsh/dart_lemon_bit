@@ -6,7 +6,6 @@ import 'classes/Inventory.dart';
 import 'classes/Player.dart';
 import 'enums.dart';
 import 'enums/ServerResponse.dart';
-import 'settings.dart';
 
 // constants
 
