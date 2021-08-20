@@ -29,7 +29,8 @@
 [ ] Refactor inventory painter
 [ ] Inventory Shotgun
 [ ] NPC Pathfinding
-[ ] UI Show rounds remaining
+[ ] Use Health Kit
+[x] UI Show rounds remaining
 [x] On Spawn - center camera
 [x] Space bar pan camera
 [x] Auto join sandbox on connect

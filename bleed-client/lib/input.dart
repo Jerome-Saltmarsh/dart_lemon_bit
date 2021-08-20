@@ -5,6 +5,7 @@ import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_input.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/server.dart';
 import 'package:flutter/services.dart';
 
 import '../common.dart';
@@ -18,19 +19,32 @@ import 'maths.dart';
 import 'state.dart';
 import 'utils.dart';
 
-
 LogicalKeyboardKey _keyReload = LogicalKeyboardKey.keyR;
 
 bool get keyPressedSpawnZombie => keyPressed(LogicalKeyboardKey.keyP);
+
 bool get keyEquipHandGun => keyPressed(LogicalKeyboardKey.digit1);
+
 bool get keyEquipShotgun => keyPressed(LogicalKeyboardKey.digit2);
+
 bool get keyEquipSniperRifle => keyPressed(LogicalKeyboardKey.digit3);
+
 bool get keyEquipMachineGun => keyPressed(LogicalKeyboardKey.digit4);
+
 bool get keyAimPressed => keyPressedSpace;
+
 bool get keySprintPressed => keyPressed(LogicalKeyboardKey.shiftLeft);
+
 bool get keyPressedReload => keyPressed(_keyReload);
 
+bool get keyPressedUseMedKit =>  keyPressed(LogicalKeyboardKey.keyQ);
+
+bool get keyPressedDisconnect =>  keyPressed(LogicalKeyboardKey.escape);
+
+bool get keyPressedThrowGrenade =>  keyPressed(LogicalKeyboardKey.keyG);
+
 bool _throwingGrenade = false;
+bool _healing = false;
 
 void readPlayerInput() {
   if (!playerAssigned) return;
@@ -40,20 +54,29 @@ void readPlayerInput() {
     return;
   }
 
-  if (keyPressed(LogicalKeyboardKey.escape)){
+  if (keyPressedDisconnect) {
     disconnect();
   }
 
-  if (keyPressed(LogicalKeyboardKey.keyG)){
-    if(!_throwingGrenade && mouseAvailable) {
+  if (keyPressedUseMedKit) {
+    if (!_healing) {
+      sendClientRequestPlayerUseMedKit();
+    }
+  } else {
+    _healing = false;
+  }
+
+  if (keyPressedThrowGrenade) {
+    if (!_throwingGrenade && mouseAvailable) {
       _throwingGrenade = true;
-      double mouseDistance = distance(game.playerX, game.playerY, mouseWorldX, mouseWorldY);
+      double mouseDistance =
+          distance(game.playerX, game.playerY, mouseWorldX, mouseWorldY);
       double maxRange = 400;
       double throwDistance = min(mouseDistance, maxRange);
       double strength = throwDistance / maxRange;
       requestThrowGrenade(strength);
     }
-  } else if (_throwingGrenade){
+  } else if (_throwingGrenade) {
     _throwingGrenade = false;
   }
   if (mouseAvailable) {
@@ -68,12 +91,11 @@ void readPlayerInput() {
   if (mouseClicked || keyPressedF || keyPressedSpace) {
     requestCharacterState = characterStateFiring;
   } else {
-
-    if (keyPressed(LogicalKeyboardKey.keyQ) && mouseAvailable){
+    if (keyPressed(LogicalKeyboardKey.keyQ) && mouseAvailable) {
       requestDirection = convertAngleToDirection(requestAim);
-      if(keySprintPressed){
+      if (keySprintPressed) {
         requestCharacterState = characterStateRunning;
-      }else{
+      } else {
         requestCharacterState = characterStateWalking;
       }
       return;
@@ -86,16 +108,17 @@ void readPlayerInput() {
         double mouseWorldX = mouseX + cameraX;
         double mouseWorldY = mouseY + cameraY;
         for (dynamic npc in game.npcs) {
-          if (distance(npc[x], npc[y], mouseWorldX, mouseWorldY) > playerAutoAimDistance) continue;
+          if (distance(npc[x], npc[y], mouseWorldX, mouseWorldY) >
+              playerAutoAimDistance) continue;
           requestCharacterState = characterStateAiming;
           requestDirection = convertAngleToDirection(requestAim);
           break;
         }
       }
     } else {
-      if(keySprintPressed){
+      if (keySprintPressed) {
         requestCharacterState = characterStateRunning;
-      }else{
+      } else {
         requestCharacterState = characterStateWalking;
       }
     }
@@ -131,8 +154,7 @@ int getKeyDirection() {
   return directionNone;
 }
 
-Block createBlock2(double x, double y, double width, double length){
-
+Block createBlock2(double x, double y, double width, double length) {
   double halfWidth = width * 0.5;
   double halfLength = length * 0.5;
 
@@ -154,7 +176,8 @@ Block createBlock2(double x, double y, double width, double length){
   double leftX = x + dX + aX;
   double leftY = y + dY + aY;
 
-  Block block = createBlock(topX, topY, rightX, rightY, bottomX, bottomY, leftX, leftY);
+  Block block =
+      createBlock(topX, topY, rightX, rightY, bottomX, bottomY, leftX, leftY);
 
   blockHouses.add(block);
   return block;

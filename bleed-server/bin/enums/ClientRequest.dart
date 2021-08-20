@@ -1,4 +1,4 @@
-enum ClientRequest {
+enum ClientRequest{
   Game_Join_Open_World,
   Game_Join_Random,
   Game_Create,
@@ -8,5 +8,6 @@ enum ClientRequest {
   Player_Equip,
   Spawn_Npc,
   Player_Throw_Grenade,
+  Player_Use_MedKit,
   Ping,
 }

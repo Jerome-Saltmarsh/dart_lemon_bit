@@ -8,5 +8,6 @@ enum ClientRequest{
   Player_Equip,
   Spawn_Npc,
   Player_Throw_Grenade,
+  Player_Use_MedKit,
   Ping,
 }

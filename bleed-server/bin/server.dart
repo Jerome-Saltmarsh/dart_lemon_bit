@@ -5,6 +5,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'classes/Game.dart';
 import 'classes.dart';
+import 'classes/Inventory.dart';
 import 'classes/Player.dart';
 import 'compile.dart';
 import 'enums/ClientRequest.dart';
@@ -122,6 +123,28 @@ void main() {
           game.setCharacterState(player, requestedState);
           sendCompiledPlayerState(game, player);
           return;
+
+        case ClientRequest.Player_Use_MedKit:
+          Game? game = gameManager.findGameById(arguments[1]);
+          if (game == null) {
+            errorGameNotFound();
+            return;
+          }
+          Player? player = game.findPlayerById(int.parse(arguments[2]));
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+          if (arguments[3] != player.uuid) {
+            errorInvalidPlayerUUID();
+            return;
+          }
+
+          int index = player.inventory.items.indexWhere((element) => element.type == InventoryItemType.HealthPack);
+          if (index == -1) return;
+          player.health = player.maxHealth;
+          player.inventory.items.removeAt(index);
+          break;
 
         case ClientRequest.Game_Create:
         // print("ClientRequest.Game_Create");
