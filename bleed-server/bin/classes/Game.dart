@@ -55,7 +55,7 @@ class Game {
 
 extension GameFunctions on Game {
   void updateAndCompile() {
-    _updateCharacters();
+    _updatePlayers();
     _updateCollisions();
     _updateBullets();
     _updateBullets(); // called twice to fix collision detection
@@ -125,6 +125,7 @@ extension GameFunctions on Game {
     }
 
     if (npc.destinationSet) {
+      // refactor t
       if (arrivedAtDestination(npc)) {
         npc.clearDestination();
         npc.idle();
@@ -137,7 +138,7 @@ extension GameFunctions on Game {
     npc.idle();
   }
 
-  void _updateCharacters() {
+  void _updatePlayers() {
     for (int i = 0; i < players.length; i++) {
       updatePlayer(players[i]);
       updateCharacter(players[i]);
@@ -810,6 +811,10 @@ extension GameFunctions on Game {
       if (npc.destinationSet) continue;
       if (randomBool()) return;
       npcSetRandomDestination(npc);
+
+      if(!npc.destinationSet){
+        throw Exception("hello");
+      }
     }
   }
 

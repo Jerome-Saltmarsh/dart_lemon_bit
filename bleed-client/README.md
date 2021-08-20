@@ -30,6 +30,7 @@
 [ ] Inventory Shotgun
 [ ] NPC Pathfinding
 [ ] Use Health Kit
+[ ] Fix Npc Wander
 [x] UI Show rounds remaining
 [x] On Spawn - center camera
 [x] Space bar pan camera

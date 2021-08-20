@@ -41,8 +41,11 @@ void npcSetRandomDestination(Npc npc) {
   npc.yDes = npc.y + giveOrTake(settingsNpcRoamRange);
 }
 
+// Expensive method
 bool arrivedAtDestination(Npc npc) {
-  return distanceFromDestination(npc) <= destinationArrivedDistance;
+  if (diff(npc.x, npc.xDes) > destinationArrivedDistance) return false;
+  if (diff(npc.y, npc.yDes) > destinationArrivedDistance) return false;
+  return true;
 }
 
 int lastUpdateFrame(dynamic character) {

@@ -139,7 +139,8 @@ void main() {
             errorInvalidPlayerUUID();
             return;
           }
-
+          if (player.health == player.maxHealth) return;
+          if (player.dead) return;
           int index = player.inventory.items.indexWhere((element) => element.type == InventoryItemType.HealthPack);
           if (index == -1) return;
           player.health = player.maxHealth;

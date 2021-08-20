@@ -51,6 +51,10 @@ double abs(double value) {
   return value;
 }
 
+double diff(double a, double b){
+  return abs(a - b);
+}
+
 // utility methods
 int millisecondsSince(DateTime value) {
   return durationSince(value).inMilliseconds;
