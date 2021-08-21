@@ -86,10 +86,10 @@ extension SceneFunctions on Scene {
   int _sortNodes(TileNodeVisit a, TileNodeVisit b){
     int scoreA = a.travelled + a.remaining;
     int scoreB = b.travelled + b.remaining;
-    if (scoreA < scoreB) return -1;
-    if (scoreA > scoreB) return 1;
-    if (a.remaining < b.remaining) return -1;
-    if (a.remaining > b.remaining) return 1;
+    if (scoreA < scoreB) return 1;
+    if (scoreA > scoreB) return -1;
+    if (a.remaining < b.remaining) return 1;
+    if (a.remaining > b.remaining) return -1;
     return 0;
   }
 
@@ -106,20 +106,21 @@ extension SceneFunctions on Scene {
     List<TileNodeVisit> visits = [TileNodeVisit(null, remaining, startNode)];
     List<TileNode> visited = [startNode];
 
-    void visit(TileNode tileNode) {
+    void visit(TileNode tileNode, TileNodeVisit previous) {
       if (!tileNode.open) return;
       if (visited.contains(tileNode)) return;
 
       int remaining =
           diffInt(tileNode.x, endNode.x) + diffInt(tileNode.y, endNode.y);
       TileNodeVisit tileNodeVisit =
-          TileNodeVisit(visits[0], remaining, tileNode);
+          TileNodeVisit(previous, remaining, tileNode);
       visits.add(tileNodeVisit);
+      visited.add(tileNode);
     }
 
     while (visits.isNotEmpty) {
-      if (visits[0].tileNode == endNode) {
-        TileNodeVisit visit = visits[0];
+      if (visits.last.tileNode == endNode) {
+        TileNodeVisit visit = visits.last;
         List<TileNode> nodes = [];
         while (visit.previous != null) {
           nodes.add(visit.tileNode);
@@ -128,11 +129,11 @@ extension SceneFunctions on Scene {
         return nodes.reversed.toList();;
       }
 
-      visit(visits[0].tileNode.up);
-      visit(visits[0].tileNode.right);
-      visit(visits[0].tileNode.down);
-      visit(visits[0].tileNode.left);
-      visits.removeAt(0);
+      TileNodeVisit last = visits.removeLast();
+      visit(last.tileNode.up, last);
+      visit(last.tileNode.right, last);
+      visit(last.tileNode.down, last);
+      visit(last.tileNode.left, last);
       visits.sort(_sortNodes);
     }
 
