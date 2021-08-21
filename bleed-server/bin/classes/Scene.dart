@@ -20,9 +20,9 @@ class Scene {
 
   Scene(this.tiles, this.blocks, this.collectables, this.playerSpawnPoints,
       this.zombieSpawnPoints) {
+
     rows = tiles.length;
     columns = tiles[0].length;
-
     tileNodes = [];
 
     for (int row = 0; row < rows; row++) {
@@ -83,6 +83,16 @@ extension SceneFunctions on Scene {
     return playerSpawnPoints[randomInt(0, playerSpawnPoints.length)];
   }
 
+  int _sortNodes(TileNodeVisit a, TileNodeVisit b){
+    int scoreA = a.travelled + a.remaining;
+    int scoreB = b.travelled + b.remaining;
+    if (scoreA < scoreB) return -1;
+    if (scoreA > scoreB) return 1;
+    if (a.remaining < b.remaining) return -1;
+    if (a.remaining > b.remaining) return 1;
+    return 0;
+  }
+
   List<TileNode> findPath(double x1, double y1, double x2, double y2) {
     TileNode startNode = tileNodeAt(x1, y1);
     TileNode endNode = tileNodeAt(x2, y2);
@@ -122,19 +132,8 @@ extension SceneFunctions on Scene {
       visit(visits[0].tileNode.right);
       visit(visits[0].tileNode.down);
       visit(visits[0].tileNode.left);
-
       visits.removeAt(0);
-
-      visits.sort((a, b) {
-        int scoreA = a.travelled + a.remaining;
-        int scoreB = b.travelled + b.remaining;
-
-        if (scoreA < scoreB) return -1;
-        if (scoreA > scoreB) return 1;
-        if (a.remaining < b.remaining) return -1;
-        if (a.remaining > b.remaining) return 1;
-        return 0;
-      });
+      visits.sort(_sortNodes);
     }
 
     return [];
