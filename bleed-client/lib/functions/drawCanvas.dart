@@ -47,6 +47,7 @@ void drawCanvas(Canvas canvass, Size _size) {
   drawCharacters();
   drawEditMode();
   _drawCollectables();
+  drawPaths();
   drawMouse();
 }
 

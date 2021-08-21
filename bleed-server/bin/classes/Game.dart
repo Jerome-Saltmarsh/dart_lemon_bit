@@ -23,6 +23,7 @@ import 'Collectable.dart';
 import 'Inventory.dart';
 import 'Player.dart';
 import 'Scene.dart';
+import 'TileNode.dart';
 import 'Vector2.dart';
 
 const int tileSize = 48;
@@ -115,6 +116,11 @@ extension GameFunctions on Game {
         return;
       }
 
+      if(frame % 5 == 0){
+        List<TileNode> nodes = scene.findPath(npc.x, npc.y, npc.target.x, npc.target.y);
+        npc.path = nodes.map((e) => e.position).toList();
+      }
+
       if (npcWithinStrikeRange(npc, npc.target)) {
         characterFaceObject(npc, npc.target);
         setCharacterState(npc, CharacterState.Striking);
@@ -123,37 +129,47 @@ extension GameFunctions on Game {
         return;
       }
 
-      npc.xDes = npc.target.x;
-      npc.yDes = npc.target.y;
+      // npc.xDes = npc.target.x;
+      // npc.yDes = npc.target.y;
     }
 
-    if (npc.destinationSet) {
-      if (arrivedAtDestination(npc)) {
+    // if(npc.path.isNotEmpty){
+    //   npc.xDes = npc.path[0].x;
+    //   npc.yDes = npc.path[0].y;
+    // }
+
+    if (npc.path.isNotEmpty) {
+      if (arrivedAtPath(npc)) {
+        npc.path.removeAt(0);
         npc.clearDestination();
         npc.idle();
         return;
+      }else{
+        characterFace(npc, npc.path[0].x, npc.path[0].y);
       }
-
-      if (scene.pathClear(npc.x, npc.y, npc.xDes, npc.yDes)) {
-        characterFace(npc, npc.xDes, npc.yDes);
-        npc.walk();
-        return;
-      }
-      
-      Vector2 left = scene.getLeft(npc.x, npc.y, npc.xDes, npc.yDes);
-      if (scene.pathClear(npc.x, npc.y, left.x, left.y)) {
-        characterFace(npc, left.x, left.y);
-        npc.walk();
-        return;
-      }
-
-      Vector2 right = scene.getRight(npc.x, npc.y, npc.xDes, npc.yDes);
-      if (scene.pathClear(npc.x, npc.y, right.x, right.y)) {
-        characterFace(npc, right.x, right.y);
-        npc.walk();
-        return;
-      }
+      npc.walk();
       return;
+
+      // if (scene.pathClear(npc.x, npc.y, npc.xDes, npc.yDes)) {
+      //   characterFace(npc, npc.xDes, npc.yDes);
+      //   npc.walk();
+      //   return;
+      // }
+      //
+      // Vector2 left = scene.getLeft(npc.x, npc.y, npc.xDes, npc.yDes);
+      // if (scene.pathClear(npc.x, npc.y, left.x, left.y)) {
+      //   characterFace(npc, left.x, left.y);
+      //   npc.walk();
+      //   return;
+      // }
+      //
+      // Vector2 right = scene.getRight(npc.x, npc.y, npc.xDes, npc.yDes);
+      // if (scene.pathClear(npc.x, npc.y, right.x, right.y)) {
+      //   characterFace(npc, right.x, right.y);
+      //   npc.walk();
+      //   return;
+      // }
+      // return;
     }
     npc.idle();
   }

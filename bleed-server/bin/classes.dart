@@ -1,3 +1,4 @@
+import 'classes/Vector2.dart';
 import 'enums.dart';
 import 'enums/GameEventType.dart';
 import 'enums/Weapons.dart';
@@ -77,6 +78,7 @@ class Npc extends Character {
   Character target = _nonTarget;
   double xDes = 0;
   double yDes = 0;
+  List<Vector2> path = [];
 
   Npc(
       {required double x,

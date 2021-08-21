@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../images.dart';
+import 'classes/Vector2.dart';
 import 'common.dart';
 import 'enums.dart';
 import 'instances/game.dart';
@@ -638,6 +639,15 @@ RSTransform rsTransform(
     translateX: x,
     translateY: y,
   );
+}
+
+void drawPaths(){
+  setColor(Colors.blue);
+  for(List<Vector2> path in paths){
+    for(int i = 0; i < path.length - 1; i++){
+      drawLine(path[i].x, path[i].y, path[i + 1].x, path[i + 1].y);
+    }
+  }
 }
 
 void drawPlayerHealth() {

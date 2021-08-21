@@ -43,6 +43,12 @@ bool arrivedAtDestination(Npc npc) {
   return true;
 }
 
+bool arrivedAtPath(Npc npc) {
+  if (diff(npc.x, npc.path[0].x) > destinationArrivedDistance) return false;
+  if (diff(npc.y, npc.path[0].y) > destinationArrivedDistance) return false;
+  return true;
+}
+
 int lastUpdateFrame(dynamic character) {
   return character[keyLastUpdateFrame];
 }

@@ -4,6 +4,7 @@ import 'classes/Collectable.dart';
 import 'classes/Game.dart';
 import 'classes/Inventory.dart';
 import 'classes/Player.dart';
+import 'classes/Vector2.dart';
 import 'enums.dart';
 import 'enums/ServerResponse.dart';
 
@@ -23,6 +24,7 @@ void compileState(Game game) {
   _compileGameEvents(game.buffer, game.gameEvents);
   _compileGrenades(game.buffer, game.grenades);
   _compileCollectables(game.buffer, game.collectables);
+  _compilePaths(game.buffer, game.npcs);
   game.compiled = game.buffer.toString();
 }
 
@@ -106,6 +108,19 @@ void _compileCollectables(StringBuffer buffer, List<Collectable> collectables) {
   for (Collectable collectable in collectables) {
     if (!collectable.active) continue;
     buffer.write(collectable.compiled);
+  }
+  buffer.write(_semiColon);
+}
+
+void _compilePaths(StringBuffer buffer, List<Npc> npcs){
+  _write(buffer, ServerResponse.Paths.index);
+  for(Npc npc in npcs){
+    if(npc.path.isEmpty) continue;
+    for(Vector2 p in npc.path){
+      _write(buffer, p.x.toInt());
+      _write(buffer, p.y.toInt());
+    }
+    _write(buffer, ", ");
   }
   buffer.write(_semiColon);
 }

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import '../common.dart';
 import 'classes/Block.dart';
 import 'classes/SpriteAnimation.dart';
+import 'classes/Vector2.dart';
 import 'enums/Mode.dart';
 import 'instances/game.dart';
 
@@ -45,6 +46,7 @@ List<Block> blockHouses = [];
 List<RSTransform> tileTransforms = [];
 List<Rect> tileRects = [];
 Map<int, bool> gameEvents = Map();
+List<List<Vector2>> paths = [];
 
 // Player State
 double playerHealth = 0;

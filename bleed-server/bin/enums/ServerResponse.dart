@@ -14,4 +14,5 @@ enum ServerResponse {
   Scene,
   Collectables,
   Inventory,
+  Paths
 }

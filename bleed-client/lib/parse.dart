@@ -9,6 +9,7 @@ import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/keys.dart';
 import 'package:bleed_client/utils.dart';
 
+import 'classes/Vector2.dart';
 import 'enums/GameError.dart';
 import 'enums/GameEventType.dart';
 import 'enums/Weapons.dart';
@@ -40,6 +41,10 @@ void parseState() {
 
       case ServerResponse.Tiles:
         _parseTiles();
+        break;
+
+      case ServerResponse.Paths:
+        _parsePaths();
         break;
 
       case ServerResponse.Player:
@@ -118,8 +123,20 @@ void _parseGameId() {
   gameId = _consumeInt();
 }
 
+void _parsePaths(){
+  paths.clear();
+  while (!_simiColonConsumed()) {
+    List<Vector2> path = [];
+    paths.add(path);
+    while(!_commaConsumed()){
+      double x = _consumeDouble();
+      double y = _consumeDouble();
+      path.add(Vector2(x, y));
+    }
+  }
+}
+
 void _parseTiles() {
-  print('parseTiles()');
   tilesX = _consumeInt();
   tilesY = _consumeInt();
   game.tiles.clear();
@@ -267,6 +284,15 @@ double _consumeDouble() {
 bool _simiColonConsumed() {
   _consumeSpace();
   if (_currentCharacter == ";") {
+    _index++;
+    return true;
+  }
+  return false;
+}
+
+bool _commaConsumed() {
+  _consumeSpace();
+  if (_currentCharacter == ",") {
     _index++;
     return true;
   }

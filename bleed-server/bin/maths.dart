@@ -51,8 +51,17 @@ double abs(double value) {
   return value;
 }
 
+int absInt(int value) {
+  if (value < _0) return -value;
+  return value;
+}
+
 double diff(double a, double b){
   return abs(a - b);
+}
+
+int diffInt(int a, int b){
+  return absInt(a - b);
 }
 
 // utility methods
