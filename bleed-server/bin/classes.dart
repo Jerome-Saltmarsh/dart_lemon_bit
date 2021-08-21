@@ -50,6 +50,8 @@ class Character extends GameObject {
 
   bool get idling => state == CharacterState.Idle;
 
+  bool get busy => stateDuration > 0;
+
   Character({
       required double x,
       required double y,

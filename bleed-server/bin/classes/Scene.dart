@@ -23,6 +23,8 @@ class Scene {
   }
 }
 
+Vector2 _vector2 = Vector2(0, 0);
+
 extension SceneFunctions on Scene {
   void sortBlocks() {
     blocks.sort((a, b) => a.leftX < b.leftX ? -1 : 1);
@@ -45,7 +47,9 @@ extension SceneFunctions on Scene {
     double middleY = (y2 - y1) * 0.5;
     double perpendicularX = middleY;
     double perpendicularY = -middleX;
-    return Vector2(x1 + middleX + perpendicularX, y1 + middleY + perpendicularY);
+    _vector2.x = x1 + middleX + perpendicularX;
+    _vector2.y = y1 + middleY + perpendicularY;
+    return _vector2;
   }
 
   Vector2 getRight(double x1, double y1, double x2, double y2){
@@ -53,7 +57,9 @@ extension SceneFunctions on Scene {
     double middleY = (y2 - y1) * 0.5;
     double perpendicularX = -middleY;
     double perpendicularY = middleX;
-    return Vector2(x1 + middleX + perpendicularX, y1 + middleY + perpendicularY);
+    _vector2.x = x1 + middleX + perpendicularX;
+    _vector2.y = y1 + middleY + perpendicularY;
+    return _vector2;
   }
 
   bool pathClear(double x1, double y1, double x2, double y2) {

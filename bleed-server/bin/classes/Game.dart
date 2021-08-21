@@ -100,6 +100,7 @@ extension GameFunctions on Game {
 
   void updateNpc(Npc npc) {
     if (npc.dead) return;
+    if (npc.busy) return;
 
     // todo this belongs in update character
     if (npc.state == CharacterState.Striking) {
@@ -114,43 +115,43 @@ extension GameFunctions on Game {
         return;
       }
 
-      characterFaceObject(npc, npc.target);
       if (npcWithinStrikeRange(npc, npc.target)) {
+        characterFaceObject(npc, npc.target);
         setCharacterState(npc, CharacterState.Striking);
         changeCharacterHealth(npc.target, -zombieStrikeDamage);
         dispatch(GameEventType.Zombie_Strike, npc.x, npc.y, 0, 0);
-      } else {
-        if (scene.pathClear(npc.x, npc.y, npc.target.x, npc.target.y)) {
-          npc.walk();
-          return;
-        }
-        Vector2 left = scene.getLeft(npc.x, npc.y, npc.target.x, npc.target.y);
-        if (scene.pathClear(npc.x, npc.y, left.x, left.y)) {
-          characterFace(npc, left.x, left.y);
-          npc.walk();
-          return;
-        }
-
-        Vector2 right = scene.getRight(npc.x, npc.y, npc.target.x, npc.target.y);
-        if (scene.pathClear(npc.x, npc.y, right.x, right.y)) {
-          characterFace(npc, right.x, right.y);
-          npc.walk();
-          return;
-        }
-
-        npc.idle();
         return;
       }
-      return;
+
+      npc.xDes = npc.target.x;
+      npc.yDes = npc.target.y;
     }
 
     if (npc.destinationSet) {
       if (arrivedAtDestination(npc)) {
         npc.clearDestination();
         npc.idle();
-      } else {
-        faceDestination(npc);
+        return;
+      }
+
+      if (scene.pathClear(npc.x, npc.y, npc.xDes, npc.yDes)) {
+        characterFace(npc, npc.xDes, npc.yDes);
         npc.walk();
+        return;
+      }
+      
+      Vector2 left = scene.getLeft(npc.x, npc.y, npc.xDes, npc.yDes);
+      if (scene.pathClear(npc.x, npc.y, left.x, left.y)) {
+        characterFace(npc, left.x, left.y);
+        npc.walk();
+        return;
+      }
+
+      Vector2 right = scene.getRight(npc.x, npc.y, npc.xDes, npc.yDes);
+      if (scene.pathClear(npc.x, npc.y, right.x, right.y)) {
+        characterFace(npc, right.x, right.y);
+        npc.walk();
+        return;
       }
       return;
     }
