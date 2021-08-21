@@ -49,8 +49,8 @@ extension SceneFunctions on Scene {
   }
 
   Vector2 getRight(double x1, double y1, double x2, double y2){
-    double middleX = (x1 - x2) * 0.5;
-    double middleY = (y1 - y2) * 0.5;
+    double middleX = (x2 - x1) * 0.5;
+    double middleY = (y2 - y1) * 0.5;
     double perpendicularX = -middleY;
     double perpendicularY = middleX;
     return Vector2(x1 + middleX + perpendicularX, y1 + middleY + perpendicularY);
