@@ -146,10 +146,6 @@ void _compilePlayers(StringBuffer buffer, List<Player> players) {
   buffer.write(_semiColon);
 }
 
-void _compileGameId(StringBuffer buffer, Game game) {
-  _write(game.buffer, '${ServerResponse.Game_Id.index} ${game.id} ;');
-}
-
 void _compileNpcs(StringBuffer buffer, List<Npc> npcs) {
   buffer.write(ServerResponse.Npcs.index);
   buffer.write(_space);

@@ -23,7 +23,6 @@ import 'Collectable.dart';
 import 'Inventory.dart';
 import 'Player.dart';
 import 'Scene.dart';
-import 'TileNode.dart';
 import 'Vector2.dart';
 
 const int tileSize = 48;
@@ -116,9 +115,8 @@ extension GameFunctions on Game {
         return;
       }
 
-      if(frame % 5 == 0){
-        List<TileNode> nodes = scene.findPath(npc.x, npc.y, npc.target.x, npc.target.y);
-        npc.path = nodes.map((e) => e.position).toList();
+      if (frame % 30 == 0) {
+        npc.path = scene.findPath(npc.x, npc.y, npc.target.x, npc.target.y);
       }
 
       if (npcWithinStrikeRange(npc, npc.target)) {
@@ -128,23 +126,13 @@ extension GameFunctions on Game {
         dispatch(GameEventType.Zombie_Strike, npc.x, npc.y, 0, 0);
         return;
       }
-
-      // npc.xDes = npc.target.x;
-      // npc.yDes = npc.target.y;
     }
-
-    // if(npc.path.isNotEmpty){
-    //   npc.xDes = npc.path[0].x;
-    //   npc.yDes = npc.path[0].y;
-    // }
 
     if (npc.path.isNotEmpty) {
       if (arrivedAtPath(npc)) {
         npc.path.removeAt(0);
-        npc.clearDestination();
-        npc.idle();
         return;
-      }else{
+      } else {
         characterFace(npc, npc.path[0].x, npc.path[0].y);
       }
       npc.walk();
@@ -832,7 +820,7 @@ extension GameFunctions on Game {
   void jobNpcWander() {
     for (Npc npc in npcs) {
       if (npc.targetSet) continue;
-      if (npc.destinationSet) continue;
+      if (npc.path.isNotEmpty) continue;
       if (randomBool()) return;
       npcSetRandomDestination(npc);
     }
@@ -883,9 +871,7 @@ extension GameFunctions on Game {
   }
 
   void npcSetDestination(Npc npc, double x, double y) {
-    if (!scene.pathClear(npc.x, npc.y, x, y)) return;
-    npc.xDes = x;
-    npc.yDes = y;
+    npc.path = scene.findPath(npc.x, npc.y, x, y);
   }
 }
 

@@ -36,13 +36,6 @@ bool withinViewRange(Npc npc, GameObject target) {
   return distanceBetween(npc, target) < zombieViewRange;
 }
 
-// Expensive method
-bool arrivedAtDestination(Npc npc) {
-  if (diff(npc.x, npc.xDes) > destinationArrivedDistance) return false;
-  if (diff(npc.y, npc.yDes) > destinationArrivedDistance) return false;
-  return true;
-}
-
 bool arrivedAtPath(Npc npc) {
   if (diff(npc.x, npc.path[0].x) > destinationArrivedDistance) return false;
   if (diff(npc.y, npc.path[0].y) > destinationArrivedDistance) return false;
@@ -70,16 +63,8 @@ void setVelocity(GameObject gameObject, double rotation, double speed) {
   gameObject.yv = velY(rotation, speed);
 }
 
-double distanceFromDestination(Npc npc) {
-  return objectDistanceFrom(npc, npc.xDes, npc.yDes);
-}
-
 double objectDistanceFrom(GameObject gameObject, double x, double y) {
   return distance(gameObject.x, gameObject.y, x, y);
-}
-
-void faceDestination(Npc npc) {
-  characterFace(npc, npc.xDes, npc.yDes);
 }
 
 void characterFace(Character character, double x, double y) {

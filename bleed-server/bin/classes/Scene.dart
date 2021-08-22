@@ -1,4 +1,3 @@
-import '../constants.dart';
 import '../enums.dart';
 import '../maths.dart';
 import 'Block.dart';
@@ -93,7 +92,7 @@ extension SceneFunctions on Scene {
     return 0;
   }
 
-  List<TileNode> findPath(double x1, double y1, double x2, double y2) {
+  List<Vector2> findPath(double x1, double y1, double x2, double y2) {
     TileNode startNode = tileNodeAt(x1, y1);
     TileNode endNode = tileNodeAt(x2, y2);
 
@@ -121,12 +120,12 @@ extension SceneFunctions on Scene {
     while (visits.isNotEmpty) {
       if (visits.last.tileNode == endNode) {
         TileNodeVisit visit = visits.last;
-        List<TileNode> nodes = [];
+        List<Vector2> nodes = [];
         while (visit.previous != null) {
-          nodes.add(visit.tileNode);
+          nodes.add(visit.tileNode.position);
           visit = visit.previous!;
         }
-        return nodes.reversed.toList();;
+        return nodes.reversed.toList();
       }
 
       TileNodeVisit last = visits.removeLast();

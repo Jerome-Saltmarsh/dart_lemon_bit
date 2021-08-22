@@ -76,8 +76,6 @@ final Character _nonTarget = Character(x: 0, y: 0, weapon: Weapon.MachineGun, he
 
 class Npc extends Character {
   Character target = _nonTarget;
-  double xDes = 0;
-  double yDes = 0;
   List<Vector2> path = [];
 
   Npc(
@@ -96,15 +94,8 @@ class Npc extends Character {
 
   get targetSet => target != _nonTarget;
 
-  get destinationSet => xDes != 0;
-
   void clearTarget() {
     target = _nonTarget;
-  }
-
-  void clearDestination() {
-    xDes = 0;
-    yDes = 0;
   }
 }
 
