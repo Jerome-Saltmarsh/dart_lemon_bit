@@ -210,8 +210,8 @@ extension SceneFunctions on Scene {
     int row = tileY.toInt();
     int column = tileX.toInt();
 
-    if (column > columns) return _boundary;
-    if (row > rows) return _boundary;
+    if (column >= columns) return _boundary;
+    if (row >= rows) return _boundary;
 
     return tileNodes[row][column];
   }
