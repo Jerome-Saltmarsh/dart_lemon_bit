@@ -2,9 +2,11 @@ import '../enums.dart';
 import '../maths.dart';
 import 'Block.dart';
 import 'Collectable.dart';
-import 'Game.dart';
 import 'TileNode.dart';
 import 'Vector2.dart';
+
+List<Vector2> _emptyPath = [];
+const int _tileSize = 48;
 
 class Scene {
   final List<List<Tile>> tiles;
@@ -94,10 +96,9 @@ extension SceneFunctions on Scene {
 
   List<Vector2> findPath(double x1, double y1, double x2, double y2) {
     TileNode startNode = tileNodeAt(x1, y1);
+    if (!startNode.open) return _emptyPath;
     TileNode endNode = tileNodeAt(x2, y2);
-
-    if (!startNode.open) return [];
-    if (!endNode.open) return [];
+    if (!endNode.open) return _emptyPath;
 
     int remaining =
         diffInt(startNode.x, endNode.x) + diffInt(startNode.y, endNode.y);
@@ -136,7 +137,7 @@ extension SceneFunctions on Scene {
       visits.sort(_sortNodes);
     }
 
-    return [];
+    return _emptyPath;
   }
 
   Vector2 getLeft(double x1, double y1, double x2, double y2) {
@@ -166,7 +167,7 @@ extension SceneFunctions on Scene {
     double vx = velX(angle, 24);
     double vy = velY(angle, 24);
 
-    while (diff(posX, x2) > tileSize || diff(posY, y2) > tileSize) {
+    while (diff(posX, x2) > _tileSize || diff(posY, y2) > _tileSize) {
       if (tileBoundaryAt(posX, posY)) return false;
       posX += vx;
       posY += vy;
@@ -181,8 +182,8 @@ extension SceneFunctions on Scene {
     double projectedY = projectedToWorldY(x, y);
     if (projectedY < 0) return Tile.Boundary;
 
-    double tileX = projectedX / tileSize;
-    double tileY = projectedY / tileSize;
+    double tileX = projectedX / _tileSize;
+    double tileY = projectedY / _tileSize;
 
     int tileXInt = tileX.toInt();
     int tileYInt = tileY.toInt();
@@ -200,16 +201,16 @@ extension SceneFunctions on Scene {
     double projectedY = projectedToWorldY(x, y);
     if (projectedY < 0) return _boundary;
 
-    double tileX = projectedX / tileSize;
-    double tileY = projectedY / tileSize;
+    double tileX = projectedX / _tileSize;
+    double tileY = projectedY / _tileSize;
 
-    int tileXInt = tileX.toInt();
-    int tileYInt = tileY.toInt();
+    int row = tileY.toInt();
+    int column = tileX.toInt();
 
-    if (tileX > columns) return _boundary;
-    if (tileY > rows) return _boundary;
+    if (column > columns) return _boundary;
+    if (row > rows) return _boundary;
 
-    return tileNodes[tileYInt][tileXInt];
+    return tileNodes[row][column];
   }
 
   bool tileBoundaryAt(double x, double y) {

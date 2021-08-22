@@ -25,8 +25,6 @@ import 'Player.dart';
 import 'Scene.dart';
 import 'Vector2.dart';
 
-const int tileSize = 48;
-
 class Game {
   static int _id = 0;
   final String id = (_id++).toString();
