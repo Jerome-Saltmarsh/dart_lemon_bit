@@ -30,7 +30,8 @@
 [ ] Inventory Shotgun
 [ ] Fix Npc Wander
 [ ] FIX Throw Grenade Angle
-[ ] NPC Pathfinding
+[ ] FIX NPC Attack Bug
+[x] NPC Pathfinding
 [x] Use Health Kit
 [x] UI Show rounds remaining
 [x] On Spawn - center camera

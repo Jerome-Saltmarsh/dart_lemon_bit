@@ -589,6 +589,21 @@ extension GameFunctions on Game {
       character.yv *= velocityFriction;
     }
 
+    if (character.dead) return;
+
+    if (character.stateDuration > 0) {
+      character.stateDuration--;
+
+      if (character.stateDuration == 0) {
+        switch (character.state) {
+          case CharacterState.Reloading:
+            dispatch(GameEventType.Reloaded, character.x, character.y, 0, 0);
+            break;
+        }
+        setCharacterState(character, CharacterState.Idle);
+      }
+    }
+
     while (scene.tileBoundaryAt(character.left, character.top)) {
       character.x++;
       character.y++;
@@ -633,28 +648,9 @@ extension GameFunctions on Game {
     // }
 
     switch (character.state) {
-      case CharacterState.ChangingWeapon:
-        character.stateDuration--;
-        if (character.stateDuration <= 0) {
-          setCharacterState(character, CharacterState.Aiming);
-        }
-        break;
       case CharacterState.Aiming:
         if (character.accuracy > 0.05) {
           character.accuracy -= 0.005;
-        }
-        break;
-      case CharacterState.Firing:
-        character.stateDuration--;
-        if (character.stateDuration <= 0) {
-          setCharacterState(character, CharacterState.Aiming);
-        }
-        break;
-      case CharacterState.Reloading:
-        character.stateDuration--;
-        if (character.stateDuration <= 0) {
-          setCharacterState(character, CharacterState.Aiming);
-          dispatch(GameEventType.Reloaded, character.x, character.y, 0, 0);
         }
         break;
       case CharacterState.Walking:

@@ -122,6 +122,9 @@ extension SceneFunctions on Scene {
       if (visits.last.tileNode == endNode) {
         TileNodeVisit visit = visits.last;
         List<Vector2> nodes = [];
+
+        // remove corners
+
         while (visit.previous != null) {
           nodes.add(visit.tileNode.position);
           visit = visit.previous!;
