@@ -113,8 +113,12 @@ extension GameFunctions on Game {
         return;
       }
 
-      if (frame % 30 == 0) {
-        npc.path = scene.findPath(npc.x, npc.y, npc.target.x, npc.target.y);
+      if (frame % 30 == 0 && npc.path.length > 4) {
+        double xDistance = diff(npc.target.x, npc.path[0].x);
+        double yDistance = diff(npc.target.y, npc.path[0].y);
+        if (xDistance > 150 || yDistance > 150) {
+          npc.path = scene.findPath(npc.x, npc.y, npc.target.x, npc.target.y);
+        }
       }
 
       if (npcWithinStrikeRange(npc, npc.target)) {
@@ -810,6 +814,7 @@ extension GameFunctions on Game {
         if (!scene.pathClear(npc.x, npc.y, players[p].x, players[p].y))
           continue;
         npc.target = players[p];
+        npc.path = scene.findPath(npc.x, npc.y, npc.target.x, npc.target.y);
         break;
       }
     }
