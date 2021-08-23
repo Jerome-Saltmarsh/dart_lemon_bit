@@ -13,8 +13,8 @@ import 'package:flutter/material.dart';
 import '../../keys.dart';
 import '../connection.dart';
 import '../draw.dart';
+import '../images.dart';
 import '../state.dart';
-import 'drawAnimations.dart';
 import 'drawBullet.dart';
 import 'drawGrenade.dart';
 import 'drawParticle.dart';
@@ -42,7 +42,7 @@ void drawCanvas(Canvas canvass, Size _size) {
   drawBulletHoles(game.bulletHoles);
   _drawGrenades(game.grenades);
   _drawBlocks();
-  drawAnimations();
+  // drawAnimations();
   _drawParticles(game.particles);
   drawCharacters();
   drawEditMode();
@@ -56,15 +56,18 @@ void _drawCollectables() {
     CollectableType type = CollectableType.values[game.collectables[i]];
     int x = game.collectables[i + 1];
     int y = game.collectables[i + 2];
-    switch(type){
-      case CollectableType.Handgun_Ammo:
-        drawCircle(x.toDouble(), y.toDouble(), 10, Colors.blue);
-        break;
-      case CollectableType.Health:
-        drawCircle(x.toDouble(), y.toDouble(), 10, Colors.red);
-        break;
-    }
+    drawCollectable(type, x.toDouble(), y.toDouble());
+  }
+}
 
+void drawCollectable(CollectableType type, double x, double y){
+  switch(type){
+    case CollectableType.Handgun_Ammo:
+      drawSprite(imageItems, 2, 1, x, y);
+      break;
+    case CollectableType.Health:
+      drawSprite(imageItems, 2, 2, x, y);
+      break;
   }
 }
 

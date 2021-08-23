@@ -31,6 +31,8 @@
 [ ] Fix Npc Wander
 [ ] FIX NPC pathfinding stops bug
 [ ] Fix zoom in / out bug
+[x] Draw Handgun Ammo
+[x] Draw Health Pack
 [x] FIX Throw Grenade Angle
 [x] Remove Path Corners
 [x] FIX NPC Attack Bug

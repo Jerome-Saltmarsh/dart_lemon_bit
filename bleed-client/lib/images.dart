@@ -11,6 +11,7 @@ Image imageExplosion;
 Image imageParticles;
 Image imageHandgun;
 Image imageHandgunAmmo;
+Image imageItems;
 SpriteSheet spritesExplosion;
 
 Future loadImages() async {
@@ -21,6 +22,7 @@ Future loadImages() async {
   imageParticles = await loadImage('images/particles.png');
   imageHandgun = await loadImage('images/weapon-handgun.png');
   imageHandgunAmmo = await loadImage('images/handgun-ammo.png');
+  imageItems = await loadImage("images/items.png");
   print("loading images complete");
   spritesExplosion = SpriteSheet(32, imageExplosion, 8, 4);
 }

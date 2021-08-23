@@ -17,11 +17,11 @@ void drawCircleOffset(Offset offset, double radius, Color color){
   globalCanvas.drawCircle(offset, radius, globalPaint);
 }
 
-void drawSprite(ui.Image image, int frames, int frame, double x, double y, {double scale = 1.0}){
+void drawSprite(ui.Image image, int frames, int frame, double x, double y){
   double frameWidth = image.width / frames;
   double frameHeight = image.height as double;
-  globalCanvas.drawImageRect(image, Rect.fromLTWH(frame * frameWidth, 0, frameWidth, frameHeight),
-      Rect.fromCenter(center: Offset(x - cameraX, y - cameraY), width: frameWidth * scale, height: frameHeight * scale), globalPaint);
+  globalCanvas.drawImageRect(image, Rect.fromLTWH((frame - 1) * frameWidth, 0, frameWidth, frameHeight),
+      Rect.fromCenter(center: Offset(x, y), width: frameWidth, height: frameHeight), globalPaint);
 }
 
 void drawText(String text, double x, double y, Color color){
