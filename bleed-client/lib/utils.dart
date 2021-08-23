@@ -157,8 +157,8 @@ repeat(Function function, int times, int milliseconds) {
 }
 
 void cameraCenter(double x, double y) {
-  cameraX = x - (screenCenterX * convertScreenToWorldDistance);
-  cameraY = y - (screenCenterY * convertScreenToWorldDistance);
+  cameraX = x - (screenCenterX / zoom);
+  cameraY = y - (screenCenterY / zoom);
 }
 
 void setHandgunRounds(int value) {

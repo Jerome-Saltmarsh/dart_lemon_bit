@@ -20,17 +20,17 @@
 [ ] Fix Block Collision Bug
 [ ] Grenade building collision
 [ ] Collect Audio
-[ ] Use Medkit Audio
 [ ] Find / Join Game 
 [ ] Refactor inventory painter
 [ ] Create Game
-[ ] Inventory Grenade
 [ ] Menu Screen Game
 [ ] Fix Shot Looping Animation
-[ ] Inventory Shotgun
 [ ] Fix Npc Wander
 [ ] FIX NPC pathfinding stops bug
-[ ] Fix zoom in / out bug
+[ ] Inventory Grenade
+[ ] Use Medkit Audio
+[ ] Inventory Shotgun
+[x] Fix zoom in / out bug
 [x] Draw Handgun Ammo
 [x] Draw Health Pack
 [x] FIX Throw Grenade Angle

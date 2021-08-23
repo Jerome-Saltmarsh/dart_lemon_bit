@@ -6,6 +6,7 @@ import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/enums/CollectableType.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
+import 'package:bleed_client/game_engine/game_functions.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/instances/game.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ void drawCanvas(Canvas canvass, Size _size) {
   }
 
   canvass.scale(zoom, zoom);
-  canvass.translate(-cameraX / zoom, -cameraY * zoom);
+  canvass.translate(-cameraX, -cameraY);
 
   drawTiles();
   try {
@@ -60,8 +61,8 @@ void _drawCollectables() {
   }
 }
 
-void drawCollectable(CollectableType type, double x, double y){
-  switch(type){
+void drawCollectable(CollectableType type, double x, double y) {
+  switch (type) {
     case CollectableType.Handgun_Ammo:
       drawSprite(imageItems, 2, 1, x, y);
       break;

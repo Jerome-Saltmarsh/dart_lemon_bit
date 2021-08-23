@@ -13,3 +13,9 @@ DragUpdateDetails dragUpdateDetails;
 
 Offset get camera => Offset(cameraX, cameraY);
 
+double convertScreenToWorldX(double value) {
+  return cameraX + value / zoom;
+}
+double convertScreenToWorldY(double value) {
+  return cameraY + value / zoom;
+}

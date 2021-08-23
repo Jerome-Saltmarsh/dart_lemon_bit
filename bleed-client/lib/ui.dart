@@ -341,7 +341,9 @@ Widget buildHud() {
             text("zombies: ${game.npcs.length}"),
             text("players: ${game.players.length}"),
             text("zoom: ${zoom.toStringAsFixed(2)}"),
-            text("cameraX: ${cameraX.toInt()}, cameraY: ${cameraY.toInt()}")
+            text("cameraX: ${cameraX.toInt()}, cameraY: ${cameraY.toInt()}"),
+            text("centerX: ${screenCenterWorldX.toInt()} ${screenCenterWorldY.toInt()}"),
+            text('screen width: ${screenWidth / zoom}, screen height: ${screenHeight / zoom}'),
           ],
         )
       ],

@@ -5,6 +5,7 @@ import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/bleed.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/update.dart';
 import 'package:flutter/material.dart';
 
@@ -25,16 +26,33 @@ class BleedWidget extends GameWidget {
 
   @override
   void onMouseScroll(double amount) {
+    Offset center1 = screenCenterWorld;
     zoom -= amount * settings.zoomSpeed;
     if (zoom < settings.maxZoom) zoom = settings.maxZoom;
-    // double xDiff = screenCenterWorldX - game.playerX;
-    // double yDiff = screenCenterWorldY - game.playerY;
-    // cameraX -= xDiff;
-    // cameraY -= yDiff;
-    //
-    // double xDiff2 = screenCenterWorldX - game.playerX;
-    // double yDiff2 = screenCenterWorldY - game.playerY;
-    // print('xDiff: $xDiff2, yDiff: $yDiff2');
+    cameraCenter(center1.dx, center1.dy);
+    // Offset center2 = screenCenterWorld;
+    // Offset diff = center1 - center2;
+    // double mag1 = magnitude(diff.dx, diff.dy);
+    // cameraX += diff.dx;
+    // cameraY += diff.dy;
+    // Offset center3 = screenCenterWorld;
+    // Offset diff2 = center1 - center3;
+    // double mag2 = magnitude(diff2.dx, diff2.dy);
+    // if(mag2 > mag1){
+    //   print('diff 1: $mag1, diff 2: $mag2');
+    // }
+
+
+    // cameraX += diff2.dx;
+    // cameraY += diff2.dy;
+    // double a = diff2.dx;
+
+    // for(int i = 0; i < 5; i++){
+    //   Offset center2 = screenCenterWorld;
+    //   Offset diff = center1 - center2;
+    //   cameraX += diff.dx;
+    //   cameraY += diff.dy;
+    // }
   }
 
   @override
