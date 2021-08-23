@@ -393,7 +393,11 @@ Widget buildHud() {
   ));
 
   return Stack(
-    children: [topLeft, topRight, bottomLeft, bottomRight,
+    children: [
+      // topLeft,
+      topRight,
+      bottomLeft,
+      bottomRight,
       if(playerHealth <= 0)
       center],
   );

@@ -122,6 +122,10 @@ void playAudioHandgunShot(double x, double y) {
   _play('handgun-shot.mp3', x, y);
 }
 
+void playAudioUseMedkit(double x, double y){
+  _play('medkit.mp3', x, y);
+}
+
 void _playRandom(List<String> values, double x, double y) {
   _play(randomItem(values), x, y);
 }

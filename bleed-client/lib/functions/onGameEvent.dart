@@ -92,5 +92,8 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv){
     case GameEventType.Reloaded:
       playAudioReloadHandgun(x, y);
       return;
+    case GameEventType.Use_MedKit:
+      playAudioUseMedkit(x, y);
+      break;
   }
 }

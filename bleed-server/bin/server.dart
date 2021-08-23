@@ -9,6 +9,7 @@ import 'classes/Player.dart';
 import 'compile.dart';
 import 'enums/ClientRequest.dart';
 import 'enums/GameError.dart';
+import 'enums/GameEventType.dart';
 import 'enums/ServerResponse.dart';
 import 'enums/Weapons.dart';
 import 'enums.dart';
@@ -144,6 +145,7 @@ void main() {
           if (index == -1) return;
           player.health = player.maxHealth;
           player.inventory.items.removeAt(index);
+          game.dispatch(GameEventType.Use_MedKit, player.x, player.y, 0, 0);
           break;
 
         case ClientRequest.Game_Create:
