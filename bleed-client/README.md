@@ -12,12 +12,11 @@
 [ ] Throw Animation
 [ ] Player Name Text
 [ ] Particle Gunshot smoke
-[ ] Throw Grenade Audio
 [ ] Cache Particles
 [ ] Zombie Hurt Animation
 [ ] Npc Text
-[ ] Lobby
 [ ] Fix Block Collision Bug
+[ ] Lobby
 [ ] Grenade building collision
 [ ] Collect Audio
 [ ] Find / Join Game 
@@ -28,8 +27,9 @@
 [ ] Fix Npc Wander
 [ ] FIX NPC pathfinding stops bug
 [ ] Inventory Grenade
-[ ] Use Medkit Audio
 [ ] Inventory Shotgun
+[x] Throw Grenade Audio
+[x] Use Medkit Audio
 [x] Fix zoom in / out bug
 [x] Draw Handgun Ammo
 [x] Draw Health Pack

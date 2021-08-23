@@ -14,5 +14,6 @@ enum GameEventType {
   Clip_Empty,
   Reloaded,
   Player_Hit,
-  Use_MedKit
+  Use_MedKit,
+  Throw_Grenade
 }

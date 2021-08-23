@@ -95,5 +95,8 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv){
     case GameEventType.Use_MedKit:
       playAudioUseMedkit(x, y);
       break;
+    case GameEventType.Throw_Grenade:
+      playAudioThrowGrenade(x, y);
+      break;
   }
 }
