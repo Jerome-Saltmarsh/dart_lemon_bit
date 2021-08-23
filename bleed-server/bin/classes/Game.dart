@@ -339,12 +339,6 @@ extension GameFunctions on Game {
         break;
       case CharacterState.Reloading:
         switch (character.weapon) {
-          case Weapon.Shotgun:
-            if (character is Player) {
-              character.shotgunRounds = settings.shotgunClipSize;
-              character.stateDuration = settingsHandgunReloadDuration;
-            }
-            break;
           case Weapon.HandGun:
             if (character is Player &&
                 character.handgunRounds < settings.handgunClipSize &&
@@ -352,6 +346,16 @@ extension GameFunctions on Game {
               character.handgunRounds = settings.handgunClipSize;
               character.inventory.remove(InventoryItemType.HandgunClip);
               character.stateDuration = settingsHandgunReloadDuration;
+              break;
+            }
+            return;
+          case Weapon.Shotgun:
+            if (character is Player &&
+                character.shotgunRounds < settings.shotgunClipSize &&
+                character.inventory.shotgunClips > 0) {
+              character.shotgunRounds = settings.shotgunClipSize;
+              character.inventory.remove(InventoryItemType.ShotgunClip);
+              character.stateDuration = settingsShotgunReloadDuration;
               break;
             }
             return;
@@ -785,6 +789,7 @@ extension GameFunctions on Game {
           InventoryItem(0, 1, InventoryItemType.HealthPack),
           InventoryItem(1, 0, InventoryItemType.HandgunClip),
           InventoryItem(2, 2, InventoryItemType.HandgunClip),
+          InventoryItem(1, 1, InventoryItemType.ShotgunClip),
         ]),
         name: name);
     players.add(player);

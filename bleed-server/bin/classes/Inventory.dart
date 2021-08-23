@@ -14,6 +14,7 @@ extension InventoryExtensions on Inventory {
   }
 
   int get handgunClips => countItems(InventoryItemType.HandgunClip);
+  int get shotgunClips => countItems(InventoryItemType.ShotgunClip);
 
   void remove(InventoryItemType type) {
     for (int i = 0; i < items.length; i++) {

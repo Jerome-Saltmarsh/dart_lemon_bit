@@ -24,6 +24,7 @@ const double settingsPlayerStartRadius = 50;
 // Weapon
 const double settingsWeaponRangeSniperRifle = 500;
 const int settingsHandgunReloadDuration = 20;
+const int settingsShotgunReloadDuration = 22;
 const double settingsWeaponRangeHandgun = 320;
 const double settingsWeaponRangeShotgun = 180;
 const double settingsWeaponBulletSpeedHandGun = 14.0;
