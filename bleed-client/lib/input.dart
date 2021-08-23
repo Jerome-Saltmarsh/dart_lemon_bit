@@ -13,7 +13,6 @@ import '../keys.dart';
 import '../send.dart';
 import '../settings.dart';
 import 'connection.dart';
-import 'functions/requestThrowGrenade.dart';
 import 'instances/game.dart';
 import 'maths.dart';
 import 'state.dart';

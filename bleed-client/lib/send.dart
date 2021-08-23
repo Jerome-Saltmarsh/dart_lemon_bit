@@ -35,6 +35,10 @@ void sendRequestEquipMachineGun() {
   sendRequestEquip(Weapon.MachineGun);
 }
 
+void requestThrowGrenade(double strength){
+  send('${ClientRequest.Player_Throw_Grenade.index} $session ${strength.toStringAsFixed(1)} ${requestAim.toStringAsFixed(2)}');
+}
+
 void sendRequestUpdatePlayer() {
   _buffer.clear();
   _write(ClientRequest.Game_Update.index);
@@ -73,3 +77,4 @@ void _write(dynamic value) {
 void request(ClientRequest request, String value){
   send('${request.index} $value');
 }
+

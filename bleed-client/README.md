@@ -13,24 +13,26 @@
 [ ] Player Name Text
 [ ] Particle Gunshot smoke
 [ ] Throw Grenade Audio
-[ ] Fix zoom in / out bug
 [ ] Cache Particles
 [ ] Zombie Hurt Animation
 [ ] Npc Text
-[ ] Fix Shot Animation
 [ ] Lobby
+[ ] Fix Block Collision Bug
 [ ] Grenade building collision
 [ ] Collect Audio
+[ ] Use Medkit Audio
 [ ] Find / Join Game 
+[ ] Refactor inventory painter
 [ ] Create Game
 [ ] Inventory Grenade
 [ ] Menu Screen Game
-[ ] Fix Block Collision Bug
-[ ] Refactor inventory painter
+[ ] Fix Shot Looping Animation
 [ ] Inventory Shotgun
 [ ] Fix Npc Wander
-[ ] FIX Throw Grenade Angle
-[ ] Remove Path Corners
+[ ] FIX NPC pathfinding stops bug
+[ ] Fix zoom in / out bug
+[x] FIX Throw Grenade Angle
+[x] Remove Path Corners
 [x] FIX NPC Attack Bug
 [x] NPC Pathfinding
 [x] Use Health Kit

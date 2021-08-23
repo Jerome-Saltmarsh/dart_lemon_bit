@@ -259,7 +259,8 @@ void main() {
             return;
           }
           double strength = double.parse(arguments[4]);
-          game.throwGrenade(player.x, player.y, player.aimAngle, strength);
+          double aim = double.parse(arguments[5]);
+          game.throwGrenade(player.x, player.y, aim, strength);
           return;
       }
     }

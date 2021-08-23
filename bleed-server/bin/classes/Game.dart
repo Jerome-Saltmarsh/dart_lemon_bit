@@ -133,6 +133,9 @@ extension GameFunctions on Game {
     if (npc.path.isNotEmpty) {
       if (arrivedAtPath(npc)) {
         npc.path.removeAt(0);
+        if (npc.path.isNotEmpty) {
+          npc.path.removeAt(0);
+        }
         return;
       } else {
         characterFace(npc, npc.path[0].x, npc.path[0].y);
