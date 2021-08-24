@@ -733,6 +733,7 @@ extension GameFunctions on Game {
       character.stateFrameCount = 0;
     } else {
       character.stateFrameCount++;
+      character.stateFrameCount %= 100; // prevents the frame count digits getting over 2
     }
   }
 
