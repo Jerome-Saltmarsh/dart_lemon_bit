@@ -380,7 +380,7 @@ void _consumePlayer(dynamic memory) {
   memory[direction] = _consumeInt();
   memory[x] = _consumeDouble();
   memory[y] = _consumeDouble();
-  memory[id] = _consumeInt();
+  memory[frameCount] = _consumeInt();
   memory[weapon] = _consumeWeapon();
 }
 
@@ -389,6 +389,7 @@ void _consumeNpc(dynamic memory) {
   memory[direction] = _consumeInt();
   memory[x] = _consumeDouble();
   memory[y] = _consumeDouble();
+  memory[frameCount] = _consumeInt();
 }
 
 void _consumeBullet(dynamic memory) {

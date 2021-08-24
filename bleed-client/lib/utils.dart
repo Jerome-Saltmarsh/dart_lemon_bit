@@ -3,7 +3,6 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:bleed_client/game_engine/engine_state.dart';
-import 'package:bleed_client/game_engine/game_functions.dart';
 import 'package:bleed_client/game_engine/game_maths.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 
@@ -13,7 +12,6 @@ import 'enums/Weapons.dart';
 import 'instances/game.dart';
 import 'keys.dart';
 import 'maths.dart';
-import 'state.dart';
 
 double getMouseRotation() {
   return getRadiansBetween(
@@ -28,13 +26,13 @@ double playerScreenPositionY() {
   return game.playerY - cameraY;
 }
 
-dynamic getPlayerCharacter() {
-  if (game.playerId == idNotConnected) return null;
-  return game.players.firstWhere((element) => element[4] == game.playerId,
-      orElse: () {
-    return null;
-  });
-}
+// dynamic getPlayerCharacter() {
+//   if (game.playerId == idNotConnected) return null;
+//   return game.players.firstWhere((element) => element[4] == game.playerId,
+//       orElse: () {
+//     return null;
+//   });
+// }
 
 bool get playerAssigned => game.playerId >= 0;
 

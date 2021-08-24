@@ -12,6 +12,7 @@ import 'enums/ServerResponse.dart';
 
 const String _space = ' ';
 const String _semiColon = '; ';
+const String _comma = ', ';
 
 // public
 
@@ -114,15 +115,15 @@ void _compileCollectables(StringBuffer buffer, List<Collectable> collectables) {
   buffer.write(_semiColon);
 }
 
-void _compilePaths(StringBuffer buffer, List<Npc> npcs){
+void _compilePaths(StringBuffer buffer, List<Npc> npcs) {
   _write(buffer, ServerResponse.Paths.index);
-  for(Npc npc in npcs){
-    if(npc.path.isEmpty) continue;
-    for(Vector2 p in npc.path){
+  for (Npc npc in npcs) {
+    if (npc.path.isEmpty) continue;
+    for (Vector2 p in npc.path) {
       _write(buffer, p.x.toInt());
       _write(buffer, p.y.toInt());
     }
-    _write(buffer, ", ");
+    _write(buffer, _comma);
   }
   buffer.write(_semiColon);
 }
@@ -139,18 +140,15 @@ void _compileGrenades(StringBuffer buffer, List<Grenade> grenades) {
 }
 
 void _compilePlayers(StringBuffer buffer, List<Player> players) {
-  buffer.write(ServerResponse.Players.index);
-  buffer.write(_space);
+  _write(buffer, ServerResponse.Players.index);
   for (Player player in players) {
-    _compileCharacter(buffer, player);
+    _compilePlayer(buffer, player);
   }
-
   buffer.write(_semiColon);
 }
 
 void _compileNpcs(StringBuffer buffer, List<Npc> npcs) {
-  buffer.write(ServerResponse.Npcs.index);
-  buffer.write(_space);
+  _write(buffer, ServerResponse.Npcs.index);
   for (Npc npc in npcs) {
     _compileNpc(buffer, npc);
   }
@@ -158,8 +156,7 @@ void _compileNpcs(StringBuffer buffer, List<Npc> npcs) {
 }
 
 void _compileBullets(StringBuffer buffer, List<Bullet> bullets) {
-  buffer.write(ServerResponse.Bullets.index);
-  buffer.write(_space);
+  _write(buffer, ServerResponse.Bullets.index);
   for (Bullet bullet in bullets) {
     _compileBullet(buffer, bullet);
   }
@@ -171,13 +168,13 @@ void _compileBullet(StringBuffer buffer, Bullet bullet) {
   _write(buffer, bullet.y.toInt());
 }
 
-void _compileCharacter(StringBuffer buffer, Character character) {
-  _write(buffer, character.state.index);
-  _write(buffer, character.direction.index);
-  _write(buffer, character.x.toInt());
-  _write(buffer, character.y.toInt());
-  _write(buffer, character.id);
-  _write(buffer, character.weapon.index);
+void _compilePlayer(StringBuffer buffer, Player player) {
+  _write(buffer, player.state.index);
+  _write(buffer, player.direction.index);
+  _write(buffer, player.x.toInt());
+  _write(buffer, player.y.toInt());
+  _write(buffer, player.stateFrameCount);
+  _write(buffer, player.weapon.index);
 }
 
 void _compileNpc(StringBuffer buffer, Npc npc) {
@@ -185,6 +182,7 @@ void _compileNpc(StringBuffer buffer, Npc npc) {
   _write(buffer, npc.direction.index);
   _write(buffer, npc.x.toInt());
   _write(buffer, npc.y.toInt());
+  _write(buffer, npc.stateFrameCount);
 }
 
 void _write(StringBuffer buffer, dynamic value) {

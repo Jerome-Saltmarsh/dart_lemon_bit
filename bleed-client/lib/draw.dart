@@ -12,6 +12,7 @@ import '../images.dart';
 import 'classes/Vector2.dart';
 import 'common.dart';
 import 'enums.dart';
+import 'enums/Weapons.dart';
 import 'instances/game.dart';
 import 'keys.dart';
 import 'rects.dart';
@@ -121,21 +122,21 @@ void drawList(
 Rect getHumanWalkingRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
-      return _getFrame(rectHumanWalkingUpFrames);
+      return _getFrameLoop(rectHumanWalkingUpFrames, character);
     case directionUpRight:
-      return _getFrame(rectHumanWalkingDownLeftFrames);
+      return _getFrameLoop(rectHumanWalkingDownLeftFrames, character);
     case directionRight:
-      return _getFrame(rectHumanWalkingLeftFrames);
+      return _getFrameLoop(rectHumanWalkingLeftFrames, character);
     case directionDownRight:
-      return _getFrame(rectHumanWalkingUpLeftFrames);
+      return _getFrameLoop(rectHumanWalkingUpLeftFrames, character);
     case directionDown:
-      return _getFrame(rectHumanWalkingUpFrames);
+      return _getFrameLoop(rectHumanWalkingUpFrames, character);
     case directionDownLeft:
-      return _getFrame(rectHumanWalkingDownLeftFrames);
+      return _getFrameLoop(rectHumanWalkingDownLeftFrames, character);
     case directionLeft:
-      return _getFrame(rectHumanWalkingLeftFrames);
+      return _getFrameLoop(rectHumanWalkingLeftFrames, character);
     case directionUpLeft:
-      return _getFrame(rectHumanWalkingUpLeftFrames);
+      return _getFrameLoop(rectHumanWalkingUpLeftFrames, character);
   }
   throw Exception("Could not get character walking sprite rect");
 }
@@ -143,21 +144,21 @@ Rect getHumanWalkingRect(dynamic character) {
 Rect getHumanReloadingRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
-      return _getFrame(rectsHumanReloadingUp);
+      return _getFrameLoop(rectsHumanReloadingUp, character);
     case directionUpRight:
-      return _getFrame(rectsHumanReloadingUpRight);
+      return _getFrameLoop(rectsHumanReloadingUpRight, character);
     case directionRight:
-      return _getFrame(rectsHumanReloadingRight);
+      return _getFrameLoop(rectsHumanReloadingRight, character);
     case directionDownRight:
-      return _getFrame(rectsHumanReloadingDownRight);
+      return _getFrameLoop(rectsHumanReloadingDownRight, character);
     case directionDown:
-      return _getFrame(rectsHumanReloadingDown);
+      return _getFrameLoop(rectsHumanReloadingDown, character);
     case directionDownLeft:
-      return _getFrame(rectsHumanReloadingDownLeft);
+      return _getFrameLoop(rectsHumanReloadingDownLeft, character);
     case directionLeft:
-      return _getFrame(rectsHumanReloadingLeft);
+      return _getFrameLoop(rectsHumanReloadingLeft, character);
     case directionUpLeft:
-      return _getFrame(rectsHumanReloadingUpLeft);
+      return _getFrameLoop(rectsHumanReloadingUpLeft, character);
   }
   throw Exception("Could not get character reloading sprite rect");
 }
@@ -167,21 +168,21 @@ List<int> characterRunningUp = [12, 51, 55];
 Rect getHumanRunningRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
-      return _getFrame(rectHumanRunningUpFrames);
+      return _getFrameLoop(rectHumanRunningUpFrames, character);
     case directionUpRight:
-      return _getFrame(rectHumanRunningUpRightFrames);
+      return _getFrameLoop(rectHumanRunningUpRightFrames, character);
     case directionRight:
-      return _getFrame(rectHumanRunningRightFrames);
+      return _getFrameLoop(rectHumanRunningRightFrames, character);
     case directionDownRight:
-      return _getFrame(rectHumanRunningDownRightFrames);
+      return _getFrameLoop(rectHumanRunningDownRightFrames, character);
     case directionDown:
-      return _getFrame(rectHumanRunningDownFrames);
+      return _getFrameLoop(rectHumanRunningDownFrames, character);
     case directionDownLeft:
-      return _getFrame(rectHumanRunningDownLeftFrames);
+      return _getFrameLoop(rectHumanRunningDownLeftFrames, character);
     case directionLeft:
-      return _getFrame(rectHumanRunningLeftFrames);
+      return _getFrameLoop(rectHumanRunningLeftFrames, character);
     case directionUpLeft:
-      return _getFrame(rectHumanRunningUpLeftFrames);
+      return _getFrameLoop(rectHumanRunningUpLeftFrames, character);
   }
   throw Exception("Could not get character walking sprite rect");
 }
@@ -298,46 +299,79 @@ Rect getCharacterSpriteRect(dynamic character) {
   throw Exception("Could not get character sprite rect");
 }
 
-Rect getHumanFiringRect(character) {
+Rect getHumanFiringRect(dynamic character) {
+  switch(character[weapon]){
+    case Weapon.Shotgun:
+      return getRectShotgunFiring(character);
+    default:
+      return getHandgunFiringRect(character);
+  }
+}
+
+Rect getHandgunFiringRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
-      return _getFrame(rectHumanFiringUpFrames);
+      return _getFrame(rectHumanFiringUpFrames, character);
     case directionUpRight:
-      return _getFrame(rectHumanFiringUpRightFrames);
+      return _getFrame(rectHumanFiringUpRightFrames, character);
     case directionRight:
-      return _getFrame(rectHumanFiringRightFrames);
+      return _getFrame(rectHumanFiringRightFrames, character);
     case directionDownRight:
-      return _getFrame(rectHumanFiringDownRightFrames);
+      return _getFrame(rectHumanFiringDownRightFrames, character);
     case directionDown:
-      return _getFrame(rectHumanFiringDownFrames);
+      return _getFrame(rectHumanFiringDownFrames, character);
     case directionDownLeft:
-      return _getFrame(rectHumanFiringDownLeftFrames);
+      return _getFrame(rectHumanFiringDownLeftFrames, character);
     case directionLeft:
-      return _getFrame(rectHumanFiringLeftFrames);
+      return _getFrame(rectHumanFiringLeftFrames, character);
     case directionUpLeft:
-      return _getFrame(rectHumanFiringUpLeftFrames);
+      return _getFrame(rectHumanFiringUpLeftFrames, character);
   }
   throw Exception("could not get firing frame from direction");
 }
 
+
+Rect getRectShotgunFiring(dynamic character) {
+  switch (character[direction]) {
+    case directionUp:
+      return _getFrame(rectFiringShotgunUpFrames, character);
+    case directionUpRight:
+      return _getFrame(rectFiringShotgunUpRightFrames, character);
+    case directionRight:
+      return _getFrame(rectFiringShotgunRightFrames, character);
+    case directionDownRight:
+      return _getFrame(rectFiringShotgunDownRightFrames, character);
+    case directionDown:
+      return _getFrame(rectFiringShotgunDownFrames, character);
+    case directionDownLeft:
+      return _getFrame(rectFiringShotgunDownLeftFrames, character);
+    case directionLeft:
+      return _getFrame(rectFiringShotgunLeftFrames, character);
+    case directionUpLeft:
+      return _getFrame(rectFiringShotgunUpLeftFrames, character);
+  }
+  throw Exception("could not get firing frame from direction");
+}
+
+
 Rect getHumanStrikingRect(character) {
   switch (character[direction]) {
     case directionUp:
-      return _getFrame(humanStrikingUpFrames);
+      return _getFrameLoop(humanStrikingUpFrames, character);
     case directionUpRight:
-      return _getFrame(humanStrikingUpRightFrames);
+      return _getFrameLoop(humanStrikingUpRightFrames, character);
     case directionRight:
-      return _getFrame(humanStrikingRightFrames);
+      return _getFrameLoop(humanStrikingRightFrames, character);
     case directionDownRight:
-      return _getFrame(humanStrikingDownRightFrames);
+      return _getFrameLoop(humanStrikingDownRightFrames, character);
     case directionDown:
-      return _getFrame(humanStrikingDownFrames);
+      return _getFrameLoop(humanStrikingDownFrames, character);
     case directionDownLeft:
-      return _getFrame(humanStrikingDownLeftFrames);
+      return _getFrameLoop(humanStrikingDownLeftFrames, character);
     case directionLeft:
-      return _getFrame(humanStrikingLeftFrames);
+      return _getFrameLoop(humanStrikingLeftFrames, character);
     case directionUpLeft:
-      return _getFrame(humanStrikingUpLeftFrames);
+      return _getFrameLoop(humanStrikingUpLeftFrames, character);
   }
   throw Exception("could not get firing frame from direction");
 }
@@ -373,8 +407,17 @@ List<Rect> humanStrikingDownRightFrames = [
 
 List<Rect> humanStrikingDownFrames = [rectHumanStrikingDown, rectHumanIdleDown];
 
-Rect _getFrame(List<Rect> frames) {
-  return frames[drawFrame % frames.length];
+Rect _getFrameLoop(List<Rect> frames, dynamic character){
+  int actualFrame = character[frameCount] ~/ 5;
+  return frames[actualFrame % frames.length];
+}
+
+Rect _getFrame(List<Rect> frames, int frame) {
+  int f = drawFrame % frame;
+  if (f >= frames.length){
+    return frames.last;
+  }
+  return frames[f];
 }
 
 const int humanSpriteFrames = 89;
@@ -513,6 +556,59 @@ List<Rect> rectHumanFiringDownFrames = [
   rectHumanFiringDown,
   rectHumanAimingDown,
 ];
+
+// Shotgun frames
+
+List<Rect> rectFiringShotgunDownLeftFrames = [
+  rectHumanBlastDownLeft,
+  rectHumanFiringDownLeft,
+  rectHumanAimingDownLeft,
+];
+
+List<Rect> rectFiringShotgunLeftFrames = [
+  rectHumanBlastLeft,
+  rectHumanFiringLeft,
+  rectHumanAimingLeft,
+];
+
+List<Rect> rectFiringShotgunUpLeftFrames = [
+  rectHumanBlastUpLeft,
+  rectHumanFiringUpLeft,
+  rectHumanAimingUpLeft,
+];
+
+List<Rect> rectFiringShotgunUpFrames = [
+  rectHumanBlastUp,
+  rectHumanFiringUp,
+  rectHumanAimingUp,
+];
+
+List<Rect> rectFiringShotgunUpRightFrames = [
+  rectHumanBlastUpRight,
+  rectHumanFiringUpRight,
+  rectHumanAimingUpRight,
+];
+
+List<Rect> rectFiringShotgunRightFrames = [
+  rectHumanBlastRight,
+  rectHumanFiringRight,
+  rectHumanAimingRight,
+];
+
+List<Rect> rectFiringShotgunDownRightFrames = [
+  rectHumanBlastDownRight,
+  rectHumanFiringDownRight,
+  rectHumanAimingDownRight,
+];
+
+List<Rect> rectFiringShotgunDownFrames = [
+  rectHumanBlastDown,
+  rectHumanFiringDown,
+  rectHumanAimingDown,
+];
+
+// End Shotgun frames
+
 
 List<Rect> rectHumanWalkingDownLeftFrames = [
   getHumanSpriteRect(4),
@@ -738,12 +834,12 @@ void setColor(Color value) {
   globalPaint.color = value;
 }
 
-void drawBulletRange() {
-  if (!playerAssigned) return;
-  dynamic player = getPlayerCharacter();
-  drawCircleOutline(
-      radius: bulletRange, x: player[x], y: player[y], color: white);
-}
+// void drawBulletRange() {
+//   if (!playerAssigned) return;
+//   dynamic player = getPlayerCharacter();
+//   drawCircleOutline(
+//       radius: bulletRange, x: player[x], y: player[y], color: white);
+// }
 
 void drawBulletHoles(List<double> bulletHoles) {
   for (int i = 0; i < bulletHoles.length; i += 2) {

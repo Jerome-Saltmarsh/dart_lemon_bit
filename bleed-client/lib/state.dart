@@ -1,7 +1,5 @@
 import 'dart:ui';
 
-import 'package:bleed_client/audio.dart';
-import 'package:bleed_client/enums/Weapons.dart';
 import 'package:flutter/material.dart';
 
 import '../common.dart';

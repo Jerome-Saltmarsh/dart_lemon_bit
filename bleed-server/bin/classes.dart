@@ -26,11 +26,13 @@ class GameObject {
 
 class Character extends GameObject {
   CharacterState state = CharacterState.Idle;
+  CharacterState previousState = CharacterState.Idle;
   Direction direction = Direction.Down;
   Weapon weapon;
   double aimAngle = 0;
   double accuracy = 0;
   int stateDuration = 0;
+  int stateFrameCount = 0;
   double health;
   double maxHealth;
   double speed;
@@ -62,14 +64,6 @@ class Character extends GameObject {
       required this.speed,
       required this.name})
       : super(x, y);
-
-  void idle() {
-    state = CharacterState.Idle;
-  }
-
-  void walk() {
-    state = CharacterState.Walking;
-  }
 }
 
 final Character _nonTarget = Character(x: 0, y: 0, weapon: Weapon.MachineGun, health: 0, maxHealth: 0, speed: 0, name: "");

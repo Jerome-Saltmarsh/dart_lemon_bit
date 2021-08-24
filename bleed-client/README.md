@@ -1,5 +1,4 @@
 # TODO
-[ ] Shotgun Animation
 [ ] Critical Damage
 [ ] Accuracy
 [ ] Weapon Oozie
@@ -28,6 +27,7 @@
 [ ] Fix Npc Wander
 [ ] FIX NPC pathfinding stops bug
 [ ] NPC surround player
+[ ] Fire Shotgun Animation
 [x] Inventory Grenade
 [x] Inventory Shotgun
 [x] Throw Grenade Audio

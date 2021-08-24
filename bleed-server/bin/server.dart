@@ -4,7 +4,6 @@ import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'classes/Game.dart';
-import 'classes/Inventory.dart';
 import 'classes/Player.dart';
 import 'compile.dart';
 import 'enums/ClientRequest.dart';

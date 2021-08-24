@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:bleed_client/game_engine/game_functions.dart';
 import 'package:bleed_client/game_engine/web_functions.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

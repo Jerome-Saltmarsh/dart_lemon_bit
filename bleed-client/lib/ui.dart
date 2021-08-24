@@ -194,13 +194,13 @@ Widget buildGameUI(BuildContext context) {
       child: Container(child: text("Reconnecting...", fontSize: 30)),
     );
   }
-  dynamic player = getPlayerCharacter();
-  if (player == null) {
+  // dynamic player = getPlayerCharacter();
+  if (!playerAssigned) {
     return Container(
       width: globalSize.width,
       height: globalSize.height,
       alignment: Alignment.center,
-      child: button("Spawn", sendRequestSpawn, fontSize: 100),
+      child: text("Error: No Player Assigned"),
     );
   }
 
@@ -435,7 +435,7 @@ Widget buildHud() {
       // topLeft,
       topRight,
       bottomLeft,
-      bottomRight,
+      // bottomRight,
       if(playerHealth <= 0)
       center],
   );

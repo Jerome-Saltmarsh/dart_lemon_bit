@@ -6,7 +6,6 @@ import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/enums/CollectableType.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
-import 'package:bleed_client/game_engine/game_functions.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/instances/game.dart';
 import 'package:flutter/material.dart';

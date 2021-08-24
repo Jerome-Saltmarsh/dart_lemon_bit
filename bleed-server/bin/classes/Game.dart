@@ -110,7 +110,7 @@ extension GameFunctions on Game {
     if (npc.targetSet) {
       if (!npc.target.active) {
         npc.clearTarget();
-        npc.idle();
+        npc.state = CharacterState.Idle;
         return;
       }
 
@@ -141,7 +141,7 @@ extension GameFunctions on Game {
       } else {
         characterFace(npc, npc.path[0].x, npc.path[0].y);
       }
-      npc.walk();
+      npc.state = CharacterState.Walking;
       return;
 
       // if (scene.pathClear(npc.x, npc.y, npc.xDes, npc.yDes)) {
@@ -165,7 +165,7 @@ extension GameFunctions on Game {
       // }
       // return;
     }
-    npc.idle();
+    npc.state = CharacterState.Idle;
   }
 
   void _updatePlayersAndNpcs() {
@@ -727,6 +727,13 @@ extension GameFunctions on Game {
         }
         break;
     }
+
+    if (character.previousState != character.state) {
+      character.previousState = character.state;
+      character.stateFrameCount = 0;
+    } else {
+      character.stateFrameCount++;
+    }
   }
 
   void throwGrenade(double x, double y, double angle, double strength) {
@@ -794,8 +801,7 @@ extension GameFunctions on Game {
         ]),
         name: name,
         grenades: 2,
-        meds: 2
-    );
+        meds: 2);
     players.add(player);
     player.shotgunRounds = settings.shotgunClipSize;
     return player;
