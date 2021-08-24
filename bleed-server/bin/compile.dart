@@ -72,6 +72,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.maxStamina);
   _write(buffer, player.handgunRounds);
   _write(buffer, player.shotgunRounds);
+  _write(buffer, player.grenades);
   _compileInventory(buffer, player.inventory);
 }
 

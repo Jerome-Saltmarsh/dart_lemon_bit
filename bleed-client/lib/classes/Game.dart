@@ -25,6 +25,7 @@ class Game {
   Weapon playerWeapon = Weapon.Unarmed;
   int handgunRounds = 0;
   int shotgunRounds = 0;
+  int playerGrenades = 0;
 
   int get roundsRemaining{
     switch(playerWeapon){

@@ -791,7 +791,9 @@ extension GameFunctions on Game {
           InventoryItem(2, 2, InventoryItemType.HandgunClip),
           InventoryItem(1, 1, InventoryItemType.ShotgunClip),
         ]),
-        name: name);
+        name: name,
+        grenades: 2
+    );
     players.add(player);
     player.shotgunRounds = settings.shotgunClipSize;
     return player;

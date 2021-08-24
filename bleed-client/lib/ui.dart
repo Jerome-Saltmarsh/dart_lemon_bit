@@ -21,7 +21,9 @@ import 'state.dart';
 import 'utils.dart';
 
 TextEditingController _playerNameController = TextEditingController();
-ButtonStyle _buttonStyle = buildButtonStyle(Colors.white, 2);
+ButtonStyle _buttonStyle = buildButtonStyle(white, 2);
+Border _border = Border.all(
+    color: white, width: 5.0, style: BorderStyle.solid);
 
 void initUI() {
   onConnectError.stream.listen((event) {
@@ -209,6 +211,10 @@ void requestJoinRandomGame() {
   send(ClientRequest.Game_Join_Random.index.toString());
 }
 
+const DecorationImage grenadeImage = const DecorationImage(
+  image: const AssetImage('images/weapon-grenade.png'),
+);
+
 const DecorationImage _handgunImage = const DecorationImage(
   image: const AssetImage('images/weapon-handgun.png'),
 );
@@ -246,10 +252,7 @@ Widget buildWeaponButton(Weapon weapon) {
         width: 120,
         height: 50,
         decoration: BoxDecoration(
-            border: game.playerWeapon == weapon
-                ? Border.all(
-                    color: Colors.white, width: 5.0, style: BorderStyle.solid)
-                : null,
+            border: game.playerWeapon == weapon ? _border : null,
             image: _getDecorationImage(weapon))),
   );
 }
@@ -381,6 +384,18 @@ Widget buildHud() {
             height: 50,
             width: 100,
             child: text(game.roundsRemaining.toString(), fontSize: 28)),
+        Container(
+            width: 120,
+            height: 50,
+            decoration: BoxDecoration(
+                border: _border,
+                image: grenadeImage)),
+        Container(
+            color: Colors.black87,
+            alignment: Alignment.center,
+            height: 50,
+            width: 100,
+            child: text(game.playerGrenades.toString(), fontSize: 28)),
       ],
     ),
   );

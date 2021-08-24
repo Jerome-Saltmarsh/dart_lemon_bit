@@ -26,7 +26,7 @@
 [ ] Fix Shot Looping Animation
 [ ] Fix Npc Wander
 [ ] FIX NPC pathfinding stops bug
-[ ] Inventory Grenade
+[x] Inventory Grenade
 [x] Inventory Shotgun
 [x] Throw Grenade Audio
 [x] Use Medkit Audio

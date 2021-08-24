@@ -11,25 +11,25 @@ class Player extends Character {
   int maxStamina = 200;
   Inventory inventory;
 
+  int grenades;
   int handgunRounds = 0;
   int shotgunRounds = 0;
 
-
-  Player(
-      {required this.uuid,
-        required double x,
-        required double y,
-        required this.inventory,
-        required String name,
-      })
-      : super(
-      x: x,
-      y: y,
-      weapon: Weapon.HandGun,
-      health: settingsPlayerStartHealth,
-      maxHealth: settingsPlayerStartHealth,
-      speed: playerSpeed,
-      name: name){
+  Player({
+    required this.uuid,
+    required double x,
+    required double y,
+    required this.inventory,
+    required String name,
+    this.grenades = 0,
+  }) : super(
+            x: x,
+            y: y,
+            weapon: Weapon.HandGun,
+            health: settingsPlayerStartHealth,
+            maxHealth: settingsPlayerStartHealth,
+            speed: playerSpeed,
+            name: name) {
     stamina = maxStamina;
     handgunRounds = settings.handgunClipSize;
   }

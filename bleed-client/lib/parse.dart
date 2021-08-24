@@ -164,6 +164,7 @@ void _parsePlayer() {
   playerMaxStamina = _consumeInt();
   setHandgunRounds(_consumeInt());
   game.shotgunRounds = _consumeInt();
+  game.playerGrenades = _consumeInt();
 }
 
 void _parseInventory() {
