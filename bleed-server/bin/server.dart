@@ -141,10 +141,12 @@ void main() {
           }
           if (player.health == player.maxHealth) return;
           if (player.dead) return;
-          int index = player.inventory.items.indexWhere((element) => element.type == InventoryItemType.HealthPack);
-          if (index == -1) return;
+          if (player.meds <= 0) return;
+          // int index = player.inventory.items.indexWhere((element) => element.type == InventoryItemType.HealthPack);
+          // if (index == -1) return;
+          // player.inventory.items.removeAt(index);
+          player.meds--;
           player.health = player.maxHealth;
-          player.inventory.items.removeAt(index);
           game.dispatch(GameEventType.Use_MedKit, player.x, player.y, 0, 0);
           break;
 

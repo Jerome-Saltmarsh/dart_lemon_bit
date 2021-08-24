@@ -26,6 +26,7 @@ class Game {
   int handgunRounds = 0;
   int shotgunRounds = 0;
   int playerGrenades = 0;
+  int playerMeds = 0;
 
   int get roundsRemaining{
     switch(playerWeapon){

@@ -73,6 +73,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.handgunRounds);
   _write(buffer, player.shotgunRounds);
   _write(buffer, player.grenades);
+  _write(buffer, player.meds);
   _compileInventory(buffer, player.inventory);
 }
 

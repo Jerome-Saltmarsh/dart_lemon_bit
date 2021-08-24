@@ -215,6 +215,10 @@ const DecorationImage grenadeImage = const DecorationImage(
   image: const AssetImage('images/weapon-grenade.png'),
 );
 
+const DecorationImage healthImage = const DecorationImage(
+  image: const AssetImage('images/health.png'),
+);
+
 const DecorationImage _handgunImage = const DecorationImage(
   image: const AssetImage('images/weapon-handgun.png'),
 );
@@ -396,6 +400,18 @@ Widget buildHud() {
             height: 50,
             width: 100,
             child: text(game.playerGrenades.toString(), fontSize: 28)),
+        Container(
+            width: 120,
+            height: 50,
+            decoration: BoxDecoration(
+                border: _border,
+                image: healthImage)),
+        Container(
+            color: Colors.black87,
+            alignment: Alignment.center,
+            height: 50,
+            width: 100,
+            child: text(game.playerMeds.toString(), fontSize: 28)),
       ],
     ),
   );

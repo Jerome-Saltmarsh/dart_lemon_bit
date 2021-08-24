@@ -20,12 +20,14 @@
 [ ] Grenade building collision
 [ ] Collect Audio
 [ ] Find / Join Game 
+[ ] Stamina Potion
 [ ] Refactor inventory painter
 [ ] Create Game
 [ ] Menu Screen Game
 [ ] Fix Shot Looping Animation
 [ ] Fix Npc Wander
 [ ] FIX NPC pathfinding stops bug
+[ ] NPC surround player
 [x] Inventory Grenade
 [x] Inventory Shotgun
 [x] Throw Grenade Audio

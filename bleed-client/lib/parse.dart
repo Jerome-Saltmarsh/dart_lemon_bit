@@ -165,6 +165,7 @@ void _parsePlayer() {
   setHandgunRounds(_consumeInt());
   game.shotgunRounds = _consumeInt();
   game.playerGrenades = _consumeInt();
+  game.playerMeds = _consumeInt();
 }
 
 void _parseInventory() {

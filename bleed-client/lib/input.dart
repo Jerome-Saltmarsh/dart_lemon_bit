@@ -36,7 +36,7 @@ bool get keySprintPressed => keyPressed(LogicalKeyboardKey.shiftLeft);
 
 bool get keyPressedReload => keyPressed(_keyReload);
 
-bool get keyPressedUseMedKit =>  keyPressed(LogicalKeyboardKey.keyQ);
+bool get keyPressedUseMedKit =>  keyPressed(LogicalKeyboardKey.keyH);
 
 bool get keyPressedDisconnect =>  keyPressed(LogicalKeyboardKey.escape);
 

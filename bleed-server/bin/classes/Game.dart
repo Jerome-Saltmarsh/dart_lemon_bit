@@ -80,6 +80,7 @@ extension GameFunctions on Game {
 
         switch (collectables[i].type) {
           case CollectableType.Health:
+            player.meds++;
             if (!player.inventory.acquire(InventoryItemType.HealthPack)) {
               continue;
             }
@@ -792,7 +793,8 @@ extension GameFunctions on Game {
           InventoryItem(1, 1, InventoryItemType.ShotgunClip),
         ]),
         name: name,
-        grenades: 2
+        grenades: 2,
+        meds: 2
     );
     players.add(player);
     player.shotgunRounds = settings.shotgunClipSize;
