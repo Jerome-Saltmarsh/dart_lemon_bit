@@ -1,4 +1,3 @@
-
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -9,6 +8,7 @@ import 'compile.dart';
 import 'enums/ClientRequest.dart';
 import 'enums/GameError.dart';
 import 'enums/GameEventType.dart';
+import 'enums/GameType.dart';
 import 'enums/ServerResponse.dart';
 import 'enums/Weapons.dart';
 import 'enums.dart';
@@ -20,7 +20,6 @@ import 'utils.dart';
 
 const String _space = " ";
 final int errorIndex = ServerResponse.Error.index;
-
 
 void main() {
   print('Bleed Game Server Starting');
@@ -47,8 +46,7 @@ void main() {
       compileState(game);
       buffer.write(game.compiled);
       buffer.write(
-          '${ServerResponse.Player_Created.index} ${player.id} ${player
-              .uuid} ${player.x.toInt()} ${player.y.toInt()} ; ');
+          '${ServerResponse.Player_Created.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ; ');
       sendToClient(buffer.toString());
     }
 
@@ -91,6 +89,10 @@ void main() {
       ClientRequest request = ClientRequest.values[clientRequestInt];
 
       switch (request) {
+        case ClientRequest.Game_Join_Fortress:
+          joinGame(gameManager.findOrCreateGameFortress());
+          break;
+
         case ClientRequest.Game_Join_Open_World:
           Game openWorld = gameManager.getAvailableOpenWorld();
           joinGame(openWorld);
@@ -112,10 +114,10 @@ void main() {
             return;
           }
           player.lastEventFrame = 0;
-          CharacterState requestedState = CharacterState.values[int.parse(
-              arguments[4])];
-          Direction requestedDirection = Direction.values[int.parse(
-              arguments[5])];
+          CharacterState requestedState =
+              CharacterState.values[int.parse(arguments[4])];
+          Direction requestedDirection =
+              Direction.values[int.parse(arguments[5])];
           double aim = double.parse(arguments[6]);
           player.aimAngle = aim;
           setDirection(player, requestedDirection);
@@ -141,20 +143,17 @@ void main() {
           if (player.health == player.maxHealth) return;
           if (player.dead) return;
           if (player.meds <= 0) return;
-          // int index = player.inventory.items.indexWhere((element) => element.type == InventoryItemType.HealthPack);
-          // if (index == -1) return;
-          // player.inventory.items.removeAt(index);
           player.meds--;
           player.health = player.maxHealth;
           game.dispatch(GameEventType.Use_MedKit, player.x, player.y, 0, 0);
           break;
 
         case ClientRequest.Game_Create:
-        // print("ClientRequest.Game_Create");
-        // Game game = Game(GameType.DeathMatch);
-        // generateTiles(game);
-        // gameManager.games.add(game);
-        // sendToClient('game-created ${game.id}');
+          // print("ClientRequest.Game_Create");
+          // Game game = Game(GameType.DeathMatch);
+          // generateTiles(game);
+          // gameManager.games.add(game);
+          // sendToClient('game-created ${game.id}');
           return;
 
         case ClientRequest.Game_Join_Random:
@@ -162,20 +161,20 @@ void main() {
           joinGame(deathMatch);
           break;
 
-      // case ClientRequest.Game_Join:
-      //   if (arguments.length <= 1) {
-      //     error('game uuid required');
-      //     return;
-      //   }
-      //   String gameId = arguments[1];
-      //   Game? game = gameManager.findGameById(gameId);
-      //   if (game == null) {
-      //     error('game not found: $gameId ;');
-      //     return;
-      //   }
-      //   Player player = game.spawnPlayer(name: "Test");
-      //   sendToClient("game-joined ${game.id} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ; ");
-      //   return;
+        // case ClientRequest.Game_Join:
+        //   if (arguments.length <= 1) {
+        //     error('game uuid required');
+        //     return;
+        //   }
+        //   String gameId = arguments[1];
+        //   Game? game = gameManager.findGameById(gameId);
+        //   if (game == null) {
+        //     error('game not found: $gameId ;');
+        //     return;
+        //   }
+        //   Player player = game.spawnPlayer(name: "Test");
+        //   sendToClient("game-joined ${game.id} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ; ");
+        //   return;
 
         case ClientRequest.Ping:
           sendToClient('${ServerResponse.Pong.index} ;');

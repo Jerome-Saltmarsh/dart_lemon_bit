@@ -22,8 +22,7 @@ import 'utils.dart';
 
 TextEditingController _playerNameController = TextEditingController();
 ButtonStyle _buttonStyle = buildButtonStyle(white, 2);
-Border _border = Border.all(
-    color: white, width: 5.0, style: BorderStyle.solid);
+Border _border = Border.all(color: white, width: 5.0, style: BorderStyle.solid);
 
 void initUI() {
   onConnectError.stream.listen((event) {
@@ -168,16 +167,21 @@ Widget buildGameUI(BuildContext context) {
   }
 
   if (gameId < 0) {
-    return column([
-      // button('Open World', () {
-      //   send(ClientRequest.Game_Join_Open_World.index.toString());
-      // }),
-      button('Death Match', () {
-        requestJoinRandomGame();
-      }),
-      // button('Create Game', (){}),
-      // button('Join Game', (){})
-    ]);
+    return Container(
+      alignment: Alignment.center,
+      width: screenWidth,
+      height: screenHeight,
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+        button('Join Death Match', requestJoinRandomGame),
+        button('Join Fortress', sendRequestJoinGameFortress),
+        button('Map Editor', (){
+
+        }),
+      ]),
+    );
   }
 
   if (editMode) return buildEditorUI();
@@ -205,10 +209,6 @@ Widget buildGameUI(BuildContext context) {
   }
 
   return buildHud();
-}
-
-void requestJoinRandomGame() {
-  send(ClientRequest.Game_Join_Random.index.toString());
 }
 
 const DecorationImage grenadeImage = const DecorationImage(
@@ -349,15 +349,19 @@ Widget buildHud() {
           children: [
             button(playMode ? 'Edit' : "Play", toggleMode),
             // text('mouseScreenX: ${mouseX.toInt()}, mouseScreenY: ${mouseY.toInt()}'),
-            text('mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
+            text(
+                'mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
             text('Stamina: $playerStamina / $playerMaxStamina'),
             text('x: ${game.playerX}, y: ${game.playerY}'),
             text("zombies: ${game.npcs.length}"),
             text("players: ${game.players.length}"),
             text("zoom: ${zoom.toStringAsFixed(2)}"),
             text("cameraX: ${cameraX.toInt()}, cameraY: ${cameraY.toInt()}"),
-            text("centerX: ${screenCenterWorldX.toInt()} ${screenCenterWorldY.toInt()}"),
-            text('screen width: ${screenWidth / zoom}, screen height: ${screenHeight / zoom}'),
+            text(
+                "centerX: ${screenCenterWorldX.toInt()} ${screenCenterWorldY.toInt()}"),
+            text(
+                'screen width: ${screenWidth / zoom}, screen height: ${screenHeight / zoom}'),
+            button('Play Fortress', sendRequestJoinGameFortress)
           ],
         )
       ],
@@ -391,9 +395,7 @@ Widget buildHud() {
         Container(
             width: 120,
             height: 50,
-            decoration: BoxDecoration(
-                border: _border,
-                image: grenadeImage)),
+            decoration: BoxDecoration(border: _border, image: grenadeImage)),
         Container(
             color: Colors.black87,
             alignment: Alignment.center,
@@ -403,9 +405,7 @@ Widget buildHud() {
         Container(
             width: 120,
             height: 50,
-            decoration: BoxDecoration(
-                border: _border,
-                image: healthImage)),
+            decoration: BoxDecoration(border: _border, image: healthImage)),
         Container(
             color: Colors.black87,
             alignment: Alignment.center,
@@ -432,17 +432,16 @@ Widget buildHud() {
 
   return Stack(
     children: [
-      // topLeft,
+      topLeft,
       topRight,
       bottomLeft,
       // bottomRight,
-      if(playerHealth <= 0)
-      center],
+      if (playerHealth <= 0) center
+    ],
   );
 }
 
 Widget buildDebugPanel() {
-
   return column([
     button("Respawn", sendRequestSpawn),
     button("Spawn NPC", sendRequestSpawnNpc),

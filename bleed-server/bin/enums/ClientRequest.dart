@@ -10,4 +10,5 @@ enum ClientRequest{
   Player_Throw_Grenade,
   Player_Use_MedKit,
   Ping,
+  Game_Join_Fortress,
 }

@@ -34,9 +34,37 @@ class GameManager {
       }
     }
 
-    Game deathMatch = Game(GameType.DeathMatch, scenesTown, settings.deathMatchMaxPlayers);
+    Game deathMatch = DeathMatch();
     games.add(deathMatch);
     return deathMatch;
+  }
+
+  Game? findAvailableGameByType(GameType type) {
+    for (Game game in games) {
+      if (game.type != GameType.OpenWorld) continue;
+      if (game.players.length < game.maxPlayers) {
+        return game;
+      }
+    }
+    return null;
+  }
+
+  DeathMatch createDeathMatch() {
+    DeathMatch deathMatch = DeathMatch();
+    games.add(deathMatch);
+    return deathMatch;
+  }
+
+  Fortress createGameFortress() {
+    Fortress fortress = Fortress();
+    games.add(fortress);
+    return fortress;
+  }
+
+  Fortress findOrCreateGameFortress() {
+    Game? game = findAvailableGameByType(GameType.Fortress);
+    if (game != null) return game as Fortress;
+    return createGameFortress();
   }
 
   Game getAvailableOpenWorld() {
@@ -46,7 +74,7 @@ class GameManager {
         return game;
       }
     }
-    Game deathMatch = Game(GameType.OpenWorld, buildOpenWorldScene(), 64);
+    Game deathMatch = DeathMatch();
     games.add(deathMatch);
     return deathMatch;
   }

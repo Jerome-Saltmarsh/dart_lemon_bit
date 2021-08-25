@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import '../classes.dart';
@@ -11,6 +12,7 @@ import '../enums/ServerResponse.dart';
 import '../enums/Weapons.dart';
 import '../extensions/settings-extensions.dart';
 import '../functions/applyForce.dart';
+import '../instances/scenes.dart';
 import '../instances/settings.dart';
 import '../language.dart';
 import '../maths.dart';
@@ -25,12 +27,38 @@ import 'Player.dart';
 import 'Scene.dart';
 import 'Vector2.dart';
 
-class Game {
+class Fortress extends Game {
+  int nextWave = 1000;
+
+  Fortress() : super(GameType.Fortress, scenesTown, 8);
+
+  void update() {
+    if (nextWave > 0) {
+      nextWave--;
+    } else {
+      nextWave = 5000;
+
+      for (Vector2 spawnPoint in scene.zombieSpawnPoints) {
+        spawnNpc(spawnPoint.x + giveOrTake(5), spawnPoint.y + giveOrTake(5));
+      }
+    }
+  }
+}
+
+class DeathMatch extends Game {
+  DeathMatch() : super(GameType.Fortress, scenesTown, 32);
+
+  @override
+  void update() {}
+}
+
+abstract class Game {
   static int _id = 0;
   final String id = (_id++).toString();
   final GameType type;
   final int maxPlayers;
   final Scene scene;
+  int duration = 0;
   List<Npc> npcs = [];
   List<Player> players = [];
   List<Bullet> bullets = [];
@@ -43,6 +71,8 @@ class Game {
   // this saves us rewriting the same text each frame
   late final String gameIdString;
 
+  void update();
+
   Game(this.type, this.scene, this.maxPlayers) {
     for (Collectable collectable in scene.collectables) {
       collectables.add(collectable);
@@ -53,6 +83,8 @@ class Game {
 
 extension GameFunctions on Game {
   void updateAndCompile() {
+    duration++;
+
     _updatePlayersAndNpcs();
     _updateCollisions();
     _updateBullets();
@@ -733,7 +765,8 @@ extension GameFunctions on Game {
       character.stateFrameCount = 0;
     } else {
       character.stateFrameCount++;
-      character.stateFrameCount %= 100; // prevents the frame count digits getting over 2
+      character.stateFrameCount %=
+          100; // prevents the frame count digits getting over 2
     }
   }
 

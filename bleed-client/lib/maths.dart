@@ -114,3 +114,7 @@ double adj(double rotation, double magnitude) {
 double opp(double rotation, double magnitude) {
   return -sin(rotation + piHalf) * magnitude;
 }
+
+double diff(double a, double b){
+  return abs(a - b);
+}

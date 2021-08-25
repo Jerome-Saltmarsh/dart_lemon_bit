@@ -20,12 +20,14 @@ import 'state.dart';
 import 'streams/onPlayerCreated.dart';
 
 // state
-final List _cache = [];
 int _index = 0;
+const List _cache = [];
+const String _emptyString = " ";
+const String _colon = ";";
+const String _comma = ",";
 
 // properties
 String get _text => event;
-
 String get _currentCharacter => _text[_index];
 
 // functions
@@ -196,6 +198,7 @@ InventoryItemType _consumeInventoryItemType() {
 }
 
 void _parseCollectables() {
+  // todo this is really expensive
   game.collectables.clear();
   while (!_simiColonConsumed()) {
     game.collectables.add(_consumeInt());
@@ -238,7 +241,7 @@ void _next() {
 }
 
 void _consumeSpace() {
-  while (_currentCharacter == " ") {
+  while (_currentCharacter == _emptyString) {
     _next();
   }
 }
@@ -271,7 +274,7 @@ ServerResponse _consumeServerResponse() {
 String _consumeString() {
   _consumeSpace();
   StringBuffer buffer = StringBuffer();
-  while (_index < event.length && _currentCharacter != " ") {
+  while (_index < event.length && _currentCharacter != _emptyString) {
     buffer.write(_currentCharacter);
     _index++;
   }
@@ -285,7 +288,7 @@ double _consumeDouble() {
 
 bool _simiColonConsumed() {
   _consumeSpace();
-  if (_currentCharacter == ";") {
+  if (_currentCharacter == _colon) {
     _index++;
     return true;
   }
@@ -294,7 +297,7 @@ bool _simiColonConsumed() {
 
 bool _commaConsumed() {
   _consumeSpace();
-  if (_currentCharacter == ",") {
+  if (_currentCharacter == _comma) {
     _index++;
     return true;
   }

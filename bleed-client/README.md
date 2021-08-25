@@ -6,7 +6,6 @@
 [ ] Game Type: Open World
 [ ] Game Type: Death Match
 [ ] Game Type: Capture The Flag
-[ ] Game Type: Fortress
 [ ] Game Type: Sandbox
 [ ] Throw Animation
 [ ] Player Name Text
@@ -15,7 +14,6 @@
 [ ] Zombie Hurt Animation
 [ ] Npc Text
 [ ] Fix Block Collision Bug
-[ ] Lobby
 [ ] Grenade building collision
 [ ] Collect Audio
 [ ] Find / Join Game 
@@ -28,6 +26,9 @@
 [ ] FIX NPC pathfinding stops bug
 [ ] NPC surround player
 [ ] Fire Shotgun Animation
+[ ] Game Type: Fortress
+[ ] Lobby
+[ ] Map Editor: Translate GameObjects
 [x] Inventory Grenade
 [x] Inventory Shotgun
 [x] Throw Grenade Audio

@@ -28,6 +28,7 @@ import 'EditMode.dart';
 Offset _translateOffset;
 bool _panning = false;
 Offset _mouseWorldStart;
+int selectedCollectable = -1;
 
 void initEditor() {
   RawKeyboard.instance.addListener(_handleKeyPressed);
@@ -53,12 +54,9 @@ Widget buildEditorUI() {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               text(
-                  "Mouse X: ${mouseWorldX.toInt()}, mouse Y: ${mouseWorldY
-                      .toInt()}"),
+                  "Mouse X: ${mouseWorldX.toInt()}, mouse Y: ${mouseWorldY.toInt()}"),
               text(
-                  "MousePro X: ${mouseUnprojectPositionX
-                      .toInt()}, mouseProY: ${mouseUnprojectPositionY
-                      .toInt()}"),
+                  "MousePro X: ${mouseUnprojectPositionX.toInt()}, mouseProY: ${mouseUnprojectPositionY.toInt()}"),
               text("Tile X: $mouseTileX, Tile Y: $mouseTileY"),
               column(EditorTool.values.map((e) {
                 return button(e.toString(), () {
@@ -69,8 +67,8 @@ Widget buildEditorUI() {
               button("Reset Tiles", () {
                 for (int row = 0; row < game.tiles.length; row++) {
                   for (int column = 0;
-                  column < game.tiles[0].length;
-                  column++) {
+                      column < game.tiles[0].length;
+                      column++) {
                     game.tiles[row][column] = Tile.Concrete;
                   }
                 }
@@ -181,6 +179,12 @@ void drawEditMode() {
 void _handleMouseDrag() {
   if (!mouseDragging) return;
 
+  if (selectedCollectable > -1) {
+    game.collectables[selectedCollectable] = mouseWorldX.toInt();
+    game.collectables[selectedCollectable + 1] = mouseWorldY.toInt();
+    return;
+  }
+
   switch (editState.tool) {
     case EditorTool.Block:
       _handleDragBlock();
@@ -194,7 +198,7 @@ void _handleMouseDrag() {
   }
 }
 
-void _handleDragBlock(){
+void _handleDragBlock() {
   if (editState.selectedBlock == null) return;
 
   Block block = editState.selectedBlock;
@@ -243,6 +247,19 @@ void _handleDragBlock(){
 
 void _handleMouseClick() {
   if (!mouseClicked) return;
+
+  selectedCollectable = -1;
+
+  double r = 50;
+
+  for (int i = 0; i < game.collectables.length; i += 2) {
+    double x = game.collectables[i].toDouble();
+    double y = game.collectables[i + 1].toDouble();
+    if (diff(x, mouseWorldX) < r && diff(y, mouseWorldY) < r) {
+      selectedCollectable = i;
+      return;
+    }
+  }
 
   switch (editState.tool) {
     case EditorTool.Block:

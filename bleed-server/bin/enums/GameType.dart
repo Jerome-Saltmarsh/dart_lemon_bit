@@ -1,5 +1,6 @@
 enum GameType {
   OpenWorld,
   DeathMatch,
-  Survival
+  Survival,
+  Fortress
 }

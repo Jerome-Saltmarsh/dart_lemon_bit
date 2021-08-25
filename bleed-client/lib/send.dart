@@ -56,6 +56,15 @@ void sendRequestUpdatePlayer() {
   send(_buffer.toString());
 }
 
+void sendRequestJoinGameFortress(){
+  send(ClientRequest.Game_Join_Fortress.index.toString());
+}
+
+void requestJoinRandomGame() {
+  send(ClientRequest.Game_Join_Random.index.toString());
+}
+
+
 void sendRequestSpawn() {
   print("sendRequestSpawn()");
   send('spawn');
