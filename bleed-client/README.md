@@ -28,7 +28,7 @@
 [ ] Fire Shotgun Animation
 [ ] Game Type: Fortress
 [ ] Lobby
-[ ] Map Editor: Translate GameObjects
+[x] Map Editor: Translate GameObjects
 [x] Inventory Grenade
 [x] Inventory Shotgun
 [x] Throw Grenade Audio

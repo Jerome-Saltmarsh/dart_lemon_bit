@@ -154,6 +154,13 @@ void drawEditMode() {
     drawCircleOffset(offset, 10, Colors.deepPurple);
   }
 
+  if (selectedCollectable > 0) {
+    double x = game.collectables[selectedCollectable + 1].toDouble();
+    double y = game.collectables[selectedCollectable + 2].toDouble();
+
+    drawCircleOutline(x: x, y: y, radius: 50, color: white, sides: 10);
+  }
+
   if (editState.selectedBlock == null) return;
   if (editState.editMode == EditMode.Translate) {
     drawBlockSelected(editState.selectedBlock);
@@ -176,12 +183,23 @@ void drawEditMode() {
   }
 }
 
+bool _mouseDragClickProcess = false;
+
 void _handleMouseDrag() {
-  if (!mouseDragging) return;
+  if (!mouseDragging) {
+    _mouseDragClickProcess = false;
+    return;
+  }
+
+  if (!_mouseDragClickProcess) {
+    _mouseDragClickProcess = true;
+    _handleMouseClick(true);
+    return;
+  }
 
   if (selectedCollectable > -1) {
-    game.collectables[selectedCollectable] = mouseWorldX.toInt();
-    game.collectables[selectedCollectable + 1] = mouseWorldY.toInt();
+    game.collectables[selectedCollectable + 1] = mouseWorldX.toInt();
+    game.collectables[selectedCollectable + 2] = mouseWorldY.toInt();
     return;
   }
 
@@ -245,18 +263,19 @@ void _handleDragBlock() {
   }
 }
 
-void _handleMouseClick() {
-  if (!mouseClicked) return;
-
+void _handleMouseClick([bool drag = false]) {
+  if (!drag && !mouseClicked) return;
+  print('clicked');
   selectedCollectable = -1;
 
-  double r = 50;
+  double r = 75;
 
-  for (int i = 0; i < game.collectables.length; i += 2) {
-    double x = game.collectables[i].toDouble();
-    double y = game.collectables[i + 1].toDouble();
+  for (int i = 0; i < game.collectables.length; i += 3) {
+    double x = game.collectables[i + 1].toDouble();
+    double y = game.collectables[i + 2].toDouble();
     if (diff(x, mouseWorldX) < r && diff(y, mouseWorldY) < r) {
       selectedCollectable = i;
+      print('collectable selected: $selectedCollectable');
       return;
     }
   }
