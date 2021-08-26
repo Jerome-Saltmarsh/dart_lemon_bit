@@ -8,6 +8,7 @@ import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/instances/game.dart';
+import 'package:bleed_client/properties.dart';
 import 'package:flutter/material.dart';
 
 import '../../keys.dart';
@@ -20,17 +21,21 @@ import 'drawGrenade.dart';
 import 'drawParticle.dart';
 
 void drawCanvas(Canvas canvass, Size _size) {
-  if (!connected) return;
 
+  canvass.scale(zoom, zoom);
+  canvass.translate(-cameraX, -cameraY);
+
+  if (editMode){
+
+  }
+
+  if (!connected) return;
   if (gameId < 0) return;
 
   frameRateValue++;
   if (frameRateValue % frameRate == 0) {
     drawFrame++;
   }
-
-  canvass.scale(zoom, zoom);
-  canvass.translate(-cameraX, -cameraY);
 
   drawTiles();
   try {

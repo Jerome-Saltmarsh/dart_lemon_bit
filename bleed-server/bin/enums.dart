@@ -2,7 +2,8 @@ enum Tile {
   Concrete,
   Grass,
   Water,
-  Boundary
+  Boundary,
+  Fortress
 }
 
 enum CharacterState { Idle, Walking, Dead, Aiming, Firing, Striking, Running, Reloading, ChangingWeapon }

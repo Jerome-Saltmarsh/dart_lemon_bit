@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bleed_client/editor/GameEdit.dart';
 import 'package:flutter/material.dart';
 
 import '../common.dart';
@@ -9,6 +10,7 @@ import 'classes/Vector2.dart';
 import 'enums/Mode.dart';
 import 'instances/game.dart';
 
+GameEdit gameEdit;
 Mode mode = Mode.Play;
 int frameRate = 5;
 int frameRateValue = 0;

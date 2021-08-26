@@ -49,12 +49,6 @@ void drawCharacterList(List<dynamic> characters) {
 }
 
 void drawTileList() {
-  if (tileTransforms.isEmpty) {
-    processTileTransforms();
-  }
-  if (tileRects.isEmpty) {
-    loadTileRects();
-  }
   drawAtlases(imageTiles, tileTransforms, tileRects);
 }
 
@@ -255,6 +249,7 @@ Rect getHumanAimRect(dynamic character) {
 
 Rect tileRectConcrete = getTileSpriteRectByIndex(0);
 Rect tileRectGrass = getTileSpriteRectByIndex(1);
+Rect tileRectRed = getTileSpriteRectByIndex(2);
 
 Rect getTileSpriteRectByIndex(int index) {
   return rectByIndex(
@@ -271,6 +266,8 @@ Rect getTileSpriteRect(Tile tile) {
       return tileRectConcrete;
     case Tile.Grass:
       return tileRectGrass;
+    case Tile.Fortress:
+      return tileRectRed;
   }
   throw Exception("could not find rect for tile $tile");
 }

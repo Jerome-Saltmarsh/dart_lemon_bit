@@ -29,6 +29,7 @@ Offset _translateOffset;
 bool _panning = false;
 Offset _mouseWorldStart;
 int selectedCollectable = -1;
+bool _mouseDragClickProcess = false;
 
 void initEditor() {
   RawKeyboard.instance.addListener(_handleKeyPressed);
@@ -183,8 +184,6 @@ void drawEditMode() {
   }
 }
 
-bool _mouseDragClickProcess = false;
-
 void _handleMouseDrag() {
   if (!mouseDragging) {
     _mouseDragClickProcess = false;
@@ -265,17 +264,15 @@ void _handleDragBlock() {
 
 void _handleMouseClick([bool drag = false]) {
   if (!drag && !mouseClicked) return;
-  print('clicked');
   selectedCollectable = -1;
 
-  double r = 75;
+  double r = 50;
 
   for (int i = 0; i < game.collectables.length; i += 3) {
     double x = game.collectables[i + 1].toDouble();
     double y = game.collectables[i + 2].toDouble();
     if (diff(x, mouseWorldX) < r && diff(y, mouseWorldY) < r) {
       selectedCollectable = i;
-      print('collectable selected: $selectedCollectable');
       return;
     }
   }
@@ -290,9 +287,17 @@ void _handleMouseClick([bool drag = false]) {
     case EditorTool.TileConcrete:
       setTileAtMouse(Tile.Concrete);
       break;
+    case EditorTool.TileFortress:
+      setTileAtMouse(Tile.Fortress);
+      break;
     case EditorTool.ZombieSpawn:
       game.zombieSpawnPoints.add(mouseWorld);
       break;
+    case EditorTool.PlayerSpawn:
+      game.playerSpawnPoints.add(mouseWorld);
+      break;
+    default:
+      throw Exception("No implementation for ${editState.tool}");
   }
 }
 
