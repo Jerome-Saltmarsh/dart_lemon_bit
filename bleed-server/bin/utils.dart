@@ -1,6 +1,5 @@
 import 'classes.dart';
 import 'classes/Block.dart';
-import 'common.dart';
 import 'constants.dart';
 import 'enums.dart';
 import 'enums/Weapons.dart';
@@ -40,22 +39,6 @@ bool arrivedAtPath(Npc npc) {
   if (diff(npc.x, npc.path[0].x) > destinationArrivedDistance) return false;
   if (diff(npc.y, npc.path[0].y) > destinationArrivedDistance) return false;
   return true;
-}
-
-int lastUpdateFrame(dynamic character) {
-  return character[keyLastUpdateFrame];
-}
-
-bool connectionExpired(dynamic character) {
-  return frame - lastUpdateFrame(character) > expiration;
-}
-
-bool isDead(Character character) {
-  return character.state == characterStateDead;
-}
-
-bool isAiming(Character character) {
-  return character.state == characterStateAiming;
 }
 
 void setVelocity(GameObject gameObject, double rotation, double speed) {

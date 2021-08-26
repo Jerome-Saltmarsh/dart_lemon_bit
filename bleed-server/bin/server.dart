@@ -43,7 +43,7 @@ void main() {
       compilePlayer(buffer, player);
       compileTiles(buffer, game.scene.tiles);
       compileBlocks(buffer, game.scene.blocks);
-      compileState(game);
+      compileGame(game);
       buffer.write(game.compiled);
       buffer.write(
           '${ServerResponse.Player_Created.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ; ');

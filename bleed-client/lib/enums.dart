@@ -3,7 +3,10 @@ enum Tile {
   Grass,
   Water,
   Boundary,
-  Fortress
+  Fortress,
+  PlayerSpawn,
+  ZombieSpawn,
+  RandomItemSpawn,
 }
 
 enum CharacterState { Idle, Walking, Dead, Aiming, Firing, Striking, Running, Reloading, ChangingWeapon }

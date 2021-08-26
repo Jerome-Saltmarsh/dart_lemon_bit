@@ -16,7 +16,7 @@ const String _comma = ', ';
 
 // public
 
-void compileState(Game game) {
+void compileGame(Game game) {
   game.buffer.clear();
   game.buffer.write(game.gameIdString);
   _compilePlayers(game.buffer, game.players);
@@ -75,7 +75,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.shotgunRounds);
   _write(buffer, player.grenades);
   _write(buffer, player.meds);
-  _compileInventory(buffer, player.inventory);
+  // _compileInventory(buffer, player.inventory);
 }
 
 void _compileInventory(StringBuffer buffer, Inventory inventory) {

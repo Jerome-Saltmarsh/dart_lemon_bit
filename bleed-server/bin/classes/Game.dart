@@ -92,7 +92,7 @@ extension GameFunctions on Game {
     _updateNpcs();
     _updateGrenades();
     _updateCollectables();
-    compileState(this);
+    compileGame(this);
     gameEvents.clear();
 
     if (frame % 5 == 0 && npcs.length < 1) {
