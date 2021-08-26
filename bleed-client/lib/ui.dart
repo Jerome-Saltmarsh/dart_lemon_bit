@@ -1,5 +1,5 @@
 import 'package:bleed_client/editor/editor.dart';
-import 'package:bleed_client/enums/ClientRequest.dart';
+import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/game_engine/web_functions.dart';
@@ -23,6 +23,8 @@ import 'utils.dart';
 TextEditingController _playerNameController = TextEditingController();
 ButtonStyle _buttonStyle = buildButtonStyle(white, 2);
 Border _border = Border.all(color: white, width: 5.0, style: BorderStyle.solid);
+
+bool _showDebug = false;
 
 void initUI() {
   onConnectError.stream.listen((event) {
@@ -177,9 +179,6 @@ Widget buildGameUI(BuildContext context) {
           children: [
         button('Join Death Match', requestJoinRandomGame),
         button('Join Fortress', sendRequestJoinGameFortress),
-        button('Map Editor', (){
-
-        }),
       ]),
     );
   }
@@ -347,8 +346,7 @@ Widget buildHud() {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            button(playMode ? 'Edit' : "Play", toggleMode),
-            // text('mouseScreenX: ${mouseX.toInt()}, mouseScreenY: ${mouseY.toInt()}'),
+            button('Close', () => _showDebug = false),
             text(
                 'mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
             text('Stamina: $playerStamina / $playerMaxStamina'),
@@ -361,7 +359,6 @@ Widget buildHud() {
                 "centerX: ${screenCenterWorldX.toInt()} ${screenCenterWorldY.toInt()}"),
             text(
                 'screen width: ${screenWidth / zoom}, screen height: ${screenHeight / zoom}'),
-            button('Play Fortress', sendRequestJoinGameFortress)
           ],
         )
       ],
@@ -371,10 +368,14 @@ Widget buildHud() {
   Positioned topRight = Positioned(
       top: 0,
       right: 0,
-      child: Column(
+      child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          if(!_showDebug)
+          button('Debug', () => _showDebug = !_showDebug),
+          button('Editor', toggleMode),
           button("FullScreen", requestFullScreen),
+          button('Menu', clearState),
           button(settings.audioMuted ? 'Unmute Audio' : 'Mute Audio',
               settings.toggleAudioMuted),
         ],
@@ -432,6 +433,7 @@ Widget buildHud() {
 
   return Stack(
     children: [
+      if(_showDebug)
       topLeft,
       topRight,
       bottomLeft,
