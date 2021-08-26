@@ -9,7 +9,7 @@ void spawnShotSmoke(double x, double y, double xv, double yv){
   double cx = clampMagnitudeX(xv, yv, speed);
   double cy = clampMagnitudeY(xv, yv, speed);
 
-  game.particles.add(Particle(
+  compiledGame.particles.add(Particle(
       ParticleType.Smoke,
       x,
       y,

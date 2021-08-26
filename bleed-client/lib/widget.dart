@@ -91,9 +91,9 @@ class BleedWidget extends GameWidget {
 
   // TODO move this
   void checkBulletHoles() {
-    if (game.bulletHoles.length > 4) {
-      game.bulletHoles.removeAt(0);
-      game.bulletHoles.removeAt(0);
+    if (compiledGame.bulletHoles.length > 4) {
+      compiledGame.bulletHoles.removeAt(0);
+      compiledGame.bulletHoles.removeAt(0);
     }
   }
 

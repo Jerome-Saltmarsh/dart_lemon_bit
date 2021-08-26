@@ -20,10 +20,10 @@ void saveScene() {
 String _compileScene() {
   return JsonEncoder().convert({
     "blocks": _compileBlocks(),
-    "collectables": game.collectables,
+    "collectables": compiledGame.collectables,
     "player-spawn-points": _compilePlayerSpawnPoints(),
     "zombie-spawn-points": _compileZombieSpawnPoints(),
-    "tiles": _compileTiles(game.tiles)
+    "tiles": _compileTiles(compiledGame.tiles)
   });
 }
 
@@ -42,11 +42,11 @@ List<List<int>> _compileTiles(List<List<Tile>> tiles) {
 }
 
 List<int> _compilePlayerSpawnPoints() {
-  return _compileOffsets(game.playerSpawnPoints);
+  return _compileOffsets(compiledGame.playerSpawnPoints);
 }
 
 List<int> _compileZombieSpawnPoints() {
-  return _compileOffsets(game.zombieSpawnPoints);
+  return _compileOffsets(compiledGame.zombieSpawnPoints);
 }
 
 List<int> _compileOffsets(List<Offset> offsets) {

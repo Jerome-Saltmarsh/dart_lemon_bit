@@ -9,6 +9,7 @@ import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/keys.dart';
 import 'package:bleed_client/utils.dart';
 
+import 'classes/RenderState.dart';
 import 'classes/Vector2.dart';
 import 'draw.dart';
 import 'enums/GameError.dart';
@@ -128,36 +129,35 @@ void _parseGameId() {
 }
 
 void _parsePaths() {
-  paths.clear();
+  render.paths.clear();
   while (!_simiColonConsumed()) {
     List<Vector2> path = [];
-    paths.add(path);
+    render.paths.add(path);
     while (!_commaConsumed()) {
-      double x = _consumeDouble();
-      double y = _consumeDouble();
-      path.add(Vector2(x, y));
+      path.add(_consumeVector2());
     }
   }
 }
 
 void _parseTiles() {
-  tilesX = _consumeInt();
-  tilesY = _consumeInt();
-  game.tiles.clear();
+  int tilesX = _consumeInt();
+  int tilesY = _consumeInt();
+  compiledGame.tiles.clear();
   for (int x = 0; x < tilesX; x++) {
     List<Tile> column = [];
-    game.tiles.add(column);
+    compiledGame.tiles.add(column);
     for (int y = 0; y < tilesY; y++) {
       column.add(Tile.values[_consumeInt()]);
     }
   }
-  renderTiles(game.tiles);
+  // TODO Bad Import
+  renderTiles(compiledGame.tiles);
 }
 
 void _parsePlayer() {
-  game.playerX = _consumeDouble();
-  game.playerY = _consumeDouble();
-  game.playerWeapon = _consumeWeapon();
+  compiledGame.playerX = _consumeDouble();
+  compiledGame.playerY = _consumeDouble();
+  compiledGame.playerWeapon = _consumeWeapon();
   playerHealth = _consumeDouble();
   playerMaxHealth = _consumeDouble();
   int stamina = _consumeInt();
@@ -168,9 +168,9 @@ void _parsePlayer() {
   }
   playerMaxStamina = _consumeInt();
   setHandgunRounds(_consumeInt());
-  game.shotgunRounds = _consumeInt();
-  game.playerGrenades = _consumeInt();
-  game.playerMeds = _consumeInt();
+  compiledGame.shotgunRounds = _consumeInt();
+  compiledGame.playerGrenades = _consumeInt();
+  compiledGame.playerMeds = _consumeInt();
 }
 
 void _parseInventory() {
@@ -202,16 +202,16 @@ InventoryItemType _consumeInventoryItemType() {
 
 void _parseCollectables() {
   // todo this is really expensive
-  game.collectables.clear();
+  compiledGame.collectables.clear();
   while (!_simiColonConsumed()) {
-    game.collectables.add(_consumeInt());
+    compiledGame.collectables.add(_consumeInt());
   }
 }
 
 void _parseGrenades() {
-  game.grenades.clear();
+  compiledGame.grenades.clear();
   while (!_simiColonConsumed()) {
-    game.grenades.add(_consumeDouble());
+    compiledGame.grenades.add(_consumeDouble());
   }
 }
 
@@ -289,6 +289,10 @@ double _consumeDouble() {
   return double.parse(_consumeString());
 }
 
+Vector2 _consumeVector2(){
+  return Vector2(_consumeDouble(), _consumeDouble());
+}
+
 bool _simiColonConsumed() {
   _consumeSpace();
   if (_currentCharacter == _colon) {
@@ -310,14 +314,14 @@ bool _commaConsumed() {
 void _parsePlayers() {
   int index = 0;
   while (!_simiColonConsumed()) {
-    if (index >= game.players.length) {
-      game.players.add(_getUnusedMemory());
+    if (index >= compiledGame.players.length) {
+      compiledGame.players.add(_getUnusedMemory());
     }
-    _consumePlayer(game.players[index]);
+    _consumePlayer(compiledGame.players[index]);
     index++;
   }
-  while (index < game.players.length) {
-    _cacheLast(game.players);
+  while (index < compiledGame.players.length) {
+    _cacheLast(compiledGame.players);
   }
 }
 
@@ -341,7 +345,7 @@ void _consumeEvents() {
     }
   }
   if (events == 0) {
-    gameEvents.clear(); // free up some memory
+    gameEvents.clear(); // free up memory
   }
 }
 
@@ -352,28 +356,28 @@ GameEventType _consumeEventType() {
 void _parseBullets() {
   int index = 0;
   while (!_simiColonConsumed()) {
-    if (index >= game.bullets.length) {
-      game.bullets.add(_getUnusedMemory());
+    if (index >= compiledGame.bullets.length) {
+      compiledGame.bullets.add(_getUnusedMemory());
     }
-    _consumeBullet(game.bullets[index]);
+    _consumeBullet(compiledGame.bullets[index]);
     index++;
   }
-  while (index < game.bullets.length) {
-    _cacheLast(game.bullets);
+  while (index < compiledGame.bullets.length) {
+    _cacheLast(compiledGame.bullets);
   }
 }
 
 void _parseNpcs() {
   int index = 0;
   while (!_simiColonConsumed()) {
-    if (index >= game.npcs.length) {
-      game.npcs.add(_getUnusedMemory());
+    if (index >= compiledGame.npcs.length) {
+      compiledGame.npcs.add(_getUnusedMemory());
     }
-    _consumeNpc(game.npcs[index]);
+    _consumeNpc(compiledGame.npcs[index]);
     index++;
   }
-  while (index < game.npcs.length) {
-    _cacheLast(game.npcs);
+  while (index < compiledGame.npcs.length) {
+    _cacheLast(compiledGame.npcs);
   }
 }
 

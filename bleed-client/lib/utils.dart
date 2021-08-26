@@ -15,15 +15,15 @@ import 'maths.dart';
 
 double getMouseRotation() {
   return getRadiansBetween(
-      game.playerX, game.playerY, mouseWorldX, mouseWorldY);
+      compiledGame.playerX, compiledGame.playerY, mouseWorldX, mouseWorldY);
 }
 
 double playerScreenPositionX() {
-  return game.playerX - cameraX;
+  return compiledGame.playerX - cameraX;
 }
 
 double playerScreenPositionY() {
-  return game.playerY - cameraY;
+  return compiledGame.playerY - cameraY;
 }
 
 // dynamic getPlayerCharacter() {
@@ -34,7 +34,7 @@ double playerScreenPositionY() {
 //   });
 // }
 
-bool get playerAssigned => game.playerId >= 0;
+bool get playerAssigned => compiledGame.playerId >= 0;
 
 Weapon previousWeapon;
 
@@ -160,8 +160,8 @@ void cameraCenter(double x, double y) {
 }
 
 void setHandgunRounds(int value) {
-  if (game.handgunRounds == value) return;
-  game.handgunRounds = value;
+  if (compiledGame.handgunRounds == value) return;
+  compiledGame.handgunRounds = value;
   // TODO only redraw ammo box
   redrawUI();
 }

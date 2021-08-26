@@ -40,14 +40,14 @@ void updatePlayMode() {
 }
 
 void updatePlayer() {
-  if (game.playerId < 0) return;
+  if (compiledGame.playerId < 0) return;
 
   sendRequestUpdatePlayer();
 
   // on player weapon changed
-  if (previousWeapon != game.playerWeapon) {
-    previousWeapon = game.playerWeapon;
-    switch (game.playerWeapon) {
+  if (previousWeapon != compiledGame.playerWeapon) {
+    previousWeapon = compiledGame.playerWeapon;
+    switch (compiledGame.playerWeapon) {
       case Weapon.HandGun:
         playAudioReload(screenCenterWorldX, screenCenterWorldY);
         break;
@@ -66,8 +66,8 @@ void updatePlayer() {
 }
 
 void cameraTrackPlayer() {
-  double xDiff = screenCenterWorldX - game.playerX;
-  double yDiff = screenCenterWorldY - game.playerY;
+  double xDiff = screenCenterWorldX - compiledGame.playerX;
+  double yDiff = screenCenterWorldY - compiledGame.playerY;
   cameraX -= xDiff * settings.cameraFollow;
   cameraY -= yDiff * settings.cameraFollow;
 }

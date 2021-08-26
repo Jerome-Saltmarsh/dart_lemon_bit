@@ -7,7 +7,7 @@ import '../maths.dart';
 import '../utils.dart';
 
 void spawnArm(double x, double y, double z, {double xv = 0, double yv = 0 }){
-  game.particles.add(Particle(
+  compiledGame.particles.add(Particle(
       ParticleType.Arm,
       x,
       y,

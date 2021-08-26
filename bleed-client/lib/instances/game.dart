@@ -1,5 +1,5 @@
 
 
-import 'package:bleed_client/classes/Game.dart';
+import 'package:bleed_client/classes/CompiledGame.dart';
 
-Game game = Game();
+CompiledGame compiledGame = CompiledGame();

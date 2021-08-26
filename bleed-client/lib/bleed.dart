@@ -17,11 +17,11 @@ void _onConnected(_event){
 }
 
 void _onPlayerCreated(OnPlayerCreated event){
-  game.playerId = event.id;
-  game.playerUUID = event.uuid;
-  game.playerX = event.x;
-  game.playerY = event.y;
-  cameraCenter(game.playerX, game.playerY);
+  compiledGame.playerId = event.id;
+  compiledGame.playerUUID = event.uuid;
+  compiledGame.playerX = event.x;
+  compiledGame.playerY = event.y;
+  cameraCenter(compiledGame.playerX, compiledGame.playerY);
 }
 
 void _joinRandomGame() {

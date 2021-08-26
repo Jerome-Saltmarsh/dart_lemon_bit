@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:bleed_client/classes/Vector2.dart';
+
 final _RenderState render = _RenderState();
 
 class _RenderState {
@@ -11,4 +13,5 @@ class _RenderState {
   List<Rect> particleRects = [];
   List<RSTransform> particleTransforms = [];
   List<Rect> npcsRects = [];
+  List<List<Vector2>> paths = [];
 }

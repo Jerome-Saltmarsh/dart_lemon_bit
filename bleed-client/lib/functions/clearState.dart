@@ -7,16 +7,16 @@ import '../state.dart';
 
 void clearState(){
   print('clearState()');
-  game.playerId = -1;
-  game.playerUUID = "";
-  game.playerX = -1;
-  game.playerY = -1;
-  game.npcs.clear();
-  game.players.clear();
-  game.bullets.clear();
-  game.bulletHoles.clear();
-  game.particles.clear();
-  game.grenades.clear();
+  compiledGame.playerId = -1;
+  compiledGame.playerUUID = "";
+  compiledGame.playerX = -1;
+  compiledGame.playerY = -1;
+  compiledGame.npcs.clear();
+  compiledGame.players.clear();
+  compiledGame.bullets.clear();
+  compiledGame.bulletHoles.clear();
+  compiledGame.particles.clear();
+  compiledGame.grenades.clear();
   zoom = 1;
   gameId = -1;
   gameEvents.clear();

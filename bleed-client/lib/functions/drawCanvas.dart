@@ -21,7 +21,6 @@ import 'drawGrenade.dart';
 import 'drawParticle.dart';
 
 void drawCanvas(Canvas canvass, Size _size) {
-
   canvass.scale(zoom, zoom);
   canvass.translate(-cameraX, -cameraY);
 
@@ -30,6 +29,10 @@ void drawCanvas(Canvas canvass, Size _size) {
     return;
   }
 
+  _drawCompiledGame();
+}
+
+void _drawCompiledGame(){
   if (!connected) return;
   if (gameId < 0) return;
 
@@ -44,12 +47,12 @@ void drawCanvas(Canvas canvass, Size _size) {
   } catch (error) {
     print("draw player health error");
   }
-  _drawBullets(game.bullets);
-  drawBulletHoles(game.bulletHoles);
-  _drawGrenades(game.grenades);
+  _drawBullets(compiledGame.bullets);
+  drawBulletHoles(compiledGame.bulletHoles);
+  _drawGrenades(compiledGame.grenades);
   _drawBlocks();
   // drawAnimations();
-  _drawParticles(game.particles);
+  _drawParticles(compiledGame.particles);
   drawCharacters();
   drawEditMode();
   _drawCollectables();
@@ -58,10 +61,10 @@ void drawCanvas(Canvas canvass, Size _size) {
 }
 
 void _drawCollectables() {
-  for (int i = 0; i < game.collectables.length; i += 3) {
-    CollectableType type = CollectableType.values[game.collectables[i]];
-    int x = game.collectables[i + 1];
-    int y = game.collectables[i + 2];
+  for (int i = 0; i < compiledGame.collectables.length; i += 3) {
+    CollectableType type = CollectableType.values[compiledGame.collectables[i]];
+    int x = compiledGame.collectables[i + 1];
+    int y = compiledGame.collectables[i + 2];
     drawCollectable(type, x.toDouble(), y.toDouble());
   }
 }

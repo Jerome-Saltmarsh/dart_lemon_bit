@@ -8,9 +8,9 @@ import '../state.dart';
 void updateCharacters() {
   if (drawFrame % 2 == 0) return;
 
-  for (int i = 0; i < game.npcs.length; i++) {
-    if (game.npcs[i][state] == characterStateDead) {
-      spawnBlood(game.npcs[i][x], game.npcs[i][y], 0);
+  for (int i = 0; i < compiledGame.npcs.length; i++) {
+    if (compiledGame.npcs[i][state] == characterStateDead) {
+      spawnBlood(compiledGame.npcs[i][x], compiledGame.npcs[i][y], 0);
     }
   }
 }

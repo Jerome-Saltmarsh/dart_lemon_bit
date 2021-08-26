@@ -6,11 +6,11 @@ import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/utils.dart';
 
 void spawnBulletHole(double x, double y){
-  game.bulletHoles.add(x);
-  game.bulletHoles.add(y);
+  compiledGame.bulletHoles.add(x);
+  compiledGame.bulletHoles.add(y);
   double r = 0.1;
   repeat((){
-    game.particles.add(Particle(
+    compiledGame.particles.add(Particle(
         ParticleType.Smoke,
         x,
         y,

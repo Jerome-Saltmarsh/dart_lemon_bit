@@ -7,7 +7,7 @@ import 'package:bleed_client/instances/game.dart';
 import '../maths.dart';
 
 void spawnShell(double x, double y){
-  game.particles.add(Particle(
+  compiledGame.particles.add(Particle(
       ParticleType.Shell,
       x,
       y,

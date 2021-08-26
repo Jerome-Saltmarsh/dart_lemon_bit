@@ -31,11 +31,11 @@ void drawCharacters() {
 }
 
 void drawNpcs() {
-  game.npcs.sort((a, b) {
+  compiledGame.npcs.sort((a, b) {
     if (a[y] < b[y]) return -1;
     return 1;
   });
-  drawList(game.npcs, render.npcsTransforms, render.npcsRects);
+  drawList(compiledGame.npcs, render.npcsTransforms, render.npcsRects);
 }
 
 void drawCharacterList(List<dynamic> characters) {
@@ -84,11 +84,11 @@ void _loadTileRects(List<List<Tile>> tiles) {
 }
 
 void drawPlayers() {
-  game.players.sort((a, b) {
+  compiledGame.players.sort((a, b) {
     if (a[y] < b[y]) return -1;
     return 1;
   });
-  drawList(game.players, render.playersTransforms, render.playersRects);
+  drawList(compiledGame.players, render.playersTransforms, render.playersRects);
 }
 
 void drawList(
@@ -738,7 +738,7 @@ RSTransform rsTransform(
 
 void drawPaths(){
   setColor(Colors.blue);
-  for(List<Vector2> path in paths){
+  for(List<Vector2> path in render.paths){
     for(int i = 0; i < path.length - 1; i++){
       drawLine(path[i].x, path[i].y, path[i + 1].x, path[i + 1].y);
     }
@@ -752,12 +752,12 @@ void drawPlayerHealth() {
   double halfMaxHealth = playerMaxHealth * 0.5;
   if (health > 0.5) {
     drawCharacterCircle(
-        game.playerX,
-        game.playerY,
+        compiledGame.playerX,
+        compiledGame.playerY,
         Color.lerp(Colors.yellow, Colors.green,
             (playerHealth - halfMaxHealth) / halfMaxHealth));
   } else {
-    drawCharacterCircle(game.playerX, game.playerY,
+    drawCharacterCircle(compiledGame.playerX, compiledGame.playerY,
         Color.lerp(Colors.red, Colors.yellow, playerHealth / halfMaxHealth));
   }
 }
@@ -825,7 +825,7 @@ void drawMouse() {
 
 void drawTiles() {
   if (imageTiles == null) return;
-  if (game.tiles == null || game.tiles.isEmpty) return;
+  if (compiledGame.tiles == null || compiledGame.tiles.isEmpty) return;
   drawTileList();
 }
 

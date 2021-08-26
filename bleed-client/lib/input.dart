@@ -71,7 +71,7 @@ void readPlayerInput() {
     if (!_throwingGrenade && mouseAvailable) {
       _throwingGrenade = true;
       double mouseDistance =
-          distance(game.playerX, game.playerY, mouseWorldX, mouseWorldY);
+          distance(compiledGame.playerX, compiledGame.playerY, mouseWorldX, mouseWorldY);
       double maxRange = 400;
       double throwDistance = min(mouseDistance, maxRange);
       double strength = throwDistance / maxRange;
@@ -108,7 +108,7 @@ void readPlayerInput() {
       if (mouseAvailable) {
         double mouseWorldX = mouseX + cameraX;
         double mouseWorldY = mouseY + cameraY;
-        for (dynamic npc in game.npcs) {
+        for (dynamic npc in compiledGame.npcs) {
           if (distance(npc[x], npc[y], mouseWorldX, mouseWorldY) >
               playerAutoAimDistance) continue;
           requestCharacterState = characterStateAiming;

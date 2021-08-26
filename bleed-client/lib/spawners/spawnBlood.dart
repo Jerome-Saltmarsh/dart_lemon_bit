@@ -6,7 +6,7 @@ import 'package:bleed_client/instances/game.dart';
 import '../utils.dart';
 
 void spawnBlood(double x, double y, double z, {double xv = 0, double yv = 0, double zv = 0 }){
-  game.particles.add(Particle(
+  compiledGame.particles.add(Particle(
       ParticleType.Blood,
       x,
       y,

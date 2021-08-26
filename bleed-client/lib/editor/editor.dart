@@ -36,9 +36,9 @@ void initEditor() {
 }
 
 void _addCollectable(CollectableType type) {
-  game.collectables.add(type.index);
-  game.collectables.add(mouseWorldX.toInt());
-  game.collectables.add(mouseWorldY.toInt());
+  compiledGame.collectables.add(type.index);
+  compiledGame.collectables.add(mouseWorldX.toInt());
+  compiledGame.collectables.add(mouseWorldY.toInt());
 }
 
 Widget buildEditorUI() {
@@ -66,28 +66,28 @@ Widget buildEditorUI() {
               }).toList()),
               button("Save Scene", saveScene),
               button("Reset Tiles", () {
-                for (int row = 0; row < game.tiles.length; row++) {
+                for (int row = 0; row < compiledGame.tiles.length; row++) {
                   for (int column = 0;
-                      column < game.tiles[0].length;
+                      column < compiledGame.tiles[0].length;
                       column++) {
-                    game.tiles[row][column] = Tile.Concrete;
+                    compiledGame.tiles[row][column] = Tile.Concrete;
                   }
                 }
-                renderTiles(game.tiles);
+                renderTiles(compiledGame.tiles);
               }),
               button("Increase Tiles X", () {
-                for (List<Tile> row in game.tiles) {
+                for (List<Tile> row in compiledGame.tiles) {
                   row.add(Tile.Grass);
                 }
-                renderTiles(game.tiles);
+                renderTiles(compiledGame.tiles);
               }),
               button("Increase Tiles Y", () {
                 List<Tile> row = [];
-                for (int i = 0; i < game.tiles[0].length; i++) {
+                for (int i = 0; i < compiledGame.tiles[0].length; i++) {
                   row.add(Tile.Grass);
                 }
-                game.tiles.add(row);
-                renderTiles(game.tiles);
+                compiledGame.tiles.add(row);
+                renderTiles(compiledGame.tiles);
               }),
             ],
           ),
@@ -108,7 +108,7 @@ void _handleKeyPressed(RawKeyEvent event) {
       _addCollectable(CollectableType.Handgun_Ammo);
     }
     if (event.logicalKey == LogicalKeyboardKey.keyP) {
-      game.playerSpawnPoints.add(mouseWorld);
+      compiledGame.playerSpawnPoints.add(mouseWorld);
     }
     if (event.logicalKey == LogicalKeyboardKey.delete) {
       if (editState.selectedBlock != null) {
@@ -147,17 +147,17 @@ void updateEditMode() {
 void drawEditMode() {
   if (!editMode) return;
 
-  for (Offset offset in game.playerSpawnPoints) {
+  for (Offset offset in compiledGame.playerSpawnPoints) {
     drawCircleOffset(offset, 10, Colors.yellow);
   }
 
-  for (Offset offset in game.zombieSpawnPoints) {
+  for (Offset offset in compiledGame.zombieSpawnPoints) {
     drawCircleOffset(offset, 10, Colors.deepPurple);
   }
 
   if (selectedCollectable > 0) {
-    double x = game.collectables[selectedCollectable + 1].toDouble();
-    double y = game.collectables[selectedCollectable + 2].toDouble();
+    double x = compiledGame.collectables[selectedCollectable + 1].toDouble();
+    double y = compiledGame.collectables[selectedCollectable + 2].toDouble();
 
     drawCircleOutline(x: x, y: y, radius: 50, color: white, sides: 10);
   }
@@ -197,8 +197,8 @@ void _handleMouseDrag() {
   }
 
   if (selectedCollectable > -1) {
-    game.collectables[selectedCollectable + 1] = mouseWorldX.toInt();
-    game.collectables[selectedCollectable + 2] = mouseWorldY.toInt();
+    compiledGame.collectables[selectedCollectable + 1] = mouseWorldX.toInt();
+    compiledGame.collectables[selectedCollectable + 2] = mouseWorldY.toInt();
     return;
   }
 
@@ -268,9 +268,9 @@ void _handleMouseClick([bool drag = false]) {
 
   double r = 50;
 
-  for (int i = 0; i < game.collectables.length; i += 3) {
-    double x = game.collectables[i + 1].toDouble();
-    double y = game.collectables[i + 2].toDouble();
+  for (int i = 0; i < compiledGame.collectables.length; i += 3) {
+    double x = compiledGame.collectables[i + 1].toDouble();
+    double y = compiledGame.collectables[i + 2].toDouble();
     if (diff(x, mouseWorldX) < r && diff(y, mouseWorldY) < r) {
       selectedCollectable = i;
       return;
@@ -291,10 +291,10 @@ void _handleMouseClick([bool drag = false]) {
       setTileAtMouse(Tile.Fortress);
       break;
     case EditorTool.ZombieSpawn:
-      game.zombieSpawnPoints.add(mouseWorld);
+      compiledGame.zombieSpawnPoints.add(mouseWorld);
       break;
     case EditorTool.PlayerSpawn:
-      game.playerSpawnPoints.add(mouseWorld);
+      compiledGame.playerSpawnPoints.add(mouseWorld);
       break;
     default:
       throw Exception("No implementation for ${editState.tool}");
@@ -306,10 +306,10 @@ void setTileAtMouse(Tile tile) {
   int column = mouseTileX;
   if (row < 0) return;
   if (column < 0) return;
-  if (row < game.tiles.length && row < game.tiles[0].length) {
+  if (row < compiledGame.tiles.length && row < compiledGame.tiles[0].length) {
     gameEdit.tiles[row][column] = tile;
-    game.tiles = gameEdit.tiles;
-    renderTiles(game.tiles);
+    compiledGame.tiles = gameEdit.tiles;
+    renderTiles(compiledGame.tiles);
   }
 }
 

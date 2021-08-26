@@ -43,8 +43,8 @@ void sendRequestUpdatePlayer() {
   _buffer.clear();
   _write(ClientRequest.Game_Update.index);
   _write(gameId);
-  _write(game.playerId);
-  _write(game.playerUUID);
+  _write(compiledGame.playerId);
+  _write(compiledGame.playerUUID);
   _write(requestCharacterState);
   _write(requestDirection);
   if(requestCharacterState == characterStateFiring){

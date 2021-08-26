@@ -185,7 +185,7 @@ Widget buildGameUI(BuildContext context) {
 
   if (editMode) return buildEditorUI();
 
-  if (game.playerId == -1) {
+  if (compiledGame.playerId == -1) {
     return text("player id not assigned");
   }
 
@@ -255,7 +255,7 @@ Widget buildWeaponButton(Weapon weapon) {
         width: 120,
         height: 50,
         decoration: BoxDecoration(
-            border: game.playerWeapon == weapon ? _border : null,
+            border: compiledGame.playerWeapon == weapon ? _border : null,
             image: _getDecorationImage(weapon))),
   );
 }
@@ -350,9 +350,9 @@ Widget buildHud() {
             text(
                 'mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
             text('Stamina: $playerStamina / $playerMaxStamina'),
-            text('x: ${game.playerX}, y: ${game.playerY}'),
-            text("zombies: ${game.npcs.length}"),
-            text("players: ${game.players.length}"),
+            text('x: ${compiledGame.playerX}, y: ${compiledGame.playerY}'),
+            text("zombies: ${compiledGame.npcs.length}"),
+            text("players: ${compiledGame.players.length}"),
             text("zoom: ${zoom.toStringAsFixed(2)}"),
             text("cameraX: ${cameraX.toInt()}, cameraY: ${cameraY.toInt()}"),
             text(
@@ -386,13 +386,13 @@ Widget buildHud() {
     bottom: 0,
     child: Row(
       children: [
-        buildWeaponButton(game.playerWeapon),
+        buildWeaponButton(compiledGame.playerWeapon),
         Container(
             color: Colors.black87,
             alignment: Alignment.center,
             height: 50,
             width: 100,
-            child: text(game.roundsRemaining.toString(), fontSize: 28)),
+            child: text(compiledGame.roundsRemaining.toString(), fontSize: 28)),
         Container(
             width: 120,
             height: 50,
@@ -402,7 +402,7 @@ Widget buildHud() {
             alignment: Alignment.center,
             height: 50,
             width: 100,
-            child: text(game.playerGrenades.toString(), fontSize: 28)),
+            child: text(compiledGame.playerGrenades.toString(), fontSize: 28)),
         Container(
             width: 120,
             height: 50,
@@ -412,7 +412,7 @@ Widget buildHud() {
             alignment: Alignment.center,
             height: 50,
             width: 100,
-            child: text(game.playerMeds.toString(), fontSize: 28)),
+            child: text(compiledGame.playerMeds.toString(), fontSize: 28)),
       ],
     ),
   );
@@ -449,7 +449,7 @@ Widget buildDebugPanel() {
     button("Spawn NPC", sendRequestSpawnNpc),
     button("Clear NPCS", sendRequestClearNpcs),
     text("Ping: ${ping.inMilliseconds}"),
-    text("Player Id: ${game.playerId}"),
+    text("Player Id: ${compiledGame.playerId}"),
     text("Player Health: $playerHealth / $playerMaxHealth"),
     text("Data Size: ${event.length}"),
     text("Frames since event: $framesSinceEvent"),
@@ -458,9 +458,9 @@ Widget buildDebugPanel() {
       text("FPS: ${(1000 / millisecondsSinceLastFrame).round()}"),
     if (serverFramesMS > 0)
       text("Server FPS: ${(1000 / serverFramesMS).round()}"),
-    text("Players: ${game.players.length}"),
-    text("Bullets: ${game.bullets.length}"),
-    text("Npcs: ${game.npcs.length}"),
+    text("Players: ${compiledGame.players.length}"),
+    text("Bullets: ${compiledGame.bullets.length}"),
+    text("Npcs: ${compiledGame.npcs.length}"),
     text("Player Assigned: $playerAssigned"),
   ]);
 }

@@ -1,7 +1,4 @@
-import 'dart:ui';
-
 import 'package:bleed_client/editor/GameEdit.dart';
-import 'package:flutter/material.dart';
 
 import '../common.dart';
 import 'classes/Block.dart';
@@ -34,11 +31,8 @@ bool debugMode = false;
 int gameId = -1;
 int serverFramesMS = 0;
 int actualFPS;
-int tilesX = 0;
-int tilesY = 0;
 List<Block> blockHouses = [];
 Map<int, bool> gameEvents = Map();
-List<List<Vector2>> paths = [];
 
 // Player State
 double playerHealth = 0;
@@ -47,5 +41,5 @@ int playerStamina = 0;
 int playerMaxStamina = 0;
 
 // TODO Expensive string build
-String get session => '$gameId ${game.playerId} ${game.playerUUID}';
+String get session => '$gameId ${compiledGame.playerId} ${compiledGame.playerUUID}';
 

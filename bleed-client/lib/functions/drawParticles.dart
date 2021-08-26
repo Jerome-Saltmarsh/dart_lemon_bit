@@ -7,7 +7,7 @@ import '../../images.dart';
 import 'drawAtlas.dart';
 
 void drawParticles2() {
-  render.particleRects = game.particles.map(mapParticleToRect).toList();
-  render.particleTransforms = game.particles.map(mapParticleToRSTransform).toList();
+  render.particleRects = compiledGame.particles.map(mapParticleToRect).toList();
+  render.particleTransforms = compiledGame.particles.map(mapParticleToRSTransform).toList();
   drawAtlas(imageParticles, render.particleTransforms, render.particleRects);
 }

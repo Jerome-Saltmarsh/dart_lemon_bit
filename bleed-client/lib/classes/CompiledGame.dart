@@ -6,7 +6,7 @@ import 'package:bleed_client/enums/Weapons.dart';
 import '../enums.dart';
 import 'Particle.dart';
 
-class Game {
+class CompiledGame {
   List<int> collectables = [];
   List<Offset> playerSpawnPoints = [];
   List<Offset> zombieSpawnPoints = [];
