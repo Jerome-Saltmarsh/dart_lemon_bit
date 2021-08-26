@@ -252,6 +252,8 @@ Rect getHumanAimRect(dynamic character) {
 Rect tileRectConcrete = getTileSpriteRectByIndex(0);
 Rect tileRectGrass = getTileSpriteRectByIndex(1);
 Rect tileRectRed = getTileSpriteRectByIndex(2);
+Rect tileRectYellow = getTileSpriteRectByIndex(3);
+Rect tileRectBlue = getTileSpriteRectByIndex(4);
 
 Rect getTileSpriteRectByIndex(int index) {
   return rectByIndex(
@@ -269,6 +271,10 @@ Rect getTileSpriteRect(Tile tile) {
     case Tile.Grass:
       return tileRectGrass;
     case Tile.Fortress:
+      return tileRectYellow;
+    case Tile.PlayerSpawn:
+      return tileRectBlue;
+    case Tile.ZombieSpawn:
       return tileRectRed;
   }
   throw Exception("could not find rect for tile $tile");

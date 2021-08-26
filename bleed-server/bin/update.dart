@@ -7,6 +7,10 @@ import 'language.dart';
 import 'maths.dart';
 import 'state.dart';
 
+const _minusOne = -1;
+const _one = 1;
+
+
 void initUpdateLoop() {
   print("initUpdateLoop()");
   periodic(fixedUpdate, ms: 1000 ~/ 30);
@@ -35,23 +39,25 @@ void jobNpcWander(Timer timer){
 
 void fixedUpdate(Timer timer) {
   frame++;
+  for(Game game in games){
+    game.updateAndCompile();
+  }
+}
+
+void _updateFPS(){
   // DateTime now = DateTime.now();
   // frameDuration = now.difference(frameTime);
   // if (frameDuration.inMilliseconds > 0) {
   //   fps = 1000 ~/ frameDuration.inMilliseconds;
   // }
   // frameTime = now;
-  for(Game game in games){
-    game.updateAndCompile();
-  }
 }
-
 
 int compareGameObjects(GameObject a, GameObject b) {
   if (a.x < b.x) {
-    return -1;
+    return _minusOne;
   }
-  return 1;
+  return _one;
 }
 
 void updateCollisionBetween(List<GameObject> gameObjects) {

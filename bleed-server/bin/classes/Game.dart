@@ -28,25 +28,67 @@ import 'Scene.dart';
 import 'Vector2.dart';
 
 class Fortress extends Game {
-  int nextWave = 1000;
+  int nextWave = 100;
+  int wave = 0;
+  int lives = 10;
 
-  Fortress() : super(GameType.Fortress, scenesTown, 8);
+  Fortress() : super(GameType.Fortress, scenes.fortress, 8){
+
+  }
+
+  void gameOver(){
+    print("Game Over");
+    for(int i = 0; i < npcs.length; i++){
+      changeCharacterHealth(npcs[i], 0);
+    }
+  }
 
   void update() {
+
+    if (lives <= 0) return;
+
+    for(int i = 0; i < npcs.length; i++){
+      Npc npc = npcs[i];
+      if(npc.path.isEmpty){
+        npcSetDestination(npcs[i], scene.fortressPosition.x, scene.fortressPosition.y);
+      }
+
+      if (diff(npc.x, scene.fortressPosition.x) > 50) continue;
+      if (diff(npc.y, scene.fortressPosition.y) > 50) continue;
+      npcs.removeAt(i);
+      i--;
+      lives--;
+      print('lives: $lives');
+      if(lives <= 0){
+        gameOver();
+        return;
+      }
+    }
+
     if (nextWave > 0) {
       nextWave--;
     } else {
-      nextWave = 5000;
+      wave++;
+      print("Next Wave: $wave");
+      nextWave = 200;
 
-      for (Vector2 spawnPoint in scene.zombieSpawnPoints) {
-        spawnNpc(spawnPoint.x + giveOrTake(5), spawnPoint.y + giveOrTake(5));
+      for(int row = 0; row < scene.rows; row++){
+        for(int column = 0; column < scene.columns; column++){
+          if(scene.tiles[row][column] == Tile.ZombieSpawn){
+            double x = getTilePositionX(row, column);
+            double y = getTilePositionY(row, column);
+            for(int i = 0; i < wave; i++){
+              Npc npc = spawnNpc(x + giveOrTake(5), y + giveOrTake(5));
+            }
+          }
+        }
       }
     }
   }
 }
 
 class DeathMatch extends Game {
-  DeathMatch() : super(GameType.Fortress, scenesTown, 32);
+  DeathMatch() : super(GameType.Fortress, scenes.town, 32);
 
   @override
   void update() {}
@@ -84,7 +126,7 @@ abstract class Game {
 extension GameFunctions on Game {
   void updateAndCompile() {
     duration++;
-
+    update();
     _updatePlayersAndNpcs();
     _updateCollisions();
     _updateBullets();
@@ -93,7 +135,13 @@ extension GameFunctions on Game {
     _updateGrenades();
     _updateCollectables();
     compileGame(this);
-    gameEvents.clear();
+
+    for(int i = 0; i < gameEvents.length; i++){
+      if(gameEvents[i].frameDuration-- < 0){
+        gameEvents.removeAt(i);
+        i--;
+      }
+    }
 
     if (frame % 5 == 0 && npcs.length < 1) {
       spawnRandomNpc();
@@ -175,27 +223,6 @@ extension GameFunctions on Game {
       }
       npc.state = CharacterState.Walking;
       return;
-
-      // if (scene.pathClear(npc.x, npc.y, npc.xDes, npc.yDes)) {
-      //   characterFace(npc, npc.xDes, npc.yDes);
-      //   npc.walk();
-      //   return;
-      // }
-      //
-      // Vector2 left = scene.getLeft(npc.x, npc.y, npc.xDes, npc.yDes);
-      // if (scene.pathClear(npc.x, npc.y, left.x, left.y)) {
-      //   characterFace(npc, left.x, left.y);
-      //   npc.walk();
-      //   return;
-      // }
-      //
-      // Vector2 right = scene.getRight(npc.x, npc.y, npc.xDes, npc.yDes);
-      // if (scene.pathClear(npc.x, npc.y, right.x, right.y)) {
-      //   characterFace(npc, right.x, right.y);
-      //   npc.walk();
-      //   return;
-      // }
-      // return;
     }
     npc.state = CharacterState.Idle;
   }
@@ -596,7 +623,7 @@ extension GameFunctions on Game {
           if (randomBool()) {
             dispatch(GameEventType.Zombie_Killed, character.x, character.y,
                 bullet.xv, bullet.yv);
-            delayed(() => character.active = false, ms: randomInt(200, 800));
+            delayed(() => character.active = false, ms: randomInt(1000, 1500));
           } else {
             character.active = false;
             dispatch(GameEventType.Zombie_killed_Explosion, character.x,
@@ -808,7 +835,6 @@ extension GameFunctions on Game {
   Npc spawnNpc(double x, double y) {
     Npc npc = Npc(x: x, y: y, health: 3, maxHealth: 3);
     npcs.add(npc);
-    npcSetRandomDestination(npc);
     return npc;
   }
 

@@ -3,7 +3,6 @@ import 'package:bleed_client/editor/GameEdit.dart';
 import '../common.dart';
 import 'classes/Block.dart';
 import 'classes/SpriteAnimation.dart';
-import 'classes/Vector2.dart';
 import 'enums/Mode.dart';
 import 'instances/game.dart';
 

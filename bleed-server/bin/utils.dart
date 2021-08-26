@@ -1,12 +1,14 @@
 import 'classes.dart';
 import 'classes/Block.dart';
+import 'classes/Vector2.dart';
 import 'constants.dart';
 import 'enums.dart';
 import 'enums/Weapons.dart';
 import 'instances/settings.dart';
 import 'maths.dart';
 import 'settings.dart';
-import 'state.dart';
+
+const double halfTileSize = 24;
 
 double bulletDistanceTravelled(Bullet bullet) {
   return distance(bullet.x, bullet.y, bullet.xStart, bullet.yStart);
@@ -188,3 +190,26 @@ void sortBlocks(List<Block> blocks) {
   blocks.sort((a, b) => a.leftX < b.leftX ? -1 : 1);
 }
 
+Vector2 getTilePosition(int row, int column) {
+  return Vector2(
+      perspectiveProjectX(row * halfTileSize, column * halfTileSize),
+      perspectiveProjectY(row * halfTileSize, column * halfTileSize) +
+          halfTileSize);
+}
+
+double getTilePositionX(int row, int column){
+  return perspectiveProjectX(row * halfTileSize, column * halfTileSize);
+}
+
+double getTilePositionY(int row, int column){
+  return perspectiveProjectY(row * halfTileSize, column * halfTileSize) +
+      halfTileSize;
+}
+
+double perspectiveProjectX(double x, double y) {
+  return -y + x;
+}
+
+double perspectiveProjectY(double x, double y) {
+  return x + y;
+}

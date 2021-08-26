@@ -12,16 +12,15 @@ class Scene {
   final List<List<Tile>> tiles;
   final List<Block> blocks;
   final List<Collectable> collectables;
-  final List<Vector2> playerSpawnPoints;
-  final List<Vector2> zombieSpawnPoints;
+  final List<Vector2> playerSpawnPoints = [];
+  final List<Vector2> zombieSpawnPoints = [];
+  late Vector2 fortressPosition;
 
   late final List<List<TileNode>> tileNodes;
   late final int rows;
   late final int columns;
 
-  Scene(this.tiles, this.blocks, this.collectables, this.playerSpawnPoints,
-      this.zombieSpawnPoints) {
-
+  Scene(this.tiles, this.blocks, this.collectables) {
     rows = tiles.length;
     columns = tiles[0].length;
     tileNodes = [];
@@ -29,14 +28,27 @@ class Scene {
     for (int row = 0; row < rows; row++) {
       List<TileNode> nodeRow = [];
       for (int column = 0; column < columns; column++) {
-        TileNode node = TileNode(tiles[row][column] == Tile.Concrete);
+        TileNode node = TileNode(isOpen(tiles[row][column]));
         node.y = column;
         node.x = row;
         double halfTileSize = 24;
-        double px = perspectiveProjectX(node.x * halfTileSize, node.y * halfTileSize);
-        double py = perspectiveProjectY(node.x * halfTileSize, node.y * halfTileSize) + halfTileSize;
+        double px =
+            perspectiveProjectX(node.x * halfTileSize, node.y * halfTileSize);
+        double py =
+            perspectiveProjectY(node.x * halfTileSize, node.y * halfTileSize) +
+                halfTileSize;
         node.position = Vector2(px, py);
         nodeRow.add(node);
+
+        if (tiles[row][column] == Tile.PlayerSpawn) {
+          playerSpawnPoints.add(node.position);
+        }
+        if (tiles[row][column] == Tile.ZombieSpawn) {
+          zombieSpawnPoints.add(node.position);
+        }
+        if (tiles[row][column] == Tile.Fortress) {
+          fortressPosition = node.position;
+        }
       }
       tileNodes.add(nodeRow);
     }
@@ -84,7 +96,7 @@ extension SceneFunctions on Scene {
     return playerSpawnPoints[randomInt(0, playerSpawnPoints.length)];
   }
 
-  int _sortNodes(TileNodeVisit a, TileNodeVisit b){
+  int _sortNodes(TileNodeVisit a, TileNodeVisit b) {
     int scoreA = a.travelled + a.remaining;
     int scoreB = b.travelled + b.remaining;
     if (scoreA < scoreB) return 1;
@@ -228,7 +240,6 @@ extension SceneFunctions on Scene {
   double perspectiveProjectY(double x, double y) {
     return x + y;
   }
-
 
   double projectedToWorldX(double x, double y) {
     return y - x;

@@ -109,7 +109,7 @@ class Bullet extends GameObject {
 
 class GameEvent extends GameObject {
   final GameEventType type;
-  int frameDuration = 1;
+  int frameDuration = 2;
 
   GameEvent(this.type, double x, double y, double xv, double yv) : super(x, y, xv: xv, yv: yv);
 }

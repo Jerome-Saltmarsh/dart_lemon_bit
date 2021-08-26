@@ -291,10 +291,10 @@ void _handleMouseClick([bool drag = false]) {
       setTileAtMouse(Tile.Fortress);
       break;
     case EditorTool.ZombieSpawn:
-      compiledGame.zombieSpawnPoints.add(mouseWorld);
+      setTileAtMouse(Tile.ZombieSpawn);
       break;
     case EditorTool.PlayerSpawn:
-      compiledGame.playerSpawnPoints.add(mouseWorld);
+      setTileAtMouse(Tile.PlayerSpawn);
       break;
     default:
       throw Exception("No implementation for ${editState.tool}");
@@ -306,11 +306,11 @@ void setTileAtMouse(Tile tile) {
   int column = mouseTileX;
   if (row < 0) return;
   if (column < 0) return;
-  if (row < compiledGame.tiles.length && row < compiledGame.tiles[0].length) {
-    gameEdit.tiles[row][column] = tile;
-    compiledGame.tiles = gameEdit.tiles;
+  // if (row < compiledGame.tiles.length && row < compiledGame.tiles[0].length) {
+  //   gameEdit.tiles[row][column] = tile;
+    compiledGame.tiles[row][column] = tile;
     renderTiles(compiledGame.tiles);
-  }
+  // }
 }
 
 void _getBlockAt(double x, double y) {

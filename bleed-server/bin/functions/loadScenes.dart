@@ -14,11 +14,15 @@ final JsonDecoder _decoder = JsonDecoder();
 
 void loadScenes() {
   print("loadScenes()");
+  loadScene('fortress').then((value) => scenes.fortress = value);
+  loadScene('town').then((value) => scenes.town = value);
+}
+
+Future<Scene> loadScene(String name) async {
   String dir = Directory.current.path;
-  File file = File('$dir/scenes/town.json');
-  file.readAsString().then((value) {
-    scenesTown = _mapStringToScene(value);
-  });
+  File fortressFile = File('$dir/scenes/$name.json');
+  String text = await fortressFile.readAsString();
+  return _mapStringToScene(text);
 }
 
 Scene _mapStringToScene(String text) {
@@ -68,7 +72,7 @@ Scene _mapStringToScene(String text) {
   List jsonBlocks = json['blocks'];
   List<Block> blocks = jsonBlocks.map(_mapJsonBlockToBlock).toList();
   sortBlocks(blocks);
-  return Scene(tiles, blocks, collectables, playerSpawnPoints, zombieSpawnPoints);
+  return Scene(tiles, blocks, collectables);
 }
 
 Block _mapJsonBlockToBlock(dynamic jsonBlock) {
