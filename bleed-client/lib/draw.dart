@@ -35,7 +35,7 @@ void drawNpcs() {
     if (a[y] < b[y]) return -1;
     return 1;
   });
-  drawList(game.npcs, npcsTransforms, npcsRects);
+  drawList(game.npcs, render.npcsTransforms, render.npcsRects);
 }
 
 void drawCharacterList(List<dynamic> characters) {
@@ -88,7 +88,7 @@ void drawPlayers() {
     if (a[y] < b[y]) return -1;
     return 1;
   });
-  drawList(game.players, playersTransforms, playersRects);
+  drawList(game.players, render.playersTransforms, render.playersRects);
 }
 
 void drawList(

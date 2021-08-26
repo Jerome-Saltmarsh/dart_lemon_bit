@@ -20,7 +20,7 @@ void clearState(){
   zoom = 1;
   gameId = -1;
   gameEvents.clear();
-  playersTransforms.clear();
+  render.playersTransforms.clear();
   render.tileTransforms.clear();
   mode = Mode.Play;
 }
