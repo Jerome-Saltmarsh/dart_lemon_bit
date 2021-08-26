@@ -1,3 +1,4 @@
+import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/instances/game.dart';
@@ -20,6 +21,6 @@ void clearState(){
   gameId = -1;
   gameEvents.clear();
   playersTransforms.clear();
-  tileTransforms.clear();
+  render.tileTransforms.clear();
   mode = Mode.Play;
 }

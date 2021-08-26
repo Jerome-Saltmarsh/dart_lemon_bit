@@ -151,8 +151,7 @@ void _parseTiles() {
       column.add(Tile.values[_consumeInt()]);
     }
   }
-  processTileTransforms();
-  loadTileRects();
+  renderTiles(game.tiles);
 }
 
 void _parsePlayer() {

@@ -73,13 +73,13 @@ Widget buildEditorUI() {
                     game.tiles[row][column] = Tile.Concrete;
                   }
                 }
-                updateTiles();
+                renderTiles(game.tiles);
               }),
               button("Increase Tiles X", () {
                 for (List<Tile> row in game.tiles) {
                   row.add(Tile.Grass);
                 }
-                updateTiles();
+                renderTiles(game.tiles);
               }),
               button("Increase Tiles Y", () {
                 List<Tile> row = [];
@@ -87,7 +87,7 @@ Widget buildEditorUI() {
                   row.add(Tile.Grass);
                 }
                 game.tiles.add(row);
-                updateTiles();
+                renderTiles(game.tiles);
               }),
             ],
           ),
@@ -307,8 +307,9 @@ void setTileAtMouse(Tile tile) {
   if (row < 0) return;
   if (column < 0) return;
   if (row < game.tiles.length && row < game.tiles[0].length) {
-    game.tiles[row][column] = tile;
-    updateTiles();
+    gameEdit.tiles[row][column] = tile;
+    game.tiles = gameEdit.tiles;
+    renderTiles(game.tiles);
   }
 }
 

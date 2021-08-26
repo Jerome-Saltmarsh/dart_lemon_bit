@@ -26,7 +26,8 @@ void drawCanvas(Canvas canvass, Size _size) {
   canvass.translate(-cameraX, -cameraY);
 
   if (editMode){
-
+    drawTiles();
+    return;
   }
 
   if (!connected) return;

@@ -43,8 +43,6 @@ List<Rect> npcsRects = [];
 int tilesX = 0;
 int tilesY = 0;
 List<Block> blockHouses = [];
-List<RSTransform> tileTransforms = [];
-List<Rect> tileRects = [];
 Map<int, bool> gameEvents = Map();
 List<List<Vector2>> paths = [];
 

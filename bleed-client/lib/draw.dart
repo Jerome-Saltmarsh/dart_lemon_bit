@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 import 'dart:ui' as ui;
 
+import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
@@ -49,13 +50,9 @@ void drawCharacterList(List<dynamic> characters) {
 }
 
 void drawTileList() {
-  drawAtlases(imageTiles, tileTransforms, tileRects);
+  drawAtlases(imageTiles, render.tileTransforms, render.tileRects);
 }
 
-void updateTiles() {
-  processTileTransforms();
-  loadTileRects();
-}
 
 void drawAtlases(
     ui.Image image, List<RSTransform> transforms, List<Rect> rects) {
@@ -63,20 +60,25 @@ void drawAtlases(
       image, transforms, rects, null, null, null, globalPaint);
 }
 
-void processTileTransforms() {
-  tileTransforms.clear();
-  for (int x = 0; x < game.tiles.length; x++) {
-    for (int y = 0; y < game.tiles[0].length; y++) {
-      tileTransforms.add(getTileTransform(x, y));
+void renderTiles(List<List<Tile>> tiles) {
+  _processTileTransforms(tiles);
+  _loadTileRects(tiles);
+}
+
+void _processTileTransforms(List<List<Tile>> tiles) {
+  render.tileTransforms.clear();
+  for (int x = 0; x < tiles.length; x++) {
+    for (int y = 0; y < tiles[0].length; y++) {
+      render.tileTransforms.add(getTileTransform(x, y));
     }
   }
 }
 
-void loadTileRects() {
-  tileRects.clear();
-  for (int x = 0; x < game.tiles.length; x++) {
-    for (int y = 0; y < game.tiles[0].length; y++) {
-      tileRects.add(getTileSpriteRect(game.tiles[x][y]));
+void _loadTileRects(List<List<Tile>> tiles) {
+  render.tileRects.clear();
+  for (int x = 0; x < tiles.length; x++) {
+    for (int y = 0; y < tiles[0].length; y++) {
+      render.tileRects.add(getTileSpriteRect(tiles[x][y]));
     }
   }
 }
