@@ -29,7 +29,7 @@
 [ ] Lobby
 [ ] Game Type: Death Match
 [ ] Game Type: Fortress
-[ ] Fix Zombie Attack Bug
+[x] Fix Zombie Attack Bug
 [x] Map Editor: Translate GameObjects
 [x] Inventory Grenade
 [x] Inventory Shotgun

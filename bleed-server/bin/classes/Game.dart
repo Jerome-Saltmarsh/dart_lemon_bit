@@ -192,6 +192,15 @@ extension GameFunctions on Game {
         return;
       }
 
+      if (npc.path.isEmpty) {
+        npc.path = scene.findPath(npc.x, npc.y, npc.target.x, npc.target.y);
+      }
+
+      if (npc.path.length <= 1 && !npcWithinStrikeRange(npc, npc.target)) {
+        characterFaceObject(npc, npc.target);
+        setCharacterState(npc, CharacterState.Walking);
+      }
+
       if (frame % 30 == 0 && npc.path.length > 4) {
         double xDistance = diff(npc.target.x, npc.path[0].x);
         double yDistance = diff(npc.target.y, npc.path[0].y);
@@ -909,7 +918,6 @@ extension GameFunctions on Game {
         if (!scene.pathClear(npc.x, npc.y, players[p].x, players[p].y))
           continue;
         npc.target = players[p];
-        npc.path = scene.findPath(npc.x, npc.y, npc.target.x, npc.target.y);
         break;
       }
     }
