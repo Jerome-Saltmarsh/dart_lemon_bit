@@ -80,6 +80,7 @@ class Scene {
   }
 }
 
+final Vector2 _vector2Zero = Vector2(0, 0);
 Vector2 _vector2 = Vector2(0, 0);
 TileNode _boundary = TileNode(false);
 
@@ -133,15 +134,14 @@ extension SceneFunctions on Scene {
     while (visits.isNotEmpty) {
       if (visits.last.tileNode == endNode) {
         TileNodeVisit visit = visits.last;
-        List<Vector2> nodes = [];
-
-        // remove corners
-
+        List<Vector2> nodes = List.filled(visit.travelled, _vector2Zero, growable: true);
+        int index = visit.travelled - 1;
         while (visit.previous != null) {
-          nodes.add(visit.tileNode.position);
+          nodes[index] = visit.tileNode.position;
+          index--;
           visit = visit.previous!;
         }
-        return nodes.reversed.toList();
+        return nodes;
       }
 
       TileNodeVisit last = visits.removeLast();
