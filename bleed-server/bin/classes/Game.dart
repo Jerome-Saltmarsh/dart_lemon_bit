@@ -803,13 +803,14 @@ extension GameFunctions on Game {
     double x = character.x + adj(character.aimAngle, d);
     double y = character.y + opp(character.aimAngle, d);
 
-    double xv = velX(
-        character.aimAngle + giveOrTake(getWeaponAccuracy(character.weapon)),
-        getWeaponBulletSpeed(character.weapon));
+    double weaponAccuracy = getWeaponAccuracy(character.weapon);
+    double bulletSpeed = getWeaponBulletSpeed(character.weapon);
 
-    double yv = velY(
-        character.aimAngle + giveOrTake(getWeaponAccuracy(character.weapon)),
-        getWeaponBulletSpeed(character.weapon));
+    double xv =
+        velX(character.aimAngle + giveOrTake(weaponAccuracy), bulletSpeed);
+
+    double yv =
+        velY(character.aimAngle + giveOrTake(weaponAccuracy), bulletSpeed);
 
     int ownerId = character.id;
 
@@ -819,13 +820,13 @@ extension GameFunctions on Game {
     double damage = getWeaponDamage(character.weapon);
 
     for (int i = 0; i < bullets.length; i++) {
-      if (!bullets[i].active) continue;
+      if (bullets[i].active) continue;
       Bullet bullet = bullets[i];
       bullet.active = true;
-      bullet.x = x;
-      bullet.y = y;
       bullet.xStart = x;
       bullet.yStart = y;
+      bullet.x = x;
+      bullet.y = y;
       bullet.xv = xv;
       bullet.yv = yv;
       bullet.ownerId = ownerId;
