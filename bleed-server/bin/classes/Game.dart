@@ -32,25 +32,23 @@ class Fortress extends Game {
   int wave = 0;
   int lives = 10;
 
-  Fortress() : super(GameType.Fortress, scenes.fortress, 8){
+  Fortress() : super(GameType.Fortress, scenes.fortress, 8) {}
 
-  }
-
-  void gameOver(){
+  void gameOver() {
     print("Game Over");
-    for(int i = 0; i < npcs.length; i++){
+    for (int i = 0; i < npcs.length; i++) {
       changeCharacterHealth(npcs[i], 0);
     }
   }
 
   void update() {
-
     if (lives <= 0) return;
 
-    for(int i = 0; i < npcs.length; i++){
+    for (int i = 0; i < npcs.length; i++) {
       Npc npc = npcs[i];
-      if(npc.path.isEmpty){
-        npcSetDestination(npcs[i], scene.fortressPosition.x, scene.fortressPosition.y);
+      if (npc.path.isEmpty) {
+        npcSetDestination(
+            npcs[i], scene.fortressPosition.x, scene.fortressPosition.y);
       }
 
       if (diff(npc.x, scene.fortressPosition.x) > 50) continue;
@@ -59,7 +57,7 @@ class Fortress extends Game {
       i--;
       lives--;
       print('lives: $lives');
-      if(lives <= 0){
+      if (lives <= 0) {
         gameOver();
         return;
       }
@@ -72,12 +70,12 @@ class Fortress extends Game {
       print("Next Wave: $wave");
       nextWave = 200;
 
-      for(int row = 0; row < scene.rows; row++){
-        for(int column = 0; column < scene.columns; column++){
-          if(scene.tiles[row][column] == Tile.ZombieSpawn){
+      for (int row = 0; row < scene.rows; row++) {
+        for (int column = 0; column < scene.columns; column++) {
+          if (scene.tiles[row][column] == Tile.ZombieSpawn) {
             double x = getTilePositionX(row, column);
             double y = getTilePositionY(row, column);
-            for(int i = 0; i < wave; i++){
+            for (int i = 0; i < wave; i++) {
               Npc npc = spawnNpc(x + giveOrTake(5), y + giveOrTake(5));
             }
           }
@@ -136,8 +134,8 @@ extension GameFunctions on Game {
     _updateCollectables();
     compileGame(this);
 
-    for(int i = 0; i < gameEvents.length; i++){
-      if(gameEvents[i].frameDuration-- < 0){
+    for (int i = 0; i < gameEvents.length; i++) {
+      if (gameEvents[i].frameDuration-- < 0) {
         gameEvents.removeAt(i);
         i--;
       }
@@ -233,7 +231,6 @@ extension GameFunctions on Game {
       updateCharacter(players[i]);
     }
 
-    removeInactiveNpcs();
     for (int i = 0; i < npcs.length; i++) {
       updateCharacter(npcs[i]);
     }
@@ -441,27 +438,26 @@ extension GameFunctions on Game {
 
   void _updateBullets() {
     for (int i = 0; i < bullets.length; i++) {
+      if (!bullets[i].active) continue;
       Bullet bullet = bullets[i];
       bullet.x += bullet.xv;
       bullet.y += bullet.yv;
       if (bulletDistanceTravelled(bullet) > bullet.range) {
         dispatch(GameEventType.Bullet_Hole, bullet.x, bullet.y, 0, 0);
-        bullets.removeAt(i);
-        i--;
-        continue;
+        bullet.active = false;
       }
     }
 
     for (int i = 0; i < bullets.length; i++) {
       if (scene.tileBoundaryAt(bullets[i].x, bullets[i].y)) {
-        bullets.removeAt(i);
-        i--;
+        bullets[i].active = false;
       }
     }
 
     bullets.sort(compareGameObjects);
 
     for (int i = 0; i < bullets.length; i++) {
+      if (!bullets[i].active) continue;
       Bullet bullet = bullets[i];
       for (int j = 0; j < scene.blocks.length; j++) {
         Block block = scene.blocks[j];
@@ -591,6 +587,7 @@ extension GameFunctions on Game {
   void checkBulletCollision(List<Character> characters) {
     int s = 0;
     for (int i = 0; i < bullets.length; i++) {
+      if (!bullets[i].active) continue;
       Bullet bullet = bullets[i];
       for (int j = s; j < characters.length; j++) {
         Character character = characters[j];
@@ -635,20 +632,13 @@ extension GameFunctions on Game {
     }
   }
 
-  void removeInactiveNpcs() {
-    for (int i = 0; i < npcs.length; i++) {
-      if (!npcs[i].active) {
-        npcs.removeAt(i);
-        i--;
-      }
-    }
-  }
-
   void clearNpcs() {
     npcs.clear();
   }
 
   void updateCharacter(Character character) {
+    if (!character.active) return;
+
     if (abs(character.xv) > 0.005) {
       character.x += character.xv;
       character.y += character.yv;
@@ -813,26 +803,56 @@ extension GameFunctions on Game {
     double x = character.x + adj(character.aimAngle, d);
     double y = character.y + opp(character.aimAngle, d);
 
-    Bullet bullet = Bullet(
-        x,
-        y,
-        velX(
-            character.aimAngle +
-                giveOrTake(getWeaponAccuracy(character.weapon)),
-            getWeaponBulletSpeed(character.weapon)),
-        velY(
-            character.aimAngle +
-                giveOrTake(getWeaponAccuracy(character.weapon)),
-            getWeaponBulletSpeed(character.weapon)),
-        character.id,
-        getWeaponRange(character.weapon) +
-            giveOrTake(settingsWeaponRangeVariation),
-        getWeaponDamage(character.weapon));
+    double xv = velX(
+        character.aimAngle + giveOrTake(getWeaponAccuracy(character.weapon)),
+        getWeaponBulletSpeed(character.weapon));
+
+    double yv = velY(
+        character.aimAngle + giveOrTake(getWeaponAccuracy(character.weapon)),
+        getWeaponBulletSpeed(character.weapon));
+
+    int ownerId = character.id;
+
+    double range = getWeaponRange(character.weapon) +
+        giveOrTake(settingsWeaponRangeVariation);
+
+    double damage = getWeaponDamage(character.weapon);
+
+    for (int i = 0; i < bullets.length; i++) {
+      if (!bullets[i].active) continue;
+      Bullet bullet = bullets[i];
+      bullet.active = true;
+      bullet.x = x;
+      bullet.y = y;
+      bullet.xStart = x;
+      bullet.yStart = y;
+      bullet.xv = xv;
+      bullet.yv = yv;
+      bullet.ownerId = ownerId;
+      bullet.range = range;
+      bullet.damage = damage;
+      return bullet;
+    }
+
+    Bullet bullet = Bullet(x, y, xv, yv, ownerId, range, damage);
     bullets.add(bullet);
     return bullet;
   }
 
   Npc spawnNpc(double x, double y) {
+    for (int i = 0; i < npcs.length; i++) {
+      if (!npcs[i].active) {
+        Npc npc = npcs[i];
+        npc.active = true;
+        npc.state = CharacterState.Idle;
+        npc.previousState = CharacterState.Idle;
+        npc.health = 3;
+        npc.x = x;
+        npc.y = y;
+        return npc;
+      }
+    }
+
     Npc npc = Npc(x: x, y: y, health: 3, maxHealth: 3);
     npcs.add(npc);
     return npc;

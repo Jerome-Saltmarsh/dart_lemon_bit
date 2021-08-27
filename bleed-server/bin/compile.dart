@@ -150,6 +150,7 @@ void _compilePlayers(StringBuffer buffer, List<Player> players) {
 void _compileNpcs(StringBuffer buffer, List<Npc> npcs) {
   _write(buffer, ServerResponse.Npcs.index);
   for (Npc npc in npcs) {
+    if (!npc.active) continue;
     _compileNpc(buffer, npc);
   }
   buffer.write(_semiColon);
@@ -158,6 +159,7 @@ void _compileNpcs(StringBuffer buffer, List<Npc> npcs) {
 void _compileBullets(StringBuffer buffer, List<Bullet> bullets) {
   _write(buffer, ServerResponse.Bullets.index);
   for (Bullet bullet in bullets) {
+    if (!bullet.active) continue;
     _compileBullet(buffer, bullet);
   }
   buffer.write(_semiColon);

@@ -1,10 +1,10 @@
 # TODO
+[ ] Fix Block Collision Bug
 [ ] Critical Damage
 [ ] Accuracy
 [ ] Weapon Oozie
 [ ] Weapon: Bazooka
 [ ] Game Type: Open World
-[ ] Game Type: Death Match
 [ ] Game Type: Capture The Flag
 [ ] Game Type: Sandbox
 [ ] Throw Animation
@@ -13,7 +13,6 @@
 [ ] Cache Particles
 [ ] Zombie Hurt Animation
 [ ] Npc Text
-[ ] Fix Block Collision Bug
 [ ] Grenade building collision
 [ ] Collect Audio
 [ ] Find / Join Game 
@@ -25,9 +24,12 @@
 [ ] Fix Npc Wander
 [ ] FIX NPC pathfinding stops bug
 [ ] NPC surround player
+[ ] Ragdoll death
 [ ] Fire Shotgun Animation
-[ ] Game Type: Fortress
 [ ] Lobby
+[ ] Game Type: Death Match
+[ ] Game Type: Fortress
+[ ] Fix Zombie Attack Bug
 [x] Map Editor: Translate GameObjects
 [x] Inventory Grenade
 [x] Inventory Shotgun

@@ -4,9 +4,10 @@ import 'enums/GameEventType.dart';
 import 'enums/Weapons.dart';
 import 'settings.dart';
 
+int _idCount = 0;
+
 class GameObject {
-  static int _idGenerator = 0;
-  final int id = _idGenerator++;
+  final int id = _idCount++;
   double x;
   double y;
   double z = 0;
@@ -15,6 +16,7 @@ class GameObject {
   double zv = 0;
   double radius;
   bool collidable = true;
+  bool active = true;
 
   double get left => x - radius;
   double get right => x + radius;
@@ -37,7 +39,6 @@ class Character extends GameObject {
   double maxHealth;
   double speed;
   String name;
-  bool active = true;
 
   bool get alive => state != CharacterState.Dead;
 
@@ -97,8 +98,8 @@ class Bullet extends GameObject {
   late double xStart;
   late double yStart;
   int ownerId;
-  final double range;
-  final double damage;
+  double range;
+  double damage;
 
   Bullet(double x, double y, double xVel, double yVel, this.ownerId, this.range, this.damage)
       : super(x, y, xv: xVel, yv: yVel) {
