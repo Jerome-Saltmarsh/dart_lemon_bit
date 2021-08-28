@@ -1,6 +1,7 @@
 
 
 import 'package:bleed_client/connection.dart';
+import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/utils.dart';
 
@@ -22,6 +23,7 @@ void _onPlayerCreated(OnPlayerCreated event){
   compiledGame.playerX = event.x;
   compiledGame.playerY = event.y;
   cameraCenter(compiledGame.playerX, compiledGame.playerY);
+  redrawUI();
 }
 
 void _joinRandomGame() {

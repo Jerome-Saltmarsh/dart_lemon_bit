@@ -21,11 +21,12 @@
 [ ] Fix Npc Wander
 [ ] FIX NPC pathfinding stops bug
 [ ] Fire Shotgun Animation
-[ ] Lobby
 [ ] Game Type: Death Match
 [ ] Game Type: Fortress
 [ ] Rag doll death
+[ ] Lobby
 [ ] Fortress life lost audio
+[x] Fix UI Lag
 [x] Fortress UI Show Game over
 [x] Fortress UI Show Next Wave
 [x] Fortress UI Show Current Wave
