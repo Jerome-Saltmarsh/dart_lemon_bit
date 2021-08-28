@@ -30,7 +30,7 @@ Squis Studios
 [ ] Lobby
 [ ] Fortress life lost audio
 [ ] Fix Zombie ai bug
-[ ] Fix parse bullet bugs
+[x] Fix parse bullet bugs
 [x] Mute Audio Icon
 [x] Fix UI Lag
 [x] Fortress UI Show Game over
