@@ -26,7 +26,23 @@ void compileGame(Game game) {
   _compileGrenades(game.buffer, game.grenades);
   _compileCollectables(game.buffer, game.collectables);
   _compilePaths(game.buffer, game.npcs);
+
+  if (game.gameOver()) {
+    _write(game.buffer, ServerResponse.GameOver.index);
+  }
+
+  if (game is Fortress) {
+    _compileFortress(game.buffer, game);
+  }
+
   game.compiled = game.buffer.toString();
+}
+
+void _compileFortress(StringBuffer buffer, Fortress game) {
+  _write(game.buffer, ServerResponse.FortressMeta.index);
+  _write(game.buffer, game.lives);
+  _write(game.buffer, game.wave);
+  _write(game.buffer, game.nextWave);
 }
 
 void compileBlocks(StringBuffer buffer, List<Block> blocks) {

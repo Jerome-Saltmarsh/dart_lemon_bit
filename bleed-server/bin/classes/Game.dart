@@ -34,13 +34,6 @@ class Fortress extends Game {
 
   Fortress() : super(GameType.Fortress, scenes.fortress, 8) {}
 
-  void gameOver() {
-    print("Game Over");
-    for (int i = 0; i < npcs.length; i++) {
-      changeCharacterHealth(npcs[i], 0);
-    }
-  }
-
   void update() {
     if (lives <= 0) return;
 
@@ -58,7 +51,6 @@ class Fortress extends Game {
       lives--;
       print('lives: $lives');
       if (lives <= 0) {
-        gameOver();
         return;
       }
     }
@@ -83,6 +75,11 @@ class Fortress extends Game {
       }
     }
   }
+
+  @override
+  bool gameOver() {
+    return lives <= 0;
+  }
 }
 
 class DeathMatch extends Game {
@@ -90,6 +87,11 @@ class DeathMatch extends Game {
 
   @override
   void update() {}
+
+  @override
+  bool gameOver() {
+    return false;
+  }
 }
 
 abstract class Game {
@@ -106,6 +108,8 @@ abstract class Game {
   List<GameEvent> gameEvents = [];
   List<Collectable> collectables = [];
   String compiled = "";
+
+  // TODO doesn't belong here
   StringBuffer buffer = StringBuffer();
 
   // this saves us rewriting the same text each frame
@@ -113,37 +117,32 @@ abstract class Game {
 
   void update();
 
+  bool gameOver();
+
   Game(this.type, this.scene, this.maxPlayers) {
     for (Collectable collectable in scene.collectables) {
       collectables.add(collectable);
     }
-    gameIdString = '${ServerResponse.Game_Id.index} $id ; ';
+    gameIdString = '${ServerResponse.Game_Id.index} $id ${type.index} ; ';
   }
 }
 
 extension GameFunctions on Game {
   void updateAndCompile() {
-    duration++;
-    update();
-    _updatePlayersAndNpcs();
-    _updateCollisions();
-    _updateBullets();
-    _updateBullets(); // called twice to fix collision detection
-    _updateNpcs();
-    _updateGrenades();
-    _updateCollectables();
+    if (!gameOver()) {
+      duration++;
+      update();
+      _updatePlayersAndNpcs();
+      _updateCollisions();
+      _updateBullets();
+      _updateBullets(); // called twice to fix collision detection
+      _updateNpcs();
+      _updateGrenades();
+      _updateCollectables();
+      _updateGameEvents();
+    }
     compileGame(this);
 
-    for (int i = 0; i < gameEvents.length; i++) {
-      if (gameEvents[i].frameDuration-- < 0) {
-        gameEvents.removeAt(i);
-        i--;
-      }
-    }
-
-    if (frame % 5 == 0 && npcs.length < 1) {
-      spawnRandomNpc();
-    }
   }
 
   void _updateCollectables() {
@@ -629,7 +628,7 @@ extension GameFunctions on Game {
           if (randomBool()) {
             dispatch(GameEventType.Zombie_Killed, character.x, character.y,
                 bullet.xv, bullet.yv);
-            delayed(() => character.active = false, ms: randomInt(1000, 1500));
+            delayed(() => character.active = false, ms: 2000);
           } else {
             character.active = false;
             dispatch(GameEventType.Zombie_killed_Explosion, character.x,
@@ -979,7 +978,18 @@ extension GameFunctions on Game {
   void npcSetDestination(Npc npc, double x, double y) {
     npc.path = scene.findPath(npc.x, npc.y, x, y);
   }
+
+  void _updateGameEvents() {
+    // TODO Expensive operation
+    for (int i = 0; i < gameEvents.length; i++) {
+      if (gameEvents[i].frameDuration-- < 0) {
+        gameEvents.removeAt(i);
+        i--;
+      }
+    }
+  }
 }
+
 
 String _generateUUID() {
   return uuidGenerator.v4().substring(0, 8);

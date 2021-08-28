@@ -1,4 +1,5 @@
 import 'package:bleed_client/editor/GameEdit.dart';
+import 'package:bleed_client/enums/GameType.dart';
 
 import '../common.dart';
 import 'classes/Block.dart';
@@ -28,6 +29,8 @@ List<SpriteAnimation> animations = [];
 int drawFrame = 0;
 bool debugMode = false;
 int gameId = -1;
+GameType gameType;
+bool gameOver = false;
 int serverFramesMS = 0;
 int actualFPS;
 List<Block> blockHouses = [];

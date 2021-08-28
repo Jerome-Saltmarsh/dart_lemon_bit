@@ -28,6 +28,10 @@ class CompiledGame {
   int playerGrenades = 0;
   int playerMeds = 0;
 
+  int lives = 0;
+  int wave = 1;
+  int nextWave = 2;
+
   int get roundsRemaining{
     switch(playerWeapon){
       case Weapon.HandGun:

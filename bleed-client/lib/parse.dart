@@ -1,5 +1,6 @@
 import 'package:bleed_client/classes/InventoryItem.dart';
 import 'package:bleed_client/connection.dart';
+import 'package:bleed_client/enums/GameType.dart';
 import 'package:bleed_client/enums/InventoryItemType.dart';
 import 'package:bleed_client/enums/ServerResponse.dart';
 import 'package:bleed_client/functions/clearState.dart';
@@ -52,6 +53,10 @@ void parseState() {
         _parsePaths();
         break;
 
+      case ServerResponse.FortressMeta:
+        _parseFortressMeta();
+        break;
+
       case ServerResponse.Player:
         _parsePlayer();
         break;
@@ -101,6 +106,11 @@ void parseState() {
         _parsePlayerCreated();
         break;
 
+      case ServerResponse.GameOver:
+        gameOver = true;
+        print('game over');
+        break;
+
       case ServerResponse.Collectables:
         _parseCollectables();
         break;
@@ -126,6 +136,13 @@ void parseState() {
 
 void _parseGameId() {
   gameId = _consumeInt();
+  gameType = GameType.values[_consumeInt()];
+}
+
+void _parseFortressMeta(){
+  compiledGame.lives = _consumeInt();
+  compiledGame.wave = _consumeInt();
+  compiledGame.nextWave = _consumeInt();
 }
 
 void _parsePaths() {

@@ -1,11 +1,10 @@
 # TODO
-[ ] Fix Block Collision Bug
 [ ] Critical Damage
 [ ] Accuracy
 [ ] Weapon Oozie
 [ ] Weapon: Bazooka
 [ ] Game Type: Open World
-[ ] Game Type: Capture The Flag
+[ ] Game Type: Capture The Squares
 [ ] Game Type: Sandbox
 [ ] Throw Animation
 [ ] Player Name Text
@@ -13,22 +12,26 @@
 [ ] Cache Particles
 [ ] Zombie Hurt Animation
 [ ] Npc Text
-[ ] Grenade building collision
+[ ] Grenade tile collision
 [ ] Collect Audio
 [ ] Find / Join Game 
 [ ] Stamina Potion
-[ ] Refactor inventory painter
 [ ] Create Game
 [ ] Menu Screen Game
-[ ] Fix Shot Looping Animation
 [ ] Fix Npc Wander
 [ ] FIX NPC pathfinding stops bug
-[ ] NPC surround player
-[ ] Ragdoll death
 [ ] Fire Shotgun Animation
 [ ] Lobby
 [ ] Game Type: Death Match
 [ ] Game Type: Fortress
+[ ] Rag doll death
+[ ] Fortress life lost audio
+[x] Fortress UI Show Game over
+[x] Fortress UI Show Next Wave
+[x] Fortress UI Show Current Wave
+[x] Fortress UI Show lives remaining
+[x] NPC surround player
+[x] Fix Shot Looping Animation
 [x] Fix Zombie Attack Bug
 [x] Map Editor: Translate GameObjects
 [x] Inventory Grenade

@@ -14,5 +14,7 @@ enum ServerResponse {
   Scene,
   Collectables,
   Inventory,
-  Paths
+  Paths,
+  FortressMeta,
+  GameOver
 }

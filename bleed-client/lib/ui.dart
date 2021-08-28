@@ -177,9 +177,9 @@ Widget buildGameUI(BuildContext context) {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-        button('Join Death Match', requestJoinRandomGame),
-        button('Join Fortress', sendRequestJoinGameFortress),
-      ]),
+            button('Join Death Match', requestJoinRandomGame),
+            button('Join Fortress', sendRequestJoinGameFortress),
+          ]),
     );
   }
 
@@ -371,8 +371,7 @@ Widget buildHud() {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          if(!_showDebug)
-          button('Debug', () => _showDebug = !_showDebug),
+          if (!_showDebug) button('Debug', () => _showDebug = !_showDebug),
           button('Editor', toggleMode),
           button("FullScreen", requestFullScreen),
           button('Menu', clearState),
@@ -418,29 +417,49 @@ Widget buildHud() {
   );
 
   Positioned bottomRight = Positioned(
-    right: 0,
-    bottom: 0,
-    child: buildInventory(),
-  );
-
-  Positioned center = Positioned(
-      child: Container(
-    width: globalSize.width,
-    height: globalSize.height,
-    color: Colors.black45,
-    child: button("respawn", sendRequestRevive, fontSize: 30),
-  ));
+      right: 0,
+      bottom: 0,
+      // child: buildInventory(),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          text("Lives: ${compiledGame.lives}"),
+          text("Wave: ${compiledGame.wave}"),
+          text("Next Wave: ${compiledGame.nextWave}"),
+        ],
+      ));
 
   return Stack(
     children: [
-      if(_showDebug)
-      topLeft,
+      if (_showDebug) topLeft,
       topRight,
       bottomLeft,
-      // bottomRight,
-      if (playerHealth <= 0) center
+      bottomRight,
+      if (gameOver) buildGameOver(),
+      if (!gameOver && playerHealth <= 0) buildRespawn()
     ],
   );
+}
+
+Widget buildGameOver(){
+  return Positioned(
+      child: Container(
+        width: globalSize.width,
+        height: globalSize.height,
+        color: Colors.black45,
+        child: button("Game Over", clearState, fontSize: 30),
+      ));
+}
+
+Widget buildRespawn(){
+  return Positioned(
+      child: Container(
+        width: globalSize.width,
+        height: globalSize.height,
+        color: Colors.black45,
+        child: button("respawn", sendRequestRevive, fontSize: 30),
+      ));
 }
 
 Widget buildDebugPanel() {

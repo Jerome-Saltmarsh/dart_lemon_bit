@@ -21,6 +21,7 @@ void clearState(){
   gameId = -1;
   gameEvents.clear();
   render.playersTransforms.clear();
+  gameOver = false;
   render.tileTransforms.clear();
   mode = Mode.Play;
 }
