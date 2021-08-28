@@ -22,7 +22,7 @@ import 'utils.dart';
 
 TextEditingController _playerNameController = TextEditingController();
 ButtonStyle _buttonStyle = buildButtonStyle(white, 2);
-Border _border = Border.all(color: white, width: 5.0, style: BorderStyle.solid);
+Border _border = Border.all(color: Colors.black, width: 5.0, style: BorderStyle.solid);
 
 bool _showDebug = false;
 
@@ -243,6 +243,18 @@ const DecorationImage _machineGunImage = const DecorationImage(
   image: const AssetImage('images/weapon-machine-gun.png'),
 );
 
+const DecorationImage _audioOnImage = const DecorationImage(
+  image: const AssetImage('images/audio-on.png'),
+);
+
+const DecorationImage _audioOffImage = const DecorationImage(
+  image: const AssetImage('images/audio-off.png'),
+);
+
+const DecorationImage _iconMenu = const DecorationImage(
+  image: const AssetImage('images/icon-menu.png'),
+);
+
 DecorationImage _getDecorationImage(Weapon weapon) {
   switch (weapon) {
     case Weapon.HandGun:
@@ -264,8 +276,22 @@ Widget buildWeaponButton(Weapon weapon) {
         width: 120,
         height: 50,
         decoration: BoxDecoration(
+            color: Colors.white70,
             border: compiledGame.playerWeapon == weapon ? _border : null,
             image: _getDecorationImage(weapon))),
+  );
+}
+
+Widget buildImageButton(DecorationImage image, Function onTap, { double width = 120 }){
+  return GestureDetector(
+    onTap: onTap,
+    child: Container(
+        width: width,
+        height: 50,
+        decoration: BoxDecoration(
+            color: Colors.black45,
+            border: _border,
+            image: image)),
   );
 }
 
@@ -383,9 +409,8 @@ Widget buildHud() {
           if (!_showDebug) button('Debug', () => _showDebug = !_showDebug),
           button('Editor', toggleMode),
           button("FullScreen", requestFullScreen),
-          button('Menu', clearState),
-          button(settings.audioMuted ? 'Unmute Audio' : 'Mute Audio',
-              settings.toggleAudioMuted),
+          buildImageButton(_iconMenu, clearState),
+          buildImageButton(settings.audioMuted ? _audioOffImage : _audioOnImage, settings.toggleAudioMuted, width: 80),
         ],
       ));
 

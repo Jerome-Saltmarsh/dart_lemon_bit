@@ -1,3 +1,6 @@
+Squizzy Studios
+Squis Studios
+
 # TODO
 [ ] Critical Damage
 [ ] Accuracy
@@ -26,6 +29,8 @@
 [ ] Rag doll death
 [ ] Lobby
 [ ] Fortress life lost audio
+[ ] Fix Zombie ai bug
+[x] Mute Audio Icon
 [x] Fix UI Lag
 [x] Fortress UI Show Game over
 [x] Fortress UI Show Next Wave

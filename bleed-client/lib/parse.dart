@@ -78,7 +78,11 @@ void parseState() {
         return;
 
       case ServerResponse.Bullets:
-        _parseBullets();
+        try {
+          _parseBullets();
+        }catch(error){
+          print(error);
+        }
         break;
 
       case ServerResponse.Npcs:

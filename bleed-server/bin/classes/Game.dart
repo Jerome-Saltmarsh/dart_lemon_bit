@@ -901,21 +901,13 @@ extension GameFunctions on Game {
   }
 
   void updateNpcTargets() {
-    int minP = 0;
     Npc npc;
-
     for (int i = 0; i < npcs.length; i++) {
-      if (npcs[i].targetSet) ;
+      if (npcs[i].targetSet) continue;
       npc = npcs[i];
-      for (int p = minP; p < players.length; p++) {
-        if (players[p].x < npc.x - zombieViewRange) {
-          minP++;
-          break;
-        }
-        if (players[p].x > npc.x + zombieViewRange) continue;
+      for (int p = 0; p < players.length; p++) {
+        if (diff(players[p].x, npc.x) > zombieViewRange) continue;
         if (diff(players[p].y, npc.y) > zombieViewRange) continue;
-        if (!scene.pathClear(npc.x, npc.y, players[p].x, players[p].y))
-          continue;
         npc.target = players[p];
         break;
       }

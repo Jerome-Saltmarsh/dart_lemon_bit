@@ -1,3 +1,5 @@
+import 'package:bleed_client/game_engine/game_widget.dart';
+
 class Settings {
   bool audioMuted = false;
   double cameraFollow = 0.05;
@@ -6,6 +8,7 @@ class Settings {
 
   void toggleAudioMuted(){
     audioMuted = !audioMuted;
+    redrawUI();
   }
 }
 
