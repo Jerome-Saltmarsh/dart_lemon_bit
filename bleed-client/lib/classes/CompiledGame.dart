@@ -13,11 +13,12 @@ class CompiledGame {
   List<List<Tile>> tiles = [];
   List<List<dynamic>> players = [];
   List<List<dynamic>> npcs = [];
-  List<List<dynamic>> bullets = [];
+  List<double> bullets = List.filled(1000, 0);
   List<double> bulletHoles = [];
   List<Particle> particles = [];
   List<double> grenades = [];
   int gameId = -1;
+  int totalBullets = 0;
   int playerId = -1;
   String playerUUID = "";
   double playerX = -1;

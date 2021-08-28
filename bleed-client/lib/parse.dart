@@ -375,17 +375,15 @@ GameEventType _consumeEventType() {
 }
 
 void _parseBullets() {
+  compiledGame.totalBullets = 0;
   int index = 0;
   while (!_simiColonConsumed()) {
-    if (index >= compiledGame.bullets.length) {
-      compiledGame.bullets.add(_getUnusedMemory());
-    }
-    _consumeBullet(compiledGame.bullets[index]);
+    compiledGame.bullets[index] = _consumeDouble();
+    index++;
+    compiledGame.bullets[index] = _consumeDouble();
     index++;
   }
-  while (index < compiledGame.bullets.length) {
-    _cacheLast(compiledGame.bullets);
-  }
+  compiledGame.totalBullets = index * 2;
 }
 
 void _parseNpcs() {

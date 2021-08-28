@@ -8,6 +8,7 @@ const double playerSpeed = 3;
 const int playerHealth = 3;
 const double velocityFriction = 0.88;
 const double zombieViewRange = 300;
+const double zombieChaseRange = 600;
 const double settingsZombieStrikeRange = 20;
 const double zombieStrikeDamage = 0.2;
 const double destinationArrivedDistance = 15.0;

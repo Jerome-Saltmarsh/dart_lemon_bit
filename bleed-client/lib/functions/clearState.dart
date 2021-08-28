@@ -25,7 +25,7 @@ void clearCompileGameState(){
   compiledGame.playerY = -1;
   compiledGame.npcs.clear();
   compiledGame.players.clear();
-  compiledGame.bullets.clear();
+  compiledGame.totalBullets = 0;
   compiledGame.bulletHoles.clear();
   compiledGame.particles.clear();
   compiledGame.grenades.clear();

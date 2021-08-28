@@ -24,7 +24,7 @@ void drawCanvas(Canvas canvass, Size _size) {
   canvass.scale(zoom, zoom);
   canvass.translate(-cameraX, -cameraY);
 
-  if (editMode){
+  if (editMode) {
     drawTiles();
     return;
   }
@@ -32,7 +32,7 @@ void drawCanvas(Canvas canvass, Size _size) {
   _drawCompiledGame();
 }
 
-void _drawCompiledGame(){
+void _drawCompiledGame() {
   if (!connected) return;
   if (compiledGame.gameId < 0) return;
 
@@ -184,7 +184,7 @@ void _drawParticles(List<Particle> particles) {
 }
 
 void _drawBullets(List bullets) {
-  bullets.forEach((bullet) {
-    drawBullet(bullet[x], bullet[y]);
-  });
+  for (int i = 0; i < compiledGame.totalBullets * 2; i += 2) {
+    drawBullet(bullets[i], bullets[i + 1]);
+  }
 }
