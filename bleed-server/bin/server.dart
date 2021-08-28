@@ -20,6 +20,7 @@ import 'utils.dart';
 
 const String _space = " ";
 final int errorIndex = ServerResponse.Error.index;
+final StringBuffer _buffer = StringBuffer();
 
 void main() {
   print('Bleed Game Server Starting');
@@ -32,22 +33,23 @@ void main() {
     }
 
     void sendCompiledPlayerState(Game game, Player player) {
-      StringBuffer buffer = StringBuffer(game.compiled);
-      compilePlayer(buffer, player);
-      sendToClient(buffer.toString());
+      _buffer.clear();
+      _buffer.write(game.compiled);
+      compilePlayer(_buffer, player);
+      sendToClient(_buffer.toString());
     }
 
     void joinGame(Game game) {
+      _buffer.clear();
       Player player = game.spawnPlayer(name: 'test');
-      StringBuffer buffer = StringBuffer();
-      compilePlayer(buffer, player);
-      compileTiles(buffer, game.scene.tiles);
-      compileBlocks(buffer, game.scene.blocks);
+      compilePlayer(_buffer, player);
+      compileTiles(_buffer, game.scene.tiles);
+      compileBlocks(_buffer, game.scene.blocks);
       compileGame(game);
-      buffer.write(game.compiled);
-      buffer.write(
+      _buffer.write(game.compiled);
+      _buffer.write(
           '${ServerResponse.Player_Created.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ; ');
-      sendToClient(buffer.toString());
+      sendToClient(_buffer.toString());
     }
 
     void error(GameError error) {

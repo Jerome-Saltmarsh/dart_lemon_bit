@@ -53,7 +53,6 @@ void drawTileList() {
   drawAtlases(imageTiles, render.tileTransforms, render.tileRects);
 }
 
-
 void drawAtlases(
     ui.Image image, List<RSTransform> transforms, List<Rect> rects) {
   globalCanvas.drawAtlas(
@@ -305,7 +304,7 @@ Rect getCharacterSpriteRect(dynamic character) {
 }
 
 Rect getHumanFiringRect(dynamic character) {
-  switch(character[weapon]){
+  switch (character[weapon]) {
     case Weapon.Shotgun:
       return getRectShotgunFiring(character);
     default:
@@ -335,7 +334,6 @@ Rect getHandgunFiringRect(dynamic character) {
   throw Exception("could not get firing frame from direction");
 }
 
-
 Rect getRectShotgunFiring(dynamic character) {
   switch (character[direction]) {
     case directionUp:
@@ -357,7 +355,6 @@ Rect getRectShotgunFiring(dynamic character) {
   }
   throw Exception("could not get firing frame from direction");
 }
-
 
 Rect getHumanStrikingRect(character) {
   switch (character[direction]) {
@@ -412,14 +409,14 @@ List<Rect> humanStrikingDownRightFrames = [
 
 List<Rect> humanStrikingDownFrames = [rectHumanStrikingDown, rectHumanIdleDown];
 
-Rect _getFrameLoop(List<Rect> frames, dynamic character){
+Rect _getFrameLoop(List<Rect> frames, dynamic character) {
   int actualFrame = character[frameCount] ~/ 5;
   return frames[actualFrame % frames.length];
 }
 
 Rect _getFrame(List<Rect> frames, dynamic character) {
   int actualFrame = character[frameCount] ~/ 5;
-  if (actualFrame >= frames.length){
+  if (actualFrame >= frames.length) {
     return frames.last;
   }
   return frames[actualFrame];
@@ -614,7 +611,6 @@ List<Rect> rectFiringShotgunDownFrames = [
 
 // End Shotgun frames
 
-
 List<Rect> rectHumanWalkingDownLeftFrames = [
   getHumanSpriteRect(4),
   getHumanSpriteRect(5),
@@ -742,10 +738,10 @@ RSTransform rsTransform(
   );
 }
 
-void drawPaths(){
+void drawPaths() {
   setColor(Colors.blue);
-  for(List<Vector2> path in render.paths){
-    for(int i = 0; i < path.length - 1; i++){
+  for (List<Vector2> path in render.paths) {
+    for (int i = 0; i < path.length - 1; i++) {
       drawLine(path[i].x, path[i].y, path[i + 1].x, path[i + 1].y);
     }
   }
@@ -775,8 +771,8 @@ RSTransform getTileTransform(int x, int y) {
       anchorX: halfTileSize,
       anchorY: 48,
       translateX: perspectiveProjectX(x * halfTileSize, y * halfTileSize),
-      translateY:
-          perspectiveProjectY(x * halfTileSize, y * halfTileSize) + halfTileSize);
+      translateY: perspectiveProjectY(x * halfTileSize, y * halfTileSize) +
+          halfTileSize);
 }
 
 double perspectiveProjectX(double x, double y) {
@@ -832,6 +828,7 @@ void drawMouse() {
 void drawTiles() {
   if (imageTiles == null) return;
   if (compiledGame.tiles == null || compiledGame.tiles.isEmpty) return;
+  if (render.tileTransforms.length != render.tileRects.length) return;
   drawTileList();
 }
 
