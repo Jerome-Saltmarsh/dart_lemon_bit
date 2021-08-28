@@ -29,7 +29,7 @@ void update() {
 
 void updatePlayMode() {
   if (!connected) return;
-  if (gameId < 0) return;
+  if (compiledGame.gameId < 0) return;
 
   framesSinceEvent++;
   readPlayerInput();

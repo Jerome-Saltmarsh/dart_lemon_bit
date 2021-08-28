@@ -8,7 +8,18 @@ import '../state.dart';
 
 void clearState(){
   print('clearState()');
+  clearCompileGameState();
+  clearRender();
+  zoom = 1;
+  gameEvents.clear();
+  gameOver = false;
+  mode = Mode.Play;
+  redrawUI();
+}
+
+void clearCompileGameState(){
   compiledGame.playerId = -1;
+  compiledGame.gameId = -1;
   compiledGame.playerUUID = "";
   compiledGame.playerX = -1;
   compiledGame.playerY = -1;
@@ -18,12 +29,16 @@ void clearState(){
   compiledGame.bulletHoles.clear();
   compiledGame.particles.clear();
   compiledGame.grenades.clear();
-  zoom = 1;
-  gameId = -1;
-  gameEvents.clear();
+}
+
+void clearRender(){
   render.playersTransforms.clear();
-  gameOver = false;
+  render.playersRects.clear();
   render.tileTransforms.clear();
-  mode = Mode.Play;
-  redrawUI();
+  render.tileRects.clear();
+  render.paths.clear();
+  render.particleRects.clear();
+  render.particleTransforms.clear();
+  render.npcsRects.clear();
+  render.npcsTransforms.clear();
 }

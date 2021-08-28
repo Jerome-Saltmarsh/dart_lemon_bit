@@ -142,51 +142,21 @@ Widget buildGameUI(BuildContext context) {
   if (globalSize == null) {
     return text("loading");
   }
+
   if (connecting) {
     return center(text("Connecting"));
   } else if (!connected) {
-    return center(
-      column([
-        row([
-          text("BLEED", fontSize: 120),
-        ]),
-        Container(
-          height: 50,
-        ),
-        row([
-          button('Localhost', connectLocalHost, fontSize: 21),
-          Container(
-            width: 10,
-          ),
-          button('GCP', connectToGCP, fontSize: 21),
-          Container(
-            width: 10,
-          ),
-          button('FULLSCREEN', requestFullScreen, fontSize: 21)
-        ]),
-      ]),
-    );
+    return _buildConnectView();
   }
 
-  if (gameId < 0) {
-    return Container(
-      alignment: Alignment.center,
-      width: screenWidth,
-      height: screenHeight,
-      child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            button('Join Death Match', requestJoinRandomGame),
-            button('Join Fortress', sendRequestJoinGameFortress),
-          ]),
-    );
+  if (compiledGame.gameId < 0) {
+    return _buildJoinGameMenu();
   }
 
   if (editMode) return buildEditorUI();
 
-  if (compiledGame.playerId == -1) {
-    return text("player id not assigned");
+  if (compiledGame.playerId < 0) {
+    return text("player id is not assigned. player id: ${compiledGame.playerId}, game id: ${compiledGame.gameId}");
   }
 
   if (framesSinceEvent > 30) {
@@ -208,6 +178,45 @@ Widget buildGameUI(BuildContext context) {
   }
 
   return buildHud();
+}
+
+Widget _buildConnectView() {
+  return center(
+    column([
+      row([
+        text("BLEED", fontSize: 120),
+      ]),
+      Container(
+        height: 50,
+      ),
+      row([
+        button('Localhost', connectLocalHost, fontSize: 21),
+        Container(
+          width: 10,
+        ),
+        button('GCP', connectToGCP, fontSize: 21),
+        Container(
+          width: 10,
+        ),
+        button('FULLSCREEN', requestFullScreen, fontSize: 21)
+      ]),
+    ]),
+  );
+}
+
+Container _buildJoinGameMenu() {
+  return Container(
+    alignment: Alignment.center,
+    width: screenWidth,
+    height: screenHeight,
+    child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          button('Join Death Match', requestJoinRandomGame),
+          button('Join Fortress', sendRequestJoinGameFortress),
+        ]),
+  );
 }
 
 const DecorationImage grenadeImage = const DecorationImage(
@@ -442,24 +451,24 @@ Widget buildHud() {
   );
 }
 
-Widget buildGameOver(){
+Widget buildGameOver() {
   return Positioned(
       child: Container(
-        width: globalSize.width,
-        height: globalSize.height,
-        color: Colors.black45,
-        child: button("Game Over", clearState, fontSize: 30),
-      ));
+    width: globalSize.width,
+    height: globalSize.height,
+    color: Colors.black45,
+    child: button("Game Over", clearState, fontSize: 30),
+  ));
 }
 
-Widget buildRespawn(){
+Widget buildRespawn() {
   return Positioned(
       child: Container(
-        width: globalSize.width,
-        height: globalSize.height,
-        color: Colors.black45,
-        child: button("respawn", sendRequestRevive, fontSize: 30),
-      ));
+    width: globalSize.width,
+    height: globalSize.height,
+    color: Colors.black45,
+    child: button("respawn", sendRequestRevive, fontSize: 30),
+  ));
 }
 
 Widget buildDebugPanel() {

@@ -26,7 +26,7 @@ import 'streams/onPlayerCreated.dart';
 int _index = 0;
 const List _cache = [];
 const String _emptyString = " ";
-const String _colon = ";";
+const String _semiColon = ";";
 const String _comma = ",";
 
 // properties
@@ -121,11 +121,11 @@ void parseState() {
     }
 
     while (_index < _text.length) {
-      if (_currentCharacter == " ") {
+      if (_currentCharacter == _emptyString) {
         _index++;
         continue;
       }
-      if (_currentCharacter == ";") {
+      if (_currentCharacter == _semiColon) {
         _index++;
         break;
       }
@@ -135,7 +135,7 @@ void parseState() {
 }
 
 void _parseGameId() {
-  gameId = _consumeInt();
+  compiledGame.gameId = _consumeInt();
   gameType = GameType.values[_consumeInt()];
 }
 
@@ -312,7 +312,7 @@ Vector2 _consumeVector2(){
 
 bool _simiColonConsumed() {
   _consumeSpace();
-  if (_currentCharacter == _colon) {
+  if (_currentCharacter == _semiColon) {
     _index++;
     return true;
   }

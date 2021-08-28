@@ -34,7 +34,7 @@ void drawCanvas(Canvas canvass, Size _size) {
 
 void _drawCompiledGame(){
   if (!connected) return;
-  if (gameId < 0) return;
+  if (compiledGame.gameId < 0) return;
 
   frameRateValue++;
   if (frameRateValue % frameRate == 0) {

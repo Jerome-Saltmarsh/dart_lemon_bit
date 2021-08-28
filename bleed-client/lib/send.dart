@@ -42,7 +42,7 @@ void requestThrowGrenade(double strength){
 void sendRequestUpdatePlayer() {
   _buffer.clear();
   _write(ClientRequest.Game_Update.index);
-  _write(gameId);
+  _write(compiledGame.gameId);
   _write(compiledGame.playerId);
   _write(compiledGame.playerUUID);
   _write(requestCharacterState);

@@ -17,7 +17,7 @@ class CompiledGame {
   List<double> bulletHoles = [];
   List<Particle> particles = [];
   List<double> grenades = [];
-
+  int gameId = -1;
   int playerId = -1;
   String playerUUID = "";
   double playerX = -1;

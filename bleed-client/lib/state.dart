@@ -28,7 +28,6 @@ Duration refreshDuration;
 List<SpriteAnimation> animations = [];
 int drawFrame = 0;
 bool debugMode = false;
-int gameId = -1;
 GameType gameType;
 bool gameOver = false;
 int serverFramesMS = 0;
@@ -43,5 +42,5 @@ int playerStamina = 0;
 int playerMaxStamina = 0;
 
 // TODO Expensive string build
-String get session => '$gameId ${compiledGame.playerId} ${compiledGame.playerUUID}';
+String get session => '${compiledGame.gameId} ${compiledGame.playerId} ${compiledGame.playerUUID}';
 
