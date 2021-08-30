@@ -128,27 +128,25 @@ extension SceneFunctions on Scene {
     return findPathNodes(startNode, endNode);
   }
 
+  void visit(TileNode tileNode, TileNodeVisit previous, List<TileNodeVisit> visits, List<TileNode> visited, TileNode endNode) {
+    if (!tileNode.open) return;
+    if (visited.contains(tileNode)) return;
+
+    int remaining = diffInt(tileNode.x, endNode.x) + diffInt(tileNode.y, endNode.y);
+    TileNodeVisit tileNodeVisit =
+    TileNodeVisit(previous, remaining, tileNode);
+    visits.add(tileNodeVisit);
+    visited.add(tileNode);
+  }
+
   List<Vector2> findPathNodes(TileNode startNode, TileNode endNode) {
     if (!startNode.open) return _emptyPath;
     if (!endNode.open) return _emptyPath;
 
-    int remaining =
-        diffInt(startNode.x, endNode.x) + diffInt(startNode.y, endNode.y);
+    int remaining = diffInt(startNode.x, endNode.x) + diffInt(startNode.y, endNode.y);
 
     List<TileNodeVisit> visits = [TileNodeVisit(null, remaining, startNode)];
     List<TileNode> visited = [startNode];
-
-    void visit(TileNode tileNode, TileNodeVisit previous) {
-      if (!tileNode.open) return;
-      if (visited.contains(tileNode)) return;
-
-      int remaining =
-          diffInt(tileNode.x, endNode.x) + diffInt(tileNode.y, endNode.y);
-      TileNodeVisit tileNodeVisit =
-          TileNodeVisit(previous, remaining, tileNode);
-      visits.add(tileNodeVisit);
-      visited.add(tileNode);
-    }
 
     while (visits.isNotEmpty) {
       if (visits.last.tileNode == endNode) {
@@ -166,25 +164,25 @@ extension SceneFunctions on Scene {
 
       TileNodeVisit last = visits.removeLast();
       if (last.tileNode.up.open) {
-        visit(last.tileNode.up, last);
+        visit(last.tileNode.up, last, visits, visited, endNode);
         if (last.tileNode.right.open) {
-          visit(last.tileNode.upRight, last);
+          visit(last.tileNode.upRight, last, visits, visited, endNode);
         }
         if (last.tileNode.left.open) {
-          visit(last.tileNode.upRight, last);
+          visit(last.tileNode.upRight, last, visits, visited, endNode);
         }
       }
       if (last.tileNode.down.open) {
-        visit(last.tileNode.down, last);
+        visit(last.tileNode.down, last, visits, visited, endNode);
         if (last.tileNode.right.open) {
-          visit(last.tileNode.rightDown, last);
+          visit(last.tileNode.rightDown, last, visits, visited, endNode);
         }
         if (last.tileNode.left.open) {
-          visit(last.tileNode.downLeft, last);
+          visit(last.tileNode.downLeft, last, visits, visited, endNode);
         }
       }
-      visit(last.tileNode.right, last);
-      visit(last.tileNode.left, last);
+      visit(last.tileNode.right, last, visits, visited, endNode);
+      visit(last.tileNode.left, last, visits, visited, endNode);
       visits.sort(_sortNodes);
     }
 
