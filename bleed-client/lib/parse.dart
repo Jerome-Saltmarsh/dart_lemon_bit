@@ -86,7 +86,11 @@ void parseState() {
         break;
 
       case ServerResponse.Npcs:
-        _parseNpcs();
+        try {
+          _parseNpcs();
+        }catch(e){
+          print(e);
+        }
         break;
 
       case ServerResponse.Game_Events:

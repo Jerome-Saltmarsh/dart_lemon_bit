@@ -28,6 +28,7 @@ class TileNode {
   late int y;
   late Vector2 position;
   bool open;
+  int search = -1;
 
   TileNode(this.open);
 }
