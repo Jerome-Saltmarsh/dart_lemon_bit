@@ -203,28 +203,21 @@ extension GameFunctions on Game {
         return;
       }
 
-      if (npc.path.isEmpty) {
+      if (npcWithinStrikeRange(npc, npc.target)) {
+        characterFaceObject(npc, npc.target);
+        setCharacterState(npc, CharacterState.Striking);
+        changeCharacterHealth(npc.target, -zombieStrikeDamage);
+        dispatch(GameEventType.Zombie_Strike, npc.x, npc.y, 0, 0);
+        return;
+      }
+
+      if (frame % 30 == 0) {
         npc.path = scene.findPath(npc.x, npc.y, npc.target.x, npc.target.y);
       }
 
       if (npc.path.length <= 1 && !npcWithinStrikeRange(npc, npc.target)) {
         characterFaceObject(npc, npc.target);
         setCharacterState(npc, CharacterState.Walking);
-      }
-
-      if (frame % 30 == 0 && npc.path.length > 4) {
-        double xDistance = diff(npc.target.x, npc.path[0].x);
-        double yDistance = diff(npc.target.y, npc.path[0].y);
-        if (xDistance > 150 || yDistance > 150) {
-          npc.path = scene.findPath(npc.x, npc.y, npc.target.x, npc.target.y);
-        }
-      }
-
-      if (npcWithinStrikeRange(npc, npc.target)) {
-        characterFaceObject(npc, npc.target);
-        setCharacterState(npc, CharacterState.Striking);
-        changeCharacterHealth(npc.target, -zombieStrikeDamage);
-        dispatch(GameEventType.Zombie_Strike, npc.x, npc.y, 0, 0);
         return;
       }
     }

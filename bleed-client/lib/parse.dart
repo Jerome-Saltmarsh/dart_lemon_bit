@@ -80,17 +80,13 @@ void parseState() {
       case ServerResponse.Bullets:
         try {
           _parseBullets();
-        }catch(error){
+        } catch (error) {
           print(error);
         }
         break;
 
       case ServerResponse.Npcs:
-        try {
-          _parseNpcs();
-        }catch(e){
-          print(e);
-        }
+        _parseNpcs();
         break;
 
       case ServerResponse.Game_Events:
@@ -147,7 +143,7 @@ void _parseGameId() {
   gameType = GameType.values[_consumeInt()];
 }
 
-void _parseFortressMeta(){
+void _parseFortressMeta() {
   compiledGame.lives = _consumeInt();
   compiledGame.wave = _consumeInt();
   compiledGame.nextWave = _consumeInt();
@@ -315,7 +311,7 @@ double _consumeDouble() {
   return double.parse(_consumeString());
 }
 
-Vector2 _consumeVector2(){
+Vector2 _consumeVector2() {
   return Vector2(_consumeDouble(), _consumeDouble());
 }
 

@@ -163,6 +163,7 @@ extension SceneFunctions on Scene {
           index--;
           visit = visit.previous!;
         }
+        visits.clear();
         return nodes;
       }
 
