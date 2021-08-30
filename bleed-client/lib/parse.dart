@@ -192,6 +192,7 @@ void _parsePlayer() {
   compiledGame.shotgunRounds = _consumeInt();
   compiledGame.playerGrenades = _consumeInt();
   compiledGame.playerMeds = _consumeInt();
+  compiledGame.playerLives = _consumeInt();
 }
 
 void _parseInventory() {

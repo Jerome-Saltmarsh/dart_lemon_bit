@@ -57,11 +57,24 @@ class Scene {
       for (int column = 0; column < columns; column++) {
         if (row > 0) {
           tileNodes[row][column].up = tileNodes[row - 1][column];
+          if (column > 0) {
+            tileNodes[row][column].leftUp = tileNodes[row - 1][column - 1];
+          }
+          if (column < columns - 1) {
+            tileNodes[row][column].upRight = tileNodes[row - 1][column + 1];
+          }
         } else {
           tileNodes[row][column].up = _boundary;
+          tileNodes[row][column].leftUp = _boundary;
         }
         if (row < rows - 1) {
           tileNodes[row][column].down = tileNodes[row + 1][column];
+          if (column < columns - 1) {
+            tileNodes[row][column].rightDown = tileNodes[row + 1][column + 1];
+          }
+          if (column > 0) {
+            tileNodes[row][column].downLeft = tileNodes[row + 1][column - 1];
+          }
         } else {
           tileNodes[row][column].down = _boundary;
         }
@@ -112,6 +125,12 @@ extension SceneFunctions on Scene {
     if (!startNode.open) return _emptyPath;
     TileNode endNode = tileNodeAt(x2, y2);
     if (!endNode.open) return _emptyPath;
+    return findPathNodes(startNode, endNode);
+  }
+
+  List<Vector2> findPathNodes(TileNode startNode, TileNode endNode) {
+    if (!startNode.open) return _emptyPath;
+    if (!endNode.open) return _emptyPath;
 
     int remaining =
         diffInt(startNode.x, endNode.x) + diffInt(startNode.y, endNode.y);
@@ -134,7 +153,8 @@ extension SceneFunctions on Scene {
     while (visits.isNotEmpty) {
       if (visits.last.tileNode == endNode) {
         TileNodeVisit visit = visits.last;
-        List<Vector2> nodes = List.filled(visit.travelled, _vector2Zero, growable: true);
+        List<Vector2> nodes =
+            List.filled(visit.travelled, _vector2Zero, growable: true);
         int index = visit.travelled - 1;
         while (visit.previous != null) {
           nodes[index] = visit.tileNode.position;
@@ -145,9 +165,25 @@ extension SceneFunctions on Scene {
       }
 
       TileNodeVisit last = visits.removeLast();
-      visit(last.tileNode.up, last);
+      if (last.tileNode.up.open) {
+        visit(last.tileNode.up, last);
+        if (last.tileNode.right.open) {
+          visit(last.tileNode.upRight, last);
+        }
+        if (last.tileNode.left.open) {
+          visit(last.tileNode.upRight, last);
+        }
+      }
+      if (last.tileNode.down.open) {
+        visit(last.tileNode.down, last);
+        if (last.tileNode.right.open) {
+          visit(last.tileNode.rightDown, last);
+        }
+        if (last.tileNode.left.open) {
+          visit(last.tileNode.downLeft, last);
+        }
+      }
       visit(last.tileNode.right, last);
-      visit(last.tileNode.down, last);
       visit(last.tileNode.left, last);
       visits.sort(_sortNodes);
     }

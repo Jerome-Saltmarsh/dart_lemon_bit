@@ -10,11 +10,11 @@ class Player extends Character {
   int stamina = 0;
   int maxStamina = 200;
   Inventory inventory;
-
   int grenades;
   int handgunRounds = 0;
   int shotgunRounds = 0;
   int meds;
+  int lives;
 
   Player({
     required this.uuid,
@@ -24,6 +24,7 @@ class Player extends Character {
     required String name,
     this.grenades = 0,
     this.meds = 0,
+    this.lives = 0
   }) : super(
             x: x,
             y: y,

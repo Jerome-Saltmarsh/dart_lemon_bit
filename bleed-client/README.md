@@ -30,6 +30,9 @@ Squis Studios
 [ ] Lobby
 [ ] Fortress life lost audio
 [ ] Fix Zombie ai bug
+[ ] Fortress Cache Path 
+[ ] Death Match - Player Lives
+[ ] Pickup Grenades
 [x] Fix parse bullet bugs
 [x] Mute Audio Icon
 [x] Fix UI Lag

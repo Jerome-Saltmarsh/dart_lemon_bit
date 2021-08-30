@@ -25,6 +25,7 @@ import 'Collectable.dart';
 import 'Inventory.dart';
 import 'Player.dart';
 import 'Scene.dart';
+import 'TileNode.dart';
 import 'Vector2.dart';
 
 class Fortress extends Game {
@@ -32,7 +33,17 @@ class Fortress extends Game {
   int wave = 0;
   int lives = 10;
 
-  Fortress() : super(GameType.Fortress, scenes.fortress, 8) {}
+  Map<TileNode, List<Vector2>> nodeToFortress = Map();
+
+  Fortress() : super(GameType.Fortress, scenes.fortress, 8) {
+    for (int row = 0; row < scene.rows; row++) {
+      for (int column = 0; column < scene.columns; column++) {
+        if (scene.tiles[row][column] == Tile.ZombieSpawn) {
+            // nodeToFortress[scene.tiles[row][column]] = scene.findPathNodes(scene.tiles[row][column], scene.fortressPosition)
+        }
+      }
+    }
+  }
 
   void update() {
     if (lives <= 0) return;
@@ -40,8 +51,8 @@ class Fortress extends Game {
     for (int i = 0; i < npcs.length; i++) {
       Npc npc = npcs[i];
       if (npc.path.isEmpty) {
-        npcSetDestination(
-            npcs[i], scene.fortressPosition.x, scene.fortressPosition.y);
+        npcSetPathTo(npc, scene.fortressPosition.x, scene.fortressPosition.y);
+        continue;
       }
 
       if (diff(npc.x, scene.fortressPosition.x) > 50) continue;
@@ -69,6 +80,7 @@ class Fortress extends Game {
             double y = getTilePositionY(row, column);
             for (int i = 0; i < wave; i++) {
               Npc npc = spawnNpc(x + giveOrTake(5), y + giveOrTake(5));
+              // npc.path = findPathNodes
             }
           }
         }
@@ -220,9 +232,6 @@ extension GameFunctions on Game {
     if (npc.path.isNotEmpty) {
       if (arrivedAtPath(npc)) {
         npc.path.removeAt(0);
-        if (npc.path.isNotEmpty) {
-          npc.path.removeAt(0);
-        }
         return;
       } else {
         characterFace(npc, npc.path[0].x, npc.path[0].y);
@@ -967,11 +976,11 @@ extension GameFunctions on Game {
   }
 
   void npcSetRandomDestination(Npc npc) {
-    npcSetDestination(npc, npc.x + giveOrTake(settingsNpcRoamRange),
+    npcSetPathTo(npc, npc.x + giveOrTake(settingsNpcRoamRange),
         npc.y + giveOrTake(settingsNpcRoamRange));
   }
 
-  void npcSetDestination(Npc npc, double x, double y) {
+  void npcSetPathTo(Npc npc, double x, double y) {
     npc.path = scene.findPath(npc.x, npc.y, x, y);
   }
 

@@ -28,6 +28,7 @@ class CompiledGame {
   int shotgunRounds = 0;
   int playerGrenades = 0;
   int playerMeds = 0;
+  int playerLives = 0;
 
   int lives = 0;
   int wave = 1;

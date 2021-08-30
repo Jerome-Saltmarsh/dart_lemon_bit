@@ -17,9 +17,13 @@ class TileNodeVisit {
 
 class TileNode {
   late TileNode up;
+  late TileNode upRight;
   late TileNode right;
+  late TileNode rightDown;
   late TileNode down;
+  late TileNode downLeft;
   late TileNode left;
+  late TileNode leftUp;
   late int x;
   late int y;
   late Vector2 position;
