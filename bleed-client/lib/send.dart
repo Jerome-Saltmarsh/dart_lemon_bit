@@ -82,6 +82,10 @@ void sendRequestJoinLobby(){
   send(ClientRequest.Lobby_Join.index.toString());
 }
 
+void sendRequestLobbyList(){
+  send(ClientRequest.Lobby_List.index.toString());
+}
+
 void sendClientRequestLobbyCreate({int maxPlayers, GameType type, String name}){
   send('${ClientRequest.Lobby_Create.index} $maxPlayers ${type.index} $name');
 }

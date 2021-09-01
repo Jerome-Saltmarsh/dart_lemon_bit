@@ -219,6 +219,7 @@ Container _buildJoinGameMenu() {
           button('Join Fortress', sendRequestJoinGameFortress),
           button('Create Game', showCreateGameDialog),
           button('Join Game', sendRequestJoinLobby),
+          button('Lobbies', showDialogListGames),
         ]),
   );
 }

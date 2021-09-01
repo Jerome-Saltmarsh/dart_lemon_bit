@@ -15,6 +15,7 @@ void clearState(){
   gameOver = false;
   mode = Mode.Play;
   state.lobby = null;
+  state.lobbies.clear();
   redrawUI();
 }
 

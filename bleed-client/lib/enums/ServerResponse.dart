@@ -19,4 +19,5 @@ enum ServerResponse {
   GameOver,
   Lobby_Joined,
   Lobby_Update,
+  Lobby_List,
 }

@@ -8,12 +8,14 @@ import 'classes/Player.dart';
 import 'classes/Vector2.dart';
 import 'enums.dart';
 import 'enums/ServerResponse.dart';
+import 'instances/gameManager.dart';
 
 // constants
 
 const String _space = ' ';
 const String _semiColon = '; ';
 const String _comma = ', ';
+const String _dash = '- ';
 
 // public
 
@@ -205,16 +207,27 @@ void _compileNpc(StringBuffer buffer, Npc npc) {
   _write(buffer, npc.stateFrameCount);
 }
 
-String compileLobby(Lobby lobby){
-  StringBuffer buffer = StringBuffer();
+String compileLobby(StringBuffer buffer, Lobby lobby) {
   _write(buffer, ServerResponse.Lobby_Update.index);
   _write(buffer, lobby.maxPlayers);
   _write(buffer, lobby.players.length);
-  if (lobby.game != null){
+  _write(buffer, lobby.uuid);
+  _write(buffer, lobby.name ?? _dash);
+  if (lobby.game != null) {
     _write(buffer, lobby.game!.uuid);
-  }else{
-    _write(buffer, _semiColon);
+  } else {
+    _write(buffer, _dash);
   }
+  return buffer.toString();
+}
+
+String compileLobbies() {
+  StringBuffer buffer = StringBuffer();
+  _write(buffer, ServerResponse.Lobby_List.index);
+  for (Lobby lobby in lobbies) {
+    compileLobby(buffer, lobby);
+  }
+  _write(buffer, _semiColon);
   return buffer.toString();
 }
 

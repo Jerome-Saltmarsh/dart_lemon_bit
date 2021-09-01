@@ -5,6 +5,7 @@ enum ClientRequest{
   Lobby_Join,
   Lobby_Exit,
   Lobby_Update,
+  Lobby_List,
   Game_Join,
   Game_Update,
   Player_Revive,

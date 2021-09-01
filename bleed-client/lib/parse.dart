@@ -30,6 +30,7 @@ const List _cache = [];
 const String _emptyString = " ";
 const String _semiColon = ";";
 const String _comma = ",";
+const String _dash = "-";
 
 const List<ServerResponse> serverResponses = ServerResponse.values;
 const List<Weapon> weapons = Weapon.values;
@@ -122,19 +123,28 @@ void parseState() {
         break;
 
       case ServerResponse.Lobby_Joined:
-        String lobbyUuid = _consumeString();
-        String userUuid = _consumeString();
-        state.lobby = Lobby(lobbyUuid, userUuid);
+        state.lobby = Lobby();
+        state.lobby.uuid = _consumeString();
+        state.lobby.playerUuid = _consumeString();
+        break;
+
+      case ServerResponse.Lobby_List:
+        state.lobbies.clear();
+        while (!_simiColonConsumed()) {
+          state.lobbies.add(_consumeLobby());
+        }
         break;
 
       case ServerResponse.Lobby_Update:
         if (state.lobby == null) return;
         state.lobby.maxPlayers = _consumeInt();
         state.lobby.playersJoined = _consumeInt();
-        String uuid = _consumeString();
-        if (uuid == _semiColon) continue;
+        String lobbyUuid = _consumeString();
+        String gameUuid = _consumeString();
+        state.lobby.name = _consumeString();
+        if (gameUuid == _dash) continue;
         state.lobby = null;
-        sendRequestJoinGame(uuid);
+        sendRequestJoinGame(gameUuid);
         break;
 
       default:
@@ -327,6 +337,15 @@ String _consumeString() {
 
 double _consumeDouble() {
   return double.parse(_consumeString());
+}
+
+Lobby _consumeLobby() {
+  return Lobby()
+    ..maxPlayers = _consumeInt()
+    ..playersJoined = _consumeInt()
+    ..uuid = _consumeString()
+    ..name = _consumeString()
+    ..gameUuid = _consumeString();
 }
 
 Vector2 _consumeVector2() {

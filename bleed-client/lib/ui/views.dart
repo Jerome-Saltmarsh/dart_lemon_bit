@@ -1,3 +1,4 @@
+import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/send.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -17,4 +18,5 @@ Widget buildLobby() {
 void leaveLobby(){
   sendRequestLobbyExit();
   state.lobby = null;
+  redrawUI();
 }

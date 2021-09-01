@@ -248,8 +248,12 @@ void main() {
             return;
           }
           user.framesSinceUpdate = 0;
-          sendToClient(compileLobby(lobby));
+          sendToClient(compileLobby(StringBuffer(), lobby));
           break;
+
+        case ClientRequest.Lobby_List:
+          sendToClient("${ServerResponse.Lobby_List.index} ${compileLobbies()}");
+          return;
 
         case ClientRequest.Player_Revive:
           String gameId = arguments[1];
