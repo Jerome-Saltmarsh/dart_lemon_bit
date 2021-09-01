@@ -65,6 +65,10 @@ void main() {
       error(GameError.GameNotFound);
     }
 
+    void errorGameFull() {
+      error(GameError.GameFull);
+    }
+
     void errorInvalidArguments() {
       error(GameError.InvalidArguments);
     }
@@ -188,7 +192,7 @@ void main() {
           lobby.players.add(user);
 
           if (lobby.players.length == lobby.maxPlayers) {
-            Game game = gameManager.createDeathMatch();
+            Game game = gameManager.createDeathMatch(maxPlayer: lobby.maxPlayers);
             lobby.game = game;
             print("Lobby Full: Starting Game");
           }
@@ -205,6 +209,10 @@ void main() {
 
           for (Game game in gameManager.games) {
             if (game.uuid != gameUuid) continue;
+            if (game.players.length == game.maxPlayers) {
+              errorGameFull();
+              return;
+            }
             joinGame(game);
             return;
           }

@@ -128,12 +128,13 @@ void parseState() {
         break;
 
       case ServerResponse.Lobby_Update:
+        if (state.lobby == null) return;
         state.lobby.maxPlayers = _consumeInt();
         state.lobby.playersJoined = _consumeInt();
         String uuid = _consumeString();
         if (uuid == _semiColon) continue;
-        sendRequestJoinGame(uuid);
         state.lobby = null;
+        sendRequestJoinGame(uuid);
         break;
 
       default:

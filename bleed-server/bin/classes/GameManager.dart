@@ -66,8 +66,8 @@ class GameManager {
     return createLobby();
   }
 
-  DeathMatch createDeathMatch() {
-    DeathMatch deathMatch = DeathMatch();
+  DeathMatch createDeathMatch({int maxPlayer = 32}) {
+    DeathMatch deathMatch = DeathMatch(maxPlayers: maxPlayer);
     games.add(deathMatch);
     return deathMatch;
   }

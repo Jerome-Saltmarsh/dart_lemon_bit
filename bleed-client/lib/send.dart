@@ -37,6 +37,7 @@ void sendRequestUpdateLobby(){
 }
 
 void sendRequestJoinGame(String gameUuid){
+  print("sendRequestJoinGame()");
   send('${ClientRequest.Game_Join.index.toString()} $gameUuid');
 }
 

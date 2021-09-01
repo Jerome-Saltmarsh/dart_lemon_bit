@@ -95,7 +95,7 @@ class Fortress extends Game {
 }
 
 class DeathMatch extends Game {
-  DeathMatch() : super(GameType.Fortress, scenes.town, 32);
+  DeathMatch({int maxPlayers = 32}) : super(GameType.DeathMatch, scenes.town, maxPlayers);
 
   @override
   void update() {}

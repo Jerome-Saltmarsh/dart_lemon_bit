@@ -22,6 +22,7 @@ void update() {
 
   if (state.lobby != null) {
     sendRequestUpdateLobby();
+    return;
   }
 
   if (playMode) {
