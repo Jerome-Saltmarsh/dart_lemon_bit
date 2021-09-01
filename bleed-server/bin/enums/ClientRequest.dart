@@ -3,6 +3,7 @@ enum ClientRequest{
   Game_Join_Random,
   Lobby_Create,
   Lobby_Join,
+  Lobby_Exit,
   Game_Join,
   Game_Update,
   Player_Revive,
@@ -12,5 +13,5 @@ enum ClientRequest{
   Player_Use_MedKit,
   Ping,
   Game_Join_Fortress,
-  Update_Lobby
+  Update_Lobby,
 }

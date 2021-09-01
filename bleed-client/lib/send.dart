@@ -37,8 +37,15 @@ void sendRequestUpdateLobby(){
 }
 
 void sendRequestJoinGame(String gameUuid){
-  print("sendRequestJoinGame()");
   send('${ClientRequest.Game_Join.index.toString()} $gameUuid');
+}
+
+void sendRequestLobbyExit(){
+  if(state.lobby == null){
+    print("sendRequestLobbyExit() state.lobby is null");
+    return;
+  }
+  send('${ClientRequest.Lobby_Exit.index.toString()} ${state.lobby.uuid} ${state.lobby.playerUuid}');
 }
 
 void sendRequestEquipMachineGun() {

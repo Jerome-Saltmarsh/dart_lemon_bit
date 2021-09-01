@@ -50,7 +50,8 @@ class GameManager {
   }
 
   Lobby createLobby() {
-    Lobby lobby = Lobby(2, GameType.DeathMatch);
+    int maxPlayers = 3;
+    Lobby lobby = Lobby(maxPlayers, GameType.DeathMatch);
     lobbies.add(lobby);
     return lobby;
   }

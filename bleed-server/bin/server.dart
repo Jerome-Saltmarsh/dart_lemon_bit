@@ -9,7 +9,6 @@ import 'compile.dart';
 import 'enums/ClientRequest.dart';
 import 'enums/GameError.dart';
 import 'enums/GameEventType.dart';
-import 'enums/GameType.dart';
 import 'enums/ServerResponse.dart';
 import 'enums/Weapons.dart';
 import 'enums.dart';
@@ -186,7 +185,6 @@ void main() {
           break;
 
         case ClientRequest.Lobby_Join:
-          print("joined lobby");
           LobbyUser user = LobbyUser();
           Lobby lobby = gameManager.findAvailableLobby();
           lobby.players.add(user);
@@ -194,7 +192,6 @@ void main() {
           if (lobby.players.length == lobby.maxPlayers) {
             Game game = gameManager.createDeathMatch(maxPlayer: lobby.maxPlayers);
             lobby.game = game;
-            print("Lobby Full: Starting Game");
           }
 
           sendToClient('${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
@@ -293,6 +290,21 @@ void main() {
           player.weapon = weapon;
           game.setCharacterState(player, CharacterState.ChangingWeapon);
           return;
+
+        case ClientRequest.Lobby_Exit:
+          if (arguments.length < 3) {
+            errorInvalidArguments();
+            return;
+          }
+          String lobbyUuid = arguments[1];
+          Lobby? lobby = findLobbyByUuid(lobbyUuid);
+          if (lobby == null) {
+            errorLobbyNotFound();
+            return;
+          }
+          String playerUuid = arguments[2];
+          removePlayerFromLobby(lobby, playerUuid);
+          break;
 
         case ClientRequest.Player_Throw_Grenade:
           String gameId = arguments[1];

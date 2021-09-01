@@ -1,11 +1,20 @@
+import 'package:bleed_client/send.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../state.dart';
 import '../ui.dart';
 
 Widget buildLobby() {
-  return Column(children: [
+  return center(Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
       text("Players ${state.lobby.playersJoined} / ${state.lobby.maxPlayers}"),
-      // if(state.lobby.)
-    ]);
+      button("Leave", leaveLobby)
+    ]));
+}
+
+void leaveLobby(){
+  sendRequestLobbyExit();
+  state.lobby = null;
 }
