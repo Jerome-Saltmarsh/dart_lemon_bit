@@ -16,5 +16,6 @@ enum ServerResponse {
   Inventory,
   Paths,
   FortressMeta,
-  GameOver
+  GameOver,
+  Lobby_Joined,
 }

@@ -13,7 +13,6 @@ import '../common.dart';
 import '../keys.dart';
 import '../send.dart';
 import '../settings.dart';
-import 'connection.dart';
 import 'instances/game.dart';
 import 'maths.dart';
 import 'state.dart';

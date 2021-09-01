@@ -3,6 +3,7 @@ import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'classes/Game.dart';
+import 'classes/Lobby.dart';
 import 'classes/Player.dart';
 import 'compile.dart';
 import 'enums/ClientRequest.dart';
@@ -21,6 +22,9 @@ import 'utils.dart';
 const String _space = " ";
 final int errorIndex = ServerResponse.Error.index;
 final StringBuffer _buffer = StringBuffer();
+
+const List<ClientRequest> clientRequests = ClientRequest.values;
+final int clientRequestsLength = clientRequests.length;
 
 void main() {
   print('Bleed Game Server Starting');
@@ -83,12 +87,12 @@ void main() {
         return;
       }
 
-      if (clientRequestInt >= ClientRequest.values.length) {
+      if (clientRequestInt >= clientRequestsLength) {
         error(GameError.UnrecognizedClientRequest);
         return;
       }
 
-      ClientRequest request = ClientRequest.values[clientRequestInt];
+      ClientRequest request = clientRequests[clientRequestInt];
 
       switch (request) {
         case ClientRequest.Game_Join_Fortress:
@@ -150,12 +154,12 @@ void main() {
           game.dispatch(GameEventType.Use_MedKit, player.x, player.y, 0, 0);
           break;
 
-        case ClientRequest.Game_Create:
-          // print("ClientRequest.Game_Create");
-          // Game game = Game(GameType.DeathMatch);
-          // generateTiles(game);
-          // gameManager.games.add(game);
-          // sendToClient('game-created ${game.id}');
+        case ClientRequest.Lobby_Create:
+          print("ClientRequest.Game_Create");
+          Lobby lobby = gameManager.createLobby();
+          LobbyUser user = LobbyUser();
+          lobby.players.add(user);
+          sendToClient('${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
           return;
 
         case ClientRequest.Game_Join_Random:

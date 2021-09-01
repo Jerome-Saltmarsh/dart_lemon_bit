@@ -60,10 +60,13 @@ void sendRequestJoinGameFortress(){
   send(ClientRequest.Game_Join_Fortress.index.toString());
 }
 
+void sendRequestCreateLobby(){
+  send(ClientRequest.Lobby_Create.index.toString());
+}
+
 void requestJoinRandomGame() {
   send(ClientRequest.Game_Join_Random.index.toString());
 }
-
 
 void sendRequestSpawn() {
   print("sendRequestSpawn()");

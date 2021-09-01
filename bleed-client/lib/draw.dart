@@ -280,7 +280,7 @@ Rect getTileSpriteRect(Tile tile) {
 }
 
 Rect getCharacterSpriteRect(dynamic character) {
-  switch (character[state]) {
+  switch (character[0]) {
     case characterStateIdle:
       return getHumanIdleRect(character);
     case characterStateWalking:

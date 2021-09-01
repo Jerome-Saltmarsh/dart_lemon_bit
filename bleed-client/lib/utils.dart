@@ -7,7 +7,6 @@ import 'package:bleed_client/game_engine/game_maths.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 
 import 'common.dart';
-import 'constants.dart';
 import 'enums/Weapons.dart';
 import 'instances/game.dart';
 import 'keys.dart';
@@ -84,7 +83,7 @@ dynamic rotationToPosY(double rotation, double distance) {
 }
 
 int getState(dynamic character) {
-  return character[state];
+  return character[stateIndex];
 }
 
 int getDirection(dynamic character) {

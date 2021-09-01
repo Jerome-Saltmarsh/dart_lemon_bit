@@ -1,7 +1,8 @@
 enum ClientRequest{
   Game_Join_Open_World,
   Game_Join_Random,
-  Game_Create,
+  Lobby_Create,
+  Lobby_Join,
   Game_Join,
   Game_Update,
   Player_Revive,

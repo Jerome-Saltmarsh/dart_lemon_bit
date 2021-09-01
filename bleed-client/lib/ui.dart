@@ -125,6 +125,27 @@ Future<void> showConnectFailedDialog() async {
   );
 }
 
+Future<void> showCreateGameDialog() async {
+  return showDialog<void>(
+    context: globalContext,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Create Game'),
+        actions: <Widget>[
+          TextButton(
+              child: const Text('Create'),
+              onPressed: () {
+                Navigator.of(context).pop();
+                sendRequestCreateLobby();
+              }),
+        ],
+      );
+    },
+  );
+}
+
+
 void connectToGCP() {
   connect(gpc);
 }
@@ -149,9 +170,9 @@ Widget buildGameUI(BuildContext context) {
     return _buildConnectView();
   }
 
-  if (compiledGame.gameId < 0) {
-    return _buildJoinGameMenu();
-  }
+  if (state.lobby != null) return buildLobby();
+
+  if (compiledGame.gameId < 0) return _buildJoinGameMenu();
 
   if (editMode) return buildEditorUI();
 
@@ -178,6 +199,10 @@ Widget buildGameUI(BuildContext context) {
   }
 
   return buildHud();
+}
+
+Widget buildLobby() {
+  return text("joined lobby");
 }
 
 Widget _buildConnectView() {
@@ -215,6 +240,7 @@ Container _buildJoinGameMenu() {
         children: [
           button('Join Death Match', requestJoinRandomGame),
           button('Join Fortress', sendRequestJoinGameFortress),
+          button('Create Game', showCreateGameDialog),
         ]),
   );
 }

@@ -16,23 +16,22 @@ Squis Studios
 [ ] Zombie Hurt Animation
 [ ] Npc Text
 [ ] Grenade tile collision
-[ ] Collect Audio
-[ ] Find / Join Game 
 [ ] Stamina Potion
-[ ] Create Game
-[ ] Menu Screen Game
-[ ] Fix Npc Wander
-[ ] FIX NPC pathfinding stops bug
-[ ] Fire Shotgun Animation
-[ ] Game Type: Death Match
-[ ] Game Type: Fortress
 [ ] Rag doll death
-[ ] Lobby
+-- RELEASE FORTRESS -- 
+[ ] Fix Npc Wander
+[ ] Fire Shotgun Animation
 [ ] Fortress life lost audio
-[ ] Fix Zombie ai bug
 [ ] Fortress Cache Path 
+[ ] FIX NPC ai walks into walls
+-- RELEASE DEATH MATCH-- 
+[ ] Create / Find / Join Game 
 [ ] Death Match - Player Lives
 [ ] Pickup Grenades
+[ ] Death Match Player Lives
+[ ] Random Power up Square 
+[ ] Random Item Square
+[ ] Lobby
 [x] Fix parse bullet bugs
 [x] Mute Audio Icon
 [x] Fix UI Lag

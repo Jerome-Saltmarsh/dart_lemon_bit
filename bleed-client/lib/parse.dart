@@ -1,4 +1,5 @@
 import 'package:bleed_client/classes/InventoryItem.dart';
+import 'package:bleed_client/classes/Lobby.dart';
 import 'package:bleed_client/connection.dart';
 import 'package:bleed_client/enums/GameType.dart';
 import 'package:bleed_client/enums/InventoryItemType.dart';
@@ -28,6 +29,10 @@ const List _cache = [];
 const String _emptyString = " ";
 const String _semiColon = ";";
 const String _comma = ",";
+
+const List<ServerResponse> serverResponses = ServerResponse.values;
+const List<Weapon> weapons = Weapon.values;
+const List<GameEventType> gameEventTypes = GameEventType.values;
 
 // properties
 String get _text => event;
@@ -78,11 +83,7 @@ void parseState() {
         return;
 
       case ServerResponse.Bullets:
-        try {
-          _parseBullets();
-        } catch (error) {
-          print(error);
-        }
+        _parseBullets();
         break;
 
       case ServerResponse.Npcs:
@@ -117,6 +118,12 @@ void parseState() {
 
       case ServerResponse.Collectables:
         _parseCollectables();
+        break;
+
+      case ServerResponse.Lobby_Joined:
+        String lobbyUuid = _consumeString();
+        String userUuid = _consumeString();
+        state.lobby = Lobby(lobbyUuid, userUuid);
         break;
 
       default:
@@ -281,7 +288,7 @@ int _consumeInt() {
 }
 
 Weapon _consumeWeapon() {
-  return Weapon.values[_consumeInt()];
+  return weapons[_consumeInt()];
 }
 
 int parseInt(String value) {
@@ -293,7 +300,7 @@ ServerResponse _consumeServerResponse() {
   if (responseInt >= ServerResponse.values.length) {
     throw Exception('$responseInt is not a valid server response');
   }
-  return ServerResponse.values[responseInt];
+  return serverResponses[responseInt];
 }
 
 String _consumeString() {
@@ -372,7 +379,7 @@ void _consumeEvents() {
 }
 
 GameEventType _consumeEventType() {
-  return GameEventType.values[_consumeInt()];
+  return gameEventTypes[_consumeInt()];
 }
 
 void _parseBullets() {
@@ -406,7 +413,7 @@ void _cacheLast(List list) {
 }
 
 void _consumePlayer(dynamic memory) {
-  memory[state] = _consumeInt();
+  memory[0] = _consumeInt();
   memory[direction] = _consumeInt();
   memory[x] = _consumeDouble();
   memory[y] = _consumeDouble();
@@ -415,16 +422,11 @@ void _consumePlayer(dynamic memory) {
 }
 
 void _consumeNpc(dynamic memory) {
-  memory[state] = _consumeInt();
+  memory[0] = _consumeInt();
   memory[direction] = _consumeInt();
   memory[x] = _consumeDouble();
   memory[y] = _consumeDouble();
   memory[frameCount] = _consumeInt();
-}
-
-void _consumeBullet(dynamic memory) {
-  memory[x] = _consumeDouble();
-  memory[y] = _consumeDouble();
 }
 
 List _getUnusedMemory() {

@@ -1,13 +1,13 @@
 import '../enums/GameType.dart';
-import '../instances/scenes.dart';
-import '../instances/settings.dart';
 import '../utils.dart';
 import 'Block.dart';
 import 'Game.dart';
+import 'Lobby.dart';
 import 'Scene.dart';
 
 class GameManager {
   List<Game> games = [];
+  List<Lobby> lobbies = [];
 
   Game? findGameById(String id) {
     for (Game game in games) {
@@ -47,6 +47,12 @@ class GameManager {
       }
     }
     return null;
+  }
+
+  Lobby createLobby(){
+    Lobby lobby = Lobby(8, GameType.DeathMatch);
+    lobbies.add(lobby);
+    return lobby;
   }
 
   DeathMatch createDeathMatch() {

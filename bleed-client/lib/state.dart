@@ -4,6 +4,7 @@ import 'package:bleed_client/enums/GameType.dart';
 import '../common.dart';
 import 'classes/Block.dart';
 import 'classes/SpriteAnimation.dart';
+import 'classes/State.dart';
 import 'enums/Mode.dart';
 import 'instances/game.dart';
 
@@ -43,4 +44,6 @@ int playerMaxStamina = 0;
 
 // TODO Expensive string build
 String get session => '${compiledGame.gameId} ${compiledGame.playerId} ${compiledGame.playerUUID}';
+
+State state = State();
 
