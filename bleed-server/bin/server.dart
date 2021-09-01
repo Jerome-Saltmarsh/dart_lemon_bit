@@ -184,8 +184,7 @@ void main() {
           Lobby lobby = gameManager.createLobby(maxPlayer: maxPlayers, gameType: gameType, name: name);
           LobbyUser user = LobbyUser();
           lobby.players.add(user);
-          sendToClient(
-              '${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
+          sendToClient('${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
           return;
 
         case ClientRequest.Game_Join_Random:

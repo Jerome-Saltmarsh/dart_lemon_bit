@@ -82,6 +82,10 @@ void parseState() {
         if (error == GameError.PlayerNotFound) {
           clearState();
         }
+        if (error == GameError.LobbyNotFound){
+          print("Server Error: Lobby not found");
+          state.lobby = null;
+        }
         return;
 
       case ServerResponse.Bullets:
@@ -123,6 +127,7 @@ void parseState() {
         break;
 
       case ServerResponse.Lobby_Joined:
+        print('ServerResponse.Lobby_Joined');
         state.lobby = Lobby();
         state.lobby.uuid = _consumeString();
         state.lobby.playerUuid = _consumeString();
@@ -140,8 +145,8 @@ void parseState() {
         state.lobby.maxPlayers = _consumeInt();
         state.lobby.playersJoined = _consumeInt();
         String lobbyUuid = _consumeString();
-        String gameUuid = _consumeString();
         state.lobby.name = _consumeString();
+        String gameUuid = _consumeString();
         if (gameUuid == _dash) continue;
         state.lobby = null;
         sendRequestJoinGame(gameUuid);
