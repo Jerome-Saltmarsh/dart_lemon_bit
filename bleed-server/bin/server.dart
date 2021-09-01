@@ -247,7 +247,7 @@ void main() {
             return;
           }
           user.framesSinceUpdate = 0;
-          StringBuffer buffer = StringBuffer(ServerResponse.Lobby_Update.index);
+          StringBuffer buffer = StringBuffer("${ServerResponse.Lobby_Update.index} ");
           compileLobby(buffer, lobby);
           sendToClient(buffer.toString());
           break;
