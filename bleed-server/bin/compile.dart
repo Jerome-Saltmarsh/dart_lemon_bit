@@ -207,8 +207,7 @@ void _compileNpc(StringBuffer buffer, Npc npc) {
   _write(buffer, npc.stateFrameCount);
 }
 
-String compileLobby(StringBuffer buffer, Lobby lobby) {
-  _write(buffer, ServerResponse.Lobby_Update.index);
+void compileLobby(StringBuffer buffer, Lobby lobby) {
   _write(buffer, lobby.maxPlayers);
   _write(buffer, lobby.players.length);
   _write(buffer, lobby.uuid);
@@ -218,7 +217,6 @@ String compileLobby(StringBuffer buffer, Lobby lobby) {
   } else {
     _write(buffer, _dash);
   }
-  return buffer.toString();
 }
 
 String compileLobbies() {

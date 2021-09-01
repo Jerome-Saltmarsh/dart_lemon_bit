@@ -66,6 +66,7 @@ class GameManager {
   }
 
   Lobby createLobby({required int maxPlayer, required GameType gameType, String? name}) {
+    print("create lobby(maxPlayers: $maxPlayer, type: $gameType, name: $name)");
     Lobby lobby = Lobby(maxPlayers: maxPlayer, gameType: gameType, name: name);
     lobbies.add(lobby);
     return lobby;

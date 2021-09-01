@@ -247,11 +247,13 @@ void main() {
             return;
           }
           user.framesSinceUpdate = 0;
-          sendToClient(compileLobby(StringBuffer(), lobby));
+          StringBuffer buffer = StringBuffer(ServerResponse.Lobby_Update.index);
+          compileLobby(buffer, lobby);
+          sendToClient(buffer.toString());
           break;
 
         case ClientRequest.Lobby_List:
-          sendToClient("${ServerResponse.Lobby_List.index} ${compileLobbies()}");
+          sendToClient(compileLobbies());
           return;
 
         case ClientRequest.Player_Revive:

@@ -134,9 +134,11 @@ void parseState() {
         break;
 
       case ServerResponse.Lobby_List:
+        print('ServerResponse.Lobby_List');
         state.lobbies.clear();
         while (!_simiColonConsumed()) {
-          state.lobbies.add(_consumeLobby());
+          Lobby lobby = _consumeLobby();
+          state.lobbies.add(lobby);
         }
         break;
 
@@ -144,7 +146,7 @@ void parseState() {
         if (state.lobby == null) return;
         state.lobby.maxPlayers = _consumeInt();
         state.lobby.playersJoined = _consumeInt();
-        String lobbyUuid = _consumeString();
+        state.lobby.uuid = _consumeString();
         state.lobby.name = _consumeString();
         String gameUuid = _consumeString();
         if (gameUuid == _dash) continue;
@@ -345,12 +347,18 @@ double _consumeDouble() {
 }
 
 Lobby _consumeLobby() {
+  int maxPlayers = _consumeInt();
+  int playersJoined = _consumeInt();
+  String lobbyUuid = _consumeString();
+  String lobbyName = _consumeString();
+  String gameUuid = _consumeString();
+
   return Lobby()
-    ..maxPlayers = _consumeInt()
-    ..playersJoined = _consumeInt()
-    ..uuid = _consumeString()
-    ..name = _consumeString()
-    ..gameUuid = _consumeString();
+    ..maxPlayers = maxPlayers
+    ..playersJoined = playersJoined
+    ..uuid = lobbyUuid
+    ..name = lobbyName
+    ..gameUuid = gameUuid;
 }
 
 Vector2 _consumeVector2() {

@@ -10,7 +10,7 @@ Widget buildLobby() {
   return center(Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-      text("Players ${state.lobby.playersJoined} / ${state.lobby.maxPlayers}"),
+      text("${state.lobby.name} Joined ${state.lobby.playersJoined} / ${state.lobby.maxPlayers}"),
       button("Leave", leaveLobby)
     ]));
 }

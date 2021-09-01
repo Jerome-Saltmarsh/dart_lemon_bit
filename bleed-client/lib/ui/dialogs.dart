@@ -28,7 +28,7 @@ Future showCreateGameDialog() async {
                 sendClientRequestLobbyCreate(
                     maxPlayers: 8,
                     type: GameType.DeathMatch,
-                    name: "hello world");
+                    name: nameController.text);
               }),
         ],
       );
