@@ -49,16 +49,17 @@ class GameManager {
     return null;
   }
 
-  Lobby createLobby(){
-    Lobby lobby = Lobby(8, GameType.DeathMatch);
+  Lobby createLobby() {
+    Lobby lobby = Lobby(2, GameType.DeathMatch);
     lobbies.add(lobby);
     return lobby;
   }
 
-  Lobby findAvailableLobby(){
+  Lobby findAvailableLobby() {
     if (lobbies.isEmpty) return createLobby();
 
-    for (Lobby lobby in lobbies){
+    for (Lobby lobby in lobbies) {
+      if (lobby.game != null) continue;
       return lobby;
     }
 

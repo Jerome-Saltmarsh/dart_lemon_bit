@@ -44,6 +44,7 @@ void main() {
     }
 
     void joinGame(Game game) {
+      print("join game");
       _buffer.clear();
       Player player = game.spawnPlayer(name: 'test');
       compilePlayer(_buffer, player);
@@ -64,11 +65,11 @@ void main() {
       error(GameError.GameNotFound);
     }
 
-    void errorInvalidArguments(){
+    void errorInvalidArguments() {
       error(GameError.InvalidArguments);
     }
 
-    void errorLobbyNotFound(){
+    void errorLobbyNotFound() {
       error(GameError.LobbyNotFound);
     }
 
@@ -167,7 +168,8 @@ void main() {
           Lobby lobby = gameManager.createLobby();
           LobbyUser user = LobbyUser();
           lobby.players.add(user);
-          sendToClient('${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
+          sendToClient(
+              '${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
           return;
 
         case ClientRequest.Game_Join_Random:
@@ -180,19 +182,43 @@ void main() {
           break;
 
         case ClientRequest.Lobby_Join:
+          print("joined lobby");
           LobbyUser user = LobbyUser();
           Lobby lobby = gameManager.findAvailableLobby();
           lobby.players.add(user);
+
+          if (lobby.players.length == lobby.maxPlayers) {
+            Game game = gameManager.createDeathMatch();
+            lobby.game = game;
+            print("Lobby Full: Starting Game");
+          }
+
           sendToClient('${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
           break;
 
+        case ClientRequest.Game_Join:
+          if (arguments.length < 2) {
+            errorInvalidArguments();
+            return;
+          }
+          String gameUuid = arguments[1];
+
+          for (Game game in gameManager.games) {
+            if (game.uuid != gameUuid) continue;
+            joinGame(game);
+            return;
+          }
+
+          errorGameNotFound();
+          break;
+
         case ClientRequest.Update_Lobby:
-          if (arguments.length < 2){
+          if (arguments.length < 2) {
             errorInvalidArguments();
             return;
           }
           String lobbyUuid = arguments[1];
-          for(Lobby lobby in gameManager.lobbies){
+          for (Lobby lobby in gameManager.lobbies) {
             if (lobby.uuid != lobbyUuid) continue;
             sendToClient(compileLobby(lobby));
             return;

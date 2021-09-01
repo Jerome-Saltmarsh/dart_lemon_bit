@@ -9,6 +9,7 @@ import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/keys.dart';
+import 'package:bleed_client/send.dart';
 import 'package:bleed_client/utils.dart';
 
 import 'classes/RenderState.dart';
@@ -129,6 +130,10 @@ void parseState() {
       case ServerResponse.Lobby_Update:
         state.lobby.maxPlayers = _consumeInt();
         state.lobby.playersJoined = _consumeInt();
+        String uuid = _consumeString();
+        if (uuid == _semiColon) continue;
+        sendRequestJoinGame(uuid);
+        state.lobby = null;
         break;
 
       default:

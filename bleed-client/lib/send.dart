@@ -36,6 +36,10 @@ void sendRequestUpdateLobby(){
   send('${ClientRequest.Update_Lobby.index.toString()} ${state.lobby.uuid}');
 }
 
+void sendRequestJoinGame(String gameUuid){
+  send('${ClientRequest.Game_Join.index.toString()} $gameUuid');
+}
+
 void sendRequestEquipMachineGun() {
   sendRequestEquip(Weapon.MachineGun);
 }

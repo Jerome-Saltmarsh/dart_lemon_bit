@@ -109,6 +109,7 @@ class DeathMatch extends Game {
 abstract class Game {
   static int _id = 0;
   final String id = (_id++).toString();
+  final String uuid = _generateUUID();
   final GameType type;
   final int maxPlayers;
   final Scene scene;

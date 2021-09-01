@@ -210,6 +210,11 @@ String compileLobby(Lobby lobby){
   _write(buffer, ServerResponse.Lobby_Update.index);
   _write(buffer, lobby.maxPlayers);
   _write(buffer, lobby.players.length);
+  if (lobby.game != null){
+    _write(buffer, lobby.game!.uuid);
+  }else{
+    _write(buffer, _semiColon);
+  }
   return buffer.toString();
 }
 
