@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'classes/Game.dart';
 import 'classes.dart';
+import 'classes/Lobby.dart';
 import 'instances/gameManager.dart';
 import 'language.dart';
 import 'maths.dart';
@@ -39,8 +40,25 @@ void jobNpcWander(Timer timer){
 
 void fixedUpdate(Timer timer) {
   frame++;
-  for(Game game in games){
+  updateGames();
+  updateLobbies();
+}
+
+void updateGames() {
+  for (Game game in games){
     game.updateAndCompile();
+  }
+}
+
+void updateLobbies() {
+  for(Lobby lobby in lobbies){
+    for(int i =0 ;i < lobby.players.length; i++){
+      lobby.players[i].framesSinceUpdate++;
+      if (lobby.players[i].framesSinceUpdate > 100){
+        lobby.players.removeAt(i);
+        i--;
+      }
+    }
   }
 }
 

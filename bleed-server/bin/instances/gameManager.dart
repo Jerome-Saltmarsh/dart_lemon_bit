@@ -5,10 +5,18 @@ import '../classes/Lobby.dart';
 GameManager gameManager = GameManager();
 
 List<Game> get games => gameManager.games;
+List<Lobby> get lobbies => gameManager.lobbies;
 
 Lobby? findLobbyByUuid(String uuid){
   for (Lobby lobby in gameManager.lobbies) {
     if (lobby.uuid == uuid) return lobby;
+  }
+  return null;
+}
+
+LobbyUser? findLobbyUser(Lobby lobby, String playerUuid){
+  for(LobbyUser user in lobby.players){
+    if(user.uuid == playerUuid) return user;
   }
   return null;
 }

@@ -14,4 +14,5 @@ class Lobby {
 
 class LobbyUser {
   final String uuid = randomUuid();
+  int framesSinceUpdate = 0;
 }

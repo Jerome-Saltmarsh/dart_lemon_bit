@@ -33,7 +33,7 @@ void sendRequestEquipSniperRifle() {
 }
 
 void sendRequestUpdateLobby(){
-  send('${ClientRequest.Update_Lobby.index.toString()} ${state.lobby.uuid}');
+  send('${ClientRequest.Lobby_Update.index.toString()} ${state.lobby.uuid} ${state.lobby.playerUuid}');
 }
 
 void sendRequestJoinGame(String gameUuid){

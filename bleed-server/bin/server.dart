@@ -76,6 +76,10 @@ void main() {
       error(GameError.LobbyNotFound);
     }
 
+    void errorLobbyUserNotFound() {
+      error(GameError.LobbyUserNotFound);
+    }
+
     void errorPlayerNotFound() {
       error(GameError.PlayerNotFound);
     }
@@ -217,18 +221,25 @@ void main() {
           errorGameNotFound();
           break;
 
-        case ClientRequest.Update_Lobby:
-          if (arguments.length < 2) {
+        case ClientRequest.Lobby_Update:
+          if (arguments.length < 3) {
             errorInvalidArguments();
             return;
           }
           String lobbyUuid = arguments[1];
-          for (Lobby lobby in gameManager.lobbies) {
-            if (lobby.uuid != lobbyUuid) continue;
-            sendToClient(compileLobby(lobby));
+          Lobby? lobby = findLobbyByUuid(lobbyUuid);
+          if (lobby == null){
+            errorLobbyNotFound();
             return;
           }
-          errorLobbyNotFound();
+          String playerUuid = arguments[2];
+          LobbyUser? user = findLobbyUser(lobby, playerUuid);
+          if (user == null){
+            errorLobbyUserNotFound();
+            return;
+          }
+          user.framesSinceUpdate = 0;
+          sendToClient(compileLobby(lobby));
           break;
 
         case ClientRequest.Player_Revive:
