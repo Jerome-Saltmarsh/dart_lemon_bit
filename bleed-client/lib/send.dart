@@ -1,6 +1,7 @@
 
 import 'package:bleed_client/common.dart';
 import 'package:bleed_client/enums/ClientRequest.dart';
+import 'package:bleed_client/enums/GameType.dart';
 
 import 'connection.dart';
 import 'enums/Weapons.dart';
@@ -81,8 +82,8 @@ void sendRequestJoinLobby(){
   send(ClientRequest.Lobby_Join.index.toString());
 }
 
-void sendRequestCreateLobby(){
-  send(ClientRequest.Lobby_Create.index.toString());
+void sendClientRequestLobbyCreate({int maxPlayers, GameType type, String name}){
+  send('${ClientRequest.Lobby_Create.index} $maxPlayers ${type.index} $name');
 }
 
 void requestJoinRandomGame() {

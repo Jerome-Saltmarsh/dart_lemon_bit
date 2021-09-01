@@ -6,10 +6,13 @@ class Lobby {
   int maxPlayers;
   GameType gameType;
   List<LobbyUser> players = [];
+  String? name;
   Game? game;
   final String uuid = randomUuid();
 
-  Lobby(this.maxPlayers, this.gameType);
+  bool get full => players.length >= maxPlayers;
+
+  Lobby({required this.maxPlayers, required this.gameType, this.name});
 }
 
 class LobbyUser {

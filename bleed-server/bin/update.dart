@@ -18,6 +18,7 @@ void initUpdateLoop() {
   periodic(jobNpcWander, seconds: 3);
   periodic(jobRemoveDisconnectedPlayers, seconds: 5);
   periodic(updateNpcTargets, ms: 500);
+  periodic(jobRemoveEmptyLobbies, ms: 5000);
 }
 
 void updateNpcTargets(Timer timer){
@@ -36,6 +37,10 @@ void jobNpcWander(Timer timer){
   for(Game game in gameManager.games){
     game.jobNpcWander();
   }
+}
+
+void jobRemoveEmptyLobbies(Timer timer){
+  lobbies.removeWhere((lobby) => lobby.players.isEmpty);
 }
 
 void fixedUpdate(Timer timer) {

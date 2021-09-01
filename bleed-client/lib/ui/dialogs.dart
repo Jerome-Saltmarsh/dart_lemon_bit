@@ -1,9 +1,9 @@
+import 'package:bleed_client/enums/GameType.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/send.dart';
 import 'package:flutter/material.dart';
 
 Future showCreateGameDialog() async {
-
   TextEditingController nameController = TextEditingController();
 
   return showDialog<void>(
@@ -23,7 +23,10 @@ Future showCreateGameDialog() async {
               child: const Text('Create'),
               onPressed: () {
                 pop(context);
-                sendRequestCreateLobby();
+                sendClientRequestLobbyCreate(
+                    maxPlayers: 8,
+                    type: GameType.DeathMatch,
+                    name: "hello world");
               }),
         ],
       );
@@ -31,6 +34,6 @@ Future showCreateGameDialog() async {
   );
 }
 
-void pop(BuildContext context){
+void pop(BuildContext context) {
   Navigator.of(context).pop();
 }

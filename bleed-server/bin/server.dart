@@ -9,6 +9,7 @@ import 'compile.dart';
 import 'enums/ClientRequest.dart';
 import 'enums/GameError.dart';
 import 'enums/GameEventType.dart';
+import 'enums/GameType.dart';
 import 'enums/ServerResponse.dart';
 import 'enums/Weapons.dart';
 import 'enums.dart';
@@ -171,8 +172,16 @@ void main() {
           break;
 
         case ClientRequest.Lobby_Create:
-          print("ClientRequest.Game_Create");
-          Lobby lobby = gameManager.createLobby();
+
+          if (arguments.length < 4) {
+            errorInvalidArguments();
+            return;
+          }
+
+          int maxPlayers = int.parse(arguments[1]);
+          GameType gameType = GameType.values[int.parse(arguments[2])];
+          String name = arguments[3];
+          Lobby lobby = gameManager.createLobby(maxPlayer: maxPlayers, gameType: gameType, name: name);
           LobbyUser user = LobbyUser();
           lobby.players.add(user);
           sendToClient(
@@ -190,7 +199,7 @@ void main() {
 
         case ClientRequest.Lobby_Join:
           LobbyUser user = LobbyUser();
-          Lobby lobby = gameManager.findAvailableLobby();
+          Lobby lobby = gameManager.findAvailableDeathMatchLobby();
           lobby.players.add(user);
 
           if (lobby.players.length == lobby.maxPlayers) {
