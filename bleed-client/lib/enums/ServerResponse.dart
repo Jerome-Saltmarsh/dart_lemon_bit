@@ -18,4 +18,5 @@ enum ServerResponse {
   FortressMeta,
   GameOver,
   Lobby_Joined,
+  Lobby_Update,
 }

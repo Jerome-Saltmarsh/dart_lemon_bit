@@ -64,6 +64,14 @@ void main() {
       error(GameError.GameNotFound);
     }
 
+    void errorInvalidArguments(){
+      error(GameError.InvalidArguments);
+    }
+
+    void errorLobbyNotFound(){
+      error(GameError.LobbyNotFound);
+    }
+
     void errorPlayerNotFound() {
       error(GameError.PlayerNotFound);
     }
@@ -167,23 +175,29 @@ void main() {
           joinGame(deathMatch);
           break;
 
-        // case ClientRequest.Game_Join:
-        //   if (arguments.length <= 1) {
-        //     error('game uuid required');
-        //     return;
-        //   }
-        //   String gameId = arguments[1];
-        //   Game? game = gameManager.findGameById(gameId);
-        //   if (game == null) {
-        //     error('game not found: $gameId ;');
-        //     return;
-        //   }
-        //   Player player = game.spawnPlayer(name: "Test");
-        //   sendToClient("game-joined ${game.id} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ; ");
-        //   return;
-
         case ClientRequest.Ping:
           sendToClient('${ServerResponse.Pong.index} ;');
+          break;
+
+        case ClientRequest.Lobby_Join:
+          LobbyUser user = LobbyUser();
+          Lobby lobby = gameManager.findAvailableLobby();
+          lobby.players.add(user);
+          sendToClient('${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
+          break;
+
+        case ClientRequest.Update_Lobby:
+          if (arguments.length < 2){
+            errorInvalidArguments();
+            return;
+          }
+          String lobbyUuid = arguments[1];
+          for(Lobby lobby in gameManager.lobbies){
+            if (lobby.uuid != lobbyUuid) continue;
+            sendToClient(compileLobby(lobby));
+            return;
+          }
+          errorLobbyNotFound();
           break;
 
         case ClientRequest.Player_Revive:

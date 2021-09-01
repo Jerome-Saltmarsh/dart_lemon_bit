@@ -8,7 +8,8 @@ import 'instances/game.dart';
 import 'state.dart';
 
 
-StringBuffer _buffer = StringBuffer();
+final StringBuffer _buffer = StringBuffer();
+final gameUpdateIndex = ClientRequest.Game_Update.index;
 const String _space = " ";
 
 void sendRequestRevive(){
@@ -31,6 +32,10 @@ void sendRequestEquipSniperRifle() {
   sendRequestEquip(Weapon.SniperRifle);
 }
 
+void sendRequestUpdateLobby(){
+  send('${ClientRequest.Update_Lobby.index.toString()} ${state.lobby.uuid}');
+}
+
 void sendRequestEquipMachineGun() {
   sendRequestEquip(Weapon.MachineGun);
 }
@@ -41,7 +46,7 @@ void requestThrowGrenade(double strength){
 
 void sendRequestUpdatePlayer() {
   _buffer.clear();
-  _write(ClientRequest.Game_Update.index);
+  _write(gameUpdateIndex);
   _write(compiledGame.gameId);
   _write(compiledGame.playerId);
   _write(compiledGame.playerUUID);
@@ -60,6 +65,10 @@ void sendRequestJoinGameFortress(){
   send(ClientRequest.Game_Join_Fortress.index.toString());
 }
 
+void sendRequestJoinLobby(){
+  send(ClientRequest.Lobby_Join.index.toString());
+}
+
 void sendRequestCreateLobby(){
   send(ClientRequest.Lobby_Create.index.toString());
 }
@@ -75,10 +84,6 @@ void sendRequestSpawn() {
 
 void sendRequestSpawnNpc() {
   send('${ClientRequest.Spawn_Npc.index} $session');
-}
-
-void sendRequestClearNpcs() {
-  send("clear-npcs");
 }
 
 void _write(dynamic value) {

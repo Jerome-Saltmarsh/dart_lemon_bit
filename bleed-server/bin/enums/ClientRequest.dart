@@ -12,4 +12,5 @@ enum ClientRequest{
   Player_Use_MedKit,
   Ping,
   Game_Join_Fortress,
+  Update_Lobby
 }

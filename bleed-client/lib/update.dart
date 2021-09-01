@@ -20,6 +20,10 @@ void update() {
   refreshDuration = now.difference(lastRefresh);
   lastRefresh = DateTime.now();
 
+  if (state.lobby != null) {
+    sendRequestUpdateLobby();
+  }
+
   if (playMode) {
     updatePlayMode();
   } else {

@@ -4,6 +4,7 @@ import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/game_engine/web_functions.dart';
 import 'package:bleed_client/properties.dart';
+import 'package:bleed_client/ui/dialogs.dart';
 import 'package:flutter/material.dart';
 
 import 'classes/InventoryItem.dart';
@@ -18,6 +19,7 @@ import 'instances/settings.dart';
 import 'send.dart';
 import 'settings.dart';
 import 'state.dart';
+import 'ui/views.dart';
 import 'utils.dart';
 
 TextEditingController _playerNameController = TextEditingController();
@@ -125,27 +127,6 @@ Future<void> showConnectFailedDialog() async {
   );
 }
 
-Future<void> showCreateGameDialog() async {
-  return showDialog<void>(
-    context: globalContext,
-    barrierDismissible: true,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Create Game'),
-        actions: <Widget>[
-          TextButton(
-              child: const Text('Create'),
-              onPressed: () {
-                Navigator.of(context).pop();
-                sendRequestCreateLobby();
-              }),
-        ],
-      );
-    },
-  );
-}
-
-
 void connectToGCP() {
   connect(gpc);
 }
@@ -201,10 +182,6 @@ Widget buildGameUI(BuildContext context) {
   return buildHud();
 }
 
-Widget buildLobby() {
-  return text("joined lobby");
-}
-
 Widget _buildConnectView() {
   return center(
     column([
@@ -241,6 +218,7 @@ Container _buildJoinGameMenu() {
           button('Join Death Match', requestJoinRandomGame),
           button('Join Fortress', sendRequestJoinGameFortress),
           button('Create Game', showCreateGameDialog),
+          button('Join Game', sendRequestJoinLobby),
         ]),
   );
 }
@@ -526,7 +504,6 @@ Widget buildDebugPanel() {
   return column([
     button("Respawn", sendRequestSpawn),
     button("Spawn NPC", sendRequestSpawnNpc),
-    button("Clear NPCS", sendRequestClearNpcs),
     text("Ping: ${ping.inMilliseconds}"),
     text("Player Id: ${compiledGame.playerId}"),
     text("Player Health: $playerHealth / $playerMaxHealth"),

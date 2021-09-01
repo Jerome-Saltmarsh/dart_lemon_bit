@@ -1,3 +1,4 @@
+
 enum GameError {
   GameNotFound,
   PlayerNotFound,
@@ -5,5 +6,7 @@ enum GameError {
   UnrecognizedClientRequest,
   InvalidPlayerUUID,
   ClientRequestArgumentsEmpty,
-  PlayerStillAlive
+  PlayerStillAlive,
+  InvalidArguments,
+  LobbyNotFound
 }

@@ -55,6 +55,16 @@ class GameManager {
     return lobby;
   }
 
+  Lobby findAvailableLobby(){
+    if (lobbies.isEmpty) return createLobby();
+
+    for (Lobby lobby in lobbies){
+      return lobby;
+    }
+
+    return createLobby();
+  }
+
   DeathMatch createDeathMatch() {
     DeathMatch deathMatch = DeathMatch();
     games.add(deathMatch);

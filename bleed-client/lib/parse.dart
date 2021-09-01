@@ -126,6 +126,11 @@ void parseState() {
         state.lobby = Lobby(lobbyUuid, userUuid);
         break;
 
+      case ServerResponse.Lobby_Update:
+        state.lobby.maxPlayers = _consumeInt();
+        state.lobby.playersJoined = _consumeInt();
+        break;
+
       default:
         print("parser not implemented $serverResponse");
         return;

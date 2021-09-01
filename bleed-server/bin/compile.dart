@@ -3,6 +3,7 @@ import 'classes/Block.dart';
 import 'classes/Collectable.dart';
 import 'classes/Game.dart';
 import 'classes/Inventory.dart';
+import 'classes/Lobby.dart';
 import 'classes/Player.dart';
 import 'classes/Vector2.dart';
 import 'enums.dart';
@@ -202,6 +203,14 @@ void _compileNpc(StringBuffer buffer, Npc npc) {
   _write(buffer, npc.x.toInt());
   _write(buffer, npc.y.toInt());
   _write(buffer, npc.stateFrameCount);
+}
+
+String compileLobby(Lobby lobby){
+  StringBuffer buffer = StringBuffer();
+  _write(buffer, ServerResponse.Lobby_Update.index);
+  _write(buffer, lobby.maxPlayers);
+  _write(buffer, lobby.players.length);
+  return buffer.toString();
 }
 
 void _write(StringBuffer buffer, dynamic value) {
