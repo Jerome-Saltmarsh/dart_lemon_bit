@@ -15,6 +15,7 @@ Widget buildLobby() {
   ]));
 }
 
+// TODO Logic does not belong here
 void leaveLobby() {
   sendRequestLobbyExit();
   state.lobby = null;
@@ -24,7 +25,10 @@ void leaveLobby() {
 Widget buildLobbyList() {
   return Refresh(
       builder: Builder(builder: (BuildContext context) {
-        print("refreshing lobby list");
+
+        if (state.lobby != null) return buildLobby();
+
+        sendRequestLobbyList();
         return border(
           child: Container(
               width: 400,
@@ -33,11 +37,14 @@ Widget buildLobbyList() {
                   children: state.lobbies.map(_buildLobbyListTile).toList())),
         );
       }),
-      duration: Duration(seconds: 1));
+      duration: Duration(seconds: 3));
 }
 
 Widget _buildLobbyListTile(Lobby lobby) {
-  return ListTile(
-      leading: text(lobby.name),
-      trailing: text("${lobby.playersJoined} / ${lobby.maxPlayers}"));
+  return border(
+    child: ListTile(
+        leading: text(lobby.name),
+        title: text("${lobby.playersJoined} / ${lobby.maxPlayers}"),
+        trailing: text("JOIN", onPressed: () => { sendRequestJoinLobby(lobby.uuid) })),
+  );
 }

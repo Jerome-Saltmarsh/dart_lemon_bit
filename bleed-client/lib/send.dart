@@ -78,8 +78,8 @@ void sendRequestJoinGameFortress(){
   send(ClientRequest.Game_Join_Fortress.index.toString());
 }
 
-void sendRequestJoinLobby(){
-  send(ClientRequest.Lobby_Join.index.toString());
+void sendRequestJoinLobby(String lobbyUuid){
+  send('${ClientRequest.Lobby_Join.index} $lobbyUuid');
 }
 
 void sendRequestLobbyList(){

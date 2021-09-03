@@ -101,7 +101,7 @@ Widget buildGameUI(BuildContext context) {
     return _buildConnectView();
   }
 
-  if (state.lobby != null) return buildLobby();
+  if (state.lobby != null) return Text("Waiting for game to start");
 
   if (compiledGame.gameId < 0) return Text("compiledGame.gameId < 0");
 
