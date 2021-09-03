@@ -6,6 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../state.dart';
+import 'dialogs.dart';
 
 Widget buildLobby() {
   return center(Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -29,12 +30,19 @@ Widget buildLobbyList() {
         if (state.lobby != null) return buildLobby();
 
         sendRequestLobbyList();
-        return border(
-          child: Container(
-              width: 400,
-              height: 400,
-              child: ListView(
-                  children: state.lobbies.map(_buildLobbyListTile).toList())),
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            height(50),
+            button("Create Game", showDialogCreateGame),
+            border(
+              child: Container(
+                  width: 400,
+                  height: 400,
+                  child: ListView(
+                      children: state.lobbies.map(_buildLobbyListTile).toList())),
+            ),
+          ],
         );
       }),
       duration: Duration(seconds: 3));

@@ -86,6 +86,14 @@ Widget center(Widget child) {
   );
 }
 
+Widget height(double value){
+  return Container(height: value);
+}
+
+Widget width(double value){
+  return Container(width: value);
+}
+
 ButtonStyle _buttonStyle = buildButtonStyle(white, 2);
 
 ButtonStyle buildButtonStyle(Color borderColor, double borderWidth) {

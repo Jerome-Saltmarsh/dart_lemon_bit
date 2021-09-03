@@ -1,4 +1,3 @@
-import 'package:bleed_client/classes/Lobby.dart';
 import 'package:bleed_client/enums/GameType.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/send.dart';
@@ -30,11 +29,86 @@ Future showDialogCreateGame() async {
                     maxPlayers: 8,
                     type: GameType.DeathMatch,
                     name: nameController.text);
+
+                mainMenuTabController.index = 2;
               }),
         ],
       );
     },
   );
+}
+
+TabController mainMenuTabController;
+
+class MainMenu extends StatefulWidget {
+  @override
+  _MainMenuState createState() => _MainMenuState();
+}
+
+class _MainMenuState extends State<MainMenu> with SingleTickerProviderStateMixin {
+
+  @override
+  void initState() {
+    super.initState();
+    mainMenuTabController = new TabController(vsync: this, length: 3);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 500,
+      child: Scaffold(
+        backgroundColor: Colors.black54,
+        appBar: TabBar(
+          controller: mainMenuTabController,
+          tabs: [
+            Tab(
+              child: text('Play'),
+            ),
+            Tab(
+              child: text('Lobby'),
+            ),
+            Tab(
+              child: text('Options'),
+            ),
+          ],
+        ),
+        body: TabBarView(
+          controller: mainMenuTabController,
+          children: [
+            Container(
+              height: 100,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    height(50),
+                    button('Death Match', requestJoinRandomGame),
+                    height(50),
+                    button('Fortress', sendRequestJoinGameFortress),
+                    height(50),
+                    button('Casual', requestJoinRandomGame),
+                  ]),
+            ),
+            buildLobbyList(),
+            text("Settings"),
+          ],
+        ),
+        floatingActionButton: Stack(
+          children: <Widget>[
+            Align(
+              alignment: Alignment.bottomRight,
+              child: FloatingActionButton(
+                heroTag: null,
+                child: text("X"),
+                // onPressed: () => _pop(dialogContext),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
 Future showDialogMainMenu() async {
@@ -45,54 +119,7 @@ Future showDialogMainMenu() async {
       return Dialog(
         backgroundColor: Colors.transparent,
         insetPadding: EdgeInsets.all(60),
-        child: DefaultTabController(
-            length: 4,
-            child: Scaffold(
-              backgroundColor: Colors.black54,
-              appBar: TabBar(
-                tabs: [
-                  Tab(
-                    child: text('Play'),
-                  ),
-                  Tab(
-                    child: text('Create'),
-                  ),
-                  Tab(
-                    child: text('Lobby'),
-                  ),
-                  Tab(
-                    child: text('Options'),
-                  ),
-                ],
-              ),
-              body: TabBarView(
-                children: [
-                  Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        button('Death Match', requestJoinRandomGame),
-                        button('Fortress', sendRequestJoinGameFortress),
-                        button('Casual', requestJoinRandomGame),
-                      ]),
-                  button("Create Game", showDialogCreateGame),
-                  buildLobbyList(),
-                  text("Settings"),
-                ],
-              ),
-              floatingActionButton: Stack(
-                children: <Widget>[
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: FloatingActionButton(
-                      heroTag: null,
-                      child: text("X"),
-                      onPressed: () => _pop(dialogContext),
-                    ),
-                  ),
-                ],
-              ),
-            )),
+        child: MainMenu(),
       );
     },
   );
