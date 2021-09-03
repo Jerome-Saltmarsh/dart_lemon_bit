@@ -5,6 +5,8 @@ import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/bleed.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/send.dart';
+import 'package:bleed_client/ui/dialogs.dart';
 import 'package:bleed_client/update.dart';
 import 'package:flutter/material.dart';
 
@@ -20,38 +22,17 @@ import 'ui.dart';
 import 'utils.dart';
 
 class BleedWidget extends GameWidget {
+
   @override
   bool uiVisible() => true;
 
   @override
   void onMouseScroll(double amount) {
+    // TODO logic does not belong here
     Offset center1 = screenCenterWorld;
     zoom -= amount * settings.zoomSpeed;
     if (zoom < settings.maxZoom) zoom = settings.maxZoom;
     cameraCenter(center1.dx, center1.dy);
-    // Offset center2 = screenCenterWorld;
-    // Offset diff = center1 - center2;
-    // double mag1 = magnitude(diff.dx, diff.dy);
-    // cameraX += diff.dx;
-    // cameraY += diff.dy;
-    // Offset center3 = screenCenterWorld;
-    // Offset diff2 = center1 - center3;
-    // double mag2 = magnitude(diff2.dx, diff2.dy);
-    // if(mag2 > mag1){
-    //   print('diff 1: $mag1, diff 2: $mag2');
-    // }
-
-
-    // cameraX += diff2.dx;
-    // cameraY += diff2.dy;
-    // double a = diff2.dx;
-
-    // for(int i = 0; i < 5; i++){
-    //   Offset center2 = screenCenterWorld;
-    //   Offset diff = center1 - center2;
-    //   cameraX += diff.dx;
-    //   cameraY += diff.dy;
-    // }
   }
 
   @override
@@ -67,9 +48,21 @@ class BleedWidget extends GameWidget {
     initBleed();
     loadRects();
     initEditor();
+    startJobs();
+
+    onDisconnected.stream.listen((event) {
+      showDialogConnectFailed();
+      clearState();
+    });
+
+    initUI();
+  }
+
+  void startJobs(){
     // todo move this
     periodic(checkBulletHoles, ms: 500);
     periodic(redrawUI, seconds: 1);
+    periodic(sendRequestLobbyList, seconds: 1);
 
     // TODO this job is expensive, use reaction instead
     periodic(() {
@@ -78,15 +71,6 @@ class BleedWidget extends GameWidget {
         redrawUI();
       }
     }, ms: 100);
-
-    onConnectedController.stream.listen((event) {
-    });
-
-    onDisconnected.stream.listen((event) {
-      clearState();
-    });
-
-    initUI();
   }
 
   // TODO move this

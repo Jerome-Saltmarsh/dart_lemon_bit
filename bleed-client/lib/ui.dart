@@ -20,40 +20,18 @@ import 'send.dart';
 import 'settings.dart';
 import 'state.dart';
 import 'ui/views.dart';
+import 'ui/widgets.dart';
 import 'utils.dart';
 
 TextEditingController _playerNameController = TextEditingController();
-ButtonStyle _buttonStyle = buildButtonStyle(white, 2);
 Border _border = Border.all(color: Colors.black, width: 5.0, style: BorderStyle.solid);
 
 bool _showDebug = false;
 
 void initUI() {
   onConnectError.stream.listen((event) {
-    showConnectFailedDialog();
+    showDialogConnectFailed();
   });
-}
-
-Widget text(String value, {fontSize = 18}) {
-  return Text(value, style: TextStyle(color: Colors.white, fontSize: fontSize));
-}
-
-Widget button(String value, Function onPressed,
-    {double fontSize = 18.0, ButtonStyle buttonStyle}) {
-  return OutlinedButton(
-    child:
-        Text(value, style: TextStyle(color: Colors.white, fontSize: fontSize)),
-    style: buttonStyle ?? _buttonStyle,
-    onPressed: onPressed,
-  );
-}
-
-ButtonStyle buildButtonStyle(Color borderColor, double borderWidth) {
-  return OutlinedButton.styleFrom(
-    side: BorderSide(color: borderColor, width: borderWidth),
-    shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(5))),
-  );
 }
 
 Widget column(List<Widget> children) {
@@ -108,36 +86,8 @@ Future<void> showChangeNameDialog() async {
   );
 }
 
-Future<void> showConnectFailedDialog() async {
-  return showDialog<void>(
-    context: globalContext,
-    barrierDismissible: true,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Connection Failed'),
-        actions: <Widget>[
-          TextButton(
-              child: const Text('Okay'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              }),
-        ],
-      );
-    },
-  );
-}
-
 void connectToGCP() {
   connect(gpc);
-}
-
-Widget center(Widget child) {
-  return Container(
-    width: globalSize.width,
-    height: globalSize.height,
-    alignment: Alignment.center,
-    child: child,
-  );
 }
 
 Widget buildGameUI(BuildContext context) {
@@ -153,7 +103,7 @@ Widget buildGameUI(BuildContext context) {
 
   if (state.lobby != null) return buildLobby();
 
-  if (compiledGame.gameId < 0) return _buildJoinGameMenu();
+  if (compiledGame.gameId < 0) return Text("compiledGame.gameId < 0");
 
   if (editMode) return buildEditorUI();
 
@@ -206,23 +156,23 @@ Widget _buildConnectView() {
   );
 }
 
-Container _buildJoinGameMenu() {
-  return Container(
-    alignment: Alignment.center,
-    width: screenWidth,
-    height: screenHeight,
-    child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          button('Join Death Match', requestJoinRandomGame),
-          button('Join Fortress', sendRequestJoinGameFortress),
-          button('Create Game', showCreateGameDialog),
-          button('Join Game', sendRequestJoinLobby),
-          button('Lobbies', showDialogListGames),
-        ]),
-  );
-}
+// Container _buildJoinGameMenu() {
+//   return Container(
+//     alignment: Alignment.center,
+//     width: screenWidth,
+//     height: screenHeight,
+//     child: Column(
+//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//         crossAxisAlignment: CrossAxisAlignment.center,
+//         children: [
+//           button('Join Death Match', requestJoinRandomGame),
+//           button('Join Fortress', sendRequestJoinGameFortress),
+//           button('Create Game', showDialogCreateGame),
+//           button('Join Game', sendRequestJoinLobby),
+//           button('Lobbies', showDialogListGames),
+//         ]),
+//   );
+// }
 
 const DecorationImage grenadeImage = const DecorationImage(
   image: const AssetImage('images/weapon-grenade.png'),
@@ -414,7 +364,7 @@ Widget buildHud() {
           if (!_showDebug) button('Debug', () => _showDebug = !_showDebug),
           button('Editor', toggleMode),
           button("FullScreen", requestFullScreen),
-          buildImageButton(_iconMenu, clearState),
+          buildImageButton(_iconMenu, showDialogMainMenu),
           buildImageButton(settings.audioMuted ? _audioOffImage : _audioOnImage, settings.toggleAudioMuted, width: 80),
         ],
       ));

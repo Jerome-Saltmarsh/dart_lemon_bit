@@ -10,6 +10,7 @@ import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/properties.dart';
+import 'package:bleed_client/ui/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

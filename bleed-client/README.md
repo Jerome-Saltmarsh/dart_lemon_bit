@@ -31,6 +31,8 @@ Squis Studios
 [ ] Death Match Player Lives
 [ ] Random Power up Square 
 [ ] Random Item Square
+[ ] Show Shots remaining text at cursor
+[ ] Deployed client auto connect to gcp
 [ ] Lobby
 [x] Fix parse bullet bugs
 [x] Mute Audio Icon
