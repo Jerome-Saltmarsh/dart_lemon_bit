@@ -1,5 +1,6 @@
 import 'package:bleed_client/classes/Lobby.dart';
 import 'package:bleed_client/enums/GameType.dart';
+import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/ui/widgets.dart';
@@ -9,12 +10,12 @@ import 'package:flutter/material.dart';
 
 import '../state.dart';
 
-Widget buildLobby() {
+Widget buildJoinedLobby() {
   return center(Column(mainAxisAlignment: MainAxisAlignment.center, children: [
 
     Tooltip(
       child: button("Copy Game ID", (){
-        FlutterClipboard.copy(state.lobby.uuid).then(( value ) => print('copied'));
+        FlutterClipboard.copy(state.lobby.uuid);
       }),
       message: "Send this id to friends to help them connect to this game",
     ),
@@ -40,7 +41,7 @@ Widget buildLobbyList() {
 
   return Refresh(
       builder: Builder(builder: (BuildContext context) {
-        if (state.lobby != null) return buildLobby();
+        if (state.lobby != null) return buildJoinedLobby();
 
         Widget gameTypeButton = StatefulBuilder(
             builder: ((BuildContext builderContext, StateSetter setState) {
