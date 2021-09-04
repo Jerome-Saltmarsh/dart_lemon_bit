@@ -29,9 +29,9 @@ double get mouseY => _mousePosition?.dy;
 
 Offset get mouse => Offset(mouseX, mouseY);
 
-double get mouseWorldX => convertScreenToWorldX(mouseX);
+double get mouseWorldX => convertScreenToWorldX(mouseX ?? 0);
 
-double get mouseWorldY => convertScreenToWorldY(mouseY);
+double get mouseWorldY => convertScreenToWorldY(mouseY ?? 0);
 
 Offset get mouseWorld => Offset(mouseWorldX, mouseWorldY);
 

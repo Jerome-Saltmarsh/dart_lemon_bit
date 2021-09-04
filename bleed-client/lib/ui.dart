@@ -327,46 +327,33 @@ Widget buildInventory() {
 }
 
 Widget buildHud() {
+
+  double iconSize = 40;
+
+  Widget iconToggleFullscreen = Tooltip(child: IconButton(icon: Icon(Icons.fullscreen, size: iconSize, color: white), onPressed: requestFullScreen), message: "Fullscreen",);
+  Widget iconToggleAudio = Tooltip(child: IconButton(icon: Icon(settings.audioMuted ? Icons.music_off : Icons.music_note_rounded, size: iconSize, color: white), onPressed: toggleAudioMuted), message: "Toggle Audio");
+  Widget iconMenu = Tooltip(child: IconButton(icon: Icon(Icons.menu, size: iconSize, color: white), onPressed: showDialogMainMenu), message: "Menu",);
+
   Positioned topLeft = Positioned(
     top: 0,
     left: 0,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    child: Row(
       children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            button('Close', () => _showDebug = false),
-            text(
-                'mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
-            text('Stamina: $playerStamina / $playerMaxStamina'),
-            text('x: ${compiledGame.playerX}, y: ${compiledGame.playerY}'),
-            text("zombies: ${compiledGame.npcs.length}"),
-            text("players: ${compiledGame.players.length}"),
-            text("zoom: ${zoom.toStringAsFixed(2)}"),
-            text("cameraX: ${cameraX.toInt()}, cameraY: ${cameraY.toInt()}"),
-            text(
-                "centerX: ${screenCenterWorldX.toInt()} ${screenCenterWorldY.toInt()}"),
-            text(
-                'screen width: ${screenWidth / zoom}, screen height: ${screenHeight / zoom}'),
-          ],
-        )
+        iconToggleFullscreen,
+        iconToggleAudio,
       ],
     ),
   );
 
   Positioned topRight = Positioned(
       top: 0,
-      right: 0,
+      right: 20,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           if (developMode && !_showDebug) button('Debug', () => _showDebug = !_showDebug),
-          if (developMode)
-          button('Editor', toggleMode),
-          button("FullScreen", requestFullScreen),
-          buildImageButton(_iconMenu, showDialogMainMenu),
-          buildImageButton(settings.audioMuted ? _audioOffImage : _audioOnImage, settings.toggleAudioMuted, width: 80),
+          if (developMode) button('Editor', toggleMode),
+          iconMenu
         ],
       ));
 
@@ -409,7 +396,6 @@ Widget buildHud() {
   Positioned bottomRight = Positioned(
       right: 0,
       bottom: 0,
-      // child: buildInventory(),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -422,13 +408,39 @@ Widget buildHud() {
 
   return Stack(
     children: [
-      if (_showDebug) topLeft,
+      topLeft,
       topRight,
       bottomLeft,
       if(compiledGame.gameType == GameType.Fortress)
       bottomRight,
       if (gameOver) buildGameOver(),
       if (!gameOver && playerHealth <= 0) buildRespawn()
+    ],
+  );
+}
+
+Widget buildDebugColumn(){
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          button('Close', () => _showDebug = false),
+          text(
+              'mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
+          text('Stamina: $playerStamina / $playerMaxStamina'),
+          text('x: ${compiledGame.playerX}, y: ${compiledGame.playerY}'),
+          text("zombies: ${compiledGame.npcs.length}"),
+          text("players: ${compiledGame.players.length}"),
+          text("zoom: ${zoom.toStringAsFixed(2)}"),
+          text("cameraX: ${cameraX.toInt()}, cameraY: ${cameraY.toInt()}"),
+          text(
+              "centerX: ${screenCenterWorldX.toInt()} ${screenCenterWorldY.toInt()}"),
+          text(
+              'screen width: ${screenWidth / zoom}, screen height: ${screenHeight / zoom}'),
+        ],
+      )
     ],
   );
 }

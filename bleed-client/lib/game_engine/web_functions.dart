@@ -7,3 +7,7 @@ void disableRightClick(){
 void requestFullScreen(){
   document.documentElement.requestFullscreen();
 }
+
+void fullScreenExit(){
+  document.exitFullscreen();
+}
