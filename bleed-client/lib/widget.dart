@@ -6,6 +6,7 @@ import 'package:bleed_client/bleed.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/send.dart';
+import 'package:bleed_client/state.dart';
 import 'package:bleed_client/ui/dialogs.dart';
 import 'package:bleed_client/update.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +51,10 @@ class BleedWidget extends GameWidget {
     initEditor();
     startJobs();
 
+    compiledGame.npcs = [];
+    for(int i = 0; i < 3000; i++){
+      compiledGame.npcs.add([0, 0, 0.0, 0.0, 0, 0]);
+    }
     onDisconnected.stream.listen((event) {
       showDialogConnectFailed();
       clearState();

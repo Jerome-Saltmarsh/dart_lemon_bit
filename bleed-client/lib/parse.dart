@@ -93,7 +93,11 @@ void parseState() {
         break;
 
       case ServerResponse.Npcs:
-        _parseNpcs();
+        try {
+          _parseNpcs();
+        }catch(error){
+          print(error);
+        }
         break;
 
       case ServerResponse.Game_Events:
@@ -438,16 +442,10 @@ void _parseBullets() {
 }
 
 void _parseNpcs() {
-  int index = 0;
+  compiledGame.totalNpcs = 0;
   while (!_simiColonConsumed()) {
-    if (index >= compiledGame.npcs.length) {
-      compiledGame.npcs.add(_getUnusedMemory());
-    }
-    _consumeNpc(compiledGame.npcs[index]);
-    index++;
-  }
-  while (index < compiledGame.npcs.length) {
-    _cacheLast(compiledGame.npcs);
+    _consumeNpc(compiledGame.npcs[compiledGame.totalNpcs]);
+    compiledGame.totalNpcs++;
   }
 }
 
@@ -464,12 +462,12 @@ void _consumePlayer(dynamic memory) {
   memory[weapon] = _consumeWeapon();
 }
 
-void _consumeNpc(dynamic memory) {
-  memory[0] = _consumeInt();
-  memory[direction] = _consumeInt();
-  memory[x] = _consumeDouble();
-  memory[y] = _consumeDouble();
-  memory[frameCount] = _consumeInt();
+void _consumeNpc(dynamic npcMemory) {
+  npcMemory[stateIndex] = _consumeInt();
+  npcMemory[direction] = _consumeInt();
+  npcMemory[x] = _consumeDouble();
+  npcMemory[y] = _consumeDouble();
+  npcMemory[frameCount] = _consumeInt();
 }
 
 List _getUnusedMemory() {

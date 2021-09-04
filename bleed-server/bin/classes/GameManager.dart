@@ -62,12 +62,12 @@ class GameManager {
   }
 
   Lobby createDeathMatchLobby(){
-    return createLobby(maxPlayer: 8, gameType: GameType.DeathMatch);
+    return createLobby(maxPlayer: 8, gameType: GameType.DeathMatch, private: false);
   }
 
-  Lobby createLobby({required int maxPlayer, required GameType gameType, String? name}) {
-    print("create lobby(maxPlayers: $maxPlayer, type: $gameType, name: $name)");
-    Lobby lobby = Lobby(maxPlayers: maxPlayer, gameType: gameType, name: name);
+  Lobby createLobby({required int maxPlayer, required GameType gameType, String? name, required bool private}) {
+    print("create lobby(maxPlayers: $maxPlayer, type: $gameType, name: $name, private: $private)");
+    Lobby lobby = Lobby(maxPlayers: maxPlayer, gameType: gameType, name: name, private: private);
     lobbies.add(lobby);
     return lobby;
   }

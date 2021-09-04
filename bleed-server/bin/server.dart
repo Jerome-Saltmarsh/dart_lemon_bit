@@ -181,7 +181,8 @@ void main() {
           int maxPlayers = int.parse(arguments[1]);
           GameType gameType = GameType.values[int.parse(arguments[2])];
           String name = arguments[3];
-          Lobby lobby = gameManager.createLobby(maxPlayer: maxPlayers, gameType: gameType, name: name);
+          bool private = arguments[4] == "1";
+          Lobby lobby = gameManager.createLobby(maxPlayer: maxPlayers, gameType: gameType, name: name, private: private);
           LobbyUser user = LobbyUser();
           lobby.players.add(user);
           sendToClient('${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');

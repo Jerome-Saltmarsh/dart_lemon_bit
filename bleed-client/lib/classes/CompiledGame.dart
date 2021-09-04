@@ -13,6 +13,7 @@ class CompiledGame {
   List<List<Tile>> tiles = [];
   List<List<dynamic>> players = [];
   List<List<dynamic>> npcs = [];
+  int totalNpcs = 0;
   List<double> bullets = List.filled(1000, 0);
   List<double> bulletHoles = [];
   List<Particle> particles = [];

@@ -28,7 +28,8 @@ Future showDialogCreateGame() async {
                 sendClientRequestLobbyCreate(
                     maxPlayers: 8,
                     type: GameType.DeathMatch,
-                    name: nameController.text);
+                    name: nameController.text,
+                    private: false);
 
                 mainMenuTabController.index = 2;
               }),

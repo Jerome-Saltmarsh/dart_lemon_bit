@@ -467,7 +467,7 @@ Widget buildDebugPanel() {
       text("Server FPS: ${(1000 / serverFramesMS).round()}"),
     text("Players: ${compiledGame.players.length}"),
     text("Bullets: ${compiledGame.bullets.length}"),
-    text("Npcs: ${compiledGame.npcs.length}"),
+    text("Npcs: ${compiledGame.totalNpcs}"),
     text("Player Assigned: $playerAssigned"),
   ]);
 }

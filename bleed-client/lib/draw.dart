@@ -31,11 +31,20 @@ void drawCharacters() {
 }
 
 void drawNpcs() {
-  compiledGame.npcs.sort((a, b) {
-    if (a[y] < b[y]) return -1;
-    return 1;
-  });
-  drawList(compiledGame.npcs, render.npcsTransforms, render.npcsRects);
+  // compiledGame.npcs.sort((a, b) {
+  //   if (a[y] < b[y]) return -1;
+  //   return 1;
+  // });
+
+  render.npcsTransforms.clear();
+  render.npcsRects.clear();
+
+  for(int i = 0; i < compiledGame.totalNpcs; i++){
+    render.npcsTransforms.add(getCharacterTransform(compiledGame.npcs[i]));
+    render.npcsRects.add(getCharacterSpriteRect(compiledGame.npcs[i]));
+  }
+
+  drawAtlases(imageCharacter, render.npcsTransforms, render.npcsRects);
 }
 
 void drawCharacterList(List<dynamic> characters) {
@@ -280,7 +289,7 @@ Rect getTileSpriteRect(Tile tile) {
 }
 
 Rect getCharacterSpriteRect(dynamic character) {
-  switch (character[0]) {
+  switch (character[stateIndex]) {
     case characterStateIdle:
       return getHumanIdleRect(character);
     case characterStateWalking:

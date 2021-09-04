@@ -10,17 +10,26 @@ import 'package:flutter/material.dart';
 import '../state.dart';
 
 Widget buildJoinedLobby() {
-  return center(Column(mainAxisAlignment: MainAxisAlignment.start, children: [
-    text(
-        "${state.lobby.name} Joined ${state.lobby.playersJoined} / ${state.lobby.maxPlayers}"),
-    Tooltip(
-      child: button("Copy Join-ID", () {
-        FlutterClipboard.copy(state.lobby.uuid);
-      }),
-      message: "Send this id to friends. Once copied, they can click the 'Paste Join-ID' button in the lobby to join",
-    ),
-    button("Leave", leaveLobby)
-  ]));
+  return Container(
+    padding: EdgeInsets.all(20),
+    child: Column(mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          height50,
+          text("Players ${state.lobby.playersJoined} / ${state.lobby.maxPlayers}"),
+          height8,
+          text("The game will automatically start once the room is full"),
+          height32,
+          Tooltip(
+            child: button("Copy Join-ID", () {
+              FlutterClipboard.copy(state.lobby.uuid);
+            }),
+            message: "Send this id to friends. Once copied, they can click the 'Paste Join-ID' button in the lobby to join",
+          ),
+          height8,
+          button("Leave", leaveLobby)
+        ]),
+  );
 }
 
 // TODO Logic does not belong here
@@ -74,7 +83,7 @@ Widget buildLobbyList() {
 
         Widget startButton = button("START", () {
           sendClientRequestLobbyCreate(
-              maxPlayers: _maxPlayers, type: _gameType, name: "Silly");
+              maxPlayers: _maxPlayers, type: _gameType, name: "Silly", private: _private);
         });
 
         sendRequestLobbyList();
