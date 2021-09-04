@@ -94,15 +94,12 @@ class _MainMenuState extends State<MainMenu> with SingleTickerProviderStateMixin
             text("Settings"),
           ],
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         floatingActionButton: Stack(
           children: <Widget>[
             Align(
               alignment: Alignment.bottomRight,
-              child: FloatingActionButton(
-                heroTag: null,
-                child: text("X"),
-                // onPressed: () => _pop(dialogContext),
-              ),
+              child: button("Close", () => _pop(context)),
             ),
           ],
         ),

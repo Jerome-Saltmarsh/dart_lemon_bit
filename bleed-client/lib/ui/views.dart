@@ -1,4 +1,5 @@
 import 'package:bleed_client/classes/Lobby.dart';
+import 'package:bleed_client/enums/GameType.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/ui/widgets.dart';
@@ -23,26 +24,94 @@ void leaveLobby() {
   redrawUI();
 }
 
+GameType _gameType = GameType.DeathMatch;
+int _maxPlayers = 8;
+bool _private = false;
+
 Widget buildLobbyList() {
+  double lobbyListViewHeight = 200;
+
   return Refresh(
       builder: Builder(builder: (BuildContext context) {
-
         if (state.lobby != null) return buildLobby();
 
+        Widget gameTypeButton = StatefulBuilder(
+            builder: ((BuildContext builderContext, StateSetter setState) {
+          return button("${_gameType.toString().replaceAll("GameType.", "")}",
+              () {
+            setState(() {
+              _gameType = GameType
+                  .values[(_gameType.index + 1) % GameType.values.length];
+            });
+          });
+        }));
+
+        Widget playersButton = StatefulBuilder(
+            builder: ((BuildContext builderContext, StateSetter setState) {
+          return button("Players: $_maxPlayers", () {
+            setState(() {
+              if (_maxPlayers >= 64) {
+                _maxPlayers = 2;
+              } else {
+                _maxPlayers += _maxPlayers;
+              }
+            });
+          });
+        }));
+
+        Widget privateButton = StatefulBuilder(
+            builder: ((BuildContext builderContext, StateSetter setState) {
+          return button(_private ? "Private" : "Public", () {
+            setState(() => _private = !_private);
+          });
+        }));
+
+        Widget startButton = button("START", (){
+          sendClientRequestLobbyCreate(maxPlayers: _maxPlayers, type: _gameType, name: "Silly");
+        });
+
         sendRequestLobbyList();
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            height(50),
-            button("Create Game", showDialogCreateGame),
-            border(
-              child: Container(
-                  width: 400,
-                  height: 400,
-                  child: ListView(
-                      children: state.lobbies.map(_buildLobbyListTile).toList())),
-            ),
-          ],
+        return Container(
+          padding: EdgeInsets.symmetric(horizontal: 8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                // padding: EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    height(8),
+                    text("Create"),
+                    Row(
+                      children: [
+                        gameTypeButton,
+                        playersButton,
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        privateButton,
+                        startButton,
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              height(8),
+              text("Public Games"),
+              border(
+                child: Container(
+                    height: lobbyListViewHeight,
+                    child: ListView(
+                        children:
+                            state.lobbies.map(_buildLobbyListTile).toList())),
+              ),
+
+              height(16),
+              Tooltip(child: button("JOIN PRIVATE", () {}), message: "First copy the game id then click this button"),
+            ],
+          ),
         );
       }),
       duration: Duration(seconds: 3));
@@ -53,6 +122,7 @@ Widget _buildLobbyListTile(Lobby lobby) {
     child: ListTile(
         leading: text(lobby.name),
         title: text("${lobby.playersJoined} / ${lobby.maxPlayers}"),
-        trailing: text("JOIN", onPressed: () => { sendRequestJoinLobby(lobby.uuid) })),
+        trailing:
+            text("JOIN", onPressed: () => {sendRequestJoinLobby(lobby.uuid)})),
   );
 }
