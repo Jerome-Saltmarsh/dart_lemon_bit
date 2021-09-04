@@ -179,7 +179,7 @@ void parseState() {
 
 void _parseGameId() {
   compiledGame.gameId = _consumeInt();
-  gameType = GameType.values[_consumeInt()];
+  compiledGame.gameType = GameType.values[_consumeInt()];
 }
 
 void _parseFortressMeta() {

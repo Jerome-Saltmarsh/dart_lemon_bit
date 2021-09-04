@@ -1,6 +1,7 @@
 
 import 'dart:ui';
 
+import 'package:bleed_client/enums/GameType.dart';
 import 'package:bleed_client/enums/Weapons.dart';
 
 import '../enums.dart';
@@ -19,6 +20,7 @@ class CompiledGame {
   List<Particle> particles = [];
   List<double> grenades = [];
   int gameId = -1;
+  GameType gameType;
   int totalBullets = 0;
   int playerId = -1;
   String playerUUID = "";

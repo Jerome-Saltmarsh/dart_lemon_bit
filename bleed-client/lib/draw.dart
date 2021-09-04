@@ -31,11 +31,6 @@ void drawCharacters() {
 }
 
 void drawNpcs() {
-  // compiledGame.npcs.sort((a, b) {
-  //   if (a[y] < b[y]) return -1;
-  //   return 1;
-  // });
-
   render.npcsTransforms.clear();
   render.npcsRects.clear();
 

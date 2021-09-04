@@ -29,7 +29,6 @@ Duration refreshDuration;
 List<SpriteAnimation> animations = [];
 int drawFrame = 0;
 bool debugMode = false;
-GameType gameType;
 bool gameOver = false;
 int serverFramesMS = 0;
 int actualFPS;

@@ -1,4 +1,5 @@
 import 'package:bleed_client/editor/editor.dart';
+import 'package:bleed_client/enums/GameType.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
@@ -19,7 +20,6 @@ import 'instances/settings.dart';
 import 'send.dart';
 import 'settings.dart';
 import 'state.dart';
-import 'ui/views.dart';
 import 'ui/widgets.dart';
 import 'utils.dart';
 
@@ -361,7 +361,8 @@ Widget buildHud() {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          if (!_showDebug) button('Debug', () => _showDebug = !_showDebug),
+          if (developMode && !_showDebug) button('Debug', () => _showDebug = !_showDebug),
+          if (developMode)
           button('Editor', toggleMode),
           button("FullScreen", requestFullScreen),
           buildImageButton(_iconMenu, showDialogMainMenu),
@@ -424,6 +425,7 @@ Widget buildHud() {
       if (_showDebug) topLeft,
       topRight,
       bottomLeft,
+      if(compiledGame.gameType == GameType.Fortress)
       bottomRight,
       if (gameOver) buildGameOver(),
       if (!gameOver && playerHealth <= 0) buildRespawn()
