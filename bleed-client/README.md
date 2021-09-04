@@ -31,7 +31,7 @@ Squis Studios
 [ ] Death Match Player Lives
 [ ] Random Power up Square 
 [ ] Random Item Square
-[ ] Show Shots remaining text at cursor
+[x] Show Shots remaining text at cursor
 [x] Deployed client auto connect to gcp
 [x] Lobby
 [x] Fix parse bullet bugs

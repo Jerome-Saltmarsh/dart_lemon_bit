@@ -56,6 +56,12 @@ void _drawCompiledGame() {
   drawEditMode();
   _drawCollectables();
   drawPaths();
+
+  if (mouseAvailable){
+    drawText(compiledGame.roundsRemaining > 0 ? compiledGame.roundsRemaining.toString() :  "Empty", mouseWorldX, mouseWorldY - 20, white);
+  }
+
+
   drawMouse();
 }
 
