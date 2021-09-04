@@ -257,6 +257,8 @@ Rect tileRectGrass = getTileSpriteRectByIndex(1);
 Rect tileRectRed = getTileSpriteRectByIndex(2);
 Rect tileRectYellow = getTileSpriteRectByIndex(3);
 Rect tileRectBlue = getTileSpriteRectByIndex(4);
+Rect tileRectGreen = getTileSpriteRectByIndex(5);
+Rect tileRectPurple = getTileSpriteRectByIndex(6);
 
 Rect getTileSpriteRectByIndex(int index) {
   return rectByIndex(
@@ -279,6 +281,8 @@ Rect getTileSpriteRect(Tile tile) {
       return tileRectBlue;
     case Tile.ZombieSpawn:
       return tileRectRed;
+    case Tile.RandomItemSpawn:
+      return tileRectPurple;
   }
   throw Exception("could not find rect for tile $tile");
 }

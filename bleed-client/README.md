@@ -1,7 +1,4 @@
-Squizzy Studios
-Squis Studios
-
-# TODO
+-- FEATURES -- 
 [ ] Critical Damage
 [ ] Accuracy
 [ ] Weapon Oozie
@@ -10,27 +7,29 @@ Squis Studios
 [ ] Game Type: Capture The Squares
 [ ] Game Type: Sandbox
 [ ] Throw Animation
+[ ] Knife Attack
 [ ] Player Name Text
 [ ] Particle Gunshot smoke
 [ ] Cache Particles
 [ ] Zombie Hurt Animation
-[ ] Npc Text
 [ ] Grenade tile collision
 [ ] Stamina Potion
 [ ] Rag doll death
+[ ] Cursor Cooldown Circle
+-- OPEN WORLD -- 
+[ ] Npc Talk Text
 -- RELEASE FORTRESS -- 
 [ ] Fix Npc Wander
 [ ] Fire Shotgun Animation
 [ ] Fortress life lost audio
 [ ] Fortress Cache Path 
-[ ] FIX NPC ai walks into walls
 -- RELEASE DEATH MATCH-- 
-[ ] Create / Find / Join Game 
 [ ] Death Match - Player Lives
 [ ] Pickup Grenades
 [ ] Death Match Player Lives
 [ ] Random Power up Square 
 [ ] Random Item Square
+[x] Create / Find / Join Game 
 [x] Show Shots remaining text at cursor
 [x] Deployed client auto connect to gcp
 [x] Lobby

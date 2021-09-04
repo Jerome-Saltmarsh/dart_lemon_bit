@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 
 import '../classes.dart';
@@ -35,15 +34,7 @@ class Fortress extends Game {
 
   Map<TileNode, List<Vector2>> nodeToFortress = Map();
 
-  Fortress() : super(GameType.Fortress, scenes.fortress, 8) {
-    for (int row = 0; row < scene.rows; row++) {
-      for (int column = 0; column < scene.columns; column++) {
-        if (scene.tiles[row][column] == Tile.ZombieSpawn) {
-            // nodeToFortress[scene.tiles[row][column]] = scene.findPathNodes(scene.tiles[row][column], scene.fortressPosition)
-        }
-      }
-    }
-  }
+  Fortress() : super(GameType.Fortress, scenes.fortress, 8) ;
 
   void update() {
     if (lives <= 0) return;
@@ -119,8 +110,11 @@ abstract class Game {
   List<Bullet> bullets = [];
   List<Grenade> grenades = [];
   List<GameEvent> gameEvents = [];
-  List<Collectable> collectables = [];
+  final List<Collectable> collectables = [];
+  final List<Vector2> playerSpawnPoints = [];
+  final List<Vector2> zombieSpawnPoints = [];
   String compiled = "";
+
 
   // TODO doesn't belong here
   StringBuffer buffer = StringBuffer();
@@ -133,10 +127,18 @@ abstract class Game {
   bool gameOver();
 
   Game(this.type, this.scene, this.maxPlayers) {
-    for (Collectable collectable in scene.collectables) {
-      collectables.add(collectable);
-    }
     gameIdString = '${ServerResponse.Game_Id.index} $id ${type.index} ; ';
+
+    for (int row = 0; row < scene.rows; row++) {
+      for (int column = 0; column < scene.columns; column++) {
+        if (scene.tiles[row][column] == Tile.ZombieSpawn) {
+          zombieSpawnPoints.add(getTilePosition(row, column));
+        }
+        if (scene.tiles[row][column] == Tile.PlayerSpawn) {
+          playerSpawnPoints.add(getTilePosition(row, column));
+        }
+      }
+    }
   }
 }
 
@@ -871,15 +873,15 @@ extension GameFunctions on Game {
   }
 
   void spawnRandomNpc() {
-    if (scene.zombieSpawnPoints.isEmpty) return;
+    if (zombieSpawnPoints.isEmpty) return;
     if (npcs.length >= settings.maxZombies) return;
 
-    Vector2 spawnPoint = randomValue(scene.zombieSpawnPoints);
+    Vector2 spawnPoint = randomValue(zombieSpawnPoints);
     spawnNpc(spawnPoint.x + giveOrTake(5), spawnPoint.y + giveOrTake(5));
   }
 
   Player spawnPlayer({required String name}) {
-    Vector2 spawnPoint = scene.randomPlayerSpawnPoint();
+    Vector2 spawnPoint = randomPlayerSpawnPoint();
     Player player = Player(
         uuid: _generateUUID(),
         x: spawnPoint.x + giveOrTake(3),
@@ -958,15 +960,19 @@ extension GameFunctions on Game {
       }
     }
 
-    if (scene.playerSpawnPoints.isEmpty) {
+    if (playerSpawnPoints.isEmpty) {
       character.x = giveOrTake(settingsPlayerStartRadius);
       character.y = tilesLeftY + giveOrTake(settingsPlayerStartRadius);
     } else {
-      Vector2 spawnPoint = scene.randomPlayerSpawnPoint();
+      Vector2 spawnPoint = randomPlayerSpawnPoint();
       character.x = spawnPoint.x;
       character.y = spawnPoint.y;
     }
     character.collidable = true;
+  }
+
+  Vector2 randomPlayerSpawnPoint() {
+    return playerSpawnPoints[randomInt(0, playerSpawnPoints.length)];
   }
 
   void npcSetRandomDestination(Npc npc) {

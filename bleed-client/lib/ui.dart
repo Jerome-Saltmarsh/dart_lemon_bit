@@ -1,3 +1,4 @@
+import 'package:bleed_client/bleed.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/enums/GameType.dart';
 import 'package:bleed_client/functions/clearState.dart';
@@ -84,10 +85,6 @@ Future<void> showChangeNameDialog() async {
       );
     },
   );
-}
-
-void connectToGCP() {
-  connect(gpc);
 }
 
 Widget buildGameUI(BuildContext context) {
@@ -351,8 +348,8 @@ Widget buildHud() {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          if (developMode && !_showDebug) button('Debug', () => _showDebug = !_showDebug),
-          if (developMode) button('Editor', toggleMode),
+          if (settings.developMode && !_showDebug) button('Debug', () => _showDebug = !_showDebug),
+          if (settings.developMode) button('Editor', toggleMode),
           iconMenu
         ],
       ));

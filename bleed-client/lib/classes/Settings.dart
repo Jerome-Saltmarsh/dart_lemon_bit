@@ -3,6 +3,7 @@ class Settings {
   double cameraFollow = 0.05;
   double zoomSpeed = 0.0005;
   double maxZoom = 0.1;
+  bool developMode = true;
 }
 
 

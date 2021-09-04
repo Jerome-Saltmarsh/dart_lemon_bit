@@ -42,6 +42,17 @@ void _addCollectable(CollectableType type) {
   compiledGame.collectables.add(mouseWorldY.toInt());
 }
 
+Widget _buildInfo() {
+  return Column(
+    children: [
+      text("Mouse X: ${mouseWorldX.toInt()}, mouse Y: ${mouseWorldY.toInt()}"),
+      text(
+          "MousePro X: ${mouseUnprojectPositionX.toInt()}, mouseProY: ${mouseUnprojectPositionY.toInt()}"),
+      text("Tile X: $mouseTileX, Tile Y: $mouseTileY"),
+    ],
+  );
+}
+
 Widget buildEditorUI() {
   return Container(
     width: globalSize.width,
@@ -55,14 +66,9 @@ Widget buildEditorUI() {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              text(
-                  "Mouse X: ${mouseWorldX.toInt()}, mouse Y: ${mouseWorldY.toInt()}"),
-              text(
-                  "MousePro X: ${mouseUnprojectPositionX.toInt()}, mouseProY: ${mouseUnprojectPositionY.toInt()}"),
-              text("Tile X: $mouseTileX, Tile Y: $mouseTileY"),
-              column(EditorTool.values.map((e) {
-                return button(e.toString(), () {
-                  editState.tool = e;
+              column(Tile.values.map((tile) {
+                return button(tile.toString(), () {
+                  editState.tile = tile;
                 });
               }).toList()),
               button("Save Scene", saveScene),
@@ -203,17 +209,18 @@ void _handleMouseDrag() {
     return;
   }
 
-  switch (editState.tool) {
-    case EditorTool.Block:
-      _handleDragBlock();
-      break;
-    case EditorTool.TileGrass:
-      setTileAtMouse(Tile.Grass);
-      break;
-    case EditorTool.TileConcrete:
-      setTileAtMouse(Tile.Concrete);
-      break;
-  }
+  setTileAtMouse(editState.tile);
+  // switch (editState.tool) {
+  //   case EditorTool.Block:
+  //     _handleDragBlock();
+  //     break;
+  //   case EditorTool.TileGrass:
+  //     setTileAtMouse(Tile.Grass);
+  //     break;
+  //   case EditorTool.TileConcrete:
+  //     setTileAtMouse(Tile.Concrete);
+  //     break;
+  // }
 }
 
 void _handleDragBlock() {
@@ -278,28 +285,29 @@ void _handleMouseClick([bool drag = false]) {
     }
   }
 
-  switch (editState.tool) {
-    case EditorTool.Block:
-      _getBlockAt(mouseWorldX, mouseWorldY);
-      break;
-    case EditorTool.TileGrass:
-      setTileAtMouse(Tile.Grass);
-      break;
-    case EditorTool.TileConcrete:
-      setTileAtMouse(Tile.Concrete);
-      break;
-    case EditorTool.TileFortress:
-      setTileAtMouse(Tile.Fortress);
-      break;
-    case EditorTool.ZombieSpawn:
-      setTileAtMouse(Tile.ZombieSpawn);
-      break;
-    case EditorTool.PlayerSpawn:
-      setTileAtMouse(Tile.PlayerSpawn);
-      break;
-    default:
-      throw Exception("No implementation for ${editState.tool}");
-  }
+  setTileAtMouse(editState.tile);
+  // switch (editState.tool) {
+  //   case EditorTool.Block:
+  //     _getBlockAt(mouseWorldX, mouseWorldY);
+  //     break;
+  //   case EditorTool.TileGrass:
+  //     setTileAtMouse(Tile.Grass);
+  //     break;
+  //   case EditorTool.TileConcrete:
+  //     setTileAtMouse(Tile.Concrete);
+  //     break;
+  //   case EditorTool.TileFortress:
+  //     setTileAtMouse(Tile.Fortress);
+  //     break;
+  //   case EditorTool.ZombieSpawn:
+  //     setTileAtMouse(Tile.ZombieSpawn);
+  //     break;
+  //   case EditorTool.PlayerSpawn:
+  //     setTileAtMouse(Tile.PlayerSpawn);
+  //     break;
+  //   default:
+  //     throw Exception("No implementation for ${editState.tool}");
+  // }
 }
 
 void setTileAtMouse(Tile tile) {
@@ -309,8 +317,8 @@ void setTileAtMouse(Tile tile) {
   if (column < 0) return;
   // if (row < compiledGame.tiles.length && row < compiledGame.tiles[0].length) {
   //   gameEdit.tiles[row][column] = tile;
-    compiledGame.tiles[row][column] = tile;
-    renderTiles(compiledGame.tiles);
+  compiledGame.tiles[row][column] = tile;
+  renderTiles(compiledGame.tiles);
   // }
 }
 

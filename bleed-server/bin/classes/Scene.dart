@@ -12,16 +12,13 @@ int search = 0;
 class Scene {
   final List<List<Tile>> tiles;
   final List<Block> blocks;
-  final List<Collectable> collectables;
-  final List<Vector2> playerSpawnPoints = [];
-  final List<Vector2> zombieSpawnPoints = [];
   late Vector2 fortressPosition;
 
   late final List<List<TileNode>> tileNodes;
   late final int rows;
   late final int columns;
 
-  Scene(this.tiles, this.blocks, this.collectables) {
+  Scene(this.tiles, this.blocks) {
     rows = tiles.length;
     columns = tiles[0].length;
     tileNodes = [];
@@ -41,12 +38,6 @@ class Scene {
         node.position = Vector2(px, py);
         nodeRow.add(node);
 
-        if (tiles[row][column] == Tile.PlayerSpawn) {
-          playerSpawnPoints.add(node.position);
-        }
-        if (tiles[row][column] == Tile.ZombieSpawn) {
-          zombieSpawnPoints.add(node.position);
-        }
         if (tiles[row][column] == Tile.Fortress) {
           fortressPosition = node.position;
         }
@@ -105,10 +96,6 @@ extension SceneFunctions on Scene {
 
   void addBlock(double x, double y, double width, double length) {
     blocks.add(Block.build(x, y, width, length));
-  }
-
-  Vector2 randomPlayerSpawnPoint() {
-    return playerSpawnPoints[randomInt(0, playerSpawnPoints.length)];
   }
 
   int _sortNodes(TileNodeVisit a, TileNodeVisit b) {

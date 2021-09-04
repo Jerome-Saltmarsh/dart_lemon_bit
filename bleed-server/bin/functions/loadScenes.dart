@@ -72,7 +72,7 @@ Scene _mapStringToScene(String text) {
   List jsonBlocks = json['blocks'];
   List<Block> blocks = jsonBlocks.map(_mapJsonBlockToBlock).toList();
   sortBlocks(blocks);
-  return Scene(tiles, blocks, collectables);
+  return Scene(tiles, blocks);
 }
 
 Block _mapJsonBlockToBlock(dynamic jsonBlock) {

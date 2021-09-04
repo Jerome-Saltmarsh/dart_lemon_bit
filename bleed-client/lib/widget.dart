@@ -52,8 +52,6 @@ class BleedWidget extends GameWidget {
     initEditor();
     startJobs();
 
-    if(!developMode) connectToGCP();
-
     compiledGame.npcs = [];
     for(int i = 0; i < 3000; i++){
       compiledGame.npcs.add([0, 0, 0.0, 0.0, 0, 0]);
