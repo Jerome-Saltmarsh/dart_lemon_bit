@@ -1,6 +1,5 @@
 import 'package:bleed_client/classes/Lobby.dart';
 import 'package:bleed_client/enums/GameType.dart';
-import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/ui/widgets.dart';
@@ -11,16 +10,15 @@ import 'package:flutter/material.dart';
 import '../state.dart';
 
 Widget buildJoinedLobby() {
-  return center(Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-
-    Tooltip(
-      child: button("Copy Game ID", (){
-        FlutterClipboard.copy(state.lobby.uuid);
-      }),
-      message: "Send this id to friends to help them connect to this game",
-    ),
+  return center(Column(mainAxisAlignment: MainAxisAlignment.start, children: [
     text(
         "${state.lobby.name} Joined ${state.lobby.playersJoined} / ${state.lobby.maxPlayers}"),
+    Tooltip(
+      child: button("Copy Join-ID", () {
+        FlutterClipboard.copy(state.lobby.uuid);
+      }),
+      message: "Send this id to friends. Once copied, they can click the 'Paste Join-ID' button in the lobby to join",
+    ),
     button("Leave", leaveLobby)
   ]));
 }
@@ -83,6 +81,7 @@ Widget buildLobbyList() {
         return Container(
           padding: EdgeInsets.symmetric(horizontal: 8),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
@@ -90,15 +89,18 @@ Widget buildLobbyList() {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    height(8),
+                    height(16),
                     text("Create"),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         gameTypeButton,
                         playersButton,
                       ],
                     ),
+                    height(4),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         privateButton,
                         startButton,
@@ -107,8 +109,9 @@ Widget buildLobbyList() {
                   ],
                 ),
               ),
-              height(8),
+              height(16),
               text("Public Games"),
+              height(4),
               border(
                 child: Container(
                     height: lobbyListViewHeight,
@@ -118,7 +121,7 @@ Widget buildLobbyList() {
               ),
               height(16),
               Tooltip(
-                  child: button("JOIN COPIED ID GAME", () async {
+                  child: button("Paste Join-ID", () async {
                     String copied = await FlutterClipboard.paste();
                     sendRequestJoinLobby(copied);
                   }),
