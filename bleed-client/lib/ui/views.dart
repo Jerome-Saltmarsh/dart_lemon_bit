@@ -3,14 +3,21 @@ import 'package:bleed_client/enums/GameType.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/ui/widgets.dart';
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../state.dart';
-import 'dialogs.dart';
 
 Widget buildLobby() {
   return center(Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+
+    Tooltip(
+      child: button("Copy Game ID", (){
+        FlutterClipboard.copy(state.lobby.uuid).then(( value ) => print('copied'));
+      }),
+      message: "Send this id to friends to help them connect to this game",
+    ),
     text(
         "${state.lobby.name} Joined ${state.lobby.playersJoined} / ${state.lobby.maxPlayers}"),
     button("Leave", leaveLobby)
@@ -66,8 +73,9 @@ Widget buildLobbyList() {
           });
         }));
 
-        Widget startButton = button("START", (){
-          sendClientRequestLobbyCreate(maxPlayers: _maxPlayers, type: _gameType, name: "Silly");
+        Widget startButton = button("START", () {
+          sendClientRequestLobbyCreate(
+              maxPlayers: _maxPlayers, type: _gameType, name: "Silly");
         });
 
         sendRequestLobbyList();
@@ -107,9 +115,14 @@ Widget buildLobbyList() {
                         children:
                             state.lobbies.map(_buildLobbyListTile).toList())),
               ),
-
               height(16),
-              Tooltip(child: button("JOIN PRIVATE", () {}), message: "First copy the game id then click this button"),
+              Tooltip(
+                  child: button("JOIN COPIED ID GAME", () async {
+                    String copied = await FlutterClipboard.paste();
+                    sendRequestJoinLobby(copied);
+                  }),
+                  message:
+                      "First copy (ctrl + c) the game id then click this button"),
             ],
           ),
         );
