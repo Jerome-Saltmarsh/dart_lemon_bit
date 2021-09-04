@@ -9,15 +9,6 @@ class GameManager {
   List<Game> games = [];
   List<Lobby> lobbies = [];
 
-  Game? findGameById(String id) {
-    for (Game game in games) {
-      if (game.id == id) {
-        return game;
-      }
-    }
-    return null;
-  }
-
   Scene buildOpenWorldScene() {
     List<Block> blocks = [];
     blocks.add(Block.build(50, 800, 200, 150));

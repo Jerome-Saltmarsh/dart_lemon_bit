@@ -34,7 +34,7 @@ class Fortress extends Game {
 
   Map<TileNode, List<Vector2>> nodeToFortress = Map();
 
-  Fortress() : super(GameType.Fortress, scenes.fortress, 8) ;
+  Fortress() : super(GameType.Fortress, scenes.fortress, 8);
 
   void update() {
     if (lives <= 0) return;
@@ -70,8 +70,7 @@ class Fortress extends Game {
             double x = getTilePositionX(row, column);
             double y = getTilePositionY(row, column);
             for (int i = 0; i < wave; i++) {
-              Npc npc = spawnNpc(x + giveOrTake(5), y + giveOrTake(5));
-              // npc.path = findPathNodes
+              spawnNpc(x + giveOrTake(5), y + giveOrTake(5));
             }
           }
         }
@@ -86,7 +85,8 @@ class Fortress extends Game {
 }
 
 class DeathMatch extends Game {
-  DeathMatch({int maxPlayers = 32}) : super(GameType.DeathMatch, scenes.town, maxPlayers);
+  DeathMatch({int maxPlayers = 32})
+      : super(GameType.DeathMatch, scenes.town, maxPlayers);
 
   @override
   void update() {}
@@ -115,7 +115,6 @@ abstract class Game {
   final List<Vector2> zombieSpawnPoints = [];
   String compiled = "";
 
-
   // TODO doesn't belong here
   StringBuffer buffer = StringBuffer();
 
@@ -131,11 +130,17 @@ abstract class Game {
 
     for (int row = 0; row < scene.rows; row++) {
       for (int column = 0; column < scene.columns; column++) {
-        if (scene.tiles[row][column] == Tile.ZombieSpawn) {
-          zombieSpawnPoints.add(getTilePosition(row, column));
-        }
-        if (scene.tiles[row][column] == Tile.PlayerSpawn) {
-          playerSpawnPoints.add(getTilePosition(row, column));
+        switch(scene.tiles[row][column]){
+          case Tile.ZombieSpawn:
+            zombieSpawnPoints.add(getTilePosition(row, column));
+            break;
+          case Tile.PlayerSpawn:
+            playerSpawnPoints.add(getTilePosition(row, column));
+            break;
+          case Tile.RandomItemSpawn:
+            Vector2 tilePosition = getTilePosition(row, column);
+            collectables.add(Collectable(tilePosition.x, tilePosition.y, CollectableType.Handgun_Ammo));
+            break;
         }
       }
     }
@@ -157,7 +162,6 @@ extension GameFunctions on Game {
       _updateGameEvents();
     }
     compileGame(this);
-
   }
 
   void _updateCollectables() {
@@ -855,16 +859,15 @@ extension GameFunctions on Game {
 
   Npc spawnNpc(double x, double y) {
     for (int i = 0; i < npcs.length; i++) {
-      if (!npcs[i].active) {
-        Npc npc = npcs[i];
-        npc.active = true;
-        npc.state = CharacterState.Idle;
-        npc.previousState = CharacterState.Idle;
-        npc.health = 3;
-        npc.x = x;
-        npc.y = y;
-        return npc;
-      }
+      if (npcs[i].active) continue;
+      Npc npc = npcs[i];
+      npc.active = true;
+      npc.state = CharacterState.Idle;
+      npc.previousState = CharacterState.Idle;
+      npc.health = 3;
+      npc.x = x;
+      npc.y = y;
+      return npc;
     }
 
     Npc npc = Npc(x: x, y: y, health: 3, maxHealth: 3);
@@ -994,7 +997,6 @@ extension GameFunctions on Game {
     }
   }
 }
-
 
 String _generateUUID() {
   return uuidGenerator.v4().substring(0, 8);

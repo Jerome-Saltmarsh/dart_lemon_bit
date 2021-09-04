@@ -24,3 +24,12 @@ LobbyUser? findLobbyUser(Lobby lobby, String playerUuid){
 void removePlayerFromLobby(Lobby lobby, String playerUuid){
   lobby.players.removeWhere((element) => element.uuid == playerUuid);
 }
+
+Game? findGameById(String id) {
+  for (Game game in games) {
+    if (game.id == id) {
+      return game;
+    }
+  }
+  return null;
+}

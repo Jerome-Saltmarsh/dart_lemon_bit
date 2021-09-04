@@ -122,7 +122,7 @@ void main() {
           break;
 
         case ClientRequest.Game_Update:
-          Game? game = gameManager.findGameById(arguments[1]);
+          Game? game = findGameById(arguments[1]);
           if (game == null) {
             errorGameNotFound();
             return;
@@ -149,7 +149,7 @@ void main() {
           return;
 
         case ClientRequest.Player_Use_MedKit:
-          Game? game = gameManager.findGameById(arguments[1]);
+          Game? game = findGameById(arguments[1]);
           if (game == null) {
             errorGameNotFound();
             return;
@@ -259,7 +259,7 @@ void main() {
 
         case ClientRequest.Player_Revive:
           String gameId = arguments[1];
-          Game? game = gameManager.findGameById(gameId);
+          Game? game = findGameById(gameId);
           if (game == null) {
             errorGameNotFound();
             return;
@@ -284,7 +284,7 @@ void main() {
 
         case ClientRequest.Spawn_Npc:
           String gameId = arguments[1];
-          Game? game = gameManager.findGameById(gameId);
+          Game? game = findGameById(gameId);
           if (game == null) {
             errorGameNotFound();
             return;
@@ -294,7 +294,7 @@ void main() {
 
         case ClientRequest.Player_Equip:
           String gameId = arguments[1];
-          Game? game = gameManager.findGameById(gameId);
+          Game? game = findGameById(gameId);
           if (game == null) {
             errorGameNotFound();
             return;
@@ -334,7 +334,7 @@ void main() {
 
         case ClientRequest.Player_Throw_Grenade:
           String gameId = arguments[1];
-          Game? game = gameManager.findGameById(gameId);
+          Game? game = findGameById(gameId);
           if (game == null) {
             error(GameError.GameNotFound);
             return;

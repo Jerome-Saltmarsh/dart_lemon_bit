@@ -68,15 +68,6 @@ void updateLobbies() {
   }
 }
 
-void _updateFPS(){
-  // DateTime now = DateTime.now();
-  // frameDuration = now.difference(frameTime);
-  // if (frameDuration.inMilliseconds > 0) {
-  //   fps = 1000 ~/ frameDuration.inMilliseconds;
-  // }
-  // frameTime = now;
-}
-
 int compareGameObjects(GameObject a, GameObject b) {
   if (a.x < b.x) {
     return _minusOne;

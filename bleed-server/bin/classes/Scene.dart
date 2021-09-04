@@ -1,13 +1,17 @@
 import '../enums.dart';
 import '../maths.dart';
 import 'Block.dart';
-import 'Collectable.dart';
 import 'TileNode.dart';
 import 'Vector2.dart';
 
-List<Vector2> _emptyPath = [];
+// constants
+const List<Vector2> _emptyPath = [];
 const int _tileSize = 48;
-int search = 0;
+final Vector2 _vector2Zero = Vector2(0, 0);
+final Vector2 _vector2 = Vector2(0, 0);
+final TileNode _boundary = TileNode(false);
+// state
+int _search = 0;
 
 class Scene {
   final List<List<Tile>> tiles;
@@ -85,9 +89,15 @@ class Scene {
   }
 }
 
-final Vector2 _vector2Zero = Vector2(0, 0);
-Vector2 _vector2 = Vector2(0, 0);
-TileNode _boundary = TileNode(false);
+int sortTileNodeVisits(TileNodeVisit a, TileNodeVisit b) {
+  int scoreA = a.travelled + a.remaining;
+  int scoreB = b.travelled + b.remaining;
+  if (scoreA < scoreB) return 1;
+  if (scoreA > scoreB) return -1;
+  if (a.remaining < b.remaining) return 1;
+  if (a.remaining > b.remaining) return -1;
+  return 0;
+}
 
 extension SceneFunctions on Scene {
   void sortBlocks() {
@@ -96,16 +106,6 @@ extension SceneFunctions on Scene {
 
   void addBlock(double x, double y, double width, double length) {
     blocks.add(Block.build(x, y, width, length));
-  }
-
-  int _sortNodes(TileNodeVisit a, TileNodeVisit b) {
-    int scoreA = a.travelled + a.remaining;
-    int scoreB = b.travelled + b.remaining;
-    if (scoreA < scoreB) return 1;
-    if (scoreA > scoreB) return -1;
-    if (a.remaining < b.remaining) return 1;
-    if (a.remaining > b.remaining) return -1;
-    return 0;
   }
 
   List<Vector2> findPath(double x1, double y1, double x2, double y2) {
@@ -119,25 +119,25 @@ extension SceneFunctions on Scene {
   void visit(TileNode tileNode, TileNodeVisit previous,
       List<TileNodeVisit> visits, TileNode endNode) {
     if (!tileNode.open) return;
-    if (tileNode.search == search) return;
+    if (tileNode.search == _search) return;
 
     int remaining =
         diffInt(tileNode.x, endNode.x) + diffInt(tileNode.y, endNode.y);
     TileNodeVisit tileNodeVisit = TileNodeVisit(previous, remaining, tileNode);
     visits.add(tileNodeVisit);
-    tileNode.search = search;
+    tileNode.search = _search;
   }
 
   List<Vector2> findPathNodes(TileNode startNode, TileNode endNode) {
     if (!startNode.open) return _emptyPath;
     if (!endNode.open) return _emptyPath;
 
-    search++;
+    _search++;
 
     int remaining = diffInt(startNode.x, endNode.x) + diffInt(startNode.y, endNode.y);
 
     List<TileNodeVisit> visits = [TileNodeVisit(null, remaining, startNode)];
-    startNode.search = search;
+    startNode.search = _search;
 
     while (visits.isNotEmpty) {
       if (visits.last.tileNode == endNode) {
@@ -175,7 +175,7 @@ extension SceneFunctions on Scene {
       }
       visit(last.tileNode.right, last, visits, endNode);
       visit(last.tileNode.left, last, visits, endNode);
-      visits.sort(_sortNodes);
+      visits.sort(sortTileNodeVisits);
     }
     return _emptyPath;
   }
