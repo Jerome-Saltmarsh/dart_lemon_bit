@@ -9,46 +9,46 @@ List<AudioPlayer> _audioPlayers = [];
 const _totalAudioPlayers = 150;
 
 const _zombieHits = [
-  'zombie-hit-01.wav',
-  'zombie-hit-02.wav',
-  'zombie-hit-03.wav',
-  'zombie-hit-05.wav'
+  'zombie-hit-01.mp3',
+  'zombie-hit-02.mp3',
+  'zombie-hit-03.mp3',
+  'zombie-hit-05.mp3'
 ];
 
 const _humanHurt = [
-  'male-hurt-01.wav',
+  'male-hurt-01.mp3',
   'male-hurt-02.wav',
 ];
 
 const _zombieDeath = [
-  'zombie-death-02.wav',
-  'zombie-death-09.wav',
-  'zombie-death-15.wav',
+  'zombie-death-02.mp3',
+  'zombie-death-09.mp3',
+  'zombie-death-15.mp3',
 ];
 
 const _zombieTalking = [
-  'zombie-talking-03.wav',
-  'zombie-talking-04.wav',
-  'zombie-talking-05.wav',
+  'zombie-talking-03.mp3',
+  'zombie-talking-04.mp3',
+  'zombie-talking-05.mp3',
 ];
 
 const _zombieBite = [
-  'zombie-bite-04.wav',
-  'zombie-bite-05.wav',
-  'bloody-punches-1.wav',
-  'bloody-punches-2.wav',
-  'bloody-punches-3.wav',
+  'zombie-bite-04.mp3',
+  'zombie-bite-05.mp3',
+  'bloody-punches-1.mp3',
+  'bloody-punches-2.mp3',
+  'bloody-punches-3.mp3',
 ];
 
 const _maleScreams = [
-  'male-screams-01.wav',
-  'male-screams-05.wav',
-  'male-screams-06.wav',
+  'male-screams-01.mp3',
+  'male-screams-05.mp3',
+  'male-screams-06.mp3',
 ];
 
 const grenadeExplosions = [
-  'explosion-grenade-01.wav',
-  'explosion-grenade-04.wav'
+  'explosion-grenade-01.mp3',
+  'explosion-grenade-04.mp3'
 ];
 
 
@@ -59,11 +59,11 @@ void initAudioPlayers(){
 }
 
 void playAudioSniperShot(double x, double y) {
-  _play('sniper-shot-04.wav', x, y);
+  _play('sniper-shot-04.mp3', x, y);
 }
 
 void playAudioAssaultRifleShot(double x, double y) {
-  _play('assault-rifle-shot-04.wav', x, y);
+  _play('assault-rifle-shot-04.mp3', x, y);
 }
 
 void playAudioExplosion(double x, double y) {
@@ -71,15 +71,15 @@ void playAudioExplosion(double x, double y) {
 }
 
 void playAudioSniperEquipped(double x, double y) {
-  _play("gun-pickup-01.wav", x, y);
+  _play("gun-pickup-01.mp3", x, y);
 }
 
 void playAudioReload(double x, double y) {
-  _play('reload-06.wav', x, y);
+  _play('reload-06.mp3', x, y);
 }
 
 void playAudioCockShotgun(double x, double y) {
-  _play('cock-shotgun-03.wav', x, y);
+  _play('cock-shotgun-03.mp3', x, y);
 }
 
 void playPlayerDeathAudio(double x, double y) {
@@ -87,11 +87,11 @@ void playPlayerDeathAudio(double x, double y) {
 }
 
 void playAudioReloadHandgun(double x, double y) {
-  _play('mag-in-02.wav', x, y);
+  _play('mag-in-02.mp3', x, y);
 }
 
 void playAudioClipEmpty(double x, double y) {
-  _play('dry-shot-02.wav', x, y);
+  _play('dry-shot-02.mp3', x, y);
 }
 
 void playAudioZombieBite(double x, double y) {
@@ -124,6 +124,10 @@ void playAudioHandgunShot(double x, double y) {
 
 void playAudioUseMedkit(double x, double y){
   _play('medkit.mp3', x, y);
+}
+
+void playAudioAcquireItem(double x, double y){
+  _play('item-acquired.mp3', x, y);
 }
 
 void playAudioThrowGrenade(double x, double y){

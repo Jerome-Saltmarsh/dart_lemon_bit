@@ -177,20 +177,21 @@ extension GameFunctions on Game {
 
         switch (collectables[i].type) {
           case CollectableType.Health:
+            if(player.meds >= settings.maxMeds) continue;
             player.meds++;
-            if (!player.inventory.acquire(InventoryItemType.HealthPack)) {
-              continue;
-            }
+            dispatch(GameEventType.Item_Acquired, collectables[i].x, collectables[i].y, 0, 0);
             break;
           case CollectableType.Handgun_Ammo:
             if (!player.inventory.acquire(InventoryItemType.HandgunClip)) {
               continue;
             }
+            dispatch(GameEventType.Item_Acquired, collectables[i].x, collectables[i].y, 0, 0);
             break;
 
           case CollectableType.Grenade:
             if(player.grenades >= settings.maxGrenades) continue;
             player.grenades++;
+            dispatch(GameEventType.Item_Acquired, collectables[i].x, collectables[i].y, 0, 0);
             break;
         }
         collectables[i].active = false;

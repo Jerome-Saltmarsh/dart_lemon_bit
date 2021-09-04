@@ -16,7 +16,9 @@
 [ ] Grenade tile collision
 [ ] Stamina Potion
 [ ] Rag doll death
+[ ] Bullet fired Flash
 [ ] Cursor Cooldown Circle
+[ ] Explosion Crater
 -- OPEN WORLD -- 
 [ ] Npc Talk Text
 -- RELEASE FORTRESS -- 
@@ -29,6 +31,7 @@
 [ ] Death Match Player Lives
 [ ] Random Power up Square 
 [ ] Collect Item Audio
+[ ] UI Handgun Clips Remaining
 [x] Draw Random Item
 [x] Collectable Type: Shotgun
 [x] Collectable Type: Grenade

@@ -21,4 +21,5 @@ class Settings {
   final int deathMatchMaxPlayers = 32;
   final int itemReactivationInSeconds = 60;
   final int maxGrenades = 3;
+  final int maxMeds = 3;
 }

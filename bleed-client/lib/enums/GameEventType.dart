@@ -15,5 +15,6 @@ enum GameEventType {
   Reloaded,
   Player_Hit,
   Use_MedKit,
-  Throw_Grenade
+  Throw_Grenade,
+  Item_Acquired
 }
