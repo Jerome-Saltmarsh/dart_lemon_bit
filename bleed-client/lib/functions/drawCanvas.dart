@@ -74,14 +74,22 @@ void _drawCollectables() {
   }
 }
 
+// TODO Optimize
 void drawCollectable(CollectableType type, double x, double y) {
   switch (type) {
     case CollectableType.Handgun_Ammo:
-      drawSprite(imageItems, 2, 1, x, y);
+      drawSprite(imageItems, 4, 1, x, y);
       break;
     case CollectableType.Health:
-      drawSprite(imageItems, 2, 2, x, y);
+      drawSprite(imageItems, 4, 2, x, y);
       break;
+    case CollectableType.Grenade:
+      drawSprite(imageItems, 4, 3, x, y);
+      break;
+    case CollectableType.Shotgun_Ammo:
+      drawSprite(imageItems, 4, 4, x, y);
+      break;
+
   }
 }
 

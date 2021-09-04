@@ -7,6 +7,7 @@
 [ ] Game Type: Capture The Squares
 [ ] Game Type: Sandbox
 [ ] Throw Animation
+[ ] Body Armor
 [ ] Knife Attack
 [ ] Player Name Text
 [ ] Particle Gunshot smoke
@@ -25,10 +26,14 @@
 [ ] Fortress Cache Path 
 -- RELEASE DEATH MATCH-- 
 [ ] Death Match - Player Lives
-[ ] Pickup Grenades
 [ ] Death Match Player Lives
 [ ] Random Power up Square 
-[ ] Random Item Square
+[ ] Collect Item Audio
+[x] Draw Random Item
+[x] Collectable Type: Shotgun
+[x] Collectable Type: Grenade
+[x] Respawn Random Item
+[x] Random Item Square
 [x] Create / Find / Join Game 
 [x] Show Shots remaining text at cursor
 [x] Deployed client auto connect to gcp

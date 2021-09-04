@@ -1,4 +1,6 @@
 enum CollectableType {
   Health,
-  Handgun_Ammo
+  Handgun_Ammo,
+  Shotgun_Ammo,
+  Grenade
 }

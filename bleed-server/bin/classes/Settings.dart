@@ -19,4 +19,6 @@ class Settings {
   final int maxZombies = 2500;
 
   final int deathMatchMaxPlayers = 32;
+  final int itemReactivationInSeconds = 60;
+  final int maxGrenades = 3;
 }

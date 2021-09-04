@@ -19,6 +19,7 @@ import '../settings.dart';
 import '../state.dart';
 import '../update.dart';
 import '../utils.dart';
+import '../utils/game_utils.dart';
 import 'Block.dart';
 import 'Collectable.dart';
 import 'Inventory.dart';
@@ -139,7 +140,7 @@ abstract class Game {
             break;
           case Tile.RandomItemSpawn:
             Vector2 tilePosition = getTilePosition(row, column);
-            collectables.add(Collectable(tilePosition.x, tilePosition.y, CollectableType.Handgun_Ammo));
+            collectables.add(Collectable(tilePosition.x, tilePosition.y, randomCollectableType));
             break;
         }
       }
@@ -186,11 +187,24 @@ extension GameFunctions on Game {
               continue;
             }
             break;
+
+          case CollectableType.Grenade:
+            if(player.grenades >= settings.maxGrenades) continue;
+            player.grenades++;
+            break;
         }
         collectables[i].active = false;
-        delayed(() => collectables[i].active = true, seconds: 60);
+        // TODO expensive call
+        delayed((){
+          activateCollectable(collectables[i]);
+        }, seconds: settings.itemReactivationInSeconds);
       }
     }
+  }
+
+  void activateCollectable(Collectable collectable){
+    collectable.active = true;
+    collectable.setType(randomCollectableType);
   }
 
   void updateNpc(Npc npc) {
