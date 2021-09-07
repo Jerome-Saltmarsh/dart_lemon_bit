@@ -1,12 +1,12 @@
+import 'package:bleed_client/classes/CompiledGame.dart';
+import 'package:bleed_client/classes/Player.dart';
 import 'package:bleed_client/editor/GameEdit.dart';
-import 'package:bleed_client/enums/GameType.dart';
 
 import '../common.dart';
 import 'classes/Block.dart';
 import 'classes/SpriteAnimation.dart';
 import 'classes/State.dart';
 import 'enums/Mode.dart';
-import 'instances/game.dart';
 
 GameEdit gameEdit;
 Mode mode = Mode.Play;
@@ -45,4 +45,7 @@ int playerMaxStamina = 0;
 String get session => '${compiledGame.gameId} ${compiledGame.playerId} ${compiledGame.playerUUID}';
 
 State state = State();
+
+Player get player => state.player;
+CompiledGame get compiledGame => state.compiledGame;
 

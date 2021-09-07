@@ -9,6 +9,7 @@ import 'classes/Vector2.dart';
 import 'enums.dart';
 import 'enums/ServerResponse.dart';
 import 'instances/gameManager.dart';
+import 'utils/player_utils.dart';
 
 // constants
 
@@ -90,11 +91,11 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.maxHealth.toInt());
   _write(buffer, player.stamina);
   _write(buffer, player.maxStamina);
-  _write(buffer, player.handgunRounds);
-  _write(buffer, player.shotgunRounds);
   _write(buffer, player.grenades);
   _write(buffer, player.meds);
   _write(buffer, player.lives);
+  _write(buffer, equippedWeaponClips(player));
+  _write(buffer, equippedWeaponRounds(player));
   // _compileInventory(buffer, player.inventory);
 }
 

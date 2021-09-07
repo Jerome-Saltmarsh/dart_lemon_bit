@@ -5,10 +5,10 @@ import 'dart:ui';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_maths.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/state.dart';
 
 import 'common.dart';
 import 'enums/Weapons.dart';
-import 'instances/game.dart';
 import 'keys.dart';
 import 'maths.dart';
 
@@ -158,10 +158,4 @@ void cameraCenter(double x, double y) {
   cameraY = y - (screenCenterY / zoom);
 }
 
-void setHandgunRounds(int value) {
-  if (compiledGame.handgunRounds == value) return;
-  compiledGame.handgunRounds = value;
-  // TODO only redraw ammo box
-  redrawUI();
-}
 

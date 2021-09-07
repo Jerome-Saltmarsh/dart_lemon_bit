@@ -7,7 +7,6 @@ import 'package:bleed_client/enums/CollectableType.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
-import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:flutter/material.dart';
 
@@ -58,7 +57,8 @@ void _drawCompiledGame() {
   drawPaths();
 
   if (mouseAvailable){
-    drawText(compiledGame.roundsRemaining > 0 ? compiledGame.roundsRemaining.toString() :  "Empty", mouseWorldX, mouseWorldY - 20, white);
+
+    drawText(player.equippedRounds > 0 ? player.equippedRounds.toString() :  "Empty", mouseWorldX, mouseWorldY - 20, white);
   }
 
 

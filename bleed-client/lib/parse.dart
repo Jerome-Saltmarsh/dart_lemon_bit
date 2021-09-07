@@ -6,11 +6,8 @@ import 'package:bleed_client/enums/InventoryItemType.dart';
 import 'package:bleed_client/enums/ServerResponse.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
-import 'package:bleed_client/game_engine/game_widget.dart';
-import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/keys.dart';
 import 'package:bleed_client/send.dart';
-import 'package:bleed_client/utils.dart';
 
 import 'classes/RenderState.dart';
 import 'classes/Vector2.dart';
@@ -220,18 +217,13 @@ void _parsePlayer() {
   compiledGame.playerWeapon = _consumeWeapon();
   playerHealth = _consumeDouble();
   playerMaxHealth = _consumeDouble();
-  int stamina = _consumeInt();
-  // TODO Logic does not belong here
-  if (playerStamina != stamina) {
-    playerStamina = stamina;
-    redrawUI();
-  }
+  playerStamina = _consumeInt();
   playerMaxStamina = _consumeInt();
-  setHandgunRounds(_consumeInt());
-  compiledGame.shotgunRounds = _consumeInt();
   compiledGame.playerGrenades = _consumeInt();
   compiledGame.playerMeds = _consumeInt();
   compiledGame.playerLives = _consumeInt();
+  player.equippedClips = _consumeInt();
+  player.equippedRounds = _consumeInt();
 }
 
 void _parseInventory() {

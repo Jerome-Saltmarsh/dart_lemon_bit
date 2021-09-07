@@ -20,6 +20,7 @@ import '../state.dart';
 import '../update.dart';
 import '../utils.dart';
 import '../utils/game_utils.dart';
+import '../utils/player_utils.dart';
 import 'Block.dart';
 import 'Collectable.dart';
 import 'Inventory.dart';
@@ -344,30 +345,26 @@ extension GameFunctions on Game {
     if (player.stateDuration > 0) return;
     faceAimDirection(player);
 
+    if (equippedWeaponRounds(player) <= 0){
+      player.stateDuration = settingsClipEmptyCooldown;
+      dispatch(GameEventType.Clip_Empty, player.x, player.y, 0, 0);
+      return;
+    }
+
     double d = 15;
     double x = player.x + adj(player.aimAngle, d);
     double y = player.y + opp(player.aimAngle, d);
 
     switch (player.weapon) {
       case Weapon.HandGun:
-        if (player.handgunRounds <= 0) {
-          player.stateDuration = settingsClipEmptyCooldown;
-          dispatch(GameEventType.Clip_Empty, x, y, 0, 0);
-          return;
-        }
-        player.handgunRounds--;
+        player.rounds.handgun--;
         Bullet bullet = spawnBullet(player);
         player.state = CharacterState.Firing;
         player.stateDuration = settingsHandgunCooldown;
         dispatch(GameEventType.Handgun_Fired, x, y, bullet.xv, bullet.yv);
         break;
       case Weapon.Shotgun:
-        if (player.shotgunRounds <= 0) {
-          player.stateDuration = settingsClipEmptyCooldown;
-          dispatch(GameEventType.Clip_Empty, x, y, 0, 0);
-          return;
-        }
-        player.shotgunRounds--;
+        player.rounds.shotgun--;
         player.xv += velX(player.aimAngle + pi, 1);
         player.yv += velY(player.aimAngle + pi, 1);
         for (int i = 0; i < settingsShotgunBulletsPerShot; i++) {
@@ -380,18 +377,18 @@ extension GameFunctions on Game {
             bullet.yv);
         break;
       case Weapon.SniperRifle:
+        player.rounds.sniper--;
         Bullet bullet = spawnBullet(player);
         player.state = CharacterState.Firing;
         player.stateDuration = settingsSniperCooldown;
-        ;
         dispatch(GameEventType.SniperRifle_Fired, player.x, player.y, bullet.xv,
             bullet.yv);
         break;
       case Weapon.MachineGun:
+        player.rounds.machineGun--;
         Bullet bullet = spawnBullet(player);
         player.state = CharacterState.Firing;
         player.stateDuration = settings.machineGunCoolDown;
-        ;
         dispatch(GameEventType.MachineGun_Fired, player.x, player.y, bullet.xv,
             bullet.yv);
         break;
@@ -430,9 +427,9 @@ extension GameFunctions on Game {
         switch (character.weapon) {
           case Weapon.HandGun:
             if (character is Player &&
-                character.handgunRounds < settings.handgunClipSize &&
-                character.inventory.handgunClips > 0) {
-              character.handgunRounds = settings.handgunClipSize;
+                character.rounds.handgun < settings.handgunClipSize &&
+                character.clips.handgun > 0) {
+              character.rounds.handgun = settings.handgunClipSize;
               character.inventory.remove(InventoryItemType.HandgunClip);
               character.stateDuration = settingsHandgunReloadDuration;
               break;
@@ -440,9 +437,9 @@ extension GameFunctions on Game {
             return;
           case Weapon.Shotgun:
             if (character is Player &&
-                character.shotgunRounds < settings.shotgunClipSize &&
+                character.rounds.shotgun < settings.shotgunClipSize &&
                 character.inventory.shotgunClips > 0) {
-              character.shotgunRounds = settings.shotgunClipSize;
+              character.rounds.shotgun = settings.shotgunClipSize;
               character.inventory.remove(InventoryItemType.ShotgunClip);
               character.stateDuration = settingsShotgunReloadDuration;
               break;
@@ -913,9 +910,11 @@ extension GameFunctions on Game {
         ]),
         name: name,
         grenades: 2,
-        meds: 2);
+        meds: 2,
+        clips: Clips(handgun: 2),
+        rounds: Rounds(handgun: settings.handgunClipSize),
+    );
     players.add(player);
-    player.shotgunRounds = settings.shotgunClipSize;
     return player;
   }
 

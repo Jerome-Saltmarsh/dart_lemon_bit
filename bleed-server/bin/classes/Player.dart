@@ -2,6 +2,7 @@ import '../classes.dart';
 import '../enums/Weapons.dart';
 import '../instances/settings.dart';
 import '../settings.dart';
+import '../utils/player_utils.dart';
 import 'Inventory.dart';
 
 class Player extends Character {
@@ -11,10 +12,11 @@ class Player extends Character {
   int maxStamina = 200;
   Inventory inventory;
   int grenades;
-  int handgunRounds = 0;
-  int shotgunRounds = 0;
   int meds;
   int lives;
+
+  Clips clips = Clips();
+  Rounds rounds = Rounds();
 
   Player({
     required this.uuid,
@@ -24,7 +26,9 @@ class Player extends Character {
     required String name,
     this.grenades = 0,
     this.meds = 0,
-    this.lives = 0
+    this.lives = 0,
+    required this.clips,
+    required this.rounds
   }) : super(
             x: x,
             y: y,
@@ -32,8 +36,8 @@ class Player extends Character {
             health: settingsPlayerStartHealth,
             maxHealth: settingsPlayerStartHealth,
             speed: playerSpeed,
-            name: name) {
+            name: name
+  ) {
     stamina = maxStamina;
-    handgunRounds = settings.handgunClipSize;
   }
 }

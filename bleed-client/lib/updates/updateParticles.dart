@@ -1,6 +1,6 @@
 
-import 'package:bleed_client/instances/game.dart';
 
+import '../state.dart';
 import 'updateParticle.dart';
 
 void updateParticles() {

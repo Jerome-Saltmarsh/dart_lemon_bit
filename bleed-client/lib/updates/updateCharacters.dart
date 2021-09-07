@@ -1,4 +1,3 @@
-import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/spawners/spawnBlood.dart';
 
 import '../../common.dart';

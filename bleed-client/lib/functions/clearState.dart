@@ -2,7 +2,6 @@ import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
-import 'package:bleed_client/instances/game.dart';
 
 import '../state.dart';
 

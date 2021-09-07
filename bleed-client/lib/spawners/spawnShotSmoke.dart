@@ -1,8 +1,9 @@
 
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
-import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/maths.dart';
+
+import '../state.dart';
 
 void spawnShotSmoke(double x, double y, double xv, double yv){
   double speed = 0.5;

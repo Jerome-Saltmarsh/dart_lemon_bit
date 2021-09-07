@@ -1,9 +1,10 @@
 
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
-import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/utils.dart';
+
+import '../state.dart';
 
 void spawnBulletHole(double x, double y){
   compiledGame.bulletHoles.add(x);

@@ -1,4 +1,3 @@
-import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/spawners/spawnBlood.dart';
 import 'package:bleed_client/spawners/spawnHead.dart';
 import 'package:bleed_client/spawners/spawnOrgan.dart';

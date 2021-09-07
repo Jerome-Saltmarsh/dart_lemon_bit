@@ -2,9 +2,9 @@ import 'dart:math';
 
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
-import 'package:bleed_client/instances/game.dart';
 
 import '../maths.dart';
+import '../state.dart';
 
 void spawnShell(double x, double y){
   compiledGame.particles.add(Particle(

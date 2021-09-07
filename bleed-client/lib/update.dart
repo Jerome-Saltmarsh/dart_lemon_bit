@@ -7,7 +7,6 @@ import 'package:bleed_client/properties.dart';
 import 'connection.dart';
 import 'enums/Weapons.dart';
 import 'input.dart';
-import 'instances/game.dart';
 import 'instances/settings.dart';
 import 'send.dart';
 import 'state.dart';

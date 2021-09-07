@@ -15,11 +15,9 @@ import 'enums/InventoryItemType.dart';
 import 'enums/Mode.dart';
 import 'enums/Weapons.dart';
 import 'images.dart';
-import 'instances/game.dart';
 import 'instances/inventory.dart';
 import 'instances/settings.dart';
 import 'send.dart';
-import 'settings.dart';
 import 'state.dart';
 import 'ui/widgets.dart';
 import 'utils.dart';
@@ -195,18 +193,6 @@ const DecorationImage _machineGunImage = const DecorationImage(
   image: const AssetImage('images/weapon-machine-gun.png'),
 );
 
-const DecorationImage _audioOnImage = const DecorationImage(
-  image: const AssetImage('images/audio-on.png'),
-);
-
-const DecorationImage _audioOffImage = const DecorationImage(
-  image: const AssetImage('images/audio-off.png'),
-);
-
-const DecorationImage _iconMenu = const DecorationImage(
-  image: const AssetImage('images/icon-menu.png'),
-);
-
 DecorationImage _getDecorationImage(Weapon weapon) {
   switch (weapon) {
     case Weapon.HandGun:
@@ -365,7 +351,7 @@ Widget buildHud() {
             alignment: Alignment.center,
             height: 50,
             width: 100,
-            child: text(compiledGame.roundsRemaining.toString(), fontSize: 28)),
+            child: text(player.equippedRounds.toString(), fontSize: 28)),
         Container(
             width: 120,
             height: 50,

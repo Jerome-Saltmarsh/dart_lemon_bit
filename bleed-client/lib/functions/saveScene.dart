@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:bleed_client/classes/Block.dart';
-import 'package:bleed_client/instances/game.dart';
 import 'package:bleed_client/state.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';

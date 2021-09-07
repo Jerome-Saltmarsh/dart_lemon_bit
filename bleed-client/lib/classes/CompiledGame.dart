@@ -27,8 +27,6 @@ class CompiledGame {
   double playerX = -1;
   double playerY = -1;
   Weapon playerWeapon = Weapon.Unarmed;
-  int handgunRounds = 0;
-  int shotgunRounds = 0;
   int playerGrenades = 0;
   int playerMeds = 0;
   int playerLives = 0;
@@ -36,16 +34,5 @@ class CompiledGame {
   int lives = 0;
   int wave = 1;
   int nextWave = 2;
-
-  int get roundsRemaining{
-    switch(playerWeapon){
-      case Weapon.HandGun:
-        return handgunRounds;
-      case Weapon.Shotgun:
-        return shotgunRounds;
-      default:
-        return 0;
-    }
-  }
 }
 

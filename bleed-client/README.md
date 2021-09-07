@@ -27,11 +27,15 @@
 [ ] Fortress life lost audio
 [ ] Fortress Cache Path 
 -- RELEASE DEATH MATCH-- 
+[ ] UI Show Stamina
 [ ] Death Match - Player Lives
 [ ] Death Match Player Lives
 [ ] Random Power up Square 
-[ ] Collect Item Audio
+[ ] Fix Join Fortress
+[ ] Tutorial Text
+[ ] Fix Join Death Match
 [ ] UI Handgun Clips Remaining
+[x] Collect Item Audio
 [x] Draw Random Item
 [x] Collectable Type: Shotgun
 [x] Collectable Type: Grenade

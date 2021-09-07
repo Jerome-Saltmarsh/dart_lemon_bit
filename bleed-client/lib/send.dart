@@ -5,7 +5,6 @@ import 'package:bleed_client/enums/GameType.dart';
 
 import 'connection.dart';
 import 'enums/Weapons.dart';
-import 'instances/game.dart';
 import 'state.dart';
 
 
