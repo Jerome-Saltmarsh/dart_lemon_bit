@@ -50,7 +50,6 @@ void _drawCompiledGame() {
   drawBulletHoles(compiledGame.bulletHoles);
   _drawGrenades(compiledGame.grenades);
   _drawBlocks();
-  // drawAnimations();
   _drawParticles(compiledGame.particles);
   drawCharacters();
   drawEditMode();

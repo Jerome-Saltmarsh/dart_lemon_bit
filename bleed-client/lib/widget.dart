@@ -11,6 +11,7 @@ import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/ui/dialogs.dart';
 import 'package:bleed_client/update.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'connection.dart';
@@ -114,19 +115,40 @@ class BleedWidget extends GameWidget {
     double aimX = mouseWorldX;
     double aimY = mouseWorldY;
     bool aiming = false;
-    for(int i = 0; i < compiledGame.npcs.length; i++){
-      if(diff(aimX, compiledGame.npcs[i][x]) < 6 && diff(aimY, compiledGame.npcs[i][y]) < 5){
+    for (int i = 0; i < compiledGame.npcs.length; i++) {
+      if (diff(aimX, compiledGame.npcs[i][x]) < 6 &&
+          diff(aimY, compiledGame.npcs[i][y]) < 5) {
         aiming = true;
         break;
       }
     }
 
-    drawCircleOutline(radius: 6, x: mouseX, y: mouseY, color: aiming ? Colors.red : Colors.white);
+    if (player.stamina < player.staminaMax) {
+      double percentage = player.stamina / player.staminaMax;
 
-    drawText(
-        player.equippedRounds.toString(),
-        mouseX + 10,
-        mouseY - 35);
+      globalPaint.color = Colors.white;
+
+      canvas.drawRect(
+          Rect.fromLTWH(screenCenterX - 50,
+              25, 100, 15),
+          globalPaint);
+
+      globalPaint.color = Colors.yellow;
+      canvas.drawRect(
+          Rect.fromLTWH(screenCenterX - 50,
+              25, 100 * percentage, 15),
+          globalPaint);
+
+
+    }
+
+    drawCircleOutline(
+        radius: 6,
+        x: mouseX,
+        y: mouseY,
+        color: aiming ? Colors.red : Colors.white);
+
+    drawText(player.equippedRounds.toString(), mouseX + 10, mouseY - 35);
 
     globalPaint.color = Colors.white;
     for (int i = 0; i < player.equippedClips; i++) {

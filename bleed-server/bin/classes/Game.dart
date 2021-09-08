@@ -438,7 +438,7 @@ extension GameFunctions on Game {
           case Weapon.Shotgun:
             if (character is Player &&
                 character.rounds.shotgun < settings.shotgunClipSize &&
-                character.inventory.shotgunClips > 0) {
+                character.clips.shotgun > 0) {
               character.rounds.shotgun = settings.shotgunClipSize;
               character.clips.shotgun--;
               character.stateDuration = settingsShotgunReloadDuration;
@@ -591,13 +591,13 @@ extension GameFunctions on Game {
         setCharacterState(player, CharacterState.Walking);
       }
     } else if (player.walking) {
-      player.stamina++;
+      player.stamina += settings.staminaRefreshRate;
     } else if (player.idling) {
-      player.stamina += 2;
+      player.stamina += settings.staminaRefreshRate;
     } else if (player.aiming) {
-      player.stamina += 2;
+      player.stamina += settings.staminaRefreshRate;
     } else if (player.firing) {
-      player.stamina += 1;
+      player.stamina += settings.staminaRefreshRate;
     }
     player.stamina = clampInt(player.stamina, 0, player.maxStamina);
   }

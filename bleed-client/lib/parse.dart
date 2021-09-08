@@ -217,8 +217,8 @@ void _parsePlayer() {
   compiledGame.playerWeapon = _consumeWeapon();
   playerHealth = _consumeDouble();
   playerMaxHealth = _consumeDouble();
-  playerStamina = _consumeInt();
-  playerMaxStamina = _consumeInt();
+  player.stamina = _consumeInt();
+  player.staminaMax = _consumeInt();
   compiledGame.playerGrenades = _consumeInt();
   compiledGame.playerMeds = _consumeInt();
   compiledGame.playerLives = _consumeInt();

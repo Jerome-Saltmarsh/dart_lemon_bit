@@ -22,4 +22,5 @@ class Settings {
   final int itemReactivationInSeconds = 60;
   final int maxGrenades = 3;
   final int maxMeds = 3;
+  final int staminaRefreshRate = 2;
 }

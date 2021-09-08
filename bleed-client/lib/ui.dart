@@ -437,7 +437,6 @@ Widget buildDebugColumn() {
           button('Close', () => _showDebug = false),
           text(
               'mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
-          text('Stamina: $playerStamina / $playerMaxStamina'),
           text('x: ${compiledGame.playerX}, y: ${compiledGame.playerY}'),
           text("zombies: ${compiledGame.npcs.length}"),
           text("players: ${compiledGame.players.length}"),

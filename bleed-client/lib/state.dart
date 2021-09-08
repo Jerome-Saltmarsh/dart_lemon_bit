@@ -38,8 +38,6 @@ Map<int, bool> gameEvents = Map();
 // Player State
 double playerHealth = 0;
 double playerMaxHealth = 0;
-int playerStamina = 0;
-int playerMaxStamina = 0;
 
 // TODO Expensive string build
 String get session => '${compiledGame.gameId} ${compiledGame.playerId} ${compiledGame.playerUUID}';
