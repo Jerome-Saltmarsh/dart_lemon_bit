@@ -7,6 +7,7 @@ import 'package:bleed_client/enums/ServerResponse.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
+import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/keys.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/ui/dialogs.dart';
@@ -79,13 +80,20 @@ void parseState() {
       case ServerResponse.Error:
         GameError error = _consumeError();
         print(error);
+
+        switch(error){
+          case GameError.GameNotFound:
+            clearState();
+            showErrorDialog("Game Not Found");
+        }
         if (error == GameError.PlayerNotFound) {
-          // clearState();
+          clearState();
           showErrorDialogPlayerNotFound();
         }
         if (error == GameError.LobbyNotFound){
           print("Server Error: Lobby not found");
           state.lobby = null;
+          showErrorDialog("Lobby not found");
         }
         return;
 

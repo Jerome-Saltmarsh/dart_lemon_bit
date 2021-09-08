@@ -9,6 +9,11 @@ import 'package:flutter/material.dart';
 
 import '../state.dart';
 
+
+GameType _gameType = GameType.DeathMatch;
+int _maxPlayers = 8;
+bool _private = false;
+
 Widget buildJoinedLobby() {
   return Container(
     padding: EdgeInsets.all(20),
@@ -39,14 +44,12 @@ void leaveLobby() {
   redrawUI();
 }
 
-GameType _gameType = GameType.DeathMatch;
-int _maxPlayers = 8;
-bool _private = false;
 
 Widget buildLobbyList() {
   double lobbyListViewHeight = 200;
 
   return Refresh(
+      duration: Duration(milliseconds: 300),
       builder: Builder(builder: (BuildContext context) {
         if (state.lobby != null) return buildJoinedLobby();
 
@@ -140,7 +143,7 @@ Widget buildLobbyList() {
           ),
         );
       }),
-      duration: Duration(seconds: 3));
+      );
 }
 
 Widget _buildLobbyListTile(Lobby lobby) {

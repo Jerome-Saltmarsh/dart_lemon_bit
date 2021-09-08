@@ -24,6 +24,19 @@ Future showErrorDialogPlayerNotFound() async {
   );
 }
 
+Future showErrorDialog(String message) async {
+  return showDialog<void>(
+    context: globalContext,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text(message),
+      );
+    },
+  );
+}
+
+
 
 Future showDialogCreateGame() async {
   TextEditingController nameController = TextEditingController();
