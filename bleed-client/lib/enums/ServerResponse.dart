@@ -9,7 +9,7 @@ enum ServerResponse {
   Grenades,
   Game_Id,
   Pong,
-  Player_Created,
+  Game_Joined,
   Blocks,
   Scene,
   Collectables,

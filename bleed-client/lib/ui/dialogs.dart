@@ -1,9 +1,13 @@
 import 'package:bleed_client/enums/GameType.dart';
+import 'package:bleed_client/events.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/ui/views.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:neuro/instance.dart';
+
+BuildContext contextMainMenuDialog;
 
 Future showDialogCreateGame() async {
   TextEditingController nameController = TextEditingController();
@@ -52,6 +56,17 @@ class _MainMenuState extends State<MainMenu> with SingleTickerProviderStateMixin
   void initState() {
     super.initState();
     mainMenuTabController = new TabController(vsync: this, length: 3);
+
+    respondTo((LobbyJoined lobbyJoined) async {
+      mainMenuTabController.index = 1;
+    });
+  }
+
+
+  @override
+  void dispose() {
+    super.dispose();
+    contextMainMenuDialog = null;
   }
 
   @override
@@ -114,6 +129,7 @@ Future showDialogMainMenu() async {
     context: globalContext,
     barrierDismissible: true,
     builder: (BuildContext dialogContext) {
+      contextMainMenuDialog = dialogContext;
       return Dialog(
         backgroundColor: Colors.transparent,
         insetPadding: EdgeInsets.all(60),

@@ -1,6 +1,7 @@
 import 'package:bleed_client/bleed.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/enums/GameType.dart';
+import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
@@ -8,6 +9,7 @@ import 'package:bleed_client/game_engine/web_functions.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/ui/dialogs.dart';
 import 'package:flutter/material.dart';
+import 'package:neuro/instance.dart';
 
 import 'classes/InventoryItem.dart';
 import 'connection.dart';
@@ -32,6 +34,19 @@ void initUI() {
   onConnectError.stream.listen((event) {
     showDialogConnectFailed();
   });
+
+  respondTo((GameJoined gameStarted) async {
+    // if(!mainMenuTabController.indexIsChanging){
+    //   closeMainMenuDialog();
+    // } else{
+    //   Future.delayed(Duration(seconds: 2), closeMainMenuDialog);
+    // }
+  });
+}
+
+void closeMainMenuDialog(){
+  if (contextMainMenuDialog == null) return;
+  Navigator.of(contextMainMenuDialog).pop();
 }
 
 Widget column(List<Widget> children) {

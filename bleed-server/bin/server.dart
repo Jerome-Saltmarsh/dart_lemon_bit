@@ -48,12 +48,9 @@ void main() {
       _buffer.clear();
       Player player = game.spawnPlayer(name: 'test');
       compilePlayer(_buffer, player);
-      compileTiles(_buffer, game.scene.tiles);
-      compileBlocks(_buffer, game.scene.blocks);
-      compileGame(game);
+      _buffer.write(game.compiledTiles);
       _buffer.write(game.compiled);
-      _buffer.write(
-          '${ServerResponse.Player_Created.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ; ');
+      _buffer.write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ; ');
       sendToClient(_buffer.toString());
     }
 

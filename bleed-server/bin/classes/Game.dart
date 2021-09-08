@@ -132,6 +132,7 @@ abstract class Game {
   final List<Vector2> playerSpawnPoints = [];
   final List<Vector2> zombieSpawnPoints = [];
   String compiled = "";
+  String compiledTiles = "";
 
   // TODO doesn't belong here
   StringBuffer buffer = StringBuffer();

@@ -1,3 +1,4 @@
+import '../compile.dart';
 import '../enums/GameType.dart';
 import '../instances/scenes.dart';
 import '../utils.dart';
@@ -27,8 +28,14 @@ class GameManager {
     }
 
     Game casualGame = GameCasual(scenes.town, 32);
-    games.add(casualGame);
+    compileAndAddGame(casualGame);
     return casualGame;
+  }
+
+  void compileAndAddGame(Game game){
+    compileGame(game);
+    game.compiledTiles = compileTiles(StringBuffer(), game.scene.tiles);
+    games.add(game);
   }
 
   Game? findAvailableGameByType(GameType type) {
@@ -54,7 +61,7 @@ class GameManager {
   }
 
   Lobby createDeathMatchLobby(){
-    return createLobby(maxPlayer: 8, gameType: GameType.DeathMatch, private: false);
+    return createLobby(maxPlayer: 3, gameType: GameType.DeathMatch, private: false);
   }
 
   Lobby createLobby({required int maxPlayer, required GameType gameType, String? name, required bool private}) {
@@ -67,13 +74,13 @@ class GameManager {
 
   DeathMatch createDeathMatch({int maxPlayer = 32}) {
     DeathMatch deathMatch = DeathMatch(maxPlayers: maxPlayer);
-    games.add(deathMatch);
+    compileAndAddGame(deathMatch);
     return deathMatch;
   }
 
   Fortress createGameFortress() {
     Fortress fortress = Fortress();
-    games.add(fortress);
+    compileAndAddGame(fortress);
     return fortress;
   }
 
@@ -90,8 +97,8 @@ class GameManager {
         return game;
       }
     }
-    Game deathMatch = DeathMatch();
-    games.add(deathMatch);
-    return deathMatch;
+    Game openWorld = DeathMatch();
+    compileAndAddGame(openWorld);
+    return openWorld;
   }
 }

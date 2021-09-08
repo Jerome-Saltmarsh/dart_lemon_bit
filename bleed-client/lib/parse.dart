@@ -4,10 +4,12 @@ import 'package:bleed_client/connection.dart';
 import 'package:bleed_client/enums/GameType.dart';
 import 'package:bleed_client/enums/InventoryItemType.dart';
 import 'package:bleed_client/enums/ServerResponse.dart';
+import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/keys.dart';
 import 'package:bleed_client/send.dart';
+import 'package:neuro/instance.dart';
 
 import 'classes/RenderState.dart';
 import 'classes/Vector2.dart';
@@ -114,8 +116,9 @@ void parseState() {
         _parseBlocks();
         break;
 
-      case ServerResponse.Player_Created:
-        _parsePlayerCreated();
+      case ServerResponse.Game_Joined:
+        _parseGameJoined();
+        announce(GameJoined());
         break;
 
       case ServerResponse.GameOver:
@@ -132,6 +135,7 @@ void parseState() {
         state.lobby = Lobby();
         state.lobby.uuid = _consumeString();
         state.lobby.playerUuid = _consumeString();
+        announce(LobbyJoined());
         break;
 
       case ServerResponse.Lobby_List:
@@ -284,7 +288,7 @@ void _parseBlocks() {
   }
 }
 
-void _parsePlayerCreated() {
+void _parseGameJoined() {
   int id = _consumeInt();
   String uuid = _consumeString();
   double x = _consumeDouble();

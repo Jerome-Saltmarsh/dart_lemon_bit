@@ -7,6 +7,7 @@ import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_input.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/server.dart';
+import 'package:bleed_client/ui/dialogs.dart';
 import 'package:flutter/services.dart';
 
 import '../common.dart';
@@ -37,7 +38,7 @@ bool get keyPressedReload => keyPressed(_keyReload);
 
 bool get keyPressedUseMedKit =>  keyPressed(LogicalKeyboardKey.keyH);
 
-bool get keyPressedDisconnect =>  keyPressed(LogicalKeyboardKey.escape);
+bool get keyPressedMenu =>  keyPressed(LogicalKeyboardKey.escape);
 
 bool get keyPressedThrowGrenade =>  keyPressed(LogicalKeyboardKey.keyG);
 
@@ -52,9 +53,8 @@ void readPlayerInput() {
     return;
   }
 
-  if (keyPressedDisconnect) {
-    // disconnect();
-    clearState();
+  if (keyPressedMenu) {
+    showDialogMainMenu();
   }
 
   if (keyPressedUseMedKit) {
