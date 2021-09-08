@@ -24,9 +24,9 @@ void drawSprite(ui.Image image, int frames, int frame, double x, double y){
       Rect.fromCenter(center: Offset(x, y), width: frameWidth, height: frameHeight), globalPaint);
 }
 
-TextStyle _style = TextStyle(color: white);
+TextStyle _style = TextStyle(color: white, fontSize: 20, fontWeight: FontWeight.bold);
 
-void drawText(String text, double x, double y, Color color){
+void drawText(String text, double x, double y){
   TextSpan span = TextSpan(style: _style, text: text);
   TextPainter tp = TextPainter(text: span, textAlign: TextAlign.center, textDirection: TextDirection.ltr);
   tp.layout();

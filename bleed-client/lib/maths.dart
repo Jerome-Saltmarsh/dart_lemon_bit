@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:bleed_client/classes/Vector2.dart';
+
 import 'keys.dart';
 
 const double degreesToRadions = 0.0174533;
@@ -34,6 +36,11 @@ double distance(double x1, double y1, double x2, double y2){
 double abs(double value){
   if(value < 0) return -value;
   return value;
+}
+
+Vector2 positionTowards(double x1, double y1, double x2, double y2, double distance){
+  double rot = radionsBetween(x1, y1, x2, y2);
+  return Vector2(x1 + velX(rot, distance), y1 + velY(rot, distance));
 }
 
 // utility methods

@@ -818,6 +818,9 @@ void drawCircleOutline(
   List<Offset> points = [];
   Offset z = Offset(x, y);
   setColor(color);
+
+  globalPaint.strokeWidth = 3;
+
   for (int i = 0; i <= sides; i++) {
     double a1 = i * r;
     points.add(Offset(cos(a1) * radius, sin(a1) * radius));

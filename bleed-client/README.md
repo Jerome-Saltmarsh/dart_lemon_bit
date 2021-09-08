@@ -27,7 +27,7 @@
 [ ] Fortress life lost audio
 [ ] Fortress Cache Path 
 -- RELEASE DEATH MATCH-- 
-[ ] UI Show Stamina
+[ ] UI Show Stamina under player
 [ ] Death Match - Player Lives
 [ ] Death Match Player Lives
 [ ] Random Power up Square 
@@ -35,6 +35,7 @@
 [ ] Tutorial Text
 [ ] Zombie Animations
 [ ] Fix Join Death Match
+[ ] Cursor goes red when aimed on zombie
 [ ] UI Handgun Clips Remaining
 [x] Collect Item Audio
 [x] Draw Random Item

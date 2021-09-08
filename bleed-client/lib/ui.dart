@@ -23,7 +23,8 @@ import 'ui/widgets.dart';
 import 'utils.dart';
 
 TextEditingController _playerNameController = TextEditingController();
-Border _border = Border.all(color: Colors.black, width: 5.0, style: BorderStyle.solid);
+Border _border =
+    Border.all(color: Colors.black, width: 5.0, style: BorderStyle.solid);
 
 bool _showDebug = false;
 
@@ -103,7 +104,8 @@ Widget buildGameUI(BuildContext context) {
   if (editMode) return buildEditorUI();
 
   if (compiledGame.playerId < 0) {
-    return text("player id is not assigned. player id: ${compiledGame.playerId}, game id: ${compiledGame.gameId}");
+    return text(
+        "player id is not assigned. player id: ${compiledGame.playerId}, game id: ${compiledGame.gameId}");
   }
 
   if (framesSinceEvent > 30) {
@@ -196,16 +198,15 @@ Widget buildWeaponButton(Weapon weapon) {
   );
 }
 
-Widget buildImageButton(DecorationImage image, Function onTap, { double width = 120 }){
+Widget buildImageButton(DecorationImage image, Function onTap,
+    {double width = 120}) {
   return GestureDetector(
     onTap: onTap,
     child: Container(
         width: width,
         height: 50,
         decoration: BoxDecoration(
-            color: Colors.black45,
-            border: _border,
-            image: image)),
+            color: Colors.black45, border: _border, image: image)),
   );
 }
 
@@ -286,12 +287,28 @@ Widget buildInventory() {
 }
 
 Widget buildHud() {
-
   double iconSize = 40;
 
-  Widget iconToggleFullscreen = Tooltip(child: IconButton(icon: Icon(Icons.fullscreen, size: iconSize, color: white), onPressed: requestFullScreen), message: "Fullscreen",);
-  Widget iconToggleAudio = Tooltip(child: IconButton(icon: Icon(settings.audioMuted ? Icons.music_off : Icons.music_note_rounded, size: iconSize, color: white), onPressed: toggleAudioMuted), message: "Toggle Audio");
-  Widget iconMenu = Tooltip(child: IconButton(icon: Icon(Icons.menu, size: iconSize, color: white), onPressed: showDialogMainMenu), message: "Menu",);
+  Widget iconToggleFullscreen = Tooltip(
+    child: IconButton(
+        icon: Icon(Icons.fullscreen, size: iconSize, color: white),
+        onPressed: requestFullScreen),
+    message: "Fullscreen",
+  );
+  Widget iconToggleAudio = Tooltip(
+      child: IconButton(
+          icon: Icon(
+              settings.audioMuted ? Icons.music_off : Icons.music_note_rounded,
+              size: iconSize,
+              color: white),
+          onPressed: toggleAudioMuted),
+      message: "Toggle Audio");
+  Widget iconMenu = Tooltip(
+    child: IconButton(
+        icon: Icon(Icons.menu, size: iconSize, color: white),
+        onPressed: showDialogMainMenu),
+    message: "Menu",
+  );
 
   Positioned topLeft = Positioned(
     top: 0,
@@ -310,7 +327,8 @@ Widget buildHud() {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          if (settings.developMode && !_showDebug) button('Debug', () => _showDebug = !_showDebug),
+          if (settings.developMode && !_showDebug)
+            button('Debug', () => _showDebug = !_showDebug),
           if (settings.developMode) button('Editor', toggleMode),
           iconMenu
         ],
@@ -318,7 +336,7 @@ Widget buildHud() {
 
   List<Widget> clips = [];
 
-  for(int i = 0; i < player.equippedClips; i++){
+  for (int i = 0; i < player.equippedClips; i++) {
     clips.add(Container(
       color: white,
       width: 25,
@@ -328,41 +346,58 @@ Widget buildHud() {
     ));
   }
 
+  List<Widget> grenades = [];
+
+  for (int i = 0; i < compiledGame.playerGrenades; i++) {
+    grenades.add(Container(
+        width: 60, height: 50, decoration: BoxDecoration(image: grenadeImage)));
+  }
+
+  List<Widget> healthPacks = [];
+
+  for (int i = 0; i < compiledGame.playerMeds; i++) {
+    healthPacks.add(Container(
+        width: 60,
+        height: 50,
+        decoration: BoxDecoration(image: healthImage)));
+  }
+
   Positioned bottomLeft = Positioned(
     left: 0,
-    bottom: 0,
+    bottom: 5,
     child: Row(
+      // crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildWeaponButton(compiledGame.playerWeapon),
+        Row(
+          children: [
+            buildWeaponButton(compiledGame.playerWeapon),
+            Row(
+              children: clips,
+            ),
+          ],
+        ),
+        Row(
+          children: grenades,
+        ),
         // Container(
         //     color: Colors.black87,
         //     alignment: Alignment.center,
         //     height: 50,
         //     width: 100,
-        //     child: text(player.equippedRounds.toString(), fontSize: 28)),
+        //     child: text(compiledGame.playerGrenades.toString(), fontSize: 28)),
         Row(
-          children: clips,
+          children: healthPacks,
         ),
-        Container(
-            width: 120,
-            height: 50,
-            decoration: BoxDecoration(border: _border, image: grenadeImage)),
-        Container(
-            color: Colors.black87,
-            alignment: Alignment.center,
-            height: 50,
-            width: 100,
-            child: text(compiledGame.playerGrenades.toString(), fontSize: 28)),
-        Container(
-            width: 120,
-            height: 50,
-            decoration: BoxDecoration(border: _border, image: healthImage)),
-        Container(
-            color: Colors.black87,
-            alignment: Alignment.center,
-            height: 50,
-            width: 100,
-            child: text(compiledGame.playerMeds.toString(), fontSize: 28)),
+        // Container(
+        //     width: 120,
+        //     height: 50,
+        //     decoration: BoxDecoration(border: _border, image: healthImage)),
+        // Container(
+        //     color: Colors.black87,
+        //     alignment: Alignment.center,
+        //     height: 50,
+        //     width: 100,
+        //     child: text(compiledGame.playerMeds.toString(), fontSize: 28)),
       ],
     ),
   );
@@ -385,15 +420,14 @@ Widget buildHud() {
       topLeft,
       topRight,
       bottomLeft,
-      if(compiledGame.gameType == GameType.Fortress)
-      bottomRight,
+      if (compiledGame.gameType == GameType.Fortress) bottomRight,
       if (gameOver) buildGameOver(),
       if (!gameOver && playerHealth <= 0) buildRespawn()
     ],
   );
 }
 
-Widget buildDebugColumn(){
+Widget buildDebugColumn() {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [

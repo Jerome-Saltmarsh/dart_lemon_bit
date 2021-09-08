@@ -24,7 +24,6 @@ import 'ui.dart';
 import 'utils.dart';
 
 class BleedWidget extends GameWidget {
-
   @override
   bool uiVisible() => true;
 
@@ -53,7 +52,7 @@ class BleedWidget extends GameWidget {
     startJobs();
 
     compiledGame.npcs = [];
-    for(int i = 0; i < 3000; i++){
+    for (int i = 0; i < 3000; i++) {
       compiledGame.npcs.add([0, 0, 0.0, 0.0, 0, 0]);
     }
     onDisconnected.stream.listen((event) {
@@ -64,7 +63,7 @@ class BleedWidget extends GameWidget {
     initUI();
   }
 
-  void startJobs(){
+  void startJobs() {
     // todo move this
     periodic(checkBulletHoles, ms: 500);
     periodic(redrawUI, seconds: 1);
@@ -108,18 +107,20 @@ class BleedWidget extends GameWidget {
   @override
   void drawForeground(Canvas canvas, Size size) {
     if (!mouseAvailable) return;
+    if (state.compiledGame.gameId < 0) return;
 
-    drawCircleOutline(radius: 5, x: mouseX, y: mouseY, color: white);
+    drawCircleOutline(radius: 5, x: mouseX, y: mouseY, color: Colors.red);
 
     drawText(
-        player.equippedRounds > 0 ? player.equippedRounds.toString() : "Empty",
-        mouseX,
-        mouseY - 20,
-        white);
+        player.equippedRounds.toString(),
+        mouseX + 10,
+        mouseY - 35);
 
     globalPaint.color = Colors.white;
-    for (int i = 0; i < player.equippedClips; i++){
-      globalCanvas.drawRect(Rect.fromLTWH(mouseX + 20 + (i * 10), mouseY - 18, 7, 12), globalPaint);
+    for (int i = 0; i < player.equippedClips; i++) {
+      globalCanvas.drawRect(
+          Rect.fromLTWH(mouseX + 35 + (i * 9), mouseY - 33, 7, 17),
+          globalPaint);
     }
   }
 }

@@ -7,6 +7,7 @@ import 'package:bleed_client/enums/CollectableType.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:flutter/material.dart';
 
@@ -55,8 +56,21 @@ void _drawCompiledGame() {
   drawEditMode();
   _drawCollectables();
   drawPaths();
+  // _drawMouseAim();
 }
 
+void _drawMouseAim() {
+  if (!mouseAvailable) return;
+  globalPaint.strokeWidth = 3;
+  double rot = radionsBetween(
+      mouseWorldX, mouseWorldY, compiledGame.playerX, compiledGame.playerY);
+  double d = 50;
+  double vX = velX(rot, d);
+  double vY = velY(rot, d);
+  Offset mouseOffset = Offset(mouseWorldX, mouseWorldY);
+  Offset aimOffset = Offset(mouseWorldX + vX, mouseWorldY + vY);
+  _drawLine(mouseOffset, aimOffset, Colors.white);
+}
 
 void _drawCollectables() {
   for (int i = 0; i < compiledGame.collectables.length; i += 3) {
