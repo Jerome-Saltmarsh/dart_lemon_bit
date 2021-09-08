@@ -1,13 +1,29 @@
+import 'dart:async';
+
 import 'package:bleed_client/enums/GameType.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/ui/views.dart';
 import 'package:bleed_client/ui/widgets.dart';
+import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:neuro/instance.dart';
 
 BuildContext contextMainMenuDialog;
+
+Future showErrorDialogPlayerNotFound() async {
+  return showDialog<void>(
+    context: globalContext,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Error: Player Not Found'),
+      );
+    },
+  );
+}
+
 
 Future showDialogCreateGame() async {
   TextEditingController nameController = TextEditingController();
@@ -52,10 +68,14 @@ class MainMenu extends StatefulWidget {
 
 class _MainMenuState extends State<MainMenu> with SingleTickerProviderStateMixin {
 
+  Timer lobbyUpdateJob;
+
   @override
   void initState() {
     super.initState();
     mainMenuTabController = new TabController(vsync: this, length: 3);
+
+    lobbyUpdateJob = periodic(sendRequestLobbyList, seconds: 1);
 
     respondTo((LobbyJoined lobbyJoined) async {
       mainMenuTabController.index = 1;
@@ -67,6 +87,7 @@ class _MainMenuState extends State<MainMenu> with SingleTickerProviderStateMixin
   void dispose() {
     super.dispose();
     contextMainMenuDialog = null;
+    lobbyUpdateJob.cancel();
   }
 
   @override

@@ -44,13 +44,13 @@ void main() {
     }
 
     void joinGame(Game game) {
-      print("join game");
+      print("Player joining game. ${game.players.length} / ${game.maxPlayers}");
       _buffer.clear();
       Player player = game.spawnPlayer(name: 'test');
       compilePlayer(_buffer, player);
+      _buffer.write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${game.id} ');
       _buffer.write(game.compiledTiles);
       _buffer.write(game.compiled);
-      _buffer.write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ; ');
       sendToClient(_buffer.toString());
     }
 
@@ -199,8 +199,10 @@ void main() {
           lobby.players.add(user);
 
           if (lobby.players.length == lobby.maxPlayers) {
-            Game game = gameManager.createDeathMatch(maxPlayer: lobby.maxPlayers);
-            lobby.game = game;
+            Future.delayed(Duration(seconds: 2), (){
+              Game game = gameManager.createDeathMatch(maxPlayer: lobby.maxPlayers);
+              lobby.game = game;
+            });
           }
 
           sendToClient('${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
@@ -220,6 +222,8 @@ void main() {
           break;
 
         case ClientRequest.Game_Join:
+          print("ClientRequest.Game_Join");
+
           if (arguments.length < 2) {
             errorInvalidArguments();
             return;

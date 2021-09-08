@@ -70,7 +70,6 @@ class BleedWidget extends GameWidget {
     // todo move this
     periodic(checkBulletHoles, ms: 500);
     periodic(redrawUI, seconds: 1);
-    periodic(sendRequestLobbyList, seconds: 1);
 
     // TODO this job is expensive, use reaction instead
     periodic(() {

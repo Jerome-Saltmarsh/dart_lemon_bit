@@ -9,6 +9,7 @@ import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/keys.dart';
 import 'package:bleed_client/send.dart';
+import 'package:bleed_client/ui/dialogs.dart';
 import 'package:neuro/instance.dart';
 
 import 'classes/RenderState.dart';
@@ -21,16 +22,16 @@ import 'enums.dart';
 import 'functions/onGameEvent.dart';
 import 'instances/inventory.dart';
 import 'state.dart';
-import 'streams/onPlayerCreated.dart';
 
 // state
 int _index = 0;
+// constants
 const List _cache = [];
 const String _emptyString = " ";
 const String _semiColon = ";";
 const String _comma = ",";
 const String _dash = "-";
-
+// enums
 const List<ServerResponse> serverResponses = ServerResponse.values;
 const List<Weapon> weapons = Weapon.values;
 const List<GameEventType> gameEventTypes = GameEventType.values;
@@ -79,7 +80,8 @@ void parseState() {
         GameError error = _consumeError();
         print(error);
         if (error == GameError.PlayerNotFound) {
-          clearState();
+          // clearState();
+          showErrorDialogPlayerNotFound();
         }
         if (error == GameError.LobbyNotFound){
           print("Server Error: Lobby not found");
@@ -153,10 +155,10 @@ void parseState() {
         state.lobby.playersJoined = _consumeInt();
         state.lobby.uuid = _consumeString();
         state.lobby.name = _consumeString();
-        String gameUuid = _consumeString();
-        if (gameUuid == _dash) continue;
+        state.lobbyGameUuid = _consumeString();
+        if (state.lobbyGameUuid == _dash) continue;
         state.lobby = null;
-        sendRequestJoinGame(gameUuid);
+        sendRequestJoinGame(state.lobbyGameUuid);
         break;
 
       default:
@@ -289,11 +291,13 @@ void _parseBlocks() {
 }
 
 void _parseGameJoined() {
-  int id = _consumeInt();
-  String uuid = _consumeString();
-  double x = _consumeDouble();
-  double y = _consumeDouble();
-  onPlayerCreated.add(OnPlayerCreated(uuid, id, x, y));
+  state.compiledGame.playerId = _consumeInt();
+  state.compiledGame.playerUUID  = _consumeString();
+  state.compiledGame.playerX = _consumeDouble();
+  state.compiledGame.playerY = _consumeDouble();
+  state.compiledGame.gameId = _consumeInt();
+  state.lobby = null;
+  print("ServerResponse.Game_Joined: playerId: ${state.compiledGame.playerId} gameId: ${state.compiledGame.gameId}");
 }
 
 void _next() {

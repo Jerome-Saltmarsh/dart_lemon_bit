@@ -123,6 +123,10 @@ Widget buildGameUI(BuildContext context) {
         "player id is not assigned. player id: ${compiledGame.playerId}, game id: ${compiledGame.gameId}");
   }
 
+  if (compiledGame.tiles.isEmpty){
+    return text('tiles have not been loaded');
+  }
+
   if (framesSinceEvent > 30) {
     return Container(
       width: globalSize.width,

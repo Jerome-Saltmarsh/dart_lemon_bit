@@ -9,4 +9,5 @@ class State {
   List<Lobby> lobbies = [];
   Player player = Player();
   CompiledGame compiledGame = CompiledGame();
+  String lobbyGameUuid = "";
 }

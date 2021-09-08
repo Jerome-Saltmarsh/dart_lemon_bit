@@ -61,7 +61,7 @@ class GameManager {
   }
 
   Lobby createDeathMatchLobby(){
-    return createLobby(maxPlayer: 3, gameType: GameType.DeathMatch, private: false);
+    return createLobby(maxPlayer: 2, gameType: GameType.DeathMatch, private: false);
   }
 
   Lobby createLobby({required int maxPlayer, required GameType gameType, String? name, required bool private}) {
