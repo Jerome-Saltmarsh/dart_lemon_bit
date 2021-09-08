@@ -2,6 +2,8 @@
 import 'package:bleed_client/common.dart';
 import 'package:bleed_client/enums/ClientRequest.dart';
 import 'package:bleed_client/enums/GameType.dart';
+import 'package:bleed_client/functions/clearState.dart';
+import 'package:bleed_client/ui.dart';
 
 import 'connection.dart';
 import 'enums/Weapons.dart';
@@ -94,10 +96,14 @@ void requestJoinRandomGame() {
 }
 
 void sendRequestGameJoinDeathMatch() {
+  clearState();
+  closeMainMenuDialog();
   sendClientRequest(ClientRequest.Lobby_Join_DeathMatch);
 }
 
 void requestGameJoinFortress() {
+  clearState();
+  closeMainMenuDialog();
   sendClientRequest(ClientRequest.Game_Join_Fortress);
 }
 

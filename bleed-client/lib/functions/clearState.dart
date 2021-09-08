@@ -30,6 +30,7 @@ void clearCompileGameState(){
   compiledGame.bulletHoles.clear();
   compiledGame.particles.clear();
   compiledGame.grenades.clear();
+  compiledGame.collectables.clear();
 }
 
 void clearRender(){

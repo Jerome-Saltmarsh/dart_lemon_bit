@@ -8,6 +8,7 @@ import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/game_engine/web_functions.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/ui/dialogs.dart';
+import 'package:bleed_client/ui/views.dart';
 import 'package:flutter/material.dart';
 import 'package:neuro/instance.dart';
 
@@ -108,7 +109,7 @@ Widget buildGameUI(BuildContext context) {
     return _buildConnectView();
   }
 
-  if (state.lobby != null) return Text("Waiting for game to start");
+  if (state.lobby != null) return buildJoinedLobby();
 
   if (compiledGame.gameId < 0) return Text("compiledGame.gameId < 0");
 
