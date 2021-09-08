@@ -48,7 +48,8 @@ void main() {
       _buffer.clear();
       Player player = game.spawnPlayer(name: 'test');
       compilePlayer(_buffer, player);
-      _buffer.write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${game.id} ');
+      _buffer.write(
+          '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${game.id} ');
       _buffer.write(game.compiledTiles);
       _buffer.write(game.compiled);
       sendToClient(_buffer.toString());
@@ -169,7 +170,6 @@ void main() {
           break;
 
         case ClientRequest.Lobby_Create:
-
           if (arguments.length < 4) {
             errorInvalidArguments();
             return;
@@ -179,10 +179,15 @@ void main() {
           GameType gameType = GameType.values[int.parse(arguments[2])];
           String name = arguments[3];
           bool private = arguments[4] == "1";
-          Lobby lobby = gameManager.createLobby(maxPlayer: maxPlayers, gameType: gameType, name: name, private: private);
+          Lobby lobby = gameManager.createLobby(
+              maxPlayer: maxPlayers,
+              gameType: gameType,
+              name: name,
+              private: private);
           LobbyUser user = LobbyUser();
           lobby.players.add(user);
-          sendToClient('${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
+          sendToClient(
+              '${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
           return;
 
         case ClientRequest.Game_Join_Casual:
@@ -198,14 +203,15 @@ void main() {
           Lobby lobby = gameManager.findAvailableDeathMatchLobby();
           lobby.players.add(user);
 
-          if (lobby.players.length == lobby.maxPlayers) {
-            Future.delayed(Duration(seconds: 2), (){
-              Game game = gameManager.createDeathMatch(maxPlayer: lobby.maxPlayers);
-              lobby.game = game;
-            });
-          }
+          // if (lobby.players.length == lobby.maxPlayers) {
+          //   Future.delayed(Duration(seconds: 2), (){
+          //     Game game = gameManager.createDeathMatch(maxPlayer: lobby.maxPlayers);
+          //     lobby.game = game;
+          //   });
+          // }
 
-          sendToClient('${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
+          sendToClient(
+              '${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
           break;
 
         case ClientRequest.Lobby_Join_DeathMatch:
@@ -214,11 +220,15 @@ void main() {
           lobby.players.add(user);
 
           if (lobby.players.length == lobby.maxPlayers) {
-            Game game = gameManager.createDeathMatch(maxPlayer: lobby.maxPlayers);
-            lobby.game = game;
+            Future.delayed(Duration(seconds: 2), () {
+              Game game =
+                  gameManager.createDeathMatch(maxPlayer: lobby.maxPlayers);
+              lobby.game = game;
+            });
           }
 
-          sendToClient('${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
+          sendToClient(
+              '${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
           break;
 
         case ClientRequest.Game_Join:
@@ -250,18 +260,19 @@ void main() {
           }
           String lobbyUuid = arguments[1];
           Lobby? lobby = findLobbyByUuid(lobbyUuid);
-          if (lobby == null){
+          if (lobby == null) {
             errorLobbyNotFound();
             return;
           }
           String playerUuid = arguments[2];
           LobbyUser? user = findLobbyUser(lobby, playerUuid);
-          if (user == null){
+          if (user == null) {
             errorLobbyUserNotFound();
             return;
           }
           user.framesSinceUpdate = 0;
-          StringBuffer buffer = StringBuffer("${ServerResponse.Lobby_Update.index} ");
+          StringBuffer buffer =
+              StringBuffer("${ServerResponse.Lobby_Update.index} ");
           compileLobby(buffer, lobby);
           sendToClient(buffer.toString());
           break;

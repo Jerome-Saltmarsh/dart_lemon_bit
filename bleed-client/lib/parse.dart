@@ -141,7 +141,6 @@ void parseState() {
         break;
 
       case ServerResponse.Lobby_List:
-        print('ServerResponse.Lobby_List');
         state.lobbies.clear();
         while (!_simiColonConsumed()) {
           Lobby lobby = _consumeLobby();
