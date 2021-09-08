@@ -55,15 +55,8 @@ void _drawCompiledGame() {
   drawEditMode();
   _drawCollectables();
   drawPaths();
-
-  if (mouseAvailable){
-
-    drawText(player.equippedRounds > 0 ? player.equippedRounds.toString() :  "Empty", mouseWorldX, mouseWorldY - 20, white);
-  }
-
-
-  drawMouse();
 }
+
 
 void _drawCollectables() {
   for (int i = 0; i < compiledGame.collectables.length; i += 3) {
@@ -89,7 +82,6 @@ void drawCollectable(CollectableType type, double x, double y) {
     case CollectableType.Shotgun_Ammo:
       drawSprite(imageItems, 4, 4, x, y);
       break;
-
   }
 }
 

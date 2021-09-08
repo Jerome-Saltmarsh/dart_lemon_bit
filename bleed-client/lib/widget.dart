@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/bleed.dart';
+import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/send.dart';
@@ -15,6 +16,7 @@ import 'connection.dart';
 import 'editor/editor.dart';
 import 'functions/clearState.dart';
 import 'functions/drawCanvas.dart';
+import 'game_engine/engine_draw.dart';
 import 'images.dart';
 import 'instances/settings.dart';
 import 'rects.dart';
@@ -105,5 +107,19 @@ class BleedWidget extends GameWidget {
 
   @override
   void drawForeground(Canvas canvas, Size size) {
+    if (!mouseAvailable) return;
+
+    drawCircleOutline(radius: 5, x: mouseX, y: mouseY, color: white);
+
+    drawText(
+        player.equippedRounds > 0 ? player.equippedRounds.toString() : "Empty",
+        mouseX,
+        mouseY - 20,
+        white);
+
+    globalPaint.color = Colors.white;
+    for (int i = 0; i < player.equippedClips; i++){
+      globalCanvas.drawRect(Rect.fromLTWH(mouseX + 20 + (i * 10), mouseY - 18, 7, 12), globalPaint);
+    }
   }
 }

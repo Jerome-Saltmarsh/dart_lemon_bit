@@ -827,11 +827,6 @@ void drawCircleOutline(
   }
 }
 
-void drawMouse() {
-  if (!mouseAvailable) return;
-  drawCircleOutline(radius: 5, x: mouseWorldX, y: mouseWorldY, color: white);
-}
-
 void drawTiles() {
   if (imageTiles == null) return;
   if (compiledGame.tiles == null || compiledGame.tiles.isEmpty) return;

@@ -430,7 +430,7 @@ extension GameFunctions on Game {
                 character.rounds.handgun < settings.handgunClipSize &&
                 character.clips.handgun > 0) {
               character.rounds.handgun = settings.handgunClipSize;
-              character.inventory.remove(InventoryItemType.HandgunClip);
+              character.clips.handgun--;
               character.stateDuration = settingsHandgunReloadDuration;
               break;
             }
@@ -440,7 +440,7 @@ extension GameFunctions on Game {
                 character.rounds.shotgun < settings.shotgunClipSize &&
                 character.inventory.shotgunClips > 0) {
               character.rounds.shotgun = settings.shotgunClipSize;
-              character.inventory.remove(InventoryItemType.ShotgunClip);
+              character.clips.shotgun--;
               character.stateDuration = settingsShotgunReloadDuration;
               break;
             }

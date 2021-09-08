@@ -133,41 +133,17 @@ Widget _buildConnectView() {
       row([
         text("BLEED", fontSize: 120),
       ]),
-      Container(
-        height: 50,
-      ),
+      height50,
       row([
         button('Localhost', connectLocalHost, fontSize: 21),
         Container(
           width: 10,
         ),
         button('GCP', connectToGCP, fontSize: 21),
-        Container(
-          width: 10,
-        ),
-        button('FULLSCREEN', requestFullScreen, fontSize: 21)
       ]),
     ]),
   );
 }
-
-// Container _buildJoinGameMenu() {
-//   return Container(
-//     alignment: Alignment.center,
-//     width: screenWidth,
-//     height: screenHeight,
-//     child: Column(
-//         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//         crossAxisAlignment: CrossAxisAlignment.center,
-//         children: [
-//           button('Join Death Match', requestJoinRandomGame),
-//           button('Join Fortress', sendRequestJoinGameFortress),
-//           button('Create Game', showDialogCreateGame),
-//           button('Join Game', sendRequestJoinLobby),
-//           button('Lobbies', showDialogListGames),
-//         ]),
-//   );
-// }
 
 const DecorationImage grenadeImage = const DecorationImage(
   image: const AssetImage('images/weapon-grenade.png'),
@@ -214,8 +190,8 @@ Widget buildWeaponButton(Weapon weapon) {
         width: 120,
         height: 50,
         decoration: BoxDecoration(
-            color: Colors.white70,
-            border: compiledGame.playerWeapon == weapon ? _border : null,
+            // color: Colors.white70,
+            // border: compiledGame.playerWeapon == weapon ? _border : null,
             image: _getDecorationImage(weapon))),
   );
 }
@@ -340,18 +316,33 @@ Widget buildHud() {
         ],
       ));
 
+  List<Widget> clips = [];
+
+  for(int i = 0; i < player.equippedClips; i++){
+    clips.add(Container(
+      color: white,
+      width: 25,
+      height: 50,
+      padding: EdgeInsets.all(10),
+      margin: EdgeInsets.only(right: 5),
+    ));
+  }
+
   Positioned bottomLeft = Positioned(
     left: 0,
     bottom: 0,
     child: Row(
       children: [
         buildWeaponButton(compiledGame.playerWeapon),
-        Container(
-            color: Colors.black87,
-            alignment: Alignment.center,
-            height: 50,
-            width: 100,
-            child: text(player.equippedRounds.toString(), fontSize: 28)),
+        // Container(
+        //     color: Colors.black87,
+        //     alignment: Alignment.center,
+        //     height: 50,
+        //     width: 100,
+        //     child: text(player.equippedRounds.toString(), fontSize: 28)),
+        Row(
+          children: clips,
+        ),
         Container(
             width: 120,
             height: 50,

@@ -33,6 +33,7 @@
 [ ] Random Power up Square 
 [ ] Fix Join Fortress
 [ ] Tutorial Text
+[ ] Zombie Animations
 [ ] Fix Join Death Match
 [ ] UI Handgun Clips Remaining
 [x] Collect Item Audio
