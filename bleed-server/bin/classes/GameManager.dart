@@ -1,4 +1,5 @@
 import '../enums/GameType.dart';
+import '../instances/scenes.dart';
 import '../utils.dart';
 import 'Block.dart';
 import 'Game.dart';
@@ -17,17 +18,17 @@ class GameManager {
     return scene;
   }
 
-  Game getAvailableDeathMatch() {
+  Game getAvailableCasualGame() {
     for (Game game in games) {
-      if (game.type != GameType.DeathMatch) continue;
+      if (game.type != GameType.Casual) continue;
       if (game.players.length < game.maxPlayers) {
         return game;
       }
     }
 
-    Game deathMatch = DeathMatch();
-    games.add(deathMatch);
-    return deathMatch;
+    Game casualGame = GameCasual(scenes.town, 32);
+    games.add(casualGame);
+    return casualGame;
   }
 
   Game? findAvailableGameByType(GameType type) {

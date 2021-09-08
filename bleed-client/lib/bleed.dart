@@ -35,5 +35,5 @@ void _onPlayerCreated(OnPlayerCreated event){
 }
 
 void _joinRandomGame() {
-  send(ClientRequest.Game_Join_Random.index.toString());
+  send(ClientRequest.Game_Join_Casual.index.toString());
 }

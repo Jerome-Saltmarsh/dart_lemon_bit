@@ -90,7 +90,19 @@ void sendClientRequestLobbyCreate({int maxPlayers, GameType type, String name, b
 }
 
 void requestJoinRandomGame() {
-  send(ClientRequest.Game_Join_Random.index.toString());
+  sendClientRequest(ClientRequest.Game_Join_Casual);
+}
+
+void sendRequestGameJoinDeathMatch() {
+  sendClientRequest(ClientRequest.Lobby_Join_DeathMatch);
+}
+
+void requestGameJoinFortress() {
+  sendClientRequest(ClientRequest.Game_Join_Fortress);
+}
+
+void sendClientRequest(ClientRequest request){
+  send(request.index.toString());
 }
 
 void sendRequestSpawn() {

@@ -1,6 +1,8 @@
 enum ClientRequest{
   Game_Join_Open_World,
-  Game_Join_Random,
+  Game_Join_Casual,
+  Game_Join_Fortress,
+  Lobby_Join_DeathMatch,
   Lobby_Create,
   Lobby_Join,
   Lobby_Exit,
@@ -14,5 +16,4 @@ enum ClientRequest{
   Player_Throw_Grenade,
   Player_Use_MedKit,
   Ping,
-  Game_Join_Fortress,
 }

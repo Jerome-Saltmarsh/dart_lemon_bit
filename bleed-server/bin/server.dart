@@ -188,9 +188,8 @@ void main() {
           sendToClient('${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
           return;
 
-        case ClientRequest.Game_Join_Random:
-          Game deathMatch = gameManager.getAvailableDeathMatch();
-          joinGame(deathMatch);
+        case ClientRequest.Game_Join_Casual:
+          joinGame(gameManager.getAvailableCasualGame());
           break;
 
         case ClientRequest.Ping:
@@ -198,6 +197,19 @@ void main() {
           break;
 
         case ClientRequest.Lobby_Join:
+          LobbyUser user = LobbyUser();
+          Lobby lobby = gameManager.findAvailableDeathMatchLobby();
+          lobby.players.add(user);
+
+          if (lobby.players.length == lobby.maxPlayers) {
+            Game game = gameManager.createDeathMatch(maxPlayer: lobby.maxPlayers);
+            lobby.game = game;
+          }
+
+          sendToClient('${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
+          break;
+
+        case ClientRequest.Lobby_Join_DeathMatch:
           LobbyUser user = LobbyUser();
           Lobby lobby = gameManager.findAvailableDeathMatchLobby();
           lobby.players.add(user);

@@ -64,7 +64,7 @@ class _MainMenuState extends State<MainMenu> with SingleTickerProviderStateMixin
           controller: mainMenuTabController,
           tabs: [
             Tab(
-              child: text('Play'),
+              child: text('Join'),
             ),
             Tab(
               child: text('Lobby'),
@@ -84,7 +84,7 @@ class _MainMenuState extends State<MainMenu> with SingleTickerProviderStateMixin
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     height(50),
-                    button('Death Match', requestJoinRandomGame),
+                    button('Death Match', sendRequestGameJoinDeathMatch),
                     height(50),
                     button('Fortress', sendRequestJoinGameFortress),
                     height(50),

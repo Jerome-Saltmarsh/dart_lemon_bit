@@ -30,9 +30,9 @@
 [ ] Death Match - Player Lives
 [ ] Death Match Player Lives
 [ ] Random Power up Square 
-[ ] Fix Join Fortress
 [ ] Tutorial Text
 [ ] Zombie Animations
+[ ] Fix Join Fortress
 [ ] Fix Join Death Match
 [x] UI Show Stamina 
 [x] Cursor goes red when aimed on zombie

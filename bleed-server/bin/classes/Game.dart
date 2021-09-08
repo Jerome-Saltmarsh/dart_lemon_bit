@@ -99,6 +99,22 @@ class DeathMatch extends Game {
   }
 }
 
+class GameCasual extends Game {
+
+  GameCasual(Scene scene, int maxPlayers) : super(GameType.Casual, scene, maxPlayers);
+
+  @override
+  bool gameOver() {
+    return false;
+  }
+
+  @override
+  void update() {
+
+  }
+
+}
+
 abstract class Game {
   static int _id = 0;
   final String id = (_id++).toString();
