@@ -36,11 +36,7 @@ void initUI() {
   });
 
   respondTo((GameJoined gameStarted) async {
-    // if(!mainMenuTabController.indexIsChanging){
-    //   closeMainMenuDialog();
-    // } else{
-    //   Future.delayed(Duration(seconds: 2), closeMainMenuDialog);
-    // }
+    closeMainMenuDialog();
   });
 }
 

@@ -219,13 +219,13 @@ void main() {
           Lobby lobby = gameManager.findAvailableDeathMatchLobby();
           lobby.players.add(user);
 
-          if (lobby.players.length == lobby.maxPlayers) {
-            Future.delayed(Duration(seconds: 2), () {
-              Game game =
-                  gameManager.createDeathMatch(maxPlayer: lobby.maxPlayers);
-              lobby.game = game;
-            });
-          }
+          // if (lobby.players.length == lobby.maxPlayers) {
+          //   Future.delayed(Duration(seconds: 2), () {
+          //     Game game =
+          //         gameManager.createDeathMatch(maxPlayer: lobby.maxPlayers);
+          //     lobby.game = game;
+          //   });
+          // }
 
           sendToClient(
               '${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');

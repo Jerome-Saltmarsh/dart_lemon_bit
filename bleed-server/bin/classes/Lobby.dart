@@ -9,6 +9,7 @@ class Lobby {
   String? name;
   Game? game;
   bool private;
+  int countDown = 100;
   final String uuid = randomUuid();
 
   bool get full => players.length >= maxPlayers;

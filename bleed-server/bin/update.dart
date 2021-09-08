@@ -64,6 +64,14 @@ void updateLobbies() {
         lobby.players.removeAt(i);
         i--;
       }
+
+      if (lobby.players.length == lobby.maxPlayers && lobby.countDown > 0) {
+          lobby.countDown--;
+          if(lobby.countDown == 0){
+            Game game = gameManager.createDeathMatch(maxPlayer: lobby.maxPlayers);
+            lobby.game = game;
+          }
+      }
     }
   }
 }
