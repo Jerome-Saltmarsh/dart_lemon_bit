@@ -6,6 +6,7 @@ import 'package:bleed_client/bleed.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/ui/dialogs.dart';
@@ -19,6 +20,7 @@ import 'functions/drawCanvas.dart';
 import 'game_engine/engine_draw.dart';
 import 'images.dart';
 import 'instances/settings.dart';
+import 'keys.dart';
 import 'rects.dart';
 import 'ui.dart';
 import 'utils.dart';
@@ -109,7 +111,17 @@ class BleedWidget extends GameWidget {
     if (!mouseAvailable) return;
     if (state.compiledGame.gameId < 0) return;
 
-    drawCircleOutline(radius: 5, x: mouseX, y: mouseY, color: Colors.red);
+    double aimX = mouseWorldX;
+    double aimY = mouseWorldY;
+    bool aiming = false;
+    for(int i = 0; i < compiledGame.npcs.length; i++){
+      if(diff(aimX, compiledGame.npcs[i][x]) < 6 && diff(aimY, compiledGame.npcs[i][y]) < 5){
+        aiming = true;
+        break;
+      }
+    }
+
+    drawCircleOutline(radius: 6, x: mouseX, y: mouseY, color: aiming ? Colors.red : Colors.white);
 
     drawText(
         player.equippedRounds.toString(),

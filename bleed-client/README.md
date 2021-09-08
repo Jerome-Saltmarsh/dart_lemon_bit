@@ -35,8 +35,8 @@
 [ ] Tutorial Text
 [ ] Zombie Animations
 [ ] Fix Join Death Match
-[ ] Cursor goes red when aimed on zombie
-[ ] UI Handgun Clips Remaining
+[x] Cursor goes red when aimed on zombie
+[x] UI Handgun Clips Remaining
 [x] Collect Item Audio
 [x] Draw Random Item
 [x] Collectable Type: Shotgun
