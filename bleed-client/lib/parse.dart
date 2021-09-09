@@ -7,7 +7,6 @@ import 'package:bleed_client/enums/ServerResponse.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
-import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/keys.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/ui/dialogs.dart';
@@ -36,6 +35,7 @@ const String _dash = "-";
 const List<ServerResponse> serverResponses = ServerResponse.values;
 const List<Weapon> weapons = Weapon.values;
 const List<GameEventType> gameEventTypes = GameEventType.values;
+const List<GameType> gameTypes = GameType.values;
 
 // properties
 String get _text => event;
@@ -49,9 +49,6 @@ void parseState() {
   while (_index < _text.length) {
     ServerResponse serverResponse = _consumeServerResponse();
     switch (serverResponse) {
-      case ServerResponse.Game_Id:
-        _parseGameId();
-        break;
 
       case ServerResponse.Tiles:
         _parseTiles();
@@ -137,6 +134,7 @@ void parseState() {
         break;
 
       case ServerResponse.Collectables:
+        if (!gameStarted) return;
         _parseCollectables();
         break;
 
@@ -303,8 +301,17 @@ void _parseGameJoined() {
   state.compiledGame.playerX = _consumeDouble();
   state.compiledGame.playerY = _consumeDouble();
   state.compiledGame.gameId = _consumeInt();
+  state.compiledGame.gameType = _consumeGameType();
   state.lobby = null;
   print("ServerResponse.Game_Joined: playerId: ${state.compiledGame.playerId} gameId: ${state.compiledGame.gameId}");
+}
+
+GameType _consumeGameType(){
+  int value = _consumeInt();
+  if (value >= gameTypes.length){
+    throw Exception('error - parse._consumeGameType() : $value is not a valid game type');
+  }
+  return gameTypes[value];
 }
 
 void _next() {

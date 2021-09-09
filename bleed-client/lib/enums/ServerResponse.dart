@@ -7,7 +7,6 @@ enum ServerResponse {
   Tiles,
   Game_Events,
   Grenades,
-  Game_Id,
   Pong,
   Game_Joined,
   Blocks,

@@ -22,7 +22,6 @@ const String _dash = '- ';
 
 void compileGame(Game game) {
   game.buffer.clear();
-  game.buffer.write(game.gameIdString);
   _compilePlayers(game.buffer, game.players);
   _compileNpcs(game.buffer, game.npcs);
   _compileBullets(game.buffer, game.bullets);

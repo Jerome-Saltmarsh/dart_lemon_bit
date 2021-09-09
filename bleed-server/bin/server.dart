@@ -49,7 +49,7 @@ void main() {
       Player player = game.spawnPlayer(name: 'test');
       compilePlayer(_buffer, player);
       _buffer.write(
-          '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${game.id} ');
+          '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${game.id} ${game.type.index} ');
       _buffer.write(game.compiledTiles);
       _buffer.write(game.compiled);
       sendToClient(_buffer.toString());

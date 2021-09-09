@@ -1,6 +1,5 @@
 import '../classes.dart';
 import '../enums/Weapons.dart';
-import '../instances/settings.dart';
 import '../settings.dart';
 import '../utils/player_utils.dart';
 import 'Inventory.dart';

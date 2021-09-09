@@ -47,3 +47,5 @@ State state = State();
 Player get player => state.player;
 CompiledGame get compiledGame => state.compiledGame;
 
+bool get gameStarted => state.compiledGame.gameId >= 0;
+

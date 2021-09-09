@@ -109,9 +109,9 @@ Widget buildGameUI(BuildContext context) {
     return _buildConnectView();
   }
 
-  if (state.lobby != null) return buildJoinedLobby();
+  if (state.lobby != null) return center(buildJoinedLobby());
 
-  if (compiledGame.gameId < 0) return Text("compiledGame.gameId < 0");
+  if (compiledGame.gameId < 0) return center(MainMenu());
 
   if (editMode) return buildEditorUI();
 

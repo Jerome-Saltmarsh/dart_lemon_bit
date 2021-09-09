@@ -90,9 +90,9 @@ class _MainMenuState extends State<MainMenu> with SingleTickerProviderStateMixin
 
     lobbyUpdateJob = periodic(sendRequestLobbyList, seconds: 1);
 
-    respondTo((LobbyJoined lobbyJoined) async {
-      mainMenuTabController.index = 1;
-    });
+    // respondTo((LobbyJoined lobbyJoined) async {
+    //   mainMenuTabController.index = 1;
+    // });
   }
 
 

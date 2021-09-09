@@ -16,6 +16,7 @@ void clearState(){
   state.lobby = null;
   state.lobbies.clear();
   redrawUI();
+  redrawGame();
 }
 
 void clearCompileGameState(){
