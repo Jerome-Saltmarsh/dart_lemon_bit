@@ -14,6 +14,8 @@ import 'updates/updateCharacters.dart';
 import 'updates/updateParticles.dart';
 import 'utils.dart';
 
+bool _showMenuOptions = false;
+
 void update() {
   DateTime now = DateTime.now();
   refreshDuration = now.difference(lastRefresh);
@@ -24,10 +26,30 @@ void update() {
     return;
   }
 
+
+  // TODO Does not belong here
+  _showHideTopLeftMenuOptions();
+
+
   if (playMode) {
     updatePlayMode();
   } else {
     updateEditMode();
+  }
+}
+
+void _showHideTopLeftMenuOptions() {
+  if(!mouseAvailable) return;
+  if (mouseX < 300 && mouseY < 300){
+    if (!_showMenuOptions){
+      _showMenuOptions = true;
+      redrawUI();
+    }
+  }else{
+    if (_showMenuOptions){
+      _showMenuOptions = false;
+      redrawUI();
+    }
   }
 }
 

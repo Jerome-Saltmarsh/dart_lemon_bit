@@ -8,9 +8,10 @@ import 'package:bleed_client/ui/views.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:neuro/instance.dart';
 
 BuildContext contextMainMenuDialog;
+
+bool get dialogOpen => contextMainMenuDialog != null;
 
 Future showErrorDialogPlayerNotFound() async {
   return showDialog<void>(
@@ -133,7 +134,7 @@ class _MainMenuState extends State<MainMenu> with SingleTickerProviderStateMixin
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     height(50),
-                    button('Death Match', sendRequestGameJoinDeathMatch),
+                    button('Death Match', sendRequestJoinLobbyDeathMatch),
                     height(50),
                     button('Fortress', sendRequestJoinGameFortress),
                     height(50),
@@ -145,7 +146,7 @@ class _MainMenuState extends State<MainMenu> with SingleTickerProviderStateMixin
           ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: Stack(
+        floatingActionButton: !dialogOpen ? null : Stack(
           children: <Widget>[
             Align(
               alignment: Alignment.bottomRight,

@@ -110,8 +110,11 @@ void main() {
       ClientRequest request = clientRequests[clientRequestInt];
 
       switch (request) {
-        case ClientRequest.Game_Join_Fortress:
-          joinGame(gameManager.findOrCreateGameFortress());
+        case ClientRequest.Lobby_Join_Fortress:
+          LobbyUser user = LobbyUser();
+          Lobby lobby = gameManager.findAvailableLobbyFortress();
+          lobby.players.add(user);
+          sendToClient('${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
           break;
 
         case ClientRequest.Game_Join_Open_World:
@@ -218,14 +221,6 @@ void main() {
           LobbyUser user = LobbyUser();
           Lobby lobby = gameManager.findAvailableDeathMatchLobby();
           lobby.players.add(user);
-
-          // if (lobby.players.length == lobby.maxPlayers) {
-          //   Future.delayed(Duration(seconds: 2), () {
-          //     Game game =
-          //         gameManager.createDeathMatch(maxPlayer: lobby.maxPlayers);
-          //     lobby.game = game;
-          //   });
-          // }
 
           sendToClient(
               '${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');

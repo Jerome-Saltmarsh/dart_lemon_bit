@@ -1,7 +1,7 @@
 enum ClientRequest{
   Game_Join_Open_World,
   Game_Join_Casual,
-  Game_Join_Fortress,
+  Lobby_Join_Fortress,
   Lobby_Join_DeathMatch,
   Lobby_Create,
   Lobby_Join,

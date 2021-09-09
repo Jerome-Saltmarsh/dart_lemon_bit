@@ -39,6 +39,10 @@ void initUI() {
   respondTo((GameJoined gameStarted) async {
     closeMainMenuDialog();
   });
+
+  on((LobbyJoined _) async {
+    // closeMainMenuDialog();
+  });
 }
 
 void closeMainMenuDialog(){
@@ -433,6 +437,7 @@ Widget buildHud() {
 
   return Stack(
     children: [
+      if (mouseX < 300 && mouseY < 300)
       topLeft,
       topRight,
       bottomLeft,

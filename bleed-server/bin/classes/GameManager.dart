@@ -32,7 +32,7 @@ class GameManager {
     return casualGame;
   }
 
-  void compileAndAddGame(Game game){
+  void compileAndAddGame(Game game) {
     compileGame(game);
     game.compiledTiles = compileTiles(StringBuffer(), game.scene.tiles);
     games.add(game);
@@ -49,28 +49,56 @@ class GameManager {
   }
 
   Lobby findAvailableDeathMatchLobby() {
-    if (lobbies.isEmpty) return createDeathMatchLobby();
+    if (lobbies.isEmpty) return createLobbyDeathMatch();
 
     for (Lobby lobby in lobbies) {
       if (lobby.game != null) continue;
       if (lobby.full) continue;
+      if (lobby.gameType != GameType.DeathMatch) continue;
       return lobby;
     }
 
-    return createDeathMatchLobby();
+    return createLobbyDeathMatch();
   }
 
-  Lobby createDeathMatchLobby(){
-    return createLobby(maxPlayer: 4, gameType: GameType.DeathMatch, private: false);
+  Lobby findAvailableLobbyFortress() {
+    if (lobbies.isEmpty) return createLobbyFortress();
+
+    for (Lobby lobby in lobbies) {
+      if (lobby.game != null) continue;
+      if (lobby.full) continue;
+      if (lobby.gameType != GameType.Fortress) continue;
+      return lobby;
+    }
+
+    return createLobbyFortress();
   }
 
-  Lobby createLobby({required int maxPlayer, required GameType gameType, String? name, required bool private}) {
-    print("create lobby(maxPlayers: $maxPlayer, type: $gameType, name: $name, private: $private)");
-    Lobby lobby = Lobby(maxPlayers: maxPlayer, gameType: gameType, name: name, private: private);
+  Lobby createLobbyDeathMatch() {
+    return createLobby(
+        maxPlayer: 4, gameType: GameType.DeathMatch, private: false);
+  }
+
+  Lobby createLobbyFortress() {
+    return createLobby(
+        maxPlayer: 4, gameType: GameType.Fortress, private: false);
+  }
+
+  Lobby createLobby(
+      {required int maxPlayer,
+      required GameType gameType,
+      String? name,
+      required bool private}) {
+    print(
+        "create lobby(maxPlayers: $maxPlayer, type: $gameType, name: $name, private: $private)");
+    Lobby lobby = Lobby(
+        maxPlayers: maxPlayer,
+        gameType: gameType,
+        name: name,
+        private: private);
     lobbies.add(lobby);
     return lobby;
   }
-
 
   DeathMatch createDeathMatch({int maxPlayer = 32}) {
     DeathMatch deathMatch = DeathMatch(maxPlayers: maxPlayer);

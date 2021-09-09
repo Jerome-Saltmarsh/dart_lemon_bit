@@ -76,7 +76,7 @@ void sendRequestUpdatePlayer() {
 }
 
 void sendRequestJoinGameFortress(){
-  send(ClientRequest.Game_Join_Fortress.index.toString());
+  send(ClientRequest.Lobby_Join_Fortress.index.toString());
 }
 
 void sendRequestJoinLobby(String lobbyUuid){
@@ -95,16 +95,20 @@ void requestJoinRandomGame() {
   sendClientRequest(ClientRequest.Game_Join_Casual);
 }
 
-void sendRequestGameJoinDeathMatch() {
+void sendRequestJoinLobbyDeathMatch() {
+  // TODO does not belong
   clearState();
+  // TODO does not belong
   closeMainMenuDialog();
   sendClientRequest(ClientRequest.Lobby_Join_DeathMatch);
 }
 
-void requestGameJoinFortress() {
+void sendRequestJoinLobbyFortress() {
+  // TODO does not belong
   clearState();
+  // TODO does not belong
   closeMainMenuDialog();
-  sendClientRequest(ClientRequest.Game_Join_Fortress);
+  sendClientRequest(ClientRequest.Lobby_Join_Fortress);
 }
 
 void sendClientRequest(ClientRequest request){

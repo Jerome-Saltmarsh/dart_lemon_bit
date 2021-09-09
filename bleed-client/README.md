@@ -19,6 +19,7 @@
 [ ] Bullet fired Flash
 [ ] Cursor Cooldown Circle
 [ ] Explosion Crater
+[ ] Random Power up Square 
 -- OPEN WORLD -- 
 [ ] Npc Talk Text
 -- RELEASE FORTRESS -- 
@@ -29,11 +30,13 @@
 -- RELEASE DEATH MATCH-- 
 [ ] Death Match - Player Lives
 [ ] Death Match Player Lives
-[ ] Random Power up Square 
+[ ] Prevent equip weapon with no ammo
 [ ] Tutorial Text
+[ ] Player Name text
 [ ] Zombie Animations
 [ ] Fix Join Fortress
-[ ] Close dialog on game start
+[ ] FIX Dialog can be opened multiple times
+[x] Close dialog on game start
 [x] Fix Join Death Match
 [x] UI Show Stamina 
 [x] Cursor goes red when aimed on zombie
