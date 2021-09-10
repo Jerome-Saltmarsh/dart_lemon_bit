@@ -106,7 +106,7 @@ Widget buildGameUI(BuildContext context) {
     return text("loading");
   }
 
-  if (connecting) {
+  if (connecting || true) {
     return buildViewLoading();
   } else if (!connected) {
     return buildViewConnect();
