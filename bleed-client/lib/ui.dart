@@ -125,7 +125,7 @@ Widget buildGameUI(BuildContext context) {
     return buildViewConnect();
   }
 
-  if (state.lobby != null) return center(buildJoinedLobby());
+  if (state.lobby != null) return center(buildViewJoinedLobby());
 
   if (compiledGame.gameId < 0) return center(MainMenu());
 
@@ -333,6 +333,7 @@ Widget buildHud() {
       children: [
         iconToggleFullscreen,
         iconToggleAudio,
+        text(state.gameState.toString()),
       ],
     ),
   );

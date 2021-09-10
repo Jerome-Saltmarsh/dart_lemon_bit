@@ -18,10 +18,14 @@ GameType _gameType = GameType.DeathMatch;
 int _maxPlayers = 8;
 bool _private = false;
 
-Widget buildJoinedLobby() {
+Widget buildViewJoinedLobby() {
+
+  if (state.lobby.maxPlayers == 0){
+    return text("Joining", fontSize: 30);
+  }
 
   if(state.lobby.playersJoined == state.lobby.maxPlayers){
-    return text("Game Starting", fontSize: 30);
+    return text("Starting", fontSize: 30);
   }
 
   return Container(
@@ -62,7 +66,7 @@ Widget buildLobbyList() {
   return Refresh(
     duration: Duration(milliseconds: 300),
     builder: Builder(builder: (BuildContext context) {
-      if (state.lobby != null) return buildJoinedLobby();
+      if (state.lobby != null) return buildViewJoinedLobby();
 
       Widget gameTypeButton = StatefulBuilder(
           builder: ((BuildContext builderContext, StateSetter setState) {

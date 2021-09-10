@@ -84,7 +84,7 @@ class _MainMenuState extends State<MainMenu>
   @override
   void initState() {
     super.initState();
-    mainMenuTabController = new TabController(vsync: this, length: 3);
+    mainMenuTabController = new TabController(vsync: this, length: 4);
     lobbyUpdateJob = periodic(sendRequestLobbyList, seconds: 1);
   }
 
@@ -98,12 +98,15 @@ class _MainMenuState extends State<MainMenu>
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 500,
+      width: 600,
       child: Scaffold(
         backgroundColor: Colors.black54,
         appBar: TabBar(
           controller: mainMenuTabController,
           tabs: [
+            Tab(
+              child: text('Deathmatch'),
+            ),
             Tab(
               child: text('Join'),
             ),
@@ -118,6 +121,23 @@ class _MainMenuState extends State<MainMenu>
         body: TabBarView(
           controller: mainMenuTabController,
           children: [
+            Container(
+              height: 100,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    height(50),
+                    button('Alone', sendRequestJoinLobbyDeathMatch),
+                    height(50),
+                    button('Cooperative', null),
+                    height(50),
+                    button('Squads 4', sendRequestJoinGameFortress),
+                    height(50),
+                    button('Squads 8', sendRequestJoinGameFortress),
+                    height(50),
+                  ]),
+            ),
             Container(
               height: 100,
               child: Column(

@@ -25,6 +25,7 @@
 [ ] Fire Shotgun Animation
 [ ] Fix Npc Wander
 [ ] Zombie Animations
+[ ] Item.RevivalKit (revive fallen squad member)
 -- OPEN WORLD -- 
 [ ] Npc Talk Text
 -- CASUAL --
@@ -42,6 +43,7 @@
 [ ] Score board
 [ ] Player Name text
 [ ] Observe mode
+[ ] Victory
 [x] Prevent Respawn in DeathMatch 
 [x] Game Start Countdown
 [x] Fix Join Fortress
@@ -195,42 +197,5 @@
 [x] Isometric characters
 
 
-# IDEA
-- Run send commands on a separate thread to the receive commands
-
-# Attributes
-- sprint duration
-- bag size
-- reload speed
-- accuracy
-- luck (critical damage chance)
-- merchant (item cost)
-- health regen
-- max health
-
-# Open World
-Diablo clone
-
-# Death Match - Free for all
-No teams, last man standing wins
-
-# Death Match - Coop Survival
-Two players per team, last team alive wins
-
-# Death Match - Teams
-Two teams
-
-# Fortress Defense
-Survive against waves of enemy zombies
-
-# Fortress Battle
-Two teams 
-
-Death Match
-When the player joins the game they have to wait until the current round is finished.
-Once the all 32 players have joined the lobby the game begins. The player spawns in a random
-location and must try their best to survive as long as possible
-
-Open World
-The player begins playing instantly and does not have to wait for the round to finish
-
+# Symbolic Hard Link
+mklink /J common C:\Users\Jerome\github\bleed\bleed-common\lib

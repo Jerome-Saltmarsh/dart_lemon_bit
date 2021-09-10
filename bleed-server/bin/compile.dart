@@ -6,6 +6,7 @@ import 'classes/Inventory.dart';
 import 'classes/Lobby.dart';
 import 'classes/Player.dart';
 import 'classes/Vector2.dart';
+import 'common/GameState.dart';
 import 'enums.dart';
 import 'enums/ServerResponse.dart';
 import 'instances/gameManager.dart';
@@ -95,6 +96,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.lives);
   _write(buffer, equippedWeaponClips(player));
   _write(buffer, equippedWeaponRounds(player));
+  _write(buffer, GameState.InProgress.index);
   // _compileInventory(buffer, player.inventory);
 }
 

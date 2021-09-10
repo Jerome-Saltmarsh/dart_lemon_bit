@@ -1,5 +1,6 @@
 
 import 'package:bleed_client/classes/Player.dart';
+import 'package:bleed_client/common/GameState.dart';
 
 import 'CompiledGame.dart';
 import 'Lobby.dart';
@@ -10,4 +11,5 @@ class State {
   Player player = Player();
   CompiledGame compiledGame = CompiledGame();
   String lobbyGameUuid = "";
+  GameState gameState = GameState.InProgress;
 }

@@ -14,6 +14,7 @@ import 'package:neuro/instance.dart';
 
 import 'classes/RenderState.dart';
 import 'classes/Vector2.dart';
+import 'common/GameState.dart';
 import 'draw.dart';
 import 'enums/GameError.dart';
 import 'enums/GameEventType.dart';
@@ -235,6 +236,7 @@ void _parsePlayer() {
   compiledGame.playerLives = _consumeInt();
   player.equippedClips = _consumeInt();
   player.equippedRounds = _consumeInt();
+  state.gameState = GameState.values[_consumeInt()];
 }
 
 void _parseInventory() {
