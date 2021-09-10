@@ -11,11 +11,18 @@ class Lobby {
   Game? game;
   bool private;
   int countDown = settings.gameStartingCountDown;
+  int squadSize;
   final String uuid = randomUuid();
 
   bool get full => players.length >= maxPlayers;
 
-  Lobby({required this.maxPlayers, required this.gameType, this.name, this.private = false});
+  Lobby({
+      required this.maxPlayers,
+      required this.gameType,
+      this.name,
+      this.private = false,
+      required this.squadSize
+  });
 }
 
 class LobbyUser {

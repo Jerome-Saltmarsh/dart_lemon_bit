@@ -87,10 +87,30 @@ class Fortress extends Game {
   void onPlayerKilled(Player player) {
     // TODO auto respawn in 20 seconds
   }
+
+  @override
+  void onPlayerJoined(Player player) {
+    // TODO: implement onPlayerJoined
+  }
 }
 
 class DeathMatch extends Game {
-  DeathMatch({int maxPlayers = 32})
+
+  final int squadSize;
+
+  int get numberOfSquads => maxPlayers ~/ squadSize;
+
+  int get nextSquadNumber{
+    if (squadSize <= 1) return -1;
+
+    for(int squad = 0; squad < numberOfSquads; squad++){
+      if (numberOfPlayersOnSquad(squad) < squadSize) return squad;
+    }
+
+    throw Exception("this code should never run");
+  }
+
+  DeathMatch({required maxPlayers, required this.squadSize})
       : super(GameType.DeathMatch, scenes.town, maxPlayers);
 
   @override
@@ -111,6 +131,22 @@ class DeathMatch extends Game {
       }
     }
   }
+
+  @override
+  void onPlayerJoined(Player player) {
+    if (squadSize <= 1) return;
+    player.squad = nextSquadNumber;
+    print('player assigned squad ${player.squad}');
+  }
+
+  int numberOfPlayersOnSquad(int squad){
+    int count = 0;
+    for(Player player in players){
+      if (player.squad != squad) continue;
+      count++;
+    }
+    return count;
+  }
 }
 
 class GameCasual extends Game {
@@ -127,6 +163,11 @@ class GameCasual extends Game {
 
   @override
   void onPlayerKilled(Player player) {}
+
+  @override
+  void onPlayerJoined(Player player) {
+    // TODO: implement onPlayerJoined
+  }
 }
 
 abstract class Game {
@@ -163,6 +204,8 @@ abstract class Game {
   void update();
 
   void onPlayerKilled(Player player);
+  
+  void onPlayerJoined(Player player);
 
   bool gameOver();
 
@@ -936,6 +979,7 @@ extension GameFunctions on Game {
       rounds: Rounds(handgun: settings.handgunClipSize),
     );
     players.add(player);
+    onPlayerJoined(player);
     return player;
   }
 

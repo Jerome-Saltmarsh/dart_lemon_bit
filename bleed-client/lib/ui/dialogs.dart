@@ -128,13 +128,17 @@ class _MainMenuState extends State<MainMenu>
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     height(50),
-                    button('Alone', sendRequestJoinLobbyDeathMatch),
+                    button('Alone', () {
+                      sendRequestJoinLobbyDeathMatch(squadSize: 1);
+                    }),
                     height(50),
-                    button('Cooperative', null),
+                    button('Coop', () {
+                      sendRequestJoinLobbyDeathMatch(squadSize: 2);
+                    }),
                     height(50),
-                    button('Squads 4', sendRequestJoinGameFortress),
-                    height(50),
-                    button('Squads 8', sendRequestJoinGameFortress),
+                    button('Trio', () {
+                      sendRequestJoinLobbyDeathMatch(squadSize: 3);
+                    }),
                     height(50),
                   ]),
             ),

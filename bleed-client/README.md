@@ -12,6 +12,7 @@
 [ ] Throw Animation
 [ ] Body Armor
 [ ] Knife Attack
+[ ] Line of Sight
 [ ] Player Name Text
 [ ] Particle Gunshot smoke
 [ ] Cache Particles
@@ -43,8 +44,8 @@
 [ ] Prevent equip weapon with no ammo
 [ ] Player Name text
 [ ] Observe mode
-[ ] Teams
 [ ] Score board
+[ ] Teams
 [x] Control Spawn Point
 [x] Victory / Lost
 [x] Prevent Respawn in DeathMatch 

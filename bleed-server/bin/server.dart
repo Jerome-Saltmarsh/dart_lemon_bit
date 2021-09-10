@@ -118,12 +118,8 @@ void main() {
           LobbyUser user = LobbyUser();
           Lobby lobby = gameManager.findAvailableLobbyFortress();
           lobby.players.add(user);
-          sendToClient('${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
-          break;
-
-        case ClientRequest.Game_Join_Open_World:
-          Game openWorld = gameManager.getAvailableOpenWorld();
-          joinGame(openWorld);
+          sendToClient(
+              '${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
           break;
 
         case ClientRequest.Game_Update:
@@ -183,11 +179,14 @@ void main() {
           }
 
           int maxPlayers = int.parse(arguments[1]);
+          // TODO read from the arguments
+          int squadSize = 4;
           GameType gameType = GameType.values[int.parse(arguments[2])];
           String name = arguments[3];
           bool private = arguments[4] == "1";
           Lobby lobby = gameManager.createLobby(
-              maxPlayer: maxPlayers,
+              maxPlayers: maxPlayers,
+              squadSize: squadSize,
               gameType: gameType,
               name: name,
               private: private);
@@ -206,17 +205,34 @@ void main() {
           break;
 
         case ClientRequest.Lobby_Join:
-          LobbyUser user = LobbyUser();
-          Lobby lobby = gameManager.findAvailableDeathMatchLobby();
-          lobby.players.add(user);
+          if (arguments.length <= 1) {
+            errorInvalidArguments();
+            return;
+          }
 
+          String lobbyUuid = arguments[1];
+          Lobby? lobby = findLobbyByUuid(lobbyUuid);
+          if (lobby == null) {
+            errorLobbyNotFound();
+            return;
+          }
+          LobbyUser user = LobbyUser();
+          lobby.players.add(user);
           sendToClient(
               '${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
           break;
 
         case ClientRequest.Lobby_Join_DeathMatch:
           LobbyUser user = LobbyUser();
-          Lobby lobby = gameManager.findAvailableDeathMatchLobby();
+          if (arguments.length <= 1) {
+            errorInvalidArguments();
+            return;
+          }
+
+          int squadSize = int.parse(arguments[1]);
+          int maxPlayers = 8;
+          Lobby lobby = gameManager.findAvailableDeathMatchLobby(
+              squadSize: squadSize, maxPlayers: maxPlayers);
           lobby.players.add(user);
 
           sendToClient(
@@ -281,7 +297,7 @@ void main() {
             return;
           }
 
-          if (game.type != GameType.Casual){
+          if (game.type != GameType.Casual) {
             errorCannotRevive();
             return;
           }

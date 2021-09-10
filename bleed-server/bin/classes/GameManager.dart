@@ -40,16 +40,18 @@ class GameManager {
 
   Game? findAvailableGameByType(GameType type) {
     for (Game game in games) {
-      if (game.type != GameType.OpenWorld) continue;
-      if (game.players.length < game.maxPlayers) {
-        return game;
-      }
+      if (game.type != type) continue;
+      if (game.players.length >= game.maxPlayers) continue;
+      return game;
     }
     return null;
   }
 
-  Lobby findAvailableDeathMatchLobby() {
-    if (lobbies.isEmpty) return createLobbyDeathMatch();
+  Lobby findAvailableDeathMatchLobby(
+      {required int squadSize, required int maxPlayers}) {
+    if (lobbies.isEmpty)
+      return createLobbyDeathMatch(
+          squadSize: squadSize, maxPlayers: maxPlayers);
 
     for (Lobby lobby in lobbies) {
       if (lobby.game != null) continue;
@@ -58,7 +60,7 @@ class GameManager {
       return lobby;
     }
 
-    return createLobbyDeathMatch();
+    return createLobbyDeathMatch(squadSize: squadSize, maxPlayers: maxPlayers);
   }
 
   Lobby findAvailableLobbyFortress() {
@@ -74,38 +76,52 @@ class GameManager {
     return createLobbyFortress();
   }
 
-  Lobby createLobbyDeathMatch() {
+  Lobby createLobbyDeathMatch(
+      {required int maxPlayers, required int squadSize}) {
     return createLobby(
-        maxPlayer: 2, gameType: GameType.DeathMatch, private: false);
+        maxPlayers: maxPlayers,
+        gameType: GameType.DeathMatch,
+        private: false,
+        squadSize: squadSize);
   }
 
   Lobby createLobbyFortress() {
     return createLobby(
-        maxPlayer: 4, gameType: GameType.Fortress, private: false);
+        maxPlayers: 4,
+        gameType: GameType.Fortress,
+        private: false,
+        squadSize: 4);
   }
 
-  Lobby createLobby({required int maxPlayer,
-    required GameType gameType,
-    String? name,
-    required bool private}) {
+  Lobby createLobby(
+      {required int maxPlayers,
+      required GameType gameType,
+      String? name,
+      required bool private,
+      required int squadSize}) {
     print(
-        "create lobby(maxPlayers: $maxPlayer, type: $gameType, name: $name, private: $private)");
+        "createLobby(maxPlayers: $maxPlayers, gameType: $gameType, name: $name, private: $private, squadSize: $squadSize)");
     Lobby lobby = Lobby(
-        maxPlayers: maxPlayer,
+        maxPlayers: maxPlayers,
         gameType: gameType,
         name: name,
-        private: private);
+        private: private,
+        squadSize: squadSize);
     lobbies.add(lobby);
     return lobby;
   }
 
-  DeathMatch createDeathMatch({int maxPlayer = 32}) {
-    DeathMatch deathMatch = DeathMatch(maxPlayers: maxPlayer);
+  DeathMatch createDeathMatch(
+      {required int maxPlayer, required int squadSize}) {
+    print("createDeathMatch(maxPlayer: $maxPlayer, squadSize: $squadSize)");
+    DeathMatch deathMatch =
+        DeathMatch(maxPlayers: maxPlayer, squadSize: squadSize);
     compileAndAddGame(deathMatch);
     return deathMatch;
   }
 
   Fortress createGameFortress({required int maxPlayers}) {
+    print("createGameFortress(maxPlayer: $maxPlayers)");
     Fortress fortress = Fortress(maxPlayers: maxPlayers);
     compileAndAddGame(fortress);
     return fortress;
@@ -115,17 +131,5 @@ class GameManager {
     Game? game = findAvailableGameByType(GameType.Fortress);
     if (game != null) return game as Fortress;
     return createGameFortress(maxPlayers: maxPlayers);
-  }
-
-  Game getAvailableOpenWorld() {
-    for (Game game in games) {
-      if (game.type != GameType.OpenWorld) continue;
-      if (game.players.length < game.maxPlayers) {
-        return game;
-      }
-    }
-    Game openWorld = DeathMatch();
-    compileAndAddGame(openWorld);
-    return openWorld;
   }
 }

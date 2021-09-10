@@ -38,7 +38,7 @@ Game? findGameById(String id) {
 void startLobbyGame(Lobby lobby) {
   switch (lobby.gameType) {
     case GameType.DeathMatch:
-      lobby.game = gameManager.createDeathMatch(maxPlayer: lobby.maxPlayers);
+      lobby.game = gameManager.createDeathMatch(maxPlayer: lobby.maxPlayers, squadSize: lobby.squadSize);
       break;
     case GameType.Fortress:
       lobby.game = gameManager.createGameFortress(maxPlayers: lobby.maxPlayers);

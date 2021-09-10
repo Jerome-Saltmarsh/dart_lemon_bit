@@ -186,7 +186,7 @@ Widget buildViewLoading() {
         fontWeight: FontWeight.bold,
         color: Colors.white),
     waveDuration: Duration(seconds: 2),
-    loadDuration: Duration(seconds: 10),
+    loadDuration: Duration(seconds: 5),
     boxBackgroundColor: Colors.black,
   ));
 }

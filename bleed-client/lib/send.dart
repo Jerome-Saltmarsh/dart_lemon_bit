@@ -94,10 +94,9 @@ void requestJoinRandomGame() {
   sendClientRequest(ClientRequest.Game_Join_Casual);
 }
 
-void sendRequestJoinLobbyDeathMatch() {
-  // TODO does not belong
+void sendRequestJoinLobbyDeathMatch({int squadSize = 1}) {
   clearState();
-  sendClientRequest(ClientRequest.Lobby_Join_DeathMatch);
+  send('${ClientRequest.Lobby_Join_DeathMatch.index} $squadSize');
 }
 
 void sendRequestJoinLobbyFortress() {
