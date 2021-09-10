@@ -2,6 +2,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/classes/Lobby.dart';
 import 'package:bleed_client/enums/GameType.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/instances/settings.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:clipboard/clipboard.dart';
@@ -167,10 +168,12 @@ Widget _buildLobbyListTile(Lobby lobby) {
 Widget buildViewLoading() {
   return center(TextLiquidFill(
     text: 'BLEED',
+    boxWidth: screenWidth,
+    boxHeight: screenHeight,
     waveColor: Colors.red,
     textStyle: const TextStyle(
         fontFamily: 'PermanentMarker',
-        fontSize: 100.0,
+        fontSize: 140.0,
         fontWeight: FontWeight.bold,
         color: Colors.white),
     waveDuration: Duration(seconds: 2),
@@ -180,6 +183,19 @@ Widget buildViewLoading() {
 }
 
 Widget buildViewConnect() {
+
+  if (settings.developMode){
+    return center(Column(
+      children: [
+        text("BLEED", fontSize: 120),
+        height50,
+        text("Connection lost to the server"),
+        height16,
+        button('RECONNECT', connectToGCP, fontSize: 21),
+      ],
+    ));
+  }
+
   return center(
     column([
       row([
@@ -187,11 +203,11 @@ Widget buildViewConnect() {
       ]),
       height50,
       row([
-        button('Localhost', connectLocalHost, fontSize: 21),
+        button('LOCALHOST', connectLocalHost, fontSize: 21),
         Container(
           width: 10,
         ),
-        button('GCP', connectToGCP, fontSize: 21),
+        button('ONLINE', connectToGCP, fontSize: 21),
       ]),
     ]),
   );
