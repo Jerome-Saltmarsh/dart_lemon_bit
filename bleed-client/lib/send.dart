@@ -99,7 +99,6 @@ void sendRequestJoinLobbyDeathMatch() {
   // TODO does not belong
   clearState();
   // TODO does not belong
-  closeMainMenuDialog();
   sendClientRequest(ClientRequest.Lobby_Join_DeathMatch);
 }
 
@@ -107,7 +106,6 @@ void sendRequestJoinLobbyFortress() {
   // TODO does not belong
   clearState();
   // TODO does not belong
-  closeMainMenuDialog();
   sendClientRequest(ClientRequest.Lobby_Join_Fortress);
 }
 

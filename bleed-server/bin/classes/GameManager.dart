@@ -84,11 +84,10 @@ class GameManager {
         maxPlayer: 4, gameType: GameType.Fortress, private: false);
   }
 
-  Lobby createLobby(
-      {required int maxPlayer,
-      required GameType gameType,
-      String? name,
-      required bool private}) {
+  Lobby createLobby({required int maxPlayer,
+    required GameType gameType,
+    String? name,
+    required bool private}) {
     print(
         "create lobby(maxPlayers: $maxPlayer, type: $gameType, name: $name, private: $private)");
     Lobby lobby = Lobby(
@@ -106,16 +105,16 @@ class GameManager {
     return deathMatch;
   }
 
-  Fortress createGameFortress() {
-    Fortress fortress = Fortress();
+  Fortress createGameFortress({required int maxPlayers}) {
+    Fortress fortress = Fortress(maxPlayers: maxPlayers);
     compileAndAddGame(fortress);
     return fortress;
   }
 
-  Fortress findOrCreateGameFortress() {
+  Fortress findOrCreateGameFortress({required int maxPlayers}) {
     Game? game = findAvailableGameByType(GameType.Fortress);
     if (game != null) return game as Fortress;
-    return createGameFortress();
+    return createGameFortress(maxPlayers: maxPlayers);
   }
 
   Game getAvailableOpenWorld() {

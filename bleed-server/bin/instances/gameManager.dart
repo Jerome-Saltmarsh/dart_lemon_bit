@@ -1,6 +1,7 @@
 import '../classes/Game.dart';
 import '../classes/GameManager.dart';
 import '../classes/Lobby.dart';
+import '../enums/GameType.dart';
 
 GameManager gameManager = GameManager();
 
@@ -32,4 +33,17 @@ Game? findGameById(String id) {
     }
   }
   return null;
+}
+
+void startLobbyGame(Lobby lobby) {
+  switch (lobby.gameType) {
+    case GameType.DeathMatch:
+      lobby.game = gameManager.createDeathMatch(maxPlayer: lobby.maxPlayers);
+      break;
+    case GameType.Fortress:
+      lobby.game = gameManager.createGameFortress(maxPlayers: lobby.maxPlayers);
+      break;
+    default:
+      throw Exception("Start Game not implemented for ${lobby.gameType}");
+  }
 }

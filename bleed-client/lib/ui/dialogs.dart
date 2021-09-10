@@ -36,8 +36,6 @@ Future showErrorDialog(String message) async {
   );
 }
 
-
-
 Future showDialogCreateGame() async {
   TextEditingController nameController = TextEditingController();
 
@@ -79,8 +77,8 @@ class MainMenu extends StatefulWidget {
   _MainMenuState createState() => _MainMenuState();
 }
 
-class _MainMenuState extends State<MainMenu> with SingleTickerProviderStateMixin {
-
+class _MainMenuState extends State<MainMenu>
+    with SingleTickerProviderStateMixin {
   Timer lobbyUpdateJob;
 
   @override
@@ -94,7 +92,6 @@ class _MainMenuState extends State<MainMenu> with SingleTickerProviderStateMixin
     //   mainMenuTabController.index = 1;
     // });
   }
-
 
   @override
   void dispose() {
@@ -145,20 +142,24 @@ class _MainMenuState extends State<MainMenu> with SingleTickerProviderStateMixin
           ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: !dialogOpen ? null : Stack(
-          children: <Widget>[
-            Align(
-              alignment: Alignment.bottomRight,
-              child: button("Close", () => _pop(context)),
-            ),
-          ],
-        ),
+        floatingActionButton: !dialogOpen
+            ? null
+            : Stack(
+                children: <Widget>[
+                  Align(
+                    alignment: Alignment.bottomRight,
+                    child: button("Close", () => _pop(context)),
+                  ),
+                ],
+              ),
       ),
     );
   }
 }
 
 Future showDialogMainMenu() async {
+  if (contextMainMenuDialog != null) return;
+
   return showDialog(
     context: globalContext,
     barrierDismissible: true,

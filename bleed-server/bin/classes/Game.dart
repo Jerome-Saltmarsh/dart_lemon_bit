@@ -35,7 +35,7 @@ class Fortress extends Game {
 
   Map<TileNode, List<Vector2>> nodeToFortress = Map();
 
-  Fortress() : super(GameType.Fortress, scenes.fortress, 8);
+  Fortress({required int maxPlayers}) : super(GameType.Fortress, scenes.fortress, maxPlayers);
 
   void update() {
     if (lives <= 0) return;

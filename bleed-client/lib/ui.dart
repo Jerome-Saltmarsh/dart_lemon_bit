@@ -40,7 +40,8 @@ void initUI() {
   });
 
   on((LobbyJoined _) async {
-    // closeMainMenuDialog();
+    closeMainMenuDialog();
+    redrawUI();
   });
 }
 

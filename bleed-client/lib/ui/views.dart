@@ -184,7 +184,7 @@ Widget buildViewLoading() {
 
 Widget buildViewConnect() {
 
-  if (settings.developMode){
+  if (!settings.developMode){
     return center(Column(
       children: [
         text("BLEED", fontSize: 120),

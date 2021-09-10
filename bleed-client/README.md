@@ -34,8 +34,8 @@
 [ ] Tutorial Text
 [ ] Player Name text
 [ ] Zombie Animations
-[ ] Fix Join Fortress
-[ ] FIX Dialog can be opened multiple times
+[x] Fix Join Fortress
+[x] FIX Dialog can be opened multiple times
 [x] Close dialog on game start
 [x] Fix Join Death Match
 [x] UI Show Stamina 

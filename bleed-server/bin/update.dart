@@ -3,6 +3,7 @@ import 'dart:async';
 import 'classes/Game.dart';
 import 'classes.dart';
 import 'classes/Lobby.dart';
+import 'enums/GameType.dart';
 import 'instances/gameManager.dart';
 import 'language.dart';
 import 'maths.dart';
@@ -21,25 +22,25 @@ void initUpdateLoop() {
   periodic(jobRemoveEmptyLobbiesAndGames, ms: 5000);
 }
 
-void updateNpcTargets(Timer timer){
-  for(Game game in gameManager.games){
+void updateNpcTargets(Timer timer) {
+  for (Game game in gameManager.games) {
     game.updateNpcTargets();
   }
 }
 
-void jobRemoveDisconnectedPlayers(Timer timer){
-  for(Game game in gameManager.games){
+void jobRemoveDisconnectedPlayers(Timer timer) {
+  for (Game game in gameManager.games) {
     game.jobRemoveDisconnectedPlayers();
   }
 }
 
-void jobNpcWander(Timer timer){
-  for(Game game in gameManager.games){
+void jobNpcWander(Timer timer) {
+  for (Game game in gameManager.games) {
     game.jobNpcWander();
   }
 }
 
-void jobRemoveEmptyLobbiesAndGames(Timer timer){
+void jobRemoveEmptyLobbiesAndGames(Timer timer) {
   lobbies.removeWhere((lobby) => lobby.players.isEmpty);
   games.removeWhere((element) => element.players.isEmpty);
 }
@@ -51,26 +52,24 @@ void fixedUpdate(Timer timer) {
 }
 
 void updateGames() {
-  for (Game game in games){
+  for (Game game in games) {
     game.updateAndCompile();
   }
 }
 
 void updateLobbies() {
-  for(Lobby lobby in lobbies){
-    for(int i =0 ;i < lobby.players.length; i++){
+  for (Lobby lobby in lobbies) {
+    for (int i = 0; i < lobby.players.length; i++) {
       lobby.players[i].framesSinceUpdate++;
-      if (lobby.players[i].framesSinceUpdate > 100){
+      if (lobby.players[i].framesSinceUpdate > 100) {
         lobby.players.removeAt(i);
         i--;
       }
-
       if (lobby.players.length == lobby.maxPlayers && lobby.countDown > 0) {
-          lobby.countDown--;
-          if(lobby.countDown == 0){
-            Game game = gameManager.createDeathMatch(maxPlayer: lobby.maxPlayers);
-            lobby.game = game;
-          }
+        lobby.countDown--;
+        if (lobby.countDown == 0) {
+          startLobbyGame(lobby);
+        }
       }
     }
   }
@@ -119,8 +118,8 @@ void resolveCollision(GameObject a, GameObject b) {
 }
 
 
-void resolveCollisionBetween(
-    List<GameObject> gameObjectsA, List<GameObject> gameObjectsB) {
+void resolveCollisionBetween(List<GameObject> gameObjectsA,
+    List<GameObject> gameObjectsB) {
   int minJ = 0;
   for (int i = 0; i < gameObjectsA.length; i++) {
     if (!gameObjectsA[i].collidable) continue;
