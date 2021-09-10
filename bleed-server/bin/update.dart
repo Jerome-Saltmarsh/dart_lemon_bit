@@ -67,6 +67,7 @@ void updateLobbies() {
       }
       if (lobby.players.length == lobby.maxPlayers && lobby.countDown > 0) {
         lobby.countDown--;
+        print("starting game in ${lobby.countDown}");
         if (lobby.countDown == 0) {
           startLobbyGame(lobby);
         }

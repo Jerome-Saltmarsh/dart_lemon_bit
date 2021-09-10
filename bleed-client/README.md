@@ -26,14 +26,17 @@
 [ ] Fix Npc Wander
 [ ] Fire Shotgun Animation
 [ ] Fortress life lost audio
+[ ] Disable friendly fire
 [ ] Fortress Cache Path 
 -- RELEASE DEATH MATCH-- 
 [ ] Death Match - Player Lives
 [ ] Death Match Player Lives
 [ ] Prevent equip weapon with no ammo
 [ ] Tutorial Text
+[ ] Control Spawn Point
 [ ] Player Name text
 [ ] Zombie Animations
+[ ] Game Start Countdown
 [x] Fix Join Fortress
 [x] FIX Dialog can be opened multiple times
 [x] Close dialog on game start

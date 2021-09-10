@@ -17,10 +17,10 @@ class Settings {
   final double grenadeGravity = 0.06;
 
   final int maxZombies = 2500;
-
   final int deathMatchMaxPlayers = 32;
   final int itemReactivationInSeconds = 60;
   final int maxGrenades = 3;
   final int maxMeds = 3;
   final int staminaRefreshRate = 2;
+  final int gameStartingCountDown = 400;
 }

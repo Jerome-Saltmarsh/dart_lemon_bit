@@ -19,6 +19,11 @@ int _maxPlayers = 8;
 bool _private = false;
 
 Widget buildJoinedLobby() {
+
+  if(state.lobby.playersJoined == state.lobby.maxPlayers){
+    return text("Game Starting", fontSize: 30);
+  }
+
   return Container(
     padding: EdgeInsets.all(20),
     child: Column(

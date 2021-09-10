@@ -1,5 +1,6 @@
 import '../enums/GameType.dart';
 import '../functions/randomUuid.dart';
+import '../instances/settings.dart';
 import 'Game.dart';
 
 class Lobby {
@@ -9,7 +10,7 @@ class Lobby {
   String? name;
   Game? game;
   bool private;
-  int countDown = 100;
+  int countDown = settings.gameStartingCountDown;
   final String uuid = randomUuid();
 
   bool get full => players.length >= maxPlayers;
