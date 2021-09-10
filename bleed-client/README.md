@@ -1,3 +1,5 @@
+-- BUGS --
+[ ] Player cache error
 -- FEATURES -- 
 [ ] Critical Damage
 [ ] Accuracy
@@ -20,23 +22,28 @@
 [ ] Cursor Cooldown Circle
 [ ] Explosion Crater
 [ ] Random Power up Square 
+[ ] Fire Shotgun Animation
+[ ] Fix Npc Wander
+[ ] Zombie Animations
 -- OPEN WORLD -- 
 [ ] Npc Talk Text
--- RELEASE FORTRESS -- 
-[ ] Fix Npc Wander
-[ ] Fire Shotgun Animation
+-- CASUAL --
+[ ] Tutorial Text
+-- FORTRESS -- 
 [ ] Fortress life lost audio
 [ ] Disable friendly fire
 [ ] Fortress Cache Path 
--- RELEASE DEATH MATCH-- 
-[ ] Death Match - Player Lives
-[ ] Death Match Player Lives
+-- DEATH MATCH (Alone)   -- // 16 teams of 1
+-- DEATH MATCH (Squad 2) -- // 8 teams of 2
+-- DEATH MATCH (Squad 4) -- // 4 teams of 4
+-- DEATH MATCH (Squad 8) -- // 2 teams of 8
 [ ] Prevent equip weapon with no ammo
-[ ] Tutorial Text
 [ ] Control Spawn Point
+[ ] Score board
 [ ] Player Name text
-[ ] Zombie Animations
-[ ] Game Start Countdown
+[ ] Observe mode
+[x] Prevent Respawn in DeathMatch 
+[x] Game Start Countdown
 [x] Fix Join Fortress
 [x] FIX Dialog can be opened multiple times
 [x] Close dialog on game start

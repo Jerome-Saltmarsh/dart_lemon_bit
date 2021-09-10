@@ -13,6 +13,7 @@ class Player extends Character {
   int grenades;
   int meds;
   int lives;
+  int frameOfDeath = -1;
 
   Clips clips = Clips();
   Rounds rounds = Rounds();

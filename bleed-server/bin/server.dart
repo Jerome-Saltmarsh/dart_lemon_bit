@@ -83,6 +83,10 @@ void main() {
       error(GameError.PlayerNotFound);
     }
 
+    void errorCannotRevive() {
+      error(GameError.CannotRevive);
+    }
+
     void errorInvalidPlayerUUID() {
       error(GameError.InvalidPlayerUUID);
     }
@@ -276,6 +280,12 @@ void main() {
             errorGameNotFound();
             return;
           }
+
+          if (game.type != GameType.Casual){
+            errorCannotRevive();
+            return;
+          }
+
           int id = int.parse(arguments[2]);
           Player? player = game.findPlayerById(id);
           if (player == null) {

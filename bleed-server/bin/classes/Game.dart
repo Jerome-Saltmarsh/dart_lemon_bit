@@ -52,7 +52,6 @@ class Fortress extends Game {
       npcs.removeAt(i);
       i--;
       lives--;
-      print('lives: $lives');
       if (lives <= 0) {
         return;
       }
@@ -62,7 +61,6 @@ class Fortress extends Game {
       nextWave--;
     } else {
       wave++;
-      print("Next Wave: $wave");
       nextWave = 200;
 
       for (int row = 0; row < scene.rows; row++) {
@@ -109,9 +107,7 @@ class GameCasual extends Game {
 
   @override
   void update() {
-
   }
-
 }
 
 abstract class Game {
@@ -421,6 +417,7 @@ extension GameFunctions on Game {
         break;
       case CharacterState.Dead:
         character.collidable = false;
+        character.stateFrameCount = duration;
         break;
       case CharacterState.ChangingWeapon:
         character.stateDuration = 10;
@@ -468,7 +465,7 @@ extension GameFunctions on Game {
   }
 
   void changeCharacterHealth(Character character, double amount) {
-    if (character.dead && amount < 0) return;
+    if (character.dead) return;
 
     character.health += amount;
     character.health = clamp(character.health, 0, character.maxHealth);
@@ -680,6 +677,7 @@ extension GameFunctions on Game {
   void updateCharacter(Character character) {
     if (!character.active) return;
 
+    // TODO magic value
     if (abs(character.xv) > 0.005) {
       character.x += character.xv;
       character.y += character.yv;
@@ -718,32 +716,6 @@ extension GameFunctions on Game {
       character.x--;
       character.y--;
     }
-
-    // if (character.y < tilesLeftY) {
-    //   if (-character.x > character.y) {
-    //     character.x = -character.y;
-    //     character.y++;
-    //   } else if (character.x > character.y) {
-    //     character.x = character.y;
-    //     character.y++;
-    //   }
-    // } else {
-    //   if (character.x > 0) {
-    //     double m = tilesRightX + tilesRightX;
-    //     double d = character.x + character.y;
-    //     if (d > m) {
-    //       character.x = m - character.y;
-    //       character.y--;
-    //     }
-    //   } else {
-    //     double m = tilesRightX + tilesRightX;
-    //     double d = -character.x + character.y;
-    //     if (d > m) {
-    //       character.x = -(m - character.y);
-    //       character.y--;
-    //     }
-    //   }
-    // }
 
     switch (character.state) {
       case CharacterState.Aiming:

@@ -85,12 +85,7 @@ class _MainMenuState extends State<MainMenu>
   void initState() {
     super.initState();
     mainMenuTabController = new TabController(vsync: this, length: 3);
-
     lobbyUpdateJob = periodic(sendRequestLobbyList, seconds: 1);
-
-    // respondTo((LobbyJoined lobbyJoined) async {
-    //   mainMenuTabController.index = 1;
-    // });
   }
 
   @override
@@ -138,7 +133,7 @@ class _MainMenuState extends State<MainMenu>
                   ]),
             ),
             buildLobbyList(),
-            text("Settings"),
+            center(text("Settings")),
           ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

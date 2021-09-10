@@ -104,7 +104,19 @@ Future<void> showChangeNameDialog() async {
 
 Widget buildGameUI(BuildContext context) {
   if (globalSize == null) {
-    return text("loading");
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            text("LOADING BLEED")
+          ],
+        ),
+      ],
+    );
   }
 
   if (connecting) {
@@ -289,7 +301,7 @@ Widget buildInventory() {
 }
 
 Widget buildHud() {
-  double iconSize = 40;
+  double iconSize = 45;
 
   Widget iconToggleFullscreen = Tooltip(
     child: IconButton(
@@ -305,6 +317,8 @@ Widget buildHud() {
               color: white),
           onPressed: toggleAudioMuted),
       message: "Toggle Audio");
+
+
   Widget iconMenu = Tooltip(
     child: IconButton(
         icon: Icon(Icons.menu, size: iconSize, color: white),
@@ -422,7 +436,7 @@ Widget buildHud() {
       bottomLeft,
       if (compiledGame.gameType == GameType.Fortress) bottomRight,
       if (gameOver) buildGameOver(),
-      if (!gameOver && playerHealth <= 0) buildRespawn()
+      if (playerHealth <= 0 && compiledGame.gameType == GameType.Casual) buildRespawn()
     ],
   );
 }
