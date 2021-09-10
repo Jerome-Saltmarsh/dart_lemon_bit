@@ -21,5 +21,5 @@ class Settings {
   final int maxGrenades = 3;
   final int maxMeds = 3;
   final int staminaRefreshRate = 2;
-  final int gameStartingCountDown = 300;
+  final int gameStartingCountDown = 200;
 }

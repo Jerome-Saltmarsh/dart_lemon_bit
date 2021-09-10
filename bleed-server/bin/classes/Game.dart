@@ -144,6 +144,7 @@ abstract class Game {
   List<GameEvent> gameEvents = [];
   final List<Collectable> collectables = [];
   final List<Vector2> playerSpawnPoints = [];
+  int spawnPointIndex = 0;
   final List<Vector2> zombieSpawnPoints = [];
   String compiled = "";
   String compiledTiles = "";
@@ -916,7 +917,7 @@ extension GameFunctions on Game {
   }
 
   Player spawnPlayer({required String name}) {
-    Vector2 spawnPoint = randomPlayerSpawnPoint();
+    Vector2 spawnPoint = getNextSpawnPoint();
     Player player = Player(
       uuid: _generateUUID(),
       x: spawnPoint.x + giveOrTake(3),
@@ -1001,7 +1002,7 @@ extension GameFunctions on Game {
       character.x = giveOrTake(settingsPlayerStartRadius);
       character.y = tilesLeftY + giveOrTake(settingsPlayerStartRadius);
     } else {
-      Vector2 spawnPoint = randomPlayerSpawnPoint();
+      Vector2 spawnPoint = getNextSpawnPoint();
       character.x = spawnPoint.x;
       character.y = spawnPoint.y;
     }
@@ -1010,6 +1011,11 @@ extension GameFunctions on Game {
 
   Vector2 randomPlayerSpawnPoint() {
     return playerSpawnPoints[randomInt(0, playerSpawnPoints.length)];
+  }
+
+  Vector2 getNextSpawnPoint(){
+    spawnPointIndex = (spawnPointIndex + 1) % playerSpawnPoints.length;
+    return playerSpawnPoints[spawnPointIndex];
   }
 
   void npcSetRandomDestination(Npc npc) {

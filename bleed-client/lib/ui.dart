@@ -205,8 +205,6 @@ Widget buildWeaponButton(Weapon weapon) {
         width: 120,
         height: 50,
         decoration: BoxDecoration(
-            // color: Colors.white70,
-            // border: compiledGame.playerWeapon == weapon ? _border : null,
             image: _getDecorationImage(weapon))),
   );
 }
@@ -331,7 +329,6 @@ Widget buildHud() {
       children: [
         iconToggleFullscreen,
         iconToggleAudio,
-        text(state.gameState.toString()),
       ],
     ),
   );
@@ -376,26 +373,30 @@ Widget buildHud() {
   }
 
   Positioned bottomLeft = Positioned(
-    left: 0,
-    bottom: 5,
-    child: Row(
-      // crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            buildWeaponButton(compiledGame.playerWeapon),
-            Row(
-              children: clips,
-            ),
-          ],
-        ),
-        Row(
-          children: grenades,
-        ),
-        Row(
-          children: healthPacks,
-        ),
-      ],
+    bottom: 0,
+    child: Container(
+      color: Colors.black45,
+      // width: screenWidth,
+      padding: EdgeInsets.all(8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Row(
+            children: [
+              buildWeaponButton(compiledGame.playerWeapon),
+              Row(
+                children: clips,
+              ),
+            ],
+          ),
+          Row(
+            children: grenades,
+          ),
+          Row(
+            children: healthPacks,
+          ),
+        ],
+      ),
     ),
   );
 
@@ -432,7 +433,10 @@ Widget buildGameInfoDeathMatch(){
   return Positioned(
       right: 10,
       bottom: 10,
-      child: text("Enemies Left: ${state.deathMatch.numberOfAlivePlayers - 1}", fontSize: 30));
+      child: Container(
+          color: Colors.black45,
+          padding: EdgeInsets.all(8),
+          child: text("Enemies Left: ${state.deathMatch.numberOfAlivePlayers - 1}", fontSize: 30)));
 }
 
 Widget buildDebugColumn() {

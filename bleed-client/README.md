@@ -23,6 +23,7 @@
 [ ] Cursor Cooldown Circle
 [ ] Explosion Crater
 [ ] Random Power up Square 
+[ ] Exit Fullscreen Mode
 [ ] Fire Shotgun Animation
 [ ] Fix Npc Wander
 [ ] Zombie Animations
@@ -40,11 +41,11 @@
 -- DEATH MATCH (Squad 4) -- // 4 teams of 4
 -- DEATH MATCH (Squad 8) -- // 2 teams of 8
 [ ] Prevent equip weapon with no ammo
-[ ] Control Spawn Point
 [ ] Player Name text
 [ ] Observe mode
 [ ] Teams
 [ ] Score board
+[x] Control Spawn Point
 [x] Victory / Lost
 [x] Prevent Respawn in DeathMatch 
 [x] Game Start Countdown
