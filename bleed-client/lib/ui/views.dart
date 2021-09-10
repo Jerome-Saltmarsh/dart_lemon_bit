@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/classes/Lobby.dart';
 import 'package:bleed_client/enums/GameType.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
@@ -7,7 +8,10 @@ import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../bleed.dart';
+import '../connection.dart';
 import '../state.dart';
+import '../ui.dart';
 
 
 GameType _gameType = GameType.DeathMatch;
@@ -153,5 +157,36 @@ Widget _buildLobbyListTile(Lobby lobby) {
         title: text("${lobby.playersJoined} / ${lobby.maxPlayers}"),
         trailing:
             text("JOIN", onPressed: () => {sendRequestJoinLobby(lobby.uuid)})),
+  );
+}
+
+Widget buildViewLoading(){
+  return center(TextLiquidFill(
+    text: 'BLEED',
+    waveColor: Colors.red,
+    textStyle: const TextStyle(
+        fontSize: 48.0, fontWeight: FontWeight.bold, color: Colors.white),
+    waveDuration: Duration(seconds: 4),
+    loadDuration: Duration(seconds: 12),
+    boxBackgroundColor: Colors.black,
+    // speed: const Duration(milliseconds: 2000),
+  ));
+}
+
+Widget buildViewConnect() {
+  return center(
+    column([
+      row([
+        text("BLEED", fontSize: 120),
+      ]),
+      height50,
+      row([
+        button('Localhost', connectLocalHost, fontSize: 21),
+        Container(
+          width: 10,
+        ),
+        button('GCP', connectToGCP, fontSize: 21),
+      ]),
+    ]),
   );
 }

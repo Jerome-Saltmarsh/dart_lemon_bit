@@ -1,4 +1,3 @@
-import 'package:bleed_client/bleed.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/enums/GameType.dart';
 import 'package:bleed_client/events.dart';
@@ -45,7 +44,7 @@ void initUI() {
   });
 }
 
-void closeMainMenuDialog(){
+void closeMainMenuDialog() {
   if (contextMainMenuDialog == null) return;
   Navigator.of(contextMainMenuDialog).pop();
 }
@@ -108,9 +107,9 @@ Widget buildGameUI(BuildContext context) {
   }
 
   if (connecting) {
-    return center(text("Connecting"));
+    return buildViewLoading();
   } else if (!connected) {
-    return _buildConnectView();
+    return buildViewConnect();
   }
 
   if (state.lobby != null) return center(buildJoinedLobby());
@@ -124,7 +123,7 @@ Widget buildGameUI(BuildContext context) {
         "player id is not assigned. player id: ${compiledGame.playerId}, game id: ${compiledGame.gameId}");
   }
 
-  if (compiledGame.tiles.isEmpty){
+  if (compiledGame.tiles.isEmpty) {
     return text('tiles have not been loaded');
   }
 
@@ -147,24 +146,6 @@ Widget buildGameUI(BuildContext context) {
   }
 
   return buildHud();
-}
-
-Widget _buildConnectView() {
-  return center(
-    column([
-      row([
-        text("BLEED", fontSize: 120),
-      ]),
-      height50,
-      row([
-        button('Localhost', connectLocalHost, fontSize: 21),
-        Container(
-          width: 10,
-        ),
-        button('GCP', connectToGCP, fontSize: 21),
-      ]),
-    ]),
-  );
 }
 
 const DecorationImage grenadeImage = const DecorationImage(
@@ -377,9 +358,7 @@ Widget buildHud() {
 
   for (int i = 0; i < compiledGame.playerMeds; i++) {
     healthPacks.add(Container(
-        width: 60,
-        height: 50,
-        decoration: BoxDecoration(image: healthImage)));
+        width: 60, height: 50, decoration: BoxDecoration(image: healthImage)));
   }
 
   Positioned bottomLeft = Positioned(
@@ -437,8 +416,7 @@ Widget buildHud() {
 
   return Stack(
     children: [
-      if (mouseX < 300 && mouseY < 300)
-      topLeft,
+      if (mouseAvailable && mouseX < 300 && mouseY < 300) topLeft,
       topRight,
       bottomLeft,
       if (compiledGame.gameType == GameType.Fortress) bottomRight,

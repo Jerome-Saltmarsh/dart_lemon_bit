@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bleed_client/enums/GameType.dart';
-import 'package:bleed_client/events.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/ui/views.dart';

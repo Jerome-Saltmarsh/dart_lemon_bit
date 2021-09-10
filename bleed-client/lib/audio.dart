@@ -5,7 +5,9 @@ import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/utils.dart';
 
 List<AudioPlayer> _audioPlayers = [];
+int _index = 0;
 
+const _audioDistanceFade = 0.005;
 const _totalAudioPlayers = 150;
 
 const _zombieHits = [
@@ -59,11 +61,11 @@ void initAudioPlayers(){
 }
 
 void playAudioSniperShot(double x, double y) {
-  _play('sniper-shot-04.mp3', x, y);
+  _playAudio('sniper-shot-04.mp3', x, y);
 }
 
 void playAudioAssaultRifleShot(double x, double y) {
-  _play('assault-rifle-shot-04.mp3', x, y);
+  _playAudio('assault-rifle-shot-04.mp3', x, y);
 }
 
 void playAudioExplosion(double x, double y) {
@@ -71,15 +73,15 @@ void playAudioExplosion(double x, double y) {
 }
 
 void playAudioSniperEquipped(double x, double y) {
-  _play("gun-pickup-01.mp3", x, y);
+  _playAudio("gun-pickup-01.mp3", x, y);
 }
 
 void playAudioReload(double x, double y) {
-  _play('reload-06.mp3', x, y);
+  _playAudio('reload-06.mp3', x, y);
 }
 
 void playAudioCockShotgun(double x, double y) {
-  _play('cock-shotgun-03.mp3', x, y);
+  _playAudio('cock-shotgun-03.mp3', x, y);
 }
 
 void playPlayerDeathAudio(double x, double y) {
@@ -87,11 +89,11 @@ void playPlayerDeathAudio(double x, double y) {
 }
 
 void playAudioReloadHandgun(double x, double y) {
-  _play('mag-in-02.mp3', x, y);
+  _playAudio('mag-in-02.mp3', x, y);
 }
 
 void playAudioClipEmpty(double x, double y) {
-  _play('dry-shot-02.mp3', x, y);
+  _playAudio('dry-shot-02.mp3', x, y);
 }
 
 void playAudioZombieBite(double x, double y) {
@@ -115,46 +117,47 @@ void playAudioPlayerHurt(double x, double y){
 }
 
 void playAudioShotgunShot(double x, double y) {
-  _play('shotgun-shot.mp3', x, y);
+  _playAudio('shotgun-shot.mp3', x, y);
 }
 
 void playAudioHandgunShot(double x, double y) {
-  _play('handgun-shot.mp3', x, y);
+  _playAudio('handgun-shot.mp3', x, y);
 }
 
 void playAudioUseMedkit(double x, double y){
-  _play('medkit.mp3', x, y);
+  _playAudio('medkit.mp3', x, y);
 }
 
 void playAudioAcquireItem(double x, double y){
-  _play('item-acquired.mp3', x, y);
+  _playAudio('item-acquired.mp3', x, y);
 }
 
 void playAudioThrowGrenade(double x, double y){
-  _play('throw.mp3', x, y);
+  _playAudio('throw.mp3', x, y);
 }
 
 void _playRandom(List<String> values, double x, double y) {
-  _play(randomItem(values), x, y);
+  _playAudio(randomItem(values), x, y);
 }
-
-//
-int _index = 0;
 
 AudioPlayer _getAudioPlayer(){
   _index = (_index + 1) % _audioPlayers.length;
   return _audioPlayers[_index];
 }
 
-void _play(String name, double x, double y) {
+void _playAudio(String name, double x, double y) {
   if (settings.audioMuted) return;
 
   try {
-    double d = distance(x, y, screenCenterWorldX, screenCenterWorldY);
-    double volume = 1.0 / ((d * 0.005) + 1);
+    double volume = _calculateVolume(x, y);
     if (volume < 0.1) return;
     _getAudioPlayer().play('assets/audio/$name', isLocal: true, volume: volume);
   } catch (error) {
-    print(error);
+    // innocuous
   }
+}
+
+double _calculateVolume(double x, double y){
+  double d = distance(x, y, screenCenterWorldX, screenCenterWorldY);
+  return 1.0 / ((d * _audioDistanceFade) + 1);
 }
