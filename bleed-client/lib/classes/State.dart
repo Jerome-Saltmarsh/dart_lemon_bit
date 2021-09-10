@@ -1,4 +1,5 @@
 
+import 'package:bleed_client/classes/DeathMatch.dart';
 import 'package:bleed_client/classes/Player.dart';
 import 'package:bleed_client/common/GameState.dart';
 
@@ -12,4 +13,5 @@ class State {
   CompiledGame compiledGame = CompiledGame();
   String lobbyGameUuid = "";
   GameState gameState = GameState.InProgress;
+  DeathMatch deathMatch = DeathMatch();
 }

@@ -59,8 +59,12 @@ void parseState() {
         _parsePaths();
         break;
 
-      case ServerResponse.FortressMeta:
-        _parseFortressMeta();
+      case ServerResponse.MetaFortress:
+        _parseMetaFortress();
+        break;
+
+      case ServerResponse.MetaDeathMatch:
+        _parseMetaDeathMatch();
         break;
 
       case ServerResponse.Player:
@@ -191,10 +195,14 @@ void _parseGameId() {
   compiledGame.gameType = GameType.values[_consumeInt()];
 }
 
-void _parseFortressMeta() {
+void _parseMetaFortress() {
   compiledGame.lives = _consumeInt();
   compiledGame.wave = _consumeInt();
   compiledGame.nextWave = _consumeInt();
+}
+
+void _parseMetaDeathMatch(){
+  state.deathMatch.numberOfAlivePlayers = _consumeInt();
 }
 
 void _parsePaths() {

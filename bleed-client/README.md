@@ -44,8 +44,8 @@
 [ ] Player Name text
 [ ] Observe mode
 [ ] Teams
-[ ] Victory
 [ ] Score board
+[x] Victory / Lost
 [x] Prevent Respawn in DeathMatch 
 [x] Game Start Countdown
 [x] Fix Join Fortress

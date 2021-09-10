@@ -39,14 +39,23 @@ void compileGame(Game game) {
     _compileFortress(game.buffer, game);
   }
 
+  if (game is DeathMatch) {
+    _compileDeathMatch(game.buffer, game);
+  }
+
   game.compiled = game.buffer.toString();
 }
 
 void _compileFortress(StringBuffer buffer, Fortress game) {
-  _write(game.buffer, ServerResponse.FortressMeta.index);
+  _write(game.buffer, ServerResponse.MetaFortress.index);
   _write(game.buffer, game.lives);
   _write(game.buffer, game.wave);
   _write(game.buffer, game.nextWave);
+}
+
+void _compileDeathMatch(StringBuffer buffer, DeathMatch deathMatch){
+  _write(buffer, ServerResponse.MetaDeathMatch.index);
+  _write(buffer, deathMatch.numberOfAlivePlayers);
 }
 
 void compileBlocks(StringBuffer buffer, List<Block> blocks) {

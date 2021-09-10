@@ -112,9 +112,7 @@ Widget buildGameUI(BuildContext context) {
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            text("LOADING BLEED")
-          ],
+          children: [text("LOADING BLEED")],
         ),
       ],
     );
@@ -319,7 +317,6 @@ Widget buildHud() {
           onPressed: toggleAudioMuted),
       message: "Toggle Audio");
 
-
   Widget iconMenu = Tooltip(
     child: IconButton(
         icon: Icon(Icons.menu, size: iconSize, color: white),
@@ -395,30 +392,14 @@ Widget buildHud() {
         Row(
           children: grenades,
         ),
-        // Container(
-        //     color: Colors.black87,
-        //     alignment: Alignment.center,
-        //     height: 50,
-        //     width: 100,
-        //     child: text(compiledGame.playerGrenades.toString(), fontSize: 28)),
         Row(
           children: healthPacks,
         ),
-        // Container(
-        //     width: 120,
-        //     height: 50,
-        //     decoration: BoxDecoration(border: _border, image: healthImage)),
-        // Container(
-        //     color: Colors.black87,
-        //     alignment: Alignment.center,
-        //     height: 50,
-        //     width: 100,
-        //     child: text(compiledGame.playerMeds.toString(), fontSize: 28)),
       ],
     ),
   );
 
-  Positioned bottomRight = Positioned(
+  Positioned buildGameInfoFortress = Positioned(
       right: 0,
       bottom: 0,
       child: Column(
@@ -436,13 +417,22 @@ Widget buildHud() {
       if (mouseAvailable && mouseX < 300 && mouseY < 300) topLeft,
       topRight,
       bottomLeft,
-      if (compiledGame.gameType == GameType.Fortress) bottomRight,
+      if (compiledGame.gameType == GameType.Fortress) buildGameInfoFortress,
+      if (compiledGame.gameType == GameType.DeathMatch) buildGameInfoDeathMatch(),
       if (gameOver) buildGameOver(),
       if (state.gameState == GameState.Won) buildViewWin(),
       if (state.gameState == GameState.Lost) buildViewLose(),
-      if (playerHealth <= 0 && compiledGame.gameType == GameType.Casual) buildRespawn()
+      if (playerHealth <= 0 && compiledGame.gameType == GameType.Casual)
+        buildRespawn()
     ],
   );
+}
+
+Widget buildGameInfoDeathMatch(){
+  return Positioned(
+      right: 10,
+      bottom: 10,
+      child: text("Enemies Left: ${state.deathMatch.numberOfAlivePlayers - 1}", fontSize: 30));
 }
 
 Widget buildDebugColumn() {
@@ -493,7 +483,6 @@ Widget buildViewLose() {
       left: screenCenterX,
       child: button("You Lost", showDialogMainMenu, fontSize: 30));
 }
-
 
 Widget buildRespawn() {
   return Positioned(
