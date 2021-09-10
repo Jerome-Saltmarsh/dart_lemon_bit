@@ -954,7 +954,6 @@ extension GameFunctions on Game {
   void spawnRandomNpc() {
     if (zombieSpawnPoints.isEmpty) return;
     if (npcs.length >= settings.maxZombies) return;
-
     Vector2 spawnPoint = randomValue(zombieSpawnPoints);
     spawnNpc(spawnPoint.x + giveOrTake(5), spawnPoint.y + giveOrTake(5));
   }

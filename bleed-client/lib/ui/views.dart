@@ -24,8 +24,8 @@ Widget buildViewJoinedLobby() {
     return text("Joining", fontSize: 30);
   }
 
-  if(state.lobby.playersJoined == state.lobby.maxPlayers){
-    return text("Starting", fontSize: 30);
+  if (state.lobby.playersJoined == state.lobby.maxPlayers){
+    return buildViewLoading();
   }
 
   return Container(

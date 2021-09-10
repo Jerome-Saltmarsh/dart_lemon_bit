@@ -63,6 +63,10 @@ void main() {
       error(GameError.GameNotFound);
     }
 
+    void errorCannotSpawnNpc() {
+      error(GameError.CannotSpawnNpc);
+    }
+
     void errorGameFull() {
       error(GameError.GameFull);
     }
@@ -230,7 +234,7 @@ void main() {
           }
 
           int squadSize = int.parse(arguments[1]);
-          int maxPlayers = 8;
+          int maxPlayers = 3;
           Lobby lobby = gameManager.findAvailableDeathMatchLobby(
               squadSize: squadSize, maxPlayers: maxPlayers);
           lobby.players.add(user);
@@ -327,6 +331,12 @@ void main() {
             errorGameNotFound();
             return;
           }
+
+          if(game.type != GameType.Casual){
+            errorCannotSpawnNpc();
+            return;
+          }
+
           game.spawnRandomNpc();
           return;
 

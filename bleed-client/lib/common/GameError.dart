@@ -12,4 +12,5 @@ enum GameError {
   LobbyUserNotFound,
   GameFull,
   CannotRevive,
+  CannotSpawnNpc,
 }
