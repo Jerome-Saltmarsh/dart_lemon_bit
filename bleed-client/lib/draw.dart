@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import '../images.dart';
 import 'classes/Vector2.dart';
 import 'common.dart';
-import 'enums/Weapons.dart';
+import 'common/Weapons.dart';
 import 'enums.dart';
 import 'keys.dart';
 import 'rects.dart';

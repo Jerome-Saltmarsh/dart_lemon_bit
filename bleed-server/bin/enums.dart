@@ -9,7 +9,6 @@ enum Tile {
   RandomItemSpawn,
 }
 
-
 bool isOpen(Tile tile){
   if(tile == Tile.Grass) return false;
   if(tile == Tile.Boundary) return false;

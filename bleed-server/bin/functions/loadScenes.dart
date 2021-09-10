@@ -6,7 +6,7 @@ import '../classes/Collectable.dart';
 import '../classes/Scene.dart';
 import '../classes/Vector2.dart';
 import '../enums.dart';
-import '../enums/CollectableType.dart';
+import '../common/CollectableType.dart';
 import '../instances/scenes.dart';
 import '../utils.dart';
 

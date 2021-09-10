@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:bleed_client/classes/Block.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/editor/editor.dart';
-import 'package:bleed_client/enums/CollectableType.dart';
+import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';

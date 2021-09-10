@@ -3,7 +3,7 @@ import 'classes/Block.dart';
 import 'classes/Vector2.dart';
 import 'constants.dart';
 import 'enums.dart';
-import 'enums/Weapons.dart';
+import 'common/Weapons.dart';
 import 'instances/settings.dart';
 import 'maths.dart';
 import 'settings.dart';

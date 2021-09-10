@@ -1,7 +1,7 @@
 import '../classes/Game.dart';
 import '../classes/GameManager.dart';
 import '../classes/Lobby.dart';
-import '../enums/GameType.dart';
+import '../common/GameType.dart';
 
 GameManager gameManager = GameManager();
 

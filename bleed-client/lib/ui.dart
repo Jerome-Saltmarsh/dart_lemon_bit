@@ -1,5 +1,6 @@
+import 'package:bleed_client/common/GameState.dart';
 import 'package:bleed_client/editor/editor.dart';
-import 'package:bleed_client/enums/GameType.dart';
+import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
@@ -15,7 +16,7 @@ import 'classes/InventoryItem.dart';
 import 'connection.dart';
 import 'enums/InventoryItemType.dart';
 import 'enums/Mode.dart';
-import 'enums/Weapons.dart';
+import 'common/Weapons.dart';
 import 'images.dart';
 import 'instances/inventory.dart';
 import 'instances/settings.dart';
@@ -437,6 +438,8 @@ Widget buildHud() {
       bottomLeft,
       if (compiledGame.gameType == GameType.Fortress) bottomRight,
       if (gameOver) buildGameOver(),
+      if (state.gameState == GameState.Won) buildViewWin(),
+      if (state.gameState == GameState.Lost) buildViewLose(),
       if (playerHealth <= 0 && compiledGame.gameType == GameType.Casual) buildRespawn()
     ],
   );
@@ -476,6 +479,21 @@ Widget buildGameOver() {
     child: button("Game Over", clearState, fontSize: 30),
   ));
 }
+
+Widget buildViewWin() {
+  return Positioned(
+      bottom: 200,
+      left: screenCenterX,
+      child: button("VICTORY", showDialogMainMenu, fontSize: 30));
+}
+
+Widget buildViewLose() {
+  return Positioned(
+      bottom: 200,
+      left: screenCenterX,
+      child: button("You Lost", showDialogMainMenu, fontSize: 30));
+}
+
 
 Widget buildRespawn() {
   return Positioned(

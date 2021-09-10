@@ -1,5 +1,6 @@
 -- BUGS --
 [ ] Player cache error
+[ ] Dead players pass through barriers
 -- FEATURES -- 
 [ ] Critical Damage
 [ ] Accuracy
@@ -40,10 +41,11 @@
 -- DEATH MATCH (Squad 8) -- // 2 teams of 8
 [ ] Prevent equip weapon with no ammo
 [ ] Control Spawn Point
-[ ] Score board
 [ ] Player Name text
 [ ] Observe mode
+[ ] Teams
 [ ] Victory
+[ ] Score board
 [x] Prevent Respawn in DeathMatch 
 [x] Game Start Countdown
 [x] Fix Join Fortress

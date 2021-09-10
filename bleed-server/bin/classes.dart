@@ -1,7 +1,7 @@
 import 'classes/Vector2.dart';
 import 'enums.dart';
-import 'enums/GameEventType.dart';
-import 'enums/Weapons.dart';
+import 'common/GameEventType.dart';
+import 'common/Weapons.dart';
 import 'settings.dart';
 
 int _idCount = 0;

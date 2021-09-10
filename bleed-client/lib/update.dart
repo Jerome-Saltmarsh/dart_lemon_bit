@@ -5,7 +5,7 @@ import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/properties.dart';
 
 import 'connection.dart';
-import 'enums/Weapons.dart';
+import 'common/Weapons.dart';
 import 'input.dart';
 import 'instances/settings.dart';
 import 'send.dart';

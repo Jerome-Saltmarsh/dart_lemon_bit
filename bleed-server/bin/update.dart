@@ -3,7 +3,7 @@ import 'dart:async';
 import 'classes/Game.dart';
 import 'classes.dart';
 import 'classes/Lobby.dart';
-import 'enums/GameType.dart';
+import 'common/GameType.dart';
 import 'instances/gameManager.dart';
 import 'language.dart';
 import 'maths.dart';

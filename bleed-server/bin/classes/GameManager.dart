@@ -1,5 +1,5 @@
 import '../compile.dart';
-import '../enums/GameType.dart';
+import '../common/GameType.dart';
 import '../instances/scenes.dart';
 import '../utils.dart';
 import 'Block.dart';
@@ -76,7 +76,7 @@ class GameManager {
 
   Lobby createLobbyDeathMatch() {
     return createLobby(
-        maxPlayer: 4, gameType: GameType.DeathMatch, private: false);
+        maxPlayer: 2, gameType: GameType.DeathMatch, private: false);
   }
 
   Lobby createLobbyFortress() {

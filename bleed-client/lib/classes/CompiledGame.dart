@@ -1,8 +1,8 @@
 
 import 'dart:ui';
 
-import 'package:bleed_client/enums/GameType.dart';
-import 'package:bleed_client/enums/Weapons.dart';
+import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/common/Weapons.dart';
 
 import '../enums.dart';
 import 'Particle.dart';

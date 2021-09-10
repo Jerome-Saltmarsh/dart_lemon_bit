@@ -1,9 +1,10 @@
 import 'package:bleed_client/classes/InventoryItem.dart';
 import 'package:bleed_client/classes/Lobby.dart';
+import 'package:bleed_client/common/GameError.dart';
+import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/common/ServerResponse.dart';
 import 'package:bleed_client/connection.dart';
-import 'package:bleed_client/enums/GameType.dart';
 import 'package:bleed_client/enums/InventoryItemType.dart';
-import 'package:bleed_client/enums/ServerResponse.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
@@ -14,11 +15,10 @@ import 'package:neuro/instance.dart';
 
 import 'classes/RenderState.dart';
 import 'classes/Vector2.dart';
+import 'common/GameEventType.dart';
 import 'common/GameState.dart';
+import 'common/Weapons.dart';
 import 'draw.dart';
-import 'enums/GameError.dart';
-import 'enums/GameEventType.dart';
-import 'enums/Weapons.dart';
 import 'enums.dart';
 import 'functions/onGameEvent.dart';
 import 'instances/inventory.dart';

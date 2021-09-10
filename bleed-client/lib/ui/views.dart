@@ -1,6 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/classes/Lobby.dart';
-import 'package:bleed_client/enums/GameType.dart';
+import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/instances/settings.dart';
 import 'package:bleed_client/send.dart';

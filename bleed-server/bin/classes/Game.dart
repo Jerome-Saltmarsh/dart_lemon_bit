@@ -1,14 +1,14 @@
 import 'dart:math';
 
 import '../classes.dart';
+import '../common/GameState.dart';
 import '../compile.dart';
 import '../constants.dart';
 import '../enums.dart';
-import '../enums/CollectableType.dart';
-import '../enums/GameEventType.dart';
-import '../enums/GameType.dart';
-import '../enums/Weapons.dart';
-import '../extensions/settings-extensions.dart';
+import '../common/CollectableType.dart';
+import '../common/GameEventType.dart';
+import '../common/GameType.dart';
+import '../common/Weapons.dart';
 import '../functions/applyForce.dart';
 import '../instances/scenes.dart';
 import '../instances/settings.dart';
@@ -35,7 +35,8 @@ class Fortress extends Game {
 
   Map<TileNode, List<Vector2>> nodeToFortress = Map();
 
-  Fortress({required int maxPlayers}) : super(GameType.Fortress, scenes.fortress, maxPlayers);
+  Fortress({required int maxPlayers})
+      : super(GameType.Fortress, scenes.fortress, maxPlayers);
 
   void update() {
     if (lives <= 0) return;
@@ -81,6 +82,11 @@ class Fortress extends Game {
   bool gameOver() {
     return lives <= 0;
   }
+
+  @override
+  void onPlayerKilled(Player player) {
+    // TODO auto respawn in 20 seconds
+  }
 }
 
 class DeathMatch extends Game {
@@ -94,11 +100,22 @@ class DeathMatch extends Game {
   bool gameOver() {
     return false;
   }
+
+  @override
+  void onPlayerKilled(Player player) {
+    player.gameState = GameState.Lost;
+
+    if (numberOfAlivePlayers == 1) {
+      for (Player player in players) {
+        if (player.alive) player.gameState = GameState.Won;
+      }
+    }
+  }
 }
 
 class GameCasual extends Game {
-
-  GameCasual(Scene scene, int maxPlayers) : super(GameType.Casual, scene, maxPlayers);
+  GameCasual(Scene scene, int maxPlayers)
+      : super(GameType.Casual, scene, maxPlayers);
 
   @override
   bool gameOver() {
@@ -106,8 +123,10 @@ class GameCasual extends Game {
   }
 
   @override
-  void update() {
-  }
+  void update() {}
+
+  @override
+  void onPlayerKilled(Player player) {}
 }
 
 abstract class Game {
@@ -132,15 +151,24 @@ abstract class Game {
   // TODO doesn't belong here
   StringBuffer buffer = StringBuffer();
 
+  int get numberOfAlivePlayers {
+    int playersRemaining = 0;
+    for (Player player in players) {
+      if (player.alive) playersRemaining++;
+    }
+    return playersRemaining;
+  }
+
   void update();
+
+  void onPlayerKilled(Player player);
 
   bool gameOver();
 
   Game(this.type, this.scene, this.maxPlayers) {
-
     for (int row = 0; row < scene.rows; row++) {
       for (int column = 0; column < scene.columns; column++) {
-        switch(scene.tiles[row][column]){
+        switch (scene.tiles[row][column]) {
           case Tile.ZombieSpawn:
             zombieSpawnPoints.add(getTilePosition(row, column));
             break;
@@ -149,7 +177,8 @@ abstract class Game {
             break;
           case Tile.RandomItemSpawn:
             Vector2 tilePosition = getTilePosition(row, column);
-            collectables.add(Collectable(tilePosition.x, tilePosition.y, randomCollectableType));
+            collectables.add(Collectable(
+                tilePosition.x, tilePosition.y, randomCollectableType));
             break;
         }
       }
@@ -186,33 +215,36 @@ extension GameFunctions on Game {
 
         switch (collectables[i].type) {
           case CollectableType.Health:
-            if(player.meds >= settings.maxMeds) continue;
+            if (player.meds >= settings.maxMeds) continue;
             player.meds++;
-            dispatch(GameEventType.Item_Acquired, collectables[i].x, collectables[i].y, 0, 0);
+            dispatch(GameEventType.Item_Acquired, collectables[i].x,
+                collectables[i].y, 0, 0);
             break;
           case CollectableType.Handgun_Ammo:
             if (!player.inventory.acquire(InventoryItemType.HandgunClip)) {
               continue;
             }
-            dispatch(GameEventType.Item_Acquired, collectables[i].x, collectables[i].y, 0, 0);
+            dispatch(GameEventType.Item_Acquired, collectables[i].x,
+                collectables[i].y, 0, 0);
             break;
 
           case CollectableType.Grenade:
-            if(player.grenades >= settings.maxGrenades) continue;
+            if (player.grenades >= settings.maxGrenades) continue;
             player.grenades++;
-            dispatch(GameEventType.Item_Acquired, collectables[i].x, collectables[i].y, 0, 0);
+            dispatch(GameEventType.Item_Acquired, collectables[i].x,
+                collectables[i].y, 0, 0);
             break;
         }
         collectables[i].active = false;
         // TODO expensive call
-        delayed((){
+        delayed(() {
           activateCollectable(collectables[i]);
         }, seconds: settings.itemReactivationInSeconds);
       }
     }
   }
 
-  void activateCollectable(Collectable collectable){
+  void activateCollectable(Collectable collectable) {
     collectable.active = true;
     collectable.setType(randomCollectableType);
   }
@@ -353,7 +385,7 @@ extension GameFunctions on Game {
     if (player.stateDuration > 0) return;
     faceAimDirection(player);
 
-    if (equippedWeaponRounds(player) <= 0){
+    if (equippedWeaponRounds(player) <= 0) {
       player.stateDuration = settingsClipEmptyCooldown;
       dispatch(GameEventType.Clip_Empty, player.x, player.y, 0, 0);
       return;
@@ -418,7 +450,11 @@ extension GameFunctions on Game {
       case CharacterState.Dead:
         character.collidable = false;
         character.stateFrameCount = duration;
-        break;
+        character.state = value;
+        if (character is Player) {
+          onPlayerKilled(character);
+        }
+        return;
       case CharacterState.ChangingWeapon:
         character.stateDuration = 10;
         break;
@@ -882,21 +918,21 @@ extension GameFunctions on Game {
   Player spawnPlayer({required String name}) {
     Vector2 spawnPoint = randomPlayerSpawnPoint();
     Player player = Player(
-        uuid: _generateUUID(),
-        x: spawnPoint.x + giveOrTake(3),
-        y: spawnPoint.y + giveOrTake(2),
-        inventory: Inventory(3, 3, [
-          InventoryItem(0, 0, InventoryItemType.Handgun),
-          InventoryItem(0, 1, InventoryItemType.HealthPack),
-          InventoryItem(1, 0, InventoryItemType.HandgunClip),
-          InventoryItem(2, 2, InventoryItemType.HandgunClip),
-          InventoryItem(1, 1, InventoryItemType.ShotgunClip),
-        ]),
-        name: name,
-        grenades: 2,
-        meds: 2,
-        clips: Clips(handgun: 2),
-        rounds: Rounds(handgun: settings.handgunClipSize),
+      uuid: _generateUUID(),
+      x: spawnPoint.x + giveOrTake(3),
+      y: spawnPoint.y + giveOrTake(2),
+      inventory: Inventory(3, 3, [
+        InventoryItem(0, 0, InventoryItemType.Handgun),
+        InventoryItem(0, 1, InventoryItemType.HealthPack),
+        InventoryItem(1, 0, InventoryItemType.HandgunClip),
+        InventoryItem(2, 2, InventoryItemType.HandgunClip),
+        InventoryItem(1, 1, InventoryItemType.ShotgunClip),
+      ]),
+      name: name,
+      grenades: 2,
+      meds: 2,
+      clips: Clips(handgun: 2),
+      rounds: Rounds(handgun: settings.handgunClipSize),
     );
     players.add(player);
     return player;

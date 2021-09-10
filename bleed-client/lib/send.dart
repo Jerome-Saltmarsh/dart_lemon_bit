@@ -1,12 +1,11 @@
 
 import 'package:bleed_client/common.dart';
-import 'package:bleed_client/enums/ClientRequest.dart';
-import 'package:bleed_client/enums/GameType.dart';
+import 'package:bleed_client/common/ClientRequest.dart';
+import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/functions/clearState.dart';
-import 'package:bleed_client/ui.dart';
 
 import 'connection.dart';
-import 'enums/Weapons.dart';
+import 'common/Weapons.dart';
 import 'state.dart';
 
 

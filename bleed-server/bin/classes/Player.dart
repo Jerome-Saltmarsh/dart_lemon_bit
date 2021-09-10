@@ -1,5 +1,6 @@
 import '../classes.dart';
-import '../enums/Weapons.dart';
+import '../common/GameState.dart';
+import '../common/Weapons.dart';
 import '../settings.dart';
 import '../utils/player_utils.dart';
 import 'Inventory.dart';
@@ -14,6 +15,7 @@ class Player extends Character {
   int meds;
   int lives;
   int frameOfDeath = -1;
+  GameState gameState = GameState.InProgress;
 
   Clips clips = Clips();
   Rounds rounds = Rounds();

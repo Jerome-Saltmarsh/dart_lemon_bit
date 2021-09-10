@@ -1,4 +1,4 @@
-import '../enums/GameType.dart';
+import '../common/GameType.dart';
 import '../functions/randomUuid.dart';
 import '../instances/settings.dart';
 import 'Game.dart';

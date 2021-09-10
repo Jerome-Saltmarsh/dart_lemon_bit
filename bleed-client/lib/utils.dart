@@ -8,7 +8,7 @@ import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/state.dart';
 
 import 'common.dart';
-import 'enums/Weapons.dart';
+import 'common/Weapons.dart';
 import 'keys.dart';
 import 'maths.dart';
 

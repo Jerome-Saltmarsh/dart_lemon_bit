@@ -1,7 +1,7 @@
 
 
 import '../classes.dart';
-import '../enums/CollectableType.dart';
+import '../common/CollectableType.dart';
 
 class Collectable extends GameObject {
   late String compiled;

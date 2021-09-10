@@ -5,7 +5,7 @@ import 'package:bleed_client/spawners/spawnShell.dart';
 import 'package:bleed_client/spawners/spawnShotSmoke.dart';
 
 import '../audio.dart';
-import '../enums/GameEventType.dart';
+import '../common/GameEventType.dart';
 import '../maths.dart';
 import '../spawn.dart';
 import '../spawners/spawnArm.dart';

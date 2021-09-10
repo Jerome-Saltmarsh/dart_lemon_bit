@@ -1,5 +1,5 @@
 import '../classes/Player.dart';
-import '../enums/Weapons.dart';
+import '../common/Weapons.dart';
 
 int equippedWeaponRounds(Player player) {
   switch (player.weapon) {
