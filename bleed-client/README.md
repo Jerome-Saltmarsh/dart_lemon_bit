@@ -41,9 +41,9 @@
 [ ] Observe mode
 [ ] Score board
 -- CASUAL --
-[ ] Auto Assign balanced Teams
 [ ] Tutorial Text
 [ ] Select Weapon on spawn
+[ ] Auto Assign balanced Teams
 [x] Fix Npc Wander
 [x] Zombies Auto Spawn
 [x] Teams

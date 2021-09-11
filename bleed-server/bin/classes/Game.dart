@@ -212,6 +212,8 @@ class DeathMatch extends Game {
 }
 
 class GameCasual extends Game {
+  int totalSquads = 4;
+
   GameCasual(Scene scene, int maxPlayers)
       : super(GameType.Casual, scene, maxPlayers);
 
@@ -250,6 +252,27 @@ class GameCasual extends Game {
       rounds: Rounds(handgun: settings.handgunClipSize),
     );
 
+    int playersInSquad0 = numberOfPlayersInSquad(0);
+    int playersInSquad1 = numberOfPlayersInSquad(1);
+    int playersInSquad2 = numberOfPlayersInSquad(2);
+    int playersInSquad3 = numberOfPlayersInSquad(3);
+
+    int squad = 0;
+    int minSquad = playersInSquad0;
+
+    if (playersInSquad1 < minSquad) {
+      minSquad = playersInSquad1;
+      squad = 1;
+    }
+    if (playersInSquad2 < minSquad) {
+      minSquad = playersInSquad2;
+      squad = 2;
+    }
+    if (playersInSquad3 < minSquad) {
+      minSquad = playersInSquad3;
+      squad = 3;
+    }
+    player.squad = squad;
     return player;
   }
 }
@@ -278,6 +301,16 @@ abstract class Game {
   StringBuffer buffer = StringBuffer();
 
   Player doSpawnPlayer();
+
+  int numberOfPlayersInSquad(int squad) {
+    int count = 0;
+    for (Player player in players) {
+      if (!player.active) continue;
+      if (player.squad != squad) continue;
+      count++;
+    }
+    return count;
+  }
 
   int get numberOfAlivePlayers {
     int playersRemaining = 0;
@@ -1046,8 +1079,8 @@ extension GameFunctions on Game {
 
   int get zombieCount {
     int count = 0;
-    for(Npc npc in npcs){
-      if(!npc.alive) continue;
+    for (Npc npc in npcs) {
+      if (!npc.alive) continue;
       count++;
     }
     return count;
@@ -1143,10 +1176,11 @@ extension GameFunctions on Game {
     npcSetPathToTileNode(npc, getRandomOpenTileNode());
   }
 
-  TileNode getRandomOpenTileNode(){
-    while(true){
-      TileNode node = scene.tileNodes[randomInt(0, scene.rows)][randomInt(0, scene.columns)];
-      if(node.open) return node;
+  TileNode getRandomOpenTileNode() {
+    while (true) {
+      TileNode node = scene.tileNodes[randomInt(0, scene.rows)]
+          [randomInt(0, scene.columns)];
+      if (node.open) return node;
     }
   }
 
