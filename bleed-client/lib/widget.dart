@@ -111,6 +111,7 @@ class BleedWidget extends GameWidget {
     if (!mouseAvailable) return;
     if (state.compiledGame.gameId < 0) return;
 
+
     double aimX = mouseWorldX;
     double aimY = mouseWorldY;
     bool aiming = false;
@@ -128,17 +129,12 @@ class BleedWidget extends GameWidget {
       globalPaint.color = Colors.white;
 
       canvas.drawRect(
-          Rect.fromLTWH(screenCenterX - 50,
-              25, 100, 15),
-          globalPaint);
+          Rect.fromLTWH(screenCenterX - 50, 25, 100, 15), globalPaint);
 
       globalPaint.color = Colors.yellow;
       canvas.drawRect(
-          Rect.fromLTWH(screenCenterX - 50,
-              25, 100 * percentage, 15),
+          Rect.fromLTWH(screenCenterX - 50, 25, 100 * percentage, 15),
           globalPaint);
-
-
     }
 
     drawCircleOutline(

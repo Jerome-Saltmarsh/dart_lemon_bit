@@ -1,6 +1,7 @@
 import '../classes.dart';
 import '../common/GameState.dart';
 import '../common/Weapons.dart';
+import '../functions/generateName.dart';
 import '../functions/generateUUID.dart';
 import '../settings.dart';
 import '../utils/player_utils.dart';
@@ -8,6 +9,7 @@ import 'Inventory.dart';
 
 class Player extends Character {
   final String uuid = generateUUID();
+  String name = generateName();
   int lastEventFrame = 0;
   int stamina = 0;
   int maxStamina = 200;
@@ -25,7 +27,6 @@ class Player extends Character {
     required double x,
     required double y,
     required this.inventory,
-    required String name,
     this.grenades = 0,
     this.meds = 0,
     this.lives = 0,
@@ -39,7 +40,6 @@ class Player extends Character {
             health: settingsPlayerStartHealth,
             maxHealth: settingsPlayerStartHealth,
             speed: playerSpeed,
-            name: name,
             squad: squad
   ) {
     stamina = maxStamina;

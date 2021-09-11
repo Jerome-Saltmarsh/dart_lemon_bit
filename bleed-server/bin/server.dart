@@ -44,9 +44,8 @@ void main() {
     }
 
     void joinGame(Game game) {
-      print("Player joining game. ${game.players.length} / ${game.maxPlayers}");
       _buffer.clear();
-      Player player = game.spawnPlayer(name: 'test');
+      Player player = game.spawnPlayer();
       compilePlayer(_buffer, player);
       _buffer.write(
           '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${game.id} ${game.type.index} ${player.squad} ');

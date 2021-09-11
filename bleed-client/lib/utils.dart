@@ -17,22 +17,6 @@ double getMouseRotation() {
       compiledGame.playerX, compiledGame.playerY, mouseWorldX, mouseWorldY);
 }
 
-double playerScreenPositionX() {
-  return compiledGame.playerX - cameraX;
-}
-
-double playerScreenPositionY() {
-  return compiledGame.playerY - cameraY;
-}
-
-// dynamic getPlayerCharacter() {
-//   if (game.playerId == idNotConnected) return null;
-//   return game.players.firstWhere((element) => element[4] == game.playerId,
-//       orElse: () {
-//     return null;
-//   });
-// }
-
 bool get playerAssigned => compiledGame.playerId >= 0;
 
 Weapon previousWeapon;

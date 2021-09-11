@@ -102,7 +102,6 @@ class Fortress extends Game {
         InventoryItem(2, 2, InventoryItemType.HandgunClip),
         InventoryItem(1, 1, InventoryItemType.ShotgunClip),
       ]),
-      name: "Test",
       grenades: 2,
       meds: 2,
       clips: Clips(handgun: 2),
@@ -140,7 +139,16 @@ class DeathMatch extends Game {
   }
 
   @override
+  void onPlayerDisconnected(Player player){
+    _updateGameState(player);
+  }
+
+  @override
   void onPlayerKilled(Player player) {
+    _updateGameState(player);
+  }
+
+  void _updateGameState(Player player){
     player.gameState = GameState.Lost;
 
     if (squadSize == 1) {
@@ -200,7 +208,6 @@ class DeathMatch extends Game {
           InventoryItem(2, 2, InventoryItemType.HandgunClip),
           InventoryItem(1, 1, InventoryItemType.ShotgunClip),
         ]),
-        name: "Test",
         grenades: 2,
         meds: 2,
         clips: Clips(handgun: 2),
@@ -245,7 +252,6 @@ class GameCasual extends Game {
         InventoryItem(2, 2, InventoryItemType.HandgunClip),
         InventoryItem(1, 1, InventoryItemType.ShotgunClip),
       ]),
-      name: "Test",
       grenades: 2,
       meds: 2,
       clips: Clips(handgun: 2),
@@ -323,6 +329,8 @@ abstract class Game {
   void update();
 
   void onPlayerKilled(Player player);
+
+  void onPlayerDisconnected(Player player){}
 
   bool gameOver();
 
@@ -1086,7 +1094,7 @@ extension GameFunctions on Game {
     return count;
   }
 
-  Player spawnPlayer({required String name}) {
+  Player spawnPlayer() {
     Player player = doSpawnPlayer();
     players.add(player);
     return player;
@@ -1127,7 +1135,6 @@ extension GameFunctions on Game {
   void jobRemoveDisconnectedPlayers() {
     for (int i = 0; i < players.length; i++) {
       if (players[i].lastEventFrame > settingsPlayerDisconnectFrames) {
-        print('Removing disconnected player: ${players[i].id}');
         Player player = players[i];
         for (Npc npc in npcs) {
           if (npc.target == player) {
@@ -1137,6 +1144,7 @@ extension GameFunctions on Game {
         player.active = false;
         players.removeAt(i);
         i--;
+        onPlayerDisconnected(player);
       }
     }
   }

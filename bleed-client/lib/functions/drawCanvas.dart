@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import '../connection.dart';
 import '../draw.dart';
 import '../images.dart';
+import '../keys.dart';
 import '../state.dart';
 import 'drawBullet.dart';
 import 'drawGrenade.dart';
@@ -55,7 +56,18 @@ void _drawCompiledGame() {
   drawEditMode();
   _drawCollectables();
   drawPaths();
+  _drawPlayerNames();
   // _drawMouseAim();
+}
+
+double nameRadius = 100;
+
+void _drawPlayerNames() {
+  for (dynamic player in compiledGame.players) {
+    if (diff(mouseWorldX, player[x]) > nameRadius) continue;
+    if (diff(mouseWorldY, player[y]) > nameRadius) continue;
+    drawText(player[indexName], player[x], player[y]);
+  }
 }
 
 void _drawMouseAim() {

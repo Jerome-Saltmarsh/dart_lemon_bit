@@ -487,6 +487,7 @@ void _consumePlayer(dynamic memory) {
   memory[frameCount] = _consumeInt();
   memory[weapon] = _consumeWeapon();
   memory[squad] = _consumeInt();
+  memory[indexName] = _consumeString();
 }
 
 void _consumeNpc(dynamic npcMemory) {
@@ -498,6 +499,6 @@ void _consumeNpc(dynamic npcMemory) {
 }
 
 List _getUnusedMemory() {
-  if (_cache.isEmpty) return [0, 0, 0.0, 0.0, 0, 0, 0];
+  if (_cache.isEmpty) return [0, 0, 0.0, 0.0, 0, 0, 0, ""];
   return _cache.removeLast();
 }

@@ -41,10 +41,12 @@
 [ ] Observe mode
 [ ] Score board
 -- CASUAL --
-[ ] Tutorial Text
 [ ] Select Weapon on spawn
+[ ] Tutorial Text
+[ ] Fix Npc Wander
+[ ] Player Names
+[x] FIX BUG: On victory did not appear
 [x] Auto Assign balanced Teams
-[x] Fix Npc Wander
 [x] Zombies Auto Spawn
 [x] Teams
 [x] Control Spawn Point

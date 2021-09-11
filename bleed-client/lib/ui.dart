@@ -414,6 +414,8 @@ Widget buildHud() {
         ],
       ));
 
+
+
   return Stack(
     children: [
       if (mouseAvailable && mouseX < 300 && mouseY < 300) topLeft,
@@ -428,6 +430,8 @@ Widget buildHud() {
     ],
   );
 }
+
+
 
 Widget buildGameViewCasual(){
   return Positioned(

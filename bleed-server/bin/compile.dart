@@ -210,6 +210,7 @@ void _compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.stateFrameCount);
   _write(buffer, player.weapon.index);
   _write(buffer, player.squad);
+  _write(buffer, player.name);
 }
 
 void _compileNpc(StringBuffer buffer, Npc npc) {

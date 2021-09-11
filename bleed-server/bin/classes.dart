@@ -40,7 +40,6 @@ class Character extends GameObject {
   double health;
   double maxHealth;
   double speed;
-  String name;
   int squad;
 
   bool get alive => state != CharacterState.Dead;
@@ -66,13 +65,12 @@ class Character extends GameObject {
       required this.health,
       required this.maxHealth,
       required this.speed,
-      required this.name,
       this.squad = noSquad,
   })
       : super(x, y);
 }
 
-final Character _nonTarget = Character(x: 0, y: 0, weapon: Weapon.MachineGun, health: 0, maxHealth: 0, speed: 0, name: "");
+final Character _nonTarget = Character(x: 0, y: 0, weapon: Weapon.MachineGun, health: 0, maxHealth: 0, speed: 0);
 
 class Npc extends Character {
   Character target = _nonTarget;
@@ -89,8 +87,7 @@ class Npc extends Character {
             weapon: Weapon.Unarmed,
             health: health,
             maxHealth: maxHealth,
-            speed: zombieSpeed,
-            name: "Npc");
+            speed: zombieSpeed);
 
   get targetSet => target != _nonTarget;
 

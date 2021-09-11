@@ -24,11 +24,12 @@ void drawSprite(ui.Image image, int frames, int frame, double x, double y){
       Rect.fromCenter(center: Offset(x, y), width: frameWidth, height: frameHeight), globalPaint);
 }
 
-TextStyle _style = TextStyle(color: white, fontSize: 20, fontWeight: FontWeight.bold);
+TextStyle _style = TextStyle(color: white, fontSize: 20, fontWeight: FontWeight.normal);
 
-void drawText(String text, double x, double y){
+void drawText(String text, double x, double y, {Canvas canvas}){
   TextSpan span = TextSpan(style: _style, text: text);
   TextPainter tp = TextPainter(text: span, textAlign: TextAlign.center, textDirection: TextDirection.ltr);
   tp.layout();
-  tp.paint(globalCanvas, Offset(x, y));
+  tp.paint(canvas ?? globalCanvas, Offset(x, y));
 }
+

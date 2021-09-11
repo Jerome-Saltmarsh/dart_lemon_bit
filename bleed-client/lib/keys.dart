@@ -5,3 +5,4 @@ const int y = 3;
 const int frameCount = 4;
 const int weapon = 5;
 const int squad = 6;
+const int indexName = 7;
