@@ -1,11 +1,14 @@
+import 'package:bleed_client/common.dart';
 import 'package:bleed_client/common/GameState.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/game_engine/web_functions.dart';
+import 'package:bleed_client/keys.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/ui/dialogs.dart';
 import 'package:bleed_client/ui/views.dart';
@@ -204,8 +207,7 @@ Widget buildWeaponButton(Weapon weapon) {
     child: Container(
         width: 120,
         height: 50,
-        decoration: BoxDecoration(
-            image: _getDecorationImage(weapon))),
+        decoration: BoxDecoration(image: _getDecorationImage(weapon))),
   );
 }
 
@@ -419,7 +421,8 @@ Widget buildHud() {
       topRight,
       bottomLeft,
       if (compiledGame.gameType == GameType.Fortress) buildGameInfoFortress,
-      if (compiledGame.gameType == GameType.DeathMatch) buildGameInfoDeathMatch(),
+      if (compiledGame.gameType == GameType.DeathMatch)
+        buildGameInfoDeathMatch(),
       if (gameOver) buildGameOver(),
       if (state.gameState == GameState.Won) buildViewWin(),
       if (state.gameState == GameState.Lost) buildViewLose(),
@@ -429,14 +432,36 @@ Widget buildHud() {
   );
 }
 
-Widget buildGameInfoDeathMatch(){
+Widget buildGameInfoDeathMatch() {
   return Positioned(
       right: 10,
       bottom: 10,
       child: Container(
           color: Colors.black45,
           padding: EdgeInsets.all(8),
-          child: text("Enemies Left: ${state.deathMatch.numberOfAlivePlayers - 1}", fontSize: 30)));
+          child: text(
+              "Enemies Left: $enemiesLeft",
+              fontSize: 30)));
+}
+
+int get enemiesLeft {
+
+  int count = 0;
+
+  if (state.player.squad == -1) {
+    for (dynamic player in compiledGame.players) {
+      if (player[stateIndex] == characterStateDead) continue;
+      count++;
+    }
+    return count - 1;
+  }
+
+  for (dynamic player in compiledGame.players) {
+    if (player[stateIndex] == characterStateDead) continue;
+    if (player[squad] == state.player.squad) continue;
+    count++;
+  }
+  return count;
 }
 
 Widget buildDebugColumn() {
@@ -478,14 +503,14 @@ Widget buildViewWin() {
   return Positioned(
       bottom: 200,
       left: screenCenterX,
-      child: button("VICTORY", showDialogMainMenu, fontSize: 30));
+      child: button("YOU WIN", showDialogMainMenu, fontSize: 30));
 }
 
 Widget buildViewLose() {
   return Positioned(
       bottom: 200,
       left: screenCenterX,
-      child: button("You Lost", showDialogMainMenu, fontSize: 30));
+      child: button("YOU LOSE", showDialogMainMenu, fontSize: 30));
 }
 
 Widget buildRespawn() {
