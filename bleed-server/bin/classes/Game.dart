@@ -10,6 +10,7 @@ import '../common/GameEventType.dart';
 import '../common/GameType.dart';
 import '../common/Weapons.dart';
 import '../functions/applyForce.dart';
+import '../functions/generateUUID.dart';
 import '../instances/scenes.dart';
 import '../instances/settings.dart';
 import '../language.dart';
@@ -89,8 +90,26 @@ class Fortress extends Game {
   }
 
   @override
-  void onPlayerJoined(Player player) {
-    // TODO: implement onPlayerJoined
+  Player doSpawnPlayer() {
+    Vector2 spawnPoint = getNextSpawnPoint();
+    Player player = Player(
+      x: spawnPoint.x + giveOrTake(3),
+      y: spawnPoint.y + giveOrTake(2),
+      inventory: Inventory(3, 3, [
+        InventoryItem(0, 0, InventoryItemType.Handgun),
+        InventoryItem(0, 1, InventoryItemType.HealthPack),
+        InventoryItem(1, 0, InventoryItemType.HandgunClip),
+        InventoryItem(2, 2, InventoryItemType.HandgunClip),
+        InventoryItem(1, 1, InventoryItemType.ShotgunClip),
+      ]),
+      name: "Test",
+      grenades: 2,
+      meds: 2,
+      clips: Clips(handgun: 2),
+      rounds: Rounds(handgun: settings.handgunClipSize),
+    );
+
+    return player;
   }
 }
 
@@ -132,13 +151,6 @@ class DeathMatch extends Game {
     }
   }
 
-  @override
-  void onPlayerJoined(Player player) {
-    if (squadSize <= 1) return;
-    player.squad = nextSquadNumber;
-    print('player assigned squad ${player.squad}');
-  }
-
   int numberOfPlayersOnSquad(int squad){
     int count = 0;
     for(Player player in players){
@@ -146,6 +158,36 @@ class DeathMatch extends Game {
       count++;
     }
     return count;
+  }
+
+  Vector2 getSquadSpawnPoint(int squad){
+    return playerSpawnPoints[squad % playerSpawnPoints.length];
+  }
+
+  @override
+  Player doSpawnPlayer() {
+    int squad = nextSquadNumber;
+    Vector2 spawnPoint = getSquadSpawnPoint(squad);
+
+    Player player = Player(
+      x: spawnPoint.x + giveOrTake(3),
+      y: spawnPoint.y + giveOrTake(2),
+      inventory: Inventory(3, 3, [
+        InventoryItem(0, 0, InventoryItemType.Handgun),
+        InventoryItem(0, 1, InventoryItemType.HealthPack),
+        InventoryItem(1, 0, InventoryItemType.HandgunClip),
+        InventoryItem(2, 2, InventoryItemType.HandgunClip),
+        InventoryItem(1, 1, InventoryItemType.ShotgunClip),
+      ]),
+      name: "Test",
+      grenades: 2,
+      meds: 2,
+      clips: Clips(handgun: 2),
+      rounds: Rounds(handgun: settings.handgunClipSize),
+      squad: squad
+    );
+
+    return player;
   }
 }
 
@@ -165,15 +207,33 @@ class GameCasual extends Game {
   void onPlayerKilled(Player player) {}
 
   @override
-  void onPlayerJoined(Player player) {
-    // TODO: implement onPlayerJoined
+  Player doSpawnPlayer() {
+    Vector2 spawnPoint = getNextSpawnPoint();
+    Player player = Player(
+      x: spawnPoint.x + giveOrTake(3),
+      y: spawnPoint.y + giveOrTake(2),
+      inventory: Inventory(3, 3, [
+        InventoryItem(0, 0, InventoryItemType.Handgun),
+        InventoryItem(0, 1, InventoryItemType.HealthPack),
+        InventoryItem(1, 0, InventoryItemType.HandgunClip),
+        InventoryItem(2, 2, InventoryItemType.HandgunClip),
+        InventoryItem(1, 1, InventoryItemType.ShotgunClip),
+      ]),
+      name: "Test",
+      grenades: 2,
+      meds: 2,
+      clips: Clips(handgun: 2),
+      rounds: Rounds(handgun: settings.handgunClipSize),
+    );
+
+    return player;
   }
 }
 
 abstract class Game {
   static int _id = 0;
   final String id = (_id++).toString();
-  final String uuid = _generateUUID();
+  final String uuid = generateUUID();
   final GameType type;
   final int maxPlayers;
   final Scene scene;
@@ -193,6 +253,8 @@ abstract class Game {
   // TODO doesn't belong here
   StringBuffer buffer = StringBuffer();
 
+  Player doSpawnPlayer();
+
   int get numberOfAlivePlayers {
     int playersRemaining = 0;
     for (Player player in players) {
@@ -204,8 +266,6 @@ abstract class Game {
   void update();
 
   void onPlayerKilled(Player player);
-  
-  void onPlayerJoined(Player player);
 
   bool gameOver();
 
@@ -962,26 +1022,8 @@ extension GameFunctions on Game {
   }
 
   Player spawnPlayer({required String name}) {
-    Vector2 spawnPoint = getNextSpawnPoint();
-    Player player = Player(
-      uuid: _generateUUID(),
-      x: spawnPoint.x + giveOrTake(3),
-      y: spawnPoint.y + giveOrTake(2),
-      inventory: Inventory(3, 3, [
-        InventoryItem(0, 0, InventoryItemType.Handgun),
-        InventoryItem(0, 1, InventoryItemType.HealthPack),
-        InventoryItem(1, 0, InventoryItemType.HandgunClip),
-        InventoryItem(2, 2, InventoryItemType.HandgunClip),
-        InventoryItem(1, 1, InventoryItemType.ShotgunClip),
-      ]),
-      name: name,
-      grenades: 2,
-      meds: 2,
-      clips: Clips(handgun: 2),
-      rounds: Rounds(handgun: settings.handgunClipSize),
-    );
+    Player player = doSpawnPlayer();
     players.add(player);
-    onPlayerJoined(player);
     return player;
   }
 
@@ -1084,6 +1126,3 @@ extension GameFunctions on Game {
   }
 }
 
-String _generateUUID() {
-  return uuidGenerator.v4().substring(0, 8);
-}

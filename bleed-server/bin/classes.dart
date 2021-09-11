@@ -41,7 +41,7 @@ class Character extends GameObject {
   double maxHealth;
   double speed;
   String name;
-  int squad = noSquad;
+  int squad;
 
   bool get alive => state != CharacterState.Dead;
 
@@ -66,7 +66,9 @@ class Character extends GameObject {
       required this.health,
       required this.maxHealth,
       required this.speed,
-      required this.name})
+      required this.name,
+      this.squad = noSquad,
+  })
       : super(x, y);
 }
 

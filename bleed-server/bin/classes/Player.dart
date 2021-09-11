@@ -1,12 +1,13 @@
 import '../classes.dart';
 import '../common/GameState.dart';
 import '../common/Weapons.dart';
+import '../functions/generateUUID.dart';
 import '../settings.dart';
 import '../utils/player_utils.dart';
 import 'Inventory.dart';
 
 class Player extends Character {
-  final String uuid;
+  final String uuid = generateUUID();
   int lastEventFrame = 0;
   int stamina = 0;
   int maxStamina = 200;
@@ -21,7 +22,6 @@ class Player extends Character {
   Rounds rounds = Rounds();
 
   Player({
-    required this.uuid,
     required double x,
     required double y,
     required this.inventory,
@@ -30,7 +30,8 @@ class Player extends Character {
     this.meds = 0,
     this.lives = 0,
     required this.clips,
-    required this.rounds
+    required this.rounds,
+    int squad = noSquad,
   }) : super(
             x: x,
             y: y,
@@ -38,7 +39,8 @@ class Player extends Character {
             health: settingsPlayerStartHealth,
             maxHealth: settingsPlayerStartHealth,
             speed: playerSpeed,
-            name: name
+            name: name,
+            squad: squad
   ) {
     stamina = maxStamina;
   }

@@ -32,15 +32,13 @@
 -- OPEN WORLD -- 
 [ ] Npc Talk Text
 -- CASUAL --
+[ ] Auto Assign balanced Teams
 [ ] Tutorial Text
 -- FORTRESS -- 
 [ ] Fortress life lost audio
 [ ] Disable friendly fire
 [ ] Fortress Cache Path 
--- DEATH MATCH (Alone)   -- // 16 teams of 1
--- DEATH MATCH (Squad 2) -- // 8 teams of 2
--- DEATH MATCH (Squad 4) -- // 4 teams of 4
--- DEATH MATCH (Squad 8) -- // 2 teams of 8
+-- DEATH MATCH 
 [ ] Prevent equip weapon with no ammo
 [ ] Player Name text
 [ ] Observe mode
