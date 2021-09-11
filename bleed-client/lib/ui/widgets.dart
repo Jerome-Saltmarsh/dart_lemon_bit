@@ -22,7 +22,7 @@ Widget border({Widget child}) {
 
 class Refresh extends StatefulWidget {
 
-  final Builder builder;
+  final WidgetBuilder builder;
   final Duration duration;
 
   Refresh({this.builder, this.duration});
@@ -53,7 +53,7 @@ class _RefreshState extends State<Refresh> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.builder.builder(context);
+    return widget.builder(context);
   }
 
   @override

@@ -84,7 +84,7 @@ class _MainMenuState extends State<MainMenu>
   @override
   void initState() {
     super.initState();
-    mainMenuTabController = new TabController(vsync: this, length: 4);
+    mainMenuTabController = new TabController(vsync: this, length: 3);
     lobbyUpdateJob = periodic(sendRequestLobbyList, seconds: 1);
   }
 
@@ -110,9 +110,9 @@ class _MainMenuState extends State<MainMenu>
             Tab(
               child: text('Join'),
             ),
-            Tab(
-              child: text('Lobby'),
-            ),
+            // Tab(
+            //   child: text('Lobby'),
+            // ),
             Tab(
               child: text('Options'),
             ),
@@ -156,7 +156,7 @@ class _MainMenuState extends State<MainMenu>
                     button('Casual', requestJoinRandomGame),
                   ]),
             ),
-            buildLobbyList(),
+            // buildLobbyList(),
             center(text("Settings")),
           ],
         ),

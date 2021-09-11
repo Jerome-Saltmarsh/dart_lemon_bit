@@ -61,107 +61,113 @@ void leaveLobby() {
 }
 
 Widget buildLobbyList() {
-  double lobbyListViewHeight = 200;
+  if (state.lobby != null)  return buildViewJoinedLobby();
 
-  return Refresh(
-    duration: Duration(milliseconds: 300),
-    builder: Builder(builder: (BuildContext context) {
-      if (state.lobby != null) return buildViewJoinedLobby();
+  return text("no implemented");
 
-      Widget gameTypeButton = StatefulBuilder(
-          builder: ((BuildContext builderContext, StateSetter setState) {
-        return button("${_gameType.toString().replaceAll("GameType.", "")}",
-            () {
-          setState(() {
-            _gameType =
-                GameType.values[(_gameType.index + 1) % GameType.values.length];
-          });
-        });
-      }));
-
-      Widget playersButton = StatefulBuilder(
-          builder: ((BuildContext builderContext, StateSetter setState) {
-        return button("Players: $_maxPlayers", () {
-          setState(() {
-            if (_maxPlayers >= 64) {
-              _maxPlayers = 2;
-            } else {
-              _maxPlayers += _maxPlayers;
-            }
-          });
-        });
-      }));
-
-      Widget privateButton = StatefulBuilder(
-          builder: ((BuildContext builderContext, StateSetter setState) {
-        return button(_private ? "Private" : "Public", () {
-          setState(() => _private = !_private);
-        });
-      }));
-
-      Widget startButton = button("START", () {
-        sendClientRequestLobbyCreate(
-            maxPlayers: _maxPlayers,
-            type: _gameType,
-            name: "Silly",
-            private: _private);
-      });
-
-      sendRequestLobbyList();
-      return Container(
-        padding: EdgeInsets.symmetric(horizontal: 8),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(
-              // padding: EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  height(16),
-                  text("Create"),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      gameTypeButton,
-                      playersButton,
-                    ],
-                  ),
-                  height(4),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      privateButton,
-                      startButton,
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            height(16),
-            text("Public Games"),
-            height(4),
-            border(
-              child: Container(
-                  height: lobbyListViewHeight,
-                  child: ListView(
-                      children:
-                          state.lobbies.map(_buildLobbyListTile).toList())),
-            ),
-            height(16),
-            Tooltip(
-                child: button("Paste Join-ID", () async {
-                  String copied = await FlutterClipboard.paste();
-                  sendRequestJoinLobby(copied);
-                }),
-                message:
-                    "First copy (ctrl + c) the game id then click this button"),
-          ],
-        ),
-      );
-    }),
-  );
+  // double lobbyListViewHeight = 200;
+  //
+  // return Refresh(
+  //   duration: Duration(milliseconds: 300),
+  //   builder: (BuildContext context) {
+  //
+  //
+  //     return StatefulBuilder(builder: (BuildContext context, StateSetter setState){
+  //
+  //       Widget gameTypeButton = StatefulBuilder(
+  //           builder: ((BuildContext builderContext, StateSetter setState) {
+  //             return button("${_gameType.toString().replaceAll("GameType.", "")}",
+  //                     () {
+  //                   setState(() {
+  //                     _gameType =
+  //                     GameType.values[(_gameType.index + 1) % GameType.values.length];
+  //                   });
+  //                 });
+  //           }));
+  //
+  //       Widget playersButton = StatefulBuilder(
+  //           builder: ((BuildContext builderContext, StateSetter setState) {
+  //             return button("Players: $_maxPlayers", () {
+  //               setState(() {
+  //                 if (_maxPlayers >= 64) {
+  //                   _maxPlayers = 2;
+  //                 } else {
+  //                   _maxPlayers += _maxPlayers;
+  //                 }
+  //               });
+  //             });
+  //           }));
+  //
+  //       Widget privateButton = StatefulBuilder(
+  //           builder: ((BuildContext builderContext, StateSetter setState) {
+  //             return button(_private ? "Private" : "Public", () {
+  //               setState(() => _private = !_private);
+  //             });
+  //           }));
+  //
+  //       Widget startButton = button("START", () {
+  //         sendClientRequestLobbyCreate(
+  //             maxPlayers: _maxPlayers,
+  //             type: _gameType,
+  //             name: "Silly",
+  //             private: _private);
+  //       });
+  //
+  //       sendRequestLobbyList();
+  //       return Container(
+  //         padding: EdgeInsets.symmetric(horizontal: 8),
+  //         child: Column(
+  //           mainAxisAlignment: MainAxisAlignment.start,
+  //           crossAxisAlignment: CrossAxisAlignment.start,
+  //           children: [
+  //             Container(
+  //               // padding: EdgeInsets.symmetric(horizontal: 20),
+  //               child: Column(
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 children: [
+  //                   height(16),
+  //                   text("Create"),
+  //                   Row(
+  //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                     children: [
+  //                       gameTypeButton,
+  //                       playersButton,
+  //                     ],
+  //                   ),
+  //                   height(4),
+  //                   Row(
+  //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //                     children: [
+  //                       privateButton,
+  //                       startButton,
+  //                     ],
+  //                   ),
+  //                 ],
+  //               ),
+  //             ),
+  //             height(16),
+  //             text("Public Games"),
+  //             height(4),
+  //             border(
+  //               child: Container(
+  //                   height: lobbyListViewHeight,
+  //                   child: ListView(
+  //                       children:
+  //                       state.lobbies.map(_buildLobbyListTile).toList())),
+  //             ),
+  //             height(16),
+  //             Tooltip(
+  //                 child: button("Paste Join-ID", () async {
+  //                   String copied = await FlutterClipboard.paste();
+  //                   sendRequestJoinLobby(copied);
+  //                 }),
+  //                 message:
+  //                 "First copy (ctrl + c) the game id then click this button"),
+  //           ],
+  //         ),
+  //       );
+  //       }
+  //     );
 }
 
 Widget _buildLobbyListTile(Lobby lobby) {
@@ -175,20 +181,26 @@ Widget _buildLobbyListTile(Lobby lobby) {
 }
 
 Widget buildViewLoading() {
-  return center(TextLiquidFill(
-    text: 'BLEED',
-    boxWidth: screenWidth,
-    boxHeight: screenHeight,
-    waveColor: Colors.red,
-    textStyle: const TextStyle(
-        fontFamily: 'PermanentMarker',
-        fontSize: 140.0,
-        fontWeight: FontWeight.bold,
-        color: Colors.white),
-    waveDuration: Duration(seconds: 2),
-    loadDuration: Duration(seconds: 5),
-    boxBackgroundColor: Colors.black,
-  ));
+
+  return Refresh(
+    duration: Duration(seconds: 6),
+    builder: (BuildContext context){
+      return center(TextLiquidFill(
+        text: 'BLEED',
+        boxWidth: screenWidth,
+        boxHeight: screenHeight,
+        waveColor: Colors.red,
+        textStyle: const TextStyle(
+            fontFamily: 'PermanentMarker',
+            fontSize: 140.0,
+            fontWeight: FontWeight.bold,
+            color: Colors.white),
+        waveDuration: Duration(seconds: 2),
+        loadDuration: Duration(seconds: 5),
+        boxBackgroundColor: Colors.black,
+      ));
+    },
+  );
 }
 
 Widget buildViewConnect() {

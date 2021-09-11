@@ -26,14 +26,11 @@
 [ ] Random Power up Square 
 [ ] Exit Fullscreen Mode
 [ ] Fire Shotgun Animation
-[ ] Fix Npc Wander
 [ ] Zombie Animations
+[ ] Select Character (Sniper, Shotgun, Machine Gun, Medic)
 [ ] Item.RevivalKit (revive fallen squad member)
 -- OPEN WORLD -- 
 [ ] Npc Talk Text
--- CASUAL --
-[ ] Auto Assign balanced Teams
-[ ] Tutorial Text
 -- FORTRESS -- 
 [ ] Fortress life lost audio
 [ ] Disable friendly fire
@@ -43,7 +40,12 @@
 [ ] Player Name text
 [ ] Observe mode
 [ ] Score board
-[ ] Zombies Auto Spawn
+-- CASUAL --
+[ ] Auto Assign balanced Teams
+[ ] Tutorial Text
+[ ] Select Weapon on spawn
+[x] Fix Npc Wander
+[x] Zombies Auto Spawn
 [x] Teams
 [x] Control Spawn Point
 [x] Victory / Lost

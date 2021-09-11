@@ -222,7 +222,7 @@ class GameCasual extends Game {
 
   @override
   void update() {
-    if (duration % 50 == 0 && zombieCount < 500) {
+    if (duration % 50 == 0 && zombieCount < 200) {
       spawnRandomNpc();
     }
   }
@@ -388,7 +388,7 @@ extension GameFunctions on Game {
     }
 
     if (npc.targetSet) {
-      if (!npc.target.active) {
+      if (!npc.target.active || npc.target.dead) {
         npc.clearTarget();
         npc.state = CharacterState.Idle;
         return;
