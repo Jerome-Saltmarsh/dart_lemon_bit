@@ -439,13 +439,10 @@ Widget buildGameInfoDeathMatch() {
       child: Container(
           color: Colors.black45,
           padding: EdgeInsets.all(8),
-          child: text(
-              "Enemies Left: $enemiesLeft",
-              fontSize: 30)));
+          child: text("Enemies Left: $enemiesLeft", fontSize: 30)));
 }
 
 int get enemiesLeft {
-
   int count = 0;
 
   if (state.player.squad == -1) {
@@ -502,15 +499,33 @@ Widget buildGameOver() {
 Widget buildViewWin() {
   return Positioned(
       bottom: 200,
-      left: screenCenterX,
-      child: button("YOU WIN", showDialogMainMenu, fontSize: 30));
+      child: Container(
+        width: screenWidth,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+                color: Colors.black45,
+                child: button("YOU WIN", showDialogMainMenu, fontSize: 40, alignment: Alignment.center)),
+          ],
+        ),
+      ));
 }
 
 Widget buildViewLose() {
   return Positioned(
       bottom: 200,
-      left: screenCenterX,
-      child: button("YOU LOSE", showDialogMainMenu, fontSize: 30));
+      child: Container(
+        width: screenWidth,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+                color: Colors.black45,
+                child: button("YOU LOSE", showDialogMainMenu, fontSize: 40, alignment: Alignment.center)),
+          ],
+        ),
+      ));
 }
 
 Widget buildRespawn() {

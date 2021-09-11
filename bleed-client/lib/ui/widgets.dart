@@ -64,12 +64,12 @@ class _RefreshState extends State<Refresh> {
 }
 
 Widget button(String value, Function onPressed,
-    {double fontSize = 18.0, ButtonStyle buttonStyle}) {
+    {double fontSize = 18.0, ButtonStyle buttonStyle, Alignment alignment = Alignment.centerLeft}) {
   return OutlinedButton(
     child: Container(
         width: 200,
         height: 50,
-        alignment: Alignment.centerLeft,
+        alignment: alignment,
         child: Text(value,
             style: TextStyle(color: Colors.white, fontSize: fontSize))),
     style: buttonStyle ?? _buttonStyle,
