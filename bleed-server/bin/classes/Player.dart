@@ -15,7 +15,6 @@ class Player extends Character {
   int meds;
   int lives;
   int frameOfDeath = -1;
-  int squad = -1;
   GameState gameState = GameState.InProgress;
 
   Clips clips = Clips();

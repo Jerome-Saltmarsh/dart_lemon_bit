@@ -26,6 +26,8 @@ class GameObject {
   GameObject(this.x, this.y, {this.z = 0, this.xv = 0, this.yv = 0, this.zv = 0, this.radius = 5});
 }
 
+const noSquad = -1;
+
 class Character extends GameObject {
   CharacterState state = CharacterState.Idle;
   CharacterState previousState = CharacterState.Idle;
@@ -39,6 +41,7 @@ class Character extends GameObject {
   double maxHealth;
   double speed;
   String name;
+  int squad = noSquad;
 
   bool get alive => state != CharacterState.Dead;
 
@@ -97,11 +100,13 @@ class Npc extends Character {
 class Bullet extends GameObject {
   late double xStart;
   late double yStart;
-  int ownerId;
+  Character owner;
   double range;
   double damage;
 
-  Bullet(double x, double y, double xVel, double yVel, this.ownerId, this.range, this.damage)
+  int get squad => owner.squad;
+
+  Bullet(double x, double y, double xVel, double yVel, this.owner, this.range, this.damage)
       : super(x, y, xv: xVel, yv: yVel) {
     xStart = x;
     yStart = y;

@@ -573,7 +573,12 @@ extension GameFunctions on Game {
     }
 
     bullets.sort(compareGameObjects);
+    // _checkBulletBlockCollision();
+    checkBulletCollision(npcs);
+    checkBulletCollision(players);
+  }
 
+  void _checkBulletBlockCollision() {
     for (int i = 0; i < bullets.length; i++) {
       if (!bullets[i].active) continue;
       Bullet bullet = bullets[i];
@@ -625,9 +630,6 @@ extension GameFunctions on Game {
         }
       }
     }
-
-    checkBulletCollision(npcs);
-    checkBulletCollision(players);
   }
 
   void spawnExplosion(double x, double y) {
@@ -710,8 +712,8 @@ extension GameFunctions on Game {
       for (int j = s; j < characters.length; j++) {
         Character character = characters[j];
         if (!character.active) continue;
-        if (character.left > bullet.right) break;
         if (character.dead) continue;
+        if (character.left > bullet.right) break;
         if (bullet.left > character.right) {
           s++;
           continue;
@@ -719,9 +721,11 @@ extension GameFunctions on Game {
         if (bullet.top > character.bottom) continue;
         if (bullet.bottom < character.top) continue;
 
-        bullets.removeAt(i);
-        i--;
-        changeCharacterHealth(character, -bullet.damage);
+        bullet.active = false;
+        if (bullet.squad == noSquad || bullet.squad != character.squad){
+          changeCharacterHealth(character, -bullet.damage);
+        }
+
         character.xv += bullet.xv * bulletImpactVelocityTransfer;
         character.yv += bullet.yv * bulletImpactVelocityTransfer;
 
@@ -905,8 +909,6 @@ extension GameFunctions on Game {
     double yv =
         velY(character.aimAngle + giveOrTake(weaponAccuracy), bulletSpeed);
 
-    int ownerId = character.id;
-
     double range = getWeaponRange(character.weapon) +
         giveOrTake(settingsWeaponRangeVariation);
 
@@ -922,13 +924,13 @@ extension GameFunctions on Game {
       bullet.y = y;
       bullet.xv = xv;
       bullet.yv = yv;
-      bullet.ownerId = ownerId;
+      bullet.owner = character;
       bullet.range = range;
       bullet.damage = damage;
       return bullet;
     }
 
-    Bullet bullet = Bullet(x, y, xv, yv, ownerId, range, damage);
+    Bullet bullet = Bullet(x, y, xv, yv, character, range, damage);
     bullets.add(bullet);
     return bullet;
   }
