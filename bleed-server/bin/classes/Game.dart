@@ -114,15 +114,14 @@ class Fortress extends Game {
 }
 
 class DeathMatch extends Game {
-
   final int squadSize;
 
   int get numberOfSquads => maxPlayers ~/ squadSize;
 
-  int get nextSquadNumber{
+  int get nextSquadNumber {
     if (squadSize <= 1) return -1;
 
-    for(int squad = 0; squad < numberOfSquads; squad++){
+    for (int squad = 0; squad < numberOfSquads; squad++) {
       if (numberOfPlayersOnSquad(squad) < squadSize) return squad;
     }
 
@@ -144,23 +143,44 @@ class DeathMatch extends Game {
   void onPlayerKilled(Player player) {
     player.gameState = GameState.Lost;
 
-    if (numberOfAlivePlayers == 1) {
-      for (Player player in players) {
-        if (player.alive) player.gameState = GameState.Won;
+    if (squadSize == 1) {
+      if (numberOfAlivePlayers == 1) {
+        for (Player player in players) {
+          if (player.alive) player.gameState = GameState.Won;
+        }
       }
+      return;
+    }
+
+    int squad = -1;
+    for (Player player in players) {
+      if (!player.alive) continue;
+      squad = player.squad;
+      break;
+    }
+
+    for (Player player in players) {
+      if (!player.alive) continue;
+      if (player.squad == squad) continue;
+      return;
+    }
+
+    for (Player player in players) {
+      if (!player.alive) continue;
+      player.gameState = GameState.Won;
     }
   }
 
-  int numberOfPlayersOnSquad(int squad){
+  int numberOfPlayersOnSquad(int squad) {
     int count = 0;
-    for(Player player in players){
+    for (Player player in players) {
       if (player.squad != squad) continue;
       count++;
     }
     return count;
   }
 
-  Vector2 getSquadSpawnPoint(int squad){
+  Vector2 getSquadSpawnPoint(int squad) {
     return playerSpawnPoints[squad % playerSpawnPoints.length];
   }
 
@@ -170,22 +190,21 @@ class DeathMatch extends Game {
     Vector2 spawnPoint = getSquadSpawnPoint(squad);
 
     Player player = Player(
-      x: spawnPoint.x + giveOrTake(3),
-      y: spawnPoint.y + giveOrTake(2),
-      inventory: Inventory(3, 3, [
-        InventoryItem(0, 0, InventoryItemType.Handgun),
-        InventoryItem(0, 1, InventoryItemType.HealthPack),
-        InventoryItem(1, 0, InventoryItemType.HandgunClip),
-        InventoryItem(2, 2, InventoryItemType.HandgunClip),
-        InventoryItem(1, 1, InventoryItemType.ShotgunClip),
-      ]),
-      name: "Test",
-      grenades: 2,
-      meds: 2,
-      clips: Clips(handgun: 2),
-      rounds: Rounds(handgun: settings.handgunClipSize),
-      squad: squad
-    );
+        x: spawnPoint.x + giveOrTake(3),
+        y: spawnPoint.y + giveOrTake(2),
+        inventory: Inventory(3, 3, [
+          InventoryItem(0, 0, InventoryItemType.Handgun),
+          InventoryItem(0, 1, InventoryItemType.HealthPack),
+          InventoryItem(1, 0, InventoryItemType.HandgunClip),
+          InventoryItem(2, 2, InventoryItemType.HandgunClip),
+          InventoryItem(1, 1, InventoryItemType.ShotgunClip),
+        ]),
+        name: "Test",
+        grenades: 2,
+        meds: 2,
+        clips: Clips(handgun: 2),
+        rounds: Rounds(handgun: settings.handgunClipSize),
+        squad: squad);
 
     return player;
   }
@@ -786,7 +805,7 @@ extension GameFunctions on Game {
         character.xv += bullet.xv * bulletImpactVelocityTransfer;
         character.yv += bullet.yv * bulletImpactVelocityTransfer;
 
-        if (bullet.squad == noSquad || bullet.squad != character.squad){
+        if (bullet.squad == noSquad || bullet.squad != character.squad) {
           changeCharacterHealth(character, -bullet.damage);
 
           if (character is Player) {
@@ -1101,7 +1120,7 @@ extension GameFunctions on Game {
     return playerSpawnPoints[randomInt(0, playerSpawnPoints.length)];
   }
 
-  Vector2 getNextSpawnPoint(){
+  Vector2 getNextSpawnPoint() {
     spawnPointIndex = (spawnPointIndex + 1) % playerSpawnPoints.length;
     return playerSpawnPoints[spawnPointIndex];
   }
@@ -1125,4 +1144,3 @@ extension GameFunctions on Game {
     }
   }
 }
-
