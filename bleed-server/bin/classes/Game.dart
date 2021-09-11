@@ -722,17 +722,18 @@ extension GameFunctions on Game {
         if (bullet.bottom < character.top) continue;
 
         bullet.active = false;
-        if (bullet.squad == noSquad || bullet.squad != character.squad){
-          changeCharacterHealth(character, -bullet.damage);
-        }
 
         character.xv += bullet.xv * bulletImpactVelocityTransfer;
         character.yv += bullet.yv * bulletImpactVelocityTransfer;
 
-        if (character is Player) {
-          dispatch(GameEventType.Player_Hit, character.x, character.y,
-              bullet.xv, bullet.yv);
-          return;
+        if (bullet.squad == noSquad || bullet.squad != character.squad){
+          changeCharacterHealth(character, -bullet.damage);
+
+          if (character is Player) {
+            dispatch(GameEventType.Player_Hit, character.x, character.y,
+                bullet.xv, bullet.yv);
+            return;
+          }
         }
 
         if (character.alive) {

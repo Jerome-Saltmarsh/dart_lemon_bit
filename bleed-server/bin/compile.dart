@@ -106,6 +106,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, equippedWeaponClips(player));
   _write(buffer, equippedWeaponRounds(player));
   _write(buffer, player.gameState.index);
+
   // _compileInventory(buffer, player.inventory);
 }
 
@@ -208,6 +209,7 @@ void _compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.y.toInt());
   _write(buffer, player.stateFrameCount);
   _write(buffer, player.weapon.index);
+  _write(buffer, player.squad);
 }
 
 void _compileNpc(StringBuffer buffer, Npc npc) {

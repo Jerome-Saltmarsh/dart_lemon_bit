@@ -312,6 +312,7 @@ void _parseGameJoined() {
   state.compiledGame.playerY = _consumeDouble();
   state.compiledGame.gameId = _consumeInt();
   state.compiledGame.gameType = _consumeGameType();
+  state.player.squad = _consumeInt();
   state.lobby = null;
   print("ServerResponse.Game_Joined: playerId: ${state.compiledGame.playerId} gameId: ${state.compiledGame.gameId}");
 }
@@ -414,6 +415,7 @@ bool _commaConsumed() {
 void _parsePlayers() {
   int index = 0;
   while (!_simiColonConsumed()) {
+    // TODO Expensive call
     if (index >= compiledGame.players.length) {
       compiledGame.players.add(_getUnusedMemory());
     }
@@ -478,12 +480,13 @@ void _cacheLast(List list) {
 }
 
 void _consumePlayer(dynamic memory) {
-  memory[0] = _consumeInt();
+  memory[stateIndex] = _consumeInt();
   memory[direction] = _consumeInt();
   memory[x] = _consumeDouble();
   memory[y] = _consumeDouble();
   memory[frameCount] = _consumeInt();
   memory[weapon] = _consumeWeapon();
+  memory[squad] = _consumeInt();
 }
 
 void _consumeNpc(dynamic npcMemory) {
@@ -495,6 +498,6 @@ void _consumeNpc(dynamic npcMemory) {
 }
 
 List _getUnusedMemory() {
-  if (_cache.isEmpty) return [0, 0, 0.0, 0.0, 0, 0];
+  if (_cache.isEmpty) return [0, 0, 0.0, 0.0, 0, 0, 0];
   return _cache.removeLast();
 }

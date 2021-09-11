@@ -33,7 +33,7 @@ void drawNpcs() {
   render.npcsTransforms.clear();
   render.npcsRects.clear();
 
-  for(int i = 0; i < compiledGame.totalNpcs; i++){
+  for (int i = 0; i < compiledGame.totalNpcs; i++) {
     render.npcsTransforms.add(getCharacterTransform(compiledGame.npcs[i]));
     render.npcsRects.add(getCharacterSpriteRect(compiledGame.npcs[i]));
   }
@@ -90,7 +90,18 @@ void drawPlayers() {
     if (a[y] < b[y]) return -1;
     return 1;
   });
+  _drawTeamMemberCircles();
   drawList(compiledGame.players, render.playersTransforms, render.playersRects);
+}
+
+void _drawTeamMemberCircles() {
+  if (state.player.squad == -1) return;
+
+  for (dynamic player in compiledGame.players) {
+    if (player[squad] != state.player.squad) continue;
+    if (player[x] == compiledGame.playerX) continue;
+    drawCircle(player[x], player[y], 10, Colors.blue);
+  }
 }
 
 void drawList(

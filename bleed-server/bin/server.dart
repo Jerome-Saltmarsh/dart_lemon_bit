@@ -49,7 +49,7 @@ void main() {
       Player player = game.spawnPlayer(name: 'test');
       compilePlayer(_buffer, player);
       _buffer.write(
-          '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${game.id} ${game.type.index} ');
+          '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${game.id} ${game.type.index} ${player.squad} ');
       _buffer.write(game.compiledTiles);
       _buffer.write(game.compiled);
       sendToClient(_buffer.toString());
@@ -234,7 +234,8 @@ void main() {
           }
 
           int squadSize = int.parse(arguments[1]);
-          int maxPlayers = 3;
+          int maxPlayers = squadSize * 2;
+
           Lobby lobby = gameManager.findAvailableDeathMatchLobby(
               squadSize: squadSize, maxPlayers: maxPlayers);
           lobby.players.add(user);
