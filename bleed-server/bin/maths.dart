@@ -4,6 +4,8 @@ import 'constants.dart';
 
 
 const double _0 = 0;
+const double half = 0.5;
+const double _1 = 0.5;
 const double goldenRatio = 1.61803398875;
 const double goldenRatioInverse = 1.0 / goldenRatio;
 const double degreesToRadians = 0.0174533;
@@ -18,8 +20,13 @@ double randomBetween(num a, num b) {
   return (random.nextDouble() * (b - a)) + a;
 }
 
+
 bool randomBool() {
-  return random.nextDouble() > 0.5;
+  return random.nextDouble() > half;
+}
+
+bool chance(double value) {
+  return random.nextDouble() <= value;
 }
 
 int randomInt(int min, int max) {
@@ -109,7 +116,7 @@ double opp(double rotation, num magnitude) {
 }
 
 double normalize(double x, double y) {
-  return 1.0 / magnitude(x, y);
+  return _1 / magnitude(x, y);
 }
 
 double normalizeX(double x, double y) {

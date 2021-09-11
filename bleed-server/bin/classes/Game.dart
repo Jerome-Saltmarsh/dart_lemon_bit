@@ -181,6 +181,7 @@ class DeathMatch extends Game {
   }
 
   Vector2 getSquadSpawnPoint(int squad) {
+    if (squad == -1) return getNextSpawnPoint();
     return playerSpawnPoints[squad % playerSpawnPoints.length];
   }
 
@@ -220,7 +221,11 @@ class GameCasual extends Game {
   }
 
   @override
-  void update() {}
+  void update() {
+    if (duration % 50 == 0 && zombieCount < 500) {
+      spawnRandomNpc();
+    }
+  }
 
   @override
   void onPlayerKilled(Player player) {}
@@ -1035,9 +1040,17 @@ extension GameFunctions on Game {
 
   void spawnRandomNpc() {
     if (zombieSpawnPoints.isEmpty) return;
-    if (npcs.length >= settings.maxZombies) return;
     Vector2 spawnPoint = randomValue(zombieSpawnPoints);
     spawnNpc(spawnPoint.x + giveOrTake(5), spawnPoint.y + giveOrTake(5));
+  }
+
+  int get zombieCount {
+    int count = 0;
+    for(Npc npc in npcs){
+      if(!npc.alive) continue;
+      count++;
+    }
+    return count;
   }
 
   Player spawnPlayer({required String name}) {
@@ -1070,9 +1083,10 @@ extension GameFunctions on Game {
 
   void jobNpcWander() {
     for (Npc npc in npcs) {
+      if (!npc.active) continue;
       if (npc.targetSet) continue;
       if (npc.path.isNotEmpty) continue;
-      if (randomBool()) return;
+      if (chance(0.25)) return;
       npcSetRandomDestination(npc);
     }
   }
@@ -1126,12 +1140,22 @@ extension GameFunctions on Game {
   }
 
   void npcSetRandomDestination(Npc npc) {
-    npcSetPathTo(npc, npc.x + giveOrTake(settingsNpcRoamRange),
-        npc.y + giveOrTake(settingsNpcRoamRange));
+    npcSetPathToTileNode(npc, getRandomOpenTileNode());
+  }
+
+  TileNode getRandomOpenTileNode(){
+    while(true){
+      TileNode node = scene.tileNodes[randomInt(0, scene.rows)][randomInt(0, scene.columns)];
+      if(node.open) return node;
+    }
   }
 
   void npcSetPathTo(Npc npc, double x, double y) {
-    npc.path = scene.findPath(npc.x, npc.y, x, y);
+    npcSetPathToTileNode(npc, scene.tileNodeAt(x, y));
+  }
+
+  void npcSetPathToTileNode(Npc npc, TileNode node) {
+    npc.path = scene.findPathNodes(scene.tileNodeAt(npc.x, npc.y), node);
   }
 
   void _updateGameEvents() {

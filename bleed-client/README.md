@@ -43,7 +43,8 @@
 [ ] Player Name text
 [ ] Observe mode
 [ ] Score board
-[ ] Teams
+[ ] Zombies Auto Spawn
+[x] Teams
 [x] Control Spawn Point
 [x] Victory / Lost
 [x] Prevent Respawn in DeathMatch 
