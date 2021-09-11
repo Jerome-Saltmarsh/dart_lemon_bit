@@ -43,7 +43,7 @@
 -- CASUAL --
 [ ] Tutorial Text
 [ ] Select Weapon on spawn
-[ ] Auto Assign balanced Teams
+[x] Auto Assign balanced Teams
 [x] Fix Npc Wander
 [x] Zombies Auto Spawn
 [x] Teams

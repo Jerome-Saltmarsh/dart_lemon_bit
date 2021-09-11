@@ -342,7 +342,6 @@ Widget buildHud() {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           if (settings.developMode && !_showDebug)
-            button('Debug', () => _showDebug = !_showDebug),
           if (settings.developMode) button('Editor', toggleMode),
           iconMenu
         ],
@@ -421,15 +420,23 @@ Widget buildHud() {
       topRight,
       bottomLeft,
       if (compiledGame.gameType == GameType.Fortress) buildGameInfoFortress,
-      if (compiledGame.gameType == GameType.DeathMatch)
-        buildGameInfoDeathMatch(),
-      if (gameOver) buildGameOver(),
+      if (compiledGame.gameType == GameType.DeathMatch) buildGameInfoDeathMatch(),
+      if (compiledGame.gameType == GameType.Casual) buildGameViewCasual(),
       if (state.gameState == GameState.Won) buildViewWin(),
       if (state.gameState == GameState.Lost) buildViewLose(),
-      if (playerHealth <= 0 && compiledGame.gameType == GameType.Casual)
-        buildRespawn()
+      if (playerHealth <= 0 && compiledGame.gameType == GameType.Casual) buildViewRespawn(),
     ],
   );
+}
+
+Widget buildGameViewCasual(){
+  return Positioned(
+      right: 10,
+      bottom: 10,
+      child: Container(
+          color: Colors.black45,
+          padding: EdgeInsets.all(8),
+          child: text("CASUAL GAME")));
 }
 
 Widget buildGameInfoDeathMatch() {
@@ -523,6 +530,22 @@ Widget buildViewLose() {
             Container(
                 color: Colors.black45,
                 child: button("YOU LOSE", showDialogMainMenu, fontSize: 40, alignment: Alignment.center)),
+          ],
+        ),
+      ));
+}
+
+Widget buildViewRespawn() {
+  return Positioned(
+      bottom: 200,
+      child: Container(
+        width: screenWidth,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+                color: Colors.black45,
+                child: button("Respawn", sendRequestRevive, fontSize: 40, alignment: Alignment.center)),
           ],
         ),
       ));
