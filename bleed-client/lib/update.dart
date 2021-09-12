@@ -6,6 +6,7 @@ import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/tutorials.dart';
+import 'package:bleed_client/ui.dart';
 
 import 'connection.dart';
 import 'common/Weapons.dart';
@@ -35,6 +36,7 @@ void update() {
 
   if (!tutorialsFinished && tutorial.getFinished()){
     tutorialNext();
+    sharedPreferences.setInt('tutorialIndex', tutorialIndex);
   }
 
 

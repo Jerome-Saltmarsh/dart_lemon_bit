@@ -2,13 +2,13 @@
 import 'package:bleed_client/common.dart';
 import 'package:bleed_client/state.dart';
 
-int _tutorialIndex = 0;
+int tutorialIndex = 0;
 
-Tut get tutorial => _tutorials[_tutorialIndex];
-bool get tutorialsFinished => _tutorialIndex >= _tutorials.length;
+Tut get tutorial => _tutorials[tutorialIndex];
+bool get tutorialsFinished => tutorialIndex >= _tutorials.length;
 
 void tutorialNext(){
-  _tutorialIndex++;
+  tutorialIndex++;
 }
 
 abstract class Tutorial {

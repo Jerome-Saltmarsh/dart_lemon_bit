@@ -15,6 +15,7 @@ import 'package:bleed_client/ui/dialogs.dart';
 import 'package:bleed_client/ui/views.dart';
 import 'package:flutter/material.dart';
 import 'package:neuro/instance.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'classes/InventoryItem.dart';
 import 'connection.dart';
@@ -32,7 +33,7 @@ import 'utils.dart';
 TextEditingController _playerNameController = TextEditingController();
 Border _border =
 Border.all(color: Colors.black, width: 5.0, style: BorderStyle.solid);
-
+SharedPreferences sharedPreferences;
 bool _showDebug = false;
 
 void initUI() {
@@ -47,6 +48,15 @@ void initUI() {
   on((LobbyJoined _) async {
     closeMainMenuDialog();
     redrawUI();
+  });
+
+  SharedPreferences.getInstance().then((value) {
+    sharedPreferences = value;
+    dispatch(value);
+    if(sharedPreferences.containsKey("tutorialIndex")){
+      tutorialIndex = sharedPreferences.getInt('tutorialIndex');
+    }
+
   });
 }
 
