@@ -105,7 +105,7 @@ class Fortress extends Game {
       grenades: 2,
       meds: 2,
       clips: Clips(handgun: 2),
-      rounds: Rounds(handgun: settings.handgunClipSize),
+      rounds: Rounds(handgun: settings.clipSizeHandgun),
     );
 
     return player;
@@ -211,7 +211,7 @@ class DeathMatch extends Game {
         grenades: 2,
         meds: 2,
         clips: Clips(handgun: 2),
-        rounds: Rounds(handgun: settings.handgunClipSize),
+        rounds: Rounds(handgun: settings.clipSizeHandgun),
         squad: squad);
 
     return player;
@@ -254,8 +254,8 @@ class GameCasual extends Game {
       ]),
       grenades: 2,
       meds: 2,
-      clips: Clips(handgun: 2),
-      rounds: Rounds(handgun: settings.handgunClipSize),
+      clips: Clips(handgun: 3, shotgun: 3),
+      rounds: Rounds(handgun: settings.clipSizeHandgun, shotgun: settings.clipSizeShotgun),
     );
 
     int playersInSquad0 = numberOfPlayersInSquad(0);
@@ -641,9 +641,9 @@ extension GameFunctions on Game {
         switch (character.weapon) {
           case Weapon.HandGun:
             if (character is Player &&
-                character.rounds.handgun < settings.handgunClipSize &&
+                character.rounds.handgun < settings.clipSizeHandgun &&
                 character.clips.handgun > 0) {
-              character.rounds.handgun = settings.handgunClipSize;
+              character.rounds.handgun = settings.clipSizeHandgun;
               character.clips.handgun--;
               character.stateDuration = settingsHandgunReloadDuration;
               break;
@@ -651,9 +651,9 @@ extension GameFunctions on Game {
             return;
           case Weapon.Shotgun:
             if (character is Player &&
-                character.rounds.shotgun < settings.shotgunClipSize &&
+                character.rounds.shotgun < settings.clipSizeShotgun &&
                 character.clips.shotgun > 0) {
-              character.rounds.shotgun = settings.shotgunClipSize;
+              character.rounds.shotgun = settings.clipSizeShotgun;
               character.clips.shotgun--;
               character.stateDuration = settingsShotgunReloadDuration;
               break;

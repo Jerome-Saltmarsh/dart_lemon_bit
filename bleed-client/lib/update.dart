@@ -1,8 +1,11 @@
 import 'package:bleed_client/audio.dart';
+import 'package:bleed_client/common.dart';
 import 'package:bleed_client/editor/editor.dart';
+import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/properties.dart';
+import 'package:bleed_client/tutorials.dart';
 
 import 'connection.dart';
 import 'common/Weapons.dart';
@@ -29,6 +32,10 @@ void update() {
 
   // TODO Does not belong here
   _showHideTopLeftMenuOptions();
+
+  if (!tutorialsFinished && tutorial.getFinished()){
+    tutorialNext();
+  }
 
 
   if (playMode) {

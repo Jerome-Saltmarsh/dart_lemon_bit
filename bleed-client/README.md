@@ -42,9 +42,9 @@
 [ ] Score board
 -- CASUAL --
 [ ] Select Weapon on spawn
-[ ] Tutorial Text
 [ ] Fix Npc Wander
-[ ] Player Names
+[ ] Tutorial Text
+[x] Player Names
 [x] FIX BUG: On victory did not appear
 [x] Auto Assign balanced Teams
 [x] Zombies Auto Spawn
