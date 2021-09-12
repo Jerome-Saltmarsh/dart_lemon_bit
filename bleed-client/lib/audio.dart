@@ -65,7 +65,7 @@ void playAudioSniperShot(double x, double y) {
 }
 
 void playAudioAssaultRifleShot(double x, double y) {
-  _playAudio('assault-rifle-shot-04.mp3', x, y);
+  _playAudio('assault-rifle-shot.mp3', x, y);
 }
 
 void playAudioExplosion(double x, double y) {

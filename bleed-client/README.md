@@ -29,11 +29,11 @@
 [ ] Zombie Animations
 [ ] Select Character (Sniper, Shotgun, Machine Gun, Medic)
 [ ] Item.RevivalKit (revive fallen squad member)
+[ ] Store
 -- OPEN WORLD -- 
 [ ] Npc Talk Text
 -- FORTRESS -- 
 [ ] Fortress life lost audio
-[ ] Disable friendly fire
 [ ] Fortress Cache Path 
 -- DEATH MATCH 
 [ ] Prevent equip weapon with no ammo
@@ -44,6 +44,8 @@
 [ ] Select Weapon on spawn
 [ ] Fix Npc Wander
 [ ] Tutorial Text
+[x] Improve Assault Rifle Audio
+[x] Disable friendly fire
 [x] Player Names
 [x] FIX BUG: On victory did not appear
 [x] Auto Assign balanced Teams

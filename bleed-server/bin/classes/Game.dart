@@ -254,8 +254,8 @@ class GameCasual extends Game {
       ]),
       grenades: 2,
       meds: 2,
-      clips: Clips(handgun: 3, shotgun: 3),
-      rounds: Rounds(handgun: settings.clipSizeHandgun, shotgun: settings.clipSizeShotgun),
+      clips: Clips(handgun: 3, shotgun: 3, sniper: 2, machineGun: 2),
+      rounds: Rounds(handgun: settings.clipSizeHandgun, shotgun: settings.clipSizeShotgun, machineGun: 100, sniper: 10),
     );
 
     int playersInSquad0 = numberOfPlayersInSquad(0);
