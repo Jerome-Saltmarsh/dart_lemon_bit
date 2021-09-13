@@ -12,7 +12,7 @@ double getWeaponAccuracy(Weapon weapon){
       return settings.shotgunAccuracy;
     case Weapon.SniperRifle:
       return settings.sniperRifleAccuracy;
-    case Weapon.MachineGun:
+    case Weapon.AssaultRifle:
       return settings.machineGunAccuracy;
     default:
       throw Exception("no range found for $weapon");

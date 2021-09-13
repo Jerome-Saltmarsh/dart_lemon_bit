@@ -92,7 +92,7 @@ void updatePlayer() {
       case Weapon.SniperRifle:
         playAudioSniperEquipped(screenCenterWorldX, screenCenterWorldY);
         break;
-      case Weapon.MachineGun:
+      case Weapon.AssaultRifle:
         playAudioReload(screenCenterWorldX, screenCenterWorldY);
         break;
     }

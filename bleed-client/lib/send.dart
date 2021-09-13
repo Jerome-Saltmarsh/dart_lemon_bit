@@ -50,7 +50,7 @@ void sendRequestLobbyExit(){
 }
 
 void sendRequestEquipMachineGun() {
-  sendRequestEquip(Weapon.MachineGun);
+  sendRequestEquip(Weapon.AssaultRifle);
 }
 
 void requestThrowGrenade(double strength){

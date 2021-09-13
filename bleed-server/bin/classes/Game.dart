@@ -231,7 +231,7 @@ class GameCasual extends Game {
 
   @override
   void update() {
-    if (duration % 50 == 0 && zombieCount < 200) {
+    if (duration % 50 == 0 && zombieCount < 100) {
       spawnRandomNpc();
     }
   }
@@ -254,8 +254,8 @@ class GameCasual extends Game {
       ]),
       grenades: 2,
       meds: 2,
-      clips: Clips(handgun: 3, shotgun: 3, sniper: 2, machineGun: 2),
-      rounds: Rounds(handgun: settings.clipSizeHandgun, shotgun: settings.clipSizeShotgun, machineGun: 100, sniper: 10),
+      clips: Clips(handgun: 3, shotgun: 3, sniper: 2, assaultRifle: 2),
+      rounds: Rounds(handgun: settings.clipSizeHandgun, shotgun: settings.clipSizeShotgun, assaultRifle: 100, sniper: 10),
     );
 
     int playersInSquad0 = numberOfPlayersInSquad(0);
@@ -593,8 +593,8 @@ extension GameFunctions on Game {
         dispatch(GameEventType.SniperRifle_Fired, player.x, player.y, bullet.xv,
             bullet.yv);
         break;
-      case Weapon.MachineGun:
-        player.rounds.machineGun--;
+      case Weapon.AssaultRifle:
+        player.rounds.assaultRifle--;
         Bullet bullet = spawnBullet(player);
         player.state = CharacterState.Firing;
         player.stateDuration = settings.machineGunCoolDown;
@@ -786,6 +786,18 @@ extension GameFunctions on Game {
                 character.y, forceX, forceY);
           }
         }
+      }
+    }
+
+    for (Character character in players) {
+      if (objectDistanceFrom(character, x, y) > settingsGrenadeExplosionRadius)
+        continue;
+      double rotation = radiansBetween2(character, x, y);
+      double magnitude = 10;
+      applyForce(character, rotation + pi, magnitude);
+
+      if (character.alive) {
+        changeCharacterHealth(character, -settingsGrenadeExplosionDamage);
       }
     }
   }

@@ -55,9 +55,15 @@ class BleedWidget extends GameWidget {
     startJobs();
 
     compiledGame.npcs = [];
-    for (int i = 0; i < 3000; i++) {
+    for (int i = 0; i < 5000; i++) {
       compiledGame.npcs.add([0, 0, 0.0, 0.0, 0, 0]);
     }
+
+    compiledGame.players = [];
+    for(int i = 0; i < 1000; i++){
+      compiledGame.players.add([0, 0, 0.0, 0.0, 0, 0, 0, ""]);
+    }
+
     onDisconnected.stream.listen((event) {
       showDialogConnectFailed();
       clearState();

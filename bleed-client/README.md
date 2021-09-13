@@ -1,6 +1,3 @@
--- BUGS --
-[ ] Player cache error
-[ ] Dead players pass through barriers
 -- FEATURES -- 
 [ ] Critical Damage
 [ ] Accuracy
@@ -13,7 +10,6 @@
 [ ] Body Armor
 [ ] Knife Attack
 [ ] Line of Sight
-[ ] Player Name Text
 [ ] Particle Gunshot smoke
 [ ] Cache Particles
 [ ] Zombie Hurt Animation
@@ -29,7 +25,8 @@
 [ ] Zombie Animations
 [ ] Select Character (Sniper, Shotgun, Machine Gun, Medic)
 [ ] Item.RevivalKit (revive fallen squad member)
-[ ] Store
+[ ] Upgrade Pistol Damage
+[ ] Upgrade Pistol Magazine Capacity
 -- OPEN WORLD -- 
 [ ] Npc Talk Text
 -- FORTRESS -- 
@@ -37,13 +34,18 @@
 [ ] Fortress Cache Path 
 -- DEATH MATCH 
 [ ] Prevent equip weapon with no ammo
-[ ] Player Name text
 [ ] Observe mode
 [ ] Score board
 -- CASUAL --
 [ ] Select Weapon on spawn
 [ ] Fix Npc Wander
-[ ] Tutorial Text
+-- BUGS --
+[ ] Dead players pass through barriers
+[x] Grenades do not hurt players
+[x] Player cache error
+[x] BUG: Assault rifle ammo doesn't update ui
+[s] Tutorial Text
+[x] Player Name text
 [x] Improve Assault Rifle Audio
 [x] Disable friendly fire
 [x] Player Names

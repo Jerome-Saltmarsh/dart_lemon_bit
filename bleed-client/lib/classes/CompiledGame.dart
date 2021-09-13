@@ -15,6 +15,7 @@ class CompiledGame {
   List<List<dynamic>> players = [];
   List<List<dynamic>> npcs = [];
   int totalNpcs = 0;
+  int totalPlayers = 0;
   List<double> bullets = List.filled(1000, 0);
   List<double> bulletHoles = [];
   List<Particle> particles = [];

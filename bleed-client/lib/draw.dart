@@ -86,12 +86,13 @@ void _loadTileRects(List<List<Tile>> tiles) {
 }
 
 void drawPlayers() {
-  compiledGame.players.sort((a, b) {
-    if (a[y] < b[y]) return -1;
-    return 1;
-  });
-  _drawTeamMemberCircles();
-  drawList(compiledGame.players, render.playersTransforms, render.playersRects);
+  render.playersTransforms.clear();
+  render.playersRects.clear();
+  for (int i = 0; i < compiledGame.totalPlayers; i++) {
+    render.playersTransforms.add(getCharacterTransform(compiledGame.players[i]));
+    render.playersRects.add(getCharacterSpriteRect(compiledGame.players[i]));
+  }
+  drawAtlases(imageCharacter, render.playersTransforms, render.playersRects);
 }
 
 void _drawTeamMemberCircles() {

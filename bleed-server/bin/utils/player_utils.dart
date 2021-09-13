@@ -9,10 +9,9 @@ int equippedWeaponRounds(Player player) {
       return player.rounds.shotgun;
     case Weapon.SniperRifle:
       return player.rounds.sniper;
-    case Weapon.MachineGun:
-      return player.clips.machineGun;
+    case Weapon.AssaultRifle:
+      return player.rounds.assaultRifle;
   }
-
   return 0;
 }
 
@@ -24,8 +23,8 @@ int equippedWeaponClips(Player player) {
       return player.clips.shotgun;
     case Weapon.SniperRifle:
       return player.clips.sniper;
-    case Weapon.MachineGun:
-      return player.clips.machineGun;
+    case Weapon.AssaultRifle:
+      return player.clips.assaultRifle;
   }
   return 0;
 }
@@ -34,24 +33,24 @@ class Clips {
   int handgun;
   int shotgun;
   int sniper;
-  int machineGun;
+  int assaultRifle;
 
   Clips({
     this.handgun = 0,
     this.shotgun = 0,
     this.sniper = 0,
-    this.machineGun = 0});
+    this.assaultRifle = 0});
 }
 
 class Rounds {
   int handgun;
   int shotgun;
   int sniper;
-  int machineGun;
+  int assaultRifle;
 
   Rounds({
     this.handgun = 0,
     this.shotgun = 0,
     this.sniper = 0,
-    this.machineGun = 0});
+    this.assaultRifle = 0});
 }

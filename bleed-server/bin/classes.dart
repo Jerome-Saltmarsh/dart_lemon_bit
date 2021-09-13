@@ -70,7 +70,7 @@ class Character extends GameObject {
       : super(x, y);
 }
 
-final Character _nonTarget = Character(x: 0, y: 0, weapon: Weapon.MachineGun, health: 0, maxHealth: 0, speed: 0);
+final Character _nonTarget = Character(x: 0, y: 0, weapon: Weapon.AssaultRifle, health: 0, maxHealth: 0, speed: 0);
 
 class Npc extends Character {
   Character target = _nonTarget;

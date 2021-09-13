@@ -27,7 +27,6 @@ import 'state.dart';
 // state
 int _index = 0;
 // constants
-const List _cache = [];
 const String _emptyString = " ";
 const String _semiColon = ";";
 const String _comma = ",";
@@ -413,17 +412,10 @@ bool _commaConsumed() {
 }
 
 void _parsePlayers() {
-  int index = 0;
+  compiledGame.totalPlayers = 0;
   while (!_simiColonConsumed()) {
-    // TODO Expensive call
-    if (index >= compiledGame.players.length) {
-      compiledGame.players.add(_getUnusedMemory());
-    }
-    _consumePlayer(compiledGame.players[index]);
-    index++;
-  }
-  while (index < compiledGame.players.length) {
-    _cacheLast(compiledGame.players);
+    _consumePlayer(compiledGame.players[compiledGame.totalPlayers]);
+    compiledGame.totalPlayers++;
   }
 }
 
@@ -475,10 +467,6 @@ void _parseNpcs() {
   }
 }
 
-void _cacheLast(List list) {
-  _cache.add(list.removeLast());
-}
-
 void _consumePlayer(dynamic memory) {
   memory[stateIndex] = _consumeInt();
   memory[direction] = _consumeInt();
@@ -496,9 +484,4 @@ void _consumeNpc(dynamic npcMemory) {
   npcMemory[x] = _consumeDouble();
   npcMemory[y] = _consumeDouble();
   npcMemory[frameCount] = _consumeInt();
-}
-
-List _getUnusedMemory() {
-  if (_cache.isEmpty) return [0, 0, 0.0, 0.0, 0, 0, 0, ""];
-  return _cache.removeLast();
 }

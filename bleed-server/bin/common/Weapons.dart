@@ -1,2 +1,2 @@
 
-enum Weapon { Unarmed, HandGun, Shotgun, SniperRifle, MachineGun }
+enum Weapon { Unarmed, HandGun, Shotgun, SniperRifle, AssaultRifle }

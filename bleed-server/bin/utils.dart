@@ -132,7 +132,7 @@ double getWeaponDamage(Weapon weapon) {
       return settingsWeaponDamageShotgun;
     case Weapon.SniperRifle:
       return settingsWeaponDamageSniperRifle;
-    case Weapon.MachineGun:
+    case Weapon.AssaultRifle:
       return settings.machineGunDamage;
     default:
       throw Exception("no range found for $weapon");
@@ -147,7 +147,7 @@ double getWeaponRange(Weapon weapon) {
       return settingsWeaponRangeShotgun;
     case Weapon.SniperRifle:
       return settingsWeaponRangeSniperRifle;
-    case Weapon.MachineGun:
+    case Weapon.AssaultRifle:
       return settings.machineGunRange;
     default:
       throw Exception("no range found for $weapon");
@@ -162,7 +162,7 @@ double getWeaponBulletSpeed(Weapon weapon) {
       return settingsWeaponBulletSpeedShotGun;
     case Weapon.SniperRifle:
       return settingsWeaponBulletSpeedSniperRifle;
-    case Weapon.MachineGun:
+    case Weapon.AssaultRifle:
       return settings.machineGunBulletSpeed;
     default:
       throw Exception("no range found for $weapon");

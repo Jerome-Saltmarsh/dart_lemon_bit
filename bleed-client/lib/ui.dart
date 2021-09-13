@@ -209,7 +209,7 @@ DecorationImage _getDecorationImage(Weapon weapon) {
       return _shotgunImage;
     case Weapon.SniperRifle:
       return _sniperImage;
-    case Weapon.MachineGun:
+    case Weapon.AssaultRifle:
       return _machineGunImage;
   }
   throw Exception("no image available for $weapon");
@@ -442,7 +442,8 @@ Widget buildHud() {
       if (playerHealth <= 0 &&
           compiledGame.gameType == GameType.Casual) buildViewRespawn(),
       if (!tutorialsFinished)
-        buildViewTutorial()
+        buildViewTutorial(),
+      // buildViewAmmo()
     ],
   );
 }
@@ -463,6 +464,24 @@ Widget buildViewTutorial() {
         ),
       ));
 }
+
+Widget buildViewAmmo() {
+  return Positioned(
+      bottom: 200,
+      child: Container(
+        width: screenWidth,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+                padding: EdgeInsets.all(10),
+                color: Colors.black54,
+                child: text(state.player.equippedRounds.toString())),
+          ],
+        ),
+      ));
+}
+
 
 Widget buildGameViewCasual() {
   return Positioned(
