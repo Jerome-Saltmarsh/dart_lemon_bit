@@ -33,12 +33,14 @@
 [ ] Fortress life lost audio
 [ ] Fortress Cache Path 
 -- DEATH MATCH 
+[ ] Rounds
 [ ] Prevent equip weapon with no ammo
 [ ] Observe mode
 [ ] Score board
 -- CASUAL --
 [ ] Select Weapon on spawn
 [ ] Fix Npc Wander
+[ ] Earn Points on zombie kill
 -- BUGS --
 [ ] Dead players pass through barriers
 [x] Grenades do not hurt players

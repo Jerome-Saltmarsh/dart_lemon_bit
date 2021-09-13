@@ -5,4 +5,5 @@ class Player {
   int stamina = 0;
   int staminaMax = 0;
   int squad = -1;
+  int points = 0;
 }

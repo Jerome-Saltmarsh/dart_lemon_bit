@@ -106,7 +106,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, equippedWeaponClips(player));
   _write(buffer, equippedWeaponRounds(player));
   _write(buffer, player.gameState.index);
-
+  _write(buffer, player.points);
   // _compileInventory(buffer, player.inventory);
 }
 

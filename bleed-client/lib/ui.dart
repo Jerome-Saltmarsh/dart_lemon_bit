@@ -443,7 +443,7 @@ Widget buildHud() {
           compiledGame.gameType == GameType.Casual) buildViewRespawn(),
       if (!tutorialsFinished)
         buildViewTutorial(),
-      // buildViewAmmo()
+      buildViewPoints()
     ],
   );
 }
@@ -465,9 +465,9 @@ Widget buildViewTutorial() {
       ));
 }
 
-Widget buildViewAmmo() {
+Widget buildViewPoints() {
   return Positioned(
-      bottom: 200,
+      bottom: 80,
       child: Container(
         width: screenWidth,
         child: Row(
@@ -476,7 +476,7 @@ Widget buildViewAmmo() {
             Container(
                 padding: EdgeInsets.all(10),
                 color: Colors.black54,
-                child: text(state.player.equippedRounds.toString())),
+                child: text(state.player.points.toString(), fontSize: 30)),
           ],
         ),
       ));

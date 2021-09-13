@@ -139,7 +139,7 @@ class DeathMatch extends Game {
   }
 
   @override
-  void onPlayerDisconnected(Player player){
+  void onPlayerDisconnected(Player player) {
     _updateGameState(player);
   }
 
@@ -148,7 +148,7 @@ class DeathMatch extends Game {
     _updateGameState(player);
   }
 
-  void _updateGameState(Player player){
+  void _updateGameState(Player player) {
     player.gameState = GameState.Lost;
 
     if (squadSize == 1) {
@@ -255,7 +255,11 @@ class GameCasual extends Game {
       grenades: 2,
       meds: 2,
       clips: Clips(handgun: 3, shotgun: 3, sniper: 2, assaultRifle: 2),
-      rounds: Rounds(handgun: settings.clipSizeHandgun, shotgun: settings.clipSizeShotgun, assaultRifle: 100, sniper: 10),
+      rounds: Rounds(
+          handgun: settings.clipSizeHandgun,
+          shotgun: settings.clipSizeShotgun,
+          assaultRifle: 100,
+          sniper: 10),
     );
 
     int playersInSquad0 = numberOfPlayersInSquad(0);
@@ -330,7 +334,7 @@ abstract class Game {
 
   void onPlayerKilled(Player player);
 
-  void onPlayerDisconnected(Player player){}
+  void onPlayerDisconnected(Player player) {}
 
   bool gameOver();
 
@@ -867,6 +871,13 @@ extension GameFunctions on Game {
           changeCharacterHealth(character, -bullet.damage);
 
           if (character is Player) {
+            if (character.dead) {
+              if (bullet.owner is Player) {
+                // on player killed by player
+                (bullet.owner as Player).points += 10;
+              }
+            }
+
             dispatch(GameEventType.Player_Hit, character.x, character.y,
                 bullet.xv, bullet.yv);
             return;
@@ -877,6 +888,11 @@ extension GameFunctions on Game {
           dispatch(GameEventType.Zombie_Hit, character.x, character.y,
               bullet.xv, bullet.yv);
         } else {
+          // on zombie killed by player
+          if (bullet.owner is Player) {
+            (bullet.owner as Player).points++;
+          }
+
           if (randomBool()) {
             dispatch(GameEventType.Zombie_Killed, character.x, character.y,
                 bullet.xv, bullet.yv);

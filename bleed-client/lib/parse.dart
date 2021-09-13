@@ -244,6 +244,7 @@ void _parsePlayer() {
   player.equippedClips = _consumeInt();
   player.equippedRounds = _consumeInt();
   state.gameState = GameState.values[_consumeInt()];
+  player.points = _consumeInt();
 }
 
 void _parseInventory() {

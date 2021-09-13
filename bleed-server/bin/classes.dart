@@ -1,3 +1,4 @@
+import 'classes/Player.dart';
 import 'classes/Vector2.dart';
 import 'enums.dart';
 import 'common/GameEventType.dart';

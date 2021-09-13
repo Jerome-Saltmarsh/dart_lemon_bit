@@ -19,6 +19,7 @@ class Player extends Character {
   int lives;
   int frameOfDeath = -1;
   GameState gameState = GameState.InProgress;
+  int points = 0;
 
   Clips clips = Clips();
   Rounds rounds = Rounds();
