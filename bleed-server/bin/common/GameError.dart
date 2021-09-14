@@ -13,4 +13,6 @@ enum GameError {
   GameFull,
   CannotRevive,
   CannotSpawnNpc,
+  InvalidPurchaseType,
+  IntegerExpected,
 }

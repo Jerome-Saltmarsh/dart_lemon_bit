@@ -49,7 +49,6 @@ void parseState() {
   while (_index < _text.length) {
     ServerResponse serverResponse = _consumeServerResponse();
     switch (serverResponse) {
-
       case ServerResponse.Tiles:
         _parseTiles();
         break;
@@ -82,16 +81,23 @@ void parseState() {
         GameError error = _consumeError();
         print(error);
 
-        switch(error){
+        switch (error) {
           case GameError.GameNotFound:
             clearState();
             showErrorDialog("Game Not Found");
+            return;
+          case GameError.InvalidArguments:
+            if(event.length > 4){
+              String message = event.substring(4, event.length);
+              print('Invalid Arguments: $message');
+            }
+            return;
         }
         if (error == GameError.PlayerNotFound) {
           clearState();
           showErrorDialogPlayerNotFound();
         }
-        if (error == GameError.LobbyNotFound){
+        if (error == GameError.LobbyNotFound) {
           print("Server Error: Lobby not found");
           state.lobby = null;
           showErrorDialog("Lobby not found");
@@ -105,7 +111,7 @@ void parseState() {
       case ServerResponse.Npcs:
         try {
           _parseNpcs();
-        }catch(error){
+        } catch (error) {
           print(error);
         }
         break;
@@ -200,7 +206,7 @@ void _parseMetaFortress() {
   compiledGame.nextWave = _consumeInt();
 }
 
-void _parseMetaDeathMatch(){
+void _parseMetaDeathMatch() {
   state.deathMatch.numberOfAlivePlayers = _consumeInt();
 }
 
@@ -307,20 +313,22 @@ void _parseBlocks() {
 
 void _parseGameJoined() {
   state.compiledGame.playerId = _consumeInt();
-  state.compiledGame.playerUUID  = _consumeString();
+  state.compiledGame.playerUUID = _consumeString();
   state.compiledGame.playerX = _consumeDouble();
   state.compiledGame.playerY = _consumeDouble();
   state.compiledGame.gameId = _consumeInt();
   state.compiledGame.gameType = _consumeGameType();
   state.player.squad = _consumeInt();
   state.lobby = null;
-  print("ServerResponse.Game_Joined: playerId: ${state.compiledGame.playerId} gameId: ${state.compiledGame.gameId}");
+  print(
+      "ServerResponse.Game_Joined: playerId: ${state.compiledGame.playerId} gameId: ${state.compiledGame.gameId}");
 }
 
-GameType _consumeGameType(){
+GameType _consumeGameType() {
   int value = _consumeInt();
-  if (value >= gameTypes.length){
-    throw Exception('error - parse._consumeGameType() : $value is not a valid game type');
+  if (value >= gameTypes.length) {
+    throw Exception(
+        'error - parse._consumeGameType() : $value is not a valid game type');
   }
   return gameTypes[value];
 }

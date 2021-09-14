@@ -2,6 +2,7 @@
 import 'package:bleed_client/common.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/common/PurchaseType.dart';
 import 'package:bleed_client/functions/clearState.dart';
 
 import 'connection.dart';
@@ -103,6 +104,14 @@ void sendRequestJoinLobbyFortress() {
   // TODO does not belong
   clearState();
   sendClientRequest(ClientRequest.Lobby_Join_Fortress);
+}
+
+void sendRequestPurchase(PurchaseType purchaseType){
+  send('${ClientRequest.Purchase.index} $session ${purchaseType.index}');
+}
+
+void purchaseAmmoHandgun(){
+  sendRequestPurchase(PurchaseType.Ammo_Handgun);
 }
 
 void sendClientRequest(ClientRequest request){

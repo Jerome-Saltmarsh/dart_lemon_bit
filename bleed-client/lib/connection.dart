@@ -8,6 +8,7 @@ import 'parse.dart';
 import 'state.dart';
 
 // state
+// TODO encapsulate state inside object
 WebSocketChannel _webSocketChannel;
 final StreamController onConnectedController = StreamController.broadcast();
 final StreamController onDisconnected = StreamController.broadcast();

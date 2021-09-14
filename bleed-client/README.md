@@ -25,8 +25,6 @@
 [ ] Zombie Animations
 [ ] Select Character (Sniper, Shotgun, Machine Gun, Medic)
 [ ] Item.RevivalKit (revive fallen squad member)
-[ ] Upgrade Pistol Damage
-[ ] Upgrade Pistol Magazine Capacity
 -- OPEN WORLD -- 
 [ ] Npc Talk Text
 -- FORTRESS -- 
@@ -39,10 +37,14 @@
 [ ] Score board
 -- CASUAL --
 [ ] Select Weapon on spawn
-[ ] Fix Npc Wander
-[ ] Earn Points on zombie kill
+[ ] Grenade kills earn points
+[ ] Upgrade Pistol Damage
+[ ] Upgrade Pistol Magazine Capacity
 -- BUGS --
 [ ] Dead players pass through barriers
+[ ] Npcs stop wandering
+-- COMPLETED --
+[x] Earn Points on zombie kill
 [x] Grenades do not hurt players
 [x] Player cache error
 [x] BUG: Assault rifle ammo doesn't update ui

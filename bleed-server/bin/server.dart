@@ -11,6 +11,7 @@ import 'common/GameError.dart';
 import 'common/GameEventType.dart';
 import 'common/GameType.dart';
 import 'common/ServerResponse.dart';
+import 'common/PurchaseType.dart';
 import 'common/Weapons.dart';
 import 'enums.dart';
 import 'functions/loadScenes.dart';
@@ -24,6 +25,7 @@ final int errorIndex = ServerResponse.Error.index;
 final StringBuffer _buffer = StringBuffer();
 
 const List<ClientRequest> clientRequests = ClientRequest.values;
+const List<PurchaseType> purchaseTypes = PurchaseType.values;
 final int clientRequestsLength = clientRequests.length;
 
 void main() {
@@ -56,6 +58,10 @@ void main() {
 
     void error(GameError error) {
       sendToClient('$errorIndex ${error.index}');
+    }
+
+    void errorArgsExpected(int expected, List arguments){
+      sendToClient('$errorIndex ${GameError.InvalidArguments.index} expected $expected but got ${arguments.length}');
     }
 
     void errorGameNotFound() {
@@ -409,6 +415,57 @@ void main() {
           game.dispatch(GameEventType.Throw_Grenade, player.x, player.y, 0, 0);
           player.grenades--;
           return;
+
+        case ClientRequest.Purchase:
+          if (arguments.length != 5){
+            errorArgsExpected(5, arguments);
+            return;
+          }
+
+          String gameId = arguments[1];
+          Game? game = findGameById(gameId);
+          if (game == null) {
+            error(GameError.GameNotFound);
+            return;
+          }
+
+          int id = int.parse(arguments[2]);
+          Player? player = game.findPlayerById(id);
+          if (player == null) {
+            error(GameError.PlayerNotFound);
+            return;
+          }
+
+          String uuid = arguments[3];
+          if (uuid != player.uuid) {
+            error(GameError.InvalidPlayerUUID);
+            return;
+          }
+
+          int? purchaseTypeIndex = int.tryParse(arguments[4]);
+
+          if (purchaseTypeIndex == null){
+            sendToClient('$errorIndex ${GameError.IntegerExpected} arguments[4] but got ${arguments[4]}');
+            return;
+          }
+
+          if(purchaseTypeIndex >= purchaseTypes.length){
+            sendToClient('$errorIndex ${GameError.InvalidArguments} $purchaseTypeIndex is not a valid PurchaseType index');
+            return;
+          }
+
+          PurchaseType purchaseType = purchaseTypes[purchaseTypeIndex];
+
+          switch(purchaseType){
+            case PurchaseType.Ammo_Handgun:
+              player.clips.handgun++;
+              return;
+            case PurchaseType.Ammo_Shotgun:
+              player.clips.shotgun++;
+              return;
+          }
+          return;
+
       }
     }
 

@@ -14,4 +14,5 @@ class State {
   String lobbyGameUuid = "";
   GameState gameState = GameState.InProgress;
   DeathMatch deathMatch = DeathMatch();
+  bool storeVisible = false;
 }

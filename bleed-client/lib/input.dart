@@ -42,6 +42,8 @@ bool get keyPressedMenu =>  keyPressed(LogicalKeyboardKey.escape);
 
 bool get keyPressedThrowGrenade =>  keyPressed(LogicalKeyboardKey.keyG);
 
+bool get keyPressedShowStore =>  keyPressed(LogicalKeyboardKey.keyI);
+
 bool _throwingGrenade = false;
 bool _healing = false;
 
@@ -63,6 +65,10 @@ void readPlayerInput() {
     }
   } else {
     _healing = false;
+  }
+
+  if (keyPressedShowStore) {
+    state.storeVisible = true;
   }
 
   if (keyPressedThrowGrenade) {

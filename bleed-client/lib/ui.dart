@@ -18,6 +18,7 @@ import 'package:neuro/instance.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'classes/InventoryItem.dart';
+import 'common/PurchaseType.dart';
 import 'connection.dart';
 import 'enums/InventoryItemType.dart';
 import 'enums/Mode.dart';
@@ -32,7 +33,7 @@ import 'utils.dart';
 
 TextEditingController _playerNameController = TextEditingController();
 Border _border =
-Border.all(color: Colors.black, width: 5.0, style: BorderStyle.solid);
+    Border.all(color: Colors.black, width: 5.0, style: BorderStyle.solid);
 SharedPreferences sharedPreferences;
 bool _showDebug = false;
 
@@ -53,10 +54,9 @@ void initUI() {
   SharedPreferences.getInstance().then((value) {
     sharedPreferences = value;
     dispatch(value);
-    if(sharedPreferences.containsKey("tutorialIndex")){
+    if (sharedPreferences.containsKey("tutorialIndex")) {
       tutorialIndex = sharedPreferences.getInt('tutorialIndex');
     }
-
   });
 }
 
@@ -104,13 +104,11 @@ Future<void> showChangeNameDialog() async {
         actions: <Widget>[
           TextButton(
             child: const Text('PLAY'),
-            onPressed: _playerNameController.text
-                .trim()
-                .length > 2
+            onPressed: _playerNameController.text.trim().length > 2
                 ? () {
-              // sendRequestSpawn(playerNameController.text.trim());
-              Navigator.of(context).pop();
-            }
+                    // sendRequestSpawn(playerNameController.text.trim());
+                    Navigator.of(context).pop();
+                  }
                 : null,
           ),
         ],
@@ -148,8 +146,7 @@ Widget buildGameUI(BuildContext context) {
 
   if (compiledGame.playerId < 0) {
     return text(
-        "player id is not assigned. player id: ${compiledGame
-            .playerId}, game id: ${compiledGame.gameId}");
+        "player id is not assigned. player id: ${compiledGame.playerId}, game id: ${compiledGame.gameId}");
   }
 
   if (compiledGame.tiles.isEmpty) {
@@ -434,16 +431,16 @@ Widget buildHud() {
       topRight,
       bottomLeft,
       if (compiledGame.gameType == GameType.Fortress) buildGameInfoFortress,
-      if (compiledGame.gameType ==
-          GameType.DeathMatch) buildGameInfoDeathMatch(),
+      if (compiledGame.gameType == GameType.DeathMatch)
+        buildGameInfoDeathMatch(),
       if (compiledGame.gameType == GameType.Casual) buildGameViewCasual(),
       if (state.gameState == GameState.Won) buildViewWin(),
       if (state.gameState == GameState.Lost) buildViewLose(),
-      if (playerHealth <= 0 &&
-          compiledGame.gameType == GameType.Casual) buildViewRespawn(),
-      if (!tutorialsFinished)
-        buildViewTutorial(),
-      buildViewPoints()
+      if (playerHealth <= 0 && compiledGame.gameType == GameType.Casual)
+        buildViewRespawn(),
+      if (!tutorialsFinished) buildViewTutorial(),
+      buildViewPoints(),
+      if (state.storeVisible) buildViewStore(),
     ],
   );
 }
@@ -482,6 +479,22 @@ Widget buildViewPoints() {
       ));
 }
 
+Widget buildViewStore() {
+  return Positioned(
+      bottom: 80,
+      child: Container(
+        width: screenWidth,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+                padding: EdgeInsets.all(10),
+                color: Colors.black54,
+                child: button("Buy Handgun Ammo", purchaseAmmoHandgun)),
+          ],
+        ),
+      ));
+}
 
 Widget buildGameViewCasual() {
   return Positioned(
@@ -531,19 +544,16 @@ Widget buildDebugColumn() {
         children: [
           button('Close', () => _showDebug = false),
           text(
-              'mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY
-                  .toInt()}'),
+              'mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
           text('x: ${compiledGame.playerX}, y: ${compiledGame.playerY}'),
           text("zombies: ${compiledGame.npcs.length}"),
           text("players: ${compiledGame.players.length}"),
           text("zoom: ${zoom.toStringAsFixed(2)}"),
           text("cameraX: ${cameraX.toInt()}, cameraY: ${cameraY.toInt()}"),
           text(
-              "centerX: ${screenCenterWorldX.toInt()} ${screenCenterWorldY
-                  .toInt()}"),
+              "centerX: ${screenCenterWorldX.toInt()} ${screenCenterWorldY.toInt()}"),
           text(
-              'screen width: ${screenWidth /
-                  zoom}, screen height: ${screenHeight / zoom}'),
+              'screen width: ${screenWidth / zoom}, screen height: ${screenHeight / zoom}'),
         ],
       )
     ],
@@ -553,11 +563,11 @@ Widget buildDebugColumn() {
 Widget buildGameOver() {
   return Positioned(
       child: Container(
-        width: globalSize.width,
-        height: globalSize.height,
-        color: Colors.black45,
-        child: button("Game Over", clearState, fontSize: 30),
-      ));
+    width: globalSize.width,
+    height: globalSize.height,
+    color: Colors.black45,
+    child: button("Game Over", clearState, fontSize: 30),
+  ));
 }
 
 Widget buildViewWin() {
@@ -570,8 +580,8 @@ Widget buildViewWin() {
           children: [
             Container(
                 color: Colors.black45,
-                child: button("YOU WIN", showDialogMainMenu, fontSize: 40,
-                    alignment: Alignment.center)),
+                child: button("YOU WIN", showDialogMainMenu,
+                    fontSize: 40, alignment: Alignment.center)),
           ],
         ),
       ));
@@ -587,8 +597,8 @@ Widget buildViewLose() {
           children: [
             Container(
                 color: Colors.black45,
-                child: button("YOU LOSE", showDialogMainMenu, fontSize: 40,
-                    alignment: Alignment.center)),
+                child: button("YOU LOSE", showDialogMainMenu,
+                    fontSize: 40, alignment: Alignment.center)),
           ],
         ),
       ));
@@ -604,8 +614,8 @@ Widget buildViewRespawn() {
           children: [
             Container(
                 color: Colors.black45,
-                child: button("Respawn", sendRequestRevive, fontSize: 40,
-                    alignment: Alignment.center)),
+                child: button("Respawn", sendRequestRevive,
+                    fontSize: 40, alignment: Alignment.center)),
           ],
         ),
       ));
@@ -614,11 +624,11 @@ Widget buildViewRespawn() {
 Widget buildRespawn() {
   return Positioned(
       child: Container(
-        width: globalSize.width,
-        height: globalSize.height,
-        color: Colors.black45,
-        child: button("respawn", sendRequestRevive, fontSize: 30),
-      ));
+    width: globalSize.width,
+    height: globalSize.height,
+    color: Colors.black45,
+    child: button("respawn", sendRequestRevive, fontSize: 30),
+  ));
 }
 
 Widget buildDebugPanel() {
