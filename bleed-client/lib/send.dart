@@ -75,6 +75,11 @@ void sendRequestUpdatePlayer() {
   send(_buffer.toString());
 }
 
+void sendRequestUpdateScore(){
+  if (state.compiledGame.gameId < 0) return;
+  send('${ClientRequest.Score.index} ${state.compiledGame.gameId}');
+}
+
 void sendRequestJoinGameFortress(){
   send(ClientRequest.Lobby_Join_Fortress.index.toString());
 }
@@ -114,14 +119,14 @@ void purchaseAmmoHandgun(){
   sendRequestPurchase(PurchaseType.Ammo_Handgun);
 }
 
+void purchaseAmmoShotgun(){
+  sendRequestPurchase(PurchaseType.Ammo_Shotgun);
+}
+
 void sendClientRequest(ClientRequest request){
   send(request.index.toString());
 }
 
-void sendRequestSpawn() {
-  print("sendRequestSpawn()");
-  send('spawn');
-}
 
 void sendRequestSpawnNpc() {
   send('${ClientRequest.Spawn_Npc.index} $session');

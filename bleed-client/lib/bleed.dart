@@ -3,6 +3,7 @@ import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/connection.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/send.dart';
 import 'package:bleed_client/settings.dart';
 import 'package:bleed_client/utils.dart';
 
@@ -18,6 +19,8 @@ void initBleed(){
     cameraCenter(compiledGame.playerX, compiledGame.playerY);
     redrawUI();
   });
+
+  periodic(sendRequestUpdateScore, seconds: 3);
 }
 
 void connectToGCP() {

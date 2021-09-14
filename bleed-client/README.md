@@ -40,10 +40,14 @@
 [ ] Grenade kills earn points
 [ ] Upgrade Pistol Damage
 [ ] Upgrade Pistol Magazine Capacity
+[ ] Next Wave Timer
+[ ] Highlight players score
 -- BUGS --
 [ ] Dead players pass through barriers
 [ ] Npcs stop wandering
+[ ] Reload Assault Rifle is broken
 -- COMPLETED --
+[x] Score board
 [x] Earn Points on zombie kill
 [x] Grenades do not hurt players
 [x] Player cache error

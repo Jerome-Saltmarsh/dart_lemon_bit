@@ -237,7 +237,9 @@ class GameCasual extends Game {
   }
 
   @override
-  void onPlayerKilled(Player player) {}
+  void onPlayerKilled(Player player) {
+      player.points = 0;
+  }
 
   @override
   Player doSpawnPlayer() {
@@ -625,6 +627,8 @@ extension GameFunctions on Game {
         character.stateFrameCount = duration;
         character.state = value;
         if (character is Player) {
+          // @on player killed
+          character.score.deaths++;
           onPlayerKilled(character);
         }
         return;
@@ -873,8 +877,11 @@ extension GameFunctions on Game {
           if (character is Player) {
             if (character.dead) {
               if (bullet.owner is Player) {
-                // on player killed by player
-                (bullet.owner as Player).points += 10;
+                // @on player killed by player
+                Player owner = bullet.owner as Player;
+                owner.points += 10;
+                owner.credits += 10;
+                owner.score.playersKilled++;
               }
             }
 
@@ -888,9 +895,12 @@ extension GameFunctions on Game {
           dispatch(GameEventType.Zombie_Hit, character.x, character.y,
               bullet.xv, bullet.yv);
         } else {
-          // on zombie killed by player
+          // @on zombie killed by player
           if (bullet.owner is Player) {
-            (bullet.owner as Player).points++;
+            Player owner = bullet.owner as Player;
+            owner.points++;
+            owner.score.zombiesKilled++;
+            owner.score.points += 5;
           }
 
           if (randomBool()) {

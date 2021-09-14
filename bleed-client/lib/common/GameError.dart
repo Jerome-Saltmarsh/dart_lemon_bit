@@ -15,4 +15,5 @@ enum GameError {
   CannotSpawnNpc,
   InvalidPurchaseType,
   IntegerExpected,
+  InsufficientFunds,
 }

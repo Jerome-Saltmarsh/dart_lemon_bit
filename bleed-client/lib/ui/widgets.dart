@@ -5,8 +5,8 @@ import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-Widget text(String value, {fontSize = 18, Function onPressed}) {
-  Widget _text = Text(value, style: TextStyle(color: Colors.white, fontSize: fontSize));
+Widget text(dynamic value, {fontSize = 18, Function onPressed}) {
+  Widget _text = Text(value.toString(), style: TextStyle(color: Colors.white, fontSize: fontSize));
   if (onPressed == null) return _text;
   return GestureDetector(child: _text, onTap: onPressed,);
 

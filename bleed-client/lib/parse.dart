@@ -14,6 +14,7 @@ import 'package:bleed_client/ui/dialogs.dart';
 import 'package:neuro/instance.dart';
 
 import 'classes/RenderState.dart';
+import 'classes/Score.dart';
 import 'classes/Vector2.dart';
 import 'common/GameEventType.dart';
 import 'common/GameState.dart';
@@ -176,9 +177,15 @@ void parseState() {
         sendRequestJoinGame(state.lobbyGameUuid);
         break;
 
+      case ServerResponse.Score:
+        _parseScore();
+        return;
+
       default:
         print("parser not implemented $serverResponse");
         return;
+
+
     }
 
     while (_index < _text.length) {
@@ -286,6 +293,21 @@ void _parseCollectables() {
   while (!_simiColonConsumed()) {
     compiledGame.collectables.add(_consumeInt());
   }
+}
+
+void _parseScore(){
+  state.score.clear();
+  while (!_simiColonConsumed()) {
+    Score score = Score();
+    score.playerName = _consumeString();
+    score.points = _consumeInt();
+    state.score.add(score);
+  }
+
+  state.score.sort((Score a, Score b){
+     if (a.points > b.points) return -1;
+     return 1;
+  });
 }
 
 void _parseGrenades() {

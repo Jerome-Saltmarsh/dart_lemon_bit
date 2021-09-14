@@ -53,7 +53,7 @@ void _compileFortress(StringBuffer buffer, Fortress game) {
   _write(game.buffer, game.nextWave);
 }
 
-void _compileDeathMatch(StringBuffer buffer, DeathMatch deathMatch){
+void _compileDeathMatch(StringBuffer buffer, DeathMatch deathMatch) {
   _write(buffer, ServerResponse.MetaDeathMatch.index);
   _write(buffer, deathMatch.numberOfAlivePlayers);
 }
@@ -108,6 +108,18 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.gameState.index);
   _write(buffer, player.points);
   // _compileInventory(buffer, player.inventory);
+}
+
+void compileScore(StringBuffer buffer, List<Player> players) {
+  _write(buffer, ServerResponse.Score.index);
+  for (Player player in players) {
+    _write(buffer, player.name);
+    _write(buffer, player.points);
+    // _write(buffer, player.score.deaths);
+    // _write(buffer, player.score.zombiesKilled);
+    // _write(buffer, player.score.playersKilled);
+  }
+  _write(buffer, _semiColon);
 }
 
 void _compileInventory(StringBuffer buffer, Inventory inventory) {

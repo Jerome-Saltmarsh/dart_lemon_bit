@@ -17,4 +17,5 @@ enum ClientRequest{
   Player_Use_MedKit,
   Ping,
   Purchase,
+  Score,
 }

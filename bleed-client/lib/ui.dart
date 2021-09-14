@@ -2,7 +2,7 @@ import 'package:bleed_client/common.dart';
 import 'package:bleed_client/common/GameState.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/common/GameType.dart';
-import 'package:bleed_client/enums.dart';
+import 'package:bleed_client/common/StoreCosts.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
@@ -441,6 +441,7 @@ Widget buildHud() {
       if (!tutorialsFinished) buildViewTutorial(),
       buildViewPoints(),
       if (state.storeVisible) buildViewStore(),
+      buildViewScore(),
     ],
   );
 }
@@ -481,16 +482,16 @@ Widget buildViewPoints() {
 
 Widget buildViewStore() {
   return Positioned(
-      bottom: 80,
+      top: 60,
+      right: 0,
       child: Container(
-        width: screenWidth,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        color: Colors.black45,
+        padding: EdgeInsets.symmetric(vertical: 16),
+        child: Column(
           children: [
-            Container(
-                padding: EdgeInsets.all(10),
-                color: Colors.black54,
-                child: button("Buy Handgun Ammo", purchaseAmmoHandgun)),
+            text('Points: ${state.player.points}'),
+            button("Handgun Ammo (10)", state.player.points >= storeCosts.ammoHandgun ? purchaseAmmoHandgun : null),
+            button("Shotgun Ammo (10)", purchaseAmmoShotgun),
           ],
         ),
       ));
@@ -633,7 +634,6 @@ Widget buildRespawn() {
 
 Widget buildDebugPanel() {
   return column([
-    button("Respawn", sendRequestSpawn),
     button("Spawn NPC", sendRequestSpawnNpc),
     text("Ping: ${ping.inMilliseconds}"),
     text("Player Id: ${compiledGame.playerId}"),
@@ -650,6 +650,38 @@ Widget buildDebugPanel() {
     text("Npcs: ${compiledGame.totalNpcs}"),
     text("Player Assigned: $playerAssigned"),
   ]);
+}
+
+Widget buildViewScore(){
+  return Positioned(
+    top: 100,
+    left: 0,
+    child: Container(
+      color: Colors.black45,
+      padding: EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Row(children: [
+          //   Container(width: 100,child: text("Name")),
+          //   Container(width: 70,child: text("Deaths")),
+          //   Container(width: 70,child: text("Kills")),
+          // ]),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: state.score.map((score){
+              return Row(
+                children: [
+                  Container(width: 120,child: text(score.playerName)),
+                  Container(width: 50,child: text(score.points)),
+                ],
+              );
+            }).toList(),
+          ),
+        ],
+      ),
+    ),
+  );
 }
 
 void showDebug() {

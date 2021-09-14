@@ -5,6 +5,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import 'classes/Game.dart';
 import 'classes/Lobby.dart';
 import 'classes/Player.dart';
+import 'common/StoreCosts.dart';
 import 'compile.dart';
 import 'common/ClientRequest.dart';
 import 'common/GameError.dart';
@@ -56,8 +57,12 @@ void main() {
       sendToClient(_buffer.toString());
     }
 
-    void error(GameError error) {
-      sendToClient('$errorIndex ${error.index}');
+    void error(GameError error, {String message = ""}) {
+      sendToClient('$errorIndex ${error.index} $message');
+    }
+
+    void sendError(String message){
+      sendToClient('$errorIndex $message');
     }
 
     void errorArgsExpected(int expected, List arguments){
@@ -458,6 +463,11 @@ void main() {
 
           switch(purchaseType){
             case PurchaseType.Ammo_Handgun:
+              if (player.points < storeCosts.ammoHandgun) {
+                error(GameError.InsufficientFunds);
+                return;
+              }
+              player.points -= storeCosts.ammoHandgun;
               player.clips.handgun++;
               return;
             case PurchaseType.Ammo_Shotgun:
@@ -465,6 +475,18 @@ void main() {
               return;
           }
           return;
+        case ClientRequest.Score:
+          String gameId = arguments[1];
+          Game? game = findGameById(gameId);
+          if (game == null) {
+            error(GameError.GameNotFound);
+            return;
+          }
+
+          StringBuffer buffer = StringBuffer();
+          compileScore(buffer, game.players);
+          sendToClient(buffer.toString());
+          break;
 
       }
     }

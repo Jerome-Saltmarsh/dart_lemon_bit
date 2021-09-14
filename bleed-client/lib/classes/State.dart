@@ -1,6 +1,7 @@
 
 import 'package:bleed_client/classes/DeathMatch.dart';
 import 'package:bleed_client/classes/Player.dart';
+import 'package:bleed_client/classes/Score.dart';
 import 'package:bleed_client/common/GameState.dart';
 
 import 'CompiledGame.dart';
@@ -15,4 +16,5 @@ class State {
   GameState gameState = GameState.InProgress;
   DeathMatch deathMatch = DeathMatch();
   bool storeVisible = false;
+  List<Score> score = [];
 }

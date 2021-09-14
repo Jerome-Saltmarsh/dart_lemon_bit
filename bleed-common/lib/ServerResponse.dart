@@ -20,4 +20,5 @@ enum ServerResponse {
   Lobby_Joined,
   Lobby_Update,
   Lobby_List,
+  Score,
 }
