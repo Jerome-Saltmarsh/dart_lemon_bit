@@ -221,6 +221,9 @@ class DeathMatch extends Game {
 class GameCasual extends Game {
   int totalSquads = 4;
 
+  final int spawnGrenades = 1;
+  final int spawnMeds = 1;
+
   GameCasual(Scene scene, int maxPlayers)
       : super(GameType.Casual, scene, maxPlayers);
 
@@ -240,33 +243,27 @@ class GameCasual extends Game {
   @override
   void onPlayerKilled(Player player) {
     player.points = 0;
+    player.clips = spawnClip();
+    player.rounds = spawnRounds();
+    player.meds = spawnMeds;
+    player.grenades = spawnGrenades;
+    player.squad = getNextSquad();
   }
 
-  @override
-  Player doSpawnPlayer() {
-    // @on spawn player casual
-    Vector2 spawnPoint = getNextSpawnPoint();
-    Player player = Player(
-      x: spawnPoint.x + giveOrTake(3),
-      y: spawnPoint.y + giveOrTake(2),
-      inventory: Inventory(3, 3, [
-        InventoryItem(0, 0, InventoryItemType.Handgun),
-        InventoryItem(0, 1, InventoryItemType.HealthPack),
-        InventoryItem(1, 0, InventoryItemType.HandgunClip),
-        InventoryItem(2, 2, InventoryItemType.HandgunClip),
-        InventoryItem(1, 1, InventoryItemType.ShotgunClip),
-      ]),
-      grenades: 2,
-      meds: 2,
-      clips: Clips(handgun: 3, shotgun: 3, sniper: 2, assaultRifle: 2),
-      rounds: Rounds(
-        handgun: settings.clipSize.handgun,
-        shotgun: settings.clipSize.shotgun,
-        sniper: settings.clipSize.sniperRifle,
-        assaultRifle: settings.clipSize.assaultRifle,
-      ),
-    );
+  Clips spawnClip() {
+    return Clips(handgun: 3, shotgun: 3, sniper: 2, assaultRifle: 2);
+  }
 
+  Rounds spawnRounds(){
+    return Rounds(
+      handgun: settings.clipSize.handgun,
+      shotgun: settings.clipSize.shotgun,
+      sniper: settings.clipSize.sniperRifle,
+      assaultRifle: settings.clipSize.assaultRifle,
+    );
+  }
+
+  int getNextSquad(){
     int playersInSquad0 = numberOfPlayersInSquad(0);
     int playersInSquad1 = numberOfPlayersInSquad(1);
     int playersInSquad2 = numberOfPlayersInSquad(2);
@@ -287,7 +284,27 @@ class GameCasual extends Game {
       minSquad = playersInSquad3;
       squad = 3;
     }
-    player.squad = squad;
+
+    return squad;
+  }
+
+  @override
+  Player doSpawnPlayer() {
+    // @on spawn player casual
+    Vector2 spawnPoint = getNextSpawnPoint();
+    Player player = Player(
+      x: spawnPoint.x + giveOrTake(3),
+      y: spawnPoint.y + giveOrTake(2),
+      inventory: Inventory(3, 3, [
+        InventoryItem(1, 1, InventoryItemType.ShotgunClip),
+      ]),
+      grenades: spawnGrenades,
+      meds: spawnMeds,
+      clips: spawnClip(),
+      rounds: spawnRounds(),
+    );
+
+    player.squad = getNextSquad();
     return player;
   }
 }

@@ -39,18 +39,15 @@
 [ ] Rounds
 [ ] Prevent equip weapon with no ammo
 [ ] Observe mode
-[ ] Score board
 -- CASUAL --
-[ ] Select Weapon on spawn
-[ ] Grenade kills earn points
 [ ] Upgrade Pistol Damage
 [ ] Upgrade Pistol Magazine Capacity
-[ ] Next Wave Timer
-[ ] Highlight players score
-[ ] On respawn gain standard items
 -- MAJOR BUGS --
-
 -- COMPLETED --
+[x] Score board
+[x] Grenade kills earn points
+[x] Highlight players score
+[x] On respawn gain standard items
 [x] grenade kills earn no points
 [x] Bullets reappear
 [x] Npcs stop wandering

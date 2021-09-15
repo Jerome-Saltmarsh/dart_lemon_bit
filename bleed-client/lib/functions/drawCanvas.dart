@@ -65,7 +65,8 @@ void _drawCompiledGame() {
 double nameRadius = 100;
 
 void _drawPlayerNames() {
-  for (dynamic player in compiledGame.players) {
+  for (int i = 0; i < compiledGame.totalPlayers; i++) {
+    dynamic player = compiledGame.players[i];
     if (player[x] == compiledGame.playerX) continue;
     if (diff(mouseWorldX, player[x]) > nameRadius) continue;
     if (diff(mouseWorldY, player[y]) > nameRadius) continue;
