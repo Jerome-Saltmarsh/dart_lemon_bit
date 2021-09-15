@@ -769,17 +769,17 @@ void drawPaths() {
 void drawPlayerHealth() {
   if (!playerAssigned) return;
 
-  double health = playerHealth / playerMaxHealth;
-  double halfMaxHealth = playerMaxHealth * 0.5;
+  double health = player.health / player.maxHealth;
+  double halfMaxHealth = player.maxHealth * 0.5;
   if (health > 0.5) {
     drawCharacterCircle(
         compiledGame.playerX,
         compiledGame.playerY,
         Color.lerp(Colors.yellow, Colors.green,
-            (playerHealth - halfMaxHealth) / halfMaxHealth));
+            (player.health - halfMaxHealth) / halfMaxHealth));
   } else {
     drawCharacterCircle(compiledGame.playerX, compiledGame.playerY,
-        Color.lerp(Colors.red, Colors.yellow, playerHealth / halfMaxHealth));
+        Color.lerp(Colors.red, Colors.yellow, player.health / halfMaxHealth));
   }
 }
 

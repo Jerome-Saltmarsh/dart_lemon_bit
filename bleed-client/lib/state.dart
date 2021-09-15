@@ -2,12 +2,14 @@ import 'package:bleed_client/classes/CompiledGame.dart';
 import 'package:bleed_client/classes/Player.dart';
 import 'package:bleed_client/classes/Score.dart';
 import 'package:bleed_client/editor/GameEdit.dart';
+import 'package:bleed_client/enums.dart';
 
 import '../common.dart';
 import 'classes/Block.dart';
 import 'classes/SpriteAnimation.dart';
 import 'classes/State.dart';
 import 'enums/Mode.dart';
+import 'keys.dart';
 
 GameEdit gameEdit;
 Mode mode = Mode.Play;
@@ -36,9 +38,23 @@ int actualFPS;
 List<Block> blockHouses = [];
 Map<int, bool> gameEvents = Map();
 
-// Player State
-double playerHealth = 0;
-double playerMaxHealth = 0;
+dynamic get getPlayer {
+  for (dynamic player in compiledGame.players) {
+    if (player[x] != compiledGame.playerX) continue;
+    if (player[y] != compiledGame.playerY) continue;
+    return player;
+  }
+}
+
+List<CharacterState> characterStates = CharacterState.values;
+
+CharacterState get playerState {
+  return characterStates[getPlayer[stateIndex]];
+}
+
+String get playerName {
+  return getPlayer[indexName];
+}
 
 // TODO Expensive string build
 String get session =>

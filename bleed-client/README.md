@@ -43,6 +43,7 @@
 [ ] Upgrade Pistol Damage
 [ ] Upgrade Pistol Magazine Capacity
 -- MAJOR BUGS --
+[ ] Respawn button appears before death
 -- COMPLETED --
 [x] Score board
 [x] Grenade kills earn points

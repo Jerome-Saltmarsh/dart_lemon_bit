@@ -19,7 +19,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'classes/InventoryItem.dart';
 import 'classes/Score.dart';
-import 'common/PurchaseType.dart';
 import 'connection.dart';
 import 'enums/InventoryItemType.dart';
 import 'enums/Mode.dart';
@@ -236,7 +235,7 @@ Widget buildImageButton(DecorationImage image, Function onTap,
   );
 }
 
-void toggleMode() {
+void toggleEditMap() {
   if (playMode) {
     mode = Mode.Edit;
   } else {
@@ -312,12 +311,63 @@ Widget buildInventory() {
   );
 }
 
-void toggleShowScore(){
+void toggleShowScore() {
   _showScore = !_showScore;
   redrawUI();
 }
 
 Widget buildHud() {
+  return Stack(
+    children: [
+      if (mouseAvailable && mouseX < 300 && mouseY < 300) buildTopLeft(),
+      buildTopRight(),
+      buildBottomLeft(),
+      if (compiledGame.gameType == GameType.Fortress) buildViewFortress(),
+      if (compiledGame.gameType == GameType.DeathMatch)
+        buildGameInfoDeathMatch(),
+      if (compiledGame.gameType == GameType.Casual) buildGameViewCasual(),
+      if (state.gameState == GameState.Won) buildViewWin(),
+      if (state.gameState == GameState.Lost) buildViewLose(),
+      if (player.health <= 0 && compiledGame.gameType == GameType.Casual)
+        buildViewRespawn(),
+      if (!tutorialsFinished) buildViewTutorial(),
+      if(player.equippedClips == 0 && player.equippedRounds < 5)
+      buildLowAmmo(),
+      if (state.storeVisible) buildViewStore(),
+      if (_showScore && state.score.isNotEmpty) buildViewScore(),
+    ],
+  );
+}
+
+Widget buildTopRight() {
+  double iconSize = 45;
+
+  Widget iconMenu = Tooltip(
+    child: IconButton(
+        icon: Icon(Icons.menu, size: iconSize, color: white),
+        onPressed: showDialogMainMenu),
+    message: "Menu",
+  );
+
+  Widget editMenu = Tooltip(
+    child: IconButton(
+        icon: Icon(Icons.edit, size: iconSize, color: white),
+        onPressed: toggleEditMap),
+    message: "Edit",
+  );
+
+  return Positioned(
+      top: 0,
+      right: 20,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [if (settings.developMode) editMenu,
+          width16,
+          iconMenu],
+      ));
+}
+
+Widget buildTopLeft() {
   double iconSize = 45;
 
   Widget iconToggleFullscreen = Tooltip(
@@ -335,103 +385,25 @@ Widget buildHud() {
           onPressed: toggleAudioMuted),
       message: "Toggle Audio");
 
-  Widget iconMenu = Tooltip(
-    child: IconButton(
-        icon: Icon(Icons.menu, size: iconSize, color: white),
-        onPressed: showDialogMainMenu),
-    message: "Menu",
-  );
-
   Widget iconScore = Tooltip(
     child: IconButton(
-        icon: Icon(_showScore ? Icons.score : Icons.score_outlined, size: iconSize, color: white),
+        icon: Icon(_showScore ? Icons.score : Icons.score_outlined,
+            size: iconSize, color: white),
         onPressed: toggleShowScore),
     message: _showScore ? "Hide Score" : "Show Score",
   );
 
-  Positioned topLeft = Positioned(
+  return Positioned(
     top: 0,
     left: 0,
     child: Row(
-      children: [
-        iconToggleFullscreen,
-        iconToggleAudio,
-        iconScore
-      ],
+      children: [iconToggleFullscreen, iconToggleAudio, iconScore],
     ),
   );
+}
 
-  Positioned topRight = Positioned(
-      top: 0,
-      right: 20,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          if (settings.developMode && !_showDebug)
-            if (settings.developMode) button('Editor', toggleMode),
-          iconMenu
-        ],
-      ));
-
-  // List<Widget> clips = [];
-  //
-  // for (int i = 0; i < player.equippedClips; i++) {
-  //   clips.add(Container(
-  //     color: white,
-  //     width: 25,
-  //     height: 50,
-  //     padding: EdgeInsets.all(10),
-  //     margin: EdgeInsets.only(right: 5),
-  //   ));
-  // }
-
-  // List<Widget> grenades = [
-  //   Container(
-  //       width: 50, height: 40, decoration: BoxDecoration(image: grenadeImage)),
-  //   text(compiledGame.grenades, fontSize: 25),
-  // ];
-
-
-  // for (int i = 0; i < compiledGame.playerGrenades; i++) {
-  //   grenades.add(Container(
-  //       width: 60, height: 50, decoration: BoxDecoration(image: grenadeImage)));
-  // }
-
-  // List<Widget> healthPacks = [];
-  //
-  // for (int i = 0; i < compiledGame.playerMeds; i++) {
-  //   healthPacks.add(Container(
-  //       width: 60, height: 50, decoration: BoxDecoration(image: healthImage)));
-  // }
-
-  Positioned bottomLeft = Positioned(
-    bottom: 0,
-    child: Container(
-      color: Colors.black45,
-      // width: screenWidth,
-      padding: EdgeInsets.all(8),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          buildWeaponButton(compiledGame.playerWeapon),
-          text(player.equippedClips, fontSize: 25),
-          width16,
-          Container(
-              width: 50, height: 40, decoration: BoxDecoration(image: grenadeImage)),
-          text(compiledGame.playerGrenades, fontSize: 25),
-          width16,
-          Container(
-              width: 50, height: 40, decoration: BoxDecoration(image: healthImage)),
-          text(compiledGame.playerMeds, fontSize: 25),
-          // Row(
-          //   children: healthPacks,
-          // ),
-        ],
-      ),
-    ),
-  );
-
-  Positioned buildGameInfoFortress = Positioned(
+Widget buildViewFortress() {
+  return Positioned(
       right: 0,
       bottom: 0,
       child: Column(
@@ -443,26 +415,34 @@ Widget buildHud() {
           text("Next Wave: ${compiledGame.nextWave}"),
         ],
       ));
+}
 
-  return Stack(
-    children: [
-      if (mouseAvailable && mouseX < 300 && mouseY < 300) topLeft,
-      topRight,
-      bottomLeft,
-      if (compiledGame.gameType == GameType.Fortress) buildGameInfoFortress,
-      if (compiledGame.gameType == GameType.DeathMatch)
-        buildGameInfoDeathMatch(),
-      if (compiledGame.gameType == GameType.Casual) buildGameViewCasual(),
-      if (state.gameState == GameState.Won) buildViewWin(),
-      if (state.gameState == GameState.Lost) buildViewLose(),
-      if (playerHealth <= 0 && compiledGame.gameType == GameType.Casual)
-        buildViewRespawn(),
-      if (!tutorialsFinished) buildViewTutorial(),
-      buildViewPoints(),
-      if (state.storeVisible) buildViewStore(),
-      if(_showScore && state.score.isNotEmpty)
-      buildViewScore(),
-    ],
+Widget buildBottomLeft() {
+  return Positioned(
+    bottom: 0,
+    child: Container(
+      color: Colors.black45,
+      padding: EdgeInsets.all(8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          buildWeaponButton(compiledGame.playerWeapon),
+          text(player.equippedClips, fontSize: 25),
+          width16,
+          Container(
+              width: 50,
+              height: 40,
+              decoration: BoxDecoration(image: grenadeImage)),
+          text(compiledGame.playerGrenades, fontSize: 25),
+          width16,
+          Container(
+              width: 50,
+              height: 40,
+              decoration: BoxDecoration(image: healthImage)),
+          text(compiledGame.playerMeds, fontSize: 25),
+        ],
+      ),
+    ),
   );
 }
 
@@ -483,7 +463,7 @@ Widget buildViewTutorial() {
       ));
 }
 
-Widget buildViewPoints() {
+Widget buildLowAmmo() {
   return Positioned(
       bottom: 80,
       child: Container(
@@ -493,8 +473,41 @@ Widget buildViewPoints() {
           children: [
             Container(
                 padding: EdgeInsets.all(10),
-                color: Colors.black54,
-                child: text(state.player.points.toString(), fontSize: 30)),
+                color: Colors.black26,
+                child: text(player.equippedRounds == 0 ? "Empty" : "Low Ammo", fontSize: 20)),
+          ],
+        ),
+      ));
+}
+
+String getMessage() {
+  if (player.health < player.maxHealth * 0.25){
+    if (compiledGame.playerMeds > 0){
+      return "Low Health: Press H to heal";
+    }
+  }
+  if (player.equippedRounds == 0){
+    if(player.equippedClips == 0){
+      return 'Empty: Press 1, 2, 3 to change weapons';
+    }else{
+      return 'Press R to reload';
+    }
+  }
+}
+
+
+Widget buildMessageBox(String message) {
+  return Positioned(
+      bottom: 80,
+      child: Container(
+        width: screenWidth,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+                padding: EdgeInsets.all(10),
+                color: Colors.black26,
+                child: text(message, fontSize: 20)),
           ],
         ),
       ));
@@ -510,7 +523,11 @@ Widget buildViewStore() {
         child: Column(
           children: [
             text('Points: ${state.player.points}'),
-            button("Handgun Ammo (10)", state.player.points >= storeCosts.ammoHandgun ? purchaseAmmoHandgun : null),
+            button(
+                "Handgun Ammo (10)",
+                state.player.points >= storeCosts.ammoHandgun
+                    ? purchaseAmmoHandgun
+                    : null),
             button("Shotgun Ammo (10)", purchaseAmmoShotgun),
           ],
         ),
@@ -634,22 +651,50 @@ Widget buildViewRespawn() {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
+              padding: EdgeInsets.all(16),
+                width: 600,
                 color: Colors.black45,
-                child: button("Respawn", sendRequestRevive,
-                    fontSize: 40, alignment: Alignment.center)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    text("You Died", fontSize: 30, decoration: TextDecoration.underline),
+                    height16,
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        text("Tip: ${getTip()}"),
+                        width16,
+                        Container(
+                            width: 60,
+                            child: button("next", nextTip, alignment: Alignment.center))
+                      ],
+                    ),
+                    height32,
+                    button("Respawn", sendRequestRevive,
+                        fontSize: 40, alignment: Alignment.center),
+                  ],
+                )),
           ],
         ),
       ));
 }
 
-Widget buildRespawn() {
-  return Positioned(
-      child: Container(
-    width: globalSize.width,
-    height: globalSize.height,
-    color: Colors.black45,
-    child: button("respawn", sendRequestRevive, fontSize: 30),
-  ));
+int tipIndex = 0;
+
+void nextTip(){
+  tipIndex = (tipIndex + 1) % tips.length;
+  redrawUI();
+}
+
+List<String> tips = [
+  "Press 1, 2, 3, etc to change weapons",
+  "Press G to throw grenade",
+  "Press H to use med kit",
+  "Hold left shift to sprint",
+];
+
+String getTip(){
+  return tips[tipIndex];
 }
 
 Widget buildDebugPanel() {
@@ -657,7 +702,6 @@ Widget buildDebugPanel() {
     button("Spawn NPC", sendRequestSpawnNpc),
     text("Ping: ${ping.inMilliseconds}"),
     text("Player Id: ${compiledGame.playerId}"),
-    text("Player Health: $playerHealth / $playerMaxHealth"),
     text("Data Size: ${event.length}"),
     text("Frames since event: $framesSinceEvent"),
     text("Milliseconds Since Last Frame: $millisecondsSinceLastFrame"),
@@ -672,11 +716,8 @@ Widget buildDebugPanel() {
   ]);
 }
 
-Widget buildViewScore(){
-
+Widget buildViewScore() {
   Score highest = highScore;
-
-  String pName = playerName;
 
   return Positioned(
     top: 100,
@@ -691,18 +732,23 @@ Widget buildViewScore(){
           children: [
             text("Highest", decoration: TextDecoration.underline),
             Row(children: [
-              Container(width: 140,child: text(highest.playerName)),
-              Container(width: 50,child: text(highest.record)),
+              Container(width: 140, child: text(highest.playerName)),
+              Container(width: 50, child: text(highest.record)),
             ]),
             Divider(),
             text("Leader", decoration: TextDecoration.underline),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: state.score.map((score){
+              children: state.score.map((score) {
                 return Row(
                   children: [
-                    Container(width: 140,child: text(score.playerName, color: score.playerName == playerName ? Colors.red : Colors.white)),
-                    Container(width: 50,child: text(score.points)),
+                    Container(
+                        width: 140,
+                        child: text(score.playerName,
+                            color: score.playerName == playerName
+                                ? Colors.red
+                                : Colors.white)),
+                    Container(width: 50, child: text(score.points)),
                   ],
                 );
               }).toList(),
@@ -714,18 +760,6 @@ Widget buildViewScore(){
   );
 }
 
-dynamic get playe{
-  for(dynamic player in compiledGame.players){
-    if (player[x] != compiledGame.playerX) continue;
-    if (player[y] != compiledGame.playerY) continue;
-    return player;
-  }
-}
-
-String get playerName {
-  return playe[indexName];
-}
-
 void showDebug() {
   debugMode = true;
 }
@@ -733,4 +767,3 @@ void showDebug() {
 void hideDebug() {
   debugMode = false;
 }
-

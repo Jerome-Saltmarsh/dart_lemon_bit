@@ -7,7 +7,6 @@ import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/maths.dart';
-import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/ui/dialogs.dart';
 import 'package:bleed_client/update.dart';

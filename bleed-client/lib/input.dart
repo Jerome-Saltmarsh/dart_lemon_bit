@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:bleed_client/classes/Block.dart';
-import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_input.dart';

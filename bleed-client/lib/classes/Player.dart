@@ -6,4 +6,6 @@ class Player {
   int staminaMax = 0;
   int squad = -1;
   int points = 0;
+  double health = 0;
+  double maxHealth = 0;
 }
