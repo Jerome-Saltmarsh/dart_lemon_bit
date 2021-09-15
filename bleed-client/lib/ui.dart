@@ -676,6 +676,8 @@ Widget buildViewScore(){
 
   Score highest = highScore;
 
+  String pName = playerName;
+
   return Positioned(
     top: 100,
     left: 0,
@@ -699,7 +701,7 @@ Widget buildViewScore(){
               children: state.score.map((score){
                 return Row(
                   children: [
-                    Container(width: 140,child: text(score.playerName)),
+                    Container(width: 140,child: text(score.playerName, color: score.playerName == playerName ? Colors.red : Colors.white)),
                     Container(width: 50,child: text(score.points)),
                   ],
                 );
@@ -710,6 +712,18 @@ Widget buildViewScore(){
       ),
     ),
   );
+}
+
+dynamic get playe{
+  for(dynamic player in compiledGame.players){
+    if (player[x] != compiledGame.playerX) continue;
+    if (player[y] != compiledGame.playerY) continue;
+    return player;
+  }
+}
+
+String get playerName {
+  return playe[indexName];
 }
 
 void showDebug() {

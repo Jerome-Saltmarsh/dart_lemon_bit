@@ -66,6 +66,7 @@ double nameRadius = 100;
 
 void _drawPlayerNames() {
   for (dynamic player in compiledGame.players) {
+    if (player[x] == compiledGame.playerX) continue;
     if (diff(mouseWorldX, player[x]) > nameRadius) continue;
     if (diff(mouseWorldY, player[y]) > nameRadius) continue;
     drawText(player[indexName], player[x], player[y]);
