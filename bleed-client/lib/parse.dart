@@ -489,7 +489,7 @@ void _parseBullets() {
     compiledGame.bullets[index] = _consumeDouble();
     index++;
   }
-  compiledGame.totalBullets = index * 2;
+  compiledGame.totalBullets = index ~/ 2;
 }
 
 void _parseNpcs() {

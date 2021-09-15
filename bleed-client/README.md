@@ -25,6 +25,7 @@
 [ ] Fire Handgun Animation
 [ ] Fire Assault Rifle Animation
 [ ] Zombie Animations
+[ ] Bullet holes in blocks
 [ ] Select Character (Sniper, Shotgun, Machine Gun, Medic)
 [ ] Item.RevivalKit (revive fallen squad member)
 -- MINOR BUGS --
@@ -48,10 +49,10 @@
 [ ] Highlight players score
 [ ] On respawn gain standard items
 -- MAJOR BUGS --
-[ ] Npcs stop wandering
-[ ] Bullets reappear 
 [ ] grenade kills earn no points
 -- COMPLETED --
+[x] Bullets reappear
+[x] Npcs stop wandering
 [x] Show high score record
 [x] Reload Assault Rifle is broken
 [x] Score board

@@ -644,6 +644,7 @@ extension GameFunctions on Game {
 
           for (Npc npc in npcs) {
             if (npc.target != character) continue;
+            // @on npc target player killed
             npc.clearTarget();
           }
         }
