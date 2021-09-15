@@ -232,7 +232,8 @@ class GameCasual extends Game {
   @override
   void update() {
     if (duration % 50 == 0 && zombieCount < 100) {
-      spawnRandomNpc();
+      Npc npc = spawnRandomNpc();
+      npcSetRandomDestination(npc);
     }
   }
 
@@ -439,13 +440,6 @@ extension GameFunctions on Game {
     }
 
     if (npc.targetSet) {
-      // @on update npc with target
-      if (!npc.target.active || npc.target.dead) {
-        npc.clearTarget();
-        npc.state = CharacterState.Idle;
-        return;
-      }
-
       if (npcWithinStrikeRange(npc, npc.target)) {
         // @on npc target within striking range
         characterFaceObject(npc, npc.target);
@@ -1152,10 +1146,11 @@ extension GameFunctions on Game {
     return npc;
   }
 
-  void spawnRandomNpc() {
-    if (zombieSpawnPoints.isEmpty) return;
+  Npc spawnRandomNpc() {
+    if (zombieSpawnPoints.isEmpty)
+      throw Exception("spawnRandomNpc() Error -No zombie spawn points available");
     Vector2 spawnPoint = randomValue(zombieSpawnPoints);
-    spawnNpc(spawnPoint.x + giveOrTake(5), spawnPoint.y + giveOrTake(5));
+    return spawnNpc(spawnPoint.x + giveOrTake(5), spawnPoint.y + giveOrTake(5));
   }
 
   int get zombieCount {
@@ -1182,10 +1177,19 @@ extension GameFunctions on Game {
     for (int i = 0; i < npcs.length; i++) {
       npc = npcs[i];
       if (npc.targetSet) {
+        // @on update npc with target
+        if (!npc.target.active || npc.target.dead) {
+          npc.clearTarget();
+          npc.state = CharacterState.Idle;
+          continue;
+        }
         if (diff(npc.x, npc.target.x) < zombieChaseRange) continue;
         if (diff(npc.y, npc.target.y) < zombieChaseRange) continue;
         npc.clearTarget();
+        npc.state = CharacterState.Idle;
+        return;
       }
+
       for (int p = 0; p < players.length; p++) {
         if (diff(players[p].x, npc.x) > zombieViewRange) continue;
         if (diff(players[p].y, npc.y) > zombieViewRange) continue;

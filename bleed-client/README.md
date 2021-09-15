@@ -46,11 +46,12 @@
 [ ] Upgrade Pistol Magazine Capacity
 [ ] Next Wave Timer
 [ ] Highlight players score
-[ ] Show high score record
+[ ] On respawn gain standard items
 -- MAJOR BUGS --
 [ ] Npcs stop wandering
 [ ] Bullets reappear 
 -- COMPLETED --
+[x] Show high score record
 [x] Reload Assault Rifle is broken
 [x] Score board
 [x] Earn Points on zombie kill
