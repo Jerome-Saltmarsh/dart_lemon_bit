@@ -101,6 +101,8 @@ Widget width(double value){
   return Container(width: value);
 }
 
+final Widget width16 = width(16);
+
 ButtonStyle _buttonStyle = buildButtonStyle(white, 2);
 
 ButtonStyle buildButtonStyle(Color borderColor, double borderWidth) {

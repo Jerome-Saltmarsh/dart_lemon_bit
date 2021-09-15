@@ -60,7 +60,7 @@ class BleedWidget extends GameWidget {
     }
 
     compiledGame.players = [];
-    for(int i = 0; i < 1000; i++){
+    for (int i = 0; i < 1000; i++) {
       compiledGame.players.add([0, 0, 0.0, 0.0, 0, 0, 0, ""]);
     }
 
@@ -117,7 +117,6 @@ class BleedWidget extends GameWidget {
     if (!mouseAvailable) return;
     if (state.compiledGame.gameId < 0) return;
 
-
     double aimX = mouseWorldX;
     double aimY = mouseWorldY;
     bool aiming = false;
@@ -129,31 +128,35 @@ class BleedWidget extends GameWidget {
       }
     }
 
-    if (player.stamina < player.staminaMax) {
-      double percentage = player.stamina / player.staminaMax;
+    _drawStaminaBar(canvas);
+    _drawMouseAim(aiming);
 
-      globalPaint.color = Colors.white;
-
-      canvas.drawRect(
-          Rect.fromLTWH(screenCenterX - 50, 25, 100, 15), globalPaint);
-
-      globalPaint.color = Colors.yellow;
-      canvas.drawRect(
-          Rect.fromLTWH(screenCenterX - 50, 25, 100 * percentage, 15),
-          globalPaint);
+    if (player.equippedRounds == 0) {
+      drawText("reload (r)", mouseX + 10, mouseY - 35);
     }
 
+    // _drawClips();
+  }
+
+  void _drawMouseAim(bool aiming) {
     drawCircleOutline(
         radius: 6,
         x: mouseX,
         y: mouseY,
         color: aiming ? Colors.red : Colors.white);
+  }
 
-    if (player.equippedRounds == 0){
-      drawText("reload (r)", mouseX + 10, mouseY - 35);
-    }
+  void _drawStaminaBar(Canvas canvas) {
+    double percentage = player.stamina / player.staminaMax;
 
-    // _drawClips();
+    globalPaint.color = Colors.white;
+
+    canvas.drawRect(
+        Rect.fromLTWH(screenCenterX - 50, 25, 100, 15), globalPaint);
+
+    globalPaint.color = Colors.yellow;
+    canvas.drawRect(Rect.fromLTWH(screenCenterX - 50, 25, 100 * percentage, 15),
+        globalPaint);
   }
 
   void _drawClips() {

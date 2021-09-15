@@ -373,31 +373,36 @@ Widget buildHud() {
         ],
       ));
 
-  List<Widget> clips = [];
+  // List<Widget> clips = [];
+  //
+  // for (int i = 0; i < player.equippedClips; i++) {
+  //   clips.add(Container(
+  //     color: white,
+  //     width: 25,
+  //     height: 50,
+  //     padding: EdgeInsets.all(10),
+  //     margin: EdgeInsets.only(right: 5),
+  //   ));
+  // }
 
-  for (int i = 0; i < player.equippedClips; i++) {
-    clips.add(Container(
-      color: white,
-      width: 25,
-      height: 50,
-      padding: EdgeInsets.all(10),
-      margin: EdgeInsets.only(right: 5),
-    ));
-  }
+  // List<Widget> grenades = [
+  //   Container(
+  //       width: 50, height: 40, decoration: BoxDecoration(image: grenadeImage)),
+  //   text(compiledGame.grenades, fontSize: 25),
+  // ];
 
-  List<Widget> grenades = [];
 
-  for (int i = 0; i < compiledGame.playerGrenades; i++) {
-    grenades.add(Container(
-        width: 60, height: 50, decoration: BoxDecoration(image: grenadeImage)));
-  }
+  // for (int i = 0; i < compiledGame.playerGrenades; i++) {
+  //   grenades.add(Container(
+  //       width: 60, height: 50, decoration: BoxDecoration(image: grenadeImage)));
+  // }
 
-  List<Widget> healthPacks = [];
-
-  for (int i = 0; i < compiledGame.playerMeds; i++) {
-    healthPacks.add(Container(
-        width: 60, height: 50, decoration: BoxDecoration(image: healthImage)));
-  }
+  // List<Widget> healthPacks = [];
+  //
+  // for (int i = 0; i < compiledGame.playerMeds; i++) {
+  //   healthPacks.add(Container(
+  //       width: 60, height: 50, decoration: BoxDecoration(image: healthImage)));
+  // }
 
   Positioned bottomLeft = Positioned(
     bottom: 0,
@@ -408,20 +413,19 @@ Widget buildHud() {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(
-            children: [
-              buildWeaponButton(compiledGame.playerWeapon),
-              Row(
-                children: clips,
-              ),
-            ],
-          ),
-          Row(
-            children: grenades,
-          ),
-          Row(
-            children: healthPacks,
-          ),
+          buildWeaponButton(compiledGame.playerWeapon),
+          text(player.equippedClips, fontSize: 25),
+          width16,
+          Container(
+              width: 50, height: 40, decoration: BoxDecoration(image: grenadeImage)),
+          text(compiledGame.playerGrenades, fontSize: 25),
+          width16,
+          Container(
+              width: 50, height: 40, decoration: BoxDecoration(image: healthImage)),
+          text(compiledGame.playerMeds, fontSize: 25),
+          // Row(
+          //   children: healthPacks,
+          // ),
         ],
       ),
     ),
