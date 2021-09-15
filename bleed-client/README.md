@@ -46,11 +46,11 @@
 [ ] Upgrade Pistol Magazine Capacity
 [ ] Show points earned floating text
 -- MAJOR BUGS --
-[ ] Respawn ui lag
 [ ] UI Score Lag
 [ ] NPC Build up in the right corner
 [ ] UI Flashes red on load
 -- COMPLETED --
+[x] Respawn ui lag
 [x] Respawn button appears before death
 [x] Score board
 [x] Grenade kills earn points

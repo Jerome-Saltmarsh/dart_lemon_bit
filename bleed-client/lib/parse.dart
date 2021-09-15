@@ -8,6 +8,7 @@ import 'package:bleed_client/enums/InventoryItemType.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
+import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/keys.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/ui/dialogs.dart';
@@ -258,6 +259,17 @@ void _parsePlayer() {
   player.equippedRounds = _consumeInt();
   state.gameState = GameState.values[_consumeInt()];
   player.points = _consumeInt();
+
+  CharacterState charState = _consumeCharacterState();
+  if (charState != player.state){
+    // @on character state changed
+    if (charState == CharacterState.Dead || player.state == CharacterState.Dead){
+      redrawUI();
+    }
+
+    player.state = charState;
+
+  }
 }
 
 void _parseInventory() {
@@ -378,6 +390,10 @@ int _consumeInt() {
 
 Weapon _consumeWeapon() {
   return weapons[_consumeInt()];
+}
+
+CharacterState _consumeCharacterState(){
+  return characterStates[_consumeInt()];
 }
 
 int parseInt(String value) {
@@ -508,7 +524,11 @@ void _consumePlayer(dynamic memory) {
   memory[frameCount] = _consumeInt();
   memory[weapon] = _consumeWeapon();
   memory[squad] = _consumeInt();
-  memory[indexName] = _consumeString();
+  try {
+    memory[indexName] = _consumeString();
+  }catch(error){
+    print(error);
+  }
 }
 
 void _consumeNpc(dynamic npcMemory) {

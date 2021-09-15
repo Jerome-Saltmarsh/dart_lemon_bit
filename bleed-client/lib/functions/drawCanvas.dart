@@ -59,7 +59,12 @@ void _drawCompiledGame() {
   drawEditMode();
   _drawCollectables();
   drawPaths();
-  _drawPlayerNames();
+
+  try {
+    _drawPlayerNames();
+  }catch(e){
+    print(e);
+  }
 
   if (playerReady) {
     dynamic player = getPlayer;

@@ -1,4 +1,6 @@
 
+import 'package:bleed_client/enums.dart';
+
 class Player {
   int equippedRounds = 0;
   int equippedClips = 0;
@@ -8,4 +10,5 @@ class Player {
   int points = 0;
   double health = 0;
   double maxHealth = 0;
+  CharacterState state = CharacterState.Idle;
 }

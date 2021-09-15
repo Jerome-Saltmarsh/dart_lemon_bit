@@ -31,6 +31,7 @@ class CompiledGame {
   int playerGrenades = 0;
   int playerMeds = 0;
   int playerLives = 0;
+  CharacterState playerState = CharacterState.Idle;
 
   int lives = 0;
   int wave = 1;

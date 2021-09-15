@@ -174,7 +174,12 @@ Widget buildGameUI(BuildContext context) {
     );
   }
 
-  return buildHud();
+  try {
+    return buildHud();
+  }catch(error){
+    print("error build hud");
+    return text("an error occurred");
+  }
 }
 
 const DecorationImage grenadeImage = const DecorationImage(
@@ -776,66 +781,70 @@ Widget buildDebugPanel() {
 }
 
 Widget buildViewScore() {
-  Score highest = highScore;
+  try {
+    Score highest = highScore;
 
-  if (!_showScore) {
-    return Positioned(
-      top: 0,
-      left: 0,
-      child: buildToggleScoreIcon(),
-    );
-  }
-
-  Widget iconClose = IconButton(
-      icon: Icon(Icons.close, size: 30, color: Colors.white70),
-      onPressed: toggleShowScore);
-
-  return Stack(
-    children: [
-      Positioned(
+    if (!_showScore) {
+      return Positioned(
         top: 0,
         left: 0,
-        child: Container(
-          color: Colors.black45,
-          width: 200,
-          padding: EdgeInsets.all(4),
-          height: 300,
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                height16,
-                text("Highest", decoration: TextDecoration.underline),
-                Row(children: [
-                  Container(width: 140, child: text(highest.playerName)),
-                  Container(width: 50, child: text(highest.record)),
-                ]),
-                Divider(),
-                text("Leader", decoration: TextDecoration.underline),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: state.score.map((score) {
-                    return Row(
-                      children: [
-                        Container(
-                            width: 140,
-                            child: text(score.playerName,
-                                color: score.playerName == playerName
-                                    ? Colors.red
-                                    : Colors.white)),
-                        Container(width: 50, child: text(score.points)),
-                      ],
-                    );
-                  }).toList(),
-                ),
-              ],
+        child: buildToggleScoreIcon(),
+      );
+    }
+
+    Widget iconClose = IconButton(
+        icon: Icon(Icons.close, size: 30, color: Colors.white70),
+        onPressed: toggleShowScore);
+
+    return Stack(
+      children: [
+        Positioned(
+          top: 0,
+          left: 0,
+          child: Container(
+            color: Colors.black45,
+            width: 200,
+            padding: EdgeInsets.all(4),
+            height: 300,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  height16,
+                  text("Highest", decoration: TextDecoration.underline),
+                  Row(children: [
+                    Container(width: 140, child: text(highest.playerName)),
+                    Container(width: 50, child: text(highest.record)),
+                  ]),
+                  Divider(),
+                  text("Leader", decoration: TextDecoration.underline),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: state.score.map((score) {
+                      return Row(
+                        children: [
+                          Container(
+                              width: 140,
+                              child: text(score.playerName,
+                                  color: score.playerName == playerName
+                                      ? Colors.red
+                                      : Colors.white)),
+                          Container(width: 50, child: text(score.points)),
+                        ],
+                      );
+                    }).toList(),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-      Positioned(top: 0, left: 160, child: iconClose,),
-    ],
-  );
+        Positioned(top: 0, left: 160, child: iconClose,),
+      ],
+    );
+  }catch(error){
+    return text("error build score");
+  }
 }
 
 void showDebug() {
