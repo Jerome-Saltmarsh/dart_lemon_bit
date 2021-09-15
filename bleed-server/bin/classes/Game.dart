@@ -802,7 +802,10 @@ extension GameFunctions on Game {
     }
   }
 
-  void spawnExplosion(double x, double y) {
+  void spawnExplosion(Grenade grenade) {
+    double x = grenade.x;
+    double y = grenade.y;
+
     dispatch(GameEventType.Explosion, x, y, 0, 0);
     for (Character character in npcs) {
       if (objectDistanceFrom(character, x, y) > settingsGrenadeExplosionRadius)
@@ -815,6 +818,9 @@ extension GameFunctions on Game {
         changeCharacterHealth(character, -settingsGrenadeExplosionDamage);
 
         if (!character.alive) {
+          // @on npc killed by grenade
+          grenade.owner.points += settings.pointsEarned.zombieKilled;
+
           double forceX =
               clampMagnitudeX(character.x - x, character.y - y, magnitude);
           double forceY =
@@ -834,17 +840,30 @@ extension GameFunctions on Game {
       }
     }
 
-    for (Character character in players) {
-      if (objectDistanceFrom(character, x, y) > settingsGrenadeExplosionRadius)
+    for (Player player in players) {
+      if (objectDistanceFrom(player, x, y) > settingsGrenadeExplosionRadius)
         continue;
-      double rotation = radiansBetween2(character, x, y);
+      double rotation = radiansBetween2(player, x, y);
       double magnitude = 10;
-      applyForce(character, rotation + pi, magnitude);
+      applyForce(player, rotation + pi, magnitude);
 
-      if (character.alive) {
-        changeCharacterHealth(character, -settingsGrenadeExplosionDamage);
+      if (player.alive) {
+        changeCharacterHealth(player, -settingsGrenadeExplosionDamage);
+        if (!player.alive) {
+          // @on player killed by grenade
+          if (!sameTeam(player, grenade.owner)) {
+            grenade.owner.points += settings.pointsEarned.playerKilled;
+          }
+        }
       }
     }
+  }
+
+  bool sameTeam(Player a, Player b) {
+    if (a == b) return true;
+    if (a.squad == noSquad) return false;
+    if (b.squad == noSquad) return false;
+    return a.squad == b.squad;
   }
 
   void _updateNpcs() {
@@ -1084,14 +1103,14 @@ extension GameFunctions on Game {
     }
   }
 
-  void throwGrenade(double x, double y, double angle, double strength) {
+  void throwGrenade(Player player, double angle, double strength) {
     double speed = settingsGrenadeSpeed * strength;
     Grenade grenade =
-        Grenade(x, y, adj(angle, speed), opp(angle, speed), 0.8 * strength);
+        Grenade(player, adj(angle, speed), opp(angle, speed), 0.8 * strength);
     grenades.add(grenade);
     delayed(() {
       grenades.remove(grenade);
-      spawnExplosion(grenade.x, grenade.y);
+      spawnExplosion(grenade);
     }, ms: settingsGrenadeDuration);
   }
 

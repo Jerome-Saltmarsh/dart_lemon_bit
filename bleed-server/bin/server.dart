@@ -416,7 +416,7 @@ void main() {
 
           double strength = double.parse(arguments[4]);
           double aim = double.parse(arguments[5]);
-          game.throwGrenade(player.x, player.y, aim, strength);
+          game.throwGrenade(player, aim, strength);
           game.dispatch(GameEventType.Throw_Grenade, player.x, player.y, 0, 0);
           player.grenades--;
           return;

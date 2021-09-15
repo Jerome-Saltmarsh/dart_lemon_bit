@@ -122,7 +122,9 @@ class GameEvent extends GameObject {
 }
 
 class Grenade extends GameObject {
-  Grenade(double x, double y, double xv, double yv, double zVel) : super(x, y, xv:xv, yv: yv) {
+  final Player owner;
+
+  Grenade(this.owner, double xv, double yv, double zVel) : super(owner.x, owner.y, xv:xv, yv: yv) {
     this.zv = zVel;
   }
 }

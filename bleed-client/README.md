@@ -49,8 +49,9 @@
 [ ] Highlight players score
 [ ] On respawn gain standard items
 -- MAJOR BUGS --
-[ ] grenade kills earn no points
+
 -- COMPLETED --
+[x] grenade kills earn no points
 [x] Bullets reappear
 [x] Npcs stop wandering
 [x] Show high score record
