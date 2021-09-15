@@ -50,6 +50,7 @@
 -- MAJOR BUGS --
 [ ] Npcs stop wandering
 [ ] Bullets reappear 
+[ ] grenade kills earn no points
 -- COMPLETED --
 [x] Show high score record
 [x] Reload Assault Rifle is broken

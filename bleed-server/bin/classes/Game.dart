@@ -260,11 +260,11 @@ class GameCasual extends Game {
       meds: 2,
       clips: Clips(handgun: 3, shotgun: 3, sniper: 2, assaultRifle: 2),
       rounds: Rounds(
-          handgun: settings.clipSize.handgun,
-          shotgun: settings.clipSize.shotgun,
-          sniper: settings.clipSize.sniperRifle,
-          assaultRifle: settings.clipSize.assaultRifle,
-          ),
+        handgun: settings.clipSize.handgun,
+        shotgun: settings.clipSize.shotgun,
+        sniper: settings.clipSize.sniperRifle,
+        assaultRifle: settings.clipSize.assaultRifle,
+      ),
     );
 
     int playersInSquad0 = numberOfPlayersInSquad(0);
@@ -641,6 +641,11 @@ extension GameFunctions on Game {
           // @on player killed
           character.score.deaths++;
           onPlayerKilled(character);
+
+          for (Npc npc in npcs) {
+            if (npc.target != character) continue;
+            npc.clearTarget();
+          }
         }
         return;
       case CharacterState.ChangingWeapon:
@@ -689,7 +694,8 @@ extension GameFunctions on Game {
             break;
           case Weapon.AssaultRifle:
             // @on reload assault rifle
-            if (player.rounds.assaultRifle >= settings.clipSize.assaultRifle) return;
+            if (player.rounds.assaultRifle >= settings.clipSize.assaultRifle)
+              return;
             if (player.clips.assaultRifle <= 0) return;
             player.rounds.assaultRifle = settings.clipSize.assaultRifle;
             player.clips.assaultRifle--;
@@ -699,7 +705,7 @@ extension GameFunctions on Game {
         break;
     }
     character.state = value;
-   }
+  }
 
   void setCharacterStateIdle(Character character) {
     setCharacterState(character, CharacterState.Idle);
@@ -1148,7 +1154,8 @@ extension GameFunctions on Game {
 
   Npc spawnRandomNpc() {
     if (zombieSpawnPoints.isEmpty)
-      throw Exception("spawnRandomNpc() Error -No zombie spawn points available");
+      throw Exception(
+          "spawnRandomNpc() Error -No zombie spawn points available");
     Vector2 spawnPoint = randomValue(zombieSpawnPoints);
     return spawnNpc(spawnPoint.x + giveOrTake(5), spawnPoint.y + giveOrTake(5));
   }
@@ -1178,11 +1185,6 @@ extension GameFunctions on Game {
       npc = npcs[i];
       if (npc.targetSet) {
         // @on update npc with target
-        if (!npc.target.active || npc.target.dead) {
-          npc.clearTarget();
-          npc.state = CharacterState.Idle;
-          continue;
-        }
         if (diff(npc.x, npc.target.x) < zombieChaseRange) continue;
         if (diff(npc.y, npc.target.y) < zombieChaseRange) continue;
         npc.clearTarget();
@@ -1191,6 +1193,7 @@ extension GameFunctions on Game {
       }
 
       for (int p = 0; p < players.length; p++) {
+        if (!players[p].alive) continue;
         if (diff(players[p].x, npc.x) > zombieViewRange) continue;
         if (diff(players[p].y, npc.y) > zombieViewRange) continue;
         npc.target = players[p];
