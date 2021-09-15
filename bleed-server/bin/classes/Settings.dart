@@ -10,8 +10,9 @@ class Settings {
   final double shotgunAccuracy = 0.15;
   final double itemCollectRadius = 10;
 
-  final int clipSizeHandgun = 24;
-  final int clipSizeShotgun = 6;
+  final _ClipSize clipSize = _ClipSize();
+  final _ReloadDuration reloadDuration = _ReloadDuration();
+  final _PointsEarned pointsEarned = _PointsEarned();
 
   final double grenadeGravity = 0.06;
 
@@ -22,4 +23,24 @@ class Settings {
   final int maxMeds = 3;
   final int staminaRefreshRate = 2;
   final int gameStartingCountDown = 400;
+}
+
+class _ClipSize {
+  final int handgun = 24;
+  final int shotgun = 6;
+  final int sniperRifle = 5;
+  final int assaultRifle = 50;
+}
+
+class _ReloadDuration {
+  final int handgun = 20;
+  final int shotgun = 20;
+  final int sniperRifle = 20;
+  final int assaultRifle = 20;
+}
+
+class _PointsEarned {
+  final int zombieKilled = 5;
+  final int zombieHit = 1;
+  final int playerKilled = 20;
 }

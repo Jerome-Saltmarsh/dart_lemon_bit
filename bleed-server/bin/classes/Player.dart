@@ -20,11 +20,21 @@ class Player extends Character {
   int lives;
   int frameOfDeath = -1;
   GameState gameState = GameState.InProgress;
-  int points = 0;
+  int _points = 0;
   int credits = 0;
+  int pointsRecord = 0;
   Score score = Score();
   Clips clips = Clips();
   Rounds rounds = Rounds();
+
+  set points(int value){
+    _points = value;
+    if(_points > pointsRecord){
+      pointsRecord = _points;
+    }
+  }
+
+  int get points => _points;
 
   Player({
     required double x,

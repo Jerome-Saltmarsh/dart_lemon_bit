@@ -22,9 +22,13 @@
 [ ] Random Power up Square 
 [ ] Exit Fullscreen Mode
 [ ] Fire Shotgun Animation
+[ ] Fire Handgun Animation
+[ ] Fire Assault Rifle Animation
 [ ] Zombie Animations
 [ ] Select Character (Sniper, Shotgun, Machine Gun, Medic)
 [ ] Item.RevivalKit (revive fallen squad member)
+-- MINOR BUGS --
+[ ] Dead players pass through barriers
 -- OPEN WORLD -- 
 [ ] Npc Talk Text
 -- FORTRESS -- 
@@ -42,11 +46,12 @@
 [ ] Upgrade Pistol Magazine Capacity
 [ ] Next Wave Timer
 [ ] Highlight players score
--- BUGS --
-[ ] Dead players pass through barriers
+[ ] Show high score record
+-- MAJOR BUGS --
 [ ] Npcs stop wandering
-[ ] Reload Assault Rifle is broken
+[ ] Bullets reappear 
 -- COMPLETED --
+[x] Reload Assault Rifle is broken
 [x] Score board
 [x] Earn Points on zombie kill
 [x] Grenades do not hurt players

@@ -1,5 +1,6 @@
 import 'package:bleed_client/classes/CompiledGame.dart';
 import 'package:bleed_client/classes/Player.dart';
+import 'package:bleed_client/classes/Score.dart';
 import 'package:bleed_client/editor/GameEdit.dart';
 
 import '../common.dart';
@@ -40,12 +41,23 @@ double playerHealth = 0;
 double playerMaxHealth = 0;
 
 // TODO Expensive string build
-String get session => '${compiledGame.gameId} ${compiledGame.playerId} ${compiledGame.playerUUID}';
+String get session =>
+    '${compiledGame.gameId} ${compiledGame.playerId} ${compiledGame.playerUUID}';
 
 State state = State();
 
 Player get player => state.player;
+
 CompiledGame get compiledGame => state.compiledGame;
 
 bool get gameStarted => state.compiledGame.gameId >= 0;
 
+Score get highScore {
+  if (state.score.isEmpty) return null;
+  Score highScore = state.score.first;
+  for (Score score in state.score) {
+    if (score.record <= highScore.record) continue;
+    highScore = score;
+  }
+  return highScore;
+}

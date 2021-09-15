@@ -5,25 +5,23 @@ List<String> adjectives = [
   "Golden",
   "Old",
   "Smelly",
+  "Stinky"
   "Mouldy",
   "Green",
   "Solid",
   "Curious",
-  "Sarcastic",
   "Ironic",
-  "Expedient",
   "Scary",
   "Rusty",
   "Jagged",
   "Greasy",
   "Soggy",
-  "New",
   "Shiny",
+  "Hairy"
   "Bright",
   "Dark",
   "Sweet",
   "Sweaty",
-  "Tough",
 ];
 
 List<String> nouns = [
@@ -32,9 +30,12 @@ List<String> nouns = [
   "Shoe",
   "Cake",
   "Fart",
+  "Puss",
   "Dog",
   "Cat",
-  "House",
+  "Frog"
+  "Crow",
+  "Mouse"
   "Turkey",
   "Fridge",
   "Armpit",
@@ -42,7 +43,9 @@ List<String> nouns = [
   "Pimple",
   "Snot",
   "Scar",
+  "Vomit"
   "Mucous",
+  "Guts",
   "Slime",
   "Ooze",
   "Nail",

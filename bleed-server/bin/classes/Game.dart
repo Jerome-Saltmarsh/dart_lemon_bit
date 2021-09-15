@@ -105,7 +105,7 @@ class Fortress extends Game {
       grenades: 2,
       meds: 2,
       clips: Clips(handgun: 2),
-      rounds: Rounds(handgun: settings.clipSizeHandgun),
+      rounds: Rounds(handgun: settings.clipSize.handgun),
     );
 
     return player;
@@ -211,7 +211,7 @@ class DeathMatch extends Game {
         grenades: 2,
         meds: 2,
         clips: Clips(handgun: 2),
-        rounds: Rounds(handgun: settings.clipSizeHandgun),
+        rounds: Rounds(handgun: settings.clipSize.handgun),
         squad: squad);
 
     return player;
@@ -238,11 +238,12 @@ class GameCasual extends Game {
 
   @override
   void onPlayerKilled(Player player) {
-      player.points = 0;
+    player.points = 0;
   }
 
   @override
   Player doSpawnPlayer() {
+    // @on spawn player casual
     Vector2 spawnPoint = getNextSpawnPoint();
     Player player = Player(
       x: spawnPoint.x + giveOrTake(3),
@@ -258,10 +259,11 @@ class GameCasual extends Game {
       meds: 2,
       clips: Clips(handgun: 3, shotgun: 3, sniper: 2, assaultRifle: 2),
       rounds: Rounds(
-          handgun: settings.clipSizeHandgun,
-          shotgun: settings.clipSizeShotgun,
-          assaultRifle: 100,
-          sniper: 10),
+          handgun: settings.clipSize.handgun,
+          shotgun: settings.clipSize.shotgun,
+          sniper: settings.clipSize.sniperRifle,
+          assaultRifle: settings.clipSize.assaultRifle,
+          ),
     );
 
     int playersInSquad0 = numberOfPlayersInSquad(0);
@@ -379,6 +381,7 @@ extension GameFunctions on Game {
   }
 
   void _updateCollectables() {
+    // @on update collectables
     for (Player player in players) {
       for (int i = 0; i < collectables.length; i++) {
         if (!collectables[i].active) continue;
@@ -425,6 +428,7 @@ extension GameFunctions on Game {
   }
 
   void updateNpc(Npc npc) {
+    // @on update npc
     if (npc.dead) return;
     if (npc.busy) return;
 
@@ -435,6 +439,7 @@ extension GameFunctions on Game {
     }
 
     if (npc.targetSet) {
+      // @on update npc with target
       if (!npc.target.active || npc.target.dead) {
         npc.clearTarget();
         npc.state = CharacterState.Idle;
@@ -442,6 +447,7 @@ extension GameFunctions on Game {
       }
 
       if (npcWithinStrikeRange(npc, npc.target)) {
+        // @on npc target within striking range
         characterFaceObject(npc, npc.target);
         setCharacterState(npc, CharacterState.Striking);
         changeCharacterHealth(npc.target, -zombieStrikeDamage);
@@ -449,6 +455,7 @@ extension GameFunctions on Game {
         return;
       }
 
+      // @on npc update find
       if (frame % 30 == 0) {
         npc.path = scene.findPath(npc.x, npc.y, npc.target.x, npc.target.y);
       }
@@ -462,11 +469,13 @@ extension GameFunctions on Game {
 
     if (npc.path.isNotEmpty) {
       if (arrivedAtPath(npc)) {
+        // @on npc arrived at path
         npc.path.removeAt(0);
+        npc.state = CharacterState.Idle;
         return;
-      } else {
-        characterFace(npc, npc.path[0].x, npc.path[0].y);
       }
+      // @on npc going to path
+      characterFace(npc, npc.path[0].x, npc.path[0].y);
       npc.state = CharacterState.Walking;
       return;
     }
@@ -555,12 +564,13 @@ extension GameFunctions on Game {
     return null;
   }
 
-  void characterFireWeapon(Player player) {
+  void _characterFireWeapon(Player player) {
     if (player.dead) return;
     if (player.stateDuration > 0) return;
     faceAimDirection(player);
 
     if (equippedWeaponRounds(player) <= 0) {
+      // @on character insufficient bullets to fire
       player.stateDuration = settingsClipEmptyCooldown;
       dispatch(GameEventType.Clip_Empty, player.x, player.y, 0, 0);
       return;
@@ -572,6 +582,7 @@ extension GameFunctions on Game {
 
     switch (player.weapon) {
       case Weapon.HandGun:
+        // @on character fire handgun
         player.rounds.handgun--;
         Bullet bullet = spawnBullet(player);
         player.state = CharacterState.Firing;
@@ -579,6 +590,7 @@ extension GameFunctions on Game {
         dispatch(GameEventType.Handgun_Fired, x, y, bullet.xv, bullet.yv);
         break;
       case Weapon.Shotgun:
+        // @on character fire shotgun
         player.rounds.shotgun--;
         player.xv += velX(player.aimAngle + pi, 1);
         player.yv += velY(player.aimAngle + pi, 1);
@@ -592,6 +604,7 @@ extension GameFunctions on Game {
             bullet.yv);
         break;
       case Weapon.SniperRifle:
+        // @on character fire sniper rifle
         player.rounds.sniper--;
         Bullet bullet = spawnBullet(player);
         player.state = CharacterState.Firing;
@@ -600,6 +613,7 @@ extension GameFunctions on Game {
             bullet.yv);
         break;
       case Weapon.AssaultRifle:
+        // @on character fire assault rifle
         player.rounds.assaultRifle--;
         Bullet bullet = spawnBullet(player);
         player.state = CharacterState.Firing;
@@ -611,18 +625,21 @@ extension GameFunctions on Game {
   }
 
   void setCharacterState(Character character, CharacterState value) {
+    // @on character set state
     if (character.dead) return;
     if (character.state == value) return;
     if (value != CharacterState.Dead && character.stateDuration > 0) return;
 
     switch (value) {
       case CharacterState.Running:
+        // @on character running
         if (character is Player && character.stamina <= minStamina) {
           character.state = CharacterState.Walking;
           return;
         }
         break;
       case CharacterState.Dead:
+        // @on character death
         character.collidable = false;
         character.stateFrameCount = duration;
         character.state = value;
@@ -639,45 +656,63 @@ extension GameFunctions on Game {
         character.accuracy = 0;
         break;
       case CharacterState.Firing:
+        // @on character firing weapon
         // TODO Fix hack
-        characterFireWeapon(character as Player);
+        _characterFireWeapon(character as Player);
         break;
       case CharacterState.Striking:
+        // @on character striking
         character.stateDuration = 10;
         break;
       case CharacterState.Reloading:
+        // @on reload weapon
+        Player player = character as Player;
+
         switch (character.weapon) {
           case Weapon.HandGun:
-            if (character is Player &&
-                character.rounds.handgun < settings.clipSizeHandgun &&
-                character.clips.handgun > 0) {
-              character.rounds.handgun = settings.clipSizeHandgun;
-              character.clips.handgun--;
-              character.stateDuration = settingsHandgunReloadDuration;
-              break;
-            }
-            return;
+            // @on reload handgun
+            if (player.rounds.handgun >= settings.clipSize.handgun) return;
+            if (player.clips.handgun <= 0) return;
+            player.rounds.handgun = settings.clipSize.handgun;
+            player.clips.handgun--;
+            player.stateDuration = settings.reloadDuration.handgun;
+            break;
           case Weapon.Shotgun:
-            if (character is Player &&
-                character.rounds.shotgun < settings.clipSizeShotgun &&
-                character.clips.shotgun > 0) {
-              character.rounds.shotgun = settings.clipSizeShotgun;
-              character.clips.shotgun--;
-              character.stateDuration = settingsShotgunReloadDuration;
-              break;
-            }
-            return;
+            // @on reload shotgun
+            if (player.rounds.shotgun >= settings.clipSize.shotgun) return;
+            if (player.clips.shotgun <= 0) return;
+            player.rounds.shotgun = settings.clipSize.shotgun;
+            player.clips.shotgun--;
+            player.stateDuration = settings.reloadDuration.shotgun;
+            break;
+          case Weapon.SniperRifle:
+            // @on reload sniper rifle
+            if (player.rounds.sniper >= settings.clipSize.sniperRifle) return;
+            if (player.clips.sniper <= 0) return;
+            player.rounds.sniper = settings.clipSize.sniperRifle;
+            player.clips.sniper--;
+            player.stateDuration = settings.reloadDuration.sniperRifle;
+            break;
+          case Weapon.AssaultRifle:
+            // @on reload assault rifle
+            if (player.rounds.assaultRifle >= settings.clipSize.assaultRifle) return;
+            if (player.clips.assaultRifle <= 0) return;
+            player.rounds.assaultRifle = settings.clipSize.assaultRifle;
+            player.clips.assaultRifle--;
+            player.stateDuration = settings.reloadDuration.assaultRifle;
+            break;
         }
         break;
     }
     character.state = value;
-  }
+   }
 
   void setCharacterStateIdle(Character character) {
     setCharacterState(character, CharacterState.Idle);
   }
 
   void changeCharacterHealth(Character character, double amount) {
+    // @on change character health
     if (character.dead) return;
 
     character.health += amount;
@@ -688,6 +723,7 @@ extension GameFunctions on Game {
   }
 
   void _updateBullets() {
+    // @on update bullet
     for (int i = 0; i < bullets.length; i++) {
       if (!bullets[i].active) continue;
       Bullet bullet = bullets[i];
@@ -898,9 +934,8 @@ extension GameFunctions on Game {
           // @on zombie killed by player
           if (bullet.owner is Player) {
             Player owner = bullet.owner as Player;
-            owner.points++;
             owner.score.zombiesKilled++;
-            owner.score.points += 5;
+            owner.points += 5;
           }
 
           if (randomBool()) {

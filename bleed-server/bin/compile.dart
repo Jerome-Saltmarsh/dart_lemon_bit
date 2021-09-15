@@ -115,6 +115,7 @@ void compileScore(StringBuffer buffer, List<Player> players) {
   for (Player player in players) {
     _write(buffer, player.name);
     _write(buffer, player.points);
+    _write(buffer, player.pointsRecord);
     // _write(buffer, player.score.deaths);
     // _write(buffer, player.score.zombiesKilled);
     // _write(buffer, player.score.playersKilled);

@@ -18,6 +18,7 @@ import 'package:neuro/instance.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'classes/InventoryItem.dart';
+import 'classes/Score.dart';
 import 'common/PurchaseType.dart';
 import 'connection.dart';
 import 'enums/InventoryItemType.dart';
@@ -441,6 +442,7 @@ Widget buildHud() {
       if (!tutorialsFinished) buildViewTutorial(),
       buildViewPoints(),
       if (state.storeVisible) buildViewStore(),
+      if(state.score.isNotEmpty)
       buildViewScore(),
     ],
   );
@@ -653,32 +655,40 @@ Widget buildDebugPanel() {
 }
 
 Widget buildViewScore(){
+
+  Score highest = highScore;
+
   return Positioned(
     top: 100,
     left: 0,
     child: Container(
       color: Colors.black45,
-      padding: EdgeInsets.all(16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Row(children: [
-          //   Container(width: 100,child: text("Name")),
-          //   Container(width: 70,child: text("Deaths")),
-          //   Container(width: 70,child: text("Kills")),
-          // ]),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: state.score.map((score){
-              return Row(
-                children: [
-                  Container(width: 120,child: text(score.playerName)),
-                  Container(width: 50,child: text(score.points)),
-                ],
-              );
-            }).toList(),
-          ),
-        ],
+      padding: EdgeInsets.all(4),
+      height: 300,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            text("Highest"),
+            Row(children: [
+              Container(width: 140,child: text(highest.playerName)),
+              Container(width: 50,child: text(highest.record)),
+            ]),
+            Divider(),
+            text("Leaderboard"),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: state.score.map((score){
+                return Row(
+                  children: [
+                    Container(width: 140,child: text(score.playerName)),
+                    Container(width: 50,child: text(score.points)),
+                  ],
+                );
+              }).toList(),
+            ),
+          ],
+        ),
       ),
     ),
   );
@@ -691,3 +701,4 @@ void showDebug() {
 void hideDebug() {
   debugMode = false;
 }
+

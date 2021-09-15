@@ -296,11 +296,13 @@ void _parseCollectables() {
 }
 
 void _parseScore(){
+  // TODO Optimize
   state.score.clear();
   while (!_simiColonConsumed()) {
     Score score = Score();
     score.playerName = _consumeString();
     score.points = _consumeInt();
+    score.record = _consumeInt();
     state.score.add(score);
   }
 
