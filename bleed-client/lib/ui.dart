@@ -37,6 +37,7 @@ Border _border =
     Border.all(color: Colors.black, width: 5.0, style: BorderStyle.solid);
 SharedPreferences sharedPreferences;
 bool _showDebug = false;
+bool _showScore = true;
 
 void initUI() {
   onConnectError.stream.listen((event) {
@@ -311,6 +312,11 @@ Widget buildInventory() {
   );
 }
 
+void toggleShowScore(){
+  _showScore = !_showScore;
+  redrawUI();
+}
+
 Widget buildHud() {
   double iconSize = 45;
 
@@ -336,6 +342,13 @@ Widget buildHud() {
     message: "Menu",
   );
 
+  Widget iconScore = Tooltip(
+    child: IconButton(
+        icon: Icon(_showScore ? Icons.score : Icons.score_outlined, size: iconSize, color: white),
+        onPressed: toggleShowScore),
+    message: _showScore ? "Hide Score" : "Show Score",
+  );
+
   Positioned topLeft = Positioned(
     top: 0,
     left: 0,
@@ -343,6 +356,7 @@ Widget buildHud() {
       children: [
         iconToggleFullscreen,
         iconToggleAudio,
+        iconScore
       ],
     ),
   );
@@ -442,7 +456,7 @@ Widget buildHud() {
       if (!tutorialsFinished) buildViewTutorial(),
       buildViewPoints(),
       if (state.storeVisible) buildViewStore(),
-      if(state.score.isNotEmpty)
+      if(_showScore && state.score.isNotEmpty)
       buildViewScore(),
     ],
   );
@@ -669,13 +683,13 @@ Widget buildViewScore(){
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            text("Highest"),
+            text("Highest", decoration: TextDecoration.underline),
             Row(children: [
               Container(width: 140,child: text(highest.playerName)),
               Container(width: 50,child: text(highest.record)),
             ]),
             Divider(),
-            text("Leaderboard"),
+            text("Leader", decoration: TextDecoration.underline),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: state.score.map((score){
