@@ -5,7 +5,7 @@ List<String> adjectives = [
   "Golden",
   "Old",
   "Smelly",
-  "Stinky"
+  "Stinky",
   "Mouldy",
   "Green",
   "Solid",
@@ -17,7 +17,7 @@ List<String> adjectives = [
   "Greasy",
   "Soggy",
   "Shiny",
-  "Hairy"
+  "Hairy",
   "Bright",
   "Dark",
   "Sweet",
@@ -33,9 +33,9 @@ List<String> nouns = [
   "Puss",
   "Dog",
   "Cat",
-  "Frog"
+  "Frog",
   "Crow",
-  "Mouse"
+  "Mouse",
   "Turkey",
   "Fridge",
   "Armpit",
