@@ -20,6 +20,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'classes/InventoryItem.dart';
 import 'classes/Score.dart';
 import 'connection.dart';
+import 'enums.dart';
 import 'enums/InventoryItemType.dart';
 import 'enums/Mode.dart';
 import 'common/Weapons.dart';
@@ -317,26 +318,32 @@ void toggleShowScore() {
 }
 
 Widget buildHud() {
+
   return Stack(
     children: [
       if (mouseAvailable && mouseX < 300 && mouseY < 300) buildTopLeft(),
       buildTopRight(),
       buildBottomLeft(),
       if (compiledGame.gameType == GameType.Fortress) buildViewFortress(),
-      if (compiledGame.gameType == GameType.DeathMatch)
-        buildGameInfoDeathMatch(),
+      if (compiledGame.gameType == GameType.DeathMatch) buildGameInfoDeathMatch(),
       if (compiledGame.gameType == GameType.Casual) buildGameViewCasual(),
       if (state.gameState == GameState.Won) buildViewWin(),
       if (state.gameState == GameState.Lost) buildViewLose(),
-      if (player.health <= 0 && compiledGame.gameType == GameType.Casual)
+      if (playerDead && compiledGame.gameType == GameType.Casual)
         buildViewRespawn(),
       if (!tutorialsFinished) buildViewTutorial(),
       if(player.equippedClips == 0 && player.equippedRounds < 5)
       buildLowAmmo(),
       if (state.storeVisible) buildViewStore(),
-      if (_showScore && state.score.isNotEmpty) buildViewScore(),
+      if (_showScore && state.score.isNotEmpty && compiledGame.players.isNotEmpty) buildViewScore(),
     ],
   );
+}
+
+bool get playerDead {
+  dynamic player = getPlayer;
+  if (player == null) return false;
+  return player[stateIndex] == characterStateDead;
 }
 
 Widget buildTopRight() {
@@ -687,10 +694,12 @@ void nextTip(){
 }
 
 List<String> tips = [
+  "Use the W,A,S,D keys to move",
   "Press 1, 2, 3, etc to change weapons",
   "Press G to throw grenade",
   "Press H to use med kit",
   "Hold left shift to sprint",
+  "Press R to Reload",
 ];
 
 String getTip(){

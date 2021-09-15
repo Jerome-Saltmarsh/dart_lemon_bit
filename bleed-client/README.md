@@ -28,6 +28,7 @@
 [ ] Bullet holes in blocks
 [ ] Select Character (Sniper, Shotgun, Machine Gun, Medic)
 [ ] Item.RevivalKit (revive fallen squad member)
+[ ] Gain XP and levels
 -- MINOR BUGS --
 [ ] Dead players pass through barriers
 -- OPEN WORLD -- 
@@ -42,9 +43,11 @@
 -- CASUAL --
 [ ] Upgrade Pistol Damage
 [ ] Upgrade Pistol Magazine Capacity
+[ ] Show points earned floating text
 -- MAJOR BUGS --
-[ ] Respawn button appears before death
 -- COMPLETED --
+[x] Respawn button appears before death
+[x] UI Flashes red on load
 [x] Score board
 [x] Grenade kills earn points
 [x] Highlight players score

@@ -39,11 +39,13 @@ List<Block> blockHouses = [];
 Map<int, bool> gameEvents = Map();
 
 dynamic get getPlayer {
+  if (compiledGame.totalPlayers == 0) return null;
   for (dynamic player in compiledGame.players) {
     if (player[x] != compiledGame.playerX) continue;
     if (player[y] != compiledGame.playerY) continue;
     return player;
   }
+  return null;
 }
 
 List<CharacterState> characterStates = CharacterState.values;
@@ -51,6 +53,8 @@ List<CharacterState> characterStates = CharacterState.values;
 CharacterState get playerState {
   return characterStates[getPlayer[stateIndex]];
 }
+
+bool get playerReady => compiledGame.totalPlayers > 0 && compiledGame.playerX != -1 && compiledGame.playerY != -1;
 
 String get playerName {
   return getPlayer[indexName];
