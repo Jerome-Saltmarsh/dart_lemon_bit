@@ -149,7 +149,10 @@ class BleedWidget extends GameWidget {
         y: mouseY,
         color: aiming ? Colors.red : Colors.white);
 
-    // drawText(player.equippedRounds.toString(), mouseX + 10, mouseY - 35);
+    if (player.equippedRounds == 0){
+      drawText("reload (r)", mouseX + 10, mouseY - 35);
+    }
+
     // _drawClips();
   }
 
