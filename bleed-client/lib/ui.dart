@@ -334,7 +334,7 @@ Widget buildHud() {
       if (state.gameState == GameState.Lost) buildViewLose(),
       if (playerDead && compiledGame.gameType == GameType.Casual)
         buildViewRespawn(),
-      if (!tutorialsFinished) buildViewTutorial(),
+      // if (!tutorialsFinished) buildViewTutorial(),
       if (player.equippedClips == 0 && player.equippedRounds < 5)
         buildLowAmmo(),
       if (state.storeVisible) buildViewStore(),
