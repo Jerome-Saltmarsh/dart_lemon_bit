@@ -45,6 +45,8 @@
 [ ] Upgrade Pistol Magazine Capacity
 [ ] Show points earned floating text
 -- MAJOR BUGS --
+[ ] Respawn ui lag
+[ ] NPC Build up in the right corner
 -- COMPLETED --
 [x] Respawn button appears before death
 [x] UI Flashes red on load

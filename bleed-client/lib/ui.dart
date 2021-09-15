@@ -318,10 +318,9 @@ void toggleShowScore() {
 }
 
 Widget buildHud() {
-
   return Stack(
     children: [
-      if (mouseAvailable && mouseX < 300 && mouseY < 300) buildTopLeft(),
+      // if (mouseAvailable && mouseX < 300 && mouseY < 300) buildTopLeft(),
       buildTopRight(),
       buildBottomLeft(),
       if (compiledGame.gameType == GameType.Fortress) buildViewFortress(),
@@ -349,6 +348,30 @@ bool get playerDead {
 Widget buildTopRight() {
   double iconSize = 45;
 
+  Widget iconToggleFullscreen = Tooltip(
+    child: IconButton(
+        icon: Icon(Icons.fullscreen, size: iconSize, color: white),
+        onPressed: requestFullScreen),
+    message: "Fullscreen",
+  );
+  Widget iconToggleAudio = Tooltip(
+      child: IconButton(
+          icon: Icon(
+              settings.audioMuted ? Icons.music_off : Icons.music_note_rounded,
+              size: iconSize,
+              color: white),
+          onPressed: toggleAudioMuted),
+      message: "Toggle Audio");
+
+  Widget iconToggleScore = Tooltip(
+    child: IconButton(
+        icon: Icon(_showScore ? Icons.score : Icons.score_outlined,
+            size: iconSize, color: white),
+        onPressed: toggleShowScore),
+    message: _showScore ? "Hide Score" : "Show Score",
+  );
+
+
   Widget iconMenu = Tooltip(
     child: IconButton(
         icon: Icon(Icons.menu, size: iconSize, color: white),
@@ -369,7 +392,9 @@ Widget buildTopRight() {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [if (settings.developMode) editMenu,
-          width16,
+          iconToggleScore,
+          iconToggleAudio,
+          iconToggleFullscreen,
           iconMenu],
       ));
 }
@@ -729,7 +754,7 @@ Widget buildViewScore() {
   Score highest = highScore;
 
   return Positioned(
-    top: 100,
+    top: 0,
     left: 0,
     child: Container(
       color: Colors.black45,
@@ -739,6 +764,7 @@ Widget buildViewScore() {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            height16,
             text("Highest", decoration: TextDecoration.underline),
             Row(children: [
               Container(width: 140, child: text(highest.playerName)),

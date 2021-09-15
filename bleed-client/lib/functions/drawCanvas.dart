@@ -1,7 +1,9 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Block.dart';
 import 'package:bleed_client/classes/Particle.dart';
+import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
@@ -9,6 +11,7 @@ import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/properties.dart';
+import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
 
 import '../connection.dart';
@@ -57,7 +60,16 @@ void _drawCompiledGame() {
   _drawCollectables();
   drawPaths();
   _drawPlayerNames();
-  // _drawMouseAim();
+
+  if (playerReady) {
+    dynamic player = getPlayer;
+    if (player != null) {
+      Weapon weapons = player[weapon];
+      if (weapons == Weapon.SniperRifle || weapons == Weapon.AssaultRifle) {
+        _drawMouseAim(weapons);
+      }
+    }
+  }
 
   drawText(player.equippedRounds.toString(), playerX - 10, playerY - 35);
 }
@@ -74,12 +86,14 @@ void _drawPlayerNames() {
   }
 }
 
-void _drawMouseAim() {
+void _drawMouseAim(Weapon weapon) {
   if (!mouseAvailable) return;
   globalPaint.strokeWidth = 3;
   double rot = radionsBetween(
       mouseWorldX, mouseWorldY, compiledGame.playerX, compiledGame.playerY);
-  double d = 50;
+
+  double mouseDistance = distance(mouseWorldX, mouseWorldY, playerX, playerY);
+  double d = min(mouseDistance, weapon == Weapon.SniperRifle ? 150 : 35);
   double vX = velX(rot, d);
   double vY = velY(rot, d);
   Offset mouseOffset = Offset(mouseWorldX, mouseWorldY);

@@ -1,8 +1,10 @@
 import 'package:bleed_client/classes/CompiledGame.dart';
 import 'package:bleed_client/classes/Player.dart';
 import 'package:bleed_client/classes/Score.dart';
+import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/editor/GameEdit.dart';
 import 'package:bleed_client/enums.dart';
+import 'package:bleed_client/utils.dart';
 
 import '../common.dart';
 import 'classes/Block.dart';
@@ -39,6 +41,8 @@ List<Block> blockHouses = [];
 Map<int, bool> gameEvents = Map();
 
 dynamic get getPlayer {
+  if (!playerAssigned) return null;
+  if (!playerReady) return null;
   if (compiledGame.totalPlayers == 0) return null;
   for (dynamic player in compiledGame.players) {
     if (player[x] != compiledGame.playerX) continue;
@@ -47,6 +51,7 @@ dynamic get getPlayer {
   }
   return null;
 }
+Weapon get playerWeapon => getPlayer[weapon];
 
 List<CharacterState> characterStates = CharacterState.values;
 
