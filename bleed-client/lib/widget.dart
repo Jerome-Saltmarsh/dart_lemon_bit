@@ -149,8 +149,11 @@ class BleedWidget extends GameWidget {
         y: mouseY,
         color: aiming ? Colors.red : Colors.white);
 
-    drawText(player.equippedRounds.toString(), mouseX + 10, mouseY - 35);
+    // drawText(player.equippedRounds.toString(), mouseX + 10, mouseY - 35);
+    // _drawClips();
+  }
 
+  void _drawClips() {
     globalPaint.color = Colors.white;
     for (int i = 0; i < player.equippedClips; i++) {
       globalCanvas.drawRect(

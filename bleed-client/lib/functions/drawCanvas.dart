@@ -58,6 +58,8 @@ void _drawCompiledGame() {
   drawPaths();
   _drawPlayerNames();
   // _drawMouseAim();
+
+  drawText(player.equippedRounds.toString(), playerX - 10, playerY - 35);
 }
 
 double nameRadius = 100;

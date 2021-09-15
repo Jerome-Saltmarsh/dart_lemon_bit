@@ -52,6 +52,9 @@ CompiledGame get compiledGame => state.compiledGame;
 
 bool get gameStarted => state.compiledGame.gameId >= 0;
 
+double get playerX => compiledGame.playerX;
+double get playerY => compiledGame.playerY;
+
 Score get highScore {
   if (state.score.isEmpty) return null;
   Score highScore = state.score.first;

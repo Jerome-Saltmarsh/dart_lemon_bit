@@ -43,7 +43,7 @@ List<String> nouns = [
   "Pimple",
   "Snot",
   "Scar",
-  "Vomit"
+  "Vomit",
   "Mucous",
   "Guts",
   "Slime",
