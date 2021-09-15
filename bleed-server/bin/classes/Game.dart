@@ -449,6 +449,7 @@ extension GameFunctions on Game {
     // @on update npc
     if (npc.dead) return;
     if (npc.busy) return;
+    if (npc.inactive) return;
 
     // todo this belongs in update character
     if (npc.state == CharacterState.Striking) {
@@ -1241,10 +1242,13 @@ extension GameFunctions on Game {
 
   void jobNpcWander() {
     for (Npc npc in npcs) {
-      if (!npc.active) continue;
+      if (npc.inactive) continue;
+      if (npc.busy) continue;
+      if (npc.dead) continue;
       if (npc.targetSet) continue;
       if (npc.path.isNotEmpty) continue;
       if (chance(0.25)) return;
+      // @on npc set random destination
       npcSetRandomDestination(npc);
     }
   }

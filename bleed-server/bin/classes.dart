@@ -23,6 +23,7 @@ class GameObject {
   double get right => x + radius;
   double get top => y - radius;
   double get bottom => y + radius;
+  bool get inactive => !active;
 
   GameObject(this.x, this.y, {this.z = 0, this.xv = 0, this.yv = 0, this.zv = 0, this.radius = 5});
 }

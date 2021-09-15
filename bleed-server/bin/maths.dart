@@ -2,12 +2,11 @@ import 'dart:math';
 import 'classes.dart';
 import 'constants.dart';
 
-
 const double _0 = 0;
 const double half = 0.5;
-const double _1 = 0.5;
+const double _1 = 1.0;
 const double goldenRatio = 1.61803398875;
-const double goldenRatioInverse = 1.0 / goldenRatio;
+const double goldenRatioInverse = _1 / goldenRatio;
 const double degreesToRadians = 0.0174533;
 const double radiansToDegrees = 57.29578;
 final Random random = Random();

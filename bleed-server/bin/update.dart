@@ -3,7 +3,6 @@ import 'dart:async';
 import 'classes/Game.dart';
 import 'classes.dart';
 import 'classes/Lobby.dart';
-import 'common/GameType.dart';
 import 'instances/gameManager.dart';
 import 'language.dart';
 import 'maths.dart';
@@ -14,7 +13,7 @@ const _one = 1;
 
 
 void initUpdateLoop() {
-  print("initUpdateLoop()");
+  // @on init jobs
   periodic(fixedUpdate, ms: 1000 ~/ 30);
   periodic(jobNpcWander, seconds: 3);
   periodic(jobRemoveDisconnectedPlayers, seconds: 5);
@@ -67,7 +66,6 @@ void updateLobbies() {
       }
       if (lobby.players.length == lobby.maxPlayers && lobby.countDown > 0) {
         lobby.countDown--;
-        print("starting game in ${lobby.countDown}");
         if (lobby.countDown == 0) {
           startLobbyGame(lobby);
         }
