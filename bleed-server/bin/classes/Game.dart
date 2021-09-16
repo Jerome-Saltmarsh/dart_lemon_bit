@@ -328,6 +328,7 @@ abstract class Game {
   final List<Vector2> zombieSpawnPoints = [];
   String compiled = "";
   String compiledTiles = "";
+  bool compilePaths = false;
 
   // TODO doesn't belong here
   StringBuffer buffer = StringBuffer();
@@ -1309,7 +1310,9 @@ extension GameFunctions on Game {
     while (true) {
       TileNode node = scene.tileNodes[randomInt(0, scene.rows)]
           [randomInt(0, scene.columns)];
-      if (node.open) return node;
+      if (node.open) {
+        return node;
+      }
     }
   }
 

@@ -176,7 +176,7 @@ Widget buildGameUI(BuildContext context) {
 
   try {
     return buildHud();
-  }catch(error){
+  } catch (error) {
     print("error build hud");
     return text("an error occurred");
   }
@@ -291,14 +291,14 @@ Widget buildInventory() {
               break;
             case InventoryItemType.HandgunClip:
               canvas.drawImage(
-                  imageHandgunAmmo,
+                  images.imageHandgunAmmo,
                   Offset(item.column * squareSize + (padding * 0.5),
                       item.row * squareSize + padding),
                   paint2);
               break;
             case InventoryItemType.ShotgunClip:
               canvas.drawImage(
-                  imageShotgunAmmo,
+                  images.imageShotgunAmmo,
                   Offset(item.column * squareSize + (padding * 0.5),
                       item.row * squareSize + padding),
                   paint2);
@@ -306,7 +306,7 @@ Widget buildInventory() {
             case InventoryItemType.Handgun:
               paint2.color = Colors.white;
               canvas.drawImage(
-                  imageHandgun,
+                  images.imageHandgun,
                   Offset(item.column * squareSize + (padding * 0.5),
                       item.row * squareSize + padding),
                   paint2);
@@ -382,6 +382,16 @@ Widget buildTopRight() {
   //   message: _showScore ? "Hide Score" : "Show Score",
   // );
 
+  Widget iconTogglePaths = Tooltip(
+    child: IconButton(
+        icon: Icon(Icons.map, size: iconSize, color: white),
+        onPressed: (){
+          settings.compilePaths = !settings.compilePaths;
+          sendRequestSetCompilePaths(settings.compilePaths);
+        }),
+    message: "Toggle Paths",
+  );
+
   Widget iconMenu = Tooltip(
     child: IconButton(
         icon: Icon(Icons.menu, size: iconSize, color: white),
@@ -406,6 +416,7 @@ Widget buildTopRight() {
           // iconToggleScore,
           iconToggleAudio,
           iconToggleFullscreen,
+          iconTogglePaths,
           iconMenu
         ],
       ));
@@ -579,19 +590,45 @@ Widget buildViewStore() {
       right: 0,
       child: Container(
         color: Colors.black45,
-        padding: EdgeInsets.symmetric(vertical: 16),
+        padding: EdgeInsets.all(16),
         child: Column(
           children: [
             text('CREDITS ${state.player.points}'),
-            button(
-                "Handgun Ammo (10)",
-                state.player.points >= storeCosts.ammoHandgun
-                    ? purchaseAmmoHandgun
-                    : null),
-            button("Shotgun Ammo (10)", purchaseAmmoShotgun),
+            height8,
+            text("Weapons"),
+            buildRow(30, "Handgun"),
+            buildRow(30, "Shotgun"),
+            buildRow(30, "Sniper Rifle"),
+            buildRow(30, "Assault Rifle"),
+            height8,
+            text("items"),
+            buildRow(30, "Grenade"),
+            buildRow(30, "Medkit"),
+            buildRow(30, "Armor"),
+            buildRow(30, "Stamina"),
+            height8,
+            text("Upgrades"),
+            buildRow(30, "Handgun Damage"),
+            buildRow(30, "Handgun Capacity"),
           ],
         ),
       ));
+}
+
+Widget buildRow(int amount, String name){
+  return Row(
+    children: [
+      Container(
+          width: 40,
+          child: text(amount)),
+      width8,
+      button(
+          name,
+          state.player.points >= storeCosts.ammoHandgun
+              ? purchaseAmmoHandgun
+              : null),
+    ],
+  );
 }
 
 Widget buildGameViewCasual() {
@@ -839,10 +876,14 @@ Widget buildViewScore() {
             ),
           ),
         ),
-        Positioned(top: 0, left: 160, child: iconClose,),
+        Positioned(
+          top: 0,
+          left: 160,
+          child: iconClose,
+        ),
       ],
     );
-  }catch(error){
+  } catch (error) {
     return text("error build score");
   }
 }

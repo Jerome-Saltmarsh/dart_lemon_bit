@@ -53,7 +53,8 @@ class BleedWidget extends GameWidget {
 
   @override
   Future init() async {
-    await loadImages();
+    // await loadImages();
+    await images.load();
     initAudioPlayers();
     initBleed();
     loadRects();

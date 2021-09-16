@@ -488,6 +488,23 @@ void main() {
           sendToClient(buffer.toString());
           break;
 
+        case ClientRequest.SetCompilePaths:
+          if (arguments.length != 5){
+            errorArgsExpected(5, arguments);
+            return;
+          }
+
+          String gameId = arguments[1];
+          Game? game = findGameById(gameId);
+          if (game == null) {
+            error(GameError.GameNotFound);
+            return;
+          }
+          // type gameId playerId playerUuid value
+          int value = int.parse(arguments[4]);
+          game.compilePaths = value == 1;
+          print("game.compilePaths = ${game.compilePaths}");
+          break;
       }
     }
 

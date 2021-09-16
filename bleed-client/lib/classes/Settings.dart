@@ -4,6 +4,7 @@ class Settings {
   double zoomSpeed = 0.0005;
   double maxZoom = 0.1;
   bool developMode = true;
+  bool compilePaths = false;
 }
 
 

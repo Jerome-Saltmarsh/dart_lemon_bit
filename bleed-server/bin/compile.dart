@@ -29,8 +29,9 @@ void compileGame(Game game) {
   _compileGameEvents(game.buffer, game.gameEvents);
   _compileGrenades(game.buffer, game.grenades);
   _compileCollectables(game.buffer, game.collectables);
-  // _compilePaths(game.buffer, game.npcs);
-
+  if (game.compilePaths) {
+    _compilePaths(game.buffer, game.npcs);
+  }
   // if (game.gameOver()) {
   //   _write(game.buffer, ServerResponse.GameOver.index);
   // }

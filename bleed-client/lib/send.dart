@@ -1,4 +1,5 @@
 
+import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/common.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/GameType.dart';
@@ -113,6 +114,11 @@ void sendRequestJoinLobbyFortress() {
 
 void sendRequestPurchase(PurchaseType purchaseType){
   send('${ClientRequest.Purchase.index} $session ${purchaseType.index}');
+}
+
+void sendRequestSetCompilePaths(bool value){
+  render.paths.clear();
+  send('${ClientRequest.SetCompilePaths.index} $session ${value ? 1 : 0}');
 }
 
 void purchaseAmmoHandgun(){

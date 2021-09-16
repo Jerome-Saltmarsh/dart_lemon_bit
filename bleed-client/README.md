@@ -11,7 +11,7 @@
 [ ] Knife Attack
 [ ] Line of Sight
 [ ] Particle Gunshot smoke
-[ ] Cache Particles
+[ ] Cache Particles-
 [ ] Zombie Hurt Animation
 [ ] Grenade tile collision
 [ ] Stamina Potion
@@ -30,8 +30,13 @@
 [ ] Item.RevivalKit (revive fallen squad member)
 [ ] Gain XP and levels
 [ ] Merge Maths lib into common
+[ ] Golden Zombie earns 5x kills
+[ ] Red Zombie earns 2x kills
+[ ] Ranged zombies
 -- MINOR BUGS --
 [ ] Dead players pass through barriers
+[ ] Score ui displays error on respawn
+[ ] UI Score Lag
 -- OPEN WORLD -- 
 [ ] Npc Talk Text
 -- FORTRESS -- 
@@ -46,10 +51,10 @@
 [ ] Upgrade Pistol Magazine Capacity
 [ ] Show points earned floating text
 -- MAJOR BUGS --
-[ ] UI Score Lag
 [ ] NPC Build up in the right corner
-[ ] UI Flashes red on load
 -- COMPLETED --
+[x] dynamically enable compile paths
+[x] UI Flashes red on load
 [x] Respawn ui lag
 [x] Respawn button appears before death
 [x] Score board

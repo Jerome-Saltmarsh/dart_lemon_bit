@@ -24,7 +24,7 @@ void drawCharacterCircle(double x, double y, Color color) {
 }
 
 void drawCharacters() {
-  if (imageCharacter == null) return;
+  if (images.imageCharacter == null) return;
   drawPlayers();
   drawNpcs();
 }
@@ -38,12 +38,12 @@ void drawNpcs() {
     render.npcsRects.add(getCharacterSpriteRect(compiledGame.npcs[i]));
   }
 
-  drawAtlases(imageCharacter, render.npcsTransforms, render.npcsRects);
+  drawAtlases(images.imageCharacter, render.npcsTransforms, render.npcsRects);
 }
 
 void drawCharacterList(List<dynamic> characters) {
   globalCanvas.drawAtlas(
-      imageCharacter,
+      images.imageCharacter,
       characters.map(getCharacterTransform).toList(),
       characters.map(getCharacterSpriteRect).toList(),
       null,
@@ -53,7 +53,7 @@ void drawCharacterList(List<dynamic> characters) {
 }
 
 void drawTileList() {
-  drawAtlases(imageTiles, render.tileTransforms, render.tileRects);
+  drawAtlases(images.imageTiles, render.tileTransforms, render.tileRects);
 }
 
 void drawAtlases(
@@ -92,7 +92,7 @@ void drawPlayers() {
     render.playersTransforms.add(getCharacterTransform(compiledGame.players[i]));
     render.playersRects.add(getCharacterSpriteRect(compiledGame.players[i]));
   }
-  drawAtlases(imageCharacter, render.playersTransforms, render.playersRects);
+  drawAtlases(images.imageCharacter, render.playersTransforms, render.playersRects);
 }
 
 void _drawTeamMemberCircles() {
@@ -126,7 +126,7 @@ void drawList(
     rects.removeLast();
   }
 
-  drawAtlases(imageCharacter, transforms, rects);
+  drawAtlases(images.imageCharacter, transforms, rects);
 }
 
 Rect getHumanWalkingRect(dynamic character) {
@@ -843,7 +843,7 @@ void drawCircleOutline(
 }
 
 void drawTiles() {
-  if (imageTiles == null) return;
+  if (images.imageTiles == null) return;
   if (compiledGame.tiles == null || compiledGame.tiles.isEmpty) return;
   if (render.tileTransforms.length != render.tileRects.length) return;
   drawTileList();
