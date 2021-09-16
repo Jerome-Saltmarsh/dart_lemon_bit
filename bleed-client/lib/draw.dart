@@ -18,6 +18,7 @@ import 'enums.dart';
 import 'keys.dart';
 import 'rects.dart';
 import 'resources/rects_human.dart';
+import 'resources/rects_zombie.dart';
 import 'state.dart';
 import 'utils.dart';
 
@@ -37,10 +38,10 @@ void drawNpcs() {
 
   for (int i = 0; i < compiledGame.totalNpcs; i++) {
     render.npcsTransforms.add(getCharacterTransform(compiledGame.npcs[i]));
-    render.npcsRects.add(getCharacterSpriteRect(compiledGame.npcs[i]));
+    render.npcsRects.add(mapZombieSpriteRect(compiledGame.npcs[i]));
   }
 
-  drawAtlases(images.imageCharacter, render.npcsTransforms, render.npcsRects);
+  drawAtlases(images.zombie, render.npcsTransforms, render.npcsRects);
 }
 
 void drawCharacterList(List<dynamic> characters) {

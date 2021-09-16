@@ -7,7 +7,7 @@ _Images images = _Images();
 
 class _Images {
   Image imageCharacter;
-  Image imageZombie;
+  Image zombie;
   Image imageTiles;
   Image imageParticles;
   Image imageHandgun;
@@ -17,6 +17,7 @@ class _Images {
 
   Future load() async {
     imageCharacter = await loadImage("images/character.png");
+    zombie = await loadImage("images/zombie.png");
     imageTiles = await loadImage("images/tiles.png");
     imageParticles = await loadImage('images/particles.png');
     imageHandgun = await loadImage('images/weapon-handgun.png');
