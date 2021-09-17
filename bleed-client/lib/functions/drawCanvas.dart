@@ -9,6 +9,7 @@ import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/instances/settings.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/utils.dart';
@@ -58,11 +59,14 @@ void _drawCompiledGame() {
   drawCharacters();
   drawEditMode();
   _drawCollectables();
-  drawPaths();
+
+  if (settings.compilePaths) {
+    drawPaths();
+  }
 
   try {
     _drawPlayerNames();
-  }catch(e){
+  } catch (e) {
     print(e);
   }
 

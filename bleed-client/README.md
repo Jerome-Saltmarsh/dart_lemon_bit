@@ -34,6 +34,11 @@
 [ ] Red Zombie earns 2x kills
 [ ] Ranged zombies
 [ ] Player squirts blood when attacked by zombie
+-- BUSINESS --
+[ ] Setup Patreon
+[ ] Setup Discord
+[ ] Publish on Reddit
+[ ] Setup Youtube Channel
 -- MINOR BUGS --
 [ ] Dead players pass through barriers
 [ ] Score ui displays error on respawn
