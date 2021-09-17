@@ -33,6 +33,7 @@
 [ ] Golden Zombie earns 5x kills
 [ ] Red Zombie earns 2x kills
 [ ] Ranged zombies
+[ ] Player squirts blood when attacked by zombie
 -- MINOR BUGS --
 [ ] Dead players pass through barriers
 [ ] Score ui displays error on respawn

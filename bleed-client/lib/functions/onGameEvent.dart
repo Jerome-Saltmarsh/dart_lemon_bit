@@ -95,6 +95,14 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
       break;
     case GameEventType.Zombie_Strike:
       playAudioZombieBite(x, y);
+      double r = 1;
+      double s = 0.15;
+      for (int i = 0; i < randomInt(2, 4); i++) {
+        spawnBlood(x, y, 0.3,
+            xv: xv * s + giveOrTake(r),
+            yv: yv * s + giveOrTake(r),
+            zv: randomBetween(0, 0.07));
+      }
       break;
     case GameEventType.Player_Death:
       playPlayerDeathAudio(x, y);

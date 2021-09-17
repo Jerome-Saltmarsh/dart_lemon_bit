@@ -464,7 +464,10 @@ extension GameFunctions on Game {
         characterFaceObject(npc, npc.target);
         setCharacterState(npc, CharacterState.Striking);
         changeCharacterHealth(npc.target, -zombieStrikeDamage);
-        dispatch(GameEventType.Zombie_Strike, npc.x, npc.y, 0, 0);
+
+        double speed = 0.1;
+        double rotation = radiansBetweenObject(npc, npc.target);
+        dispatch(GameEventType.Zombie_Strike, npc.target.x, npc.target.y, velX(rotation, speed), velY(rotation, speed));
         return;
       }
 
