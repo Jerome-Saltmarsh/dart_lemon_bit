@@ -12,10 +12,25 @@ Widget text(dynamic value, {fontSize = 18, Function onPressed, TextDecoration de
 
 }
 
-Widget border({Widget child}) {
+Widget border({Widget child, Color color = Colors.white, double width = 1, BorderRadius borderRadius, EdgeInsets padding, Color fillColor}) {
   return Container(
-    decoration: BoxDecoration(border: Border.all(color: Colors.white)),
+    decoration: BoxDecoration(border: Border.all(color: color, width: width), borderRadius: borderRadius, color: fillColor),
     child: child,
+    padding: padding,
+  );
+}
+
+Widget onPressed({Widget child, Function callback, String hint}){
+
+  Widget widget = MouseRegion(
+      cursor: SystemMouseCursors.click,
+      child: GestureDetector(child: child, onTap: callback));
+
+  if(hint == null) return widget;
+
+  return Tooltip(
+    message: hint,
+    child: widget,
   );
 }
 

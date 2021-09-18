@@ -1,10 +1,11 @@
 import 'package:bleed_client/common/GameState.dart';
-import 'package:bleed_client/common/constants.dart';
 import 'package:bleed_client/common/prices.dart';
+import 'package:bleed_client/constants.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
+import 'package:bleed_client/functions/open_link.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/game_engine/web_functions.dart';
@@ -12,6 +13,7 @@ import 'package:bleed_client/keys.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/tutorials.dart';
 import 'package:bleed_client/ui/dialogs.dart';
+import 'package:bleed_client/ui/flutter_constants.dart';
 import 'package:bleed_client/ui/views.dart';
 import 'package:flutter/material.dart';
 import 'package:neuro/instance.dart';
@@ -24,6 +26,7 @@ import 'connection.dart';
 import 'enums/InventoryItemType.dart';
 import 'enums/Mode.dart';
 import 'common/Weapons.dart';
+import 'functions/copy.dart';
 import 'images.dart';
 import 'instances/inventory.dart';
 import 'instances/settings.dart';
@@ -330,19 +333,16 @@ Widget buildHud() {
     children: [
       // if (mouseAvailable && mouseX < 300 && mouseY < 300) buildTopLeft(),
       buildTopRight(),
-      buildBottomLeft(),
+      if (!playerDead) buildBottomLeft(),
       if (compiledGame.gameType == GameType.Fortress) buildViewFortress(),
       if (compiledGame.gameType == GameType.DeathMatch)
         buildGameInfoDeathMatch(),
       if (compiledGame.gameType == GameType.Casual) buildGameViewCasual(),
       if (state.gameState == GameState.Won) buildViewWin(),
       if (state.gameState == GameState.Lost) buildViewLose(),
-      if (playerDead && compiledGame.gameType == GameType.Casual)
+      if (true || playerDead && compiledGame.gameType == GameType.Casual)
         buildViewRespawn(),
-      // if (!tutorialsFinished) buildViewTutorial(),
-      if (player.equippedClips == 0 && player.equippedRounds < 5)
-        buildLowAmmo(),
-      if (state.storeVisible) buildViewStore(),
+      if (!playerDead && state.storeVisible) buildViewStore(),
       if (state.score.isNotEmpty && compiledGame.players.isNotEmpty)
         buildViewScore(),
       if (message != null) buildMessageBox(message),
@@ -584,6 +584,10 @@ Widget buildMessageBox(String message) {
       ));
 }
 
+StoreTab storeTab = StoreTab.Buy;
+
+enum StoreTab { Buy, Upgrade }
+
 Widget buildViewStore() {
   return Positioned(
       top: 60,
@@ -594,29 +598,65 @@ Widget buildViewStore() {
         child: Column(
           children: [
             text('CREDITS ${state.player.points}'),
-            height8,
-            text("Weapons"),
-            if (!player.acquiredHandgun)
-              buildRow(prices.weapon.handgun, "Handgun", purchaseWeaponHandgun),
-            if (player.acquiredHandgun)
-              buildRow(prices.ammo.handgun, "Handgun Ammo", purchaseAmmoHandgun),
-            if (!player.acquiredShotgun)
-              buildRow(prices.weapon.shotgun, "Shotgun", purchaseWeaponShotgun),
-            if (player.acquiredShotgun)
-              buildRow(prices.weapon.shotgun, "Shotgun Ammo", purchaseAmmoShotgun),
-            height8,
-            text("items"),
-            // buildRow(30, "Grenade"),
-            // buildRow(30, "Medkit"),
-            // buildRow(30, "Armor"),
-            // buildRow(30, "Stamina"),
-            height8,
-            text("Upgrades"),
-            // buildRow(30, "Handgun Damage"),
-            // buildRow(30, "Handgun Capacity"),
+            Row(
+              children: [
+                Container(
+                  width: 100,
+                  child: button("Buy", () {
+                    storeTab = StoreTab.Buy;
+                    redrawUI();
+                  }),
+                ),
+                Container(
+                  width: 100,
+                  child: button("Upgrade", () {
+                    storeTab = StoreTab.Upgrade;
+                    redrawUI();
+                  }),
+                ),
+              ],
+            ),
+            if (storeTab == StoreTab.Buy) buildViewBuy(),
+            if (storeTab == StoreTab.Upgrade) buildViewUpgrade(),
           ],
         ),
       ));
+}
+
+Widget buildViewBuy() {
+  return Column(
+    children: [
+      height8,
+      text("Weapons"),
+      if (!player.acquiredHandgun)
+        buildRow(prices.weapon.handgun, "Handgun", purchaseWeaponHandgun),
+      if (player.acquiredHandgun)
+        buildRow(prices.ammo.handgun, "Handgun Ammo", purchaseAmmoHandgun),
+      if (!player.acquiredShotgun)
+        buildRow(prices.weapon.shotgun, "Shotgun", purchaseWeaponShotgun),
+      if (player.acquiredShotgun)
+        buildRow(prices.weapon.shotgun, "Shotgun Ammo", purchaseAmmoShotgun),
+      height8,
+      text("items"),
+      height8,
+      text("Upgrades"),
+    ],
+  );
+}
+
+Widget buildViewUpgrade() {
+  return Column(
+    children: [
+      height8,
+      text("Weapons"),
+      if (player.acquiredHandgun)
+        buildRow(
+            prices.weapon.handgun, "Handgun Damage", purchaseWeaponHandgun),
+      if (player.acquiredHandgun)
+        buildRow(
+            prices.weapon.handgun, "Handgun Capacity", purchaseWeaponHandgun),
+    ],
+  );
 }
 
 Widget buildRow(int amount, String name, Function onPressed) {
@@ -738,38 +778,156 @@ Widget buildViewLose() {
 }
 
 Widget buildViewRespawn() {
+  print("buildViewRespawn()");
   return Positioned(
-      bottom: 200,
+      top: 100,
       child: Container(
         width: screenWidth,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: mainAxis.center,
           children: [
             Container(
-                padding: EdgeInsets.all(16),
+                padding: padding16,
                 width: 600,
-                color: Colors.black45,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    text("You Died",
-                        fontSize: 30, decoration: TextDecoration.underline),
-                    height16,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        text("Tip: ${getTip()}"),
-                        width16,
-                        Container(
-                            width: 60,
-                            child: button("next", nextTip,
-                                alignment: Alignment.center))
-                      ],
-                    ),
-                    height32,
-                    button("Respawn", sendRequestRevive,
-                        fontSize: 40, alignment: Alignment.center),
-                  ],
+                // height: 600,
+                decoration: BoxDecoration(borderRadius: borderRadius8, color: black54),
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: crossAxis.center,
+                    children: [
+                      Container(
+                          color: Colors.red,
+                          padding: padding8,
+                          child: text("BLEED beta v1.0.0")),
+                      height16,
+                      text("YOU DIED",
+                          fontSize: 30, decoration: underline),
+                      height16,
+                      Container(
+                        padding: padding16,
+                        decoration: BoxDecoration(
+                          borderRadius: borderRadius8,
+                          color: black54,
+                        ),
+                        child: Column(
+                          crossAxisAlignment: crossAxis.center,
+                          children: [
+                            text("Please Support Me"),
+                            height16,
+                            Row(
+                              mainAxisAlignment: mainAxis.spaceEvenly,
+                              children: [
+                                onPressed(
+                                    child: border(
+                                        child: Container(
+                                            width: 70,
+                                            alignment: Alignment.center,
+                                            child: text("Paypal", )),
+                                        borderRadius: borderRadius4,
+                                        padding: padding8),
+                                    callback: () {
+                                      openLink(links.paypal);
+                                    },
+                                    hint: links.paypal),
+                                onPressed(
+                                    child: border(
+                                        child: Container(
+                                            width: 70,
+                                            alignment: Alignment.center,
+                                            child: text("Patreon")),
+                                        borderRadius: borderRadius4,
+                                        padding: padding8),
+                                    callback: () {
+                                      openLink(links.patreon);
+                                    },
+                                    hint: links.patreon
+                                )
+                              ],
+                            ),
+                            height8,
+                          ],
+                        ),
+                      ),
+                      height16,
+                      Container(
+                        padding: EdgeInsets.all(16),
+                        color: Colors.black54,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            text("Community"),
+                            height8,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Row(
+                                  children: [
+                                    text("Youtube"),
+                                    IconButton(
+                                        onPressed: () {
+                                        },
+                                        icon: Icon(
+                                          Icons.link,
+                                          color: white,
+                                        ))
+                                  ],
+                                ),
+                                Row(
+                                  children: [
+                                    text("Discord"),
+                                    IconButton(
+                                        onPressed: () {},
+                                        icon: Icon(
+                                          Icons.link,
+                                          color: white,
+                                        ))
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      height16,
+                      Container(
+                        color: black54,
+                        padding: padding16,
+                        child: Column(
+                          children: [
+                            text("Hints"),
+                            Row(
+                              mainAxisAlignment: mainAxis.center,
+                              crossAxisAlignment: crossAxis.center,
+                              children: [
+                                Container(
+                                    width: 350,
+                                    alignment: Alignment.center,
+                                    child: text(getTip())),
+                                width16,
+                                IconButton(
+                                    onPressed: nextTip,
+                                    icon: Icon(
+                                      Icons.arrow_forward,
+                                      color: Colors.white,
+                                      size: 30,
+                                    ))
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      height32,
+                      onPressed(
+                        child: border(
+                            child: text("RESPAWN", fontSize: 40),
+                            padding: padding16,
+                            borderRadius: borderRadius8,
+                            fillColor: black54),
+                        callback: sendRequestRevive,
+                        hint: "Click to respawn",
+                      ),
+                    ],
+                  ),
                 )),
           ],
         ),
