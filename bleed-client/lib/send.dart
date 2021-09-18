@@ -116,6 +116,7 @@ void sendRequestPurchase(PurchaseType purchaseType){
   send('${ClientRequest.Purchase.index} $session ${purchaseType.index}');
 }
 
+
 void sendRequestSetCompilePaths(bool value){
   render.paths.clear();
   send('${ClientRequest.SetCompilePaths.index} $session ${value ? 1 : 0}');
@@ -127,6 +128,14 @@ void purchaseAmmoHandgun(){
 
 void purchaseAmmoShotgun(){
   sendRequestPurchase(PurchaseType.Ammo_Shotgun);
+}
+
+void purchaseWeaponHandgun(){
+  sendRequestPurchase(PurchaseType.Weapon_Handgun);
+}
+
+void purchaseWeaponShotgun(){
+  sendRequestPurchase(PurchaseType.Weapon_Shotgun);
 }
 
 void sendClientRequest(ClientRequest request){

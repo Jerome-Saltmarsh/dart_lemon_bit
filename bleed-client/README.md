@@ -42,6 +42,7 @@
 -- MINOR BUGS --
 [ ] Dead players pass through barriers
 [ ] Score ui displays error on respawn
+[ ] Prevent Duplicate Names
 [ ] UI Score Lag
 -- OPTIMIZATIONS --
 [ ] Rebuilding the ui unnecessarily is extremely expensive

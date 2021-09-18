@@ -1139,7 +1139,7 @@ extension GameFunctions on Game {
       return npc;
     }
 
-    Npc npc = Npc(x: x, y: y, health: 3, maxHealth: 3);
+    Npc npc = Npc(x: x, y: y, health: zombieHealth, maxHealth: zombieHealth);
     npcs.add(npc);
     return npc;
   }

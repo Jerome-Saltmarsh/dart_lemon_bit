@@ -6,6 +6,7 @@ const double spawnRadius = 500;
 const double zombieSpeed = 2;
 const double playerSpeed = 4;
 const int playerHealth = 3;
+const double zombieHealth = 3;
 const double velocityFriction = 0.88;
 const double zombieViewRange = 300;
 const double zombieChaseRange = 600;
@@ -45,8 +46,8 @@ const int tilesX = 32;
 const int tilesY = 32;
 
 const int settingsGrenadeDuration = 800;
-const double settingsGrenadeExplosionRadius = 100;
-const double settingsGrenadeExplosionDamage = 100;
+const double settingsGrenadeExplosionRadius = 75;
+const double settingsGrenadeExplosionDamage = 2;
 const double settingsGrenadeSpeed = 18;
 const double settingsGrenadeFriction = 0.98;
 

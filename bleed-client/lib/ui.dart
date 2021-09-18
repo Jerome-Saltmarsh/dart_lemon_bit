@@ -1,5 +1,6 @@
 import 'package:bleed_client/common/GameState.dart';
 import 'package:bleed_client/common/constants.dart';
+import 'package:bleed_client/common/prices.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/events.dart';
@@ -20,7 +21,6 @@ import 'classes/InventoryItem.dart';
 import 'classes/Score.dart';
 import 'common.dart';
 import 'connection.dart';
-import 'enums.dart';
 import 'enums/InventoryItemType.dart';
 import 'enums/Mode.dart';
 import 'common/Weapons.dart';
@@ -385,7 +385,7 @@ Widget buildTopRight() {
   Widget iconTogglePaths = Tooltip(
     child: IconButton(
         icon: Icon(Icons.map, size: iconSize, color: white),
-        onPressed: (){
+        onPressed: () {
           settings.compilePaths = !settings.compilePaths;
           sendRequestSetCompilePaths(settings.compilePaths);
         }),
@@ -596,37 +596,35 @@ Widget buildViewStore() {
             text('CREDITS ${state.player.points}'),
             height8,
             text("Weapons"),
-            buildRow(30, "Handgun"),
-            buildRow(30, "Shotgun"),
-            buildRow(30, "Sniper Rifle"),
-            buildRow(30, "Assault Rifle"),
+            if (!player.acquiredHandgun)
+              buildRow(prices.weapon.handgun, "Handgun", purchaseWeaponHandgun),
+            if (player.acquiredHandgun)
+              buildRow(prices.ammo.handgun, "Handgun Ammo", purchaseAmmoHandgun),
+            if (!player.acquiredShotgun)
+              buildRow(prices.weapon.shotgun, "Shotgun", purchaseWeaponShotgun),
+            if (player.acquiredShotgun)
+              buildRow(prices.weapon.shotgun, "Shotgun Ammo", purchaseAmmoShotgun),
             height8,
             text("items"),
-            buildRow(30, "Grenade"),
-            buildRow(30, "Medkit"),
-            buildRow(30, "Armor"),
-            buildRow(30, "Stamina"),
+            // buildRow(30, "Grenade"),
+            // buildRow(30, "Medkit"),
+            // buildRow(30, "Armor"),
+            // buildRow(30, "Stamina"),
             height8,
             text("Upgrades"),
-            buildRow(30, "Handgun Damage"),
-            buildRow(30, "Handgun Capacity"),
+            // buildRow(30, "Handgun Damage"),
+            // buildRow(30, "Handgun Capacity"),
           ],
         ),
       ));
 }
 
-Widget buildRow(int amount, String name){
+Widget buildRow(int amount, String name, Function onPressed) {
   return Row(
     children: [
-      Container(
-          width: 40,
-          child: text(amount)),
+      Container(width: 40, child: text(amount)),
       width8,
-      button(
-          name,
-          state.player.points >= constants.prices.ammo.handgun
-              ? purchaseAmmoHandgun
-              : null),
+      button(name, state.player.points >= amount ? onPressed : null),
     ],
   );
 }
