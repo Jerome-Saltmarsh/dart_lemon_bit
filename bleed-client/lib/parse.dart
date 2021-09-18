@@ -188,6 +188,9 @@ void parseState() {
         _parsePlayer();
         break;
 
+      case ServerResponse.Score:
+        _parseScore();
+        break;
 
       default:
         print("parser not implemented $serverResponse");
