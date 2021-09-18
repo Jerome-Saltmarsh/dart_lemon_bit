@@ -1,8 +1,12 @@
 import 'dart:math';
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Block.dart';
+import 'package:bleed_client/classes/FloatingText.dart';
+import 'package:bleed_client/classes/GunshotFlash.dart';
 import 'package:bleed_client/classes/Particle.dart';
+import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/common/CollectableType.dart';
@@ -12,7 +16,9 @@ import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/instances/settings.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/properties.dart';
+import 'package:bleed_client/rects.dart';
 import 'package:bleed_client/utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../connection.dart';
@@ -64,6 +70,15 @@ void _drawCompiledGame() {
     drawPaths();
   }
 
+  _drawGunShotFlashes();
+
+  for (FloatingText floatingText in render.floatingText){
+    if(floatingText.duration == 0) continue;
+    floatingText.duration--;
+    floatingText.y -= 0.5;
+    drawText(floatingText.value, floatingText.x, floatingText.y);
+  }
+
   try {
     _drawPlayerNames();
   } catch (e) {
@@ -81,6 +96,28 @@ void _drawCompiledGame() {
   }
 
   drawText(player.equippedRounds.toString(), playerX - 10, playerY - 35);
+}
+
+void _drawGunShotFlashes() {
+  List<RSTransform> gunShotTransforms = [];
+  List<Rect> rects = [];
+
+  for(GunShotFlash gunShotFlash in render.gunShotFlashes){
+    // globalCanvas.drawCircle(Offset(gunShotFlash.x, gunShotFlash.y), 5, globalPaint);
+    gunShotTransforms.add(RSTransform.fromComponents(
+      rotation: gunShotFlash.rotation,
+      scale: 1,
+      anchorX: 8,
+      anchorY: 0,
+      translateX: gunShotFlash.x,
+      translateY: gunShotFlash.y,
+    ));
+    rects.add(rectGunShotFlash);
+  }
+
+  drawAtlases(images.gunshot, gunShotTransforms, rects);
+  render.gunShotFlashes.clear();
+
 }
 
 double nameRadius = 100;

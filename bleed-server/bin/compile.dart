@@ -6,7 +6,7 @@ import 'classes/Inventory.dart';
 import 'classes/Lobby.dart';
 import 'classes/Player.dart';
 import 'classes/Vector2.dart';
-import 'common/GameState.dart';
+import 'common/PlayerEvents.dart';
 import 'enums.dart';
 import 'common/ServerResponse.dart';
 import 'instances/gameManager.dart';
@@ -18,6 +18,9 @@ const String _space = ' ';
 const String _semiColon = '; ';
 const String _comma = ', ';
 const String _dash = '- ';
+const int _decimals = 1;
+const int _1 = 1;
+const int _0 = 0;
 
 // public
 
@@ -94,8 +97,8 @@ String compileTiles(StringBuffer buffer, List<List<Tile>> tiles) {
 
 void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, ServerResponse.Player.index);
-  _write(buffer, player.x.toInt());
-  _write(buffer, player.y.toInt());
+  _writeInt(buffer, player.x);
+  _writeInt(buffer, player.y);
   _write(buffer, player.weapon.index);
   _write(buffer, player.health.toInt());
   _write(buffer, player.maxHealth.toInt());
@@ -109,7 +112,28 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.gameState.index);
   _write(buffer, player.points);
   _write(buffer, player.state.index);
+  _writeBool(buffer, player.acquiredHandgun);
+  _writeBool(buffer, player.acquiredShotgun);
+  _writeBool(buffer, player.acquiredSniperRifle);
+  _writeBool(buffer, player.acquiredAssaultRifle);
   // _compileInventory(buffer, player.inventory);
+
+  for (PlayerEvent playerEvent in player.events) {
+    if (playerEvent.sent) continue;
+    _compilePlayerEvents(buffer, player);
+    return;
+  }
+}
+
+void _compilePlayerEvents(StringBuffer buffer, Player player) {
+  _write(buffer, ServerResponse.Player_Events.index);
+  for (PlayerEvent playerEvent in player.events) {
+    if (playerEvent.sent) continue;
+    playerEvent.sent = true;
+    _write(buffer, playerEvent.type.index);
+    _write(buffer, playerEvent.value);
+  }
+  _write(buffer, _semiColon);
 }
 
 void compileScore(StringBuffer buffer, List<Player> players) {
@@ -256,6 +280,18 @@ String compileLobbies() {
   }
   _write(buffer, _semiColon);
   return buffer.toString();
+}
+
+void _writeBool(StringBuffer buffer, bool value) {
+  _write(buffer, value ? _1 : _0);
+}
+
+void _writeDouble(StringBuffer buffer, double value) {
+  _write(buffer, value.toStringAsFixed(_decimals));
+}
+
+void _writeInt(StringBuffer buffer, double value) {
+  _write(buffer, value.toInt());
 }
 
 void _write(StringBuffer buffer, dynamic value) {

@@ -11,4 +11,8 @@ class Player {
   double health = 0;
   double maxHealth = 0;
   CharacterState state = CharacterState.Idle;
+  bool acquiredHandgun = false;
+  bool acquiredShotgun = false;
+  bool acquiredSniperRifle = false;
+  bool acquiredAssaultRifle = false;
 }

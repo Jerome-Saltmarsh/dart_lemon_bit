@@ -5,6 +5,7 @@ class Settings {
   double maxZoom = 0.1;
   bool developMode = true;
   bool compilePaths = false;
+  int floatingTextDuration = 100;
 }
 
 

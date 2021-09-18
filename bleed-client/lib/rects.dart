@@ -8,6 +8,8 @@ const int tileCanvasWidthHalf = tileCanvasWidth ~/ 2;
 const int tileCanvasHeightHalf = tileCanvasHeight ~/ 2;
 const int tileFrames = 1;
 
+Rect rectGunShotFlash = Rect.fromLTWH(0, 0, 16, 16);
+
 Rect concreteRect = rect(0, 48, 48);
 Rect grassRect = rect(1, 48, 48);
 

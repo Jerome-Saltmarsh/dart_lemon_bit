@@ -5,7 +5,8 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import 'classes/Game.dart';
 import 'classes/Lobby.dart';
 import 'classes/Player.dart';
-import 'common/StoreCosts.dart';
+import 'common/PlayerEvents.dart';
+import 'common/prices.dart';
 import 'compile.dart';
 import 'common/ClientRequest.dart';
 import 'common/GameError.dart';
@@ -17,6 +18,7 @@ import 'common/Weapons.dart';
 import 'enums.dart';
 import 'functions/loadScenes.dart';
 import 'instances/gameManager.dart';
+import 'instances/settings.dart';
 import 'settings.dart';
 import 'update.dart';
 import 'utils.dart';
@@ -61,12 +63,9 @@ void main() {
       sendToClient('$errorIndex ${error.index} $message');
     }
 
-    void sendError(String message){
-      sendToClient('$errorIndex $message');
-    }
-
-    void errorArgsExpected(int expected, List arguments){
-      sendToClient('$errorIndex ${GameError.InvalidArguments.index} expected $expected but got ${arguments.length}');
+    void errorArgsExpected(int expected, List arguments) {
+      sendToClient(
+          '$errorIndex ${GameError.InvalidArguments.index} expected $expected but got ${arguments.length}');
     }
 
     void errorGameNotFound() {
@@ -103,6 +102,14 @@ void main() {
 
     void errorInvalidPlayerUUID() {
       error(GameError.InvalidPlayerUUID);
+    }
+
+    void errorWeaponNotAcquired() {
+      error(GameError.WeaponNotAcquired);
+    }
+
+    void errorWeaponAlreadyAcquired() {
+      error(GameError.WeaponAlreadyAcquired);
     }
 
     void onEvent(requestD) {
@@ -151,6 +158,11 @@ void main() {
             errorInvalidPlayerUUID();
             return;
           }
+
+          if (player.events.isNotEmpty) {
+            // TODO compile player events
+          }
+
           player.lastEventFrame = 0;
           CharacterState requestedState =
               CharacterState.values[int.parse(arguments[4])];
@@ -343,7 +355,7 @@ void main() {
             return;
           }
 
-          if(game.type != GameType.Casual){
+          if (game.type != GameType.Casual) {
             errorCannotSpawnNpc();
             return;
           }
@@ -372,6 +384,34 @@ void main() {
           Weapon weapon = Weapon.values[int.parse(arguments[4])];
           if (player.stateDuration > 0) return;
           if (player.weapon == weapon) return;
+
+          switch (weapon) {
+            case Weapon.HandGun:
+              if (!player.acquiredHandgun) {
+                errorWeaponNotAcquired();
+                return;
+              }
+              break;
+            case Weapon.Shotgun:
+              if (!player.acquiredShotgun) {
+                errorWeaponNotAcquired();
+                return;
+              }
+              break;
+            case Weapon.SniperRifle:
+              if (!player.acquiredSniperRifle) {
+                errorWeaponNotAcquired();
+                return;
+              }
+              break;
+            case Weapon.AssaultRifle:
+              if (!player.acquiredAssaultRifle) {
+                errorWeaponNotAcquired();
+                return;
+              }
+              break;
+          }
+
           player.weapon = weapon;
           game.setCharacterState(player, CharacterState.ChangingWeapon);
           return;
@@ -422,7 +462,7 @@ void main() {
           return;
 
         case ClientRequest.Purchase:
-          if (arguments.length != 5){
+          if (arguments.length != 5) {
             errorArgsExpected(5, arguments);
             return;
           }
@@ -449,32 +489,72 @@ void main() {
 
           int? purchaseTypeIndex = int.tryParse(arguments[4]);
 
-          if (purchaseTypeIndex == null){
-            sendToClient('$errorIndex ${GameError.IntegerExpected} arguments[4] but got ${arguments[4]}');
+          if (purchaseTypeIndex == null) {
+            sendToClient(
+                '$errorIndex ${GameError.IntegerExpected} arguments[4] but got ${arguments[4]}');
             return;
           }
 
-          if(purchaseTypeIndex >= purchaseTypes.length){
-            sendToClient('$errorIndex ${GameError.InvalidArguments} $purchaseTypeIndex is not a valid PurchaseType index');
+          if (purchaseTypeIndex >= purchaseTypes.length) {
+            sendToClient(
+                '$errorIndex ${GameError.InvalidArguments} $purchaseTypeIndex is not a valid PurchaseType index');
             return;
           }
 
           PurchaseType purchaseType = purchaseTypes[purchaseTypeIndex];
+          int cost = getPurchaseTypeCost(purchaseType);
+          if (player.points < cost) {
+            error(GameError.InsufficientFunds);
+            return;
+          }
 
-          switch(purchaseType){
-            case PurchaseType.Ammo_Handgun:
-              if (player.points < storeCosts.ammoHandgun) {
-                error(GameError.InsufficientFunds);
+          switch (purchaseType) {
+            case PurchaseType.Weapon_Handgun:
+              if (player.acquiredHandgun) {
+                errorWeaponAlreadyAcquired();
                 return;
               }
-              player.points -= storeCosts.ammoHandgun;
-              player.clips.handgun++;
+              player.points -= prices.weapon.handgun;
+              player.clips.handgun = 1;
+              player.rounds.handgun = settings.clipSize.handgun;
+              player.addEvent(PlayerEventType.Acquired_Handgun, 1);
               return;
-            case PurchaseType.Ammo_Shotgun:
-              player.clips.shotgun++;
+
+            case PurchaseType.Weapon_Shotgun:
+              if (player.acquiredShotgun) {
+                errorWeaponAlreadyAcquired();
+                return;
+              }
+              player.points -= prices.weapon.shotgun;
+              player.clips.shotgun = 1;
+              player.rounds.shotgun = settings.clipSize.shotgun;
+              player.addEvent(PlayerEventType.Acquired_Shotgun, 1);
+              return;
+
+            case PurchaseType.Weapon_SniperRifle:
+              if (player.acquiredSniperRifle) {
+                errorWeaponAlreadyAcquired();
+                return;
+              }
+              player.points -= prices.weapon.sniperRifle;
+              player.clips.sniperRifle = 1;
+              player.rounds.sniperRifle = settings.clipSize.sniperRifle;
+              player.addEvent(PlayerEventType.Acquired_SniperRifle, 1);
+              return;
+
+            case PurchaseType.Weapon_AssaultRifle:
+              if (player.acquiredAssaultRifle) {
+                errorWeaponAlreadyAcquired();
+                return;
+              }
+              player.points -= prices.weapon.assaultRifle;
+              player.clips.assaultRifle = 1;
+              player.rounds.assaultRifle = settings.clipSize.assaultRifle;
+              player.addEvent(PlayerEventType.Acquired_AssaultRifle, 1);
               return;
           }
           return;
+
         case ClientRequest.Score:
           String gameId = arguments[1];
           Game? game = findGameById(gameId);
@@ -489,7 +569,7 @@ void main() {
           break;
 
         case ClientRequest.SetCompilePaths:
-          if (arguments.length != 5){
+          if (arguments.length != 5) {
             errorArgsExpected(5, arguments);
             return;
           }

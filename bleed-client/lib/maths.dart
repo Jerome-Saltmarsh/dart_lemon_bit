@@ -4,8 +4,8 @@ import 'package:bleed_client/classes/Vector2.dart';
 
 import 'keys.dart';
 
-const double degreesToRadions = 0.0174533;
-const double radionsToDegrees =  57.29578;
+const double degreesToRadian = 0.0174533;
+const double radianToDegrees =  57.29578;
 const double piHalf = pi / 2.0;
 const double piQuarter = pi * 0.25;
 const double pi2 = pi + pi;
@@ -60,14 +60,6 @@ double radionsBetween2(dynamic a, double x, double y) {
   return radionsBetween(a[x], a[y], x, y);
 }
 
-double convertVectorToDegrees(double x, double y) {
-  if (x < 0)
-  {
-    return 360 - (atan2(x, y) * radionsToDegrees * -1);
-  }
-  return atan2(x, y) * radionsToDegrees;
-}
-
 double radionsBetween(double x1, double y1, double x2, double y2) {
   double x = x1 - x2;
   double y = y1 - y2;
@@ -83,6 +75,11 @@ double toRadian(double x, double y) {
     return pi2 - (atan2(x, y)  * -1);
   }
   return atan2(x, y);
+}
+
+double radians(double x, double y) {
+  if (x < 0) return -atan2(x, y);
+  return pi2 - atan2(x, y);
 }
 
 double velX(double rotation, double speed) {

@@ -16,4 +16,6 @@ enum GameError {
   InvalidPurchaseType,
   IntegerExpected,
   InsufficientFunds,
+  WeaponNotAcquired,
+  WeaponAlreadyAcquired
 }

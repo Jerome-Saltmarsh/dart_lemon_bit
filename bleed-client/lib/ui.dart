@@ -1,8 +1,7 @@
-import 'package:bleed_client/common.dart';
 import 'package:bleed_client/common/GameState.dart';
+import 'package:bleed_client/common/constants.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/common/GameType.dart';
-import 'package:bleed_client/common/StoreCosts.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
@@ -19,6 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'classes/InventoryItem.dart';
 import 'classes/Score.dart';
+import 'common.dart';
 import 'connection.dart';
 import 'enums.dart';
 import 'enums/InventoryItemType.dart';
@@ -624,7 +624,7 @@ Widget buildRow(int amount, String name){
       width8,
       button(
           name,
-          state.player.points >= storeCosts.ammoHandgun
+          state.player.points >= constants.prices.ammo.handgun
               ? purchaseAmmoHandgun
               : null),
     ],

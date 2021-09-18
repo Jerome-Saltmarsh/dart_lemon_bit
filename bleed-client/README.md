@@ -16,7 +16,6 @@
 [ ] Grenade tile collision
 [ ] Stamina Potion
 [ ] Rag doll death
-[ ] Bullet fired Flash
 [ ] Cursor Cooldown Circle
 [ ] Explosion Crater
 [ ] Random Power up Square 
@@ -24,7 +23,6 @@
 [ ] Fire Shotgun Animation
 [ ] Fire Handgun Animation
 [ ] Fire Assault Rifle Animation
-[ ] Zombie Animations
 [ ] Bullet holes in blocks
 [ ] Select Character (Sniper, Shotgun, Machine Gun, Medic)
 [ ] Item.RevivalKit (revive fallen squad member)
@@ -33,7 +31,9 @@
 [ ] Golden Zombie earns 5x kills
 [ ] Red Zombie earns 2x kills
 [ ] Ranged zombies
-[ ] Player squirts blood when attacked by zombie
+[ ] Supply Square - can only buy items when standing on a supply square
+[ ] Upgrade Square - can only upgrade items when on an upgrade square
+[ ] Bullet fired Flash
 -- BUSINESS --
 [ ] Setup Patreon
 [ ] Setup Discord
@@ -43,6 +43,8 @@
 [ ] Dead players pass through barriers
 [ ] Score ui displays error on respawn
 [ ] UI Score Lag
+-- OPTIMIZATIONS --
+[ ] Rebuilding the ui unnecessarily is extremely expensive
 -- OPEN WORLD -- 
 [ ] Npc Talk Text
 -- FORTRESS -- 
@@ -50,15 +52,18 @@
 [ ] Fortress Cache Path 
 -- DEATH MATCH 
 [ ] Rounds
-[ ] Prevent equip weapon with no ammo
 [ ] Observe mode
 -- CASUAL --
 [ ] Upgrade Pistol Damage
 [ ] Upgrade Pistol Magazine Capacity
-[ ] Show points earned floating text
+[ ] Prevent equip weapon which hasn't been acquired
+[ ] Compile Player Events in Update
 -- MAJOR BUGS --
 [ ] NPC Build up in the right corner
 -- COMPLETED --
+[x] Show points earned floating text on zombie killed
+[x] Player squirts blood when attacked by zombie
+[x] Zombie Animations
 [x] dynamically enable compile paths
 [x] UI Flashes red on load
 [x] Respawn ui lag
@@ -243,3 +248,7 @@
 
 # Symbolic Hard Link
 mklink /J common C:\Users\Jerome\github\bleed\bleed-common\lib
+
+
+// IDEAS
+// Captured Flags increase passive income

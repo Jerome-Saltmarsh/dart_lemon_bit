@@ -241,6 +241,7 @@ void drawCircleOutline(
 }
 
 void drawTiles() {
+  // TODO Optimization: Null checks are expensive
   if (images.imageTiles == null) return;
   if (compiledGame.tiles == null || compiledGame.tiles.isEmpty) return;
   if (render.tileTransforms.length != render.tileRects.length) return;

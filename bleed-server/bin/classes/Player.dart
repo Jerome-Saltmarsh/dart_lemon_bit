@@ -1,5 +1,6 @@
 import '../classes.dart';
 import '../common/GameState.dart';
+import '../common/PlayerEvents.dart';
 import '../common/Weapons.dart';
 import '../functions/generateName.dart';
 import '../functions/generateUUID.dart';
@@ -26,6 +27,24 @@ class Player extends Character {
   Score score = Score();
   Clips clips = Clips();
   Rounds rounds = Rounds();
+
+  bool acquiredHandgun = false;
+  bool acquiredShotgun = false;
+  bool acquiredSniperRifle = false;
+  bool acquiredAssaultRifle = false;
+
+  final List<PlayerEvent> events = [];
+
+  void addEvent(PlayerEventType type, int value){
+    for(PlayerEvent event in events){
+      if(event.sent) continue;
+      event.sent = false;
+      event.type = type;
+      event.value = value;
+      return;
+    }
+    events.add(PlayerEvent(type, value));
+  }
 
   set points(int value){
     _points = value;

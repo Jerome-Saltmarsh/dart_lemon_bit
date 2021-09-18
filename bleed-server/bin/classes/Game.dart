@@ -251,14 +251,14 @@ class GameCasual extends Game {
   }
 
   Clips spawnClip() {
-    return Clips(handgun: 3, shotgun: 3, sniper: 2, assaultRifle: 2);
+    return Clips(handgun: 3, shotgun: 3, sniperRifle: 2, assaultRifle: 2);
   }
 
   Rounds spawnRounds(){
     return Rounds(
       handgun: settings.clipSize.handgun,
       shotgun: settings.clipSize.shotgun,
-      sniper: settings.clipSize.sniperRifle,
+      sniperRifle: settings.clipSize.sniperRifle,
       assaultRifle: settings.clipSize.assaultRifle,
     );
   }
@@ -305,6 +305,10 @@ class GameCasual extends Game {
     );
 
     player.squad = getNextSquad();
+    player.acquiredHandgun = true;
+    player.acquiredShotgun = false;
+    player.acquiredSniperRifle = false;
+    player.acquiredAssaultRifle = false;
     return player;
   }
 }
@@ -594,7 +598,7 @@ extension GameFunctions on Game {
 
     double d = 15;
     double x = player.x + adj(player.aimAngle, d);
-    double y = player.y + opp(player.aimAngle, d);
+    double y = player.y + opp(player.aimAngle, d) - 5;
 
     switch (player.weapon) {
       case Weapon.HandGun:
@@ -616,16 +620,16 @@ extension GameFunctions on Game {
         Bullet bullet = bullets.last;
         player.state = CharacterState.Firing;
         player.stateDuration = shotgunCoolDown;
-        dispatch(GameEventType.Shotgun_Fired, player.x, player.y, bullet.xv,
+        dispatch(GameEventType.Shotgun_Fired, x, y, bullet.xv,
             bullet.yv);
         break;
       case Weapon.SniperRifle:
         // @on character fire sniper rifle
-        player.rounds.sniper--;
+        player.rounds.sniperRifle--;
         Bullet bullet = spawnBullet(player);
         player.state = CharacterState.Firing;
         player.stateDuration = settingsSniperCooldown;
-        dispatch(GameEventType.SniperRifle_Fired, player.x, player.y, bullet.xv,
+        dispatch(GameEventType.SniperRifle_Fired, x, y, bullet.xv,
             bullet.yv);
         break;
       case Weapon.AssaultRifle:
@@ -634,7 +638,7 @@ extension GameFunctions on Game {
         Bullet bullet = spawnBullet(player);
         player.state = CharacterState.Firing;
         player.stateDuration = settings.machineGunCoolDown;
-        dispatch(GameEventType.MachineGun_Fired, player.x, player.y, bullet.xv,
+        dispatch(GameEventType.MachineGun_Fired, x, y, bullet.xv,
             bullet.yv);
         break;
     }
@@ -709,10 +713,10 @@ extension GameFunctions on Game {
             break;
           case Weapon.SniperRifle:
             // @on reload sniper rifle
-            if (player.rounds.sniper >= settings.clipSize.sniperRifle) return;
-            if (player.clips.sniper <= 0) return;
-            player.rounds.sniper = settings.clipSize.sniperRifle;
-            player.clips.sniper--;
+            if (player.rounds.sniperRifle >= settings.clipSize.sniperRifle) return;
+            if (player.clips.sniperRifle <= 0) return;
+            player.rounds.sniperRifle = settings.clipSize.sniperRifle;
+            player.clips.sniperRifle--;
             player.stateDuration = settings.reloadDuration.sniperRifle;
             break;
           case Weapon.AssaultRifle:
@@ -768,60 +772,6 @@ extension GameFunctions on Game {
     // _checkBulletBlockCollision();
     checkBulletCollision(npcs);
     checkBulletCollision(players);
-  }
-
-  void _checkBulletBlockCollision() {
-    for (int i = 0; i < bullets.length; i++) {
-      if (!bullets[i].active) continue;
-      Bullet bullet = bullets[i];
-      for (int j = 0; j < scene.blocks.length; j++) {
-        Block block = scene.blocks[j];
-        if (bullet.x > block.rightX) continue;
-        if (bullet.x < block.leftX) continue;
-        if (bullet.y < block.topY) continue;
-        if (bullet.y > block.bottomY) continue;
-
-        if (bullet.x < block.topX && bullet.y < block.leftY) {
-          double xd = block.topX - bullet.x;
-          double yd = bullet.y - block.topY;
-          if (yd > xd) {
-            bullets.removeAt(i);
-            i--;
-          }
-          continue;
-        }
-
-        if (bullet.x < block.bottomX && bullet.y > block.leftY) {
-          double xd = bullet.x - block.leftX;
-          double yd = bullet.y - block.leftY;
-          if (xd > yd) {
-            bullets.removeAt(i);
-            i--;
-          }
-          continue;
-        }
-        if (bullet.x > block.topX && bullet.y < block.rightY) {
-          double xd = bullet.x - block.topX;
-          double yd = bullet.y - block.topY;
-
-          if (yd > xd) {
-            bullets.removeAt(i);
-            i--;
-          }
-          continue;
-        }
-
-        if (bullet.x > block.bottomX && bullet.y > block.rightY) {
-          double xd = block.rightX - bullet.x;
-          double yd = bullet.y - block.rightY;
-          if (xd > yd) {
-            bullets.removeAt(i);
-            i--;
-          }
-          continue;
-        }
-      }
-    }
   }
 
   void spawnExplosion(Grenade grenade) {

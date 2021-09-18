@@ -72,11 +72,8 @@ String get session =>
 State state = State();
 
 Player get player => state.player;
-
 CompiledGame get compiledGame => state.compiledGame;
-
 bool get gameStarted => state.compiledGame.gameId >= 0;
-
 double get playerX => compiledGame.playerX;
 double get playerY => compiledGame.playerY;
 

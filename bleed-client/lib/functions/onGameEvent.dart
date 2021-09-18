@@ -1,3 +1,8 @@
+import 'package:bleed_client/classes/FloatingText.dart';
+import 'package:bleed_client/classes/GunshotFlash.dart';
+import 'package:bleed_client/classes/RenderState.dart';
+import 'package:bleed_client/common/constants.dart';
+import 'package:bleed_client/instances/settings.dart';
 import 'package:bleed_client/spawners/spawnBlood.dart';
 import 'package:bleed_client/spawners/spawnHead.dart';
 import 'package:bleed_client/spawners/spawnOrgan.dart';
@@ -17,11 +22,12 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
     case GameEventType.Handgun_Fired:
       playAudioHandgunShot(x, y);
       spawnShell(x, y);
-      spawnShotSmoke(x, y, xv, yv);
+      // render.gunShotFlashes.add(GunShotFlash(x: x, y: y, rotation: radians(xv, yv)));
       break;
     case GameEventType.Shotgun_Fired:
       playAudioShotgunShot(x, y);
       spawnShell(x, y);
+      spawnShotSmoke(x, y, xv, yv);
       break;
     case GameEventType.SniperRifle_Fired:
       playAudioSniperShot(x, y);
@@ -30,6 +36,7 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
     case GameEventType.MachineGun_Fired:
       playAudioAssaultRifleShot(x, y);
       spawnShell(x, y);
+      spawnShotSmoke(x, y, xv, yv);
       break;
     case GameEventType.Zombie_Hit:
       if (randomBool()) {
@@ -67,6 +74,7 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
             yv: yv * s + giveOrTake(r),
             zv: randomBetween(0, 0.07));
       }
+      spawnFloatingText(x, y, constants.pointsEarnedZombieKilled);
       break;
     case GameEventType.Zombie_killed_Explosion:
       playAudioZombieDeath(x, y);
@@ -86,6 +94,9 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
           xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
       spawnOrgan(x, y, 0.3,
           xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
+
+
+      spawnFloatingText(x, y, constants.pointsEarnedZombieKilled);
       break;
     case GameEventType.Zombie_Target_Acquired:
       playAudioZombieTargetAcquired(x, y);

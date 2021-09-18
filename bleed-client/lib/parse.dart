@@ -1,7 +1,9 @@
+import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/classes/InventoryItem.dart';
 import 'package:bleed_client/classes/Lobby.dart';
 import 'package:bleed_client/common/GameError.dart';
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/common/PlayerEvents.dart';
 import 'package:bleed_client/common/ServerResponse.dart';
 import 'package:bleed_client/connection.dart';
 import 'package:bleed_client/enums/InventoryItemType.dart';
@@ -178,9 +180,14 @@ void parseState() {
         sendRequestJoinGame(state.lobbyGameUuid);
         break;
 
-      case ServerResponse.Score:
-        _parseScore();
+      case ServerResponse.Player_Events:
+        _parsePlayerEvents();
         return;
+
+      case ServerResponse.Player:
+        _parsePlayer();
+        break;
+
 
       default:
         print("parser not implemented $serverResponse");
@@ -269,6 +276,23 @@ void _parsePlayer() {
 
     player.state = charState;
 
+  }
+
+  player.acquiredHandgun = _consumeBool();
+  player.acquiredShotgun = _consumeBool();
+  player.acquiredSniperRifle = _consumeBool();
+  player.acquiredAssaultRifle = _consumeBool();
+}
+
+void _parsePlayerEvents(){
+  while (!_simiColonConsumed()) {
+    PlayerEventType playerEvent = playerEventTypes[_consumeInt()];
+    int value = _consumeInt();
+    switch(playerEvent){
+      case PlayerEventType.Acquired_Handgun:
+        playAudioAcquireItem(playerX, playerY);
+        break;
+    }
   }
 }
 
@@ -386,6 +410,10 @@ int _consumeInt() {
     throw Exception("could not parse $string to int");
   }
   return value;
+}
+
+bool _consumeBool(){
+  return _consumeString() == "1" ? true : false;
 }
 
 Weapon _consumeWeapon() {
