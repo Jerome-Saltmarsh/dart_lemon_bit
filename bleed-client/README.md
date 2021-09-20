@@ -7,7 +7,6 @@
 [ ] Game Type: Capture The Squares
 [ ] Game Type: Sandbox
 [ ] Throw Animation
-[ ] Body Armor
 [ ] Knife Attack
 [ ] Line of Sight
 [ ] Particle Gunshot smoke
@@ -34,6 +33,7 @@
 [ ] Supply Square - can only buy items when standing on a supply square
 [ ] Upgrade Square - can only upgrade items when on an upgrade square
 [ ] Bullet fired Flash
+[ ] Player chat
 [ ] Activate Shield
 [ ] Heal animation
 -- BUSINESS --
@@ -59,11 +59,12 @@
 -- CASUAL --
 [ ] Upgrade Pistol Damage
 [ ] Upgrade Pistol Magazine Capacity
-[ ] Prevent equip weapon which hasn't been acquired
-[ ] Compile Player Events in Update
+[ ] Body Armor
 -- MAJOR BUGS --
 [ ] NPC Build up in the right corner
 -- COMPLETED --
+[x] Prevent equip weapon which hasn't been acquired
+[x] Compile Player Events in Update
 [x] Show points earned floating text on zombie killed
 [x] Player squirts blood when attacked by zombie
 [x] Zombie Animations
