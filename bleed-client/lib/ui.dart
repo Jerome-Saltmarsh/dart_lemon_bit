@@ -1009,24 +1009,27 @@ Widget buildViewScore() {
           top: 0,
           left: 0,
           child: Container(
-            color: Colors.black45,
+            decoration: BoxDecoration(
+              color: black45,
+              borderRadius: borderRadiusBottomRight8,
+            ),
             width: 200,
             padding: EdgeInsets.all(4),
             height: 300,
             child: SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: crossAxis.start,
                 children: [
                   height16,
-                  text("Highest", decoration: TextDecoration.underline),
+                  text("Highest", decoration: underline),
                   Row(children: [
                     Container(width: 140, child: text(highest.playerName)),
                     Container(width: 50, child: text(highest.record)),
                   ]),
                   Divider(),
-                  text("Leader", decoration: TextDecoration.underline),
+                  text("Leader", decoration: underline),
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: crossAxis.start,
                     children: state.score.map((score) {
                       return Row(
                         children: [
