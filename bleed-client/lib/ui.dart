@@ -340,7 +340,7 @@ Widget buildHud() {
       if (compiledGame.gameType == GameType.Casual) buildGameViewCasual(),
       if (state.gameState == GameState.Won) buildViewWin(),
       if (state.gameState == GameState.Lost) buildViewLose(),
-      if (true || playerDead && compiledGame.gameType == GameType.Casual)
+      if (playerDead && compiledGame.gameType == GameType.Casual)
         buildViewRespawn(),
       if (!playerDead && state.storeVisible) buildViewStore(),
       if (state.score.isNotEmpty && compiledGame.players.isNotEmpty)
@@ -789,8 +789,9 @@ Widget buildViewRespawn() {
             Container(
                 padding: padding16,
                 width: 600,
-                // height: 600,
-                decoration: BoxDecoration(borderRadius: borderRadius8, color: black54),
+                decoration: BoxDecoration(
+                    // borderRadius: borderRadius8,
+                    color: black54),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: crossAxis.center,
@@ -800,8 +801,7 @@ Widget buildViewRespawn() {
                           padding: padding8,
                           child: text("BLEED beta v1.0.0")),
                       height16,
-                      text("YOU DIED",
-                          fontSize: 30, decoration: underline),
+                      text("YOU DIED", fontSize: 30, decoration: underline),
                       height16,
                       Container(
                         padding: padding16,
@@ -822,7 +822,9 @@ Widget buildViewRespawn() {
                                         child: Container(
                                             width: 70,
                                             alignment: Alignment.center,
-                                            child: text("Paypal", )),
+                                            child: text(
+                                              "Paypal",
+                                            )),
                                         borderRadius: borderRadius4,
                                         padding: padding8),
                                     callback: () {
@@ -840,8 +842,7 @@ Widget buildViewRespawn() {
                                     callback: () {
                                       openLink(links.patreon);
                                     },
-                                    hint: links.patreon
-                                )
+                                    hint: links.patreon)
                               ],
                             ),
                             height8,
@@ -864,8 +865,7 @@ Widget buildViewRespawn() {
                                   children: [
                                     text("Youtube"),
                                     IconButton(
-                                        onPressed: () {
-                                        },
+                                        onPressed: () {},
                                         icon: Icon(
                                           Icons.link,
                                           color: white,
@@ -985,9 +985,12 @@ Widget buildViewScore() {
       );
     }
 
-    Widget iconClose = IconButton(
-        icon: Icon(Icons.close, size: 30, color: Colors.white70),
-        onPressed: toggleShowScore);
+    Widget iconClose = Tooltip(
+      message: "Hide Score board",
+      child: IconButton(
+          icon: Icon(Icons.close, size: 30, color: Colors.white70),
+          onPressed: toggleShowScore),
+    );
 
     return Stack(
       children: [

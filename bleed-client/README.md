@@ -34,6 +34,7 @@
 [ ] Supply Square - can only buy items when standing on a supply square
 [ ] Upgrade Square - can only upgrade items when on an upgrade square
 [ ] Bullet fired Flash
+[ ] Activate Shield
 [ ] Heal animation
 -- BUSINESS --
 [ ] Setup Patreon
