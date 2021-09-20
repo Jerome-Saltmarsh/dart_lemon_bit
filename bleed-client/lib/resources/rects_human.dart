@@ -197,24 +197,28 @@ List<Rect> rectHumanWalkingDownLeftFrames = [
   getHumanSpriteRect(4),
   getHumanSpriteRect(5),
   getHumanSpriteRect(6),
+  getHumanSpriteRect(5),
 ];
 
 List<Rect> rectHumanWalkingLeftFrames = [
   getHumanSpriteRect(7),
   getHumanSpriteRect(8),
   getHumanSpriteRect(9),
+  getHumanSpriteRect(8),
 ];
 
 List<Rect> rectHumanWalkingUpLeftFrames = [
   getHumanSpriteRect(10),
   getHumanSpriteRect(11),
   getHumanSpriteRect(12),
+  getHumanSpriteRect(11),
 ];
 
 List<Rect> rectHumanWalkingUpFrames = [
   getHumanSpriteRect(13),
   getHumanSpriteRect(14),
-  getHumanSpriteRect(15)
+  getHumanSpriteRect(15),
+  getHumanSpriteRect(14),
 ];
 
 // Reloading
@@ -233,48 +237,56 @@ List<Rect> rectHumanRunningDownLeftFrames = [
   rectHumanRunningDownLeft1,
   rectHumanRunningDownLeft2,
   rectHumanRunningDownLeft3,
+  rectHumanRunningDownLeft2,
 ];
 
 List<Rect> rectHumanRunningLeftFrames = [
   rectHumanRunningLeft1,
   rectHumanRunningLeft2,
   rectHumanRunningLeft3,
+  rectHumanRunningLeft2,
 ];
 
 List<Rect> rectHumanRunningUpLeftFrames = [
   rectHumanRunningUpLeft1,
   rectHumanRunningUpLeft2,
   rectHumanRunningUpLeft3,
+  rectHumanRunningUpLeft2,
 ];
 
 List<Rect> rectHumanRunningUpFrames = [
   rectHumanRunningUp1,
   rectHumanRunningUp2,
   rectHumanRunningUp3,
+  rectHumanRunningUp2,
 ];
 
 List<Rect> rectHumanRunningUpRightFrames = [
   rectHumanRunningUpRight1,
   rectHumanRunningUpRight2,
   rectHumanRunningUpRight3,
+  rectHumanRunningUpRight2,
 ];
 
 List<Rect> rectHumanRunningRightFrames = [
   rectHumanRunningRight1,
   rectHumanRunningRight2,
   rectHumanRunningRight3,
+  rectHumanRunningRight2,
 ];
 
 List<Rect> rectHumanRunningDownRightFrames = [
   rectHumanRunningDownRight1,
   rectHumanRunningDownRight2,
   rectHumanRunningDownRight3,
+  rectHumanRunningDownRight2,
 ];
 
 List<Rect> rectHumanRunningDownFrames = [
   rectHumanRunningDown1,
   rectHumanRunningDown2,
   rectHumanRunningDown3,
+  rectHumanRunningDown2,
 ];
 
 List<Rect> humanStrikingDownLeftFrames = [
@@ -306,7 +318,7 @@ List<Rect> humanStrikingDownRightFrames = [
   rectHumanIdleDownRight
 ];
 
-List<int> characterRunningUp = [12, 51, 55];
+List<int> characterRunningUp = [12, 51, 55, 51];
 List<Rect> humanStrikingDownFrames = [rectHumanStrikingDown, rectHumanIdleDown];
 
 Rect getHumanSpriteRect(int index) {

@@ -20,6 +20,10 @@ Widget border({Widget child, Color color = Colors.white, double width = 1, Borde
   );
 }
 
+Widget comingSoon({Widget child}){
+  return Tooltip(message: "Coming Soon", child: child,);
+}
+
 Widget onPressed({Widget child, Function callback, String hint}){
 
   Widget widget = MouseRegion(

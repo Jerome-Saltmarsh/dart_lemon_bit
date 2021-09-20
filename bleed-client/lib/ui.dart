@@ -861,27 +861,35 @@ Widget buildViewRespawn() {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Row(
-                                  children: [
-                                    text("Youtube"),
-                                    IconButton(
-                                        onPressed: () {},
-                                        icon: Icon(
-                                          Icons.link,
-                                          color: white,
-                                        ))
-                                  ],
+                                comingSoon (
+                                  child: Row(
+                                    children: [
+                                      text("Youtube"),
+                                      IconButton(
+                                          // onPressed: () {},
+                                          icon: Icon(
+                                            Icons.link,
+                                            color: white,
+                                          ))
+                                    ],
+                                  ),
                                 ),
-                                Row(
-                                  children: [
-                                    text("Discord"),
-                                    IconButton(
-                                        onPressed: () {},
-                                        icon: Icon(
-                                          Icons.link,
-                                          color: white,
-                                        ))
-                                  ],
+                                onPressed(
+                                  hint: "Come and Hang!",
+                                  callback: (){
+                                    openLink(links.discord);
+                                  },
+                                  child: Row(
+                                    children: [
+                                      text("Discord"),
+                                      IconButton(
+                                          onPressed: () {},
+                                          icon: Icon(
+                                            Icons.link,
+                                            color: white,
+                                          ))
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
@@ -904,13 +912,16 @@ Widget buildViewRespawn() {
                                     alignment: Alignment.center,
                                     child: text(getTip())),
                                 width16,
-                                IconButton(
-                                    onPressed: nextTip,
-                                    icon: Icon(
-                                      Icons.arrow_forward,
-                                      color: Colors.white,
-                                      size: 30,
-                                    ))
+                                Tooltip(
+                                  message: "Next Hint",
+                                  child: IconButton(
+                                      onPressed: nextTip,
+                                      icon: Icon(
+                                        Icons.arrow_forward,
+                                        color: Colors.white,
+                                        size: 30,
+                                      )),
+                                )
                               ],
                             ),
                           ],
