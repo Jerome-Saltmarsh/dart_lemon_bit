@@ -255,7 +255,7 @@ class GameCasual extends Game {
     return Clips(handgun: 3, shotgun: 3, sniperRifle: 2, assaultRifle: 2);
   }
 
-  Rounds spawnRounds(){
+  Rounds spawnRounds() {
     return Rounds(
       handgun: settings.clipSize.handgun,
       shotgun: settings.clipSize.shotgun,
@@ -264,7 +264,7 @@ class GameCasual extends Game {
     );
   }
 
-  int getNextSquad(){
+  int getNextSquad() {
     int playersInSquad0 = numberOfPlayersInSquad(0);
     int playersInSquad1 = numberOfPlayersInSquad(1);
     int playersInSquad2 = numberOfPlayersInSquad(2);
@@ -310,7 +310,7 @@ class GameCasual extends Game {
   }
 
   @override
-  void onPlayerRevived(Player player){
+  void onPlayerRevived(Player player) {
     player.meds = spawnMeds;
     player.grenades = spawnGrenades;
     player.clips = spawnClip();
@@ -374,11 +374,9 @@ abstract class Game {
 
   void onPlayerDisconnected(Player player) {}
 
-  void onPlayerRevived(Player player){}
+  void onPlayerRevived(Player player) {}
 
   bool gameOver();
-
-
 
   Game(this.type, this.scene, this.maxPlayers) {
     for (int row = 0; row < scene.rows; row++) {
@@ -486,7 +484,8 @@ extension GameFunctions on Game {
 
         double speed = 0.1;
         double rotation = radiansBetweenObject(npc, npc.target);
-        dispatch(GameEventType.Zombie_Strike, npc.target.x, npc.target.y, velX(rotation, speed), velY(rotation, speed));
+        dispatch(GameEventType.Zombie_Strike, npc.target.x, npc.target.y,
+            velX(rotation, speed), velY(rotation, speed));
         return;
       }
 
@@ -635,8 +634,7 @@ extension GameFunctions on Game {
         Bullet bullet = bullets.last;
         player.state = CharacterState.Firing;
         player.stateDuration = shotgunCoolDown;
-        dispatch(GameEventType.Shotgun_Fired, x, y, bullet.xv,
-            bullet.yv);
+        dispatch(GameEventType.Shotgun_Fired, x, y, bullet.xv, bullet.yv);
         break;
       case Weapon.SniperRifle:
         // @on character fire sniper rifle
@@ -644,8 +642,7 @@ extension GameFunctions on Game {
         Bullet bullet = spawnBullet(player);
         player.state = CharacterState.Firing;
         player.stateDuration = settingsSniperCooldown;
-        dispatch(GameEventType.SniperRifle_Fired, x, y, bullet.xv,
-            bullet.yv);
+        dispatch(GameEventType.SniperRifle_Fired, x, y, bullet.xv, bullet.yv);
         break;
       case Weapon.AssaultRifle:
         // @on character fire assault rifle
@@ -653,8 +650,7 @@ extension GameFunctions on Game {
         Bullet bullet = spawnBullet(player);
         player.state = CharacterState.Firing;
         player.stateDuration = settings.machineGunCoolDown;
-        dispatch(GameEventType.MachineGun_Fired, x, y, bullet.xv,
-            bullet.yv);
+        dispatch(GameEventType.MachineGun_Fired, x, y, bullet.xv, bullet.yv);
         break;
     }
   }
@@ -728,7 +724,8 @@ extension GameFunctions on Game {
             break;
           case Weapon.SniperRifle:
             // @on reload sniper rifle
-            if (player.rounds.sniperRifle >= settings.clipSize.sniperRifle) return;
+            if (player.rounds.sniperRifle >= settings.clipSize.sniperRifle)
+              return;
             if (player.clips.sniperRifle <= 0) return;
             player.rounds.sniperRifle = settings.clipSize.sniperRifle;
             player.clips.sniperRifle--;
@@ -1276,11 +1273,9 @@ extension GameFunctions on Game {
 
   TileNode getRandomOpenTileNode() {
     while (true) {
-      TileNode node = scene.tileNodes[randomInt(0, scene.rows)]
-          [randomInt(0, scene.columns)];
-      if (node.open) {
-        return node;
-      }
+      TileNode node = randomValue(randomValue(scene.tileNodes));
+      if (!node.open) continue;
+      return node;
     }
   }
 

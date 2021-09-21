@@ -1,12 +1,13 @@
 -- FEATURES -- 
 [ ] Critical Damage
 [ ] Accuracy
-[ ] Weapon Oozie
+[ ] Weapon Smg
+[ ] Weapon: Desert Eagle
 [ ] Weapon: Bazooka
+[ ] Weapon: Mini gun
 [ ] Game Type: Capture The Squares
 [ ] Game Type: Sandbox
 [ ] Throw Animation
-[ ] Knife Attack
 [ ] Line of Sight
 [ ] Particle Gunshot smoke
 [ ] Cache Particles-
@@ -25,7 +26,6 @@
 [ ] Select Character (Sniper, Shotgun, Machine Gun, Medic)
 [ ] Item.RevivalKit (revive fallen squad member)
 [ ] Gain XP and levels
-[ ] Merge Maths lib into common
 [ ] Golden Zombie earns 5x kills
 [ ] Red Zombie earns 2x kills
 [ ] Ranged zombies
@@ -33,6 +33,10 @@
 [ ] Player chat
 [ ] Activate Shield
 [ ] Heal animation
+[ ] Supply Square - Purchase supplies, health, grenades, ammo, etc,
+[ ] Upgrade Square - upgrade weapons and items
+-- REFACTOR --
+[ ] Merge Maths lib into common
 -- BUSINESS --
 [ ] Setup Patreon
 [ ] Setup Discord
@@ -56,9 +60,8 @@
 [ ] Observe mode
 -- CASUAL --
 [ ] Body Armor
-[ ] Supply Square - Purchase supplies, health, grenades, ammo, etc,
-[ ] Upgrade Square - upgrade weapons and items
-[ ] Weapon Square - purchase new weapons
+[ ] Knife Attack
+[x] Weapon Square - purchase new weapons
 -- MAJOR BUGS --
 [ ] NPC Build up in the right corner
 -- COMPLETED --
