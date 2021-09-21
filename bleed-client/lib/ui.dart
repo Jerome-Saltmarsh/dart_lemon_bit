@@ -543,19 +543,17 @@ Widget buildBottomLeft() {
         children: [
           Column(
             children: [
-              // if (player.canPurchase)
-              //   Column(
-              //     children: [
-              //       buildSlot(title: "Desert Eagle"),
-              //       height16,
-              //     ],
-              //   ),
               if (!player.acquiredHandgun) buildSlot(title: "Slot 1"),
               if (player.acquiredHandgun)
-                onPressed(
-                    child: buildWeaponSlot(weapon: Weapon.HandGun),
-                    hint: "Press 1 to equip",
-                    callback: sendRequestEquipHandgun),
+                Stack(
+                  children: [
+                    buildTag(player.clipsHandgun),
+                    onPressed(
+                        child: buildWeaponSlot(weapon: Weapon.HandGun),
+                        hint: "Press 1 to equip",
+                        callback: sendRequestEquipHandgun),
+                  ],
+                ),
             ],
           ),
           width8,
@@ -591,10 +589,15 @@ Widget buildBottomLeft() {
                   ],
                 ),
               if (player.acquiredShotgun)
-                onPressed(
-                    child: buildWeaponSlot(weapon: Weapon.Shotgun),
-                    hint: "Press 2 to equip",
-                    callback: sendRequestEquipShotgun),
+                Stack(
+                  children: [
+                    buildTag(player.clipsShotgun),
+                    onPressed(
+                        child: buildWeaponSlot(weapon: Weapon.Shotgun),
+                        hint: "Press 2 to equip",
+                        callback: sendRequestEquipShotgun),
+                  ],
+                ),
               if (!player.acquiredShotgun) buildSlot(title: "Slot 2"),
             ],
           ),

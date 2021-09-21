@@ -291,6 +291,8 @@ void _parsePlayer() {
     player.tile = tile;
     onPlayerTileChanged(previousTile, tile);
   }
+  player.clipsHandgun = _consumeInt();
+  player.clipsShotgun = _consumeInt();
 }
 
 void _parsePlayerEvents(){
