@@ -63,6 +63,7 @@ class Scene {
         } else {
           tileNodes[row][column].up = _boundary;
           tileNodes[row][column].leftUp = _boundary;
+          tileNodes[row][column].upRight = _boundary;
         }
         if (row < rows - 1) {
           tileNodes[row][column].down = tileNodes[row + 1][column];
@@ -74,6 +75,8 @@ class Scene {
           }
         } else {
           tileNodes[row][column].down = _boundary;
+          tileNodes[row][column].downLeft = _boundary;
+          tileNodes[row][column].rightDown = _boundary;
         }
         if (column > 0) {
           tileNodes[row][column].left = tileNodes[row][column - 1];
