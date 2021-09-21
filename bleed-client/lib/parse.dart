@@ -1,4 +1,5 @@
 import 'package:bleed_client/audio.dart';
+import 'package:bleed_client/bleed.dart';
 import 'package:bleed_client/classes/InventoryItem.dart';
 import 'package:bleed_client/classes/Lobby.dart';
 import 'package:bleed_client/common/GameError.dart';
@@ -268,25 +269,29 @@ void _parsePlayer() {
   compiledGame.playerLives = _consumeInt();
   player.equippedClips = _consumeInt();
   player.equippedRounds = _consumeInt();
-  state.gameState = GameState.values[_consumeInt()];
+  state.gameState = gameStates[_consumeInt()];
   player.points = _consumeInt();
 
   CharacterState charState = _consumeCharacterState();
   if (charState != player.state){
-    // @on character state changed
-    if (charState == CharacterState.Dead || player.state == CharacterState.Dead){
-      redrawUI();
-    }
-
+    CharacterState previous = player.state;
     player.state = charState;
-
+    onPlayerStateChanged(previous, charState);
   }
 
   player.acquiredHandgun = _consumeBool();
   player.acquiredShotgun = _consumeBool();
   player.acquiredSniperRifle = _consumeBool();
   player.acquiredAssaultRifle = _consumeBool();
-  player.tile = tiles[_consumeInt()];
+
+  Tile tile = _consumeTile();
+
+  if(player.tile != tile){
+    Tile previousTile = player.tile;
+    player.tile = tile;
+    onPlayerTileChanged(previousTile, tile);
+  }
+
 }
 
 void _parsePlayerEvents(){
@@ -427,6 +432,10 @@ Weapon _consumeWeapon() {
 
 CharacterState _consumeCharacterState(){
   return characterStates[_consumeInt()];
+}
+
+Tile _consumeTile(){
+  return tiles[_consumeInt()];
 }
 
 int parseInt(String value) {

@@ -16,6 +16,7 @@ import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/tutorials.dart';
 import 'package:bleed_client/ui/dialogs.dart';
 import 'package:bleed_client/ui/flutter_constants.dart';
+import 'package:bleed_client/ui/styleguide.dart';
 import 'package:bleed_client/ui/views.dart';
 import 'package:flutter/material.dart';
 import 'package:neuro/instance.dart';
@@ -24,6 +25,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'classes/InventoryItem.dart';
 import 'classes/Score.dart';
 import 'common.dart';
+import 'common/Tile.dart';
 import 'connection.dart';
 import 'enums/InventoryItemType.dart';
 import 'enums/Mode.dart';
@@ -484,7 +486,7 @@ Widget buildBottomLeft() {
       padding: padding8,
       decoration: BoxDecoration(
           color: Colors.black45,
-          borderRadius: BorderRadius.only(topRight: radius8),
+          borderRadius: const BorderRadius.only(topRight: radius8),
       ),
       child: Row(
         mainAxisAlignment: mainAxis.center,
@@ -492,42 +494,44 @@ Widget buildBottomLeft() {
         children: [
           Column(
             children: [
-              Container(
-                child: Column(
-                  mainAxisAlignment: mainAxis.center,
+              if(player.tile == Tile.PlayerSpawn)
+                Column(
                   children: [
-                    text("Beretta"),
-                    text("200"),
+                    Container(
+                      child: Column(
+                        mainAxisAlignment: mainAxis.center,
+                        children: [
+                          text("Beretta"),
+                          text("200"),
+                        ],
+                      ),
+                      width: 120,
+                      height: 120 * goldenRatioInverse,
+                      alignment: Alignment.center,
+                      decoration: styleGuide.slot.boxDecoration,
+                    ),
+                    Container(
+                      child: text("Glock 45"),
+                      width: 120,
+                      height: 120 * goldenRatioInverse,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: borderRadius4,
+                          border: Border.all(color: Colors.white, width: 2)
+                      ),
+                    ),
+                    Container(
+                      child: text("Colt"),
+                      width: 120,
+                      height: 120 * goldenRatioInverse,
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                          borderRadius: borderRadius4,
+                          border: Border.all(color: Colors.white, width: 2)
+                      ),
+                    ),
                   ],
                 ),
-                width: 120,
-                height: 120 * goldenRatioInverse,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    borderRadius: borderRadius4,
-                    border: Border.all(color: Colors.white, width: 2)
-                ),
-              ),
-              Container(
-                child: text("Glock 45"),
-                width: 120,
-                height: 120 * goldenRatioInverse,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    borderRadius: borderRadius4,
-                    border: Border.all(color: Colors.white, width: 2)
-                ),
-              ),
-              Container(
-                child: text("Colt"),
-                width: 120,
-                height: 120 * goldenRatioInverse,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    borderRadius: borderRadius4,
-                    border: Border.all(color: Colors.white, width: 2)
-                ),
-              ),
               Container(
                 child: text("Slot 1"),
                 width: 120,
