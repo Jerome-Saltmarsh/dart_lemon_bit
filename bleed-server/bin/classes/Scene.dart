@@ -51,43 +51,33 @@ class Scene {
     }
 
     for (int row = 0; row < rows; row++) {
-      for (int column = 0; column < columns; column++) {
-        if (row > 0) {
-          tileNodes[row][column].up = tileNodes[row - 1][column];
-          if (column > 0) {
-            tileNodes[row][column].leftUp = tileNodes[row - 1][column - 1];
-          }
-          if (column < columns - 1) {
-            tileNodes[row][column].upRight = tileNodes[row - 1][column + 1];
-          }
-        } else {
-          tileNodes[row][column].up = _boundary;
-          tileNodes[row][column].leftUp = _boundary;
-          tileNodes[row][column].upRight = _boundary;
-        }
-        if (row < rows - 1) {
-          tileNodes[row][column].down = tileNodes[row + 1][column];
-          if (column < columns - 1) {
-            tileNodes[row][column].rightDown = tileNodes[row + 1][column + 1];
-          }
-          if (column > 0) {
-            tileNodes[row][column].downLeft = tileNodes[row + 1][column - 1];
-          }
-        } else {
-          tileNodes[row][column].down = _boundary;
-          tileNodes[row][column].downLeft = _boundary;
-          tileNodes[row][column].rightDown = _boundary;
-        }
-        if (column > 0) {
-          tileNodes[row][column].left = tileNodes[row][column - 1];
-        } else {
-          tileNodes[row][column].left = _boundary;
-        }
-        if (column < columns - 1) {
-          tileNodes[row][column].right = tileNodes[row][column + 1];
-        } else {
-          tileNodes[row][column].right = _boundary;
-        }
+      tileNodes[row][0].leftUp = _boundary;
+      tileNodes[row][0].left = _boundary;
+      tileNodes[row][0].downLeft = _boundary;
+      tileNodes[row][columns - 1].upRight = _boundary;
+      tileNodes[row][columns - 1].right = _boundary;
+      tileNodes[row][columns - 1].rightDown = _boundary;
+    }
+
+    for (int column = 0; column < columns; column++) {
+      tileNodes[0][column].leftUp = _boundary;
+      tileNodes[0][column].up = _boundary;
+      tileNodes[0][column].upRight = _boundary;
+      tileNodes[rows - 1][column].downLeft = _boundary;
+      tileNodes[rows - 1][column].down = _boundary;
+      tileNodes[rows - 1][column].rightDown = _boundary;
+    }
+
+    for (int row = 1; row < rows - 1; row++) {
+      for (int column = 1; column < columns - 1; column++) {
+        tileNodes[row][column].up = tileNodes[row - 1][column];
+        tileNodes[row][column].leftUp = tileNodes[row - 1][column - 1];
+        tileNodes[row][column].upRight = tileNodes[row - 1][column + 1];
+        tileNodes[row][column].down = tileNodes[row + 1][column];
+        tileNodes[row][column].rightDown = tileNodes[row + 1][column + 1];
+        tileNodes[row][column].downLeft = tileNodes[row + 1][column - 1];
+        tileNodes[row][column].left = tileNodes[row][column - 1];
+        tileNodes[row][column].right = tileNodes[row][column + 1];
       }
     }
   }
@@ -138,7 +128,8 @@ extension SceneFunctions on Scene {
 
     _search++;
 
-    int remaining = diffInt(startNode.x, endNode.x) + diffInt(startNode.y, endNode.y);
+    int remaining =
+        diffInt(startNode.x, endNode.x) + diffInt(startNode.y, endNode.y);
 
     List<TileNodeVisit> visits = [TileNodeVisit(null, remaining, startNode)];
     startNode.search = _search;
