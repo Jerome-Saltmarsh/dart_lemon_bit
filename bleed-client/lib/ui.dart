@@ -372,14 +372,6 @@ Widget buildTopRight() {
           onPressed: toggleAudioMuted),
       message: "Toggle Audio");
 
-  // Widget iconToggleScore = Tooltip(
-  //   child: IconButton(
-  //       icon: Icon(Icons.format_list_numbered_rtl,
-  //           size: iconSize, color: _showScore ? white : Colors.white60),
-  //       onPressed: toggleShowScore),
-  //   message: _showScore ? "Hide Score" : "Show Score",
-  // );
-
   Widget iconTogglePaths = Tooltip(
     child: IconButton(
         icon: Icon(Icons.map, size: iconSize, color: white),
@@ -606,9 +598,7 @@ Widget buildBottomLeft() {
           width8,
           buildSlot(
               title: player.acquiredAssaultRifle ? "Assault Rifle" : "Slot 4"),
-          // buildWeaponButton(compiledGame.playerWeapon),
-          // text(player.equippedClips, fontSize: 25),
-          width16,
+          width8,
           Stack(
             children: [
               buildTag(player.grenades),
@@ -622,7 +612,7 @@ Widget buildBottomLeft() {
                       player.grenades > 0 ? null : Colors.white60)),
             ],
           ),
-          width16,
+          width8,
           Stack(
             children: [
               buildTag(player.meds),
@@ -637,6 +627,8 @@ Widget buildBottomLeft() {
                       player.meds > 0 ? null : Colors.white60)),
             ],
           ),
+          width8,
+          buildSlot(title: "Credits: ${player.points}"),
           // text(compiledGame.playerMeds, fontSize: 25),
         ],
       ),

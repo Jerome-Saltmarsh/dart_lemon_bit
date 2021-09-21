@@ -1238,7 +1238,6 @@ extension GameFunctions on Game {
   }
 
   void revive(Character character) {
-    print('revive(${character.id})');
     character.state = CharacterState.Idle;
     character.health = character.maxHealth;
 
@@ -1252,9 +1251,6 @@ extension GameFunctions on Game {
     }
 
     onPlayerRevived(character as Player);
-
-    //
-
     character.collidable = true;
   }
 
