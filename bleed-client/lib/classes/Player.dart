@@ -17,6 +17,8 @@ class Player {
   bool acquiredSniperRifle = false;
   bool acquiredAssaultRifle = false;
   Tile tile = Tile.Grass;
+  int grenades = 0;
+  int meds = 0;
 
   bool get dead => state == CharacterState.Dead;
   bool get alive => !dead;

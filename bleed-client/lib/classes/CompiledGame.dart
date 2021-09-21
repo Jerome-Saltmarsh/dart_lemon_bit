@@ -29,8 +29,6 @@ class CompiledGame {
   double playerX = -1;
   double playerY = -1;
   Weapon playerWeapon = Weapon.Unarmed;
-  int playerGrenades = 0;
-  int playerMeds = 0;
   int playerLives = 0;
   CharacterState playerState = CharacterState.Idle;
 

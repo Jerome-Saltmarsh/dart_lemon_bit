@@ -609,7 +609,7 @@ Widget buildBottomLeft() {
           width16,
           Stack(
             children: [
-              buildTag(compiledGame.playerGrenades),
+              buildTag(player.grenades),
               Tooltip(
                   message: "Press G to throw grenade",
                   child: buildImageSlot(
@@ -617,13 +617,13 @@ Widget buildBottomLeft() {
                       width: 120 * goldenRatioInverse,
                       height: 120 * goldenRatioInverse,
                       color:
-                          compiledGame.playerGrenades > 0 ? null : Colors.white60)),
+                      player.grenades > 0 ? null : Colors.white60)),
             ],
           ),
           width16,
           Stack(
             children: [
-              buildTag(compiledGame.playerMeds),
+              buildTag(player.meds),
               onPressed(
                   hint: "Press H to use med kit",
                   callback: sendRequestUseMedKit,
@@ -632,7 +632,7 @@ Widget buildBottomLeft() {
                       width: 120 * goldenRatioInverse,
                       height: 120 * goldenRatioInverse,
                       color:
-                          compiledGame.playerMeds > 0 ? null : Colors.white60)),
+                      player.meds > 0 ? null : Colors.white60)),
             ],
           ),
           // text(compiledGame.playerMeds, fontSize: 25),
@@ -696,7 +696,7 @@ String getMessage() {
   if (player.health == 0) return null;
 
   if (player.health < player.maxHealth * 0.25) {
-    if (compiledGame.playerMeds > 0) {
+    if (player.meds > 0) {
       return "Low Health: Press H to heal";
     }
   }
