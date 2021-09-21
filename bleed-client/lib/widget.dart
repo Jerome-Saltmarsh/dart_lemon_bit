@@ -17,6 +17,7 @@ import 'connection.dart';
 import 'editor/editor.dart';
 import 'functions/clearState.dart';
 import 'functions/drawCanvas.dart';
+import 'functions/drawParticle.dart';
 import 'game_engine/engine_draw.dart';
 import 'images.dart';
 import 'instances/settings.dart';
@@ -161,7 +162,7 @@ class BleedWidget extends GameWidget {
     canvas.drawRect(
         Rect.fromLTWH(screenCenterX - 50, 25, 100, 15), globalPaint);
 
-    globalPaint.color = Colors.yellow;
+    globalPaint.color = orange;
     canvas.drawRect(Rect.fromLTWH(screenCenterX - 50, 25, 100 * percentage, 15),
         globalPaint);
   }

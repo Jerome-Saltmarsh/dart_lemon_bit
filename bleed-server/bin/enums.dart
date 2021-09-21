@@ -1,17 +1,8 @@
-enum Tile {
-  Concrete,
-  Grass,
-  Water,
-  Boundary,
-  Fortress,
-  PlayerSpawn,
-  ZombieSpawn,
-  RandomItemSpawn,
-}
+import 'common/Tile.dart';
 
 bool isOpen(Tile tile){
-  if(tile == Tile.Grass) return false;
-  if(tile == Tile.Boundary) return false;
+  if (tile == Tile.Grass) return false;
+  if (tile == Tile.Boundary) return false;
   return true;
 }
 

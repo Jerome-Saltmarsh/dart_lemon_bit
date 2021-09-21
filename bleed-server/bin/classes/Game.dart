@@ -2,6 +2,7 @@ import 'dart:math';
 
 import '../classes.dart';
 import '../common/GameState.dart';
+import '../common/Tile.dart';
 import '../compile.dart';
 import '../constants.dart';
 import '../enums.dart';
@@ -864,6 +865,7 @@ extension GameFunctions on Game {
       player.stamina += settings.staminaRefreshRate;
     }
     player.stamina = clampInt(player.stamina, 0, player.maxStamina);
+    player.currentTile = scene.tileAt(player.x, player.y);
   }
 
   void _updateGrenades() {

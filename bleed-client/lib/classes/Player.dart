@@ -1,4 +1,5 @@
 
+import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/enums.dart';
 
 class Player {
@@ -15,4 +16,5 @@ class Player {
   bool acquiredShotgun = false;
   bool acquiredSniperRifle = false;
   bool acquiredAssaultRifle = false;
+  Tile tile = Tile.Grass;
 }

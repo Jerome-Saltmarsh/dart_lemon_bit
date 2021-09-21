@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 const EdgeInsets padding16 = EdgeInsets.all(16);
 const EdgeInsets padding8 = EdgeInsets.all(8);
+const EdgeInsets padding4 = EdgeInsets.all(4);
 const BorderRadius borderRadius4 = BorderRadius.all(radius4);
 const BorderRadius borderRadius8 = BorderRadius.all(radius8);
 
@@ -32,4 +33,5 @@ class _MainAxis {
 class _CrossAxis {
   final CrossAxisAlignment center = CrossAxisAlignment.center;
   final CrossAxisAlignment start = CrossAxisAlignment.start;
+  final CrossAxisAlignment end = CrossAxisAlignment.end;
 }

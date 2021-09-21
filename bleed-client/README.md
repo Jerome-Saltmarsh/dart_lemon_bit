@@ -30,8 +30,6 @@
 [ ] Golden Zombie earns 5x kills
 [ ] Red Zombie earns 2x kills
 [ ] Ranged zombies
-[ ] Supply Square - can only buy items when standing on a supply square
-[ ] Upgrade Square - can only upgrade items when on an upgrade square
 [ ] Bullet fired Flash
 [ ] Player chat
 [ ] Activate Shield
@@ -60,6 +58,8 @@
 [ ] Upgrade Pistol Damage
 [ ] Upgrade Pistol Magazine Capacity
 [ ] Body Armor
+[ ] Supply Square - can only buy items when standing on a supply square
+[ ] Upgrade Square - can only upgrade items when on an upgrade square
 -- MAJOR BUGS --
 [ ] NPC Build up in the right corner
 -- COMPLETED --

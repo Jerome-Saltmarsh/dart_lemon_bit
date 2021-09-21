@@ -1,3 +1,4 @@
+import '../common/Tile.dart';
 import '../enums.dart';
 import '../maths.dart';
 import 'Block.dart';
@@ -231,7 +232,7 @@ extension SceneFunctions on Scene {
     if (tileX > columns) return Tile.Boundary;
     if (tileY > rows) return Tile.Boundary;
 
-    return tiles[tileYInt][tileXInt];
+    return this.tiles[tileYInt][tileXInt];
   }
 
   TileNode tileNodeAt(double x, double y) {

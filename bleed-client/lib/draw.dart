@@ -12,9 +12,8 @@ import 'package:flutter/material.dart';
 
 import '../images.dart';
 import 'classes/Vector2.dart';
-import 'common.dart';
-import 'common/Weapons.dart';
-import 'enums.dart';
+import 'common/Tile.dart';
+import 'functions/drawParticle.dart';
 import 'keys.dart';
 import 'rects.dart';
 import 'resources/rects_human.dart';
@@ -173,11 +172,11 @@ void drawPlayerHealth() {
     drawCharacterCircle(
         compiledGame.playerX,
         compiledGame.playerY,
-        Color.lerp(Colors.yellow, Colors.green,
+        Color.lerp(yellow, green,
             (player.health - halfMaxHealth) / halfMaxHealth));
   } else {
     drawCharacterCircle(compiledGame.playerX, compiledGame.playerY,
-        Color.lerp(Colors.red, Colors.yellow, player.health / halfMaxHealth));
+        Color.lerp(blood, yellow, player.health / halfMaxHealth));
   }
 }
 

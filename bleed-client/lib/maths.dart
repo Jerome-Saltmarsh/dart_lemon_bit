@@ -11,6 +11,9 @@ const double piQuarter = pi * 0.25;
 const double pi2 = pi + pi;
 final Random random = Random();
 
+const double goldenRatio = 1.61803398875;
+const double goldenRatioInverse = 1.0 / goldenRatio;
+
 double randomBetween(num a, num b){
   return (random.nextDouble() * (b - a)) + a;
 }

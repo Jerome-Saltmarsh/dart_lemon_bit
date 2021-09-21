@@ -1,11 +1,10 @@
 import 'dart:convert';
 
 import 'package:bleed_client/classes/Block.dart';
+import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/state.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
-
-import '../enums.dart';
 
 void saveScene() {
   print("saveScene()");

@@ -5,6 +5,7 @@ import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
+import 'package:bleed_client/functions/drawParticle.dart';
 import 'package:bleed_client/functions/open_link.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
@@ -30,6 +31,7 @@ import 'functions/copy.dart';
 import 'images.dart';
 import 'instances/inventory.dart';
 import 'instances/settings.dart';
+import 'maths.dart';
 import 'send.dart';
 import 'state.dart';
 import 'ui/widgets.dart';
@@ -333,7 +335,7 @@ Widget buildHud() {
     children: [
       // if (mouseAvailable && mouseX < 300 && mouseY < 300) buildTopLeft(),
       buildTopRight(),
-      if (!playerDead) buildBottomLeft(),
+      if (true || !playerDead) buildBottomLeft(),
       if (compiledGame.gameType == GameType.Fortress) buildViewFortress(),
       if (compiledGame.gameType == GameType.DeathMatch)
         buildGameInfoDeathMatch(),
@@ -342,7 +344,7 @@ Widget buildHud() {
       if (state.gameState == GameState.Lost) buildViewLose(),
       if (playerDead && compiledGame.gameType == GameType.Casual)
         buildViewRespawn(),
-      if (!playerDead && state.storeVisible) buildViewStore(),
+      // if (!playerDead && state.storeVisible) buildViewStore(),
       if (state.score.isNotEmpty && compiledGame.players.isNotEmpty)
         buildViewScore(),
       if (message != null) buildMessageBox(message),
@@ -484,11 +486,98 @@ Widget buildBottomLeft() {
   return Positioned(
     bottom: 0,
     child: Container(
-      color: Colors.black45,
-      padding: EdgeInsets.all(8),
+      padding: padding8,
+      decoration: BoxDecoration(
+          color: Colors.black45,
+          borderRadius: BorderRadius.only(topRight: radius8),
+      ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: mainAxis.center,
+        crossAxisAlignment: crossAxis.end,
         children: [
+          Column(
+            children: [
+              Container(
+                child: Column(
+                  mainAxisAlignment: mainAxis.center,
+                  children: [
+                    text("Beretta"),
+                    text("200"),
+                  ],
+                ),
+                width: 120,
+                height: 120 * goldenRatioInverse,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    borderRadius: borderRadius4,
+                    border: Border.all(color: Colors.white, width: 2)
+                ),
+              ),
+              Container(
+                child: text("Glock 45"),
+                width: 120,
+                height: 120 * goldenRatioInverse,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    borderRadius: borderRadius4,
+                    border: Border.all(color: Colors.white, width: 2)
+                ),
+              ),
+              Container(
+                child: text("Colt"),
+                width: 120,
+                height: 120 * goldenRatioInverse,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    borderRadius: borderRadius4,
+                    border: Border.all(color: Colors.white, width: 2)
+                ),
+              ),
+              Container(
+                child: text("Slot 1"),
+                width: 120,
+                height: 120 * goldenRatioInverse,
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    borderRadius: borderRadius4,
+                    border: Border.all(color: Colors.white, width: 2)
+                ),
+              ),
+            ],
+          ),
+          width8,
+          Container(
+            child: text("Slot 2"),
+            width: 120,
+            height: 120 * goldenRatioInverse,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                borderRadius: borderRadius4,
+                border: Border.all(color: Colors.white, width: 2)
+            ),
+          ),
+          width8,
+          Container(
+            child: text("Slot 3"),
+            width: 120,
+            height: 120 * goldenRatioInverse,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                borderRadius: borderRadius4,
+                border: Border.all(color: Colors.white, width: 2)
+            ),
+          ),
+          width8,
+          Container(
+            child: text("Slot 4"),
+            width: 120,
+            height: 120 * goldenRatioInverse,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+                borderRadius: borderRadius4,
+                border: Border.all(color: Colors.white, width: 2)
+            ),
+          ),
           buildWeaponButton(compiledGame.playerWeapon),
           text(player.equippedClips, fontSize: 25),
           width16,
@@ -515,7 +604,7 @@ Widget buildViewTutorial() {
       child: Container(
         width: screenWidth,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: mainAxis.center,
           children: [
             Container(
                 padding: EdgeInsets.all(10),
@@ -569,7 +658,7 @@ String getMessage() {
 
 Widget buildMessageBox(String message) {
   return Positioned(
-      bottom: 80,
+      bottom: 120,
       child: Container(
         width: screenWidth,
         child: Row(
@@ -780,7 +869,7 @@ Widget buildViewLose() {
 Widget buildViewRespawn() {
   print("buildViewRespawn()");
   return Positioned(
-      top: 100,
+      top: 60,
       child: Container(
         width: screenWidth,
         child: Row(
@@ -790,14 +879,17 @@ Widget buildViewRespawn() {
                 padding: padding16,
                 width: 600,
                 decoration: BoxDecoration(
-                    // borderRadius: borderRadius8,
+                    borderRadius: borderRadius8,
                     color: black54),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: crossAxis.center,
                     children: [
                       Container(
-                          color: Colors.red,
+                          decoration: BoxDecoration(
+                            borderRadius: borderRadius8,
+                            color: blood,
+                          ),
                           padding: padding8,
                           child: text("BLEED beta v1.0.0")),
                       height16,
@@ -851,8 +943,11 @@ Widget buildViewRespawn() {
                       ),
                       height16,
                       Container(
-                        padding: EdgeInsets.all(16),
-                        color: Colors.black54,
+                        padding: padding16,
+                        decoration: BoxDecoration(
+                          borderRadius: borderRadius8,
+                          color: black54,
+                        ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
@@ -898,7 +993,10 @@ Widget buildViewRespawn() {
                       ),
                       height16,
                       Container(
-                        color: black54,
+                        decoration: BoxDecoration(
+                          borderRadius: borderRadius8,
+                          color: black54,
+                        ),
                         padding: padding16,
                         child: Column(
                           children: [
@@ -959,6 +1057,7 @@ List<String> tips = [
   "Press H to use med kit",
   "Hold left shift to sprint",
   "Press R to Reload",
+  "Press Space bar to fire weapon",
 ];
 
 String getTip() {
@@ -1014,7 +1113,7 @@ Widget buildViewScore() {
               borderRadius: borderRadiusBottomRight8,
             ),
             width: 200,
-            padding: EdgeInsets.all(4),
+            padding: padding4,
             height: 300,
             child: SingleChildScrollView(
               child: Column(
@@ -1037,7 +1136,7 @@ Widget buildViewScore() {
                               width: 140,
                               child: text(score.playerName,
                                   color: score.playerName == playerName
-                                      ? Colors.red
+                                      ? blood
                                       : Colors.white)),
                           Container(width: 50, child: text(score.points)),
                         ],

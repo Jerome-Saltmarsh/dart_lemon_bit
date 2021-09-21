@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 import 'package:bleed_client/common/CollectableType.dart';
+import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/functions/saveScene.dart';
@@ -13,7 +14,6 @@ import 'package:flutter/services.dart';
 
 import '../classes/Block.dart';
 import '../connection.dart';
-import '../enums.dart';
 import '../game_engine/engine_state.dart';
 import '../game_engine/game_input.dart';
 import '../game_engine/game_widget.dart';

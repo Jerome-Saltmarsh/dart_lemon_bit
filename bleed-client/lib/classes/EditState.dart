@@ -1,7 +1,7 @@
 
 import 'package:bleed_client/classes/Block.dart';
+import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/editor/EditMode.dart';
-import 'package:bleed_client/enums.dart';
 
 class EditState {
   Block selectedBlock;

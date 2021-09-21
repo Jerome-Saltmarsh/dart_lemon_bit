@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+
 const idNotConnected = -1;
 
 _Links links = _Links();

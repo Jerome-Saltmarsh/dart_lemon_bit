@@ -7,7 +7,7 @@ import 'classes/Lobby.dart';
 import 'classes/Player.dart';
 import 'classes/Vector2.dart';
 import 'common/PlayerEvents.dart';
-import 'enums.dart';
+import 'common/Tile.dart';
 import 'common/ServerResponse.dart';
 import 'instances/gameManager.dart';
 import 'utils/player_utils.dart';
@@ -116,6 +116,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _writeBool(buffer, player.acquiredShotgun);
   _writeBool(buffer, player.acquiredSniperRifle);
   _writeBool(buffer, player.acquiredAssaultRifle);
+  _write(buffer, player.currentTile.index);
   // _compileInventory(buffer, player.inventory);
 
   for (PlayerEvent playerEvent in player.events) {

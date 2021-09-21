@@ -8,6 +8,13 @@ import 'package:flutter/material.dart';
 import '../maths.dart';
 import '../utils.dart';
 
+final Color blood = Color.fromRGBO(162, 91, 109, 1);
+final Color orange = Color.fromRGBO(226, 199, 172, 1);
+final Color green = Color.fromRGBO(191, 238, 194, 1);
+final Color yellow = Color.fromRGBO(237, 237, 213, 1);
+final Color red = Color.fromRGBO(162, 91, 109, 1);
+
+
 void drawParticle(Particle particle){
   double scaleShift = (1 + (particle.z * 0.4)) * particle.scale;
   double heightShift = -particle.z * 20;
@@ -26,7 +33,7 @@ void drawParticle(Particle particle){
       break;
     case ParticleType.Blood:
       double size = 2.5;
-      drawCircle(x, y + heightShift, size * scaleShift, Colors.red);
+      drawCircle(x, y + heightShift, size * scaleShift, blood);
       break;
     case ParticleType.Head:
       double size = 5;

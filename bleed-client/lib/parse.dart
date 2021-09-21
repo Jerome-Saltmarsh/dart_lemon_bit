@@ -21,6 +21,7 @@ import 'classes/Score.dart';
 import 'classes/Vector2.dart';
 import 'common/GameEventType.dart';
 import 'common/GameState.dart';
+import 'common/Tile.dart';
 import 'common/Weapons.dart';
 import 'draw.dart';
 import 'enums.dart';
@@ -285,6 +286,7 @@ void _parsePlayer() {
   player.acquiredShotgun = _consumeBool();
   player.acquiredSniperRifle = _consumeBool();
   player.acquiredAssaultRifle = _consumeBool();
+  player.tile = tiles[_consumeInt()];
 }
 
 void _parsePlayerEvents(){

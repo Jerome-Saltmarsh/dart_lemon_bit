@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/Weapons.dart';
 
 import '../enums.dart';

@@ -1,7 +1,8 @@
 
 import 'dart:ui';
 
-import '../enums.dart';
+import 'package:bleed_client/common/Tile.dart';
+
 import '../rects.dart';
 
 Rect tileRectConcrete = getTileSpriteRectByIndex(0);

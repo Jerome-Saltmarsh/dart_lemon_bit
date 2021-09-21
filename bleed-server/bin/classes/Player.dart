@@ -1,6 +1,7 @@
 import '../classes.dart';
 import '../common/GameState.dart';
 import '../common/PlayerEvents.dart';
+import '../common/Tile.dart';
 import '../common/Weapons.dart';
 import '../functions/generateName.dart';
 import '../functions/generateUUID.dart';
@@ -32,6 +33,7 @@ class Player extends Character {
   bool acquiredShotgun = false;
   bool acquiredSniperRifle = false;
   bool acquiredAssaultRifle = false;
+  Tile currentTile = Tile.PlayerSpawn;
 
   final List<PlayerEvent> events = [];
 

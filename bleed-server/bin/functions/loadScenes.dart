@@ -5,6 +5,7 @@ import '../classes/Block.dart';
 import '../classes/Collectable.dart';
 import '../classes/Scene.dart';
 import '../classes/Vector2.dart';
+import '../common/Tile.dart';
 import '../enums.dart';
 import '../common/CollectableType.dart';
 import '../instances/scenes.dart';
