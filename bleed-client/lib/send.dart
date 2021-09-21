@@ -5,6 +5,7 @@ import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/PurchaseType.dart';
 import 'package:bleed_client/functions/clearState.dart';
+import 'package:bleed_client/properties.dart';
 
 import 'connection.dart';
 import 'common/Weapons.dart';
@@ -78,6 +79,7 @@ void sendRequestUpdatePlayer() {
 
 void sendRequestUpdateScore(){
   if (state.compiledGame.gameId < 0) return;
+  if (editMode) return;
   send('${ClientRequest.Score.index} ${state.compiledGame.gameId}');
 }
 
