@@ -9,11 +9,14 @@ Widget text(dynamic value,
     {fontSize = 18,
     Function onPressed,
     TextDecoration decoration = TextDecoration.none,
-      FontWeight fontWeight = FontWeight.normal,
+    FontWeight fontWeight = FontWeight.normal,
     Color color = Colors.white}) {
   Widget _text = Text(value.toString(),
-      style:
-          TextStyle(color: color, fontSize: fontSize, decoration: decoration, fontWeight: fontWeight));
+      style: TextStyle(
+          color: color,
+          fontSize: fontSize,
+          decoration: decoration,
+          fontWeight: fontWeight));
   if (onPressed == null) return _text;
   return GestureDetector(
     child: _text,
@@ -27,8 +30,10 @@ Widget border(
     double width = 1,
     BorderRadius borderRadius,
     EdgeInsets padding,
+    Alignment alignment,
     Color fillColor}) {
   return Container(
+    alignment: alignment,
     decoration: BoxDecoration(
         border: Border.all(color: color, width: width),
         borderRadius: borderRadius,

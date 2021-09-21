@@ -607,15 +607,19 @@ Widget buildBottomLeft() {
           // buildWeaponButton(compiledGame.playerWeapon),
           // text(player.equippedClips, fontSize: 25),
           width16,
-          Tooltip(
-              message: "Press G to throw grenade",
-              child: buildImageSlot(
-                  image: grenadeImage,
-                  width: 120 * goldenRatioInverse,
-                  height: 120 * goldenRatioInverse,
-                  color:
-                      compiledGame.playerGrenades > 0 ? null : Colors.white60)),
-          // text(compiledGame.playerGrenades, fontSize: 25),
+          Stack(
+            children: [
+              buildTag(compiledGame.playerGrenades),
+              Tooltip(
+                  message: "Press G to throw grenade",
+                  child: buildImageSlot(
+                      image: grenadeImage,
+                      width: 120 * goldenRatioInverse,
+                      height: 120 * goldenRatioInverse,
+                      color:
+                          compiledGame.playerGrenades > 0 ? null : Colors.white60)),
+            ],
+          ),
           width16,
           Stack(
             children: [
@@ -658,10 +662,15 @@ Widget buildViewTutorial() {
 Widget buildTag(dynamic value, {Color color = Colors.white}) {
   return Container(
       alignment: Alignment.center,
-      margin: EdgeInsets.only(left: 5, top: 5),
+      // margin: EdgeInsets.only(left: 0, top: 0),
       child: border(
-          child: text(value, fontWeight: FontWeight.bold, color: color),
-          borderRadius: borderRadius16,
+          child: Container(
+              width: 20,
+              height: 20,
+              alignment: Alignment.center,
+              child: text(value, fontWeight: FontWeight.bold, color: color)),
+          borderRadius: borderRadius8,
+          alignment: Alignment.center,
           padding: padding4));
 }
 

@@ -114,10 +114,6 @@ void _drawGunShotFlashes() {
     ));
     rects.add(rectGunShotFlash);
   }
-
-  drawAtlases(images.gunshot, gunShotTransforms, rects);
-  render.gunShotFlashes.clear();
-
 }
 
 double nameRadius = 100;
