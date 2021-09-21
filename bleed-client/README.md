@@ -2,7 +2,6 @@
 [ ] Critical Damage
 [ ] Accuracy
 [ ] Weapon Smg
-[ ] Weapon: Desert Eagle
 [ ] Weapon: Bazooka
 [ ] Weapon: Mini gun
 [ ] Game Type: Capture The Squares
@@ -18,12 +17,10 @@
 [ ] Cursor Cooldown Circle
 [ ] Explosion Crater
 [ ] Random Power up Square 
-[ ] Exit Fullscreen Mode
 [ ] Fire Shotgun Animation
 [ ] Fire Handgun Animation
 [ ] Fire Assault Rifle Animation
 [ ] Bullet holes in blocks
-[ ] Select Character (Sniper, Shotgun, Machine Gun, Medic)
 [ ] Item.RevivalKit (revive fallen squad member)
 [ ] Gain XP and levels
 [ ] Golden Zombie earns 5x kills
@@ -35,6 +32,7 @@
 [ ] Heal animation
 [ ] Supply Square - Purchase supplies, health, grenades, ammo, etc,
 [ ] Upgrade Square - upgrade weapons and items
+[ ] Select Server (Germany, USA, )
 -- REFACTOR --
 [ ] Merge Maths lib into common
 -- BUSINESS --
@@ -61,10 +59,12 @@
 -- CASUAL --
 [ ] Body Armor
 [ ] Knife Attack
-[x] Weapon Square - purchase new weapons
+[ ] Weapon: Desert Eagle
 -- MAJOR BUGS --
 [ ] NPC Build up in the right corner
 -- COMPLETED --
+[x] Exit Fullscreen Mode
+[x] Weapon Square - purchase new weapons
 [x] Prevent equip weapon which hasn't been acquired
 [x] Compile Player Events in Update
 [x] Show points earned floating text on zombie killed

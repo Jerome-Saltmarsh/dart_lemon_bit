@@ -21,16 +21,15 @@ import 'package:bleed_client/ui/views.dart';
 import 'package:flutter/material.dart';
 import 'package:neuro/instance.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:universal_html/html.dart';
 
 import 'classes/InventoryItem.dart';
 import 'classes/Score.dart';
 import 'common.dart';
-import 'common/Tile.dart';
 import 'connection.dart';
 import 'enums/InventoryItemType.dart';
 import 'enums/Mode.dart';
 import 'common/Weapons.dart';
-import 'functions/copy.dart';
 import 'images.dart';
 import 'instances/inventory.dart';
 import 'instances/settings.dart';
@@ -44,11 +43,11 @@ TextEditingController _playerNameController = TextEditingController();
 Border _border =
     Border.all(color: Colors.black, width: 5.0, style: BorderStyle.solid);
 SharedPreferences sharedPreferences;
-bool _showDebug = false;
 bool _showScore = true;
 double iconSize = 45;
 
 void initUI() {
+
   onConnectError.stream.listen((event) {
     showDialogConnectFailed();
   });
@@ -360,9 +359,9 @@ Widget buildTopRight() {
 
   Widget iconToggleFullscreen = Tooltip(
     child: IconButton(
-        icon: Icon(Icons.fullscreen, size: iconSize, color: white),
-        onPressed: requestFullScreen),
-    message: "Fullscreen",
+        icon: Icon(fullScreenActive ? Icons.fullscreen_exit : Icons.fullscreen, size: iconSize, color: white),
+        onPressed: toggleFullScreen),
+    message: document.fullscreenEnabled ? "Exit Fullscreen" : "Enter Fullscreen",
   );
   Widget iconToggleAudio = Tooltip(
       child: IconButton(
@@ -425,7 +424,7 @@ Widget buildTopLeft() {
   Widget iconToggleFullscreen = Tooltip(
     child: IconButton(
         icon: Icon(Icons.fullscreen, size: iconSize, color: white),
-        onPressed: requestFullScreen),
+        onPressed: fullScreenEnter),
     message: "Fullscreen",
   );
   Widget iconToggleAudio = Tooltip(
@@ -866,7 +865,6 @@ Widget buildDebugColumn() {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          button('Close', () => _showDebug = false),
           text(
               'mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
           text('x: ${compiledGame.playerX}, y: ${compiledGame.playerY}'),

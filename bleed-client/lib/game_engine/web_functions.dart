@@ -1,13 +1,23 @@
 import 'package:universal_html/html.dart';
 
-void disableRightClick(){
+void disableRightClick() {
   document.onContextMenu.listen((event) => event.preventDefault());
 }
 
-void requestFullScreen(){
+void fullScreenEnter() {
   document.documentElement.requestFullscreen();
 }
 
-void fullScreenExit(){
+void toggleFullScreen(){
+  if(fullScreenActive){
+    fullScreenExit();
+  }else{
+    fullScreenEnter();
+  }
+}
+
+void fullScreenExit() {
   document.exitFullscreen();
 }
+
+bool get fullScreenActive => document.fullscreenElement != null;
