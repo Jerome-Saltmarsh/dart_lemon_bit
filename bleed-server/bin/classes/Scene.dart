@@ -43,6 +43,7 @@ class Scene {
         node.position = Vector2(px, py);
         nodeRow.add(node);
 
+        // TODO Does not belong
         if (tiles[row][column] == Tile.Fortress) {
           fortressPosition = node.position;
         }
@@ -51,33 +52,57 @@ class Scene {
     }
 
     for (int row = 0; row < rows; row++) {
-      tileNodes[row][0].leftUp = _boundary;
-      tileNodes[row][0].left = _boundary;
-      tileNodes[row][0].downLeft = _boundary;
-      tileNodes[row][columns - 1].upRight = _boundary;
-      tileNodes[row][columns - 1].right = _boundary;
-      tileNodes[row][columns - 1].rightDown = _boundary;
-    }
+      for (int column = 0; column < columns; column++) {
+        bool canLeft = column > 0;
+        bool canRight = column < columns - 1;
+        bool canUp = row > 0;
+        bool canDown = row < rows - 1;
 
-    for (int column = 0; column < columns; column++) {
-      tileNodes[0][column].leftUp = _boundary;
-      tileNodes[0][column].up = _boundary;
-      tileNodes[0][column].upRight = _boundary;
-      tileNodes[rows - 1][column].downLeft = _boundary;
-      tileNodes[rows - 1][column].down = _boundary;
-      tileNodes[rows - 1][column].rightDown = _boundary;
-    }
+        if (canUp) {
+          tileNodes[row][column].up = tileNodes[row - 1][column];
+          if (canLeft) {
+            tileNodes[row][column].leftUp = tileNodes[row - 1][column - 1];
+          } else {
+            tileNodes[row][column].leftUp = _boundary;
+          }
+          if (canRight) {
+            tileNodes[row][column].upRight = tileNodes[row - 1][column + 1];
+          } else {
+            tileNodes[row][column].upRight = _boundary;
+          }
+        } else {
+          tileNodes[row][column].up = _boundary;
+          tileNodes[row][column].upRight = _boundary;
+          tileNodes[row][column].leftUp = _boundary;
+        }
 
-    for (int row = 1; row < rows - 1; row++) {
-      for (int column = 1; column < columns - 1; column++) {
-        tileNodes[row][column].up = tileNodes[row - 1][column];
-        tileNodes[row][column].leftUp = tileNodes[row - 1][column - 1];
-        tileNodes[row][column].upRight = tileNodes[row - 1][column + 1];
-        tileNodes[row][column].down = tileNodes[row + 1][column];
-        tileNodes[row][column].rightDown = tileNodes[row + 1][column + 1];
-        tileNodes[row][column].downLeft = tileNodes[row + 1][column - 1];
-        tileNodes[row][column].left = tileNodes[row][column - 1];
-        tileNodes[row][column].right = tileNodes[row][column + 1];
+        if (canDown) {
+          tileNodes[row][column].down = tileNodes[row + 1][column];
+
+          if (canRight) {
+            tileNodes[row][column].rightDown = tileNodes[row + 1][column + 1];
+          } else {
+            tileNodes[row][column].rightDown = _boundary;
+          }
+
+          if (canLeft) {
+            tileNodes[row][column].downLeft = tileNodes[row + 1][column - 1];
+          } else {
+            tileNodes[row][column].downLeft = _boundary;
+          }
+        }
+
+        if (canLeft) {
+          tileNodes[row][column].left = tileNodes[row][column - 1];
+        } else {
+          tileNodes[row][column].left = _boundary;
+        }
+
+        if (canRight) {
+          tileNodes[row][column].right = tileNodes[row][column + 1];
+        } else {
+          tileNodes[row][column].left = _boundary;
+        }
       }
     }
   }
@@ -150,6 +175,17 @@ extension SceneFunctions on Scene {
       }
 
       TileNodeVisit last = visits.removeLast();
+
+      try {
+        if (last.tileNode.up.open &&
+            last.tileNode.down.open &&
+            last.tileNode.right.open &&
+            last.tileNode.left.open) {}
+      } catch (error) {
+        print(error);
+        print(last.tileNode.x.toString() + " " + last.tileNode.y.toString());
+      }
+
       if (last.tileNode.up.open) {
         visit(last.tileNode.up, last, visits, endNode);
         if (last.tileNode.right.open) {
