@@ -137,7 +137,10 @@ class BleedWidget extends GameWidget {
     }
 
     if (player.alive) {
+
       _drawStaminaBar(canvas);
+
+
     }
 
     _drawMouseAim(aiming);

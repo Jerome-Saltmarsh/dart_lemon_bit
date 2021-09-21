@@ -12,6 +12,7 @@ import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/game_engine/web_functions.dart';
 import 'package:bleed_client/keys.dart';
 import 'package:bleed_client/properties.dart';
+import 'package:bleed_client/server.dart';
 import 'package:bleed_client/tutorials.dart';
 import 'package:bleed_client/ui/dialogs.dart';
 import 'package:bleed_client/ui/flutter_constants.dart';
@@ -493,6 +494,25 @@ Widget buildSlot({String title}) {
   );
 }
 
+Widget buildImageSlot(
+    {DecorationImage image,
+    double width,
+    double height,
+    double borderWidth = 1,
+    Color color}) {
+  return Container(
+    width: width,
+    height: height,
+    alignment: Alignment.center,
+    decoration: BoxDecoration(
+      image: image,
+      color: color,
+      border: Border.all(color: Colors.white, width: borderWidth),
+      borderRadius: borderRadius8,
+    ),
+  );
+}
+
 Widget buildWeaponSlot({Weapon weapon}) {
   return Container(
     width: 120,
@@ -523,16 +543,19 @@ Widget buildBottomLeft() {
         children: [
           Column(
             children: [
-              if (player.canPurchase)
-                Column(
-                  children: [
-                    buildSlot(title: "Desert Eagle"),
-                    height16,
-                  ],
-                ),
+              // if (player.canPurchase)
+              //   Column(
+              //     children: [
+              //       buildSlot(title: "Desert Eagle"),
+              //       height16,
+              //     ],
+              //   ),
               if (!player.acquiredHandgun) buildSlot(title: "Slot 1"),
               if (player.acquiredHandgun)
-                buildWeaponSlot(weapon: Weapon.HandGun),
+                onPressed(
+                    child: buildWeaponSlot(weapon: Weapon.HandGun),
+                    hint: "Press 1 to equip",
+                    callback: sendRequestEquipHandgun),
             ],
           ),
           width8,
@@ -545,13 +568,16 @@ Widget buildBottomLeft() {
                       Stack(
                         children: [
                           onPressed(
-                              hint: 'Shotgun ${prices.weapon.shotgun}',
+                              hint:
+                                  'Purchase Shotgun: ${prices.weapon.shotgun}',
                               child: buildWeaponSlot(weapon: Weapon.Shotgun),
                               callback: purchaseWeaponShotgun),
                           Container(
+                              alignment: Alignment.center,
                               margin: EdgeInsets.only(left: 5, top: 5),
                               child: border(
-                                  child: text(prices.weapon.shotgun, fontWeight: FontWeight.bold,
+                                  child: text(prices.weapon.shotgun,
+                                      fontWeight: FontWeight.bold,
                                       color:
                                           player.points >= prices.weapon.shotgun
                                               ? green
@@ -565,7 +591,10 @@ Widget buildBottomLeft() {
                   ],
                 ),
               if (player.acquiredShotgun)
-                buildWeaponSlot(weapon: Weapon.Shotgun),
+                onPressed(
+                    child: buildWeaponSlot(weapon: Weapon.Shotgun),
+                    hint: "Press 2 to equip",
+                    callback: sendRequestEquipShotgun),
               if (!player.acquiredShotgun) buildSlot(title: "Slot 2"),
             ],
           ),
@@ -578,17 +607,31 @@ Widget buildBottomLeft() {
           // buildWeaponButton(compiledGame.playerWeapon),
           // text(player.equippedClips, fontSize: 25),
           width16,
-          Container(
-              width: 50,
-              height: 40,
-              decoration: BoxDecoration(image: grenadeImage)),
-          text(compiledGame.playerGrenades, fontSize: 25),
+          Tooltip(
+              message: "Press G to throw grenade",
+              child: buildImageSlot(
+                  image: grenadeImage,
+                  width: 120 * goldenRatioInverse,
+                  height: 120 * goldenRatioInverse,
+                  color:
+                      compiledGame.playerGrenades > 0 ? null : Colors.white60)),
+          // text(compiledGame.playerGrenades, fontSize: 25),
           width16,
-          Container(
-              width: 50,
-              height: 40,
-              decoration: BoxDecoration(image: healthImage)),
-          text(compiledGame.playerMeds, fontSize: 25),
+          Stack(
+            children: [
+              buildTag(compiledGame.playerMeds),
+              onPressed(
+                  hint: "Press H to use med kit",
+                  callback: sendRequestUseMedKit,
+                  child: buildImageSlot(
+                      image: healthImage,
+                      width: 120 * goldenRatioInverse,
+                      height: 120 * goldenRatioInverse,
+                      color:
+                          compiledGame.playerMeds > 0 ? null : Colors.white60)),
+            ],
+          ),
+          // text(compiledGame.playerMeds, fontSize: 25),
         ],
       ),
     ),
@@ -610,6 +653,16 @@ Widget buildViewTutorial() {
           ],
         ),
       ));
+}
+
+Widget buildTag(dynamic value, {Color color = Colors.white}) {
+  return Container(
+      alignment: Alignment.center,
+      margin: EdgeInsets.only(left: 5, top: 5),
+      child: border(
+          child: text(value, fontWeight: FontWeight.bold, color: color),
+          borderRadius: borderRadius16,
+          padding: padding4));
 }
 
 Widget buildLowAmmo() {
@@ -1054,6 +1107,7 @@ List<String> tips = [
   "Hold left shift to sprint",
   "Press R to Reload",
   "Press Space bar to fire weapon",
+  "Scroll with the mouse to zoom in and out"
 ];
 
 String getTip() {

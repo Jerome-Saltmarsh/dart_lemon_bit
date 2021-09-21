@@ -60,7 +60,7 @@ void readPlayerInput() {
 
   if (keyPressedUseMedKit) {
     if (!_healing) {
-      sendClientRequestPlayerUseMedKit();
+      sendRequestUseMedKit();
     }
   } else {
     _healing = false;
