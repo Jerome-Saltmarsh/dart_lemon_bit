@@ -113,10 +113,9 @@ List<List<Tile>> generateTiles() {
     List<Tile> column = [];
     tiles.add(column);
     for (int y = 0; y < tilesY; y++) {
-      column.add(Tile.Concrete);
+      column.add(Tile.Grass);
     }
   }
-  tiles[1][0] = Tile.Grass;
   tilesLeftX = -24 * tilesX.toDouble();
   tilesLeftY = 24 * tilesY.toDouble();
   tilesRightX = 24 * tilesX.toDouble();

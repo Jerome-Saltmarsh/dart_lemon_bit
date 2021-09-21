@@ -74,7 +74,7 @@ Widget buildEditorUI() {
                   for (int column = 0;
                       column < compiledGame.tiles[0].length;
                       column++) {
-                    compiledGame.tiles[row][column] = Tile.Concrete;
+                    compiledGame.tiles[row][column] = Tile.Grass;
                   }
                 }
                 renderTiles(compiledGame.tiles);

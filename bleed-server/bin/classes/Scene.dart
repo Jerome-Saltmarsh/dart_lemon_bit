@@ -256,7 +256,7 @@ extension SceneFunctions on Scene {
 
   bool tileBoundaryAt(double x, double y) {
     Tile tile = tileAt(x, y);
-    return tile == Tile.Grass || tile == Tile.Boundary;
+    return tile == Tile.Block || tile == Tile.Boundary;
   }
 
   double perspectiveProjectX(double x, double y) {

@@ -7,6 +7,7 @@ enum Tile {
   PlayerSpawn,
   ZombieSpawn,
   RandomItemSpawn,
+  Block,
 }
 
 final List<Tile> tiles = Tile.values;

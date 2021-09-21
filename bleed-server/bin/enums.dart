@@ -1,7 +1,7 @@
 import 'common/Tile.dart';
 
 bool isOpen(Tile tile){
-  if (tile == Tile.Grass) return false;
+  if (tile == Tile.Block) return false;
   if (tile == Tile.Boundary) return false;
   return true;
 }

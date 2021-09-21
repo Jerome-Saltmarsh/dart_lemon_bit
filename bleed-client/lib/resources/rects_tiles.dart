@@ -5,13 +5,12 @@ import 'package:bleed_client/common/Tile.dart';
 
 import '../rects.dart';
 
-Rect tileRectConcrete = getTileSpriteRectByIndex(0);
-Rect tileRectGrass = getTileSpriteRectByIndex(1);
-Rect tileRectRed = getTileSpriteRectByIndex(2);
-Rect tileRectYellow = getTileSpriteRectByIndex(3);
-Rect tileRectBlue = getTileSpriteRectByIndex(4);
-Rect tileRectGreen = getTileSpriteRectByIndex(5);
-Rect tileRectPurple = getTileSpriteRectByIndex(6);
+Rect tileRectGrass = getTileSpriteRectByIndex(0);
+Rect tileRectBlock = getTileSpriteRectByIndex(1);
+Rect tileRectConcrete = getTileSpriteRectByIndex(2);
+Rect tileRectOrange = getTileSpriteRectByIndex(3);
+Rect tileRectRed = getTileSpriteRectByIndex(4);
+Rect tileRectBlack = getTileSpriteRectByIndex(4);
 
 
 Rect getTileSpriteRect(Tile tile) {
@@ -21,13 +20,15 @@ Rect getTileSpriteRect(Tile tile) {
     case Tile.Grass:
       return tileRectGrass;
     case Tile.Fortress:
-      return tileRectYellow;
+      return tileRectOrange;
     case Tile.PlayerSpawn:
-      return tileRectBlue;
+      return tileRectBlack;
     case Tile.ZombieSpawn:
       return tileRectRed;
     case Tile.RandomItemSpawn:
-      return tileRectPurple;
+      return tileRectOrange;
+    case Tile.Block:
+      return tileRectBlock;
   }
   throw Exception("could not find rect for tile $tile");
 }
