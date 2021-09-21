@@ -3,7 +3,6 @@
 [ ] Accuracy
 [ ] Weapon Oozie
 [ ] Weapon: Bazooka
-[ ] Game Type: Open World
 [ ] Game Type: Capture The Squares
 [ ] Game Type: Sandbox
 [ ] Throw Animation
@@ -48,6 +47,7 @@
 [ ] Rebuilding the ui unnecessarily is extremely expensive
 -- OPEN WORLD -- 
 [ ] Npc Talk Text
+[ ] Complete Quests to earn income and unlock upgrades
 -- FORTRESS -- 
 [ ] Fortress life lost audio
 [ ] Fortress Cache Path 
@@ -55,11 +55,10 @@
 [ ] Rounds
 [ ] Observe mode
 -- CASUAL --
-[ ] Upgrade Pistol Damage
-[ ] Upgrade Pistol Magazine Capacity
 [ ] Body Armor
-[ ] Supply Square - can only buy items when standing on a supply square
-[ ] Upgrade Square - can only upgrade items when on an upgrade square
+[ ] Supply Square - Purchase supplies, health, grenades, ammo, etc,
+[ ] Upgrade Square - upgrade weapons and items
+[ ] Weapon Square - purchase new weapons
 -- MAJOR BUGS --
 [ ] NPC Build up in the right corner
 -- COMPLETED --

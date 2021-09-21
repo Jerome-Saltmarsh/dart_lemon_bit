@@ -291,7 +291,6 @@ void _parsePlayer() {
     player.tile = tile;
     onPlayerTileChanged(previousTile, tile);
   }
-
 }
 
 void _parsePlayerEvents(){

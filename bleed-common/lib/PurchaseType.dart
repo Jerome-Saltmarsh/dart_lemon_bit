@@ -1,5 +1,4 @@
-
-import 'prices.dart';
+import 'constants.dart';
 
 enum PurchaseType {
   Weapon_Handgun,

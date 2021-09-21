@@ -1,9 +1,8 @@
 import 'package:bleed_client/common/GameState.dart';
-import 'package:bleed_client/common/prices.dart';
+import 'package:bleed_client/common/constants.dart';
 import 'package:bleed_client/constants.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/common/GameType.dart';
-import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/drawParticle.dart';
@@ -214,7 +213,7 @@ const DecorationImage _machineGunImage = const DecorationImage(
   image: const AssetImage('images/weapon-machine-gun.png'),
 );
 
-DecorationImage _getDecorationImage(Weapon weapon) {
+DecorationImage mapWeaponToImage(Weapon weapon) {
   switch (weapon) {
     case Weapon.HandGun:
       return _handgunImage;
@@ -234,7 +233,7 @@ Widget buildWeaponButton(Weapon weapon) {
     child: Container(
         width: 120,
         height: 50,
-        decoration: BoxDecoration(image: _getDecorationImage(weapon))),
+        decoration: BoxDecoration(image: mapWeaponToImage(weapon))),
   );
 }
 
@@ -479,14 +478,44 @@ Widget buildViewFortress() {
       ));
 }
 
+Widget buildSlot({String title}) {
+  return Container(
+    child: Column(
+      mainAxisAlignment: mainAxis.center,
+      children: [
+        text(title),
+      ],
+    ),
+    width: 120,
+    height: 120 * goldenRatioInverse,
+    alignment: Alignment.center,
+    decoration: styleGuide.slot.boxDecoration,
+  );
+}
+
+Widget buildWeaponSlot({Weapon weapon}) {
+  return Container(
+    width: 120,
+    height: 120 * goldenRatioInverse,
+    alignment: Alignment.center,
+    decoration: BoxDecoration(
+      image: mapWeaponToImage(weapon),
+      border: Border.all(
+          color: Colors.white,
+          width: compiledGame.playerWeapon == weapon ? 6 : 1),
+      borderRadius: borderRadius8,
+    ),
+  );
+}
+
 Widget buildBottomLeft() {
   return Positioned(
     bottom: 0,
     child: Container(
       padding: padding8,
       decoration: BoxDecoration(
-          color: Colors.black45,
-          borderRadius: const BorderRadius.only(topRight: radius8),
+        color: Colors.black45,
+        borderRadius: const BorderRadius.only(topRight: radius8),
       ),
       child: Row(
         mainAxisAlignment: mainAxis.center,
@@ -494,91 +523,60 @@ Widget buildBottomLeft() {
         children: [
           Column(
             children: [
-              if(player.tile == Tile.PlayerSpawn)
+              if (player.canPurchase)
                 Column(
                   children: [
-                    Container(
-                      child: Column(
-                        mainAxisAlignment: mainAxis.center,
-                        children: [
-                          text("Beretta"),
-                          text("200"),
-                        ],
-                      ),
-                      width: 120,
-                      height: 120 * goldenRatioInverse,
-                      alignment: Alignment.center,
-                      decoration: styleGuide.slot.boxDecoration,
-                    ),
-                    Container(
-                      child: text("Glock 45"),
-                      width: 120,
-                      height: 120 * goldenRatioInverse,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          borderRadius: borderRadius4,
-                          border: Border.all(color: Colors.white, width: 2)
-                      ),
-                    ),
-                    Container(
-                      child: text("Colt"),
-                      width: 120,
-                      height: 120 * goldenRatioInverse,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          borderRadius: borderRadius4,
-                          border: Border.all(color: Colors.white, width: 2)
-                      ),
-                    ),
+                    buildSlot(title: "Desert Eagle"),
+                    height16,
                   ],
                 ),
-              Container(
-                child: text("Slot 1"),
-                width: 120,
-                height: 120 * goldenRatioInverse,
-                alignment: Alignment.center,
-                decoration: BoxDecoration(
-                    borderRadius: borderRadius4,
-                    border: Border.all(color: Colors.white, width: 2)
-                ),
-              ),
+              if (!player.acquiredHandgun) buildSlot(title: "Slot 1"),
+              if (player.acquiredHandgun)
+                buildWeaponSlot(weapon: Weapon.HandGun),
             ],
           ),
           width8,
-          Container(
-            child: text("Slot 2"),
-            width: 120,
-            height: 120 * goldenRatioInverse,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                borderRadius: borderRadius4,
-                border: Border.all(color: Colors.white, width: 2)
-            ),
+          Column(
+            children: [
+              if (player.canPurchase)
+                Column(
+                  children: [
+                    if (!player.acquiredShotgun)
+                      Stack(
+                        children: [
+                          onPressed(
+                              hint: 'Shotgun ${prices.weapon.shotgun}',
+                              child: buildWeaponSlot(weapon: Weapon.Shotgun),
+                              callback: purchaseWeaponShotgun),
+                          Container(
+                              margin: EdgeInsets.only(left: 5, top: 5),
+                              child: border(
+                                  child: text(prices.weapon.shotgun, fontWeight: FontWeight.bold,
+                                      color:
+                                          player.points >= prices.weapon.shotgun
+                                              ? green
+                                              : blood),
+                                  borderRadius: borderRadius16,
+                                  padding: padding4)),
+                        ],
+                      ),
+                    // buildSlot(title: "Mac 10"),
+                    height16,
+                  ],
+                ),
+              if (player.acquiredShotgun)
+                buildWeaponSlot(weapon: Weapon.Shotgun),
+              if (!player.acquiredShotgun) buildSlot(title: "Slot 2"),
+            ],
           ),
           width8,
-          Container(
-            child: text("Slot 3"),
-            width: 120,
-            height: 120 * goldenRatioInverse,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                borderRadius: borderRadius4,
-                border: Border.all(color: Colors.white, width: 2)
-            ),
-          ),
+          buildSlot(
+              title: player.acquiredSniperRifle ? "Sniper Rifle" : "Slot 3"),
           width8,
-          Container(
-            child: text("Slot 4"),
-            width: 120,
-            height: 120 * goldenRatioInverse,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-                borderRadius: borderRadius4,
-                border: Border.all(color: Colors.white, width: 2)
-            ),
-          ),
-          buildWeaponButton(compiledGame.playerWeapon),
-          text(player.equippedClips, fontSize: 25),
+          buildSlot(
+              title: player.acquiredAssaultRifle ? "Assault Rifle" : "Slot 4"),
+          // buildWeaponButton(compiledGame.playerWeapon),
+          // text(player.equippedClips, fontSize: 25),
           width16,
           Container(
               width: 50,
@@ -877,9 +875,8 @@ Widget buildViewRespawn() {
             Container(
                 padding: padding16,
                 width: 600,
-                decoration: BoxDecoration(
-                    borderRadius: borderRadius8,
-                    color: black54),
+                decoration:
+                    BoxDecoration(borderRadius: borderRadius8, color: black54),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: crossAxis.center,
@@ -955,22 +952,22 @@ Widget buildViewRespawn() {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                comingSoon (
+                                comingSoon(
                                   child: Row(
                                     children: [
                                       text("Youtube"),
                                       IconButton(
                                           // onPressed: () {},
                                           icon: Icon(
-                                            Icons.link,
-                                            color: white,
-                                          ))
+                                        Icons.link,
+                                        color: white,
+                                      ))
                                     ],
                                   ),
                                 ),
                                 onPressed(
                                   hint: "Come and Hang!",
-                                  callback: (){
+                                  callback: () {
                                     openLink(links.discord);
                                   },
                                   child: Row(

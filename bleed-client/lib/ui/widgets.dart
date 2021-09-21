@@ -5,42 +5,60 @@ import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-Widget text(dynamic value, {fontSize = 18, Function onPressed, TextDecoration decoration = TextDecoration.none, Color color = Colors.white}) {
-  Widget _text = Text(value.toString(), style: TextStyle(color: color, fontSize: fontSize, decoration: decoration));
+Widget text(dynamic value,
+    {fontSize = 18,
+    Function onPressed,
+    TextDecoration decoration = TextDecoration.none,
+      FontWeight fontWeight = FontWeight.normal,
+    Color color = Colors.white}) {
+  Widget _text = Text(value.toString(),
+      style:
+          TextStyle(color: color, fontSize: fontSize, decoration: decoration, fontWeight: fontWeight));
   if (onPressed == null) return _text;
-  return GestureDetector(child: _text, onTap: onPressed,);
-
+  return GestureDetector(
+    child: _text,
+    onTap: onPressed,
+  );
 }
 
-Widget border({Widget child, Color color = Colors.white, double width = 1, BorderRadius borderRadius, EdgeInsets padding, Color fillColor}) {
+Widget border(
+    {Widget child,
+    Color color = Colors.white,
+    double width = 1,
+    BorderRadius borderRadius,
+    EdgeInsets padding,
+    Color fillColor}) {
   return Container(
-    decoration: BoxDecoration(border: Border.all(color: color, width: width), borderRadius: borderRadius, color: fillColor),
+    decoration: BoxDecoration(
+        border: Border.all(color: color, width: width),
+        borderRadius: borderRadius,
+        color: fillColor),
     child: child,
     padding: padding,
   );
 }
 
-Widget comingSoon({Widget child}){
-  return Tooltip(message: "Coming Soon", child: child,);
+Widget comingSoon({Widget child}) {
+  return Tooltip(
+    message: "Coming Soon",
+    child: child,
+  );
 }
 
-Widget onPressed({Widget child, Function callback, String hint}){
-
+Widget onPressed({Widget child, Function callback, dynamic hint}) {
   Widget widget = MouseRegion(
       cursor: SystemMouseCursors.click,
       child: GestureDetector(child: child, onTap: callback));
 
-  if(hint == null) return widget;
+  if (hint == null) return widget;
 
   return Tooltip(
-    message: hint,
+    message: hint.toString(),
     child: widget,
   );
 }
 
-
 class Refresh extends StatefulWidget {
-
   final WidgetBuilder builder;
   final Duration duration;
 
@@ -51,7 +69,6 @@ class Refresh extends StatefulWidget {
 }
 
 class _RefreshState extends State<Refresh> {
-
   Timer timer;
   bool assigned = false;
 
@@ -64,10 +81,8 @@ class _RefreshState extends State<Refresh> {
     });
   }
 
-  void rebuild(){
-    setState(() {
-
-    });
+  void rebuild() {
+    setState(() {});
   }
 
   @override
@@ -83,7 +98,9 @@ class _RefreshState extends State<Refresh> {
 }
 
 Widget button(String value, Function onPressed,
-    {double fontSize = 18.0, ButtonStyle buttonStyle, Alignment alignment = Alignment.centerLeft}) {
+    {double fontSize = 18.0,
+    ButtonStyle buttonStyle,
+    Alignment alignment = Alignment.centerLeft}) {
   return OutlinedButton(
     child: Container(
         width: 200,
@@ -105,7 +122,7 @@ Widget center(Widget child) {
   );
 }
 
-Widget height(double value){
+Widget height(double value) {
   return Container(height: value);
 }
 
@@ -116,7 +133,7 @@ final Widget height16 = height(16);
 final Widget height32 = height(32);
 final Widget height50 = height(50);
 
-Widget width(double value){
+Widget width(double value) {
   return Container(width: value);
 }
 

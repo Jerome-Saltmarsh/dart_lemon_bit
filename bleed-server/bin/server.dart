@@ -6,7 +6,7 @@ import 'classes/Game.dart';
 import 'classes/Lobby.dart';
 import 'classes/Player.dart';
 import 'common/PlayerEvents.dart';
-import 'common/prices.dart';
+import 'common/constants.dart';
 import 'compile.dart';
 import 'common/ClientRequest.dart';
 import 'common/GameError.dart';
@@ -519,6 +519,8 @@ void main() {
               player.rounds.handgun = settings.clipSize.handgun;
               player.acquiredHandgun = true;
               player.addEvent(PlayerEventType.Acquired_Handgun, 1);
+              player.weapon = Weapon.HandGun;
+              game.setCharacterState(player, CharacterState.ChangingWeapon);
               return;
 
             case PurchaseType.Weapon_Shotgun:
@@ -531,6 +533,8 @@ void main() {
               player.rounds.shotgun = settings.clipSize.shotgun;
               player.acquiredShotgun = true;
               player.addEvent(PlayerEventType.Acquired_Shotgun, 1);
+              player.weapon = Weapon.Shotgun;
+              game.setCharacterState(player, CharacterState.ChangingWeapon);
               return;
 
             case PurchaseType.Weapon_SniperRifle:
@@ -543,6 +547,8 @@ void main() {
               player.rounds.sniperRifle = settings.clipSize.sniperRifle;
               player.acquiredSniperRifle = true;
               player.addEvent(PlayerEventType.Acquired_SniperRifle, 1);
+              player.weapon = Weapon.SniperRifle;
+              game.setCharacterState(player, CharacterState.ChangingWeapon);
               return;
 
             case PurchaseType.Weapon_AssaultRifle:
@@ -555,6 +561,8 @@ void main() {
               player.rounds.assaultRifle = settings.clipSize.assaultRifle;
               player.acquiredAssaultRifle = true;
               player.addEvent(PlayerEventType.Acquired_AssaultRifle, 1);
+              player.weapon = Weapon.AssaultRifle;
+              game.setCharacterState(player, CharacterState.ChangingWeapon);
               return;
           }
           return;

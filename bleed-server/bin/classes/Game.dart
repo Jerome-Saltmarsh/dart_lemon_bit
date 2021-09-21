@@ -305,12 +305,22 @@ class GameCasual extends Game {
       rounds: spawnRounds(),
     );
 
+    onPlayerRevived(player);
+    return player;
+  }
+
+  @override
+  void onPlayerRevived(Player player){
+    player.meds = spawnMeds;
+    player.grenades = spawnGrenades;
+    player.clips = spawnClip();
+    player.rounds = spawnRounds();
+    player.credits = 100;
     player.squad = getNextSquad();
     player.acquiredHandgun = true;
     player.acquiredShotgun = false;
     player.acquiredSniperRifle = false;
     player.acquiredAssaultRifle = false;
-    return player;
   }
 }
 
@@ -364,7 +374,11 @@ abstract class Game {
 
   void onPlayerDisconnected(Player player) {}
 
+  void onPlayerRevived(Player player){}
+
   bool gameOver();
+
+
 
   Game(this.type, this.scene, this.maxPlayers) {
     for (int row = 0; row < scene.rows; row++) {
@@ -1231,12 +1245,6 @@ extension GameFunctions on Game {
     character.state = CharacterState.Idle;
     character.health = character.maxHealth;
 
-    for (Npc npc in npcs) {
-      if (npc.target == character) {
-        npc.clearTarget();
-      }
-    }
-
     if (playerSpawnPoints.isEmpty) {
       character.x = giveOrTake(settingsPlayerStartRadius);
       character.y = tilesLeftY + giveOrTake(settingsPlayerStartRadius);
@@ -1245,6 +1253,11 @@ extension GameFunctions on Game {
       character.x = spawnPoint.x;
       character.y = spawnPoint.y;
     }
+
+    onPlayerRevived(character as Player);
+
+    //
+
     character.collidable = true;
   }
 
