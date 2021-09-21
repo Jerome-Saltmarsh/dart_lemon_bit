@@ -44,8 +44,8 @@ class BleedWidget extends GameWidget {
     globalContext = bc;
     try {
       return buildGameUI(bc);
-    }catch(error){
-      if(settings.developMode){
+    } catch (error) {
+      if (settings.developMode) {
         return Text("An error occurred");
       }
       return Container();
@@ -136,7 +136,10 @@ class BleedWidget extends GameWidget {
       }
     }
 
-    _drawStaminaBar(canvas);
+    if (player.alive) {
+      _drawStaminaBar(canvas);
+    }
+
     _drawMouseAim(aiming);
 
     if (player.equippedRounds == 0) {

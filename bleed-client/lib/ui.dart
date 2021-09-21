@@ -3,6 +3,7 @@ import 'package:bleed_client/common/prices.dart';
 import 'package:bleed_client/constants.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/drawParticle.dart';
@@ -335,14 +336,14 @@ Widget buildHud() {
     children: [
       // if (mouseAvailable && mouseX < 300 && mouseY < 300) buildTopLeft(),
       buildTopRight(),
-      if (true || !playerDead) buildBottomLeft(),
+      if (true || !player.dead) buildBottomLeft(),
       if (compiledGame.gameType == GameType.Fortress) buildViewFortress(),
       if (compiledGame.gameType == GameType.DeathMatch)
         buildGameInfoDeathMatch(),
       if (compiledGame.gameType == GameType.Casual) buildGameViewCasual(),
       if (state.gameState == GameState.Won) buildViewWin(),
       if (state.gameState == GameState.Lost) buildViewLose(),
-      if (playerDead && compiledGame.gameType == GameType.Casual)
+      if (player.dead && compiledGame.gameType == GameType.Casual)
         buildViewRespawn(),
       // if (!playerDead && state.storeVisible) buildViewStore(),
       if (state.score.isNotEmpty && compiledGame.players.isNotEmpty)
@@ -350,12 +351,6 @@ Widget buildHud() {
       if (message != null) buildMessageBox(message),
     ],
   );
-}
-
-bool get playerDead {
-  dynamic player = getPlayer;
-  if (player == null) return false;
-  return player[stateIndex] == characterStateDead;
 }
 
 Widget buildTopRight() {
@@ -869,7 +864,7 @@ Widget buildViewLose() {
 Widget buildViewRespawn() {
   print("buildViewRespawn()");
   return Positioned(
-      top: 60,
+      top: 30,
       child: Container(
         width: screenWidth,
         child: Row(

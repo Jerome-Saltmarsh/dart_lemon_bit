@@ -3,6 +3,7 @@ import '../common/GameState.dart';
 import '../common/PlayerEvents.dart';
 import '../common/Tile.dart';
 import '../common/Weapons.dart';
+import '../enums.dart';
 import '../functions/generateName.dart';
 import '../functions/generateUUID.dart';
 import '../settings.dart';
@@ -34,6 +35,7 @@ class Player extends Character {
   bool acquiredSniperRifle = false;
   bool acquiredAssaultRifle = false;
   Tile currentTile = Tile.PlayerSpawn;
+  CharacterState characterState = CharacterState.Idle;
 
   final List<PlayerEvent> events = [];
 
