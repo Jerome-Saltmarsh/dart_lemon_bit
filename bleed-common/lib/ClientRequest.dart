@@ -1,4 +1,4 @@
-enum ClientRequest{
+enum ClientRequest {
   Game_Join_Open_World,
   Game_Join_Casual,
   Lobby_Join_Fortress,

@@ -62,8 +62,8 @@
 [ ] Weapon: Desert Eagle
 -- MAJOR BUGS --
 [ ] NPC Build up in the right corner
+[ ] Pathfinding bug
 -- COMPLETED --
-[x] Pathfinding bug
 [x] Exit Fullscreen Mode
 [x] Weapon Square - purchase new weapons
 [x] Prevent equip weapon which hasn't been acquired

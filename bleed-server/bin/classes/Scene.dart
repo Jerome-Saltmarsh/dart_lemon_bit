@@ -90,6 +90,10 @@ class Scene {
           } else {
             tileNodes[row][column].downLeft = _boundary;
           }
+        } else {
+          tileNodes[row][column].down = _boundary;
+          tileNodes[row][column].rightDown = _boundary;
+          tileNodes[row][column].downLeft = _boundary;
         }
 
         if (canLeft) {
@@ -101,7 +105,7 @@ class Scene {
         if (canRight) {
           tileNodes[row][column].right = tileNodes[row][column + 1];
         } else {
-          tileNodes[row][column].left = _boundary;
+          tileNodes[row][column].right = _boundary;
         }
       }
     }
@@ -175,16 +179,6 @@ extension SceneFunctions on Scene {
       }
 
       TileNodeVisit last = visits.removeLast();
-
-      try {
-        if (last.tileNode.up.open &&
-            last.tileNode.down.open &&
-            last.tileNode.right.open &&
-            last.tileNode.left.open) {}
-      } catch (error) {
-        print(error);
-        print(last.tileNode.x.toString() + " " + last.tileNode.y.toString());
-      }
 
       if (last.tileNode.up.open) {
         visit(last.tileNode.up, last, visits, endNode);
