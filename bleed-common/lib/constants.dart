@@ -1,5 +1,5 @@
 
-import 'package:bleed_client/common/Weapons.dart';
+import 'Weapons.dart';
 
 _Constants constants = _Constants();
 
@@ -18,8 +18,8 @@ class _Prices {
 class _Weapon {
   final int handgun = 50;
   final int shotgun = 15;
-  final int sniperRifle = 100;
-  final int assaultRifle = 200;
+  final int sniperRifle = 10;
+  final int assaultRifle = 10;
 }
 
 class _Ammo {

@@ -605,29 +605,9 @@ Widget buildBottomLeft() {
           width8,
           buildSlotWeapon(weapon: Weapon.Shotgun, index: 2),
           width8,
-          Column(
-            children: [
-              buildSlot(
-                  title:
-                      player.acquiredSniperRifle ? "Sniper Rifle" : "Slot 3"),
-            ],
-          ),
+          buildSlotWeapon(weapon: Weapon.SniperRifle, index: 3),
           width8,
-          buildSlot(
-              title: player.acquiredAssaultRifle ? "Assault Rifle" : "Slot 4"),
-          width8,
-          Stack(
-            children: [
-              buildTag(player.grenades),
-              Tooltip(
-                  message: "Press G to throw grenade",
-                  child: buildImageSlot(
-                      image: grenadeImage,
-                      width: 120 * goldenRatioInverse,
-                      height: 120 * goldenRatioInverse,
-                      color: player.grenades > 0 ? null : Colors.white60)),
-            ],
-          ),
+          buildSlotWeapon(weapon: Weapon.AssaultRifle, index: 4),
           width8,
           Stack(
             children: [
@@ -644,7 +624,6 @@ Widget buildBottomLeft() {
           ),
           width8,
           buildSlot(title: "Credits: ${player.points}"),
-          // text(compiledGame.playerMeds, fontSize: 25),
         ],
       ),
     ),
@@ -673,8 +652,8 @@ Widget buildTag(dynamic value, {Color color = Colors.white}) {
       alignment: Alignment.center,
       child: border(
           child: Container(
-              width: 20,
-              height: 20,
+              width: 35,
+              height: 25,
               alignment: Alignment.center,
               child: text(value, fontWeight: FontWeight.bold, color: color)),
           borderRadius: borderRadius8,
