@@ -390,7 +390,7 @@ Widget buildTopRight() {
             size: iconSize, color: white),
         onPressed: toggleFullScreen),
     message:
-        document.fullscreenEnabled ? "Exit Fullscreen" : "Enter Fullscreen",
+    fullScreenActive ? "Exit Fullscreen" : "Enter Fullscreen",
   );
   Widget iconToggleAudio = Tooltip(
       child: IconButton(
