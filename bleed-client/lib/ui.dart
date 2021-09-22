@@ -338,7 +338,7 @@ Widget buildHud() {
     children: [
       // if (mouseAvailable && mouseX < 300 && mouseY < 300) buildTopLeft(),
       buildTopRight(),
-      if (true || !player.dead) buildBottomLeft(),
+      if (player.alive) buildBottomLeft(),
       if (compiledGame.gameType == GameType.Fortress) buildViewFortress(),
       if (compiledGame.gameType == GameType.DeathMatch)
         buildGameInfoDeathMatch(),
@@ -1103,7 +1103,7 @@ Widget buildViewRespawn() {
                         mainAxisAlignment: mainAxis.center,
                         children: [
                           onPressed(
-                              child: text("Observe"),
+                              child: text("Close"),
                               callback: () {
                                 observeMode = true;
                                 redrawUI();
