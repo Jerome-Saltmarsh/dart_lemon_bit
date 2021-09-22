@@ -15,7 +15,7 @@ const _one = 1;
 void initUpdateLoop() {
   // @on init jobs
   periodic(fixedUpdate, ms: 1000 ~/ 30);
-  periodic(jobNpcWander, seconds: 1);
+  periodic(jobNpcWander, seconds: 4);
   periodic(jobRemoveDisconnectedPlayers, seconds: 5);
   periodic(updateNpcTargets, ms: 500);
   periodic(jobRemoveEmptyLobbiesAndGames, ms: 5000);

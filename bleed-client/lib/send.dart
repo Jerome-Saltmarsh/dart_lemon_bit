@@ -1,4 +1,3 @@
-
 import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/common.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
@@ -11,12 +10,11 @@ import 'connection.dart';
 import 'common/Weapons.dart';
 import 'state.dart';
 
-
 final StringBuffer _buffer = StringBuffer();
 final gameUpdateIndex = ClientRequest.Game_Update.index;
 const String _space = " ";
 
-void sendRequestRevive(){
+void sendRequestRevive() {
   send('${ClientRequest.Player_Revive.index} $session');
 }
 
@@ -36,28 +34,31 @@ void sendRequestEquipSniperRifle() {
   sendRequestEquip(Weapon.SniperRifle);
 }
 
-void sendRequestUpdateLobby(){
-  send('${ClientRequest.Lobby_Update.index.toString()} ${state.lobby.uuid} ${state.lobby.playerUuid}');
+void sendRequestUpdateLobby() {
+  send(
+      '${ClientRequest.Lobby_Update.index.toString()} ${state.lobby.uuid} ${state.lobby.playerUuid}');
 }
 
-void sendRequestJoinGame(String gameUuid){
+void sendRequestJoinGame(String gameUuid) {
   send('${ClientRequest.Game_Join.index.toString()} $gameUuid');
 }
 
-void sendRequestLobbyExit(){
-  if(state.lobby == null){
+void sendRequestLobbyExit() {
+  if (state.lobby == null) {
     print("sendRequestLobbyExit() state.lobby is null");
     return;
   }
-  send('${ClientRequest.Lobby_Exit.index.toString()} ${state.lobby.uuid} ${state.lobby.playerUuid}');
+  send(
+      '${ClientRequest.Lobby_Exit.index.toString()} ${state.lobby.uuid} ${state.lobby.playerUuid}');
 }
 
 void sendRequestEquipMachineGun() {
   sendRequestEquip(Weapon.AssaultRifle);
 }
 
-void requestThrowGrenade(double strength){
-  send('${ClientRequest.Player_Throw_Grenade.index} $session ${strength.toStringAsFixed(1)} ${requestAim.toStringAsFixed(2)}');
+void requestThrowGrenade(double strength) {
+  send(
+      '${ClientRequest.Player_Throw_Grenade.index} $session ${strength.toStringAsFixed(1)} ${requestAim.toStringAsFixed(2)}');
 }
 
 void sendRequestUpdatePlayer() {
@@ -68,35 +69,37 @@ void sendRequestUpdatePlayer() {
   _write(compiledGame.playerUUID);
   _write(requestCharacterState);
   _write(requestDirection);
-  if(requestCharacterState == characterStateFiring){
+  if (requestCharacterState == characterStateFiring) {
     _write(requestAim.toStringAsFixed(2));
-  }else{
+  } else {
     _write(requestAim.toInt());
   }
   _write(serverFrame);
   send(_buffer.toString());
 }
 
-void sendRequestUpdateScore(){
+void sendRequestUpdateScore() {
   if (state.compiledGame.gameId < 0) return;
   if (editMode) return;
   send('${ClientRequest.Score.index} ${state.compiledGame.gameId}');
 }
 
-void sendRequestJoinGameFortress(){
+void sendRequestJoinGameFortress() {
   send(ClientRequest.Lobby_Join_Fortress.index.toString());
 }
 
-void sendRequestJoinLobby(String lobbyUuid){
+void sendRequestJoinLobby(String lobbyUuid) {
   send('${ClientRequest.Lobby_Join.index} $lobbyUuid');
 }
 
-void sendRequestLobbyList(){
+void sendRequestLobbyList() {
   send(ClientRequest.Lobby_List.index.toString());
 }
 
-void sendClientRequestLobbyCreate({int maxPlayers, GameType type, String name, bool private}){
-  send('${ClientRequest.Lobby_Create.index} $maxPlayers ${type.index} $name ${private ? "1" : "0"}');
+void sendClientRequestLobbyCreate(
+    {int maxPlayers, GameType type, String name, bool private}) {
+  send(
+      '${ClientRequest.Lobby_Create.index} $maxPlayers ${type.index} $name ${private ? "1" : "0"}');
 }
 
 void requestJoinRandomGame() {
@@ -114,36 +117,61 @@ void sendRequestJoinLobbyFortress() {
   sendClientRequest(ClientRequest.Lobby_Join_Fortress);
 }
 
-void sendRequestPurchase(PurchaseType purchaseType){
+void sendRequestPurchase(PurchaseType purchaseType) {
   send('${ClientRequest.Purchase.index} $session ${purchaseType.index}');
 }
 
-
-void sendRequestSetCompilePaths(bool value){
+void sendRequestSetCompilePaths(bool value) {
   render.paths.clear();
   send('${ClientRequest.SetCompilePaths.index} $session ${value ? 1 : 0}');
 }
 
-void purchaseAmmoHandgun(){
+void purchaseAmmoHandgun() {
   sendRequestPurchase(PurchaseType.Ammo_Handgun);
 }
 
-void purchaseAmmoShotgun(){
+void purchaseAmmoShotgun() {
   sendRequestPurchase(PurchaseType.Ammo_Shotgun);
 }
 
-void purchaseWeaponHandgun(){
+void purchaseWeaponHandgun() {
   sendRequestPurchase(PurchaseType.Weapon_Handgun);
 }
 
-void purchaseWeaponShotgun(){
+void purchaseWeaponShotgun() {
   sendRequestPurchase(PurchaseType.Weapon_Shotgun);
 }
 
-void sendClientRequest(ClientRequest request){
-  send(request.index.toString());
+void purchaseWeaponSniperRifle() {
+  sendRequestPurchase(PurchaseType.Weapon_SniperRifle);
 }
 
+void purchaseWeaponAssaultRifle() {
+  sendRequestPurchase(PurchaseType.Weapon_AssaultRifle);
+}
+
+void sendRequestPurchaseWeapon(Weapon weapon) {
+  switch (weapon) {
+    case Weapon.HandGun:
+      purchaseWeaponHandgun();
+      break;
+    case Weapon.Shotgun:
+      purchaseWeaponShotgun();
+      break;
+    case Weapon.SniperRifle:
+      purchaseWeaponSniperRifle();
+      break;
+    case Weapon.AssaultRifle:
+      purchaseWeaponAssaultRifle();
+      break;
+    default:
+      throw Exception("Could not request purchase $weapon");
+  }
+}
+
+void sendClientRequest(ClientRequest request) {
+  send(request.index.toString());
+}
 
 void sendRequestSpawnNpc() {
   send('${ClientRequest.Spawn_Npc.index} $session');
@@ -154,7 +182,6 @@ void _write(dynamic value) {
   _buffer.write(_space);
 }
 
-void request(ClientRequest request, String value){
+void request(ClientRequest request, String value) {
   send('${request.index} $value');
 }
-

@@ -57,11 +57,13 @@
 -- CASUAL --
 [ ] Body Armor
 [ ] Knife Attack
-[ ] Weapon: Desert Eagle
-[ ] Select Server (Germany, USA, )
+[ ] Select Server (Germany, USA-East, USA-West, Japan, Russia, Australia)
+[ ] Purchase Desert Eagle
+[ ] Purchase Sniper Rifle
+[ ] Purchase Assault Rifle
 -- MAJOR BUGS --
-[ ] NPC Build up in the right corner
 -- COMPLETED --
+[x] NPC Build up in the right corner
 [x] Observe mode
 [x] Pathfinding bug
 [x] Exit Fullscreen Mode

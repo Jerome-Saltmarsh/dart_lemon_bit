@@ -51,6 +51,7 @@ dynamic get getPlayer {
   }
   return null;
 }
+
 Weapon get playerWeapon => getPlayer[weapon];
 
 List<CharacterState> characterStates = CharacterState.values;
@@ -59,7 +60,10 @@ CharacterState get playerState {
   return characterStates[getPlayer[stateIndex]];
 }
 
-bool get playerReady => compiledGame.totalPlayers > 0 && compiledGame.playerX != -1 && compiledGame.playerY != -1;
+bool get playerReady =>
+    compiledGame.totalPlayers > 0 &&
+    compiledGame.playerX != -1 &&
+    compiledGame.playerY != -1;
 
 String get playerName {
   return getPlayer[indexName];
@@ -72,9 +76,13 @@ String get session =>
 State state = State();
 
 Player get player => state.player;
+
 CompiledGame get compiledGame => state.compiledGame;
+
 bool get gameStarted => state.compiledGame.gameId >= 0;
+
 double get playerX => compiledGame.playerX;
+
 double get playerY => compiledGame.playerY;
 
 Score get highScore {
@@ -85,4 +93,34 @@ Score get highScore {
     highScore = score;
   }
   return highScore;
+}
+
+int clipsRemaining(Weapon weapon) {
+  switch (weapon) {
+    case Weapon.HandGun:
+      return player.clipsHandgun;
+    case Weapon.Shotgun:
+      return player.clipsShotgun;
+    case Weapon.SniperRifle:
+      return player.clipsSniperRifle;
+    case Weapon.AssaultRifle:
+      return player.clipsAssaultRifle;
+    default:
+      throw Exception("Could not get clips for $weapon");
+  }
+}
+
+bool weaponAcquired(Weapon weapon) {
+  switch (weapon) {
+    case Weapon.HandGun:
+      return player.acquiredHandgun;
+    case Weapon.Shotgun:
+      return player.acquiredShotgun;
+    case Weapon.SniperRifle:
+      return player.acquiredSniperRifle;
+    case Weapon.AssaultRifle:
+      return player.acquiredAssaultRifle;
+    default:
+      throw Exception("Could not get acquired for $weapon");
+  }
 }

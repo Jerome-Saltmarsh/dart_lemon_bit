@@ -1,4 +1,6 @@
 
+import 'package:bleed_client/common/Weapons.dart';
+
 _Constants constants = _Constants();
 
 _Prices get prices => constants.prices;
@@ -25,4 +27,32 @@ class _Ammo {
   final int shotgun = 75;
   final int sniperRifle = 100;
   final int assaultRifle = 200;
+}
+
+int mapWeaponPrice(Weapon weapon){
+  switch(weapon){
+    case Weapon.HandGun:
+      return prices.weapon.handgun;
+    case Weapon.Shotgun:
+      return prices.weapon.shotgun;
+    case Weapon.SniperRifle:
+      return prices.weapon.sniperRifle;
+    case Weapon.AssaultRifle:
+      return prices.weapon.assaultRifle;
+  }
+  throw Exception("No price available for $weapon");
+}
+
+String mapWeaponName(Weapon weapon){
+  switch(weapon){
+    case Weapon.HandGun:
+      return "Handgun";
+    case Weapon.Shotgun:
+      return "Shotgun";
+    case Weapon.SniperRifle:
+      return "Sniper Rifle";
+    case Weapon.AssaultRifle:
+      return "Assault Rifle";
+  }
+  throw Exception("No name available for $weapon");
 }

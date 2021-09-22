@@ -1,5 +1,6 @@
 
 import 'package:bleed_client/common/Tile.dart';
+import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/enums.dart';
 
 class Player {
@@ -21,8 +22,11 @@ class Player {
   int meds = 0;
   int clipsHandgun;
   int clipsShotgun;
+  int clipsSniperRifle = 0;
+  int clipsAssaultRifle = 0;
 
   bool get dead => state == CharacterState.Dead;
   bool get alive => !dead;
   bool get canPurchase => tile == Tile.PlayerSpawn;
 }
+

@@ -360,10 +360,15 @@ Widget buildHud() {
                   crossAxisAlignment: crossAxis.center,
                   children: [
                     Row(mainAxisAlignment: mainAxis.center, children: [
-                      onPressed(callback: (){
-                        sendRequestRevive();
-                        observeMode = false;
-                      }, child: border(child: text("Respawn", fontSize: 30), padding: padding8, borderRadius: borderRadius4))
+                      onPressed(
+                          callback: () {
+                            sendRequestRevive();
+                            observeMode = false;
+                          },
+                          child: border(
+                              child: text("Respawn", fontSize: 30),
+                              padding: padding8,
+                              borderRadius: borderRadius4))
                     ]),
                     height32,
                     text("Hold E to pan camera")
@@ -528,6 +533,46 @@ Widget buildImageSlot(
   );
 }
 
+Widget buildEquipWeaponSlot({Weapon weapon, int index}) {
+  return Stack(
+    children: [
+      buildTag(clipsRemaining(weapon)),
+      onPressed(
+          child: buildWeaponSlot(weapon: weapon),
+          hint: "Press $index to equip",
+          callback: sendRequestEquipShotgun),
+    ],
+  );
+}
+
+Widget buildSlotWeapon({Weapon weapon, int index}) {
+  bool acquired = weaponAcquired(weapon);
+  return Column(
+    children: [
+      if (!acquired && player.canPurchase)
+        buildPurchaseWeaponSlot(weapon: weapon),
+      if (player.canPurchase) height8,
+      if (!acquired) buildSlot(title: "Slot $index"),
+      if (acquired) buildEquipWeaponSlot(weapon: weapon, index: index),
+    ],
+  );
+}
+
+Widget buildPurchaseWeaponSlot({Weapon weapon}) {
+  int price = mapWeaponPrice(weapon);
+  return Stack(
+    children: [
+      onPressed(
+          hint: '${mapWeaponName(weapon)} $price',
+          child: buildWeaponSlot(weapon: weapon),
+          callback: () {
+            sendRequestPurchaseWeapon(weapon);
+          }),
+      buildTag(price, color: player.points >= price ? green : blood),
+    ],
+  );
+}
+
 Widget buildWeaponSlot({Weapon weapon}) {
   return Container(
     width: 120,
@@ -556,69 +601,17 @@ Widget buildBottomLeft() {
         mainAxisAlignment: mainAxis.center,
         crossAxisAlignment: crossAxis.end,
         children: [
-          Column(
-            children: [
-              if (!player.acquiredHandgun) buildSlot(title: "Slot 1"),
-              if (player.acquiredHandgun)
-                Stack(
-                  children: [
-                    buildTag(player.clipsHandgun),
-                    onPressed(
-                        child: buildWeaponSlot(weapon: Weapon.HandGun),
-                        hint: "Press 1 to equip",
-                        callback: sendRequestEquipHandgun),
-                  ],
-                ),
-            ],
-          ),
+          buildSlotWeapon(weapon: Weapon.HandGun, index: 1),
+          width8,
+          buildSlotWeapon(weapon: Weapon.Shotgun, index: 2),
           width8,
           Column(
             children: [
-              if (player.canPurchase)
-                Column(
-                  children: [
-                    if (!player.acquiredShotgun)
-                      Stack(
-                        children: [
-                          onPressed(
-                              hint:
-                                  'Purchase Shotgun: ${prices.weapon.shotgun}',
-                              child: buildWeaponSlot(weapon: Weapon.Shotgun),
-                              callback: purchaseWeaponShotgun),
-                          Container(
-                              alignment: Alignment.center,
-                              margin: EdgeInsets.only(left: 5, top: 5),
-                              child: border(
-                                  child: text(prices.weapon.shotgun,
-                                      fontWeight: FontWeight.bold,
-                                      color:
-                                          player.points >= prices.weapon.shotgun
-                                              ? green
-                                              : blood),
-                                  borderRadius: borderRadius16,
-                                  padding: padding4)),
-                        ],
-                      ),
-                    // buildSlot(title: "Mac 10"),
-                    height16,
-                  ],
-                ),
-              if (player.acquiredShotgun)
-                Stack(
-                  children: [
-                    buildTag(player.clipsShotgun),
-                    onPressed(
-                        child: buildWeaponSlot(weapon: Weapon.Shotgun),
-                        hint: "Press 2 to equip",
-                        callback: sendRequestEquipShotgun),
-                  ],
-                ),
-              if (!player.acquiredShotgun) buildSlot(title: "Slot 2"),
+              buildSlot(
+                  title:
+                      player.acquiredSniperRifle ? "Sniper Rifle" : "Slot 3"),
             ],
           ),
-          width8,
-          buildSlot(
-              title: player.acquiredSniperRifle ? "Sniper Rifle" : "Slot 3"),
           width8,
           buildSlot(
               title: player.acquiredAssaultRifle ? "Assault Rifle" : "Slot 4"),
@@ -678,7 +671,6 @@ Widget buildViewTutorial() {
 Widget buildTag(dynamic value, {Color color = Colors.white}) {
   return Container(
       alignment: Alignment.center,
-      // margin: EdgeInsets.only(left: 0, top: 0),
       child: border(
           child: Container(
               width: 20,
