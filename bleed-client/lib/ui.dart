@@ -356,9 +356,19 @@ Widget buildHud() {
             top: 30,
             child: Container(
                 width: screenWidth,
-                child: Row(mainAxisAlignment: mainAxis.center, children: [
-                  onPressed(callback: sendRequestRevive, child: text("Respawn"))
-                ]))),
+                child: Column(
+                  crossAxisAlignment: crossAxis.center,
+                  children: [
+                    Row(mainAxisAlignment: mainAxis.center, children: [
+                      onPressed(callback: (){
+                        sendRequestRevive();
+                        observeMode = false;
+                      }, child: border(child: text("Respawn", fontSize: 30), padding: padding8, borderRadius: borderRadius4))
+                    ]),
+                    height32,
+                    text("Hold E to pan camera")
+                  ],
+                ))),
       if (state.score.isNotEmpty && compiledGame.players.isNotEmpty)
         buildViewScore(),
       if (message != null) buildMessageBox(message),
@@ -1098,6 +1108,7 @@ Widget buildViewRespawn() {
                                 observeMode = true;
                                 redrawUI();
                               }),
+                          width16,
                           onPressed(
                             child: border(
                                 child: text("RESPAWN", fontSize: 40),

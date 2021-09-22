@@ -66,7 +66,7 @@ void updatePlayMode() {
   readPlayerInput();
   updateParticles();
   updateCharacters();
-  if (!panningCamera) {
+  if (!panningCamera && player.alive) {
     cameraTrackPlayer();
   }
   updatePlayer();
