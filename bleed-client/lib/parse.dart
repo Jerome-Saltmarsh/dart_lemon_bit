@@ -293,6 +293,8 @@ void _parsePlayer() {
   }
   player.clipsHandgun = _consumeInt();
   player.clipsShotgun = _consumeInt();
+  player.clipsSniperRifle = _consumeInt();
+  player.clipsAssaultRifle = _consumeInt();
 }
 
 void _parsePlayerEvents(){

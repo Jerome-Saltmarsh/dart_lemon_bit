@@ -119,6 +119,8 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.currentTile.index);
   _write(buffer, player.clips.handgun);
   _write(buffer, player.clips.shotgun);
+  _write(buffer, player.clips.sniperRifle);
+  _write(buffer, player.clips.assaultRifle);
   // _compileInventory(buffer, player.inventory);
 
   for (PlayerEvent playerEvent in player.events) {

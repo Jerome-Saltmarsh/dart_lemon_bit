@@ -59,10 +59,11 @@
 [ ] Knife Attack
 [ ] Select Server (Germany, USA-East, USA-West, Japan, Russia, Australia)
 [ ] Purchase Desert Eagle
-[ ] Purchase Sniper Rifle
-[ ] Purchase Assault Rifle
+[ ] Color Palette
 -- MAJOR BUGS --
 -- COMPLETED --
+[x] Purchase Sniper Rifle
+[x] Purchase Assault Rifle
 [x] NPC Build up in the right corner
 [x] Observe mode
 [x] Pathfinding bug

@@ -623,6 +623,19 @@ Widget buildBottomLeft() {
             ],
           ),
           width8,
+          Stack(
+            children: [
+              buildTag(player.meds),
+              Tooltip(
+                  message: "Press G to throw grenade",
+                  child: buildImageSlot(
+                      image: grenadeImage,
+                      width: 120 * goldenRatioInverse,
+                      height: 120 * goldenRatioInverse,
+                      color: player.grenades > 0 ? null : Colors.white60)),
+            ],
+          ),
+          width8,
           buildSlot(title: "Credits: ${player.points}"),
         ],
       ),
