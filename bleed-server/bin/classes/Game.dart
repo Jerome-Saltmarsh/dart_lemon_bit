@@ -3,6 +3,7 @@ import 'dart:math';
 import '../classes.dart';
 import '../common/GameState.dart';
 import '../common/Tile.dart';
+import '../common/constants.dart';
 import '../compile.dart';
 import '../constants.dart';
 import '../enums.dart';
@@ -251,6 +252,15 @@ class GameCasual extends Game {
     player.squad = getNextSquad();
   }
 
+  @override
+  void onNpcSpawned(Npc npc) {
+    if (chance(0.05)) {
+      npc.pointMultiplier = 5;
+    } else {
+      npc.pointMultiplier = 1;
+    }
+  }
+
   Clips spawnClip() {
     return Clips(handgun: 3, shotgun: 3, sniperRifle: 2, assaultRifle: 2);
   }
@@ -315,7 +325,6 @@ class GameCasual extends Game {
     player.grenades = spawnGrenades;
     player.clips = spawnClip();
     player.rounds = spawnRounds();
-    player.credits = 100;
     player.squad = getNextSquad();
     player.acquiredHandgun = true;
     player.acquiredShotgun = false;
@@ -375,6 +384,8 @@ abstract class Game {
   void onPlayerDisconnected(Player player) {}
 
   void onPlayerRevived(Player player) {}
+
+  void onNpcSpawned(Npc npc) {}
 
   bool gameOver();
 
@@ -921,7 +932,6 @@ extension GameFunctions on Game {
                 // @on player killed by player
                 Player owner = bullet.owner as Player;
                 owner.points += 10;
-                owner.credits += 10;
                 owner.score.playersKilled++;
               }
             }
@@ -940,7 +950,9 @@ extension GameFunctions on Game {
           if (bullet.owner is Player) {
             Player owner = bullet.owner as Player;
             owner.score.zombiesKilled++;
-            owner.points += 5;
+            if (character is Npc){
+              owner.points += constants.points.zombieKilled * character.pointMultiplier;
+            }
           }
 
           if (randomBool()) {
@@ -1149,11 +1161,13 @@ extension GameFunctions on Game {
       npc.health = 3;
       npc.x = x;
       npc.y = y;
+      onNpcSpawned(npc);
       return npc;
     }
 
     Npc npc = Npc(x: x, y: y, health: zombieHealth, maxHealth: zombieHealth);
     npcs.add(npc);
+    onNpcSpawned(npc);
     return npc;
   }
 

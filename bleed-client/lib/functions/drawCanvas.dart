@@ -57,6 +57,13 @@ void _drawCompiledGame() {
   } catch (error) {
     print("draw player health error");
   }
+
+  for (int i = 0; i < compiledGame.totalNpcs; i++) {
+    if (compiledGame.npcs[i][indexPointMultiplier] == "1") continue;
+    dynamic npc = compiledGame.npcs[i];
+    drawCircle(npc[x], npc[y], 10, orange);
+  }
+
   _drawBullets(compiledGame.bullets);
   drawBulletHoles(compiledGame.bulletHoles);
   _drawGrenades(compiledGame.grenades);
@@ -70,10 +77,10 @@ void _drawCompiledGame() {
     drawPaths();
   }
 
-  _drawGunShotFlashes();
+  // _drawGunShotFlashes();
 
-  for (FloatingText floatingText in render.floatingText){
-    if(floatingText.duration == 0) continue;
+  for (FloatingText floatingText in render.floatingText) {
+    if (floatingText.duration == 0) continue;
     floatingText.duration--;
     floatingText.y -= 0.5;
     drawText(floatingText.value, floatingText.x, floatingText.y);
@@ -102,7 +109,7 @@ void _drawGunShotFlashes() {
   List<RSTransform> gunShotTransforms = [];
   List<Rect> rects = [];
 
-  for(GunShotFlash gunShotFlash in render.gunShotFlashes){
+  for (GunShotFlash gunShotFlash in render.gunShotFlashes) {
     // globalCanvas.drawCircle(Offset(gunShotFlash.x, gunShotFlash.y), 5, globalPaint);
     gunShotTransforms.add(RSTransform.fromComponents(
       rotation: gunShotFlash.rotation,

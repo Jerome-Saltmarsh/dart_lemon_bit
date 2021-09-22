@@ -24,7 +24,6 @@
 [ ] Item.RevivalKit (revive fallen squad member)
 [ ] Gain XP and levels
 [ ] Golden Zombie earns 5x kills
-[ ] Red Zombie earns 2x kills
 [ ] Ranged zombies
 [ ] Bullet fired Flash
 [ ] Player chat
@@ -60,6 +59,8 @@
 [ ] Select Server (Germany, USA-East, USA-West, Japan, Russia, Australia)
 [ ] Purchase Desert Eagle
 [ ] Color Palette
+[ ] Loot Box (Gain extra points when destroyed)
+[ ] Golden Zombie earns 10x kills
 -- MAJOR BUGS --
 -- COMPLETED --
 [x] Purchase Sniper Rifle

@@ -260,9 +260,10 @@ void _compilePlayer(StringBuffer buffer, Player player) {
 void _compileNpc(StringBuffer buffer, Npc npc) {
   _write(buffer, npc.state.index);
   _write(buffer, npc.direction.index);
-  _write(buffer, npc.x.toInt());
-  _write(buffer, npc.y.toInt());
+  _writeInt(buffer, npc.x);
+  _writeInt(buffer, npc.y);
   _write(buffer, npc.stateFrameCount);
+  _write(buffer, npc.pointMultiplier);
 }
 
 void compileLobby(StringBuffer buffer, Lobby lobby) {
@@ -289,10 +290,6 @@ String compileLobbies() {
 
 void _writeBool(StringBuffer buffer, bool value) {
   _write(buffer, value ? _1 : _0);
-}
-
-void _writeDouble(StringBuffer buffer, double value) {
-  _write(buffer, value.toStringAsFixed(_decimals));
 }
 
 void _writeInt(StringBuffer buffer, double value) {

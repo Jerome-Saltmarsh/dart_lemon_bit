@@ -11,7 +11,6 @@ import 'package:bleed_client/enums/InventoryItemType.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
-import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/keys.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/ui/dialogs.dart';
@@ -37,11 +36,14 @@ const String _emptyString = " ";
 const String _semiColon = ";";
 const String _comma = ",";
 const String _dash = "-";
+const String _1 = "1";
+
 // enums
 const List<ServerResponse> serverResponses = ServerResponse.values;
 const List<Weapon> weapons = Weapon.values;
 const List<GameEventType> gameEventTypes = GameEventType.values;
 const List<GameType> gameTypes = GameType.values;
+
 
 // properties
 String get _text => event;
@@ -213,11 +215,6 @@ void parseState() {
       break;
     }
   }
-}
-
-void _parseGameId() {
-  compiledGame.gameId = _consumeInt();
-  compiledGame.gameType = GameType.values[_consumeInt()];
 }
 
 void _parseMetaFortress() {
@@ -426,7 +423,7 @@ int _consumeInt() {
 }
 
 bool _consumeBool(){
-  return _consumeString() == "1" ? true : false;
+  return _consumeString() == _1 ? true : false;
 }
 
 Weapon _consumeWeapon() {
@@ -562,12 +559,12 @@ void _parseNpcs() {
 }
 
 void _consumePlayer(dynamic memory) {
-  memory[stateIndex] = _consumeInt();
-  memory[direction] = _consumeInt();
+  memory[stateIndex] = _consumeInt(); // TODO optimization remove int parse
+  memory[direction] = _consumeInt(); // TODO optimization remove int parse
   memory[x] = _consumeDouble();
   memory[y] = _consumeDouble();
   memory[frameCount] = _consumeInt();
-  memory[weapon] = _consumeWeapon();
+  memory[weapon] = _consumeWeapon(); // TODO optimization remove int parse
   memory[squad] = _consumeInt();
   try {
     memory[indexName] = _consumeString();
@@ -577,9 +574,10 @@ void _consumePlayer(dynamic memory) {
 }
 
 void _consumeNpc(dynamic npcMemory) {
-  npcMemory[stateIndex] = _consumeInt();
-  npcMemory[direction] = _consumeInt();
+  npcMemory[stateIndex] = _consumeInt(); // TODO optimization remove int parse
+  npcMemory[direction] = _consumeInt(); // TODO optimization remove int parse
   npcMemory[x] = _consumeDouble();
   npcMemory[y] = _consumeDouble();
   npcMemory[frameCount] = _consumeInt();
+  npcMemory[indexPointMultiplier] = _consumeString();
 }

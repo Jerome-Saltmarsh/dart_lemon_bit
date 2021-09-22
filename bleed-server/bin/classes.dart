@@ -77,6 +77,7 @@ final Character _nonTarget = Character(x: 0, y: 0, weapon: Weapon.AssaultRifle, 
 class Npc extends Character {
   Character target = _nonTarget;
   List<Vector2> path = [];
+  int pointMultiplier = 1;
 
   Npc(
       {required double x,

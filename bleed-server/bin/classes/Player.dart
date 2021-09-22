@@ -24,7 +24,6 @@ class Player extends Character {
   int frameOfDeath = -1;
   GameState gameState = GameState.InProgress;
   int _points = 0;
-  int credits = 0;
   int pointsRecord = 0;
   Score score = Score();
   Clips clips = Clips();

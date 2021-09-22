@@ -6,8 +6,12 @@ _Constants constants = _Constants();
 _Prices get prices => constants.prices;
 
 class _Constants {
-  int pointsEarnedZombieKilled = 5;
   _Prices prices = _Prices();
+  _Points points = _Points();
+}
+
+class _Points {
+  final int zombieKilled = 5;
 }
 
 class _Prices {

@@ -625,7 +625,7 @@ Widget buildBottomLeft() {
           width8,
           Stack(
             children: [
-              buildTag(player.meds),
+              buildTag(player.grenades),
               Tooltip(
                   message: "Press G to throw grenade",
                   child: buildImageSlot(

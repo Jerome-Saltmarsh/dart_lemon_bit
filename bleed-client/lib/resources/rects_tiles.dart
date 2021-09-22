@@ -8,9 +8,8 @@ import '../rects.dart';
 Rect tileRectGrass = getTileSpriteRectByIndex(0);
 Rect tileRectBlock = getTileSpriteRectByIndex(1);
 Rect tileRectConcrete = getTileSpriteRectByIndex(2);
-Rect tileRectOrange = getTileSpriteRectByIndex(3);
-Rect tileRectRed = getTileSpriteRectByIndex(4);
-Rect tileRectBlack = getTileSpriteRectByIndex(4);
+Rect tileZombieSpawn = getTileSpriteRectByIndex(3);
+Rect tilePlayerSpawn = getTileSpriteRectByIndex(4);
 
 
 Rect getTileSpriteRect(Tile tile) {
@@ -20,13 +19,13 @@ Rect getTileSpriteRect(Tile tile) {
     case Tile.Grass:
       return tileRectGrass;
     case Tile.Fortress:
-      return tileRectOrange;
+      return tilePlayerSpawn;
     case Tile.PlayerSpawn:
-      return tileRectBlack;
+      return tilePlayerSpawn;
     case Tile.ZombieSpawn:
-      return tileRectRed;
+      return tileZombieSpawn;
     case Tile.RandomItemSpawn:
-      return tileRectOrange;
+      return tileRectConcrete;
     case Tile.Block:
       return tileRectBlock;
   }
