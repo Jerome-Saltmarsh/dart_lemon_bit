@@ -32,7 +32,6 @@
 [ ] Heal animation
 [ ] Supply Square - Purchase supplies, health, grenades, ammo, etc,
 [ ] Upgrade Square - upgrade weapons and items
-[ ] Select Server (Germany, USA, )
 -- REFACTOR --
 [ ] Merge Maths lib into common
 -- BUSINESS --
@@ -55,15 +54,16 @@
 [ ] Fortress Cache Path 
 -- DEATH MATCH 
 [ ] Rounds
-[ ] Observe mode
 -- CASUAL --
 [ ] Body Armor
 [ ] Knife Attack
 [ ] Weapon: Desert Eagle
+[ ] Select Server (Germany, USA, )
 -- MAJOR BUGS --
 [ ] NPC Build up in the right corner
-[ ] Pathfinding bug
 -- COMPLETED --
+[x] Observe mode
+[x] Pathfinding bug
 [x] Exit Fullscreen Mode
 [x] Weapon Square - purchase new weapons
 [x] Prevent equip weapon which hasn't been acquired

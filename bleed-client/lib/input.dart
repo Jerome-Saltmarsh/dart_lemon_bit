@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:ui';
 
 import 'package:bleed_client/classes/Block.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
@@ -35,16 +36,21 @@ bool get keySprintPressed => keyPressed(LogicalKeyboardKey.shiftLeft);
 
 bool get keyPressedReload => keyPressed(_keyReload);
 
-bool get keyPressedUseMedKit =>  keyPressed(LogicalKeyboardKey.keyH);
+bool get keyPressedUseMedKit => keyPressed(LogicalKeyboardKey.keyH);
 
-bool get keyPressedMenu =>  keyPressed(LogicalKeyboardKey.escape);
+bool get keyPressedMenu => keyPressed(LogicalKeyboardKey.escape);
 
-bool get keyPressedThrowGrenade =>  keyPressed(LogicalKeyboardKey.keyG);
+bool get keyPressedThrowGrenade => keyPressed(LogicalKeyboardKey.keyG);
 
-bool get keyPressedShowStore =>  keyPressed(LogicalKeyboardKey.keyI);
+bool get keyPressedShowStore => keyPressed(LogicalKeyboardKey.keyI);
+
+bool get keyPressedPan => keyPressed(LogicalKeyboardKey.keyE);
 
 bool _throwingGrenade = false;
 bool _healing = false;
+bool panningCamera = false;
+
+Offset _mouseWorldStart;
 
 void readPlayerInput() {
   if (!playerAssigned) return;
@@ -73,8 +79,8 @@ void readPlayerInput() {
   if (keyPressedThrowGrenade) {
     if (!_throwingGrenade && mouseAvailable) {
       _throwingGrenade = true;
-      double mouseDistance =
-          distance(compiledGame.playerX, compiledGame.playerY, mouseWorldX, mouseWorldY);
+      double mouseDistance = distance(
+          compiledGame.playerX, compiledGame.playerY, mouseWorldX, mouseWorldY);
       double maxRange = 400;
       double throwDistance = min(mouseDistance, maxRange);
       double strength = throwDistance / maxRange;
@@ -85,6 +91,21 @@ void readPlayerInput() {
   }
   if (mouseAvailable) {
     requestAim = getMouseRotation();
+  }
+
+  if (keyPressedPan && !panningCamera) {
+    panningCamera = true;
+    _mouseWorldStart = mouseWorld;
+  }
+
+  if (panningCamera && !keyPressedPan) {
+    panningCamera = false;
+  }
+
+  if (panningCamera) {
+    Offset mouseWorldDiff = _mouseWorldStart - mouseWorld;
+    cameraY += mouseWorldDiff.dy * zoom;
+    cameraX += mouseWorldDiff.dx * zoom;
   }
 
   if (keyPressedReload) {

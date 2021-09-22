@@ -46,8 +46,9 @@ SharedPreferences sharedPreferences;
 bool _showScore = true;
 double iconSize = 45;
 
-void initUI() {
+bool observeMode = false;
 
+void initUI() {
   onConnectError.stream.listen((event) {
     showDialogConnectFailed();
   });
@@ -344,9 +345,20 @@ Widget buildHud() {
       if (compiledGame.gameType == GameType.Casual) buildGameViewCasual(),
       if (state.gameState == GameState.Won) buildViewWin(),
       if (state.gameState == GameState.Lost) buildViewLose(),
-      if (player.dead && compiledGame.gameType == GameType.Casual)
+      if (!observeMode &&
+          player.dead &&
+          compiledGame.gameType == GameType.Casual)
         buildViewRespawn(),
       // if (!playerDead && state.storeVisible) buildViewStore(),
+
+      if (player.dead && observeMode)
+        Positioned(
+            top: 30,
+            child: Container(
+                width: screenWidth,
+                child: Row(mainAxisAlignment: mainAxis.center, children: [
+                  onPressed(callback: sendRequestRevive, child: text("Respawn"))
+                ]))),
       if (state.score.isNotEmpty && compiledGame.players.isNotEmpty)
         buildViewScore(),
       if (message != null) buildMessageBox(message),
@@ -359,9 +371,11 @@ Widget buildTopRight() {
 
   Widget iconToggleFullscreen = Tooltip(
     child: IconButton(
-        icon: Icon(fullScreenActive ? Icons.fullscreen_exit : Icons.fullscreen, size: iconSize, color: white),
+        icon: Icon(fullScreenActive ? Icons.fullscreen_exit : Icons.fullscreen,
+            size: iconSize, color: white),
         onPressed: toggleFullScreen),
-    message: document.fullscreenEnabled ? "Exit Fullscreen" : "Enter Fullscreen",
+    message:
+        document.fullscreenEnabled ? "Exit Fullscreen" : "Enter Fullscreen",
   );
   Widget iconToggleAudio = Tooltip(
       child: IconButton(
@@ -608,8 +622,7 @@ Widget buildBottomLeft() {
                       image: grenadeImage,
                       width: 120 * goldenRatioInverse,
                       height: 120 * goldenRatioInverse,
-                      color:
-                      player.grenades > 0 ? null : Colors.white60)),
+                      color: player.grenades > 0 ? null : Colors.white60)),
             ],
           ),
           width8,
@@ -623,8 +636,7 @@ Widget buildBottomLeft() {
                       image: healthImage,
                       width: 120 * goldenRatioInverse,
                       height: 120 * goldenRatioInverse,
-                      color:
-                      player.meds > 0 ? null : Colors.white60)),
+                      color: player.meds > 0 ? null : Colors.white60)),
             ],
           ),
           width8,
@@ -1077,14 +1089,25 @@ Widget buildViewRespawn() {
                         ),
                       ),
                       height32,
-                      onPressed(
-                        child: border(
-                            child: text("RESPAWN", fontSize: 40),
-                            padding: padding16,
-                            borderRadius: borderRadius8,
-                            fillColor: black54),
-                        callback: sendRequestRevive,
-                        hint: "Click to respawn",
+                      Row(
+                        mainAxisAlignment: mainAxis.center,
+                        children: [
+                          onPressed(
+                              child: text("Observe"),
+                              callback: () {
+                                observeMode = true;
+                                redrawUI();
+                              }),
+                          onPressed(
+                            child: border(
+                                child: text("RESPAWN", fontSize: 40),
+                                padding: padding16,
+                                borderRadius: borderRadius8,
+                                fillColor: black54),
+                            callback: sendRequestRevive,
+                            hint: "Click to respawn",
+                          ),
+                        ],
                       ),
                     ],
                   ),
@@ -1109,7 +1132,8 @@ List<String> tips = [
   "Hold left shift to sprint",
   "Press R to Reload",
   "Press Space bar to fire weapon",
-  "Scroll with the mouse to zoom in and out"
+  "Scroll with the mouse to zoom in and out",
+  "Hold E to pan camera"
 ];
 
 String getTip() {

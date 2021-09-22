@@ -28,15 +28,13 @@ void update() {
     return;
   }
 
-
   // TODO Does not belong here
   _showHideTopLeftMenuOptions();
 
-  if (!tutorialsFinished && tutorial.getFinished()){
+  if (!tutorialsFinished && tutorial.getFinished()) {
     tutorialNext();
     sharedPreferences.setInt('tutorialIndex', tutorialIndex);
   }
-
 
   if (playMode) {
     updatePlayMode();
@@ -46,14 +44,14 @@ void update() {
 }
 
 void _showHideTopLeftMenuOptions() {
-  if(!mouseAvailable) return;
-  if (mouseX < 300 && mouseY < 300){
-    if (!_showMenuOptions){
+  if (!mouseAvailable) return;
+  if (mouseX < 300 && mouseY < 300) {
+    if (!_showMenuOptions) {
       _showMenuOptions = true;
       redrawUI();
     }
-  }else{
-    if (_showMenuOptions){
+  } else {
+    if (_showMenuOptions) {
       _showMenuOptions = false;
       redrawUI();
     }
@@ -68,7 +66,9 @@ void updatePlayMode() {
   readPlayerInput();
   updateParticles();
   updateCharacters();
-  cameraTrackPlayer();
+  if (!panningCamera) {
+    cameraTrackPlayer();
+  }
   updatePlayer();
 }
 

@@ -1214,7 +1214,7 @@ extension GameFunctions on Game {
       if (npc.dead) continue;
       if (npc.targetSet) continue;
       if (npc.path.isNotEmpty) continue;
-      if (chance(0.25)) return;
+      // if (chance(0.25)) return;
       // @on npc set random destination
       npcSetRandomDestination(npc);
     }
