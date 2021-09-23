@@ -65,10 +65,10 @@
 [ ] Select Server (Germany, USA-East, USA-West, Japan, Russia, Australia)
 [ ] Purchase Desert Eagle
 [ ] Loot Box (Gain extra points when destroyed)
-[ ] Killed zombies drop health pack etc,
 [ ] Design Level, City
 -- MAJOR BUGS --
 -- COMPLETED --
+[x] Killed zombies drop health pack etc,
 [x] Color Palette
 [x] Melee Attack
 [x] Golden Zombie earns 10x kills
