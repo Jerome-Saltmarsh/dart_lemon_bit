@@ -420,6 +420,7 @@ abstract class Game {
 
 extension GameFunctions on Game {
   void updateAndCompile() {
+    // @on update game
     if (!gameOver()) {
       duration++;
       update();
@@ -431,6 +432,7 @@ extension GameFunctions on Game {
       _updateGrenades();
       _updateCollectables();
       _updateGameEvents();
+      _updateItems();
     }
     compileGame(this);
   }
@@ -1331,6 +1333,28 @@ extension GameFunctions on Game {
       if (gameEvents[i].frameDuration-- < 0) {
         gameEvents.removeAt(i);
         i--;
+      }
+    }
+  }
+
+  void _updateItems() {
+    for (int i = 0; i < items.length; i++) {
+      Item item = items[i];
+      double r = 15; // TODO add to settings
+      int healAmount = 5; // TODO add to settings
+      for (Player player in players) {
+        if (diff(item.x, player.x) > r) continue;
+        if (diff(item.y, player.y) > r) continue;
+        if (player.dead) continue;
+
+        switch (item.type) {
+          case ItemType.Health:
+            if (player.health < player.maxHealth) {
+              player.health += healAmount;
+              items.removeAt(i);
+              i--;
+            }
+        }
       }
     }
   }

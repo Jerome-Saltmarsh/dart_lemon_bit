@@ -4,13 +4,14 @@ import 'package:bleed_client/rects.dart';
 import 'package:bleed_client/state.dart';
 
 // interface
-Rect get rectHealth => _rectsHealth[drawFrame % 3];
+Rect get rectHealth => _rectsHealth[drawFrame % _healthFrames];
 
 // private
-double _frameWidth = 48;
-double _frameHeight = 72;
+const double _frameWidth = 48;
+const double _frameHeight = 72;
 
-List<Rect> _rectsHealth = _itemFrames([1, 2, 3]);
+List<Rect> _rectsHealth = _itemFrames([1, 1, 2, 2]);
+int _healthFrames = _rectsHealth.length;
 
 List<Rect> _itemFrames(List<int> indexes){
   return indexes.map(_itemFrame).toList();
