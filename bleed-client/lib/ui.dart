@@ -27,6 +27,7 @@ import 'classes/InventoryItem.dart';
 import 'classes/Score.dart';
 import 'common.dart';
 import 'connection.dart';
+import 'constants/servers.dart';
 import 'enums/InventoryItemType.dart';
 import 'enums/Mode.dart';
 import 'common/Weapons.dart';
@@ -357,9 +358,9 @@ Widget buildHud() {
             child: Container(
                 width: screenWidth,
                 child: Column(
-                  crossAxisAlignment: crossAxis.center,
+                  crossAxisAlignment: cross.center,
                   children: [
-                    Row(mainAxisAlignment: mainAxis.center, children: [
+                    Row(mainAxisAlignment: main.center, children: [
                       onPressed(
                           callback: () {
                             sendRequestRevive();
@@ -389,8 +390,7 @@ Widget buildTopRight() {
         icon: Icon(fullScreenActive ? Icons.fullscreen_exit : Icons.fullscreen,
             size: iconSize, color: white),
         onPressed: toggleFullScreen),
-    message:
-    fullScreenActive ? "Exit Fullscreen" : "Enter Fullscreen",
+    message: fullScreenActive ? "Exit Fullscreen" : "Enter Fullscreen",
   );
   Widget iconToggleAudio = Tooltip(
       child: IconButton(
@@ -502,7 +502,7 @@ Widget buildViewFortress() {
 Widget buildSlot({String title}) {
   return Container(
     child: Column(
-      mainAxisAlignment: mainAxis.center,
+      mainAxisAlignment: main.center,
       children: [
         text(title),
       ],
@@ -598,8 +598,8 @@ Widget buildBottomLeft() {
         borderRadius: const BorderRadius.only(topRight: radius8),
       ),
       child: Row(
-        mainAxisAlignment: mainAxis.center,
-        crossAxisAlignment: crossAxis.end,
+        mainAxisAlignment: main.center,
+        crossAxisAlignment: cross.end,
         children: [
           buildSlotWeapon(weapon: Weapon.HandGun, index: 1),
           width8,
@@ -649,7 +649,7 @@ Widget buildViewTutorial() {
       child: Container(
         width: screenWidth,
         child: Row(
-          mainAxisAlignment: mainAxis.center,
+          mainAxisAlignment: main.center,
           children: [
             Container(
                 padding: EdgeInsets.all(10),
@@ -931,7 +931,7 @@ Widget buildViewRespawn() {
       child: Container(
         width: screenWidth,
         child: Row(
-          mainAxisAlignment: mainAxis.center,
+          mainAxisAlignment: main.center,
           children: [
             Container(
                 padding: padding16,
@@ -940,7 +940,7 @@ Widget buildViewRespawn() {
                     BoxDecoration(borderRadius: borderRadius8, color: black54),
                 child: SingleChildScrollView(
                   child: Column(
-                    crossAxisAlignment: crossAxis.center,
+                    crossAxisAlignment: cross.center,
                     children: [
                       Container(
                           decoration: BoxDecoration(
@@ -959,12 +959,12 @@ Widget buildViewRespawn() {
                           color: black54,
                         ),
                         child: Column(
-                          crossAxisAlignment: crossAxis.center,
+                          crossAxisAlignment: cross.center,
                           children: [
                             text("Please Support Me"),
                             height16,
                             Row(
-                              mainAxisAlignment: mainAxis.spaceEvenly,
+                              mainAxisAlignment: main.even,
                               children: [
                                 onPressed(
                                     child: border(
@@ -998,7 +998,7 @@ Widget buildViewRespawn() {
                           ],
                         ),
                       ),
-                      height16,
+                      height8,
                       Container(
                         padding: padding16,
                         decoration: BoxDecoration(
@@ -1048,7 +1048,7 @@ Widget buildViewRespawn() {
                           ],
                         ),
                       ),
-                      height16,
+                      height8,
                       Container(
                         decoration: BoxDecoration(
                           borderRadius: borderRadius8,
@@ -1059,8 +1059,8 @@ Widget buildViewRespawn() {
                           children: [
                             text("Hints"),
                             Row(
-                              mainAxisAlignment: mainAxis.center,
-                              crossAxisAlignment: crossAxis.center,
+                              mainAxisAlignment: main.center,
+                              crossAxisAlignment: cross.center,
                               children: [
                                 Container(
                                     width: 350,
@@ -1082,9 +1082,40 @@ Widget buildViewRespawn() {
                           ],
                         ),
                       ),
+                      height8,
+                      Container(
+                        decoration: BoxDecoration(
+                          borderRadius: borderRadius8,
+                          color: black54,
+                        ),
+                        padding: padding16,
+                        child: Column(
+                          children: [
+                            text("Server"),
+                            height8,
+                            Row(mainAxisAlignment: main.even, children: [
+                              onPressed(
+                                  child: isUriConnected(servers.germany) ? border(child: text("Germany"), padding: padding4, borderRadius: borderRadius4) : text("Germany"),
+                                  callback: () {
+                                    connect(servers.germany);
+                                  }),
+                              onPressed(
+                                  child: isUriConnected(servers.usaEast) ? border(child: text("USA East"), padding: padding4, borderRadius: borderRadius4) : text("USA East"),
+                                  callback: () {
+                                    connect(servers.usaEast);
+                                  }),
+                              onPressed(
+                                  child: isUriConnected(servers.usaWest) ? border(child: text("USA West"), padding: padding4, borderRadius: borderRadius4) : text("USA West"),
+                                  callback: () {
+                                    connect(servers.usaWest);
+                                  }),
+                            ]),
+                          ],
+                        ),
+                      ),
                       height32,
                       Row(
-                        mainAxisAlignment: mainAxis.center,
+                        mainAxisAlignment: main.center,
                         children: [
                           onPressed(
                               child: text("Close"),
@@ -1188,7 +1219,7 @@ Widget buildViewScore() {
             height: 300,
             child: SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: crossAxis.start,
+                crossAxisAlignment: cross.start,
                 children: [
                   height16,
                   text("Highest", decoration: underline),
@@ -1199,7 +1230,7 @@ Widget buildViewScore() {
                   Divider(),
                   text("Leader", decoration: underline),
                   Column(
-                    crossAxisAlignment: crossAxis.start,
+                    crossAxisAlignment: cross.start,
                     children: state.score.map((score) {
                       return Row(
                         children: [

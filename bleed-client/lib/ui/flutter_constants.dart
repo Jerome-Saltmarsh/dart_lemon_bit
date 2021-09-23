@@ -25,13 +25,13 @@ final TextDecoration underline = TextDecoration.underline;
 final Color black45 = Colors.black45;
 final Color black54 = Colors.black54;
 
-_MainAxis mainAxis = _MainAxis();
-_CrossAxis crossAxis = _CrossAxis();
+_MainAxis main = _MainAxis();
+_CrossAxis cross = _CrossAxis();
 
 class _MainAxis {
   final MainAxisAlignment center = MainAxisAlignment.center;
-  final MainAxisAlignment spaceBetween = MainAxisAlignment.spaceBetween;
-  final MainAxisAlignment spaceEvenly = MainAxisAlignment.spaceEvenly;
+  final MainAxisAlignment between = MainAxisAlignment.spaceBetween;
+  final MainAxisAlignment even = MainAxisAlignment.spaceEvenly;
 }
 
 class _CrossAxis {

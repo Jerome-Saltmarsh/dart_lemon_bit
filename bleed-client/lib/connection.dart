@@ -7,7 +7,6 @@ import 'functions/clearState.dart';
 import 'parse.dart';
 import 'state.dart';
 
-// state
 // TODO encapsulate state inside object
 WebSocketChannel _webSocketChannel;
 final StreamController onConnectedController = StreamController.broadcast();
@@ -18,6 +17,8 @@ final StreamController onDone = StreamController.broadcast();
 final StreamController onEvent = StreamController.broadcast();
 bool connected = false;
 bool connecting = false;
+
+String _connectionUri = "";
 
 // public
 void disconnect() {
@@ -34,13 +35,18 @@ void connectLocalHost({int port = 8080}) {
   connect('ws://localhost:$port');
 }
 
+bool isUriConnected(String value){
+  return connected && _connectionUri == value;
+}
+
 void connect(String uri) {
   print('connection.connect($uri)');
   clearState();
   connecting = true;
-  _webSocketChannel = WebSocketChannel.connect(Uri.parse(uri));
+  _webSocketChannel = WebSocketChannel.connect(Uri.parse(uri.replaceAll("https", "wss") + "/:8080"));
   _webSocketChannel.stream.listen(_onEvent, onError: _onError, onDone: _onDone);
   _webSocketChannel.sink.add(ClientRequest.Ping.index);
+  _connectionUri = uri;
 }
 
 void send(String message) {
@@ -86,6 +92,7 @@ void _onError(dynamic value) {
 
 void _onDone() {
   print("connection done");
+  _connectionUri = "";
   connected = false;
   connecting = false;
   onDone.add(true);

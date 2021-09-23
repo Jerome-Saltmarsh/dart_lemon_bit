@@ -62,10 +62,14 @@
 [ ] Rounds
 -- CASUAL --
 [ ] Body Armor
+[ ] How do players acquire more ammo?
+[ ] How do players acquire more grenades?
+[ ] How do players acquire more health kits?
 [ ] Select Server (Germany, USA-East, USA-West, Japan, Russia, Australia)
 [ ] Purchase Desert Eagle
 [ ] Loot Box (Gain extra points when destroyed)
 [ ] Design Level, City
+[ ] Disable spawn npcs request
 -- MAJOR BUGS --
 -- COMPLETED --
 [x] Killed zombies drop health pack etc,
