@@ -195,8 +195,23 @@ Widget buildGameUI(BuildContext context) {
   }
 }
 
-const DecorationImage grenadeImage = const DecorationImage(
+const DecorationImage grenades1Image = const DecorationImage(
   image: const AssetImage('images/weapon-grenade.png'),
+);
+
+Map<int, DecorationImage> grenadeImages = {
+  0: grenades1Image,
+  1: grenades1Image,
+  2: grenades2Image,
+  3: grenades3Image,
+};
+
+const DecorationImage grenades2Image = const DecorationImage(
+  image: const AssetImage('images/weapon-grenades-02.png'),
+);
+
+const DecorationImage grenades3Image = const DecorationImage(
+  image: const AssetImage('images/weapon-grenades-03.png'),
 );
 
 const DecorationImage healthImage = const DecorationImage(
@@ -653,7 +668,7 @@ Widget buildBottomLeft() {
               Tooltip(
                   message: "Press G to throw grenade",
                   child: buildImageSlot(
-                      image: grenadeImage,
+                      image: grenades1Image,
                       width: 120 * goldenRatioInverse,
                       height: 120 * goldenRatioInverse,
                       color: player.grenades > 0 ? null : Colors.white60)),
@@ -686,16 +701,10 @@ Widget buildViewTutorial() {
 
 Widget buildTag(dynamic value, {Color color = Colors.white}) {
   return Container(
+      width: 30,
+      height: 30,
       alignment: Alignment.center,
-      child: border(
-          child: Container(
-              width: 35,
-              height: 25,
-              alignment: Alignment.center,
-              child: text(value, fontWeight: FontWeight.bold, color: color)),
-          borderRadius: borderRadius8,
-          alignment: Alignment.center,
-          padding: padding4));
+      child: text(value, fontWeight: FontWeight.bold, color: color));
 }
 
 Widget buildLowAmmo() {
