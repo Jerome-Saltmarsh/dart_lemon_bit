@@ -10,6 +10,9 @@ class Settings {
   final double shotgunAccuracy = 0.15;
   final double itemCollectRadius = 10;
 
+  final double chanceOfDropHealth = 0.1;
+  final int itemDuration = 500;
+
   final _ClipSize clipSize = _ClipSize();
   final _ReloadDuration reloadDuration = _ReloadDuration();
   final _PointsEarned pointsEarned = _PointsEarned();

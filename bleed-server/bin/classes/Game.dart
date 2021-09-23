@@ -385,8 +385,9 @@ abstract class Game {
   void onPlayerKilled(Player player);
 
   void onNpcKilled(Npc npc) {
-    items.add(Item(type: ItemType.Health, x: npc.x, y: npc.y));
-    // spawn
+    if (chance(settings.chanceOfDropHealth)) {
+      items.add(Item(type: ItemType.Health, x: npc.x, y: npc.y));
+    }
   }
 
   void onPlayerDisconnected(Player player) {}
@@ -1340,6 +1341,12 @@ extension GameFunctions on Game {
   void _updateItems() {
     for (int i = 0; i < items.length; i++) {
       Item item = items[i];
+
+      if (item.duration-- <= 0) {
+        items.removeAt(i);
+        i--;
+        continue;
+      }
       double r = 15; // TODO add to settings
       int healAmount = 5; // TODO add to settings
       for (Player player in players) {

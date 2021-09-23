@@ -7,10 +7,10 @@ import 'package:bleed_client/state.dart';
 Rect get rectHealth => _rectsHealth[drawFrame % _healthFrames];
 
 // private
-const double _frameWidth = 48;
-const double _frameHeight = 72;
+const double _frameWidth = 47;
+const double _frameHeight = 71;
 
-List<Rect> _rectsHealth = _itemFrames([1, 1, 2, 2]);
+List<Rect> _rectsHealth = _itemFrames([5, 5, 6, 6, 7, 7, 6, 6]);
 int _healthFrames = _rectsHealth.length;
 
 List<Rect> _itemFrames(List<int> indexes){
