@@ -46,6 +46,8 @@ bool get keyPressedShowStore => keyPressed(LogicalKeyboardKey.keyI);
 
 bool get keyPressedPan => keyPressed(LogicalKeyboardKey.keyE);
 
+bool get keyPressedMelee => keyPressed(LogicalKeyboardKey.keyF);
+
 bool _throwingGrenade = false;
 bool _healing = false;
 bool panningCamera = false;
@@ -113,7 +115,13 @@ void readPlayerInput() {
     return;
   }
 
-  if (mouseClicked || keyPressedF || keyPressedSpace) {
+  if (keyPressedMelee && mouseAvailable) {
+    requestCharacterState = characterStateStriking;
+    requestDirection = convertAngleToDirection(requestAim);
+    return;
+  }
+
+  if (mouseClicked || keyPressedSpace) {
     requestCharacterState = characterStateFiring;
   } else {
     if (keyPressed(LogicalKeyboardKey.keyQ) && mouseAvailable) {

@@ -9,7 +9,6 @@
 [ ] Throw Animation
 [ ] Line of Sight
 [ ] Particle Gunshot smoke
-[ ] Cache Particles-
 [ ] Zombie Hurt Animation
 [ ] Grenade tile collision
 [ ] Stamina Potion
@@ -17,22 +16,30 @@
 [ ] Cursor Cooldown Circle
 [ ] Explosion Crater
 [ ] Random Power up Square 
+    [ ] Double Damage
+    [ ] Infinite Sprint
+    [ ] Full Health
+    [ ] Full Ammo
+    [ ] Points 50
 [ ] Fire Shotgun Animation
 [ ] Fire Handgun Animation
 [ ] Fire Assault Rifle Animation
 [ ] Bullet holes in blocks
 [ ] Item.RevivalKit (revive fallen squad member)
-[ ] Gain XP and levels
-[ ] Golden Zombie earns 5x kills
 [ ] Ranged zombies
 [ ] Bullet fired Flash
 [ ] Player chat
+[ ] Giant Zombie
+[ ] Flying Bat Enemy
 [ ] Activate Shield
 [ ] Heal animation
-[ ] Supply Square - Purchase supplies, health, grenades, ammo, etc,
-[ ] Upgrade Square - upgrade weapons and items
+[ ] Gain XP and levelsp
+    [ ] Perk Stamina Boost
+    [ ] Perk Health Boost
+    [ ] Perk Damage Boost (cost 2 perks)
 -- REFACTOR --
 [ ] Merge Maths lib into common
+[ ] Cache Particles-
 -- BUSINESS --
 [ ] Setup Patreon
 [ ] Setup Discord
@@ -55,14 +62,16 @@
 [ ] Rounds
 -- CASUAL --
 [ ] Body Armor
-[ ] Knife Attack
 [ ] Select Server (Germany, USA-East, USA-West, Japan, Russia, Australia)
 [ ] Purchase Desert Eagle
 [ ] Color Palette
 [ ] Loot Box (Gain extra points when destroyed)
-[ ] Golden Zombie earns 10x kills
+[ ] Killed zombies drop health pack etc,
+[ ] Design Level, City
+[ ] Knife Attack
 -- MAJOR BUGS --
 -- COMPLETED --
+[x] Golden Zombie earns 10x kills
 [x] Purchase Sniper Rifle
 [x] Purchase Assault Rifle
 [x] NPC Build up in the right corner

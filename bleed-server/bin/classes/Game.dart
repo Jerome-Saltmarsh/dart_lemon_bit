@@ -711,6 +711,23 @@ extension GameFunctions on Game {
       case CharacterState.Striking:
         // @on character striking
         character.stateDuration = 10;
+        if (character is Player){
+          double d = 10;
+          double frontX = character.x + velX(character.aimAngle, d);
+          double frontY = character.y + velY(character.aimAngle, d);
+          for (Npc npc in npcs){
+            // @on zombie struck by player
+            if (!npc.alive) continue;
+            if (!npc.active) continue;
+            if (diff(npc.x, frontX) > 20) continue;
+            if (diff(npc.y, frontY) > 20) continue;
+            double d = 5;
+            npc.xv += velX(character.aimAngle, d);
+            npc.yv += velY(character.aimAngle, d);
+            changeCharacterHealth(npc, -1);
+            return;
+          }
+        }
         break;
       case CharacterState.Reloading:
         // @on reload weapon
@@ -924,6 +941,7 @@ extension GameFunctions on Game {
         character.yv += bullet.yv * bulletImpactVelocityTransfer;
 
         if (bullet.squad == noSquad || bullet.squad != character.squad) {
+          // @on zombie hit by bullet
           changeCharacterHealth(character, -bullet.damage);
 
           if (character is Player) {
