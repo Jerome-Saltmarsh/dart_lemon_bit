@@ -6,6 +6,7 @@ import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
 import 'package:bleed_client/resources/rects_tiles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -91,7 +92,8 @@ void drawPlayers() {
   render.playersTransforms.clear();
   render.playersRects.clear();
   for (int i = 0; i < compiledGame.totalPlayers; i++) {
-    render.playersTransforms.add(getCharacterTransform(compiledGame.players[i]));
+    render.playersTransforms
+        .add(getCharacterTransform(compiledGame.players[i]));
     render.playersRects.add(getCharacterSpriteRect(compiledGame.players[i]));
   }
   drawAtlases(images.imageCharacter, render.playersTransforms, render.playersRects);
@@ -172,8 +174,8 @@ void drawPlayerHealth() {
     drawCharacterCircle(
         compiledGame.playerX,
         compiledGame.playerY,
-        Color.lerp(yellow, green,
-            (player.health - halfMaxHealth) / halfMaxHealth));
+        Color.lerp(
+            yellow, green, (player.health - halfMaxHealth) / halfMaxHealth));
   } else {
     drawCharacterCircle(compiledGame.playerX, compiledGame.playerY,
         Color.lerp(blood, yellow, player.health / halfMaxHealth));

@@ -4,6 +4,7 @@ import 'package:bleed_client/classes/InventoryItem.dart';
 import 'package:bleed_client/classes/Lobby.dart';
 import 'package:bleed_client/common/GameError.dart';
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/PlayerEvents.dart';
 import 'package:bleed_client/common/ServerResponse.dart';
 import 'package:bleed_client/connection.dart';
@@ -196,6 +197,15 @@ void parseState() {
         _parseScore();
         break;
 
+      case ServerResponse.Items:
+        compiledGame.totalItems = 0;
+        while (!_simiColonConsumed()) {
+          compiledGame.items[compiledGame.totalItems].type = _consumeItemType();
+          compiledGame.items[compiledGame.totalItems].x = _consumeDouble();
+          compiledGame.items[compiledGame.totalItems].y = _consumeDouble();
+          compiledGame.totalItems++;
+        }
+        break;
       default:
         print("parser not implemented $serverResponse");
         return;
@@ -536,6 +546,10 @@ void _consumeEvents() {
 
 GameEventType _consumeEventType() {
   return gameEventTypes[_consumeInt()];
+}
+
+ItemType _consumeItemType(){
+  return itemTypes[_consumeInt()];
 }
 
 void _parseBullets() {

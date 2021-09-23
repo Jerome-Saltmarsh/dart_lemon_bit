@@ -15,3 +15,7 @@ Rect getFrame(List<Rect> frames, dynamic character) {
   }
   return frames[actualFrame];
 }
+
+Rect rect({double frameWidth, double frameHeight, int index}) {
+  return Rect.fromLTWH(index * frameWidth, 0.0, frameWidth, frameHeight);
+}

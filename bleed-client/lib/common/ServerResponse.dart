@@ -22,4 +22,5 @@ enum ServerResponse {
   Lobby_List,
   Score,
   Player_Events,
+  Items,
 }

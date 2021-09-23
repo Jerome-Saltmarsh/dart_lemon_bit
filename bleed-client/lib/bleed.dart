@@ -1,3 +1,4 @@
+import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/connection.dart';
@@ -23,6 +24,7 @@ void initBleed() {
 
   for (int i = 0; i < 1000; i++) {
     compiledGame.bullets.add(0);
+    compiledGame.items.add(Item());
   }
 
   periodic(sendRequestUpdateScore, seconds: 3);

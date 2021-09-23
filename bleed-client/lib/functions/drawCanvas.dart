@@ -1,23 +1,22 @@
 import 'dart:math';
-import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Block.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
-import 'package:bleed_client/classes/GunshotFlash.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/RenderState.dart';
+import 'package:bleed_client/common/CollectableType.dart';
+import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/editor/editor.dart';
-import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/instances/settings.dart';
+import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/properties.dart';
-import 'package:bleed_client/rects.dart';
-import 'package:bleed_client/utils.dart';
+import 'package:bleed_client/resources/rects_items.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -29,6 +28,8 @@ import '../state.dart';
 import 'drawBullet.dart';
 import 'drawGrenade.dart';
 import 'drawParticle.dart';
+
+double _nameRadius = 100;
 
 void drawCanvas(Canvas canvass, Size _size) {
   canvass.scale(zoom, zoom);
@@ -64,6 +65,7 @@ void _drawCompiledGame() {
     drawCircle(npc[x], npc[y], 10, orange);
   }
 
+  _renderItems();
   _drawBullets(compiledGame.bullets);
   drawBulletHoles(compiledGame.bulletHoles);
   _drawGrenades(compiledGame.grenades);
@@ -105,32 +107,28 @@ void _drawCompiledGame() {
   drawText(player.equippedRounds.toString(), playerX - 10, playerY - 35);
 }
 
-void _drawGunShotFlashes() {
-  List<RSTransform> gunShotTransforms = [];
-  List<Rect> rects = [];
+void _renderItems() {
+  clear(render.items);
 
-  for (GunShotFlash gunShotFlash in render.gunShotFlashes) {
-    // globalCanvas.drawCircle(Offset(gunShotFlash.x, gunShotFlash.y), 5, globalPaint);
-    gunShotTransforms.add(RSTransform.fromComponents(
-      rotation: gunShotFlash.rotation,
-      scale: 1,
-      anchorX: 8,
-      anchorY: 0,
-      translateX: gunShotFlash.x,
-      translateY: gunShotFlash.y,
-    ));
-    rects.add(rectGunShotFlash);
+  for (int i = 0; i < compiledGame.totalItems; i++) {
+    render.items.transforms.add(mapItemToRSTransform(compiledGame.items[i]));
+    switch(compiledGame.items[i].type){
+      case ItemType.Health:
+        render.items.rects.add(rectHealth);
+        break;
+      default:
+        throw Exception("Could not get rect for item type ${compiledGame.items[i].type}");
+    }
   }
+  drawAtlases(images.items, render.items.transforms, render.items.rects);
 }
-
-double nameRadius = 100;
 
 void _drawPlayerNames() {
   for (int i = 0; i < compiledGame.totalPlayers; i++) {
     dynamic player = compiledGame.players[i];
     if (player[x] == compiledGame.playerX) continue;
-    if (diff(mouseWorldX, player[x]) > nameRadius) continue;
-    if (diff(mouseWorldY, player[y]) > nameRadius) continue;
+    if (diff(mouseWorldX, player[x]) > _nameRadius) continue;
+    if (diff(mouseWorldY, player[y]) > _nameRadius) continue;
     drawText(player[indexName], player[x], player[y]);
   }
 }
@@ -163,16 +161,16 @@ void _drawCollectables() {
 void drawCollectable(CollectableType type, double x, double y) {
   switch (type) {
     case CollectableType.Handgun_Ammo:
-      drawSprite(images.imageItems, 4, 1, x, y);
+      drawSprite(images.imageCollectables, 4, 1, x, y);
       break;
     case CollectableType.Health:
-      drawSprite(images.imageItems, 4, 2, x, y);
+      drawSprite(images.imageCollectables, 4, 2, x, y);
       break;
     case CollectableType.Grenade:
-      drawSprite(images.imageItems, 4, 3, x, y);
+      drawSprite(images.imageCollectables, 4, 3, x, y);
       break;
     case CollectableType.Shotgun_Ammo:
-      drawSprite(images.imageItems, 4, 4, x, y);
+      drawSprite(images.imageCollectables, 4, 4, x, y);
       break;
   }
 }

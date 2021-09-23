@@ -6,6 +6,7 @@ import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/Weapons.dart';
 
 import '../enums.dart';
+import 'Item.dart';
 import 'Particle.dart';
 
 class CompiledGame {
@@ -31,6 +32,8 @@ class CompiledGame {
   Weapon playerWeapon = Weapon.Unarmed;
   int playerLives = 0;
   CharacterState playerState = CharacterState.Idle;
+  List<Item> items = [];
+  int totalItems = 0;
 
   int lives = 0;
   int wave = 1;

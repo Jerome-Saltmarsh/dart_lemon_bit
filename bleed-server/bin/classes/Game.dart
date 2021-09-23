@@ -2,6 +2,7 @@ import 'dart:math';
 
 import '../classes.dart';
 import '../common/GameState.dart';
+import '../common/ItemType.dart';
 import '../common/Tile.dart';
 import '../common/constants.dart';
 import '../compile.dart';
@@ -26,6 +27,7 @@ import '../utils/player_utils.dart';
 import 'Block.dart';
 import 'Collectable.dart';
 import 'Inventory.dart';
+import 'Item.dart';
 import 'Player.dart';
 import 'Scene.dart';
 import 'TileNode.dart';
@@ -348,6 +350,7 @@ abstract class Game {
   List<GameEvent> gameEvents = [];
   final List<Collectable> collectables = [];
   final List<Vector2> playerSpawnPoints = [];
+  final List<Item> items = [];
   int spawnPointIndex = 0;
   final List<Vector2> zombieSpawnPoints = [];
   String compiled = "";
@@ -380,6 +383,11 @@ abstract class Game {
   void update();
 
   void onPlayerKilled(Player player);
+
+  void onNpcKilled(Npc npc) {
+    items.add(Item(type: ItemType.Health, x: npc.x, y: npc.y));
+    // spawn
+  }
 
   void onPlayerDisconnected(Player player) {}
 
@@ -670,7 +678,7 @@ extension GameFunctions on Game {
     // @on character set state
     if (character.dead) return;
     if (character.state == value) return;
-    if (value != CharacterState.Dead && character.stateDuration > 0) return;
+    if (value != CharacterState.Dead && character.busy) return;
 
     switch (value) {
       case CharacterState.Running:
@@ -695,6 +703,8 @@ extension GameFunctions on Game {
             // @on npc target player killed
             npc.clearTarget();
           }
+        } else if (character is Npc) {
+          onNpcKilled(character);
         }
         return;
       case CharacterState.ChangingWeapon:
@@ -711,11 +721,11 @@ extension GameFunctions on Game {
       case CharacterState.Striking:
         // @on character striking
         character.stateDuration = 10;
-        if (character is Player){
+        if (character is Player) {
           double d = 10;
           double frontX = character.x + velX(character.aimAngle, d);
           double frontY = character.y + velY(character.aimAngle, d);
-          for (Npc npc in npcs){
+          for (Npc npc in npcs) {
             // @on zombie struck by player
             if (!npc.alive) continue;
             if (!npc.active) continue;
@@ -782,8 +792,7 @@ extension GameFunctions on Game {
     // @on change character health
     if (character.dead) return;
 
-    character.health += amount;
-    character.health = clamp(character.health, 0, character.maxHealth);
+    character.health = clamp(character.health + amount, 0, character.maxHealth);
     if (character.health <= 0) {
       setCharacterState(character, CharacterState.Dead);
     }
@@ -968,8 +977,9 @@ extension GameFunctions on Game {
           if (bullet.owner is Player) {
             Player owner = bullet.owner as Player;
             owner.score.zombiesKilled++;
-            if (character is Npc){
-              owner.points += constants.points.zombieKilled * character.pointMultiplier;
+            if (character is Npc) {
+              owner.points +=
+                  constants.points.zombieKilled * character.pointMultiplier;
             }
           }
 

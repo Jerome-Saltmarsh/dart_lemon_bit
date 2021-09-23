@@ -64,13 +64,13 @@
 [ ] Body Armor
 [ ] Select Server (Germany, USA-East, USA-West, Japan, Russia, Australia)
 [ ] Purchase Desert Eagle
-[ ] Color Palette
 [ ] Loot Box (Gain extra points when destroyed)
 [ ] Killed zombies drop health pack etc,
 [ ] Design Level, City
-[ ] Knife Attack
 -- MAJOR BUGS --
 -- COMPLETED --
+[x] Color Palette
+[x] Melee Attack
 [x] Golden Zombie earns 10x kills
 [x] Purchase Sniper Rifle
 [x] Purchase Assault Rifle

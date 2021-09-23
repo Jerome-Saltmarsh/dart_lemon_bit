@@ -1,10 +1,19 @@
 import 'dart:ui';
 
 import 'package:bleed_client/classes/FloatingText.dart';
-import 'package:bleed_client/classes/GunshotFlash.dart';
 import 'package:bleed_client/classes/Vector2.dart';
 
 final _RenderState render = _RenderState();
+
+class Render {
+  List<RSTransform> transforms = [];
+  List<Rect> rects = [];
+}
+
+void clear(Render render){
+  render.transforms.clear();
+  render.rects.clear();
+}
 
 class _RenderState {
   List<RSTransform> tileTransforms = [];
@@ -16,6 +25,7 @@ class _RenderState {
   List<RSTransform> particleTransforms = [];
   List<Rect> npcsRects = [];
   List<List<Vector2>> paths = [];
-  List<GunShotFlash> gunShotFlashes = [];
   List<FloatingText> floatingText = [];
+
+  Render items = Render();
 }

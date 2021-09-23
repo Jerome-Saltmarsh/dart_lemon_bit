@@ -1,8 +1,4 @@
-import 'package:bleed_client/classes/FloatingText.dart';
-import 'package:bleed_client/classes/GunshotFlash.dart';
-import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/common/constants.dart';
-import 'package:bleed_client/instances/settings.dart';
 import 'package:bleed_client/spawners/spawnBlood.dart';
 import 'package:bleed_client/spawners/spawnHead.dart';
 import 'package:bleed_client/spawners/spawnOrgan.dart';

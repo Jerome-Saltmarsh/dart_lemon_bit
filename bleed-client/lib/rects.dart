@@ -24,7 +24,7 @@ Rect rectParticleShell = rect(5, 64, 64);
 
 
 Rect rect(int index, double width, double height){
-  return Rect.fromLTWH(width * index, 0, width, height);
+  return Rect.fromLTWH(width * (index - 1), 0, width, height);
 }
 
 void loadRects() {

@@ -12,8 +12,9 @@ class _Images {
   Image imageParticles;
   Image imageHandgun;
   Image imageHandgunAmmo;
-  Image imageItems;
+  Image imageCollectables;
   Image imageShotgunAmmo;
+  Image items;
 
   Future load() async {
     imageCharacter = await loadImage("images/character.png");
@@ -23,7 +24,8 @@ class _Images {
     imageHandgun = await loadImage('images/weapon-handgun.png');
     imageHandgunAmmo = await loadImage('images/handgun-ammo.png');
     imageShotgunAmmo = await loadImage('images/shotgun-ammo.png');
-    imageItems = await loadImage("images/items.png");
+    imageCollectables = await loadImage("images/collectables.png");
+    items = await loadImage("images/items.png");
   }
 }
 

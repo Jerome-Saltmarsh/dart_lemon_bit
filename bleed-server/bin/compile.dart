@@ -3,6 +3,7 @@ import 'classes/Block.dart';
 import 'classes/Collectable.dart';
 import 'classes/Game.dart';
 import 'classes/Inventory.dart';
+import 'classes/Item.dart';
 import 'classes/Lobby.dart';
 import 'classes/Player.dart';
 import 'classes/Vector2.dart';
@@ -35,9 +36,8 @@ void compileGame(Game game) {
   if (game.compilePaths) {
     _compilePaths(game.buffer, game.npcs);
   }
-  // if (game.gameOver()) {
-  //   _write(game.buffer, ServerResponse.GameOver.index);
-  // }
+
+  _compileItems(game.buffer, game.items);
 
   if (game is Fortress) {
     _compileFortress(game.buffer, game);
@@ -48,6 +48,16 @@ void compileGame(Game game) {
   }
 
   game.compiled = game.buffer.toString();
+}
+
+void _compileItems(StringBuffer buffer, List<Item> items) {
+  _write(buffer, ServerResponse.Items.index);
+  for (Item item in items) {
+    _write(buffer, item.type.index);
+    _writeInt(buffer, item.x);
+    _write(buffer, item.y);
+  }
+  _write(buffer, _semiColon);
 }
 
 void _compileFortress(StringBuffer buffer, Fortress game) {
