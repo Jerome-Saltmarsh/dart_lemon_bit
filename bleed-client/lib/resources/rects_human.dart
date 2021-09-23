@@ -6,220 +6,65 @@ import '../common.dart';
 import '../keys.dart';
 import 'rects_utils.dart';
 
-const int humanSpriteFrameWidth = 36;
-const int humanSpriteFrameHeight = 35;
-const double halfHumanSpriteFrameWidth = humanSpriteFrameWidth * 0.5;
-const double halfHumanSpriteFrameHeight = humanSpriteFrameHeight * 0.5;
+const int _humanSpriteFrameWidth = 36;
+const int _humanSpriteFrameHeight = 35;
+const double halfHumanSpriteFrameWidth = _humanSpriteFrameWidth * 0.5;
+const double halfHumanSpriteFrameHeight = _humanSpriteFrameHeight * 0.5;
 
-Rect rectHumanIdleDownLeft = _getHumanSpriteRect(0);
-Rect rectHumanIdleLeft = _getHumanSpriteRect(1);
-Rect rectHumanIdleUpLeft = _getHumanSpriteRect(2);
-Rect rectHumanIdleUp = _getHumanSpriteRect(3);
-Rect rectHumanIdleUpRight = rectHumanIdleDownLeft;
-Rect rectHumanIdleRight = rectHumanIdleLeft;
-Rect rectHumanIdleDownRight = rectHumanIdleUpLeft;
-Rect rectHumanIdleDown = rectHumanIdleUp;
+Rect _idleDownLeft = _frame(1);
+Rect _idleLeft = _frame(2);
+Rect _idleUpLeft = _frame(3);
+Rect _idleUp = _frame(4);
+Rect _idleUpRight = _frame(1);
+Rect _idleRight = _frame(2);
+Rect _idleDownRight = _frame(3);
+Rect _idleDown = _frame(4);
 
-Rect rectHumanRunningDownLeft1 = _frame(53);
-Rect rectHumanRunningDownLeft2 = _frame(54);
-Rect rectHumanRunningDownLeft3 = _frame(55);
+Rect _deadUpRight = _frame(17);
+Rect _deadRight = _frame(18);
+Rect _deadDownRight = _frame(19);
+Rect _deadDown = _frame(20);
 
-Rect rectHumanRunningLeft1 = _frame(56);
-Rect rectHumanRunningLeft2 = _frame(57);
-Rect rectHumanRunningLeft3 = _frame(58);
+Rect _aimingDownLeft = _frame(21);
+Rect _aimingLeft = _frame(23);
+Rect _aimingUpLeft = _frame(25);
+Rect _aimingUp = _frame(27);
+Rect _aimingUpRight = _frame(29);
+Rect _aimingRight = _frame(31);
+Rect _aimingDownRight = _frame(33);
+Rect _aimingDown = _frame(35);
 
-Rect rectHumanRunningUpLeft1 = _frame(59);
-Rect rectHumanRunningUpLeft2 = _frame(60);
-Rect rectHumanRunningUpLeft3 = _frame(61);
+List<Rect> _firingRifleDownLeft = _frames([22, 21]);
+List<Rect> _firingRifleLeft = _frames([24, 23]);
+List<Rect> _firingRifleUpLeft = _frames([26, 25]);
+List<Rect> _firingRifleUp = _frames([28, 27]);
+List<Rect> _firingRifleUpRight = _frames([30, 29]);
+List<Rect> _firingRifleRight = _frames([32, 31]);
+List<Rect> _firingRifleDownRight = _frames([34, 33]);
+List<Rect> _firingRifleDown = _frames([36, 35]);
 
-Rect rectHumanRunningUp1 = _frame(62);
-Rect rectHumanRunningUp2 = _frame(63);
-Rect rectHumanRunningUp3 = _frame(64);
+List<Rect> _firingShotgunDownLeft  = _frames([22, 21]);
+List<Rect> _firingShotgunLeft = _frames([24, 23]);
+List<Rect> _firingShotgunUpLeft = _frames([26, 25]);
+List<Rect> _firingShotgunUp = _frames([28, 27]);
+List<Rect> _firingShotgunUpRight = _frames([30, 29]);
+List<Rect> _firingShotgunRight = _frames([32, 31]);
+List<Rect> _firingShotgunDownRight = _frames([34, 33]);
+List<Rect> _firingShotgunDown = _frames([36, 35]);
 
-Rect rectHumanRunningUpRight1 = _frame(65);
-Rect rectHumanRunningUpRight2 = _frame(66);
-Rect rectHumanRunningUpRight3 = _frame(67);
+List<Rect> _walkingDownLeft = _frames([5, 6, 7, 6]);
+List<Rect> _walkingLeft = _frames([8, 9, 10, 9]);
+List<Rect> _walkingUpLeft = _frames([11, 12, 13, 12]);
+List<Rect> _walkingUp = _frames([14, 15, 16, 15]);
 
-Rect rectHumanRunningRight1 = _frame(68);
-Rect rectHumanRunningRight2 = _frame(69);
-Rect rectHumanRunningRight3 = _frame(70);
-
-Rect rectHumanRunningDownRight1 = _frame(71);
-Rect rectHumanRunningDownRight2 = _frame(72);
-Rect rectHumanRunningDownRight3 = _frame(73);
-
-Rect rectHumanRunningDown1 = rectHumanRunningUp1;
-Rect rectHumanRunningDown2 = rectHumanRunningUp2;
-Rect rectHumanRunningDown3 = rectHumanRunningUp3;
-
-Rect rectHumanDeadUpRight = _getHumanSpriteRect(16);
-Rect rectHumanDeadRight = _getHumanSpriteRect(17);
-Rect rectHumanDeadDownRight = _getHumanSpriteRect(18);
-Rect rectHumanDeadDown = _getHumanSpriteRect(19);
-
-Rect rectHumanAimingDownLeft = _getHumanSpriteRect(20);
-Rect rectHumanAimingLeft = _getHumanSpriteRect(21);
-Rect rectHumanAimingUpLeft = _getHumanSpriteRect(22);
-Rect rectHumanAimingUp = _getHumanSpriteRect(23);
-Rect rectHumanAimingUpRight = _getHumanSpriteRect(24);
-Rect rectHumanAimingRight = _getHumanSpriteRect(25);
-Rect rectHumanAimingDownRight = _getHumanSpriteRect(26);
-Rect rectHumanAimingDown = _getHumanSpriteRect(27);
-
-Rect rectHumanFiringDownLeft = _getHumanSpriteRect(28);
-Rect rectHumanFiringLeft = _getHumanSpriteRect(29);
-Rect rectHumanFiringUpLeft = _getHumanSpriteRect(30);
-Rect rectHumanFiringUp = _getHumanSpriteRect(31);
-Rect rectHumanFiringUpRight = _getHumanSpriteRect(32);
-Rect rectHumanFiringRight = _getHumanSpriteRect(33);
-Rect rectHumanFiringDownRight = _getHumanSpriteRect(34);
-Rect rectHumanFiringDown = _getHumanSpriteRect(35);
-
-Rect rectHumanStrikingDownLeft = _getHumanSpriteRect(36);
-Rect rectHumanStrikingLeft = _getHumanSpriteRect(37);
-Rect rectHumanStrikingUpLeft = _getHumanSpriteRect(38);
-Rect rectHumanStrikingUp = _getHumanSpriteRect(39);
-Rect rectHumanStrikingUpRight = _getHumanSpriteRect(40);
-Rect rectHumanStrikingRight = _getHumanSpriteRect(41);
-Rect rectHumanStrikingDownRight = _getHumanSpriteRect(42);
-Rect rectHumanStrikingDown = _getHumanSpriteRect(43);
-
-Rect rectHumanBlastDownLeft = _getHumanSpriteRect(44);
-Rect rectHumanBlastLeft = _getHumanSpriteRect(45);
-Rect rectHumanBlastUpLeft = _getHumanSpriteRect(46);
-Rect rectHumanBlastUp = _getHumanSpriteRect(47);
-Rect rectHumanBlastUpRight = _getHumanSpriteRect(48);
-Rect rectHumanBlastRight = _getHumanSpriteRect(49);
-Rect rectHumanBlastDownRight = _getHumanSpriteRect(50);
-Rect rectHumanBlastDown = _getHumanSpriteRect(51);
-
-List<Rect> rectHumanFiringDownLeftFrames = [
-  rectHumanBlastDownLeft,
-  rectHumanFiringDownLeft,
-  rectHumanAimingDownLeft,
-];
-
-List<Rect> rectHumanFiringLeftFrames = [
-  rectHumanBlastLeft,
-  rectHumanFiringLeft,
-  rectHumanAimingLeft,
-];
-
-List<Rect> rectHumanFiringUpLeftFrames = [
-  rectHumanBlastUpLeft,
-  rectHumanFiringUpLeft,
-  rectHumanAimingUpLeft,
-];
-
-List<Rect> rectHumanFiringUpFrames = [
-  rectHumanBlastUp,
-  rectHumanFiringUp,
-  rectHumanAimingUp,
-];
-
-List<Rect> rectHumanFiringUpRightFrames = [
-  rectHumanBlastUpRight,
-  rectHumanFiringUpRight,
-  rectHumanAimingUpRight,
-];
-
-List<Rect> rectHumanFiringRightFrames = [
-  rectHumanBlastRight,
-  rectHumanFiringRight,
-  rectHumanAimingRight,
-];
-
-List<Rect> rectHumanFiringDownRightFrames = [
-  rectHumanBlastDownRight,
-  rectHumanFiringDownRight,
-  rectHumanAimingDownRight,
-];
-
-List<Rect> rectHumanFiringDownFrames = [
-  rectHumanBlastDown,
-  rectHumanFiringDown,
-  rectHumanAimingDown,
-];
-
-// Shotgun frames
-
-List<Rect> rectFiringShotgunDownLeftFrames = [
-  rectHumanBlastDownLeft,
-  rectHumanFiringDownLeft,
-  rectHumanAimingDownLeft,
-];
-
-List<Rect> rectFiringShotgunLeftFrames = [
-  rectHumanBlastLeft,
-  rectHumanFiringLeft,
-  rectHumanAimingLeft,
-];
-
-List<Rect> rectFiringShotgunUpLeftFrames = [
-  rectHumanBlastUpLeft,
-  rectHumanFiringUpLeft,
-  rectHumanAimingUpLeft,
-];
-
-List<Rect> rectFiringShotgunUpFrames = [
-  rectHumanBlastUp,
-  rectHumanFiringUp,
-  rectHumanAimingUp,
-];
-
-List<Rect> rectFiringShotgunUpRightFrames = [
-  rectHumanBlastUpRight,
-  rectHumanFiringUpRight,
-  rectHumanAimingUpRight,
-];
-
-List<Rect> rectFiringShotgunRightFrames = [
-  rectHumanBlastRight,
-  rectHumanFiringRight,
-  rectHumanAimingRight,
-];
-
-List<Rect> rectFiringShotgunDownRightFrames = [
-  rectHumanBlastDownRight,
-  rectHumanFiringDownRight,
-  rectHumanAimingDownRight,
-];
-
-List<Rect> rectFiringShotgunDownFrames = [
-  rectHumanBlastDown,
-  rectHumanFiringDown,
-  rectHumanAimingDown,
-];
-
-// End Shotgun frames
-
-List<Rect> rectHumanWalkingDownLeftFrames = [
-  _getHumanSpriteRect(4),
-  _getHumanSpriteRect(5),
-  _getHumanSpriteRect(6),
-  _getHumanSpriteRect(5),
-];
-
-List<Rect> rectHumanWalkingLeftFrames = [
-  _getHumanSpriteRect(7),
-  _getHumanSpriteRect(8),
-  _getHumanSpriteRect(9),
-  _getHumanSpriteRect(8),
-];
-
-List<Rect> rectHumanWalkingUpLeftFrames = [
-  _getHumanSpriteRect(10),
-  _getHumanSpriteRect(11),
-  _getHumanSpriteRect(12),
-  _getHumanSpriteRect(11),
-];
-
-List<Rect> rectHumanWalkingUpFrames = [
-  _getHumanSpriteRect(13),
-  _getHumanSpriteRect(14),
-  _getHumanSpriteRect(15),
-  _getHumanSpriteRect(14),
-];
+List<Rect> _runningDownLeft = _frames([53, 54, 55, 54]);
+List<Rect> _runningLeft = _frames([56, 57, 58, 57]);
+List<Rect> _runningUpLeft = _frames([59, 60, 61, 60]);
+List<Rect> _runningUp = _frames([62, 63, 64, 63]);
+List<Rect> _runningUpRight = _frames([65, 66, 67, 66]);
+List<Rect> _runningRight = _frames([68, 69, 70, 69]);
+List<Rect> _runningDownRight = _frames([71, 72, 73, 72]);
+List<Rect> _runningDown = _frames([63, 64, 65, 64]);
 
 List<Rect> _reloadingDownLeft = _frames([74, 74, 74, 75, 75, 75]);
 List<Rect> _reloadingLeft = _frames([76, 76, 76, 77, 77, 77]);
@@ -229,15 +74,6 @@ List<Rect> _reloadingUpRight = _frames([82, 82, 82, 83, 83, 83]);
 List<Rect> _reloadingRight = _frames([84, 84, 84, 85, 85, 85]);
 List<Rect> _reloadingDownRight = _frames([86, 86, 86, 87, 87, 87]);
 List<Rect> _reloadingDown = _frames([88, 88, 88, 89, 89, 89]);
-
-List<Rect> _runningDownLeft = _frames([61, 62, 63, 62]);
-List<Rect> _runningLeft = _frames([64, 65, 66, 65]);
-List<Rect> _runningUpLeft = _frames([67, 68, 69, 68]);
-List<Rect> _runningUp = _frames([70, 71, 72, 71]);
-List<Rect> _runningUpRight = _frames([73, 74, 75, 74]);
-List<Rect> _runningRight = _frames([76, 77, 78, 77]);
-List<Rect> _runningDownRight = _frames([79, 80, 81, 80]);
-List<Rect> _runningDown = _frames([70, 71, 72, 71]);
 
 List<Rect> _strikingDownLeft = _frames([37, 38]);
 List<Rect> _strikingLeft = _frames([39, 40]);
@@ -249,41 +85,41 @@ List<Rect> _strikingDownRight = _frames([49, 50]);
 List<Rect> _strikingDown = _frames([51, 52]);
 
 
+List<Rect> _frames(List<int> indexes) {
+  List<Rect> rects = [];
+  for (int i in indexes) {
+    rects.add(_frame(i));
+  }
+  return rects;
+}
+
 Rect _frame(int index) {
   return _getHumanSpriteRect(index - 1);
 }
 
 Rect _getHumanSpriteRect(int index) {
-  return Rect.fromLTWH((index * humanSpriteFrameWidth).toDouble(), 0.0,
-      humanSpriteFrameWidth.toDouble(), humanSpriteFrameHeight.toDouble());
-}
-
-List<Rect> _frames(List<int> indexes) {
-  List<Rect> rects = [];
-  for (int i in indexes) {
-    rects.add(_getHumanSpriteRect(i - 1));
-  }
-  return rects;
+  return Rect.fromLTWH((index * _humanSpriteFrameWidth).toDouble(), 0.0,
+      _humanSpriteFrameWidth.toDouble(), _humanSpriteFrameHeight.toDouble());
 }
 
 Rect getHumanWalkingRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
-      return getFrameLoop(rectHumanWalkingUpFrames, character);
+      return getFrameLoop(_walkingUp, character);
     case directionUpRight:
-      return getFrameLoop(rectHumanWalkingDownLeftFrames, character);
+      return getFrameLoop(_walkingDownLeft, character);
     case directionRight:
-      return getFrameLoop(rectHumanWalkingLeftFrames, character);
+      return getFrameLoop(_walkingLeft, character);
     case directionDownRight:
-      return getFrameLoop(rectHumanWalkingUpLeftFrames, character);
+      return getFrameLoop(_walkingUpLeft, character);
     case directionDown:
-      return getFrameLoop(rectHumanWalkingUpFrames, character);
+      return getFrameLoop(_walkingUp, character);
     case directionDownLeft:
-      return getFrameLoop(rectHumanWalkingDownLeftFrames, character);
+      return getFrameLoop(_walkingDownLeft, character);
     case directionLeft:
-      return getFrameLoop(rectHumanWalkingLeftFrames, character);
+      return getFrameLoop(_walkingLeft, character);
     case directionUpLeft:
-      return getFrameLoop(rectHumanWalkingUpLeftFrames, character);
+      return getFrameLoop(_walkingUpLeft, character);
   }
   throw Exception("Could not get character walking sprite rect");
 }
@@ -335,21 +171,21 @@ Rect getHumanRunningRect(dynamic character) {
 Rect getHumanIdleRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
-      return rectHumanIdleUp;
+      return _idleUp;
     case directionUpRight:
-      return rectHumanIdleUpRight;
+      return _idleUpRight;
     case directionRight:
-      return rectHumanIdleRight;
+      return _idleRight;
     case directionDownRight:
-      return rectHumanIdleDownRight;
+      return _idleDownRight;
     case directionDown:
-      return rectHumanIdleDown;
+      return _idleDown;
     case directionDownLeft:
-      return rectHumanIdleDownLeft;
+      return _idleDownLeft;
     case directionLeft:
-      return rectHumanIdleLeft;
+      return _idleLeft;
     case directionUpLeft:
-      return rectHumanIdleUpLeft;
+      return _idleUpLeft;
   }
   throw Exception("Could not get character walking sprite rect");
 }
@@ -357,21 +193,21 @@ Rect getHumanIdleRect(dynamic character) {
 Rect getHumanDeadRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
-      return rectHumanDeadDown;
+      return _deadDown;
     case directionUpRight:
-      return rectHumanDeadUpRight;
+      return _deadUpRight;
     case directionRight:
-      return rectHumanDeadRight;
+      return _deadRight;
     case directionDownRight:
-      return rectHumanDeadDownRight;
+      return _deadDownRight;
     case directionDown:
-      return rectHumanDeadDown;
+      return _deadDown;
     case directionDownLeft:
-      return rectHumanDeadUpRight;
+      return _deadUpRight;
     case directionLeft:
-      return rectHumanDeadRight;
+      return _deadRight;
     case directionUpLeft:
-      return rectHumanDeadDownRight;
+      return _deadDownRight;
   }
   throw Exception("Could not get character dead sprite rect");
 }
@@ -379,21 +215,21 @@ Rect getHumanDeadRect(dynamic character) {
 Rect getHumanAimRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
-      return rectHumanAimingUp;
+      return _aimingUp;
     case directionUpRight:
-      return rectHumanAimingUpRight;
+      return _aimingUpRight;
     case directionRight:
-      return rectHumanAimingRight;
+      return _aimingRight;
     case directionDownRight:
-      return rectHumanAimingDownRight;
+      return _aimingDownRight;
     case directionDown:
-      return rectHumanAimingDown;
+      return _aimingDown;
     case directionDownLeft:
-      return rectHumanAimingDownLeft;
+      return _aimingDownLeft;
     case directionLeft:
-      return rectHumanAimingLeft;
+      return _aimingLeft;
     case directionUpLeft:
-      return rectHumanAimingUpLeft;
+      return _aimingUpLeft;
   }
   throw Exception("Could not get character dead sprite rect");
 }
@@ -434,21 +270,21 @@ Rect getHumanFiringRect(dynamic character) {
 Rect getHandgunFiringRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
-      return getFrame(rectHumanFiringUpFrames, character);
+      return getFrame(_firingRifleUp, character);
     case directionUpRight:
-      return getFrame(rectHumanFiringUpRightFrames, character);
+      return getFrame(_firingRifleUpRight, character);
     case directionRight:
-      return getFrame(rectHumanFiringRightFrames, character);
+      return getFrame(_firingRifleRight, character);
     case directionDownRight:
-      return getFrame(rectHumanFiringDownRightFrames, character);
+      return getFrame(_firingRifleDownRight, character);
     case directionDown:
-      return getFrame(rectHumanFiringDownFrames, character);
+      return getFrame(_firingRifleDown, character);
     case directionDownLeft:
-      return getFrame(rectHumanFiringDownLeftFrames, character);
+      return getFrame(_firingRifleDownLeft, character);
     case directionLeft:
-      return getFrame(rectHumanFiringLeftFrames, character);
+      return getFrame(_firingRifleLeft, character);
     case directionUpLeft:
-      return getFrame(rectHumanFiringUpLeftFrames, character);
+      return getFrame(_firingRifleUpLeft, character);
   }
   throw Exception("could not get firing frame from direction");
 }
@@ -456,21 +292,21 @@ Rect getHandgunFiringRect(dynamic character) {
 Rect getRectShotgunFiring(dynamic character) {
   switch (character[direction]) {
     case directionUp:
-      return getFrame(rectFiringShotgunUpFrames, character);
+      return getFrame(_firingShotgunUp, character);
     case directionUpRight:
-      return getFrame(rectFiringShotgunUpRightFrames, character);
+      return getFrame(_firingShotgunUpRight, character);
     case directionRight:
-      return getFrame(rectFiringShotgunRightFrames, character);
+      return getFrame(_firingShotgunRight, character);
     case directionDownRight:
-      return getFrame(rectFiringShotgunDownRightFrames, character);
+      return getFrame(_firingShotgunDownRight, character);
     case directionDown:
-      return getFrame(rectFiringShotgunDownFrames, character);
+      return getFrame(_firingShotgunDown, character);
     case directionDownLeft:
-      return getFrame(rectFiringShotgunDownLeftFrames, character);
+      return getFrame(_firingShotgunDownLeft, character);
     case directionLeft:
-      return getFrame(rectFiringShotgunLeftFrames, character);
+      return getFrame(_firingShotgunLeft, character);
     case directionUpLeft:
-      return getFrame(rectFiringShotgunUpLeftFrames, character);
+      return getFrame(_firingShotgunUpLeft, character);
   }
   throw Exception("could not get firing frame from direction");
 }
