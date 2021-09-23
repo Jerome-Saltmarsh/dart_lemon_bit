@@ -205,6 +205,27 @@ Future showDialogConnectFailed() async {
   );
 }
 
+Future showDialogChangeServer() async {
+  return showDialog(
+    context: globalContext,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text('Change Server'),
+        content: Column(
+          children: [
+            text("Germany"),
+            text("USA East"),
+            text("USA West"),
+          ],
+        ),
+        backgroundColor: Colors.black54,
+        actions: <Widget>[_buildCancelButton(context)],
+      );
+    },
+  );
+}
+
 // private functions
 
 void _pop(BuildContext context) {

@@ -43,7 +43,7 @@ import 'utils.dart';
 
 TextEditingController _playerNameController = TextEditingController();
 Border _border =
-    Border.all(color: Colors.black, width: 5.0, style: BorderStyle.solid);
+Border.all(color: Colors.black, width: 5.0, style: BorderStyle.solid);
 SharedPreferences sharedPreferences;
 bool _showScore = true;
 double iconSize = 45;
@@ -117,11 +117,13 @@ Future<void> showChangeNameDialog() async {
         actions: <Widget>[
           TextButton(
             child: const Text('PLAY'),
-            onPressed: _playerNameController.text.trim().length > 2
+            onPressed: _playerNameController.text
+                .trim()
+                .length > 2
                 ? () {
-                    // sendRequestSpawn(playerNameController.text.trim());
-                    Navigator.of(context).pop();
-                  }
+              // sendRequestSpawn(playerNameController.text.trim());
+              Navigator.of(context).pop();
+            }
                 : null,
           ),
         ],
@@ -159,7 +161,8 @@ Widget buildGameUI(BuildContext context) {
 
   if (compiledGame.playerId < 0) {
     return text(
-        "player id is not assigned. player id: ${compiledGame.playerId}, game id: ${compiledGame.gameId}");
+        "player id is not assigned. player id: ${compiledGame
+            .playerId}, game id: ${compiledGame.gameId}");
   }
 
   if (compiledGame.tiles.isEmpty) {
@@ -342,17 +345,21 @@ Widget buildHud() {
 
       if (player.alive && lag > 10)
         Positioned(
-            top: 60, child: Container(
-            width: screenWidth,
-            alignment: Alignment.topCenter,
-            child: Row(
-              mainAxisAlignment: main.center,
-              children: [
-                text("To reduce lag"),
-                width4,
-                border(child: text("change server"), padding: padding4, borderRadius: borderRadius4),
-              ],
-            ))),
+            top: 60,
+            child: Container(
+                width: screenWidth,
+                alignment: Alignment.topCenter,
+                child: Row(
+                  mainAxisAlignment: main.center,
+                  children: [
+                    text("To reduce lag"),
+                    width4,
+                    border(
+                        child: text("change server"),
+                        padding: padding4,
+                        borderRadius: borderRadius4),
+                  ],
+                ))),
 
       if (player.alive) buildBottomLeft(),
       if (compiledGame.gameType == GameType.Fortress) buildViewFortress(),
@@ -446,12 +453,15 @@ Widget buildTopRight() {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          if (settings.developMode) iconTogglePaths,
+          if (settings.developMode) width4,
           if (settings.developMode) editMenu,
           // iconToggleScore,
           iconToggleAudio,
+          width4,
           iconToggleFullscreen,
-          iconTogglePaths,
-          iconMenu
+          if (settings.developMode) width4,
+          // iconMenu
         ],
       ));
 }
@@ -529,12 +539,11 @@ Widget buildSlot({String title}) {
   );
 }
 
-Widget buildImageSlot(
-    {DecorationImage image,
-    double width,
-    double height,
-    double borderWidth = 1,
-    Color color}) {
+Widget buildImageSlot({DecorationImage image,
+  double width,
+  double height,
+  double borderWidth = 1,
+  Color color}) {
   return Container(
     width: width,
     height: height,
@@ -626,7 +635,7 @@ Widget buildBottomLeft() {
           width8,
           Stack(
             children: [
-              buildTag(player.meds),
+              if(player.meds > 0) buildTag(player.meds),
               onPressed(
                   hint: "Press H to use med kit",
                   callback: sendRequestUseMedKit,
@@ -640,7 +649,7 @@ Widget buildBottomLeft() {
           width8,
           Stack(
             children: [
-              buildTag(player.grenades),
+              if(player.grenades > 0) buildTag(player.grenades),
               Tooltip(
                   message: "Press G to throw grenade",
                   child: buildImageSlot(
@@ -837,6 +846,7 @@ Widget buildGameViewCasual() {
       right: 10,
       bottom: 10,
       child: onPressed(
+        callback: showDialogChangeServer,
         hint: "Change Server",
         child: Container(
             color: Colors.black45,
@@ -882,16 +892,19 @@ Widget buildDebugColumn() {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           text(
-              'mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
+              'mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY
+                  .toInt()}'),
           text('x: ${compiledGame.playerX}, y: ${compiledGame.playerY}'),
           text("zombies: ${compiledGame.npcs.length}"),
           text("players: ${compiledGame.players.length}"),
           text("zoom: ${zoom.toStringAsFixed(2)}"),
           text("cameraX: ${cameraX.toInt()}, cameraY: ${cameraY.toInt()}"),
           text(
-              "centerX: ${screenCenterWorldX.toInt()} ${screenCenterWorldY.toInt()}"),
+              "centerX: ${screenCenterWorldX.toInt()} ${screenCenterWorldY
+                  .toInt()}"),
           text(
-              'screen width: ${screenWidth / zoom}, screen height: ${screenHeight / zoom}'),
+              'screen width: ${screenWidth /
+                  zoom}, screen height: ${screenHeight / zoom}'),
         ],
       )
     ],
@@ -901,11 +914,11 @@ Widget buildDebugColumn() {
 Widget buildGameOver() {
   return Positioned(
       child: Container(
-    width: globalSize.width,
-    height: globalSize.height,
-    color: Colors.black45,
-    child: button("Game Over", clearState, fontSize: 30),
-  ));
+        width: globalSize.width,
+        height: globalSize.height,
+        color: Colors.black45,
+        child: button("Game Over", clearState, fontSize: 30),
+      ));
 }
 
 Widget buildViewWin() {
@@ -942,6 +955,13 @@ Widget buildViewLose() {
       ));
 }
 
+Widget buildDialog(Widget child) {
+  return Positioned(
+      top: 30,
+      child: Container(
+          width: screenWidth, child: child));
+}
+
 Widget buildViewRespawn() {
   print("buildViewRespawn()");
   return Positioned(
@@ -955,7 +975,7 @@ Widget buildViewRespawn() {
                 padding: padding16,
                 width: 600,
                 decoration:
-                    BoxDecoration(borderRadius: borderRadius8, color: black54),
+                BoxDecoration(borderRadius: borderRadius8, color: black54),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: cross.center,
@@ -1036,11 +1056,11 @@ Widget buildViewRespawn() {
                                     children: [
                                       text("Youtube"),
                                       IconButton(
-                                          // onPressed: () {},
+                                        // onPressed: () {},
                                           icon: Icon(
-                                        Icons.link,
-                                        color: white,
-                                      ))
+                                            Icons.link,
+                                            color: white,
+                                          ))
                                     ],
                                   ),
                                 ),
@@ -1115,17 +1135,17 @@ Widget buildViewRespawn() {
                               onPressed(
                                   child: isUriConnected(servers.germany)
                                       ? border(
-                                          child: text("Germany"),
-                                          padding: padding4,
-                                          borderRadius: borderRadius4)
+                                      child: text("Germany"),
+                                      padding: padding4,
+                                      borderRadius: borderRadius4)
                                       : text("Germany"),
                                   callback: connectServerGermany),
                               onPressed(
                                   child: isUriConnected(servers.usaEast)
                                       ? border(
-                                          child: text("USA East"),
-                                          padding: padding4,
-                                          borderRadius: borderRadius4)
+                                      child: text("USA East"),
+                                      padding: padding4,
+                                      borderRadius: borderRadius4)
                                       : text("USA East"),
                                   callback: () {
                                     connect(servers.usaEast);
@@ -1133,9 +1153,9 @@ Widget buildViewRespawn() {
                               onPressed(
                                   child: isUriConnected(servers.usaWest)
                                       ? border(
-                                          child: text("USA West"),
-                                          padding: padding4,
-                                          borderRadius: borderRadius4)
+                                      child: text("USA West"),
+                                      padding: padding4,
+                                      borderRadius: borderRadius4)
                                       : text("USA West"),
                                   callback: () {
                                     connect(servers.usaWest);
