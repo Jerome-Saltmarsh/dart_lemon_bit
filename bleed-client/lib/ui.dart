@@ -18,6 +18,7 @@ import 'package:bleed_client/ui/dialogs.dart';
 import 'package:bleed_client/ui/flutter_constants.dart';
 import 'package:bleed_client/ui/styleguide.dart';
 import 'package:bleed_client/ui/views.dart';
+import 'package:bleed_client/utils/server_util.dart';
 import 'package:flutter/material.dart';
 import 'package:neuro/instance.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -339,6 +340,21 @@ Widget buildHud() {
     children: [
       // if (mouseAvailable && mouseX < 300 && mouseY < 300) buildTopLeft(),
       buildTopRight(),
+
+      if (player.alive)
+        Positioned(
+            top: 60, child: Container(
+            width: screenWidth,
+            alignment: Alignment.topCenter,
+            child: Row(
+              mainAxisAlignment: main.center,
+              children: [
+                text("To reduce lag"),
+                width4,
+                border(child: text("change server"), padding: padding4, borderRadius: borderRadius4),
+              ],
+            ))),
+
       if (player.alive) buildBottomLeft(),
       if (compiledGame.gameType == GameType.Fortress) buildViewFortress(),
       if (compiledGame.gameType == GameType.DeathMatch)
@@ -1095,17 +1111,30 @@ Widget buildViewRespawn() {
                             height8,
                             Row(mainAxisAlignment: main.even, children: [
                               onPressed(
-                                  child: isUriConnected(servers.germany) ? border(child: text("Germany"), padding: padding4, borderRadius: borderRadius4) : text("Germany"),
-                                  callback: () {
-                                    connect(servers.germany);
-                                  }),
+                                  child: isUriConnected(servers.germany)
+                                      ? border(
+                                          child: text("Germany"),
+                                          padding: padding4,
+                                          borderRadius: borderRadius4)
+                                      : text("Germany"),
+                                  callback: connectServerGermany),
                               onPressed(
-                                  child: isUriConnected(servers.usaEast) ? border(child: text("USA East"), padding: padding4, borderRadius: borderRadius4) : text("USA East"),
+                                  child: isUriConnected(servers.usaEast)
+                                      ? border(
+                                          child: text("USA East"),
+                                          padding: padding4,
+                                          borderRadius: borderRadius4)
+                                      : text("USA East"),
                                   callback: () {
                                     connect(servers.usaEast);
                                   }),
                               onPressed(
-                                  child: isUriConnected(servers.usaWest) ? border(child: text("USA West"), padding: padding4, borderRadius: borderRadius4) : text("USA West"),
+                                  child: isUriConnected(servers.usaWest)
+                                      ? border(
+                                          child: text("USA West"),
+                                          padding: padding4,
+                                          borderRadius: borderRadius4)
+                                      : text("USA West"),
                                   callback: () {
                                     connect(servers.usaWest);
                                   }),

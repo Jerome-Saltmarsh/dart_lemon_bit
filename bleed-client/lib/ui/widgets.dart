@@ -144,6 +144,7 @@ Widget width(double value) {
 
 final Widget width16 = width(16);
 final Widget width8 = width(8);
+final Widget width4 = width(4);
 
 ButtonStyle _buttonStyle = buildButtonStyle(white, 2);
 
