@@ -338,10 +338,9 @@ Widget buildHud() {
 
   return Stack(
     children: [
-      // if (mouseAvailable && mouseX < 300 && mouseY < 300) buildTopLeft(),
       buildTopRight(),
 
-      if (player.alive)
+      if (player.alive && lag > 10)
         Positioned(
             top: 60, child: Container(
             width: screenWidth,
@@ -837,10 +836,13 @@ Widget buildGameViewCasual() {
   return Positioned(
       right: 10,
       bottom: 10,
-      child: Container(
-          color: Colors.black45,
-          padding: EdgeInsets.all(8),
-          child: text("CASUAL GAME")));
+      child: onPressed(
+        hint: "Change Server",
+        child: Container(
+            color: Colors.black45,
+            padding: EdgeInsets.all(8),
+            child: text(getCurrentServer())),
+      ));
 }
 
 Widget buildGameInfoDeathMatch() {

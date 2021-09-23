@@ -68,6 +68,7 @@ void _onEvent(dynamic response) {
   }
 
   onEvent.add(response);
+  lag = framesSinceEvent;
   framesSinceEvent = 0;
   DateTime now = DateTime.now();
   ping = now.difference(previousEvent);

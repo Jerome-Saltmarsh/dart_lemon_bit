@@ -26,6 +26,7 @@ int requestCharacterState = characterStateIdle;
 double requestAim = 0;
 DateTime previousEvent = DateTime.now();
 int framesSinceEvent = 0;
+int lag = 0;
 Duration ping;
 String event = "";
 dynamic valueObject;
