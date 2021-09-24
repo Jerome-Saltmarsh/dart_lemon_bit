@@ -22,7 +22,6 @@ import 'package:bleed_client/utils/server_util.dart';
 import 'package:flutter/material.dart';
 import 'package:neuro/instance.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:universal_html/html.dart';
 
 import 'classes/InventoryItem.dart';
 import 'classes/Score.dart';
@@ -43,9 +42,10 @@ import 'utils.dart';
 
 TextEditingController _playerNameController = TextEditingController();
 Border _border =
-Border.all(color: Colors.black, width: 5.0, style: BorderStyle.solid);
+    Border.all(color: Colors.black, width: 5.0, style: BorderStyle.solid);
 SharedPreferences sharedPreferences;
 bool _showScore = true;
+bool _showServers = false;
 double iconSize = 45;
 
 bool observeMode = false;
@@ -70,6 +70,8 @@ void initUI() {
     if (sharedPreferences.containsKey("tutorialIndex")) {
       tutorialIndex = sharedPreferences.getInt('tutorialIndex');
     }
+    settings.audioMuted = sharedPreferences.containsKey('audioMuted') &&
+        sharedPreferences.getBool('audioMuted');
   });
 }
 
@@ -117,13 +119,11 @@ Future<void> showChangeNameDialog() async {
         actions: <Widget>[
           TextButton(
             child: const Text('PLAY'),
-            onPressed: _playerNameController.text
-                .trim()
-                .length > 2
+            onPressed: _playerNameController.text.trim().length > 2
                 ? () {
-              // sendRequestSpawn(playerNameController.text.trim());
-              Navigator.of(context).pop();
-            }
+                    // sendRequestSpawn(playerNameController.text.trim());
+                    Navigator.of(context).pop();
+                  }
                 : null,
           ),
         ],
@@ -161,8 +161,7 @@ Widget buildGameUI(BuildContext context) {
 
   if (compiledGame.playerId < 0) {
     return text(
-        "player id is not assigned. player id: ${compiledGame
-            .playerId}, game id: ${compiledGame.gameId}");
+        "player id is not assigned. player id: ${compiledGame.playerId}, game id: ${compiledGame.gameId}");
   }
 
   if (compiledGame.tiles.isEmpty) {
@@ -357,7 +356,6 @@ Widget buildHud() {
   return Stack(
     children: [
       buildTopRight(),
-
       if (player.alive && lag > 10)
         Positioned(
             top: 60,
@@ -380,7 +378,7 @@ Widget buildHud() {
       if (compiledGame.gameType == GameType.Fortress) buildViewFortress(),
       if (compiledGame.gameType == GameType.DeathMatch)
         buildGameInfoDeathMatch(),
-      if (compiledGame.gameType == GameType.Casual) buildGameViewCasual(),
+      buildViewBottomRight(),
       if (state.gameState == GameState.Won) buildViewWin(),
       if (state.gameState == GameState.Lost) buildViewLose(),
       if (!observeMode &&
@@ -506,8 +504,8 @@ Widget buildTopLeft() {
   );
 
   return Positioned(
-    top: 0,
-    left: 0,
+    top: 5,
+    left: 5,
     child: Row(
       children: [iconToggleFullscreen, iconToggleAudio, iconScore],
     ),
@@ -554,11 +552,12 @@ Widget buildSlot({String title}) {
   );
 }
 
-Widget buildImageSlot({DecorationImage image,
-  double width,
-  double height,
-  double borderWidth = 1,
-  Color color}) {
+Widget buildImageSlot(
+    {DecorationImage image,
+    double width,
+    double height,
+    double borderWidth = 1,
+    Color color}) {
   return Container(
     width: width,
     height: height,
@@ -629,12 +628,13 @@ Widget buildWeaponSlot({Weapon weapon}) {
 
 Widget buildBottomLeft() {
   return Positioned(
-    bottom: 0,
+    bottom: 5,
+    left: 5,
     child: Container(
       padding: padding8,
       decoration: BoxDecoration(
         color: Colors.black45,
-        borderRadius: const BorderRadius.only(topRight: radius8),
+        borderRadius: borderRadius4,
       ),
       child: Row(
         mainAxisAlignment: main.center,
@@ -650,7 +650,7 @@ Widget buildBottomLeft() {
           width8,
           Stack(
             children: [
-              if(player.meds > 0) buildTag(player.meds),
+              if (player.meds > 0) buildTag(player.meds),
               onPressed(
                   hint: "Press H to use med kit",
                   callback: sendRequestUseMedKit,
@@ -664,7 +664,7 @@ Widget buildBottomLeft() {
           width8,
           Stack(
             children: [
-              if(player.grenades > 0) buildTag(player.grenades),
+              if (player.grenades > 0) buildTag(player.grenades),
               Tooltip(
                   message: "Press G to throw grenade",
                   child: buildImageSlot(
@@ -850,18 +850,65 @@ Widget buildRow(int amount, String name, Function onPressed) {
   );
 }
 
-Widget buildGameViewCasual() {
+Widget buildViewBottomRight() {
   return Positioned(
-      right: 10,
-      bottom: 10,
-      child: onPressed(
-        callback: showDialogChangeServer,
-        hint: "Change Server",
-        child: Container(
+    right: 10,
+    bottom: 10,
+    child: MouseRegion(
+      onEnter: (_) {
+        _showServers = true;
+        redrawUI();
+      },
+      onExit: (_) {
+        _showServers = false;
+        redrawUI();
+      },
+      child: Container(
+          padding: padding8,
+          decoration: BoxDecoration(
+            borderRadius: borderRadius4,
             color: Colors.black45,
-            padding: EdgeInsets.all(8),
-            child: text(getCurrentServer())),
-      ));
+          ),
+          child: Column(
+            crossAxisAlignment: cross.end,
+            children: [
+              if (_showServers) buildServerList(),
+              onPressed(
+                  callback: () {
+                    _showServers = !_showServers;
+                    redrawUI();
+                  },
+                  child: Container(
+                      padding: padding4,
+                      child: text(getServerName(currentServer)))),
+            ],
+          )),
+    ),
+  );
+}
+
+Widget buildServerList() {
+  return Column(
+      crossAxisAlignment: cross.end,
+      children: servers.map((server) {
+        bool active = isServerConnected(server);
+        return onPressed(
+            hint: "Connect to ${getServerName(server)} server",
+            callback: () {
+              connectServer(server);
+              _showServers = false;
+            },
+            child: Container(
+              padding: padding4,
+              decoration: active
+                  ? BoxDecoration(
+                      border: Border.all(width: 2, color: Colors.white),
+                      borderRadius: borderRadius4)
+                  : null,
+              margin: const EdgeInsets.only(bottom: 16),
+              child: text(getServerName(server)),
+            ));
+      }).toList());
 }
 
 Widget buildGameInfoDeathMatch() {
@@ -901,19 +948,16 @@ Widget buildDebugColumn() {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           text(
-              'mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY
-                  .toInt()}'),
+              'mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
           text('x: ${compiledGame.playerX}, y: ${compiledGame.playerY}'),
           text("zombies: ${compiledGame.npcs.length}"),
           text("players: ${compiledGame.players.length}"),
           text("zoom: ${zoom.toStringAsFixed(2)}"),
           text("cameraX: ${cameraX.toInt()}, cameraY: ${cameraY.toInt()}"),
           text(
-              "centerX: ${screenCenterWorldX.toInt()} ${screenCenterWorldY
-                  .toInt()}"),
+              "centerX: ${screenCenterWorldX.toInt()} ${screenCenterWorldY.toInt()}"),
           text(
-              'screen width: ${screenWidth /
-                  zoom}, screen height: ${screenHeight / zoom}'),
+              'screen width: ${screenWidth / zoom}, screen height: ${screenHeight / zoom}'),
         ],
       )
     ],
@@ -923,11 +967,11 @@ Widget buildDebugColumn() {
 Widget buildGameOver() {
   return Positioned(
       child: Container(
-        width: globalSize.width,
-        height: globalSize.height,
-        color: Colors.black45,
-        child: button("Game Over", clearState, fontSize: 30),
-      ));
+    width: globalSize.width,
+    height: globalSize.height,
+    color: Colors.black45,
+    child: button("Game Over", clearState, fontSize: 30),
+  ));
 }
 
 Widget buildViewWin() {
@@ -966,9 +1010,7 @@ Widget buildViewLose() {
 
 Widget buildDialog(Widget child) {
   return Positioned(
-      top: 30,
-      child: Container(
-          width: screenWidth, child: child));
+      top: 30, child: Container(width: screenWidth, child: child));
 }
 
 Widget buildViewRespawn() {
@@ -984,7 +1026,7 @@ Widget buildViewRespawn() {
                 padding: padding16,
                 width: 600,
                 decoration:
-                BoxDecoration(borderRadius: borderRadius8, color: black54),
+                    BoxDecoration(borderRadius: borderRadius8, color: black54),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: cross.center,
@@ -1065,11 +1107,11 @@ Widget buildViewRespawn() {
                                     children: [
                                       text("Youtube"),
                                       IconButton(
-                                        // onPressed: () {},
+                                          // onPressed: () {},
                                           icon: Icon(
-                                            Icons.link,
-                                            color: white,
-                                          ))
+                                        Icons.link,
+                                        color: white,
+                                      ))
                                     ],
                                   ),
                                 ),
@@ -1140,36 +1182,36 @@ Widget buildViewRespawn() {
                           children: [
                             text("Server"),
                             height8,
-                            Row(mainAxisAlignment: main.even, children: [
-                              onPressed(
-                                  child: isUriConnected(servers.germany)
-                                      ? border(
-                                      child: text("Germany"),
-                                      padding: padding4,
-                                      borderRadius: borderRadius4)
-                                      : text("Germany"),
-                                  callback: connectServerGermany),
-                              onPressed(
-                                  child: isUriConnected(servers.usaEast)
-                                      ? border(
-                                      child: text("USA East"),
-                                      padding: padding4,
-                                      borderRadius: borderRadius4)
-                                      : text("USA East"),
-                                  callback: () {
-                                    connect(servers.usaEast);
-                                  }),
-                              onPressed(
-                                  child: isUriConnected(servers.usaWest)
-                                      ? border(
-                                      child: text("USA West"),
-                                      padding: padding4,
-                                      borderRadius: borderRadius4)
-                                      : text("USA West"),
-                                  callback: () {
-                                    connect(servers.usaWest);
-                                  }),
-                            ]),
+                            // Row(mainAxisAlignment: main.even, children: [
+                            //   onPressed(
+                            //       child: isUriConnected(servers.germany)
+                            //           ? border(
+                            //               child: text("Germany"),
+                            //               padding: padding4,
+                            //               borderRadius: borderRadius4)
+                            //           : text("Germany"),
+                            //       callback: connectServerGermany),
+                            //   onPressed(
+                            //       child: isUriConnected(servers.usaEast)
+                            //           ? border(
+                            //               child: text("USA East"),
+                            //               padding: padding4,
+                            //               borderRadius: borderRadius4)
+                            //           : text("USA East"),
+                            //       callback: () {
+                            //         connect(servers.usaEast);
+                            //       }),
+                            //   onPressed(
+                            //       child: isUriConnected(servers.usaWest)
+                            //           ? border(
+                            //               child: text("USA West"),
+                            //               padding: padding4,
+                            //               borderRadius: borderRadius4)
+                            //           : text("USA West"),
+                            //       callback: () {
+                            //         connect(servers.usaWest);
+                            //       }),
+                            // ]),
                           ],
                         ),
                       ),
@@ -1267,12 +1309,12 @@ Widget buildViewScore() {
     return Stack(
       children: [
         Positioned(
-          top: 0,
-          left: 0,
+          top: 5,
+          left: 5,
           child: Container(
             decoration: BoxDecoration(
               color: black45,
-              borderRadius: borderRadiusBottomRight8,
+              borderRadius: borderRadius4,
             ),
             width: 200,
             padding: padding4,

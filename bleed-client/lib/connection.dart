@@ -31,10 +31,6 @@ void disconnect() {
   onDisconnected.add(true);
 }
 
-void connectLocalHost({int port = 8080}) {
-  connect('ws://localhost:$port');
-}
-
 bool isUriConnected(String value){
   return connected && _connectionUri == value;
 }
@@ -43,7 +39,7 @@ void connect(String uri) {
   print('connection.connect($uri)');
   clearState();
   connecting = true;
-  _webSocketChannel = WebSocketChannel.connect(Uri.parse(uri.replaceAll("https", "wss") + "/:8080"));
+  _webSocketChannel = WebSocketChannel.connect(Uri.parse(uri));
   _webSocketChannel.stream.listen(_onEvent, onError: _onError, onDone: _onDone);
   _webSocketChannel.sink.add(ClientRequest.Ping.index);
   _connectionUri = uri;

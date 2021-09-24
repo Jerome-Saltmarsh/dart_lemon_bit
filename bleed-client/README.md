@@ -70,6 +70,8 @@
 [ ] Loot Box (Gain extra points when destroyed)
 [ ] Design Level, City
 [ ] Disable spawn npcs request
+[ ] Separate credits and points
+[ ] Shared Preference: remember last server
 -- MAJOR BUGS --
 -- COMPLETED --
 [x] Killed zombies drop health pack etc,
