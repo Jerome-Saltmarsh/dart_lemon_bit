@@ -865,6 +865,7 @@ Widget buildViewBottomRight() {
       },
       child: Container(
           padding: padding8,
+          width: 110,
           decoration: BoxDecoration(
             borderRadius: borderRadius4,
             color: Colors.black45,
@@ -1016,7 +1017,7 @@ Widget buildDialog(Widget child) {
 Widget buildViewRespawn() {
   print("buildViewRespawn()");
   return Positioned(
-      top: 30,
+      top: 5,
       child: Container(
         width: screenWidth,
         child: Row(
@@ -1026,7 +1027,7 @@ Widget buildViewRespawn() {
                 padding: padding16,
                 width: 600,
                 decoration:
-                    BoxDecoration(borderRadius: borderRadius8, color: black54),
+                    BoxDecoration(borderRadius: borderRadius4, color: black54),
                 child: SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: cross.center,
