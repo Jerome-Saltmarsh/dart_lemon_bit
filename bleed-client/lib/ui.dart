@@ -51,6 +51,8 @@ double iconSize = 45;
 
 bool observeMode = false;
 
+Color _panelBackgroundColor = Colors.black38;
+
 void initUI() {
   onConnectError.stream.listen((event) {
     showDialogConnectFailed();
@@ -1033,236 +1035,236 @@ Widget buildDialog(Widget child) {
 
 Widget buildViewRespawn() {
   print("buildViewRespawn()");
-  return Positioned(
-      top: 5,
-      child: Container(
-        width: screenWidth,
-        child: Row(
-          mainAxisAlignment: main.center,
-          children: [
-            Container(
-                padding: padding16,
-                width: 600,
-                decoration:
-                    BoxDecoration(borderRadius: borderRadius4, color: black54),
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: cross.center,
-                    children: [
-                      Container(
-                          decoration: BoxDecoration(
-                            borderRadius: borderRadius8,
-                            color: blood,
-                          ),
-                          padding: padding8,
-                          child: text("BLEED beta v1.0.0")),
-                      height16,
-                      text("YOU DIED", fontSize: 30, decoration: underline),
-                      height16,
-                      Container(
-                        padding: padding16,
-                        decoration: BoxDecoration(
-                          borderRadius: borderRadius8,
-                          color: black54,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: cross.center,
+  return Container(
+    width: screenWidth,
+    height: screenHeight,
+    child: Row(
+      mainAxisAlignment: main.center,
+      crossAxisAlignment: cross.center,
+      children: [
+        Container(
+            padding: padding16,
+            width: screenWidth * goldenRatioInverseB,
+            decoration:
+                BoxDecoration(borderRadius: borderRadius4, color: _panelBackgroundColor),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: cross.center,
+                children: [
+                  Container(
+                      decoration: BoxDecoration(
+                        borderRadius: borderRadius8,
+                        color: blood,
+                      ),
+                      padding: padding8,
+                      child: text("BLEED beta v1.0.0")),
+                  height16,
+                  text("YOU DIED", fontSize: 30, decoration: underline),
+                  height16,
+                  Container(
+                    padding: padding16,
+                    decoration: BoxDecoration(
+                      borderRadius: borderRadius8,
+                      color: black54,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: cross.center,
+                      children: [
+                        text("Please Support Me"),
+                        height16,
+                        Row(
+                          mainAxisAlignment: main.even,
                           children: [
-                            text("Please Support Me"),
-                            height16,
-                            Row(
-                              mainAxisAlignment: main.even,
-                              children: [
-                                onPressed(
-                                    child: border(
-                                        child: Container(
-                                            width: 70,
-                                            alignment: Alignment.center,
-                                            child: text(
-                                              "Paypal",
-                                            )),
-                                        radius: borderRadius4,
-                                        padding: padding8),
-                                    callback: () {
-                                      openLink(links.paypal);
-                                    },
-                                    hint: links.paypal),
-                                onPressed(
-                                    child: border(
-                                        child: Container(
-                                            width: 70,
-                                            alignment: Alignment.center,
-                                            child: text("Patreon")),
-                                        radius: borderRadius4,
-                                        padding: padding8),
-                                    callback: () {
-                                      openLink(links.patreon);
-                                    },
-                                    hint: links.patreon)
-                              ],
-                            ),
-                            height8,
+                            onPressed(
+                                child: border(
+                                    child: Container(
+                                        width: 70,
+                                        alignment: Alignment.center,
+                                        child: text(
+                                          "Paypal",
+                                        )),
+                                    radius: borderRadius4,
+                                    padding: padding8),
+                                callback: () {
+                                  openLink(links.paypal);
+                                },
+                                hint: links.paypal),
+                            onPressed(
+                                child: border(
+                                    child: Container(
+                                        width: 70,
+                                        alignment: Alignment.center,
+                                        child: text("Patreon")),
+                                    radius: borderRadius4,
+                                    padding: padding8),
+                                callback: () {
+                                  openLink(links.patreon);
+                                },
+                                hint: links.patreon)
                           ],
                         ),
-                      ),
-                      height8,
-                      Container(
-                        padding: padding16,
-                        decoration: BoxDecoration(
-                          borderRadius: borderRadius8,
-                          color: black54,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                        height8,
+                      ],
+                    ),
+                  ),
+                  height8,
+                  Container(
+                    padding: padding16,
+                    decoration: BoxDecoration(
+                      borderRadius: borderRadius8,
+                      color: black54,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        text("Community"),
+                        height8,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            text("Community"),
-                            height8,
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                comingSoon(
-                                  child: Row(
-                                    children: [
-                                      text("Youtube"),
-                                      IconButton(
-                                          // onPressed: () {},
-                                          icon: Icon(
+                            comingSoon(
+                              child: Row(
+                                children: [
+                                  text("Youtube"),
+                                  IconButton(
+                                      // onPressed: () {},
+                                      icon: Icon(
+                                    Icons.link,
+                                    color: white,
+                                  ))
+                                ],
+                              ),
+                            ),
+                            onPressed(
+                              hint: "Come and Hang!",
+                              callback: () {
+                                openLink(links.discord);
+                              },
+                              child: Row(
+                                children: [
+                                  text("Discord"),
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(
                                         Icons.link,
                                         color: white,
                                       ))
-                                    ],
-                                  ),
-                                ),
-                                onPressed(
-                                  hint: "Come and Hang!",
-                                  callback: () {
-                                    openLink(links.discord);
-                                  },
-                                  child: Row(
-                                    children: [
-                                      text("Discord"),
-                                      IconButton(
-                                          onPressed: () {},
-                                          icon: Icon(
-                                            Icons.link,
-                                            color: white,
-                                          ))
-                                    ],
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
                           ],
                         ),
-                      ),
-                      height8,
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: borderRadius8,
-                          color: black54,
-                        ),
-                        padding: padding16,
-                        child: Column(
+                      ],
+                    ),
+                  ),
+                  height8,
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: borderRadius8,
+                      color: black54,
+                    ),
+                    padding: padding16,
+                    child: Column(
+                      children: [
+                        text("Hints"),
+                        Row(
+                          mainAxisAlignment: main.center,
+                          crossAxisAlignment: cross.center,
                           children: [
-                            text("Hints"),
-                            Row(
-                              mainAxisAlignment: main.center,
-                              crossAxisAlignment: cross.center,
-                              children: [
-                                Container(
-                                    width: 350,
-                                    alignment: Alignment.center,
-                                    child: text(getTip())),
-                                width16,
-                                Tooltip(
-                                  message: "Next Hint",
-                                  child: IconButton(
-                                      onPressed: nextTip,
-                                      icon: Icon(
-                                        Icons.arrow_forward,
-                                        color: Colors.white,
-                                        size: 30,
-                                      )),
-                                )
-                              ],
-                            ),
+                            Container(
+                                width: 350,
+                                alignment: Alignment.center,
+                                child: text(getTip())),
+                            width16,
+                            Tooltip(
+                              message: "Next Hint",
+                              child: IconButton(
+                                  onPressed: nextTip,
+                                  icon: Icon(
+                                    Icons.arrow_forward,
+                                    color: Colors.white,
+                                    size: 30,
+                                  )),
+                            )
                           ],
                         ),
-                      ),
-                      // height8,
-                      // Container(
-                      //   decoration: BoxDecoration(
-                      //     borderRadius: borderRadius8,
-                      //     color: black54,
-                      //   ),
-                      //   padding: padding16,
-                      //   child: Column(
-                      //     children: [
-                      //       text("Server"),
-                      //       height8,
-                      //       // Row(mainAxisAlignment: main.even, children: [
-                      //       //   onPressed(
-                      //       //       child: isUriConnected(servers.germany)
-                      //       //           ? border(
-                      //       //               child: text("Germany"),
-                      //       //               padding: padding4,
-                      //       //               borderRadius: borderRadius4)
-                      //       //           : text("Germany"),
-                      //       //       callback: connectServerGermany),
-                      //       //   onPressed(
-                      //       //       child: isUriConnected(servers.usaEast)
-                      //       //           ? border(
-                      //       //               child: text("USA East"),
-                      //       //               padding: padding4,
-                      //       //               borderRadius: borderRadius4)
-                      //       //           : text("USA East"),
-                      //       //       callback: () {
-                      //       //         connect(servers.usaEast);
-                      //       //       }),
-                      //       //   onPressed(
-                      //       //       child: isUriConnected(servers.usaWest)
-                      //       //           ? border(
-                      //       //               child: text("USA West"),
-                      //       //               padding: padding4,
-                      //       //               borderRadius: borderRadius4)
-                      //       //           : text("USA West"),
-                      //       //       callback: () {
-                      //       //         connect(servers.usaWest);
-                      //       //       }),
-                      //       // ]),
-                      //     ],
-                      //   ),
-                      // ),
-                      height32,
-                      Row(
-                        mainAxisAlignment: main.between,
-                        children: [
-                          onPressed(
-                              child: Container(
-                                  padding: padding16, child: text("Close")),
-                              callback: () {
-                                observeMode = true;
-                                redrawUI();
-                              }),
-                          width16,
-                          onPressed(
-                            child: border(
-                                child: text("RESPAWN", fontSize: 30),
-                                padding: padding16,
-                                radius: borderRadius8,
-                                color: Colors.black38,
-                                fillColor: black54),
-                            callback: sendRequestRevive,
-                            hint: "Click to respawn",
-                          ),
-                        ],
+                      ],
+                    ),
+                  ),
+                  // height8,
+                  // Container(
+                  //   decoration: BoxDecoration(
+                  //     borderRadius: borderRadius8,
+                  //     color: black54,
+                  //   ),
+                  //   padding: padding16,
+                  //   child: Column(
+                  //     children: [
+                  //       text("Server"),
+                  //       height8,
+                  //       // Row(mainAxisAlignment: main.even, children: [
+                  //       //   onPressed(
+                  //       //       child: isUriConnected(servers.germany)
+                  //       //           ? border(
+                  //       //               child: text("Germany"),
+                  //       //               padding: padding4,
+                  //       //               borderRadius: borderRadius4)
+                  //       //           : text("Germany"),
+                  //       //       callback: connectServerGermany),
+                  //       //   onPressed(
+                  //       //       child: isUriConnected(servers.usaEast)
+                  //       //           ? border(
+                  //       //               child: text("USA East"),
+                  //       //               padding: padding4,
+                  //       //               borderRadius: borderRadius4)
+                  //       //           : text("USA East"),
+                  //       //       callback: () {
+                  //       //         connect(servers.usaEast);
+                  //       //       }),
+                  //       //   onPressed(
+                  //       //       child: isUriConnected(servers.usaWest)
+                  //       //           ? border(
+                  //       //               child: text("USA West"),
+                  //       //               padding: padding4,
+                  //       //               borderRadius: borderRadius4)
+                  //       //           : text("USA West"),
+                  //       //       callback: () {
+                  //       //         connect(servers.usaWest);
+                  //       //       }),
+                  //       // ]),
+                  //     ],
+                  //   ),
+                  // ),
+                  height32,
+                  Row(
+                    mainAxisAlignment: main.between,
+                    children: [
+                      onPressed(
+                          child: Container(
+                              padding: padding16, child: text("Close")),
+                          callback: () {
+                            observeMode = true;
+                            redrawUI();
+                          }),
+                      width16,
+                      onPressed(
+                        child: border(
+                            child: text("RESPAWN", fontSize: 30),
+                            padding: padding16,
+                            radius: borderRadius8,
+                            color: Colors.black38,
+                            fillColor: black54),
+                        callback: sendRequestRevive,
+                        hint: "Click to respawn",
                       ),
                     ],
                   ),
-                )),
-          ],
-        ),
-      ));
+                ],
+              ),
+            )),
+      ],
+    ),
+  );
 }
 
 int tipIndex = 0;
