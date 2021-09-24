@@ -888,7 +888,7 @@ Widget buildViewBottomRight() {
           child: Column(
             crossAxisAlignment: cross.end,
             children: [
-              if (player.dead | _showServers) buildServerList(),
+              if ((player.dead && !observeMode) | _showServers) buildServerList(),
               onPressed(
                   callback: () {
                     _showServers = !_showServers;
