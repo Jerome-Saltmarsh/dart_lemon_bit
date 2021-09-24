@@ -39,6 +39,7 @@ import 'send.dart';
 import 'state.dart';
 import 'ui/widgets.dart';
 import 'utils.dart';
+import 'utils/list_util.dart';
 
 TextEditingController _playerNameController = TextEditingController();
 Border _border =
@@ -449,7 +450,7 @@ Widget buildTopRight() {
               size: iconSize,
               color: white),
           onPressed: toggleAudioMuted),
-      message: "Toggle Audio");
+      message: settings.audioMuted ? "Resume Audio" : "Mute Audio");
 
   Widget iconTogglePaths = Tooltip(
     child: IconButton(
@@ -867,8 +868,8 @@ Widget buildRow(int amount, String name, Function onPressed) {
 
 Widget buildViewBottomRight() {
   return Positioned(
-    right: 10,
-    bottom: 10,
+    right: 5,
+    bottom: 5,
     child: MouseRegion(
       onEnter: (_) {
         _showServers = true;
@@ -888,7 +889,8 @@ Widget buildViewBottomRight() {
           child: Column(
             crossAxisAlignment: cross.end,
             children: [
-              if ((player.dead && !observeMode) | _showServers) buildServerList(),
+              if ((player.dead && !observeMode) | _showServers)
+                buildServerList(),
               onPressed(
                   callback: () {
                     _showServers = !_showServers;
@@ -1237,8 +1239,7 @@ Widget buildViewRespawn() {
                         children: [
                           onPressed(
                               child: Container(
-                                  padding: padding16,
-                                  child: text("Close")),
+                                  padding: padding16, child: text("Close")),
                               callback: () {
                                 observeMode = true;
                                 redrawUI();
@@ -1307,24 +1308,29 @@ Widget buildDebugPanel() {
   ]);
 }
 
+int getScoreRecord(Score score) {
+  return score.record;
+}
+
 Widget buildViewScore() {
+  if (!_showScore) {
+    return Positioned(
+      top: 0,
+      left: 0,
+      child: buildToggleScoreIcon(),
+    );
+  }
+
   try {
-    Score highest = highScore;
-
-    if (!_showScore) {
-      return Positioned(
-        top: 0,
-        left: 0,
-        child: buildToggleScoreIcon(),
-      );
-    }
-
+    sort(state.score, getScoreRecord);
     Widget iconClose = Tooltip(
       message: "Hide Score board",
       child: IconButton(
-          icon: Icon(Icons.close, size: 30, color: Colors.white70),
+          icon: Icon(Icons.close, size: 30, color: Colors.white),
           onPressed: toggleShowScore),
     );
+
+    double width = 260;
 
     return Stack(
       children: [
@@ -1336,21 +1342,24 @@ Widget buildViewScore() {
               color: black45,
               borderRadius: borderRadius4,
             ),
-            width: 200,
-            padding: padding4,
-            height: 300,
+            width: width,
+            padding: padding8,
+            height: width * goldenRatio,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: cross.start,
                 children: [
-                  height16,
-                  text("Highest", decoration: underline),
-                  Row(children: [
-                    Container(width: 140, child: text(highest.playerName)),
-                    Container(width: 50, child: text(highest.record)),
-                  ]),
-                  Divider(),
-                  text("Leader", decoration: underline),
+                  Container(
+                    width: width,
+                    child: Row(
+                      mainAxisAlignment: main.spread,
+                      children: [
+                        text("Leaderboard"),
+                        iconClose
+                      ],
+                    ),
+                  ),
+                  height8,
                   Column(
                     crossAxisAlignment: cross.start,
                     children: state.score.map((score) {
@@ -1363,6 +1372,7 @@ Widget buildViewScore() {
                                       ? blood
                                       : Colors.white)),
                           Container(width: 50, child: text(score.points)),
+                          Container(width: 50, child: text(score.record)),
                         ],
                       );
                     }).toList(),
@@ -1371,11 +1381,6 @@ Widget buildViewScore() {
               ),
             ),
           ),
-        ),
-        Positioned(
-          top: 0,
-          left: 160,
-          child: iconClose,
         ),
       ],
     );

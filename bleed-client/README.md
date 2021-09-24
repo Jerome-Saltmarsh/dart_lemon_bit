@@ -65,6 +65,8 @@
 [ ] Rounds
 -- CASUAL --
 [ ] Body Armor
+[ ] Check version
+[ ] Send custom news updates to client
 [ ] How do players acquire more ammo?
 [ ] How do players acquire more grenades?
 [ ] How do players acquire more health kits?
@@ -75,6 +77,7 @@
 [ ] Separate credits and points
 -- MAJOR BUGS --
 -- COMPLETED --
+[x] Show high score, order by high score
 [x] Select Server (Germany, USA-East, USA-West, Japan, Russia, Australia)
 [x] Shared Preference: remember last server
 [x] Killed zombies drop health pack etc,

@@ -31,6 +31,7 @@ _CrossAxis cross = _CrossAxis();
 class _MainAxis {
   final MainAxisAlignment center = MainAxisAlignment.center;
   final MainAxisAlignment between = MainAxisAlignment.spaceBetween;
+  final MainAxisAlignment spread = MainAxisAlignment.spaceBetween;
   final MainAxisAlignment even = MainAxisAlignment.spaceEvenly;
 }
 
@@ -38,4 +39,5 @@ class _CrossAxis {
   final CrossAxisAlignment center = CrossAxisAlignment.center;
   final CrossAxisAlignment start = CrossAxisAlignment.start;
   final CrossAxisAlignment end = CrossAxisAlignment.end;
+  final CrossAxisAlignment stretch = CrossAxisAlignment.stretch;
 }
