@@ -123,6 +123,7 @@ class BleedWidget extends GameWidget {
   @override
   void drawForeground(Canvas canvas, Size size) {
     if (!mouseAvailable) return;
+    if (!connected) return;
     if (state.compiledGame.gameId < 0) return;
 
     double aimX = mouseWorldX;
@@ -137,10 +138,7 @@ class BleedWidget extends GameWidget {
     }
 
     if (player.alive) {
-
       _drawStaminaBar(canvas);
-
-
     }
 
     _drawMouseAim(aiming);
@@ -148,8 +146,6 @@ class BleedWidget extends GameWidget {
     if (player.equippedRounds == 0) {
       drawText("reload (r)", mouseX + 10, mouseY - 35);
     }
-
-    // _drawClips();
   }
 
   void _drawMouseAim(bool aiming) {

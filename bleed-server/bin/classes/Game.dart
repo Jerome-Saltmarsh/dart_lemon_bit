@@ -229,7 +229,15 @@ class GameCasual extends Game {
   final int spawnMeds = 1;
 
   GameCasual(Scene scene, int maxPlayers)
-      : super(GameType.Casual, scene, maxPlayers);
+      : super(GameType.Casual, scene, maxPlayers){
+    spawnRandomNpcs(10);
+  }
+
+  void spawnRandomNpcs(int amount) {
+    for(int i = 0; i < amount; i++){
+      spawnRandomNpc();
+    }
+  }
 
   @override
   bool gameOver() {
