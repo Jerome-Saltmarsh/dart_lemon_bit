@@ -9,13 +9,10 @@ import 'package:bleed_client/send.dart';
 import 'package:bleed_client/settings.dart';
 import 'package:bleed_client/utils.dart';
 
-import 'instances/settings.dart';
 import 'state.dart';
 
 void initBleed() {
   onConnectedController.stream.listen(_onConnected);
-
-  if (!settings.developMode) connectToGCP();
 
   on((GameJoined gameJoined) async {
     cameraCenter(compiledGame.playerX, compiledGame.playerY);

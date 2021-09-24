@@ -26,17 +26,17 @@ Widget text(dynamic value,
 
 Widget border(
     {Widget child,
-    Color color = Colors.white,
+    Color color,
     double width = 1,
-    BorderRadius borderRadius,
+    BorderRadius radius,
     EdgeInsets padding,
     Alignment alignment,
     Color fillColor}) {
   return Container(
     alignment: alignment,
     decoration: BoxDecoration(
-        border: Border.all(color: color, width: width),
-        borderRadius: borderRadius,
+        border: color != null ? Border.all(color: color, width: width) : null,
+        borderRadius: radius,
         color: fillColor),
     child: child,
     padding: padding,

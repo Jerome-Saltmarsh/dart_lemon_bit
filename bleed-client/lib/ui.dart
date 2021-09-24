@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/common/GameState.dart';
 import 'package:bleed_client/common/constants.dart';
 import 'package:bleed_client/constants.dart';
@@ -18,7 +19,6 @@ import 'package:bleed_client/ui/dialogs.dart';
 import 'package:bleed_client/ui/flutter_constants.dart';
 import 'package:bleed_client/ui/styleguide.dart';
 import 'package:bleed_client/ui/views.dart';
-import 'package:bleed_client/utils/server_util.dart';
 import 'package:flutter/material.dart';
 import 'package:neuro/instance.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -64,6 +64,7 @@ void initUI() {
     redrawUI();
   });
 
+  // TODO Refactor
   SharedPreferences.getInstance().then((instance) {
     //@ on sharedPreferences loaded
     sharedPreferences = instance;
@@ -78,7 +79,7 @@ void initUI() {
       Server server = servers[sharedPreferences.getInt('server')];
       connectServer(server);
     } else {
-      connectServer(Server.USA_West);
+      // connectServer(Server.USA_West);
     }
   });
 }
@@ -149,7 +150,12 @@ Widget buildGameUI(BuildContext context) {
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: [text("LOADING BLEED")],
+          children: [
+            AnimatedTextKit(repeatForever: true, animatedTexts: [
+              RotateAnimatedText('Loading Bleed',
+                  textStyle: TextStyle(color: Colors.white)),
+            ]),
+          ],
         ),
       ],
     );
@@ -163,8 +169,9 @@ Widget buildGameUI(BuildContext context) {
 
   if (state.lobby != null) return center(buildViewJoinedLobby());
 
-  if (compiledGame.gameId < 0) return center(MainMenu());
-
+  if (compiledGame.gameId < 0) {
+    return buildViewLoading();
+  }
   if (editMode) return buildEditorUI();
 
   if (compiledGame.playerId < 0) {
@@ -378,7 +385,7 @@ Widget buildHud() {
                     border(
                         child: text("change server"),
                         padding: padding4,
-                        borderRadius: borderRadius4),
+                        radius: borderRadius4),
                   ],
                 ))),
 
@@ -412,7 +419,7 @@ Widget buildHud() {
                           child: border(
                               child: text("Respawn", fontSize: 30),
                               padding: padding8,
-                              borderRadius: borderRadius4))
+                              radius: borderRadius4))
                     ]),
                     height32,
                     text("Hold E to pan camera")
@@ -881,7 +888,7 @@ Widget buildViewBottomRight() {
           child: Column(
             crossAxisAlignment: cross.end,
             children: [
-              if (player.dead |_showServers) buildServerList(),
+              if (player.dead | _showServers) buildServerList(),
               onPressed(
                   callback: () {
                     _showServers = !_showServers;
@@ -1072,7 +1079,7 @@ Widget buildViewRespawn() {
                                             child: text(
                                               "Paypal",
                                             )),
-                                        borderRadius: borderRadius4,
+                                        radius: borderRadius4,
                                         padding: padding8),
                                     callback: () {
                                       openLink(links.paypal);
@@ -1084,7 +1091,7 @@ Widget buildViewRespawn() {
                                             width: 70,
                                             alignment: Alignment.center,
                                             child: text("Patreon")),
-                                        borderRadius: borderRadius4,
+                                        radius: borderRadius4,
                                         padding: padding8),
                                     callback: () {
                                       openLink(links.patreon);
@@ -1226,10 +1233,12 @@ Widget buildViewRespawn() {
                       // ),
                       height32,
                       Row(
-                        mainAxisAlignment: main.center,
+                        mainAxisAlignment: main.between,
                         children: [
                           onPressed(
-                              child: text("Close"),
+                              child: Container(
+                                  padding: padding16,
+                                  child: text("Close")),
                               callback: () {
                                 observeMode = true;
                                 redrawUI();
@@ -1237,9 +1246,10 @@ Widget buildViewRespawn() {
                           width16,
                           onPressed(
                             child: border(
-                                child: text("RESPAWN", fontSize: 40),
+                                child: text("RESPAWN", fontSize: 30),
                                 padding: padding16,
-                                borderRadius: borderRadius8,
+                                radius: borderRadius8,
+                                color: Colors.black38,
                                 fillColor: black54),
                             callback: sendRequestRevive,
                             hint: "Click to respawn",

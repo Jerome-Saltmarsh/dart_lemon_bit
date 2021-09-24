@@ -33,6 +33,9 @@
 [ ] Flying Bat Enemy
 [ ] Activate Shield
 [ ] Heal animation
+[ ] Connect to specific container instance
+    [ ] Support auto reconnect
+    [ ] Invite friend to container
 [ ] Gain XP and levelsp
     [ ] Perk Stamina Boost
     [ ] Perk Health Boost
@@ -65,15 +68,15 @@
 [ ] How do players acquire more ammo?
 [ ] How do players acquire more grenades?
 [ ] How do players acquire more health kits?
-[ ] Select Server (Germany, USA-East, USA-West, Japan, Russia, Australia)
 [ ] Purchase Desert Eagle
 [ ] Loot Box (Gain extra points when destroyed)
 [ ] Design Level, City
 [ ] Disable spawn npcs request
 [ ] Separate credits and points
-[ ] Shared Preference: remember last server
 -- MAJOR BUGS --
 -- COMPLETED --
+[x] Select Server (Germany, USA-East, USA-West, Japan, Russia, Australia)
+[x] Shared Preference: remember last server
 [x] Killed zombies drop health pack etc,
 [x] Color Palette
 [x] Melee Attack
