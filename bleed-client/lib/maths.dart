@@ -13,6 +13,7 @@ final Random random = Random();
 
 const double goldenRatio = 1.61803398875;
 const double goldenRatioInverse = 1.0 / goldenRatio;
+const double goldenRatioInverseB = 1.0 - goldenRatioInverse;
 
 double randomBetween(num a, num b){
   return (random.nextDouble() * (b - a)) + a;

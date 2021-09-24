@@ -45,7 +45,6 @@ const List<Weapon> weapons = Weapon.values;
 const List<GameEventType> gameEventTypes = GameEventType.values;
 const List<GameType> gameTypes = GameType.values;
 
-
 // properties
 String get _text => event;
 
@@ -93,10 +92,11 @@ void parseState() {
         switch (error) {
           case GameError.GameNotFound:
             clearState();
-            showErrorDialog("Game Not Found");
+            disconnect();
+            showErrorDialog("You were disconnected from the game");
             return;
           case GameError.InvalidArguments:
-            if(event.length > 4){
+            if (event.length > 4) {
               String message = event.substring(4, event.length);
               print('Invalid Arguments: $message');
             }
@@ -104,6 +104,7 @@ void parseState() {
         }
         if (error == GameError.PlayerNotFound) {
           clearState();
+          disconnect();
           showErrorDialogPlayerNotFound();
         }
         if (error == GameError.LobbyNotFound) {
@@ -209,8 +210,6 @@ void parseState() {
       default:
         print("parser not implemented $serverResponse");
         return;
-
-
     }
 
     while (_index < _text.length) {
@@ -280,7 +279,7 @@ void _parsePlayer() {
   player.points = _consumeInt();
 
   CharacterState charState = _consumeCharacterState();
-  if (charState != player.state){
+  if (charState != player.state) {
     CharacterState previous = player.state;
     player.state = charState;
     onPlayerStateChanged(previous, charState);
@@ -293,7 +292,7 @@ void _parsePlayer() {
 
   Tile tile = _consumeTile();
 
-  if(player.tile != tile){
+  if (player.tile != tile) {
     Tile previousTile = player.tile;
     player.tile = tile;
     onPlayerTileChanged(previousTile, tile);
@@ -304,11 +303,11 @@ void _parsePlayer() {
   player.clipsAssaultRifle = _consumeInt();
 }
 
-void _parsePlayerEvents(){
+void _parsePlayerEvents() {
   while (!_simiColonConsumed()) {
     PlayerEventType playerEvent = playerEventTypes[_consumeInt()];
     int value = _consumeInt();
-    switch(playerEvent){
+    switch (playerEvent) {
       case PlayerEventType.Acquired_Handgun:
         playAudioAcquireItem(playerX, playerY);
         break;
@@ -351,7 +350,7 @@ void _parseCollectables() {
   }
 }
 
-void _parseScore(){
+void _parseScore() {
   // TODO Optimize
   state.score.clear();
   while (!_simiColonConsumed()) {
@@ -362,9 +361,9 @@ void _parseScore(){
     state.score.add(score);
   }
 
-  state.score.sort((Score a, Score b){
-     if (a.points > b.points) return -1;
-     return 1;
+  state.score.sort((Score a, Score b) {
+    if (a.points > b.points) return -1;
+    return 1;
   });
 }
 
@@ -432,7 +431,7 @@ int _consumeInt() {
   return value;
 }
 
-bool _consumeBool(){
+bool _consumeBool() {
   return _consumeString() == _1 ? true : false;
 }
 
@@ -440,11 +439,11 @@ Weapon _consumeWeapon() {
   return weapons[_consumeInt()];
 }
 
-CharacterState _consumeCharacterState(){
+CharacterState _consumeCharacterState() {
   return characterStates[_consumeInt()];
 }
 
-Tile _consumeTile(){
+Tile _consumeTile() {
   return tiles[_consumeInt()];
 }
 
@@ -548,7 +547,7 @@ GameEventType _consumeEventType() {
   return gameEventTypes[_consumeInt()];
 }
 
-ItemType _consumeItemType(){
+ItemType _consumeItemType() {
   return itemTypes[_consumeInt()];
 }
 
@@ -582,7 +581,7 @@ void _consumePlayer(dynamic memory) {
   memory[squad] = _consumeInt();
   try {
     memory[indexName] = _consumeString();
-  }catch(error){
+  } catch (error) {
     print(error);
   }
 }

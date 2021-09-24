@@ -4,6 +4,7 @@ import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/instances/settings.dart';
+import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:clipboard/clipboard.dart';
@@ -14,18 +15,18 @@ import '../bleed.dart';
 import '../connection.dart';
 import '../state.dart';
 import '../ui.dart';
+import 'flutter_constants.dart';
 
 GameType _gameType = GameType.DeathMatch;
 int _maxPlayers = 8;
 bool _private = false;
 
 Widget buildViewJoinedLobby() {
-
-  if (state.lobby.maxPlayers == 0){
+  if (state.lobby.maxPlayers == 0) {
     return text("Joining", fontSize: 30);
   }
 
-  if (state.lobby.playersJoined == state.lobby.maxPlayers){
+  if (state.lobby.playersJoined == state.lobby.maxPlayers) {
     return buildViewLoading();
   }
 
@@ -62,7 +63,7 @@ void leaveLobby() {
 }
 
 Widget buildLobbyList() {
-  if (state.lobby != null)  return buildViewJoinedLobby();
+  if (state.lobby != null) return buildViewJoinedLobby();
 
   return text("no implemented");
 
@@ -182,10 +183,9 @@ Widget _buildLobbyListTile(Lobby lobby) {
 }
 
 Widget buildViewLoading() {
-
   return Refresh(
     duration: Duration(seconds: 6),
-    builder: (BuildContext context){
+    builder: (BuildContext context) {
       return center(TextLiquidFill(
         text: 'BLEED',
         boxWidth: screenWidth,
@@ -205,32 +205,29 @@ Widget buildViewLoading() {
 }
 
 Widget buildViewConnect() {
-
-  if (!settings.developMode){
-    return center(Column(
-      children: [
-        text("BLEED", fontSize: 120),
-        height50,
-        text("Connection lost to the server"),
-        height16,
-        button('RECONNECT', connectToGCP, fontSize: 21),
-      ],
-    ));
-  }
-
   return center(
-    column([
-      row([
-        text("BLEED", fontSize: 120),
-      ]),
-      height50,
-      row([
-        button('LOCALHOST', connectLocalHost, fontSize: 21),
-        Container(
-          width: 10,
-        ),
-        button('ONLINE', connectToGCP, fontSize: 21),
-      ]),
+    Column(crossAxisAlignment: cross.center, children: [
+      height(50 * goldenRatioInverse),
+      text("BLEED", fontSize: 120),
+        height(50 * goldenRatioInverse),
+      text("Select a server to play on"),
+      height(50 * goldenRatioInverseB),
+      ...Server.values.map((server) {
+        return Container(
+          width: 50 * (goldenRatio * 2),
+          child: button(getServerName(server), () {
+            connectServer(server);
+          }, alignment: Alignment.center),
+          margin: EdgeInsets.only(bottom: 50 * goldenRatioInverseB),
+        );
+      })
+      // row([
+      //   button('LOCALHOST', connectLocalHost, fontSize: 21),
+      //   Container(
+      //     width: 10,
+      //   ),
+      //   button('ONLINE', connectToGCP, fontSize: 21),
+      // ]),
     ]),
   );
 }
