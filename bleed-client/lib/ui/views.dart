@@ -183,25 +183,20 @@ Widget _buildLobbyListTile(Lobby lobby) {
 }
 
 Widget buildViewLoading() {
-  return Refresh(
-    duration: Duration(seconds: 6),
-    builder: (BuildContext context) {
-      return center(TextLiquidFill(
-        text: 'BLEED',
-        boxWidth: screenWidth,
-        boxHeight: screenHeight,
-        waveColor: Colors.red,
-        textStyle: const TextStyle(
-            fontFamily: 'PermanentMarker',
-            fontSize: 140.0,
-            fontWeight: FontWeight.bold,
-            color: Colors.white),
-        waveDuration: Duration(seconds: 2),
-        loadDuration: Duration(seconds: 5),
-        boxBackgroundColor: Colors.black,
-      ));
-    },
-  );
+  return center(TextLiquidFill(
+    text: 'BLEED',
+    boxWidth: screenWidth,
+    boxHeight: screenHeight,
+    waveColor: Colors.red,
+    textStyle: const TextStyle(
+        fontFamily: 'PermanentMarker',
+        fontSize: 140.0,
+        fontWeight: FontWeight.bold,
+        color: Colors.white),
+    waveDuration: Duration(seconds: 2),
+    loadDuration: Duration(seconds: 8),
+    boxBackgroundColor: Colors.black,
+  ));
 }
 
 Widget buildViewConnect() {
@@ -209,7 +204,7 @@ Widget buildViewConnect() {
     Column(crossAxisAlignment: cross.center, children: [
       height(50 * goldenRatioInverse),
       text("BLEED", fontSize: 120),
-        height(50 * goldenRatioInverse),
+      height(50 * goldenRatioInverse),
       text("Select a server to play on"),
       height(50 * goldenRatioInverseB),
       ...Server.values.map((server) {

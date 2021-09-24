@@ -1,3 +1,5 @@
+import 'package:bleed_client/ui.dart';
+
 import '../connection.dart';
 
 // state
@@ -10,6 +12,7 @@ String getServerName(Server server) {
 
 void connectServer(Server server) {
   _currentServer = server;
+  sharedPreferences.setInt('server', server.index);
   if (server == Server.LocalHost) {
     connectLocalHost();
     return;

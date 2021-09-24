@@ -64,14 +64,22 @@ void initUI() {
     redrawUI();
   });
 
-  SharedPreferences.getInstance().then((value) {
-    sharedPreferences = value;
-    dispatch(value);
+  SharedPreferences.getInstance().then((instance) {
+    //@ on sharedPreferences loaded
+    sharedPreferences = instance;
+    dispatch(instance);
     if (sharedPreferences.containsKey("tutorialIndex")) {
       tutorialIndex = sharedPreferences.getInt('tutorialIndex');
     }
     settings.audioMuted = sharedPreferences.containsKey('audioMuted') &&
         sharedPreferences.getBool('audioMuted');
+
+    if (sharedPreferences.containsKey('server')) {
+      Server server = servers[sharedPreferences.getInt('server')];
+      connectServer(server);
+    } else {
+      connectServer(Server.USA_West);
+    }
   });
 }
 
