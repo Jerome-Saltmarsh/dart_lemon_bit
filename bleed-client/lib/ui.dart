@@ -1171,50 +1171,50 @@ Widget buildViewRespawn() {
                           ],
                         ),
                       ),
-                      height8,
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: borderRadius8,
-                          color: black54,
-                        ),
-                        padding: padding16,
-                        child: Column(
-                          children: [
-                            text("Server"),
-                            height8,
-                            // Row(mainAxisAlignment: main.even, children: [
-                            //   onPressed(
-                            //       child: isUriConnected(servers.germany)
-                            //           ? border(
-                            //               child: text("Germany"),
-                            //               padding: padding4,
-                            //               borderRadius: borderRadius4)
-                            //           : text("Germany"),
-                            //       callback: connectServerGermany),
-                            //   onPressed(
-                            //       child: isUriConnected(servers.usaEast)
-                            //           ? border(
-                            //               child: text("USA East"),
-                            //               padding: padding4,
-                            //               borderRadius: borderRadius4)
-                            //           : text("USA East"),
-                            //       callback: () {
-                            //         connect(servers.usaEast);
-                            //       }),
-                            //   onPressed(
-                            //       child: isUriConnected(servers.usaWest)
-                            //           ? border(
-                            //               child: text("USA West"),
-                            //               padding: padding4,
-                            //               borderRadius: borderRadius4)
-                            //           : text("USA West"),
-                            //       callback: () {
-                            //         connect(servers.usaWest);
-                            //       }),
-                            // ]),
-                          ],
-                        ),
-                      ),
+                      // height8,
+                      // Container(
+                      //   decoration: BoxDecoration(
+                      //     borderRadius: borderRadius8,
+                      //     color: black54,
+                      //   ),
+                      //   padding: padding16,
+                      //   child: Column(
+                      //     children: [
+                      //       text("Server"),
+                      //       height8,
+                      //       // Row(mainAxisAlignment: main.even, children: [
+                      //       //   onPressed(
+                      //       //       child: isUriConnected(servers.germany)
+                      //       //           ? border(
+                      //       //               child: text("Germany"),
+                      //       //               padding: padding4,
+                      //       //               borderRadius: borderRadius4)
+                      //       //           : text("Germany"),
+                      //       //       callback: connectServerGermany),
+                      //       //   onPressed(
+                      //       //       child: isUriConnected(servers.usaEast)
+                      //       //           ? border(
+                      //       //               child: text("USA East"),
+                      //       //               padding: padding4,
+                      //       //               borderRadius: borderRadius4)
+                      //       //           : text("USA East"),
+                      //       //       callback: () {
+                      //       //         connect(servers.usaEast);
+                      //       //       }),
+                      //       //   onPressed(
+                      //       //       child: isUriConnected(servers.usaWest)
+                      //       //           ? border(
+                      //       //               child: text("USA West"),
+                      //       //               padding: padding4,
+                      //       //               borderRadius: borderRadius4)
+                      //       //           : text("USA West"),
+                      //       //       callback: () {
+                      //       //         connect(servers.usaWest);
+                      //       //       }),
+                      //       // ]),
+                      //     ],
+                      //   ),
+                      // ),
                       height32,
                       Row(
                         mainAxisAlignment: main.center,
@@ -1261,7 +1261,8 @@ List<String> tips = [
   "Press R to Reload",
   "Press Space bar to fire weapon",
   "Scroll with the mouse to zoom in and out",
-  "Hold E to pan camera"
+  "Hold E to pan camera",
+  'You can change server using the option menu at the bottom right side of the screen'
 ];
 
 String getTip() {
