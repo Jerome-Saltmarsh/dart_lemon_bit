@@ -893,7 +893,7 @@ Widget buildViewBottomRight() {
             children: [
               if ((player.dead && !observeMode) | _showServers)
                 buildServerList(),
-              onPressed(
+              if (player.alive) onPressed(
                   callback: () {
                     _showServers = !_showServers;
                     redrawUI();

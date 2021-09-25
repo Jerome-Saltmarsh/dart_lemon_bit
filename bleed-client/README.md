@@ -54,6 +54,8 @@
 [ ] Score ui displays error on respawn
 [ ] Prevent Duplicate Names
 [ ] UI Score Lag
+-- UI --
+[ ] Compact Score Mode 
 -- OPTIMIZATIONS --
 [ ] Rebuilding the ui unnecessarily is extremely expensive
 -- OPEN WORLD -- 
@@ -74,10 +76,10 @@
 [ ] Design Level, City
 [ ] Disable spawn npcs request
 [ ] Fix GCP Security
-[ ] Check version
-[ ] Expand score on hover
+[ ] Check client version
 -- MAJOR BUGS --
 -- COMPLETED --
+[x] Expand score on hover
 [x] Separate credits and points
 [x] Show high score, order by high score
 [x] Select Server (Germany, USA-East, USA-West, Japan, Russia, Australia)
