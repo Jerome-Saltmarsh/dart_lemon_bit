@@ -277,6 +277,7 @@ void _parsePlayer() {
   player.equippedRounds = _consumeInt();
   state.gameState = gameStates[_consumeInt()];
   player.points = _consumeInt();
+  player.credits = _consumeInt();
 
   CharacterState charState = _consumeCharacterState();
   if (charState != player.state) {

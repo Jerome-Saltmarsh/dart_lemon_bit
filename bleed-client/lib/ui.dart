@@ -80,7 +80,7 @@ void initUI() {
 
     if (sharedPreferences.containsKey('server')) {
       Server server = servers[sharedPreferences.getInt('server')];
-      connectServer(server);
+      // connectServer(server);
     } else {
       // connectServer(Server.USA_West);
     }
@@ -624,7 +624,7 @@ Widget buildPurchaseWeaponSlot({Weapon weapon}) {
           callback: () {
             sendRequestPurchaseWeapon(weapon);
           }),
-      buildTag(price, color: player.points >= price ? green : blood),
+      buildTag(price, color: player.credits >= price ? green : blood),
     ],
   );
 }
@@ -693,7 +693,7 @@ Widget buildBottomLeft() {
             ],
           ),
           width8,
-          buildSlot(title: "Credits: ${player.points}"),
+          buildSlot(title: "Credits: ${player.credits}"),
         ],
       ),
     ),
@@ -1314,11 +1314,13 @@ int getScoreRecord(Score score) {
   return score.record;
 }
 
+bool _expandScore = false;
+
 Widget buildViewScore() {
   if (!_showScore) {
     return Positioned(
-      top: 0,
-      left: 0,
+      top: 5,
+      left: 5,
       child: buildToggleScoreIcon(),
     );
   }
@@ -1334,57 +1336,64 @@ Widget buildViewScore() {
 
     double width = 260;
 
-    return Stack(
-      children: [
-        Positioned(
-          top: 5,
-          left: 5,
-          child: Container(
-            decoration: BoxDecoration(
-              color: black45,
-              borderRadius: borderRadius4,
-            ),
-            width: width,
-            padding: padding8,
-            height: width * goldenRatio,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: cross.start,
-                children: [
-                  Container(
-                    width: width,
-                    child: Row(
-                      mainAxisAlignment: main.spread,
+    return Positioned(
+      top: 5,
+      left: 5,
+      child: MouseRegion(
+        onHover: (_){
+          _expandScore = true;
+          redrawUI();
+        },
+        onExit: (_){
+          _expandScore = false;
+          redrawUI();
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: black45,
+            borderRadius: borderRadius4,
+          ),
+          width: width,
+          padding: padding8,
+          height: width * (_expandScore ? goldenRatio : goldenRatioInverse),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: cross.start,
+              children: [
+                Container(
+                  width: width,
+                  child: Row(
+                    mainAxisAlignment: main.spread,
+                    children: [
+                      text("Leaderboard"),
+                      iconClose
+                    ],
+                  ),
+                ),
+                height8,
+                Column(
+                  crossAxisAlignment: cross.start,
+                  children: state.score.map((score) {
+                    int index = state.score.indexOf(score);
+                    return Row(
                       children: [
-                        text("Leaderboard"),
-                        iconClose
+                        Container(
+                            width: 140,
+                            child: text('$index ${score.playerName}',
+                                color: score.playerName == playerName
+                                    ? blood
+                                    : Colors.white)),
+                        Container(width: 50, child: text(score.points)),
+                        Container(width: 50, child: text(score.record)),
                       ],
-                    ),
-                  ),
-                  height8,
-                  Column(
-                    crossAxisAlignment: cross.start,
-                    children: state.score.map((score) {
-                      return Row(
-                        children: [
-                          Container(
-                              width: 140,
-                              child: text(score.playerName,
-                                  color: score.playerName == playerName
-                                      ? blood
-                                      : Colors.white)),
-                          Container(width: 50, child: text(score.points)),
-                          Container(width: 50, child: text(score.record)),
-                        ],
-                      );
-                    }).toList(),
-                  ),
-                ],
-              ),
+                    );
+                  }).toList(),
+                ),
+              ],
             ),
           ),
         ),
-      ],
+      ),
     );
   } catch (error) {
     return text("error build score");

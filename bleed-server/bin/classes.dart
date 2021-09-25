@@ -30,7 +30,7 @@ class GameObject {
 
 const noSquad = -1;
 
-class Character extends GameObject {
+class Character extends GameObject implements HasSquad {
   CharacterState state = CharacterState.Idle;
   CharacterState previousState = CharacterState.Idle;
   Direction direction = Direction.Down;
@@ -70,6 +70,11 @@ class Character extends GameObject {
       this.squad = noSquad,
   })
       : super(x, y);
+
+  @override
+  int getSquad() {
+    return squad;
+  }
 }
 
 final Character _nonTarget = Character(x: 0, y: 0, weapon: Weapon.AssaultRifle, health: 0, maxHealth: 0, speed: 0);
@@ -100,7 +105,25 @@ class Npc extends Character {
   }
 }
 
-class Bullet extends GameObject {
+abstract class HasSquad {
+  int getSquad();
+}
+
+extension HasSquadExtensions on HasSquad {
+  bool get noSquad => getSquad() == -1;
+}
+
+bool allies(HasSquad a, HasSquad b){
+  if (a.noSquad) return false;
+  if (b.noSquad) return false;
+  return a.getSquad() == b.getSquad();
+}
+
+bool enemies(HasSquad a, HasSquad b){
+  return !allies(a, b);
+}
+
+class Bullet extends GameObject implements HasSquad {
   late double xStart;
   late double yStart;
   Character owner;
@@ -113,6 +136,11 @@ class Bullet extends GameObject {
       : super(x, y, xv: xVel, yv: yVel) {
     xStart = x;
     yStart = y;
+  }
+
+  @override
+  int getSquad() {
+    return owner.squad;
   }
 }
 

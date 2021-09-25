@@ -121,6 +121,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, equippedWeaponRounds(player));
   _write(buffer, player.gameState.index);
   _write(buffer, player.points);
+  _write(buffer, player.credits);
   _write(buffer, player.state.index);
   _writeBool(buffer, player.acquiredHandgun);
   _writeBool(buffer, player.acquiredShotgun);

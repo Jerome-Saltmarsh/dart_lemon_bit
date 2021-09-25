@@ -229,12 +229,12 @@ class GameCasual extends Game {
   final int spawnMeds = 1;
 
   GameCasual(Scene scene, int maxPlayers)
-      : super(GameType.Casual, scene, maxPlayers){
+      : super(GameType.Casual, scene, maxPlayers) {
     spawnRandomNpcs(10);
   }
 
   void spawnRandomNpcs(int amount) {
-    for(int i = 0; i < amount; i++){
+    for (int i = 0; i < amount; i++) {
       spawnRandomNpc();
     }
   }
@@ -254,7 +254,7 @@ class GameCasual extends Game {
 
   @override
   void onPlayerKilled(Player player) {
-    player.points = 0;
+    player.resetPoints();
     player.clips = spawnClip();
     player.rounds = spawnRounds();
     player.meds = spawnMeds;
@@ -851,7 +851,7 @@ extension GameFunctions on Game {
 
         if (!character.alive) {
           // @on npc killed by grenade
-          grenade.owner.points += settings.pointsEarned.zombieKilled;
+          grenade.owner.earnPoints(settings.pointsEarned.zombieKilled);
 
           double forceX =
               clampMagnitudeX(character.x - x, character.y - y, magnitude);
@@ -884,7 +884,7 @@ extension GameFunctions on Game {
         if (!player.alive) {
           // @on player killed by grenade
           if (!sameTeam(player, grenade.owner)) {
-            grenade.owner.points += settings.pointsEarned.playerKilled;
+            grenade.owner.earnPoints(settings.pointsEarned.playerKilled);
           }
         }
       }
@@ -960,7 +960,7 @@ extension GameFunctions on Game {
         character.xv += bullet.xv * bulletImpactVelocityTransfer;
         character.yv += bullet.yv * bulletImpactVelocityTransfer;
 
-        if (bullet.squad == noSquad || bullet.squad != character.squad) {
+        if (enemies(bullet, character)) {
           // @on zombie hit by bullet
           changeCharacterHealth(character, -bullet.damage);
 
@@ -969,7 +969,7 @@ extension GameFunctions on Game {
               if (bullet.owner is Player) {
                 // @on player killed by player
                 Player owner = bullet.owner as Player;
-                owner.points += 10;
+                owner.earnPoints(settings.pointsEarned.playerKilled);
                 owner.score.playersKilled++;
               }
             }
@@ -989,8 +989,7 @@ extension GameFunctions on Game {
             Player owner = bullet.owner as Player;
             owner.score.zombiesKilled++;
             if (character is Npc) {
-              owner.points +=
-                  constants.points.zombieKilled * character.pointMultiplier;
+              owner.earnPoints(constants.points.zombieKilled * character.pointMultiplier);
             }
           }
 

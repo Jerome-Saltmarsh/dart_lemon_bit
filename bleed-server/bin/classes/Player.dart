@@ -24,6 +24,7 @@ class Player extends Character {
   int frameOfDeath = -1;
   GameState gameState = GameState.InProgress;
   int _points = 0;
+  int credits = 0;
   int pointsRecord = 0;
   Score score = Score();
   Clips clips = Clips();
@@ -38,9 +39,9 @@ class Player extends Character {
 
   final List<PlayerEvent> events = [];
 
-  void addEvent(PlayerEventType type, int value){
-    for(PlayerEvent event in events){
-      if(event.sent) continue;
+  void addEvent(PlayerEventType type, int value) {
+    for (PlayerEvent event in events) {
+      if (event.sent) continue;
       event.sent = false;
       event.type = type;
       event.value = value;
@@ -49,11 +50,21 @@ class Player extends Character {
     events.add(PlayerEvent(type, value));
   }
 
-  set points(int value){
-    _points = value;
-    if(_points > pointsRecord){
-      pointsRecord = _points;
+  void earnPoints(int amount) {
+    _points += amount;
+    credits += amount;
+    if (points > pointsRecord) {
+      pointsRecord = points;
     }
+  }
+
+  void removeCredits(int amount){
+    credits -= amount;
+  }
+
+  void resetPoints(){
+    _points = 0;
+    credits = 0;
   }
 
   int get points => _points;
@@ -75,8 +86,7 @@ class Player extends Character {
             health: settingsPlayerStartHealth,
             maxHealth: settingsPlayerStartHealth,
             speed: playerSpeed,
-            squad: squad
-  ) {
+            squad: squad) {
     stamina = maxStamina;
   }
 }

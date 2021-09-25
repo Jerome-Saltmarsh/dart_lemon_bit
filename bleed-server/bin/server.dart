@@ -514,7 +514,7 @@ void main() {
                 errorWeaponAlreadyAcquired();
                 return;
               }
-              player.points -= prices.weapon.handgun;
+              player.removeCredits(prices.weapon.handgun);
               player.clips.handgun = 1;
               player.rounds.handgun = settings.clipSize.handgun;
               player.acquiredHandgun = true;
@@ -528,7 +528,7 @@ void main() {
                 errorWeaponAlreadyAcquired();
                 return;
               }
-              player.points -= prices.weapon.shotgun;
+              player.removeCredits(prices.weapon.shotgun);
               player.clips.shotgun = 1;
               player.rounds.shotgun = settings.clipSize.shotgun;
               player.acquiredShotgun = true;
@@ -542,7 +542,7 @@ void main() {
                 errorWeaponAlreadyAcquired();
                 return;
               }
-              player.points -= prices.weapon.sniperRifle;
+              player.removeCredits(prices.weapon.sniperRifle);
               player.clips.sniperRifle = 1;
               player.rounds.sniperRifle = settings.clipSize.sniperRifle;
               player.acquiredSniperRifle = true;
@@ -556,7 +556,7 @@ void main() {
                 errorWeaponAlreadyAcquired();
                 return;
               }
-              player.points -= prices.weapon.assaultRifle;
+              player.removeCredits(prices.weapon.assaultRifle);
               player.clips.assaultRifle = 1;
               player.rounds.assaultRifle = settings.clipSize.assaultRifle;
               player.acquiredAssaultRifle = true;

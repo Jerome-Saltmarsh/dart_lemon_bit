@@ -33,6 +33,7 @@
 [ ] Flying Bat Enemy
 [ ] Activate Shield
 [ ] Heal animation
+[ ] Body Armor
 [ ] Connect to specific container instance
     [ ] Support auto reconnect
     [ ] Invite friend to container
@@ -64,8 +65,6 @@
 -- DEATH MATCH 
 [ ] Rounds
 -- CASUAL --
-[ ] Body Armor
-[ ] Check version
 [ ] Send custom news updates to client
 [ ] How do players acquire more ammo?
 [ ] How do players acquire more grenades?
@@ -74,9 +73,12 @@
 [ ] Loot Box (Gain extra points when destroyed)
 [ ] Design Level, City
 [ ] Disable spawn npcs request
-[ ] Separate credits and points
+[ ] Fix GCP Security
+[ ] Check version
+[ ] Expand score on hover
 -- MAJOR BUGS --
 -- COMPLETED --
+[x] Separate credits and points
 [x] Show high score, order by high score
 [x] Select Server (Germany, USA-East, USA-West, Japan, Russia, Australia)
 [x] Shared Preference: remember last server
