@@ -5,6 +5,7 @@ import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 
 import '../state.dart';
+import '../ui.dart';
 
 void clearState(){
   print('clearState()');
@@ -16,6 +17,7 @@ void clearState(){
   mode = Mode.Play;
   state.lobby = null;
   state.lobbies.clear();
+  refreshUI();
   redrawUI();
   redrawGame();
 }

@@ -29,7 +29,7 @@ Widget buildViewJoinedLobby() {
   }
 
   if (state.lobby.playersJoined == state.lobby.maxPlayers) {
-    return buildViewLoading();
+    return buildViewConnecting();
   }
 
   return Container(
@@ -184,21 +184,23 @@ Widget _buildLobbyListTile(Lobby lobby) {
   );
 }
 
-Widget buildViewLoading() {
-  return center(TextLiquidFill(
-    text: 'BLEED',
-    boxWidth: screenWidth,
-    boxHeight: screenHeight,
-    waveColor: Colors.red,
-    textStyle: const TextStyle(
-        fontFamily: 'PermanentMarker',
-        fontSize: 140.0,
-        fontWeight: FontWeight.bold,
-        color: Colors.white),
-    waveDuration: Duration(seconds: 2),
-    loadDuration: Duration(seconds: 8),
-    boxBackgroundColor: Colors.black,
-  ));
+Widget buildViewConnecting() {
+  return center(
+      Column(
+        mainAxisAlignment: main.center,
+        children: [
+          Container(
+            height: 80,
+            child: AnimatedTextKit(repeatForever: true, animatedTexts: [
+              RotateAnimatedText("Connecting to server: $currentServerName",
+                  textStyle: TextStyle(color: Colors.white, fontSize: 30)),
+            ]),
+          ),
+          height32,
+          onPressed(child: text("Cancel"), callback: disconnect),
+        ],
+      )
+  );
 }
 
 Widget _buildServer(Server server) {
@@ -238,13 +240,6 @@ Widget buildViewConnect() {
       text("Select a server to play on"),
       height(50 * goldenRatioInverseB),
       ...Server.values.map(_buildServer)
-      // row([
-      //   button('LOCALHOST', connectLocalHost, fontSize: 21),
-      //   Container(
-      //     width: 10,
-      //   ),
-      //   button('ONLINE', connectToGCP, fontSize: 21),
-      // ]),
     ]),
   );
 }

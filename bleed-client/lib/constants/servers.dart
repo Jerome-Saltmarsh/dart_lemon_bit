@@ -31,6 +31,8 @@ bool isServerConnected(Server server) {
 
 Server get currentServer => _currentServer;
 
+String get currentServerName => getServerName(currentServer);
+
 enum Server { Germany, USA_East, USA_West, LocalHost }
 
 final List<Server> servers = Server.values;

@@ -54,6 +54,11 @@ bool observeMode = false;
 
 Color _panelBackgroundColor = Colors.black38;
 
+void refreshUI(){
+  observeMode = false;
+  _showServers = false;
+}
+
 void initUI() {
   onConnectError.stream.listen((event) {
     showDialogConnectFailed();
@@ -143,28 +148,32 @@ Future<void> showChangeNameDialog() async {
   );
 }
 
+Widget buildLoadingScreen(){
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    crossAxisAlignment: CrossAxisAlignment.center,
+    children: [
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          AnimatedTextKit(repeatForever: true, animatedTexts: [
+            RotateAnimatedText('Loading Bleed',
+                textStyle: TextStyle(color: Colors.white)),
+          ]),
+        ],
+      ),
+    ],
+  );
+}
+
 Widget buildGameUI(BuildContext context) {
   if (globalSize == null) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            AnimatedTextKit(repeatForever: true, animatedTexts: [
-              RotateAnimatedText('Loading Bleed',
-                  textStyle: TextStyle(color: Colors.white)),
-            ]),
-          ],
-        ),
-      ],
-    );
+    return buildLoadingScreen();
   }
 
   if (connecting) {
-    return buildViewLoading();
+    return buildViewConnecting();
   } else if (!connected) {
     return buildViewConnect();
   }
@@ -172,7 +181,8 @@ Widget buildGameUI(BuildContext context) {
   if (state.lobby != null) return center(buildViewJoinedLobby());
 
   if (compiledGame.gameId < 0) {
-    return buildViewLoading();
+    // TODO consider case
+    return buildViewConnecting();
   }
   if (editMode) return buildEditorUI();
 
@@ -898,14 +908,12 @@ Widget buildViewBottomRight() {
                       child: text("Disconnect"), padding: padding4,)),
               if ((player.dead && !observeMode) | _showServers)
                 buildServerList(),
-              if (player.alive) onPressed(
-                  callback: () {
-                    _showServers = !_showServers;
-                    redrawUI();
-                  },
-                  child: Container(
-                      padding: padding4,
-                      child: text(getServerName(currentServer)))),
+              if (player.alive) Container(
+                  padding: padding4,
+                  child: text(getServerName(currentServer))),
+              if (player.dead && !_showServers) Container(
+                  padding: padding4,
+                  child: text(getServerName(currentServer))),
             ],
           )),
     ),

@@ -79,6 +79,9 @@
 [ ] Check client version
 [ ] Improve Connection Failed Dialog
 [ ] Multiple pistol shot audios
+[ ] Improve Connection screen 
+    [ ] Add cancel button
+    [ ] Show animation
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong
 -- COMPLETED --
