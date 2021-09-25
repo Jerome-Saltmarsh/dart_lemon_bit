@@ -13,7 +13,6 @@ import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/game_engine/web_functions.dart';
 import 'package:bleed_client/keys.dart';
 import 'package:bleed_client/properties.dart';
-import 'package:bleed_client/server.dart';
 import 'package:bleed_client/tutorials.dart';
 import 'package:bleed_client/ui/dialogs.dart';
 import 'package:bleed_client/ui/flutter_constants.dart';
@@ -80,8 +79,8 @@ void initUI() {
 
     if (sharedPreferences.containsKey('server')) {
       Server server = servers[sharedPreferences.getInt('server')];
-      connectServer(server);
-    } 
+      // connectServer(server);
+    }
   });
 }
 
@@ -889,6 +888,10 @@ Widget buildViewBottomRight() {
           child: Column(
             crossAxisAlignment: cross.end,
             children: [
+              if ((player.dead && !observeMode) | _showServers)
+                onPressed(
+                    callback: disconnect,
+                    child: Container(child: text("Disconnect"), padding: padding4,)),
               if ((player.dead && !observeMode) | _showServers)
                 buildServerList(),
               if (player.alive) onPressed(

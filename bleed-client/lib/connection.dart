@@ -70,6 +70,7 @@ void _onEvent(dynamic response) {
   ping = now.difference(previousEvent);
   previousEvent = now;
   packagesReceived++;
+  // TODO doesn't belong
   event = response;
   parseState();
   redrawGame();

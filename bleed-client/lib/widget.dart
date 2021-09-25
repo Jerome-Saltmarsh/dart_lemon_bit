@@ -81,25 +81,18 @@ class BleedWidget extends GameWidget {
   }
 
   void startJobs() {
-    // todo move this
-    periodic(checkBulletHoles, ms: 500);
-    periodic(redrawUI, seconds: 1);
-
-    // TODO this job is expensive, use reaction instead
-    periodic(() {
-      if (!connected) {
-        redrawGame();
-        redrawUI();
-      }
-    }, ms: 100);
-  }
-
-  // TODO move this
-  void checkBulletHoles() {
-    if (compiledGame.bulletHoles.length > 4) {
-      compiledGame.bulletHoles.removeAt(0);
-      compiledGame.bulletHoles.removeAt(0);
-    }
+    // periodic(checkBulletHoles, ms: 500);
+    // periodic(redrawUI, seconds: 1);
+    // periodic(() {
+    //   if (!connected) {
+    //     redrawGame();
+    //     redrawUI();
+    //   }
+    // }, ms: 100);
+    onDone.stream.listen((event) {
+      redrawUI();
+      redrawGame();
+    });
   }
 
   @override
