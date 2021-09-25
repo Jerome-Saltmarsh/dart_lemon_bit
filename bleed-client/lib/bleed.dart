@@ -32,10 +32,11 @@ void connectToGCP() {
 }
 
 void _onConnected(_event) {
-  _joinRandomGame();
+  // _joinRandomGame();
+  send(ClientRequest.Version.index.toString());
 }
 
-void _joinRandomGame() {
+void joinRandomGame() {
   send(ClientRequest.Game_Join_Casual.index.toString());
 }
 

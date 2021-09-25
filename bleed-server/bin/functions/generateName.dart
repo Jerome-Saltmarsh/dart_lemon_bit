@@ -73,6 +73,7 @@ List<String> nouns = [
   "Maggot",
   "Dirt",
   "Mole",
+  "Fungus"
 ];
 
 String generateName() {

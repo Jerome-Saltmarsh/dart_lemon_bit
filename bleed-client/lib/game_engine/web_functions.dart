@@ -8,6 +8,10 @@ void fullScreenEnter() {
   document.documentElement.requestFullscreen();
 }
 
+void refreshPage(){
+  document.window.location.href = document.domain;
+}
+
 void toggleFullScreen(){
   if(fullScreenActive){
     fullScreenExit();

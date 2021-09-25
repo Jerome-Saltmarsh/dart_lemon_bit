@@ -77,6 +77,7 @@
 [ ] Disable spawn npcs request
 [ ] Fix GCP Security
 [ ] Check client version
+[ ] Improve Connection Failed Dialog
 -- MAJOR BUGS --
 -- COMPLETED --
 [x] Expand score on hover

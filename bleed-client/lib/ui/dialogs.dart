@@ -35,6 +35,18 @@ Future showErrorDialog(String message) async {
   );
 }
 
+Future showDialogClientUpdateAvailable() async {
+  return showDialog<void>(
+    context: globalContext,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Hi"),
+      );
+    },
+  );
+}
+
 Future showDialogCreateGame() async {
   TextEditingController nameController = TextEditingController();
 

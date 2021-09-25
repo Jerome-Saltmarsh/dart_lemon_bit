@@ -18,5 +18,6 @@ enum ClientRequest {
   Ping,
   Purchase,
   Score,
-  SetCompilePaths
+  SetCompilePaths,
+  Version,
 }

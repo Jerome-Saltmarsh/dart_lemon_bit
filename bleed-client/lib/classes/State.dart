@@ -17,4 +17,5 @@ class State {
   DeathMatch deathMatch = DeathMatch();
   bool storeVisible = true;
   List<Score> score = [];
+  int serverVersion;
 }

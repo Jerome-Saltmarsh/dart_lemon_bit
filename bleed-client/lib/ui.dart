@@ -663,37 +663,37 @@ Widget buildBottomLeft() {
           buildSlotWeapon(weapon: Weapon.Shotgun, index: 2),
           width8,
           buildSlotWeapon(weapon: Weapon.SniperRifle, index: 3),
-          width8,
-          buildSlotWeapon(weapon: Weapon.AssaultRifle, index: 4),
-          width8,
-          Stack(
-            children: [
-              if (player.meds > 0) buildTag(player.meds),
-              onPressed(
-                  hint: "Press H to use med kit",
-                  callback: sendRequestUseMedKit,
-                  child: buildImageSlot(
-                      image: healthImage,
-                      width: 120 * goldenRatioInverse,
-                      height: 120 * goldenRatioInverse,
-                      color: player.meds > 0 ? null : Colors.white60)),
-            ],
-          ),
-          width8,
-          Stack(
-            children: [
-              if (player.grenades > 0) buildTag(player.grenades),
-              Tooltip(
-                  message: "Press G to throw grenade",
-                  child: buildImageSlot(
-                      image: grenades1Image,
-                      width: 120 * goldenRatioInverse,
-                      height: 120 * goldenRatioInverse,
-                      color: player.grenades > 0 ? null : Colors.white60)),
-            ],
-          ),
-          width8,
-          buildSlot(title: "Credits: ${player.credits}"),
+          // width8,
+          // buildSlotWeapon(weapon: Weapon.AssaultRifle, index: 4),
+          // width8,
+          // Stack(
+          //   children: [
+          //     if (player.meds > 0) buildTag(player.meds),
+          //     onPressed(
+          //         hint: "Press H to use med kit",
+          //         callback: sendRequestUseMedKit,
+          //         child: buildImageSlot(
+          //             image: healthImage,
+          //             width: 120 * goldenRatioInverse,
+          //             height: 120 * goldenRatioInverse,
+          //             color: player.meds > 0 ? null : Colors.white60)),
+          //   ],
+          // ),
+          // width8,
+          // Stack(
+          //   children: [
+          //     if (player.grenades > 0) buildTag(player.grenades),
+          //     Tooltip(
+          //         message: "Press G to throw grenade",
+          //         child: buildImageSlot(
+          //             image: grenades1Image,
+          //             width: 120 * goldenRatioInverse,
+          //             height: 120 * goldenRatioInverse,
+          //             color: player.grenades > 0 ? null : Colors.white60)),
+          //   ],
+          // ),
+          // width8,
+          // buildSlot(title: "Credits: ${player.credits}"),
         ],
       ),
     ),
@@ -1284,7 +1284,8 @@ List<String> tips = [
   "Press Space bar to fire weapon",
   "Scroll with the mouse to zoom in and out",
   "Hold E to pan camera",
-  'You can change server using the option menu at the bottom right side of the screen'
+  'Change server using the option menu at the bottom right side of the screen',
+  "Activate fullscreen using the option at the top right side of the screen"
 ];
 
 String getTip() {

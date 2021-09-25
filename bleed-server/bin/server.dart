@@ -6,6 +6,7 @@ import 'classes/Game.dart';
 import 'classes/Lobby.dart';
 import 'classes/Player.dart';
 import 'common/PlayerEvents.dart';
+import 'common/version.dart';
 import 'common/constants.dart';
 import 'compile.dart';
 import 'common/ClientRequest.dart';
@@ -597,6 +598,11 @@ void main() {
           game.compilePaths = value == 1;
           print("game.compilePaths = ${game.compilePaths}");
           break;
+
+          case ClientRequest.Version:
+            sendToClient('${ServerResponse.Version.index} $version');
+            break;
+
       }
     }
 

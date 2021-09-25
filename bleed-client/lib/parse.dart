@@ -24,10 +24,13 @@ import 'common/GameEventType.dart';
 import 'common/GameState.dart';
 import 'common/Tile.dart';
 import 'common/Weapons.dart';
+import 'common/version.dart';
 import 'draw.dart';
 import 'enums.dart';
 import 'functions/onGameEvent.dart';
+import 'game_engine/web_functions.dart';
 import 'instances/inventory.dart';
+import 'instances/settings.dart';
 import 'state.dart';
 
 // state
@@ -83,6 +86,24 @@ void parseState() {
 
       case ServerResponse.Players:
         _parsePlayers();
+        break;
+
+      case ServerResponse.Version:
+        state.serverVersion = _consumeInt();
+        if (state.serverVersion == version) {
+          joinRandomGame();
+          break;
+        }
+        if (state.serverVersion < version) {
+          showErrorDialog(
+              "The server version ${state.serverVersion} you have connected to be older than your client $version. The game may not perform properly");
+          break;
+        }
+        print("Outdated client detected: Refreshing browser");
+        refreshPage();
+        showDialogClientUpdateAvailable();
+        showErrorDialog(
+            "A new version has been release. Please refresh the browser to download it");
         break;
 
       case ServerResponse.Error:

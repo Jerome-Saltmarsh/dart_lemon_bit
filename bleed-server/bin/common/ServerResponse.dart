@@ -23,4 +23,5 @@ enum ServerResponse {
   Score,
   Player_Events,
   Items,
+  Version,
 }
