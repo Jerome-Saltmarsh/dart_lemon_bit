@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/common/GameState.dart';
 import 'package:bleed_client/common/constants.dart';
@@ -880,18 +882,20 @@ Widget buildViewBottomRight() {
       },
       child: Container(
           padding: padding8,
-          width: 110,
+          width: 120,
           decoration: BoxDecoration(
             borderRadius: borderRadius4,
             color: Colors.black45,
           ),
           child: Column(
-            crossAxisAlignment: cross.end,
+            crossAxisAlignment: cross.center,
             children: [
               if ((player.dead && !observeMode) | _showServers)
                 onPressed(
                     callback: disconnect,
-                    child: Container(child: text("Disconnect"), padding: padding4,)),
+                    child: Container(
+                      margin: const EdgeInsets.only(bottom: 16),
+                      child: text("Disconnect"), padding: padding4,)),
               if ((player.dead && !observeMode) | _showServers)
                 buildServerList(),
               if (player.alive) onPressed(
@@ -1045,7 +1049,7 @@ Widget buildViewRespawn() {
       children: [
         Container(
             padding: padding16,
-            width: screenWidth * goldenRatioInverseB,
+            width: max(screenWidth * goldenRatioInverseB, 480),
             decoration:
                 BoxDecoration(borderRadius: borderRadius4, color: _panelBackgroundColor),
             child: SingleChildScrollView(

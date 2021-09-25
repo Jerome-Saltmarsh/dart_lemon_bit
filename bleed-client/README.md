@@ -78,6 +78,7 @@
 [ ] Fix GCP Security
 [ ] Check client version
 [ ] Improve Connection Failed Dialog
+[ ] Multiple pistol shot audios
 -- MAJOR BUGS --
 -- COMPLETED --
 [x] Expand score on hover
