@@ -90,20 +90,16 @@ void parseState() {
 
       case ServerResponse.Version:
         state.serverVersion = _consumeInt();
+
         if (state.serverVersion == version) {
           joinRandomGame();
           break;
         }
         if (state.serverVersion < version) {
-          showErrorDialog(
-              "The server version ${state.serverVersion} you have connected to be older than your client $version. The game may not perform properly");
+          showErrorDialog("The server version ${state.serverVersion} you have connected to be older than your client $version. The game may not perform properly");
           break;
         }
-        print("Outdated client detected: Refreshing browser");
-        refreshPage();
         showDialogClientUpdateAvailable();
-        showErrorDialog(
-            "A new version has been release. Please refresh the browser to download it");
         break;
 
       case ServerResponse.Error:

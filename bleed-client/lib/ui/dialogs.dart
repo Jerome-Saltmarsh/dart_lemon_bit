@@ -1,11 +1,19 @@
 import 'dart:async';
 
+import 'package:bleed_client/bleed.dart';
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/connection.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
+import 'package:bleed_client/game_engine/web_functions.dart';
+import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/send.dart';
+import 'package:bleed_client/ui/flutter_constants.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:bleed_client/utils.dart';
+import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
+
+import '../state.dart';
 
 BuildContext contextMainMenuDialog;
 
@@ -36,12 +44,45 @@ Future showErrorDialog(String message) async {
 }
 
 Future showDialogClientUpdateAvailable() async {
+  double height = 300;
+
   return showDialog<void>(
     context: globalContext,
-    barrierDismissible: true,
+    barrierDismissible: false,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text("Hi"),
+        title: Text("Update Available ${state.serverVersion}"),
+        actions: [
+          // onPressed(
+          //     callback: refreshPage,
+          //     child: text("Update", color: Colors.black)),
+          onPressed(
+              callback: () {
+                disconnect();
+                pop(context);
+              },
+              child: text("Cancel", color: Colors.black)),
+          onPressed(
+              callback: () {
+                pop(context);
+                joinRandomGame();
+              },
+              child: text("Ignore", color: Colors.black)),
+        ],
+        content: Container(
+          height: height,
+          width: height * goldenRatioInverse,
+          child: Row(
+            mainAxisAlignment: main.center,
+            children: [
+              mouseOver(builder: (BuildContext context, bool mouseOver){
+                Widget update = text("Update", color: Colors.black, fontSize: 40);
+                if (!mouseOver) return update;
+                return border(child: update, color: Colors.black, padding: padding8, radius: borderRadius4);
+              }),
+            ],
+          ),
+        ),
       );
     },
   );
@@ -66,7 +107,7 @@ Future showDialogCreateGame() async {
           TextButton(
               child: const Text('Create'),
               onPressed: () {
-                _pop(context);
+                pop(context);
                 sendClientRequestLobbyCreate(
                     maxPlayers: 8,
                     type: GameType.DeathMatch,
@@ -178,7 +219,7 @@ class _MainMenuState extends State<MainMenu>
                 children: <Widget>[
                   Align(
                     alignment: Alignment.bottomRight,
-                    child: button("Close", () => _pop(context)),
+                    child: button("Close", () => pop(context)),
                   ),
                 ],
               ),
@@ -240,15 +281,12 @@ Future showDialogChangeServer() async {
 
 // private functions
 
-void _pop(BuildContext context) {
+void pop(BuildContext context) {
   Navigator.of(context).pop();
 }
 
 Widget _buildCancelButton(BuildContext context) {
   return TextButton(
-      child: const Text(
-        'close',
-        style: TextStyle(color: Colors.white, fontSize: 18),
-      ),
-      onPressed: () => _pop(context));
+      child: text('close', color: Colors.black),
+      onPressed: () => pop(context));
 }
