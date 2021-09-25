@@ -12,6 +12,7 @@ import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../audio.dart';
 import '../bleed.dart';
 import '../connection.dart';
 import '../state.dart';
@@ -203,7 +204,9 @@ Widget buildViewLoading() {
 Widget _buildServer(Server server) {
   double height = 50;
   return Container(
-    child: mouseOver(builder: (BuildContext context, bool hovering) {
+    child: mouseOver(
+        onEnter: playAudioButtonHover,
+        builder: (BuildContext context, bool hovering) {
       return onPressed(
           callback: () {
             connectServer(server);

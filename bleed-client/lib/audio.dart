@@ -157,6 +157,11 @@ void _playAudio(String name, double x, double y) {
   }
 }
 
+void playAudioButtonHover(){
+  if(settings.audioMuted) return;
+  _getAudioPlayer().play('assets/audio/button-hover.mp3', isLocal: true, volume: 1);
+}
+
 double _calculateVolume(double x, double y){
   double d = distance(x, y, screenCenterWorldX, screenCenterWorldY);
   return 1.0 / ((d * _audioDistanceFade) + 1);
