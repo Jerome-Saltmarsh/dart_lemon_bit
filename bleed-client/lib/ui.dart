@@ -81,7 +81,7 @@ void initUI() {
 
     if (sharedPreferences.containsKey('server')) {
       Server server = servers[sharedPreferences.getInt('server')];
-      // connectServer(server);
+      connectServer(server);
     }
   });
 }

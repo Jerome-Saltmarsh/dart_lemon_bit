@@ -45,9 +45,9 @@ Map<Server, String> _names = {
 };
 
 Map<Server, String> _uris = {
-  Server.Germany: 'https://bleed-berlin-osbmaezptq-ey.a.run.app',
-  Server.USA_East: 'https://bleed-usa-east-osbmaezptq-ue.a.run.app',
-  Server.USA_West: 'https://usa-west-osbmaezptq-uw.a.run.app',
+  Server.Germany: 'https://bleed-frankfurt-1-osbmaezptq-ey.a.run.app',
+  Server.USA_East: 'https://bleed-usa-east-1-osbmaezptq-ue.a.run.app',
+  Server.USA_West: 'https://bleed-usa-west-1-osbmaezptq-uw.a.run.app',
   Server.LocalHost: 'https://localhost'
 };
 

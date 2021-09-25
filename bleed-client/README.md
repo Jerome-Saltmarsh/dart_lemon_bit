@@ -80,6 +80,7 @@
 [ ] Improve Connection Failed Dialog
 [ ] Multiple pistol shot audios
 -- MAJOR BUGS --
+[ ] Bonus zombie point text is wrong
 -- COMPLETED --
 [x] Expand score on hover
 [x] Separate credits and points
