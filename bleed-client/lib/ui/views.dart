@@ -211,12 +211,15 @@ Widget _buildServer(Server server) {
           child: Container(
               height: height,
               decoration: BoxDecoration(
-                border: Border.all(color: Colors.white, width: 2),
+                border: Border.all(color: Colors.white, width: hovering ? 4 : 2),
                 borderRadius: borderRadius4,
-                color: hovering ? Colors.white30 : null
+                // color: hovering ? Colors.white30 : null
               ),
               width: height * (goldenRatio * 2),
-              child: text(getServerName(server)),
+              child: text(
+                  getServerName(server), fontWeight: hovering ? FontWeight.bold : FontWeight.normal,
+                  fontSize: hovering ? 20 : 18
+              ),
               alignment: Alignment.center));
     }),
     margin: EdgeInsets.only(bottom: height * goldenRatioInverseB),

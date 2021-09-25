@@ -251,7 +251,7 @@ Future showDialogConnectFailed() async {
     barrierDismissible: true,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: const Text('Connection Failed'),
+        title: const Text('Connection Lost'),
         actions: <Widget>[_buildCancelButton(context)],
       );
     },

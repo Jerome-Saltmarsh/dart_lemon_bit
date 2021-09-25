@@ -54,13 +54,11 @@ class BleedWidget extends GameWidget {
 
   @override
   Future init() async {
-    // await loadImages();
     await images.load();
     initAudioPlayers();
     initBleed();
     loadRects();
     initEditor();
-    startJobs();
 
     compiledGame.npcs = [];
     for (int i = 0; i < 5000; i++) {
@@ -77,22 +75,13 @@ class BleedWidget extends GameWidget {
       clearState();
     });
 
-    initUI();
-  }
-
-  void startJobs() {
-    // periodic(checkBulletHoles, ms: 500);
-    // periodic(redrawUI, seconds: 1);
-    // periodic(() {
-    //   if (!connected) {
-    //     redrawGame();
-    //     redrawUI();
-    //   }
-    // }, ms: 100);
     onDone.stream.listen((event) {
+      clearState();
       redrawUI();
       redrawGame();
     });
+
+    initUI();
   }
 
   @override
