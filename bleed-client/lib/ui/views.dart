@@ -7,6 +7,7 @@ import 'package:bleed_client/instances/settings.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/ui/widgets.dart';
+import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -199,6 +200,29 @@ Widget buildViewLoading() {
   ));
 }
 
+Widget _buildServer(Server server) {
+  double height = 50;
+  return Container(
+    child: mouseOver(builder: (BuildContext context, bool hovering) {
+      return onPressed(
+          callback: () {
+            connectServer(server);
+          },
+          child: Container(
+              height: height,
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.white, width: 2),
+                borderRadius: borderRadius4,
+                color: hovering ? Colors.white30 : null
+              ),
+              width: height * (goldenRatio * 2),
+              child: text(getServerName(server)),
+              alignment: Alignment.center));
+    }),
+    margin: EdgeInsets.only(bottom: height * goldenRatioInverseB),
+  );
+}
+
 Widget buildViewConnect() {
   return center(
     Column(crossAxisAlignment: cross.center, children: [
@@ -207,15 +231,7 @@ Widget buildViewConnect() {
       height(50 * goldenRatioInverse),
       text("Select a server to play on"),
       height(50 * goldenRatioInverseB),
-      ...Server.values.map((server) {
-        return Container(
-          width: 50 * (goldenRatio * 2),
-          child: button(getServerName(server), () {
-            connectServer(server);
-          }, alignment: Alignment.center),
-          margin: EdgeInsets.only(bottom: 50 * goldenRatioInverseB),
-        );
-      })
+      ...Server.values.map(_buildServer)
       // row([
       //   button('LOCALHOST', connectLocalHost, fontSize: 21),
       //   Container(
