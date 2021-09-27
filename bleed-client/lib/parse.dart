@@ -287,7 +287,15 @@ void _parsePlayer() {
   player.maxHealth = _consumeDouble();
   player.stamina = _consumeInt();
   player.staminaMax = _consumeInt();
-  player.grenades = _consumeInt();
+
+  int grenades = _consumeInt();
+
+  if(player.grenades != grenades){
+    player.grenades = grenades;
+    // TODO Move
+    rebuildBottomLeft();
+  }
+
   player.meds = _consumeInt();
   compiledGame.playerLives = _consumeInt();
   player.equippedClips = _consumeInt();

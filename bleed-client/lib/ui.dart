@@ -403,7 +403,7 @@ Widget buildHud() {
                   ],
                 ))),
 
-      if (player.alive) buildBottomLeft(),
+      if (player.alive) buildViewBottomLeft(),
       if (compiledGame.gameType == GameType.Fortress) buildViewFortress(),
       if (compiledGame.gameType == GameType.DeathMatch)
         buildGameInfoDeathMatch(),
@@ -694,36 +694,46 @@ Widget buildMedSlot() {
   ]);
 }
 
-Widget buildBottomLeft() {
-  return Positioned(
-    bottom: 0,
-    left: 0,
-    child: Container(
-      padding: padding8,
-      decoration: BoxDecoration(
-        borderRadius: borderRadius4,
+StateSetter _stateSetterBottomLeft;
+
+rebuildBottomLeft() {
+  if (_stateSetterBottomLeft == null) return;
+  _stateSetterBottomLeft(doNothing);
+}
+
+Widget buildViewBottomLeft() {
+  return StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+    _stateSetterBottomLeft = setState;
+    return Positioned(
+      bottom: 0,
+      left: 0,
+      child: Container(
+        padding: padding8,
+        decoration: BoxDecoration(
+          borderRadius: borderRadius4,
+        ),
+        child: Row(
+          mainAxisAlignment: main.center,
+          crossAxisAlignment: cross.end,
+          children: [
+            buildSlotWeapon(weapon: Weapon.HandGun, index: 1),
+            width4,
+            buildSlotWeapon(weapon: Weapon.Shotgun, index: 2),
+            width4,
+            buildSlotWeapon(weapon: Weapon.SniperRifle, index: 3),
+            width4,
+            buildSlotWeapon(weapon: Weapon.AssaultRifle, index: 4),
+            width4,
+            buildMedSlot(),
+            width4,
+            buildGrenadeSlot(),
+            width4,
+            buildSlot(title: "Credits: ${player.credits}"),
+          ],
+        ),
       ),
-      child: Row(
-        mainAxisAlignment: main.center,
-        crossAxisAlignment: cross.end,
-        children: [
-          buildSlotWeapon(weapon: Weapon.HandGun, index: 1),
-          width4,
-          buildSlotWeapon(weapon: Weapon.Shotgun, index: 2),
-          width4,
-          buildSlotWeapon(weapon: Weapon.SniperRifle, index: 3),
-          width4,
-          buildSlotWeapon(weapon: Weapon.AssaultRifle, index: 4),
-          width4,
-          buildMedSlot(),
-          width4,
-          buildGrenadeSlot(),
-          width4,
-          buildSlot(title: "Credits: ${player.credits}"),
-        ],
-      ),
-    ),
-  );
+    );
+  });
 }
 
 Stack buildGrenadeSlot() {
