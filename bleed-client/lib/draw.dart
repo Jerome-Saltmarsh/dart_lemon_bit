@@ -6,7 +6,6 @@ import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
-import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
 import 'package:bleed_client/resources/rects_tiles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,6 @@ import 'keys.dart';
 import 'rects.dart';
 import 'resources/rects.dart';
 import 'resources/rects_human.dart';
-import 'resources/rects_zombie.dart';
 import 'state.dart';
 import 'utils.dart';
 

@@ -28,9 +28,7 @@ import 'common/version.dart';
 import 'draw.dart';
 import 'enums.dart';
 import 'functions/onGameEvent.dart';
-import 'game_engine/web_functions.dart';
 import 'instances/inventory.dart';
-import 'instances/settings.dart';
 import 'state.dart';
 
 // state

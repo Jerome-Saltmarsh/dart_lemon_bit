@@ -6,8 +6,8 @@ import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/tutorials.dart';
 import 'package:bleed_client/ui.dart';
 
-import 'connection.dart';
 import 'common/Weapons.dart';
+import 'connection.dart';
 import 'input.dart';
 import 'instances/settings.dart';
 import 'send.dart';

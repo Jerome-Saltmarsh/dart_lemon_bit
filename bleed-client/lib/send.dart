@@ -6,8 +6,8 @@ import 'package:bleed_client/common/PurchaseType.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/properties.dart';
 
-import 'connection.dart';
 import 'common/Weapons.dart';
+import 'connection.dart';
 import 'state.dart';
 
 final StringBuffer _buffer = StringBuffer();

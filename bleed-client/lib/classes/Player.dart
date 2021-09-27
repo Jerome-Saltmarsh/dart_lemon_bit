@@ -1,6 +1,5 @@
 
 import 'package:bleed_client/common/Tile.dart';
-import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/enums.dart';
 
 class Player {

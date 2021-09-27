@@ -2,10 +2,10 @@ import 'dart:math';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/common/GameState.dart';
+import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/constants.dart';
 import 'package:bleed_client/constants.dart';
 import 'package:bleed_client/editor/editor.dart';
-import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/drawParticle.dart';
@@ -26,12 +26,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'classes/InventoryItem.dart';
 import 'classes/Score.dart';
+import 'common/Weapons.dart';
 import 'common.dart';
 import 'connection.dart';
 import 'constants/servers.dart';
 import 'enums/InventoryItemType.dart';
 import 'enums/Mode.dart';
-import 'common/Weapons.dart';
 import 'images.dart';
 import 'instances/inventory.dart';
 import 'instances/settings.dart';
@@ -39,8 +39,8 @@ import 'maths.dart';
 import 'send.dart';
 import 'state.dart';
 import 'ui/widgets.dart';
-import 'utils.dart';
 import 'utils/list_util.dart';
+import 'utils.dart';
 
 TextEditingController _playerNameController = TextEditingController();
 Border _border =
