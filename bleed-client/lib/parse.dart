@@ -96,7 +96,8 @@ void parseState() {
           break;
         }
         if (state.serverVersion < version) {
-          showErrorDialog("The server version ${state.serverVersion} you have connected to be older than your client $version. The game may not perform properly");
+          showErrorDialog(
+              "The server version ${state.serverVersion} you have connected to be older than your client $version. The game may not perform properly");
           break;
         }
         showDialogClientUpdateAvailable();
@@ -290,13 +291,18 @@ void _parsePlayer() {
 
   int grenades = _consumeInt();
 
-  if(player.grenades != grenades){
+  if (player.grenades != grenades) {
     player.grenades = grenades;
     // TODO Move
     rebuildBottomLeft();
   }
 
-  player.meds = _consumeInt();
+  int meds = _consumeInt();
+  if (player.meds != meds) {
+    player.meds = meds;
+    // TODO Move
+    rebuildBottomLeft();
+  }
   compiledGame.playerLives = _consumeInt();
   player.equippedClips = _consumeInt();
   player.equippedRounds = _consumeInt();
