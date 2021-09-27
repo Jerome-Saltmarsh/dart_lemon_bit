@@ -17,6 +17,7 @@ import 'common/Tile.dart';
 import 'functions/drawParticle.dart';
 import 'keys.dart';
 import 'rects.dart';
+import 'resources/rects.dart';
 import 'resources/rects_human.dart';
 import 'resources/rects_zombie.dart';
 import 'state.dart';

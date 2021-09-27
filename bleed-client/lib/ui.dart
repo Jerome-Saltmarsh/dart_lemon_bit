@@ -159,7 +159,7 @@ Widget buildLoadingScreen(){
         children: [
           AnimatedTextKit(repeatForever: true, animatedTexts: [
             RotateAnimatedText('Loading Bleed',
-                textStyle: TextStyle(color: Colors.white)),
+                textStyle: TextStyle(color: Colors.white, fontSize: 30)),
           ]),
         ],
       ),

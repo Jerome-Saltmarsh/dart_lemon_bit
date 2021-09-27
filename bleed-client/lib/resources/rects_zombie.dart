@@ -1,26 +1,16 @@
 import 'dart:ui';
 
-import '../common.dart';
-import '../keys.dart';
-import 'rects_utils.dart';
+const int _zombieFrameWidth = 36;
+const int _zombieFrameHeight = 35;
 
-const int zombieFramWidth = 36;
-const int zombieFrameHeight = 35;
-
-final _Rects rects = _Rects();
-
-class _Rects {
-  final _ZombieRects zombie = _ZombieRects();
+class RectsZombie {
+  final _Idle idle = _Idle();
+  final _Walking walking = _Walking();
+  final _Dead dead = _Dead();
+  final _Striking striking = _Striking();
 }
 
-class _ZombieRects {
-  final _ZombieRectsIdle idle = _ZombieRectsIdle();
-  final _ZombieRectsWalking walking = _ZombieRectsWalking();
-  final _ZombieRectsDead dead = _ZombieRectsDead();
-  final _ZombieRectsStriking striking = _ZombieRectsStriking();
-}
-
-class _ZombieRectsIdle {
+class _Idle {
   final Rect downLeft = _frame(1);
   final Rect left = _frame(2);
   final Rect upLeft = _frame(3);
@@ -31,7 +21,7 @@ class _ZombieRectsIdle {
   final Rect down = _frame(4);
 }
 
-class _ZombieRectsDead {
+class _Dead {
   final Rect downLeft = _frame(29);
   final Rect left = _frame(30);
   final Rect upLeft = _frame(31);
@@ -42,7 +32,7 @@ class _ZombieRectsDead {
   final Rect down = _frame(32);
 }
 
-class _ZombieRectsWalking {
+class _Walking {
   List<Rect> up = [
     _frame(14),
     _frame(15),
@@ -100,7 +90,7 @@ class _ZombieRectsWalking {
   ];
 }
 
-class _ZombieRectsStriking {
+class _Striking {
   List<Rect> up = [
     _frame(4),
     _frame(36),
@@ -152,108 +142,6 @@ class _ZombieRectsStriking {
 
 
 Rect _frame(int index) {
-  return Rect.fromLTWH(((index - 1) * zombieFramWidth).toDouble(), 0.0,
-      zombieFramWidth.toDouble(), zombieFrameHeight.toDouble());
-}
-
-Rect mapZombieSpriteRect(dynamic character) {
-  switch (character[stateIndex]) {
-    case characterStateIdle:
-      return getZombieIdleRect(character);
-    case characterStateWalking:
-      return getZombieWalkingRect(character);
-    case characterStateDead:
-      return getZombieDeadRect(character);
-    case characterStateStriking:
-      return getZombieStrikingRect(character);
-  }
-  throw Exception("Could not get character sprite rect");
-}
-
-Rect getZombieIdleRect(dynamic character) {
-  switch (character[direction]) {
-    case directionUp:
-      return rects.zombie.idle.up;
-    case directionUpRight:
-      return rects.zombie.idle.upRight;
-    case directionRight:
-      return rects.zombie.idle.right;
-    case directionDownRight:
-      return rects.zombie.idle.downRight;
-    case directionDown:
-      return rects.zombie.idle.down;
-    case directionDownLeft:
-      return rects.zombie.idle.downLeft;
-    case directionLeft:
-      return rects.zombie.idle.left;
-    case directionUpLeft:
-      return rects.zombie.idle.upLeft;
-  }
-  throw Exception("Could not get character walking sprite rect");
-}
-
-Rect getZombieWalkingRect(dynamic character) {
-  switch (character[direction]) {
-    case directionUp:
-      return getFrameLoop(rects.zombie.walking.up, character);
-    case directionUpRight:
-      return getFrameLoop(rects.zombie.walking.upRight, character);
-    case directionRight:
-      return getFrameLoop(rects.zombie.walking.right, character);
-    case directionDownRight:
-      return getFrameLoop(rects.zombie.walking.downRight, character);
-    case directionDown:
-      return getFrameLoop(rects.zombie.walking.down, character);
-    case directionDownLeft:
-      return getFrameLoop(rects.zombie.walking.downLeft, character);
-    case directionLeft:
-      return getFrameLoop(rects.zombie.walking.left, character);
-    case directionUpLeft:
-      return getFrameLoop(rects.zombie.walking.upLeft, character);
-  }
-  throw Exception("Could not get character walking sprite rect");
-}
-
-Rect getZombieDeadRect(dynamic character) {
-  switch (character[direction]) {
-    case directionUp:
-      return rects.zombie.dead.up;
-    case directionUpRight:
-      return rects.zombie.dead.upRight;
-    case directionRight:
-      return rects.zombie.dead.right;
-    case directionDownRight:
-      return rects.zombie.dead.downRight;
-    case directionDown:
-      return rects.zombie.dead.down;
-    case directionDownLeft:
-      return rects.zombie.dead.left;
-    case directionLeft:
-      return rects.zombie.dead.left;
-    case directionUpLeft:
-      return rects.zombie.dead.upLeft;
-  }
-  throw Exception("Could not get character dead sprite rect");
-}
-
-Rect getZombieStrikingRect(character) {
-  switch (character[direction]) {
-    case directionUp:
-      return getFrameLoop(rects.zombie.striking.up, character);
-    case directionUpRight:
-      return getFrameLoop(rects.zombie.striking.upRight, character);
-    case directionRight:
-      return getFrameLoop(rects.zombie.striking.right, character);
-    case directionDownRight:
-      return getFrameLoop(rects.zombie.striking.downRight, character);
-    case directionDown:
-      return getFrameLoop(rects.zombie.striking.down, character);
-    case directionDownLeft:
-      return getFrameLoop(rects.zombie.striking.downLeft, character);
-    case directionLeft:
-      return getFrameLoop(rects.zombie.striking.left, character);
-    case directionUpLeft:
-      return getFrameLoop(rects.zombie.striking.upLeft, character);
-  }
-  throw Exception("could not get firing frame from direction");
+  return Rect.fromLTWH(((index - 1) * _zombieFrameWidth).toDouble(), 0.0,
+      _zombieFrameWidth.toDouble(), _zombieFrameHeight.toDouble());
 }
