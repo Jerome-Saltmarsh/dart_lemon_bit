@@ -940,16 +940,10 @@ Widget buildViewBottomRight() {
                       child: text("Disconnect"),
                       padding: padding4,
                     )),
-              if ((player.dead && !observeMode) | _showServers)
+              if ((player.dead && !observeMode) || _showServers)
                 buildServerList(),
-              if (player.alive)
-                Container(
-                    padding: padding4,
-                    child: text(getServerName(currentServer))),
-              if (player.dead && !_showServers)
-                Container(
-                    padding: padding4,
-                    child: text(getServerName(currentServer))),
+              Container(
+                  padding: padding4, child: text(getServerName(currentServer))),
             ],
           )),
     ),
@@ -1368,16 +1362,14 @@ bool _expandScore = false;
 
 StateSetter _scoreStateSetter;
 
-rebuildScore(){
+rebuildScore() {
   _scoreStateSetter(doNothing);
 }
 
-doNothing(){
-
-}
+doNothing() {}
 
 Widget buildViewScore() {
-  return StatefulBuilder(builder: (BuildContext context, StateSetter setState){
+  return StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
     print("buildViewScore");
     _scoreStateSetter = setState;
     if (!_showScore) {
