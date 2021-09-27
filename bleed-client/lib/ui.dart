@@ -42,6 +42,7 @@ import 'state.dart';
 import 'ui/widgets.dart';
 import 'utils/list_util.dart';
 import 'utils.dart';
+import 'utils/widget_utils.dart';
 
 TextEditingController _playerNameController = TextEditingController();
 Border _border =
@@ -675,7 +676,7 @@ Widget buildWeaponSlot({Weapon weapon}) {
       border: Border.all(
           color: Colors.white,
           width: compiledGame.playerWeapon == weapon ? 6 : 1),
-      borderRadius: borderRadius8,
+      borderRadius: borderRadius4,
     ),
   );
 }
@@ -1106,7 +1107,7 @@ Widget buildViewRespawn() {
                 children: [
                   Container(
                       decoration: BoxDecoration(
-                        borderRadius: borderRadius8,
+                        borderRadius: borderRadius4,
                         color: blood,
                       ),
                       padding: padding8,
@@ -1117,7 +1118,7 @@ Widget buildViewRespawn() {
                   Container(
                     padding: padding16,
                     decoration: BoxDecoration(
-                      borderRadius: borderRadius8,
+                      borderRadius: borderRadius4,
                       color: black54,
                     ),
                     child: Column(
@@ -1164,7 +1165,7 @@ Widget buildViewRespawn() {
                   Container(
                     padding: padding16,
                     decoration: BoxDecoration(
-                      borderRadius: borderRadius8,
+                      borderRadius: borderRadius4,
                       color: black54,
                     ),
                     child: Column(
@@ -1213,7 +1214,7 @@ Widget buildViewRespawn() {
                   height8,
                   Container(
                     decoration: BoxDecoration(
-                      borderRadius: borderRadius8,
+                      borderRadius: borderRadius4,
                       color: black54,
                     ),
                     padding: padding16,
@@ -1244,50 +1245,6 @@ Widget buildViewRespawn() {
                       ],
                     ),
                   ),
-                  // height8,
-                  // Container(
-                  //   decoration: BoxDecoration(
-                  //     borderRadius: borderRadius8,
-                  //     color: black54,
-                  //   ),
-                  //   padding: padding16,
-                  //   child: Column(
-                  //     children: [
-                  //       text("Server"),
-                  //       height8,
-                  //       // Row(mainAxisAlignment: main.even, children: [
-                  //       //   onPressed(
-                  //       //       child: isUriConnected(servers.germany)
-                  //       //           ? border(
-                  //       //               child: text("Germany"),
-                  //       //               padding: padding4,
-                  //       //               borderRadius: borderRadius4)
-                  //       //           : text("Germany"),
-                  //       //       callback: connectServerGermany),
-                  //       //   onPressed(
-                  //       //       child: isUriConnected(servers.usaEast)
-                  //       //           ? border(
-                  //       //               child: text("USA East"),
-                  //       //               padding: padding4,
-                  //       //               borderRadius: borderRadius4)
-                  //       //           : text("USA East"),
-                  //       //       callback: () {
-                  //       //         connect(servers.usaEast);
-                  //       //       }),
-                  //       //   onPressed(
-                  //       //       child: isUriConnected(servers.usaWest)
-                  //       //           ? border(
-                  //       //               child: text("USA West"),
-                  //       //               padding: padding4,
-                  //       //               borderRadius: borderRadius4)
-                  //       //           : text("USA West"),
-                  //       //       callback: () {
-                  //       //         connect(servers.usaWest);
-                  //       //       }),
-                  //       // ]),
-                  //     ],
-                  //   ),
-                  // ),
                   height32,
                   Row(
                     mainAxisAlignment: main.between,
@@ -1300,16 +1257,20 @@ Widget buildViewRespawn() {
                             redrawUI();
                           }),
                       width16,
-                      onPressed(
-                        child: border(
-                            child: text("RESPAWN", fontSize: 30),
-                            padding: padding16,
-                            radius: borderRadius8,
-                            color: Colors.black38,
-                            fillColor: black54),
-                        callback: sendRequestRevive,
-                        hint: "Click to respawn",
-                      ),
+
+                      mouseOver(builder: (BuildContext context, bool mouseOver){
+                        return onPressed(
+                          child: border(
+                              child: text("RESPAWN", fontWeight: bold, decoration: mouseOver ? underline : null),
+                              padding: padding16,
+                              radius: borderRadius4,
+                              color: Colors.white,
+                              width: 1,
+                              fillColor: black54),
+                          callback: sendRequestRevive,
+                          hint: "Click to respawn",
+                        );
+                      })
                     ],
                   ),
                 ],
