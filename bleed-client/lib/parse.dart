@@ -12,8 +12,10 @@ import 'package:bleed_client/enums/InventoryItemType.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
+import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/keys.dart';
 import 'package:bleed_client/send.dart';
+import 'package:bleed_client/ui.dart';
 import 'package:bleed_client/ui/dialogs.dart';
 import 'package:neuro/instance.dart';
 
@@ -381,6 +383,8 @@ void _parseScore() {
     if (a.points > b.points) return -1;
     return 1;
   });
+
+  rebuildScore();
 }
 
 void _parseGrenades() {

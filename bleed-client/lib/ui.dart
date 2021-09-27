@@ -379,11 +379,11 @@ void toggleShowScore() {
 }
 
 Widget buildHud() {
+  print("buildHud()");
   String message = getMessage();
 
   return Stack(
     children: [
-      // buildTop(),
       buildTopRight(),
       if (player.alive && lag > 10)
         Positioned(
@@ -439,8 +439,7 @@ Widget buildHud() {
                     text("Hold E to pan camera")
                   ],
                 ))),
-      if (state.score.isNotEmpty && compiledGame.players.isNotEmpty)
-        buildViewScore(),
+      buildViewScore(),
       if (message != null) buildMessageBox(message),
     ],
   );
@@ -1367,85 +1366,100 @@ int getScoreRecord(Score score) {
 
 bool _expandScore = false;
 
+StateSetter _scoreStateSetter;
+
+rebuildScore(){
+  _scoreStateSetter(doNothing);
+}
+
+doNothing(){
+
+}
+
 Widget buildViewScore() {
-  if (!_showScore) {
-    return Positioned(
-      top: 5,
-      left: 5,
-      child: buildToggleScoreIcon(),
-    );
-  }
+  return StatefulBuilder(builder: (BuildContext context, StateSetter setState){
+    print("buildViewScore");
+    _scoreStateSetter = setState;
+    if (!_showScore) {
+      return Positioned(
+        top: 5,
+        left: 5,
+        child: buildToggleScoreIcon(),
+      );
+    }
 
-  try {
-    sort(state.score, getScoreRecord);
-    Widget iconClose = Tooltip(
-      message: "Hide Score board",
-      child: IconButton(
-          icon: Icon(Icons.close, size: 30, color: Colors.white),
-          onPressed: toggleShowScore),
-    );
+    try {
+      sort(state.score, getScoreRecord);
+      Widget iconClose = Tooltip(
+        message: "Hide Score board",
+        child: IconButton(
+            icon: Icon(Icons.close, size: 30, color: Colors.white),
+            onPressed: toggleShowScore),
+      );
 
-    double width = 260;
+      double width = 260;
 
-    return Positioned(
-      top: 5,
-      left: 5,
-      child: MouseRegion(
-        onHover: (_) {
-          _expandScore = true;
-          redrawUI();
-        },
-        onExit: (_) {
-          _expandScore = false;
-          redrawUI();
-        },
-        child: Container(
-          decoration: BoxDecoration(
-            color: black45,
-            borderRadius: borderRadius4,
-          ),
-          width: width,
-          padding: padding8,
-          height: width * (_expandScore ? goldenRatio : goldenRatioInverse),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: cross.start,
-              children: [
-                Container(
-                  width: width,
-                  child: Row(
-                    mainAxisAlignment: main.spread,
-                    children: [text("Leaderboard"), iconClose],
+      return Positioned(
+        top: 5,
+        left: 5,
+        child: MouseRegion(
+          onHover: (_) {
+            _expandScore = true;
+            redrawUI();
+          },
+          onExit: (_) {
+            _expandScore = false;
+            redrawUI();
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              color: black45,
+              borderRadius: borderRadius4,
+            ),
+            width: width,
+            padding: padding8,
+            height: width * (_expandScore ? goldenRatio : goldenRatioInverse),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: cross.start,
+                children: [
+                  Container(
+                    width: width,
+                    child: Row(
+                      mainAxisAlignment: main.spread,
+                      children: [text("Leaderboard"), iconClose],
+                    ),
                   ),
-                ),
-                height8,
-                Column(
-                  crossAxisAlignment: cross.start,
-                  children: state.score.map((score) {
-                    int index = state.score.indexOf(score);
-                    return Row(
-                      children: [
-                        Container(
-                            width: 140,
-                            child: text('$index ${score.playerName}',
-                                color: score.playerName == playerName
-                                    ? blood
-                                    : Colors.white)),
-                        Container(width: 50, child: text(score.points)),
-                        Container(width: 50, child: text(score.record)),
-                      ],
-                    );
-                  }).toList(),
-                ),
-              ],
+                  height8,
+                  if (state.score.isNotEmpty)
+                    Column(
+                      crossAxisAlignment: cross.start,
+                      children: state.score.map((score) {
+                        int index = state.score.indexOf(score);
+                        return Row(
+                          children: [
+                            Container(
+                                width: 140,
+                                child: text('$index ${score.playerName}',
+                                    color: score.playerName == playerName
+                                        ? blood
+                                        : Colors.white)),
+                            Container(width: 50, child: text(score.points)),
+                            Container(width: 50, child: text(score.record)),
+                          ],
+                        );
+                      }).toList(),
+                    ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
-    );
-  } catch (error) {
-    return text("error build score");
-  }
+      );
+    } catch (error) {
+      return text("error build score");
+    }
+  });
 }
 
 void showDebug() {
