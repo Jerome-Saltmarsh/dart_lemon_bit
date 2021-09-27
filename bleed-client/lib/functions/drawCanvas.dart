@@ -108,17 +108,11 @@ void _drawCompiledGame() {
 }
 
 void _renderItems() {
+  // TODO Refactor
   clear(render.items);
-
   for (int i = 0; i < compiledGame.totalItems; i++) {
     render.items.transforms.add(mapItemToRSTransform(compiledGame.items[i]));
-    switch(compiledGame.items[i].type){
-      case ItemType.Health:
-        render.items.rects.add(rectHealth);
-        break;
-      default:
-        throw Exception("Could not get rect for item type ${compiledGame.items[i].type}");
-    }
+    render.items.rects.add(mapItemToRect(compiledGame.items[i].type));
   }
   drawAtlases(images.items, render.items.transforms, render.items.rects);
 }

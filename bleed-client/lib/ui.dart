@@ -697,7 +697,7 @@ Widget buildMedSlot() {
 
 StateSetter _stateSetterBottomLeft;
 
-rebuildBottomLeft() {
+redrawBottomLeft() {
   if (_stateSetterBottomLeft == null) return;
   _stateSetterBottomLeft(doNothing);
 }

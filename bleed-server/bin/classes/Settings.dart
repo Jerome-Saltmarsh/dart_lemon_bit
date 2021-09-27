@@ -11,9 +11,11 @@ class Settings {
   final double itemCollectRadius = 10;
 
   final double chanceOfDropHealth = 0.1;
+  final double chanceOfDropAmmo = 0.75;
   final int itemDuration = 500;
 
   final _ClipSize clipSize = _ClipSize();
+  final _MaxClips maxClips = _MaxClips();
   final _ReloadDuration reloadDuration = _ReloadDuration();
   final _PointsEarned pointsEarned = _PointsEarned();
 
@@ -33,6 +35,13 @@ class _ClipSize {
   final int shotgun = 6;
   final int sniperRifle = 5;
   final int assaultRifle = 50;
+}
+
+class _MaxClips {
+  final int handgun = 3;
+  final int shotgun = 3;
+  final int sniperRifle = 3;
+  final int assaultRifle = 3;
 }
 
 class _ReloadDuration {

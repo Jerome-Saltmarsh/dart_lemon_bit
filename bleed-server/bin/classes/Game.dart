@@ -393,8 +393,13 @@ abstract class Game {
   void onPlayerKilled(Player player);
 
   void onNpcKilled(Npc npc) {
+    if (chance(settings.chanceOfDropAmmo)) {
+      items.add(Item(type: ItemType.Ammo, x: npc.x, y: npc.y));
+      return;
+    }
     if (chance(settings.chanceOfDropHealth)) {
       items.add(Item(type: ItemType.Health, x: npc.x, y: npc.y));
+      return;
     }
   }
 
@@ -989,7 +994,8 @@ extension GameFunctions on Game {
             Player owner = bullet.owner as Player;
             owner.score.zombiesKilled++;
             if (character is Npc) {
-              owner.earnPoints(constants.points.zombieKilled * character.pointMultiplier);
+              owner.earnPoints(
+                  constants.points.zombieKilled * character.pointMultiplier);
             }
           }
 
@@ -1360,15 +1366,38 @@ extension GameFunctions on Game {
         if (diff(item.x, player.x) > r) continue;
         if (diff(item.y, player.y) > r) continue;
         if (player.dead) continue;
+        // @on item collectable
 
         switch (item.type) {
           case ItemType.Health:
-            if (player.health < player.maxHealth) {
-              player.health += healAmount;
-              items.removeAt(i);
-              i--;
+            if (player.meds >= settings.maxMeds) continue;
+            player.meds++;
+            break;
+          case ItemType.Ammo:
+            switch (player.weapon) {
+              case Weapon.HandGun:
+                if (player.clips.handgun >= settings.maxClips.handgun) continue;
+                player.clips.handgun++;
+                break;
+              case Weapon.Shotgun:
+                if (player.clips.shotgun >= settings.maxClips.shotgun) continue;
+                player.clips.shotgun++;
+                break;
+              case Weapon.SniperRifle:
+                if (player.clips.sniperRifle >= settings.maxClips.sniperRifle)
+                  continue;
+                player.clips.sniperRifle++;
+                break;
+              case Weapon.AssaultRifle:
+                if (player.clips.assaultRifle >= settings.maxClips.assaultRifle)
+                  continue;
+                player.clips.assaultRifle++;
+                break;
             }
         }
+
+        items.removeAt(i);
+        i--;
       }
     }
   }

@@ -68,9 +68,7 @@
 [ ] Rounds
 -- CASUAL --
 [ ] Send custom news updates to client
-[ ] How do players acquire more ammo?
 [ ] How do players acquire more grenades?
-[ ] How do players acquire more health kits?
 [ ] Purchase Desert Eagle
 [ ] Loot Box (Gain extra points when destroyed)
 [ ] Design Level, City
@@ -82,9 +80,12 @@
     [ ] Add cancel button
     [ ] Show animation
 -- MAJOR BUGS --
-[ ] UI Score not showing
 [ ] Bonus zombie point text is wrong
 -- COMPLETED --
+[x] How do players acquire more ammo?
+[x] How do players acquire more health kits?
+[x] UI not update clips on reload
+[x] UI Score not showing
 [x] Check client version
 [x] Expand score on hover
 [x] Separate credits and points

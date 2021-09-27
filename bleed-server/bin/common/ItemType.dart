@@ -1,5 +1,6 @@
 enum ItemType {
-  Health
+  Health,
+  Ammo,
 }
 
 final List<ItemType> itemTypes = ItemType.values;
