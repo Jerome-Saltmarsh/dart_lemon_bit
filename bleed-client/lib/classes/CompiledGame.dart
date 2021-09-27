@@ -1,6 +1,7 @@
 
 import 'dart:ui';
 
+import 'package:bleed_client/classes/Vector2.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/Weapons.dart';
@@ -19,7 +20,8 @@ class CompiledGame {
   int totalNpcs = 0;
   int totalPlayers = 0;
   List<double> bullets = [];
-  List<double> bulletHoles = [];
+  List<Vector2> bulletHoles = [];
+  int bulletHoleIndex = 0;
   List<Particle> particles = [];
   List<double> grenades = [];
   int gameId = -1;

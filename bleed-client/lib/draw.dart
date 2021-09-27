@@ -259,9 +259,10 @@ void setColor(Color value) {
 //       radius: bulletRange, x: player[x], y: player[y], color: white);
 // }
 
-void drawBulletHoles(List<double> bulletHoles) {
-  for (int i = 0; i < bulletHoles.length; i += 2) {
-    drawCircle(bulletHoles[i], bulletHoles[i + 1], 2, Colors.black);
+void drawBulletHoles(List<Vector2> bulletHoles) {
+  for(Vector2 bulletHole in bulletHoles){
+    if(bulletHole.x == 0 && bulletHole.y == 0) return;
+    drawCircle(bulletHole.x, bulletHole.y, 2, Colors.black);
   }
 }
 

@@ -6,7 +6,7 @@ class Settings {
   bool developMode = false;
   bool compilePaths = false;
   int floatingTextDuration = 100;
+  int maxBulletHoles = 50;
 }
-
 
 

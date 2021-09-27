@@ -1,4 +1,5 @@
 import 'package:bleed_client/classes/RenderState.dart';
+import 'package:bleed_client/classes/Vector2.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
@@ -30,10 +31,15 @@ void clearCompileGameState(){
   compiledGame.totalNpcs = 0;
   compiledGame.totalPlayers = 0;
   compiledGame.totalBullets = 0;
-  compiledGame.bulletHoles.clear();
   compiledGame.particles.clear();
   compiledGame.grenades.clear();
   compiledGame.collectables.clear();
+
+  for(Vector2 bullet in compiledGame.bulletHoles){
+    bullet.x = 0;
+    bullet.y = 0;
+  }
+  compiledGame.bulletHoleIndex = 0;
 }
 
 void clearRender(){
