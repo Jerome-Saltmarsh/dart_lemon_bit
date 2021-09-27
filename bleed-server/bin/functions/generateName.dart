@@ -28,6 +28,9 @@ List<String> adjectives = [
   "Spicy",
   "Wicked",
   "Sadistic",
+  "Swift",
+  "Shady",
+  "Simple"
 ];
 
 List<String> nouns = [
@@ -73,7 +76,14 @@ List<String> nouns = [
   "Maggot",
   "Dirt",
   "Mole",
-  "Fungus"
+  "Fungus",
+  "Potato",
+  "Ghost",
+  "Wizard",
+  "Knight",
+  "Rogue",
+  "Thief",
+  "Worm"
 ];
 
 String generateName() {

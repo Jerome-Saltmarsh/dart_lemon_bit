@@ -4,9 +4,10 @@ import 'package:bleed_client/instances/settings.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/utils.dart';
 
-List<AudioPlayer> _audioPlayers = [];
+
 int _index = 0;
 
+final List<AudioPlayer> _audioPlayers = [];
 const _audioDistanceFade = 0.005;
 const _totalAudioPlayers = 150;
 
@@ -40,6 +41,13 @@ const _zombieBite = [
   'bloody-punches-1.mp3',
   'bloody-punches-2.mp3',
   'bloody-punches-3.mp3',
+];
+
+const _pistolShot = [
+  "pistol-shot-19.mp3",
+  "pistol-shot-20.mp3",
+  "pistol-shot-21.mp3",
+  "pistol-shot-22.mp3",
 ];
 
 const _maleScreams = [
@@ -121,7 +129,7 @@ void playAudioShotgunShot(double x, double y) {
 }
 
 void playAudioHandgunShot(double x, double y) {
-  _playAudio('handgun-shot.mp3', x, y);
+  _playRandom(_pistolShot, x, y);
 }
 
 void playAudioUseMedkit(double x, double y){

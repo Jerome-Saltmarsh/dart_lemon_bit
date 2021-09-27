@@ -1119,7 +1119,7 @@ Widget buildViewRespawn() {
                     padding: padding16,
                     decoration: BoxDecoration(
                       borderRadius: borderRadius4,
-                      color: black54,
+                      color: black26,
                     ),
                     child: Column(
                       crossAxisAlignment: cross.center,
@@ -1166,7 +1166,7 @@ Widget buildViewRespawn() {
                     padding: padding16,
                     decoration: BoxDecoration(
                       borderRadius: borderRadius4,
-                      color: black54,
+                      color: black26,
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -1215,7 +1215,7 @@ Widget buildViewRespawn() {
                   Container(
                     decoration: BoxDecoration(
                       borderRadius: borderRadius4,
-                      color: black54,
+                      color: black26,
                     ),
                     padding: padding16,
                     child: Column(
@@ -1266,7 +1266,7 @@ Widget buildViewRespawn() {
                               radius: borderRadius4,
                               color: Colors.white,
                               width: 1,
-                              fillColor: black54),
+                              fillColor: mouseOver ? black54 : black26),
                           callback: sendRequestRevive,
                           hint: "Click to respawn",
                         );

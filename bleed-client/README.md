@@ -76,7 +76,6 @@
 [ ] Design Level, City
 [ ] Disable spawn npcs request
 [ ] Fix GCP Security
-[ ] Check client version
 [ ] Improve Connection Failed Dialog
 [ ] Multiple pistol shot audios
 [ ] Improve Connection screen 
@@ -86,6 +85,7 @@
 [ ] UI Score not showing
 [ ] Bonus zombie point text is wrong
 -- COMPLETED --
+[x] Check client version
 [x] Expand score on hover
 [x] Separate credits and points
 [x] Show high score, order by high score

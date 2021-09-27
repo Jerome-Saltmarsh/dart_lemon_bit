@@ -82,6 +82,7 @@ class BleedWidget extends GameWidget {
     });
 
     initUI();
+    redrawUI();
   }
 
   @override

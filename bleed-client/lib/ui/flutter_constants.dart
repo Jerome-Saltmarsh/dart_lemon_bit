@@ -22,8 +22,10 @@ final Border border3 = Border.all(width: 3.0);
 
 final TextDecoration underline = TextDecoration.underline;
 
+final Color black26 = Colors.black26;
 final Color black45 = Colors.black45;
 final Color black54 = Colors.black54;
+
 
 const FontWeight bold = FontWeight.bold;
 const FontWeight normal = FontWeight.normal;
