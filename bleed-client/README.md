@@ -83,6 +83,7 @@
     [ ] Add cancel button
     [ ] Show animation
 -- MAJOR BUGS --
+[ ] UI Score not showing
 [ ] Bonus zombie point text is wrong
 -- COMPLETED --
 [x] Expand score on hover

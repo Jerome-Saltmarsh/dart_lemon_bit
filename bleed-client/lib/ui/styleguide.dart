@@ -18,6 +18,7 @@ class _Slot {
 
   BoxDecoration boxDecoration = BoxDecoration(
       borderRadius: borderRadius4,
+      color: Colors.black38,
       border: Border.all(color: Colors.white, width: 1)
   );
 }

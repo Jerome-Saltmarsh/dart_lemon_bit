@@ -15,6 +15,7 @@ import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/game_engine/web_functions.dart';
 import 'package:bleed_client/keys.dart';
 import 'package:bleed_client/properties.dart';
+import 'package:bleed_client/server.dart';
 import 'package:bleed_client/tutorials.dart';
 import 'package:bleed_client/ui/dialogs.dart';
 import 'package:bleed_client/ui/flutter_constants.dart';
@@ -54,7 +55,7 @@ bool observeMode = false;
 
 Color _panelBackgroundColor = Colors.black38;
 
-void refreshUI(){
+void refreshUI() {
   observeMode = false;
   _showServers = false;
 }
@@ -148,7 +149,7 @@ Future<void> showChangeNameDialog() async {
   );
 }
 
-Widget buildLoadingScreen(){
+Widget buildLoadingScreen() {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
     crossAxisAlignment: CrossAxisAlignment.center,
@@ -382,6 +383,7 @@ Widget buildHud() {
 
   return Stack(
     children: [
+      // buildTop(),
       buildTopRight(),
       if (player.alive && lag > 10)
         Positioned(
@@ -442,6 +444,31 @@ Widget buildHud() {
       if (message != null) buildMessageBox(message),
     ],
   );
+}
+
+Widget buildTop() {
+  return Positioned(
+      top: 0,
+      child: Container(
+        width: screenWidth,
+        height: 100,
+        child: Row(
+          mainAxisAlignment: main.center,
+          children: [
+            buildMedSlot(),
+            Container(
+              height: 50,
+              width: 100,
+              // color: Colors.blue,
+            ),
+            Container(
+              height: 50,
+              width: 100,
+              color: Colors.red,
+            )
+          ],
+        ),
+      ));
 }
 
 Widget buildTopRight() {
@@ -593,7 +620,7 @@ Widget buildImageSlot(
       image: image,
       color: color,
       border: Border.all(color: Colors.white, width: borderWidth),
-      borderRadius: borderRadius8,
+      borderRadius: borderRadius4,
     ),
   );
 }
@@ -601,11 +628,11 @@ Widget buildImageSlot(
 Widget buildEquipWeaponSlot({Weapon weapon, int index}) {
   return Stack(
     children: [
-      buildTag(clipsRemaining(weapon)),
       onPressed(
           child: buildWeaponSlot(weapon: weapon),
           hint: "Press $index to equip",
           callback: sendRequestEquipShotgun),
+      buildTag(clipsRemaining(weapon)),
     ],
   );
 }
@@ -645,6 +672,7 @@ Widget buildWeaponSlot({Weapon weapon}) {
     alignment: Alignment.center,
     decoration: BoxDecoration(
       image: mapWeaponToImage(weapon),
+      color: Colors.black26,
       border: Border.all(
           color: Colors.white,
           width: compiledGame.playerWeapon == weapon ? 6 : 1),
@@ -653,14 +681,27 @@ Widget buildWeaponSlot({Weapon weapon}) {
   );
 }
 
+Widget buildMedSlot() {
+  return Stack(children: [
+    onPressed(
+        hint: "Press H to use med kit",
+        callback: sendRequestUseMedKit,
+        child: buildImageSlot(
+            image: healthImage,
+            width: 120 * goldenRatioInverse,
+            height: 120 * goldenRatioInverse,
+            color: Colors.black38)),
+    buildTag(player.meds)
+  ]);
+}
+
 Widget buildBottomLeft() {
   return Positioned(
-    bottom: 5,
-    left: 5,
+    bottom: 0,
+    left: 0,
     child: Container(
       padding: padding8,
       decoration: BoxDecoration(
-        color: Colors.black45,
         borderRadius: borderRadius4,
       ),
       child: Row(
@@ -668,44 +709,36 @@ Widget buildBottomLeft() {
         crossAxisAlignment: cross.end,
         children: [
           buildSlotWeapon(weapon: Weapon.HandGun, index: 1),
-          width8,
+          width4,
           buildSlotWeapon(weapon: Weapon.Shotgun, index: 2),
-          width8,
+          width4,
           buildSlotWeapon(weapon: Weapon.SniperRifle, index: 3),
-          // width8,
-          // buildSlotWeapon(weapon: Weapon.AssaultRifle, index: 4),
-          // width8,
-          // Stack(
-          //   children: [
-          //     if (player.meds > 0) buildTag(player.meds),
-          //     onPressed(
-          //         hint: "Press H to use med kit",
-          //         callback: sendRequestUseMedKit,
-          //         child: buildImageSlot(
-          //             image: healthImage,
-          //             width: 120 * goldenRatioInverse,
-          //             height: 120 * goldenRatioInverse,
-          //             color: player.meds > 0 ? null : Colors.white60)),
-          //   ],
-          // ),
-          // width8,
-          // Stack(
-          //   children: [
-          //     if (player.grenades > 0) buildTag(player.grenades),
-          //     Tooltip(
-          //         message: "Press G to throw grenade",
-          //         child: buildImageSlot(
-          //             image: grenades1Image,
-          //             width: 120 * goldenRatioInverse,
-          //             height: 120 * goldenRatioInverse,
-          //             color: player.grenades > 0 ? null : Colors.white60)),
-          //   ],
-          // ),
-          // width8,
-          // buildSlot(title: "Credits: ${player.credits}"),
+          width4,
+          buildSlotWeapon(weapon: Weapon.AssaultRifle, index: 4),
+          width4,
+          buildMedSlot(),
+          width4,
+          buildGrenadeSlot(),
+          width4,
+          buildSlot(title: "Credits: ${player.credits}"),
         ],
       ),
     ),
+  );
+}
+
+Stack buildGrenadeSlot() {
+  return Stack(
+    children: [
+      Tooltip(
+          message: "Press G to throw grenade",
+          child: buildImageSlot(
+              image: grenades1Image,
+              width: 120 * goldenRatioInverse,
+              height: 120 * goldenRatioInverse,
+              color: Colors.black38)),
+      buildTag(player.grenades)
+    ],
   );
 }
 
@@ -905,15 +938,19 @@ Widget buildViewBottomRight() {
                     callback: disconnect,
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 16),
-                      child: text("Disconnect"), padding: padding4,)),
+                      child: text("Disconnect"),
+                      padding: padding4,
+                    )),
               if ((player.dead && !observeMode) | _showServers)
                 buildServerList(),
-              if (player.alive) Container(
-                  padding: padding4,
-                  child: text(getServerName(currentServer))),
-              if (player.dead && !_showServers) Container(
-                  padding: padding4,
-                  child: text(getServerName(currentServer))),
+              if (player.alive)
+                Container(
+                    padding: padding4,
+                    child: text(getServerName(currentServer))),
+              if (player.dead && !_showServers)
+                Container(
+                    padding: padding4,
+                    child: text(getServerName(currentServer))),
             ],
           )),
     ),
@@ -1058,8 +1095,8 @@ Widget buildViewRespawn() {
         Container(
             padding: padding16,
             width: max(screenWidth * goldenRatioInverseB, 480),
-            decoration:
-                BoxDecoration(borderRadius: borderRadius4, color: _panelBackgroundColor),
+            decoration: BoxDecoration(
+                borderRadius: borderRadius4, color: _panelBackgroundColor),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: cross.center,
@@ -1354,11 +1391,11 @@ Widget buildViewScore() {
       top: 5,
       left: 5,
       child: MouseRegion(
-        onHover: (_){
+        onHover: (_) {
           _expandScore = true;
           redrawUI();
         },
-        onExit: (_){
+        onExit: (_) {
           _expandScore = false;
           redrawUI();
         },
@@ -1378,10 +1415,7 @@ Widget buildViewScore() {
                   width: width,
                   child: Row(
                     mainAxisAlignment: main.spread,
-                    children: [
-                      text("Leaderboard"),
-                      iconClose
-                    ],
+                    children: [text("Leaderboard"), iconClose],
                   ),
                 ),
                 height8,
