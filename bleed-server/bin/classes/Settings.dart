@@ -10,8 +10,7 @@ class Settings {
   final double shotgunAccuracy = 0.15;
   final double itemCollectRadius = 10;
 
-  final double chanceOfDropHealth = 0.1;
-  final double chanceOfDropAmmo = 0.75;
+  final double chanceOfDropItem = 0.2;
   final int itemDuration = 500;
 
   final _ClipSize clipSize = _ClipSize();
@@ -26,6 +25,7 @@ class Settings {
   final int itemReactivationInSeconds = 60;
   final int maxGrenades = 3;
   final int maxMeds = 3;
+  final int collectCreditAmount = 25;
   final int staminaRefreshRate = 2;
   final int gameStartingCountDown = 400;
 }

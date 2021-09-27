@@ -3,6 +3,7 @@ import 'package:bleed_client/classes/Lobby.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/game_engine/web_functions.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/ui/widgets.dart';
@@ -14,6 +15,7 @@ import 'package:flutter/material.dart';
 import '../audio.dart';
 import '../connection.dart';
 import '../state.dart';
+import '../ui.dart';
 import 'flutter_constants.dart';
 
 GameType _gameType = GameType.DeathMatch;
@@ -194,7 +196,10 @@ Widget buildViewConnecting() {
             ]),
           ),
           height32,
-          onPressed(child: text("Cancel"), callback: disconnect),
+          onPressed(child: text("Cancel"), callback: (){
+            sharedPreferences.remove('server');
+            refreshPage();
+          }),
         ],
       )
   );

@@ -8,9 +8,13 @@ import 'package:bleed_client/state.dart';
 Rect mapItemToRect(ItemType item) {
   switch (item) {
     case ItemType.Health:
-      return _rectsHealth[drawFrame % _healthFrames];
+      return _health[drawFrame % _healthFrames];
     case ItemType.Ammo:
-      return _rectsAmmo[0];
+      return _ammo[0];
+    case ItemType.Grenade:
+      return _grenade[0];
+    case ItemType.Credits:
+      return _credits[0];
     default:
       throw Exception("Could not map $item to Rect");
   }
@@ -19,10 +23,11 @@ Rect mapItemToRect(ItemType item) {
 // private
 const double _frameWidth = 47;
 const double _frameHeight = 71;
-
-final List<Rect> _rectsHealth = _itemFrames([1, 1, 2, 2, 3, 3, 4, 4, 3, 3]);
-final List<Rect> _rectsAmmo = _itemFrames([5]);
-final int _healthFrames = _rectsHealth.length;
+final List<Rect> _health = _itemFrames([1, 1, 2, 2, 3, 3, 4, 4, 3, 3]);
+final List<Rect> _ammo = _itemFrames([5]);
+final List<Rect> _grenade = _itemFrames([6]);
+final List<Rect> _credits = _itemFrames([7]);
+final int _healthFrames = _health.length;
 
 List<Rect> _itemFrames(List<int> indexes) {
   return indexes.map(_itemFrame).toList();

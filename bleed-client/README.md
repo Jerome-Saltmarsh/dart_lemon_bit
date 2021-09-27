@@ -31,6 +31,7 @@
 [ ] Player chat
 [ ] Giant Zombie
 [ ] Flying Bat Enemy
+[ ] Improve Connection Failed Dialog
 [ ] Activate Shield
 [ ] Heal animation
 [ ] Body Armor
@@ -68,20 +69,19 @@
 [ ] Rounds
 -- CASUAL --
 [ ] Send custom news updates to client
-[ ] How do players acquire more grenades?
 [ ] Purchase Desert Eagle
 [ ] Loot Box (Gain extra points when destroyed)
 [ ] Design Level, City
 [ ] Disable spawn npcs request
 [ ] Fix GCP Security
-[ ] Improve Connection Failed Dialog
-[ ] Multiple pistol shot audios
-[ ] Improve Connection screen 
-    [ ] Add cancel button
-    [ ] Show animation
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong
 -- COMPLETED --
+[x] Improve Connection screen 
+    [x] Add cancel button
+    [x] Show animation
+[x] Multiple pistol shot audios
+[x] How do players acquire more grenades?
 [x] How do players acquire more ammo?
 [x] How do players acquire more health kits?
 [x] UI not update clips on reload

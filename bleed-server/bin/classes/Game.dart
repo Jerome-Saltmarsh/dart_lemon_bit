@@ -393,12 +393,8 @@ abstract class Game {
   void onPlayerKilled(Player player);
 
   void onNpcKilled(Npc npc) {
-    if (chance(settings.chanceOfDropAmmo)) {
-      items.add(Item(type: ItemType.Ammo, x: npc.x, y: npc.y));
-      return;
-    }
-    if (chance(settings.chanceOfDropHealth)) {
-      items.add(Item(type: ItemType.Health, x: npc.x, y: npc.y));
+    if (chance(settings.chanceOfDropItem)) {
+      items.add(Item(type: randomValue(itemTypes), x: npc.x, y: npc.y));
       return;
     }
   }
@@ -1369,9 +1365,16 @@ extension GameFunctions on Game {
         // @on item collectable
 
         switch (item.type) {
+          case ItemType.Credits:
+            player.earnPoints(settings.collectCreditAmount);
+            break;
           case ItemType.Health:
             if (player.meds >= settings.maxMeds) continue;
             player.meds++;
+            break;
+          case ItemType.Grenade:
+            if (player.grenades >= settings.maxGrenades) continue;
+            player.grenades++;
             break;
           case ItemType.Ammo:
             switch (player.weapon) {
