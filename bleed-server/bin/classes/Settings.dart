@@ -10,7 +10,7 @@ class Settings {
   final double shotgunAccuracy = 0.15;
   final double itemCollectRadius = 10;
 
-  final double chanceOfDropItem = 0.2;
+  final double chanceOfDropItem = 0.25;
   final int itemDuration = 500;
 
   final _ClipSize clipSize = _ClipSize();

@@ -59,6 +59,9 @@
 [ ] Prevent Duplicate Names
 [ ] UI Score Lag
 -- UI --
+-- IDEAS --
+[ ] No such thing as reload, this simplifies the game a lot and allows the player to focus on having fun
+[ ] No such thing as health pack
 [ ] Compact Score Mode 
 -- OPTIMIZATIONS --
 -- OPEN WORLD -- 

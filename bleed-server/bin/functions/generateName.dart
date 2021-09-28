@@ -88,7 +88,7 @@ List<String> nouns = [
   "Rogue",
   "Thief",
   "Worm",
-  "Chicken"
+  "Chicken",
   "Spider",
   "Crow",
   "Wolf",

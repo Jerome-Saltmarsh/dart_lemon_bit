@@ -259,9 +259,8 @@ class GameCasual extends Game {
   @override
   void onNpcKilled(Npc npc){
     // @on npc killed
-    items.add(Item(type: ItemType.Assault_Rifle, x: npc.x, y: npc.y));
-    return;
-
+    // items.add(Item(type: ItemType.Assault_Rifle, x: npc.x, y: npc.y));
+    // return;
     if (chance(settings.chanceOfDropItem)) {
       items.add(Item(type: randomValue(itemTypes), x: npc.x, y: npc.y));
       return;
@@ -1374,11 +1373,16 @@ extension GameFunctions on Game {
 
         switch (item.type) {
           case ItemType.Assault_Rifle:
-            if (player.acquiredAssaultRifle) continue;
             // @on assault rifle acquired
+            if (player.acquiredAssaultRifle) {
+              if (player.clips.assaultRifle >= settings.maxClips.assaultRifle) continue;
+              player.clips.assaultRifle++;
+              break;
+            }
             player.acquiredAssaultRifle = true;
             player.clips.assaultRifle = settings.maxClips.assaultRifle;
             player.rounds.assaultRifle = settings.clipSize.assaultRifle;
+            player.weapon = Weapon.AssaultRifle;
             break;
           case ItemType.Credits:
             player.earnPoints(settings.collectCreditAmount);
