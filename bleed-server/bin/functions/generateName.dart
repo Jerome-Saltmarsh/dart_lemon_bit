@@ -88,6 +88,7 @@ List<String> nouns = [
   "Rogue",
   "Thief",
   "Worm",
+  "Chicken"
   "Spider",
   "Crow",
   "Wolf",
@@ -101,7 +102,11 @@ List<String> nouns = [
   "Comet",
   "Thimble",
   "Needle",
-  "Thread"
+  "Thread",
+  "Shark",
+  "Fish",
+  "Sword",
+  "Knife",
 ];
 
 String generateName() {

@@ -2,7 +2,8 @@ enum ItemType {
   Health,
   Ammo,
   Grenade,
-  Credits
+  Credits,
+  Assault_Rifle
 }
 
 final List<ItemType> itemTypes = ItemType.values;

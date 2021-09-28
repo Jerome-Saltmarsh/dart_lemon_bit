@@ -224,7 +224,6 @@ class DeathMatch extends Game {
 
 class GameCasual extends Game {
   int totalSquads = 4;
-
   final int spawnGrenades = 1;
   final int spawnMeds = 1;
 
@@ -254,12 +253,19 @@ class GameCasual extends Game {
 
   @override
   void onPlayerKilled(Player player) {
-    player.resetPoints();
-    player.clips = spawnClip();
-    player.rounds = spawnRounds();
-    player.meds = spawnMeds;
-    player.grenades = spawnGrenades;
-    player.squad = getNextSquad();
+    resetPlayer(player);
+  }
+
+  @override
+  void onNpcKilled(Npc npc){
+    // @on npc killed
+    items.add(Item(type: ItemType.Assault_Rifle, x: npc.x, y: npc.y));
+    return;
+
+    if (chance(settings.chanceOfDropItem)) {
+      items.add(Item(type: randomValue(itemTypes), x: npc.x, y: npc.y));
+      return;
+    }
   }
 
   @override
@@ -325,12 +331,17 @@ class GameCasual extends Game {
       rounds: spawnRounds(),
     );
 
-    onPlayerRevived(player);
+    resetPlayer(player);
     return player;
   }
 
   @override
   void onPlayerRevived(Player player) {
+    resetPlayer(player);
+  }
+
+  void resetPlayer(Player player){
+    player.resetPoints();
     player.meds = spawnMeds;
     player.grenades = spawnGrenades;
     player.clips = spawnClip();
@@ -340,6 +351,7 @@ class GameCasual extends Game {
     player.acquiredShotgun = false;
     player.acquiredSniperRifle = false;
     player.acquiredAssaultRifle = false;
+    player.weapon = Weapon.HandGun;
   }
 }
 
@@ -393,10 +405,7 @@ abstract class Game {
   void onPlayerKilled(Player player);
 
   void onNpcKilled(Npc npc) {
-    if (chance(settings.chanceOfDropItem)) {
-      items.add(Item(type: randomValue(itemTypes), x: npc.x, y: npc.y));
-      return;
-    }
+
   }
 
   void onPlayerDisconnected(Player player) {}
@@ -1357,7 +1366,6 @@ extension GameFunctions on Game {
         continue;
       }
       double r = 15; // TODO add to settings
-      int healAmount = 5; // TODO add to settings
       for (Player player in players) {
         if (diff(item.x, player.x) > r) continue;
         if (diff(item.y, player.y) > r) continue;
@@ -1365,6 +1373,13 @@ extension GameFunctions on Game {
         // @on item collectable
 
         switch (item.type) {
+          case ItemType.Assault_Rifle:
+            if (player.acquiredAssaultRifle) continue;
+            // @on assault rifle acquired
+            player.acquiredAssaultRifle = true;
+            player.clips.assaultRifle = settings.maxClips.assaultRifle;
+            player.rounds.assaultRifle = settings.clipSize.assaultRifle;
+            break;
           case ItemType.Credits:
             player.earnPoints(settings.collectCreditAmount);
             break;

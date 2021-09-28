@@ -9,6 +9,7 @@
 [ ] Throw Animation
 [ ] Line of Sight
 [ ] Particle Gunshot smoke
+[ ] Faster to walk on concrete than grass, mud is very slow.
 [ ] Zombie Hurt Animation
 [ ] Grenade tile collision
 [ ] Stamina Potion
@@ -34,7 +35,9 @@
 [ ] Improve Connection Failed Dialog
 [ ] Activate Shield
 [ ] Heal animation
+[ ] Find Promotions for you weapons
 [ ] Body Armor
+[ ] Prevent Blood from bouncing
 [ ] Connect to specific container instance
     [ ] Support auto reconnect
     [ ] Invite friend to container
@@ -58,7 +61,6 @@
 -- UI --
 [ ] Compact Score Mode 
 -- OPTIMIZATIONS --
-[ ] Rebuilding the ui unnecessarily is extremely expensive
 -- OPEN WORLD -- 
 [ ] Npc Talk Text
 [ ] Complete Quests to earn income and unlock upgrades
@@ -74,9 +76,12 @@
 [ ] Design Level, City
 [ ] Disable spawn npcs request
 [ ] Fix GCP Security
+[ ] Collect item audio
+[ ] Collect item text floating text
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong
 -- COMPLETED --
+[x] Rebuilding the ui unnecessarily is extremely expensive
 [x] Improve Connection screen 
     [x] Add cancel button
     [x] Show animation
@@ -289,10 +294,12 @@
 [x] Deploy Server on GCP
 [x] Isometric characters
 
-
 # Symbolic Hard Link
 mklink /J common C:\Users\Jerome\github\bleed\bleed-common\lib
 
-
 // IDEAS
 // Captured Flags increase passive income
+
+#Goal
+The goal is to build something that people enjoy playing. If I can get a user base that plays consistently
+then that is success for me.

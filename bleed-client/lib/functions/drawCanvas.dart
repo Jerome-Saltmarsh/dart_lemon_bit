@@ -167,6 +167,9 @@ void drawCollectable(CollectableType type, double x, double y) {
     case CollectableType.Shotgun_Ammo:
       drawSprite(images.imageCollectables, 4, 4, x, y);
       break;
+    case CollectableType.Shotgun_Ammo:
+      drawSprite(images.imageCollectables, 4, 4, x, y);
+      break;
   }
 }
 
