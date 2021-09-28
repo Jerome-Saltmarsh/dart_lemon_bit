@@ -74,13 +74,15 @@
 [ ] Rounds
 -- CASUAL --
 [ ] Send custom news updates to client
-[ ] Purchase Desert Eagle
 [ ] Loot Box (Gain extra points when destroyed)
 [ ] Design Level, City
 [ ] Disable spawn npcs request
 [ ] Fix GCP Security
 [ ] Collect item audio
 [ ] Collect item text floating text
+[ ] Collect Magnum
+[ ] Collect Shotgun
+[ ] Collect Sniper Rifle
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong
 -- COMPLETED --

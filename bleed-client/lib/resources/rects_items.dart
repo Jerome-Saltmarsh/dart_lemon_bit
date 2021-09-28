@@ -15,6 +15,12 @@ Rect mapItemToRect(ItemType item) {
       return _grenade[0];
     case ItemType.Credits:
       return _credits[0];
+    case ItemType.Handgun:
+      return _handgun[0];
+    case ItemType.Shotgun:
+      return _shotgun[0];
+    case ItemType.SniperRifle:
+      return _sniper[0];
     case ItemType.Assault_Rifle:
       return _assaultRifle[0];
     default:
@@ -29,7 +35,10 @@ final List<Rect> _ammo = _itemFrames([1]);
 final List<Rect> _grenade = _itemFrames([2]);
 final List<Rect> _credits = _itemFrames([3]);
 final List<Rect> _assaultRifle = _itemFrames([4]);
-final List<Rect> _health = _itemFrames([6]);
+final List<Rect> _handgun = _itemFrames([5]);
+final List<Rect> _shotgun = _itemFrames([6]);
+final List<Rect> _sniper = _itemFrames([7]);
+final List<Rect> _health = _itemFrames([8]);
 final int _healthFrames = _health.length;
 
 List<Rect> _itemFrames(List<int> indexes) {

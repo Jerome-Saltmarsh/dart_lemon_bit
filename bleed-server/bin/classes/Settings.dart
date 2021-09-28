@@ -32,9 +32,9 @@ class Settings {
 
 class _ClipSize {
   final int handgun = 24;
-  final int shotgun = 6;
-  final int sniperRifle = 5;
-  final int assaultRifle = 50;
+  final int shotgun = 20;
+  final int sniperRifle = 15;
+  final int assaultRifle = 150;
 }
 
 class _MaxClips {

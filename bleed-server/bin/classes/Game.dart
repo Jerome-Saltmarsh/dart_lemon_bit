@@ -1372,6 +1372,42 @@ extension GameFunctions on Game {
         // @on item collectable
 
         switch (item.type) {
+          case ItemType.Handgun:
+          // @on handgun acquired
+            if (player.acquiredHandgun) {
+              if (player.clips.handgun >= settings.maxClips.handgun) continue;
+              player.clips.handgun++;
+              break;
+            }
+            player.acquiredHandgun = true;
+            player.clips.handgun = settings.maxClips.handgun;
+            player.rounds.handgun = settings.clipSize.handgun;
+            player.weapon = Weapon.HandGun;
+            break;
+          case ItemType.Shotgun:
+          // @on handgun acquired
+            if (player.acquiredShotgun) {
+              if (player.clips.shotgun >= settings.maxClips.shotgun) continue;
+              player.clips.shotgun++;
+              break;
+            }
+            player.acquiredShotgun = true;
+            player.clips.shotgun = settings.maxClips.shotgun;
+            player.rounds.shotgun = settings.clipSize.shotgun;
+            player.weapon = Weapon.Shotgun;
+            break;
+          case ItemType.SniperRifle:
+          // @on handgun acquired
+            if (player.acquiredSniperRifle) {
+              if (player.clips.sniperRifle >= settings.maxClips.sniperRifle) continue;
+              player.clips.sniperRifle++;
+              break;
+            }
+            player.acquiredSniperRifle = true;
+            player.clips.sniperRifle = settings.maxClips.sniperRifle;
+            player.rounds.sniperRifle = settings.clipSize.sniperRifle;
+            player.weapon = Weapon.SniperRifle;
+            break;
           case ItemType.Assault_Rifle:
             // @on assault rifle acquired
             if (player.acquiredAssaultRifle) {
@@ -1396,6 +1432,10 @@ extension GameFunctions on Game {
             player.grenades++;
             break;
           case ItemType.Ammo:
+            if (player.acquiredAssaultRifle){
+              player.rounds.assaultRifle = min(player.rounds.assaultRifle + 20, settings.clipSize.assaultRifle);
+            }
+
             switch (player.weapon) {
               case Weapon.HandGun:
                 if (player.clips.handgun >= settings.maxClips.handgun) continue;
