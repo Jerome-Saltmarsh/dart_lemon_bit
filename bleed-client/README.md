@@ -74,18 +74,18 @@
 [ ] Rounds
 -- CASUAL --
 [ ] Send custom news updates to client
-[ ] Loot Box (Gain extra points when destroyed)
+[ ] Loot Box (Drops Item when destroyed)
 [ ] Design Level, City
 [ ] Disable spawn npcs request
 [ ] Fix GCP Security
 [ ] Collect item audio
 [ ] Collect item text floating text
-[ ] Collect Magnum
-[ ] Collect Shotgun
-[ ] Collect Sniper Rifle
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong
 -- COMPLETED --
+[x] Collect Magnum
+[x] Collect Shotgun
+[x] Collect Sniper Rifle
 [x] Rebuilding the ui unnecessarily is extremely expensive
 [x] Improve Connection screen 
     [x] Add cancel button

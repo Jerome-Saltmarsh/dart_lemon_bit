@@ -724,6 +724,7 @@ extension GameFunctions on Game {
             npc.clearTarget();
           }
         } else if (character is Npc) {
+          character.clearTarget();
           onNpcKilled(character);
         }
         return;
@@ -1209,6 +1210,8 @@ extension GameFunctions on Game {
       npc.health = 3;
       npc.x = x;
       npc.y = y;
+      npc.yv = 0;
+      npc.xv = 0;
       onNpcSpawned(npc);
       return npc;
     }
