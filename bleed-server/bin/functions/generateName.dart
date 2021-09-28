@@ -34,7 +34,8 @@ List<String> adjectives = [
   "Bad",
   "Cold",
   "Strange",
-  "Lost"
+  "Lost",
+  "Crispy"
 ];
 
 List<String> nouns = [
@@ -107,6 +108,7 @@ List<String> nouns = [
   "Fish",
   "Sword",
   "Knife",
+  "Cactus"
 ];
 
 String generateName() {

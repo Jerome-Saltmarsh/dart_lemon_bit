@@ -259,7 +259,7 @@ class GameCasual extends Game {
   @override
   void onNpcKilled(Npc npc){
     // @on npc killed
-    // items.add(Item(type: ItemType.Assault_Rifle, x: npc.x, y: npc.y));
+    // items.add(Item(type: ItemType.Health, x: npc.x, y: npc.y));
     // return;
     if (chance(settings.chanceOfDropItem)) {
       items.add(Item(type: randomValue(itemTypes), x: npc.x, y: npc.y));
@@ -1388,8 +1388,8 @@ extension GameFunctions on Game {
             player.earnPoints(settings.collectCreditAmount);
             break;
           case ItemType.Health:
-            if (player.meds >= settings.maxMeds) continue;
-            player.meds++;
+            if (player.health >= player.maxHealth) continue;
+            player.health = player.maxHealth;
             break;
           case ItemType.Grenade:
             if (player.grenades >= settings.maxGrenades) continue;

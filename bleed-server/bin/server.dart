@@ -177,6 +177,7 @@ void main() {
           return;
 
         case ClientRequest.Player_Use_MedKit:
+          return;
           Game? game = findGameById(arguments[1]);
           if (game == null) {
             errorGameNotFound();

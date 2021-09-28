@@ -27,6 +27,7 @@ class Player {
 
   bool get dead => state == CharacterState.Dead;
   bool get alive => !dead;
-  bool get canPurchase => tile == Tile.PlayerSpawn;
+  // bool get canPurchase => tile == Tile.PlayerSpawn;
+  bool get canPurchase => false;
 }
 

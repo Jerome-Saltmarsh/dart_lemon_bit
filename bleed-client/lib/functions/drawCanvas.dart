@@ -66,12 +66,12 @@ void _drawCompiledGame() {
     drawCircle(npc[x], npc[y], 10, orange);
   }
 
-  _renderItems();
   _drawBullets(compiledGame.bullets);
   drawBulletHoles(compiledGame.bulletHoles);
   _drawGrenades(compiledGame.grenades);
-  _drawBlocks();
+  // _drawBlocks();
   _drawParticles(compiledGame.particles);
+  _renderItems();
   drawCharacters();
   drawEditMode();
   _drawCollectables();
@@ -109,7 +109,6 @@ void _drawCompiledGame() {
 }
 
 void _renderItems() {
-  // TODO Refactor
   clear(render.items);
   for (int i = 0; i < compiledGame.totalItems; i++) {
     render.items.transforms.add(mapItemToRSTransform(compiledGame.items[i]));
