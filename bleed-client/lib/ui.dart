@@ -1403,7 +1403,7 @@ Widget buildViewScore() {
                           children: [
                             Container(
                                 width: 140,
-                                child: text('$index ${score.playerName}',
+                                child: text('${index + 1}. ${score.playerName}',
                                     color: score.playerName == playerName
                                         ? blood
                                         : Colors.white)),
