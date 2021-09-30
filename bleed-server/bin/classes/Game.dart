@@ -747,23 +747,23 @@ extension GameFunctions on Game {
         break;
       case CharacterState.Striking:
         // @on character striking
-        character.stateDuration = 10;
+        character.stateDuration = settings.knifeAttackDuration;
         if (character is Player) {
-          double d = 10;
-          double frontX = character.x + velX(character.aimAngle, d);
-          double frontY = character.y + velY(character.aimAngle, d);
+          double frontX = character.x + velX(character.aimAngle, settings.knifeRange);
+          double frontY = character.y + velY(character.aimAngle, settings.knifeRange);
           for (Npc npc in npcs) {
             // @on zombie struck by player
             if (!npc.alive) continue;
             if (!npc.active) continue;
-            if (diff(npc.x, frontX) > 20) continue;
-            if (diff(npc.y, frontY) > 20) continue;
-            double d = 5;
-            npc.xv += velX(character.aimAngle, d);
-            npc.yv += velY(character.aimAngle, d);
-            changeCharacterHealth(npc, -1);
+            if (diffOver(npc.x, frontX, settings.characterRadius)) continue;
+            if (diffOver(npc.y, frontY, settings.characterRadius)) continue;
+            npc.xv += velX(character.aimAngle, settings.knifeHitAcceleration);
+            npc.yv += velY(character.aimAngle, settings.knifeHitAcceleration);
+            changeCharacterHealth(npc, -settings.knifeDamage);
             return;
           }
+
+          //
         }
         break;
       case CharacterState.Reloading:
@@ -850,24 +850,14 @@ extension GameFunctions on Game {
     }
 
     bullets.sort(compareGameObjects);
-    // _checkBulletBlockCollision();
     checkBulletCollision(npcs);
     checkBulletCollision(players);
 
     for (int i = 0; i < crates.length; i++) {
       if (!crates[i].active) continue;
       Crate crate = crates[i];
-      for (Character character in players) {
-        if (!character.active) continue;
-        if (diffOver(crate.x, character.x, settings.crateRadius)) continue;
-        if (diffOver(crate.y, character.y, settings.crateRadius)) continue;
-        double dis = distance(crate.x, crate.y, character.x, character.y);
-        if (dis >= settings.crateRadius) continue;
-        double b = settings.crateRadius - dis;
-        double r = radiansBetween(crate.x, crate.y, character.x, character.y);
-        character.x += adj(r, b);
-        character.y += opp(r, b);
-      }
+      applyCratePhysics(crate, players);
+      applyCratePhysics(crate, npcs);
 
       for (int j = 0; j < bullets.length; j++) {
         if (!bullets[j].active) continue;
@@ -1510,5 +1500,19 @@ extension GameFunctions on Game {
         i--;
       }
     }
+  }
+}
+
+void applyCratePhysics(Crate crate, List<Character> characters) {
+  for (Character character in characters) {
+    if (!character.active) continue;
+    if (diffOver(crate.x, character.x, settings.crateRadius)) continue;
+    if (diffOver(crate.y, character.y, settings.crateRadius)) continue;
+    double dis = distance(crate.x, crate.y, character.x, character.y);
+    if (dis >= settings.crateRadius) continue;
+    double b = settings.crateRadius - dis;
+    double r = radiansBetween(crate.x, crate.y, character.x, character.y);
+    character.x += adj(r, b);
+    character.y += opp(r, b);
   }
 }

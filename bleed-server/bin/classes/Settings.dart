@@ -9,6 +9,11 @@ class Settings {
   final double crateRadius = 22;
 
   final double handgunAccuracy = 0.05;
+  final double knifeRange = 15;
+  final double knifeHitAcceleration = 5;
+  final double knifeDamage = 1;
+  final double characterRadius = 20;
+  final int knifeAttackDuration = 10;
   final double sniperRifleAccuracy = 0;
   final double shotgunAccuracy = 0.15;
   final double itemCollectRadius = 10;
