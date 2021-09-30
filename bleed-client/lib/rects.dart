@@ -22,6 +22,8 @@ Rect rectParticleArm = rect(3, 64, 64);
 Rect rectParticleOrgan = rect(4, 64, 64);
 Rect rectParticleShell = rect(5, 64, 64);
 
+Rect rectCrate = rect(1, 48, 72);
+
 
 Rect rect(int index, double width, double height){
   return Rect.fromLTWH(width * (index - 1), 0, width, height);

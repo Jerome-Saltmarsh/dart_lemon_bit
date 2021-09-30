@@ -14,10 +14,12 @@ import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/instances/settings.dart';
+import 'package:bleed_client/mappers/mapCrateToRSTransform.dart';
 import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/properties.dart';
-import 'package:bleed_client/resources/rects_items.dart';
+import 'package:bleed_client/mappers/mapItemToRect.dart';
+import 'package:bleed_client/rects.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -112,9 +114,12 @@ void _drawCompiledGame() {
 }
 
 void _drawCrates() {
-  for(int i = 0; i < compiledGame.cratesTotal; i++){
-    _drawCrate(compiledGame.crates[i]);
+  clear(render.crates);
+  for (int i = 0; i < compiledGame.cratesTotal; i++) {
+    render.crates.transforms.add(mapCrateToRSTransform((compiledGame.crates[i])));
+    render.crates.rects.add(rectCrate);
   }
+  drawAtlases(images.crate, render.crates.transforms, render.crates.rects);
 }
 
 void _drawCratesEditor() {

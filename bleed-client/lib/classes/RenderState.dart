@@ -28,4 +28,5 @@ class _RenderState {
   List<FloatingText> floatingText = [];
 
   Render items = Render();
+  Render crates = Render();
 }

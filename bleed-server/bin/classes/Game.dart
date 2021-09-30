@@ -858,8 +858,8 @@ extension GameFunctions on Game {
       if (!crates[i].active) continue;
       for (int j = 0; j < bullets.length; j++) {
         if (!bullets[j].active) continue;
-        if (diffOver(crates[i].x, bullets[j].x, 7)) continue;
-        if (diffOver(crates[i].y, bullets[j].y, 7)) continue;
+        if (diffOver(crates[i].x, bullets[j].x, settings.crateRadius)) continue;
+        if (diffOver(crates[i].y, bullets[j].y, settings.crateRadius)) continue;
         // @on crate struck by bullet
         spawnRandomItem(crates[i].x, crates[i].y);
         crates[i].deactiveDuration = settings.crateDeactiveDuration;

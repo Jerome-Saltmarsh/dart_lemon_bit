@@ -6,6 +6,7 @@ class Settings {
   final double machineGunBulletSpeed = 18;
 
   final int crateDeactiveDuration = 1000;
+  final double crateRadius = 10;
 
   final double handgunAccuracy = 0.05;
   final double sniperRifleAccuracy = 0;
