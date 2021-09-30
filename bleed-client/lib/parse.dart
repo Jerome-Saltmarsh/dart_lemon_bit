@@ -148,6 +148,14 @@ void parseState() {
         _consumeEvents();
         break;
 
+      case ServerResponse.Crates:
+        compiledGame.cratesTotal = 0;
+        while (!_simiColonConsumed()) {
+          compiledGame.crates[compiledGame.cratesTotal].x = _consumeDouble();
+          compiledGame.crates[compiledGame.cratesTotal].y = _consumeDouble();
+          compiledGame.cratesTotal++;
+        }
+        break;
       case ServerResponse.Grenades:
         _parseGrenades();
         break;

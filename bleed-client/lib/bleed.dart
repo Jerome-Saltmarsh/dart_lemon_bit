@@ -26,6 +26,10 @@ void initBleed() {
     compiledGame.items.add(Item());
   }
 
+  for (int i = 0; i < 2000; i++) {
+    compiledGame.crates.add(Vector2(0, 0));
+  }
+
   for (int i = 0; i < settings.maxBulletHoles; i++) {
     compiledGame.bulletHoles.add(Vector2(0, 0));
   }

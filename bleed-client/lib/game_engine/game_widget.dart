@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/game_engine/web_functions.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -34,6 +35,8 @@ double get mouseWorldX => convertScreenToWorldX(mouseX ?? 0);
 double get mouseWorldY => convertScreenToWorldY(mouseY ?? 0);
 
 Offset get mouseWorld => Offset(mouseWorldX, mouseWorldY);
+
+Vector2 get mouseWorldV2 => Vector2(mouseWorldX, mouseWorldY);
 
 double get screenCenterX => screenWidth * 0.5;
 

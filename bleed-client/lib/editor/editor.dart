@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Tile.dart';
+import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/functions/saveScene.dart';
@@ -107,9 +108,13 @@ void _handleKeyPressed(RawKeyEvent event) {
 
   if (event is RawKeyDownEvent) {
     if (event.logicalKey == LogicalKeyboardKey.keyC) {
-      print("Adding crate");
-      compiledGame.crates.add(mouseWorld);
-      redrawCanvas();
+      for (Vector2 position in compiledGame.crates) {
+        if (!position.isZero) continue;
+        position.x = mouseWorldX;
+        position.y = mouseWorldY;
+        redrawCanvas();
+        return;
+      }
     }
     if (event.logicalKey == LogicalKeyboardKey.keyP) {
       compiledGame.playerSpawnPoints.add(mouseWorld);

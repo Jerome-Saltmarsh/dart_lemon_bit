@@ -1,6 +1,7 @@
 import 'classes.dart';
 import 'classes/Block.dart';
 import 'classes/Collectable.dart';
+import 'classes/Crate.dart';
 import 'classes/Game.dart';
 import 'classes/Inventory.dart';
 import 'classes/Item.dart';
@@ -36,7 +37,7 @@ void compileGame(Game game) {
   if (game.compilePaths) {
     _compilePaths(game.buffer, game.npcs);
   }
-
+  _compileCrates(game);
   _compileItems(game.buffer, game.items);
 
   if (game is Fortress) {
@@ -48,6 +49,15 @@ void compileGame(Game game) {
   }
 
   game.compiled = game.buffer.toString();
+}
+
+void _compileCrates(Game game) {
+  _write(game.buffer, ServerResponse.Crates.index);
+  for(Crate crate in game.crates){
+    _write(game.buffer, crate.position.x.toInt());
+    _write(game.buffer, crate.position.y.toInt());
+  }
+  _write(game.buffer, _semiColon);
 }
 
 void _compileItems(StringBuffer buffer, List<Item> items) {

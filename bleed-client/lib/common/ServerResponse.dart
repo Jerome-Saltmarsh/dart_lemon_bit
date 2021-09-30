@@ -24,4 +24,5 @@ enum ServerResponse {
   Player_Events,
   Items,
   Version,
+  Crates,
 }

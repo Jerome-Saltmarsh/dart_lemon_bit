@@ -38,7 +38,7 @@ void drawCanvas(Canvas canvass, Size _size) {
 
   if (editMode) {
     drawTiles();
-    _drawCrates();
+    _drawCratesEditor();
     return;
   }
 
@@ -112,9 +112,20 @@ void _drawCompiledGame() {
 }
 
 void _drawCrates() {
-  for (Offset crate in compiledGame.crates) {
-    drawCircle(crate.dx, crate.dy, 10, Colors.white);
+  for(int i = 0; i < compiledGame.cratesTotal; i++){
+    _drawCrate(compiledGame.crates[i]);
   }
+}
+
+void _drawCratesEditor() {
+  for(Vector2 position in compiledGame.crates){
+    if(position.isZero) break;
+    _drawCrate(position);
+  }
+}
+
+void _drawCrate(Vector2 position){
+  drawCircle(position.x, position.y, 10, Colors.white);
 }
 
 void _renderItems() {
