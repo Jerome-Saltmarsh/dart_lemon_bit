@@ -90,7 +90,7 @@ List<Rect> _runningUp = _frames([62, 63, 64, 63]);
 List<Rect> _runningUpRight = _frames([65, 66, 67, 66]);
 List<Rect> _runningRight = _frames([68, 69, 70, 69]);
 List<Rect> _runningDownRight = _frames([71, 72, 73, 72]);
-List<Rect> _runningDown = _frames([63, 64, 65, 64]);
+List<Rect> _runningDown = _frames([62, 63, 64, 63]);
 
 List<Rect> _reloadingDownLeft = _frames([74, 74, 74, 75, 75, 75]);
 List<Rect> _reloadingLeft = _frames([76, 76, 76, 77, 77, 77]);

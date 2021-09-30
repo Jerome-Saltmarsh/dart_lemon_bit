@@ -80,10 +80,12 @@
 [ ] Collect item audio
 [ ] Standing on home base heals health && refills handgun ammo
 [ ] Collect item text floating text
+[ ] Crate broken animation
+[ ] Crate boundary physics
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong
-[ ] Sprint down human sprite wrong
 -- COMPLETED --
+[x] Sprint down human sprite wrong
 [x] Loot Box (Drops Item when destroyed)
 [x] Bullets not being draw
 [x] Collect Magnum
