@@ -13,7 +13,7 @@ class Settings {
   final double knifeHitAcceleration = 5;
   final double knifeDamage = 1;
   final double characterRadius = 20;
-  final int knifeAttackDuration = 10;
+  final int knifeAttackDuration = 15;
   final double sniperRifleAccuracy = 0;
   final double shotgunAccuracy = 0.15;
   final double itemCollectRadius = 10;

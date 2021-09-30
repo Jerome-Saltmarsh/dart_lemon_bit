@@ -706,6 +706,10 @@ extension GameFunctions on Game {
     if (character.state == value) return;
     if (value != CharacterState.Dead && character.busy) return;
 
+    if(character.striking){
+      print(character.stateDuration);
+    }
+
     switch (value) {
       case CharacterState.Running:
         // @on character running
@@ -748,23 +752,6 @@ extension GameFunctions on Game {
       case CharacterState.Striking:
         // @on character striking
         character.stateDuration = settings.knifeAttackDuration;
-        if (character is Player) {
-          double frontX = character.x + velX(character.aimAngle, settings.knifeRange);
-          double frontY = character.y + velY(character.aimAngle, settings.knifeRange);
-          for (Npc npc in npcs) {
-            // @on zombie struck by player
-            if (!npc.alive) continue;
-            if (!npc.active) continue;
-            if (diffOver(npc.x, frontX, settings.characterRadius)) continue;
-            if (diffOver(npc.y, frontY, settings.characterRadius)) continue;
-            npc.xv += velX(character.aimAngle, settings.knifeHitAcceleration);
-            npc.yv += velY(character.aimAngle, settings.knifeHitAcceleration);
-            changeCharacterHealth(npc, -settings.knifeDamage);
-            return;
-          }
-
-          //
-        }
         break;
       case CharacterState.Reloading:
         // @on reload weapon
@@ -864,12 +851,17 @@ extension GameFunctions on Game {
         if (diffOver(crate.x, bullets[j].x, settings.crateRadius)) continue;
         if (diffOver(crate.y, bullets[j].y, settings.crateRadius)) continue;
         // @on crate struck by bullet
-        spawnRandomItem(crate.x, crate.y);
-        crate.deactiveDuration = settings.crateDeactiveDuration;
+        breakCrate(crate);
         bullets[j].active = false;
         break;
       }
     }
+  }
+
+  void breakCrate(Crate crate) {
+    // @on break crate
+    spawnRandomItem(crate.x, crate.y);
+    crate.deactiveDuration = settings.crateDeactiveDuration;
   }
 
   void spawnRandomItem(double x, double y) {
@@ -946,24 +938,55 @@ extension GameFunctions on Game {
     }
   }
 
+  // TODO Optimize
   void updatePlayer(Player player) {
-    if (player.lastEventFrame++ > 5 && player.walking) {
-      setCharacterStateIdle(player);
-    }
+    switch (player.state) {
+      case CharacterState.Running:
+        player.stamina -= 3;
+        if (player.stamina <= 0) {
+          setCharacterState(player, CharacterState.Walking);
+        }
+        break;
+      case CharacterState.Walking:
+        player.stamina += settings.staminaRefreshRate;
+        if (player.lastEventFrame++ > 5) {
+          setCharacterStateIdle(player);
+        }
+        break;
+      case CharacterState.Idle:
+        player.stamina += settings.staminaRefreshRate;
+        break;
+      case CharacterState.Aiming:
+        player.stamina += settings.staminaRefreshRate;
+        break;
+      case CharacterState.Firing:
+        player.stamina += settings.staminaRefreshRate;
+        break;
+      case CharacterState.Striking:
+        if (player.stateDuration == 8) {
+          double frontX = player.x + velX(player.aimAngle, settings.knifeRange);
+          double frontY =
+              player.y + velY(player.aimAngle, settings.knifeRange);
 
-    if (player.running) {
-      player.stamina -= 3;
-      if (player.stamina <= 0) {
-        setCharacterState(player, CharacterState.Walking);
-      }
-    } else if (player.walking) {
-      player.stamina += settings.staminaRefreshRate;
-    } else if (player.idling) {
-      player.stamina += settings.staminaRefreshRate;
-    } else if (player.aiming) {
-      player.stamina += settings.staminaRefreshRate;
-    } else if (player.firing) {
-      player.stamina += settings.staminaRefreshRate;
+          for (Npc npc in npcs) {
+            // @on zombie struck by player
+            if (!npc.alive) continue;
+            if (!npc.active) continue;
+            if (diffOver(npc.x, frontX, settings.characterRadius)) continue;
+            if (diffOver(npc.y, frontY, settings.characterRadius)) continue;
+            npc.xv += velX(player.aimAngle, settings.knifeHitAcceleration);
+            npc.yv += velY(player.aimAngle, settings.knifeHitAcceleration);
+            changeCharacterHealth(npc, -settings.knifeDamage);
+            return;
+          }
+
+          for (Crate crate in crates) {
+            if (!crate.active) continue;
+            if (diffOver(crate.x, frontX, settings.crateRadius)) continue;
+            if (diffOver(crate.y, frontY, settings.crateRadius)) continue;
+            breakCrate(crate);
+          }
+        }
     }
     player.stamina = clampInt(player.stamina, 0, player.maxStamina);
     player.currentTile = scene.tileAt(player.x, player.y);
@@ -1135,6 +1158,8 @@ extension GameFunctions on Game {
             character.y += velY(piQuarter, character.speed);
             break;
         }
+        break;
+      case CharacterState.Striking:
         break;
       case CharacterState.Running:
         double runRatio = character.speed * (1.0 + goldenRatioInverse);

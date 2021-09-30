@@ -81,10 +81,11 @@
 [ ] Standing on home base heals health && refills handgun ammo
 [ ] Collect item text floating text
 [ ] Crate broken animation
-[ ] Break crate with knife
+[ ] Sniper bullet goes through multiple enemies
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong
 -- COMPLETED --
+[x] Break crate with knife
 [x] Crate boundary physics
 [x] Sprint down human sprite wrong
 [x] Loot Box (Drops Item when destroyed)

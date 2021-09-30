@@ -198,49 +198,41 @@ class _Striking {
   List<Rect> up = [
     _frame(4),
     _frame(36),
-    _frame(4),
   ];
 
   List<Rect> upRight = [
     _frame(1),
     _frame(37),
-    _frame(1),
   ];
 
   List<Rect> right = [
     _frame(2),
     _frame(38),
-    _frame(2),
   ];
 
   List<Rect> downRight = [
     _frame(3),
     _frame(39),
-    _frame(3),
   ];
 
   List<Rect> down = [
     _frame(4),
     _frame(40),
-    _frame(4),
   ];
 
   List<Rect> downLeft = [
     _frame(1),
     _frame(33),
-    _frame(1),
   ];
 
   List<Rect> left = [
     _frame(2),
     _frame(34),
-    _frame(2),
   ];
 
   List<Rect> upLeft = [
     _frame(3),
     _frame(35),
-    _frame(3),
   ];
 }
 
