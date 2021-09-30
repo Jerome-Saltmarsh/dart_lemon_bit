@@ -4,8 +4,34 @@ import 'package:bleed_client/common/Weapons.dart';
 
 import '../common.dart';
 import '../keys.dart';
-import 'rects_utils.dart';
+import '../resources/rects_utils.dart';
 
+// interface
+Rect mapHumanToRect(dynamic character) {
+  switch (character[stateIndex]) {
+    case characterStateIdle:
+      return _mapIdleRect(character);
+    case characterStateWalking:
+      return _mapWalkingRect(character);
+    case characterStateDead:
+      return _mapDeadRect(character);
+    case characterStateAiming:
+      return _mapAimingRect(character);
+    case characterStateFiring:
+      return _mapFiringRect(character);
+    case characterStateStriking:
+      return _mapStrikingRect(character);
+    case characterStateRunning:
+      return _mapRunningRect(character);
+    case characterStateReloading:
+      return _mapReloadingRect(character);
+    case characterStateChangingWeapon:
+      return _mapReloadingRect(character);
+  }
+  throw Exception("Could not get character sprite rect");
+}
+
+// abstraction
 const int _humanSpriteFrameWidth = 36;
 const int _humanSpriteFrameHeight = 35;
 const double halfHumanSpriteFrameWidth = _humanSpriteFrameWidth * 0.5;
@@ -102,7 +128,7 @@ Rect _getHumanSpriteRect(int index) {
       _humanSpriteFrameWidth.toDouble(), _humanSpriteFrameHeight.toDouble());
 }
 
-Rect getHumanWalkingRect(dynamic character) {
+Rect _mapWalkingRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
       return getFrameLoop(_walkingUp, character);
@@ -124,7 +150,7 @@ Rect getHumanWalkingRect(dynamic character) {
   throw Exception("Could not get character walking sprite rect");
 }
 
-Rect getHumanReloadingRect(dynamic character) {
+Rect _mapReloadingRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
       return getFrameLoop(_reloadingUp, character);
@@ -146,7 +172,7 @@ Rect getHumanReloadingRect(dynamic character) {
   throw Exception("Could not get character reloading sprite rect");
 }
 
-Rect getHumanRunningRect(dynamic character) {
+Rect _mapRunningRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
       return getFrameLoop(_runningUp, character);
@@ -168,7 +194,7 @@ Rect getHumanRunningRect(dynamic character) {
   throw Exception("Could not get character walking sprite rect");
 }
 
-Rect getHumanIdleRect(dynamic character) {
+Rect _mapIdleRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
       return _idleUp;
@@ -190,7 +216,7 @@ Rect getHumanIdleRect(dynamic character) {
   throw Exception("Could not get character walking sprite rect");
 }
 
-Rect getHumanDeadRect(dynamic character) {
+Rect _mapDeadRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
       return _deadDown;
@@ -212,7 +238,7 @@ Rect getHumanDeadRect(dynamic character) {
   throw Exception("Could not get character dead sprite rect");
 }
 
-Rect getHumanAimRect(dynamic character) {
+Rect _mapAimingRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
       return _aimingUp;
@@ -234,40 +260,16 @@ Rect getHumanAimRect(dynamic character) {
   throw Exception("Could not get character dead sprite rect");
 }
 
-Rect getCharacterSpriteRect(dynamic character) {
-  switch (character[stateIndex]) {
-    case characterStateIdle:
-      return getHumanIdleRect(character);
-    case characterStateWalking:
-      return getHumanWalkingRect(character);
-    case characterStateDead:
-      return getHumanDeadRect(character);
-    case characterStateAiming:
-      return getHumanAimRect(character);
-    case characterStateFiring:
-      return getHumanFiringRect(character);
-    case characterStateStriking:
-      return getHumanStrikingRect(character);
-    case characterStateRunning:
-      return getHumanRunningRect(character);
-    case characterStateReloading:
-      return getHumanReloadingRect(character);
-    case characterStateChangingWeapon:
-      return getHumanReloadingRect(character);
-  }
-  throw Exception("Could not get character sprite rect");
-}
-
-Rect getHumanFiringRect(dynamic character) {
+Rect _mapFiringRect(dynamic character) {
   switch (character[weapon]) {
     case Weapon.Shotgun:
-      return getRectShotgunFiring(character);
+      return _mapFiringShotgunRect(character);
     default:
-      return getHandgunFiringRect(character);
+      return _mapFiringRifleRect(character);
   }
 }
 
-Rect getHandgunFiringRect(dynamic character) {
+Rect _mapFiringRifleRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
       return getFrame(_firingRifleUp, character);
@@ -289,7 +291,7 @@ Rect getHandgunFiringRect(dynamic character) {
   throw Exception("could not get firing frame from direction");
 }
 
-Rect getRectShotgunFiring(dynamic character) {
+Rect _mapFiringShotgunRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
       return getFrame(_firingShotgunUp, character);
@@ -311,7 +313,7 @@ Rect getRectShotgunFiring(dynamic character) {
   throw Exception("could not get firing frame from direction");
 }
 
-Rect getHumanStrikingRect(character) {
+Rect _mapStrikingRect(character) {
   switch (character[direction]) {
     case directionUp:
       return getFrameLoop(_strikingUp, character);

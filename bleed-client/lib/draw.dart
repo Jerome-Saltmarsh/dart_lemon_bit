@@ -6,8 +6,8 @@ import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
-import 'package:bleed_client/resources/rects_tiles.dart';
-import 'package:bleed_client/resources/rects_zombie.dart';
+import 'package:bleed_client/mappers/mapTileToRect.dart';
+import 'package:bleed_client/mappers/mapZombieToRect.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -17,8 +17,7 @@ import 'common/Tile.dart';
 import 'functions/drawParticle.dart';
 import 'keys.dart';
 import 'rects.dart';
-import 'resources/rects.dart';
-import 'resources/rects_human.dart';
+import 'mappers/mapHumanToRect.dart';
 import 'state.dart';
 import 'utils.dart';
 
@@ -48,7 +47,7 @@ void drawCharacterList(List<dynamic> characters) {
   globalCanvas.drawAtlas(
       images.imageCharacter,
       characters.map(getCharacterTransform).toList(),
-      characters.map(getCharacterSpriteRect).toList(),
+      characters.map(mapHumanToRect).toList(),
       null,
       null,
       null,
@@ -94,7 +93,7 @@ void drawPlayers() {
   for (int i = 0; i < compiledGame.totalPlayers; i++) {
     render.playersTransforms
         .add(getCharacterTransform(compiledGame.players[i]));
-    render.playersRects.add(getCharacterSpriteRect(compiledGame.players[i]));
+    render.playersRects.add(mapHumanToRect(compiledGame.players[i]));
   }
   drawAtlases(images.imageCharacter, render.playersTransforms, render.playersRects);
 }
@@ -118,9 +117,9 @@ void drawList(
       transforms[i] = getCharacterTransform(values[i]);
     }
     if (i >= rects.length) {
-      rects.add(getCharacterSpriteRect(values[i]));
+      rects.add(mapHumanToRect(values[i]));
     } else {
-      rects[i] = getCharacterSpriteRect(values[i]);
+      rects[i] = mapHumanToRect(values[i]);
     }
   }
   while (transforms.length > values.length) {
