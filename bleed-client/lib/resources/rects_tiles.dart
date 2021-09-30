@@ -5,38 +5,37 @@ import 'package:bleed_client/common/Tile.dart';
 
 import '../rects.dart';
 
-Rect tileRectGrass = getTileSpriteRectByIndex(0);
-Rect tileRectBlock = getTileSpriteRectByIndex(1);
-Rect tileRectConcrete = getTileSpriteRectByIndex(2);
-Rect tileZombieSpawn = getTileSpriteRectByIndex(3);
-Rect tilePlayerSpawn = getTileSpriteRectByIndex(4);
-
-
-Rect getTileSpriteRect(Tile tile) {
+// interface
+Rect mapTileToRect(Tile tile) {
   switch (tile) {
     case Tile.Concrete:
-      return tileRectConcrete;
+      return _concrete;
     case Tile.Grass:
-      return tileRectGrass;
+      return _grass;
     case Tile.Fortress:
-      return tilePlayerSpawn;
+      return _playerSpawn;
     case Tile.PlayerSpawn:
-      return tilePlayerSpawn;
+      return _playerSpawn;
     case Tile.ZombieSpawn:
-      return tileZombieSpawn;
+      return _zombieSpawn;
     case Tile.RandomItemSpawn:
-      return tileRectConcrete;
+      return _concrete;
     case Tile.Block:
-      return tileRectBlock;
+      return _block;
+    case Tile.Crate:
+      return _crate;
   }
   throw Exception("could not find rect for tile $tile");
 }
 
-Rect getTileSpriteRectByIndex(int index) {
-  return rectByIndex(
-      index, tileCanvasWidth.toDouble(), tileCanvasHeight.toDouble());
-}
+// abstraction
+Rect _grass = _frame(1);
+Rect _block = _frame(2);
+Rect _concrete = _frame(3);
+Rect _zombieSpawn = _frame(4);
+Rect _playerSpawn = _frame(5);
+Rect _crate = _frame(6);
 
-Rect rectByIndex(int index, double frameWidth, double height) {
-  return Rect.fromLTWH(index * frameWidth, 0.0, frameWidth, height);
+Rect _frame(int index) {
+  return Rect.fromLTWH((index - 1) * tileCanvasWidth.toDouble(), 0.0, tileCanvasWidth.toDouble(), tileCanvasHeight.toDouble());
 }

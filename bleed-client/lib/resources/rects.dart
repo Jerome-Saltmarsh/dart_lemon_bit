@@ -11,18 +11,18 @@ RectsZombie _zombie = RectsZombie();
 Rect mapZombieSpriteRect(dynamic character) {
   switch (character[stateIndex]) {
     case characterStateIdle:
-      return getZombieIdleRect(character);
+      return _getZombieIdleRect(character);
     case characterStateWalking:
-      return getZombieWalkingRect(character);
+      return _getZombieWalkingRect(character);
     case characterStateDead:
-      return getZombieDeadRect(character);
+      return _getZombieDeadRect(character);
     case characterStateStriking:
-      return getZombieStrikingRect(character);
+      return _getZombieStrikingRect(character);
   }
   throw Exception("Could not get character sprite rect");
 }
 
-Rect getZombieIdleRect(dynamic character) {
+Rect _getZombieIdleRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
       return _zombie.idle.up;
@@ -44,7 +44,7 @@ Rect getZombieIdleRect(dynamic character) {
   throw Exception("Could not get character walking sprite rect");
 }
 
-Rect getZombieWalkingRect(dynamic character) {
+Rect _getZombieWalkingRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
       return getFrameLoop(_zombie.walking.up, character);
@@ -66,7 +66,7 @@ Rect getZombieWalkingRect(dynamic character) {
   throw Exception("Could not get character walking sprite rect");
 }
 
-Rect getZombieDeadRect(dynamic character) {
+Rect _getZombieDeadRect(dynamic character) {
   switch (character[direction]) {
     case directionUp:
       return _zombie.dead.up;
@@ -88,7 +88,7 @@ Rect getZombieDeadRect(dynamic character) {
   throw Exception("Could not get character dead sprite rect");
 }
 
-Rect getZombieStrikingRect(character) {
+Rect _getZombieStrikingRect(character) {
   switch (character[direction]) {
     case directionUp:
       return getFrameLoop(_zombie.striking.up, character);

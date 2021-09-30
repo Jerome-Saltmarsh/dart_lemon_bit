@@ -106,8 +106,10 @@ void _handleKeyPressed(RawKeyEvent event) {
   if (!editMode) return;
 
   if (event is RawKeyDownEvent) {
-    if (event.logicalKey == LogicalKeyboardKey.keyO) {
+    if (event.logicalKey == LogicalKeyboardKey.keyC) {
+      print("Adding crate");
       compiledGame.crates.add(mouseWorld);
+      redrawCanvas();
     }
     if (event.logicalKey == LogicalKeyboardKey.keyP) {
       compiledGame.playerSpawnPoints.add(mouseWorld);

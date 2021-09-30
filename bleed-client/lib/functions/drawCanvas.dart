@@ -38,6 +38,7 @@ void drawCanvas(Canvas canvass, Size _size) {
 
   if (editMode) {
     drawTiles();
+    _drawCrates();
     return;
   }
 

@@ -4,3 +4,4 @@ class Vector2{
   double y;
   Vector2(this.x, this.y);
 }
+

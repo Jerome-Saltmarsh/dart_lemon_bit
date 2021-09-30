@@ -82,7 +82,7 @@ void _loadTileRects(List<List<Tile>> tiles) {
   render.tileRects.clear();
   for (int x = 0; x < tiles.length; x++) {
     for (int y = 0; y < tiles[0].length; y++) {
-      render.tileRects.add(getTileSpriteRect(tiles[x][y]));
+      render.tileRects.add(mapTileToRect(tiles[x][y]));
     }
   }
 }
