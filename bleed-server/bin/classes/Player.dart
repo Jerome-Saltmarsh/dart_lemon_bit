@@ -14,7 +14,7 @@ import 'Score.dart';
 class Player extends Character {
   final String uuid = generateUUID();
   String name = generateName();
-  int lastEventFrame = 0;
+  int lastUpdateFrame = 0;
   int stamina = 0;
   int maxStamina = 200;
   Inventory inventory;

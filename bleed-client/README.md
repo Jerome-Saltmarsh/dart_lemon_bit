@@ -83,7 +83,9 @@
 [ ] Sniper bullet goes through multiple enemies
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong
+[ ] NPC get stuck on crate
 -- COMPLETED --
+[x] Players are not getting disconnected
 [x] Prevent Blood from bouncing
 [x] Knife attack blood effect
 [x] Break crate with knife

@@ -706,10 +706,6 @@ extension GameFunctions on Game {
     if (character.state == value) return;
     if (value != CharacterState.Dead && character.busy) return;
 
-    if (character.striking) {
-      print(character.stateDuration);
-    }
-
     switch (value) {
       case CharacterState.Running:
         // @on character running
@@ -938,8 +934,9 @@ extension GameFunctions on Game {
     }
   }
 
-  // TODO Optimize
   void updatePlayer(Player player) {
+    player.lastUpdateFrame++;
+
     switch (player.state) {
       case CharacterState.Running:
         player.stamina -= 3;
@@ -949,7 +946,7 @@ extension GameFunctions on Game {
         break;
       case CharacterState.Walking:
         player.stamina += settings.staminaRefreshRate;
-        if (player.lastEventFrame++ > 5) {
+        if (player.lastUpdateFrame > 5) {
           setCharacterStateIdle(player);
         }
         break;
@@ -1349,18 +1346,17 @@ extension GameFunctions on Game {
 
   void jobRemoveDisconnectedPlayers() {
     for (int i = 0; i < players.length; i++) {
-      if (players[i].lastEventFrame > settingsPlayerDisconnectFrames) {
-        Player player = players[i];
-        for (Npc npc in npcs) {
-          if (npc.target == player) {
-            npc.clearTarget();
-          }
+      if (players[i].lastUpdateFrame < settings.playerDisconnectFrames) continue;
+      Player player = players[i];
+      for (Npc npc in npcs) {
+        if (npc.target == player) {
+          npc.clearTarget();
         }
-        player.active = false;
-        players.removeAt(i);
-        i--;
-        onPlayerDisconnected(player);
       }
+      player.active = false;
+      players.removeAt(i);
+      i--;
+      onPlayerDisconnected(player);
     }
   }
 

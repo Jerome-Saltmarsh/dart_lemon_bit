@@ -164,7 +164,7 @@ void main() {
             // TODO compile player events
           }
 
-          player.lastEventFrame = 0;
+          player.lastUpdateFrame = 0;
           CharacterState requestedState =
               CharacterState.values[int.parse(arguments[4])];
           Direction requestedDirection =
