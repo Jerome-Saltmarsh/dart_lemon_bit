@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bleed_client/classes/Block.dart';
 import 'package:bleed_client/common/Tile.dart';
+import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/state.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
@@ -9,23 +10,42 @@ import 'package:flutter/cupertino.dart';
 void saveScene() {
   print("saveScene()");
   try {
-    FlutterClipboard.copy(_compileScene());
-  }catch(e){
-    print(_compileScene());
+    FlutterClipboard.copy(_mapCompileGameToJson());
+  } catch (e) {
+    print(_mapCompileGameToJson());
   }
 }
 
-String _compileScene() {
-  return JsonEncoder().convert({
+String toJson(Object object) {
+  return JsonEncoder().convert(object);
+}
+
+String _mapCompileGameToJson() {
+  return toJson(_mapCompiledGameToObject());
+}
+
+Object _mapCompiledGameToObject() {
+  return {
     "blocks": _compileBlocks(),
     "collectables": compiledGame.collectables,
     "player-spawn-points": _compilePlayerSpawnPoints(),
     "zombie-spawn-points": _compileZombieSpawnPoints(),
-    "tiles": _compileTiles(compiledGame.tiles)
-  });
+    "tiles": _compileTiles(compiledGame.tiles),
+    "crates": _compileCrates(compiledGame.crates),
+  };
 }
 
 List<dynamic> _compileBlocks() => blockHouses.map(mapBlockToJson).toList();
+
+List<int> _compileCrates(List<Vector2> crates) {
+  List<int> values = [];
+  for (Vector2 vector2 in crates) {
+    if (vector2.isZero) return values;
+    values.add(vector2.x.toInt());
+    values.add(vector2.y.toInt());
+  }
+  return values;
+}
 
 List<List<int>> _compileTiles(List<List<Tile>> tiles) {
   List<List<int>> _tiles = [];
@@ -55,7 +75,6 @@ List<int> _compileOffsets(List<Offset> offsets) {
   }
   return points;
 }
-
 
 dynamic mapBlockToJson(Block block) {
   return {
