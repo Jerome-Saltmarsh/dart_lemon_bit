@@ -1,6 +1,5 @@
 
 import '../common/classes/Vector2.dart';
-import 'Vector2.dart';
 
 class Crate {
   final Vector2 position;

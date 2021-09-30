@@ -14,7 +14,7 @@ class GameManager {
   Scene buildOpenWorldScene() {
     List<Block> blocks = [];
     blocks.add(Block.build(50, 800, 200, 150));
-    Scene scene = Scene(generateTiles(), blocks);
+    Scene scene = Scene(tiles: generateTiles(), blocks: blocks, crates: []);
     scene.sortBlocks();
     return scene;
   }

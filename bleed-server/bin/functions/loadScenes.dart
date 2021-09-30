@@ -58,6 +58,17 @@ Scene _mapStringToScene(String text) {
     }
   }
 
+  List<Vector2> crates = [];
+
+  if (json.containsKey('crates')){
+    List cratesJson = json['crates'];
+    for (int i = 0; i < cratesJson.length; i += 2) {
+      int x = cratesJson[i];
+      int y = cratesJson[i + 1];
+      crates.add(Vector2(x.toDouble(), y.toDouble()));
+    }
+  }
+
   List compiledTiles = json['tiles'];
   List<List<Tile>> tiles = [];
 
@@ -72,7 +83,7 @@ Scene _mapStringToScene(String text) {
   List jsonBlocks = json['blocks'];
   List<Block> blocks = jsonBlocks.map(_mapJsonBlockToBlock).toList();
   sortBlocks(blocks);
-  return Scene(tiles, blocks);
+  return Scene(tiles: tiles, blocks: blocks, crates: crates);
 }
 
 Block _mapJsonBlockToBlock(dynamic jsonBlock) {

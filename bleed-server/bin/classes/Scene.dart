@@ -17,13 +17,14 @@ int _search = 0;
 class Scene {
   final List<List<Tile>> tiles;
   final List<Block> blocks;
+  final List<Vector2> crates;
   late Vector2 fortressPosition;
 
   late final List<List<TileNode>> tileNodes;
   late final int rows;
   late final int columns;
 
-  Scene(this.tiles, this.blocks) {
+  Scene({required this.tiles, required this.blocks, required this.crates}) {
     rows = tiles.length;
     columns = tiles[0].length;
     tileNodes = [];

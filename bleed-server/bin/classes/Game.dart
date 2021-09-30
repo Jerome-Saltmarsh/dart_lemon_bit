@@ -419,6 +419,11 @@ abstract class Game {
   bool gameOver();
 
   Game(this.type, this.scene, this.maxPlayers) {
+    this.crates.clear();
+    for(Vector2 crate in scene.crates){
+      crates.add(Crate(position: Vector2(crate.x, crate.y)));
+    }
+
     for (int row = 0; row < scene.rows; row++) {
       for (int column = 0; column < scene.columns; column++) {
         switch (scene.tiles[row][column]) {
