@@ -613,14 +613,11 @@ ItemType _consumeItemType() {
 
 void _parseBullets() {
   compiledGame.totalBullets = 0;
-  int index = 0;
   while (!_simiColonConsumed()) {
-    compiledGame.bullets[index] = _consumeDouble();
-    index++;
-    compiledGame.bullets[index] = _consumeDouble();
-    index++;
+    compiledGame.bullets[compiledGame.totalBullets].x = _consumeDouble();
+    compiledGame.bullets[compiledGame.totalBullets].y = _consumeDouble();
+    compiledGame.totalBullets++;
   }
-  compiledGame.totalBullets = index ~/ 2;
 }
 
 void _parseNpcs() {

@@ -80,6 +80,8 @@ void _drawCompiledGame() {
     drawPaths();
   }
 
+  _drawCrates();
+
   // _drawGunShotFlashes();
 
   for (FloatingText floatingText in render.floatingText) {
@@ -106,6 +108,12 @@ void _drawCompiledGame() {
   }
 
   drawText(player.equippedRounds.toString(), playerX - 10, playerY - 35);
+}
+
+void _drawCrates() {
+  for (Offset crate in compiledGame.crates) {
+    drawCircle(crate.dx, crate.dy, 10, Colors.white);
+  }
 }
 
 void _renderItems() {
@@ -276,8 +284,7 @@ void _drawParticles(List<Particle> particles) {
 }
 
 void _drawBullets(List bullets) {
-  for (Vector2 bullet in compiledGame.bulletHoles) {
-    if (bullet.x == 0 && bullet.y == 0) break;
-    drawBullet(bullet.x, bullet.y);
+  for(int i = 0; i < compiledGame.totalBullets; i++){
+    drawBullet(compiledGame.bullets[i].x, compiledGame.bullets[i].y);
   }
 }

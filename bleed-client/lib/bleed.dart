@@ -22,7 +22,7 @@ void initBleed() {
   });
 
   for (int i = 0; i < 1000; i++) {
-    compiledGame.bullets.add(0);
+    compiledGame.bullets.add(Vector2(0, 0));
     compiledGame.items.add(Item());
   }
 

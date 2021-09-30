@@ -82,8 +82,8 @@
 [ ] Loot Box (Drops Item when destroyed)
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong
-[ ] Bullets not being draw
 -- COMPLETED --
+[x] Bullets not being draw
 [x] Collect Magnum
 [x] Collect Shotgun
 [x] Collect Sniper Rifle

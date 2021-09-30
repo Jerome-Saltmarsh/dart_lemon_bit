@@ -20,7 +20,7 @@ class CompiledGame {
   List<List<dynamic>> npcs = [];
   int totalNpcs = 0;
   int totalPlayers = 0;
-  List<double> bullets = [];
+  List<Vector2> bullets = [];
   List<Vector2> bulletHoles = [];
   int bulletHoleIndex = 0;
   List<Particle> particles = [];
