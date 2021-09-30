@@ -53,9 +53,9 @@ void compileGame(Game game) {
 
 void _compileCrates(Game game) {
   _write(game.buffer, ServerResponse.Crates.index);
-  for(Crate crate in game.crates){
-    _write(game.buffer, crate.position.x.toInt());
-    _write(game.buffer, crate.position.y.toInt());
+  for (Crate crate in game.crates) {
+    _writeInt(game.buffer, crate.x);
+    _writeInt(game.buffer, crate.y);
   }
   _write(game.buffer, _semiColon);
 }

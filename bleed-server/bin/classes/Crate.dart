@@ -1,7 +1,5 @@
-
-import '../common/classes/Vector2.dart';
-
 class Crate {
-  final Vector2 position;
-  Crate({required this.position});
+  double x;
+  double y;
+  Crate({required this.x, required this.y});
 }

@@ -6,6 +6,7 @@ import '../common/ItemType.dart';
 import '../common/Tile.dart';
 import '../common/classes/Vector2.dart';
 import '../common/constants.dart';
+import '../common/functions/diffOver.dart';
 import '../compile.dart';
 import '../constants.dart';
 import '../enums.dart';
@@ -259,12 +260,11 @@ class GameCasual extends Game {
   }
 
   @override
-  void onNpcKilled(Npc npc){
+  void onNpcKilled(Npc npc) {
     // @on npc killed
     // items.add(Item(type: ItemType.Health, x: npc.x, y: npc.y));
-    // return;
     if (chance(settings.chanceOfDropItem)) {
-      items.add(Item(type: randomValue(itemTypes), x: npc.x, y: npc.y));
+      spawnRandomItem(npc.x, npc.y);
       return;
     }
   }
@@ -341,7 +341,7 @@ class GameCasual extends Game {
     resetPlayer(player);
   }
 
-  void resetPlayer(Player player){
+  void resetPlayer(Player player) {
     player.resetPoints();
     player.meds = spawnMeds;
     player.grenades = spawnGrenades;
@@ -406,9 +406,7 @@ abstract class Game {
 
   void onPlayerKilled(Player player);
 
-  void onNpcKilled(Npc npc) {
-
-  }
+  void onNpcKilled(Npc npc) {}
 
   void onPlayerDisconnected(Player player) {}
 
@@ -420,8 +418,8 @@ abstract class Game {
 
   Game(this.type, this.scene, this.maxPlayers) {
     this.crates.clear();
-    for(Vector2 crate in scene.crates){
-      crates.add(Crate(position: Vector2(crate.x, crate.y)));
+    for (Vector2 crate in scene.crates) {
+      crates.add(Crate(x: crate.x, y: crate.y));
     }
 
     for (int row = 0; row < scene.rows; row++) {
@@ -850,6 +848,22 @@ extension GameFunctions on Game {
     // _checkBulletBlockCollision();
     checkBulletCollision(npcs);
     checkBulletCollision(players);
+
+    for (int i = 0; i < crates.length; i++) {
+      for (int j = 0; j < bullets.length; j++) {
+        if (diffOver(crates[i].x, bullets[j].x, 7)) continue;
+        if (diffOver(crates[i].y, bullets[j].y, 7)) continue;
+        // @on crate struck by bullet
+        spawnRandomItem(crates[i].x, crates[i].y);
+        crates.removeAt(i); i--;
+        bullets[j].active = false;
+        break;
+      }
+    }
+  }
+
+  void spawnRandomItem(double x, double y){
+    items.add(Item(type: randomValue(itemTypes), x: x, y: y));
   }
 
   void spawnExplosion(Grenade grenade) {
@@ -1384,7 +1398,7 @@ extension GameFunctions on Game {
 
         switch (item.type) {
           case ItemType.Handgun:
-          // @on handgun acquired
+            // @on handgun acquired
             if (player.acquiredHandgun) {
               if (player.clips.handgun >= settings.maxClips.handgun) continue;
               player.clips.handgun++;
@@ -1396,7 +1410,7 @@ extension GameFunctions on Game {
             player.weapon = Weapon.HandGun;
             break;
           case ItemType.Shotgun:
-          // @on handgun acquired
+            // @on handgun acquired
             if (player.acquiredShotgun) {
               if (player.clips.shotgun >= settings.maxClips.shotgun) continue;
               player.clips.shotgun++;
@@ -1408,9 +1422,10 @@ extension GameFunctions on Game {
             player.weapon = Weapon.Shotgun;
             break;
           case ItemType.SniperRifle:
-          // @on handgun acquired
+            // @on handgun acquired
             if (player.acquiredSniperRifle) {
-              if (player.clips.sniperRifle >= settings.maxClips.sniperRifle) continue;
+              if (player.clips.sniperRifle >= settings.maxClips.sniperRifle)
+                continue;
               player.clips.sniperRifle++;
               break;
             }
@@ -1422,7 +1437,8 @@ extension GameFunctions on Game {
           case ItemType.Assault_Rifle:
             // @on assault rifle acquired
             if (player.acquiredAssaultRifle) {
-              if (player.clips.assaultRifle >= settings.maxClips.assaultRifle) continue;
+              if (player.clips.assaultRifle >= settings.maxClips.assaultRifle)
+                continue;
               player.clips.assaultRifle++;
               break;
             }
@@ -1443,8 +1459,9 @@ extension GameFunctions on Game {
             player.grenades++;
             break;
           case ItemType.Ammo:
-            if (player.acquiredAssaultRifle){
-              player.rounds.assaultRifle = min(player.rounds.assaultRifle + 20, settings.clipSize.assaultRifle);
+            if (player.acquiredAssaultRifle) {
+              player.rounds.assaultRifle = min(player.rounds.assaultRifle + 20,
+                  settings.clipSize.assaultRifle);
             }
 
             switch (player.weapon) {
