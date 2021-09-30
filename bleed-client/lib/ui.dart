@@ -298,12 +298,15 @@ Widget buildImageButton(DecorationImage image, Function onTap,
   );
 }
 
-void toggleEditMap() {
+void toggleEditMode() {
   if (playMode) {
     mode = Mode.Edit;
   } else {
     mode = Mode.Play;
   }
+
+  redrawUI();
+  redrawGame();
 }
 
 double squareSize = 80;
@@ -500,17 +503,17 @@ Widget buildTopRight() {
     message: "Toggle Paths",
   );
 
-  Widget iconMenu = Tooltip(
-    child: IconButton(
-        icon: Icon(Icons.menu, size: iconSize, color: white),
-        onPressed: showDialogMainMenu),
-    message: "Menu",
-  );
+  // Widget iconMenu = Tooltip(
+  //   child: IconButton(
+  //       icon: Icon(Icons.menu, size: iconSize, color: white),
+  //       onPressed: showDialogMainMenu),
+  //   message: "Menu",
+  // );
 
-  Widget editMenu = Tooltip(
+  Widget iconToggleEditMode = Tooltip(
     child: IconButton(
         icon: Icon(Icons.edit, size: iconSize, color: white),
-        onPressed: toggleEditMap),
+        onPressed: toggleEditMode),
     message: "Edit",
   );
 
@@ -521,13 +524,12 @@ Widget buildTopRight() {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           if (settings.developMode) iconTogglePaths,
-          if (settings.developMode) width4,
-          if (settings.developMode) editMenu,
-          // iconToggleScore,
+          if (settings.developMode) width8,
+          if (settings.developMode) iconToggleEditMode,
           iconToggleAudio,
-          width4,
+          width8,
           iconToggleFullscreen,
-          if (settings.developMode) width4,
+          if (settings.developMode) width8,
           // iconMenu
         ],
       ));

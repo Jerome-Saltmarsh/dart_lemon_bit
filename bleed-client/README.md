@@ -74,12 +74,12 @@
 [ ] Rounds
 -- CASUAL --
 [ ] Send custom news updates to client
-[ ] Loot Box (Drops Item when destroyed)
 [ ] Design Level, City
 [ ] Disable spawn npcs request
 [ ] Fix GCP Security
 [ ] Collect item audio
 [ ] Collect item text floating text
+[ ] Loot Box (Drops Item when destroyed)
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong
 -- COMPLETED --
