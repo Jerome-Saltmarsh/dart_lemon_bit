@@ -1,7 +1,7 @@
 import 'classes.dart';
 import 'classes/Block.dart';
-import 'classes/Vector2.dart';
 import 'common/Tile.dart';
+import 'common/classes/Vector2.dart';
 import 'constants.dart';
 import 'enums.dart';
 import 'common/Weapons.dart';

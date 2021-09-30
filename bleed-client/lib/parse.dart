@@ -21,7 +21,7 @@ import 'package:neuro/instance.dart';
 
 import 'classes/RenderState.dart';
 import 'classes/Score.dart';
-import 'classes/Vector2.dart';
+import 'common/classes/Vector2.dart';
 import 'common/GameEventType.dart';
 import 'common/GameState.dart';
 import 'common/Tile.dart';

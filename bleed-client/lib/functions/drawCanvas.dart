@@ -5,7 +5,7 @@ import 'package:bleed_client/classes/Block.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/RenderState.dart';
-import 'package:bleed_client/classes/Vector2.dart';
+import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/Weapons.dart';

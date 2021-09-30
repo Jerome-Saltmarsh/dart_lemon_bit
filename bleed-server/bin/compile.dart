@@ -6,10 +6,10 @@ import 'classes/Inventory.dart';
 import 'classes/Item.dart';
 import 'classes/Lobby.dart';
 import 'classes/Player.dart';
-import 'classes/Vector2.dart';
 import 'common/PlayerEvents.dart';
 import 'common/Tile.dart';
 import 'common/ServerResponse.dart';
+import 'common/classes/Vector2.dart';
 import 'instances/gameManager.dart';
 import 'utils/player_utils.dart';
 

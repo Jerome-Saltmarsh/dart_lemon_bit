@@ -11,7 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../images.dart';
-import 'classes/Vector2.dart';
+import 'common/classes/Vector2.dart';
 import 'common/Tile.dart';
 import 'functions/drawParticle.dart';
 import 'keys.dart';

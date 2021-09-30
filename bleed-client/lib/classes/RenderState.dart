@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:bleed_client/classes/FloatingText.dart';
-import 'package:bleed_client/classes/Vector2.dart';
+import 'package:bleed_client/common/classes/Vector2.dart';
 
 final _RenderState render = _RenderState();
 

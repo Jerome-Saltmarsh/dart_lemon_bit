@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:bleed_client/classes/Vector2.dart';
+import 'package:bleed_client/common/classes/Vector2.dart';
 
 import 'keys.dart';
 

@@ -1,9 +1,9 @@
 import '../common/Tile.dart';
+import '../common/classes/Vector2.dart';
 import '../enums.dart';
 import '../maths.dart';
 import 'Block.dart';
 import 'TileNode.dart';
-import 'Vector2.dart';
 
 // constants
 const List<Vector2> _emptyPath = [];

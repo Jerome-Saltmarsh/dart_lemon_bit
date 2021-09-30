@@ -1,4 +1,4 @@
-import 'Vector2.dart';
+import '../common/classes/Vector2.dart';
 
 class TileNodeVisit {
   TileNodeVisit? previous;

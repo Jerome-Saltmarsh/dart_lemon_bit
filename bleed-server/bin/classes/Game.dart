@@ -4,6 +4,7 @@ import '../classes.dart';
 import '../common/GameState.dart';
 import '../common/ItemType.dart';
 import '../common/Tile.dart';
+import '../common/classes/Vector2.dart';
 import '../common/constants.dart';
 import '../compile.dart';
 import '../constants.dart';
