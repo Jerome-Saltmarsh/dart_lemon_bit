@@ -7,6 +7,7 @@ import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/resources/rects_tiles.dart';
+import 'package:bleed_client/resources/rects_zombie.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -37,7 +38,7 @@ void drawNpcs() {
 
   for (int i = 0; i < compiledGame.totalNpcs; i++) {
     render.npcsTransforms.add(getCharacterTransform(compiledGame.npcs[i]));
-    render.npcsRects.add(mapZombieSpriteRect(compiledGame.npcs[i]));
+    render.npcsRects.add(mapZombieToRect(compiledGame.npcs[i]));
   }
 
   drawAtlases(images.zombie, render.npcsTransforms, render.npcsRects);

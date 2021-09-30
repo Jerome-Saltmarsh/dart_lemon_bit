@@ -1,13 +1,117 @@
 import 'dart:ui';
+import 'package:bleed_client/resources/rects_utils.dart';
+import '../common.dart';
+import '../keys.dart';
 
-const int _zombieFrameWidth = 36;
-const int _zombieFrameHeight = 35;
+// interface
+Rect mapZombieToRect(dynamic character) {
+  switch (character[stateIndex]) {
+    case characterStateIdle:
+      return _mapIdle(character);
+    case characterStateWalking:
+      return _mapWalking(character);
+    case characterStateDead:
+      return _mapDead(character);
+    case characterStateStriking:
+      return _mapStriking(character);
+  }
+  throw Exception("Could not get character sprite rect");
+}
 
-class RectsZombie {
-  final _Idle idle = _Idle();
-  final _Walking walking = _Walking();
-  final _Dead dead = _Dead();
-  final _Striking striking = _Striking();
+// abstraction
+const int _frameWidth = 36;
+const int _frameHeight = 35;
+final _Idle _idle = _Idle();
+final _Walking _walking = _Walking();
+final _Dead _dead = _Dead();
+final _Striking _striking = _Striking();
+
+Rect _mapIdle(dynamic character) {
+  switch (character[direction]) {
+    case directionUp:
+      return _idle.up;
+    case directionUpRight:
+      return _idle.upRight;
+    case directionRight:
+      return _idle.right;
+    case directionDownRight:
+      return _idle.downRight;
+    case directionDown:
+      return _idle.down;
+    case directionDownLeft:
+      return _idle.downLeft;
+    case directionLeft:
+      return _idle.left;
+    case directionUpLeft:
+      return _idle.upLeft;
+  }
+  throw Exception("Could not get character walking sprite rect");
+}
+
+Rect _mapWalking(dynamic character) {
+  switch (character[direction]) {
+    case directionUp:
+      return getFrameLoop(_walking.up, character);
+    case directionUpRight:
+      return getFrameLoop(_walking.upRight, character);
+    case directionRight:
+      return getFrameLoop(_walking.right, character);
+    case directionDownRight:
+      return getFrameLoop(_walking.downRight, character);
+    case directionDown:
+      return getFrameLoop(_walking.down, character);
+    case directionDownLeft:
+      return getFrameLoop(_walking.downLeft, character);
+    case directionLeft:
+      return getFrameLoop(_walking.left, character);
+    case directionUpLeft:
+      return getFrameLoop(_walking.upLeft, character);
+  }
+  throw Exception("Could not get character walking sprite rect");
+}
+
+Rect _mapDead(dynamic character) {
+  switch (character[direction]) {
+    case directionUp:
+      return _dead.up;
+    case directionUpRight:
+      return _dead.upRight;
+    case directionRight:
+      return _dead.right;
+    case directionDownRight:
+      return _dead.downRight;
+    case directionDown:
+      return _dead.down;
+    case directionDownLeft:
+      return _dead.left;
+    case directionLeft:
+      return _dead.left;
+    case directionUpLeft:
+      return _dead.upLeft;
+  }
+  throw Exception("Could not get character dead sprite rect");
+}
+
+Rect _mapStriking(character) {
+  switch (character[direction]) {
+    case directionUp:
+      return getFrameLoop(_striking.up, character);
+    case directionUpRight:
+      return getFrameLoop(_striking.upRight, character);
+    case directionRight:
+      return getFrameLoop(_striking.right, character);
+    case directionDownRight:
+      return getFrameLoop(_striking.downRight, character);
+    case directionDown:
+      return getFrameLoop(_striking.down, character);
+    case directionDownLeft:
+      return getFrameLoop(_striking.downLeft, character);
+    case directionLeft:
+      return getFrameLoop(_striking.left, character);
+    case directionUpLeft:
+      return getFrameLoop(_striking.upLeft, character);
+  }
+  throw Exception("could not get firing frame from direction");
 }
 
 class _Idle {
@@ -140,8 +244,7 @@ class _Striking {
   ];
 }
 
-
 Rect _frame(int index) {
-  return Rect.fromLTWH(((index - 1) * _zombieFrameWidth).toDouble(), 0.0,
-      _zombieFrameWidth.toDouble(), _zombieFrameHeight.toDouble());
+  return Rect.fromLTWH(((index - 1) * _frameWidth).toDouble(), 0.0,
+      _frameWidth.toDouble(), _frameHeight.toDouble());
 }
