@@ -856,13 +856,26 @@ extension GameFunctions on Game {
 
     for (int i = 0; i < crates.length; i++) {
       if (!crates[i].active) continue;
+      Crate crate = crates[i];
+      for (Character character in players) {
+        if (!character.active) continue;
+        if (diffOver(crate.x, character.x, settings.crateRadius)) continue;
+        if (diffOver(crate.y, character.y, settings.crateRadius)) continue;
+        double dis = distance(crate.x, crate.y, character.x, character.y);
+        if (dis >= settings.crateRadius) continue;
+        double b = settings.crateRadius - dis;
+        double r = radiansBetween(crate.x, crate.y, character.x, character.y);
+        character.x += adj(r, b);
+        character.y += opp(r, b);
+      }
+
       for (int j = 0; j < bullets.length; j++) {
         if (!bullets[j].active) continue;
-        if (diffOver(crates[i].x, bullets[j].x, settings.crateRadius)) continue;
-        if (diffOver(crates[i].y, bullets[j].y, settings.crateRadius)) continue;
+        if (diffOver(crate.x, bullets[j].x, settings.crateRadius)) continue;
+        if (diffOver(crate.y, bullets[j].y, settings.crateRadius)) continue;
         // @on crate struck by bullet
-        spawnRandomItem(crates[i].x, crates[i].y);
-        crates[i].deactiveDuration = settings.crateDeactiveDuration;
+        spawnRandomItem(crate.x, crate.y);
+        crate.deactiveDuration = settings.crateDeactiveDuration;
         bullets[j].active = false;
         break;
       }

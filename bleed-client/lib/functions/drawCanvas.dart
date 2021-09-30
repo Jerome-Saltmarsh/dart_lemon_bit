@@ -75,6 +75,7 @@ void _drawCompiledGame() {
   // _drawBlocks();
   _drawParticles(compiledGame.particles);
   _renderItems();
+  _drawCrates();
   drawCharacters();
   drawEditMode();
   _drawCollectables();
@@ -82,10 +83,6 @@ void _drawCompiledGame() {
   if (settings.compilePaths) {
     drawPaths();
   }
-
-  _drawCrates();
-
-  // _drawGunShotFlashes();
 
   for (FloatingText floatingText in render.floatingText) {
     if (floatingText.duration == 0) continue;

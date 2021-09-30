@@ -81,7 +81,7 @@
 [ ] Standing on home base heals health && refills handgun ammo
 [ ] Collect item text floating text
 [ ] Crate broken animation
-[ ] Crate boundary physics
+[x] Crate boundary physics
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong
 -- COMPLETED --
