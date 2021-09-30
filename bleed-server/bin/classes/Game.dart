@@ -706,7 +706,7 @@ extension GameFunctions on Game {
     if (character.state == value) return;
     if (value != CharacterState.Dead && character.busy) return;
 
-    if(character.striking){
+    if (character.striking) {
       print(character.stateDuration);
     }
 
@@ -965,8 +965,7 @@ extension GameFunctions on Game {
       case CharacterState.Striking:
         if (player.stateDuration == 8) {
           double frontX = player.x + velX(player.aimAngle, settings.knifeRange);
-          double frontY =
-              player.y + velY(player.aimAngle, settings.knifeRange);
+          double frontY = player.y + velY(player.aimAngle, settings.knifeRange);
 
           for (Npc npc in npcs) {
             // @on zombie struck by player
@@ -977,6 +976,12 @@ extension GameFunctions on Game {
             npc.xv += velX(player.aimAngle, settings.knifeHitAcceleration);
             npc.yv += velY(player.aimAngle, settings.knifeHitAcceleration);
             changeCharacterHealth(npc, -settings.knifeDamage);
+            dispatch(
+                GameEventType.Zombie_Hit,
+                npc.x,
+                npc.y,
+                velX(player.aimAngle, settings.knifeHitAcceleration * 2),
+                velY(player.aimAngle, settings.knifeHitAcceleration * 2));
             return;
           }
 

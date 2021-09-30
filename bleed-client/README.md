@@ -85,6 +85,7 @@
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong
 -- COMPLETED --
+[x] Knife attack blood effect
 [x] Break crate with knife
 [x] Crate boundary physics
 [x] Sprint down human sprite wrong
