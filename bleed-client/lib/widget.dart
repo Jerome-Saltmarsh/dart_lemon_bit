@@ -77,12 +77,12 @@ class BleedWidget extends GameWidget {
 
     onDone.stream.listen((event) {
       clearState();
-      redrawUI();
-      redrawGame();
+      rebuildUI();
+      redrawCanvas();
     });
 
     initUI();
-    redrawUI();
+    rebuildUI();
   }
 
   @override

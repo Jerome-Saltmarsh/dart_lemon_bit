@@ -6,6 +6,6 @@ Settings settings = Settings();
 
 void toggleAudioMuted(){
   settings.audioMuted = !settings.audioMuted;
-  redrawUI();
+  rebuildUI();
   sharedPreferences.setBool('audioMuted' , settings.audioMuted);
 }

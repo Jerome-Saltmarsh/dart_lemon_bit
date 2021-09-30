@@ -60,7 +60,7 @@ Widget buildViewJoinedLobby() {
 void leaveLobby() {
   sendRequestLobbyExit();
   state.lobby = null;
-  redrawUI();
+  rebuildUI();
 }
 
 Widget buildLobbyList() {

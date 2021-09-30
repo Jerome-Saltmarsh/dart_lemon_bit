@@ -72,7 +72,7 @@ void initUI() {
 
   on((LobbyJoined _) async {
     closeMainMenuDialog();
-    redrawUI();
+    rebuildUI();
   });
 
   // TODO Refactor
@@ -305,8 +305,8 @@ void toggleEditMode() {
     mode = Mode.Play;
   }
 
-  redrawUI();
-  redrawGame();
+  rebuildUI();
+  redrawCanvas();
 }
 
 double squareSize = 80;
@@ -379,7 +379,7 @@ Widget buildInventory() {
 
 void toggleShowScore() {
   _showScore = !_showScore;
-  redrawUI();
+  rebuildUI();
 }
 
 Widget buildHud() {
@@ -857,14 +857,14 @@ Widget buildViewStore() {
                   width: 100,
                   child: button("Buy", () {
                     storeTab = StoreTab.Buy;
-                    redrawUI();
+                    rebuildUI();
                   }),
                 ),
                 Container(
                   width: 100,
                   child: button("Upgrade", () {
                     storeTab = StoreTab.Upgrade;
-                    redrawUI();
+                    rebuildUI();
                   }),
                 ),
               ],
@@ -929,11 +929,11 @@ Widget buildViewBottomRight() {
     child: MouseRegion(
       onEnter: (_) {
         _showServers = true;
-        redrawUI();
+        rebuildUI();
       },
       onExit: (_) {
         _showServers = false;
-        redrawUI();
+        rebuildUI();
       },
       child: Container(
           padding: padding8,
@@ -1256,7 +1256,7 @@ Widget buildViewRespawn() {
                               padding: padding16, child: text("Close")),
                           callback: () {
                             observeMode = true;
-                            redrawUI();
+                            rebuildUI();
                           }),
                       width16,
 
@@ -1287,7 +1287,7 @@ int tipIndex = 0;
 
 void nextTip() {
   tipIndex = (tipIndex + 1) % tips.length;
-  redrawUI();
+  rebuildUI();
 }
 
 List<String> tips = [
@@ -1370,11 +1370,11 @@ Widget buildViewScore() {
         child: MouseRegion(
           onHover: (_) {
             _expandScore = true;
-            redrawUI();
+            rebuildUI();
           },
           onExit: (_) {
             _expandScore = false;
-            redrawUI();
+            rebuildUI();
           },
           child: Container(
             decoration: BoxDecoration(

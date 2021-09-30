@@ -107,10 +107,7 @@ void _handleKeyPressed(RawKeyEvent event) {
 
   if (event is RawKeyDownEvent) {
     if (event.logicalKey == LogicalKeyboardKey.keyO) {
-      _addCollectable(CollectableType.Health);
-    }
-    if (event.logicalKey == LogicalKeyboardKey.keyI) {
-      _addCollectable(CollectableType.Handgun_Ammo);
+      compiledGame.crates.add(mouseWorld);
     }
     if (event.logicalKey == LogicalKeyboardKey.keyP) {
       compiledGame.playerSpawnPoints.add(mouseWorld);
@@ -121,7 +118,6 @@ void _handleKeyPressed(RawKeyEvent event) {
         editState.selectedBlock = null;
       }
     }
-
     if (event.logicalKey == LogicalKeyboardKey.space && !_panning) {
       _panning = true;
       _mouseWorldStart = mouseWorld;
@@ -140,7 +136,7 @@ void updateEditMode() {
   _controlCameraEditMode();
   _handleMouseClick();
   _handleMouseDrag();
-  redrawGame();
+  redrawCanvas();
 
   if (_panning) {
     Offset mouseWorldDiff = _mouseWorldStart - mouseWorld;

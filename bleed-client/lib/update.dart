@@ -48,12 +48,12 @@ void _showHideTopLeftMenuOptions() {
   if (mouseX < 300 && mouseY < 300) {
     if (!_showMenuOptions) {
       _showMenuOptions = true;
-      redrawUI();
+      rebuildUI();
     }
   } else {
     if (_showMenuOptions) {
       _showMenuOptions = false;
-      redrawUI();
+      rebuildUI();
     }
   }
 }
@@ -94,7 +94,7 @@ void updatePlayer() {
         playAudioReload(screenCenterWorldX, screenCenterWorldY);
         break;
     }
-    redrawUI();
+    rebuildUI();
   }
 }
 

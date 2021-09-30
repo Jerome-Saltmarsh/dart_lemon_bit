@@ -60,8 +60,8 @@ void _onEvent(dynamic response) {
     connected = true;
     connecting = false;
     onConnectedController.add(response);
-    redrawUI();
-    Future.delayed(Duration(seconds: 1), redrawUI);
+    rebuildUI();
+    Future.delayed(Duration(seconds: 1), rebuildUI);
   }
 
   onEvent.add(response);
@@ -74,7 +74,7 @@ void _onEvent(dynamic response) {
   // TODO doesn't belong
   event = response;
   parseState();
-  redrawGame();
+  redrawCanvas();
 }
 
 void _onError(dynamic value) {

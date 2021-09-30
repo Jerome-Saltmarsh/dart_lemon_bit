@@ -13,6 +13,7 @@ import 'Particle.dart';
 class CompiledGame {
   List<int> collectables = [];
   List<Offset> playerSpawnPoints = [];
+  List<Offset> crates = [];
   List<Offset> zombieSpawnPoints = [];
   List<List<Tile>> tiles = [];
   List<List<dynamic>> players = [];

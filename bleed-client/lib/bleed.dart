@@ -18,7 +18,7 @@ void initBleed() {
 
   on((GameJoined gameJoined) async {
     cameraCenter(compiledGame.playerX, compiledGame.playerY);
-    redrawUI();
+    rebuildUI();
   });
 
   for (int i = 0; i < 1000; i++) {
@@ -48,18 +48,18 @@ void joinRandomGame() {
 
 void onPlayerStateChanged(CharacterState previous, CharacterState next) {
   if (previous == CharacterState.Dead || next == CharacterState.Dead) {
-    redrawUI();
+    rebuildUI();
   }
 }
 
 void onPlayerTileChanged(Tile previous, Tile next) {
   if (next == Tile.PlayerSpawn) {
-    redrawUI();
+    rebuildUI();
     return;
   }
 
   if (previous == Tile.PlayerSpawn) {
-    redrawUI();
+    rebuildUI();
     return;
   }
 }

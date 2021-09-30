@@ -127,11 +127,11 @@ abstract class GameWidget extends StatefulWidget {
 
 StateSetter uiSetState;
 
-void redrawGame() {
+void redrawCanvas() {
   _frame.value++;
 }
 
-void redrawUI() {
+void rebuildUI() {
   uiSetState(_doNothing);
 }
 
