@@ -125,7 +125,8 @@ void _drawCratesEditor() {
 }
 
 void _drawCrate(Vector2 position){
-  drawCircle(position.x, position.y, 10, Colors.white);
+  drawCircle(position.x, position.y, 5, Colors.white);
+  globalCanvas.drawImage(images.crate, Offset(position.x, position.y), globalPaint);
 }
 
 void _renderItems() {

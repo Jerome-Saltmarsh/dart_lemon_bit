@@ -15,6 +15,7 @@ class _Images {
   Image imageCollectables;
   Image imageShotgunAmmo;
   Image items;
+  Image crate;
 
   Future load() async {
     imageCharacter = await loadImage("images/character.png");
@@ -26,6 +27,7 @@ class _Images {
     imageShotgunAmmo = await loadImage('images/shotgun-ammo.png');
     imageCollectables = await loadImage("images/collectables.png");
     items = await loadImage("images/items.png");
+    crate = await loadImage("images/crate.png");
   }
 }
 
