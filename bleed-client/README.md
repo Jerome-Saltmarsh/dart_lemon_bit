@@ -37,7 +37,6 @@
 [ ] Heal animation
 [ ] Find Promotions for you weapons
 [ ] Body Armor
-[ ] Prevent Blood from bouncing
 [ ] Connect to specific container instance
     [ ] Support auto reconnect
     [ ] Invite friend to container
@@ -85,6 +84,7 @@
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong
 -- COMPLETED --
+[x] Prevent Blood from bouncing
 [x] Knife attack blood effect
 [x] Break crate with knife
 [x] Crate boundary physics

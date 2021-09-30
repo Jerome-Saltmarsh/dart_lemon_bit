@@ -14,6 +14,7 @@ class Particle {
   double scale;
   double scaleV;
   ParticleType type;
+  double bounceHeightFriction;
 
   Particle(
     this.type,
@@ -29,5 +30,6 @@ class Particle {
     this.rotationV = 0,
     this.scale = 1,
     this.scaleV = 0,
+    this.bounceHeightFriction = 0.3,
   });
 }

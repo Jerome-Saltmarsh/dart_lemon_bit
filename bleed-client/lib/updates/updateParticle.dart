@@ -6,7 +6,6 @@ import 'package:bleed_client/spawners/spawnBlood.dart';
 void updateParticle(Particle particle){
   double gravity = 0.04;
   double bounceFriction = 0.99;
-  double bounceHeightFriction = 0.3;
   double airFriction = 0.98;
   double rotationFriction = 0.93;
   double floorFriction = 0.9;
@@ -22,7 +21,7 @@ void updateParticle(Particle particle){
   bool bounce = falling && airBorn && particle.z <= 0;
 
   if (bounce) {
-    particle.zv = -particle.zv * bounceHeightFriction;
+    particle.zv = -particle.zv * particle.bounceHeightFriction;
     particle.xv = particle.xv * bounceFriction;
     particle.yv = particle.yv * bounceFriction;
     particle.rotationV *= rotationFriction;

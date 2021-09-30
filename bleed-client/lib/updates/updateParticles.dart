@@ -1,8 +1,10 @@
-
+import 'package:bleed_client/classes/Particle.dart';
+import 'package:bleed_client/utils/list_util.dart';
 
 import '../state.dart';
 import 'updateParticle.dart';
 
+// TODO Refactor
 void updateParticles() {
   for (int i = 0; i < compiledGame.particles.length; i++) {
     if (compiledGame.particles[i].duration-- < 0) {
@@ -12,12 +14,13 @@ void updateParticles() {
     }
   }
 
-  for (int i = 0; i < compiledGame.particles.length; i++) {
-    updateParticle(compiledGame.particles[i]);
+  for (Particle particle in compiledGame.particles) {
+    updateParticle(particle);
   }
-  compiledGame.particles.sort((a, b) {
-    if (a.type.index == b.type.index) return 0;
-    if (a.type.index < b.type.index) return 1;
-    return -1;
-  });
+
+  sort(compiledGame.particles, _compareParticle);
+}
+
+int _compareParticle(Particle a) {
+  return a.type.index;
 }
