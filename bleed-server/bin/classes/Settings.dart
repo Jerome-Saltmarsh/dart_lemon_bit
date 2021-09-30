@@ -5,6 +5,8 @@ class Settings {
   final double machineGunDamage = 0.7;
   final double machineGunBulletSpeed = 18;
 
+  final int crateDeactiveDuration = 1000;
+
   final double handgunAccuracy = 0.05;
   final double sniperRifleAccuracy = 0;
   final double shotgunAccuracy = 0.15;

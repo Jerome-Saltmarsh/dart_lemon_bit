@@ -844,25 +844,32 @@ extension GameFunctions on Game {
       }
     }
 
+    for (Crate crate in crates) {
+      if (crate.active) continue;
+      crate.deactiveDuration--;
+    }
+
     bullets.sort(compareGameObjects);
     // _checkBulletBlockCollision();
     checkBulletCollision(npcs);
     checkBulletCollision(players);
 
     for (int i = 0; i < crates.length; i++) {
+      if (!crates[i].active) continue;
       for (int j = 0; j < bullets.length; j++) {
+        if (!bullets[j].active) continue;
         if (diffOver(crates[i].x, bullets[j].x, 7)) continue;
         if (diffOver(crates[i].y, bullets[j].y, 7)) continue;
         // @on crate struck by bullet
         spawnRandomItem(crates[i].x, crates[i].y);
-        crates.removeAt(i); i--;
+        crates[i].deactiveDuration = settings.crateDeactiveDuration;
         bullets[j].active = false;
         break;
       }
     }
   }
 
-  void spawnRandomItem(double x, double y){
+  void spawnRandomItem(double x, double y) {
     items.add(Item(type: randomValue(itemTypes), x: x, y: y));
   }
 

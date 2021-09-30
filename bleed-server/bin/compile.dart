@@ -54,6 +54,7 @@ void compileGame(Game game) {
 void _compileCrates(Game game) {
   _write(game.buffer, ServerResponse.Crates.index);
   for (Crate crate in game.crates) {
+    if (crate.deactiveDuration > 0) continue;
     _writeInt(game.buffer, crate.x);
     _writeInt(game.buffer, crate.y);
   }
