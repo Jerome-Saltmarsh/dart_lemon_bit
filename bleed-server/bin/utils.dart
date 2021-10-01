@@ -124,20 +124,6 @@ List<List<Tile>> generateTiles() {
   return tiles;
 }
 
-double getWeaponBulletSpeed(Weapon weapon) {
-  switch (weapon) {
-    case Weapon.HandGun:
-      return settings.settingsWeaponBulletSpeedHandGun;
-    case Weapon.Shotgun:
-      return settings.settingsWeaponBulletSpeedShotGun;
-    case Weapon.SniperRifle:
-      return settings.settingsWeaponBulletSpeedSniperRifle;
-    case Weapon.AssaultRifle:
-      return settings.machineGunBulletSpeed;
-    default:
-      throw Exception("no range found for $weapon");
-  }
-}
 
 void applyMovement(GameObject gameObject) {
   gameObject.x += gameObject.xv;

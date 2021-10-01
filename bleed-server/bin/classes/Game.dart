@@ -956,8 +956,8 @@ extension GameFunctions on Game {
         break;
       case CharacterState.Striking:
         if (player.stateDuration == 8) {
-          double frontX = player.x + velX(player.aimAngle, settings.knifeRange);
-          double frontY = player.y + velY(player.aimAngle, settings.knifeRange);
+          double frontX = player.x + velX(player.aimAngle, settings.range.knife);
+          double frontY = player.y + velY(player.aimAngle, settings.range.knife);
 
           for (Npc npc in npcs) {
             // @on zombie struck by player
@@ -1220,7 +1220,7 @@ extension GameFunctions on Game {
     double y = character.y + opp(character.aimAngle, d);
 
     double weaponAccuracy = getWeaponAccuracy(character.weapon);
-    double bulletSpeed = getWeaponBulletSpeed(character.weapon);
+    double bulletSpeed = getBulletSpeed(character.weapon);
 
     double xv =
         velX(character.aimAngle + giveOrTake(weaponAccuracy), bulletSpeed);

@@ -3,15 +3,32 @@ import '../bin/common/Weapons.dart';
 
 Settings settings = Settings();
 
-Radius get radius => settings.radius;
+_Radius get radius => settings.radius;
 
-Accuracy get _accuracy => settings.accuracy;
+_Accuracy get _accuracy => settings.accuracy;
 
-CoolDown get coolDown => settings.coolDown;
+_CoolDown get coolDown => settings.coolDown;
 
-Damage get _damage => settings.damage;
+_Damage get _damage => settings.damage;
 
-Range get _range => settings.range;
+_Range get _range => settings.range;
+
+_BulletSpeed _bulletSpeed = settings.bulletSpeed;
+
+double getBulletSpeed(Weapon weapon) {
+  switch (weapon) {
+    case Weapon.HandGun:
+      return _bulletSpeed.handgun;
+    case Weapon.Shotgun:
+      return _bulletSpeed.shotgun;
+    case Weapon.SniperRifle:
+      return _bulletSpeed.sniperRifle;
+    case Weapon.AssaultRifle:
+      return _bulletSpeed.assaultRifle;
+    default:
+      throw Exception("no range found for $weapon");
+  }
+}
 
 double getWeaponAccuracy(Weapon weapon){
   switch (weapon){
@@ -62,12 +79,13 @@ class Settings {
   final host = '0.0.0.0';
   final port = 8080;
 
-  final Radius radius = Radius();
-  final Accuracy accuracy = Accuracy();
-  final CoolDown coolDown = CoolDown();
-  final Damage damage = Damage();
-  final Range range = Range();
-  final NpcSettings npc = NpcSettings();
+  final _Radius radius = _Radius();
+  final _Accuracy accuracy = _Accuracy();
+  final _CoolDown coolDown = _CoolDown();
+  final _Damage damage = _Damage();
+  final _Range range = _Range();
+  final _BulletSpeed bulletSpeed = _BulletSpeed();
+  final _NpcSettings npc = _NpcSettings();
   final _MapRounds maxRounds = _MapRounds();
   final _MaxClips maxClips = _MaxClips();
   final _Pickup pickup = _Pickup();
@@ -77,7 +95,6 @@ class Settings {
   final double playerSpeed = 4;
   final double machineGunBulletSpeed = 18;
   final int crateDeactiveDuration = 1000;
-  final double knifeRange = 15;
   final double knifeHitAcceleration = 5;
   final int knifeAttackDuration = 15;
   final double itemCollectRadius = 10;
@@ -99,14 +116,9 @@ class Settings {
   final double zombieChaseRange = 600;
   final double weaponRangeVariation = 10.0;
   final double settingsNpcRoamRange = 100;
-  final int settingsPlayerStartHealth = 5;
+  final int playerSpawnHealth = 100;
   final double playerStartRadius = 50;
 
-  final int settingsHandgunReloadDuration = 20;
-  final int settingsShotgunReloadDuration = 22;
-  final double settingsWeaponBulletSpeedHandGun = 14.0;
-  final double settingsWeaponBulletSpeedShotGun = 12.0;
-  final double settingsWeaponBulletSpeedSniperRifle = 24.0;
   final int settingsClipEmptyCooldown = 14;
   final int settingsShotgunBulletsPerShot = 5;
   final double settingsParticleShellSpeed = 3;
@@ -158,27 +170,27 @@ class _PointsEarned {
   final int playerKilled = 20;
 }
 
-class Radius {
+class _Radius {
   final double item = 15;
   final double crate = 22;
   final double character = 20;
 }
 
-class Accuracy {
+class _Accuracy {
   final double handgun = 0.05;
   final double sniperRifle = 0;
   final double shotgun = 0.15;
   final double assaultRifle = 0.1;
 }
 
-class CoolDown {
+class _CoolDown {
   final int handgun = 14;
   final int shotgun = 20;
   final int sniperRifle = 45;
   final int assaultRifle = 5;
 }
 
-class Damage {
+class _Damage {
   final int knife = 10;
   final int zombieStrike = 1;
   final int grenade = 15;
@@ -188,7 +200,8 @@ class Damage {
   final int assaultRifle = 4;
 }
 
-class Range {
+class _Range {
+  final double knife = 15;
   final double handgun = 320;
   final double shotgun = 180;
   final double sniperRifle = 600;
@@ -196,7 +209,15 @@ class Range {
   final double zombieStrike = 20;
 }
 
-class NpcSettings {
+class _BulletSpeed {
+  final double handgun = 14.0;
+  final double shotgun = 12.0;
+  final double sniperRifle = 24;
+  final double assaultRifle = 16;
+}
+
+class _NpcSettings {
   final double destinationRadius = 15.0;
   final double viewRange = 300;
 }
+

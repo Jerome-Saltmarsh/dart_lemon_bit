@@ -83,7 +83,7 @@ class Player extends Character {
             x: x,
             y: y,
             weapon: Weapon.HandGun,
-            health: settings.settingsPlayerStartHealth,
+            health: settings.playerSpawnHealth,
             speed: settings.playerSpeed,
             squad: squad) {
     stamina = maxStamina;
