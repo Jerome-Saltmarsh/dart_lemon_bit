@@ -28,7 +28,6 @@ const int tilesY = 32;
 
 const int settingsGrenadeDuration = 800;
 const double settingsGrenadeExplosionRadius = 75;
-const int settingsGrenadeExplosionDamage = 2;
 const double settingsGrenadeSpeed = 18;
 const double settingsGrenadeFriction = 0.98;
 

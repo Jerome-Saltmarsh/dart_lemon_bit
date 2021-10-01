@@ -8,7 +8,7 @@ class Settings {
   final Damage damage = Damage();
   final Range range = Range();
   final NpcSettings npc = NpcSettings();
-  final _ClipSize clipSize = _ClipSize();
+  final _MapRounds maxRounds = _MapRounds();
   final _MaxClips maxClips = _MaxClips();
   final _Pickup pickup = _Pickup();
   final _ReloadDuration reloadDuration = _ReloadDuration();
@@ -34,7 +34,7 @@ class Settings {
   final int playerDisconnectFrames = 300;
 }
 
-class _ClipSize {
+class _MapRounds {
   final int handgun = 50;
   final int shotgun = 20;
   final int sniperRifle = 15;
@@ -90,6 +90,7 @@ class CoolDown {
 
 class Damage {
   final int knife = 10;
+  final int grenade = 15;
   final int handgun = 5;
   final int shotgun = 3;
   final int sniperRifle = 35;
