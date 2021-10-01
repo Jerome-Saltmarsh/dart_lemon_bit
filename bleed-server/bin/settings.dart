@@ -5,9 +5,9 @@ Settings settings = Settings();
 
 _Radius get radius => settings.radius;
 
-_Accuracy get _accuracy => settings.accuracy;
-
 _CoolDown get coolDown => settings.coolDown;
+
+_Accuracy get _accuracy => settings.accuracy;
 
 _Damage get _damage => settings.damage;
 
@@ -115,22 +115,20 @@ class Settings {
   final double velocityFriction = 0.88;
   final double zombieChaseRange = 600;
   final double weaponRangeVariation = 10.0;
-  final double settingsNpcRoamRange = 100;
   final int playerSpawnHealth = 100;
   final double playerStartRadius = 50;
 
-  final int settingsClipEmptyCooldown = 14;
-  final int settingsShotgunBulletsPerShot = 5;
-  final double settingsParticleShellSpeed = 3;
+  final int shotgunBulletsPerShot = 5;
+  final double particleShellSpeed = 3;
   final double bulletImpactVelocityTransfer = 0.25;
 
   final int tilesX = 32;
   final int tilesY = 32;
 
-  final int settingsGrenadeDuration = 800;
-  final double settingsGrenadeExplosionRadius = 75;
-  final double settingsGrenadeSpeed = 18;
-  final double settingsGrenadeFriction = 0.98;
+  final int grenadeDuration = 800;
+  final double grenadeExplosionRadius = 75;
+  final double grenadeSpeed = 18;
+  final double grenadeFriction = 0.98;
 
   final double minStamina = 60;
 
@@ -188,6 +186,7 @@ class _CoolDown {
   final int shotgun = 20;
   final int sniperRifle = 45;
   final int assaultRifle = 5;
+  final int clipEmpty = 14;
 }
 
 class _Damage {

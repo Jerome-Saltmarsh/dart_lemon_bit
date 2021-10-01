@@ -648,7 +648,7 @@ extension GameFunctions on Game {
 
     if (equippedWeaponRounds(player) <= 0) {
       // @on character insufficient bullets to fire
-      player.stateDuration = settings.settingsClipEmptyCooldown;
+      player.stateDuration = settings.coolDown.clipEmpty;
       dispatch(GameEventType.Clip_Empty, player.x, player.y, 0, 0);
       return;
     }
@@ -671,7 +671,7 @@ extension GameFunctions on Game {
         player.rounds.shotgun--;
         player.xv += velX(player.aimAngle + pi, 1);
         player.yv += velY(player.aimAngle + pi, 1);
-        for (int i = 0; i < settings.settingsShotgunBulletsPerShot; i++) {
+        for (int i = 0; i < settings.shotgunBulletsPerShot; i++) {
           spawnBullet(player);
         }
         Bullet bullet = bullets.last;
@@ -865,7 +865,7 @@ extension GameFunctions on Game {
 
     dispatch(GameEventType.Explosion, x, y, 0, 0);
     for (Character character in npcs) {
-      if (objectDistanceFrom(character, x, y) > settings.settingsGrenadeExplosionRadius)
+      if (objectDistanceFrom(character, x, y) > settings.grenadeExplosionRadius)
         continue;
       double rotation = radiansBetween2(character, x, y);
       double magnitude = 10;
@@ -898,7 +898,7 @@ extension GameFunctions on Game {
     }
 
     for (Player player in players) {
-      if (objectDistanceFrom(player, x, y) > settings.settingsGrenadeExplosionRadius)
+      if (objectDistanceFrom(player, x, y) > settings.grenadeExplosionRadius)
         continue;
       double rotation = radiansBetween2(player, x, y);
       double magnitude = 10;
@@ -992,7 +992,7 @@ extension GameFunctions on Game {
   void _updateGrenades() {
     for (Grenade grenade in grenades) {
       applyMovement(grenade);
-      applyFriction(grenade, settings.settingsGrenadeFriction);
+      applyFriction(grenade, settings.grenadeFriction);
       grenade.zv -= settings.grenadeGravity;
       if (grenade.z < 0) {
         grenade.z = 0;
@@ -1204,14 +1204,14 @@ extension GameFunctions on Game {
   }
 
   void throwGrenade(Player player, double angle, double strength) {
-    double speed = settings.settingsGrenadeSpeed * strength;
+    double speed = settings.grenadeSpeed * strength;
     Grenade grenade =
         Grenade(player, adj(angle, speed), opp(angle, speed), 0.8 * strength);
     grenades.add(grenade);
     delayed(() {
       grenades.remove(grenade);
       spawnExplosion(grenade);
-    }, ms: settings.settingsGrenadeDuration);
+    }, ms: settings.grenadeDuration);
   }
 
   Bullet spawnBullet(Character character) {
