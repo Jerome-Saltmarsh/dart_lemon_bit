@@ -126,9 +126,9 @@ class BleedWidget extends GameWidget {
 
     _drawMouseAim(aiming);
 
-    if (player.equippedRounds == 0) {
-      drawText("reload (r)", mouseX + 10, mouseY - 35);
-    }
+    // if (player.equippedRounds == 0) {
+    //   drawText("reload (r)", mouseX + 10, mouseY - 35);
+    // }
   }
 
   void _drawMouseAim(bool aiming) {

@@ -107,7 +107,7 @@ void _drawCompiledGame() {
     }
   }
 
-  drawText(player.equippedRounds.toString(), playerX - 10, playerY - 35);
+  // drawText(player.equippedRounds.toString(), playerX - 10, playerY - 35);
 }
 
 void _drawCrates() {

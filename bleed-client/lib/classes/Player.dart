@@ -20,10 +20,10 @@ class Player {
   Tile tile = Tile.Grass;
   int grenades = 0;
   int meds = 0;
-  int clipsHandgun;
-  int clipsShotgun;
-  int clipsSniperRifle = 0;
-  int clipsAssaultRifle = 0;
+  int roundsHandgun;
+  int roundsShotgun;
+  int roundsSniperRifle = 0;
+  int roundsAssaultRifle = 0;
 
   bool get dead => state == CharacterState.Dead;
   bool get alive => !dead;

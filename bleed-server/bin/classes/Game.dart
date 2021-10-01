@@ -34,7 +34,6 @@ import 'Item.dart';
 import 'Player.dart';
 import 'Scene.dart';
 import 'TileNode.dart';
-import 'Vector2.dart';
 
 class Fortress extends Game {
   int nextWave = 100;
@@ -658,14 +657,14 @@ extension GameFunctions on Game {
     double d = 15;
     double x = player.x + adj(player.aimAngle, d);
     double y = player.y + opp(player.aimAngle, d) - 5;
+    player.state = CharacterState.Firing;
 
     switch (player.weapon) {
       case Weapon.HandGun:
         // @on character fire handgun
         player.rounds.handgun--;
         Bullet bullet = spawnBullet(player);
-        player.state = CharacterState.Firing;
-        player.stateDuration = settingsHandgunCooldown;
+        player.stateDuration = coolDown.handgun;
         dispatch(GameEventType.Handgun_Fired, x, y, bullet.xv, bullet.yv);
         break;
       case Weapon.Shotgun:
@@ -677,24 +676,21 @@ extension GameFunctions on Game {
           spawnBullet(player);
         }
         Bullet bullet = bullets.last;
-        player.state = CharacterState.Firing;
-        player.stateDuration = shotgunCoolDown;
+        player.stateDuration = coolDown.shotgun;
         dispatch(GameEventType.Shotgun_Fired, x, y, bullet.xv, bullet.yv);
         break;
       case Weapon.SniperRifle:
         // @on character fire sniper rifle
         player.rounds.sniperRifle--;
         Bullet bullet = spawnBullet(player);
-        player.state = CharacterState.Firing;
-        player.stateDuration = settingsSniperCooldown;
+        player.stateDuration = coolDown.sniperRifle;
         dispatch(GameEventType.SniperRifle_Fired, x, y, bullet.xv, bullet.yv);
         break;
       case Weapon.AssaultRifle:
         // @on character fire assault rifle
         player.rounds.assaultRifle--;
         Bullet bullet = spawnBullet(player);
-        player.state = CharacterState.Firing;
-        player.stateDuration = settings.machineGunCoolDown;
+        player.stateDuration = coolDown.assaultRifle;
         dispatch(GameEventType.MachineGun_Fired, x, y, bullet.xv, bullet.yv);
         break;
     }
@@ -798,12 +794,12 @@ extension GameFunctions on Game {
     setCharacterState(character, CharacterState.Idle);
   }
 
-  void changeCharacterHealth(Character character, double amount) {
+  void changeCharacterHealth(Character character, int amount) {
     // @on change character health
     if (character.dead) return;
 
-    character.health = clamp(character.health + amount, 0, character.maxHealth);
-    if (character.health <= 0) {
+    character.health += amount;
+    if (character.health == 0) {
       setCharacterState(character, CharacterState.Dead);
     }
   }
@@ -844,8 +840,8 @@ extension GameFunctions on Game {
 
       for (int j = 0; j < bullets.length; j++) {
         if (!bullets[j].active) continue;
-        if (diffOver(crate.x, bullets[j].x, settings.crateRadius)) continue;
-        if (diffOver(crate.y, bullets[j].y, settings.crateRadius)) continue;
+        if (diffOver(crate.x, bullets[j].x, radius.crate)) continue;
+        if (diffOver(crate.y, bullets[j].y, radius.crate)) continue;
         // @on crate struck by bullet
         breakCrate(crate);
         bullets[j].active = false;
@@ -984,8 +980,8 @@ extension GameFunctions on Game {
 
           for (Crate crate in crates) {
             if (!crate.active) continue;
-            if (diffOver(crate.x, frontX, settings.crateRadius)) continue;
-            if (diffOver(crate.y, frontY, settings.crateRadius)) continue;
+            if (diffOver(crate.x, frontX, radius.crate)) continue;
+            if (diffOver(crate.y, frontY, radius.crate)) continue;
             breakCrate(crate);
           }
         }
@@ -1236,7 +1232,7 @@ extension GameFunctions on Game {
     double range = getWeaponRange(character.weapon) +
         giveOrTake(settingsWeaponRangeVariation);
 
-    double damage = getWeaponDamage(character.weapon);
+    int damage = getWeaponDamage(character.weapon);
 
     for (int i = 0; i < bullets.length; i++) {
       if (bullets[i].active) continue;
@@ -1259,14 +1255,14 @@ extension GameFunctions on Game {
     return bullet;
   }
 
-  Npc spawnNpc(double x, double y) {
+  Npc spawnNpc(double x, double y, {int health = 25}) {
     for (int i = 0; i < npcs.length; i++) {
       if (npcs[i].active) continue;
       Npc npc = npcs[i];
       npc.active = true;
       npc.state = CharacterState.Idle;
       npc.previousState = CharacterState.Idle;
-      npc.health = 3;
+      npc.health = health;
       npc.x = x;
       npc.y = y;
       npc.yv = 0;
@@ -1275,7 +1271,7 @@ extension GameFunctions on Game {
       return npc;
     }
 
-    Npc npc = Npc(x: x, y: y, health: zombieHealth, maxHealth: zombieHealth);
+    Npc npc = Npc(x: x, y: y, health: health);
     npcs.add(npc);
     onNpcSpawned(npc);
     return npc;
@@ -1338,15 +1334,14 @@ extension GameFunctions on Game {
       if (npc.dead) continue;
       if (npc.targetSet) continue;
       if (npc.path.isNotEmpty) continue;
-      // if (chance(0.25)) return;
-      // @on npc set random destination
       npcSetRandomDestination(npc);
     }
   }
 
   void jobRemoveDisconnectedPlayers() {
     for (int i = 0; i < players.length; i++) {
-      if (players[i].lastUpdateFrame < settings.playerDisconnectFrames) continue;
+      if (players[i].lastUpdateFrame < settings.playerDisconnectFrames)
+        continue;
       Player player = players[i];
       for (Npc npc in npcs) {
         if (npc.target == player) {
@@ -1387,6 +1382,7 @@ extension GameFunctions on Game {
   }
 
   void npcSetRandomDestination(Npc npc) {
+    // @on npc set random destination
     npcSetPathToTileNode(npc, getRandomOpenTileNode());
   }
 
@@ -1425,10 +1421,9 @@ extension GameFunctions on Game {
         i--;
         continue;
       }
-      double r = 15; // TODO add to settings
       for (Player player in players) {
-        if (diff(item.x, player.x) > r) continue;
-        if (diff(item.y, player.y) > r) continue;
+        if (diff(item.x, player.x) > radius.item) continue;
+        if (diff(item.y, player.y) > radius.item) continue;
         if (player.dead) continue;
         // @on item collectable
 
@@ -1436,13 +1431,15 @@ extension GameFunctions on Game {
           case ItemType.Handgun:
             // @on handgun acquired
             if (player.acquiredHandgun) {
-              if (player.clips.handgun >= settings.maxClips.handgun) continue;
-              player.clips.handgun++;
+              if (player.rounds.handgun >= settings.clipSize.handgun) continue;
+              player.rounds.handgun = min(
+                  player.rounds.handgun + settings.pickup.handgun,
+                  settings.clipSize.handgun);
               break;
             }
             player.acquiredHandgun = true;
             player.clips.handgun = settings.maxClips.handgun;
-            player.rounds.handgun = settings.clipSize.handgun;
+            player.rounds.handgun = settings.pickup.handgun;
             player.weapon = Weapon.HandGun;
             break;
           case ItemType.Shotgun:
@@ -1532,11 +1529,11 @@ extension GameFunctions on Game {
 void applyCratePhysics(Crate crate, List<Character> characters) {
   for (Character character in characters) {
     if (!character.active) continue;
-    if (diffOver(crate.x, character.x, settings.crateRadius)) continue;
-    if (diffOver(crate.y, character.y, settings.crateRadius)) continue;
+    if (diffOver(crate.x, character.x, radius.crate)) continue;
+    if (diffOver(crate.y, character.y, radius.crate)) continue;
     double dis = distance(crate.x, crate.y, character.x, character.y);
-    if (dis >= settings.crateRadius) continue;
-    double b = settings.crateRadius - dis;
+    if (dis >= radius.crate) continue;
+    double b = radius.crate - dis;
     double r = radiansBetween(crate.x, crate.y, character.x, character.y);
     character.x += adj(r, b);
     character.y += opp(r, b);

@@ -389,24 +389,6 @@ Widget buildHud() {
   return Stack(
     children: [
       buildTopRight(),
-      if (player.alive && lag > 10)
-        Positioned(
-            top: 60,
-            child: Container(
-                width: screenWidth,
-                alignment: Alignment.topCenter,
-                child: Row(
-                  mainAxisAlignment: main.center,
-                  children: [
-                    text("To reduce lag"),
-                    width4,
-                    border(
-                        child: text("change server"),
-                        padding: padding4,
-                        radius: borderRadius4),
-                  ],
-                ))),
-
       if (player.alive) buildViewBottomLeft(),
       if (compiledGame.gameType == GameType.Fortress) buildViewFortress(),
       if (compiledGame.gameType == GameType.DeathMatch)
@@ -444,7 +426,7 @@ Widget buildHud() {
                   ],
                 ))),
       buildViewScore(),
-      if (message != null) buildMessageBox(message),
+      // if (message != null) buildMessageBox(message),
     ],
   );
 }

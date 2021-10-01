@@ -124,7 +124,7 @@ List<List<Tile>> generateTiles() {
   return tiles;
 }
 
-double getWeaponDamage(Weapon weapon) {
+int getWeaponDamage(Weapon weapon) {
   switch (weapon) {
     case Weapon.HandGun:
       return settingsWeaponDamageHandgun;

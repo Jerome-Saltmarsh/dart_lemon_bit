@@ -110,10 +110,10 @@ void readPlayerInput() {
     cameraX += mouseWorldDiff.dx * zoom;
   }
 
-  if (keyPressedReload) {
-    requestCharacterState = characterStateReloading;
-    return;
-  }
+  // if (keyPressedReload) {
+  //   requestCharacterState = characterStateReloading;
+  //   return;
+  // }
 
   if (keyPressedMelee && mouseAvailable) {
     requestCharacterState = characterStateStriking;

@@ -4,17 +4,23 @@ import '../common/Weapons.dart';
 
 Settings settings = Settings();
 
+Radius get radius => settings.radius;
+
+Accuracy get accuracy => settings.accuracy;
+
+CoolDown get coolDown => settings.coolDown;
+
 double getWeaponAccuracy(Weapon weapon){
   switch (weapon){
     case Weapon.HandGun:
-      return settings.handgunAccuracy;
+      return accuracy.handgun;
     case Weapon.Shotgun:
-      return settings.shotgunAccuracy;
+      return accuracy.shotgun;
     case Weapon.SniperRifle:
-      return settings.sniperRifleAccuracy;
+      return accuracy.sniperRifle;
     case Weapon.AssaultRifle:
-      return settings.machineGunAccuracy;
+      return accuracy.assaultRifle;
     default:
-      throw Exception("no range found for $weapon");
+      throw Exception("No accuracy found for $weapon");
   }
 }

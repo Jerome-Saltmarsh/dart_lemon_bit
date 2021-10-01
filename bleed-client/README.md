@@ -36,6 +36,10 @@
 [ ] Activate Shield
 [ ] Heal animation
 [ ] Find Promotions for you weapons
+[ ] Right click activates items special ability
+    [ ] Shotgun double bullets
+    [ ] Handgun double damage / Speed
+    [ ] Sniper 
 [ ] Body Armor
 [ ] Connect to specific container instance
     [ ] Support auto reconnect
@@ -46,7 +50,7 @@
     [ ] Perk Damage Boost (cost 2 perks)
 -- REFACTOR --
 [ ] Merge Maths lib into common
-[ ] Cache Particles-
+[ ] Client Cache Particles-
 -- BUSINESS --
 [ ] Setup Patreon
 [ ] Setup Discord
@@ -71,6 +75,8 @@
 [ ] Fortress Cache Path 
 -- DEATH MATCH 
 [ ] Rounds
+-- TEAM CASUAL --
+
 -- CASUAL --
 [ ] Send custom news updates to client
 [ ] Design Level, City
@@ -80,7 +86,13 @@
 [ ] Standing on home base heals health && refills handgun ammo
 [ ] Collect item text floating text
 [ ] Crate broken animation
+[ ] Grenades should bounce off blocks
+[ ] Cursor indicates ammo remaining
 [ ] Sniper bullet goes through multiple enemies
+[ ] Remove Reload
+[ ] Player health 100
+[ ] Disable squads
+[ ] Finding weapons adds ammo
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong
 [ ] NPC get stuck on crate

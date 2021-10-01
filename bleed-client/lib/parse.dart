@@ -344,23 +344,23 @@ void _parsePlayer() {
   int clipsSniperRifle = _consumeInt();
   int clipsAssaultRifle = _consumeInt();
 
-  if (player.clipsHandgun != clipsHandgun) {
-    player.clipsHandgun = clipsHandgun;
+  if (player.roundsHandgun != clipsHandgun) {
+    player.roundsHandgun = clipsHandgun;
     redrawWeapons = true;
   }
 
-  if (player.clipsShotgun != clipsShotgun) {
-    player.clipsShotgun = clipsShotgun;
+  if (player.roundsShotgun != clipsShotgun) {
+    player.roundsShotgun = clipsShotgun;
     redrawWeapons = true;
   }
 
-  if (player.clipsSniperRifle != clipsSniperRifle) {
-    player.clipsSniperRifle = clipsSniperRifle;
+  if (player.roundsSniperRifle != clipsSniperRifle) {
+    player.roundsSniperRifle = clipsSniperRifle;
     redrawWeapons = true;
   }
 
-  if (player.clipsAssaultRifle != clipsAssaultRifle) {
-    player.clipsAssaultRifle = clipsAssaultRifle;
+  if (player.roundsAssaultRifle != clipsAssaultRifle) {
+    player.roundsAssaultRifle = clipsAssaultRifle;
     redrawWeapons = true;
   }
 

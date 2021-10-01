@@ -139,11 +139,10 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _writeBool(buffer, player.acquiredSniperRifle);
   _writeBool(buffer, player.acquiredAssaultRifle);
   _write(buffer, player.currentTile.index);
-  _write(buffer, player.clips.handgun);
-  _write(buffer, player.clips.shotgun);
-  _write(buffer, player.clips.sniperRifle);
-  _write(buffer, player.clips.assaultRifle);
-  // _compileInventory(buffer, player.inventory);
+  _write(buffer, player.rounds.handgun);
+  _write(buffer, player.rounds.shotgun);
+  _write(buffer, player.rounds.sniperRifle);
+  _write(buffer, player.rounds.assaultRifle);
 
   for (PlayerEvent playerEvent in player.events) {
     if (playerEvent.sent) continue;
