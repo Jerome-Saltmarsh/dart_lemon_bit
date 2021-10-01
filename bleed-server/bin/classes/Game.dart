@@ -964,11 +964,11 @@ extension GameFunctions on Game {
             // @on zombie struck by player
             if (!npc.alive) continue;
             if (!npc.active) continue;
-            if (diffOver(npc.x, frontX, settings.characterRadius)) continue;
-            if (diffOver(npc.y, frontY, settings.characterRadius)) continue;
+            if (diffOver(npc.x, frontX, radius.character)) continue;
+            if (diffOver(npc.y, frontY, radius.character)) continue;
             npc.xv += velX(player.aimAngle, settings.knifeHitAcceleration);
             npc.yv += velY(player.aimAngle, settings.knifeHitAcceleration);
-            changeCharacterHealth(npc, -settings.knifeDamage);
+            changeCharacterHealth(npc, -settings.damage.knife);
             dispatch(
                 GameEventType.Zombie_Hit,
                 npc.x,

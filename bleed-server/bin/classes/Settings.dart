@@ -17,8 +17,6 @@ class Settings {
   final int crateDeactiveDuration = 1000;
   final double knifeRange = 15;
   final double knifeHitAcceleration = 5;
-  final int knifeDamage = 1;
-  final double characterRadius = 20;
   final int knifeAttackDuration = 15;
   final double itemCollectRadius = 10;
   final double chanceOfDropItem = 0.25;
@@ -73,6 +71,7 @@ class _PointsEarned {
 class Radius {
   final double item = 15;
   final double crate = 22;
+  final double character = 20;
 }
 
 class Accuracy {
@@ -90,6 +89,7 @@ class CoolDown {
 }
 
 class Damage {
+  final int knife = 10;
   final int handgun = 5;
   final int shotgun = 3;
   final int sniperRifle = 35;

@@ -20,7 +20,6 @@ import 'enums.dart';
 import 'functions/loadScenes.dart';
 import 'instances/gameManager.dart';
 import 'instances/settings.dart';
-import 'settings.dart';
 import 'update.dart';
 import 'utils.dart';
 
@@ -178,27 +177,28 @@ void main() {
 
         case ClientRequest.Player_Use_MedKit:
           return;
-          Game? game = findGameById(arguments[1]);
-          if (game == null) {
-            errorGameNotFound();
-            return;
-          }
-          Player? player = game.findPlayerById(int.parse(arguments[2]));
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
-          if (arguments[3] != player.uuid) {
-            errorInvalidPlayerUUID();
-            return;
-          }
-          if (player.health == player.maxHealth) return;
-          if (player.dead) return;
-          if (player.meds <= 0) return;
-          player.meds--;
-          player.health = player.maxHealth;
-          game.dispatch(GameEventType.Use_MedKit, player.x, player.y, 0, 0);
-          break;
+          // return;
+          // Game? game = findGameById(arguments[1]);
+          // if (game == null) {
+          //   errorGameNotFound();
+          //   return;
+          // }
+          // Player? player = game.findPlayerById(int.parse(arguments[2]));
+          // if (player == null) {
+          //   errorPlayerNotFound();
+          //   return;
+          // }
+          // if (arguments[3] != player.uuid) {
+          //   errorInvalidPlayerUUID();
+          //   return;
+          // }
+          // if (player.health == player.maxHealth) return;
+          // if (player.dead) return;
+          // if (player.meds <= 0) return;
+          // player.meds--;
+          // player.health = player.maxHealth;
+          // game.dispatch(GameEventType.Use_MedKit, player.x, player.y, 0, 0);
+          // break;
 
         case ClientRequest.Lobby_Create:
           if (arguments.length < 4) {

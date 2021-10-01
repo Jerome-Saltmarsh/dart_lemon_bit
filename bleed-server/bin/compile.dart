@@ -3,7 +3,6 @@ import 'classes/Block.dart';
 import 'classes/Collectable.dart';
 import 'classes/Crate.dart';
 import 'classes/Game.dart';
-import 'classes/Inventory.dart';
 import 'classes/Item.dart';
 import 'classes/Lobby.dart';
 import 'classes/Player.dart';
@@ -20,7 +19,6 @@ const String _space = ' ';
 const String _semiColon = '; ';
 const String _comma = ', ';
 const String _dash = '- ';
-const int _decimals = 1;
 const int _1 = 1;
 const int _0 = 0;
 
@@ -175,17 +173,17 @@ void compileScore(StringBuffer buffer, List<Player> players) {
   _write(buffer, _semiColon);
 }
 
-void _compileInventory(StringBuffer buffer, Inventory inventory) {
-  _write(buffer, ServerResponse.Inventory.index);
-  _write(buffer, inventory.rows);
-  _write(buffer, inventory.columns);
-  for (InventoryItem item in inventory.items) {
-    _write(buffer, item.type.index);
-    _write(buffer, item.row);
-    _write(buffer, item.column);
-  }
-  buffer.write(_semiColon);
-}
+// void _compileInventory(StringBuffer buffer, Inventory inventory) {
+//   _write(buffer, ServerResponse.Inventory.index);
+//   _write(buffer, inventory.rows);
+//   _write(buffer, inventory.columns);
+//   for (InventoryItem item in inventory.items) {
+//     _write(buffer, item.type.index);
+//     _write(buffer, item.row);
+//     _write(buffer, item.column);
+//   }
+//   buffer.write(_semiColon);
+// }
 
 // private
 
