@@ -109,18 +109,18 @@ double tilesLeftY = 0;
 
 List<List<Tile>> generateTiles() {
   List<List<Tile>> tiles = [];
-  for (int x = 0; x < settings.tilesX; x++) {
+  for (int x = 0; x < settings.generateTilesX; x++) {
     List<Tile> column = [];
     tiles.add(column);
-    for (int y = 0; y < settings.tilesY; y++) {
+    for (int y = 0; y < settings.generateTilesY; y++) {
       column.add(Tile.Grass);
     }
   }
-  tilesLeftX = -24 * settings.tilesX.toDouble();
-  tilesLeftY = 24 * settings.tilesY.toDouble();
-  tilesRightX = 24 * settings.tilesX.toDouble();
-  tilesRightY = 24 * settings.tilesY.toDouble();
-  tilesBottomY = 48 * settings.tilesY.toDouble();
+  tilesLeftX = -24 * settings.generateTilesX.toDouble();
+  tilesLeftY = 24 * settings.generateTilesY.toDouble();
+  tilesRightX = 24 * settings.generateTilesX.toDouble();
+  tilesRightY = 24 * settings.generateTilesY.toDouble();
+  tilesBottomY = 48 * settings.generateTilesY.toDouble();
   return tiles;
 }
 

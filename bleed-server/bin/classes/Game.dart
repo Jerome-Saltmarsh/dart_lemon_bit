@@ -1254,14 +1254,14 @@ extension GameFunctions on Game {
     return bullet;
   }
 
-  Npc spawnNpc(double x, double y, {int health = 25}) {
+  Npc spawnNpc(double x, double y) {
     for (int i = 0; i < npcs.length; i++) {
       if (npcs[i].active) continue;
       Npc npc = npcs[i];
       npc.active = true;
       npc.state = CharacterState.Idle;
       npc.previousState = CharacterState.Idle;
-      npc.health = health;
+      npc.health = settings.health.zombie;
       npc.x = x;
       npc.y = y;
       npc.yv = 0;
@@ -1270,7 +1270,7 @@ extension GameFunctions on Game {
       return npc;
     }
 
-    Npc npc = Npc(x: x, y: y, health: health);
+    Npc npc = Npc(x: x, y: y, health: settings.health.zombie);
     npcs.add(npc);
     onNpcSpawned(npc);
     return npc;

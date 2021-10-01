@@ -84,6 +84,7 @@ class Settings {
   final _CoolDown coolDown = _CoolDown();
   final _Damage damage = _Damage();
   final _Range range = _Range();
+  final _Health health = _Health();
   final _BulletSpeed bulletSpeed = _BulletSpeed();
   final _NpcSettings npc = _NpcSettings();
   final _MapRounds maxRounds = _MapRounds();
@@ -115,15 +116,14 @@ class Settings {
   final double velocityFriction = 0.88;
   final double zombieChaseRange = 600;
   final double weaponRangeVariation = 10.0;
-  final int playerSpawnHealth = 100;
   final double playerStartRadius = 50;
 
   final int shotgunBulletsPerShot = 5;
   final double particleShellSpeed = 3;
   final double bulletImpactVelocityTransfer = 0.25;
 
-  final int tilesX = 32;
-  final int tilesY = 32;
+  final int generateTilesX = 32;
+  final int generateTilesY = 32;
 
   final int grenadeDuration = 800;
   final double grenadeExplosionRadius = 75;
@@ -190,13 +190,13 @@ class _CoolDown {
 }
 
 class _Damage {
-  final int knife = 10;
+  final int knife = 12;
   final int zombieStrike = 1;
   final int grenade = 15;
-  final int handgun = 5;
-  final int shotgun = 3;
+  final int handgun = 10;
+  final int shotgun = 8;
   final int sniperRifle = 35;
-  final int assaultRifle = 4;
+  final int assaultRifle = 8;
 }
 
 class _Range {
@@ -218,5 +218,10 @@ class _BulletSpeed {
 class _NpcSettings {
   final double destinationRadius = 15.0;
   final double viewRange = 300;
+}
+
+class _Health {
+  final int player = 100;
+  final int zombie = 25;
 }
 
