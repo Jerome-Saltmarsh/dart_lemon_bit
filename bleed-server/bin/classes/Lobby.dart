@@ -1,6 +1,6 @@
 import '../common/GameType.dart';
 import '../functions/randomUuid.dart';
-import '../instances/settings.dart';
+import '../settings.dart';
 import 'Game.dart';
 
 class Lobby {

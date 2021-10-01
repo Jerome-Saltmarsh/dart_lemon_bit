@@ -6,7 +6,7 @@ import '../common/Weapons.dart';
 import '../enums.dart';
 import '../functions/generateName.dart';
 import '../functions/generateUUID.dart';
-import '../instances/settings.dart';
+import '../settings.dart';
 import '../utils/player_utils.dart';
 import 'Inventory.dart';
 import 'Score.dart';

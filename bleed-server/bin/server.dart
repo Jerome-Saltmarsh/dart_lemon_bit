@@ -19,7 +19,7 @@ import 'common/Weapons.dart';
 import 'enums.dart';
 import 'functions/loadScenes.dart';
 import 'instances/gameManager.dart';
-import 'instances/settings.dart';
+import 'settings.dart';
 import 'update.dart';
 import 'utils.dart';
 

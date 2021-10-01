@@ -6,8 +6,8 @@ import 'common/functions/diffOver.dart';
 import 'constants.dart';
 import 'enums.dart';
 import 'common/Weapons.dart';
-import 'instances/settings.dart';
 import 'maths.dart';
+import 'settings.dart';
 
 const double halfTileSize = 24;
 
