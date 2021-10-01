@@ -13,6 +13,8 @@ class Settings {
   final _Pickup pickup = _Pickup();
   final _ReloadDuration reloadDuration = _ReloadDuration();
   final _PointsEarned pointsEarned = _PointsEarned();
+  final double zombieSpeed = 2;
+  final double playerSpeed = 4;
   final double machineGunBulletSpeed = 18;
   final int crateDeactiveDuration = 1000;
   final double knifeRange = 15;
@@ -32,6 +34,34 @@ class Settings {
   final int gameStartingCountDown = 400;
 
   final int playerDisconnectFrames = 300;
+
+  final double velocityFriction = 0.88;
+  final double zombieChaseRange = 600;
+  final double weaponRangeVariation = 10.0;
+  final double settingsNpcRoamRange = 100;
+  final int settingsPlayerStartHealth = 5;
+  final double playerStartRadius = 50;
+
+  final int settingsHandgunReloadDuration = 20;
+  final int settingsShotgunReloadDuration = 22;
+  final double settingsWeaponBulletSpeedHandGun = 14.0;
+  final double settingsWeaponBulletSpeedShotGun = 12.0;
+  final double settingsWeaponBulletSpeedSniperRifle = 24.0;
+  final int settingsClipEmptyCooldown = 14;
+  final int settingsShotgunBulletsPerShot = 5;
+  final double settingsParticleShellSpeed = 3;
+  final double bulletImpactVelocityTransfer = 0.25;
+
+  final int tilesX = 32;
+  final int tilesY = 32;
+
+  final int settingsGrenadeDuration = 800;
+  final double settingsGrenadeExplosionRadius = 75;
+  final double settingsGrenadeSpeed = 18;
+  final double settingsGrenadeFriction = 0.98;
+
+  final double minStamina = 60;
+
 }
 
 class _MapRounds {
@@ -90,6 +120,7 @@ class CoolDown {
 
 class Damage {
   final int knife = 10;
+  final int zombieStrike = 1;
   final int grenade = 15;
   final int handgun = 5;
   final int shotgun = 3;
@@ -102,8 +133,10 @@ class Range {
   final double shotgun = 180;
   final double sniperRifle = 600;
   final double assaultRifle = 450;
+  final double zombieStrike = 20;
 }
 
 class NpcSettings {
   final double destinationRadius = 15.0;
+  final double viewRange = 300;
 }

@@ -20,7 +20,6 @@ import '../instances/scenes.dart';
 import '../instances/settings.dart';
 import '../language.dart';
 import '../maths.dart';
-import '../settings.dart';
 import '../state.dart';
 import '../update.dart';
 import '../utils.dart';
@@ -524,7 +523,7 @@ extension GameFunctions on Game {
         // @on npc target within striking range
         characterFaceObject(npc, npc.target);
         setCharacterState(npc, CharacterState.Striking);
-        changeCharacterHealth(npc.target, -zombieStrikeDamage);
+        changeCharacterHealth(npc.target, -settings.damage.zombieStrike);
 
         double speed = 0.1;
         double rotation = radiansBetweenObject(npc, npc.target);
@@ -649,7 +648,7 @@ extension GameFunctions on Game {
 
     if (equippedWeaponRounds(player) <= 0) {
       // @on character insufficient bullets to fire
-      player.stateDuration = settingsClipEmptyCooldown;
+      player.stateDuration = settings.settingsClipEmptyCooldown;
       dispatch(GameEventType.Clip_Empty, player.x, player.y, 0, 0);
       return;
     }
@@ -672,7 +671,7 @@ extension GameFunctions on Game {
         player.rounds.shotgun--;
         player.xv += velX(player.aimAngle + pi, 1);
         player.yv += velY(player.aimAngle + pi, 1);
-        for (int i = 0; i < settingsShotgunBulletsPerShot; i++) {
+        for (int i = 0; i < settings.settingsShotgunBulletsPerShot; i++) {
           spawnBullet(player);
         }
         Bullet bullet = bullets.last;
@@ -705,7 +704,7 @@ extension GameFunctions on Game {
     switch (value) {
       case CharacterState.Running:
         // @on character running
-        if (character is Player && character.stamina <= minStamina) {
+        if (character is Player && character.stamina <= settings.minStamina) {
           character.state = CharacterState.Walking;
           return;
         }
@@ -866,7 +865,7 @@ extension GameFunctions on Game {
 
     dispatch(GameEventType.Explosion, x, y, 0, 0);
     for (Character character in npcs) {
-      if (objectDistanceFrom(character, x, y) > settingsGrenadeExplosionRadius)
+      if (objectDistanceFrom(character, x, y) > settings.settingsGrenadeExplosionRadius)
         continue;
       double rotation = radiansBetween2(character, x, y);
       double magnitude = 10;
@@ -899,7 +898,7 @@ extension GameFunctions on Game {
     }
 
     for (Player player in players) {
-      if (objectDistanceFrom(player, x, y) > settingsGrenadeExplosionRadius)
+      if (objectDistanceFrom(player, x, y) > settings.settingsGrenadeExplosionRadius)
         continue;
       double rotation = radiansBetween2(player, x, y);
       double magnitude = 10;
@@ -993,7 +992,7 @@ extension GameFunctions on Game {
   void _updateGrenades() {
     for (Grenade grenade in grenades) {
       applyMovement(grenade);
-      applyFriction(grenade, settingsGrenadeFriction);
+      applyFriction(grenade, settings.settingsGrenadeFriction);
       grenade.zv -= settings.grenadeGravity;
       if (grenade.z < 0) {
         grenade.z = 0;
@@ -1020,8 +1019,8 @@ extension GameFunctions on Game {
 
         bullet.active = false;
 
-        character.xv += bullet.xv * bulletImpactVelocityTransfer;
-        character.yv += bullet.yv * bulletImpactVelocityTransfer;
+        character.xv += bullet.xv * settings.bulletImpactVelocityTransfer;
+        character.yv += bullet.yv * settings.bulletImpactVelocityTransfer;
 
         if (enemies(bullet, character)) {
           // @on zombie hit by bullet
@@ -1083,8 +1082,8 @@ extension GameFunctions on Game {
     if (abs(character.xv) > 0.005) {
       character.x += character.xv;
       character.y += character.yv;
-      character.xv *= velocityFriction;
-      character.yv *= velocityFriction;
+      character.xv *= settings.velocityFriction;
+      character.yv *= settings.velocityFriction;
     }
 
     if (character.dead) return;
@@ -1205,14 +1204,14 @@ extension GameFunctions on Game {
   }
 
   void throwGrenade(Player player, double angle, double strength) {
-    double speed = settingsGrenadeSpeed * strength;
+    double speed = settings.settingsGrenadeSpeed * strength;
     Grenade grenade =
         Grenade(player, adj(angle, speed), opp(angle, speed), 0.8 * strength);
     grenades.add(grenade);
     delayed(() {
       grenades.remove(grenade);
       spawnExplosion(grenade);
-    }, ms: settingsGrenadeDuration);
+    }, ms: settings.settingsGrenadeDuration);
   }
 
   Bullet spawnBullet(Character character) {
@@ -1230,7 +1229,7 @@ extension GameFunctions on Game {
         velY(character.aimAngle + giveOrTake(weaponAccuracy), bulletSpeed);
 
     double range = getWeaponRange(character.weapon) +
-        giveOrTake(settingsWeaponRangeVariation);
+        giveOrTake(settings.weaponRangeVariation);
 
     int damage = getWeaponDamage(character.weapon);
 
@@ -1310,8 +1309,8 @@ extension GameFunctions on Game {
       npc = npcs[i];
       if (npc.targetSet) {
         // @on update npc with target
-        if (diff(npc.x, npc.target.x) < zombieChaseRange) continue;
-        if (diff(npc.y, npc.target.y) < zombieChaseRange) continue;
+        if (diff(npc.x, npc.target.x) < settings.zombieChaseRange) continue;
+        if (diff(npc.y, npc.target.y) < settings.zombieChaseRange) continue;
         npc.clearTarget();
         npc.state = CharacterState.Idle;
         return;
@@ -1319,8 +1318,8 @@ extension GameFunctions on Game {
 
       for (int p = 0; p < players.length; p++) {
         if (!players[p].alive) continue;
-        if (diff(players[p].x, npc.x) > zombieViewRange) continue;
-        if (diff(players[p].y, npc.y) > zombieViewRange) continue;
+        if (diff(players[p].x, npc.x) > settings.npc.viewRange) continue;
+        if (diff(players[p].y, npc.y) > settings.npc.viewRange) continue;
         npc.target = players[p];
         break;
       }
@@ -1360,8 +1359,8 @@ extension GameFunctions on Game {
     character.health = character.maxHealth;
 
     if (playerSpawnPoints.isEmpty) {
-      character.x = giveOrTake(settingsPlayerStartRadius);
-      character.y = tilesLeftY + giveOrTake(settingsPlayerStartRadius);
+      character.x = giveOrTake(settings.playerStartRadius);
+      character.y = tilesLeftY + giveOrTake(settings.playerStartRadius);
     } else {
       Vector2 spawnPoint = getNextSpawnPoint();
       character.x = spawnPoint.x;

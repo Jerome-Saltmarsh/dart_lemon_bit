@@ -6,7 +6,7 @@ import '../common/Weapons.dart';
 import '../enums.dart';
 import '../functions/generateName.dart';
 import '../functions/generateUUID.dart';
-import '../settings.dart';
+import '../instances/settings.dart';
 import '../utils/player_utils.dart';
 import 'Inventory.dart';
 import 'Score.dart';
@@ -83,8 +83,8 @@ class Player extends Character {
             x: x,
             y: y,
             weapon: Weapon.HandGun,
-            health: settingsPlayerStartHealth,
-            speed: playerSpeed,
+            health: settings.settingsPlayerStartHealth,
+            speed: settings.playerSpeed,
             squad: squad) {
     stamina = maxStamina;
   }

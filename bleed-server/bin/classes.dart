@@ -3,7 +3,7 @@ import 'common/classes/Vector2.dart';
 import 'enums.dart';
 import 'common/GameEventType.dart';
 import 'common/Weapons.dart';
-import 'settings.dart';
+import 'instances/settings.dart';
 import 'utils.dart';
 
 int _idCount = 0;
@@ -107,7 +107,7 @@ class Npc extends Character {
             y: y,
             weapon: Weapon.Unarmed,
             health: health,
-            speed: zombieSpeed);
+            speed: settings.zombieSpeed);
 
   get targetSet => target != _nonTarget;
 

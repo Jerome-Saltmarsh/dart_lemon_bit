@@ -8,7 +8,6 @@ import 'enums.dart';
 import 'common/Weapons.dart';
 import 'instances/settings.dart';
 import 'maths.dart';
-import 'settings.dart';
 
 const double halfTileSize = 24;
 
@@ -36,7 +35,7 @@ void setDirection(Character character, Direction value) {
 }
 
 bool withinViewRange(Npc npc, GameObject target) {
-  return distanceBetween(npc, target) < zombieViewRange;
+  return distanceBetween(npc, target) < settings.npc.viewRange;
 }
 
 bool arrivedAtPath(Npc npc) {
@@ -110,29 +109,29 @@ double tilesLeftY = 0;
 
 List<List<Tile>> generateTiles() {
   List<List<Tile>> tiles = [];
-  for (int x = 0; x < tilesX; x++) {
+  for (int x = 0; x < settings.tilesX; x++) {
     List<Tile> column = [];
     tiles.add(column);
-    for (int y = 0; y < tilesY; y++) {
+    for (int y = 0; y < settings.tilesY; y++) {
       column.add(Tile.Grass);
     }
   }
-  tilesLeftX = -24 * tilesX.toDouble();
-  tilesLeftY = 24 * tilesY.toDouble();
-  tilesRightX = 24 * tilesX.toDouble();
-  tilesRightY = 24 * tilesY.toDouble();
-  tilesBottomY = 48 * tilesY.toDouble();
+  tilesLeftX = -24 * settings.tilesX.toDouble();
+  tilesLeftY = 24 * settings.tilesY.toDouble();
+  tilesRightX = 24 * settings.tilesX.toDouble();
+  tilesRightY = 24 * settings.tilesY.toDouble();
+  tilesBottomY = 48 * settings.tilesY.toDouble();
   return tiles;
 }
 
 double getWeaponBulletSpeed(Weapon weapon) {
   switch (weapon) {
     case Weapon.HandGun:
-      return settingsWeaponBulletSpeedHandGun;
+      return settings.settingsWeaponBulletSpeedHandGun;
     case Weapon.Shotgun:
-      return settingsWeaponBulletSpeedShotGun;
+      return settings.settingsWeaponBulletSpeedShotGun;
     case Weapon.SniperRifle:
-      return settingsWeaponBulletSpeedSniperRifle;
+      return settings.settingsWeaponBulletSpeedSniperRifle;
     case Weapon.AssaultRifle:
       return settings.machineGunBulletSpeed;
     default:
@@ -152,8 +151,8 @@ void applyFriction(GameObject gameObject, double value) {
 }
 
 bool npcWithinStrikeRange(Npc npc, GameObject target) {
-  if (diff(npc.x, npc.target.x) > settingsZombieStrikeRange) return false;
-  if (diff(npc.y, npc.target.y) > settingsZombieStrikeRange) return false;
+  if (diff(npc.x, npc.target.x) > settings.range.zombieStrike) return false;
+  if (diff(npc.y, npc.target.y) > settings.range.zombieStrike) return false;
   return true;
 }
 
