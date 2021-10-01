@@ -2,6 +2,7 @@ import 'classes.dart';
 import 'classes/Block.dart';
 import 'common/Tile.dart';
 import 'common/classes/Vector2.dart';
+import 'common/functions/diffOver.dart';
 import 'constants.dart';
 import 'enums.dart';
 import 'common/Weapons.dart';
@@ -39,8 +40,8 @@ bool withinViewRange(Npc npc, GameObject target) {
 }
 
 bool arrivedAtPath(Npc npc) {
-  if (diff(npc.x, npc.path[0].x) > destinationArrivedDistance) return false;
-  if (diff(npc.y, npc.path[0].y) > destinationArrivedDistance) return false;
+  if (diffOver(npc.x, npc.path[0].x, settings.npc.destinationRadius)) return false;
+  if (diffOver(npc.y, npc.path[0].y, settings.npc.destinationRadius)) return false;
   return true;
 }
 
@@ -122,36 +123,6 @@ List<List<Tile>> generateTiles() {
   tilesRightY = 24 * tilesY.toDouble();
   tilesBottomY = 48 * tilesY.toDouble();
   return tiles;
-}
-
-int getWeaponDamage(Weapon weapon) {
-  switch (weapon) {
-    case Weapon.HandGun:
-      return settingsWeaponDamageHandgun;
-    case Weapon.Shotgun:
-      return settingsWeaponDamageShotgun;
-    case Weapon.SniperRifle:
-      return settingsWeaponDamageSniperRifle;
-    case Weapon.AssaultRifle:
-      return settings.machineGunDamage;
-    default:
-      throw Exception("no range found for $weapon");
-  }
-}
-
-double getWeaponRange(Weapon weapon) {
-  switch (weapon) {
-    case Weapon.HandGun:
-      return settingsWeaponRangeHandgun;
-    case Weapon.Shotgun:
-      return settingsWeaponRangeShotgun;
-    case Weapon.SniperRifle:
-      return settingsWeaponRangeSniperRifle;
-    case Weapon.AssaultRifle:
-      return settings.machineGunRange;
-    default:
-      throw Exception("no range found for $weapon");
-  }
 }
 
 double getWeaponBulletSpeed(Weapon weapon) {

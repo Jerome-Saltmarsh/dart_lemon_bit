@@ -610,7 +610,7 @@ void main() {
     webSocket.stream.listen(onEvent);
   });
 
-  shelf_io.serve(handler, host, port).then((server) {
+  shelf_io.serve(handler, settings.host, settings.port).then((server) {
     print('Serving at wss://${server.address.host}:${server.port}');
   });
 }

@@ -1,32 +1,29 @@
 class Settings {
+  final host = '0.0.0.0';
+  final port = 8080;
+
   final Radius radius = Radius();
   final Accuracy accuracy = Accuracy();
   final CoolDown coolDown = CoolDown();
-  final double machineGunRange = 400;
-  final int machineGunDamage = 1;
+  final Damage damage = Damage();
+  final Range range = Range();
+  final NpcSettings npc = NpcSettings();
+  final _ClipSize clipSize = _ClipSize();
+  final _MaxClips maxClips = _MaxClips();
+  final _Pickup pickup = _Pickup();
+  final _ReloadDuration reloadDuration = _ReloadDuration();
+  final _PointsEarned pointsEarned = _PointsEarned();
   final double machineGunBulletSpeed = 18;
-
   final int crateDeactiveDuration = 1000;
-
   final double knifeRange = 15;
   final double knifeHitAcceleration = 5;
   final int knifeDamage = 1;
   final double characterRadius = 20;
   final int knifeAttackDuration = 15;
   final double itemCollectRadius = 10;
-
   final double chanceOfDropItem = 0.25;
   final int itemDuration = 500;
-
-  final _ClipSize clipSize = _ClipSize();
-  final _MaxClips maxClips = _MaxClips();
-  final _Pickup pickup = _Pickup();
-
-  final _ReloadDuration reloadDuration = _ReloadDuration();
-  final _PointsEarned pointsEarned = _PointsEarned();
-
   final double grenadeGravity = 0.06;
-
   final int maxZombies = 2500;
   final int deathMatchMaxPlayers = 32;
   final int itemReactivationInSeconds = 60;
@@ -90,4 +87,22 @@ class CoolDown {
   final int shotgun = 20;
   final int sniperRifle = 45;
   final int assaultRifle = 5;
+}
+
+class Damage {
+  final int handgun = 5;
+  final int shotgun = 3;
+  final int sniperRifle = 35;
+  final int assaultRifle = 4;
+}
+
+class Range {
+  final double handgun = 320;
+  final double shotgun = 180;
+  final double sniperRifle = 600;
+  final double assaultRifle = 450;
+}
+
+class NpcSettings {
+  final double destinationRadius = 15.0;
 }
