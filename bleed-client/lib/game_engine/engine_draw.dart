@@ -6,13 +6,12 @@ import 'package:flutter/material.dart';
 import 'engine_state.dart';
 import 'game_widget.dart';
 
-
 void drawCircle(double x, double y, double radius, Color color){
-  globalPaint.color = color;
-  globalCanvas.drawCircle(Offset(x, y), radius, globalPaint);
+  drawCircleOffset(Offset(x, y), radius, color);
 }
 
 void drawCircleOffset(Offset offset, double radius, Color color){
+  // TODO Optimize
   globalPaint.color = color;
   globalCanvas.drawCircle(offset, radius, globalPaint);
 }

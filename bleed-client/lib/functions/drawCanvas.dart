@@ -72,7 +72,7 @@ void _drawCompiledGame() {
   drawBulletHoles(compiledGame.bulletHoles);
   _drawGrenades(compiledGame.grenades);
   // _drawBlocks();
-  _drawParticles(compiledGame.particles);
+  _drawParticles();
   _renderItems();
   _drawCrates();
   drawCharacters();
@@ -274,8 +274,11 @@ void _drawGrenades(List<double> grenades) {
   }
 }
 
-void _drawParticles(List<Particle> particles) {
-  particles.forEach(drawParticle);
+void _drawParticles() {
+  for (Particle particle in compiledGame.particles){
+    if (!particle.active) continue;
+    drawParticle(particle);
+  }
 }
 
 void _drawBullets(List bullets) {

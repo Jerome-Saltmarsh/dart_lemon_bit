@@ -1,17 +1,25 @@
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
+import 'package:bleed_client/spawners/spawnParticle.dart';
 
 import '../state.dart';
 import '../utils.dart';
 
 void spawnBlood(double x, double y, double z,
     {double xv = 0, double yv = 0, double zv = 0}) {
-  compiledGame.particles.add(Particle(ParticleType.Blood, x, y, z, xv, yv, zv,
+  spawnParticle(
+      type: ParticleType.Blood,
+      x: x,
+      y: y,
+      z: z,
+      xv: xv,
+      yv: yv,
+      zv: zv,
       weight: 0.1,
       duration: randomInt(90, 170),
       rotation: 0,
       rotationV: 0,
       scale: 1,
       scaleV: 0.0085,
-      bounceHeightFriction: 0));
+      bounciness: 0);
 }

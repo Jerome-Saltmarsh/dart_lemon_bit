@@ -1,4 +1,5 @@
 import 'package:bleed_client/classes/Item.dart';
+import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/Tile.dart';
@@ -20,6 +21,10 @@ void initBleed() {
     cameraCenter(compiledGame.playerX, compiledGame.playerY);
     rebuildUI();
   });
+
+  for(int i = 0; i < settings.maxParticles; i++){
+    compiledGame.particles.add(Particle());
+  }
 
   for (int i = 0; i < 1000; i++) {
     compiledGame.bullets.add(Vector2(0, 0));

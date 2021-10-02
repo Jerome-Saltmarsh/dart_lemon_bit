@@ -119,10 +119,12 @@ class Fortress extends Game {
 
 class DeathMatch extends Game {
   final int squadSize;
+  bool teamsEnabled = false;
 
   int get numberOfSquads => maxPlayers ~/ squadSize;
 
   int get nextSquadNumber {
+    if( !teamsEnabled) return -1;
     if (squadSize <= 1) return -1;
 
     for (int squad = 0; squad < numberOfSquads; squad++) {

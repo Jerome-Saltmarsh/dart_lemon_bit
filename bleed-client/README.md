@@ -63,11 +63,10 @@
 [ ] UI Score Lag
 -- UI --
 -- IDEAS --
+[ ] Getting kills charges your weapons super ability
 [ ] Deploy auto turret
 [ ] Standing on home base heals health && refills handgun ammo
 [ ] Send custom news updates to client
-[ ] No such thing as reload, this simplifies the game a lot and allows the player to focus on having fun
-[ ] No such thing as health pack
 [ ] Compact Score Mode 
 -- OPTIMIZATIONS --
 -- OPEN WORLD -- 
@@ -79,18 +78,18 @@
 -- DEATH MATCH 
 [ ] Rounds
 -- TEAM CASUAL --
-
 -- CASUAL --
+[ ] Draw health Ring same as ammo ring
 [ ] Design Level, City
 [ ] Disable spawn npcs request
 [ ] Fix GCP Security
-[ ] Disable squads
 [ ] Running out of ammo causes weapon to drop
 [ ] Grenades should bounce off blocks
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong
 [ ] NPC get stuck on crate
 -- COMPLETED --
+[x] Disable squads
 [x] Sniper bullet goes through multiple enemies
 [x] Cursor indicates ammo remaining
 [x] Collect item audio

@@ -21,7 +21,7 @@ void updateParticle(Particle particle){
   bool bounce = falling && airBorn && particle.z <= 0;
 
   if (bounce) {
-    particle.zv = -particle.zv * particle.bounceHeightFriction;
+    particle.zv = -particle.zv * particle.bounciness;
     particle.xv = particle.xv * bounceFriction;
     particle.yv = particle.yv * bounceFriction;
     particle.rotationV *= rotationFriction;
@@ -49,5 +49,8 @@ void updateParticle(Particle particle){
   }
   if (particle.type == ParticleType.Organ && particle.duration & 2 == 0) {
     spawnBlood(particle.x, particle.y, particle.z);
+  }
+  if (particle.duration-- < 0) {
+    particle.active = false;
   }
 }

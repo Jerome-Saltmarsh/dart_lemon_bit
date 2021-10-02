@@ -1,3 +1,4 @@
+import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/enums/Mode.dart';
@@ -31,9 +32,12 @@ void clearCompileGameState(){
   compiledGame.totalNpcs = 0;
   compiledGame.totalPlayers = 0;
   compiledGame.totalBullets = 0;
-  compiledGame.particles.clear();
   compiledGame.grenades.clear();
   compiledGame.collectables.clear();
+
+  for (Particle particle in compiledGame.particles){
+    particle.active = false;
+  }
 
   for(Vector2 bullet in compiledGame.bulletHoles){
     bullet.x = 0;
