@@ -124,6 +124,7 @@ class BleedWidget extends GameWidget {
       _drawStaminaBar(canvas);
     }
 
+
     _drawMouseAim(aiming);
 
     // if (player.equippedRounds == 0) {

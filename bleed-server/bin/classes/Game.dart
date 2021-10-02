@@ -864,6 +864,15 @@ extension GameFunctions on Game {
     double y = grenade.y;
 
     dispatch(GameEventType.Explosion, x, y, 0, 0);
+
+
+    for (Crate crate in crates) {
+      if (!crate.active) continue;
+      if (diffOver(grenade.x, crate.x, settings.grenadeExplosionRadius)) continue;
+      if (diffOver(grenade.y, crate.y, settings.grenadeExplosionRadius)) continue;
+      breakCrate(crate);
+    }
+
     for (Character character in npcs) {
       if (objectDistanceFrom(character, x, y) > settings.grenadeExplosionRadius)
         continue;
@@ -956,8 +965,10 @@ extension GameFunctions on Game {
         break;
       case CharacterState.Striking:
         if (player.stateDuration == 8) {
-          double frontX = player.x + velX(player.aimAngle, settings.range.knife);
-          double frontY = player.y + velY(player.aimAngle, settings.range.knife);
+          double frontX =
+              player.x + velX(player.aimAngle, settings.range.knife);
+          double frontY =
+              player.y + velY(player.aimAngle, settings.range.knife);
 
           for (Npc npc in npcs) {
             // @on zombie struck by player
@@ -1458,7 +1469,8 @@ extension GameFunctions on Game {
           case ItemType.SniperRifle:
             // @on sniper rifle acquired
             if (player.acquiredSniperRifle) {
-              if (player.rounds.sniperRifle >= settings.maxRounds.sniperRifle) continue;
+              if (player.rounds.sniperRifle >= settings.maxRounds.sniperRifle)
+                continue;
               player.rounds.sniperRifle = clampInt(
                   player.rounds.sniperRifle + settings.pickup.sniperRifle,
                   0,
@@ -1470,9 +1482,10 @@ extension GameFunctions on Game {
             player.weapon = Weapon.SniperRifle;
             break;
           case ItemType.Assault_Rifle:
-          // @on assault rifle acquired
+            // @on assault rifle acquired
             if (player.acquiredAssaultRifle) {
-              if (player.rounds.assaultRifle >= settings.maxRounds.assaultRifle) continue;
+              if (player.rounds.assaultRifle >= settings.maxRounds.assaultRifle)
+                continue;
               player.rounds.assaultRifle = clampInt(
                   player.rounds.assaultRifle + settings.pickup.assaultRifle,
                   0,

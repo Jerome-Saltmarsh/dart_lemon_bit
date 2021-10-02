@@ -82,21 +82,24 @@
 [ ] Design Level, City
 [ ] Disable spawn npcs request
 [ ] Fix GCP Security
-[ ] Collect item audio
 [ ] Standing on home base heals health && refills handgun ammo
-[ ] Collect item text floating text
 [ ] Crate broken animation
+[ ] Collect item text floating text
+[ ] Sniper bullet goes through multiple enemies
 [ ] Grenades should bounce off blocks
 [ ] Cursor indicates ammo remaining
-[ ] Sniper bullet goes through multiple enemies
-[ ] Remove Reload
-[ ] Player health 100
+[ ] Collect item audio
 [ ] Disable squads
-[ ] Finding weapons adds ammo
+[ ] Running out of ammo causes weapon to drop
+[ ] Ammo acquired text
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong
 [ ] NPC get stuck on crate
 -- COMPLETED --
+[x] Grenades break crate
+[x] Remove Reload
+[x] Player health 100
+[x] Finding weapons adds ammo
 [x] Players are not getting disconnected
 [x] Prevent Blood from bouncing
 [x] Knife attack blood effect
