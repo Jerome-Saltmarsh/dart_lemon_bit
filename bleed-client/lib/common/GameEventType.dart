@@ -20,4 +20,5 @@ enum GameEventType {
   Health_Acquired,
   Knife_Strike,
   Crate_Breaking,
+  Ammo_Acquired,
 }

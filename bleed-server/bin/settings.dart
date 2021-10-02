@@ -1,5 +1,6 @@
 
 import '../bin/common/Weapons.dart';
+import 'maths.dart';
 
 Settings settings = Settings();
 
@@ -88,7 +89,6 @@ class Settings {
   final _BulletSpeed bulletSpeed = _BulletSpeed();
   final _Duration duration = _Duration();
   final _NpcSettings npc = _NpcSettings();
-  final _MapRounds maxRounds = _MapRounds();
   final _MaxClips maxClips = _MaxClips();
   final _Pickup pickup = _Pickup();
   final _ReloadDuration reloadDuration = _ReloadDuration();
@@ -99,7 +99,7 @@ class Settings {
   final int crateDeactiveDuration = 1000;
   final double knifeHitAcceleration = 5;
   final double itemCollectRadius = 10;
-  final double chanceOfDropItem = 0.25;
+  final double chanceOfDropItem = goldenRatioInverse;
   final int itemDuration = 500;
   final double grenadeGravity = 0.06;
   final int maxZombies = 2500;
@@ -136,13 +136,6 @@ class Settings {
 
 class _Duration {
   final int knifeStrike = 15;
-}
-
-class _MapRounds {
-  final int handgun = 50;
-  final int shotgun = 20;
-  final int sniperRifle = 15;
-  final int assaultRifle = 175;
 }
 
 class _Pickup {

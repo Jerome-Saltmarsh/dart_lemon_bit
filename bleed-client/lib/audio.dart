@@ -30,6 +30,10 @@ void playAudioExplosion(double x, double y) {
 }
 
 void playAudioSniperEquipped(double x, double y) {
+  playAudioGunPickup(x, y);
+}
+
+void playAudioGunPickup(double x, double y){
   _playAudio("gun-pickup-01.mp3", x, y);
 }
 

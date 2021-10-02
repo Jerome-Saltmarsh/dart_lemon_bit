@@ -8,6 +8,7 @@ _Prices get prices => constants.prices;
 class _Constants {
   _Prices prices = _Prices();
   _Points points = _Points();
+  _MaxRounds maxRounds = _MaxRounds();
 }
 
 class _Points {
@@ -59,4 +60,27 @@ String mapWeaponName(Weapon weapon){
       return "Assault Rifle";
   }
   throw Exception("No name available for $weapon");
+}
+
+class _MaxRounds {
+  final int handgun = 100;
+  final int shotgun = 30;
+  final int sniperRifle = 15;
+  final int assaultRifle = 250;
+}
+
+int getMaxRounds(Weapon weapon){
+  switch(weapon){
+    case Weapon.Unarmed:
+      return 0;
+    case Weapon.HandGun:
+      return constants.maxRounds.handgun;
+    case Weapon.Shotgun:
+      return constants.maxRounds.shotgun;
+    case Weapon.SniperRifle:
+      return constants.maxRounds.sniperRifle;
+    case Weapon.AssaultRifle:
+      return constants.maxRounds.assaultRifle;
+  }
+  throw Exception("no max rounds mapped for $weapon");
 }

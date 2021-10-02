@@ -110,7 +110,7 @@ class Fortress extends Game {
       grenades: 2,
       meds: 2,
       clips: Clips(handgun: 2),
-      rounds: Rounds(handgun: settings.maxRounds.handgun),
+      rounds: Rounds(handgun: constants.maxRounds.handgun),
     );
 
     return player;
@@ -216,7 +216,7 @@ class DeathMatch extends Game {
         grenades: 2,
         meds: 2,
         clips: Clips(handgun: 2),
-        rounds: Rounds(handgun: settings.maxRounds.handgun),
+        rounds: Rounds(handgun: constants.maxRounds.handgun),
         squad: squad);
 
     return player;
@@ -282,10 +282,10 @@ class GameCasual extends Game {
 
   Rounds spawnRounds() {
     return Rounds(
-      handgun: settings.maxRounds.handgun,
-      shotgun: settings.maxRounds.shotgun,
-      sniperRifle: settings.maxRounds.sniperRifle,
-      assaultRifle: settings.maxRounds.assaultRifle,
+      handgun: constants.maxRounds.handgun,
+      shotgun: constants.maxRounds.shotgun,
+      sniperRifle: constants.maxRounds.sniperRifle,
+      assaultRifle: constants.maxRounds.assaultRifle,
     );
   }
 
@@ -751,35 +751,35 @@ extension GameFunctions on Game {
         switch (character.weapon) {
           case Weapon.HandGun:
             // @on reload handgun
-            if (player.rounds.handgun >= settings.maxRounds.handgun) return;
+            if (player.rounds.handgun >= constants.maxRounds.handgun) return;
             if (player.clips.handgun <= 0) return;
-            player.rounds.handgun = settings.maxRounds.handgun;
+            player.rounds.handgun = constants.maxRounds.handgun;
             player.clips.handgun--;
             player.stateDuration = settings.reloadDuration.handgun;
             break;
           case Weapon.Shotgun:
             // @on reload shotgun
-            if (player.rounds.shotgun >= settings.maxRounds.shotgun) return;
+            if (player.rounds.shotgun >= constants.maxRounds.shotgun) return;
             if (player.clips.shotgun <= 0) return;
-            player.rounds.shotgun = settings.maxRounds.shotgun;
+            player.rounds.shotgun = constants.maxRounds.shotgun;
             player.clips.shotgun--;
             player.stateDuration = settings.reloadDuration.shotgun;
             break;
           case Weapon.SniperRifle:
             // @on reload sniper rifle
-            if (player.rounds.sniperRifle >= settings.maxRounds.sniperRifle)
+            if (player.rounds.sniperRifle >= constants.maxRounds.sniperRifle)
               return;
             if (player.clips.sniperRifle <= 0) return;
-            player.rounds.sniperRifle = settings.maxRounds.sniperRifle;
+            player.rounds.sniperRifle = constants.maxRounds.sniperRifle;
             player.clips.sniperRifle--;
             player.stateDuration = settings.reloadDuration.sniperRifle;
             break;
           case Weapon.AssaultRifle:
             // @on reload assault rifle
-            if (player.rounds.assaultRifle >= settings.maxRounds.assaultRifle)
+            if (player.rounds.assaultRifle >= constants.maxRounds.assaultRifle)
               return;
             if (player.clips.assaultRifle <= 0) return;
-            player.rounds.assaultRifle = settings.maxRounds.assaultRifle;
+            player.rounds.assaultRifle = constants.maxRounds.assaultRifle;
             player.clips.assaultRifle--;
             player.stateDuration = settings.reloadDuration.assaultRifle;
             break;
@@ -1454,64 +1454,64 @@ extension GameFunctions on Game {
           case ItemType.Handgun:
             // @on handgun acquired
             if (player.acquiredHandgun) {
-              if (player.rounds.handgun >= settings.maxRounds.handgun) continue;
+              if (player.rounds.handgun >= constants.maxRounds.handgun) continue;
               player.rounds.handgun = min(
                   player.rounds.handgun + settings.pickup.handgun,
-                  settings.maxRounds.handgun);
+                  constants.maxRounds.handgun);
+              dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
               break;
             }
             player.acquiredHandgun = true;
             player.clips.handgun = settings.maxClips.handgun;
             player.rounds.handgun = settings.pickup.handgun;
             player.weapon = Weapon.HandGun;
-            dispatch(GameEventType.Item_Acquired, item.x, item.y, 0, 0);
             break;
           case ItemType.Shotgun:
             // @on shotgun acquired
             if (player.acquiredShotgun) {
-              if (player.rounds.shotgun >= settings.maxRounds.shotgun) continue;
+              if (player.rounds.shotgun >= constants.maxRounds.shotgun) continue;
               player.rounds.shotgun = clampInt(
                   player.rounds.shotgun + settings.pickup.shotgun,
                   0,
-                  settings.maxRounds.shotgun);
+                  constants.maxRounds.shotgun);
+              dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
               break;
             }
             player.acquiredShotgun = true;
             player.rounds.shotgun = settings.pickup.shotgun;
             player.weapon = Weapon.Shotgun;
-            dispatch(GameEventType.Item_Acquired, item.x, item.y, 0, 0);
             break;
           case ItemType.SniperRifle:
             // @on sniper rifle acquired
             if (player.acquiredSniperRifle) {
-              if (player.rounds.sniperRifle >= settings.maxRounds.sniperRifle)
+              if (player.rounds.sniperRifle >= constants.maxRounds.sniperRifle)
                 continue;
               player.rounds.sniperRifle = clampInt(
                   player.rounds.sniperRifle + settings.pickup.sniperRifle,
                   0,
-                  settings.maxRounds.sniperRifle);
+                  constants.maxRounds.sniperRifle);
+              dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
               break;
             }
             player.acquiredSniperRifle = true;
             player.rounds.sniperRifle = settings.pickup.sniperRifle;
             player.weapon = Weapon.SniperRifle;
-            dispatch(GameEventType.Item_Acquired, item.x, item.y, 0, 0);
             break;
           case ItemType.Assault_Rifle:
             // @on assault rifle acquired
             if (player.acquiredAssaultRifle) {
-              if (player.rounds.assaultRifle >= settings.maxRounds.assaultRifle)
+              if (player.rounds.assaultRifle >= constants.maxRounds.assaultRifle)
                 continue;
               player.rounds.assaultRifle = clampInt(
                   player.rounds.assaultRifle + settings.pickup.assaultRifle,
                   0,
-                  settings.maxRounds.assaultRifle);
+                  constants.maxRounds.assaultRifle);
+              dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
               break;
             }
             player.acquiredAssaultRifle = true;
             player.rounds.assaultRifle = settings.pickup.assaultRifle;
             player.weapon = Weapon.AssaultRifle;
-            dispatch(GameEventType.Item_Acquired, item.x, item.y, 0, 0);
             break;
           case ItemType.Credits:
             player.earnPoints(settings.collectCreditAmount);
@@ -1519,17 +1519,17 @@ extension GameFunctions on Game {
           case ItemType.Health:
             if (player.health >= player.maxHealth) continue;
             player.health = player.maxHealth;
-            dispatch(GameEventType.Health_Acquired, item.x, item.y, 0, 0);
+            dispatch(GameEventType.Health_Acquired, item.x, item.y);
             break;
           case ItemType.Grenade:
             if (player.grenades >= settings.maxGrenades) continue;
             player.grenades++;
-            dispatch(GameEventType.Item_Acquired, item.x, item.y, 0, 0);
+            dispatch(GameEventType.Item_Acquired, item.x, item.y);
             break;
           case ItemType.Ammo:
             if (player.acquiredAssaultRifle) {
               player.rounds.assaultRifle = min(player.rounds.assaultRifle + 20,
-                  settings.maxRounds.assaultRifle);
+                  constants.maxRounds.assaultRifle);
             }
             switch (player.weapon) {
               case Weapon.HandGun:

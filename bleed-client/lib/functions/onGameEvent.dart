@@ -141,5 +141,8 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
       }
       playAudioCrateBreaking(x, y);
       break;
+    case GameEventType.Ammo_Acquired:
+      playAudioGunPickup(x, y);
+      break;
   }
 }
