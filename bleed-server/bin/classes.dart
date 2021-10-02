@@ -141,6 +141,7 @@ class Bullet extends GameObject implements HasSquad {
   Character owner;
   double range;
   int damage;
+  late Weapon weapon;
 
   int get squad => owner.squad;
 
@@ -149,6 +150,7 @@ class Bullet extends GameObject implements HasSquad {
       : super(x, y, xv: xVel, yv: yVel) {
     xStart = x;
     yStart = y;
+    weapon = owner.weapon;
   }
 
   @override

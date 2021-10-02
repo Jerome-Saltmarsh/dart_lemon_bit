@@ -84,16 +84,14 @@
 [ ] Design Level, City
 [ ] Disable spawn npcs request
 [ ] Fix GCP Security
-[ ] Collect item text floating text
-[ ] Sniper bullet goes through multiple enemies
 [ ] Disable squads
 [ ] Running out of ammo causes weapon to drop
-[ ] Ammo acquired text
 [ ] Grenades should bounce off blocks
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong
 [ ] NPC get stuck on crate
 -- COMPLETED --
+[x] Sniper bullet goes through multiple enemies
 [x] Cursor indicates ammo remaining
 [x] Collect item audio
 [x] Crate broken animation

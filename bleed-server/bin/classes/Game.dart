@@ -1038,7 +1038,9 @@ extension GameFunctions on Game {
         if (bullet.top > character.bottom) continue;
         if (bullet.bottom < character.top) continue;
 
-        bullet.active = false;
+        if (bullet.weapon != Weapon.SniperRifle){
+          bullet.active = false;
+        }
 
         character.xv += bullet.xv * settings.bulletImpactVelocityTransfer;
         character.yv += bullet.yv * settings.bulletImpactVelocityTransfer;
@@ -1267,6 +1269,7 @@ extension GameFunctions on Game {
       bullet.owner = character;
       bullet.range = range;
       bullet.damage = damage;
+      bullet.weapon = character.weapon;
       return bullet;
     }
 
