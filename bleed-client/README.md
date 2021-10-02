@@ -83,7 +83,6 @@
 [ ] Disable spawn npcs request
 [ ] Fix GCP Security
 [ ] Standing on home base heals health && refills handgun ammo
-[ ] Crate broken animation
 [ ] Collect item text floating text
 [ ] Sniper bullet goes through multiple enemies
 [ ] Cursor indicates ammo remaining
@@ -91,12 +90,13 @@
 [ ] Disable squads
 [ ] Running out of ammo causes weapon to drop
 [ ] Ammo acquired text
-[ ] Knife strike audio
 [ ] Grenades should bounce off blocks
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong
 [ ] NPC get stuck on crate
 -- COMPLETED --
+[x] Crate broken animation
+[x] Knife strike audio
 [x] Grenades break crate
 [x] Remove Reload
 [x] Player health 100

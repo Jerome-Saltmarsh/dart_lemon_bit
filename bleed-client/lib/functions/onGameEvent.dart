@@ -4,6 +4,7 @@ import 'package:bleed_client/spawners/spawnHead.dart';
 import 'package:bleed_client/spawners/spawnOrgan.dart';
 import 'package:bleed_client/spawners/spawnShell.dart';
 import 'package:bleed_client/spawners/spawnShotSmoke.dart';
+import 'package:bleed_client/spawners/spawnShrapnel.dart';
 
 import '../audio.dart';
 import '../common/GameEventType.dart';
@@ -135,6 +136,9 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
       playAudioKnifeStrike(x, y);
       break;
     case GameEventType.Crate_Breaking:
+      for (int i = 0; i < randomInt(4, 10); i++) {
+        spawnShrapnel(x, y);
+      }
       playAudioCrateBreaking(x, y);
       break;
   }
