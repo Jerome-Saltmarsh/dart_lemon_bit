@@ -1005,8 +1005,10 @@ extension GameFunctions on Game {
       applyMovement(grenade);
       applyFriction(grenade, settings.grenadeFriction);
       grenade.zv -= settings.grenadeGravity;
+
       if (grenade.z < 0) {
         grenade.z = 0;
+        grenade.zv = -grenade.zv * 0.5;
       }
     }
   }

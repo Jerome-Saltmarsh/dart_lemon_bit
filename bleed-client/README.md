@@ -86,12 +86,12 @@
 [ ] Crate broken animation
 [ ] Collect item text floating text
 [ ] Sniper bullet goes through multiple enemies
-[ ] Grenades should bounce off blocks
 [ ] Cursor indicates ammo remaining
 [ ] Collect item audio
 [ ] Disable squads
 [ ] Running out of ammo causes weapon to drop
 [ ] Ammo acquired text
+[ ] Grenades should bounce off blocks
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong
 [ ] NPC get stuck on crate
