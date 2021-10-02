@@ -91,6 +91,7 @@
 [ ] Disable squads
 [ ] Running out of ammo causes weapon to drop
 [ ] Ammo acquired text
+[ ] Knife strike audio
 [ ] Grenades should bounce off blocks
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong

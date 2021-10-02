@@ -742,7 +742,7 @@ extension GameFunctions on Game {
         break;
       case CharacterState.Striking:
         // @on character striking
-        character.stateDuration = settings.knifeAttackDuration;
+        character.stateDuration = settings.duration.knifeStrike;
         break;
       case CharacterState.Reloading:
         // @on reload weapon
@@ -964,6 +964,12 @@ extension GameFunctions on Game {
         player.stamina += settings.staminaRefreshRate;
         break;
       case CharacterState.Striking:
+        // @on player striking
+        // @on character striking
+        if (player.stateDuration == 10) {
+          dispatch(GameEventType.Knife_Strike, player.x, player.y);
+        }
+
         if (player.stateDuration == 8) {
           double frontX =
               player.x + velX(player.aimAngle, settings.range.knife);
@@ -1312,7 +1318,8 @@ extension GameFunctions on Game {
     return player;
   }
 
-  void dispatch(GameEventType type, double x, double y, double xv, double xy) {
+  // TODO Optimize
+  void dispatch(GameEventType type, double x, double y, [double xv = 0, double xy = 0]) {
     gameEvents.add(GameEvent(type, x, y, xv, xy));
   }
 
@@ -1428,15 +1435,17 @@ extension GameFunctions on Game {
     for (int i = 0; i < items.length; i++) {
       Item item = items[i];
 
+      // TODO Optimize
       if (item.duration-- <= 0) {
         items.removeAt(i);
         i--;
         continue;
       }
       for (Player player in players) {
-        if (diff(item.x, player.x) > radius.item) continue;
-        if (diff(item.y, player.y) > radius.item) continue;
+        if (diffOver(item.x, player.x, radius.item)) continue;
+        if (diffOver(item.y, player.y, radius.item)) continue;
         if (player.dead) continue;
+
         // @on item collectable
 
         switch (item.type) {
@@ -1453,6 +1462,7 @@ extension GameFunctions on Game {
             player.clips.handgun = settings.maxClips.handgun;
             player.rounds.handgun = settings.pickup.handgun;
             player.weapon = Weapon.HandGun;
+            dispatch(GameEventType.Item_Acquired, item.x, item.y, 0, 0);
             break;
           case ItemType.Shotgun:
             // @on shotgun acquired
@@ -1467,6 +1477,7 @@ extension GameFunctions on Game {
             player.acquiredShotgun = true;
             player.rounds.shotgun = settings.pickup.shotgun;
             player.weapon = Weapon.Shotgun;
+            dispatch(GameEventType.Item_Acquired, item.x, item.y, 0, 0);
             break;
           case ItemType.SniperRifle:
             // @on sniper rifle acquired
@@ -1482,6 +1493,7 @@ extension GameFunctions on Game {
             player.acquiredSniperRifle = true;
             player.rounds.sniperRifle = settings.pickup.sniperRifle;
             player.weapon = Weapon.SniperRifle;
+            dispatch(GameEventType.Item_Acquired, item.x, item.y, 0, 0);
             break;
           case ItemType.Assault_Rifle:
             // @on assault rifle acquired
@@ -1497,6 +1509,7 @@ extension GameFunctions on Game {
             player.acquiredAssaultRifle = true;
             player.rounds.assaultRifle = settings.pickup.assaultRifle;
             player.weapon = Weapon.AssaultRifle;
+            dispatch(GameEventType.Item_Acquired, item.x, item.y, 0, 0);
             break;
           case ItemType.Credits:
             player.earnPoints(settings.collectCreditAmount);
@@ -1504,17 +1517,18 @@ extension GameFunctions on Game {
           case ItemType.Health:
             if (player.health >= player.maxHealth) continue;
             player.health = player.maxHealth;
+            dispatch(GameEventType.Health_Acquired, item.x, item.y, 0, 0);
             break;
           case ItemType.Grenade:
             if (player.grenades >= settings.maxGrenades) continue;
             player.grenades++;
+            dispatch(GameEventType.Item_Acquired, item.x, item.y, 0, 0);
             break;
           case ItemType.Ammo:
             if (player.acquiredAssaultRifle) {
               player.rounds.assaultRifle = min(player.rounds.assaultRifle + 20,
                   settings.maxRounds.assaultRifle);
             }
-
             switch (player.weapon) {
               case Weapon.HandGun:
                 if (player.clips.handgun >= settings.maxClips.handgun) continue;

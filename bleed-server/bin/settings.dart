@@ -86,6 +86,7 @@ class Settings {
   final _Range range = _Range();
   final _Health health = _Health();
   final _BulletSpeed bulletSpeed = _BulletSpeed();
+  final _Duration duration = _Duration();
   final _NpcSettings npc = _NpcSettings();
   final _MapRounds maxRounds = _MapRounds();
   final _MaxClips maxClips = _MaxClips();
@@ -97,7 +98,6 @@ class Settings {
   final double machineGunBulletSpeed = 18;
   final int crateDeactiveDuration = 1000;
   final double knifeHitAcceleration = 5;
-  final int knifeAttackDuration = 15;
   final double itemCollectRadius = 10;
   final double chanceOfDropItem = 0.25;
   final int itemDuration = 500;
@@ -132,6 +132,10 @@ class Settings {
 
   final double minStamina = 60;
 
+}
+
+class _Duration {
+  final int knifeStrike = 15;
 }
 
 class _MapRounds {

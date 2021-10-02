@@ -16,5 +16,7 @@ enum GameEventType {
   Player_Hit,
   Use_MedKit,
   Throw_Grenade,
-  Item_Acquired
+  Item_Acquired,
+  Health_Acquired,
+  Knife_Strike,
 }

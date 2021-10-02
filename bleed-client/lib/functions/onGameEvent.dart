@@ -131,5 +131,8 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
     case GameEventType.Item_Acquired:
       playAudioAcquireItem(x, y);
       break;
+    case GameEventType.Knife_Strike:
+      playAudioKnifeStrike(x, y);
+      break;
   }
 }
