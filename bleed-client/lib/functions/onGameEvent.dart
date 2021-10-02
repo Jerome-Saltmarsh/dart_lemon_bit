@@ -135,6 +135,9 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
     case GameEventType.Knife_Strike:
       playAudioKnifeStrike(x, y);
       break;
+    case GameEventType.Health_Acquired:
+      playAudioHeal(x, y);
+      break;
     case GameEventType.Crate_Breaking:
       for (int i = 0; i < randomInt(4, 10); i++) {
         spawnShrapnel(x, y);
@@ -143,6 +146,9 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
       break;
     case GameEventType.Ammo_Acquired:
       playAudioGunPickup(x, y);
+      break;
+    case GameEventType.Credits_Acquired:
+      playAudioCollectStar(x, y);
       break;
   }
 }

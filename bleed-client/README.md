@@ -63,6 +63,7 @@
 [ ] UI Score Lag
 -- UI --
 -- IDEAS --
+[ ] Deploy auto turret
 [ ] Standing on home base heals health && refills handgun ammo
 [ ] Send custom news updates to client
 [ ] No such thing as reload, this simplifies the game a lot and allows the player to focus on having fun

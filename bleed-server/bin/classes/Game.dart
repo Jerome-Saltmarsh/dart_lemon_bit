@@ -282,10 +282,10 @@ class GameCasual extends Game {
 
   Rounds spawnRounds() {
     return Rounds(
-      handgun: constants.maxRounds.handgun,
-      shotgun: constants.maxRounds.shotgun,
-      sniperRifle: constants.maxRounds.sniperRifle,
-      assaultRifle: constants.maxRounds.assaultRifle,
+      handgun: constants.maxRounds.handgun ~/ 2,
+      shotgun: 0,
+      sniperRifle: 0,
+      assaultRifle: 0,
     );
   }
 
@@ -1515,6 +1515,7 @@ extension GameFunctions on Game {
             break;
           case ItemType.Credits:
             player.earnPoints(settings.collectCreditAmount);
+            dispatch(GameEventType.Credits_Acquired, item.x, item.y);
             break;
           case ItemType.Health:
             if (player.health >= player.maxHealth) continue;

@@ -93,6 +93,14 @@ void playAudioAcquireItem(double x, double y) {
   _playAudio('item-acquired.mp3', x, y);
 }
 
+void playAudioCollectStar(double x, double y){
+  _playAudio('collect-star-4.mp3', x, y);
+}
+
+void playAudioHeal(double x, double y){
+  _playAudio('revive-heal-1.mp3', x, y);
+}
+
 void playAudioKnifeStrike(double x, double y) {
   _playRandom(_knifeStrikes, x, y);
 }

@@ -188,7 +188,7 @@ class _CoolDown {
 
 class _Damage {
   final int knife = 12;
-  final int zombieStrike = 1;
+  final int zombieStrike = 7;
   final int grenade = 15;
   final int handgun = 10;
   final int shotgun = 8;
