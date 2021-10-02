@@ -97,6 +97,10 @@ void playAudioThrowGrenade(double x, double y) {
   _playAudio('throw.mp3', x, y);
 }
 
+void playAudioCrateBreaking(double x, double y) {
+  _playAudio('crate-breaking.mp3', x, y);
+}
+
 // abstraction
 int _index = 0;
 

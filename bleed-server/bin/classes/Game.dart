@@ -851,8 +851,10 @@ extension GameFunctions on Game {
 
   void breakCrate(Crate crate) {
     // @on break crate
+    if (!crate.active) return;
     spawnRandomItem(crate.x, crate.y);
     crate.deactiveDuration = settings.crateDeactiveDuration;
+    dispatch(GameEventType.Crate_Breaking, crate.x, crate.y);
   }
 
   void spawnRandomItem(double x, double y) {

@@ -134,5 +134,8 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
     case GameEventType.Knife_Strike:
       playAudioKnifeStrike(x, y);
       break;
+    case GameEventType.Crate_Breaking:
+      playAudioCrateBreaking(x, y);
+      break;
   }
 }
