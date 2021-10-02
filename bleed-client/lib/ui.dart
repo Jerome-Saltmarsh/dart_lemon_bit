@@ -384,7 +384,6 @@ void toggleShowScore() {
 
 Widget buildHud() {
   print("buildHud()");
-  String message = getMessage();
 
   return Stack(
     children: [
@@ -400,8 +399,6 @@ Widget buildHud() {
           player.dead &&
           compiledGame.gameType == GameType.Casual)
         buildViewRespawn(),
-      // if (!playerDead && state.storeVisible) buildViewStore(),
-
       if (player.dead && observeMode)
         Positioned(
             top: 30,

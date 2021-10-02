@@ -9,8 +9,6 @@ Rect mapItemToRect(ItemType item) {
   switch (item) {
     case ItemType.Health:
       return _health[drawFrame % _healthFrames];
-    case ItemType.Ammo:
-      return _ammo[0];
     case ItemType.Grenade:
       return _grenade[0];
     case ItemType.Credits:

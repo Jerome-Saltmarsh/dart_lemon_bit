@@ -63,6 +63,8 @@
 [ ] UI Score Lag
 -- UI --
 -- IDEAS --
+[ ] Standing on home base heals health && refills handgun ammo
+[ ] Send custom news updates to client
 [ ] No such thing as reload, this simplifies the game a lot and allows the player to focus on having fun
 [ ] No such thing as health pack
 [ ] Compact Score Mode 
@@ -78,15 +80,11 @@
 -- TEAM CASUAL --
 
 -- CASUAL --
-[ ] Send custom news updates to client
 [ ] Design Level, City
 [ ] Disable spawn npcs request
 [ ] Fix GCP Security
-[ ] Standing on home base heals health && refills handgun ammo
 [ ] Collect item text floating text
 [ ] Sniper bullet goes through multiple enemies
-[ ] Cursor indicates ammo remaining
-[ ] Collect item audio
 [ ] Disable squads
 [ ] Running out of ammo causes weapon to drop
 [ ] Ammo acquired text
@@ -95,6 +93,8 @@
 [ ] Bonus zombie point text is wrong
 [ ] NPC get stuck on crate
 -- COMPLETED --
+[x] Cursor indicates ammo remaining
+[x] Collect item audio
 [x] Crate broken animation
 [x] Knife strike audio
 [x] Grenades break crate

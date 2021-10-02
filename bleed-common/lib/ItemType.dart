@@ -1,6 +1,5 @@
 enum ItemType {
   Health,
-  Ammo,
   Grenade,
   Credits,
   Handgun,

@@ -1526,31 +1526,6 @@ extension GameFunctions on Game {
             player.grenades++;
             dispatch(GameEventType.Item_Acquired, item.x, item.y);
             break;
-          case ItemType.Ammo:
-            if (player.acquiredAssaultRifle) {
-              player.rounds.assaultRifle = min(player.rounds.assaultRifle + 20,
-                  constants.maxRounds.assaultRifle);
-            }
-            switch (player.weapon) {
-              case Weapon.HandGun:
-                if (player.clips.handgun >= settings.maxClips.handgun) continue;
-                player.clips.handgun++;
-                break;
-              case Weapon.Shotgun:
-                if (player.clips.shotgun >= settings.maxClips.shotgun) continue;
-                player.clips.shotgun++;
-                break;
-              case Weapon.SniperRifle:
-                if (player.clips.sniperRifle >= settings.maxClips.sniperRifle)
-                  continue;
-                player.clips.sniperRifle++;
-                break;
-              case Weapon.AssaultRifle:
-                if (player.clips.assaultRifle >= settings.maxClips.assaultRifle)
-                  continue;
-                player.clips.assaultRifle++;
-                break;
-            }
         }
 
         items.removeAt(i);

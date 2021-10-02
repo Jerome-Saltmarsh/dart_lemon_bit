@@ -7,7 +7,6 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/CollectableType.dart';
-import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
@@ -216,25 +215,6 @@ final Paint paintDeepPurple = Paint()
   ..isAntiAlias = false
   ..strokeWidth = 1;
 
-void _drawBlocks() {
-  blockHouses.forEach(drawBlock);
-}
-
-void drawBlock(Block block) {
-  // globalCanvas.drawPath(block.wall1, _blockBlueGrey);
-  // globalCanvas.drawPath(block.wall2, _blockBlue);
-  // globalCanvas.drawPath(block.wall3, _blockGrey);
-  // _drawLine(block.center, block.a, Colors.red);
-  // _drawLine(block.center, block.b, Colors.green);
-  // _drawLine(block.center, block.top, Colors.deepPurple);
-  // _drawLine(block.center, block.right, Colors.orange);
-
-  globalPaint.strokeWidth = 2;
-  _drawLine(block.top, block.right, Colors.white);
-  _drawLine(block.right, block.bottom, Colors.white);
-  _drawLine(block.bottom, block.left, Colors.white);
-  _drawLine(block.left, block.top, Colors.white);
-}
 
 void drawBlockSelected(Block block) {
   // globalCanvas.drawPath(block.wall1, _blockBlueGrey);

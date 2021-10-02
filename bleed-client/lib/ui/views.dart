@@ -1,6 +1,4 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:bleed_client/classes/Lobby.dart';
-import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/game_engine/web_functions.dart';
@@ -13,14 +11,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../audio.dart';
-import '../connection.dart';
 import '../state.dart';
 import '../ui.dart';
 import 'flutter_constants.dart';
-
-GameType _gameType = GameType.DeathMatch;
-int _maxPlayers = 8;
-bool _private = false;
 
 Widget buildViewJoinedLobby() {
   if (state.lobby.maxPlayers == 0) {
@@ -171,16 +164,6 @@ Widget buildLobbyList() {
   //       );
   //       }
   //     );
-}
-
-Widget _buildLobbyListTile(Lobby lobby) {
-  return border(
-    child: ListTile(
-        leading: text(lobby.name),
-        title: text("${lobby.playersJoined} / ${lobby.maxPlayers}"),
-        trailing:
-            text("JOIN", onPressed: () => {sendRequestJoinLobby(lobby.uuid)})),
-  );
 }
 
 Widget buildViewConnecting() {

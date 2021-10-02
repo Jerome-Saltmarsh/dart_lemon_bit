@@ -20,7 +20,6 @@ import 'editor/editor.dart';
 import 'functions/clearState.dart';
 import 'functions/drawCanvas.dart';
 import 'functions/drawParticle.dart';
-import 'game_engine/engine_draw.dart';
 import 'images.dart';
 import 'instances/settings.dart';
 import 'keys.dart';
@@ -168,14 +167,5 @@ class BleedWidget extends GameWidget {
     globalPaint.color = orange;
     canvas.drawRect(Rect.fromLTWH(screenCenterX - 50, 25, 100 * percentage, 15),
         globalPaint);
-  }
-
-  void _drawClips() {
-    globalPaint.color = Colors.white;
-    for (int i = 0; i < player.equippedClips; i++) {
-      globalCanvas.drawRect(
-          Rect.fromLTWH(mouseX + 35 + (i * 9), mouseY - 33, 7, 17),
-          globalPaint);
-    }
   }
 }
