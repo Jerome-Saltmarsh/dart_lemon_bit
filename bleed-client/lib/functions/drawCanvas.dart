@@ -64,6 +64,8 @@ void _drawCompiledGame() {
   //   print("draw player health error");
   // }
 
+  drawRing(percentage: player.health / player.maxHealth, color: Colors.red, position: Offset(playerX, playerY));
+
   for (int i = 0; i < compiledGame.totalNpcs; i++) {
     if (compiledGame.npcs[i][indexPointMultiplier] == "1") continue;
     dynamic npc = compiledGame.npcs[i];
@@ -108,8 +110,6 @@ void _drawCompiledGame() {
     }
   }
   // drawText(player.equippedRounds.toString(), playerX - 10, playerY - 35);
-
-  drawRing(percentage: 0.5, color: Colors.blue, position: Offset(playerX, playerY));
 }
 
 void _drawCrates() {

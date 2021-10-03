@@ -1426,7 +1426,7 @@ void drawRing({double percentage, Color color, Offset position}) {
   if (!_pointsInitialized) {
     _pointsInitialized = true;
     double radianPerSide = pi2 / _sides;
-    double radius = 20;
+    double radius = 12;
     for (int side = 0; side <= _sides; side++) {
       double radians = side * radianPerSide;
       _points.add(Offset(cos(radians) * radius, sin(radians) * radius));
@@ -1439,12 +1439,13 @@ void drawRing({double percentage, Color color, Offset position}) {
     globalCanvas.drawLine(
         _points[i] + position, _points[i + 1] + position, globalPaint);
   }
-  // setStrokeWidth(3);
-  // setColor(color);
-  //
-  // int fillSides = (_sides * percentage).toInt();
-  // for (int i = 0; i < fillSides - 1; i++) {
-  //   globalCanvas.drawLine(
-  //       _points[i] + position, _points[i + 1] + position, globalPaint);
-  // }
+
+  setStrokeWidth(3);
+  setColor(color);
+
+  int fillSides = (_sides * percentage).toInt();
+  for (int i = 0; i < fillSides; i++) {
+    globalCanvas.drawLine(
+        _points[i] + position, _points[i + 1] + position, globalPaint);
+  }
 }
