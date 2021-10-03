@@ -98,8 +98,11 @@ void _drawNpcBonusPointsCircles() {
   }
 }
 
+Ring _healthRing = Ring(16);
+
 void _drawPlayerHealthRing() {
   drawRing(
+      _healthRing,
       percentage: player.health / player.maxHealth,
       color: healthColor,
       position: Offset(playerX, playerY));

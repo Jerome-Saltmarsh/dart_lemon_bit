@@ -85,11 +85,11 @@
 [ ] Running out of ammo causes weapon to drop
 [ ] Grenades should bounce off blocks
 [ ] Collect item particles
-[ ] Optimize ammo circle
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong
 [ ] NPC get stuck on crate
 -- COMPLETED --
+[x] Optimize ammo circle
 [x] Draw health Ring same as ammo ring
 [x] Disable squads
 [x] Sniper bullet goes through multiple enemies

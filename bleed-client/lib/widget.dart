@@ -129,38 +129,20 @@ class BleedWidget extends GameWidget {
     _drawMouseAim(aiming);
   }
 
+  Ring ammoRing = Ring(32, radius: 8);
+
   void _drawMouseAim(bool aiming) {
     if (!mouseAvailable) return;
-
     if (player.equippedRounds == 0) return;
 
-    int maxRounds = getMaxRounds(compiledGame.playerWeapon);
-    double p = player.equippedRounds / maxRounds;
+    double p = player.equippedRounds / getMaxRounds(compiledGame.playerWeapon);
 
-    drawRing(
+    drawRing(ammoRing,
         percentage: p,
         color: Colors.blue,
         position: Offset(mouseX, mouseY),
         backgroundColor: aiming ? Colors.red : Colors.white);
     return;
-    double r = (pi * 2) / maxRounds;
-    List<Offset> points = [];
-    Offset z = Offset(mouseX, mouseY);
-    double radius = 6;
-    for (int i = 0; i <= maxRounds; i++) {
-      double a1 = i * r;
-      points.add(Offset(cos(a1) * radius, sin(a1) * radius));
-    }
-    globalPaint.strokeWidth = 5;
-    setColor(Colors.white);
-    for (int i = 0; i < points.length - 1; i++) {
-      globalCanvas.drawLine(points[i] + z, points[i + 1] + z, globalPaint);
-    }
-    globalPaint.strokeWidth = 3;
-    setColor(aiming ? Colors.red : Colors.blue);
-    for (int i = 0; i < player.equippedRounds - 1; i++) {
-      globalCanvas.drawLine(points[i] + z, points[i + 1] + z, globalPaint);
-    }
   }
 
   void _drawStaminaBar(Canvas canvas) {

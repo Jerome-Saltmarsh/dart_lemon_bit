@@ -1418,35 +1418,42 @@ void hideDebug() {
   debugMode = false;
 }
 
-List<Offset> _points = [];
-bool _pointsInitialized = false;
-double _sides = 16;
+// List<Offset> _points = [];
+// bool _pointsInitialized = false;
+// double _sides = 16;
 
-void drawRing({double percentage, Color color, Offset position, Color backgroundColor = Colors.white}) {
+Ring healthRing = Ring(16);
 
-  if (!_pointsInitialized) {
-    _pointsInitialized = true;
-    double radianPerSide = pi2 / _sides;
-    double radius = 12;
-    for (int side = 0; side <= _sides; side++) {
+class Ring {
+  List<Offset> points = [];
+  double sides;
+
+  Ring(this.sides, {double radius = 12}) {
+    double radianPerSide = pi2 / sides;
+    for (int side = 0; side <= sides; side++) {
       double radians = side * radianPerSide;
-      _points.add(Offset(cos(radians) * radius, sin(radians) * radius));
+      points.add(Offset(cos(radians) * radius, sin(radians) * radius));
     }
   }
+}
 
+void drawRing(Ring ring,
+    {double percentage,
+    Color color,
+    Offset position,
+    Color backgroundColor = Colors.white}) {
   setStrokeWidth(6);
   setColor(backgroundColor);
-  for (int i = 0; i < _points.length - 1; i++) {
+  for (int i = 0; i < ring.points.length - 1; i++) {
     globalCanvas.drawLine(
-        _points[i] + position, _points[i + 1] + position, globalPaint);
+        ring.points[i] + position, ring.points[i + 1] + position, globalPaint);
   }
 
   setStrokeWidth(3);
   setColor(color);
-
-  int fillSides = (_sides * percentage).toInt();
+  int fillSides = (ring.sides * percentage).toInt();
   for (int i = 0; i < fillSides; i++) {
     globalCanvas.drawLine(
-        _points[i] + position, _points[i + 1] + position, globalPaint);
+        ring.points[i] + position, ring.points[i + 1] + position, globalPaint);
   }
 }
