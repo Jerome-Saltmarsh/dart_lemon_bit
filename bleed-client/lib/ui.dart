@@ -1239,11 +1239,13 @@ Widget buildViewRespawn() {
                             rebuildUI();
                           }),
                       width16,
-
-                      mouseOver(builder: (BuildContext context, bool mouseOver){
+                      mouseOver(
+                          builder: (BuildContext context, bool mouseOver) {
                         return onPressed(
                           child: border(
-                              child: text("RESPAWN", fontWeight: bold, decoration: mouseOver ? underline : null),
+                              child: text("RESPAWN",
+                                  fontWeight: bold,
+                                  decoration: mouseOver ? underline : null),
                               padding: padding16,
                               radius: borderRadius4,
                               color: Colors.white,
@@ -1422,17 +1424,18 @@ double _sides = 10;
 void drawRing({double percentage, Color color, Offset position}) {
 
   if (!_pointsInitialized) {
-    double radius = 20;
     _pointsInitialized = true;
-    for (int i = 0; i <= _sides; i++) {
-      double a1 = i * _sides;
-      _points.add(Offset(cos(a1) * radius, sin(a1) * radius));
+    double radianPerSide = pi2 / _sides;
+    double radius = 20;
+    for (int side = 0; side <= _sides; side++) {
+      double radians = side * radianPerSide;
+      _points.add(Offset(cos(radians) * radius, sin(radians) * radius));
     }
   }
 
   setStrokeWidth(5);
   setColorWhite();
-  for (int i = 0; i < _sides - 1; i++) {
+  for (int i = 0; i < _points.length - 1; i++) {
     globalCanvas.drawLine(
         _points[i] + position, _points[i + 1] + position, globalPaint);
   }
