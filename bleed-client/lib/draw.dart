@@ -15,6 +15,7 @@ import '../images.dart';
 import 'common/classes/Vector2.dart';
 import 'common/Tile.dart';
 import 'functions/drawParticle.dart';
+import 'game_engine/global_paint.dart';
 import 'keys.dart';
 import 'rects.dart';
 import 'mappers/mapHumanToRect.dart';
@@ -247,17 +248,6 @@ void drawTiles() {
   if (render.tileTransforms.length != render.tileRects.length) return;
   drawTileList();
 }
-
-void setColor(Color value) {
-  globalPaint.color = value;
-}
-
-// void drawBulletRange() {
-//   if (!playerAssigned) return;
-//   dynamic player = getPlayerCharacter();
-//   drawCircleOutline(
-//       radius: bulletRange, x: player[x], y: player[y], color: white);
-// }
 
 void drawBulletHoles(List<Vector2> bulletHoles) {
   for(Vector2 bulletHole in bulletHoles){

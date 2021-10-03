@@ -9,6 +9,7 @@ import 'package:bleed_client/state.dart';
 
 import 'common/Weapons.dart';
 import 'common.dart';
+import 'game_engine/global_paint.dart';
 import 'keys.dart';
 import 'maths.dart';
 
@@ -27,10 +28,6 @@ bool isDead(dynamic character) {
 
 void drawLine(double x1, double y1, double x2, double y2) {
   globalCanvas.drawLine(offset(x1, y1), offset(x2, y2), globalPaint);
-}
-
-void drawLine2(double x1, double y1, double x2, double y2) {
-  globalCanvas.drawLine(offset(x1, y1), offset(x2, y2), paint2);
 }
 
 void drawLine3(double x1, double y1, double x2, double y2) {

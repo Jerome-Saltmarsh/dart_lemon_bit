@@ -8,6 +8,7 @@ import 'package:flutter/material.dart' as mat;
 import 'package:positioned_tap_detector/positioned_tap_detector.dart';
 
 import 'engine_state.dart';
+import 'global_paint.dart';
 
 typedef PaintGame = Function(Canvas canvas, Size size);
 
@@ -59,12 +60,6 @@ Color white = mat.Colors.white;
 Color red = mat.Colors.red;
 
 // finals
-final Paint globalPaint = Paint()
-  ..color = white
-  ..strokeCap = StrokeCap.round
-  ..style = PaintingStyle.fill
-  ..isAntiAlias = false
-  ..strokeWidth = 1;
 
 final Paint paint2 = Paint()
   ..color = white

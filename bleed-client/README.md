@@ -85,6 +85,8 @@
 [ ] Fix GCP Security
 [ ] Running out of ammo causes weapon to drop
 [ ] Grenades should bounce off blocks
+[ ] Collect item particles
+[ ] Optimize ammo circle
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong
 [ ] NPC get stuck on crate

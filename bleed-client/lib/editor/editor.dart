@@ -6,6 +6,7 @@ import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/functions/saveScene.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
+import 'package:bleed_client/game_engine/global_paint.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/ui/widgets.dart';

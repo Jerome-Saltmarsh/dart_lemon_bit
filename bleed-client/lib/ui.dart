@@ -33,6 +33,7 @@ import 'connection.dart';
 import 'constants/servers.dart';
 import 'enums/InventoryItemType.dart';
 import 'enums/Mode.dart';
+import 'game_engine/global_paint.dart';
 import 'images.dart';
 import 'instances/inventory.dart';
 import 'instances/settings.dart';
@@ -1412,4 +1413,35 @@ void showDebug() {
 
 void hideDebug() {
   debugMode = false;
+}
+
+List<Offset> _points = [];
+bool _pointsInitialized = false;
+double _sides = 10;
+
+void drawRing({double percentage, Color color, Offset position}) {
+
+  if (!_pointsInitialized) {
+    double radius = 20;
+    _pointsInitialized = true;
+    for (int i = 0; i <= _sides; i++) {
+      double a1 = i * _sides;
+      _points.add(Offset(cos(a1) * radius, sin(a1) * radius));
+    }
+  }
+
+  setStrokeWidth(5);
+  setColorWhite();
+  for (int i = 0; i < _sides - 1; i++) {
+    globalCanvas.drawLine(
+        _points[i] + position, _points[i + 1] + position, globalPaint);
+  }
+  // setStrokeWidth(3);
+  // setColor(color);
+  //
+  // int fillSides = (_sides * percentage).toInt();
+  // for (int i = 0; i < fillSides - 1; i++) {
+  //   globalCanvas.drawLine(
+  //       _points[i] + position, _points[i + 1] + position, globalPaint);
+  // }
 }

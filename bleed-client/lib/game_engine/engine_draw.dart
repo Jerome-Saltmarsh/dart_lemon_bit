@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import 'engine_state.dart';
 import 'game_widget.dart';
+import 'global_paint.dart';
 
 void drawCircle(double x, double y, double radius, Color color){
   drawCircleOffset(Offset(x, y), radius, color);

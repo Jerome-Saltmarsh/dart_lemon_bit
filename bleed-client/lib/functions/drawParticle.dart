@@ -3,6 +3,7 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/game_engine/global_paint.dart';
 import 'package:flutter/material.dart';
 
 import '../maths.dart';
@@ -44,7 +45,7 @@ void drawParticle(Particle particle){
       double length = randomBetween(4, 6);
       double handX = x + velX(rotation, length);
       double handY = y + velY(rotation, length);
-      globalPaint.color = Colors.black45;
+      setColor(Colors.black45);
       drawLine3(x, y, handX, handY);
       drawCircle(handX, handY, 2 / scaleShift, Colors.black45);
       globalPaint.color = white;
@@ -52,7 +53,7 @@ void drawParticle(Particle particle){
       drawCircle(handX, handY  + heightShift, 2 * scaleShift, white);
       break;
     case ParticleType.Organ:
-      globalPaint.color = Colors.black45;
+      setColor(Colors.black45);
       drawCircle(x, y, scaleShift / 2, white);
       drawCircle(x, y  + heightShift, 2 * scaleShift, white);
       break;

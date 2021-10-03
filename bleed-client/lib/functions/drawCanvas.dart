@@ -12,6 +12,7 @@ import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/game_engine/global_paint.dart';
 import 'package:bleed_client/instances/settings.dart';
 import 'package:bleed_client/mappers/mapCrateToRSTransform.dart';
 import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
@@ -19,6 +20,7 @@ import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/mappers/mapItemToRect.dart';
 import 'package:bleed_client/rects.dart';
+import 'package:bleed_client/ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -56,11 +58,11 @@ void _drawCompiledGame() {
   }
 
   drawTiles();
-  try {
-    drawPlayerHealth();
-  } catch (error) {
-    print("draw player health error");
-  }
+  // try {
+  //   drawPlayerHealth();
+  // } catch (error) {
+  //   print("draw player health error");
+  // }
 
   for (int i = 0; i < compiledGame.totalNpcs; i++) {
     if (compiledGame.npcs[i][indexPointMultiplier] == "1") continue;
@@ -105,8 +107,9 @@ void _drawCompiledGame() {
       }
     }
   }
-
   // drawText(player.equippedRounds.toString(), playerX - 10, playerY - 35);
+
+  drawRing(percentage: 0.5, color: Colors.blue, position: Offset(playerX, playerY));
 }
 
 void _drawCrates() {

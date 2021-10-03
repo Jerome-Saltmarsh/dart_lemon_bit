@@ -1508,7 +1508,7 @@ extension GameFunctions on Game {
               if (player.rounds.assaultRifle >= constants.maxRounds.assaultRifle)
                 continue;
               player.rounds.assaultRifle = clampInt(
-                  player.rounds.assaultRifle + settings.pickup.assaultRifle,
+                  player.rounds.assaultRifle + constants.maxRounds.assaultRifle ~/ 5,
                   0,
                   constants.maxRounds.assaultRifle);
               dispatch(GameEventType.Ammo_Acquired, item.x, item.y);

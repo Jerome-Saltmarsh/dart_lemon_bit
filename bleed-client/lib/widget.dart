@@ -20,6 +20,7 @@ import 'editor/editor.dart';
 import 'functions/clearState.dart';
 import 'functions/drawCanvas.dart';
 import 'functions/drawParticle.dart';
+import 'game_engine/global_paint.dart';
 import 'images.dart';
 import 'instances/settings.dart';
 import 'keys.dart';
@@ -125,15 +126,11 @@ class BleedWidget extends GameWidget {
       _drawStaminaBar(canvas);
     }
 
-
     _drawMouseAim(aiming);
-
-    // if (player.equippedRounds == 0) {
-    //   drawText("reload (r)", mouseX + 10, mouseY - 35);
-    // }
   }
 
   void _drawMouseAim(bool aiming) {
+    if (!mouseAvailable) return;
 
     int maxRounds = getMaxRounds(compiledGame.playerWeapon);
     double r = (pi * 2) / maxRounds;
