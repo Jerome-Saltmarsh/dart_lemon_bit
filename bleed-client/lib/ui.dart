@@ -1419,7 +1419,7 @@ void hideDebug() {
 
 List<Offset> _points = [];
 bool _pointsInitialized = false;
-double _sides = 10;
+double _sides = 16;
 
 void drawRing({double percentage, Color color, Offset position}) {
 
@@ -1433,7 +1433,7 @@ void drawRing({double percentage, Color color, Offset position}) {
     }
   }
 
-  setStrokeWidth(5);
+  setStrokeWidth(6);
   setColorWhite();
   for (int i = 0; i < _points.length - 1; i++) {
     globalCanvas.drawLine(

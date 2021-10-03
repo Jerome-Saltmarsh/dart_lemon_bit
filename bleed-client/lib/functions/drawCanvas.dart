@@ -64,7 +64,7 @@ void _drawCompiledGame() {
   //   print("draw player health error");
   // }
 
-  drawRing(percentage: player.health / player.maxHealth, color: Colors.red, position: Offset(playerX, playerY));
+  drawRing(percentage: player.health / player.maxHealth, color: healthColor, position: Offset(playerX, playerY));
 
   for (int i = 0; i < compiledGame.totalNpcs; i++) {
     if (compiledGame.npcs[i][indexPointMultiplier] == "1") continue;

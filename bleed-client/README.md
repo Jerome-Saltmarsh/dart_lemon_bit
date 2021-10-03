@@ -79,7 +79,6 @@
 [ ] Rounds
 -- TEAM CASUAL --
 -- CASUAL --
-[ ] Draw health Ring same as ammo ring
 [ ] Design Level, City
 [ ] Disable spawn npcs request
 [ ] Fix GCP Security
@@ -91,6 +90,7 @@
 [ ] Bonus zombie point text is wrong
 [ ] NPC get stuck on crate
 -- COMPLETED --
+[x] Draw health Ring same as ammo ring
 [x] Disable squads
 [x] Sniper bullet goes through multiple enemies
 [x] Cursor indicates ammo remaining

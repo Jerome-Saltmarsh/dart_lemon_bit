@@ -182,6 +182,16 @@ void drawPlayerHealth() {
   }
 }
 
+Color get healthColor {
+  double health = player.health / player.maxHealth;
+  double halfMaxHealth = player.maxHealth * 0.5;
+  if (health > 0.5) {
+    return Color.lerp(
+        orange, green, (player.health - halfMaxHealth) / halfMaxHealth);
+  }
+  return Color.lerp(blood, orange, player.health / halfMaxHealth);
+}
+
 RSTransform getTileTransform(int x, int y) {
   return RSTransform.fromComponents(
       rotation: 0.0,
