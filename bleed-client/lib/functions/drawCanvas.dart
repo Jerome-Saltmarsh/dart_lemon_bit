@@ -58,24 +58,11 @@ void _drawCompiledGame() {
   }
 
   drawTiles();
-  // try {
-  //   drawPlayerHealth();
-  // } catch (error) {
-  //   print("draw player health error");
-  // }
-
-  drawRing(percentage: player.health / player.maxHealth, color: healthColor, position: Offset(playerX, playerY));
-
-  for (int i = 0; i < compiledGame.totalNpcs; i++) {
-    if (compiledGame.npcs[i][indexPointMultiplier] == "1") continue;
-    dynamic npc = compiledGame.npcs[i];
-    drawCircle(npc[x], npc[y], 10, orange);
-  }
-
+  _drawNpcBonusPointsCircles();
+  _drawPlayerHealthRing();
   _drawBullets(compiledGame.bullets);
   drawBulletHoles(compiledGame.bulletHoles);
   _drawGrenades(compiledGame.grenades);
-  // _drawBlocks();
   _drawParticles();
   _renderItems();
   _drawCrates();
@@ -110,6 +97,18 @@ void _drawCompiledGame() {
     }
   }
   // drawText(player.equippedRounds.toString(), playerX - 10, playerY - 35);
+}
+
+void _drawNpcBonusPointsCircles() {
+  for (int i = 0; i < compiledGame.totalNpcs; i++) {
+    if (compiledGame.npcs[i][indexPointMultiplier] == "1") continue;
+    dynamic npc = compiledGame.npcs[i];
+    drawCircle(npc[x], npc[y], 10, orange);
+  }
+}
+
+void _drawPlayerHealthRing() {
+  drawRing(percentage: player.health / player.maxHealth, color: healthColor, position: Offset(playerX, playerY));
 }
 
 void _drawCrates() {

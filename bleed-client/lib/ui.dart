@@ -1318,6 +1318,7 @@ bool _expandScore = false;
 StateSetter _scoreStateSetter;
 
 rebuildScore() {
+  if (_scoreStateSetter == null) return;
   _scoreStateSetter(doNothing);
 }
 
