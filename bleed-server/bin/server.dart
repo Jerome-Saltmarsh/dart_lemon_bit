@@ -350,6 +350,7 @@ void main() {
           return;
 
         case ClientRequest.Spawn_Npc:
+          return; // disabled
           String gameId = arguments[1];
           Game? game = findGameById(gameId);
           if (game == null) {

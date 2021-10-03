@@ -753,7 +753,7 @@ Widget buildViewTutorial() {
 
 Widget buildTag(dynamic value, {Color color = Colors.white}) {
   return Container(
-      width: 30,
+      width: 40,
       height: 30,
       alignment: Alignment.center,
       child: text(value, fontWeight: FontWeight.bold, color: color));
