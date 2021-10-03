@@ -53,7 +53,7 @@ dynamic get getPlayer {
   return null;
 }
 
-Weapon get playerWeapon => getPlayer[weapon];
+Weapon get playerWeapon => getPlayer[indexWeapon];
 
 List<CharacterState> characterStates = CharacterState.values;
 

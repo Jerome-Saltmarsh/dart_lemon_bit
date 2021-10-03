@@ -261,7 +261,7 @@ Rect _mapAimingRect(dynamic character) {
 }
 
 Rect _mapFiringRect(dynamic character) {
-  switch (character[weapon]) {
+  switch (character[indexWeapon]) {
     case Weapon.Shotgun:
       return _mapFiringShotgunRect(character);
     default:

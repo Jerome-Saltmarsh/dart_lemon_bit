@@ -1422,7 +1422,7 @@ List<Offset> _points = [];
 bool _pointsInitialized = false;
 double _sides = 16;
 
-void drawRing({double percentage, Color color, Offset position}) {
+void drawRing({double percentage, Color color, Offset position, Color backgroundColor = Colors.white}) {
 
   if (!_pointsInitialized) {
     _pointsInitialized = true;
@@ -1435,7 +1435,7 @@ void drawRing({double percentage, Color color, Offset position}) {
   }
 
   setStrokeWidth(6);
-  setColorWhite();
+  setColor(backgroundColor);
   for (int i = 0; i < _points.length - 1; i++) {
     globalCanvas.drawLine(
         _points[i] + position, _points[i + 1] + position, globalPaint);

@@ -641,7 +641,7 @@ void _consumePlayer(dynamic memory) {
   memory[x] = _consumeDouble();
   memory[y] = _consumeDouble();
   memory[frameCount] = _consumeInt();
-  memory[weapon] = _consumeWeapon(); // TODO optimization remove int parse
+  memory[indexWeapon] = _consumeWeapon(); // TODO optimization remove int parse
   memory[squad] = _consumeInt();
   try {
     memory[indexName] = _consumeString();

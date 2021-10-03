@@ -87,16 +87,7 @@ void _drawCompiledGame() {
     print(e);
   }
 
-  if (playerReady) {
-    dynamic player = getPlayer;
-    if (player != null) {
-      Weapon weapons = player[weapon];
-      if (weapons == Weapon.SniperRifle || weapons == Weapon.AssaultRifle) {
-        _drawMouseAim(weapons);
-      }
-    }
-  }
-  // drawText(player.equippedRounds.toString(), playerX - 10, playerY - 35);
+  _drawMouseAim();
 }
 
 void _drawNpcBonusPointsCircles() {
@@ -108,28 +99,33 @@ void _drawNpcBonusPointsCircles() {
 }
 
 void _drawPlayerHealthRing() {
-  drawRing(percentage: player.health / player.maxHealth, color: healthColor, position: Offset(playerX, playerY));
+  drawRing(
+      percentage: player.health / player.maxHealth,
+      color: healthColor,
+      position: Offset(playerX, playerY));
 }
 
 void _drawCrates() {
   clear(render.crates);
   for (int i = 0; i < compiledGame.cratesTotal; i++) {
-    render.crates.transforms.add(mapCrateToRSTransform((compiledGame.crates[i])));
+    render.crates.transforms
+        .add(mapCrateToRSTransform((compiledGame.crates[i])));
     render.crates.rects.add(rectCrate);
   }
   drawAtlases(images.crate, render.crates.transforms, render.crates.rects);
 }
 
 void _drawCratesEditor() {
-  for(Vector2 position in compiledGame.crates){
-    if(position.isZero) break;
+  for (Vector2 position in compiledGame.crates) {
+    if (position.isZero) break;
     _drawCrate(position);
   }
 }
 
-void _drawCrate(Vector2 position){
+void _drawCrate(Vector2 position) {
   drawCircle(position.x, position.y, 5, Colors.white);
-  globalCanvas.drawImage(images.crate, Offset(position.x, position.y), globalPaint);
+  globalCanvas.drawImage(
+      images.crate, Offset(position.x, position.y), globalPaint);
 }
 
 void _renderItems() {
@@ -151,8 +147,16 @@ void _drawPlayerNames() {
   }
 }
 
-void _drawMouseAim(Weapon weapon) {
+void _drawMouseAim() {
   if (!mouseAvailable) return;
+  if (!playerReady) return;
+  dynamic _player = getPlayer;
+  if (_player == null) return;
+  if (player.equippedRounds == 0) return;
+  Weapon weapon = _player[indexWeapon];
+  if (weapon == Weapon.HandGun) return;
+  if (weapon == Weapon.Shotgun) return;
+
   globalPaint.strokeWidth = 3;
   double rot = radionsBetween(
       mouseWorldX, mouseWorldY, compiledGame.playerX, compiledGame.playerY);
@@ -217,7 +221,6 @@ final Paint paintDeepPurple = Paint()
   ..isAntiAlias = false
   ..strokeWidth = 1;
 
-
 void drawBlockSelected(Block block) {
   // globalCanvas.drawPath(block.wall1, _blockBlueGrey);
   // globalCanvas.drawPath(block.wall2, _blockBlue);
@@ -277,14 +280,14 @@ void _drawGrenades(List<double> grenades) {
 }
 
 void _drawParticles() {
-  for (Particle particle in compiledGame.particles){
+  for (Particle particle in compiledGame.particles) {
     if (!particle.active) continue;
     drawParticle(particle);
   }
 }
 
 void _drawBullets(List bullets) {
-  for(int i = 0; i < compiledGame.totalBullets; i++){
+  for (int i = 0; i < compiledGame.totalBullets; i++) {
     drawBullet(compiledGame.bullets[i].x, compiledGame.bullets[i].y);
   }
 }

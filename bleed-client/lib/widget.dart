@@ -116,7 +116,7 @@ class BleedWidget extends GameWidget {
     bool aiming = false;
     for (int i = 0; i < compiledGame.npcs.length; i++) {
       if (diff(aimX, compiledGame.npcs[i][x]) < 6 &&
-          diff(aimY, compiledGame.npcs[i][y]) < 5) {
+          diff(aimY, compiledGame.npcs[i][y]) < 6) {
         aiming = true;
         break;
       }
@@ -132,7 +132,17 @@ class BleedWidget extends GameWidget {
   void _drawMouseAim(bool aiming) {
     if (!mouseAvailable) return;
 
+    if (player.equippedRounds == 0) return;
+
     int maxRounds = getMaxRounds(compiledGame.playerWeapon);
+    double p = player.equippedRounds / maxRounds;
+
+    drawRing(
+        percentage: p,
+        color: Colors.blue,
+        position: Offset(mouseX, mouseY),
+        backgroundColor: aiming ? Colors.red : Colors.white);
+    return;
     double r = (pi * 2) / maxRounds;
     List<Offset> points = [];
     Offset z = Offset(mouseX, mouseY);
