@@ -33,23 +33,37 @@ Server get currentServer => _currentServer;
 
 String get currentServerName => getServerName(currentServer);
 
-enum Server { Germany, USA_East, USA_West, LocalHost }
+enum Server {
+  Australia,
+  Brazil,
+  Germany,
+  South_Korea,
+  USA_East,
+  USA_West,
+  LocalHost
+}
 
 final List<Server> servers = Server.values;
 
 // implementation
 
 Map<Server, String> _names = {
+  Server.Australia: "Australia",
+  Server.Brazil: "Brazil",
   Server.Germany: "Germany",
+  Server.South_Korea: "South Korea",
   Server.USA_East: "USA East",
   Server.USA_West: "USA West",
   Server.LocalHost: "Localhost",
 };
 
 Map<Server, String> _uris = {
-  Server.Germany: 'https://bleed-frankfurt-1-osbmaezptq-ey.a.run.app',
-  Server.USA_East: 'https://bleed-usa-east-1-osbmaezptq-ue.a.run.app',
-  Server.USA_West: 'https://bleed-usa-west-1-osbmaezptq-uw.a.run.app',
+  Server.Australia: 'https://bleed-2-melbourne-osbmaezptq-km.a.run.app',
+  Server.Brazil: "https://bleed-2-sao-paulo-osbmaezptq-rj.a.run.app",
+  Server.Germany: 'https://bleed-frankfurt-2-osbmaezptq-ey.a.run.app',
+  Server.South_Korea: 'https://bleed-2-seoul-osbmaezptq-du.a.run.app',
+  Server.USA_East: 'https://bleed-usa-east-2-osbmaezptq-ue.a.run.app',
+  Server.USA_West: 'https://bleed-usa-west-2-osbmaezptq-uw.a.run.app',
   Server.LocalHost: 'https://localhost'
 };
 

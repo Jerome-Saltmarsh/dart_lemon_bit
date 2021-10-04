@@ -218,13 +218,15 @@ Widget _buildServer(Server server) {
 
 Widget buildViewConnect() {
   return center(
-    Column(crossAxisAlignment: cross.center, children: [
-      height(50 * goldenRatioInverse),
-      text("BLEED", fontSize: 120),
-      height(50 * goldenRatioInverse),
-      text("Select a server to play on"),
-      height(50 * goldenRatioInverseB),
-      ...Server.values.map(_buildServer)
-    ]),
+    SingleChildScrollView(
+      child: Column(crossAxisAlignment: cross.center, children: [
+        height(50 * goldenRatioInverse),
+        text("BLEED", fontSize: 120),
+        height(50 * goldenRatioInverse),
+        text("Select a server to play on"),
+        height(50 * goldenRatioInverseB),
+        ...Server.values.map(_buildServer)
+      ]),
+    ),
   );
 }

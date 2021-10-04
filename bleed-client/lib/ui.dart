@@ -56,9 +56,13 @@ double iconSize = 45;
 bool observeMode = false;
 
 Color _panelBackgroundColor = Colors.black38;
+StateSetter _stateSetterBottomLeft;
+bool _expandScore = false;
+StateSetter _scoreStateSetter;
 
 void refreshUI() {
   observeMode = false;
+  _showServers = false;
   _showServers = false;
 }
 
@@ -90,6 +94,20 @@ void initUI() {
     if (sharedPreferences.containsKey('server')) {
       Server server = servers[sharedPreferences.getInt('server')];
       connectServer(server);
+    }
+
+    if (sharedPreferences.containsKey('last-refresh')) {
+      DateTime lastRefresh =
+          DateTime.parse(sharedPreferences.getString('last-refresh'));
+      DateTime now = DateTime.now();
+      if (now.difference(lastRefresh).inHours > 1) {
+        sharedPreferences.setString(
+            'last-refresh', DateTime.now().toIso8601String());
+        refreshPage();
+      }
+    } else {
+      sharedPreferences.setString(
+          'last-refresh', DateTime.now().toIso8601String());
     }
   });
 }
@@ -677,11 +695,14 @@ Widget buildMedSlot() {
   ]);
 }
 
-StateSetter _stateSetterBottomLeft;
-
 redrawBottomLeft() {
   if (_stateSetterBottomLeft == null) return;
   _stateSetterBottomLeft(doNothing);
+}
+
+clearUI() {
+  _stateSetterBottomLeft = null;
+  _scoreStateSetter = null;
 }
 
 Widget buildViewBottomLeft() {
@@ -917,7 +938,7 @@ Widget buildViewBottomRight() {
       },
       child: Container(
           padding: padding8,
-          width: 120,
+          width: 140,
           decoration: BoxDecoration(
             borderRadius: borderRadius4,
             color: Colors.black45,
@@ -929,6 +950,7 @@ Widget buildViewBottomRight() {
                 onPressed(
                     callback: disconnect,
                     child: Container(
+                      alignment: Alignment.center,
                       margin: const EdgeInsets.only(bottom: 16),
                       child: text("Disconnect"),
                       padding: padding4,
@@ -1312,10 +1334,6 @@ Widget buildDebugPanel() {
 int getScoreRecord(Score score) {
   return score.record;
 }
-
-bool _expandScore = false;
-
-StateSetter _scoreStateSetter;
 
 rebuildScore() {
   if (_scoreStateSetter == null) return;

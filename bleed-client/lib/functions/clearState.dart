@@ -20,6 +20,7 @@ void clearState(){
   state.lobbies.clear();
   refreshUI();
   rebuildUI();
+  clearUI();
   redrawCanvas();
 }
 

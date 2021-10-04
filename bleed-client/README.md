@@ -80,8 +80,6 @@
 -- TEAM CASUAL --
 -- CASUAL --
 [ ] Design Level, City
-[ ] Disable spawn npcs request
-[ ] Fix GCP Security
 [ ] Running out of ammo causes weapon to drop
 [ ] Grenades should bounce off blocks
 [ ] Collect item particles
@@ -89,6 +87,9 @@
 [ ] Bonus zombie point text is wrong
 [ ] NPC get stuck on crate
 -- COMPLETED --
+[x] Disable spawn npcs request
+[x] Auto refresh browser once per day
+[x] Fix GCP Security
 [x] Optimize ammo circle
 [x] Draw health Ring same as ammo ring
 [x] Disable squads
