@@ -79,6 +79,7 @@
 [ ] Rounds
 -- TEAM CASUAL --
 -- CASUAL --
+[ ] Design 2nd level
 [ ] Design Level, City
 [ ] Running out of ammo causes weapon to drop
 [ ] Grenades should bounce off blocks

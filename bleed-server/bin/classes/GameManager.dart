@@ -1,6 +1,7 @@
 import '../compile.dart';
 import '../common/GameType.dart';
 import '../instances/scenes.dart';
+import '../settings.dart';
 import '../utils.dart';
 import 'Block.dart';
 import 'Game.dart';
@@ -27,7 +28,7 @@ class GameManager {
       }
     }
 
-    Game casualGame = GameCasual(scenes.town, 32);
+    Game casualGame = GameCasual(scenes.town, settings.casualGameMaxPlayers);
     compileAndAddGame(casualGame);
     return casualGame;
   }

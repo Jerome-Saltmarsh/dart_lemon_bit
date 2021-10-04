@@ -110,6 +110,7 @@ class Settings {
   final int collectCreditAmount = 25;
   final int staminaRefreshRate = 2;
   final int gameStartingCountDown = 400;
+  final int casualGameMaxPlayers = 16;
 
   final int playerDisconnectFrames = 300;
 

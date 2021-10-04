@@ -1296,11 +1296,10 @@ void nextTip() {
 
 List<String> tips = [
   "Use the W,A,S,D keys to move",
+  "Press F to use knife attack",
   "Press 1, 2, 3, etc to change weapons",
   "Press G to throw grenade",
-  "Press H to use med kit",
   "Hold left shift to sprint",
-  "Press R to Reload",
   "Press Space bar to fire weapon",
   "Scroll with the mouse to zoom in and out",
   "Hold E to pan camera",
