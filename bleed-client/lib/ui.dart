@@ -35,6 +35,7 @@ import 'enums/InventoryItemType.dart';
 import 'enums/Mode.dart';
 import 'game_engine/global_paint.dart';
 import 'images.dart';
+import 'input.dart';
 import 'instances/inventory.dart';
 import 'instances/settings.dart';
 import 'maths.dart';
@@ -401,6 +402,38 @@ void toggleShowScore() {
   rebuildUI();
 }
 
+StateSetter stateSetterKeys;
+
+rebuildUIKeys(){
+  stateSetterKeys(doNothing);
+}
+
+Widget buildKeys(){
+  return StatefulBuilder(
+    builder: (BuildContext context, StateSetter set){
+      stateSetterKeys = set;
+      return Positioned(
+          right: 50,
+          top: 400,
+          child: Container(
+            color: Colors.white70,
+            padding: padding16,
+            child: Column(
+              crossAxisAlignment: cross.start,
+              children: [
+                Text("SPRINT: ${inputRequest.sprint}"),
+                Text("UP: ${inputRequest.moveUp}"),
+                Text("RIGHT: ${inputRequest.moveRight}"),
+                Text("DOWN: ${inputRequest.moveDown}"),
+                Text("LEFT: ${inputRequest.moveLeft}"),
+              ],
+            ),
+          ));
+    },
+  );
+
+}
+
 Widget buildHud() {
   print("buildHud()");
 
@@ -418,6 +451,7 @@ Widget buildHud() {
           player.dead &&
           compiledGame.gameType == GameType.Casual)
         buildViewRespawn(),
+      buildKeys(),
       if (player.dead && observeMode)
         Positioned(
             top: 30,
@@ -1343,7 +1377,6 @@ doNothing() {}
 
 Widget buildViewScore() {
   return StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-    print("buildViewScore");
     _scoreStateSetter = setState;
     if (!_showScore) {
       return Positioned(

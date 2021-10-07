@@ -6,7 +6,9 @@ import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_input.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/server.dart';
+import 'package:bleed_client/ui.dart';
 import 'package:bleed_client/ui/dialogs.dart';
 import 'package:flutter/services.dart';
 
@@ -32,7 +34,7 @@ bool get keyEquipMachineGun => keyPressed(LogicalKeyboardKey.digit4);
 
 bool get keyAimPressed => keyPressedSpace;
 
-bool get keySprintPressed => keyPressed(LogicalKeyboardKey.shiftLeft);
+bool get keySprintPressed => inputRequest.sprint;
 
 bool get keyPressedReload => keyPressed(_keyReload);
 
@@ -53,6 +55,91 @@ bool _healing = false;
 bool panningCamera = false;
 
 Offset _mouseWorldStart;
+
+_InputRequest inputRequest = _InputRequest();
+
+void initInput() {
+  RawKeyboard.instance.addListener(_handleKeyboardEvent);
+}
+
+void _handleKeyboardEvent(RawKeyEvent event) {
+  if (editMode) return;
+
+  if (event is RawKeyUpEvent) {
+    _handleKeyUpEvent(event);
+  } else if (event is RawKeyDownEvent) {
+    _handleKeyDownEvent(event);
+  }
+  rebuildUIKeys();
+}
+
+void _handleKeyDownEvent(RawKeyDownEvent event) {
+  LogicalKeyboardKey key = event.logicalKey;
+
+  if (key == LogicalKeyboardKey.keyJ) {
+    inputRequest.sprint = true;
+    return;
+  }
+
+  if (key == LogicalKeyboardKey.keyA) {
+    inputRequest.moveLeft = true;
+    return;
+  }
+
+  if (key == LogicalKeyboardKey.keyD) {
+    inputRequest.moveRight = true;
+    return;
+  }
+
+  if (key == LogicalKeyboardKey.keyW) {
+    inputRequest.moveUp = true;
+    return;
+  }
+
+  if (key == LogicalKeyboardKey.keyS) {
+    inputRequest.moveDown = true;
+    return;
+  }
+}
+
+void _handleKeyUpEvent(RawKeyUpEvent event) {
+  LogicalKeyboardKey key = event.logicalKey;
+
+  if (key == LogicalKeyboardKey.keyJ) {
+    inputRequest.sprint = false;
+    return;
+  }
+
+  if (key == LogicalKeyboardKey.keyA) {
+    inputRequest.moveLeft = false;
+    return;
+  }
+
+  if (key == LogicalKeyboardKey.keyD) {
+    inputRequest.moveRight = false;
+    return;
+  }
+
+  if (key == LogicalKeyboardKey.keyW) {
+    inputRequest.moveUp = false;
+    print("up released");
+    return;
+  }
+
+  if (key == LogicalKeyboardKey.keyS) {
+    inputRequest.moveDown = false;
+    print("down released");
+    return;
+  }
+}
+
+class _InputRequest {
+  bool sprint = false;
+  bool moveUp = false;
+  bool moveRight = false;
+  bool moveDown = false;
+  bool moveLeft = false;
+}
 
 void readPlayerInput() {
   if (!playerAssigned) return;
@@ -163,25 +250,25 @@ void readPlayerInput() {
 }
 
 int getKeyDirection() {
-  if (keyPressedW) {
-    if (keyPressedD) {
+  if (inputRequest.moveUp) {
+    if (inputRequest.moveRight) {
       return directionUpRight;
-    } else if (keyPressedA) {
+    } else if (inputRequest.moveLeft) {
       return directionUpLeft;
     } else {
       return directionUp;
     }
-  } else if (keyPressedS) {
-    if (keyPressedD) {
+  } else if (inputRequest.moveDown) {
+    if (inputRequest.moveRight) {
       return directionDownRight;
-    } else if (keyPressedA) {
+    } else if (inputRequest.moveLeft) {
       return directionDownLeft;
     } else {
       return directionDown;
     }
-  } else if (keyPressedA) {
+  } else if (inputRequest.moveLeft) {
     return directionLeft;
-  } else if (keyPressedD) {
+  } else if (inputRequest.moveRight) {
     return directionRight;
   }
   return directionNone;

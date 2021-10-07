@@ -42,6 +42,10 @@ void initBleed() {
   periodic(sendRequestUpdateScore, seconds: 3);
 }
 
+void _handleKeyboardEvent(){
+
+}
+
 void connectToGCP() {
   connect(gpc);
 }

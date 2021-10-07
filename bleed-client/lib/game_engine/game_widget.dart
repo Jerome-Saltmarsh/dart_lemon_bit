@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/game_engine/web_functions.dart';
+import 'package:bleed_client/input.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as mat;
@@ -140,7 +141,6 @@ final _foregroundFrame = ValueNotifier<int>(0);
 
 class _GameWidgetState extends State<GameWidget> {
   // variables
-  FocusNode keyboardFocusNode;
   Timer updateTimer;
 
   void _update(Timer timer) {
@@ -151,7 +151,6 @@ class _GameWidgetState extends State<GameWidget> {
   void initState() {
     updateTimer = Timer.periodic(
         Duration(milliseconds: 1000 ~/ widget.targetFPS()), _update);
-    keyboardFocusNode = FocusNode();
     widget.init();
     disableRightClick();
     globalPaint.isAntiAlias = false;
@@ -161,34 +160,23 @@ class _GameWidgetState extends State<GameWidget> {
   @override
   Widget build(BuildContext context) {
     globalContext = context;
-
-    if (!keyboardFocusNode.hasFocus) {
-      FocusScope.of(context).requestFocus(keyboardFocusNode);
-    }
     return MaterialApp(
       title: widget.title,
       theme: ThemeData(
         primarySwatch: mat.Colors.orange,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: RawKeyboardListener(
-        focusNode: keyboardFocusNode,
-        onKey: (key) {
-          // game.handleKeyPressed(key);
-        },
-        child: Scaffold(
-          // appBar: game.buildAppBar(context),
-          body: Builder(
-            builder: (context) {
-              widget.screenSize = MediaQuery.of(context).size;
-              return Stack(
-                children: [
-                  buildBody(context),
-                  if (widget.uiVisible()) _buildUI(),
-                ],
-              );
-            },
-          ),
+      home: Scaffold(
+        body: Builder(
+          builder: (context) {
+            widget.screenSize = MediaQuery.of(context).size;
+            return Stack(
+              children: [
+                buildBody(context),
+                if (widget.uiVisible()) _buildUI(),
+              ],
+            );
+          },
         ),
       ),
       debugShowCheckedModeBanner: false,
@@ -225,6 +213,14 @@ class _GameWidgetState extends State<GameWidget> {
             }
           },
           child: GestureDetector(
+              onSecondaryTapDown: (_) {
+                // @on right click down
+                inputRequest.sprint = true;
+              },
+              onSecondaryTapUp: (_) {
+                // @on right click up
+                inputRequest.sprint = false;
+              },
               onPanStart: (start) {
                 mouseDragging = true;
                 _previousMousePosition = _mousePosition;
@@ -258,7 +254,6 @@ class _GameWidgetState extends State<GameWidget> {
   void dispose() {
     super.dispose();
     updateTimer.cancel();
-    keyboardFocusNode.dispose();
   }
 }
 

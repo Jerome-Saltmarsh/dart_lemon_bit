@@ -78,12 +78,14 @@
 -- DEATH MATCH 
 [ ] Rounds
 -- TEAM CASUAL --
--- CASUAL --
+-- OFFICIAL RELEASE --
 [ ] Design 2nd level
 [ ] Design Level, City
 [ ] Running out of ammo causes weapon to drop
 [ ] Grenades should bounce off blocks
 [ ] Collect item particles
+[ ] Fix movement controls
+[ ] Create decent 45 second youtube video
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong
 [ ] NPC get stuck on crate

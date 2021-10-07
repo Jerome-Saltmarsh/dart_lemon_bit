@@ -232,7 +232,7 @@ class GameCasual extends Game {
 
   GameCasual(Scene scene, int maxPlayers)
       : super(GameType.Casual, scene, maxPlayers) {
-    spawnRandomNpcs(10);
+    // spawnRandomNpcs(10);
   }
 
   void spawnRandomNpcs(int amount) {
@@ -248,10 +248,10 @@ class GameCasual extends Game {
 
   @override
   void update() {
-    if (duration % 50 == 0 && zombieCount < 100) {
-      Npc npc = spawnRandomNpc();
-      npcSetRandomDestination(npc);
-    }
+    // if (duration % 50 == 0 && zombieCount < 100) {
+    //   Npc npc = spawnRandomNpc();
+    //   npcSetRandomDestination(npc);
+    // }
   }
 
   @override
@@ -947,7 +947,7 @@ extension GameFunctions on Game {
 
     switch (player.state) {
       case CharacterState.Running:
-        player.stamina -= 3;
+        // player.stamina -= 3;
         if (player.stamina <= 0) {
           setCharacterState(player, CharacterState.Walking);
         }

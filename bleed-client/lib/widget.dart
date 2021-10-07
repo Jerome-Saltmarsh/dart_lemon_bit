@@ -1,11 +1,9 @@
 import 'dart:async';
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/bleed.dart';
 import 'package:bleed_client/common/constants.dart';
-import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/maths.dart';
@@ -22,6 +20,7 @@ import 'functions/drawCanvas.dart';
 import 'functions/drawParticle.dart';
 import 'game_engine/global_paint.dart';
 import 'images.dart';
+import 'input.dart';
 import 'instances/settings.dart';
 import 'keys.dart';
 import 'rects.dart';
@@ -61,6 +60,7 @@ class BleedWidget extends GameWidget {
     initBleed();
     loadRects();
     initEditor();
+    initInput();
 
     compiledGame.npcs = [];
     for (int i = 0; i < 5000; i++) {
