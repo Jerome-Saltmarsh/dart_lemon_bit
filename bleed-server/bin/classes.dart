@@ -96,6 +96,14 @@ class Character extends GameObject implements HasSquad {
 final Character _nonTarget =
     Character(x: 0, y: 0, weapon: Weapon.AssaultRifle, health: 0, speed: 0);
 
+class InteractableNpc extends Npc {
+
+  Function(Player player) onInteractedWith;
+
+  InteractableNpc({required this.onInteractedWith, required double x, required double y, required int health})
+      : super(x: x, y: y, health: health);
+}
+
 class Npc extends Character {
   Character target = _nonTarget;
   List<Vector2> path = [];

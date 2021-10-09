@@ -20,4 +20,5 @@ enum ClientRequest {
   Score,
   SetCompilePaths,
   Version,
+  Interact,
 }

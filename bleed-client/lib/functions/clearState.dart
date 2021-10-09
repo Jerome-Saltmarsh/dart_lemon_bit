@@ -30,7 +30,7 @@ void clearCompileGameState(){
   compiledGame.playerUUID = "";
   compiledGame.playerX = -1;
   compiledGame.playerY = -1;
-  compiledGame.totalNpcs = 0;
+  compiledGame.totalZombies = 0;
   compiledGame.totalPlayers = 0;
   compiledGame.totalBullets = 0;
   compiledGame.grenades.clear();
@@ -55,6 +55,6 @@ void clearRender(){
   render.paths.clear();
   render.particleRects.clear();
   render.particleTransforms.clear();
-  render.npcsRects.clear();
-  render.npcsTransforms.clear();
+  render.zombieRects.clear();
+  render.zombiesTransforms.clear();
 }

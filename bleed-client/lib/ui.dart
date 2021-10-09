@@ -53,13 +53,14 @@ SharedPreferences sharedPreferences;
 bool _showScore = true;
 bool _showServers = false;
 double iconSize = 45;
-
+StateSetter _stateSetterKeys;
 bool observeMode = false;
 
 Color _panelBackgroundColor = Colors.black38;
 StateSetter _stateSetterBottomLeft;
 bool _expandScore = false;
 StateSetter _scoreStateSetter;
+StateSetter _stateSetterServerText;
 
 void refreshUI() {
   observeMode = false;
@@ -402,36 +403,74 @@ void toggleShowScore() {
   rebuildUI();
 }
 
-StateSetter stateSetterKeys;
-
-rebuildUIKeys(){
-  stateSetterKeys(doNothing);
+rebuildUIKeys() {
+  if (_stateSetterKeys == null) return;
+  _stateSetterKeys(_doNothing);
 }
 
-Widget buildKeys(){
+// Widget buildKeys() {
+//   return StatefulBuilder(
+//     builder: (BuildContext context, StateSetter set) {
+//       _stateSetterKeys = set;
+//       return Positioned(
+//           right: 50,
+//           top: 400,
+//           child: Container(
+//             color: Colors.white70,
+//             padding: padding16,
+//             child: Column(
+//               crossAxisAlignment: cross.start,
+//               children: [
+//                 Text("SPRINT: ${inputRequest.sprint}"),
+//                 Text("UP: ${inputRequest.moveUp}"),
+//                 Text("RIGHT: ${inputRequest.moveRight}"),
+//                 Text("DOWN: ${inputRequest.moveDown}"),
+//                 Text("LEFT: ${inputRequest.moveLeft}"),
+//               ],
+//             ),
+//           ));
+//     },
+//   );
+// }
+
+void rebuildPlayerMessage() {
+  if (_stateSetterServerText == null) return;
+  _stateSetterServerText(_doNothing);
+}
+
+final Widget _blank = Positioned(
+  top: 0,
+  child: Text(""),
+);
+
+Widget _buildServerText() {
   return StatefulBuilder(
-    builder: (BuildContext context, StateSetter set){
-      stateSetterKeys = set;
-      return Positioned(
-          right: 50,
-          top: 400,
+      builder: (BuildContext context, StateSetter stateSetter) {
+
+    _stateSetterServerText = stateSetter;
+
+    if (player.message.isEmpty) return _blank;
+
+    return Positioned(
+        child: Container(
+          width: screenWidth,
+          alignment: Alignment.center,
           child: Container(
-            color: Colors.white70,
-            padding: padding16,
+            width: 300,
+            height: 300 * goldenRatioInverse,
+            color: Colors.black45,
             child: Column(
-              crossAxisAlignment: cross.start,
               children: [
-                Text("SPRINT: ${inputRequest.sprint}"),
-                Text("UP: ${inputRequest.moveUp}"),
-                Text("RIGHT: ${inputRequest.moveRight}"),
-                Text("DOWN: ${inputRequest.moveDown}"),
-                Text("LEFT: ${inputRequest.moveLeft}"),
+                text(player.message),
+                button("Next", () {
+                  player.message = "";
+                }),
               ],
             ),
-          ));
-    },
-  );
-
+          ),
+        ),
+        bottom: 100);
+  });
 }
 
 Widget buildHud() {
@@ -440,6 +479,7 @@ Widget buildHud() {
   return Stack(
     children: [
       buildTopRight(),
+      _buildServerText(),
       if (player.alive) buildViewBottomLeft(),
       if (compiledGame.gameType == GameType.Fortress) buildViewFortress(),
       if (compiledGame.gameType == GameType.DeathMatch)
@@ -451,7 +491,7 @@ Widget buildHud() {
           player.dead &&
           compiledGame.gameType == GameType.Casual)
         buildViewRespawn(),
-      buildKeys(),
+      // buildKeys(),
       if (player.dead && observeMode)
         Positioned(
             top: 30,
@@ -731,7 +771,7 @@ Widget buildMedSlot() {
 
 redrawBottomLeft() {
   if (_stateSetterBottomLeft == null) return;
-  _stateSetterBottomLeft(doNothing);
+  _stateSetterBottomLeft(_doNothing);
 }
 
 clearUI() {
@@ -1062,7 +1102,7 @@ Widget buildDebugColumn() {
           text(
               'mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
           text('x: ${compiledGame.playerX}, y: ${compiledGame.playerY}'),
-          text("zombies: ${compiledGame.npcs.length}"),
+          text("zombies: ${compiledGame.zombies.length}"),
           text("players: ${compiledGame.players.length}"),
           text("zoom: ${zoom.toStringAsFixed(2)}"),
           text("cameraX: ${cameraX.toInt()}, cameraY: ${cameraY.toInt()}"),
@@ -1359,7 +1399,7 @@ Widget buildDebugPanel() {
       text("Server FPS: ${(1000 / serverFramesMS).round()}"),
     text("Players: ${compiledGame.players.length}"),
     text("Bullets: ${compiledGame.bullets.length}"),
-    text("Npcs: ${compiledGame.totalNpcs}"),
+    text("Npcs: ${compiledGame.totalZombies}"),
     text("Player Assigned: $playerAssigned"),
   ]);
 }
@@ -1370,10 +1410,10 @@ int getScoreRecord(Score score) {
 
 rebuildScore() {
   if (_scoreStateSetter == null) return;
-  _scoreStateSetter(doNothing);
+  _scoreStateSetter(_doNothing);
 }
 
-doNothing() {}
+_doNothing() {}
 
 Widget buildViewScore() {
   return StatefulBuilder(builder: (BuildContext context, StateSetter setState) {

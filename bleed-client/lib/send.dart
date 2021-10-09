@@ -14,6 +14,10 @@ final StringBuffer _buffer = StringBuffer();
 final gameUpdateIndex = ClientRequest.Game_Update.index;
 const String _space = " ";
 
+void sendRequestInteract(){
+  send('${ClientRequest.Interact.index} $session');
+}
+
 void sendRequestRevive() {
   send('${ClientRequest.Player_Revive.index} $session');
 }

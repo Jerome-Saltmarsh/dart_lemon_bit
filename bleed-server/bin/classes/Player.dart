@@ -29,6 +29,7 @@ class Player extends Character {
   Score score = Score();
   Clips clips = Clips();
   Rounds rounds = Rounds();
+  String message = "";
 
   bool acquiredHandgun = false;
   bool acquiredShotgun = false;

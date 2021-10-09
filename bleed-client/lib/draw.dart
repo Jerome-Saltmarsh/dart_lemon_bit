@@ -29,19 +29,34 @@ void drawCharacterCircle(double x, double y, Color color) {
 void drawCharacters() {
   if (images.imageCharacter == null) return;
   drawPlayers();
+  drawZombies();
   drawNpcs();
 }
 
 void drawNpcs() {
-  render.npcsTransforms.clear();
-  render.npcsRects.clear();
+  render.npcs.rects.clear();
+  render.npcs.transforms.clear();
 
   for (int i = 0; i < compiledGame.totalNpcs; i++) {
-    render.npcsTransforms.add(getCharacterTransform(compiledGame.npcs[i]));
-    render.npcsRects.add(mapZombieToRect(compiledGame.npcs[i]));
+    render.npcs.transforms
+        .add(getCharacterTransform(compiledGame.npcs[i]));
+    render.npcs.rects.add(mapHumanToRect(compiledGame.npcs[i]));
   }
 
-  drawAtlases(images.zombie, render.npcsTransforms, render.npcsRects);
+  drawAtlases(images.imageCharacter, render.npcs.transforms, render.npcs.rects);
+}
+
+void drawZombies() {
+  render.zombiesTransforms.clear();
+  render.zombieRects.clear();
+
+  for (int i = 0; i < compiledGame.totalZombies; i++) {
+    render.zombiesTransforms
+        .add(getCharacterTransform(compiledGame.zombies[i]));
+    render.zombieRects.add(mapZombieToRect(compiledGame.zombies[i]));
+  }
+
+  drawAtlases(images.zombie, render.zombiesTransforms, render.zombieRects);
 }
 
 void drawCharacterList(List<dynamic> characters) {
@@ -96,7 +111,8 @@ void drawPlayers() {
         .add(getCharacterTransform(compiledGame.players[i]));
     render.playersRects.add(mapHumanToRect(compiledGame.players[i]));
   }
-  drawAtlases(images.imageCharacter, render.playersTransforms, render.playersRects);
+  drawAtlases(
+      images.imageCharacter, render.playersTransforms, render.playersRects);
 }
 
 void _drawTeamMemberCircles() {
@@ -260,8 +276,8 @@ void drawTiles() {
 }
 
 void drawBulletHoles(List<Vector2> bulletHoles) {
-  for(Vector2 bulletHole in bulletHoles){
-    if(bulletHole.x == 0 && bulletHole.y == 0) return;
+  for (Vector2 bulletHole in bulletHoles) {
+    if (bulletHole.x == 0 && bulletHole.y == 0) return;
     drawCircle(bulletHole.x, bulletHole.y, 2, Colors.black);
   }
 }

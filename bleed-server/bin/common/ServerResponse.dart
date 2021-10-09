@@ -3,7 +3,7 @@ enum ServerResponse {
   Players,
   Error,
   Bullets,
-  Npcs,
+  Zombies,
   Tiles,
   Game_Events,
   Grenades,
@@ -25,4 +25,6 @@ enum ServerResponse {
   Items,
   Version,
   Crates,
+  NpcMessage,
+  Npcs,
 }

@@ -27,13 +27,14 @@ const int _0 = 0;
 void compileGame(Game game) {
   game.buffer.clear();
   _compilePlayers(game.buffer, game.players);
+  _compileZombies(game.buffer, game.zombies);
   _compileNpcs(game.buffer, game.npcs);
   _compileBullets(game.buffer, game.bullets);
   _compileGameEvents(game.buffer, game.gameEvents);
   _compileGrenades(game.buffer, game.grenades);
   _compileCollectables(game.buffer, game.collectables);
   if (game.compilePaths) {
-    _compilePaths(game.buffer, game.npcs);
+    _compilePaths(game.buffer, game.zombies);
   }
   _compileCrates(game);
   _compileItems(game.buffer, game.items);
@@ -242,6 +243,15 @@ void _compilePlayers(StringBuffer buffer, List<Player> players) {
   buffer.write(_semiColon);
 }
 
+void _compileZombies(StringBuffer buffer, List<Npc> npcs) {
+  _write(buffer, ServerResponse.Zombies.index);
+  for (Npc npc in npcs) {
+    if (!npc.active) continue;
+    _compileNpc(buffer, npc);
+  }
+  buffer.write(_semiColon);
+}
+
 void _compileNpcs(StringBuffer buffer, List<Npc> npcs) {
   _write(buffer, ServerResponse.Npcs.index);
   for (Npc npc in npcs) {
@@ -283,6 +293,16 @@ void _compileNpc(StringBuffer buffer, Npc npc) {
   _writeInt(buffer, npc.y);
   _write(buffer, npc.stateFrameCount);
   _write(buffer, npc.pointMultiplier);
+}
+
+void compilePlayerMessage(StringBuffer buffer, String message) {
+  _write(buffer, ServerResponse.NpcMessage.index);
+  _write(buffer, message);
+  _writeSemiColon(buffer);
+}
+
+void _writeSemiColon(StringBuffer buffer){
+  _write(buffer, _semiColon);
 }
 
 void compileLobby(StringBuffer buffer, Lobby lobby) {

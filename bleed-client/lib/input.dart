@@ -227,7 +227,7 @@ void readPlayerInput() {
       if (mouseAvailable) {
         double mouseWorldX = mouseX + cameraX;
         double mouseWorldY = mouseY + cameraY;
-        for (dynamic npc in compiledGame.npcs) {
+        for (dynamic npc in compiledGame.zombies) {
           if (distance(npc[x], npc[y], mouseWorldX, mouseWorldY) >
               playerAutoAimDistance) continue;
           requestCharacterState = characterStateAiming;

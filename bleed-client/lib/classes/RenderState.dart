@@ -20,13 +20,14 @@ class _RenderState {
   List<Rect> tileRects = [];
   List<RSTransform> playersTransforms = [];
   List<Rect> playersRects = [];
-  List<RSTransform> npcsTransforms = [];
-  List<Rect> particleRects = [];
+  List<RSTransform> zombiesTransforms = [];
+  List<Rect> zombieRects = [];
   List<RSTransform> particleTransforms = [];
-  List<Rect> npcsRects = [];
+  List<Rect> particleRects = [];
   List<List<Vector2>> paths = [];
   List<FloatingText> floatingText = [];
 
   Render items = Render();
   Render crates = Render();
+  Render npcs = Render();
 }

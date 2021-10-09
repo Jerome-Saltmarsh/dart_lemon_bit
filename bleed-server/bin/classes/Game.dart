@@ -47,8 +47,8 @@ class Fortress extends Game {
   void update() {
     if (lives <= 0) return;
 
-    for (int i = 0; i < npcs.length; i++) {
-      Npc npc = npcs[i];
+    for (int i = 0; i < zombies.length; i++) {
+      Npc npc = zombies[i];
       if (npc.path.isEmpty) {
         npcSetPathTo(npc, scene.fortressPosition.x, scene.fortressPosition.y);
         continue;
@@ -56,7 +56,7 @@ class Fortress extends Game {
 
       if (diff(npc.x, scene.fortressPosition.x) > 50) continue;
       if (diff(npc.y, scene.fortressPosition.y) > 50) continue;
-      npcs.removeAt(i);
+      zombies.removeAt(i);
       i--;
       lives--;
       if (lives <= 0) {
@@ -232,7 +232,7 @@ class GameCasual extends Game {
 
   GameCasual(Scene scene, int maxPlayers)
       : super(GameType.Casual, scene, maxPlayers) {
-    // spawnRandomNpcs(10);
+    spawnRandomNpcs(10);
   }
 
   void spawnRandomNpcs(int amount) {
@@ -248,10 +248,10 @@ class GameCasual extends Game {
 
   @override
   void update() {
-    // if (duration % 50 == 0 && zombieCount < 100) {
-    //   Npc npc = spawnRandomNpc();
-    //   npcSetRandomDestination(npc);
-    // }
+    if (duration % 50 == 0 && zombieCount < 100) {
+      Npc npc = spawnRandomNpc();
+      npcSetRandomDestination(npc);
+    }
   }
 
   @override
@@ -364,6 +364,7 @@ abstract class Game {
   final int maxPlayers;
   final Scene scene;
   int duration = 0;
+  List<Npc> zombies = [];
   List<Npc> npcs = [];
   List<Player> players = [];
   List<Bullet> bullets = [];
@@ -567,8 +568,8 @@ extension GameFunctions on Game {
       updateCharacter(players[i]);
     }
 
-    for (int i = 0; i < npcs.length; i++) {
-      updateCharacter(npcs[i]);
+    for (int i = 0; i < zombies.length; i++) {
+      updateCharacter(zombies[i]);
     }
   }
 
@@ -626,14 +627,14 @@ extension GameFunctions on Game {
   }
 
   void _updateCollisions() {
-    npcs.sort(compareGameObjects);
+    zombies.sort(compareGameObjects);
     players.sort(compareGameObjects);
-    updateCollisionBetween(npcs);
+    updateCollisionBetween(zombies);
     updateCollisionBetween(players);
-    resolveCollisionBetween(npcs, players);
+    resolveCollisionBetween(zombies, players);
 
     handleBlockCollisions(players);
-    handleBlockCollisions(npcs);
+    handleBlockCollisions(zombies);
   }
 
   Player? findPlayerById(int id) {
@@ -721,7 +722,7 @@ extension GameFunctions on Game {
           character.score.deaths++;
           onPlayerKilled(character);
 
-          for (Npc npc in npcs) {
+          for (Npc npc in zombies) {
             if (npc.target != character) continue;
             // @on npc target player killed
             npc.clearTarget();
@@ -830,14 +831,14 @@ extension GameFunctions on Game {
     }
 
     bullets.sort(compareGameObjects);
-    checkBulletCollision(npcs);
+    checkBulletCollision(zombies);
     checkBulletCollision(players);
 
     for (int i = 0; i < crates.length; i++) {
       if (!crates[i].active) continue;
       Crate crate = crates[i];
       applyCratePhysics(crate, players);
-      applyCratePhysics(crate, npcs);
+      applyCratePhysics(crate, zombies);
 
       for (int j = 0; j < bullets.length; j++) {
         if (!bullets[j].active) continue;
@@ -877,7 +878,7 @@ extension GameFunctions on Game {
       breakCrate(crate);
     }
 
-    for (Character character in npcs) {
+    for (Character character in zombies) {
       if (objectDistanceFrom(character, x, y) > settings.grenadeExplosionRadius)
         continue;
       double rotation = radiansBetween2(character, x, y);
@@ -937,7 +938,7 @@ extension GameFunctions on Game {
   }
 
   void _updateNpcs() {
-    for (Npc npc in npcs) {
+    for (Npc npc in zombies) {
       updateNpc(npc);
     }
   }
@@ -980,7 +981,7 @@ extension GameFunctions on Game {
           double frontY =
               player.y + velY(player.aimAngle, settings.range.knife);
 
-          for (Npc npc in npcs) {
+          for (Npc npc in zombies) {
             // @on zombie struck by player
             if (!npc.alive) continue;
             if (!npc.active) continue;
@@ -1097,7 +1098,7 @@ extension GameFunctions on Game {
   }
 
   void clearNpcs() {
-    npcs.clear();
+    zombies.clear();
   }
 
   void updateCharacter(Character character) {
@@ -1281,9 +1282,9 @@ extension GameFunctions on Game {
   }
 
   Npc spawnNpc(double x, double y) {
-    for (int i = 0; i < npcs.length; i++) {
-      if (npcs[i].active) continue;
-      Npc npc = npcs[i];
+    for (int i = 0; i < zombies.length; i++) {
+      if (zombies[i].active) continue;
+      Npc npc = zombies[i];
       npc.active = true;
       npc.state = CharacterState.Idle;
       npc.previousState = CharacterState.Idle;
@@ -1297,7 +1298,7 @@ extension GameFunctions on Game {
     }
 
     Npc npc = Npc(x: x, y: y, health: settings.health.zombie);
-    npcs.add(npc);
+    zombies.add(npc);
     onNpcSpawned(npc);
     return npc;
   }
@@ -1312,7 +1313,7 @@ extension GameFunctions on Game {
 
   int get zombieCount {
     int count = 0;
-    for (Npc npc in npcs) {
+    for (Npc npc in zombies) {
       if (!npc.alive) continue;
       count++;
     }
@@ -1332,8 +1333,8 @@ extension GameFunctions on Game {
 
   void updateNpcTargets() {
     Npc npc;
-    for (int i = 0; i < npcs.length; i++) {
-      npc = npcs[i];
+    for (int i = 0; i < zombies.length; i++) {
+      npc = zombies[i];
       if (npc.targetSet) {
         // @on update npc with target
         if (diff(npc.x, npc.target.x) < settings.zombieChaseRange) continue;
@@ -1354,7 +1355,7 @@ extension GameFunctions on Game {
   }
 
   void jobNpcWander() {
-    for (Npc npc in npcs) {
+    for (Npc npc in zombies) {
       if (npc.inactive) continue;
       if (npc.busy) continue;
       if (npc.dead) continue;
@@ -1369,7 +1370,7 @@ extension GameFunctions on Game {
       if (players[i].lastUpdateFrame < settings.playerDisconnectFrames)
         continue;
       Player player = players[i];
-      for (Npc npc in npcs) {
+      for (Npc npc in zombies) {
         if (npc.target == player) {
           npc.clearTarget();
         }

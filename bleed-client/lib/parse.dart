@@ -91,7 +91,8 @@ void parseState() {
         state.serverVersion = _consumeInt();
 
         if (state.serverVersion == version) {
-          joinRandomGame();
+          // joinCasualGame();
+          joinGameOpenWorld();
           break;
         }
         if (state.serverVersion < version) {
@@ -136,15 +137,24 @@ void parseState() {
         break;
 
       case ServerResponse.Npcs:
-        try {
-          _parseNpcs();
-        } catch (error) {
-          print(error);
-        }
+        _parseNpcs();
+        break;
+
+      case ServerResponse.Zombies:
+        _parseZombies();
         break;
 
       case ServerResponse.Game_Events:
         _consumeEvents();
+        break;
+
+      case ServerResponse.NpcMessage:
+        while (!_simiColonConsumed()) {
+          String message = "";
+          message += _consumeString();
+          player.message = message;
+          rebuildPlayerMessage();
+        }
         break;
 
       case ServerResponse.Crates:
@@ -624,6 +634,14 @@ void _parseBullets() {
     compiledGame.bullets[compiledGame.totalBullets].x = _consumeDouble();
     compiledGame.bullets[compiledGame.totalBullets].y = _consumeDouble();
     compiledGame.totalBullets++;
+  }
+}
+
+void _parseZombies() {
+  compiledGame.totalZombies = 0;
+  while (!_simiColonConsumed()) {
+    _consumeNpc(compiledGame.zombies[compiledGame.totalZombies]);
+    compiledGame.totalZombies++;
   }
 }
 

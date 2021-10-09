@@ -72,6 +72,8 @@
 -- OPEN WORLD -- 
 [ ] Npc Talk Text
 [ ] Complete Quests to earn income and unlock upgrades
+-- TIME TRIAL MISSIONS --
+
 -- FORTRESS -- 
 [ ] Fortress life lost audio
 [ ] Fortress Cache Path 
@@ -80,16 +82,16 @@
 -- TEAM CASUAL --
 -- OFFICIAL RELEASE --
 [ ] Design 2nd level
-[ ] Design Level, City
 [ ] Running out of ammo causes weapon to drop
 [ ] Grenades should bounce off blocks
 [ ] Collect item particles
-[ ] Fix movement controls
 [ ] Create decent 45 second youtube video
+[ ] Design Level, City
 -- MAJOR BUGS --
 [ ] Bonus zombie point text is wrong
 [ ] NPC get stuck on crate
 -- COMPLETED --
+[x] Fix movement controls
 [x] Disable spawn npcs request
 [x] Auto refresh browser once per day
 [x] Fix GCP Security

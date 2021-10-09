@@ -15,6 +15,7 @@ import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/game_engine/global_paint.dart';
 import 'package:bleed_client/instances/settings.dart';
 import 'package:bleed_client/mappers/mapCrateToRSTransform.dart';
+import 'package:bleed_client/mappers/mapHumanToRect.dart';
 import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/properties.dart';
@@ -70,6 +71,8 @@ void _drawCompiledGame() {
   drawEditMode();
   _drawCollectables();
 
+  // drawText("hello world!!!!!", 0, 0);
+
   if (settings.compilePaths) {
     drawPaths();
   }
@@ -91,9 +94,9 @@ void _drawCompiledGame() {
 }
 
 void _drawNpcBonusPointsCircles() {
-  for (int i = 0; i < compiledGame.totalNpcs; i++) {
-    if (compiledGame.npcs[i][indexPointMultiplier] == "1") continue;
-    dynamic npc = compiledGame.npcs[i];
+  for (int i = 0; i < compiledGame.totalZombies; i++) {
+    if (compiledGame.zombies[i][indexPointMultiplier] == "1") continue;
+    dynamic npc = compiledGame.zombies[i];
     drawCircle(npc[x], npc[y], 10, orange);
   }
 }

@@ -62,8 +62,13 @@ class BleedWidget extends GameWidget {
     initEditor();
     initInput();
 
-    compiledGame.npcs = [];
+    compiledGame.zombies = [];
     for (int i = 0; i < 5000; i++) {
+      compiledGame.zombies.add([0, 0, 0.0, 0.0, 0, 0]);
+    }
+
+    compiledGame.npcs = [];
+    for (int i = 0; i < 200; i++) {
       compiledGame.npcs.add([0, 0, 0.0, 0.0, 0, 0]);
     }
 
@@ -114,9 +119,9 @@ class BleedWidget extends GameWidget {
     double aimX = mouseWorldX;
     double aimY = mouseWorldY;
     bool aiming = false;
-    for (int i = 0; i < compiledGame.npcs.length; i++) {
-      if (diff(aimX, compiledGame.npcs[i][x]) < 6 &&
-          diff(aimY, compiledGame.npcs[i][y]) < 6) {
+    for (int i = 0; i < compiledGame.zombies.length; i++) {
+      if (diff(aimX, compiledGame.zombies[i][x]) < 6 &&
+          diff(aimY, compiledGame.zombies[i][y]) < 6) {
         aiming = true;
         break;
       }

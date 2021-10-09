@@ -64,7 +64,8 @@ Future showDialogClientUpdateAvailable() async {
           onPressed(
               callback: () {
                 pop(context);
-                joinRandomGame();
+                // joinCasualGame();
+                joinGameOpenWorld();
               },
               child: text("Ignore", color: Colors.black)),
         ],

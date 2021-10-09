@@ -18,7 +18,9 @@ class CompiledGame {
   List<Offset> zombieSpawnPoints = [];
   List<List<Tile>> tiles = [];
   List<List<dynamic>> players = [];
+  List<List<dynamic>> zombies = [];
   List<List<dynamic>> npcs = [];
+  int totalZombies = 0;
   int totalNpcs = 0;
   int totalPlayers = 0;
   List<Vector2> bullets = [];

@@ -1,5 +1,6 @@
 import '../compile.dart';
 import '../common/GameType.dart';
+import '../games/open-world.dart';
 import '../instances/scenes.dart';
 import '../settings.dart';
 import '../utils.dart';
@@ -31,6 +32,18 @@ class GameManager {
     Game casualGame = GameCasual(scenes.town, settings.casualGameMaxPlayers);
     compileAndAddGame(casualGame);
     return casualGame;
+  }
+
+  Game getAvailableOpenWorld() {
+    for (Game game in games) {
+      if (game.type != GameType.Open_World) continue;
+      if (game.players.length < game.maxPlayers) {
+        return game;
+      }
+    }
+    Game openWorld = OpenWorld();
+    compileAndAddGame(openWorld);
+    return openWorld;
   }
 
   void compileAndAddGame(Game game) {

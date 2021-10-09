@@ -24,6 +24,7 @@ class Player {
   int roundsShotgun;
   int roundsSniperRifle = 0;
   int roundsAssaultRifle = 0;
+  String message = "";
 
   bool get dead => state == CharacterState.Dead;
   bool get alive => !dead;

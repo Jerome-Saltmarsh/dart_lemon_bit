@@ -55,8 +55,12 @@ void _onConnected(_event) {
   send(ClientRequest.Version.index.toString());
 }
 
-void joinRandomGame() {
+void joinCasualGame() {
   send(ClientRequest.Game_Join_Casual.index.toString());
+}
+
+void joinGameOpenWorld(){
+  send(ClientRequest.Game_Join_Open_World.index.toString());
 }
 
 void onPlayerStateChanged(CharacterState previous, CharacterState next) {
