@@ -10,6 +10,7 @@ import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/ui.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../common.dart';
@@ -75,12 +76,18 @@ final _Keys keys = _Keys();
 
 class _Keys {
   LogicalKeyboardKey interact = LogicalKeyboardKey.keyE;
-  LogicalKeyboardKey sprint = LogicalKeyboardKey.keyX;
+  LogicalKeyboardKey sprint = LogicalKeyboardKey.keyQ;
+  LogicalKeyboardKey sprint2 = LogicalKeyboardKey.keyC;
   LogicalKeyboardKey runUp = LogicalKeyboardKey.keyW;
   LogicalKeyboardKey runRight = LogicalKeyboardKey.keyD;
   LogicalKeyboardKey runDown = LogicalKeyboardKey.keyS;
   LogicalKeyboardKey runLeft = LogicalKeyboardKey.keyA;
   LogicalKeyboardKey throwGrenade = LogicalKeyboardKey.keyG;
+  LogicalKeyboardKey melee = LogicalKeyboardKey.keyF;
+  LogicalKeyboardKey equipHandgun = LogicalKeyboardKey.digit1;
+  LogicalKeyboardKey equipShotgun = LogicalKeyboardKey.digit2;
+  LogicalKeyboardKey equipSniperRifle = LogicalKeyboardKey.digit3;
+  LogicalKeyboardKey equipAssaultRifle = LogicalKeyboardKey.digit4;
 }
 
 Map<LogicalKeyboardKey, bool> _keyDownState = {};
@@ -92,8 +99,19 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.runUp: runUp,
   keys.runRight: runRight,
   keys.runDown: runDown,
-  keys.throwGrenade: throwGrenade
+  keys.throwGrenade: throwGrenade,
+  keys.melee: melee,
+  keys.equipHandgun: sendRequestEquipHandgun,
+  keys.equipShotgun: sendRequestEquipShotgun,
+  keys.equipSniperRifle: sendRequestEquipSniperRifle,
+  keys.equipAssaultRifle: sendRequestEquipAssaultRifle,
+  keys.sprint: toggleSprint,
+  keys.sprint2: toggleSprint,
 };
+
+void toggleSprint(){
+  inputRequest.sprint = !inputRequest.sprint;
+}
 
 // triggered after a key is held longer than one frame
 Map<LogicalKeyboardKey, Function> _keyHeldHandlers = {
@@ -153,6 +171,11 @@ void stopRunDown() {
   inputRequest.moveDown = false;
 }
 
+void melee(){
+  requestCharacterState = characterStateStriking;
+  requestDirection = convertAngleToDirection(requestAim);
+}
+
 void _handleKeyDownEvent(RawKeyDownEvent event) {
   LogicalKeyboardKey key = event.logicalKey;
 
@@ -184,6 +207,8 @@ void _handleKeyUpEvent(RawKeyUpEvent event) {
   if (_keyReleasedHandlers.containsKey(key)) {
     _keyReleasedHandlers[key].call();
   }
+
+  _keyDownState[key] = false;
 }
 
 class _InputRequest {
@@ -216,22 +241,20 @@ void readPlayerInput() {
     cameraX += mouseWorldDiff.dx * zoom;
   }
 
-  if (keyPressedMelee && mouseAvailable) {
-    requestCharacterState = characterStateStriking;
-    requestDirection = convertAngleToDirection(requestAim);
-    return;
-  }
-
   if (mouseClicked || keyPressedSpace) {
     requestCharacterState = characterStateFiring;
   } else {
-    if (keyPressed(LogicalKeyboardKey.keyQ) && mouseAvailable) {
-      requestDirection = convertAngleToDirection(requestAim);
-      if (keySprintPressed) {
-        requestCharacterState = characterStateRunning;
-      } else {
-        requestCharacterState = characterStateWalking;
-      }
+    // if (keyPressed(LogicalKeyboardKey.keyQ) && mouseAvailable) {
+    //   requestDirection = convertAngleToDirection(requestAim);
+    //   if (keySprintPressed) {
+    //     requestCharacterState = characterStateRunning;
+    //   } else {
+    //     requestCharacterState = characterStateWalking;
+    //   }
+    //   return;
+    // }
+
+    if (requestCharacterState == characterStateStriking){
       return;
     }
 
@@ -249,18 +272,15 @@ void readPlayerInput() {
           break;
         }
       }
+      return;
     } else {
-      if (keySprintPressed) {
+      if (inputRequest.sprint) {
         requestCharacterState = characterStateRunning;
       } else {
         requestCharacterState = characterStateWalking;
       }
     }
   }
-  if (keyEquipHandGun) sendRequestEquipHandgun();
-  if (keyEquipShotgun) sendRequestEquipShotgun();
-  if (keyEquipSniperRifle) sendRequestEquipSniperRifle();
-  if (keyEquipMachineGun) sendRequestEquipMachineGun();
 }
 
 int getKeyDirection() {

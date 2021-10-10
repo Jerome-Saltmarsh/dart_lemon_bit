@@ -56,7 +56,7 @@ void sendRequestLobbyExit() {
       '${ClientRequest.Lobby_Exit.index.toString()} ${state.lobby.uuid} ${state.lobby.playerUuid}');
 }
 
-void sendRequestEquipMachineGun() {
+void sendRequestEquipAssaultRifle() {
   sendRequestEquip(Weapon.AssaultRifle);
 }
 
