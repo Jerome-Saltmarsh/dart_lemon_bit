@@ -50,7 +50,6 @@ bool get keyPressedPan => keyPressed(LogicalKeyboardKey.keyE);
 
 bool get keyPressedMelee => keyPressed(LogicalKeyboardKey.keyF);
 
-bool _throwingGrenade = false;
 bool panningCamera = false;
 
 Offset _mouseWorldStart;
@@ -81,6 +80,7 @@ class _Keys {
   LogicalKeyboardKey runRight = LogicalKeyboardKey.keyD;
   LogicalKeyboardKey runDown = LogicalKeyboardKey.keyS;
   LogicalKeyboardKey runLeft = LogicalKeyboardKey.keyA;
+  LogicalKeyboardKey throwGrenade = LogicalKeyboardKey.keyG;
 }
 
 Map<LogicalKeyboardKey, bool> _keyDownState = {};
@@ -92,6 +92,7 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.runUp: runUp,
   keys.runRight: runRight,
   keys.runDown: runDown,
+  keys.throwGrenade: throwGrenade
 };
 
 // triggered after a key is held longer than one frame
@@ -109,6 +110,16 @@ Map<LogicalKeyboardKey, Function> _keyReleasedHandlers = {
   keys.runRight: stopRunRight,
   keys.runDown: stopRunDown,
 };
+
+void throwGrenade(){
+  if (!mouseAvailable) return;
+  double mouseDistance = distance(
+      compiledGame.playerX, compiledGame.playerY, mouseWorldX, mouseWorldY);
+  double maxRange = 400; // TODO refactor magic variable
+  double throwDistance = min(mouseDistance, maxRange);
+  double strength = throwDistance / maxRange;
+  requestThrowGrenade(strength);
+}
 
 void runLeft() {
   inputRequest.moveLeft = true;
@@ -173,25 +184,6 @@ void _handleKeyUpEvent(RawKeyUpEvent event) {
   if (_keyReleasedHandlers.containsKey(key)) {
     _keyReleasedHandlers[key].call();
   }
-  // if (key == LogicalKeyboardKey.keyA) {
-  //   inputRequest.moveLeft = false;
-  //   return;
-  // }
-  //
-  // if (key == LogicalKeyboardKey.keyD) {
-  //   inputRequest.moveRight = false;
-  //   return;
-  // }
-  //
-  // if (key == LogicalKeyboardKey.keyW) {
-  //   inputRequest.moveUp = false;
-  //   return;
-  // }
-  //
-  // if (key == LogicalKeyboardKey.keyS) {
-  //   inputRequest.moveDown = false;
-  //   return;
-  // }
 }
 
 class _InputRequest {
@@ -205,24 +197,6 @@ class _InputRequest {
 void readPlayerInput() {
   if (!playerAssigned) return;
 
-  // if (keyPressedSpawnZombie) {
-  //   sendRequestSpawnNpc();
-  //   return;
-  // }
-
-  if (keyPressedThrowGrenade) {
-    if (!_throwingGrenade && mouseAvailable) {
-      _throwingGrenade = true;
-      double mouseDistance = distance(
-          compiledGame.playerX, compiledGame.playerY, mouseWorldX, mouseWorldY);
-      double maxRange = 400;
-      double throwDistance = min(mouseDistance, maxRange);
-      double strength = throwDistance / maxRange;
-      requestThrowGrenade(strength);
-    }
-  } else if (_throwingGrenade) {
-    _throwingGrenade = false;
-  }
   if (mouseAvailable) {
     requestAim = getMouseRotation();
   }
