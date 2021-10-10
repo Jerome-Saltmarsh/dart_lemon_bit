@@ -109,7 +109,7 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.sprint2: toggleSprint,
 };
 
-void toggleSprint(){
+void toggleSprint() {
   inputRequest.sprint = !inputRequest.sprint;
 }
 
@@ -127,9 +127,10 @@ Map<LogicalKeyboardKey, Function> _keyReleasedHandlers = {
   keys.runUp: stopRunUp,
   keys.runRight: stopRunRight,
   keys.runDown: stopRunDown,
+  keys.melee: stopMelee,
 };
 
-void throwGrenade(){
+void throwGrenade() {
   if (!mouseAvailable) return;
   double mouseDistance = distance(
       compiledGame.playerX, compiledGame.playerY, mouseWorldX, mouseWorldY);
@@ -171,9 +172,14 @@ void stopRunDown() {
   inputRequest.moveDown = false;
 }
 
-void melee(){
+void melee() {
   requestCharacterState = characterStateStriking;
   requestDirection = convertAngleToDirection(requestAim);
+}
+
+void stopMelee() {
+  if (requestCharacterState != characterStateStriking) return;
+  requestCharacterState = characterStateIdle;
 }
 
 void _handleKeyDownEvent(RawKeyDownEvent event) {
@@ -198,7 +204,9 @@ void _handleKeyDownEvent(RawKeyDownEvent event) {
 
   // on key pressed
   _keyDownState[key] = true;
-  _keyPressedHandlers[key].call();
+  if (_keyPressedHandlers.containsKey(key)) {
+    _keyPressedHandlers[key].call();
+  }
 }
 
 void _handleKeyUpEvent(RawKeyUpEvent event) {
@@ -254,7 +262,7 @@ void readPlayerInput() {
     //   return;
     // }
 
-    if (requestCharacterState == characterStateStriking){
+    if (requestCharacterState == characterStateStriking) {
       return;
     }
 

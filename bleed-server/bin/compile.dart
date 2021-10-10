@@ -133,7 +133,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.points);
   _write(buffer, player.credits);
   _write(buffer, player.state.index);
-  _writeBool(buffer, player.acquiredHandgun);
+  _writeBool(buffer, player.rounds.handgun > 0);
   _writeBool(buffer, player.acquiredShotgun);
   _writeBool(buffer, player.acquiredSniperRifle);
   _writeBool(buffer, player.acquiredAssaultRifle);

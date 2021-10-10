@@ -33,7 +33,7 @@ class OpenWorld extends Game {
       y: 0,
       inventory: Inventory(0, 0, []),
       clips: Clips(),
-      rounds: Rounds(),
+      rounds: Rounds(handgun: 30),
     );
   }
 
