@@ -23,6 +23,7 @@ class OpenWorld extends Game {
   }
 
   void _onNpcMainInteractedWith(Player player){
+    print("Player interacted with main");
     player.message = "Hello World";
   }
 

@@ -170,6 +170,7 @@ class _Radius {
   final double item = 15;
   final double crate = 22;
   final double character = 20;
+  final double interact = 20;
 }
 
 class _Accuracy {

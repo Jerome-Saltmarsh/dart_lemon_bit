@@ -2,10 +2,12 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+import 'classes.dart';
 import 'classes/Game.dart';
 import 'classes/Lobby.dart';
 import 'classes/Player.dart';
 import 'common/PlayerEvents.dart';
+import 'common/functions/diffOver.dart';
 import 'common/version.dart';
 import 'common/constants.dart';
 import 'compile.dart';
@@ -611,6 +613,36 @@ void main() {
         case ClientRequest.Version:
           sendToClient('${ServerResponse.Version.index} $version');
           break;
+
+        case ClientRequest.Interact:
+          String gameId = arguments[1];
+          Game? game = findGameById(gameId);
+          if (game == null) {
+            error(GameError.GameNotFound);
+            return;
+          }
+
+          int id = int.parse(arguments[2]);
+          Player? player = game.findPlayerById(id);
+          if (player == null) {
+            error(GameError.PlayerNotFound);
+            return;
+          }
+
+          String uuid = arguments[3];
+          if (uuid != player.uuid) {
+            error(GameError.InvalidPlayerUUID);
+            return;
+          }
+
+          if (player.dead) return;
+
+          for (InteractableNpc interactable in game.npcs){
+            if (diffOver(interactable.x, player.x, radius.interact)) continue;
+            if (diffOver(interactable.y, player.y, radius.interact)) continue;
+            interactable.onInteractedWith(player);
+            return;
+          }
       }
     }
 

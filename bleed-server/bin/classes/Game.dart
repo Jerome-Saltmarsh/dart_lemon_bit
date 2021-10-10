@@ -365,7 +365,7 @@ abstract class Game {
   final Scene scene;
   int duration = 0;
   List<Npc> zombies = [];
-  List<Npc> npcs = [];
+  List<InteractableNpc> npcs = [];
   List<Player> players = [];
   List<Bullet> bullets = [];
   List<Grenade> grenades = [];
