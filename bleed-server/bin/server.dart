@@ -49,6 +49,7 @@ void main() {
       compilePlayer(_buffer, player);
       if (player.message.isNotEmpty) {
         compilePlayerMessage(_buffer, player.message);
+        player.message = "";
       }
       sendToClient(_buffer.toString());
     }

@@ -464,6 +464,7 @@ Widget _buildServerText() {
                 text(player.message),
                 button("Next", () {
                   player.message = "";
+                  rebuildPlayerMessage();
                 }),
               ],
             ),

@@ -149,12 +149,14 @@ void parseState() {
         break;
 
       case ServerResponse.NpcMessage:
+        String message = "";
         while (!_simiColonConsumed()) {
-          String message = "";
           message += _consumeString();
-          player.message = message;
-          rebuildPlayerMessage();
+          message += " ";
         }
+        print("NpcMessage: $message");
+        player.message = message.trim();
+        rebuildPlayerMessage();
         break;
 
       case ServerResponse.Crates:
