@@ -12,7 +12,7 @@ class OpenWorld extends Game {
 
   late InteractableNpc npcMain;
 
-  OpenWorld() : super(GameType.Open_World, scenes.town, 64){
+  OpenWorld() : super(GameType.Open_World, scenes.town, 64) {
     npcMain = InteractableNpc(
         onInteractedWith: _onNpcMainInteractedWith,
         x: 0,
@@ -48,6 +48,6 @@ class OpenWorld extends Game {
 
   @override
   void update() {
-    
+
   }
 }

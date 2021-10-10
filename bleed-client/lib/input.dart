@@ -2,14 +2,14 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Block.dart';
+import 'package:bleed_client/common/functions/diffOver.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_input.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/properties.dart';
-import 'package:bleed_client/server.dart';
 import 'package:bleed_client/ui.dart';
-import 'package:bleed_client/ui/dialogs.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
 import '../common.dart';
@@ -51,7 +51,6 @@ bool get keyPressedPan => keyPressed(LogicalKeyboardKey.keyE);
 bool get keyPressedMelee => keyPressed(LogicalKeyboardKey.keyF);
 
 bool _throwingGrenade = false;
-bool _healing = false;
 bool panningCamera = false;
 
 Offset _mouseWorldStart;
@@ -73,64 +72,126 @@ void _handleKeyboardEvent(RawKeyEvent event) {
   rebuildUIKeys();
 }
 
+final _Keys keys = _Keys();
+
+class _Keys {
+  LogicalKeyboardKey interact = LogicalKeyboardKey.keyE;
+  LogicalKeyboardKey sprint = LogicalKeyboardKey.keyX;
+  LogicalKeyboardKey runUp = LogicalKeyboardKey.keyW;
+  LogicalKeyboardKey runRight = LogicalKeyboardKey.keyD;
+  LogicalKeyboardKey runDown = LogicalKeyboardKey.keyS;
+  LogicalKeyboardKey runLeft = LogicalKeyboardKey.keyA;
+}
+
+Map<LogicalKeyboardKey, bool> _keyDownState = {};
+
+// triggered the first frame a key is down
+Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
+  keys.interact: sendRequestInteract,
+  keys.runLeft: runLeft,
+  keys.runUp: runUp,
+  keys.runRight: runRight,
+  keys.runDown: runDown,
+};
+
+// triggered after a key is held longer than one frame
+Map<LogicalKeyboardKey, Function> _keyHeldHandlers = {
+  keys.interact: sendRequestInteract,
+  keys.runLeft: runLeft,
+  keys.runUp: runUp,
+  keys.runRight: runRight,
+  keys.runDown: runDown,
+};
+
+Map<LogicalKeyboardKey, Function> _keyReleasedHandlers = {
+  keys.runLeft: stopRunLeft,
+  keys.runUp: stopRunUp,
+  keys.runRight: stopRunRight,
+  keys.runDown: stopRunDown,
+};
+
+void runLeft() {
+  inputRequest.moveLeft = true;
+}
+
+void runUp() {
+  inputRequest.moveUp = true;
+}
+
+void runRight() {
+  inputRequest.moveRight = true;
+}
+
+void runDown() {
+  inputRequest.moveDown = true;
+}
+
+void stopRunLeft() {
+  inputRequest.moveLeft = false;
+}
+
+void stopRunUp() {
+  inputRequest.moveUp = false;
+}
+
+void stopRunRight() {
+  inputRequest.moveRight = false;
+}
+
+void stopRunDown() {
+  inputRequest.moveDown = false;
+}
+
 void _handleKeyDownEvent(RawKeyDownEvent event) {
   LogicalKeyboardKey key = event.logicalKey;
 
-  if (key == LogicalKeyboardKey.keyJ) {
-    inputRequest.sprint = true;
+  if (!_keyDownState.containsKey(key)) {
+    // on key pressed
+    _keyDownState[key] = true;
+    if (_keyPressedHandlers.containsKey(key)) {
+      _keyPressedHandlers[key].call();
+    }
     return;
   }
 
-  if (key == LogicalKeyboardKey.keyA) {
-    inputRequest.moveLeft = true;
+  if (_keyDownState[key]) {
+    // on key held
+    if (_keyHeldHandlers.containsKey(key)) {
+      _keyHeldHandlers[key].call();
+    }
     return;
   }
 
-  if (key == LogicalKeyboardKey.keyD) {
-    inputRequest.moveRight = true;
-    return;
-  }
-
-  if (key == LogicalKeyboardKey.keyW) {
-    inputRequest.moveUp = true;
-    return;
-  }
-
-  if (key == LogicalKeyboardKey.keyS) {
-    inputRequest.moveDown = true;
-    return;
-  }
+  // on key pressed
+  _keyDownState[key] = true;
+  _keyPressedHandlers[key].call();
 }
 
 void _handleKeyUpEvent(RawKeyUpEvent event) {
   LogicalKeyboardKey key = event.logicalKey;
 
-  if (key == LogicalKeyboardKey.keyJ) {
-    inputRequest.sprint = false;
-    return;
+  if (_keyReleasedHandlers.containsKey(key)) {
+    _keyReleasedHandlers[key].call();
   }
-
-  if (key == LogicalKeyboardKey.keyA) {
-    inputRequest.moveLeft = false;
-    return;
-  }
-
-  if (key == LogicalKeyboardKey.keyD) {
-    inputRequest.moveRight = false;
-    return;
-  }
-
-  if (key == LogicalKeyboardKey.keyW) {
-    inputRequest.moveUp = false;
-    print("up released");
-    return;
-  }
-
-  if (key == LogicalKeyboardKey.keyS) {
-    inputRequest.moveDown = false;
-    print("down released");
-    return;
-  }
+  // if (key == LogicalKeyboardKey.keyA) {
+  //   inputRequest.moveLeft = false;
+  //   return;
+  // }
+  //
+  // if (key == LogicalKeyboardKey.keyD) {
+  //   inputRequest.moveRight = false;
+  //   return;
+  // }
+  //
+  // if (key == LogicalKeyboardKey.keyW) {
+  //   inputRequest.moveUp = false;
+  //   return;
+  // }
+  //
+  // if (key == LogicalKeyboardKey.keyS) {
+  //   inputRequest.moveDown = false;
+  //   return;
+  // }
 }
 
 class _InputRequest {
@@ -144,26 +205,10 @@ class _InputRequest {
 void readPlayerInput() {
   if (!playerAssigned) return;
 
-  if (keyPressedSpawnZombie) {
-    sendRequestSpawnNpc();
-    return;
-  }
-
-  if (keyPressedMenu) {
-    showDialogMainMenu();
-  }
-
-  if (keyPressedUseMedKit) {
-    if (!_healing) {
-      sendRequestUseMedKit();
-    }
-  } else {
-    _healing = false;
-  }
-
-  if (keyPressedShowStore) {
-    state.storeVisible = true;
-  }
+  // if (keyPressedSpawnZombie) {
+  //   sendRequestSpawnNpc();
+  //   return;
+  // }
 
   if (keyPressedThrowGrenade) {
     if (!_throwingGrenade && mouseAvailable) {
@@ -197,11 +242,6 @@ void readPlayerInput() {
     cameraX += mouseWorldDiff.dx * zoom;
   }
 
-  // if (keyPressedReload) {
-  //   requestCharacterState = characterStateReloading;
-  //   return;
-  // }
-
   if (keyPressedMelee && mouseAvailable) {
     requestCharacterState = characterStateStriking;
     requestDirection = convertAngleToDirection(requestAim);
@@ -228,8 +268,8 @@ void readPlayerInput() {
         double mouseWorldX = mouseX + cameraX;
         double mouseWorldY = mouseY + cameraY;
         for (dynamic npc in compiledGame.zombies) {
-          if (distance(npc[x], npc[y], mouseWorldX, mouseWorldY) >
-              playerAutoAimDistance) continue;
+          if (diffOver(npc[x], mouseWorldX, playerAutoAimDistance)) continue;
+          if (diffOver(npc[y], mouseWorldY, playerAutoAimDistance)) continue;
           requestCharacterState = characterStateAiming;
           requestDirection = convertAngleToDirection(requestAim);
           break;
