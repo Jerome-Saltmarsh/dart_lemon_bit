@@ -348,10 +348,6 @@ class GameCasual extends Game {
     player.clips = spawnClip();
     player.rounds = spawnRounds();
     player.squad = getNextSquad();
-    player.acquiredHandgun = true;
-    player.acquiredShotgun = false;
-    player.acquiredSniperRifle = false;
-    player.acquiredAssaultRifle = false;
     player.weapon = Weapon.HandGun;
   }
 }
@@ -632,9 +628,8 @@ extension GameFunctions on Game {
     updateCollisionBetween(zombies);
     updateCollisionBetween(players);
     resolveCollisionBetween(zombies, players);
-
-    handleBlockCollisions(players);
-    handleBlockCollisions(zombies);
+    // handleBlockCollisions(players);
+    // handleBlockCollisions(zombies);
   }
 
   Player? findPlayerById(int id) {
@@ -1467,7 +1462,6 @@ extension GameFunctions on Game {
               dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
               break;
             }
-            player.acquiredHandgun = true;
             player.clips.handgun = settings.maxClips.handgun;
             player.rounds.handgun = settings.pickup.handgun;
             player.weapon = Weapon.HandGun;
@@ -1483,7 +1477,6 @@ extension GameFunctions on Game {
               dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
               break;
             }
-            player.acquiredShotgun = true;
             player.rounds.shotgun = settings.pickup.shotgun;
             player.weapon = Weapon.Shotgun;
             break;
@@ -1499,7 +1492,6 @@ extension GameFunctions on Game {
               dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
               break;
             }
-            player.acquiredSniperRifle = true;
             player.rounds.sniperRifle = settings.pickup.sniperRifle;
             player.weapon = Weapon.SniperRifle;
             break;
@@ -1515,7 +1507,6 @@ extension GameFunctions on Game {
               dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
               break;
             }
-            player.acquiredAssaultRifle = true;
             player.rounds.assaultRifle = settings.pickup.assaultRifle;
             player.weapon = Weapon.AssaultRifle;
             break;

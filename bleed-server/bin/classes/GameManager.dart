@@ -29,7 +29,7 @@ class GameManager {
       }
     }
 
-    Game casualGame = GameCasual(scenes.town, settings.casualGameMaxPlayers);
+    Game casualGame = GameCasual(scenes.casualMap01, settings.casualGameMaxPlayers);
     compileAndAddGame(casualGame);
     return casualGame;
   }

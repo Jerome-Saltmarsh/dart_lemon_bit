@@ -1,6 +1,7 @@
 import '../classes.dart';
 import '../common/GameState.dart';
 import '../common/PlayerEvents.dart';
+import '../common/Quests.dart';
 import '../common/Tile.dart';
 import '../common/Weapons.dart';
 import '../enums.dart';
@@ -10,6 +11,7 @@ import '../settings.dart';
 import '../utils/player_utils.dart';
 import 'Inventory.dart';
 import 'Score.dart';
+
 
 class Player extends Character {
   final String uuid = generateUUID();
@@ -30,11 +32,12 @@ class Player extends Character {
   Clips clips = Clips();
   Rounds rounds = Rounds();
   String message = "";
+  MainQuest questMain = MainQuest.Introduction;
 
-  bool acquiredHandgun = false;
-  bool acquiredShotgun = false;
-  bool acquiredSniperRifle = false;
-  bool acquiredAssaultRifle = false;
+  bool get acquiredHandgun => rounds.handgun > 0;
+  bool get acquiredShotgun => rounds.shotgun > 0;
+  bool get acquiredSniperRifle => rounds.sniperRifle > 0;
+  bool get acquiredAssaultRifle => rounds.assaultRifle > 0;
   Tile currentTile = Tile.PlayerSpawn;
   CharacterState characterState = CharacterState.Idle;
 

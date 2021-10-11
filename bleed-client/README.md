@@ -70,10 +70,12 @@
 [ ] Compact Score Mode 
 -- OPTIMIZATIONS --
 -- OPEN WORLD -- 
-[ ] Npc Talk Text
+[ ] Interactable Npc Name Tag
+[ ] Quest Window
 [ ] Complete Quests to earn income and unlock upgrades
+[ ] Walls Tiles
+[x] Npc Talk Text
 -- TIME TRIAL MISSIONS --
-
 -- FORTRESS -- 
 [ ] Fortress life lost audio
 [ ] Fortress Cache Path 

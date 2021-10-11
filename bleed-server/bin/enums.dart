@@ -1,9 +1,18 @@
 import 'common/Tile.dart';
 
+List<Tile> _closedTiles = [
+  Tile.Water,
+  Tile.Block,
+  Tile.Block_Horizontal,
+  Tile.Block_Vertical,
+  Tile.Block_Corner_01,
+  Tile.Block_Corner_02,
+  Tile.Block_Corner_03,
+  Tile.Block_Corner_04,
+];
+
 bool isOpen(Tile tile){
-  if (tile == Tile.Block) return false;
-  if (tile == Tile.Boundary) return false;
-  return true;
+  return !_closedTiles.contains(tile);
 }
 
 enum CharacterState { Idle, Walking, Dead, Aiming, Firing, Striking, Running, Reloading, ChangingWeapon }

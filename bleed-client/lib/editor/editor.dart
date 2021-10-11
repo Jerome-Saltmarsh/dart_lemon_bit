@@ -33,6 +33,20 @@ void initEditor() {
   RawKeyboard.instance.addListener(_handleKeyPressed);
 }
 
+void _resetTiles(){
+  for (int row = 0; row < compiledGame.tiles.length; row++) {
+    for (int column = 0;
+    column < compiledGame.tiles[0].length;
+    column++) {
+      compiledGame.tiles[row][column] = Tile.Grass;
+    }
+  }
+  compiledGame.crates.clear();
+  compiledGame.collectables.clear();
+  compiledGame.items.clear();
+  renderTiles(compiledGame.tiles);
+}
+
 Widget buildEditorUI() {
   return Container(
     width: globalSize.width,
@@ -43,40 +57,36 @@ Widget buildEditorUI() {
         Positioned(
           left: 0,
           top: 0,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              column(Tile.values.map((tile) {
-                return button(tile.toString(), () {
-                  editState.tile = tile;
-                });
-              }).toList()),
-              button("Save Scene", saveScene),
-              button("Reset Tiles", () {
-                for (int row = 0; row < compiledGame.tiles.length; row++) {
-                  for (int column = 0;
-                      column < compiledGame.tiles[0].length;
-                      column++) {
-                    compiledGame.tiles[row][column] = Tile.Grass;
-                  }
-                }
-                renderTiles(compiledGame.tiles);
-              }),
-              button("Increase Tiles X", () {
-                for (List<Tile> row in compiledGame.tiles) {
-                  row.add(Tile.Grass);
-                }
-                renderTiles(compiledGame.tiles);
-              }),
-              button("Increase Tiles Y", () {
-                List<Tile> row = [];
-                for (int i = 0; i < compiledGame.tiles[0].length; i++) {
-                  row.add(Tile.Grass);
-                }
-                compiledGame.tiles.add(row);
-                renderTiles(compiledGame.tiles);
-              }),
-            ],
+          child: Container(
+            height: screenHeight,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  column(Tile.values.map((tile) {
+                    return button(tile.toString(), () {
+                      editState.tile = tile;
+                    });
+                  }).toList()),
+                  button("Save Scene", saveScene),
+                  button("Reset Tiles", _resetTiles),
+                  button("Increase Tiles X", () {
+                    for (List<Tile> row in compiledGame.tiles) {
+                      row.add(Tile.Grass);
+                    }
+                    renderTiles(compiledGame.tiles);
+                  }),
+                  button("Increase Tiles Y", () {
+                    List<Tile> row = [];
+                    for (int i = 0; i < compiledGame.tiles[0].length; i++) {
+                      row.add(Tile.Grass);
+                    }
+                    compiledGame.tiles.add(row);
+                    renderTiles(compiledGame.tiles);
+                  }),
+                ],
+              ),
+            ),
           ),
         )
       ],

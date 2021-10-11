@@ -408,31 +408,6 @@ rebuildUIKeys() {
   _stateSetterKeys(_doNothing);
 }
 
-// Widget buildKeys() {
-//   return StatefulBuilder(
-//     builder: (BuildContext context, StateSetter set) {
-//       _stateSetterKeys = set;
-//       return Positioned(
-//           right: 50,
-//           top: 400,
-//           child: Container(
-//             color: Colors.white70,
-//             padding: padding16,
-//             child: Column(
-//               crossAxisAlignment: cross.start,
-//               children: [
-//                 Text("SPRINT: ${inputRequest.sprint}"),
-//                 Text("UP: ${inputRequest.moveUp}"),
-//                 Text("RIGHT: ${inputRequest.moveRight}"),
-//                 Text("DOWN: ${inputRequest.moveDown}"),
-//                 Text("LEFT: ${inputRequest.moveLeft}"),
-//               ],
-//             ),
-//           ));
-//     },
-//   );
-// }
-
 void rebuildPlayerMessage() {
   if (_stateSetterServerText == null) return;
   _stateSetterServerText(_doNothing);
@@ -457,11 +432,13 @@ Widget _buildServerText() {
           alignment: Alignment.center,
           child: Container(
             width: 300,
-            height: 300 * goldenRatioInverse,
+            // height: 300 * goldenRatioInverse,
             color: Colors.black45,
+            padding: padding16,
             child: Column(
               children: [
                 text(player.message),
+                height16,
                 button("Next", () {
                   player.message = "";
                   rebuildPlayerMessage();

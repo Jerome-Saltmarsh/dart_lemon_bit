@@ -530,7 +530,6 @@ void main() {
               player.removeCredits(prices.weapon.handgun);
               player.clips.handgun = 1;
               player.rounds.handgun = constants.maxRounds.handgun;
-              player.acquiredHandgun = true;
               player.addEvent(PlayerEventType.Acquired_Handgun, 1);
               player.weapon = Weapon.HandGun;
               game.setCharacterState(player, CharacterState.ChangingWeapon);
@@ -544,7 +543,6 @@ void main() {
               player.removeCredits(prices.weapon.shotgun);
               player.clips.shotgun = 1;
               player.rounds.shotgun = constants.maxRounds.shotgun;
-              player.acquiredShotgun = true;
               player.addEvent(PlayerEventType.Acquired_Shotgun, 1);
               player.weapon = Weapon.Shotgun;
               game.setCharacterState(player, CharacterState.ChangingWeapon);
@@ -558,7 +556,6 @@ void main() {
               player.removeCredits(prices.weapon.sniperRifle);
               player.clips.sniperRifle = 1;
               player.rounds.sniperRifle = constants.maxRounds.sniperRifle;
-              player.acquiredSniperRifle = true;
               player.addEvent(PlayerEventType.Acquired_SniperRifle, 1);
               player.weapon = Weapon.SniperRifle;
               game.setCharacterState(player, CharacterState.ChangingWeapon);
@@ -572,7 +569,6 @@ void main() {
               player.removeCredits(prices.weapon.assaultRifle);
               player.clips.assaultRifle = 1;
               player.rounds.assaultRifle = constants.maxRounds.assaultRifle;
-              player.acquiredAssaultRifle = true;
               player.addEvent(PlayerEventType.Acquired_AssaultRifle, 1);
               player.weapon = Weapon.AssaultRifle;
               game.setCharacterState(player, CharacterState.ChangingWeapon);
