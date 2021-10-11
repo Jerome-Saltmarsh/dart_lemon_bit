@@ -371,14 +371,14 @@ Widget buildInventory() {
               break;
             case InventoryItemType.HandgunClip:
               canvas.drawImage(
-                  images.imageHandgunAmmo,
+                  images.handgunAmmo,
                   Offset(item.column * squareSize + (padding * 0.5),
                       item.row * squareSize + padding),
                   paint2);
               break;
             case InventoryItemType.ShotgunClip:
               canvas.drawImage(
-                  images.imageShotgunAmmo,
+                  images.shotgunAmmo,
                   Offset(item.column * squareSize + (padding * 0.5),
                       item.row * squareSize + padding),
                   paint2);
@@ -386,7 +386,7 @@ Widget buildInventory() {
             case InventoryItemType.Handgun:
               paint2.color = Colors.white;
               canvas.drawImage(
-                  images.imageHandgun,
+                  images.handgun,
                   Offset(item.column * squareSize + (padding * 0.5),
                       item.row * squareSize + padding),
                   paint2);

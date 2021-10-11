@@ -28,7 +28,7 @@ void drawCharacterCircle(double x, double y, Color color) {
 }
 
 void drawCharacters() {
-  if (images.imageCharacter == null) return;
+  if (images.character == null) return;
   drawPlayers();
   drawZombies();
   drawInteractableNpcs();
@@ -49,7 +49,7 @@ void drawInteractableNpcs() {
     drawText(compiledGame.npcs[i][indexNpcName], npc[x], npc[y]);
   }
 
-  drawAtlases(images.imageCharacter, render.npcs.transforms, render.npcs.rects);
+  drawAtlases(images.character, render.npcs.transforms, render.npcs.rects);
 }
 
 void drawZombies() {
@@ -67,7 +67,7 @@ void drawZombies() {
 
 void drawCharacterList(List<dynamic> characters) {
   globalCanvas.drawAtlas(
-      images.imageCharacter,
+      images.character,
       characters.map(getCharacterTransform).toList(),
       characters.map(mapHumanToRect).toList(),
       null,
@@ -77,7 +77,7 @@ void drawCharacterList(List<dynamic> characters) {
 }
 
 void drawTileList() {
-  drawAtlases(images.imageTiles, render.tileTransforms, render.tileRects);
+  drawAtlases(images.tiles, render.tileTransforms, render.tileRects);
 }
 
 void drawAtlases(
@@ -118,7 +118,7 @@ void drawPlayers() {
     render.playersRects.add(mapHumanToRect(compiledGame.players[i]));
   }
   drawAtlases(
-      images.imageCharacter, render.playersTransforms, render.playersRects);
+      images.character, render.playersTransforms, render.playersRects);
 }
 
 void _drawTeamMemberCircles() {
@@ -152,7 +152,7 @@ void drawList(
     rects.removeLast();
   }
 
-  drawAtlases(images.imageCharacter, transforms, rects);
+  drawAtlases(images.character, transforms, rects);
 }
 
 RSTransform getCharacterTransform(dynamic character) {
@@ -275,7 +275,7 @@ void drawCircleOutline(
 
 void drawTiles() {
   // TODO Optimization: Null checks are expensive
-  if (images.imageTiles == null) return;
+  if (images.tiles == null) return;
   if (compiledGame.tiles == null || compiledGame.tiles.isEmpty) return;
   if (render.tileTransforms.length != render.tileRects.length) return;
   drawTileList();

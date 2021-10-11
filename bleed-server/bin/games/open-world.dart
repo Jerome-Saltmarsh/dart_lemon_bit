@@ -16,14 +16,14 @@ class OpenWorld extends Game {
         name: "Davis",
         onInteractedWith: _onNpcInteractedWithMain,
         x: 0,
-        y: 150,
+        y: 1550,
         health: 100);
 
     npcSmith = InteractableNpc(
         name: "Smith",
         onInteractedWith: _onNpcInteractedWithSmith,
-        x: 0,
-        y: 250,
+        x: -300,
+        y: 1950,
         health: 100);
     npcs.add(npcMain);
     npcs.add(npcSmith);
@@ -75,7 +75,7 @@ class OpenWorld extends Game {
   Player doSpawnPlayer() {
     return Player(
       x: 0,
-      y: 0,
+      y: 1750,
       inventory: Inventory(0, 0, []),
       clips: Clips(),
       rounds: Rounds(),

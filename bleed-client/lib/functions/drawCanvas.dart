@@ -189,19 +189,19 @@ void _drawCollectables() {
 void drawCollectable(CollectableType type, double x, double y) {
   switch (type) {
     case CollectableType.Handgun_Ammo:
-      drawSprite(images.imageCollectables, 4, 1, x, y);
+      drawSprite(images.collectables, 4, 1, x, y);
       break;
     case CollectableType.Health:
-      drawSprite(images.imageCollectables, 4, 2, x, y);
+      drawSprite(images.collectables, 4, 2, x, y);
       break;
     case CollectableType.Grenade:
-      drawSprite(images.imageCollectables, 4, 3, x, y);
+      drawSprite(images.collectables, 4, 3, x, y);
       break;
     case CollectableType.Shotgun_Ammo:
-      drawSprite(images.imageCollectables, 4, 4, x, y);
+      drawSprite(images.collectables, 4, 4, x, y);
       break;
     case CollectableType.Shotgun_Ammo:
-      drawSprite(images.imageCollectables, 4, 4, x, y);
+      drawSprite(images.collectables, 4, 4, x, y);
       break;
   }
 }
