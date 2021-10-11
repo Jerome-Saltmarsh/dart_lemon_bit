@@ -642,7 +642,7 @@ void _parseBullets() {
 void _parseZombies() {
   compiledGame.totalZombies = 0;
   while (!_simiColonConsumed()) {
-    _consumeNpc(compiledGame.zombies[compiledGame.totalZombies]);
+    _consumeZombie(compiledGame.zombies[compiledGame.totalZombies]);
     compiledGame.totalZombies++;
   }
 }
@@ -650,7 +650,7 @@ void _parseZombies() {
 void _parseNpcs() {
   compiledGame.totalNpcs = 0;
   while (!_simiColonConsumed()) {
-    _consumeNpc(compiledGame.npcs[compiledGame.totalNpcs]);
+    _consumeInteractableNpc(compiledGame.npcs[compiledGame.totalNpcs]);
     compiledGame.totalNpcs++;
   }
 }
@@ -670,11 +670,20 @@ void _consumePlayer(dynamic memory) {
   }
 }
 
-void _consumeNpc(dynamic npcMemory) {
-  npcMemory[stateIndex] = _consumeInt(); // TODO optimization remove int parse
-  npcMemory[direction] = _consumeInt(); // TODO optimization remove int parse
-  npcMemory[x] = _consumeDouble();
-  npcMemory[y] = _consumeDouble();
-  npcMemory[frameCount] = _consumeInt();
-  npcMemory[indexPointMultiplier] = _consumeString();
+void _consumeZombie(dynamic zombie) {
+  zombie[stateIndex] = _consumeInt(); // TODO optimization remove int parse
+  zombie[direction] = _consumeInt(); // TODO optimization remove int parse
+  zombie[x] = _consumeDouble();
+  zombie[y] = _consumeDouble();
+  zombie[frameCount] = _consumeInt();
+  zombie[indexPointMultiplier] = _consumeString();
+}
+
+void _consumeInteractableNpc(dynamic npc) {
+  npc[stateIndex] = _consumeInt(); // TODO optimization remove int parse
+  npc[direction] = _consumeInt(); // TODO optimization remove int parse
+  npc[x] = _consumeDouble();
+  npc[y] = _consumeDouble();
+  npc[frameCount] = _consumeInt();
+  npc[indexNpcName] = _consumeString();
 }

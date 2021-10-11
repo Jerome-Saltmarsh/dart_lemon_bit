@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'dart:ui' as ui;
 
 import 'package:bleed_client/classes/RenderState.dart';
+import 'package:bleed_client/common/functions/diffOver.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
@@ -30,17 +31,22 @@ void drawCharacters() {
   if (images.imageCharacter == null) return;
   drawPlayers();
   drawZombies();
-  drawNpcs();
+  drawInteractableNpcs();
 }
 
-void drawNpcs() {
+void drawInteractableNpcs() {
   render.npcs.rects.clear();
   render.npcs.transforms.clear();
 
   for (int i = 0; i < compiledGame.totalNpcs; i++) {
+    dynamic npc = compiledGame.npcs[i];
     render.npcs.transforms
-        .add(getCharacterTransform(compiledGame.npcs[i]));
-    render.npcs.rects.add(mapHumanToRect(compiledGame.npcs[i]));
+        .add(getCharacterTransform(npc));
+    render.npcs.rects.add(mapHumanToRect(npc));
+
+    if (diffOver(npc[x], mouseWorldX, 50)) continue;
+    if (diffOver(npc[y], mouseWorldY, 50)) continue;
+    drawText(compiledGame.npcs[i][indexNpcName], npc[x], npc[y]);
   }
 
   drawAtlases(images.imageCharacter, render.npcs.transforms, render.npcs.rects);

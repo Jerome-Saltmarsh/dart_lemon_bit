@@ -70,10 +70,12 @@
 [ ] Compact Score Mode 
 -- OPTIMIZATIONS --
 -- OPEN WORLD -- 
-[ ] Interactable Npc Name Tag
-[ ] Quest Window
+[ ] Persist Character on cloud
 [ ] Complete Quests to earn income and unlock upgrades
-[ ] Walls Tiles
+[ ] Change scene
+[ ] Quest Window
+[x] Interactable Npc Name Tag
+[x] Walls Tiles
 [x] Npc Talk Text
 -- TIME TRIAL MISSIONS --
 -- FORTRESS -- 

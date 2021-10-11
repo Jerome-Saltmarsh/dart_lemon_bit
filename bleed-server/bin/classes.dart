@@ -98,9 +98,11 @@ final Character _nonTarget =
 
 class InteractableNpc extends Npc {
 
+  final String name;
+
   Function(Player player) onInteractedWith;
 
-  InteractableNpc({required this.onInteractedWith, required double x, required double y, required int health})
+  InteractableNpc({required this.name, required this.onInteractedWith, required double x, required double y, required int health})
       : super(x: x, y: y, health: health);
 }
 

@@ -8,3 +8,4 @@ const int squad = 6;
 const int indexName = 7;
 
 const int indexPointMultiplier = 5;
+const int indexNpcName = 5;

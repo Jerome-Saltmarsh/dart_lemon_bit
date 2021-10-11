@@ -13,10 +13,18 @@ class OpenWorld extends Game {
 
   OpenWorld() : super(GameType.Open_World, scenes.town, 64) {
     npcMain = InteractableNpc(
-        onInteractedWith: _onNpcInteractedWithMain, x: 0, y: 150, health: 100);
+        name: "Davis",
+        onInteractedWith: _onNpcInteractedWithMain,
+        x: 0,
+        y: 150,
+        health: 100);
 
     npcSmith = InteractableNpc(
-        onInteractedWith: _onNpcInteractedWithSmith, x: 0, y: 250, health: 100);
+        name: "Smith",
+        onInteractedWith: _onNpcInteractedWithSmith,
+        x: 0,
+        y: 250,
+        health: 100);
     npcs.add(npcMain);
     npcs.add(npcSmith);
   }

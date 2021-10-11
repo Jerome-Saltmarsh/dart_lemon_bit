@@ -28,7 +28,7 @@ void compileGame(Game game) {
   game.buffer.clear();
   _compilePlayers(game.buffer, game.players);
   _compileZombies(game.buffer, game.zombies);
-  _compileNpcs(game.buffer, game.npcs);
+  _compileInteractableNpcs(game.buffer, game.npcs);
   _compileBullets(game.buffer, game.bullets);
   _compileGameEvents(game.buffer, game.gameEvents);
   _compileGrenades(game.buffer, game.grenades);
@@ -252,11 +252,11 @@ void _compileZombies(StringBuffer buffer, List<Npc> npcs) {
   buffer.write(_semiColon);
 }
 
-void _compileNpcs(StringBuffer buffer, List<Npc> npcs) {
+void _compileInteractableNpcs(StringBuffer buffer, List<InteractableNpc> npcs) {
   _write(buffer, ServerResponse.Npcs.index);
-  for (Npc npc in npcs) {
+  for (InteractableNpc npc in npcs) {
     if (!npc.active) continue;
-    _compileNpc(buffer, npc);
+    _compileInteractableNpc(buffer, npc);
   }
   buffer.write(_semiColon);
 }
@@ -293,6 +293,15 @@ void _compileNpc(StringBuffer buffer, Npc npc) {
   _writeInt(buffer, npc.y);
   _write(buffer, npc.stateFrameCount);
   _write(buffer, npc.pointMultiplier);
+}
+
+void _compileInteractableNpc(StringBuffer buffer, InteractableNpc npc) {
+  _write(buffer, npc.state.index);
+  _write(buffer, npc.direction.index);
+  _writeInt(buffer, npc.x);
+  _writeInt(buffer, npc.y);
+  _write(buffer, npc.stateFrameCount);
+  _write(buffer, npc.name);
 }
 
 void compilePlayerMessage(StringBuffer buffer, String message) {
