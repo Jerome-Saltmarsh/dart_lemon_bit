@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'dart:ui' as ui;
 
 import 'package:bleed_client/classes/RenderState.dart';
+import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/functions/diffOver.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
@@ -58,7 +59,7 @@ void drawZombies() {
 
   for (int i = 0; i < compiledGame.totalZombies; i++) {
     render.zombiesTransforms
-        .add(getCharacterTransform(compiledGame.zombies[i]));
+        .add(mapZombieToRSTransform(compiledGame.zombies[i]));
     render.zombieRects.add(mapZombieToRect(compiledGame.zombies[i]));
   }
 
@@ -163,6 +164,17 @@ RSTransform getCharacterTransform(dynamic character) {
     anchorY: halfHumanSpriteFrameHeight + 5,
     translateX: character[x],
     translateY: character[y],
+  );
+}
+
+RSTransform mapZombieToRSTransform(Zombie zombie){
+  return RSTransform.fromComponents(
+    rotation: 0.0,
+    scale: 1.0,
+    anchorX: halfHumanSpriteFrameWidth,
+    anchorY: halfHumanSpriteFrameHeight + 5,
+    translateX: zombie.x,
+    translateY: zombie.y,
   );
 }
 

@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Block.dart';
+import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/functions/diffOver.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
@@ -272,9 +273,9 @@ void readPlayerInput() {
       if (mouseAvailable) {
         double mouseWorldX = mouseX + cameraX;
         double mouseWorldY = mouseY + cameraY;
-        for (dynamic npc in compiledGame.zombies) {
-          if (diffOver(npc[x], mouseWorldX, playerAutoAimDistance)) continue;
-          if (diffOver(npc[y], mouseWorldY, playerAutoAimDistance)) continue;
+        for (Zombie zombie in compiledGame.zombies) {
+          if (diffOver(zombie.x, mouseWorldX, playerAutoAimDistance)) continue;
+          if (diffOver(zombie.y, mouseWorldY, playerAutoAimDistance)) continue;
           requestCharacterState = characterStateAiming;
           requestDirection = convertAngleToDirection(requestAim);
           break;

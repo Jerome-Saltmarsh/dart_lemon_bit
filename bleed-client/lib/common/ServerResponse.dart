@@ -27,4 +27,5 @@ enum ServerResponse {
   Crates,
   NpcMessage,
   Npcs,
+  EnvironmentObjects
 }

@@ -2,11 +2,15 @@ import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/bleed.dart';
 import 'package:bleed_client/classes/InventoryItem.dart';
 import 'package:bleed_client/classes/Lobby.dart';
+import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/GameError.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/ItemType.dart';
+import 'package:bleed_client/common/ObjectType.dart';
 import 'package:bleed_client/common/PlayerEvents.dart';
 import 'package:bleed_client/common/ServerResponse.dart';
+import 'package:bleed_client/common/classes/EnvironmentObject.dart';
+import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/connection.dart';
 import 'package:bleed_client/enums/InventoryItemType.dart';
 import 'package:bleed_client/events.dart';
@@ -91,8 +95,8 @@ void parseState() {
         state.serverVersion = _consumeInt();
 
         if (state.serverVersion == version) {
-          // joinCasualGame();
-          joinGameOpenWorld();
+          joinCasualGame();
+          // joinGameOpenWorld();
           break;
         }
         if (state.serverVersion < version) {
@@ -140,6 +144,20 @@ void parseState() {
         _parseNpcs();
         break;
 
+      case ServerResponse.EnvironmentObjects:
+        compiledGame.environmentObjects.clear();
+        while (!_simiColonConsumed()) {
+          double x = _consumeDouble();
+          double y = _consumeDouble();
+          EnvironmentObjectType type = _consumeEnvironmentObjectType();
+          compiledGame.environmentObjects.add(EnvironmentObject(
+            x: x,
+            y: y,
+            type: type
+          ));
+        }
+        break;
+
       case ServerResponse.Zombies:
         _parseZombies();
         break;
@@ -154,7 +172,6 @@ void parseState() {
           message += _consumeString();
           message += " ";
         }
-        print("NpcMessage: $message");
         player.message = message.trim();
         rebuildPlayerMessage();
         break;
@@ -491,6 +508,10 @@ GameType _consumeGameType() {
   return gameTypes[value];
 }
 
+EnvironmentObjectType _consumeEnvironmentObjectType(){
+  return environmentObjectTypes[_consumeInt()];
+}
+
 void _next() {
   _index++;
 }
@@ -520,6 +541,10 @@ Weapon _consumeWeapon() {
 
 CharacterState _consumeCharacterState() {
   return characterStates[_consumeInt()];
+}
+
+Direction _consumeDirection(){
+  return directions[_consumeInt()];
 }
 
 Tile _consumeTile() {
@@ -670,13 +695,13 @@ void _consumePlayer(dynamic memory) {
   }
 }
 
-void _consumeZombie(dynamic zombie) {
-  zombie[stateIndex] = _consumeInt(); // TODO optimization remove int parse
-  zombie[direction] = _consumeInt(); // TODO optimization remove int parse
-  zombie[x] = _consumeDouble();
-  zombie[y] = _consumeDouble();
-  zombie[frameCount] = _consumeInt();
-  zombie[indexPointMultiplier] = _consumeString();
+void _consumeZombie(Zombie zombie) {
+  zombie.state = _consumeCharacterState();
+  zombie.direction = _consumeDirection();
+  zombie.x = _consumeDouble();
+  zombie.y = _consumeDouble();
+  zombie.frame = _consumeInt();
+  zombie.scoreMultiplier = _consumeString();
 }
 
 void _consumeInteractableNpc(dynamic npc) {

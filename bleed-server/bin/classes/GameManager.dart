@@ -48,7 +48,8 @@ class GameManager {
 
   void compileAndAddGame(Game game) {
     compileGame(game);
-    game.compiledTiles = compileTiles(StringBuffer(), game.scene.tiles);
+    game.compiledTiles = compileTiles(game.scene.tiles);
+    game.compiledEnvironmentObjects = compileEnvironmentObjects(game);
     games.add(game);
   }
 

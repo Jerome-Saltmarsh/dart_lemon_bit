@@ -65,7 +65,7 @@ void updatePlayMode() {
   framesSinceEvent++;
   readPlayerInput();
   updateParticles();
-  updateCharacters();
+  updateDeadCharacterBlood();
   if (!panningCamera && player.alive) {
     cameraTrackPlayer();
   }

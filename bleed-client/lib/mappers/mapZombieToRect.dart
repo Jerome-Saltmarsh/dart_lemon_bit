@@ -1,19 +1,22 @@
 import 'dart:ui';
+import 'package:bleed_client/classes/Zombie.dart';
+import 'package:bleed_client/common/enums/Direction.dart';
+import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/resources/rects_utils.dart';
 import '../common.dart';
 import '../keys.dart';
 
 // interface
-Rect mapZombieToRect(dynamic character) {
-  switch (character[stateIndex]) {
-    case characterStateIdle:
-      return _mapIdle(character);
-    case characterStateWalking:
-      return _mapWalking(character);
-    case characterStateDead:
-      return _mapDead(character);
-    case characterStateStriking:
-      return _mapStriking(character);
+Rect mapZombieToRect(Zombie zombie) {
+  switch (zombie.state) {
+    case CharacterState.Idle:
+      return _mapIdle(zombie);
+    case CharacterState.Walking:
+      return _mapWalking(zombie);
+    case CharacterState.Dead:
+      return _mapDead(zombie);
+    case CharacterState.Striking:
+      return _mapStriking(zombie);
   }
   throw Exception("Could not get character sprite rect");
 }
@@ -26,90 +29,90 @@ final _Walking _walking = _Walking();
 final _Dead _dead = _Dead();
 final _Striking _striking = _Striking();
 
-Rect _mapIdle(dynamic character) {
-  switch (character[direction]) {
-    case directionUp:
+Rect _mapIdle(Zombie zombie) {
+  switch (zombie.direction) {
+    case Direction.Up:
       return _idle.up;
-    case directionUpRight:
+    case Direction.UpRight:
       return _idle.upRight;
-    case directionRight:
+    case Direction.Right:
       return _idle.right;
-    case directionDownRight:
+    case Direction.DownRight:
       return _idle.downRight;
-    case directionDown:
+    case Direction.Down:
       return _idle.down;
-    case directionDownLeft:
+    case Direction.DownLeft:
       return _idle.downLeft;
-    case directionLeft:
+    case Direction.Left:
       return _idle.left;
-    case directionUpLeft:
+    case Direction.UpLeft:
       return _idle.upLeft;
   }
   throw Exception("Could not get character walking sprite rect");
 }
 
-Rect _mapWalking(dynamic character) {
-  switch (character[direction]) {
-    case directionUp:
-      return getFrameLoop(_walking.up, character);
-    case directionUpRight:
-      return getFrameLoop(_walking.upRight, character);
-    case directionRight:
-      return getFrameLoop(_walking.right, character);
-    case directionDownRight:
-      return getFrameLoop(_walking.downRight, character);
-    case directionDown:
-      return getFrameLoop(_walking.down, character);
-    case directionDownLeft:
-      return getFrameLoop(_walking.downLeft, character);
-    case directionLeft:
-      return getFrameLoop(_walking.left, character);
-    case directionUpLeft:
-      return getFrameLoop(_walking.upLeft, character);
+Rect _mapWalking(Zombie zombie) {
+  switch (zombie.direction) {
+    case Direction.Up:
+      return _loopFrame(_walking.up, zombie);
+    case Direction.UpRight:
+      return _loopFrame(_walking.upRight, zombie);
+    case Direction.Right:
+      return _loopFrame(_walking.right, zombie);
+    case Direction.DownRight:
+      return _loopFrame(_walking.downRight, zombie);
+    case Direction.Down:
+      return _loopFrame(_walking.down, zombie);
+    case Direction.DownLeft:
+      return _loopFrame(_walking.downLeft, zombie);
+    case Direction.Left:
+      return _loopFrame(_walking.left, zombie);
+    case Direction.UpLeft:
+      return _loopFrame(_walking.upLeft, zombie);
   }
   throw Exception("Could not get character walking sprite rect");
 }
 
-Rect _mapDead(dynamic character) {
-  switch (character[direction]) {
-    case directionUp:
+Rect _mapDead(Zombie zombie) {
+  switch (zombie.direction) {
+    case Direction.Up:
       return _dead.up;
-    case directionUpRight:
+    case Direction.UpRight:
       return _dead.upRight;
-    case directionRight:
+    case Direction.Right:
       return _dead.right;
-    case directionDownRight:
+    case Direction.DownRight:
       return _dead.downRight;
-    case directionDown:
+    case Direction.Down:
       return _dead.down;
-    case directionDownLeft:
+    case Direction.DownLeft:
       return _dead.left;
-    case directionLeft:
+    case Direction.Left:
       return _dead.left;
-    case directionUpLeft:
+    case Direction.UpLeft:
       return _dead.upLeft;
   }
   throw Exception("Could not get character dead sprite rect");
 }
 
-Rect _mapStriking(character) {
-  switch (character[direction]) {
-    case directionUp:
-      return getFrameLoop(_striking.up, character);
-    case directionUpRight:
-      return getFrameLoop(_striking.upRight, character);
-    case directionRight:
-      return getFrameLoop(_striking.right, character);
-    case directionDownRight:
-      return getFrameLoop(_striking.downRight, character);
-    case directionDown:
-      return getFrameLoop(_striking.down, character);
-    case directionDownLeft:
-      return getFrameLoop(_striking.downLeft, character);
-    case directionLeft:
-      return getFrameLoop(_striking.left, character);
-    case directionUpLeft:
-      return getFrameLoop(_striking.upLeft, character);
+Rect _mapStriking(Zombie zombie) {
+  switch (zombie.direction) {
+    case Direction.Up:
+      return _loopFrame(_striking.up, zombie);
+    case Direction.UpRight:
+      return _loopFrame(_striking.upRight, zombie);
+    case Direction.Right:
+      return _loopFrame(_striking.right, zombie);
+    case Direction.DownRight:
+      return _loopFrame(_striking.downRight, zombie);
+    case Direction.Down:
+      return _loopFrame(_striking.down, zombie);
+    case Direction.DownLeft:
+      return _loopFrame(_striking.downLeft, zombie);
+    case Direction.Left:
+      return _loopFrame(_striking.left, zombie);
+    case Direction.UpLeft:
+      return _loopFrame(_striking.upLeft, zombie);
   }
   throw Exception("could not get firing frame from direction");
 }
@@ -234,6 +237,11 @@ class _Striking {
     _frame(3),
     _frame(35),
   ];
+}
+
+Rect _loopFrame(List<Rect> frames, Zombie zombie) {
+  int actualFrame = zombie.frame ~/ 5;
+  return frames[actualFrame % frames.length]; // TODO Calling frames.length is expensive
 }
 
 Rect _frame(int index) {

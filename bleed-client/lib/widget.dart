@@ -3,7 +3,9 @@ import 'dart:ui';
 
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/bleed.dart';
+import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/constants.dart';
+import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/maths.dart';
@@ -62,9 +64,9 @@ class BleedWidget extends GameWidget {
     initEditor();
     initInput();
 
-    compiledGame.zombies = [];
+    compiledGame.zombies.clear();
     for (int i = 0; i < 5000; i++) {
-      compiledGame.zombies.add([0, 0, 0.0, 0.0, 0, 0]);
+      compiledGame.zombies.add(Zombie(x: 0, y: 0, state: CharacterState.Idle, scoreMultiplier: ""));
     }
 
     compiledGame.npcs = [];
@@ -119,9 +121,9 @@ class BleedWidget extends GameWidget {
     double aimX = mouseWorldX;
     double aimY = mouseWorldY;
     bool aiming = false;
-    for (int i = 0; i < compiledGame.zombies.length; i++) {
-      if (diff(aimX, compiledGame.zombies[i][x]) < 6 &&
-          diff(aimY, compiledGame.zombies[i][y]) < 6) {
+    for (int i = 0; i < compiledGame.totalZombies; i++) {
+      if (diff(aimX, compiledGame.zombies[i].x) < 6 &&
+          diff(aimY, compiledGame.zombies[i].y) < 6) {
         aiming = true;
         break;
       }

@@ -5,6 +5,7 @@ import 'package:bleed_client/classes/Block.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/RenderState.dart';
+import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
@@ -95,9 +96,9 @@ void _drawCompiledGame() {
 
 void _drawNpcBonusPointsCircles() {
   for (int i = 0; i < compiledGame.totalZombies; i++) {
-    if (compiledGame.zombies[i][indexPointMultiplier] == "1") continue;
-    dynamic npc = compiledGame.zombies[i];
-    drawCircle(npc[x], npc[y], 10, orange);
+    if (compiledGame.zombies[i].scoreMultiplier == "1") continue;
+    Zombie npc = compiledGame.zombies[i];
+    drawCircle(npc.x, npc.y, 10, orange);
   }
 }
 

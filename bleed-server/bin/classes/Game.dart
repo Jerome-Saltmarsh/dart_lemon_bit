@@ -3,6 +3,7 @@ import 'dart:math';
 import '../classes.dart';
 import '../common/GameState.dart';
 import '../common/ItemType.dart';
+import '../common/ObjectType.dart';
 import '../common/Tile.dart';
 import '../common/classes/Vector2.dart';
 import '../common/constants.dart';
@@ -28,6 +29,7 @@ import '../utils/player_utils.dart';
 import 'Block.dart';
 import 'Collectable.dart';
 import 'Crate.dart';
+import '../common/classes/EnvironmentObject.dart';
 import 'Inventory.dart';
 import 'Item.dart';
 import 'Player.dart';
@@ -367,6 +369,7 @@ abstract class Game {
   List<Grenade> grenades = [];
   List<GameEvent> gameEvents = [];
   List<Crate> crates = [];
+  List<EnvironmentObject> environmentObjects = [];
   final List<Collectable> collectables = [];
   final List<Vector2> playerSpawnPoints = [];
   final List<Item> items = [];
@@ -374,6 +377,7 @@ abstract class Game {
   final List<Vector2> zombieSpawnPoints = [];
   String compiled = "";
   String compiledTiles = "";
+  String compiledEnvironmentObjects = "";
   bool compilePaths = false;
 
   // TODO doesn't belong here

@@ -1,6 +1,8 @@
 
 import 'dart:ui';
 
+import 'package:bleed_client/classes/Zombie.dart';
+import 'package:bleed_client/common/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/Tile.dart';
@@ -16,9 +18,10 @@ class CompiledGame {
   List<Vector2> crates = [];
   int cratesTotal = 0;
   List<Offset> zombieSpawnPoints = [];
+  List<EnvironmentObject> environmentObjects = [];
   List<List<Tile>> tiles = [];
   List<List<dynamic>> players = [];
-  List<List<dynamic>> zombies = [];
+  final List<Zombie> zombies = [];
   List<List<dynamic>> npcs = [];
   int totalZombies = 0;
   int totalNpcs = 0;

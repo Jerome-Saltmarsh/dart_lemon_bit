@@ -2,6 +2,7 @@ import 'classes.dart';
 import 'classes/Block.dart';
 import 'classes/Collectable.dart';
 import 'classes/Crate.dart';
+import 'common/classes/EnvironmentObject.dart';
 import 'classes/Game.dart';
 import 'classes/Item.dart';
 import 'classes/Lobby.dart';
@@ -48,6 +49,18 @@ void compileGame(Game game) {
   }
 
   game.compiled = game.buffer.toString();
+}
+
+String compileEnvironmentObjects(Game game) {
+  StringBuffer buffer = StringBuffer();
+  _write(buffer, ServerResponse.EnvironmentObjects.index);
+  for (EnvironmentObject environmentObject in game.environmentObjects){
+    _write(buffer, environmentObject.x.toInt());
+    _write(buffer, environmentObject.y.toInt());
+    _write(buffer, environmentObject.type.index);
+  }
+  _writeSemiColon(buffer);
+  return buffer.toString();
 }
 
 void _compileCrates(Game game) {
@@ -98,7 +111,8 @@ void compileBlocks(StringBuffer buffer, List<Block> blocks) {
   buffer.write(_semiColon);
 }
 
-String compileTiles(StringBuffer buffer, List<List<Tile>> tiles) {
+String compileTiles(List<List<Tile>> tiles) {
+  StringBuffer buffer = StringBuffer();
   buffer.write(ServerResponse.Tiles.index);
   buffer.write(_space);
   buffer.write(tiles.length);

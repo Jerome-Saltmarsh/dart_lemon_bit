@@ -1070,30 +1070,6 @@ int get enemiesLeft {
   return count;
 }
 
-Widget buildDebugColumn() {
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          text(
-              'mouseWorldX: ${mouseWorldX.toInt()}, mouseWorldY: ${mouseWorldY.toInt()}'),
-          text('x: ${compiledGame.playerX}, y: ${compiledGame.playerY}'),
-          text("zombies: ${compiledGame.zombies.length}"),
-          text("players: ${compiledGame.players.length}"),
-          text("zoom: ${zoom.toStringAsFixed(2)}"),
-          text("cameraX: ${cameraX.toInt()}, cameraY: ${cameraY.toInt()}"),
-          text(
-              "centerX: ${screenCenterWorldX.toInt()} ${screenCenterWorldY.toInt()}"),
-          text(
-              'screen width: ${screenWidth / zoom}, screen height: ${screenHeight / zoom}'),
-        ],
-      )
-    ],
-  );
-}
-
 Widget buildGameOver() {
   return Positioned(
       child: Container(
