@@ -27,12 +27,6 @@ double magnitude(double a, double b){
   return sqrt((a * a) + (b * b));
 }
 
-double distanceBetween(dynamic a, dynamic b){
-  double xDiff = a[x] - b[x];
-  double yDiff = a[y] - b[y];
-  return magnitude(xDiff, yDiff);
-}
-
 double distance(double x1, double y1, double x2, double y2){
   return magnitude(x1 - x2, y1 - y2);
 }

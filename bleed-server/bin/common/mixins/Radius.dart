@@ -1,4 +1,4 @@
 
 mixin Radius {
-  late double radius;
+  double radius = 0;
 }

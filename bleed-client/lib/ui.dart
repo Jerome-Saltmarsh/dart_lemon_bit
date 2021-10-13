@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:bleed_client/classes/Human.dart';
 import 'package:bleed_client/common/GameState.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/constants.dart';
@@ -31,6 +32,7 @@ import 'common/Weapons.dart';
 import 'common.dart';
 import 'connection.dart';
 import 'constants/servers.dart';
+import 'enums.dart';
 import 'enums/InventoryItemType.dart';
 import 'enums/Mode.dart';
 import 'game_engine/global_paint.dart';
@@ -226,7 +228,6 @@ Widget buildGameUI(BuildContext context) {
       child: Container(child: text("Reconnecting...", fontSize: 30)),
     );
   }
-  // dynamic player = getPlayerCharacter();
   if (!playerAssigned) {
     return Container(
       width: globalSize.width,
@@ -1055,16 +1056,16 @@ int get enemiesLeft {
   int count = 0;
 
   if (state.player.squad == -1) {
-    for (dynamic player in compiledGame.players) {
-      if (player[stateIndex] == characterStateDead) continue;
+    for (Human player in compiledGame.humans) {
+      if (player.state != CharacterState.Dead) continue;
       count++;
     }
     return count - 1;
   }
 
-  for (dynamic player in compiledGame.players) {
-    if (player[stateIndex] == characterStateDead) continue;
-    if (player[squad] == state.player.squad) continue;
+  for (Human player in compiledGame.humans) {
+    if (player.state == CharacterState.Dead) continue;
+    if (player.squad == state.player.squad) continue;
     count++;
   }
   return count;
@@ -1351,7 +1352,7 @@ Widget buildDebugPanel() {
       text("FPS: ${(1000 / millisecondsSinceLastFrame).round()}"),
     if (serverFramesMS > 0)
       text("Server FPS: ${(1000 / serverFramesMS).round()}"),
-    text("Players: ${compiledGame.players.length}"),
+    text("Players: ${compiledGame.humans.length}"),
     text("Bullets: ${compiledGame.bullets.length}"),
     text("Npcs: ${compiledGame.totalZombies}"),
     text("Player Assigned: $playerAssigned"),

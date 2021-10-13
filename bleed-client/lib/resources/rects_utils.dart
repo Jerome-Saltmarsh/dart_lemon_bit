@@ -3,13 +3,13 @@ import 'dart:ui';
 
 import '../keys.dart';
 
-Rect getFrameLoop(List<Rect> frames, dynamic character) {
-  int actualFrame = character[frameCount] ~/ 5;
+Rect getFrameLoop(List<Rect> frames, int frame) {
+  int actualFrame = frame ~/ 5;
   return frames[actualFrame % frames.length]; // TODO Calling frames.length is expensive
 }
 
-Rect getFrame(List<Rect> frames, dynamic character) {
-  int actualFrame = character[frameCount] ~/ 5;
+Rect getFrame(List<Rect> frames, int frame) {
+  int actualFrame = frame ~/ 5;
   if (actualFrame >= frames.length) {
     return frames.last;
   }

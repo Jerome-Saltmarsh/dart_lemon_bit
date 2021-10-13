@@ -9,6 +9,8 @@ import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/Weapons.dart';
 
 import '../enums.dart';
+import 'Human.dart';
+import 'InteractableNpc.dart';
 import 'Item.dart';
 import 'Particle.dart';
 
@@ -20,12 +22,12 @@ class CompiledGame {
   List<Offset> zombieSpawnPoints = [];
   List<EnvironmentObject> environmentObjects = [];
   List<List<Tile>> tiles = [];
-  List<List<dynamic>> players = [];
+  final List<Human> humans = [];
   final List<Zombie> zombies = [];
-  List<List<dynamic>> npcs = [];
+  final List<InteractableNpc> interactableNpcs = [];
   int totalZombies = 0;
   int totalNpcs = 0;
-  int totalPlayers = 0;
+  int totalHumans = 0;
   List<Vector2> bullets = [];
   List<Vector2> bulletHoles = [];
   int bulletHoleIndex = 0;

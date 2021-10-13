@@ -31,7 +31,7 @@ void clearCompileGameState(){
   compiledGame.playerX = -1;
   compiledGame.playerY = -1;
   compiledGame.totalZombies = 0;
-  compiledGame.totalPlayers = 0;
+  compiledGame.totalHumans = 0;
   compiledGame.totalBullets = 0;
   compiledGame.grenades.clear();
   compiledGame.collectables.clear();

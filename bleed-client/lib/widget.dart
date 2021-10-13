@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/bleed.dart';
+import 'package:bleed_client/classes/Human.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/constants.dart';
 import 'package:bleed_client/enums.dart';
@@ -15,6 +16,7 @@ import 'package:bleed_client/update.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'classes/InteractableNpc.dart';
 import 'connection.dart';
 import 'editor/editor.dart';
 import 'functions/clearState.dart';
@@ -69,14 +71,14 @@ class BleedWidget extends GameWidget {
       compiledGame.zombies.add(Zombie(x: 0, y: 0, state: CharacterState.Idle, scoreMultiplier: ""));
     }
 
-    compiledGame.npcs = [];
+    compiledGame.interactableNpcs.clear();
     for (int i = 0; i < 200; i++) {
-      compiledGame.npcs.add([0, 0, 0.0, 0.0, 0, 0]);
+      compiledGame.interactableNpcs.add(InteractableNpc());
     }
 
-    compiledGame.players = [];
+    compiledGame.humans.clear();
     for (int i = 0; i < 1000; i++) {
-      compiledGame.players.add([0, 0, 0.0, 0.0, 0, 0, 0, ""]);
+      compiledGame.humans.add(Human());
     }
 
     onDisconnected.stream.listen((event) {

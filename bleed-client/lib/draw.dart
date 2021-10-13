@@ -2,18 +2,22 @@ import 'dart:math';
 import 'dart:ui';
 import 'dart:ui' as ui;
 
+import 'package:bleed_client/classes/InteractableNpc.dart';
 import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/functions/diffOver.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/mappers/mapInteractableNpcToRSTransform.dart';
 import 'package:bleed_client/mappers/mapTileToRect.dart';
 import 'package:bleed_client/mappers/mapZombieToRect.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../images.dart';
+import 'classes/Human.dart';
+import 'common/Weapons.dart';
 import 'common/classes/Vector2.dart';
 import 'common/Tile.dart';
 import 'functions/drawParticle.dart';
@@ -40,14 +44,24 @@ void drawInteractableNpcs() {
   render.npcs.transforms.clear();
 
   for (int i = 0; i < compiledGame.totalNpcs; i++) {
-    dynamic npc = compiledGame.npcs[i];
-    render.npcs.transforms
-        .add(getCharacterTransform(npc));
-    render.npcs.rects.add(mapHumanToRect(npc));
+    InteractableNpc interactableNpc = compiledGame.interactableNpcs[i];
+    render.npcs.transforms.add(
+        mapHumanToRSTransform(interactableNpc.x, interactableNpc.y)
+    );
 
-    if (diffOver(npc[x], mouseWorldX, 50)) continue;
-    if (diffOver(npc[y], mouseWorldY, 50)) continue;
-    drawText(compiledGame.npcs[i][indexNpcName], npc[x], npc[y]);
+    render.npcs.rects.add(
+        mapHumanToRect(
+            Weapon.HandGun,
+            interactableNpc.state,
+            interactableNpc.direction,
+            interactableNpc.frame
+        )
+    );
+
+    if (diffOver(interactableNpc.x, mouseWorldX, 50)) continue;
+    if (diffOver(interactableNpc.y, mouseWorldY, 50)) continue;
+    drawText(compiledGame.interactableNpcs[i].name, interactableNpc.x,
+        interactableNpc.y);
   }
 
   drawAtlases(images.character, render.npcs.transforms, render.npcs.rects);
@@ -58,23 +72,15 @@ void drawZombies() {
   render.zombieRects.clear();
 
   for (int i = 0; i < compiledGame.totalZombies; i++) {
-    render.zombiesTransforms
-        .add(mapZombieToRSTransform(compiledGame.zombies[i]));
-    render.zombieRects.add(mapZombieToRect(compiledGame.zombies[i]));
+    render.zombiesTransforms.add(
+        mapZombieToRSTransform(compiledGame.zombies[i])
+    );
+    render.zombieRects.add(
+        mapZombieToRect(compiledGame.zombies[i])
+    );
   }
 
   drawAtlases(images.zombie, render.zombiesTransforms, render.zombieRects);
-}
-
-void drawCharacterList(List<dynamic> characters) {
-  globalCanvas.drawAtlas(
-      images.character,
-      characters.map(getCharacterTransform).toList(),
-      characters.map(mapHumanToRect).toList(),
-      null,
-      null,
-      null,
-      globalPaint);
 }
 
 void drawTileList() {
@@ -113,61 +119,30 @@ void _loadTileRects(List<List<Tile>> tiles) {
 void drawPlayers() {
   render.playersTransforms.clear();
   render.playersRects.clear();
-  for (int i = 0; i < compiledGame.totalPlayers; i++) {
-    render.playersTransforms
-        .add(getCharacterTransform(compiledGame.players[i]));
-    render.playersRects.add(mapHumanToRect(compiledGame.players[i]));
+  for (int i = 0; i < compiledGame.totalHumans; i++) {
+    Human human = compiledGame.humans[i];
+    render.playersTransforms.add(
+        mapHumanToRSTransform(human.x, human.y)
+    );
+    render.playersRects.add(
+        mapHumanToRect(human.weapon, human.state, human.direction, human.frame)
+    );
   }
-  drawAtlases(
-      images.character, render.playersTransforms, render.playersRects);
+  drawAtlases(images.character, render.playersTransforms, render.playersRects);
 }
 
-void _drawTeamMemberCircles() {
-  if (state.player.squad == -1) return;
-
-  for (dynamic player in compiledGame.players) {
-    if (player[squad] != state.player.squad) continue;
-    if (player[x] == compiledGame.playerX) continue;
-    drawCircle(player[x], player[y], 10, Colors.blue);
-  }
-}
-
-void drawList(
-    List<dynamic> values, List<RSTransform> transforms, List<Rect> rects) {
-  for (int i = 0; i < values.length; i++) {
-    if (i >= transforms.length) {
-      transforms.add(getCharacterTransform(values[i]));
-    } else {
-      transforms[i] = getCharacterTransform(values[i]);
-    }
-    if (i >= rects.length) {
-      rects.add(mapHumanToRect(values[i]));
-    } else {
-      rects[i] = mapHumanToRect(values[i]);
-    }
-  }
-  while (transforms.length > values.length) {
-    transforms.removeLast();
-  }
-  while (rects.length > values.length) {
-    rects.removeLast();
-  }
-
-  drawAtlases(images.character, transforms, rects);
-}
-
-RSTransform getCharacterTransform(dynamic character) {
+RSTransform mapHumanToRSTransform(double x, double y) {
   return RSTransform.fromComponents(
     rotation: 0.0,
     scale: 1.0,
     anchorX: halfHumanSpriteFrameWidth,
     anchorY: halfHumanSpriteFrameHeight + 5,
-    translateX: character[x],
-    translateY: character[y],
+    translateX: x,
+    translateY: y,
   );
 }
 
-RSTransform mapZombieToRSTransform(Zombie zombie){
+RSTransform mapZombieToRSTransform(Zombie zombie) {
   return RSTransform.fromComponents(
     rotation: 0.0,
     scale: 1.0,

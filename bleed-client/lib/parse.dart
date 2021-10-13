@@ -22,6 +22,8 @@ import 'package:bleed_client/ui.dart';
 import 'package:bleed_client/ui/dialogs.dart';
 import 'package:neuro/instance.dart';
 
+import 'classes/Human.dart';
+import 'classes/InteractableNpc.dart';
 import 'classes/RenderState.dart';
 import 'classes/Score.dart';
 import 'common/classes/Vector2.dart';
@@ -616,10 +618,10 @@ bool _commaConsumed() {
 }
 
 void _parsePlayers() {
-  compiledGame.totalPlayers = 0;
+  compiledGame.totalHumans = 0;
   while (!_simiColonConsumed()) {
-    _consumePlayer(compiledGame.players[compiledGame.totalPlayers]);
-    compiledGame.totalPlayers++;
+    _consumeHuman(compiledGame.humans[compiledGame.totalHumans]);
+    compiledGame.totalHumans++;
   }
 }
 
@@ -675,24 +677,20 @@ void _parseZombies() {
 void _parseNpcs() {
   compiledGame.totalNpcs = 0;
   while (!_simiColonConsumed()) {
-    _consumeInteractableNpc(compiledGame.npcs[compiledGame.totalNpcs]);
+    _consumeInteractableNpc(compiledGame.interactableNpcs[compiledGame.totalNpcs]);
     compiledGame.totalNpcs++;
   }
 }
 
-void _consumePlayer(dynamic memory) {
-  memory[stateIndex] = _consumeInt(); // TODO optimization remove int parse
-  memory[direction] = _consumeInt(); // TODO optimization remove int parse
-  memory[x] = _consumeDouble();
-  memory[y] = _consumeDouble();
-  memory[frameCount] = _consumeInt();
-  memory[indexWeapon] = _consumeWeapon(); // TODO optimization remove int parse
-  memory[squad] = _consumeInt();
-  try {
-    memory[indexName] = _consumeString();
-  } catch (error) {
-    print(error);
-  }
+void _consumeHuman(Human human) {
+  human.state = _consumeCharacterState();
+  human.direction = _consumeDirection();
+  human.x = _consumeDouble();
+  human.y = _consumeDouble();
+  human.frame = _consumeInt();
+  human.weapon = _consumeWeapon();
+  human.squad = _consumeInt();
+  human.name = _consumeString();
 }
 
 void _consumeZombie(Zombie zombie) {
@@ -704,11 +702,11 @@ void _consumeZombie(Zombie zombie) {
   zombie.scoreMultiplier = _consumeString();
 }
 
-void _consumeInteractableNpc(dynamic npc) {
-  npc[stateIndex] = _consumeInt(); // TODO optimization remove int parse
-  npc[direction] = _consumeInt(); // TODO optimization remove int parse
-  npc[x] = _consumeDouble();
-  npc[y] = _consumeDouble();
-  npc[frameCount] = _consumeInt();
-  npc[indexNpcName] = _consumeString();
+void _consumeInteractableNpc(InteractableNpc interactableNpc) {
+  interactableNpc.state = _consumeCharacterState();
+  interactableNpc.direction = _consumeDirection();
+  interactableNpc.x = _consumeDouble();
+  interactableNpc.y = _consumeDouble();
+  interactableNpc.frame = _consumeInt();
+  interactableNpc.name = _consumeString();
 }

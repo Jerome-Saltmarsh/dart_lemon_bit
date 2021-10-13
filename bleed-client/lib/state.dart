@@ -1,4 +1,5 @@
 import 'package:bleed_client/classes/CompiledGame.dart';
+import 'package:bleed_client/classes/Human.dart';
 import 'package:bleed_client/classes/Player.dart';
 import 'package:bleed_client/classes/Score.dart';
 import 'package:bleed_client/common/Weapons.dart';
@@ -41,34 +42,31 @@ int actualFPS;
 List<Block> blockHouses = [];
 Map<int, bool> gameEvents = Map();
 
-dynamic get getPlayer {
+// TODO delete this
+Human get getPlayer {
   if (!playerAssigned) return null;
   if (!playerReady) return null;
-  if (compiledGame.totalPlayers == 0) return null;
-  for (dynamic player in compiledGame.players) {
-    if (player[x] != compiledGame.playerX) continue;
-    if (player[y] != compiledGame.playerY) continue;
+  if (compiledGame.totalHumans == 0) return null;
+  for (Human player in compiledGame.humans) {
+    if (player.x != compiledGame.playerX) continue;
+    if (player.y != compiledGame.playerY) continue;
     return player;
   }
   return null;
 }
 
-Weapon get playerWeapon => getPlayer[indexWeapon];
+Weapon get playerWeapon => getPlayer.weapon;
 
 List<CharacterState> characterStates = CharacterState.values;
 
-CharacterState get playerState {
-  return characterStates[getPlayer[stateIndex]];
-}
+CharacterState get playerState => getPlayer.state;
 
 bool get playerReady =>
-    compiledGame.totalPlayers > 0 &&
+    compiledGame.totalHumans > 0 &&
     compiledGame.playerX != -1 &&
     compiledGame.playerY != -1;
 
-String get playerName {
-  return getPlayer[indexName];
-}
+String get playerName => getPlayer.name;
 
 // TODO Expensive string build
 String get session =>

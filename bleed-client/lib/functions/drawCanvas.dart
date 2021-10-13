@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:bleed_client/classes/Block.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
+import 'package:bleed_client/classes/Human.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/classes/Zombie.dart';
@@ -145,22 +146,22 @@ void _renderItems() {
 }
 
 void _drawPlayerNames() {
-  for (int i = 0; i < compiledGame.totalPlayers; i++) {
-    dynamic player = compiledGame.players[i];
-    if (player[x] == compiledGame.playerX) continue;
-    if (diff(mouseWorldX, player[x]) > _nameRadius) continue;
-    if (diff(mouseWorldY, player[y]) > _nameRadius) continue;
-    drawText(player[indexName], player[x], player[y]);
+  for (int i = 0; i < compiledGame.totalHumans; i++) {
+    Human player = compiledGame.humans[i];
+    if (player.x == compiledGame.playerX) continue;
+    if (diff(mouseWorldX, player.x) > _nameRadius) continue;
+    if (diff(mouseWorldY, player.y) > _nameRadius) continue;
+    drawText(player.name, player.x, player.y);
   }
 }
 
 void _drawMouseAim() {
   if (!mouseAvailable) return;
   if (!playerReady) return;
-  dynamic _player = getPlayer;
+  Human _player = getPlayer;
   if (_player == null) return;
   if (player.equippedRounds == 0) return;
-  Weapon weapon = _player[indexWeapon];
+  Weapon weapon = _player.weapon;
   if (weapon == Weapon.HandGun) return;
   if (weapon == Weapon.Shotgun) return;
 

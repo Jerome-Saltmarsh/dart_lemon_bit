@@ -1,32 +1,34 @@
 import 'dart:ui';
 
 import 'package:bleed_client/common/Weapons.dart';
+import 'package:bleed_client/common/enums/Direction.dart';
+import 'package:bleed_client/enums.dart';
 
 import '../common.dart';
 import '../keys.dart';
 import '../resources/rects_utils.dart';
 
 // interface
-Rect mapHumanToRect(dynamic character) {
-  switch (character[stateIndex]) {
-    case characterStateIdle:
-      return _mapIdleRect(character);
-    case characterStateWalking:
-      return _mapWalkingRect(character);
-    case characterStateDead:
-      return _mapDeadRect(character);
-    case characterStateAiming:
-      return _mapAimingRect(character);
-    case characterStateFiring:
-      return _mapFiringRect(character);
-    case characterStateStriking:
-      return _mapStrikingRect(character);
-    case characterStateRunning:
-      return _mapRunningRect(character);
-    case characterStateReloading:
-      return _mapReloadingRect(character);
-    case characterStateChangingWeapon:
-      return _mapReloadingRect(character);
+Rect mapHumanToRect(Weapon weapon, CharacterState state, Direction direction, int frame) {
+  switch (state) {
+    case CharacterState.Idle:
+      return _mapIdleRect(direction);
+    case CharacterState.Walking:
+      return _mapWalkingRect(direction, frame);
+    case CharacterState.Dead:
+      return _mapDeadRect(direction);
+    case CharacterState.Aiming:
+      return _mapAimingRect(direction);
+    case CharacterState.Firing:
+      return _mapFiringRect(weapon, direction, frame);
+    case CharacterState.Striking:
+      return _mapStrikingRect(direction);
+    case CharacterState.Running:
+      return _mapRunningRect(direction, frame);
+    case CharacterState.Reloading:
+      return _mapReloadingRect(direction, frame);
+    case CharacterState.ChangingWeapon:
+      return _mapReloadingRect(direction, frame);
   }
   throw Exception("Could not get character sprite rect");
 }
@@ -128,187 +130,187 @@ Rect _getHumanSpriteRect(int index) {
       _humanSpriteFrameWidth.toDouble(), _humanSpriteFrameHeight.toDouble());
 }
 
-Rect _mapWalkingRect(dynamic character) {
-  switch (character[direction]) {
-    case directionUp:
-      return getFrameLoop(_walkingUp, character);
-    case directionUpRight:
-      return getFrameLoop(_walkingDownLeft, character);
-    case directionRight:
-      return getFrameLoop(_walkingLeft, character);
-    case directionDownRight:
-      return getFrameLoop(_walkingUpLeft, character);
-    case directionDown:
-      return getFrameLoop(_walkingUp, character);
-    case directionDownLeft:
-      return getFrameLoop(_walkingDownLeft, character);
-    case directionLeft:
-      return getFrameLoop(_walkingLeft, character);
-    case directionUpLeft:
-      return getFrameLoop(_walkingUpLeft, character);
+Rect _mapWalkingRect(Direction direction, int frame) {
+  switch (direction) {
+    case Direction.Up:
+      return getFrameLoop(_walkingUp, frame);
+    case Direction.UpRight:
+      return getFrameLoop(_walkingDownLeft, frame);
+    case Direction.Right:
+      return getFrameLoop(_walkingLeft, frame);
+    case Direction.DownRight:
+      return getFrameLoop(_walkingUpLeft, frame);
+    case Direction.Down:
+      return getFrameLoop(_walkingUp, frame);
+    case Direction.DownLeft:
+      return getFrameLoop(_walkingDownLeft, frame);
+    case Direction.Left:
+      return getFrameLoop(_walkingLeft, frame);
+    case Direction.UpLeft:
+      return getFrameLoop(_walkingUpLeft, frame);
   }
   throw Exception("Could not get character walking sprite rect");
 }
 
-Rect _mapReloadingRect(dynamic character) {
-  switch (character[direction]) {
-    case directionUp:
-      return getFrameLoop(_reloadingUp, character);
-    case directionUpRight:
-      return getFrameLoop(_reloadingUpRight, character);
-    case directionRight:
-      return getFrameLoop(_reloadingRight, character);
-    case directionDownRight:
-      return getFrameLoop(_reloadingDownRight, character);
-    case directionDown:
-      return getFrameLoop(_reloadingDown, character);
-    case directionDownLeft:
-      return getFrameLoop(_reloadingDownLeft, character);
-    case directionLeft:
-      return getFrameLoop(_reloadingLeft, character);
-    case directionUpLeft:
-      return getFrameLoop(_reloadingUpLeft, character);
+Rect _mapReloadingRect(Direction direction, int frame) {
+  switch (direction) {
+    case Direction.Up:
+      return getFrameLoop(_reloadingUp, frame);
+    case Direction.UpRight:
+      return getFrameLoop(_reloadingUpRight, frame);
+    case Direction.Right:
+      return getFrameLoop(_reloadingRight, frame);
+    case Direction.DownRight:
+      return getFrameLoop(_reloadingDownRight, frame);
+    case Direction.Down:
+      return getFrameLoop(_reloadingDown, frame);
+    case Direction.DownLeft:
+      return getFrameLoop(_reloadingDownLeft, frame);
+    case Direction.Left:
+      return getFrameLoop(_reloadingLeft, frame);
+    case Direction.UpLeft:
+      return getFrameLoop(_reloadingUpLeft, frame);
   }
   throw Exception("Could not get character reloading sprite rect");
 }
 
-Rect _mapRunningRect(dynamic character) {
-  switch (character[direction]) {
-    case directionUp:
-      return getFrameLoop(_runningUp, character);
-    case directionUpRight:
-      return getFrameLoop(_runningUpRight, character);
-    case directionRight:
-      return getFrameLoop(_runningRight, character);
-    case directionDownRight:
-      return getFrameLoop(_runningDownRight, character);
-    case directionDown:
-      return getFrameLoop(_runningDown, character);
-    case directionDownLeft:
-      return getFrameLoop(_runningDownLeft, character);
-    case directionLeft:
-      return getFrameLoop(_runningLeft, character);
-    case directionUpLeft:
-      return getFrameLoop(_runningUpLeft, character);
+Rect _mapRunningRect(Direction direction, int frame) {
+  switch (direction) {
+    case Direction.Up:
+      return getFrameLoop(_runningUp, frame);
+    case Direction.UpRight:
+      return getFrameLoop(_runningUpRight, frame);
+    case Direction.Right:
+      return getFrameLoop(_runningRight, frame);
+    case Direction.DownRight:
+      return getFrameLoop(_runningDownRight, frame);
+    case Direction.Down:
+      return getFrameLoop(_runningDown, frame);
+    case Direction.DownLeft:
+      return getFrameLoop(_runningDownLeft, frame);
+    case Direction.Left:
+      return getFrameLoop(_runningLeft, frame);
+    case Direction.UpLeft:
+      return getFrameLoop(_runningUpLeft, frame);
   }
   throw Exception("Could not get character walking sprite rect");
 }
 
-Rect _mapIdleRect(dynamic character) {
-  switch (character[direction]) {
-    case directionUp:
+Rect _mapIdleRect(Direction direction) {
+  switch (direction) {
+    case Direction.Up:
       return _idleUp;
-    case directionUpRight:
+    case Direction.UpRight:
       return _idleUpRight;
-    case directionRight:
+    case Direction.Right:
       return _idleRight;
-    case directionDownRight:
+    case Direction.DownRight:
       return _idleDownRight;
-    case directionDown:
+    case Direction.Down:
       return _idleDown;
-    case directionDownLeft:
+    case Direction.DownLeft:
       return _idleDownLeft;
-    case directionLeft:
+    case Direction.Left:
       return _idleLeft;
-    case directionUpLeft:
+    case Direction.UpLeft:
       return _idleUpLeft;
   }
   throw Exception("Could not get character walking sprite rect");
 }
 
-Rect _mapDeadRect(dynamic character) {
-  switch (character[direction]) {
-    case directionUp:
+Rect _mapDeadRect(Direction direction) {
+  switch (direction) {
+    case Direction.Up:
       return _deadDown;
-    case directionUpRight:
+    case Direction.UpRight:
       return _deadUpRight;
-    case directionRight:
+    case Direction.Right:
       return _deadRight;
-    case directionDownRight:
+    case Direction.DownRight:
       return _deadDownRight;
-    case directionDown:
+    case Direction.Down:
       return _deadDown;
-    case directionDownLeft:
+    case Direction.DownLeft:
       return _deadUpRight;
-    case directionLeft:
+    case Direction.Left:
       return _deadRight;
-    case directionUpLeft:
+    case Direction.UpLeft:
       return _deadDownRight;
   }
   throw Exception("Could not get character dead sprite rect");
 }
 
-Rect _mapAimingRect(dynamic character) {
-  switch (character[direction]) {
-    case directionUp:
+Rect _mapAimingRect(Direction direction) {
+  switch (direction) {
+    case Direction.Up:
       return _aimingUp;
-    case directionUpRight:
+    case Direction.UpRight:
       return _aimingUpRight;
-    case directionRight:
+    case Direction.Right:
       return _aimingRight;
-    case directionDownRight:
+    case Direction.DownRight:
       return _aimingDownRight;
-    case directionDown:
+    case Direction.Down:
       return _aimingDown;
-    case directionDownLeft:
+    case Direction.DownLeft:
       return _aimingDownLeft;
-    case directionLeft:
+    case Direction.Left:
       return _aimingLeft;
-    case directionUpLeft:
+    case Direction.UpLeft:
       return _aimingUpLeft;
   }
   throw Exception("Could not get character dead sprite rect");
 }
 
-Rect _mapFiringRect(dynamic character) {
-  switch (character[indexWeapon]) {
+Rect _mapFiringRect(Weapon weapon, Direction direction, int frame) {
+  switch (weapon) {
     case Weapon.Shotgun:
-      return _mapFiringShotgunRect(character);
+      return _mapFiringShotgunRect(direction, frame);
     default:
-      return _mapFiringRifleRect(character);
+      return _mapFiringRifleRect(direction, frame);
   }
 }
 
-Rect _mapFiringRifleRect(dynamic character) {
-  switch (character[direction]) {
-    case directionUp:
-      return getFrame(_firingRifleUp, character);
-    case directionUpRight:
-      return getFrame(_firingRifleUpRight, character);
-    case directionRight:
-      return getFrame(_firingRifleRight, character);
-    case directionDownRight:
-      return getFrame(_firingRifleDownRight, character);
-    case directionDown:
-      return getFrame(_firingRifleDown, character);
-    case directionDownLeft:
-      return getFrame(_firingRifleDownLeft, character);
-    case directionLeft:
-      return getFrame(_firingRifleLeft, character);
-    case directionUpLeft:
-      return getFrame(_firingRifleUpLeft, character);
+Rect _mapFiringRifleRect(Direction direction, int frame) {
+  switch (direction) {
+    case Direction.Up:
+      return getFrame(_firingRifleUp, frame);
+    case Direction.UpRight:
+      return getFrame(_firingRifleUpRight, frame);
+    case Direction.Right:
+      return getFrame(_firingRifleRight, frame);
+    case Direction.DownRight:
+      return getFrame(_firingRifleDownRight, frame);
+    case Direction.Down:
+      return getFrame(_firingRifleDown, frame);
+    case Direction.DownLeft:
+      return getFrame(_firingRifleDownLeft, frame);
+    case Direction.Left:
+      return getFrame(_firingRifleLeft, frame);
+    case Direction.UpLeft:
+      return getFrame(_firingRifleUpLeft, frame);
   }
   throw Exception("could not get firing frame from direction");
 }
 
-Rect _mapFiringShotgunRect(dynamic character) {
-  switch (character[direction]) {
-    case directionUp:
-      return getFrame(_firingShotgunUp, character);
-    case directionUpRight:
-      return getFrame(_firingShotgunUpRight, character);
-    case directionRight:
-      return getFrame(_firingShotgunRight, character);
-    case directionDownRight:
-      return getFrame(_firingShotgunDownRight, character);
-    case directionDown:
-      return getFrame(_firingShotgunDown, character);
-    case directionDownLeft:
-      return getFrame(_firingShotgunDownLeft, character);
-    case directionLeft:
-      return getFrame(_firingShotgunLeft, character);
-    case directionUpLeft:
-      return getFrame(_firingShotgunUpLeft, character);
+Rect _mapFiringShotgunRect(Direction direction, int frame) {
+  switch (direction) {
+    case Direction.Up:
+      return getFrame(_firingShotgunUp, frame);
+    case Direction.UpRight:
+      return getFrame(_firingShotgunUpRight, frame);
+    case Direction.Right:
+      return getFrame(_firingShotgunRight, frame);
+    case Direction.DownRight:
+      return getFrame(_firingShotgunDownRight, frame);
+    case Direction.Down:
+      return getFrame(_firingShotgunDown, frame);
+    case Direction.DownLeft:
+      return getFrame(_firingShotgunDownLeft, frame);
+    case Direction.Left:
+      return getFrame(_firingShotgunLeft, frame);
+    case Direction.UpLeft:
+      return getFrame(_firingShotgunUpLeft, frame);
   }
   throw Exception("could not get firing frame from direction");
 }

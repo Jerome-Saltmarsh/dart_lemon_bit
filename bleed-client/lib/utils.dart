@@ -42,17 +42,9 @@ Offset offset(double x, double y) {
   return Offset(x, y);
 }
 
-void drawLineFrom(dynamic object, double x, double y) {
-  drawLine(object[x], object[y], x, y);
-}
-
 void drawLineRotation(dynamic object, double rotation, double distance) {
   drawLine(object[x], object[y], object[x] + rotationToPosX(rotation, distance),
       object[y] + rotationToPosY(rotation, distance));
-}
-
-void drawLineBetween(dynamic a, dynamic b) {
-  drawLineFrom(a, b[x], b[y]);
 }
 
 dynamic rotationToPosX(double rotation, double distance) {
@@ -65,14 +57,6 @@ dynamic rotationToPosY(double rotation, double distance) {
 
 int getState(dynamic character) {
   return character[stateIndex];
-}
-
-int getDirection(dynamic character) {
-  return character[direction];
-}
-
-bool isAlive(dynamic character) {
-  return getState(character) != characterStateDead;
 }
 
 double round(double value, {int decimals = 1}) {
