@@ -30,7 +30,6 @@ import 'package:flutter/material.dart';
 import '../connection.dart';
 import '../draw.dart';
 import '../images.dart';
-import '../keys.dart';
 import '../state.dart';
 import 'drawBullet.dart';
 import 'drawGrenade.dart';

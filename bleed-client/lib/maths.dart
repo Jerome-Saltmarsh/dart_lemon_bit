@@ -2,8 +2,6 @@ import 'dart:math';
 
 import 'package:bleed_client/common/classes/Vector2.dart';
 
-import 'keys.dart';
-
 const double degreesToRadian = 0.0174533;
 const double radianToDegrees =  57.29578;
 const double piHalf = pi / 2.0;
@@ -48,14 +46,6 @@ int millisecondsSince(DateTime value){
 
 Duration durationSince(DateTime value){
   return DateTime.now().difference(value);
-}
-
-double radionsBetweenObject(dynamic a, dynamic b) {
-  return radionsBetween(a[x], a[y], b[x], b[y]);
-}
-
-double radionsBetween2(dynamic a, double x, double y) {
-  return radionsBetween(a[x], a[y], x, y);
 }
 
 double radionsBetween(double x1, double y1, double x2, double y2) {

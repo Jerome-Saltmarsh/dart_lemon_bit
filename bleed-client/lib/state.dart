@@ -12,7 +12,6 @@ import 'classes/Block.dart';
 import 'classes/SpriteAnimation.dart';
 import 'classes/State.dart';
 import 'enums/Mode.dart';
-import 'keys.dart';
 
 GameEdit gameEdit;
 Mode mode = Mode.Play;

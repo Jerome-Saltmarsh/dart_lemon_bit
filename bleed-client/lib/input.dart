@@ -15,7 +15,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../common.dart';
-import '../keys.dart';
 import '../send.dart';
 import '../settings.dart';
 import 'maths.dart';

@@ -4,8 +4,6 @@ import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/enums.dart';
 
-import '../common.dart';
-import '../keys.dart';
 import '../resources/rects_utils.dart';
 
 // interface
@@ -22,7 +20,7 @@ Rect mapHumanToRect(Weapon weapon, CharacterState state, Direction direction, in
     case CharacterState.Firing:
       return _mapFiringRect(weapon, direction, frame);
     case CharacterState.Striking:
-      return _mapStrikingRect(direction);
+      return _mapStrikingRect(direction, frame);
     case CharacterState.Running:
       return _mapRunningRect(direction, frame);
     case CharacterState.Reloading:
@@ -315,24 +313,24 @@ Rect _mapFiringShotgunRect(Direction direction, int frame) {
   throw Exception("could not get firing frame from direction");
 }
 
-Rect _mapStrikingRect(character) {
-  switch (character[direction]) {
-    case directionUp:
-      return getFrameLoop(_strikingUp, character);
-    case directionUpRight:
-      return getFrameLoop(_strikingUpRight, character);
-    case directionRight:
-      return getFrameLoop(_strikingRight, character);
-    case directionDownRight:
-      return getFrameLoop(_strikingDownRight, character);
-    case directionDown:
-      return getFrameLoop(_strikingDown, character);
-    case directionDownLeft:
-      return getFrameLoop(_strikingDownLeft, character);
-    case directionLeft:
-      return getFrameLoop(_strikingLeft, character);
-    case directionUpLeft:
-      return getFrameLoop(_strikingUpLeft, character);
+Rect _mapStrikingRect(Direction direction, int frame) {
+  switch (direction) {
+    case Direction.Up:
+      return getFrameLoop(_strikingUp, frame);
+    case Direction.UpRight:
+      return getFrameLoop(_strikingUpRight, frame);
+    case Direction.Right:
+      return getFrameLoop(_strikingRight, frame);
+    case Direction.DownRight:
+      return getFrameLoop(_strikingDownRight, frame);
+    case Direction.Down:
+      return getFrameLoop(_strikingDown, frame);
+    case Direction.DownLeft:
+      return getFrameLoop(_strikingDownLeft, frame);
+    case Direction.Left:
+      return getFrameLoop(_strikingLeft, frame);
+    case Direction.UpLeft:
+      return getFrameLoop(_strikingUpLeft, frame);
   }
   throw Exception("could not get firing frame from direction");
 }

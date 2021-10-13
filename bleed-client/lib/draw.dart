@@ -22,7 +22,6 @@ import 'common/classes/Vector2.dart';
 import 'common/Tile.dart';
 import 'functions/drawParticle.dart';
 import 'game_engine/global_paint.dart';
-import 'keys.dart';
 import 'rects.dart';
 import 'mappers/mapHumanToRect.dart';
 import 'state.dart';

@@ -10,7 +10,6 @@ import 'package:bleed_client/state.dart';
 import 'common/Weapons.dart';
 import 'common.dart';
 import 'game_engine/global_paint.dart';
-import 'keys.dart';
 import 'maths.dart';
 
 double getMouseRotation() {
@@ -21,10 +20,6 @@ double getMouseRotation() {
 bool get playerAssigned => compiledGame.playerId >= 0;
 
 Weapon previousWeapon;
-
-bool isDead(dynamic character) {
-  return getState(character) == characterStateDead;
-}
 
 void drawLine(double x1, double y1, double x2, double y2) {
   globalCanvas.drawLine(offset(x1, y1), offset(x2, y2), globalPaint);
@@ -42,10 +37,6 @@ Offset offset(double x, double y) {
   return Offset(x, y);
 }
 
-void drawLineRotation(dynamic object, double rotation, double distance) {
-  drawLine(object[x], object[y], object[x] + rotationToPosX(rotation, distance),
-      object[y] + rotationToPosY(rotation, distance));
-}
 
 dynamic rotationToPosX(double rotation, double distance) {
   return -cos(rotation + (pi * 0.5)) * distance;
@@ -53,10 +44,6 @@ dynamic rotationToPosX(double rotation, double distance) {
 
 dynamic rotationToPosY(double rotation, double distance) {
   return -sin(rotation + (pi * 0.5)) * distance;
-}
-
-int getState(dynamic character) {
-  return character[stateIndex];
 }
 
 double round(double value, {int decimals = 1}) {

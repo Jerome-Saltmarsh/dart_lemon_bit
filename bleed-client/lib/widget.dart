@@ -26,7 +26,6 @@ import 'game_engine/global_paint.dart';
 import 'images.dart';
 import 'input.dart';
 import 'instances/settings.dart';
-import 'keys.dart';
 import 'rects.dart';
 import 'ui.dart';
 import 'utils.dart';
