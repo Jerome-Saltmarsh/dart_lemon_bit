@@ -74,8 +74,9 @@
 [ ] Complete Quests to earn income and unlock upgrades
 [ ] Change scene
 [ ] Quest Window
+[ ] Guards on walls
 [ ] Environment object collision
-[ ] BUG Can't shoot over water
+[x] BUG Can't shoot over water
 [x] Npc's attack zombies
 [x] Npc player collision 
 [x] Zombies spawn on edge of map

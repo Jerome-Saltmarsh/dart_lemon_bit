@@ -113,10 +113,18 @@ class InteractableNpc extends Npc {
       : super(x: x, y: y, health: health, weapon: weapon);
 }
 
+enum NpcMode {
+  Ignore,
+  Stand_Ground,
+  Defensive,
+  Aggressive
+}
+
 class Npc extends Character {
   Character target = _nonTarget;
   List<Vector2> path = [];
   int pointMultiplier = 1;
+  NpcMode mode = NpcMode.Aggressive;
 
   Npc({required double x, required double y, required int health, required Weapon weapon})
       : super(

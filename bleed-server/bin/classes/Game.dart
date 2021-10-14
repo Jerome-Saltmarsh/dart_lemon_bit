@@ -545,14 +545,16 @@ extension GameFunctions on Game {
       }
 
       // @on npc update find
-      if (frame % 30 == 0) {
-        npc.path = scene.findPath(npc.x, npc.y, npc.target.x, npc.target.y);
-      }
-
-      if (npc.path.length <= 1 && !targetWithinStrikingRange(npc, npc.target)) {
-        characterFaceObject(npc, npc.target);
-        setCharacterState(npc, CharacterState.Walking);
-        return;
+      if (npc.mode == NpcMode.Aggressive) {
+        if (frame % 30 == 0) {
+          npc.path = scene.findPath(npc.x, npc.y, npc.target.x, npc.target.y);
+        }
+        if (npc.path.length <= 1 &&
+            !targetWithinStrikingRange(npc, npc.target)) {
+          characterFaceObject(npc, npc.target);
+          setCharacterState(npc, CharacterState.Walking);
+          return;
+        }
       }
     }
 
@@ -572,7 +574,6 @@ extension GameFunctions on Game {
   }
 
   void _updatePlayersAndNpcs() {
-
     for (int i = 0; i < players.length; i++) {
       updatePlayer(players[i]);
       updateCharacter(players[i]);
@@ -662,7 +663,7 @@ extension GameFunctions on Game {
     if (character.stateDuration > 0) return;
     faceAimDirection(character);
 
-    if (character is Player){
+    if (character is Player) {
       if (equippedWeaponRounds(character) <= 0) {
         // @on character insufficient bullets to fire
         character.stateDuration = settings.coolDown.clipEmpty;
@@ -678,7 +679,7 @@ extension GameFunctions on Game {
     switch (character.weapon) {
       case Weapon.HandGun:
         // @on character fire handgun
-        if (character is Player){
+        if (character is Player) {
           character.rounds.handgun--;
         }
         Bullet bullet = spawnBullet(character);
@@ -841,13 +842,16 @@ extension GameFunctions on Game {
       bullet.x += bullet.xv;
       bullet.y += bullet.yv;
       if (bulletDistanceTravelled(bullet) > bullet.range) {
-        dispatch(GameEventType.Bullet_Hole, bullet.x, bullet.y, 0, 0);
+        if(!scene.waterAt(bullet.x, bullet.y)){
+          dispatch(GameEventType.Bullet_Hole, bullet.x, bullet.y, 0, 0);
+        }
+        
         bullet.active = false;
       }
     }
 
     for (int i = 0; i < bullets.length; i++) {
-      if (scene.tileBoundaryAt(bullets[i].x, bullets[i].y)) {
+      if (scene.bulletCollisionAt(bullets[i].x, bullets[i].y)) {
         bullets[i].active = false;
       }
     }
@@ -1386,7 +1390,7 @@ extension GameFunctions on Game {
     }
   }
 
-  void updateInteractableNpcTargets(){
+  void updateInteractableNpcTargets() {
     InteractableNpc npc;
     for (int i = 0; i < npcs.length; i++) {
       npc = npcs[i];

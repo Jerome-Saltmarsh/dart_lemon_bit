@@ -34,7 +34,7 @@ class Scene {
     for (int row = 0; row < rows; row++) {
       List<TileNode> nodeRow = [];
       for (int column = 0; column < columns; column++) {
-        TileNode node = TileNode(isOpen(tiles[row][column]));
+        TileNode node = TileNode(isWalkable(tiles[row][column]));
         node.y = column;
         node.x = row;
         double halfTileSize = 24;
@@ -243,6 +243,10 @@ extension SceneFunctions on Scene {
     return true;
   }
 
+  bool waterAt(double x, double y){
+    return tileAt(x, y) == Tile.Water;
+  }
+
   Tile tileAt(double x, double y) {
     double projectedX = projectedToWorldX(x, y);
     if (projectedX < 0) return Tile.Boundary;
@@ -283,6 +287,10 @@ extension SceneFunctions on Scene {
 
   bool tileBoundaryAt(double x, double y) {
     return !isOpen(tileAt(x, y));
+  }
+
+  bool bulletCollisionAt(double x, double y) {
+    return isCollision(tileAt(x, y));
   }
 
   double perspectiveProjectX(double x, double y) {

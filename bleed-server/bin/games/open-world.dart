@@ -10,14 +10,16 @@ import '../state.dart';
 import '../utils/player_utils.dart';
 
 class OpenWorld extends Game {
-  late InteractableNpc npcMain;
+  late InteractableNpc npcDavis;
   late InteractableNpc npcSmith;
   late InteractableNpc guard1;
+  late InteractableNpc guard2;
 
   final int _maxZombies = 30;
+  final int _framesPerZombieSpawn = 120;
 
   OpenWorld() : super(GameType.Open_World, scenes.town, 64) {
-    npcMain = InteractableNpc(
+    npcDavis = InteractableNpc(
         name: "Davis",
         onInteractedWith: _onNpcInteractedWithMain,
         x: 0,
@@ -25,6 +27,8 @@ class OpenWorld extends Game {
         health: 100,
         weapon: Weapon.Unarmed
     );
+    npcDavis.mode = NpcMode.Stand_Ground;
+    npcs.add(npcDavis);
 
     npcSmith = InteractableNpc(
         name: "Smith",
@@ -34,17 +38,30 @@ class OpenWorld extends Game {
         health: 100,
         weapon: Weapon.Unarmed
     );
-    npcs.add(npcMain);
+    npcSmith.mode = NpcMode.Stand_Ground;
+    npcs.add(npcSmith);
 
     guard1 = InteractableNpc(
         name: "Guard",
         onInteractedWith: _onNpcInteractedWithSmith,
-        x: 200,
+        x: 180,
         y: 2000,
         health: 100,
-        weapon: Weapon.HandGun
+        weapon: Weapon.SniperRifle
     );
+    guard1.mode = NpcMode.Stand_Ground;
     npcs.add(guard1);
+
+    guard2 = InteractableNpc(
+        name: "Guard",
+        onInteractedWith: _onNpcInteractedWithSmith,
+        x: 215,
+        y: 1970,
+        health: 100,
+        weapon: Weapon.AssaultRifle
+    );
+    guard2.mode = NpcMode.Stand_Ground;
+    npcs.add(guard2);
   }
 
   void _onNpcInteractedWithMain(Player player) {
@@ -110,7 +127,7 @@ class OpenWorld extends Game {
 
   @override
   void update() {
-    if (frame % 60 != 0) return;
+    if (frame % _framesPerZombieSpawn != 0) return;
     if (zombieCount > _maxZombies) return;
     spawnRandomZombie();
   }

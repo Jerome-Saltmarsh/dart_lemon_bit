@@ -1,5 +1,12 @@
 import 'common/Tile.dart';
 
+List<Tile> _walkableTiles = [
+  Tile.Grass,
+  Tile.ZombieSpawn,
+  Tile.Concrete,
+  Tile.PlayerSpawn
+];
+
 List<Tile> _closedTiles = [
   Tile.Water,
   Tile.Block,
@@ -11,8 +18,26 @@ List<Tile> _closedTiles = [
   Tile.Block_Corner_04,
 ];
 
+List<Tile> _collisionTiles = [
+  Tile.Block,
+  Tile.Block_Horizontal,
+  Tile.Block_Vertical,
+  Tile.Block_Corner_01,
+  Tile.Block_Corner_02,
+  Tile.Block_Corner_03,
+  Tile.Block_Corner_04,
+];
+
+bool isWalkable(Tile tile){
+  return _walkableTiles.contains(tile);
+}
+
 bool isOpen(Tile tile){
   return !_closedTiles.contains(tile);
+}
+
+bool isCollision(Tile tile){
+  return _collisionTiles.contains(tile);
 }
 
 enum CharacterState { Idle, Walking, Dead, Aiming, Firing, Striking, Running, Reloading, ChangingWeapon }
