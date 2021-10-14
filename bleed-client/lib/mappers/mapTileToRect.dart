@@ -21,7 +21,7 @@ Rect mapTileToRect(Tile tile) {
     case Tile.RandomItemSpawn:
       return _concrete;
     case Tile.Block:
-      return _blockHorizontal;
+      return _blockFull;
     case Tile.Block_Horizontal:
       return _blockHorizontal;
     case Tile.Block_Vertical:
@@ -50,11 +50,13 @@ Rect _blockCorner01 = _frame(4);
 Rect _blockCorner02 = _frame(5);
 Rect _blockCorner03 = _frame(6);
 Rect _blockCorner04 = _frame(7);
-Rect _concrete = _frame(8);
-Rect _zombieSpawn = _frame(9);
-Rect _playerSpawn = _frame(10);
-Rect _water = _frame(9);
-Rect _crate = _frame(12);
+Rect _blockFull = _frame(8);
+Rect _concrete = _frame(9);
+Rect _crate = _frame(9);
+Rect _water = _frame(10);
+Rect _playerSpawn = _frame(11);
+Rect _zombieSpawn = _frame(12);
+
 
 Rect _frame(int index) {
   return Rect.fromLTWH((index - 1) * tileCanvasWidth.toDouble(), 0.0, tileCanvasWidth.toDouble(), tileCanvasHeight.toDouble());

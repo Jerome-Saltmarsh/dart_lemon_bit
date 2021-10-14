@@ -102,8 +102,15 @@ class InteractableNpc extends Npc {
 
   Function(Player player) onInteractedWith;
 
-  InteractableNpc({required this.name, required this.onInteractedWith, required double x, required double y, required int health})
-      : super(x: x, y: y, health: health);
+  InteractableNpc({
+    required this.name,
+    required this.onInteractedWith,
+    required double x,
+    required double y,
+    required int health,
+    required Weapon weapon
+  })
+      : super(x: x, y: y, health: health, weapon: weapon);
 }
 
 class Npc extends Character {
@@ -111,11 +118,11 @@ class Npc extends Character {
   List<Vector2> path = [];
   int pointMultiplier = 1;
 
-  Npc({required double x, required double y, required int health})
+  Npc({required double x, required double y, required int health, required Weapon weapon})
       : super(
             x: x,
             y: y,
-            weapon: Weapon.Unarmed,
+            weapon: weapon,
             health: health,
             speed: settings.zombieSpeed);
 

@@ -116,6 +116,7 @@ class Settings {
 
   final double velocityFriction = 0.88;
   final double zombieChaseRange = 600;
+  final double npcChaseRange = 600;
   final double weaponRangeVariation = 10.0;
   final double playerStartRadius = 50;
 

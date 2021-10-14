@@ -4,6 +4,7 @@ import '../classes/Inventory.dart';
 import '../classes/Player.dart';
 import '../common/GameType.dart';
 import '../common/Quests.dart';
+import '../common/Weapons.dart';
 import '../instances/scenes.dart';
 import '../state.dart';
 import '../utils/player_utils.dart';
@@ -11,6 +12,7 @@ import '../utils/player_utils.dart';
 class OpenWorld extends Game {
   late InteractableNpc npcMain;
   late InteractableNpc npcSmith;
+  late InteractableNpc guard1;
 
   final int _maxZombies = 30;
 
@@ -20,16 +22,29 @@ class OpenWorld extends Game {
         onInteractedWith: _onNpcInteractedWithMain,
         x: 0,
         y: 1550,
-        health: 100);
+        health: 100,
+        weapon: Weapon.Unarmed
+    );
 
     npcSmith = InteractableNpc(
         name: "Smith",
         onInteractedWith: _onNpcInteractedWithSmith,
         x: -300,
         y: 1950,
-        health: 100);
+        health: 100,
+        weapon: Weapon.Unarmed
+    );
     npcs.add(npcMain);
-    npcs.add(npcSmith);
+
+    guard1 = InteractableNpc(
+        name: "Guard",
+        onInteractedWith: _onNpcInteractedWithSmith,
+        x: 200,
+        y: 2000,
+        health: 100,
+        weapon: Weapon.HandGun
+    );
+    npcs.add(guard1);
   }
 
   void _onNpcInteractedWithMain(Player player) {
@@ -80,7 +95,7 @@ class OpenWorld extends Game {
       x: 0,
       y: 1750,
       inventory: Inventory(0, 0, []),
-      clips: Clips(),
+      clips: Clips(assaultRifle: 100),
       rounds: Rounds(),
     );
   }

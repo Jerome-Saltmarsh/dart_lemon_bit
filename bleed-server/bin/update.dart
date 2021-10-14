@@ -23,7 +23,8 @@ void initUpdateLoop() {
 
 void updateNpcTargets(Timer timer) {
   for (Game game in gameManager.games) {
-    game.updateNpcTargets();
+    game.updateZombieTargets();
+    game.updateInteractableNpcTargets();
   }
 }
 

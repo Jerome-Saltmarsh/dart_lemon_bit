@@ -26,11 +26,11 @@ int clampInt(int value, int min, int max) {
   return value;
 }
 
-void setDirection(Character character, Direction value) {
-  if (value == Direction.None) return;
-  if (character.firing) return;
+void setDirection(Character character, Direction direction) {
+  if (direction == Direction.None) return;
+  // if (character.firing) return;
   if (character.dead) return;
-  character.direction = value;
+  character.direction = direction;
 }
 
 bool withinViewRange(Npc npc, GameObject target) {
@@ -53,8 +53,7 @@ double objectDistanceFrom(GameObject gameObject, double x, double y) {
 }
 
 void characterFace(Character character, double x, double y) {
-  setDirection(
-      character, convertAngleToDirection(radiansBetween2(character, x, y)));
+  setDirection(character, convertAngleToDirection(radiansBetween2(character, x, y)));
 }
 
 void characterFaceObject(Character character, GameObject target) {
@@ -135,9 +134,16 @@ void applyFriction(GameObject gameObject, double value) {
   gameObject.yv *= value;
 }
 
-bool npcWithinStrikeRange(Npc npc, GameObject target) {
-  if (diff(npc.x, npc.target.x) > settings.range.zombieStrike) return false;
-  if (diff(npc.y, npc.target.y) > settings.range.zombieStrike) return false;
+bool targetWithinStrikingRange(GameObject source, GameObject target) {
+  if (diff(source.x, target.x) > settings.range.zombieStrike) return false;
+  if (diff(source.y, target.y) > settings.range.zombieStrike) return false;
+  return true;
+}
+
+bool targetWithinFiringRange(Character character, GameObject target){
+  double range = getWeaponRange(character.weapon);
+  if (diffOver(character.x, target.x, range)) return false;
+  if (diffOver(character.y, target.y, range)) return false;
   return true;
 }
 
