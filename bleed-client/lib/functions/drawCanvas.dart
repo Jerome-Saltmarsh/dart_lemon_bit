@@ -7,6 +7,7 @@ import 'package:bleed_client/classes/Human.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/classes/Zombie.dart';
+import 'package:bleed_client/common/ObjectType.dart';
 import 'package:bleed_client/common/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/CollectableType.dart';
@@ -18,6 +19,7 @@ import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/game_engine/global_paint.dart';
 import 'package:bleed_client/instances/settings.dart';
 import 'package:bleed_client/mappers/mapCrateToRSTransform.dart';
+import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
 import 'package:bleed_client/mappers/mapHumanToRect.dart';
 import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
 import 'package:bleed_client/maths.dart';
@@ -97,7 +99,10 @@ void _drawCompiledGame() {
 
 void _drawEnvironmentObjects() {
   for (EnvironmentObject environmentObject in compiledGame.environmentObjects){
-    globalCanvas.drawImage(images.house, Offset(environmentObject.x, environmentObject.y), paint);
+    globalCanvas.drawImage(
+        mapEnvironmentObjectTypeToImage(environmentObject.type),
+        Offset(environmentObject.x, environmentObject.y), paint
+    );
   }
 }
 
