@@ -48,7 +48,7 @@ void drawParticle(Particle particle){
       setColor(Colors.black45);
       drawLine3(x, y, handX, handY);
       drawCircle(handX, handY, 2 / scaleShift, Colors.black45);
-      globalPaint.color = white;
+      paint.color = white;
       drawLine3(x, y + heightShift, handX, handY + heightShift);
       drawCircle(handX, handY  + heightShift, 2 * scaleShift, white);
       break;

@@ -1,6 +1,8 @@
 import 'dart:ui';
 
+import 'package:bleed_client/common/ObjectType.dart';
 import 'package:bleed_client/common/Tile.dart';
+import 'package:bleed_client/common/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
@@ -9,6 +11,7 @@ import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/global_paint.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/properties.dart';
+import 'package:bleed_client/ui/flutter_constants.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,7 +24,6 @@ import '../game_engine/game_widget.dart';
 import '../instances/editState.dart';
 import '../settings.dart';
 import '../state.dart';
-import '../ui.dart';
 import 'EditMode.dart';
 
 bool _panning = false;
@@ -29,15 +31,17 @@ Offset _mouseWorldStart;
 int selectedCollectable = -1;
 bool _mouseDragClickProcess = false;
 
+EditTool tool = EditTool.Tile;
+
+enum EditTool { Tile, EnvironmentObject }
+
 void initEditor() {
   RawKeyboard.instance.addListener(_handleKeyPressed);
 }
 
-void _resetTiles(){
+void _resetTiles() {
   for (int row = 0; row < compiledGame.tiles.length; row++) {
-    for (int column = 0;
-    column < compiledGame.tiles[0].length;
-    column++) {
+    for (int column = 0; column < compiledGame.tiles[0].length; column++) {
       compiledGame.tiles[row][column] = Tile.Grass;
     }
   }
@@ -45,6 +49,29 @@ void _resetTiles(){
   compiledGame.collectables.clear();
   compiledGame.items.clear();
   renderTiles(compiledGame.tiles);
+}
+
+Widget buildTiles() {
+  return Column(
+      children: Tile.values.map((tile) {
+    return button(tile.toString(), () {
+      tool = EditTool.Tile;
+      editState.tile = tile;
+    });
+  }).toList());
+}
+
+Widget buildEnvironmentObjects() {
+  return Column(
+      children:
+          EnvironmentObjectType.values.map(buildEnvironmentType).toList());
+}
+
+Widget buildEnvironmentType(EnvironmentObjectType type) {
+  return button(type.toString(), () {
+    tool = EditTool.EnvironmentObject;
+    editState.environmentObjectType = type;
+  });
 }
 
 Widget buildEditorUI() {
@@ -61,13 +88,10 @@ Widget buildEditorUI() {
             height: screenHeight,
             child: SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: cross.start,
                 children: [
-                  column(Tile.values.map((tile) {
-                    return button(tile.toString(), () {
-                      editState.tile = tile;
-                    });
-                  }).toList()),
+                  buildTiles(),
+                  buildEnvironmentObjects(),
                   button("Save Scene", saveScene),
                   button("Reset Tiles", _resetTiles),
                   button("Increase Tiles X", () {
@@ -132,7 +156,7 @@ void updateEditMode() {
   onKeyPressed(LogicalKeyboardKey.escape, disconnect);
 
   _controlCameraEditMode();
-  _handleMouseClick();
+  _onMouseLeftClick();
   _handleMouseDrag();
   redrawCanvas();
 
@@ -191,7 +215,7 @@ void _handleMouseDrag() {
 
   if (!_mouseDragClickProcess) {
     _mouseDragClickProcess = true;
-    _handleMouseClick(true);
+    _onMouseLeftClick(true);
     return;
   }
 
@@ -215,7 +239,7 @@ void _handleMouseDrag() {
   // }
 }
 
-void _handleMouseClick([bool drag = false]) {
+void _onMouseLeftClick([bool drag = false]) {
   if (!drag && !mouseClicked) return;
   selectedCollectable = -1;
 
@@ -231,28 +255,6 @@ void _handleMouseClick([bool drag = false]) {
   }
 
   setTileAtMouse(editState.tile);
-  // switch (editState.tool) {
-  //   case EditorTool.Block:
-  //     _getBlockAt(mouseWorldX, mouseWorldY);
-  //     break;
-  //   case EditorTool.TileGrass:
-  //     setTileAtMouse(Tile.Grass);
-  //     break;
-  //   case EditorTool.TileConcrete:
-  //     setTileAtMouse(Tile.Concrete);
-  //     break;
-  //   case EditorTool.TileFortress:
-  //     setTileAtMouse(Tile.Fortress);
-  //     break;
-  //   case EditorTool.ZombieSpawn:
-  //     setTileAtMouse(Tile.ZombieSpawn);
-  //     break;
-  //   case EditorTool.PlayerSpawn:
-  //     setTileAtMouse(Tile.PlayerSpawn);
-  //     break;
-  //   default:
-  //     throw Exception("No implementation for ${editState.tool}");
-  // }
 }
 
 void setTileAtMouse(Tile tile) {
@@ -260,11 +262,24 @@ void setTileAtMouse(Tile tile) {
   int column = mouseTileX;
   if (row < 0) return;
   if (column < 0) return;
-  // if (row < compiledGame.tiles.length && row < compiledGame.tiles[0].length) {
-  //   gameEdit.tiles[row][column] = tile;
-  compiledGame.tiles[row][column] = tile;
-  renderTiles(compiledGame.tiles);
-  // }
+
+  switch (tool) {
+    case EditTool.Tile:
+      compiledGame.tiles[row][column] = tile;
+      renderTiles(compiledGame.tiles);
+      break;
+    case EditTool.EnvironmentObject:
+      compiledGame.environmentObjects.add(
+          EnvironmentObject(
+            x: mouseWorldX,
+            y: mouseWorldY,
+            type: editState.environmentObjectType
+          )
+      );
+      print("added house");
+      redrawCanvas();
+      break;
+  }
 }
 
 void _controlCameraEditMode() {
@@ -283,6 +298,6 @@ void _controlCameraEditMode() {
 }
 
 void _drawLine(Offset a, Offset b, Color color) {
-  globalPaint.color = color;
-  globalCanvas.drawLine(a, b, globalPaint);
+  paint.color = color;
+  globalCanvas.drawLine(a, b, paint);
 }

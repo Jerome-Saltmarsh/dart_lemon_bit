@@ -1,4 +1,5 @@
 import '../common/Tile.dart';
+import '../common/classes/EnvironmentObject.dart';
 import '../common/classes/Vector2.dart';
 import '../enums.dart';
 import '../maths.dart';
@@ -18,13 +19,14 @@ class Scene {
   final List<List<Tile>> tiles;
   final List<Block> blocks;
   final List<Vector2> crates;
+  final List<EnvironmentObject> environment;
   late Vector2 fortressPosition;
 
   late final List<List<TileNode>> tileNodes;
   late final int rows;
   late final int columns;
 
-  Scene({required this.tiles, required this.blocks, required this.crates}) {
+  Scene({required this.tiles, required this.blocks, required this.crates, required this.environment}) {
     rows = tiles.length;
     columns = tiles[0].length;
     tileNodes = [];

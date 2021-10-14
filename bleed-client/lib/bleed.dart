@@ -42,17 +42,13 @@ void initBleed() {
   periodic(sendRequestUpdateScore, seconds: 3);
 }
 
-void _handleKeyboardEvent(){
-
-}
-
 void connectToGCP() {
   connect(gpc);
 }
 
 void _onConnected(_event) {
-  // _joinRandomGame();
-  send(ClientRequest.Version.index.toString());
+  // send(ClientRequest.Version.index.toString());
+  joinGameOpenWorld();
 }
 
 void joinCasualGame() {

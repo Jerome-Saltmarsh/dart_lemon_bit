@@ -5,7 +5,6 @@ import 'common/classes/Vector2.dart';
 import 'common/functions/diffOver.dart';
 import 'constants.dart';
 import 'enums.dart';
-import 'common/Weapons.dart';
 import 'maths.dart';
 import 'settings.dart';
 

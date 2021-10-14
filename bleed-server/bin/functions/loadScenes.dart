@@ -4,7 +4,9 @@ import 'dart:io';
 import '../classes/Block.dart';
 import '../classes/Collectable.dart';
 import '../classes/Scene.dart';
+import '../common/ObjectType.dart';
 import '../common/Tile.dart';
+import '../common/classes/EnvironmentObject.dart';
 import '../common/classes/Vector2.dart';
 import '../common/CollectableType.dart';
 import '../instances/scenes.dart';
@@ -59,6 +61,22 @@ Scene _mapStringToScene(String text) {
     }
   }
 
+  List<EnvironmentObject> environment = [];
+
+  if (json.containsKey('environment')) {
+    List jsonItems = json['environment'];
+    for (dynamic item in jsonItems) {
+      int x = item['x'];
+      int y = item['y'];
+      EnvironmentObjectType type = environmentObjectTypes[item['type']];
+      environment.add(EnvironmentObject(
+        x: x.toDouble(),
+        y: y.toDouble(),
+        type: type
+      ));
+    }
+  }
+
   List<Vector2> crates = [];
 
   if (json.containsKey('crates')){
@@ -84,7 +102,12 @@ Scene _mapStringToScene(String text) {
   List jsonBlocks = json['blocks'];
   List<Block> blocks = jsonBlocks.map(_mapJsonBlockToBlock).toList();
   sortBlocks(blocks);
-  return Scene(tiles: tiles, blocks: blocks, crates: crates);
+  return Scene(
+      tiles: tiles,
+      blocks: blocks,
+      crates: crates,
+      environment: environment
+  );
 }
 
 Block _mapJsonBlockToBlock(dynamic jsonBlock) {

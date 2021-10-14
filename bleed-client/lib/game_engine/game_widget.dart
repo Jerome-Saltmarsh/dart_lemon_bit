@@ -153,7 +153,7 @@ class _GameWidgetState extends State<GameWidget> {
         Duration(milliseconds: 1000 ~/ widget.targetFPS()), _update);
     widget.init();
     disableRightClick();
-    globalPaint.isAntiAlias = false;
+    paint.isAntiAlias = false;
     super.initState();
   }
 

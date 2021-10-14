@@ -28,7 +28,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'classes/InventoryItem.dart';
 import 'classes/Score.dart';
 import 'common/Weapons.dart';
-import 'common.dart';
 import 'connection.dart';
 import 'constants/servers.dart';
 import 'enums.dart';
@@ -36,7 +35,6 @@ import 'enums/InventoryItemType.dart';
 import 'enums/Mode.dart';
 import 'game_engine/global_paint.dart';
 import 'images.dart';
-import 'input.dart';
 import 'instances/inventory.dart';
 import 'instances/settings.dart';
 import 'maths.dart';
@@ -493,7 +491,7 @@ Widget buildHud() {
                     text("Hold E to pan camera")
                   ],
                 ))),
-      buildViewScore(),
+      if(compiledGame.gameType == GameType.Casual) buildViewScore(),
       // if (message != null) buildMessageBox(message),
     ],
   );
@@ -1490,7 +1488,7 @@ void drawRing(Ring ring,
   setColor(backgroundColor);
   for (int i = 0; i < ring.points.length - 1; i++) {
     globalCanvas.drawLine(
-        ring.points[i] + position, ring.points[i + 1] + position, globalPaint);
+        ring.points[i] + position, ring.points[i + 1] + position, paint);
   }
 
   setStrokeWidth(3);
@@ -1498,6 +1496,6 @@ void drawRing(Ring ring,
   int fillSides = (ring.sides * percentage).toInt();
   for (int i = 0; i < fillSides; i++) {
     globalCanvas.drawLine(
-        ring.points[i] + position, ring.points[i + 1] + position, globalPaint);
+        ring.points[i] + position, ring.points[i + 1] + position, paint);
   }
 }

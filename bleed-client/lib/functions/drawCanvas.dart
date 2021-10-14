@@ -7,6 +7,7 @@ import 'package:bleed_client/classes/Human.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/classes/Zombie.dart';
+import 'package:bleed_client/common/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
@@ -43,6 +44,7 @@ void drawCanvas(Canvas canvass, Size _size) {
 
   if (editMode) {
     drawTiles();
+    _drawEnvironmentObjects();
     _drawCratesEditor();
     return;
   }
@@ -71,8 +73,7 @@ void _drawCompiledGame() {
   drawCharacters();
   drawEditMode();
   _drawCollectables();
-
-  // drawText("hello world!!!!!", 0, 0);
+  _drawEnvironmentObjects();
 
   if (settings.compilePaths) {
     drawPaths();
@@ -92,6 +93,12 @@ void _drawCompiledGame() {
   }
 
   _drawMouseAim();
+}
+
+void _drawEnvironmentObjects() {
+  for (EnvironmentObject environmentObject in compiledGame.environmentObjects){
+    globalCanvas.drawImage(images.house, Offset(environmentObject.x, environmentObject.y), paint);
+  }
 }
 
 void _drawNpcBonusPointsCircles() {
@@ -132,7 +139,7 @@ void _drawCratesEditor() {
 void _drawCrate(Vector2 position) {
   drawCircle(position.x, position.y, 5, Colors.white);
   globalCanvas.drawImage(
-      images.crate, Offset(position.x, position.y), globalPaint);
+      images.crate, Offset(position.x, position.y), paint);
 }
 
 void _renderItems() {
@@ -164,7 +171,7 @@ void _drawMouseAim() {
   if (weapon == Weapon.HandGun) return;
   if (weapon == Weapon.Shotgun) return;
 
-  globalPaint.strokeWidth = 3;
+  paint.strokeWidth = 3;
   double rot = radionsBetween(
       mouseWorldX, mouseWorldY, compiledGame.playerX, compiledGame.playerY);
 
@@ -237,7 +244,7 @@ void drawBlockSelected(Block block) {
   // _drawLine(block.center, block.top, Colors.deepPurple);
   // _drawLine(block.center, block.right, Colors.orange);
 
-  globalPaint.strokeWidth = 3;
+  paint.strokeWidth = 3;
   _drawLine(block.top, block.right, Colors.red);
   _drawLine(block.right, block.bottom, Colors.red);
   _drawLine(block.bottom, block.left, Colors.red);
@@ -245,8 +252,8 @@ void drawBlockSelected(Block block) {
 }
 
 void _drawLine(Offset a, Offset b, Color color) {
-  globalPaint.color = color;
-  globalCanvas.drawLine(a, b, globalPaint);
+  paint.color = color;
+  globalCanvas.drawLine(a, b, paint);
 }
 
 Block createBlock(double topX, double topY, double rightX, double rightY,

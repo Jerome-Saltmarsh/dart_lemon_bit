@@ -19,7 +19,7 @@ void drawSpriteAnimation(SpriteAnimation animation){
       null,
       null,
       null,
-      globalPaint);
+      paint);
 
   animation.nextFrame();
 }

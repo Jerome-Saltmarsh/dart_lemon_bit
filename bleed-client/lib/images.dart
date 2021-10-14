@@ -16,6 +16,7 @@ class _Images {
   Image shotgunAmmo;
   Image items;
   Image crate;
+  Image house;
 
   Future load() async {
     character = await loadImage("images/character.png");
@@ -28,6 +29,7 @@ class _Images {
     collectables = await loadImage("images/collectables.png");
     items = await loadImage("images/items.png");
     crate = await loadImage("images/crate.png");
+    house = await loadImage("images/house.png");
   }
 }
 

@@ -156,13 +156,13 @@ class BleedWidget extends GameWidget {
   void _drawStaminaBar(Canvas canvas) {
     double percentage = player.stamina / player.staminaMax;
 
-    globalPaint.color = Colors.white;
+    paint.color = Colors.white;
 
     canvas.drawRect(
-        Rect.fromLTWH(screenCenterX - 50, 25, 100, 15), globalPaint);
+        Rect.fromLTWH(screenCenterX - 50, 25, 100, 15), paint);
 
-    globalPaint.color = orange;
+    paint.color = orange;
     canvas.drawRect(Rect.fromLTWH(screenCenterX - 50, 25, 100 * percentage, 15),
-        globalPaint);
+        paint);
   }
 }

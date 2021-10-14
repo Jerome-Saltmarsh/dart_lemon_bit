@@ -11,8 +11,9 @@ int equippedWeaponRounds(Player player) {
       return player.rounds.sniperRifle;
     case Weapon.AssaultRifle:
       return player.rounds.assaultRifle;
+    default:
+      return 0;
   }
-  return 0;
 }
 
 int equippedWeaponClips(Player player) {
@@ -25,8 +26,9 @@ int equippedWeaponClips(Player player) {
       return player.clips.sniperRifle;
     case Weapon.AssaultRifle:
       return player.clips.assaultRifle;
+    default:
+      return 0;
   }
-  return 0;
 }
 
 class Clips {

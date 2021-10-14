@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-final Paint globalPaint = Paint()
+final Paint paint = Paint()
   ..color = Colors.white
   ..strokeCap = StrokeCap.round
   ..style = PaintingStyle.fill
@@ -22,10 +22,10 @@ void setColorWhite(){
 }
 
 void setStrokeWidth(double value){
-  globalPaint.strokeWidth = value;
+  paint.strokeWidth = value;
 }
 
 void setColor(Color value) {
-  if (globalPaint.color == value) return;
-  globalPaint.color = value;
+  if (paint.color == value) return;
+  paint.color = value;
 }

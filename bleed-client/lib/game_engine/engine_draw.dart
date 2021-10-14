@@ -13,8 +13,8 @@ void drawCircle(double x, double y, double radius, Color color) {
 
 void drawCircleOffset(Offset offset, double radius, Color color) {
   // TODO Optimize
-  globalPaint.color = color;
-  globalCanvas.drawCircle(offset, radius, globalPaint);
+  paint.color = color;
+  globalCanvas.drawCircle(offset, radius, paint);
 }
 
 void drawSprite(ui.Image image, int frames, int frame, double x, double y) {
@@ -24,7 +24,7 @@ void drawSprite(ui.Image image, int frames, int frame, double x, double y) {
       Rect.fromLTWH((frame - 1) * frameWidth, 0, frameWidth, frameHeight),
       Rect.fromCenter(
           center: Offset(x, y), width: frameWidth, height: frameHeight),
-      globalPaint);
+      paint);
 }
 
 TextStyle _style = TextStyle(

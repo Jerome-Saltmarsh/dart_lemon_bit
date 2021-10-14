@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:bleed_client/classes/Block.dart';
 import 'package:bleed_client/common/Tile.dart';
+import 'package:bleed_client/common/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/state.dart';
 import 'package:clipboard/clipboard.dart';
@@ -32,6 +33,7 @@ Object _mapCompiledGameToObject() {
     "zombie-spawn-points": _compileZombieSpawnPoints(),
     "tiles": _compileTiles(compiledGame.tiles),
     "crates": _compileCrates(compiledGame.crates),
+    "environment": _compileEnvironmentObjects(compiledGame.environmentObjects),
   };
 }
 
@@ -45,6 +47,14 @@ List<int> _compileCrates(List<Vector2> crates) {
     values.add(vector2.y.toInt());
   }
   return values;
+}
+
+List<dynamic> _compileEnvironmentObjects(List<EnvironmentObject> values){
+  return values.map((environmentObject) => {
+    'x': environmentObject.x.toInt(),
+    'y': environmentObject.y.toInt(),
+    'type': environmentObject.type.index
+  }).toList();
 }
 
 List<List<int>> _compileTiles(List<List<Tile>> tiles) {

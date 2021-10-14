@@ -89,7 +89,7 @@ void drawTileList() {
 void drawAtlases(
     ui.Image image, List<RSTransform> transforms, List<Rect> rects) {
   globalCanvas.drawAtlas(
-      image, transforms, rects, null, null, null, globalPaint);
+      image, transforms, rects, null, null, null, paint);
 }
 
 void renderTiles(List<List<Tile>> tiles) {
@@ -248,14 +248,14 @@ void drawCircleOutline(
   Offset z = Offset(x, y);
   setColor(color);
 
-  globalPaint.strokeWidth = 3;
+  paint.strokeWidth = 3;
 
   for (int i = 0; i <= sides; i++) {
     double a1 = i * r;
     points.add(Offset(cos(a1) * radius, sin(a1) * radius));
   }
   for (int i = 0; i < points.length - 1; i++) {
-    globalCanvas.drawLine(points[i] + z, points[i + 1] + z, globalPaint);
+    globalCanvas.drawLine(points[i] + z, points[i + 1] + z, paint);
   }
 }
 

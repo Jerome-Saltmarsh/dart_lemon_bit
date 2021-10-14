@@ -3,7 +3,6 @@ import 'dart:math';
 import '../classes.dart';
 import '../common/GameState.dart';
 import '../common/ItemType.dart';
-import '../common/ObjectType.dart';
 import '../common/Tile.dart';
 import '../common/classes/Vector2.dart';
 import '../common/constants.dart';
@@ -437,6 +436,8 @@ abstract class Game {
             collectables.add(Collectable(
                 tilePosition.x, tilePosition.y, randomCollectableType));
             break;
+          default:
+            break;
         }
       }
     }
@@ -493,6 +494,8 @@ extension GameFunctions on Game {
             player.grenades++;
             dispatch(GameEventType.Item_Acquired, collectables[i].x,
                 collectables[i].y, 0, 0);
+            break;
+          default:
             break;
         }
         collectables[i].active = false;
@@ -629,11 +632,11 @@ extension GameFunctions on Game {
   void _updateCollisions() {
     zombies.sort(compareGameObjects);
     players.sort(compareGameObjects);
+    npcs.sort(compareGameObjects);
     updateCollisionBetween(zombies);
     updateCollisionBetween(players);
     resolveCollisionBetween(zombies, players);
-    // handleBlockCollisions(players);
-    // handleBlockCollisions(zombies);
+    resolveCollisionBetween(players, npcs);
   }
 
   Player? findPlayerById(int id) {
@@ -693,6 +696,8 @@ extension GameFunctions on Game {
         Bullet bullet = spawnBullet(player);
         player.stateDuration = coolDown.assaultRifle;
         dispatch(GameEventType.MachineGun_Fired, x, y, bullet.xv, bullet.yv);
+        break;
+      default:
         break;
     }
   }
@@ -785,7 +790,11 @@ extension GameFunctions on Game {
             player.clips.assaultRifle--;
             player.stateDuration = settings.reloadDuration.assaultRifle;
             break;
+          default:
+            break;
         }
+        break;
+      default:
         break;
     }
     character.state = value;

@@ -3,23 +3,12 @@ import '../common/GameType.dart';
 import '../games/open-world.dart';
 import '../instances/scenes.dart';
 import '../settings.dart';
-import '../utils.dart';
-import 'Block.dart';
 import 'Game.dart';
 import 'Lobby.dart';
-import 'Scene.dart';
 
 class GameManager {
   List<Game> games = [];
   List<Lobby> lobbies = [];
-
-  Scene buildOpenWorldScene() {
-    List<Block> blocks = [];
-    blocks.add(Block.build(50, 800, 200, 150));
-    Scene scene = Scene(tiles: generateTiles(), blocks: blocks, crates: []);
-    scene.sortBlocks();
-    return scene;
-  }
 
   Game getAvailableCasualGame() {
     for (Game game in games) {

@@ -58,8 +58,9 @@ String mapWeaponName(Weapon weapon){
       return "Sniper Rifle";
     case Weapon.AssaultRifle:
       return "Assault Rifle";
+    case Weapon.Unarmed:
+      return "Unarmed";
   }
-  throw Exception("No name available for $weapon");
 }
 
 class _MaxRounds {
@@ -82,5 +83,4 @@ int getMaxRounds(Weapon weapon){
     case Weapon.AssaultRifle:
       return constants.maxRounds.assaultRifle;
   }
-  throw Exception("no max rounds mapped for $weapon");
 }
