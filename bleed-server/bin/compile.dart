@@ -51,10 +51,10 @@ void compileGame(Game game) {
   game.compiled = game.buffer.toString();
 }
 
-String compileEnvironmentObjects(Game game) {
+String compileEnvironmentObjects(List<EnvironmentObject> environmentObjects) {
   StringBuffer buffer = StringBuffer();
   _write(buffer, ServerResponse.EnvironmentObjects.index);
-  for (EnvironmentObject environmentObject in game.environmentObjects){
+  for (EnvironmentObject environmentObject in environmentObjects){
     _write(buffer, environmentObject.x.toInt());
     _write(buffer, environmentObject.y.toInt());
     _write(buffer, environmentObject.type.index);

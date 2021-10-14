@@ -28,7 +28,6 @@ import '../utils/player_utils.dart';
 import 'Block.dart';
 import 'Collectable.dart';
 import 'Crate.dart';
-import '../common/classes/EnvironmentObject.dart';
 import 'Inventory.dart';
 import 'Item.dart';
 import 'Player.dart';
@@ -368,7 +367,6 @@ abstract class Game {
   List<Grenade> grenades = [];
   List<GameEvent> gameEvents = [];
   List<Crate> crates = [];
-  List<EnvironmentObject> environmentObjects = [];
   final List<Collectable> collectables = [];
   final List<Vector2> playerSpawnPoints = [];
   final List<Item> items = [];
