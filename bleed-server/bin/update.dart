@@ -89,16 +89,14 @@ void updateCollisionBetween(List<GameObject> gameObjects) {
       if (gameObjects[j].left > gameObjects[i].right) break;
       if (gameObjects[j].top > gameObjects[i].bottom) continue;
       if (gameObjects[j].bottom < gameObjects[i].top) continue;
-      resolveCollision(gameObjects[i], gameObjects[j]);
+      resolveCollisionA(gameObjects[i], gameObjects[j]);
     }
   }
 }
 
-double collisionOverlap(GameObject a, GameObject b) {
-  return a.radius + b.radius - distanceBetween(a, b);
-}
+typedef void CollisionResolver(GameObject a, GameObject b);
 
-void resolveCollision(GameObject a, GameObject b) {
+void resolveCollisionA(GameObject a, GameObject b) {
   double overlap = collisionOverlap(a, b);
   if (overlap < 0) return;
   double xDiff = a.x - b.x;
@@ -116,9 +114,28 @@ void resolveCollision(GameObject a, GameObject b) {
   b.y -= targetY;
 }
 
+void resolveCollisionB(GameObject a, GameObject b) {
+  double overlap = collisionOverlap(a, b);
+  if (overlap < 0) return;
+  double xDiff = a.x - b.x;
+  double yDiff = a.y - b.y;
+  double mag = magnitude(xDiff, yDiff);
+  double ratio = 1.0 / mag;
+  double xDiffNormalized = xDiff * ratio;
+  double yDiffNormalized = yDiff * ratio;
+  double targetX = xDiffNormalized * overlap;
+  double targetY = yDiffNormalized * overlap;
+  a.x += targetX;
+  a.y += targetY;
+}
+
+double collisionOverlap(GameObject a, GameObject b) {
+  return a.radius + b.radius - distanceBetween(a, b);
+}
+
 
 void resolveCollisionBetween(List<GameObject> gameObjectsA,
-    List<GameObject> gameObjectsB) {
+    List<GameObject> gameObjectsB, CollisionResolver resolve) {
   int minJ = 0;
   for (int i = 0; i < gameObjectsA.length; i++) {
     if (!gameObjectsA[i].collidable) continue;
@@ -134,7 +151,7 @@ void resolveCollisionBetween(List<GameObject> gameObjectsA,
       }
       if (gameObjectsA[i].top > gameObjectsB[j].bottom) continue;
       if (gameObjectsA[i].bottom < gameObjectsB[j].top) continue;
-      resolveCollision(gameObjectsA[i], gameObjectsB[j]);
+      resolve(gameObjectsA[i], gameObjectsB[j]);
     }
   }
 }

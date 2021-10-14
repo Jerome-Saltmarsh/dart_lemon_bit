@@ -74,7 +74,9 @@
 [ ] Complete Quests to earn income and unlock upgrades
 [ ] Change scene
 [ ] Quest Window
-[ ] Npc player collision 
+[ ] Environment object collision
+[ ] Npc's attack zombies
+[x] Npc player collision 
 [x] Zombies spawn on edge of map
 [x] Interactable Npc Name Tag
 [x] Walls Tiles

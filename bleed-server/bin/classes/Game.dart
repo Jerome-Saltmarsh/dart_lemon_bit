@@ -634,8 +634,8 @@ extension GameFunctions on Game {
     npcs.sort(compareGameObjects);
     updateCollisionBetween(zombies);
     updateCollisionBetween(players);
-    resolveCollisionBetween(zombies, players);
-    resolveCollisionBetween(players, npcs);
+    resolveCollisionBetween(zombies, players, resolveCollisionA);
+    resolveCollisionBetween(players, npcs, resolveCollisionB);
   }
 
   Player? findPlayerById(int id) {

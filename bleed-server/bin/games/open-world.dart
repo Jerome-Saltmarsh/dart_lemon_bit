@@ -12,7 +12,7 @@ class OpenWorld extends Game {
   late InteractableNpc npcMain;
   late InteractableNpc npcSmith;
 
-  final int _maxZombies = 50;
+  final int _maxZombies = 30;
 
   OpenWorld() : super(GameType.Open_World, scenes.town, 64) {
     npcMain = InteractableNpc(
