@@ -7,7 +7,6 @@ import 'package:bleed_client/classes/Human.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/classes/Zombie.dart';
-import 'package:bleed_client/common/ObjectType.dart';
 import 'package:bleed_client/common/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/CollectableType.dart';
@@ -20,7 +19,6 @@ import 'package:bleed_client/game_engine/global_paint.dart';
 import 'package:bleed_client/instances/settings.dart';
 import 'package:bleed_client/mappers/mapCrateToRSTransform.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
-import 'package:bleed_client/mappers/mapHumanToRect.dart';
 import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/properties.dart';
@@ -39,6 +37,7 @@ import 'drawGrenade.dart';
 import 'drawParticle.dart';
 
 double _nameRadius = 100;
+Ring _healthRing = Ring(16);
 
 void drawCanvas(Canvas canvass, Size _size) {
   canvass.scale(zoom, zoom);
@@ -113,8 +112,6 @@ void _drawNpcBonusPointsCircles() {
     drawCircle(npc.x, npc.y, 10, orange);
   }
 }
-
-Ring _healthRing = Ring(16);
 
 void _drawPlayerHealthRing() {
   drawRing(
@@ -218,27 +215,6 @@ void drawCollectable(CollectableType type, double x, double y) {
       break;
   }
 }
-
-final Paint paintRed = Paint()
-  ..color = Colors.red
-  ..strokeCap = StrokeCap.round
-  ..style = PaintingStyle.fill
-  ..isAntiAlias = false
-  ..strokeWidth = 1;
-
-final Paint paintGreen = Paint()
-  ..color = Colors.green
-  ..strokeCap = StrokeCap.round
-  ..style = PaintingStyle.fill
-  ..isAntiAlias = false
-  ..strokeWidth = 1;
-
-final Paint paintDeepPurple = Paint()
-  ..color = Colors.deepPurple
-  ..strokeCap = StrokeCap.round
-  ..style = PaintingStyle.fill
-  ..isAntiAlias = false
-  ..strokeWidth = 1;
 
 void drawBlockSelected(Block block) {
   // globalCanvas.drawPath(block.wall1, _blockBlueGrey);
