@@ -171,6 +171,7 @@ class _Radius {
   final double crate = 22;
   final double character = 20;
   final double interact = 20;
+  final double zombieSpawnVariation = 5;
 }
 
 class _Accuracy {

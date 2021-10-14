@@ -14,6 +14,7 @@ import '../common/CollectableType.dart';
 import '../common/GameEventType.dart';
 import '../common/GameType.dart';
 import '../common/Weapons.dart';
+import '../exceptions/ZombieSpawnPointsEmptyException.dart';
 import '../functions/applyForce.dart';
 import '../functions/generateUUID.dart';
 import '../instances/scenes.dart';
@@ -237,7 +238,7 @@ class GameCasual extends Game {
 
   void spawnRandomNpcs(int amount) {
     for (int i = 0; i < amount; i++) {
-      spawnRandomNpc();
+      spawnRandomZombie();
     }
   }
 
@@ -249,7 +250,7 @@ class GameCasual extends Game {
   @override
   void update() {
     if (duration % 50 == 0 && zombieCount < 100) {
-      Npc npc = spawnRandomNpc();
+      Npc npc = spawnRandomZombie();
       npcSetRandomDestination(npc);
     }
   }
@@ -1309,12 +1310,13 @@ extension GameFunctions on Game {
     return npc;
   }
 
-  Npc spawnRandomNpc() {
-    if (zombieSpawnPoints.isEmpty)
-      throw Exception(
-          "spawnRandomNpc() Error -No zombie spawn points available");
+  Npc spawnRandomZombie() {
+    if (zombieSpawnPoints.isEmpty) throw ZombieSpawnPointsEmptyException();
     Vector2 spawnPoint = randomValue(zombieSpawnPoints);
-    return spawnNpc(spawnPoint.x + giveOrTake(5), spawnPoint.y + giveOrTake(5));
+    return spawnNpc(
+        spawnPoint.x + giveOrTake(radius.zombieSpawnVariation),
+        spawnPoint.y + giveOrTake(radius.zombieSpawnVariation)
+    );
   }
 
   int get zombieCount {

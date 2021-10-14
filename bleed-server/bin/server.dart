@@ -374,7 +374,7 @@ void main() {
             return;
           }
 
-          game.spawnRandomNpc();
+          game.spawnRandomZombie();
           return;
 
         case ClientRequest.Player_Equip:

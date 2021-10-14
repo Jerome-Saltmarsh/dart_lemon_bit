@@ -5,11 +5,14 @@ import '../classes/Player.dart';
 import '../common/GameType.dart';
 import '../common/Quests.dart';
 import '../instances/scenes.dart';
+import '../state.dart';
 import '../utils/player_utils.dart';
 
 class OpenWorld extends Game {
   late InteractableNpc npcMain;
   late InteractableNpc npcSmith;
+
+  final int _maxZombies = 50;
 
   OpenWorld() : super(GameType.Open_World, scenes.town, 64) {
     npcMain = InteractableNpc(
@@ -91,5 +94,9 @@ class OpenWorld extends Game {
   void onPlayerKilled(Player player) {}
 
   @override
-  void update() {}
+  void update() {
+    if (frame % 60 != 0) return;
+    if (zombieCount > _maxZombies) return;
+    spawnRandomZombie();
+  }
 }
