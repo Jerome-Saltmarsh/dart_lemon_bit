@@ -56,6 +56,11 @@ void characterFace(Character character, double x, double y) {
   setDirection(character, convertAngleToDirection(radiansBetween2(character, x, y)));
 }
 
+void characterAimAt(Character character, double x, double y){
+  character.aimAngle = radiansBetween2(character, x, y);
+  setDirection(character, convertAngleToDirection(character.aimAngle));
+}
+
 void characterFaceObject(Character character, GameObject target) {
   characterFace(character, target.x, target.y);
 }

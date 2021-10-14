@@ -539,7 +539,7 @@ extension GameFunctions on Game {
           return;
         default:
           if (!targetWithinFiringRange(npc, npc.target)) break;
-          characterFaceObject(npc, npc.target);
+          characterAimAt(npc, npc.target.x, npc.target.y);
           setCharacterState(npc, CharacterState.Firing);
           break;
       }

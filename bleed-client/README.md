@@ -75,7 +75,8 @@
 [ ] Change scene
 [ ] Quest Window
 [ ] Environment object collision
-[ ] Npc's attack zombies
+[ ] BUG Can't shoot over water
+[x] Npc's attack zombies
 [x] Npc player collision 
 [x] Zombies spawn on edge of map
 [x] Interactable Npc Name Tag
