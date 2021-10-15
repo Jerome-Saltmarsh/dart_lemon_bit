@@ -75,7 +75,8 @@
 [ ] Change scene
 [ ] Guards on walls
 [ ] Quest Window
-[ ] Respawn on death
+[ ] Fix floating text bug
+[x] Respawn on death
 [x] Environment object collision
 [x] Switch between Quest Mode and Battle Mode
 [x] BUG Can't shoot over water

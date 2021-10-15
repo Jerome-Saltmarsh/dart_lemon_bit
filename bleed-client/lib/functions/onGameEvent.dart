@@ -71,7 +71,7 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
             yv: yv * s + giveOrTake(r),
             zv: randomBetween(0, 0.07));
       }
-      spawnFloatingText(x, y, constants.points.zombieKilled);
+      // spawnFloatingText(x, y, constants.points.zombieKilled);
       break;
     case GameEventType.Zombie_killed_Explosion:
       playAudioZombieDeath(x, y);

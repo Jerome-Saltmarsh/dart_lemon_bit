@@ -5,3 +5,9 @@ void sort<T>(List<T> list, GetNum<T> function) {
     return function(a) < function(b) ? 1 : -1;
   });
 }
+
+void sortReversed<T>(List<T> list, GetNum<T> function) {
+  list.sort((T a, T b) {
+    return function(a) < function(b) ? -1 : 1;
+  });
+}

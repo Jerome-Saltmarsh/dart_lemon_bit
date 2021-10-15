@@ -19,6 +19,7 @@ import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/ui.dart';
 import 'package:bleed_client/ui/dialogs.dart';
+import 'package:bleed_client/utils/list_util.dart';
 import 'package:neuro/instance.dart';
 
 import 'classes/Human.dart';
@@ -146,17 +147,7 @@ void parseState() {
         break;
 
       case ServerResponse.EnvironmentObjects:
-        compiledGame.environmentObjects.clear();
-        while (!_simiColonConsumed()) {
-          double x = _consumeDouble();
-          double y = _consumeDouble();
-          EnvironmentObjectType type = _consumeEnvironmentObjectType();
-          compiledGame.environmentObjects.add(EnvironmentObject(
-            x: x,
-            y: y,
-            type: type
-          ));
-        }
+        _parseEnvironmentObjects();
         break;
 
       case ServerResponse.Zombies:
@@ -279,6 +270,26 @@ void parseState() {
       break;
     }
   }
+}
+
+void _parseEnvironmentObjects() {
+  compiledGame.environmentObjects.clear();
+  while (!_simiColonConsumed()) {
+    double x = _consumeDouble();
+    double y = _consumeDouble();
+    EnvironmentObjectType type = _consumeEnvironmentObjectType();
+    compiledGame.environmentObjects.add(EnvironmentObject(
+      x: x,
+      y: y,
+      type: type
+    ));
+  }
+
+  sortReversed(compiledGame.environmentObjects, environmentObjectY);
+}
+
+double environmentObjectY(EnvironmentObject environmentObject){
+  return environmentObject.y;
 }
 
 void _parseMetaFortress() {
