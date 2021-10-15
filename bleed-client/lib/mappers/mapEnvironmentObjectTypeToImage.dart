@@ -11,7 +11,9 @@ Image mapEnvironmentObjectTypeToImage(EnvironmentObjectType type){
     case EnvironmentObjectType.House02:
       return images.house02;
     case EnvironmentObjectType.Tree01:
-      return images.tree;
+      return images.tree01;
+    case EnvironmentObjectType.Tree02:
+      return images.tree02;
     case EnvironmentObjectType.Rock:
       return images.rock;
     default:

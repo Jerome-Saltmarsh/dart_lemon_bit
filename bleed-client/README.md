@@ -76,6 +76,7 @@
 [ ] Fix particles on water
 [ ] Guards on walls
 [ ] Quest Window
+[ ] Chat 
 [ ] Editor translate environment object
 [ ] Fix floating text bug
 [ ] Fix guards stop shooting bug

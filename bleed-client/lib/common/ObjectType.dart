@@ -4,6 +4,7 @@ enum EnvironmentObjectType {
   Tree01,
   Rock,
   House02,
+  Tree02,
 }
 
 const List<EnvironmentObjectType> environmentObjectTypes = EnvironmentObjectType.values;

@@ -44,6 +44,14 @@ Rect mapTileToRect(Tile tile) {
       return _waterSide03;
     case Tile.Water_Side_04:
       return _waterSide04;
+    case Tile.Water_Corner_01:
+      return _waterCorner01;
+    case Tile.Water_Corner_02:
+      return _waterCorner02;
+    case Tile.Water_Corner_03:
+      return _waterCorner03;
+    case Tile.Water_Corner_04:
+      return _waterCorner04;
     case Tile.Crate:
       return _crate;
     case Tile.Long_Grass:
@@ -70,9 +78,13 @@ Rect _waterSide01 = _frame(11);
 Rect _waterSide02 = _frame(12);
 Rect _waterSide03 = _frame(13);
 Rect _waterSide04 = _frame(14);
-Rect _playerSpawn = _frame(15);
-Rect _zombieSpawn = _frame(16);
-Rect _longGrass = _frame(17);
+Rect _waterCorner01 = _frame(15);
+Rect _waterCorner02 = _frame(16);
+Rect _waterCorner03 = _frame(17);
+Rect _waterCorner04 = _frame(18);
+Rect _playerSpawn = _frame(19);
+Rect _zombieSpawn = _frame(20);
+Rect _longGrass = _frame(21);
 
 
 Rect _frame(int index) {

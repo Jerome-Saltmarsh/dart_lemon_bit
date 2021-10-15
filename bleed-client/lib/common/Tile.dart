@@ -19,6 +19,10 @@ enum Tile {
   Water_Side_02,
   Water_Side_03,
   Water_Side_04,
+  Water_Corner_01,
+  Water_Corner_02,
+  Water_Corner_03,
+  Water_Corner_04,
   Long_Grass,
 }
 

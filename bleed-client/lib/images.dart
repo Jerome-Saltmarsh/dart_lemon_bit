@@ -18,7 +18,8 @@ class _Images {
   Image crate;
   Image house;
   Image house02;
-  Image tree;
+  Image tree01;
+  Image tree02;
   Image rock;
 
   Future load() async {
@@ -34,7 +35,8 @@ class _Images {
     crate = await loadImage("images/crate.png");
     house = await loadImage("images/house.png");
     house02 = await loadImage("images/house02.png");
-    tree = await loadImage("images/tree.png");
+    tree01 = await loadImage("images/tree01.png");
+    tree02 = await loadImage("images/tree02.png");
     rock = await loadImage("images/rock.png");
   }
 }
