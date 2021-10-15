@@ -38,6 +38,8 @@ Rect mapTileToRect(Tile tile) {
       return _water;
     case Tile.Crate:
       return _crate;
+    case Tile.Boundary:
+      throw Exception("Boundary has no rect");
   }
   throw Exception("could not find rect for tile $tile");
 }

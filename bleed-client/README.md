@@ -76,7 +76,7 @@
 [ ] Quest Window
 [ ] Guards on walls
 [ ] Environment object collision
-[ ] Switch between Quest Mode and Battle Mode
+[x] Switch between Quest Mode and Battle Mode
 [x] BUG Can't shoot over water
 [x] Npc's attack zombies
 [x] Npc player collision 

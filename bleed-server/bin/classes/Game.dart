@@ -4,6 +4,7 @@ import '../classes.dart';
 import '../common/GameState.dart';
 import '../common/ItemType.dart';
 import '../common/Tile.dart';
+import 'EnvironmentObject.dart';
 import '../common/classes/Vector2.dart';
 import '../common/constants.dart';
 import '../common/functions/diffOver.dart';
@@ -458,6 +459,21 @@ extension GameFunctions on Game {
       _updateCollectables();
       _updateGameEvents();
       _updateItems();
+
+      for(Character character in players){
+        for(EnvironmentObject environmentObject in scene.environment){
+          double combinedRadius = character.radius + environmentObject.radius;
+            if (diffOver(character.x, environmentObject.x, combinedRadius)) continue;
+            if (diffOver(character.y, environmentObject.y, combinedRadius)) continue;
+
+            double _distance = distanceBetween(character, environmentObject);
+            if (_distance > combinedRadius) continue;
+            double overlap = combinedRadius - _distance;
+            double r = radiansBetweenObject(character, environmentObject);
+            character.x -= adj(r, overlap);
+            character.y -= opp(r, overlap);
+        }
+      }
     }
     compileGame(this);
   }

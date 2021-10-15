@@ -1,8 +1,8 @@
 import 'dart:ui';
 
+import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/ObjectType.dart';
 import 'package:bleed_client/common/Tile.dart';
-import 'package:bleed_client/common/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
@@ -203,6 +203,9 @@ void drawEditMode() {
       break;
     case EditMode.AdjustRight:
       _drawLine(block.bottom, block.right, Colors.red);
+      break;
+    case EditMode.Translate:
+      // TODO: Handle this case.
       break;
   }
 }

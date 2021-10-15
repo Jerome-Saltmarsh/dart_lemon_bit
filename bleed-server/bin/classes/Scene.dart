@@ -1,5 +1,5 @@
 import '../common/Tile.dart';
-import '../common/classes/EnvironmentObject.dart';
+import 'EnvironmentObject.dart';
 import '../common/classes/Vector2.dart';
 import '../enums.dart';
 import '../maths.dart';

@@ -14,8 +14,9 @@ Rect mapZombieToRect(Zombie zombie) {
       return _mapDead(zombie);
     case CharacterState.Striking:
       return _mapStriking(zombie);
+    default:
+      throw Exception("Could not get zombie sprite rect");
   }
-  throw Exception("Could not get character sprite rect");
 }
 
 // abstraction

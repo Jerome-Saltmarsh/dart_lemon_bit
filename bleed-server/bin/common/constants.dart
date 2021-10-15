@@ -44,6 +44,8 @@ int mapWeaponPrice(Weapon weapon){
       return prices.weapon.sniperRifle;
     case Weapon.AssaultRifle:
       return prices.weapon.assaultRifle;
+    case Weapon.Unarmed:
+      return 0;
   }
   throw Exception("No price available for $weapon");
 }

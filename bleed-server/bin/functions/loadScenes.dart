@@ -6,7 +6,7 @@ import '../classes/Collectable.dart';
 import '../classes/Scene.dart';
 import '../common/ObjectType.dart';
 import '../common/Tile.dart';
-import '../common/classes/EnvironmentObject.dart';
+import '../classes/EnvironmentObject.dart';
 import '../common/classes/Vector2.dart';
 import '../common/CollectableType.dart';
 import '../instances/scenes.dart';

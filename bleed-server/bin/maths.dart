@@ -40,16 +40,16 @@ double giveOrTake(double value) {
   return randomBetween(-value, value);
 }
 
-double magnitude(double a, double b) {
-  return sqrt((a * a) + (b * b));
-}
-
 double distanceBetween(GameObject a, GameObject b) {
-  return magnitude(a.x - b.x, a.y - b.y);
+  return distance(a.x, a.y, b.x, b.y);
 }
 
 double distance(double x1, double y1, double x2, double y2) {
   return magnitude(x1 - x2, y1 - y2);
+}
+
+double magnitude(double a, double b) {
+  return sqrt((a * a) + (b * b));
 }
 
 double abs(double value) {

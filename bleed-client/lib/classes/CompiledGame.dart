@@ -2,13 +2,13 @@
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Zombie.dart';
-import 'package:bleed_client/common/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/Weapons.dart';
 
 import '../enums.dart';
+import 'EnvironmentObject.dart';
 import 'Human.dart';
 import 'InteractableNpc.dart';
 import 'Item.dart';

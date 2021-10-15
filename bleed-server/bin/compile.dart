@@ -2,7 +2,7 @@ import 'classes.dart';
 import 'classes/Block.dart';
 import 'classes/Collectable.dart';
 import 'classes/Crate.dart';
-import 'common/classes/EnvironmentObject.dart';
+import 'classes/EnvironmentObject.dart';
 import 'classes/Game.dart';
 import 'classes/Item.dart';
 import 'classes/Lobby.dart';

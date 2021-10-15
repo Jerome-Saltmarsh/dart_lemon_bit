@@ -2,12 +2,12 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Block.dart';
+import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/Human.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/classes/Zombie.dart';
-import 'package:bleed_client/common/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
@@ -100,7 +100,9 @@ void _drawEnvironmentObjects() {
   for (EnvironmentObject environmentObject in compiledGame.environmentObjects){
     globalCanvas.drawImage(
         mapEnvironmentObjectTypeToImage(environmentObject.type),
-        Offset(environmentObject.x, environmentObject.y), paint
+        Offset(environmentObject.x - (mapEnvironmentObjectTypeToImage(environmentObject.type).width * 0.5), environmentObject.y
+        - (mapEnvironmentObjectTypeToImage(environmentObject.type).height * 0.5)
+        ), paint
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/bleed.dart';
+import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/InventoryItem.dart';
 import 'package:bleed_client/classes/Lobby.dart';
 import 'package:bleed_client/classes/Zombie.dart';
@@ -9,7 +10,6 @@ import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/ObjectType.dart';
 import 'package:bleed_client/common/PlayerEvents.dart';
 import 'package:bleed_client/common/ServerResponse.dart';
-import 'package:bleed_client/common/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/connection.dart';
 import 'package:bleed_client/enums/InventoryItemType.dart';

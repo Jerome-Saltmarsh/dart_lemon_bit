@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:bleed_client/classes/Block.dart';
+import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
-import 'package:bleed_client/common/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/state.dart';
 import 'package:clipboard/clipboard.dart';
