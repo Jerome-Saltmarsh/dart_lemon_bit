@@ -47,6 +47,7 @@ void drawCanvas(Canvas canvass, Size _size) {
     drawTiles();
     _drawEnvironmentObjects();
     _drawCratesEditor();
+    drawEditMode();
     return;
   }
 
@@ -72,7 +73,6 @@ void _drawCompiledGame() {
   _renderItems();
   _drawCrates();
   drawCharacters();
-  drawEditMode();
   _drawCollectables();
   _drawEnvironmentObjects();
 

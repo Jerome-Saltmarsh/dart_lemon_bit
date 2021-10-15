@@ -17,6 +17,7 @@ class _Images {
   Image items;
   Image crate;
   Image house;
+  Image house02;
   Image tree;
   Image rock;
 
@@ -32,6 +33,7 @@ class _Images {
     items = await loadImage("images/items.png");
     crate = await loadImage("images/crate.png");
     house = await loadImage("images/house.png");
+    house02 = await loadImage("images/house02.png");
     tree = await loadImage("images/tree.png");
     rock = await loadImage("images/rock.png");
   }

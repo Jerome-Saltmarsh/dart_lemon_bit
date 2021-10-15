@@ -4,6 +4,7 @@ import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/ObjectType.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
+import 'package:bleed_client/common/functions/diffOver.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/functions/saveScene.dart';
@@ -139,6 +140,12 @@ void _handleKeyPressed(RawKeyEvent event) {
         blockHouses.remove(editState.selectedBlock);
         editState.selectedBlock = null;
       }
+
+      if(editState.selectedObject != null){
+        compiledGame.environmentObjects.remove(editState.selectedObject);
+        editState.selectedObject = null;
+        redrawCanvas();
+      }
     }
     if (event.logicalKey == LogicalKeyboardKey.space && !_panning) {
       _panning = true;
@@ -170,6 +177,8 @@ void updateEditMode() {
 void drawEditMode() {
   if (!editMode) return;
 
+  print("drawEditMode()");
+
   for (Offset offset in compiledGame.playerSpawnPoints) {
     drawCircleOffset(offset, 10, Colors.yellow);
   }
@@ -183,6 +192,10 @@ void drawEditMode() {
     double y = compiledGame.collectables[selectedCollectable + 2].toDouble();
 
     drawCircleOutline(x: x, y: y, radius: 50, color: white, sides: 10);
+  }
+
+  if (editState.selectedObject != null){
+    drawCircleOutline(x: editState.selectedObject.x, y: editState.selectedObject.y, radius: 50, color: white, sides: 10);
   }
 
   if (editState.selectedBlock == null) return;
@@ -255,6 +268,15 @@ void _onMouseLeftClick([bool drag = false]) {
       selectedCollectable = i;
       return;
     }
+  }
+
+  double selectRadius = 25;
+  for (EnvironmentObject environmentObject in compiledGame.environmentObjects) {
+    if (diffOver(environmentObject.x, mouseWorldX, selectRadius)) continue;
+    if (diffOver(environmentObject.y, mouseWorldY, selectRadius)) continue;
+    editState.selectedObject = environmentObject;
+    redrawCanvas();
+    return;
   }
 
   setTileAtMouse(editState.tile);

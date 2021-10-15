@@ -92,7 +92,7 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
       spawnOrgan(x, y, 0.3,
           xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
 
-      spawnFloatingText(x, y, constants.points.zombieKilled);
+      // spawnFloatingText(x, y, constants.points.zombieKilled);
       break;
     case GameEventType.Zombie_Target_Acquired:
       playAudioZombieTargetAcquired(x, y);

@@ -8,6 +8,8 @@ Image mapEnvironmentObjectTypeToImage(EnvironmentObjectType type){
   switch(type){
     case EnvironmentObjectType.House01:
       return images.house;
+    case EnvironmentObjectType.House02:
+      return images.house02;
     case EnvironmentObjectType.Tree01:
       return images.tree;
     case EnvironmentObjectType.Rock:

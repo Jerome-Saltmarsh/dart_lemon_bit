@@ -73,8 +73,11 @@
 [ ] Persist Character on cloud
 [ ] Complete Quests to earn income and unlock upgrades
 [ ] Change scene
+[ ] Fix particles on water
 [ ] Guards on walls
 [ ] Quest Window
+[ ] Editor delete environment object
+[ ] Editor translate environment object
 [ ] Fix floating text bug
 [x] Respawn on death
 [x] Environment object collision

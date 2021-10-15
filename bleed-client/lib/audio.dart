@@ -117,7 +117,7 @@ void playAudioCrateBreaking(double x, double y) {
 int _index = 0;
 
 final List<AudioPlayer> _audioPlayers = [];
-const _audioDistanceFade = 0.005;
+const _audioDistanceFade = 0.0065;
 const _totalAudioPlayers = 200;
 
 const _zombieHits = [
