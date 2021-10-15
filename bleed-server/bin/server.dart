@@ -337,11 +337,6 @@ void main() {
             return;
           }
 
-          if (game.type != GameType.Casual) {
-            errorCannotRevive();
-            return;
-          }
-
           int id = int.parse(arguments[2]);
           Player? player = game.findPlayerById(id);
           if (player == null) {

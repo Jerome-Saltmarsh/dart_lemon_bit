@@ -464,10 +464,7 @@ Widget buildHud() {
       buildViewBottomRight(),
       if (state.gameState == GameState.Won) buildViewWin(),
       if (state.gameState == GameState.Lost) buildViewLose(),
-      if (!observeMode &&
-          player.dead &&
-          compiledGame.gameType == GameType.Casual)
-        buildViewRespawn(),
+      if (!observeMode && player.dead) buildViewRespawn(),
       // buildKeys(),
       if (player.dead && observeMode)
         Positioned(
@@ -492,7 +489,7 @@ Widget buildHud() {
                     text("Hold E to pan camera")
                   ],
                 ))),
-      if(compiledGame.gameType == GameType.Casual) buildViewScore(),
+      if (compiledGame.gameType == GameType.Casual) buildViewScore(),
       // if (message != null) buildMessageBox(message),
     ],
   );

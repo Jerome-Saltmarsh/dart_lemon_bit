@@ -5,6 +5,7 @@ import '../classes/Player.dart';
 import '../common/GameType.dart';
 import '../common/Quests.dart';
 import '../common/Weapons.dart';
+import '../enums.dart';
 import '../instances/scenes.dart';
 import '../state.dart';
 import '../utils/player_utils.dart';
@@ -17,6 +18,9 @@ class OpenWorld extends Game {
 
   final int _maxZombies = 30;
   final int _framesPerZombieSpawn = 120;
+
+  final double playerSpawnX = 0;
+  final double playerSpawnY = 1750;
 
   OpenWorld() : super(GameType.Open_World, scenes.town, 64) {
     npcDavis = InteractableNpc(
@@ -109,8 +113,8 @@ class OpenWorld extends Game {
   @override
   Player doSpawnPlayer() {
     return Player(
-      x: 0,
-      y: 1750,
+      x: playerSpawnX,
+      y: playerSpawnY,
       inventory: Inventory(0, 0, []),
       clips: Clips(assaultRifle: 100),
       rounds: Rounds(),
@@ -123,7 +127,13 @@ class OpenWorld extends Game {
   }
 
   @override
-  void onPlayerKilled(Player player) {}
+  void onPlayerKilled(Player player) {
+    // player.x = playerSpawnX;
+    // player.y = playerSpawnY;
+    // player.health = 100;
+    // player.state = CharacterState.Idle;
+    // player.stateDuration = 0;
+  }
 
   @override
   void update() {

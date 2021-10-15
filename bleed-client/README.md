@@ -73,9 +73,10 @@
 [ ] Persist Character on cloud
 [ ] Complete Quests to earn income and unlock upgrades
 [ ] Change scene
-[ ] Quest Window
 [ ] Guards on walls
-[ ] Environment object collision
+[ ] Quest Window
+[ ] Respawn on death
+[x] Environment object collision
 [x] Switch between Quest Mode and Battle Mode
 [x] BUG Can't shoot over water
 [x] Npc's attack zombies
