@@ -76,9 +76,10 @@
 [ ] Fix particles on water
 [ ] Guards on walls
 [ ] Quest Window
-[ ] Editor delete environment object
 [ ] Editor translate environment object
 [ ] Fix floating text bug
+[ ] Fix guards stop shooting bug
+[x] Editor delete environment object
 [x] Respawn on death
 [x] Environment object collision
 [x] Switch between Quest Mode and Battle Mode

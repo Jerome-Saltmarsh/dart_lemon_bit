@@ -9,11 +9,14 @@ import 'package:flutter/material.dart';
 import '../maths.dart';
 import '../utils.dart';
 
-final Color blood = Color.fromRGBO(199, 80, 107, 1);
-final Color orange = Color.fromRGBO(237, 158, 12, 1);
-final Color green = Color.fromRGBO(105, 201, 118 , 1);
-final Color yellow = Color.fromRGBO(255, 239, 201, 1);
-final Color red = blood;
+
+final Color blood = redDark;
+
+final Color redDark = Color.fromRGBO(174, 35, 52, 1);
+final Color orange = Color.fromRGBO(247, 150, 23, 1);
+final Color green = Color.fromRGBO(30, 188, 115 , 1);
+final Color yellow = Color.fromRGBO(249, 194, 43, 1);
+final Color red = Color.fromRGBO(234, 79, 54, 1);
 
 
 void drawParticle(Particle particle){
