@@ -51,7 +51,7 @@ void _onConnected(_event) {
   joinGameOpenWorld();
 }
 
-void joinCasualGame() {
+void joinGameCasual() {
   send(ClientRequest.Game_Join_Casual.index.toString());
 }
 

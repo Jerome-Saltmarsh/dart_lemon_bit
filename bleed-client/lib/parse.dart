@@ -96,7 +96,7 @@ void parseState() {
         state.serverVersion = _consumeInt();
 
         if (state.serverVersion == version) {
-          joinCasualGame();
+          joinGameCasual();
           // joinGameOpenWorld();
           break;
         }

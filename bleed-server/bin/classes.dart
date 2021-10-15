@@ -10,13 +10,13 @@ int _idCount = 0;
 
 class GameObject {
   final int id = _idCount++;
-  double x;
-  double y;
+  double x = 0;
+  double y = 0;
   double z = 0;
   double xv = 0;
   double yv = 0;
   double zv = 0;
-  double radius;
+  double radius = 0;
   bool collidable = true;
   bool active = true;
 

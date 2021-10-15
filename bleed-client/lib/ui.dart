@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:bleed_client/bleed.dart';
 import 'package:bleed_client/classes/Human.dart';
 import 'package:bleed_client/common/GameState.dart';
 import 'package:bleed_client/common/GameType.dart';
@@ -557,6 +558,8 @@ Widget buildTopRight() {
   //       onPressed: showDialogMainMenu),
   //   message: "Menu",
   // );
+  Widget buttonJoinGameOpenWorld = button('Open World', joinGameOpenWorld);
+  Widget buttonJoinGameCasual = button('Casual', joinGameCasual);
 
   Widget iconToggleEditMode = Tooltip(
     child: IconButton(
@@ -571,6 +574,10 @@ Widget buildTopRight() {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          if (compiledGame.gameType == GameType.Casual)
+            buttonJoinGameOpenWorld,
+          if (compiledGame.gameType == GameType.Open_World)
+            buttonJoinGameCasual,
           if (settings.developMode) iconTogglePaths,
           if (settings.developMode) width8,
           if (settings.developMode) iconToggleEditMode,
