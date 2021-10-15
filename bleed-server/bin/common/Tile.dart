@@ -17,6 +17,9 @@ enum Tile {
   Crate,
   Water_Side_01,
   Water_Side_02,
+  Water_Side_03,
+  Water_Side_04,
+  Long_Grass,
 }
 
 final List<Tile> tiles = Tile.values;

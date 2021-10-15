@@ -40,8 +40,14 @@ Rect mapTileToRect(Tile tile) {
       return _waterSide01;
     case Tile.Water_Side_02:
       return _waterSide02;
+    case Tile.Water_Side_03:
+      return _waterSide03;
+    case Tile.Water_Side_04:
+      return _waterSide04;
     case Tile.Crate:
       return _crate;
+    case Tile.Long_Grass:
+      return _longGrass;
     case Tile.Boundary:
       throw Exception("Boundary has no rect");
   }
@@ -62,8 +68,11 @@ Rect _crate = _frame(9);
 Rect _water = _frame(10);
 Rect _waterSide01 = _frame(11);
 Rect _waterSide02 = _frame(12);
-Rect _playerSpawn = _frame(13);
-Rect _zombieSpawn = _frame(14);
+Rect _waterSide03 = _frame(13);
+Rect _waterSide04 = _frame(14);
+Rect _playerSpawn = _frame(15);
+Rect _zombieSpawn = _frame(16);
+Rect _longGrass = _frame(17);
 
 
 Rect _frame(int index) {

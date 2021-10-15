@@ -138,7 +138,7 @@ class Npc extends Character {
 
   void clearTarget() {
     target = _nonTarget;
-    path.clear();
+    path = [];
   }
 }
 
