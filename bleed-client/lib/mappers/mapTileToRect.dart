@@ -36,6 +36,10 @@ Rect mapTileToRect(Tile tile) {
       return _blockCorner04;
     case Tile.Water:
       return _water;
+    case Tile.Water_Side_01:
+      return _waterSide01;
+    case Tile.Water_Side_02:
+      return _waterSide02;
     case Tile.Crate:
       return _crate;
     case Tile.Boundary:
@@ -56,8 +60,10 @@ Rect _blockFull = _frame(8);
 Rect _concrete = _frame(9);
 Rect _crate = _frame(9);
 Rect _water = _frame(10);
-Rect _playerSpawn = _frame(11);
-Rect _zombieSpawn = _frame(12);
+Rect _waterSide01 = _frame(11);
+Rect _waterSide02 = _frame(12);
+Rect _playerSpawn = _frame(13);
+Rect _zombieSpawn = _frame(14);
 
 
 Rect _frame(int index) {

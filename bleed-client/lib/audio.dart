@@ -189,7 +189,7 @@ void _playAudio(String name, double x, double y) {
 
   try {
     double volume = _calculateVolume(x, y);
-    if (volume < 0.1) return;
+    // if (volume < 0.025) return;
     _getAudioPlayer().play('assets/audio/$name', isLocal: true, volume: volume);
   } catch (error) {
     // innocuous
@@ -198,5 +198,6 @@ void _playAudio(String name, double x, double y) {
 
 double _calculateVolume(double x, double y) {
   double d = distance(x, y, screenCenterWorldX, screenCenterWorldY);
-  return 1.0 / ((d * _audioDistanceFade) + 1);
+  double v = 1.0 / ((d * _audioDistanceFade) + 1);
+  return v * v;
 }
