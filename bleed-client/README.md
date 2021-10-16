@@ -77,10 +77,12 @@
 [ ] Quest Window
 [ ] Chat 
 [ ] Editor translate environment object
+[ ] Zombies run through environment objects
 [ ] Fix floating text bug
 [ ] Fix particles on water
-[ ] Fix guards stop shooting bug
 [ ] FIX Zombies walk into walls 
+[ ] Fix guards stop shooting bug
+[x] Environment object zordering
 [x] Editor delete environment object
 [x] Respawn on death
 [x] Environment object collision

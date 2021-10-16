@@ -36,6 +36,16 @@ class Scene {
     tileNodes = [];
 
     for (int row = 0; row < rows; row++) {
+      for (int column = 0; column < columns; column++) {
+         if (tiles[row][column] == Tile.Grass){
+           if(randomBool()){
+             tiles[row][column] = Tile.Grass02;
+           }
+         }
+      }
+    }
+
+    for (int row = 0; row < rows; row++) {
       List<TileNode> nodeRow = [];
       for (int column = 0; column < columns; column++) {
         TileNode node = TileNode(isWalkable(tiles[row][column]));
