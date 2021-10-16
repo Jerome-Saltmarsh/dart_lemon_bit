@@ -78,6 +78,7 @@
 [ ] Chat 
 [ ] Editor translate environment object
 [ ] Zombies run through environment objects
+[ ] Chimney Smoke
 [ ] Fix floating text bug
 [ ] Fix particles on water
 [ ] FIX Zombies walk into walls 
