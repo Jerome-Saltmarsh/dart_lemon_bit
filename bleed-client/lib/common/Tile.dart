@@ -26,6 +26,8 @@ enum Tile {
   Long_Grass,
   Flowers,
   Grass02,
+  Concrete_Horizontal,
+  Concrete_Vertical,
 }
 
 final List<Tile> tiles = Tile.values;

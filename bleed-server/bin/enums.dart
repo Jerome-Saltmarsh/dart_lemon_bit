@@ -6,6 +6,8 @@ List<Tile> _walkableTiles = [
   Tile.Long_Grass,
   Tile.ZombieSpawn,
   Tile.Concrete,
+  Tile.Concrete_Vertical,
+  Tile.Concrete_Horizontal,
   Tile.PlayerSpawn
 ];
 

@@ -60,6 +60,10 @@ Rect mapTileToRect(Tile tile) {
       return _flowers;
     case Tile.Grass02:
       return _grass02;
+    case Tile.Concrete_Horizontal:
+      return _concreteHorizontal;
+    case Tile.Concrete_Vertical:
+      return _concreteVertical;
     case Tile.Boundary:
       throw Exception("Boundary has no rect");
   }
@@ -91,7 +95,8 @@ Rect _zombieSpawn = _frame(20);
 Rect _longGrass = _frame(21);
 Rect _flowers = _frame(22);
 Rect _grass02 = _frame(23);
-
+Rect _concreteHorizontal = _frame(24);
+Rect _concreteVertical = _frame(25);
 
 Rect _frame(int index) {
   return Rect.fromLTWH((index - 1) * tileCanvasWidth.toDouble(), 0.0, tileCanvasWidth.toDouble(), tileCanvasHeight.toDouble());
