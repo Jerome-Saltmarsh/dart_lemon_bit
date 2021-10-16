@@ -16,8 +16,14 @@ class EnvironmentObject extends GameObject {
       case EnvironmentObjectType.House01:
         radius = 40;
         break;
+      case EnvironmentObjectType.House02:
+        radius = 40;
+        break;
       case EnvironmentObjectType.Tree01:
-        radius = 20;
+        radius = 10;
+        break;
+      case EnvironmentObjectType.Tree02:
+        radius = 10;
         break;
       case EnvironmentObjectType.Rock:
         radius = 17;

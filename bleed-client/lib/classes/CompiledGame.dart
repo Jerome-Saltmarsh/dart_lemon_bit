@@ -1,6 +1,7 @@
 
 import 'dart:ui';
 
+import 'package:bleed_client/classes/Sprite.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/GameType.dart';
@@ -30,6 +31,8 @@ class CompiledGame {
   int totalHumans = 0;
   List<Vector2> bullets = [];
   List<Vector2> bulletHoles = [];
+  List<Sprite> sprites = [];
+  int totalSprites = 0;
   int bulletHoleIndex = 0;
   List<Particle> particles = [];
   List<double> grenades = [];

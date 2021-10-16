@@ -7,6 +7,7 @@ import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/Human.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/RenderState.dart';
+import 'package:bleed_client/classes/Sprite.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/CollectableType.dart';
@@ -17,8 +18,11 @@ import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/game_engine/global_paint.dart';
 import 'package:bleed_client/instances/settings.dart';
+import 'package:bleed_client/mappers/Rect%20mapHumanToDstRect.dart';
 import 'package:bleed_client/mappers/mapCrateToRSTransform.dart';
+import 'package:bleed_client/mappers/mapDstRect.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
+import 'package:bleed_client/mappers/mapHumanToRect.dart';
 import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/properties.dart';
@@ -74,7 +78,51 @@ void _drawCompiledGame() {
   _drawCrates();
   drawCharacters();
   _drawCollectables();
-  _drawEnvironmentObjects();
+
+  int index = 0;
+  int humanIndex = 0;
+  int envIndex = 0;
+
+  for (int i = 0;
+      i < compiledGame.totalHumans + compiledGame.environmentObjects.length;
+      i++) {
+
+    Sprite sprite = compiledGame.sprites[index];
+
+    if (humanIndex < compiledGame.totalHumans &&
+        compiledGame.humans[humanIndex].y <
+            compiledGame.environmentObjects[envIndex].y) {
+      Human human = compiledGame.humans[humanIndex];
+      sprite.image = images.human;
+      sprite.x = human.x;
+      sprite.y = human.y;
+      sprite.src = mapHumanToRect(
+          human.weapon, human.state, human.direction, human.frame);
+      humanIndex++;
+    } else {
+      EnvironmentObject environmentObject = compiledGame.environmentObjects[envIndex];
+      sprite.image = mapEnvironmentObjectTypeToImage(environmentObject.type);
+      sprite.x = environmentObject.x;
+      sprite.y = environmentObject.y;
+      sprite.src = Rect.fromLTWH(
+          0, 0, sprite.image.width.toDouble(), sprite.image.height.toDouble());
+      envIndex++;
+    }
+    index++;
+  }
+
+  for (int i = 0; i < index; i++) {
+    Sprite sprite = compiledGame.sprites[i];
+    globalCanvas.drawImageRect(
+        sprite.image,
+        sprite.src,
+        Rect.fromLTWH(
+            sprite.x - (sprite.src.width * 0.5),
+            sprite.y - (sprite.src.height * 0.5),
+            sprite.src.width,
+            sprite.src.height),
+        paint);
+  }
 
   if (settings.compilePaths) {
     drawPaths();
@@ -97,13 +145,18 @@ void _drawCompiledGame() {
 }
 
 void _drawEnvironmentObjects() {
-  for (EnvironmentObject environmentObject in compiledGame.environmentObjects){
+  for (EnvironmentObject environmentObject in compiledGame.environmentObjects) {
     globalCanvas.drawImage(
         mapEnvironmentObjectTypeToImage(environmentObject.type),
-        Offset(environmentObject.x - (mapEnvironmentObjectTypeToImage(environmentObject.type).width * 0.5), environmentObject.y
-        - (mapEnvironmentObjectTypeToImage(environmentObject.type).height * 0.5)
-        ), paint
-    );
+        Offset(
+            environmentObject.x -
+                (mapEnvironmentObjectTypeToImage(environmentObject.type).width *
+                    0.5),
+            environmentObject.y -
+                (mapEnvironmentObjectTypeToImage(environmentObject.type)
+                        .height *
+                    0.5)),
+        paint);
   }
 }
 
@@ -116,8 +169,7 @@ void _drawNpcBonusPointsCircles() {
 }
 
 void _drawPlayerHealthRing() {
-  drawRing(
-      _healthRing,
+  drawRing(_healthRing,
       percentage: player.health / player.maxHealth,
       color: healthColor,
       position: Offset(playerX, playerY));
@@ -142,8 +194,7 @@ void _drawCratesEditor() {
 
 void _drawCrate(Vector2 position) {
   drawCircle(position.x, position.y, 5, Colors.white);
-  globalCanvas.drawImage(
-      images.crate, Offset(position.x, position.y), paint);
+  globalCanvas.drawImage(images.crate, Offset(position.x, position.y), paint);
 }
 
 void _renderItems() {

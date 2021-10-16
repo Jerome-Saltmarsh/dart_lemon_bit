@@ -8,7 +8,7 @@ import 'package:bleed_client/game_engine/game_widget.dart';
 import '../state.dart';
 import '../ui.dart';
 
-void clearState(){
+void clearState() {
   print('clearState()');
   clearCompileGameState();
   clearRender();
@@ -24,7 +24,7 @@ void clearState(){
   redrawCanvas();
 }
 
-void clearCompileGameState(){
+void clearCompileGameState() {
   compiledGame.playerId = -1;
   compiledGame.gameId = -1;
   compiledGame.playerUUID = "";
@@ -36,18 +36,23 @@ void clearCompileGameState(){
   compiledGame.grenades.clear();
   compiledGame.collectables.clear();
 
-  for (Particle particle in compiledGame.particles){
+  for (Vector2 bullet in compiledGame.bulletHoles) {
+    bullet.x = 0;
+    bullet.y = 0;
+  }
+
+  for (Particle particle in compiledGame.particles) {
     particle.active = false;
   }
 
-  for(Vector2 bullet in compiledGame.bulletHoles){
+  for (Vector2 bullet in compiledGame.bulletHoles) {
     bullet.x = 0;
     bullet.y = 0;
   }
   compiledGame.bulletHoleIndex = 0;
 }
 
-void clearRender(){
+void clearRender() {
   render.playersTransforms.clear();
   render.playersRects.clear();
   render.tileTransforms.clear();

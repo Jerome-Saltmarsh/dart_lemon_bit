@@ -73,13 +73,14 @@
 [ ] Persist Character on cloud
 [ ] Complete Quests to earn income and unlock upgrades
 [ ] Change scene
-[ ] Fix particles on water
 [ ] Guards on walls
 [ ] Quest Window
 [ ] Chat 
 [ ] Editor translate environment object
 [ ] Fix floating text bug
+[ ] Fix particles on water
 [ ] Fix guards stop shooting bug
+[ ] FIX Zombies walk into walls 
 [x] Editor delete environment object
 [x] Respawn on death
 [x] Environment object collision

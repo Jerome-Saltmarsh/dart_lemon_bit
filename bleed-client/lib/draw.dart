@@ -32,8 +32,8 @@ void drawCharacterCircle(double x, double y, Color color) {
 }
 
 void drawCharacters() {
-  if (images.character == null) return;
-  drawPlayers();
+  if (images.human == null) return;
+  // drawPlayers();
   drawZombies();
   drawInteractableNpcs();
 }
@@ -63,7 +63,7 @@ void drawInteractableNpcs() {
         interactableNpc.y);
   }
 
-  drawAtlases(images.character, render.npcs.transforms, render.npcs.rects);
+  drawAtlases(images.human, render.npcs.transforms, render.npcs.rects);
 }
 
 void drawZombies() {
@@ -127,7 +127,7 @@ void drawPlayers() {
         mapHumanToRect(human.weapon, human.state, human.direction, human.frame)
     );
   }
-  drawAtlases(images.character, render.playersTransforms, render.playersRects);
+  drawAtlases(images.human, render.playersTransforms, render.playersRects);
 }
 
 RSTransform mapHumanToRSTransform(double x, double y) {

@@ -26,7 +26,11 @@ class Scene {
   late final int rows;
   late final int columns;
 
-  Scene({required this.tiles, required this.blocks, required this.crates, required this.environment}) {
+  Scene(
+      {required this.tiles,
+      required this.blocks,
+      required this.crates,
+      required this.environment}) {
     rows = tiles.length;
     columns = tiles[0].length;
     tileNodes = [];
@@ -243,7 +247,7 @@ extension SceneFunctions on Scene {
     return true;
   }
 
-  bool waterAt(double x, double y){
+  bool waterAt(double x, double y) {
     return tileAt(x, y) == Tile.Water;
   }
 

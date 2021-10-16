@@ -1,5 +1,6 @@
 import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Particle.dart';
+import 'package:bleed_client/classes/Sprite.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/Tile.dart';
@@ -33,6 +34,10 @@ void initBleed() {
 
   for (int i = 0; i < 2000; i++) {
     compiledGame.crates.add(Vector2(0, 0));
+  }
+
+  for (int i = 0; i < 1000; i++) {
+    compiledGame.sprites.add(Sprite());
   }
 
   for (int i = 0; i < settings.maxBulletHoles; i++) {

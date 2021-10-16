@@ -2,7 +2,8 @@
 import 'dart:ui';
 
 class Sprite {
-  RSTransform transform;
-  Rect rect;
+  Rect src;
+  double x = 0;
+  double y = 0;
   Image image;
 }

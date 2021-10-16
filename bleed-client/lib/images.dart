@@ -6,7 +6,7 @@ import 'package:bleed_client/game_engine/game_resources.dart';
 _Images images = _Images();
 
 class _Images {
-  Image character;
+  Image human;
   Image zombie;
   Image tiles;
   Image particles;
@@ -23,7 +23,7 @@ class _Images {
   Image rock;
 
   Future load() async {
-    character = await loadImage("images/character.png");
+    human = await loadImage("images/character.png");
     zombie = await loadImage("images/zombie.png");
     tiles = await loadImage("images/tiles-02.png");
     particles = await loadImage('images/particles.png');
