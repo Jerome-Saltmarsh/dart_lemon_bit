@@ -64,21 +64,21 @@ class Scene {
         if (tiles[row][column] == Tile.Block) {
           environment.add(EnvironmentObject(
               x: mapTilePositionX(row, column),
-              y: mapTilePositionY(row, column),
+              y: mapTilePositionY(row, column) + _tileSizeHalf,
               type: EnvironmentObjectType.Palisade));
         } else
 
         if (tiles[row][column] == Tile.Block_Horizontal) {
           environment.add(EnvironmentObject(
               x: mapTilePositionX(row, column),
-              y: mapTilePositionY(row, column),
+              y: mapTilePositionY(row, column) + _tileSizeHalf,
               type: EnvironmentObjectType.Palisade_H));
         } else
 
         if (tiles[row][column] == Tile.Block_Vertical) {
           environment.add(EnvironmentObject(
               x: mapTilePositionX(row, column),
-              y: mapTilePositionY(row, column),
+              y: mapTilePositionY(row, column)+ _tileSizeHalf,
               type: EnvironmentObjectType.Palisade_V));
         }
       }

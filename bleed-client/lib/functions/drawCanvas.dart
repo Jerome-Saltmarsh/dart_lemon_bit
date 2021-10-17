@@ -91,11 +91,12 @@ void _drawCompiledGame() {
 
     if (humanIndex < compiledGame.totalHumans &&
         compiledGame.humans[humanIndex].y <
-            compiledGame.environmentObjects[envIndex].y) {
+            compiledGame.environmentObjects[envIndex].y + 30) {
       Human human = compiledGame.humans[humanIndex];
       sprite.image = images.human;
       sprite.x = human.x;
       sprite.y = human.y;
+      sprite.anchorY = 0.5;
       sprite.src = mapHumanToRect(
           human.weapon, human.state, human.direction, human.frame);
       humanIndex++;
@@ -104,6 +105,7 @@ void _drawCompiledGame() {
       sprite.image = mapEnvironmentObjectTypeToImage(environmentObject.type);
       sprite.x = environmentObject.x;
       sprite.y = environmentObject.y;
+      sprite.anchorY = 0.666;
       sprite.src = Rect.fromLTWH(
           0, 0, sprite.image.width.toDouble(), sprite.image.height.toDouble());
       envIndex++;
@@ -117,12 +119,16 @@ void _drawCompiledGame() {
         sprite.image,
         sprite.src,
         Rect.fromLTWH(
-            sprite.x - (sprite.src.width * 0.5),
-            sprite.y - (sprite.src.height * 0.5),
+            sprite.x - (sprite.src.width * sprite.anchorX),
+            sprite.y - (sprite.src.height * sprite.anchorY),
             sprite.src.width,
             sprite.src.height),
         paint);
   }
+
+  // for(EnvironmentObject env in compiledGame.environmentObjects){
+  //   drawCircle(env.x, env.y, 50, Colors.white70);
+  // }
 
   if (settings.compilePaths) {
     drawPaths();
@@ -144,18 +150,16 @@ void _drawCompiledGame() {
   _drawMouseAim();
 }
 
+double _anchorX = 50;
+double _anchorY = 80;
+
 void _drawEnvironmentObjects() {
   for (EnvironmentObject environmentObject in compiledGame.environmentObjects) {
     globalCanvas.drawImage(
         mapEnvironmentObjectTypeToImage(environmentObject.type),
         Offset(
-            environmentObject.x -
-                (mapEnvironmentObjectTypeToImage(environmentObject.type).width *
-                    0.5),
-            environmentObject.y -
-                (mapEnvironmentObjectTypeToImage(environmentObject.type)
-                        .height *
-                    0.5)),
+            environmentObject.x - _anchorX,
+            environmentObject.y - _anchorY),
         paint);
   }
 }
