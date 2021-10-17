@@ -3,6 +3,7 @@ import 'package:bleed_client/bleed.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/InventoryItem.dart';
 import 'package:bleed_client/classes/Lobby.dart';
+import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/GameError.dart';
 import 'package:bleed_client/common/GameType.dart';
@@ -71,6 +72,18 @@ void parseState() {
 
       case ServerResponse.Paths:
         _parsePaths();
+        break;
+
+      case ServerResponse.NpcsDebug:
+        compiledGame.npcDebug.clear();
+        while (!_simiColonConsumed()) {
+          compiledGame.npcDebug.add(NpcDebug(
+            x: _consumeDouble(),
+            y: _consumeDouble(),
+            targetX: _consumeDouble(),
+            targetY: _consumeDouble(),
+          ));
+        }
         break;
 
       case ServerResponse.MetaFortress:

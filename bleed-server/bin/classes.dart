@@ -134,7 +134,7 @@ class Npc extends Character {
             health: health,
             speed: settings.zombieSpeed);
 
-  get targetSet => target != _nonTarget;
+  bool get targetSet => target != _nonTarget;
 
   void clearTarget() {
     target = _nonTarget;

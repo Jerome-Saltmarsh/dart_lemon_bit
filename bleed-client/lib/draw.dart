@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'dart:ui' as ui;
 
 import 'package:bleed_client/classes/InteractableNpc.dart';
+import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/functions/diffOver.dart';
@@ -174,6 +175,14 @@ void drawPaths() {
     for (int i = 0; i < path.length - 1; i++) {
       drawLine(path[i].x, path[i].y, path[i + 1].x, path[i + 1].y);
     }
+  }
+}
+
+void drawDebugNpcs(List<NpcDebug> values){
+  setColor(Colors.yellow);
+
+  for (NpcDebug npc in values) {
+    drawLine(npc.x, npc.y, npc.targetX, npc.targetY);
   }
 }
 

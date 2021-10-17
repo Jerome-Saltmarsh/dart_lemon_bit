@@ -1,6 +1,7 @@
 
 import 'dart:ui';
 
+import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/classes/Sprite.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
@@ -23,6 +24,7 @@ class CompiledGame {
   List<Offset> zombieSpawnPoints = [];
   List<EnvironmentObject> environmentObjects = [];
   List<List<Tile>> tiles = [];
+  List<NpcDebug> npcDebug = [];
   final List<Human> humans = [];
   final List<Zombie> zombies = [];
   final List<InteractableNpc> interactableNpcs = [];

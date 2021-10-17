@@ -132,6 +132,7 @@ void _drawCompiledGame() {
 
   if (settings.compilePaths) {
     drawPaths();
+    drawDebugNpcs(compiledGame.npcDebug);
   }
 
   for (FloatingText floatingText in render.floatingText) {

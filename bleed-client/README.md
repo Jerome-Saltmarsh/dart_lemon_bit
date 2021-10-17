@@ -86,10 +86,10 @@
 [ ] Fix floating text bug
 [ ] Fix particle float on water
 [ ] FIX Zombies walk into walls 
-[ ] Fix guards stop shooting bug
 [ ] Animate water tiles
-[ ] Walls 3d
-[ ] Edit mode select tile
+[ ] Fix guards stop shooting bug
+[x] Walls 3d
+[x] Edit mode select tile
 [x] Environment object zordering
 [x] Editor delete environment object
 [x] Respawn on death

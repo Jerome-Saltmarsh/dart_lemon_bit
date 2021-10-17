@@ -39,9 +39,12 @@ void compileGame(Game game) {
   _compileGameEvents(game.buffer, game.gameEvents);
   _compileGrenades(game.buffer, game.grenades);
   _compileCollectables(game.buffer, game.collectables);
+
   if (game.compilePaths) {
     _compilePaths(game.buffer, game.zombies);
+    _compileNpcDebug(game.buffer, game.npcs);
   }
+
   _compileCrates(game);
   _compileItems(game.buffer, game.items);
 
@@ -235,10 +238,22 @@ void _compilePaths(StringBuffer buffer, List<Npc> npcs) {
   for (Npc npc in npcs) {
     if (npc.path.isEmpty) continue;
     for (Vector2 p in npc.path) {
-      _write(buffer, p.x.toInt());
-      _write(buffer, p.y.toInt());
+      _writeInt(buffer, p.x);
+      _writeInt(buffer, p.y);
     }
     _write(buffer, _comma);
+  }
+  buffer.write(_semiColon);
+}
+
+void _compileNpcDebug(StringBuffer buffer, List<Npc> npcs){
+  _write(buffer, ServerResponse.NpcsDebug.index);
+  for (Npc npc in npcs) {
+    if (!npc.targetSet) continue;
+    _writeInt(buffer, npc.x);
+    _writeInt(buffer, npc.y);
+    _writeInt(buffer, npc.target.x);
+    _writeInt(buffer, npc.target.y);
   }
   buffer.write(_semiColon);
 }
