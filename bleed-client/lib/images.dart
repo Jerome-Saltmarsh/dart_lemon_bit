@@ -11,9 +11,6 @@ class _Images {
   Image tiles;
   Image particles;
   Image handgun;
-  Image handgunAmmo;
-  Image collectables;
-  Image shotgunAmmo;
   Image items;
   Image crate;
   Image house;
@@ -32,9 +29,6 @@ class _Images {
     tiles = await loadImage("images/tiles-02.png");
     particles = await loadImage('images/particles.png');
     handgun = await loadImage('images/weapon-handgun.png');
-    handgunAmmo = await loadImage('images/handgun-ammo.png');
-    shotgunAmmo = await loadImage('images/shotgun-ammo.png');
-    collectables = await loadImage("images/collectables.png");
     items = await loadImage("images/items.png");
     crate = await loadImage("images/crate.png");
     house = await loadImage("images/house.png");

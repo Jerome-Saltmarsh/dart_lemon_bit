@@ -250,23 +250,6 @@ void _drawCollectables() {
 
 // TODO Optimize
 void drawCollectable(CollectableType type, double x, double y) {
-  switch (type) {
-    case CollectableType.Handgun_Ammo:
-      drawSprite(images.collectables, 4, 1, x, y);
-      break;
-    case CollectableType.Health:
-      drawSprite(images.collectables, 4, 2, x, y);
-      break;
-    case CollectableType.Grenade:
-      drawSprite(images.collectables, 4, 3, x, y);
-      break;
-    case CollectableType.Shotgun_Ammo:
-      drawSprite(images.collectables, 4, 4, x, y);
-      break;
-    case CollectableType.Shotgun_Ammo:
-      drawSprite(images.collectables, 4, 4, x, y);
-      break;
-  }
 }
 
 void drawBlockSelected(Block block) {

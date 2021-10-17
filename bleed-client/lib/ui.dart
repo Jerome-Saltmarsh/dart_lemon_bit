@@ -371,20 +371,6 @@ Widget buildInventory() {
               paint2.color = Colors.red;
               canvas.drawCircle(o, 20, paint2);
               break;
-            case InventoryItemType.HandgunClip:
-              canvas.drawImage(
-                  images.handgunAmmo,
-                  Offset(item.column * squareSize + (padding * 0.5),
-                      item.row * squareSize + padding),
-                  paint2);
-              break;
-            case InventoryItemType.ShotgunClip:
-              canvas.drawImage(
-                  images.shotgunAmmo,
-                  Offset(item.column * squareSize + (padding * 0.5),
-                      item.row * squareSize + padding),
-                  paint2);
-              break;
             case InventoryItemType.Handgun:
               paint2.color = Colors.white;
               canvas.drawImage(

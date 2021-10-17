@@ -59,21 +59,21 @@ class Scene {
           if (randomBool()) {
             tiles[row][column] = Tile.Grass02;
           }
-        }
+        } else
 
         if (tiles[row][column] == Tile.Block) {
           environment.add(EnvironmentObject(
               x: mapTilePositionX(row, column),
               y: mapTilePositionY(row, column),
               type: EnvironmentObjectType.Palisade));
-        }
+        } else
 
         if (tiles[row][column] == Tile.Block_Horizontal) {
           environment.add(EnvironmentObject(
               x: mapTilePositionX(row, column),
               y: mapTilePositionY(row, column),
               type: EnvironmentObjectType.Palisade_H));
-        }
+        } else
 
         if (tiles[row][column] == Tile.Block_Vertical) {
           environment.add(EnvironmentObject(
