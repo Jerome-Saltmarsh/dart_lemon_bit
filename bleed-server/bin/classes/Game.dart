@@ -462,6 +462,7 @@ extension GameFunctions on Game {
 
       for(Character character in players){
         for(EnvironmentObject environmentObject in scene.environment){
+            if (environmentObject.radius == 0) continue;
           double combinedRadius = character.radius + environmentObject.radius;
             if (diffOver(character.x, environmentObject.x, combinedRadius)) continue;
             if (diffOver(character.y, environmentObject.y, combinedRadius)) continue;
@@ -861,7 +862,7 @@ extension GameFunctions on Game {
         if(!scene.waterAt(bullet.x, bullet.y)){
           dispatch(GameEventType.Bullet_Hole, bullet.x, bullet.y, 0, 0);
         }
-        
+
         bullet.active = false;
       }
     }

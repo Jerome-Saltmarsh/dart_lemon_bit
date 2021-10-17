@@ -91,7 +91,7 @@ void _drawCompiledGame() {
 
     if (humanIndex < compiledGame.totalHumans &&
         compiledGame.humans[humanIndex].y <
-            compiledGame.environmentObjects[envIndex].y + 30) {
+            compiledGame.environmentObjects[envIndex].y) {
       Human human = compiledGame.humans[humanIndex];
       sprite.image = images.human;
       sprite.x = human.x;
