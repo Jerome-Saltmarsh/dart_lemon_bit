@@ -18,6 +18,12 @@ Image mapEnvironmentObjectTypeToImage(EnvironmentObjectType type){
       return images.rock;
     case EnvironmentObjectType.Palisade:
       return images.palisade;
+    case EnvironmentObjectType.Palisade_H:
+      return images.palisadeH;
+    case EnvironmentObjectType.Palisade_V:
+      return images.palisadeV;
+    case EnvironmentObjectType.Grave:
+      return images.grave;
     default:
       throw Exception("cannot map type");
   }

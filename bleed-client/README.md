@@ -77,8 +77,10 @@
 [ ] Design Zombies
 [ ] Quest Window
 [ ] Chat 
+[ ] Design Bridge
 [ ] Editor translate environment object
 [ ] Zombies run through environment objects
+[ ] Animated Torches
 [ ] Chimney Smoke
 [ ] Render Batching
 [ ] Fix floating text bug
@@ -87,6 +89,7 @@
 [ ] Fix guards stop shooting bug
 [ ] Animate water tiles
 [ ] Walls 3d
+[ ] Edit mode select tile
 [x] Environment object zordering
 [x] Editor delete environment object
 [x] Respawn on death

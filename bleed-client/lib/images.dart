@@ -22,6 +22,9 @@ class _Images {
   Image tree02;
   Image rock;
   Image palisade;
+  Image palisadeH;
+  Image palisadeV;
+  Image grave;
 
   Future load() async {
     human = await loadImage("images/character.png");
@@ -40,6 +43,9 @@ class _Images {
     tree02 = await loadImage("images/tree02.png");
     rock = await loadImage("images/rock.png");
     palisade = await loadImage("images/palisade.png");
+    palisadeH = await loadImage("images/palisade-h.png");
+    palisadeV = await loadImage("images/palisade-v.png");
+    grave = await loadImage("images/grave.png");
   }
 }
 

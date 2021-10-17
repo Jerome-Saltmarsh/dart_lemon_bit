@@ -31,3 +31,13 @@ enum Tile {
 }
 
 final List<Tile> tiles = Tile.values;
+
+List<Tile> _blocks = [
+  Tile.Block,
+  Tile.Block_Horizontal,
+  Tile.Block_Vertical,
+];
+
+bool isBlock(Tile tile){
+  return _blocks.contains(tile);
+}

@@ -34,10 +34,17 @@ bool _mouseDragClickProcess = false;
 
 EditTool tool = EditTool.Tile;
 
+_Keys _keys = _Keys();
+
+class _Keys {
+  LogicalKeyboardKey selectTileType = LogicalKeyboardKey.keyQ;
+  LogicalKeyboardKey pan = LogicalKeyboardKey.space;
+}
+
 enum EditTool { Tile, EnvironmentObject }
 
 void initEditor() {
-  RawKeyboard.instance.addListener(_handleKeyPressed);
+  RawKeyboard.instance.addListener(_onKeyEvent);
 }
 
 void _resetTiles() {
@@ -119,45 +126,55 @@ Widget buildEditorUI() {
   );
 }
 
-void _handleKeyPressed(RawKeyEvent event) {
+void _onKeyEvent(RawKeyEvent event) {
   if (!editMode) return;
 
   if (event is RawKeyDownEvent) {
-    if (event.logicalKey == LogicalKeyboardKey.keyC) {
-      for (Vector2 position in compiledGame.crates) {
-        if (!position.isZero) continue;
-        position.x = mouseWorldX;
-        position.y = mouseWorldY;
-        redrawCanvas();
-        return;
-      }
-    }
-    if (event.logicalKey == LogicalKeyboardKey.keyP) {
-      compiledGame.playerSpawnPoints.add(mouseWorld);
-    }
-    if (event.logicalKey == LogicalKeyboardKey.delete) {
-      if (editState.selectedBlock != null) {
-        blockHouses.remove(editState.selectedBlock);
-        editState.selectedBlock = null;
-      }
-
-      if(editState.selectedObject != null){
-        compiledGame.environmentObjects.remove(editState.selectedObject);
-        editState.selectedObject = null;
-        redrawCanvas();
-      }
-    }
-    if (event.logicalKey == LogicalKeyboardKey.space && !_panning) {
-      _panning = true;
-      _mouseWorldStart = mouseWorld;
-    }
+    _onKeyDownEvent(event);
+    return;
   }
   if (event is RawKeyUpEvent) {
-    if (event.logicalKey == LogicalKeyboardKey.space) {
+    if (event.logicalKey == _keys.pan) {
       _panning = false;
+    }
+    if (event.logicalKey == _keys.selectTileType) {
+      editState.tile = tileAtMouse;
     }
   }
 }
+
+void _onKeyDownEvent(RawKeyDownEvent event){
+  if (event.logicalKey == LogicalKeyboardKey.keyC) {
+    for (Vector2 position in compiledGame.crates) {
+      if (!position.isZero) continue;
+      position.x = mouseWorldX;
+      position.y = mouseWorldY;
+      redrawCanvas();
+      return;
+    }
+  }
+  if (event.logicalKey == LogicalKeyboardKey.keyP) {
+    compiledGame.playerSpawnPoints.add(mouseWorld);
+  }
+  if (event.logicalKey == LogicalKeyboardKey.delete) {
+    if (editState.selectedBlock != null) {
+      blockHouses.remove(editState.selectedBlock);
+      editState.selectedBlock = null;
+    }
+
+    if(editState.selectedObject != null){
+      compiledGame.environmentObjects.remove(editState.selectedObject);
+      editState.selectedObject = null;
+      redrawCanvas();
+    }
+  }
+  if (event.logicalKey == LogicalKeyboardKey.space && !_panning) {
+    _panning = true;
+    _mouseWorldStart = mouseWorld;
+  }
+}
+
+
 
 void updateEditMode() {
   onKeyPressed(LogicalKeyboardKey.escape, disconnect);
@@ -280,6 +297,14 @@ void _onMouseLeftClick([bool drag = false]) {
   }
 
   setTileAtMouse(editState.tile);
+}
+
+Tile get tileAtMouse {
+  try {
+    return compiledGame.tiles[mouseTileY][mouseTileX];
+  } catch(e){
+    return Tile.Boundary;
+  }
 }
 
 void setTileAtMouse(Tile tile) {

@@ -5,6 +5,7 @@ import 'package:bleed_client/bleed.dart';
 import 'package:bleed_client/classes/Human.dart';
 import 'package:bleed_client/common/GameState.dart';
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/common/ObjectType.dart';
 import 'package:bleed_client/common/constants.dart';
 import 'package:bleed_client/constants.dart';
 import 'package:bleed_client/editor/editor.dart';
@@ -321,9 +322,11 @@ Widget buildImageButton(DecorationImage image, Function onTap,
 void toggleEditMode() {
   if (playMode) {
     mode = Mode.Edit;
+    compiledGame.environmentObjects.removeWhere((env) => isGeneratedAtBuild(env.type));
   } else {
     mode = Mode.Play;
   }
+
 
   rebuildUI();
   redrawCanvas();
