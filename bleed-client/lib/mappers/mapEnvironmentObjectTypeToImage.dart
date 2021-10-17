@@ -16,6 +16,8 @@ Image mapEnvironmentObjectTypeToImage(EnvironmentObjectType type){
       return images.tree02;
     case EnvironmentObjectType.Rock:
       return images.rock;
+    case EnvironmentObjectType.Palisade:
+      return images.palisade;
     default:
       throw Exception("cannot map type");
   }

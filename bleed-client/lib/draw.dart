@@ -101,7 +101,9 @@ void _processTileTransforms(List<List<Tile>> tiles) {
   render.tileTransforms.clear();
   for (int x = 0; x < tiles.length; x++) {
     for (int y = 0; y < tiles[0].length; y++) {
-      render.tileTransforms.add(getTileTransform(x, y));
+      if (tiles[x][y] != Tile.Block){
+        render.tileTransforms.add(getTileTransform(x, y));
+      }
     }
   }
 }
@@ -110,7 +112,9 @@ void _loadTileRects(List<List<Tile>> tiles) {
   render.tileRects.clear();
   for (int x = 0; x < tiles.length; x++) {
     for (int y = 0; y < tiles[0].length; y++) {
-      render.tileRects.add(mapTileToRect(tiles[x][y]));
+      if (tiles[x][y] != Tile.Block){
+        render.tileRects.add(mapTileToRect(tiles[x][y]));
+      }
     }
   }
 }

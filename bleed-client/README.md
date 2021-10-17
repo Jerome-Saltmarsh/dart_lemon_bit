@@ -67,22 +67,26 @@
 [ ] Deploy auto turret
 [ ] Standing on home base heals health && refills handgun ammo
 [ ] Send custom news updates to client
+[ ] Guards on walls
 [ ] Compact Score Mode 
 -- OPTIMIZATIONS --
 -- OPEN WORLD -- 
 [ ] Persist Character on cloud
 [ ] Complete Quests to earn income and unlock upgrades
 [ ] Change scene
-[ ] Guards on walls
+[ ] Design Zombies
 [ ] Quest Window
 [ ] Chat 
 [ ] Editor translate environment object
 [ ] Zombies run through environment objects
 [ ] Chimney Smoke
+[ ] Render Batching
 [ ] Fix floating text bug
-[ ] Fix particles on water
+[ ] Fix particle float on water
 [ ] FIX Zombies walk into walls 
 [ ] Fix guards stop shooting bug
+[ ] Animate water tiles
+[ ] Walls 3d
 [x] Environment object zordering
 [x] Editor delete environment object
 [x] Respawn on death

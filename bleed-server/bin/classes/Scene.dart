@@ -1,3 +1,4 @@
+import '../common/ObjectType.dart';
 import '../common/Tile.dart';
 import 'EnvironmentObject.dart';
 import '../common/classes/Vector2.dart';
@@ -9,11 +10,28 @@ import 'TileNode.dart';
 // constants
 const List<Vector2> _emptyPath = [];
 const int _tileSize = 48;
+const double _tileSizeHalf = _tileSize * 0.5;
 final Vector2 _vector2Zero = Vector2(0, 0);
 final Vector2 _vector2 = Vector2(0, 0);
 final TileNode _boundary = TileNode(false);
 // state
 int _search = 0;
+
+double mapTilePositionX(int row, int column) {
+  return perspectiveProjectX(row * _tileSizeHalf, column * _tileSizeHalf);
+}
+
+double mapTilePositionY(int row, int column) {
+  return perspectiveProjectY(row * _tileSizeHalf, column * _tileSizeHalf);
+}
+
+double perspectiveProjectX(double x, double y) {
+  return -y + x;
+}
+
+double perspectiveProjectY(double x, double y) {
+  return x + y;
+}
 
 class Scene {
   final List<List<Tile>> tiles;
@@ -37,11 +55,18 @@ class Scene {
 
     for (int row = 0; row < rows; row++) {
       for (int column = 0; column < columns; column++) {
-         if (tiles[row][column] == Tile.Grass){
-           if(randomBool()){
-             tiles[row][column] = Tile.Grass02;
-           }
-         }
+        if (tiles[row][column] == Tile.Grass) {
+          if (randomBool()) {
+            tiles[row][column] = Tile.Grass02;
+          }
+        }
+
+        if (tiles[row][column] == Tile.Block) {
+          environment.add(EnvironmentObject(
+              x: mapTilePositionX(row, column),
+              y: mapTilePositionY(row, column),
+              type: EnvironmentObjectType.Palisade));
+        }
       }
     }
 
@@ -305,14 +330,6 @@ extension SceneFunctions on Scene {
 
   bool bulletCollisionAt(double x, double y) {
     return isCollision(tileAt(x, y));
-  }
-
-  double perspectiveProjectX(double x, double y) {
-    return -y + x;
-  }
-
-  double perspectiveProjectY(double x, double y) {
-    return x + y;
   }
 
   double projectedToWorldX(double x, double y) {
