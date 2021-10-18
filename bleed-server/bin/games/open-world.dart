@@ -31,7 +31,7 @@ class OpenWorld extends Game {
         health: 100,
         weapon: Weapon.Unarmed
     );
-    npcDavis.mode = NpcMode.Stand_Ground;
+    npcDavis.mode = NpcMode.Ignore;
     npcs.add(npcDavis);
 
     npcSmith = InteractableNpc(
@@ -42,7 +42,7 @@ class OpenWorld extends Game {
         health: 100,
         weapon: Weapon.Unarmed
     );
-    npcSmith.mode = NpcMode.Stand_Ground;
+    npcSmith.mode = NpcMode.Ignore;
     npcs.add(npcSmith);
 
     guard1 = InteractableNpc(

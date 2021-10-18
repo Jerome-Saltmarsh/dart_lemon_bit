@@ -1128,11 +1128,15 @@ extension GameFunctions on Game {
           // @on zombie killed by player
           if (bullet.owner is Player) {
             Player owner = bullet.owner as Player;
+            // call interface instead
             owner.score.zombiesKilled++;
             if (character is Npc) {
               owner.earnPoints(
                   constants.points.zombieKilled * character.pointMultiplier);
             }
+          } else if(bullet.owner is Npc) {
+            // on zombie killed by npc
+            (bullet.owner as Npc).clearTarget();
           }
 
           if (randomBool()) {
@@ -1411,6 +1415,9 @@ extension GameFunctions on Game {
     InteractableNpc npc;
     for (int i = 0; i < npcs.length; i++) {
       npc = npcs[i];
+
+      if (npc.mode == NpcMode.Ignore) continue;
+
       if (npc.targetSet) {
         // @on update npc with target
         if (diffOver(npc.x, npc.target.x, settings.npcChaseRange)) continue;
