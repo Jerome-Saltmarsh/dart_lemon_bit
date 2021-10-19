@@ -35,6 +35,7 @@ void clearCompileGameState() {
   compiledGame.totalBullets = 0;
   compiledGame.grenades.clear();
   compiledGame.collectables.clear();
+  compiledGame.particleEmitters.clear();
 
   for (Vector2 bullet in compiledGame.bulletHoles) {
     bullet.x = 0;

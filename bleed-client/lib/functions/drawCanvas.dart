@@ -9,6 +9,7 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/classes/Sprite.dart';
 import 'package:bleed_client/classes/Zombie.dart';
+import 'package:bleed_client/common/ObjectType.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
@@ -73,7 +74,6 @@ void _drawCompiledGame() {
   _drawBullets(compiledGame.bullets);
   drawBulletHoles(compiledGame.bulletHoles);
   _drawGrenades(compiledGame.grenades);
-  _drawParticles();
   _renderItems();
   _drawCrates();
   drawCharacters();
@@ -97,11 +97,13 @@ void _drawCompiledGame() {
       sprite.x = human.x;
       sprite.y = human.y;
       sprite.anchorY = 0.5;
+      sprite.visible = true;
       sprite.src = mapHumanToRect(
           human.weapon, human.state, human.direction, human.frame);
       humanIndex++;
     } else {
       EnvironmentObject environmentObject = compiledGame.environmentObjects[envIndex];
+      sprite.visible = environmentObject.type != EnvironmentObjectType.SmokeEmitter;
       sprite.image = mapEnvironmentObjectTypeToImage(environmentObject.type);
       sprite.x = environmentObject.x;
       sprite.y = environmentObject.y;
@@ -115,6 +117,7 @@ void _drawCompiledGame() {
 
   for (int i = 0; i < index; i++) {
     Sprite sprite = compiledGame.sprites[i];
+    if (!sprite.visible) continue;
     globalCanvas.drawImageRect(
         sprite.image,
         sprite.src,
@@ -129,6 +132,8 @@ void _drawCompiledGame() {
   // for(EnvironmentObject env in compiledGame.environmentObjects){
   //   drawCircle(env.x, env.y, 50, Colors.white70);
   // }
+
+  _drawParticles();
 
   if (settings.compilePaths) {
     drawPaths();

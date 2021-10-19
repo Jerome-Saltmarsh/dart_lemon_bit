@@ -9,6 +9,7 @@ enum EnvironmentObjectType {
   Grave,
   Palisade_H,
   Palisade_V,
+  SmokeEmitter,
 }
 
 const List<EnvironmentObjectType> environmentObjectTypes = EnvironmentObjectType.values;

@@ -8,4 +8,5 @@ class Sprite {
   double anchorX = 0.5;
   double anchorY = 0.5;
   Image image;
+  bool visible = true;
 }

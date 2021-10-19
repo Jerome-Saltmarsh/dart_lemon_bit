@@ -1,7 +1,4 @@
-
-import 'dart:math';
-
-Random random = Random();
+import '../instances/random.dart';
 
 double randomBetween(num a, num b){
   return (random.nextDouble() * (b - a)) + a;

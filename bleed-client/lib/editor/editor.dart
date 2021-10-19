@@ -153,6 +153,29 @@ void _onKeyDownEvent(RawKeyDownEvent event){
       return;
     }
   }
+
+  double v = 1.5;
+  if (event.logicalKey == LogicalKeyboardKey.keyW) {
+    if(editState.selectedObject != null) {
+      editState.selectedObject.y -= v;
+    }
+  }
+  if (event.logicalKey == LogicalKeyboardKey.keyS) {
+    if(editState.selectedObject != null) {
+      editState.selectedObject.y += v;
+    }
+  }
+  if (event.logicalKey == LogicalKeyboardKey.keyA) {
+    if(editState.selectedObject != null) {
+      editState.selectedObject.x -= v;
+    }
+  }
+  if (event.logicalKey == LogicalKeyboardKey.keyD) {
+    if(editState.selectedObject != null) {
+      editState.selectedObject.x += v;
+    }
+  }
+
   if (event.logicalKey == LogicalKeyboardKey.keyP) {
     compiledGame.playerSpawnPoints.add(mouseWorld);
   }
@@ -179,7 +202,7 @@ void _onKeyDownEvent(RawKeyDownEvent event){
 void updateEditMode() {
   onKeyPressed(LogicalKeyboardKey.escape, disconnect);
 
-  _controlCameraEditMode();
+  // _controlCameraEditMode();
   _onMouseLeftClick();
   _handleMouseDrag();
   redrawCanvas();
@@ -213,6 +236,9 @@ void drawEditMode() {
 
   if (editState.selectedObject != null){
     drawCircleOutline(x: editState.selectedObject.x, y: editState.selectedObject.y, radius: 50, color: white, sides: 10);
+
+    drawCircle(editState.selectedObject.x, editState.selectedObject.y,
+        15, Colors.white70);
   }
 
   if (editState.selectedBlock == null) return;

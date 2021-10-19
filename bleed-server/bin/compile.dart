@@ -312,8 +312,8 @@ void _compileBullet(StringBuffer buffer, Bullet bullet) {
 void _compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.state.index);
   _write(buffer, player.direction.index);
-  _write(buffer, player.x.toInt());
-  _write(buffer, player.y.toInt());
+  _writeInt(buffer, player.x);
+  _writeInt(buffer, player.y);
   _write(buffer, player.stateFrameCount);
   _write(buffer, player.weapon.index);
   _write(buffer, player.squad);

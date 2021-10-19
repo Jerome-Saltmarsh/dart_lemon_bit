@@ -26,8 +26,8 @@ class OpenWorld extends Game {
     npcDavis = InteractableNpc(
         name: "Davis",
         onInteractedWith: _onNpcInteractedWithMain,
-        x: 0,
-        y: 1550,
+        x: -100,
+        y: 1650,
         health: 100,
         weapon: Weapon.Unarmed
     );

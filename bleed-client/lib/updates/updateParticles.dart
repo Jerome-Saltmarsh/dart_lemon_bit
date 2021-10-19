@@ -4,13 +4,18 @@ import 'package:bleed_client/utils/list_util.dart';
 import '../state.dart';
 import 'updateParticle.dart';
 
+bool _sort = true;
+
 void updateParticles() {
   for (Particle particle in compiledGame.particles) {
     if (!particle.active) continue;
     updateParticle(particle);
   }
 
-  sort(compiledGame.particles, _compareParticle);
+  // _sort = !_sort;
+  // if (_sort) {
+  //   sort(compiledGame.particles, _compareParticle);
+  // }
 }
 
 int _compareParticle(Particle a) {

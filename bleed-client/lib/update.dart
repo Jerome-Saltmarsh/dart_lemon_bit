@@ -1,5 +1,8 @@
 import 'package:bleed_client/audio.dart';
+import 'package:bleed_client/classes/Particle.dart';
+import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/editor/editor.dart';
+import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/properties.dart';
@@ -69,7 +72,27 @@ void updatePlayMode() {
   if (!panningCamera && player.alive) {
     cameraTrackPlayer();
   }
+
+  for (ParticleEmitter emitter in compiledGame.particleEmitters) {
+    if (emitter.next-- > 0) continue;
+    emitter.next = emitter.rate;
+    Particle particle = getDeactiveParticle();
+    if (particle == null) continue;
+    particle.active = true;
+    particle.x = emitter.x;
+    particle.y = emitter.y;
+    emitter.emit(particle);
+  }
+
   updatePlayer();
+}
+
+Particle getDeactiveParticle() {
+  for (Particle particle in compiledGame.particles) {
+    if (particle.active) continue;
+    return particle;
+  }
+  return null;
 }
 
 void updatePlayer() {

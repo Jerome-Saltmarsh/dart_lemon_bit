@@ -81,13 +81,14 @@
 [ ] Editor translate environment object
 [ ] Zombies run through environment objects
 [ ] Animated Torches
-[ ] Chimney Smoke
 [ ] Render Batching
 [ ] Fix floating text bug
 [ ] Fix particle float on water
 [ ] FIX Zombies walk into walls 
-[ ] Animate water tiles
-[ ] Fix guards stop shooting bug
+[ ] Myst Particles
+[ ] Water Particles
+[ ] Chimney Smoke Particles
+[x] Fix guards stop shooting bug
 [x] Walls 3d
 [x] Edit mode select tile
 [x] Environment object zordering

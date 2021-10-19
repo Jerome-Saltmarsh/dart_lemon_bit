@@ -4,6 +4,7 @@ import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/InventoryItem.dart';
 import 'package:bleed_client/classes/Lobby.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
+import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/GameError.dart';
 import 'package:bleed_client/common/GameType.dart';
@@ -17,6 +18,7 @@ import 'package:bleed_client/enums/InventoryItemType.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
+import 'package:bleed_client/functions/emitSmoke.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/ui.dart';
 import 'package:bleed_client/ui/dialogs.dart';
@@ -296,6 +298,17 @@ void _parseEnvironmentObjects() {
       y: y,
       type: type
     ));
+
+    if (type == EnvironmentObjectType.SmokeEmitter){
+      compiledGame.particleEmitters.add(
+          ParticleEmitter(
+            x: x,
+            y: y,
+            rate: 20,
+            emit: emitSmoke
+          )
+      );
+    }
   }
 
   sortReversed(compiledGame.environmentObjects, environmentObjectY);

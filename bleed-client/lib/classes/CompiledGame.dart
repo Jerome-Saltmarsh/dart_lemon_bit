@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import 'package:bleed_client/classes/NpcDebug.dart';
+import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/classes/Sprite.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
@@ -37,6 +38,7 @@ class CompiledGame {
   int totalSprites = 0;
   int bulletHoleIndex = 0;
   List<Particle> particles = [];
+  List<ParticleEmitter> particleEmitters = [];
   List<double> grenades = [];
   int gameId = -1;
   GameType gameType;
