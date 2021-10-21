@@ -439,12 +439,30 @@ Widget _buildServerText() {
   });
 }
 
+TextEditingController _textEditingControllerSpeak = TextEditingController();
+
+Widget buildTextBox(){
+  return Positioned(bottom: 0, right: 300,child: Row(children: [
+    Container(
+        width: 200,
+        height: 50,
+        child: TextField(
+          controller: _textEditingControllerSpeak,
+        )),
+    button('Send', (){
+      speak(_textEditingControllerSpeak.text);
+      _textEditingControllerSpeak.text = "";
+    })
+  ],));
+}
+
 Widget buildHud() {
   print("buildHud()");
 
   return Stack(
     children: [
       buildTopRight(),
+      buildTextBox(),
       _buildServerText(),
       if (player.alive) buildViewBottomLeft(),
       if (compiledGame.gameType == GameType.Fortress) buildViewFortress(),

@@ -44,7 +44,7 @@ import 'state.dart';
 // state
 int _index = 0;
 // constants
-const String _emptyString = " ";
+const String _space = " ";
 const String _semiColon = ";";
 const String _comma = ",";
 const String _dash = "-";
@@ -274,7 +274,7 @@ void parseState() {
     }
 
     while (_index < _text.length) {
-      if (_currentCharacter == _emptyString) {
+      if (_currentCharacter == _space) {
         _index++;
         continue;
       }
@@ -555,7 +555,7 @@ void _next() {
 }
 
 void _consumeSpace() {
-  while (_currentCharacter == _emptyString) {
+  while (_currentCharacter == _space) {
     _next();
   }
 }
@@ -604,7 +604,7 @@ ServerResponse _consumeServerResponse() {
 String _consumeString() {
   _consumeSpace();
   StringBuffer buffer = StringBuffer();
-  while (_index < event.length && _currentCharacter != _emptyString) {
+  while (_index < event.length && _currentCharacter != _space) {
     buffer.write(_currentCharacter);
     _index++;
   }
@@ -727,6 +727,13 @@ void _consumeHuman(Human human) {
   human.weapon = _consumeWeapon();
   human.squad = _consumeInt();
   human.name = _consumeString();
+
+  StringBuffer textBuffer = StringBuffer();
+  while (!_simiColonConsumed()) {
+    textBuffer.write(_consumeString());
+    textBuffer.write(_space);
+  }
+  human.text = textBuffer.toString();
 }
 
 void _consumeZombie(Zombie zombie) {

@@ -88,6 +88,7 @@ class _Keys {
   LogicalKeyboardKey equipShotgun = LogicalKeyboardKey.digit2;
   LogicalKeyboardKey equipSniperRifle = LogicalKeyboardKey.digit3;
   LogicalKeyboardKey equipAssaultRifle = LogicalKeyboardKey.digit4;
+  LogicalKeyboardKey speak = LogicalKeyboardKey.keyT;
 }
 
 Map<LogicalKeyboardKey, bool> _keyDownState = {};
@@ -107,6 +108,9 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.equipAssaultRifle: sendRequestEquipAssaultRifle,
   keys.sprint: toggleSprint,
   keys.sprint2: toggleSprint,
+  keys.speak: (){
+    speak("Hello World");
+  },
 };
 
 void toggleSprint() {

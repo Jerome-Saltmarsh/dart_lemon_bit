@@ -11,6 +11,7 @@ class Human {
   Weapon weapon;
   int squad;
   String name;
+  String text = "";
 
   Human({
       this.state,

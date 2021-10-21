@@ -32,6 +32,7 @@ class Player extends Character {
   Clips clips = Clips();
   Rounds rounds = Rounds();
   String message = "";
+  String text = "";
   MainQuest questMain = MainQuest.Introduction;
 
   bool get acquiredHandgun => rounds.handgun > 0;

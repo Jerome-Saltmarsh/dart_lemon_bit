@@ -466,7 +466,6 @@ extension GameFunctions on Game {
           double combinedRadius = character.radius + environmentObject.radius;
             if (diffOver(character.x, environmentObject.x, combinedRadius)) continue;
             if (diffOver(character.y, environmentObject.y, combinedRadius)) continue;
-
             double _distance = distanceBetween(character, environmentObject);
             if (_distance > combinedRadius) continue;
             double overlap = combinedRadius - _distance;

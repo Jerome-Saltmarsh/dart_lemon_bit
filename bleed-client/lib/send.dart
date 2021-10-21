@@ -14,6 +14,11 @@ final StringBuffer _buffer = StringBuffer();
 final gameUpdateIndex = ClientRequest.Game_Update.index;
 const String _space = " ";
 
+void speak(String message){
+  if (message.isEmpty) return;
+  send('${ClientRequest.Speak.index} $session $message ;');
+}
+
 void sendRequestInteract(){
   send('${ClientRequest.Interact.index} $session');
 }
@@ -85,6 +90,7 @@ void sendRequestUpdatePlayer() {
 void sendRequestUpdateScore() {
   if (state.compiledGame.gameId < 0) return;
   if (editMode) return;
+  if (compiledGame.gameType == GameType.Open_World) return;
   send('${ClientRequest.Score.index} ${state.compiledGame.gameId}');
 }
 

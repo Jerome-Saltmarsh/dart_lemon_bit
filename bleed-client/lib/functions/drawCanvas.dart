@@ -153,6 +153,8 @@ void _drawCompiledGame() {
     print(e);
   }
 
+  _writePlayerText();
+
   _drawMouseAim();
 }
 
@@ -225,6 +227,15 @@ void _drawPlayerNames() {
     drawText(player.name, player.x, player.y);
   }
 }
+
+void _writePlayerText() {
+  for (int i = 0; i < compiledGame.totalHumans; i++) {
+    Human human = compiledGame.humans[i];
+    if (human.text.isEmpty) continue;
+    drawText(human.text, human.x - 50, human.y - 50);
+  }
+}
+
 
 void _drawMouseAim() {
   if (!mouseAvailable) return;

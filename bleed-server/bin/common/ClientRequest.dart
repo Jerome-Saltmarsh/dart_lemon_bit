@@ -21,4 +21,5 @@ enum ClientRequest {
   SetCompilePaths,
   Version,
   Interact,
+  Speak,
 }

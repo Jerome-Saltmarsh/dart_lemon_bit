@@ -607,6 +607,30 @@ void main() {
           sendToClient('${ServerResponse.Version.index} $version');
           break;
 
+        case ClientRequest.Speak:
+          String gameId = arguments[1];
+          Game? game = findGameById(gameId);
+          if (game == null) {
+            errorGameNotFound();
+            return;
+          }
+
+          int id = int.parse(arguments[2]);
+          Player? player = game.findPlayerById(id);
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+
+          String uuid = arguments[3];
+          if (uuid != player.uuid) {
+            errorInvalidPlayerUUID();
+            return;
+          }
+
+          player.text = arguments.sublist(4, arguments.length).fold("", (previousValue, element) => '$previousValue $element');
+        break;
+
         case ClientRequest.Interact:
           String gameId = arguments[1];
           Game? game = findGameById(gameId);
