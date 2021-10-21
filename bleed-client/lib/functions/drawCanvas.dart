@@ -42,6 +42,8 @@ import 'drawBullet.dart';
 import 'drawGrenade.dart';
 import 'drawParticle.dart';
 
+double _anchorX = 50;
+double _anchorY = 80;
 double _nameRadius = 100;
 Ring _healthRing = Ring(16);
 
@@ -79,6 +81,30 @@ void _drawCompiledGame() {
   _drawCrates();
   drawCharacters();
   _drawCollectables();
+  _drawSprites();
+  _drawParticles();
+
+  if (settings.compilePaths) {
+    drawPaths();
+    drawDebugNpcs(compiledGame.npcDebug);
+  }
+
+  _drawFloatingTexts();
+  _drawPlayerNames();
+  _writePlayerText();
+  _drawMouseAim();
+}
+
+void _drawFloatingTexts() {
+  for (FloatingText floatingText in render.floatingText) {
+    if (floatingText.duration == 0) continue;
+    floatingText.duration--;
+    floatingText.y -= 0.5;
+    drawText(floatingText.value, floatingText.x, floatingText.y);
+  }
+}
+
+void _drawSprites() {
 
   int index = 0;
   int humanIndex = 0;
@@ -129,38 +155,7 @@ void _drawCompiledGame() {
             sprite.src.height),
         paint);
   }
-
-  // for(EnvironmentObject env in compiledGame.environmentObjects){
-  //   drawCircle(env.x, env.y, 50, Colors.white70);
-  // }
-
-  _drawParticles();
-
-  if (settings.compilePaths) {
-    drawPaths();
-    drawDebugNpcs(compiledGame.npcDebug);
-  }
-
-  for (FloatingText floatingText in render.floatingText) {
-    if (floatingText.duration == 0) continue;
-    floatingText.duration--;
-    floatingText.y -= 0.5;
-    drawText(floatingText.value, floatingText.x, floatingText.y);
-  }
-
-  try {
-    _drawPlayerNames();
-  } catch (e) {
-    print(e);
-  }
-
-  _writePlayerText();
-
-  _drawMouseAim();
 }
-
-double _anchorX = 50;
-double _anchorY = 80;
 
 void _drawEnvironmentObjects() {
   for (EnvironmentObject environmentObject in compiledGame.environmentObjects) {
@@ -229,11 +224,14 @@ void _drawPlayerNames() {
   }
 }
 
+double _charWidth = 4.5;
+
 void _writePlayerText() {
   for (int i = 0; i < compiledGame.totalHumans; i++) {
     Human human = compiledGame.humans[i];
     if (human.text.isEmpty) continue;
-    drawText(human.text, human.x - 50, human.y - 50);
+
+    drawText(human.text, human.x - _charWidth * human.text.length, human.y - 50);
   }
 }
 
