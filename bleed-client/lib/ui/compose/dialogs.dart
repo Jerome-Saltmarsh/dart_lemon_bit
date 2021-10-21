@@ -6,13 +6,13 @@ import 'package:bleed_client/connection.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/send.dart';
-import 'package:bleed_client/ui/flutter_constants.dart';
-import 'package:bleed_client/ui/widgets.dart';
+import 'package:bleed_client/ui/state/flutter_constants.dart';
+import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 
-import '../state.dart';
+import '../../state.dart';
 
 BuildContext contextMainMenuDialog;
 
@@ -290,3 +290,5 @@ Widget _buildCancelButton(BuildContext context) {
       child: text('close', color: Colors.black),
       onPressed: () => pop(context));
 }
+
+

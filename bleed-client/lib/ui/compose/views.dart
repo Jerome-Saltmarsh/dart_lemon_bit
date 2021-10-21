@@ -5,16 +5,15 @@ import 'package:bleed_client/game_engine/web_functions.dart';
 import 'package:bleed_client/instances/sharedPreferences.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/send.dart';
-import 'package:bleed_client/ui/widgets.dart';
+import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../audio.dart';
-import '../state.dart';
-import '../ui.dart';
-import 'flutter_constants.dart';
+import '../../audio.dart';
+import '../../state.dart';
+import '../state/flutter_constants.dart';
 
 Widget buildViewJoinedLobby() {
   if (state.lobby.maxPlayers == 0) {

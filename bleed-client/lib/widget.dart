@@ -11,7 +11,10 @@ import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/state.dart';
-import 'package:bleed_client/ui/dialogs.dart';
+import 'package:bleed_client/ui/compose/dialogs.dart';
+import 'package:bleed_client/ui/compose/hudUI.dart';
+import 'package:bleed_client/ui/logic/hudLogic.dart';
+import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/update.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +30,6 @@ import 'images.dart';
 import 'input.dart';
 import 'instances/settings.dart';
 import 'rects.dart';
-import 'ui.dart';
 import 'utils.dart';
 
 class BleedWidget extends GameWidget {

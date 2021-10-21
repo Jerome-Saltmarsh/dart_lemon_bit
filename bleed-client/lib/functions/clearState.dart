@@ -4,9 +4,9 @@ import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/ui/logic/hudLogic.dart';
 
 import '../state.dart';
-import '../ui.dart';
 
 void clearState() {
   print('clearState()');

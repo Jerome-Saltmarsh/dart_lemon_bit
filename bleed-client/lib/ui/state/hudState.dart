@@ -1,0 +1,120 @@
+
+
+import 'dart:math';
+
+import 'package:bleed_client/classes/Human.dart';
+import 'package:bleed_client/classes/Score.dart';
+import 'package:bleed_client/enums.dart';
+import 'package:bleed_client/instances/inventory.dart';
+import 'package:bleed_client/maths.dart';
+import 'package:bleed_client/state.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
+
+bool get textFieldFocused => hud.focusNodes.textFieldMessage.hasFocus;
+
+final HudState hud = HudState();
+
+double squareSize = 80;
+double halfSquareSize = squareSize * 0.5;
+double padding = 3;
+double w = squareSize * inventory.columns + padding;
+double h = squareSize * inventory.rows + padding;
+
+
+int tipIndex = 0;
+
+String getTip() {
+  return tips[tipIndex];
+}
+
+int getScoreRecord(Score score) {
+  return score.record;
+}
+
+final List<String> tips = [
+  "Use the W,A,S,D keys to move",
+  "Press F to use knife attack",
+  "Press 1, 2, 3, etc to change weapons",
+  "Press G to throw grenade",
+  "Hold left shift to sprint",
+  "Press Space bar to fire weapon",
+  "Scroll with the mouse to zoom in and out",
+  "Hold E to pan camera",
+  'Change server using the option menu at the bottom right side of the screen',
+  "Activate fullscreen using the option at the top right side of the screen"
+];
+
+
+int get enemiesLeft {
+  int count = 0;
+
+  if (state.player.squad == -1) {
+    for (Human player in compiledGame.humans) {
+      if (player.state != CharacterState.Dead) continue;
+      count++;
+    }
+    return count - 1;
+  }
+
+  for (Human player in compiledGame.humans) {
+    if (player.state == CharacterState.Dead) continue;
+    if (player.squad == state.player.squad) continue;
+    count++;
+  }
+  return count;
+}
+
+
+class HudState {
+  final _State state = _State();
+  final _FocusNodes focusNodes = _FocusNodes();
+  final _StateSetters stateSetters = _StateSetters();
+  final _TextEditingControllers textEditingControllers = _TextEditingControllers();
+  final _Properties properties = _Properties();
+}
+
+class _StateSetters {
+  StateSetter bottomLeft;
+  StateSetter score;
+  StateSetter serverText;
+}
+
+class _State {
+  bool observeMode = false;
+  bool showScore = true;
+  bool showServers = false;
+  bool expandScore = false;
+}
+
+class _Properties {
+  double iconSize = 45;
+  Border border = Border.all(color: Colors.black, width: 5.0, style: BorderStyle.solid);
+}
+
+class _TextEditingControllers {
+  final TextEditingController speak = TextEditingController();
+  final TextEditingController playerName = TextEditingController();
+}
+
+class _FocusNodes {
+  FocusNode textFieldMessage = FocusNode();
+}
+
+
+Ring healthRing = Ring(16);
+
+class Ring {
+  List<Offset> points = [];
+  double sides;
+
+  Ring(this.sides, {double radius = 12}) {
+    double radianPerSide = pi2 / sides;
+    for (int side = 0; side <= sides; side++) {
+      double radians = side * radianPerSide;
+      points.add(Offset(cos(radians) * radius, sin(radians) * radius));
+    }
+  }
+}
+

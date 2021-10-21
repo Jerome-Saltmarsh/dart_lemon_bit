@@ -2,12 +2,10 @@ import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/editor/editor.dart';
-import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/tutorials.dart';
-import 'package:bleed_client/ui.dart';
 
 import 'common/Weapons.dart';
 import 'connection.dart';

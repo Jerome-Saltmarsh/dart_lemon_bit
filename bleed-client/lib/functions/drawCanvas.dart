@@ -29,7 +29,8 @@ import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/mappers/mapItemToRect.dart';
 import 'package:bleed_client/rects.dart';
-import 'package:bleed_client/ui.dart';
+import 'package:bleed_client/ui/compose/hudUI.dart';
+import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

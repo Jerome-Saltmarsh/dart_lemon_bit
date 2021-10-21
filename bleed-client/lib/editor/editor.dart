@@ -12,8 +12,8 @@ import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/global_paint.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/properties.dart';
-import 'package:bleed_client/ui/flutter_constants.dart';
-import 'package:bleed_client/ui/widgets.dart';
+import 'package:bleed_client/ui/state/flutter_constants.dart';
+import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
