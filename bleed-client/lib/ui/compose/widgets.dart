@@ -168,3 +168,8 @@ ButtonStyle buildButtonStyle(Color borderColor, double borderWidth) {
         borderRadius: BorderRadius.all(Radius.circular(5))),
   );
 }
+
+final Widget blank = Positioned(
+  top: 0,
+  child: Text(""),
+);

@@ -89,7 +89,6 @@ class _Keys {
   LogicalKeyboardKey equipShotgun = LogicalKeyboardKey.digit2;
   LogicalKeyboardKey equipSniperRifle = LogicalKeyboardKey.digit3;
   LogicalKeyboardKey equipAssaultRifle = LogicalKeyboardKey.digit4;
-  LogicalKeyboardKey speak = LogicalKeyboardKey.keyT;
   LogicalKeyboardKey speakLetsGo = LogicalKeyboardKey.digit9;
   LogicalKeyboardKey speakLetsGreeting = LogicalKeyboardKey.digit8;
   LogicalKeyboardKey waitASecond = LogicalKeyboardKey.digit7;
@@ -232,7 +231,7 @@ void _handleKeyDownEvent(RawKeyDownEvent event) {
   LogicalKeyboardKey key = event.logicalKey;
 
   if (hud.state.textBoxVisible) {
-    if (key == LogicalKeyboardKey.enter){
+    if (key == keys.text){
       sendAndCloseTextBox();
     }
     return;

@@ -37,6 +37,7 @@ import 'package:flutter/material.dart';
 
 import '../../properties.dart';
 import '../../tutorials.dart';
+import 'buildTextBox.dart';
 import 'dialogs.dart';
 
 Widget buildHud() {
@@ -221,7 +222,7 @@ Widget _buildServerText() {
       builder: (BuildContext context, StateSetter stateSetter) {
         hud.stateSetters.serverText = stateSetter;
 
-        if (player.message.isEmpty) return _blank;
+        if (player.message.isEmpty) return blank;
 
         return Positioned(
             child: Container(
@@ -247,39 +248,6 @@ Widget _buildServerText() {
             bottom: 100);
       });
 }
-
-Widget buildTextBox() {
-  return StatefulBuilder(builder: (BuildContext context, StateSetter setState){
-    hud.stateSetters.messageText = setState;
-
-    if (!hud.state.textBoxVisible) return _blank;
-
-    return Positioned(
-        bottom: 0,
-        right: 300,
-        child: Container(
-          decoration: boxDecoration(),
-          child: Row(
-            children: [
-              Container(
-                  width: 200,
-                  height: 50,
-                  padding: padding8,
-                  child: TextField(
-                    focusNode: hud.focusNodes.textFieldMessage,
-                    controller: hud.textEditingControllers.speak,
-                    style: TextStyle(color: Colors.white),
-                  )),
-              // Container(
-              //   width: 100,
-              //   child: button('Send', sendText),
-              // )
-            ],
-          ),
-        ));
-  },);
-}
-
 
 Widget buildViewFortress() {
   return Positioned(
@@ -331,10 +299,6 @@ Widget buildImageSlot(
   );
 }
 
-final Widget _blank = Positioned(
-  top: 0,
-  child: Text(""),
-);
 
 
 Widget buildEquipWeaponSlot({Weapon weapon, int index}) {
