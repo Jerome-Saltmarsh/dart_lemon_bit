@@ -38,8 +38,8 @@ TextPainter _textPainter = TextPainter(
     textDirection: TextDirection.ltr
 );
 
-void drawText(String text, double x, double y, {Canvas canvas}) {
-  _textPainter.text = TextSpan(style: _style, text: text);
+void drawText(String text, double x, double y, {Canvas canvas, TextStyle style}) {
+  _textPainter.text = TextSpan(style: style ?? _style, text: text);
   _textPainter.layout();
   _textPainter.paint(canvas ?? globalCanvas, Offset(x, y));
 }

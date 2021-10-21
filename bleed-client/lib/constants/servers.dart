@@ -60,7 +60,7 @@ Map<Server, String> _names = {
 Map<Server, String> _uris = {
   Server.Australia: 'https://bleed-2-melbourne-osbmaezptq-km.a.run.app',
   Server.Brazil: "https://bleed-2-sao-paulo-osbmaezptq-rj.a.run.app",
-  Server.Germany: 'https://bleed-frankfurt-2-osbmaezptq-ey.a.run.app',
+  Server.Germany: 'https://bleed-3-frankfurt-osbmaezptq-ey.a.run.app',
   Server.South_Korea: 'https://bleed-2-seoul-osbmaezptq-du.a.run.app',
   Server.USA_East: 'https://bleed-usa-east-2-osbmaezptq-ue.a.run.app',
   Server.USA_West: 'https://bleed-usa-west-2-osbmaezptq-uw.a.run.app',

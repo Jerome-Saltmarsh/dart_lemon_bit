@@ -89,9 +89,21 @@ class _Keys {
   LogicalKeyboardKey equipSniperRifle = LogicalKeyboardKey.digit3;
   LogicalKeyboardKey equipAssaultRifle = LogicalKeyboardKey.digit4;
   LogicalKeyboardKey speak = LogicalKeyboardKey.keyT;
+  LogicalKeyboardKey speakLetsGo = LogicalKeyboardKey.digit9;
+  LogicalKeyboardKey speakLetsGreeting = LogicalKeyboardKey.digit8;
 }
 
 Map<LogicalKeyboardKey, bool> _keyDownState = {};
+
+final List<String> letsGo = [
+  "Come on!",
+  "Let's go!",
+];
+
+final List<String> greetings = [
+  'Hello',
+  'Hi',
+];
 
 // triggered the first frame a key is down
 Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
@@ -108,8 +120,11 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.equipAssaultRifle: sendRequestEquipAssaultRifle,
   keys.sprint: toggleSprint,
   keys.sprint2: toggleSprint,
-  keys.speak: (){
-    speak("Hello World");
+  keys.speakLetsGo: (){
+    speak(randomItem(letsGo));
+  },
+  keys.speakLetsGreeting: (){
+    speak(randomItem(greetings));
   },
 };
 

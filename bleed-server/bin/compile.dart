@@ -377,6 +377,9 @@ void _writeBool(StringBuffer buffer, bool value) {
 }
 
 void _writeInt(StringBuffer buffer, double value) {
+  if (value.isNaN){
+    throw Exception("Invalid value");
+  }
   _write(buffer, value.toInt());
 }
 

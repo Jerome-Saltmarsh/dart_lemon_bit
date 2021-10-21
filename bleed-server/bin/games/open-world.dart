@@ -118,6 +118,7 @@ class OpenWorld extends Game {
       inventory: Inventory(0, 0, []),
       clips: Clips(assaultRifle: 100),
       rounds: Rounds(),
+      squad: 1,
     );
   }
 

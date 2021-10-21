@@ -733,7 +733,7 @@ void _consumeHuman(Human human) {
     textBuffer.write(_consumeString());
     textBuffer.write(_space);
   }
-  human.text = textBuffer.toString();
+  human.text = textBuffer.toString().trim();
 }
 
 void _consumeZombie(Zombie zombie) {

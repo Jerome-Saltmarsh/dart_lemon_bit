@@ -998,6 +998,13 @@ extension GameFunctions on Game {
   void updatePlayer(Player player) {
     player.lastUpdateFrame++;
 
+    if (player.textDuration > 0) {
+      player.textDuration--;
+      if (player.textDuration == 0) {
+        player.text = "";
+      }
+    }
+
     switch (player.state) {
       case CharacterState.Running:
         // player.stamina -= 3;

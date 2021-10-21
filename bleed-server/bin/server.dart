@@ -629,6 +629,7 @@ void main() {
           }
 
           player.text = arguments.sublist(4, arguments.length).fold("", (previousValue, element) => '$previousValue $element');
+          player.textDuration = 150;
         break;
 
         case ClientRequest.Interact:

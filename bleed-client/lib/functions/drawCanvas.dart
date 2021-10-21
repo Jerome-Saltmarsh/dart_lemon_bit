@@ -236,7 +236,6 @@ void _writePlayerText() {
   }
 }
 
-
 void _drawMouseAim() {
   if (!mouseAvailable) return;
   if (!playerReady) return;
