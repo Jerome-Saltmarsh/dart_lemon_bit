@@ -231,6 +231,13 @@ void stopMelee() {
 void _handleKeyDownEvent(RawKeyDownEvent event) {
   LogicalKeyboardKey key = event.logicalKey;
 
+  if (hud.state.textBoxVisible) {
+    if (key == LogicalKeyboardKey.enter){
+      sendAndCloseTextBox();
+    }
+    return;
+  }
+
   if (!_keyDownState.containsKey(key)) {
     // on key pressed
     _keyDownState[key] = true;
@@ -257,6 +264,8 @@ void _handleKeyDownEvent(RawKeyDownEvent event) {
 
 void _handleKeyUpEvent(RawKeyUpEvent event) {
   LogicalKeyboardKey key = event.logicalKey;
+
+  if (hud.state.textBoxVisible) return;
 
   if (_keyReleasedHandlers.containsKey(key)) {
     _keyReleasedHandlers[key].call();
