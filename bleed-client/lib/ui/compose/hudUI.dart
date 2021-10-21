@@ -261,12 +261,15 @@ Widget buildTextBox() {
                 child: TextField(
                   focusNode: hud.focusNodes.textFieldMessage,
                   controller: hud.textEditingControllers.speak,
-                  decoration: InputDecoration(labelText: "Message"),
+                  decoration: InputDecoration(label: Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: text("Say (Press Enter)"),
+                  )),
                 )),
-            Container(
-              width: 100,
-              child: button('Send', sendText),
-            )
+            // Container(
+            //   width: 100,
+            //   child: button('Send', sendText),
+            // )
           ],
         ),
       ));
@@ -694,7 +697,7 @@ Widget buildViewRespawn() {
                             Container(
                                 width: 350,
                                 alignment: Alignment.center,
-                                child: text(getTip())),
+                                child: text(currentTip)),
                             width16,
                             Tooltip(
                               message: "Next Hint",

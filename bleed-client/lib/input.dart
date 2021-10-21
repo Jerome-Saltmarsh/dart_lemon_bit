@@ -91,7 +91,8 @@ class _Keys {
   LogicalKeyboardKey speak = LogicalKeyboardKey.keyT;
   LogicalKeyboardKey speakLetsGo = LogicalKeyboardKey.digit9;
   LogicalKeyboardKey speakLetsGreeting = LogicalKeyboardKey.digit8;
-  LogicalKeyboardKey sendText = LogicalKeyboardKey.enter;
+  LogicalKeyboardKey waitASecond = LogicalKeyboardKey.digit7;
+  LogicalKeyboardKey text = LogicalKeyboardKey.enter;
 }
 
 Map<LogicalKeyboardKey, bool> _keyDownState = {};
@@ -99,12 +100,20 @@ Map<LogicalKeyboardKey, bool> _keyDownState = {};
 final List<String> letsGo = [
   "Come on!",
   "Let's go!",
+  'Follow me!',
 ];
 
 final List<String> greetings = [
   'Hello',
   'Hi',
+  'Greetings',
 ];
+
+final List<String> waitASecond = [
+  'Wait a second',
+  'Just a moment'
+];
+
 
 // triggered the first frame a key is down
 Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
@@ -123,12 +132,13 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.sprint2: toggleSprint,
   keys.speakLetsGo: sayLetsGo,
   keys.speakLetsGreeting: sayGreeting,
-  keys.sendText: _onKeyPressedEnter
+  keys.waitASecond: sayWaitASecond,
+  keys.text: _onKeyPressedEnter
 };
 
 void _onKeyPressedEnter(){
   print("enter key pressed");
-  if(textFieldFocused){
+  if(hud.textEditingControllers.speak.text.isNotEmpty){
     sendText();
   } else{
     focusTextField();
@@ -141,6 +151,10 @@ void sayGreeting(){
 
 void sayLetsGo(){
   speak(randomItem(letsGo));
+}
+
+void sayWaitASecond(){
+  speak(randomItem(waitASecond));
 }
 
 

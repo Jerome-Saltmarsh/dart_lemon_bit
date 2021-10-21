@@ -14,6 +14,7 @@ import 'package:bleed_client/state.dart';
 import 'package:bleed_client/tutorials.dart';
 import 'package:bleed_client/ui/compose/dialogs.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
+import 'package:bleed_client/ui/state/tips.dart';
 import 'package:neuro/instance.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
