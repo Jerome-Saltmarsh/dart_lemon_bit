@@ -20,6 +20,7 @@ import '../send.dart';
 import '../settings.dart';
 import 'maths.dart';
 import 'state.dart';
+import 'ui/logic/showTextBox.dart';
 import 'utils.dart';
 
 LogicalKeyboardKey _keyReload = LogicalKeyboardKey.keyR;
@@ -137,12 +138,8 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
 };
 
 void _onKeyPressedEnter(){
-  print("enter key pressed");
-  if(hud.textEditingControllers.speak.text.isNotEmpty){
-    sendText();
-  } else{
-    focusTextField();
-  }
+  print("_onKeyPressedEnter()");
+  hud.state.textBoxVisible ? sendAndCloseTextBox() : showTextBox();
 }
 
 void sayGreeting(){

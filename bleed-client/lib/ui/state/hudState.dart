@@ -64,9 +64,11 @@ class _StateSetters {
   StateSetter bottomLeft;
   StateSetter score;
   StateSetter serverText;
+  StateSetter messageText;
 }
 
 class _State {
+  bool textBoxVisible = false;
   bool observeMode = false;
   bool showScore = true;
   bool showServers = false;

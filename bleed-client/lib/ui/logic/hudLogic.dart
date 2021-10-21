@@ -18,6 +18,8 @@ import 'package:bleed_client/ui/state/tips.dart';
 import 'package:neuro/instance.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'showTextBox.dart';
+
 
 void initUI() {
   onConnectError.stream.listen((event) {
@@ -71,23 +73,11 @@ void refreshUI() {
   hud.state.showServers = false;
 }
 
-void focusTextField(){
-  print("focusTextField()");
-  hud.focusNodes.textFieldMessage.requestFocus();
-}
-
-void sendText(){
-  print("sendText()");
+void sendAndCloseTextBox(){
+  print("sendAndCloseTextBox()");
   speak(hud.textEditingControllers.speak.text);
-  hud.textEditingControllers.speak.text = "";
-  _unfocusTextField();
+  hideTextBox();
 }
-
-void _unfocusTextField(){
-  print("_unfocusTextField()");
-  hud.focusNodes.textFieldMessage.unfocus();
-}
-
 
 redrawBottomLeft() {
   if (hud.stateSetters.bottomLeft == null) return;

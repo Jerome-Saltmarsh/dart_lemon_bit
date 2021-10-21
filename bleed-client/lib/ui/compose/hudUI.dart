@@ -46,6 +46,7 @@ Widget buildHud() {
     children: [
       buildTopRight(),
       buildTextBox(),
+      if (hud.state.textBoxVisible)
       _buildServerText(),
       if (player.alive) buildViewBottomLeft(),
       if (compiledGame.gameType == GameType.Fortress) buildViewFortress(),
@@ -248,29 +249,35 @@ Widget _buildServerText() {
 }
 
 Widget buildTextBox() {
-  return Positioned(
-      bottom: 0,
-      right: 300,
-      child: Container(
-        decoration: boxDecoration(),
-        child: Row(
-          children: [
-            Container(
-                width: 200,
-                height: 50,
-                padding: padding8,
-                child: TextField(
-                  focusNode: hud.focusNodes.textFieldMessage,
-                  controller: hud.textEditingControllers.speak,
-                  style: TextStyle(color: Colors.white),
-                )),
-            // Container(
-            //   width: 100,
-            //   child: button('Send', sendText),
-            // )
-          ],
-        ),
-      ));
+  return StatefulBuilder(builder: (BuildContext context, StateSetter setState){
+    hud.stateSetters.messageText = setState;
+
+    if (!hud.state.textBoxVisible) return _blank;
+
+    return Positioned(
+        bottom: 0,
+        right: 300,
+        child: Container(
+          decoration: boxDecoration(),
+          child: Row(
+            children: [
+              Container(
+                  width: 200,
+                  height: 50,
+                  padding: padding8,
+                  child: TextField(
+                    focusNode: hud.focusNodes.textFieldMessage,
+                    controller: hud.textEditingControllers.speak,
+                    style: TextStyle(color: Colors.white),
+                  )),
+              // Container(
+              //   width: 100,
+              //   child: button('Send', sendText),
+              // )
+            ],
+          ),
+        ));
+  },);
 }
 
 
