@@ -729,7 +729,7 @@ void _consumeHuman(Human human) {
   human.name = _consumeString();
 
   StringBuffer textBuffer = StringBuffer();
-  while (!_simiColonConsumed()) {
+  while (!_commaConsumed()) {
     textBuffer.write(_consumeString());
     textBuffer.write(_space);
   }

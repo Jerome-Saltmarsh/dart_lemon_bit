@@ -319,7 +319,7 @@ void _compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.squad);
   _write(buffer, player.name);
   _write(buffer, player.text);
-  _write(buffer, _semiColon);
+  _write(buffer, _comma);
 }
 
 void _compileNpc(StringBuffer buffer, Npc npc) {

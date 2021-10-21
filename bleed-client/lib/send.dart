@@ -16,7 +16,7 @@ const String _space = " ";
 
 void speak(String message){
   if (message.isEmpty) return;
-  send('${ClientRequest.Speak.index} $session $message ;');
+  send('${ClientRequest.Speak.index} $session $message');
 }
 
 void sendRequestInteract(){
