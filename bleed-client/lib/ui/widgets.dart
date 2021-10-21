@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/ui/flutter_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -41,6 +42,18 @@ Widget border(
     child: child,
     padding: padding,
   );
+}
+
+BoxDecoration boxDecoration({
+    double borderWidth = 2.0,
+    Color borderColor = Colors.white,
+    double borderRadius = 4,
+    Color fillColor
+    }) {
+  return BoxDecoration(
+      border: Border.all(color: borderColor, width: borderWidth),
+      borderRadius: borderRadius4,
+      color: fillColor);
 }
 
 Widget comingSoon({Widget child}) {

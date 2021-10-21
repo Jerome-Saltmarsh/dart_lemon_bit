@@ -69,7 +69,6 @@ void _handleKeyboardEvent(RawKeyEvent event) {
   } else if (event is RawKeyDownEvent) {
     _handleKeyDownEvent(event);
   }
-  rebuildUIKeys();
 }
 
 final _Keys keys = _Keys();
@@ -91,6 +90,7 @@ class _Keys {
   LogicalKeyboardKey speak = LogicalKeyboardKey.keyT;
   LogicalKeyboardKey speakLetsGo = LogicalKeyboardKey.digit9;
   LogicalKeyboardKey speakLetsGreeting = LogicalKeyboardKey.digit8;
+  LogicalKeyboardKey sendText = LogicalKeyboardKey.enter;
 }
 
 Map<LogicalKeyboardKey, bool> _keyDownState = {};
@@ -120,13 +120,28 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.equipAssaultRifle: sendRequestEquipAssaultRifle,
   keys.sprint: toggleSprint,
   keys.sprint2: toggleSprint,
-  keys.speakLetsGo: (){
-    speak(randomItem(letsGo));
-  },
-  keys.speakLetsGreeting: (){
-    speak(randomItem(greetings));
-  },
+  keys.speakLetsGo: sayLetsGo,
+  keys.speakLetsGreeting: sayGreeting,
+  keys.sendText: _onKeyPressedEnter
 };
+
+void _onKeyPressedEnter(){
+  print("enter key pressed");
+  if(textFieldFocused){
+    sendText();
+  } else{
+    focusTextField();
+  }
+}
+
+void sayGreeting(){
+  speak(randomItem(greetings));
+}
+
+void sayLetsGo(){
+  speak(randomItem(letsGo));
+}
+
 
 void toggleSprint() {
   inputRequest.sprint = !inputRequest.sprint;

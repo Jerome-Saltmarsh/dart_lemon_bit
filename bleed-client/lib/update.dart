@@ -13,6 +13,7 @@ import 'common/Weapons.dart';
 import 'connection.dart';
 import 'input.dart';
 import 'instances/settings.dart';
+import 'instances/sharedPreferences.dart';
 import 'send.dart';
 import 'state.dart';
 import 'updates/updateCharacters.dart';

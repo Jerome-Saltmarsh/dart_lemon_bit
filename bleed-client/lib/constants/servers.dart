@@ -1,3 +1,4 @@
+import 'package:bleed_client/instances/sharedPreferences.dart';
 import 'package:bleed_client/ui.dart';
 
 import '../connection.dart';

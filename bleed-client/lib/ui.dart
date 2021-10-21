@@ -39,6 +39,7 @@ import 'game_engine/global_paint.dart';
 import 'images.dart';
 import 'instances/inventory.dart';
 import 'instances/settings.dart';
+import 'instances/sharedPreferences.dart';
 import 'maths.dart';
 import 'send.dart';
 import 'state.dart';
@@ -47,26 +48,47 @@ import 'utils/list_util.dart';
 import 'utils.dart';
 import 'utils/widget_utils.dart';
 
-TextEditingController _playerNameController = TextEditingController();
-Border _border =
-    Border.all(color: Colors.black, width: 5.0, style: BorderStyle.solid);
-SharedPreferences sharedPreferences;
-bool _showScore = true;
-bool _showServers = false;
-double iconSize = 45;
-StateSetter _stateSetterKeys;
-bool observeMode = false;
+final _Data _data = _Data();
 
-Color _panelBackgroundColor = Colors.black38;
-StateSetter _stateSetterBottomLeft;
-bool _expandScore = false;
-StateSetter _scoreStateSetter;
-StateSetter _stateSetterServerText;
+class _Data {
+  final _State state = _State();
+  final _FocusNodes focusNodes = _FocusNodes();
+  final _StateSetters stateSetters = _StateSetters();
+  final _TextEditingControllers textEditingControllers = _TextEditingControllers();
+  final _Properties properties = _Properties();
+}
+
+class _StateSetters {
+  StateSetter bottomLeft;
+  StateSetter score;
+  StateSetter serverText;
+}
+
+class _State {
+  bool observeMode = false;
+  bool showScore = true;
+  bool showServers = false;
+  bool expandScore = false;
+}
+
+class _Properties {
+  double iconSize = 45;
+  Border border = Border.all(color: Colors.black, width: 5.0, style: BorderStyle.solid);
+}
+
+class _TextEditingControllers {
+  final TextEditingController speak = TextEditingController();
+  final TextEditingController playerName = TextEditingController();
+}
+
+class _FocusNodes {
+  FocusNode textFieldMessage = FocusNode();
+}
 
 void refreshUI() {
-  observeMode = false;
-  _showServers = false;
-  _showServers = false;
+  _data.state.observeMode = false;
+  _data.state.showServers = false;
+  _data.state.showServers = false;
 }
 
 void initUI() {
@@ -117,21 +139,7 @@ void initUI() {
 
 void closeMainMenuDialog() {
   if (contextMainMenuDialog == null) return;
-  Navigator.of(contextMainMenuDialog).pop();
-}
-
-Widget column(List<Widget> children) {
-  return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: children);
-}
-
-Widget row(List<Widget> children) {
-  return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: children);
+  pop(contextMainMenuDialog);
 }
 
 Future<void> showChangeNameDialog() async {
@@ -151,7 +159,7 @@ Future<void> showChangeNameDialog() async {
               TextField(
                 autofocus: true,
                 focusNode: FocusNode(),
-                controller: _playerNameController,
+                controller: _data.textEditingControllers.playerName,
               )
             ],
           ),
@@ -159,7 +167,7 @@ Future<void> showChangeNameDialog() async {
         actions: <Widget>[
           TextButton(
             child: const Text('PLAY'),
-            onPressed: _playerNameController.text.trim().length > 2
+            onPressed: _data.textEditingControllers.playerName.text.trim().length > 2
                 ? () {
                     // sendRequestSpawn(playerNameController.text.trim());
                     Navigator.of(context).pop();
@@ -315,18 +323,18 @@ Widget buildImageButton(DecorationImage image, Function onTap,
         width: width,
         height: 50,
         decoration: BoxDecoration(
-            color: Colors.black45, border: _border, image: image)),
+            color: Colors.black45, border: _data.properties.border, image: image)),
   );
 }
 
 void toggleEditMode() {
   if (playMode) {
     mode = Mode.Edit;
-    compiledGame.environmentObjects.removeWhere((env) => isGeneratedAtBuild(env.type));
+    compiledGame.environmentObjects
+        .removeWhere((env) => isGeneratedAtBuild(env.type));
   } else {
     mode = Mode.Play;
   }
-
 
   rebuildUI();
   redrawCanvas();
@@ -387,18 +395,13 @@ Widget buildInventory() {
 }
 
 void toggleShowScore() {
-  _showScore = !_showScore;
+  _data.state.showScore = !_data.state.showScore;
   rebuildUI();
 }
 
-rebuildUIKeys() {
-  if (_stateSetterKeys == null) return;
-  _stateSetterKeys(_doNothing);
-}
-
 void rebuildPlayerMessage() {
-  if (_stateSetterServerText == null) return;
-  _stateSetterServerText(_doNothing);
+  if (_data.stateSetters.serverText == null) return;
+  _data.stateSetters.serverText(_doNothing);
 }
 
 final Widget _blank = Positioned(
@@ -409,8 +412,7 @@ final Widget _blank = Positioned(
 Widget _buildServerText() {
   return StatefulBuilder(
       builder: (BuildContext context, StateSetter stateSetter) {
-
-    _stateSetterServerText = stateSetter;
+        _data.stateSetters.serverText = stateSetter;
 
     if (player.message.isEmpty) return _blank;
 
@@ -439,21 +441,49 @@ Widget _buildServerText() {
   });
 }
 
-TextEditingController _textEditingControllerSpeak = TextEditingController();
+bool get textFieldFocused => _data.focusNodes.textFieldMessage.hasFocus;
 
-Widget buildTextBox(){
-  return Positioned(bottom: 0, right: 300,child: Row(children: [
-    Container(
-        width: 200,
-        height: 50,
-        child: TextField(
-          controller: _textEditingControllerSpeak,
-        )),
-    button('Send', (){
-      speak(_textEditingControllerSpeak.text);
-      _textEditingControllerSpeak.text = "";
-    })
-  ],));
+void focusTextField(){
+  print("focusTextField()");
+  _data.focusNodes.textFieldMessage.requestFocus();
+}
+
+void sendText(){
+  print("sendText()");
+  speak(_data.textEditingControllers.speak.text);
+  _data.textEditingControllers.speak.text = "";
+  _unfocusTextField();
+}
+
+void _unfocusTextField(){
+  print("_unfocusTextField()");
+  _data.focusNodes.textFieldMessage.unfocus();
+}
+
+
+Widget buildTextBox() {
+  return Positioned(
+      bottom: 0,
+      right: 300,
+      child: Container(
+        decoration: boxDecoration(),
+        child: Row(
+          children: [
+            Container(
+                width: 200,
+                height: 50,
+                child: TextField(
+                  focusNode: _data.focusNodes.textFieldMessage,
+                  controller: _data.textEditingControllers.speak,
+                  decoration: InputDecoration(labelText: "Message"),
+                )),
+            Container(
+              width: 100,
+              child: button('Send', sendText),
+            )
+          ],
+        ),
+      ));
 }
 
 Widget buildHud() {
@@ -471,9 +501,9 @@ Widget buildHud() {
       buildViewBottomRight(),
       if (state.gameState == GameState.Won) buildViewWin(),
       if (state.gameState == GameState.Lost) buildViewLose(),
-      if (!observeMode && player.dead) buildViewRespawn(),
+      if (!_data.state.observeMode && player.dead) buildViewRespawn(),
       // buildKeys(),
-      if (player.dead && observeMode)
+      if (player.dead && _data.state.observeMode)
         Positioned(
             top: 30,
             child: Container(
@@ -485,7 +515,7 @@ Widget buildHud() {
                       onPressed(
                           callback: () {
                             sendRequestRevive();
-                            observeMode = false;
+                            _data.state.observeMode = false;
                           },
                           child: border(
                               child: text("Respawn", fontSize: 30),
@@ -556,12 +586,6 @@ Widget buildTopRight() {
     message: "Toggle Paths",
   );
 
-  // Widget iconMenu = Tooltip(
-  //   child: IconButton(
-  //       icon: Icon(Icons.menu, size: iconSize, color: white),
-  //       onPressed: showDialogMainMenu),
-  //   message: "Menu",
-  // );
   Widget buttonJoinGameOpenWorld = button('Open World', joinGameOpenWorld);
   Widget buttonJoinGameCasual = button('Casual', joinGameCasual);
 
@@ -578,8 +602,7 @@ Widget buildTopRight() {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          if (compiledGame.gameType == GameType.Casual)
-            buttonJoinGameOpenWorld,
+          if (compiledGame.gameType == GameType.Casual) buttonJoinGameOpenWorld,
           if (compiledGame.gameType == GameType.Open_World)
             buttonJoinGameCasual,
           if (settings.developMode) iconTogglePaths,
@@ -597,7 +620,7 @@ Widget buildTopRight() {
 Widget buildTopLeft() {
   Widget iconToggleFullscreen = Tooltip(
     child: IconButton(
-        icon: Icon(Icons.fullscreen, size: iconSize, color: white),
+        icon: Icon(Icons.fullscreen, size: _data.properties.iconSize, color: white),
         onPressed: fullScreenEnter),
     message: "Fullscreen",
   );
@@ -605,17 +628,17 @@ Widget buildTopLeft() {
       child: IconButton(
           icon: Icon(
               settings.audioMuted ? Icons.music_off : Icons.music_note_rounded,
-              size: iconSize,
+              size: _data.properties.iconSize,
               color: white),
           onPressed: toggleAudioMuted),
       message: "Toggle Audio");
 
   Widget iconScore = Tooltip(
     child: IconButton(
-        icon: Icon(_showScore ? Icons.score : Icons.score_outlined,
-            size: iconSize, color: white),
+        icon: Icon(_data.state.showScore ? Icons.score : Icons.score_outlined,
+            size: _data.properties.iconSize, color: white),
         onPressed: toggleShowScore),
-    message: _showScore ? "Hide Score" : "Show Score",
+    message: _data.state.showScore ? "Hide Score" : "Show Score",
   );
 
   return Positioned(
@@ -633,7 +656,7 @@ Widget buildToggleScoreIcon() {
         icon: Icon(Icons.format_list_numbered_rtl_outlined,
             size: 35, color: Colors.white60),
         onPressed: toggleShowScore),
-    message: _showScore ? "Hide Score" : "Show Score",
+    message: _data.state.showScore ? "Hide Score" : "Show Score",
   );
 }
 
@@ -757,18 +780,18 @@ Widget buildMedSlot() {
 }
 
 redrawBottomLeft() {
-  if (_stateSetterBottomLeft == null) return;
-  _stateSetterBottomLeft(_doNothing);
+  if (_data.stateSetters.bottomLeft == null) return;
+  _data.stateSetters.bottomLeft(_doNothing);
 }
 
 clearUI() {
-  _stateSetterBottomLeft = null;
-  _scoreStateSetter = null;
+  _data.stateSetters.bottomLeft = null;
+  _data.stateSetters.score = null;
 }
 
 Widget buildViewBottomLeft() {
   return StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-    _stateSetterBottomLeft = setState;
+    _data.stateSetters.bottomLeft = setState;
     return Positioned(
       bottom: 0,
       left: 0,
@@ -990,11 +1013,11 @@ Widget buildViewBottomRight() {
     bottom: 5,
     child: MouseRegion(
       onEnter: (_) {
-        _showServers = true;
+        _data.state.showServers = true;
         rebuildUI();
       },
       onExit: (_) {
-        _showServers = false;
+        _data.state.showServers = false;
         rebuildUI();
       },
       child: Container(
@@ -1007,7 +1030,7 @@ Widget buildViewBottomRight() {
           child: Column(
             crossAxisAlignment: cross.center,
             children: [
-              if ((player.dead && !observeMode) | _showServers)
+              if ((player.dead && !_data.state.observeMode) | _data.state.showServers)
                 onPressed(
                     callback: disconnect,
                     child: Container(
@@ -1016,7 +1039,7 @@ Widget buildViewBottomRight() {
                       child: text("Disconnect"),
                       padding: padding4,
                     )),
-              if ((player.dead && !observeMode) || _showServers)
+              if ((player.dead && !_data.state.observeMode) || _data.state.showServers)
                 buildServerList(),
               Container(
                   padding: padding4, child: text(getServerName(currentServer))),
@@ -1035,7 +1058,7 @@ Widget buildServerList() {
             hint: "Connect to ${getServerName(server)} server",
             callback: () {
               connectServer(server);
-              _showServers = false;
+              _data.state.showServers = false;
             },
             child: Container(
               padding: padding4,
@@ -1141,7 +1164,7 @@ Widget buildViewRespawn() {
             padding: padding16,
             width: max(screenWidth * goldenRatioInverseB, 480),
             decoration: BoxDecoration(
-                borderRadius: borderRadius4, color: _panelBackgroundColor),
+                borderRadius: borderRadius4, color: Colors.black38),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: cross.center,
@@ -1294,7 +1317,7 @@ Widget buildViewRespawn() {
                           child: Container(
                               padding: padding16, child: text("Close")),
                           callback: () {
-                            observeMode = true;
+                            _data.state.observeMode = true;
                             rebuildUI();
                           }),
                       width16,
@@ -1331,7 +1354,7 @@ void nextTip() {
   rebuildUI();
 }
 
-List<String> tips = [
+final List<String> tips = [
   "Use the W,A,S,D keys to move",
   "Press F to use knife attack",
   "Press 1, 2, 3, etc to change weapons",
@@ -1348,40 +1371,21 @@ String getTip() {
   return tips[tipIndex];
 }
 
-Widget buildDebugPanel() {
-  return column([
-    button("Spawn NPC", sendRequestSpawnNpc),
-    text("Ping: ${ping.inMilliseconds}"),
-    text("Player Id: ${compiledGame.playerId}"),
-    text("Data Size: ${event.length}"),
-    text("Frames since event: $framesSinceEvent"),
-    text("Milliseconds Since Last Frame: $millisecondsSinceLastFrame"),
-    if (millisecondsSinceLastFrame > 0)
-      text("FPS: ${(1000 / millisecondsSinceLastFrame).round()}"),
-    if (serverFramesMS > 0)
-      text("Server FPS: ${(1000 / serverFramesMS).round()}"),
-    text("Players: ${compiledGame.humans.length}"),
-    text("Bullets: ${compiledGame.bullets.length}"),
-    text("Npcs: ${compiledGame.totalZombies}"),
-    text("Player Assigned: $playerAssigned"),
-  ]);
-}
-
 int getScoreRecord(Score score) {
   return score.record;
 }
 
-rebuildScore() {
-  if (_scoreStateSetter == null) return;
-  _scoreStateSetter(_doNothing);
+void rebuildScore() {
+  if (_data.stateSetters.score == null) return;
+  _data.stateSetters.score(_doNothing);
 }
 
-_doNothing() {}
+void _doNothing() {}
 
 Widget buildViewScore() {
   return StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-    _scoreStateSetter = setState;
-    if (!_showScore) {
+    _data.stateSetters.score = setState;
+    if (!_data.state.showScore) {
       return Positioned(
         top: 5,
         left: 5,
@@ -1405,11 +1409,11 @@ Widget buildViewScore() {
         left: 5,
         child: MouseRegion(
           onHover: (_) {
-            _expandScore = true;
+            _data.state.expandScore = true;
             rebuildUI();
           },
           onExit: (_) {
-            _expandScore = false;
+            _data.state.expandScore = false;
             rebuildUI();
           },
           child: Container(
@@ -1419,7 +1423,7 @@ Widget buildViewScore() {
             ),
             width: width,
             padding: padding8,
-            height: width * (_expandScore ? goldenRatio : goldenRatioInverse),
+            height: width * (_data.state.expandScore ? goldenRatio : goldenRatioInverse),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: cross.start,
