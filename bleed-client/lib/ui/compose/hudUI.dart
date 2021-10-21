@@ -258,13 +258,11 @@ Widget buildTextBox() {
             Container(
                 width: 200,
                 height: 50,
+                padding: padding8,
                 child: TextField(
                   focusNode: hud.focusNodes.textFieldMessage,
                   controller: hud.textEditingControllers.speak,
-                  decoration: InputDecoration(label: Padding(
-                    padding: const EdgeInsets.only(left: 8),
-                    child: text("Say (Press Enter)"),
-                  )),
+                  style: TextStyle(color: Colors.white),
                 )),
             // Container(
             //   width: 100,
