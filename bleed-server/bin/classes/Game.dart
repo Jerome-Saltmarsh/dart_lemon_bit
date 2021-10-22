@@ -459,21 +459,7 @@ extension GameFunctions on Game {
       _updateCollectables();
       _updateGameEvents();
       _updateItems();
-
-      for(Character character in players){
-        for(EnvironmentObject environmentObject in scene.environment){
-            if (environmentObject.radius == 0) continue;
-          double combinedRadius = character.radius + environmentObject.radius;
-            if (diffOver(character.x, environmentObject.x, combinedRadius)) continue;
-            if (diffOver(character.y, environmentObject.y, combinedRadius)) continue;
-            double _distance = distanceBetween(character, environmentObject);
-            if (_distance > combinedRadius) continue;
-            double overlap = combinedRadius - _distance;
-            double r = radiansBetweenObject(character, environmentObject);
-            character.x -= adj(r, overlap);
-            character.y -= opp(r, overlap);
-        }
-      }
+      _updateCrates();
     }
     compileGame(this);
   }
@@ -601,6 +587,21 @@ extension GameFunctions on Game {
 
     for (int i = 0; i < npcs.length; i++) {
       updateCharacter(npcs[i]);
+    }
+
+    for(Character character in players) {
+      for(EnvironmentObject environmentObject in scene.environment){
+        if (environmentObject.radius == 0) continue;
+        double combinedRadius = character.radius + environmentObject.radius;
+        if (diffOver(character.x, environmentObject.x, combinedRadius)) continue;
+        if (diffOver(character.y, environmentObject.y, combinedRadius)) continue;
+        double _distance = distanceBetween(character, environmentObject);
+        if (_distance > combinedRadius) continue;
+        double overlap = combinedRadius - _distance;
+        double r = radiansBetweenObject(character, environmentObject);
+        character.x -= adj(r, overlap);
+        character.y -= opp(r, overlap);
+      }
     }
   }
 
@@ -870,11 +871,6 @@ extension GameFunctions on Game {
       if (scene.bulletCollisionAt(bullets[i].x, bullets[i].y)) {
         bullets[i].active = false;
       }
-    }
-
-    for (Crate crate in crates) {
-      if (crate.active) continue;
-      crate.deactiveDuration--;
     }
 
     bullets.sort(compareGameObjects);
@@ -1626,7 +1622,16 @@ extension GameFunctions on Game {
       }
     }
   }
+
+  void _updateCrates() {
+    for (Crate crate in crates) {
+      if (crate.active) continue;
+      crate.deactiveDuration--;
+    }
+  }
 }
+
+
 
 void applyCratePhysics(Crate crate, List<Character> characters) {
   for (Character character in characters) {

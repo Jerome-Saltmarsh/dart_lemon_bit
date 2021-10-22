@@ -297,7 +297,7 @@ extension SceneFunctions on Scene {
   }
 
   bool waterAt(double x, double y) {
-    return tileAt(x, y) == Tile.Water;
+    return isWater(tileAt(x, y));
   }
 
   Tile tileAt(double x, double y) {
@@ -308,12 +308,11 @@ extension SceneFunctions on Scene {
     if (projectedY < 0) return Tile.Boundary;
 
     double tileX = projectedX / _tileSize;
-    double tileY = projectedY / _tileSize;
-
     int tileXInt = tileX.toInt();
-    int tileYInt = tileY.toInt();
-
     if (tileX > columns) return Tile.Boundary;
+
+    double tileY = projectedY / _tileSize;
+    int tileYInt = tileY.toInt();
     if (tileY > rows) return Tile.Boundary;
 
     return this.tiles[tileYInt][tileXInt];
