@@ -5,6 +5,7 @@ import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/spawners/spawnBlood.dart';
+import 'package:bleed_client/state/getters/isWalkable.dart';
 import 'package:bleed_client/state/isWaterAt.dart';
 
 void updateParticle(Particle particle){
@@ -26,7 +27,7 @@ void updateParticle(Particle particle){
 
   if (bounce) {
 
-    if (isWaterAt(particle.x, particle.y)){
+    if (!isWalkable(particle.x, particle.y)){
       particle.active = false;
       return;
     }
@@ -45,7 +46,7 @@ void updateParticle(Particle particle){
     particle.yv *= floorFriction;
     particle.rotationV *= rotationFriction;
 
-    if (isWaterAt(particle.x, particle.y)){
+    if (!isWalkable(particle.x, particle.y)){
       particle.active = false;
       return;
     }
