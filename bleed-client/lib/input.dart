@@ -2,12 +2,14 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Block.dart';
+import 'package:bleed_client/classes/InteractableNpc.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/functions/diffOver.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_input.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/instances/settings.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
@@ -304,6 +306,16 @@ void readPlayerInput() {
   }
 
   if (mouseClicked || keyPressedSpace) {
+    double mX = mouseWorldX;
+    double mY = mouseWorldY;
+    for(int i = 0; i < compiledGame.totalNpcs; i++){
+      InteractableNpc interactableNpc = compiledGame.interactableNpcs[i];
+      if (diffOver(interactableNpc.x, mX, settings.interactRadius)) continue;
+      if (diffOver(interactableNpc.y, mY, settings.interactRadius)) continue;
+      sendRequestInteract();
+      return;
+    }
+
     requestCharacterState = characterStateFiring;
   } else {
     // if (keyPressed(LogicalKeyboardKey.keyQ) && mouseAvailable) {

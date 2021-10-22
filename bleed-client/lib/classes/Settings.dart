@@ -8,6 +8,7 @@ class Settings {
   int floatingTextDuration = 100;
   int maxBulletHoles = 50;
   int maxParticles = 300;
+  double interactRadius = 60;
 }
 
 

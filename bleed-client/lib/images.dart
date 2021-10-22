@@ -23,6 +23,7 @@ class _Images {
   Image palisadeV;
   Image grave;
   Image circle64;
+  Image radial64;
 
   Future load() async {
     human = await loadImage("images/character.png");
@@ -42,6 +43,7 @@ class _Images {
     palisadeV = await loadImage("images/palisade-v.png");
     grave = await loadImage("images/grave.png");
     circle64 = await loadImage("images/circle-64.png");
+    radial64 = await loadImage("images/radial-64.png");
   }
 }
 
