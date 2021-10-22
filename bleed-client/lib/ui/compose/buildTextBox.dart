@@ -7,7 +7,7 @@ import 'widgets.dart';
 
 Widget buildTextBox() {
   return StatefulBuilder(builder: (BuildContext context, StateSetter setState){
-    hud.stateSetters.messageText = setState;
+    hud.stateSetters.playerMessage = setState;
 
     if (!hud.state.textBoxVisible) return blank;
 

@@ -63,8 +63,8 @@ class HudState {
 class _StateSetters {
   StateSetter bottomLeft;
   StateSetter score;
-  StateSetter serverText;
-  StateSetter messageText;
+  StateSetter npcMessage;
+  StateSetter playerMessage;
 }
 
 class _State {

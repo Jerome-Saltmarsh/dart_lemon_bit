@@ -180,7 +180,7 @@ void parseState() {
           message += " ";
         }
         player.message = message.trim();
-        rebuildPlayerMessage();
+        rebuildNpcMessage();
         break;
 
       case ServerResponse.Crates:

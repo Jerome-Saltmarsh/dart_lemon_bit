@@ -15,5 +15,5 @@ void hideTextBox(){
 }
 
 void _rebuildTextBox(){
-  hud.stateSetters.messageText((){});
+  hud.stateSetters.playerMessage((){});
 }

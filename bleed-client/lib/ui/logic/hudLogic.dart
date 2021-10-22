@@ -122,9 +122,9 @@ void toggleShowScore() {
   rebuildUI();
 }
 
-void rebuildPlayerMessage() {
-  if (hud.stateSetters.serverText == null) return;
-  hud.stateSetters.serverText(_doNothing);
+void rebuildNpcMessage() {
+  if (hud.stateSetters.npcMessage == null) return;
+  hud.stateSetters.npcMessage(_doNothing);
 }
 
 void closeMainMenuDialog() {

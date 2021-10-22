@@ -50,41 +50,41 @@ Widget buildHud() {
       if (hud.state.textBoxVisible)
       _buildServerText(),
       if (player.alive) buildViewBottomLeft(),
-      if (compiledGame.gameType == GameType.Fortress) buildViewFortress(),
+      if (compiledGame.gameType == GameType.Fortress) _buildViewFortress(),
       if (compiledGame.gameType == GameType.DeathMatch)
         buildGameInfoDeathMatch(),
-      buildViewBottomRight(),
-      if (state.gameState == GameState.Won) buildViewWin(),
-      if (state.gameState == GameState.Lost) buildViewLose(),
-      if (!hud.state.observeMode && player.dead) buildViewRespawn(),
-      // buildKeys(),
-      if (player.dead && hud.state.observeMode)
-        Positioned(
-            top: 30,
-            child: Container(
-                width: screenWidth,
-                child: Column(
-                  crossAxisAlignment: cross.center,
-                  children: [
-                    Row(mainAxisAlignment: main.center, children: [
-                      onPressed(
-                          callback: () {
-                            sendRequestRevive();
-                            hud.state.observeMode = false;
-                          },
-                          child: border(
-                              child: text("Respawn", fontSize: 30),
-                              padding: padding8,
-                              radius: borderRadius4))
-                    ]),
-                    height32,
-                    text("Hold E to pan camera")
-                  ],
-                ))),
+      _buildViewBottomRight(),
+      _buildServerText(),
+      if (!hud.state.observeMode && player.dead) _buildViewRespawn(),
+      if (player.dead && hud.state.observeMode) _buildRespawnLight(),
       if (compiledGame.gameType == GameType.Casual) buildViewScore(),
-      // if (message != null) buildMessageBox(message),
     ],
   );
+}
+
+Positioned _buildRespawnLight() {
+  return Positioned(
+          top: 30,
+          child: Container(
+              width: screenWidth,
+              child: Column(
+                crossAxisAlignment: cross.center,
+                children: [
+                  Row(mainAxisAlignment: main.center, children: [
+                    onPressed(
+                        callback: () {
+                          sendRequestRevive();
+                          hud.state.observeMode = false;
+                        },
+                        child: border(
+                            child: text("Respawn", fontSize: 30),
+                            padding: padding8,
+                            radius: borderRadius4))
+                  ]),
+                  height32,
+                  text("Hold E to pan camera")
+                ],
+              )));
 }
 
 Widget buildTop() {
@@ -220,7 +220,7 @@ Widget buildToggleScoreIcon() {
 Widget _buildServerText() {
   return StatefulBuilder(
       builder: (BuildContext context, StateSetter stateSetter) {
-        hud.stateSetters.serverText = stateSetter;
+        hud.stateSetters.npcMessage = stateSetter;
 
         if (player.message.isEmpty) return blank;
 
@@ -239,7 +239,7 @@ Widget _buildServerText() {
                     height16,
                     button("Next", () {
                       player.message = "";
-                      rebuildPlayerMessage();
+                      rebuildNpcMessage();
                     }),
                   ],
                 ),
@@ -249,7 +249,7 @@ Widget _buildServerText() {
       });
 }
 
-Widget buildViewFortress() {
+Widget _buildViewFortress() {
   return Positioned(
       right: 0,
       bottom: 0,
@@ -525,7 +525,7 @@ Widget buildViewScore() {
 }
 
 
-Widget buildViewRespawn() {
+Widget _buildViewRespawn() {
   print("buildViewRespawn()");
   return Container(
     width: screenWidth,
@@ -882,17 +882,16 @@ Widget buildTag(dynamic value, {Color color = Colors.white}) {
       child: text(value, fontWeight: FontWeight.bold, color: color));
 }
 
-
 Widget buildMessageBox(String message) {
   return Positioned(
       bottom: 120,
       child: Container(
         width: screenWidth,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: main.center,
           children: [
             Container(
-                padding: EdgeInsets.all(10),
+                padding: padding8,
                 color: Colors.black26,
                 child: text(message, fontSize: 20)),
           ],
@@ -911,7 +910,7 @@ Widget buildRow(int amount, String name, Function onPressed) {
 }
 
 
-Widget buildViewBottomRight() {
+Widget _buildViewBottomRight() {
   return Positioned(
     right: 5,
     bottom: 5,

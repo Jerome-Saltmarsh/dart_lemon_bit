@@ -86,6 +86,8 @@
 [ ] Myst Particles
 [ ] Water Particles
 [ ] Deploy dev endpoint
+[ ] Bullets environment object collision
+[x] FIX Player message box not showing up
 [x] Chat 
 [x] Fix particle float on water
 [x] Chimney Smoke Particles
