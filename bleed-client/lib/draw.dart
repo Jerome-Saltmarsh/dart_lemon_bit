@@ -7,6 +7,7 @@ import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/functions/diffOver.dart';
+import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
@@ -61,7 +62,7 @@ void drawInteractableNpcs() {
 
     if (diffOver(interactableNpc.x, mouseWorldX, 50)) continue;
     if (diffOver(interactableNpc.y, mouseWorldY, 50)) continue;
-    drawText(compiledGame.interactableNpcs[i].name, interactableNpc.x,
+    drawText(compiledGame.interactableNpcs[i].name, interactableNpc.x - charWidth * compiledGame.interactableNpcs[i].name.length,
         interactableNpc.y);
   }
 

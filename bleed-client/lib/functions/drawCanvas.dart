@@ -43,7 +43,7 @@ import 'drawParticle.dart';
 final double _anchorX = 50;
 final double _anchorY = 80;
 final double _nameRadius = 100;
-final double _charWidth = 4.5;
+final double charWidth = 4.5;
 final Ring _healthRing = Ring(16);
 
 void drawCanvas(Canvas canvass, Size _size) {
@@ -219,7 +219,8 @@ void _drawPlayerNames() {
     if (player.x == compiledGame.playerX) continue;
     if (diff(mouseWorldX, player.x) > _nameRadius) continue;
     if (diff(mouseWorldY, player.y) > _nameRadius) continue;
-    drawText(player.name, player.x, player.y);
+
+    drawText(player.name, player.x - charWidth * player.name.length, player.y);
   }
 }
 
@@ -229,7 +230,7 @@ void _writePlayerText() {
     if (human.text.isEmpty) continue;
 
     double padding = 5;
-    double width = _charWidth * human.text.length;
+    double width = charWidth * human.text.length;
     double left = human.x - width;
     double y = human.y - 50;
     paint.color = Colors.black26;

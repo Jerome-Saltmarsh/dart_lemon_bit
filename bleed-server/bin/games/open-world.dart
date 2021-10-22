@@ -71,17 +71,17 @@ class OpenWorld extends Game {
   void _onNpcInteractedWithMain(Player player) {
     switch (player.questMain) {
       case MainQuest.Introduction:
-        player.message = "Welcome Traveller. "
+        player.message = "Davis: Welcome Traveller. "
             "You may rest easy, the walls of our town are well protected. "
             "If you need to earn some income I recommend talking to various folks. "
             "Equipment can be found at the armory, for a price of course. ";
         player.questMain = MainQuest.Talk_To_Smith;
         break;
       case MainQuest.Talk_To_Smith:
-        player.message = "The smith is looking for a help with a matter";
+        player.message = "Davis: The smith is looking for a help with a matter";
         break;
       default:
-        player.message = "I'm glad you are still with us traveller";
+        player.message = "Davis: I'm glad you are still with us traveller";
         break;
     }
   }
@@ -89,11 +89,11 @@ class OpenWorld extends Game {
   void _onNpcInteractedWithSmith(Player player) {
     switch (player.questMain) {
       case MainQuest.Introduction:
-        player.message = "Welcome to our town";
+        player.message = "Smith: Welcome to our town";
         player.questMain = MainQuest.Talk_To_Smith;
         break;
       case MainQuest.Talk_To_Smith:
-        player.message = "Welcome outsider. Our supplies are running low. "
+        player.message = "Smith: Welcome outsider. Our supplies are running low. "
             "If you happen across some scrap metal while you are out, would you collect it for me"
             "I'll compensate you of course"
             "Here take this handgun, its last owner certainly no longer needs it... "
@@ -102,10 +102,10 @@ class OpenWorld extends Game {
         player.rounds.handgun = 60;
         break;
       case MainQuest.Scavenge_Supplies:
-        player.message = "Bring any metals and junk back you can find";
+        player.message = "Smith: Bring any metals and junk back you can find";
         break;
       default:
-        player.message = "Good to see you well";
+        player.message = "Smith: Good to see you well";
         break;
     }
   }

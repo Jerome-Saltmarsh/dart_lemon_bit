@@ -63,6 +63,7 @@
 [ ] UI Score Lag
 -- UI --
 -- IDEAS --
+[ ] Elevate ground like aoe2
 [ ] Getting kills charges your weapons super ability
 [ ] Deploy auto turret
 [ ] Standing on home base heals health && refills handgun ammo
