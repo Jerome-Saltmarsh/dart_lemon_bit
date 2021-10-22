@@ -38,6 +38,22 @@ List<Tile> _blocks = [
   Tile.Block_Vertical,
 ];
 
+List<Tile> _water = [
+  Tile.Water,
+  Tile.Water_Side_01,
+  Tile.Water_Side_02,
+  Tile.Water_Side_03,
+  Tile.Water_Side_04,
+  Tile.Water_Corner_01,
+  Tile.Water_Corner_02,
+  Tile.Water_Corner_03,
+  Tile.Water_Corner_04,
+];
+
 bool isBlock(Tile tile){
   return _blocks.contains(tile);
+}
+
+bool isWater(Tile tile){
+  return _water.contains(tile);
 }

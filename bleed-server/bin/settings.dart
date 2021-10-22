@@ -114,6 +114,7 @@ class Settings {
 
   final int playerDisconnectFrames = 300;
 
+  final double minVelocity = 0.005;
   final double velocityFriction = 0.88;
   final double zombieChaseRange = 600;
   final double npcChaseRange = 600;

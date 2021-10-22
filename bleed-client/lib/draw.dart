@@ -26,6 +26,7 @@ import 'game_engine/global_paint.dart';
 import 'rects.dart';
 import 'mappers/mapHumanToRect.dart';
 import 'state.dart';
+import 'state/isWaterAt.dart';
 import 'utils.dart';
 
 void drawCharacterCircle(double x, double y, Color color) {
@@ -72,6 +73,12 @@ void drawZombies() {
   render.zombieRects.clear();
 
   for (int i = 0; i < compiledGame.totalZombies; i++) {
+    if (!compiledGame.zombies[i].alive) {
+      if (isWaterAt(compiledGame.zombies[i].x, compiledGame.zombies[i].y)){
+        continue;
+      }
+    }
+
     render.zombiesTransforms.add(
         mapZombieToRSTransform(compiledGame.zombies[i])
     );
@@ -252,6 +259,14 @@ int get mouseTileX {
 
 int get mouseTileY {
   return mouseUnprojectPositionY ~/ tileSize;
+}
+
+Tile getTile(int row, int column){
+  if (row < 0) return Tile.Boundary;
+  if (column < 0) return Tile.Boundary;
+  if (row >= compiledGame.tiles.length) return Tile.Boundary;
+  if (column >= compiledGame.tiles[0].length) return Tile.Boundary;
+  return compiledGame.tiles[row][column];
 }
 
 void drawCircleOutline(

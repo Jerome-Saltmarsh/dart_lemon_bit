@@ -1167,8 +1167,7 @@ extension GameFunctions on Game {
   void updateCharacter(Character character) {
     if (!character.active) return;
 
-    // TODO magic value
-    if (abs(character.xv) > 0.005) {
+    if (abs(character.xv) > settings.minVelocity) {
       character.x += character.xv;
       character.y += character.yv;
       character.xv *= settings.velocityFriction;

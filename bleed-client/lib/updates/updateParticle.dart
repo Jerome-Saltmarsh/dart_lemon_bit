@@ -1,7 +1,11 @@
 
 import 'package:bleed_client/classes/Particle.dart';
+import 'package:bleed_client/common/Tile.dart';
+import 'package:bleed_client/draw.dart';
+import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/spawners/spawnBlood.dart';
+import 'package:bleed_client/state/isWaterAt.dart';
 
 void updateParticle(Particle particle){
   double gravity = 0.04;
@@ -21,6 +25,12 @@ void updateParticle(Particle particle){
   bool bounce = falling && airBorn && particle.z <= 0;
 
   if (bounce) {
+
+    if (isWaterAt(particle.x, particle.y)){
+      particle.active = false;
+      return;
+    }
+
     particle.zv = -particle.zv * particle.bounciness;
     particle.xv = particle.xv * bounceFriction;
     particle.yv = particle.yv * bounceFriction;
@@ -34,6 +44,11 @@ void updateParticle(Particle particle){
     particle.xv *= floorFriction;
     particle.yv *= floorFriction;
     particle.rotationV *= rotationFriction;
+
+    if (isWaterAt(particle.x, particle.y)){
+      particle.active = false;
+      return;
+    }
   }
   if (particle.scale < 0) {
     particle.scale = 0;

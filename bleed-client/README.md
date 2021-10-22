@@ -76,19 +76,19 @@
 [ ] Change scene
 [ ] Design Zombies
 [ ] Quest Window
-[ ] Chat 
 [ ] Design Bridge
 [ ] Editor translate environment object
 [ ] Zombies run through environment objects
 [ ] Animated Torches
 [ ] Render Batching
 [ ] Fix floating text bug
-[ ] Fix particle float on water
 [ ] FIX Zombies walk into walls 
 [ ] Myst Particles
 [ ] Water Particles
-[ ] Chimney Smoke Particles
-[ ] sDeploy dev endpoint
+[ ] Deploy dev endpoint
+[x] Chat 
+[x] Fix particle float on water
+[x] Chimney Smoke Particles
 [x] Fix guards stop shooting bug
 [x] Walls 3d
 [x] Edit mode select tile
