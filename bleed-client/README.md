@@ -82,11 +82,11 @@
 [ ] Animated Torches
 [ ] Render Batching
 [ ] Fix floating text bug
-[ ] FIX Zombies walk into walls 
 [ ] Myst Particles
 [ ] Water Particles
 [ ] Deploy dev endpoint
 [ ] Bullets environment object collision
+[x] FIX Zombies walk into walls 
 [x] FIX Player message box not showing up
 [x] Chat 
 [x] Fix particle float on water

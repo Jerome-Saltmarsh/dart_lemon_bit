@@ -37,7 +37,7 @@ class _Images {
     tree01 = await loadImage("images/tree01.png");
     tree02 = await loadImage("images/tree02.png");
     rock = await loadImage("images/rock.png");
-    palisade = await loadImage("images/palisade.png");
+    palisade = await loadImage("images/palisade02.png");
     palisadeH = await loadImage("images/palisade-h.png");
     palisadeV = await loadImage("images/palisade-v.png");
     grave = await loadImage("images/grave.png");
