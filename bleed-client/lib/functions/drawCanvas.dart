@@ -19,9 +19,7 @@ import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/game_engine/global_paint.dart';
 import 'package:bleed_client/instances/settings.dart';
-import 'package:bleed_client/mappers/Rect%20mapHumanToDstRect.dart';
 import 'package:bleed_client/mappers/mapCrateToRSTransform.dart';
-import 'package:bleed_client/mappers/mapDstRect.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
 import 'package:bleed_client/mappers/mapHumanToRect.dart';
 import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
@@ -42,10 +40,11 @@ import 'drawBullet.dart';
 import 'drawGrenade.dart';
 import 'drawParticle.dart';
 
-double _anchorX = 50;
-double _anchorY = 80;
-double _nameRadius = 100;
-Ring _healthRing = Ring(16);
+final double _anchorX = 50;
+final double _anchorY = 80;
+final double _nameRadius = 100;
+final double _charWidth = 4.5;
+final Ring _healthRing = Ring(16);
 
 void drawCanvas(Canvas canvass, Size _size) {
   canvass.scale(zoom, zoom);
@@ -55,7 +54,7 @@ void drawCanvas(Canvas canvass, Size _size) {
     drawTiles();
     _drawEnvironmentObjects();
     _drawCratesEditor();
-    drawEditMode();
+    drawEditor();
     return;
   }
 
@@ -224,14 +223,19 @@ void _drawPlayerNames() {
   }
 }
 
-double _charWidth = 4.5;
-
 void _writePlayerText() {
   for (int i = 0; i < compiledGame.totalHumans; i++) {
     Human human = compiledGame.humans[i];
     if (human.text.isEmpty) continue;
 
-    drawText(human.text, human.x - _charWidth * human.text.length, human.y - 50);
+    double padding = 5;
+    double width = _charWidth * human.text.length;
+    double left = human.x - width;
+    double y = human.y - 50;
+    paint.color = Colors.black26;
+    globalCanvas.drawRect(Rect.fromLTWH(left - padding, y - 5, width * 2 + padding + padding, 30), paint);
+    drawText(human.text, left, y);
+
   }
 }
 

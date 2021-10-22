@@ -214,7 +214,7 @@ void updateEditMode() {
   }
 }
 
-void drawEditMode() {
+void drawEditor() {
   if (!editMode) return;
 
   print("drawEditMode()");

@@ -41,7 +41,7 @@ Widget buildTextBox() {
                     ),
                     focusNode: hud.focusNodes.textFieldMessage,
                     controller: hud.textEditingControllers.speak,
-                    maxLength: 75,
+                    maxLength: 50,
                     style: TextStyle(color: Colors.white),
                   )),
             ],

@@ -15,6 +15,13 @@ import 'instances/gameManager.dart';
 import 'utils/player_utils.dart';
 
 // constants
+final int collectablesIndex = ServerResponse.Collectables.index;
+final int playersIndex = ServerResponse.Players.index;
+final int playerIndex = ServerResponse.Player.index;
+final int indexZombies = ServerResponse.Zombies.index;
+final int indexNpcs = ServerResponse.Npcs.index;
+final int indexBullets = ServerResponse.Bullets.index;
+final int indexNpcMessage = ServerResponse.NpcMessage.index;
 
 const String _space = ' ';
 const String _semiColon = '; ';
@@ -138,7 +145,7 @@ String compileTiles(List<List<Tile>> tiles) {
 }
 
 void compilePlayer(StringBuffer buffer, Player player) {
-  _write(buffer, ServerResponse.Player.index);
+  _write(buffer, playerIndex);
   _writeInt(buffer, player.x);
   _writeInt(buffer, player.y);
   _write(buffer, player.weapon.index);
@@ -189,26 +196,9 @@ void compileScore(StringBuffer buffer, List<Player> players) {
     _write(buffer, player.name);
     _write(buffer, player.points);
     _write(buffer, player.pointsRecord);
-    // _write(buffer, player.score.deaths);
-    // _write(buffer, player.score.zombiesKilled);
-    // _write(buffer, player.score.playersKilled);
   }
   _write(buffer, _semiColon);
 }
-
-// void _compileInventory(StringBuffer buffer, Inventory inventory) {
-//   _write(buffer, ServerResponse.Inventory.index);
-//   _write(buffer, inventory.rows);
-//   _write(buffer, inventory.columns);
-//   for (InventoryItem item in inventory.items) {
-//     _write(buffer, item.type.index);
-//     _write(buffer, item.row);
-//     _write(buffer, item.column);
-//   }
-//   buffer.write(_semiColon);
-// }
-
-// private
 
 void _compileGameEvents(StringBuffer buffer, List<GameEvent> gameEvents) {
   _write(buffer, ServerResponse.Game_Events.index);
@@ -224,7 +214,7 @@ void _compileGameEvents(StringBuffer buffer, List<GameEvent> gameEvents) {
 }
 
 void _compileCollectables(StringBuffer buffer, List<Collectable> collectables) {
-  buffer.write(ServerResponse.Collectables.index);
+  buffer.write(collectablesIndex);
   buffer.write(_space);
   for (Collectable collectable in collectables) {
     if (!collectable.active) continue;
@@ -270,7 +260,7 @@ void _compileGrenades(StringBuffer buffer, List<Grenade> grenades) {
 }
 
 void _compilePlayers(StringBuffer buffer, List<Player> players) {
-  _write(buffer, ServerResponse.Players.index);
+  _write(buffer, playersIndex);
   for (Player player in players) {
     _compilePlayer(buffer, player);
   }
@@ -278,7 +268,7 @@ void _compilePlayers(StringBuffer buffer, List<Player> players) {
 }
 
 void _compileZombies(StringBuffer buffer, List<Npc> npcs) {
-  _write(buffer, ServerResponse.Zombies.index);
+  _write(buffer, indexZombies);
   for (Npc npc in npcs) {
     if (!npc.active) continue;
     _compileNpc(buffer, npc);
@@ -287,7 +277,7 @@ void _compileZombies(StringBuffer buffer, List<Npc> npcs) {
 }
 
 void _compileInteractableNpcs(StringBuffer buffer, List<InteractableNpc> npcs) {
-  _write(buffer, ServerResponse.Npcs.index);
+  _write(buffer, indexNpcs);
   for (InteractableNpc npc in npcs) {
     if (!npc.active) continue;
     _compileInteractableNpc(buffer, npc);
@@ -296,7 +286,7 @@ void _compileInteractableNpcs(StringBuffer buffer, List<InteractableNpc> npcs) {
 }
 
 void _compileBullets(StringBuffer buffer, List<Bullet> bullets) {
-  _write(buffer, ServerResponse.Bullets.index);
+  _write(buffer, indexBullets);
   for (Bullet bullet in bullets) {
     if (!bullet.active) continue;
     _compileBullet(buffer, bullet);
@@ -341,7 +331,7 @@ void _compileInteractableNpc(StringBuffer buffer, InteractableNpc npc) {
 }
 
 void compilePlayerMessage(StringBuffer buffer, String message) {
-  _write(buffer, ServerResponse.NpcMessage.index);
+  _write(buffer, indexNpcMessage);
   _write(buffer, message);
   _writeSemiColon(buffer);
 }
