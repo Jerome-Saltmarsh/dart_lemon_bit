@@ -27,7 +27,7 @@ void drawParticle(Particle particle){
 
   switch(particle.type){
     case ParticleType.Myst:
-      drawImage(images.radial64, x, y);
+      drawImage(images.radial64, x - 32, y - 32);
       break;
     case ParticleType.Smoke:
       double size = 5.33 * scaleShift;
