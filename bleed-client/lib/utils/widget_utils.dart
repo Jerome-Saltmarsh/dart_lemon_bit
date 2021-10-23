@@ -11,13 +11,15 @@ Widget mouseOver(
       return MouseRegion(
           onEnter: (_) {
             if (onEnter != null) onEnter();
-            mouseOver = true;
-            setState(() {});
+            setState(() {
+              mouseOver = true;
+            });
           },
           onExit: (_) {
             if (onExit != null) onExit();
-            mouseOver = false;
-            setState(() {});
+            setState(() {
+              mouseOver = false;
+            });
           },
           child: builder(cont, mouseOver));
     });

@@ -7,12 +7,10 @@ import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/Human.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/RenderState.dart';
-import 'package:bleed_client/classes/Sprite.dart';
 import 'package:bleed_client/classes/Zombie.dart';
-import 'package:bleed_client/common/ObjectType.dart';
-import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
+import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
@@ -23,9 +21,9 @@ import 'package:bleed_client/mappers/mapCrateToRSTransform.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
 import 'package:bleed_client/mappers/mapHumanToRect.dart';
 import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
+import 'package:bleed_client/mappers/mapItemToRect.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/properties.dart';
-import 'package:bleed_client/mappers/mapItemToRect.dart';
 import 'package:bleed_client/rects.dart';
 import 'package:bleed_client/state/colours.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
@@ -46,6 +44,7 @@ final double _anchorY = 80;
 final double _nameRadius = 100;
 final double charWidth = 4.5;
 final Ring _healthRing = Ring(16);
+final Rect _rectEnvironmentObject = Rect.fromLTWH(0, 0, 100, 120);
 
 void drawCanvas(Canvas canvass, Size _size) {
   canvass.scale(zoom, zoom);
@@ -82,7 +81,7 @@ void _drawCompiledGame() {
   drawCharacters();
   _drawCollectables();
   _drawSprites();
-  _drawParticles();
+  // _drawParticles();
 
   if (settings.compilePaths) {
     drawPaths();
@@ -104,44 +103,115 @@ void _drawFloatingTexts() {
   }
 }
 
-void _drawSprites() {
+int compareParticles(Particle a, Particle b){
+  if (a.active && !b.active){
+    return -1;
+  }
+  if (b.active && !a.active){
+    return 1;
+  }
+  if (!a.active && !b.active) {
+    return 1;
+  }
 
-  int humanIndex = 0;
-  int envIndex = 0;
+  return a.y > b.y ? 1 : -1;
+}
 
-  for (int i = 0;
-      i < compiledGame.totalHumans + compiledGame.environmentObjects.length;
-      i++) {
-    if (humanIndex < compiledGame.totalHumans &&
-        compiledGame.humans[humanIndex].y <
-            compiledGame.environmentObjects[envIndex].y) {
-      drawHuman(compiledGame.humans[humanIndex]);
-      humanIndex++;
-    } else {
-      drawEnvironmentObject(compiledGame.environmentObjects[envIndex]);
-      envIndex++;
+void _sortParticles() {
+  compiledGame.particles.sort(compareParticles);
+  // // use insertion sort
+  //
+  // Particle a = compiledGame.particles[_sortIndex];
+  // Particle b = compiledGame.particles[_sortIndex + 1];
+  //
+  // if (a.y < b.y) {
+  //   compiledGame.particles[_sortIndex] = b;
+  //   compiledGame.particles[_sortIndex + 1] = a;
+  // }
+  // _sortIndex++;
+  //
+  // if (_sortIndex >= _max) {
+  //   _sortIndex = 0;
+  // }
+}
+
+int getTotalActiveParticles(){
+  int totalParticles = 0;
+  for(int i = 0; i < settings.maxParticles; i++){
+    if(compiledGame.particles[i].active){
+      totalParticles++;
     }
+  }
+  return totalParticles;
+}
+
+void _drawSprites() {
+  int indexHuman = 0;
+  int indexEnv = 0;
+  int indexParticle = 0;
+  int totalParticles = getTotalActiveParticles();
+
+  int totalEnvironment = compiledGame.environmentObjects.length;
+
+  if (totalParticles > 0) {
+    _sortParticles();
+  }
+
+  bool humansRemaining = indexHuman < compiledGame.totalHumans;
+  bool environmentRemaining = indexEnv < totalEnvironment;
+  bool particlesRemaining = indexParticle < totalParticles;
+
+  while (true){
+    humansRemaining = indexHuman < compiledGame.totalHumans;
+    environmentRemaining = indexEnv < totalEnvironment;
+    particlesRemaining = indexParticle < totalParticles;
+
+    if(!humansRemaining && !environmentRemaining && !particlesRemaining){
+      return;
+    }
+
+    if (humansRemaining) {
+      double humanY = compiledGame.humans[indexHuman].y;
+      if (!environmentRemaining || humanY > compiledGame.environmentObjects[indexEnv].y){
+        if(!particlesRemaining || humanY > compiledGame.particles[indexParticle].y){
+          drawHuman(compiledGame.humans[indexHuman]);
+          indexHuman++;
+          continue;
+        }
+      }
+    }
+
+    if (environmentRemaining){
+      if(!particlesRemaining || compiledGame.environmentObjects[indexEnv].y < compiledGame.particles[indexParticle].y){
+        drawEnvironmentObject(compiledGame.environmentObjects[indexEnv]);
+        indexEnv++;
+        continue;
+      }
+    }
+
+    drawParticle(compiledGame.particles[indexParticle]);
+    indexParticle++;
   }
 }
 
 void drawEnvironmentObject(EnvironmentObject environmentObject) {
-  globalCanvas.drawImageRect(environmentObject.image, rectEnvironmentObject, environmentObject.dst, paint);
+  globalCanvas.drawImageRect(environmentObject.image, _rectEnvironmentObject,
+      environmentObject.dst, paint);
 }
 
-Rect rectEnvironmentObject = Rect.fromLTWH(0, 0, 100, 120);
-
 void drawHuman(Human human) {
-  globalCanvas.drawImageRect(images.human, mapHumanToRect(
-      human.weapon, human.state, human.direction, human.frame), Rect.fromLTWH(human.x - 18, human.y - 18, 36, 36), paint);
+  globalCanvas.drawImageRect(
+      images.human,
+      mapHumanToRect(human.weapon, human.state, human.direction, human.frame),
+      Rect.fromLTWH(human.x - 18, human.y - 18, 36, 36),
+      paint);
 }
 
 void _drawEnvironmentObjects() {
   for (EnvironmentObject environmentObject in compiledGame.environmentObjects) {
     globalCanvas.drawImage(
         mapEnvironmentObjectTypeToImage(environmentObject.type),
-        Offset(
-            environmentObject.x - _anchorX,
-            environmentObject.y - _anchorY),
+        Offset(environmentObject.x - _anchorX, environmentObject.y - _anchorY),
         paint);
   }
 }
@@ -213,9 +283,10 @@ void _writePlayerText() {
     double left = human.x - width;
     double y = human.y - 50;
     paint.color = Colors.black26;
-    globalCanvas.drawRect(Rect.fromLTWH(left - padding, y - 5, width * 2 + padding + padding, 30), paint);
+    globalCanvas.drawRect(
+        Rect.fromLTWH(left - padding, y - 5, width * 2 + padding + padding, 30),
+        paint);
     drawText(human.text, left, y);
-
   }
 }
 
@@ -252,8 +323,7 @@ void _drawCollectables() {
 }
 
 // TODO Optimize
-void drawCollectable(CollectableType type, double x, double y) {
-}
+void drawCollectable(CollectableType type, double x, double y) {}
 
 void drawBlockSelected(Block block) {
   // globalCanvas.drawPath(block.wall1, _blockBlueGrey);
