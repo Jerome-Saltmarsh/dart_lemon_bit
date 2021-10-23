@@ -104,35 +104,17 @@ void _drawFloatingTexts() {
 }
 
 int compareParticles(Particle a, Particle b){
-  if (a.active && !b.active){
+  if (!a.active){
+    return 1;
+  }
+  if (!b.active){
     return -1;
   }
-  if (b.active && !a.active){
-    return 1;
-  }
-  if (!a.active && !b.active) {
-    return 1;
-  }
-
   return a.y > b.y ? 1 : -1;
 }
 
 void _sortParticles() {
   compiledGame.particles.sort(compareParticles);
-  // // use insertion sort
-  //
-  // Particle a = compiledGame.particles[_sortIndex];
-  // Particle b = compiledGame.particles[_sortIndex + 1];
-  //
-  // if (a.y < b.y) {
-  //   compiledGame.particles[_sortIndex] = b;
-  //   compiledGame.particles[_sortIndex + 1] = a;
-  // }
-  // _sortIndex++;
-  //
-  // if (_sortIndex >= _max) {
-  //   _sortIndex = 0;
-  // }
 }
 
 int getTotalActiveParticles(){
@@ -172,8 +154,8 @@ void _drawSprites() {
 
     if (humansRemaining) {
       double humanY = compiledGame.humans[indexHuman].y;
-      if (!environmentRemaining || humanY > compiledGame.environmentObjects[indexEnv].y){
-        if(!particlesRemaining || humanY > compiledGame.particles[indexParticle].y){
+      if (!environmentRemaining || humanY < compiledGame.environmentObjects[indexEnv].y){
+        if(!particlesRemaining || humanY < compiledGame.particles[indexParticle].y){
           drawHuman(compiledGame.humans[indexHuman]);
           indexHuman++;
           continue;
