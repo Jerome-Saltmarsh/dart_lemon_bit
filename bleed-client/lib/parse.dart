@@ -18,6 +18,7 @@ import 'package:bleed_client/enums/InventoryItemType.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
+import 'package:bleed_client/functions/emit/emitMyst.dart';
 import 'package:bleed_client/functions/emitSmoke.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/ui/compose/dialogs.dart';
@@ -293,11 +294,6 @@ void _parseEnvironmentObjects() {
     double x = _consumeDouble();
     double y = _consumeDouble();
     EnvironmentObjectType type = _consumeEnvironmentObjectType();
-    compiledGame.environmentObjects.add(EnvironmentObject(
-      x: x,
-      y: y,
-      type: type
-    ));
 
     if (type == EnvironmentObjectType.SmokeEmitter){
       compiledGame.particleEmitters.add(
@@ -308,7 +304,26 @@ void _parseEnvironmentObjects() {
             emit: emitSmoke
           )
       );
+      continue;
     }
+
+    if (type == EnvironmentObjectType.MystEmitter){
+      compiledGame.particleEmitters.add(
+          ParticleEmitter(
+              x: x,
+              y: y,
+              rate: 20,
+              emit: emitMyst
+          )
+      );
+      continue;
+    }
+
+    compiledGame.environmentObjects.add(EnvironmentObject(
+        x: x,
+        y: y,
+        type: type
+    ));
   }
 
   sortReversed(compiledGame.environmentObjects, environmentObjectY);

@@ -11,3 +11,4 @@ void sortReversed<T>(List<T> list, GetNum<T> function) {
     return function(a) < function(b) ? -1 : 1;
   });
 }
+

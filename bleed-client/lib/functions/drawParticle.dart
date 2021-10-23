@@ -2,23 +2,15 @@
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
-import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/game_engine/global_paint.dart';
 import 'package:bleed_client/images.dart';
+import 'package:bleed_client/state/colours.dart';
 import 'package:flutter/material.dart';
 
 import '../maths.dart';
 import '../utils.dart';
-
-
-final Color blood = redDark;
-
-final Color redDark = Color.fromRGBO(174, 35, 52, 1);
-final Color orange = Color.fromRGBO(247, 150, 23, 1);
-final Color green = Color.fromRGBO(30, 188, 115 , 1);
-final Color yellow = Color.fromRGBO(249, 194, 43, 1);
-final Color red = Color.fromRGBO(234, 79, 54, 1);
+import 'drawImage.dart';
 
 
 void drawParticle(Particle particle){
@@ -29,6 +21,9 @@ void drawParticle(Particle particle){
   double rotation = particle.rotation;
 
   switch(particle.type){
+    case ParticleType.Myst:
+      drawImage(images.radial64, x, y);
+      break;
     case ParticleType.Smoke:
       double size = 5.33 * scaleShift;
       drawCircle(x, y + heightShift, size * scaleShift, Colors.white);
@@ -39,7 +34,7 @@ void drawParticle(Particle particle){
       break;
     case ParticleType.Blood:
       double size = 2.5;
-      drawCircle(x, y + heightShift, size * scaleShift, blood);
+      drawCircle(x, y + heightShift, size * scaleShift, colours.blood);
       break;
     case ParticleType.Head:
       double size = 5;

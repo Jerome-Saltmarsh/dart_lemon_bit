@@ -23,6 +23,7 @@ import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/server.dart';
 import 'package:bleed_client/state.dart';
+import 'package:bleed_client/state/colours.dart';
 import 'package:bleed_client/ui/compose/views.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
@@ -336,7 +337,7 @@ Widget buildPurchaseWeaponSlot({Weapon weapon}) {
           callback: () {
             sendRequestPurchaseWeapon(weapon);
           }),
-      buildTag(price, color: player.credits >= price ? green : blood),
+      buildTag(price, color: player.credits >= price ? colours.green : colours.blood),
     ],
   );
 }
@@ -504,7 +505,7 @@ Widget buildViewScore() {
                                 width: 140,
                                 child: text('${index + 1}. ${score.playerName}',
                                     color: score.playerName == playerName
-                                        ? blood
+                                        ? colours.blood
                                         : Colors.white)),
                             Container(width: 50, child: text(score.points)),
                             Container(width: 50, child: text(score.record)),
@@ -546,7 +547,7 @@ Widget _buildViewRespawn() {
                   Container(
                       decoration: BoxDecoration(
                         borderRadius: borderRadius4,
-                        color: blood,
+                        color: colours.blood,
                       ),
                       padding: padding8,
                       child: text("BLEED beta v1.0.0")),

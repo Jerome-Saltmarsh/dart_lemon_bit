@@ -40,7 +40,7 @@ double giveOrTake(double value) {
   return randomBetween(-value, value);
 }
 
-double distanceBetween(GameObject a, GameObject b) {
+double distanceBetween(Positioned a, Positioned b) {
   return distance(a.x, a.y, b.x, b.y);
 }
 
@@ -81,11 +81,11 @@ Duration durationSince(DateTime value) {
 
 DateTime now() => DateTime.now();
 
-double radiansBetweenObject(GameObject a, GameObject b) {
+double radiansBetweenObject(Positioned a, Positioned b) {
   return radiansBetween(a.x, a.y, b.x, b.y);
 }
 
-double radiansBetween2(GameObject a, double x, double y) {
+double radiansBetween2(Positioned a, double x, double y) {
   return radiansBetween(a.x, a.y, x, y);
 }
 

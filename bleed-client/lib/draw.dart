@@ -27,6 +27,7 @@ import 'game_engine/global_paint.dart';
 import 'rects.dart';
 import 'mappers/mapHumanToRect.dart';
 import 'state.dart';
+import 'state/colours.dart';
 import 'state/isWaterAt.dart';
 import 'utils.dart';
 
@@ -204,10 +205,10 @@ void drawPlayerHealth() {
         compiledGame.playerX,
         compiledGame.playerY,
         Color.lerp(
-            yellow, green, (player.health - halfMaxHealth) / halfMaxHealth));
+            colours.yellow, colours.green, (player.health - halfMaxHealth) / halfMaxHealth));
   } else {
     drawCharacterCircle(compiledGame.playerX, compiledGame.playerY,
-        Color.lerp(blood, yellow, player.health / halfMaxHealth));
+        Color.lerp(colours.blood, colours.yellow, player.health / halfMaxHealth));
   }
 }
 
@@ -216,9 +217,9 @@ Color get healthColor {
   double halfMaxHealth = player.maxHealth * 0.5;
   if (health > 0.5) {
     return Color.lerp(
-        orange, green, (player.health - halfMaxHealth) / halfMaxHealth);
+        colours.orange, colours.green, (player.health - halfMaxHealth) / halfMaxHealth);
   }
-  return Color.lerp(blood, orange, player.health / halfMaxHealth);
+  return Color.lerp(colours.blood, colours.orange, player.health / halfMaxHealth);
 }
 
 RSTransform getTileTransform(int x, int y) {

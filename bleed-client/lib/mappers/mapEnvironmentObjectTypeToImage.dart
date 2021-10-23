@@ -26,6 +26,8 @@ Image mapEnvironmentObjectTypeToImage(EnvironmentObjectType type){
       return images.grave;
     case EnvironmentObjectType.SmokeEmitter:
       return images.circle64;
+    case EnvironmentObjectType.MystEmitter:
+      return images.circle64;
     default:
       throw Exception("cannot map type");
   }

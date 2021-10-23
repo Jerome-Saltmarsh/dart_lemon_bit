@@ -8,10 +8,14 @@ import 'utils.dart';
 
 int _idCount = 0;
 
-class GameObject {
+class Positioned {
+  double x;
+  double y;
+  Positioned(this.x, this.y);
+}
+
+class GameObject extends Positioned {
   final int id = _idCount++;
-  double x = 0;
-  double y = 0;
   double z = 0;
   double xv = 0;
   double yv = 0;
@@ -30,8 +34,8 @@ class GameObject {
 
   bool get inactive => !active;
 
-  GameObject(this.x, this.y,
-      {this.z = 0, this.xv = 0, this.yv = 0, this.zv = 0, this.radius = 5});
+  GameObject(double x, double y,
+      {this.z = 0, this.xv = 0, this.yv = 0, this.zv = 0, this.radius = 5}) : super(x, y);
 }
 
 const noSquad = -1;

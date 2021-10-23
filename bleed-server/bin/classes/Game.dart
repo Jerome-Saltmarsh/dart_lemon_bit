@@ -4,6 +4,7 @@ import '../classes.dart';
 import '../common/GameState.dart';
 import '../common/ItemType.dart';
 import '../common/Tile.dart';
+import 'Collider.dart';
 import 'EnvironmentObject.dart';
 import '../common/classes/Vector2.dart';
 import '../common/constants.dart';
@@ -369,6 +370,9 @@ abstract class Game {
   List<Grenade> grenades = [];
   List<GameEvent> gameEvents = [];
   List<Crate> crates = [];
+
+  // List<EnvironmentObject>
+  final List<Collider> colliders = [];
   final List<Collectable> collectables = [];
   final List<Vector2> playerSpawnPoints = [];
   final List<Item> items = [];
@@ -420,6 +424,13 @@ abstract class Game {
     this.crates.clear();
     for (Vector2 crate in scene.crates) {
       crates.add(Crate(x: crate.x, y: crate.y));
+    }
+
+    for (EnvironmentObject environmentObject in scene.environment) {
+      if (environmentObject.radius > 0) {
+        colliders.add(Collider(environmentObject.x, environmentObject.y,
+            environmentObject.radius));
+      }
     }
 
     for (int row = 0; row < scene.rows; row++) {
@@ -589,16 +600,15 @@ extension GameFunctions on Game {
       updateCharacter(npcs[i]);
     }
 
-    for(Character character in players) {
-      for(EnvironmentObject environmentObject in scene.environment){
-        if (environmentObject.radius == 0) continue;
-        double combinedRadius = character.radius + environmentObject.radius;
-        if (diffOver(character.x, environmentObject.x, combinedRadius)) continue;
-        if (diffOver(character.y, environmentObject.y, combinedRadius)) continue;
-        double _distance = distanceBetween(character, environmentObject);
+    for (Character character in players) {
+      for (Collider collider in colliders) {
+        double combinedRadius = character.radius + collider.radius;
+        if (diffOver(character.x, collider.x, combinedRadius)) continue;
+        if (diffOver(character.y, collider.y, combinedRadius)) continue;
+        double _distance = distanceBetween(character, collider);
         if (_distance > combinedRadius) continue;
         double overlap = combinedRadius - _distance;
-        double r = radiansBetweenObject(character, environmentObject);
+        double r = radiansBetweenObject(character, collider);
         character.x -= adj(r, overlap);
         character.y -= opp(r, overlap);
       }
@@ -859,7 +869,7 @@ extension GameFunctions on Game {
       bullet.x += bullet.xv;
       bullet.y += bullet.yv;
       if (bulletDistanceTravelled(bullet) > bullet.range) {
-        if(!scene.waterAt(bullet.x, bullet.y)){
+        if (!scene.waterAt(bullet.x, bullet.y)) {
           dispatch(GameEventType.Bullet_Hole, bullet.x, bullet.y, 0, 0);
         }
 
@@ -1136,7 +1146,7 @@ extension GameFunctions on Game {
               owner.earnPoints(
                   constants.points.zombieKilled * character.pointMultiplier);
             }
-          } else if(bullet.owner is Npc) {
+          } else if (bullet.owner is Npc) {
             // on zombie killed by npc
             (bullet.owner as Npc).clearTarget();
           }
@@ -1630,8 +1640,6 @@ extension GameFunctions on Game {
     }
   }
 }
-
-
 
 void applyCratePhysics(Crate crate, List<Character> characters) {
   for (Character character in characters) {

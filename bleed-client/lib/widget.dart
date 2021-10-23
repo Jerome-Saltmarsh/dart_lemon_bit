@@ -11,6 +11,7 @@ import 'package:bleed_client/game_engine/engine_state.dart';
 import 'package:bleed_client/game_engine/game_widget.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/state.dart';
+import 'package:bleed_client/state/colours.dart';
 import 'package:bleed_client/ui/compose/dialogs.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
@@ -163,7 +164,7 @@ class BleedWidget extends GameWidget {
     canvas.drawRect(
         Rect.fromLTWH(screenCenterX - 50, 25, 100, 15), paint);
 
-    paint.color = orange;
+    paint.color = colours.orange;
     canvas.drawRect(Rect.fromLTWH(screenCenterX - 50, 25, 100 * percentage, 15),
         paint);
   }

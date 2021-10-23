@@ -74,6 +74,7 @@
 -- OPEN WORLD -- 
 [ ] Persist Character on cloud
 [ ] Complete Quests to earn income and unlock upgrades
+[ ] Particles 3D Rendering
 [ ] Change scene
 [ ] Design Zombies
 [ ] Quest Window
@@ -83,10 +84,10 @@
 [ ] Animated Torches
 [ ] Render Batching
 [ ] Fix floating text bug
-[ ] Myst Particles
 [ ] Water Particles
 [ ] Deploy dev endpoint
 [ ] Bullets environment object collision
+[ ] Myst Particles
 [x] Left click npc to interact
 [x] FIX Zombies walk into walls 
 [x] FIX Player message box not showing up
