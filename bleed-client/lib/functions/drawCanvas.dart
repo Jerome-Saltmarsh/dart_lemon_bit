@@ -106,55 +106,33 @@ void _drawFloatingTexts() {
 
 void _drawSprites() {
 
-  int index = 0;
   int humanIndex = 0;
   int envIndex = 0;
 
   for (int i = 0;
       i < compiledGame.totalHumans + compiledGame.environmentObjects.length;
       i++) {
-
-    Sprite sprite = compiledGame.sprites[index];
-
     if (humanIndex < compiledGame.totalHumans &&
         compiledGame.humans[humanIndex].y <
             compiledGame.environmentObjects[envIndex].y) {
-      Human human = compiledGame.humans[humanIndex];
-      sprite.image = images.human;
-      sprite.x = human.x;
-      sprite.y = human.y;
-      sprite.anchorY = 0.5;
-      sprite.visible = true;
-      sprite.src = mapHumanToRect(
-          human.weapon, human.state, human.direction, human.frame);
+      drawHuman(compiledGame.humans[humanIndex]);
       humanIndex++;
     } else {
-      EnvironmentObject environmentObject = compiledGame.environmentObjects[envIndex];
-      sprite.visible = environmentObject.type != EnvironmentObjectType.SmokeEmitter;
-      sprite.image = mapEnvironmentObjectTypeToImage(environmentObject.type);
-      sprite.x = environmentObject.x;
-      sprite.y = environmentObject.y;
-      sprite.anchorY = 0.666;
-      sprite.src = Rect.fromLTWH(
-          0, 0, sprite.image.width.toDouble(), sprite.image.height.toDouble());
+      drawEnvironmentObject(compiledGame.environmentObjects[envIndex]);
       envIndex++;
     }
-    index++;
   }
+}
 
-  for (int i = 0; i < index; i++) {
-    Sprite sprite = compiledGame.sprites[i];
-    if (!sprite.visible) continue;
-    globalCanvas.drawImageRect(
-        sprite.image,
-        sprite.src,
-        Rect.fromLTWH(
-            sprite.x - (sprite.src.width * sprite.anchorX),
-            sprite.y - (sprite.src.height * sprite.anchorY),
-            sprite.src.width,
-            sprite.src.height),
-        paint);
-  }
+void drawEnvironmentObject(EnvironmentObject environmentObject) {
+  globalCanvas.drawImageRect(environmentObject.image, rectEnvironmentObject, environmentObject.dst, paint);
+}
+
+Rect rectEnvironmentObject = Rect.fromLTWH(0, 0, 100, 120);
+
+void drawHuman(Human human) {
+  globalCanvas.drawImageRect(images.human, mapHumanToRect(
+      human.weapon, human.state, human.direction, human.frame), Rect.fromLTWH(human.x - 18, human.y - 18, 36, 36), paint);
 }
 
 void _drawEnvironmentObjects() {

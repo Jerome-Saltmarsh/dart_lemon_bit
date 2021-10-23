@@ -32,13 +32,14 @@ const int _0 = 0;
 
 // public
 
+int ySortPositioned(Positioned a, Positioned b){
+  return a.y > b.y ? 1 : -1;
+}
+
 void compileGame(Game game) {
   game.buffer.clear();
 
-  game.players.sort((a, b){
-    return a.y > b.y ? 1 : -1;
-  });
-
+  game.players.sort(ySortPositioned);
   _compilePlayers(game.buffer, game.players);
   _compileZombies(game.buffer, game.zombies);
   _compileInteractableNpcs(game.buffer, game.npcs);
