@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:bleed_client/engine/engine_state.dart';
 import 'package:bleed_client/engine/game_maths.dart';
 import 'package:bleed_client/engine/game_widget.dart';
 import 'package:bleed_client/engine/state/camera.dart';
@@ -13,6 +12,7 @@ import 'package:bleed_client/state.dart';
 
 import 'common/Weapons.dart';
 import 'common.dart';
+import 'engine/properties/mouseWorld.dart';
 import 'maths.dart';
 
 double getMouseRotation() {

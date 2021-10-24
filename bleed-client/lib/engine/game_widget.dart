@@ -1,8 +1,11 @@
 import 'dart:async';
 
 import 'package:bleed_client/common/classes/Vector2.dart';
+import 'package:bleed_client/engine/functions/convertScreenToWorld.dart';
+import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/state/buildContext.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
+import 'package:bleed_client/engine/state/mouseDragging.dart';
 import 'package:bleed_client/engine/state/size.dart';
 import 'package:bleed_client/input.dart';
 import 'package:flutter/gestures.dart';
@@ -10,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as mat;
 import 'package:positioned_tap_detector/positioned_tap_detector.dart';
 
-import 'engine_state.dart';
 import 'state/paint.dart';
 import 'web_functions.dart';
 
@@ -34,10 +36,6 @@ double get mouseX => _mousePosition?.dx;
 double get mouseY => _mousePosition?.dy;
 
 Offset get mouse => Offset(mouseX, mouseY);
-
-double get mouseWorldX => convertScreenToWorldX(mouseX ?? 0);
-
-double get mouseWorldY => convertScreenToWorldY(mouseY ?? 0);
 
 Offset get mouseWorld => Offset(mouseWorldX, mouseWorldY);
 
@@ -233,7 +231,6 @@ class _GameWidgetState extends State<GameWidget> {
                 mouseDragging = false;
               },
               onPanUpdate: (DragUpdateDetails value) {
-                dragUpdateDetails = value;
                 _previousMousePosition = _mousePosition;
                 _mousePosition = value.globalPosition;
               },

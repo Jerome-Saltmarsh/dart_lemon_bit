@@ -10,7 +10,6 @@ import 'package:bleed_client/connection.dart';
 import 'package:bleed_client/constants.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/editor/editor.dart';
-import 'package:bleed_client/engine/engine_state.dart';
 import 'package:bleed_client/engine/game_widget.dart';
 import 'package:bleed_client/engine/state/buildContext.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
