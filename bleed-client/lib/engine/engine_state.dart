@@ -4,7 +4,6 @@ import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/engine/state/zoom.dart';
 import 'package:flutter/cupertino.dart';
 
-Size globalSize;
 bool mouseDragging = false;
 DragUpdateDetails dragUpdateDetails;
 

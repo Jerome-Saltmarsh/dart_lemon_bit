@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/engine/state/buildContext.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
+import 'package:bleed_client/engine/state/size.dart';
 import 'package:bleed_client/input.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';

@@ -15,6 +15,7 @@ import 'package:bleed_client/engine/game_widget.dart';
 import 'package:bleed_client/engine/state/buildContext.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
+import 'package:bleed_client/engine/state/size.dart';
 import 'package:bleed_client/engine/web_functions.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/open_link.dart';
