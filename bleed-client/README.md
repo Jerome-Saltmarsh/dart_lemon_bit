@@ -87,7 +87,8 @@
 [ ] Water Particles
 [ ] Deploy dev endpoint
 [ ] Bullets environment object collision
-[ ] Myst Particles
+[x] Torch
+[x] Myst Particles
 [x] Left click npc to interact
 [x] FIX Zombies walk into walls 
 [x] FIX Player message box not showing up

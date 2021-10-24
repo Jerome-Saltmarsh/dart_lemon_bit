@@ -24,6 +24,7 @@ class CompiledGame {
   int cratesTotal = 0;
   List<Offset> zombieSpawnPoints = [];
   List<EnvironmentObject> environmentObjects = [];
+  List<EnvironmentObject> torches = [];
   List<List<Tile>> tiles = [];
   List<NpcDebug> npcDebug = [];
   final List<Human> humans = [];

@@ -291,6 +291,7 @@ void parseState() {
 
 void _parseEnvironmentObjects() {
   compiledGame.environmentObjects.clear();
+  compiledGame.torches.clear();
   while (!_simiColonConsumed()) {
     double x = _consumeDouble();
     double y = _consumeDouble();
@@ -328,6 +329,12 @@ void _parseEnvironmentObjects() {
   }
 
   sortReversed(compiledGame.environmentObjects, environmentObjectY);
+
+  for(EnvironmentObject env in compiledGame.environmentObjects){
+    if (env.type == EnvironmentObjectType.Torch){
+      compiledGame.torches.add(env);
+    }
+  }
 }
 
 double environmentObjectY(EnvironmentObject environmentObject){

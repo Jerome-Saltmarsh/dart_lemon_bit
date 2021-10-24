@@ -33,6 +33,7 @@ import 'package:bleed_client/rects.dart';
 import 'package:bleed_client/state/colours.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
+import 'package:bleed_client/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -66,6 +67,8 @@ void drawCanvas(Canvas canvass, Size _size) {
   _drawCompiledGame();
 }
 
+int _flameIndex = 0;
+
 void _drawCompiledGame() {
   if (!connected) return;
   if (compiledGame.gameId < 0) return;
@@ -73,6 +76,11 @@ void _drawCompiledGame() {
   frameRateValue++;
   if (frameRateValue % frameRate == 0) {
     drawFrame++;
+
+    for(EnvironmentObject torch in compiledGame.torches){
+      torch.image = images.flames[_flameIndex];
+      _flameIndex = (_flameIndex + 1) % 3;
+    }
   }
 
   drawTiles();

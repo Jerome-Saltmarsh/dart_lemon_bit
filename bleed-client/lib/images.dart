@@ -34,6 +34,8 @@ class _Images {
   Image torch_02;
   Image torch_03;
 
+  List<Image> flames = [];
+
   Future load() async {
     human = await loadImage("images/character.png");
     zombie = await loadImage("images/zombie.png");
@@ -62,6 +64,10 @@ class _Images {
     torch_01 = await loadImage("images/torch-01.png");
     torch_02 = await loadImage("images/torch-02.png");
     torch_03 = await loadImage("images/torch-03.png");
+
+    flames.add(torch_01);
+    flames.add(torch_02);
+    flames.add(torch_03);
   }
 }
 
