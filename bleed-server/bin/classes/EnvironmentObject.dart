@@ -28,6 +28,9 @@ class EnvironmentObject extends GameObject {
       case EnvironmentObjectType.Rock:
         radius = 14;
         break;
+      case EnvironmentObjectType.Torch:
+        radius = 10;
+        break;
     }
   }
 }

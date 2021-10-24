@@ -76,10 +76,10 @@ void _drawCompiledGame() {
   frameRateValue++;
   if (frameRateValue % frameRate == 0) {
     drawFrame++;
+    _flameIndex = (_flameIndex + 1) % 3;
 
     for(EnvironmentObject torch in compiledGame.torches){
       torch.image = images.flames[_flameIndex];
-      _flameIndex = (_flameIndex + 1) % 3;
     }
   }
 
