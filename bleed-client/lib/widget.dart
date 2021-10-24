@@ -10,6 +10,7 @@ import 'package:bleed_client/engine/engine_state.dart';
 import 'package:bleed_client/engine/game_widget.dart';
 import 'package:bleed_client/engine/state/buildContext.dart';
 import 'package:bleed_client/engine/state/paint.dart';
+import 'package:bleed_client/engine/state/zoom.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/state.dart';
