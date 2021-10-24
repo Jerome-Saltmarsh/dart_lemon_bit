@@ -16,4 +16,6 @@ class Particle {
   double scaleV;
   ParticleType type;
   double bounciness;
+  double airFriction = 0.98;
 }
+

@@ -18,4 +18,5 @@ void emitSmoke(Particle particle){
   particle.xv = randomBetween(0, -pi * 0.1);
   particle.yv = randomBetween(0, pi * 0.1);
   particle.zv = 0.01;
+  particle.airFriction = 0.98;
 }

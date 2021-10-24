@@ -5,6 +5,7 @@ import 'package:bleed_client/engine/render/game_widget.dart';
 import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/images.dart';
+import 'package:bleed_client/mappers/getMystImage.dart';
 import 'package:bleed_client/state/colours.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +28,7 @@ void drawParticle(Particle particle){
 
   switch(particle.type){
     case ParticleType.Myst:
-      drawImage(images.radial64, x - 32, y - 32);
+      drawImage(mapMystDurationToImage(particle.duration), x - 32, y - 32);
       break;
     case ParticleType.Smoke:
       double size = 5.33 * scaleShift;

@@ -3,7 +3,7 @@ import 'dart:ui';
 
 import 'package:bleed_client/engine/functions/loadImage.dart';
 
-_Images images = _Images();
+final _Images images = _Images();
 
 class _Images {
   Image human;
@@ -23,7 +23,13 @@ class _Images {
   Image palisadeV;
   Image grave;
   Image circle64;
-  Image radial64;
+  Image radial64_50;
+  Image radial64_40;
+  Image radial64_30;
+  Image radial64_20;
+  Image radial64_10;
+  Image radial64_05;
+  Image radial64_02;
 
   Future load() async {
     human = await loadImage("images/character.png");
@@ -43,7 +49,13 @@ class _Images {
     palisadeV = await loadImage("images/palisade-v.png");
     grave = await loadImage("images/grave.png");
     circle64 = await loadImage("images/circle-64.png");
-    radial64 = await loadImage("images/radial-64.png");
+    radial64_50 = await loadImage("images/radial-64-50.png");
+    radial64_40 = await loadImage("images/radial-64-40.png");
+    radial64_30 = await loadImage("images/radial-64-30.png");
+    radial64_20 = await loadImage("images/radial-64-20.png");
+    radial64_10 = await loadImage("images/radial-64-10.png");
+    radial64_05 = await loadImage("images/radial-64-05.png");
+    radial64_02 = await loadImage("images/radial-64-02.png");
   }
 }
 

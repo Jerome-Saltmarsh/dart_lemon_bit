@@ -11,7 +11,6 @@ import 'package:bleed_client/state/isWaterAt.dart';
 void updateParticle(Particle particle){
   double gravity = 0.04;
   double bounceFriction = 0.99;
-  double airFriction = 0.98;
   double rotationFriction = 0.93;
   double floorFriction = 0.9;
   bool airBorn = particle.z > 0.01;
@@ -38,8 +37,8 @@ void updateParticle(Particle particle){
     particle.rotationV *= rotationFriction;
   } else if (airBorn) {
     particle.zv -= gravity * particle.weight;
-    particle.xv *= airFriction;
-    particle.yv *= airFriction;
+    particle.xv *= particle.airFriction;
+    particle.yv *= particle.airFriction;
   } else {
     // on floor
     particle.xv *= floorFriction;

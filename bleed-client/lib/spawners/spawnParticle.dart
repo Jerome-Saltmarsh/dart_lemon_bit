@@ -19,8 +19,8 @@ void spawnParticle({
   double rotation = 0,
   double rotationV = 0,
   bounciness = 0.5,
+  double airFriction = 0.98
 }) {
-
   for (Particle particle in compiledGame.particles){
     if (particle.active) continue;
     particle.type = type;
@@ -38,6 +38,7 @@ void spawnParticle({
     particle.rotationV = rotationV;
     particle.bounciness = bounciness;
     particle.active = true;
+    particle.airFriction = airFriction;
     return;
   }
 }

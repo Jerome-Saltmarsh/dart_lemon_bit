@@ -7,7 +7,7 @@ import 'package:bleed_client/common/functions/giveOrTake.dart';
 import 'package:bleed_client/common/functions/randomBetween.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 
-final double _maxVelocity = 0.5;
+final double _maxVelocity = 0.1;
 
 void emitMyst(Particle particle){
   particle.type = ParticleType.Myst;
@@ -19,6 +19,7 @@ void emitMyst(Particle particle){
   particle.rotation = 0;
   particle.rotationV = 0;
   particle.bounciness = 0;
+  particle.airFriction = 1.0;
   particle.xv = giveOrTake(pi * _maxVelocity);
   particle.yv = giveOrTake(pi * _maxVelocity);
   particle.zv = 0.0;
