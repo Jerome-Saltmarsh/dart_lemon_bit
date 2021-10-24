@@ -16,7 +16,7 @@ import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/engine/engine_draw.dart';
 import 'package:bleed_client/engine/engine_state.dart';
 import 'package:bleed_client/engine/game_widget.dart';
-import 'package:bleed_client/engine/global_paint.dart';
+import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/instances/settings.dart';
 import 'package:bleed_client/mappers/mapCrateToRSTransform.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';

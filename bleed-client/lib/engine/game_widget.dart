@@ -8,7 +8,7 @@ import 'package:flutter/material.dart' as mat;
 import 'package:positioned_tap_detector/positioned_tap_detector.dart';
 
 import 'engine_state.dart';
-import 'global_paint.dart';
+import 'state/paint.dart';
 import 'web_functions.dart';
 
 typedef PaintGame = Function(Canvas canvas, Size size);

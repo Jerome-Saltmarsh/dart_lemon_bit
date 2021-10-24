@@ -8,7 +8,7 @@ import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/constants.dart';
 import 'package:bleed_client/engine/engine_state.dart';
 import 'package:bleed_client/engine/game_widget.dart';
-import 'package:bleed_client/engine/global_paint.dart';
+import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/state.dart';
