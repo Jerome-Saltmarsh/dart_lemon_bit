@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:bleed_client/engine/engine_state.dart';
 import 'package:bleed_client/engine/game_maths.dart';
 import 'package:bleed_client/engine/game_widget.dart';
+import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/state.dart';

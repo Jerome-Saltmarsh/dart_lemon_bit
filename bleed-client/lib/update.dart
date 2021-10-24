@@ -3,6 +3,7 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/engine/engine_state.dart';
+import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/tutorials.dart';
 

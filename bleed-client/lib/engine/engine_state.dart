@@ -1,10 +1,9 @@
 import 'dart:ui';
 
+import 'package:bleed_client/engine/state/camera.dart';
 import 'package:flutter/cupertino.dart';
 
 Size globalSize;
-double cameraX = 0;
-double cameraY = 0;
 double zoom = 1;
 bool mouseDragging = false;
 DragUpdateDetails dragUpdateDetails;

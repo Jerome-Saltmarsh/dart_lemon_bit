@@ -8,6 +8,7 @@ import 'package:bleed_client/common/functions/diffOver.dart';
 import 'package:bleed_client/engine/engine_state.dart';
 import 'package:bleed_client/engine/game_input.dart';
 import 'package:bleed_client/engine/game_widget.dart';
+import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/instances/settings.dart';
 import 'package:bleed_client/properties.dart';
