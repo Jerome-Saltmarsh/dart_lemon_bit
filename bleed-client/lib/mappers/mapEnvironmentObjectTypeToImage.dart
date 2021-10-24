@@ -30,6 +30,8 @@ Image mapEnvironmentObjectTypeToImage(EnvironmentObjectType type){
       return images.circle64;
     case EnvironmentObjectType.Torch:
       return images.torch_01;
+    case EnvironmentObjectType.Bridge:
+      return images.bridge;
     default:
       throw Exception("cannot map type");
   }

@@ -2,17 +2,14 @@
 import 'dart:ui';
 
 import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
-import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
 
 class EnvironmentObject {
   double x;
   double y;
-  EnvironmentObjectType type;
   Image image;
-  Rect dst;
+  final EnvironmentObjectType type;
+  final Rect dst;
+  final Rect src;
 
-  EnvironmentObject({this.x, this.y, this.type}){
-    image = mapEnvironmentObjectTypeToImage(type);
-    dst = Rect.fromLTWH(x - 50, y - 80, 100, 120);
-  }
+  EnvironmentObject({this.x, this.y, this.type, this.image, this.src, this.dst});
 }

@@ -17,5 +17,6 @@ class Particle {
   ParticleType type;
   double bounciness;
   double airFriction = 0.98;
+  bool foreground = false;
 }
 

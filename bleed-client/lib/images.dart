@@ -33,6 +33,7 @@ class _Images {
   Image torch_01;
   Image torch_02;
   Image torch_03;
+  Image bridge;
 
   List<Image> flames = [];
 
@@ -64,6 +65,7 @@ class _Images {
     torch_01 = await loadImage("images/torch-01.png");
     torch_02 = await loadImage("images/torch-02.png");
     torch_03 = await loadImage("images/torch-03.png");
+    bridge = await loadImage("images/bridge.png");
 
     flames.add(torch_01);
     flames.add(torch_02);

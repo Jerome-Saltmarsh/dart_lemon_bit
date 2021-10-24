@@ -87,6 +87,61 @@ Widget buildEnvironmentType(EnvironmentObjectType type) {
   });
 }
 
+Widget buildEnv(EnvironmentObject env){
+  return button(toString(env.type), (){
+    editState.selectedObject = env;
+  });
+}
+
+Widget _buildObjectList(){
+  return Positioned(
+      right: 0,
+      top: 50,
+      child: Container(
+        height: screenHeight - 50,
+        child: SingleChildScrollView(
+            child:Column(
+            children: compiledGame.environmentObjects.map(buildEnv).toList(),
+          )
+        ),
+  ));
+}
+
+Widget _buildTools(){
+  return Positioned(
+    left: 0,
+    top: 0,
+    child: Container(
+      height: screenHeight,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: cross.start,
+          children: [
+            buildTiles(),
+            buildEnvironmentObjects(),
+            button("Save Scene", saveScene),
+            button("Reset Tiles", _resetTiles),
+            button("Increase Tiles X", () {
+              for (List<Tile> row in compiledGame.tiles) {
+                row.add(Tile.Grass);
+              }
+              renderTiles(compiledGame.tiles);
+            }),
+            button("Increase Tiles Y", () {
+              List<Tile> row = [];
+              for (int i = 0; i < compiledGame.tiles[0].length; i++) {
+                row.add(Tile.Grass);
+              }
+              compiledGame.tiles.add(row);
+              renderTiles(compiledGame.tiles);
+            }),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
 Widget buildEditorUI() {
   return Container(
     width: globalSize.width,
@@ -94,38 +149,8 @@ Widget buildEditorUI() {
     alignment: Alignment.center,
     child: Stack(
       children: [
-        Positioned(
-          left: 0,
-          top: 0,
-          child: Container(
-            height: screenHeight,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: cross.start,
-                children: [
-                  buildTiles(),
-                  buildEnvironmentObjects(),
-                  button("Save Scene", saveScene),
-                  button("Reset Tiles", _resetTiles),
-                  button("Increase Tiles X", () {
-                    for (List<Tile> row in compiledGame.tiles) {
-                      row.add(Tile.Grass);
-                    }
-                    renderTiles(compiledGame.tiles);
-                  }),
-                  button("Increase Tiles Y", () {
-                    List<Tile> row = [];
-                    for (int i = 0; i < compiledGame.tiles[0].length; i++) {
-                      row.add(Tile.Grass);
-                    }
-                    compiledGame.tiles.add(row);
-                    renderTiles(compiledGame.tiles);
-                  }),
-                ],
-              ),
-            ),
-          ),
-        )
+        _buildTools(),
+        _buildObjectList(),
       ],
     ),
   );

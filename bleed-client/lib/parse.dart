@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/bleed.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
@@ -20,6 +22,7 @@ import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/functions/emit/emitMyst.dart';
 import 'package:bleed_client/functions/emitSmoke.dart';
+import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/ui/compose/dialogs.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
@@ -321,10 +324,16 @@ void _parseEnvironmentObjects() {
       continue;
     }
 
+    Image image = mapEnvironmentObjectTypeToImage(type);
+    Rect src = Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble());
+
     compiledGame.environmentObjects.add(EnvironmentObject(
         x: x,
         y: y,
-        type: type
+        type: type,
+        dst: Rect.fromLTWH(x - image.width * 0.5, y - image.height * 0.6666, image.width.toDouble(), image.height.toDouble()),
+        src: src,
+        image: image
     ));
   }
 

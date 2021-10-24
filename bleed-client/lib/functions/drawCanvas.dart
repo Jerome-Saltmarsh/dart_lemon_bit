@@ -94,7 +94,6 @@ void _drawCompiledGame() {
   drawCharacters();
   _drawCollectables();
   _drawSprites();
-  // _drawParticles();
 
   if (settings.compilePaths) {
     drawPaths();
@@ -157,8 +156,6 @@ void _drawSprites() {
   if (totalParticles > 0) {
     _sortParticles();
   }
-  // compiledGame.particles.insertionS
-  // insertionSort()
 
   bool humansRemaining = indexHuman < compiledGame.totalHumans;
   bool environmentRemaining = indexEnv < totalEnvironment;
@@ -202,8 +199,12 @@ void _drawSprites() {
 }
 
 void drawEnvironmentObject(EnvironmentObject environmentObject) {
-  globalCanvas.drawImageRect(environmentObject.image, _rectEnvironmentObject,
-      environmentObject.dst, paint);
+  globalCanvas.drawImageRect(
+      environmentObject.image,
+      environmentObject.src,
+      environmentObject.dst,
+      paint
+  );
 }
 
 void drawHuman(Human human) {

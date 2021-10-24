@@ -10,5 +10,10 @@ enum EnvironmentObjectType {
   Palisade_V,
   SmokeEmitter,
   MystEmitter,
-  Torch
+  Torch,
+  Bridge
+}
+
+String toString(EnvironmentObjectType type){
+  return type.toString().replaceAll("EnvironmentObjectType.", "");
 }
