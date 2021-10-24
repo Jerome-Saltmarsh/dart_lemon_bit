@@ -1,8 +1,18 @@
 import 'dart:ui';
 
 import 'package:bleed_client/images.dart';
+import 'package:bleed_client/state/particleSettings.dart';
+
+final int _a = particleSettings.mystDuration - 50;
+final int _b = particleSettings.mystDuration - 100;
 
 Image mapMystDurationToImage(int duration) {
+  if (duration > _a){
+    return images.radial64_10;
+  }
+  if (duration > _b){
+    return images.radial64_30;
+  }
   if (duration > 150) {
     return images.radial64_50;
   }

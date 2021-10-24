@@ -1,17 +1,16 @@
-
 import 'dart:math';
 
 import 'package:bleed_client/classes/Particle.dart';
-import 'package:bleed_client/common/constants/pi2.dart';
 import 'package:bleed_client/common/functions/giveOrTake.dart';
 import 'package:bleed_client/common/functions/randomBetween.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
+import 'package:bleed_client/state/particleSettings.dart';
 
-final double _maxVelocity = 0.1;
-
-void emitMyst(Particle particle){
+void emitMyst(Particle particle) {
   particle.type = ParticleType.Myst;
-  particle.duration = randomBetween(500, 750).toInt();
+  particle.duration = particleSettings.mystDuration;
+  particle.x += giveOrTake(particleSettings.mystPositionRange);
+  particle.y += giveOrTake(particleSettings.mystPositionRange);
   particle.z = 0.25;
   particle.weight = 0;
   particle.scale = 1;
@@ -20,7 +19,7 @@ void emitMyst(Particle particle){
   particle.rotationV = 0;
   particle.bounciness = 0;
   particle.airFriction = 1.0;
-  particle.xv = giveOrTake(pi * _maxVelocity);
-  particle.yv = giveOrTake(pi * _maxVelocity);
+  particle.xv = giveOrTake(pi * particleSettings.mystMaxVelocity);
+  particle.yv = giveOrTake(pi * particleSettings.mystMaxVelocity);
   particle.zv = 0.0;
 }
