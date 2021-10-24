@@ -1,7 +1,7 @@
 
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/engine/functions/drawCircle.dart';
-import 'package:bleed_client/engine/game_widget.dart';
+import 'package:bleed_client/engine/render/game_widget.dart';
 import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/images.dart';

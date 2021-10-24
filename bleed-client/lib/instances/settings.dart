@@ -1,5 +1,5 @@
 import 'package:bleed_client/classes/Settings.dart';
-import 'package:bleed_client/engine/game_widget.dart';
+import 'package:bleed_client/engine/render/game_widget.dart';
 import 'package:bleed_client/instances/sharedPreferences.dart';
 
 Settings settings = Settings();

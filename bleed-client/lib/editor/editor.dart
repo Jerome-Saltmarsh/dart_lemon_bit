@@ -7,8 +7,8 @@ import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/functions/diffOver.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/engine/functions/drawCircle.dart';
-import 'package:bleed_client/engine/game_input.dart';
-import 'package:bleed_client/engine/game_widget.dart';
+import 'package:bleed_client/engine/properties/keyPressed.dart';
+import 'package:bleed_client/engine/render/game_widget.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/engine/state/mouseDragging.dart';
@@ -205,7 +205,7 @@ void _onKeyDownEvent(RawKeyDownEvent event){
 
 
 void updateEditMode() {
-  onKeyPressed(LogicalKeyboardKey.escape, disconnect);
+  // onKeyPressed(LogicalKeyboardKey.escape, disconnect);
 
   // _controlCameraEditMode();
   _onMouseLeftClick();

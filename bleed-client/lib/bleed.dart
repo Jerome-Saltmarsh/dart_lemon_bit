@@ -5,7 +5,7 @@ import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/connection.dart';
-import 'package:bleed_client/engine/game_widget.dart';
+import 'package:bleed_client/engine/render/game_widget.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/send.dart';

@@ -6,7 +6,7 @@ import 'package:bleed_client/bleed.dart';
 import 'package:bleed_client/classes/Human.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/constants.dart';
-import 'package:bleed_client/engine/game_widget.dart';
+import 'package:bleed_client/engine/render/game_widget.dart';
 import 'package:bleed_client/engine/state/buildContext.dart';
 import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/engine/state/zoom.dart';

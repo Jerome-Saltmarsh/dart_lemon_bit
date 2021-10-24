@@ -3,7 +3,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:bleed_client/common/functions/radiansBetween.dart';
-import 'package:bleed_client/engine/game_widget.dart';
+import 'package:bleed_client/engine/render/game_widget.dart';
 import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
@@ -39,7 +39,6 @@ void drawCustomLine(double x1, double y1, double x2, double y2, Paint paint) {
 Offset offset(double x, double y) {
   return Offset(x, y);
 }
-
 
 dynamic rotationToPosX(double rotation, double distance) {
   return -cos(rotation + (pi * 0.5)) * distance;

@@ -15,7 +15,7 @@ import 'package:bleed_client/common/functions/insertionSort.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/engine/functions/drawCircle.dart';
 import 'package:bleed_client/engine/functions/drawText.dart';
-import 'package:bleed_client/engine/game_widget.dart';
+import 'package:bleed_client/engine/render/game_widget.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/engine/state/canvas.dart';

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/engine/functions/convertScreenToWorld.dart';
+import 'package:bleed_client/engine/functions/disableRightClick.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/state/buildContext.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
@@ -13,8 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/material.dart' as mat;
 import 'package:positioned_tap_detector/positioned_tap_detector.dart';
 
-import 'state/paint.dart';
-import 'web_functions.dart';
+import '../state/paint.dart';
 
 typedef PaintGame = Function(Canvas canvas, Size size);
 
@@ -62,13 +62,6 @@ Color white = mat.Colors.white;
 Color red = mat.Colors.red;
 
 // finals
-
-final Paint paint2 = Paint()
-  ..color = white
-  ..strokeCap = StrokeCap.round
-  ..style = PaintingStyle.fill
-  ..isAntiAlias = false
-  ..strokeWidth = 2;
 
 final Paint paint3 = Paint()
   ..color = white

@@ -8,7 +8,7 @@ import 'package:bleed_client/tutorials.dart';
 
 import 'common/Weapons.dart';
 import 'connection.dart';
-import 'engine/game_widget.dart';
+import 'engine/render/game_widget.dart';
 import 'input.dart';
 import 'instances/settings.dart';
 import 'instances/sharedPreferences.dart';
