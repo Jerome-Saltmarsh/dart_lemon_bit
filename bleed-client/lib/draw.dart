@@ -10,6 +10,7 @@ import 'package:bleed_client/common/functions/diffOver.dart';
 import 'package:bleed_client/engine/engine_draw.dart';
 import 'package:bleed_client/engine/engine_state.dart';
 import 'package:bleed_client/engine/game_widget.dart';
+import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/mappers/mapTileToRect.dart';

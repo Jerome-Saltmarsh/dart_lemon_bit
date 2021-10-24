@@ -1,4 +1,5 @@
 import 'package:bleed_client/engine/engine_state.dart';
+import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
 
 import '../classes/SpriteAnimation.dart';
