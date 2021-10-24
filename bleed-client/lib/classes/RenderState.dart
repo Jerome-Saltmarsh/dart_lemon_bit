@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/FloatingText.dart';
@@ -26,6 +27,11 @@ class _RenderState {
   List<Rect> particleRects = [];
   List<List<Vector2>> paths = [];
   List<FloatingText> floatingText = [];
+
+
+  Float32List tilesRstTransforms;
+  Float32List tilesRects;
+
 
   Render items = Render();
   Render crates = Render();

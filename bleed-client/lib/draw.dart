@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:typed_data';
 import 'dart:ui';
 import 'dart:ui' as ui;
 
@@ -92,11 +93,13 @@ void drawZombies() {
 }
 
 void drawTileList() {
-  drawAtlases(images.tiles, render.tileTransforms, render.tileRects);
+  // drawAtlases(images.tiles, render.tileTransforms, render.tileRects);
+  globalCanvas.drawRawAtlas(images.tiles, render.tilesRstTransforms, render.tilesRects, null, null, null, paint);
 }
 
 void drawAtlases(
     ui.Image image, List<RSTransform> transforms, List<Rect> rects) {
+  
   globalCanvas.drawAtlas(
       image, transforms, rects, null, null, null, paint);
 }
@@ -104,6 +107,33 @@ void drawAtlases(
 void renderTiles(List<List<Tile>> tiles) {
   _processTileTransforms(tiles);
   _loadTileRects(tiles);
+
+  List<Rect> rects = render.tileRects;
+  List<RSTransform> rsTransform = render.tileTransforms;
+
+  int total = rects.length * 4;
+  Float32List rstTransformBuffer = Float32List(total);
+  Float32List tileRects = Float32List(total);
+
+  for (int i = 0; i < rects.length; ++i) {
+    final int index0 = i * 4;
+    final int index1 = index0 + 1;
+    final int index2 = index0 + 2;
+    final int index3 = index0 + 3;
+    final RSTransform rstTransform = rsTransform[i];
+    final Rect rect = rects[i];
+    rstTransformBuffer[index0] = rstTransform.scos;
+    rstTransformBuffer[index1] = rstTransform.ssin;
+    rstTransformBuffer[index2] = rstTransform.tx;
+    rstTransformBuffer[index3] = rstTransform.ty;
+    tileRects[index0] = rect.left;
+    tileRects[index1] = rect.top;
+    tileRects[index2] = rect.right;
+    tileRects[index3] = rect.bottom;
+  }
+
+  render.tilesRects = tileRects;
+  render.tilesRstTransforms = rstTransformBuffer;
 }
 
 void _processTileTransforms(List<List<Tile>> tiles) {

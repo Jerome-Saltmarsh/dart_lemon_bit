@@ -87,6 +87,7 @@
 [ ] Water Particles
 [ ] Deploy dev endpoint
 [ ] Bullets environment object collision
+[ ] Draw tiles using drawRawAtlas
 [x] Torch
 [x] Myst Particles
 [x] Left click npc to interact
