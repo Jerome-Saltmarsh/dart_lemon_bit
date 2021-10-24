@@ -1431,10 +1431,17 @@ extension GameFunctions on Game {
 
       if (npc.targetSet) {
         // @on update npc with target
-        if (diffOver(npc.x, npc.target.x, settings.npcChaseRange)) continue;
-        if (diffOver(npc.y, npc.target.y, settings.npcChaseRange)) continue;
-        npc.clearTarget();
-        npc.state = CharacterState.Idle;
+        if (npc.mode == NpcMode.Stand_Ground) {
+          if (diffOver(npc.x, npc.target.x, getWeaponRange(npc.weapon))) continue;
+          if (diffOver(npc.y, npc.target.y, getWeaponRange(npc.weapon))) continue;
+          npc.clearTarget();
+          npc.state = CharacterState.Idle;
+        } else {
+          if (diffOver(npc.x, npc.target.x, settings.npcChaseRange)) continue;
+          if (diffOver(npc.y, npc.target.y, settings.npcChaseRange)) continue;
+          npc.clearTarget();
+          npc.state = CharacterState.Idle;
+        }
       }
 
       for (int j = 0; j < zombies.length; j++) {
