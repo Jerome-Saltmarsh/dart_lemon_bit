@@ -33,7 +33,7 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
     case GameEventType.MachineGun_Fired:
       playAudioAssaultRifleShot(x, y);
       spawnShell(x, y);
-      spawnShotSmoke(x, y, xv, yv);
+      // spawnShotSmoke(x, y, xv, yv);
       break;
     case GameEventType.Zombie_Hit:
       if (randomBool()) {

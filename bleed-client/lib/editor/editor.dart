@@ -1,9 +1,9 @@
 import 'dart:ui';
 
 import 'package:bleed_client/classes/EnvironmentObject.dart';
-import 'package:bleed_client/common/ObjectType.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
+import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
 import 'package:bleed_client/common/functions/diffOver.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/engine/functions/drawCircle.dart';

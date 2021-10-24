@@ -30,6 +30,9 @@ class _Images {
   Image radial64_10;
   Image radial64_05;
   Image radial64_02;
+  Image torch_01;
+  Image torch_02;
+  Image torch_03;
 
   Future load() async {
     human = await loadImage("images/character.png");
@@ -56,6 +59,9 @@ class _Images {
     radial64_10 = await loadImage("images/radial-64-10.png");
     radial64_05 = await loadImage("images/radial-64-05.png");
     radial64_02 = await loadImage("images/radial-64-02.png");
+    torch_01 = await loadImage("images/torch-01.png");
+    torch_02 = await loadImage("images/torch-02.png");
+    torch_03 = await loadImage("images/torch-03.png");
   }
 }
 

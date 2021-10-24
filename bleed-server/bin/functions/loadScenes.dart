@@ -9,6 +9,7 @@ import '../common/Tile.dart';
 import '../classes/EnvironmentObject.dart';
 import '../common/classes/Vector2.dart';
 import '../common/CollectableType.dart';
+import '../common/enums/EnvironmentObjectType.dart';
 import '../instances/scenes.dart';
 import '../utils.dart';
 

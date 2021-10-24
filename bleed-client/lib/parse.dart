@@ -35,6 +35,7 @@ import 'common/GameEventType.dart';
 import 'common/GameState.dart';
 import 'common/Tile.dart';
 import 'common/Weapons.dart';
+import 'common/enums/EnvironmentObjectType.dart';
 import 'common/version.dart';
 import 'draw.dart';
 import 'enums.dart';

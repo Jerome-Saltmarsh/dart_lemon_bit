@@ -1,7 +1,7 @@
 
 import 'dart:ui';
 
-import 'package:bleed_client/common/ObjectType.dart';
+import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
 
 class EnvironmentObject {

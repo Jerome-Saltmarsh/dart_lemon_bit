@@ -1,5 +1,6 @@
 import '../common/ObjectType.dart';
 import '../common/Tile.dart';
+import '../common/enums/EnvironmentObjectType.dart';
 import 'EnvironmentObject.dart';
 import '../common/classes/Vector2.dart';
 import '../enums.dart';

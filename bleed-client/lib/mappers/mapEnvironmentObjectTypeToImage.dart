@@ -1,7 +1,7 @@
 
 import 'dart:ui';
 
-import 'package:bleed_client/common/ObjectType.dart';
+import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
 import 'package:bleed_client/images.dart';
 
 Image mapEnvironmentObjectTypeToImage(EnvironmentObjectType type){
@@ -28,6 +28,8 @@ Image mapEnvironmentObjectTypeToImage(EnvironmentObjectType type){
       return images.circle64;
     case EnvironmentObjectType.MystEmitter:
       return images.circle64;
+    case EnvironmentObjectType.Torch:
+      return images.torch_01;
     default:
       throw Exception("cannot map type");
   }
