@@ -11,6 +11,7 @@ import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
+import 'package:bleed_client/common/functions/insertionSort.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/game_engine/engine_draw.dart';
 import 'package:bleed_client/game_engine/engine_state.dart';
@@ -103,24 +104,30 @@ void _drawFloatingTexts() {
   }
 }
 
-int compareParticles(Particle a, Particle b){
-  if (!a.active){
+int compareParticles(Particle a, Particle b) {
+  if (!a.active) {
     return 1;
   }
-  if (!b.active){
+  if (!b.active) {
     return -1;
   }
   return a.y > b.y ? 1 : -1;
 }
 
 void _sortParticles() {
-  compiledGame.particles.sort(compareParticles);
+  // compiledGame.particles.sort(compareParticles);
+  insertionSort(
+      list: compiledGame.particles,
+      compare: compareParticles,
+      start: 0,
+      end: settings.maxParticles
+  );
 }
 
-int getTotalActiveParticles(){
+int getTotalActiveParticles() {
   int totalParticles = 0;
-  for(int i = 0; i < settings.maxParticles; i++){
-    if(compiledGame.particles[i].active){
+  for (int i = 0; i < settings.maxParticles; i++) {
+    if (compiledGame.particles[i].active) {
       totalParticles++;
     }
   }
@@ -138,24 +145,28 @@ void _drawSprites() {
   if (totalParticles > 0) {
     _sortParticles();
   }
+  // compiledGame.particles.insertionS
+  // insertionSort()
 
   bool humansRemaining = indexHuman < compiledGame.totalHumans;
   bool environmentRemaining = indexEnv < totalEnvironment;
   bool particlesRemaining = indexParticle < totalParticles;
 
-  while (true){
+  while (true) {
     humansRemaining = indexHuman < compiledGame.totalHumans;
     environmentRemaining = indexEnv < totalEnvironment;
     particlesRemaining = indexParticle < totalParticles;
 
-    if(!humansRemaining && !environmentRemaining && !particlesRemaining){
+    if (!humansRemaining && !environmentRemaining && !particlesRemaining) {
       return;
     }
 
     if (humansRemaining) {
       double humanY = compiledGame.humans[indexHuman].y;
-      if (!environmentRemaining || humanY < compiledGame.environmentObjects[indexEnv].y){
-        if(!particlesRemaining || humanY < compiledGame.particles[indexParticle].y){
+      if (!environmentRemaining ||
+          humanY < compiledGame.environmentObjects[indexEnv].y) {
+        if (!particlesRemaining ||
+            humanY < compiledGame.particles[indexParticle].y) {
           drawHuman(compiledGame.humans[indexHuman]);
           indexHuman++;
           continue;
@@ -163,8 +174,10 @@ void _drawSprites() {
       }
     }
 
-    if (environmentRemaining){
-      if(!particlesRemaining || compiledGame.environmentObjects[indexEnv].y < compiledGame.particles[indexParticle].y){
+    if (environmentRemaining) {
+      if (!particlesRemaining ||
+          compiledGame.environmentObjects[indexEnv].y <
+              compiledGame.particles[indexParticle].y) {
         drawEnvironmentObject(compiledGame.environmentObjects[indexEnv]);
         indexEnv++;
         continue;
