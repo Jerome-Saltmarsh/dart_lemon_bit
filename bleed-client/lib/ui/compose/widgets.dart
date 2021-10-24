@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:bleed_client/game_engine/engine_state.dart';
-import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/engine/engine_state.dart';
+import 'package:bleed_client/engine/game_widget.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';

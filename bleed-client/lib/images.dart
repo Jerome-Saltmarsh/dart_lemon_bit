@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:bleed_client/game_engine/game_resources.dart';
+import 'package:bleed_client/engine/game_resources.dart';
 
 _Images images = _Images();
 

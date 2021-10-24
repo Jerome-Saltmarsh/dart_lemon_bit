@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:bleed_client/common/ClientRequest.dart';
-import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/engine/game_widget.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'functions/clearState.dart';

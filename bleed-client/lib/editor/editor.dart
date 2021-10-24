@@ -6,12 +6,16 @@ import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/functions/diffOver.dart';
 import 'package:bleed_client/draw.dart';
+import 'package:bleed_client/engine/engine_draw.dart';
+import 'package:bleed_client/engine/engine_state.dart';
+import 'package:bleed_client/engine/game_input.dart';
+import 'package:bleed_client/engine/game_widget.dart';
+import 'package:bleed_client/engine/global_paint.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
 import 'package:bleed_client/functions/saveScene.dart';
-import 'package:bleed_client/game_engine/engine_draw.dart';
-import 'package:bleed_client/game_engine/global_paint.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/properties.dart';
+import 'package:bleed_client/state/canvas.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +23,6 @@ import 'package:flutter/services.dart';
 
 import '../classes/Block.dart';
 import '../connection.dart';
-import '../game_engine/engine_state.dart';
-import '../game_engine/game_input.dart';
-import '../game_engine/game_widget.dart';
 import '../instances/editState.dart';
 import '../settings.dart';
 import '../state.dart';
@@ -375,5 +376,5 @@ void _controlCameraEditMode() {
 
 void _drawLine(Offset a, Offset b, Color color) {
   paint.color = color;
-  globalCanvas.drawLine(a, b, paint);
+  canvas.drawLine(a, b, paint);
 }

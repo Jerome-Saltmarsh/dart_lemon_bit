@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bleed_client/common/classes/Vector2.dart';
-import 'package:bleed_client/game_engine/web_functions.dart';
 import 'package:bleed_client/input.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +9,7 @@ import 'package:positioned_tap_detector/positioned_tap_detector.dart';
 
 import 'engine_state.dart';
 import 'global_paint.dart';
+import 'web_functions.dart';
 
 typedef PaintGame = Function(Canvas canvas, Size size);
 
