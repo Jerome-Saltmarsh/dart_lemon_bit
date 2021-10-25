@@ -78,7 +78,7 @@ void _drawCompiledGame() {
     drawFrame++;
     _flameIndex = (_flameIndex + 1) % 3;
 
-    for(EnvironmentObject torch in compiledGame.torches){
+    for (EnvironmentObject torch in compiledGame.torches) {
       torch.image = images.flames[_flameIndex];
     }
   }
@@ -131,8 +131,7 @@ void _sortParticles() {
       list: compiledGame.particles,
       compare: compareParticles,
       start: 0,
-      end: settings.maxParticles
-  );
+      end: settings.maxParticles);
 }
 
 int getTotalActiveParticles() {
@@ -156,6 +155,11 @@ void _drawSprites() {
   if (totalParticles > 0) {
     _sortParticles();
   }
+
+  for (EnvironmentObject environmentObject in compiledGame.backgroundObjects) {
+    drawEnvironmentObject(environmentObject);
+  }
+
 
   bool humansRemaining = indexHuman < compiledGame.totalHumans;
   bool environmentRemaining = indexEnv < totalEnvironment;
@@ -199,12 +203,8 @@ void _drawSprites() {
 }
 
 void drawEnvironmentObject(EnvironmentObject environmentObject) {
-  globalCanvas.drawImageRect(
-      environmentObject.image,
-      environmentObject.src,
-      environmentObject.dst,
-      paint
-  );
+  globalCanvas.drawImageRect(environmentObject.image, environmentObject.src,
+      environmentObject.dst, paint);
 }
 
 void drawHuman(Human human) {

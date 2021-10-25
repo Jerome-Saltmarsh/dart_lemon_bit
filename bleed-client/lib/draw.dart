@@ -93,8 +93,15 @@ void drawZombies() {
 }
 
 void drawTileList() {
-  // drawAtlases(images.tiles, render.tileTransforms, render.tileRects);
-  globalCanvas.drawRawAtlas(images.tiles, render.tilesRstTransforms, render.tilesRects, null, null, null, paint);
+  globalCanvas.drawRawAtlas(
+      images.tiles,
+      render.tilesRstTransforms,
+      render.tilesRects,
+      null,
+      null,
+      null,
+      paint
+  );
 }
 
 void drawAtlases(

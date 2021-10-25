@@ -327,14 +327,21 @@ void _parseEnvironmentObjects() {
     Image image = mapEnvironmentObjectTypeToImage(type);
     Rect src = Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble());
 
-    compiledGame.environmentObjects.add(EnvironmentObject(
+    EnvironmentObject envObject = EnvironmentObject(
         x: x,
         y: y,
         type: type,
         dst: Rect.fromLTWH(x - image.width * 0.5, y - image.height * 0.6666, image.width.toDouble(), image.height.toDouble()),
         src: src,
         image: image
-    ));
+    );
+
+    if (type == EnvironmentObjectType.Bridge) {
+      compiledGame.backgroundObjects.add(envObject);
+      continue;
+    }
+
+    compiledGame.environmentObjects.add(envObject);
   }
 
   sortReversed(compiledGame.environmentObjects, environmentObjectY);

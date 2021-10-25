@@ -78,7 +78,7 @@
 [ ] Change scene
 [ ] Design Zombies
 [ ] Quest Window
-[ ] Design Bridge
+[ ] Fall into water and die
 [ ] Editor translate environment object
 [ ] Zombies run through environment objects
 [ ] Animated Torches
@@ -87,7 +87,8 @@
 [ ] Water Particles
 [ ] Deploy dev endpoint
 [ ] Bullets environment object collision
-[ ] Draw tiles using drawRawAtlas
+[ ] Design Bridge
+[x] Draw tiles using drawRawAtlas
 [x] Torch
 [x] Myst Particles
 [x] Left click npc to interact
