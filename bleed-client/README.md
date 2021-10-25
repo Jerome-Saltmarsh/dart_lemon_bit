@@ -71,23 +71,27 @@
 [ ] Guards on walls
 [ ] Compact Score Mode 
 -- OPTIMIZATIONS --
+-- Env Objects
+[ ] Flowers
+[ ] Water
 -- OPEN WORLD -- 
 [ ] Persist Character on cloud
 [ ] Complete Quests to earn income and unlock upgrades
-[ ] Particles 3D Rendering
 [ ] Change scene
 [ ] Design Zombies
 [ ] Quest Window
 [ ] Fall into water and die
 [ ] Editor translate environment object
 [ ] Zombies run through environment objects
-[ ] Animated Torches
 [ ] Render Batching
 [ ] Fix floating text bug
-[ ] Water Particles
 [ ] Deploy dev endpoint
 [ ] Bullets environment object collision
-[ ] Design Bridge
+[ ] Water Particles
+[ ] Tree Stump
+[x] Design Bridge
+[x] Animated Torches
+[x] Particles 3D Rendering
 [x] Draw tiles using drawRawAtlas
 [x] Torch
 [x] Myst Particles
