@@ -11,7 +11,8 @@ enum EnvironmentObjectType {
   SmokeEmitter,
   MystEmitter,
   Torch,
-  Bridge
+  Bridge,
+  Tree_Stump
 }
 
 String toString(EnvironmentObjectType type){

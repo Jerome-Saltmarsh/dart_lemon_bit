@@ -31,6 +31,9 @@ class EnvironmentObject extends GameObject {
       case EnvironmentObjectType.Torch:
         radius = 10;
         break;
+      case EnvironmentObjectType.Tree_Stump:
+        radius = 8;
+        break;
     }
   }
 }

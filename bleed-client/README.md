@@ -88,7 +88,10 @@
 [ ] Deploy dev endpoint
 [ ] Bullets environment object collision
 [ ] Water Particles
-[ ] Tree Stump
+[ ] House 3
+[ ] Tree 3
+[ ] Stone 2
+[x] Tree Stump
 [x] Design Bridge
 [x] Animated Torches
 [x] Particles 3D Rendering

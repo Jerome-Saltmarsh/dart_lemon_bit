@@ -32,6 +32,8 @@ Image mapEnvironmentObjectTypeToImage(EnvironmentObjectType type){
       return images.torch_01;
     case EnvironmentObjectType.Bridge:
       return images.bridge;
+    case EnvironmentObjectType.Tree_Stump:
+      return images.treeStump;
     default:
       throw Exception("cannot map type");
   }
