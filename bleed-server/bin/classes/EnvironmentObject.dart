@@ -11,29 +11,27 @@ class EnvironmentObject extends GameObject {
   }) : super(x, y) {
     this.x = x;
     this.y = y;
-
-    switch(type){
-      case EnvironmentObjectType.House01:
-        radius = 40;
-        break;
-      case EnvironmentObjectType.House02:
-        radius = 40;
-        break;
-      case EnvironmentObjectType.Tree01:
-        radius = 8;
-        break;
-      case EnvironmentObjectType.Tree02:
-        radius = 8;
-        break;
-      case EnvironmentObjectType.Rock:
-        radius = 14;
-        break;
-      case EnvironmentObjectType.Torch:
-        radius = 10;
-        break;
-      case EnvironmentObjectType.Tree_Stump:
-        radius = 8;
-        break;
-    }
+    // hacky
+    radius = _getRadius(type);
   }
+}
+
+// state doesn't belong in classes directory
+final Map<EnvironmentObjectType, double> _radiusMap = {
+  EnvironmentObjectType.House01: 40,
+  EnvironmentObjectType.House02: 40,
+  EnvironmentObjectType.Tree01: 8,
+  EnvironmentObjectType.Tree02: 8,
+  EnvironmentObjectType.Rock: 14,
+  EnvironmentObjectType.Torch: 10,
+  EnvironmentObjectType.Tree_Stump: 8,
+  EnvironmentObjectType.Rock_Small: 4,
+  EnvironmentObjectType.Grave: 13,
+};
+
+double _getRadius(EnvironmentObjectType type){
+  if (_radiusMap.containsKey(type)){
+    return _radiusMap[type] ?? 0;
+  }
+  return 0;
 }

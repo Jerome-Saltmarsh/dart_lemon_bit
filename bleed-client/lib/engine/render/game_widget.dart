@@ -61,13 +61,9 @@ Offset get screenCenterWorld => Offset(screenCenterWorldX, screenCenterWorldY);
 bool get mouseAvailable => mouseX != null;
 
 bool get mouseClicked => !_clickProcessed;
-Color white = mat.Colors.white;
-Color red = mat.Colors.red;
-
-// finals
 
 final Paint paint3 = Paint()
-  ..color = white
+  ..color = Colors.white
   ..strokeCap = StrokeCap.round
   ..style = PaintingStyle.fill
   ..isAntiAlias = false
@@ -93,10 +89,10 @@ abstract class GameWidget extends StatefulWidget {
         now.difference(previousUpdateTime).inMilliseconds;
     previousUpdateTime = now;
 
-    screen.left = cameraX - 5;
-    screen.right = cameraX + (screenWidth / zoom);
-    screen.top = cameraY;
-    screen.bottom = cameraY + (screenHeight / zoom);
+    screen.left = camera.x - 5;
+    screen.right = camera.x + (screenWidth / zoom);
+    screen.top = camera.y;
+    screen.bottom = camera.y + (screenHeight / zoom);
 
     fixedUpdate();
     _clickProcessed = true;
@@ -143,8 +139,7 @@ final _frame = ValueNotifier<int>(0);
 final _foregroundFrame = ValueNotifier<int>(0);
 
 class _GameWidgetState extends State<GameWidget> {
-  // variables
-  Timer updateTimer;
+  Timer _updateTimer;
 
   void _update(Timer timer) {
     widget._internalUpdate();
@@ -152,7 +147,7 @@ class _GameWidgetState extends State<GameWidget> {
 
   @override
   void initState() {
-    updateTimer = Timer.periodic(
+    _updateTimer = Timer.periodic(
         Duration(milliseconds: 1000 ~/ widget.targetFPS()), _update);
     widget.init();
     disableRightClick();
@@ -255,7 +250,7 @@ class _GameWidgetState extends State<GameWidget> {
   @override
   void dispose() {
     super.dispose();
-    updateTimer.cancel();
+    _updateTimer.cancel();
   }
 }
 

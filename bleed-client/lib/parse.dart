@@ -386,7 +386,7 @@ void _parseTiles() {
     List<Tile> column = [];
     compiledGame.tiles.add(column);
     for (int y = 0; y < tilesY; y++) {
-      column.add(Tile.values[_consumeInt()]);
+      column.add(_consumeTile());
     }
   }
   // TODO Bad Import

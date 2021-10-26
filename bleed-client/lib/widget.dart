@@ -113,7 +113,7 @@ class BleedWidget extends GameWidget {
   @override
   void draw(Canvas canvass, Size _size) {
     canvass.scale(zoom, zoom);
-    canvass.translate(-cameraX, -cameraY);
+    canvass.translate(-camera.x, -camera.y);
     drawCanvas(canvass, _size);
   }
 

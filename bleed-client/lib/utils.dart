@@ -108,8 +108,8 @@ repeat(Function function, int times, int milliseconds) {
 }
 
 void cameraCenter(double x, double y) {
-  cameraX = x - (screenCenterX / zoom);
-  cameraY = y - (screenCenterY / zoom);
+  camera.x = x - (screenCenterX / zoom);
+  camera.y = y - (screenCenterY / zoom);
 }
 
 

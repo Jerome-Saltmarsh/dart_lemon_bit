@@ -239,15 +239,15 @@ void updateEditMode() {
 
   if (_panning) {
     Offset mouseWorldDiff = _mouseWorldStart - mouseWorld;
-    cameraY += mouseWorldDiff.dy * zoom;
-    cameraX += mouseWorldDiff.dx * zoom;
+    camera.y += mouseWorldDiff.dy * zoom;
+    camera.x += mouseWorldDiff.dx * zoom;
   }
 }
 
 void drawEditor() {
   if (!editMode) return;
 
-  print("drawEditMode()");
+  // print("drawEditMode()");
 
   for (Offset offset in compiledGame.playerSpawnPoints) {
     drawCircleOffset(offset, 10, Colors.yellow);
@@ -261,11 +261,11 @@ void drawEditor() {
     double x = compiledGame.collectables[selectedCollectable + 1].toDouble();
     double y = compiledGame.collectables[selectedCollectable + 2].toDouble();
 
-    drawCircleOutline(x: x, y: y, radius: 50, color: white, sides: 10);
+    drawCircleOutline(x: x, y: y, radius: 50, color: Colors.white, sides: 10);
   }
 
   if (editState.selectedObject != null){
-    drawCircleOutline(x: editState.selectedObject.x, y: editState.selectedObject.y, radius: 50, color: white, sides: 10);
+    drawCircleOutline(x: editState.selectedObject.x, y: editState.selectedObject.y, radius: 50, color: Colors.white, sides: 10);
 
     drawCircle(editState.selectedObject.x, editState.selectedObject.y,
         15, Colors.white70);
@@ -385,21 +385,6 @@ void setTileAtMouse(Tile tile) {
       print("added house");
       redrawCanvas();
       break;
-  }
-}
-
-void _controlCameraEditMode() {
-  if (keyPressedA) {
-    cameraX -= cameraSpeed;
-  }
-  if (keyPressedD) {
-    cameraX += cameraSpeed;
-  }
-  if (keyPressedS) {
-    cameraY += cameraSpeed;
-  }
-  if (keyPressedW) {
-    cameraY -= cameraSpeed;
   }
 }
 

@@ -69,7 +69,8 @@ Scene _mapStringToScene(String text) {
     for (dynamic item in jsonItems) {
       int x = item['x'];
       int y = item['y'];
-      EnvironmentObjectType type = environmentObjectTypes[item['type']];
+      String typeName = item['type'];
+      EnvironmentObjectType type = fromString(typeName);
       environment.add(EnvironmentObject(
         x: x.toDouble(),
         y: y.toDouble(),

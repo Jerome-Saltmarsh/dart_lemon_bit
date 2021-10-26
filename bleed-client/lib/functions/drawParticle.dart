@@ -45,7 +45,7 @@ void drawParticle(Particle particle){
     case ParticleType.Head:
       double size = 5;
       drawCircle(x, y, size / scaleShift, Colors.black45);
-      drawCircle(x, y + heightShift, size * scaleShift, white);
+      drawCircle(x, y + heightShift, size * scaleShift, Colors.white);
       break;
     case ParticleType.Arm:
       double length = randomBetween(4, 6);
@@ -54,14 +54,14 @@ void drawParticle(Particle particle){
       setColor(Colors.black45);
       drawLine3(x, y, handX, handY);
       drawCircle(handX, handY, 2 / scaleShift, Colors.black45);
-      paint.color = white;
+      paint.color = Colors.white;
       drawLine3(x, y + heightShift, handX, handY + heightShift);
-      drawCircle(handX, handY  + heightShift, 2 * scaleShift, white);
+      drawCircle(handX, handY  + heightShift, 2 * scaleShift, Colors.white);
       break;
     case ParticleType.Organ:
       setColor(Colors.black45);
-      drawCircle(x, y, scaleShift / 2, white);
-      drawCircle(x, y  + heightShift, 2 * scaleShift, white);
+      drawCircle(x, y, scaleShift / 2, Colors.white);
+      drawCircle(x, y  + heightShift, 2 * scaleShift, Colors.white);
       break;
     case ParticleType.Shrapnel:
       double size = 2.5;

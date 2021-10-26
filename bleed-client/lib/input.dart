@@ -304,8 +304,8 @@ void readPlayerInput() {
 
   if (panningCamera) {
     Offset mouseWorldDiff = _mouseWorldStart - mouseWorld;
-    cameraY += mouseWorldDiff.dy * zoom;
-    cameraX += mouseWorldDiff.dx * zoom;
+    camera.y += mouseWorldDiff.dy * zoom;
+    camera.x += mouseWorldDiff.dx * zoom;
   }
 
   if (mouseClicked || keyPressedSpace) {
@@ -321,16 +321,6 @@ void readPlayerInput() {
 
     requestCharacterState = characterStateFiring;
   } else {
-    // if (keyPressed(LogicalKeyboardKey.keyQ) && mouseAvailable) {
-    //   requestDirection = convertAngleToDirection(requestAim);
-    //   if (keySprintPressed) {
-    //     requestCharacterState = characterStateRunning;
-    //   } else {
-    //     requestCharacterState = characterStateWalking;
-    //   }
-    //   return;
-    // }
-
     if (requestCharacterState == characterStateStriking) {
       return;
     }
@@ -339,8 +329,8 @@ void readPlayerInput() {
     if (requestDirection == directionNone) {
       requestCharacterState = characterStateIdle;
       if (mouseAvailable) {
-        double mouseWorldX = mouseX + cameraX;
-        double mouseWorldY = mouseY + cameraY;
+        double mouseWorldX = mouseX + camera.x;
+        double mouseWorldY = mouseY + camera.y;
         for (Zombie zombie in compiledGame.zombies) {
           if (diffOver(zombie.x, mouseWorldX, playerAutoAimDistance)) continue;
           if (diffOver(zombie.y, mouseWorldY, playerAutoAimDistance)) continue;

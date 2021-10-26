@@ -28,7 +28,6 @@ final Color black54 = Colors.black54;
 
 
 const FontWeight bold = FontWeight.bold;
-const FontWeight normal = FontWeight.normal;
 
 _MainAxis main = _MainAxis();
 _CrossAxis cross = _CrossAxis();

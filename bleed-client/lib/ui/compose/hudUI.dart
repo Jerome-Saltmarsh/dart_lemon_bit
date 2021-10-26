@@ -122,7 +122,7 @@ Widget buildTopRight() {
   Widget iconToggleFullscreen = Tooltip(
     child: IconButton(
         icon: Icon(fullScreenActive ? Icons.fullscreen_exit : Icons.fullscreen,
-            size: iconSize, color: white),
+            size: iconSize, color: Colors.white),
         onPressed: toggleFullScreen),
     message: fullScreenActive ? "Exit Fullscreen" : "Enter Fullscreen",
   );
@@ -131,13 +131,13 @@ Widget buildTopRight() {
           icon: Icon(
               settings.audioMuted ? Icons.music_off : Icons.music_note_rounded,
               size: iconSize,
-              color: white),
+              color: Colors.white),
           onPressed: toggleAudioMuted),
       message: settings.audioMuted ? "Resume Audio" : "Mute Audio");
 
   Widget iconTogglePaths = Tooltip(
     child: IconButton(
-        icon: Icon(Icons.map, size: iconSize, color: white),
+        icon: Icon(Icons.map, size: iconSize, color: Colors.white),
         onPressed: () {
           settings.compilePaths = !settings.compilePaths;
           sendRequestSetCompilePaths(settings.compilePaths);
@@ -150,7 +150,7 @@ Widget buildTopRight() {
 
   Widget iconToggleEditMode = Tooltip(
     child: IconButton(
-        icon: Icon(Icons.edit, size: iconSize, color: white),
+        icon: Icon(Icons.edit, size: iconSize, color: Colors.white),
         onPressed: toggleEditMode),
     message: "Edit",
   );
@@ -180,7 +180,7 @@ Widget buildTopRight() {
 Widget buildTopLeft() {
   Widget iconToggleFullscreen = Tooltip(
     child: IconButton(
-        icon: Icon(Icons.fullscreen, size: hud.properties.iconSize, color: white),
+        icon: Icon(Icons.fullscreen, size: hud.properties.iconSize, color: Colors.white),
         onPressed: fullScreenEnter),
     message: "Fullscreen",
   );
@@ -189,14 +189,14 @@ Widget buildTopLeft() {
           icon: Icon(
               settings.audioMuted ? Icons.music_off : Icons.music_note_rounded,
               size: hud.properties.iconSize,
-              color: white),
+              color: Colors.white),
           onPressed: toggleAudioMuted),
       message: "Toggle Audio");
 
   Widget iconScore = Tooltip(
     child: IconButton(
         icon: Icon(hud.state.showScore ? Icons.score : Icons.score_outlined,
-            size: hud.properties.iconSize, color: white),
+            size: hud.properties.iconSize, color: Colors.white),
         onPressed: toggleShowScore),
     message: hud.state.showScore ? "Hide Score" : "Show Score",
   );
@@ -625,7 +625,7 @@ Widget _buildViewRespawn() {
                                     // onPressed: () {},
                                       icon: Icon(
                                         Icons.link,
-                                        color: white,
+                                        color: Colors.white,
                                       ))
                                 ],
                               ),
@@ -642,7 +642,7 @@ Widget _buildViewRespawn() {
                                       onPressed: () {},
                                       icon: Icon(
                                         Icons.link,
-                                        color: white,
+                                        color: Colors.white,
                                       ))
                                 ],
                               ),

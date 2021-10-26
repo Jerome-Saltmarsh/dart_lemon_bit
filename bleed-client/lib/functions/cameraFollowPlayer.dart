@@ -6,6 +6,6 @@ import 'package:bleed_client/state.dart';
 void cameraFollowPlayer() {
   double xDiff = screenCenterWorldX - compiledGame.playerX;
   double yDiff = screenCenterWorldY - compiledGame.playerY;
-  cameraX -= xDiff * settings.cameraFollow;
-  cameraY -= yDiff * settings.cameraFollow;
+  camera.x -= xDiff * settings.cameraFollow;
+  camera.y -= yDiff * settings.cameraFollow;
 }

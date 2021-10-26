@@ -83,14 +83,15 @@
 [ ] Fall into water and die
 [ ] Editor translate environment object
 [ ] Zombies run through environment objects
-[ ] Render Batching
 [ ] Fix floating text bug
 [ ] Deploy dev endpoint
 [ ] Bullets environment object collision
 [ ] Water Particles
+[ ] Design Player Character
 [ ] House 3
 [ ] Tree 3
 [ ] Stone 2
+[ ] Zombies 3D render
 [x] Tree Stump
 [x] Design Bridge
 [x] Animated Torches

@@ -56,27 +56,24 @@ class Scene {
 
     for (int row = 0; row < rows; row++) {
       for (int column = 0; column < columns; column++) {
-        if (tiles[row][column] == Tile.Grass) {
-          if (randomBool()) {
-            tiles[row][column] = Tile.Grass02;
-          }
-        } else
 
-        if (tiles[row][column] == Tile.Block) {
+        Tile tile = tiles[row][column];
+
+        if (tile == Tile.Block) {
           environment.add(EnvironmentObject(
               x: mapTilePositionX(row, column),
               y: mapTilePositionY(row, column) + _tileSizeHalf,
               type: EnvironmentObjectType.Palisade));
         } else
 
-        if (tiles[row][column] == Tile.Block_Horizontal) {
+        if (tile == Tile.Block_Horizontal) {
           environment.add(EnvironmentObject(
               x: mapTilePositionX(row, column),
               y: mapTilePositionY(row, column) + _tileSizeHalf,
               type: EnvironmentObjectType.Palisade_H));
         } else
 
-        if (tiles[row][column] == Tile.Block_Vertical) {
+        if (tile == Tile.Block_Vertical) {
           environment.add(EnvironmentObject(
               x: mapTilePositionX(row, column),
               y: mapTilePositionY(row, column)+ _tileSizeHalf,

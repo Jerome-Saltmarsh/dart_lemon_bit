@@ -1,17 +1,19 @@
 import 'dart:async';
 
-import 'package:bleed_client/engine/render/game_widget.dart';
+import 'package:bleed_client/constants/colors/white.dart';
+import 'package:bleed_client/constants/fontWeights/normal.dart';
 import 'package:bleed_client/engine/state/size.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-Widget text(dynamic value,
-    {fontSize = 18,
+Widget text(dynamic value, {
+    fontSize = 18,
     Function onPressed,
     TextDecoration decoration = TextDecoration.none,
-    FontWeight fontWeight = FontWeight.normal,
-    Color color = Colors.white}) {
+    FontWeight fontWeight = normal,
+    Color color = white
+}) {
   Widget _text = Text(value.toString(),
       style: TextStyle(
           color: color,
@@ -46,7 +48,7 @@ Widget border(
 
 BoxDecoration boxDecoration({
     double borderWidth = 2.0,
-    Color borderColor = Colors.white,
+    Color borderColor = white,
     double borderRadius = 4,
     Color fillColor
     }) {
@@ -125,7 +127,7 @@ Widget button(String value, Function onPressed,
         height: 50,
         alignment: alignment,
         child: Text(value,
-            style: TextStyle(color: Colors.white, fontSize: fontSize))),
+            style: TextStyle(color: white, fontSize: fontSize))),
     style: buttonStyle ?? _buttonStyle,
     onPressed: onPressed,
   );

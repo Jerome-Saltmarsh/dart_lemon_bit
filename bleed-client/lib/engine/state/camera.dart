@@ -1,2 +1,6 @@
-double cameraX = 0;
-double cameraY = 0;
+_Camera camera = _Camera();
+
+class _Camera {
+  double x = 0;
+  double y = 0;
+}
