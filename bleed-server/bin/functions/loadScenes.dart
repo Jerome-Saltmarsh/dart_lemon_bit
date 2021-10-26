@@ -70,7 +70,7 @@ Scene _mapStringToScene(String text) {
       int x = item['x'];
       int y = item['y'];
       String typeName = item['type'];
-      EnvironmentObjectType type = fromString(typeName);
+      EnvironmentObjectType type = parseEnvironmentObjectTypeFromString(typeName);
       environment.add(EnvironmentObject(
         x: x.toDouble(),
         y: y.toDouble(),

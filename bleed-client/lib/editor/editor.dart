@@ -88,7 +88,7 @@ Widget buildEnvironmentType(EnvironmentObjectType type) {
 }
 
 Widget buildEnv(EnvironmentObject env){
-  return button(toString(env.type), (){
+  return button(parseEnvironmentObjectTypeToString(env.type), (){
     editState.selectedObject = env;
   });
 }

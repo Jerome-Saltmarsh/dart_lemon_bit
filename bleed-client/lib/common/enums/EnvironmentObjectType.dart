@@ -16,12 +16,14 @@ enum EnvironmentObjectType {
   Rock_Small
 }
 
-String toString(EnvironmentObjectType type){
+final List<EnvironmentObjectType> environmentObjectTypes = EnvironmentObjectType.values;
+
+String parseEnvironmentObjectTypeToString(EnvironmentObjectType type){
   return type.toString().replaceAll("EnvironmentObjectType.", "");
 }
 
-EnvironmentObjectType fromString(String value){
-  return EnvironmentObjectType.values.firstWhere((element) => toString(element) == value, orElse: (){
+EnvironmentObjectType parseEnvironmentObjectTypeFromString(String value){
+  return environmentObjectTypes.firstWhere((type) => parseEnvironmentObjectTypeToString(type) == value, orElse: (){
     throw Exception("could not parse $value to type");
   });
 }

@@ -54,7 +54,7 @@ List<dynamic> _compileEnvironmentObjects(List<EnvironmentObject> values){
   return values.map((environmentObject) => {
     'x': environmentObject.x.toInt(),
     'y': environmentObject.y.toInt(),
-    'type': toString(environmentObject.type)
+    'type': parseEnvironmentObjectTypeToString(environmentObject.type)
   }).toList();
 }
 
