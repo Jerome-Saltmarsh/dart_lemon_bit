@@ -10,6 +10,7 @@ import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/functions/diffOver.dart';
 import 'package:bleed_client/engine/functions/drawCircle.dart';
 import 'package:bleed_client/engine/functions/drawText.dart';
+import 'package:bleed_client/engine/functions/onScreen.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
@@ -75,17 +76,21 @@ void drawZombies() {
   render.zombieRects.clear();
 
   for (int i = 0; i < compiledGame.totalZombies; i++) {
-    if (!compiledGame.zombies[i].alive) {
-      if (isWaterAt(compiledGame.zombies[i].x, compiledGame.zombies[i].y)){
+    Zombie zombie = compiledGame.zombies[i];
+    if (!zombie.alive) {
+      if (isWaterAt(zombie.x, zombie.y)){
         continue;
       }
     }
+    if (!onScreen(zombie.x, zombie.y)){
+      continue;
+    }
 
     render.zombiesTransforms.add(
-        mapZombieToRSTransform(compiledGame.zombies[i])
+        mapZombieToRSTransform(zombie)
     );
     render.zombieRects.add(
-        mapZombieToRect(compiledGame.zombies[i])
+        mapZombieToRect(zombie)
     );
   }
 
@@ -335,7 +340,8 @@ void drawTiles() {
 
 void drawBulletHoles(List<Vector2> bulletHoles) {
   for (Vector2 bulletHole in bulletHoles) {
-    if (bulletHole.x == 0 && bulletHole.y == 0) return;
+    if (bulletHole.x == 0) return;
+    if (!onScreen(bulletHole.x, bulletHole.y)) continue;
     drawCircle(bulletHole.x, bulletHole.y, 2, Colors.black);
   }
 }

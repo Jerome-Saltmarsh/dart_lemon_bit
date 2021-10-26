@@ -11,6 +11,7 @@ import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
+import 'package:bleed_client/engine/functions/onScreen.dart';
 import 'package:bleed_client/engine/state/screen.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/editor/editor.dart';
@@ -84,11 +85,6 @@ void _drawCompiledGame() {
     }
   }
 
-  screen.left = cameraX;
-  screen.right = cameraX + (screenWidth / zoom);
-  screen.top = cameraY;
-  screen.bottom = cameraY + (screenHeight / zoom);
-
   drawTiles();
   _drawNpcBonusPointsCircles();
   _drawPlayerHealthRing();
@@ -101,11 +97,6 @@ void _drawCompiledGame() {
   _drawCollectables();
   _drawSprites();
 
-  // drawCircle(screen.left, screen.top, 50, Colors.red);
-  // drawLine(screen.left, screen.top, screen.right, screen.bottom);
-
-  // drawCircle(cameraX, cameraY, 50, Colors.yellow);
-  // drawCircle(cameraX + (screenWidth / zoom), cameraY + (screenHeight / zoom), 50, Colors.yellow);
 
   if (settings.compilePaths) {
     drawPaths();
@@ -218,7 +209,10 @@ void _drawSprites() {
       }
     }
 
-    drawParticle(compiledGame.particles[indexParticle]);
+    Particle particle = compiledGame.particles[indexParticle];
+    if (onScreen(particle.x, particle.y)){
+      drawParticle(particle);
+    }
     indexParticle++;
   }
 }
@@ -425,13 +419,6 @@ Block createBlock(double topX, double topY, double rightX, double rightY,
 void _drawGrenades(List<double> grenades) {
   for (int i = 0; i < grenades.length; i += 3) {
     drawGrenade(grenades[i], grenades[i + 1], grenades[i + 2]);
-  }
-}
-
-void _drawParticles() {
-  for (Particle particle in compiledGame.particles) {
-    if (!particle.active) continue;
-    drawParticle(particle);
   }
 }
 

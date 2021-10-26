@@ -10,6 +10,7 @@ import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/mouseDragging.dart';
 import 'package:bleed_client/engine/state/screen.dart';
 import 'package:bleed_client/engine/state/size.dart';
+import 'package:bleed_client/engine/state/zoom.dart';
 import 'package:bleed_client/input.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -92,10 +93,10 @@ abstract class GameWidget extends StatefulWidget {
         now.difference(previousUpdateTime).inMilliseconds;
     previousUpdateTime = now;
 
-    screen.left = convertScreenToWorldX(cameraX);
-    screen.right = convertScreenToWorldX(cameraX + screenWidth);
-    screen.top = convertScreenToWorldY(cameraY);
-    screen.bottom = convertScreenToWorldY(cameraY + screenHeight);
+    screen.left = cameraX - 5;
+    screen.right = cameraX + (screenWidth / zoom);
+    screen.top = cameraY;
+    screen.bottom = cameraY + (screenHeight / zoom);
 
     fixedUpdate();
     _clickProcessed = true;
