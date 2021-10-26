@@ -17,9 +17,9 @@ final JsonDecoder _decoder = JsonDecoder();
 
 void loadScenes() {
   print("loadScenes()");
-  loadScene('fortress').then((value) => scenes.fortress = value);
+  // loadScene('fortress').then((value) => scenes.fortress = value);
   loadScene('quest/town').then((value) => scenes.town = value);
-  loadScene('casual/casual-map-01').then((value) => scenes.casualMap01 = value);
+  // loadScene('casual/casual-map-01').then((value) => scenes.casualMap01 = value);
 }
 
 Future<Scene> loadScene(String name) async {
@@ -96,7 +96,9 @@ Scene _mapStringToScene(String text) {
   for(int row = 0; row < compiledTiles.length; row++){
     List<Tile> _row = [];
     for(int column = 0; column < compiledTiles[0].length; column++){
-      _row.add(Tile.values[compiledTiles[row][column]]);
+      String tileName = compiledTiles[row][column];
+      Tile tile = parseStringToTile(tileName);
+      _row.add(tile);
     }
     tiles.add(_row);
   }

@@ -32,6 +32,16 @@ enum Tile {
 
 final List<Tile> tiles = Tile.values;
 
+Tile parseStringToTile(String text){
+  return tiles.firstWhere((element) => parseTileToString(element) == text, orElse: (){
+    throw Exception("could not parse $text to tile");
+  });
+}
+
+String parseTileToString(Tile tile){
+  return tile.toString().replaceAll("Tile.", "");
+}
+
 List<Tile> _blocks = [
   Tile.Block,
   Tile.Block_Horizontal,

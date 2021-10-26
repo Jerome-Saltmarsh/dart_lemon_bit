@@ -5,6 +5,7 @@ import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
+import 'package:bleed_client/parsers/parseTileToString.dart';
 import 'package:bleed_client/state.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
@@ -58,12 +59,12 @@ List<dynamic> _compileEnvironmentObjects(List<EnvironmentObject> values){
   }).toList();
 }
 
-List<List<int>> _compileTiles(List<List<Tile>> tiles) {
-  List<List<int>> _tiles = [];
+List<List<String>> _compileTiles(List<List<Tile>> tiles) {
+  List<List<String>> _tiles = [];
   for (int row = 0; row < tiles.length; row++) {
-    List<int> _row = [];
+    List<String> _row = [];
     for (int column = 0; column < tiles[0].length; column++) {
-      _row.add(tiles[row][column].index);
+      _row.add(parseTileToString(tiles[row][column]));
     }
     _tiles.add(_row);
   }
