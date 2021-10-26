@@ -1,7 +1,8 @@
 import 'package:bleed_client/enums/ParticleType.dart';
-import 'package:bleed_client/spawners/spawnParticle.dart';
+import 'package:bleed_client/utils.dart';
 
-import '../utils.dart';
+import 'spawnParticle.dart';
+
 
 void spawnBlood(double x, double y, double z,
     {double xv = 0, double yv = 0, double zv = 0}) {

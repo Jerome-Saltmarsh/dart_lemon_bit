@@ -1,6 +1,6 @@
 import 'package:bleed_client/engine/render/game_widget.dart';
 import 'package:bleed_client/engine/state/camera.dart';
-import 'package:bleed_client/instances/settings.dart';
+import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/state.dart';
 
 void cameraFollowPlayer() {

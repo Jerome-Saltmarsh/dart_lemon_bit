@@ -1,10 +1,9 @@
-import 'package:bleed_client/classes/Particle.dart';
+import 'package:bleed_client/common/functions/randomBetween.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
-import 'package:bleed_client/spawners/spawnParticle.dart';
+import 'package:bleed_client/utils.dart';
 
-import '../maths.dart';
-import '../state.dart';
-import '../utils.dart';
+import 'spawnParticle.dart';
+
 
 void spawnHead(double x, double y, double z, {double xv = 0, double yv = 0}) {
   spawnParticle(

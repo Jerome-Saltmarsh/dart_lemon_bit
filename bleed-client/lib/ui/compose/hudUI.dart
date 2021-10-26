@@ -19,7 +19,7 @@ import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/engine/state/size.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/open_link.dart';
-import 'package:bleed_client/instances/settings.dart';
+import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/mappers/mapWeaponToDecorationImage.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/send.dart';

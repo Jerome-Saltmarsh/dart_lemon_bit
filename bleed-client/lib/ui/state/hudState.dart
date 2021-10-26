@@ -5,7 +5,7 @@ import 'dart:math';
 import 'package:bleed_client/classes/Human.dart';
 import 'package:bleed_client/classes/Score.dart';
 import 'package:bleed_client/enums.dart';
-import 'package:bleed_client/instances/inventory.dart';
+import 'package:bleed_client/state/inventory.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/state.dart';
 import 'package:flutter/cupertino.dart';

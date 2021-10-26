@@ -11,7 +11,7 @@ import 'package:bleed_client/engine/render/game_widget.dart';
 import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/engine/state/zoom.dart';
 import 'package:bleed_client/functions/drawCanvas.dart';
-import 'package:bleed_client/instances/settings.dart';
+import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/hudState.dart';

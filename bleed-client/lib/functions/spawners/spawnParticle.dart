@@ -1,8 +1,7 @@
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
-import 'package:bleed_client/instances/settings.dart';
 
-import '../state.dart';
+import '../../state.dart';
 
 void spawnParticle({
   ParticleType type,

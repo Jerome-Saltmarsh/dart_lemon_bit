@@ -12,7 +12,7 @@ import 'package:bleed_client/send.dart';
 import 'package:bleed_client/settings.dart';
 import 'package:bleed_client/utils.dart';
 
-import 'instances/settings.dart';
+import 'state/settings.dart';
 import 'state.dart';
 
 void initBleed() {

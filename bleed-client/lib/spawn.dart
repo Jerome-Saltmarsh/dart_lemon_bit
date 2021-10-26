@@ -1,22 +1,20 @@
 import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/RenderState.dart';
-import 'package:bleed_client/spawners/spawnFireYellow.dart';
-import 'package:bleed_client/spawners/spawnShrapnel.dart';
+import 'package:bleed_client/functions/spawners/spawnFireYellow.dart';
+import 'package:bleed_client/functions/spawners/spawnShrapnel.dart';
+import 'package:bleed_client/functions/spawners/spawnSmoke.dart';
 import 'package:bleed_client/utils.dart';
 
 import 'audio.dart';
 import 'functions/spawnBulletHole.dart';
-import 'instances/settings.dart';
+import 'state/settings.dart';
 import 'maths.dart';
-import 'spawners/spawnSmoke.dart';
 
 int get shrapnelCount => randomInt(4, 15);
 
 void spawnExplosion(double x, double y) {
   print("spawnExplosion()");
   playAudioExplosion(x, y);
-  // animations.add(SpriteAnimation(spritesExplosion, x.toDouble(), y.toDouble(), scale: 0.5)
-  // );
   spawnBulletHole(x, y);
   for (int i = 0; i < randomInt(4, 10); i++) {
     spawnShrapnel(x, y);

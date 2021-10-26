@@ -27,7 +27,7 @@ import 'package:flutter/services.dart';
 
 import '../classes/Block.dart';
 import '../connection.dart';
-import '../instances/editState.dart';
+import '../state/editState.dart';
 import '../settings.dart';
 import '../state.dart';
 import 'EditMode.dart';

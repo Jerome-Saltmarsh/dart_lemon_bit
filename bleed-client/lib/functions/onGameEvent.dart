@@ -1,18 +1,17 @@
-import 'package:bleed_client/common/constants.dart';
-import 'package:bleed_client/spawners/spawnBlood.dart';
-import 'package:bleed_client/spawners/spawnHead.dart';
-import 'package:bleed_client/spawners/spawnOrgan.dart';
-import 'package:bleed_client/spawners/spawnShell.dart';
-import 'package:bleed_client/spawners/spawnShotSmoke.dart';
-import 'package:bleed_client/spawners/spawnShrapnel.dart';
 
 import '../audio.dart';
 import '../common/GameEventType.dart';
 import '../maths.dart';
 import '../spawn.dart';
-import '../spawners/spawnArm.dart';
 import '../utils.dart';
 import 'spawnBulletHole.dart';
+import 'spawners/spawnArm.dart';
+import 'spawners/spawnBlood.dart';
+import 'spawners/spawnHead.dart';
+import 'spawners/spawnOrgan.dart';
+import 'spawners/spawnShell.dart';
+import 'spawners/spawnShotSmoke.dart';
+import 'spawners/spawnShrapnel.dart';
 
 void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
   switch (type) {

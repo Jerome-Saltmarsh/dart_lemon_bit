@@ -1,8 +1,5 @@
-import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
-import 'package:bleed_client/spawners/spawnParticle.dart';
-
-import '../state.dart';
+import 'package:bleed_client/functions/spawners/spawnParticle.dart';
 
 void spawnSmoke(double x, double y, double z, {double xv = 0, double yv = 0}) {
   spawnParticle(

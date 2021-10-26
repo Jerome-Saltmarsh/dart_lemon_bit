@@ -33,7 +33,7 @@ import 'functions/drawCanvas.dart';
 import 'functions/drawParticle.dart';
 import 'images.dart';
 import 'input.dart';
-import 'instances/settings.dart';
+import 'state/settings.dart';
 import 'rects.dart';
 import 'utils.dart';
 

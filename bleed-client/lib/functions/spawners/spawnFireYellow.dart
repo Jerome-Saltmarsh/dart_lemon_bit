@@ -1,7 +1,8 @@
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/maths.dart';
-import 'package:bleed_client/spawners/spawnParticle.dart';
 import 'package:bleed_client/utils.dart';
+
+import 'spawnParticle.dart';
 
 
 void spawnFireYellow(double x, double y){
