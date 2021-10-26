@@ -11,6 +11,7 @@ import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
+import 'package:bleed_client/engine/functions/drawImage.dart';
 import 'package:bleed_client/engine/functions/onScreen.dart';
 import 'package:bleed_client/engine/state/screen.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
@@ -35,7 +36,6 @@ import 'package:bleed_client/rects.dart';
 import 'package:bleed_client/state/colours.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
-import 'package:bleed_client/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -52,12 +52,8 @@ final double _anchorY = 80;
 final double _nameRadius = 100;
 final double charWidth = 4.5;
 final Ring _healthRing = Ring(16);
-final Rect _rectEnvironmentObject = Rect.fromLTWH(0, 0, 100, 120);
 
 void drawCanvas(Canvas canvass, Size _size) {
-  canvass.scale(zoom, zoom);
-  canvass.translate(-cameraX, -cameraY);
-
   if (editMode) {
     drawTiles();
     _drawEnvironmentObjects();
@@ -129,7 +125,6 @@ int compareParticles(Particle a, Particle b) {
 }
 
 void _sortParticles() {
-  // compiledGame.particles.sort(compareParticles);
   insertionSort(
       list: compiledGame.particles,
       compare: compareParticles,
@@ -148,8 +143,6 @@ int getTotalActiveParticles() {
 }
 
 void _drawSprites() {
-  totalDrawn = 0;
-  totalSkipped = 0;
 
   int indexHuman = 0;
   int indexEnv = 0;
@@ -225,25 +218,22 @@ bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject){
   return true;
 }
 
-int totalDrawn = 0;
-int totalSkipped = 0;
 
 void drawEnvironmentObject(EnvironmentObject environmentObject) {
-  if (!environmentObjectOnScreenScreen(environmentObject)) {
-    totalSkipped++;
-    return;
-  }
-  totalDrawn++;
-  globalCanvas.drawImageRect(environmentObject.image, environmentObject.src,
-      environmentObject.dst, paint);
+  if (!environmentObjectOnScreenScreen(environmentObject)) return;
+  drawImageRect(
+      environmentObject.image,
+      environmentObject.src,
+      environmentObject.dst
+  );
 }
 
 void drawHuman(Human human) {
-  globalCanvas.drawImageRect(
-      images.human,
-      mapHumanToRect(human.weapon, human.state, human.direction, human.frame),
-      Rect.fromLTWH(human.x - 18, human.y - 18, 36, 36),
-      paint);
+  drawImageRect(
+    images.human,
+    mapHumanToRect(human.weapon, human.state, human.direction, human.frame),
+    Rect.fromLTWH(human.x - 18, human.y - 18, 36, 36),
+  );
 }
 
 void _drawEnvironmentObjects() {

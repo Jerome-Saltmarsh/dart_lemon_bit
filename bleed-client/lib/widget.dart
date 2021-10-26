@@ -26,6 +26,7 @@ import 'classes/InteractableNpc.dart';
 import 'connection.dart';
 import 'editor/editor.dart';
 import 'engine/properties/mouseWorld.dart';
+import 'engine/state/camera.dart';
 import 'functions/clearState.dart';
 import 'functions/drawCanvas.dart';
 import 'functions/drawParticle.dart';
@@ -110,6 +111,8 @@ class BleedWidget extends GameWidget {
 
   @override
   void draw(Canvas canvass, Size _size) {
+    canvass.scale(zoom, zoom);
+    canvass.translate(-cameraX, -cameraY);
     drawCanvas(canvass, _size);
   }
 
