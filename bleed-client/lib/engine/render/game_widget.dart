@@ -5,8 +5,10 @@ import 'package:bleed_client/engine/functions/convertScreenToWorld.dart';
 import 'package:bleed_client/engine/functions/disableRightClick.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/state/buildContext.dart';
+import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/mouseDragging.dart';
+import 'package:bleed_client/engine/state/screen.dart';
 import 'package:bleed_client/engine/state/size.dart';
 import 'package:bleed_client/input.dart';
 import 'package:flutter/gestures.dart';
@@ -89,6 +91,12 @@ abstract class GameWidget extends StatefulWidget {
     _millisecondsSinceLastFrame =
         now.difference(previousUpdateTime).inMilliseconds;
     previousUpdateTime = now;
+
+    screen.left = convertScreenToWorldX(cameraX);
+    screen.right = convertScreenToWorldX(cameraX + screenWidth);
+    screen.top = convertScreenToWorldY(cameraY);
+    screen.bottom = convertScreenToWorldY(cameraY + screenHeight);
+
     fixedUpdate();
     _clickProcessed = true;
   }

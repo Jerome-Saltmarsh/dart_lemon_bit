@@ -11,6 +11,7 @@ import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
+import 'package:bleed_client/engine/state/screen.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/engine/functions/drawCircle.dart';
@@ -83,6 +84,11 @@ void _drawCompiledGame() {
     }
   }
 
+  screen.left = cameraX;
+  screen.right = cameraX + (screenWidth / zoom);
+  screen.top = cameraY;
+  screen.bottom = cameraY + (screenHeight / zoom);
+
   drawTiles();
   _drawNpcBonusPointsCircles();
   _drawPlayerHealthRing();
@@ -94,6 +100,12 @@ void _drawCompiledGame() {
   drawCharacters();
   _drawCollectables();
   _drawSprites();
+
+  // drawCircle(screen.left, screen.top, 50, Colors.red);
+  // drawLine(screen.left, screen.top, screen.right, screen.bottom);
+
+  // drawCircle(cameraX, cameraY, 50, Colors.yellow);
+  // drawCircle(cameraX + (screenWidth / zoom), cameraY + (screenHeight / zoom), 50, Colors.yellow);
 
   if (settings.compilePaths) {
     drawPaths();
@@ -145,6 +157,9 @@ int getTotalActiveParticles() {
 }
 
 void _drawSprites() {
+  totalDrawn = 0;
+  totalSkipped = 0;
+
   int indexHuman = 0;
   int indexEnv = 0;
   int indexParticle = 0;
@@ -191,6 +206,12 @@ void _drawSprites() {
       if (!particlesRemaining ||
           compiledGame.environmentObjects[indexEnv].y <
               compiledGame.particles[indexParticle].y) {
+
+
+        if (compiledGame.environmentObjects[indexEnv].dst.top > screen.bottom){
+          return;
+        }
+
         drawEnvironmentObject(compiledGame.environmentObjects[indexEnv]);
         indexEnv++;
         continue;
@@ -202,7 +223,23 @@ void _drawSprites() {
   }
 }
 
+bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject){
+  if (environmentObject.dst.top > screen.bottom) return false;
+  if (environmentObject.dst.right < screen.left) return false;
+  if (environmentObject.dst.left > screen.right) return false;
+  if (environmentObject.dst.bottom < screen.top) return false;
+  return true;
+}
+
+int totalDrawn = 0;
+int totalSkipped = 0;
+
 void drawEnvironmentObject(EnvironmentObject environmentObject) {
+  if (!environmentObjectOnScreenScreen(environmentObject)) {
+    totalSkipped++;
+    return;
+  }
+  totalDrawn++;
   globalCanvas.drawImageRect(environmentObject.image, environmentObject.src,
       environmentObject.dst, paint);
 }
