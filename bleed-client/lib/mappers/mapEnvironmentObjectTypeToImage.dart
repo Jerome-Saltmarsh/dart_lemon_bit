@@ -36,6 +36,8 @@ Image mapEnvironmentObjectTypeToImage(EnvironmentObjectType type){
       return images.treeStump;
     case EnvironmentObjectType.Rock_Small:
       return images.rockSmall;
+    case EnvironmentObjectType.Character:
+      return images.isoCharacter;
     default:
       throw Exception("cannot map type");
   }

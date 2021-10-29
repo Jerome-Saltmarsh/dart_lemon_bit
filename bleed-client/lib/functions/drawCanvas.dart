@@ -20,10 +20,8 @@ import 'package:bleed_client/engine/functions/drawCircle.dart';
 import 'package:bleed_client/engine/functions/drawText.dart';
 import 'package:bleed_client/engine/render/game_widget.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
-import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
-import 'package:bleed_client/engine/state/zoom.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/mappers/mapCrateToRSTransform.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
@@ -52,6 +50,9 @@ final double _anchorY = 80;
 final double _nameRadius = 100;
 final double charWidth = 4.5;
 final Ring _healthRing = Ring(16);
+
+const double _humanFrameWidth = 36;
+const double _humanFrameHeight = 36;
 
 void drawCanvas(Canvas canvass, Size _size) {
   if (editMode) {
@@ -232,7 +233,7 @@ void drawHuman(Human human) {
   drawImageRect(
     images.human,
     mapHumanToRect(human.weapon, human.state, human.direction, human.frame),
-    Rect.fromLTWH(human.x - 18, human.y - 18, 36, 36),
+    Rect.fromLTWH(human.x - 18, human.y - 18, _humanFrameWidth, _humanFrameHeight),
   );
 }
 

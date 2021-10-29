@@ -5,18 +5,13 @@ import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
-import 'package:bleed_client/parsers/parseTileToString.dart';
 import 'package:bleed_client/state.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 
 void saveScene() {
   print("saveScene()");
-  try {
-    FlutterClipboard.copy(_mapCompileGameToJson());
-  } catch (e) {
-    print(_mapCompileGameToJson());
-  }
+  FlutterClipboard.copy(_mapCompileGameToJson());
 }
 
 String toJson(Object object) {
@@ -51,12 +46,14 @@ List<int> _compileCrates(List<Vector2> crates) {
   return values;
 }
 
-List<dynamic> _compileEnvironmentObjects(List<EnvironmentObject> values){
-  return values.map((environmentObject) => {
-    'x': environmentObject.x.toInt(),
-    'y': environmentObject.y.toInt(),
-    'type': parseEnvironmentObjectTypeToString(environmentObject.type)
-  }).toList();
+List<dynamic> _compileEnvironmentObjects(List<EnvironmentObject> values) {
+  return values
+      .map((environmentObject) => {
+            'x': environmentObject.x.toInt(),
+            'y': environmentObject.y.toInt(),
+            'type': parseEnvironmentObjectTypeToString(environmentObject.type)
+          })
+      .toList();
 }
 
 List<List<String>> _compileTiles(List<List<Tile>> tiles) {

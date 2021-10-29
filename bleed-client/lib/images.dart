@@ -36,6 +36,7 @@ class _Images {
   Image bridge;
   Image treeStump;
   Image rockSmall;
+  Image isoCharacter;
 
   List<Image> flames = [];
 
@@ -70,6 +71,7 @@ class _Images {
     bridge = await loadImage("images/bridge.png");
     treeStump = await loadImage("images/tree-stump.png");
     rockSmall = await loadImage("images/rock-small.png");
+    isoCharacter = await loadImage("images/iso-character.png");
 
     flames.add(torch_01);
     flames.add(torch_02);
