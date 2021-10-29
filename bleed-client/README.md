@@ -87,11 +87,16 @@
 [ ] Deploy dev endpoint
 [ ] Bullets environment object collision
 [ ] Water Particles
-[ ] Design Player Character
 [ ] House 3
 [ ] Tree 3
 [ ] Stone 2
 [ ] Zombies 3D render
+[ ] Human 3d Render
+    [ ] Running
+    [ ] Shooting
+    [ ] Dead
+    [x] Walking
+    [x] Idle
 [x] Tree Stump
 [x] Design Bridge
 [x] Animated Torches

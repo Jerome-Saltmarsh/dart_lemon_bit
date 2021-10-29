@@ -14,6 +14,7 @@ import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/engine/functions/drawImage.dart';
 import 'package:bleed_client/engine/functions/onScreen.dart';
 import 'package:bleed_client/engine/state/screen.dart';
+import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/engine/functions/drawCircle.dart';
@@ -22,6 +23,7 @@ import 'package:bleed_client/engine/render/game_widget.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
+import 'package:bleed_client/mappers/mapHumanToImage.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/mappers/mapCrateToRSTransform.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
@@ -84,7 +86,7 @@ void _drawCompiledGame() {
 
   drawTiles();
   _drawNpcBonusPointsCircles();
-  _drawPlayerHealthRing();
+  // _drawPlayerHealthRing();
   _drawBullets(compiledGame.bullets);
   drawBulletHoles(compiledGame.bulletHoles);
   _drawGrenades(compiledGame.grenades);
@@ -229,11 +231,14 @@ void drawEnvironmentObject(EnvironmentObject environmentObject) {
   );
 }
 
+final double _s = 40;
+final double _sHalf = _s * 0.5;
+
 void drawHuman(Human human) {
   drawImageRect(
-    images.human,
+    mapCharacterStateToImageMan(human.state),
     mapHumanToRect(human.weapon, human.state, human.direction, human.frame),
-    Rect.fromLTWH(human.x - 18, human.y - 18, _humanFrameWidth, _humanFrameHeight),
+    Rect.fromLTWH(human.x - _sHalf, human.y - _sHalf, _s, _s),
   );
 }
 
