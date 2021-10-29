@@ -1,8 +1,8 @@
 
 import 'dart:ui';
 
-Rect getFrameLoop(List<Rect> frames, int frame) {
-  int actualFrame = frame ~/ 5;
+Rect getFrameLoop(List<Rect> frames, int frame, {int frameRate = 5}) {
+  int actualFrame = frame ~/ frameRate;
   return frames[actualFrame % frames.length]; // TODO Calling frames.length is expensive
 }
 

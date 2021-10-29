@@ -192,24 +192,26 @@ Rect _mapReloadingRect(Direction direction, int frame) {
   throw Exception("Could not get character reloading sprite rect");
 }
 
+int _frameRateRunning = 3;
+
 Rect _mapRunningRect(Direction direction, int frame) {
   switch (direction) {
     case Direction.Down:
-      return getFrameLoop(_human.running.down, frame);
+      return getFrameLoop(_human.running.down, frame, frameRate: _frameRateRunning);
     case Direction.DownRight:
-      return getFrameLoop(_human.running.downRight, frame);
+      return getFrameLoop(_human.running.downRight, frame, frameRate: _frameRateRunning);
     case Direction.Right:
-      return getFrameLoop(_human.running.right, frame);
+      return getFrameLoop(_human.running.right, frame, frameRate: _frameRateRunning);
     case Direction.UpRight:
-      return getFrameLoop(_human.running.upRight, frame);
+      return getFrameLoop(_human.running.upRight, frame, frameRate: _frameRateRunning);
     case Direction.Up:
-      return getFrameLoop(_human.running.up, frame);
+      return getFrameLoop(_human.running.up, frame, frameRate: _frameRateRunning);
     case Direction.UpLeft:
-      return getFrameLoop(_human.running.upLeft, frame);
+      return getFrameLoop(_human.running.upLeft, frame, frameRate: _frameRateRunning);
     case Direction.Left:
-      return getFrameLoop(_human.running.left, frame);
+      return getFrameLoop(_human.running.left, frame, frameRate: _frameRateRunning);
     case Direction.DownLeft:
-      return getFrameLoop(_human.running.downLeft, frame);
+      return getFrameLoop(_human.running.downLeft, frame, frameRate: _frameRateRunning);
   }
   throw Exception("Could not get character walking sprite rect");
 }
