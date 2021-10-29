@@ -236,7 +236,7 @@ final double _sHalf = _s * 0.5;
 
 void drawHuman(Human human) {
   drawImageRect(
-    mapCharacterStateToImageMan(human.state),
+    mapHumanToImage(human),
     mapHumanToRect(human.weapon, human.state, human.direction, human.frame),
     Rect.fromLTWH(human.x - _sHalf, human.y - _sHalf, _s, _s),
   );

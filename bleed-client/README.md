@@ -92,9 +92,10 @@
 [ ] Stone 2
 [ ] Zombies 3D render
 [ ] Human 3d Render
-    [ ] Running
-    [ ] Shooting
     [ ] Dead
+    [ ] Firing Handgun
+    [x] Running
+    [x] Firing Shotgun
     [x] Walking
     [x] Idle
 [x] Tree Stump
