@@ -45,6 +45,7 @@ class _Human {
   final _Idle idle = _Idle();
   final _Walking walking = _Walking();
   final _Running running = _Running();
+  final _FiringShotgun firingShotgun = _FiringShotgun();
 }
 
 class _Idle {
@@ -80,6 +81,17 @@ class _Running {
   final List<Rect> downLeft = _frames([29, 30, 31, 32]);
 }
 
+class _FiringShotgun {
+  final List<Rect> down = _frames([1]);
+  final List<Rect> downRight = _frames([2]);
+  final List<Rect> right = _frames([3]);
+  final List<Rect> upRight = _frames([4]);
+  final List<Rect> up = _frames([5]);
+  final List<Rect> upLeft = _frames([6]);
+  final List<Rect> left = _frames([7]);
+  final List<Rect> downLeft  = _frames([8]);
+}
+
 
 Rect _deadUpRight = _frame(17);
 Rect _deadRight = _frame(18);
@@ -103,15 +115,6 @@ List<Rect> _firingRifleUpRight = _frames([30, 29]);
 List<Rect> _firingRifleRight = _frames([32, 31]);
 List<Rect> _firingRifleDownRight = _frames([34, 33]);
 List<Rect> _firingRifleDown = _frames([36, 35]);
-
-List<Rect> _firingShotgunDownLeft  = _frames([22, 21]);
-List<Rect> _firingShotgunLeft = _frames([24, 23]);
-List<Rect> _firingShotgunUpLeft = _frames([26, 25]);
-List<Rect> _firingShotgunUp = _frames([28, 27]);
-List<Rect> _firingShotgunUpRight = _frames([30, 29]);
-List<Rect> _firingShotgunRight = _frames([32, 31]);
-List<Rect> _firingShotgunDownRight = _frames([34, 33]);
-List<Rect> _firingShotgunDown = _frames([36, 35]);
 
 List<Rect> _reloadingDownLeft = _frames([74, 74, 74, 75, 75, 75]);
 List<Rect> _reloadingLeft = _frames([76, 76, 76, 77, 77, 77]);
@@ -283,12 +286,13 @@ Rect _mapAimingRect(Direction direction) {
 }
 
 Rect _mapFiringRect(Weapon weapon, Direction direction, int frame) {
-  switch (weapon) {
-    case Weapon.Shotgun:
-      return _mapFiringShotgunRect(direction, frame);
-    default:
-      return _mapFiringRifleRect(direction, frame);
-  }
+  return _mapFiringShotgunRect(direction, frame);
+  // switch (weapon) {
+  //   case Weapon.Shotgun:
+  //     return _mapFiringShotgunRect(direction, frame);
+  //   default:
+  //     return _mapFiringRifleRect(direction, frame);
+  // }
 }
 
 Rect _mapFiringRifleRect(Direction direction, int frame) {
@@ -315,22 +319,22 @@ Rect _mapFiringRifleRect(Direction direction, int frame) {
 
 Rect _mapFiringShotgunRect(Direction direction, int frame) {
   switch (direction) {
-    case Direction.Up:
-      return getFrame(_firingShotgunUp, frame);
-    case Direction.UpRight:
-      return getFrame(_firingShotgunUpRight, frame);
-    case Direction.Right:
-      return getFrame(_firingShotgunRight, frame);
-    case Direction.DownRight:
-      return getFrame(_firingShotgunDownRight, frame);
     case Direction.Down:
-      return getFrame(_firingShotgunDown, frame);
-    case Direction.DownLeft:
-      return getFrame(_firingShotgunDownLeft, frame);
-    case Direction.Left:
-      return getFrame(_firingShotgunLeft, frame);
+      return getFrame(_human.firingShotgun.down, frame);
+    case Direction.DownRight:
+      return getFrame(_human.firingShotgun.downRight, frame);
+    case Direction.Right:
+      return getFrame(_human.firingShotgun.right, frame);
+    case Direction.UpRight:
+      return getFrame(_human.firingShotgun.upRight, frame);
+    case Direction.Up:
+      return getFrame(_human.firingShotgun.up, frame);
     case Direction.UpLeft:
-      return getFrame(_firingShotgunUpLeft, frame);
+      return getFrame(_human.firingShotgun.upLeft, frame);
+    case Direction.Left:
+      return getFrame(_human.firingShotgun.left, frame);
+    case Direction.DownLeft:
+      return getFrame(_human.firingShotgun.downLeft, frame);
   }
   throw Exception("could not get firing frame from direction");
 }
