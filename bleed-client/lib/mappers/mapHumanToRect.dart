@@ -14,7 +14,7 @@ Rect mapHumanToRect(Weapon weapon, CharacterState state, Direction direction, in
     case CharacterState.Walking:
       return _mapWalkingRect(direction, frame);
     case CharacterState.Dead:
-      return _mapDeadRect(direction);
+      return _mapDeadRect(direction, frame);
     case CharacterState.Aiming:
       return _mapAimingRect(direction);
     case CharacterState.Firing:
@@ -45,6 +45,7 @@ class _RectsHuman {
   final _Running running = _Running();
   final _FiringShotgun firingShotgun = _FiringShotgun();
   final _Changing changing = _Changing();
+  final _Dying dying = _Dying();
 }
 
 class _Idle {
@@ -102,10 +103,16 @@ class _Changing {
   final List<Rect> downLeft = _frames([15, 16]);
 }
 
-Rect _deadUpRight = _frame(17);
-Rect _deadRight = _frame(18);
-Rect _deadDownRight = _frame(19);
-Rect _deadDown = _frame(20);
+class _Dying {
+  final List<Rect> down = _frames([1, 2]);
+  final List<Rect> downRight = _frames([3, 4]);
+  final List<Rect> right = _frames([5, 6]);
+  final List<Rect> upRight = _frames([7, 8]);
+  final List<Rect> up = _frames([9, 10]);
+  final List<Rect> upLeft = _frames([11, 12]);
+  final List<Rect> left = _frames([13, 14]);
+  final List<Rect> downLeft = _frames([15, 16]);
+}
 
 Rect _aimingDownLeft = _frame(21);
 Rect _aimingLeft = _frame(23);
@@ -230,24 +237,24 @@ Rect _mapIdleRect(Direction direction) {
   throw Exception("Could not get character walking sprite rect");
 }
 
-Rect _mapDeadRect(Direction direction) {
+Rect _mapDeadRect(Direction direction, int frame) {
   switch (direction) {
     case Direction.Up:
-      return _deadDown;
+      return getFrame(_human.dying.up, frame);
     case Direction.UpRight:
-      return _deadUpRight;
+      return getFrame(_human.dying.upRight, frame);
     case Direction.Right:
-      return _deadRight;
+      return getFrame(_human.dying.right, frame);
     case Direction.DownRight:
-      return _deadDownRight;
+      return getFrame(_human.dying.downRight, frame);
     case Direction.Down:
-      return _deadDown;
+      return getFrame(_human.dying.down, frame);
     case Direction.DownLeft:
-      return _deadUpRight;
+      return getFrame(_human.dying.downLeft, frame);
     case Direction.Left:
-      return _deadRight;
+      return getFrame(_human.dying.left, frame);
     case Direction.UpLeft:
-      return _deadDownRight;
+      return getFrame(_human.dying.upLeft, frame);
   }
   throw Exception("Could not get character dead sprite rect");
 }

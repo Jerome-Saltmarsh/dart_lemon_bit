@@ -93,7 +93,7 @@
 [ ] Zombies 3D render
 [ ] Human 3d Render
     [ ] Dead
-    [ ] Changing Weapon 
+    [x] Changing Weapon 
     [x] Firing Handgun
     [x] Running
     [x] Firing Shotgun

@@ -8,6 +8,8 @@ import 'package:bleed_client/images.dart';
 
 Image mapHumanToImage(Human human){
   switch(human.state){
+    case CharacterState.Dead:
+      return images.manDying;
     case CharacterState.ChangingWeapon:
       return images.manChanging;
     case CharacterState.Running:
