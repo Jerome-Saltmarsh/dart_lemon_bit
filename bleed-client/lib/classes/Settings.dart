@@ -10,6 +10,7 @@ class Settings {
   int maxParticles = 200;
   int maxParticlesMinusOne = 299;
   double interactRadius = 60;
+  double manRenderSize = 40.0;
 }
 
 

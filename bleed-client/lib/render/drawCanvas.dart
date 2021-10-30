@@ -179,7 +179,7 @@ void _drawSprites() {
         if (!particlesRemaining ||
             humanY < compiledGame.particles[indexParticle].y) {
           // TODO remove
-          renderHuman(compiledGame.humans[indexHuman]);
+          drawCharacter(compiledGame.humans[indexHuman]);
           indexHuman++;
           continue;
         }
