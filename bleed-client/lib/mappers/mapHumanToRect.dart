@@ -137,47 +137,11 @@ Rect _frame(int index) {
 }
 
 Rect _mapWalkingRect(Direction direction, int frame) {
-  switch (direction) {
-    case Direction.Down:
-      return getFrameLoop(_human.walking.down, frame);
-    case Direction.DownRight:
-      return getFrameLoop(_human.walking.downRight, frame);
-    case Direction.Right:
-      return getFrameLoop(_human.walking.right, frame);
-    case Direction.UpRight:
-      return getFrameLoop(_human.walking.upRight, frame);
-    case Direction.Up:
-      return getFrameLoop(_human.walking.up, frame);
-    case Direction.UpLeft:
-      return getFrameLoop(_human.walking.upLeft, frame);
-    case Direction.Left:
-      return getFrameLoop(_human.walking.left, frame);
-    case Direction.DownLeft:
-      return getFrameLoop(_human.walking.downLeft, frame);
-  }
-  throw Exception("Could not get character walking sprite rect");
+  return _mapFrame(_human.walking, direction, frame);
 }
 
 Rect _mapZombieWalkingRect(Direction direction, int frame) {
-  switch (direction) {
-    case Direction.Down:
-      return getFrameLoop(_zombie.walking.down, frame);
-    case Direction.DownRight:
-      return getFrameLoop(_zombie.walking.downRight, frame);
-    case Direction.Right:
-      return getFrameLoop(_zombie.walking.right, frame);
-    case Direction.UpRight:
-      return getFrameLoop(_zombie.walking.upRight, frame);
-    case Direction.Up:
-      return getFrameLoop(_zombie.walking.up, frame);
-    case Direction.UpLeft:
-      return getFrameLoop(_zombie.walking.upLeft, frame);
-    case Direction.Left:
-      return getFrameLoop(_zombie.walking.left, frame);
-    case Direction.DownLeft:
-      return getFrameLoop(_zombie.walking.downLeft, frame);
-  }
-  throw Exception("Could not get character walking sprite rect");
+  return _mapFrame(_zombie.walking, direction, frame);
 }
 
 
