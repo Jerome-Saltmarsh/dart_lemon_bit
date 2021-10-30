@@ -8,9 +8,9 @@ import 'package:bleed_client/images.dart';
 Image mapCharacterToImageZombie(CharacterState state, Weapon weapon){
   switch(state){
     case CharacterState.Dead:
-      return images.manDying;
+      return images.zombieDying;
     case CharacterState.Striking:
-      return images.manStriking;
+      return images.zombieStriking;
     case CharacterState.ChangingWeapon:
       return images.manChanging;
     case CharacterState.Walking:
