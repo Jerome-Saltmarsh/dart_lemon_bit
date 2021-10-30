@@ -12,15 +12,15 @@ Rect mapCharacterToSrcMan(Weapon weapon, CharacterState state, Direction directi
     case CharacterState.Idle:
       return _mapIdleRect(direction, frame);
     case CharacterState.Walking:
-      return _mapWalkingRect(direction, frame);
+      return _mapFrameLoop(_srcRects4, direction, frame);
     case CharacterState.Dead:
-      return _mapDeadRectMan(direction, frame);
+      return _mapFrame(_srcRects2, direction, frame);
     case CharacterState.Aiming:
       return _mapAimingRect(direction);
     case CharacterState.Firing:
       return _getRectFiringShotgun(weapon, direction, frame);
     case CharacterState.Striking:
-      return _mapStrikingRect(direction, frame);
+      return _mapFrame(_srcRects2, direction, frame);
     case CharacterState.Running:
       return _mapRunningRect(direction, frame);
     case CharacterState.Reloading:
@@ -60,7 +60,6 @@ const double _frameWidth = 64;
 const double _frameHeight = 64;
 
 final _RectsHuman _human = _RectsHuman();
-final _RectsZombie _zombie = _RectsZombie();
 
 Rect _aimingDownLeft = _frame(21);
 Rect _aimingLeft = _frame(23);
@@ -73,14 +72,6 @@ Rect _aimingDown = _frame(35);
 
 Rect _getRectFiringShotgun(Weapon weapon, Direction direction, int frame) {
   return _mapFrameLoop(_human.firingShotgun, direction, frame);
-}
-
-Rect _mapStrikingRect(Direction direction, int frame) {
-  return _mapFrameLoop(_human.striking, direction, frame);
-}
-
-class _RectsZombie {
-  final AnimationRects walking = _srcRects4;
 }
 
 class _RectsHuman {
@@ -140,14 +131,6 @@ Rect _frame(int index) {
       0.0,
       _frameWidth,
       _frameHeight);
-}
-
-Rect _mapWalkingRect(Direction direction, int frame) {
-  return _mapFrameLoop(_human.walking, direction, frame);
-}
-
-Rect _mapZombieWalkingRect(Direction direction, int frame) {
-  return _mapFrameLoop(_zombie.walking, direction, frame);
 }
 
 Rect _mapReloadingRect(Direction direction, int frame) {
@@ -220,10 +203,6 @@ Rect _mapFrame(AnimationRects src, Direction direction, int frame){
 
 Rect _mapIdleRect(Direction direction, int frame) {
   return _mapFrameLoop(_human.idle, direction, frame);
-}
-
-Rect _mapDeadRectMan(Direction direction, int frame) {
-  return _mapFrameLoop(_human.dying, direction, frame);
 }
 
 Rect _mapAimingRect(Direction direction) {
