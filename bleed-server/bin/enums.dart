@@ -2,6 +2,8 @@ import 'common/Tile.dart';
 
 List<Tile> _walkableTiles = [
   Tile.Grass,
+  Tile.Grass02,
+  Tile.Flowers,
   Tile.Long_Grass,
   Tile.ZombieSpawn,
   Tile.Concrete,
