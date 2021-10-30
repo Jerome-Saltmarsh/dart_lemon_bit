@@ -101,28 +101,6 @@ void _loadTileRects(List<List<Tile>> tiles) {
   }
 }
 
-RSTransform mapHumanToRSTransform(double x, double y) {
-  return RSTransform.fromComponents(
-    rotation: 0.0,
-    scale: 1.0,
-    anchorX: halfHumanSpriteFrameWidth,
-    anchorY: halfHumanSpriteFrameHeight + 5,
-    translateX: x,
-    translateY: y,
-  );
-}
-
-RSTransform mapZombieToRSTransform(Zombie zombie) {
-  return RSTransform.fromComponents(
-    rotation: 0.0,
-    scale: 1.0,
-    anchorX: halfHumanSpriteFrameWidth,
-    anchorY: halfHumanSpriteFrameHeight + 5,
-    translateX: zombie.x,
-    translateY: zombie.y,
-  );
-}
-
 RSTransform rsTransform(
     {double x, double y, double anchorX, double anchorY, double scale = 1}) {
   return RSTransform.fromComponents(

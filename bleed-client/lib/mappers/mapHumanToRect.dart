@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bleed_client/classes/AnimationRects.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/enums.dart';
@@ -56,10 +57,10 @@ Rect mapCharacterToSrcZombie(Weapon weapon, CharacterState state, Direction dire
 }
 
 // TODO state belongs in state directory
-const int _humanSpriteFrameWidth = 36;
-const int _humanSpriteFrameHeight = 35;
-const double halfHumanSpriteFrameWidth = _humanSpriteFrameWidth * 0.5;
-const double halfHumanSpriteFrameHeight = _humanSpriteFrameHeight * 0.5;
+const double _frameWidth = 64;
+const double _frameHeight = 64;
+const double _frameWidthHalf = _frameWidth * 0.5;
+const double _frameHeightHalf = _frameHeight * 0.5;
 const int _frameRateRunning = 3;
 
 final _RectsHuman _human = _RectsHuman();
@@ -75,20 +76,20 @@ Rect _aimingDownRight = _frame(33);
 Rect _aimingDown = _frame(35);
 
 class _RectsZombie {
-  final CharacterSrcRects walking = _srcRects4;
+  final AnimationRects walking = _srcRects4;
 }
 
 class _RectsHuman {
-  final CharacterSrcRects idle = _srcRects1;
+  final AnimationRects idle = _srcRects1;
   final _Walking walking = _Walking();
-  final CharacterSrcRects firingShotgun = _srcRects1;
-  final CharacterSrcRects running = _srcRects4;
-  final CharacterSrcRects changing = _srcRects2;
-  final CharacterSrcRects striking = _srcRects2;
-  final CharacterSrcRects dying = _srcRects2;
+  final AnimationRects firingShotgun = _srcRects1;
+  final AnimationRects running = _srcRects4;
+  final AnimationRects changing = _srcRects2;
+  final AnimationRects striking = _srcRects2;
+  final AnimationRects dying = _srcRects2;
 }
 
-final CharacterSrcRects _srcRects1 = CharacterSrcRects(
+final AnimationRects _srcRects1 = AnimationRects(
     down: _frames([1]),
     downRight: _frames([2]),
     right:  _frames([3]),
@@ -99,7 +100,7 @@ final CharacterSrcRects _srcRects1 = CharacterSrcRects(
     downLeft: _frames([8])
 );
 
-final CharacterSrcRects _srcRects2 = CharacterSrcRects(
+final AnimationRects _srcRects2 = AnimationRects(
     down: _frames([1, 2]),
     downRight: _frames([3, 4]),
     right:  _frames([5, 6]),
@@ -110,7 +111,7 @@ final CharacterSrcRects _srcRects2 = CharacterSrcRects(
     downLeft: _frames([15, 16])
 );
 
-final CharacterSrcRects _srcRects4 = CharacterSrcRects(
+final AnimationRects _srcRects4 = AnimationRects(
     down: _frames([1, 2, 3, 4]),
     downRight: _frames([5, 6, 7, 8]),
     right:  _frames([9, 10, 11, 12]),
@@ -132,28 +133,6 @@ class _Walking {
   final List<Rect> downLeft = _frames([37, 38, 39, 40]);
 }
 
-class CharacterSrcRects{
-  final List<Rect> down;
-  final List<Rect> downRight;
-  final List<Rect> right;
-  final List<Rect> upRight;
-  final List<Rect> up;
-  final List<Rect> upLeft;
-  final List<Rect> left;
-  final List<Rect> downLeft;
-
-  CharacterSrcRects({
-      this.down,
-      this.downRight,
-      this.right,
-      this.upRight,
-      this.up,
-      this.upLeft,
-      this.left,
-      this.downLeft
-  });
-}
-
 List<Rect> _frames(List<int> indexes) {
   List<Rect> rects = [];
   for (int i in indexes) {
@@ -163,11 +142,11 @@ List<Rect> _frames(List<int> indexes) {
 }
 
 Rect _frame(int index) {
-  return _getHumanSpriteRect(index - 1);
-}
-
-Rect _getHumanSpriteRect(int index) {
-  return Rect.fromLTWH(index * 64.0, 0.0, 64, 64);
+  return Rect.fromLTWH(
+      (index - 1) * _frameWidth,
+      0.0,
+      _frameWidth,
+      _frameHeight);
 }
 
 Rect _mapWalkingRect(Direction direction, int frame) {
@@ -259,7 +238,7 @@ Rect _mapRunningRect(Direction direction, int frame) {
   throw Exception("Could not get character walking sprite rect");
 }
 
-Rect _mapFrame(CharacterSrcRects src, Direction direction, int frame){
+Rect _mapFrame(AnimationRects src, Direction direction, int frame){
   switch (direction) {
     case Direction.Up:
       return getFrameLoop(src.up, frame);
