@@ -1,17 +1,15 @@
 
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/engine/functions/drawCircle.dart';
-import 'package:bleed_client/engine/render/game_widget.dart';
+import 'package:bleed_client/engine/render/drawImage.dart';
 import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
-import 'package:bleed_client/images.dart';
 import 'package:bleed_client/mappers/getMystImage.dart';
 import 'package:bleed_client/state/colours.dart';
 import 'package:flutter/material.dart';
 
 import '../maths.dart';
 import '../utils.dart';
-import '../functions/drawImage.dart';
 
 
 void drawParticle(Particle particle){

@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Human.dart';
-import 'package:bleed_client/render/drawImage.dart';
+import 'package:bleed_client/engine/render/drawImageRect.dart';
 import 'package:bleed_client/mappers/mapHumanToImage.dart';
 import 'package:bleed_client/mappers/mapHumanToRect.dart';
 

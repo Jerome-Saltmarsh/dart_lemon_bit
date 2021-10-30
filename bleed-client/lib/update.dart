@@ -1,12 +1,12 @@
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/functions/cameraFollowPlayer.dart';
-import 'package:bleed_client/functions/updateParticles.dart';
-import 'package:bleed_client/functions/updatePlayer.dart';
+import 'package:bleed_client/update/updateParticles.dart';
+import 'package:bleed_client/update/updatePlayer.dart';
 import 'package:bleed_client/getters/getDeactiveParticle.dart';
 
 import 'connection.dart';
-import 'functions/updateCharacters.dart';
+import 'update/updateCharacters.dart';
 import 'input.dart';
 import 'state.dart';
 

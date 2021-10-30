@@ -1,35 +1,29 @@
 import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
-import 'dart:ui' as ui;
 
-import 'package:bleed_client/classes/InteractableNpc.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/classes/Zombie.dart';
-import 'package:bleed_client/common/functions/diffOver.dart';
 import 'package:bleed_client/engine/functions/drawCircle.dart';
-import 'package:bleed_client/engine/functions/drawText.dart';
 import 'package:bleed_client/engine/functions/onScreen.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
-import 'package:bleed_client/render/drawCanvas.dart';
+import 'package:bleed_client/images.dart';
 import 'package:bleed_client/mappers/mapTileToRect.dart';
-import 'package:bleed_client/mappers/mapZombieToRect.dart';
+import 'package:bleed_client/render/drawInteractableNpcs.dart';
+import 'package:bleed_client/render/drawZombies.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../images.dart';
 import 'classes/Human.dart';
-import 'common/Weapons.dart';
-import 'common/classes/Vector2.dart';
 import 'common/Tile.dart';
-import 'rects.dart';
+import 'common/classes/Vector2.dart';
 import 'mappers/mapHumanToRect.dart';
-import 'state.dart';
+import 'rects.dart';
 import 'state/colours.dart';
-import 'state/isWaterAt.dart';
+import 'state.dart';
 import 'utils.dart';
 
 void drawCharacterCircle(double x, double y, Color color) {
@@ -42,60 +36,6 @@ void drawCharacters() {
   drawInteractableNpcs();
 }
 
-void drawInteractableNpcs() {
-  render.npcs.rects.clear();
-  render.npcs.transforms.clear();
-
-  for (int i = 0; i < compiledGame.totalNpcs; i++) {
-    InteractableNpc interactableNpc = compiledGame.interactableNpcs[i];
-    render.npcs.transforms.add(
-        mapHumanToRSTransform(interactableNpc.x, interactableNpc.y)
-    );
-
-    render.npcs.rects.add(
-        mapHumanToRect(
-            Weapon.HandGun,
-            interactableNpc.state,
-            interactableNpc.direction,
-            interactableNpc.frame
-        )
-    );
-
-    if (diffOver(interactableNpc.x, mouseWorldX, 50)) continue;
-    if (diffOver(interactableNpc.y, mouseWorldY, 50)) continue;
-    drawText(compiledGame.interactableNpcs[i].name, interactableNpc.x - charWidth * compiledGame.interactableNpcs[i].name.length,
-        interactableNpc.y);
-  }
-
-  drawAtlases(images.human, render.npcs.transforms, render.npcs.rects);
-}
-
-void drawZombies() {
-  render.zombiesTransforms.clear();
-  render.zombieRects.clear();
-
-  for (int i = 0; i < compiledGame.totalZombies; i++) {
-    Zombie zombie = compiledGame.zombies[i];
-    if (!zombie.alive) {
-      if (isWaterAt(zombie.x, zombie.y)){
-        continue;
-      }
-    }
-    if (!onScreen(zombie.x, zombie.y)){
-      continue;
-    }
-
-    render.zombiesTransforms.add(
-        mapZombieToRSTransform(zombie)
-    );
-    render.zombieRects.add(
-        mapZombieToRect(zombie)
-    );
-  }
-
-  drawAtlases(images.zombie, render.zombiesTransforms, render.zombieRects);
-}
-
 void drawTileList() {
   globalCanvas.drawRawAtlas(
       images.tiles,
@@ -106,13 +46,6 @@ void drawTileList() {
       null,
       paint
   );
-}
-
-void drawAtlases(
-    ui.Image image, List<RSTransform> transforms, List<Rect> rects) {
-  
-  globalCanvas.drawAtlas(
-      image, transforms, rects, null, null, null, paint);
 }
 
 void renderTiles(List<List<Tile>> tiles) {
@@ -167,21 +100,6 @@ void _loadTileRects(List<List<Tile>> tiles) {
       }
     }
   }
-}
-
-void drawPlayers() {
-  render.playersTransforms.clear();
-  render.playersRects.clear();
-  for (int i = 0; i < compiledGame.totalHumans; i++) {
-    Human human = compiledGame.humans[i];
-    render.playersTransforms.add(
-        mapHumanToRSTransform(human.x, human.y)
-    );
-    render.playersRects.add(
-        mapHumanToRect(human.weapon, human.state, human.direction, human.frame)
-    );
-  }
-  drawAtlases(images.human, render.playersTransforms, render.playersRects);
 }
 
 RSTransform mapHumanToRSTransform(double x, double y) {

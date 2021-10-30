@@ -11,10 +11,10 @@ import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
-import 'package:bleed_client/render/drawImage.dart';
+import 'package:bleed_client/engine/render/drawAtlas.dart';
+import 'package:bleed_client/engine/render/drawImageRect.dart';
 import 'package:bleed_client/engine/functions/onScreen.dart';
 import 'package:bleed_client/engine/state/screen.dart';
-import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/engine/functions/drawCircle.dart';
@@ -23,12 +23,10 @@ import 'package:bleed_client/engine/render/game_widget.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
-import 'package:bleed_client/mappers/mapHumanToImage.dart';
-import 'package:bleed_client/render/renderHuman.dart';
+import 'package:bleed_client/render/drawHuman.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/mappers/mapCrateToRSTransform.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
-import 'package:bleed_client/mappers/mapHumanToRect.dart';
 import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
 import 'package:bleed_client/mappers/mapItemToRect.dart';
 import 'package:bleed_client/maths.dart';
@@ -53,9 +51,6 @@ final double _anchorY = 80;
 final double _nameRadius = 100;
 final double charWidth = 4.5;
 final Ring _healthRing = Ring(16);
-
-const double _humanFrameWidth = 36;
-const double _humanFrameHeight = 36;
 
 void drawCanvas(Canvas canvass, Size _size) {
   if (editMode) {
@@ -183,6 +178,7 @@ void _drawSprites() {
           humanY < compiledGame.environmentObjects[indexEnv].y) {
         if (!particlesRemaining ||
             humanY < compiledGame.particles[indexParticle].y) {
+          // TODO remove
           renderHuman(compiledGame.humans[indexHuman]);
           indexHuman++;
           continue;
@@ -263,7 +259,7 @@ void _drawCrates() {
         .add(mapCrateToRSTransform((compiledGame.crates[i])));
     render.crates.rects.add(rectCrate);
   }
-  drawAtlases(images.crate, render.crates.transforms, render.crates.rects);
+  drawAtlas(images.crate, render.crates.transforms, render.crates.rects);
 }
 
 void _drawCratesEditor() {
@@ -284,7 +280,7 @@ void _renderItems() {
     render.items.transforms.add(mapItemToRSTransform(compiledGame.items[i]));
     render.items.rects.add(mapItemToRect(compiledGame.items[i].type));
   }
-  drawAtlases(images.items, render.items.transforms, render.items.rects);
+  drawAtlas(images.items, render.items.transforms, render.items.rects);
 }
 
 void _drawPlayerNames() {
