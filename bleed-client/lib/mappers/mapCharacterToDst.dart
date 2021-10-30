@@ -5,7 +5,7 @@ import 'package:bleed_client/state/settings.dart';
 
 final double _sizeHalf = settings.manRenderSize;
 
-Rect mapCharacterToDst(Character character) {
+Rect mapCharacterToDstMan(Character character) {
   return Rect.fromLTWH(
       character.x - _sizeHalf,
       character.y - _sizeHalf,

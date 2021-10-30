@@ -5,7 +5,7 @@ import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/images.dart';
 
 
-Image mapHumanToImage(CharacterState state, Weapon weapon){
+Image mapCharacterToImageMan(CharacterState state, Weapon weapon){
   switch(state){
     case CharacterState.Dead:
       return images.manDying;

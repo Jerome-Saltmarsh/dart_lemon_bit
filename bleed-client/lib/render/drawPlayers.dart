@@ -17,7 +17,7 @@ void drawPlayers() {
         mapHumanToRSTransform(player.x, player.y)
     );
     render.playersRects.add(
-        mapHumanToRect(player.weapon, player.state, player.direction, player.frame)
+        mapCharacterToSrcMan(player.weapon, player.state, player.direction, player.frame)
     );
   }
   drawAtlas(images.human, render.playersTransforms, render.playersRects);

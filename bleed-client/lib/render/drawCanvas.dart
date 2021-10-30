@@ -23,7 +23,7 @@ import 'package:bleed_client/engine/render/gameWidget.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
-import 'package:bleed_client/render/drawHuman.dart';
+import 'package:bleed_client/render/drawCharacterMan.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/mappers/mapCrateToRSTransform.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
@@ -179,7 +179,7 @@ void _drawSprites() {
         if (!particlesRemaining ||
             humanY < compiledGame.particles[indexParticle].y) {
           // TODO remove
-          drawCharacter(compiledGame.humans[indexHuman]);
+          drawCharacterMan(compiledGame.humans[indexHuman]);
           indexHuman++;
           continue;
         }

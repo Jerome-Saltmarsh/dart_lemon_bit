@@ -7,7 +7,7 @@ import 'package:bleed_client/enums.dart';
 import '../resources/rects_utils.dart';
 
 // interface
-Rect mapHumanToRect(Weapon weapon, CharacterState state, Direction direction, int frame) {
+Rect mapCharacterToSrcMan(Weapon weapon, CharacterState state, Direction direction, int frame) {
   switch (state) {
     case CharacterState.Idle:
       return _mapIdleRect(direction);
