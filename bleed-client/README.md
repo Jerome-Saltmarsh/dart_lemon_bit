@@ -91,9 +91,10 @@
 [ ] Tree 3
 [ ] Stone 2
 [ ] Dynamic Lighting
-[ ] Zombies 3D render
 [ ] Npc firing image looks like idle
-[ ] Human 3d Render
+[ ] NPC 3d render
+[ ] Zombies 3D render
+[x] Human 3d Render
     [x] Dead
     [x] Striking
     [x] Changing Weapon 

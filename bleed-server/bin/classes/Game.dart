@@ -575,8 +575,10 @@ extension GameFunctions on Game {
       if (arrivedAtPath(npc)) {
         // @on npc arrived at path
         npc.path.removeAt(0);
-        npc.state = CharacterState.Idle;
-        return;
+        if (npc.path.isEmpty) {
+          npc.state = CharacterState.Idle;
+          return;
+        }
       }
       // @on npc going to path
       characterFace(npc, npc.path[0].x, npc.path[0].y);
