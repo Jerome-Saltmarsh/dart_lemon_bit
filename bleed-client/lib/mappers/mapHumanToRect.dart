@@ -10,7 +10,7 @@ import '../resources/rects_utils.dart';
 Rect mapCharacterToSrcMan(Weapon weapon, CharacterState state, Direction direction, int frame) {
   switch (state) {
     case CharacterState.Idle:
-      return _mapIdleRect(direction);
+      return _mapIdleRect(direction, frame);
     case CharacterState.Walking:
       return _mapWalkingRect(direction, frame);
     case CharacterState.Dead:
@@ -34,7 +34,7 @@ Rect mapCharacterToSrcMan(Weapon weapon, CharacterState state, Direction directi
 Rect mapCharacterToSrcZombie(Weapon weapon, CharacterState state, Direction direction, int frame) {
   switch (state) {
     case CharacterState.Idle:
-      return _mapIdleRect(direction);
+      return _mapIdleRect(direction, frame);
     case CharacterState.Walking:
       return _mapZombieWalkingRect(direction, frame);
     case CharacterState.Dead:
@@ -65,19 +65,39 @@ const int _frameRateRunning = 3;
 final _RectsHuman _human = _RectsHuman();
 final _RectsZombie _zombie = _RectsZombie();
 
+Rect _aimingDownLeft = _frame(21);
+Rect _aimingLeft = _frame(23);
+Rect _aimingUpLeft = _frame(25);
+Rect _aimingUp = _frame(27);
+Rect _aimingUpRight = _frame(29);
+Rect _aimingRight = _frame(31);
+Rect _aimingDownRight = _frame(33);
+Rect _aimingDown = _frame(35);
+
 class _RectsZombie {
   final CharacterSrcRects walking = _srcRects4;
 }
 
 class _RectsHuman {
-  final _Idle idle = _Idle();
+  final CharacterSrcRects idle = _srcRects1;
   final _Walking walking = _Walking();
-  final _FiringShotgun firingShotgun = _FiringShotgun();
+  final CharacterSrcRects firingShotgun = _srcRects1;
   final CharacterSrcRects running = _srcRects4;
   final CharacterSrcRects changing = _srcRects2;
   final CharacterSrcRects striking = _srcRects2;
   final CharacterSrcRects dying = _srcRects2;
 }
+
+final CharacterSrcRects _srcRects1 = CharacterSrcRects(
+    down: _frames([1]),
+    downRight: _frames([2]),
+    right:  _frames([3]),
+    upRight: _frames([4]),
+    up:  _frames([5]),
+    upLeft: _frames([6]),
+    left:  _frames([7]),
+    downLeft: _frames([8])
+);
 
 final CharacterSrcRects _srcRects2 = CharacterSrcRects(
     down: _frames([1, 2]),
@@ -101,18 +121,6 @@ final CharacterSrcRects _srcRects4 = CharacterSrcRects(
     downLeft: _frames([29, 30, 31, 32])
 );
 
-
-class _Idle {
-  final Rect down = _frame(1);
-  final Rect downRight = _frame(2);
-  final Rect right = _frame(3);
-  final Rect upRight = _frame(4);
-  final Rect up = _frame(5);
-  final Rect upLeft = _frame(6);
-  final Rect left = _frame(7);
-  final Rect downLeft = _frame(8);
-}
-
 class _Walking {
   final List<Rect> down = _frames([9, 10, 11 , 12]);
   final List<Rect> downRight = _frames([13, 14, 15, 16]);
@@ -122,50 +130,6 @@ class _Walking {
   final List<Rect> upLeft = _frames([29, 30, 31, 32]);
   final List<Rect> left = _frames([33, 34, 35, 36]);
   final List<Rect> downLeft = _frames([37, 38, 39, 40]);
-}
-
-class _Running {
-  final List<Rect> down = _frames([1, 2, 3, 4]);
-  final List<Rect> downRight = _frames([5, 6, 7, 8]);
-  final List<Rect> right = _frames([9, 10, 11, 12]);
-  final List<Rect> upRight = _frames([13, 14, 15, 16]);
-  final List<Rect> up = _frames([17, 18, 19, 20]);
-  final List<Rect> upLeft = _frames([21, 22, 23, 24]);
-  final List<Rect> left = _frames([25, 26, 27, 28]);
-  final List<Rect> downLeft = _frames([29, 30, 31, 32]);
-}
-
-class _FiringShotgun {
-  final List<Rect> down = _frames([1]);
-  final List<Rect> downRight = _frames([2]);
-  final List<Rect> right = _frames([3]);
-  final List<Rect> upRight = _frames([4]);
-  final List<Rect> up = _frames([5]);
-  final List<Rect> upLeft = _frames([6]);
-  final List<Rect> left = _frames([7]);
-  final List<Rect> downLeft  = _frames([8]);
-}
-
-class _Changing {
-  final List<Rect> down = _frames([1, 2]);
-  final List<Rect> downRight = _frames([3, 4]);
-  final List<Rect> right = _frames([5, 6]);
-  final List<Rect> upRight = _frames([7, 8]);
-  final List<Rect> up = _frames([9, 10]);
-  final List<Rect> upLeft = _frames([11, 12]);
-  final List<Rect> left = _frames([13, 14]);
-  final List<Rect> downLeft = _frames([15, 16]);
-}
-
-class _Dying {
-  final List<Rect> down = _frames([1, 2]);
-  final List<Rect> downRight = _frames([3, 4]);
-  final List<Rect> right = _frames([5, 6]);
-  final List<Rect> upRight = _frames([7, 8]);
-  final List<Rect> up = _frames([9, 10]);
-  final List<Rect> upLeft = _frames([11, 12]);
-  final List<Rect> left = _frames([13, 14]);
-  final List<Rect> downLeft = _frames([15, 16]);
 }
 
 class CharacterSrcRects{
@@ -189,16 +153,6 @@ class CharacterSrcRects{
       this.downLeft
   });
 }
-
-Rect _aimingDownLeft = _frame(21);
-Rect _aimingLeft = _frame(23);
-Rect _aimingUpLeft = _frame(25);
-Rect _aimingUp = _frame(27);
-Rect _aimingUpRight = _frame(29);
-Rect _aimingRight = _frame(31);
-Rect _aimingDownRight = _frame(33);
-Rect _aimingDown = _frame(35);
-
 
 List<Rect> _frames(List<int> indexes) {
   List<Rect> rects = [];
@@ -305,26 +259,29 @@ Rect _mapRunningRect(Direction direction, int frame) {
   throw Exception("Could not get character walking sprite rect");
 }
 
-Rect _mapIdleRect(Direction direction) {
+Rect _mapFrame(CharacterSrcRects src, Direction direction, int frame){
   switch (direction) {
     case Direction.Up:
-      return _human.idle.up;
+      return getFrameLoop(src.up, frame);
     case Direction.UpRight:
-      return _human.idle.upRight;
+      return getFrameLoop(src.upRight, frame);
     case Direction.Right:
-      return _human.idle.right;
+      return getFrameLoop(src.right, frame);
     case Direction.DownRight:
-      return _human.idle.downRight;
+      return getFrameLoop(src.downRight, frame);
     case Direction.Down:
-      return _human.idle.down;
+      return getFrameLoop(src.down, frame);
     case Direction.DownLeft:
-      return _human.idle.downLeft;
+      return getFrameLoop(src.downLeft, frame);
     case Direction.Left:
-      return _human.idle.left;
+      return getFrameLoop(src.left, frame);
     case Direction.UpLeft:
-      return _human.idle.upLeft;
+      return getFrameLoop(src.upLeft, frame);
   }
-  throw Exception("Could not get character walking sprite rect");
+}
+
+Rect _mapIdleRect(Direction direction, int frame) {
+  return _mapFrame(_human.idle, direction, frame);
 }
 
 Rect _mapDeadRect(Direction direction, int frame) {
