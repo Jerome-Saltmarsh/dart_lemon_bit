@@ -31,21 +31,20 @@ Rect mapHumanToRect(Weapon weapon, CharacterState state, Direction direction, in
   throw Exception("Could not get character sprite rect");
 }
 
-// abstraction
+// TODO state belongs in state directory
 const int _humanSpriteFrameWidth = 36;
 const int _humanSpriteFrameHeight = 35;
 const double halfHumanSpriteFrameWidth = _humanSpriteFrameWidth * 0.5;
 const double halfHumanSpriteFrameHeight = _humanSpriteFrameHeight * 0.5;
+const int _frameRateRunning = 3;
+final _RectsHuman _human = _RectsHuman();
 
-// TODO state belongs in state directory
-
-_Human _human = _Human();
-
-class _Human {
+class _RectsHuman {
   final _Idle idle = _Idle();
   final _Walking walking = _Walking();
   final _Running running = _Running();
   final _FiringShotgun firingShotgun = _FiringShotgun();
+  final _Changing changing = _Changing();
 }
 
 class _Idle {
@@ -92,6 +91,16 @@ class _FiringShotgun {
   final List<Rect> downLeft  = _frames([8]);
 }
 
+class _Changing {
+  final List<Rect> down = _frames([1, 2]);
+  final List<Rect> downRight = _frames([3, 4]);
+  final List<Rect> right = _frames([5, 6]);
+  final List<Rect> upRight = _frames([7, 8]);
+  final List<Rect> up = _frames([9, 10]);
+  final List<Rect> upLeft = _frames([11, 12]);
+  final List<Rect> left = _frames([13, 14]);
+  final List<Rect> downLeft = _frames([15, 16]);
+}
 
 Rect _deadUpRight = _frame(17);
 Rect _deadRight = _frame(18);
@@ -106,24 +115,6 @@ Rect _aimingUpRight = _frame(29);
 Rect _aimingRight = _frame(31);
 Rect _aimingDownRight = _frame(33);
 Rect _aimingDown = _frame(35);
-
-List<Rect> _firingRifleDownLeft = _frames([22, 21]);
-List<Rect> _firingRifleLeft = _frames([24, 23]);
-List<Rect> _firingRifleUpLeft = _frames([26, 25]);
-List<Rect> _firingRifleUp = _frames([28, 27]);
-List<Rect> _firingRifleUpRight = _frames([30, 29]);
-List<Rect> _firingRifleRight = _frames([32, 31]);
-List<Rect> _firingRifleDownRight = _frames([34, 33]);
-List<Rect> _firingRifleDown = _frames([36, 35]);
-
-List<Rect> _reloadingDownLeft = _frames([74, 74, 74, 75, 75, 75]);
-List<Rect> _reloadingLeft = _frames([76, 76, 76, 77, 77, 77]);
-List<Rect> _reloadingUpLeft = _frames([78, 78, 78, 79, 79, 79]);
-List<Rect> _reloadingUp = _frames([80, 80, 80, 81, 81, 81]);
-List<Rect> _reloadingUpRight = _frames([82, 82, 82, 83, 83, 83]);
-List<Rect> _reloadingRight = _frames([84, 84, 84, 85, 85, 85]);
-List<Rect> _reloadingDownRight = _frames([86, 86, 86, 87, 87, 87]);
-List<Rect> _reloadingDown = _frames([88, 88, 88, 89, 89, 89]);
 
 List<Rect> _strikingDownLeft = _frames([37, 38]);
 List<Rect> _strikingLeft = _frames([39, 40]);
@@ -175,27 +166,25 @@ Rect _mapWalkingRect(Direction direction, int frame) {
 
 Rect _mapReloadingRect(Direction direction, int frame) {
   switch (direction) {
-    case Direction.Up:
-      return getFrameLoop(_reloadingUp, frame);
-    case Direction.UpRight:
-      return getFrameLoop(_reloadingUpRight, frame);
-    case Direction.Right:
-      return getFrameLoop(_reloadingRight, frame);
-    case Direction.DownRight:
-      return getFrameLoop(_reloadingDownRight, frame);
     case Direction.Down:
-      return getFrameLoop(_reloadingDown, frame);
-    case Direction.DownLeft:
-      return getFrameLoop(_reloadingDownLeft, frame);
-    case Direction.Left:
-      return getFrameLoop(_reloadingLeft, frame);
+      return getFrameLoop(_human.changing.down, frame);
+    case Direction.DownRight:
+      return getFrameLoop(_human.changing.downRight, frame);
+    case Direction.Right:
+      return getFrameLoop(_human.changing.right, frame);
+    case Direction.UpRight:
+      return getFrameLoop(_human.changing.upRight, frame);
+    case Direction.Up:
+      return getFrameLoop(_human.changing.up, frame);
     case Direction.UpLeft:
-      return getFrameLoop(_reloadingUpLeft, frame);
+      return getFrameLoop(_human.changing.upLeft, frame);
+    case Direction.Left:
+      return getFrameLoop(_human.changing.left, frame);
+    case Direction.DownLeft:
+      return getFrameLoop(_human.changing.downLeft, frame);
   }
   throw Exception("Could not get character reloading sprite rect");
 }
-
-int _frameRateRunning = 3;
 
 Rect _mapRunningRect(Direction direction, int frame) {
   switch (direction) {
@@ -287,34 +276,6 @@ Rect _mapAimingRect(Direction direction) {
 
 Rect _mapFiringRect(Weapon weapon, Direction direction, int frame) {
   return _mapFiringShotgunRect(direction, frame);
-  // switch (weapon) {
-  //   case Weapon.Shotgun:
-  //     return _mapFiringShotgunRect(direction, frame);
-  //   default:
-  //     return _mapFiringRifleRect(direction, frame);
-  // }
-}
-
-Rect _mapFiringRifleRect(Direction direction, int frame) {
-  switch (direction) {
-    case Direction.Up:
-      return getFrame(_firingRifleUp, frame);
-    case Direction.UpRight:
-      return getFrame(_firingRifleUpRight, frame);
-    case Direction.Right:
-      return getFrame(_firingRifleRight, frame);
-    case Direction.DownRight:
-      return getFrame(_firingRifleDownRight, frame);
-    case Direction.Down:
-      return getFrame(_firingRifleDown, frame);
-    case Direction.DownLeft:
-      return getFrame(_firingRifleDownLeft, frame);
-    case Direction.Left:
-      return getFrame(_firingRifleLeft, frame);
-    case Direction.UpLeft:
-      return getFrame(_firingRifleUpLeft, frame);
-  }
-  throw Exception("could not get firing frame from direction");
 }
 
 Rect _mapFiringShotgunRect(Direction direction, int frame) {

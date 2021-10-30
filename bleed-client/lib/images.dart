@@ -41,8 +41,13 @@ class _Images {
   Image manRunning;
   Image manFiringHandgun;
   Image manFiringShotgun;
+  Image manChanging;
 
   List<Image> flames = [];
+
+  Future<Image> _png(String fileName){
+    return loadImage('images/$fileName.png');
+  }
 
   Future load() async {
     human = await loadImage("images/character.png");
@@ -79,6 +84,7 @@ class _Images {
     manRunning = await loadImage("images/man-running.png");
     manFiringHandgun = await loadImage("images/man-firing-handgun.png");
     manFiringShotgun = await loadImage("images/man-firing-shotgun.png");
+    manChanging = await _png("man-changing");
     flames.add(torch_01);
     flames.add(torch_02);
     flames.add(torch_03);
