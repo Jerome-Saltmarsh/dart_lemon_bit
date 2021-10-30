@@ -1,8 +1,8 @@
 import 'dart:ui';
-
 import 'package:bleed_client/classes/AnimationRects.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
+import 'package:bleed_client/constants/defaultSpriteFrameRate.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/resources/rects_utils.dart';
 
@@ -10,7 +10,7 @@ import 'package:bleed_client/resources/rects_utils.dart';
 Rect mapCharacterToSrcMan(Weapon weapon, CharacterState state, Direction direction, int frame) {
   switch (state) {
     case CharacterState.Idle:
-      return _mapIdleRect(direction, frame);
+      return _mapFrameLoop(_srcRects1, direction, frame);
     case CharacterState.Walking:
       return _mapFrameLoop(_srcRects4, direction, frame);
     case CharacterState.Dead:
@@ -18,11 +18,11 @@ Rect mapCharacterToSrcMan(Weapon weapon, CharacterState state, Direction directi
     case CharacterState.Aiming:
       return _mapAimingRect(direction);
     case CharacterState.Firing:
-      return _getRectFiringShotgun(weapon, direction, frame);
+      return _mapFrame(_srcRects1, direction, frame);
     case CharacterState.Striking:
       return _mapFrame(_srcRects2, direction, frame);
     case CharacterState.Running:
-      return _mapRunningRect(direction, frame);
+      return _mapFrameLoop(_srcRects4, direction, frame, frameRate: 4);
     case CharacterState.Reloading:
       return _mapReloadingRect(direction, frame);
     case CharacterState.ChangingWeapon:
@@ -34,25 +34,24 @@ Rect mapCharacterToSrcMan(Weapon weapon, CharacterState state, Direction directi
 Rect mapCharacterToSrcZombie(Weapon weapon, CharacterState state, Direction direction, int frame) {
   switch (state) {
     case CharacterState.Idle:
-      return _mapIdleRect(direction, frame);
+      return _mapFrameLoop(_srcRects1, direction, frame);
     case CharacterState.Walking:
       return _mapFrameLoop(_srcRects4, direction, frame);
     case CharacterState.Dead:
       return _mapFrame(_srcRects2, direction, frame);
     case CharacterState.Aiming:
       return _mapAimingRect(direction);
-    case CharacterState.Firing:
-      return _getRectFiringShotgun(weapon, direction, frame);
     case CharacterState.Striking:
       return _mapFrame(_srcRects2, direction, frame);
     case CharacterState.Running:
-      return _mapRunningRect(direction, frame);
+      return _mapFrameLoop(_srcRects4, direction, frame);
     case CharacterState.Reloading:
       return _mapReloadingRect(direction, frame);
     case CharacterState.ChangingWeapon:
       return _mapReloadingRect(direction, frame);
+    default:
+      throw Exception("Could not get character sprite rect");
   }
-  throw Exception("Could not get character sprite rect");
 }
 
 // TODO state belongs in state directory
@@ -70,18 +69,9 @@ Rect _aimingRight = _frame(31);
 Rect _aimingDownRight = _frame(33);
 Rect _aimingDown = _frame(35);
 
-Rect _getRectFiringShotgun(Weapon weapon, Direction direction, int frame) {
-  return _mapFrameLoop(_human.firingShotgun, direction, frame);
-}
-
 class _RectsHuman {
-  final AnimationRects idle = _srcRects1;
   final AnimationRects firingShotgun = _srcRects1;
   final AnimationRects changing = _srcRects2;
-  final AnimationRects striking = _srcRects2;
-  final AnimationRects dying = _srcRects2;
-  final AnimationRects walking = _srcRects4;
-  final AnimationRects running = _srcRects4;
 }
 
 final AnimationRects _srcRects1 = AnimationRects(
@@ -155,28 +145,24 @@ Rect _mapReloadingRect(Direction direction, int frame) {
   throw Exception("Could not get character reloading sprite rect");
 }
 
-Rect _mapRunningRect(Direction direction, int frame) {
-  return _mapFrameLoop(_human.running, direction, frame);
-}
-
-Rect _mapFrameLoop(AnimationRects src, Direction direction, int frame){
+Rect _mapFrameLoop(AnimationRects src, Direction direction, int frame, {int frameRate = defaultSpriteFrameRate}){
   switch (direction) {
     case Direction.Up:
-      return getFrameLoop(src.up, frame);
+      return getFrameLoop(src.up, frame, frameRate: frameRate);
     case Direction.UpRight:
-      return getFrameLoop(src.upRight, frame);
+      return getFrameLoop(src.upRight, frame, frameRate: frameRate);
     case Direction.Right:
-      return getFrameLoop(src.right, frame);
+      return getFrameLoop(src.right, frame, frameRate: frameRate);
     case Direction.DownRight:
-      return getFrameLoop(src.downRight, frame);
+      return getFrameLoop(src.downRight, frame, frameRate: frameRate);
     case Direction.Down:
-      return getFrameLoop(src.down, frame);
+      return getFrameLoop(src.down, frame, frameRate: frameRate);
     case Direction.DownLeft:
-      return getFrameLoop(src.downLeft, frame);
+      return getFrameLoop(src.downLeft, frame, frameRate: frameRate);
     case Direction.Left:
-      return getFrameLoop(src.left, frame);
+      return getFrameLoop(src.left, frame, frameRate: frameRate);
     case Direction.UpLeft:
-      return getFrameLoop(src.upLeft, frame);
+      return getFrameLoop(src.upLeft, frame, frameRate: frameRate);
   }
 }
 
@@ -199,10 +185,6 @@ Rect _mapFrame(AnimationRects src, Direction direction, int frame){
     case Direction.UpLeft:
       return getFrame(src.upLeft, frame);
   }
-}
-
-Rect _mapIdleRect(Direction direction, int frame) {
-  return _mapFrameLoop(_human.idle, direction, frame);
 }
 
 Rect _mapAimingRect(Direction direction) {
