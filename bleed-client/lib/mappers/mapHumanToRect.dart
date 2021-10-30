@@ -66,37 +66,41 @@ final _RectsHuman _human = _RectsHuman();
 final _RectsZombie _zombie = _RectsZombie();
 
 class _RectsZombie {
-  final CharacterSrcRects walking = CharacterSrcRects(
-      down: _frames([1, 2, 3, 4]),
-      downRight: _frames([5, 6, 7, 8]),
-      right:  _frames([9, 10, 11, 12]),
-      upRight: _frames([13, 14, 15, 16]),
-      up:  _frames([17, 18, 19, 20]),
-      upLeft: _frames([21, 22, 23, 24]),
-      left:  _frames([25, 26, 27, 28]),
-      downLeft: _frames([29, 30, 31, 32])
-  );
+  final CharacterSrcRects walking = _srcRects4;
 }
 
 class _RectsHuman {
   final _Idle idle = _Idle();
   final _Walking walking = _Walking();
-  final _Running running = _Running();
   final _FiringShotgun firingShotgun = _FiringShotgun();
-  final _Changing changing = _Changing();
-  final _Dying dying = _Dying();
-
-  final CharacterSrcRects striking = CharacterSrcRects(
-      down: _frames([1, 2]),
-      downRight: _frames([3, 4]),
-      right:  _frames([5, 6]),
-      upRight: _frames([7, 8]),
-      up:  _frames([9, 10]),
-      upLeft: _frames([11, 12]),
-      left:  _frames([13, 14]),
-      downLeft: _frames([15, 16])
-  );
+  final CharacterSrcRects running = _srcRects4;
+  final CharacterSrcRects changing = _srcRects2;
+  final CharacterSrcRects striking = _srcRects2;
+  final CharacterSrcRects dying = _srcRects2;
 }
+
+final CharacterSrcRects _srcRects2 = CharacterSrcRects(
+    down: _frames([1, 2]),
+    downRight: _frames([3, 4]),
+    right:  _frames([5, 6]),
+    upRight: _frames([7, 8]),
+    up:  _frames([9, 10]),
+    upLeft: _frames([11, 12]),
+    left:  _frames([13, 14]),
+    downLeft: _frames([15, 16])
+);
+
+final CharacterSrcRects _srcRects4 = CharacterSrcRects(
+    down: _frames([1, 2, 3, 4]),
+    downRight: _frames([5, 6, 7, 8]),
+    right:  _frames([9, 10, 11, 12]),
+    upRight: _frames([13, 14, 15, 16]),
+    up:  _frames([17, 18, 19, 20]),
+    upLeft: _frames([21, 22, 23, 24]),
+    left:  _frames([25, 26, 27, 28]),
+    downLeft: _frames([29, 30, 31, 32])
+);
+
 
 class _Idle {
   final Rect down = _frame(1);
