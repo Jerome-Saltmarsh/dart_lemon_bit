@@ -14,7 +14,7 @@ import 'package:bleed_client/engine/functions/onScreen.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
-import 'package:bleed_client/functions/drawCanvas.dart';
+import 'package:bleed_client/render/drawCanvas.dart';
 import 'package:bleed_client/mappers/mapTileToRect.dart';
 import 'package:bleed_client/mappers/mapZombieToRect.dart';
 import 'package:flutter/cupertino.dart';
@@ -38,7 +38,6 @@ void drawCharacterCircle(double x, double y, Color color) {
 
 void drawCharacters() {
   if (images.human == null) return;
-  // drawPlayers();
   drawZombies();
   drawInteractableNpcs();
 }

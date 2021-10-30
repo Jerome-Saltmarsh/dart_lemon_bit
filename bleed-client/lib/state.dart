@@ -9,7 +9,6 @@ import 'package:bleed_client/utils.dart';
 
 import '../common.dart';
 import 'classes/Block.dart';
-import 'classes/SpriteAnimation.dart';
 import 'classes/State.dart';
 import 'enums/Mode.dart';
 
@@ -32,7 +31,6 @@ String event = "";
 dynamic valueObject;
 DateTime lastRefresh = DateTime.now();
 Duration refreshDuration;
-List<SpriteAnimation> animations = [];
 int drawFrame = 0;
 bool debugMode = false;
 bool gameOver = false;

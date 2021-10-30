@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 
 import '../maths.dart';
 import '../utils.dart';
-import 'drawImage.dart';
+import '../functions/drawImage.dart';
 
 
 void drawParticle(Particle particle){

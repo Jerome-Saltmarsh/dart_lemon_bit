@@ -19,7 +19,7 @@ import 'package:bleed_client/connection.dart';
 import 'package:bleed_client/enums/InventoryItemType.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
-import 'package:bleed_client/functions/drawCanvas.dart';
+import 'package:bleed_client/render/drawCanvas.dart';
 import 'package:bleed_client/functions/emit/emitMyst.dart';
 import 'package:bleed_client/functions/emitSmoke.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';

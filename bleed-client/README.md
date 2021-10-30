@@ -90,6 +90,7 @@
 [ ] House 3
 [ ] Tree 3
 [ ] Stone 2
+[ ] Dynamic Lighting
 [ ] Zombies 3D render
 [ ] Human 3d Render
     [ ] Dead

@@ -11,7 +11,7 @@ import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
-import 'package:bleed_client/engine/functions/drawImage.dart';
+import 'package:bleed_client/render/drawImage.dart';
 import 'package:bleed_client/engine/functions/onScreen.dart';
 import 'package:bleed_client/engine/state/screen.dart';
 import 'package:bleed_client/enums.dart';
@@ -24,6 +24,7 @@ import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/mappers/mapHumanToImage.dart';
+import 'package:bleed_client/render/renderHuman.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/mappers/mapCrateToRSTransform.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
@@ -182,7 +183,7 @@ void _drawSprites() {
           humanY < compiledGame.environmentObjects[indexEnv].y) {
         if (!particlesRemaining ||
             humanY < compiledGame.particles[indexParticle].y) {
-          drawHuman(compiledGame.humans[indexHuman]);
+          renderHuman(compiledGame.humans[indexHuman]);
           indexHuman++;
           continue;
         }
@@ -228,17 +229,6 @@ void drawEnvironmentObject(EnvironmentObject environmentObject) {
       environmentObject.image,
       environmentObject.src,
       environmentObject.dst
-  );
-}
-
-final double _s = 40;
-final double _sHalf = _s * 0.5;
-
-void drawHuman(Human human) {
-  drawImageRect(
-    mapHumanToImage(human),
-    mapHumanToRect(human.weapon, human.state, human.direction, human.frame),
-    Rect.fromLTWH(human.x - _sHalf, human.y - _sHalf, _s, _s),
   );
 }
 

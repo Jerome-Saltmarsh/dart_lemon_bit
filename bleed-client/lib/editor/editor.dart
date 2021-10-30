@@ -15,7 +15,7 @@ import 'package:bleed_client/engine/state/mouseDragging.dart';
 import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/engine/state/size.dart';
 import 'package:bleed_client/engine/state/zoom.dart';
-import 'package:bleed_client/functions/drawCanvas.dart';
+import 'package:bleed_client/render/drawCanvas.dart';
 import 'package:bleed_client/functions/saveScene.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/properties.dart';
