@@ -43,6 +43,8 @@ class _Images {
   Image manFiringShotgun;
   Image manChanging;
   Image manDying;
+  Image manStriking;
+
 
   List<Image> flames = [];
 
@@ -87,6 +89,7 @@ class _Images {
     manFiringShotgun = await loadImage("images/man-firing-shotgun.png");
     manChanging = await _png("man-changing");
     manDying = await _png("man-dying");
+    manStriking = await _png("man-striking");
     flames.add(torch_01);
     flames.add(torch_02);
     flames.add(torch_03);

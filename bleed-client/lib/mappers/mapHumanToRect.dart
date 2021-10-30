@@ -46,6 +46,17 @@ class _RectsHuman {
   final _FiringShotgun firingShotgun = _FiringShotgun();
   final _Changing changing = _Changing();
   final _Dying dying = _Dying();
+
+  final CharacterSrcRects striking = CharacterSrcRects(
+      down: _frames([1, 2]),
+      downRight: _frames([3, 4]),
+      right:  _frames([5, 6]),
+      upRight: _frames([7, 8]),
+      up:  _frames([9, 10]),
+      upLeft: _frames([11, 12]),
+      left:  _frames([13, 14]),
+      downLeft: _frames([15, 16])
+  );
 }
 
 class _Idle {
@@ -114,6 +125,28 @@ class _Dying {
   final List<Rect> downLeft = _frames([15, 16]);
 }
 
+class CharacterSrcRects{
+  final List<Rect> down;
+  final List<Rect> downRight;
+  final List<Rect> right;
+  final List<Rect> upRight;
+  final List<Rect> up;
+  final List<Rect> upLeft;
+  final List<Rect> left;
+  final List<Rect> downLeft;
+
+  CharacterSrcRects({
+      this.down,
+      this.downRight,
+      this.right,
+      this.upRight,
+      this.up,
+      this.upLeft,
+      this.left,
+      this.downLeft
+  });
+}
+
 Rect _aimingDownLeft = _frame(21);
 Rect _aimingLeft = _frame(23);
 Rect _aimingUpLeft = _frame(25);
@@ -122,15 +155,6 @@ Rect _aimingUpRight = _frame(29);
 Rect _aimingRight = _frame(31);
 Rect _aimingDownRight = _frame(33);
 Rect _aimingDown = _frame(35);
-
-List<Rect> _strikingDownLeft = _frames([37, 38]);
-List<Rect> _strikingLeft = _frames([39, 40]);
-List<Rect> _strikingUpLeft = _frames([41, 42]);
-List<Rect> _strikingUp = _frames([43, 44]);
-List<Rect> _strikingUpRight = _frames([45, 46]);
-List<Rect> _strikingRight = _frames([47, 48]);
-List<Rect> _strikingDownRight = _frames([49, 50]);
-List<Rect> _strikingDown = _frames([51, 52]);
 
 
 List<Rect> _frames(List<int> indexes) {
@@ -310,21 +334,21 @@ Rect _mapFiringShotgunRect(Direction direction, int frame) {
 Rect _mapStrikingRect(Direction direction, int frame) {
   switch (direction) {
     case Direction.Up:
-      return getFrameLoop(_strikingUp, frame);
+      return getFrameLoop(_human.striking.up, frame);
     case Direction.UpRight:
-      return getFrameLoop(_strikingUpRight, frame);
+      return getFrameLoop(_human.striking.upRight, frame);
     case Direction.Right:
-      return getFrameLoop(_strikingRight, frame);
+      return getFrameLoop(_human.striking.right, frame);
     case Direction.DownRight:
-      return getFrameLoop(_strikingDownRight, frame);
+      return getFrameLoop(_human.striking.downRight, frame);
     case Direction.Down:
-      return getFrameLoop(_strikingDown, frame);
+      return getFrameLoop(_human.striking.down, frame);
     case Direction.DownLeft:
-      return getFrameLoop(_strikingDownLeft, frame);
+      return getFrameLoop(_human.striking.downLeft, frame);
     case Direction.Left:
-      return getFrameLoop(_strikingLeft, frame);
+      return getFrameLoop(_human.striking.left, frame);
     case Direction.UpLeft:
-      return getFrameLoop(_strikingUpLeft, frame);
+      return getFrameLoop(_human.striking.upLeft, frame);
   }
   throw Exception("could not get firing frame from direction");
 }

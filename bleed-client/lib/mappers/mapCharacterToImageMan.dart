@@ -9,6 +9,8 @@ Image mapCharacterToImageMan(CharacterState state, Weapon weapon){
   switch(state){
     case CharacterState.Dead:
       return images.manDying;
+    case CharacterState.Striking:
+      return images.manStriking;
     case CharacterState.ChangingWeapon:
       return images.manChanging;
     case CharacterState.Running:
