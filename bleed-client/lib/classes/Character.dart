@@ -11,16 +11,20 @@ class Character {
   Weapon weapon;
   int squad;
   String name;
-  String text = "";
+  String text;
+
+  bool get dead => state == CharacterState.Dead;
+  bool get alive => state != CharacterState.Dead;
 
   Character({
-    this.state,
-    this.direction,
-    this.x,
-    this.y,
-    this.frame,
-    this.weapon,
-    this.squad,
-    this.name
+    this.state = CharacterState.Idle,
+    this.direction = Direction.Down,
+    this.x = 0,
+    this.y = 0,
+    this.frame = 0,
+    this.weapon = Weapon.Unarmed,
+    this.squad = 0,
+    this.name = "",
+    this.text = "",
   });
 }

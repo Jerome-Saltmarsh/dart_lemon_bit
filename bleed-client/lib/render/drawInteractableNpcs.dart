@@ -1,14 +1,8 @@
 import 'package:bleed_client/classes/Character.dart';
-import 'package:bleed_client/classes/RenderState.dart';
-import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/functions/diffOver.dart';
-import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/engine/functions/drawText.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
-import 'package:bleed_client/engine/render/drawAtlas.dart';
 import 'package:bleed_client/render/drawCanvas.dart';
-import 'package:bleed_client/images.dart';
-import 'package:bleed_client/mappers/mapHumanToRect.dart';
 import 'package:bleed_client/render/drawCharacterMan.dart';
 import 'package:bleed_client/state.dart';
 

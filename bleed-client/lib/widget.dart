@@ -71,7 +71,7 @@ class BleedWidget extends GameWidget {
 
     compiledGame.zombies.clear();
     for (int i = 0; i < 5000; i++) {
-      compiledGame.zombies.add(Zombie(x: 0, y: 0, state: CharacterState.Idle, scoreMultiplier: ""));
+      compiledGame.zombies.add(Zombie());
     }
 
     compiledGame.interactableNpcs.clear();
