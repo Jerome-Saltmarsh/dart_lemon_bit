@@ -3,7 +3,7 @@ import 'package:bleed_client/common/ObjectType.dart';
 import 'package:bleed_client/connection.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/engine/functions/refreshPage.dart';
-import 'package:bleed_client/engine/render/game_widget.dart';
+import 'package:bleed_client/engine/render/gameWidget.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/state/settings.dart';

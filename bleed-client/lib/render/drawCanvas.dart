@@ -2,9 +2,9 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Block.dart';
+import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
-import 'package:bleed_client/classes/Human.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/classes/Zombie.dart';
@@ -19,7 +19,7 @@ import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/engine/functions/drawCircle.dart';
 import 'package:bleed_client/engine/functions/drawText.dart';
-import 'package:bleed_client/engine/render/game_widget.dart';
+import 'package:bleed_client/engine/render/gameWidget.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
@@ -285,7 +285,7 @@ void _renderItems() {
 
 void _drawPlayerNames() {
   for (int i = 0; i < compiledGame.totalHumans; i++) {
-    Human player = compiledGame.humans[i];
+    Character player = compiledGame.humans[i];
     if (player.x == compiledGame.playerX) continue;
     if (diff(mouseWorldX, player.x) > _nameRadius) continue;
     if (diff(mouseWorldY, player.y) > _nameRadius) continue;
@@ -296,7 +296,7 @@ void _drawPlayerNames() {
 
 void _writePlayerText() {
   for (int i = 0; i < compiledGame.totalHumans; i++) {
-    Human human = compiledGame.humans[i];
+    Character human = compiledGame.humans[i];
     if (human.text.isEmpty) continue;
 
     double padding = 5;
@@ -314,7 +314,7 @@ void _writePlayerText() {
 void _drawMouseAim() {
   if (!mouseAvailable) return;
   if (!playerReady) return;
-  Human _player = getPlayer;
+  Character _player = getPlayer;
   if (_player == null) return;
   if (player.equippedRounds == 0) return;
   Weapon weapon = _player.weapon;

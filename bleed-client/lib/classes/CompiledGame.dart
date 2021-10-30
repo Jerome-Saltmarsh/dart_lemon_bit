@@ -1,6 +1,7 @@
 
 import 'dart:ui';
 
+import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/classes/Sprite.dart';
@@ -12,8 +13,6 @@ import 'package:bleed_client/common/Weapons.dart';
 
 import '../enums.dart';
 import 'EnvironmentObject.dart';
-import 'Human.dart';
-import 'InteractableNpc.dart';
 import 'Item.dart';
 import 'Particle.dart';
 
@@ -28,9 +27,9 @@ class CompiledGame {
   List<EnvironmentObject> torches = [];
   List<List<Tile>> tiles = [];
   List<NpcDebug> npcDebug = [];
-  final List<Human> humans = [];
+  final List<Character> humans = [];
   final List<Zombie> zombies = [];
-  final List<InteractableNpc> interactableNpcs = [];
+  final List<Character> interactableNpcs = [];
   int totalZombies = 0;
   int totalNpcs = 0;
   int totalHumans = 0;

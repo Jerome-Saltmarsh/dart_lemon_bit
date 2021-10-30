@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/bleed.dart';
+import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/InventoryItem.dart';
 import 'package:bleed_client/classes/Lobby.dart';
@@ -29,8 +30,6 @@ import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/utils/list_util.dart';
 import 'package:neuro/instance.dart';
 
-import 'classes/Human.dart';
-import 'classes/InteractableNpc.dart';
 import 'classes/RenderState.dart';
 import 'classes/Score.dart';
 import 'common/classes/Vector2.dart';
@@ -757,22 +756,22 @@ void _parseNpcs() {
   }
 }
 
-void _consumeHuman(Human human) {
-  human.state = _consumeCharacterState();
-  human.direction = _consumeDirection();
-  human.x = _consumeDouble();
-  human.y = _consumeDouble();
-  human.frame = _consumeInt();
-  human.weapon = _consumeWeapon();
-  human.squad = _consumeInt();
-  human.name = _consumeString();
+void _consumeHuman(Character character) {
+  character.state = _consumeCharacterState();
+  character.direction = _consumeDirection();
+  character.x = _consumeDouble();
+  character.y = _consumeDouble();
+  character.frame = _consumeInt();
+  character.weapon = _consumeWeapon();
+  character.squad = _consumeInt();
+  character.name = _consumeString();
 
   StringBuffer textBuffer = StringBuffer();
   while (!_commaConsumed()) {
     textBuffer.write(_consumeString());
     textBuffer.write(_space);
   }
-  human.text = textBuffer.toString().trim();
+  character.text = textBuffer.toString().trim();
 }
 
 void _consumeZombie(Zombie zombie) {
@@ -784,7 +783,7 @@ void _consumeZombie(Zombie zombie) {
   zombie.scoreMultiplier = _consumeString();
 }
 
-void _consumeInteractableNpc(InteractableNpc interactableNpc) {
+void _consumeInteractableNpc(Character interactableNpc) {
   interactableNpc.state = _consumeCharacterState();
   interactableNpc.direction = _consumeDirection();
   interactableNpc.x = _consumeDouble();

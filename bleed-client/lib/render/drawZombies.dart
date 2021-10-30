@@ -9,11 +9,13 @@ import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/isWaterAt.dart';
 
 void drawZombies() {
+  // TODO Expensive operations
   render.zombiesTransforms.clear();
   render.zombieRects.clear();
 
   for (int i = 0; i < compiledGame.totalZombies; i++) {
     Zombie zombie = compiledGame.zombies[i];
+
     if (!zombie.alive) {
       if (isWaterAt(zombie.x, zombie.y)){
         continue;

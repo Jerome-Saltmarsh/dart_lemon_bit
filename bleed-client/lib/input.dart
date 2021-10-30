@@ -2,12 +2,12 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Block.dart';
-import 'package:bleed_client/classes/InteractableNpc.dart';
+import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/functions/diffOver.dart';
 import 'package:bleed_client/engine/functions/keyPressed.dart';
 import 'package:bleed_client/engine/properties/keyPressed.dart';
-import 'package:bleed_client/engine/render/game_widget.dart';
+import 'package:bleed_client/engine/render/gameWidget.dart';
 import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/engine/state/zoom.dart';
 import 'package:bleed_client/render/drawCanvas.dart';
@@ -312,7 +312,7 @@ void readPlayerInput() {
     double mX = mouseWorldX;
     double mY = mouseWorldY;
     for(int i = 0; i < compiledGame.totalNpcs; i++){
-      InteractableNpc interactableNpc = compiledGame.interactableNpcs[i];
+      Character interactableNpc = compiledGame.interactableNpcs[i];
       if (diffOver(interactableNpc.x, mX, settings.interactRadius)) continue;
       if (diffOver(interactableNpc.y, mY, settings.interactRadius)) continue;
       sendRequestInteract();

@@ -1,5 +1,5 @@
+import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/CompiledGame.dart';
-import 'package:bleed_client/classes/Human.dart';
 import 'package:bleed_client/classes/Player.dart';
 import 'package:bleed_client/classes/Score.dart';
 import 'package:bleed_client/common/Weapons.dart';
@@ -40,11 +40,11 @@ List<Block> blockHouses = [];
 Map<int, bool> gameEvents = Map();
 
 // TODO delete this
-Human get getPlayer {
+Character get getPlayer {
   if (!playerAssigned) return null;
   if (!playerReady) return null;
   if (compiledGame.totalHumans == 0) return null;
-  for (Human player in compiledGame.humans) {
+  for (Character player in compiledGame.humans) {
     if (player.x != compiledGame.playerX) continue;
     if (player.y != compiledGame.playerY) continue;
     return player;

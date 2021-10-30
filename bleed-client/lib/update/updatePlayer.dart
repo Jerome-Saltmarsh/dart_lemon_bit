@@ -1,6 +1,6 @@
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/common/Weapons.dart';
-import 'package:bleed_client/engine/render/game_widget.dart';
+import 'package:bleed_client/engine/render/gameWidget.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/utils.dart';

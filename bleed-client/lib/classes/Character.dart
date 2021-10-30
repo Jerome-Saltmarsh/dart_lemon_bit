@@ -2,7 +2,7 @@ import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/enums.dart';
 
-class Human {
+class Character {
   CharacterState state;
   Direction direction;
   double x;
@@ -13,14 +13,14 @@ class Human {
   String name;
   String text = "";
 
-  Human({
-      this.state,
-      this.direction,
-      this.x,
-      this.y,
-      this.frame,
-      this.weapon,
-      this.squad,
-      this.name
+  Character({
+    this.state,
+    this.direction,
+    this.x,
+    this.y,
+    this.frame,
+    this.weapon,
+    this.squad,
+    this.name
   });
 }

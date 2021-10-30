@@ -1,4 +1,4 @@
-import 'package:bleed_client/engine/render/game_widget.dart';
+import 'package:bleed_client/engine/render/gameWidget.dart';
 import 'package:flutter/widgets.dart';
 
 TextPainter textPainter = TextPainter(

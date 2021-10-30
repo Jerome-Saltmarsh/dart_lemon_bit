@@ -1,6 +1,6 @@
 
 
-import 'package:bleed_client/classes/Human.dart';
+import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/engine/render/drawAtlas.dart';
@@ -12,12 +12,12 @@ void drawPlayers() {
   render.playersTransforms.clear();
   render.playersRects.clear();
   for (int i = 0; i < compiledGame.totalHumans; i++) {
-    Human human = compiledGame.humans[i];
+    Character player = compiledGame.humans[i];
     render.playersTransforms.add(
-        mapHumanToRSTransform(human.x, human.y)
+        mapHumanToRSTransform(player.x, player.y)
     );
     render.playersRects.add(
-        mapHumanToRect(human.weapon, human.state, human.direction, human.frame)
+        mapHumanToRect(player.weapon, player.state, player.direction, player.frame)
     );
   }
   drawAtlas(images.human, render.playersTransforms, render.playersRects);

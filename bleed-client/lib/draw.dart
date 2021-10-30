@@ -17,7 +17,6 @@ import 'package:bleed_client/render/drawZombies.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'classes/Human.dart';
 import 'common/Tile.dart';
 import 'common/classes/Vector2.dart';
 import 'mappers/mapHumanToRect.dart';

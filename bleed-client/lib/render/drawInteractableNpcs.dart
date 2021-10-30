@@ -1,4 +1,4 @@
-import 'package:bleed_client/classes/InteractableNpc.dart';
+import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/functions/diffOver.dart';
@@ -16,7 +16,7 @@ void drawInteractableNpcs() {
   render.npcs.transforms.clear();
 
   for (int i = 0; i < compiledGame.totalNpcs; i++) {
-    InteractableNpc interactableNpc = compiledGame.interactableNpcs[i];
+    Character interactableNpc = compiledGame.interactableNpcs[i];
     render.npcs.transforms.add(
         mapHumanToRSTransform(interactableNpc.x, interactableNpc.y)
     );
@@ -38,3 +38,4 @@ void drawInteractableNpcs() {
 
   drawAtlas(images.human, render.npcs.transforms, render.npcs.rects);
 }
+

@@ -1,9 +1,9 @@
 
 import 'dart:ui';
 
-import 'package:bleed_client/classes/InteractableNpc.dart';
+import 'package:bleed_client/classes/Character.dart';
 
-RSTransform mapHumanToRSTransform(InteractableNpc npc) {
+RSTransform mapHumanToRSTransform(Character npc) {
   return RSTransform.fromComponents(
     rotation: 0.0,
     scale: 1.0,

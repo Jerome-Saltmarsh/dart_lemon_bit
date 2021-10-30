@@ -8,7 +8,7 @@ import 'package:bleed_client/common/functions/diffOver.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/engine/functions/drawCircle.dart';
 import 'package:bleed_client/engine/properties/keyPressed.dart';
-import 'package:bleed_client/engine/render/game_widget.dart';
+import 'package:bleed_client/engine/render/gameWidget.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/engine/state/mouseDragging.dart';
