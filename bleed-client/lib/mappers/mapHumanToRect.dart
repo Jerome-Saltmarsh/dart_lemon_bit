@@ -4,8 +4,7 @@ import 'package:bleed_client/classes/AnimationRects.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/enums.dart';
-
-import '../resources/rects_utils.dart';
+import 'package:bleed_client/resources/rects_utils.dart';
 
 // interface
 Rect mapCharacterToSrcMan(Weapon weapon, CharacterState state, Direction direction, int frame) {
@@ -19,7 +18,7 @@ Rect mapCharacterToSrcMan(Weapon weapon, CharacterState state, Direction directi
     case CharacterState.Aiming:
       return _mapAimingRect(direction);
     case CharacterState.Firing:
-      return _mapFiringRect(weapon, direction, frame);
+      return _getRectFiringShotgun(weapon, direction, frame);
     case CharacterState.Striking:
       return _mapStrikingRect(direction, frame);
     case CharacterState.Running:
@@ -43,7 +42,7 @@ Rect mapCharacterToSrcZombie(Weapon weapon, CharacterState state, Direction dire
     case CharacterState.Aiming:
       return _mapAimingRect(direction);
     case CharacterState.Firing:
-      return _mapFiringRect(weapon, direction, frame);
+      return _getRectFiringShotgun(weapon, direction, frame);
     case CharacterState.Striking:
       return _mapStrikingRect(direction, frame);
     case CharacterState.Running:
@@ -59,7 +58,6 @@ Rect mapCharacterToSrcZombie(Weapon weapon, CharacterState state, Direction dire
 // TODO state belongs in state directory
 const double _frameWidth = 64;
 const double _frameHeight = 64;
-const int _frameRateRunning = 3;
 
 final _RectsHuman _human = _RectsHuman();
 final _RectsZombie _zombie = _RectsZombie();
@@ -72,6 +70,14 @@ Rect _aimingUpRight = _frame(29);
 Rect _aimingRight = _frame(31);
 Rect _aimingDownRight = _frame(33);
 Rect _aimingDown = _frame(35);
+
+Rect _getRectFiringShotgun(Weapon weapon, Direction direction, int frame) {
+  return _mapFrame(_human.firingShotgun, direction, frame);
+}
+
+Rect _mapStrikingRect(Direction direction, int frame) {
+  return _mapFrame(_human.striking, direction, frame);
+}
 
 class _RectsZombie {
   final AnimationRects walking = _srcRects4;
@@ -168,25 +174,7 @@ Rect _mapReloadingRect(Direction direction, int frame) {
 }
 
 Rect _mapRunningRect(Direction direction, int frame) {
-  switch (direction) {
-    case Direction.Down:
-      return getFrameLoop(_human.running.down, frame, frameRate: _frameRateRunning);
-    case Direction.DownRight:
-      return getFrameLoop(_human.running.downRight, frame, frameRate: _frameRateRunning);
-    case Direction.Right:
-      return getFrameLoop(_human.running.right, frame, frameRate: _frameRateRunning);
-    case Direction.UpRight:
-      return getFrameLoop(_human.running.upRight, frame, frameRate: _frameRateRunning);
-    case Direction.Up:
-      return getFrameLoop(_human.running.up, frame, frameRate: _frameRateRunning);
-    case Direction.UpLeft:
-      return getFrameLoop(_human.running.upLeft, frame, frameRate: _frameRateRunning);
-    case Direction.Left:
-      return getFrameLoop(_human.running.left, frame, frameRate: _frameRateRunning);
-    case Direction.DownLeft:
-      return getFrameLoop(_human.running.downLeft, frame, frameRate: _frameRateRunning);
-  }
-  throw Exception("Could not get character walking sprite rect");
+  return _mapFrame(_human.running, direction, frame);
 }
 
 Rect _mapFrame(AnimationRects src, Direction direction, int frame){
@@ -215,25 +203,7 @@ Rect _mapIdleRect(Direction direction, int frame) {
 }
 
 Rect _mapDeadRect(Direction direction, int frame) {
-  switch (direction) {
-    case Direction.Up:
-      return getFrame(_human.dying.up, frame);
-    case Direction.UpRight:
-      return getFrame(_human.dying.upRight, frame);
-    case Direction.Right:
-      return getFrame(_human.dying.right, frame);
-    case Direction.DownRight:
-      return getFrame(_human.dying.downRight, frame);
-    case Direction.Down:
-      return getFrame(_human.dying.down, frame);
-    case Direction.DownLeft:
-      return getFrame(_human.dying.downLeft, frame);
-    case Direction.Left:
-      return getFrame(_human.dying.left, frame);
-    case Direction.UpLeft:
-      return getFrame(_human.dying.upLeft, frame);
-  }
-  throw Exception("Could not get character dead sprite rect");
+  return _mapFrame(_human.dying, direction, frame);
 }
 
 Rect _mapAimingRect(Direction direction) {
@@ -256,52 +226,4 @@ Rect _mapAimingRect(Direction direction) {
       return _aimingUpLeft;
   }
   throw Exception("Could not get character dead sprite rect");
-}
-
-Rect _mapFiringRect(Weapon weapon, Direction direction, int frame) {
-  return _mapFiringShotgunRect(direction, frame);
-}
-
-Rect _mapFiringShotgunRect(Direction direction, int frame) {
-  switch (direction) {
-    case Direction.Down:
-      return getFrame(_human.firingShotgun.down, frame);
-    case Direction.DownRight:
-      return getFrame(_human.firingShotgun.downRight, frame);
-    case Direction.Right:
-      return getFrame(_human.firingShotgun.right, frame);
-    case Direction.UpRight:
-      return getFrame(_human.firingShotgun.upRight, frame);
-    case Direction.Up:
-      return getFrame(_human.firingShotgun.up, frame);
-    case Direction.UpLeft:
-      return getFrame(_human.firingShotgun.upLeft, frame);
-    case Direction.Left:
-      return getFrame(_human.firingShotgun.left, frame);
-    case Direction.DownLeft:
-      return getFrame(_human.firingShotgun.downLeft, frame);
-  }
-  throw Exception("could not get firing frame from direction");
-}
-
-Rect _mapStrikingRect(Direction direction, int frame) {
-  switch (direction) {
-    case Direction.Up:
-      return getFrameLoop(_human.striking.up, frame);
-    case Direction.UpRight:
-      return getFrameLoop(_human.striking.upRight, frame);
-    case Direction.Right:
-      return getFrameLoop(_human.striking.right, frame);
-    case Direction.DownRight:
-      return getFrameLoop(_human.striking.downRight, frame);
-    case Direction.Down:
-      return getFrameLoop(_human.striking.down, frame);
-    case Direction.DownLeft:
-      return getFrameLoop(_human.striking.downLeft, frame);
-    case Direction.Left:
-      return getFrameLoop(_human.striking.left, frame);
-    case Direction.UpLeft:
-      return getFrameLoop(_human.striking.upLeft, frame);
-  }
-  throw Exception("could not get firing frame from direction");
 }
