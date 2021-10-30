@@ -31,13 +31,52 @@ Rect mapCharacterToSrcMan(Weapon weapon, CharacterState state, Direction directi
   throw Exception("Could not get character sprite rect");
 }
 
+Rect mapCharacterToSrcZombie(Weapon weapon, CharacterState state, Direction direction, int frame) {
+  switch (state) {
+    case CharacterState.Idle:
+      return _mapIdleRect(direction);
+    case CharacterState.Walking:
+      return _mapZombieWalkingRect(direction, frame);
+    case CharacterState.Dead:
+      return _mapDeadRect(direction, frame);
+    case CharacterState.Aiming:
+      return _mapAimingRect(direction);
+    case CharacterState.Firing:
+      return _mapFiringRect(weapon, direction, frame);
+    case CharacterState.Striking:
+      return _mapStrikingRect(direction, frame);
+    case CharacterState.Running:
+      return _mapRunningRect(direction, frame);
+    case CharacterState.Reloading:
+      return _mapReloadingRect(direction, frame);
+    case CharacterState.ChangingWeapon:
+      return _mapReloadingRect(direction, frame);
+  }
+  throw Exception("Could not get character sprite rect");
+}
+
 // TODO state belongs in state directory
 const int _humanSpriteFrameWidth = 36;
 const int _humanSpriteFrameHeight = 35;
 const double halfHumanSpriteFrameWidth = _humanSpriteFrameWidth * 0.5;
 const double halfHumanSpriteFrameHeight = _humanSpriteFrameHeight * 0.5;
 const int _frameRateRunning = 3;
+
 final _RectsHuman _human = _RectsHuman();
+final _RectsZombie _zombie = _RectsZombie();
+
+class _RectsZombie {
+  final CharacterSrcRects walking = CharacterSrcRects(
+      down: _frames([1, 2, 3, 4]),
+      downRight: _frames([5, 6, 7, 8]),
+      right:  _frames([9, 10, 11, 12]),
+      upRight: _frames([13, 14, 15, 16]),
+      up:  _frames([17, 18, 19, 20]),
+      upLeft: _frames([21, 22, 23, 24]),
+      left:  _frames([25, 26, 27, 28]),
+      downLeft: _frames([29, 30, 31, 32])
+  );
+}
 
 class _RectsHuman {
   final _Idle idle = _Idle();
@@ -194,6 +233,29 @@ Rect _mapWalkingRect(Direction direction, int frame) {
   }
   throw Exception("Could not get character walking sprite rect");
 }
+
+Rect _mapZombieWalkingRect(Direction direction, int frame) {
+  switch (direction) {
+    case Direction.Down:
+      return getFrameLoop(_zombie.walking.down, frame);
+    case Direction.DownRight:
+      return getFrameLoop(_zombie.walking.downRight, frame);
+    case Direction.Right:
+      return getFrameLoop(_zombie.walking.right, frame);
+    case Direction.UpRight:
+      return getFrameLoop(_zombie.walking.upRight, frame);
+    case Direction.Up:
+      return getFrameLoop(_zombie.walking.up, frame);
+    case Direction.UpLeft:
+      return getFrameLoop(_zombie.walking.upLeft, frame);
+    case Direction.Left:
+      return getFrameLoop(_zombie.walking.left, frame);
+    case Direction.DownLeft:
+      return getFrameLoop(_zombie.walking.downLeft, frame);
+  }
+  throw Exception("Could not get character walking sprite rect");
+}
+
 
 Rect _mapReloadingRect(Direction direction, int frame) {
   switch (direction) {

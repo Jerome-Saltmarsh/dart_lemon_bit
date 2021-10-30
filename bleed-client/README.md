@@ -92,8 +92,9 @@
 [ ] Stone 2
 [ ] Dynamic Lighting
 [ ] Zombies 3D render
+[ ] Npc firing image looks like idle
 [ ] Human 3d Render
-    [ ] Dead
+    [x] Dead
     [x] Striking
     [x] Changing Weapon 
     [x] Firing Handgun
