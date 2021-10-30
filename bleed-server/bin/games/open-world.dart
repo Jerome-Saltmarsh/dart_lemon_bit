@@ -100,6 +100,7 @@ class OpenWorld extends Game {
             "Just come back and talk to me again if you find yourself running low on ammunition";
         player.questMain = MainQuest.Scavenge_Supplies;
         player.rounds.handgun = 60;
+        player.rounds.shotgun = 20;
         break;
       case MainQuest.Scavenge_Supplies:
         player.message = "Smith: Bring any metals and junk back you can find";

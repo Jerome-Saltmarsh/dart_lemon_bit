@@ -79,7 +79,6 @@ class _Images {
     manRunning = await loadImage("images/man-running.png");
     manFiringHandgun = await loadImage("images/man-firing-handgun.png");
     manFiringShotgun = await loadImage("images/man-firing-shotgun.png");
-
     flames.add(torch_01);
     flames.add(torch_02);
     flames.add(torch_03);
