@@ -21,6 +21,8 @@ Image mapCharacterToImageMan(CharacterState state, Weapon weapon){
       switch(weapon){
         case Weapon.HandGun:
           return images.manFiringHandgun;
+        default:
+          return images.manFiringShotgun;
       }
       return images.manFiringShotgun;
     default:

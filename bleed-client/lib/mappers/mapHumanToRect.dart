@@ -24,9 +24,9 @@ Rect mapCharacterToSrcMan(Weapon weapon, CharacterState state, Direction directi
     case CharacterState.Running:
       return _mapFrameLoop(_srcRects4, direction, frame, frameRate: 4);
     case CharacterState.Reloading:
-      return _mapReloadingRect(direction, frame);
+      return _mapFrame(_srcRects2, direction, frame);
     case CharacterState.ChangingWeapon:
-      return _mapReloadingRect(direction, frame);
+      return _mapFrame(_srcRects2, direction, frame);
   }
   throw Exception("Could not get character sprite rect");
 }
@@ -46,9 +46,9 @@ Rect mapCharacterToSrcZombie(Weapon weapon, CharacterState state, Direction dire
     case CharacterState.Running:
       return _mapFrameLoop(_srcRects4, direction, frame);
     case CharacterState.Reloading:
-      return _mapReloadingRect(direction, frame);
+      return _mapFrame(_srcRects2, direction, frame);
     case CharacterState.ChangingWeapon:
-      return _mapReloadingRect(direction, frame);
+      return _mapFrame(_srcRects2, direction, frame);
     default:
       throw Exception("Could not get character sprite rect");
   }
@@ -70,7 +70,6 @@ Rect _aimingDownRight = _frame(33);
 Rect _aimingDown = _frame(35);
 
 class _RectsHuman {
-  final AnimationRects firingShotgun = _srcRects1;
   final AnimationRects changing = _srcRects2;
 }
 
@@ -121,28 +120,6 @@ Rect _frame(int index) {
       0.0,
       _frameWidth,
       _frameHeight);
-}
-
-Rect _mapReloadingRect(Direction direction, int frame) {
-  switch (direction) {
-    case Direction.Down:
-      return getFrameLoop(_human.changing.down, frame);
-    case Direction.DownRight:
-      return getFrameLoop(_human.changing.downRight, frame);
-    case Direction.Right:
-      return getFrameLoop(_human.changing.right, frame);
-    case Direction.UpRight:
-      return getFrameLoop(_human.changing.upRight, frame);
-    case Direction.Up:
-      return getFrameLoop(_human.changing.up, frame);
-    case Direction.UpLeft:
-      return getFrameLoop(_human.changing.upLeft, frame);
-    case Direction.Left:
-      return getFrameLoop(_human.changing.left, frame);
-    case Direction.DownLeft:
-      return getFrameLoop(_human.changing.downLeft, frame);
-  }
-  throw Exception("Could not get character reloading sprite rect");
 }
 
 Rect _mapFrameLoop(AnimationRects src, Direction direction, int frame, {int frameRate = defaultSpriteFrameRate}){
