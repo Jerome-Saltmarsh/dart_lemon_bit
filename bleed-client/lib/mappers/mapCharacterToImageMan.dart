@@ -4,9 +4,10 @@ import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/images.dart';
 
-
 Image mapCharacterToImageMan(CharacterState state, Weapon weapon){
   switch(state){
+    case CharacterState.Idle:
+      return images.manIdle;
     case CharacterState.Dead:
       return images.manDying;
     case CharacterState.Striking:
@@ -26,6 +27,6 @@ Image mapCharacterToImageMan(CharacterState state, Weapon weapon){
       }
       return images.manFiringShotgun;
     default:
-      return images.man;
+      throw Exception("could not map man image");
   }
 }

@@ -7,6 +7,8 @@ import 'package:bleed_client/images.dart';
 
 Image mapCharacterToImageZombie(CharacterState state, Weapon weapon){
   switch(state){
+    case CharacterState.Idle:
+      return images.zombieIdle;
     case CharacterState.Dead:
       return images.zombieDying;
     case CharacterState.Striking:
@@ -24,6 +26,6 @@ Image mapCharacterToImageZombie(CharacterState state, Weapon weapon){
       }
       return images.manFiringShotgun;
     default:
-      return images.man;
+      throw Exception("could not map zombie image");
   }
 }

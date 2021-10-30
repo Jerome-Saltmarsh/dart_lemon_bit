@@ -37,7 +37,7 @@ class _Images {
   Image treeStump;
   Image rockSmall;
   Image isoCharacter;
-  Image man;
+  Image manIdle;
   Image manWalking;
   Image manRunning;
   Image manFiringHandgun;
@@ -48,7 +48,7 @@ class _Images {
   Image zombieWalking;
   Image zombieDying;
   Image zombieStriking;
-
+  Image zombieIdle;
 
   List<Image> flames = [];
 
@@ -87,7 +87,6 @@ class _Images {
     bridge = await loadImage("images/bridge.png");
     treeStump = await loadImage("images/tree-stump.png");
     rockSmall = await loadImage("images/rock-small.png");
-    man = await loadImage("images/man.png");
     manRunning = await loadImage("images/man-running.png");
     manFiringHandgun = await loadImage("images/man-firing-handgun.png");
     manFiringShotgun = await loadImage("images/man-firing-shotgun.png");
@@ -95,9 +94,11 @@ class _Images {
     manDying = await _png("man-dying");
     manStriking = await _png("man-striking");
     manWalking = await _png("man-walking");
+    manIdle = await _png("man-idle");
     zombieWalking = await _png("zombie-walking");
     zombieDying = await _png("zombie-dying");
     zombieStriking = await _png("zombie-striking");
+    zombieIdle = await _png("zombie-idle");
     flames.add(torch_01);
     flames.add(torch_02);
     flames.add(torch_03);
