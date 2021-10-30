@@ -38,6 +38,7 @@ class _Images {
   Image rockSmall;
   Image isoCharacter;
   Image man;
+  Image manWalking;
   Image manRunning;
   Image manFiringHandgun;
   Image manFiringShotgun;
@@ -91,6 +92,7 @@ class _Images {
     manChanging = await _png("man-changing");
     manDying = await _png("man-dying");
     manStriking = await _png("man-striking");
+    manWalking = await _png("man-walking");
     zombieWalking = await _png("zombie-walking");
     flames.add(torch_01);
     flames.add(torch_02);

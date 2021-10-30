@@ -15,6 +15,8 @@ Image mapCharacterToImageMan(CharacterState state, Weapon weapon){
       return images.manChanging;
     case CharacterState.Running:
       return images.manRunning;
+    case CharacterState.Walking:
+      return images.manWalking;
     case CharacterState.Firing:
       switch(weapon){
         case Weapon.HandGun:

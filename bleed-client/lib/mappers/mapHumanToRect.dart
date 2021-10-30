@@ -59,8 +59,6 @@ Rect mapCharacterToSrcZombie(Weapon weapon, CharacterState state, Direction dire
 // TODO state belongs in state directory
 const double _frameWidth = 64;
 const double _frameHeight = 64;
-const double _frameWidthHalf = _frameWidth * 0.5;
-const double _frameHeightHalf = _frameHeight * 0.5;
 const int _frameRateRunning = 3;
 
 final _RectsHuman _human = _RectsHuman();
@@ -81,12 +79,12 @@ class _RectsZombie {
 
 class _RectsHuman {
   final AnimationRects idle = _srcRects1;
-  final _Walking walking = _Walking();
   final AnimationRects firingShotgun = _srcRects1;
-  final AnimationRects running = _srcRects4;
   final AnimationRects changing = _srcRects2;
   final AnimationRects striking = _srcRects2;
   final AnimationRects dying = _srcRects2;
+  final AnimationRects walking = _srcRects4;
+  final AnimationRects running = _srcRects4;
 }
 
 final AnimationRects _srcRects1 = AnimationRects(
@@ -121,17 +119,6 @@ final AnimationRects _srcRects4 = AnimationRects(
     left:  _frames([25, 26, 27, 28]),
     downLeft: _frames([29, 30, 31, 32])
 );
-
-class _Walking {
-  final List<Rect> down = _frames([9, 10, 11 , 12]);
-  final List<Rect> downRight = _frames([13, 14, 15, 16]);
-  final List<Rect> right = _frames([17, 18, 19, 20]);
-  final List<Rect> upRight = _frames([21, 22, 23, 24]);
-  final List<Rect> up = _frames([25, 26, 27, 28]);
-  final List<Rect> upLeft = _frames([29, 30, 31, 32]);
-  final List<Rect> left = _frames([33, 34, 35, 36]);
-  final List<Rect> downLeft = _frames([37, 38, 39, 40]);
-}
 
 List<Rect> _frames(List<int> indexes) {
   List<Rect> rects = [];
