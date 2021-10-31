@@ -362,7 +362,14 @@ void _parseEnvironmentObjects() {
       compiledGame.torches.add(env);
       applyBrightLightAt(render.bakeMap, env.x, env.y);
     }
+    if (env.type == EnvironmentObjectType.House01){
+      applyMediumLightAt(render.bakeMap, env.x, env.y);
+    }
+    if (env.type == EnvironmentObjectType.House02){
+      applyMediumLightAt(render.bakeMap, env.x, env.y);
+    }
   }
+
 }
 
 
