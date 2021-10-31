@@ -162,6 +162,22 @@ void _drawCompiledGame() {
           continue;
       }
     }
+
+    if (environmentObject.type == EnvironmentObjectType.Tree01) {
+      Shading shade = getShadingAt(environmentObject.x, environmentObject.y);
+
+      switch (shade) {
+        case Shading.Bright:
+          environmentObject.image = images.tree01Bright;
+          continue;
+        case Shading.Medium:
+          environmentObject.image = images.tree01Medium;
+          continue;
+        case Shading.Dark:
+          environmentObject.image = images.tree01Dark;
+          continue;
+      }
+    }
   }
 
   applyDynamicLighting(compiledGame.humans);
