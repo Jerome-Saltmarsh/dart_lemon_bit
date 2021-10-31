@@ -19,7 +19,7 @@ Image mapEnvironmentObjectTypeToImage(EnvironmentObjectType type){
     case EnvironmentObjectType.Palisade:
       return images.palisadeBright;
     case EnvironmentObjectType.Palisade_H:
-      return images.palisadeH;
+      return images.palisadeHBright;
     case EnvironmentObjectType.Palisade_V:
       return images.palisadeV;
     case EnvironmentObjectType.Grave:

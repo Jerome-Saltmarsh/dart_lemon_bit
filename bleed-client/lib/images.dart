@@ -30,7 +30,9 @@ class _Images {
   Image palisadeBright;
   Image palisadeMedium;
   Image palisadeDark;
-  Image palisadeH;
+  Image palisadeHBright;
+  Image palisadeHMedium;
+  Image palisadeHDark;
   Image palisadeV;
   Image grave;
   Image circle64;
@@ -92,7 +94,9 @@ class _Images {
     palisadeBright = await loadImage("images/palisade-bright.png");
     palisadeMedium = await loadImage("images/palisade-medium.png");
     palisadeDark = await loadImage("images/palisade-dark.png");
-    palisadeH = await loadImage("images/palisade-h.png");
+    palisadeHBright = await loadImage("images/palisade-h-bright.png");
+    palisadeHMedium = await loadImage("images/palisade-h-medium.png");
+    palisadeHDark = await loadImage("images/palisade-h-dark.png");
     palisadeV = await loadImage("images/palisade-v.png");
     grave = await loadImage("images/grave.png");
     circle64 = await loadImage("images/circle-64.png");
