@@ -6,6 +6,8 @@ import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
 class EnvironmentObject {
   double x;
   double y;
+  int tileRow;
+  int tileColumn;
   Image image;
   final EnvironmentObjectType type;
   final Rect dst;

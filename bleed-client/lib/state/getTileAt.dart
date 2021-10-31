@@ -9,3 +9,11 @@ Tile getTileAt(double x, double y){
   int row = pY ~/ tileSize;
   return getTile(row, column);
 }
+
+int getRow(double x, double y){
+  return projectedToWorldY(x, y) ~/ tileSize;
+}
+
+int getColumn(double x, double y){
+  return projectedToWorldX(x, y) ~/ tileSize;
+}

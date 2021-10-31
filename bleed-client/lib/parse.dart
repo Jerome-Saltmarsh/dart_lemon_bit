@@ -27,6 +27,7 @@ import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/network/state/connecting.dart';
 import 'package:bleed_client/render/drawCanvas.dart';
 import 'package:bleed_client/send.dart';
+import 'package:bleed_client/state/getTileAt.dart';
 import 'package:bleed_client/ui/compose/dialogs.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/utils/list_util.dart';
@@ -342,6 +343,9 @@ void _parseEnvironmentObjects() {
         src: src,
         image: image
     );
+
+    envObject.tileRow = getRow(envObject.x, envObject.y);
+    envObject.tileColumn = getColumn(envObject.x, envObject.y);
 
     if (type == EnvironmentObjectType.Bridge) {
       compiledGame.backgroundObjects.add(envObject);

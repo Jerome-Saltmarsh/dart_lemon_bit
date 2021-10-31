@@ -148,7 +148,7 @@ void _drawCompiledGame() {
 
   for (EnvironmentObject environmentObject in compiledGame.environmentObjects) {
     if (environmentObject.type == EnvironmentObjectType.Rock) {
-      Shading shade = getShadingAt(environmentObject.x, environmentObject.y);
+      Shading shade = render.dynamicShading[environmentObject.tileRow][environmentObject.tileColumn];
 
       switch (shade) {
         case Shading.Bright:
@@ -322,23 +322,6 @@ Shading getShadingAt(double x, double y) {
       shading = Shading.Medium;
     }
   }
-
-  // for (Vector2 light in compiledGame.lights) {
-  //   double xDiff = diff(x, light.x);
-  //   if (xDiff > _dark) continue;
-  //   double yDiff = diff(y, light.y);
-  //   if (yDiff > _dark) continue;
-  //
-  //   double total = xDiff + yDiff;
-  //
-  //   if (total < _light) {
-  //     return Shading.Bright;
-  //   }
-  //   if (total < _medium) {
-  //     shading = Shading.Medium;
-  //   }
-  // }
-
   return shading;
 }
 
