@@ -9,6 +9,7 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CollectableType.dart';
+import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/editor/editor.dart';
@@ -22,11 +23,14 @@ import 'package:bleed_client/engine/render/gameWidget.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/engine/state/screen.dart';
+import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/mappers/mapCrateToRSTransform.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
 import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
 import 'package:bleed_client/mappers/mapItemToRect.dart';
+import 'package:bleed_client/mappers/mapShadeToTileImage.dart';
+import 'package:bleed_client/mappers/mapTileToRect.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/properties.dart';
@@ -37,6 +41,7 @@ import 'package:bleed_client/state/colours.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
+import 'package:bleed_client/utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -52,6 +57,7 @@ final double _anchorY = 80;
 final double _nameRadius = 100;
 final double charWidth = 4.5;
 final Ring _healthRing = Ring(16);
+int _flameIndex = 0;
 
 void drawCanvas(Canvas canvass, Size _size) {
   if (editMode) {
@@ -65,7 +71,31 @@ void drawCanvas(Canvas canvass, Size _size) {
   _drawCompiledGame();
 }
 
-int _flameIndex = 0;
+int getTileIndex(int row, int column){
+  return compiledGame.tiles.length * 4 + column * 4;
+}
+
+void calculateTileRects(){
+  int rows = compiledGame.tiles.length;
+  int columns = compiledGame.tiles.length;
+
+  for (int x = 0; x < rows; x++) {
+    for (int y = 0; y < columns; y++) {
+      if (isBlock(compiledGame.tiles[x][y])) continue;
+      // render.tileRects.add(mapTileToSrcRect(compiledGame.tiles[x][y]));
+      int index = getTileIndex(x, y);
+      setTileType(index, 3);
+    }
+  }
+}
+
+void setTileType(int index, double frame){
+  int i = index * 4;
+  render.tilesRects[i] = 48 * frame;
+  render.tilesRects[i + 1] = 0;
+  render.tilesRects[i + 2] = 48 * (frame + 1);
+  render.tilesRects[i + 3] = 72;
+}
 
 void _drawCompiledGame() {
   if (!connected) return;
@@ -80,7 +110,15 @@ void _drawCompiledGame() {
       torch.image = images.flames[_flameIndex];
     }
   }
+  // drawDynamicTiles();
+  // double i = randomBetween(0, 6);
+  //
+  // render.tilesRects[0] = 48 * i;
+  // render.tilesRects[1] = 0;
+  // render.tilesRects[2] = 48 * (i + 1);
+  // render.tilesRects[3] = 72;
 
+  calculateTileRects();
   drawTiles();
   _drawNpcBonusPointsCircles();
   // _drawPlayerHealthRing();
@@ -93,7 +131,6 @@ void _drawCompiledGame() {
   _drawCollectables();
   _drawSprites();
 
-
   if (settings.compilePaths) {
     drawPaths();
     drawDebugNpcs(compiledGame.npcDebug);
@@ -103,6 +140,80 @@ void _drawCompiledGame() {
   _drawPlayerNames();
   _writePlayerText();
   _drawMouseAim();
+}
+
+void drawDynamicTiles() {
+  int rows = compiledGame.tiles.length;
+  int columns = compiledGame.tiles[0].length;
+
+  for (int row = 0; row < rows; row++) {
+    for (int column = 0; column < columns; column++) {
+      drawDynamicTile(row, column);
+    }
+  }
+}
+
+double _light = 100;
+double _medium = 250;
+double _dark = 400;
+
+Shading getShadingAt(double x, double y) {
+  Shading shading = Shading.Dark;
+
+  for (Character player in compiledGame.humans) {
+    double xDiff = diff(x, player.x);
+    if (xDiff > _dark) continue;
+    double yDiff = diff(y, player.y);
+    if (yDiff > _dark) continue;
+    double total = xDiff + yDiff;
+
+    if (total < _light) {
+      return Shading.Bright;
+    }
+    if (total < _medium) {
+      shading = Shading.Medium;
+    }
+  }
+
+  // for (Vector2 light in compiledGame.lights) {
+  //   double xDiff = diff(x, light.x);
+  //   if (xDiff > _dark) continue;
+  //   double yDiff = diff(y, light.y);
+  //   if (yDiff > _dark) continue;
+  //
+  //   double total = xDiff + yDiff;
+  //
+  //   if (total < _light) {
+  //     return Shading.Bright;
+  //   }
+  //   if (total < _medium) {
+  //     shading = Shading.Medium;
+  //   }
+  // }
+
+  return shading;
+}
+
+void drawDynamicTile(int row, int column) {
+  double x = getTileWorldX(row, column);
+  double y = getTileWorldY(row, column);
+  if (!onScreen(x, y)) return;
+
+  Shading shading = getShadingAt(x, y);
+  // Shading shading = Shading.Bright;
+
+  Tile tile = compiledGame.tiles[row][column];
+  if (isBlock(tile)) return;
+
+  Rect dst = Rect.fromLTWH(x - 24, y - 36, 48, 72);
+  Rect src = mapTileToSrcRect(tile);
+  drawImageRect(mapShadeToImage(shading), src, dst);
+}
+
+Rect mapTileToDstRect(int row, int column) {
+  double x = getTileWorldX(row, column);
+  double y = getTileWorldY(row, column);
+  return Rect.fromLTWH(x - 24, y - 36, 48, 72);
 }
 
 void _drawFloatingTexts() {
@@ -143,7 +254,6 @@ int getTotalActiveParticles() {
 }
 
 void _drawSprites() {
-
   int indexHuman = 0;
   int indexEnv = 0;
   int indexParticle = 0;
@@ -160,7 +270,6 @@ void _drawSprites() {
     drawEnvironmentObject(environmentObject);
   }
 
-
   bool zombiesRemaining = indexZombie < compiledGame.totalZombies;
   bool humansRemaining = indexHuman < compiledGame.totalHumans;
   bool environmentRemaining = indexEnv < totalEnvironment;
@@ -172,24 +281,20 @@ void _drawSprites() {
     particlesRemaining = indexParticle < totalParticles;
     zombiesRemaining = indexZombie < compiledGame.totalZombies;
 
-    if (
-      !zombiesRemaining &&
-      !humansRemaining &&
-      !environmentRemaining &&
-      !particlesRemaining
-    ) return;
+    if (!zombiesRemaining &&
+        !humansRemaining &&
+        !environmentRemaining &&
+        !particlesRemaining) return;
 
     if (humansRemaining) {
       double humanY = compiledGame.humans[indexHuman].y;
 
       if (!environmentRemaining ||
           humanY < compiledGame.environmentObjects[indexEnv].y) {
-
         if (!particlesRemaining ||
             humanY < compiledGame.particles[indexParticle].y) {
-
-          if (!zombiesRemaining || humanY < compiledGame.zombies[indexZombie].y) {
-
+          if (!zombiesRemaining ||
+              humanY < compiledGame.zombies[indexZombie].y) {
             drawCharacterMan(compiledGame.humans[indexHuman]);
             indexHuman++;
             continue;
@@ -203,10 +308,9 @@ void _drawSprites() {
 
       if (env.dst.top > screen.bottom) return;
 
-      if (!particlesRemaining || env.y < compiledGame.particles[indexParticle].y) {
-
+      if (!particlesRemaining ||
+          env.y < compiledGame.particles[indexParticle].y) {
         if (!zombiesRemaining || env.y < compiledGame.zombies[indexZombie].y) {
-
           drawEnvironmentObject(compiledGame.environmentObjects[indexEnv]);
           indexEnv++;
           continue;
@@ -214,12 +318,12 @@ void _drawSprites() {
       }
     }
 
-    if (particlesRemaining){
+    if (particlesRemaining) {
       Particle particle = compiledGame.particles[indexParticle];
 
-      if (!zombiesRemaining || particle.y < compiledGame.zombies[indexZombie].y) {
-
-        if (onScreen(particle.x, particle.y)){
+      if (!zombiesRemaining ||
+          particle.y < compiledGame.zombies[indexZombie].y) {
+        if (onScreen(particle.x, particle.y)) {
           drawParticle(particle);
         }
         indexParticle++;
@@ -232,7 +336,7 @@ void _drawSprites() {
   }
 }
 
-bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject){
+bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {
   if (environmentObject.dst.top > screen.bottom) return false;
   if (environmentObject.dst.right < screen.left) return false;
   if (environmentObject.dst.left > screen.right) return false;
@@ -240,14 +344,10 @@ bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject){
   return true;
 }
 
-
 void drawEnvironmentObject(EnvironmentObject environmentObject) {
   if (!environmentObjectOnScreenScreen(environmentObject)) return;
   drawImageRect(
-      environmentObject.image,
-      environmentObject.src,
-      environmentObject.dst
-  );
+      environmentObject.image, environmentObject.src, environmentObject.dst);
 }
 
 void _drawEnvironmentObjects() {

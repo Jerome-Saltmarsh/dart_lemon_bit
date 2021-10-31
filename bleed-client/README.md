@@ -93,7 +93,8 @@
 [ ] Dynamic Lighting
 [ ] Npc firing image looks like idle
 [ ] NPC 3d render
-[ ] Zombies 3D render
+[ ] FIX Zombies Collision
+[x] Zombies 3D render
 [x] Zombies 3D model
 [x] Human 3d Render
     [ ] Idle Handgun

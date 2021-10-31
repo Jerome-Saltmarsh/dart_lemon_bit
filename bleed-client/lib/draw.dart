@@ -68,9 +68,9 @@ void renderTiles(List<List<Tile>> tiles) {
     rstTransformBuffer[index2] = rstTransform.tx;
     rstTransformBuffer[index3] = rstTransform.ty;
     tileRects[index0] = rect.left;
-    tileRects[index1] = rect.top;
+    tileRects[index1] = 0;
     tileRects[index2] = rect.right;
-    tileRects[index3] = rect.bottom;
+    tileRects[index3] = 72;
   }
 
   render.tilesRects = tileRects;
@@ -93,11 +93,24 @@ void _loadTileRects(List<List<Tile>> tiles) {
   for (int x = 0; x < tiles.length; x++) {
     for (int y = 0; y < tiles[0].length; y++) {
       if (!isBlock(tiles[x][y])){
-        render.tileRects.add(mapTileToRect(tiles[x][y]));
+        render.tileRects.add(mapTileToSrcRect(tiles[x][y]));
       }
     }
   }
 }
+
+List<Rect> mapTilesToSrcRects(List<List<Tile>> tiles) {
+  List<Rect> srcRects = [];
+  for (int x = 0; x < tiles.length; x++) {
+    for (int y = 0; y < tiles[0].length; y++) {
+      if (!isBlock(tiles[x][y])){
+        srcRects.add(mapTileToSrcRect(tiles[x][y]));
+      }
+    }
+  }
+  return srcRects;
+}
+
 
 RSTransform rsTransform(
     {double x, double y, double anchorX, double anchorY, double scale = 1}) {
@@ -160,10 +173,17 @@ RSTransform getTileTransform(int x, int y) {
       rotation: 0.0,
       scale: 1.0,
       anchorX: halfTileSize,
-      anchorY: 48,
-      translateX: perspectiveProjectX(x * halfTileSize, y * halfTileSize),
-      translateY: perspectiveProjectY(x * halfTileSize, y * halfTileSize) +
-          halfTileSize);
+      anchorY: halfTileSize,
+      translateX: getTileWorldX(x, y),
+      translateY: getTileWorldY(x, y));
+}
+
+double getTileWorldX(int row, int column){
+  return perspectiveProjectX(row * halfTileSize, column * halfTileSize);
+}
+
+double getTileWorldY(int row, int column){
+  return perspectiveProjectY(row * halfTileSize, column * halfTileSize);
 }
 
 double perspectiveProjectX(double x, double y) {
@@ -224,7 +244,7 @@ void drawCircleOutline(
 
 void drawTiles() {
   // TODO Optimization: Null checks are expensive
-  if (images.tiles == null) return;
+  if (images.tilesLight == null) return;
   if (compiledGame.tiles == null || compiledGame.tiles.isEmpty) return;
   if (render.tileTransforms.length != render.tileRects.length) return;
   drawTileList();

@@ -9,6 +9,9 @@ class _Images {
   Image human;
   Image zombie;
   Image tiles;
+  Image tilesLight;
+  Image tilesMedium;
+  Image tilesDark;
   Image particles;
   Image handgun;
   Image items;
@@ -58,8 +61,11 @@ class _Images {
 
   Future load() async {
     human = await loadImage("images/character.png");
+    tiles = await loadImage("images/tiles.png");
     zombie = await loadImage("images/zombie.png");
-    tiles = await loadImage("images/tiles-02.png");
+    tilesLight = await loadImage("images/tiles-light.png");
+    tilesMedium = await loadImage("images/tiles-medium.png");
+    tilesDark = await loadImage("images/tiles-dark.png");
     particles = await loadImage('images/particles.png');
     handgun = await loadImage('images/weapon-handgun.png');
     items = await loadImage("images/items.png");

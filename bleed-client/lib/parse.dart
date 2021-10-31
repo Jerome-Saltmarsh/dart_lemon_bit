@@ -294,7 +294,9 @@ void parseState() {
 
 void _parseEnvironmentObjects() {
   compiledGame.environmentObjects.clear();
+  compiledGame.lights.clear();
   compiledGame.torches.clear();
+
   while (!_simiColonConsumed()) {
     double x = _consumeDouble();
     double y = _consumeDouble();
@@ -310,6 +312,10 @@ void _parseEnvironmentObjects() {
           )
       );
       continue;
+    }
+
+    if (type == EnvironmentObjectType.Torch){
+      compiledGame.lights.add(Vector2(x, y));
     }
 
     if (type == EnvironmentObjectType.MystEmitter){

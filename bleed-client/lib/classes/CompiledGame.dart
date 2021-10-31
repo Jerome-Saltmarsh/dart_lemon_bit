@@ -23,8 +23,8 @@ class CompiledGame {
   int cratesTotal = 0;
   List<Offset> zombieSpawnPoints = [];
   List<EnvironmentObject> backgroundObjects = [];
-  List<EnvironmentObject> environmentObjects = [];
-  List<EnvironmentObject> torches = [];
+  final List<EnvironmentObject> environmentObjects = [];
+  final List<EnvironmentObject> torches = [];
   List<List<Tile>> tiles = [];
   List<NpcDebug> npcDebug = [];
   final List<Character> humans = [];
@@ -33,6 +33,7 @@ class CompiledGame {
   int totalZombies = 0;
   int totalNpcs = 0;
   int totalHumans = 0;
+  final List<Vector2> lights = [];
   List<Vector2> bullets = [];
   List<Vector2> bulletHoles = [];
   List<Sprite> sprites = [];
