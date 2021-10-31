@@ -138,13 +138,6 @@ void _drawCompiledGame() {
       torch.image = images.flames[_flameIndex];
     }
   }
-  // drawDynamicTiles();
-  // double i = randomBetween(0, 6);
-  //
-  // render.tilesRects[0] = 48 * i;
-  // render.tilesRects[1] = 0;
-  // render.tilesRects[2] = 48 * (i + 1);
-  // render.tilesRects[3] = 72;
 
   for (int row = 0; row < render.dynamicShading.length; row++) {
     for (int column = 0; column < render.dynamicShading[0].length; column++) {
@@ -185,6 +178,14 @@ void applyDynamicLighting(List<Character> characters) {
   }
 }
 
+int bright = 2;
+int medium = 1;
+
+void applyMediumShade(List<List<Shading>> shader, int row, int column){
+   if (shader[row][column] != Shading.Dark) return;
+   shader[row][column] = Shading.Medium;
+}
+
 void applyLightAt(List<List<Shading>> shader, double x, double y){
   double pX = projectedToWorldX(x, y);
   double pY = projectedToWorldY(x, y);
@@ -193,22 +194,22 @@ void applyLightAt(List<List<Shading>> shader, double x, double y){
   shader[row][column] = Shading.Bright;
 
   if (row > 0) {
-    shader[row - 1][column] = Shading.Medium;
+    applyMediumShade(shader, row -1, column);
     if (column > 0) {
-      shader[row - 1][column - 1] = Shading.Medium;
+      applyMediumShade(shader, row - 1, column - 1);
     }
   }
   if (column > 0) {
-    shader[row][column - 1] = Shading.Medium;
+    applyMediumShade(shader, row, column - 1);
   }
   if (column + 1 < compiledGame.totalColumns) {
-    shader[row][column + 1] = Shading.Medium;
+    applyMediumShade(shader, row, column + 1);
     if (row + 1 < compiledGame.totalRows) {
-      shader[row + 1][column + 1] = Shading.Medium;
+      applyMediumShade(shader, row + 1, column + 1);
     }
   }
   if (row + 1 < compiledGame.totalRows) {
-    shader[row + 1][column] = Shading.Medium;
+    applyMediumShade(shader, row + 1, column);
   }
 }
 
