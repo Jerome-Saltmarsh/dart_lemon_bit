@@ -15,7 +15,7 @@ Image mapEnvironmentObjectTypeToImage(EnvironmentObjectType type){
     case EnvironmentObjectType.Tree02:
       return images.tree02;
     case EnvironmentObjectType.Rock:
-      return images.rock;
+      return images.rockBright;
     case EnvironmentObjectType.Palisade:
       return images.palisade;
     case EnvironmentObjectType.Palisade_H:

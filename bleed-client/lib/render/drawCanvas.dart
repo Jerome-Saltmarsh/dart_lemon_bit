@@ -12,6 +12,7 @@ import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
+import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/engine/functions/drawCircle.dart';
 import 'package:bleed_client/engine/functions/drawText.dart';
@@ -145,6 +146,24 @@ void _drawCompiledGame() {
     }
   }
 
+  for (EnvironmentObject environmentObject in compiledGame.environmentObjects) {
+    if (environmentObject.type == EnvironmentObjectType.Rock) {
+      Shading shade = getShadingAt(environmentObject.x, environmentObject.y);
+
+      switch (shade) {
+        case Shading.Bright:
+          environmentObject.image = images.rockBright;
+          continue;
+        case Shading.Medium:
+          environmentObject.image = images.rockMedium;
+          continue;
+        case Shading.Dark:
+          environmentObject.image = images.rockDark;
+          continue;
+      }
+    }
+  }
+
   applyDynamicLighting(compiledGame.humans);
   applyDynamicLighting(compiledGame.interactableNpcs);
 
@@ -177,9 +196,6 @@ void applyDynamicLighting(List<Character> characters) {
     applyMediumLightAt(render.dynamicShading, character.x, character.y);
   }
 }
-
-int bright = 2;
-int medium = 1;
 
 void applyMediumShade(List<List<Shading>> shader, int row, int column) {
   if (shader[row][column] != Shading.Dark) return;
@@ -257,7 +273,6 @@ void applyBrightLightAt(List<List<Shading>> shader, double x, double y) {
     }
   }
 }
-
 
 void drawDynamicTiles() {
   int rows = compiledGame.tiles.length;
