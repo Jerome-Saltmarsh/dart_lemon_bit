@@ -146,10 +146,14 @@ void _drawCompiledGame() {
     }
   }
 
-  for (EnvironmentObject environmentObject in compiledGame.environmentObjects) {
-    if (environmentObject.type == EnvironmentObjectType.Rock) {
-      Shading shade = render.dynamicShading[environmentObject.tileRow][environmentObject.tileColumn];
+  applyDynamicLighting(compiledGame.humans);
+  applyDynamicLighting(compiledGame.interactableNpcs);
 
+
+  for (EnvironmentObject environmentObject in compiledGame.environmentObjects) {
+    Shading shade = render.dynamicShading[environmentObject.tileRow][environmentObject.tileColumn];
+
+    if (environmentObject.type == EnvironmentObjectType.Rock) {
       switch (shade) {
         case Shading.Bright:
           environmentObject.image = images.rockBright;
@@ -163,9 +167,7 @@ void _drawCompiledGame() {
       }
     }
 
-    if (environmentObject.type == EnvironmentObjectType.Tree01) {
-      Shading shade = getShadingAt(environmentObject.x, environmentObject.y);
-
+    else if (environmentObject.type == EnvironmentObjectType.Tree01) {
       switch (shade) {
         case Shading.Bright:
           environmentObject.image = images.tree01Bright;
@@ -179,9 +181,6 @@ void _drawCompiledGame() {
       }
     }
   }
-
-  applyDynamicLighting(compiledGame.humans);
-  applyDynamicLighting(compiledGame.interactableNpcs);
 
   calculateTileSrcRects();
   drawTiles();
