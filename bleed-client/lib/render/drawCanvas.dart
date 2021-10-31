@@ -198,6 +198,9 @@ void applyLightAt(List<List<Shading>> shader, double x, double y){
     if (column > 0) {
       applyMediumShade(shader, row - 1, column - 1);
     }
+    if (column + 1 < compiledGame.totalColumns) {
+      applyMediumShade(shader, row - 1, column + 1);
+    }
   }
   if (column > 0) {
     applyMediumShade(shader, row, column - 1);
