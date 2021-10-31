@@ -4,7 +4,6 @@ import 'dart:ui';
 
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/classes/RenderState.dart';
-import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/engine/functions/drawCircle.dart';
 import 'package:bleed_client/engine/functions/onScreen.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
@@ -19,7 +18,6 @@ import 'package:flutter/material.dart';
 
 import 'common/Tile.dart';
 import 'common/classes/Vector2.dart';
-import 'mappers/mapHumanToRect.dart';
 import 'rects.dart';
 import 'state/colours.dart';
 import 'state.dart';

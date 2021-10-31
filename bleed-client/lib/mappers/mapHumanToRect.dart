@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:bleed_client/classes/AnimationRects.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
@@ -140,6 +141,8 @@ Rect _mapFrameLoop(AnimationRects src, Direction direction, int frame, {int fram
       return getFrameLoop(src.left, frame, frameRate: frameRate);
     case Direction.UpLeft:
       return getFrameLoop(src.upLeft, frame, frameRate: frameRate);
+    default:
+      throw Exception("Should never happen");
   }
 }
 

@@ -1,5 +1,4 @@
 import 'package:bleed_client/classes/Particle.dart';
-import 'package:bleed_client/utils/list_util.dart';
 
 import '../state.dart';
 import '../update/updateParticle.dart';

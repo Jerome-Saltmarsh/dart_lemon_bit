@@ -1,8 +1,6 @@
 import 'package:bleed_client/network/functions/connect.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 
-import '../network/connection.dart';
-
 // state
 Server _currentServer;
 

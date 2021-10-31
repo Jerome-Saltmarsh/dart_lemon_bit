@@ -1,14 +1,14 @@
 import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Sprite.dart';
-import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/Tile.dart';
-import 'package:bleed_client/network/connection.dart';
+import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/engine/render/gameWidget.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/network/functions/connect.dart';
+import 'package:bleed_client/network/functions/send.dart';
 import 'package:bleed_client/network/streams/onConnected.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/settings.dart';

@@ -7,8 +7,8 @@ import 'package:bleed_client/utils.dart';
 
 import 'audio.dart';
 import 'functions/spawnBulletHole.dart';
-import 'state/settings.dart';
 import 'maths.dart';
+import 'state/settings.dart';
 
 int get shrapnelCount => randomInt(4, 15);
 

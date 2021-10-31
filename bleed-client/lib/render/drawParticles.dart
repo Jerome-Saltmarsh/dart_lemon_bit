@@ -3,8 +3,8 @@ import 'package:bleed_client/mappers/mapParticleToRSTransform.dart';
 import 'package:bleed_client/mappers/mapParticleToRect.dart';
 
 import '../../images.dart';
-import '../state.dart';
 import '../engine/render/drawAtlas.dart';
+import '../state.dart';
 
 void drawParticles2() {
   render.particleRects = compiledGame.particles.map(mapParticleToRect).toList();

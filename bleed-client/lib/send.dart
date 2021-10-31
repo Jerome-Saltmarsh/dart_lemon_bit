@@ -4,10 +4,10 @@ import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/PurchaseType.dart';
 import 'package:bleed_client/functions/clearState.dart';
+import 'package:bleed_client/network/functions/send.dart';
 import 'package:bleed_client/properties.dart';
 
 import 'common/Weapons.dart';
-import 'network/connection.dart';
 import 'state.dart';
 
 final StringBuffer _buffer = StringBuffer();
