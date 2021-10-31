@@ -181,12 +181,12 @@ void applyDynamicLighting(List<Character> characters) {
 int bright = 2;
 int medium = 1;
 
-void applyMediumShade(List<List<Shading>> shader, int row, int column){
-   if (shader[row][column] != Shading.Dark) return;
-   shader[row][column] = Shading.Medium;
+void applyMediumShade(List<List<Shading>> shader, int row, int column) {
+  if (shader[row][column] != Shading.Dark) return;
+  shader[row][column] = Shading.Medium;
 }
 
-void applyLightAt(List<List<Shading>> shader, double x, double y){
+void applyLightAt(List<List<Shading>> shader, double x, double y) {
   double pX = projectedToWorldX(x, y);
   double pY = projectedToWorldY(x, y);
   int column = pX ~/ tileSize;
@@ -194,7 +194,7 @@ void applyLightAt(List<List<Shading>> shader, double x, double y){
   shader[row][column] = Shading.Bright;
 
   if (row > 0) {
-    applyMediumShade(shader, row -1, column);
+    applyMediumShade(shader, row - 1, column);
     if (column > 0) {
       applyMediumShade(shader, row - 1, column - 1);
     }
@@ -213,6 +213,10 @@ void applyLightAt(List<List<Shading>> shader, double x, double y){
   }
   if (row + 1 < compiledGame.totalRows) {
     applyMediumShade(shader, row + 1, column);
+
+    if (column > 0) {
+      applyMediumShade(shader, row + 1, column - 1);
+    }
   }
 }
 
