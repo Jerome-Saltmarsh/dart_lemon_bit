@@ -250,6 +250,20 @@ void _drawCompiledGame() {
           continue;
       }
     }
+
+    else if (environmentObject.type == EnvironmentObjectType.Rock_Small) {
+      switch (shade) {
+        case Shading.Bright:
+          environmentObject.image = images.rockSmallBright;
+          continue;
+        case Shading.Medium:
+          environmentObject.image = images.rockSmallMedium;
+          continue;
+        case Shading.Dark:
+          environmentObject.image = images.rockSmallDark;
+          continue;
+      }
+    }
   }
 
   calculateTileSrcRects();
