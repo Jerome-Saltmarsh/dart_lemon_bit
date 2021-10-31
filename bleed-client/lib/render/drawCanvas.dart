@@ -264,6 +264,20 @@ void _drawCompiledGame() {
           continue;
       }
     }
+
+    else if (environmentObject.type == EnvironmentObjectType.Grave) {
+      switch (shade) {
+        case Shading.Bright:
+          environmentObject.image = images.graveBright;
+          continue;
+        case Shading.Medium:
+          environmentObject.image = images.graveMedium;
+          continue;
+        case Shading.Dark:
+          environmentObject.image = images.graveDark;
+          continue;
+      }
+    }
   }
 
   calculateTileSrcRects();
