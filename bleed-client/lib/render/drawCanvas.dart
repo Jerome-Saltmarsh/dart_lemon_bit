@@ -194,6 +194,20 @@ void _drawCompiledGame() {
           continue;
       }
     }
+
+    else if (environmentObject.type == EnvironmentObjectType.Palisade) {
+      switch (shade) {
+        case Shading.Bright:
+          environmentObject.image = images.palisadeBright;
+          continue;
+        case Shading.Medium:
+          environmentObject.image = images.palisadeMedium;
+          continue;
+        case Shading.Dark:
+          environmentObject.image = images.palisadeDark;
+          continue;
+      }
+    }
   }
 
   calculateTileSrcRects();
