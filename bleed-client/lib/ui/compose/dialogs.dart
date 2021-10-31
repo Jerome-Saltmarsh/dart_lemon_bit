@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bleed_client/bleed.dart';
 import 'package:bleed_client/common/GameType.dart';
-import 'package:bleed_client/connection.dart';
+import 'package:bleed_client/network/connection.dart';
 import 'package:bleed_client/engine/state/buildContext.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/send.dart';

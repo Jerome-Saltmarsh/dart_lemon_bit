@@ -7,7 +7,7 @@ import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/properties.dart';
 
 import 'common/Weapons.dart';
-import 'connection.dart';
+import 'network/connection.dart';
 import 'state.dart';
 
 final StringBuffer _buffer = StringBuffer();

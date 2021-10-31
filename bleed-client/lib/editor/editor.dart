@@ -26,7 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../classes/Block.dart';
-import '../connection.dart';
+import '../network/connection.dart';
 import '../state/editState.dart';
 import '../settings.dart';
 import '../state.dart';

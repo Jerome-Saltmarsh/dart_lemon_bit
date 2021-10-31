@@ -13,6 +13,8 @@ import 'package:bleed_client/engine/state/zoom.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/functions/update.dart';
 import 'package:bleed_client/maths.dart';
+import 'package:bleed_client/network/state/connected.dart';
+import 'package:bleed_client/network/streams/onDone.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/colours.dart';
 import 'package:bleed_client/ui/compose/dialogs.dart';
@@ -22,7 +24,7 @@ import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'connection.dart';
+import 'network/connection.dart';
 import 'editor/editor.dart';
 import 'engine/properties/mouseWorld.dart';
 import 'engine/state/camera.dart';
@@ -89,7 +91,7 @@ class BleedWidget extends GameWidget {
       clearState();
     });
 
-    onDone.stream.listen((event) {
+    onDoneStream.stream.listen((event) {
       clearState();
       rebuildUI();
       redrawCanvas();

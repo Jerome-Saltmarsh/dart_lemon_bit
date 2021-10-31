@@ -23,6 +23,7 @@ import 'package:bleed_client/engine/render/gameWidget.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
+import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/render/drawCharacterMan.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/mappers/mapCrateToRSTransform.dart';
@@ -38,7 +39,7 @@ import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../connection.dart';
+import '../network/connection.dart';
 import '../draw.dart';
 import '../images.dart';
 import '../state.dart';
