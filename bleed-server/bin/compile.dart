@@ -40,6 +40,8 @@ void compileGame(Game game) {
   game.buffer.clear();
 
   game.players.sort(ySortPositioned);
+  game.zombies.sort(ySortPositioned);
+
   _compilePlayers(game.buffer, game.players);
   _compileZombies(game.buffer, game.zombies);
   _compileInteractableNpcs(game.buffer, game.npcs);

@@ -32,6 +32,7 @@ import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/rects.dart';
 import 'package:bleed_client/render/drawCharacterMan.dart';
+import 'package:bleed_client/render/drawCharacterZombie.dart';
 import 'package:bleed_client/state/colours.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
@@ -146,6 +147,7 @@ void _drawSprites() {
   int indexHuman = 0;
   int indexEnv = 0;
   int indexParticle = 0;
+  int indexZombie = 0;
   int totalParticles = getTotalActiveParticles();
 
   int totalEnvironment = compiledGame.environmentObjects.length;
@@ -159,6 +161,7 @@ void _drawSprites() {
   }
 
 
+  bool zombiesRemaining = indexZombie < compiledGame.totalZombies;
   bool humansRemaining = indexHuman < compiledGame.totalHumans;
   bool environmentRemaining = indexEnv < totalEnvironment;
   bool particlesRemaining = indexParticle < totalParticles;
@@ -167,46 +170,65 @@ void _drawSprites() {
     humansRemaining = indexHuman < compiledGame.totalHumans;
     environmentRemaining = indexEnv < totalEnvironment;
     particlesRemaining = indexParticle < totalParticles;
+    zombiesRemaining = indexZombie < compiledGame.totalZombies;
 
-    if (!humansRemaining && !environmentRemaining && !particlesRemaining) {
-      return;
-    }
+    if (
+      !zombiesRemaining &&
+      !humansRemaining &&
+      !environmentRemaining &&
+      !particlesRemaining
+    ) return;
 
     if (humansRemaining) {
       double humanY = compiledGame.humans[indexHuman].y;
+
       if (!environmentRemaining ||
           humanY < compiledGame.environmentObjects[indexEnv].y) {
+
         if (!particlesRemaining ||
             humanY < compiledGame.particles[indexParticle].y) {
-          // TODO remove
-          drawCharacterMan(compiledGame.humans[indexHuman]);
-          indexHuman++;
-          continue;
+
+          if (!zombiesRemaining || humanY < compiledGame.zombies[indexZombie].y) {
+
+            drawCharacterMan(compiledGame.humans[indexHuman]);
+            indexHuman++;
+            continue;
+          }
         }
       }
     }
 
     if (environmentRemaining) {
-      if (!particlesRemaining ||
-          compiledGame.environmentObjects[indexEnv].y <
-              compiledGame.particles[indexParticle].y) {
+      EnvironmentObject env = compiledGame.environmentObjects[indexEnv];
 
+      if (env.dst.top > screen.bottom) return;
 
-        if (compiledGame.environmentObjects[indexEnv].dst.top > screen.bottom){
-          return;
+      if (!particlesRemaining || env.y < compiledGame.particles[indexParticle].y) {
+
+        if (!zombiesRemaining || env.y < compiledGame.zombies[indexZombie].y) {
+
+          drawEnvironmentObject(compiledGame.environmentObjects[indexEnv]);
+          indexEnv++;
+          continue;
         }
+      }
+    }
 
-        drawEnvironmentObject(compiledGame.environmentObjects[indexEnv]);
-        indexEnv++;
+    if (particlesRemaining){
+      Particle particle = compiledGame.particles[indexParticle];
+
+      if (!zombiesRemaining || particle.y < compiledGame.zombies[indexZombie].y) {
+
+        if (onScreen(particle.x, particle.y)){
+          drawParticle(particle);
+        }
+        indexParticle++;
         continue;
       }
     }
 
-    Particle particle = compiledGame.particles[indexParticle];
-    if (onScreen(particle.x, particle.y)){
-      drawParticle(particle);
-    }
-    indexParticle++;
+    drawCharacterZombie(compiledGame.zombies[indexZombie]);
+    indexZombie++;
   }
 }
 

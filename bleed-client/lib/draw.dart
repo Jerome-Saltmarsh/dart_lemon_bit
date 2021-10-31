@@ -29,7 +29,7 @@ void drawCharacterCircle(double x, double y, Color color) {
 
 void drawCharacters() {
   if (images.human == null) return;
-  drawZombies();
+  // drawZombies();
   drawInteractableNpcs();
 }
 

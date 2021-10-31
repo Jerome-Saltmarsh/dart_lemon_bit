@@ -14,10 +14,6 @@ import '../utils.dart';
 
 void drawParticle(Particle particle){
 
-  if(!particle.active){
-    throw Exception("Drawning inactive particle");
-  }
-
   double scaleShift = (1 + (particle.z * 0.4)) * particle.scale;
   double heightShift = -particle.z * 20;
   double x = particle.x;

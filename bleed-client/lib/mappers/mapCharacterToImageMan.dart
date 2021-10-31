@@ -8,6 +8,14 @@ Image mapCharacterToImageMan(CharacterState state, Weapon weapon){
   switch(state){
     case CharacterState.Idle:
       return images.manIdle;
+    case CharacterState.Aiming:
+      switch(weapon){
+        case Weapon.HandGun:
+          return images.manFiringHandgun;
+        default:
+          return images.manFiringShotgun;
+      }
+      return images.manFiringShotgun;
     case CharacterState.Dead:
       return images.manDying;
     case CharacterState.Striking:
