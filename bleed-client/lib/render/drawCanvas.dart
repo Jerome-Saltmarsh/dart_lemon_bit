@@ -152,13 +152,8 @@ void _drawCompiledGame() {
     }
   }
 
-  for(Character character in compiledGame.humans){
-    double pX = projectedToWorldX(character.x, character.y);
-    double pY = projectedToWorldY(character.x, character.y);
-    int column = pX ~/ tileSize;
-    int row = pY ~/ tileSize;
-    render.dynamicShading[row][column] = Shading.Bright;
-  }
+  applyDynamicLighting(compiledGame.humans);
+  applyDynamicLighting(compiledGame.interactableNpcs);
 
   calculateTileSrcRects();
   drawTiles();
@@ -182,6 +177,35 @@ void _drawCompiledGame() {
   _drawPlayerNames();
   _writePlayerText();
   _drawMouseAim();
+}
+
+void applyDynamicLighting(List<Character> characters) {
+  for (Character character in characters) {
+    double pX = projectedToWorldX(character.x, character.y);
+    double pY = projectedToWorldY(character.x, character.y);
+    int column = pX ~/ tileSize;
+    int row = pY ~/ tileSize;
+    render.dynamicShading[row][column] = Shading.Bright;
+
+    if (row > 0) {
+      render.dynamicShading[row - 1][column] = Shading.Medium;
+      if (column > 0) {
+        render.dynamicShading[row - 1][column - 1] = Shading.Medium;
+      }
+    }
+    if (column > 0) {
+      render.dynamicShading[row][column - 1] = Shading.Medium;
+    }
+    if (column + 1 < compiledGame.totalColumns) {
+      render.dynamicShading[row][column + 1] = Shading.Medium;
+      if (row + 1 < compiledGame.totalRows) {
+        render.dynamicShading[row + 1][column + 1] = Shading.Medium;
+      }
+    }
+    if (row + 1 < compiledGame.totalRows) {
+      render.dynamicShading[row + 1][column] = Shading.Medium;
+    }
+  }
 }
 
 void drawDynamicTiles() {
