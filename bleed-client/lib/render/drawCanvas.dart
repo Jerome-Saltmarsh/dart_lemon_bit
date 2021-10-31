@@ -180,6 +180,20 @@ void _drawCompiledGame() {
           continue;
       }
     }
+
+    else if (environmentObject.type == EnvironmentObjectType.Tree02) {
+      switch (shade) {
+        case Shading.Bright:
+          environmentObject.image = images.tree02Bright;
+          continue;
+        case Shading.Medium:
+          environmentObject.image = images.tree02Medium;
+          continue;
+        case Shading.Dark:
+          environmentObject.image = images.tree02Dark;
+          continue;
+      }
+    }
   }
 
   calculateTileSrcRects();

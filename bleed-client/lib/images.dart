@@ -21,7 +21,9 @@ class _Images {
   Image tree01Bright;
   Image tree01Medium;
   Image tree01Dark;
-  Image tree02;
+  Image tree02Bright;
+  Image tree02Medium;
+  Image tree02Dark;
   Image rockBright;
   Image rockMedium;
   Image rockDark;
@@ -79,7 +81,9 @@ class _Images {
     tree01Bright = await loadImage("images/tree-bright.png");
     tree01Medium = await loadImage("images/tree-medium.png");
     tree01Dark = await loadImage("images/tree-dark.png");
-    tree02 = await loadImage("images/tree02.png");
+    tree02Bright = await loadImage("images/tree2-bright.png");
+    tree02Medium = await loadImage("images/tree2-medium.png");
+    tree02Dark = await loadImage("images/tree2-dark.png");
     rockBright = await loadImage("images/rock-bright.png");
     rockMedium = await loadImage("images/rock-medium.png");
     rockDark = await loadImage("images/rock-dark.png");

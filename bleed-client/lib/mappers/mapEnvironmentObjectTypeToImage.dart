@@ -13,7 +13,7 @@ Image mapEnvironmentObjectTypeToImage(EnvironmentObjectType type){
     case EnvironmentObjectType.Tree01:
       return images.tree01Bright;
     case EnvironmentObjectType.Tree02:
-      return images.tree02;
+      return images.tree02Bright;
     case EnvironmentObjectType.Rock:
       return images.rockBright;
     case EnvironmentObjectType.Palisade:
