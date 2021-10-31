@@ -54,7 +54,8 @@ void connectToGCP() {
 }
 
 void _onConnected(_event) {
-  // send(ClientRequest.Version.index.toString());
+  rebuildUI();
+  Future.delayed(Duration(seconds: 1), rebuildUI);
   joinGameOpenWorld();
 }
 
