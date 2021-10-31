@@ -356,7 +356,7 @@ void _parseEnvironmentObjects() {
   for (EnvironmentObject env in compiledGame.environmentObjects){
     if (env.type == EnvironmentObjectType.Torch){
       compiledGame.torches.add(env);
-      applyLightAt(render.bakeMap, env.x, env.y);
+      applyBrightLightAt(render.bakeMap, env.x, env.y);
     }
   }
 }

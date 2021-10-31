@@ -174,7 +174,7 @@ void _drawCompiledGame() {
 
 void applyDynamicLighting(List<Character> characters) {
   for (Character character in characters) {
-    applyLightAt(render.dynamicShading, character.x, character.y);
+    applyMediumLightAt(render.dynamicShading, character.x, character.y);
   }
 }
 
@@ -186,7 +186,45 @@ void applyMediumShade(List<List<Shading>> shader, int row, int column) {
   shader[row][column] = Shading.Medium;
 }
 
-void applyLightAt(List<List<Shading>> shader, double x, double y) {
+void applyMediumLightAt(List<List<Shading>> shader, double x, double y) {
+  double pX = projectedToWorldX(x, y);
+  double pY = projectedToWorldY(x, y);
+  int column = pX ~/ tileSize;
+  int row = pY ~/ tileSize;
+  shader[row][column] = Shading.Medium;
+
+  if (row > 0) {
+    applyMediumShade(shader, row - 1, column);
+    if (column > 0) {
+      applyMediumShade(shader, row - 1, column - 1);
+    }
+    if (column + 1 < compiledGame.totalColumns) {
+      applyMediumShade(shader, row - 1, column + 1);
+    }
+  }
+  if (column > 0) {
+    applyMediumShade(shader, row, column - 1);
+  }
+  if (column + 1 < compiledGame.totalColumns) {
+    applyMediumShade(shader, row, column + 1);
+    if (row + 1 < compiledGame.totalRows) {
+      applyMediumShade(shader, row + 1, column + 1);
+    }
+  }
+  if (row + 1 < compiledGame.totalRows) {
+    applyMediumShade(shader, row + 1, column);
+
+    if (column > 0) {
+      applyMediumShade(shader, row + 1, column - 1);
+    }
+  }
+
+  // if (row + 2 < compiledGame.totalRows){
+  //   applyMediumShade(shader, row + 2, column);
+  // }
+}
+
+void applyBrightLightAt(List<List<Shading>> shader, double x, double y) {
   double pX = projectedToWorldX(x, y);
   double pY = projectedToWorldY(x, y);
   int column = pX ~/ tileSize;
@@ -219,6 +257,7 @@ void applyLightAt(List<List<Shading>> shader, double x, double y) {
     }
   }
 }
+
 
 void drawDynamicTiles() {
   int rows = compiledGame.tiles.length;
