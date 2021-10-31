@@ -16,7 +16,6 @@ GameEdit gameEdit;
 Mode mode = Mode.Play;
 int frameRate = 5;
 int frameRateValue = 0;
-int packagesSent = 0;
 int packagesReceived = 0;
 int pass = 0;
 int serverFrame = 0;

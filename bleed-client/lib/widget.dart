@@ -16,6 +16,7 @@ import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/network/streams/onConnect.dart';
 import 'package:bleed_client/network/streams/onDisconnected.dart';
 import 'package:bleed_client/network/streams/onDone.dart';
+import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/colours.dart';
 import 'package:bleed_client/ui/compose/dialogs.dart';
@@ -95,6 +96,7 @@ class BleedWidget extends GameWidget {
     onConnectController.stream.listen((event) {
       print('on connect $event');
       clearState();
+      sendRequestPing();
     });
 
     onDoneStream.stream.listen((event) {

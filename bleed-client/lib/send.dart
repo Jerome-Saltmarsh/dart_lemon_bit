@@ -5,6 +5,7 @@ import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/PurchaseType.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/network/functions/send.dart';
+import 'package:bleed_client/network/functions/sinkMessage.dart';
 import 'package:bleed_client/properties.dart';
 
 import 'common/Weapons.dart';
@@ -21,6 +22,10 @@ void speak(String message){
 
 void sendRequestInteract(){
   send('${ClientRequest.Interact.index} $session');
+}
+
+void sendRequestPing(){
+  sinkMessage(ClientRequest.Ping.index.toString());
 }
 
 void sendRequestRevive() {
