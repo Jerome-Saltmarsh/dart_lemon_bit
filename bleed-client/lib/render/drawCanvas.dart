@@ -143,7 +143,7 @@ void _drawCompiledGame() {
   // render.tilesRects[2] = 48 * (i + 1);
   // render.tilesRects[3] = 72;
 
-  // calculateTileSrcRects();
+  calculateTileSrcRects();
   drawTiles();
   _drawNpcBonusPointsCircles();
   // _drawPlayerHealthRing();
