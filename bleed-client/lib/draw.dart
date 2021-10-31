@@ -66,11 +66,11 @@ void renderTiles(List<List<Tile>> tiles) {
     rstTransformBuffer[index0] = rstTransform.scos;
     rstTransformBuffer[index1] = rstTransform.ssin;
     rstTransformBuffer[index2] = rstTransform.tx;
-    rstTransformBuffer[index3] = rstTransform.ty;
+    rstTransformBuffer[index3] = rstTransform.ty + 24;
     tileRects[index0] = rect.left;
     tileRects[index1] = 0;
     tileRects[index2] = rect.right;
-    tileRects[index3] = 72;
+    tileRects[index3] = 48;
   }
 
   render.tilesRects = tileRects;

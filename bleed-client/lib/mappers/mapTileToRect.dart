@@ -21,11 +21,11 @@ Rect mapTileToSrcRect(Tile tile) {
     case Tile.RandomItemSpawn:
       return _concrete;
     case Tile.Block:
-      return _blockFull;
+      return _grass;
     case Tile.Block_Horizontal:
-      return _blockHorizontal;
+      return _grass;
     case Tile.Block_Vertical:
-      return _blockVertical;
+      return _grass;
     case Tile.Water:
       return _water;
     case Tile.Water_Side_01:
@@ -62,10 +62,13 @@ Rect mapTileToSrcRect(Tile tile) {
 
 // abstraction
 Rect _grass = _frame(1);
+Rect _grass02 = _frame(1);
 Rect _blockHorizontal = _frame(4);
 Rect _blockVertical = _frame(7);
 Rect _blockFull = _frame(10);
 Rect _concrete = _frame(13);
+Rect _concreteHorizontal = _frame(13);
+Rect _concreteVertical = _frame(13);
 Rect _water = _frame(16);
 Rect _waterSide01 = _frame(16);
 Rect _waterSide02 = _frame(16);
@@ -79,10 +82,12 @@ Rect _playerSpawn = _frame(19);
 Rect _zombieSpawn = _frame(22);
 Rect _longGrass = _frame(25);
 Rect _flowers = _frame(25);
-Rect _grass02 = _frame(1);
-Rect _concreteHorizontal = _frame(13);
-Rect _concreteVertical = _frame(13);
 
 Rect _frame(int index) {
-  return Rect.fromLTWH((index - 1) * tileCanvasWidth.toDouble(), 0.0, tileCanvasWidth.toDouble(), tileCanvasHeight.toDouble());
+  return Rect.fromLTWH(
+      (index - 1) * tileCanvasWidth.toDouble(),
+      0.0,
+      tileCanvasWidth.toDouble(),
+      tileCanvasHeight.toDouble()
+  );
 }

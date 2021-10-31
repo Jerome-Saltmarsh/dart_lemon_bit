@@ -385,13 +385,13 @@ void _parsePaths() {
 }
 
 void _parseTiles() {
-  int tilesX = _consumeInt();
-  int tilesY = _consumeInt();
+  compiledGame.totalColumns = _consumeInt();
+  compiledGame.totalRows = _consumeInt();
   compiledGame.tiles.clear();
-  for (int x = 0; x < tilesX; x++) {
+  for (int column = 0; column < compiledGame.totalColumns; column++) {
     List<Tile> column = [];
     compiledGame.tiles.add(column);
-    for (int y = 0; y < tilesY; y++) {
+    for (int row = 0; row < compiledGame.totalRows; row++) {
       column.add(_consumeTile());
     }
   }

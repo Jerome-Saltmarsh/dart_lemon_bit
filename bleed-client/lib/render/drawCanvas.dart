@@ -72,22 +72,36 @@ void drawCanvas(Canvas canvass, Size _size) {
 }
 
 void calculateTileSrcRects(){
-  int rows = compiledGame.tiles.length;
-  int columns = compiledGame.tiles.length;
-
   int i = 0;
-  for (int row = 0; row < rows; row++) {
-    for (int column = 0; column < columns; column++) {
-      if (isBlock(compiledGame.tiles[row][column])) continue;
+  for (int row = 0; row < compiledGame.totalRows; row++) {
+    for (int column = 0; column < compiledGame.totalColumns; column++) {
+      // if (isBlock(compiledGame.tiles[row][column])) continue;
+      // double x = render.tilesRstTransforms[i + 2];
+      // double y = render.tilesRstTransforms[i + 3];
+      // if (!onScreen(x, y)) continue;
+      if (column >= compiledGame.tiles.length){
+        print('invalid');
+      }
+      if (row >= compiledGame.tiles[0].length){
+        print('invalid');
+      }
 
-      i += 4;
-      double x = render.tilesRstTransforms[i + 2];
-      double y = render.tilesRstTransforms[i + 3];
-      if (!onScreen(x, y)) continue;
-      Tile tile = compiledGame.tiles[row][column];
+      Tile tile = compiledGame.tiles[column][row];
       Rect rect = mapTileToSrcRect(tile);
+
+      if (i >= render.tilesRects.length){
+        print("invalid");
+        return;
+      }
+
       render.tilesRects[i] = rect.left;
+
+      if (i + 2 >= render.tilesRects.length){
+        print("invalid");
+        return;
+      }
       render.tilesRects[i + 2] = rect.right;
+      i += 4;
     }
   }
   // for(int i = 0; i < render.tilesRects.length; i += 4){
@@ -129,7 +143,7 @@ void _drawCompiledGame() {
   // render.tilesRects[2] = 48 * (i + 1);
   // render.tilesRects[3] = 72;
 
-  calculateTileSrcRects();
+  // calculateTileSrcRects();
   drawTiles();
   _drawNpcBonusPointsCircles();
   // _drawPlayerHealthRing();
@@ -221,11 +235,11 @@ void drawDynamicTile(int row, int column) {
   drawImageRect(mapShadeToImage(shading), src, dst);
 }
 
-Rect mapTileToDstRect(int row, int column) {
-  double x = getTileWorldX(row, column);
-  double y = getTileWorldY(row, column);
-  return Rect.fromLTWH(x - 24, y - 36, 48, 72);
-}
+// Rect mapTileToDstRect(int row, int column) {
+//   double x = getTileWorldX(row, column);
+//   double y = getTileWorldY(row, column);
+//   return Rect.fromLTWH(x - 24, y - 24, 48, 48);
+// }
 
 void _drawFloatingTexts() {
   for (FloatingText floatingText in render.floatingText) {
