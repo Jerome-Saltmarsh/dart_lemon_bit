@@ -10,6 +10,8 @@ import 'package:bleed_client/events.dart';
 import 'package:bleed_client/network/functions/connect.dart';
 import 'package:bleed_client/network/functions/send.dart';
 import 'package:bleed_client/network/streams/onConnected.dart';
+import 'package:bleed_client/network/streams/onEvent.dart';
+import 'package:bleed_client/parse.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/settings.dart';
 import 'package:bleed_client/utils.dart';
@@ -19,6 +21,7 @@ import 'state.dart';
 
 void initBleed() {
   onConnectedController.stream.listen(_onConnected);
+  streamOnEvent.stream.listen(_onEvent);
 
   on((GameJoined gameJoined) async {
     cameraCenter(compiledGame.playerX, compiledGame.playerY);
@@ -53,7 +56,20 @@ void connectToGCP() {
   connect(gpc);
 }
 
+void _onEvent(_response){
+  lag = framesSinceEvent;
+  framesSinceEvent = 0;
+  DateTime now = DateTime.now();
+  ping = now.difference(previousEvent);
+  previousEvent = now;
+  // TODO doesn't belong
+  event = _response;
+  parseState();
+  redrawCanvas();
+}
+
 void _onConnected(_event) {
+  print("on connected");
   rebuildUI();
   Future.delayed(Duration(seconds: 1), rebuildUI);
   joinGameOpenWorld();
