@@ -353,9 +353,10 @@ void _parseEnvironmentObjects() {
 
   sortReversed(compiledGame.environmentObjects, environmentObjectY);
 
-  for(EnvironmentObject env in compiledGame.environmentObjects){
+  for (EnvironmentObject env in compiledGame.environmentObjects){
     if (env.type == EnvironmentObjectType.Torch){
       compiledGame.torches.add(env);
+      applyLightAt(render.bakeMap, env.x, env.y);
     }
   }
 }
@@ -391,14 +392,18 @@ void _parseTiles() {
   compiledGame.totalRows = _consumeInt();
   compiledGame.tiles.clear();
   render.dynamicShading.clear();
+  render.bakeMap.clear();
   for (int column = 0; column < compiledGame.totalColumns; column++) {
     List<Tile> column = [];
     compiledGame.tiles.add(column);
     List<Shading> shading = [];
+    List<Shading> bakeMap = [];
     render.dynamicShading.add(shading);
+    render.bakeMap.add(bakeMap);
     for (int row = 0; row < compiledGame.totalRows; row++) {
       column.add(_consumeTile());
       shading.add(Shading.Dark);
+      bakeMap.add(Shading.Dark);
     }
   }
   // TODO Bad Import

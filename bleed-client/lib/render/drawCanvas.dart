@@ -148,7 +148,7 @@ void _drawCompiledGame() {
 
   for (int row = 0; row < render.dynamicShading.length; row++) {
     for (int column = 0; column < render.dynamicShading[0].length; column++) {
-      render.dynamicShading[row][column] = Shading.Dark;
+      render.dynamicShading[row][column] = render.bakeMap[row][column];
     }
   }
 
@@ -181,30 +181,34 @@ void _drawCompiledGame() {
 
 void applyDynamicLighting(List<Character> characters) {
   for (Character character in characters) {
-    double pX = projectedToWorldX(character.x, character.y);
-    double pY = projectedToWorldY(character.x, character.y);
-    int column = pX ~/ tileSize;
-    int row = pY ~/ tileSize;
-    render.dynamicShading[row][column] = Shading.Bright;
+    applyLightAt(render.dynamicShading, character.x, character.y);
+  }
+}
 
-    if (row > 0) {
-      render.dynamicShading[row - 1][column] = Shading.Medium;
-      if (column > 0) {
-        render.dynamicShading[row - 1][column - 1] = Shading.Medium;
-      }
-    }
+void applyLightAt(List<List<Shading>> shader, double x, double y){
+  double pX = projectedToWorldX(x, y);
+  double pY = projectedToWorldY(x, y);
+  int column = pX ~/ tileSize;
+  int row = pY ~/ tileSize;
+  shader[row][column] = Shading.Bright;
+
+  if (row > 0) {
+    shader[row - 1][column] = Shading.Medium;
     if (column > 0) {
-      render.dynamicShading[row][column - 1] = Shading.Medium;
+      shader[row - 1][column - 1] = Shading.Medium;
     }
-    if (column + 1 < compiledGame.totalColumns) {
-      render.dynamicShading[row][column + 1] = Shading.Medium;
-      if (row + 1 < compiledGame.totalRows) {
-        render.dynamicShading[row + 1][column + 1] = Shading.Medium;
-      }
-    }
+  }
+  if (column > 0) {
+    shader[row][column - 1] = Shading.Medium;
+  }
+  if (column + 1 < compiledGame.totalColumns) {
+    shader[row][column + 1] = Shading.Medium;
     if (row + 1 < compiledGame.totalRows) {
-      render.dynamicShading[row + 1][column] = Shading.Medium;
+      shader[row + 1][column + 1] = Shading.Medium;
     }
+  }
+  if (row + 1 < compiledGame.totalRows) {
+    shader[row + 1][column] = Shading.Medium;
   }
 }
 
