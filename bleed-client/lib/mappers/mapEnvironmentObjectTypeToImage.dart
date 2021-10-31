@@ -33,7 +33,7 @@ Image mapEnvironmentObjectTypeToImage(EnvironmentObjectType type){
     case EnvironmentObjectType.Bridge:
       return images.bridge;
     case EnvironmentObjectType.Tree_Stump:
-      return images.treeStump;
+      return images.treeStumpBright;
     case EnvironmentObjectType.Rock_Small:
       return images.rockSmall;
     case EnvironmentObjectType.Character:

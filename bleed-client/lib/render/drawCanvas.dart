@@ -236,6 +236,20 @@ void _drawCompiledGame() {
           continue;
       }
     }
+
+    else if (environmentObject.type == EnvironmentObjectType.Tree_Stump) {
+      switch (shade) {
+        case Shading.Bright:
+          environmentObject.image = images.treeStumpBright;
+          continue;
+        case Shading.Medium:
+          environmentObject.image = images.treeStumpMedium;
+          continue;
+        case Shading.Dark:
+          environmentObject.image = images.treeStumpDark;
+          continue;
+      }
+    }
   }
 
   calculateTileSrcRects();

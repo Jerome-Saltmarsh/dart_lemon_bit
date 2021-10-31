@@ -49,7 +49,9 @@ class _Images {
   Image torch_02;
   Image torch_03;
   Image bridge;
-  Image treeStump;
+  Image treeStumpBright;
+  Image treeStumpMedium;
+  Image treeStumpDark;
   Image rockSmall;
   Image isoCharacter;
   Image manIdle;
@@ -115,7 +117,9 @@ class _Images {
     torch_02 = await loadImage("images/torch-02.png");
     torch_03 = await loadImage("images/torch-03.png");
     bridge = await loadImage("images/bridge.png");
-    treeStump = await loadImage("images/tree-stump.png");
+    treeStumpBright = await loadImage("images/tree-stump-bright.png");
+    treeStumpMedium = await loadImage("images/tree-stump-medium.png");
+    treeStumpDark = await loadImage("images/tree-stump-dark.png");
     rockSmall = await loadImage("images/rock-small.png");
     manRunning = await loadImage("images/man-running.png");
     manFiringHandgun = await loadImage("images/man-firing-handgun.png");
