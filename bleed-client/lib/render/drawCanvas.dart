@@ -73,37 +73,31 @@ void drawCanvas(Canvas canvass, Size _size) {
 
 void calculateTileSrcRects(){
   int i = 0;
-  for (int row = 0; row < compiledGame.totalRows; row++) {
-    for (int column = 0; column < compiledGame.totalColumns; column++) {
-      // if (isBlock(compiledGame.tiles[row][column])) continue;
-      // double x = render.tilesRstTransforms[i + 2];
-      // double y = render.tilesRstTransforms[i + 3];
-      // if (!onScreen(x, y)) continue;
-      if (column >= compiledGame.tiles.length){
-        print('invalid');
-      }
-      if (row >= compiledGame.tiles[0].length){
-        print('invalid');
-      }
 
-      Tile tile = compiledGame.tiles[column][row];
-      Rect rect = mapTileToSrcRect(tile);
+  List<List<Tile>> _tiles = compiledGame.tiles;
 
-      if (i >= render.tilesRects.length){
-        print("invalid");
-        return;
-      }
-
+  for (int row = 0; row < _tiles.length; row++) {
+    for (int column = 0; column < _tiles[0].length; column++) {
+      Rect rect = mapTileToSrcRect(_tiles[row][column]);
       render.tilesRects[i] = rect.left;
-
-      if (i + 2 >= render.tilesRects.length){
-        print("invalid");
-        return;
-      }
       render.tilesRects[i + 2] = rect.right;
       i += 4;
     }
   }
+
+  // for (int row = 0; row < compiledGame.totalRows; row++) {
+  //   for (int column = 0; column < compiledGame.totalColumns; column++) {
+  //     // if (isBlock(compiledGame.tiles[row][column])) continue;
+  //     // double x = render.tilesRstTransforms[i + 2];
+  //     // double y = render.tilesRstTransforms[i + 3];
+  //     // if (!onScreen(x, y)) continue;
+  //     Tile tile = compiledGame.tiles[column][row];
+  //     Rect rect = mapTileToSrcRect(tile);
+  //     render.tilesRects[i] = rect.left;
+  //     render.tilesRects[i + 2] = rect.right;
+  //     i += 4;
+  //   }
+  // }
   // for(int i = 0; i < render.tilesRects.length; i += 4){
   //     double srcLeft = render.tilesRects[i];
   //     double srcTop = 0;

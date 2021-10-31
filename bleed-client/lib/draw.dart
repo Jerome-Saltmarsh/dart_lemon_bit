@@ -88,9 +88,9 @@ void _processTileTransforms(List<List<Tile>> tiles) {
 
 void _loadTileRects(List<List<Tile>> tiles) {
   render.tileRects.clear();
-  for (int x = 0; x < tiles.length; x++) {
-    for (int y = 0; y < tiles[0].length; y++) {
-        render.tileRects.add(mapTileToSrcRect(tiles[x][y]));
+  for (int row = 0; row < tiles.length; row++) {
+    for (int column = 0; column < tiles[0].length; column++) {
+        render.tileRects.add(mapTileToSrcRect(tiles[row][column]));
     }
   }
 }
