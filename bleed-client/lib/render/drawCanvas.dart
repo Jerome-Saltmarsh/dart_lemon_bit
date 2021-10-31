@@ -71,22 +71,33 @@ void drawCanvas(Canvas canvass, Size _size) {
   _drawCompiledGame();
 }
 
-int getTileIndex(int row, int column){
-  return compiledGame.tiles.length * 4 + column * 4;
-}
-
-void calculateTileRects(){
+void calculateTileSrcRects(){
   int rows = compiledGame.tiles.length;
   int columns = compiledGame.tiles.length;
 
-  for (int x = 0; x < rows; x++) {
-    for (int y = 0; y < columns; y++) {
-      if (isBlock(compiledGame.tiles[x][y])) continue;
-      // render.tileRects.add(mapTileToSrcRect(compiledGame.tiles[x][y]));
-      int index = getTileIndex(x, y);
-      setTileType(index, 3);
+  int i = 0;
+  for (int row = 0; row < rows; row++) {
+    for (int column = 0; column < columns; column++) {
+      if (isBlock(compiledGame.tiles[row][column])) continue;
+
+      i += 4;
+      double x = render.tilesRstTransforms[i + 2];
+      double y = render.tilesRstTransforms[i + 3];
+      if (!onScreen(x, y)) continue;
+      Tile tile = compiledGame.tiles[row][column];
+      Rect rect = mapTileToSrcRect(tile);
+      render.tilesRects[i] = rect.left;
+      render.tilesRects[i + 2] = rect.right;
     }
   }
+  // for(int i = 0; i < render.tilesRects.length; i += 4){
+  //     double srcLeft = render.tilesRects[i];
+  //     double srcTop = 0;
+  //     double srcRight = render.tilesRects[i + 2];
+  //     double srcBottom = 48;
+  //     double x = render.tilesRstTransforms[i + 2];
+  //     double y = render.tilesRstTransforms[i + 3];
+  // }
 }
 
 void setTileType(int index, double frame){
@@ -118,7 +129,7 @@ void _drawCompiledGame() {
   // render.tilesRects[2] = 48 * (i + 1);
   // render.tilesRects[3] = 72;
 
-  calculateTileRects();
+  calculateTileSrcRects();
   drawTiles();
   _drawNpcBonusPointsCircles();
   // _drawPlayerHealthRing();
