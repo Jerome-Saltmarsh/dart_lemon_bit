@@ -13,6 +13,7 @@ import 'package:bleed_client/engine/state/zoom.dart';
 import 'package:bleed_client/functions/update.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/network/state/connected.dart';
+import 'package:bleed_client/network/streams/onConnect.dart';
 import 'package:bleed_client/network/streams/onDisconnected.dart';
 import 'package:bleed_client/network/streams/onDone.dart';
 import 'package:bleed_client/state.dart';
@@ -86,11 +87,18 @@ class BleedWidget extends GameWidget {
     }
 
     onDisconnected.stream.listen((event) {
+      print("disconnect");
       showDialogConnectFailed();
       clearState();
     });
 
+    onConnectController.stream.listen((event) {
+      print('on connect $event');
+      clearState();
+    });
+
     onDoneStream.stream.listen((event) {
+      print("connection done");
       clearState();
       rebuildUI();
       redrawCanvas();
