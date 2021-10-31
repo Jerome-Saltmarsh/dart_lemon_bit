@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
+import 'package:bleed_client/enums/Shading.dart';
 
 final _RenderState render = _RenderState();
 
@@ -30,6 +31,8 @@ class _RenderState {
 
   Float32List tilesRstTransforms;
   Float32List tilesRects;
+  List<Shading> bakeMap = [];
+  List<List<Shading>> dynamicShading = [];
 
 
   Render items = Render();

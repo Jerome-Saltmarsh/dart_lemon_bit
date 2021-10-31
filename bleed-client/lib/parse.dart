@@ -16,6 +16,7 @@ import 'package:bleed_client/common/PlayerEvents.dart';
 import 'package:bleed_client/common/ServerResponse.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/enums/InventoryItemType.dart';
+import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/emit/emitMyst.dart';
@@ -359,6 +360,7 @@ void _parseEnvironmentObjects() {
   }
 }
 
+
 double environmentObjectY(EnvironmentObject environmentObject){
   return environmentObject.y;
 }
@@ -388,11 +390,15 @@ void _parseTiles() {
   compiledGame.totalColumns = _consumeInt();
   compiledGame.totalRows = _consumeInt();
   compiledGame.tiles.clear();
+  render.dynamicShading.clear();
   for (int column = 0; column < compiledGame.totalColumns; column++) {
     List<Tile> column = [];
     compiledGame.tiles.add(column);
+    List<Shading> shading = [];
+    render.dynamicShading.add(shading);
     for (int row = 0; row < compiledGame.totalRows; row++) {
       column.add(_consumeTile());
+      shading.add(Shading.Dark);
     }
   }
   // TODO Bad Import

@@ -38,6 +38,7 @@ import 'package:bleed_client/rects.dart';
 import 'package:bleed_client/render/drawCharacterMan.dart';
 import 'package:bleed_client/render/drawCharacterZombie.dart';
 import 'package:bleed_client/state/colours.dart';
+import 'package:bleed_client/state/getTileAt.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
@@ -71,16 +72,24 @@ void drawCanvas(Canvas canvass, Size _size) {
   _drawCompiledGame();
 }
 
-void calculateTileSrcRects(){
+void calculateTileSrcRects() {
   int i = 0;
-
   List<List<Tile>> _tiles = compiledGame.tiles;
 
   for (int row = 0; row < _tiles.length; row++) {
     for (int column = 0; column < _tiles[0].length; column++) {
+      Shading shading = render.dynamicShading[row][column];
       Rect rect = mapTileToSrcRect(_tiles[row][column]);
-      render.tilesRects[i] = rect.left;
-      render.tilesRects[i + 2] = rect.right;
+      double left = rect.left;
+
+      if (shading == Shading.Medium) {
+        left += 48;
+      } else if (shading == Shading.Dark) {
+        left += 96;
+      }
+
+      render.tilesRects[i] = left;
+      render.tilesRects[i + 2] = left + 48;
       i += 4;
     }
   }
@@ -108,7 +117,7 @@ void calculateTileSrcRects(){
   // }
 }
 
-void setTileType(int index, double frame){
+void setTileType(int index, double frame) {
   int i = index * 4;
   render.tilesRects[i] = 48 * frame;
   render.tilesRects[i + 1] = 0;
@@ -136,6 +145,20 @@ void _drawCompiledGame() {
   // render.tilesRects[1] = 0;
   // render.tilesRects[2] = 48 * (i + 1);
   // render.tilesRects[3] = 72;
+
+  for (int row = 0; row < render.dynamicShading.length; row++) {
+    for (int column = 0; column < render.dynamicShading[0].length; column++) {
+      render.dynamicShading[row][column] = Shading.Dark;
+    }
+  }
+
+  for(Character character in compiledGame.humans){
+    double pX = projectedToWorldX(character.x, character.y);
+    double pY = projectedToWorldY(character.x, character.y);
+    int column = pX ~/ tileSize;
+    int row = pY ~/ tileSize;
+    render.dynamicShading[row][column] = Shading.Bright;
+  }
 
   calculateTileSrcRects();
   drawTiles();
