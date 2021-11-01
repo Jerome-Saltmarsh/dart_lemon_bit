@@ -11,7 +11,15 @@ Image mapCharacterToImageZombie(CharacterState state, Weapon weapon, Shading sha
     case CharacterState.Idle:
       return images.zombieIdle;
     case CharacterState.Dead:
-      return images.zombieDying;
+      switch(shading){
+        case Shading.Bright:
+          return images.zombieDyingBright;
+        case Shading.Medium:
+          return images.zombieDyingMedium;
+        case Shading.Dark:
+          return images.zombieDyingDark;
+      }
+      return images.zombieWalkingBright;
     case CharacterState.Striking:
       return images.zombieStriking;
     case CharacterState.Walking:
