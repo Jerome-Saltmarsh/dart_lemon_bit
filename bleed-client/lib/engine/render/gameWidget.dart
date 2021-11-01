@@ -190,6 +190,7 @@ class _GameWidgetState extends State<GameWidget> {
 
   Widget buildBody(BuildContext context) {
     return MouseRegion(
+        cursor: SystemMouseCursors.precise,
       onHover: (PointerHoverEvent pointerHoverEvent) {
         _previousMousePosition = _mousePosition;
         _mousePosition = pointerHoverEvent.position;

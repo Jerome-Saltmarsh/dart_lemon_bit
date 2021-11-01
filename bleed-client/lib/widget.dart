@@ -147,11 +147,11 @@ class BleedWidget extends GameWidget {
       }
     }
 
-    if (player.alive) {
-      _drawStaminaBar(canvas);
-    }
+    // if (player.alive) {
+    //   _drawStaminaBar(canvas);
+    // }
 
-    _drawMouseAim(aiming);
+    // _drawMouseAim(aiming);
   }
 
   Ring ammoRing = Ring(32, radius: 8);
