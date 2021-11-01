@@ -26,7 +26,8 @@ import 'package:bleed_client/network/functions/disconnect.dart';
 import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/network/state/connecting.dart';
 import 'package:bleed_client/render/drawCanvas.dart';
-import 'package:bleed_client/render/functions/processBakeMap.dart';
+import 'package:bleed_client/render/functions/applyEnvironmentObjectsToBakeMapping.dart';
+import 'package:bleed_client/render/functions/setBakeMapToAmbientLight.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/getTileAt.dart';
 import 'package:bleed_client/ui/compose/dialogs.dart';
@@ -358,22 +359,8 @@ void _parseEnvironmentObjects() {
   }
 
   sortReversed(compiledGame.environmentObjects, environmentObjectY);
-
-  for (EnvironmentObject env in compiledGame.environmentObjects){
-    if (env.type == EnvironmentObjectType.Torch){
-      compiledGame.torches.add(env);
-      applyLightBright(render.bakeMap, env.x, env.y);
-    }
-    if (env.type == EnvironmentObjectType.House01){
-      applyLightMedium(render.bakeMap, env.x, env.y);
-    }
-    if (env.type == EnvironmentObjectType.House02){
-      applyLightMedium(render.bakeMap, env.x, env.y);
-    }
-  }
-
+  applyEnvironmentObjectsToBakeMapping();
 }
-
 
 double environmentObjectY(EnvironmentObject environmentObject){
   return environmentObject.y;

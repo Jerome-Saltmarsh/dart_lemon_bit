@@ -10,8 +10,10 @@ import 'package:bleed_client/engine/properties/keyPressed.dart';
 import 'package:bleed_client/engine/render/gameWidget.dart';
 import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/engine/state/zoom.dart';
+import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/render/drawCanvas.dart';
+import 'package:bleed_client/render/functions/setAmbientLight.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
@@ -98,6 +100,9 @@ class _Keys {
   LogicalKeyboardKey speakLetsGreeting = LogicalKeyboardKey.digit8;
   LogicalKeyboardKey waitASecond = LogicalKeyboardKey.digit7;
   LogicalKeyboardKey text = LogicalKeyboardKey.enter;
+  LogicalKeyboardKey ambientBright = LogicalKeyboardKey.digit5;
+  LogicalKeyboardKey ambientMedium = LogicalKeyboardKey.digit6;
+  LogicalKeyboardKey ambientDark = LogicalKeyboardKey.digit7;
 }
 
 Map<LogicalKeyboardKey, bool> _keyDownState = {};
@@ -138,8 +143,25 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.speakLetsGo: sayLetsGo,
   keys.speakLetsGreeting: sayGreeting,
   keys.waitASecond: sayWaitASecond,
-  keys.text: _onKeyPressedEnter
+  keys.text: _onKeyPressedEnter,
+  keys.ambientBright: setAmbientLightBright,
+  keys.ambientMedium: setAmbientLightMedium,
+  keys.ambientDark: setAmbientLightDark,
 };
+
+void setAmbientLightBright(){
+  setAmbientLight(Shading.Bright);
+}
+
+void setAmbientLightMedium(){
+  setAmbientLight(Shading.Medium);
+}
+
+void setAmbientLightDark(){
+  setAmbientLight(Shading.Dark);
+}
+
+
 
 void _onKeyPressedEnter(){
   print("_onKeyPressedEnter()");
