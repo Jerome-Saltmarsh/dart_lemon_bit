@@ -26,11 +26,13 @@ import 'package:bleed_client/network/functions/disconnect.dart';
 import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/network/state/connecting.dart';
 import 'package:bleed_client/render/drawCanvas.dart';
+import 'package:bleed_client/render/functions/processBakeMap.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/getTileAt.dart';
 import 'package:bleed_client/ui/compose/dialogs.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/utils/list_util.dart';
+import 'package:bleed_client/variables/ambientLight.dart';
 import 'package:neuro/instance.dart';
 
 import 'classes/RenderState.dart';
@@ -360,13 +362,13 @@ void _parseEnvironmentObjects() {
   for (EnvironmentObject env in compiledGame.environmentObjects){
     if (env.type == EnvironmentObjectType.Torch){
       compiledGame.torches.add(env);
-      applyBrightLightAt(render.bakeMap, env.x, env.y);
+      applyLightBright(render.bakeMap, env.x, env.y);
     }
     if (env.type == EnvironmentObjectType.House01){
-      applyMediumLightAt(render.bakeMap, env.x, env.y);
+      applyLightMedium(render.bakeMap, env.x, env.y);
     }
     if (env.type == EnvironmentObjectType.House02){
-      applyMediumLightAt(render.bakeMap, env.x, env.y);
+      applyLightMedium(render.bakeMap, env.x, env.y);
     }
   }
 
@@ -402,21 +404,15 @@ void _parseTiles() {
   compiledGame.totalColumns = _consumeInt();
   compiledGame.totalRows = _consumeInt();
   compiledGame.tiles.clear();
-  render.dynamicShading.clear();
-  render.bakeMap.clear();
   for (int column = 0; column < compiledGame.totalColumns; column++) {
     List<Tile> column = [];
     compiledGame.tiles.add(column);
-    List<Shading> shading = [];
-    List<Shading> bakeMap = [];
-    render.dynamicShading.add(shading);
-    render.bakeMap.add(bakeMap);
     for (int row = 0; row < compiledGame.totalRows; row++) {
       column.add(_consumeTile());
-      shading.add(Shading.Dark);
-      bakeMap.add(Shading.Dark);
     }
   }
+
+  setBakeMapToAmbientLight();
   // TODO Bad Import
   renderTiles(compiledGame.tiles);
 }

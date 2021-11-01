@@ -163,9 +163,9 @@ Widget buildTopRight() {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          if (compiledGame.gameType == GameType.Casual) buttonJoinGameOpenWorld,
-          if (compiledGame.gameType == GameType.Open_World)
-            buttonJoinGameCasual,
+          // if (compiledGame.gameType == GameType.Casual) buttonJoinGameOpenWorld,
+          // if (compiledGame.gameType == GameType.Open_World)
+          //   buttonJoinGameCasual,
           if (settings.developMode) iconTogglePaths,
           if (settings.developMode) width8,
           if (settings.developMode) iconToggleEditMode,
