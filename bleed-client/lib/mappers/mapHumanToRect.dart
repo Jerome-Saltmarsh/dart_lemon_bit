@@ -17,7 +17,7 @@ Rect mapCharacterToSrcMan(Weapon weapon, CharacterState state, Direction directi
     case CharacterState.Dead:
       return _mapFrame(_srcRects2, direction, frame);
     case CharacterState.Aiming:
-      return _mapAimingRect(direction);
+      return _mapFrame(_srcRects1, direction, frame);
     case CharacterState.Firing:
       return _mapFrame(_srcRects1, direction, frame);
     case CharacterState.Striking:
@@ -40,16 +40,10 @@ Rect mapCharacterToSrcZombie(Weapon weapon, CharacterState state, Direction dire
       return _mapFrameLoop(_srcRects4, direction, frame);
     case CharacterState.Dead:
       return _mapFrame(_srcRects2, direction, frame);
-    case CharacterState.Aiming:
-      return _mapAimingRect(direction);
     case CharacterState.Striking:
       return _mapFrame(_srcRects2, direction, frame);
     case CharacterState.Running:
       return _mapFrameLoop(_srcRects4, direction, frame);
-    case CharacterState.Reloading:
-      return _mapFrame(_srcRects2, direction, frame);
-    case CharacterState.ChangingWeapon:
-      return _mapFrame(_srcRects2, direction, frame);
     default:
       throw Exception("Could not get character sprite rect");
   }
@@ -58,21 +52,6 @@ Rect mapCharacterToSrcZombie(Weapon weapon, CharacterState state, Direction dire
 // TODO state belongs in state directory
 const double _frameWidth = 64;
 const double _frameHeight = 64;
-
-final _RectsHuman _human = _RectsHuman();
-
-Rect _aimingDownLeft = _frame(21);
-Rect _aimingLeft = _frame(23);
-Rect _aimingUpLeft = _frame(25);
-Rect _aimingUp = _frame(27);
-Rect _aimingUpRight = _frame(29);
-Rect _aimingRight = _frame(31);
-Rect _aimingDownRight = _frame(33);
-Rect _aimingDown = _frame(35);
-
-class _RectsHuman {
-  final AnimationRects changing = _srcRects2;
-}
 
 final AnimationRects _srcRects1 = AnimationRects(
     down: _frames([1]),
@@ -164,27 +143,8 @@ Rect _mapFrame(AnimationRects src, Direction direction, int frame){
       return getFrame(src.left, frame);
     case Direction.UpLeft:
       return getFrame(src.upLeft, frame);
+    default:
+      throw Exception("Could not map frame");
   }
 }
 
-Rect _mapAimingRect(Direction direction) {
-  switch (direction) {
-    case Direction.Up:
-      return _aimingUp;
-    case Direction.UpRight:
-      return _aimingUpRight;
-    case Direction.Right:
-      return _aimingRight;
-    case Direction.DownRight:
-      return _aimingDownRight;
-    case Direction.Down:
-      return _aimingDown;
-    case Direction.DownLeft:
-      return _aimingDownLeft;
-    case Direction.Left:
-      return _aimingLeft;
-    case Direction.UpLeft:
-      return _aimingUpLeft;
-  }
-  throw Exception("Could not get character dead sprite rect");
-}

@@ -402,7 +402,7 @@ double _light = 100;
 double _medium = 250;
 double _dark = 400;
 
-Shading getShadingAt(double x, double y) {
+Shading calculateShadeAt(double x, double y) {
   Shading shading = Shading.Dark;
 
   for (Character player in compiledGame.humans) {
@@ -427,7 +427,7 @@ void drawDynamicTile(int row, int column) {
   double y = getTileWorldY(row, column);
   if (!onScreen(x, y)) return;
 
-  Shading shading = getShadingAt(x, y);
+  Shading shading = calculateShadeAt(x, y);
   // Shading shading = Shading.Bright;
 
   Tile tile = compiledGame.tiles[row][column];
