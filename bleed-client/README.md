@@ -94,10 +94,12 @@
 [ ] Npc firing image looks like idle
 [ ] NPC 3d render
 [ ] FIX Zombies Collision
-[ ] Day / Night
 [ ] FIX Npc aim
 [ ] Particle dynamic lighting
-[ ] Zombie dynamic lighting
+[ ] Zombie death particles
+[ ] Zombie Shadow
+[ ] Day / Night
+[x] Zombie dynamic lighting
 [x] Zombies 3D render
 [x] Zombies 3D model
 [x] Human 3d Render

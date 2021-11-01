@@ -4,6 +4,8 @@ import 'package:bleed_client/engine/functions/drawCircle.dart';
 import 'package:bleed_client/engine/render/drawImage.dart';
 import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
+import 'package:bleed_client/enums/Shading.dart';
+import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/mappers/mapDurationToMystImage.dart';
 import 'package:bleed_client/state/colours.dart';
 import 'package:flutter/material.dart';
@@ -11,9 +13,9 @@ import 'package:flutter/material.dart';
 import '../maths.dart';
 import '../utils.dart';
 
+const _headSize = 5.0;
 
 void drawParticle(Particle particle){
-
   double scaleShift = (1 + (particle.z * 0.4)) * particle.scale;
   double heightShift = -particle.z * 20;
   double x = particle.x;
@@ -34,28 +36,35 @@ void drawParticle(Particle particle){
       break;
     case ParticleType.Blood:
       double size = 2.5;
-      drawCircle(x, y + heightShift, size * scaleShift, colours.blood);
+      Shading shading = getShading(particle.x, particle.y);
+      Color color = colours.blood;
+      if (shading == Shading.Dark){
+        color = colours.redDarkest;
+      }
+      drawCircle(x, y + heightShift, size * scaleShift, color);
       break;
     case ParticleType.Head:
-      double size = 5;
-      drawCircle(x, y, size / scaleShift, Colors.black45);
-      drawCircle(x, y + heightShift, size * scaleShift, Colors.white);
+      Shading shading = getShading(particle.x, particle.y);
+      drawCircle(x, y, _headSize / scaleShift, Colors.black45);
+      drawCircle(x, y + heightShift, _headSize * scaleShift, getColorSkin(shading));
       break;
     case ParticleType.Arm:
+      Shading shading = getShading(particle.x, particle.y);
+      Color color = getColorSkin(shading);
       double length = randomBetween(4, 6);
       double handX = x + velX(rotation, length);
       double handY = y + velY(rotation, length);
-      setColor(Colors.black45);
+      setColor(color);
       drawLine3(x, y, handX, handY);
-      drawCircle(handX, handY, 2 / scaleShift, Colors.black45);
-      paint.color = Colors.white;
+      drawCircle(handX, handY, 2 / scaleShift, color);
       drawLine3(x, y + heightShift, handX, handY + heightShift);
-      drawCircle(handX, handY  + heightShift, 2 * scaleShift, Colors.white);
+      drawCircle(handX, handY  + heightShift, 2 * scaleShift, color);
       break;
     case ParticleType.Organ:
-      setColor(Colors.black45);
-      drawCircle(x, y, scaleShift / 2, Colors.white);
-      drawCircle(x, y  + heightShift, 2 * scaleShift, Colors.white);
+      Shading shading = getShading(particle.x, particle.y);
+      Color color = getColorSkin(shading);
+      drawCircle(x, y, scaleShift / 2, color);
+      drawCircle(x, y  + heightShift, 2 * scaleShift, color);
       break;
     case ParticleType.Shrapnel:
       double size = 2.5;
