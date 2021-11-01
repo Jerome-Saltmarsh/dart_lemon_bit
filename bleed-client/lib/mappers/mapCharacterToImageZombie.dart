@@ -9,7 +9,15 @@ import 'package:bleed_client/images.dart';
 Image mapCharacterToImageZombie(CharacterState state, Weapon weapon, Shading shading){
   switch(state){
     case CharacterState.Idle:
-      return images.zombieIdle;
+      switch(shading){
+        case Shading.Bright:
+          return images.zombieIdleBright;
+        case Shading.Medium:
+          return images.zombieIdleMedium;
+        case Shading.Dark:
+          return images.zombieIdleDark;
+      }
+      return images.zombieWalkingBright;
     case CharacterState.Dead:
       switch(shading){
         case Shading.Bright:

@@ -73,7 +73,9 @@ class _Images {
   Image zombieDyingMedium;
   Image zombieDyingDark;
   Image zombieStriking;
-  Image zombieIdle;
+  Image zombieIdleBright;
+  Image zombieIdleMedium;
+  Image zombieIdleDark;
 
   List<Image> flames = [];
 
@@ -148,7 +150,9 @@ class _Images {
     zombieDyingMedium = await _png("zombie-dying-medium");
     zombieDyingDark = await _png("zombie-dying-dark");
     zombieStriking = await _png("zombie-striking");
-    zombieIdle = await _png("zombie-idle");
+    zombieIdleBright = await _png("zombie-idle-bright");
+    zombieIdleMedium = await _png("zombie-idle-medium");
+    zombieIdleDark = await _png("zombie-idle-dark");
     flames.add(torch_01);
     flames.add(torch_02);
     flames.add(torch_03);
