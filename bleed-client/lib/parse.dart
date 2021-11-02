@@ -15,6 +15,7 @@ import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/PlayerEvents.dart';
 import 'package:bleed_client/common/ServerResponse.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
+import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/enums/InventoryItemType.dart';
 import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/events.dart';
@@ -34,6 +35,7 @@ import 'package:bleed_client/ui/compose/dialogs.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/utils/list_util.dart';
 import 'package:bleed_client/variables/ambientLight.dart';
+import 'package:bleed_client/variables/time.dart';
 import 'package:neuro/instance.dart';
 
 import 'classes/RenderState.dart';
@@ -84,6 +86,10 @@ void parseState() {
 
       case ServerResponse.Paths:
         _parsePaths();
+        break;
+
+      case ServerResponse.Game_Time:
+        setTime(_consumeInt());
         break;
 
       case ServerResponse.NpcsDebug:

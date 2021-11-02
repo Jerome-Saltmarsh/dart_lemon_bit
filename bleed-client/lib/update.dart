@@ -15,9 +15,6 @@ void updatePlayMode() {
   if (!connected) return;
   if (compiledGame.gameId < 0) return;
 
-  incrementSeconds();
-
-
   framesSinceEvent++;
   readPlayerInput();
   updateParticles();

@@ -1,54 +1,43 @@
-
 import 'package:bleed_client/input.dart';
+import 'package:bleed_client/state.dart';
 
-int seconds = 0;
-int secondsPerFrame = 1;
+// const secondsPerMinute = 60;
+// const minutesPerHour = 60;
+// const hoursPerDay = 24;
+//
+// const secondsPerDay = secondsPerMinute * minutesPerHour * hoursPerDay;
 
-double get minute {
-  return seconds / 60;
-}
+// Phase phase = Phase.Day;
 
-double get hour {
-  return minute / 60;
-}
+void setTime(int value) {
+  Phase _phase1 = getPhase();
+  compiledGame.time = value;
+  Phase _phase2 = getPhase();
+  if (_phase1 == _phase2) return;
 
-const secondsPerMinute = 60;
-const minutesPerHour = 60;
-const hoursPerDay = 24;
-
-const secondsPerDay = secondsPerMinute * minutesPerHour * hoursPerDay;
-
-void incrementSeconds(){
-  Phase _phase = getPhase;
-  seconds = (seconds + secondsPerFrame) % secondsPerDay;
-  Phase _phase2 = getPhase;
-
-  if (_phase != _phase2){
-    switch(_phase2){
-      case Phase.EarlyMorning:
-        setAmbientLightDark();
-        break;
-      case Phase.Morning:
-        setAmbientLightMedium();
-        break;
-      case Phase.Day:
-        setAmbientLightBright();
-        break;
-      case Phase.EarlyEvening:
-        setAmbientLightMedium();
-        break;
-      case Phase.Evening:
-        setAmbientLightDark();
-        break;
-      case Phase.Night:
-        setAmbientLightVeryDark();
-        break;
-    }
+  switch (_phase2) {
+    case Phase.EarlyMorning:
+      setAmbientLightDark();
+      break;
+    case Phase.Morning:
+      setAmbientLightMedium();
+      break;
+    case Phase.Day:
+      setAmbientLightBright();
+      break;
+    case Phase.EarlyEvening:
+      setAmbientLightMedium();
+      break;
+    case Phase.Evening:
+      setAmbientLightDark();
+      break;
+    case Phase.Night:
+      setAmbientLightVeryDark();
+      break;
   }
 }
 
-
-Phase get getPhase {
+Phase getPhase() {
   double _hour = hour;
   if (_hour < 4) return Phase.Night;
   if (_hour < 6) return Phase.EarlyMorning;
@@ -57,6 +46,14 @@ Phase get getPhase {
   if (_hour < 18) return Phase.EarlyEvening;
   if (_hour < 20) return Phase.Evening;
   return Phase.Night;
+}
+
+double get minute {
+  return compiledGame.time / 60;
+}
+
+double get hour {
+  return minute / 60;
 }
 
 enum Phase {

@@ -29,6 +29,7 @@ class CompiledGame {
   int totalColumns = 0;
   int totalRows = 0;
   List<NpcDebug> npcDebug = [];
+  int time = 0;
   final List<Character> humans = [];
   final List<Zombie> zombies = [];
   final List<Character> interactableNpcs = [];

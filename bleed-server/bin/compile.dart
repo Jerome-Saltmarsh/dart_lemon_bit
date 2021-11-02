@@ -50,6 +50,9 @@ void compileGame(Game game) {
   _compileGrenades(game.buffer, game.grenades);
   _compileCollectables(game.buffer, game.collectables);
 
+  _write(game.buffer, ServerResponse.Game_Time.index);
+  _write(game.buffer, game.time);
+
   if (game.compilePaths) {
     _compilePaths(game.buffer, game.zombies);
     _compileNpcDebug(game.buffer, game.npcs);
@@ -370,9 +373,6 @@ void _writeBool(StringBuffer buffer, bool value) {
 }
 
 void _writeInt(StringBuffer buffer, double value) {
-  if (value.isNaN){
-    throw Exception("Invalid value");
-  }
   _write(buffer, value.toInt());
 }
 
