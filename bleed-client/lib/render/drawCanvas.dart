@@ -293,6 +293,11 @@ void applyShade(List<List<Shading>> shader, int row, int column, Shading value){
   shader[row][column] = value;
 }
 
+void applyShadeBright(List<List<Shading>> shader, int row, int column) {
+  applyShade(shader, row, column, Shading.Bright);
+}
+
+
 void applyMediumShade(List<List<Shading>> shader, int row, int column) {
   applyShade(shader, row, column, Shading.Medium);
 }
@@ -387,11 +392,62 @@ void applyLightMedium(List<List<Shading>> shader, double x, double y) {
 }
 
 void applyLightBright(List<List<Shading>> shader, double x, double y) {
-  double pX = projectedToWorldX(x, y);
-  double pY = projectedToWorldY(x, y);
-  int column = pX ~/ tileSize;
-  int row = pY ~/ tileSize;
-  shader[row][column] = Shading.Bright;
+  int column = getColumn(x, y);
+  int row = getRow(x, y);
+  applyShadeBright(shader, row, column);
+
+  if (row > 1){
+    applyDarkShade(shader, row - 2, column);
+    if (column > 0) {
+      applyDarkShade(shader, row - 2, column - 1);
+    }
+    if (column > 1) {
+      applyDarkShade(shader, row - 2, column - 2);
+    }
+    if (column < compiledGame.totalColumns - 1){
+      applyDarkShade(shader, row - 2, column + 1);
+    }
+    if (column < compiledGame.totalColumns - 2){
+      applyDarkShade(shader, row - 2, column + 2);
+    }
+  }
+  if (row < compiledGame.totalRows - 2){
+    applyDarkShade(shader, row + 2, column);
+
+    if (column > 0) {
+      applyDarkShade(shader, row + 2, column - 1);
+    }
+    if (column > 1) {
+      applyDarkShade(shader, row + 2, column - 2);
+    }
+    if (column < compiledGame.totalColumns - 1){
+      applyDarkShade(shader, row + 2, column + 1);
+    }
+    if (column < compiledGame.totalColumns - 2){
+      applyDarkShade(shader, row + 2, column + 2);
+    }
+  }
+
+  if (column > 0) {
+    applyDarkShade(shader, row, column - 2);
+
+    if (row > 0){
+      applyDarkShade(shader, row - 1, column - 2);
+    }
+    if (row < compiledGame.totalRows - 1){
+      applyDarkShade(shader, row + 1, column - 2);
+    }
+  }
+  if (column < compiledGame.totalColumns - 1){
+    applyDarkShade(shader, row, column + 2);
+
+    if (row > 0){
+      applyDarkShade(shader, row - 1, column + 2);
+    }
+    if (row < compiledGame.totalRows - 1){
+      applyDarkShade(shader, row + 1, column + 2);
+    }
+  }
 
   if (row > 0) {
     applyMediumShade(shader, row - 1, column);
