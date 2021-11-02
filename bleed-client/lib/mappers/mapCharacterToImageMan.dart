@@ -2,11 +2,15 @@ import 'dart:ui';
 
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/enums.dart';
+import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/images.dart';
 
-Image mapCharacterToImageMan(CharacterState state, Weapon weapon){
+Image mapCharacterToImageMan(CharacterState state, Weapon weapon, Shading shade){
   switch(state){
     case CharacterState.Idle:
+      if (shade == Shading.Bright){
+        return images.manIdleBright;
+      }
       return images.manIdle;
     case CharacterState.Aiming:
       switch(weapon){
@@ -25,6 +29,9 @@ Image mapCharacterToImageMan(CharacterState state, Weapon weapon){
     case CharacterState.Running:
       return images.manRunning;
     case CharacterState.Walking:
+      if (shade == Shading.Bright){
+        return images.manWalkingBright;
+      }
       return images.manWalking;
     case CharacterState.Firing:
       switch(weapon){

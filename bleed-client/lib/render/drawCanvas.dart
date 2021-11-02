@@ -302,7 +302,7 @@ void applyShadeMedium(List<List<Shading>> shader, int row, int column) {
   applyShade(shader, row, column, Shading.Medium);
 }
 
-void applyDarkShade(List<List<Shading>> shader, int row, int column) {
+void applyShadeDark(List<List<Shading>> shader, int row, int column) {
   applyShade(shader, row, column, Shading.Dark);
 }
 
@@ -312,55 +312,55 @@ void applyLightMedium(List<List<Shading>> shader, double x, double y) {
   applyShadeMedium(shader, row, column);
 
   if (row > 1){
-    applyDarkShade(shader, row - 2, column);
+    applyShadeDark(shader, row - 2, column);
     if (column > 0) {
-      applyDarkShade(shader, row - 2, column - 1);
+      applyShadeDark(shader, row - 2, column - 1);
     }
     if (column > 1) {
-      applyDarkShade(shader, row - 2, column - 2);
+      applyShadeDark(shader, row - 2, column - 2);
     }
     if (column < compiledGame.totalColumns - 1){
-      applyDarkShade(shader, row - 2, column + 1);
+      applyShadeDark(shader, row - 2, column + 1);
     }
     if (column < compiledGame.totalColumns - 2){
-      applyDarkShade(shader, row - 2, column + 2);
+      applyShadeDark(shader, row - 2, column + 2);
     }
   }
   if (row < compiledGame.totalRows - 2){
-    applyDarkShade(shader, row + 2, column);
+    applyShadeDark(shader, row + 2, column);
 
     if (column > 0) {
-      applyDarkShade(shader, row + 2, column - 1);
+      applyShadeDark(shader, row + 2, column - 1);
     }
     if (column > 1) {
-      applyDarkShade(shader, row + 2, column - 2);
+      applyShadeDark(shader, row + 2, column - 2);
     }
     if (column < compiledGame.totalColumns - 1){
-      applyDarkShade(shader, row + 2, column + 1);
+      applyShadeDark(shader, row + 2, column + 1);
     }
     if (column < compiledGame.totalColumns - 2){
-      applyDarkShade(shader, row + 2, column + 2);
+      applyShadeDark(shader, row + 2, column + 2);
     }
   }
 
   if (column > 0) {
-    applyDarkShade(shader, row, column - 2);
+    applyShadeDark(shader, row, column - 2);
 
     if (row > 0){
-      applyDarkShade(shader, row - 1, column - 2);
+      applyShadeDark(shader, row - 1, column - 2);
     }
     if (row < compiledGame.totalRows - 1){
-      applyDarkShade(shader, row + 1, column - 2);
+      applyShadeDark(shader, row + 1, column - 2);
     }
   }
   if (column < compiledGame.totalColumns - 1){
-    applyDarkShade(shader, row, column + 2);
+    applyShadeDark(shader, row, column + 2);
 
     if (row > 0){
-      applyDarkShade(shader, row - 1, column + 2);
+      applyShadeDark(shader, row - 1, column + 2);
     }
     if (row < compiledGame.totalRows - 1){
-      applyDarkShade(shader, row + 1, column + 2);
+      applyShadeDark(shader, row + 1, column + 2);
     }
   }
 
