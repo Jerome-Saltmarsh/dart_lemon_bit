@@ -62,7 +62,7 @@ void applyLightBright(List<List<Shading>> shader, double x, double y) {
   }
 
   if (row > 0) {
-    applyShadeMedium(shader, row - 1, column);
+    applyShadeBright(shader, row - 1, column);
     if (column > 0) {
       applyShadeMedium(shader, row - 1, column - 1);
     }
@@ -71,16 +71,16 @@ void applyLightBright(List<List<Shading>> shader, double x, double y) {
     }
   }
   if (column > 0) {
-    applyShadeMedium(shader, row, column - 1);
+    applyShadeBright(shader, row, column - 1);
   }
   if (column + 1 < compiledGame.totalColumns) {
-    applyShadeMedium(shader, row, column + 1);
+    applyShadeBright(shader, row, column + 1);
     if (row + 1 < compiledGame.totalRows) {
       applyShadeMedium(shader, row + 1, column + 1);
     }
   }
   if (row + 1 < compiledGame.totalRows) {
-    applyShadeMedium(shader, row + 1, column);
+    applyShadeBright(shader, row + 1, column);
 
     if (column > 0) {
       applyShadeMedium(shader, row + 1, column - 1);

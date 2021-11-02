@@ -100,9 +100,10 @@ class _Keys {
   LogicalKeyboardKey speakLetsGreeting = LogicalKeyboardKey.digit8;
   LogicalKeyboardKey waitASecond = LogicalKeyboardKey.digit7;
   LogicalKeyboardKey text = LogicalKeyboardKey.enter;
-  LogicalKeyboardKey ambientBright = LogicalKeyboardKey.digit5;
-  LogicalKeyboardKey ambientMedium = LogicalKeyboardKey.digit6;
-  LogicalKeyboardKey ambientDark = LogicalKeyboardKey.digit7;
+  LogicalKeyboardKey ambientBright = LogicalKeyboardKey.digit4;
+  LogicalKeyboardKey ambientMedium = LogicalKeyboardKey.digit5;
+  LogicalKeyboardKey ambientDark = LogicalKeyboardKey.digit6;
+  LogicalKeyboardKey ambientVeryDark = LogicalKeyboardKey.digit7;
 }
 
 Map<LogicalKeyboardKey, bool> _keyDownState = {};
@@ -147,6 +148,7 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.ambientBright: setAmbientLightBright,
   keys.ambientMedium: setAmbientLightMedium,
   keys.ambientDark: setAmbientLightDark,
+  keys.ambientVeryDark: setAmbientLightVeryDark,
 };
 
 void setAmbientLightBright(){
@@ -159,6 +161,10 @@ void setAmbientLightMedium(){
 
 void setAmbientLightDark(){
   setAmbientLight(Shading.Dark);
+}
+
+void setAmbientLightVeryDark(){
+  setAmbientLight(Shading.VeryDark);
 }
 
 
