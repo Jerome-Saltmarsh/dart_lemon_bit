@@ -298,7 +298,7 @@ void applyShadeBright(List<List<Shading>> shader, int row, int column) {
 }
 
 
-void applyShadeMedium(List<List<Shading>> shader, int row, int column) {
+void  applyShadeMedium(List<List<Shading>> shader, int row, int column) {
   applyShade(shader, row, column, Shading.Medium);
 }
 
