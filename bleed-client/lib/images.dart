@@ -17,6 +17,7 @@ class _Images {
   Image items;
   Image crate;
   Image house;
+  Image houseDay;
   Image house02;
   Image tree01Bright;
   Image tree01Medium;
@@ -50,6 +51,7 @@ class _Images {
   Image torch_01;
   Image torch_02;
   Image torch_03;
+  Image torchOut;
   Image bridge;
   Image treeStumpBright;
   Image treeStumpMedium;
@@ -98,6 +100,7 @@ class _Images {
     items = await loadImage("images/items.png");
     crate = await loadImage("images/crate.png");
     house = await loadImage("images/house.png");
+    houseDay = await loadImage("images/house-day.png");
     house02 = await loadImage("images/house02.png");
     tree01Bright = await loadImage("images/tree-bright.png");
     tree01Medium = await loadImage("images/tree-medium.png");
@@ -131,6 +134,7 @@ class _Images {
     torch_01 = await loadImage("images/torch-01.png");
     torch_02 = await loadImage("images/torch-02.png");
     torch_03 = await loadImage("images/torch-03.png");
+    torchOut = await loadImage("images/torch-out.png");
     bridge = await loadImage("images/bridge.png");
     treeStumpBright = await loadImage("images/tree-stump-bright.png");
     treeStumpMedium = await loadImage("images/tree-stump-medium.png");

@@ -44,6 +44,9 @@ import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/utils.dart';
+import 'package:bleed_client/variables/ambientLight.dart';
+import 'package:bleed_client/variables/phase.dart';
+import 'package:bleed_client/variables/time.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -121,8 +124,10 @@ void _drawCompiledGame() {
     drawFrame++;
     _flameIndex = (_flameIndex + 1) % 3;
 
-    for (EnvironmentObject torch in compiledGame.torches) {
-      torch.image = images.flames[_flameIndex];
+    if (ambientLight != Shading.Bright){
+      for (EnvironmentObject torch in compiledGame.torches) {
+        torch.image = images.flames[_flameIndex];
+      }
     }
   }
 
@@ -276,6 +281,15 @@ void applyLightingToEnvironmentObjects() {
           continue;
         case Shading.Dark:
           environmentObject.image = images.graveDark;
+          continue;
+      }
+    } else if (environmentObject.type == EnvironmentObjectType.House01) {
+      switch (shade) {
+        case Shading.Bright:
+          environmentObject.image = images.houseDay;
+          continue;
+        default:
+          environmentObject.image = images.house;
           continue;
       }
     }

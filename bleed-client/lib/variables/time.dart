@@ -1,19 +1,13 @@
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/state.dart';
-
-// const secondsPerMinute = 60;
-// const minutesPerHour = 60;
-// const hoursPerDay = 24;
-//
-// const secondsPerDay = secondsPerMinute * minutesPerHour * hoursPerDay;
-
-// Phase phase = Phase.Day;
+import 'package:bleed_client/variables/phase.dart';
 
 void setTime(int value) {
-  Phase _phase1 = getPhase();
   compiledGame.time = value;
   Phase _phase2 = getPhase();
-  if (_phase1 == _phase2) return;
+  if (phase == _phase2) return;
+  // on phase changed
+  phase = _phase2;
 
   switch (_phase2) {
     case Phase.EarlyMorning:
