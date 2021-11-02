@@ -10,9 +10,8 @@ import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/images.dart';
-import 'package:bleed_client/mappers/mapTileToRect.dart';
+import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
 import 'package:bleed_client/render/drawInteractableNpcs.dart';
-import 'package:bleed_client/render/drawZombies.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

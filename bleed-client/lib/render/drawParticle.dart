@@ -16,10 +16,14 @@ import '../utils.dart';
 const _headSize = 5.0;
 
 void drawParticle(Particle particle){
-  double scaleShift = (1 + (particle.z * 0.4)) * particle.scale;
-  double heightShift = -particle.z * 20;
   double x = particle.x;
   double y = particle.y;
+
+  Shading shading = getShading(particle.x, particle.y);
+  if (shading == Shading.VeryDark) return;
+
+  double scaleShift = (1 + (particle.z * 0.4)) * particle.scale;
+  double heightShift = -particle.z * 20;
   double rotation = particle.rotation;
 
   switch(particle.type){
@@ -36,7 +40,6 @@ void drawParticle(Particle particle){
       break;
     case ParticleType.Blood:
       double size = 2.5;
-      Shading shading = getShading(particle.x, particle.y);
       Color color = colours.blood;
       if (shading == Shading.Dark){
         color = colours.redDarkest;
@@ -44,12 +47,10 @@ void drawParticle(Particle particle){
       drawCircle(x, y + heightShift, size * scaleShift, color);
       break;
     case ParticleType.Head:
-      Shading shading = getShading(particle.x, particle.y);
       drawCircle(x, y, _headSize / scaleShift, Colors.black45);
       drawCircle(x, y + heightShift, _headSize * scaleShift, getColorSkin(shading));
       break;
     case ParticleType.Arm:
-      Shading shading = getShading(particle.x, particle.y);
       Color color = getColorSkin(shading);
       double length = randomBetween(4, 6);
       double handX = x + velX(rotation, length);
@@ -61,7 +62,6 @@ void drawParticle(Particle particle){
       drawCircle(handX, handY  + heightShift, 2 * scaleShift, color);
       break;
     case ParticleType.Organ:
-      Shading shading = getShading(particle.x, particle.y);
       Color color = getColorSkin(shading);
       drawCircle(x, y, scaleShift / 2, color);
       drawCircle(x, y  + heightShift, 2 * scaleShift, color);

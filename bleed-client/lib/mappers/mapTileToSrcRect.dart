@@ -63,9 +63,6 @@ Rect mapTileToSrcRect(Tile tile) {
 // abstraction
 Rect _grass = _frame(1);
 Rect _grass02 = _frame(1);
-Rect _blockHorizontal = _frame(4);
-Rect _blockVertical = _frame(7);
-Rect _blockFull = _frame(10);
 Rect _concrete = _frame(13);
 Rect _concreteHorizontal = _frame(13);
 Rect _concreteVertical = _frame(13);
@@ -82,6 +79,7 @@ Rect _playerSpawn = _frame(19);
 Rect _zombieSpawn = _frame(22);
 Rect _longGrass = _frame(25);
 Rect _flowers = _frame(25);
+Rect rectSrcDarkness = _frame(28);
 
 Rect _frame(int index) {
   return Rect.fromLTWH(

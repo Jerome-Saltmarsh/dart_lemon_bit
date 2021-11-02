@@ -31,7 +31,7 @@ import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
 import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
 import 'package:bleed_client/mappers/mapItemToRect.dart';
 import 'package:bleed_client/mappers/mapShadeToTileImage.dart';
-import 'package:bleed_client/mappers/mapTileToRect.dart';
+import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/properties.dart';
@@ -80,6 +80,14 @@ void calculateTileSrcRects() {
   for (int row = 0; row < _tiles.length; row++) {
     for (int column = 0; column < _tiles[0].length; column++) {
       Shading shading = render.dynamicShading[row][column];
+
+      if (shading == Shading.VeryDark) {
+        render.tilesRects[i] = rectSrcDarkness.left;
+        render.tilesRects[i + 2] = rectSrcDarkness.right;
+        i += 4;
+        continue;
+      }
+
       Rect rect = mapTileToSrcRect(_tiles[row][column]);
       double left = rect.left;
 
@@ -94,28 +102,6 @@ void calculateTileSrcRects() {
       i += 4;
     }
   }
-
-  // for (int row = 0; row < compiledGame.totalRows; row++) {
-  //   for (int column = 0; column < compiledGame.totalColumns; column++) {
-  //     // if (isBlock(compiledGame.tiles[row][column])) continue;
-  //     // double x = render.tilesRstTransforms[i + 2];
-  //     // double y = render.tilesRstTransforms[i + 3];
-  //     // if (!onScreen(x, y)) continue;
-  //     Tile tile = compiledGame.tiles[column][row];
-  //     Rect rect = mapTileToSrcRect(tile);
-  //     render.tilesRects[i] = rect.left;
-  //     render.tilesRects[i + 2] = rect.right;
-  //     i += 4;
-  //   }
-  // }
-  // for(int i = 0; i < render.tilesRects.length; i += 4){
-  //     double srcLeft = render.tilesRects[i];
-  //     double srcTop = 0;
-  //     double srcRight = render.tilesRects[i + 2];
-  //     double srcBottom = 48;
-  //     double x = render.tilesRstTransforms[i + 2];
-  //     double y = render.tilesRstTransforms[i + 3];
-  // }
 }
 
 void setTileType(int index, double frame) {
@@ -146,139 +132,9 @@ void _drawCompiledGame() {
     }
   }
 
-  applyDynamicLighting(compiledGame.humans);
-  applyDynamicLighting(compiledGame.interactableNpcs);
-
-
-  for (EnvironmentObject environmentObject in compiledGame.environmentObjects) {
-    Shading shade = render.dynamicShading[environmentObject.tileRow][environmentObject.tileColumn];
-
-    if (environmentObject.type == EnvironmentObjectType.Rock) {
-      switch (shade) {
-        case Shading.Bright:
-          environmentObject.image = images.rockBright;
-          continue;
-        case Shading.Medium:
-          environmentObject.image = images.rockMedium;
-          continue;
-        case Shading.Dark:
-          environmentObject.image = images.rockDark;
-          continue;
-      }
-    }
-
-    else if (environmentObject.type == EnvironmentObjectType.Tree01) {
-      switch (shade) {
-        case Shading.Bright:
-          environmentObject.image = images.tree01Bright;
-          continue;
-        case Shading.Medium:
-          environmentObject.image = images.tree01Medium;
-          continue;
-        case Shading.Dark:
-          environmentObject.image = images.tree01Dark;
-          continue;
-      }
-    }
-
-    else if (environmentObject.type == EnvironmentObjectType.Tree02) {
-      switch (shade) {
-        case Shading.Bright:
-          environmentObject.image = images.tree02Bright;
-          continue;
-        case Shading.Medium:
-          environmentObject.image = images.tree02Medium;
-          continue;
-        case Shading.Dark:
-          environmentObject.image = images.tree02Dark;
-          continue;
-      }
-    }
-
-    else if (environmentObject.type == EnvironmentObjectType.Palisade) {
-      switch (shade) {
-        case Shading.Bright:
-          environmentObject.image = images.palisadeBright;
-          continue;
-        case Shading.Medium:
-          environmentObject.image = images.palisadeMedium;
-          continue;
-        case Shading.Dark:
-          environmentObject.image = images.palisadeDark;
-          continue;
-      }
-    }
-
-    else if (environmentObject.type == EnvironmentObjectType.Palisade_H) {
-      switch (shade) {
-        case Shading.Bright:
-          environmentObject.image = images.palisadeHBright;
-          continue;
-        case Shading.Medium:
-          environmentObject.image = images.palisadeHMedium;
-          continue;
-        case Shading.Dark:
-          environmentObject.image = images.palisadeHDark;
-          continue;
-      }
-    }
-
-    else if (environmentObject.type == EnvironmentObjectType.Palisade_V) {
-      switch (shade) {
-        case Shading.Bright:
-          environmentObject.image = images.palisadeVBright;
-          continue;
-        case Shading.Medium:
-          environmentObject.image = images.palisadeVMedium;
-          continue;
-        case Shading.Dark:
-          environmentObject.image = images.palisadeVDark;
-          continue;
-      }
-    }
-
-    else if (environmentObject.type == EnvironmentObjectType.Tree_Stump) {
-      switch (shade) {
-        case Shading.Bright:
-          environmentObject.image = images.treeStumpBright;
-          continue;
-        case Shading.Medium:
-          environmentObject.image = images.treeStumpMedium;
-          continue;
-        case Shading.Dark:
-          environmentObject.image = images.treeStumpDark;
-          continue;
-      }
-    }
-
-    else if (environmentObject.type == EnvironmentObjectType.Rock_Small) {
-      switch (shade) {
-        case Shading.Bright:
-          environmentObject.image = images.rockSmallBright;
-          continue;
-        case Shading.Medium:
-          environmentObject.image = images.rockSmallMedium;
-          continue;
-        case Shading.Dark:
-          environmentObject.image = images.rockSmallDark;
-          continue;
-      }
-    }
-
-    else if (environmentObject.type == EnvironmentObjectType.Grave) {
-      switch (shade) {
-        case Shading.Bright:
-          environmentObject.image = images.graveBright;
-          continue;
-        case Shading.Medium:
-          environmentObject.image = images.graveMedium;
-          continue;
-        case Shading.Dark:
-          environmentObject.image = images.graveDark;
-          continue;
-      }
-    }
-  }
+  applyLightingToCharacters(compiledGame.humans);
+  applyLightingToCharacters(compiledGame.interactableNpcs);
+  applyLightingToEnvironmentObjects();
 
   calculateTileSrcRects();
   drawTiles();
@@ -304,23 +160,204 @@ void _drawCompiledGame() {
   _drawMouseAim();
 }
 
-void applyDynamicLighting(List<Character> characters) {
+void applyLightingToEnvironmentObjects() {
+  for (EnvironmentObject environmentObject in compiledGame.environmentObjects) {
+    Shading shade = render.dynamicShading[environmentObject.tileRow]
+        [environmentObject.tileColumn];
+
+    if (shade == Shading.VeryDark){
+      environmentObject.image = images.empty;
+      continue;
+    }
+
+    if (environmentObject.type == EnvironmentObjectType.Rock) {
+      switch (shade) {
+        case Shading.Bright:
+          environmentObject.image = images.rockBright;
+          continue;
+        case Shading.Medium:
+          environmentObject.image = images.rockMedium;
+          continue;
+        case Shading.Dark:
+          environmentObject.image = images.rockDark;
+          continue;
+      }
+    } else if (environmentObject.type == EnvironmentObjectType.Tree01) {
+      switch (shade) {
+        case Shading.Bright:
+          environmentObject.image = images.tree01Bright;
+          continue;
+        case Shading.Medium:
+          environmentObject.image = images.tree01Medium;
+          continue;
+        case Shading.Dark:
+          environmentObject.image = images.tree01Dark;
+          continue;
+      }
+    } else if (environmentObject.type == EnvironmentObjectType.Tree02) {
+      switch (shade) {
+        case Shading.Bright:
+          environmentObject.image = images.tree02Bright;
+          continue;
+        case Shading.Medium:
+          environmentObject.image = images.tree02Medium;
+          continue;
+        case Shading.Dark:
+          environmentObject.image = images.tree02Dark;
+          continue;
+      }
+    } else if (environmentObject.type == EnvironmentObjectType.Palisade) {
+      switch (shade) {
+        case Shading.Bright:
+          environmentObject.image = images.palisadeBright;
+          continue;
+        case Shading.Medium:
+          environmentObject.image = images.palisadeMedium;
+          continue;
+        case Shading.Dark:
+          environmentObject.image = images.palisadeDark;
+          continue;
+      }
+    } else if (environmentObject.type == EnvironmentObjectType.Palisade_H) {
+      switch (shade) {
+        case Shading.Bright:
+          environmentObject.image = images.palisadeHBright;
+          continue;
+        case Shading.Medium:
+          environmentObject.image = images.palisadeHMedium;
+          continue;
+        case Shading.Dark:
+          environmentObject.image = images.palisadeHDark;
+          continue;
+      }
+    } else if (environmentObject.type == EnvironmentObjectType.Palisade_V) {
+      switch (shade) {
+        case Shading.Bright:
+          environmentObject.image = images.palisadeVBright;
+          continue;
+        case Shading.Medium:
+          environmentObject.image = images.palisadeVMedium;
+          continue;
+        case Shading.Dark:
+          environmentObject.image = images.palisadeVDark;
+          continue;
+      }
+    } else if (environmentObject.type == EnvironmentObjectType.Tree_Stump) {
+      switch (shade) {
+        case Shading.Bright:
+          environmentObject.image = images.treeStumpBright;
+          continue;
+        case Shading.Medium:
+          environmentObject.image = images.treeStumpMedium;
+          continue;
+        case Shading.Dark:
+          environmentObject.image = images.treeStumpDark;
+          continue;
+      }
+    } else if (environmentObject.type == EnvironmentObjectType.Rock_Small) {
+      switch (shade) {
+        case Shading.Bright:
+          environmentObject.image = images.rockSmallBright;
+          continue;
+        case Shading.Medium:
+          environmentObject.image = images.rockSmallMedium;
+          continue;
+        case Shading.Dark:
+          environmentObject.image = images.rockSmallDark;
+          continue;
+      }
+    } else if (environmentObject.type == EnvironmentObjectType.Grave) {
+      switch (shade) {
+        case Shading.Bright:
+          environmentObject.image = images.graveBright;
+          continue;
+        case Shading.Medium:
+          environmentObject.image = images.graveMedium;
+          continue;
+        case Shading.Dark:
+          environmentObject.image = images.graveDark;
+          continue;
+      }
+    }
+  }
+}
+
+void applyLightingToCharacters(List<Character> characters) {
   for (Character character in characters) {
     applyLightMedium(render.dynamicShading, character.x, character.y);
   }
 }
 
+void applyShade(List<List<Shading>> shader, int row, int column, Shading value){
+  if (shader[row][column].index <= value.index) return;
+  shader[row][column] = value;
+}
+
 void applyMediumShade(List<List<Shading>> shader, int row, int column) {
-  if (shader[row][column] != Shading.Dark) return;
-  shader[row][column] = Shading.Medium;
+  applyShade(shader, row, column, Shading.Medium);
+}
+
+void applyDarkShade(List<List<Shading>> shader, int row, int column) {
+  applyShade(shader, row, column, Shading.Dark);
 }
 
 void applyLightMedium(List<List<Shading>> shader, double x, double y) {
-  double pX = projectedToWorldX(x, y);
-  double pY = projectedToWorldY(x, y);
-  int column = pX ~/ tileSize;
-  int row = pY ~/ tileSize;
+  int column = getColumn(x, y);
+  int row = getRow(x, y);
   applyMediumShade(shader, row, column);
+
+  if (row > 1){
+    applyDarkShade(shader, row - 2, column);
+    if (column > 0) {
+      applyDarkShade(shader, row - 2, column - 1);
+    }
+    if (column > 1) {
+      applyDarkShade(shader, row - 2, column - 2);
+    }
+    if (column < compiledGame.totalColumns - 1){
+      applyDarkShade(shader, row - 2, column + 1);
+    }
+    if (column < compiledGame.totalColumns - 2){
+      applyDarkShade(shader, row - 2, column + 2);
+    }
+  }
+  if (row < compiledGame.totalRows - 2){
+    applyDarkShade(shader, row + 2, column);
+
+    if (column > 0) {
+      applyDarkShade(shader, row + 2, column - 1);
+    }
+    if (column > 1) {
+      applyDarkShade(shader, row + 2, column - 2);
+    }
+    if (column < compiledGame.totalColumns - 1){
+      applyDarkShade(shader, row + 2, column + 1);
+    }
+    if (column < compiledGame.totalColumns - 2){
+      applyDarkShade(shader, row + 2, column + 2);
+    }
+  }
+
+  if (column > 0) {
+    applyDarkShade(shader, row, column - 2);
+
+    if (row > 0){
+      applyDarkShade(shader, row - 1, column - 2);
+    }
+    if (row < compiledGame.totalRows - 1){
+      applyDarkShade(shader, row + 1, column - 2);
+    }
+  }
+  if (column < compiledGame.totalColumns - 1){
+    applyDarkShade(shader, row, column + 2);
+
+    if (row > 0){
+      applyDarkShade(shader, row - 1, column + 2);
+    }
+    if (row < compiledGame.totalRows - 1){
+      applyDarkShade(shader, row + 1, column + 2);
+    }
+  }
 
   if (row > 0) {
     applyMediumShade(shader, row - 1, column);

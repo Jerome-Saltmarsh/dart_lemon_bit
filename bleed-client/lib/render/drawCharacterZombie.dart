@@ -14,7 +14,7 @@ import 'package:bleed_client/state/isWaterAt.dart';
 void drawCharacterZombie(Character character) {
   if (!character.alive && isWaterAt(character.x, character.y)) return;
   if (!onScreen(character.x, character.y)) return;
-
+  if (getShading(character.x, character.y) == Shading.VeryDark) return;
 
   drawImageRect(
     mapCharacterToImageZombie(

@@ -98,7 +98,11 @@
 [ ] Particle dynamic lighting
 [ ] Zombie death particles
 [ ] Zombie Shadow
-[ ] Day / Night
+[ ] Audio walk on grass
+[ ] Environment Object: Bush
+[ ] Improve UI
+[ ] Shading Very Dark
+[x] Day / Night
 [x] Zombie dynamic lighting
 [x] Zombies 3D render
 [x] Zombies 3D model
