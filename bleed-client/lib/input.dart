@@ -17,6 +17,7 @@ import 'package:bleed_client/render/functions/setAmbientLight.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
+import 'package:bleed_client/variables/lantern.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -98,12 +99,13 @@ class _Keys {
   LogicalKeyboardKey equipAssaultRifle = LogicalKeyboardKey.digit4;
   LogicalKeyboardKey speakLetsGo = LogicalKeyboardKey.digit9;
   LogicalKeyboardKey speakLetsGreeting = LogicalKeyboardKey.digit8;
-  LogicalKeyboardKey waitASecond = LogicalKeyboardKey.digit7;
+  LogicalKeyboardKey waitASecond = LogicalKeyboardKey.digit0;
   LogicalKeyboardKey text = LogicalKeyboardKey.enter;
   LogicalKeyboardKey ambientBright = LogicalKeyboardKey.digit4;
   LogicalKeyboardKey ambientMedium = LogicalKeyboardKey.digit5;
   LogicalKeyboardKey ambientDark = LogicalKeyboardKey.digit6;
   LogicalKeyboardKey ambientVeryDark = LogicalKeyboardKey.digit7;
+  LogicalKeyboardKey toggleLantern = LogicalKeyboardKey.keyL;
 }
 
 Map<LogicalKeyboardKey, bool> _keyDownState = {};
@@ -148,6 +150,7 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.ambientBright: setAmbientLightBright,
   keys.ambientMedium: setAmbientLightMedium,
   keys.ambientDark: setAmbientLightDark,
+  keys.toggleLantern: toggleLantern,
   keys.ambientVeryDark: setAmbientLightVeryDark,
 };
 
@@ -165,6 +168,10 @@ void setAmbientLightDark(){
 
 void setAmbientLightVeryDark(){
   setAmbientLight(Shading.VeryDark);
+}
+
+void toggleLantern(){
+  lantern = !lantern;
 }
 
 void _onKeyPressedEnter(){

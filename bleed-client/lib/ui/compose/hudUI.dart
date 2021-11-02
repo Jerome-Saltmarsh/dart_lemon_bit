@@ -45,8 +45,17 @@ import '../../tutorials.dart';
 import 'buildTextBox.dart';
 import 'dialogs.dart';
 
+bool mouseInTopRight = false;
+
 Widget buildHud() {
   print("buildHud()");
+
+  bool m = mouseX > screenWidth - 100 && mouseY < 100;
+
+  if (mouseInTopRight != m){
+
+  }
+
 
   return Stack(
     children: [

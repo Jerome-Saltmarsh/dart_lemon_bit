@@ -38,6 +38,7 @@ import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/rects.dart';
 import 'package:bleed_client/render/drawCharacterMan.dart';
 import 'package:bleed_client/render/drawCharacterZombie.dart';
+import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
 import 'package:bleed_client/state/colours.dart';
 import 'package:bleed_client/state/getTileAt.dart';
 import 'package:bleed_client/state/settings.dart';
@@ -293,12 +294,6 @@ void applyLightingToEnvironmentObjects() {
           continue;
       }
     }
-  }
-}
-
-void applyLightingToCharacters(List<Character> characters) {
-  for (Character character in characters) {
-    applyLightMedium(render.dynamicShading, character.x, character.y);
   }
 }
 
