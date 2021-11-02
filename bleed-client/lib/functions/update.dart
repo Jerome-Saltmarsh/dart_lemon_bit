@@ -5,6 +5,7 @@ import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/tutorials.dart';
+import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/update.dart';
 
 bool _showMenuOptions = false;
@@ -36,15 +37,12 @@ void update() {
 
 void _showHideTopLeftMenuOptions() {
   if (!mouseAvailable) return;
-  if (mouseX < 300 && mouseY < 300) {
-    if (!_showMenuOptions) {
-      _showMenuOptions = true;
-      rebuildUI();
-    }
-  } else {
-    if (_showMenuOptions) {
-      _showMenuOptions = false;
-      rebuildUI();
-    }
+
+  int range = 300;
+  bool m = mouseX > screenWidth - 300 && mouseY < 200;
+
+  if (m != hud.state.menuVisible){
+    hud.state.menuVisible = m;
+    hud.stateSetters.topRight((){});
   }
 }

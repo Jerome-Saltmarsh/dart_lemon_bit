@@ -65,6 +65,7 @@ class _StateSetters {
   StateSetter score;
   StateSetter npcMessage;
   StateSetter playerMessage;
+  StateSetter topRight;
 }
 
 class _State {
@@ -73,6 +74,7 @@ class _State {
   bool showScore = true;
   bool showServers = false;
   bool expandScore = false;
+  bool menuVisible = false;
 }
 
 class _Properties {

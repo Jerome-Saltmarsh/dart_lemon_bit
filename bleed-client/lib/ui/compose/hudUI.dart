@@ -50,19 +50,11 @@ bool mouseInTopRight = false;
 Widget buildHud() {
   print("buildHud()");
 
-  bool m = mouseX > screenWidth - 100 && mouseY < 100;
-
-  if (mouseInTopRight != m){
-
-  }
-
-
   return Stack(
     children: [
       buildTopRight(),
       buildTextBox(),
-      if (hud.state.textBoxVisible)
-      _buildServerText(),
+      if (hud.state.textBoxVisible) _buildServerText(),
       if (player.alive) buildViewBottomLeft(),
       if (compiledGame.gameType == GameType.Fortress) _buildViewFortress(),
       if (compiledGame.gameType == GameType.DeathMatch)
@@ -78,27 +70,27 @@ Widget buildHud() {
 
 Positioned _buildRespawnLight() {
   return Positioned(
-          top: 30,
-          child: Container(
-              width: screenWidth,
-              child: Column(
-                crossAxisAlignment: cross.center,
-                children: [
-                  Row(mainAxisAlignment: main.center, children: [
-                    onPressed(
-                        callback: () {
-                          sendRequestRevive();
-                          hud.state.observeMode = false;
-                        },
-                        child: border(
-                            child: text("Respawn", fontSize: 30),
-                            padding: padding8,
-                            radius: borderRadius4))
-                  ]),
-                  height32,
-                  text("Hold E to pan camera")
-                ],
-              )));
+      top: 30,
+      child: Container(
+          width: screenWidth,
+          child: Column(
+            crossAxisAlignment: cross.center,
+            children: [
+              Row(mainAxisAlignment: main.center, children: [
+                onPressed(
+                    callback: () {
+                      sendRequestRevive();
+                      hud.state.observeMode = false;
+                    },
+                    child: border(
+                        child: text("Respawn", fontSize: 30),
+                        padding: padding8,
+                        radius: borderRadius4))
+              ]),
+              height32,
+              text("Hold E to pan camera")
+            ],
+          )));
 }
 
 Widget buildTop() {
@@ -126,72 +118,84 @@ Widget buildTop() {
       ));
 }
 
-
 Widget buildTopRight() {
   double iconSize = 45;
 
-  Widget iconToggleFullscreen = Tooltip(
-    child: IconButton(
-        icon: Icon(fullScreenActive ? Icons.fullscreen_exit : Icons.fullscreen,
-            size: iconSize, color: Colors.white),
-        onPressed: toggleFullScreen),
-    message: fullScreenActive ? "Exit Fullscreen" : "Enter Fullscreen",
-  );
-  Widget iconToggleAudio = Tooltip(
+  return StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
+
+    hud.stateSetters.topRight = setState;
+
+    if (!hud.state.menuVisible) {
+      return Container();
+    }
+
+    Widget iconToggleFullscreen = Tooltip(
       child: IconButton(
           icon: Icon(
-              settings.audioMuted ? Icons.music_off : Icons.music_note_rounded,
+              fullScreenActive ? Icons.fullscreen_exit : Icons.fullscreen,
               size: iconSize,
               color: Colors.white),
-          onPressed: toggleAudioMuted),
-      message: settings.audioMuted ? "Resume Audio" : "Mute Audio");
+          onPressed: toggleFullScreen),
+      message: fullScreenActive ? "Exit Fullscreen" : "Enter Fullscreen",
+    );
+    Widget iconToggleAudio = Tooltip(
+        child: IconButton(
+            icon: Icon(
+                settings.audioMuted
+                    ? Icons.music_off
+                    : Icons.music_note_rounded,
+                size: iconSize,
+                color: Colors.white),
+            onPressed: toggleAudioMuted),
+        message: settings.audioMuted ? "Resume Audio" : "Mute Audio");
 
-  Widget iconTogglePaths = Tooltip(
-    child: IconButton(
-        icon: Icon(Icons.map, size: iconSize, color: Colors.white),
-        onPressed: () {
-          settings.compilePaths = !settings.compilePaths;
-          sendRequestSetCompilePaths(settings.compilePaths);
-        }),
-    message: "Toggle Paths",
-  );
+    Widget iconTogglePaths = Tooltip(
+      child: IconButton(
+          icon: Icon(Icons.map, size: iconSize, color: Colors.white),
+          onPressed: () {
+            settings.compilePaths = !settings.compilePaths;
+            sendRequestSetCompilePaths(settings.compilePaths);
+          }),
+      message: "Toggle Paths",
+    );
 
-  Widget buttonJoinGameOpenWorld = button('Open World', joinGameOpenWorld);
-  Widget buttonJoinGameCasual = button('Casual', joinGameCasual);
+    Widget buttonJoinGameOpenWorld = button('Open World', joinGameOpenWorld);
+    Widget buttonJoinGameCasual = button('Casual', joinGameCasual);
 
-  Widget iconToggleEditMode = Tooltip(
-    child: IconButton(
-        icon: Icon(Icons.edit, size: iconSize, color: Colors.white),
-        onPressed: toggleEditMode),
-    message: "Edit",
-  );
+    Widget iconToggleEditMode = Tooltip(
+      child: IconButton(
+          icon: Icon(Icons.edit, size: iconSize, color: Colors.white),
+          onPressed: toggleEditMode),
+      message: "Edit",
+    );
 
-  return Positioned(
-      top: 0,
-      right: 20,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          // if (compiledGame.gameType == GameType.Casual) buttonJoinGameOpenWorld,
-          // if (compiledGame.gameType == GameType.Open_World)
-          //   buttonJoinGameCasual,
-          if (settings.developMode) iconTogglePaths,
-          if (settings.developMode) width8,
-          if (settings.developMode) iconToggleEditMode,
-          iconToggleAudio,
-          width8,
-          iconToggleFullscreen,
-          if (settings.developMode) width8,
-          // iconMenu
-        ],
-      ));
+    return Positioned(
+        top: 0,
+        right: 20,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // if (compiledGame.gameType == GameType.Casual) buttonJoinGameOpenWorld,
+            // if (compiledGame.gameType == GameType.Open_World)
+            //   buttonJoinGameCasual,
+            if (settings.developMode) iconTogglePaths,
+            if (settings.developMode) width8,
+            if (settings.developMode) iconToggleEditMode,
+            iconToggleAudio,
+            width8,
+            iconToggleFullscreen,
+            if (settings.developMode) width8,
+            // iconMenu
+          ],
+        ));
+  });
 }
-
 
 Widget buildTopLeft() {
   Widget iconToggleFullscreen = Tooltip(
     child: IconButton(
-        icon: Icon(Icons.fullscreen, size: hud.properties.iconSize, color: Colors.white),
+        icon: Icon(Icons.fullscreen,
+            size: hud.properties.iconSize, color: Colors.white),
         onPressed: fullScreenEnter),
     message: "Fullscreen",
   );
@@ -234,33 +238,33 @@ Widget buildToggleScoreIcon() {
 Widget _buildServerText() {
   return StatefulBuilder(
       builder: (BuildContext context, StateSetter stateSetter) {
-        hud.stateSetters.npcMessage = stateSetter;
+    hud.stateSetters.npcMessage = stateSetter;
 
-        if (player.message.isEmpty) return blank;
+    if (player.message.isEmpty) return blank;
 
-        return Positioned(
-            child: Container(
-              width: screenWidth,
-              alignment: Alignment.center,
-              child: Container(
-                width: 300,
-                // height: 300 * goldenRatioInverse,
-                color: Colors.black45,
-                padding: padding16,
-                child: Column(
-                  children: [
-                    text(player.message),
-                    height16,
-                    button("Next", () {
-                      player.message = "";
-                      rebuildNpcMessage();
-                    }),
-                  ],
-                ),
-              ),
+    return Positioned(
+        child: Container(
+          width: screenWidth,
+          alignment: Alignment.center,
+          child: Container(
+            width: 300,
+            // height: 300 * goldenRatioInverse,
+            color: Colors.black45,
+            padding: padding16,
+            child: Column(
+              children: [
+                text(player.message),
+                height16,
+                button("Next", () {
+                  player.message = "";
+                  rebuildNpcMessage();
+                }),
+              ],
             ),
-            bottom: 100);
-      });
+          ),
+        ),
+        bottom: 100);
+  });
 }
 
 Widget _buildViewFortress() {
@@ -293,13 +297,12 @@ Widget buildSlot({String title}) {
   );
 }
 
-
 Widget buildImageSlot(
     {DecorationImage image,
-      double width,
-      double height,
-      double borderWidth = 1,
-      Color color}) {
+    double width,
+    double height,
+    double borderWidth = 1,
+    Color color}) {
   return Container(
     width: width,
     height: height,
@@ -312,8 +315,6 @@ Widget buildImageSlot(
     ),
   );
 }
-
-
 
 Widget buildEquipWeaponSlot({Weapon weapon, int index}) {
   return Stack(
@@ -350,7 +351,8 @@ Widget buildPurchaseWeaponSlot({Weapon weapon}) {
           callback: () {
             sendRequestPurchaseWeapon(weapon);
           }),
-      buildTag(price, color: player.credits >= price ? colours.green : colours.blood),
+      buildTag(price,
+          color: player.credits >= price ? colours.green : colours.blood),
     ],
   );
 }
@@ -384,7 +386,6 @@ Widget buildMedSlot() {
     buildTag(player.meds)
   ]);
 }
-
 
 Widget buildViewBottomLeft() {
   return StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
@@ -494,7 +495,8 @@ Widget buildViewScore() {
             ),
             width: width,
             padding: padding8,
-            height: width * (hud.state.expandScore ? goldenRatio : goldenRatioInverse),
+            height: width *
+                (hud.state.expandScore ? goldenRatio : goldenRatioInverse),
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: cross.start,
@@ -537,7 +539,6 @@ Widget buildViewScore() {
     }
   });
 }
-
 
 Widget _buildViewRespawn() {
   print("buildViewRespawn()");
@@ -633,11 +634,11 @@ Widget _buildViewRespawn() {
                                 children: [
                                   text("Youtube"),
                                   IconButton(
-                                    // onPressed: () {},
+                                      // onPressed: () {},
                                       icon: Icon(
-                                        Icons.link,
-                                        color: Colors.white,
-                                      ))
+                                    Icons.link,
+                                    color: Colors.white,
+                                  ))
                                 ],
                               ),
                             ),
@@ -711,20 +712,20 @@ Widget _buildViewRespawn() {
                       width16,
                       mouseOver(
                           builder: (BuildContext context, bool mouseOver) {
-                            return onPressed(
-                              child: border(
-                                  child: text("RESPAWN",
-                                      fontWeight: bold,
-                                      decoration: mouseOver ? underline : null),
-                                  padding: padding16,
-                                  radius: borderRadius4,
-                                  color: Colors.white,
-                                  width: 1,
-                                  fillColor: mouseOver ? black54 : black26),
-                              callback: sendRequestRevive,
-                              hint: "Click to respawn",
-                            );
-                          })
+                        return onPressed(
+                          child: border(
+                              child: text("RESPAWN",
+                                  fontWeight: bold,
+                                  decoration: mouseOver ? underline : null),
+                              padding: padding16,
+                              radius: borderRadius4,
+                              color: Colors.white,
+                              width: 1,
+                              fillColor: mouseOver ? black54 : black26),
+                          callback: sendRequestRevive,
+                          hint: "Click to respawn",
+                        );
+                      })
                     ],
                   ),
                 ],
@@ -734,7 +735,6 @@ Widget _buildViewRespawn() {
     ),
   );
 }
-
 
 Widget buildWeaponButton(Weapon weapon) {
   return GestureDetector(
@@ -754,10 +754,11 @@ Widget buildImageButton(DecorationImage image, Function onTap,
         width: width,
         height: 50,
         decoration: BoxDecoration(
-            color: Colors.black45, border: hud.properties.border, image: image)),
+            color: Colors.black45,
+            border: hud.properties.border,
+            image: image)),
   );
 }
-
 
 Future<void> showChangeNameDialog() async {
   return showDialog<void>(
@@ -784,12 +785,13 @@ Future<void> showChangeNameDialog() async {
         actions: <Widget>[
           TextButton(
             child: const Text('PLAY'),
-            onPressed: hud.textEditingControllers.playerName.text.trim().length > 2
-                ? () {
-              // sendRequestSpawn(playerNameController.text.trim());
-              Navigator.of(context).pop();
-            }
-                : null,
+            onPressed:
+                hud.textEditingControllers.playerName.text.trim().length > 2
+                    ? () {
+                        // sendRequestSpawn(playerNameController.text.trim());
+                        Navigator.of(context).pop();
+                      }
+                    : null,
           ),
         ],
       );
@@ -815,7 +817,6 @@ Widget buildLoadingScreen() {
     ],
   );
 }
-
 
 Widget buildGameUI(BuildContext context) {
   if (globalSize == null) {
@@ -919,7 +920,6 @@ Widget buildRow(int amount, String name, Function onPressed) {
   );
 }
 
-
 Widget _buildViewBottomRight() {
   return Positioned(
     right: 5,
@@ -943,7 +943,8 @@ Widget _buildViewBottomRight() {
           child: Column(
             crossAxisAlignment: cross.center,
             children: [
-              if ((player.dead && !hud.state.observeMode) | hud.state.showServers)
+              if ((player.dead && !hud.state.observeMode) |
+                  hud.state.showServers)
                 onPressed(
                     callback: disconnect,
                     child: Container(
@@ -952,7 +953,8 @@ Widget _buildViewBottomRight() {
                       child: text("Disconnect"),
                       padding: padding4,
                     )),
-              if ((player.dead && !hud.state.observeMode) || hud.state.showServers)
+              if ((player.dead && !hud.state.observeMode) ||
+                  hud.state.showServers)
                 buildServerList(),
               Container(
                   padding: padding4, child: text(getServerName(currentServer))),
@@ -961,7 +963,6 @@ Widget _buildViewBottomRight() {
     ),
   );
 }
-
 
 Widget buildServerList() {
   return Column(
@@ -978,15 +979,14 @@ Widget buildServerList() {
               padding: padding4,
               decoration: active
                   ? BoxDecoration(
-                  border: Border.all(width: 2, color: Colors.white),
-                  borderRadius: borderRadius4)
+                      border: Border.all(width: 2, color: Colors.white),
+                      borderRadius: borderRadius4)
                   : null,
               margin: const EdgeInsets.only(bottom: 16),
               child: text(getServerName(server)),
             ));
       }).toList());
 }
-
 
 Widget buildGameInfoDeathMatch() {
   return Positioned(
@@ -1001,13 +1001,12 @@ Widget buildGameInfoDeathMatch() {
 Widget buildGameOver() {
   return Positioned(
       child: Container(
-        width: globalSize.width,
-        height: globalSize.height,
-        color: Colors.black45,
-        child: button("Game Over", clearState, fontSize: 30),
-      ));
+    width: globalSize.width,
+    height: globalSize.height,
+    color: Colors.black45,
+    child: button("Game Over", clearState, fontSize: 30),
+  ));
 }
-
 
 Widget buildViewWin() {
   return Positioned(
@@ -1025,7 +1024,6 @@ Widget buildViewWin() {
         ),
       ));
 }
-
 
 Widget buildViewLose() {
   return Positioned(
@@ -1051,9 +1049,9 @@ Widget buildDialog(Widget child) {
 
 void drawRing(Ring ring,
     {double percentage,
-      Color color,
-      Offset position,
-      Color backgroundColor = Colors.white}) {
+    Color color,
+    Offset position,
+    Color backgroundColor = Colors.white}) {
   setStrokeWidth(6);
   setColor(backgroundColor);
   for (int i = 0; i < ring.points.length - 1; i++) {
