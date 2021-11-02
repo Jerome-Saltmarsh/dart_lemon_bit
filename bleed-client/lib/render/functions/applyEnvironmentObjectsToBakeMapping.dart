@@ -2,6 +2,7 @@ import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
 import 'package:bleed_client/render/drawCanvas.dart';
+import 'package:bleed_client/render/functions/applyLightBright.dart';
 import 'package:bleed_client/state.dart';
 
 void applyEnvironmentObjectsToBakeMapping(){

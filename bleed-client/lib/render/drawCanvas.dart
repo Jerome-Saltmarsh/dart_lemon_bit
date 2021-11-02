@@ -298,7 +298,7 @@ void applyShadeBright(List<List<Shading>> shader, int row, int column) {
 }
 
 
-void applyMediumShade(List<List<Shading>> shader, int row, int column) {
+void applyShadeMedium(List<List<Shading>> shader, int row, int column) {
   applyShade(shader, row, column, Shading.Medium);
 }
 
@@ -309,7 +309,7 @@ void applyDarkShade(List<List<Shading>> shader, int row, int column) {
 void applyLightMedium(List<List<Shading>> shader, double x, double y) {
   int column = getColumn(x, y);
   int row = getRow(x, y);
-  applyMediumShade(shader, row, column);
+  applyShadeMedium(shader, row, column);
 
   if (row > 1){
     applyDarkShade(shader, row - 2, column);
@@ -365,113 +365,28 @@ void applyLightMedium(List<List<Shading>> shader, double x, double y) {
   }
 
   if (row > 0) {
-    applyMediumShade(shader, row - 1, column);
+    applyShadeMedium(shader, row - 1, column);
     if (column > 0) {
-      applyMediumShade(shader, row - 1, column - 1);
+      applyShadeMedium(shader, row - 1, column - 1);
     }
     if (column + 1 < compiledGame.totalColumns) {
-      applyMediumShade(shader, row - 1, column + 1);
+      applyShadeMedium(shader, row - 1, column + 1);
     }
   }
   if (column > 0) {
-    applyMediumShade(shader, row, column - 1);
+    applyShadeMedium(shader, row, column - 1);
   }
   if (column + 1 < compiledGame.totalColumns) {
-    applyMediumShade(shader, row, column + 1);
+    applyShadeMedium(shader, row, column + 1);
     if (row + 1 < compiledGame.totalRows) {
-      applyMediumShade(shader, row + 1, column + 1);
+      applyShadeMedium(shader, row + 1, column + 1);
     }
   }
   if (row + 1 < compiledGame.totalRows) {
-    applyMediumShade(shader, row + 1, column);
+    applyShadeMedium(shader, row + 1, column);
 
     if (column > 0) {
-      applyMediumShade(shader, row + 1, column - 1);
-    }
-  }
-}
-
-void applyLightBright(List<List<Shading>> shader, double x, double y) {
-  int column = getColumn(x, y);
-  int row = getRow(x, y);
-  applyShadeBright(shader, row, column);
-
-  if (row > 1){
-    applyDarkShade(shader, row - 2, column);
-    if (column > 0) {
-      applyDarkShade(shader, row - 2, column - 1);
-    }
-    if (column > 1) {
-      applyDarkShade(shader, row - 2, column - 2);
-    }
-    if (column < compiledGame.totalColumns - 1){
-      applyDarkShade(shader, row - 2, column + 1);
-    }
-    if (column < compiledGame.totalColumns - 2){
-      applyDarkShade(shader, row - 2, column + 2);
-    }
-  }
-  if (row < compiledGame.totalRows - 2){
-    applyDarkShade(shader, row + 2, column);
-
-    if (column > 0) {
-      applyDarkShade(shader, row + 2, column - 1);
-    }
-    if (column > 1) {
-      applyDarkShade(shader, row + 2, column - 2);
-    }
-    if (column < compiledGame.totalColumns - 1){
-      applyDarkShade(shader, row + 2, column + 1);
-    }
-    if (column < compiledGame.totalColumns - 2){
-      applyDarkShade(shader, row + 2, column + 2);
-    }
-  }
-
-  if (column > 0) {
-    applyDarkShade(shader, row, column - 2);
-
-    if (row > 0){
-      applyDarkShade(shader, row - 1, column - 2);
-    }
-    if (row < compiledGame.totalRows - 1){
-      applyDarkShade(shader, row + 1, column - 2);
-    }
-  }
-  if (column < compiledGame.totalColumns - 1){
-    applyDarkShade(shader, row, column + 2);
-
-    if (row > 0){
-      applyDarkShade(shader, row - 1, column + 2);
-    }
-    if (row < compiledGame.totalRows - 1){
-      applyDarkShade(shader, row + 1, column + 2);
-    }
-  }
-
-  if (row > 0) {
-    applyMediumShade(shader, row - 1, column);
-    if (column > 0) {
-      applyMediumShade(shader, row - 1, column - 1);
-    }
-    if (column + 1 < compiledGame.totalColumns) {
-      applyMediumShade(shader, row - 1, column + 1);
-    }
-  }
-  if (column > 0) {
-    applyMediumShade(shader, row, column - 1);
-  }
-  if (column + 1 < compiledGame.totalColumns) {
-    applyMediumShade(shader, row, column + 1);
-    if (row + 1 < compiledGame.totalRows) {
-      applyMediumShade(shader, row + 1, column + 1);
-    }
-  }
-  if (row + 1 < compiledGame.totalRows) {
-    applyMediumShade(shader, row + 1, column);
-
-    if (column > 0) {
-      applyMediumShade(shader, row + 1, column - 1);
+      applyShadeMedium(shader, row + 1, column - 1);
     }
   }
 }
