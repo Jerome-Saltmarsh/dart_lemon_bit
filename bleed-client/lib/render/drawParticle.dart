@@ -36,7 +36,13 @@ void drawParticle(Particle particle){
       break;
     case ParticleType.Shell:
       double size = 1.33 * scaleShift;
-      drawCircle(x, y + heightShift, size * scaleShift, Colors.white);
+      Color color = colours.white;
+      if (shading == Shading.Dark){
+        color = colours.grey;
+      }else if (shading == Shading.Medium){
+        color = colours.greyDark;
+      }
+      drawCircle(x, y + heightShift, size * scaleShift, color);
       break;
     case ParticleType.Blood:
       double size = 2.5;

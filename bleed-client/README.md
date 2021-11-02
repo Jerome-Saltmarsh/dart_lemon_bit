@@ -95,6 +95,7 @@
 [ ] NPC 3d render
 [ ] FIX Zombies Collision
 [ ] FIX Npc aim
+[ ] Flash light on gunshot
 [ ] Particle dynamic lighting
 [ ] Zombie death particles
 [ ] Zombie Shadow
