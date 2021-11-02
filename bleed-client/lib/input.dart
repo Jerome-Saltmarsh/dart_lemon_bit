@@ -167,8 +167,6 @@ void setAmbientLightVeryDark(){
   setAmbientLight(Shading.VeryDark);
 }
 
-
-
 void _onKeyPressedEnter(){
   print("_onKeyPressedEnter()");
   hud.state.textBoxVisible ? sendAndCloseTextBox() : showTextBox();

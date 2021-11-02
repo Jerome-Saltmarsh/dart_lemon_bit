@@ -9,6 +9,9 @@ import 'package:bleed_client/engine/functions/onScreen.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
+import 'package:bleed_client/enums/Shading.dart';
+import 'package:bleed_client/getters/getShading.dart';
+import 'package:bleed_client/getters/inDarkness.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
 import 'package:bleed_client/render/drawInteractableNpcs.dart';
@@ -249,6 +252,7 @@ void drawBulletHoles(List<Vector2> bulletHoles) {
   for (Vector2 bulletHole in bulletHoles) {
     if (bulletHole.x == 0) return;
     if (!onScreen(bulletHole.x, bulletHole.y)) continue;
+    if (inDarkness(bulletHole.x, bulletHole.y)) continue;
     drawCircle(bulletHole.x, bulletHole.y, 2, Colors.black);
   }
 }
