@@ -39,7 +39,7 @@ Image mapEnvironmentObjectTypeToImage(EnvironmentObjectType type){
     case EnvironmentObjectType.Character:
       return images.isoCharacter;
     case EnvironmentObjectType.LongGrass:
-      return images.longGrass;
+      return images.longGrassNormal;
     default:
       throw Exception("cannot map type");
   }

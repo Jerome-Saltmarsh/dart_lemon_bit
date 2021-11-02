@@ -293,6 +293,18 @@ void applyLightingToEnvironmentObjects() {
           environmentObject.image = images.house;
           continue;
       }
+    } else if (environmentObject.type == EnvironmentObjectType.LongGrass) {
+      switch (shade) {
+        case Shading.Bright:
+          environmentObject.image = images.longGrassBright;
+          continue;
+        case Shading.Medium:
+          environmentObject.image = images.longGrassNormal;
+          continue;
+        case Shading.Dark:
+          environmentObject.image = images.longGrassDark;
+          continue;
+      }
     }
   }
 }

@@ -81,7 +81,9 @@ class _Images {
   Image zombieIdleMedium;
   Image zombieIdleDark;
   Image empty;
-  Image longGrass;
+  Image longGrassBright;
+  Image longGrassNormal;
+  Image longGrassDark;
 
   List<Image> flames = [];
 
@@ -90,7 +92,9 @@ class _Images {
   }
 
   Future load() async {
-    longGrass = await _png('long-grass');
+    longGrassBright = await _png('long-grass-bright');
+    longGrassNormal = await _png('long-grass-normal');
+    longGrassDark = await _png('long-grass-dark');
     human = await loadImage("images/character.png");
     tiles = await loadImage("images/tiles.png");
     zombie = await loadImage("images/zombie.png");

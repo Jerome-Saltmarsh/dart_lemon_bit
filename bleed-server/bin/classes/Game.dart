@@ -563,7 +563,7 @@ extension GameFunctions on Game {
           if (!targetWithinFiringRange(npc, npc.target)) break;
           characterAimAt(npc, npc.target.x, npc.target.y);
           setCharacterState(npc, CharacterState.Firing);
-          break;
+          return;
       }
 
       // @on npc update find
