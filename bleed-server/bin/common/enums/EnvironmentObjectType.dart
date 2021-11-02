@@ -14,7 +14,8 @@ enum EnvironmentObjectType {
   Bridge,
   Tree_Stump,
   Rock_Small,
-  Character
+  Character,
+  LongGrass
 }
 
 final List<EnvironmentObjectType> environmentObjectTypes = EnvironmentObjectType.values;
