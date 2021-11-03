@@ -82,13 +82,14 @@ class Player extends Character {
     this.grenades = 0,
     this.meds = 0,
     this.lives = 0,
+    Weapon weapon = Weapon.HandGun,
     required this.clips,
     required this.rounds,
     int squad = noSquad,
   }) : super(
             x: x,
             y: y,
-            weapon: Weapon.HandGun,
+            weapon: weapon,
             health: settings.health.player,
             speed: settings.playerSpeed,
             squad: squad) {

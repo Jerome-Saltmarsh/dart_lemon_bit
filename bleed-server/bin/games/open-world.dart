@@ -117,9 +117,10 @@ class OpenWorld extends Game {
       x: playerSpawnX,
       y: playerSpawnY,
       inventory: Inventory(0, 0, []),
-      clips: Clips(assaultRifle: 100),
+      clips: Clips(),
       rounds: Rounds(),
       squad: 1,
+      weapon: Weapon.Unarmed,
     );
   }
 

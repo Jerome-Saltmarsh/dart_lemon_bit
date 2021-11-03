@@ -803,6 +803,10 @@ extension GameFunctions on Game {
         break;
       case CharacterState.Firing:
         // @on character firing weapon
+        if (character.weapon == Weapon.Unarmed) {
+          setCharacterState(character, CharacterState.Striking);
+          return;
+        }
         _characterFireWeapon(character);
         break;
       case CharacterState.Striking:
