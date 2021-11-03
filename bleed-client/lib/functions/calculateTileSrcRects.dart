@@ -3,6 +3,7 @@ import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
 import 'package:bleed_client/render/state/dynamicShading.dart';
+import 'package:bleed_client/render/state/tilesRects.dart';
 import 'package:bleed_client/state.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -15,8 +16,8 @@ void calculateTileSrcRects() {
       Shading shading = dynamicShading[row][column];
 
       if (shading == Shading.VeryDark) {
-        render.tilesRects[i] = rectSrcDarkness.left;
-        render.tilesRects[i + 2] = rectSrcDarkness.right;
+        tilesRects[i] = rectSrcDarkness.left;
+        tilesRects[i + 2] = rectSrcDarkness.right;
         i += 4;
         continue;
       }
@@ -30,8 +31,8 @@ void calculateTileSrcRects() {
         left += 96;
       }
 
-      render.tilesRects[i] = left;
-      render.tilesRects[i + 2] = left + 48;
+      tilesRects[i] = left;
+      tilesRects[i + 2] = left + 48;
       i += 4;
     }
   }

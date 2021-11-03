@@ -28,7 +28,6 @@ class _RenderState {
   List<List<Vector2>> paths = [];
   List<FloatingText> floatingText = [];
 
-  Float32List tilesRects;
 
 
   Render items = Render();

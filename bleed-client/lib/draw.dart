@@ -12,6 +12,7 @@ import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/getters/inDarkness.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
+import 'package:bleed_client/render/state/tilesRects.dart';
 import 'package:bleed_client/render/state/tilesRstTransforms.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ void drawTileList() {
   globalCanvas.drawRawAtlas(
       images.tiles,
       tilesRstTransforms,
-      render.tilesRects,
+      tilesRects,
       null,
       null,
       null,
@@ -48,7 +49,7 @@ void renderTiles(List<List<Tile>> tiles) {
 
   int total = rects.length * 4;
   tilesRstTransforms = Float32List(total);
-  Float32List tileRects = Float32List(total);
+  tilesRects = Float32List(total);
 
   for (int i = 0; i < rects.length; ++i) {
     final int index0 = i * 4;
@@ -61,13 +62,11 @@ void renderTiles(List<List<Tile>> tiles) {
     tilesRstTransforms[index1] = rstTransform.ssin;
     tilesRstTransforms[index2] = rstTransform.tx;
     tilesRstTransforms[index3] = rstTransform.ty + 24;
-    tileRects[index0] = rect.left;
-    tileRects[index1] = 0;
-    tileRects[index2] = rect.right;
-    tileRects[index3] = 48;
+    tilesRects[index0] = rect.left;
+    tilesRects[index1] = 0;
+    tilesRects[index2] = rect.right;
+    tilesRects[index3] = 48;
   }
-
-  render.tilesRects = tileRects;
 }
 
 void _processTileTransforms(List<List<Tile>> tiles) {
