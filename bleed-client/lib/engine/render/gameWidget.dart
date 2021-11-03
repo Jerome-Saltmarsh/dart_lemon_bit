@@ -8,6 +8,7 @@ import 'package:bleed_client/engine/state/backgroundColor.dart';
 import 'package:bleed_client/engine/state/buildContext.dart';
 import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
+import 'package:bleed_client/engine/state/draw.dart';
 import 'package:bleed_client/engine/state/mouseDragging.dart';
 import 'package:bleed_client/engine/state/primarySwatch.dart';
 import 'package:bleed_client/engine/state/screen.dart';
@@ -100,10 +101,6 @@ abstract class GameWidget extends StatefulWidget {
     update();
     _clickProcessed = true;
   }
-
-
-  /// used to draw the game
-  void draw(Canvas canvas, Size size);
 
   void drawForeground(Canvas canvas, Size size);
 
@@ -235,7 +232,7 @@ class _GameWidgetState extends State<GameWidget> {
                 height: widget.screenSize.height,
                 child: CustomPaint(
                     painter:
-                        GamePainter(paintGame: widget.draw, repaint: _frame),
+                        GamePainter(paintGame: draw, repaint: _frame),
                     foregroundPainter: GamePainter(
                         paintGame: widget.drawForeground,
                         repaint: _foregroundFrame)),
@@ -262,6 +259,9 @@ class GamePainter extends CustomPainter {
   void paint(Canvas _canvas, Size _size) {
     globalCanvas = _canvas;
     globalSize = _size;
+    _canvas.scale(zoom, zoom);
+    _canvas.translate(-camera.x, -camera.y);
+    draw(_canvas, _size);
     paintGame(_canvas, _size);
   }
 
