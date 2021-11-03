@@ -4,7 +4,7 @@ import 'package:bleed_client/render/drawCanvas.dart';
 import 'package:bleed_client/render/functions/applyLightBright.dart';
 import 'package:bleed_client/variables/lantern.dart';
 
-void applyLightingToCharacters(List<Character> characters) {
+void applyCharacterLightEmission(List<Character> characters) {
   for (Character character in characters) {
     if (lantern){
       applyLightBright(render.dynamicShading, character.x, character.y);

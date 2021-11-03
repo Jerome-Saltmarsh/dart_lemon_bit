@@ -13,7 +13,6 @@ import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
-import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/editor/render/drawEditor.dart';
 import 'package:bleed_client/engine/functions/drawCircle.dart';
 import 'package:bleed_client/engine/functions/drawText.dart';
@@ -31,7 +30,6 @@ import 'package:bleed_client/mappers/mapCrateToRSTransform.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
 import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
 import 'package:bleed_client/mappers/mapItemToRect.dart';
-import 'package:bleed_client/mappers/mapShadeToTileImage.dart';
 import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/network/state/connected.dart';
@@ -45,10 +43,7 @@ import 'package:bleed_client/state/getTileAt.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
-import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/variables/ambientLight.dart';
-import 'package:bleed_client/variables/phase.dart';
-import 'package:bleed_client/variables/time.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -64,6 +59,9 @@ final double _anchorY = 80;
 final double _nameRadius = 100;
 final double charWidth = 4.5;
 final Ring _healthRing = Ring(16);
+final double _light = 100;
+final double _medium = 250;
+final double _dark = 400;
 int _flameIndex = 0;
 
 void drawCanvas(Canvas canvass, Size _size) {
@@ -124,9 +122,8 @@ void _drawCompiledGame() {
   frameRateValue++;
   if (frameRateValue % frameRate == 0) {
     drawFrame++;
-    _flameIndex = (_flameIndex + 1) % 3;
-
-    if (ambientLight != Shading.Bright){
+    if (ambientLight != Shading.Bright) {
+      _flameIndex = (_flameIndex + 1) % 3;
       for (EnvironmentObject torch in compiledGame.torches) {
         torch.image = images.flames[_flameIndex];
       }
@@ -139,8 +136,8 @@ void _drawCompiledGame() {
     }
   }
 
-  applyLightingToCharacters(compiledGame.humans);
-  applyLightingToCharacters(compiledGame.interactableNpcs);
+  applyCharacterLightEmission(compiledGame.humans);
+  applyCharacterLightEmission(compiledGame.interactableNpcs);
   applyLightingToEnvironmentObjects();
 
   calculateTileSrcRects();
@@ -172,7 +169,7 @@ void applyLightingToEnvironmentObjects() {
     Shading shade = render.dynamicShading[environmentObject.tileRow]
         [environmentObject.tileColumn];
 
-    if (shade == Shading.VeryDark){
+    if (shade == Shading.VeryDark) {
       environmentObject.image = images.empty;
       continue;
     }
@@ -310,7 +307,8 @@ void applyLightingToEnvironmentObjects() {
   }
 }
 
-void applyShade(List<List<Shading>> shader, int row, int column, Shading value){
+void applyShade(
+    List<List<Shading>> shader, int row, int column, Shading value) {
   if (shader[row][column].index <= value.index) return;
   shader[row][column] = value;
 }
@@ -319,8 +317,7 @@ void applyShadeBright(List<List<Shading>> shader, int row, int column) {
   applyShade(shader, row, column, Shading.Bright);
 }
 
-
-void  applyShadeMedium(List<List<Shading>> shader, int row, int column) {
+void applyShadeMedium(List<List<Shading>> shader, int row, int column) {
   applyShade(shader, row, column, Shading.Medium);
 }
 
@@ -333,7 +330,7 @@ void applyLightMedium(List<List<Shading>> shader, double x, double y) {
   int row = getRow(x, y);
   applyShadeMedium(shader, row, column);
 
-  if (row > 1){
+  if (row > 1) {
     applyShadeDark(shader, row - 2, column);
     if (column > 0) {
       applyShadeDark(shader, row - 2, column - 1);
@@ -341,14 +338,14 @@ void applyLightMedium(List<List<Shading>> shader, double x, double y) {
     if (column > 1) {
       applyShadeDark(shader, row - 2, column - 2);
     }
-    if (column < compiledGame.totalColumns - 1){
+    if (column < compiledGame.totalColumns - 1) {
       applyShadeDark(shader, row - 2, column + 1);
     }
-    if (column < compiledGame.totalColumns - 2){
+    if (column < compiledGame.totalColumns - 2) {
       applyShadeDark(shader, row - 2, column + 2);
     }
   }
-  if (row < compiledGame.totalRows - 2){
+  if (row < compiledGame.totalRows - 2) {
     applyShadeDark(shader, row + 2, column);
 
     if (column > 0) {
@@ -357,10 +354,10 @@ void applyLightMedium(List<List<Shading>> shader, double x, double y) {
     if (column > 1) {
       applyShadeDark(shader, row + 2, column - 2);
     }
-    if (column < compiledGame.totalColumns - 1){
+    if (column < compiledGame.totalColumns - 1) {
       applyShadeDark(shader, row + 2, column + 1);
     }
-    if (column < compiledGame.totalColumns - 2){
+    if (column < compiledGame.totalColumns - 2) {
       applyShadeDark(shader, row + 2, column + 2);
     }
   }
@@ -368,20 +365,20 @@ void applyLightMedium(List<List<Shading>> shader, double x, double y) {
   if (column > 0) {
     applyShadeDark(shader, row, column - 2);
 
-    if (row > 0){
+    if (row > 0) {
       applyShadeDark(shader, row - 1, column - 2);
     }
-    if (row < compiledGame.totalRows - 1){
+    if (row < compiledGame.totalRows - 1) {
       applyShadeDark(shader, row + 1, column - 2);
     }
   }
-  if (column < compiledGame.totalColumns - 1){
+  if (column < compiledGame.totalColumns - 1) {
     applyShadeDark(shader, row, column + 2);
 
-    if (row > 0){
+    if (row > 0) {
       applyShadeDark(shader, row - 1, column + 2);
     }
-    if (row < compiledGame.totalRows - 1){
+    if (row < compiledGame.totalRows - 1) {
       applyShadeDark(shader, row + 1, column + 2);
     }
   }
@@ -413,21 +410,6 @@ void applyLightMedium(List<List<Shading>> shader, double x, double y) {
   }
 }
 
-void drawDynamicTiles() {
-  int rows = compiledGame.tiles.length;
-  int columns = compiledGame.tiles[0].length;
-
-  for (int row = 0; row < rows; row++) {
-    for (int column = 0; column < columns; column++) {
-      drawDynamicTile(row, column);
-    }
-  }
-}
-
-double _light = 100;
-double _medium = 250;
-double _dark = 400;
-
 Shading calculateShadeAt(double x, double y) {
   Shading shading = Shading.Dark;
 
@@ -447,28 +429,6 @@ Shading calculateShadeAt(double x, double y) {
   }
   return shading;
 }
-
-void drawDynamicTile(int row, int column) {
-  double x = getTileWorldX(row, column);
-  double y = getTileWorldY(row, column);
-  if (!onScreen(x, y)) return;
-
-  Shading shading = calculateShadeAt(x, y);
-  // Shading shading = Shading.Bright;
-
-  Tile tile = compiledGame.tiles[row][column];
-  if (isBlock(tile)) return;
-
-  Rect dst = Rect.fromLTWH(x - 24, y - 36, 48, 72);
-  Rect src = mapTileToSrcRect(tile);
-  drawImageRect(mapShadeToImage(shading), src, dst);
-}
-
-// Rect mapTileToDstRect(int row, int column) {
-//   double x = getTileWorldX(row, column);
-//   double y = getTileWorldY(row, column);
-//   return Rect.fromLTWH(x - 24, y - 24, 48, 48);
-// }
 
 void _drawFloatingTexts() {
   for (FloatingText floatingText in render.floatingText) {
