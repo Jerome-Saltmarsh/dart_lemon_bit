@@ -26,6 +26,7 @@ Offset _mousePosition;
 Offset _previousMousePosition;
 Offset _mouseDelta;
 bool _clickProcessed = true;
+StateSetter uiSetState;
 
 // global properties
 Offset get mousePosition => _mousePosition;
@@ -122,8 +123,6 @@ abstract class GameWidget extends StatefulWidget {
   @override
   _GameWidgetState createState() => _GameWidgetState();
 }
-
-StateSetter uiSetState;
 
 void redrawCanvas() {
   _frame.value++;

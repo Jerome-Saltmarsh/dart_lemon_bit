@@ -145,5 +145,13 @@ Image mapEnvironmentObjectToToShadedImage(EnvironmentObject environmentObject, S
     return images.house02;
   }
 
+  if (environmentObject.type == EnvironmentObjectType.SmokeEmitter){
+    return images.empty;
+  }
+
+  if (environmentObject.type == EnvironmentObjectType.MystEmitter){
+    return images.empty;
+  }
+
   throw Exception("Could not map ${environmentObject.type} to image");
 }

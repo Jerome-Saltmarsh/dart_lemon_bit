@@ -92,7 +92,6 @@
 [ ] FIX Npc aim
 [ ] Npc view range decreases at night
 [ ] Flash light on gunshot
-[ ] Particle dynamic lighting
 [ ] Zombie death particles
 [ ] Zombie Shadow
 [ ] Audio walk on grass
@@ -100,6 +99,7 @@
 [ ] Add fireplace with smoke emitter
 [ ] NPC draw order
 [ ] Fix save environment issues
+[x] Particle dynamic lighting
 [x] Environment Object: Bush
 [x] Shading Very Dark
 [x] Day / Night

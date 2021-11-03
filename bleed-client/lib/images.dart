@@ -41,6 +41,7 @@ class _Images {
   Image graveMedium;
   Image graveDark;
   Image circle64;
+  Image circle;
   Image radial64_50;
   Image radial64_40;
   Image radial64_30;
@@ -131,6 +132,7 @@ class _Images {
     graveMedium = await loadImage("images/grave-medium.png");
     graveDark = await loadImage("images/grave-dark.png");
     circle64 = await loadImage("images/circle-64.png");
+    circle = await _png("circle");
     radial64_50 = await loadImage("images/radial-64-50.png");
     radial64_40 = await loadImage("images/radial-64-40.png");
     radial64_30 = await loadImage("images/radial-64-30.png");

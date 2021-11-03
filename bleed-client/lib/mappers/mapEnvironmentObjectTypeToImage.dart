@@ -25,9 +25,9 @@ Image mapEnvironmentObjectTypeToImage(EnvironmentObjectType type){
     case EnvironmentObjectType.Grave:
       return images.graveBright;
     case EnvironmentObjectType.SmokeEmitter:
-      return images.circle64;
+      return images.circle;
     case EnvironmentObjectType.MystEmitter:
-      return images.circle64;
+      return images.circle;
     case EnvironmentObjectType.Torch:
       return images.torch_01;
     case EnvironmentObjectType.Bridge:
