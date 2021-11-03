@@ -9,6 +9,7 @@ import 'package:bleed_client/engine/state/buildContext.dart';
 import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/draw.dart';
+import 'package:bleed_client/engine/state/drawForeground.dart';
 import 'package:bleed_client/engine/state/mouseDragging.dart';
 import 'package:bleed_client/engine/state/primarySwatch.dart';
 import 'package:bleed_client/engine/state/screen.dart';
@@ -83,8 +84,6 @@ abstract class GameWidget extends StatefulWidget {
   DateTime previousUpdateTime = DateTime.now();
   Duration frameDuration = Duration();
 
-  int targetFPS() => 45;
-
   Future init();
 
   void _internalUpdate() {
@@ -101,8 +100,6 @@ abstract class GameWidget extends StatefulWidget {
     update();
     _clickProcessed = true;
   }
-
-  void drawForeground(Canvas canvas, Size size);
 
   void onMouseClick() {}
 
@@ -131,6 +128,10 @@ void _doNothing() {}
 
 final _frame = ValueNotifier<int>(0);
 final _foregroundFrame = ValueNotifier<int>(0);
+const int framesPerSecond  = 60;
+const int millisecondsPerSecond = 1000;
+const int millisecondsPerFrame = millisecondsPerSecond ~/ framesPerSecond;
+const Duration _updateDuration = Duration(milliseconds: millisecondsPerFrame);
 
 class _GameWidgetState extends State<GameWidget> {
   Timer _updateTimer;
@@ -141,8 +142,7 @@ class _GameWidgetState extends State<GameWidget> {
 
   @override
   void initState() {
-    _updateTimer = Timer.periodic(
-        Duration(milliseconds: 1000 ~/ widget.targetFPS()), _update);
+    _updateTimer = Timer.periodic(_updateDuration, _update);
     widget.init();
     disableRightClickContextMenu();
     paint.isAntiAlias = false;
@@ -234,7 +234,7 @@ class _GameWidgetState extends State<GameWidget> {
                     painter:
                         GamePainter(paintGame: draw, repaint: _frame),
                     foregroundPainter: GamePainter(
-                        paintGame: widget.drawForeground,
+                        paintGame: drawForeground,
                         repaint: _foregroundFrame)),
               )),
         ),
