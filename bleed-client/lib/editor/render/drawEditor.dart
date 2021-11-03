@@ -10,7 +10,7 @@ import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/editState.dart';
 import 'package:flutter/material.dart';
 
-void renderEditorOnToCanvas() {
+void renderCanvasEdit() {
   drawTiles();
   drawEnvironmentObjects();
 

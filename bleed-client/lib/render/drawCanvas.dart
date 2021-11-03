@@ -10,7 +10,6 @@ import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
-import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/editor/render/drawEditor.dart';
 import 'package:bleed_client/engine/functions/drawCircle.dart';
 import 'package:bleed_client/engine/functions/drawText.dart';
@@ -24,11 +23,8 @@ import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/engine/state/screen.dart';
 import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/functions/applyLightingToEnvironmentObjects.dart';
-import 'package:bleed_client/functions/applyShade.dart';
 import 'package:bleed_client/functions/calculateTileSrcRects.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
-import 'package:bleed_client/mappers/mapEnvironmentObjectToShadedImage.dart';
-import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/mappers/mapCrateToRSTransform.dart';
 import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
 import 'package:bleed_client/mappers/mapItemToRect.dart';
@@ -38,11 +34,9 @@ import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/rects.dart';
 import 'package:bleed_client/render/drawCharacterMan.dart';
 import 'package:bleed_client/render/drawCharacterZombie.dart';
-import 'package:bleed_client/render/drawEnvironmentObjects.dart';
 import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
 import 'package:bleed_client/render/functions/drawBullets.dart';
 import 'package:bleed_client/state/colours.dart';
-import 'package:bleed_client/state/getTileAt.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
@@ -53,30 +47,26 @@ import 'package:flutter/material.dart';
 import '../draw.dart';
 import '../images.dart';
 import '../state.dart';
-import 'drawBullet.dart';
 import 'drawGrenade.dart';
 import 'drawParticle.dart';
 
 final double _nameRadius = 100;
 final double charWidth = 4.5;
 final Ring _healthRing = Ring(16);
-final double _light = 100;
-final double _medium = 250;
-final double _dark = 400;
 int _flameIndex = 0;
 
 void drawCanvas(Canvas canvass, Size _size) {
   if (editMode) {
-    renderEditorOnToCanvas();
+    renderCanvasEdit();
     return;
   }
 
   if (!connected) return;
   if (compiledGame.gameId < 0) return;
-  renderCompileGameOnToCanvas();
+  renderCanvasPlay();
 }
 
-void renderCompileGameOnToCanvas() {
+void renderCanvasPlay() {
   _updateAnimations();
   _resetDynamicShadesToBakeMap();
   applyCharacterLightEmission(compiledGame.humans);
@@ -123,27 +113,6 @@ void _resetDynamicShadesToBakeMap() {
       render.dynamicShading[row][column] = render.bakeMap[row][column];
     }
   }
-}
-
-
-Shading calculateShadeAt(double x, double y) {
-  Shading shading = Shading.Dark;
-
-  for (Character player in compiledGame.humans) {
-    double xDiff = diff(x, player.x);
-    if (xDiff > _dark) continue;
-    double yDiff = diff(y, player.y);
-    if (yDiff > _dark) continue;
-    double total = xDiff + yDiff;
-
-    if (total < _light) {
-      return Shading.Bright;
-    }
-    if (total < _medium) {
-      shading = Shading.Medium;
-    }
-  }
-  return shading;
 }
 
 void _drawFloatingTexts() {

@@ -31,8 +31,6 @@ void setAmbientLight(Shading value){
   applyEnvironmentObjectsToBakeMapping();
 
   if (value == Shading.Bright){
-    for (EnvironmentObject torch in compiledGame.torches) {
-      torch.image = images.torchOut;
-    }
+    images.torch = images.torchOut;
   }
 }
