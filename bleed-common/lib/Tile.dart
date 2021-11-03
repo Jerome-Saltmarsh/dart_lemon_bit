@@ -10,19 +10,7 @@ enum Tile {
   Block,
   Block_Horizontal,
   Block_Vertical,
-  Block_Corner_01,
-  Block_Corner_02,
-  Block_Corner_03,
-  Block_Corner_04,
   Crate,
-  Water_Side_01,
-  Water_Side_02,
-  Water_Side_03,
-  Water_Side_04,
-  Water_Corner_01,
-  Water_Corner_02,
-  Water_Corner_03,
-  Water_Corner_04,
   Long_Grass,
   Flowers,
   Grass02,
@@ -51,14 +39,6 @@ List<Tile> _blocks = [
 
 List<Tile> _water = [
   Tile.Water,
-  Tile.Water_Side_01,
-  Tile.Water_Side_02,
-  Tile.Water_Side_03,
-  Tile.Water_Side_04,
-  Tile.Water_Corner_01,
-  Tile.Water_Corner_02,
-  Tile.Water_Corner_03,
-  Tile.Water_Corner_04,
 ];
 
 bool isBlock(Tile tile){

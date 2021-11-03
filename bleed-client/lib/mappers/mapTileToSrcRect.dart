@@ -38,22 +38,6 @@ Rect mapTileToSrcRect(Tile tile) {
       return _grass;
     case Tile.Water:
       return _water;
-    case Tile.Water_Side_01:
-      return _waterSide01;
-    case Tile.Water_Side_02:
-      return _waterSide02;
-    case Tile.Water_Side_03:
-      return _waterSide03;
-    case Tile.Water_Side_04:
-      return _waterSide04;
-    case Tile.Water_Corner_01:
-      return _waterCorner01;
-    case Tile.Water_Corner_02:
-      return _waterCorner02;
-    case Tile.Water_Corner_03:
-      return _waterCorner03;
-    case Tile.Water_Corner_04:
-      return _waterCorner04;
     case Tile.Long_Grass:
       return _longGrass;
     case Tile.Flowers:

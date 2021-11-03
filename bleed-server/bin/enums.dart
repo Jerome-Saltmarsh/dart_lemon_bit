@@ -15,31 +15,15 @@ List<Tile> _walkableTiles = [
 
 List<Tile> _closedTiles = [
   Tile.Water,
-  Tile.Water_Corner_01,
-  Tile.Water_Corner_02,
-  Tile.Water_Corner_03,
-  Tile.Water_Corner_04,
-  Tile.Water_Side_01,
-  Tile.Water_Side_02,
-  Tile.Water_Side_03,
-  Tile.Water_Side_04,
   Tile.Block,
   Tile.Block_Horizontal,
   Tile.Block_Vertical,
-  Tile.Block_Corner_01,
-  Tile.Block_Corner_02,
-  Tile.Block_Corner_03,
-  Tile.Block_Corner_04,
 ];
 
 List<Tile> _collisionTiles = [
   Tile.Block,
   Tile.Block_Horizontal,
   Tile.Block_Vertical,
-  Tile.Block_Corner_01,
-  Tile.Block_Corner_02,
-  Tile.Block_Corner_03,
-  Tile.Block_Corner_04,
 ];
 
 bool isWalkable(Tile tile){
