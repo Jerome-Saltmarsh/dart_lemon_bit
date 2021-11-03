@@ -3,13 +3,15 @@ import 'package:bleed_client/editor/state/mouseWorldStart.dart';
 import 'package:bleed_client/editor/state/panning.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/render/gameWidget.dart';
+import 'package:bleed_client/state/game.dart';
+import 'package:bleed_client/state/environmentObjects.dart';
 import 'package:bleed_client/state.dart';
-import 'package:bleed_client/state/editState.dart';
+import 'package:bleed_client/editor/state/editState.dart';
 import 'package:flutter/services.dart';
 
 void onEditorKeyDownEvent(RawKeyDownEvent event){
   if (event.logicalKey == LogicalKeyboardKey.keyC) {
-    for (Vector2 position in compiledGame.crates) {
+    for (Vector2 position in game.crates) {
       if (!position.isZero) continue;
       position.x = mouseWorldX;
       position.y = mouseWorldY;
@@ -47,7 +49,7 @@ void onEditorKeyDownEvent(RawKeyDownEvent event){
     }
 
     if(editState.selectedObject != null){
-      compiledGame.environmentObjects.remove(editState.selectedObject);
+      environmentObjects.remove(editState.selectedObject);
       editState.selectedObject = null;
       redrawCanvas();
     }

@@ -8,7 +8,7 @@ import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/engine/state/zoom.dart';
-import 'package:bleed_client/state.dart';
+import 'package:bleed_client/state/game.dart';
 
 import 'common/Weapons.dart';
 import 'common.dart';
@@ -17,10 +17,10 @@ import 'maths.dart';
 
 double getMouseRotation() {
   return getRadiansBetween(
-      compiledGame.playerX, compiledGame.playerY, mouseWorldX, mouseWorldY);
+      game.playerX, game.playerY, mouseWorldX, mouseWorldY);
 }
 
-bool get playerAssigned => compiledGame.playerId >= 0;
+bool get playerAssigned => game.playerId >= 0;
 
 Weapon previousWeapon;
 

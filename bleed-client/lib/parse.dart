@@ -20,6 +20,9 @@ import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/emit/emitMyst.dart';
 import 'package:bleed_client/functions/emitSmoke.dart';
+import 'package:bleed_client/parser/state/response.dart';
+import 'package:bleed_client/state/game.dart';
+import 'package:bleed_client/state/environmentObjects.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
 import 'package:bleed_client/network/functions/disconnect.dart';
 import 'package:bleed_client/network/state/connected.dart';
@@ -29,14 +32,13 @@ import 'package:bleed_client/render/functions/applyEnvironmentObjectsToBakeMappi
 import 'package:bleed_client/render/functions/setBakeMapToAmbientLight.dart';
 import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/send.dart';
-import 'package:bleed_client/state/getTileAt.dart';
+import 'package:bleed_client/getters/getTileAt.dart';
 import 'package:bleed_client/ui/compose/dialogs.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/utils/list_util.dart';
 import 'package:bleed_client/variables/time.dart';
 import 'package:neuro/instance.dart';
 
-import 'classes/RenderState.dart';
 import 'classes/Score.dart';
 import 'common/GameEventType.dart';
 import 'common/GameState.dart';
@@ -67,15 +69,15 @@ const List<GameEventType> gameEventTypes = GameEventType.values;
 const List<GameType> gameTypes = GameType.values;
 
 // properties
-String get _text => event;
+// String get _text => event;
 
-String get _currentCharacter => _text[_index];
+String get _currentCharacter => event[_index];
 
 // functions
 void parseState() {
   _index = 0;
   event = event.trim();
-  while (_index < _text.length) {
+  while (_index < event.length) {
     ServerResponse serverResponse = _consumeServerResponse();
     switch (serverResponse) {
       case ServerResponse.Tiles:
@@ -91,9 +93,9 @@ void parseState() {
         break;
 
       case ServerResponse.NpcsDebug:
-        compiledGame.npcDebug.clear();
+        game.npcDebug.clear();
         while (!_simiColonConsumed()) {
-          compiledGame.npcDebug.add(NpcDebug(
+          game.npcDebug.add(NpcDebug(
             x: _consumeDouble(),
             y: _consumeDouble(),
             targetX: _consumeDouble(),
@@ -198,11 +200,11 @@ void parseState() {
         break;
 
       case ServerResponse.Crates:
-        compiledGame.cratesTotal = 0;
+        game.cratesTotal = 0;
         while (!_simiColonConsumed()) {
-          compiledGame.crates[compiledGame.cratesTotal].x = _consumeDouble();
-          compiledGame.crates[compiledGame.cratesTotal].y = _consumeDouble();
-          compiledGame.cratesTotal++;
+          game.crates[game.cratesTotal].x = _consumeDouble();
+          game.crates[game.cratesTotal].y = _consumeDouble();
+          game.cratesTotal++;
         }
         break;
       case ServerResponse.Grenades:
@@ -274,12 +276,12 @@ void parseState() {
         break;
 
       case ServerResponse.Items:
-        compiledGame.totalItems = 0;
+        game.totalItems = 0;
         while (!_simiColonConsumed()) {
-          compiledGame.items[compiledGame.totalItems].type = _consumeItemType();
-          compiledGame.items[compiledGame.totalItems].x = _consumeDouble();
-          compiledGame.items[compiledGame.totalItems].y = _consumeDouble();
-          compiledGame.totalItems++;
+          game.items[game.totalItems].type = _consumeItemType();
+          game.items[game.totalItems].x = _consumeDouble();
+          game.items[game.totalItems].y = _consumeDouble();
+          game.totalItems++;
         }
         break;
       default:
@@ -287,7 +289,7 @@ void parseState() {
         return;
     }
 
-    while (_index < _text.length) {
+    while (_index < event.length) {
       if (_currentCharacter == _space) {
         _index++;
         continue;
@@ -302,7 +304,7 @@ void parseState() {
 }
 
 void _parseEnvironmentObjects() {
-  compiledGame.environmentObjects.clear();
+  environmentObjects.clear();
 
   while (!_simiColonConsumed()) {
     double x = _consumeDouble();
@@ -310,7 +312,7 @@ void _parseEnvironmentObjects() {
     EnvironmentObjectType type = _consumeEnvironmentObjectType();
 
     if (type == EnvironmentObjectType.SmokeEmitter){
-      compiledGame.particleEmitters.add(
+      game.particleEmitters.add(
           ParticleEmitter(
             x: x,
             y: y,
@@ -321,7 +323,7 @@ void _parseEnvironmentObjects() {
     }
 
     if (type == EnvironmentObjectType.MystEmitter){
-      compiledGame.particleEmitters.add(
+      game.particleEmitters.add(
           ParticleEmitter(
               x: x,
               y: y,
@@ -347,14 +349,14 @@ void _parseEnvironmentObjects() {
     envObject.tileColumn = getColumn(envObject.x, envObject.y);
 
     if (type == EnvironmentObjectType.Bridge) {
-      compiledGame.backgroundObjects.add(envObject);
+      game.backgroundObjects.add(envObject);
       continue;
     }
 
-    compiledGame.environmentObjects.add(envObject);
+    environmentObjects.add(envObject);
   }
 
-  sortReversed(compiledGame.environmentObjects, environmentObjectY);
+  sortReversed(environmentObjects, environmentObjectY);
   applyEnvironmentObjectsToBakeMapping();
 }
 
@@ -363,9 +365,9 @@ double environmentObjectY(EnvironmentObject environmentObject){
 }
 
 void _parseMetaFortress() {
-  compiledGame.lives = _consumeInt();
-  compiledGame.wave = _consumeInt();
-  compiledGame.nextWave = _consumeInt();
+  game.lives = _consumeInt();
+  game.wave = _consumeInt();
+  game.nextWave = _consumeInt();
 }
 
 void _parseMetaDeathMatch() {
@@ -384,26 +386,26 @@ void _parsePaths() {
 }
 
 void _parseTiles() {
-  compiledGame.totalColumns = _consumeInt();
-  compiledGame.totalRows = _consumeInt();
-  compiledGame.tiles.clear();
-  for (int column = 0; column < compiledGame.totalColumns; column++) {
+  game.totalColumns = _consumeInt();
+  game.totalRows = _consumeInt();
+  game.tiles.clear();
+  for (int column = 0; column < game.totalColumns; column++) {
     List<Tile> column = [];
-    compiledGame.tiles.add(column);
-    for (int row = 0; row < compiledGame.totalRows; row++) {
+    game.tiles.add(column);
+    for (int row = 0; row < game.totalRows; row++) {
       column.add(_consumeTile());
     }
   }
 
   setBakeMapToAmbientLight();
   // TODO Bad Import
-  renderTiles(compiledGame.tiles);
+  renderTiles(game.tiles);
 }
 
 void _parsePlayer() {
-  compiledGame.playerX = _consumeDouble();
-  compiledGame.playerY = _consumeDouble();
-  compiledGame.playerWeapon = _consumeWeapon();
+  game.playerX = _consumeDouble();
+  game.playerY = _consumeDouble();
+  game.playerWeapon = _consumeWeapon();
   player.health = _consumeDouble();
   player.maxHealth = _consumeDouble();
   player.stamina = _consumeInt();
@@ -423,7 +425,7 @@ void _parsePlayer() {
     // TODO Move
     redrawBottomLeft();
   }
-  compiledGame.playerLives = _consumeInt();
+  game.playerLives = _consumeInt();
   player.equippedClips = _consumeInt();
   player.equippedRounds = _consumeInt();
   state.gameState = gameStates[_consumeInt()];
@@ -522,9 +524,9 @@ InventoryItemType _consumeInventoryItemType() {
 
 void _parseCollectables() {
   // todo this is really expensive
-  compiledGame.collectables.clear();
+  game.collectables.clear();
   while (!_simiColonConsumed()) {
-    compiledGame.collectables.add(_consumeInt());
+    game.collectables.add(_consumeInt());
   }
 }
 
@@ -548,9 +550,9 @@ void _parseScore() {
 }
 
 void _parseGrenades() {
-  compiledGame.grenades.clear();
+  game.grenades.clear();
   while (!_simiColonConsumed()) {
-    compiledGame.grenades.add(_consumeDouble());
+    game.grenades.add(_consumeDouble());
   }
 }
 
@@ -571,16 +573,15 @@ void _parseBlocks() {
 }
 
 void _parseGameJoined() {
-  state.compiledGame.playerId = _consumeInt();
-  state.compiledGame.playerUUID = _consumeString();
-  state.compiledGame.playerX = _consumeDouble();
-  state.compiledGame.playerY = _consumeDouble();
-  state.compiledGame.gameId = _consumeInt();
-  state.compiledGame.gameType = _consumeGameType();
-  state.player.squad = _consumeInt();
-  state.lobby = null;
+  game.playerId = _consumeInt();
+  game.playerUUID = _consumeString();
+  game.playerX = _consumeDouble();
+  game.playerY = _consumeDouble();
+  game.gameId = _consumeInt();
+  game.gameType = _consumeGameType();
+  player.squad = _consumeInt();
   print(
-      "ServerResponse.Game_Joined: playerId: ${state.compiledGame.playerId} gameId: ${state.compiledGame.gameId}");
+      "ServerResponse.Game_Joined: playerId: ${game.playerId} gameId: ${game.gameId}");
 }
 
 GameType _consumeGameType() {
@@ -700,10 +701,10 @@ bool _commaConsumed() {
 }
 
 void _parsePlayers() {
-  compiledGame.totalHumans = 0;
+  game.totalHumans = 0;
   while (!_simiColonConsumed()) {
-    _consumeHuman(compiledGame.humans[compiledGame.totalHumans]);
-    compiledGame.totalHumans++;
+    _consumeHuman(game.humans[game.totalHumans]);
+    game.totalHumans++;
   }
 }
 
@@ -740,27 +741,27 @@ ItemType _consumeItemType() {
 }
 
 void _parseBullets() {
-  compiledGame.totalBullets = 0;
+  game.totalBullets = 0;
   while (!_simiColonConsumed()) {
-    compiledGame.bullets[compiledGame.totalBullets].x = _consumeDouble();
-    compiledGame.bullets[compiledGame.totalBullets].y = _consumeDouble();
-    compiledGame.totalBullets++;
+    game.bullets[game.totalBullets].x = _consumeDouble();
+    game.bullets[game.totalBullets].y = _consumeDouble();
+    game.totalBullets++;
   }
 }
 
 void _parseZombies() {
-  compiledGame.totalZombies = 0;
+  game.totalZombies = 0;
   while (!_simiColonConsumed()) {
-    _consumeZombie(compiledGame.zombies[compiledGame.totalZombies]);
-    compiledGame.totalZombies++;
+    _consumeZombie(game.zombies[game.totalZombies]);
+    game.totalZombies++;
   }
 }
 
 void _parseNpcs() {
-  compiledGame.totalNpcs = 0;
+  game.totalNpcs = 0;
   while (!_simiColonConsumed()) {
-    _consumeInteractableNpc(compiledGame.interactableNpcs[compiledGame.totalNpcs]);
-    compiledGame.totalNpcs++;
+    _consumeInteractableNpc(game.interactableNpcs[game.totalNpcs]);
+    game.totalNpcs++;
   }
 }
 

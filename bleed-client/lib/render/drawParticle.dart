@@ -7,7 +7,7 @@ import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/mappers/mapDurationToMystImage.dart';
-import 'package:bleed_client/state/colours.dart';
+import 'package:bleed_client/constants/colours.dart';
 import 'package:flutter/material.dart';
 
 import '../maths.dart';

@@ -3,12 +3,12 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/NpcDebug.dart';
-import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/engine/functions/drawCircle.dart';
 import 'package:bleed_client/engine/functions/onScreen.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/getters/inDarkness.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
@@ -23,7 +23,7 @@ import 'package:flutter/material.dart';
 import 'common/Tile.dart';
 import 'common/classes/Vector2.dart';
 import 'rects.dart';
-import 'state/colours.dart';
+import 'constants/colours.dart';
 import 'state.dart';
 import 'utils.dart';
 
@@ -136,12 +136,12 @@ void drawPlayerHealth() {
   double halfMaxHealth = player.maxHealth * 0.5;
   if (health > 0.5) {
     drawCharacterCircle(
-        compiledGame.playerX,
-        compiledGame.playerY,
+        game.playerX,
+        game.playerY,
         Color.lerp(
             colours.yellow, colours.green, (player.health - halfMaxHealth) / halfMaxHealth));
   } else {
-    drawCharacterCircle(compiledGame.playerX, compiledGame.playerY,
+    drawCharacterCircle(game.playerX, game.playerY,
         Color.lerp(colours.blood, colours.yellow, player.health / halfMaxHealth));
   }
 }
@@ -207,9 +207,9 @@ int get mouseTileY {
 Tile getTile(int row, int column){
   if (row < 0) return Tile.Boundary;
   if (column < 0) return Tile.Boundary;
-  if (row >= compiledGame.tiles.length) return Tile.Boundary;
-  if (column >= compiledGame.tiles[0].length) return Tile.Boundary;
-  return compiledGame.tiles[row][column];
+  if (row >= game.tiles.length) return Tile.Boundary;
+  if (column >= game.tiles[0].length) return Tile.Boundary;
+  return game.tiles[row][column];
 }
 
 void drawCircleOutline(
@@ -233,7 +233,7 @@ void drawCircleOutline(
 void drawTiles() {
   // TODO Optimization: Null checks are expensive
   if (images.tilesLight == null) return;
-  if (compiledGame.tiles == null || compiledGame.tiles.isEmpty) return;
+  if (game.tiles == null || game.tiles.isEmpty) return;
   if (tileTransforms.length != tileRects.length) return;
   drawTileList();
 }

@@ -1,7 +1,5 @@
 
-import 'package:bleed_client/common/ObjectType.dart';
 import 'package:bleed_client/constants/servers.dart';
-import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/editor/functions/registerEditorKeyboardListener.dart';
 import 'package:bleed_client/engine/functions/refreshPage.dart';
 import 'package:bleed_client/engine/render/gameWidget.dart';

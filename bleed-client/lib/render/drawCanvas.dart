@@ -6,7 +6,6 @@ import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/Particle.dart';
-import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
@@ -25,25 +24,25 @@ import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/functions/applyLightingToEnvironmentObjects.dart';
 import 'package:bleed_client/functions/calculateTileSrcRects.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
-import 'package:bleed_client/mappers/mapCrateToRSTransform.dart';
+import 'package:bleed_client/state/game.dart';
+import 'package:bleed_client/state/environmentObjects.dart';
 import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
 import 'package:bleed_client/mappers/mapItemToRect.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/properties.dart';
-import 'package:bleed_client/rects.dart';
 import 'package:bleed_client/render/constants/charWidth.dart';
+import 'package:bleed_client/render/draw/drawCrates.dart';
 import 'package:bleed_client/render/drawCharacterMan.dart';
 import 'package:bleed_client/render/drawCharacterZombie.dart';
 import 'package:bleed_client/render/drawInteractableNpcs.dart';
 import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
 import 'package:bleed_client/render/functions/drawBullets.dart';
 import 'package:bleed_client/render/state/bakeMap.dart';
-import 'package:bleed_client/render/state/crates.dart';
 import 'package:bleed_client/render/state/dynamicShading.dart';
 import 'package:bleed_client/render/state/floatingText.dart';
 import 'package:bleed_client/render/state/items.dart';
-import 'package:bleed_client/state/colours.dart';
+import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
@@ -68,31 +67,31 @@ void drawCanvas(Canvas canvass, Size _size) {
   }
 
   if (!connected) return;
-  if (compiledGame.gameId < 0) return;
+  if (game.gameId < 0) return;
   renderCanvasPlay();
 }
 
 void renderCanvasPlay() {
   _updateAnimations();
   _resetDynamicShadesToBakeMap();
-  applyCharacterLightEmission(compiledGame.humans);
-  applyCharacterLightEmission(compiledGame.interactableNpcs);
+  applyCharacterLightEmission(game.humans);
+  applyCharacterLightEmission(game.interactableNpcs);
   applyLightingToEnvironmentObjects();
   calculateTileSrcRects();
   drawTiles();
   _drawNpcBonusPointsCircles();
   // _drawPlayerHealthRing();
-  drawBullets(compiledGame.bullets);
-  drawBulletHoles(compiledGame.bulletHoles);
-  _drawGrenades(compiledGame.grenades);
+  drawBullets(game.bullets);
+  drawBulletHoles(game.bulletHoles);
+  _drawGrenades(game.grenades);
   _renderItems();
-  _drawCrates();
+  drawCrates();
   _drawCollectables();
   _drawSprites();
 
   if (settings.compilePaths) {
     drawPaths();
-    drawDebugNpcs(compiledGame.npcDebug);
+    drawDebugNpcs(game.npcDebug);
   }
 
   _drawFloatingTexts();
@@ -141,7 +140,7 @@ int compareParticles(Particle a, Particle b) {
 
 void _sortParticles() {
   insertionSort(
-      list: compiledGame.particles,
+      list: game.particles,
       compare: compareParticles,
       start: 0,
       end: settings.maxParticles);
@@ -150,7 +149,7 @@ void _sortParticles() {
 int getTotalActiveParticles() {
   int totalParticles = 0;
   for (int i = 0; i < settings.maxParticles; i++) {
-    if (compiledGame.particles[i].active) {
+    if (game.particles[i].active) {
       totalParticles++;
     }
   }
@@ -165,28 +164,28 @@ void _drawSprites() {
   int indexNpc = 0;
   int totalParticles = getTotalActiveParticles();
 
-  int totalEnvironment = compiledGame.environmentObjects.length;
+  int totalEnvironment = environmentObjects.length;
 
   if (totalParticles > 0) {
     _sortParticles();
   }
 
-  for (EnvironmentObject environmentObject in compiledGame.backgroundObjects) {
+  for (EnvironmentObject environmentObject in game.backgroundObjects) {
     drawEnvironmentObject(environmentObject);
   }
 
-  bool zombiesRemaining = indexZombie < compiledGame.totalZombies;
-  bool humansRemaining = indexHuman < compiledGame.totalHumans;
-  bool npcsRemaining = indexHuman < compiledGame.totalNpcs;
+  bool zombiesRemaining = indexZombie < game.totalZombies;
+  bool humansRemaining = indexHuman < game.totalHumans;
+  bool npcsRemaining = indexHuman < game.totalNpcs;
   bool environmentRemaining = indexEnv < totalEnvironment;
   bool particlesRemaining = indexParticle < totalParticles;
 
   while (true) {
-    humansRemaining = indexHuman < compiledGame.totalHumans;
+    humansRemaining = indexHuman < game.totalHumans;
     environmentRemaining = indexEnv < totalEnvironment;
     particlesRemaining = indexParticle < totalParticles;
-    zombiesRemaining = indexZombie < compiledGame.totalZombies;
-    npcsRemaining = indexNpc < compiledGame.totalNpcs;
+    zombiesRemaining = indexZombie < game.totalZombies;
+    npcsRemaining = indexNpc < game.totalNpcs;
 
     if (!zombiesRemaining &&
         !humansRemaining &&
@@ -195,17 +194,17 @@ void _drawSprites() {
         !npcsRemaining) return;
 
     if (humansRemaining) {
-      double humanY = compiledGame.humans[indexHuman].y;
+      double humanY = game.humans[indexHuman].y;
 
       if (!environmentRemaining ||
-          humanY < compiledGame.environmentObjects[indexEnv].y) {
+          humanY < environmentObjects[indexEnv].y) {
         if (!particlesRemaining ||
-            humanY < compiledGame.particles[indexParticle].y) {
+            humanY < game.particles[indexParticle].y) {
           if (!zombiesRemaining ||
-              humanY < compiledGame.zombies[indexZombie].y) {
+              humanY < game.zombies[indexZombie].y) {
             if (!npcsRemaining ||
-                humanY < compiledGame.interactableNpcs[indexNpc].y) {
-              drawCharacterMan(compiledGame.humans[indexHuman]);
+                humanY < game.interactableNpcs[indexNpc].y) {
+              drawCharacterMan(game.humans[indexHuman]);
               indexHuman++;
               continue;
             }
@@ -215,16 +214,16 @@ void _drawSprites() {
     }
 
     if (environmentRemaining) {
-      EnvironmentObject env = compiledGame.environmentObjects[indexEnv];
+      EnvironmentObject env = environmentObjects[indexEnv];
 
       if (env.dst.top > screen.bottom) return;
 
       if (!particlesRemaining ||
-          env.y < compiledGame.particles[indexParticle].y) {
-        if (!zombiesRemaining || env.y < compiledGame.zombies[indexZombie].y) {
+          env.y < game.particles[indexParticle].y) {
+        if (!zombiesRemaining || env.y < game.zombies[indexZombie].y) {
           if (!npcsRemaining ||
-              env.y < compiledGame.interactableNpcs[indexNpc].y) {
-            drawEnvironmentObject(compiledGame.environmentObjects[indexEnv]);
+              env.y < game.interactableNpcs[indexNpc].y) {
+            drawEnvironmentObject(environmentObjects[indexEnv]);
             indexEnv++;
             continue;
           }
@@ -233,12 +232,12 @@ void _drawSprites() {
     }
 
     if (particlesRemaining) {
-      Particle particle = compiledGame.particles[indexParticle];
+      Particle particle = game.particles[indexParticle];
 
       if (!zombiesRemaining ||
-          particle.y < compiledGame.zombies[indexZombie].y) {
+          particle.y < game.zombies[indexZombie].y) {
         if (!npcsRemaining ||
-            particle.y < compiledGame.interactableNpcs[indexNpc].y) {
+            particle.y < game.interactableNpcs[indexNpc].y) {
           if (onScreen(particle.x, particle.y)) {
             drawParticle(particle);
           }
@@ -249,17 +248,17 @@ void _drawSprites() {
     }
 
     if (zombiesRemaining) {
-      Zombie zombie = compiledGame.zombies[indexZombie];
+      Zombie zombie = game.zombies[indexZombie];
 
       if (!npcsRemaining ||
-          zombie.y < compiledGame.interactableNpcs[indexNpc].y) {
-        drawCharacterZombie(compiledGame.zombies[indexZombie]);
+          zombie.y < game.interactableNpcs[indexNpc].y) {
+        drawCharacterZombie(game.zombies[indexZombie]);
         indexZombie++;
         continue;
       }
     }
 
-    drawInteractableNpc(compiledGame.interactableNpcs[indexNpc]);
+    drawInteractableNpc(game.interactableNpcs[indexNpc]);
     indexNpc++;
   }
 }
@@ -279,9 +278,9 @@ void drawEnvironmentObject(EnvironmentObject environmentObject) {
 }
 
 void _drawNpcBonusPointsCircles() {
-  for (int i = 0; i < compiledGame.totalZombies; i++) {
-    if (compiledGame.zombies[i].scoreMultiplier == "1") continue;
-    Zombie npc = compiledGame.zombies[i];
+  for (int i = 0; i < game.totalZombies; i++) {
+    if (game.zombies[i].scoreMultiplier == "1") continue;
+    Zombie npc = game.zombies[i];
     drawCircle(npc.x, npc.y, 10, colours.orange);
   }
 }
@@ -293,31 +292,20 @@ void _drawPlayerHealthRing() {
       position: Offset(playerX, playerY));
 }
 
-void _drawCrates() {
-  crates.rects.clear();
-  crates.transforms.clear();
-  for (int i = 0; i < compiledGame.cratesTotal; i++) {
-    crates.transforms
-        .add(mapCrateToRSTransform((compiledGame.crates[i])));
-    crates.rects.add(rectCrate);
-  }
-  drawAtlas(images.crate, crates.transforms, crates.rects);
-}
-
 void _renderItems() {
   items.transforms.clear();
   items.rects.clear();
-  for (int i = 0; i < compiledGame.totalItems; i++) {
-    items.transforms.add(mapItemToRSTransform(compiledGame.items[i]));
-    items.rects.add(mapItemToRect(compiledGame.items[i].type));
+  for (int i = 0; i < game.totalItems; i++) {
+    items.transforms.add(mapItemToRSTransform(game.items[i]));
+    items.rects.add(mapItemToRect(game.items[i].type));
   }
   drawAtlas(images.items, items.transforms, items.rects);
 }
 
 void _drawPlayerNames() {
-  for (int i = 0; i < compiledGame.totalHumans; i++) {
-    Character player = compiledGame.humans[i];
-    if (player.x == compiledGame.playerX) continue;
+  for (int i = 0; i < game.totalHumans; i++) {
+    Character player = game.humans[i];
+    if (player.x == game.playerX) continue;
     if (diff(mouseWorldX, player.x) > _nameRadius) continue;
     if (diff(mouseWorldY, player.y) > _nameRadius) continue;
 
@@ -326,8 +314,8 @@ void _drawPlayerNames() {
 }
 
 void _writePlayerText() {
-  for (int i = 0; i < compiledGame.totalHumans; i++) {
-    Character human = compiledGame.humans[i];
+  for (int i = 0; i < game.totalHumans; i++) {
+    Character human = game.humans[i];
     if (human.text.isEmpty) continue;
 
     double padding = 5;
@@ -354,7 +342,7 @@ void _drawMouseAim() {
 
   paint.strokeWidth = 3;
   double rot = radionsBetween(
-      mouseWorldX, mouseWorldY, compiledGame.playerX, compiledGame.playerY);
+      mouseWorldX, mouseWorldY, game.playerX, game.playerY);
 
   double mouseDistance = distance(mouseWorldX, mouseWorldY, playerX, playerY);
   double d = min(mouseDistance, weapon == Weapon.SniperRifle ? 150 : 35);
@@ -366,10 +354,10 @@ void _drawMouseAim() {
 }
 
 void _drawCollectables() {
-  for (int i = 0; i < compiledGame.collectables.length; i += 3) {
-    CollectableType type = CollectableType.values[compiledGame.collectables[i]];
-    int x = compiledGame.collectables[i + 1];
-    int y = compiledGame.collectables[i + 2];
+  for (int i = 0; i < game.collectables.length; i += 3) {
+    CollectableType type = CollectableType.values[game.collectables[i]];
+    int x = game.collectables[i + 1];
+    int y = game.collectables[i + 2];
     drawCollectable(type, x.toDouble(), y.toDouble());
   }
 }

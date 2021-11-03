@@ -2,7 +2,7 @@ import 'package:bleed_client/enums/Shading.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-_Colors colours = _Colors();
+final _Colors colours = _Colors();
 
 class _Colors {
   final Color redDarkest = Color.fromRGBO(66, 21, 46, 1);

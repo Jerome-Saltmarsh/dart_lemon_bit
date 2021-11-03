@@ -11,6 +11,7 @@ import 'package:bleed_client/engine/state/buildContext.dart';
 import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/engine/state/zoom.dart';
 import 'package:bleed_client/functions/update.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/network/streams/onConnect.dart';
@@ -18,7 +19,7 @@ import 'package:bleed_client/network/streams/onDisconnected.dart';
 import 'package:bleed_client/network/streams/onDone.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state.dart';
-import 'package:bleed_client/state/colours.dart';
+import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/ui/compose/dialogs.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
@@ -68,19 +69,19 @@ class BleedWidget extends GameWidget {
     initBleed();
     registerPlayKeyboardHandler();
 
-    compiledGame.zombies.clear();
+    game.zombies.clear();
     for (int i = 0; i < 5000; i++) {
-      compiledGame.zombies.add(Zombie());
+      game.zombies.add(Zombie());
     }
 
-    compiledGame.interactableNpcs.clear();
+    game.interactableNpcs.clear();
     for (int i = 0; i < 200; i++) {
-      compiledGame.interactableNpcs.add(Character());
+      game.interactableNpcs.add(Character());
     }
 
-    compiledGame.humans.clear();
+    game.humans.clear();
     for (int i = 0; i < 1000; i++) {
-      compiledGame.humans.add(Character());
+      game.humans.add(Character());
     }
 
     onDisconnected.stream.listen((event) {
@@ -130,14 +131,14 @@ class BleedWidget extends GameWidget {
   void drawForeground(Canvas canvas, Size size) {
     if (!mouseAvailable) return;
     if (!connected) return;
-    if (state.compiledGame.gameId < 0) return;
+    if (game.gameId < 0) return;
 
     double aimX = mouseWorldX;
     double aimY = mouseWorldY;
     bool aiming = false;
-    for (int i = 0; i < compiledGame.totalZombies; i++) {
-      if (diff(aimX, compiledGame.zombies[i].x) < 6 &&
-          diff(aimY, compiledGame.zombies[i].y) < 6) {
+    for (int i = 0; i < game.totalZombies; i++) {
+      if (diff(aimX, game.zombies[i].x) < 6 &&
+          diff(aimY, game.zombies[i].y) < 6) {
         aiming = true;
         break;
       }
@@ -156,7 +157,7 @@ class BleedWidget extends GameWidget {
     if (!mouseAvailable) return;
     if (player.equippedRounds == 0) return;
 
-    double p = player.equippedRounds / getMaxRounds(compiledGame.playerWeapon);
+    double p = player.equippedRounds / getMaxRounds(game.playerWeapon);
 
     drawRing(ammoRing,
         percentage: p,

@@ -1,7 +1,6 @@
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
-
-import '../../state.dart';
+import 'package:bleed_client/state/game.dart';
 
 void spawnParticle({
   ParticleType type,
@@ -20,7 +19,7 @@ void spawnParticle({
   bounciness = 0.5,
   double airFriction = 0.98
 }) {
-  for (Particle particle in compiledGame.particles){
+  for (Particle particle in game.particles){
     if (particle.active) continue;
     particle.type = type;
     particle.x = x;

@@ -414,3 +414,16 @@ mklink /J common C:\Users\Jerome\github\bleed\bleed-common\lib
 #Goal
 The goal is to build something that people enjoy playing. If I can get a user base that plays consistently
 then that is success for me.
+
+
+# Architecture 
+
+
+
+Network -> Parse -> Game State -> Render
+
+Input -> Network
+
+Game Loop -> Network Update
+
+receive compiled game state from the network, parse it into game state then render.

@@ -1,9 +1,9 @@
 import 'package:bleed_client/classes/Particle.dart';
-import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/engine/render/gameWidget.dart';
 import 'package:bleed_client/engine/state/zoom.dart';
 import 'package:bleed_client/enums/Mode.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/render/state/tileRects.dart';
 import 'package:bleed_client/render/state/tileTransforms.dart';
@@ -28,32 +28,32 @@ void clearState() {
 }
 
 void clearCompileGameState() {
-  compiledGame.playerId = -1;
-  compiledGame.gameId = -1;
-  compiledGame.playerUUID = "";
-  compiledGame.playerX = -1;
-  compiledGame.playerY = -1;
-  compiledGame.totalZombies = 0;
-  compiledGame.totalHumans = 0;
-  compiledGame.totalBullets = 0;
-  compiledGame.grenades.clear();
-  compiledGame.collectables.clear();
-  compiledGame.particleEmitters.clear();
+  game.playerId = -1;
+  game.gameId = -1;
+  game.playerUUID = "";
+  game.playerX = -1;
+  game.playerY = -1;
+  game.totalZombies = 0;
+  game.totalHumans = 0;
+  game.totalBullets = 0;
+  game.grenades.clear();
+  game.collectables.clear();
+  game.particleEmitters.clear();
 
-  for (Vector2 bullet in compiledGame.bulletHoles) {
+  for (Vector2 bullet in game.bulletHoles) {
     bullet.x = 0;
     bullet.y = 0;
   }
 
-  for (Particle particle in compiledGame.particles) {
+  for (Particle particle in game.particles) {
     particle.active = false;
   }
 
-  for (Vector2 bullet in compiledGame.bulletHoles) {
+  for (Vector2 bullet in game.bulletHoles) {
     bullet.x = 0;
     bullet.y = 0;
   }
-  compiledGame.bulletHoleIndex = 0;
+  game.bulletHoleIndex = 0;
 }
 
 void clearRender() {

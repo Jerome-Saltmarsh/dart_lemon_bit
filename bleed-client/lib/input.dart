@@ -10,7 +10,7 @@ import 'package:bleed_client/engine/properties/keyPressed.dart';
 import 'package:bleed_client/engine/render/gameWidget.dart';
 import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/engine/state/zoom.dart';
-import 'package:bleed_client/enums/Shading.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/render/drawCanvas.dart';
 import 'package:bleed_client/render/functions/setAmbientLight.dart';
 import 'package:bleed_client/state/settings.dart';
@@ -202,7 +202,7 @@ Map<LogicalKeyboardKey, Function> _keyReleasedHandlers = {
 void throwGrenade() {
   if (!mouseAvailable) return;
   double mouseDistance = distance(
-      compiledGame.playerX, compiledGame.playerY, mouseWorldX, mouseWorldY);
+      game.playerX, game.playerY, mouseWorldX, mouseWorldY);
   double maxRange = 400; // TODO refactor magic variable
   double throwDistance = min(mouseDistance, maxRange);
   double strength = throwDistance / maxRange;
@@ -330,8 +330,8 @@ void readPlayerInput() {
   if (mouseClicked || keyPressedSpace) {
     double mX = mouseWorldX;
     double mY = mouseWorldY;
-    for(int i = 0; i < compiledGame.totalNpcs; i++){
-      Character interactableNpc = compiledGame.interactableNpcs[i];
+    for(int i = 0; i < game.totalNpcs; i++){
+      Character interactableNpc = game.interactableNpcs[i];
       if (diffOver(interactableNpc.x, mX, settings.interactRadius)) continue;
       if (diffOver(interactableNpc.y, mY, settings.interactRadius)) continue;
       sendRequestInteract();
@@ -350,7 +350,7 @@ void readPlayerInput() {
       if (mouseAvailable) {
         double mouseWorldX = mouseX + camera.x;
         double mouseWorldY = mouseY + camera.y;
-        for (Zombie zombie in compiledGame.zombies) {
+        for (Zombie zombie in game.zombies) {
           if (diffOver(zombie.x, mouseWorldX, playerAutoAimDistance)) continue;
           if (diffOver(zombie.y, mouseWorldY, playerAutoAimDistance)) continue;
           requestCharacterState = characterStateAiming;

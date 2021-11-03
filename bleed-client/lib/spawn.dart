@@ -1,5 +1,4 @@
 import 'package:bleed_client/classes/FloatingText.dart';
-import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/functions/spawners/spawnFireYellow.dart';
 import 'package:bleed_client/functions/spawners/spawnShrapnel.dart';
 import 'package:bleed_client/functions/spawners/spawnSmoke.dart';

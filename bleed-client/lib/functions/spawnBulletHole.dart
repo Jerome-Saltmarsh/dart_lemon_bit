@@ -1,16 +1,16 @@
 
 import 'package:bleed_client/enums/ParticleType.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/utils.dart';
 
-import '../state.dart';
 import 'spawners/spawnParticle.dart';
 
 void spawnBulletHole(double x, double y){
-  compiledGame.bulletHoles[compiledGame.bulletHoleIndex].x = x;
-  compiledGame.bulletHoles[compiledGame.bulletHoleIndex].y = y;
-  compiledGame.bulletHoleIndex = (compiledGame.bulletHoleIndex + 1) % settings.maxBulletHoles;
+  game.bulletHoles[game.bulletHoleIndex].x = x;
+  game.bulletHoles[game.bulletHoleIndex].y = y;
+  game.bulletHoleIndex = (game.bulletHoleIndex + 1) % settings.maxBulletHoles;
   double r = 0.1;
   repeat((){
     spawnParticle(

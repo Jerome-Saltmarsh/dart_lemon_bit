@@ -4,10 +4,10 @@ import 'package:bleed_client/editor/state/selectedCollectable.dart';
 import 'package:bleed_client/engine/functions/drawCircle.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/render/drawEnvironmentObjects.dart';
-import 'package:bleed_client/state.dart';
-import 'package:bleed_client/state/editState.dart';
+import 'package:bleed_client/editor/state/editState.dart';
 import 'package:flutter/material.dart';
 
 void renderCanvasEdit() {
@@ -15,8 +15,8 @@ void renderCanvasEdit() {
   drawEnvironmentObjects();
 
   if (selectedCollectable > 0) {
-    double x = compiledGame.collectables[selectedCollectable + 1].toDouble();
-    double y = compiledGame.collectables[selectedCollectable + 2].toDouble();
+    double x = game.collectables[selectedCollectable + 1].toDouble();
+    double y = game.collectables[selectedCollectable + 2].toDouble();
     drawCircleOutline(x: x, y: y, radius: 50, color: Colors.white, sides: 10);
   }
 
@@ -30,7 +30,7 @@ void renderCanvasEdit() {
 }
 
 void _drawCrates() {
-  for (Vector2 position in compiledGame.crates) {
+  for (Vector2 position in game.crates) {
     if (position.isZero) break;
     _drawCrate(position);
   }

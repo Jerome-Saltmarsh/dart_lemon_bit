@@ -1,9 +1,9 @@
-import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/common.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/PurchaseType.dart';
 import 'package:bleed_client/functions/clearState.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/network/functions/send.dart';
 import 'package:bleed_client/network/functions/sinkMessage.dart';
 import 'package:bleed_client/properties.dart';
@@ -79,9 +79,9 @@ void requestThrowGrenade(double strength) {
 void sendRequestUpdatePlayer() {
   _buffer.clear();
   _write(gameUpdateIndex);
-  _write(compiledGame.gameId);
-  _write(compiledGame.playerId);
-  _write(compiledGame.playerUUID);
+  _write(game.gameId);
+  _write(game.playerId);
+  _write(game.playerUUID);
   _write(requestCharacterState);
   _write(requestDirection);
   if (requestCharacterState == characterStateFiring) {
@@ -94,10 +94,10 @@ void sendRequestUpdatePlayer() {
 }
 
 void sendRequestUpdateScore() {
-  if (state.compiledGame.gameId < 0) return;
+  if (game.gameId < 0) return;
   if (editMode) return;
-  if (compiledGame.gameType == GameType.Open_World) return;
-  send('${ClientRequest.Score.index} ${state.compiledGame.gameId}');
+  if (game.gameType == GameType.Open_World) return;
+  send('${ClientRequest.Score.index} ${game.gameId}');
 }
 
 void sendRequestJoinGameFortress() {

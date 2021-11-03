@@ -7,10 +7,12 @@ import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/engine/render/gameWidget.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/events.dart';
+import 'package:bleed_client/parser/events/onEvent.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/network/functions/connect.dart';
 import 'package:bleed_client/network/functions/send.dart';
 import 'package:bleed_client/network/streams/onConnected.dart';
-import 'package:bleed_client/network/streams/onEvent.dart';
+import 'package:bleed_client/network/streams/eventStream.dart';
 import 'package:bleed_client/parse.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/settings.dart';
@@ -21,32 +23,32 @@ import 'state.dart';
 
 void initBleed() {
   onConnectedController.stream.listen(_onConnected);
-  streamOnEvent.stream.listen(_onEvent);
+  eventStream.stream.listen(onEvent);
 
   on((GameJoined gameJoined) async {
-    cameraCenter(compiledGame.playerX, compiledGame.playerY);
+    cameraCenter(game.playerX, game.playerY);
     rebuildUI();
   });
 
   for(int i = 0; i < settings.maxParticles; i++){
-    compiledGame.particles.add(Particle());
+    game.particles.add(Particle());
   }
 
   for (int i = 0; i < 1000; i++) {
-    compiledGame.bullets.add(Vector2(0, 0));
-    compiledGame.items.add(Item());
+    game.bullets.add(Vector2(0, 0));
+    game.items.add(Item());
   }
 
   for (int i = 0; i < 2000; i++) {
-    compiledGame.crates.add(Vector2(0, 0));
+    game.crates.add(Vector2(0, 0));
   }
 
   for (int i = 0; i < 1000; i++) {
-    compiledGame.sprites.add(Sprite());
+    game.sprites.add(Sprite());
   }
 
   for (int i = 0; i < settings.maxBulletHoles; i++) {
-    compiledGame.bulletHoles.add(Vector2(0, 0));
+    game.bulletHoles.add(Vector2(0, 0));
   }
 
   periodic(sendRequestUpdateScore, seconds: 3);
@@ -56,17 +58,6 @@ void connectToGCP() {
   connect(gpc);
 }
 
-void _onEvent(_response){
-  lag = framesSinceEvent;
-  framesSinceEvent = 0;
-  DateTime now = DateTime.now();
-  ping = now.difference(previousEvent);
-  previousEvent = now;
-  // TODO doesn't belong
-  event = _response;
-  parseState();
-  redrawCanvas();
-}
 
 void _onConnected(_event) {
   print("on connected");

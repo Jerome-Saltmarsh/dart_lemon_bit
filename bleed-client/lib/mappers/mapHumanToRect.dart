@@ -5,7 +5,7 @@ import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/constants/defaultSpriteFrameRate.dart';
 import 'package:bleed_client/enums.dart';
-import 'package:bleed_client/resources/rects_utils.dart';
+import 'package:bleed_client/utils/rects_utils.dart';
 
 // interface
 Rect mapCharacterToSrcMan(Weapon weapon, CharacterState state, Direction direction, int frame) {

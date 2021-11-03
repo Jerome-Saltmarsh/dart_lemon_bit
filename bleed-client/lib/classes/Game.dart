@@ -1,6 +1,4 @@
 
-import 'dart:ui';
-
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
@@ -16,12 +14,11 @@ import 'EnvironmentObject.dart';
 import 'Item.dart';
 import 'Particle.dart';
 
-class CompiledGame {
+class Game {
   List<int> collectables = [];
   List<Vector2> crates = [];
   int cratesTotal = 0;
   List<EnvironmentObject> backgroundObjects = [];
-  final List<EnvironmentObject> environmentObjects = [];
   List<List<Tile>> tiles = [];
   int totalColumns = 0;
   int totalRows = 0;

@@ -1,6 +1,6 @@
 
 import 'package:bleed_client/common/Tile.dart';
-import 'package:bleed_client/state/getTileAt.dart';
+import 'package:bleed_client/getters/getTileAt.dart';
 
 bool tileIsWalkable(double x, double y){
   Tile tile = getTileAt(x, y);

@@ -5,6 +5,7 @@ import 'dart:math';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Score.dart';
 import 'package:bleed_client/enums.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/inventory.dart';
@@ -36,14 +37,14 @@ int get enemiesLeft {
   int count = 0;
 
   if (state.player.squad == -1) {
-    for (Character player in compiledGame.humans) {
+    for (Character player in game.humans) {
       if (player.state != CharacterState.Dead) continue;
       count++;
     }
     return count - 1;
   }
 
-  for (Character player in compiledGame.humans) {
+  for (Character player in game.humans) {
     if (player.state == CharacterState.Dead) continue;
     if (player.squad == state.player.squad) continue;
     count++;

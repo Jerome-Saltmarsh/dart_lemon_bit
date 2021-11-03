@@ -1,9 +1,9 @@
 import 'package:bleed_client/classes/Character.dart';
-import 'package:bleed_client/classes/CompiledGame.dart';
 import 'package:bleed_client/classes/Player.dart';
 import 'package:bleed_client/classes/Score.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/enums.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
 
 import '../common.dart';
@@ -23,7 +23,6 @@ DateTime previousEvent = DateTime.now();
 int framesSinceEvent = 0;
 int lag = 0;
 Duration ping;
-String event = "";
 dynamic valueObject;
 DateTime lastRefresh = DateTime.now();
 Duration refreshDuration;
@@ -39,10 +38,10 @@ Map<int, bool> gameEvents = Map();
 Character get getPlayer {
   if (!playerAssigned) return null;
   if (!playerReady) return null;
-  if (compiledGame.totalHumans == 0) return null;
-  for (Character player in compiledGame.humans) {
-    if (player.x != compiledGame.playerX) continue;
-    if (player.y != compiledGame.playerY) continue;
+  if (game.totalHumans == 0) return null;
+  for (Character player in game.humans) {
+    if (player.x != game.playerX) continue;
+    if (player.y != game.playerY) continue;
     return player;
   }
   return null;
@@ -55,27 +54,25 @@ List<CharacterState> characterStates = CharacterState.values;
 CharacterState get playerState => getPlayer.state;
 
 bool get playerReady =>
-    compiledGame.totalHumans > 0 &&
-    compiledGame.playerX != -1 &&
-    compiledGame.playerY != -1;
+    game.totalHumans > 0 &&
+    game.playerX != -1 &&
+    game.playerY != -1;
 
 String get playerName => getPlayer.name;
 
 // TODO Expensive string build
 String get session =>
-    '${compiledGame.gameId} ${compiledGame.playerId} ${compiledGame.playerUUID}';
+    '${game.gameId} ${game.playerId} ${game.playerUUID}';
 
 State state = State();
 
 Player get player => state.player;
 
-CompiledGame get compiledGame => state.compiledGame;
+bool get gameStarted => game.gameId >= 0;
 
-bool get gameStarted => state.compiledGame.gameId >= 0;
+double get playerX => game.playerX;
 
-double get playerX => compiledGame.playerX;
-
-double get playerY => compiledGame.playerY;
+double get playerY => game.playerY;
 
 Score get highScore {
   if (state.score.isEmpty) return null;

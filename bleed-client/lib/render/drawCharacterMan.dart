@@ -6,7 +6,7 @@ import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/mappers/mapCharacterToDst.dart';
 import 'package:bleed_client/mappers/mapCharacterToImageMan.dart';
 import 'package:bleed_client/mappers/mapHumanToRect.dart';
-import 'package:bleed_client/state/isWaterAt.dart';
+import 'package:bleed_client/getters/isWaterAt.dart';
 
 void drawCharacterMan(Character character) {
   if (!character.alive && isWaterAt(character.x, character.y)) return;

@@ -1,15 +1,14 @@
-import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/enums/Shading.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
 import 'package:bleed_client/render/state/dynamicShading.dart';
 import 'package:bleed_client/render/state/tilesRects.dart';
-import 'package:bleed_client/state.dart';
 import 'package:flutter/cupertino.dart';
 
 void calculateTileSrcRects() {
   int i = 0;
-  List<List<Tile>> _tiles = compiledGame.tiles;
+  List<List<Tile>> _tiles = game.tiles;
 
   for (int row = 0; row < _tiles.length; row++) {
     for (int column = 0; column < _tiles[0].length; column++) {

@@ -1,9 +1,9 @@
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/render/functions/setAmbientLight.dart';
-import 'package:bleed_client/state.dart';
 import 'package:bleed_client/variables/phase.dart';
 
 void setTime(int value) {
-  compiledGame.time = value;
+  game.time = value;
   Phase _phase2 = getPhase();
   if (phase == _phase2) return;
   // on phase changed
@@ -43,7 +43,7 @@ Phase getPhase() {
 }
 
 double get minute {
-  return compiledGame.time / 60;
+  return game.time / 60;
 }
 
 double get hour {

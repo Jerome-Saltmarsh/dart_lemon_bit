@@ -1,19 +1,19 @@
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/engine/render/gameWidget.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/send.dart';
-import 'package:bleed_client/state.dart';
 import 'package:bleed_client/utils.dart';
 
 void updatePlayer() {
-  if (compiledGame.playerId < 0) return;
+  if (game.playerId < 0) return;
 
   sendRequestUpdatePlayer();
 
   // on player weapon changed
-  if (previousWeapon != compiledGame.playerWeapon) {
-    previousWeapon = compiledGame.playerWeapon;
-    switch (compiledGame.playerWeapon) {
+  if (previousWeapon != game.playerWeapon) {
+    previousWeapon = game.playerWeapon;
+    switch (game.playerWeapon) {
       case Weapon.HandGun:
         playAudioReload(screenCenterWorldX, screenCenterWorldY);
         break;

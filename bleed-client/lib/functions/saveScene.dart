@@ -5,6 +5,8 @@ import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
+import 'package:bleed_client/state/game.dart';
+import 'package:bleed_client/state/environmentObjects.dart';
 import 'package:bleed_client/state.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
@@ -25,15 +27,15 @@ String _mapCompileGameToJson() {
 Object _mapCompiledGameToObject() {
 
   List<EnvironmentObject> all = [
-    ...compiledGame.environmentObjects,
-    ...compiledGame.backgroundObjects
+    ...environmentObjects,
+    ...game.backgroundObjects
   ];
 
   return {
     "blocks": _compileBlocks(),
-    "collectables": compiledGame.collectables,
-    "tiles": _compileTiles(compiledGame.tiles),
-    "crates": _compileCrates(compiledGame.crates),
+    "collectables": game.collectables,
+    "tiles": _compileTiles(game.tiles),
+    "crates": _compileCrates(game.crates),
     "environment": _compileEnvironmentObjects(all),
   };
 }

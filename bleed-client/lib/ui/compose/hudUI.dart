@@ -18,6 +18,7 @@ import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/engine/state/size.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/openLink.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/mappers/mapWeaponToDecorationImage.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/network/functions/disconnect.dart';
@@ -26,7 +27,7 @@ import 'package:bleed_client/network/state/connecting.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/server.dart';
 import 'package:bleed_client/state.dart';
-import 'package:bleed_client/state/colours.dart';
+import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/ui/compose/views.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
@@ -56,14 +57,14 @@ Widget buildHud() {
       buildTextBox(),
       if (hud.state.textBoxVisible) _buildServerText(),
       if (player.alive) buildViewBottomLeft(),
-      if (compiledGame.gameType == GameType.Fortress) _buildViewFortress(),
-      if (compiledGame.gameType == GameType.DeathMatch)
+      if (game.gameType == GameType.Fortress) _buildViewFortress(),
+      if (game.gameType == GameType.DeathMatch)
         buildGameInfoDeathMatch(),
       // _buildViewBottomRight(),
       _buildServerText(),
       if (!hud.state.observeMode && player.dead) _buildViewRespawn(),
       if (player.dead && hud.state.observeMode) _buildRespawnLight(),
-      if (compiledGame.gameType == GameType.Casual) buildViewScore(),
+      if (game.gameType == GameType.Casual) buildViewScore(),
     ],
   );
 }
@@ -275,9 +276,9 @@ Widget _buildViewFortress() {
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          text("Lives: ${compiledGame.lives}"),
-          text("Wave: ${compiledGame.wave}"),
-          text("Next Wave: ${compiledGame.nextWave}"),
+          text("Lives: ${game.lives}"),
+          text("Wave: ${game.wave}"),
+          text("Next Wave: ${game.nextWave}"),
         ],
       ));
 }
@@ -367,7 +368,7 @@ Widget buildWeaponSlot({Weapon weapon}) {
       color: Colors.black26,
       border: Border.all(
           color: Colors.white,
-          width: compiledGame.playerWeapon == weapon ? 6 : 1),
+          width: game.playerWeapon == weapon ? 6 : 1),
       borderRadius: borderRadius4,
     ),
   );
@@ -831,15 +832,15 @@ Widget buildGameUI(BuildContext context) {
 
   if (state.lobby != null) return center(buildViewJoinedLobby());
 
-  if (compiledGame.gameId < 0) {
+  if (game.gameId < 0) {
     // TODO consider case
     return buildViewConnecting();
   }
   if (editMode) return buildEditorUI();
 
-  if (compiledGame.playerId < 0) {
+  if (game.playerId < 0) {
     return text(
-        "player id is not assigned. player id: ${compiledGame.playerId}, game id: ${compiledGame.gameId}");
+        "player id is not assigned. player id: ${game.playerId}, game id: ${game.gameId}");
   }
 
   if (framesSinceEvent > 30) {

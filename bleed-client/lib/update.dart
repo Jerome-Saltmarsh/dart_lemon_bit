@@ -1,6 +1,7 @@
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/functions/cameraFollowPlayer.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/getters/getDeactiveParticle.dart';
 import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/update/updateParticles.dart';
@@ -12,7 +13,7 @@ import 'update/updateCharacters.dart';
 
 void updatePlayMode() {
   if (!connected) return;
-  if (compiledGame.gameId < 0) return;
+  if (game.gameId < 0) return;
 
   framesSinceEvent++;
   readPlayerInput();
@@ -22,7 +23,7 @@ void updatePlayMode() {
     cameraFollowPlayer();
   }
 
-  for (ParticleEmitter emitter in compiledGame.particleEmitters) {
+  for (ParticleEmitter emitter in game.particleEmitters) {
     if (emitter.next-- > 0) continue;
     emitter.next = emitter.rate;
     Particle particle = getDeactiveParticle();

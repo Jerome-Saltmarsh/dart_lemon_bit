@@ -1,8 +1,8 @@
 import 'package:bleed_client/classes/Particle.dart';
-import 'package:bleed_client/state.dart';
+import 'package:bleed_client/state/game.dart';
 
 Particle getDeactiveParticle() {
-  for (Particle particle in compiledGame.particles) {
+  for (Particle particle in game.particles) {
     if (particle.active) continue;
     return particle;
   }

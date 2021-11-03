@@ -1,7 +1,7 @@
 import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/network/state/connecting.dart';
 import 'package:bleed_client/network/streams/onConnected.dart';
-import 'package:bleed_client/network/streams/onEvent.dart';
+import 'package:bleed_client/network/streams/eventStream.dart';
 
 void handleOnEvent(dynamic _response) {
   if (connecting) {
@@ -9,5 +9,5 @@ void handleOnEvent(dynamic _response) {
     connected = true;
     onConnectedController.add(_response);
   }
-  streamOnEvent.add(_response);
+  eventStream.add(_response);
 }
