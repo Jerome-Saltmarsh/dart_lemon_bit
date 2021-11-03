@@ -2,6 +2,7 @@
 import 'dart:ui';
 
 import 'package:bleed_client/common/Tile.dart';
+import 'package:bleed_client/properties.dart';
 
 import '../rects.dart';
 
@@ -21,10 +22,19 @@ Rect mapTileToSrcRect(Tile tile) {
     case Tile.RandomItemSpawn:
       return _concrete;
     case Tile.Block:
+      if (editMode) {
+        return _block;
+      }
       return _grass;
     case Tile.Block_Horizontal:
+      if (editMode) {
+        return _block;
+      }
       return _grass;
     case Tile.Block_Vertical:
+      if (editMode) {
+        return _block;
+      }
       return _grass;
     case Tile.Water:
       return _water;
@@ -63,23 +73,24 @@ Rect mapTileToSrcRect(Tile tile) {
 // abstraction
 Rect _grass = _frame(1);
 Rect _grass02 = _frame(1);
-Rect _concrete = _frame(13);
-Rect _concreteHorizontal = _frame(13);
-Rect _concreteVertical = _frame(13);
-Rect _water = _frame(16);
-Rect _waterSide01 = _frame(16);
-Rect _waterSide02 = _frame(16);
-Rect _waterSide03 = _frame(16);
-Rect _waterSide04 = _frame(16);
-Rect _waterCorner01 = _frame(16);
-Rect _waterCorner02 = _frame(16);
-Rect _waterCorner03 = _frame(16);
-Rect _waterCorner04 = _frame(16);
-Rect _playerSpawn = _frame(19);
-Rect _zombieSpawn = _frame(22);
-Rect _longGrass = _frame(25);
-Rect _flowers = _frame(25);
-Rect rectSrcDarkness = _frame(28);
+Rect _concrete = _frame(5);
+Rect _block = _frame(4);
+Rect _concreteHorizontal = _concrete;
+Rect _concreteVertical =  _concrete;
+Rect _water = _frame(8);
+Rect _waterSide01 = _water;
+Rect _waterSide02 = _water;
+Rect _waterSide03 = _water;
+Rect _waterSide04 = _water;
+Rect _waterCorner01 = _water;
+Rect _waterCorner02 = _water;
+Rect _waterCorner03 = _water;
+Rect _waterCorner04 = _water;
+Rect _playerSpawn = _frame(11);
+Rect _zombieSpawn = _frame(14);
+Rect _longGrass = _frame(17);
+Rect _flowers = _longGrass;
+Rect rectSrcDarkness = _frame(20);
 
 Rect _frame(int index) {
   return Rect.fromLTWH(
