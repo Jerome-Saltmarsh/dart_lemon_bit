@@ -1,3 +1,4 @@
+import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Sprite.dart';
@@ -7,6 +8,7 @@ import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/engine/render/gameWidget.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/events.dart';
+import 'package:bleed_client/input.dart';
 import 'package:bleed_client/network/functions/send.dart';
 import 'package:bleed_client/network/streams/eventStream.dart';
 import 'package:bleed_client/network/streams/onConnected.dart';
@@ -20,6 +22,9 @@ import 'state/settings.dart';
 
 
 void initBleed() {
+  initAudioPlayers();
+  registerPlayKeyboardHandler();
+
   onConnectedController.stream.listen(_onConnected);
   eventStream.stream.listen(_onEventReceivedFromServer);
 

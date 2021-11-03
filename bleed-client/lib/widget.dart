@@ -65,9 +65,6 @@ class BleedWidget extends GameWidget {
   @override
   Future init() async {
     await images.load();
-    initAudioPlayers();
-    initBleed();
-    registerPlayKeyboardHandler();
 
     game.zombies.clear();
     for (int i = 0; i < 5000; i++) {
