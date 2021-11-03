@@ -1,8 +1,6 @@
 {
   "blocks": [],
   "collectables": [],
-  "player-spawn-points": [],
-  "zombie-spawn-points": [],
   "tiles": [
     [
       "ZombieSpawn",
@@ -2649,7 +2647,7 @@
       "Grass02",
       "Long_Grass",
       "Grass02",
-      "Concrete_Horizontal",
+      "Grass",
       "Grass02",
       "Grass02",
       "Grass02",
@@ -2727,7 +2725,7 @@
       "Concrete_Horizontal",
       "Long_Grass",
       "Long_Grass",
-      "Grass02",
+      "Grass",
       "Concrete_Horizontal",
       "Grass02",
       "Grass02",
@@ -3992,7 +3990,7 @@
       "Water_Side_01",
       "Water_Side_01",
       "Water_Side_01",
-      "Concrete_Horizontal",
+      "Bridge",
       "Water_Side_01",
       "Water_Side_01",
       "Water_Side_01",
@@ -4071,7 +4069,7 @@
       "Water",
       "Water",
       "Water",
-      "Concrete",
+      "Bridge",
       "Water",
       "Water",
       "Water",
@@ -4150,7 +4148,7 @@
       "Water_Side_03",
       "Water_Side_03",
       "Water_Side_03",
-      "Concrete",
+      "Bridge",
       "Water_Side_03",
       "Water_Side_03",
       "Water_Side_03",
@@ -5888,6 +5886,11 @@
       "type": "Tree01"
     },
     {
+      "x": -293,
+      "y": 1388,
+      "type": "LongGrass"
+    },
+    {
       "x": -878,
       "y": 1410,
       "type": "Tree_Stump"
@@ -5901,6 +5904,11 @@
       "x": -1405,
       "y": 1417,
       "type": "Rock_Small"
+    },
+    {
+      "x": -377,
+      "y": 1422,
+      "type": "LongGrass"
     },
     {
       "x": 588,
@@ -6003,6 +6011,11 @@
       "type": "Tree02"
     },
     {
+      "x": 147,
+      "y": 1553,
+      "type": "LongGrass"
+    },
+    {
       "x": -956,
       "y": 1555,
       "type": "Rock"
@@ -6073,6 +6086,11 @@
       "type": "LongGrass"
     },
     {
+      "x": -285,
+      "y": 1639,
+      "type": "LongGrass"
+    },
+    {
       "x": -31,
       "y": 1640,
       "type": "LongGrass"
@@ -6098,14 +6116,14 @@
       "type": "Rock_Small"
     },
     {
+      "x": -828,
+      "y": 1659,
+      "type": "LongGrass"
+    },
+    {
       "x": -405,
       "y": 1661,
       "type": "Torch"
-    },
-    {
-      "x": -1334,
-      "y": 1664,
-      "type": "Grave"
     },
     {
       "x": -463,
@@ -6113,8 +6131,23 @@
       "type": "Rock"
     },
     {
+      "x": -1334,
+      "y": 1664,
+      "type": "Grave"
+    },
+    {
+      "x": -670,
+      "y": 1668,
+      "type": "LongGrass"
+    },
+    {
       "x": 1450,
       "y": 1672,
+      "type": "Tree_Stump"
+    },
+    {
+      "x": -243,
+      "y": 1675,
       "type": "Tree_Stump"
     },
     {
@@ -6123,9 +6156,9 @@
       "type": "House01"
     },
     {
-      "x": -243,
-      "y": 1675,
-      "type": "Tree_Stump"
+      "x": -453,
+      "y": 1677,
+      "type": "LongGrass"
     },
     {
       "x": 605,
@@ -6223,14 +6256,14 @@
       "type": "Rock_Small"
     },
     {
-      "x": 741,
-      "y": 1754,
-      "type": "Tree01"
-    },
-    {
       "x": -91,
       "y": 1754,
       "type": "Torch"
+    },
+    {
+      "x": 741,
+      "y": 1754,
+      "type": "Tree01"
     },
     {
       "x": -876,
@@ -6238,14 +6271,29 @@
       "type": "Rock_Small"
     },
     {
+      "x": -79,
+      "y": 1758,
+      "type": "LongGrass"
+    },
+    {
       "x": -630,
       "y": 1759,
       "type": "Tree01"
     },
     {
+      "x": -97,
+      "y": 1763,
+      "type": "LongGrass"
+    },
+    {
       "x": -731,
       "y": 1764,
       "type": "Tree02"
+    },
+    {
+      "x": -676,
+      "y": 1766,
+      "type": "LongGrass"
     },
     {
       "x": 54,
@@ -6258,6 +6306,11 @@
       "type": "Rock"
     },
     {
+      "x": 132,
+      "y": 1780,
+      "type": "LongGrass"
+    },
+    {
       "x": -760,
       "y": 1780,
       "type": "Tree02"
@@ -6268,9 +6321,19 @@
       "type": "Tree_Stump"
     },
     {
+      "x": -279,
+      "y": 1781,
+      "type": "LongGrass"
+    },
+    {
       "x": 694,
       "y": 1787,
       "type": "Tree_Stump"
+    },
+    {
+      "x": -135,
+      "y": 1788,
+      "type": "LongGrass"
     },
     {
       "x": 220,
@@ -6293,6 +6356,11 @@
       "type": "Rock_Small"
     },
     {
+      "x": -328,
+      "y": 1804,
+      "type": "LongGrass"
+    },
+    {
       "x": -582,
       "y": 1811,
       "type": "Tree01"
@@ -6303,14 +6371,14 @@
       "type": "Tree01"
     },
     {
-      "x": -50,
-      "y": 1819,
-      "type": "LongGrass"
-    },
-    {
       "x": 1213,
       "y": 1819,
       "type": "Tree01"
+    },
+    {
+      "x": -50,
+      "y": 1819,
+      "type": "LongGrass"
     },
     {
       "x": -1156,
@@ -6328,14 +6396,14 @@
       "type": "Tree01"
     },
     {
-      "x": -320,
-      "y": 1843,
-      "type": "LongGrass"
-    },
-    {
       "x": -772,
       "y": 1843,
       "type": "Tree01"
+    },
+    {
+      "x": -320,
+      "y": 1843,
+      "type": "LongGrass"
     },
     {
       "x": 1086,
@@ -6398,12 +6466,12 @@
       "type": "House01"
     },
     {
-      "x": -1626,
+      "x": 1038,
       "y": 1880,
       "type": "Tree01"
     },
     {
-      "x": 1038,
+      "x": -1626,
       "y": 1880,
       "type": "Tree01"
     },
@@ -6421,6 +6489,11 @@
       "x": -816,
       "y": 1895,
       "type": "Tree_Stump"
+    },
+    {
+      "x": -174,
+      "y": 1906,
+      "type": "LongGrass"
     },
     {
       "x": 1003,
@@ -6508,14 +6581,14 @@
       "type": "Tree02"
     },
     {
-      "x": 323,
-      "y": 1985,
-      "type": "Tree01"
-    },
-    {
       "x": -410,
       "y": 1985,
       "type": "Rock"
+    },
+    {
+      "x": 323,
+      "y": 1985,
+      "type": "Tree01"
     },
     {
       "x": -470,
@@ -7071,81 +7144,6 @@
       "x": -285,
       "y": 3356,
       "type": "Tree02"
-    },
-    {
-      "x": -670,
-      "y": 1668,
-      "type": "LongGrass"
-    },
-    {
-      "x": -828,
-      "y": 1659,
-      "type": "LongGrass"
-    },
-    {
-      "x": -676,
-      "y": 1766,
-      "type": "LongGrass"
-    },
-    {
-      "x": -293,
-      "y": 1388,
-      "type": "LongGrass"
-    },
-    {
-      "x": -377,
-      "y": 1422,
-      "type": "LongGrass"
-    },
-    {
-      "x": -285,
-      "y": 1639,
-      "type": "LongGrass"
-    },
-    {
-      "x": -279,
-      "y": 1781,
-      "type": "LongGrass"
-    },
-    {
-      "x": -328,
-      "y": 1804,
-      "type": "LongGrass"
-    },
-    {
-      "x": 132,
-      "y": 1780,
-      "type": "LongGrass"
-    },
-    {
-      "x": 147,
-      "y": 1553,
-      "type": "LongGrass"
-    },
-    {
-      "x": -135,
-      "y": 1788,
-      "type": "LongGrass"
-    },
-    {
-      "x": -97,
-      "y": 1763,
-      "type": "LongGrass"
-    },
-    {
-      "x": -79,
-      "y": 1758,
-      "type": "LongGrass"
-    },
-    {
-      "x": -453,
-      "y": 1677,
-      "type": "LongGrass"
-    },
-    {
-      "x": -174,
-      "y": 1906,
-      "type": "LongGrass"
     }
   ]
 }

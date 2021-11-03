@@ -93,7 +93,7 @@ Widget buildEditorUI() {
     child: Stack(
       children: [
         _buildTools(),
-        _buildObjectList(),
+        // _buildObjectList(),
       ],
     ),
   );

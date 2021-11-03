@@ -9,7 +9,8 @@ List<Tile> _walkableTiles = [
   Tile.Concrete,
   Tile.Concrete_Vertical,
   Tile.Concrete_Horizontal,
-  Tile.PlayerSpawn
+  Tile.PlayerSpawn,
+  Tile.Bridge
 ];
 
 List<Tile> _closedTiles = [
