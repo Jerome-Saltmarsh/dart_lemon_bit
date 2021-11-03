@@ -306,7 +306,6 @@ void parseState() {
 void _parseEnvironmentObjects() {
   compiledGame.environmentObjects.clear();
   compiledGame.lights.clear();
-  compiledGame.torches.clear();
 
   while (!_simiColonConsumed()) {
     double x = _consumeDouble();

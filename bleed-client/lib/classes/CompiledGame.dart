@@ -22,7 +22,6 @@ class CompiledGame {
   int cratesTotal = 0;
   List<EnvironmentObject> backgroundObjects = [];
   final List<EnvironmentObject> environmentObjects = [];
-  final List<EnvironmentObject> torches = [];
   List<List<Tile>> tiles = [];
   int totalColumns = 0;
   int totalRows = 0;

@@ -8,7 +8,6 @@ import 'package:bleed_client/state.dart';
 void applyEnvironmentObjectsToBakeMapping(){
   for (EnvironmentObject env in compiledGame.environmentObjects){
     if (env.type == EnvironmentObjectType.Torch){
-      compiledGame.torches.add(env);
       applyLightBright(bakeMap, env.x, env.y);
     }
     if (env.type == EnvironmentObjectType.House01){
