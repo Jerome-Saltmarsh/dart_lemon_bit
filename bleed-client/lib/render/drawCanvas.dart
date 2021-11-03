@@ -24,6 +24,7 @@ import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/engine/state/screen.dart';
 import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/functions/applyLightingToEnvironmentObjects.dart';
+import 'package:bleed_client/functions/applyShade.dart';
 import 'package:bleed_client/functions/calculateTileSrcRects.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToShadedImage.dart';
@@ -39,6 +40,7 @@ import 'package:bleed_client/render/drawCharacterMan.dart';
 import 'package:bleed_client/render/drawCharacterZombie.dart';
 import 'package:bleed_client/render/drawEnvironmentObjects.dart';
 import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
+import 'package:bleed_client/render/functions/drawBullets.dart';
 import 'package:bleed_client/state/colours.dart';
 import 'package:bleed_client/state/getTileAt.dart';
 import 'package:bleed_client/state/settings.dart';
@@ -65,44 +67,26 @@ int _flameIndex = 0;
 
 void drawCanvas(Canvas canvass, Size _size) {
   if (editMode) {
-    drawTiles();
-    drawEnvironmentObjects();
-    _drawCratesEditor();
-    drawEditor();
+    renderEditorOnToCanvas();
     return;
   }
 
-  _drawCompiledGame();
-}
-
-void _drawCompiledGame() {
   if (!connected) return;
   if (compiledGame.gameId < 0) return;
+  renderCompileGameOnToCanvas();
+}
 
-  frameRateValue++;
-  if (frameRateValue % frameRate == 0) {
-    drawFrame++;
-    if (ambientLight != Shading.Bright) {
-      _flameIndex = (_flameIndex + 1) % 3;
-      images.torch = images.flames[_flameIndex];
-    }
-  }
-
-  for (int row = 0; row < render.dynamicShading.length; row++) {
-    for (int column = 0; column < render.dynamicShading[0].length; column++) {
-      render.dynamicShading[row][column] = render.bakeMap[row][column];
-    }
-  }
-
+void renderCompileGameOnToCanvas() {
+  _updateAnimations();
+  _resetDynamicShadesToBakeMap();
   applyCharacterLightEmission(compiledGame.humans);
   applyCharacterLightEmission(compiledGame.interactableNpcs);
   applyLightingToEnvironmentObjects();
-
   calculateTileSrcRects();
   drawTiles();
   _drawNpcBonusPointsCircles();
   // _drawPlayerHealthRing();
-  _drawBullets(compiledGame.bullets);
+  drawBullets(compiledGame.bullets);
   drawBulletHoles(compiledGame.bulletHoles);
   _drawGrenades(compiledGame.grenades);
   _renderItems();
@@ -122,108 +106,25 @@ void _drawCompiledGame() {
   _drawMouseAim();
 }
 
-void applyShade(
-    List<List<Shading>> shader, int row, int column, Shading value) {
-  if (shader[row][column].index <= value.index) return;
-  shader[row][column] = value;
-}
-
-void applyShadeBright(List<List<Shading>> shader, int row, int column) {
-  applyShade(shader, row, column, Shading.Bright);
-}
-
-void applyShadeMedium(List<List<Shading>> shader, int row, int column) {
-  applyShade(shader, row, column, Shading.Medium);
-}
-
-void applyShadeDark(List<List<Shading>> shader, int row, int column) {
-  applyShade(shader, row, column, Shading.Dark);
-}
-
-void applyLightMedium(List<List<Shading>> shader, double x, double y) {
-  int column = getColumn(x, y);
-  int row = getRow(x, y);
-  applyShadeMedium(shader, row, column);
-
-  if (row > 1) {
-    applyShadeDark(shader, row - 2, column);
-    if (column > 0) {
-      applyShadeDark(shader, row - 2, column - 1);
-    }
-    if (column > 1) {
-      applyShadeDark(shader, row - 2, column - 2);
-    }
-    if (column < compiledGame.totalColumns - 1) {
-      applyShadeDark(shader, row - 2, column + 1);
-    }
-    if (column < compiledGame.totalColumns - 2) {
-      applyShadeDark(shader, row - 2, column + 2);
-    }
-  }
-  if (row < compiledGame.totalRows - 2) {
-    applyShadeDark(shader, row + 2, column);
-
-    if (column > 0) {
-      applyShadeDark(shader, row + 2, column - 1);
-    }
-    if (column > 1) {
-      applyShadeDark(shader, row + 2, column - 2);
-    }
-    if (column < compiledGame.totalColumns - 1) {
-      applyShadeDark(shader, row + 2, column + 1);
-    }
-    if (column < compiledGame.totalColumns - 2) {
-      applyShadeDark(shader, row + 2, column + 2);
-    }
-  }
-
-  if (column > 0) {
-    applyShadeDark(shader, row, column - 2);
-
-    if (row > 0) {
-      applyShadeDark(shader, row - 1, column - 2);
-    }
-    if (row < compiledGame.totalRows - 1) {
-      applyShadeDark(shader, row + 1, column - 2);
-    }
-  }
-  if (column < compiledGame.totalColumns - 1) {
-    applyShadeDark(shader, row, column + 2);
-
-    if (row > 0) {
-      applyShadeDark(shader, row - 1, column + 2);
-    }
-    if (row < compiledGame.totalRows - 1) {
-      applyShadeDark(shader, row + 1, column + 2);
-    }
-  }
-
-  if (row > 0) {
-    applyShadeMedium(shader, row - 1, column);
-    if (column > 0) {
-      applyShadeMedium(shader, row - 1, column - 1);
-    }
-    if (column + 1 < compiledGame.totalColumns) {
-      applyShadeMedium(shader, row - 1, column + 1);
-    }
-  }
-  if (column > 0) {
-    applyShadeMedium(shader, row, column - 1);
-  }
-  if (column + 1 < compiledGame.totalColumns) {
-    applyShadeMedium(shader, row, column + 1);
-    if (row + 1 < compiledGame.totalRows) {
-      applyShadeMedium(shader, row + 1, column + 1);
-    }
-  }
-  if (row + 1 < compiledGame.totalRows) {
-    applyShadeMedium(shader, row + 1, column);
-
-    if (column > 0) {
-      applyShadeMedium(shader, row + 1, column - 1);
+void _updateAnimations() {
+  frameRateValue++;
+  if (frameRateValue % frameRate == 0) {
+    drawFrame++;
+    if (ambientLight != Shading.Bright) {
+      _flameIndex = (_flameIndex + 1) % 3;
+      images.torch = images.flames[_flameIndex];
     }
   }
 }
+
+void _resetDynamicShadesToBakeMap() {
+  for (int row = 0; row < render.dynamicShading.length; row++) {
+    for (int column = 0; column < render.dynamicShading[0].length; column++) {
+      render.dynamicShading[row][column] = render.bakeMap[row][column];
+    }
+  }
+}
+
 
 Shading calculateShadeAt(double x, double y) {
   Shading shading = Shading.Dark;
@@ -404,18 +305,6 @@ void _drawCrates() {
   drawAtlas(images.crate, render.crates.transforms, render.crates.rects);
 }
 
-void _drawCratesEditor() {
-  for (Vector2 position in compiledGame.crates) {
-    if (position.isZero) break;
-    _drawCrate(position);
-  }
-}
-
-void _drawCrate(Vector2 position) {
-  drawCircle(position.x, position.y, 5, Colors.white);
-  globalCanvas.drawImage(images.crate, Offset(position.x, position.y), paint);
-}
-
 void _renderItems() {
   clear(render.items);
   for (int i = 0; i < compiledGame.totalItems; i++) {
@@ -546,8 +435,3 @@ void _drawGrenades(List<double> grenades) {
   }
 }
 
-void _drawBullets(List bullets) {
-  for (int i = 0; i < compiledGame.totalBullets; i++) {
-    drawBullet(compiledGame.bullets[i].x, compiledGame.bullets[i].y);
-  }
-}
