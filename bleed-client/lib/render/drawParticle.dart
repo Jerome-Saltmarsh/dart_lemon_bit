@@ -19,7 +19,7 @@ void drawParticle(Particle particle){
   double x = particle.x;
   double y = particle.y;
 
-  Shading shading = getShading(particle.x, particle.y);
+  Shading shading = getShadeAtPosition(particle.x, particle.y);
   if (shading == Shading.VeryDark) return;
 
   double scaleShift = (1 + (particle.z * 0.4)) * particle.scale;

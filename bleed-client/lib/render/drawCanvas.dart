@@ -9,7 +9,6 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CollectableType.dart';
-import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
@@ -25,18 +24,21 @@ import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/engine/state/screen.dart';
 import 'package:bleed_client/enums/Shading.dart';
+import 'package:bleed_client/functions/calculateTileSrcRects.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
+import 'package:bleed_client/functions/mapEnvironmentObjectToShadedImage.dart';
+import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/mappers/mapCrateToRSTransform.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
 import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
 import 'package:bleed_client/mappers/mapItemToRect.dart';
-import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/rects.dart';
 import 'package:bleed_client/render/drawCharacterMan.dart';
 import 'package:bleed_client/render/drawCharacterZombie.dart';
+import 'package:bleed_client/render/drawEnvironmentObjects.dart';
 import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
 import 'package:bleed_client/state/colours.dart';
 import 'package:bleed_client/state/getTileAt.dart';
@@ -54,8 +56,6 @@ import 'drawBullet.dart';
 import 'drawGrenade.dart';
 import 'drawParticle.dart';
 
-final double _anchorX = 50;
-final double _anchorY = 80;
 final double _nameRadius = 100;
 final double charWidth = 4.5;
 final Ring _healthRing = Ring(16);
@@ -67,44 +67,13 @@ int _flameIndex = 0;
 void drawCanvas(Canvas canvass, Size _size) {
   if (editMode) {
     drawTiles();
-    _drawEnvironmentObjects();
+    drawEnvironmentObjects();
     _drawCratesEditor();
     drawEditor();
     return;
   }
 
   _drawCompiledGame();
-}
-
-void calculateTileSrcRects() {
-  int i = 0;
-  List<List<Tile>> _tiles = compiledGame.tiles;
-
-  for (int row = 0; row < _tiles.length; row++) {
-    for (int column = 0; column < _tiles[0].length; column++) {
-      Shading shading = render.dynamicShading[row][column];
-
-      if (shading == Shading.VeryDark) {
-        render.tilesRects[i] = rectSrcDarkness.left;
-        render.tilesRects[i + 2] = rectSrcDarkness.right;
-        i += 4;
-        continue;
-      }
-
-      Rect rect = mapTileToSrcRect(_tiles[row][column]);
-      double left = rect.left;
-
-      if (shading == Shading.Medium) {
-        left += 48;
-      } else if (shading == Shading.Dark) {
-        left += 96;
-      }
-
-      render.tilesRects[i] = left;
-      render.tilesRects[i + 2] = left + 48;
-      i += 4;
-    }
-  }
 }
 
 void setTileType(int index, double frame) {
@@ -124,9 +93,7 @@ void _drawCompiledGame() {
     drawFrame++;
     if (ambientLight != Shading.Bright) {
       _flameIndex = (_flameIndex + 1) % 3;
-      for (EnvironmentObject torch in compiledGame.torches) {
-        torch.image = images.flames[_flameIndex];
-      }
+      images.torch = images.flames[_flameIndex];
     }
   }
 
@@ -166,144 +133,8 @@ void _drawCompiledGame() {
 
 void applyLightingToEnvironmentObjects() {
   for (EnvironmentObject environmentObject in compiledGame.environmentObjects) {
-    Shading shade = render.dynamicShading[environmentObject.tileRow]
-        [environmentObject.tileColumn];
-
-    if (shade == Shading.VeryDark) {
-      environmentObject.image = images.empty;
-      continue;
-    }
-
-    if (environmentObject.type == EnvironmentObjectType.Rock) {
-      switch (shade) {
-        case Shading.Bright:
-          environmentObject.image = images.rockBright;
-          continue;
-        case Shading.Medium:
-          environmentObject.image = images.rockMedium;
-          continue;
-        case Shading.Dark:
-          environmentObject.image = images.rockDark;
-          continue;
-      }
-    } else if (environmentObject.type == EnvironmentObjectType.Tree01) {
-      switch (shade) {
-        case Shading.Bright:
-          environmentObject.image = images.tree01Bright;
-          continue;
-        case Shading.Medium:
-          environmentObject.image = images.tree01Medium;
-          continue;
-        case Shading.Dark:
-          environmentObject.image = images.tree01Dark;
-          continue;
-      }
-    } else if (environmentObject.type == EnvironmentObjectType.Tree02) {
-      switch (shade) {
-        case Shading.Bright:
-          environmentObject.image = images.tree02Bright;
-          continue;
-        case Shading.Medium:
-          environmentObject.image = images.tree02Medium;
-          continue;
-        case Shading.Dark:
-          environmentObject.image = images.tree02Dark;
-          continue;
-      }
-    } else if (environmentObject.type == EnvironmentObjectType.Palisade) {
-      switch (shade) {
-        case Shading.Bright:
-          environmentObject.image = images.palisadeBright;
-          continue;
-        case Shading.Medium:
-          environmentObject.image = images.palisadeMedium;
-          continue;
-        case Shading.Dark:
-          environmentObject.image = images.palisadeDark;
-          continue;
-      }
-    } else if (environmentObject.type == EnvironmentObjectType.Palisade_H) {
-      switch (shade) {
-        case Shading.Bright:
-          environmentObject.image = images.palisadeHBright;
-          continue;
-        case Shading.Medium:
-          environmentObject.image = images.palisadeHMedium;
-          continue;
-        case Shading.Dark:
-          environmentObject.image = images.palisadeHDark;
-          continue;
-      }
-    } else if (environmentObject.type == EnvironmentObjectType.Palisade_V) {
-      switch (shade) {
-        case Shading.Bright:
-          environmentObject.image = images.palisadeVBright;
-          continue;
-        case Shading.Medium:
-          environmentObject.image = images.palisadeVMedium;
-          continue;
-        case Shading.Dark:
-          environmentObject.image = images.palisadeVDark;
-          continue;
-      }
-    } else if (environmentObject.type == EnvironmentObjectType.Tree_Stump) {
-      switch (shade) {
-        case Shading.Bright:
-          environmentObject.image = images.treeStumpBright;
-          continue;
-        case Shading.Medium:
-          environmentObject.image = images.treeStumpMedium;
-          continue;
-        case Shading.Dark:
-          environmentObject.image = images.treeStumpDark;
-          continue;
-      }
-    } else if (environmentObject.type == EnvironmentObjectType.Rock_Small) {
-      switch (shade) {
-        case Shading.Bright:
-          environmentObject.image = images.rockSmallBright;
-          continue;
-        case Shading.Medium:
-          environmentObject.image = images.rockSmallMedium;
-          continue;
-        case Shading.Dark:
-          environmentObject.image = images.rockSmallDark;
-          continue;
-      }
-    } else if (environmentObject.type == EnvironmentObjectType.Grave) {
-      switch (shade) {
-        case Shading.Bright:
-          environmentObject.image = images.graveBright;
-          continue;
-        case Shading.Medium:
-          environmentObject.image = images.graveMedium;
-          continue;
-        case Shading.Dark:
-          environmentObject.image = images.graveDark;
-          continue;
-      }
-    } else if (environmentObject.type == EnvironmentObjectType.House01) {
-      switch (shade) {
-        case Shading.Bright:
-          environmentObject.image = images.houseDay;
-          continue;
-        default:
-          environmentObject.image = images.house;
-          continue;
-      }
-    } else if (environmentObject.type == EnvironmentObjectType.LongGrass) {
-      switch (shade) {
-        case Shading.Bright:
-          environmentObject.image = images.longGrassBright;
-          continue;
-        case Shading.Medium:
-          environmentObject.image = images.longGrassNormal;
-          continue;
-        case Shading.Dark:
-          environmentObject.image = images.longGrassDark;
-          continue;
-      }
-    }
+    Shading shade = getShade(environmentObject.tileRow, environmentObject.tileColumn);
+    environmentObject.image = mapEnvironmentObjectToToShadedImage(environmentObject, shade);
   }
 }
 
@@ -562,15 +393,6 @@ void drawEnvironmentObject(EnvironmentObject environmentObject) {
   if (!environmentObjectOnScreenScreen(environmentObject)) return;
   drawImageRect(
       environmentObject.image, environmentObject.src, environmentObject.dst);
-}
-
-void _drawEnvironmentObjects() {
-  for (EnvironmentObject environmentObject in compiledGame.environmentObjects) {
-    globalCanvas.drawImage(
-        mapEnvironmentObjectTypeToImage(environmentObject.type),
-        Offset(environmentObject.x - _anchorX, environmentObject.y - _anchorY),
-        paint);
-  }
 }
 
 void _drawNpcBonusPointsCircles() {

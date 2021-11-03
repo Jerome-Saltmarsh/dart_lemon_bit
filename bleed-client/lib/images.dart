@@ -48,6 +48,7 @@ class _Images {
   Image radial64_10;
   Image radial64_05;
   Image radial64_02;
+  Image torch;
   Image torch_01;
   Image torch_02;
   Image torch_03;
@@ -172,6 +173,8 @@ class _Images {
     flames.add(torch_01);
     flames.add(torch_02);
     flames.add(torch_03);
+
+    torch = torch_01;
   }
 }
 

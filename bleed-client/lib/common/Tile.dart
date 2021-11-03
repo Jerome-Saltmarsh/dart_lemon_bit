@@ -1,6 +1,9 @@
 enum Tile {
   Concrete,
   Grass,
+  Grass02,
+  Long_Grass,
+  Flowers,
   Water,
   Boundary,
   Fortress,
@@ -11,9 +14,6 @@ enum Tile {
   Block_Horizontal,
   Block_Vertical,
   Crate,
-  Long_Grass,
-  Flowers,
-  Grass02,
   Concrete_Horizontal,
   Concrete_Vertical,
   Bridge

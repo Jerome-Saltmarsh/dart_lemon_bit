@@ -156,22 +156,6 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.ambientVeryDark: setAmbientLightVeryDark,
 };
 
-void setAmbientLightBright(){
-  setAmbientLight(Shading.Bright);
-}
-
-void setAmbientLightMedium(){
-  setAmbientLight(Shading.Medium);
-}
-
-void setAmbientLightDark(){
-  setAmbientLight(Shading.Dark);
-}
-
-void setAmbientLightVeryDark(){
-  setAmbientLight(Shading.VeryDark);
-}
-
 void toggleLantern(){
   lantern = !lantern;
 }
