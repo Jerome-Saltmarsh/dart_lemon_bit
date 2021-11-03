@@ -97,8 +97,8 @@
 [ ] Audio walk on grass
 [ ] Improve UI
 [ ] Add fireplace with smoke emitter
-[ ] NPC draw order
 [ ] Fix save environment issues
+[x] NPC draw order
 [x] Particle dynamic lighting
 [x] Environment Object: Bush
 [x] Shading Very Dark

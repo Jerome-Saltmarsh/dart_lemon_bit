@@ -34,6 +34,7 @@ import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/rects.dart';
 import 'package:bleed_client/render/drawCharacterMan.dart';
 import 'package:bleed_client/render/drawCharacterZombie.dart';
+import 'package:bleed_client/render/drawInteractableNpcs.dart';
 import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
 import 'package:bleed_client/render/functions/drawBullets.dart';
 import 'package:bleed_client/render/state/bakeMap.dart';
@@ -83,7 +84,6 @@ void renderCanvasPlay() {
   _drawGrenades(compiledGame.grenades);
   _renderItems();
   _drawCrates();
-  drawCharacters();
   _drawCollectables();
   _drawSprites();
 
@@ -159,6 +159,7 @@ void _drawSprites() {
   int indexEnv = 0;
   int indexParticle = 0;
   int indexZombie = 0;
+  int indexNpc = 0;
   int totalParticles = getTotalActiveParticles();
 
   int totalEnvironment = compiledGame.environmentObjects.length;
@@ -173,6 +174,7 @@ void _drawSprites() {
 
   bool zombiesRemaining = indexZombie < compiledGame.totalZombies;
   bool humansRemaining = indexHuman < compiledGame.totalHumans;
+  bool npcsRemaining = indexHuman < compiledGame.totalNpcs;
   bool environmentRemaining = indexEnv < totalEnvironment;
   bool particlesRemaining = indexParticle < totalParticles;
 
@@ -181,11 +183,13 @@ void _drawSprites() {
     environmentRemaining = indexEnv < totalEnvironment;
     particlesRemaining = indexParticle < totalParticles;
     zombiesRemaining = indexZombie < compiledGame.totalZombies;
+    npcsRemaining = indexNpc < compiledGame.totalNpcs;
 
     if (!zombiesRemaining &&
         !humansRemaining &&
         !environmentRemaining &&
-        !particlesRemaining) return;
+        !particlesRemaining &&
+        !npcsRemaining) return;
 
     if (humansRemaining) {
       double humanY = compiledGame.humans[indexHuman].y;
@@ -196,9 +200,12 @@ void _drawSprites() {
             humanY < compiledGame.particles[indexParticle].y) {
           if (!zombiesRemaining ||
               humanY < compiledGame.zombies[indexZombie].y) {
-            drawCharacterMan(compiledGame.humans[indexHuman]);
-            indexHuman++;
-            continue;
+            if (!npcsRemaining ||
+                humanY < compiledGame.interactableNpcs[indexNpc].y) {
+              drawCharacterMan(compiledGame.humans[indexHuman]);
+              indexHuman++;
+              continue;
+            }
           }
         }
       }
@@ -212,9 +219,12 @@ void _drawSprites() {
       if (!particlesRemaining ||
           env.y < compiledGame.particles[indexParticle].y) {
         if (!zombiesRemaining || env.y < compiledGame.zombies[indexZombie].y) {
-          drawEnvironmentObject(compiledGame.environmentObjects[indexEnv]);
-          indexEnv++;
-          continue;
+          if (!npcsRemaining ||
+              env.y < compiledGame.interactableNpcs[indexNpc].y) {
+            drawEnvironmentObject(compiledGame.environmentObjects[indexEnv]);
+            indexEnv++;
+            continue;
+          }
         }
       }
     }
@@ -224,16 +234,30 @@ void _drawSprites() {
 
       if (!zombiesRemaining ||
           particle.y < compiledGame.zombies[indexZombie].y) {
-        if (onScreen(particle.x, particle.y)) {
-          drawParticle(particle);
+        if (!npcsRemaining ||
+            particle.y < compiledGame.interactableNpcs[indexNpc].y) {
+          if (onScreen(particle.x, particle.y)) {
+            drawParticle(particle);
+          }
+          indexParticle++;
+          continue;
         }
-        indexParticle++;
+      }
+    }
+
+    if (zombiesRemaining) {
+      Zombie zombie = compiledGame.zombies[indexZombie];
+
+      if (!npcsRemaining ||
+          zombie.y < compiledGame.interactableNpcs[indexNpc].y) {
+        drawCharacterZombie(compiledGame.zombies[indexZombie]);
+        indexZombie++;
         continue;
       }
     }
 
-    drawCharacterZombie(compiledGame.zombies[indexZombie]);
-    indexZombie++;
+    drawInteractableNpc(compiledGame.interactableNpcs[indexNpc]);
+    indexNpc++;
   }
 }
 
@@ -405,4 +429,3 @@ void _drawGrenades(List<double> grenades) {
     drawGrenade(grenades[i], grenades[i + 1], grenades[i + 2]);
   }
 }
-

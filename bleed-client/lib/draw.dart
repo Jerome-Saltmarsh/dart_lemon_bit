@@ -27,12 +27,6 @@ void drawCharacterCircle(double x, double y, Color color) {
   drawCircle(x, y, 10, color);
 }
 
-void drawCharacters() {
-  if (images.human == null) return;
-  // drawZombies();
-  drawInteractableNpcs();
-}
-
 void drawTileList() {
   globalCanvas.drawRawAtlas(
       images.tiles,
