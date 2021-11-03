@@ -39,7 +39,10 @@ import 'package:bleed_client/render/drawInteractableNpcs.dart';
 import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
 import 'package:bleed_client/render/functions/drawBullets.dart';
 import 'package:bleed_client/render/state/bakeMap.dart';
+import 'package:bleed_client/render/state/crates.dart';
 import 'package:bleed_client/render/state/dynamicShading.dart';
+import 'package:bleed_client/render/state/floatingText.dart';
+import 'package:bleed_client/render/state/items.dart';
 import 'package:bleed_client/state/colours.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
@@ -118,7 +121,7 @@ void _resetDynamicShadesToBakeMap() {
 }
 
 void _drawFloatingTexts() {
-  for (FloatingText floatingText in render.floatingText) {
+  for (FloatingText floatingText in floatingText) {
     if (floatingText.duration == 0) continue;
     floatingText.duration--;
     floatingText.y -= 0.5;
@@ -291,22 +294,22 @@ void _drawPlayerHealthRing() {
 }
 
 void _drawCrates() {
-  clear(render.crates);
+  clear(crates);
   for (int i = 0; i < compiledGame.cratesTotal; i++) {
-    render.crates.transforms
+    crates.transforms
         .add(mapCrateToRSTransform((compiledGame.crates[i])));
-    render.crates.rects.add(rectCrate);
+    crates.rects.add(rectCrate);
   }
-  drawAtlas(images.crate, render.crates.transforms, render.crates.rects);
+  drawAtlas(images.crate, crates.transforms, crates.rects);
 }
 
 void _renderItems() {
-  clear(render.items);
+  clear(items);
   for (int i = 0; i < compiledGame.totalItems; i++) {
-    render.items.transforms.add(mapItemToRSTransform(compiledGame.items[i]));
-    render.items.rects.add(mapItemToRect(compiledGame.items[i].type));
+    items.transforms.add(mapItemToRSTransform(compiledGame.items[i]));
+    items.rects.add(mapItemToRect(compiledGame.items[i].type));
   }
-  drawAtlas(images.items, render.items.transforms, render.items.rects);
+  drawAtlas(images.items, items.transforms, items.rects);
 }
 
 void _drawPlayerNames() {

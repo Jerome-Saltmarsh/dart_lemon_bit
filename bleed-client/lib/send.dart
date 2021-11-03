@@ -7,6 +7,7 @@ import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/network/functions/send.dart';
 import 'package:bleed_client/network/functions/sinkMessage.dart';
 import 'package:bleed_client/properties.dart';
+import 'package:bleed_client/render/state/paths.dart';
 
 import 'common/Weapons.dart';
 import 'state.dart';
@@ -137,7 +138,7 @@ void sendRequestPurchase(PurchaseType purchaseType) {
 }
 
 void sendRequestSetCompilePaths(bool value) {
-  render.paths.clear();
+  paths.clear();
   send('${ClientRequest.SetCompilePaths.index} $session ${value ? 1 : 0}');
 }
 

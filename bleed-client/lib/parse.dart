@@ -27,6 +27,7 @@ import 'package:bleed_client/network/state/connecting.dart';
 import 'package:bleed_client/render/drawCanvas.dart';
 import 'package:bleed_client/render/functions/applyEnvironmentObjectsToBakeMapping.dart';
 import 'package:bleed_client/render/functions/setBakeMapToAmbientLight.dart';
+import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/getTileAt.dart';
 import 'package:bleed_client/ui/compose/dialogs.dart';
@@ -372,10 +373,10 @@ void _parseMetaDeathMatch() {
 }
 
 void _parsePaths() {
-  render.paths.clear();
+  paths.clear();
   while (!_simiColonConsumed()) {
     List<Vector2> path = [];
-    render.paths.add(path);
+    paths.add(path);
     while (!_commaConsumed()) {
       path.add(_consumeVector2());
     }

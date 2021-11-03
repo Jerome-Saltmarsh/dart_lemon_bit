@@ -3,6 +3,7 @@ import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/functions/spawners/spawnFireYellow.dart';
 import 'package:bleed_client/functions/spawners/spawnShrapnel.dart';
 import 'package:bleed_client/functions/spawners/spawnSmoke.dart';
+import 'package:bleed_client/render/state/floatingText.dart';
 import 'package:bleed_client/utils.dart';
 
 import 'audio.dart';
@@ -29,15 +30,15 @@ void spawnExplosion(double x, double y) {
 }
 
 void spawnFloatingText(double x, double y, dynamic value) {
-  for (FloatingText floatingText in render.floatingText) {
-    if (floatingText.duration > 0) continue;
-    floatingText.duration = settings.floatingTextDuration;
-    floatingText.x = x;
-    floatingText.y = y;
-    floatingText.value = value.toString();
+  for (FloatingText text in floatingText) {
+    if (text.duration > 0) continue;
+    text.duration = settings.floatingTextDuration;
+    text.x = x;
+    text.y = y;
+    text.value = value.toString();
     return;
   }
-  render.floatingText.add(FloatingText(
+  floatingText.add(FloatingText(
       x: x,
       y: y,
       value: value.toString(),

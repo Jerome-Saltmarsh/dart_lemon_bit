@@ -12,6 +12,9 @@ import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/getters/inDarkness.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
+import 'package:bleed_client/render/state/paths.dart';
+import 'package:bleed_client/render/state/tileRects.dart';
+import 'package:bleed_client/render/state/tileTransforms.dart';
 import 'package:bleed_client/render/state/tilesRects.dart';
 import 'package:bleed_client/render/state/tilesRstTransforms.dart';
 import 'package:flutter/cupertino.dart';
@@ -44,20 +47,17 @@ void renderTiles(List<List<Tile>> tiles) {
   _processTileTransforms(tiles);
   _loadTileRects(tiles);
 
-  List<Rect> rects = render.tileRects;
-  List<RSTransform> rsTransform = render.tileTransforms;
-
-  int total = rects.length * 4;
+  int total = tileRects.length * 4;
   tilesRstTransforms = Float32List(total);
   tilesRects = Float32List(total);
 
-  for (int i = 0; i < rects.length; ++i) {
+  for (int i = 0; i < tileRects.length; ++i) {
     final int index0 = i * 4;
     final int index1 = index0 + 1;
     final int index2 = index0 + 2;
     final int index3 = index0 + 3;
-    final RSTransform rstTransform = rsTransform[i];
-    final Rect rect = rects[i];
+    final RSTransform rstTransform = tileTransforms[i];
+    final Rect rect = tileRects[i];
     tilesRstTransforms[index0] = rstTransform.scos;
     tilesRstTransforms[index1] = rstTransform.ssin;
     tilesRstTransforms[index2] = rstTransform.tx;
@@ -70,19 +70,19 @@ void renderTiles(List<List<Tile>> tiles) {
 }
 
 void _processTileTransforms(List<List<Tile>> tiles) {
-  render.tileTransforms.clear();
+  tileTransforms.clear();
   for (int x = 0; x < tiles.length; x++) {
     for (int y = 0; y < tiles[0].length; y++) {
-      render.tileTransforms.add(getTileTransform(x, y));
+      tileTransforms.add(getTileTransform(x, y));
     }
   }
 }
 
 void _loadTileRects(List<List<Tile>> tiles) {
-  render.tileRects.clear();
+  tileRects.clear();
   for (int row = 0; row < tiles.length; row++) {
     for (int column = 0; column < tiles[0].length; column++) {
-        render.tileRects.add(mapTileToSrcRect(tiles[row][column]));
+        tileRects.add(mapTileToSrcRect(tiles[row][column]));
     }
   }
 }
@@ -114,7 +114,7 @@ RSTransform rsTransform(
 
 void drawPaths() {
   setColor(Colors.blue);
-  for (List<Vector2> path in render.paths) {
+  for (List<Vector2> path in paths) {
     for (int i = 0; i < path.length - 1; i++) {
       drawLine(path[i].x, path[i].y, path[i + 1].x, path[i + 1].y);
     }
@@ -234,7 +234,7 @@ void drawTiles() {
   // TODO Optimization: Null checks are expensive
   if (images.tilesLight == null) return;
   if (compiledGame.tiles == null || compiledGame.tiles.isEmpty) return;
-  if (render.tileTransforms.length != render.tileRects.length) return;
+  if (tileTransforms.length != tileRects.length) return;
   drawTileList();
 }
 

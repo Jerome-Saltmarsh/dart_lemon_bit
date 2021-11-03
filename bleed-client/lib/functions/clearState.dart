@@ -4,6 +4,9 @@ import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/engine/render/gameWidget.dart';
 import 'package:bleed_client/engine/state/zoom.dart';
 import 'package:bleed_client/enums/Mode.dart';
+import 'package:bleed_client/render/state/paths.dart';
+import 'package:bleed_client/render/state/tileRects.dart';
+import 'package:bleed_client/render/state/tileTransforms.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 
 import '../state.dart';
@@ -54,8 +57,7 @@ void clearCompileGameState() {
 }
 
 void clearRender() {
-  render.tileTransforms.clear();
-  render.tileRects.clear();
-  render.paths.clear();
-  render.particleRects.clear();
+  tileTransforms.clear();
+  tileRects.clear();
+  paths.clear();
 }
