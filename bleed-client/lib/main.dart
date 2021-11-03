@@ -1,7 +1,7 @@
 import 'package:bleed_client/bleed.dart';
 import 'package:flutter/material.dart';
 
-import 'widget.dart';
+import 'ui/widgets/BleedWidget.dart';
 
 void main() {
   initBleed();

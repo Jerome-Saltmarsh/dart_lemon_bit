@@ -12,6 +12,7 @@ import 'package:bleed_client/engine/state/mouseDragging.dart';
 import 'package:bleed_client/engine/state/primarySwatch.dart';
 import 'package:bleed_client/engine/state/screen.dart';
 import 'package:bleed_client/engine/state/size.dart';
+import 'package:bleed_client/engine/state/update.dart';
 import 'package:bleed_client/engine/state/zoom.dart';
 import 'package:bleed_client/input.dart';
 import 'package:flutter/gestures.dart';
@@ -96,12 +97,10 @@ abstract class GameWidget extends StatefulWidget {
     screen.top = camera.y;
     screen.bottom = camera.y + (screenHeight / zoom);
 
-    fixedUpdate();
+    update();
     _clickProcessed = true;
   }
 
-  /// used to update the game logic
-  void fixedUpdate();
 
   /// used to draw the game
   void draw(Canvas canvas, Size size);

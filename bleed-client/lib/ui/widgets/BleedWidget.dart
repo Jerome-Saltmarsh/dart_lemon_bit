@@ -18,14 +18,15 @@ import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'engine/properties/mouseWorld.dart';
-import 'engine/state/camera.dart';
-import 'images.dart';
-import 'render/drawCanvas.dart';
-import 'state/settings.dart';
-import 'utils.dart';
+import '../../engine/properties/mouseWorld.dart';
+import '../../engine/state/camera.dart';
+import '../../images.dart';
+import '../../render/drawCanvas.dart';
+import '../../state/settings.dart';
+import '../../utils.dart';
 
 class BleedWidget extends GameWidget {
+
   @override
   bool uiVisible() => true;
 
@@ -56,11 +57,6 @@ class BleedWidget extends GameWidget {
     await images.load();
     initUI();
     rebuildUI();
-  }
-
-  @override
-  void fixedUpdate() {
-    update();
   }
 
   @override

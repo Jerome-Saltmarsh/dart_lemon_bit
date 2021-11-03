@@ -7,10 +7,13 @@ import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
+import 'package:bleed_client/engine/functions/registerUpdateLoop.dart';
 import 'package:bleed_client/engine/render/gameWidget.dart';
+import 'package:bleed_client/engine/state/update.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
+import 'package:bleed_client/functions/update.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/network/functions/send.dart';
 import 'package:bleed_client/network/streams/eventStream.dart';
@@ -32,6 +35,7 @@ import 'ui/compose/dialogs.dart';
 void initBleed() {
   initAudioPlayers();
   registerPlayKeyboardHandler();
+  registerUpdateLoop(updateGame);
 
   onConnectedController.stream.listen(_onConnected);
   eventStream.stream.listen(_onEventReceivedFromServer);
