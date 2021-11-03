@@ -3,7 +3,6 @@ import 'package:bleed_client/classes/CompiledGame.dart';
 import 'package:bleed_client/classes/Player.dart';
 import 'package:bleed_client/classes/Score.dart';
 import 'package:bleed_client/common/Weapons.dart';
-import 'package:bleed_client/editor/GameEdit.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/utils.dart';
 
@@ -12,7 +11,6 @@ import 'classes/Block.dart';
 import 'classes/State.dart';
 import 'enums/Mode.dart';
 
-GameEdit gameEdit;
 Mode mode = Mode.Play;
 int frameRate = 5;
 int frameRateValue = 0;

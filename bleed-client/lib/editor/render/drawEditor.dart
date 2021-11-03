@@ -1,5 +1,6 @@
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/editor/editor.dart';
+import 'package:bleed_client/editor/state/selectedCollectable.dart';
 import 'package:bleed_client/engine/functions/drawCircle.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/editState.dart';

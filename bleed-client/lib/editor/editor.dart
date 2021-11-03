@@ -5,10 +5,15 @@ import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
 import 'package:bleed_client/common/functions/diffOver.dart';
 import 'package:bleed_client/draw.dart';
+import 'package:bleed_client/editor/enums/EditTool.dart';
 import 'package:bleed_client/editor/functions/resetTiles.dart';
+import 'package:bleed_client/editor/render/buildEnvironmentObjects.dart';
 import 'package:bleed_client/editor/render/buildTiles.dart';
+import 'package:bleed_client/editor/state/editTool.dart';
+import 'package:bleed_client/editor/state/mouseDragClickProcess.dart';
 import 'package:bleed_client/editor/state/mouseWorldStart.dart';
 import 'package:bleed_client/editor/state/panning.dart';
+import 'package:bleed_client/editor/state/selectedCollectable.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/render/gameWidget.dart';
 import 'package:bleed_client/engine/state/camera.dart';
@@ -24,25 +29,6 @@ import 'package:flutter/material.dart';
 import '../state.dart';
 import '../state/editState.dart';
 
-int selectedCollectable = -1;
-bool _mouseDragClickProcess = false;
-
-EditTool tool = EditTool.Tile;
-
-enum EditTool { Tile, EnvironmentObject }
-
-Widget buildEnvironmentObjects() {
-  return Column(
-      children:
-          EnvironmentObjectType.values.map(buildEnvironmentType).toList());
-}
-
-Widget buildEnvironmentType(EnvironmentObjectType type) {
-  return button(type.toString(), () {
-    tool = EditTool.EnvironmentObject;
-    editState.environmentObjectType = type;
-  });
-}
 
 Widget buildEnv(EnvironmentObject env){
   return button(parseEnvironmentObjectTypeToString(env.type), (){
@@ -113,9 +99,6 @@ Widget buildEditorUI() {
   );
 }
 void updateEditMode() {
-  // onKeyPressed(LogicalKeyboardKey.escape, disconnect);
-
-  // _controlCameraEditMode();
   _onMouseLeftClick();
   _handleMouseDrag();
   redrawCanvas();
@@ -129,12 +112,12 @@ void updateEditMode() {
 
 void _handleMouseDrag() {
   if (!mouseDragging) {
-    _mouseDragClickProcess = false;
+    mouseDragClickProcess = false;
     return;
   }
 
-  if (!_mouseDragClickProcess) {
-    _mouseDragClickProcess = true;
+  if (!mouseDragClickProcess) {
+    mouseDragClickProcess = true;
     _onMouseLeftClick(true);
     return;
   }
@@ -146,17 +129,6 @@ void _handleMouseDrag() {
   }
 
   setTileAtMouse(editState.tile);
-  // switch (editState.tool) {
-  //   case EditorTool.Block:
-  //     _handleDragBlock();
-  //     break;
-  //   case EditorTool.TileGrass:
-  //     setTileAtMouse(Tile.Grass);
-  //     break;
-  //   case EditorTool.TileConcrete:
-  //     setTileAtMouse(Tile.Concrete);
-  //     break;
-  // }
 }
 
 void _onMouseLeftClick([bool drag = false]) {

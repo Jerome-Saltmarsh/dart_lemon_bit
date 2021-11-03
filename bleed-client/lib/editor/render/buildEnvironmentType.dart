@@ -1,0 +1,14 @@
+
+import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
+import 'package:bleed_client/editor/enums/EditTool.dart';
+import 'package:bleed_client/editor/state/editTool.dart';
+import 'package:bleed_client/state/editState.dart';
+import 'package:bleed_client/ui/compose/widgets.dart';
+import 'package:flutter/material.dart';
+
+Widget buildEnvironmentType(EnvironmentObjectType type) {
+  return button(type.toString(), () {
+    tool = EditTool.EnvironmentObject;
+    editState.environmentObjectType = type;
+  });
+}
