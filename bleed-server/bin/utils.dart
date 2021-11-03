@@ -1,13 +1,14 @@
 import 'classes.dart';
 import 'classes/Block.dart';
-import 'common.dart';
+import 'common/Tile.dart';
+import 'common/classes/Vector2.dart';
+import 'common/functions/diffOver.dart';
 import 'constants.dart';
 import 'enums.dart';
-import 'enums/Weapons.dart';
-import 'instances/settings.dart';
 import 'maths.dart';
 import 'settings.dart';
-import 'state.dart';
+
+const double halfTileSize = 24;
 
 double bulletDistanceTravelled(Bullet bullet) {
   return distance(bullet.x, bullet.y, bullet.xStart, bullet.yStart);
@@ -25,37 +26,21 @@ int clampInt(int value, int min, int max) {
   return value;
 }
 
-void setDirection(Character character, Direction value) {
-  if (value == Direction.None) return;
-  if (character.firing) return;
+void setDirection(Character character, Direction direction) {
+  if (direction == Direction.None) return;
+  // if (character.firing) return;
   if (character.dead) return;
-  character.direction = value;
+  character.direction = direction;
 }
 
 bool withinViewRange(Npc npc, GameObject target) {
-  return distanceBetween(npc, target) < zombieViewRange;
+  return distanceBetween(npc, target) < settings.npc.viewRange;
 }
 
 bool arrivedAtPath(Npc npc) {
-  if (diff(npc.x, npc.path[0].x) > destinationArrivedDistance) return false;
-  if (diff(npc.y, npc.path[0].y) > destinationArrivedDistance) return false;
+  if (diffOver(npc.x, npc.path[0].x, settings.npc.destinationRadius)) return false;
+  if (diffOver(npc.y, npc.path[0].y, settings.npc.destinationRadius)) return false;
   return true;
-}
-
-int lastUpdateFrame(dynamic character) {
-  return character[keyLastUpdateFrame];
-}
-
-bool connectionExpired(dynamic character) {
-  return frame - lastUpdateFrame(character) > expiration;
-}
-
-bool isDead(Character character) {
-  return character.state == characterStateDead;
-}
-
-bool isAiming(Character character) {
-  return character.state == characterStateAiming;
 }
 
 void setVelocity(GameObject gameObject, double rotation, double speed) {
@@ -68,8 +53,12 @@ double objectDistanceFrom(GameObject gameObject, double x, double y) {
 }
 
 void characterFace(Character character, double x, double y) {
-  setDirection(
-      character, convertAngleToDirection(radiansBetween2(character, x, y)));
+  setDirection(character, convertAngleToDirection(radiansBetween2(character, x, y)));
+}
+
+void characterAimAt(Character character, double x, double y){
+  character.aimAngle = radiansBetween2(character, x, y);
+  setDirection(character, convertAngleToDirection(character.aimAngle));
 }
 
 void characterFaceObject(Character character, GameObject target) {
@@ -123,66 +112,21 @@ double tilesLeftY = 0;
 
 List<List<Tile>> generateTiles() {
   List<List<Tile>> tiles = [];
-  for (int x = 0; x < tilesX; x++) {
+  for (int x = 0; x < settings.generateTilesX; x++) {
     List<Tile> column = [];
     tiles.add(column);
-    for (int y = 0; y < tilesY; y++) {
-      column.add(Tile.Concrete);
+    for (int y = 0; y < settings.generateTilesY; y++) {
+      column.add(Tile.Grass);
     }
   }
-  tiles[1][0] = Tile.Grass;
-  tilesLeftX = -24 * tilesX.toDouble();
-  tilesLeftY = 24 * tilesY.toDouble();
-  tilesRightX = 24 * tilesX.toDouble();
-  tilesRightY = 24 * tilesY.toDouble();
-  tilesBottomY = 48 * tilesY.toDouble();
+  tilesLeftX = -24 * settings.generateTilesX.toDouble();
+  tilesLeftY = 24 * settings.generateTilesY.toDouble();
+  tilesRightX = 24 * settings.generateTilesX.toDouble();
+  tilesRightY = 24 * settings.generateTilesY.toDouble();
+  tilesBottomY = 48 * settings.generateTilesY.toDouble();
   return tiles;
 }
 
-double getWeaponDamage(Weapon weapon) {
-  switch (weapon) {
-    case Weapon.HandGun:
-      return settingsWeaponDamageHandgun;
-    case Weapon.Shotgun:
-      return settingsWeaponDamageShotgun;
-    case Weapon.SniperRifle:
-      return settingsWeaponDamageSniperRifle;
-    case Weapon.MachineGun:
-      return settings.machineGunDamage;
-    default:
-      throw Exception("no range found for $weapon");
-  }
-}
-
-double getWeaponRange(Weapon weapon) {
-  switch (weapon) {
-    case Weapon.HandGun:
-      return settingsWeaponRangeHandgun;
-    case Weapon.Shotgun:
-      return settingsWeaponRangeShotgun;
-    case Weapon.SniperRifle:
-      return settingsWeaponRangeSniperRifle;
-    case Weapon.MachineGun:
-      return settings.machineGunRange;
-    default:
-      throw Exception("no range found for $weapon");
-  }
-}
-
-double getWeaponBulletSpeed(Weapon weapon) {
-  switch (weapon) {
-    case Weapon.HandGun:
-      return settingsWeaponBulletSpeedHandGun;
-    case Weapon.Shotgun:
-      return settingsWeaponBulletSpeedShotGun;
-    case Weapon.SniperRifle:
-      return settingsWeaponBulletSpeedSniperRifle;
-    case Weapon.MachineGun:
-      return settings.machineGunBulletSpeed;
-    default:
-      throw Exception("no range found for $weapon");
-  }
-}
 
 void applyMovement(GameObject gameObject) {
   gameObject.x += gameObject.xv;
@@ -195,9 +139,16 @@ void applyFriction(GameObject gameObject, double value) {
   gameObject.yv *= value;
 }
 
-bool npcWithinStrikeRange(Npc npc, GameObject target) {
-  if (diff(npc.x, npc.target.x) > settingsZombieStrikeRange) return false;
-  if (diff(npc.y, npc.target.y) > settingsZombieStrikeRange) return false;
+bool targetWithinStrikingRange(GameObject source, GameObject target) {
+  if (diff(source.x, target.x) > settings.range.zombieStrike) return false;
+  if (diff(source.y, target.y) > settings.range.zombieStrike) return false;
+  return true;
+}
+
+bool targetWithinFiringRange(Character character, GameObject target){
+  double range = getWeaponRange(character.weapon);
+  if (diffOver(character.x, target.x, range)) return false;
+  if (diffOver(character.y, target.y, range)) return false;
   return true;
 }
 
@@ -205,3 +156,26 @@ void sortBlocks(List<Block> blocks) {
   blocks.sort((a, b) => a.leftX < b.leftX ? -1 : 1);
 }
 
+Vector2 getTilePosition(int row, int column) {
+  return Vector2(
+      perspectiveProjectX(row * halfTileSize, column * halfTileSize),
+      perspectiveProjectY(row * halfTileSize, column * halfTileSize) +
+          halfTileSize);
+}
+
+double getTilePositionX(int row, int column){
+  return perspectiveProjectX(row * halfTileSize, column * halfTileSize);
+}
+
+double getTilePositionY(int row, int column){
+  return perspectiveProjectY(row * halfTileSize, column * halfTileSize) +
+      halfTileSize;
+}
+
+double perspectiveProjectX(double x, double y) {
+  return -y + x;
+}
+
+double perspectiveProjectY(double x, double y) {
+  return x + y;
+}

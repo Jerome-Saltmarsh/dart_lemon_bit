@@ -2,10 +2,11 @@ import 'dart:math';
 import 'classes.dart';
 import 'constants.dart';
 
-
 const double _0 = 0;
+const double half = 0.5;
+const double _1 = 1.0;
 const double goldenRatio = 1.61803398875;
-const double goldenRatioInverse = 1.0 / goldenRatio;
+const double goldenRatioInverse = _1 / goldenRatio;
 const double degreesToRadians = 0.0174533;
 const double radiansToDegrees = 57.29578;
 final Random random = Random();
@@ -18,8 +19,13 @@ double randomBetween(num a, num b) {
   return (random.nextDouble() * (b - a)) + a;
 }
 
+
 bool randomBool() {
-  return random.nextDouble() > 0.5;
+  return random.nextDouble() > half;
+}
+
+bool chance(double value) {
+  return random.nextDouble() <= value;
 }
 
 int randomInt(int min, int max) {
@@ -34,16 +40,16 @@ double giveOrTake(double value) {
   return randomBetween(-value, value);
 }
 
-double magnitude(double a, double b) {
-  return sqrt((a * a) + (b * b));
-}
-
-double distanceBetween(GameObject a, GameObject b) {
-  return magnitude(a.x - b.x, a.y - b.y);
+double distanceBetween(Positioned a, Positioned b) {
+  return distance(a.x, a.y, b.x, b.y);
 }
 
 double distance(double x1, double y1, double x2, double y2) {
   return magnitude(x1 - x2, y1 - y2);
+}
+
+double magnitude(double a, double b) {
+  return sqrt((a * a) + (b * b));
 }
 
 double abs(double value) {
@@ -75,11 +81,11 @@ Duration durationSince(DateTime value) {
 
 DateTime now() => DateTime.now();
 
-double radiansBetweenObject(GameObject a, GameObject b) {
+double radiansBetweenObject(Positioned a, Positioned b) {
   return radiansBetween(a.x, a.y, b.x, b.y);
 }
 
-double radiansBetween2(GameObject a, double x, double y) {
+double radiansBetween2(Positioned a, double x, double y) {
   return radiansBetween(a.x, a.y, x, y);
 }
 
@@ -109,7 +115,7 @@ double opp(double rotation, num magnitude) {
 }
 
 double normalize(double x, double y) {
-  return 1.0 / magnitude(x, y);
+  return _1 / magnitude(x, y);
 }
 
 double normalizeX(double x, double y) {

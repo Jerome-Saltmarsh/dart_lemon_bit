@@ -1,10 +1,10 @@
 import 'package:bleed_client/assertions.dart';
-import 'package:bleed_client/enums/ClientRequest.dart';
+import 'package:bleed_client/common/ClientRequest.dart';
+import 'package:bleed_client/network/functions/send.dart';
 
-import '../connection.dart';
 import '../state.dart';
 
-void sendClientRequestPlayerUseMedKit(){
+void sendRequestUseMedKit(){
   assertPlayerAssigned();
   send('${ClientRequest.Player_Use_MedKit.index} $session');
 }

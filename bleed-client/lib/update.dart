@@ -1,73 +1,41 @@
-import 'package:bleed_client/audio.dart';
-import 'package:bleed_client/editor/editor.dart';
-import 'package:bleed_client/game_engine/engine_state.dart';
-import 'package:bleed_client/game_engine/game_widget.dart';
-import 'package:bleed_client/properties.dart';
+import 'package:bleed_client/classes/Particle.dart';
+import 'package:bleed_client/classes/ParticleEmitter.dart';
+import 'package:bleed_client/functions/cameraFollowPlayer.dart';
+import 'package:bleed_client/getters/getDeactiveParticle.dart';
+import 'package:bleed_client/network/state/connected.dart';
+import 'package:bleed_client/update/updateParticles.dart';
+import 'package:bleed_client/update/updatePlayer.dart';
+import 'package:bleed_client/variables/time.dart';
 
-import 'connection.dart';
-import 'enums/Weapons.dart';
 import 'input.dart';
-import 'instances/game.dart';
-import 'instances/settings.dart';
-import 'send.dart';
 import 'state.dart';
-import 'updates/updateCharacters.dart';
-import 'updates/updateParticles.dart';
-import 'utils.dart';
-
-void update() {
-  DateTime now = DateTime.now();
-  refreshDuration = now.difference(lastRefresh);
-  lastRefresh = DateTime.now();
-
-  if (playMode) {
-    updatePlayMode();
-  } else {
-    updateEditMode();
-  }
-}
+import 'update/updateCharacters.dart';
 
 void updatePlayMode() {
   if (!connected) return;
-  if (gameId < 0) return;
+  if (compiledGame.gameId < 0) return;
 
   framesSinceEvent++;
   readPlayerInput();
   updateParticles();
-  updateCharacters();
-  cameraTrackPlayer();
+  updateDeadCharacterBlood();
+  if (!panningCamera && player.alive) {
+    cameraFollowPlayer();
+  }
+
+
+
+  for (ParticleEmitter emitter in compiledGame.particleEmitters) {
+    if (emitter.next-- > 0) continue;
+    emitter.next = emitter.rate;
+    Particle particle = getDeactiveParticle();
+    if (particle == null) continue;
+    particle.active = true;
+    particle.x = emitter.x;
+    particle.y = emitter.y;
+    emitter.emit(particle);
+  }
+
   updatePlayer();
 }
 
-void updatePlayer() {
-  if (game.playerId < 0) return;
-
-  sendRequestUpdatePlayer();
-
-  // on player weapon changed
-  if (previousWeapon != game.playerWeapon) {
-    previousWeapon = game.playerWeapon;
-    switch (game.playerWeapon) {
-      case Weapon.HandGun:
-        playAudioReload(screenCenterWorldX, screenCenterWorldY);
-        break;
-      case Weapon.Shotgun:
-        playAudioCockShotgun(screenCenterWorldX, screenCenterWorldY);
-        break;
-      case Weapon.SniperRifle:
-        playAudioSniperEquipped(screenCenterWorldX, screenCenterWorldY);
-        break;
-      case Weapon.MachineGun:
-        playAudioReload(screenCenterWorldX, screenCenterWorldY);
-        break;
-    }
-    redrawUI();
-  }
-}
-
-void cameraTrackPlayer() {
-  double xDiff = screenCenterWorldX - game.playerX;
-  double yDiff = screenCenterWorldY - game.playerY;
-  cameraX -= xDiff * settings.cameraFollow;
-  cameraY -= yDiff * settings.cameraFollow;
-}

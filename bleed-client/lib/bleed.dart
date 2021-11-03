@@ -1,29 +1,102 @@
-
-
-import 'package:bleed_client/connection.dart';
-import 'package:bleed_client/instances/game.dart';
+import 'package:bleed_client/classes/Item.dart';
+import 'package:bleed_client/classes/Particle.dart';
+import 'package:bleed_client/classes/Sprite.dart';
+import 'package:bleed_client/common/ClientRequest.dart';
+import 'package:bleed_client/common/Tile.dart';
+import 'package:bleed_client/common/classes/Vector2.dart';
+import 'package:bleed_client/engine/render/gameWidget.dart';
+import 'package:bleed_client/enums.dart';
+import 'package:bleed_client/events.dart';
+import 'package:bleed_client/network/functions/connect.dart';
+import 'package:bleed_client/network/functions/send.dart';
+import 'package:bleed_client/network/streams/onConnected.dart';
+import 'package:bleed_client/network/streams/onEvent.dart';
+import 'package:bleed_client/parse.dart';
+import 'package:bleed_client/send.dart';
+import 'package:bleed_client/settings.dart';
 import 'package:bleed_client/utils.dart';
 
-import 'enums/ClientRequest.dart';
-import 'streams/onPlayerCreated.dart';
+import 'state/settings.dart';
+import 'state.dart';
 
-void initBleed(){
+void initBleed() {
   onConnectedController.stream.listen(_onConnected);
-  onPlayerCreated.stream.listen(_onPlayerCreated);
+  streamOnEvent.stream.listen(_onEvent);
+
+  on((GameJoined gameJoined) async {
+    cameraCenter(compiledGame.playerX, compiledGame.playerY);
+    rebuildUI();
+  });
+
+  for(int i = 0; i < settings.maxParticles; i++){
+    compiledGame.particles.add(Particle());
+  }
+
+  for (int i = 0; i < 1000; i++) {
+    compiledGame.bullets.add(Vector2(0, 0));
+    compiledGame.items.add(Item());
+  }
+
+  for (int i = 0; i < 2000; i++) {
+    compiledGame.crates.add(Vector2(0, 0));
+  }
+
+  for (int i = 0; i < 1000; i++) {
+    compiledGame.sprites.add(Sprite());
+  }
+
+  for (int i = 0; i < settings.maxBulletHoles; i++) {
+    compiledGame.bulletHoles.add(Vector2(0, 0));
+  }
+
+  periodic(sendRequestUpdateScore, seconds: 3);
 }
 
-void _onConnected(_event){
-  _joinRandomGame();
+void connectToGCP() {
+  connect(gpc);
 }
 
-void _onPlayerCreated(OnPlayerCreated event){
-  game.playerId = event.id;
-  game.playerUUID = event.uuid;
-  game.playerX = event.x;
-  game.playerY = event.y;
-  cameraCenter(game.playerX, game.playerY);
+void _onEvent(_response){
+  lag = framesSinceEvent;
+  framesSinceEvent = 0;
+  DateTime now = DateTime.now();
+  ping = now.difference(previousEvent);
+  previousEvent = now;
+  // TODO doesn't belong
+  event = _response;
+  parseState();
+  redrawCanvas();
 }
 
-void _joinRandomGame() {
-  send(ClientRequest.Game_Join_Random.index.toString());
+void _onConnected(_event) {
+  print("on connected");
+  rebuildUI();
+  Future.delayed(Duration(seconds: 1), rebuildUI);
+  joinGameOpenWorld();
+}
+
+void joinGameCasual() {
+  send(ClientRequest.Game_Join_Casual.index.toString());
+}
+
+void joinGameOpenWorld(){
+  send(ClientRequest.Game_Join_Open_World.index.toString());
+}
+
+void onPlayerStateChanged(CharacterState previous, CharacterState next) {
+  if (previous == CharacterState.Dead || next == CharacterState.Dead) {
+    rebuildUI();
+  }
+}
+
+void onPlayerTileChanged(Tile previous, Tile next) {
+  if (next == Tile.PlayerSpawn) {
+    rebuildUI();
+    return;
+  }
+
+  if (previous == Tile.PlayerSpawn) {
+    rebuildUI();
+    return;
+  }
 }

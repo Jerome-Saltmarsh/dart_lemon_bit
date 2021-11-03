@@ -2,56 +2,84 @@ import 'dart:async';
 
 import 'classes/Game.dart';
 import 'classes.dart';
+import 'classes/Lobby.dart';
 import 'instances/gameManager.dart';
 import 'language.dart';
 import 'maths.dart';
 import 'state.dart';
 
+const _minusOne = -1;
+const _one = 1;
+
+
 void initUpdateLoop() {
-  print("initUpdateLoop()");
+  // @on init jobs
   periodic(fixedUpdate, ms: 1000 ~/ 30);
-  periodic(jobNpcWander, seconds: 3);
+  periodic(jobNpcWander, seconds: 4);
   periodic(jobRemoveDisconnectedPlayers, seconds: 5);
   periodic(updateNpcTargets, ms: 500);
+  periodic(jobRemoveEmptyLobbiesAndGames, ms: 5000);
 }
 
-void updateNpcTargets(Timer timer){
-  for(Game game in gameManager.games){
-    game.updateNpcTargets();
+void updateNpcTargets(Timer timer) {
+  for (Game game in gameManager.games) {
+    game.updateZombieTargets();
+    game.updateInteractableNpcTargets();
   }
 }
 
-void jobRemoveDisconnectedPlayers(Timer timer){
-  for(Game game in gameManager.games){
+void jobRemoveDisconnectedPlayers(Timer timer) {
+  for (Game game in gameManager.games) {
     game.jobRemoveDisconnectedPlayers();
   }
 }
 
-void jobNpcWander(Timer timer){
-  for(Game game in gameManager.games){
+void jobNpcWander(Timer timer) {
+  for (Game game in gameManager.games) {
     game.jobNpcWander();
   }
 }
 
+void jobRemoveEmptyLobbiesAndGames(Timer timer) {
+  lobbies.removeWhere((lobby) => lobby.players.isEmpty);
+  games.removeWhere((element) => element.players.isEmpty);
+}
+
 void fixedUpdate(Timer timer) {
   frame++;
-  // DateTime now = DateTime.now();
-  // frameDuration = now.difference(frameTime);
-  // if (frameDuration.inMilliseconds > 0) {
-  //   fps = 1000 ~/ frameDuration.inMilliseconds;
-  // }
-  // frameTime = now;
-  for(Game game in games){
+  updateGames();
+  updateLobbies();
+}
+
+void updateGames() {
+  for (Game game in games) {
     game.updateAndCompile();
   }
 }
 
+void updateLobbies() {
+  for (Lobby lobby in lobbies) {
+    for (int i = 0; i < lobby.players.length; i++) {
+      lobby.players[i].framesSinceUpdate++;
+      if (lobby.players[i].framesSinceUpdate > 100) {
+        lobby.players.removeAt(i);
+        i--;
+      }
+      if (lobby.players.length == lobby.maxPlayers && lobby.countDown > 0) {
+        lobby.countDown--;
+        if (lobby.countDown == 0) {
+          startLobbyGame(lobby);
+        }
+      }
+    }
+  }
+}
 
 int compareGameObjects(GameObject a, GameObject b) {
   if (a.x < b.x) {
-    return -1;
+    return _minusOne;
   }
-  return 1;
+  return _one;
 }
 
 void updateCollisionBetween(List<GameObject> gameObjects) {
@@ -62,16 +90,14 @@ void updateCollisionBetween(List<GameObject> gameObjects) {
       if (gameObjects[j].left > gameObjects[i].right) break;
       if (gameObjects[j].top > gameObjects[i].bottom) continue;
       if (gameObjects[j].bottom < gameObjects[i].top) continue;
-      resolveCollision(gameObjects[i], gameObjects[j]);
+      resolveCollisionA(gameObjects[i], gameObjects[j]);
     }
   }
 }
 
-double collisionOverlap(GameObject a, GameObject b) {
-  return a.radius + b.radius - distanceBetween(a, b);
-}
+typedef void CollisionResolver(GameObject a, GameObject b);
 
-void resolveCollision(GameObject a, GameObject b) {
+void resolveCollisionA(GameObject a, GameObject b) {
   double overlap = collisionOverlap(a, b);
   if (overlap < 0) return;
   double xDiff = a.x - b.x;
@@ -89,9 +115,28 @@ void resolveCollision(GameObject a, GameObject b) {
   b.y -= targetY;
 }
 
+void resolveCollisionB(GameObject a, GameObject b) {
+  double overlap = collisionOverlap(a, b);
+  if (overlap < 0) return;
+  double xDiff = a.x - b.x;
+  double yDiff = a.y - b.y;
+  double mag = magnitude(xDiff, yDiff);
+  double ratio = 1.0 / mag;
+  double xDiffNormalized = xDiff * ratio;
+  double yDiffNormalized = yDiff * ratio;
+  double targetX = xDiffNormalized * overlap;
+  double targetY = yDiffNormalized * overlap;
+  a.x += targetX;
+  a.y += targetY;
+}
 
-void resolveCollisionBetween(
-    List<GameObject> gameObjectsA, List<GameObject> gameObjectsB) {
+double collisionOverlap(GameObject a, GameObject b) {
+  return a.radius + b.radius - distanceBetween(a, b);
+}
+
+
+void resolveCollisionBetween(List<GameObject> gameObjectsA,
+    List<GameObject> gameObjectsB, CollisionResolver resolve) {
   int minJ = 0;
   for (int i = 0; i < gameObjectsA.length; i++) {
     if (!gameObjectsA[i].collidable) continue;
@@ -107,7 +152,7 @@ void resolveCollisionBetween(
       }
       if (gameObjectsA[i].top > gameObjectsB[j].bottom) continue;
       if (gameObjectsA[i].bottom < gameObjectsB[j].top) continue;
-      resolveCollision(gameObjectsA[i], gameObjectsB[j]);
+      resolve(gameObjectsA[i], gameObjectsB[j]);
     }
   }
 }

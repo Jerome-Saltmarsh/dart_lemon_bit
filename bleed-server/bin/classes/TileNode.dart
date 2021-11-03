@@ -1,4 +1,4 @@
-import 'Vector2.dart';
+import '../common/classes/Vector2.dart';
 
 class TileNodeVisit {
   TileNodeVisit? previous;
@@ -17,13 +17,18 @@ class TileNodeVisit {
 
 class TileNode {
   late TileNode up;
+  late TileNode upRight;
   late TileNode right;
+  late TileNode rightDown;
   late TileNode down;
+  late TileNode downLeft;
   late TileNode left;
+  late TileNode leftUp;
   late int x;
   late int y;
   late Vector2 position;
   bool open;
+  int search = -1;
 
   TileNode(this.open);
 }

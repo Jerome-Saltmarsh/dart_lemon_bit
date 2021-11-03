@@ -2,54 +2,30 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:bleed_client/game_engine/engine_state.dart';
-import 'package:bleed_client/game_engine/game_functions.dart';
-import 'package:bleed_client/game_engine/game_maths.dart';
-import 'package:bleed_client/game_engine/game_widget.dart';
+import 'package:bleed_client/common/functions/radiansBetween.dart';
+import 'package:bleed_client/engine/render/gameWidget.dart';
+import 'package:bleed_client/engine/state/camera.dart';
+import 'package:bleed_client/engine/state/canvas.dart';
+import 'package:bleed_client/engine/state/paint.dart';
+import 'package:bleed_client/engine/state/zoom.dart';
+import 'package:bleed_client/state.dart';
 
+import 'common/Weapons.dart';
 import 'common.dart';
-import 'constants.dart';
-import 'enums/Weapons.dart';
-import 'instances/game.dart';
-import 'keys.dart';
+import 'engine/properties/mouseWorld.dart';
 import 'maths.dart';
-import 'state.dart';
 
 double getMouseRotation() {
   return getRadiansBetween(
-      game.playerX, game.playerY, mouseWorldX, mouseWorldY);
+      compiledGame.playerX, compiledGame.playerY, mouseWorldX, mouseWorldY);
 }
 
-double playerScreenPositionX() {
-  return game.playerX - cameraX;
-}
-
-double playerScreenPositionY() {
-  return game.playerY - cameraY;
-}
-
-dynamic getPlayerCharacter() {
-  if (game.playerId == idNotConnected) return null;
-  return game.players.firstWhere((element) => element[4] == game.playerId,
-      orElse: () {
-    return null;
-  });
-}
-
-bool get playerAssigned => game.playerId >= 0;
+bool get playerAssigned => compiledGame.playerId >= 0;
 
 Weapon previousWeapon;
 
-bool isDead(dynamic character) {
-  return getState(character) == characterStateDead;
-}
-
 void drawLine(double x1, double y1, double x2, double y2) {
-  globalCanvas.drawLine(offset(x1, y1), offset(x2, y2), globalPaint);
-}
-
-void drawLine2(double x1, double y1, double x2, double y2) {
-  globalCanvas.drawLine(offset(x1, y1), offset(x2, y2), paint2);
+  globalCanvas.drawLine(offset(x1, y1), offset(x2, y2), paint);
 }
 
 void drawLine3(double x1, double y1, double x2, double y2) {
@@ -64,37 +40,12 @@ Offset offset(double x, double y) {
   return Offset(x, y);
 }
 
-void drawLineFrom(dynamic object, double x, double y) {
-  drawLine(object[x], object[y], x, y);
-}
-
-void drawLineRotation(dynamic object, double rotation, double distance) {
-  drawLine(object[x], object[y], object[x] + rotationToPosX(rotation, distance),
-      object[y] + rotationToPosY(rotation, distance));
-}
-
-void drawLineBetween(dynamic a, dynamic b) {
-  drawLineFrom(a, b[x], b[y]);
-}
-
 dynamic rotationToPosX(double rotation, double distance) {
   return -cos(rotation + (pi * 0.5)) * distance;
 }
 
 dynamic rotationToPosY(double rotation, double distance) {
   return -sin(rotation + (pi * 0.5)) * distance;
-}
-
-int getState(dynamic character) {
-  return character[state];
-}
-
-int getDirection(dynamic character) {
-  return character[direction];
-}
-
-bool isAlive(dynamic character) {
-  return getState(character) != characterStateDead;
 }
 
 double round(double value, {int decimals = 1}) {
@@ -157,14 +108,8 @@ repeat(Function function, int times, int milliseconds) {
 }
 
 void cameraCenter(double x, double y) {
-  cameraX = x - (screenCenterX / zoom);
-  cameraY = y - (screenCenterY / zoom);
+  camera.x = x - (screenCenterX / zoom);
+  camera.y = y - (screenCenterY / zoom);
 }
 
-void setHandgunRounds(int value) {
-  if (game.handgunRounds == value) return;
-  game.handgunRounds = value;
-  // TODO only redraw ammo box
-  redrawUI();
-}
 

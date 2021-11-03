@@ -1,13 +1,17 @@
 import 'dart:math';
 
-import 'keys.dart';
+import 'package:bleed_client/common/classes/Vector2.dart';
 
-const double degreesToRadions = 0.0174533;
-const double radionsToDegrees =  57.29578;
+const double degreesToRadian = 0.0174533;
+const double radianToDegrees =  57.29578;
 const double piHalf = pi / 2.0;
 const double piQuarter = pi * 0.25;
 const double pi2 = pi + pi;
 final Random random = Random();
+
+const double goldenRatio = 1.61803398875;
+const double goldenRatioInverse = 1.0 / goldenRatio;
+const double goldenRatioInverseB = 1.0 - goldenRatioInverse;
 
 double randomBetween(num a, num b){
   return (random.nextDouble() * (b - a)) + a;
@@ -21,12 +25,6 @@ double magnitude(double a, double b){
   return sqrt((a * a) + (b * b));
 }
 
-double distanceBetween(dynamic a, dynamic b){
-  double xDiff = a[x] - b[x];
-  double yDiff = a[y] - b[y];
-  return magnitude(xDiff, yDiff);
-}
-
 double distance(double x1, double y1, double x2, double y2){
   return magnitude(x1 - x2, y1 - y2);
 }
@@ -36,6 +34,11 @@ double abs(double value){
   return value;
 }
 
+Vector2 positionTowards(double x1, double y1, double x2, double y2, double distance){
+  double rot = radionsBetween(x1, y1, x2, y2);
+  return Vector2(x1 + velX(rot, distance), y1 + velY(rot, distance));
+}
+
 // utility methods
 int millisecondsSince(DateTime value){
   return durationSince(value).inMilliseconds;
@@ -43,22 +46,6 @@ int millisecondsSince(DateTime value){
 
 Duration durationSince(DateTime value){
   return DateTime.now().difference(value);
-}
-
-double radionsBetweenObject(dynamic a, dynamic b) {
-  return radionsBetween(a[x], a[y], b[x], b[y]);
-}
-
-double radionsBetween2(dynamic a, double x, double y) {
-  return radionsBetween(a[x], a[y], x, y);
-}
-
-double convertVectorToDegrees(double x, double y) {
-  if (x < 0)
-  {
-    return 360 - (atan2(x, y) * radionsToDegrees * -1);
-  }
-  return atan2(x, y) * radionsToDegrees;
 }
 
 double radionsBetween(double x1, double y1, double x2, double y2) {
@@ -76,6 +63,11 @@ double toRadian(double x, double y) {
     return pi2 - (atan2(x, y)  * -1);
   }
   return atan2(x, y);
+}
+
+double radians(double x, double y) {
+  if (x < 0) return -atan2(x, y);
+  return pi2 - atan2(x, y);
 }
 
 double velX(double rotation, double speed) {
@@ -113,4 +105,8 @@ double adj(double rotation, double magnitude) {
 
 double opp(double rotation, double magnitude) {
   return -sin(rotation + piHalf) * magnitude;
+}
+
+double diff(double a, double b){
+  return abs(a - b);
 }

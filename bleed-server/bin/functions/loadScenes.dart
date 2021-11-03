@@ -4,9 +4,12 @@ import 'dart:io';
 import '../classes/Block.dart';
 import '../classes/Collectable.dart';
 import '../classes/Scene.dart';
-import '../classes/Vector2.dart';
-import '../enums.dart';
-import '../enums/CollectableType.dart';
+import '../common/ObjectType.dart';
+import '../common/Tile.dart';
+import '../classes/EnvironmentObject.dart';
+import '../common/classes/Vector2.dart';
+import '../common/CollectableType.dart';
+import '../common/enums/EnvironmentObjectType.dart';
 import '../instances/scenes.dart';
 import '../utils.dart';
 
@@ -14,11 +17,16 @@ final JsonDecoder _decoder = JsonDecoder();
 
 void loadScenes() {
   print("loadScenes()");
+  // loadScene('fortress').then((value) => scenes.fortress = value);
+  loadScene('quest/town').then((value) => scenes.town = value);
+  // loadScene('casual/casual-map-01').then((value) => scenes.casualMap01 = value);
+}
+
+Future<Scene> loadScene(String name) async {
   String dir = Directory.current.path;
-  File file = File('$dir/scenes/town.json');
-  file.readAsString().then((value) {
-    scenesTown = _mapStringToScene(value);
-  });
+  File fortressFile = File('$dir/scenes/$name.json');
+  String text = await fortressFile.readAsString();
+  return _mapStringToScene(text);
 }
 
 Scene _mapStringToScene(String text) {
@@ -54,13 +62,43 @@ Scene _mapStringToScene(String text) {
     }
   }
 
+  List<EnvironmentObject> environment = [];
+
+  if (json.containsKey('environment')) {
+    List jsonItems = json['environment'];
+    for (dynamic item in jsonItems) {
+      int x = item['x'];
+      int y = item['y'];
+      String typeName = item['type'];
+      EnvironmentObjectType type = parseEnvironmentObjectTypeFromString(typeName);
+      environment.add(EnvironmentObject(
+        x: x.toDouble(),
+        y: y.toDouble(),
+        type: type
+      ));
+    }
+  }
+
+  List<Vector2> crates = [];
+
+  if (json.containsKey('crates')){
+    List cratesJson = json['crates'];
+    for (int i = 0; i < cratesJson.length; i += 2) {
+      int x = cratesJson[i];
+      int y = cratesJson[i + 1];
+      crates.add(Vector2(x.toDouble(), y.toDouble()));
+    }
+  }
+
   List compiledTiles = json['tiles'];
   List<List<Tile>> tiles = [];
 
   for(int row = 0; row < compiledTiles.length; row++){
     List<Tile> _row = [];
     for(int column = 0; column < compiledTiles[0].length; column++){
-      _row.add(Tile.values[compiledTiles[row][column]]);
+      String tileName = compiledTiles[row][column];
+      Tile tile = parseStringToTile(tileName);
+      _row.add(tile);
     }
     tiles.add(_row);
   }
@@ -68,7 +106,12 @@ Scene _mapStringToScene(String text) {
   List jsonBlocks = json['blocks'];
   List<Block> blocks = jsonBlocks.map(_mapJsonBlockToBlock).toList();
   sortBlocks(blocks);
-  return Scene(tiles, blocks, collectables, playerSpawnPoints, zombieSpawnPoints);
+  return Scene(
+      tiles: tiles,
+      blocks: blocks,
+      crates: crates,
+      environment: environment
+  );
 }
 
 Block _mapJsonBlockToBlock(dynamic jsonBlock) {

@@ -18,9 +18,3 @@ const directionLeft = 6;
 const directionUpLeft = 7;
 const directionNone = 8;
 
-const weaponUnarmed = 0;
-const weaponHandgun = 1;
-const weaponShotgun = 2;
-
-const double bulletRadius = 3;
-const double bulletRange = 220;
