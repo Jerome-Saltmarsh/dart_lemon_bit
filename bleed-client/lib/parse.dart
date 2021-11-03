@@ -20,7 +20,7 @@ import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/emit/emitMyst.dart';
 import 'package:bleed_client/functions/emitSmoke.dart';
-import 'package:bleed_client/parser/state/response.dart';
+import 'package:bleed_client/parser/state/event.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/environmentObjects.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
