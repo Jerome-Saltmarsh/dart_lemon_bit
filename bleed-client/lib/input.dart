@@ -66,7 +66,7 @@ Offset _mouseWorldStart;
 
 _InputRequest inputRequest = _InputRequest();
 
-void initInput() {
+void registerPlayKeyboardHandler() {
   RawKeyboard.instance.addListener(_handleKeyboardEvent);
 }
 

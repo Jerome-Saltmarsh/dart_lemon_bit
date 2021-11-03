@@ -26,13 +26,11 @@ import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'editor/editor.dart';
 import 'engine/properties/mouseWorld.dart';
 import 'engine/state/camera.dart';
 import 'functions/clearState.dart';
 import 'images.dart';
 import 'input.dart';
-import 'rects.dart';
 import 'render/drawCanvas.dart';
 import 'state/settings.dart';
 import 'utils.dart';
@@ -68,8 +66,7 @@ class BleedWidget extends GameWidget {
     await images.load();
     initAudioPlayers();
     initBleed();
-    loadRects();
-    initInput();
+    registerPlayKeyboardHandler();
 
     compiledGame.zombies.clear();
     for (int i = 0; i < 5000; i++) {

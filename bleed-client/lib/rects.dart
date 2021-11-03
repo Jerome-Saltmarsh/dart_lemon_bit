@@ -23,25 +23,5 @@ Rect rect(int index, double width, double height){
   return Rect.fromLTWH(width * (index - 1), 0, width, height);
 }
 
-void loadRects() {
-  print("loadRects()");
-  _loadExplosionRects();
-}
 
-void _loadExplosionRects() {
-  int explosionFrames = 32;
-  rectsExplosion = [];
-  for (int i = 0; i < explosionFrames; i++) {
-    rectsExplosion.add(_explosionRect(i));
-  }
-}
 
-Rect _explosionRect(int frame) {
-  int framesPerRow = 8;
-  int row = framesPerRow ~/ ~frame;
-  int column = frame % framesPerRow;
-  double frameWidth = 256.125;
-  double frameHeight = 251.25;
-  return Rect.fromLTWH(
-      column * frameWidth, row * frameHeight, frameWidth, frameHeight);
-}
