@@ -2,74 +2,34 @@ import 'dart:ui';
 
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
-import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
 import 'package:bleed_client/common/functions/diffOver.dart';
 import 'package:bleed_client/draw.dart';
-import 'package:bleed_client/engine/functions/drawCircle.dart';
+import 'package:bleed_client/editor/functions/resetTiles.dart';
+import 'package:bleed_client/editor/render/buildTiles.dart';
+import 'package:bleed_client/editor/state/mouseWorldStart.dart';
+import 'package:bleed_client/editor/state/panning.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/render/gameWidget.dart';
 import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/engine/state/mouseDragging.dart';
-import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/engine/state/size.dart';
 import 'package:bleed_client/engine/state/zoom.dart';
 import 'package:bleed_client/functions/saveScene.dart';
 import 'package:bleed_client/maths.dart';
-import 'package:bleed_client/properties.dart';
-import 'package:bleed_client/render/drawCanvas.dart';
-import 'package:bleed_client/state/canvas.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../state.dart';
 import '../state/editState.dart';
 
-bool _panning = false;
-Offset _mouseWorldStart;
 int selectedCollectable = -1;
 bool _mouseDragClickProcess = false;
 
 EditTool tool = EditTool.Tile;
 
-_Keys _keys = _Keys();
-
-class _Keys {
-  LogicalKeyboardKey selectTileType = LogicalKeyboardKey.keyQ;
-  LogicalKeyboardKey pan = LogicalKeyboardKey.space;
-}
-
 enum EditTool { Tile, EnvironmentObject }
-
-
-void registerEditorKeyboardListener(){
-  print("registerEditorKeyboardListener()");
-  RawKeyboard.instance.addListener(_onKeyEvent);
-}
-
-void _resetTiles() {
-  for (int row = 0; row < compiledGame.tiles.length; row++) {
-    for (int column = 0; column < compiledGame.tiles[0].length; column++) {
-      compiledGame.tiles[row][column] = Tile.Grass;
-    }
-  }
-  compiledGame.crates.clear();
-  compiledGame.collectables.clear();
-  compiledGame.items.clear();
-  renderTiles(compiledGame.tiles);
-}
-
-Widget buildTiles() {
-  return Column(
-      children: Tile.values.map((tile) {
-    return button(tile.toString(), () {
-      tool = EditTool.Tile;
-      editState.tile = tile;
-    });
-  }).toList());
-}
 
 Widget buildEnvironmentObjects() {
   return Column(
@@ -117,7 +77,7 @@ Widget _buildTools(){
             buildTiles(),
             buildEnvironmentObjects(),
             button("Save Scene", saveScene),
-            button("Reset Tiles", _resetTiles),
+            button("Reset Tiles", resetTiles),
             button("Increase Tiles X", () {
               for (List<Tile> row in compiledGame.tiles) {
                 row.add(Tile.Grass);
@@ -152,77 +112,6 @@ Widget buildEditorUI() {
     ),
   );
 }
-
-void _onKeyEvent(RawKeyEvent event) {
-  if (!editMode) return;
-
-  if (event is RawKeyDownEvent) {
-    _onKeyDownEvent(event);
-    return;
-  }
-  if (event is RawKeyUpEvent) {
-    if (event.logicalKey == _keys.pan) {
-      _panning = false;
-    }
-    if (event.logicalKey == _keys.selectTileType) {
-      editState.tile = tileAtMouse;
-    }
-  }
-}
-
-void _onKeyDownEvent(RawKeyDownEvent event){
-  if (event.logicalKey == LogicalKeyboardKey.keyC) {
-    for (Vector2 position in compiledGame.crates) {
-      if (!position.isZero) continue;
-      position.x = mouseWorldX;
-      position.y = mouseWorldY;
-      redrawCanvas();
-      return;
-    }
-  }
-
-  double v = 1.5;
-  if (event.logicalKey == LogicalKeyboardKey.keyW) {
-    if(editState.selectedObject != null) {
-      editState.selectedObject.y -= v;
-    }
-  }
-  if (event.logicalKey == LogicalKeyboardKey.keyS) {
-    if(editState.selectedObject != null) {
-      editState.selectedObject.y += v;
-    }
-  }
-  if (event.logicalKey == LogicalKeyboardKey.keyA) {
-    if(editState.selectedObject != null) {
-      editState.selectedObject.x -= v;
-    }
-  }
-  if (event.logicalKey == LogicalKeyboardKey.keyD) {
-    if(editState.selectedObject != null) {
-      editState.selectedObject.x += v;
-    }
-  }
-
-  if (event.logicalKey == LogicalKeyboardKey.delete) {
-    if (editState.selectedBlock != null) {
-      blockHouses.remove(editState.selectedBlock);
-      editState.selectedBlock = null;
-    }
-
-    if(editState.selectedObject != null){
-      compiledGame.environmentObjects.remove(editState.selectedObject);
-      editState.selectedObject = null;
-      redrawCanvas();
-    }
-  }
-  if (event.logicalKey == LogicalKeyboardKey.space && !_panning) {
-    _panning = true;
-    _mouseWorldStart = mouseWorld;
-  }
-}
-
-
-
 void updateEditMode() {
   // onKeyPressed(LogicalKeyboardKey.escape, disconnect);
 
@@ -231,8 +120,8 @@ void updateEditMode() {
   _handleMouseDrag();
   redrawCanvas();
 
-  if (_panning) {
-    Offset mouseWorldDiff = _mouseWorldStart - mouseWorld;
+  if (panning) {
+    Offset mouseWorldDiff = mouseWorldStart - mouseWorld;
     camera.y += mouseWorldDiff.dy * zoom;
     camera.x += mouseWorldDiff.dx * zoom;
   }
@@ -328,9 +217,4 @@ void setTileAtMouse(Tile tile) {
       redrawCanvas();
       break;
   }
-}
-
-void _drawLine(Offset a, Offset b, Color color) {
-  paint.color = color;
-  canvas.drawLine(a, b, paint);
 }
