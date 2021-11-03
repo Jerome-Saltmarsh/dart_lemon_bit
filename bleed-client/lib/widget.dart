@@ -1,26 +1,17 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:bleed_client/audio.dart';
-import 'package:bleed_client/bleed.dart';
-import 'package:bleed_client/classes/Character.dart';
-import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/constants.dart';
+import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/engine/render/gameWidget.dart';
 import 'package:bleed_client/engine/state/buildContext.dart';
 import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/engine/state/zoom.dart';
 import 'package:bleed_client/functions/update.dart';
-import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/network/state/connected.dart';
-import 'package:bleed_client/network/streams/onConnect.dart';
-import 'package:bleed_client/network/streams/onDisconnected.dart';
-import 'package:bleed_client/network/streams/onDone.dart';
-import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state.dart';
-import 'package:bleed_client/constants/colours.dart';
-import 'package:bleed_client/ui/compose/dialogs.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
@@ -29,9 +20,7 @@ import 'package:flutter/material.dart';
 
 import 'engine/properties/mouseWorld.dart';
 import 'engine/state/camera.dart';
-import 'functions/clearState.dart';
 import 'images.dart';
-import 'input.dart';
 import 'render/drawCanvas.dart';
 import 'state/settings.dart';
 import 'utils.dart';
@@ -65,41 +54,6 @@ class BleedWidget extends GameWidget {
   @override
   Future init() async {
     await images.load();
-
-    game.zombies.clear();
-    for (int i = 0; i < 5000; i++) {
-      game.zombies.add(Zombie());
-    }
-
-    game.interactableNpcs.clear();
-    for (int i = 0; i < 200; i++) {
-      game.interactableNpcs.add(Character());
-    }
-
-    game.humans.clear();
-    for (int i = 0; i < 1000; i++) {
-      game.humans.add(Character());
-    }
-
-    onDisconnected.stream.listen((event) {
-      print("disconnect");
-      showDialogConnectFailed();
-      clearState();
-    });
-
-    onConnectController.stream.listen((event) {
-      print('on connect $event');
-      clearState();
-      sendRequestPing();
-    });
-
-    onDoneStream.stream.listen((event) {
-      print("connection done");
-      clearState();
-      rebuildUI();
-      redrawCanvas();
-    });
-
     initUI();
     rebuildUI();
   }
