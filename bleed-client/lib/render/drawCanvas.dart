@@ -32,6 +32,7 @@ import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/rects.dart';
+import 'package:bleed_client/render/constants/charWidth.dart';
 import 'package:bleed_client/render/drawCharacterMan.dart';
 import 'package:bleed_client/render/drawCharacterZombie.dart';
 import 'package:bleed_client/render/drawInteractableNpcs.dart';
@@ -54,7 +55,6 @@ import 'drawGrenade.dart';
 import 'drawParticle.dart';
 
 final double _nameRadius = 100;
-final double charWidth = 4.5;
 final Ring _healthRing = Ring(16);
 int _flameIndex = 0;
 

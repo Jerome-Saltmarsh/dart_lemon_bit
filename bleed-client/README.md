@@ -88,16 +88,17 @@
 [ ] House 3
 [ ] Tree 3
 [ ] Stone 2
+[ ] Add fireplace with smoke emitter
 [ ] FIX Zombies Collision
-[ ] FIX Npc aim
 [ ] Npc view range decreases at night
 [ ] Flash light on gunshot
 [ ] Zombie death particles
 [ ] Zombie Shadow
 [ ] Audio walk on grass
 [ ] Improve UI
-[ ] Add fireplace with smoke emitter
+[ ] Right click to pan
 [ ] Fix save environment issues
+[x] FIX Npc aim
 [x] NPC draw order
 [x] Particle dynamic lighting
 [x] Environment Object: Bush

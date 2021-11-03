@@ -12,7 +12,7 @@ import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/getters/inDarkness.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
-import 'package:bleed_client/render/drawInteractableNpcs.dart';
+import 'package:bleed_client/render/state/tilesRstTransforms.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +30,7 @@ void drawCharacterCircle(double x, double y, Color color) {
 void drawTileList() {
   globalCanvas.drawRawAtlas(
       images.tiles,
-      render.tilesRstTransforms,
+      tilesRstTransforms,
       render.tilesRects,
       null,
       null,
@@ -47,7 +47,7 @@ void renderTiles(List<List<Tile>> tiles) {
   List<RSTransform> rsTransform = render.tileTransforms;
 
   int total = rects.length * 4;
-  Float32List rstTransformBuffer = Float32List(total);
+  tilesRstTransforms = Float32List(total);
   Float32List tileRects = Float32List(total);
 
   for (int i = 0; i < rects.length; ++i) {
@@ -57,10 +57,10 @@ void renderTiles(List<List<Tile>> tiles) {
     final int index3 = index0 + 3;
     final RSTransform rstTransform = rsTransform[i];
     final Rect rect = rects[i];
-    rstTransformBuffer[index0] = rstTransform.scos;
-    rstTransformBuffer[index1] = rstTransform.ssin;
-    rstTransformBuffer[index2] = rstTransform.tx;
-    rstTransformBuffer[index3] = rstTransform.ty + 24;
+    tilesRstTransforms[index0] = rstTransform.scos;
+    tilesRstTransforms[index1] = rstTransform.ssin;
+    tilesRstTransforms[index2] = rstTransform.tx;
+    tilesRstTransforms[index3] = rstTransform.ty + 24;
     tileRects[index0] = rect.left;
     tileRects[index1] = 0;
     tileRects[index2] = rect.right;
@@ -68,7 +68,6 @@ void renderTiles(List<List<Tile>> tiles) {
   }
 
   render.tilesRects = tileRects;
-  render.tilesRstTransforms = rstTransformBuffer;
 }
 
 void _processTileTransforms(List<List<Tile>> tiles) {
