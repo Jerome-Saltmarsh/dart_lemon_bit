@@ -36,6 +36,8 @@ import 'package:bleed_client/render/drawCharacterMan.dart';
 import 'package:bleed_client/render/drawCharacterZombie.dart';
 import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
 import 'package:bleed_client/render/functions/drawBullets.dart';
+import 'package:bleed_client/render/state/bakeMap.dart';
+import 'package:bleed_client/render/state/dynamicShading.dart';
 import 'package:bleed_client/state/colours.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
@@ -108,9 +110,9 @@ void _updateAnimations() {
 }
 
 void _resetDynamicShadesToBakeMap() {
-  for (int row = 0; row < render.dynamicShading.length; row++) {
-    for (int column = 0; column < render.dynamicShading[0].length; column++) {
-      render.dynamicShading[row][column] = render.bakeMap[row][column];
+  for (int row = 0; row < dynamicShading.length; row++) {
+    for (int column = 0; column < dynamicShading[0].length; column++) {
+      dynamicShading[row][column] = bakeMap[row][column];
     }
   }
 }

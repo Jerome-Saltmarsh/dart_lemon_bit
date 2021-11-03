@@ -2,6 +2,7 @@ import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
+import 'package:bleed_client/render/state/dynamicShading.dart';
 import 'package:bleed_client/state.dart';
 import 'package:flutter/cupertino.dart';
 
@@ -11,7 +12,7 @@ void calculateTileSrcRects() {
 
   for (int row = 0; row < _tiles.length; row++) {
     for (int column = 0; column < _tiles[0].length; column++) {
-      Shading shading = render.dynamicShading[row][column];
+      Shading shading = dynamicShading[row][column];
 
       if (shading == Shading.VeryDark) {
         render.tilesRects[i] = rectSrcDarkness.left;

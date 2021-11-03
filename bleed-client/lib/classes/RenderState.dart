@@ -31,8 +31,6 @@ class _RenderState {
 
   Float32List tilesRstTransforms;
   Float32List tilesRects;
-  List<List<Shading>> bakeMap = [];
-  List<List<Shading>> dynamicShading = [];
 
 
   Render items = Render();

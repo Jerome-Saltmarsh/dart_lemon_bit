@@ -1,6 +1,6 @@
 
-import 'package:bleed_client/classes/RenderState.dart';
 import 'package:bleed_client/enums/Shading.dart';
+import 'package:bleed_client/render/state/dynamicShading.dart';
 import 'package:bleed_client/state/getTileAt.dart';
 
 Shading getShadeAtPosition(double x, double y){
@@ -8,5 +8,5 @@ Shading getShadeAtPosition(double x, double y){
 }
 
 Shading getShade(int row, int column){
-  return render.dynamicShading[row][column];
+  return dynamicShading[row][column];
 }
