@@ -54,13 +54,8 @@ void clearCompileGameState() {
 }
 
 void clearRender() {
-  render.playersTransforms.clear();
-  render.playersRects.clear();
   render.tileTransforms.clear();
   render.tileRects.clear();
   render.paths.clear();
   render.particleRects.clear();
-  render.particleTransforms.clear();
-  render.zombieRects.clear();
-  render.zombiesTransforms.clear();
 }

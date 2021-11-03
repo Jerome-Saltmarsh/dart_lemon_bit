@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/FloatingText.dart';
@@ -19,18 +18,10 @@ void clear(Render render){
 class _RenderState {
   List<RSTransform> tileTransforms = [];
   List<Rect> tileRects = [];
-  List<RSTransform> playersTransforms = [];
-  List<Rect> playersRects = [];
-  List<RSTransform> zombiesTransforms = [];
-  List<Rect> zombieRects = [];
-  List<RSTransform> particleTransforms = [];
   List<Rect> particleRects = [];
   List<List<Vector2>> paths = [];
   List<FloatingText> floatingText = [];
 
-
-
   Render items = Render();
   Render crates = Render();
-  Render npcs = Render();
 }
