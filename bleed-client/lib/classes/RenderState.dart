@@ -5,7 +5,3 @@ class Render {
   List<Rect> rects = [];
 }
 
-void clear(Render render){
-  render.transforms.clear();
-  render.rects.clear();
-}

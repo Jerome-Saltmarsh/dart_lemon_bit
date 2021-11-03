@@ -294,7 +294,8 @@ void _drawPlayerHealthRing() {
 }
 
 void _drawCrates() {
-  clear(crates);
+  crates.rects.clear();
+  crates.transforms.clear();
   for (int i = 0; i < compiledGame.cratesTotal; i++) {
     crates.transforms
         .add(mapCrateToRSTransform((compiledGame.crates[i])));
@@ -304,7 +305,8 @@ void _drawCrates() {
 }
 
 void _renderItems() {
-  clear(items);
+  items.transforms.clear();
+  items.rects.clear();
   for (int i = 0; i < compiledGame.totalItems; i++) {
     items.transforms.add(mapItemToRSTransform(compiledGame.items[i]));
     items.rects.add(mapItemToRect(compiledGame.items[i].type));
