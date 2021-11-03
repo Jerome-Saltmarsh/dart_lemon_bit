@@ -78,21 +78,16 @@
 [ ] Persist Character on cloud
 [ ] Complete Quests to earn income and unlock upgrades
 [ ] Change scene
-[ ] Design Zombies
 [ ] Quest Window
 [ ] Fall into water and die
 [ ] Editor translate environment object
 [ ] Zombies run through environment objects
-[ ] Fix floating text bug
 [ ] Deploy dev endpoint
 [ ] Bullets environment object collision
 [ ] Water Particles
 [ ] House 3
 [ ] Tree 3
 [ ] Stone 2
-[ ] Dynamic Lighting
-[ ] Npc firing image looks like idle
-[ ] NPC 3d render
 [ ] FIX Zombies Collision
 [ ] FIX Npc aim
 [ ] Npc view range decreases at night
@@ -103,6 +98,7 @@
 [ ] Audio walk on grass
 [ ] Improve UI
 [ ] Add fireplace with smoke emitter
+[ ] NPC draw order
 [ ] Fix save environment issues
 [x] Environment Object: Bush
 [x] Shading Very Dark

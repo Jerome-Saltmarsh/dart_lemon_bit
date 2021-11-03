@@ -8,8 +8,6 @@ import 'package:bleed_client/tutorials.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/update.dart';
 
-bool _showMenuOptions = false;
-
 void update() {
   DateTime now = DateTime.now();
   refreshDuration = now.difference(lastRefresh);
@@ -20,9 +18,6 @@ void update() {
     return;
   }
 
-  // TODO Does not belong here
-  _showHideTopLeftMenuOptions();
-
   if (!tutorialsFinished && tutorial.getFinished()) {
     tutorialNext();
     sharedPreferences.setInt('tutorialIndex', tutorialIndex);
@@ -30,15 +25,15 @@ void update() {
 
   if (playMode) {
     updatePlayMode();
+    _showHideMenu();
   } else {
     updateEditMode();
   }
 }
 
-void _showHideTopLeftMenuOptions() {
+void _showHideMenu() {
   if (!mouseAvailable) return;
 
-  int range = 300;
   bool m = mouseX > screenWidth - 300 && mouseY < 200;
 
   if (m != hud.state.menuVisible){
