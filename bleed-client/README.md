@@ -95,12 +95,15 @@
 [ ] NPC 3d render
 [ ] FIX Zombies Collision
 [ ] FIX Npc aim
+[ ] Npc view range decreases at night
 [ ] Flash light on gunshot
 [ ] Particle dynamic lighting
 [ ] Zombie death particles
 [ ] Zombie Shadow
 [ ] Audio walk on grass
 [ ] Improve UI
+[ ] Add fireplace with smoke emitter
+[ ] Fix save environment issues
 [x] Environment Object: Bush
 [x] Shading Very Dark
 [x] Day / Night

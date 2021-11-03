@@ -24,10 +24,8 @@ import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../classes/Block.dart';
 import '../state.dart';
 import '../state/editState.dart';
-import 'EditMode.dart';
 
 bool _panning = false;
 Offset _mouseWorldStart;
@@ -45,7 +43,9 @@ class _Keys {
 
 enum EditTool { Tile, EnvironmentObject }
 
-void initEditor() {
+
+void registerEditorKeyboardListener(){
+  print("registerEditorKeyboardListener()");
   RawKeyboard.instance.addListener(_onKeyEvent);
 }
 
@@ -203,9 +203,6 @@ void _onKeyDownEvent(RawKeyDownEvent event){
     }
   }
 
-  if (event.logicalKey == LogicalKeyboardKey.keyP) {
-    compiledGame.playerSpawnPoints.add(mouseWorld);
-  }
   if (event.logicalKey == LogicalKeyboardKey.delete) {
     if (editState.selectedBlock != null) {
       blockHouses.remove(editState.selectedBlock);
@@ -238,58 +235,6 @@ void updateEditMode() {
     Offset mouseWorldDiff = _mouseWorldStart - mouseWorld;
     camera.y += mouseWorldDiff.dy * zoom;
     camera.x += mouseWorldDiff.dx * zoom;
-  }
-}
-
-void drawEditor() {
-  if (!editMode) return;
-
-  // print("drawEditMode()");
-
-  for (Offset offset in compiledGame.playerSpawnPoints) {
-    drawCircleOffset(offset, 10, Colors.yellow);
-  }
-
-  for (Offset offset in compiledGame.zombieSpawnPoints) {
-    drawCircleOffset(offset, 10, Colors.deepPurple);
-  }
-
-  if (selectedCollectable > 0) {
-    double x = compiledGame.collectables[selectedCollectable + 1].toDouble();
-    double y = compiledGame.collectables[selectedCollectable + 2].toDouble();
-
-    drawCircleOutline(x: x, y: y, radius: 50, color: Colors.white, sides: 10);
-  }
-
-  if (editState.selectedObject != null){
-    drawCircleOutline(x: editState.selectedObject.x, y: editState.selectedObject.y, radius: 50, color: Colors.white, sides: 10);
-
-    drawCircle(editState.selectedObject.x, editState.selectedObject.y,
-        15, Colors.white70);
-  }
-
-  if (editState.selectedBlock == null) return;
-  if (editState.editMode == EditMode.Translate) {
-    drawBlockSelected(editState.selectedBlock);
-    return;
-  }
-  Block block = editState.selectedBlock;
-  switch (editState.editMode) {
-    case EditMode.AdjustTop:
-      _drawLine(block.top, block.right, Colors.red);
-      break;
-    case EditMode.AdjustLeft:
-      _drawLine(block.top, block.left, Colors.red);
-      break;
-    case EditMode.AdjustBottom:
-      _drawLine(block.left, block.bottom, Colors.red);
-      break;
-    case EditMode.AdjustRight:
-      _drawLine(block.bottom, block.right, Colors.red);
-      break;
-    case EditMode.Translate:
-      // TODO: Handle this case.
-      break;
   }
 }
 

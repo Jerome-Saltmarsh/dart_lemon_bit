@@ -23,14 +23,18 @@ String _mapCompileGameToJson() {
 }
 
 Object _mapCompiledGameToObject() {
+
+  List<EnvironmentObject> all = [
+    ...compiledGame.environmentObjects,
+    ...compiledGame.backgroundObjects
+  ];
+
   return {
     "blocks": _compileBlocks(),
     "collectables": compiledGame.collectables,
-    "player-spawn-points": _compilePlayerSpawnPoints(),
-    "zombie-spawn-points": _compileZombieSpawnPoints(),
     "tiles": _compileTiles(compiledGame.tiles),
     "crates": _compileCrates(compiledGame.crates),
-    "environment": _compileEnvironmentObjects(compiledGame.environmentObjects),
+    "environment": _compileEnvironmentObjects(all),
   };
 }
 
@@ -66,14 +70,6 @@ List<List<String>> _compileTiles(List<List<Tile>> tiles) {
     _tiles.add(_row);
   }
   return _tiles;
-}
-
-List<int> _compilePlayerSpawnPoints() {
-  return _compileOffsets(compiledGame.playerSpawnPoints);
-}
-
-List<int> _compileZombieSpawnPoints() {
-  return _compileOffsets(compiledGame.zombieSpawnPoints);
 }
 
 List<int> _compileOffsets(List<Offset> offsets) {

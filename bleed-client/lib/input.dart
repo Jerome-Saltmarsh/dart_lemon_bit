@@ -11,7 +11,6 @@ import 'package:bleed_client/engine/render/gameWidget.dart';
 import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/engine/state/zoom.dart';
 import 'package:bleed_client/enums/Shading.dart';
-import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/render/drawCanvas.dart';
 import 'package:bleed_client/render/functions/setAmbientLight.dart';
 import 'package:bleed_client/state/settings.dart';
@@ -71,9 +70,12 @@ void initInput() {
   RawKeyboard.instance.addListener(_handleKeyboardEvent);
 }
 
-void _handleKeyboardEvent(RawKeyEvent event) {
-  if (editMode) return;
+void deregisterPlayKeyboardHandler(){
+  print("deregisterPlayKeyboardHandler()");
+  RawKeyboard.instance.removeListener(_handleKeyboardEvent);
+}
 
+void _handleKeyboardEvent(RawKeyEvent event) {
   if (event is RawKeyUpEvent) {
     _handleKeyUpEvent(event);
   } else if (event is RawKeyDownEvent) {

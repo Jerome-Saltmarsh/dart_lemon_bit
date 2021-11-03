@@ -69,7 +69,6 @@ class BleedWidget extends GameWidget {
     initAudioPlayers();
     initBleed();
     loadRects();
-    initEditor();
     initInput();
 
     compiledGame.zombies.clear();

@@ -14,6 +14,7 @@ import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
 import 'package:bleed_client/editor/editor.dart';
+import 'package:bleed_client/editor/render/drawEditor.dart';
 import 'package:bleed_client/engine/functions/drawCircle.dart';
 import 'package:bleed_client/engine/functions/drawText.dart';
 import 'package:bleed_client/engine/functions/onScreen.dart';

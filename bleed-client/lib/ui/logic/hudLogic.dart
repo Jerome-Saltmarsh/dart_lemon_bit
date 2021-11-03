@@ -1,10 +1,13 @@
 
 import 'package:bleed_client/common/ObjectType.dart';
 import 'package:bleed_client/constants/servers.dart';
+import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/engine/functions/refreshPage.dart';
 import 'package:bleed_client/engine/render/gameWidget.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/events.dart';
+import 'package:bleed_client/functions/removeGeneratedEnvironmentObjects.dart';
+import 'package:bleed_client/input.dart';
 import 'package:bleed_client/network/streams/onConnectError.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/send.dart';
@@ -106,10 +109,13 @@ void hideDebug() {
 
 void toggleEditMode() {
   if (playMode) {
+    print("mode = Mode.Edit");
     mode = Mode.Edit;
-    compiledGame.environmentObjects
-        .removeWhere((env) => isGeneratedAtBuild(env.type));
+    removeGeneratedEnvironmentObjects();
+    registerEditorKeyboardListener();
+    deregisterPlayKeyboardHandler();
   } else {
+    print("mode = Mode.Play");
     mode = Mode.Play;
   }
 

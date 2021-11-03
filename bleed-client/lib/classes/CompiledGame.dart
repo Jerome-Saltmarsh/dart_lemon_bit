@@ -18,10 +18,8 @@ import 'Particle.dart';
 
 class CompiledGame {
   List<int> collectables = [];
-  List<Offset> playerSpawnPoints = [];
   List<Vector2> crates = [];
   int cratesTotal = 0;
-  List<Offset> zombieSpawnPoints = [];
   List<EnvironmentObject> backgroundObjects = [];
   final List<EnvironmentObject> environmentObjects = [];
   final List<EnvironmentObject> torches = [];

@@ -322,7 +322,6 @@ void _parseEnvironmentObjects() {
             emit: emitSmoke
           )
       );
-      continue;
     }
 
     if (type == EnvironmentObjectType.Torch){
@@ -338,7 +337,6 @@ void _parseEnvironmentObjects() {
               emit: emitMyst
           )
       );
-      continue;
     }
 
     Image image = mapEnvironmentObjectTypeToImage(type);
