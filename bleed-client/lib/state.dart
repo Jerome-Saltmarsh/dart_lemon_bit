@@ -22,7 +22,6 @@ double requestAim = 0;
 DateTime previousEvent = DateTime.now();
 int framesSinceEvent = 0;
 int lag = 0;
-Duration ping;
 dynamic valueObject;
 DateTime lastRefresh = DateTime.now();
 Duration refreshDuration;

@@ -7,38 +7,21 @@ import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/engine/render/gameWidget.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/events.dart';
-import 'package:bleed_client/network/functions/connect.dart';
 import 'package:bleed_client/network/functions/send.dart';
 import 'package:bleed_client/network/streams/eventStream.dart';
 import 'package:bleed_client/network/streams/onConnected.dart';
 import 'package:bleed_client/parse.dart';
-import 'package:bleed_client/parser/events/onEvent.dart';
 import 'package:bleed_client/parser/state/event.dart';
-import 'package:bleed_client/send.dart';
-import 'package:bleed_client/settings.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
 
 import 'state/settings.dart';
 
-void onServerEvent(dynamic value){
-  lag = framesSinceEvent;
-  framesSinceEvent = 0;
-  DateTime now = DateTime.now();
-  ping = now.difference(previousEvent);
-  previousEvent = now;
-  event = value;
-  parseState();
-  redrawCanvas();
-}
 
 void initBleed() {
   onConnectedController.stream.listen(_onConnected);
-  // parser listens to the network event stream
-  // on event changed should trigger a parse
-  // on game state changed event should trigger repaint
-  eventStream.stream.listen(onServerEvent);
+  eventStream.stream.listen(_onEventReceivedFromServer);
 
   on((GameJoined gameJoined) async {
     cameraCenter(game.playerX, game.playerY);
@@ -66,13 +49,16 @@ void initBleed() {
     game.bulletHoles.add(Vector2(0, 0));
   }
 
-  periodic(sendRequestUpdateScore, seconds: 3);
+  // periodic(sendRequestUpdateScore, seconds: 3);
 }
 
-void connectToGCP() {
-  connect(gpc);
+void _onEventReceivedFromServer(dynamic value){
+  lag = framesSinceEvent;
+  framesSinceEvent = 0;
+  event = value;
+  parseState();
+  redrawCanvas();
 }
-
 
 void _onConnected(_event) {
   print("on connected");
