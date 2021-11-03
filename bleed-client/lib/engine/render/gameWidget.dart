@@ -4,17 +4,18 @@ import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/engine/functions/convertScreenToWorld.dart';
 import 'package:bleed_client/engine/functions/disableRightClick.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
+import 'package:bleed_client/engine/state/backgroundColor.dart';
 import 'package:bleed_client/engine/state/buildContext.dart';
 import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/mouseDragging.dart';
+import 'package:bleed_client/engine/state/primarySwatch.dart';
 import 'package:bleed_client/engine/state/screen.dart';
 import 'package:bleed_client/engine/state/size.dart';
 import 'package:bleed_client/engine/state/zoom.dart';
 import 'package:bleed_client/input.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as mat;
 import 'package:positioned_tap_detector/positioned_tap_detector.dart';
 
 import '../state/paint.dart';
@@ -116,8 +117,6 @@ abstract class GameWidget extends StatefulWidget {
 
   bool uiVisible() => false;
 
-  mat.Color getBackgroundColor() => mat.Colors.black;
-
   GameWidget({this.title = 'BLEED'});
 
   @override
@@ -149,7 +148,7 @@ class _GameWidgetState extends State<GameWidget> {
     _updateTimer = Timer.periodic(
         Duration(milliseconds: 1000 ~/ widget.targetFPS()), _update);
     widget.init();
-    disableRightClick();
+    disableRightClickContextMenu();
     paint.isAntiAlias = false;
     super.initState();
   }
@@ -160,7 +159,7 @@ class _GameWidgetState extends State<GameWidget> {
     return MaterialApp(
       title: widget.title,
       theme: ThemeData(
-        primarySwatch: mat.Colors.orange,
+        primarySwatch: primarySwatch,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Scaffold(
@@ -232,7 +231,7 @@ class _GameWidgetState extends State<GameWidget> {
                 _mousePosition = value.globalPosition;
               },
               child: Container(
-                color: widget.getBackgroundColor(),
+                color: backgroundColor,
                 width: widget.screenSize.width,
                 height: widget.screenSize.height,
                 child: CustomPaint(
