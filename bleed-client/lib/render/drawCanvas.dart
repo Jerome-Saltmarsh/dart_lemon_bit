@@ -11,7 +11,6 @@ import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
-import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
 import 'package:bleed_client/editor/render/drawEditor.dart';
 import 'package:bleed_client/engine/functions/drawCircle.dart';
 import 'package:bleed_client/engine/functions/drawText.dart';
@@ -24,12 +23,12 @@ import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/engine/state/screen.dart';
 import 'package:bleed_client/enums/Shading.dart';
+import 'package:bleed_client/functions/applyLightingToEnvironmentObjects.dart';
 import 'package:bleed_client/functions/calculateTileSrcRects.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
-import 'package:bleed_client/functions/mapEnvironmentObjectToShadedImage.dart';
+import 'package:bleed_client/mappers/mapEnvironmentObjectToShadedImage.dart';
 import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/mappers/mapCrateToRSTransform.dart';
-import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
 import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
 import 'package:bleed_client/mappers/mapItemToRect.dart';
 import 'package:bleed_client/maths.dart';
@@ -74,14 +73,6 @@ void drawCanvas(Canvas canvass, Size _size) {
   }
 
   _drawCompiledGame();
-}
-
-void setTileType(int index, double frame) {
-  int i = index * 4;
-  render.tilesRects[i] = 48 * frame;
-  render.tilesRects[i + 1] = 0;
-  render.tilesRects[i + 2] = 48 * (frame + 1);
-  render.tilesRects[i + 3] = 72;
 }
 
 void _drawCompiledGame() {
@@ -129,13 +120,6 @@ void _drawCompiledGame() {
   _drawPlayerNames();
   _writePlayerText();
   _drawMouseAim();
-}
-
-void applyLightingToEnvironmentObjects() {
-  for (EnvironmentObject environmentObject in compiledGame.environmentObjects) {
-    Shading shade = getShade(environmentObject.tileRow, environmentObject.tileColumn);
-    environmentObject.image = mapEnvironmentObjectToToShadedImage(environmentObject, shade);
-  }
 }
 
 void applyShade(

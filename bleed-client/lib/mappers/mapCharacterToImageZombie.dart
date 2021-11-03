@@ -5,6 +5,7 @@ import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/images.dart';
 
+// typedef ImageShade = Map<Shading, Image>;
 
 Image mapCharacterToImageZombie(CharacterState state, Weapon weapon, Shading shading){
   switch(state){
