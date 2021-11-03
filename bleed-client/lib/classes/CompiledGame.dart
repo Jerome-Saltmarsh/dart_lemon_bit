@@ -33,7 +33,6 @@ class CompiledGame {
   int totalZombies = 0;
   int totalNpcs = 0;
   int totalHumans = 0;
-  final List<Vector2> lights = [];
   List<Vector2> bullets = [];
   List<Vector2> bulletHoles = [];
   List<Sprite> sprites = [];

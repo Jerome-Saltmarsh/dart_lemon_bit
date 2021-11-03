@@ -305,7 +305,6 @@ void parseState() {
 
 void _parseEnvironmentObjects() {
   compiledGame.environmentObjects.clear();
-  compiledGame.lights.clear();
 
   while (!_simiColonConsumed()) {
     double x = _consumeDouble();
@@ -321,10 +320,6 @@ void _parseEnvironmentObjects() {
             emit: emitSmoke
           )
       );
-    }
-
-    if (type == EnvironmentObjectType.Torch){
-      compiledGame.lights.add(Vector2(x, y));
     }
 
     if (type == EnvironmentObjectType.MystEmitter){
