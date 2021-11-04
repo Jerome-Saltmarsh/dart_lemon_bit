@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bleed_client/common/classes/Vector2.dart';
+import 'package:bleed_client/engine/functions/buildUI.dart';
 import 'package:bleed_client/engine/functions/convertScreenToWorld.dart';
 import 'package:bleed_client/engine/functions/disableRightClick.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
@@ -232,7 +233,9 @@ class _GameWidgetState extends State<GameWidget> {
   Widget _buildUI() {
     return StatefulBuilder(builder: (context, drawUI) {
       uiSetState = drawUI;
-      return widget.buildUI(context);
+      globalContext = context;
+      return buildUI(context);
+      // return widget.buildUI(context);
     });
   }
 

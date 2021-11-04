@@ -16,9 +16,6 @@ import '../../utils.dart';
 class BleedWidget extends GameWidget {
 
   @override
-  bool uiVisible() => true;
-
-  @override
   void onMouseScroll(double amount) {
     // TODO logic does not belong here
     Offset center1 = screenCenterWorld;
