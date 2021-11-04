@@ -33,6 +33,9 @@ Image mapCharacterToImageMan(CharacterState state, Weapon weapon, Shading shade)
     case CharacterState.Running:
       return images.manRunning;
     case CharacterState.Walking:
+      if (weapon == Weapon.HandGun){
+        return images.manWalkingHandgun;
+      }
       if (shade == Shading.Bright){
         return images.manWalkingBright;
       }
