@@ -16,7 +16,6 @@ import 'package:bleed_client/engine/state/screen.dart';
 import 'package:bleed_client/engine/state/size.dart';
 import 'package:bleed_client/engine/state/zoom.dart';
 import 'package:bleed_client/engine/typedefs/DrawCanvas.dart';
-import 'package:bleed_client/input.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:positioned_tap_detector/positioned_tap_detector.dart';
@@ -77,14 +76,14 @@ DateTime _previousUpdateTime = DateTime.now();
 
 int get millisecondsSinceLastFrame => _millisecondsSinceLastFrame;
 
+StreamController<bool> onRightClickChanged = StreamController.broadcast();
+
 class GameWidget extends StatefulWidget {
   final String title;
   final Function init;
   final Function update;
   final WidgetBuilder buildUI;
   final DrawCanvas drawCanvas;
-  final Function onRightClickDown;
-  final Function onRightClickReleased;
 
   GameWidget({
     this.title,
@@ -92,8 +91,6 @@ class GameWidget extends StatefulWidget {
     this.update,
     this.buildUI,
     this.drawCanvas,
-    this.onRightClickDown,
-    this.onRightClickReleased
   });
 
   void _internalUpdate() {
@@ -202,13 +199,11 @@ class _GameWidgetState extends State<GameWidget> {
           child: GestureDetector(
               onSecondaryTapDown: (_) {
                 _rightClickDown = true;
-                if (widget.onRightClickDown == null) return;
-                widget.onRightClickDown();
+                onRightClickChanged.add(true);
               },
               onSecondaryTapUp: (_) {
+                onRightClickChanged.add(false);
                 _rightClickDown = false;
-                if (widget.onRightClickReleased == null) return;
-                widget.onRightClickReleased();
               },
               onPanStart: (start) {
                 mouseDragging = true;
