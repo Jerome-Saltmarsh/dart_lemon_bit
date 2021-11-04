@@ -16,15 +16,6 @@ import '../../utils.dart';
 class BleedWidget extends GameWidget {
 
   @override
-  void onMouseScroll(double amount) {
-    // TODO logic does not belong here
-    Offset center1 = screenCenterWorld;
-    zoom -= amount * settings.zoomSpeed;
-    if (zoom < settings.maxZoom) zoom = settings.maxZoom;
-    cameraCenter(center1.dx, center1.dy);
-  }
-
-  @override
   Future init() async {
     await images.load();
     initUI();
