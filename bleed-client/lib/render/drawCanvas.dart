@@ -16,7 +16,7 @@ import 'package:bleed_client/engine/functions/onScreen.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/render/drawAtlas.dart';
 import 'package:bleed_client/engine/render/drawImageRect.dart';
-import 'package:bleed_client/engine/render/gameWidget.dart';
+import 'package:bleed_client/engine/GameWidget.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/engine/state/screen.dart';

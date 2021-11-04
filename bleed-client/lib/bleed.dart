@@ -11,7 +11,7 @@ import 'package:bleed_client/engine/functions/registerBuildUI.dart';
 import 'package:bleed_client/engine/functions/registerDraw.dart';
 import 'package:bleed_client/engine/functions/registerOnMouseScroll.dart';
 import 'package:bleed_client/engine/functions/registerUpdateLoop.dart';
-import 'package:bleed_client/engine/render/gameWidget.dart';
+import 'package:bleed_client/engine/GameWidget.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
@@ -30,16 +30,13 @@ import 'package:bleed_client/render/drawCanvas.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/utils.dart';
 
 import 'state/settings.dart';
 import 'ui/compose/dialogs.dart';
 
 void initBleed() {
-  initAudioPlayers();
   registerPlayKeyboardHandler();
-  registerBuildUI(buildGameUI);
   registerUpdateLoop(updateGame);
   registerDraw(drawGame);
   registerOnMouseScroll(onMouseScroll);
@@ -106,8 +103,6 @@ void initBleed() {
     rebuildUI();
     redrawCanvas();
   });
-
-  // periodic(sendRequestUpdateScore, seconds: 3);
 }
 
 void _onEventReceivedFromServer(dynamic value){

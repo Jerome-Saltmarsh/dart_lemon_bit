@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:bleed_client/constants/colours.dart';
-import 'package:bleed_client/engine/render/gameWidget.dart';
+import 'package:bleed_client/engine/GameWidget.dart';
 import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/state.dart';
 import 'package:flutter/material.dart';

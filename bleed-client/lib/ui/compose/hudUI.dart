@@ -11,7 +11,7 @@ import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/engine/functions/fullscreenEnter.dart';
 import 'package:bleed_client/engine/functions/toggleFullScreen.dart';
 import 'package:bleed_client/engine/properties/fullScreenActive.dart';
-import 'package:bleed_client/engine/render/gameWidget.dart';
+import 'package:bleed_client/engine/GameWidget.dart';
 import 'package:bleed_client/engine/state/buildContext.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';

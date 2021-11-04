@@ -1,6 +1,6 @@
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
-import 'package:bleed_client/engine/render/gameWidget.dart';
+import 'package:bleed_client/engine/GameWidget.dart';
 import 'package:bleed_client/engine/state/zoom.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/state/game.dart';

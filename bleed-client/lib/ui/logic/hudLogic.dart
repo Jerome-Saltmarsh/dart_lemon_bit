@@ -2,7 +2,7 @@
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/editor/functions/registerEditorKeyboardListener.dart';
 import 'package:bleed_client/engine/functions/refreshPage.dart';
-import 'package:bleed_client/engine/render/gameWidget.dart';
+import 'package:bleed_client/engine/GameWidget.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/removeGeneratedEnvironmentObjects.dart';

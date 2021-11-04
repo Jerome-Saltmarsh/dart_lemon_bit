@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:bleed_client/engine/render/gameWidget.dart';
+import 'package:bleed_client/engine/GameWidget.dart';
 import 'package:bleed_client/engine/state/zoom.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/utils.dart';

@@ -1,4 +1,4 @@
-import 'package:bleed_client/engine/render/gameWidget.dart';
+import 'package:bleed_client/engine/GameWidget.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:flutter/material.dart';

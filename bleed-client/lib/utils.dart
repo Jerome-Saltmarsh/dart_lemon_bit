@@ -3,7 +3,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:bleed_client/common/functions/radiansBetween.dart';
-import 'package:bleed_client/engine/render/gameWidget.dart';
+import 'package:bleed_client/engine/GameWidget.dart';
 import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';

@@ -1,5 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:bleed_client/engine/render/gameWidget.dart';
+import 'package:bleed_client/engine/GameWidget.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/utils.dart';

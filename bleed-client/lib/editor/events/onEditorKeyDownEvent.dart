@@ -2,7 +2,7 @@ import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/editor/state/mouseWorldStart.dart';
 import 'package:bleed_client/editor/state/panning.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
-import 'package:bleed_client/engine/render/gameWidget.dart';
+import 'package:bleed_client/engine/GameWidget.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/environmentObjects.dart';
 import 'package:bleed_client/state.dart';

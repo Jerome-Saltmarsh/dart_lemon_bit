@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bleed_client/common/classes/Vector2.dart';
-import 'package:bleed_client/engine/functions/buildUI.dart';
 import 'package:bleed_client/engine/functions/convertScreenToWorld.dart';
 import 'package:bleed_client/engine/functions/disableRightClick.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
@@ -23,7 +22,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:positioned_tap_detector/positioned_tap_detector.dart';
 
-import '../state/paint.dart';
+import 'state/paint.dart';
 
 typedef PaintGame = Function(Canvas canvas, Size size);
 
@@ -83,11 +82,17 @@ int get millisecondsSinceLastFrame => _millisecondsSinceLastFrame;
 class GameWidget extends StatefulWidget {
   final String title;
   final Function init;
+  final WidgetBuilder buildUI;
 
   DateTime previousUpdateTime = DateTime.now();
   Duration frameDuration = Duration();
 
-  GameWidget({this.init, this.title});
+  GameWidget({
+    this.title,
+    this.init,
+    this.buildUI,
+  });
+
 
   void _internalUpdate() {
     DateTime now = DateTime.now();
@@ -120,7 +125,7 @@ void _doNothing() {}
 
 final _frame = ValueNotifier<int>(0);
 final _foregroundFrame = ValueNotifier<int>(0);
-const int framesPerSecond  = 45;
+const int framesPerSecond  = 60;
 const int millisecondsPerSecond = 1000;
 const int millisecondsPerFrame = millisecondsPerSecond ~/ framesPerSecond;
 const Duration _updateDuration = Duration(milliseconds: millisecondsPerFrame);
@@ -230,8 +235,7 @@ class _GameWidgetState extends State<GameWidget> {
     return StatefulBuilder(builder: (context, drawUI) {
       uiSetState = drawUI;
       globalContext = context;
-      return buildUI(context);
-      // return widget.buildUI(context);
+      return widget.buildUI(context);
     });
   }
 

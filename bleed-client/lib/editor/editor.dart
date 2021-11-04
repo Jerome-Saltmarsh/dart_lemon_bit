@@ -15,7 +15,7 @@ import 'package:bleed_client/editor/state/mouseWorldStart.dart';
 import 'package:bleed_client/editor/state/panning.dart';
 import 'package:bleed_client/editor/state/selectedCollectable.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
-import 'package:bleed_client/engine/render/gameWidget.dart';
+import 'package:bleed_client/engine/GameWidget.dart';
 import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/engine/state/mouseDragging.dart';
 import 'package:bleed_client/engine/state/size.dart';

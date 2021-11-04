@@ -1,7 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/engine/functions/refreshPage.dart';
-import 'package:bleed_client/engine/render/gameWidget.dart';
+import 'package:bleed_client/engine/GameWidget.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
