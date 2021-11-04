@@ -9,7 +9,6 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
-import 'package:bleed_client/editor/render/drawEditor.dart';
 import 'package:bleed_client/engine/render/drawCircle.dart';
 import 'package:bleed_client/engine/render/drawText.dart';
 import 'package:bleed_client/engine/functions/onScreen.dart';
@@ -24,13 +23,13 @@ import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/functions/applyLightingToEnvironmentObjects.dart';
 import 'package:bleed_client/functions/calculateTileSrcRects.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
+import 'package:bleed_client/render/draw/drawPlayerText.dart';
+import 'package:bleed_client/render/functions/resetDynamicShadesToBakeMap.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/environmentObjects.dart';
 import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
 import 'package:bleed_client/mappers/mapItemToRect.dart';
 import 'package:bleed_client/maths.dart';
-import 'package:bleed_client/network/state/connected.dart';
-import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/render/constants/charWidth.dart';
 import 'package:bleed_client/render/draw/drawCrates.dart';
 import 'package:bleed_client/render/drawCharacterMan.dart';
@@ -38,8 +37,6 @@ import 'package:bleed_client/render/drawCharacterZombie.dart';
 import 'package:bleed_client/render/drawInteractableNpcs.dart';
 import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
 import 'package:bleed_client/render/functions/drawBullets.dart';
-import 'package:bleed_client/render/state/bakeMap.dart';
-import 'package:bleed_client/render/state/dynamicShading.dart';
 import 'package:bleed_client/render/state/floatingText.dart';
 import 'package:bleed_client/render/state/items.dart';
 import 'package:bleed_client/constants/colours.dart';
@@ -60,11 +57,9 @@ final double _nameRadius = 100;
 final Ring _healthRing = Ring(16);
 int _flameIndex = 0;
 
-
-
 void renderCanvasPlay() {
   _updateAnimations();
-  _resetDynamicShadesToBakeMap();
+  resetDynamicShadesToBakeMap();
   applyCharacterLightEmission(game.humans);
   applyCharacterLightEmission(game.interactableNpcs);
   applyLightingToEnvironmentObjects();
@@ -87,7 +82,7 @@ void renderCanvasPlay() {
 
   _drawFloatingTexts();
   _drawPlayerNames();
-  _writePlayerText();
+  drawPlayerText();
   _drawMouseAim();
 }
 
@@ -98,14 +93,6 @@ void _updateAnimations() {
     if (ambientLight != Shading.Bright) {
       _flameIndex = (_flameIndex + 1) % 3;
       images.torch = images.flames[_flameIndex];
-    }
-  }
-}
-
-void _resetDynamicShadesToBakeMap() {
-  for (int row = 0; row < dynamicShading.length; row++) {
-    for (int column = 0; column < dynamicShading[0].length; column++) {
-      dynamicShading[row][column] = bakeMap[row][column];
     }
   }
 }
@@ -301,23 +288,6 @@ void _drawPlayerNames() {
     if (diff(mouseWorldY, player.y) > _nameRadius) continue;
 
     drawText(player.name, player.x - charWidth * player.name.length, player.y);
-  }
-}
-
-void _writePlayerText() {
-  for (int i = 0; i < game.totalHumans; i++) {
-    Character human = game.humans[i];
-    if (human.text.isEmpty) continue;
-
-    double padding = 5;
-    double width = charWidth * human.text.length;
-    double left = human.x - width;
-    double y = human.y - 50;
-    paint.color = Colors.black26;
-    globalCanvas.drawRect(
-        Rect.fromLTWH(left - padding, y - 5, width * 2 + padding + padding, 30),
-        paint);
-    drawText(human.text, left, y);
   }
 }
 

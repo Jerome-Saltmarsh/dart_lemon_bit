@@ -9,9 +9,18 @@ import 'utils.dart';
 int _idCount = 0;
 
 class Positioned {
-  double x;
+  double _x;
   double y;
-  Positioned(this.x, this.y);
+  Positioned(this._x, this.y);
+
+  double get x => _x;
+
+  set x(double value){
+    if (value.isNaN){
+      throw Exception();
+    }
+    _x = value;
+  }
 }
 
 class GameObject extends Positioned {

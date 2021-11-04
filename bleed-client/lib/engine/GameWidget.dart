@@ -161,7 +161,6 @@ class _GameWidgetState extends State<GameWidget> {
 
   @override
   Widget build(BuildContext context) {
-    globalContext = context;
     return MaterialApp(
       title: widget.title,
       theme: widget.themeData ?? ThemeData(
@@ -171,6 +170,7 @@ class _GameWidgetState extends State<GameWidget> {
       home: Scaffold(
         body: Builder(
           builder: (context) {
+            globalContext = context;
             globalSize = MediaQuery.of(context).size;
             return Stack(
               children: [
