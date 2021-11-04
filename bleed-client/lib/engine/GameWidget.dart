@@ -137,11 +137,11 @@ class _GameWidgetState extends State<GameWidget> {
 
   @override
   void initState() {
+    super.initState();
     _updateTimer = Timer.periodic(_updateDuration, _update);
-    widget.init();
     disableRightClickContextMenu();
     paint.isAntiAlias = false;
-    super.initState();
+    widget.init();
   }
 
   @override

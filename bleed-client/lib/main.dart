@@ -7,7 +7,6 @@ import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  initBleed();
   runApp(GameWidget(
     title: "BLEED",
     init: init,
@@ -16,4 +15,3 @@ void main() {
     drawCanvas: drawCanvasBleed,
   ));
 }
-
