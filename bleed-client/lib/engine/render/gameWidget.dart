@@ -92,7 +92,7 @@ abstract class GameWidget extends StatefulWidget {
         now.difference(previousUpdateTime).inMilliseconds;
     previousUpdateTime = now;
 
-    screen.left = camera.x - 5;
+    screen.left = camera.x;
     screen.right = camera.x + (screenWidth / zoom);
     screen.top = camera.y;
     screen.bottom = camera.y + (screenHeight / zoom);
@@ -101,16 +101,12 @@ abstract class GameWidget extends StatefulWidget {
     _clickProcessed = true;
   }
 
-  void onMouseClick() {}
-
   void onMouseScroll(double amount) {}
 
   /// used to build the ui
   Widget buildUI(BuildContext context);
 
-  bool uiVisible() => false;
-
-  GameWidget({this.title = 'BLEED'});
+  GameWidget({this.title = 'Game'});
 
   @override
   _GameWidgetState createState() => _GameWidgetState();
@@ -164,8 +160,8 @@ class _GameWidgetState extends State<GameWidget> {
             widget.screenSize = MediaQuery.of(context).size;
             return Stack(
               children: [
-                buildBody(context),
-                if (widget.uiVisible()) _buildUI(),
+                _buildBody(context),
+                _buildUI(),
               ],
             );
           },
@@ -175,14 +171,7 @@ class _GameWidgetState extends State<GameWidget> {
     );
   }
 
-  Widget _buildUI() {
-    return StatefulBuilder(builder: (context, drawUI) {
-      uiSetState = drawUI;
-      return widget.buildUI(context);
-    });
-  }
-
-  Widget buildBody(BuildContext context) {
+  Widget _buildBody(BuildContext context) {
     return MouseRegion(
         cursor: SystemMouseCursors.precise,
       onHover: (PointerHoverEvent pointerHoverEvent) {
@@ -197,7 +186,6 @@ class _GameWidgetState extends State<GameWidget> {
         },
         onTap: (position) {
           _clickProcessed = false;
-          widget.onMouseClick();
         },
         child: Listener(
           onPointerSignal: (pointerSignalEvent) {
@@ -232,14 +220,21 @@ class _GameWidgetState extends State<GameWidget> {
                 height: widget.screenSize.height,
                 child: CustomPaint(
                     painter:
-                        GamePainter(paintGame: draw, repaint: _frame),
-                    foregroundPainter: GamePainter(
+                        _GamePainter(paintGame: draw, repaint: _frame),
+                    foregroundPainter: _GamePainter(
                         paintGame: drawForeground,
                         repaint: _foregroundFrame)),
               )),
         ),
       ),
     );
+  }
+
+  Widget _buildUI() {
+    return StatefulBuilder(builder: (context, drawUI) {
+      uiSetState = drawUI;
+      return widget.buildUI(context);
+    });
   }
 
   @override
@@ -249,10 +244,10 @@ class _GameWidgetState extends State<GameWidget> {
   }
 }
 
-class GamePainter extends CustomPainter {
+class _GamePainter extends CustomPainter {
   final PaintGame paintGame;
 
-  const GamePainter({this.paintGame, Listenable repaint})
+  const _GamePainter({this.paintGame, Listenable repaint})
       : super(repaint: repaint);
 
   @override
@@ -271,19 +266,4 @@ class GamePainter extends CustomPainter {
   }
 }
 
-class CustomCustomPainter extends CustomPainter {
-  final PaintGame paintGame;
-
-  CustomCustomPainter(this.paintGame);
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    paintGame(canvas, size);
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return true;
-  }
-}
 
