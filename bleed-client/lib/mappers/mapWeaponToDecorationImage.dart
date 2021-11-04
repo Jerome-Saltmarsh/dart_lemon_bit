@@ -5,6 +5,8 @@ final _DecorationImages _decorationImages = _DecorationImages();
 
 DecorationImage mapWeaponToImage(Weapon weapon) {
   switch (weapon) {
+    case Weapon.Unarmed:
+      return _decorationImages.unarmed;
     case Weapon.HandGun:
       return _decorationImages.handgun;
     case Weapon.Shotgun:
@@ -20,6 +22,10 @@ DecorationImage mapWeaponToImage(Weapon weapon) {
 class _DecorationImages {
   final DecorationImage handgun = const DecorationImage(
     image: const AssetImage('images/weapon-handgun.png'),
+  );
+
+  final DecorationImage unarmed = const DecorationImage(
+    image: const AssetImage('images/weapon-unarmed.png'),
   );
 
   final DecorationImage shotgun = const DecorationImage(

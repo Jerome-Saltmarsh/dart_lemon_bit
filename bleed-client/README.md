@@ -98,7 +98,8 @@
 [ ] Right click to pan
 [ ] Fix save environment issues
 [ ] Improve UI
-[ ] Fix boundary error
+[ ] UI Health Bar
+[x] Fix boundary error
 [x] Fix Server nan error
 [x] Fix chat bug
 [x] FIX Npc aim

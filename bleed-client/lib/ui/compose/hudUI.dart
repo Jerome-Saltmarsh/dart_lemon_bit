@@ -399,7 +399,7 @@ Widget buildViewBottomLeft() {
           mainAxisAlignment: main.center,
           crossAxisAlignment: cross.end,
           children: [
-            buildSlotWeapon(weapon: Weapon.HandGun, index: 1),
+            buildSlotWeapon(weapon: game.playerWeapon, index: 1),
             // width4,
             // buildSlotWeapon(weapon: Weapon.Shotgun, index: 2),
             // width4,
