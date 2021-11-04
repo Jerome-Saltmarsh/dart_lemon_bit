@@ -3,11 +3,8 @@ import 'dart:math';
 import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/functions/applyShade.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/getters/getTileAt.dart';
 
-void applyLightArea(List<List<Shading>> shader, double x, double y, int size, Shading shade) {
-  int column = getColumn(x, y);
-  int row = getRow(x, y);
+void applyLightArea(List<List<Shading>> shader, int column, int row, int size, Shading shade) {
 
   int columnStart = max(column - size, 0);
   int columnEnd = min(column + size, game.totalColumns - 1);
