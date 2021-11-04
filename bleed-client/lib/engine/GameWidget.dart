@@ -8,7 +8,6 @@ import 'package:bleed_client/engine/state/backgroundColor.dart';
 import 'package:bleed_client/engine/state/buildContext.dart';
 import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
-import 'package:bleed_client/engine/state/draw.dart';
 import 'package:bleed_client/engine/state/drawForeground.dart';
 import 'package:bleed_client/engine/state/mouseDragging.dart';
 import 'package:bleed_client/engine/state/onMouseScroll.dart';
@@ -24,8 +23,6 @@ import 'package:flutter/material.dart';
 import 'package:positioned_tap_detector/positioned_tap_detector.dart';
 
 import 'state/paint.dart';
-
-typedef PaintGame = Function(Canvas canvas, Size size);
 
 // private global variables
 Offset _mousePosition;
@@ -221,9 +218,9 @@ class _GameWidgetState extends State<GameWidget> {
                 height: globalSize.height,
                 child: CustomPaint(
                     painter:
-                        _GamePainter(paintGame: widget.drawCanvas, repaint: _frame),
+                        _GamePainter(drawCanvas: widget.drawCanvas, repaint: _frame),
                     foregroundPainter: _GamePainter(
-                        paintGame: drawForeground,
+                        drawCanvas: drawForeground,
                         repaint: _foregroundFrame)),
               )),
         ),
@@ -247,9 +244,9 @@ class _GameWidgetState extends State<GameWidget> {
 }
 
 class _GamePainter extends CustomPainter {
-  final PaintGame paintGame;
+  final DrawCanvas drawCanvas;
 
-  const _GamePainter({this.paintGame, Listenable repaint})
+  const _GamePainter({this.drawCanvas, Listenable repaint})
       : super(repaint: repaint);
 
   @override
@@ -258,8 +255,7 @@ class _GamePainter extends CustomPainter {
     globalSize = _size;
     _canvas.scale(zoom, zoom);
     _canvas.translate(-camera.x, -camera.y);
-    draw(_canvas, _size);
-    paintGame(_canvas, _size);
+    drawCanvas(_canvas, _size);
   }
 
   @override

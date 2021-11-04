@@ -6,7 +6,6 @@ import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
-import 'package:bleed_client/engine/functions/registerDraw.dart';
 import 'package:bleed_client/engine/functions/registerOnMouseScroll.dart';
 import 'package:bleed_client/engine/functions/registerUpdateLoop.dart';
 import 'package:bleed_client/engine/GameWidget.dart';
