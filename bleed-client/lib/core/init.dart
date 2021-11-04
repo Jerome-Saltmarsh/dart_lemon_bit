@@ -9,7 +9,6 @@ import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/engine/GameWidget.dart';
 import 'package:bleed_client/engine/functions/registerOnMouseScroll.dart';
-import 'package:bleed_client/engine/state/onMouseScroll.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
@@ -21,6 +20,7 @@ import 'package:bleed_client/network/streams/onConnect.dart';
 import 'package:bleed_client/network/streams/onConnected.dart';
 import 'package:bleed_client/network/streams/onDisconnected.dart';
 import 'package:bleed_client/network/streams/onDone.dart';
+import 'package:bleed_client/onMouseScroll.dart';
 import 'package:bleed_client/parse.dart';
 import 'package:bleed_client/parser/state/event.dart';
 import 'package:bleed_client/send.dart';
@@ -29,10 +29,11 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/utils.dart';
 
-import 'state/settings.dart';
-import 'ui/compose/dialogs.dart';
+import '../state/settings.dart';
+import '../ui/compose/dialogs.dart';
 
-Future bleedInit() async {
+Future init() async {
+  print("init()");
   registerPlayKeyboardHandler();
   registerOnMouseScroll(onMouseScroll);
 

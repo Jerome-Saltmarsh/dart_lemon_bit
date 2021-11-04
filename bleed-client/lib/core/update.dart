@@ -9,11 +9,8 @@ import 'package:bleed_client/tutorials.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/update.dart';
 
-void updateGame() {
-  DateTime now = DateTime.now();
-  refreshDuration = now.difference(lastRefresh);
-  lastRefresh = DateTime.now();
-
+void update() {
+  
   if (state.lobby != null) {
     sendRequestUpdateLobby();
     return;

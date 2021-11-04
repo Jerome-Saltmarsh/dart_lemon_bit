@@ -24,7 +24,6 @@ int framesSinceEvent = 0;
 int lag = 0;
 dynamic valueObject;
 DateTime lastRefresh = DateTime.now();
-Duration refreshDuration;
 int drawFrame = 0;
 bool debugMode = false;
 bool gameOver = false;
