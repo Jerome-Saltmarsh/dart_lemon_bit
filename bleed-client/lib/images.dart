@@ -63,6 +63,7 @@ class _Images {
   Image rockSmallDark;
   Image isoCharacter;
   Image manIdle;
+  Image manIdleHandgun;
   Image manIdleBright;
   Image manWalking;
   Image manWalkingBright;
@@ -160,6 +161,7 @@ class _Images {
     manWalking = await _png("man-walking");
     manWalkingBright = await _png("man-walking-bright");
     manIdle = await _png("man-idle");
+    manIdleHandgun = await _png("man-idle-handgun");
     manIdleBright = await _png("man-idle-bright");
     zombieWalkingBright = await _png("zombie-walking-bright");
     zombieWalkingMedium = await _png("zombie-walking-medium");

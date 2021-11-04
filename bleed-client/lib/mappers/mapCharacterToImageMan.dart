@@ -8,6 +8,10 @@ import 'package:bleed_client/images.dart';
 Image mapCharacterToImageMan(CharacterState state, Weapon weapon, Shading shade){
   switch(state){
     case CharacterState.Idle:
+      if (weapon == Weapon.HandGun){
+        return images.manIdleHandgun;
+      }
+
       if (shade == Shading.Bright){
         return images.manIdleBright;
       }
