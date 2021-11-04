@@ -80,12 +80,14 @@ int _millisecondsSinceLastFrame = 0;
 
 int get millisecondsSinceLastFrame => _millisecondsSinceLastFrame;
 
-abstract class GameWidget extends StatefulWidget {
+class GameWidget extends StatefulWidget {
   final String title;
+  final Function init;
+
   DateTime previousUpdateTime = DateTime.now();
   Duration frameDuration = Duration();
 
-  Future init();
+  GameWidget({this.init, this.title});
 
   void _internalUpdate() {
     DateTime now = DateTime.now();
@@ -101,10 +103,6 @@ abstract class GameWidget extends StatefulWidget {
     update();
     _clickProcessed = true;
   }
-
-  // void onMouseScroll(double amount) {}
-
-  GameWidget({this.title = 'Game'});
 
   @override
   _GameWidgetState createState() => _GameWidgetState();
@@ -122,7 +120,7 @@ void _doNothing() {}
 
 final _frame = ValueNotifier<int>(0);
 final _foregroundFrame = ValueNotifier<int>(0);
-const int framesPerSecond  = 60;
+const int framesPerSecond  = 45;
 const int millisecondsPerSecond = 1000;
 const int millisecondsPerFrame = millisecondsPerSecond ~/ framesPerSecond;
 const Duration _updateDuration = Duration(milliseconds: millisecondsPerFrame);
