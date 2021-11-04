@@ -8,7 +8,6 @@ import 'package:bleed_client/engine/state/backgroundColor.dart';
 import 'package:bleed_client/engine/state/buildContext.dart';
 import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
-import 'package:bleed_client/engine/state/drawForeground.dart';
 import 'package:bleed_client/engine/state/mouseDragging.dart';
 import 'package:bleed_client/engine/state/onMouseScroll.dart';
 import 'package:bleed_client/engine/state/primarySwatch.dart';
@@ -84,13 +83,15 @@ class GameWidget extends StatefulWidget {
   final Function update;
   final WidgetBuilder buildUI;
   final DrawCanvas drawCanvas;
+  final DrawCanvas drawCanvasForeground;
 
   GameWidget({
-    this.title,
-    this.init,
-    this.update,
-    this.buildUI,
-    this.drawCanvas,
+      this.title,
+      this.init,
+      this.update,
+      this.buildUI,
+      this.drawCanvas,
+      this.drawCanvasForeground
   });
 
   void _internalUpdate() {
@@ -124,12 +125,13 @@ void _doNothing() {}
 
 final _frame = ValueNotifier<int>(0);
 final _foregroundFrame = ValueNotifier<int>(0);
-const int framesPerSecond  = 60;
+const int framesPerSecond = 60;
 const int millisecondsPerSecond = 1000;
 const int millisecondsPerFrame = millisecondsPerSecond ~/ framesPerSecond;
 const Duration _updateDuration = Duration(milliseconds: millisecondsPerFrame);
 
 bool _rightClickDown = false;
+
 bool get rightClickDown => _rightClickDown;
 
 class _GameWidgetState extends State<GameWidget> {
@@ -176,7 +178,7 @@ class _GameWidgetState extends State<GameWidget> {
 
   Widget _buildBody(BuildContext context) {
     return MouseRegion(
-        cursor: SystemMouseCursors.precise,
+      cursor: SystemMouseCursors.precise,
       onHover: (PointerHoverEvent pointerHoverEvent) {
         _previousMousePosition = _mousePosition;
         _mousePosition = pointerHoverEvent.position;
@@ -218,16 +220,17 @@ class _GameWidgetState extends State<GameWidget> {
                 _mousePosition = value.globalPosition;
               },
               child: Container(
-                color: backgroundColor,
-                width: globalSize.width,
-                height: globalSize.height,
-                child: CustomPaint(
-                    painter:
-                        _GamePainter(drawCanvas: widget.drawCanvas, repaint: _frame),
-                    foregroundPainter: _GamePainter(
-                        drawCanvas: drawForeground,
-                        repaint: _foregroundFrame)),
-              )),
+                  color: backgroundColor,
+                  width: globalSize.width,
+                  height: globalSize.height,
+                  child: CustomPaint(
+                      painter: _GamePainter(
+                          drawCanvas: widget.drawCanvas, repaint: _frame),
+                      foregroundPainter: widget.drawCanvasForeground != null
+                          ? _GamePainter(
+                              drawCanvas: widget.drawCanvasForeground,
+                              repaint: _foregroundFrame)
+                          : null))),
         ),
       ),
     );
@@ -268,5 +271,3 @@ class _GamePainter extends CustomPainter {
     return true;
   }
 }
-
-
