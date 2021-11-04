@@ -1,5 +1,6 @@
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/engine/GameWidget.dart';
+import 'package:bleed_client/input.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state.dart';
@@ -16,6 +17,10 @@ void updateGame() {
   if (state.lobby != null) {
     sendRequestUpdateLobby();
     return;
+  }
+
+  if (rightClickDown){
+    inputRequest.sprint = true;
   }
 
   if (!tutorialsFinished && tutorial.getFinished()) {

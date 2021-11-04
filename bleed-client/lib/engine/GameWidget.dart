@@ -83,13 +83,17 @@ class GameWidget extends StatefulWidget {
   final Function update;
   final WidgetBuilder buildUI;
   final DrawCanvas drawCanvas;
+  final Function onRightClickDown;
+  final Function onRightClickReleased;
 
   GameWidget({
     this.title,
     this.init,
     this.update,
     this.buildUI,
-    this.drawCanvas
+    this.drawCanvas,
+    this.onRightClickDown,
+    this.onRightClickReleased
   });
 
   void _internalUpdate() {
@@ -127,6 +131,9 @@ const int framesPerSecond  = 60;
 const int millisecondsPerSecond = 1000;
 const int millisecondsPerFrame = millisecondsPerSecond ~/ framesPerSecond;
 const Duration _updateDuration = Duration(milliseconds: millisecondsPerFrame);
+
+bool _rightClickDown = false;
+bool get rightClickDown => _rightClickDown;
 
 class _GameWidgetState extends State<GameWidget> {
   Timer _updateTimer;
@@ -194,12 +201,14 @@ class _GameWidgetState extends State<GameWidget> {
           },
           child: GestureDetector(
               onSecondaryTapDown: (_) {
-                // @on right click down
-                inputRequest.sprint = true;
+                _rightClickDown = true;
+                if (widget.onRightClickDown == null) return;
+                widget.onRightClickDown();
               },
               onSecondaryTapUp: (_) {
-                // @on right click up
-                inputRequest.sprint = false;
+                _rightClickDown = false;
+                if (widget.onRightClickReleased == null) return;
+                widget.onRightClickReleased();
               },
               onPanStart: (start) {
                 mouseDragging = true;
