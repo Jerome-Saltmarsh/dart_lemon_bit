@@ -80,7 +80,6 @@ int get millisecondsSinceLastFrame => _millisecondsSinceLastFrame;
 
 abstract class GameWidget extends StatefulWidget {
   final String title;
-  Size screenSize;
   DateTime previousUpdateTime = DateTime.now();
   Duration frameDuration = Duration();
 
@@ -157,7 +156,7 @@ class _GameWidgetState extends State<GameWidget> {
       home: Scaffold(
         body: Builder(
           builder: (context) {
-            widget.screenSize = MediaQuery.of(context).size;
+            globalSize = MediaQuery.of(context).size;
             return Stack(
               children: [
                 _buildBody(context),
@@ -216,8 +215,8 @@ class _GameWidgetState extends State<GameWidget> {
               },
               child: Container(
                 color: backgroundColor,
-                width: widget.screenSize.width,
-                height: widget.screenSize.height,
+                width: globalSize.width,
+                height: globalSize.height,
                 child: CustomPaint(
                     painter:
                         _GamePainter(paintGame: draw, repaint: _frame),
