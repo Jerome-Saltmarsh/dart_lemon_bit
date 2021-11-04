@@ -14,7 +14,6 @@ import 'package:bleed_client/engine/state/onMouseScroll.dart';
 import 'package:bleed_client/engine/state/primarySwatch.dart';
 import 'package:bleed_client/engine/state/screen.dart';
 import 'package:bleed_client/engine/state/size.dart';
-import 'package:bleed_client/engine/state/update.dart';
 import 'package:bleed_client/engine/state/zoom.dart';
 import 'package:bleed_client/engine/typedefs/DrawCanvas.dart';
 import 'package:bleed_client/input.dart';
@@ -81,12 +80,14 @@ int get millisecondsSinceLastFrame => _millisecondsSinceLastFrame;
 class GameWidget extends StatefulWidget {
   final String title;
   final Function init;
+  final Function update;
   final WidgetBuilder buildUI;
   final DrawCanvas drawCanvas;
 
   GameWidget({
     this.title,
     this.init,
+    this.update,
     this.buildUI,
     this.drawCanvas
   });
