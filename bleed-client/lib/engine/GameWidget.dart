@@ -76,6 +76,7 @@ final Paint paint3 = Paint()
   ..strokeWidth = 3;
 
 int _millisecondsSinceLastFrame = 0;
+DateTime _previousUpdateTime = DateTime.now();
 
 int get millisecondsSinceLastFrame => _millisecondsSinceLastFrame;
 
@@ -84,21 +85,17 @@ class GameWidget extends StatefulWidget {
   final Function init;
   final WidgetBuilder buildUI;
 
-  DateTime previousUpdateTime = DateTime.now();
-  Duration frameDuration = Duration();
-
   GameWidget({
     this.title,
     this.init,
     this.buildUI,
   });
 
-
   void _internalUpdate() {
     DateTime now = DateTime.now();
     _millisecondsSinceLastFrame =
-        now.difference(previousUpdateTime).inMilliseconds;
-    previousUpdateTime = now;
+        now.difference(_previousUpdateTime).inMilliseconds;
+    _previousUpdateTime = now;
 
     screen.left = camera.x;
     screen.right = camera.x + (screenWidth / zoom);
