@@ -14,5 +14,6 @@ Widget buildBleed(){
     update: update,
     buildUI: buildUI,
     drawCanvas: drawCanvas,
+    drawCanvasAfterUpdate: false,
   );
 }

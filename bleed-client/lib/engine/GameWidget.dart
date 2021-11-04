@@ -4,7 +4,6 @@ import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/engine/functions/convertScreenToWorld.dart';
 import 'package:bleed_client/engine/functions/disableRightClick.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
-import 'package:bleed_client/engine/state/backgroundColor.dart';
 import 'package:bleed_client/engine/state/buildContext.dart';
 import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
@@ -53,9 +52,9 @@ double get screenWidth => globalSize.width;
 
 double get screenHeight => globalSize.height;
 
-double get screenCenterWorldX => convertScreenToWorldX(screenCenterX);
+double get screenCenterWorldX => screenToWorldX(screenCenterX);
 
-double get screenCenterWorldY => convertScreenToWorldY(screenCenterY);
+double get screenCenterWorldY => screenToWorldY(screenCenterY);
 
 Offset get screenCenterWorld => Offset(screenCenterWorldX, screenCenterWorldY);
 
@@ -84,6 +83,8 @@ class GameWidget extends StatefulWidget {
   final WidgetBuilder buildUI;
   final DrawCanvas drawCanvas;
   final DrawCanvas drawCanvasForeground;
+  final Color backgroundColor;
+  final bool drawCanvasAfterUpdate;
 
   GameWidget({
       this.title,
@@ -91,7 +92,9 @@ class GameWidget extends StatefulWidget {
       this.update,
       this.buildUI,
       this.drawCanvas,
-      this.drawCanvasForeground
+      this.drawCanvasForeground,
+      this.backgroundColor = Colors.black,
+      this.drawCanvasAfterUpdate = true,
   });
 
   void _internalUpdate() {
@@ -104,9 +107,12 @@ class GameWidget extends StatefulWidget {
     screen.right = camera.x + (screenWidth / zoom);
     screen.top = camera.y;
     screen.bottom = camera.y + (screenHeight / zoom);
-
     update();
     _clickProcessed = true;
+
+    if (drawCanvasAfterUpdate){
+      redrawCanvas();
+    }
   }
 
   @override
@@ -220,7 +226,7 @@ class _GameWidgetState extends State<GameWidget> {
                 _mousePosition = value.globalPosition;
               },
               child: Container(
-                  color: backgroundColor,
+                  color: widget.backgroundColor,
                   width: globalSize.width,
                   height: globalSize.height,
                   child: CustomPaint(
