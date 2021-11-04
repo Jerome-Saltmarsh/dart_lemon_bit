@@ -82,6 +82,8 @@ void parseState() {
     switch (serverResponse) {
       case ServerResponse.Tiles:
         _parseTiles();
+        setBakeMapToAmbientLight();
+        renderTiles(game.tiles);
         break;
 
       case ServerResponse.Paths:
@@ -396,10 +398,6 @@ void _parseTiles() {
       column.add(_consumeTile());
     }
   }
-
-  setBakeMapToAmbientLight();
-  // TODO Bad Import
-  renderTiles(game.tiles);
 }
 
 void _parsePlayer() {

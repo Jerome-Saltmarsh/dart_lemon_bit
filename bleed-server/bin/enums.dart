@@ -18,12 +18,14 @@ List<Tile> _closedTiles = [
   Tile.Block,
   Tile.Block_Horizontal,
   Tile.Block_Vertical,
+  Tile.Boundary,
 ];
 
 List<Tile> _collisionTiles = [
   Tile.Block,
   Tile.Block_Horizontal,
   Tile.Block_Vertical,
+  Tile.Boundary,
 ];
 
 bool isWalkable(Tile tile){

@@ -95,10 +95,11 @@
 [ ] Zombie death particles
 [ ] Zombie Shadow
 [ ] Audio walk on grass
-[ ] Improve UI
 [ ] Right click to pan
 [ ] Fix save environment issues
-[ ] Fix Server nan error
+[ ] Improve UI
+[ ] Fix boundary error
+[x] Fix Server nan error
 [x] Fix chat bug
 [x] FIX Npc aim
 [x] NPC draw order
