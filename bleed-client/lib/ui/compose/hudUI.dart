@@ -815,55 +815,6 @@ Widget buildLoadingScreen() {
   );
 }
 
-Widget buildBleedUI(BuildContext context) {
-  if (globalSize == null) {
-    return buildLoadingScreen();
-  }
-
-  if (connecting) {
-    return buildViewConnecting();
-  } else if (!connected) {
-    return buildViewConnect();
-  }
-
-  if (state.lobby != null) return center(buildViewJoinedLobby());
-
-  if (game.gameId < 0) {
-    // TODO consider case
-    return buildViewConnecting();
-  }
-  if (editMode) return buildEditorUI();
-
-  if (game.playerId < 0) {
-    return text(
-        "player id is not assigned. player id: ${game.playerId}, game id: ${game.gameId}");
-  }
-
-  if (framesSinceEvent > 30) {
-    return Container(
-      width: globalSize.width,
-      height: globalSize.height,
-      alignment: Alignment.center,
-      child: Container(child: text("Reconnecting...", fontSize: 30)),
-    );
-  }
-  if (!playerAssigned) {
-    return Container(
-      width: globalSize.width,
-      height: globalSize.height,
-      alignment: Alignment.center,
-      child: text("Error: No Player Assigned"),
-    );
-  }
-
-  try {
-    return buildHud();
-  } catch (error) {
-    print("error build hud");
-    return text("an error occurred");
-  }
-}
-
 Widget buildLowAmmo() {
   return Positioned(
       bottom: 80,
