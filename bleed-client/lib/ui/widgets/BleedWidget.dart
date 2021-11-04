@@ -25,19 +25,6 @@ class BleedWidget extends GameWidget {
   }
 
   @override
-  Widget buildUI(BuildContext bc) {
-    globalContext = bc;
-    try {
-      return buildGameUI(bc);
-    } catch (error) {
-      if (settings.developMode) {
-        return Text("An error occurred");
-      }
-      return Container();
-    }
-  }
-
-  @override
   Future init() async {
     await images.load();
     initUI();

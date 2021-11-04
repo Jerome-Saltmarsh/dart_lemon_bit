@@ -103,9 +103,6 @@ abstract class GameWidget extends StatefulWidget {
 
   void onMouseScroll(double amount) {}
 
-  /// used to build the ui
-  Widget buildUI(BuildContext context);
-
   GameWidget({this.title = 'Game'});
 
   @override
