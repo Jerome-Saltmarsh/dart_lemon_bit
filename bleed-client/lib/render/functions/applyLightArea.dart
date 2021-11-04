@@ -8,7 +8,6 @@ void applyLightArea(List<List<Shading>> shader, int column, int row, int size, S
 
   int columnStart = max(column - size, 0);
   int columnEnd = min(column + size, game.totalColumns - 1);
-
   int rowStart = max(row - size, 0);
   int rowEnd = min(row + size, game.totalRows - 1);
 
