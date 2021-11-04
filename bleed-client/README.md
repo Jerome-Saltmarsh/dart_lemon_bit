@@ -98,8 +98,8 @@
 [ ] Improve UI
 [ ] Right click to pan
 [ ] Fix save environment issues
-[ ] Fix chat bug
 [ ] Fix Server nan error
+[x] Fix chat bug
 [x] FIX Npc aim
 [x] NPC draw order
 [x] Particle dynamic lighting

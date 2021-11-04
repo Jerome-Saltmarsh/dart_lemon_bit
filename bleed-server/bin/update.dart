@@ -102,6 +102,13 @@ void resolveCollisionA(GameObject a, GameObject b) {
   if (overlap < 0) return;
   double xDiff = a.x - b.x;
   double yDiff = a.y - b.y;
+
+  if (xDiff == 0 && yDiff == 0){
+    a.x -= 5;
+    b.y += 5;
+    xDiff = 10;
+  }
+
   double halfOverlap = overlap * 0.5;
   double mag = magnitude(xDiff, yDiff);
   double ratio = 1.0 / mag;
