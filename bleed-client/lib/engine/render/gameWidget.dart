@@ -12,6 +12,7 @@ import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/draw.dart';
 import 'package:bleed_client/engine/state/drawForeground.dart';
 import 'package:bleed_client/engine/state/mouseDragging.dart';
+import 'package:bleed_client/engine/state/onMouseScroll.dart';
 import 'package:bleed_client/engine/state/primarySwatch.dart';
 import 'package:bleed_client/engine/state/screen.dart';
 import 'package:bleed_client/engine/state/size.dart';
@@ -101,7 +102,7 @@ abstract class GameWidget extends StatefulWidget {
     _clickProcessed = true;
   }
 
-  void onMouseScroll(double amount) {}
+  // void onMouseScroll(double amount) {}
 
   GameWidget({this.title = 'Game'});
 
@@ -187,7 +188,7 @@ class _GameWidgetState extends State<GameWidget> {
         child: Listener(
           onPointerSignal: (pointerSignalEvent) {
             if (pointerSignalEvent is PointerScrollEvent) {
-              widget.onMouseScroll(pointerSignalEvent.scrollDelta.dy);
+              onMouseScroll(pointerSignalEvent.scrollDelta.dy);
             }
           },
           child: GestureDetector(
