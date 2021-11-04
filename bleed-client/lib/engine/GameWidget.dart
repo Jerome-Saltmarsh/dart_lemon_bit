@@ -86,6 +86,7 @@ class GameWidget extends StatefulWidget {
   final Color backgroundColor;
   final bool drawCanvasAfterUpdate;
   final int framesPerSecond;
+  final ThemeData themeData;
 
   GameWidget({
       this.title,
@@ -97,6 +98,7 @@ class GameWidget extends StatefulWidget {
       this.backgroundColor = Colors.black,
       this.drawCanvasAfterUpdate = true,
       this.framesPerSecond = 60,
+      this.themeData
   });
 
   void _internalUpdate() {
@@ -163,8 +165,8 @@ class _GameWidgetState extends State<GameWidget> {
     globalContext = context;
     return MaterialApp(
       title: widget.title,
-      theme: ThemeData(
-        primarySwatch: primarySwatch,
+      theme: widget.themeData ?? ThemeData(
+        primarySwatch: Colors.orange,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: Scaffold(
