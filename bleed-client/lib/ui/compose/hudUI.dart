@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:bleed_client/bleed.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/constants.dart';
@@ -159,9 +158,6 @@ Widget buildTopRight() {
           }),
       message: "Toggle Paths",
     );
-
-    Widget buttonJoinGameOpenWorld = button('Open World', joinGameOpenWorld);
-    Widget buttonJoinGameCasual = button('Casual', joinGameCasual);
 
     Widget iconToggleEditMode = Tooltip(
       child: IconButton(
