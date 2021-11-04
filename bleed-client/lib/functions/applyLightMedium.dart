@@ -7,11 +7,6 @@ void applyLightMedium(List<List<Shading>> shader, double x, double y) {
   int column = getColumn(x, y);
   int row = getRow(x, y);
 
-  if (row < 0) return;
-  if (column < 0) return;
-  if (row > game.totalRows) return;
-  if (column > game.totalColumns) return;
-
   applyShadeMedium(shader, row, column);
 
   if (row > 1) {
