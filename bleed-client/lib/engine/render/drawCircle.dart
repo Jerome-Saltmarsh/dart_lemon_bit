@@ -8,7 +8,6 @@ void drawCircle(double x, double y, double radius, Color color) {
 }
 
 void drawCircleOffset(Offset offset, double radius, Color color) {
-  // TODO Optimize
   paint.color = color;
   globalCanvas.drawCircle(offset, radius, paint);
 }

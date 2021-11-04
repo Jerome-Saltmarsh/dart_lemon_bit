@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:bleed_client/common/classes/Vector2.dart';
-import 'package:bleed_client/engine/functions/convertScreenToWorld.dart';
-import 'package:bleed_client/engine/functions/disableRightClick.dart';
+import 'package:bleed_client/engine/functions/screenToWorld.dart';
+import 'package:bleed_client/engine/functions/disableRightClickContextMenu.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/state/buildContext.dart';
 import 'package:bleed_client/engine/state/camera.dart';
@@ -85,6 +85,7 @@ class GameWidget extends StatefulWidget {
   final DrawCanvas drawCanvasForeground;
   final Color backgroundColor;
   final bool drawCanvasAfterUpdate;
+  final int framesPerSecond;
 
   GameWidget({
       this.title,
@@ -95,6 +96,7 @@ class GameWidget extends StatefulWidget {
       this.drawCanvasForeground,
       this.backgroundColor = Colors.black,
       this.drawCanvasAfterUpdate = true,
+      this.framesPerSecond = 60,
   });
 
   void _internalUpdate() {
@@ -131,10 +133,8 @@ void _doNothing() {}
 
 final _frame = ValueNotifier<int>(0);
 final _foregroundFrame = ValueNotifier<int>(0);
-const int framesPerSecond = 60;
 const int millisecondsPerSecond = 1000;
-const int millisecondsPerFrame = millisecondsPerSecond ~/ framesPerSecond;
-const Duration _updateDuration = Duration(milliseconds: millisecondsPerFrame);
+
 
 bool _rightClickDown = false;
 
@@ -150,7 +150,9 @@ class _GameWidgetState extends State<GameWidget> {
   @override
   void initState() {
     super.initState();
-    _updateTimer = Timer.periodic(_updateDuration, _update);
+    int millisecondsPerFrame = millisecondsPerSecond ~/ widget.framesPerSecond;
+    Duration updateDuration = Duration(milliseconds: millisecondsPerFrame);
+    _updateTimer = Timer.periodic(updateDuration, _update);
     disableRightClickContextMenu();
     paint.isAntiAlias = false;
     widget.init();

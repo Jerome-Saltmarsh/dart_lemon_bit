@@ -1,7 +1,7 @@
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/editor/state/selectedCollectable.dart';
-import 'package:bleed_client/engine/functions/drawCircle.dart';
+import 'package:bleed_client/engine/render/drawCircle.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
 import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/state/game.dart';

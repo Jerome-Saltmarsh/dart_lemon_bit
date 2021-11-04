@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/NpcDebug.dart';
-import 'package:bleed_client/engine/functions/drawCircle.dart';
+import 'package:bleed_client/engine/render/drawCircle.dart';
 import 'package:bleed_client/engine/functions/onScreen.dart';
 import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/engine/state/canvas.dart';
