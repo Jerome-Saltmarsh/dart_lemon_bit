@@ -17,6 +17,7 @@ import 'package:bleed_client/engine/state/screen.dart';
 import 'package:bleed_client/engine/state/size.dart';
 import 'package:bleed_client/engine/state/update.dart';
 import 'package:bleed_client/engine/state/zoom.dart';
+import 'package:bleed_client/engine/typedefs/DrawCanvas.dart';
 import 'package:bleed_client/input.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -84,11 +85,13 @@ class GameWidget extends StatefulWidget {
   final String title;
   final Function init;
   final WidgetBuilder buildUI;
+  final DrawCanvas drawCanvas;
 
   GameWidget({
     this.title,
     this.init,
     this.buildUI,
+    this.drawCanvas
   });
 
   void _internalUpdate() {
@@ -218,7 +221,7 @@ class _GameWidgetState extends State<GameWidget> {
                 height: globalSize.height,
                 child: CustomPaint(
                     painter:
-                        _GamePainter(paintGame: draw, repaint: _frame),
+                        _GamePainter(paintGame: widget.drawCanvas, repaint: _frame),
                     foregroundPainter: _GamePainter(
                         paintGame: drawForeground,
                         repaint: _foregroundFrame)),

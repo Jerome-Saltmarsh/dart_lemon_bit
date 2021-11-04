@@ -1,8 +1,8 @@
 
 import 'dart:ui';
 
-import 'package:bleed_client/engine/typedefs/Draw.dart';
+import 'package:bleed_client/engine/typedefs/DrawCanvas.dart';
 
-Draw draw = (Canvas canvass, Size _size){
+DrawCanvas draw = (Canvas canvass, Size _size){
   // do nothing by default
 };

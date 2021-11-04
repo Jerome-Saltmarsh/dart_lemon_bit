@@ -60,7 +60,7 @@ final double _nameRadius = 100;
 final Ring _healthRing = Ring(16);
 int _flameIndex = 0;
 
-void drawGame(Canvas canvass, Size _size) {
+void drawCanvasBleed(Canvas canvass, Size _size) {
   if (editMode) {
     renderCanvasEdit();
     return;

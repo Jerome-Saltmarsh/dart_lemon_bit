@@ -1,8 +1,8 @@
 
 
 import 'package:bleed_client/engine/state/draw.dart';
-import 'package:bleed_client/engine/typedefs/Draw.dart';
+import 'package:bleed_client/engine/typedefs/DrawCanvas.dart';
 
-registerDraw(Draw value){
+registerDraw(DrawCanvas value){
   draw = value;
 }

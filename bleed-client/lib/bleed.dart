@@ -36,7 +36,6 @@ import 'ui/compose/dialogs.dart';
 void initBleed() {
   registerPlayKeyboardHandler();
   registerUpdateLoop(updateGame);
-  registerDraw(drawGame);
   registerOnMouseScroll(onMouseScroll);
 
   onConnectedController.stream.listen(_onConnected);

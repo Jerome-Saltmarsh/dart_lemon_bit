@@ -819,7 +819,7 @@ Widget buildLoadingScreen() {
   );
 }
 
-Widget buildGameUI(BuildContext context) {
+Widget buildBleedUI(BuildContext context) {
   if (globalSize == null) {
     return buildLoadingScreen();
   }
