@@ -89,8 +89,8 @@ final AnimationRects _srcRects4 = AnimationRects(
     downLeft: _frames([29, 30, 31, 32]));
 
 final AnimationRects _shotgunFiring = AnimationRects(
-    down: _frames([1, 2, 2, 1, 2]),
-    downRight: _frames([4, 5, 5, 4, 5]),
+    down: _frames([1, 2, 2, 3, 2]),
+    downRight: _frames([4, 5, 5, 6, 5]),
     right: _frames([7, 8, 8, 9, 8]),
     upRight: _frames([10, 11, 11, 12, 11]),
     up: _frames([13, 14, 14, 15, 14]),
