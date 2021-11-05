@@ -11,7 +11,9 @@ Image mapCharacterToImageMan(CharacterState state, Weapon weapon, Shading shade)
       if (weapon == Weapon.HandGun){
         return images.manIdleHandgun;
       }
-
+      if (weapon == Weapon.Shotgun){
+        return images.manShotgunIdle;
+      }
       if (shade == Shading.Bright){
         return images.manIdleBright;
       }
