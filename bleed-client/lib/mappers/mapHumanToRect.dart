@@ -8,7 +8,8 @@ import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/utils/rects_utils.dart';
 
 // interface
-Rect mapCharacterToSrcMan(Weapon weapon, CharacterState state, Direction direction, int frame) {
+Rect mapCharacterToSrcMan(
+    Weapon weapon, CharacterState state, Direction direction, int frame) {
   switch (state) {
     case CharacterState.Idle:
       return _mapFrameLoop(_srcRects1, direction, frame);
@@ -19,6 +20,9 @@ Rect mapCharacterToSrcMan(Weapon weapon, CharacterState state, Direction directi
     case CharacterState.Aiming:
       return _mapFrame(_srcRects1, direction, frame);
     case CharacterState.Firing:
+      if (weapon == Weapon.Shotgun) {
+        return _mapFrame(_shotgunFiring, direction, frame);
+      }
       return _mapFrame(_srcRects1, direction, frame);
     case CharacterState.Striking:
       return _mapFrame(_srcRects2, direction, frame);
@@ -32,7 +36,8 @@ Rect mapCharacterToSrcMan(Weapon weapon, CharacterState state, Direction directi
   throw Exception("Could not get character sprite rect");
 }
 
-Rect mapCharacterToSrcZombie(Weapon weapon, CharacterState state, Direction direction, int frame) {
+Rect mapCharacterToSrcZombie(
+    Weapon weapon, CharacterState state, Direction direction, int frame) {
   switch (state) {
     case CharacterState.Idle:
       return _mapFrameLoop(_srcRects1, direction, frame);
@@ -56,35 +61,42 @@ const double _frameHeight = 64;
 final AnimationRects _srcRects1 = AnimationRects(
     down: _frames([1]),
     downRight: _frames([2]),
-    right:  _frames([3]),
+    right: _frames([3]),
     upRight: _frames([4]),
-    up:  _frames([5]),
+    up: _frames([5]),
     upLeft: _frames([6]),
-    left:  _frames([7]),
-    downLeft: _frames([8])
-);
+    left: _frames([7]),
+    downLeft: _frames([8]));
 
 final AnimationRects _srcRects2 = AnimationRects(
     down: _frames([1, 2]),
     downRight: _frames([3, 4]),
-    right:  _frames([5, 6]),
+    right: _frames([5, 6]),
     upRight: _frames([7, 8]),
-    up:  _frames([9, 10]),
+    up: _frames([9, 10]),
     upLeft: _frames([11, 12]),
-    left:  _frames([13, 14]),
-    downLeft: _frames([15, 16])
-);
+    left: _frames([13, 14]),
+    downLeft: _frames([15, 16]));
 
 final AnimationRects _srcRects4 = AnimationRects(
     down: _frames([1, 2, 3, 4]),
     downRight: _frames([5, 6, 7, 8]),
-    right:  _frames([9, 10, 11, 12]),
+    right: _frames([9, 10, 11, 12]),
     upRight: _frames([13, 14, 15, 16]),
-    up:  _frames([17, 18, 19, 20]),
+    up: _frames([17, 18, 19, 20]),
     upLeft: _frames([21, 22, 23, 24]),
-    left:  _frames([25, 26, 27, 28]),
-    downLeft: _frames([29, 30, 31, 32])
-);
+    left: _frames([25, 26, 27, 28]),
+    downLeft: _frames([29, 30, 31, 32]));
+
+final AnimationRects _shotgunFiring = AnimationRects(
+    down: _frames([1, 2, 2, 1, 2]),
+    downRight: _frames([4, 5, 5, 4, 5]),
+    right: _frames([7, 8, 8, 9, 8]),
+    upRight: _frames([10, 11, 11, 12, 11]),
+    up: _frames([13, 14, 14, 15, 14]),
+    upLeft: _frames([16, 17, 17, 18, 17]),
+    left: _frames([19, 20, 20, 21, 20]),
+    downLeft: _frames([22, 23, 24, 24, 23]));
 
 List<Rect> _frames(List<int> indexes) {
   List<Rect> rects = [];
@@ -96,13 +108,11 @@ List<Rect> _frames(List<int> indexes) {
 
 Rect _frame(int index) {
   return Rect.fromLTWH(
-      (index - 1) * _frameWidth,
-      0.0,
-      _frameWidth,
-      _frameHeight);
+      (index - 1) * _frameWidth, 0.0, _frameWidth, _frameHeight);
 }
 
-Rect _mapFrameLoop(AnimationRects src, Direction direction, int frame, {int frameRate = defaultSpriteFrameRate}){
+Rect _mapFrameLoop(AnimationRects src, Direction direction, int frame,
+    {int frameRate = defaultSpriteFrameRate}) {
   switch (direction) {
     case Direction.Up:
       return getFrameLoop(src.up, frame, frameRate: frameRate);
@@ -125,7 +135,7 @@ Rect _mapFrameLoop(AnimationRects src, Direction direction, int frame, {int fram
   }
 }
 
-Rect _mapFrame(AnimationRects src, Direction direction, int frame){
+Rect _mapFrame(AnimationRects src, Direction direction, int frame) {
   switch (direction) {
     case Direction.Up:
       return getFrame(src.up, frame);
@@ -147,4 +157,3 @@ Rect _mapFrame(AnimationRects src, Direction direction, int frame){
       throw Exception("Could not map frame");
   }
 }
-

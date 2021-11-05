@@ -185,7 +185,7 @@ class _Accuracy {
 
 class _CoolDown {
   final int handgun = 14;
-  final int shotgun = 20;
+  final int shotgun = 30;
   final int sniperRifle = 45;
   final int assaultRifle = 5;
   final int clipEmpty = 14;
