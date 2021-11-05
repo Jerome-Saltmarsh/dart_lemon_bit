@@ -71,6 +71,7 @@ class _Images {
   Image manFiringHandgun;
   Image manFiringShotgun;
   Image manShotgunIdle;
+  Image manShotgunWalking;
   Image manChanging;
   Image manDying;
   Image manStriking;
@@ -158,6 +159,7 @@ class _Images {
     manFiringHandgun = await loadImage("images/man-firing-handgun.png");
     manFiringShotgun = await loadImage("images/man-firing-shotgun.png");
     manShotgunIdle = await _png("man-shotgun-idle");
+    manShotgunWalking = await _png("man-shotgun-walking");
     manChanging = await _png("man-changing");
     manDying = await _png("man-dying");
     manStriking = await _png("man-striking");

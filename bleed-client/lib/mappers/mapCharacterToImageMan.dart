@@ -14,6 +14,12 @@ Image mapCharacterToImageMan(CharacterState state, Weapon weapon, Shading shade)
       if (weapon == Weapon.Shotgun){
         return images.manShotgunIdle;
       }
+      if (weapon == Weapon.SniperRifle){
+        return images.manShotgunIdle;
+      }
+      if (weapon == Weapon.AssaultRifle){
+        return images.manShotgunIdle;
+      }
       if (shade == Shading.Bright){
         return images.manIdleBright;
       }
@@ -37,6 +43,9 @@ Image mapCharacterToImageMan(CharacterState state, Weapon weapon, Shading shade)
     case CharacterState.Walking:
       if (weapon == Weapon.HandGun){
         return images.manWalkingHandgun;
+      }
+      if (weapon == Weapon.Shotgun){
+        return images.manShotgunWalking;
       }
       if (shade == Shading.Bright){
         return images.manWalkingBright;
