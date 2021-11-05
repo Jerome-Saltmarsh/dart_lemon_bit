@@ -93,12 +93,14 @@
 [ ] Npc view range decreases at night
 [ ] Flash light on gunshot
 [ ] Zombie death particles
-[ ] Zombie Shadow
+[ ] Zombie Idle Shadow
 [ ] Audio walk on grass
 [ ] Right click to pan
 [ ] Fix save environment issues
 [ ] Improve UI
 [ ] UI Health Bar
+[ ] Zombie Walk Shadow
+[ ] Design Color Palette
 [x] Fix boundary error
 [x] Fix Server nan error
 [x] Fix chat bug
