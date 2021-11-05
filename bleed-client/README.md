@@ -99,8 +99,9 @@
 [ ] Fix save environment issues
 [ ] Improve UI
 [ ] UI Health Bar
-[ ] Zombie Walk Shadow
 [ ] Design Color Palette
+[ ] Zombie Strike Animation
+[x] Zombie Walk Shadow
 [x] Fix boundary error
 [x] Fix Server nan error
 [x] Fix chat bug
