@@ -99,8 +99,9 @@
 [ ] Fix save environment issues
 [ ] Improve UI
 [ ] UI Health Bar
-[ ] Design Color Palette
 [ ] Zombie Strike Animation
+[ ] Shade 1, 2, 3
+[ ] Refactor server collision detection
 [x] Zombie Walk Shadow
 [x] Fix boundary error
 [x] Fix Server nan error
@@ -115,9 +116,10 @@
 [x] Zombies 3D render
 [x] Zombies 3D model
 [x] Human 3d Render
-    [ ] Idle Handgun
-    [ ] Walking Handgun
     [ ] Running Handgun
+    [ ] Running Shotgun
+    [x] Idle Handgun
+    [x] Walking Handgun
     [x] Dead
     [x] Striking
     [x] Changing Weapon 

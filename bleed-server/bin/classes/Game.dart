@@ -4,6 +4,7 @@ import '../classes.dart';
 import '../common/GameState.dart';
 import '../common/ItemType.dart';
 import '../common/Tile.dart';
+import '../functions/insertionSort.dart';
 import 'Collider.dart';
 import 'EnvironmentObject.dart';
 import '../common/classes/Vector2.dart';
@@ -680,13 +681,17 @@ extension GameFunctions on Game {
   }
 
   void _updateCollisions() {
-    zombies.sort(compareGameObjects);
-    players.sort(compareGameObjects);
-    npcs.sort(compareGameObjects);
+    sortGameObjects();
     updateCollisionBetween(zombies);
     updateCollisionBetween(players);
     resolveCollisionBetween(zombies, players, resolveCollisionA);
     resolveCollisionBetween(players, npcs, resolveCollisionB);
+  }
+
+  void sortGameObjects(){
+    insertionSort(list: zombies, compare: compareGameObjectsY);
+    insertionSort(list: players, compare: compareGameObjectsY);
+    insertionSort(list: npcs, compare: compareGameObjectsY);
   }
 
   Player? findPlayerById(int id) {
@@ -898,7 +903,7 @@ extension GameFunctions on Game {
       }
     }
 
-    bullets.sort(compareGameObjects);
+    insertionSort(list: bullets, compare: compareGameObjectsY);
     checkBulletCollision(zombies);
     checkBulletCollision(players);
 
@@ -1107,17 +1112,14 @@ extension GameFunctions on Game {
   void checkBulletCollision(List<Character> characters) {
     int s = 0;
     for (int i = 0; i < bullets.length; i++) {
-      if (!bullets[i].active) continue;
       Bullet bullet = bullets[i];
+      if (!bullet.active) continue;
       for (int j = s; j < characters.length; j++) {
         Character character = characters[j];
         if (!character.active) continue;
         if (character.dead) continue;
-        if (character.left > bullet.right) break;
-        if (bullet.left > character.right) {
-          s++;
-          continue;
-        }
+        if (character.left > bullet.right) continue;
+        if (bullet.left > character.right) continue;
         if (bullet.top > character.bottom) continue;
         if (bullet.bottom < character.top) continue;
 

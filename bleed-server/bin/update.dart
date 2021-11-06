@@ -75,8 +75,15 @@ void updateLobbies() {
   }
 }
 
-int compareGameObjects(GameObject a, GameObject b) {
+int compareGameObjectsX(GameObject a, GameObject b) {
   if (a.x < b.x) {
+    return _minusOne;
+  }
+  return _one;
+}
+
+int compareGameObjectsY(GameObject a, GameObject b) {
+  if (a.y < b.y) {
     return _minusOne;
   }
   return _one;
@@ -87,8 +94,8 @@ void updateCollisionBetween(List<GameObject> gameObjects) {
     if (!gameObjects[i].collidable) continue;
     for (int j = i + 1; j < gameObjects.length; j++) {
       if (!gameObjects[j].collidable) continue;
-      if (gameObjects[j].left > gameObjects[i].right) break;
-      if (gameObjects[j].top > gameObjects[i].bottom) continue;
+      if (gameObjects[j].top > gameObjects[i].bottom) break;
+      if (gameObjects[j].left > gameObjects[i].right) continue;
       if (gameObjects[j].bottom < gameObjects[i].top) continue;
       resolveCollisionA(gameObjects[i], gameObjects[j]);
     }
@@ -142,23 +149,21 @@ double collisionOverlap(GameObject a, GameObject b) {
 }
 
 
-void resolveCollisionBetween(List<GameObject> gameObjectsA,
-    List<GameObject> gameObjectsB, CollisionResolver resolve) {
+void resolveCollisionBetween(
+    List<GameObject> gameObjectsA,
+    List<GameObject> gameObjectsB,
+    CollisionResolver resolve
+  ) {
+
   int minJ = 0;
   for (int i = 0; i < gameObjectsA.length; i++) {
     if (!gameObjectsA[i].collidable) continue;
     for (int j = minJ; j < gameObjectsB.length; j++) {
-      if (!gameObjectsB[minJ].collidable) {
-        minJ++;
-        break;
-      }
-      if (gameObjectsB[j].left > gameObjectsA[i].right) break;
-      if (gameObjectsB[j].right < gameObjectsA[i].left) {
-        minJ++;
-        continue;
-      }
-      if (gameObjectsA[i].top > gameObjectsB[j].bottom) continue;
+      if (!gameObjectsB[j].collidable) continue;
       if (gameObjectsA[i].bottom < gameObjectsB[j].top) continue;
+      if (gameObjectsA[i].top > gameObjectsB[j].bottom) continue;
+      if (gameObjectsA[i].right < gameObjectsB[j].left) continue;
+      if (gameObjectsA[i].left > gameObjectsB[j].right) continue;
       resolve(gameObjectsA[i], gameObjectsB[j]);
     }
   }
