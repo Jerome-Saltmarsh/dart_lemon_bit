@@ -12,13 +12,23 @@ Image mapCharacterToImageMan(CharacterState state, Weapon weapon, Shading shade)
         return images.manIdleHandgun;
       }
       if (weapon == Weapon.Shotgun){
-        return images.manShotgunIdle;
+        switch(shade){
+          case Shading.Bright:
+            return images.manIdleShotgun01;
+          case Shading.Medium:
+            return images.manIdleShotgun02;
+          case Shading.Dark:
+            return images.manIdleShotgun03;
+          case Shading.VeryDark:
+            return images.manIdleShotgun03;
+        }
+        throw Exception();
       }
       if (weapon == Weapon.SniperRifle){
-        return images.manShotgunIdle;
+        return images.manIdleShotgun01;
       }
       if (weapon == Weapon.AssaultRifle){
-        return images.manShotgunIdle;
+        return images.manIdleShotgun01;
       }
       if (shade == Shading.Bright){
         return images.manIdleBright;
