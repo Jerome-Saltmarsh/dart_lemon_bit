@@ -9,7 +9,7 @@ void applyCharacterLightEmission(List<Character> characters) {
     if (lantern){
       applyLightBright(dynamicShading, character.x, character.y);
     }else{
-      applyLightMedium(dynamicShading, character.x, character.y);
+      // applyLightMedium(dynamicShading, character.x, character.y);
     }
   }
 }

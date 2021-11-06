@@ -102,6 +102,7 @@
 [ ] Zombie Strike Animation
 [ ] Shade 1, 2, 3
 [ ] Refactor server collision detection
+[ ] Pistol Shoot Animation
 [x] Zombie Walk Shadow
 [x] Fix boundary error
 [x] Fix Server nan error

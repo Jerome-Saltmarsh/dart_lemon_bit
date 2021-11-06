@@ -45,7 +45,17 @@ Image mapCharacterToImageMan(CharacterState state, Weapon weapon, Shading shade)
         return images.manWalkingHandgun;
       }
       if (weapon == Weapon.Shotgun){
-        return images.manShotgunWalking;
+        switch(shade){
+          case Shading.Bright:
+            return images.manWalkingShotgunShade1;
+          case Shading.Medium:
+            return images.manWalkingShotgunShade2;
+          case Shading.Dark:
+            return images.manWalkingShotgunShade3;
+          case Shading.VeryDark:
+            return images.manWalkingShotgunShade3;
+        }
+        throw Exception();
       }
       if (shade == Shading.Bright){
         return images.manWalkingBright;
