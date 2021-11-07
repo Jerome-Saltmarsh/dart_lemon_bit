@@ -18,9 +18,9 @@ Image mapCharacterToImageMan(CharacterState state, Weapon weapon, Shading shade)
           case Shading.Medium:
             return images.manIdleShotgun02;
           case Shading.Dark:
-            return images.manIdleShotgun03;
+            return images.manIdleShotgun04;
           case Shading.VeryDark:
-            return images.manIdleShotgun03;
+            return images.manIdleShotgun04;
         }
         throw Exception();
       }

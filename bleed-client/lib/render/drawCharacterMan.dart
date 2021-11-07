@@ -14,7 +14,7 @@ void drawCharacterMan(Character character) {
 
   Shading shading = getShadeAtPosition(character.x, character.y);
 
-  if (shading == Shading.VeryDark) return;
+  // if (shading == Shading.VeryDark) return;
 
   drawImageRect(
     mapCharacterToImageMan(
