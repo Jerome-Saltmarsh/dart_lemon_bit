@@ -10,7 +10,16 @@ Image mapCharacterToImageMan(
   switch (state) {
     case CharacterState.Idle:
       if (weapon == Weapon.HandGun) {
-        return images.manIdleHandgun;
+        switch (shade) {
+          case Shading.Bright:
+            return images.manIdleHandgun1;
+          case Shading.Medium:
+            return images.manIdleHandgun2;
+          case Shading.Dark:
+            return images.manIdleHandgun3;
+          case Shading.VeryDark:
+            return images.manIdleHandgun3;
+        }
       }
       if (weapon == Weapon.Shotgun) {
         switch (shade) {
