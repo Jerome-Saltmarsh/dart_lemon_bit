@@ -82,7 +82,9 @@ class _Images {
   Image manChanging;
   Image manDying;
   Image manStriking;
-  Image manWalkingHandgun;
+  Image manWalkingHandgun1;
+  Image manWalkingHandgun2;
+  Image manWalkingHandgun3;
   Image zombieWalkingBright;
   Image zombieWalkingMedium;
   Image zombieWalkingDark;
@@ -193,7 +195,9 @@ class _Images {
     zombieIdleMedium = await _png("zombie-idle-medium");
     zombieIdleDark = await _png("zombie-idle-dark");
     empty = await _png("empty");
-    manWalkingHandgun = await _png("man-walking-handgun");
+    manWalkingHandgun1 = await _png("man-walking-handgun-1");
+    manWalkingHandgun2 = await _png("man-walking-handgun-2");
+    manWalkingHandgun3 = await _png("man-walking-handgun-3");
     flames.add(torch_01);
     flames.add(torch_02);
     flames.add(torch_03);
