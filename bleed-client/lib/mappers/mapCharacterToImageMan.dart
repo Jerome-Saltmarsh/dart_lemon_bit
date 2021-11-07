@@ -5,14 +5,15 @@ import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/images.dart';
 
-Image mapCharacterToImageMan(CharacterState state, Weapon weapon, Shading shade){
-  switch(state){
+Image mapCharacterToImageMan(
+    CharacterState state, Weapon weapon, Shading shade) {
+  switch (state) {
     case CharacterState.Idle:
-      if (weapon == Weapon.HandGun){
+      if (weapon == Weapon.HandGun) {
         return images.manIdleHandgun;
       }
-      if (weapon == Weapon.Shotgun){
-        switch(shade){
+      if (weapon == Weapon.Shotgun) {
+        switch (shade) {
           case Shading.Bright:
             return images.manIdleShotgun01;
           case Shading.Medium:
@@ -24,24 +25,33 @@ Image mapCharacterToImageMan(CharacterState state, Weapon weapon, Shading shade)
         }
         throw Exception();
       }
-      if (weapon == Weapon.SniperRifle){
+      if (weapon == Weapon.SniperRifle) {
         return images.manIdleShotgun01;
       }
-      if (weapon == Weapon.AssaultRifle){
+      if (weapon == Weapon.AssaultRifle) {
         return images.manIdleShotgun01;
       }
-      if (shade == Shading.Bright){
+      if (shade == Shading.Bright) {
         return images.manIdleBright;
       }
       return images.manIdle;
     case CharacterState.Aiming:
-      switch(weapon){
+      switch (weapon) {
         case Weapon.HandGun:
           return images.manFiringHandgun;
         default:
-          return images.manFiringShotgun;
+          switch (shade) {
+            case Shading.Bright:
+              return images.manFiringShotgun1;
+            case Shading.Medium:
+              return images.manFiringShotgun2;
+            case Shading.Dark:
+              return images.manFiringShotgun3;
+            case Shading.VeryDark:
+              return images.manFiringShotgun3;
+          }
       }
-      return images.manFiringShotgun;
+      throw Exception();
     case CharacterState.Dead:
       return images.manDying;
     case CharacterState.Striking:
@@ -51,11 +61,11 @@ Image mapCharacterToImageMan(CharacterState state, Weapon weapon, Shading shade)
     case CharacterState.Running:
       return images.manRunning;
     case CharacterState.Walking:
-      if (weapon == Weapon.HandGun){
+      if (weapon == Weapon.HandGun) {
         return images.manWalkingHandgun;
       }
-      if (weapon == Weapon.Shotgun){
-        switch(shade){
+      if (weapon == Weapon.Shotgun) {
+        switch (shade) {
           case Shading.Bright:
             return images.manWalkingShotgunShade1;
           case Shading.Medium:
@@ -67,19 +77,28 @@ Image mapCharacterToImageMan(CharacterState state, Weapon weapon, Shading shade)
         }
         throw Exception();
       }
-      if (shade == Shading.Bright){
+      if (shade == Shading.Bright) {
         return images.manWalkingBright;
       }
       return images.manWalking;
     case CharacterState.Firing:
-      switch(weapon){
+      switch (weapon) {
         case Weapon.HandGun:
           return images.manFiringHandgun;
         default:
-          return images.manFiringShotgun;
+          switch (shade) {
+            case Shading.Bright:
+              return images.manFiringShotgun1;
+            case Shading.Medium:
+              return images.manFiringShotgun2;
+            case Shading.Dark:
+              return images.manFiringShotgun3;
+            case Shading.VeryDark:
+              return images.manFiringShotgun3;
+          }
       }
-      return images.manFiringShotgun;
+      throw Exception();
     default:
-      throw Exception("could not map man image");
+      throw Exception();
   }
 }
