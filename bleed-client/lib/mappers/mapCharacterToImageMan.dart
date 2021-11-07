@@ -78,7 +78,17 @@ Image mapCharacterToImageMan(
     case CharacterState.ChangingWeapon:
       return images.manChanging;
     case CharacterState.Running:
-      return images.manRunning;
+      switch (shade) {
+        case Shading.Bright:
+          return images.manUnarmedRunning1;
+        case Shading.Medium:
+          return images.manUnarmedRunning2;
+        case Shading.Dark:
+          return images.manUnarmedRunning3;
+        case Shading.VeryDark:
+          return images.manUnarmedRunning3;
+      }
+      throw Exception();
     case CharacterState.Walking:
       if (weapon == Weapon.HandGun) {
         switch (shade) {
