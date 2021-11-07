@@ -23,6 +23,9 @@ Rect mapCharacterToSrcMan(
       if (weapon == Weapon.Shotgun) {
         return _mapFrame(_shotgunFiring, direction, frame);
       }
+      if (weapon == Weapon.HandGun) {
+        return _mapFrame(_handgunFiring, direction, frame);
+      }
       return _mapFrame(_srcRects1, direction, frame);
     case CharacterState.Striking:
       return _mapFrame(_srcRects2, direction, frame);
@@ -97,6 +100,16 @@ final AnimationRects _shotgunFiring = AnimationRects(
     upLeft: _frames([16, 17, 17, 18, 17]),
     left: _frames([19, 20, 20, 21, 20]),
     downLeft: _frames([22, 23, 24, 24, 23]));
+
+final AnimationRects _handgunFiring = AnimationRects(
+    down: _frames([2, 1]),
+    downRight: _frames([4, 3]),
+    right: _frames([6, 5]),
+    upRight: _frames([8, 7]),
+    up: _frames([10, 9]),
+    upLeft: _frames([12, 11]),
+    left: _frames([14, 13]),
+    downLeft: _frames([16, 15]));
 
 List<Rect> _frames(List<int> indexes) {
   List<Rect> rects = [];

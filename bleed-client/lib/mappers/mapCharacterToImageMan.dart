@@ -47,7 +47,17 @@ Image mapCharacterToImageMan(
     case CharacterState.Aiming:
       switch (weapon) {
         case Weapon.HandGun:
-          return images.manFiringHandgun;
+          switch (shade) {
+            case Shading.Bright:
+              return images.manFiringHandgun1;
+            case Shading.Medium:
+              return images.manFiringHandgun2;
+            case Shading.Dark:
+              return images.manFiringHandgun3;
+            case Shading.VeryDark:
+              return images.manFiringHandgun3;
+          }
+          throw Exception();
         default:
           switch (shade) {
             case Shading.Bright:
@@ -103,7 +113,17 @@ Image mapCharacterToImageMan(
     case CharacterState.Firing:
       switch (weapon) {
         case Weapon.HandGun:
-          return images.manFiringHandgun;
+          switch (shade) {
+            case Shading.Bright:
+              return images.manFiringHandgun1;
+            case Shading.Medium:
+              return images.manFiringHandgun2;
+            case Shading.Dark:
+              return images.manFiringHandgun3;
+            case Shading.VeryDark:
+              return images.manFiringHandgun3;
+          }
+          throw Exception();
         default:
           switch (shade) {
             case Shading.Bright:

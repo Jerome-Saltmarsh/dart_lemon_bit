@@ -70,7 +70,9 @@ class _Images {
   Image manWalking;
   Image manWalkingBright;
   Image manRunning;
-  Image manFiringHandgun;
+  Image manFiringHandgun1;
+  Image manFiringHandgun2;
+  Image manFiringHandgun3;
   Image manFiringShotgun1;
   Image manFiringShotgun2;
   Image manFiringShotgun3;
@@ -167,7 +169,9 @@ class _Images {
     rockSmallMedium = await loadImage("images/rock-small-medium.png");
     rockSmallDark = await loadImage("images/rock-small-dark.png");
     manRunning = await loadImage("images/man-running.png");
-    manFiringHandgun = await loadImage("images/man-firing-handgun.png");
+    manFiringHandgun1 = await loadImage("images/man-firing-handgun-1.png");
+    manFiringHandgun2 = await loadImage("images/man-firing-handgun-2.png");
+    manFiringHandgun3 = await loadImage("images/man-firing-handgun-3.png");
     manFiringShotgun1 = await loadImage("images/man-firing-shotgun-1.png");
     manFiringShotgun2 = await loadImage("images/man-firing-shotgun-2.png");
     manFiringShotgun3 = await loadImage("images/man-firing-shotgun-3.png");
