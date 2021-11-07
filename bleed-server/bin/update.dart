@@ -160,7 +160,7 @@ void resolveCollisionBetween(
     if (!gameObjectsA[i].collidable) continue;
     for (int j = minJ; j < gameObjectsB.length; j++) {
       if (!gameObjectsB[j].collidable) continue;
-      if (gameObjectsA[i].bottom < gameObjectsB[j].top) continue;
+      if (gameObjectsA[i].bottom < gameObjectsB[j].top) break;
       if (gameObjectsA[i].top > gameObjectsB[j].bottom) continue;
       if (gameObjectsA[i].right < gameObjectsB[j].left) continue;
       if (gameObjectsA[i].left > gameObjectsB[j].right) continue;

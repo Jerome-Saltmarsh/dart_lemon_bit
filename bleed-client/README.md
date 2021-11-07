@@ -100,9 +100,11 @@
 [ ] Improve UI
 [ ] UI Health Bar
 [ ] Zombie Strike Animation
+[ ] Animate Running Handgun
+[ ] Animate Running Shotgun
+[ ] Animate Pistol Shoot 
 [ ] Shade 1, 2, 3
-[ ] Refactor server collision detection
-[ ] Pistol Shoot Animation
+[x] Refactor server collision detection
 [x] Zombie Walk Shadow
 [x] Fix boundary error
 [x] Fix Server nan error
@@ -117,8 +119,6 @@
 [x] Zombies 3D render
 [x] Zombies 3D model
 [x] Human 3d Render
-    [ ] Running Handgun
-    [ ] Running Shotgun
     [x] Idle Handgun
     [x] Walking Handgun
     [x] Dead
