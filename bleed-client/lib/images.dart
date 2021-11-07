@@ -196,9 +196,9 @@ class _Images {
     manIdleHandgun2 = await _png("man-idle-handgun-2");
     manIdleHandgun3 = await _png("man-idle-handgun-3");
     manIdleBright = await _png("man-idle-bright");
-    zombieWalkingBright = await _png("zombie-walking-bright");
-    zombieWalkingMedium = await _png("zombie-walking-medium");
-    zombieWalkingDark = await _png("zombie-walking-dark");
+    zombieWalkingBright = await _png("zombie-walking-1");
+    zombieWalkingMedium = await _png("zombie-walking-2");
+    zombieWalkingDark = await _png("zombie-walking-3");
     zombieDyingBright = await _png("zombie-dying-bright");
     zombieDyingMedium = await _png("zombie-dying-medium");
     zombieDyingDark = await _png("zombie-dying-dark");

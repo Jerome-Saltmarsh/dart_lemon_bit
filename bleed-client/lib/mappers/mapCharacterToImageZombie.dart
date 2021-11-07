@@ -16,7 +16,7 @@ Image mapCharacterToImageZombie(CharacterState state, Weapon weapon, Shading sha
         case Shading.Dark:
           return images.zombieIdleDark;
       }
-      return images.zombieWalkingBright;
+      throw Exception();
     case CharacterState.Dead:
       switch(shading){
         case Shading.Bright:
@@ -26,19 +26,19 @@ Image mapCharacterToImageZombie(CharacterState state, Weapon weapon, Shading sha
         case Shading.Dark:
           return images.zombieDyingDark;
       }
-      return images.zombieWalkingBright;
+      throw Exception();
     case CharacterState.Striking:
       return images.zombieStriking;
     case CharacterState.Walking:
       switch(shading){
         case Shading.Bright:
-          return images.zombieWalkingMedium;
+          return images.zombieWalkingBright;
         case Shading.Medium:
           return images.zombieWalkingMedium;
         case Shading.Dark:
           return images.zombieWalkingDark;
       }
-      return images.zombieWalkingBright;
+      throw Exception();
     default:
       throw Exception("could not map zombie image");
   }
