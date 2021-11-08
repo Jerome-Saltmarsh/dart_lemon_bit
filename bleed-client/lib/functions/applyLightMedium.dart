@@ -5,30 +5,7 @@ import 'package:bleed_client/getters/getTileAt.dart';
 void applyLightMedium(List<List<Shading>> shader, double x, double y) {
   int column = getColumn(x, y);
   int row = getRow(x, y);
-
-  applyShadeDark(shader, row - 1, column - 2);
-  applyShadeMedium(shader, row, column);
-  applyShadeDark(shader, row, column - 2);
-  applyShadeDark(shader, row - 2, column);
-  applyShadeDark(shader, row - 2, column - 1);
-  applyShadeDark(shader, row - 2, column - 2);
-  applyShadeDark(shader, row - 2, column + 1);
-  applyShadeDark(shader, row - 2, column + 2);
-  applyShadeDark(shader, row + 2, column);
-  applyShadeDark(shader, row + 2, column - 1);
-  applyShadeDark(shader, row + 2, column - 2);
-  applyShadeDark(shader, row + 2, column + 1);
-  applyShadeDark(shader, row + 2, column + 2);
-  applyShadeDark(shader, row + 1, column - 2);
-  applyShadeDark(shader, row, column + 2);
-  applyShadeDark(shader, row - 1, column + 2);
-  applyShadeDark(shader, row + 1, column + 2);
-  applyShadeMedium(shader, row - 1, column);
-  applyShadeMedium(shader, row - 1, column - 1);
-  applyShadeMedium(shader, row - 1, column + 1);
-  applyShadeMedium(shader, row, column - 1);
-  applyShadeMedium(shader, row, column + 1);
-  applyShadeMedium(shader, row + 1, column);
-  applyShadeMedium(shader, row + 1, column + 1);
-  applyShadeMedium(shader, row + 1, column - 1);
+  applyShade(shader, row, column, Shading.Medium);
+  applyShadeRing(shader, row, column, 1, Shading.Medium);
+  applyShadeRing(shader, row, column, 3, Shading.Dark);
 }

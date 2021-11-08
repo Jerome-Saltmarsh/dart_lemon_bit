@@ -373,7 +373,6 @@ abstract class Game {
   List<GameEvent> gameEvents = [];
   List<Crate> crates = [];
 
-  // List<EnvironmentObject>
   final List<Collider> colliders = [];
   final List<Collectable> collectables = [];
   final List<Vector2> playerSpawnPoints = [];
@@ -881,6 +880,14 @@ extension GameFunctions on Game {
     }
   }
 
+  bool overlapping(GameObject a, GameObject b){
+    if (a.right < b.left) return false;
+    if (a.left > b.right) return false;
+    if (a.bottom < b.top) return false;
+    if (a.top > b.bottom) return false;
+    return true;
+  }
+
   void _updateBullets() {
     // @on update bullet
     for (int i = 0; i < bullets.length; i++) {
@@ -906,6 +913,17 @@ extension GameFunctions on Game {
     insertionSort(list: bullets, compare: compareGameObjectsY);
     checkBulletCollision(zombies);
     checkBulletCollision(players);
+
+    for(int i = 0; i < bullets.length; i++){
+      if (!bullets[i].active) continue;
+      for (EnvironmentObject environmentObject in scene.environment){
+         if (!environmentObject.collidable) continue;
+         if (!overlapping(bullets[i], environmentObject)) continue;
+         bullets[i].active = false;
+         break;
+      }
+    }
+
 
     for (int i = 0; i < crates.length; i++) {
       if (!crates[i].active) continue;

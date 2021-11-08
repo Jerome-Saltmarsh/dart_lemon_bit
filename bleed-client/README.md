@@ -104,6 +104,8 @@
 [ ] Shade 1, 2, 3
 [ ] Cave Level
 [ ] Select weapon menu
+[ ] Fix AI target
+[ ] Weapon Baseball Bat
 [ ] Fix Map Fading Bug
 [x] Publish Game Engine
 [x] Man Dead Shades

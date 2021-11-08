@@ -13,6 +13,11 @@ class EnvironmentObject extends GameObject {
     this.y = y;
     // hacky
     radius = _getRadius(type);
+
+    // TODO Forbidden game logic inside data class
+    if (type == EnvironmentObjectType.Rock_Small){
+      collidable = false;
+    }
   }
 }
 
