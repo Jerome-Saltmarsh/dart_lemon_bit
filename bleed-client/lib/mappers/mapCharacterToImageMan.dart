@@ -86,7 +86,17 @@ Image mapCharacterToImageMan(
     case CharacterState.Striking:
       return images.manStriking;
     case CharacterState.ChangingWeapon:
-      return images.manChanging;
+      switch (shade) {
+        case Shading.Bright:
+          return images.manChanging1;
+        case Shading.Medium:
+          return images.manChanging2;
+        case Shading.Dark:
+          return images.manChanging3;
+        case Shading.VeryDark:
+          return images.manChanging3;
+      }
+      throw Exception();
     case CharacterState.Running:
       switch (shade) {
         case Shading.Bright:

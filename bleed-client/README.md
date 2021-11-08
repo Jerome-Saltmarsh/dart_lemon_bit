@@ -104,6 +104,7 @@
 [ ] Cave Level
 [ ] Select weapon menu
 [ ] Weapon Baseball Bat
+[ ] Npc wander
 [ ] Changing Weapon Shade
 [x] Fix AI target
 [x] Bullets environment object collision
