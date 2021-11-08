@@ -2,7 +2,6 @@ import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Particle.dart';
-import 'package:bleed_client/classes/Sprite.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/Tile.dart';
@@ -56,10 +55,6 @@ Future init() async {
 
   for (int i = 0; i < 2000; i++) {
     game.crates.add(Vector2(0, 0));
-  }
-
-  for (int i = 0; i < 1000; i++) {
-    game.sprites.add(Sprite());
   }
 
   for (int i = 0; i < settings.maxBulletHoles; i++) {

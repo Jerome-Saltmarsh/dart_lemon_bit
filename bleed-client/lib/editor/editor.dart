@@ -37,19 +37,19 @@ Widget buildEnv(EnvironmentObject env){
   });
 }
 
-Widget _buildObjectList(){
-  return Positioned(
-      right: 0,
-      top: 50,
-      child: Container(
-        height: screenHeight - 50,
-        child: SingleChildScrollView(
-            child:Column(
-            children: environmentObjects.map(buildEnv).toList(),
-          )
-        ),
-  ));
-}
+// Widget _buildObjectList(){
+//   return Positioned(
+//       right: 0,
+//       top: 50,
+//       child: Container(
+//         height: screenHeight - 50,
+//         child: SingleChildScrollView(
+//             child:Column(
+//             children: environmentObjects.map(buildEnv).toList(),
+//           )
+//         ),
+//   ));
+// }
 
 Widget _buildTools(){
   return Positioned(

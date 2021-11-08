@@ -2,7 +2,6 @@
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
-import 'package:bleed_client/classes/Sprite.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/Tile.dart';
@@ -32,7 +31,6 @@ class Game {
   int totalHumans = 0;
   List<Vector2> bullets = [];
   List<Vector2> bulletHoles = [];
-  List<Sprite> sprites = [];
   int totalSprites = 0;
   int bulletHoleIndex = 0;
   List<Particle> particles = [];

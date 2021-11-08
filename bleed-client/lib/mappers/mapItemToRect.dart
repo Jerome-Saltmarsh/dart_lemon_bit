@@ -29,7 +29,6 @@ Rect mapItemToRect(ItemType item) {
 // private
 const double _frameWidth = 47;
 const double _frameHeight = 71;
-final List<Rect> _ammo = _itemFrames([1]);
 final List<Rect> _grenade = _itemFrames([2]);
 final List<Rect> _credits = _itemFrames([3]);
 final List<Rect> _assaultRifle = _itemFrames([4]);

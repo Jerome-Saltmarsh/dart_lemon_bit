@@ -1,5 +1,4 @@
 import 'package:bleed_client/classes/Character.dart';
-import 'package:bleed_client/functions/applyLightMedium.dart';
 import 'package:bleed_client/render/functions/applyLightBright.dart';
 import 'package:bleed_client/render/state/dynamicShading.dart';
 import 'package:bleed_client/variables/lantern.dart';

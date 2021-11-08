@@ -9,10 +9,8 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/environmentObjects.dart';
 import 'package:bleed_client/state.dart';
 import 'package:clipboard/clipboard.dart';
-import 'package:flutter/cupertino.dart';
 
 void saveScene() {
-  print("saveScene()");
   FlutterClipboard.copy(_mapCompileGameToJson());
 }
 
@@ -72,15 +70,6 @@ List<List<String>> _compileTiles(List<List<Tile>> tiles) {
     _tiles.add(_row);
   }
   return _tiles;
-}
-
-List<int> _compileOffsets(List<Offset> offsets) {
-  List<int> points = [];
-  for (Offset offset in offsets) {
-    points.add(offset.dx.toInt());
-    points.add(offset.dy.toInt());
-  }
-  return points;
 }
 
 dynamic mapBlockToJson(Block block) {

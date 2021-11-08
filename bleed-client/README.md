@@ -103,8 +103,9 @@
 [ ] Animate Running Shotgun
 [ ] Shade 1, 2, 3
 [ ] Cave Level
+[ ] Select weapon menu
 [ ] Fix Map Fading Bug
-[ ] Publish Game Engine
+[x] Publish Game Engine
 [x] Man Dead Shades
 [x] Zombie Strike Animation
 [x] Animate Pistol Shoot 
