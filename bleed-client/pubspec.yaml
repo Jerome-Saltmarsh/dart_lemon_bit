@@ -10,6 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  lemon_engine: ^0.0.2
   audioplayers: ^0.19.1
   universal_html: ^2.0.8
   positioned_tap_detector: ^1.0.3

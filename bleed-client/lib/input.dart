@@ -5,11 +5,6 @@ import 'package:bleed_client/classes/Block.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/functions/diffOver.dart';
-import 'package:bleed_client/engine/functions/keyPressed.dart';
-import 'package:bleed_client/engine/properties/keyPressed.dart';
-import 'package:bleed_client/engine/GameWidget.dart';
-import 'package:bleed_client/engine/state/camera.dart';
-import 'package:bleed_client/engine/state/zoom.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/render/drawCanvas.dart';
 import 'package:bleed_client/render/functions/setAmbientLight.dart';
@@ -20,11 +15,15 @@ import 'package:bleed_client/variables/lantern.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lemon_engine/functions/key_pressed.dart';
+import 'package:lemon_engine/game.dart';
+import 'package:lemon_engine/properties/mouse_world.dart';
+import 'package:lemon_engine/state/camera.dart';
+import 'package:lemon_engine/state/zoom.dart';
 
 import '../common.dart';
 import '../send.dart';
 import '../settings.dart';
-import 'engine/properties/mouseWorld.dart';
 import 'maths.dart';
 import 'state.dart';
 import 'ui/logic/showTextBox.dart';
@@ -42,7 +41,7 @@ bool get keyEquipSniperRifle => keyPressed(LogicalKeyboardKey.digit3);
 
 bool get keyEquipMachineGun => keyPressed(LogicalKeyboardKey.digit4);
 
-bool get keyAimPressed => keyPressedSpace;
+bool get keyPressedSpace => keyPressed(LogicalKeyboardKey.space);
 
 bool get keySprintPressed => inputRequest.sprint;
 

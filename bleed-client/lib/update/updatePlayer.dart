@@ -1,9 +1,9 @@
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/common/Weapons.dart';
-import 'package:bleed_client/engine/GameWidget.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/utils.dart';
+import 'package:lemon_engine/game.dart';
 
 void updatePlayer() {
   if (game.playerId < 0) return;

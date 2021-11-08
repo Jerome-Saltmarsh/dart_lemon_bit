@@ -1,10 +1,10 @@
 import 'dart:ui';
 
 import 'package:bleed_client/classes/EnvironmentObject.dart';
-import 'package:bleed_client/engine/state/canvas.dart';
-import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/state/environmentObjects.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
+import 'package:lemon_engine/state/canvas.dart';
+import 'package:lemon_engine/state/paint.dart';
 
 final double _anchorX = 50;
 final double _anchorY = 80;

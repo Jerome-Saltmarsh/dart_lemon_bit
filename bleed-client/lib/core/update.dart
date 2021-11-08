@@ -1,5 +1,4 @@
 import 'package:bleed_client/editor/editor.dart';
-import 'package:bleed_client/engine/GameWidget.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/send.dart';
@@ -8,6 +7,7 @@ import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/tutorials.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/update.dart';
+import 'package:lemon_engine/game.dart';
 
 void update() {
   

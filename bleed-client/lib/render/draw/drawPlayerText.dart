@@ -1,7 +1,7 @@
 import 'package:bleed_client/classes/Character.dart';
-import 'package:bleed_client/engine/render/drawText.dart';
 import 'package:bleed_client/render/constants/charWidth.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:lemon_engine/render/draw_text.dart';
 
 void drawPlayerText() {
   for (int i = 0; i < game.totalHumans; i++) {

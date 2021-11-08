@@ -1,9 +1,9 @@
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/common/functions/diffOver.dart';
-import 'package:bleed_client/engine/render/drawText.dart';
-import 'package:bleed_client/engine/properties/mouseWorld.dart';
 import 'package:bleed_client/render/constants/charWidth.dart';
 import 'package:bleed_client/render/drawCharacterMan.dart';
+import 'package:lemon_engine/properties/mouse_world.dart';
+import 'package:lemon_engine/render/draw_text.dart';
 
 void drawInteractableNpc(Character npc) {
   drawCharacterMan(npc);

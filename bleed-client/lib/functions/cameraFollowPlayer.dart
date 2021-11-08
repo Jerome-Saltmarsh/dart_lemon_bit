@@ -1,7 +1,7 @@
-import 'package:bleed_client/engine/GameWidget.dart';
-import 'package:bleed_client/engine/state/camera.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/settings.dart';
+import 'package:lemon_engine/game.dart';
+import 'package:lemon_engine/state/camera.dart';
 
 void cameraFollowPlayer() {
   double xDiff = screenCenterWorldX - game.playerX;

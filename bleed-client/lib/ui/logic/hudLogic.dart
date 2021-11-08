@@ -1,10 +1,9 @@
 
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/editor/functions/registerEditorKeyboardListener.dart';
-import 'package:bleed_client/engine/functions/refreshPage.dart';
-import 'package:bleed_client/engine/GameWidget.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/events.dart';
+import 'package:bleed_client/functions/refreshPage.dart';
 import 'package:bleed_client/functions/removeGeneratedEnvironmentObjects.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/network/streams/onConnectError.dart';
@@ -18,6 +17,7 @@ import 'package:bleed_client/tutorials.dart';
 import 'package:bleed_client/ui/compose/dialogs.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/ui/state/tips.dart';
+import 'package:lemon_engine/game.dart';
 import 'package:neuro/instance.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

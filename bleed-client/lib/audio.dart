@@ -1,8 +1,8 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:bleed_client/engine/GameWidget.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/utils.dart';
+import 'package:lemon_engine/game.dart';
 
 // interface
 void initAudioPlayers() {

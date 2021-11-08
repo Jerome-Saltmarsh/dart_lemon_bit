@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:bleed_client/engine/functions/loadImage.dart';
+import 'package:lemon_engine/functions/load_image.dart';
 
 final _Images images = _Images();
 

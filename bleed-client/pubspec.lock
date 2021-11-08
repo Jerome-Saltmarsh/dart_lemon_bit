@@ -123,6 +123,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.6.3"
+  lemon_engine:
+    dependency: "direct main"
+    description:
+      name: lemon_engine
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2"
   meta:
     dependency: transitive
     description:
@@ -207,6 +214,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
+  positioned_tap_detector_2:
+    dependency: transitive
+    description:
+      name: positioned_tap_detector_2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.4"
   process:
     dependency: transitive
     description:
@@ -374,5 +388,5 @@ packages:
     source: hosted
     version: "0.2.0"
 sdks:
-  dart: ">=2.13.0 <3.0.0"
+  dart: ">=2.14.3 <3.0.0"
   flutter: ">=2.0.0"

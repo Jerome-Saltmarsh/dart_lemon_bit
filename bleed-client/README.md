@@ -104,7 +104,8 @@
 [ ] Shade 1, 2, 3
 [ ] Cave Level
 [ ] Fix Map Fading Bug
-[ ] Man Dead Shades
+[ ] Publish Game Engine
+[x] Man Dead Shades
 [x] Zombie Strike Animation
 [x] Animate Pistol Shoot 
 [x] Refactor server collision detection

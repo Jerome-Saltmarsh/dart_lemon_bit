@@ -9,16 +9,6 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
-import 'package:bleed_client/engine/render/drawCircle.dart';
-import 'package:bleed_client/engine/render/drawText.dart';
-import 'package:bleed_client/engine/functions/onScreen.dart';
-import 'package:bleed_client/engine/properties/mouseWorld.dart';
-import 'package:bleed_client/engine/render/drawAtlas.dart';
-import 'package:bleed_client/engine/render/drawImageRect.dart';
-import 'package:bleed_client/engine/GameWidget.dart';
-import 'package:bleed_client/engine/state/canvas.dart';
-import 'package:bleed_client/engine/state/paint.dart';
-import 'package:bleed_client/engine/state/screen.dart';
 import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/functions/applyLightingToEnvironmentObjects.dart';
 import 'package:bleed_client/functions/calculateTileSrcRects.dart';
@@ -46,6 +36,16 @@ import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/variables/ambientLight.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lemon_engine/game.dart';
+import 'package:lemon_engine/properties/mouse_world.dart';
+import 'package:lemon_engine/queries/on_screen.dart';
+import 'package:lemon_engine/render/draw_atlas.dart';
+import 'package:lemon_engine/render/draw_circle.dart';
+import 'package:lemon_engine/render/draw_image_rect.dart';
+import 'package:lemon_engine/render/draw_text.dart';
+import 'package:lemon_engine/state/canvas.dart';
+import 'package:lemon_engine/state/paint.dart';
+import 'package:lemon_engine/state/screen.dart';
 
 import '../draw.dart';
 import '../images.dart';
@@ -327,14 +327,6 @@ void _drawCollectables() {
 void drawCollectable(CollectableType type, double x, double y) {}
 
 void drawBlockSelected(Block block) {
-  // globalCanvas.drawPath(block.wall1, _blockBlueGrey);
-  // globalCanvas.drawPath(block.wall2, _blockBlue);
-  // globalCanvas.drawPath(block.wall3, _blockGrey);
-  // _drawLine(block.center, block.a, Colors.red);
-  // _drawLine(block.center, block.b, Colors.green);
-  // _drawLine(block.center, block.top, Colors.deepPurple);
-  // _drawLine(block.center, block.right, Colors.orange);
-
   paint.strokeWidth = 3;
   _drawLine(block.top, block.right, Colors.red);
   _drawLine(block.right, block.bottom, Colors.red);

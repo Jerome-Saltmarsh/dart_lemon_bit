@@ -1,7 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/constants/servers.dart';
-import 'package:bleed_client/engine/functions/refreshPage.dart';
-import 'package:bleed_client/engine/GameWidget.dart';
+import 'package:bleed_client/functions/refreshPage.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
@@ -10,6 +9,7 @@ import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lemon_engine/game.dart';
 
 import '../../audio.dart';
 import '../../state.dart';

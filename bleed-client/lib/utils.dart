@@ -3,16 +3,16 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:bleed_client/common/functions/radiansBetween.dart';
-import 'package:bleed_client/engine/GameWidget.dart';
-import 'package:bleed_client/engine/state/camera.dart';
-import 'package:bleed_client/engine/state/canvas.dart';
-import 'package:bleed_client/engine/state/paint.dart';
-import 'package:bleed_client/engine/state/zoom.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:lemon_engine/game.dart';
+import 'package:lemon_engine/properties/mouse_world.dart';
+import 'package:lemon_engine/state/camera.dart';
+import 'package:lemon_engine/state/canvas.dart';
+import 'package:lemon_engine/state/paint.dart';
+import 'package:lemon_engine/state/zoom.dart';
 
 import 'common/Weapons.dart';
 import 'common.dart';
-import 'engine/properties/mouseWorld.dart';
 import 'maths.dart';
 
 double getMouseRotation() {
@@ -29,7 +29,6 @@ void drawLine(double x1, double y1, double x2, double y2) {
 }
 
 void drawLine3(double x1, double y1, double x2, double y2) {
-  globalCanvas.drawLine(offset(x1, y1), offset(x2, y2), paint3);
 }
 
 void drawCustomLine(double x1, double y1, double x2, double y2, Paint paint) {

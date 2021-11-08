@@ -1,10 +1,10 @@
 import 'dart:ui';
 
 import 'package:bleed_client/constants/colours.dart';
-import 'package:bleed_client/engine/GameWidget.dart';
-import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/state.dart';
 import 'package:flutter/material.dart';
+import 'package:lemon_engine/game.dart';
+import 'package:lemon_engine/state/paint.dart';
 
 void drawStaminaBar(Canvas canvas) {
   double percentage = player.stamina / player.staminaMax;

@@ -1,7 +1,7 @@
-import 'package:bleed_client/engine/GameWidget.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:flutter/material.dart';
+import 'package:lemon_engine/game.dart';
 
 import 'widgets.dart';
 

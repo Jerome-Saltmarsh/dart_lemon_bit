@@ -7,8 +7,6 @@ import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
-import 'package:bleed_client/engine/GameWidget.dart';
-import 'package:bleed_client/engine/functions/registerOnMouseScroll.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
@@ -28,6 +26,8 @@ import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/utils.dart';
+import 'package:lemon_engine/functions/register_on_mouse_scroll.dart';
+import 'package:lemon_engine/game.dart';
 
 import '../state/settings.dart';
 import '../ui/compose/dialogs.dart';

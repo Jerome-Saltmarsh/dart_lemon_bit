@@ -1,14 +1,14 @@
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/editor/state/selectedCollectable.dart';
-import 'package:bleed_client/engine/render/drawCircle.dart';
-import 'package:bleed_client/engine/state/canvas.dart';
-import 'package:bleed_client/engine/state/paint.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/render/drawEnvironmentObjects.dart';
 import 'package:bleed_client/editor/state/editState.dart';
 import 'package:flutter/material.dart';
+import 'package:lemon_engine/render/draw_circle.dart';
+import 'package:lemon_engine/state/canvas.dart';
+import 'package:lemon_engine/state/paint.dart';
 
 void renderCanvasEdit() {
   drawTiles();
