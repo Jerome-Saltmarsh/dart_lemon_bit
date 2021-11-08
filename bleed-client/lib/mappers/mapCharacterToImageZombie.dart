@@ -28,7 +28,15 @@ Image mapCharacterToImageZombie(CharacterState state, Weapon weapon, Shading sha
       }
       throw Exception();
     case CharacterState.Striking:
-      return images.zombieStriking;
+      switch(shading){
+        case Shading.Bright:
+          return images.zombieStriking1;
+        case Shading.Medium:
+          return images.zombieStriking2;
+        case Shading.Dark:
+          return images.zombieStriking3;
+      }
+      throw Exception();
     case CharacterState.Walking:
       switch(shading){
         case Shading.Bright:

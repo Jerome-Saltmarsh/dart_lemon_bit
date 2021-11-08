@@ -99,11 +99,14 @@
 [ ] Fix save environment issues
 [ ] Improve UI
 [ ] UI Health Bar
-[ ] Zombie Strike Animation
 [ ] Animate Running Handgun
 [ ] Animate Running Shotgun
-[ ] Animate Pistol Shoot 
 [ ] Shade 1, 2, 3
+[ ] Cave Level
+[ ] Fix Map Fading Bug
+[ ] Man Dead Shades
+[x] Zombie Strike Animation
+[x] Animate Pistol Shoot 
 [x] Refactor server collision detection
 [x] Zombie Walk Shadow
 [x] Fix boundary error

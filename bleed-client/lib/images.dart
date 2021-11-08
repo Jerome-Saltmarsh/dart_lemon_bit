@@ -97,7 +97,9 @@ class _Images {
   Image zombieDyingBright;
   Image zombieDyingMedium;
   Image zombieDyingDark;
-  Image zombieStriking;
+  Image zombieStriking1;
+  Image zombieStriking2;
+  Image zombieStriking3;
   Image zombieIdleBright;
   Image zombieIdleMedium;
   Image zombieIdleDark;
@@ -202,7 +204,9 @@ class _Images {
     zombieDyingBright = await _png("zombie-dying-bright");
     zombieDyingMedium = await _png("zombie-dying-medium");
     zombieDyingDark = await _png("zombie-dying-dark");
-    zombieStriking = await _png("zombie-striking");
+    zombieStriking1 = await _png("zombie-striking-1");
+    zombieStriking2 = await _png("zombie-striking-2");
+    zombieStriking3 = await _png("zombie-striking-3");
     zombieIdleBright = await _png("zombie-idle-bright");
     zombieIdleMedium = await _png("zombie-idle-medium");
     zombieIdleDark = await _png("zombie-idle-dark");

@@ -49,7 +49,7 @@ Rect mapCharacterToSrcZombie(
     case CharacterState.Dead:
       return _mapFrame(_srcRects2, direction, frame);
     case CharacterState.Striking:
-      return _mapFrame(_srcRects2, direction, frame);
+      return _mapFrameLoop(_srcRects3, direction, frame);
     case CharacterState.Running:
       return _mapFrameLoop(_srcRects4, direction, frame);
     default:
@@ -80,6 +80,17 @@ final AnimationRects _srcRects2 = AnimationRects(
     upLeft: _frames([11, 12]),
     left: _frames([13, 14]),
     downLeft: _frames([15, 16]));
+
+
+final AnimationRects _srcRects3 = AnimationRects(
+    down: _frames([1, 2, 3]),
+    downRight: _frames([4, 5, 6]),
+    right: _frames([7, 8, 9]),
+    upRight: _frames([10, 11, 12]),
+    up: _frames([13, 14, 15]),
+    upLeft: _frames([16, 17, 18]),
+    left: _frames([19, 20, 21]),
+    downLeft: _frames([22, 23, 24]));
 
 final AnimationRects _srcRects4 = AnimationRects(
     down: _frames([1, 2, 3, 4]),

@@ -19,6 +19,7 @@ class _Colors {
   final Color skinCaucasian01 = Color.fromRGBO(226, 198, 181, 1.0);
   final Color skinCaucasian02 = Color.fromRGBO(168, 130, 123, 1.0);
   final Color skinCaucasian03 = Color.fromRGBO(142, 96, 98, 1.0);
+  final Color skinCaucasian04 = Color.fromRGBO(85, 56, 58, 1.0);
 
   Color get blood => redDark;
 }
@@ -32,6 +33,8 @@ Color getColorSkin(Shading shading){
       return colours.skinCaucasian02;
     case Shading.Dark:
       return colours.skinCaucasian03;
+    case Shading.VeryDark:
+      return colours.skinCaucasian04;
   }
   throw Exception();
 }
