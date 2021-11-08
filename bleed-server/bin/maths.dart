@@ -48,6 +48,7 @@ double distance(double x1, double y1, double x2, double y2) {
   return magnitude(x1 - x2, y1 - y2);
 }
 
+// Warning Expensive Method
 double magnitude(double a, double b) {
   return sqrt((a * a) + (b * b));
 }

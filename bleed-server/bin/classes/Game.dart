@@ -38,6 +38,8 @@ import 'Player.dart';
 import 'Scene.dart';
 import 'TileNode.dart';
 
+const _none = -1;
+
 class Fortress extends Game {
   int nextWave = 100;
   int wave = 0;
@@ -456,7 +458,6 @@ abstract class Game {
   }
 }
 
-
 const secondsPerMinute = 60;
 const minutesPerHour = 60;
 const hoursPerDay = 24;
@@ -687,7 +688,7 @@ extension GameFunctions on Game {
     resolveCollisionBetween(players, npcs, resolveCollisionB);
   }
 
-  void sortGameObjects(){
+  void sortGameObjects() {
     insertionSort(list: zombies, compare: compareGameObjectsY);
     insertionSort(list: players, compare: compareGameObjectsY);
     insertionSort(list: npcs, compare: compareGameObjectsY);
@@ -880,7 +881,7 @@ extension GameFunctions on Game {
     }
   }
 
-  bool overlapping(GameObject a, GameObject b){
+  bool overlapping(GameObject a, GameObject b) {
     if (a.right < b.left) return false;
     if (a.left > b.right) return false;
     if (a.bottom < b.top) return false;
@@ -914,16 +915,15 @@ extension GameFunctions on Game {
     checkBulletCollision(zombies);
     checkBulletCollision(players);
 
-    for(int i = 0; i < bullets.length; i++){
+    for (int i = 0; i < bullets.length; i++) {
       if (!bullets[i].active) continue;
-      for (EnvironmentObject environmentObject in scene.environment){
-         if (!environmentObject.collidable) continue;
-         if (!overlapping(bullets[i], environmentObject)) continue;
-         bullets[i].active = false;
-         break;
+      for (EnvironmentObject environmentObject in scene.environment) {
+        if (!environmentObject.collidable) continue;
+        if (!overlapping(bullets[i], environmentObject)) continue;
+        bullets[i].active = false;
+        break;
       }
     }
-
 
     for (int i = 0; i < crates.length; i++) {
       if (!crates[i].active) continue;
@@ -1457,36 +1457,98 @@ extension GameFunctions on Game {
     }
   }
 
-  void updateInteractableNpcTargets() {
-    InteractableNpc npc;
-    for (int i = 0; i < npcs.length; i++) {
-      npc = npcs[i];
-
-      if (npc.mode == NpcMode.Ignore) continue;
-
-      if (npc.targetSet) {
-        // @on update npc with target
-        if (npc.mode == NpcMode.Stand_Ground) {
-          if (diffOver(npc.x, npc.target.x, getWeaponRange(npc.weapon))) continue;
-          if (diffOver(npc.y, npc.target.y, getWeaponRange(npc.weapon))) continue;
-          npc.clearTarget();
-          npc.state = CharacterState.Idle;
-        } else {
-          if (diffOver(npc.x, npc.target.x, settings.npcChaseRange)) continue;
-          if (diffOver(npc.y, npc.target.y, settings.npcChaseRange)) continue;
-          npc.clearTarget();
-          npc.state = CharacterState.Idle;
-        }
-      }
-
-      for (int j = 0; j < zombies.length; j++) {
-        if (!zombies[j].alive) continue;
-        if (diff(zombies[j].x, npc.x) > settings.npc.viewRange) continue;
-        if (diff(zombies[j].y, npc.y) > settings.npc.viewRange) continue;
-        npc.target = zombies[j];
-        break;
+  Character? findClosestCharacter(List<Character> list, double x, double y) {
+    int j = 0;
+    while (true) {
+      if (list[j].alive) break;
+      j++;
+      if (j >= list.length) {
+        return null;
       }
     }
+
+    Character closest = list[j];
+    double distance = diff(closest.y, y) + diff(closest.x, x);
+    for (int i = j + 1; i < list.length; i++) {
+      double distance2 = diff(closest.y, y) + diff(closest.x, x);
+      if (distance2 > distance) continue;
+      closest = list[i];
+      distance = distance2;
+    }
+    return closest;
+  }
+
+  double cheapDistance(Positioned a, Positioned b) {
+    return diff(a.y, b.y) + diff(a.x, b.x);
+  }
+
+  void updateInteractableNpcTargets() {
+    if (zombies.isEmpty) return;
+    int initial = getFirstAliveZombieIndex();
+    if (initial == _none) return;
+
+    for (int i = 0; i < npcs.length; i++) {
+      updateNpcTarget(npcs[i], initial);
+    }
+  }
+
+  int getFirstAliveZombieIndex(){
+    for (int i = 0; i < zombies.length; i++){
+      if (zombies[i].alive) return i;
+    }
+    return _none;
+  }
+
+  void updateNpcTarget(Npc npc, int j) {
+    if (npc.mode == NpcMode.Ignore) return;
+
+    Character closest = zombies[j];
+    double closestDistance = cheapDistance(closest, npc);
+    for (int i = j + 1; i < zombies.length; i++) {
+      if (!zombies[i].alive) continue;
+      double distance2 = cheapDistance(zombies[i], npc);
+      if (distance2 > closestDistance) continue;
+      closest = zombies[i];
+      closestDistance = distance2;
+    }
+
+    double range = getWeaponRange(npc.weapon);
+    double actualDistance = distance(npc.x, npc.y, closest.x, closest.y);
+    if (actualDistance > range) {
+      npc.clearTarget();
+      npc.state = CharacterState.Idle;
+    } else {
+      setNpcTarget(npc, closest);
+    }
+
+
+
+    // if (npc.targetSet) {
+    //   // @on update npc with target
+    //   if (npc.mode == NpcMode.Stand_Ground) {
+    //     if (diffOver(npc.x, npc.target.x, getWeaponRange(npc.weapon))) continue;
+    //     if (diffOver(npc.y, npc.target.y, getWeaponRange(npc.weapon))) continue;
+    //     npc.clearTarget();
+    //     npc.state = CharacterState.Idle;
+    //   } else {
+    //     if (diffOver(npc.x, npc.target.x, settings.npcChaseRange)) continue;
+    //     if (diffOver(npc.y, npc.target.y, settings.npcChaseRange)) continue;
+    //     npc.clearTarget();
+    //     npc.state = CharacterState.Idle;
+    //   }
+    // }
+    //
+    // for (int j = 0; j < zombies.length; j++) {
+    //   if (!zombies[j].alive) continue;
+    //   if (diff(zombies[j].x, npc.x) > settings.npc.viewRange) continue;
+    //   if (diff(zombies[j].y, npc.y) > settings.npc.viewRange) continue;
+    //   setNpcTarget(npc, zombies[j]);
+    //   break;
+    // }
+  }
+
+  void setNpcTarget(Npc npc, Character value) {
+    npc.target = value;
   }
 
   void jobNpcWander() {

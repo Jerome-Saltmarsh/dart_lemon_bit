@@ -83,7 +83,6 @@
 [ ] Editor translate environment object
 [ ] Zombies run through environment objects
 [ ] Deploy dev endpoint
-[ ] Bullets environment object collision
 [ ] Water Particles
 [ ] House 3
 [ ] Tree 3
@@ -104,9 +103,11 @@
 [ ] Shade 1, 2, 3
 [ ] Cave Level
 [ ] Select weapon menu
-[ ] Fix AI target
 [ ] Weapon Baseball Bat
-[ ] Fix Map Fading Bug
+[ ] Changing Weapon Shade
+[x] Fix AI target
+[x] Bullets environment object collision
+[x] Fix Map Fading Bug
 [x] Publish Game Engine
 [x] Man Dead Shades
 [x] Zombie Strike Animation
