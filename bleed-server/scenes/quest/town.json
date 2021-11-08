@@ -2610,9 +2610,9 @@
       "ZombieSpawn"
     ],
     [
-      "Water",
-      "Water",
-      "Water",
+      "Grass",
+      "Grass",
+      "Grass",
       "Long_Grass",
       "Long_Grass",
       "Grass",
@@ -2691,7 +2691,7 @@
     [
       "Water",
       "Water",
-      "Water",
+      "Bridge",
       "Water",
       "Water",
       "Water",
@@ -2770,7 +2770,7 @@
     [
       "Water",
       "Water",
-      "Water",
+      "Bridge",
       "Water",
       "Water",
       "Water",
@@ -2849,7 +2849,7 @@
     [
       "Water",
       "Water",
-      "Water",
+      "Bridge",
       "Water",
       "Water",
       "Water",
@@ -2928,7 +2928,7 @@
     [
       "Grass",
       "Water",
-      "Water",
+      "Bridge",
       "Water",
       "Water",
       "Water",
@@ -3393,7 +3393,7 @@
       "Water",
       "Water",
       "Water",
-      "Water",
+      "Bridge",
       "Water",
       "Water",
       "Water",
@@ -3472,7 +3472,7 @@
       "Water",
       "Water",
       "Water",
-      "Water",
+      "Bridge",
       "Water",
       "Water",
       "Water",
@@ -3551,7 +3551,7 @@
       "Water",
       "Water",
       "Water",
-      "Water",
+      "Bridge",
       "Water",
       "Water",
       "Water",
@@ -3630,7 +3630,7 @@
       "Water",
       "Water",
       "Water",
-      "Water",
+      "Bridge",
       "Water",
       "Water",
       "Water",
@@ -5881,14 +5881,14 @@
       "type": "Tree01"
     },
     {
-      "x": -293,
-      "y": 1388,
-      "type": "LongGrass"
-    },
-    {
       "x": 596,
       "y": 1388,
       "type": "Tree01"
+    },
+    {
+      "x": -293,
+      "y": 1388,
+      "type": "LongGrass"
     },
     {
       "x": -878,
@@ -6156,14 +6156,14 @@
       "type": "LongGrass"
     },
     {
-      "x": 206,
-      "y": 1679,
-      "type": "House01"
-    },
-    {
       "x": 605,
       "y": 1679,
       "type": "Rock"
+    },
+    {
+      "x": 206,
+      "y": 1679,
+      "type": "House01"
     },
     {
       "x": -1182,
@@ -6231,6 +6231,11 @@
       "type": "Tree01"
     },
     {
+      "x": -121,
+      "y": 1731,
+      "type": "Torch"
+    },
+    {
       "x": -756,
       "y": 1737,
       "type": "Tree01"
@@ -6239,6 +6244,16 @@
       "x": 151,
       "y": 1745,
       "type": "Rock"
+    },
+    {
+      "x": -131,
+      "y": 1747,
+      "type": "Rock_Small"
+    },
+    {
+      "x": -102,
+      "y": 1749,
+      "type": "Rock_Small"
     },
     {
       "x": -401,
@@ -6276,14 +6291,14 @@
       "type": "Tree02"
     },
     {
-      "x": 54,
-      "y": 1766,
-      "type": "Tree01"
-    },
-    {
       "x": -676,
       "y": 1766,
       "type": "LongGrass"
+    },
+    {
+      "x": 54,
+      "y": 1766,
+      "type": "Tree01"
     },
     {
       "x": -558,
@@ -6291,19 +6306,14 @@
       "type": "Rock"
     },
     {
-      "x": -760,
-      "y": 1780,
-      "type": "Tree02"
-    },
-    {
       "x": 132,
       "y": 1780,
       "type": "LongGrass"
     },
     {
-      "x": -279,
-      "y": 1781,
-      "type": "LongGrass"
+      "x": -760,
+      "y": 1780,
+      "type": "Tree02"
     },
     {
       "x": 179,
@@ -6311,9 +6321,9 @@
       "type": "Tree_Stump"
     },
     {
-      "x": -131,
-      "y": 1747,
-      "type": "Rock_Small"
+      "x": -279,
+      "y": 1781,
+      "type": "LongGrass"
     },
     {
       "x": 694,
@@ -6324,11 +6334,6 @@
       "x": 220,
       "y": 1792,
       "type": "Tree01"
-    },
-    {
-      "x": -102,
-      "y": 1749,
-      "type": "Rock_Small"
     },
     {
       "x": -829,
@@ -6379,6 +6384,11 @@
       "x": -856,
       "y": 1823,
       "type": "Rock"
+    },
+    {
+      "x": -822,
+      "y": 1833,
+      "type": "MystEmitter"
     },
     {
       "x": -682,
@@ -6456,12 +6466,12 @@
       "type": "House01"
     },
     {
-      "x": -1626,
+      "x": 1038,
       "y": 1880,
       "type": "Tree01"
     },
     {
-      "x": 1038,
+      "x": -1626,
       "y": 1880,
       "type": "Tree01"
     },
@@ -6571,14 +6581,14 @@
       "type": "Tree02"
     },
     {
-      "x": -410,
-      "y": 1985,
-      "type": "Rock"
-    },
-    {
       "x": 323,
       "y": 1985,
       "type": "Tree01"
+    },
+    {
+      "x": -410,
+      "y": 1985,
+      "type": "Rock"
     },
     {
       "x": -49,
@@ -6601,12 +6611,12 @@
       "type": "Torch"
     },
     {
-      "x": -1277,
+      "x": -689,
       "y": 2003,
       "type": "Tree01"
     },
     {
-      "x": -689,
+      "x": -1277,
       "y": 2003,
       "type": "Tree01"
     },
@@ -6641,14 +6651,14 @@
       "type": "Torch"
     },
     {
-      "x": -661,
-      "y": 2034,
-      "type": "Rock_Small"
-    },
-    {
       "x": -372,
       "y": 2034,
       "type": "LongGrass"
+    },
+    {
+      "x": -661,
+      "y": 2034,
+      "type": "Rock_Small"
     },
     {
       "x": 752,
@@ -6881,14 +6891,14 @@
       "type": "Tree01"
     },
     {
-      "x": -1084,
-      "y": 2338,
-      "type": "Tree02"
-    },
-    {
       "x": 988,
       "y": 2338,
       "type": "Tree01"
+    },
+    {
+      "x": -1084,
+      "y": 2338,
+      "type": "Tree02"
     },
     {
       "x": -928,
@@ -7134,16 +7144,6 @@
       "x": -285,
       "y": 3356,
       "type": "Tree02"
-    },
-    {
-      "x": -121,
-      "y": 1731,
-      "type": "Torch"
-    },
-    {
-      "x": -822,
-      "y": 1833,
-      "type": "MystEmitter"
     }
   ]
 }
