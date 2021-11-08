@@ -16,7 +16,7 @@ Rect mapCharacterToSrcMan(
     case CharacterState.Walking:
       return _mapFrameLoop(_srcRects4, direction, frame);
     case CharacterState.Dead:
-      return _mapFrame(_srcRects2, direction, frame);
+      return _mapFrame(_srcRects3, direction, frame);
     case CharacterState.Aiming:
       return _mapFrame(_srcRects1, direction, frame);
     case CharacterState.Firing:
