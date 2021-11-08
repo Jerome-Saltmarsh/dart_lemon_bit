@@ -1,11 +1,33 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
 import 'package:lemon_engine/functions/load_image.dart';
 
 final _Images images = _Images();
 
+Map<EnvironmentObjectType, List<Image>> typeShades;
+
+class Shades {
+  Image shade1;
+  Image shade2;
+  Image shade3;
+  Image shade4;
+  Shades(this.shade1, this.shade2, this.shade3, this.shade4);
+}
+
+Future<Shades> load4(String name) async {
+  Image shade1 = await loadImage(name + "-1.png");
+  Image shade2 = await loadImage(name + "-2.png");
+  Image shade3 = await loadImage(name + "-3.png");
+  Image shade4 = await loadImage(name + "-3.png");
+  return Shades(shade1, shade2, shade3, shade4);
+}
+
 class _Images {
+
+  Shades rockShades;
+
   Image human;
   Image zombie;
   Image tiles;
@@ -25,12 +47,13 @@ class _Images {
   Image tree02Bright;
   Image tree02Medium;
   Image tree02Dark;
-  Image rockBright;
-  Image rockMedium;
-  Image rockDark;
+  Image rock1;
+  Image rock2;
+  Image rock3;
   Image palisadeBright;
   Image palisadeMedium;
   Image palisadeDark;
+  Image palisadeDarkDark;
   Image palisadeHBright;
   Image palisadeHMedium;
   Image palisadeHDark;
@@ -55,9 +78,9 @@ class _Images {
   Image torch_03;
   Image torchOut;
   Image bridge;
-  Image treeStumpBright;
-  Image treeStumpMedium;
-  Image treeStumpDark;
+  Image treeStump1;
+  Image treeStump2;
+  Image treeStump3;
   Image rockSmallBright;
   Image rockSmallMedium;
   Image rockSmallDark;
@@ -141,12 +164,13 @@ class _Images {
     tree02Bright = await loadImage("images/tree2-bright.png");
     tree02Medium = await loadImage("images/tree2-medium.png");
     tree02Dark = await loadImage("images/tree2-dark.png");
-    rockBright = await loadImage("images/rock-bright.png");
-    rockMedium = await loadImage("images/rock-medium.png");
-    rockDark = await loadImage("images/rock-dark.png");
+    rock1 = await loadImage("images/rock-bright.png");
+    rock2 = await loadImage("images/rock-medium.png");
+    rock3 = await loadImage("images/rock-dark.png");
     palisadeBright = await loadImage("images/palisade-bright.png");
     palisadeMedium = await loadImage("images/palisade-medium.png");
     palisadeDark = await loadImage("images/palisade-dark.png");
+    palisadeDarkDark = await loadImage("images/palisade-dark-dark.png");
     palisadeHBright = await loadImage("images/palisade-h-bright.png");
     palisadeHMedium = await loadImage("images/palisade-h-medium.png");
     palisadeHDark = await loadImage("images/palisade-h-dark.png");
@@ -170,9 +194,9 @@ class _Images {
     torch_03 = await loadImage("images/torch-03.png");
     torchOut = await loadImage("images/torch-out.png");
     bridge = await loadImage("images/bridge.png");
-    treeStumpBright = await loadImage("images/tree-stump-bright.png");
-    treeStumpMedium = await loadImage("images/tree-stump-medium.png");
-    treeStumpDark = await loadImage("images/tree-stump-dark.png");
+    treeStump1 = await loadImage("images/tree-stump-bright.png");
+    treeStump2 = await loadImage("images/tree-stump-medium.png");
+    treeStump3 = await loadImage("images/tree-stump-dark.png");
     rockSmallBright = await loadImage("images/rock-small-bright.png");
     rockSmallMedium = await loadImage("images/rock-small-medium.png");
     rockSmallDark = await loadImage("images/rock-small-dark.png");
@@ -227,6 +251,34 @@ class _Images {
     flames.add(torch_03);
 
     torch = torch_01;
+
+
+    typeShades = {
+      EnvironmentObjectType.Rock: [
+        rock1,
+        rock2,
+        rock3,
+        rock3,
+      ],
+      EnvironmentObjectType.Tree01: [
+        tree01Bright,
+        tree01Medium,
+        tree01Dark,
+        tree01Dark,
+      ],
+      EnvironmentObjectType.Tree02: [
+        tree02Bright,
+        tree02Medium,
+        tree02Dark,
+        tree02Dark,
+      ],
+      EnvironmentObjectType.Tree_Stump: [
+        treeStump1,
+        treeStump2,
+        treeStump3,
+        treeStump3,
+      ]
+    };
   }
 }
 

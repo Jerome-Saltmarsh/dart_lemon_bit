@@ -6,25 +6,24 @@ import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/images.dart';
 
 Map<Shading, Image> _rock = {
-  Shading.Bright: images.rockBright,
-  Shading.Medium: images.rockMedium,
-  Shading.Dark: images.rockDark,
+  Shading.Bright: images.rock1,
+  Shading.Medium: images.rock2,
+  Shading.Dark: images.rock3,
+  Shading.VeryDark: images.rock3,
 };
 
 Map<Shading, Image> _tree01 = {
   Shading.Bright: images.tree01Bright,
   Shading.Medium: images.tree01Medium,
   Shading.Dark: images.tree01Dark,
+  Shading.VeryDark: images.tree01Dark,
 };
+
 
 Image mapEnvironmentObjectToToShadedImage(EnvironmentObject environmentObject, Shading shade) {
 
-  if (shade == Shading.VeryDark) {
-    return images.empty;
-  }
-
-  if (environmentObject.type == EnvironmentObjectType.Rock) {
-    return _rock[shade];
+  if (typeShades.containsKey(environmentObject.type)){
+    return typeShades[environmentObject.type][shade.index];
   }
 
   if (environmentObject.type == EnvironmentObjectType.Tree01) {
@@ -50,6 +49,8 @@ Image mapEnvironmentObjectToToShadedImage(EnvironmentObject environmentObject, S
         return images.palisadeMedium;
       case Shading.Dark:
         return images.palisadeDark;
+      case Shading.VeryDark:
+        return images.palisadeDarkDark;
     }
   }
 
@@ -60,6 +61,8 @@ Image mapEnvironmentObjectToToShadedImage(EnvironmentObject environmentObject, S
       case Shading.Medium:
         return images.palisadeHMedium;
       case Shading.Dark:
+        return images.palisadeHDark;
+      case Shading.VeryDark:
         return images.palisadeHDark;
     }
   }
@@ -72,17 +75,21 @@ Image mapEnvironmentObjectToToShadedImage(EnvironmentObject environmentObject, S
         return images.palisadeVMedium;
       case Shading.Dark:
         return images.palisadeVDark;
+      case Shading.VeryDark:
+        return images.palisadeVDark;
     }
   }
 
   if (environmentObject.type == EnvironmentObjectType.Tree_Stump) {
     switch (shade) {
       case Shading.Bright:
-        return images.treeStumpBright;
+        return images.treeStump1;
       case Shading.Medium:
-        return images.treeStumpMedium;
+        return images.treeStump2;
       case Shading.Dark:
-        return images.treeStumpDark;
+        return images.treeStump3;
+      case Shading.VeryDark:
+        return images.treeStump3;
     }
   }
 
@@ -94,6 +101,8 @@ Image mapEnvironmentObjectToToShadedImage(EnvironmentObject environmentObject, S
         return images.rockSmallMedium;
       case Shading.Dark:
         return images.rockSmallDark;
+      case Shading.VeryDark:
+        return images.rockSmallDark;
     }
   }
 
@@ -104,6 +113,8 @@ Image mapEnvironmentObjectToToShadedImage(EnvironmentObject environmentObject, S
       case Shading.Medium:
         return images.graveMedium;
       case Shading.Dark:
+        return images.graveDark;
+      case Shading.VeryDark:
         return images.graveDark;
     }
   }
@@ -124,6 +135,8 @@ Image mapEnvironmentObjectToToShadedImage(EnvironmentObject environmentObject, S
       case Shading.Medium:
         return images.longGrassNormal;
       case Shading.Dark:
+        return images.longGrassDark;
+      case Shading.VeryDark:
         return images.longGrassDark;
     }
   }
@@ -153,5 +166,5 @@ Image mapEnvironmentObjectToToShadedImage(EnvironmentObject environmentObject, S
     return images.empty;
   }
 
-  throw Exception("Could not map ${environmentObject.type} to image");
+  return images.empty;
 }
