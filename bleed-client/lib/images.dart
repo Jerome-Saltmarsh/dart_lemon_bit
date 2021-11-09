@@ -52,6 +52,7 @@ class _Images {
   Image rock1;
   Image rock2;
   Image rock3;
+  Image rock4;
   Image palisadeBright;
   Image palisadeMedium;
   Image palisadeDark;
@@ -175,6 +176,7 @@ class _Images {
     rock1 = await loadImage("images/rock-bright.png");
     rock2 = await loadImage("images/rock-medium.png");
     rock3 = await loadImage("images/rock-dark.png");
+    rock4 = await loadImage("images/rock-dark-dark.png");
     palisadeBright = await loadImage("images/palisade-bright.png");
     palisadeMedium = await loadImage("images/palisade-medium.png");
     palisadeDark = await loadImage("images/palisade-dark.png");
@@ -270,7 +272,7 @@ class _Images {
         rock1,
         rock2,
         rock3,
-        rock3,
+        rock4,
       ],
       EnvironmentObjectType.Tree01: [
         treeA1,
