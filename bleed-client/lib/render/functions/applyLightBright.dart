@@ -1,7 +1,6 @@
 import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/functions/applyShade.dart';
 import 'package:bleed_client/getters/getTileAt.dart';
-import 'package:bleed_client/render/functions/applyLightArea.dart';
 
 void applyLightBrightMedium(List<List<Shading>> shader, double x, double y) {
   int column = getColumn(x, y);
