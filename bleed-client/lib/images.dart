@@ -69,10 +69,10 @@ class _Images {
   Image treeStump2;
   Image treeStump3;
   Image treeStump4;
-  Image rockSmallBright;
-  Image rockSmallMedium;
-  Image rockSmallDark;
-  Image rockSmallDarkDark;
+  Image rockSmall1;
+  Image rockSmall2;
+  Image rockSmall3;
+  Image rockSmall4;
   Image isoCharacter;
   Image manIdle;
   Image manIdleHandgun1;
@@ -156,10 +156,10 @@ class _Images {
     treeB2 = await loadImage("images/tree2-medium.png");
     treeB3 = await loadImage("images/tree2-dark.png");
     treeB4 = await loadImage("images/tree2-dark-dark.png");
-    rock1 = await loadImage("images/rock-bright.png");
-    rock2 = await loadImage("images/rock-medium.png");
-    rock3 = await loadImage("images/rock-dark.png");
-    rock4 = await loadImage("images/rock-dark-dark.png");
+    rock1 = await loadImage("images/rock1.png");
+    rock2 = await loadImage("images/rock2.png");
+    rock3 = await loadImage("images/rock3.png");
+    rock4 = await loadImage("images/rock4.png");
     palisade1 = await loadImage("images/palisade1.png");
     palisade2 = await loadImage("images/palisade2.png");
     palisade3 = await loadImage("images/palisade3.png");
@@ -194,10 +194,10 @@ class _Images {
     treeStump2 = await loadImage("images/tree-stump-medium.png");
     treeStump3 = await loadImage("images/tree-stump-dark.png");
     treeStump4 = await loadImage("images/tree-stump-dark-dark.png");
-    rockSmallBright = await loadImage("images/rock-small-bright.png");
-    rockSmallMedium = await loadImage("images/rock-small-medium.png");
-    rockSmallDark = await loadImage("images/rock-small-dark.png");
-    rockSmallDarkDark = await loadImage("images/rock-small-dark-dark.png");
+    rockSmall1 = await loadImage("images/rock-small1.png");
+    rockSmall2 = await loadImage("images/rock-small2.png");
+    rockSmall3 = await loadImage("images/rock-small3.png");
+    rockSmall4 = await loadImage("images/rock-small4.png");
     manUnarmedRunning1 = await loadImage("images/man-unarmed-running-1.png");
     manUnarmedRunning2 = await loadImage("images/man-unarmed-running-2.png");
     manUnarmedRunning3 = await loadImage("images/man-unarmed-running-3.png");
@@ -306,10 +306,10 @@ class _Images {
         palisadeV4,
       ],
       EnvironmentObjectType.Rock_Small: [
-        rockSmallBright,
-        rockSmallMedium,
-        rockSmallDark,
-        rockSmallDarkDark,
+        rockSmall1,
+        rockSmall2,
+        rockSmall3,
+        rockSmall4,
       ]
     };
   }

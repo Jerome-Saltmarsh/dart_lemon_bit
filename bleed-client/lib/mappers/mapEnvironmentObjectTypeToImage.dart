@@ -35,7 +35,7 @@ Image mapEnvironmentObjectTypeToImage(EnvironmentObjectType type){
     case EnvironmentObjectType.Tree_Stump:
       return images.treeStump1;
     case EnvironmentObjectType.Rock_Small:
-      return images.rockSmallBright;
+      return images.rockSmall1;
     case EnvironmentObjectType.Character:
       return images.isoCharacter;
     case EnvironmentObjectType.LongGrass:
