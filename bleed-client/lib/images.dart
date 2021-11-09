@@ -132,10 +132,10 @@ class _Images {
   }
 
   Future load() async {
-    longGrass1 = await _png('long-grass-bright');
-    longGrass2 = await _png('long-grass-normal');
-    longGrass3 = await _png('long-grass-dark');
-    longGrass4 = await _png('long-grass-dark-dark');
+    longGrass1 = await _png('long-grass1');
+    longGrass2 = await _png('long-grass2');
+    longGrass3 = await _png('long-grass3');
+    longGrass4 = await _png('long-grass4');
     human = await loadImage("images/character.png");
     tiles = await loadImage("images/tiles.png");
     tilesLight = await loadImage("images/tiles-light.png");
@@ -172,10 +172,10 @@ class _Images {
     palisadeV2 = await loadImage("images/palisade-v2.png");
     palisadeV3 = await loadImage("images/palisade-v3.png");
     palisadeV4 = await loadImage("images/palisade-v4.png");
-    grave1 = await loadImage("images/grave-bright.png");
-    grave2 = await loadImage("images/grave-medium.png");
-    grave3 = await loadImage("images/grave-dark.png");
-    grave4 = await loadImage("images/grave-dark-dark.png");
+    grave1 = await loadImage("images/grave1.png");
+    grave2 = await loadImage("images/grave2.png");
+    grave3 = await loadImage("images/grave3.png");
+    grave4 = await loadImage("images/grave4.png");
     circle64 = await loadImage("images/circle-64.png");
     circle = await _png("circle");
     radial64_50 = await loadImage("images/radial-64-50.png");
@@ -190,10 +190,10 @@ class _Images {
     torch_03 = await loadImage("images/torch-03.png");
     torchOut = await loadImage("images/torch-out.png");
     bridge = await loadImage("images/bridge.png");
-    treeStump1 = await loadImage("images/tree-stump-bright.png");
-    treeStump2 = await loadImage("images/tree-stump-medium.png");
-    treeStump3 = await loadImage("images/tree-stump-dark.png");
-    treeStump4 = await loadImage("images/tree-stump-dark-dark.png");
+    treeStump1 = await loadImage("images/tree-stump1.png");
+    treeStump2 = await loadImage("images/tree-stump2.png");
+    treeStump3 = await loadImage("images/tree-stump3.png");
+    treeStump4 = await loadImage("images/tree-stump4.png");
     rockSmall1 = await loadImage("images/rock-small1.png");
     rockSmall2 = await loadImage("images/rock-small2.png");
     rockSmall3 = await loadImage("images/rock-small3.png");
