@@ -63,6 +63,7 @@ class _Images {
   Image torch_01;
   Image torch_02;
   Image torch_03;
+  Image torch_04;
   Image torchOut;
   Image bridge;
   Image treeStump1;
@@ -188,6 +189,7 @@ class _Images {
     torch_01 = await loadImage("images/torch-01.png");
     torch_02 = await loadImage("images/torch-02.png");
     torch_03 = await loadImage("images/torch-03.png");
+    torch_04 = await loadImage("images/torch-04.png");
     torchOut = await loadImage("images/torch-out.png");
     bridge = await loadImage("images/bridge.png");
     treeStump1 = await loadImage("images/tree-stump1.png");
@@ -244,10 +246,14 @@ class _Images {
     manWalkingHandgun1 = await _png("man-walking-handgun-1");
     manWalkingHandgun2 = await _png("man-walking-handgun-2");
     manWalkingHandgun3 = await _png("man-walking-handgun-3");
-    flames.add(torch_01);
-    flames.add(torch_02);
-    flames.add(torch_03);
 
+    flames = [
+      torch_01,
+      torch_02,
+      torch_03,
+      torch_04,
+
+    ];
     torch = torch_01;
 
     typeShades = {

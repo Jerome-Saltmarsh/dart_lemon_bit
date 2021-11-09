@@ -22,6 +22,10 @@ class EnvironmentObject extends GameObject {
     if (type == EnvironmentObjectType.LongGrass){
       collidable = false;
     }
+    // TODO Forbidden game logic inside data class
+    if (type == EnvironmentObjectType.Tree_Stump){
+      collidable = false;
+    }
   }
 }
 

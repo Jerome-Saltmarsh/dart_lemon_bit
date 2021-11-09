@@ -88,10 +88,10 @@ void renderCanvasPlay() {
 
 void _updateAnimations() {
   frameRateValue++;
-  if (frameRateValue % frameRate == 0) {
+  if (frameRateValue % 7 == 0) {
     drawFrame++;
     if (ambientLight != Shading.Bright) {
-      _flameIndex = (_flameIndex + 1) % 3;
+      _flameIndex = (_flameIndex + 1) % 4;
       images.torch = images.flames[_flameIndex];
     }
   }
