@@ -23,7 +23,7 @@ Image mapEnvironmentObjectTypeToImage(EnvironmentObjectType type){
     case EnvironmentObjectType.Palisade_V:
       return images.palisadeVBright;
     case EnvironmentObjectType.Grave:
-      return images.graveBright;
+      return images.grave1;
     case EnvironmentObjectType.SmokeEmitter:
       return images.circle;
     case EnvironmentObjectType.MystEmitter:

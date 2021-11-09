@@ -79,13 +79,13 @@ Image mapEnvironmentObjectToToShadedImage(EnvironmentObject environmentObject, S
   if (environmentObject.type == EnvironmentObjectType.Grave) {
     switch (shade) {
       case Shading.Bright:
-        return images.graveBright;
+        return images.grave1;
       case Shading.Medium:
-        return images.graveMedium;
+        return images.grave2;
       case Shading.Dark:
-        return images.graveDark;
+        return images.grave3;
       case Shading.VeryDark:
-        return images.graveDark;
+        return images.grave3;
     }
   }
 

@@ -64,9 +64,10 @@ class _Images {
   Image palisadeVMedium;
   Image palisadeVDark;
   Image palisadeVDarkDark;
-  Image graveBright;
-  Image graveMedium;
-  Image graveDark;
+  Image grave1;
+  Image grave2;
+  Image grave3;
+  Image grave4;
   Image circle64;
   Image circle;
   Image radial64_50;
@@ -186,9 +187,10 @@ class _Images {
     palisadeVMedium = await loadImage("images/palisade-v-medium.png");
     palisadeVDark = await loadImage("images/palisade-v-dark.png");
     palisadeVDarkDark = await loadImage("images/palisade-v-dark-dark.png");
-    graveBright = await loadImage("images/grave-bright.png");
-    graveMedium = await loadImage("images/grave-medium.png");
-    graveDark = await loadImage("images/grave-dark.png");
+    grave1 = await loadImage("images/grave-bright.png");
+    grave2 = await loadImage("images/grave-medium.png");
+    grave3 = await loadImage("images/grave-dark.png");
+    grave4 = await loadImage("images/grave-dark-dark.png");
     circle64 = await loadImage("images/circle-64.png");
     circle = await _png("circle");
     radial64_50 = await loadImage("images/radial-64-50.png");
@@ -287,6 +289,12 @@ class _Images {
         treeStump2,
         treeStump3,
         treeStump4,
+      ],
+      EnvironmentObjectType.Grave: [
+        grave1,
+        grave2,
+        grave3,
+        grave4,
       ]
     };
   }
