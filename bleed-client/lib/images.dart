@@ -160,10 +160,10 @@ class _Images {
     rock2 = await loadImage("images/rock-medium.png");
     rock3 = await loadImage("images/rock-dark.png");
     rock4 = await loadImage("images/rock-dark-dark.png");
-    palisade1 = await loadImage("images/palisade-bright.png");
-    palisade2 = await loadImage("images/palisade-medium.png");
-    palisade3 = await loadImage("images/palisade-dark.png");
-    palisade4 = await loadImage("images/palisade-dark-dark.png");
+    palisade1 = await loadImage("images/palisade1.png");
+    palisade2 = await loadImage("images/palisade2.png");
+    palisade3 = await loadImage("images/palisade3.png");
+    palisade4 = await loadImage("images/palisade4.png");
     palisadeH1 = await loadImage("images/palisade-h-bright.png");
     palisadeH2 = await loadImage("images/palisade-h-medium.png");
     palisadeH3 = await loadImage("images/palisade-h-dark.png");
