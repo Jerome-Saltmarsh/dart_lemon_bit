@@ -8,28 +8,9 @@ final _Images images = _Images();
 
 Map<EnvironmentObjectType, List<Image>> typeShades;
 
-class Shades {
-  Image shade1;
-  Image shade2;
-  Image shade3;
-  Image shade4;
-  Shades(this.shade1, this.shade2, this.shade3, this.shade4);
-}
-
-Future<Shades> load4(String name) async {
-  Image shade1 = await loadImage(name + "-1.png");
-  Image shade2 = await loadImage(name + "-2.png");
-  Image shade3 = await loadImage(name + "-3.png");
-  Image shade4 = await loadImage(name + "-3.png");
-  return Shades(shade1, shade2, shade3, shade4);
-}
-
 class _Images {
 
-  Shades rockShades;
-
   Image human;
-  Image zombie;
   Image tiles;
   Image tilesLight;
   Image tilesMedium;
@@ -53,18 +34,18 @@ class _Images {
   Image rock2;
   Image rock3;
   Image rock4;
-  Image palisadeBright;
-  Image palisadeMedium;
-  Image palisadeDark;
-  Image palisadeDarkDark;
-  Image palisadeHBright;
-  Image palisadeHMedium;
-  Image palisadeHDark;
-  Image palisadeHDarkDark;
-  Image palisadeVBright;
-  Image palisadeVMedium;
-  Image palisadeVDark;
-  Image palisadeVDarkDark;
+  Image palisade1;
+  Image palisade2;
+  Image palisade3;
+  Image palisade4;
+  Image palisadeH1;
+  Image palisadeH2;
+  Image palisadeH3;
+  Image palisadeH4;
+  Image palisadeV1;
+  Image palisadeV2;
+  Image palisadeV3;
+  Image palisadeV4;
   Image grave1;
   Image grave2;
   Image grave3;
@@ -91,6 +72,7 @@ class _Images {
   Image rockSmallBright;
   Image rockSmallMedium;
   Image rockSmallDark;
+  Image rockSmallDarkDark;
   Image isoCharacter;
   Image manIdle;
   Image manIdleHandgun1;
@@ -156,7 +138,6 @@ class _Images {
     longGrass4 = await _png('long-grass-dark-dark');
     human = await loadImage("images/character.png");
     tiles = await loadImage("images/tiles.png");
-    zombie = await loadImage("images/zombie.png");
     tilesLight = await loadImage("images/tiles-light.png");
     tilesMedium = await loadImage("images/tiles-medium.png");
     tilesDark = await loadImage("images/tiles-dark.png");
@@ -179,18 +160,18 @@ class _Images {
     rock2 = await loadImage("images/rock-medium.png");
     rock3 = await loadImage("images/rock-dark.png");
     rock4 = await loadImage("images/rock-dark-dark.png");
-    palisadeBright = await loadImage("images/palisade-bright.png");
-    palisadeMedium = await loadImage("images/palisade-medium.png");
-    palisadeDark = await loadImage("images/palisade-dark.png");
-    palisadeDarkDark = await loadImage("images/palisade-dark-dark.png");
-    palisadeHBright = await loadImage("images/palisade-h-bright.png");
-    palisadeHMedium = await loadImage("images/palisade-h-medium.png");
-    palisadeHDark = await loadImage("images/palisade-h-dark.png");
-    palisadeHDarkDark = await loadImage("images/palisade-h-dark-dark.png");
-    palisadeVBright = await loadImage("images/palisade-v-bright.png");
-    palisadeVMedium = await loadImage("images/palisade-v-medium.png");
-    palisadeVDark = await loadImage("images/palisade-v-dark.png");
-    palisadeVDarkDark = await loadImage("images/palisade-v-dark-dark.png");
+    palisade1 = await loadImage("images/palisade-bright.png");
+    palisade2 = await loadImage("images/palisade-medium.png");
+    palisade3 = await loadImage("images/palisade-dark.png");
+    palisade4 = await loadImage("images/palisade-dark-dark.png");
+    palisadeH1 = await loadImage("images/palisade-h-bright.png");
+    palisadeH2 = await loadImage("images/palisade-h-medium.png");
+    palisadeH3 = await loadImage("images/palisade-h-dark.png");
+    palisadeH4 = await loadImage("images/palisade-h-dark-dark.png");
+    palisadeV1 = await loadImage("images/palisade-v-bright.png");
+    palisadeV2 = await loadImage("images/palisade-v-medium.png");
+    palisadeV3 = await loadImage("images/palisade-v-dark.png");
+    palisadeV4 = await loadImage("images/palisade-v-dark-dark.png");
     grave1 = await loadImage("images/grave-bright.png");
     grave2 = await loadImage("images/grave-medium.png");
     grave3 = await loadImage("images/grave-dark.png");
@@ -216,6 +197,7 @@ class _Images {
     rockSmallBright = await loadImage("images/rock-small-bright.png");
     rockSmallMedium = await loadImage("images/rock-small-medium.png");
     rockSmallDark = await loadImage("images/rock-small-dark.png");
+    rockSmallDarkDark = await loadImage("images/rock-small-dark-dark.png");
     manUnarmedRunning1 = await loadImage("images/man-unarmed-running-1.png");
     manUnarmedRunning2 = await loadImage("images/man-unarmed-running-2.png");
     manUnarmedRunning3 = await loadImage("images/man-unarmed-running-3.png");
@@ -268,7 +250,6 @@ class _Images {
 
     torch = torch_01;
 
-
     typeShades = {
       EnvironmentObjectType.Rock: [
         rock1,
@@ -305,6 +286,30 @@ class _Images {
         longGrass2,
         longGrass3,
         longGrass4,
+      ],
+      EnvironmentObjectType.Palisade: [
+        palisade1,
+        palisade2,
+        palisade3,
+        palisade4,
+      ],
+      EnvironmentObjectType.Palisade_H: [
+        palisadeH1,
+        palisadeH2,
+        palisadeH3,
+        palisadeH4,
+      ],
+      EnvironmentObjectType.Palisade_V: [
+        palisadeV1,
+        palisadeV2,
+        palisadeV3,
+        palisadeV4,
+      ],
+      EnvironmentObjectType.Rock_Small: [
+        rockSmallBright,
+        rockSmallMedium,
+        rockSmallDark,
+        rockSmallDarkDark,
       ]
     };
   }

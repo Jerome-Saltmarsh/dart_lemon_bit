@@ -17,11 +17,11 @@ Image mapEnvironmentObjectTypeToImage(EnvironmentObjectType type){
     case EnvironmentObjectType.Rock:
       return images.rock1;
     case EnvironmentObjectType.Palisade:
-      return images.palisadeBright;
+      return images.palisade1;
     case EnvironmentObjectType.Palisade_H:
-      return images.palisadeHBright;
+      return images.palisadeH1;
     case EnvironmentObjectType.Palisade_V:
-      return images.palisadeVBright;
+      return images.palisadeV1;
     case EnvironmentObjectType.Grave:
       return images.grave1;
     case EnvironmentObjectType.SmokeEmitter:
