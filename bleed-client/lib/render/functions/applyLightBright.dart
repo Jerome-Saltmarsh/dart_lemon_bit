@@ -14,7 +14,7 @@ void applyLightBrightMedium(List<List<Shading>> shader, double x, double y) {
 void applyLightBrightSmall(List<List<Shading>> shader, double x, double y) {
   int column = getColumn(x, y);
   int row = getRow(x, y);
-  applyShade(shader, row, column, Shading.Bright);
+  applyShade(shader, row, column, Shading.Medium);
   applyShadeRing(shader, row, column, 1, Shading.Medium);
   applyShadeRing(shader, row, column, 2, Shading.Dark);
 }
