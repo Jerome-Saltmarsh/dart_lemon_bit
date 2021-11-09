@@ -6,8 +6,8 @@ import 'package:bleed_client/variables/lantern.dart';
 void applyCharacterLightEmission(List<Character> characters) {
   for (Character character in characters) {
     if (lantern){
-      applyLightBright(dynamicShading, character.x, character.y);
-    }else{
+      applyLightBrightSmall(dynamicShading, character.x, character.y);
+    } else {
       // applyLightMedium(dynamicShading, character.x, character.y);
     }
   }

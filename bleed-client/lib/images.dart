@@ -41,12 +41,14 @@ class _Images {
   Image house;
   Image houseDay;
   Image house02;
-  Image tree01Bright;
-  Image tree01Medium;
-  Image tree01Dark;
-  Image tree02Bright;
-  Image tree02Medium;
-  Image tree02Dark;
+  Image treeA1;
+  Image treeA2;
+  Image treeA3;
+  Image treeA4;
+  Image treeB1;
+  Image treeB2;
+  Image treeB3;
+  Image treeB4;
   Image rock1;
   Image rock2;
   Image rock3;
@@ -57,9 +59,11 @@ class _Images {
   Image palisadeHBright;
   Image palisadeHMedium;
   Image palisadeHDark;
+  Image palisadeHDarkDark;
   Image palisadeVBright;
   Image palisadeVMedium;
   Image palisadeVDark;
+  Image palisadeVDarkDark;
   Image graveBright;
   Image graveMedium;
   Image graveDark;
@@ -81,6 +85,7 @@ class _Images {
   Image treeStump1;
   Image treeStump2;
   Image treeStump3;
+  Image treeStump4;
   Image rockSmallBright;
   Image rockSmallMedium;
   Image rockSmallDark;
@@ -158,12 +163,14 @@ class _Images {
     house = await loadImage("images/house.png");
     houseDay = await loadImage("images/house-day.png");
     house02 = await loadImage("images/house02.png");
-    tree01Bright = await loadImage("images/tree-bright.png");
-    tree01Medium = await loadImage("images/tree-medium.png");
-    tree01Dark = await loadImage("images/tree-dark.png");
-    tree02Bright = await loadImage("images/tree2-bright.png");
-    tree02Medium = await loadImage("images/tree2-medium.png");
-    tree02Dark = await loadImage("images/tree2-dark.png");
+    treeA1 = await loadImage("images/tree-bright.png");
+    treeA2 = await loadImage("images/tree-medium.png");
+    treeA3 = await loadImage("images/tree-dark.png");
+    treeA4 = await loadImage("images/tree-dark-dark.png");
+    treeB1 = await loadImage("images/tree2-bright.png");
+    treeB2 = await loadImage("images/tree2-medium.png");
+    treeB3 = await loadImage("images/tree2-dark.png");
+    treeB4 = await loadImage("images/tree2-dark-dark.png");
     rock1 = await loadImage("images/rock-bright.png");
     rock2 = await loadImage("images/rock-medium.png");
     rock3 = await loadImage("images/rock-dark.png");
@@ -174,9 +181,11 @@ class _Images {
     palisadeHBright = await loadImage("images/palisade-h-bright.png");
     palisadeHMedium = await loadImage("images/palisade-h-medium.png");
     palisadeHDark = await loadImage("images/palisade-h-dark.png");
+    palisadeHDarkDark = await loadImage("images/palisade-h-dark-dark.png");
     palisadeVBright = await loadImage("images/palisade-v-bright.png");
     palisadeVMedium = await loadImage("images/palisade-v-medium.png");
     palisadeVDark = await loadImage("images/palisade-v-dark.png");
+    palisadeVDarkDark = await loadImage("images/palisade-v-dark-dark.png");
     graveBright = await loadImage("images/grave-bright.png");
     graveMedium = await loadImage("images/grave-medium.png");
     graveDark = await loadImage("images/grave-dark.png");
@@ -197,6 +206,7 @@ class _Images {
     treeStump1 = await loadImage("images/tree-stump-bright.png");
     treeStump2 = await loadImage("images/tree-stump-medium.png");
     treeStump3 = await loadImage("images/tree-stump-dark.png");
+    treeStump4 = await loadImage("images/tree-stump-dark-dark.png");
     rockSmallBright = await loadImage("images/rock-small-bright.png");
     rockSmallMedium = await loadImage("images/rock-small-medium.png");
     rockSmallDark = await loadImage("images/rock-small-dark.png");
@@ -261,22 +271,22 @@ class _Images {
         rock3,
       ],
       EnvironmentObjectType.Tree01: [
-        tree01Bright,
-        tree01Medium,
-        tree01Dark,
-        tree01Dark,
+        treeA1,
+        treeA2,
+        treeA3,
+        treeA4,
       ],
       EnvironmentObjectType.Tree02: [
-        tree02Bright,
-        tree02Medium,
-        tree02Dark,
-        tree02Dark,
+        treeB1,
+        treeB2,
+        treeB3,
+        treeB4,
       ],
       EnvironmentObjectType.Tree_Stump: [
         treeStump1,
         treeStump2,
         treeStump3,
-        treeStump3,
+        treeStump4,
       ]
     };
   }
