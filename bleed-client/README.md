@@ -106,6 +106,7 @@
 [ ] Weapon Baseball Bat
 [ ] Npc wander
 [ ] Changing Weapon Shade
+[x] FIX can turn while shooting bug
 [x] Fix AI target
 [x] Bullets environment object collision
 [x] Fix Map Fading Bug

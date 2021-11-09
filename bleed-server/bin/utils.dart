@@ -28,8 +28,8 @@ int clampInt(int value, int min, int max) {
 
 void setDirection(Character character, Direction direction) {
   if (direction == Direction.None) return;
-  // if (character.firing) return;
   if (character.dead) return;
+  if (character.busy) return;
   character.direction = direction;
 }
 
