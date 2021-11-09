@@ -101,13 +101,13 @@ Image mapEnvironmentObjectToToShadedImage(EnvironmentObject environmentObject, S
   if (environmentObject.type == EnvironmentObjectType.LongGrass) {
     switch (shade) {
       case Shading.Bright:
-        return images.longGrassBright;
+        return images.longGrass1;
       case Shading.Medium:
-        return images.longGrassNormal;
+        return images.longGrass2;
       case Shading.Dark:
-        return images.longGrassDark;
+        return images.longGrass3;
       case Shading.VeryDark:
-        return images.longGrassDark;
+        return images.longGrass3;
     }
   }
 

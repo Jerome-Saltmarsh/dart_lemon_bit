@@ -138,9 +138,10 @@ class _Images {
   Image zombieIdleMedium;
   Image zombieIdleDark;
   Image empty;
-  Image longGrassBright;
-  Image longGrassNormal;
-  Image longGrassDark;
+  Image longGrass1;
+  Image longGrass2;
+  Image longGrass3;
+  Image longGrass4;
 
   List<Image> flames = [];
 
@@ -149,9 +150,10 @@ class _Images {
   }
 
   Future load() async {
-    longGrassBright = await _png('long-grass-bright');
-    longGrassNormal = await _png('long-grass-normal');
-    longGrassDark = await _png('long-grass-dark');
+    longGrass1 = await _png('long-grass-bright');
+    longGrass2 = await _png('long-grass-normal');
+    longGrass3 = await _png('long-grass-dark');
+    longGrass4 = await _png('long-grass-dark-dark');
     human = await loadImage("images/character.png");
     tiles = await loadImage("images/tiles.png");
     zombie = await loadImage("images/zombie.png");
@@ -297,6 +299,12 @@ class _Images {
         grave2,
         grave3,
         grave4,
+      ],
+      EnvironmentObjectType.LongGrass: [
+        longGrass1,
+        longGrass2,
+        longGrass3,
+        longGrass4,
       ]
     };
   }
