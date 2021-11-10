@@ -2,6 +2,7 @@ import '../classes.dart';
 import '../classes/Game.dart';
 import '../classes/Inventory.dart';
 import '../classes/Player.dart';
+import '../classes/TileNode.dart';
 import '../common/Quests.dart';
 import '../common/Weapons.dart';
 import '../compile.dart';
@@ -141,6 +142,10 @@ class Town extends Game {
     world.cave.players.add(player);
     player.game = world.cave;
     player.sceneChanged = true;
+
+    TileNode node = world.cave.getRandomOpenTileNode();
+    player.x = node.position.x;
+    player.y = node.position.y;
 
     // switch (player.questMain) {
     //   case MainQuest.Introduction:

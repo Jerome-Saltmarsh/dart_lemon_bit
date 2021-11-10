@@ -35,6 +35,7 @@ void update() {
 
 void _showHideMenu() {
   if (!mouseAvailable) return;
+  if (hud.stateSetters == null) return;
 
   bool m = mouseX > screenWidth - 300 && mouseY < 200;
 
