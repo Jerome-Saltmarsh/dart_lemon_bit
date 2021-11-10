@@ -12,7 +12,7 @@ const _one = 1;
 
 void initUpdateLoop() {
   // @on init jobs
-  Future.delayed(Duration(seconds: 3), (){
+  Future.delayed(Duration(seconds: 3), () {
     periodic(fixedUpdate, ms: 1000 ~/ 30);
     periodic(jobNpcWander, seconds: 4);
     periodic(jobRemoveDisconnectedPlayers, seconds: 5);
@@ -21,20 +21,22 @@ void initUpdateLoop() {
 }
 
 void updateNpcTargets(Timer timer) {
-  world.town.updateZombieTargets();
-  world.town.updateInteractableNpcTargets();
-  world.cave.updateZombieTargets();
-  world.cave.updateInteractableNpcTargets();
+  for (Game game in world.games) {
+    game.updateInteractableNpcTargets();
+    game.updateZombieTargets();
+  }
 }
 
 void jobRemoveDisconnectedPlayers(Timer timer) {
-  world.cave.jobRemoveDisconnectedPlayers();
-  world.town.jobRemoveDisconnectedPlayers();
+  for (Game game in world.games) {
+    game.jobRemoveDisconnectedPlayers();
+  }
 }
 
 void jobNpcWander(Timer timer) {
-  world.cave.jobNpcWander();
-  world.town.jobNpcWander();
+  for (Game game in world.games) {
+    game.jobNpcWander();
+  }
 }
 
 void fixedUpdate(Timer timer) {
@@ -43,8 +45,9 @@ void fixedUpdate(Timer timer) {
 }
 
 void updateGames() {
-  world.cave.updateAndCompile();
-  world.town.updateAndCompile();
+  for (Game game in world.games) {
+    game.updateAndCompile();
+  }
 }
 
 int compareGameObjectsX(GameObject a, GameObject b) {
