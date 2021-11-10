@@ -1,11 +1,9 @@
-import '../common/ObjectType.dart';
 import '../common/Tile.dart';
 import '../common/enums/EnvironmentObjectType.dart';
 import 'EnvironmentObject.dart';
 import '../common/classes/Vector2.dart';
 import '../enums.dart';
 import '../maths.dart';
-import 'Block.dart';
 import 'TileNode.dart';
 
 // constants
@@ -36,7 +34,6 @@ double perspectiveProjectY(double x, double y) {
 
 class Scene {
   final List<List<Tile>> tiles;
-  final List<Block> blocks;
   final List<Vector2> crates;
   final List<EnvironmentObject> environment;
   late Vector2 fortressPosition;
@@ -45,11 +42,11 @@ class Scene {
   late final int rows;
   late final int columns;
 
-  Scene(
-      {required this.tiles,
-      required this.blocks,
-      required this.crates,
-      required this.environment}) {
+  Scene({
+    required this.tiles,
+    required this.crates,
+    required this.environment
+  }) {
     rows = tiles.length;
     columns = tiles[0].length;
     tileNodes = [];
@@ -177,13 +174,6 @@ int sortTileNodeVisits(TileNodeVisit a, TileNodeVisit b) {
 }
 
 extension SceneFunctions on Scene {
-  void sortBlocks() {
-    blocks.sort((a, b) => a.leftX < b.leftX ? -1 : 1);
-  }
-
-  void addBlock(double x, double y, double width, double length) {
-    blocks.add(Block.build(x, y, width, length));
-  }
 
   List<Vector2> findPath(double x1, double y1, double x2, double y2) {
     TileNode startNode = tileNodeAt(x1, y1);

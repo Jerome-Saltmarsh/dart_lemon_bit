@@ -1,17 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
 
-import '../classes/Block.dart';
 import '../classes/Collectable.dart';
 import '../classes/Scene.dart';
-import '../common/ObjectType.dart';
 import '../common/Tile.dart';
 import '../classes/EnvironmentObject.dart';
 import '../common/classes/Vector2.dart';
 import '../common/CollectableType.dart';
 import '../common/enums/EnvironmentObjectType.dart';
 import '../instances/scenes.dart';
-import '../utils.dart';
 
 final JsonDecoder _decoder = JsonDecoder();
 
@@ -104,26 +101,10 @@ Scene _mapStringToScene(String text) {
     tiles.add(_row);
   }
 
-  List jsonBlocks = json['blocks'];
-  List<Block> blocks = jsonBlocks.map(_mapJsonBlockToBlock).toList();
-  sortBlocks(blocks);
   return Scene(
       tiles: tiles,
-      blocks: blocks,
       crates: crates,
       environment: environment
   );
 }
 
-Block _mapJsonBlockToBlock(dynamic jsonBlock) {
-  return Block(
-    jsonBlock['tx'],
-    jsonBlock['ty'],
-    jsonBlock['rx'],
-    jsonBlock['ry'],
-    jsonBlock['bx'],
-    jsonBlock['by'],
-    jsonBlock['lx'],
-    jsonBlock['ly'],
-  );
-}

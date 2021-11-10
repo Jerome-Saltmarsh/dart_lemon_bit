@@ -28,7 +28,6 @@ import '../update.dart';
 import '../utils.dart';
 import '../utils/game_utils.dart';
 import '../utils/player_utils.dart';
-import 'Block.dart';
 import 'Collectable.dart';
 import 'Crate.dart';
 import 'Inventory.dart';
@@ -300,59 +299,6 @@ extension GameFunctions on Game {
         double r = radiansBetweenObject(character, collider);
         character.x -= adj(r, overlap);
         character.y -= opp(r, overlap);
-      }
-    }
-  }
-
-  void handleBlockCollisions(List<GameObject> gameObjects) {
-    for (int i = 0; i < gameObjects.length; i++) {
-      GameObject gameObject = gameObjects[i];
-      for (int j = 0; j < scene.blocks.length; j++) {
-        Block block = scene.blocks[j];
-        if (block.rightX < gameObject.left) continue;
-        if (gameObject.right < block.leftX) break;
-        if (gameObject.y < block.topY) continue;
-        if (gameObject.y > block.bottomY) continue;
-
-        if (gameObject.x < block.topX && gameObject.y < block.leftY) {
-          double xd = block.topX - gameObject.x;
-          double yd = gameObject.y - block.topY;
-          if (yd > xd) {
-            gameObject.x = block.topX - yd;
-            gameObject.y--;
-          }
-          continue;
-        }
-
-        if (gameObject.x < block.bottomX && gameObject.y > block.leftY) {
-          double xd = gameObject.x - block.leftX;
-          double yd = gameObject.y - block.leftY;
-          if (xd > yd) {
-            gameObject.x -= xd - yd;
-            gameObject.y += xd - yd;
-          }
-          continue;
-        }
-        if (gameObject.x > block.topX && gameObject.y < block.rightY) {
-          double xd = gameObject.x - block.topX;
-          double yd = gameObject.y - block.topY;
-
-          if (yd > xd) {
-            gameObject.x += yd - xd;
-            gameObject.y -= yd - xd;
-          }
-          continue;
-        }
-
-        if (gameObject.x > block.bottomX && gameObject.y > block.rightY) {
-          double xd = block.rightX - gameObject.x;
-          double yd = gameObject.y - block.rightY;
-          if (xd > yd) {
-            gameObject.x += xd - yd;
-            gameObject.y += xd - yd;
-          }
-          continue;
-        }
       }
     }
   }

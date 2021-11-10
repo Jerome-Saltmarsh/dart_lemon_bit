@@ -1,5 +1,4 @@
 import 'classes.dart';
-import 'classes/Block.dart';
 import 'classes/Collectable.dart';
 import 'classes/Crate.dart';
 import 'classes/EnvironmentObject.dart';
@@ -89,22 +88,6 @@ void _compileItems(StringBuffer buffer, List<Item> items) {
     _write(buffer, item.y);
   }
   _write(buffer, _semiColon);
-}
-
-void compileBlocks(StringBuffer buffer, List<Block> blocks) {
-  buffer.write(ServerResponse.Blocks.index);
-  buffer.write(_space);
-  for (Block block in blocks) {
-    _write(buffer, block.topX.toInt());
-    _write(buffer, block.topY.toInt());
-    _write(buffer, block.rightX.toInt());
-    _write(buffer, block.rightY.toInt());
-    _write(buffer, block.bottomX.toInt());
-    _write(buffer, block.bottomY.toInt());
-    _write(buffer, block.leftX.toInt());
-    _write(buffer, block.leftY.toInt());
-  }
-  buffer.write(_semiColon);
 }
 
 String compileTiles(List<List<Tile>> tiles) {

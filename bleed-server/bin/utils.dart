@@ -1,5 +1,4 @@
 import 'classes.dart';
-import 'classes/Block.dart';
 import 'common/Tile.dart';
 import 'common/classes/Vector2.dart';
 import 'common/functions/diffOver.dart';
@@ -150,10 +149,6 @@ bool targetWithinFiringRange(Character character, GameObject target){
   if (diffOver(character.x, target.x, range)) return false;
   if (diffOver(character.y, target.y, range)) return false;
   return true;
-}
-
-void sortBlocks(List<Block> blocks) {
-  blocks.sort((a, b) => a.leftX < b.leftX ? -1 : 1);
 }
 
 Vector2 getTilePosition(int row, int column) {
