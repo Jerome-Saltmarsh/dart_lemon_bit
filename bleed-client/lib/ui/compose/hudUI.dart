@@ -66,7 +66,7 @@ Widget buildHealthBar(){
           child: Container(
             decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: borderRadius4
+                // borderRadius: borderRadius4
             ),
             width: width * percentage,
             height: height,

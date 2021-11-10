@@ -97,7 +97,6 @@
 [ ] Right click to pan
 [ ] Fix save environment issues
 [ ] Improve UI
-[ ] UI Health Bar
 [ ] Animate Running Handgun
 [ ] Animate Running Shotgun
 [ ] Shade 1, 2, 3
@@ -105,7 +104,9 @@
 [ ] Select weapon menu
 [ ] Weapon Baseball Bat
 [ ] Npc wander
+[ ] Fix Zombie Idle animation
 [ ] Changing Weapon Shade
+[x] UI Health Bar
 [x] FIX can turn while shooting bug
 [x] Fix AI target
 [x] Bullets environment object collision
