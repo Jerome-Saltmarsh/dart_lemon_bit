@@ -22,6 +22,8 @@ void initUpdateLoop() {
 
 void updateNpcTargets(Timer timer) {
   world.town.updateZombieTargets();
+  world.town.updateInteractableNpcTargets();
+  world.cave.updateZombieTargets();
   world.cave.updateInteractableNpcTargets();
 }
 

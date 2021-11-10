@@ -13,18 +13,18 @@ import '../utils/player_utils.dart';
 class World {
   late Game town;
   late Game cave;
+  late List<Game> games;
 
   World(){
     town = OpenWorld(this);
     cave = Cave(this);
-    compileGame(town);
-    compileGame(cave);
-
-    town.compiledTiles = compileTiles(town.scene.tiles);
-    town.compiledEnvironmentObjects = compileEnvironmentObjects(town.scene.environment);
-
-    cave.compiledTiles = compileTiles(cave.scene.tiles);
-    cave.compiledEnvironmentObjects = compileEnvironmentObjects(cave.scene.environment);
+    games = [town, cave];
+    // TODO Remove Logic
+    for(Game game in games){
+      compileGame(game);
+      game.compiledTiles = compileTiles(game.scene.tiles);
+      game.compiledEnvironmentObjects = compileEnvironmentObjects(game.scene.environment);
+    }
   }
 }
 
