@@ -3,7 +3,7 @@ import 'package:bleed_client/getters/outOfBounds.dart';
 
 void applyShade(
     List<List<Shading>> shader, int row, int column, Shading value) {
-  if (outOfBounds(column, row)) return;
+  if (outOfBounds(row, column)) return;
   if (shader[row][column].index <= value.index) return;
   shader[row][column] = value;
 }
