@@ -32,7 +32,7 @@ import 'state/editState.dart';
 _ToolTab _tab = _ToolTab.Tiles;
 StateSetter _toolsStateSetter;
 
-enum _ToolTab { Tiles, Objects, Misc }
+enum _ToolTab { Tiles, Objects, All, Misc }
 
 Widget _buildTabs() {
   return Row(
@@ -42,6 +42,9 @@ Widget _buildTabs() {
       }),
       button("Objects", (){
         _setTab(_ToolTab.Objects);
+      }),
+      button("All", (){
+        _setTab(_ToolTab.All);
       }),
       button("Misc", (){
         _setTab(_ToolTab.Misc);
@@ -63,10 +66,18 @@ List<Widget> _getTabChildren() {
       return _buildTabTiles();
     case _ToolTab.Objects:
       return _buildTabEnvironmentObjects();
+    case _ToolTab.All:
+      return _buildObjectList();
     case _ToolTab.Misc:
       return _buildTabMisc();
   }
   throw Exception();
+}
+
+List<Widget> _buildObjectList(){
+  return environmentObjects.map((e){
+    return text(parseEnvironmentObjectTypeToString(e.type));
+  }).toList();
 }
 
 List<Widget> _buildTabEnvironmentObjects(){
@@ -123,7 +134,7 @@ Widget _buildTools() {
             height: screenHeight - 100,
             child: SingleChildScrollView(
               child: Column(
-                children: _getTabChildren(),
+                children: _getTabChildren().toList(),
               ),
             ),
           )
@@ -141,7 +152,6 @@ Widget buildEditorUI() {
     child: Stack(
       children: [
         _buildTools(),
-        // _buildObjectList(),
       ],
     ),
   );
