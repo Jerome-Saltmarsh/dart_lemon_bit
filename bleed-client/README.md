@@ -77,7 +77,6 @@
 -- OPEN WORLD -- 
 [ ] Persist Character on cloud
 [ ] Complete Quests to earn income and unlock upgrades
-[ ] Change scene
 [ ] Shotgun animation exaggerate body knock back
 [ ] Quest Window
 [ ] Fall into water and die
@@ -101,13 +100,15 @@
 [ ] Animate Running Handgun
 [ ] Animate Running Shotgun
 [ ] Shade 1, 2, 3
-[ ] Cave Level
+[ ] Glow worms
 [ ] Select weapon menu
 [ ] Weapon Baseball Bat
 [ ] Npc wander
 [ ] Fix Zombie Idle animation
 [ ] Fix Changing Weapon Shade
 [ ] Fix Npc aim direction incorrect
+[ ] Cave Level
+[ ] Change scene
 [x] UI Health Bar
 [x] FIX can turn while shooting bug
 [x] Fix AI target

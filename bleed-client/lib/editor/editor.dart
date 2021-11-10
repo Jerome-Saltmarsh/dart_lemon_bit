@@ -7,8 +7,7 @@ import 'package:bleed_client/common/functions/diffOver.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/editor/enums/EditTool.dart';
 import 'package:bleed_client/editor/functions/resetTiles.dart';
-import 'package:bleed_client/editor/render/buildEnvironmentObjects.dart';
-import 'package:bleed_client/editor/render/buildTiles.dart';
+import 'package:bleed_client/editor/render/buildEnvironmentType.dart';
 import 'package:bleed_client/editor/state/editTool.dart';
 import 'package:bleed_client/editor/state/mouseDragClickProcess.dart';
 import 'package:bleed_client/editor/state/mouseWorldStart.dart';
@@ -30,60 +29,107 @@ import 'package:lemon_engine/state/zoom.dart';
 
 import 'state/editState.dart';
 
+_ToolTab _tab = _ToolTab.Tiles;
+StateSetter _toolsStateSetter;
 
-Widget buildEnv(EnvironmentObject env){
-  return button(parseEnvironmentObjectTypeToString(env.type), (){
-    editState.selectedObject = env;
-  });
+enum _ToolTab { Tiles, Objects, Misc }
+
+Widget _buildTabs() {
+  return Row(
+    children: [
+      button("Tiles", (){
+        _setTab(_ToolTab.Tiles);
+      }),
+      button("Objects", (){
+        _setTab(_ToolTab.Objects);
+      }),
+      button("Misc", (){
+        _setTab(_ToolTab.Misc);
+      }),
+    ],
+    mainAxisAlignment: main.even,
+  );
 }
 
-// Widget _buildObjectList(){
-//   return Positioned(
-//       right: 0,
-//       top: 50,
-//       child: Container(
-//         height: screenHeight - 50,
-//         child: SingleChildScrollView(
-//             child:Column(
-//             children: environmentObjects.map(buildEnv).toList(),
-//           )
-//         ),
-//   ));
-// }
+void _setTab(_ToolTab value){
+  if(_tab == value) return;
+  _tab = value;
+  _rebuildTools();
+}
 
-Widget _buildTools(){
-  return Positioned(
-    left: 0,
-    top: 0,
-    child: Container(
-      height: screenHeight,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: cross.start,
-          children: [
-            buildTiles(),
-            buildEnvironmentObjects(),
-            button("Save Scene", saveScene),
-            button("Reset Tiles", resetTiles),
-            button("Increase Tiles X", () {
-              for (List<Tile> row in game.tiles) {
-                row.add(Tile.Grass);
-              }
-              renderTiles(game.tiles);
-            }),
-            button("Increase Tiles Y", () {
-              List<Tile> row = [];
-              for (int i = 0; i < game.tiles[0].length; i++) {
-                row.add(Tile.Grass);
-              }
-              game.tiles.add(row);
-              renderTiles(game.tiles);
-            }),
-          ],
-        ),
+List<Widget> _getTabChildren() {
+  switch (_tab) {
+    case _ToolTab.Tiles:
+      return _buildTabTiles();
+    case _ToolTab.Objects:
+      return _buildTabEnvironmentObjects();
+    case _ToolTab.Misc:
+      return _buildTabMisc();
+  }
+  throw Exception();
+}
+
+List<Widget> _buildTabEnvironmentObjects(){
+  return EnvironmentObjectType.values.map(buildEnvironmentType).toList();
+}
+
+List<Widget> _buildTabTiles(){
+  return Tile.values.map((tile) {
+    return button(parseTileToString(tile), () {
+      tool = EditTool.Tile;
+      editState.tile = tile;
+    });
+  }).toList();
+}
+
+List<Widget> _buildTabMisc() {
+  return [
+    button("Save Scene", saveScene),
+    button("Reset Tiles", resetTiles),
+    button("Increase Tiles X", () {
+      for (List<Tile> row in game.tiles) {
+        row.add(Tile.Grass);
+      }
+      renderTiles(game.tiles);
+    }),
+    button("Increase Tiles Y", () {
+      List<Tile> row = [];
+      for (int i = 0; i < game.tiles[0].length; i++) {
+        row.add(Tile.Grass);
+      }
+      game.tiles.add(row);
+      renderTiles(game.tiles);
+    }),
+  ];
+}
+
+void _rebuildTools(){
+  _toolsStateSetter((){});
+}
+
+Widget _buildTools() {
+  return StatefulBuilder(builder: (BuildContext context, StateSetter setState){
+    print("_buildTools()");
+    _toolsStateSetter = setState;
+    return Positioned(
+      left: 0,
+      top: 0,
+      child: Column(
+        crossAxisAlignment: cross.start,
+        children: [
+          _buildTabs(),
+          Container(
+            height: screenHeight - 50,
+            child: SingleChildScrollView(
+              child: Column(
+                children: _getTabChildren(),
+              ),
+            ),
+          )
+        ],
       ),
-    ),
-  );
+    );
+  });
 }
 
 Widget buildEditorUI() {
@@ -99,6 +145,7 @@ Widget buildEditorUI() {
     ),
   );
 }
+
 void updateEditMode() {
   _onMouseLeftClick();
   _handleMouseDrag();
@@ -162,7 +209,7 @@ void _onMouseLeftClick([bool drag = false]) {
 Tile get tileAtMouse {
   try {
     return game.tiles[mouseTileY][mouseTileX];
-  } catch(e){
+  } catch (e) {
     return Tile.Boundary;
   }
 }
@@ -179,13 +226,10 @@ void setTileAtMouse(Tile tile) {
       renderTiles(game.tiles);
       break;
     case EditTool.EnvironmentObject:
-      environmentObjects.add(
-          EnvironmentObject(
-            x: mouseWorldX,
-            y: mouseWorldY,
-            type: editState.environmentObjectType
-          )
-      );
+      environmentObjects.add(EnvironmentObject(
+          x: mouseWorldX,
+          y: mouseWorldY,
+          type: editState.environmentObjectType));
       print("added house");
       redrawCanvas();
       break;
