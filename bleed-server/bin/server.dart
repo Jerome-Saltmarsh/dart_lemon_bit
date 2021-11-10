@@ -148,7 +148,7 @@ void main() {
           if (player.sceneChanged){
             player.sceneChanged = false;
             _buffer.clear();
-            _buffer.write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${game.id} ${player.squad} ');
+            _buffer.write('${ServerResponse.Scene_Changed.index} ');
             _buffer.write(game.compiledTiles);
             _buffer.write(game.compiledEnvironmentObjects);
             _buffer.write(game.compiled);

@@ -6,6 +6,7 @@ import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/InventoryItem.dart';
 import 'package:bleed_client/classes/Lobby.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
+import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/GameError.dart';
@@ -176,6 +177,13 @@ void parseState() {
 
       case ServerResponse.Npcs:
         _parseNpcs();
+        break;
+
+      case ServerResponse.Scene_Changed:
+        print("ServerResponse.Scene_Changed");
+        for(Particle particle in game.particles){
+          particle.active = false;
+        }
         break;
 
       case ServerResponse.EnvironmentObjects:

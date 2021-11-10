@@ -95,15 +95,15 @@ List<Widget> _buildTabTiles(){
 
 List<Widget> _buildTabMisc() {
   return [
-    button("Save Scene", saveScene),
-    button("Reset Tiles", resetTiles),
-    button("Increase Tiles X", () {
+    button("Save", saveScene),
+    button("Reset", resetTiles),
+    button("Tiles.X++", () {
       for (List<Tile> row in game.tiles) {
         row.add(Tile.Grass);
       }
       renderTiles(game.tiles);
     }),
-    button("Increase Tiles Y", () {
+    button("Tiles.Y++", () {
       List<Tile> row = [];
       for (int i = 0; i < game.tiles[0].length; i++) {
         row.add(Tile.Grass);
@@ -111,6 +111,18 @@ List<Widget> _buildTabMisc() {
       game.tiles.add(row);
       renderTiles(game.tiles);
     }),
+    if(game.tiles.length > 2)
+    button("Tiles.X--", () {
+      game.tiles.removeLast();
+      renderTiles(game.tiles);
+    }),
+    if(game.tiles[0].length > 2)
+      button("Tiles.Y--", () {
+        for (int i = 0; i < game.tiles.length; i++) {
+           game.tiles[i].removeLast();
+        }
+        renderTiles(game.tiles);
+      }),
   ];
 }
 
