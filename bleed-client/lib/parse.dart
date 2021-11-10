@@ -9,7 +9,6 @@ import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/GameError.dart';
-import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/PlayerEvents.dart';
 import 'package:bleed_client/common/ServerResponse.dart';
@@ -67,7 +66,6 @@ const String _1 = "1";
 const List<ServerResponse> serverResponses = ServerResponse.values;
 const List<Weapon> weapons = Weapon.values;
 const List<GameEventType> gameEventTypes = GameEventType.values;
-const List<GameType> gameTypes = GameType.values;
 
 // properties
 // String get _text => event;
@@ -579,19 +577,8 @@ void _parseGameJoined() {
   game.playerX = _consumeDouble();
   game.playerY = _consumeDouble();
   game.gameId = _consumeInt();
-  game.gameType = _consumeGameType();
   player.squad = _consumeInt();
-  print(
-      "ServerResponse.Game_Joined: playerId: ${game.playerId} gameId: ${game.gameId}");
-}
-
-GameType _consumeGameType() {
-  int value = _consumeInt();
-  if (value >= gameTypes.length) {
-    throw Exception(
-        'error - parse._consumeGameType() : $value is not a valid game type');
-  }
-  return gameTypes[value];
+  print("ServerResponse.Game_Joined: playerId: ${game.playerId} gameId: ${game.gameId}");
 }
 
 EnvironmentObjectType _consumeEnvironmentObjectType(){

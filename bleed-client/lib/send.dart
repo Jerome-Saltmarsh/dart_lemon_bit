@@ -1,12 +1,9 @@
 import 'package:bleed_client/common.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
-import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/PurchaseType.dart';
-import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/network/functions/send.dart';
 import 'package:bleed_client/network/functions/sinkMessage.dart';
-import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/render/state/paths.dart';
 
 import 'common/Weapons.dart';
@@ -50,12 +47,12 @@ void sendRequestEquipSniperRifle() {
 }
 
 void sendRequestUpdateLobby() {
-  send(
-      '${ClientRequest.Lobby_Update.index.toString()} ${state.lobby.uuid} ${state.lobby.playerUuid}');
+  // send(
+  //     '${ClientRequest.Lobby_Update.index.toString()} ${state.lobby.uuid} ${state.lobby.playerUuid}');
 }
 
 void sendRequestJoinGame(String gameUuid) {
-  send('${ClientRequest.Game_Join.index.toString()} $gameUuid');
+  // send('${ClientRequest.Game_Join.index.toString()} $gameUuid');
 }
 
 void sendRequestLobbyExit() {
@@ -63,8 +60,8 @@ void sendRequestLobbyExit() {
     print("sendRequestLobbyExit() state.lobby is null");
     return;
   }
-  send(
-      '${ClientRequest.Lobby_Exit.index.toString()} ${state.lobby.uuid} ${state.lobby.playerUuid}');
+  // send(
+  //     '${ClientRequest.Lobby_Exit.index.toString()} ${state.lobby.uuid} ${state.lobby.playerUuid}');
 }
 
 void sendRequestEquipAssaultRifle() {
@@ -93,45 +90,6 @@ void sendRequestUpdatePlayer() {
   send(_buffer.toString());
 }
 
-void sendRequestUpdateScore() {
-  if (game.gameId < 0) return;
-  if (editMode) return;
-  if (game.gameType == GameType.Open_World) return;
-  send('${ClientRequest.Score.index} ${game.gameId}');
-}
-
-void sendRequestJoinGameFortress() {
-  send(ClientRequest.Lobby_Join_Fortress.index.toString());
-}
-
-void sendRequestJoinLobby(String lobbyUuid) {
-  send('${ClientRequest.Lobby_Join.index} $lobbyUuid');
-}
-
-void sendRequestLobbyList() {
-  send(ClientRequest.Lobby_List.index.toString());
-}
-
-void sendClientRequestLobbyCreate(
-    {int maxPlayers, GameType type, String name, bool private}) {
-  send(
-      '${ClientRequest.Lobby_Create.index} $maxPlayers ${type.index} $name ${private ? "1" : "0"}');
-}
-
-void requestJoinRandomGame() {
-  sendClientRequest(ClientRequest.Game_Join_Casual);
-}
-
-void sendRequestJoinLobbyDeathMatch({int squadSize = 1}) {
-  clearState();
-  send('${ClientRequest.Lobby_Join_DeathMatch.index} $squadSize');
-}
-
-void sendRequestJoinLobbyFortress() {
-  // TODO does not belong
-  clearState();
-  sendClientRequest(ClientRequest.Lobby_Join_Fortress);
-}
 
 void sendRequestPurchase(PurchaseType purchaseType) {
   send('${ClientRequest.Purchase.index} $session ${purchaseType.index}');

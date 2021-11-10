@@ -5,6 +5,7 @@ import '../common/GameState.dart';
 import '../common/ItemType.dart';
 import '../common/Tile.dart';
 import '../functions/insertionSort.dart';
+import '../games/open-world.dart';
 import 'Collider.dart';
 import 'EnvironmentObject.dart';
 import '../common/classes/Vector2.dart';
@@ -15,12 +16,10 @@ import '../constants.dart';
 import '../enums.dart';
 import '../common/CollectableType.dart';
 import '../common/GameEventType.dart';
-import '../common/GameType.dart';
 import '../common/Weapons.dart';
 import '../exceptions/ZombieSpawnPointsEmptyException.dart';
 import '../functions/applyForce.dart';
 import '../functions/generateUUID.dart';
-import '../instances/scenes.dart';
 import '../language.dart';
 import '../maths.dart';
 import '../settings.dart';
@@ -40,329 +39,11 @@ import 'TileNode.dart';
 
 const _none = -1;
 
-class Fortress extends Game {
-  int nextWave = 100;
-  int wave = 0;
-  int lives = 10;
-
-  Map<TileNode, List<Vector2>> nodeToFortress = Map();
-
-  Fortress({required int maxPlayers})
-      : super(GameType.Fortress, scenes.fortress, maxPlayers);
-
-  void update() {
-    if (lives <= 0) return;
-
-    for (int i = 0; i < zombies.length; i++) {
-      Npc npc = zombies[i];
-      if (npc.path.isEmpty) {
-        npcSetPathTo(npc, scene.fortressPosition.x, scene.fortressPosition.y);
-        continue;
-      }
-
-      if (diff(npc.x, scene.fortressPosition.x) > 50) continue;
-      if (diff(npc.y, scene.fortressPosition.y) > 50) continue;
-      zombies.removeAt(i);
-      i--;
-      lives--;
-      if (lives <= 0) {
-        return;
-      }
-    }
-
-    if (nextWave > 0) {
-      nextWave--;
-    } else {
-      wave++;
-      nextWave = 200;
-
-      for (int row = 0; row < scene.rows; row++) {
-        for (int column = 0; column < scene.columns; column++) {
-          if (scene.tiles[row][column] == Tile.ZombieSpawn) {
-            double x = getTilePositionX(row, column);
-            double y = getTilePositionY(row, column);
-            for (int i = 0; i < wave; i++) {
-              spawnZombie(x + giveOrTake(5), y + giveOrTake(5));
-            }
-          }
-        }
-      }
-    }
-  }
-
-  @override
-  bool gameOver() {
-    return lives <= 0;
-  }
-
-  @override
-  void onPlayerKilled(Player player) {
-    // TODO auto respawn in 20 seconds
-  }
-
-  @override
-  Player doSpawnPlayer() {
-    Vector2 spawnPoint = getNextSpawnPoint();
-    Player player = Player(
-      x: spawnPoint.x + giveOrTake(3),
-      y: spawnPoint.y + giveOrTake(2),
-      inventory: Inventory(3, 3, [
-        InventoryItem(0, 0, InventoryItemType.Handgun),
-        InventoryItem(0, 1, InventoryItemType.HealthPack),
-        InventoryItem(1, 0, InventoryItemType.HandgunClip),
-        InventoryItem(2, 2, InventoryItemType.HandgunClip),
-        InventoryItem(1, 1, InventoryItemType.ShotgunClip),
-      ]),
-      grenades: 2,
-      meds: 2,
-      clips: Clips(handgun: 2),
-      rounds: Rounds(handgun: constants.maxRounds.handgun),
-    );
-
-    return player;
-  }
-}
-
-class DeathMatch extends Game {
-  final int squadSize;
-  bool teamsEnabled = false;
-
-  int get numberOfSquads => maxPlayers ~/ squadSize;
-
-  int get nextSquadNumber {
-    if (!teamsEnabled) return -1;
-    if (squadSize <= 1) return -1;
-
-    for (int squad = 0; squad < numberOfSquads; squad++) {
-      if (numberOfPlayersOnSquad(squad) < squadSize) return squad;
-    }
-
-    throw Exception("this code should never run");
-  }
-
-  DeathMatch({required maxPlayers, required this.squadSize})
-      : super(GameType.DeathMatch, scenes.town, maxPlayers);
-
-  @override
-  void update() {}
-
-  @override
-  bool gameOver() {
-    return false;
-  }
-
-  @override
-  void onPlayerDisconnected(Player player) {
-    _updateGameState(player);
-  }
-
-  @override
-  void onPlayerKilled(Player player) {
-    _updateGameState(player);
-  }
-
-  void _updateGameState(Player player) {
-    player.gameState = GameState.Lost;
-
-    if (squadSize == 1) {
-      if (numberOfAlivePlayers == 1) {
-        for (Player player in players) {
-          if (player.alive) player.gameState = GameState.Won;
-        }
-      }
-      return;
-    }
-
-    int squad = -1;
-    for (Player player in players) {
-      if (!player.alive) continue;
-      squad = player.squad;
-      break;
-    }
-
-    for (Player player in players) {
-      if (!player.alive) continue;
-      if (player.squad == squad) continue;
-      return;
-    }
-
-    for (Player player in players) {
-      if (!player.alive) continue;
-      player.gameState = GameState.Won;
-    }
-  }
-
-  int numberOfPlayersOnSquad(int squad) {
-    int count = 0;
-    for (Player player in players) {
-      if (player.squad != squad) continue;
-      count++;
-    }
-    return count;
-  }
-
-  Vector2 getSquadSpawnPoint(int squad) {
-    if (squad == -1) return getNextSpawnPoint();
-    return playerSpawnPoints[squad % playerSpawnPoints.length];
-  }
-
-  @override
-  Player doSpawnPlayer() {
-    int squad = nextSquadNumber;
-    Vector2 spawnPoint = getSquadSpawnPoint(squad);
-
-    Player player = Player(
-        x: spawnPoint.x + giveOrTake(3),
-        y: spawnPoint.y + giveOrTake(2),
-        inventory: Inventory(3, 3, [
-          InventoryItem(0, 0, InventoryItemType.Handgun),
-          InventoryItem(0, 1, InventoryItemType.HealthPack),
-          InventoryItem(1, 0, InventoryItemType.HandgunClip),
-          InventoryItem(2, 2, InventoryItemType.HandgunClip),
-          InventoryItem(1, 1, InventoryItemType.ShotgunClip),
-        ]),
-        grenades: 2,
-        meds: 2,
-        clips: Clips(handgun: 2),
-        rounds: Rounds(handgun: constants.maxRounds.handgun),
-        squad: squad);
-
-    return player;
-  }
-}
-
-class GameCasual extends Game {
-  int totalSquads = 4;
-  final int spawnGrenades = 1;
-  final int spawnMeds = 1;
-
-  GameCasual(Scene scene, int maxPlayers)
-      : super(GameType.Casual, scene, maxPlayers) {
-    spawnRandomNpcs(10);
-  }
-
-  void spawnRandomNpcs(int amount) {
-    for (int i = 0; i < amount; i++) {
-      spawnRandomZombie();
-    }
-  }
-
-  @override
-  bool gameOver() {
-    return false;
-  }
-
-  @override
-  void update() {
-    if (duration % 50 == 0 && zombieCount < 100) {
-      Npc npc = spawnRandomZombie();
-      npcSetRandomDestination(npc);
-    }
-  }
-
-  @override
-  void onPlayerKilled(Player player) {
-    resetPlayer(player);
-  }
-
-  @override
-  void onNpcKilled(Npc npc) {
-    // @on npc killed
-    // items.add(Item(type: ItemType.Health, x: npc.x, y: npc.y));
-    if (chance(settings.chanceOfDropItem)) {
-      spawnRandomItem(npc.x, npc.y);
-      return;
-    }
-  }
-
-  @override
-  void onNpcSpawned(Npc npc) {
-    if (chance(0.05)) {
-      npc.pointMultiplier = 5;
-    } else {
-      npc.pointMultiplier = 1;
-    }
-  }
-
-  Clips spawnClip() {
-    return Clips(handgun: 3, shotgun: 3, sniperRifle: 2, assaultRifle: 2);
-  }
-
-  Rounds spawnRounds() {
-    return Rounds(
-      handgun: constants.maxRounds.handgun ~/ 2,
-      shotgun: 0,
-      sniperRifle: 0,
-      assaultRifle: 0,
-    );
-  }
-
-  int getNextSquad() {
-    int playersInSquad0 = numberOfPlayersInSquad(0);
-    int playersInSquad1 = numberOfPlayersInSquad(1);
-    int playersInSquad2 = numberOfPlayersInSquad(2);
-    int playersInSquad3 = numberOfPlayersInSquad(3);
-
-    int squad = 0;
-    int minSquad = playersInSquad0;
-
-    if (playersInSquad1 < minSquad) {
-      minSquad = playersInSquad1;
-      squad = 1;
-    }
-    if (playersInSquad2 < minSquad) {
-      minSquad = playersInSquad2;
-      squad = 2;
-    }
-    if (playersInSquad3 < minSquad) {
-      minSquad = playersInSquad3;
-      squad = 3;
-    }
-
-    return squad;
-  }
-
-  @override
-  Player doSpawnPlayer() {
-    // @on spawn player casual
-    Vector2 spawnPoint = getNextSpawnPoint();
-    Player player = Player(
-      x: spawnPoint.x + giveOrTake(3),
-      y: spawnPoint.y + giveOrTake(2),
-      inventory: Inventory(3, 3, [
-        InventoryItem(1, 1, InventoryItemType.ShotgunClip),
-      ]),
-      grenades: spawnGrenades,
-      meds: spawnMeds,
-      clips: spawnClip(),
-      rounds: spawnRounds(),
-    );
-
-    resetPlayer(player);
-    return player;
-  }
-
-  @override
-  void onPlayerRevived(Player player) {
-    resetPlayer(player);
-  }
-
-  void resetPlayer(Player player) {
-    player.resetPoints();
-    player.meds = spawnMeds;
-    player.grenades = spawnGrenades;
-    player.clips = spawnClip();
-    player.rounds = spawnRounds();
-    player.squad = getNextSquad();
-    player.weapon = Weapon.HandGun;
-  }
-}
-
 abstract class Game {
+  World world;
   static int _id = 0;
   final String id = (_id++).toString();
   final String uuid = generateUUID();
-  final GameType type;
   final int maxPlayers;
   final Scene scene;
   int duration = 0;
@@ -421,9 +102,7 @@ abstract class Game {
 
   void onNpcSpawned(Npc npc) {}
 
-  bool gameOver();
-
-  Game(this.type, this.scene, this.maxPlayers) {
+  Game(this.world, this.scene, this.maxPlayers) {
     this.crates.clear();
     for (Vector2 crate in scene.crates) {
       crates.add(Crate(x: crate.x, y: crate.y));
@@ -467,21 +146,19 @@ const secondsPerFrame = 5;
 extension GameFunctions on Game {
   void updateAndCompile() {
     // @on update game
-    if (!gameOver()) {
-      duration++;
-      time = (time + secondsPerFrame) % secondsPerDay;
-      update();
-      _updatePlayersAndNpcs();
-      _updateCollisions();
-      _updateBullets();
-      _updateBullets(); // called twice to fix collision detection
-      _updateNpcs();
-      _updateGrenades();
-      _updateCollectables();
-      _updateGameEvents();
-      _updateItems();
-      _updateCrates();
-    }
+    duration++;
+    time = (time + secondsPerFrame) % secondsPerDay;
+    update();
+    _updatePlayersAndNpcs();
+    _updateCollisions();
+    _updateBullets();
+    _updateBullets(); // called twice to fix collision detection
+    _updateNpcs();
+    _updateGrenades();
+    _updateCollectables();
+    _updateGameEvents();
+    _updateItems();
+    _updateCrates();
     compileGame(this);
   }
 

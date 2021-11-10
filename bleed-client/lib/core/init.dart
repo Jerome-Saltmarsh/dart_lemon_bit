@@ -122,7 +122,7 @@ void _onConnected(_event) {
 }
 
 void joinGameCasual() {
-  send(ClientRequest.Game_Join_Casual.index.toString());
+  // send(ClientRequest.Game_Join_Casual.index.toString());
 }
 
 void joinGameOpenWorld(){

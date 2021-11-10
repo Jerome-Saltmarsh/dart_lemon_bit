@@ -19,6 +19,7 @@ void loadScenes() {
   print("loadScenes()");
   // loadScene('fortress').then((value) => scenes.fortress = value);
   loadScene('quest/town').then((value) => scenes.town = value);
+  loadScene('quest/cave').then((value) => scenes.cave = value);
   // loadScene('casual/casual-map-01').then((value) => scenes.casualMap01 = value);
 }
 

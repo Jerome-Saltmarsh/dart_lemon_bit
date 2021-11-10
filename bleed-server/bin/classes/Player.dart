@@ -9,6 +9,7 @@ import '../functions/generateName.dart';
 import '../functions/generateUUID.dart';
 import '../settings.dart';
 import '../utils/player_utils.dart';
+import 'Game.dart';
 import 'Inventory.dart';
 import 'Score.dart';
 
@@ -35,6 +36,8 @@ class Player extends Character {
   String text = "";
   int textDuration = 0;
   MainQuest questMain = MainQuest.Introduction;
+  bool sceneChanged = false;
+  Game game;
 
   bool get acquiredHandgun => rounds.handgun > 0;
   bool get acquiredShotgun => rounds.shotgun > 0;
@@ -79,6 +82,7 @@ class Player extends Character {
     required double x,
     required double y,
     required this.inventory,
+    required this.game,
     this.grenades = 0,
     this.meds = 0,
     this.lives = 0,

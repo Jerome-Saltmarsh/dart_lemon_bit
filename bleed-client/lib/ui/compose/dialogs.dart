@@ -1,13 +1,9 @@
 import 'dart:async';
 
-import 'package:bleed_client/common/GameType.dart';
-import 'package:bleed_client/core/init.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/network/functions/disconnect.dart';
-import 'package:bleed_client/send.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
-import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/state/build_context.dart';
@@ -64,7 +60,7 @@ Future showDialogClientUpdateAvailable() async {
           onPressed(
               callback: () {
                 pop(context);
-                joinGameOpenWorld();
+                // joinGameOpenWorld();
               },
               child: text("Ignore", color: Colors.black)),
         ],
@@ -87,40 +83,6 @@ Future showDialogClientUpdateAvailable() async {
   );
 }
 
-Future showDialogCreateGame() async {
-  TextEditingController nameController = TextEditingController();
-
-  return showDialog<void>(
-    context: globalContext,
-    barrierDismissible: true,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Create Game'),
-        content: Column(
-          children: [
-            Text("Game Name"),
-            TextField(controller: nameController),
-          ],
-        ),
-        actions: <Widget>[
-          TextButton(
-              child: const Text('Create'),
-              onPressed: () {
-                pop(context);
-                sendClientRequestLobbyCreate(
-                    maxPlayers: 8,
-                    type: GameType.DeathMatch,
-                    name: nameController.text,
-                    private: false);
-
-                mainMenuTabController.index = 2;
-              }),
-        ],
-      );
-    },
-  );
-}
-
 TabController mainMenuTabController;
 
 class MainMenu extends StatefulWidget {
@@ -136,7 +98,7 @@ class _MainMenuState extends State<MainMenu>
   void initState() {
     super.initState();
     mainMenuTabController = new TabController(vsync: this, length: 3);
-    lobbyUpdateJob = periodic(sendRequestLobbyList, seconds: 1);
+    // lobbyUpdateJob = periodic(sendRequestLobbyList, seconds: 1);
   }
 
   @override
@@ -180,15 +142,15 @@ class _MainMenuState extends State<MainMenu>
                   children: [
                     height(50),
                     button('Alone', () {
-                      sendRequestJoinLobbyDeathMatch(squadSize: 1);
+                      // sendRequestJoinLobbyDeathMatch(squadSize: 1);
                     }),
                     height(50),
                     button('Coop', () {
-                      sendRequestJoinLobbyDeathMatch(squadSize: 2);
+                      // sendRequestJoinLobbyDeathMatch(squadSize: 2);
                     }),
                     height(50),
                     button('Trio', () {
-                      sendRequestJoinLobbyDeathMatch(squadSize: 3);
+                      // sendRequestJoinLobbyDeathMatch(squadSize: 3);
                     }),
                     height(50),
                   ]),
@@ -200,11 +162,11 @@ class _MainMenuState extends State<MainMenu>
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     height(50),
-                    button('Death Match', sendRequestJoinLobbyDeathMatch),
+                    // button('Death Match', sendRequestJoinLobbyDeathMatch),
                     height(50),
-                    button('Fortress', sendRequestJoinGameFortress),
+                    // button('Fortress', sendRequestJoinGameFortress),
                     height(50),
-                    button('Casual', requestJoinRandomGame),
+                    // button('Casual', requestJoinRandomGame),
                   ]),
             ),
             // buildLobbyList(),

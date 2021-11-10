@@ -4,7 +4,6 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'classes.dart';
 import 'classes/Game.dart';
-import 'classes/Lobby.dart';
 import 'classes/Player.dart';
 import 'common/PlayerEvents.dart';
 import 'common/functions/diffOver.dart';
@@ -14,13 +13,12 @@ import 'compile.dart';
 import 'common/ClientRequest.dart';
 import 'common/GameError.dart';
 import 'common/GameEventType.dart';
-import 'common/GameType.dart';
 import 'common/ServerResponse.dart';
 import 'common/PurchaseType.dart';
 import 'common/Weapons.dart';
 import 'enums.dart';
 import 'functions/loadScenes.dart';
-import 'instances/gameManager.dart';
+import 'games/open-world.dart';
 import 'settings.dart';
 import 'update.dart';
 import 'utils.dart';
@@ -32,6 +30,14 @@ final StringBuffer _buffer = StringBuffer();
 const List<ClientRequest> clientRequests = ClientRequest.values;
 const List<PurchaseType> purchaseTypes = PurchaseType.values;
 final int clientRequestsLength = clientRequests.length;
+
+World world = World();
+
+Game findGameById(String id){
+  if(world.town.id == id) return world.town;
+  if (world.cave.id == id) return world.cave;
+  throw Exception();
+}
 
 void main() {
   print('Bleed Game Server Starting');
@@ -58,8 +64,7 @@ void main() {
       _buffer.clear();
       Player player = game.spawnPlayer();
       compilePlayer(_buffer, player);
-      _buffer.write(
-          '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${game.id} ${game.type.index} ${player.squad} ');
+      _buffer.write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${game.id} ${player.squad} ');
       _buffer.write(game.compiledTiles);
       _buffer.write(game.compiledEnvironmentObjects);
       _buffer.write(game.compiled);
@@ -142,13 +147,6 @@ void main() {
       ClientRequest request = clientRequests[clientRequestInt];
 
       switch (request) {
-        case ClientRequest.Lobby_Join_Fortress:
-          LobbyUser user = LobbyUser();
-          Lobby lobby = gameManager.findAvailableLobbyFortress();
-          lobby.players.add(user);
-          sendToClient(
-              '${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
-          break;
 
         case ClientRequest.Game_Update:
           Game? game = findGameById(arguments[1]);
@@ -166,8 +164,13 @@ void main() {
             return;
           }
 
-          if (player.events.isNotEmpty) {
-            // TODO compile player events
+          if (player.sceneChanged){
+            _buffer.clear();
+            _buffer.write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${game.id} ${player.squad} ');
+            _buffer.write(game.compiledTiles);
+            _buffer.write(game.compiledEnvironmentObjects);
+            _buffer.write(game.compiled);
+            sendToClient(_buffer.toString());
           }
 
           player.lastUpdateFrame = 0;
@@ -207,127 +210,36 @@ void main() {
         // game.dispatch(GameEventType.Use_MedKit, player.x, player.y, 0, 0);
         // break;
 
-        case ClientRequest.Lobby_Create:
-          if (arguments.length < 4) {
-            errorInvalidArguments();
-            return;
-          }
-
-          int maxPlayers = int.parse(arguments[1]);
-          // TODO read from the arguments
-          int squadSize = 4;
-          GameType gameType = GameType.values[int.parse(arguments[2])];
-          String name = arguments[3];
-          bool private = arguments[4] == "1";
-          Lobby lobby = gameManager.createLobby(
-              maxPlayers: maxPlayers,
-              squadSize: squadSize,
-              gameType: gameType,
-              name: name,
-              private: private);
-          LobbyUser user = LobbyUser();
-          lobby.players.add(user);
-          sendToClient(
-              '${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
-          return;
-
-        case ClientRequest.Game_Join_Casual:
-          joinGame(gameManager.getAvailableCasualGame());
-          break;
 
         case ClientRequest.Game_Join_Open_World:
-          joinGame(gameManager.getAvailableOpenWorld());
+          joinGame(world.town);
           break;
 
         case ClientRequest.Ping:
           sendToClient('${ServerResponse.Pong.index} ;');
           break;
 
-        case ClientRequest.Lobby_Join:
-          if (arguments.length <= 1) {
-            errorInvalidArguments();
-            return;
-          }
-
-          String lobbyUuid = arguments[1];
-          Lobby? lobby = findLobbyByUuid(lobbyUuid);
-          if (lobby == null) {
-            errorLobbyNotFound();
-            return;
-          }
-          LobbyUser user = LobbyUser();
-          lobby.players.add(user);
-          sendToClient(
-              '${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
-          break;
-
-        case ClientRequest.Lobby_Join_DeathMatch:
-          LobbyUser user = LobbyUser();
-          if (arguments.length <= 1) {
-            errorInvalidArguments();
-            return;
-          }
-
-          int squadSize = int.parse(arguments[1]);
-          int maxPlayers = squadSize * 2;
-
-          Lobby lobby = gameManager.findAvailableDeathMatchLobby(
-              squadSize: squadSize, maxPlayers: maxPlayers);
-          lobby.players.add(user);
-
-          sendToClient(
-              '${ServerResponse.Lobby_Joined.index} ${lobby.uuid} ${user.uuid}');
-          break;
-
-        case ClientRequest.Game_Join:
-          print("ClientRequest.Game_Join");
-
-          if (arguments.length < 2) {
-            errorInvalidArguments();
-            return;
-          }
-          String gameUuid = arguments[1];
-
-          for (Game game in gameManager.games) {
-            if (game.uuid != gameUuid) continue;
-            if (game.players.length == game.maxPlayers) {
-              errorGameFull();
-              return;
-            }
-            joinGame(game);
-            return;
-          }
-
-          errorGameNotFound();
-          break;
-
-        case ClientRequest.Lobby_Update:
-          if (arguments.length < 3) {
-            errorInvalidArguments();
-            return;
-          }
-          String lobbyUuid = arguments[1];
-          Lobby? lobby = findLobbyByUuid(lobbyUuid);
-          if (lobby == null) {
-            errorLobbyNotFound();
-            return;
-          }
-          String playerUuid = arguments[2];
-          LobbyUser? user = findLobbyUser(lobby, playerUuid);
-          if (user == null) {
-            errorLobbyUserNotFound();
-            return;
-          }
-          user.framesSinceUpdate = 0;
-          StringBuffer buffer =
-              StringBuffer("${ServerResponse.Lobby_Update.index} ");
-          compileLobby(buffer, lobby);
-          sendToClient(buffer.toString());
-          break;
-
-        case ClientRequest.Lobby_List:
-          sendToClient(compileLobbies());
-          return;
+        // case ClientRequest.Game_Join:
+        //   print("ClientRequest.Game_Join");
+        //
+        //   if (arguments.length < 2) {
+        //     errorInvalidArguments();
+        //     return;
+        //   }
+        //   String gameUuid = arguments[1];
+        //
+        //   for (Game game in gameManager.games) {
+        //     if (game.uuid != gameUuid) continue;
+        //     if (game.players.length == game.maxPlayers) {
+        //       errorGameFull();
+        //       return;
+        //     }
+        //     joinGame(game);
+        //     return;
+        //   }
+        //
+        //   errorGameNotFound();
+        //   break;
 
         case ClientRequest.Player_Revive:
           String gameId = arguments[1];
@@ -361,11 +273,6 @@ void main() {
           Game? game = findGameById(gameId);
           if (game == null) {
             errorGameNotFound();
-            return;
-          }
-
-          if (game.type != GameType.Casual) {
-            errorCannotSpawnNpc();
             return;
           }
 
@@ -424,21 +331,6 @@ void main() {
           player.weapon = weapon;
           game.setCharacterState(player, CharacterState.ChangingWeapon);
           return;
-
-        case ClientRequest.Lobby_Exit:
-          if (arguments.length < 3) {
-            errorInvalidArguments();
-            return;
-          }
-          String lobbyUuid = arguments[1];
-          Lobby? lobby = findLobbyByUuid(lobbyUuid);
-          if (lobby == null) {
-            errorLobbyNotFound();
-            return;
-          }
-          String playerUuid = arguments[2];
-          removePlayerFromLobby(lobby, playerUuid);
-          break;
 
         case ClientRequest.Player_Throw_Grenade:
           String gameId = arguments[1];

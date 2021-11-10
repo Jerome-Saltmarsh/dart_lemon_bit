@@ -29,5 +29,6 @@ enum ServerResponse {
   Npcs,
   EnvironmentObjects,
   NpcsDebug,
-  Game_Time
+  Game_Time,
+  Scene_Changed,
 }

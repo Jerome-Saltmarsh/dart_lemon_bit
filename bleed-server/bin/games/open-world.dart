@@ -2,15 +2,55 @@ import '../classes.dart';
 import '../classes/Game.dart';
 import '../classes/Inventory.dart';
 import '../classes/Player.dart';
-import '../common/GameType.dart';
 import '../common/Quests.dart';
 import '../common/Weapons.dart';
-import '../enums.dart';
+import '../compile.dart';
 import '../instances/scenes.dart';
 import '../state.dart';
 import '../utils/player_utils.dart';
 
+
+class World {
+  late Game town;
+  late Game cave;
+
+  World(){
+    town = OpenWorld(this);
+    cave = Cave(this);
+    compileGame(town);
+    compileGame(cave);
+
+    town.compiledTiles = compileTiles(town.scene.tiles);
+    town.compiledEnvironmentObjects = compileEnvironmentObjects(town.scene.environment);
+
+    cave.compiledTiles = compileTiles(cave.scene.tiles);
+    cave.compiledEnvironmentObjects = compileEnvironmentObjects(cave.scene.environment);
+  }
+}
+
+class Cave extends Game {
+
+  Cave(World world) : super(world, scenes.cave, 64);
+
+  @override
+  Player doSpawnPlayer() {
+    // TODO: implement doSpawnPlayer
+    throw UnimplementedError();
+  }
+
+  @override
+  void onPlayerKilled(Player player) {
+    // TODO: implement onPlayerKilled
+  }
+
+  @override
+  void update() {
+    // TODO: implement update
+  }
+}
+
 class OpenWorld extends Game {
+
   late InteractableNpc npcDavis;
   late InteractableNpc npcSmith;
   late InteractableNpc guard1;
@@ -22,7 +62,7 @@ class OpenWorld extends Game {
   final double playerSpawnX = 0;
   final double playerSpawnY = 1750;
 
-  OpenWorld() : super(GameType.Open_World, scenes.town, 64) {
+  OpenWorld(World world) : super(world, scenes.town, 64) {
     npcDavis = InteractableNpc(
         name: "Davis",
         onInteractedWith: _onNpcInteractedWithMain,
@@ -96,33 +136,39 @@ class OpenWorld extends Game {
   }
 
   void _onNpcInteractedWithSmith(Player player) {
-    switch (player.questMain) {
-      case MainQuest.Introduction:
-        player.message = "Smith: Welcome to our town";
-        player.questMain = MainQuest.Talk_To_Smith;
-        break;
-      case MainQuest.Talk_To_Smith:
-        player.message = "Smith: Welcome outsider. Our supplies are running low. "
-            "If you happen across some scrap metal while you are out, would you collect it for me"
-            "I'll compensate you of course"
-            "Here take this handgun, its last owner certainly no longer needs it... "
-            "Just come back and talk to me again if you find yourself running low on ammunition";
-        player.questMain = MainQuest.Scavenge_Supplies;
-        player.rounds.handgun = 60;
-        player.rounds.shotgun = 20;
-        break;
-      case MainQuest.Scavenge_Supplies:
-        player.message = "Smith: Bring any metals and junk back you can find";
-        break;
-      default:
-        player.message = "Smith: Good to see you well";
-        break;
-    }
+    // change scene
+    players.remove(player);
+    world.cave.players.add(player);
+    player.sceneChanged = true;
+
+    // switch (player.questMain) {
+    //   case MainQuest.Introduction:
+    //     player.message = "Smith: Welcome to our town";
+    //     player.questMain = MainQuest.Talk_To_Smith;
+    //     break;
+    //   case MainQuest.Talk_To_Smith:
+    //     player.message = "Smith: Welcome outsider. Our supplies are running low. "
+    //         "If you happen across some scrap metal while you are out, would you collect it for me"
+    //         "I'll compensate you of course"
+    //         "Here take this handgun, its last owner certainly no longer needs it... "
+    //         "Just come back and talk to me again if you find yourself running low on ammunition";
+    //     player.questMain = MainQuest.Scavenge_Supplies;
+    //     player.rounds.handgun = 60;
+    //     player.rounds.shotgun = 20;
+    //     break;
+    //   case MainQuest.Scavenge_Supplies:
+    //     player.message = "Smith: Bring any metals and junk back you can find";
+    //     break;
+    //   default:
+    //     player.message = "Smith: Good to see you well";
+    //     break;
+    // }
   }
 
   @override
   Player doSpawnPlayer() {
     return Player(
+      game: this,
       x: playerSpawnX,
       y: playerSpawnY,
       inventory: Inventory(0, 0, []),

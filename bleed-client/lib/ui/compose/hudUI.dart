@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/constants.dart';
 import 'package:bleed_client/constants.dart';
@@ -94,14 +93,10 @@ Widget buildHud() {
       if (hud.state.textBoxVisible) _buildServerText(),
       if (player.alive) buildViewBottomLeft(),
       if (player.alive) buildTopLeft(),
-      if (game.gameType == GameType.Fortress) _buildViewFortress(),
-      if (game.gameType == GameType.DeathMatch)
-        buildGameInfoDeathMatch(),
       // _buildViewBottomRight(),
       _buildServerText(),
       if (!hud.state.observeMode && player.dead) _buildViewRespawn(),
       if (player.dead && hud.state.observeMode) _buildRespawnLight(),
-      if (game.gameType == GameType.Casual) buildViewScore(),
     ],
   );
 }

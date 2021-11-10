@@ -3,7 +3,6 @@ import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/classes/Zombie.dart';
-import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
@@ -37,7 +36,6 @@ class Game {
   List<ParticleEmitter> particleEmitters = [];
   List<double> grenades = [];
   int gameId = -1;
-  GameType gameType;
   int totalBullets = 0;
   int playerId = -1;
   String playerUUID = "";

@@ -5,13 +5,11 @@ import 'classes/Crate.dart';
 import 'classes/EnvironmentObject.dart';
 import 'classes/Game.dart';
 import 'classes/Item.dart';
-import 'classes/Lobby.dart';
 import 'classes/Player.dart';
 import 'common/PlayerEvents.dart';
 import 'common/Tile.dart';
 import 'common/ServerResponse.dart';
 import 'common/classes/Vector2.dart';
-import 'instances/gameManager.dart';
 import 'utils/player_utils.dart';
 
 // constants
@@ -39,10 +37,6 @@ int ySortPositioned(Positioned a, Positioned b){
 void compileGame(Game game) {
   game.buffer.clear();
 
-  // game.players.sort(ySortPositioned);
-  // game.zombies.sort(ySortPositioned);
-  // game.npcs.sort(ySortPositioned);
-
   _compilePlayers(game.buffer, game.players);
   _compileZombies(game.buffer, game.zombies);
   _compileInteractableNpcs(game.buffer, game.npcs);
@@ -61,14 +55,6 @@ void compileGame(Game game) {
 
   _compileCrates(game);
   _compileItems(game.buffer, game.items);
-
-  if (game is Fortress) {
-    _compileFortress(game.buffer, game);
-  }
-
-  if (game is DeathMatch) {
-    _compileDeathMatch(game.buffer, game);
-  }
 
   game.compiled = game.buffer.toString();
 }
@@ -103,18 +89,6 @@ void _compileItems(StringBuffer buffer, List<Item> items) {
     _write(buffer, item.y);
   }
   _write(buffer, _semiColon);
-}
-
-void _compileFortress(StringBuffer buffer, Fortress game) {
-  _write(game.buffer, ServerResponse.MetaFortress.index);
-  _write(game.buffer, game.lives);
-  _write(game.buffer, game.wave);
-  _write(game.buffer, game.nextWave);
-}
-
-void _compileDeathMatch(StringBuffer buffer, DeathMatch deathMatch) {
-  _write(buffer, ServerResponse.MetaDeathMatch.index);
-  _write(buffer, deathMatch.numberOfAlivePlayers);
 }
 
 void compileBlocks(StringBuffer buffer, List<Block> blocks) {
@@ -345,28 +319,6 @@ void compilePlayerMessage(StringBuffer buffer, String message) {
 
 void _writeSemiColon(StringBuffer buffer){
   _write(buffer, _semiColon);
-}
-
-void compileLobby(StringBuffer buffer, Lobby lobby) {
-  _write(buffer, lobby.maxPlayers);
-  _write(buffer, lobby.players.length);
-  _write(buffer, lobby.uuid);
-  _write(buffer, lobby.name ?? _dash);
-  if (lobby.game != null) {
-    _write(buffer, lobby.game!.uuid);
-  } else {
-    _write(buffer, _dash);
-  }
-}
-
-String compileLobbies() {
-  StringBuffer buffer = StringBuffer();
-  _write(buffer, ServerResponse.Lobby_List.index);
-  for (Lobby lobby in lobbies) {
-    compileLobby(buffer, lobby);
-  }
-  _write(buffer, _semiColon);
-  return buffer.toString();
 }
 
 void _writeBool(StringBuffer buffer, bool value) {

@@ -78,6 +78,7 @@
 [ ] Persist Character on cloud
 [ ] Complete Quests to earn income and unlock upgrades
 [ ] Change scene
+[ ] Shotgun animation exaggerate body knock back
 [ ] Quest Window
 [ ] Fall into water and die
 [ ] Editor translate environment object
@@ -105,7 +106,8 @@
 [ ] Weapon Baseball Bat
 [ ] Npc wander
 [ ] Fix Zombie Idle animation
-[ ] Changing Weapon Shade
+[ ] Fix Changing Weapon Shade
+[ ] Fix Npc aim direction incorrect
 [x] UI Health Bar
 [x] FIX can turn while shooting bug
 [x] Fix AI target
