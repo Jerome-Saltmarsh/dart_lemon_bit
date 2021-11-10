@@ -46,7 +46,6 @@ class Game {
   CharacterState playerState = CharacterState.Idle;
   List<Item> items = [];
   int totalItems = 0;
-
   int lives = 0;
   int wave = 1;
   int nextWave = 2;

@@ -16,7 +16,7 @@ class World {
   late List<Game> games;
 
   World(){
-    town = OpenWorld(this);
+    town = Town(this);
     cave = Cave(this);
     games = [town, cave];
     // TODO Remove Logic
@@ -49,7 +49,7 @@ class Cave extends Game {
   }
 }
 
-class OpenWorld extends Game {
+class Town extends Game {
 
   late InteractableNpc npcDavis;
   late InteractableNpc npcSmith;
@@ -62,7 +62,7 @@ class OpenWorld extends Game {
   final double playerSpawnX = 0;
   final double playerSpawnY = 1750;
 
-  OpenWorld(World world) : super(world, scenes.town, 64) {
+  Town(World world) : super(world, scenes.town, 64) {
     npcDavis = InteractableNpc(
         name: "Davis",
         onInteractedWith: _onNpcInteractedWithMain,

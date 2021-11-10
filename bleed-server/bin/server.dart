@@ -39,6 +39,17 @@ Game findGameById(String id){
   throw Exception();
 }
 
+Player? findPlayerById(String id){
+  for(Game game in world.games){
+    for(Player player in game.players){
+      if(player.uuid == id){
+        return player;
+      }
+    }
+  }
+  return null;
+}
+
 void main() {
   print('Bleed Game Server Starting');
   initUpdateLoop();
@@ -84,32 +95,8 @@ void main() {
       error(GameError.GameNotFound);
     }
 
-    void errorCannotSpawnNpc() {
-      error(GameError.CannotSpawnNpc);
-    }
-
-    void errorGameFull() {
-      error(GameError.GameFull);
-    }
-
-    void errorInvalidArguments() {
-      error(GameError.InvalidArguments);
-    }
-
-    void errorLobbyNotFound() {
-      error(GameError.LobbyNotFound);
-    }
-
-    void errorLobbyUserNotFound() {
-      error(GameError.LobbyUserNotFound);
-    }
-
     void errorPlayerNotFound() {
       error(GameError.PlayerNotFound);
-    }
-
-    void errorCannotRevive() {
-      error(GameError.CannotRevive);
     }
 
     void errorInvalidPlayerUUID() {
@@ -149,20 +136,13 @@ void main() {
       switch (request) {
 
         case ClientRequest.Game_Update:
-          Game? game = findGameById(arguments[1]);
-          if (game == null) {
-            errorGameNotFound();
-            return;
-          }
-          Player? player = game.findPlayerById(int.parse(arguments[2]));
+          Player? player = findPlayerById(arguments[3]);
           if (player == null) {
             errorPlayerNotFound();
             return;
           }
-          if (arguments[3] != player.uuid) {
-            errorInvalidPlayerUUID();
-            return;
-          }
+
+          Game game = player.game;
 
           if (player.sceneChanged){
             _buffer.clear();
