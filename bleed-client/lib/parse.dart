@@ -187,6 +187,7 @@ void parseState() {
         break;
 
       case ServerResponse.EnvironmentObjects:
+        game.particleEmitters.clear();
         _parseEnvironmentObjects();
         break;
 
