@@ -9,14 +9,11 @@ Shading getShadeAtPosition(double x, double y){
 }
 
 Shading getShade(int row, int column){
-  // assert(row < game.totalRows);
   if (row >= game.totalRows){
-    throw Exception();
+    return Shading.VeryDark;
   }
   if (column >= game.totalColumns){
-    throw Exception();
+    return Shading.VeryDark;
   }
-
-  // assert(column < game.totalColumns);
   return dynamicShading[row][column];
 }
