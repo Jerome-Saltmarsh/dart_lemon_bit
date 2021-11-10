@@ -5,7 +5,7 @@ import '../common/GameState.dart';
 import '../common/ItemType.dart';
 import '../common/Tile.dart';
 import '../functions/insertionSort.dart';
-import '../games/open-world.dart';
+import '../games/world.dart';
 import 'Collider.dart';
 import 'EnvironmentObject.dart';
 import '../common/classes/Vector2.dart';

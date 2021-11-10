@@ -139,6 +139,7 @@ class Town extends Game {
     // change scene
     players.remove(player);
     world.cave.players.add(player);
+    player.game = world.cave;
     player.sceneChanged = true;
 
     // switch (player.questMain) {

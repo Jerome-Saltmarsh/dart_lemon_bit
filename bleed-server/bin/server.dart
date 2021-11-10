@@ -18,7 +18,7 @@ import 'common/PurchaseType.dart';
 import 'common/Weapons.dart';
 import 'enums.dart';
 import 'functions/loadScenes.dart';
-import 'games/open-world.dart';
+import 'games/world.dart';
 import 'settings.dart';
 import 'update.dart';
 import 'utils.dart';
@@ -142,18 +142,20 @@ void main() {
             return;
           }
 
+          player.lastUpdateFrame = 0;
           Game game = player.game;
 
           if (player.sceneChanged){
+            player.sceneChanged = false;
             _buffer.clear();
             _buffer.write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${game.id} ${player.squad} ');
             _buffer.write(game.compiledTiles);
             _buffer.write(game.compiledEnvironmentObjects);
             _buffer.write(game.compiled);
             sendToClient(_buffer.toString());
+            return;
           }
 
-          player.lastUpdateFrame = 0;
           CharacterState requestedState =
               CharacterState.values[int.parse(arguments[4])];
           Direction requestedDirection =
