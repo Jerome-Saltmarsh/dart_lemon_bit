@@ -1,12 +1,12 @@
 
 import 'dart:async';
 
-class State<T> {
+class ReactiveState<T> {
   T _value;
   T get value => _value;
   final StreamController<T> onChanged = StreamController.broadcast();
 
-  State(this._value);
+  ReactiveState(this._value);
 
   set value(T t){
     if (_value == t) return;
@@ -17,4 +17,6 @@ class State<T> {
   void call(T t){
     value = t;
   }
+
+  Stream get stream => onChanged.stream;
 }

@@ -17,6 +17,7 @@ import 'package:bleed_client/server.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/settings.dart';
+import 'package:bleed_client/streams/playerHealth.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/decorationImages.dart';
@@ -26,7 +27,6 @@ import 'package:bleed_client/ui/state/styleguide.dart';
 import 'package:bleed_client/utils/list_util.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:lemon_engine/functions/fullscreen_enter.dart';
 import 'package:lemon_engine/functions/toggle_fullscreen.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/fullscreen_active.dart';
@@ -40,6 +40,49 @@ import 'buildTextBox.dart';
 import 'dialogs.dart';
 
 bool mouseInTopRight = false;
+const double _padding = 8;
+
+Widget buildHealthBar(){
+  return StreamBuilder<double>(
+    initialData: 100.0,
+    stream: playerHealth.stream,
+    builder: (BuildContext context, AsyncSnapshot<double> snapshot){
+      double health = snapshot.data;
+      double percentage = health / 100.0;
+      double width = 120;
+      double height = width * goldenRatioInverse;
+
+      return Tooltip(
+        message: 'Health ${health.toInt()}',
+        child: Container(
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+            border: Border.all(color: Colors.white, width: 4),
+            borderRadius: borderRadius4
+          ),
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.all(3),
+          child: Container(
+            decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: borderRadius4
+            ),
+            width: width * percentage,
+            height: height,
+          ),
+        ),
+      );
+    },
+  );
+}
+
+Widget buildTopLeft(){
+  return Positioned(
+      bottom: _padding,
+      right: _padding,
+      child: buildHealthBar());
+}
 
 Widget buildHud() {
   print("buildHud()");
@@ -50,6 +93,7 @@ Widget buildHud() {
       buildTextBox(),
       if (hud.state.textBoxVisible) _buildServerText(),
       if (player.alive) buildViewBottomLeft(),
+      if (player.alive) buildTopLeft(),
       if (game.gameType == GameType.Fortress) _buildViewFortress(),
       if (game.gameType == GameType.DeathMatch)
         buildGameInfoDeathMatch(),
@@ -182,39 +226,39 @@ Widget buildTopRight() {
   });
 }
 
-Widget buildTopLeft() {
-  Widget iconToggleFullscreen = Tooltip(
-    child: IconButton(
-        icon: Icon(Icons.fullscreen,
-            size: hud.properties.iconSize, color: Colors.white),
-        onPressed: fullScreenEnter),
-    message: "Fullscreen",
-  );
-  Widget iconToggleAudio = Tooltip(
-      child: IconButton(
-          icon: Icon(
-              settings.audioMuted ? Icons.music_off : Icons.music_note_rounded,
-              size: hud.properties.iconSize,
-              color: Colors.white),
-          onPressed: toggleAudioMuted),
-      message: "Toggle Audio");
-
-  Widget iconScore = Tooltip(
-    child: IconButton(
-        icon: Icon(hud.state.showScore ? Icons.score : Icons.score_outlined,
-            size: hud.properties.iconSize, color: Colors.white),
-        onPressed: toggleShowScore),
-    message: hud.state.showScore ? "Hide Score" : "Show Score",
-  );
-
-  return Positioned(
-    top: 5,
-    left: 5,
-    child: Row(
-      children: [iconToggleFullscreen, iconToggleAudio, iconScore],
-    ),
-  );
-}
+// Widget buildTopLeft() {
+//   Widget iconToggleFullscreen = Tooltip(
+//     child: IconButton(
+//         icon: Icon(Icons.fullscreen,
+//             size: hud.properties.iconSize, color: Colors.white),
+//         onPressed: fullScreenEnter),
+//     message: "Fullscreen",
+//   );
+//   Widget iconToggleAudio = Tooltip(
+//       child: IconButton(
+//           icon: Icon(
+//               settings.audioMuted ? Icons.music_off : Icons.music_note_rounded,
+//               size: hud.properties.iconSize,
+//               color: Colors.white),
+//           onPressed: toggleAudioMuted),
+//       message: "Toggle Audio");
+//
+//   Widget iconScore = Tooltip(
+//     child: IconButton(
+//         icon: Icon(hud.state.showScore ? Icons.score : Icons.score_outlined,
+//             size: hud.properties.iconSize, color: Colors.white),
+//         onPressed: toggleShowScore),
+//     message: hud.state.showScore ? "Hide Score" : "Show Score",
+//   );
+//
+//   return Positioned(
+//     top: 5,
+//     left: 5,
+//     child: Row(
+//       children: [iconToggleFullscreen, iconToggleAudio, iconScore],
+//     ),
+//   );
+// }
 
 Widget buildToggleScoreIcon() {
   return Tooltip(
@@ -394,6 +438,7 @@ Widget buildViewBottomLeft() {
           crossAxisAlignment: cross.end,
           children: [
             buildSlotWeapon(weapon: game.playerWeapon, index: 1),
+            width4,
             // width4,
             // buildSlotWeapon(weapon: Weapon.Shotgun, index: 2),
             // width4,
