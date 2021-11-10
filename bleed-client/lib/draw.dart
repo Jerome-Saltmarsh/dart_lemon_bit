@@ -207,8 +207,8 @@ int get mouseTileY {
 Tile getTile(int row, int column){
   if (row < 0) return Tile.Boundary;
   if (column < 0) return Tile.Boundary;
-  if (row >= game.tiles.length) return Tile.Boundary;
-  if (column >= game.tiles[0].length) return Tile.Boundary;
+  if (row >= game.totalRows) return Tile.Boundary;
+  if (column >= game.totalColumns) return Tile.Boundary;
   return game.tiles[row][column];
 }
 

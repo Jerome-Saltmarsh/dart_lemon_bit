@@ -7,8 +7,8 @@ const _width = 48.0;
 
 void calculateTileSrcRects() {
   int i = 0;
-  for (int row = 0; row < game.tiles.length; row++) {
-    for (int column = 0; column < game.tiles[0].length; column++) {
+  for (int row = 0; row < game.totalRows; row++) {
+    for (int column = 0; column < game.totalColumns; column++) {
       Shading shading = dynamicShading[row][column];
       tileSrcRects[i + 1] = shading.index * _width; // top
       tileSrcRects[i + 3] = tileSrcRects[i + 1] + _width; // bottom

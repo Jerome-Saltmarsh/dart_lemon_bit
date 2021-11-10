@@ -395,15 +395,15 @@ void _parsePaths() {
 }
 
 void _parseTiles() {
-  game.totalColumns = _consumeInt();
   game.totalRows = _consumeInt();
+  game.totalColumns = _consumeInt();
   game.tiles.clear();
-  for (int column = 0; column < game.totalColumns; column++) {
+  for (int row = 0; row < game.totalRows; row++) {
     List<Tile> column = [];
-    game.tiles.add(column);
-    for (int row = 0; row < game.totalRows; row++) {
+    for (int columnIndex = 0; columnIndex < game.totalColumns; columnIndex++) {
       column.add(_consumeTile());
     }
+    game.tiles.add(column);
   }
 }
 
