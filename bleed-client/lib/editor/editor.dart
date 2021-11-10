@@ -120,7 +120,7 @@ Widget _buildTools() {
           _buildTabs(),
           height8,
           Container(
-            height: screenHeight - 50,
+            height: screenHeight - 100,
             child: SingleChildScrollView(
               child: Column(
                 children: _getTabChildren(),
