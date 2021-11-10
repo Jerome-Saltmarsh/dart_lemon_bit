@@ -245,34 +245,6 @@ void parseState() {
         _parseCollectables();
         break;
 
-      case ServerResponse.Lobby_Joined:
-        print('ServerResponse.Lobby_Joined');
-        state.lobby = Lobby();
-        state.lobby.uuid = _consumeString();
-        state.lobby.playerUuid = _consumeString();
-        announce(LobbyJoined());
-        break;
-
-      case ServerResponse.Lobby_List:
-        state.lobbies.clear();
-        while (!_simiColonConsumed()) {
-          Lobby lobby = _consumeLobby();
-          state.lobbies.add(lobby);
-        }
-        break;
-
-      case ServerResponse.Lobby_Update:
-        if (state.lobby == null) return;
-        state.lobby.maxPlayers = _consumeInt();
-        state.lobby.playersJoined = _consumeInt();
-        state.lobby.uuid = _consumeString();
-        state.lobby.name = _consumeString();
-        state.lobbyGameUuid = _consumeString();
-        if (state.lobbyGameUuid == _dash) continue;
-        state.lobby = null;
-        sendRequestJoinGame(state.lobbyGameUuid);
-        break;
-
       case ServerResponse.Player_Events:
         _parsePlayerEvents();
         return;

@@ -3,7 +3,6 @@ enum ClientRequest {
   Game_Update,
   Player_Revive,
   Player_Equip,
-  Spawn_Npc,
   Player_Throw_Grenade,
   Player_Use_MedKit,
   Ping,

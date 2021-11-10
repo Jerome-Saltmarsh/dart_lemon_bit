@@ -249,36 +249,13 @@ void main() {
           game.revive(player);
           return;
 
-        case ClientRequest.Spawn_Npc:
-          return; // disabled
-          String gameId = arguments[1];
-          Game? game = findGameById(gameId);
-          if (game == null) {
-            errorGameNotFound();
-            return;
-          }
-
-          game.spawnRandomZombie();
-          return;
-
         case ClientRequest.Player_Equip:
-          String gameId = arguments[1];
-          Game? game = findGameById(gameId);
-          if (game == null) {
-            errorGameNotFound();
-            return;
-          }
-          int id = int.parse(arguments[2]);
-          Player? player = game.findPlayerById(id);
+          Player? player = findPlayerById(arguments[3]);
           if (player == null) {
             errorPlayerNotFound();
             return;
           }
-          String uuid = arguments[3];
-          if (uuid != player.uuid) {
-            errorInvalidPlayerUUID();
-            return;
-          }
+
           Weapon weapon = Weapon.values[int.parse(arguments[4])];
           if (player.stateDuration > 0) return;
           if (player.weapon == weapon) return;
@@ -311,7 +288,7 @@ void main() {
           }
 
           player.weapon = weapon;
-          game.setCharacterState(player, CharacterState.ChangingWeapon);
+          player.game.setCharacterState(player, CharacterState.ChangingWeapon);
           return;
 
         case ClientRequest.Player_Throw_Grenade:

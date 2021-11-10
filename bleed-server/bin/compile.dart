@@ -23,15 +23,8 @@ final int indexNpcMessage = ServerResponse.NpcMessage.index;
 const String _space = ' ';
 const String _semiColon = '; ';
 const String _comma = ', ';
-const String _dash = '- ';
 const int _1 = 1;
 const int _0 = 0;
-
-// public
-
-int ySortPositioned(Positioned a, Positioned b){
-  return a.y > b.y ? 1 : -1;
-}
 
 void compileGame(Game game) {
   game.buffer.clear();

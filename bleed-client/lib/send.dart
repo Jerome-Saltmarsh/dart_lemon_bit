@@ -147,10 +147,6 @@ void sendClientRequest(ClientRequest request) {
   send(request.index.toString());
 }
 
-void sendRequestSpawnNpc() {
-  send('${ClientRequest.Spawn_Npc.index} $session');
-}
-
 void _write(dynamic value) {
   _buffer.write(value);
   _buffer.write(_space);
