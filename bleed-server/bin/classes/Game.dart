@@ -1080,22 +1080,24 @@ extension GameFunctions on Game {
   }
 
   void updateZombieTargets() {
-    Npc npc;
+    Npc zombie;
     for (int i = 0; i < zombies.length; i++) {
-      npc = zombies[i];
-      if (npc.targetSet) {
+      zombie = zombies[i];
+      if (zombie.targetSet) {
         // @on update npc with target
-        if (diff(npc.x, npc.target.x) < settings.zombieChaseRange) continue;
-        if (diff(npc.y, npc.target.y) < settings.zombieChaseRange) continue;
-        npc.clearTarget();
-        npc.state = CharacterState.Idle;
+        if (diff(zombie.x, zombie.target.x) < settings.zombieChaseRange) continue;
+        if (diff(zombie.y, zombie.target.y) < settings.zombieChaseRange) continue;
+        zombie.clearTarget();
+        zombie.state = CharacterState.Idle;
       }
 
       for (int p = 0; p < players.length; p++) {
-        if (!players[p].alive) continue;
-        if (diff(players[p].x, npc.x) > settings.npc.viewRange) continue;
-        if (diff(players[p].y, npc.y) > settings.npc.viewRange) continue;
-        npc.target = players[p];
+        Player player = players[p];
+        if (!player.alive) continue;
+        if (diff(player.x, zombie.x) > settings.npc.viewRange) continue;
+        if (diff(player.y, zombie.y) > settings.npc.viewRange) continue;
+        if (!isVisibleBetween(zombie, player)) continue;
+        zombie.target = player;
         break;
       }
     }
@@ -1132,7 +1134,7 @@ extension GameFunctions on Game {
     if (initial == _none) return;
 
     for (int i = 0; i < npcs.length; i++) {
-      updateNpcTarget(npcs[i], initial);
+      updateInteractableNpcTarget(npcs[i], initial);
     }
   }
 
@@ -1143,7 +1145,7 @@ extension GameFunctions on Game {
     return _none;
   }
 
-  void updateNpcTarget(Npc npc, int j) {
+  void updateInteractableNpcTarget(Npc npc, int j) {
     if (npc.mode == NpcMode.Ignore) return;
 
     Character closest = zombies[j];
@@ -1164,31 +1166,6 @@ extension GameFunctions on Game {
     } else {
       setNpcTarget(npc, closest);
     }
-
-
-
-    // if (npc.targetSet) {
-    //   // @on update npc with target
-    //   if (npc.mode == NpcMode.Stand_Ground) {
-    //     if (diffOver(npc.x, npc.target.x, getWeaponRange(npc.weapon))) continue;
-    //     if (diffOver(npc.y, npc.target.y, getWeaponRange(npc.weapon))) continue;
-    //     npc.clearTarget();
-    //     npc.state = CharacterState.Idle;
-    //   } else {
-    //     if (diffOver(npc.x, npc.target.x, settings.npcChaseRange)) continue;
-    //     if (diffOver(npc.y, npc.target.y, settings.npcChaseRange)) continue;
-    //     npc.clearTarget();
-    //     npc.state = CharacterState.Idle;
-    //   }
-    // }
-    //
-    // for (int j = 0; j < zombies.length; j++) {
-    //   if (!zombies[j].alive) continue;
-    //   if (diff(zombies[j].x, npc.x) > settings.npc.viewRange) continue;
-    //   if (diff(zombies[j].y, npc.y) > settings.npc.viewRange) continue;
-    //   setNpcTarget(npc, zombies[j]);
-    //   break;
-    // }
   }
 
   void setNpcTarget(Npc npc, Character value) {

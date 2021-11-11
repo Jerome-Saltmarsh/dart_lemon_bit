@@ -1,6 +1,6 @@
 import 'common/Tile.dart';
 
-// can a person pass through this tile
+/// can a person pass through this tile
 const Map<Tile, bool> _walkableTiles = {
   Tile.Grass: true,
   Tile.Grass02: true,
@@ -44,13 +44,4 @@ enum Direction {
   Left,
   UpLeft,
   None
-}
-
-enum ParticleType {
-  Blood,
-  Shell,
-  Head,
-  Arm,
-  Organ,
-  Smoke
 }
