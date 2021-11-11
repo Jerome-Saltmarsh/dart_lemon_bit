@@ -71,6 +71,25 @@ abstract class Game {
 
   Player doSpawnPlayer();
 
+  void playerChangeGame(Player player, Game to){
+    if (player.game == to) return;
+
+    players.remove(player);
+
+    for(Npc zombie in player.game.zombies){
+      if (zombie.target == player){
+        zombie.clearTarget();
+      }
+    }
+
+    to.players.add(player);
+    player.game = to;
+    player.sceneChanged = true;
+    TileNode node = to.getRandomOpenTileNode();
+    player.x = node.position.x;
+    player.y = node.position.y;
+  }
+
   int numberOfPlayersInSquad(int squad) {
     int count = 0;
     for (Player player in players) {
