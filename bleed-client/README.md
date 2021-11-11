@@ -95,20 +95,20 @@
 [ ] Zombie Idle Shadow
 [ ] Audio walk on grass
 [ ] Right click to pan
-[ ] Fix save environment issues
-[ ] Improve UI
-[ ] Animate Running Handgun
-[ ] Animate Running Shotgun
-[ ] Shade 1, 2, 3
 [ ] Glow worms
 [ ] Select weapon menu
 [ ] Weapon Baseball Bat
 [ ] Npc wander
 [ ] Fix Zombie Idle animation
 [ ] Fix Changing Weapon Shade
-[ ] Fix Npc aim direction incorrect
-[ ] Cave Level
+[ ] Design Palette
 [ ] Change scene
+    [ ] Tavern Level
+    [ ] Cave Level
+    [ ] Camera Pans up 
+    [ ] Player disappears when firing
+    [?] Zombies aren't drawing
+[ ] Fix Npc aim direction incorrect
 [x] UI Health Bar
 [x] FIX can turn while shooting bug
 [x] Fix AI target

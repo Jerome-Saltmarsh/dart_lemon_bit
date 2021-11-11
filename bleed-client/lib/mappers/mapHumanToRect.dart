@@ -18,7 +18,10 @@ Rect mapCharacterToSrcMan(
     case CharacterState.Dead:
       return _mapFrame(_srcRects3, direction, frame);
     case CharacterState.Aiming:
-      return _mapFrame(_srcRects1, direction, frame);
+      if (weapon == Weapon.HandGun) {
+        return _mapFrame(_srcRectAimingHandgun, direction, frame);
+      }
+      return _mapFrame(_srcRectAimingShotgun, direction, frame);
     case CharacterState.Firing:
       if (weapon == Weapon.Shotgun) {
         return _mapFrame(_shotgunFiring, direction, frame);
@@ -26,7 +29,7 @@ Rect mapCharacterToSrcMan(
       if (weapon == Weapon.HandGun) {
         return _mapFrame(_handgunFiring, direction, frame);
       }
-      return _mapFrame(_srcRects1, direction, frame);
+      return _mapFrame(_shotgunFiring, direction, frame);
     case CharacterState.Striking:
       return _mapFrame(_srcRects2, direction, frame);
     case CharacterState.Running:
@@ -71,6 +74,26 @@ final AnimationRects _srcRects1 = AnimationRects(
     left: _frames([7]),
     downLeft: _frames([8]));
 
+final AnimationRects _srcRectAimingHandgun = AnimationRects(
+    down: _frames([1]),
+    downRight: _frames([3]),
+    right: _frames([5]),
+    upRight: _frames([7]),
+    up: _frames([9]),
+    upLeft: _frames([11]),
+    left: _frames([13]),
+    downLeft: _frames([15]));
+
+final AnimationRects _srcRectAimingShotgun = AnimationRects(
+    down: _frames([2]),
+    downRight: _frames([5]),
+    right: _frames([8]),
+    upRight: _frames([11]),
+    up: _frames([14]),
+    upLeft: _frames([17]),
+    left: _frames([20]),
+    downLeft: _frames([23]));
+
 final AnimationRects _srcRects2 = AnimationRects(
     down: _frames([1, 2]),
     downRight: _frames([3, 4]),
@@ -80,7 +103,6 @@ final AnimationRects _srcRects2 = AnimationRects(
     upLeft: _frames([11, 12]),
     left: _frames([13, 14]),
     downLeft: _frames([15, 16]));
-
 
 final AnimationRects _srcRects3 = AnimationRects(
     down: _frames([1, 2, 3]),

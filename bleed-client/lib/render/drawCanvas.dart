@@ -251,8 +251,8 @@ bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {
 
 void drawEnvironmentObject(EnvironmentObject environmentObject) {
   if (!environmentObjectOnScreenScreen(environmentObject)) return;
-  drawImageRect(
-      environmentObject.image, environmentObject.src, environmentObject.dst);
+
+  drawImageRect(environmentObject.image, environmentObject.src, environmentObject.dst);
 }
 
 void _drawNpcBonusPointsCircles() {

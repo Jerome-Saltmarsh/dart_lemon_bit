@@ -33,16 +33,16 @@ final int clientRequestsLength = clientRequests.length;
 
 World world = World();
 
-Game findGameById(String id){
-  if(world.town.id == id) return world.town;
+Game findGameById(String id) {
+  if (world.town.id == id) return world.town;
   if (world.cave.id == id) return world.cave;
   throw Exception();
 }
 
-Player? findPlayerById(String id){
-  for(Game game in world.games){
-    for(Player player in game.players){
-      if(player.uuid == id){
+Player? findPlayerById(String id) {
+  for (Game game in world.games) {
+    for (Player player in game.players) {
+      if (player.uuid == id) {
         return player;
       }
     }
@@ -75,7 +75,8 @@ void main() {
       _buffer.clear();
       Player player = game.spawnPlayer();
       compilePlayer(_buffer, player);
-      _buffer.write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${game.id} ${player.squad} ');
+      _buffer.write(
+          '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${game.id} ${player.squad} ');
       _buffer.write(game.compiledTiles);
       _buffer.write(game.compiledEnvironmentObjects);
       _buffer.write(game.compiled);
@@ -134,7 +135,6 @@ void main() {
       ClientRequest request = clientRequests[clientRequestInt];
 
       switch (request) {
-
         case ClientRequest.Game_Update:
           Player? player = findPlayerById(arguments[3]);
           if (player == null) {
@@ -145,7 +145,7 @@ void main() {
           player.lastUpdateFrame = 0;
           Game game = player.game;
 
-          if (player.sceneChanged){
+          if (player.sceneChanged) {
             player.sceneChanged = false;
             _buffer.clear();
             _buffer.write('${ServerResponse.Scene_Changed.index} ');
@@ -192,7 +192,6 @@ void main() {
         // game.dispatch(GameEventType.Use_MedKit, player.x, player.y, 0, 0);
         // break;
 
-
         case ClientRequest.Game_Join_Open_World:
           joinGame(world.town);
           break;
@@ -201,52 +200,19 @@ void main() {
           sendToClient('${ServerResponse.Pong.index} ;');
           break;
 
-        // case ClientRequest.Game_Join:
-        //   print("ClientRequest.Game_Join");
-        //
-        //   if (arguments.length < 2) {
-        //     errorInvalidArguments();
-        //     return;
-        //   }
-        //   String gameUuid = arguments[1];
-        //
-        //   for (Game game in gameManager.games) {
-        //     if (game.uuid != gameUuid) continue;
-        //     if (game.players.length == game.maxPlayers) {
-        //       errorGameFull();
-        //       return;
-        //     }
-        //     joinGame(game);
-        //     return;
-        //   }
-        //
-        //   errorGameNotFound();
-        //   break;
-
         case ClientRequest.Player_Revive:
-          String gameId = arguments[1];
-          Game? game = findGameById(gameId);
-          if (game == null) {
-            errorGameNotFound();
-            return;
-          }
+          String uuid = arguments[3];
+          Player? player = findPlayerById(uuid);
 
-          int id = int.parse(arguments[2]);
-          Player? player = game.findPlayerById(id);
           if (player == null) {
             errorPlayerNotFound();
-            return;
-          }
-          String uuid = arguments[3];
-          if (uuid != player.uuid) {
-            errorInvalidPlayerUUID();
             return;
           }
           if (player.alive) {
             error(GameError.PlayerStillAlive);
             return;
           }
-          game.revive(player);
+          player.game.revive(player);
           return;
 
         case ClientRequest.Player_Equip:
@@ -479,9 +445,11 @@ void main() {
             return;
           }
 
-          player.text = arguments.sublist(4, arguments.length).fold("", (previousValue, element) => '$previousValue $element');
+          player.text = arguments
+              .sublist(4, arguments.length)
+              .fold("", (previousValue, element) => '$previousValue $element');
           player.textDuration = 150;
-        break;
+          break;
 
         case ClientRequest.Interact:
           String gameId = arguments[1];
@@ -506,7 +474,7 @@ void main() {
 
           if (player.dead) return;
 
-          for (InteractableNpc interactable in game.npcs){
+          for (InteractableNpc interactable in game.npcs) {
             if (diffOver(interactable.x, player.x, radius.interact)) continue;
             if (diffOver(interactable.y, player.y, radius.interact)) continue;
             interactable.onInteractedWith(player);

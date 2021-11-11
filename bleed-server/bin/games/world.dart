@@ -137,8 +137,15 @@ class Town extends Game {
   }
 
   void _onNpcInteractedWithSmith(Player player) {
-    // change scene
+    // @on change scene
     players.remove(player);
+
+    for(Npc zombie in player.game.zombies){
+      if (zombie.target == player){
+        zombie.clearTarget();
+      }
+    }
+
     world.cave.players.add(player);
     player.game = world.cave;
     player.sceneChanged = true;
