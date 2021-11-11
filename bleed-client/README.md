@@ -102,13 +102,15 @@
 [ ] Fix Zombie Idle animation
 [ ] Fix Changing Weapon Shade
 [ ] Design Palette
+[ ] Design Tree Model
+[ ] Fix Npc when wall is in the way 
 [ ] Change scene
     [ ] Tavern Level
     [ ] Cave Level
     [ ] Camera Pans up 
     [ ] Player disappears when firing
     [?] Zombies aren't drawing
-[ ] Fix Npc aim direction incorrect
+[x] Fix Npc aim direction incorrect
 [x] UI Health Bar
 [x] FIX can turn while shooting bug
 [x] Fix AI target

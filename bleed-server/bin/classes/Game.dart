@@ -205,6 +205,25 @@ extension GameFunctions on Game {
     }
   }
 
+  /// calculates if there is a wall between two objects
+  bool isVisibleBetween(Positioned a, Positioned b){
+    double r = radiansBetweenObject(a, b);
+    double d = distanceBetween(a, b);
+    double vX = adj(r, tileSize);
+    double vY = opp(r, tileSize);
+    int jumps = d ~/ tileSize;
+    double x = a.x + vX;
+    double y = a.y + vY;
+    for (int i = 0; i < jumps; i++){
+      if (isShootable(scene.tileAt(x, y))){
+        return true;
+      }
+      x += vX;
+      y += vY;
+    }
+    return false;
+  }
+
   void activateCollectable(Collectable collectable) {
     collectable.active = true;
     collectable.setType(randomCollectableType);
@@ -238,6 +257,8 @@ extension GameFunctions on Game {
           return;
         default:
           if (!targetWithinFiringRange(npc, npc.target)) break;
+          if (!isVisibleBetween(npc, npc.target)) break;
+
           characterAimAt(npc, npc.target.x, npc.target.y);
           setCharacterState(npc, CharacterState.Firing);
           return;

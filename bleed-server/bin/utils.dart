@@ -7,6 +7,7 @@ import 'enums.dart';
 import 'maths.dart';
 import 'settings.dart';
 
+const double tileSize = 48.0;
 const double halfTileSize = 24;
 
 double bulletDistanceTravelled(Bullet bullet) {

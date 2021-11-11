@@ -21,12 +21,28 @@ List<Tile> _closedTiles = [
   Tile.Boundary,
 ];
 
+const Map<Tile, bool> _shootableTiles = {
+  Tile.Water: true,
+  Tile.Grass: true,
+  Tile.Grass02: true,
+  Tile.Long_Grass: true,
+  Tile.PlayerSpawn: true,
+  Tile.Bridge: true,
+  Tile.Concrete: true,
+  Tile.Concrete_Vertical: true,
+  Tile.Concrete_Horizontal: true,
+};
+
 List<Tile> _collisionTiles = [
   Tile.Block,
   Tile.Block_Horizontal,
   Tile.Block_Vertical,
   Tile.Boundary,
 ];
+
+bool isShootable(Tile tile){
+  return _shootableTiles.containsKey(tile);
+}
 
 bool isWalkable(Tile tile){
   return _walkableTiles.contains(tile);
