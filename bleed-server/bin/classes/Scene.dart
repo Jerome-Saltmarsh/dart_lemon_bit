@@ -269,23 +269,13 @@ extension SceneFunctions on Scene {
     return _vector2;
   }
 
-  bool pathClear(double x1, double y1, double x2, double y2) {
-    double angle = radiansBetween(x1, y1, x2, y2);
-    double posX = x1;
-    double posY = y1;
-    double vx = velX(angle, 24);
-    double vy = velY(angle, 24);
-
-    while (diff(posX, x2) > _tileSize || diff(posY, y2) > _tileSize) {
-      if (tileBoundaryAt(posX, posY)) return false;
-      posX += vx;
-      posY += vy;
-    }
-    return true;
-  }
-
   bool waterAt(double x, double y) {
     return isWater(tileAt(x, y));
+  }
+
+
+  bool tileWalkableAt(double x, double y){
+    return isWalkable(tileAt(x, y));
   }
 
   Tile tileAt(double x, double y) {
@@ -325,12 +315,8 @@ extension SceneFunctions on Scene {
     return tileNodes[row][column];
   }
 
-  bool tileBoundaryAt(double x, double y) {
-    return !isOpen(tileAt(x, y));
-  }
-
   bool bulletCollisionAt(double x, double y) {
-    return isCollision(tileAt(x, y));
+    return isBulletCollideable(tileAt(x, y));
   }
 
   double projectedToWorldX(double x, double y) {

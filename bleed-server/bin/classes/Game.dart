@@ -215,13 +215,13 @@ extension GameFunctions on Game {
     double x = a.x + vX;
     double y = a.y + vY;
     for (int i = 0; i < jumps; i++){
-      if (isShootable(scene.tileAt(x, y))){
-        return true;
+      if (!isShootable(scene.tileAt(x, y))){
+        return false;
       }
       x += vX;
       y += vY;
     }
-    return false;
+    return true;
   }
 
   void activateCollectable(Collectable collectable) {
@@ -874,19 +874,19 @@ extension GameFunctions on Game {
       }
     }
 
-    while (scene.tileBoundaryAt(character.left, character.top)) {
+    while (!scene.tileWalkableAt(character.left, character.top)) {
       character.x++;
       character.y++;
     }
-    while (scene.tileBoundaryAt(character.right, character.top)) {
+    while (!scene.tileWalkableAt(character.right, character.top)) {
       character.x--;
       character.y++;
     }
-    while (scene.tileBoundaryAt(character.left, character.bottom)) {
+    while (!scene.tileWalkableAt(character.left, character.bottom)) {
       character.x++;
       character.y--;
     }
-    while (scene.tileBoundaryAt(character.right, character.bottom)) {
+    while (!scene.tileWalkableAt(character.right, character.bottom)) {
       character.x--;
       character.y--;
     }
