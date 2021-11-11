@@ -183,12 +183,19 @@ void parseState() {
 
       case ServerResponse.Scene_Changed:
         print("ServerResponse.Scene_Changed");
-        game.playerX = _consumeDouble();
-        game.playerY = _consumeDouble();
+        double x = _consumeDouble();
+        double y = _consumeDouble();
+        game.playerX = x;
+        game.playerY = y;
+
+        Future.delayed(Duration(milliseconds: 100), () {
+          cameraCenter(x, y);
+        });
+
         // cameraCenter(game.playerX, game.playerY);
         camera.x = game.playerX;
         camera.y = game.playerY;
-        for(Particle particle in game.particles){
+        for (Particle particle in game.particles) {
           particle.active = false;
         }
         break;
@@ -300,39 +307,28 @@ void _parseEnvironmentObjects() {
     double y = _consumeDouble();
     EnvironmentObjectType type = _consumeEnvironmentObjectType();
 
-    if (type == EnvironmentObjectType.SmokeEmitter){
-      game.particleEmitters.add(
-          ParticleEmitter(
-            x: x,
-            y: y,
-            rate: 20,
-            emit: emitSmoke
-          )
-      );
+    if (type == EnvironmentObjectType.SmokeEmitter) {
+      game.particleEmitters
+          .add(ParticleEmitter(x: x, y: y, rate: 20, emit: emitSmoke));
     }
 
-    if (type == EnvironmentObjectType.MystEmitter){
-      game.particleEmitters.add(
-          ParticleEmitter(
-              x: x,
-              y: y,
-              rate: 20,
-              emit: emitMyst
-          )
-      );
+    if (type == EnvironmentObjectType.MystEmitter) {
+      game.particleEmitters
+          .add(ParticleEmitter(x: x, y: y, rate: 20, emit: emitMyst));
     }
 
     Image image = mapEnvironmentObjectTypeToImage(type);
-    Rect src = Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble());
+    Rect src =
+        Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble());
 
     EnvironmentObject envObject = EnvironmentObject(
         x: x,
         y: y,
         type: type,
-        dst: Rect.fromLTWH(x - image.width * 0.5, y - image.height * 0.6666, image.width.toDouble(), image.height.toDouble()),
+        dst: Rect.fromLTWH(x - image.width * 0.5, y - image.height * 0.6666,
+            image.width.toDouble(), image.height.toDouble()),
         src: src,
-        image: image
-    );
+        image: image);
 
     envObject.tileRow = getRow(envObject.x, envObject.y);
     envObject.tileColumn = getColumn(envObject.x, envObject.y);
@@ -349,7 +345,7 @@ void _parseEnvironmentObjects() {
   applyEnvironmentObjectsToBakeMapping();
 }
 
-double environmentObjectY(EnvironmentObject environmentObject){
+double environmentObjectY(EnvironmentObject environmentObject) {
   return environmentObject.y;
 }
 
@@ -566,10 +562,11 @@ void _parseGameJoined() {
   game.playerY = _consumeDouble();
   game.gameId = _consumeInt();
   player.squad = _consumeInt();
-  print("ServerResponse.Game_Joined: playerId: ${game.playerId} gameId: ${game.gameId}");
+  print(
+      "ServerResponse.Game_Joined: playerId: ${game.playerId} gameId: ${game.gameId}");
 }
 
-EnvironmentObjectType _consumeEnvironmentObjectType(){
+EnvironmentObjectType _consumeEnvironmentObjectType() {
   return environmentObjectTypes[_consumeInt()];
 }
 
@@ -604,7 +601,7 @@ CharacterState _consumeCharacterState() {
   return characterStates[_consumeInt()];
 }
 
-Direction _consumeDirection(){
+Direction _consumeDirection() {
   return directions[_consumeInt()];
 }
 
