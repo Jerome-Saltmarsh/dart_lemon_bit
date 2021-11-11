@@ -87,8 +87,14 @@ Widget buildBottomRight() {
 
 Widget buildTime() {
   return Reactive(time, (int value) {
-    return text(value);
+    return text("${padZero(hour)} : ${padZero(minute % 60)}");
   });
+}
+
+String padZero(num value){
+  String t = value.toInt().toString();
+  if(t.length >= 2) return t;
+  return '0$t';
 }
 
 Widget buildHud() {
