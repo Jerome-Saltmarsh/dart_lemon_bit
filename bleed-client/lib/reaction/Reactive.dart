@@ -1,10 +1,10 @@
 
 
-import 'package:bleed_client/classes/ReactiveState.dart';
+import 'package:bleed_client/reaction/ReactiveValue.dart';
 import 'package:flutter/cupertino.dart';
 
 class Reactive<T> extends StatelessWidget {
-  final ReactiveState<T> value;
+  final ReactiveValue<T> value;
   final Widget Function(T t) builder;
 
   Reactive(this.value, this.builder);

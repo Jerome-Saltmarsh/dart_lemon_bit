@@ -19,7 +19,7 @@ import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/streams/playerHealth.dart';
 import 'package:bleed_client/streams/time.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
-import 'package:bleed_client/ui/compose/widgets/Reactive.dart';
+import 'package:bleed_client/reaction/Reactive.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/decorationImages.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
@@ -31,6 +31,7 @@ import 'package:flutter/material.dart';
 import 'package:lemon_engine/functions/toggle_fullscreen.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/fullscreen_active.dart';
+import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/state/build_context.dart';
 import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_engine/state/paint.dart';
@@ -78,7 +79,8 @@ Widget buildHealthBar() {
 }
 
 Widget buildTopLeft() {
-  return Positioned(top: _padding, left: _padding, child: buildTime());
+  // return Positioned(top: _padding, left: _padding, child: buildTime());
+  return Positioned(top: _padding, left: _padding, child: buildMouseWorldPosition());
 }
 
 Widget buildBottomRight() {
@@ -88,6 +90,12 @@ Widget buildBottomRight() {
 Widget buildTime() {
   return Reactive(time, (int value) {
     return text("${padZero(hour)} : ${padZero(minute % 60)}");
+  });
+}
+
+Widget buildMouseWorldPosition(){
+  return Reactive(time, (int value) {
+    return text("Mouse X: ${mouseWorldX.toInt()}, Y: ${mouseWorldY.toInt()}");
   });
 }
 

@@ -1,4 +1,4 @@
 
-import 'package:bleed_client/classes/ReactiveState.dart';
+import 'package:bleed_client/reaction/ReactiveValue.dart';
 
-ReactiveState<double> playerHealth = ReactiveState(0);
+ReactiveValue<double> playerHealth = ReactiveValue(0);

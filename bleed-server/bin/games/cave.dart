@@ -3,6 +3,7 @@ import '../classes/Game.dart';
 import '../classes/Player.dart';
 import '../common/Weapons.dart';
 import '../common/classes/Vector2.dart';
+import '../common/functions/diffOver.dart';
 import '../common/functions/giveOrTake.dart';
 import '../common/functions/randomPositionAround.dart';
 import '../instances/scenes.dart';
@@ -41,10 +42,20 @@ class Cave extends Game {
   @override
   void update() {
     // TODO: implement update
+
+    // 318 324
+    double radius = 10;
+    for(int i = 0; i < players.length; i++){
+      Player player = players[i];
+      if (diffOver(player.x, 318, radius)) continue;
+      if (diffOver(player.y, 324, radius)) continue;
+      changeGame(player, world.town);
+      i--;
+    }
   }
 
   @override
   Vector2 getSpawnPositionFrom(Game from) {
-    return randomPositionAround(john.x, john.y, 50);
+    return Vector2(308, 338);
   }
 }

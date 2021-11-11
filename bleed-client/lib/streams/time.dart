@@ -1,6 +1,6 @@
-import 'package:bleed_client/classes/ReactiveState.dart';
+import 'package:bleed_client/reaction/ReactiveValue.dart';
 
-ReactiveState<int> time = ReactiveState(0);
+ReactiveValue<int> time = ReactiveValue(0);
 
 
 Phase getPhase() {

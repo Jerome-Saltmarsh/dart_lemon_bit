@@ -6,6 +6,7 @@ import '../classes/TileNode.dart';
 import '../common/Quests.dart';
 import '../common/Weapons.dart';
 import '../common/classes/Vector2.dart';
+import '../common/functions/diffOver.dart';
 import '../common/functions/giveOrTake.dart';
 import '../common/functions/randomPositionAround.dart';
 import '../instances/scenes.dart';
@@ -146,11 +147,6 @@ class Town extends Game {
   }
 
   @override
-  bool gameOver() {
-    return false;
-  }
-
-  @override
   void onPlayerKilled(Player player) {
     // player.x = playerSpawnX;
     // player.y = playerSpawnY;
@@ -161,6 +157,15 @@ class Town extends Game {
 
   @override
   void update() {
+    double radius = 10;
+    for(int i = 0; i < players.length; i++){
+      Player player = players[i];
+      if (diffOver(player.x, -1281, radius)) continue;
+      if (diffOver(player.y, 2408, radius)) continue;
+      changeGame(player, world.cave);
+      i--;
+    }
+
     if (frame % _framesPerZombieSpawn != 0) return;
     if (zombieCount > _maxZombies) return;
     spawnRandomZombie();
@@ -168,6 +173,6 @@ class Town extends Game {
 
   @override
   Vector2 getSpawnPositionFrom(Game from) {
-    return randomPositionAround(npcSmith.x, npcSmith.y, 50);
+    return Vector2(-1260, 2389);
   }
 }
