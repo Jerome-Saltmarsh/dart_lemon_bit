@@ -44,37 +44,37 @@ bool mouseInTopRight = false;
 const double _padding = 8;
 
 Widget buildHealthBar() {
-  return StreamBuilder<double>(
-    initialData: 100.0,
-    stream: playerHealth.stream,
-    builder: (BuildContext context, AsyncSnapshot<double> snapshot) {
-      double health = snapshot.data;
-      double percentage = health / 100.0;
-      double width = 120;
-      double height = width * goldenRatioInverse;
+  return Reactive(playerHealth, (double health){
 
-      return Tooltip(
-        message: 'Health ${health.toInt()}',
+    if (health == null) {
+      return CircularProgressIndicator();
+    }
+
+    double percentage = health / 100.0;
+    double width = 120;
+    double height = width * goldenRatioInverse;
+
+    return Tooltip(
+      message: 'Health ${health.toInt()}',
+      child: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.white, width: 4),
+            borderRadius: borderRadius4),
+        alignment: Alignment.centerLeft,
+        padding: EdgeInsets.all(3),
         child: Container(
-          width: width,
-          height: height,
           decoration: BoxDecoration(
-              border: Border.all(color: Colors.white, width: 4),
-              borderRadius: borderRadius4),
-          alignment: Alignment.centerLeft,
-          padding: EdgeInsets.all(3),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              // borderRadius: borderRadius4
-            ),
-            width: width * percentage,
-            height: height,
+            color: Colors.white,
+            // borderRadius: borderRadius4
           ),
+          width: width * percentage,
+          height: height,
         ),
-      );
-    },
-  );
+      ),
+    );
+  });
 }
 
 Widget buildTopLeft() {

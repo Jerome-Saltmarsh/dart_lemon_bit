@@ -386,7 +386,6 @@ void _parsePlayer() {
   game.playerWeapon = _consumeWeapon();
   player.health = _consumeDouble();
   playerHealth(player.health);
-  // streamPlayerHealth.add(player.health);
   player.maxHealth = _consumeDouble();
   player.stamina = _consumeInt();
   player.staminaMax = _consumeInt();
