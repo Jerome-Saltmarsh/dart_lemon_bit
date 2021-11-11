@@ -19,6 +19,7 @@ import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/streams/playerHealth.dart';
 import 'package:bleed_client/streams/time.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
+import 'package:bleed_client/ui/compose/widgets/Reactive.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/decorationImages.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
@@ -85,12 +86,9 @@ Widget buildBottomRight() {
 }
 
 Widget buildTime() {
-  return StreamBuilder<int>(
-    stream: time.stream,
-    builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-      return text(snapshot.data);
-    },
-  );
+  return Reactive(time, (int value) {
+    return text(value);
+  });
 }
 
 Widget buildHud() {
