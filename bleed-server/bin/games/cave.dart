@@ -11,7 +11,7 @@ class Cave extends Game {
     InteractableNpc john = InteractableNpc(
         name: "John",
         onInteractedWith: (Player player){
-          playerChangeGame(player, world.town);
+          changeGame(player, world.town);
         },
         x: 0,
         y: 300,

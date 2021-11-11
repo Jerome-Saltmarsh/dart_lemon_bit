@@ -55,7 +55,13 @@ void main() {
   initUpdateLoop();
   loadScenes();
 
+  int totalConnections = 0;
+
   var handler = webSocketHandler((WebSocketChannel webSocket) {
+
+    totalConnections++;
+    print("New connection established. Total Connections $totalConnections");
+
     void sendToClient(String response) {
       webSocket.sink.add(response);
     }
@@ -98,6 +104,10 @@ void main() {
 
     void errorPlayerNotFound() {
       error(GameError.PlayerNotFound);
+    }
+
+    void errorPlayerDead(){
+      error(GameError.PlayerDead);
     }
 
     void errorInvalidPlayerUUID() {
@@ -268,7 +278,7 @@ void main() {
           int id = int.parse(arguments[2]);
           Player? player = game.findPlayerById(id);
           if (player == null) {
-            error(GameError.PlayerNotFound);
+            errorPlayerNotFound();
             return;
           }
 
@@ -303,7 +313,7 @@ void main() {
           int id = int.parse(arguments[2]);
           Player? player = game.findPlayerById(id);
           if (player == null) {
-            error(GameError.PlayerNotFound);
+            errorPlayerNotFound();
             return;
           }
 
@@ -452,32 +462,23 @@ void main() {
           break;
 
         case ClientRequest.Interact:
-          String gameId = arguments[1];
-          Game? game = findGameById(gameId);
-          if (game == null) {
-            error(GameError.GameNotFound);
-            return;
-          }
-
-          int id = int.parse(arguments[2]);
-          Player? player = game.findPlayerById(id);
-          if (player == null) {
-            error(GameError.PlayerNotFound);
-            return;
-          }
-
           String uuid = arguments[3];
-          if (uuid != player.uuid) {
-            error(GameError.InvalidPlayerUUID);
+          Player? player = findPlayerById(uuid);
+
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+          if (player.dead) {
+            errorPlayerDead();
             return;
           }
 
-          if (player.dead) return;
-
-          for (InteractableNpc interactable in game.npcs) {
-            if (diffOver(interactable.x, player.x, radius.interact)) continue;
-            if (diffOver(interactable.y, player.y, radius.interact)) continue;
-            interactable.onInteractedWith(player);
+          // TODO perform this logic in game not server
+          for (InteractableNpc npc in player.game.npcs) {
+            if (diffOver(npc.x, player.x, radius.interact)) continue;
+            if (diffOver(npc.y, player.y, radius.interact)) continue;
+            npc.onInteractedWith(player);
             return;
           }
       }

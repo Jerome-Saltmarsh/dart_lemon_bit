@@ -71,7 +71,7 @@ abstract class Game {
 
   Player doSpawnPlayer();
 
-  void playerChangeGame(Player player, Game to){
+  void changeGame(Player player, Game to){
     if (player.game == to) return;
 
     players.remove(player);

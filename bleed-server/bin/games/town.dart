@@ -102,21 +102,7 @@ class Town extends Game {
 
   void _onNpcInteractedWithSmith(Player player) {
     // @on change scene
-    players.remove(player);
-
-    for(Npc zombie in player.game.zombies){
-      if (zombie.target == player){
-        zombie.clearTarget();
-      }
-    }
-
-    world.cave.players.add(player);
-    player.game = world.cave;
-    player.sceneChanged = true;
-
-    TileNode node = world.cave.getRandomOpenTileNode();
-    player.x = node.position.x;
-    player.y = node.position.y;
+    changeGame(player, world.cave);
 
     // switch (player.questMain) {
     //   case MainQuest.Introduction:

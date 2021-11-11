@@ -7,6 +7,7 @@ enum GameError {
   InvalidPlayerUUID,
   ClientRequestArgumentsEmpty,
   PlayerStillAlive,
+  PlayerDead,
   InvalidArguments,
   LobbyNotFound,
   LobbyUserNotFound,
