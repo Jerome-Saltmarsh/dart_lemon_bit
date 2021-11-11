@@ -1,3 +1,3 @@
-import 'package:bleed_client/variables/time.dart';
+import 'package:bleed_client/streams/time.dart';
 
 Phase phase = Phase.EarlyMorning;

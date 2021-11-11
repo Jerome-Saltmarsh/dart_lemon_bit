@@ -17,6 +17,7 @@ import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/streams/playerHealth.dart';
+import 'package:bleed_client/streams/time.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/decorationImages.dart';
@@ -41,11 +42,11 @@ import 'dialogs.dart';
 bool mouseInTopRight = false;
 const double _padding = 8;
 
-Widget buildHealthBar(){
+Widget buildHealthBar() {
   return StreamBuilder<double>(
     initialData: 100.0,
     stream: playerHealth.stream,
-    builder: (BuildContext context, AsyncSnapshot<double> snapshot){
+    builder: (BuildContext context, AsyncSnapshot<double> snapshot) {
       double health = snapshot.data;
       double percentage = health / 100.0;
       double width = 120;
@@ -57,15 +58,14 @@ Widget buildHealthBar(){
           width: width,
           height: height,
           decoration: BoxDecoration(
-            border: Border.all(color: Colors.white, width: 4),
-            borderRadius: borderRadius4
-          ),
+              border: Border.all(color: Colors.white, width: 4),
+              borderRadius: borderRadius4),
           alignment: Alignment.centerLeft,
           padding: EdgeInsets.all(3),
           child: Container(
             decoration: BoxDecoration(
-                color: Colors.white,
-                // borderRadius: borderRadius4
+              color: Colors.white,
+              // borderRadius: borderRadius4
             ),
             width: width * percentage,
             height: height,
@@ -76,11 +76,21 @@ Widget buildHealthBar(){
   );
 }
 
-Widget buildTopLeft(){
-  return Positioned(
-      bottom: _padding,
-      right: _padding,
-      child: buildHealthBar());
+Widget buildTopLeft() {
+  return Positioned(top: _padding, left: _padding, child: buildTime());
+}
+
+Widget buildBottomRight() {
+  return Positioned(bottom: _padding, right: _padding, child: buildHealthBar());
+}
+
+Widget buildTime() {
+  return StreamBuilder<int>(
+    stream: time.stream,
+    builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+      return text(snapshot.data);
+    },
+  );
 }
 
 Widget buildHud() {
@@ -92,8 +102,8 @@ Widget buildHud() {
       buildTextBox(),
       if (hud.state.textBoxVisible) _buildServerText(),
       if (player.alive) buildViewBottomLeft(),
-      if (player.alive) buildTopLeft(),
-      // _buildViewBottomRight(),
+      if (player.alive) buildBottomRight(),
+      buildTopLeft(),
       _buildServerText(),
       if (!hud.state.observeMode && player.dead) _buildViewRespawn(),
       if (player.dead && hud.state.observeMode) _buildRespawnLight(),
@@ -155,7 +165,6 @@ Widget buildTopRight() {
   double iconSize = 45;
 
   return StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-
     hud.stateSetters.topRight = setState;
 
     if (!hud.state.menuVisible) {
@@ -396,8 +405,7 @@ Widget buildWeaponSlot({Weapon weapon}) {
       image: mapWeaponToImage(weapon),
       color: Colors.black26,
       border: Border.all(
-          color: Colors.white,
-          width: game.playerWeapon == weapon ? 6 : 1),
+          color: Colors.white, width: game.playerWeapon == weapon ? 6 : 1),
       borderRadius: borderRadius4,
     ),
   );
@@ -902,47 +910,42 @@ Widget buildRow(int amount, String name, Function onPressed) {
   );
 }
 
-Widget _buildViewBottomRight() {
-  return Positioned(
-    right: 5,
-    bottom: 5,
-    child: MouseRegion(
-      onEnter: (_) {
-        hud.state.showServers = true;
-        rebuildUI();
-      },
-      onExit: (_) {
-        hud.state.showServers = false;
-        rebuildUI();
-      },
-      child: Container(
-          padding: padding8,
-          width: 140,
-          decoration: BoxDecoration(
-            borderRadius: borderRadius4,
-            color: Colors.black45,
-          ),
-          child: Column(
-            crossAxisAlignment: cross.center,
-            children: [
-              if ((player.dead && !hud.state.observeMode) |
-                  hud.state.showServers)
-                onPressed(
-                    callback: disconnect,
-                    child: Container(
-                      alignment: Alignment.center,
-                      margin: const EdgeInsets.only(bottom: 16),
-                      child: text("Disconnect"),
-                      padding: padding4,
-                    )),
-              if ((player.dead && !hud.state.observeMode) ||
-                  hud.state.showServers)
-                buildServerList(),
-              Container(
-                  padding: padding4, child: text(getServerName(currentServer))),
-            ],
-          )),
-    ),
+Widget buildServer() {
+  return MouseRegion(
+    onEnter: (_) {
+      hud.state.showServers = true;
+      rebuildUI();
+    },
+    onExit: (_) {
+      hud.state.showServers = false;
+      rebuildUI();
+    },
+    child: Container(
+        padding: padding8,
+        width: 140,
+        decoration: BoxDecoration(
+          borderRadius: borderRadius4,
+          color: Colors.black45,
+        ),
+        child: Column(
+          crossAxisAlignment: cross.center,
+          children: [
+            if ((player.dead && !hud.state.observeMode) | hud.state.showServers)
+              onPressed(
+                  callback: disconnect,
+                  child: Container(
+                    alignment: Alignment.center,
+                    margin: const EdgeInsets.only(bottom: 16),
+                    child: text("Disconnect"),
+                    padding: padding4,
+                  )),
+            if ((player.dead && !hud.state.observeMode) ||
+                hud.state.showServers)
+              buildServerList(),
+            Container(
+                padding: padding4, child: text(getServerName(currentServer))),
+          ],
+        )),
   );
 }
 

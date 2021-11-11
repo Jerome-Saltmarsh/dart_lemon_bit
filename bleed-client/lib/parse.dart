@@ -38,7 +38,7 @@ import 'package:bleed_client/ui/compose/dialogs.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/utils/list_util.dart';
-import 'package:bleed_client/variables/time.dart';
+import 'package:bleed_client/streams/time.dart';
 import 'package:lemon_engine/state/camera.dart';
 import 'package:neuro/instance.dart';
 
@@ -93,7 +93,7 @@ void parseState() {
         break;
 
       case ServerResponse.Game_Time:
-        setTime(_consumeInt());
+        time(_consumeInt());
         break;
 
       case ServerResponse.NpcsDebug:
