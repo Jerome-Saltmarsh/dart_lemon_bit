@@ -38,5 +38,9 @@ Image mapEnvironmentObjectToToShadedImage(EnvironmentObject environmentObject, S
     }
   }
 
+  if (environmentObject.type == EnvironmentObjectType.House02){
+    return images.house02;
+  }
+
   return images.empty;
 }
