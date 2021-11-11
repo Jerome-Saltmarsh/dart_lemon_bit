@@ -5,6 +5,9 @@ import '../classes/Player.dart';
 import '../classes/TileNode.dart';
 import '../common/Quests.dart';
 import '../common/Weapons.dart';
+import '../common/classes/Vector2.dart';
+import '../common/functions/giveOrTake.dart';
+import '../common/functions/randomPositionAround.dart';
 import '../instances/scenes.dart';
 import '../state.dart';
 import '../utils/player_utils.dart';
@@ -161,5 +164,10 @@ class Town extends Game {
     if (frame % _framesPerZombieSpawn != 0) return;
     if (zombieCount > _maxZombies) return;
     spawnRandomZombie();
+  }
+
+  @override
+  Vector2 getSpawnPositionFrom(Game from) {
+    return randomPositionAround(npcSmith.x, npcSmith.y, 50);
   }
 }

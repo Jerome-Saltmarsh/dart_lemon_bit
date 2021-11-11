@@ -71,6 +71,8 @@ abstract class Game {
 
   Player doSpawnPlayer();
 
+  Vector2 getSpawnPositionFrom(Game from);
+
   void changeGame(Player player, Game to){
     if (player.game == to) return;
 
@@ -84,9 +86,9 @@ abstract class Game {
 
     to.players.add(player);
     player.game = to;
-    TileNode node = to.getRandomOpenTileNode();
-    player.x = node.position.x;
-    player.y = node.position.y;
+    Vector2 spawnPosition = to.getSpawnPositionFrom(player.game);
+    player.x = spawnPosition.x;
+    player.y = spawnPosition.y;
     player.sceneChanged = true;
   }
 

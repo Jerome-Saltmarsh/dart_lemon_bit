@@ -187,14 +187,11 @@ void parseState() {
         double y = _consumeDouble();
         game.playerX = x;
         game.playerY = y;
+        cameraCenter(x, y);
 
-        Future.delayed(Duration(milliseconds: 100), () {
+        Future.delayed(Duration(milliseconds: 150), () {
           cameraCenter(x, y);
         });
-
-        // cameraCenter(game.playerX, game.playerY);
-        camera.x = game.playerX;
-        camera.y = game.playerY;
         for (Particle particle in game.particles) {
           particle.active = false;
         }

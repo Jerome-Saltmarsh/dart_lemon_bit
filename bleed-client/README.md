@@ -108,9 +108,10 @@
 [ ] UI Display Clock
 [ ] Smooth Zooming
 [ ] Change scene
+    [ ] Black Fade Screen 
     [ ] Tavern Level
     [ ] Cave Level
-    [ ] Camera Pans up 
+    [x] Camera Pans up 
     [x] Player disappears when firing
     [?] Zombies aren't drawing
 [x] Fix Npc aim direction incorrect
