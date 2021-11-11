@@ -104,11 +104,14 @@
 [ ] Design Palette
 [ ] Design Tree Model
 [ ] Fix Npc when wall is in the way 
+[ ] Spawn Myst at night
+[ ] UI Display Clock
+[ ] Smooth Zooming
 [ ] Change scene
     [ ] Tavern Level
     [ ] Cave Level
     [ ] Camera Pans up 
-    [ ] Player disappears when firing
+    [x] Player disappears when firing
     [?] Zombies aren't drawing
 [x] Fix Npc aim direction incorrect
 [x] UI Health Bar

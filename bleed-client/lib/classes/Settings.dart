@@ -1,6 +1,7 @@
 class Settings {
   bool audioMuted = true;
-  double cameraFollow = 0.05;
+  double cameraFollowSpeed = 0.04;
+  double zoomFollowSpeed = 0.2;
   double zoomSpeed = 0.0005;
   double maxZoom = 0.1;
   bool developMode = true;

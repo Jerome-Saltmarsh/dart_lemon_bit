@@ -9,6 +9,8 @@ Shading getShadeAtPosition(double x, double y){
 }
 
 Shading getShade(int row, int column){
+  if (row < 0) return Shading.VeryDark;
+  if (column < 0) return Shading.VeryDark;
   if (row >= game.totalRows){
     return Shading.VeryDark;
   }

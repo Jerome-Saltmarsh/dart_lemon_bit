@@ -6,6 +6,7 @@ import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/state/particleSettings.dart';
 
 void emitMyst(Particle particle) {
+  particle.active = true;
   particle.type = ParticleType.Myst;
   particle.duration = particleSettings.mystDuration;
   particle.x += giveOrTake(particleSettings.mystPositionRange);

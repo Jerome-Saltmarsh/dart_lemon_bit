@@ -4,8 +4,12 @@ import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/state/camera.dart';
 
 void cameraFollowPlayer() {
-  double xDiff = screenCenterWorldX - game.playerX;
-  double yDiff = screenCenterWorldY - game.playerY;
-  camera.x -= xDiff * settings.cameraFollow;
-  camera.y -= yDiff * settings.cameraFollow;
+  cameraFollow(game.playerX, game.playerY, settings.cameraFollowSpeed);
+}
+
+void cameraFollow(double x, double y, double speed){
+  double xDiff = screenCenterWorldX - x;
+  double yDiff = screenCenterWorldY - y;
+  camera.x -= xDiff * speed;
+  camera.y -= yDiff * speed;
 }

@@ -84,10 +84,10 @@ abstract class Game {
 
     to.players.add(player);
     player.game = to;
-    player.sceneChanged = true;
     TileNode node = to.getRandomOpenTileNode();
     player.x = node.position.x;
     player.y = node.position.y;
+    player.sceneChanged = true;
   }
 
   int numberOfPlayersInSquad(int squad) {

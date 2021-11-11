@@ -39,6 +39,7 @@ import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/utils/list_util.dart';
 import 'package:bleed_client/variables/time.dart';
+import 'package:lemon_engine/state/camera.dart';
 import 'package:neuro/instance.dart';
 
 import 'classes/Score.dart';
@@ -182,6 +183,11 @@ void parseState() {
 
       case ServerResponse.Scene_Changed:
         print("ServerResponse.Scene_Changed");
+        game.playerX = _consumeDouble();
+        game.playerY = _consumeDouble();
+        // cameraCenter(game.playerX, game.playerY);
+        camera.x = game.playerX;
+        camera.y = game.playerY;
         for(Particle particle in game.particles){
           particle.active = false;
         }
