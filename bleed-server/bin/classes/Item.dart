@@ -1,7 +1,7 @@
 
-import '../classes.dart';
 import '../common/ItemType.dart';
 import '../settings.dart';
+import 'GameObject.dart';
 
 class Item extends GameObject {
   ItemType type;

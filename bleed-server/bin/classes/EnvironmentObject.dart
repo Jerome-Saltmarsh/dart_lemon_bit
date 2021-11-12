@@ -1,5 +1,5 @@
-import '../classes.dart';
 import '../common/enums/EnvironmentObjectType.dart';
+import 'GameObject.dart';
 
 class EnvironmentObject extends GameObject {
   EnvironmentObjectType type;

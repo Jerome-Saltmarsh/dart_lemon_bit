@@ -1,4 +1,4 @@
-import '../classes.dart';
+import '../classes/GameObject.dart';
 import '../maths.dart';
 
 void applyForce(GameObject gameObject, double rotation, double amount){

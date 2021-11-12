@@ -31,9 +31,11 @@ import '../utils/game_utils.dart';
 import '../utils/player_utils.dart';
 import 'Collectable.dart';
 import 'Crate.dart';
+import 'GameObject.dart';
 import 'Inventory.dart';
 import 'Item.dart';
 import 'Player.dart';
+import 'Positioned.dart';
 import 'Scene.dart';
 import 'TileNode.dart';
 

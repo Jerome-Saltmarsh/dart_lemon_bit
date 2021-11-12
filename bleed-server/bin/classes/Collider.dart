@@ -1,5 +1,5 @@
 
-import '../classes.dart';
+import 'Positioned.dart';
 
 class Collider extends Positioned {
   double radius;

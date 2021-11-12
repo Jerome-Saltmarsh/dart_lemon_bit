@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'classes/Game.dart';
-import 'classes.dart';
+import 'classes/GameObject.dart';
 import 'language.dart';
 import 'maths.dart';
 import 'server.dart';

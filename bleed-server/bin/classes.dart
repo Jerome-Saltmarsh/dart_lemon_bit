@@ -1,3 +1,4 @@
+import 'classes/GameObject.dart';
 import 'classes/Player.dart';
 import 'common/classes/Vector2.dart';
 import 'enums.dart';
@@ -6,46 +7,7 @@ import 'common/Weapons.dart';
 import 'settings.dart';
 import 'utils.dart';
 
-int _idCount = 0;
 
-class Positioned {
-  double _x;
-  double y;
-  Positioned(this._x, this.y);
-
-  double get x => _x;
-
-  set x(double value){
-    if (value.isNaN){
-      throw Exception();
-    }
-    _x = value;
-  }
-}
-
-class GameObject extends Positioned {
-  final int id = _idCount++;
-  double z = 0;
-  double xv = 0;
-  double yv = 0;
-  double zv = 0;
-  double radius = 0;
-  bool collidable = true;
-  bool active = true;
-
-  double get left => x - radius;
-
-  double get right => x + radius;
-
-  double get top => y - radius;
-
-  double get bottom => y + radius;
-
-  bool get inactive => !active;
-
-  GameObject(double x, double y,
-      {this.z = 0, this.xv = 0, this.yv = 0, this.zv = 0, this.radius = 5}) : super(x, y);
-}
 
 const noSquad = -1;
 
