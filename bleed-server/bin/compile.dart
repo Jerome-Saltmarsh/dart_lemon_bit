@@ -6,7 +6,7 @@ import 'classes/Game.dart';
 import 'classes/Item.dart';
 import 'classes/Npc.dart';
 import 'classes/Player.dart';
-import 'classes/interactable_npc.dart';
+import 'classes/InteractableNpc.dart';
 import 'common/PlayerEvents.dart';
 import 'common/Tile.dart';
 import 'common/ServerResponse.dart';

@@ -5,7 +5,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'classes/Game.dart';
 import 'classes/Player.dart';
-import 'classes/interactable_npc.dart';
+import 'classes/InteractableNpc.dart';
 import 'common/PlayerEvents.dart';
 import 'common/version.dart';
 import 'common/constants.dart';

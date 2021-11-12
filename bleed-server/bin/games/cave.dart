@@ -3,7 +3,7 @@ import 'package:lemon_math/diff_over.dart';
 import '../classes.dart';
 import '../classes/Game.dart';
 import '../classes/Player.dart';
-import '../classes/interactable_npc.dart';
+import '../classes/InteractableNpc.dart';
 import '../common/Weapons.dart';
 import '../common/classes/Vector2.dart';
 import '../enums/npc_mode.dart';
