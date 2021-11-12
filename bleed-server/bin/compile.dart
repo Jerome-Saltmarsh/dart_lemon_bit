@@ -1,8 +1,10 @@
 import 'classes.dart';
+import 'classes/Bullet.dart';
 import 'classes/Collectable.dart';
 import 'classes/Crate.dart';
 import 'classes/EnvironmentObject.dart';
 import 'classes/Game.dart';
+import 'classes/GameEvent.dart';
 import 'classes/Item.dart';
 import 'classes/Npc.dart';
 import 'classes/Player.dart';

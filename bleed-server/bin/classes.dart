@@ -1,11 +1,8 @@
 import 'classes/Character.dart';
 import 'classes/GameObject.dart';
 import 'classes/Player.dart';
-import 'common/classes/Vector2.dart';
 import 'common/GameEventType.dart';
 import 'common/Weapons.dart';
-import 'enums/npc_mode.dart';
-import 'settings.dart';
 
 abstract class HasSquad {
   int getSquad();
@@ -23,38 +20,6 @@ bool allies(HasSquad a, HasSquad b) {
 
 bool enemies(HasSquad a, HasSquad b) {
   return !allies(a, b);
-}
-
-class Bullet extends GameObject implements HasSquad {
-  late double xStart;
-  late double yStart;
-  Character owner;
-  double range;
-  int damage;
-  late Weapon weapon;
-
-  int get squad => owner.squad;
-
-  Bullet(double x, double y, double xVel, double yVel, this.owner, this.range,
-      this.damage)
-      : super(x, y, xv: xVel, yv: yVel) {
-    xStart = x;
-    yStart = y;
-    weapon = owner.weapon;
-  }
-
-  @override
-  int getSquad() {
-    return owner.squad;
-  }
-}
-
-class GameEvent extends GameObject {
-  final GameEventType type;
-  int frameDuration = 2;
-
-  GameEvent(this.type, double x, double y, double xv, double yv)
-      : super(x, y, xv: xv, yv: yv);
 }
 
 class Grenade extends GameObject {
