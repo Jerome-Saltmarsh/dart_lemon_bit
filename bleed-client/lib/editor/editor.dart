@@ -16,7 +16,6 @@ import 'package:bleed_client/editor/state/selectedCollectable.dart';
 import 'package:bleed_client/functions/saveScene.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/environmentObjects.dart';
-import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +25,7 @@ import 'package:lemon_engine/state/camera.dart';
 import 'package:lemon_engine/state/mouseDragging.dart';
 import 'package:lemon_engine/state/size.dart';
 import 'package:lemon_engine/state/zoom.dart';
+import 'package:lemon_math/diff.dart';
 
 import 'state/editState.dart';
 

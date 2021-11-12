@@ -46,6 +46,9 @@ import 'package:lemon_engine/render/draw_text.dart';
 import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_engine/state/screen.dart';
+import 'package:lemon_math/adjacent.dart';
+import 'package:lemon_math/diff.dart';
+import 'package:lemon_math/opposite.dart';
 
 import '../draw.dart';
 import '../images.dart';
@@ -302,13 +305,14 @@ void _drawMouseAim() {
   if (weapon == Weapon.Shotgun) return;
 
   paint.strokeWidth = 3;
-  double rot = radionsBetween(
+  double angle = radionsBetween(
       mouseWorldX, mouseWorldY, game.playerX, game.playerY);
 
   double mouseDistance = distance(mouseWorldX, mouseWorldY, playerX, playerY);
   double d = min(mouseDistance, weapon == Weapon.SniperRifle ? 150 : 35);
-  double vX = velX(rot, d);
-  double vY = velY(rot, d);
+
+  double vX = adjacent(angle, d);
+  double vY = opposite(angle, d);
   Offset mouseOffset = Offset(mouseWorldX, mouseWorldY);
   Offset aimOffset = Offset(mouseWorldX + vX, mouseWorldY + vY);
   _drawLine(mouseOffset, aimOffset, Colors.white);

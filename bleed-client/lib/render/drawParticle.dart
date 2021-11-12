@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:lemon_engine/render/draw_circle.dart';
 import 'package:lemon_engine/render/draw_image.dart';
 import 'package:lemon_engine/state/paint.dart';
+import 'package:lemon_math/adjacent.dart';
+import 'package:lemon_math/opposite.dart';
 
 import '../maths.dart';
 import '../utils.dart';
@@ -59,8 +61,8 @@ void drawParticle(Particle particle){
     case ParticleType.Arm:
       Color color = getColorSkin(shading);
       double length = randomBetween(4, 6);
-      double handX = x + velX(rotation, length);
-      double handY = y + velY(rotation, length);
+      double handX = x + adjacent(rotation, length);
+      double handY = y + opposite(rotation, length);
       setColor(color);
       drawLine3(x, y, handX, handY);
       drawCircle(handX, handY, 2 / scaleShift, color);

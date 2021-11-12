@@ -41,7 +41,6 @@ import '../../tutorials.dart';
 import 'buildTextBox.dart';
 import 'dialogs.dart';
 
-bool mouseInTopRight = false;
 const double _padding = 8;
 
 Widget buildHealthBar() {
@@ -79,7 +78,7 @@ Widget buildHealthBar() {
 }
 
 Widget buildTopLeft() {
-  // return Positioned(top: _padding, left: _padding, child: buildTime());
+  return Positioned(top: _padding, left: _padding, child: buildTime());
   return Positioned(top: _padding, left: _padding, child: buildMouseWorldPosition());
 }
 
