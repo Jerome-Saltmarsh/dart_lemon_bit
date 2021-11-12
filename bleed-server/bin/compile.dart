@@ -4,6 +4,7 @@ import 'classes/Crate.dart';
 import 'classes/EnvironmentObject.dart';
 import 'classes/Game.dart';
 import 'classes/Item.dart';
+import 'classes/Npc.dart';
 import 'classes/Player.dart';
 import 'classes/interactable_npc.dart';
 import 'common/PlayerEvents.dart';

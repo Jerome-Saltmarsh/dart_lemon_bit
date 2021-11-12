@@ -1,5 +1,5 @@
-import '../classes.dart';
 import '../common/Weapons.dart';
+import 'Npc.dart';
 import 'Player.dart';
 
 class InteractableNpc extends Npc {
