@@ -1,45 +1,8 @@
 import 'dart:math';
 
+import 'package:lemon_math/normlize.dart';
+
 const double piQuarter = pi * 0.25;
-final Random random = Random();
-
-const double goldenRatio = 1.61803398875;
-const double goldenRatioInverse = 1.0 / goldenRatio;
-const double goldenRatioInverseB = 1.0 - goldenRatioInverse;
-
-double randomBetween(num a, num b){
-  return (random.nextDouble() * (b - a)) + a;
-}
-
-double giveOrTake(double value){
-  return randomBetween(-value, value);
-}
-
-double magnitude(double a, double b){
-  return sqrt((a * a) + (b * b));
-}
-
-double distance(double x1, double y1, double x2, double y2){
-  return magnitude(x1 - x2, y1 - y2);
-}
-
-// double abs(double value){
-//   if(value < 0) return -value;
-//   return value;
-// }
-
-double radionsBetween(double x1, double y1, double x2, double y2) {
-  double x = x1 - x2;
-  double y = y1 - y2;
-  if (x < 0) {
-    return (atan2(x, y) * -1);
-  }
-  return (pi + pi) - atan2(x, y);
-}
-
-double normalize(double x, double y){
-  return 1.0 / magnitude(x, y);
-}
 
 double normalizeX(double x, double y){
   return normalize(x, y) * x;
@@ -56,15 +19,3 @@ double clampMagnitudeX(double x, double y, double value){
 double clampMagnitudeY(double x, double y, double value){
   return normalizeY(x, y) * value;
 }
-
-// double adj(double rotation, double magnitude) {
-//   return -cos(rotation + piHalf) * magnitude;
-// }
-//
-// double opp(double rotation, double magnitude) {
-//   return -sin(rotation + piHalf) * magnitude;
-// }
-
-// double diff(double a, double b){
-//   return abs(a - b);
-// }

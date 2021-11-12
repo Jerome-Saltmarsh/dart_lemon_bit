@@ -1218,6 +1218,7 @@ extension GameFunctions on Game {
       player.active = false;
       players.removeAt(i);
       i--;
+
       onPlayerDisconnected(player);
     }
   }

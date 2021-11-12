@@ -1,6 +1,7 @@
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/functions/spawners/spawnParticle.dart';
 import 'package:bleed_client/maths.dart';
+import 'package:lemon_math/give_or_take.dart';
 
 void spawnShotSmoke(double x, double y, double xv, double yv) {
   for (int i = 0; i < 4; i++) {

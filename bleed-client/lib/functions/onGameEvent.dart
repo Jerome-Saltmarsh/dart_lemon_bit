@@ -1,4 +1,9 @@
 
+import 'package:lemon_math/give_or_take.dart';
+import 'package:lemon_math/randomBool.dart';
+import 'package:lemon_math/randomInt.dart';
+import 'package:lemon_math/random_between.dart';
+
 import '../audio.dart';
 import '../common/GameEventType.dart';
 import '../maths.dart';

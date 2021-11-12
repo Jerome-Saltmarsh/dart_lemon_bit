@@ -36,6 +36,7 @@ import 'package:lemon_engine/state/build_context.dart';
 import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_engine/state/size.dart';
+import 'package:lemon_math/golden_ratio.dart';
 
 import '../../tutorials.dart';
 import 'buildTextBox.dart';

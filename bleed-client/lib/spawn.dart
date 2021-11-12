@@ -4,6 +4,8 @@ import 'package:bleed_client/functions/spawners/spawnShrapnel.dart';
 import 'package:bleed_client/functions/spawners/spawnSmoke.dart';
 import 'package:bleed_client/render/state/floatingText.dart';
 import 'package:bleed_client/utils.dart';
+import 'package:lemon_math/give_or_take.dart';
+import 'package:lemon_math/randomInt.dart';
 
 import 'audio.dart';
 import 'functions/spawnBulletHole.dart';

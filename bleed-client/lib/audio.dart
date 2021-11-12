@@ -3,6 +3,8 @@ import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:lemon_engine/game.dart';
+import 'package:lemon_math/distance_between.dart';
+import 'package:lemon_math/randomItem.dart';
 
 // interface
 void initAudioPlayers() {
@@ -197,7 +199,7 @@ void _playAudio(String name, double x, double y) {
 }
 
 double _calculateVolume(double x, double y) {
-  double d = distance(x, y, screenCenterWorldX, screenCenterWorldY);
+  double d = distanceBetween(x, y, screenCenterWorldX, screenCenterWorldY);
   double v = 1.0 / ((d * _audioDistanceFade) + 1);
   return v * v;
 }

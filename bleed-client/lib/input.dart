@@ -21,7 +21,9 @@ import 'package:lemon_engine/state/camera.dart';
 import 'package:lemon_engine/state/zoom.dart';
 import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/diff_over.dart';
+import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/opposite.dart';
+import 'package:lemon_math/randomItem.dart';
 
 import '../common.dart';
 import '../send.dart';
@@ -202,7 +204,7 @@ Map<LogicalKeyboardKey, Function> _keyReleasedHandlers = {
 
 void throwGrenade() {
   if (!mouseAvailable) return;
-  double mouseDistance = distance(
+  double mouseDistance = distanceBetween(
       game.playerX, game.playerY, mouseWorldX, mouseWorldY);
   double maxRange = 400; // TODO refactor magic variable
   double throwDistance = min(mouseDistance, maxRange);

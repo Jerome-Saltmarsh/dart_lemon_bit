@@ -11,6 +11,7 @@ import 'package:lemon_engine/render/draw_image.dart';
 import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/opposite.dart';
+import 'package:lemon_math/random_between.dart';
 
 import '../maths.dart';
 import '../utils.dart';
