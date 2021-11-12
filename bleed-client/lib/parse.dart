@@ -4,7 +4,6 @@ import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/InventoryItem.dart';
-import 'package:bleed_client/classes/Lobby.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
@@ -31,7 +30,6 @@ import 'package:bleed_client/render/drawCanvas.dart';
 import 'package:bleed_client/render/functions/applyEnvironmentObjectsToBakeMapping.dart';
 import 'package:bleed_client/render/functions/setBakeMapToAmbientLight.dart';
 import 'package:bleed_client/render/state/paths.dart';
-import 'package:bleed_client/send.dart';
 import 'package:bleed_client/getters/getTileAt.dart';
 import 'package:bleed_client/streams/playerHealth.dart';
 import 'package:bleed_client/ui/compose/dialogs.dart';
@@ -39,7 +37,6 @@ import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/utils/list_util.dart';
 import 'package:bleed_client/streams/time.dart';
-import 'package:lemon_engine/state/camera.dart';
 import 'package:neuro/instance.dart';
 
 import 'classes/Score.dart';
@@ -62,7 +59,6 @@ int _index = 0;
 const String _space = " ";
 const String _semiColon = ";";
 const String _comma = ",";
-const String _dash = "-";
 const String _1 = "1";
 
 // enums
@@ -617,21 +613,6 @@ String _consumeString() {
 
 double _consumeDouble() {
   return double.parse(_consumeString());
-}
-
-Lobby _consumeLobby() {
-  int maxPlayers = _consumeInt();
-  int playersJoined = _consumeInt();
-  String lobbyUuid = _consumeString();
-  String lobbyName = _consumeString();
-  String gameUuid = _consumeString();
-
-  return Lobby()
-    ..maxPlayers = maxPlayers
-    ..playersJoined = playersJoined
-    ..uuid = lobbyUuid
-    ..name = lobbyName
-    ..gameUuid = gameUuid;
 }
 
 Vector2 _consumeVector2() {

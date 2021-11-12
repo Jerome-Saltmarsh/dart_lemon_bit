@@ -119,6 +119,7 @@ Widget buildHud() {
       buildTopLeft(),
       if (!hud.state.observeMode && player.dead) _buildViewRespawn(),
       if (player.dead && hud.state.observeMode) _buildRespawnLight(),
+      _buildServerText(),
     ],
   );
 }
@@ -459,7 +460,6 @@ Widget buildBottomLeft() {
               WatchBuilder(game.playerWeapon, (Weapon value){
                 return buildSlotWeapon(weapon: value, index: 1);
               })
-
             ],
           );
         },
