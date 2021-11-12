@@ -96,8 +96,8 @@ abstract class Game {
     }
 
     to.players.add(player);
-    player.game = to;
     Vector2 spawnPosition = to.getSpawnPositionFrom(player.game);
+    player.game = to;
     player.x = spawnPosition.x;
     player.y = spawnPosition.y;
     player.sceneChanged = true;

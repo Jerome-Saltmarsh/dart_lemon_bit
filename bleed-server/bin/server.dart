@@ -33,8 +33,9 @@ const List<PurchaseType> purchaseTypes = PurchaseType.values;
 final int clientRequestsLength = clientRequests.length;
 
 Game findGameById(String id) {
-  if (world.town.id == id) return world.town;
-  if (world.cave.id == id) return world.cave;
+  for (Game game in world.games){
+    if (game.id == id) return game;
+  }
   throw Exception();
 }
 

@@ -1,17 +1,20 @@
 import '../classes/Game.dart';
 import '../compile.dart';
 import 'cave.dart';
+import 'tavern.dart';
 import 'town.dart';
 
 class World {
   late Game town;
   late Game cave;
+  late Game tavern;
   late List<Game> games;
 
   World(){
     town = Town();
     cave = Cave();
-    games = [town, cave];
+    tavern = Tavern();
+    games = [town, cave, tavern];
     // TODO Remove Logic
     for(Game game in games){
       compileGame(game);

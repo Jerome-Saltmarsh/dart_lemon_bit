@@ -84,5 +84,31 @@
     ]
   ],
   "crates": [],
-  "environment": []
+  "environment": [
+    {
+      "x": -1,
+      "y": 20,
+      "type": "Torch"
+    },
+    {
+      "x": -168,
+      "y": 188,
+      "type": "Torch"
+    },
+    {
+      "x": 167,
+      "y": 191,
+      "type": "Torch"
+    },
+    {
+      "x": -2,
+      "y": 351,
+      "type": "Torch"
+    },
+    {
+      "x": 0,
+      "y": 188,
+      "type": "Torch"
+    }
+  ]
 }

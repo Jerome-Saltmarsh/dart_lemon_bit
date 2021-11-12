@@ -1,13 +1,15 @@
 
+import 'package:lemon_math/diff_over.dart';
+
 import '../classes/Game.dart';
 import '../classes/Player.dart';
-import '../classes/Scene.dart';
 import '../common/classes/Vector2.dart';
-import 'world.dart';
+import '../instances/scenes.dart';
+import '../values/world.dart';
 
 class Tavern extends Game {
 
-  Tavern(Scene scene, int maxPlayers) : super(scene, maxPlayers);
+  Tavern() : super(scenes.tavern, 64);
 
   @override
   Player doSpawnPlayer() {
@@ -17,8 +19,7 @@ class Tavern extends Game {
 
   @override
   Vector2 getSpawnPositionFrom(Game from) {
-    // TODO: implement getSpawnPositionFrom
-    throw UnimplementedError();
+    return Vector2(65, 263);
   }
 
   @override
@@ -28,6 +29,12 @@ class Tavern extends Game {
 
   @override
   void update() {
-    // TODO: implement update
+    for(int i = 0; i < players.length; i++){
+      Player player = players[i];
+      if (diffOver(player.x, 97, 15)) continue;
+      if (diffOver(player.y, 290, 15)) continue;
+      changeGame(player, world.town);
+      i--;
+    }
   }
 }

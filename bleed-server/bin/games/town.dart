@@ -160,6 +160,15 @@ class Town extends Game {
       i--;
     }
 
+    // -145 1900
+    for(int i = 0; i < players.length; i++){
+      Player player = players[i];
+      if (diffOver(player.x, -145, 20)) continue;
+      if (diffOver(player.y, 1900, 20)) continue;
+      changeGame(player, world.tavern);
+      i--;
+    }
+
     if (frame % _framesPerZombieSpawn != 0) return;
     if (zombieCount > _maxZombies) return;
     spawnRandomZombie();
@@ -167,6 +176,9 @@ class Town extends Game {
 
   @override
   Vector2 getSpawnPositionFrom(Game from) {
+    if (from == world.tavern){
+      return Vector2(-108, 1922);
+    }
     return Vector2(-1260, 2389);
   }
 }
