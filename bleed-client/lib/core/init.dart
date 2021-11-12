@@ -126,8 +126,8 @@ Future init() async {
   });
 
   initAudioPlayers();
-  await images.load();
   initUI();
+  await images.load();
   rebuildUI();
 
   onRightClickChanged.stream.listen((bool down){
