@@ -1,6 +1,6 @@
-import 'package:bleed_client/reaction/ReactiveValue.dart';
+import 'package:lemon_watch/watch.dart';
 
-ReactiveValue<int> time = ReactiveValue(0);
+final time = Watch(0);
 
 
 Phase getPhase() {

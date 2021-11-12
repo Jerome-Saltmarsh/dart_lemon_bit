@@ -70,6 +70,7 @@
 [ ] Send custom news updates to client
 [ ] Guards on walls
 [ ] Compact Score Mode 
+[ ] Add fireplace with smoke emitter
 -- OPTIMIZATIONS --
 -- Env Objects
 [ ] Flowers
@@ -86,9 +87,6 @@
 [ ] Deploy dev endpoint
 [ ] Water Particles
 [ ] House 3
-[ ] Tree 3
-[ ] Stone 2
-[ ] Add fireplace with smoke emitter
 [ ] FIX Zombies Collision
 [ ] Npc view range decreases at night
 [ ] Flash light on gunshot
@@ -104,10 +102,7 @@
 [ ] Fix Changing Weapon Shade
 [ ] Design Palette
 [ ] Design Tree Model
-[ ] Fix Npc when wall is in the way 
 [ ] Spawn Myst at night
-[ ] UI Display Clock
-[ ] Smooth Zooming
 [ ] Change scene
     [ ] Black Fade Screen 
     [ ] Tavern Level
@@ -115,6 +110,9 @@
     [x] Camera Pans up 
     [x] Player disappears when firing
     [?] Zombies aren't drawing
+[x] UI Display Clock    
+[x] Fix Npc when wall is in the way
+[x] Smooth Zooming
 [x] Fix Npc aim direction incorrect
 [x] UI Health Bar
 [x] FIX can turn while shooting bug

@@ -1,4 +1,4 @@
 
-import 'package:bleed_client/reaction/ReactiveValue.dart';
+import 'package:lemon_watch/watch.dart';
 
-ReactiveValue<double> playerHealth = ReactiveValue(0);
+final playerHealth = Watch(0.0);

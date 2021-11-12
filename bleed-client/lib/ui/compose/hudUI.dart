@@ -19,7 +19,6 @@ import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/streams/playerHealth.dart';
 import 'package:bleed_client/streams/time.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
-import 'package:bleed_client/reaction/Reactive.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/decorationImages.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
@@ -37,6 +36,7 @@ import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_engine/state/size.dart';
 import 'package:lemon_math/golden_ratio.dart';
+import 'package:lemon_watch/watch_builder.dart';
 
 import '../../tutorials.dart';
 import 'buildTextBox.dart';
@@ -45,7 +45,7 @@ import 'dialogs.dart';
 const double _padding = 8;
 
 Widget buildHealthBar() {
-  return Reactive(playerHealth, (double health){
+  return WatchBuilder(playerHealth, (double health){
 
     if (health == null) {
       return CircularProgressIndicator();
@@ -88,13 +88,13 @@ Widget buildBottomRight() {
 }
 
 Widget buildTime() {
-  return Reactive(time, (int value) {
+  return WatchBuilder(time, (int value) {
     return text("${padZero(hour)} : ${padZero(minute % 60)}");
   });
 }
 
 Widget buildMouseWorldPosition(){
-  return Reactive(time, (int value) {
+  return WatchBuilder(time, (int value) {
     return text("Mouse X: ${mouseWorldX.toInt()}, Y: ${mouseWorldY.toInt()}");
   });
 }
