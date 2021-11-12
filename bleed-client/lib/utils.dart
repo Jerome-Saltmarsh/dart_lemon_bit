@@ -13,7 +13,6 @@ import 'package:lemon_math/angle_between.dart';
 
 import 'common/Weapons.dart';
 import 'common.dart';
-import 'maths.dart';
 
 double getMouseRotation() {
   return angleBetween(game.playerX, game.playerY, mouseWorldX, mouseWorldY);
