@@ -4,6 +4,7 @@ import '../classes.dart';
 import '../classes/Game.dart';
 import '../classes/Inventory.dart';
 import '../classes/Player.dart';
+import '../classes/interactable_npc.dart';
 import '../common/Quests.dart';
 import '../common/Weapons.dart';
 import '../common/classes/Vector2.dart';

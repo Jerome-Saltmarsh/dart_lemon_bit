@@ -5,6 +5,7 @@ import 'classes/EnvironmentObject.dart';
 import 'classes/Game.dart';
 import 'classes/Item.dart';
 import 'classes/Player.dart';
+import 'classes/interactable_npc.dart';
 import 'common/PlayerEvents.dart';
 import 'common/Tile.dart';
 import 'common/ServerResponse.dart';

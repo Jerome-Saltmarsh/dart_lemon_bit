@@ -39,6 +39,7 @@ import 'Player.dart';
 import 'Positioned.dart';
 import 'Scene.dart';
 import 'TileNode.dart';
+import 'interactable_npc.dart';
 
 const _none = -1;
 

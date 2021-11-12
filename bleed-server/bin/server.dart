@@ -3,9 +3,9 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import 'classes.dart';
 import 'classes/Game.dart';
 import 'classes/Player.dart';
+import 'classes/interactable_npc.dart';
 import 'common/PlayerEvents.dart';
 import 'common/version.dart';
 import 'common/constants.dart';
