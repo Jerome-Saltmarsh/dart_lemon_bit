@@ -82,13 +82,7 @@ void sendAndCloseTextBox(){
   hideTextBox();
 }
 
-redrawBottomLeft() {
-  if (hud.stateSetters.bottomLeft == null) return;
-  hud.stateSetters.bottomLeft(_doNothing);
-}
-
 clearUI() {
-  hud.stateSetters.bottomLeft = null;
   hud.stateSetters.score = null;
 }
 

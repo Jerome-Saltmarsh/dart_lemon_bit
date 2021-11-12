@@ -103,31 +103,25 @@ class Town extends Game {
   }
 
   void _onNpcInteractedWithSmith(Player player) {
-    // @on change scene
-    changeGame(player, world.cave);
 
-    // switch (player.questMain) {
-    //   case MainQuest.Introduction:
-    //     player.message = "Smith: Welcome to our town";
-    //     player.questMain = MainQuest.Talk_To_Smith;
-    //     break;
-    //   case MainQuest.Talk_To_Smith:
-    //     player.message = "Smith: Welcome outsider. Our supplies are running low. "
-    //         "If you happen across some scrap metal while you are out, would you collect it for me"
-    //         "I'll compensate you of course"
-    //         "Here take this handgun, its last owner certainly no longer needs it... "
-    //         "Just come back and talk to me again if you find yourself running low on ammunition";
-    //     player.questMain = MainQuest.Scavenge_Supplies;
-    //     player.rounds.handgun = 60;
-    //     player.rounds.shotgun = 20;
-    //     break;
-    //   case MainQuest.Scavenge_Supplies:
-    //     player.message = "Smith: Bring any metals and junk back you can find";
-    //     break;
-    //   default:
-    //     player.message = "Smith: Good to see you well";
-    //     break;
-    // }
+    switch (player.questMain) {
+      case MainQuest.Introduction:
+        player.message = "Smith: Welcome to our town";
+        player.questMain = MainQuest.Talk_To_Smith;
+        break;
+      case MainQuest.Talk_To_Smith:
+        player.message = "Smith: Welcome outsider. Our supplies are running low. "
+            "If you happen across some scrap metal while you are out, would you collect it for me"
+            "I'll compensate you of course";
+        player.questMain = MainQuest.Scavenge_Supplies;
+        break;
+      case MainQuest.Scavenge_Supplies:
+        player.message = "Smith: Bring any metals and junk back you can find";
+        break;
+      default:
+        player.message = "Smith: Good to see you well";
+        break;
+    }
   }
 
   @override

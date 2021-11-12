@@ -103,6 +103,9 @@
 [ ] Design Palette
 [ ] Design Tree Model
 [ ] Spawn Myst at night
+[ ] Fix Zombies vanish on death bug
+[ ] Remove player walk (its always better to run, no stamina)
+[ ] Right Click to aim (aiming improves accuracy)
 [ ] Change scene
     [ ] Black Fade Screen 
     [ ] Tavern Level

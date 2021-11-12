@@ -383,7 +383,7 @@ void _parseTiles() {
 void _parsePlayer() {
   game.playerX = _consumeDouble();
   game.playerY = _consumeDouble();
-  game.playerWeapon = _consumeWeapon();
+  game.playerWeapon.value = _consumeWeapon();
   player.health = _consumeDouble();
   playerHealth(player.health);
   player.maxHealth = _consumeDouble();
@@ -394,15 +394,11 @@ void _parsePlayer() {
 
   if (player.grenades != grenades) {
     player.grenades = grenades;
-    // TODO Move
-    redrawBottomLeft();
   }
 
   int meds = _consumeInt();
   if (player.meds != meds) {
     player.meds = meds;
-    // TODO Move
-    redrawBottomLeft();
   }
   game.playerLives = _consumeInt();
   player.equippedClips = _consumeInt();
@@ -431,7 +427,6 @@ void _parsePlayer() {
     onPlayerTileChanged(previousTile, tile);
   }
 
-  bool redrawWeapons = false;
   int clipsHandgun = _consumeInt();
   int clipsShotgun = _consumeInt();
   int clipsSniperRifle = _consumeInt();
@@ -439,26 +434,18 @@ void _parsePlayer() {
 
   if (player.roundsHandgun != clipsHandgun) {
     player.roundsHandgun = clipsHandgun;
-    redrawWeapons = true;
   }
 
   if (player.roundsShotgun != clipsShotgun) {
     player.roundsShotgun = clipsShotgun;
-    redrawWeapons = true;
   }
 
   if (player.roundsSniperRifle != clipsSniperRifle) {
     player.roundsSniperRifle = clipsSniperRifle;
-    redrawWeapons = true;
   }
 
   if (player.roundsAssaultRifle != clipsAssaultRifle) {
     player.roundsAssaultRifle = clipsAssaultRifle;
-    redrawWeapons = true;
-  }
-
-  if (redrawWeapons) {
-    redrawBottomLeft();
   }
 }
 

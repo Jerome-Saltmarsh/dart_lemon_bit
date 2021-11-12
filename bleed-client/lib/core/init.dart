@@ -5,6 +5,7 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/Tile.dart';
+import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/events.dart';
@@ -133,6 +134,25 @@ Future init() async {
   onRightClickChanged.stream.listen((bool down){
     inputRequest.sprint = down;
   });
+
+  game.playerWeapon.onChanged(onPlayerWeaponChanged);
+}
+
+void onPlayerWeaponChanged(Weapon weapon){
+  switch (weapon) {
+    case Weapon.HandGun:
+      playAudioReload(screenCenterWorldX, screenCenterWorldY);
+      break;
+    case Weapon.Shotgun:
+      playAudioCockShotgun(screenCenterWorldX, screenCenterWorldY);
+      break;
+    case Weapon.SniperRifle:
+      playAudioSniperEquipped(screenCenterWorldX, screenCenterWorldY);
+      break;
+    case Weapon.AssaultRifle:
+      playAudioReload(screenCenterWorldX, screenCenterWorldY);
+      break;
+  }
 }
 
 

@@ -9,7 +9,6 @@ import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/openLink.dart';
 import 'package:bleed_client/mappers/mapWeaponToDecorationImage.dart';
-import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/network/functions/disconnect.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/server.dart';
@@ -36,6 +35,7 @@ import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_engine/state/size.dart';
 import 'package:lemon_math/golden_ratio.dart';
+import 'package:lemon_watch/watch.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../../tutorials.dart';
@@ -43,10 +43,10 @@ import 'buildTextBox.dart';
 import 'dialogs.dart';
 
 const double _padding = 8;
+final expandInventory = Watch(false);
 
 Widget buildHealthBar() {
-  return WatchBuilder(playerHealth, (double health){
-
+  return WatchBuilder(playerHealth, (double health) {
     if (health == null) {
       return CircularProgressIndicator();
     }
@@ -80,7 +80,8 @@ Widget buildHealthBar() {
 
 Widget buildTopLeft() {
   return Positioned(top: _padding, left: _padding, child: buildTime());
-  return Positioned(top: _padding, left: _padding, child: buildMouseWorldPosition());
+  return Positioned(
+      top: _padding, left: _padding, child: buildMouseWorldPosition());
 }
 
 Widget buildBottomRight() {
@@ -93,15 +94,15 @@ Widget buildTime() {
   });
 }
 
-Widget buildMouseWorldPosition(){
+Widget buildMouseWorldPosition() {
   return WatchBuilder(time, (int value) {
     return text("Mouse X: ${mouseWorldX.toInt()}, Y: ${mouseWorldY.toInt()}");
   });
 }
 
-String padZero(num value){
+String padZero(num value) {
   String t = value.toInt().toString();
-  if(t.length >= 2) return t;
+  if (t.length >= 2) return t;
   return '0$t';
 }
 
@@ -113,10 +114,9 @@ Widget buildHud() {
       buildTopRight(),
       buildTextBox(),
       if (hud.state.textBoxVisible) _buildServerText(),
-      if (player.alive) buildViewBottomLeft(),
+      if (player.alive) buildBottomLeft(),
       if (player.alive) buildBottomRight(),
       buildTopLeft(),
-      _buildServerText(),
       if (!hud.state.observeMode && player.dead) _buildViewRespawn(),
       if (player.dead && hud.state.observeMode) _buildRespawnLight(),
     ],
@@ -437,40 +437,33 @@ Widget buildMedSlot() {
   ]);
 }
 
-Widget buildViewBottomLeft() {
-  return StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-    hud.stateSetters.bottomLeft = setState;
-    return Positioned(
-      bottom: 0,
-      left: 0,
-      child: Container(
-        padding: padding8,
-        decoration: BoxDecoration(
-          borderRadius: borderRadius4,
-        ),
-        child: Row(
-          mainAxisAlignment: main.center,
-          crossAxisAlignment: cross.end,
-          children: [
-            buildSlotWeapon(weapon: game.playerWeapon, index: 1),
-            width4,
-            // width4,
-            // buildSlotWeapon(weapon: Weapon.Shotgun, index: 2),
-            // width4,
-            // buildSlotWeapon(weapon: Weapon.SniperRifle, index: 3),
-            // width4,
-            // buildSlotWeapon(weapon: Weapon.AssaultRifle, index: 4),
-            // width4,
-            // buildMedSlot(),
-            // width4,
-            // buildGrenadeSlot(),
-            // width4,
-            // buildSlot(title: "Credits: ${player.credits}"),
-          ],
-        ),
-      ),
-    );
-  });
+Widget buildBottomLeft() {
+  return Positioned(
+      bottom: _padding,
+      left: _padding,
+      child: WatchBuilder(expandInventory, (bool expanded) {
+          return Column(
+            mainAxisAlignment: main.end,
+            crossAxisAlignment: cross.start,
+            children: [
+              if (expanded)
+                Column(
+                  mainAxisAlignment: main.end,
+                  crossAxisAlignment: cross.start,
+                  children: [
+                    height4,
+                    buildSlotWeapon(weapon: Weapon.Shotgun, index: 3),
+                    height4,
+                  ],
+                ),
+              WatchBuilder(game.playerWeapon, (Weapon value){
+                return buildSlotWeapon(weapon: value, index: 1);
+              })
+
+            ],
+          );
+        },
+      ));
 }
 
 Stack buildGrenadeSlot() {

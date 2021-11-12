@@ -33,6 +33,8 @@ _MainAxis main = _MainAxis();
 _CrossAxis cross = _CrossAxis();
 
 class _MainAxis {
+  final MainAxisAlignment start = MainAxisAlignment.start;
+  final MainAxisAlignment end = MainAxisAlignment.end;
   final MainAxisAlignment center = MainAxisAlignment.center;
   final MainAxisAlignment between = MainAxisAlignment.spaceBetween;
   final MainAxisAlignment spread = MainAxisAlignment.spaceBetween;
