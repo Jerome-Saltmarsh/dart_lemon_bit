@@ -1,4 +1,3 @@
-import 'classes.dart';
 import 'classes/Bullet.dart';
 import 'classes/Collectable.dart';
 import 'classes/Crate.dart';
