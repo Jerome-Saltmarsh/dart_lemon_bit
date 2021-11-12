@@ -60,13 +60,13 @@ double clampMagnitudeY(double x, double y, double value){
   return normalizeY(x, y) * value;
 }
 
-double adj(double rotation, double magnitude) {
-  return -cos(rotation + piHalf) * magnitude;
-}
-
-double opp(double rotation, double magnitude) {
-  return -sin(rotation + piHalf) * magnitude;
-}
+// double adj(double rotation, double magnitude) {
+//   return -cos(rotation + piHalf) * magnitude;
+// }
+//
+// double opp(double rotation, double magnitude) {
+//   return -sin(rotation + piHalf) * magnitude;
+// }
 
 // double diff(double a, double b){
 //   return abs(a - b);

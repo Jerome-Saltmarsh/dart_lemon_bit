@@ -20,6 +20,8 @@ import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/state/camera.dart';
 import 'package:lemon_engine/state/zoom.dart';
+import 'package:lemon_math/adjacent.dart';
+import 'package:lemon_math/opposite.dart';
 
 import '../common.dart';
 import '../send.dart';
@@ -397,14 +399,14 @@ Block createBlock2(double x, double y, double width, double length) {
   double halfWidth = width * 0.5;
   double halfLength = length * 0.5;
 
-  double aX = adj(piQuarter * 5, halfLength);
-  double aY = opp(piQuarter * 5, halfLength);
-  double bX = adj(piQuarter * 3, halfWidth);
-  double bY = opp(piQuarter * 3, halfWidth);
-  double cX = adj(piQuarter * 1, halfLength);
-  double cY = opp(piQuarter * 1, halfLength);
-  double dX = adj(piQuarter * 7, halfWidth);
-  double dY = opp(piQuarter * 7, halfWidth);
+  double aX = adjacent(piQuarter * 5, halfLength);
+  double aY = opposite(piQuarter * 5, halfLength);
+  double bX = adjacent(piQuarter * 3, halfWidth);
+  double bY = opposite(piQuarter * 3, halfWidth);
+  double cX = adjacent(piQuarter * 1, halfLength);
+  double cY = opposite(piQuarter * 1, halfLength);
+  double dX = adjacent(piQuarter * 7, halfWidth);
+  double dY = opposite(piQuarter * 7, halfWidth);
 
   double topX = x + cX + dX;
   double topY = y + cY + dY;
