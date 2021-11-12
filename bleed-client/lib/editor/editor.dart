@@ -96,7 +96,7 @@ List<Widget> _buildTabTiles(){
 List<Widget> _buildTabMisc() {
   return [
     button("Save", saveScene),
-    button("Reset", resetTiles),
+    button("New", newScene),
     button("Tiles.X++", () {
       for (List<Tile> row in game.tiles) {
         row.add(Tile.Grass);

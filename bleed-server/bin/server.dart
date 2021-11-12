@@ -22,6 +22,7 @@ import 'games/world.dart';
 import 'settings.dart';
 import 'update.dart';
 import 'utils.dart';
+import 'values/world.dart';
 
 const String _space = " ";
 final int errorIndex = ServerResponse.Error.index;
@@ -30,8 +31,6 @@ final StringBuffer _buffer = StringBuffer();
 const List<ClientRequest> clientRequests = ClientRequest.values;
 const List<PurchaseType> purchaseTypes = PurchaseType.values;
 final int clientRequestsLength = clientRequests.length;
-
-World world = World();
 
 Game findGameById(String id) {
   if (world.town.id == id) return world.town;

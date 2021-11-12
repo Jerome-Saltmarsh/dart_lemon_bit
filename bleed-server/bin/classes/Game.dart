@@ -4,10 +4,10 @@ import 'package:lemon_math/diff_over.dart';
 
 import '../common/ItemType.dart';
 import '../common/Tile.dart';
+import '../common/enums/EnvironmentObjectType.dart';
 import '../constants/no_squad.dart';
 import '../enums/npc_mode.dart';
 import '../functions/insertionSort.dart';
-import '../games/world.dart';
 import '../interfaces/HasSquad.dart';
 import 'Bullet.dart';
 import 'Character.dart';
@@ -50,7 +50,6 @@ import 'InteractableNpc.dart';
 const _none = -1;
 
 abstract class Game {
-  World world;
   static int _id = 0;
   final String id = (_id++).toString();
   final String uuid = generateUUID();
@@ -134,7 +133,7 @@ abstract class Game {
 
   void onNpcSpawned(Npc npc) {}
 
-  Game(this.world, this.scene, this.maxPlayers) {
+  Game(this.scene, this.maxPlayers) {
     this.crates.clear();
     for (Vector2 crate in scene.crates) {
       crates.add(Crate(x: crate.x, y: crate.y));
@@ -1420,5 +1419,11 @@ void playerInteract(Player player){
     if (diffOver(npc.y, player.y, radius.interact)) continue;
     npc.onInteractedWith(player);
     return;
+  }
+
+  for (EnvironmentObject environmentObject in player.game.scene.environment){
+    if (environmentObject.type == EnvironmentObjectType.House02){
+
+    };
   }
 }

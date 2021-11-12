@@ -7,13 +7,13 @@ import '../common/Weapons.dart';
 import '../common/classes/Vector2.dart';
 import '../enums/npc_mode.dart';
 import '../instances/scenes.dart';
-import 'world.dart';
+import '../values/world.dart';
 
 class Cave extends Game {
 
   late InteractableNpc john;
 
-  Cave(World world) : super(world, scenes.cave, 64){
+  Cave() : super(scenes.cave, 64){
     john = InteractableNpc(
         name: "John",
         onInteractedWith: (Player player){

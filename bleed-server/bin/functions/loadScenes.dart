@@ -14,8 +14,9 @@ final JsonDecoder _decoder = JsonDecoder();
 
 void loadScenes() {
   print("loadScenes()");
-  loadScene('quest/town').then((value) => scenes.town = value);
-  loadScene('quest/cave').then((value) => scenes.cave = value);
+  loadScene('town').then((value) => scenes.town = value);
+  loadScene('cave').then((value) => scenes.cave = value);
+  loadScene('tavern').then((value) => scenes.tavern = value);
 }
 
 Future<Scene> loadScene(String name) async {

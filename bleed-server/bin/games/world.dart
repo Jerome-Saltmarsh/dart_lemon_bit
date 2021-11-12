@@ -9,8 +9,8 @@ class World {
   late List<Game> games;
 
   World(){
-    town = Town(this);
-    cave = Cave(this);
+    town = Town();
+    cave = Cave();
     games = [town, cave];
     // TODO Remove Logic
     for(Game game in games){

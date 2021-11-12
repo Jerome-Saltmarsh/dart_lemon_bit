@@ -11,6 +11,7 @@ import '../enums/npc_mode.dart';
 import '../instances/scenes.dart';
 import '../state.dart';
 import '../utils/player_utils.dart';
+import '../values/world.dart';
 import 'world.dart';
 
 class Town extends Game {
@@ -26,7 +27,7 @@ class Town extends Game {
   final double playerSpawnX = 0;
   final double playerSpawnY = 1750;
 
-  Town(World world) : super(world, scenes.town, 64) {
+  Town() : super(scenes.town, 64) {
     npcDavis = InteractableNpc(
         name: "Davis",
         onInteractedWith: _onNpcInteractedWithMain,
