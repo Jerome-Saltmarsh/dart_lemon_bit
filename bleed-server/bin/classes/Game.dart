@@ -3,11 +3,12 @@ import 'dart:math';
 import 'package:lemon_math/diff_over.dart';
 
 import '../classes.dart';
-import '../common/GameState.dart';
 import '../common/ItemType.dart';
 import '../common/Tile.dart';
+import '../constants/no_squad.dart';
 import '../functions/insertionSort.dart';
 import '../games/world.dart';
+import 'Character.dart';
 import 'Collider.dart';
 import 'EnvironmentObject.dart';
 import '../common/classes/Vector2.dart';

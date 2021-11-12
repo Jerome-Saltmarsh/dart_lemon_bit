@@ -1,6 +1,7 @@
 import 'package:lemon_math/diff_over.dart';
 
 import 'classes.dart';
+import 'classes/Character.dart';
 import 'classes/GameObject.dart';
 import 'common/Tile.dart';
 import 'common/classes/Vector2.dart';

@@ -1,7 +1,7 @@
-import '../classes.dart';
 import '../common/GameState.dart';
 import '../common/PlayerEvents.dart';
 import '../common/Quests.dart';
+import '../constants/no_squad.dart';
 import '../common/Tile.dart';
 import '../common/Weapons.dart';
 import '../enums.dart';
@@ -9,6 +9,7 @@ import '../functions/generateName.dart';
 import '../functions/generateUUID.dart';
 import '../settings.dart';
 import '../utils/player_utils.dart';
+import 'Character.dart';
 import 'Game.dart';
 import 'Inventory.dart';
 import 'Score.dart';

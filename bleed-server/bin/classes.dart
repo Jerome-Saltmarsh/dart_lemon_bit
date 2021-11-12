@@ -1,72 +1,10 @@
+import 'classes/Character.dart';
 import 'classes/GameObject.dart';
 import 'classes/Player.dart';
 import 'common/classes/Vector2.dart';
-import 'enums.dart';
 import 'common/GameEventType.dart';
 import 'common/Weapons.dart';
 import 'settings.dart';
-import 'utils.dart';
-
-
-
-const noSquad = -1;
-
-class Character extends GameObject implements HasSquad {
-  CharacterState state = CharacterState.Idle;
-  CharacterState previousState = CharacterState.Idle;
-  Direction direction = Direction.Down;
-  Weapon weapon;
-  double aimAngle = 0;
-  double accuracy = 0;
-  int stateDuration = 0;
-  int stateFrameCount = 0;
-  late int maxHealth;
-  double speed;
-  int squad;
-
-  late int _health;
-
-  int get health => _health;
-
-  set health(int value) {
-    _health = clampInt(value, 0, maxHealth);
-  }
-
-  bool get alive => state != CharacterState.Dead;
-
-  bool get dead => state == CharacterState.Dead;
-
-  bool get firing => state == CharacterState.Firing;
-
-  bool get aiming => state == CharacterState.Aiming;
-
-  bool get walking => state == CharacterState.Walking;
-
-  bool get running => state == CharacterState.Running;
-
-  bool get idling => state == CharacterState.Idle;
-
-  bool get striking => state == CharacterState.Striking;
-
-  bool get busy => stateDuration > 0;
-
-  Character({
-    required double x,
-    required double y,
-    required this.weapon,
-    required int health,
-    required this.speed,
-    this.squad = noSquad,
-  }) : super(x, y) {
-    maxHealth = health;
-    _health = health;
-  }
-
-  @override
-  int getSquad() {
-    return squad;
-  }
-}
 
 final Character _nonTarget =
     Character(x: 0, y: 0, weapon: Weapon.AssaultRifle, health: 0, speed: 0);
