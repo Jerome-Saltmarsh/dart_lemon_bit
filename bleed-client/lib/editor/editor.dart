@@ -3,7 +3,6 @@ import 'dart:ui';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
-import 'package:bleed_client/common/functions/diffOver.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/editor/enums/EditTool.dart';
 import 'package:bleed_client/editor/functions/resetTiles.dart';
@@ -26,6 +25,7 @@ import 'package:lemon_engine/state/mouseDragging.dart';
 import 'package:lemon_engine/state/size.dart';
 import 'package:lemon_engine/state/zoom.dart';
 import 'package:lemon_math/diff.dart';
+import 'package:lemon_math/diff_over.dart';
 
 import 'state/editState.dart';
 

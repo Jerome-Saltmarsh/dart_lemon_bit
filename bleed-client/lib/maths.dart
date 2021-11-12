@@ -1,8 +1,5 @@
 import 'dart:math';
 
-const double degreesToRadian = 0.0174533;
-const double radianToDegrees =  57.29578;
-const double piHalf = pi / 2.0;
 const double piQuarter = pi * 0.25;
 final Random random = Random();
 

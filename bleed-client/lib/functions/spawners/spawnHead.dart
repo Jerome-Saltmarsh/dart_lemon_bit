@@ -1,6 +1,6 @@
-import 'package:bleed_client/common/functions/randomBetween.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/utils.dart';
+import 'package:lemon_math/random_between.dart';
 
 import 'spawnParticle.dart';
 

@@ -1,7 +1,7 @@
 import 'package:bleed_client/classes/Character.dart';
-import 'package:bleed_client/common/functions/diff.dart';
 import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:lemon_math/diff.dart';
 
 final double _light = 100;
 final double _medium = 250;

@@ -1,8 +1,6 @@
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
-import 'package:bleed_client/common/functions/giveOrTake.dart';
 import 'package:bleed_client/draw.dart';
-import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/functions/cameraFollowPlayer.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/getters/getDeactiveParticle.dart';
@@ -11,9 +9,7 @@ import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/update/updateParticles.dart';
 import 'package:bleed_client/update/updatePlayer.dart';
 import 'package:bleed_client/utils.dart';
-import 'package:bleed_client/variables/ambientLight.dart';
 import 'package:lemon_engine/game.dart';
-import 'package:lemon_engine/state/camera.dart';
 import 'package:lemon_engine/state/zoom.dart';
 
 import 'functions/emit/emitMyst.dart';

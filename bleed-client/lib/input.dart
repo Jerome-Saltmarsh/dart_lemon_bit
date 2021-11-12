@@ -4,7 +4,6 @@ import 'dart:ui';
 import 'package:bleed_client/classes/Block.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Zombie.dart';
-import 'package:bleed_client/common/functions/diffOver.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/render/drawCanvas.dart';
 import 'package:bleed_client/render/functions/setAmbientLight.dart';
@@ -21,6 +20,7 @@ import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/state/camera.dart';
 import 'package:lemon_engine/state/zoom.dart';
 import 'package:lemon_math/adjacent.dart';
+import 'package:lemon_math/diff_over.dart';
 import 'package:lemon_math/opposite.dart';
 
 import '../common.dart';

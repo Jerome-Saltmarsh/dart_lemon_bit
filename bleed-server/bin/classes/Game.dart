@@ -1,5 +1,7 @@
 import 'dart:math';
 
+import 'package:lemon_math/diff_over.dart';
+
 import '../classes.dart';
 import '../common/GameState.dart';
 import '../common/ItemType.dart';
@@ -10,7 +12,6 @@ import 'Collider.dart';
 import 'EnvironmentObject.dart';
 import '../common/classes/Vector2.dart';
 import '../common/constants.dart';
-import '../common/functions/diffOver.dart';
 import '../compile.dart';
 import '../constants.dart';
 import '../enums.dart';

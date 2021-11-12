@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:bleed_client/common/functions/radiansBetween.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
@@ -10,14 +9,14 @@ import 'package:lemon_engine/state/camera.dart';
 import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_engine/state/zoom.dart';
+import 'package:lemon_math/angle_between.dart';
 
 import 'common/Weapons.dart';
 import 'common.dart';
 import 'maths.dart';
 
 double getMouseRotation() {
-  return getRadiansBetween(
-      game.playerX, game.playerY, mouseWorldX, mouseWorldY);
+  return angleBetween(game.playerX, game.playerY, mouseWorldX, mouseWorldY);
 }
 
 bool get playerAssigned => game.playerId >= 0;
