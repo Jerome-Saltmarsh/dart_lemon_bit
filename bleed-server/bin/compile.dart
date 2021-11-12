@@ -16,13 +16,13 @@ import 'common/classes/Vector2.dart';
 import 'utils/player_utils.dart';
 
 // constants
-final int collectablesIndex = ServerResponse.Collectables.index;
-final int playersIndex = ServerResponse.Players.index;
-final int playerIndex = ServerResponse.Player.index;
-final int indexZombies = ServerResponse.Zombies.index;
-final int indexNpcs = ServerResponse.Npcs.index;
-final int indexBullets = ServerResponse.Bullets.index;
-final int indexNpcMessage = ServerResponse.NpcMessage.index;
+final int _collectablesIndex = ServerResponse.Collectables.index;
+final int _playersIndex = ServerResponse.Players.index;
+final int _playerIndex = ServerResponse.Player.index;
+final int _indexZombies = ServerResponse.Zombies.index;
+final int _indexNpcs = ServerResponse.Npcs.index;
+final int _indexBullets = ServerResponse.Bullets.index;
+final int _indexNpcMessage = ServerResponse.NpcMessage.index;
 
 const String _space = ' ';
 const String _semiColon = '; ';
@@ -106,7 +106,7 @@ String compileTiles(List<List<Tile>> tiles) {
 }
 
 void compilePlayer(StringBuffer buffer, Player player) {
-  _write(buffer, playerIndex);
+  _write(buffer, _playerIndex);
   _writeInt(buffer, player.x);
   _writeInt(buffer, player.y);
   _write(buffer, player.weapon.index);
@@ -175,7 +175,7 @@ void _compileGameEvents(StringBuffer buffer, List<GameEvent> gameEvents) {
 }
 
 void _compileCollectables(StringBuffer buffer, List<Collectable> collectables) {
-  buffer.write(collectablesIndex);
+  buffer.write(_collectablesIndex);
   buffer.write(_space);
   for (Collectable collectable in collectables) {
     if (!collectable.active) continue;
@@ -221,7 +221,7 @@ void _compileGrenades(StringBuffer buffer, List<Grenade> grenades) {
 }
 
 void _compilePlayers(StringBuffer buffer, List<Player> players) {
-  _write(buffer, playersIndex);
+  _write(buffer, _playersIndex);
   for (Player player in players) {
     _compilePlayer(buffer, player);
   }
@@ -229,7 +229,7 @@ void _compilePlayers(StringBuffer buffer, List<Player> players) {
 }
 
 void _compileZombies(StringBuffer buffer, List<Npc> npcs) {
-  _write(buffer, indexZombies);
+  _write(buffer, _indexZombies);
   for (Npc npc in npcs) {
     if (!npc.active) continue;
     _compileNpc(buffer, npc);
@@ -238,7 +238,7 @@ void _compileZombies(StringBuffer buffer, List<Npc> npcs) {
 }
 
 void _compileInteractableNpcs(StringBuffer buffer, List<InteractableNpc> npcs) {
-  _write(buffer, indexNpcs);
+  _write(buffer, _indexNpcs);
   for (InteractableNpc npc in npcs) {
     if (!npc.active) continue;
     _compileInteractableNpc(buffer, npc);
@@ -247,7 +247,7 @@ void _compileInteractableNpcs(StringBuffer buffer, List<InteractableNpc> npcs) {
 }
 
 void _compileBullets(StringBuffer buffer, List<Bullet> bullets) {
-  _write(buffer, indexBullets);
+  _write(buffer, _indexBullets);
   for (Bullet bullet in bullets) {
     if (!bullet.active) continue;
     _compileBullet(buffer, bullet);
@@ -292,7 +292,7 @@ void _compileInteractableNpc(StringBuffer buffer, InteractableNpc npc) {
 }
 
 void compilePlayerMessage(StringBuffer buffer, String message) {
-  _write(buffer, indexNpcMessage);
+  _write(buffer, _indexNpcMessage);
   _write(buffer, message);
   _writeSemiColon(buffer);
 }
