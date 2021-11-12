@@ -37,6 +37,7 @@ import 'Crate.dart';
 import 'GameEvent.dart';
 import 'GameObject.dart';
 import 'Grenade.dart';
+import 'InteractableObject.dart';
 import 'Inventory.dart';
 import 'Item.dart';
 import 'Npc.dart';
@@ -59,6 +60,7 @@ abstract class Game {
   int time = 0;
   List<Npc> zombies = [];
   List<InteractableNpc> npcs = [];
+  List<InteractableObject> interactableObjects = [];
   List<Player> players = [];
   List<Bullet> bullets = [];
   List<Grenade> grenades = [];
@@ -1409,5 +1411,14 @@ void applyCratePhysics(Crate crate, List<Character> characters) {
     double r = radiansBetween(crate.x, crate.y, character.x, character.y);
     character.x += adj(r, b);
     character.y += opp(r, b);
+  }
+}
+
+void playerInteract(Player player){
+  for (InteractableNpc npc in player.game.npcs) {
+    if (diffOver(npc.x, player.x, radius.interact)) continue;
+    if (diffOver(npc.y, player.y, radius.interact)) continue;
+    npc.onInteractedWith(player);
+    return;
   }
 }

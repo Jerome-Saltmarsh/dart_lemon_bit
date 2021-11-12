@@ -474,13 +474,7 @@ void main() {
             return;
           }
 
-          // TODO perform this logic in game not server
-          for (InteractableNpc npc in player.game.npcs) {
-            if (diffOver(npc.x, player.x, radius.interact)) continue;
-            if (diffOver(npc.y, player.y, radius.interact)) continue;
-            npc.onInteractedWith(player);
-            return;
-          }
+         playerInteract(player);
       }
     }
 
