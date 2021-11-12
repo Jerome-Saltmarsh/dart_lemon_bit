@@ -1,8 +1,8 @@
 
-import '../classes.dart';
 import '../common/Weapons.dart';
 import '../constants/no_squad.dart';
 import '../enums.dart';
+import '../interfaces/HasSquad.dart';
 import '../utils.dart';
 import 'GameObject.dart';
 

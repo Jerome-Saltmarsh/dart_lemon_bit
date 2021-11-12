@@ -36,6 +36,7 @@ import 'Collectable.dart';
 import 'Crate.dart';
 import 'GameEvent.dart';
 import 'GameObject.dart';
+import 'Grenade.dart';
 import 'Inventory.dart';
 import 'Item.dart';
 import 'Npc.dart';

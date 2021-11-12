@@ -1,5 +1,6 @@
 import '../classes.dart';
 import '../common/Weapons.dart';
+import '../interfaces/HasSquad.dart';
 import 'Character.dart';
 import 'GameObject.dart';
 
