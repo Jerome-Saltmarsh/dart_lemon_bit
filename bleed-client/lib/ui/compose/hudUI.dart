@@ -15,8 +15,7 @@ import 'package:bleed_client/server.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/settings.dart';
-import 'package:bleed_client/streams/playerHealth.dart';
-import 'package:bleed_client/streams/time.dart';
+import 'package:bleed_client/watches/playerHealth.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/decorationImages.dart';
@@ -89,13 +88,13 @@ Widget buildBottomRight() {
 }
 
 Widget buildTime() {
-  return WatchBuilder(time, (int value) {
-    return text("${padZero(hour)} : ${padZero(minute % 60)}");
+  return WatchBuilder(timeInSeconds, (int value) {
+    return text("${padZero(timeInHours)} : ${padZero(timeInMinutes % 60)}");
   });
 }
 
 Widget buildMouseWorldPosition() {
-  return WatchBuilder(time, (int value) {
+  return WatchBuilder(timeInSeconds, (int value) {
     return text("Mouse X: ${mouseWorldX.toInt()}, Y: ${mouseWorldY.toInt()}");
   });
 }

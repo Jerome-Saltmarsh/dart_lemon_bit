@@ -31,12 +31,11 @@ import 'package:bleed_client/render/functions/applyEnvironmentObjectsToBakeMappi
 import 'package:bleed_client/render/functions/setBakeMapToAmbientLight.dart';
 import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/getters/getTileAt.dart';
-import 'package:bleed_client/streams/playerHealth.dart';
+import 'package:bleed_client/watches/playerHealth.dart';
 import 'package:bleed_client/ui/compose/dialogs.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/utils/list_util.dart';
-import 'package:bleed_client/streams/time.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:neuro/instance.dart';
 
@@ -90,7 +89,7 @@ void parseState() {
         break;
 
       case ServerResponse.Game_Time:
-        time(_consumeInt());
+        timeInSeconds(_consumeInt());
         break;
 
       case ServerResponse.NpcsDebug:

@@ -8,7 +8,6 @@ import 'package:bleed_client/functions/removeGeneratedEnvironmentObjects.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/network/streams/onConnectError.dart';
 import 'package:bleed_client/properties.dart';
-import 'package:bleed_client/render/functions/setAmbientLight.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/settings.dart';
@@ -108,7 +107,6 @@ void toggleEditMode() {
     removeGeneratedEnvironmentObjects();
     registerEditorKeyboardListener();
     deregisterPlayKeyboardHandler();
-    setAmbientLightBright();
   } else {
     print("mode = Mode.Play");
     mode = Mode.Play;

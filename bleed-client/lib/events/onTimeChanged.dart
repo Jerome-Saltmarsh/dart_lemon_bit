@@ -1,31 +1,17 @@
+import 'package:bleed_client/mappers/mapHourToPhase.dart';
+import 'package:bleed_client/watches/phase.dart';
 
-import 'package:bleed_client/render/functions/setAmbientLight.dart';
-import 'package:bleed_client/streams/time.dart';
-import 'package:bleed_client/variables/phase.dart';
+const secondsPerMinute = 60;
+const minutesPerHour = 60;
+const secondsPerHour = 60 * 60 * 60;
 
-void onTimeChanged(int value){
-    Phase _phase2 = getPhase();
-    if (phase == _phase2) return;
-    // this should also be reactive
-    phase = _phase2;
-    switch (_phase2) {
-      case Phase.EarlyMorning:
-        setAmbientLightDark();
-        break;
-      case Phase.Morning:
-        setAmbientLightMedium();
-        break;
-      case Phase.Day:
-        setAmbientLightBright();
-        break;
-      case Phase.EarlyEvening:
-        setAmbientLightMedium();
-        break;
-      case Phase.Evening:
-        setAmbientLightDark();
-        break;
-      case Phase.Night:
-        setAmbientLightVeryDark();
-        break;
-    }
+int _hour = 0;
+
+void onTimeChanged(int timeInSeconds) {
+  double timeInMinutes = timeInSeconds / secondsPerMinute;
+  double timeInHours = timeInMinutes / minutesPerHour;
+  int _h = timeInHours.toInt();
+  if (_hour == _h) return;
+  _hour = _h;
+  phase.value = mapHourToPhase(_hour);
 }

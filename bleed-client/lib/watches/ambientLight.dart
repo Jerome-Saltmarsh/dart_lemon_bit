@@ -12,3 +12,19 @@ set ambientLight(Shade value) {
 observeAmbientLight(Function(Shade value) function) {
   _ambientLight.onChanged(function);
 }
+
+void setAmbientLightBright(){
+  ambientLight = Shade.Bright;
+}
+
+void setAmbientLightMedium(){
+  ambientLight = Shade.Medium;
+}
+
+void setAmbientLightDark(){
+  ambientLight = Shade.Dark;
+}
+
+void setAmbientLightVeryDark(){
+  ambientLight = Shade.VeryDark;
+}

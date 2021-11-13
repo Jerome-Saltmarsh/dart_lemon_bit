@@ -12,6 +12,7 @@ import 'package:bleed_client/events.dart';
 import 'package:bleed_client/events/onAmbientLightChanged.dart';
 import 'package:bleed_client/events/onCompiledGameChanged.dart';
 import 'package:bleed_client/events/onGameJoined.dart';
+import 'package:bleed_client/events/onPhaseChanged.dart';
 import 'package:bleed_client/events/onTimeChanged.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/images.dart';
@@ -29,6 +30,7 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
+import 'package:bleed_client/watches/phase.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:lemon_engine/functions/register_on_mouse_scroll.dart';
 import 'package:lemon_engine/game.dart';
@@ -44,7 +46,9 @@ Future init() async {
   eventStream.stream.listen(_onEventReceivedFromServer);
   observeCompiledGame(onCompiledGameChanged);
   on(onGameJoined);
-  time.onChanged(onTimeChanged);
+  timeInSeconds.onChanged(onTimeChanged);
+  phase.onChanged(onPhaseChangedSetAmbientLight);
+  observeAmbientLight(onAmbientLightChanged);
 
   for(int i = 0; i < settings.maxParticles; i++){
     game.particles.add(Particle());
@@ -102,7 +106,6 @@ Future init() async {
   await images.load();
   rebuildUI();
 
-  observeAmbientLight(onAmbientLightChanged);
 
   onRightClickChanged.stream.listen((bool down){
     inputRequest.sprint = down;

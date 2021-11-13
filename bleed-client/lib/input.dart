@@ -6,7 +6,6 @@ import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/render/drawCanvas.dart';
-import 'package:bleed_client/render/functions/setAmbientLight.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
