@@ -11,7 +11,6 @@ bool finishedLoading = false;
 
 class _Images {
 
-  Image human;
   Image tiles;
   Image tilesLight;
   Image tilesMedium;
@@ -75,7 +74,6 @@ class _Images {
   Image rockSmall2;
   Image rockSmall3;
   Image rockSmall4;
-  Image isoCharacter;
   Image manIdle;
   Image manIdleHandgun1;
   Image manIdleHandgun2;
@@ -138,7 +136,6 @@ class _Images {
     longGrass2 = await _png('long-grass2');
     longGrass3 = await _png('long-grass3');
     longGrass4 = await _png('long-grass4');
-    human = await loadImage("images/character.png");
     tiles = await loadImage("images/tiles.png");
     tilesLight = await loadImage("images/tiles-light.png");
     tilesMedium = await loadImage("images/tiles-medium.png");

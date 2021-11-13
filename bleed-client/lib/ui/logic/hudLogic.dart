@@ -92,14 +92,6 @@ void rebuildScore() {
 
 void _doNothing() {}
 
-void showDebug() {
-  debugMode = true;
-}
-
-void hideDebug() {
-  debugMode = false;
-}
-
 void toggleEditMode() {
   if (playMode) {
     print("mode = Mode.Edit");

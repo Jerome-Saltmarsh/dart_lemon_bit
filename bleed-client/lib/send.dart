@@ -94,7 +94,7 @@ void sendRequestUpdatePlayer() {
   } else {
     _write(requestAim.toInt());
   }
-  _write(serverFrame);
+  // _write(serverFrame);
   send(_buffer.toString());
 }
 

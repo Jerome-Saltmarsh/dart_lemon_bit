@@ -14,7 +14,6 @@ enum EnvironmentObjectType {
   Bridge,
   Tree_Stump,
   Rock_Small,
-  Character,
   LongGrass
 }
 
