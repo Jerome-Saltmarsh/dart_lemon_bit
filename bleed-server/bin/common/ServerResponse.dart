@@ -9,7 +9,6 @@ enum ServerResponse {
   Grenades,
   Pong,
   Game_Joined,
-  Blocks,
   Scene,
   Collectables,
   Inventory,

@@ -233,10 +233,6 @@ void parseState() {
         connecting = false;
         break;
 
-      case ServerResponse.Blocks:
-        _parseBlocks();
-        break;
-
       case ServerResponse.Game_Joined:
         _parseGameJoined();
         announce(GameJoined());
