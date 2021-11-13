@@ -1,5 +1,6 @@
 import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/getters/outOfBounds.dart';
+import 'package:bleed_client/variables/ambientLight.dart';
 
 void applyShade(
     List<List<Shading>> shader, int row, int column, Shading value) {
@@ -21,6 +22,9 @@ void applyShadeDark(List<List<Shading>> shader, int row, int column) {
 }
 
 void applyShadeRing(List<List<Shading>> shader, int row, int column, int size, Shading shade) {
+
+  if (shade.index >= ambientLight.index) return;
+
   int rStart = row - size;
   int rEnd = row + size;
   int cStart = column - size;
