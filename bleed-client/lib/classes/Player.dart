@@ -1,9 +1,10 @@
 
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/enums.dart';
+import 'package:lemon_watch/watch.dart';
 
 class Player {
-  int equippedRounds = 0;
+  Watch<int> equippedRounds = Watch(0);
   int equippedClips = 0;
   int stamina = 0;
   int staminaMax = 0;

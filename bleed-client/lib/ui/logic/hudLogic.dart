@@ -145,7 +145,7 @@ String getMessage() {
       return "Low Health: Press H to heal";
     }
   }
-  if (player.equippedRounds == 0) {
+  if (player.equippedRounds.value == 0) {
     if (player.equippedClips == 0) {
       return 'Empty: Press 1, 2, 3 to change weapons';
     } else {
@@ -153,7 +153,7 @@ String getMessage() {
     }
   }
 
-  if (player.equippedRounds <= 2) {
+  if (player.equippedRounds.value <= 2) {
     return "Low Ammo";
   }
 

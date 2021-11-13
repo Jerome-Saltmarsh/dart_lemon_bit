@@ -381,6 +381,16 @@ Widget buildEquipWeaponSlot(Weapon weapon) {
   );
 }
 
+Widget buildEquippedWeaponSlot(Weapon weapon) {
+  return Stack(
+    children: [
+      buildWeaponSlot(weapon),
+      if (weapon != Weapon.Unarmed)
+      WatchBuilder(player.equippedRounds, buildTag),
+    ],
+  );
+}
+
 Widget buildSlotWeapon({Weapon weapon, int index}) {
   bool acquired = weaponAcquired(weapon);
   return Column(
@@ -458,9 +468,7 @@ Widget buildBottomLeft() {
                       .map((Weapon weapon){
                     return Container(child: buildEquipWeaponSlot(weapon), margin: const EdgeInsets.only(bottom: 4),);
                   }).toList()),
-            WatchBuilder(game.playerWeapon, (Weapon value) {
-              return buildEquipWeaponSlot(value);
-            })
+            WatchBuilder(game.playerWeapon, buildEquippedWeaponSlot)
           ],
         );
       }));

@@ -106,10 +106,10 @@ class _Keys {
   LogicalKeyboardKey speakLetsGreeting = LogicalKeyboardKey.digit8;
   LogicalKeyboardKey waitASecond = LogicalKeyboardKey.digit0;
   LogicalKeyboardKey text = LogicalKeyboardKey.enter;
-  LogicalKeyboardKey ambientBright = LogicalKeyboardKey.digit4;
-  LogicalKeyboardKey ambientMedium = LogicalKeyboardKey.digit5;
-  LogicalKeyboardKey ambientDark = LogicalKeyboardKey.digit6;
-  LogicalKeyboardKey ambientVeryDark = LogicalKeyboardKey.digit7;
+  // LogicalKeyboardKey ambientBright = LogicalKeyboardKey.digit4;
+  // LogicalKeyboardKey ambientMedium = LogicalKeyboardKey.digit5;
+  // LogicalKeyboardKey ambientDark = LogicalKeyboardKey.digit6;
+  // LogicalKeyboardKey ambientVeryDark = LogicalKeyboardKey.digit7;
   LogicalKeyboardKey toggleLantern = LogicalKeyboardKey.keyL;
   LogicalKeyboardKey hourForwards = LogicalKeyboardKey.arrowRight;
   LogicalKeyboardKey hourBackwards = LogicalKeyboardKey.arrowLeft;
@@ -154,11 +154,11 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.speakLetsGreeting: sayGreeting,
   keys.waitASecond: sayWaitASecond,
   keys.text: _onKeyPressedEnter,
-  keys.ambientBright: setAmbientLightBright,
-  keys.ambientMedium: setAmbientLightMedium,
-  keys.ambientDark: setAmbientLightDark,
+  // keys.ambientBright: setAmbientLightBright,
+  // keys.ambientMedium: setAmbientLightMedium,
+  // keys.ambientDark: setAmbientLightDark,
   keys.toggleLantern: toggleLantern,
-  keys.ambientVeryDark: setAmbientLightVeryDark,
+  // keys.ambientVeryDark: setAmbientLightVeryDark,
   keys.hourForwards: skipHour,
   keys.hourBackwards: reverseHour,
 };

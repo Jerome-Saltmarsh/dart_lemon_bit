@@ -398,7 +398,7 @@ void _parsePlayer() {
   }
   game.playerLives = _consumeInt();
   player.equippedClips = _consumeInt();
-  player.equippedRounds = _consumeInt();
+  player.equippedRounds.value = _consumeInt();
   state.gameState = gameStates[_consumeInt()];
   player.points = _consumeInt();
   player.credits = _consumeInt();
