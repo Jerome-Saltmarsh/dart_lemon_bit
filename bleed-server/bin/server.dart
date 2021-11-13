@@ -434,6 +434,14 @@ void main() {
           sendToClient('${ServerResponse.Version.index} $version');
           break;
 
+        case ClientRequest.SkipHour:
+          time = (time + secondsPerHour) % secondsPerDay;
+          break;
+
+          case ClientRequest.ReverseHour:
+          time = (time - secondsPerHour) % secondsPerDay;
+          break;
+
         case ClientRequest.Speak:
           String gameId = arguments[1];
           Game? game = findGameById(gameId);

@@ -56,7 +56,6 @@ abstract class Game {
   final int maxPlayers;
   final Scene scene;
   int duration = 0;
-  int time = 0;
   List<Npc> zombies = [];
   List<InteractableNpc> npcs = [];
   List<InteractableObject> interactableObjects = [];
@@ -174,11 +173,12 @@ const hoursPerDay = 24;
 const secondsPerDay = secondsPerMinute * minutesPerHour * hoursPerDay;
 const secondsPerFrame = 5;
 
+const secondsPerHour = secondsPerMinute * minutesPerHour;
+
 extension GameFunctions on Game {
   void updateAndCompile() {
     // @on update game
     duration++;
-    time = (time + secondsPerFrame) % secondsPerDay;
     update();
     _updatePlayersAndNpcs();
     _updateCollisions();

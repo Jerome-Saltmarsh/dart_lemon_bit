@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'classes/Game.dart';
 import 'classes/GameObject.dart';
+import 'games/world.dart';
 import 'language.dart';
 import 'maths.dart';
-import 'server.dart';
 import 'state.dart';
 import 'values/world.dart';
 
@@ -28,6 +28,10 @@ void updateNpcTargets(Timer timer) {
   }
 }
 
+void updateWorldTime() {
+  time = (time + secondsPerFrame) % secondsPerDay;
+}
+
 void jobRemoveDisconnectedPlayers(Timer timer) {
   for (Game game in world.games) {
     game.jobRemoveDisconnectedPlayers();
@@ -42,10 +46,11 @@ void jobNpcWander(Timer timer) {
 
 void fixedUpdate(Timer timer) {
   frame++;
-  updateGames();
+  updateWorld();
 }
 
-void updateGames() {
+void updateWorld() {
+  updateWorldTime();
   for (Game game in world.games) {
     game.updateAndCompile();
   }

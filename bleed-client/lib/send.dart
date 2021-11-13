@@ -34,6 +34,14 @@ void sendRequestEquip(Weapon weapon) {
   send('${ClientRequest.Player_Equip.index} $session ${weapon.index}');
 }
 
+void skipHour(){
+  send(ClientRequest.SkipHour.index.toString());
+}
+
+void reverseHour(){
+  send(ClientRequest.ReverseHour.index.toString());
+}
+
 void sendRequestEquipHandgun() {
   sendRequestEquip(Weapon.HandGun);
 }

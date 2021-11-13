@@ -111,6 +111,8 @@ class _Keys {
   LogicalKeyboardKey ambientDark = LogicalKeyboardKey.digit6;
   LogicalKeyboardKey ambientVeryDark = LogicalKeyboardKey.digit7;
   LogicalKeyboardKey toggleLantern = LogicalKeyboardKey.keyL;
+  LogicalKeyboardKey hourForwards = LogicalKeyboardKey.arrowRight;
+  LogicalKeyboardKey hourBackwards = LogicalKeyboardKey.arrowLeft;
 }
 
 Map<LogicalKeyboardKey, bool> _keyDownState = {};
@@ -157,6 +159,8 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.ambientDark: setAmbientLightDark,
   keys.toggleLantern: toggleLantern,
   keys.ambientVeryDark: setAmbientLightVeryDark,
+  keys.hourForwards: skipHour,
+  keys.hourBackwards: reverseHour,
 };
 
 void toggleLantern(){

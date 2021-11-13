@@ -4,6 +4,9 @@ import 'cave.dart';
 import 'tavern.dart';
 import 'town.dart';
 
+// TODO remove global value
+int time = 0;
+
 class World {
   late Game town;
   late Game cave;
@@ -15,7 +18,7 @@ class World {
     cave = Cave();
     tavern = Tavern();
     games = [town, cave, tavern];
-    // TODO Remove Logic
+    // TODO Remove Logic from class
     for(Game game in games){
       compileGame(game);
       game.compiledTiles = compileTiles(game.scene.tiles);

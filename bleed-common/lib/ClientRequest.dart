@@ -12,4 +12,6 @@ enum ClientRequest {
   Version,
   Interact,
   Speak,
+  SkipHour,
+  ReverseHour,
 }
