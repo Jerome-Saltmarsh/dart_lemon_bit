@@ -374,6 +374,7 @@ Widget buildEquipWeaponSlot(Weapon weapon) {
           child: buildWeaponSlot(weapon: weapon),
           callback: (){
             sendRequestEquip(weapon);
+            rebuildUI();
           }),
       if (weapon != Weapon.Unarmed) buildTag(getWeaponRounds(weapon)),
     ],
