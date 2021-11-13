@@ -17,7 +17,6 @@ void clearState() {
   clearRender();
   zoom = 1;
   gameEvents.clear();
-  gameOver = false;
   mode = Mode.Play;
   state.lobby = null;
   state.lobbies.clear();

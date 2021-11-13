@@ -238,11 +238,6 @@ void parseState() {
         announce(GameJoined());
         break;
 
-      case ServerResponse.GameOver:
-        gameOver = true;
-        print('game over');
-        break;
-
       case ServerResponse.Collectables:
         if (!gameStarted) return;
         _parseCollectables();

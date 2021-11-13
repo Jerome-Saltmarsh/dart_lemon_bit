@@ -202,7 +202,7 @@ void main() {
         // game.dispatch(GameEventType.Use_MedKit, player.x, player.y, 0, 0);
         // break;
 
-        case ClientRequest.Game_Join_Open_World:
+        case ClientRequest.Player_Join:
           joinGame(world.town);
           break;
 

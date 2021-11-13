@@ -26,7 +26,6 @@ dynamic valueObject;
 DateTime lastRefresh = DateTime.now();
 int drawFrame = 0;
 bool debugMode = false;
-bool gameOver = false;
 int serverFramesMS = 0;
 int actualFPS;
 List<Block> blockHouses = [];

@@ -1,5 +1,5 @@
 enum ClientRequest {
-  Game_Join_Open_World,
+  Player_Join,
   Game_Update,
   Player_Revive,
   Player_Equip,

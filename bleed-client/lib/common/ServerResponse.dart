@@ -15,7 +15,6 @@ enum ServerResponse {
   Paths,
   MetaFortress,
   MetaDeathMatch,
-  GameOver,
   Score,
   Player_Events,
   Items,
