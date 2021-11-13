@@ -43,7 +43,6 @@ import 'buildTextBox.dart';
 import 'dialogs.dart';
 
 const double _padding = 8;
-final expandInventory = Watch(false);
 
 Widget buildHealthBar() {
   return WatchBuilder(playerHealth, (double health) {
@@ -79,9 +78,9 @@ Widget buildHealthBar() {
 }
 
 Widget buildTopLeft() {
-  // return Positioned(top: _padding, left: _padding, child: buildTime());
-  return Positioned(
-      top: _padding, left: _padding, child: buildMouseWorldPosition());
+  return Positioned(top: _padding, left: _padding, child: buildTime());
+  // return Positioned(
+  //     top: _padding, left: _padding, child: buildMouseWorldPosition());
 }
 
 Widget buildBottomRight() {
@@ -368,14 +367,15 @@ Widget buildImageSlot(
   );
 }
 
-Widget buildEquipWeaponSlot({Weapon weapon, int index}) {
+Widget buildEquipWeaponSlot(Weapon weapon) {
   return Stack(
     children: [
       onPressed(
           child: buildWeaponSlot(weapon: weapon),
-          hint: "Press $index to equip",
-          callback: sendRequestEquipShotgun),
-      buildTag(clipsRemaining(weapon)),
+          callback: (){
+            sendRequestEquip(weapon);
+          }),
+      if (weapon != Weapon.Unarmed) buildTag(getWeaponRounds(weapon)),
     ],
   );
 }
@@ -388,7 +388,7 @@ Widget buildSlotWeapon({Weapon weapon, int index}) {
         buildPurchaseWeaponSlot(weapon: weapon),
       if (player.canPurchase) height8,
       if (!acquired) buildSlot(title: "Slot $index"),
-      if (acquired) buildEquipWeaponSlot(weapon: weapon, index: index),
+      if (acquired) buildEquipWeaponSlot(weapon),
     ],
   );
 }
@@ -442,28 +442,29 @@ Widget buildBottomLeft() {
   return Positioned(
       bottom: _padding,
       left: _padding,
-      child: WatchBuilder(expandInventory, (bool expanded) {
-          return Column(
-            mainAxisAlignment: main.end,
-            crossAxisAlignment: cross.start,
-            children: [
-              if (expanded)
-                Column(
+      child: mouseOver(builder: (BuildContext context, bool mouseOver) {
+        return Column(
+          mainAxisAlignment: main.end,
+          crossAxisAlignment: cross.start,
+          children: [
+            if (mouseOver)
+              Column(
                   mainAxisAlignment: main.end,
                   crossAxisAlignment: cross.start,
-                  children: [
-                    height4,
-                    buildSlotWeapon(weapon: Weapon.Shotgun, index: 3),
-                    height4,
-                  ],
-                ),
-              WatchBuilder(game.playerWeapon, (Weapon value){
-                return buildSlotWeapon(weapon: value, index: 1);
-              })
-            ],
-          );
-        },
-      ));
+                  children: getAcquiredNonEquippedWeapons()
+                      .map(buildEquipWeaponSlot).toList()),
+            WatchBuilder(game.playerWeapon, (Weapon value) {
+              return buildEquipWeaponSlot(value);
+            })
+          ],
+        );
+      }));
+}
+
+List<Weapon> getAcquiredNonEquippedWeapons() {
+  return Weapon.values.where((Weapon weapon) {
+    return weaponAcquired(weapon) && game.playerWeapon.value != weapon;
+  }).toList();
 }
 
 Stack buildGrenadeSlot() {

@@ -82,7 +82,7 @@ Score get highScore {
   return highScore;
 }
 
-int clipsRemaining(Weapon weapon) {
+int getWeaponRounds(Weapon weapon) {
   switch (weapon) {
     case Weapon.HandGun:
       return player.roundsHandgun;
@@ -96,26 +96,11 @@ int clipsRemaining(Weapon weapon) {
       throw Exception("Could not get clips for $weapon");
   }
 }
-
-int roundsRemaining(Weapon weapon) {
-  switch (weapon) {
-    case Weapon.HandGun:
-      return player.roundsHandgun;
-    case Weapon.Shotgun:
-      return player.roundsShotgun;
-    case Weapon.SniperRifle:
-      return player.roundsSniperRifle;
-    case Weapon.AssaultRifle:
-      return player.roundsAssaultRifle;
-    default:
-      throw Exception("Could not get clips for $weapon");
-  }
-}
-
-
 
 bool weaponAcquired(Weapon weapon) {
   switch (weapon) {
+    case Weapon.Unarmed:
+      return true;
     case Weapon.HandGun:
       return player.acquiredHandgun;
     case Weapon.Shotgun:

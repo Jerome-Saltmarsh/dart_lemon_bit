@@ -134,7 +134,7 @@ class Town extends Game {
       y: playerSpawnY,
       inventory: Inventory(0, 0, []),
       clips: Clips(),
-      rounds: Rounds(handgun: 40, shotgun: 25),
+      rounds: Rounds(handgun: 50, shotgun: 30, sniperRifle: 20, assaultRifle: 100),
       squad: 1,
       weapon: Weapon.HandGun,
     );
