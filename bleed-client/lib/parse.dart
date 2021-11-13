@@ -414,35 +414,11 @@ void _parsePlayer() {
   player.acquiredShotgun = _consumeBool();
   player.acquiredSniperRifle = _consumeBool();
   player.acquiredAssaultRifle = _consumeBool();
-
-  Tile tile = _consumeTile();
-
-  if (player.tile != tile) {
-    Tile previousTile = player.tile;
-    player.tile = tile;
-    onPlayerTileChanged(previousTile, tile);
-  }
-
-  int clipsHandgun = _consumeInt();
-  int clipsShotgun = _consumeInt();
-  int clipsSniperRifle = _consumeInt();
-  int clipsAssaultRifle = _consumeInt();
-
-  if (player.roundsHandgun != clipsHandgun) {
-    player.roundsHandgun = clipsHandgun;
-  }
-
-  if (player.roundsShotgun != clipsShotgun) {
-    player.roundsShotgun = clipsShotgun;
-  }
-
-  if (player.roundsSniperRifle != clipsSniperRifle) {
-    player.roundsSniperRifle = clipsSniperRifle;
-  }
-
-  if (player.roundsAssaultRifle != clipsAssaultRifle) {
-    player.roundsAssaultRifle = clipsAssaultRifle;
-  }
+  player.tile = _consumeTile();
+  player.roundsHandgun = _consumeInt();
+  player.roundsShotgun = _consumeInt();
+  player.roundsSniperRifle = _consumeInt();
+  player.roundsAssaultRifle = _consumeInt();
 }
 
 void _parsePlayerEvents() {

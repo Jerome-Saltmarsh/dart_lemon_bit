@@ -46,8 +46,8 @@ Future init() async {
   eventStream.stream.listen(_onEventReceivedFromServer);
   observeCompiledGame(onCompiledGameChanged);
   on(onGameJoined);
-  timeInSeconds.onChanged(onTimeChanged);
-  phase.onChanged(onPhaseChangedSetAmbientLight);
+  timeInSeconds.onChanged(updatePhase);
+  phase.onChanged(updateAmbientLight);
   observeAmbientLight(onAmbientLightChanged);
 
   for(int i = 0; i < settings.maxParticles; i++){
@@ -159,14 +159,3 @@ void onPlayerStateChanged(CharacterState previous, CharacterState next) {
   }
 }
 
-void onPlayerTileChanged(Tile previous, Tile next) {
-  if (next == Tile.PlayerSpawn) {
-    rebuildUI();
-    return;
-  }
-
-  if (previous == Tile.PlayerSpawn) {
-    rebuildUI();
-    return;
-  }
-}

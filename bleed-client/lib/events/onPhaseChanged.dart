@@ -2,9 +2,9 @@
 import 'package:bleed_client/enums/Phase.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 
-void onPhaseChangedSetAmbientLight(Phase value){
-  print("onPhaseChangedSetAmbientLight($value)");
-  switch (value) {
+void updateAmbientLight(Phase phase){
+  print("onPhaseChangedSetAmbientLight($phase)");
+  switch (phase) {
     case Phase.EarlyMorning:
       setAmbientLightDark();
       break;
