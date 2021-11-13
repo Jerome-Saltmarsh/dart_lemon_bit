@@ -1,27 +1,27 @@
 import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/getters/outOfBounds.dart';
-import 'package:bleed_client/variables/ambientLight.dart';
+import 'package:bleed_client/watches/ambientLight.dart';
 
 void applyShade(
-    List<List<Shading>> shader, int row, int column, Shading value) {
+    List<List<Shade>> shader, int row, int column, Shade value) {
   if (outOfBounds(row, column)) return;
   if (shader[row][column].index <= value.index) return;
   shader[row][column] = value;
 }
 
-void applyShadeBright(List<List<Shading>> shader, int row, int column) {
-  applyShade(shader, row, column, Shading.Bright);
+void applyShadeBright(List<List<Shade>> shader, int row, int column) {
+  applyShade(shader, row, column, Shade.Bright);
 }
 
-void applyShadeMedium(List<List<Shading>> shader, int row, int column) {
-  applyShade(shader, row, column, Shading.Medium);
+void applyShadeMedium(List<List<Shade>> shader, int row, int column) {
+  applyShade(shader, row, column, Shade.Medium);
 }
 
-void applyShadeDark(List<List<Shading>> shader, int row, int column) {
-  applyShade(shader, row, column, Shading.Dark);
+void applyShadeDark(List<List<Shade>> shader, int row, int column) {
+  applyShade(shader, row, column, Shade.Dark);
 }
 
-void applyShadeRing(List<List<Shading>> shader, int row, int column, int size, Shading shade) {
+void applyShadeRing(List<List<Shade>> shader, int row, int column, int size, Shade shade) {
 
   if (shade.index >= ambientLight.index) return;
 

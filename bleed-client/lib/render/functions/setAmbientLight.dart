@@ -4,31 +4,31 @@ import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/render/functions/applyEnvironmentObjectsToBakeMapping.dart';
 import 'package:bleed_client/render/functions/setBakeMapToAmbientLight.dart';
-import 'package:bleed_client/variables/ambientLight.dart';
+import 'package:bleed_client/watches/ambientLight.dart';
 
 void setAmbientLightBright(){
-  setAmbientLight(Shading.Bright);
+  setAmbientLight(Shade.Bright);
 }
 
 void setAmbientLightMedium(){
-  setAmbientLight(Shading.Medium);
+  setAmbientLight(Shade.Medium);
 }
 
 void setAmbientLightDark(){
-  setAmbientLight(Shading.Dark);
+  setAmbientLight(Shade.Dark);
 }
 
 void setAmbientLightVeryDark(){
-  setAmbientLight(Shading.VeryDark);
+  setAmbientLight(Shade.VeryDark);
 }
 
-void setAmbientLight(Shading value){
+void setAmbientLight(Shade value){
   if (ambientLight == value) return;
   ambientLight = value;
   setBakeMapToAmbientLight();
   applyEnvironmentObjectsToBakeMapping();
 
-  if (value == Shading.Bright){
+  if (value == Shade.Bright){
     images.torch = images.torchOut;
   }
 }

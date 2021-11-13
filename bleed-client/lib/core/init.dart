@@ -9,6 +9,8 @@ import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/events.dart';
+import 'package:bleed_client/functions/applyLightingToEnvironmentObjects.dart';
+import 'package:bleed_client/functions/calculateTileSrcRects.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/input.dart';
@@ -21,6 +23,7 @@ import 'package:bleed_client/network/streams/onDone.dart';
 import 'package:bleed_client/onMouseScroll.dart';
 import 'package:bleed_client/parse.dart';
 import 'package:bleed_client/parser/state/event.dart';
+import 'package:bleed_client/render/functions/resetDynamicShadesToBakeMap.dart';
 import 'package:bleed_client/render/functions/setAmbientLight.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state.dart';
@@ -29,6 +32,7 @@ import 'package:bleed_client/streams/time.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/variables/phase.dart';
+import 'package:bleed_client/watches/ambientLight.dart';
 import 'package:lemon_engine/functions/register_on_mouse_scroll.dart';
 import 'package:lemon_engine/game.dart';
 
@@ -130,6 +134,13 @@ Future init() async {
   initUI();
   await images.load();
   rebuildUI();
+
+  ambientLightWatch.onChanged((t) {
+    print("Ambient light changed to $t");
+    resetDynamicShadesToBakeMap();
+    calculateTileSrcRects();
+    applyLightingToEnvironmentObjects();
+  });
 
   onRightClickChanged.stream.listen((bool down){
     inputRequest.sprint = down;

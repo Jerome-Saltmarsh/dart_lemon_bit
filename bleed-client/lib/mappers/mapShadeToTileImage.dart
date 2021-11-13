@@ -3,13 +3,13 @@ import 'dart:ui';
 import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/images.dart';
 
-Image mapShadeToImage(Shading shading){
+Image mapShadeToImage(Shade shading){
   switch(shading){
-    case Shading.Bright:
+    case Shade.Bright:
       return images.tilesLight;
-    case Shading.Medium:
+    case Shade.Medium:
       return images.tilesMedium;
-    case Shading.Dark:
+    case Shade.Dark:
       return images.tilesDark;
     default:
       throw Exception("unknown shade");

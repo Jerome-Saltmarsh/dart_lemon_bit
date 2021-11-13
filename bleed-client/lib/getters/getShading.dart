@@ -4,18 +4,18 @@ import 'package:bleed_client/render/state/dynamicShading.dart';
 import 'package:bleed_client/getters/getTileAt.dart';
 import 'package:bleed_client/state/game.dart';
 
-Shading getShadeAtPosition(double x, double y){
+Shade getShadeAtPosition(double x, double y){
   return getShade(getRow(x, y), getColumn(x, y));
 }
 
-Shading getShade(int row, int column){
-  if (row < 0) return Shading.VeryDark;
-  if (column < 0) return Shading.VeryDark;
+Shade getShade(int row, int column){
+  if (row < 0) return Shade.VeryDark;
+  if (column < 0) return Shade.VeryDark;
   if (row >= game.totalRows){
-    return Shading.VeryDark;
+    return Shade.VeryDark;
   }
   if (column >= game.totalColumns){
-    return Shading.VeryDark;
+    return Shade.VeryDark;
   }
   return dynamicShading[row][column];
 }

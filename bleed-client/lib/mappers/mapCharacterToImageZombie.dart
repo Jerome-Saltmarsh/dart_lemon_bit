@@ -5,45 +5,45 @@ import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/images.dart';
 
-Image mapCharacterToImageZombie(CharacterState state, Weapon weapon, Shading shading){
+Image mapCharacterToImageZombie(CharacterState state, Weapon weapon, Shade shading){
   switch(state){
     case CharacterState.Idle:
       switch(shading){
-        case Shading.Bright:
+        case Shade.Bright:
           return images.zombieIdleBright;
-        case Shading.Medium:
+        case Shade.Medium:
           return images.zombieIdleMedium;
-        case Shading.Dark:
+        case Shade.Dark:
           return images.zombieIdleDark;
       }
       throw Exception();
     case CharacterState.Dead:
       switch(shading){
-        case Shading.Bright:
+        case Shade.Bright:
           return images.zombieDyingBright;
-        case Shading.Medium:
+        case Shade.Medium:
           return images.zombieDyingMedium;
-        case Shading.Dark:
+        case Shade.Dark:
           return images.zombieDyingDark;
       }
       throw Exception();
     case CharacterState.Striking:
       switch(shading){
-        case Shading.Bright:
+        case Shade.Bright:
           return images.zombieStriking1;
-        case Shading.Medium:
+        case Shade.Medium:
           return images.zombieStriking2;
-        case Shading.Dark:
+        case Shade.Dark:
           return images.zombieStriking3;
       }
       throw Exception();
     case CharacterState.Walking:
       switch(shading){
-        case Shading.Bright:
+        case Shade.Bright:
           return images.zombieWalkingBright;
-        case Shading.Medium:
+        case Shade.Medium:
           return images.zombieWalkingMedium;
-        case Shading.Dark:
+        case Shade.Dark:
           return images.zombieWalkingDark;
       }
       throw Exception();

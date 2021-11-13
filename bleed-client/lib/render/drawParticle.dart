@@ -22,8 +22,8 @@ void drawParticle(Particle particle){
   double x = particle.x;
   double y = particle.y;
 
-  Shading shading = getShadeAtPosition(particle.x, particle.y);
-  if (shading == Shading.VeryDark) return;
+  Shade shading = getShadeAtPosition(particle.x, particle.y);
+  if (shading == Shade.VeryDark) return;
 
   double scaleShift = (1 + (particle.z * 0.4)) * particle.scale;
   double heightShift = -particle.z * 20;
@@ -40,9 +40,9 @@ void drawParticle(Particle particle){
     case ParticleType.Shell:
       double size = 1.33 * scaleShift;
       Color color = colours.white;
-      if (shading == Shading.Dark){
+      if (shading == Shade.Dark){
         color = colours.grey;
-      }else if (shading == Shading.Medium){
+      }else if (shading == Shade.Medium){
         color = colours.greyDark;
       }
       drawCircle(x, y + heightShift, size * scaleShift, color);
@@ -50,7 +50,7 @@ void drawParticle(Particle particle){
     case ParticleType.Blood:
       double size = 2.5;
       Color color = colours.blood;
-      if (shading == Shading.Dark){
+      if (shading == Shade.Dark){
         color = colours.redDarkest;
       }
       drawCircle(x, y + heightShift, size * scaleShift, color);

@@ -33,7 +33,7 @@ import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
-import 'package:bleed_client/variables/ambientLight.dart';
+import 'package:bleed_client/watches/ambientLight.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/game.dart';
@@ -62,26 +62,28 @@ final double _nameRadius = 100;
 final Ring _healthRing = Ring(16);
 int _flameIndex = 0;
 
+bool get dayTime => ambientLight.index == Shade.Bright.index;
+
 void renderCanvasPlay() {
   _updateAnimations();
 
-  // if (ambientLight.index > Shading.Bright.index) {
+  if (!dayTime) {
     resetDynamicShadesToBakeMap();
     calculateTileSrcRects();
     applyCharacterLightEmission(game.humans);
     applyCharacterLightEmission(game.interactableNpcs);
     applyLightingToEnvironmentObjects();
-  // }
+  }
 
   drawTiles();
-  _drawNpcBonusPointsCircles();
+  // _drawNpcBonusPointsCircles();
   // _drawPlayerHealthRing();
   drawBullets(game.bullets);
   drawBulletHoles(game.bulletHoles);
   _drawGrenades(game.grenades);
   _renderItems();
-  drawCrates();
-  _drawCollectables();
+  // drawCrates();
+  // _drawCollectables();
   _drawSprites();
 
   if (settings.compilePaths) {
@@ -99,7 +101,7 @@ void _updateAnimations() {
   frameRateValue++;
   if (frameRateValue % 7 == 0) {
     drawFrame++;
-    if (ambientLight != Shading.Bright) {
+    if (ambientLight != Shade.Bright) {
       _flameIndex = (_flameIndex + 1) % 4;
       images.torch = images.flames[_flameIndex];
     }
@@ -183,14 +185,10 @@ void _drawSprites() {
     if (humansRemaining) {
       double humanY = game.humans[indexHuman].y;
 
-      if (!environmentRemaining ||
-          humanY < environmentObjects[indexEnv].y) {
-        if (!particlesRemaining ||
-            humanY < game.particles[indexParticle].y) {
-          if (!zombiesRemaining ||
-              humanY < game.zombies[indexZombie].y) {
-            if (!npcsRemaining ||
-                humanY < game.interactableNpcs[indexNpc].y) {
+      if (!environmentRemaining || humanY < environmentObjects[indexEnv].y) {
+        if (!particlesRemaining || humanY < game.particles[indexParticle].y) {
+          if (!zombiesRemaining || humanY < game.zombies[indexZombie].y) {
+            if (!npcsRemaining || humanY < game.interactableNpcs[indexNpc].y) {
               drawCharacterMan(game.humans[indexHuman]);
               indexHuman++;
               continue;
@@ -205,11 +203,9 @@ void _drawSprites() {
 
       if (env.dst.top > screen.bottom) return;
 
-      if (!particlesRemaining ||
-          env.y < game.particles[indexParticle].y) {
+      if (!particlesRemaining || env.y < game.particles[indexParticle].y) {
         if (!zombiesRemaining || env.y < game.zombies[indexZombie].y) {
-          if (!npcsRemaining ||
-              env.y < game.interactableNpcs[indexNpc].y) {
+          if (!npcsRemaining || env.y < game.interactableNpcs[indexNpc].y) {
             drawEnvironmentObject(environmentObjects[indexEnv]);
             indexEnv++;
             continue;
@@ -221,10 +217,8 @@ void _drawSprites() {
     if (particlesRemaining) {
       Particle particle = game.particles[indexParticle];
 
-      if (!zombiesRemaining ||
-          particle.y < game.zombies[indexZombie].y) {
-        if (!npcsRemaining ||
-            particle.y < game.interactableNpcs[indexNpc].y) {
+      if (!zombiesRemaining || particle.y < game.zombies[indexZombie].y) {
+        if (!npcsRemaining || particle.y < game.interactableNpcs[indexNpc].y) {
           if (onScreen(particle.x, particle.y)) {
             drawParticle(particle);
           }
@@ -237,8 +231,7 @@ void _drawSprites() {
     if (zombiesRemaining) {
       Zombie zombie = game.zombies[indexZombie];
 
-      if (!npcsRemaining ||
-          zombie.y < game.interactableNpcs[indexNpc].y) {
+      if (!npcsRemaining || zombie.y < game.interactableNpcs[indexNpc].y) {
         drawCharacterZombie(game.zombies[indexZombie]);
         indexZombie++;
         continue;
@@ -261,7 +254,8 @@ bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {
 void drawEnvironmentObject(EnvironmentObject environmentObject) {
   if (!environmentObjectOnScreenScreen(environmentObject)) return;
 
-  drawImageRect(environmentObject.image, environmentObject.src, environmentObject.dst);
+  drawImageRect(
+      environmentObject.image, environmentObject.src, environmentObject.dst);
 }
 
 void _drawNpcBonusPointsCircles() {
@@ -311,10 +305,11 @@ void _drawMouseAim() {
   if (weapon == Weapon.Shotgun) return;
 
   paint.strokeWidth = 3;
-  double angle = angleBetween(
-      mouseWorldX, mouseWorldY, game.playerX, game.playerY);
+  double angle =
+      angleBetween(mouseWorldX, mouseWorldY, game.playerX, game.playerY);
 
-  double mouseDistance = distanceBetween(mouseWorldX, mouseWorldY, playerX, playerY);
+  double mouseDistance =
+      distanceBetween(mouseWorldX, mouseWorldY, playerX, playerY);
   double d = min(mouseDistance, weapon == Weapon.SniperRifle ? 150 : 35);
 
   double vX = adjacent(angle, d);

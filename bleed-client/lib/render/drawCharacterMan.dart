@@ -12,7 +12,7 @@ void drawCharacterMan(Character character) {
   if (!character.alive && isWaterAt(character.x, character.y)) return;
   if (!onScreen(character.x, character.y)) return;
 
-  Shading shading = getShadeAtPosition(character.x, character.y);
+  Shade shading = getShadeAtPosition(character.x, character.y);
 
   // if (shading == Shading.VeryDark) return;
 

@@ -7,7 +7,7 @@ import 'package:bleed_client/mappers/mapEnvironmentObjectToShadedImage.dart';
 
 void applyLightingToEnvironmentObjects() {
   for (EnvironmentObject environmentObject in environmentObjects) {
-    Shading shade = getShade(environmentObject.tileRow, environmentObject.tileColumn);
+    Shade shade = getShade(environmentObject.tileRow, environmentObject.tileColumn);
     environmentObject.image = mapEnvironmentObjectToToShadedImage(environmentObject, shade);
   }
 }

@@ -25,15 +25,15 @@ class _Colors {
 }
 
 
-Color getColorSkin(Shading shading){
+Color getColorSkin(Shade shading){
   switch (shading){
-    case Shading.Bright:
+    case Shade.Bright:
       return colours.skinCaucasian01;
-    case Shading.Medium:
+    case Shade.Medium:
       return colours.skinCaucasian02;
-    case Shading.Dark:
+    case Shade.Dark:
       return colours.skinCaucasian03;
-    case Shading.VeryDark:
+    case Shade.VeryDark:
       return colours.skinCaucasian04;
   }
   throw Exception();

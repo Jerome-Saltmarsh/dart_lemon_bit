@@ -9,7 +9,7 @@ void calculateTileSrcRects() {
   int i = 0;
   for (int row = 0; row < game.totalRows; row++) {
     for (int column = 0; column < game.totalColumns; column++) {
-      Shading shading = dynamicShading[row][column];
+      Shade shading = dynamicShading[row][column];
       tileSrcRects[i + 1] = shading.index * _width; // top
       tileSrcRects[i + 3] = tileSrcRects[i + 1] + _width; // bottom
       i += 4;

@@ -6,30 +6,30 @@ import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/images.dart';
 
 Image mapCharacterToImageMan(
-    CharacterState state, Weapon weapon, Shading shade) {
+    CharacterState state, Weapon weapon, Shade shade) {
   switch (state) {
     case CharacterState.Idle:
       if (weapon == Weapon.HandGun) {
         switch (shade) {
-          case Shading.Bright:
+          case Shade.Bright:
             return images.manIdleHandgun1;
-          case Shading.Medium:
+          case Shade.Medium:
             return images.manIdleHandgun2;
-          case Shading.Dark:
+          case Shade.Dark:
             return images.manIdleHandgun3;
-          case Shading.VeryDark:
+          case Shade.VeryDark:
             return images.manIdleHandgun3;
         }
       }
       if (weapon == Weapon.Shotgun) {
         switch (shade) {
-          case Shading.Bright:
+          case Shade.Bright:
             return images.manIdleShotgun01;
-          case Shading.Medium:
+          case Shade.Medium:
             return images.manIdleShotgun02;
-          case Shading.Dark:
+          case Shade.Dark:
             return images.manIdleShotgun03;
-          case Shading.VeryDark:
+          case Shade.VeryDark:
             return images.manIdleShotgun03;
         }
         throw Exception();
@@ -40,7 +40,7 @@ Image mapCharacterToImageMan(
       if (weapon == Weapon.AssaultRifle) {
         return images.manIdleShotgun01;
       }
-      if (shade == Shading.Bright) {
+      if (shade == Shade.Bright) {
         return images.manIdleBright;
       }
       return images.manIdle;
@@ -48,38 +48,38 @@ Image mapCharacterToImageMan(
       switch (weapon) {
         case Weapon.HandGun:
           switch (shade) {
-            case Shading.Bright:
+            case Shade.Bright:
               return images.manFiringHandgun1;
-            case Shading.Medium:
+            case Shade.Medium:
               return images.manFiringHandgun2;
-            case Shading.Dark:
+            case Shade.Dark:
               return images.manFiringHandgun3;
-            case Shading.VeryDark:
+            case Shade.VeryDark:
               return images.manFiringHandgun3;
           }
           throw Exception();
         default:
           switch (shade) {
-            case Shading.Bright:
+            case Shade.Bright:
               return images.manFiringShotgun1;
-            case Shading.Medium:
+            case Shade.Medium:
               return images.manFiringShotgun2;
-            case Shading.Dark:
+            case Shade.Dark:
               return images.manFiringShotgun3;
-            case Shading.VeryDark:
+            case Shade.VeryDark:
               return images.manFiringShotgun3;
           }
       }
       throw Exception();
     case CharacterState.Dead:
       switch (shade) {
-        case Shading.Bright:
+        case Shade.Bright:
           return images.manDying1;
-        case Shading.Medium:
+        case Shade.Medium:
           return images.manDying2;
-        case Shading.Dark:
+        case Shade.Dark:
           return images.manDying3;
-        case Shading.VeryDark:
+        case Shade.VeryDark:
           return images.manDying3;
       }
       throw Exception();
@@ -87,56 +87,56 @@ Image mapCharacterToImageMan(
       return images.manStriking;
     case CharacterState.ChangingWeapon:
       switch (shade) {
-        case Shading.Bright:
+        case Shade.Bright:
           return images.manChanging1;
-        case Shading.Medium:
+        case Shade.Medium:
           return images.manChanging2;
-        case Shading.Dark:
+        case Shade.Dark:
           return images.manChanging3;
-        case Shading.VeryDark:
+        case Shade.VeryDark:
           return images.manChanging3;
       }
       throw Exception();
     case CharacterState.Running:
       switch (shade) {
-        case Shading.Bright:
+        case Shade.Bright:
           return images.manUnarmedRunning1;
-        case Shading.Medium:
+        case Shade.Medium:
           return images.manUnarmedRunning2;
-        case Shading.Dark:
+        case Shade.Dark:
           return images.manUnarmedRunning3;
-        case Shading.VeryDark:
+        case Shade.VeryDark:
           return images.manUnarmedRunning3;
       }
       throw Exception();
     case CharacterState.Walking:
       if (weapon == Weapon.HandGun) {
         switch (shade) {
-          case Shading.Bright:
+          case Shade.Bright:
             return images.manWalkingHandgun1;
-          case Shading.Medium:
+          case Shade.Medium:
             return images.manWalkingHandgun2;
-          case Shading.Dark:
+          case Shade.Dark:
             return images.manWalkingHandgun3;
-          case Shading.VeryDark:
+          case Shade.VeryDark:
             return images.manWalkingHandgun3;
         }
         throw Exception();
       }
       if (weapon == Weapon.Shotgun) {
         switch (shade) {
-          case Shading.Bright:
+          case Shade.Bright:
             return images.manWalkingShotgunShade1;
-          case Shading.Medium:
+          case Shade.Medium:
             return images.manWalkingShotgunShade2;
-          case Shading.Dark:
+          case Shade.Dark:
             return images.manWalkingShotgunShade3;
-          case Shading.VeryDark:
+          case Shade.VeryDark:
             return images.manWalkingShotgunShade3;
         }
         throw Exception();
       }
-      if (shade == Shading.Bright) {
+      if (shade == Shade.Bright) {
         return images.manWalkingBright;
       }
       return images.manWalking;
@@ -144,25 +144,25 @@ Image mapCharacterToImageMan(
       switch (weapon) {
         case Weapon.HandGun:
           switch (shade) {
-            case Shading.Bright:
+            case Shade.Bright:
               return images.manFiringHandgun1;
-            case Shading.Medium:
+            case Shade.Medium:
               return images.manFiringHandgun2;
-            case Shading.Dark:
+            case Shade.Dark:
               return images.manFiringHandgun3;
-            case Shading.VeryDark:
+            case Shade.VeryDark:
               return images.manFiringHandgun3;
           }
           throw Exception();
         default:
           switch (shade) {
-            case Shading.Bright:
+            case Shade.Bright:
               return images.manFiringShotgun1;
-            case Shading.Medium:
+            case Shade.Medium:
               return images.manFiringShotgun2;
-            case Shading.Dark:
+            case Shade.Dark:
               return images.manFiringShotgun3;
-            case Shading.VeryDark:
+            case Shade.VeryDark:
               return images.manFiringShotgun3;
           }
       }

@@ -1,4 +1,4 @@
-enum Shading {
+enum Shade {
   Bright,
   Medium,
   Dark,

@@ -7,8 +7,8 @@ final double _light = 100;
 final double _medium = 250;
 final double _dark = 400;
 
-Shading calculateShadeAt(double x, double y) {
-  Shading shading = Shading.Dark;
+Shade calculateShadeAt(double x, double y) {
+  Shade shading = Shade.Dark;
 
   for (Character player in game.humans) {
     double xDiff = diff(x, player.x);
@@ -18,10 +18,10 @@ Shading calculateShadeAt(double x, double y) {
     double total = xDiff + yDiff;
 
     if (total < _light) {
-      return Shading.Bright;
+      return Shade.Bright;
     }
     if (total < _medium) {
-      shading = Shading.Medium;
+      shading = Shade.Medium;
     }
   }
   return shading;
