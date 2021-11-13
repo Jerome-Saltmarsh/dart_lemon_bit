@@ -63,6 +63,8 @@
 [ ] UI Score Lag
 -- UI --
 -- IDEAS --
+[ ] Trees apply shadow to tile
+[ ] Anti lights, opposite of torches to apply darkness 
 [ ] Elevate ground like aoe2
 [ ] Getting kills charges your weapons super ability
 [ ] Deploy auto turret

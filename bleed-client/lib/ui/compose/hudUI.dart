@@ -25,6 +25,7 @@ import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/ui/state/styleguide.dart';
 import 'package:bleed_client/utils/list_util.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
+import 'package:bleed_client/watches/time.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/functions/toggle_fullscreen.dart';
 import 'package:lemon_engine/game.dart';

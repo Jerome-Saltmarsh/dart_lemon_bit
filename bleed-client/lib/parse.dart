@@ -19,7 +19,7 @@ import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/emit/emitMyst.dart';
 import 'package:bleed_client/functions/emitSmoke.dart';
 import 'package:bleed_client/core/init.dart';
-import 'package:bleed_client/parser/state/event.dart';
+import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/environmentObjects.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
@@ -37,6 +37,7 @@ import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/utils/list_util.dart';
 import 'package:bleed_client/streams/time.dart';
+import 'package:bleed_client/watches/time.dart';
 import 'package:neuro/instance.dart';
 
 import 'classes/Score.dart';
@@ -69,13 +70,13 @@ const List<GameEventType> gameEventTypes = GameEventType.values;
 // properties
 // String get _text => event;
 
-String get _currentCharacter => event[_index];
+String get _currentCharacter => compiledGame[_index];
 
 // functions
 void parseState() {
   _index = 0;
-  event = event.trim();
-  while (_index < event.length) {
+  compiledGame = compiledGame.trim();
+  while (_index < compiledGame.length) {
     ServerResponse serverResponse = _consumeServerResponse();
     switch (serverResponse) {
       case ServerResponse.Tiles:
@@ -151,8 +152,8 @@ void parseState() {
             showErrorDialog("You were disconnected from the game");
             return;
           case GameError.InvalidArguments:
-            if (event.length > 4) {
-              String message = event.substring(4, event.length);
+            if (compiledGame.length > 4) {
+              String message = compiledGame.substring(4, compiledGame.length);
               print('Invalid Arguments: $message');
             }
             return;
@@ -278,7 +279,7 @@ void parseState() {
         return;
     }
 
-    while (_index < event.length) {
+    while (_index < compiledGame.length) {
       if (_currentCharacter == _space) {
         _index++;
         continue;
@@ -603,7 +604,7 @@ ServerResponse _consumeServerResponse() {
 String _consumeString() {
   _consumeSpace();
   StringBuffer buffer = StringBuffer();
-  while (_index < event.length && _currentCharacter != _space) {
+  while (_index < compiledGame.length && _currentCharacter != _space) {
     buffer.write(_currentCharacter);
     _index++;
   }

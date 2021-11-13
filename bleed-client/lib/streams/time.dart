@@ -1,6 +1,4 @@
-import 'package:lemon_watch/watch.dart';
-
-final time = Watch(0);
+import 'package:bleed_client/watches/time.dart';
 
 
 Phase getPhase() {

@@ -9,8 +9,10 @@ import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/events.dart';
-import 'package:bleed_client/functions/applyLightingToEnvironmentObjects.dart';
-import 'package:bleed_client/functions/calculateTileSrcRects.dart';
+import 'package:bleed_client/events/onAmbientLightChanged.dart';
+import 'package:bleed_client/events/onCompiledGameChanged.dart';
+import 'package:bleed_client/events/onGameJoined.dart';
+import 'package:bleed_client/events/onTimeChanged.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/input.dart';
@@ -21,18 +23,13 @@ import 'package:bleed_client/network/streams/onConnected.dart';
 import 'package:bleed_client/network/streams/onDisconnected.dart';
 import 'package:bleed_client/network/streams/onDone.dart';
 import 'package:bleed_client/onMouseScroll.dart';
-import 'package:bleed_client/parse.dart';
-import 'package:bleed_client/parser/state/event.dart';
-import 'package:bleed_client/render/functions/resetDynamicShadesToBakeMap.dart';
-import 'package:bleed_client/render/functions/setAmbientLight.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/streams/time.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
-import 'package:bleed_client/utils.dart';
-import 'package:bleed_client/variables/phase.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
+import 'package:bleed_client/watches/compiledGame.dart';
+import 'package:bleed_client/watches/time.dart';
 import 'package:lemon_engine/functions/register_on_mouse_scroll.dart';
 import 'package:lemon_engine/game.dart';
 
@@ -43,41 +40,11 @@ Future init() async {
   print("init()");
   registerPlayKeyboardHandler();
   registerOnMouseScroll(onMouseScroll);
-
   onConnectedController.stream.listen(_onConnected);
   eventStream.stream.listen(_onEventReceivedFromServer);
-
-  on((GameJoined gameJoined) async {
-    cameraCenter(game.playerX, game.playerY);
-    rebuildUI();
-  });
-
-  time.onChanged((int value){
-    Phase _phase2 = getPhase();
-    if (phase == _phase2) return;
-    // this should also be reactive
-    phase = _phase2;
-    switch (_phase2) {
-      case Phase.EarlyMorning:
-        setAmbientLightDark();
-        break;
-      case Phase.Morning:
-        setAmbientLightMedium();
-        break;
-      case Phase.Day:
-        setAmbientLightBright();
-        break;
-      case Phase.EarlyEvening:
-        setAmbientLightMedium();
-        break;
-      case Phase.Evening:
-        setAmbientLightDark();
-        break;
-      case Phase.Night:
-        setAmbientLightVeryDark();
-        break;
-    }
-  });
+  observeCompiledGame(onCompiledGameChanged);
+  on(onGameJoined);
+  time.onChanged(onTimeChanged);
 
   for(int i = 0; i < settings.maxParticles; i++){
     game.particles.add(Particle());
@@ -135,12 +102,7 @@ Future init() async {
   await images.load();
   rebuildUI();
 
-  ambientLightWatch.onChanged((t) {
-    print("Ambient light changed to $t");
-    resetDynamicShadesToBakeMap();
-    calculateTileSrcRects();
-    applyLightingToEnvironmentObjects();
-  });
+  observeAmbientLight(onAmbientLightChanged);
 
   onRightClickChanged.stream.listen((bool down){
     inputRequest.sprint = down;
@@ -170,9 +132,7 @@ void onPlayerWeaponChanged(Weapon weapon){
 void _onEventReceivedFromServer(dynamic value){
   lag = framesSinceEvent;
   framesSinceEvent = 0;
-  event = value;
-  parseState();
-  redrawCanvas();
+  compiledGame = value;
 }
 
 void _onConnected(_event) {

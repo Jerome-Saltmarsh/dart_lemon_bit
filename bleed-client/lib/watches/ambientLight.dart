@@ -5,8 +5,10 @@ Watch<Shade> _ambientLight = Watch(Shade.VeryDark);
 
 Shade get ambientLight => _ambientLight.value;
 
-set ambientLight(Shade value){
+set ambientLight(Shade value) {
   _ambientLight.value = value;
 }
 
-Watch<Shade> get ambientLightWatch => _ambientLight;
+observeAmbientLight(Function(Shade value) function) {
+  _ambientLight.onChanged(function);
+}
