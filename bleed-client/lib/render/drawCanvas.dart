@@ -64,11 +64,15 @@ int _flameIndex = 0;
 
 void renderCanvasPlay() {
   _updateAnimations();
-  resetDynamicShadesToBakeMap();
-  applyCharacterLightEmission(game.humans);
-  applyCharacterLightEmission(game.interactableNpcs);
-  applyLightingToEnvironmentObjects();
-  calculateTileSrcRects();
+
+  // if (ambientLight.index > Shading.Bright.index) {
+    resetDynamicShadesToBakeMap();
+    calculateTileSrcRects();
+    applyCharacterLightEmission(game.humans);
+    applyCharacterLightEmission(game.interactableNpcs);
+    applyLightingToEnvironmentObjects();
+  // }
+
   drawTiles();
   _drawNpcBonusPointsCircles();
   // _drawPlayerHealthRing();
