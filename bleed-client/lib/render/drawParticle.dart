@@ -13,17 +13,17 @@ import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/opposite.dart';
 import 'package:lemon_math/random_between.dart';
 
-import '../maths.dart';
 import '../utils.dart';
 
 const _headSize = 5.0;
 
 void drawParticle(Particle particle){
-  double x = particle.x;
-  double y = particle.y;
 
   Shade shading = getShadeAtPosition(particle.x, particle.y);
-  if (shading == Shade.VeryDark) return;
+  if (shading.index >= Shade.VeryDark.index) return;
+
+  double x = particle.x;
+  double y = particle.y;
 
   double scaleShift = (1 + (particle.z * 0.4)) * particle.scale;
   double heightShift = -particle.z * 20;

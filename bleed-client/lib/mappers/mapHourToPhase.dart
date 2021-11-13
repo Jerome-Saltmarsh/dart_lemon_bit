@@ -1,6 +1,7 @@
 import 'package:bleed_client/enums/Phase.dart';
 
 Phase mapHourToPhase(int hour) {
+  if (hour < 2) return Phase.MidNight;
   if (hour < 4) return Phase.Night;
   if (hour < 6) return Phase.EarlyMorning;
   if (hour < 10) return Phase.Morning;

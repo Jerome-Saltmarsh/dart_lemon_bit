@@ -232,9 +232,7 @@ void drawCircleOutline(
 
 void drawTiles() {
   // TODO Optimization: Null checks are expensive
-  if (images.tilesLight == null) return;
   if (game.tiles == null || game.tiles.isEmpty) return;
-  if (tileTransforms.length != tileRects.length) return;
   drawTileList();
 }
 

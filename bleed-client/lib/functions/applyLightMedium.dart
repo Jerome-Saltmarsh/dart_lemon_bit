@@ -7,5 +7,6 @@ void applyLightMedium(List<List<Shade>> shader, double x, double y) {
   int row = getRow(x, y);
   applyShade(shader, row, column, Shade.Medium);
   applyShadeRing(shader, row, column, 1, Shade.Medium);
-  applyShadeRing(shader, row, column, 3, Shade.Dark);
+  applyShadeRing(shader, row, column, 2, Shade.Dark);
+  applyShadeRing(shader, row, column, 3, Shade.VeryDark);
 }

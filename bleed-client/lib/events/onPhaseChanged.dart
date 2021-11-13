@@ -23,5 +23,8 @@ void updateAmbientLight(Phase phase){
     case Phase.Night:
       setAmbientLightVeryDark();
       break;
+    case Phase.MidNight:
+      setAmbientLightPitchBlack();
+      break;
   }
 }

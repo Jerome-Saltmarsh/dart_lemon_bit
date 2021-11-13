@@ -28,3 +28,7 @@ void setAmbientLightDark(){
 void setAmbientLightVeryDark(){
   ambientLight = Shade.VeryDark;
 }
+
+void setAmbientLightPitchBlack(){
+  ambientLight = Shade.PitchBlack;
+}

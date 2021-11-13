@@ -69,9 +69,9 @@ void renderCanvasPlay() {
 
   if (!dayTime) {
     resetDynamicShadesToBakeMap();
-    calculateTileSrcRects();
     applyCharacterLightEmission(game.humans);
     applyCharacterLightEmission(game.interactableNpcs);
+    calculateTileSrcRects();
     applyLightingToEnvironmentObjects();
   }
 

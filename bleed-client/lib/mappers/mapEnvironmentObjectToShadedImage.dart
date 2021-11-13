@@ -6,14 +6,13 @@ import 'package:bleed_client/enums/Shading.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 
-Image mapEnvironmentObjectToToShadedImage(EnvironmentObject environmentObject, Shade shade) {
+Image mapEnvironmentObjectToToShadedImage(
+    EnvironmentObject environmentObject, Shade shade) {
 
-  try {
-    if (typeShades.containsKey(environmentObject.type)) {
-      return typeShades[environmentObject.type][shade.index];
-    }
-  }catch(e){
-    print('failed to map $environmentObject for shade $shade');
+  if (shade == Shade.PitchBlack) return images.empty;
+
+  if (typeShades.containsKey(environmentObject.type)) {
+    return typeShades[environmentObject.type][shade.index];
   }
 
   if (environmentObject.type == EnvironmentObjectType.House01) {
@@ -25,11 +24,11 @@ Image mapEnvironmentObjectToToShadedImage(EnvironmentObject environmentObject, S
     }
   }
 
-  if (environmentObject.type == EnvironmentObjectType.Torch){
+  if (environmentObject.type == EnvironmentObjectType.Torch) {
     return images.torch;
   }
 
-  if (environmentObject.type == EnvironmentObjectType.House01){
+  if (environmentObject.type == EnvironmentObjectType.House01) {
     switch (ambientLight) {
       case Shade.Bright:
         return images.houseDay;
@@ -38,7 +37,7 @@ Image mapEnvironmentObjectToToShadedImage(EnvironmentObject environmentObject, S
     }
   }
 
-  if (environmentObject.type == EnvironmentObjectType.House02){
+  if (environmentObject.type == EnvironmentObjectType.House02) {
     return images.house02;
   }
 

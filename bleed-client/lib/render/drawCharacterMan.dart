@@ -9,8 +9,9 @@ import 'package:lemon_engine/queries/on_screen.dart';
 import 'package:lemon_engine/render/draw_image_rect.dart';
 
 void drawCharacterMan(Character character) {
-  if (!character.alive && isWaterAt(character.x, character.y)) return;
   if (!onScreen(character.x, character.y)) return;
+  if (!character.alive && isWaterAt(character.x, character.y)) return;
+  if (getShadeAtPosition(character.x, character.y).index >= Shade.PitchBlack.index) return;
 
   Shade shading = getShadeAtPosition(character.x, character.y);
 

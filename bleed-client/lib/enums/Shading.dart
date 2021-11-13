@@ -3,4 +3,5 @@ enum Shade {
   Medium,
   Dark,
   VeryDark,
+  PitchBlack,
 }

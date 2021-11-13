@@ -11,7 +11,7 @@ import 'package:lemon_engine/render/draw_image_rect.dart';
 void drawCharacterZombie(Character character) {
   if (!character.alive && isWaterAt(character.x, character.y)) return;
   if (!onScreen(character.x, character.y)) return;
-  if (getShadeAtPosition(character.x, character.y) == Shade.VeryDark) return;
+  if (getShadeAtPosition(character.x, character.y).index >= Shade.VeryDark.index) return;
 
   drawImageRect(
     mapCharacterToImageZombie(
