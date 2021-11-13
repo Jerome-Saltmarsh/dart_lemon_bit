@@ -371,7 +371,7 @@ Widget buildEquipWeaponSlot(Weapon weapon) {
   return Stack(
     children: [
       onPressed(
-          child: buildWeaponSlot(weapon: weapon),
+          child: buildWeaponSlot(weapon),
           callback: (){
             sendRequestEquip(weapon);
             rebuildUI();
@@ -400,7 +400,7 @@ Widget buildPurchaseWeaponSlot({Weapon weapon}) {
     children: [
       onPressed(
           hint: '${mapWeaponName(weapon)} $price',
-          child: buildWeaponSlot(weapon: weapon),
+          child: buildWeaponSlot(weapon),
           callback: () {
             sendRequestPurchaseWeapon(weapon);
           }),
@@ -410,19 +410,21 @@ Widget buildPurchaseWeaponSlot({Weapon weapon}) {
   );
 }
 
-Widget buildWeaponSlot({Weapon weapon}) {
-  return Container(
-    width: 120,
-    height: 120 * goldenRatioInverse,
-    alignment: Alignment.center,
-    decoration: BoxDecoration(
-      image: mapWeaponToImage(weapon),
-      color: Colors.black26,
-      border: Border.all(
-          color: Colors.white, width: game.playerWeapon == weapon ? 6 : 1),
-      borderRadius: borderRadius4,
-    ),
-  );
+Widget buildWeaponSlot(Weapon weapon) {
+  return mouseOver(builder:(BuildContext context, bool mouseOver){
+    return Container(
+      width: 120,
+      height: 120 * goldenRatioInverse,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        image: mapWeaponToImage(weapon),
+        color: mouseOver ? Colors.black45 : Colors.black26,
+        border: Border.all(
+            color: Colors.white, width: 1),
+        borderRadius: borderRadius4,
+      ),
+    );
+  });
 }
 
 Widget buildMedSlot() {
@@ -453,7 +455,9 @@ Widget buildBottomLeft() {
                   mainAxisAlignment: main.end,
                   crossAxisAlignment: cross.start,
                   children: getAcquiredNonEquippedWeapons()
-                      .map(buildEquipWeaponSlot).toList()),
+                      .map((Weapon weapon){
+                    return Container(child: buildEquipWeaponSlot(weapon), margin: const EdgeInsets.only(bottom: 4),);
+                  }).toList()),
             WatchBuilder(game.playerWeapon, (Weapon value) {
               return buildEquipWeaponSlot(value);
             })
