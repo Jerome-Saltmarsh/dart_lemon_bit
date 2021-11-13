@@ -150,7 +150,7 @@ void joinGameCasual() {
 }
 
 void joinGameOpenWorld(){
-  send(ClientRequest.Player_Join.index.toString());
+  send(ClientRequest.Join.index.toString());
 }
 
 void onPlayerStateChanged(CharacterState previous, CharacterState next) {

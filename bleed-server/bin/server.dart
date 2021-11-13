@@ -145,7 +145,7 @@ void main() {
       ClientRequest request = clientRequests[clientRequestInt];
 
       switch (request) {
-        case ClientRequest.Game_Update:
+        case ClientRequest.Update:
           Player? player = findPlayerById(arguments[3]);
           if (player == null) {
             errorPlayerNotFound();
@@ -177,7 +177,7 @@ void main() {
           sendCompiledPlayerState(game, player);
           return;
 
-        case ClientRequest.Player_Use_MedKit:
+        case ClientRequest.Medkit:
           return;
         // return;
         // Game? game = findGameById(arguments[1]);
@@ -202,7 +202,7 @@ void main() {
         // game.dispatch(GameEventType.Use_MedKit, player.x, player.y, 0, 0);
         // break;
 
-        case ClientRequest.Player_Join:
+        case ClientRequest.Join:
           joinGame(world.town);
           break;
 
@@ -210,7 +210,7 @@ void main() {
           sendToClient('${ServerResponse.Pong.index} ;');
           break;
 
-        case ClientRequest.Player_Revive:
+        case ClientRequest.Revive:
           String uuid = arguments[3];
           Player? player = findPlayerById(uuid);
 
@@ -225,7 +225,7 @@ void main() {
           player.game.revive(player);
           return;
 
-        case ClientRequest.Player_Equip:
+        case ClientRequest.Equip:
           Player? player = findPlayerById(arguments[3]);
           if (player == null) {
             errorPlayerNotFound();
@@ -267,7 +267,7 @@ void main() {
           player.game.setCharacterState(player, CharacterState.ChangingWeapon);
           return;
 
-        case ClientRequest.Player_Throw_Grenade:
+        case ClientRequest.Grenade:
           String gameId = arguments[1];
           Game? game = findGameById(gameId);
           if (game == null) {

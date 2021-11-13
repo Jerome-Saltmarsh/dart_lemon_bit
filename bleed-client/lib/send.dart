@@ -10,7 +10,7 @@ import 'common/Weapons.dart';
 import 'state.dart';
 
 final StringBuffer _buffer = StringBuffer();
-final gameUpdateIndex = ClientRequest.Game_Update.index;
+final gameUpdateIndex = ClientRequest.Update.index;
 const String _space = " ";
 
 void speak(String message){
@@ -27,11 +27,11 @@ void sendRequestPing(){
 }
 
 void sendRequestRevive() {
-  send('${ClientRequest.Player_Revive.index} $session');
+  send('${ClientRequest.Revive.index} $session');
 }
 
 void sendRequestEquip(Weapon weapon) {
-  send('${ClientRequest.Player_Equip.index} $session ${weapon.index}');
+  send('${ClientRequest.Equip.index} $session ${weapon.index}');
 }
 
 void skipHour(){
@@ -78,7 +78,7 @@ void sendRequestEquipAssaultRifle() {
 
 void requestThrowGrenade(double strength) {
   send(
-      '${ClientRequest.Player_Throw_Grenade.index} $session ${strength.toStringAsFixed(1)} ${requestAim.toStringAsFixed(2)}');
+      '${ClientRequest.Grenade.index} $session ${strength.toStringAsFixed(1)} ${requestAim.toStringAsFixed(2)}');
 }
 
 void sendRequestUpdatePlayer() {

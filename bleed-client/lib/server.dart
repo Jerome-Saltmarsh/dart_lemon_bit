@@ -6,5 +6,5 @@ import '../state.dart';
 
 void sendRequestUseMedKit(){
   assertPlayerAssigned();
-  send('${ClientRequest.Player_Use_MedKit.index} $session');
+  send('${ClientRequest.Medkit.index} $session');
 }
