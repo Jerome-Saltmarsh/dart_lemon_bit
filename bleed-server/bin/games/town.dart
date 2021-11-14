@@ -177,7 +177,7 @@ class Town extends Game {
   @override
   Vector2 getSpawnPositionFrom(Game from) {
     if (from == world.tavern){
-      return Vector2(-108, 1922);
+      return Vector2(-120, 1917);
     }
     return Vector2(-1260, 2389);
   }
