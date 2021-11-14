@@ -2,7 +2,6 @@ import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Player.dart';
 import 'package:bleed_client/classes/Score.dart';
 import 'package:bleed_client/common/Weapons.dart';
-import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
 
@@ -41,12 +40,6 @@ Character get getPlayer {
   }
   return null;
 }
-
-Weapon get playerWeapon => getPlayer.weapon;
-
-List<CharacterState> characterStates = CharacterState.values;
-
-CharacterState get playerState => getPlayer.state;
 
 bool get playerReady =>
     game.totalHumans > 0 &&

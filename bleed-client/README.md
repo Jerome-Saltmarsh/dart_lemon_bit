@@ -104,7 +104,6 @@
 [ ] Fix Changing Weapon Shade
 [ ] Design Palette
 [ ] Design Tree Model
-[ ] Spawn Myst at night
 [ ] Fix Zombies vanish on death bug
 [ ] Remove player walk (its always better to run, no stamina)
 [ ] Right Click to aim (aiming improves accuracy)
@@ -116,6 +115,7 @@
     [x] Camera Pans up 
     [x] Player disappears when firing
     [?] Zombies aren't drawing
+[x] Spawn Myst at night    
 [x] UI Display Clock    
 [x] Fix Npc when wall is in the way
 [x] Smooth Zooming

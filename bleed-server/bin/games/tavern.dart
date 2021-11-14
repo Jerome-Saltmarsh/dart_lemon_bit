@@ -19,7 +19,7 @@ class Tavern extends Game {
 
   @override
   Vector2 getSpawnPositionFrom(Game from) {
-    return Vector2(65, 263);
+    return Vector2(35, 210);
   }
 
   @override

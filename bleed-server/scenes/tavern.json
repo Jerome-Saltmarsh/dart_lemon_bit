@@ -3,84 +3,67 @@
   "collectables": [],
   "tiles": [
     [
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete"
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor"
     ],
     [
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete"
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor"
     ],
     [
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete"
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor"
     ],
     [
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete"
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor"
     ],
     [
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete"
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor"
     ],
     [
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete"
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor"
     ],
     [
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor",
       "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete"
-    ],
-    [
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete",
-      "Concrete"
+      "Wooden_Floor",
+      "Wooden_Floor",
+      "Wooden_Floor"
     ]
   ],
   "crates": [],
@@ -91,23 +74,18 @@
       "type": "Torch"
     },
     {
-      "x": -168,
-      "y": 188,
+      "x": -142,
+      "y": 164,
       "type": "Torch"
     },
     {
-      "x": 167,
-      "y": 191,
-      "type": "Torch"
-    },
-    {
-      "x": -2,
-      "y": 351,
+      "x": 147,
+      "y": 164,
       "type": "Torch"
     },
     {
       "x": 0,
-      "y": 188,
+      "y": 304,
       "type": "Torch"
     }
   ]

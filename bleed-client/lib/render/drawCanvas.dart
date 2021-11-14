@@ -296,7 +296,7 @@ void _drawMouseAim() {
   if (!playerReady) return;
   Character _player = getPlayer;
   if (_player == null) return;
-  if (player.equippedRounds == 0) return;
+  if (player.equippedRounds.value == 0) return;
   Weapon weapon = _player.weapon;
   if (weapon == Weapon.HandGun) return;
   if (weapon == Weapon.Shotgun) return;

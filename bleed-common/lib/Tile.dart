@@ -2,6 +2,7 @@ enum Tile {
   Concrete,
   Grass,
   Grass02,
+  Wooden_Floor,
   Long_Grass,
   Flowers,
   Water,
