@@ -242,11 +242,8 @@ Widget buildToggleScoreIcon() {
 }
 
 Widget _buildServerText() {
-  return StatefulBuilder(
-      builder: (BuildContext context, StateSetter stateSetter) {
-    hud.stateSetters.npcMessage = stateSetter;
-
-    if (player.message.isEmpty) return blank;
+  return WatchBuilder(player.message, (String value){
+    if (value.isEmpty) return blank;
 
     return Positioned(
         child: Container(
@@ -254,17 +251,13 @@ Widget _buildServerText() {
           alignment: Alignment.center,
           child: Container(
             width: 300,
-            // height: 300 * goldenRatioInverse,
             color: Colors.black45,
             padding: padding16,
             child: Column(
               children: [
-                text(player.message),
+                text(player.message.value),
                 height16,
-                button("Next", () {
-                  player.message = "";
-                  rebuildNpcMessage();
-                }),
+                button("Next", clearPlayerMessage),
               ],
             ),
           ),
@@ -273,19 +266,8 @@ Widget _buildServerText() {
   });
 }
 
-Widget _buildViewFortress() {
-  return Positioned(
-      right: 0,
-      bottom: 0,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          text("Lives: ${game.lives}"),
-          text("Wave: ${game.wave}"),
-          text("Next Wave: ${game.nextWave}"),
-        ],
-      ));
+void clearPlayerMessage(){
+  player.message.value = "";
 }
 
 Widget buildSlot({String title}) {

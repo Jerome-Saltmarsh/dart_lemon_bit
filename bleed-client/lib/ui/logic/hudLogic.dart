@@ -81,11 +81,6 @@ void toggleShowScore() {
   rebuildUI();
 }
 
-void rebuildNpcMessage() {
-  if (hud.stateSetters.npcMessage == null) return;
-  hud.stateSetters.npcMessage(_doNothing);
-}
-
 void closeMainMenuDialog() {
   if (contextMainMenuDialog == null) return;
   pop(contextMainMenuDialog);

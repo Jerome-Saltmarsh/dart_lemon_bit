@@ -212,8 +212,7 @@ void parseState() {
           message += _consumeString();
           message += " ";
         }
-        player.message = message.trim();
-        rebuildNpcMessage();
+        player.message.value = message.trim();
         break;
 
       case ServerResponse.Crates:

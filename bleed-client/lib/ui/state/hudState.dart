@@ -65,7 +65,6 @@ class HudState {
 
 class _StateSetters {
   StateSetter score;
-  StateSetter npcMessage;
 }
 
 class _State {
