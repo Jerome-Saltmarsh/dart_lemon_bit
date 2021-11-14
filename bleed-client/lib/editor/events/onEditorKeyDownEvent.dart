@@ -2,7 +2,6 @@ import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/editor/state/mouseWorldStart.dart';
 import 'package:bleed_client/editor/state/panning.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/state/environmentObjects.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/editor/state/editState.dart';
 import 'package:flutter/services.dart';
@@ -49,7 +48,7 @@ void onEditorKeyDownEvent(RawKeyDownEvent event){
     }
 
     if(editState.selectedObject != null){
-      environmentObjects.remove(editState.selectedObject);
+      game.environmentObjects.remove(editState.selectedObject);
       editState.selectedObject = null;
       redrawCanvas();
     }

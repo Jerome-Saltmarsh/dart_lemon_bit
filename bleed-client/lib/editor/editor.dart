@@ -14,7 +14,6 @@ import 'package:bleed_client/editor/state/panning.dart';
 import 'package:bleed_client/editor/state/selectedCollectable.dart';
 import 'package:bleed_client/functions/saveScene.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/state/environmentObjects.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:flutter/material.dart';
@@ -75,7 +74,7 @@ List<Widget> _getTabChildren() {
 }
 
 List<Widget> _buildObjectList(){
-  return environmentObjects.map((e){
+  return game.environmentObjects.map((e){
     return text(parseEnvironmentObjectTypeToString(e.type));
   }).toList();
 }
@@ -218,7 +217,7 @@ void _onMouseLeftClick([bool drag = false]) {
   }
 
   double selectRadius = 25;
-  for (EnvironmentObject environmentObject in environmentObjects) {
+  for (EnvironmentObject environmentObject in game.environmentObjects) {
     if (diffOver(environmentObject.x, mouseWorldX, selectRadius)) continue;
     if (diffOver(environmentObject.y, mouseWorldY, selectRadius)) continue;
     editState.selectedObject = environmentObject;
@@ -249,7 +248,7 @@ void setTileAtMouse(Tile tile) {
       renderTiles(game.tiles);
       break;
     case EditTool.EnvironmentObject:
-      environmentObjects.add(EnvironmentObject(
+      game.environmentObjects.add(EnvironmentObject(
           x: mouseWorldX,
           y: mouseWorldY,
           type: editState.environmentObjectType));

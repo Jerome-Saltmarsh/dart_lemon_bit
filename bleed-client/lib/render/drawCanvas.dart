@@ -16,12 +16,9 @@ import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/render/draw/drawPlayerText.dart';
 import 'package:bleed_client/render/functions/resetDynamicShadesToBakeMap.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/state/environmentObjects.dart';
 import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
 import 'package:bleed_client/mappers/mapItemToRect.dart';
-import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/render/constants/charWidth.dart';
-import 'package:bleed_client/render/draw/drawCrates.dart';
 import 'package:bleed_client/render/drawCharacterMan.dart';
 import 'package:bleed_client/render/drawCharacterZombie.dart';
 import 'package:bleed_client/render/drawInteractableNpcs.dart';
@@ -153,7 +150,7 @@ void _drawSprites() {
   int indexNpc = 0;
   int totalParticles = getTotalActiveParticles();
 
-  int totalEnvironment = environmentObjects.length;
+  int totalEnvironment = game.environmentObjects.length;
 
   if (totalParticles > 0) {
     _sortParticles();
@@ -185,7 +182,7 @@ void _drawSprites() {
     if (humansRemaining) {
       double humanY = game.humans[indexHuman].y;
 
-      if (!environmentRemaining || humanY < environmentObjects[indexEnv].y) {
+      if (!environmentRemaining || humanY < game.environmentObjects[indexEnv].y) {
         if (!particlesRemaining || humanY < game.particles[indexParticle].y) {
           if (!zombiesRemaining || humanY < game.zombies[indexZombie].y) {
             if (!npcsRemaining || humanY < game.interactableNpcs[indexNpc].y) {
@@ -199,14 +196,14 @@ void _drawSprites() {
     }
 
     if (environmentRemaining) {
-      EnvironmentObject env = environmentObjects[indexEnv];
+      EnvironmentObject env = game.environmentObjects[indexEnv];
 
       if (env.dst.top > screen.bottom) return;
 
       if (!particlesRemaining || env.y < game.particles[indexParticle].y) {
         if (!zombiesRemaining || env.y < game.zombies[indexZombie].y) {
           if (!npcsRemaining || env.y < game.interactableNpcs[indexNpc].y) {
-            drawEnvironmentObject(environmentObjects[indexEnv]);
+            drawEnvironmentObject(game.environmentObjects[indexEnv]);
             indexEnv++;
             continue;
           }

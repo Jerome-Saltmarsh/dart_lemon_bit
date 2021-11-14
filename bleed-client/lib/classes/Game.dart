@@ -18,6 +18,7 @@ class Game {
   List<Vector2> crates = [];
   int cratesTotal = 0;
   List<EnvironmentObject> backgroundObjects = [];
+  List<EnvironmentObject> environmentObjects = [];
   List<List<Tile>> tiles = [];
   int totalColumns = 0;
   int totalRows = 0;

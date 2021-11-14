@@ -1,12 +1,12 @@
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
 import 'package:bleed_client/functions/applyLightMedium.dart';
-import 'package:bleed_client/state/environmentObjects.dart';
 import 'package:bleed_client/render/functions/applyLightBright.dart';
 import 'package:bleed_client/render/state/bakeMap.dart';
+import 'package:bleed_client/state/game.dart';
 
 void applyEnvironmentObjectsToBakeMapping(){
-  for (EnvironmentObject env in environmentObjects){
+  for (EnvironmentObject env in game.environmentObjects){
     if (env.type == EnvironmentObjectType.Torch){
       applyLightBrightMedium(bakeMap, env.x, env.y);
     }

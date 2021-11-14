@@ -21,7 +21,6 @@ import 'package:bleed_client/functions/emitSmoke.dart';
 import 'package:bleed_client/core/init.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/state/environmentObjects.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
 import 'package:bleed_client/network/functions/disconnect.dart';
 import 'package:bleed_client/network/state/connected.dart';
@@ -284,7 +283,7 @@ void parseState() {
 }
 
 void _parseEnvironmentObjects() {
-  environmentObjects.clear();
+  game.environmentObjects.clear();
 
   while (!_simiColonConsumed()) {
     double x = _consumeDouble();
@@ -322,10 +321,10 @@ void _parseEnvironmentObjects() {
       continue;
     }
 
-    environmentObjects.add(envObject);
+    game.environmentObjects.add(envObject);
   }
 
-  sortReversed(environmentObjects, environmentObjectY);
+  sortReversed(game.environmentObjects, environmentObjectY);
   applyEnvironmentObjectsToBakeMapping();
 }
 

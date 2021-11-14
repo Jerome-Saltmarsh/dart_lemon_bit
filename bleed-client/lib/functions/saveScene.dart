@@ -6,7 +6,6 @@ import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/state/environmentObjects.dart';
 import 'package:bleed_client/state.dart';
 import 'package:clipboard/clipboard.dart';
 
@@ -25,7 +24,7 @@ String _mapCompileGameToJson() {
 Object _mapCompiledGameToObject() {
 
   List<EnvironmentObject> all = [
-    ...environmentObjects,
+    ...game.environmentObjects,
     ...game.backgroundObjects
   ];
 
