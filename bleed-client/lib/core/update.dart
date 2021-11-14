@@ -35,12 +35,5 @@ void update() {
 
 void _showHideMenu() {
   if (!mouseAvailable) return;
-  if (hud.stateSetters == null) return;
-
-  bool m = mouseX > screenWidth - 300 && mouseY < 200;
-
-  if (m != hud.state.menuVisible){
-    hud.state.menuVisible = m;
-    hud.stateSetters.topRight((){});
-  }
+  hud.state.menuVisible.value = mouseX > screenWidth - 300 && mouseY < 200;
 }

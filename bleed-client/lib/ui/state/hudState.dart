@@ -13,6 +13,7 @@ import 'package:bleed_client/state/inventory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:lemon_watch/watch.dart';
 
 import 'tips.dart';
 
@@ -66,7 +67,6 @@ class _StateSetters {
   StateSetter score;
   StateSetter npcMessage;
   StateSetter playerMessage;
-  StateSetter topRight;
 }
 
 class _State {
@@ -75,7 +75,7 @@ class _State {
   bool showScore = true;
   bool showServers = false;
   bool expandScore = false;
-  bool menuVisible = false;
+  Watch<bool> menuVisible = Watch(false);
 }
 
 class _Properties {

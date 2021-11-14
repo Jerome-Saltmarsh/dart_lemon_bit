@@ -175,12 +175,8 @@ Widget buildTop() {
 Widget buildTopRight() {
   double iconSize = 45;
 
-  return StatefulBuilder(builder: (BuildContext context, StateSetter setState) {
-    hud.stateSetters.topRight = setState;
-
-    if (!hud.state.menuVisible) {
-      return Container();
-    }
+  return WatchBuilder(hud.state.menuVisible, (bool value) {
+    if (!value) return Container();
 
     Widget iconToggleFullscreen = Tooltip(
       child: IconButton(
@@ -223,9 +219,6 @@ Widget buildTopRight() {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // if (compiledGame.gameType == GameType.Casual) buttonJoinGameOpenWorld,
-            // if (compiledGame.gameType == GameType.Open_World)
-            //   buttonJoinGameCasual,
             if (settings.developMode) iconTogglePaths,
             if (settings.developMode) width8,
             if (settings.developMode) iconToggleEditMode,
@@ -233,45 +226,10 @@ Widget buildTopRight() {
             width8,
             iconToggleFullscreen,
             if (settings.developMode) width8,
-            // iconMenu
           ],
         ));
   });
 }
-
-// Widget buildTopLeft() {
-//   Widget iconToggleFullscreen = Tooltip(
-//     child: IconButton(
-//         icon: Icon(Icons.fullscreen,
-//             size: hud.properties.iconSize, color: Colors.white),
-//         onPressed: fullScreenEnter),
-//     message: "Fullscreen",
-//   );
-//   Widget iconToggleAudio = Tooltip(
-//       child: IconButton(
-//           icon: Icon(
-//               settings.audioMuted ? Icons.music_off : Icons.music_note_rounded,
-//               size: hud.properties.iconSize,
-//               color: Colors.white),
-//           onPressed: toggleAudioMuted),
-//       message: "Toggle Audio");
-//
-//   Widget iconScore = Tooltip(
-//     child: IconButton(
-//         icon: Icon(hud.state.showScore ? Icons.score : Icons.score_outlined,
-//             size: hud.properties.iconSize, color: Colors.white),
-//         onPressed: toggleShowScore),
-//     message: hud.state.showScore ? "Hide Score" : "Show Score",
-//   );
-//
-//   return Positioned(
-//     top: 5,
-//     left: 5,
-//     child: Row(
-//       children: [iconToggleFullscreen, iconToggleAudio, iconScore],
-//     ),
-//   );
-// }
 
 Widget buildToggleScoreIcon() {
   return Tooltip(
