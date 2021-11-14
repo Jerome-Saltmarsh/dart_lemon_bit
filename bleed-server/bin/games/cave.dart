@@ -1,6 +1,7 @@
 import 'package:lemon_math/diff_over.dart';
 
 import '../classes/Game.dart';
+import '../classes/Npc.dart';
 import '../classes/Player.dart';
 import '../classes/InteractableNpc.dart';
 import '../common/Weapons.dart';

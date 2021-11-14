@@ -4,9 +4,9 @@ import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
-import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
+import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/events/onAmbientLightChanged.dart';
@@ -27,6 +27,7 @@ import 'package:bleed_client/onMouseScroll.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
@@ -34,12 +35,17 @@ import 'package:bleed_client/watches/phase.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:lemon_engine/functions/register_on_mouse_scroll.dart';
 import 'package:lemon_engine/game.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../state/settings.dart';
 import '../ui/compose/dialogs.dart';
 
 Future init() async {
   print("init()");
+  print("loading images");
+  await images.load();
+  await loadSharedPreferences();
+  print("loading images finished");
   registerPlayKeyboardHandler();
   registerOnMouseScroll(onMouseScroll);
   onConnectedController.stream.listen(_onConnected);
@@ -50,7 +56,12 @@ Future init() async {
   phase.onChanged(updateAmbientLight);
   observeAmbientLight(onAmbientLightChanged);
 
-  for(int i = 0; i < settings.maxParticles; i++){
+  settings.audioMuted.onChanged((value) {
+    if (sharedPreferences == null) return;
+    sharedPreferences.setBool('audioMuted' , value);
+  });
+
+  for (int i = 0; i < settings.maxParticles; i++) {
     game.particles.add(Particle());
   }
 
@@ -103,18 +114,17 @@ Future init() async {
 
   initAudioPlayers();
   initUI();
-  await images.load();
   rebuildUI();
 
 
-  onRightClickChanged.stream.listen((bool down){
+  onRightClickChanged.stream.listen((bool down) {
     inputRequest.sprint = down;
   });
 
   game.playerWeapon.onChanged(onPlayerWeaponChanged);
 }
 
-void onPlayerWeaponChanged(Weapon weapon){
+void onPlayerWeaponChanged(Weapon weapon) {
   switch (weapon) {
     case Weapon.HandGun:
       playAudioReload(screenCenterWorldX, screenCenterWorldY);
@@ -132,7 +142,7 @@ void onPlayerWeaponChanged(Weapon weapon){
 }
 
 
-void _onEventReceivedFromServer(dynamic value){
+void _onEventReceivedFromServer(dynamic value) {
   lag = framesSinceEvent;
   framesSinceEvent = 0;
   compiledGame = value;
@@ -142,14 +152,14 @@ void _onConnected(_event) {
   print("on connected");
   rebuildUI();
   Future.delayed(Duration(seconds: 1), rebuildUI);
-  joinGameOpenWorld();
+  sendRequestJoinGame();
 }
 
 void joinGameCasual() {
   // send(ClientRequest.Game_Join_Casual.index.toString());
 }
 
-void joinGameOpenWorld(){
+void sendRequestJoinGame() {
   send(ClientRequest.Join.index.toString());
 }
 
@@ -157,5 +167,34 @@ void onPlayerStateChanged(CharacterState previous, CharacterState next) {
   if (previous == CharacterState.Dead || next == CharacterState.Dead) {
     rebuildUI();
   }
+}
+
+Future loadSharedPreferences() async {
+  sharedPreferences = await SharedPreferences.getInstance();
+  //@ on sharedPreferences loaded
+  settings.audioMuted.value = sharedPreferences.containsKey('audioMuted') &&
+      sharedPreferences.getBool('audioMuted');
+
+  // if (sharedPreferences.containsKey('server')) {
+  //   Server server = servers[sharedPreferences.getInt('server')];
+  //   connectServer(server);
+  // }
+
+  // if (sharedPreferences.containsKey('last-refresh')) {
+  //   DateTime lastRefresh =
+  //   DateTime.parse(sharedPreferences.getString('last-refresh'));
+  //   DateTime now = DateTime.now();
+  //   if (now
+  //       .difference(lastRefresh)
+  //       .inHours > 1) {
+  //     sharedPreferences.setString(
+  //         'last-refresh', DateTime.now().toIso8601String());
+  //     refreshPage();
+  //   }
+  // } else {
+  //   sharedPreferences.setString(
+  //       'last-refresh', DateTime.now().toIso8601String());
+  // }
+  // );
 }
 

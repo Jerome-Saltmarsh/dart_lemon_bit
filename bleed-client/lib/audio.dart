@@ -14,7 +14,7 @@ void initAudioPlayers() {
 }
 
 void playAudioButtonHover() {
-  if (settings.audioMuted) return;
+  if (settings.audioMuted.value) return;
   _getAudioPlayer()
       .play('assets/audio/button-hover.mp3', isLocal: true, volume: 1);
 }
@@ -187,7 +187,7 @@ AudioPlayer _getAudioPlayer() {
 }
 
 void _playAudio(String name, double x, double y) {
-  if (settings.audioMuted) return;
+  if (true || settings.audioMuted.value) return;
 
   try {
     double volume = _calculateVolume(x, y);

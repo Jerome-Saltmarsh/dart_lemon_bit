@@ -35,7 +35,6 @@ import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_engine/state/size.dart';
 import 'package:lemon_math/golden_ratio.dart';
-import 'package:lemon_watch/watch.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../../tutorials.dart';
@@ -78,9 +77,9 @@ Widget buildHealthBar() {
 }
 
 Widget buildTopLeft() {
-  // return Positioned(top: _padding, left: _padding, child: buildTime());
-  return Positioned(
-      top: _padding, left: _padding, child: buildMouseWorldPosition());
+  return Positioned(top: _padding, left: _padding, child: buildTime());
+  // return Positioned(
+  //     top: _padding, left: _padding, child: buildMouseWorldPosition());
 }
 
 Widget buildBottomRight() {
@@ -194,14 +193,12 @@ Widget buildTopRight() {
     );
     Widget iconToggleAudio = Tooltip(
         child: IconButton(
-            icon: Icon(
-                settings.audioMuted
-                    ? Icons.music_off
-                    : Icons.music_note_rounded,
-                size: iconSize,
-                color: Colors.white),
+            icon: WatchBuilder(settings.audioMuted, (bool value) {
+              return Icon(value ? Icons.music_off : Icons.music_note_rounded,
+                  size: iconSize, color: Colors.white);
+            }),
             onPressed: toggleAudioMuted),
-        message: settings.audioMuted ? "Resume Audio" : "Mute Audio");
+        message: "Toggle Audio");
 
     Widget iconTogglePaths = Tooltip(
       child: IconButton(
@@ -372,7 +369,7 @@ Widget buildEquipWeaponSlot(Weapon weapon) {
     children: [
       onPressed(
           child: buildWeaponSlot(weapon),
-          callback: (){
+          callback: () {
             sendRequestEquip(weapon);
             rebuildUI();
           }),
@@ -386,7 +383,7 @@ Widget buildEquippedWeaponSlot(Weapon weapon) {
     children: [
       buildWeaponSlot(weapon),
       if (weapon != Weapon.Unarmed)
-      WatchBuilder(player.equippedRounds, buildTag),
+        WatchBuilder(player.equippedRounds, buildTag),
     ],
   );
 }
@@ -421,7 +418,7 @@ Widget buildPurchaseWeaponSlot({Weapon weapon}) {
 }
 
 Widget buildWeaponSlot(Weapon weapon) {
-  return mouseOver(builder:(BuildContext context, bool mouseOver){
+  return mouseOver(builder: (BuildContext context, bool mouseOver) {
     return Container(
       width: 120,
       height: 120 * goldenRatioInverse,
@@ -429,8 +426,7 @@ Widget buildWeaponSlot(Weapon weapon) {
       decoration: BoxDecoration(
         image: mapWeaponToImage(weapon),
         color: mouseOver ? Colors.black45 : Colors.black26,
-        border: Border.all(
-            color: Colors.white, width: 1),
+        border: Border.all(color: Colors.white, width: 1),
         borderRadius: borderRadius4,
       ),
     );
@@ -464,9 +460,12 @@ Widget buildBottomLeft() {
               Column(
                   mainAxisAlignment: main.end,
                   crossAxisAlignment: cross.start,
-                  children: getAcquiredNonEquippedWeapons()
-                      .map((Weapon weapon){
-                    return Container(child: buildEquipWeaponSlot(weapon), margin: const EdgeInsets.only(bottom: 4),);
+                  children:
+                      getAcquiredNonEquippedWeapons().map((Weapon weapon) {
+                    return Container(
+                      child: buildEquipWeaponSlot(weapon),
+                      margin: const EdgeInsets.only(bottom: 4),
+                    );
                   }).toList()),
             WatchBuilder(game.playerWeapon, buildEquippedWeaponSlot)
           ],

@@ -36,37 +36,6 @@ void initUI() {
     closeMainMenuDialog();
     rebuildUI();
   });
-
-  // TODO Refactor
-  SharedPreferences.getInstance().then((instance) {
-    //@ on sharedPreferences loaded
-    sharedPreferences = instance;
-    dispatch(instance);
-    if (sharedPreferences.containsKey("tutorialIndex")) {
-      tutorialIndex = sharedPreferences.getInt('tutorialIndex');
-    }
-    settings.audioMuted = sharedPreferences.containsKey('audioMuted') &&
-        sharedPreferences.getBool('audioMuted');
-
-    if (sharedPreferences.containsKey('server')) {
-      Server server = servers[sharedPreferences.getInt('server')];
-      connectServer(server);
-    }
-
-    if (sharedPreferences.containsKey('last-refresh')) {
-      DateTime lastRefresh =
-      DateTime.parse(sharedPreferences.getString('last-refresh'));
-      DateTime now = DateTime.now();
-      if (now.difference(lastRefresh).inHours > 1) {
-        sharedPreferences.setString(
-            'last-refresh', DateTime.now().toIso8601String());
-        refreshPage();
-      }
-    } else {
-      sharedPreferences.setString(
-          'last-refresh', DateTime.now().toIso8601String());
-    }
-  });
 }
 
 void refreshUI() {

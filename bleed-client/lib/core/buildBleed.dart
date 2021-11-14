@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/game.dart';
 
+import 'buildLoadingScreen.dart';
 import 'buildUI.dart';
 import 'drawCanvas.dart';
 import 'init.dart';
@@ -15,5 +16,6 @@ Widget buildBleed(){
     buildUI: buildUI,
     drawCanvas: drawCanvas,
     drawCanvasAfterUpdate: false,
+    buildLoadingScreen: buildLoadingScreen
   );
 }

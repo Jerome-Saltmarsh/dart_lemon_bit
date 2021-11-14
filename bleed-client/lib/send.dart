@@ -59,10 +59,6 @@ void sendRequestUpdateLobby() {
   //     '${ClientRequest.Lobby_Update.index.toString()} ${state.lobby.uuid} ${state.lobby.playerUuid}');
 }
 
-void sendRequestJoinGame(String gameUuid) {
-  // send('${ClientRequest.Game_Join.index.toString()} $gameUuid');
-}
-
 void sendRequestLobbyExit() {
   if (state.lobby == null) {
     print("sendRequestLobbyExit() state.lobby is null");

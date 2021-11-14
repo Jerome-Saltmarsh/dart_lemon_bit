@@ -36,6 +36,7 @@ import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/utils/list_util.dart';
 import 'package:bleed_client/watches/time.dart';
+import 'package:lemon_engine/state/initialized.dart';
 import 'package:neuro/instance.dart';
 
 import 'classes/Score.dart';
@@ -282,7 +283,16 @@ void parseState() {
   }
 }
 
+const double _imgWidth = 100;
+const double _imgHeight = 120;
+
 void _parseEnvironmentObjects() {
+  if (!initialized.value) {
+    print(
+        "parser.parseEnvironmentObjects() aborted because still initializing");
+    return;
+  }
+
   game.environmentObjects.clear();
 
   while (!_simiColonConsumed()) {
@@ -301,15 +311,14 @@ void _parseEnvironmentObjects() {
     }
 
     Image image = mapEnvironmentObjectTypeToImage(type);
-    Rect src =
-        Rect.fromLTWH(0, 0, image.width.toDouble(), image.height.toDouble());
+    Rect src = Rect.fromLTWH(0, 0, _imgWidth, _imgHeight);
 
     EnvironmentObject envObject = EnvironmentObject(
         x: x,
         y: y,
         type: type,
-        dst: Rect.fromLTWH(x - image.width * 0.5, y - image.height * 0.6666,
-            image.width.toDouble(), image.height.toDouble()),
+        dst: Rect.fromLTWH(x - _imgWidth * 0.5, y - _imgHeight * 0.6666,
+            _imgWidth, _imgHeight),
         src: src,
         image: image);
 

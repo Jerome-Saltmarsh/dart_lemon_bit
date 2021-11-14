@@ -108,10 +108,12 @@
 [ ] Remove player walk (its always better to run, no stamina)
 [ ] Right Click to aim (aiming improves accuracy)
 [ ] Fix Firing AssaultRifle animation
+[ ] QUEST
+    [ ] Kill the vampire
 [ ] Change scene
     [ ] Black Fade Screen 
-    [ ] Tavern Level
     [ ] Cave Level
+    [x] Tavern Level
     [x] Camera Pans up 
     [x] Player disappears when firing
     [?] Zombies aren't drawing
