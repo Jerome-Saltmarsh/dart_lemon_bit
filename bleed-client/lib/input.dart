@@ -167,8 +167,7 @@ void toggleLantern(){
 }
 
 void _onKeyPressedEnter(){
-  print("_onKeyPressedEnter()");
-  hud.state.textBoxVisible ? sendAndCloseTextBox() : showTextBox();
+  hud.state.textBoxVisible.value ? sendAndCloseTextBox() : showTextBox();
 }
 
 void sayGreeting(){
@@ -260,7 +259,7 @@ void stopMelee() {
 void _handleKeyDownEvent(RawKeyDownEvent event) {
   LogicalKeyboardKey key = event.logicalKey;
 
-  if (hud.state.textBoxVisible) {
+  if (hud.state.textBoxVisible.value) {
     if (key == keys.text){
       sendAndCloseTextBox();
     }
@@ -291,10 +290,13 @@ void _handleKeyDownEvent(RawKeyDownEvent event) {
   }
 }
 
+
+// on text box visible should disable the character keyboard and vicer vercer
+
 void _handleKeyUpEvent(RawKeyUpEvent event) {
   LogicalKeyboardKey key = event.logicalKey;
 
-  if (hud.state.textBoxVisible) return;
+  if (hud.state.textBoxVisible.value) return;
 
   if (_keyReleasedHandlers.containsKey(key)) {
     _keyReleasedHandlers[key].call();

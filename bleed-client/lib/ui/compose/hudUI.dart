@@ -111,7 +111,7 @@ Widget buildHud() {
     children: [
       buildTopRight(),
       buildTextBox(),
-      if (hud.state.textBoxVisible) _buildServerText(),
+      if (hud.state.textBoxVisible.value) _buildServerText(),
       if (player.alive) buildBottomLeft(),
       if (player.alive) buildBottomRight(),
       buildTopLeft(),

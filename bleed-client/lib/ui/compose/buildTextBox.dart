@@ -2,15 +2,13 @@ import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/game.dart';
+import 'package:lemon_watch/watch_builder.dart';
 
 import 'widgets.dart';
 
 Widget buildTextBox() {
-  return StatefulBuilder(builder: (BuildContext context, StateSetter setState){
-    hud.stateSetters.playerMessage = setState;
-
-    if (!hud.state.textBoxVisible) return blank;
-
+  return WatchBuilder(hud.state.textBoxVisible, (bool value){
+    if (!value) return blank;
     return Positioned(
         bottom: 100,
         child: Container(

@@ -66,11 +66,10 @@ class HudState {
 class _StateSetters {
   StateSetter score;
   StateSetter npcMessage;
-  StateSetter playerMessage;
 }
 
 class _State {
-  bool textBoxVisible = false;
+  Watch<bool> textBoxVisible = Watch(false);
   bool observeMode = false;
   bool showScore = true;
   bool showServers = false;
