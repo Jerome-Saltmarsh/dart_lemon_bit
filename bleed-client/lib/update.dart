@@ -6,6 +6,7 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/getters/getDeactiveParticle.dart';
 import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/state/settings.dart';
+import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/update/updateParticles.dart';
 import 'package:bleed_client/update/updatePlayer.dart';
 import 'package:bleed_client/utils.dart';
@@ -21,6 +22,7 @@ import 'update/updateCharacters.dart';
 int emitPart = 0;
 double targetZoom = 1;
 
+
 void updatePlayMode() {
   if (!connected) return;
   if (game.gameId < 0) return;
@@ -31,12 +33,12 @@ void updatePlayMode() {
   zoom += zoomDiff * settings.zoomFollowSpeed;
   cameraCenter(sX, sY);
 
-
+  _updateMenuVisible();
   framesSinceEvent++;
   readPlayerInput();
   updateParticles();
   updateDeadCharacterBlood();
-  if (!panningCamera && player.alive) {
+  if (!panningCamera && player.alive.value) {
     cameraFollowPlayer();
   }
 
@@ -79,4 +81,8 @@ void updateParticleEmitters() {
     particle.y = emitter.y;
     emitter.emit(particle);
   }
+}
+
+void _updateMenuVisible() {
+  hud.state.menuVisible.value = mouseAvailable && mouseX > screenWidth - 300 && mouseY < 200;
 }

@@ -13,7 +13,6 @@ class Player {
   int credits = 0;
   Watch<double> health = Watch(0.0);
   double maxHealth = 0;
-  CharacterState state = CharacterState.Idle;
   bool acquiredHandgun = false;
   bool acquiredShotgun = false;
   bool acquiredSniperRifle = false;
@@ -26,9 +25,9 @@ class Player {
   int roundsSniperRifle = 0;
   int roundsAssaultRifle = 0;
   Watch<String> message = Watch("");
-
-  bool get dead => state == CharacterState.Dead;
-  bool get alive => !dead;
+  Watch<CharacterState> state = Watch(CharacterState.Idle);
+  Watch<bool> alive = Watch(true);
+  bool get dead => !alive.value;
   // bool get canPurchase => tile == Tile.PlayerSpawn;
   bool get canPurchase => false;
 }

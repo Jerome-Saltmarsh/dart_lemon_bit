@@ -56,6 +56,10 @@ Future init() async {
   phase.onChanged(updateAmbientLight);
   observeAmbientLight(onAmbientLightChanged);
 
+  player.state.onChanged((CharacterState state) {
+     player.alive.value = state != CharacterState.Dead;
+  });
+
   settings.audioMuted.onChanged((value) {
     if (sharedPreferences == null) return;
     sharedPreferences.setBool('audioMuted' , value);
@@ -161,12 +165,6 @@ void joinGameCasual() {
 
 void sendRequestJoinGame() {
   send(ClientRequest.Join.index.toString());
-}
-
-void onPlayerStateChanged(CharacterState previous, CharacterState next) {
-  if (previous == CharacterState.Dead || next == CharacterState.Dead) {
-    rebuildUI();
-  }
 }
 
 Future loadSharedPreferences() async {

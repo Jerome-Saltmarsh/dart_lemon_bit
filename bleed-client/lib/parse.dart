@@ -398,14 +398,7 @@ void _parsePlayer() {
   state.gameState = gameStates[_consumeInt()];
   player.points = _consumeInt();
   player.credits = _consumeInt();
-
-  CharacterState charState = _consumeCharacterState();
-  if (charState != player.state) {
-    CharacterState previous = player.state;
-    player.state = charState;
-    onPlayerStateChanged(previous, charState);
-  }
-
+  player.state.value = _consumeCharacterState();
   player.acquiredHandgun = _consumeBool();
   player.acquiredShotgun = _consumeBool();
   player.acquiredSniperRifle = _consumeBool();

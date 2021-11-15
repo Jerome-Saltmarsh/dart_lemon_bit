@@ -11,43 +11,10 @@ const double half = 0.5;
 const double _1 = 1.0;
 const double goldenRatio = 1.61803398875;
 const double goldenRatioInverse = _1 / goldenRatio;
-const double degreesToRadians = 0.0174533;
-const double radiansToDegrees = 57.29578;
-final Random random = Random();
-
-// bool chance(double value) {
-//   return random.nextDouble() <= value;
-// }
-
-// int randomInt(int min, int max) {
-//   return random.nextInt(max - min) + min;
-// }
-
-// double randomRadion() {
-//   return random.nextDouble() * pi2;
-// }
-
-// double giveOrTake(double value) {
-//   return randomBetween(-value, value);
-// }
 
 double distanceBetweenObjects(Positioned a, Positioned b) {
   return distanceBetween(a.x, a.y, b.x, b.y);
 }
-
-// double distance(double x1, double y1, double x2, double y2) {
-//   return magnitude(x1 - x2, y1 - y2);
-// }
-
-// // Warning Expensive Method
-// double magnitude(double a, double b) {
-//   return sqrt((a * a) + (b * b));
-// }
-
-// double abs(double value) {
-//   if (value < _0) return -value;
-//   return value;
-// }
 
 int absInt(int value) {
   if (value < _0) return -value;

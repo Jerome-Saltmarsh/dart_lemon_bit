@@ -106,19 +106,21 @@ String padZero(num value) {
 Widget buildHud() {
   print("buildHud()");
 
-  return Stack(
-    children: [
-      buildTextBox(),
-      if (hud.state.textBoxVisible.value) _buildServerText(),
-      if (player.alive) buildBottomLeft(),
-      if (player.alive) buildBottomRight(),
-      buildTopLeft(),
-      if (!hud.state.observeMode && player.dead) _buildViewRespawn(),
-      if (player.dead && hud.state.observeMode) _buildRespawnLight(),
-      _buildServerText(),
-      buildTopRight(),
-    ],
-  );
+  return WatchBuilder(player.alive, (bool alive){
+    return Stack(
+      children: [
+        buildTextBox(),
+        if (hud.state.textBoxVisible.value) _buildServerText(),
+        if (alive) buildBottomLeft(),
+        if (alive) buildBottomRight(),
+        buildTopLeft(),
+        if (!hud.state.observeMode && !alive) _buildViewRespawn(),
+        if (!alive && hud.state.observeMode) _buildRespawnLight(),
+        _buildServerText(),
+        buildTopRight(),
+      ],
+    );
+  });
 }
 
 Positioned _buildRespawnLight() {
