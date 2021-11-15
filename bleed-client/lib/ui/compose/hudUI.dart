@@ -41,6 +41,7 @@ import 'buildTextBox.dart';
 import 'dialogs.dart';
 
 const double _padding = 8;
+const _iconSize = 45.0;
 
 Widget buildHealthBar() {
   return WatchBuilder(player.health, (double health) {
@@ -173,68 +174,72 @@ Widget buildTop() {
 }
 
 Widget buildTopRight() {
-  print("buildTopRight()");
-  double iconSize = 45;
-
   return Positioned(
     top: _padding,
     right: _padding,
-    child: WatchBuilder(hud.state.menuVisible, (bool value) {
-      print("Build menu visible $value");
-      if (!value)
-        return Container(
-          child: text("Menu"),
-        );
-
-      Widget iconToggleFullscreen = Tooltip(
-        child: IconButton(
-            icon: Icon(
-                fullScreenActive ? Icons.fullscreen_exit : Icons.fullscreen,
-                size: iconSize,
-                color: Colors.white),
-            onPressed: toggleFullScreen),
-        message: fullScreenActive ? "Exit Fullscreen" : "Enter Fullscreen",
-      );
-      Widget iconToggleAudio = Tooltip(
-          child: IconButton(
-              icon: WatchBuilder(settings.audioMuted, (bool value) {
-                return Icon(value ? Icons.music_off : Icons.music_note_rounded,
-                    size: iconSize, color: Colors.white);
-              }),
-              onPressed: toggleAudioMuted),
-          message: "Toggle Audio");
-
-      Widget iconTogglePaths = Tooltip(
-        child: IconButton(
-            icon: Icon(Icons.map, size: iconSize, color: Colors.white),
-            onPressed: () {
-              settings.compilePaths = !settings.compilePaths;
-              sendRequestSetCompilePaths(settings.compilePaths);
-            }),
-        message: "Toggle Paths",
-      );
-
-      Widget iconToggleEditMode = Tooltip(
-        child: IconButton(
-            icon: Icon(Icons.edit, size: iconSize, color: Colors.white),
-            onPressed: toggleEditMode),
-        message: "Edit",
-      );
-
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          if (settings.developMode) iconTogglePaths,
-          if (settings.developMode) width8,
-          if (settings.developMode) iconToggleEditMode,
-          iconToggleAudio,
-          width8,
-          iconToggleFullscreen,
-          if (settings.developMode) width8,
-        ],
-      );
-    }),
+    child: buildMenu(),
   );
+}
+
+Widget buildMenu(){
+  return WatchBuilder(hud.state.menuVisible, (bool value) {
+    print("Build menu visible $value");
+    if (!value)
+      return Container(
+        child: const Icon(
+            Icons.menu,
+            size: _iconSize,
+            color: Colors.white),
+      );
+
+    Widget iconToggleFullscreen = Tooltip(
+      child: IconButton(
+          icon: Icon(
+              fullScreenActive ? Icons.fullscreen_exit : Icons.fullscreen,
+              size: _iconSize,
+              color: Colors.white),
+          onPressed: toggleFullScreen),
+      message: fullScreenActive ? "Exit Fullscreen" : "Enter Fullscreen",
+    );
+    Widget iconToggleAudio = Tooltip(
+        child: IconButton(
+            icon: WatchBuilder(settings.audioMuted, (bool value) {
+              return Icon(value ? Icons.music_off : Icons.music_note_rounded,
+                  size: _iconSize, color: Colors.white);
+            }),
+            onPressed: toggleAudioMuted),
+        message: "Toggle Audio");
+
+    Widget iconTogglePaths = Tooltip(
+      child: IconButton(
+          icon: Icon(Icons.map, size: _iconSize, color: Colors.white),
+          onPressed: () {
+            settings.compilePaths = !settings.compilePaths;
+            sendRequestSetCompilePaths(settings.compilePaths);
+          }),
+      message: "Toggle Paths",
+    );
+
+    Widget iconToggleEditMode = Tooltip(
+      child: IconButton(
+          icon: Icon(Icons.edit, size: _iconSize, color: Colors.white),
+          onPressed: toggleEditMode),
+      message: "Edit",
+    );
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        if (settings.developMode) iconTogglePaths,
+        if (settings.developMode) width8,
+        if (settings.developMode) iconToggleEditMode,
+        iconToggleAudio,
+        width8,
+        iconToggleFullscreen,
+        if (settings.developMode) width8,
+      ],
+    );
+  });
 }
 
 Widget buildToggleScoreIcon() {
