@@ -8,8 +8,6 @@ import 'package:bleed_client/render/drawCanvas.dart';
 import 'package:bleed_client/state/game.dart';
 
 void drawCanvas(Canvas canvass, Size _size) {
-  if (!finishedLoading) return;
-
   if (editMode) {
     renderCanvasEdit();
     return;

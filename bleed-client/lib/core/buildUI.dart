@@ -14,10 +14,7 @@ import 'package:lemon_engine/state/size.dart';
 
 Widget buildUI(BuildContext context) {
   if (globalSize == null) {
-    return buildLoadingScreen();
-  }
-
-  if (!finishedLoading) {
+    print("globalSize == null - showing loading screen");
     return buildLoadingScreen();
   }
 

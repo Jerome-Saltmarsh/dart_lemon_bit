@@ -7,7 +7,6 @@ import 'package:lemon_engine/functions/load_image.dart';
 final _Images images = _Images();
 
 Map<EnvironmentObjectType, List<Image>> typeShades;
-bool finishedLoading = false;
 
 class _Images {
 
@@ -316,8 +315,6 @@ class _Images {
         rockSmall4,
       ]
     };
-
-    finishedLoading = true;
   }
 }
 

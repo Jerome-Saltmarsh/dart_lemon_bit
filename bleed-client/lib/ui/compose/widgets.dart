@@ -171,4 +171,4 @@ ButtonStyle buildButtonStyle(Color borderColor, double borderWidth) {
   );
 }
 
-final Widget blank = const Text("");
+final Widget blank = const Positioned(child: const Text(""), top: 0, left: 0,);

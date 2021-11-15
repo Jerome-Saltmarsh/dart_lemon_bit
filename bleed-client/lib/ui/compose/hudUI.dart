@@ -106,11 +106,10 @@ String padZero(num value) {
 Widget buildHud() {
   print("buildHud()");
 
-  return WatchBuilder(player.alive, (bool alive){
+  return WatchBuilder(player.alive, (bool alive) {
     return Stack(
       children: [
         buildTextBox(),
-        if (hud.state.textBoxVisible.value) _buildServerText(),
         if (alive) buildBottomLeft(),
         if (alive) buildBottomRight(),
         buildTopLeft(),
@@ -174,6 +173,7 @@ Widget buildTop() {
 }
 
 Widget buildTopRight() {
+  print("buildTopRight()");
   double iconSize = 45;
 
   return Positioned(
@@ -181,7 +181,10 @@ Widget buildTopRight() {
     right: _padding,
     child: WatchBuilder(hud.state.menuVisible, (bool value) {
       print("Build menu visible $value");
-      if (!value) return Container(child: text("Menu"),);
+      if (!value)
+        return Container(
+          child: text("Menu"),
+        );
 
       Widget iconToggleFullscreen = Tooltip(
         child: IconButton(
@@ -245,7 +248,7 @@ Widget buildToggleScoreIcon() {
 }
 
 Widget _buildServerText() {
-  return WatchBuilder(player.message, (String value){
+  return WatchBuilder(player.message, (String value) {
     if (value.isEmpty) return blank;
 
     return Positioned(
@@ -269,7 +272,7 @@ Widget _buildServerText() {
   });
 }
 
-void clearPlayerMessage(){
+void clearPlayerMessage() {
   player.message.value = "";
 }
 
@@ -391,29 +394,29 @@ Widget buildMedSlot() {
 }
 
 Widget buildBottomLeft() {
-  return Positioned(
-      bottom: _padding,
-      left: _padding,
-      child: mouseOver(builder: (BuildContext context, bool mouseOver) {
-        return Column(
-          mainAxisAlignment: main.end,
-          crossAxisAlignment: cross.start,
-          children: [
-            if (mouseOver)
-              Column(
-                  mainAxisAlignment: main.end,
-                  crossAxisAlignment: cross.start,
-                  children:
-                      getAcquiredNonEquippedWeapons().map((Weapon weapon) {
-                    return Container(
-                      child: buildEquipWeaponSlot(weapon),
-                      margin: const EdgeInsets.only(bottom: 4),
-                    );
-                  }).toList()),
-            WatchBuilder(game.playerWeapon, buildEquippedWeaponSlot)
-          ],
-        );
-      }));
+  return Positioned(bottom: _padding, left: _padding, child: buildWeaponMenu());
+}
+
+Widget buildWeaponMenu() {
+  return mouseOver(builder: (BuildContext context, bool mouseOver) {
+    return Column(
+      mainAxisAlignment: main.end,
+      crossAxisAlignment: cross.start,
+      children: [
+        if (mouseOver)
+          Column(
+              mainAxisAlignment: main.end,
+              crossAxisAlignment: cross.start,
+              children: getAcquiredNonEquippedWeapons().map((Weapon weapon) {
+                return Container(
+                  child: buildEquipWeaponSlot(weapon),
+                  margin: const EdgeInsets.only(bottom: 4),
+                );
+              }).toList()),
+        WatchBuilder(game.playerWeapon, buildEquippedWeaponSlot)
+      ],
+    );
+  });
 }
 
 List<Weapon> getAcquiredNonEquippedWeapons() {
