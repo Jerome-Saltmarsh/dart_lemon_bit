@@ -1,5 +1,6 @@
 
-import '../common/CollectableType.dart';
-import '../maths.dart';
+import 'package:lemon_math/randomItem.dart';
 
-CollectableType get randomCollectableType => randomValue(CollectableType.values);
+import '../common/CollectableType.dart';
+
+CollectableType get randomCollectableType => randomItem(CollectableType.values);

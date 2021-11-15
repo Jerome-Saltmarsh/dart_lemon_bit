@@ -15,7 +15,6 @@ import 'common/ServerResponse.dart';
 import 'common/classes/Vector2.dart';
 import 'games/world.dart';
 import 'utils/player_utils.dart';
-import 'values/world.dart';
 
 // constants
 final int _collectablesIndex = ServerResponse.Collectables.index;

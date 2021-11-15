@@ -91,25 +91,3 @@ void nextTip() {
   rebuildUI();
 }
 
-String getMessage() {
-  if (player.health == 0) return null;
-
-  if (player.health < player.maxHealth * 0.25) {
-    if (player.meds > 0) {
-      return "Low Health: Press H to heal";
-    }
-  }
-  if (player.equippedRounds.value == 0) {
-    if (player.equippedClips == 0) {
-      return 'Empty: Press 1, 2, 3 to change weapons';
-    } else {
-      return 'Press R to reload';
-    }
-  }
-
-  if (player.equippedRounds.value <= 2) {
-    return "Low Ammo";
-  }
-
-  return null;
-}

@@ -132,28 +132,28 @@ void drawDebugNpcs(List<NpcDebug> values){
 void drawPlayerHealth() {
   if (!playerAssigned) return;
 
-  double health = player.health / player.maxHealth;
+  double health = player.health.value / player.maxHealth;
   double halfMaxHealth = player.maxHealth * 0.5;
   if (health > 0.5) {
     drawCharacterCircle(
         game.playerX,
         game.playerY,
         Color.lerp(
-            colours.yellow, colours.green, (player.health - halfMaxHealth) / halfMaxHealth));
+            colours.yellow, colours.green, (player.health.value - halfMaxHealth) / halfMaxHealth));
   } else {
     drawCharacterCircle(game.playerX, game.playerY,
-        Color.lerp(colours.blood, colours.yellow, player.health / halfMaxHealth));
+        Color.lerp(colours.blood, colours.yellow, player.health.value / halfMaxHealth));
   }
 }
 
 Color get healthColor {
-  double health = player.health / player.maxHealth;
+  double health = player.health.value / player.maxHealth;
   double halfMaxHealth = player.maxHealth * 0.5;
   if (health > 0.5) {
     return Color.lerp(
-        colours.orange, colours.green, (player.health - halfMaxHealth) / halfMaxHealth);
+        colours.orange, colours.green, (player.health.value - halfMaxHealth) / halfMaxHealth);
   }
-  return Color.lerp(colours.blood, colours.orange, player.health / halfMaxHealth);
+  return Color.lerp(colours.blood, colours.orange, player.health.value / halfMaxHealth);
 }
 
 RSTransform getTileTransform(int x, int y) {

@@ -11,7 +11,7 @@ class Player {
   int squad = -1;
   int points = 0;
   int credits = 0;
-  double health = 0;
+  Watch<double> health = Watch(0.0);
   double maxHealth = 0;
   CharacterState state = CharacterState.Idle;
   bool acquiredHandgun = false;

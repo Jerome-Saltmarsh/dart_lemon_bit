@@ -263,13 +263,6 @@ void _drawNpcBonusPointsCircles() {
   }
 }
 
-void _drawPlayerHealthRing() {
-  drawRing(_healthRing,
-      percentage: player.health / player.maxHealth,
-      color: healthColor,
-      position: Offset(playerX, playerY));
-}
-
 void _renderItems() {
   items.transforms.clear();
   items.rects.clear();

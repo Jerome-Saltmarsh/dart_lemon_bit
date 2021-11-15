@@ -1,4 +1,6 @@
+import 'package:lemon_math/diff.dart';
 import 'package:lemon_math/diff_over.dart';
+import 'package:lemon_math/give_or_take.dart';
 
 import 'classes/Bullet.dart';
 import 'classes/Character.dart';

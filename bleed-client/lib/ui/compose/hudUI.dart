@@ -15,7 +15,6 @@ import 'package:bleed_client/server.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/settings.dart';
-import 'package:bleed_client/watches/playerHealth.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/decorationImages.dart';
@@ -44,7 +43,7 @@ import 'dialogs.dart';
 const double _padding = 8;
 
 Widget buildHealthBar() {
-  return WatchBuilder(playerHealth, (double health) {
+  return WatchBuilder(player.health, (double health) {
     if (health == null) {
       return CircularProgressIndicator();
     }
@@ -109,7 +108,6 @@ Widget buildHud() {
 
   return Stack(
     children: [
-      buildTopRight(),
       buildTextBox(),
       if (hud.state.textBoxVisible.value) _buildServerText(),
       if (player.alive) buildBottomLeft(),
@@ -118,6 +116,7 @@ Widget buildHud() {
       if (!hud.state.observeMode && player.dead) _buildViewRespawn(),
       if (player.dead && hud.state.observeMode) _buildRespawnLight(),
       _buildServerText(),
+      buildTopRight(),
     ],
   );
 }
@@ -175,60 +174,62 @@ Widget buildTop() {
 Widget buildTopRight() {
   double iconSize = 45;
 
-  return WatchBuilder(hud.state.menuVisible, (bool value) {
-    if (!value) return Container();
+  return Positioned(
+    top: _padding,
+    right: _padding,
+    child: WatchBuilder(hud.state.menuVisible, (bool value) {
+      print("Build menu visible $value");
+      if (!value) return Container(child: text("Menu"),);
 
-    Widget iconToggleFullscreen = Tooltip(
-      child: IconButton(
-          icon: Icon(
-              fullScreenActive ? Icons.fullscreen_exit : Icons.fullscreen,
-              size: iconSize,
-              color: Colors.white),
-          onPressed: toggleFullScreen),
-      message: fullScreenActive ? "Exit Fullscreen" : "Enter Fullscreen",
-    );
-    Widget iconToggleAudio = Tooltip(
+      Widget iconToggleFullscreen = Tooltip(
         child: IconButton(
-            icon: WatchBuilder(settings.audioMuted, (bool value) {
-              return Icon(value ? Icons.music_off : Icons.music_note_rounded,
-                  size: iconSize, color: Colors.white);
+            icon: Icon(
+                fullScreenActive ? Icons.fullscreen_exit : Icons.fullscreen,
+                size: iconSize,
+                color: Colors.white),
+            onPressed: toggleFullScreen),
+        message: fullScreenActive ? "Exit Fullscreen" : "Enter Fullscreen",
+      );
+      Widget iconToggleAudio = Tooltip(
+          child: IconButton(
+              icon: WatchBuilder(settings.audioMuted, (bool value) {
+                return Icon(value ? Icons.music_off : Icons.music_note_rounded,
+                    size: iconSize, color: Colors.white);
+              }),
+              onPressed: toggleAudioMuted),
+          message: "Toggle Audio");
+
+      Widget iconTogglePaths = Tooltip(
+        child: IconButton(
+            icon: Icon(Icons.map, size: iconSize, color: Colors.white),
+            onPressed: () {
+              settings.compilePaths = !settings.compilePaths;
+              sendRequestSetCompilePaths(settings.compilePaths);
             }),
-            onPressed: toggleAudioMuted),
-        message: "Toggle Audio");
+        message: "Toggle Paths",
+      );
 
-    Widget iconTogglePaths = Tooltip(
-      child: IconButton(
-          icon: Icon(Icons.map, size: iconSize, color: Colors.white),
-          onPressed: () {
-            settings.compilePaths = !settings.compilePaths;
-            sendRequestSetCompilePaths(settings.compilePaths);
-          }),
-      message: "Toggle Paths",
-    );
+      Widget iconToggleEditMode = Tooltip(
+        child: IconButton(
+            icon: Icon(Icons.edit, size: iconSize, color: Colors.white),
+            onPressed: toggleEditMode),
+        message: "Edit",
+      );
 
-    Widget iconToggleEditMode = Tooltip(
-      child: IconButton(
-          icon: Icon(Icons.edit, size: iconSize, color: Colors.white),
-          onPressed: toggleEditMode),
-      message: "Edit",
-    );
-
-    return Positioned(
-        top: 0,
-        right: 20,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            if (settings.developMode) iconTogglePaths,
-            if (settings.developMode) width8,
-            if (settings.developMode) iconToggleEditMode,
-            iconToggleAudio,
-            width8,
-            iconToggleFullscreen,
-            if (settings.developMode) width8,
-          ],
-        ));
-  });
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          if (settings.developMode) iconTogglePaths,
+          if (settings.developMode) width8,
+          if (settings.developMode) iconToggleEditMode,
+          iconToggleAudio,
+          width8,
+          iconToggleFullscreen,
+          if (settings.developMode) width8,
+        ],
+      );
+    }),
+  );
 }
 
 Widget buildToggleScoreIcon() {

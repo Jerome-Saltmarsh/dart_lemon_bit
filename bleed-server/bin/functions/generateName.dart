@@ -1,3 +1,5 @@
+import 'package:lemon_math/randomItem.dart';
+
 import '../maths.dart';
 
 List<String> adjectives = [
@@ -112,5 +114,5 @@ List<String> nouns = [
 ];
 
 String generateName() {
-  return '${randomValue(adjectives)}_${randomValue(nouns)}';
+  return '${randomItem(adjectives)}_${randomItem(nouns)}';
 }

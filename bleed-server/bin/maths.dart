@@ -1,4 +1,7 @@
 import 'dart:math';
+
+import 'package:lemon_math/random_between.dart';
+
 import 'classes/Positioned.dart';
 import 'constants.dart';
 
@@ -11,34 +14,21 @@ const double degreesToRadians = 0.0174533;
 const double radiansToDegrees = 57.29578;
 final Random random = Random();
 
-T randomValue<T>(List<T> list){
-  return list[randomInt(0, list.length)];
-}
+// bool chance(double value) {
+//   return random.nextDouble() <= value;
+// }
 
-double randomBetween(num a, num b) {
-  return (random.nextDouble() * (b - a)) + a;
-}
+// int randomInt(int min, int max) {
+//   return random.nextInt(max - min) + min;
+// }
 
+// double randomRadion() {
+//   return random.nextDouble() * pi2;
+// }
 
-bool randomBool() {
-  return random.nextDouble() > half;
-}
-
-bool chance(double value) {
-  return random.nextDouble() <= value;
-}
-
-int randomInt(int min, int max) {
-  return random.nextInt(max - min) + min;
-}
-
-double randomRadion() {
-  return random.nextDouble() * pi2;
-}
-
-double giveOrTake(double value) {
-  return randomBetween(-value, value);
-}
+// double giveOrTake(double value) {
+//   return randomBetween(-value, value);
+// }
 
 double distanceBetween(Positioned a, Positioned b) {
   return distance(a.x, a.y, b.x, b.y);
@@ -53,19 +43,19 @@ double magnitude(double a, double b) {
   return sqrt((a * a) + (b * b));
 }
 
-double abs(double value) {
-  if (value < _0) return -value;
-  return value;
-}
+// double abs(double value) {
+//   if (value < _0) return -value;
+//   return value;
+// }
 
 int absInt(int value) {
   if (value < _0) return -value;
   return value;
 }
 
-double diff(double a, double b){
-  return abs(a - b);
-}
+// double diff(double a, double b){
+//   return abs(a - b);
+// }
 
 int diffInt(int a, int b){
   return absInt(a - b);

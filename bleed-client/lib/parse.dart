@@ -30,7 +30,6 @@ import 'package:bleed_client/render/functions/applyEnvironmentObjectsToBakeMappi
 import 'package:bleed_client/render/functions/setBakeMapToAmbientLight.dart';
 import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/getters/getTileAt.dart';
-import 'package:bleed_client/watches/playerHealth.dart';
 import 'package:bleed_client/ui/compose/dialogs.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/utils.dart';
@@ -378,8 +377,7 @@ void _parsePlayer() {
   game.playerX = _consumeDouble();
   game.playerY = _consumeDouble();
   game.playerWeapon.value = _consumeWeapon();
-  player.health = _consumeDouble();
-  playerHealth(player.health);
+  player.health.value = _consumeDouble();
   player.maxHealth = _consumeDouble();
   player.stamina = _consumeInt();
   player.staminaMax = _consumeInt();

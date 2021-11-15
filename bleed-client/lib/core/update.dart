@@ -27,13 +27,12 @@ void update() {
 
   if (playMode) {
     updatePlayMode();
-    _showHideMenu();
+    updateMenuVisible();
   } else {
     updateEditMode();
   }
 }
 
-void _showHideMenu() {
-  if (!mouseAvailable) return;
-  hud.state.menuVisible.value = mouseX > screenWidth - 300 && mouseY < 200;
+void updateMenuVisible() {
+  hud.state.menuVisible.value = mouseAvailable && mouseX > screenWidth - 300 && mouseY < 200;
 }

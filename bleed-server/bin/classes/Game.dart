@@ -1,6 +1,12 @@
 import 'dart:math';
 
+import 'package:lemon_math/abs.dart';
+import 'package:lemon_math/diff.dart';
 import 'package:lemon_math/diff_over.dart';
+import 'package:lemon_math/give_or_take.dart';
+import 'package:lemon_math/randomBool.dart';
+import 'package:lemon_math/randomInt.dart';
+import 'package:lemon_math/randomItem.dart';
 
 import '../common/ItemType.dart';
 import '../common/Tile.dart';
@@ -628,7 +634,7 @@ extension GameFunctions on Game {
   }
 
   void spawnRandomItem(double x, double y) {
-    items.add(Item(type: randomValue(itemTypes), x: x, y: y));
+    items.add(Item(type: randomItem(itemTypes), x: x, y: y));
   }
 
   void spawnExplosion(Grenade grenade) {
@@ -1085,7 +1091,7 @@ extension GameFunctions on Game {
 
   Npc spawnRandomZombie() {
     if (zombieSpawnPoints.isEmpty) throw ZombieSpawnPointsEmptyException();
-    Vector2 spawnPoint = randomValue(zombieSpawnPoints);
+    Vector2 spawnPoint = randomItem(zombieSpawnPoints);
     return spawnZombie(spawnPoint.x + giveOrTake(radius.zombieSpawnVariation),
         spawnPoint.y + giveOrTake(radius.zombieSpawnVariation));
   }
@@ -1146,9 +1152,9 @@ extension GameFunctions on Game {
     }
 
     Character closest = list[j];
-    double distance = diff(closest.y, y) + diff(closest.x, x);
+    num distance = diff(closest.y, y) + diff(closest.x, x);
     for (int i = j + 1; i < list.length; i++) {
-      double distance2 = diff(closest.y, y) + diff(closest.x, x);
+      num distance2 = diff(closest.y, y) + diff(closest.x, x);
       if (distance2 > distance) continue;
       closest = list[i];
       distance = distance2;
@@ -1156,7 +1162,7 @@ extension GameFunctions on Game {
     return closest;
   }
 
-  double cheapDistance(Positioned a, Positioned b) {
+  num cheapDistance(Positioned a, Positioned b) {
     return diff(a.y, b.y) + diff(a.x, b.x);
   }
 
@@ -1181,10 +1187,10 @@ extension GameFunctions on Game {
     if (npc.mode == NpcMode.Ignore) return;
 
     Character closest = zombies[j];
-    double closestDistance = cheapDistance(closest, npc);
+    num closestDistance = cheapDistance(closest, npc);
     for (int i = j + 1; i < zombies.length; i++) {
       if (!zombies[i].alive) continue;
-      double distance2 = cheapDistance(zombies[i], npc);
+      num distance2 = cheapDistance(zombies[i], npc);
       if (distance2 > closestDistance) continue;
       closest = zombies[i];
       closestDistance = distance2;
@@ -1266,7 +1272,7 @@ extension GameFunctions on Game {
 
   TileNode getRandomOpenTileNode() {
     while (true) {
-      TileNode node = randomValue(randomValue(scene.tileNodes));
+      TileNode node = randomItem(randomItem(scene.tileNodes));
       if (!node.open) continue;
       return node;
     }
