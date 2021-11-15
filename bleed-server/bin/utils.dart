@@ -1,5 +1,6 @@
 import 'package:lemon_math/diff.dart';
 import 'package:lemon_math/diff_over.dart';
+import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/give_or_take.dart';
 
 import 'classes/Bullet.dart';
@@ -17,7 +18,7 @@ const double tileSize = 48.0;
 const double halfTileSize = 24;
 
 double bulletDistanceTravelled(Bullet bullet) {
-  return distance(bullet.x, bullet.y, bullet.xStart, bullet.yStart);
+  return distanceBetween(bullet.x, bullet.y, bullet.xStart, bullet.yStart);
 }
 
 double clamp(double value, double min, double max) {
@@ -40,7 +41,7 @@ void setDirection(Character character, Direction direction) {
 }
 
 bool withinViewRange(Npc npc, GameObject target) {
-  return distanceBetween(npc, target) < settings.npc.viewRange;
+  return distanceBetweenObjects(npc, target) < settings.npc.viewRange;
 }
 
 bool arrivedAtPath(Npc npc) {
@@ -55,7 +56,7 @@ void setVelocity(GameObject gameObject, double rotation, double speed) {
 }
 
 double objectDistanceFrom(GameObject gameObject, double x, double y) {
-  return distance(gameObject.x, gameObject.y, x, y);
+  return distanceBetween(gameObject.x, gameObject.y, x, y);
 }
 
 void characterFace(Character character, double x, double y) {

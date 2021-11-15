@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:lemon_math/hypotenuse.dart';
+
 import 'classes/Game.dart';
 import 'classes/GameObject.dart';
 import 'games/world.dart';
@@ -98,7 +100,7 @@ void resolveCollisionA(GameObject a, GameObject b) {
   }
 
   double halfOverlap = overlap * 0.5;
-  double mag = magnitude(xDiff, yDiff);
+  double mag = hypotenuse(xDiff, yDiff);
   double ratio = 1.0 / mag;
   double xDiffNormalized = xDiff * ratio;
   double yDiffNormalized = yDiff * ratio;
@@ -115,7 +117,7 @@ void resolveCollisionB(GameObject a, GameObject b) {
   if (overlap < 0) return;
   double xDiff = a.x - b.x;
   double yDiff = a.y - b.y;
-  double mag = magnitude(xDiff, yDiff);
+  double mag = hypotenuse(xDiff, yDiff);
   double ratio = 1.0 / mag;
   double xDiffNormalized = xDiff * ratio;
   double yDiffNormalized = yDiff * ratio;
@@ -126,7 +128,7 @@ void resolveCollisionB(GameObject a, GameObject b) {
 }
 
 double collisionOverlap(GameObject a, GameObject b) {
-  return a.radius + b.radius - distanceBetween(a, b);
+  return a.radius + b.radius - distanceBetweenObjects(a, b);
 }
 
 void resolveCollisionBetween(List<GameObject> gameObjectsA,

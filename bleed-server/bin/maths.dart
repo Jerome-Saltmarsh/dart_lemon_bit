@@ -1,6 +1,7 @@
 import 'dart:math';
 
-import 'package:lemon_math/random_between.dart';
+import 'package:lemon_math/distance_between.dart';
+import 'package:lemon_math/hypotenuse.dart';
 
 import 'classes/Positioned.dart';
 import 'constants.dart';
@@ -30,18 +31,18 @@ final Random random = Random();
 //   return randomBetween(-value, value);
 // }
 
-double distanceBetween(Positioned a, Positioned b) {
-  return distance(a.x, a.y, b.x, b.y);
+double distanceBetweenObjects(Positioned a, Positioned b) {
+  return distanceBetween(a.x, a.y, b.x, b.y);
 }
 
-double distance(double x1, double y1, double x2, double y2) {
-  return magnitude(x1 - x2, y1 - y2);
-}
+// double distance(double x1, double y1, double x2, double y2) {
+//   return magnitude(x1 - x2, y1 - y2);
+// }
 
-// Warning Expensive Method
-double magnitude(double a, double b) {
-  return sqrt((a * a) + (b * b));
-}
+// // Warning Expensive Method
+// double magnitude(double a, double b) {
+//   return sqrt((a * a) + (b * b));
+// }
 
 // double abs(double value) {
 //   if (value < _0) return -value;
@@ -53,24 +54,10 @@ int absInt(int value) {
   return value;
 }
 
-// double diff(double a, double b){
-//   return abs(a - b);
-// }
-
 int diffInt(int a, int b){
   return absInt(a - b);
 }
 
-// utility methods
-int millisecondsSince(DateTime value) {
-  return durationSince(value).inMilliseconds;
-}
-
-Duration durationSince(DateTime value) {
-  return now().difference(value);
-}
-
-DateTime now() => DateTime.now();
 
 double radiansBetweenObject(Positioned a, Positioned b) {
   return radiansBetween(a.x, a.y, b.x, b.y);
@@ -106,7 +93,7 @@ double opp(double rotation, num magnitude) {
 }
 
 double normalize(double x, double y) {
-  return _1 / magnitude(x, y);
+  return _1 / hypotenuse(x, y);
 }
 
 double normalizeX(double x, double y) {

@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:lemon_math/abs.dart';
 import 'package:lemon_math/diff.dart';
 import 'package:lemon_math/diff_over.dart';
+import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/randomBool.dart';
 import 'package:lemon_math/randomInt.dart';
@@ -246,7 +247,7 @@ extension GameFunctions on Game {
   /// calculates if there is a wall between two objects
   bool isVisibleBetween(Positioned a, Positioned b){
     double r = radiansBetweenObject(a, b);
-    double d = distanceBetween(a, b);
+    double d = distanceBetweenObjects(a, b);
     double vX = adj(r, tileSize);
     double vY = opp(r, tileSize);
     int jumps = d ~/ tileSize;
@@ -352,7 +353,7 @@ extension GameFunctions on Game {
         double combinedRadius = character.radius + collider.radius;
         if (diffOver(character.x, collider.x, combinedRadius)) continue;
         if (diffOver(character.y, collider.y, combinedRadius)) continue;
-        double _distance = distanceBetween(character, collider);
+        double _distance = distanceBetweenObjects(character, collider);
         if (_distance > combinedRadius) continue;
         double overlap = combinedRadius - _distance;
         double r = radiansBetweenObject(character, collider);
@@ -1197,7 +1198,7 @@ extension GameFunctions on Game {
     }
 
     double range = getWeaponRange(npc.weapon);
-    double actualDistance = distance(npc.x, npc.y, closest.x, closest.y);
+    double actualDistance = distanceBetween(npc.x, npc.y, closest.x, closest.y);
     if (actualDistance > range) {
       npc.clearTarget();
       npc.state = CharacterState.Idle;
@@ -1410,7 +1411,7 @@ void applyCratePhysics(Crate crate, List<Character> characters) {
     if (!character.active) continue;
     if (diffOver(crate.x, character.x, radius.crate)) continue;
     if (diffOver(crate.y, character.y, radius.crate)) continue;
-    double dis = distance(crate.x, crate.y, character.x, character.y);
+    double dis = distanceBetween(crate.x, crate.y, character.x, character.y);
     if (dis >= radius.crate) continue;
     double b = radius.crate - dis;
     double r = radiansBetween(crate.x, crate.y, character.x, character.y);
