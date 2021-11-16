@@ -1,8 +1,5 @@
-import 'package:lemon_math/diff_over.dart';
-
 import '../classes/Character.dart';
 import '../classes/Game.dart';
-import '../classes/Inventory.dart';
 import '../classes/Player.dart';
 import '../classes/InteractableNpc.dart';
 import '../common/Quests.dart';
@@ -11,7 +8,6 @@ import '../common/classes/Vector2.dart';
 import '../enums/npc_mode.dart';
 import '../instances/scenes.dart';
 import '../state.dart';
-import '../utils/player_utils.dart';
 import '../values/world.dart';
 
 class Town extends Game {
@@ -22,9 +18,6 @@ class Town extends Game {
 
   final int _maxZombies = 30;
   final int _framesPerZombieSpawn = 120;
-
-  final double playerSpawnX = 0;
-  final double playerSpawnY = 1750;
 
   Town() : super(scenes.town, 64) {
     npcDavis = InteractableNpc(
@@ -121,21 +114,6 @@ class Town extends Game {
   }
 
   @override
-  Player doSpawnPlayer() {
-    return Player(
-      game: this,
-      x: playerSpawnX,
-      y: playerSpawnY,
-      inventory: Inventory(0, 0, []),
-      clips: Clips(),
-      rounds:
-          Rounds(handgun: 50, shotgun: 30, sniperRifle: 20, assaultRifle: 100),
-      squad: 1,
-      weapon: Weapon.HandGun,
-    );
-  }
-
-  @override
   void onPlayerKilled(Player player) {
     // player.x = playerSpawnX;
     // player.y = playerSpawnY;
@@ -146,23 +124,32 @@ class Town extends Game {
 
   @override
   void update() {
-    double radius = 10;
-    for (int i = 0; i < players.length; i++) {
-      Player player = players[i];
-      if (diffOver(player.x, -1281, radius)) continue;
-      if (diffOver(player.y, 2408, radius)) continue;
-      changeGame(player, world.cave);
-      i--;
-    }
-
-    // -145 1900
-    for (int i = 0; i < players.length; i++) {
-      Player player = players[i];
-      if (diffOver(player.x, -145, 20)) continue;
-      if (diffOver(player.y, 1900, 20)) continue;
-      changeGame(player, world.tavern);
-      i--;
-    }
+    // double radius = 10;
+    // for (int i = 0; i < players.length; i++) {
+    //   Player player = players[i];
+    //   if (diffOver(player.x, -1281, radius)) continue;
+    //   if (diffOver(player.y, 2408, radius)) continue;
+    //   changeGame(player, world.cave);
+    //   i--;
+    // }
+    //
+    // // -145 1900
+    // for (int i = 0; i < players.length; i++) {
+    //   Player player = players[i];
+    //   if (diffOver(player.x, -145, 20)) continue;
+    //   if (diffOver(player.y, 1900, 20)) continue;
+    //   changeGame(player, world.tavern);
+    //   i--;
+    // }
+    //
+    // // -145 1900
+    // for (int i = 0; i < players.length; i++) {
+    //   Player player = players[i];
+    //   if (diffOver(player.x, -1232, 20)) continue;
+    //   if (diffOver(player.y, 1238, 20)) continue;
+    //   changeGame(player, world.wildernessNorth01);
+    //   i--;
+    // }
 
     if (frame % _framesPerZombieSpawn != 0) return;
     if (zombieCount > _maxZombies) return;
@@ -180,5 +167,13 @@ class Town extends Game {
   @override
   void onKilledBy(Character target, Character by) {
     // TODO: implement onKilledBy
+  }
+
+  @override
+  List<SpawnPoint> buildInternalSpawnPoints() {
+    return [
+      SpawnPoint(game: world.tavern, x: -145, y: 1900),
+      SpawnPoint(game: world.cave, x: -1281, y: 2408),
+    ];
   }
 }

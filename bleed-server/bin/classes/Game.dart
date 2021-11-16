@@ -11,6 +11,7 @@ import 'package:lemon_math/randomItem.dart';
 
 import '../common/ItemType.dart';
 import '../common/Tile.dart';
+import '../common/enums/Direction.dart';
 import '../common/enums/EnvironmentObjectType.dart';
 import '../constants/no_squad.dart';
 import '../enums/npc_mode.dart';
@@ -56,6 +57,18 @@ import 'InteractableNpc.dart';
 
 const _none = -1;
 
+const List<SpawnPoint> noSpawnPoints = [];
+
+class SpawnPoint extends Positioned {
+  final Game game;
+
+  SpawnPoint({
+    required this.game,
+    required double x,
+    required double y,
+  }) : super(x, y);
+}
+
 abstract class Game {
   static int _id = 0;
   final String id = (_id++).toString();
@@ -66,6 +79,7 @@ abstract class Game {
   List<Npc> zombies = [];
   List<InteractableNpc> npcs = [];
   List<InteractableObject> interactableObjects = [];
+  List<SpawnPoint> spawnPoints = [];
   List<Player> players = [];
   List<Bullet> bullets = [];
   List<Grenade> grenades = [];
@@ -100,10 +114,10 @@ abstract class Game {
     }
 
     to.players.add(player);
-    Vector2 spawnPosition = to.getSpawnPositionFrom(player.game);
+    // Vector2 spawnPosition = to.getSpawnPositionFrom(player.game);
     player.game = to;
-    player.x = spawnPosition.x;
-    player.y = spawnPosition.y;
+    // player.x = spawnPosition.x;
+    // player.y = spawnPosition.y;
     player.sceneChanged = true;
   }
 
@@ -197,6 +211,8 @@ extension GameFunctions on Game {
     _updateGameEvents();
     _updateItems();
     _updateCrates();
+    _updateSpawnPointCollisions();
+
     compileGame(this);
   }
 
@@ -1396,6 +1412,27 @@ extension GameFunctions on Game {
 
         items.removeAt(i);
         i--;
+      }
+    }
+  }
+
+  void _updateSpawnPointCollisions() {
+    for (int i = 0; i < players.length; i++) {
+      Player player = players[i];
+      for (SpawnPoint spawnPoint in spawnPoints){
+        if (diffOver(player.x, spawnPoint.x, 20)) continue;
+        if (diffOver(player.y, spawnPoint.y, 20)) continue;
+        for(SpawnPoint point in spawnPoint.game.spawnPoints){
+          if (point.game != this) continue;
+          changeGame(player, spawnPoint.game);
+          double xDiff = spawnPoint.x - player.x;
+          double yDiff = spawnPoint.y - player.y;
+          player.x = point.x + xDiff * 1.25;
+          player.y = point.y + yDiff * 1.25;
+          i--;
+          break;
+        }
+        break;
       }
     }
   }

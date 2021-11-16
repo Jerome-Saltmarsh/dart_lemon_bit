@@ -9,8 +9,8 @@ import 'classes/GameObject.dart';
 import 'classes/Npc.dart';
 import 'common/Tile.dart';
 import 'common/classes/Vector2.dart';
+import 'common/enums/Direction.dart';
 import 'constants.dart';
-import 'enums.dart';
 import 'maths.dart';
 import 'settings.dart';
 

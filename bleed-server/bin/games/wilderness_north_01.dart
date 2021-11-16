@@ -10,12 +10,6 @@ class WildernessNorth01 extends Game {
   WildernessNorth01() : super(scenes.wildernessNorth01, 64);
 
   @override
-  Player doSpawnPlayer() {
-    // TODO: implement doSpawnPlayer
-    throw UnimplementedError();
-  }
-
-  @override
   Vector2 getSpawnPositionFrom(Game from) {
     // TODO: implement getSpawnPositionFrom
     throw UnimplementedError();
@@ -34,5 +28,10 @@ class WildernessNorth01 extends Game {
   @override
   void update() {
     // TODO: implement update
+  }
+
+  @override
+  List<SpawnPoint> buildInternalSpawnPoints() {
+    return [];
   }
 }

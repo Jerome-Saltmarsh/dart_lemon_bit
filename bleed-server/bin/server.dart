@@ -8,6 +8,7 @@ import 'classes/Inventory.dart';
 import 'classes/Player.dart';
 import 'classes/InteractableNpc.dart';
 import 'common/PlayerEvents.dart';
+import 'common/enums/Direction.dart';
 import 'common/version.dart';
 import 'common/constants.dart';
 import 'compile.dart';

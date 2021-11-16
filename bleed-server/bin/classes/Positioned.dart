@@ -7,9 +7,9 @@ class Positioned {
   double get x => _x;
 
   set x(double value){
-    if (value.isNaN){
-      throw Exception();
-    }
+    // if (value.isNaN){
+    //   throw Exception();
+    // }
     _x = value;
   }
 }

@@ -1,5 +1,3 @@
-import 'package:lemon_math/diff_over.dart';
-
 import '../classes/Character.dart';
 import '../classes/Game.dart';
 import '../classes/Npc.dart';
@@ -19,12 +17,6 @@ class Cave extends Game {
   }
 
   @override
-  Player doSpawnPlayer() {
-    // TODO: implement doSpawnPlayer
-    throw UnimplementedError();
-  }
-
-  @override
   void onPlayerKilled(Player player) {
     // TODO: implement onPlayerKilled
   }
@@ -34,14 +26,14 @@ class Cave extends Game {
     // TODO: implement update
 
     // 318 324
-    double radius = 10;
-    for(int i = 0; i < players.length; i++){
-      Player player = players[i];
-      if (diffOver(player.x, 318, radius)) continue;
-      if (diffOver(player.y, 324, radius)) continue;
-      changeGame(player, world.town);
-      i--;
-    }
+    // double radius = 10;
+    //     // for(int i = 0; i < players.length; i++){
+    //     //   Player player = players[i];
+    //     //   if (diffOver(player.x, 318, radius)) continue;
+    //     //   if (diffOver(player.y, 324, radius)) continue;
+    //     //   changeGame(player, world.town);
+    //     //   i--;
+    //     // }
   }
 
   @override

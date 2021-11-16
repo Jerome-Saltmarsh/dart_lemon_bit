@@ -7,6 +7,7 @@ import '../classes/Npc.dart';
 import '../classes/Player.dart';
 import '../common/Weapons.dart';
 import '../common/classes/Vector2.dart';
+import '../common/enums/Direction.dart';
 import '../enums/npc_mode.dart';
 import '../functions/withinRadius.dart';
 import '../instances/scenes.dart';
@@ -36,12 +37,6 @@ class Tavern extends Game {
   }
 
   @override
-  Player doSpawnPlayer() {
-    // TODO: implement doSpawnPlayer
-    throw UnimplementedError();
-  }
-
-  @override
   Vector2 getSpawnPositionFrom(Game from) {
     return spawnPosition;
   }
@@ -53,12 +48,12 @@ class Tavern extends Game {
 
   @override
   void update() {
-    for (int i = 0; i < players.length; i++) {
-      Player player = players[i];
-      if (!withinRadius(player, doorPosition, 15)) continue;
-      changeGame(player, world.town);
-      i--;
-    }
+    // for (int i = 0; i < players.length; i++) {
+    //   Player player = players[i];
+    //   if (!withinRadius(player, doorPosition, 15)) continue;
+    //   changeGame(player, world.town);
+    //   i--;
+    // }
   }
 
   @override
