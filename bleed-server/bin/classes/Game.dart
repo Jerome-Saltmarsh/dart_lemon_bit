@@ -100,8 +100,6 @@ abstract class Game {
   // TODO doesn't belong here
   StringBuffer buffer = StringBuffer();
 
-  Vector2 getSpawnPositionFrom(Game from);
-
   void changeGame(Player player, Game to) {
     if (player.game == to) return;
 

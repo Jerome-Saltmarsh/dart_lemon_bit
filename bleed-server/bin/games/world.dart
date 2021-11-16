@@ -17,7 +17,7 @@ class World {
 
   World(){
     town = Town();
-    cave = Cave();
+    cave = WildernessWest01();
     tavern = Tavern();
     wildernessNorth01 = WildernessNorth01();
     games = [town, cave, tavern, wildernessNorth01];

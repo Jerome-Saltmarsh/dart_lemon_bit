@@ -5,7 +5,7 @@ _Scenes scenes = _Scenes();
 
 class _Scenes {
   late Scene town;
-  late Scene cave;
+  late Scene wildernessWest01;
   late Scene tavern;
   late Scene wildernessNorth01;
 }

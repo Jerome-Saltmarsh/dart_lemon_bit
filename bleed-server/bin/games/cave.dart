@@ -3,15 +3,13 @@ import '../classes/Game.dart';
 import '../classes/Npc.dart';
 import '../classes/Player.dart';
 import '../common/Quests.dart';
-import '../common/classes/Vector2.dart';
 import '../instances/scenes.dart';
-import '../values/world.dart';
 
-class Cave extends Game {
+class WildernessWest01 extends Game {
 
   late Npc boss;
 
-  Cave() : super(scenes.cave, 64){
+  WildernessWest01() : super(scenes.wildernessWest01, 64){
     boss = Npc(x: 0, y: 300, health: 100);
     zombies.add(boss);
   }
@@ -24,21 +22,6 @@ class Cave extends Game {
   @override
   void update() {
     // TODO: implement update
-
-    // 318 324
-    // double radius = 10;
-    //     // for(int i = 0; i < players.length; i++){
-    //     //   Player player = players[i];
-    //     //   if (diffOver(player.x, 318, radius)) continue;
-    //     //   if (diffOver(player.y, 324, radius)) continue;
-    //     //   changeGame(player, world.town);
-    //     //   i--;
-    //     // }
-  }
-
-  @override
-  Vector2 getSpawnPositionFrom(Game from) {
-    return Vector2(308, 338);
   }
 
   @override
