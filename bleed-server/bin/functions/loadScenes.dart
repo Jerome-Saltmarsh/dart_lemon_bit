@@ -16,6 +16,7 @@ void loadScenes() {
   print("loadScenes()");
   loadScene('town').then((value) => scenes.town = value);
   loadScene('tavern').then((value) => scenes.tavern = value);
+  loadScene('cave').then((value) => scenes.cave = value);
   loadScene('wilderness-west-01').then((value) => scenes.wildernessWest01 = value);
   loadScene('wilderness-north-01').then((value) => scenes.wildernessNorth01 = value);
 }

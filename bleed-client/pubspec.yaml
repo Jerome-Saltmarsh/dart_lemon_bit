@@ -29,6 +29,7 @@ flutter:
     - family: PermanentMarker
       fonts:
         - asset: fonts/PermanentMarker-Regular.ttf
+  uses-material-design: true
   assets:
      - images/
      - audio/

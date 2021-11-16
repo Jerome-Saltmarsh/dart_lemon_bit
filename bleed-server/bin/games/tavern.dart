@@ -9,7 +9,7 @@ import '../instances/scenes.dart';
 class Tavern extends Game {
   late InteractableNpc oscar;
 
-  Tavern() : super(scenes.tavern, 64){
+  Tavern() : super(scenes.tavern){
     oscar = InteractableNpc(
         name: "Oscar",
         onInteractedWith: onOscarInteractedWith,

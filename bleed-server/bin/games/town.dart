@@ -19,7 +19,7 @@ class Town extends Game {
   final int _maxZombies = 30;
   final int _framesPerZombieSpawn = 120;
 
-  Town() : super(scenes.town, 64) {
+  Town() : super(scenes.town) {
     npcDavis = InteractableNpc(
         name: "Davis",
         onInteractedWith: _onNpcInteractedWithMain,
@@ -173,7 +173,7 @@ class Town extends Game {
   List<SpawnPoint> buildInternalSpawnPoints() {
     return [
       SpawnPoint(game: world.tavern, x: -145, y: 1900),
-      SpawnPoint(game: world.cave, x: -1281, y: 2408),
+      SpawnPoint(game: world.wildernessWest01, x: -1281, y: 2408),
     ];
   }
 }

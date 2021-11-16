@@ -9,7 +9,7 @@ class WildernessWest01 extends Game {
 
   late Npc boss;
 
-  WildernessWest01() : super(scenes.wildernessWest01, 64){
+  WildernessWest01() : super(scenes.wildernessWest01){
     boss = Npc(x: 0, y: 300, health: 100);
     zombies.add(boss);
   }

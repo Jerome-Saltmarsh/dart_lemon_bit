@@ -149,7 +149,7 @@ abstract class Game {
 
   void onNpcSpawned(Npc npc) {}
 
-  Game(this.scene, this.maxPlayers) {
+  Game(this.scene, {this.maxPlayers = 64}) {
     this.crates.clear();
     for (Vector2 crate in scene.crates) {
       crates.add(Crate(x: crate.x, y: crate.y));

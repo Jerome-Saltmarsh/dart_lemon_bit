@@ -52,6 +52,8 @@ Rect mapTileToSrcRect(Tile tile) {
       return _bridge;
     case Tile.Wooden_Floor:
       return _woodenFloor;
+    case Tile.Rock:
+      return _rock;
     case Tile.Boundary:
       throw Exception("Boundary has no rect");
   }
@@ -73,6 +75,7 @@ Rect _flowers = _longGrass;
 Rect rectSrcDarkness = _frame(8);
 Rect _bridge = _frame(9);
 Rect _woodenFloor = _frame(10);
+Rect _rock = _frame(11);
 
 Rect _frame(int index) {
   return Rect.fromLTWH(

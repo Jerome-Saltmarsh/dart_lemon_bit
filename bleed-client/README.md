@@ -63,6 +63,7 @@
 [ ] UI Score Lag
 -- UI --
 -- IDEAS --
+[ ] 4 sides light sources to light up rock
 [ ] Trees apply shadow to tile
 [ ] Anti lights, opposite of torches to apply darkness 
 [ ] Elevate ground like aoe2
@@ -109,6 +110,7 @@
 [ ] Right Click to aim (aiming improves accuracy)
 [ ] Fix Firing AssaultRifle animation
 [ ] Speech Box split sentences 
+[ ] Remove material design to reduce disk size
 [ ] Add Name to Speech box
 [ ] QUEST
     [ ] Kill the vampire

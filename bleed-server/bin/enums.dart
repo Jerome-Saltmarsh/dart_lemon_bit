@@ -13,6 +13,7 @@ const Map<Tile, bool> _walkableTiles = {
   Tile.PlayerSpawn: true,
   Tile.Bridge: true,
   Tile.Wooden_Floor: true,
+  Tile.Rock: true,
 };
 
 /// Can a bullet travel through this tile

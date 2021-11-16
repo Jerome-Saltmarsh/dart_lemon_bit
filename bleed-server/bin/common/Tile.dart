@@ -17,7 +17,8 @@ enum Tile {
   Crate,
   Concrete_Horizontal,
   Concrete_Vertical,
-  Bridge
+  Bridge,
+  Rock,
 }
 
 final List<Tile> tiles = Tile.values;

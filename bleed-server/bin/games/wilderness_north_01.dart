@@ -7,7 +7,7 @@ import '../instances/scenes.dart';
 
 class WildernessNorth01 extends Game {
 
-  WildernessNorth01() : super(scenes.wildernessNorth01, 64);
+  WildernessNorth01() : super(scenes.wildernessNorth01);
 
   @override
   Vector2 getSpawnPositionFrom(Game from) {

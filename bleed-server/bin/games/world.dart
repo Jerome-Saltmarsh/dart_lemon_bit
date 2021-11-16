@@ -1,5 +1,6 @@
 import '../classes/Game.dart';
 import '../compile.dart';
+import 'cave.dart';
 import 'wilderness_west_01.dart';
 import 'tavern.dart';
 import 'town.dart';
@@ -10,23 +11,30 @@ int time = 0;
 
 class World {
   late Game town;
-  late Game cave;
   late Game tavern;
+  late Game wildernessWest01;
   late Game wildernessNorth01;
+  late Game cave;
   late List<Game> games;
 
   World(){
     town = Town();
-    cave = WildernessWest01();
     tavern = Tavern();
+    wildernessWest01 = WildernessWest01();
     wildernessNorth01 = WildernessNorth01();
-    games = [town, cave, tavern, wildernessNorth01];
+    cave = Cave();
+    games = [town, tavern, wildernessWest01, wildernessNorth01, cave];
 
     // TODO Remove Logic from class
     town.spawnPoints = [
       SpawnPoint(game: tavern, x: -145, y: 1900),
-      SpawnPoint(game: cave, x: -1281, y: 2408),
+      SpawnPoint(game: wildernessWest01, x: -1281, y: 2408),
       SpawnPoint(game: wildernessNorth01, x: -1234, y: 1236),
+      SpawnPoint(game: cave, x: 241, y: 2571),
+    ];
+
+    cave.spawnPoints = [
+      SpawnPoint(game: town, x: 64, y: 64),
     ];
 
     tavern.spawnPoints = [
@@ -37,7 +45,7 @@ class World {
       )
     ];
 
-    cave.spawnPoints = [
+    wildernessWest01.spawnPoints = [
       SpawnPoint(game: town, x: 318, y: 324)
     ];
 
