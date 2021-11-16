@@ -26,6 +26,7 @@ class World {
     town.spawnPoints = [
       SpawnPoint(game: tavern, x: -145, y: 1900),
       SpawnPoint(game: cave, x: -1281, y: 2408),
+      SpawnPoint(game: wildernessNorth01, x: -1234, y: 1236),
     ];
 
     tavern.spawnPoints = [
@@ -38,6 +39,10 @@ class World {
 
     cave.spawnPoints = [
       SpawnPoint(game: town, x: 318, y: 324)
+    ];
+
+    wildernessNorth01.spawnPoints = [
+      SpawnPoint(game: town, x: 587, y: 1235)
     ];
 
     for(Game game in games){
