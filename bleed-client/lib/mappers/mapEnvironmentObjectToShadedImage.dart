@@ -25,6 +25,7 @@ Image mapEnvironmentObjectToToShadedImage(
   }
 
   if (environmentObject.type == EnvironmentObjectType.Torch) {
+    if (ambientLight == Shade.Bright) return images.torchOut;
     return images.torch;
   }
 

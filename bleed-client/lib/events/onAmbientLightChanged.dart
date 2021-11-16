@@ -7,8 +7,6 @@ import 'package:bleed_client/render/functions/applyEnvironmentObjectsToBakeMappi
 import 'package:bleed_client/render/functions/resetDynamicShadesToBakeMap.dart';
 import 'package:bleed_client/render/functions/setBakeMapToAmbientLight.dart';
 
-import '../images.dart';
-
 void onAmbientLightChanged(Shade value){
   print("onAmbientLightChanged($value)");
   setBakeMapToAmbientLight();
@@ -16,7 +14,4 @@ void onAmbientLightChanged(Shade value){
   calculateTileSrcRects();
   applyEnvironmentObjectsToBakeMapping();
   applyLightingToEnvironmentObjects();
-  if (value == Shade.Bright){
-    images.torch = images.torchOut;
-  }
 }

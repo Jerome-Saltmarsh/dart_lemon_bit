@@ -1,5 +1,6 @@
 import 'package:lemon_math/diff_over.dart';
 
+import '../classes/Character.dart';
 import '../classes/Game.dart';
 import '../classes/Inventory.dart';
 import '../classes/Player.dart';
@@ -15,7 +16,6 @@ import '../values/world.dart';
 import 'world.dart';
 
 class Town extends Game {
-
   late InteractableNpc npcDavis;
   late InteractableNpc npcSmith;
   late InteractableNpc guard1;
@@ -34,8 +34,7 @@ class Town extends Game {
         x: -100,
         y: 1650,
         health: 100,
-        weapon: Weapon.Unarmed
-    );
+        weapon: Weapon.Unarmed);
     npcDavis.mode = NpcMode.Ignore;
     npcs.add(npcDavis);
 
@@ -45,8 +44,7 @@ class Town extends Game {
         x: -300,
         y: 1950,
         health: 100,
-        weapon: Weapon.Unarmed
-    );
+        weapon: Weapon.Unarmed);
     npcSmith.mode = NpcMode.Ignore;
     npcs.add(npcSmith);
 
@@ -56,8 +54,7 @@ class Town extends Game {
         x: 180,
         y: 2000,
         health: 100,
-        weapon: Weapon.SniperRifle
-    );
+        weapon: Weapon.SniperRifle);
     guard1.mode = NpcMode.Stand_Ground;
     npcs.add(guard1);
 
@@ -67,61 +64,59 @@ class Town extends Game {
         x: 215,
         y: 1970,
         health: 100,
-        weapon: Weapon.AssaultRifle
-    );
+        weapon: Weapon.AssaultRifle);
     guard2.mode = NpcMode.Stand_Ground;
     npcs.add(guard2);
   }
 
-  void _onGuardInteractedWith(Player player){
-
-  }
+  void _onGuardInteractedWith(Player player) {}
 
   void _onNpcInteractedWithMain(Player player) {
     player.health = 100;
 
-    if (player.rounds.shotgun < 25){
+    if (player.rounds.shotgun < 25) {
       player.rounds.shotgun = 25;
     }
-    if (player.rounds.handgun < 40){
+    if (player.rounds.handgun < 40) {
       player.rounds.handgun = 40;
     }
 
     switch (player.questMain) {
       case MainQuest.Introduction:
-        player.message = "Davis: Welcome Traveller. "
+        player.message = "Welcome Traveller. "
             "You may rest easy, the walls of our town are well protected. "
             "If you need to earn some income I recommend talking to various folks. "
-            "Equipment can be found at the armory, for a price of course. ";
+            "Smith was looking for help with an issue ";
         player.questMain = MainQuest.Talk_To_Smith;
         break;
       case MainQuest.Talk_To_Smith:
-        player.message = "Davis: The smith is looking for a help with a matter";
+        player.message = "Smith was looking for help with something";
         break;
       default:
-        player.message = "Davis: I'm glad you are still with us traveller";
+        player.message = "I'm glad you are still with us traveller";
         break;
     }
   }
 
   void _onNpcInteractedWithSmith(Player player) {
+    if (player.questMain.index <= MainQuest.Talk_To_Smith.index) {
+      player.message = "Hello there, I'm smith "
+          "Just west outside of town there is a zombie boss, go kill it and return to me";
+      player.questMain = MainQuest.Kill_Zombie_Boss;
+      return;
+    }
 
     switch (player.questMain) {
-      case MainQuest.Introduction:
-        player.message = "Smith: Welcome to our town";
-        player.questMain = MainQuest.Talk_To_Smith;
+      case MainQuest.Kill_Zombie_Boss:
+        player.message = "The zombie boss is in the wilderness west of town "
+            "Come back to me once its dead";
         break;
-      case MainQuest.Talk_To_Smith:
-        player.message = "Smith: Welcome outsider. Our supplies are running low. "
-            "If you happen across some scrap metal while you are out, would you collect it for me"
-            "I'll compensate you of course";
-        player.questMain = MainQuest.Scavenge_Supplies;
-        break;
-      case MainQuest.Scavenge_Supplies:
-        player.message = "Smith: Bring any metals and junk back you can find";
+      case MainQuest.Kill_Zombie_Boss_Talk_To_Smith:
+        player.message = "You did it! Well done here is your reward";
+        player.questMain = MainQuest.Finished;
         break;
       default:
-        player.message = "Smith: Good to see you well";
+        player.message = "Good to see you well";
         break;
     }
   }
@@ -134,7 +129,8 @@ class Town extends Game {
       y: playerSpawnY,
       inventory: Inventory(0, 0, []),
       clips: Clips(),
-      rounds: Rounds(handgun: 50, shotgun: 30, sniperRifle: 20, assaultRifle: 100),
+      rounds:
+          Rounds(handgun: 50, shotgun: 30, sniperRifle: 20, assaultRifle: 100),
       squad: 1,
       weapon: Weapon.HandGun,
     );
@@ -152,7 +148,7 @@ class Town extends Game {
   @override
   void update() {
     double radius = 10;
-    for(int i = 0; i < players.length; i++){
+    for (int i = 0; i < players.length; i++) {
       Player player = players[i];
       if (diffOver(player.x, -1281, radius)) continue;
       if (diffOver(player.y, 2408, radius)) continue;
@@ -161,7 +157,7 @@ class Town extends Game {
     }
 
     // -145 1900
-    for(int i = 0; i < players.length; i++){
+    for (int i = 0; i < players.length; i++) {
       Player player = players[i];
       if (diffOver(player.x, -145, 20)) continue;
       if (diffOver(player.y, 1900, 20)) continue;
@@ -176,9 +172,14 @@ class Town extends Game {
 
   @override
   Vector2 getSpawnPositionFrom(Game from) {
-    if (from == world.tavern){
+    if (from == world.tavern) {
       return Vector2(-120, 1917);
     }
     return Vector2(-1260, 2389);
+  }
+
+  @override
+  void onKilledBy(Character target, Character by) {
+    // TODO: implement onKilledBy
   }
 }

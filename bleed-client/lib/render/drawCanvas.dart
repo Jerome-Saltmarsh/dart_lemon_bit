@@ -62,25 +62,20 @@ int _flameIndex = 0;
 bool get dayTime => ambientLight.index == Shade.Bright.index;
 
 void renderCanvasPlay() {
-  _updateAnimations();
-
   if (!dayTime) {
+    _updateTorchFrames();
     resetDynamicShadesToBakeMap();
     applyCharacterLightEmission(game.humans);
-    applyCharacterLightEmission(game.interactableNpcs);
+    applyNpcLightEmission(game.interactableNpcs);
     calculateTileSrcRects();
     applyLightingToEnvironmentObjects();
   }
 
   drawTiles();
-  // _drawNpcBonusPointsCircles();
-  // _drawPlayerHealthRing();
   drawBullets(game.bullets);
   drawBulletHoles(game.bulletHoles);
   _drawGrenades(game.grenades);
   _renderItems();
-  // drawCrates();
-  // _drawCollectables();
   _drawSprites();
 
   if (settings.compilePaths) {
@@ -94,15 +89,12 @@ void renderCanvasPlay() {
   _drawMouseAim();
 }
 
-void _updateAnimations() {
+void _updateTorchFrames() {
   frameRateValue++;
-  if (frameRateValue % 7 == 0) {
-    drawFrame++;
-    if (ambientLight != Shade.Bright) {
-      _flameIndex = (_flameIndex + 1) % 4;
-      images.torch = images.flames[_flameIndex];
-    }
-  }
+  if (frameRateValue % 7 != 0) return;
+  drawFrame++;
+  _flameIndex = (_flameIndex + 1) % 4;
+  images.torch = images.flames[_flameIndex];
 }
 
 void _drawFloatingTexts() {
@@ -182,7 +174,8 @@ void _drawSprites() {
     if (humansRemaining) {
       double humanY = game.humans[indexHuman].y;
 
-      if (!environmentRemaining || humanY < game.environmentObjects[indexEnv].y) {
+      if (!environmentRemaining ||
+          humanY < game.environmentObjects[indexEnv].y) {
         if (!particlesRemaining || humanY < game.particles[indexParticle].y) {
           if (!zombiesRemaining || humanY < game.zombies[indexZombie].y) {
             if (!npcsRemaining || humanY < game.interactableNpcs[indexNpc].y) {

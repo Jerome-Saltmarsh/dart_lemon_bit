@@ -5,10 +5,12 @@ import 'package:bleed_client/variables/lantern.dart';
 
 void applyCharacterLightEmission(List<Character> characters) {
   for (Character character in characters) {
-    if (lantern){
-      applyLightBrightSmall(dynamicShading, character.x, character.y);
-    } else {
-      // applyLightMedium(dynamicShading, character.x, character.y);
-    }
+    applyLightBrightSmall(dynamicShading, character.x, character.y);
+  }
+}
+
+void applyNpcLightEmission(List<Character> characters) {
+  for (Character character in characters) {
+    applyLightBright2Small(dynamicShading, character.x, character.y);
   }
 }

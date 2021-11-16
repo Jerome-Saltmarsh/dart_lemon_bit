@@ -13,7 +13,12 @@ class Npc extends Character {
   int pointMultiplier = 1;
   NpcMode mode = NpcMode.Aggressive;
 
-  Npc({required double x, required double y, required int health, required Weapon weapon})
+  Npc({
+    required double x,
+    required double y,
+    int health = 100,
+    Weapon weapon = Weapon.Unarmed,
+  })
       : super(
       x: x,
       y: y,

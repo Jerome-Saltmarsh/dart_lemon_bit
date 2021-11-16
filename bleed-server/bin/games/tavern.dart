@@ -1,5 +1,6 @@
 import 'package:lemon_math/diff_over.dart';
 
+import '../classes/Character.dart';
 import '../classes/Game.dart';
 import '../classes/InteractableNpc.dart';
 import '../classes/Npc.dart';
@@ -58,5 +59,10 @@ class Tavern extends Game {
       changeGame(player, world.town);
       i--;
     }
+  }
+
+  @override
+  void onKilledBy(Character target, Character by) {
+    // TODO: implement onKilledBy
   }
 }

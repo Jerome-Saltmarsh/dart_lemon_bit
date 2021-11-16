@@ -108,6 +108,9 @@
 [ ] Remove player walk (its always better to run, no stamina)
 [ ] Right Click to aim (aiming improves accuracy)
 [ ] Fix Firing AssaultRifle animation
+[ ] Speech Box split sentences 
+[ ] Add Name to Speech box
+[x] FIX BUG Torches don't go out during daylight
 [ ] QUEST
     [ ] Kill the vampire
 [ ] Change scene

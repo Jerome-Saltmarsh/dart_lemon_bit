@@ -90,13 +90,13 @@ abstract class Game {
 
   Vector2 getSpawnPositionFrom(Game from);
 
-  void changeGame(Player player, Game to){
+  void changeGame(Player player, Game to) {
     if (player.game == to) return;
 
     players.remove(player);
 
-    for(Npc zombie in player.game.zombies){
-      if (zombie.target == player){
+    for (Npc zombie in player.game.zombies) {
+      if (zombie.target == player) {
         zombie.clearTarget();
       }
     }
@@ -132,6 +132,8 @@ abstract class Game {
   void onPlayerKilled(Player player);
 
   void onNpcKilled(Npc npc) {}
+
+  void onKilledBy(Character target, Character by);
 
   void onPlayerDisconnected(Player player) {}
 
@@ -245,7 +247,7 @@ extension GameFunctions on Game {
   }
 
   /// calculates if there is a wall between two objects
-  bool isVisibleBetween(Positioned a, Positioned b){
+  bool isVisibleBetween(Positioned a, Positioned b) {
     double r = radiansBetweenObject(a, b);
     double d = distanceBetweenObjects(a, b);
     double vX = adj(r, tileSize);
@@ -253,8 +255,8 @@ extension GameFunctions on Game {
     int jumps = d ~/ tileSize;
     double x = a.x + vX;
     double y = a.y + vY;
-    for (int i = 0; i < jumps; i++){
-      if (!isShootable(scene.tileAt(x, y))){
+    for (int i = 0; i < jumps; i++) {
+      if (!isShootable(scene.tileAt(x, y))) {
         return false;
       }
       x += vX;
@@ -266,6 +268,13 @@ extension GameFunctions on Game {
   void activateCollectable(Collectable collectable) {
     collectable.active = true;
     collectable.setType(randomCollectableType);
+  }
+
+  void applyDamage(Character src, Character target, int amount) {
+    if (target.dead) return;
+    changeCharacterHealth(target, -amount);
+    if (target.alive) return;
+    onKilledBy(target, src);
   }
 
   void updateNpc(Npc npc) {
@@ -287,8 +296,7 @@ extension GameFunctions on Game {
           // @on npc target within striking range
           characterFaceObject(npc, npc.target);
           setCharacterState(npc, CharacterState.Striking);
-          changeCharacterHealth(npc.target, -settings.damage.zombieStrike);
-
+          applyDamage(npc, npc.target, settings.damage.zombieStrike);
           double speed = 0.1;
           double rotation = radiansBetweenObject(npc, npc.target);
           dispatch(GameEventType.Zombie_Strike, npc.target.x, npc.target.y,
@@ -775,7 +783,7 @@ extension GameFunctions on Game {
             if (diffOver(npc.y, frontY, radius.character)) continue;
             npc.xv += velX(player.aimAngle, settings.knifeHitAcceleration);
             npc.yv += velY(player.aimAngle, settings.knifeHitAcceleration);
-            changeCharacterHealth(npc, -settings.damage.knife);
+            applyDamage(player, npc, settings.damage.knife);
             dispatch(
                 GameEventType.Zombie_Hit,
                 npc.x,
@@ -833,7 +841,7 @@ extension GameFunctions on Game {
 
         if (enemies(bullet, character)) {
           // @on zombie hit by bullet
-          changeCharacterHealth(character, -bullet.damage);
+          applyDamage(bullet.owner, character, bullet.damage);
 
           if (character is Player) {
             if (character.dead) {
@@ -1124,8 +1132,10 @@ extension GameFunctions on Game {
       zombie = zombies[i];
       if (zombie.targetSet) {
         // @on update npc with target
-        if (diff(zombie.x, zombie.target.x) < settings.zombieChaseRange) continue;
-        if (diff(zombie.y, zombie.target.y) < settings.zombieChaseRange) continue;
+        if (diff(zombie.x, zombie.target.x) < settings.zombieChaseRange)
+          continue;
+        if (diff(zombie.y, zombie.target.y) < settings.zombieChaseRange)
+          continue;
         zombie.clearTarget();
         zombie.state = CharacterState.Idle;
       }
@@ -1177,8 +1187,8 @@ extension GameFunctions on Game {
     }
   }
 
-  int getFirstAliveZombieIndex(){
-    for (int i = 0; i < zombies.length; i++){
+  int getFirstAliveZombieIndex() {
+    for (int i = 0; i < zombies.length; i++) {
       if (zombies[i].alive) return i;
     }
     return _none;
@@ -1420,7 +1430,7 @@ void applyCratePhysics(Crate crate, List<Character> characters) {
   }
 }
 
-void playerInteract(Player player){
+void playerInteract(Player player) {
   for (InteractableNpc npc in player.game.npcs) {
     if (diffOver(npc.x, player.x, radius.interact)) continue;
     if (diffOver(npc.y, player.y, radius.interact)) continue;
@@ -1428,9 +1438,8 @@ void playerInteract(Player player){
     return;
   }
 
-  for (EnvironmentObject environmentObject in player.game.scene.environment){
-    if (environmentObject.type == EnvironmentObjectType.House02){
-
-    };
+  for (EnvironmentObject environmentObject in player.game.scene.environment) {
+    if (environmentObject.type == EnvironmentObjectType.House02) {}
+    ;
   }
 }
