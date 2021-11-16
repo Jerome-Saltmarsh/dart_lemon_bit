@@ -1420,8 +1420,8 @@ extension GameFunctions on Game {
     for (int i = 0; i < players.length; i++) {
       Player player = players[i];
       for (SpawnPoint spawnPoint in spawnPoints){
-        if (diffOver(player.x, spawnPoint.x, 20)) continue;
-        if (diffOver(player.y, spawnPoint.y, 20)) continue;
+        if (diffOver(player.x, spawnPoint.x, settings.radius.spawnPoint)) continue;
+        if (diffOver(player.y, spawnPoint.y, settings.radius.spawnPoint)) continue;
         for(SpawnPoint point in spawnPoint.game.spawnPoints){
           if (point.game != this) continue;
           changeGame(player, spawnPoint.game);
