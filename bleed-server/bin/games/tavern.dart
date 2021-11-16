@@ -1,22 +1,12 @@
-import 'package:lemon_math/diff_over.dart';
-
 import '../classes/Character.dart';
 import '../classes/Game.dart';
 import '../classes/InteractableNpc.dart';
-import '../classes/Npc.dart';
 import '../classes/Player.dart';
 import '../common/Weapons.dart';
-import '../common/classes/Vector2.dart';
-import '../common/enums/Direction.dart';
 import '../enums/npc_mode.dart';
-import '../functions/withinRadius.dart';
 import '../instances/scenes.dart';
-import '../values/world.dart';
 
 class Tavern extends Game {
-  final Vector2 doorPosition = Vector2(85, 250);
-  final Vector2 spawnPosition = Vector2(63, 228);
-
   late InteractableNpc oscar;
 
   Tavern() : super(scenes.tavern, 64){
@@ -37,23 +27,8 @@ class Tavern extends Game {
   }
 
   @override
-  Vector2 getSpawnPositionFrom(Game from) {
-    return spawnPosition;
-  }
-
-  @override
-  void onPlayerKilled(Player player) {
-    // TODO: implement onPlayerKilled
-  }
-
-  @override
   void update() {
-    // for (int i = 0; i < players.length; i++) {
-    //   Player player = players[i];
-    //   if (!withinRadius(player, doorPosition, 15)) continue;
-    //   changeGame(player, world.town);
-    //   i--;
-    // }
+
   }
 
   @override

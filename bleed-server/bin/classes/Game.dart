@@ -139,8 +139,6 @@ abstract class Game {
 
   void update();
 
-  void onPlayerKilled(Player player);
-
   void onNpcKilled(Npc npc) {}
 
   void onKilledBy(Character target, Character by);
@@ -491,7 +489,6 @@ extension GameFunctions on Game {
         if (character is Player) {
           // @on player killed
           character.score.deaths++;
-          onPlayerKilled(character);
 
           for (Npc npc in zombies) {
             if (npc.target != character) continue;

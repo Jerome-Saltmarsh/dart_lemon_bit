@@ -15,21 +15,21 @@ class WildernessWest01 extends Game {
   }
 
   @override
-  void onPlayerKilled(Player player) {
-    // TODO: implement onPlayerKilled
-  }
-
-  @override
   void update() {
     // TODO: implement update
   }
 
   @override
   void onKilledBy(Character target, Character by) {
-    if (target == boss && by is Player){
-      if (by.questMain.index <= MainQuest.Kill_Zombie_Boss.index){
-        by.questMain = MainQuest.Kill_Zombie_Boss_Talk_To_Smith;
-      }
+    if (target != boss) return;
+    if (by is Player){
+      _onBossKilledBy(by);
+    }
+  }
+
+  void _onBossKilledBy(Player player){
+    if (player.questMain.index <= MainQuest.Kill_Zombie_Boss.index){
+      player.questMain = MainQuest.Kill_Zombie_Boss_Talk_To_Smith;
     }
   }
 }

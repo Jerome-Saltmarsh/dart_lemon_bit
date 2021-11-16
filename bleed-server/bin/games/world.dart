@@ -1,6 +1,6 @@
 import '../classes/Game.dart';
 import '../compile.dart';
-import 'cave.dart';
+import 'wilderness_west_01.dart';
 import 'tavern.dart';
 import 'town.dart';
 import 'wilderness_north_01.dart';
