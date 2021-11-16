@@ -7,4 +7,5 @@ class _Scenes {
   late Scene town;
   late Scene cave;
   late Scene tavern;
+  late Scene wildernessNorth01;
 }

@@ -4,6 +4,7 @@ import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'classes/Game.dart';
+import 'classes/Inventory.dart';
 import 'classes/Player.dart';
 import 'classes/InteractableNpc.dart';
 import 'common/PlayerEvents.dart';
@@ -22,6 +23,7 @@ import 'games/world.dart';
 import 'settings.dart';
 import 'update.dart';
 import 'utils.dart';
+import 'utils/player_utils.dart';
 import 'values/world.dart';
 
 const String _space = " ";
@@ -79,7 +81,7 @@ void main() {
 
     void joinGame(Game game) {
       _buffer.clear();
-      Player player = game.spawnPlayer();
+      Player player = spawnPlayerInTown();
       compilePlayer(_buffer, player);
       _buffer.write(
           '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${game.id} ${player.squad} ');
@@ -492,4 +494,20 @@ void main() {
   shelf_io.serve(handler, settings.host, settings.port).then((server) {
     print('Serving at wss://${server.address.host}:${server.port}');
   });
+}
+
+Player spawnPlayerInTown(){
+  Player player = Player(
+    game: world.town,
+    x: 0,
+    y: 1750,
+    inventory: Inventory(0, 0, []),
+    clips: Clips(),
+    rounds:
+    Rounds(handgun: 50, shotgun: 30, sniperRifle: 20, assaultRifle: 100),
+    squad: 1,
+    weapon: Weapon.HandGun,
+  );
+  world.town.players.add(player);
+  return player;
 }

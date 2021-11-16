@@ -110,7 +110,6 @@
 [ ] Fix Firing AssaultRifle animation
 [ ] Speech Box split sentences 
 [ ] Add Name to Speech box
-[x] FIX BUG Torches don't go out during daylight
 [ ] QUEST
     [ ] Kill the vampire
 [ ] Change scene
@@ -120,6 +119,7 @@
     [x] Camera Pans up 
     [x] Player disappears when firing
     [?] Zombies aren't drawing
+[x] FIX BUG Torches don't go out during daylight
 [x] Spawn Myst at night    
 [x] UI Display Clock    
 [x] Fix Npc when wall is in the way

@@ -17,6 +17,7 @@ void loadScenes() {
   loadScene('town').then((value) => scenes.town = value);
   loadScene('cave').then((value) => scenes.cave = value);
   loadScene('tavern').then((value) => scenes.tavern = value);
+  loadScene('wilderness-north-01').then((value) => scenes.wildernessNorth01 = value);
 }
 
 Future<Scene> loadScene(String name) async {

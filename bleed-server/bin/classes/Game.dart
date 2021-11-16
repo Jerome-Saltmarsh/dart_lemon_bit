@@ -86,8 +86,6 @@ abstract class Game {
   // TODO doesn't belong here
   StringBuffer buffer = StringBuffer();
 
-  Player doSpawnPlayer();
-
   Vector2 getSpawnPositionFrom(Game from);
 
   void changeGame(Player player, Game to) {
@@ -1112,12 +1110,6 @@ extension GameFunctions on Game {
       count++;
     }
     return count;
-  }
-
-  Player spawnPlayer() {
-    Player player = doSpawnPlayer();
-    players.add(player);
-    return player;
   }
 
   // TODO Optimize

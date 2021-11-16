@@ -13,7 +13,6 @@ import '../instances/scenes.dart';
 import '../state.dart';
 import '../utils/player_utils.dart';
 import '../values/world.dart';
-import 'world.dart';
 
 class Town extends Game {
   late InteractableNpc npcDavis;
