@@ -105,13 +105,10 @@ class _Keys {
   LogicalKeyboardKey speakLetsGreeting = LogicalKeyboardKey.digit8;
   LogicalKeyboardKey waitASecond = LogicalKeyboardKey.digit0;
   LogicalKeyboardKey text = LogicalKeyboardKey.enter;
-  // LogicalKeyboardKey ambientBright = LogicalKeyboardKey.digit4;
-  // LogicalKeyboardKey ambientMedium = LogicalKeyboardKey.digit5;
-  // LogicalKeyboardKey ambientDark = LogicalKeyboardKey.digit6;
-  // LogicalKeyboardKey ambientVeryDark = LogicalKeyboardKey.digit7;
   LogicalKeyboardKey toggleLantern = LogicalKeyboardKey.keyL;
   LogicalKeyboardKey hourForwards = LogicalKeyboardKey.arrowRight;
   LogicalKeyboardKey hourBackwards = LogicalKeyboardKey.arrowLeft;
+  LogicalKeyboardKey teleport = LogicalKeyboardKey.keyG;
 }
 
 Map<LogicalKeyboardKey, bool> _keyDownState = {};
@@ -160,7 +157,13 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   // keys.ambientVeryDark: setAmbientLightVeryDark,
   keys.hourForwards: skipHour,
   keys.hourBackwards: reverseHour,
+  keys.teleport: teleportToMouse
 };
+
+void teleportToMouse(){
+  if (!mouseAvailable) return;
+  sendRequestTeleport(mouseWorldX, mouseWorldY);
+}
 
 void toggleLantern(){
   lantern = !lantern;

@@ -228,6 +228,18 @@ void main() {
           player.game.revive(player);
           return;
 
+        case ClientRequest.Teleport:
+          Player? player = findPlayerById(arguments[3]);
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+          double x = double.parse(arguments[4]);
+          double y = double.parse(arguments[5]);
+          player.x = x;
+          player.y = y;
+          break;
+
         case ClientRequest.Equip:
           Player? player = findPlayerById(arguments[3]);
           if (player == null) {

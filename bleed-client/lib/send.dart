@@ -30,6 +30,10 @@ void sendRequestRevive() {
   send('${ClientRequest.Revive.index} $session');
 }
 
+void sendRequestTeleport(double x, double y){
+  send('${ClientRequest.Teleport.index} $session ${x.toInt()} ${y.toInt()} ');
+}
+
 void sendRequestEquip(Weapon weapon) {
   send('${ClientRequest.Equip.index} $session ${weapon.index}');
 }
