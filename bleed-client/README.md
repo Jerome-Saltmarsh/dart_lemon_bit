@@ -113,7 +113,7 @@
 [ ] Remove material design to reduce disk size
 [ ] Add Name to Speech box
 [ ] Melee Weapon Sword
-[ ] Ability Fireball
+[ ] Ability Caste Fireball
 [ ] QUEST
     [ ] Kill the vampire
 [ ] Change scene

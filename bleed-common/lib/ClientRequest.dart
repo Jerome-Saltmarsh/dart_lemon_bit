@@ -14,5 +14,6 @@ enum ClientRequest {
   Speak,
   SkipHour,
   ReverseHour,
-  Teleport
+  Teleport,
+  CasteFireball,
 }

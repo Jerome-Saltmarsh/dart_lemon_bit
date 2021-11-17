@@ -6,7 +6,6 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
 
 import '../common.dart';
-import 'classes/Block.dart';
 import 'classes/State.dart';
 import 'enums/Mode.dart';
 
@@ -25,7 +24,6 @@ DateTime lastRefresh = DateTime.now();
 int drawFrame = 0;
 int serverFramesMS = 0;
 int actualFPS;
-List<Block> blockHouses = [];
 Map<int, bool> gameEvents = Map();
 
 // TODO delete this

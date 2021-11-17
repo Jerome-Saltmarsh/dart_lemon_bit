@@ -488,22 +488,6 @@ void _parseGrenades() {
   }
 }
 
-void _parseBlocks() {
-  blockHouses.clear();
-  while (!_simiColonConsumed()) {
-    blockHouses.add(createBlock(
-      _consumeDouble(),
-      _consumeDouble(),
-      _consumeDouble(),
-      _consumeDouble(),
-      _consumeDouble(),
-      _consumeDouble(),
-      _consumeDouble(),
-      _consumeDouble(),
-    ));
-  }
-}
-
 void _parseGameJoined() {
   game.playerId = _consumeInt();
   game.playerUUID = _consumeString();

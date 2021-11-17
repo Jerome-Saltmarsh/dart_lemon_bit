@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:bleed_client/classes/Block.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
@@ -314,48 +313,9 @@ void _drawCollectables() {
 // TODO Optimize
 void drawCollectable(CollectableType type, double x, double y) {}
 
-void drawBlockSelected(Block block) {
-  paint.strokeWidth = 3;
-  _drawLine(block.top, block.right, Colors.red);
-  _drawLine(block.right, block.bottom, Colors.red);
-  _drawLine(block.bottom, block.left, Colors.red);
-  _drawLine(block.left, block.top, Colors.red);
-}
-
 void _drawLine(Offset a, Offset b, Color color) {
   paint.color = color;
   globalCanvas.drawLine(a, b, paint);
-}
-
-Block createBlock(double topX, double topY, double rightX, double rightY,
-    double bottomX, double bottomY, double leftX, double leftY) {
-  // width *= 0.5;
-  // length *= 0.5;
-  //
-  // Path path1 = Path();
-  // path1.moveTo(x, y + length - height);
-  // path1.lineTo(x - width, y - height);
-  // path1.lineTo(x, y - length - height);
-  // path1.lineTo(x + width, y - height);
-  //
-  // Path path2 = Path();
-  // path2.moveTo(x, y + length);
-  // path2.lineTo(x, y + length - height);
-  // path2.lineTo(x - width, y - height);
-  // path2.lineTo(x - width, y);
-  //
-  // Path path3 = Path();
-  // path3.moveTo(x, y + length);
-  // path3.lineTo(x, y + length - height);
-  // path3.lineTo(x + width, y - height);
-  // path3.lineTo(x + width, y);
-
-  Offset top = Offset(topX, topY);
-  Offset right = Offset(rightX, rightY);
-  Offset bottom = Offset(bottomX, bottomY);
-  Offset left = Offset(leftX, leftY);
-
-  return Block(top, right, bottom, left);
 }
 
 void _drawGrenades(List<double> grenades) {

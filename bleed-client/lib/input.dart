@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:bleed_client/classes/Block.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/state/game.dart';
@@ -109,6 +108,7 @@ class _Keys {
   LogicalKeyboardKey hourForwards = LogicalKeyboardKey.arrowRight;
   LogicalKeyboardKey hourBackwards = LogicalKeyboardKey.arrowLeft;
   LogicalKeyboardKey teleport = LogicalKeyboardKey.keyG;
+  LogicalKeyboardKey casteFireball = LogicalKeyboardKey.keyZ;
 }
 
 Map<LogicalKeyboardKey, bool> _keyDownState = {};
@@ -157,7 +157,8 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   // keys.ambientVeryDark: setAmbientLightVeryDark,
   keys.hourForwards: skipHour,
   keys.hourBackwards: reverseHour,
-  keys.teleport: teleportToMouse
+  keys.teleport: teleportToMouse,
+  keys.casteFireball: sendRequestCastFireball,
 };
 
 void teleportToMouse(){
@@ -405,31 +406,3 @@ int getKeyDirection() {
   return directionNone;
 }
 
-Block createBlock2(double x, double y, double width, double length) {
-  double halfWidth = width * 0.5;
-  double halfLength = length * 0.5;
-
-  double aX = adjacent(piQuarter * 5, halfLength);
-  double aY = opposite(piQuarter * 5, halfLength);
-  double bX = adjacent(piQuarter * 3, halfWidth);
-  double bY = opposite(piQuarter * 3, halfWidth);
-  double cX = adjacent(piQuarter * 1, halfLength);
-  double cY = opposite(piQuarter * 1, halfLength);
-  double dX = adjacent(piQuarter * 7, halfWidth);
-  double dY = opposite(piQuarter * 7, halfWidth);
-
-  double topX = x + cX + dX;
-  double topY = y + cY + dY;
-  double rightX = x + cX + bX;
-  double rightY = y + cY + bY;
-  double bottomX = x + bX + aX;
-  double bottomY = y + bY + aY;
-  double leftX = x + dX + aX;
-  double leftY = y + dY + aY;
-
-  Block block =
-      createBlock(topX, topY, rightX, rightY, bottomX, bottomY, leftX, leftY);
-
-  blockHouses.add(block);
-  return block;
-}

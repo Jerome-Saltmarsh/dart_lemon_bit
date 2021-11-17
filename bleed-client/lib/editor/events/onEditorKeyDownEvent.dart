@@ -42,11 +42,6 @@ void onEditorKeyDownEvent(RawKeyDownEvent event){
   }
 
   if (event.logicalKey == LogicalKeyboardKey.delete) {
-    if (editState.selectedBlock != null) {
-      blockHouses.remove(editState.selectedBlock);
-      editState.selectedBlock = null;
-    }
-
     if(editState.selectedObject != null){
       game.environmentObjects.remove(editState.selectedObject);
       editState.selectedObject = null;

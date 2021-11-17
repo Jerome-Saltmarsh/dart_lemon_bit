@@ -34,6 +34,10 @@ void sendRequestTeleport(double x, double y){
   send('${ClientRequest.Teleport.index} $session ${x.toInt()} ${y.toInt()} ');
 }
 
+void sendRequestCastFireball(){
+  send('${ClientRequest.CasteFireball.index} $session $aim');
+}
+
 void sendRequestEquip(Weapon weapon) {
   send('${ClientRequest.Equip.index} $session ${weapon.index}');
 }
@@ -76,9 +80,10 @@ void sendRequestEquipAssaultRifle() {
   sendRequestEquip(Weapon.AssaultRifle);
 }
 
+String get aim => requestAim.toStringAsFixed(2);
+
 void requestThrowGrenade(double strength) {
-  send(
-      '${ClientRequest.Grenade.index} $session ${strength.toStringAsFixed(1)} ${requestAim.toStringAsFixed(2)}');
+  send('${ClientRequest.Grenade.index} $session ${strength.toStringAsFixed(1)} $aim');
 }
 
 void sendRequestUpdatePlayer() {
