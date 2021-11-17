@@ -2,6 +2,7 @@ import '../classes/Character.dart';
 import '../classes/Game.dart';
 import '../classes/Player.dart';
 import '../classes/InteractableNpc.dart';
+import '../classes/SpawnPoint.dart';
 import '../common/Quests.dart';
 import '../common/Weapons.dart';
 import '../common/classes/Vector2.dart';

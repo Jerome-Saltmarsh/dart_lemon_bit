@@ -1,4 +1,5 @@
 import '../classes/Game.dart';
+import '../classes/SpawnPoint.dart';
 import '../compile.dart';
 import 'cave.dart';
 import 'wilderness_west_01.dart';

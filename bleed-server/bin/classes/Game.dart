@@ -52,22 +52,11 @@ import 'Npc.dart';
 import 'Player.dart';
 import 'Positioned.dart';
 import 'Scene.dart';
+import 'SpawnPoint.dart';
 import 'TileNode.dart';
 import 'InteractableNpc.dart';
 
 const _none = -1;
-
-const List<SpawnPoint> noSpawnPoints = [];
-
-class SpawnPoint extends Positioned {
-  final Game game;
-
-  SpawnPoint({
-    required this.game,
-    required double x,
-    required double y,
-  }) : super(x, y);
-}
 
 abstract class Game {
   static int _id = 0;
