@@ -22,7 +22,7 @@ class Projectile extends GameObject implements HasSquad {
       this.range,
       this.damage,
       {
-        this.type = ProjectileType.Bullet
+        this.type = ProjectileType.Fireball
       })
       : super(x, y, xv: xVel, yv: yVel) {
     xStart = x;

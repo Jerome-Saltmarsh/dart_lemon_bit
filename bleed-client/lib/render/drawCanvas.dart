@@ -5,15 +5,19 @@ import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/Particle.dart';
+import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
+import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/functions/applyLightingToEnvironmentObjects.dart';
 import 'package:bleed_client/functions/calculateTileSrcRects.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/render/draw/drawPlayerText.dart';
+import 'package:bleed_client/render/functions/applyLightBright.dart';
 import 'package:bleed_client/render/functions/resetDynamicShadesToBakeMap.dart';
+import 'package:bleed_client/render/state/dynamicShading.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
 import 'package:bleed_client/mappers/mapItemToRect.dart';
@@ -27,7 +31,6 @@ import 'package:bleed_client/render/state/floatingText.dart';
 import 'package:bleed_client/render/state/items.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/state/settings.dart';
-import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 import 'package:flutter/cupertino.dart';
@@ -55,7 +58,6 @@ import 'drawGrenade.dart';
 import 'drawParticle.dart';
 
 final double _nameRadius = 100;
-final Ring _healthRing = Ring(16);
 int _flameIndex = 0;
 
 bool get dayTime => ambient.index == Shade.Bright.index;
@@ -65,13 +67,21 @@ void renderCanvasPlay() {
     _updateTorchFrames();
     resetDynamicShadesToBakeMap();
     applyCharacterLightEmission(game.humans);
+
+    for (int i = 0; i < game.totalProjectiles; i++) {
+      Projectile projectile = game.projectiles[i];
+      if (projectile.type == ProjectileType.Fireball) {
+        applyLightBrightVerySmall(dynamicShading, projectile.x, projectile.y);
+      }
+    }
+
     applyNpcLightEmission(game.interactableNpcs);
     calculateTileSrcRects();
     applyLightingToEnvironmentObjects();
   }
 
   drawTiles();
-  drawBullets(game.projectiles);
+  drawProjectiles(game.projectiles);
   drawBulletHoles(game.bulletHoles);
   _drawGrenades(game.grenades);
   _renderItems();
@@ -299,15 +309,6 @@ void _drawMouseAim() {
   Offset mouseOffset = Offset(mouseWorldX, mouseWorldY);
   Offset aimOffset = Offset(mouseWorldX + vX, mouseWorldY + vY);
   _drawLine(mouseOffset, aimOffset, Colors.white);
-}
-
-void _drawCollectables() {
-  for (int i = 0; i < game.collectables.length; i += 3) {
-    CollectableType type = CollectableType.values[game.collectables[i]];
-    int x = game.collectables[i + 1];
-    int y = game.collectables[i + 2];
-    drawCollectable(type, x.toDouble(), y.toDouble());
-  }
 }
 
 // TODO Optimize
