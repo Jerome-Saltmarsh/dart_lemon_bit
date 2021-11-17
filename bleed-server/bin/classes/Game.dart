@@ -18,7 +18,7 @@ import '../constants/no_squad.dart';
 import '../enums/npc_mode.dart';
 import '../functions/insertionSort.dart';
 import '../interfaces/HasSquad.dart';
-import 'Bullet.dart';
+import 'Projectile.dart';
 import 'Character.dart';
 import 'Collider.dart';
 import 'EnvironmentObject.dart';
@@ -73,7 +73,7 @@ abstract class Game {
   List<InteractableObject> interactableObjects = [];
   List<SpawnPoint> spawnPoints = [];
   List<Player> players = [];
-  List<Bullet> bullets = [];
+  List<Projectile> projectiles = [];
   List<Grenade> grenades = [];
   List<GameEvent> gameEvents = [];
   List<Crate> crates = [];
@@ -419,7 +419,7 @@ extension GameFunctions on Game {
         if (character is Player) {
           character.rounds.handgun--;
         }
-        Bullet bullet = spawnBullet(character);
+        Projectile bullet = spawnBullet(character);
         character.stateDuration = coolDown.handgun;
         dispatch(GameEventType.Handgun_Fired, x, y, bullet.xv, bullet.yv);
         break;
@@ -433,7 +433,7 @@ extension GameFunctions on Game {
         for (int i = 0; i < settings.shotgunBulletsPerShot; i++) {
           spawnBullet(character);
         }
-        Bullet bullet = bullets.last;
+        Projectile bullet = projectiles.last;
         character.stateDuration = coolDown.shotgun;
         dispatch(GameEventType.Shotgun_Fired, x, y, bullet.xv, bullet.yv);
         break;
@@ -442,7 +442,7 @@ extension GameFunctions on Game {
         if (character is Player) {
           character.rounds.sniperRifle--;
         }
-        Bullet bullet = spawnBullet(character);
+        Projectile bullet = spawnBullet(character);
         character.stateDuration = coolDown.sniperRifle;
         dispatch(GameEventType.SniperRifle_Fired, x, y, bullet.xv, bullet.yv);
         break;
@@ -451,7 +451,7 @@ extension GameFunctions on Game {
         if (character is Player) {
           character.rounds.assaultRifle--;
         }
-        Bullet bullet = spawnBullet(character);
+        Projectile bullet = spawnBullet(character);
         character.stateDuration = coolDown.assaultRifle;
         dispatch(GameEventType.MachineGun_Fired, x, y, bullet.xv, bullet.yv);
         break;
@@ -584,9 +584,9 @@ extension GameFunctions on Game {
 
   void _updateBullets() {
     // @on update bullet
-    for (int i = 0; i < bullets.length; i++) {
-      if (!bullets[i].active) continue;
-      Bullet bullet = bullets[i];
+    for (int i = 0; i < projectiles.length; i++) {
+      if (!projectiles[i].active) continue;
+      Projectile bullet = projectiles[i];
       bullet.x += bullet.xv;
       bullet.y += bullet.yv;
       if (bulletDistanceTravelled(bullet) > bullet.range) {
@@ -598,22 +598,22 @@ extension GameFunctions on Game {
       }
     }
 
-    for (int i = 0; i < bullets.length; i++) {
-      if (scene.bulletCollisionAt(bullets[i].x, bullets[i].y)) {
-        bullets[i].active = false;
+    for (int i = 0; i < projectiles.length; i++) {
+      if (scene.bulletCollisionAt(projectiles[i].x, projectiles[i].y)) {
+        projectiles[i].active = false;
       }
     }
 
-    insertionSort(list: bullets, compare: compareGameObjectsY);
+    insertionSort(list: projectiles, compare: compareGameObjectsY);
     checkBulletCollision(zombies);
     checkBulletCollision(players);
 
-    for (int i = 0; i < bullets.length; i++) {
-      if (!bullets[i].active) continue;
+    for (int i = 0; i < projectiles.length; i++) {
+      if (!projectiles[i].active) continue;
       for (EnvironmentObject environmentObject in scene.environment) {
         if (!environmentObject.collidable) continue;
-        if (!overlapping(bullets[i], environmentObject)) continue;
-        bullets[i].active = false;
+        if (!overlapping(projectiles[i], environmentObject)) continue;
+        projectiles[i].active = false;
         break;
       }
     }
@@ -624,13 +624,13 @@ extension GameFunctions on Game {
       applyCratePhysics(crate, players);
       applyCratePhysics(crate, zombies);
 
-      for (int j = 0; j < bullets.length; j++) {
-        if (!bullets[j].active) continue;
-        if (diffOver(crate.x, bullets[j].x, radius.crate)) continue;
-        if (diffOver(crate.y, bullets[j].y, radius.crate)) continue;
+      for (int j = 0; j < projectiles.length; j++) {
+        if (!projectiles[j].active) continue;
+        if (diffOver(crate.x, projectiles[j].x, radius.crate)) continue;
+        if (diffOver(crate.y, projectiles[j].y, radius.crate)) continue;
         // @on crate struck by bullet
         breakCrate(crate);
-        bullets[j].active = false;
+        projectiles[j].active = false;
         break;
       }
     }
@@ -822,8 +822,8 @@ extension GameFunctions on Game {
 
   void checkBulletCollision(List<Character> characters) {
     int s = 0;
-    for (int i = 0; i < bullets.length; i++) {
-      Bullet bullet = bullets[i];
+    for (int i = 0; i < projectiles.length; i++) {
+      Projectile bullet = projectiles[i];
       if (!bullet.active) continue;
       for (int j = s; j < characters.length; j++) {
         Character character = characters[j];
@@ -834,10 +834,7 @@ extension GameFunctions on Game {
         if (bullet.top > character.bottom) continue;
         if (bullet.bottom < character.top) continue;
 
-        if (bullet.weapon != Weapon.SniperRifle) {
-          bullet.active = false;
-        }
-
+        bullet.active = false;
         character.xv += bullet.xv * settings.bulletImpactVelocityTransfer;
         character.yv += bullet.yv * settings.bulletImpactVelocityTransfer;
 
@@ -1036,7 +1033,7 @@ extension GameFunctions on Game {
     }, ms: settings.grenadeDuration);
   }
 
-  Bullet spawnBullet(Character character) {
+  Projectile spawnBullet(Character character) {
     double d = 5;
     double x = character.x + adj(character.aimAngle, d);
     double y = character.y + opp(character.aimAngle, d);
@@ -1055,9 +1052,9 @@ extension GameFunctions on Game {
 
     int damage = getWeaponDamage(character.weapon);
 
-    for (int i = 0; i < bullets.length; i++) {
-      if (bullets[i].active) continue;
-      Bullet bullet = bullets[i];
+    for (int i = 0; i < projectiles.length; i++) {
+      if (projectiles[i].active) continue;
+      Projectile bullet = projectiles[i];
       bullet.active = true;
       bullet.xStart = x;
       bullet.yStart = y;
@@ -1068,12 +1065,11 @@ extension GameFunctions on Game {
       bullet.owner = character;
       bullet.range = range;
       bullet.damage = damage;
-      bullet.weapon = character.weapon;
       return bullet;
     }
 
-    Bullet bullet = Bullet(x, y, xv, yv, character, range, damage);
-    bullets.add(bullet);
+    Projectile bullet = Projectile(x, y, xv, yv, character, range, damage);
+    projectiles.add(bullet);
     return bullet;
   }
 

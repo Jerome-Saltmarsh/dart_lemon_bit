@@ -2,10 +2,12 @@ import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Particle.dart';
+import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
+import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/events/onAmbientLightChanged.dart';
@@ -72,7 +74,7 @@ Future init() async {
   }
 
   for (int i = 0; i < 1000; i++) {
-    game.bullets.add(Vector2(0, 0));
+    game.projectiles.add(Projectile(0, 0, ProjectileType.Bullet));
     game.items.add(Item());
   }
 

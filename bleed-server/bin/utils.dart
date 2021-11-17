@@ -3,7 +3,7 @@ import 'package:lemon_math/diff_over.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/give_or_take.dart';
 
-import 'classes/Bullet.dart';
+import 'classes/Projectile.dart';
 import 'classes/Character.dart';
 import 'classes/GameObject.dart';
 import 'classes/Npc.dart';
@@ -17,7 +17,7 @@ import 'settings.dart';
 const double tileSize = 48.0;
 const double halfTileSize = 24;
 
-double bulletDistanceTravelled(Bullet bullet) {
+double bulletDistanceTravelled(Projectile bullet) {
   return distanceBetween(bullet.x, bullet.y, bullet.xStart, bullet.yStart);
 }
 

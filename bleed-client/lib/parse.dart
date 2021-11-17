@@ -7,12 +7,14 @@ import 'package:bleed_client/classes/InventoryItem.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
+import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/GameError.dart';
 import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/PlayerEvents.dart';
 import 'package:bleed_client/common/ServerResponse.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
+import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums/InventoryItemType.dart';
 import 'package:bleed_client/events.dart';
@@ -170,7 +172,7 @@ void parseState() {
         return;
 
       case ServerResponse.Bullets:
-        _parseBullets();
+        _parseProjectiles();
         break;
 
       case ServerResponse.Npcs:
@@ -631,13 +633,19 @@ ItemType _consumeItemType() {
   return itemTypes[_consumeInt()];
 }
 
-void _parseBullets() {
-  game.totalBullets = 0;
+void _parseProjectiles() {
+  game.totalProjectiles = 0;
   while (!_simiColonConsumed()) {
-    game.bullets[game.totalBullets].x = _consumeDouble();
-    game.bullets[game.totalBullets].y = _consumeDouble();
-    game.totalBullets++;
+    Projectile projectile = game.projectiles[game.totalProjectiles];
+    projectile.x = _consumeDouble();
+    projectile.y = _consumeDouble();
+    projectile.type = _consumeProjectileType();
+    game.totalProjectiles++;
   }
+}
+
+ProjectileType _consumeProjectileType(){
+  return projectileTypes[_consumeInt()];
 }
 
 void _parseZombies() {

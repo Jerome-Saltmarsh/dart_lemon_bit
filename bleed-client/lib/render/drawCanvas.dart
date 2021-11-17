@@ -71,7 +71,7 @@ void renderCanvasPlay() {
   }
 
   drawTiles();
-  drawBullets(game.bullets);
+  drawBullets(game.projectiles);
   drawBulletHoles(game.bulletHoles);
   _drawGrenades(game.grenades);
   _renderItems();

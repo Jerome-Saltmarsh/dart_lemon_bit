@@ -63,6 +63,7 @@
 [ ] UI Score Lag
 -- UI --
 -- IDEAS --
+[ ] Black Fade Screen on change scene
 [ ] 4 sides light sources to light up rock
 [ ] Trees apply shadow to tile
 [ ] Anti lights, opposite of torches to apply darkness 
@@ -72,19 +73,13 @@
 [ ] Standing on home base heals health && refills handgun ammo
 [ ] Send custom news updates to client
 [ ] Guards on walls
-[ ] Compact Score Mode 
-[ ] Add fireplace with smoke emitter
--- OPTIMIZATIONS --
--- Env Objects
-[ ] Flowers
-[ ] Water
+[ ] Fall into water and die
 -- OPEN WORLD -- 
 [ ] Convert Project to Null Safe
 [ ] Persist Character on cloud
 [ ] Complete Quests to earn income and unlock upgrades
 [ ] Shotgun animation exaggerate body knock back
 [ ] Quest Window
-[ ] Fall into water and die
 [ ] Editor translate environment object
 [ ] Zombies run through environment objects
 [ ] Deploy dev endpoint
@@ -112,13 +107,13 @@
 [ ] Speech Box split sentences 
 [ ] Remove material design to reduce disk size
 [ ] Add Name to Speech box
-[ ] Melee Weapon Sword
-[ ] Ability Caste Fireball
+[ ] Fire Arrow (Archer)
+[ ] Slash Sword (Warrior)
+[ ] Ability Caste Fireball (Wizard)
 [ ] QUEST
     [ ] Kill the vampire
-[ ] Change scene
-    [ ] Black Fade Screen sa
-    [ ] Cave Level
+[x] Change scene
+    [x] Cave Level
     [x] Tavern Level
     [x] Camera Pans up 
     [x] Player disappears when firing

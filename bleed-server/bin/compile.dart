@@ -1,4 +1,4 @@
-import 'classes/Bullet.dart';
+import 'classes/Projectile.dart';
 import 'classes/Collectable.dart';
 import 'classes/Crate.dart';
 import 'classes/EnvironmentObject.dart';
@@ -37,7 +37,7 @@ void compileGame(Game game) {
   _compilePlayers(game.buffer, game.players);
   _compileZombies(game.buffer, game.zombies);
   _compileInteractableNpcs(game.buffer, game.npcs);
-  _compileBullets(game.buffer, game.bullets);
+  _compileProjectiles(game.buffer, game.projectiles);
   _compileGameEvents(game.buffer, game.gameEvents);
   _compileGrenades(game.buffer, game.grenades);
   _compileCollectables(game.buffer, game.collectables);
@@ -250,18 +250,19 @@ void _compileInteractableNpcs(StringBuffer buffer, List<InteractableNpc> npcs) {
   buffer.write(_semiColon);
 }
 
-void _compileBullets(StringBuffer buffer, List<Bullet> bullets) {
+void _compileProjectiles(StringBuffer buffer, List<Projectile> bullets) {
   _write(buffer, _indexBullets);
-  for (Bullet bullet in bullets) {
+  for (Projectile bullet in bullets) {
     if (!bullet.active) continue;
-    _compileBullet(buffer, bullet);
+    _compileProjectile(buffer, bullet);
   }
   buffer.write(_semiColon);
 }
 
-void _compileBullet(StringBuffer buffer, Bullet bullet) {
-  _write(buffer, bullet.x.toInt());
-  _write(buffer, bullet.y.toInt());
+void _compileProjectile(StringBuffer buffer, Projectile projectile) {
+  _write(buffer, projectile.x.toInt());
+  _write(buffer, projectile.y.toInt());
+  _write(buffer, projectile.type.index);
 }
 
 void _compilePlayer(StringBuffer buffer, Player player) {
