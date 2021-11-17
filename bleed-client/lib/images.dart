@@ -129,22 +129,41 @@ class _Images {
   }
 
   Future load() async {
-    longGrass1 = await _png('long-grass1');
-    longGrass2 = await _png('long-grass2');
-    longGrass3 = await _png('long-grass3');
-    longGrass4 = await _png('long-grass4');
-    tiles = await loadImage("images/tiles.png");
-    particles = await loadImage('images/particles.png');
-    handgun = await loadImage('images/weapon-handgun.png');
-    items = await loadImage("images/items.png");
-    crate = await loadImage("images/crate.png");
-    house = await loadImage("images/house.png");
-    houseDay = await loadImage("images/house-day.png");
-    house02 = await loadImage("images/house02.png");
-    treeA1 = await loadImage("images/treeA1.png");
-    treeA2 = await loadImage("images/treeA2.png");
-    treeA3 = await loadImage("images/treeA3.png");
-    treeA4 = await loadImage("images/treeA4.png");
+    empty = await _png("empty");
+    longGrass1 = empty;
+    longGrass2 = empty;
+    longGrass3 = empty;
+    longGrass4 = empty;
+    tiles = empty;
+    particles = empty;
+    handgun = empty;
+    items = empty;
+    crate = empty;
+    house = empty;
+    houseDay = empty;
+    house02 = empty;
+    treeA1 = empty;
+    treeA2 = empty;
+    treeA3 = empty;
+    treeA4 = empty;
+
+    _png('long-grass1').then((value) => longGrass1 = value);
+    _png('long-grass2').then((value) => longGrass2 = value);
+    _png('long-grass3').then((value) => longGrass3 = value);
+    _png('long-grass4').then((value) => longGrass4 = value);
+    _png('tiles').then((value) => tiles = value);
+    _png('particles').then((value) => particles = value);
+    _png('weapon-handgun').then((value) => handgun = value);
+    _png('items').then((value) => items = value);
+    _png('crate').then((value) => crate = value);
+    _png('house').then((value) => house = value);
+    _png('house-day').then((value) => houseDay = value);
+    _png('house02').then((value) => house02 = value);
+    _png('treeA1').then((value) => treeA1 = value);
+    _png('treeA2').then((value) => treeA2 = value);
+    _png('treeA3').then((value) => treeA3 = value);
+    _png('treeA4').then((value) => treeA4 = value);
+
     treeB1 = await loadImage("images/treeB1.png");
     treeB2 = await loadImage("images/treeB2.png");
     treeB3 = await loadImage("images/treeB3.png");
@@ -235,7 +254,6 @@ class _Images {
     zombieIdleMedium = await _png("zombie-idle-medium");
     zombieIdleDark = await _png("zombie-idle-dark");
     fireball = await _png("fireball");
-    empty = await _png("empty");
     manWalkingHandgun1 = await _png("man-walking-handgun-1");
     manWalkingHandgun2 = await _png("man-walking-handgun-2");
     manWalkingHandgun3 = await _png("man-walking-handgun-3");

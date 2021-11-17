@@ -109,10 +109,12 @@
 [ ] Add Name to Speech box
 [ ] Shoot Arrow (Archer)
 [ ] Slash Sword (Warrior)
+[ ] Cave Wall
+[ ] Design Cottage
+[ ] QUEST
+[ ] Kill the vampire
 [x] Level Max Ambient Light
 [x] Ability Caste Fireball (Wizard)
-[ ] QUEST
-    [ ] Kill the vampire
 [x] Change scene
     [x] Cave Level
     [x] Tavern Level
