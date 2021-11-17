@@ -1,7 +1,6 @@
 import '../common/enums/Direction.dart';
 import '../common/enums/ProjectileType.dart';
 import '../interfaces/HasSquad.dart';
-import '../utils.dart';
 import 'Character.dart';
 import 'GameObject.dart';
 
@@ -26,7 +25,7 @@ class Projectile extends GameObject implements HasSquad {
       this.damage,
       this.direction,
       {
-        this.type = ProjectileType.Fireball
+        this.type = ProjectileType.Bullet
       })
       : super(x, y, xv: xVel, yv: yVel) {
     xStart = x;

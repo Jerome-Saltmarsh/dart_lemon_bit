@@ -212,7 +212,8 @@ class _Range {
 }
 
 class _BulletSpeed {
-  final double handgun = 4.0;
+  final double fireball = 4.0;
+  final double handgun = 12.0;
   final double shotgun = 12.0;
   final double sniperRifle = 24;
   final double assaultRifle = 16;

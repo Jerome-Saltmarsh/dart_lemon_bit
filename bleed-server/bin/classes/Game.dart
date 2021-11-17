@@ -13,6 +13,7 @@ import '../common/ItemType.dart';
 import '../common/Tile.dart';
 import '../common/enums/Direction.dart';
 import '../common/enums/EnvironmentObjectType.dart';
+import '../common/enums/ProjectileType.dart';
 import '../common/enums/Shade.dart';
 import '../constants/no_squad.dart';
 import '../enums/npc_mode.dart';
@@ -63,6 +64,7 @@ abstract class Game {
   final String id = (_id++).toString();
   final int maxPlayers;
   final Scene scene;
+
   /// Used to constrain the brightness of a level
   /// For example a cave which is very dark even during day time
   /// or a dark forest
@@ -91,7 +93,6 @@ abstract class Game {
 
   // TODO doesn't belong here
   StringBuffer buffer = StringBuffer();
-
 
   void changeGame(Player player, Game to) {
     if (player.game == to) return;
@@ -413,6 +414,7 @@ extension GameFunctions on Game {
     double x = character.x + adj(character.aimAngle, d);
     double y = character.y + opp(character.aimAngle, d) - 5;
     character.state = CharacterState.Firing;
+
     switch (character.weapon) {
       case Weapon.HandGun:
         // @on character fire handgun
@@ -1034,18 +1036,36 @@ extension GameFunctions on Game {
   }
 
   Projectile spawnBullet(Character character) {
+    return spawnProjectile(
+        character: character,
+        accuracy: getWeaponAccuracy(character.weapon),
+        speed: getBulletSpeed(character.weapon),
+        type: ProjectileType.Bullet
+    );
+  }
+
+  Projectile spawnFireball(Character character){
+    return spawnProjectile(
+        character: character,
+        accuracy: 0,
+        speed: 4.0,
+        type: ProjectileType.Fireball
+    );
+  }
+
+  Projectile spawnProjectile({
+    required Character character,
+    required double accuracy,
+    required double speed,
+    required ProjectileType type,
+  }) {
     double spawnDistance = character.radius + 20;
     double x = character.x + adj(character.aimAngle, spawnDistance);
     double y = character.y + opp(character.aimAngle, spawnDistance);
 
-    double weaponAccuracy = getWeaponAccuracy(character.weapon);
-    double bulletSpeed = getBulletSpeed(character.weapon);
+    double xv = velX(character.aimAngle + giveOrTake(accuracy), speed);
 
-    double xv =
-        velX(character.aimAngle + giveOrTake(weaponAccuracy), bulletSpeed);
-
-    double yv =
-        velY(character.aimAngle + giveOrTake(weaponAccuracy), bulletSpeed);
+    double yv = velY(character.aimAngle + giveOrTake(accuracy), speed);
 
     double range = getWeaponRange(character.weapon) +
         giveOrTake(settings.weaponRangeVariation);
@@ -1068,10 +1088,13 @@ extension GameFunctions on Game {
       bullet.range = range;
       bullet.damage = damage;
       bullet.direction = direction;
+      bullet.type = type;
       return bullet;
     }
 
-    Projectile bullet = Projectile(x, y, xv, yv, character, range, damage, direction);
+    Projectile bullet = Projectile(
+        x, y, xv, yv, character, range, damage, direction,
+        type: type);
     projectiles.add(bullet);
     return bullet;
   }
@@ -1406,10 +1429,12 @@ extension GameFunctions on Game {
   void _updateSpawnPointCollisions() {
     for (int i = 0; i < players.length; i++) {
       Player player = players[i];
-      for (SpawnPoint spawnPoint in spawnPoints){
-        if (diffOver(player.x, spawnPoint.x, settings.radius.spawnPoint)) continue;
-        if (diffOver(player.y, spawnPoint.y, settings.radius.spawnPoint)) continue;
-        for(SpawnPoint point in spawnPoint.game.spawnPoints){
+      for (SpawnPoint spawnPoint in spawnPoints) {
+        if (diffOver(player.x, spawnPoint.x, settings.radius.spawnPoint))
+          continue;
+        if (diffOver(player.y, spawnPoint.y, settings.radius.spawnPoint))
+          continue;
+        for (SpawnPoint point in spawnPoint.game.spawnPoints) {
           if (point.game != this) continue;
           changeGame(player, spawnPoint.game);
           double xDiff = spawnPoint.x - player.x;

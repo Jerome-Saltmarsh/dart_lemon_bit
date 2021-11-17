@@ -9,6 +9,7 @@ import 'classes/Player.dart';
 import 'classes/InteractableNpc.dart';
 import 'common/PlayerEvents.dart';
 import 'common/enums/Direction.dart';
+import 'common/enums/ProjectileType.dart';
 import 'common/version.dart';
 import 'common/constants.dart';
 import 'compile.dart';
@@ -36,7 +37,7 @@ const List<PurchaseType> purchaseTypes = PurchaseType.values;
 final int clientRequestsLength = clientRequests.length;
 
 Game findGameById(String id) {
-  for (Game game in world.games){
+  for (Game game in world.games) {
     if (game.id == id) return game;
   }
   throw Exception();
@@ -61,7 +62,6 @@ void main() {
   int totalConnections = 0;
 
   var handler = webSocketHandler((WebSocketChannel webSocket) {
-
     totalConnections++;
     print("New connection established. Total Connections $totalConnections");
 
@@ -109,7 +109,7 @@ void main() {
       error(GameError.PlayerNotFound);
     }
 
-    void errorPlayerDead(){
+    void errorPlayerDead() {
       error(GameError.PlayerDead);
     }
 
@@ -161,7 +161,8 @@ void main() {
           if (player.sceneChanged) {
             player.sceneChanged = false;
             _buffer.clear();
-            _buffer.write('${ServerResponse.Scene_Changed.index} ${player.x.toInt()} ${player.y.toInt()} ');
+            _buffer.write(
+                '${ServerResponse.Scene_Changed.index} ${player.x.toInt()} ${player.y.toInt()} ');
             _buffer.write(game.compiledTiles);
             _buffer.write(game.compiledEnvironmentObjects);
             _buffer.write(game.compiled);
@@ -234,8 +235,15 @@ void main() {
             errorPlayerNotFound();
             return;
           }
-          double aim = double.parse(arguments[4]);
-
+          if (player.dead) {
+            errorPlayerDead();
+            return;
+          }
+          if (player.busy) {
+            return;
+          }
+          player.aimAngle = double.parse(arguments[4]);
+          player.game.spawnFireball(player);
           return;
 
         case ClientRequest.Teleport:
@@ -463,7 +471,7 @@ void main() {
           time = (time + secondsPerHour) % secondsPerDay;
           break;
 
-          case ClientRequest.ReverseHour:
+        case ClientRequest.ReverseHour:
           time = (time - secondsPerHour) % secondsPerDay;
           break;
 
@@ -507,7 +515,7 @@ void main() {
             return;
           }
 
-         playerInteract(player);
+          playerInteract(player);
       }
     }
 
@@ -519,7 +527,7 @@ void main() {
   });
 }
 
-Player spawnPlayerInTown(){
+Player spawnPlayerInTown() {
   Player player = Player(
     game: world.town,
     x: 0,
@@ -527,7 +535,7 @@ Player spawnPlayerInTown(){
     inventory: Inventory(0, 0, []),
     clips: Clips(),
     rounds:
-    Rounds(handgun: 50, shotgun: 30, sniperRifle: 20, assaultRifle: 100),
+        Rounds(handgun: 50, shotgun: 30, sniperRifle: 20, assaultRifle: 100),
     squad: 1,
     weapon: Weapon.HandGun,
   );
