@@ -113,6 +113,7 @@
 [ ] Design Cottage
 [ ] QUEST
 [ ] Kill the vampire
+[ ] Downloading Screen
 [x] Level Max Ambient Light
 [x] Ability Caste Fireball (Wizard)
 [x] Change scene
