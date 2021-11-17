@@ -107,9 +107,10 @@
 [ ] Speech Box split sentences 
 [ ] Remove material design to reduce disk size
 [ ] Add Name to Speech box
-[ ] Fire Arrow (Archer)
+[ ] Shoot Arrow (Archer)
 [ ] Slash Sword (Warrior)
-[ ] Ability Caste Fireball (Wizard)
+[x] Level Max Ambient Light
+[x] Ability Caste Fireball (Wizard)
 [ ] QUEST
     [ ] Kill the vampire
 [x] Change scene
