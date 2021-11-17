@@ -228,6 +228,16 @@ void main() {
           player.game.revive(player);
           return;
 
+        case ClientRequest.CasteFireball:
+          Player? player = findPlayerById(arguments[3]);
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+          double aim = double.parse(arguments[4]);
+
+          return;
+
         case ClientRequest.Teleport:
           Player? player = findPlayerById(arguments[3]);
           if (player == null) {

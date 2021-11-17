@@ -32,7 +32,6 @@ import '../common/GameEventType.dart';
 import '../common/Weapons.dart';
 import '../exceptions/ZombieSpawnPointsEmptyException.dart';
 import '../functions/applyForce.dart';
-import '../functions/generateUUID.dart';
 import '../language.dart';
 import '../maths.dart';
 import '../settings.dart';

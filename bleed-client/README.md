@@ -117,7 +117,7 @@
 [ ] QUEST
     [ ] Kill the vampire
 [ ] Change scene
-    [ ] Black Fade Screen 
+    [ ] Black Fade Screen sa
     [ ] Cave Level
     [x] Tavern Level
     [x] Camera Pans up 
