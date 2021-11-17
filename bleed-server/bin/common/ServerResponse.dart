@@ -26,4 +26,5 @@ enum ServerResponse {
   NpcsDebug,
   Game_Time,
   Scene_Changed,
+  Scene_Shade_Max,
 }

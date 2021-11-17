@@ -6,7 +6,7 @@ const _minutesPerHour = 60;
 
 int _hour = 0;
 
-void updatePhase(int timeInSeconds) {
+void onTimeChanged(int timeInSeconds) {
   double timeInMinutes = timeInSeconds / _secondsPerMinute;
   double timeInHours = timeInMinutes / _minutesPerHour;
   int _h = timeInHours.toInt();

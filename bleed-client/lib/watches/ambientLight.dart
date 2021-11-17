@@ -1,11 +1,18 @@
-import 'package:bleed_client/enums/Shading.dart';
+import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:lemon_watch/watch.dart';
 
 Watch<Shade> _ambientLight = Watch(Shade.VeryDark);
 
-Shade get ambientLight => _ambientLight.value;
+Shade get ambient => _ambientLight.value;
 
-set ambientLight(Shade value) {
+Shade get _maxShade => game.shadeMax.value;
+
+set ambient(Shade value) {
+  if (value.isLighterThan(_maxShade)){
+    _ambientLight.value = _maxShade;
+    return;
+  }
   _ambientLight.value = value;
 }
 
@@ -14,21 +21,21 @@ observeAmbientLight(Function(Shade value) function) {
 }
 
 void setAmbientLightBright(){
-  ambientLight = Shade.Bright;
+  ambient = Shade.Bright;
 }
 
 void setAmbientLightMedium(){
-  ambientLight = Shade.Medium;
+  ambient = Shade.Medium;
 }
 
 void setAmbientLightDark(){
-  ambientLight = Shade.Dark;
+  ambient = Shade.Dark;
 }
 
 void setAmbientLightVeryDark(){
-  ambientLight = Shade.VeryDark;
+  ambient = Shade.VeryDark;
 }
 
 void setAmbientLightPitchBlack(){
-  ambientLight = Shade.PitchBlack;
+  ambient = Shade.PitchBlack;
 }

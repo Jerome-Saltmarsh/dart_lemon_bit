@@ -1,5 +1,6 @@
 import 'package:bleed_client/classes/Character.dart';
-import 'package:bleed_client/enums/Shading.dart';
+
+import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/mappers/mapCharacterToDst.dart';
 import 'package:bleed_client/mappers/mapCharacterToImageZombie.dart';

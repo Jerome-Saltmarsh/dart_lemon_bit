@@ -19,6 +19,7 @@ enum Tile {
   Concrete_Vertical,
   Bridge,
   Rock,
+  Black,
 }
 
 final List<Tile> tiles = Tile.values;

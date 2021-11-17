@@ -3,32 +3,32 @@
   "collectables": [],
   "tiles": [
     [
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
       "Grass",
       "Grass",
       "Grass",
@@ -43,15 +43,17 @@
       "Grass",
       "Grass",
       "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass"
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black"
     ],
     [
+      "Black",
+      "Black",
       "Grass",
       "Grass",
       "Grass",
@@ -59,20 +61,18 @@
       "Grass",
       "Grass",
       "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Long_Grass",
-      "Grass",
-      "Grass",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
       "Long_Grass",
       "Grass",
       "Grass",
@@ -95,12 +95,13 @@
       "Grass",
       "Grass",
       "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass"
+      "Black",
+      "Black",
+      "Black",
+      "Black"
     ],
     [
+      "Black",
       "Grass",
       "Grass",
       "Grass",
@@ -113,10 +114,9 @@
       "Grass",
       "Grass",
       "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Long_Grass",
+      "Black",
+      "Black",
+      "Black",
       "Long_Grass",
       "Long_Grass",
       "Long_Grass",
@@ -146,11 +146,11 @@
       "Grass",
       "Grass",
       "Grass",
-      "Grass",
-      "Grass"
+      "Black",
+      "Black"
     ],
     [
-      "Grass",
+      "Black",
       "Grass",
       "Grass",
       "Grass",
@@ -195,11 +195,11 @@
       "Grass",
       "Grass",
       "Grass",
-      "Grass",
-      "Grass"
+      "Black",
+      "Black"
     ],
     [
-      "Grass",
+      "Black",
       "Grass",
       "Grass",
       "Grass",
@@ -245,7 +245,7 @@
       "Grass",
       "Grass",
       "Grass",
-      "Grass"
+      "Black"
     ],
     [
       "Grass",
@@ -983,7 +983,7 @@
       "Grass"
     ],
     [
-      "Grass",
+      "Black",
       "Grass",
       "Grass",
       "Grass",
@@ -1032,7 +1032,7 @@
       "Grass"
     ],
     [
-      "Grass",
+      "Black",
       "Grass",
       "Grass",
       "Grass",
@@ -1078,10 +1078,10 @@
       "Grass",
       "Grass",
       "Grass",
-      "Grass"
+      "Black"
     ],
     [
-      "Grass",
+      "Black",
       "Grass",
       "Grass",
       "Grass",
@@ -1126,10 +1126,24 @@
       "Grass",
       "Grass",
       "Grass",
-      "Grass",
-      "Grass"
+      "Black",
+      "Black"
     ],
     [
+      "Black",
+      "Black",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Long_Grass",
+      "Long_Grass",
+      "Long_Grass",
+      "Grass",
+      "Grass",
       "Grass",
       "Grass",
       "Grass",
@@ -1141,20 +1155,6 @@
       "Grass",
       "Long_Grass",
       "Long_Grass",
-      "Long_Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Long_Grass",
-      "Long_Grass",
       "Grass",
       "Grass",
       "Long_Grass",
@@ -1166,19 +1166,25 @@
       "Grass",
       "Long_Grass",
       "Long_Grass",
-      "Water",
+      "Grass02",
       "Grass",
       "Grass",
       "Grass",
       "Grass",
       "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass"
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black"
     ],
     [
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
       "Grass",
       "Grass",
       "Grass",
@@ -1188,44 +1194,38 @@
       "Grass",
       "Grass",
       "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Long_Grass",
+      "Long_Grass",
       "Grass",
       "Grass",
       "Long_Grass",
       "Long_Grass",
       "Long_Grass",
       "Long_Grass",
-      "Grass",
-      "Grass",
-      "Long_Grass",
-      "Long_Grass",
-      "Long_Grass",
-      "Long_Grass",
-      "Long_Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass"
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black",
+      "Black"
     ]
   ],
   "crates": [],
@@ -1236,12 +1236,12 @@
       "type": "LongGrass"
     },
     {
-      "x": 46,
+      "x": -45,
       "y": 144,
       "type": "LongGrass"
     },
     {
-      "x": -45,
+      "x": 46,
       "y": 144,
       "type": "LongGrass"
     },
@@ -1267,13 +1267,8 @@
     },
     {
       "x": -194,
-      "y": 265,
+      "y": 326,
       "type": "Rock"
-    },
-    {
-      "x": -264,
-      "y": 296,
-      "type": "Tree01"
     },
     {
       "x": -1,
@@ -1284,11 +1279,6 @@
       "x": 161,
       "y": 372,
       "type": "Tree_Stump"
-    },
-    {
-      "x": -281,
-      "y": 386,
-      "type": "Tree01"
     },
     {
       "x": 12,
@@ -1426,6 +1416,11 @@
       "type": "Tree01"
     },
     {
+      "x": 93,
+      "y": 813,
+      "type": "House02"
+    },
+    {
       "x": -249,
       "y": 820,
       "type": "Tree01"
@@ -1446,14 +1441,19 @@
       "type": "Rock_Small"
     },
     {
-      "x": -125,
-      "y": 872,
+      "x": 170,
+      "y": 868,
       "type": "Tree01"
     },
     {
       "x": 21,
       "y": 872,
       "type": "Rock"
+    },
+    {
+      "x": -125,
+      "y": 872,
+      "type": "Tree01"
     },
     {
       "x": -835,
@@ -1517,7 +1517,7 @@
     },
     {
       "x": 142,
-      "y": 1021,
+      "y": 958,
       "type": "Tree02"
     },
     {
@@ -1616,6 +1616,11 @@
       "type": "Tree01"
     },
     {
+      "x": -541,
+      "y": 1266,
+      "type": "Torch"
+    },
+    {
       "x": -817,
       "y": 1298,
       "type": "Tree01"
@@ -1626,13 +1631,13 @@
       "type": "Tree02"
     },
     {
-      "x": -158,
-      "y": 1353,
+      "x": -173,
+      "y": 1302,
       "type": "Tree02"
     },
     {
-      "x": -168,
-      "y": 1365,
+      "x": -189,
+      "y": 1360,
       "type": "Tree02"
     },
     {
@@ -1646,29 +1651,9 @@
       "type": "Tree01"
     },
     {
-      "x": -378,
-      "y": 1526,
+      "x": -426,
+      "y": 1523,
       "type": "Tree02"
-    },
-    {
-      "x": -466,
-      "y": 1703,
-      "type": "LongGrass"
-    },
-    {
-      "x": 170,
-      "y": 868,
-      "type": "Tree01"
-    },
-    {
-      "x": 93,
-      "y": 813,
-      "type": "House02"
-    },
-    {
-      "x": -541,
-      "y": 1266,
-      "type": "Torch"
     }
   ]
 }

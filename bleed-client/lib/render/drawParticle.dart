@@ -1,7 +1,7 @@
 
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
-import 'package:bleed_client/enums/Shading.dart';
+import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/mappers/mapDurationToMystImage.dart';
 import 'package:bleed_client/constants/colours.dart';

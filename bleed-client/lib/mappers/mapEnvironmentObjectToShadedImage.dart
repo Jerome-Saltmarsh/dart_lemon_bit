@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
-import 'package:bleed_client/enums/Shading.dart';
+import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 
@@ -16,7 +16,7 @@ Image mapEnvironmentObjectToToShadedImage(
   }
 
   if (environmentObject.type == EnvironmentObjectType.House01) {
-    switch (ambientLight) {
+    switch (ambient) {
       case Shade.Bright:
         return images.houseDay;
       default:
@@ -25,12 +25,12 @@ Image mapEnvironmentObjectToToShadedImage(
   }
 
   if (environmentObject.type == EnvironmentObjectType.Torch) {
-    if (ambientLight == Shade.Bright) return images.torchOut;
+    if (ambient == Shade.Bright) return images.torchOut;
     return images.torch;
   }
 
   if (environmentObject.type == EnvironmentObjectType.House01) {
-    switch (ambientLight) {
+    switch (ambient) {
       case Shade.Bright:
         return images.houseDay;
       default:

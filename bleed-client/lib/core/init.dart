@@ -6,13 +6,14 @@ import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
-import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/events/onAmbientLightChanged.dart';
 import 'package:bleed_client/events/onCompiledGameChanged.dart';
 import 'package:bleed_client/events/onGameJoined.dart';
 import 'package:bleed_client/events/onPhaseChanged.dart';
+import 'package:bleed_client/setters/setAmbientLightAccordingToPhase.dart';
+import 'package:bleed_client/events/onShadeMaxChanged.dart';
 import 'package:bleed_client/events/onTimeChanged.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/images.dart';
@@ -52,9 +53,10 @@ Future init() async {
   eventStream.stream.listen(_onEventReceivedFromServer);
   observeCompiledGame(onCompiledGameChanged);
   on(onGameJoined);
-  timeInSeconds.onChanged(updatePhase);
-  phase.onChanged(updateAmbientLight);
+  timeInSeconds.onChanged(onTimeChanged);
+  phase.onChanged(onPhaseChanged);
   observeAmbientLight(onAmbientLightChanged);
+  game.shadeMax.onChanged(onShadeMaxChanged);
 
   player.state.onChanged((CharacterState state) {
      player.alive.value = state != CharacterState.Dead;

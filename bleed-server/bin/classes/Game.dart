@@ -13,6 +13,7 @@ import '../common/ItemType.dart';
 import '../common/Tile.dart';
 import '../common/enums/Direction.dart';
 import '../common/enums/EnvironmentObjectType.dart';
+import '../common/enums/Shade.dart';
 import '../constants/no_squad.dart';
 import '../enums/npc_mode.dart';
 import '../functions/insertionSort.dart';
@@ -72,9 +73,12 @@ class SpawnPoint extends Positioned {
 abstract class Game {
   static int _id = 0;
   final String id = (_id++).toString();
-  final String uuid = generateUUID();
   final int maxPlayers;
   final Scene scene;
+  /// Used to constrain the brightness of a level
+  /// For example a cave which is very dark even during day time
+  /// or a dark forest
+  Shade shadeMax = Shade.Bright;
   int duration = 0;
   List<Npc> zombies = [];
   List<InteractableNpc> npcs = [];
@@ -99,6 +103,7 @@ abstract class Game {
 
   // TODO doesn't belong here
   StringBuffer buffer = StringBuffer();
+
 
   void changeGame(Player player, Game to) {
     if (player.game == to) return;
@@ -149,7 +154,7 @@ abstract class Game {
 
   void onNpcSpawned(Npc npc) {}
 
-  Game(this.scene, {this.maxPlayers = 64}) {
+  Game(this.scene, {this.maxPlayers = 64, this.shadeMax = Shade.Bright}) {
     this.crates.clear();
     for (Vector2 crate in scene.crates) {
       crates.add(Crate(x: crate.x, y: crate.y));

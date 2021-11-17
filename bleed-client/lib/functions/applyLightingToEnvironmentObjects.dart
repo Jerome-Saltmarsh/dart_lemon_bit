@@ -1,6 +1,6 @@
 
 import 'package:bleed_client/classes/EnvironmentObject.dart';
-import 'package:bleed_client/enums/Shading.dart';
+import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToShadedImage.dart';
 import 'package:bleed_client/state/game.dart';

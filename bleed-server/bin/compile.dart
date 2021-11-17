@@ -50,6 +50,9 @@ void compileGame(Game game) {
     _compileNpcDebug(game.buffer, game.npcs);
   }
 
+  _write(game.buffer, ServerResponse.Scene_Shade_Max.index);
+  _write(game.buffer, game.shadeMax.index);
+
   _compileCrates(game);
   _compileItems(game.buffer, game.items);
 

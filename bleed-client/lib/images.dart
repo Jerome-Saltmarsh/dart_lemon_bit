@@ -11,9 +11,6 @@ Map<EnvironmentObjectType, List<Image>> typeShades;
 class _Images {
 
   Image tiles;
-  Image tilesLight;
-  Image tilesMedium;
-  Image tilesDark;
   Image particles;
   Image handgun;
   Image items;
@@ -136,9 +133,6 @@ class _Images {
     longGrass3 = await _png('long-grass3');
     longGrass4 = await _png('long-grass4');
     tiles = await loadImage("images/tiles.png");
-    tilesLight = await loadImage("images/tiles-light.png");
-    tilesMedium = await loadImage("images/tiles-medium.png");
-    tilesDark = await loadImage("images/tiles-dark.png");
     particles = await loadImage('images/particles.png');
     handgun = await loadImage('images/weapon-handgun.png');
     items = await loadImage("images/items.png");

@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/enums.dart';
-import 'package:bleed_client/enums/Shading.dart';
+import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/images.dart';
 
 Image mapCharacterToImageMan(

@@ -1,5 +1,5 @@
 import 'package:bleed_client/classes/Character.dart';
-import 'package:bleed_client/enums/Shading.dart';
+import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_math/diff.dart';
 

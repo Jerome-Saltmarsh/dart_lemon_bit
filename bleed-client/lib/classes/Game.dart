@@ -6,6 +6,7 @@ import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
+import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:lemon_watch/watch.dart';
 
 import '../enums.dart';
@@ -23,6 +24,7 @@ class Game {
   int totalColumns = 0;
   int totalRows = 0;
   List<NpcDebug> npcDebug = [];
+  final Watch<Shade> shadeMax = Watch(Shade.Bright);
   final List<Character> humans = [];
   final List<Zombie> zombies = [];
   final List<Character> interactableNpcs = [];

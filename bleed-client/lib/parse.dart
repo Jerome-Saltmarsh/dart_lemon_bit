@@ -13,6 +13,7 @@ import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/PlayerEvents.dart';
 import 'package:bleed_client/common/ServerResponse.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
+import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums/InventoryItemType.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
@@ -174,6 +175,10 @@ void parseState() {
 
       case ServerResponse.Npcs:
         _parseNpcs();
+        break;
+
+      case ServerResponse.Scene_Shade_Max:
+        game.shadeMax.value = _consumeShade();
         break;
 
       case ServerResponse.Scene_Changed:
@@ -701,4 +706,8 @@ void _consumeInteractableNpc(Character interactableNpc) {
   interactableNpc.y = _consumeDouble();
   interactableNpc.frame = _consumeInt();
   interactableNpc.name = _consumeString();
+}
+
+Shade _consumeShade(){
+  return shades[_consumeInt()];
 }

@@ -9,7 +9,7 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
-import 'package:bleed_client/enums/Shading.dart';
+import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/functions/applyLightingToEnvironmentObjects.dart';
 import 'package:bleed_client/functions/calculateTileSrcRects.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
@@ -59,7 +59,7 @@ final double _nameRadius = 100;
 final Ring _healthRing = Ring(16);
 int _flameIndex = 0;
 
-bool get dayTime => ambientLight.index == Shade.Bright.index;
+bool get dayTime => ambient.index == Shade.Bright.index;
 
 void renderCanvasPlay() {
   if (!dayTime) {
