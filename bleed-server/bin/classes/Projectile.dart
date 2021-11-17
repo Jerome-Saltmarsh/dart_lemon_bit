@@ -1,5 +1,7 @@
+import '../common/enums/Direction.dart';
 import '../common/enums/ProjectileType.dart';
 import '../interfaces/HasSquad.dart';
+import '../utils.dart';
 import 'Character.dart';
 import 'GameObject.dart';
 
@@ -10,6 +12,7 @@ class Projectile extends GameObject implements HasSquad {
   double range;
   int damage;
   ProjectileType type;
+  Direction direction;
 
   int get squad => owner.squad;
 
@@ -21,6 +24,7 @@ class Projectile extends GameObject implements HasSquad {
       this.owner,
       this.range,
       this.damage,
+      this.direction,
       {
         this.type = ProjectileType.Fireball
       })

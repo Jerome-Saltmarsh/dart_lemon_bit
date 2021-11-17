@@ -7,6 +7,7 @@ import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
+import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/events.dart';
@@ -74,7 +75,7 @@ Future init() async {
   }
 
   for (int i = 0; i < 1000; i++) {
-    game.projectiles.add(Projectile(0, 0, ProjectileType.Bullet));
+    game.projectiles.add(Projectile(0, 0, ProjectileType.Bullet, Direction.DownLeft));
     game.items.add(Item());
   }
 

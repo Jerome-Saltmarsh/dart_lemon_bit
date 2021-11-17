@@ -63,9 +63,9 @@ void renderTiles(List<List<Tile>> tiles) {
     tilesRstTransforms[index2] = rstTransform.tx;
     tilesRstTransforms[index3] = rstTransform.ty + 24;
     tileSrcRects[index0] = rect.left;
-    tileSrcRects[index1] = 0;
+    tileSrcRects[index1] = 0; // top
     tileSrcRects[index2] = rect.right;
-    tileSrcRects[index3] = 48;
+    tileSrcRects[index3] = 48; // bottom
   }
 }
 

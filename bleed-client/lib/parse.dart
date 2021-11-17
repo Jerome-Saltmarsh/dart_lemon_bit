@@ -640,6 +640,7 @@ void _parseProjectiles() {
     projectile.x = _consumeDouble();
     projectile.y = _consumeDouble();
     projectile.type = _consumeProjectileType();
+    projectile.direction = _consumeDirection();
     game.totalProjectiles++;
   }
 }

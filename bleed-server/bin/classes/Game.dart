@@ -1034,9 +1034,9 @@ extension GameFunctions on Game {
   }
 
   Projectile spawnBullet(Character character) {
-    double d = character.radius + 5;
-    double x = character.x + adj(character.aimAngle, d);
-    double y = character.y + opp(character.aimAngle, d);
+    double spawnDistance = character.radius + 20;
+    double x = character.x + adj(character.aimAngle, spawnDistance);
+    double y = character.y + opp(character.aimAngle, spawnDistance);
 
     double weaponAccuracy = getWeaponAccuracy(character.weapon);
     double bulletSpeed = getBulletSpeed(character.weapon);
@@ -1052,6 +1052,8 @@ extension GameFunctions on Game {
 
     int damage = getWeaponDamage(character.weapon);
 
+    Direction direction = convertAngleToDirection(character.aimAngle);
+
     for (int i = 0; i < projectiles.length; i++) {
       if (projectiles[i].active) continue;
       Projectile bullet = projectiles[i];
@@ -1065,10 +1067,11 @@ extension GameFunctions on Game {
       bullet.owner = character;
       bullet.range = range;
       bullet.damage = damage;
+      bullet.direction = direction;
       return bullet;
     }
 
-    Projectile bullet = Projectile(x, y, xv, yv, character, range, damage);
+    Projectile bullet = Projectile(x, y, xv, yv, character, range, damage, direction);
     projectiles.add(bullet);
     return bullet;
   }
