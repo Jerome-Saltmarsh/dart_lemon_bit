@@ -1034,7 +1034,7 @@ extension GameFunctions on Game {
   }
 
   Projectile spawnBullet(Character character) {
-    double d = 5;
+    double d = character.radius + 5;
     double x = character.x + adj(character.aimAngle, d);
     double y = character.y + opp(character.aimAngle, d);
 

@@ -120,6 +120,7 @@ class _Images {
   Image longGrass2;
   Image longGrass3;
   Image longGrass4;
+  Image fireball;
 
   List<Image> flames = [];
 
@@ -233,6 +234,7 @@ class _Images {
     zombieIdleBright = await _png("zombie-idle-bright");
     zombieIdleMedium = await _png("zombie-idle-medium");
     zombieIdleDark = await _png("zombie-idle-dark");
+    fireball = await _png("fireball");
     empty = await _png("empty");
     manWalkingHandgun1 = await _png("man-walking-handgun-1");
     manWalkingHandgun2 = await _png("man-walking-handgun-2");
