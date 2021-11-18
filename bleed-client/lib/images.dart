@@ -27,7 +27,7 @@ Map<EnvironmentObjectType, int> environmentObjectIndex = {
   EnvironmentObjectType.Palisade_V: 3,
 };
 
-const double _totalImages = 71;
+const double _totalImages = 68;
 double _imagesLoaded = 0;
 
 void _imageLoaded(){
@@ -55,11 +55,6 @@ class _Images {
   Image radial64_10;
   Image radial64_05;
   Image radial64_02;
-  Image torch;
-  Image torch_01;
-  Image torch_02;
-  Image torch_03;
-  Image torch_04;
   Image torchOut;
   Image bridge;
   Image manIdle;
@@ -69,6 +64,7 @@ class _Images {
   Image manIdleBright;
   Image manWalking;
   Image manWalkingBright;
+  Image manUnarmedRunning;
   Image manUnarmedRunning1;
   Image manUnarmedRunning2;
   Image manUnarmedRunning3;
@@ -110,8 +106,6 @@ class _Images {
   Image empty;
   Image fireball;
   Image torches;
-
-  List<Image> flames = [];
 
   Future<Image> _png(String fileName){
     return loadImage('images/$fileName.png');
@@ -156,17 +150,11 @@ class _Images {
     _imageLoaded();
     radial64_02 = await loadImage("images/radial-64-02.png");
     _imageLoaded();
-    torch_01 = await loadImage("images/torch-01.png");
-    _imageLoaded();
-    torch_02 = await loadImage("images/torch-02.png");
-    _imageLoaded();
-    torch_03 = await loadImage("images/torch-03.png");
-    _imageLoaded();
-    torch_04 = await loadImage("images/torch-04.png");
-    _imageLoaded();
     torchOut = await loadImage("images/torch-out.png");
     _imageLoaded();
     bridge = await loadImage("images/bridge.png");
+    _imageLoaded();
+    manUnarmedRunning = await loadImage("images/man-unarmed-running.png");
     _imageLoaded();
     manUnarmedRunning1 = await loadImage("images/man-unarmed-running-1.png");
     _imageLoaded();
@@ -262,15 +250,6 @@ class _Images {
     _imageLoaded();
     manWalkingHandgun3 = await _png("man-walking-handgun-3");
     _imageLoaded();
-
-    flames = [
-      torch_01,
-      torch_02,
-      torch_03,
-      torch_04,
-
-    ];
-    torch = torch_01;
 
     environmentObjectImage = {
       EnvironmentObjectType.Rock: objects48,

@@ -63,6 +63,7 @@
 [ ] UI Score Lag
 -- UI --
 -- IDEAS --
+[ ] Dynamic Shadow direction
 [ ] Black Fade Screen on change scene
 [ ] 4 sides light sources to light up rock
 [ ] Trees apply shadow to tile
@@ -114,13 +115,13 @@
 [ ] QUEST
 [ ] Kill the vampire
 [ ] Splash Screen
+[ ] Firebolt explode on impact
 
 [ ] Draw all sprites on single sprite call (potentially massive optimization)
 [ ] Pack all sprites into single sprite sheet
 [ ] Pack character into sprite sheets
 
-[ ] Fix Animated Torches
-
+[x] Fix Animated Torches
 [x] Fix culling bug
 [x] Downloading Screen
 [x] Level Max Ambient Light
