@@ -18,11 +18,13 @@ class EnvironmentObject {
   final Float32List dst;
   final Float32List src;
 
-  double _size;
   double _top;
   double _right;
   double _bottom;
   double _left;
+
+  double width;
+  double height;
 
   double get top => _top;
   double get right => _right;
@@ -31,13 +33,12 @@ class EnvironmentObject {
 
   EnvironmentObject({this.x, this.y, this.type, this.image, this.src, this.dst, this.generated = false}) {
 
-    double width = src[2] - src[0];
-    double height = src[3] - src[1];
+    width = src[2] - src[0];
+    height = src[3] - src[1];
 
     double widthHalf = width * 0.5;
     double heightHalf = height * 0.5;
 
-    _size = src[3];
     _top = y - heightHalf;
     _right = x + widthHalf;
     _bottom = _top + heightHalf;

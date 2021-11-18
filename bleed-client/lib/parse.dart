@@ -317,6 +317,19 @@ void _parseEnvironmentObjects() {
     double width = imageSpriteWidth[image];
     double height = imageSpriteHeight[image];
 
+    if (image == null){
+      throw Exception("no image found for $type");
+    }
+    if (index == null){
+      throw Exception("no image index for $type");
+    }
+
+    assert(width != null);
+    assert(height != null);
+
+
+
+
     Float32List dst = Float32List(4);
     dst[0] = 1;
     dst[1] = 0;
@@ -326,7 +339,7 @@ void _parseEnvironmentObjects() {
     Float32List src = Float32List(4);
     src[0] = index * width; // left
     src[1] = 0; // top
-    src[2] = index * width + width; // right
+    src[2] = src[0] + width; // right
     src[3] = height; // bottom
 
     EnvironmentObject envObject = EnvironmentObject(

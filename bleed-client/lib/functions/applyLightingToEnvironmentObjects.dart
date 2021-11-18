@@ -8,6 +8,7 @@ import 'package:bleed_client/state/game.dart';
 void applyLightingToEnvironmentObjects() {
   for (EnvironmentObject environmentObject in game.environmentObjects) {
     Shade shade = getShade(environmentObject.tileRow, environmentObject.tileColumn);
-    environmentObject.image = mapEnvironmentObjectToToShadedImage(environmentObject, shade);
+    environmentObject.src[1] = shade.index * environmentObject.height;
+    environmentObject.src[3] = environmentObject.src[1] + environmentObject.height;
   }
 }

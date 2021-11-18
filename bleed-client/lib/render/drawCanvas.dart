@@ -30,7 +30,6 @@ import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
 import 'package:bleed_client/render/functions/drawBullets.dart';
 import 'package:bleed_client/render/state/floatingText.dart';
 import 'package:bleed_client/render/state/items.dart';
-import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 import 'package:flutter/cupertino.dart';
@@ -39,7 +38,6 @@ import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/queries/on_screen.dart';
 import 'package:lemon_engine/render/draw_atlas.dart';
-import 'package:lemon_engine/render/draw_circle.dart';
 import 'package:lemon_engine/render/draw_text.dart';
 import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_engine/state/paint.dart';
@@ -253,10 +251,8 @@ bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {
 }
 
 void drawEnvironmentObject(EnvironmentObject environmentObject) {
-  // if (!environmentObjectOnScreenScreen(environmentObject)) return;
+  if (!environmentObjectOnScreenScreen(environmentObject)) return;
   globalCanvas.drawRawAtlas(environmentObject.image, environmentObject.dst, environmentObject.src, null, null, null, paint);
-  // drawImageRect(
-  //     environmentObject.image, environmentObject.src, environmentObject.dst);
 }
 
 void _renderItems() {

@@ -18,13 +18,14 @@ Map<EnvironmentObjectType, int> environmentObjectIndex = {
   EnvironmentObjectType.Tree_Stump: 3,
   EnvironmentObjectType.Rock_Small: 4,
   EnvironmentObjectType.LongGrass: 5,
+  EnvironmentObjectType.Torch: 6,
   EnvironmentObjectType.Tree01: 1,
   EnvironmentObjectType.Tree02: 2,
   EnvironmentObjectType.House01: 1,
   EnvironmentObjectType.House02: 2,
   EnvironmentObjectType.Palisade: 1,
-  EnvironmentObjectType.Palisade_H: 2,
-  EnvironmentObjectType.Palisade_V: 3,
+  EnvironmentObjectType.Palisade_V: 2,
+  EnvironmentObjectType.Palisade_H: 3,
 };
 
 const double _totalImages = 111;
@@ -468,6 +469,7 @@ class _Images {
       EnvironmentObjectType.Tree_Stump: objects48,
       EnvironmentObjectType.Rock_Small: objects48,
       EnvironmentObjectType.LongGrass: objects48,
+      EnvironmentObjectType.Torch: objects48,
       EnvironmentObjectType.Tree01: objects96,
       EnvironmentObjectType.Tree02: objects96,
       EnvironmentObjectType.House01: objects150,
