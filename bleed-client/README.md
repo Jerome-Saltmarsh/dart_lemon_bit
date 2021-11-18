@@ -113,7 +113,16 @@
 [ ] Design Cottage
 [ ] QUEST
 [ ] Kill the vampire
-[ ] Downloading Screen
+[ ] Splash Screen
+
+[ ] Draw all sprites on single sprite call (potentially massive optimization)
+[ ] Pack all sprites into single sprite sheet
+[ ] Pack character into sprite sheets
+
+[ ] Fix Animated Torches
+[ ] Fix culling bug
+
+[x] Downloading Screen
 [x] Level Max Ambient Light
 [x] Ability Caste Fireball (Wizard)
 [x] Change scene

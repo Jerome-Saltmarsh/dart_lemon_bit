@@ -63,8 +63,9 @@ String compileEnvironmentObjects(List<EnvironmentObject> environmentObjects) {
   StringBuffer buffer = StringBuffer();
   _write(buffer, ServerResponse.EnvironmentObjects.index);
   for (EnvironmentObject environmentObject in environmentObjects){
-    _write(buffer, environmentObject.x.toInt());
-    _write(buffer, environmentObject.y.toInt());
+    _writeInt(buffer, environmentObject.x);
+    _writeInt(buffer, environmentObject.y);
+    _writeInt(buffer, environmentObject.radius);
     _write(buffer, environmentObject.type.index);
   }
   _writeSemiColon(buffer);

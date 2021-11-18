@@ -31,6 +31,7 @@ import 'package:bleed_client/render/functions/drawBullets.dart';
 import 'package:bleed_client/render/state/floatingText.dart';
 import 'package:bleed_client/render/state/items.dart';
 import 'package:bleed_client/state/settings.dart';
+import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,6 +39,7 @@ import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/queries/on_screen.dart';
 import 'package:lemon_engine/render/draw_atlas.dart';
+import 'package:lemon_engine/render/draw_circle.dart';
 import 'package:lemon_engine/render/draw_text.dart';
 import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_engine/state/paint.dart';
@@ -64,14 +66,7 @@ void renderCanvasPlay() {
     _updateTorchFrames();
     resetDynamicShadesToBakeMap();
     applyCharacterLightEmission(game.humans);
-
-    for (int i = 0; i < game.totalProjectiles; i++) {
-      Projectile projectile = game.projectiles[i];
-      if (projectile.type == ProjectileType.Fireball) {
-        applyLightBrightVerySmall(dynamicShading, projectile.x, projectile.y);
-      }
-    }
-
+    applyProjectileLighting();
     applyNpcLightEmission(game.interactableNpcs);
     calculateTileSrcRects();
     applyLightingToEnvironmentObjects();
@@ -84,6 +79,18 @@ void renderCanvasPlay() {
   _renderItems();
   _drawSprites();
 
+  paint.color = Colors.red;
+  for(EnvironmentObject env in game.environmentObjects){
+    drawLine(env.left, env.top, env.right, env.top); // top left to top right
+    drawLine(env.right, env.top, env.right, env.bottom); // top left to bottom right
+    drawLine(env.right, env.bottom, env.left, env.bottom);
+    drawLine(env.left, env.top, env.left, env.bottom);
+  }
+  for(EnvironmentObject env in game.environmentObjects){
+    drawCircle(env.x, env.y, env.radius, Colors.blue);
+  }
+
+
   if (settings.compilePaths) {
     drawPaths();
     drawDebugNpcs(game.npcDebug);
@@ -93,6 +100,15 @@ void renderCanvasPlay() {
   _drawPlayerNames();
   drawPlayerText();
   _drawMouseAim(); // TODO Expensive
+}
+
+void applyProjectileLighting() {
+  for (int i = 0; i < game.totalProjectiles; i++) {
+    Projectile projectile = game.projectiles[i];
+    if (projectile.type == ProjectileType.Fireball) {
+      applyLightBrightVerySmall(dynamicShading, projectile.x, projectile.y);
+    }
+  }
 }
 
 void _updateTorchFrames() {

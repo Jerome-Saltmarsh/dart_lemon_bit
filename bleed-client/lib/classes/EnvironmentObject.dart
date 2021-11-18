@@ -25,13 +25,14 @@ class EnvironmentObject {
 
   double width;
   double height;
+  double radius;
 
   double get top => _top;
   double get right => _right;
   double get bottom => _bottom;
   double get left => _left;
 
-  EnvironmentObject({this.x, this.y, this.type, this.image, this.src, this.dst, this.generated = false}) {
+  EnvironmentObject({this.x, this.y, this.type, this.image, this.src, this.dst, this.generated = false, this.radius}) {
 
     width = src[2] - src[0];
     height = src[3] - src[1];
@@ -41,7 +42,7 @@ class EnvironmentObject {
 
     _top = y - heightHalf;
     _right = x + widthHalf;
-    _bottom = _top + heightHalf;
-    _left = _right - widthHalf;
+    _bottom = y + heightHalf;
+    _left = x - widthHalf;
   }
 }

@@ -289,17 +289,13 @@ void parseState() {
 }
 
 void _parseEnvironmentObjects() {
-  if (!initialized.value) {
-    print(
-        "parser.parseEnvironmentObjects() aborted because still initializing");
-    return;
-  }
 
   game.environmentObjects.clear();
 
   while (!_simiColonConsumed()) {
     double x = _consumeDouble();
     double y = _consumeDouble();
+    double radius = _consumeDouble();
     EnvironmentObjectType type = _consumeEnvironmentObjectType();
 
     if (type == EnvironmentObjectType.SmokeEmitter) {
@@ -327,9 +323,6 @@ void _parseEnvironmentObjects() {
     assert(width != null);
     assert(height != null);
 
-
-
-
     Float32List dst = Float32List(4);
     dst[0] = 1;
     dst[1] = 0;
@@ -343,7 +336,14 @@ void _parseEnvironmentObjects() {
     src[3] = height; // bottom
 
     EnvironmentObject envObject = EnvironmentObject(
-        x: x, y: y, type: type, dst: dst, src: src, image: image);
+        x: x,
+        y: y,
+        type: type,
+        dst: dst,
+        src: src,
+        image: image,
+        radius: radius
+    );
 
     envObject.tileRow = getRow(envObject.x, envObject.y);
     envObject.tileColumn = getColumn(envObject.x, envObject.y);
