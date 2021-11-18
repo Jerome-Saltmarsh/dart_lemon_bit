@@ -95,14 +95,13 @@
 [ ] Audio walk on grass
 [ ] Right click to pan
 [ ] Glow worms
-[ ] Select weapon menu
+[ ] Flowing Bat
 [ ] Weapon Baseball Bat
 [ ] Npc wander
 [ ] Fix Zombie Idle animation
 [ ] Fix Changing Weapon Shade
 [ ] Design Palette
 [ ] Design Tree Model
-[ ] Fix Zombies vanish on death bug
 [ ] Remove player walk (its always better to run, no stamina)
 [ ] Right Click to aim (aiming improves accuracy)
 [ ] Fix Firing AssaultRifle animation
@@ -117,13 +116,13 @@
 [ ] Kill the vampire
 [ ] Splash Screen
 [ ] Firebolt explode on impact
-
 [ ] Draw all sprites on single sprite call (potentially massive optimization)
 [ ] Pack all sprites into single sprite sheet
+[ ] Fix Zombies vanish on death bug
+-- CURRENT -- 
 [ ] Pack character into sprite sheets
-
-[ ] Fix firing shotgun bug
-
+-- FINISHED -- 
+[x] Fix firing shotgun bug
 [x] Fix Animated Torches
 [x] Fix culling bug
 [x] Downloading Screen
