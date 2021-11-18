@@ -288,14 +288,14 @@ class _Images {
     imageSpriteWidth = {
       images.objects48: 48.0,
       images.objects96: 96.0,
-      images.objects150: 96.0,
+      images.objects150: 150.0,
       images.palisades: 48
     };
 
     imageSpriteHeight = {
       images.objects48: 48.0,
       images.objects96: 96.0,
-      images.objects150: 96.0,
+      images.objects150: 150.0,
       images.palisades: 100
     };
   }
