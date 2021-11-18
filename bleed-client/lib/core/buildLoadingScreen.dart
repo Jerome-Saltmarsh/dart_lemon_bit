@@ -23,11 +23,12 @@ Widget buildLoadingScreen(BuildContext context) {
               width: _width,
               height: _height,
               decoration: BoxDecoration(
-                color: Colors.black,
-                border: Border.all(color: Colors.white, width: 2),
+                color: Colors.white,
+                border: Border.all(color: Colors.black, width: 2),
               ),
               alignment: Alignment.centerLeft,
               child: Container(
+                color: Colors.black,
                 width: _width * value,
                 height: _height,
               ),

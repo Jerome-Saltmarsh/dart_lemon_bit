@@ -7,7 +7,6 @@ import 'package:lemon_engine/functions/load_image.dart';
 
 final _Images images = _Images();
 
-Map<EnvironmentObjectType, List<Image>> typeShades;
 Map<EnvironmentObjectType, Image> environmentObjectImage;
 Map<Image, double> imageSpriteWidth = {};
 Map<Image, double> imageSpriteHeight = {};
@@ -24,11 +23,11 @@ Map<EnvironmentObjectType, int> environmentObjectIndex = {
   EnvironmentObjectType.House01: 1,
   EnvironmentObjectType.House02: 2,
   EnvironmentObjectType.Palisade: 1,
-  EnvironmentObjectType.Palisade_V: 2,
-  EnvironmentObjectType.Palisade_H: 3,
+  EnvironmentObjectType.Palisade_H: 2,
+  EnvironmentObjectType.Palisade_V: 3,
 };
 
-const double _totalImages = 111;
+const double _totalImages = 71;
 double _imagesLoaded = 0;
 
 void _imageLoaded(){
@@ -38,7 +37,6 @@ void _imageLoaded(){
 
 
 class _Images {
-
   Image objects48;
   Image objects96;
   Image objects150;
@@ -48,37 +46,6 @@ class _Images {
   Image handgun;
   Image items;
   Image crate;
-  Image house;
-  Image houseDay;
-  Image house02;
-  Image treeA1;
-  Image treeA2;
-  Image treeA3;
-  Image treeA4;
-  Image treeB1;
-  Image treeB2;
-  Image treeB3;
-  Image treeB4;
-  Image rock1;
-  Image rock2;
-  Image rock3;
-  Image rock4;
-  Image palisade1;
-  Image palisade2;
-  Image palisade3;
-  Image palisade4;
-  Image palisadeH1;
-  Image palisadeH2;
-  Image palisadeH3;
-  Image palisadeH4;
-  Image palisadeV1;
-  Image palisadeV2;
-  Image palisadeV3;
-  Image palisadeV4;
-  Image grave1;
-  Image grave2;
-  Image grave3;
-  Image grave4;
   Image circle64;
   Image circle;
   Image radial64_50;
@@ -95,14 +62,6 @@ class _Images {
   Image torch_04;
   Image torchOut;
   Image bridge;
-  Image treeStump1;
-  Image treeStump2;
-  Image treeStump3;
-  Image treeStump4;
-  Image rockSmall1;
-  Image rockSmall2;
-  Image rockSmall3;
-  Image rockSmall4;
   Image manIdle;
   Image manIdleHandgun1;
   Image manIdleHandgun2;
@@ -149,10 +108,6 @@ class _Images {
   Image zombieIdleMedium;
   Image zombieIdleDark;
   Image empty;
-  Image longGrass1;
-  Image longGrass2;
-  Image longGrass3;
-  Image longGrass4;
   Image fireball;
 
   List<Image> flames = [];
@@ -170,14 +125,6 @@ class _Images {
     _imageLoaded();
     palisades = await _png("palisades");
     _imageLoaded();
-    longGrass1 = await _png('long-grass1');
-    _imageLoaded();
-    longGrass2 = await _png('long-grass2');
-    _imageLoaded();
-    longGrass3 = await _png('long-grass3');
-    _imageLoaded();
-    longGrass4 = await _png('long-grass4');
-    _imageLoaded();
     tiles = await loadImage("images/tiles.png");
     _imageLoaded();
     particles = await loadImage('images/particles.png');
@@ -187,68 +134,6 @@ class _Images {
     items = await loadImage("images/items.png");
     _imageLoaded();
     crate = await loadImage("images/crate.png");
-    _imageLoaded();
-    house = await loadImage("images/house.png");
-    _imageLoaded();
-    houseDay = await loadImage("images/house-day.png");
-    _imageLoaded();
-    house02 = await loadImage("images/house02.png");
-    _imageLoaded();
-    treeA1 = await loadImage("images/treeA1.png");
-    _imageLoaded();
-    treeA2 = await loadImage("images/treeA2.png");
-    _imageLoaded();
-    treeA3 = await loadImage("images/treeA3.png");
-    _imageLoaded();
-    treeA4 = await loadImage("images/treeA4.png");
-    _imageLoaded();
-    treeB1 = await loadImage("images/treeB1.png");
-    _imageLoaded();
-    treeB2 = await loadImage("images/treeB2.png");
-    _imageLoaded();
-    treeB3 = await loadImage("images/treeB3.png");
-    _imageLoaded();
-    treeB4 = await loadImage("images/treeB4.png");
-    _imageLoaded();
-    rock1 = await loadImage("images/rock1.png");
-    _imageLoaded();
-    rock2 = await loadImage("images/rock2.png");
-    _imageLoaded();
-    rock3 = await loadImage("images/rock3.png");
-    _imageLoaded();
-    rock4 = await loadImage("images/rock4.png");
-    _imageLoaded();
-    palisade1 = await loadImage("images/palisade1.png");
-    _imageLoaded();
-    palisade2 = await loadImage("images/palisade2.png");
-    _imageLoaded();
-    palisade3 = await loadImage("images/palisade3.png");
-    _imageLoaded();
-    palisade4 = await loadImage("images/palisade4.png");
-    _imageLoaded();
-    palisadeH1 = await loadImage("images/palisade-h1.png");
-    _imageLoaded();
-    palisadeH2 = await loadImage("images/palisade-h2.png");
-    _imageLoaded();
-    palisadeH3 = await loadImage("images/palisade-h3.png");
-    _imageLoaded();
-    palisadeH4 = await loadImage("images/palisade-h4.png");
-    _imageLoaded();
-    palisadeV1 = await loadImage("images/palisade-v1.png");
-    _imageLoaded();
-    palisadeV2 = await loadImage("images/palisade-v2.png");
-    _imageLoaded();
-    palisadeV3 = await loadImage("images/palisade-v3.png");
-    _imageLoaded();
-    palisadeV4 = await loadImage("images/palisade-v4.png");
-    _imageLoaded();
-    grave1 = await loadImage("images/grave1.png");
-    _imageLoaded();
-    grave2 = await loadImage("images/grave2.png");
-    _imageLoaded();
-    grave3 = await loadImage("images/grave3.png");
-    _imageLoaded();
-    grave4 = await loadImage("images/grave4.png");
     _imageLoaded();
     circle64 = await loadImage("images/circle-64.png");
     _imageLoaded();
@@ -279,22 +164,6 @@ class _Images {
     torchOut = await loadImage("images/torch-out.png");
     _imageLoaded();
     bridge = await loadImage("images/bridge.png");
-    _imageLoaded();
-    treeStump1 = await loadImage("images/tree-stump1.png");
-    _imageLoaded();
-    treeStump2 = await loadImage("images/tree-stump2.png");
-    _imageLoaded();
-    treeStump3 = await loadImage("images/tree-stump3.png");
-    _imageLoaded();
-    treeStump4 = await loadImage("images/tree-stump4.png");
-    _imageLoaded();
-    rockSmall1 = await loadImage("images/rock-small1.png");
-    _imageLoaded();
-    rockSmall2 = await loadImage("images/rock-small2.png");
-    _imageLoaded();
-    rockSmall3 = await loadImage("images/rock-small3.png");
-    _imageLoaded();
-    rockSmall4 = await loadImage("images/rock-small4.png");
     _imageLoaded();
     manUnarmedRunning1 = await loadImage("images/man-unarmed-running-1.png");
     _imageLoaded();
@@ -400,69 +269,6 @@ class _Images {
     ];
     torch = torch_01;
 
-    typeShades = {
-      EnvironmentObjectType.Rock: [
-        rock1,
-        rock2,
-        rock3,
-        rock4,
-      ],
-      EnvironmentObjectType.Tree01: [
-        treeA1,
-        treeA2,
-        treeA3,
-        treeA4,
-      ],
-      EnvironmentObjectType.Tree02: [
-        treeB1,
-        treeB2,
-        treeB3,
-        treeB4,
-      ],
-      EnvironmentObjectType.Tree_Stump: [
-        treeStump1,
-        treeStump2,
-        treeStump3,
-        treeStump4,
-      ],
-      EnvironmentObjectType.Grave: [
-        grave1,
-        grave2,
-        grave3,
-        grave4,
-      ],
-      EnvironmentObjectType.LongGrass: [
-        longGrass1,
-        longGrass2,
-        longGrass3,
-        longGrass4,
-      ],
-      EnvironmentObjectType.Palisade: [
-        palisade1,
-        palisade2,
-        palisade3,
-        palisade4,
-      ],
-      EnvironmentObjectType.Palisade_H: [
-        palisadeH1,
-        palisadeH2,
-        palisadeH3,
-        palisadeH4,
-      ],
-      EnvironmentObjectType.Palisade_V: [
-        palisadeV1,
-        palisadeV2,
-        palisadeV3,
-        palisadeV4,
-      ],
-      EnvironmentObjectType.Rock_Small: [
-        rockSmall1,
-        rockSmall2,
-        rockSmall3,
-        rockSmall4,
-      ]
-    };
-
     environmentObjectImage = {
       EnvironmentObjectType.Rock: objects48,
       EnvironmentObjectType.Grave: objects48,
@@ -490,7 +296,7 @@ class _Images {
       images.objects48: 48.0,
       images.objects96: 96.0,
       images.objects150: 96.0,
-      images.palisades: 72
+      images.palisades: 100
     };
   }
 }

@@ -313,7 +313,7 @@ void _parseEnvironmentObjects() {
     }
 
     Image image = environmentObjectImage[type];
-    int index = environmentObjectIndex[type];
+    int index = environmentObjectIndex[type] - 1;
     double width = imageSpriteWidth[image];
     double height = imageSpriteHeight[image];
 
