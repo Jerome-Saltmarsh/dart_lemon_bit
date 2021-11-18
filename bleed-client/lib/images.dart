@@ -17,7 +17,7 @@ Map<EnvironmentObjectType, int> environmentObjectIndex = {
   EnvironmentObjectType.Tree_Stump: 3,
   EnvironmentObjectType.Rock_Small: 4,
   EnvironmentObjectType.LongGrass: 5,
-  EnvironmentObjectType.Torch: 6,
+  EnvironmentObjectType.Torch: 1,
   EnvironmentObjectType.Tree01: 1,
   EnvironmentObjectType.Tree02: 2,
   EnvironmentObjectType.House01: 1,
@@ -109,6 +109,7 @@ class _Images {
   Image zombieIdleDark;
   Image empty;
   Image fireball;
+  Image torches;
 
   List<Image> flames = [];
 
@@ -117,6 +118,8 @@ class _Images {
   }
 
   Future load() async {
+    torches = await _png("torches");
+    _imageLoaded();
     objects48 = await _png("objects-48");
     _imageLoaded();
     objects96 = await _png("objects-96");
@@ -275,7 +278,7 @@ class _Images {
       EnvironmentObjectType.Tree_Stump: objects48,
       EnvironmentObjectType.Rock_Small: objects48,
       EnvironmentObjectType.LongGrass: objects48,
-      EnvironmentObjectType.Torch: objects48,
+      EnvironmentObjectType.Torch: torches,
       EnvironmentObjectType.Tree01: objects96,
       EnvironmentObjectType.Tree02: objects96,
       EnvironmentObjectType.House01: objects150,
@@ -289,14 +292,16 @@ class _Images {
       images.objects48: 48.0,
       images.objects96: 96.0,
       images.objects150: 150.0,
-      images.palisades: 48
+      images.palisades: 48,
+      images.torches: 25,
     };
 
     imageSpriteHeight = {
       images.objects48: 48.0,
       images.objects96: 96.0,
       images.objects150: 150.0,
-      images.palisades: 100
+      images.palisades: 100,
+      images.torches: 70,
     };
   }
 }

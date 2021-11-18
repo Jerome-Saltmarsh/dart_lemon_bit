@@ -38,7 +38,6 @@ import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/utils/list_util.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/time.dart';
-import 'package:lemon_engine/state/initialized.dart';
 import 'package:neuro/instance.dart';
 
 import 'classes/Score.dart';
@@ -289,8 +288,9 @@ void parseState() {
 }
 
 void _parseEnvironmentObjects() {
-
+  print("parseEnvironmentObjects()");
   game.environmentObjects.clear();
+  game.torches.clear();
 
   while (!_simiColonConsumed()) {
     double x = _consumeDouble();
@@ -298,14 +298,18 @@ void _parseEnvironmentObjects() {
     double radius = _consumeDouble();
     EnvironmentObjectType type = _consumeEnvironmentObjectType();
 
-    if (type == EnvironmentObjectType.SmokeEmitter) {
-      game.particleEmitters
-          .add(ParticleEmitter(x: x, y: y, rate: 20, emit: emitSmoke));
-    }
-
-    if (type == EnvironmentObjectType.MystEmitter) {
-      game.particleEmitters
-          .add(ParticleEmitter(x: x, y: y, rate: 20, emit: emitMyst));
+    switch(type){
+      case EnvironmentObjectType.SmokeEmitter:
+        game.particleEmitters
+            .add(ParticleEmitter(x: x, y: y, rate: 20, emit: emitSmoke));
+        break;
+      case EnvironmentObjectType.MystEmitter:
+        game.particleEmitters
+            .add(ParticleEmitter(x: x, y: y, rate: 20, emit: emitMyst));
+        break;
+      default:
+        // ignore
+        break;
     }
 
     Image image = environmentObjectImage[type];
@@ -313,6 +317,9 @@ void _parseEnvironmentObjects() {
     double width = imageSpriteWidth[image];
     double height = imageSpriteHeight[image];
 
+    if (index == null){
+      throw Exception("no index found for $type");
+    }
     if (image == null){
       throw Exception("no image found for $type");
     }
@@ -344,6 +351,10 @@ void _parseEnvironmentObjects() {
         image: image,
         radius: radius
     );
+
+    if (type == EnvironmentObjectType.Torch){
+      game.torches.add(envObject);
+    }
 
     envObject.tileRow = getRow(envObject.x, envObject.y);
     envObject.tileColumn = getColumn(envObject.x, envObject.y);

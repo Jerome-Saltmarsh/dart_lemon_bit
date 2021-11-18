@@ -58,18 +58,26 @@ import 'drawParticle.dart';
 
 final double _nameRadius = 100;
 int _flameIndex = 0;
-
+int _flameRenderIndex = 0;
 bool get dayTime => ambient.index == Shade.Bright.index;
+const animationFrameRate = 7; // frames per change;
 
 void renderCanvasPlay() {
+
+  if (frameRateValue++ % animationFrameRate == 0) {
+    drawFrame++;
+    _flameIndex = (_flameIndex + 1) % 4;
+    _flameRenderIndex = _flameIndex + 1;
+  }
+
   if (!dayTime) {
-    _updateTorchFrames();
     resetDynamicShadesToBakeMap();
     applyCharacterLightEmission(game.humans);
     applyProjectileLighting();
     applyNpcLightEmission(game.interactableNpcs);
     calculateTileSrcRects();
     applyLightingToEnvironmentObjects();
+    _updateTorchFrames();
   }
 
   drawTiles();
@@ -79,10 +87,8 @@ void renderCanvasPlay() {
   _renderItems();
   _drawSprites();
 
-  // drawDebugEnvironmentObjects();
-
-
   if (settings.compilePaths) {
+    drawDebugEnvironmentObjects();
     drawPaths();
     drawDebugNpcs(game.npcDebug);
   }
@@ -116,11 +122,9 @@ void applyProjectileLighting() {
 }
 
 void _updateTorchFrames() {
-  frameRateValue++;
-  if (frameRateValue % 7 != 0) return;
-  drawFrame++;
-  _flameIndex = (_flameIndex + 1) % 4;
-  images.torch = images.flames[_flameIndex];
+  for(EnvironmentObject torch in game.torches){
+    setSrcIndex(torch, _flameRenderIndex);
+  }
 }
 
 void _drawFloatingTexts() {

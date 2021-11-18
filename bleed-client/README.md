@@ -120,8 +120,8 @@
 [ ] Pack character into sprite sheets
 
 [ ] Fix Animated Torches
-[ ] Fix culling bug
 
+[x] Fix culling bug
 [x] Downloading Screen
 [x] Level Max Ambient Light
 [x] Ability Caste Fireball (Wizard)

@@ -21,6 +21,7 @@ class Game {
   int cratesTotal = 0;
   List<EnvironmentObject> backgroundObjects = [];
   List<EnvironmentObject> environmentObjects = [];
+  List<EnvironmentObject> torches = [];
   List<List<Tile>> tiles = [];
   int totalColumns = 0;
   int totalRows = 0;
