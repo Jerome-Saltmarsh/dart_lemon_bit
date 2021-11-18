@@ -139,7 +139,7 @@ Image mapCharacterToImageMan(
       if (shade == Shade.Bright) {
         return images.manWalkingBright;
       }
-      return images.manWalking;
+      return images.manWalkingUnarmed;
     case CharacterState.Firing:
       switch (weapon) {
         case Weapon.HandGun:
