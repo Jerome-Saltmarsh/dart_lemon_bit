@@ -121,6 +121,8 @@
 [ ] Pack all sprites into single sprite sheet
 [ ] Pack character into sprite sheets
 
+[ ] Fix firing shotgun bug
+
 [x] Fix Animated Torches
 [x] Fix culling bug
 [x] Downloading Screen

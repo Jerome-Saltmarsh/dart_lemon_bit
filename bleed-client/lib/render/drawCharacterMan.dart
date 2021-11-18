@@ -12,14 +12,14 @@ void drawCharacterMan(Character character) {
   if (!onScreen(character.x, character.y)) return;
   if (!character.alive && isWaterAt(character.x, character.y)) return;
 
-  Shade shading = getShadeAtPosition(character.x, character.y);
-  if (shading.index >= Shade.PitchBlack.index) return;
+  Shade shade = getShadeAtPosition(character.x, character.y);
+  if (shade.index >= Shade.PitchBlack.index) return;
 
   drawImageRect(
     mapCharacterToImageMan(
         character.state,
         character.weapon,
-        shading
+        shade
     ),
     mapCharacterToSrcMan(
         character.weapon,
