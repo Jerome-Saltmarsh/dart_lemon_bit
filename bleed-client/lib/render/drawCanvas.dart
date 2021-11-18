@@ -32,7 +32,6 @@ import 'package:bleed_client/render/state/floatingText.dart';
 import 'package:bleed_client/render/state/items.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/state/settings.dart';
-import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -41,7 +40,6 @@ import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/queries/on_screen.dart';
 import 'package:lemon_engine/render/draw_atlas.dart';
 import 'package:lemon_engine/render/draw_circle.dart';
-import 'package:lemon_engine/render/draw_image_rect.dart';
 import 'package:lemon_engine/render/draw_text.dart';
 import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_engine/state/paint.dart';
@@ -204,7 +202,7 @@ void _drawSprites() {
     if (environmentRemaining) {
       EnvironmentObject env = game.environmentObjects[indexEnv];
 
-      if (env.dst.top > screen.bottom) return;
+      if (env.top > screen.bottom) return;
 
       if (!particlesRemaining || env.y < game.particles[indexParticle].y) {
         if (!zombiesRemaining || env.y < game.zombies[indexZombie].y) {
@@ -247,26 +245,18 @@ void _drawSprites() {
 }
 
 bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {
-  if (environmentObject.dst.top > screen.bottom) return false;
-  if (environmentObject.dst.right < screen.left) return false;
-  if (environmentObject.dst.left > screen.right) return false;
-  if (environmentObject.dst.bottom < screen.top) return false;
+  if (environmentObject.top > screen.bottom) return false;
+  if (environmentObject.right < screen.left) return false;
+  if (environmentObject.left > screen.right) return false;
+  if (environmentObject.bottom < screen.top) return false;
   return true;
 }
 
 void drawEnvironmentObject(EnvironmentObject environmentObject) {
-  if (!environmentObjectOnScreenScreen(environmentObject)) return;
-
-  drawImageRect(
-      environmentObject.image, environmentObject.src, environmentObject.dst);
-}
-
-void _drawNpcBonusPointsCircles() {
-  for (int i = 0; i < game.totalZombies; i++) {
-    if (game.zombies[i].scoreMultiplier == "1") continue;
-    Zombie npc = game.zombies[i];
-    drawCircle(npc.x, npc.y, 10, colours.orange);
-  }
+  // if (!environmentObjectOnScreenScreen(environmentObject)) return;
+  globalCanvas.drawRawAtlas(environmentObject.image, environmentObject.dst, environmentObject.src, null, null, null, paint);
+  // drawImageRect(
+  //     environmentObject.image, environmentObject.src, environmentObject.dst);
 }
 
 void _renderItems() {

@@ -1,4 +1,5 @@
 
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
@@ -10,9 +11,36 @@ class EnvironmentObject {
   int tileColumn;
   Image image;
   final EnvironmentObjectType type;
-  final Rect dst;
-  final Rect src;
+  // final Rect dst;
+  // final Rect src;
   final bool generated;
 
-  EnvironmentObject({this.x, this.y, this.type, this.image, this.src, this.dst, this.generated = false});
+  final Float32List dst;
+  final Float32List src;
+
+  double _size;
+  double _top;
+  double _right;
+  double _bottom;
+  double _left;
+
+  double get top => _top;
+  double get right => _right;
+  double get bottom => _bottom;
+  double get left => _left;
+
+  EnvironmentObject({this.x, this.y, this.type, this.image, this.src, this.dst, this.generated = false}) {
+
+    double width = src[2] - src[0];
+    double height = src[3] - src[1];
+
+    double widthHalf = width * 0.5;
+    double heightHalf = height * 0.5;
+
+    _size = src[3];
+    _top = y - heightHalf;
+    _right = x + widthHalf;
+    _bottom = _top + heightHalf;
+    _left = _right - widthHalf;
+  }
 }

@@ -8,6 +8,24 @@ import 'package:lemon_engine/functions/load_image.dart';
 final _Images images = _Images();
 
 Map<EnvironmentObjectType, List<Image>> typeShades;
+Map<EnvironmentObjectType, Image> environmentObjectImage;
+Map<Image, double> imageSpriteWidth = {};
+Map<Image, double> imageSpriteHeight = {};
+
+Map<EnvironmentObjectType, int> environmentObjectIndex = {
+  EnvironmentObjectType.Rock: 1,
+  EnvironmentObjectType.Grave: 2,
+  EnvironmentObjectType.Tree_Stump: 3,
+  EnvironmentObjectType.Rock_Small: 4,
+  EnvironmentObjectType.LongGrass: 5,
+  EnvironmentObjectType.Tree01: 1,
+  EnvironmentObjectType.Tree02: 2,
+  EnvironmentObjectType.House01: 1,
+  EnvironmentObjectType.House02: 2,
+  EnvironmentObjectType.Palisade: 1,
+  EnvironmentObjectType.Palisade_H: 2,
+  EnvironmentObjectType.Palisade_V: 3,
+};
 
 const double _totalImages = 111;
 double _imagesLoaded = 0;
@@ -21,6 +39,9 @@ void _imageLoaded(){
 class _Images {
 
   Image objects48;
+  Image objects96;
+  Image objects150;
+  Image palisades;
   Image tiles;
   Image particles;
   Image handgun;
@@ -141,6 +162,12 @@ class _Images {
 
   Future load() async {
     objects48 = await _png("objects-48");
+    _imageLoaded();
+    objects96 = await _png("objects-96");
+    _imageLoaded();
+    objects150 = await _png("objects-150");
+    _imageLoaded();
+    palisades = await _png("palisades");
     _imageLoaded();
     longGrass1 = await _png('long-grass1');
     _imageLoaded();
@@ -433,6 +460,35 @@ class _Images {
         rockSmall3,
         rockSmall4,
       ]
+    };
+
+    environmentObjectImage = {
+      EnvironmentObjectType.Rock: objects48,
+      EnvironmentObjectType.Grave: objects48,
+      EnvironmentObjectType.Tree_Stump: objects48,
+      EnvironmentObjectType.Rock_Small: objects48,
+      EnvironmentObjectType.LongGrass: objects48,
+      EnvironmentObjectType.Tree01: objects96,
+      EnvironmentObjectType.Tree02: objects96,
+      EnvironmentObjectType.House01: objects150,
+      EnvironmentObjectType.House02: objects150,
+      EnvironmentObjectType.Palisade: palisades,
+      EnvironmentObjectType.Palisade_H: palisades,
+      EnvironmentObjectType.Palisade_V: palisades,
+    };
+
+    imageSpriteWidth = {
+      images.objects48: 48.0,
+      images.objects96: 96.0,
+      images.objects150: 96.0,
+      images.palisades: 48
+    };
+
+    imageSpriteHeight = {
+      images.objects48: 48.0,
+      images.objects96: 96.0,
+      images.objects150: 96.0,
+      images.palisades: 72
     };
   }
 }

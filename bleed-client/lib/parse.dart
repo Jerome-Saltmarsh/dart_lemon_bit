@@ -1,3 +1,4 @@
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:bleed_client/audio.dart';
@@ -16,27 +17,26 @@ import 'package:bleed_client/common/ServerResponse.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:bleed_client/core/init.dart';
 import 'package:bleed_client/enums/InventoryItemType.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/emit/emitMyst.dart';
 import 'package:bleed_client/functions/emitSmoke.dart';
-import 'package:bleed_client/core/init.dart';
-import 'package:bleed_client/watches/compiledGame.dart';
-import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/mappers/mapEnvironmentObjectTypeToImage.dart';
+import 'package:bleed_client/getters/getTileAt.dart';
+import 'package:bleed_client/images.dart';
 import 'package:bleed_client/network/functions/disconnect.dart';
 import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/network/state/connecting.dart';
-import 'package:bleed_client/render/drawCanvas.dart';
 import 'package:bleed_client/render/functions/applyEnvironmentObjectsToBakeMapping.dart';
 import 'package:bleed_client/render/functions/setBakeMapToAmbientLight.dart';
 import 'package:bleed_client/render/state/paths.dart';
-import 'package:bleed_client/getters/getTileAt.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/compose/dialogs.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/utils/list_util.dart';
+import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:lemon_engine/state/initialized.dart';
 import 'package:neuro/instance.dart';
@@ -288,9 +288,6 @@ void parseState() {
   }
 }
 
-const double _imgWidth = 100;
-const double _imgHeight = 120;
-
 void _parseEnvironmentObjects() {
   if (!initialized.value) {
     print(
@@ -315,17 +312,25 @@ void _parseEnvironmentObjects() {
           .add(ParticleEmitter(x: x, y: y, rate: 20, emit: emitMyst));
     }
 
-    Image image = mapEnvironmentObjectTypeToImage(type);
-    Rect src = Rect.fromLTWH(0, 0, _imgWidth, _imgHeight);
+    Image image = environmentObjectImage[type];
+    int index = environmentObjectIndex[type];
+    double width = imageSpriteWidth[image];
+    double height = imageSpriteHeight[image];
+
+    Float32List dst = Float32List(4);
+    dst[0] = 1;
+    dst[1] = 0;
+    dst[2] = x - (width * 0.5);
+    dst[3] = y - (height * 0.6666);
+
+    Float32List src = Float32List(4);
+    src[0] = index * width; // left
+    src[1] = 0; // top
+    src[2] = index * width + width; // right
+    src[3] = height; // bottom
 
     EnvironmentObject envObject = EnvironmentObject(
-        x: x,
-        y: y,
-        type: type,
-        dst: Rect.fromLTWH(x - _imgWidth * 0.5, y - _imgHeight * 0.6666,
-            _imgWidth, _imgHeight),
-        src: src,
-        image: image);
+        x: x, y: y, type: type, dst: dst, src: src, image: image);
 
     envObject.tileRow = getRow(envObject.x, envObject.y);
     envObject.tileColumn = getColumn(envObject.x, envObject.y);
@@ -645,7 +650,7 @@ void _parseProjectiles() {
   }
 }
 
-ProjectileType _consumeProjectileType(){
+ProjectileType _consumeProjectileType() {
   return projectileTypes[_consumeInt()];
 }
 
@@ -701,6 +706,6 @@ void _consumeInteractableNpc(Character interactableNpc) {
   interactableNpc.name = _consumeString();
 }
 
-Shade _consumeShade(){
+Shade _consumeShade() {
   return shades[_consumeInt()];
 }
