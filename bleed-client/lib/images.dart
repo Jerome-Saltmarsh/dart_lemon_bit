@@ -4,8 +4,14 @@ import 'dart:ui';
 import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
 import 'package:bleed_client/core/buildLoadingScreen.dart';
 import 'package:lemon_engine/functions/load_image.dart';
+import 'package:lemon_watch/watch.dart';
 
 final _Images images = _Images();
+const double _totalImages = 68;
+
+Watch<double> _imagesLoaded = Watch(0, onChanged: (double value){
+  download.value =  value / _totalImages;
+});
 
 Map<EnvironmentObjectType, Image> environmentObjectImage;
 Map<Image, double> imageSpriteWidth = {};
@@ -26,15 +32,6 @@ Map<EnvironmentObjectType, int> environmentObjectIndex = {
   EnvironmentObjectType.Palisade_H: 2,
   EnvironmentObjectType.Palisade_V: 3,
 };
-
-const double _totalImages = 68;
-double _imagesLoaded = 0;
-
-void _imageLoaded(){
-  _imagesLoaded++;
-  download.value =  _imagesLoaded / _totalImages;
-}
-
 
 class _Images {
   Image objects48;
@@ -107,149 +104,81 @@ class _Images {
   Image fireball;
   Image torches;
 
-  Future<Image> _png(String fileName){
-    return loadImage('images/$fileName.png');
+  Future<Image> _png(String fileName) async {
+    Image image = await loadImage('images/$fileName.png');
+    _imagesLoaded.value++;
+    return image;
   }
 
   Future load() async {
     torches = await _png("torches");
-    _imageLoaded();
     objects48 = await _png("objects-48");
-    _imageLoaded();
     objects96 = await _png("objects-96");
-    _imageLoaded();
     objects150 = await _png("objects-150");
-    _imageLoaded();
     palisades = await _png("palisades");
-    _imageLoaded();
-    tiles = await loadImage("images/tiles.png");
-    _imageLoaded();
-    particles = await loadImage('images/particles.png');
-    _imageLoaded();
-    handgun = await loadImage('images/weapon-handgun.png');
-    _imageLoaded();
-    items = await loadImage("images/items.png");
-    _imageLoaded();
-    crate = await loadImage("images/crate.png");
-    _imageLoaded();
-    circle64 = await loadImage("images/circle-64.png");
-    _imageLoaded();
+    tiles = await _png("tiles");
+    particles = await _png('particles');
+    handgun = await _png('weapon-handgun');
+    items = await _png("items");
+    crate = await _png("crate");
+    circle64 = await _png("circle-64");
     circle = await _png("circle");
-    _imageLoaded();
-    radial64_50 = await loadImage("images/radial-64-50.png");
-    _imageLoaded();
-    radial64_40 = await loadImage("images/radial-64-40.png");
-    _imageLoaded();
-    radial64_30 = await loadImage("images/radial-64-30.png");
-    _imageLoaded();
-    radial64_20 = await loadImage("images/radial-64-20.png");
-    _imageLoaded();
-    radial64_10 = await loadImage("images/radial-64-10.png");
-    _imageLoaded();
-    radial64_05 = await loadImage("images/radial-64-05.png");
-    _imageLoaded();
-    radial64_02 = await loadImage("images/radial-64-02.png");
-    _imageLoaded();
-    torchOut = await loadImage("images/torch-out.png");
-    _imageLoaded();
-    bridge = await loadImage("images/bridge.png");
-    _imageLoaded();
-    manUnarmedRunning = await loadImage("images/man-unarmed-running.png");
-    _imageLoaded();
-    manUnarmedRunning1 = await loadImage("images/man-unarmed-running-1.png");
-    _imageLoaded();
-    manUnarmedRunning2 = await loadImage("images/man-unarmed-running-2.png");
-    _imageLoaded();
-    manUnarmedRunning3 = await loadImage("images/man-unarmed-running-3.png");
-    _imageLoaded();
-    manFiringHandgun1 = await loadImage("images/man-firing-handgun-1.png");
-    _imageLoaded();
-    manFiringHandgun2 = await loadImage("images/man-firing-handgun-2.png");
-    _imageLoaded();
-    manFiringHandgun3 = await loadImage("images/man-firing-handgun-3.png");
-    _imageLoaded();
-    manFiringShotgun1 = await loadImage("images/man-firing-shotgun-1.png");
-    _imageLoaded();
-    manFiringShotgun2 = await loadImage("images/man-firing-shotgun-2.png");
-    _imageLoaded();
-    manFiringShotgun3 = await loadImage("images/man-firing-shotgun-3.png");
-    _imageLoaded();
+    radial64_50 = await _png("radial-64-50");
+    radial64_40 = await _png("radial-64-40");
+    radial64_30 = await _png("radial-64-30");
+    radial64_20 = await _png("radial-64-20");
+    radial64_10 = await _png("radial-64-10");
+    radial64_05 = await _png("radial-64-05");
+    radial64_02 = await _png("radial-64-02");
+    torchOut = await _png("torch-out");
+    bridge = await _png("bridge");
+    manUnarmedRunning = await _png("man-unarmed-running");
+    manUnarmedRunning1 = await _png("man-unarmed-running-1");
+    manUnarmedRunning2 = await _png("man-unarmed-running-2");
+    manUnarmedRunning3 = await _png("man-unarmed-running-3");
+    manFiringHandgun1 = await _png("man-firing-handgun-1");
+    manFiringHandgun2 = await _png("man-firing-handgun-2");
+    manFiringHandgun3 = await _png("man-firing-handgun-3");
+    manFiringShotgun1 = await _png("man-firing-shotgun-2");
+    manFiringShotgun3 = await _png("man-firing-shotgun-3");
     manIdleShotgun01 = await _png("man-idle-shotgun-1");
-    _imageLoaded();
     manIdleShotgun02 = await _png("man-idle-shotgun-2");
-    _imageLoaded();
     manIdleShotgun03 = await _png("man-idle-shotgun-3");
-    _imageLoaded();
     manIdleShotgun04 = await _png("man-idle-shotgun-4");
-    _imageLoaded();
     manWalkingShotgunShade1 = await _png("man-walking-shotgun-shade01");
-    _imageLoaded();
     manWalkingShotgunShade2 = await _png("man-walking-shotgun-shade02");
-    _imageLoaded();
     manWalkingShotgunShade3 = await _png("man-walking-shotgun-shade03");
-    _imageLoaded();
     manChanging1 = await _png("man-changing-1");
-    _imageLoaded();
     manChanging2 = await _png("man-changing-2");
-    _imageLoaded();
     manChanging3 = await _png("man-changing-3");
-    _imageLoaded();
     manDying1 = await _png("man-dying-1");
-    _imageLoaded();
     manDying2 = await _png("man-dying-2");
-    _imageLoaded();
     manDying3 = await _png("man-dying-3");
-    _imageLoaded();
     manStriking = await _png("man-striking");
-    _imageLoaded();
     manWalking = await _png("man-walking");
-    _imageLoaded();
     manWalkingBright = await _png("man-walking-bright");
-    _imageLoaded();
     manIdle = await _png("man-idle");
-    _imageLoaded();
     manIdleHandgun1 = await _png("man-idle-handgun-1");
-    _imageLoaded();
     manIdleHandgun2 = await _png("man-idle-handgun-2");
-    _imageLoaded();
     manIdleHandgun3 = await _png("man-idle-handgun-3");
-    _imageLoaded();
     manIdleBright = await _png("man-idle-bright");
-    _imageLoaded();
     zombieWalkingBright = await _png("zombie-walking-1");
-    _imageLoaded();
     zombieWalkingMedium = await _png("zombie-walking-2");
-    _imageLoaded();
     zombieWalkingDark = await _png("zombie-walking-3");
-    _imageLoaded();
     zombieDyingBright = await _png("zombie-dying-bright");
-    _imageLoaded();
     zombieDyingMedium = await _png("zombie-dying-medium");
-    _imageLoaded();
     zombieDyingDark = await _png("zombie-dying-dark");
-    _imageLoaded();
     zombieStriking1 = await _png("zombie-striking-1");
-    _imageLoaded();
     zombieStriking2 = await _png("zombie-striking-2");
-    _imageLoaded();
     zombieStriking3 = await _png("zombie-striking-3");
-    _imageLoaded();
     zombieIdleBright = await _png("zombie-idle-bright");
-    _imageLoaded();
     zombieIdleMedium = await _png("zombie-idle-medium");
-    _imageLoaded();
     zombieIdleDark = await _png("zombie-idle-dark");
-    _imageLoaded();
     fireball = await _png("fireball");
-    _imageLoaded();
     empty = await _png("empty");
-    _imageLoaded();
     manWalkingHandgun1 = await _png("man-walking-handgun-1");
-    _imageLoaded();
     manWalkingHandgun2 = await _png("man-walking-handgun-2");
-    _imageLoaded();
     manWalkingHandgun3 = await _png("man-walking-handgun-3");
-    _imageLoaded();
 
     environmentObjectImage = {
       EnvironmentObjectType.Rock: objects48,
@@ -283,6 +212,10 @@ class _Images {
       images.torches: 70,
     };
   }
+}
+
+void _imageLoaded(){
+  _imagesLoaded.value++;
 }
 
 
