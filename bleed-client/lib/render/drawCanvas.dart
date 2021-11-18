@@ -84,9 +84,6 @@ void renderCanvasPlay() {
   _renderItems();
   _drawSprites();
 
-  drawSprite(images.objects48, -173, 1664, 0, 48.0 * 3, 48, 48.0 * 4);
-  drawSprite(images.objects48, -173, 1764, 48, 48.0, 48.0 * 2, 48.0 * 2);
-
   if (settings.compilePaths) {
     drawPaths();
     drawDebugNpcs(game.npcDebug);
