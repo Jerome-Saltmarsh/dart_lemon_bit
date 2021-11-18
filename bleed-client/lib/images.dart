@@ -9,7 +9,7 @@ final _Images images = _Images();
 
 Map<EnvironmentObjectType, List<Image>> typeShades;
 
-const double _totalImages = 110;
+const double _totalImages = 111;
 double _imagesLoaded = 0;
 
 void _imageLoaded(){
@@ -20,6 +20,7 @@ void _imageLoaded(){
 
 class _Images {
 
+  Image objects48;
   Image tiles;
   Image particles;
   Image handgun;
@@ -139,6 +140,8 @@ class _Images {
   }
 
   Future load() async {
+    objects48 = await _png("objects-48");
+    _imageLoaded();
     longGrass1 = await _png('long-grass1');
     _imageLoaded();
     longGrass2 = await _png('long-grass2');
