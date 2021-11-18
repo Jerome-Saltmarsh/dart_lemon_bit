@@ -11,7 +11,6 @@ const double _height = 50;
 
 Widget buildLoadingScreen(BuildContext context) {
   return WatchBuilder(download, (double value) {
-    print("download $value");
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
