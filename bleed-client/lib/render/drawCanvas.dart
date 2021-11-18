@@ -79,16 +79,7 @@ void renderCanvasPlay() {
   _renderItems();
   _drawSprites();
 
-  paint.color = Colors.red;
-  for(EnvironmentObject env in game.environmentObjects){
-    drawLine(env.left, env.top, env.right, env.top); // top left to top right
-    drawLine(env.right, env.top, env.right, env.bottom); // top left to bottom right
-    drawLine(env.right, env.bottom, env.left, env.bottom);
-    drawLine(env.left, env.top, env.left, env.bottom);
-  }
-  for(EnvironmentObject env in game.environmentObjects){
-    drawCircle(env.x, env.y, env.radius, Colors.blue);
-  }
+  // drawDebugEnvironmentObjects();
 
 
   if (settings.compilePaths) {
@@ -100,6 +91,19 @@ void renderCanvasPlay() {
   _drawPlayerNames();
   drawPlayerText();
   _drawMouseAim(); // TODO Expensive
+}
+
+void drawDebugEnvironmentObjects() {
+  paint.color = Colors.red;
+  for(EnvironmentObject env in game.environmentObjects){
+    drawLine(env.left, env.top, env.right, env.top); // top left to top right
+    drawLine(env.right, env.top, env.right, env.bottom); // top left to bottom right
+    drawLine(env.right, env.bottom, env.left, env.bottom);
+    drawLine(env.left, env.top, env.left, env.bottom);
+  }
+  for(EnvironmentObject env in game.environmentObjects){
+    drawCircle(env.x, env.y, env.radius, Colors.blue);
+  }
 }
 
 void applyProjectileLighting() {
