@@ -63,6 +63,7 @@
 [ ] UI Score Lag
 -- UI --
 -- IDEAS --
+[ ] Animate tiles flowing water
 [ ] Dynamic Shadow direction
 [ ] Black Fade Screen on change scene
 [ ] 4 sides light sources to light up rock

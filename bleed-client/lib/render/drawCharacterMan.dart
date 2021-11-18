@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/getters/getShading.dart';
@@ -15,12 +17,18 @@ void drawCharacterMan(Character character) {
   Shade shade = getShadeAtPosition(character.x, character.y);
   if (shade.index >= Shade.PitchBlack.index) return;
 
+  Image image = mapCharacterToImageMan(
+      character.state,
+      character.weapon,
+      shade
+  );
+
+  if (image == null){
+    throw Exception("could not map image for man ${character.state} ${character.weapon} $shade");
+  }
+
   drawImageRect(
-    mapCharacterToImageMan(
-        character.state,
-        character.weapon,
-        shade
-    ),
+    image,
     mapCharacterToSrcMan(
         character.weapon,
         character.state,

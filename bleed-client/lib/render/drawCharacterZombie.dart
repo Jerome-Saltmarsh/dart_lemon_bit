@@ -9,6 +9,11 @@ import 'package:bleed_client/getters/isWaterAt.dart';
 import 'package:lemon_engine/queries/on_screen.dart';
 import 'package:lemon_engine/render/draw_image_rect.dart';
 
+enum CharacterType {
+  Human,
+  Zombie
+}
+
 void drawCharacterZombie(Character character) {
   if (!character.alive && isWaterAt(character.x, character.y)) return;
   if (!onScreen(character.x, character.y)) return;

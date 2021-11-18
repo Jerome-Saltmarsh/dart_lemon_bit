@@ -139,7 +139,8 @@ class _Images {
     manFiringHandgun1 = await _png("man-firing-handgun-1");
     manFiringHandgun2 = await _png("man-firing-handgun-2");
     manFiringHandgun3 = await _png("man-firing-handgun-3");
-    manFiringShotgun1 = await _png("man-firing-shotgun-2");
+    manFiringShotgun1 = await _png("man-firing-shotgun-1");
+    manFiringShotgun2 = await _png("man-firing-shotgun-2");
     manFiringShotgun3 = await _png("man-firing-shotgun-3");
     manIdleShotgun01 = await _png("man-idle-shotgun-1");
     manIdleShotgun02 = await _png("man-idle-shotgun-2");
