@@ -7,9 +7,9 @@ import 'package:lemon_engine/functions/load_image.dart';
 import 'package:lemon_watch/watch.dart';
 
 final _Images images = _Images();
-const double _totalImages = 68;
+const int _totalImages = 68;
 
-Watch<double> _imagesLoaded = Watch(0, onChanged: (double value){
+Watch<int> _imagesLoaded = Watch(0, onChanged: (int value){
   download.value =  value / _totalImages;
 });
 
@@ -212,10 +212,6 @@ class _Images {
       images.torches: 70,
     };
   }
-}
-
-void _imageLoaded(){
-  _imagesLoaded.value++;
 }
 
 
