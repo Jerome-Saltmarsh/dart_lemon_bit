@@ -1,5 +1,4 @@
 
-import 'package:bleed_client/maths.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_math/golden_ratio.dart';

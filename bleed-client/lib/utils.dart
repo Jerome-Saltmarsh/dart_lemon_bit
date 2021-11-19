@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
@@ -52,32 +53,32 @@ double round(double value, {int decimals = 1}) {
 const double _eight = pi / 8.0;
 const double _quarter = pi / 4.0;
 
-int convertAngleToDirection(double angle) {
+Direction convertAngleToDirection(double angle) {
   if (angle < _eight) {
-    return directionUp;
+    return Direction.Up;
   }
   if (angle < _eight + (_quarter * 1)) {
-    return directionUpRight;
+    return Direction.UpRight;
   }
   if (angle < _eight + (_quarter * 2)) {
-    return directionRight;
+    return Direction.Right;
   }
   if (angle < _eight + (_quarter * 3)) {
-    return directionDownRight;
+    return Direction.DownRight;
   }
   if (angle < _eight + (_quarter * 4)) {
-    return directionDown;
+    return Direction.Down;
   }
   if (angle < _eight + (_quarter * 5)) {
-    return directionDownLeft;
+    return Direction.DownLeft;
   }
   if (angle < _eight + (_quarter * 6)) {
-    return directionLeft;
+    return Direction.Left;
   }
   if (angle < _eight + (_quarter * 7)) {
-    return directionUpLeft;
+    return Direction.UpLeft;
   }
-  return directionUp;
+  return Direction.Up;
 }
 
 // bool randomBool() {

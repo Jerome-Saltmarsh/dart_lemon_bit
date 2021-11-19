@@ -11,8 +11,6 @@ class EnvironmentObject {
   int tileColumn;
   Image image;
   final EnvironmentObjectType type;
-  // final Rect dst;
-  // final Rect src;
   final bool generated;
 
   final Float32List dst;

@@ -1,7 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/state/settings.dart';
-import 'package:bleed_client/utils.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/randomItem.dart';

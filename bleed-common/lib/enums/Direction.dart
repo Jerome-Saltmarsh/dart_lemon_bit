@@ -1,12 +1,12 @@
 enum Direction {
-  Up,
-  UpRight,
-  Right,
-  DownRight,
   Down,
-  DownLeft,
-  Left,
+  DownRight,
+  Right,
+  UpRight,
+  Up,
   UpLeft,
+  Left,
+  DownLeft,
   None,
 }
 

@@ -6,9 +6,7 @@ import 'package:lemon_math/random_between.dart';
 
 import '../audio.dart';
 import '../common/GameEventType.dart';
-import '../maths.dart';
 import '../spawn.dart';
-import '../utils.dart';
 import 'spawnBulletHole.dart';
 import 'spawners/spawnArm.dart';
 import 'spawners/spawnBlood.dart';

@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:bleed_client/editor/render/drawEditor.dart';
-import 'package:bleed_client/images.dart';
 import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/render/drawCanvas.dart';

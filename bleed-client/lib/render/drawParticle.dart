@@ -1,10 +1,10 @@
 
 import 'package:bleed_client/classes/Particle.dart';
-import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:bleed_client/constants/colours.dart';
+import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/mappers/mapDurationToMystImage.dart';
-import 'package:bleed_client/constants/colours.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/render/draw_circle.dart';
 import 'package:lemon_engine/render/draw_image.dart';

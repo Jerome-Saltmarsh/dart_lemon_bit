@@ -1,7 +1,7 @@
 import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/network/state/connecting.dart';
-import 'package:bleed_client/network/streams/onConnected.dart';
 import 'package:bleed_client/network/streams/eventStream.dart';
+import 'package:bleed_client/network/streams/onConnected.dart';
 
 void handleOnEvent(dynamic _response) {
   if (connecting) {

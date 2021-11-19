@@ -1,7 +1,7 @@
-import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/render/state/dynamicShading.dart';
 import 'package:bleed_client/render/state/tilesSrcRects.dart';
+import 'package:bleed_client/state/game.dart';
 
 const _width = 48.0;
 

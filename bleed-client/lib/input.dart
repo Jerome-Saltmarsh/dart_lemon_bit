@@ -4,7 +4,6 @@ import 'dart:ui';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/render/drawCanvas.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
@@ -17,16 +16,14 @@ import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/state/camera.dart';
 import 'package:lemon_engine/state/zoom.dart';
-import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/diff_over.dart';
 import 'package:lemon_math/distance_between.dart';
-import 'package:lemon_math/opposite.dart';
 import 'package:lemon_math/randomItem.dart';
 
 import '../common.dart';
 import '../send.dart';
 import '../settings.dart';
-import 'maths.dart';
+import 'common/enums/Direction.dart';
 import 'state.dart';
 import 'ui/logic/showTextBox.dart';
 import 'utils.dart';
@@ -357,7 +354,7 @@ void readPlayerInput() {
     }
 
     requestDirection = getKeyDirection();
-    if (requestDirection == directionNone) {
+    if (requestDirection == Direction.None) {
       requestCharacterState = characterStateIdle;
       if (mouseAvailable) {
         double mouseWorldX = mouseX + camera.x;
@@ -381,28 +378,28 @@ void readPlayerInput() {
   }
 }
 
-int getKeyDirection() {
+Direction getKeyDirection() {
   if (inputRequest.moveUp) {
     if (inputRequest.moveRight) {
-      return directionUpRight;
+      return Direction.UpRight;
     } else if (inputRequest.moveLeft) {
-      return directionUpLeft;
+      return Direction.UpLeft;
     } else {
-      return directionUp;
+      return Direction.Up;
     }
   } else if (inputRequest.moveDown) {
     if (inputRequest.moveRight) {
-      return directionDownRight;
+      return Direction.DownRight;
     } else if (inputRequest.moveLeft) {
-      return directionDownLeft;
+      return Direction.DownLeft;
     } else {
-      return directionDown;
+      return Direction.Down;
     }
   } else if (inputRequest.moveLeft) {
-    return directionLeft;
+    return Direction.Left;
   } else if (inputRequest.moveRight) {
-    return directionRight;
+    return Direction.Right;
   }
-  return directionNone;
+  return Direction.None;
 }
 

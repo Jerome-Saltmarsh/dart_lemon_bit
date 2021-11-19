@@ -1,9 +1,8 @@
 import 'package:bleed_client/common/classes/Vector2.dart';
+import 'package:bleed_client/editor/state/editState.dart';
 import 'package:bleed_client/editor/state/mouseWorldStart.dart';
 import 'package:bleed_client/editor/state/panning.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/state.dart';
-import 'package:bleed_client/editor/state/editState.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';

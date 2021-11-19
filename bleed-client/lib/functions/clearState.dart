@@ -1,10 +1,10 @@
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/enums/Mode.dart';
-import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/render/state/tileRects.dart';
 import 'package:bleed_client/render/state/tileTransforms.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/state/zoom.dart';

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/network/functions/disconnect.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';

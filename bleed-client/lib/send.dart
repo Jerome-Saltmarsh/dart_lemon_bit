@@ -1,10 +1,10 @@
 import 'package:bleed_client/common.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/PurchaseType.dart';
-import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/network/functions/send.dart';
 import 'package:bleed_client/network/functions/sinkMessage.dart';
 import 'package:bleed_client/render/state/paths.dart';
+import 'package:bleed_client/state/game.dart';
 
 import 'common/Weapons.dart';
 import 'state.dart';
@@ -93,7 +93,7 @@ void sendRequestUpdatePlayer() {
   _write(game.playerId);
   _write(game.playerUUID);
   _write(requestCharacterState);
-  _write(requestDirection);
+  _write(requestDirection.index);
   if (requestCharacterState == characterStateFiring) {
     _write(requestAim.toStringAsFixed(2));
   } else {

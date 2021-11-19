@@ -1,6 +1,6 @@
 import 'package:bleed_client/functions/spawners/spawnBlood.dart';
-import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state.dart';
+import 'package:bleed_client/state/game.dart';
 
 
 void updateDeadCharacterBlood() {

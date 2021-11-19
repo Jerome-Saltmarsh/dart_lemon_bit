@@ -134,6 +134,7 @@ final AnimationRects _shotgunFiring = AnimationRects(
     left: _frames([19, 20, 20, 21, 20]),
     downLeft: _frames([22, 23, 24, 24, 23]));
 
+// rects
 final AnimationRects _handgunFiring = AnimationRects(
     down: _frames([2, 1]),
     downRight: _frames([4, 3]),

@@ -1,5 +1,5 @@
-import 'package:bleed_client/functions/applyShade.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:bleed_client/functions/applyShade.dart';
 import 'package:bleed_client/getters/getTileAt.dart';
 
 void applyLightBrightMedium(List<List<Shade>> shader, double x, double y) {

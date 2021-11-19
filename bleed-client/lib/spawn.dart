@@ -9,7 +9,6 @@ import 'package:lemon_math/randomInt.dart';
 
 import 'audio.dart';
 import 'functions/spawnBulletHole.dart';
-import 'maths.dart';
 import 'state/settings.dart';
 
 int get shrapnelCount => randomInt(4, 15);

@@ -2,6 +2,7 @@ import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Player.dart';
 import 'package:bleed_client/classes/Score.dart';
 import 'package:bleed_client/common/Weapons.dart';
+import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
 
@@ -13,7 +14,7 @@ Mode mode = Mode.Play;
 int frameRate = 5;
 int frameRateValue = 0;
 int serverFrame = 0;
-int requestDirection = directionDown;
+Direction requestDirection = Direction.None;
 int requestCharacterState = characterStateIdle;
 double requestAim = 0;
 DateTime previousEvent = DateTime.now();

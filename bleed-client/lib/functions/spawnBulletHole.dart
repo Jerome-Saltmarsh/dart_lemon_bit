@@ -1,7 +1,6 @@
 
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:lemon_math/give_or_take.dart';

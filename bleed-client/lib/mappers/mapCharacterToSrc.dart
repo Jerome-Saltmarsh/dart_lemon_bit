@@ -1,107 +1,21 @@
-
-
 import 'dart:typed_data';
-import 'dart:ui';
 
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums.dart';
-import 'package:bleed_client/images.dart';
 import 'package:bleed_client/render/drawCharacterZombie.dart';
 
-double _runningFrames = 4.0;
-double _manSize = 64.0;
+const _runningFrames = 4.0;
+const _framesWalking = 4;
+const _framesDying = 4;
+const _frameSize = 64.0;
 
-Image mapCharacterToImage({
-  CharacterType type,
-  CharacterState state,
-  Weapon weapon
-}){
-  switch(type){
-    case CharacterType.Human:
-      switch(state){
-        case CharacterState.Idle:
-          switch(weapon){
-            case Weapon.Unarmed:
-              return images.manIdle;
-            case Weapon.HandGun:
-              return images.manIdleHandgun1;
-            case Weapon.Shotgun:
-              return images.manIdleShotgun01;
-            case Weapon.SniperRifle:
-              return images.manIdleShotgun01;
-            case Weapon.AssaultRifle:
-              return images.manIdleShotgun01;
-          }
-          break;
-        case CharacterState.Walking:
-          switch(weapon){
-            case Weapon.Unarmed:
-              return images.manWalkingUnarmed;
-            case Weapon.HandGun:
-              return images.manWalkingHandgun1;
-            case Weapon.Shotgun:
-              return images.manWalkingShotgunShade1;
-            case Weapon.SniperRifle:
-              return images.manWalkingShotgunShade1;
-            case Weapon.AssaultRifle:
-              return images.manWalkingShotgunShade1;
-          }
-          break;
-        case CharacterState.Dead:
-          return images.manDying1;
-        case CharacterState.Aiming:
-          throw Exception();
-        case CharacterState.Firing:
-          switch(weapon){
-            case Weapon.Unarmed:
-              return images.manStriking;
-            case Weapon.HandGun:
-              return images.manFiringHandgun1;
-            case Weapon.Shotgun:
-              return images.manFiringShotgun1;
-            case Weapon.SniperRifle:
-              return images.manFiringShotgun1;
-            case Weapon.AssaultRifle:
-              return images.manFiringShotgun1;
-          }
-          break;
-        case CharacterState.Striking:
-          return images.manStriking;
-        case CharacterState.Running:
-          return images.manUnarmedRunning1;
-        case CharacterState.Reloading:
-          return images.manChanging1;
-        case CharacterState.ChangingWeapon:
-          return images.manChanging1;
-      }
-      break;
-    case CharacterType.Zombie:
-      switch(state){
-        case CharacterState.Idle:
-          return images.zombieIdleBright;
-        case CharacterState.Walking:
-          return images.zombieWalkingBright;
-        case CharacterState.Dead:
-          return images.zombieDyingBright;
-        case CharacterState.Aiming:
-          throw Exception();
-        case CharacterState.Firing:
-          throw Exception();
-        case CharacterState.Striking:
-          return images.zombieStriking1;
-        case CharacterState.Running:
-          throw Exception();
-        case CharacterState.Reloading:
-          throw Exception();
-        case CharacterState.ChangingWeapon:
-          throw Exception();
-      }
-      break;
-  }
-  throw Exception();
-}
+const List<int> _manFramesFiringHandgun = [1, 0];
+const List<int> _manFramesFiringShotgun = [0, 1, 1, 2, 1];
+
+final _manFramesFiringHandgunLength = _manFramesFiringHandgun.length;
+final _manFramesFiringShotgunLength = _manFramesFiringShotgun.length;
 
 void mapCharacterToSrc({
   CharacterType type,
@@ -111,51 +25,91 @@ void mapCharacterToSrc({
   int frame,
   Shade shade,
   Float32List src,
-}){
-  switch(type){
+}) {
+  switch (type) {
     case CharacterType.Human:
-      switch(state){
+      switch (state) {
         case CharacterState.Idle:
-          // TODO: Handle this case.
-          break;
+          src[0] = direction.index * _frameSize;
+          src[1] = shade.index * _frameSize;
+          src[2] = src[0] + _frameSize;
+          src[3] = src[1] + _frameSize;
+          return;
         case CharacterState.Walking:
-          // TODO: Handle this case.
-          break;
+          src[0] = direction.index * _frameSize + ((frame % _framesWalking) * _frameSize);
+          src[1] = shade.index * _frameSize;
+          src[2] = src[0] + _frameSize;
+          src[3] = src[1] + _frameSize;
+          return;
         case CharacterState.Dead:
-          // TODO: Handle this case.
-          break;
+          src[0] = direction.index * _frameSize + ((frame % _framesDying) * _frameSize);
+          src[1] = shade.index * _frameSize;
+          src[2] = src[0] + _frameSize;
+          src[3] = src[1] + _frameSize;
+          return;
         case CharacterState.Aiming:
-          // TODO: Handle this case.
-          break;
+          throw Exception();
         case CharacterState.Firing:
-          // TODO: Handle this case.
-          break;
+          switch (weapon) {
+            case Weapon.HandGun:
+              int _frame = _manFramesFiringHandgun[
+                  frame % _manFramesFiringHandgunLength];
+              src[0] = direction.index + (_frame * _frameSize);
+              src[1] = shade.index * _frameSize;
+              src[2] = src[0] + _frameSize;
+              src[3] = src[1] + _frameSize;
+              return;
+            case Weapon.Shotgun:
+              int _frame = _manFramesFiringShotgun[
+                  frame % _manFramesFiringShotgunLength];
+              src[0] = direction.index + (_frame * _frameSize);
+              src[1] = shade.index * _frameSize;
+              src[2] = src[0] + _frameSize;
+              src[3] = src[1] + _frameSize;
+              return;
+            case Weapon.SniperRifle:
+              int _frame = 0;
+              src[0] = direction.index + (_frame * _frameSize);
+              src[1] = shade.index * _frameSize;
+              src[2] = src[0] + _frameSize;
+              src[3] = src[1] + _frameSize;
+              return;
+            case Weapon.AssaultRifle:
+              int _frame = 0;
+              src[0] = direction.index + (_frame * _frameSize);
+              src[1] = shade.index * _frameSize;
+              src[2] = src[0] + _frameSize;
+              src[3] = src[1] + _frameSize;
+              return;
+          }
+          return;
         case CharacterState.Striking:
           // TODO: Handle this case.
-          break;
+          return;
         case CharacterState.Running:
-          // weapon gets ignore
           double left = direction.index * _runningFrames + frame;
-          double top = shade.index * _manSize;
-          double right = left + _manSize;
-          double bottom = top + _manSize;
+          double top = shade.index * _frameSize;
+          double right = left + _frameSize;
+          double bottom = top + _frameSize;
           src[0] = left;
           src[1] = top;
           src[2] = right;
           src[3] = bottom;
-          break;
+          return;
 
         case CharacterState.Reloading:
-          // TODO: Handle this case.
-          break;
+          throw Exception();
         case CharacterState.ChangingWeapon:
-          // TODO: Handle this case.
-          break;
+          src[0] = direction.index + ((frame % 4) * _frameSize);
+          src[1] = shade.index * _frameSize;
+          src[2] = src[0] + _frameSize;
+          src[3] = src[1] + _frameSize;
+          return;
       }
       break;
     case CharacterType.Zombie:
-    // TODO: Handle this case.
-      break;
+      throw Exception();
   }
-  throw Exception();
+  throw Exception(
+      "Could not map character to src: {type: $type, state: $state, weapon: $weapon, direction: $direction, frame: $frame, shade: $shade");
 }

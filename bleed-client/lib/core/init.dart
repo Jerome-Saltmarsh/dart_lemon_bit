@@ -15,7 +15,6 @@ import 'package:bleed_client/events/onAmbientLightChanged.dart';
 import 'package:bleed_client/events/onCompiledGameChanged.dart';
 import 'package:bleed_client/events/onGameJoined.dart';
 import 'package:bleed_client/events/onPhaseChanged.dart';
-import 'package:bleed_client/setters/setAmbientLightAccordingToPhase.dart';
 import 'package:bleed_client/events/onShadeMaxChanged.dart';
 import 'package:bleed_client/events/onTimeChanged.dart';
 import 'package:bleed_client/functions/clearState.dart';
