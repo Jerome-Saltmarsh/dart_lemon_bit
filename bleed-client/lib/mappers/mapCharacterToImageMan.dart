@@ -34,11 +34,11 @@ Image mapCharacterToImage({
             case Weapon.HandGun:
               return images.manWalkingHandgun;
             case Weapon.Shotgun:
-              return images.manWalkingHandgun;
+              return images.manWalkingShotgun;
             case Weapon.SniperRifle:
-              return images.manWalkingHandgun;
+              return images.manWalkingShotgun;
             case Weapon.AssaultRifle:
-              return images.manWalkingHandgun;
+              return images.manWalkingShotgun;
           }
           break;
         case CharacterState.Dead:
