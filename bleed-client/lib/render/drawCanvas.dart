@@ -24,7 +24,6 @@ import 'package:bleed_client/render/drawInteractableNpcs.dart';
 import 'package:bleed_client/render/functions/applyLightBright.dart';
 import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
 import 'package:bleed_client/render/functions/drawBullets.dart';
-import 'package:bleed_client/render/functions/drawDebugBox.dart';
 import 'package:bleed_client/render/functions/drawRawAtlas.dart';
 import 'package:bleed_client/render/functions/resetDynamicShadesToBakeMap.dart';
 import 'package:bleed_client/render/state/dynamicShading.dart';
@@ -41,7 +40,6 @@ import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/queries/on_screen.dart';
 import 'package:lemon_engine/render/draw_atlas.dart';
 import 'package:lemon_engine/render/draw_circle.dart';
-import 'package:lemon_engine/render/draw_image.dart';
 import 'package:lemon_engine/render/draw_text.dart';
 import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_engine/state/paint.dart';
@@ -304,15 +302,14 @@ void _drawPlayerNames() {
 }
 
 void _drawMouseAim() {
+  if (game.playerWeapon.value == Weapon.HandGun) return;
+  if (game.playerWeapon.value == Weapon.Shotgun) return;
   if (!mouseAvailable) return;
   if (!playerReady) return;
   Character _player = getPlayer;
   if (_player == null) return;
   if (player.equippedRounds.value == 0) return;
   Weapon weapon = _player.weapon;
-  if (weapon == Weapon.HandGun) return;
-  if (weapon == Weapon.Shotgun) return;
-
   paint.strokeWidth = 3;
   double angle =
       angleBetween(mouseWorldX, mouseWorldY, game.playerX, game.playerY);
