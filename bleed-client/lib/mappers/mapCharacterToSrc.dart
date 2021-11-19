@@ -36,7 +36,9 @@ void mapCharacterToSrc({
           src[3] = src[1] + _frameSize;
           return;
         case CharacterState.Walking:
-          src[0] = direction.index * _frameSize + ((frame % _framesWalking) * _frameSize);
+          double _s = direction.index * _frameSize * 4;
+          double _f = (frame % 4) * _frameSize;
+          src[0] = _s + _f;
           src[1] = shade.index * _frameSize;
           src[2] = src[0] + _frameSize;
           src[3] = src[1] + _frameSize;

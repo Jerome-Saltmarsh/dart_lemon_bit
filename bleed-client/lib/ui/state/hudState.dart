@@ -4,7 +4,6 @@ import 'dart:math';
 
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Score.dart';
-import 'package:bleed_client/common/constants/pi2.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
@@ -12,6 +11,7 @@ import 'package:bleed_client/state/inventory.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:lemon_math/pi2.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'tips.dart';
