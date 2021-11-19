@@ -10,6 +10,12 @@ Image mapCharacterToImage({
   CharacterState state,
   Weapon weapon
 }){
+
+  if (type == CharacterType.Human){
+    return images.human;
+  }
+
+
   switch(type){
     case CharacterType.Human:
       switch(state){

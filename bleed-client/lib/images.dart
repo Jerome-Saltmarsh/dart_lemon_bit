@@ -73,6 +73,7 @@ class _Images {
   Image empty;
   Image fireball;
   Image torches;
+  Image human;
 
   Future<Image> _png(String fileName) async {
     Image image = await loadImage('images/$fileName.png');
@@ -81,6 +82,7 @@ class _Images {
   }
 
   Future load() async {
+    human = await _png("human");
     torches = await _png("torches");
     objects48 = await _png("objects-48");
     objects96 = await _png("objects-96");
