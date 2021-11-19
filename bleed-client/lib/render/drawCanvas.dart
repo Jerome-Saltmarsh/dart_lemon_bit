@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Character.dart';
@@ -276,7 +275,11 @@ bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {
 
 void drawEnvironmentObject(EnvironmentObject environmentObject) {
   if (!environmentObjectOnScreenScreen(environmentObject)) return;
-  globalCanvas.drawRawAtlas(environmentObject.image, environmentObject.dst, environmentObject.src, null, null, null, paint);
+  drawRawAtlas(
+      environmentObject.image,
+      environmentObject.dst,
+      environmentObject.src,
+  );
 }
 
 void _renderItems() {
