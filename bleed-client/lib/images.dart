@@ -14,19 +14,19 @@ Watch<int> _imagesLoaded = Watch(0, onChanged: (int value){
 });
 
 Map<ObjectType, int> environmentObjectIndex = {
-  ObjectType.Rock: 1,
-  ObjectType.Grave: 2,
-  ObjectType.Tree_Stump: 3,
-  ObjectType.Rock_Small: 4,
-  ObjectType.LongGrass: 5,
-  ObjectType.Torch: 1,
-  ObjectType.Tree01: 1,
-  ObjectType.Tree02: 2,
-  ObjectType.House01: 1,
-  ObjectType.House02: 2,
-  ObjectType.Palisade: 1,
-  ObjectType.Palisade_H: 2,
-  ObjectType.Palisade_V: 3,
+  ObjectType.Rock: 0,
+  ObjectType.Grave: 1,
+  ObjectType.Tree_Stump: 2,
+  ObjectType.Rock_Small: 3,
+  ObjectType.LongGrass: 4,
+  ObjectType.Torch: 0,
+  ObjectType.Tree01: 0,
+  ObjectType.Tree02: 1,
+  ObjectType.House01: 0,
+  ObjectType.House02: 1,
+  ObjectType.Palisade: 0,
+  ObjectType.Palisade_H: 1,
+  ObjectType.Palisade_V: 2,
 };
 
 class _Images {
