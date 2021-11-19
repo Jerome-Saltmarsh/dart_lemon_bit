@@ -82,17 +82,17 @@ Image mapCharacterToImage({
     case CharacterType.Zombie:
       switch(state){
         case CharacterState.Idle:
-          return images.zombieIdleBright;
+          return images.zombieIdle;
         case CharacterState.Walking:
-          return images.zombieWalkingBright;
+          return images.zombieWalking;
         case CharacterState.Dead:
-          return images.zombieDyingBright;
+          return images.zombieDying;
         case CharacterState.Aiming:
           throw Exception();
         case CharacterState.Firing:
           throw Exception();
         case CharacterState.Striking:
-          return images.zombieStriking1;
+          return images.zombieStriking;
         case CharacterState.Running:
           throw Exception();
         case CharacterState.Reloading:

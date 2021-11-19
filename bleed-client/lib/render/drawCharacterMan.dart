@@ -8,7 +8,6 @@ import 'package:bleed_client/getters/isWaterAt.dart';
 import 'package:bleed_client/mappers/mapCharacterToImageMan.dart';
 import 'package:bleed_client/mappers/mapCharacterToSrc.dart';
 import 'package:bleed_client/render/drawCharacterZombie.dart';
-import 'package:bleed_client/render/functions/drawDebugBox.dart';
 import 'package:bleed_client/render/functions/drawRawAtlas.dart';
 import 'package:lemon_engine/queries/on_screen.dart';
 
@@ -18,7 +17,7 @@ Float32List _src = Float32List(4);
 const double _manSize = 64.0;
 const double _manSizeHalf = _manSize * 0.5;
 
-void drawCharacterMan(Character character) {
+void drawCharacter(Character character, CharacterType type) {
   if (!onScreen(character.x, character.y)) return;
   if (!character.alive && isWaterAt(character.x, character.y)) return;
 
@@ -26,19 +25,19 @@ void drawCharacterMan(Character character) {
   if (shade.index >= Shade.PitchBlack.index) return;
 
   Image image = mapCharacterToImage(
-      type: CharacterType.Human,
+      type: type,
       state: character.state,
       weapon: character.weapon,
   );
 
   if (image == null){
-    throw Exception("could not map image for man ${character.state} ${character.weapon}");
+    throw Exception("could not map image for $type ${character.state} ${character.weapon}");
   }
 
   mapCharacterToRSTransform(character, _transform);
 
   mapCharacterToSrc(
-      type: CharacterType.Human,
+      type: type,
       state: character.state,
       weapon: character.weapon,
       direction: character.direction,

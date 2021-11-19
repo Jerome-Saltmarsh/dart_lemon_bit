@@ -66,18 +66,10 @@ class _Images {
   Image manStriking;
   Image manWalkingHandgun;
   Image manWalkingShotgun;
-  Image zombieWalkingBright;
-  Image zombieWalkingMedium;
-  Image zombieWalkingDark;
-  Image zombieDyingBright;
-  Image zombieDyingMedium;
-  Image zombieDyingDark;
-  Image zombieStriking1;
-  Image zombieStriking2;
-  Image zombieStriking3;
-  Image zombieIdleBright;
-  Image zombieIdleMedium;
-  Image zombieIdleDark;
+  Image zombieIdle;
+  Image zombieWalking;
+  Image zombieStriking;
+  Image zombieDying;
   Image empty;
   Image fireball;
   Image torches;
@@ -122,18 +114,11 @@ class _Images {
     manIdleUnarmed = await _png("man-idle-unarmed");
     manIdleHandgun = await _png("man-idle-handgun");
     manIdleShotgun = await _png("man-idle-shotgun");
-    zombieWalkingBright = await _png("zombie-walking-1");
-    zombieWalkingMedium = await _png("zombie-walking-2");
-    zombieWalkingDark = await _png("zombie-walking-3");
-    zombieDyingBright = await _png("zombie-dying-bright");
-    zombieDyingMedium = await _png("zombie-dying-medium");
-    zombieDyingDark = await _png("zombie-dying-dark");
-    zombieStriking1 = await _png("zombie-striking-1");
-    zombieStriking2 = await _png("zombie-striking-2");
-    zombieStriking3 = await _png("zombie-striking-3");
-    zombieIdleBright = await _png("zombie-idle-bright");
-    zombieIdleMedium = await _png("zombie-idle-medium");
-    zombieIdleDark = await _png("zombie-idle-dark");
+    zombieIdle = manIdleUnarmed;
+    zombieWalking = await _png("zombie-walking");
+    zombieDying = manDying;
+    zombieStriking = await _png("zombie-striking");
+
     fireball = await _png("fireball");
     empty = await _png("empty");
 
