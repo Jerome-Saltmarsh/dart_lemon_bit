@@ -60,9 +60,15 @@ void mapCharacterToSrc({
         case CharacterState.Firing:
           switch (weapon) {
             case Weapon.HandGun:
-              int _frame = _manFramesFiringHandgun[
-                  frame % _manFramesFiringHandgunLength];
-              src[0] = direction.index + (_frame * _frameSize);
+              int _frame = -1;
+              if (frame < _manFramesFiringHandgunLength) {
+                _frame = _manFramesFiringHandgun[frame];
+              }else{
+                _frame = _manFramesFiringHandgunLength - 1;
+              }
+              double _s = direction.index * _frameSize * 2;
+              double _f = _frame * _frameSize;
+              src[0] = _s + _f;
               src[1] = shade.index * _frameSize;
               src[2] = src[0] + _frameSize;
               src[3] = src[1] + _frameSize;

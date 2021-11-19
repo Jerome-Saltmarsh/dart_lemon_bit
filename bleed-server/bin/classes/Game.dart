@@ -1027,6 +1027,7 @@ extension GameFunctions on Game {
 
     if (character.previousState != character.state) {
       character.previousState = character.state;
+      character.stateFrameCount = 0;
     }
   }
 
