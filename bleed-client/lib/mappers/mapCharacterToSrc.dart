@@ -63,7 +63,7 @@ void mapCharacterToSrc({
               int _frame = -1;
               if (frame < _manFramesFiringHandgunLength) {
                 _frame = _manFramesFiringHandgun[frame];
-              }else{
+              } else {
                 _frame = _manFramesFiringHandgunLength - 1;
               }
               double _s = direction.index * _frameSize * 2;
@@ -114,7 +114,15 @@ void mapCharacterToSrc({
         case CharacterState.Reloading:
           throw Exception();
         case CharacterState.ChangingWeapon:
-          src[0] = direction.index + ((frame % 4) * _frameSize);
+          int _frame = -1;
+          if (frame < 2) {
+            _frame = frame;
+          }else{
+            _frame = 1;
+          }
+          double _s = direction.index * _frameSize * 2;
+          double _f = _frame * _frameSize;
+          src[0] = _s + _f;
           src[1] = shade.index * _frameSize;
           src[2] = src[0] + _frameSize;
           src[3] = src[1] + _frameSize;
