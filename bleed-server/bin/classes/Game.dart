@@ -203,7 +203,18 @@ extension GameFunctions on Game {
     _updateCrates();
     _updateSpawnPointCollisions();
 
+    if (frame % 4 == 0){
+      updateFrames(players);
+      updateFrames(zombies);
+      updateFrames(npcs);
+    }
     compileGame(this);
+  }
+
+  void updateFrames(List<Character> character){
+    for(Character character in character){
+      character.stateFrameCount = (character.stateFrameCount + 1) % 10;
+    }
   }
 
   void _updateCollectables() {
@@ -1016,11 +1027,6 @@ extension GameFunctions on Game {
 
     if (character.previousState != character.state) {
       character.previousState = character.state;
-      character.stateFrameCount = 0;
-    } else {
-      character.stateFrameCount++;
-      character.stateFrameCount %=
-          100; // prevents the frame count digits getting over 2
     }
   }
 

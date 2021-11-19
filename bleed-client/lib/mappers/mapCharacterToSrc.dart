@@ -7,7 +7,6 @@ import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/render/drawCharacterZombie.dart';
 
 const _runningFrames = 4.0;
-const _framesWalking = 4;
 const _framesDying = 4;
 const _frameSize = 64.0;
 
