@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:bleed_client/common/Weapons.dart';
@@ -42,7 +43,10 @@ void mapCharacterToSrc({
           src[3] = src[1] + _frameSize;
           return;
         case CharacterState.Dead:
-          src[0] = direction.index * _frameSize + ((frame % _framesDying) * _frameSize);
+          int _frame = min(2, frame);
+          double _s = direction.index * _frameSize * 2;
+          double _f = _frame * _frameSize;
+          src[0] = _s + _f;
           src[1] = shade.index * _frameSize;
           src[2] = src[0] + _frameSize;
           src[3] = src[1] + _frameSize;
