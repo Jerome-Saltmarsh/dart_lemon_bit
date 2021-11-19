@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
+import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/core/buildLoadingScreen.dart';
 import 'package:lemon_engine/functions/load_image.dart';
 import 'package:lemon_watch/watch.dart';
@@ -13,30 +13,23 @@ Watch<int> _imagesLoaded = Watch(0, onChanged: (int value){
   download.value =  value / _totalImages;
 });
 
-Map<EnvironmentObjectType, Image> environmentObjectImage;
-Map<Image, double> imageSpriteWidth = {};
-Map<Image, double> imageSpriteHeight = {};
-
-Map<EnvironmentObjectType, int> environmentObjectIndex = {
-  EnvironmentObjectType.Rock: 1,
-  EnvironmentObjectType.Grave: 2,
-  EnvironmentObjectType.Tree_Stump: 3,
-  EnvironmentObjectType.Rock_Small: 4,
-  EnvironmentObjectType.LongGrass: 5,
-  EnvironmentObjectType.Torch: 1,
-  EnvironmentObjectType.Tree01: 1,
-  EnvironmentObjectType.Tree02: 2,
-  EnvironmentObjectType.House01: 1,
-  EnvironmentObjectType.House02: 2,
-  EnvironmentObjectType.Palisade: 1,
-  EnvironmentObjectType.Palisade_H: 2,
-  EnvironmentObjectType.Palisade_V: 3,
+Map<ObjectType, int> environmentObjectIndex = {
+  ObjectType.Rock: 1,
+  ObjectType.Grave: 2,
+  ObjectType.Tree_Stump: 3,
+  ObjectType.Rock_Small: 4,
+  ObjectType.LongGrass: 5,
+  ObjectType.Torch: 1,
+  ObjectType.Tree01: 1,
+  ObjectType.Tree02: 2,
+  ObjectType.House01: 1,
+  ObjectType.House02: 2,
+  ObjectType.Palisade: 1,
+  ObjectType.Palisade_H: 2,
+  ObjectType.Palisade_V: 3,
 };
 
 class _Images {
-  Image objects48;
-  Image objects96;
-  Image objects150;
   Image palisades;
   Image tiles;
   Image particles;
@@ -61,7 +54,7 @@ class _Images {
   Image empty;
   Image fireball;
   Image torches;
-  Image human;
+  Image atlas;
 
   Future<Image> _png(String fileName) async {
     Image image = await loadImage('images/$fileName.png');
@@ -70,11 +63,8 @@ class _Images {
   }
 
   Future load() async {
-    human = await _png("human");
+    atlas = await _png("atlas");
     torches = await _png("torches");
-    objects48 = await _png("objects-48");
-    objects96 = await _png("objects-96");
-    objects150 = await _png("objects-150");
     palisades = await _png("palisades");
     tiles = await _png("tiles");
     particles = await _png('particles');
@@ -96,41 +86,8 @@ class _Images {
     zombieWalking = await _png("zombie-walking");
     zombieDying = radial64_50;
     zombieStriking = await _png("zombie-striking");
-
     fireball = await _png("fireball");
     empty = await _png("empty");
-
-    environmentObjectImage = {
-      EnvironmentObjectType.Rock: objects48,
-      EnvironmentObjectType.Grave: objects48,
-      EnvironmentObjectType.Tree_Stump: objects48,
-      EnvironmentObjectType.Rock_Small: objects48,
-      EnvironmentObjectType.LongGrass: objects48,
-      EnvironmentObjectType.Torch: torches,
-      EnvironmentObjectType.Tree01: objects96,
-      EnvironmentObjectType.Tree02: objects96,
-      EnvironmentObjectType.House01: objects150,
-      EnvironmentObjectType.House02: objects150,
-      EnvironmentObjectType.Palisade: palisades,
-      EnvironmentObjectType.Palisade_H: palisades,
-      EnvironmentObjectType.Palisade_V: palisades,
-    };
-
-    imageSpriteWidth = {
-      images.objects48: 48.0,
-      images.objects96: 96.0,
-      images.objects150: 150.0,
-      images.palisades: 48,
-      images.torches: 25,
-    };
-
-    imageSpriteHeight = {
-      images.objects48: 48.0,
-      images.objects96: 96.0,
-      images.objects150: 150.0,
-      images.palisades: 100,
-      images.torches: 70,
-    };
   }
 }
 

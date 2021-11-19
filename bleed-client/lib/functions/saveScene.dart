@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
-import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
+import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:clipboard/clipboard.dart';
 

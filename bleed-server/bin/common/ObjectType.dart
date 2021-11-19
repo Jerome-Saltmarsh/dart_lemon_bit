@@ -1,17 +1,17 @@
 
-import 'enums/EnvironmentObjectType.dart';
+import 'enums/ObjectType.dart';
 
-const List<EnvironmentObjectType> _palisades = [
-  EnvironmentObjectType.Palisade,
-  EnvironmentObjectType.Palisade_H,
-  EnvironmentObjectType.Palisade_V,
+const List<ObjectType> _palisades = [
+  ObjectType.Palisade,
+  ObjectType.Palisade_H,
+  ObjectType.Palisade_V,
 ];
 
-bool isPalisade(EnvironmentObjectType type){
+bool isPalisade(ObjectType type){
   return _palisades.contains(type);
 }
 
-bool isGeneratedAtBuild(EnvironmentObjectType type){
+bool isGeneratedAtBuild(ObjectType type){
   return isPalisade(type);
 }
 

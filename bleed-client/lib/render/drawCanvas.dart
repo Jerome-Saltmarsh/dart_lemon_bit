@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Character.dart';
@@ -14,6 +15,7 @@ import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/functions/applyLightingToEnvironmentObjects.dart';
 import 'package:bleed_client/functions/calculateTileSrcRects.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
+import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
 import 'package:bleed_client/mappers/mapItemToRect.dart';
 import 'package:bleed_client/render/constants/charWidth.dart';
@@ -252,7 +254,7 @@ void _drawSprites() {
       Zombie zombie = game.zombies[indexZombie];
 
       if (!npcsRemaining || zombie.y < game.interactableNpcs[indexNpc].y) {
-        drawCharacter(game.zombies[indexZombie], CharacterType.Zombie);
+        drawCharacter(game.zombies[indexZombie], CharacterType.Human);
         indexZombie++;
         continue;
       }
@@ -271,12 +273,17 @@ bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {
   return true;
 }
 
+Float32List _src = Float32List(4);
+
 void drawEnvironmentObject(EnvironmentObject environmentObject) {
   if (!environmentObjectOnScreenScreen(environmentObject)) return;
+
+  mapEnvironmentObjectToSrc(environmentObject, _src);
+
   drawRawAtlas(
-      environmentObject.image,
+      images.atlas,
       environmentObject.dst,
-      environmentObject.src,
+      _src,
   );
 }
 

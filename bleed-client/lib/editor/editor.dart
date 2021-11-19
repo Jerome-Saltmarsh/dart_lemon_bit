@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
-import 'package:bleed_client/common/enums/EnvironmentObjectType.dart';
+import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/editor/enums/EditTool.dart';
 import 'package:bleed_client/editor/functions/resetTiles.dart';
@@ -80,7 +80,7 @@ List<Widget> _buildObjectList(){
 }
 
 List<Widget> _buildTabEnvironmentObjects(){
-  return EnvironmentObjectType.values.map(buildEnvironmentType).toList();
+  return ObjectType.values.map(buildEnvironmentType).toList();
 }
 
 List<Widget> _buildTabTiles(){

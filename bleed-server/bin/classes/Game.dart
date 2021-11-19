@@ -12,7 +12,7 @@ import 'package:lemon_math/randomItem.dart';
 import '../common/ItemType.dart';
 import '../common/Tile.dart';
 import '../common/enums/Direction.dart';
-import '../common/enums/EnvironmentObjectType.dart';
+import '../common/enums/ObjectType.dart';
 import '../common/enums/ProjectileType.dart';
 import '../common/enums/Shade.dart';
 import '../constants/no_squad.dart';
@@ -1487,7 +1487,7 @@ void playerInteract(Player player) {
   }
 
   for (EnvironmentObject environmentObject in player.game.scene.environment) {
-    if (environmentObject.type == EnvironmentObjectType.House02) {}
+    if (environmentObject.type == ObjectType.House02) {}
     ;
   }
 }

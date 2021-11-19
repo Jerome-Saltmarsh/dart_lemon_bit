@@ -7,7 +7,7 @@ import '../common/Tile.dart';
 import '../classes/EnvironmentObject.dart';
 import '../common/classes/Vector2.dart';
 import '../common/CollectableType.dart';
-import '../common/enums/EnvironmentObjectType.dart';
+import '../common/enums/ObjectType.dart';
 import '../instances/scenes.dart';
 
 final JsonDecoder _decoder = JsonDecoder();
@@ -69,7 +69,7 @@ Scene _mapStringToScene(String text) {
       int x = item['x'];
       int y = item['y'];
       String typeName = item['type'];
-      EnvironmentObjectType type = parseEnvironmentObjectTypeFromString(typeName);
+      ObjectType type = parseObjectTypeFromString(typeName);
       environment.add(EnvironmentObject(
         x: x.toDouble(),
         y: y.toDouble(),

@@ -12,7 +12,7 @@ Image mapCharacterToImage({
 }){
 
   if (type == CharacterType.Human){
-    return images.human;
+    return images.atlas;
   }
 
   switch(type){

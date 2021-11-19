@@ -1,5 +1,5 @@
 import '../common/Tile.dart';
-import '../common/enums/EnvironmentObjectType.dart';
+import '../common/enums/ObjectType.dart';
 import 'EnvironmentObject.dart';
 import '../common/classes/Vector2.dart';
 import '../enums.dart';
@@ -60,21 +60,21 @@ class Scene {
           environment.add(EnvironmentObject(
               x: mapTilePositionX(row, column),
               y: mapTilePositionY(row, column) + _tileSizeHalf,
-              type: EnvironmentObjectType.Palisade));
+              type: ObjectType.Palisade));
         } else
 
         if (tile == Tile.Block_Horizontal) {
           environment.add(EnvironmentObject(
               x: mapTilePositionX(row, column),
               y: mapTilePositionY(row, column) + _tileSizeHalf,
-              type: EnvironmentObjectType.Palisade_H));
+              type: ObjectType.Palisade_H));
         } else
 
         if (tile == Tile.Block_Vertical) {
           environment.add(EnvironmentObject(
               x: mapTilePositionX(row, column),
               y: mapTilePositionY(row, column)+ _tileSizeHalf,
-              type: EnvironmentObjectType.Palisade_V));
+              type: ObjectType.Palisade_V));
         }
       }
     }

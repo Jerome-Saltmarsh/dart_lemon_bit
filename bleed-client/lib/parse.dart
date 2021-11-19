@@ -1,6 +1,6 @@
 import 'dart:typed_data';
-import 'dart:ui';
 
+import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
@@ -25,6 +25,7 @@ import 'package:bleed_client/functions/emit/emitMyst.dart';
 import 'package:bleed_client/functions/emitSmoke.dart';
 import 'package:bleed_client/getters/getTileAt.dart';
 import 'package:bleed_client/images.dart';
+import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:bleed_client/network/functions/disconnect.dart';
 import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/network/state/connecting.dart';
@@ -46,7 +47,7 @@ import 'common/GameState.dart';
 import 'common/Tile.dart';
 import 'common/Weapons.dart';
 import 'common/classes/Vector2.dart';
-import 'common/enums/EnvironmentObjectType.dart';
+import 'common/enums/ObjectType.dart';
 import 'common/version.dart';
 import 'draw.dart';
 import 'enums.dart';
@@ -296,14 +297,14 @@ void _parseEnvironmentObjects() {
     double x = _consumeDouble();
     double y = _consumeDouble();
     double radius = _consumeDouble();
-    EnvironmentObjectType type = _consumeEnvironmentObjectType();
+    ObjectType type = _consumeEnvironmentObjectType();
 
     switch(type){
-      case EnvironmentObjectType.SmokeEmitter:
+      case ObjectType.SmokeEmitter:
         game.particleEmitters
             .add(ParticleEmitter(x: x, y: y, rate: 20, emit: emitSmoke));
         break;
-      case EnvironmentObjectType.MystEmitter:
+      case ObjectType.MystEmitter:
         game.particleEmitters
             .add(ParticleEmitter(x: x, y: y, rate: 20, emit: emitMyst));
         break;
@@ -312,23 +313,17 @@ void _parseEnvironmentObjects() {
         break;
     }
 
-    Image image = environmentObjectImage[type];
     int index = environmentObjectIndex[type] - 1;
-    double width = imageSpriteWidth[image];
-    double height = imageSpriteHeight[image];
 
     if (index == null){
       throw Exception("no index found for $type");
-    }
-    if (image == null){
-      throw Exception("no image found for $type");
     }
     if (index == null){
       throw Exception("no image index for $type");
     }
 
-    assert(width != null);
-    assert(height != null);
+    double width = environmentObjectWidth[type];
+    double height = environmentObjectHeight[type];
 
     Float32List dst = Float32List(4);
     dst[0] = 1;
@@ -336,37 +331,24 @@ void _parseEnvironmentObjects() {
     dst[2] = x - (width * 0.5);
     dst[3] = y - (height * 0.6666);
 
-    Float32List src = Float32List(4);
-    src[0] = index * width; // left
-    src[1] = 0; // top
-    src[2] = src[0] + width; // right
-    src[3] = height; // bottom
-
     EnvironmentObject envObject = EnvironmentObject(
         x: x,
         y: y,
         type: type,
         dst: dst,
-        src: src,
-        image: image,
         radius: radius
     );
 
-    if (type == EnvironmentObjectType.Torch){
+    if (type == ObjectType.Torch){
       game.torches.add(envObject);
     }
 
     envObject.tileRow = getRow(envObject.x, envObject.y);
     envObject.tileColumn = getColumn(envObject.x, envObject.y);
-
-    if (type == EnvironmentObjectType.Bridge) {
-      game.backgroundObjects.add(envObject);
-      continue;
-    }
-
     game.environmentObjects.add(envObject);
   }
 
+  // * on environmentObjects changed
   sortReversed(game.environmentObjects, environmentObjectY);
   applyEnvironmentObjectsToBakeMapping();
 }
@@ -530,8 +512,8 @@ void _parseGameJoined() {
       "ServerResponse.Game_Joined: playerId: ${game.playerId} gameId: ${game.gameId}");
 }
 
-EnvironmentObjectType _consumeEnvironmentObjectType() {
-  return environmentObjectTypes[_consumeInt()];
+ObjectType _consumeEnvironmentObjectType() {
+  return objectTypes[_consumeInt()];
 }
 
 void _next() {
