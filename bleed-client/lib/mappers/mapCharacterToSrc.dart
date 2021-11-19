@@ -6,12 +6,11 @@ import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/render/drawCharacterZombie.dart';
 
-const _runningFrames = 4.0;
 const _framesDying = 4;
 const _frameSize = 64.0;
 
 const List<int> _manFramesFiringHandgun = [1, 0];
-const List<int> _manFramesFiringShotgun = [0, 1, 1, 2, 1];
+const List<int> _manFramesFiringShotgun = [0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0];
 
 final _manFramesFiringHandgunLength = _manFramesFiringHandgun.length;
 final _manFramesFiringShotgunLength = _manFramesFiringShotgun.length;
@@ -74,9 +73,15 @@ void mapCharacterToSrc({
               src[3] = src[1] + _frameSize;
               return;
             case Weapon.Shotgun:
-              int _frame = _manFramesFiringShotgun[
-                  frame % _manFramesFiringShotgunLength];
-              src[0] = direction.index + (_frame * _frameSize);
+              int _frame = -1;
+              if (frame < _manFramesFiringShotgunLength) {
+                _frame = _manFramesFiringShotgun[frame];
+              } else {
+                _frame = _manFramesFiringShotgunLength - 1;
+              }
+              double _s = direction.index * _frameSize * 3;
+              double _f = _frame * _frameSize;
+              src[0] = _s + _f;
               src[1] = shade.index * _frameSize;
               src[2] = src[0] + _frameSize;
               src[3] = src[1] + _frameSize;
