@@ -101,14 +101,12 @@ void mapCharacterToSrc({
           // TODO: Handle this case.
           return;
         case CharacterState.Running:
-          double left = direction.index * _runningFrames + frame;
-          double top = shade.index * _frameSize;
-          double right = left + _frameSize;
-          double bottom = top + _frameSize;
-          src[0] = left;
-          src[1] = top;
-          src[2] = right;
-          src[3] = bottom;
+          double _s = direction.index * _frameSize * 4;
+          double _f = (frame % 4) * _frameSize;
+          src[0] = _s + _f;
+          src[1] = shade.index * _frameSize;
+          src[2] = src[0] + _frameSize;
+          src[3] = src[1] + _frameSize;
           return;
 
         case CharacterState.Reloading:
