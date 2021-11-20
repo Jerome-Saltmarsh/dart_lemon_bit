@@ -60,7 +60,7 @@ final Map<ObjectType, Vector2> objectTypeSrcPosition = {
   ObjectType.Palisade_H: palisades,
 };
 
-void mapEnvironmentObjectToSrc(EnvironmentObject env, Float32List src){
+void mapEnvironmentObjectToSrc(EnvironmentObject env){
   ObjectType type = env.type;
   Vector2 translation = objectTypeSrcPosition[type];
 
@@ -77,17 +77,17 @@ void mapEnvironmentObjectToSrc(EnvironmentObject env, Float32List src){
   Shade shade = getShadeAtEnvironmentObject(env);
 
   if (shade == Shade.PitchBlack){
-    src[0] = 0;
-    src[1] = 0;
-    src[2] = 0;
-    src[3] = 0;
+    env.src[0] = 0;
+    env.src[1] = 0;
+    env.src[2] = 0;
+    env.src[3] = 0;
     return;
   }
 
   double top = shade.index * height + translation.y;
   double bottom = top + height;
-  src[0] = left;
-  src[1] = top;
-  src[2] = right;
-  src[3] = bottom;
+  env.src[0] = left;
+  env.src[1] = top;
+  env.src[2] = right;
+  env.src[3] = bottom;
 }

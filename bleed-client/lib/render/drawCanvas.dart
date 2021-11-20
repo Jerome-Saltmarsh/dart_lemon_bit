@@ -269,17 +269,13 @@ bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {
   return true;
 }
 
-Float32List _src = Float32List(4);
-
 void drawEnvironmentObject(EnvironmentObject environmentObject) {
   if (!environmentObjectOnScreenScreen(environmentObject)) return;
-
-  mapEnvironmentObjectToSrc(environmentObject, _src);
-
+  mapEnvironmentObjectToSrc(environmentObject);
   drawRawAtlas(
       images.atlas,
       environmentObject.dst,
-      _src,
+      environmentObject.src,
   );
 }
 

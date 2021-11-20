@@ -16,8 +16,8 @@ void applyShadeToEnvironmentObject(EnvironmentObject obj, Shade shade){
 }
 
 void setSrcIndex(EnvironmentObject obj, int index){
-  // obj.src[1] = index * obj.height;
-  // obj.src[3] = obj.src[1] + obj.height;
+  obj.src[1] = index * obj.height;
+  obj.src[3] = obj.src[1] + obj.height;
 }
 
 Shade getShadeAtEnvironmentObject(EnvironmentObject env){
