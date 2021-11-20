@@ -116,11 +116,11 @@
 [ ] Kill the vampire
 [ ] Splash Screen
 [ ] Firebolt explode on impact
-[ ] Draw all sprites on single sprite call (potentially massive optimization)
-[ ] Pack all sprites into single sprite sheet
 [ ] Fix Zombies vanish on death bug
 -- CURRENT -- 
 [ ] Pack character into sprite sheets
+[ ] Fix Zombie.Blender so all animations are in one file
+[ ] Fix Human.Blender so all animations are in one file
 -- FINISHED -- 
 [x] Fix firing shotgun bug
 [x] Fix Animated Torches
