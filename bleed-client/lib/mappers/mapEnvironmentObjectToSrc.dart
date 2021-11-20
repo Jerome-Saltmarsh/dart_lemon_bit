@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
+import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/functions/applyLightingToEnvironmentObjects.dart';
 import 'package:bleed_client/images.dart';
 
@@ -72,7 +73,18 @@ void mapEnvironmentObjectToSrc(EnvironmentObject env, Float32List src){
   double height = environmentObjectHeight[type];
   double left = index * width + translation.x;
   double right = left + width;
-  double top = getShadeAtEnvironmentObject(env).index * height + translation.y;
+
+  Shade shade = getShadeAtEnvironmentObject(env);
+
+  if (shade == Shade.PitchBlack){
+    src[0] = 0;
+    src[1] = 0;
+    src[2] = 0;
+    src[3] = 0;
+    return;
+  }
+
+  double top = shade.index * height + translation.y;
   double bottom = top + height;
   src[0] = left;
   src[1] = top;
