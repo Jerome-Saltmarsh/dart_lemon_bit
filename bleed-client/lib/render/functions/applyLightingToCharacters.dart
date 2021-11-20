@@ -1,5 +1,5 @@
 import 'package:bleed_client/classes/Character.dart';
-import 'package:bleed_client/render/functions/applyLightBright.dart';
+import 'package:bleed_client/render/functions/emitLight.dart';
 import 'package:bleed_client/render/state/dynamicShading.dart';
 
 void applyCharacterLightEmission(List<Character> characters) {

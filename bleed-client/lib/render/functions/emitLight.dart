@@ -2,7 +2,7 @@ import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/functions/applyShade.dart';
 import 'package:bleed_client/getters/getTileAt.dart';
 
-void applyLightBrightMedium(List<List<Shade>> shader, double x, double y) {
+void emitLightBrightMedium(List<List<Shade>> shader, double x, double y) {
   int column = getColumn(x, y);
   int row = getRow(x, y);
   applyShade(shader, row, column, Shade.Bright);
@@ -10,6 +10,8 @@ void applyLightBrightMedium(List<List<Shade>> shader, double x, double y) {
   applyShadeRing(shader, row, column, 2, Shade.Medium);
   applyShadeRing(shader, row, column, 3, Shade.Dark);
   applyShadeRing(shader, row, column, 4, Shade.VeryDark);
+  applyShadeRing(shader, row, column, 5, Shade.VeryDark);
+  applyShadeRing(shader, row, column, 6, Shade.VeryDark);
 }
 
 void applyLightBrightSmall(List<List<Shade>> shader, double x, double y) {

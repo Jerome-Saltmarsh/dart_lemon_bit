@@ -23,7 +23,7 @@ import 'package:bleed_client/render/draw/drawPlayerText.dart';
 import 'package:bleed_client/render/drawCharacterMan.dart';
 import 'package:bleed_client/render/drawCharacterZombie.dart';
 import 'package:bleed_client/render/drawInteractableNpcs.dart';
-import 'package:bleed_client/render/functions/applyLightBright.dart';
+import 'package:bleed_client/render/functions/emitLight.dart';
 import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
 import 'package:bleed_client/render/functions/drawBullets.dart';
 import 'package:bleed_client/render/functions/drawRawAtlas.dart';

@@ -19,7 +19,7 @@ Map<ObjectType, int> environmentObjectIndex = {
   ObjectType.Tree_Stump: 2,
   ObjectType.Rock_Small: 3,
   ObjectType.LongGrass: 4,
-  ObjectType.Torch: 0,
+  ObjectType.Torch: 5,
   ObjectType.Tree01: 0,
   ObjectType.Tree02: 1,
   ObjectType.House01: 0,
