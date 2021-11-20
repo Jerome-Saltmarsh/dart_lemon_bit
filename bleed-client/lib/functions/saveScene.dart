@@ -20,17 +20,11 @@ String _mapCompileGameToJson() {
 }
 
 Object _mapCompiledGameToObject() {
-
-  List<EnvironmentObject> all = [
-    ...game.environmentObjects,
-    ...game.backgroundObjects
-  ];
-
   return {
     "collectables": game.collectables,
     "tiles": _compileTiles(game.tiles),
     "crates": _compileCrates(game.crates),
-    "environment": _compileEnvironmentObjects(all),
+    "environment": _compileEnvironmentObjects(game.environmentObjects),
   };
 }
 

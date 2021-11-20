@@ -10,7 +10,6 @@ void newScene() {
   }
   game.crates.clear();
   game.particleEmitters.clear();
-  game.backgroundObjects.clear();
   game.environmentObjects.clear();
   game.collectables.clear();
   game.items.clear();

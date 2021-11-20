@@ -180,10 +180,6 @@ void _drawSprites() {
     _sortParticles();
   }
 
-  for (EnvironmentObject environmentObject in game.backgroundObjects) {
-    drawEnvironmentObject(environmentObject);
-  }
-
   bool zombiesRemaining = indexZombie < game.totalZombies;
   bool humansRemaining = indexHuman < game.totalHumans;
   bool npcsRemaining = indexHuman < game.totalNpcs;

@@ -19,7 +19,6 @@ class Game {
   List<int> collectables = [];
   List<Vector2> crates = [];
   int cratesTotal = 0;
-  List<EnvironmentObject> backgroundObjects = [];
   List<EnvironmentObject> environmentObjects = [];
   List<EnvironmentObject> torches = [];
   List<List<Tile>> tiles = [];
