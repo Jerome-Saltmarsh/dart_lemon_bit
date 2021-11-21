@@ -158,6 +158,8 @@ void parseState() {
               print('Invalid Arguments: $message');
             }
             return;
+          default:
+            break;
         }
         if (error == GameError.PlayerNotFound) {
           clearState();

@@ -77,9 +77,14 @@ Widget buildHealthBar() {
 }
 
 Widget buildTopLeft() {
-  // return Positioned(top: _padding, left: _padding, child: buildTime());
   return Positioned(
-      top: _padding, left: _padding, child: buildMouseWorldPosition());
+      top: _padding, left: _padding, child: Column(
+        crossAxisAlignment: cross.start,
+        children: [
+          buildTime(),
+          buildMouseWorldPosition(),
+        ],
+      ));
 }
 
 Widget buildBottomRight() {
