@@ -110,18 +110,24 @@
 [ ] Add Name to Speech box
 [ ] Shoot Arrow (Archer)
 [ ] Slash Sword (Warrior)
-[ ] Cave Wall
+[ ] Object Cave Wall
 [ ] Design Cottage
-[ ] QUEST
-[ ] Kill the vampire
+[ ] Quest Kill the vampire
 [ ] Splash Screen
 [ ] Firebolt explode on impact
 [ ] Fix Zombies vanish on death bug
+[ ] Add myst to atlas
 -- CURRENT -- 
 [ ] Fix Zombie Animations
 [ ] Fix Human Animations
-[ ] Fix Animated Torches
+    [ ] Running
+    [ ] Changing
+    [ ] Handgun Idle
+    [ ] Handgun Walking
+    [ ] Handgun Firing
+    
 -- FINISHED -- 
+[x] Fix Animated Torches
 [x] Pack character into sprite sheets
 [x] Fix Zombie.Blender so all animations are in one file
 [x] Fix Human.Blender so all animations are in one file

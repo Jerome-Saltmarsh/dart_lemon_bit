@@ -18,7 +18,7 @@ final _manFramesFiringShotgunLength = _manFramesFiringShotgun.length;
 
 final Vector2 _humanIdleUnarmed = Vector2(1538, 1);
 final Vector2 _humanWalkingUnarmed = Vector2(1, 1222);
-final Vector2 _humanRunning = Vector2(0, 1221);
+final Vector2 _humanRunning = Vector2(0, 2206);
 final Vector2 _humanChanging = Vector2(1, 1479);
 final Vector2 _dying = Vector2(1, 1736);
 final Vector2 _firingHandgun = Vector2(1, 258);
