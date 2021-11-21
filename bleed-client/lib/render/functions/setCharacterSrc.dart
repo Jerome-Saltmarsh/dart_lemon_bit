@@ -35,37 +35,35 @@ void setCharacterSrc({
 }) {
   switch (state) {
     case CharacterState.Idle:
-      src[0] = direction.index * _frameSize + _humanIdleUnarmed.x;
-      src[1] = shade.index * _frameSize + _humanIdleUnarmed.y;
-      src[2] = src[0] + _frameSize;
-      src[3] = src[1] + _frameSize;
-      return;
+      double _s = direction.index * _frameSize;
+      double _f = _frameSize;
+      src[0] = _s + _f + _humanIdleUnarmed.x;
+      src[1] = _humanIdleUnarmed.y + shade.index * _frameSize;
+      break;
+
     case CharacterState.Walking:
       double _s = direction.index * _frameSize * 4;
       double _f = (frame % 4) * _frameSize;
       src[0] = _s + _f + _humanWalkingUnarmed.x;
       src[1] = shade.index * _frameSize + _humanWalkingUnarmed.y;
-      src[2] = src[0] + _frameSize;
-      src[3] = src[1] + _frameSize;
-      return;
+      break;
+
     case CharacterState.Dead:
       int _frame = min(2, frame);
       double _s = direction.index * _frameSize * 2;
       double _f = _frame * _frameSize;
       src[0] = _s + _f + _dying.x;
       src[1] = shade.index * _frameSize + _dying.y;
-      src[2] = src[0] + _frameSize;
-      src[3] = src[1] + _frameSize;
-      return;
+      break;
+
     case CharacterState.Aiming:
       // TODO This is wrong
       int _frame =
           _manFramesFiringHandgun[frame % _manFramesFiringHandgunLength];
       src[0] = direction.index + (_frame * _frameSize);
       src[1] = shade.index * _frameSize;
-      src[2] = src[0] + _frameSize;
-      src[3] = src[1] + _frameSize;
-      return;
+      break;
+
     case CharacterState.Firing:
       switch (weapon) {
         case Weapon.HandGun:
@@ -79,9 +77,8 @@ void setCharacterSrc({
           double _f = _frame * _frameSize;
           src[0] = _s + _f + _firingHandgun.x;
           src[1] = shade.index * _frameSize + _firingHandgun.y;
-          src[2] = src[0] + _frameSize;
-          src[3] = src[1] + _frameSize;
-          return;
+          break;
+
         default:
           int _frame = -1;
           if (frame < _manFramesFiringShotgunLength) {
@@ -93,9 +90,7 @@ void setCharacterSrc({
           double _f = _frame * _frameSize;
           src[0] = _s + _f + _firingShotgun.x;
           src[1] = shade.index * _frameSize + _firingShotgun.y;
-          src[2] = src[0] + _frameSize;
-          src[3] = src[1] + _frameSize;
-          return;
+          break;
       }
       return;
     case CharacterState.Striking:
@@ -105,9 +100,7 @@ void setCharacterSrc({
       double _f = (frame % 4) * _frameSize;
       src[0] = _s + _f + _humanRunning.x;
       src[1] = shade.index * _frameSize + _humanRunning.y;
-      src[2] = src[0] + _frameSize;
-      src[3] = src[1] + _frameSize;
-      return;
+      break;
 
     case CharacterState.Reloading:
       throw Exception("Not Implemented");
@@ -122,8 +115,9 @@ void setCharacterSrc({
       double _f = _frame * _frameSize;
       src[0] = _s + _f + _humanChanging.x;
       src[1] = shade.index * _frameSize + _humanChanging.y;
-      src[2] = src[0] + _frameSize;
-      src[3] = src[1] + _frameSize;
-      return;
+      break;
   }
+
+  src[2] = src[0] + _frameSize;
+  src[3] = src[1] + _frameSize;
 }
