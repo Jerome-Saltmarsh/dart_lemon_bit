@@ -5,7 +5,7 @@ import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/getters/isWaterAt.dart';
 import 'package:bleed_client/images.dart';
-import 'package:bleed_client/mappers/mapCharacterToSrc.dart';
+import 'package:bleed_client/render/functions/setCharacterSrc.dart';
 import 'package:bleed_client/render/drawCharacterZombie.dart';
 import 'package:bleed_client/render/functions/drawRawAtlas.dart';
 import 'package:bleed_client/render/functions/setCharacterDst.dart';
@@ -23,7 +23,7 @@ void drawCharacter(Character character, CharacterType type) {
 
   setCharacterDst(character, _dst);
 
-  mapCharacterToSrc(
+  setCharacterSrc(
       type: type,
       state: character.state,
       weapon: character.weapon,

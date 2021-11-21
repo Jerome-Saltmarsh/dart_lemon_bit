@@ -24,7 +24,7 @@ final Vector2 _dying = Vector2(1, 1736);
 final Vector2 _firingHandgun  = Vector2(1, 258);
 final Vector2 _firingShotgun  = Vector2(1, 1);
 
-void mapCharacterToSrc({
+void setCharacterSrc({
   CharacterType type,
   CharacterState state,
   Weapon weapon,
