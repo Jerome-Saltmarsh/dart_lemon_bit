@@ -6,7 +6,7 @@ import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/functions/applyLightingToEnvironmentObjects.dart';
 import 'package:bleed_client/images.dart';
-import 'package:bleed_client/render/functions/setSrc.dart';
+import 'package:bleed_client/state.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 
 final Map<ObjectType, double> environmentObjectWidth = {
@@ -41,35 +41,36 @@ final Map<ObjectType, double> environmentObjectHeight = {
   ObjectType.House02: 150,
 };
 
-final Vector2 small = Vector2(2056, 994);
-final Vector2 medium  = Vector2(2051, 1);
-final Vector2 large  = Vector2(2056, 393);
-final Vector2 palisades  = Vector2(2072, 1222);
-final Vector2 torches = Vector2(2254, 1);
+final _Translations _translations = _Translations();
+
+class _Translations {
+  final Vector2 small = Vector2(2056, 994);
+  final Vector2 medium  = Vector2(2051, 1);
+  final Vector2 large  = Vector2(2056, 393);
+  final Vector2 palisades  = Vector2(2072, 1222);
+  final Vector2 torches = Vector2(2254, 1);
+}
 
 final Map<ObjectType, Vector2> objectTypeSrcPosition = {
-  ObjectType.Rock: small,
-  ObjectType.Grave: small,
-  ObjectType.Tree_Stump: small,
-  ObjectType.Rock_Small: small,
-  ObjectType.LongGrass: small,
-  ObjectType.Torch: small,
-  ObjectType.Tree01: medium,
-  ObjectType.Tree02: medium,
-  ObjectType.House01: large,
-  ObjectType.House02: large,
-  ObjectType.Palisade: palisades,
-  ObjectType.Palisade_V: palisades,
-  ObjectType.Palisade_H: palisades,
+  ObjectType.Rock: _translations.small,
+  ObjectType.Grave: _translations.small,
+  ObjectType.Tree_Stump: _translations.small,
+  ObjectType.Rock_Small: _translations.small,
+  ObjectType.LongGrass: _translations.small,
+  ObjectType.Torch: _translations.small,
+  ObjectType.Tree01: _translations.medium,
+  ObjectType.Tree02: _translations.medium,
+  ObjectType.House01: _translations.large,
+  ObjectType.House02: _translations.large,
+  ObjectType.Palisade: _translations.palisades,
+  ObjectType.Palisade_V: _translations.palisades,
+  ObjectType.Palisade_H: _translations.palisades,
 };
 
 void mapEnvironmentObjectToSrc(EnvironmentObject env){
   Shade shade = getShadeAtEnvironmentObject(env);
   if (shade == Shade.PitchBlack){
-    env.src[0] = 0;
-    env.src[1] = 0;
-    env.src[2] = 0;
-    env.src[3] = 0;
+    clearSrc(env.src);
     return;
   }
 
@@ -87,9 +88,9 @@ void mapEnvironmentObjectToSrc(EnvironmentObject env){
   double bottom = top + height;
 
   if (type == ObjectType.Torch && ambient.isDarkerThan(Shade.Bright)){
-    left = torches.x;
-    right = torches.x + 25.0;
-    top = 1;
+    left = _translations.torches.x;
+    right = _translations.torches.x + 25.0;
+    top = _translations.torches.y + ((drawFrame % 4) * 70);
     bottom = top + 70;
   }
 
@@ -97,4 +98,11 @@ void mapEnvironmentObjectToSrc(EnvironmentObject env){
   env.src[1] = top;
   env.src[2] = right;
   env.src[3] = bottom;
+}
+
+void clearSrc(Float32List src){
+  src[0] = 0;
+  src[1] = 0;
+  src[2] = 0;
+  src[3] = 0;
 }
