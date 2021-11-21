@@ -40,7 +40,6 @@ import 'package:flutter/material.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/queries/on_screen.dart';
-import 'package:lemon_engine/render/draw_atlas.dart';
 import 'package:lemon_engine/render/draw_circle.dart';
 import 'package:lemon_engine/render/draw_text.dart';
 import 'package:lemon_engine/state/canvas.dart';
@@ -74,7 +73,7 @@ void renderCanvasPlay() {
 
   if (!dayTime) {
     resetDynamicShadesToBakeMap();
-    applyCharacterLightEmission(game.humans);
+    // applyCharacterLightEmission(game.humans);
     applyProjectileLighting();
     applyNpcLightEmission(game.interactableNpcs);
     calculateTileSrcRects();
@@ -86,7 +85,6 @@ void renderCanvasPlay() {
   drawProjectiles(game.projectiles);
   drawBulletHoles(game.bulletHoles);
   _drawGrenades(game.grenades);
-  _renderItems();
   _drawSprites();
 
   if (settings.compilePaths) {
@@ -277,16 +275,6 @@ void drawEnvironmentObject(EnvironmentObject environmentObject) {
       environmentObject.dst,
       environmentObject.src,
   );
-}
-
-void _renderItems() {
-  items.transforms.clear();
-  items.rects.clear();
-  for (int i = 0; i < game.totalItems; i++) {
-    items.transforms.add(mapItemToRSTransform(game.items[i]));
-    items.rects.add(mapItemToRect(game.items[i].type));
-  }
-  drawAtlas(images.items, items.transforms, items.rects);
 }
 
 void _drawPlayerNames() {
