@@ -48,7 +48,7 @@ class _Translations {
   final Vector2 objects96  = Vector2(2051, 1);
   final Vector2 objects150  = Vector2(2056, 393);
   final Vector2 palisades  = Vector2(2072, 1222);
-  final Vector2 torches = Vector2(2234, 0);
+  final Vector2 torches = Vector2(2272, 0);
 }
 
 final Map<ObjectType, Vector2> objectTypeSrcPosition = {
