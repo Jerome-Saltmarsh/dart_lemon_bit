@@ -16,13 +16,13 @@ const List<int> _manFramesFiringShotgun = [0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0];
 final _manFramesFiringHandgunLength = _manFramesFiringHandgun.length;
 final _manFramesFiringShotgunLength = _manFramesFiringShotgun.length;
 
-final Vector2 _humanIdleUnarmed = Vector2(0, 1537);
+final Vector2 _humanIdleUnarmed = Vector2(1, 1538);
 final Vector2 _humanWalkingUnarmed = Vector2(1, 1222);
-final Vector2 _humanRunning  = Vector2(0, 1221);
-final Vector2 _humanChanging   = Vector2(1, 1479);
+final Vector2 _humanRunning = Vector2(0, 1221);
+final Vector2 _humanChanging = Vector2(1, 1479);
 final Vector2 _dying = Vector2(1, 1736);
-final Vector2 _firingHandgun  = Vector2(1, 258);
-final Vector2 _firingShotgun  = Vector2(1, 1);
+final Vector2 _firingHandgun = Vector2(1, 258);
+final Vector2 _firingShotgun = Vector2(1, 1);
 
 void setCharacterSrc({
   CharacterType type,
