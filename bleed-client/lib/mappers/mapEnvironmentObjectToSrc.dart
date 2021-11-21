@@ -6,6 +6,8 @@ import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/functions/applyLightingToEnvironmentObjects.dart';
 import 'package:bleed_client/images.dart';
+import 'package:bleed_client/render/functions/setSrc.dart';
+import 'package:bleed_client/watches/ambientLight.dart';
 
 final Map<ObjectType, double> environmentObjectWidth = {
   ObjectType.Palisade: 48,
@@ -43,6 +45,7 @@ final Vector2 small = Vector2(2056, 994);
 final Vector2 medium  = Vector2(2051, 1);
 final Vector2 large  = Vector2(2056, 393);
 final Vector2 palisades  = Vector2(2072, 1222);
+final Vector2 torches = Vector2(2254, 1);
 
 final Map<ObjectType, Vector2> objectTypeSrcPosition = {
   ObjectType.Rock: small,
@@ -61,21 +64,7 @@ final Map<ObjectType, Vector2> objectTypeSrcPosition = {
 };
 
 void mapEnvironmentObjectToSrc(EnvironmentObject env){
-  ObjectType type = env.type;
-  Vector2 translation = objectTypeSrcPosition[type];
-
-  if (translation == null){
-    throw Exception(type);
-  }
-
-  int index =  environmentObjectIndex[type];
-  double width = environmentObjectWidth[type];
-  double height = environmentObjectHeight[type];
-  double left = index * width + translation.x;
-  double right = left + width;
-
   Shade shade = getShadeAtEnvironmentObject(env);
-
   if (shade == Shade.PitchBlack){
     env.src[0] = 0;
     env.src[1] = 0;
@@ -84,8 +73,26 @@ void mapEnvironmentObjectToSrc(EnvironmentObject env){
     return;
   }
 
+  ObjectType type = env.type;
+  Vector2 translation = objectTypeSrcPosition[type];
+  if (translation == null){
+    throw Exception(type);
+  }
+  int index =  environmentObjectIndex[type];
+  double width = environmentObjectWidth[type];
+  double height = environmentObjectHeight[type];
+  double left = index * width + translation.x;
+  double right = left + width;
   double top = shade.index * height + translation.y;
   double bottom = top + height;
+
+  if (type == ObjectType.Torch && ambient.isDarkerThan(Shade.Bright)){
+    left = torches.x;
+    right = torches.x + 25.0;
+    top = 1;
+    bottom = top + 70;
+  }
+
   env.src[0] = left;
   env.src[1] = top;
   env.src[2] = right;

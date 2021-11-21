@@ -118,12 +118,14 @@
 [ ] Firebolt explode on impact
 [ ] Fix Zombies vanish on death bug
 -- CURRENT -- 
-[ ] Pack character into sprite sheets
-[ ] Fix Zombie.Blender so all animations are in one file
-[ ] Fix Human.Blender so all animations are in one file
+[ ] Fix Zombie Animations
+[ ] Fix Human Animations
+[ ] Fix Animated Torches
 -- FINISHED -- 
+[x] Pack character into sprite sheets
+[x] Fix Zombie.Blender so all animations are in one file
+[x] Fix Human.Blender so all animations are in one file
 [x] Fix firing shotgun bug
-[x] Fix Animated Torches
 [x] Fix culling bug
 [x] Downloading Screen
 [x] Level Max Ambient Light
