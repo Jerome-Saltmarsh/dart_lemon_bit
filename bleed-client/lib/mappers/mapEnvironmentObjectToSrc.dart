@@ -4,7 +4,7 @@ import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
-import 'package:bleed_client/functions/applyLightingToEnvironmentObjects.dart';
+import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
@@ -69,11 +69,14 @@ final Map<ObjectType, Vector2> objectTypeSrcPosition = {
 
 final double _torchHeight = environmentObjectHeight[ObjectType.Torch];
 
-void mapEnvironmentObjectToSrc(EnvironmentObject env){
-  Shade shade = getShadeAtEnvironmentObject(env);
+final Float32List _src = Float32List(4);
+
+Float32List mapEnvironmentObjectToSrc(EnvironmentObject env){
+  Shade shade = getShade(env.tileRow, env.tileColumn);
+
   if (shade == Shade.PitchBlack){
-    clearSrc(env.src);
-    return;
+    clearSrc(_src);
+    return _src;
   }
 
   ObjectType type = env.type;
@@ -93,10 +96,11 @@ void mapEnvironmentObjectToSrc(EnvironmentObject env){
   }
 
   double bottom = top + height;
-  env.src[0] = left;
-  env.src[1] = top;
-  env.src[2] = right;
-  env.src[3] = bottom;
+  _src[0] = left;
+  _src[1] = top;
+  _src[2] = right;
+  _src[3] = bottom;
+  return _src;
 }
 
 void clearSrc(Float32List src){

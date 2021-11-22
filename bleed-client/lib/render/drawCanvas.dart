@@ -12,12 +12,9 @@ import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
-import 'package:bleed_client/functions/applyLightingToEnvironmentObjects.dart';
 import 'package:bleed_client/functions/calculateTileSrcRects.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
-import 'package:bleed_client/mappers/mapItemToRSTransform.dart';
-import 'package:bleed_client/mappers/mapItemToRect.dart';
 import 'package:bleed_client/render/constants/charWidth.dart';
 import 'package:bleed_client/render/draw/drawPlayerText.dart';
 import 'package:bleed_client/render/drawCharacterMan.dart';
@@ -77,8 +74,6 @@ void renderCanvasPlay() {
     applyProjectileLighting();
     applyNpcLightEmission(game.interactableNpcs);
     calculateTileSrcRects();
-    applyLightingToEnvironmentObjects();
-    _updateTorchFrames();
   }
 
   drawTiles();
@@ -118,12 +113,6 @@ void applyProjectileLighting() {
     if (projectile.type == ProjectileType.Fireball) {
       applyLightBrightVerySmall(dynamicShading, projectile.x, projectile.y);
     }
-  }
-}
-
-void _updateTorchFrames() {
-  for(EnvironmentObject torch in game.torches){
-    setSrcIndex(torch, _flameRenderIndex);
   }
 }
 
@@ -269,11 +258,10 @@ bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {
 
 void drawEnvironmentObject(EnvironmentObject environmentObject) {
   if (!environmentObjectOnScreenScreen(environmentObject)) return;
-  mapEnvironmentObjectToSrc(environmentObject);
   drawRawAtlas(
       images.atlas,
       environmentObject.dst,
-      environmentObject.src,
+      mapEnvironmentObjectToSrc(environmentObject),
   );
 }
 

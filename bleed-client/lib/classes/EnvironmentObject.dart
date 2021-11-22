@@ -12,7 +12,6 @@ class EnvironmentObject {
   final ObjectType type;
   final bool generated;
 
-  final Float32List src = Float32List(4);
   final Float32List dst;
 
   double _top;

@@ -1,7 +1,6 @@
 
 
 import 'package:bleed_client/common/enums/Shade.dart';
-import 'package:bleed_client/functions/applyLightingToEnvironmentObjects.dart';
 import 'package:bleed_client/functions/calculateTileSrcRects.dart';
 import 'package:bleed_client/render/functions/applyEnvironmentObjectsToBakeMapping.dart';
 import 'package:bleed_client/render/functions/resetDynamicShadesToBakeMap.dart';
@@ -13,5 +12,4 @@ void onAmbientLightChanged(Shade value){
   resetDynamicShadesToBakeMap();
   calculateTileSrcRects();
   applyEnvironmentObjectsToBakeMapping();
-  applyLightingToEnvironmentObjects();
 }
