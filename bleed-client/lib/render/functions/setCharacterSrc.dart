@@ -107,7 +107,6 @@ void setCharacterSrc({
 
         case Weapon.Shotgun:
           int _frame = _manFramesFiringShotgun[min(frame, _manFramesFiringShotgunMax)];
-          print("frame $frame, $_frame");
           double _di = direction.index * _frameSize * _framesPerDirection3;
           double _fr = _frame * _frameSize;
           src[0] = _humanFiringShotgun.x + _di + _fr;
