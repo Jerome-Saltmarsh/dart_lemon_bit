@@ -11,12 +11,14 @@ import 'package:lemon_engine/classes/vector2.dart';
 const _frameSize = 64.0;
 
 const List<int> _manFramesFiringHandgun = [0, 1, 0];
-const List<int> _manFramesFiringShotgun = [0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0];
+const List<int> _manFramesFiringShotgun = [1, 0, 2, 0];
 
 final _manFramesFiringHandgunMax = _manFramesFiringHandgun.length - 1;
-final _manFramesFiringShotgunLength = _manFramesFiringShotgun.length;
+final _manFramesFiringShotgunLength = _manFramesFiringShotgun.length - 1;
 
-const humanHandgunIdleFramesPerDirection = 2;
+const _framesPerDirection2 = 2;
+const _framesPerDirection3 = 3;
+const _framesPerDirection4 = 4;
 
 final Vector2 _humanIdleUnarmed = Vector2(1538, 1);
 final Vector2 _humanIdleHandgun = Vector2(1026, 258);
@@ -26,9 +28,9 @@ final Vector2 _humanWalkingHandgun = Vector2(1, 708);
 final Vector2 _humanWalkingShotgun = Vector2(1, 965);
 final Vector2 _humanRunning = Vector2(0, 2206);
 final Vector2 _humanChanging = Vector2(1, 1479);
-final Vector2 _dying = Vector2(1, 1736);
+final Vector2 _humanDying = Vector2(1, 1736);
 final Vector2 _humanFiringHandgun = Vector2(1, 258);
-final Vector2 _firingShotgun = Vector2(1, 1);
+final Vector2 _humanFiringShotgun = Vector2(1, 1);
 
 void setCharacterSrc({
   CharacterType type,
@@ -58,7 +60,7 @@ void setCharacterSrc({
       break;
 
     case CharacterState.Walking:
-      double _s = direction.index * _frameSize * 4;
+      double _s = direction.index * _frameSize * _framesPerDirection4;
       double _f = (frame % 4) * _frameSize;
 
       switch(weapon){
@@ -81,8 +83,8 @@ void setCharacterSrc({
       int _frame = min(2, frame);
       double _s = direction.index * _frameSize * 2;
       double _f = _frame * _frameSize;
-      src[0] = _s + _f + _dying.x;
-      src[1] = shade.index * _frameSize + _dying.y;
+      src[0] = _s + _f + _humanDying.x;
+      src[1] = shade.index * _frameSize + _humanDying.y;
       break;
 
     case CharacterState.Aiming:
@@ -97,10 +99,18 @@ void setCharacterSrc({
       switch (weapon) {
         case Weapon.HandGun:
           int _frame = _manFramesFiringHandgun[min(frame, _manFramesFiringHandgunMax)];
-          double _di = direction.index * _frameSize * humanHandgunIdleFramesPerDirection;
+          double _di = direction.index * _frameSize * _framesPerDirection2;
           double _fr = _frame * _frameSize;
           src[0] = _humanFiringHandgun.x + _di + _fr;
           src[1] = _humanFiringHandgun.y + shade.index * _frameSize;
+          break;
+
+        case Weapon.Shotgun:
+          int _frame = _manFramesFiringShotgun[min(frame, _manFramesFiringShotgunLength)];
+          double _di = direction.index * _frameSize * _framesPerDirection3;
+          double _fr = _frame * _frameSize;
+          src[0] = _humanFiringShotgun.x + _di + _fr;
+          src[1] = _humanFiringShotgun.y + shade.index * _frameSize;
           break;
 
         default:
@@ -112,8 +122,8 @@ void setCharacterSrc({
           }
           double _s = direction.index * _frameSize * 3;
           double _f = _frame * _frameSize;
-          src[0] = _s + _f + _firingShotgun.x;
-          src[1] = shade.index * _frameSize + _firingShotgun.y;
+          src[0] = _s + _f + _humanFiringShotgun.x;
+          src[1] = shade.index * _frameSize + _humanFiringShotgun.y;
           break;
       }
       break;
