@@ -17,6 +17,7 @@ final _manFramesFiringHandgunLength = _manFramesFiringHandgun.length;
 final _manFramesFiringShotgunLength = _manFramesFiringShotgun.length;
 
 final Vector2 _humanIdleUnarmed = Vector2(1538, 1);
+final Vector2 _humanIdleHandgun = Vector2(1026, 258);
 final Vector2 _humanWalkingUnarmed = Vector2(1, 1222);
 final Vector2 _humanRunning = Vector2(0, 2206);
 final Vector2 _humanChanging = Vector2(1, 1479);
@@ -35,8 +36,13 @@ void setCharacterSrc({
 }) {
   switch (state) {
     case CharacterState.Idle:
-      src[0] = _humanIdleUnarmed.x + (direction.index * _frameSize);
-      src[1] = _humanIdleUnarmed.y + (shade.index * _frameSize);
+      if (weapon == Weapon.HandGun){
+        src[0] = _humanIdleHandgun.x + (direction.index * _frameSize);
+        src[1] = _humanIdleHandgun.y + (shade.index * _frameSize);
+      } else {
+        src[0] = _humanIdleUnarmed.x + (direction.index * _frameSize);
+        src[1] = _humanIdleUnarmed.y + (shade.index * _frameSize);
+      }
       break;
 
     case CharacterState.Walking:

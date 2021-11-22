@@ -120,11 +120,14 @@
 -- CURRENT -- 
 [ ] Fix Zombie Animations
 [ ] Fix Human Animations
-    [ ] Running
-    [ ] Changing
     [ ] Handgun Idle
-    [ ] Handgun Walking
     [ ] Handgun Firing
+    [ ] Handgun Walking
+    [ ] Shotgun Idle
+    [ ] Shotgun Firing
+    [ ] Shotgun Walking
+    [x] Running
+    [x] Changing
     
 -- FINISHED -- 
 [x] Fix Animated Torches
