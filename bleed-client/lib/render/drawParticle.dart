@@ -32,7 +32,7 @@ void drawParticle(Particle particle){
 
   switch(particle.type){
     case ParticleType.Myst:
-      drawAtlas(mapParticleToDst(particle), mapParticleToSrc(particle));
+      // drawAtlas(mapParticleToDst(particle), mapParticleToSrc(particle));
       break;
     case ParticleType.Smoke:
       double size = 5.33 * scaleShift;

@@ -24,7 +24,6 @@ import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/emit/emitMyst.dart';
 import 'package:bleed_client/functions/emitSmoke.dart';
 import 'package:bleed_client/getters/getTileAt.dart';
-import 'package:bleed_client/images.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:bleed_client/network/functions/disconnect.dart';
 import 'package:bleed_client/network/state/connected.dart';
@@ -313,15 +312,6 @@ void _parseEnvironmentObjects() {
       default:
         // ignore
         break;
-    }
-
-    int index = environmentObjectIndex[type] - 1;
-
-    if (index == null){
-      throw Exception("no index found for $type");
-    }
-    if (index == null){
-      throw Exception("no image index for $type");
     }
 
     double width = environmentObjectWidth[type];

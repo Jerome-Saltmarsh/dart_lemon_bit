@@ -7000,11 +7000,6 @@
       "type": "Tree01"
     },
     {
-      "x": 110,
-      "y": 2886,
-      "type": "Rock"
-    },
-    {
       "x": 190,
       "y": 2887,
       "type": "Rock"
@@ -7020,14 +7015,9 @@
       "type": "Tree01"
     },
     {
-      "x": -97,
-      "y": 3040,
-      "type": "Rock_Small"
-    },
-    {
       "x": -360,
       "y": 3066,
-      "type": "Rock"
+      "type": "MystEmitter"
     },
     {
       "x": -195,

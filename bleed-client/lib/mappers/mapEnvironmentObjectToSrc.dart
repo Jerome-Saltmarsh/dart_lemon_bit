@@ -6,6 +6,7 @@ import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/images.dart';
+import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 
@@ -23,6 +24,7 @@ final Map<ObjectType, double> environmentObjectWidth = {
   ObjectType.Tree02: 96,
   ObjectType.House01: 150,
   ObjectType.House02: 150,
+  ObjectType.MystEmitter: 48
 };
 
 final Map<ObjectType, double> environmentObjectHeight = {
@@ -39,6 +41,7 @@ final Map<ObjectType, double> environmentObjectHeight = {
   ObjectType.Tree02: 96,
   ObjectType.House01: 150,
   ObjectType.House02: 150,
+  ObjectType.MystEmitter: 48
 };
 
 final _Translations _translations = _Translations();
@@ -65,6 +68,7 @@ final Map<ObjectType, Vector2> objectTypeSrcPosition = {
   ObjectType.Palisade: _translations.palisades,
   ObjectType.Palisade_V: _translations.palisades,
   ObjectType.Palisade_H: _translations.palisades,
+  ObjectType.MystEmitter: atlas.circle,
 };
 
 final double _torchHeight = environmentObjectHeight[ObjectType.Torch];
