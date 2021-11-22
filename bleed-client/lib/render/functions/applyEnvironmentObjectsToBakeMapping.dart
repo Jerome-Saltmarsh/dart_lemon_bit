@@ -9,12 +9,15 @@ void applyEnvironmentObjectsToBakeMapping(){
   for (EnvironmentObject env in game.environmentObjects){
     if (env.type == ObjectType.Torch){
       emitLightBrightMedium(bakeMap, env.x, env.y);
+      continue;
     }
     if (env.type == ObjectType.House01){
       emitLightMedium(bakeMap, env.x, env.y);
+      continue;
     }
     if (env.type == ObjectType.House02){
       emitLightMedium(bakeMap, env.x, env.y);
+      continue;
     }
   }
 }

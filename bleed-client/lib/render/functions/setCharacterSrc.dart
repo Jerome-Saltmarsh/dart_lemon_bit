@@ -88,13 +88,7 @@ void setCharacterSrc({
       break;
 
     case CharacterState.Aiming:
-      // TODO This is wrong
-      int _frame =
-          _manFramesFiringHandgun[frame % _manFramesFiringHandgunMax];
-      src[0] = direction.index + (_frame * _frameSize);
-      src[1] = shade.index * _frameSize;
-      break;
-
+      throw Exception("CharacterState.Aiming not implemented");
     case CharacterState.Firing:
       switch (weapon) {
         case Weapon.HandGun:

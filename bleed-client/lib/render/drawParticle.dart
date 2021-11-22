@@ -1,13 +1,15 @@
 
+
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/getters/getShading.dart';
-import 'package:bleed_client/mappers/mapDurationToMystImage.dart';
+import 'package:bleed_client/render/drawCharacterMan.dart';
+import 'package:bleed_client/render/functions/mapParticleToDst.dart';
+import 'package:bleed_client/render/functions/mapParticleToSrc.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/render/draw_circle.dart';
-import 'package:lemon_engine/render/draw_image.dart';
 import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/opposite.dart';
@@ -24,14 +26,13 @@ void drawParticle(Particle particle){
 
   double x = particle.x;
   double y = particle.y;
-
   double scaleShift = (1 + (particle.z * 0.4)) * particle.scale;
   double heightShift = -particle.z * 20;
   double rotation = particle.rotation;
 
   switch(particle.type){
     case ParticleType.Myst:
-      drawImage(mapMystDurationToImage(particle.duration), x - 32, y - 32);
+      drawAtlas(mapParticleToDst(particle), mapParticleToSrc(particle));
       break;
     case ParticleType.Smoke:
       double size = 5.33 * scaleShift;
