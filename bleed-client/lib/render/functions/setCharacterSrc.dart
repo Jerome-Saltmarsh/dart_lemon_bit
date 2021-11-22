@@ -11,10 +11,10 @@ import 'package:lemon_engine/classes/vector2.dart';
 const _frameSize = 64.0;
 
 const List<int> _manFramesFiringHandgun = [0, 1, 0];
-const List<int> _manFramesFiringShotgun = [1, 0, 2, 0];
+const List<int> _manFramesFiringShotgun = [0, 1, 0, 0, 0, 2, 0];
 
 final _manFramesFiringHandgunMax = _manFramesFiringHandgun.length - 1;
-final _manFramesFiringShotgunLength = _manFramesFiringShotgun.length - 1;
+final _manFramesFiringShotgunMax = _manFramesFiringShotgun.length - 1;
 
 const _framesPerDirection2 = 2;
 const _framesPerDirection3 = 3;
@@ -106,7 +106,8 @@ void setCharacterSrc({
           break;
 
         case Weapon.Shotgun:
-          int _frame = _manFramesFiringShotgun[min(frame, _manFramesFiringShotgunLength)];
+          int _frame = _manFramesFiringShotgun[min(frame, _manFramesFiringShotgunMax)];
+          print("frame $frame, $_frame");
           double _di = direction.index * _frameSize * _framesPerDirection3;
           double _fr = _frame * _frameSize;
           src[0] = _humanFiringShotgun.x + _di + _fr;
@@ -115,10 +116,10 @@ void setCharacterSrc({
 
         default:
           int _frame = -1;
-          if (frame < _manFramesFiringShotgunLength) {
+          if (frame < _manFramesFiringShotgunMax) {
             _frame = _manFramesFiringShotgun[frame];
           } else {
-            _frame = _manFramesFiringShotgunLength - 1;
+            _frame = _manFramesFiringShotgunMax - 1;
           }
           double _s = direction.index * _frameSize * 3;
           double _f = _frame * _frameSize;
