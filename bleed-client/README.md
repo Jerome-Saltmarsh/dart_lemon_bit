@@ -118,18 +118,17 @@
 [ ] Fix Zombies vanish on death bug
 [ ] Add myst to atlas
 -- CURRENT -- 
-[ ] Fix Zombie Animations
-[ ] Fix Human Animations
-    [ ] Handgun Idle
-    [ ] Handgun Firing
-    [ ] Handgun Walking
-    [ ] Shotgun Idle
-    [ ] Shotgun Firing
-    [ ] Shotgun Walking
-    [x] Running
-    [x] Changing
-    
+[ ] Zombie Striking
+[ ] Zombie Walking
+[ ] Human Shotgun Firing
+[ ] Human Shotgun Walking
 -- FINISHED -- 
+[x] Handgun Idle
+[x] Handgun Firing
+[x] Handgun Walking
+[x] Shotgun Idle
+[x] Running
+[x] Changing
 [x] Fix Animated Torches
 [x] Pack character into sprite sheets
 [x] Fix Zombie.Blender so all animations are in one file
