@@ -10,11 +10,13 @@ import 'package:lemon_engine/classes/vector2.dart';
 
 const _frameSize = 64.0;
 
-const List<int> _manFramesFiringHandgun = [1, 0];
+const List<int> _manFramesFiringHandgun = [0, 1, 0];
 const List<int> _manFramesFiringShotgun = [0, 0, 0, 2, 2, 0, 0, 0, 0, 0, 0];
 
-final _manFramesFiringHandgunLength = _manFramesFiringHandgun.length;
+final _manFramesFiringHandgunMax = _manFramesFiringHandgun.length - 1;
 final _manFramesFiringShotgunLength = _manFramesFiringShotgun.length;
+
+const humanHandgunIdleFramesPerDirection = 2;
 
 final Vector2 _humanIdleUnarmed = Vector2(1538, 1);
 final Vector2 _humanIdleHandgun = Vector2(1026, 258);
@@ -23,7 +25,7 @@ final Vector2 _humanWalkingHandgun = Vector2(1, 708);
 final Vector2 _humanRunning = Vector2(0, 2206);
 final Vector2 _humanChanging = Vector2(1, 1479);
 final Vector2 _dying = Vector2(1, 1736);
-final Vector2 _firingHandgun = Vector2(1, 258);
+final Vector2 _humanFiringHandgun = Vector2(1, 258);
 final Vector2 _firingShotgun = Vector2(1, 1);
 
 void setCharacterSrc({
@@ -69,7 +71,7 @@ void setCharacterSrc({
     case CharacterState.Aiming:
       // TODO This is wrong
       int _frame =
-          _manFramesFiringHandgun[frame % _manFramesFiringHandgunLength];
+          _manFramesFiringHandgun[frame % _manFramesFiringHandgunMax];
       src[0] = direction.index + (_frame * _frameSize);
       src[1] = shade.index * _frameSize;
       break;
@@ -77,16 +79,12 @@ void setCharacterSrc({
     case CharacterState.Firing:
       switch (weapon) {
         case Weapon.HandGun:
-          int _frame = -1;
-          if (frame < _manFramesFiringHandgunLength) {
-            _frame = _manFramesFiringHandgun[frame];
-          } else {
-            _frame = _manFramesFiringHandgunLength - 1;
-          }
-          double _s = direction.index * _frameSize * 2;
-          double _f = _frame * _frameSize;
-          src[0] = _s + _f + _firingHandgun.x;
-          src[1] = shade.index * _frameSize + _firingHandgun.y;
+          int _frame = _manFramesFiringHandgun[min(frame, _manFramesFiringHandgunMax)];
+          print("frame $frame");
+          double _di = direction.index * _frameSize * humanHandgunIdleFramesPerDirection;
+          double _fr = _frame * _frameSize;
+          src[0] = _humanFiringHandgun.x + _di + _fr;
+          src[1] = _humanFiringHandgun.y + shade.index * _frameSize;
           break;
 
         default:
@@ -102,7 +100,7 @@ void setCharacterSrc({
           src[1] = shade.index * _frameSize + _firingShotgun.y;
           break;
       }
-      return;
+      break;
     case CharacterState.Striking:
       throw Exception("Not Implemented");
     case CharacterState.Running:
