@@ -20,6 +20,7 @@ const humanHandgunIdleFramesPerDirection = 2;
 
 final Vector2 _humanIdleUnarmed = Vector2(1538, 1);
 final Vector2 _humanIdleHandgun = Vector2(1026, 258);
+final Vector2 _humanIdleShotgun = Vector2(1539, 258);
 final Vector2 _humanWalkingUnarmed = Vector2(1, 1222);
 final Vector2 _humanWalkingHandgun = Vector2(1, 708);
 final Vector2 _humanRunning = Vector2(0, 2206);
@@ -39,12 +40,19 @@ void setCharacterSrc({
 }) {
   switch (state) {
     case CharacterState.Idle:
-      if (weapon == Weapon.HandGun){
-        src[0] = _humanIdleHandgun.x + (direction.index * _frameSize);
-        src[1] = _humanIdleHandgun.y + (shade.index * _frameSize);
-      } else {
-        src[0] = _humanIdleUnarmed.x + (direction.index * _frameSize);
-        src[1] = _humanIdleUnarmed.y + (shade.index * _frameSize);
+      switch(weapon){
+        case Weapon.HandGun:
+          src[0] = _humanIdleHandgun.x + (direction.index * _frameSize);
+          src[1] = _humanIdleHandgun.y + (shade.index * _frameSize);
+          break;
+        case Weapon.Unarmed:
+          src[0] = _humanIdleUnarmed.x + (direction.index * _frameSize);
+          src[1] = _humanIdleUnarmed.y + (shade.index * _frameSize);
+          break;
+        default:
+          src[0] = _humanIdleShotgun.x + (direction.index * _frameSize);
+          src[1] = _humanIdleShotgun.y + (shade.index * _frameSize);
+          break;
       }
       break;
 
@@ -80,7 +88,6 @@ void setCharacterSrc({
       switch (weapon) {
         case Weapon.HandGun:
           int _frame = _manFramesFiringHandgun[min(frame, _manFramesFiringHandgunMax)];
-          print("frame $frame");
           double _di = direction.index * _frameSize * humanHandgunIdleFramesPerDirection;
           double _fr = _frame * _frameSize;
           src[0] = _humanFiringHandgun.x + _di + _fr;
