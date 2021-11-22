@@ -120,7 +120,7 @@
 -- CURRENT -- 
 [ ] Zombie Striking
 [ ] Zombie Walking
-[ ] Handgun Firing
+[x] Handgun Firing
 [x] Human Shotgun Firing
 [x] Human Shotgun Walking
 -- FINISHED -- 
