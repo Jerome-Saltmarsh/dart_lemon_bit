@@ -97,7 +97,27 @@ Float32List mapCharacterSrc({
       break;
 
     case CharacterState.Aiming:
-      throw Exception("CharacterState.Aiming not implemented");
+      switch (weapon) {
+        case Weapon.HandGun:
+          int _frame = 0;
+          double _di = direction.index * _frameSize * _framesPerDirection2;
+          double _fr = _frame * _frameSize;
+          _src[0] = _humanFiringHandgun.x + _di + _fr;
+          _src[1] = _humanFiringHandgun.y + shade.index * _frameSize;
+          break;
+
+        case Weapon.Shotgun:
+          int _frame = 0;
+          double _di = direction.index * _frameSize * _framesPerDirection3;
+          double _fr = _frame * _frameSize;
+          _src[0] = _humanFiringShotgun.x + _di + _fr;
+          _src[1] = _humanFiringShotgun.y + shade.index * _frameSize;
+          break;
+
+        default:
+          throw Exception("Cannot aim unarmed");
+      }
+      break;
     case CharacterState.Firing:
       switch (weapon) {
         case Weapon.HandGun:
