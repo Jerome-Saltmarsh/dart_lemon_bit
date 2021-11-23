@@ -5,9 +5,9 @@ import 'package:bleed_client/render/mappers/mapDst.dart';
 
 Float32List mapParticleToDst(Particle particle){
   return mapDst(
-    scale: particle.scale,
+    scale: (1 + (particle.z * 0.4)) * particle.scale,
     rotation: particle.rotation,
     x: particle.x,
-    y: particle.y
+    y: particle.y - (particle.z * 20)
   );
 }
