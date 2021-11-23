@@ -58,6 +58,7 @@ import 'TileNode.dart';
 import 'InteractableNpc.dart';
 
 const _none = -1;
+const _maxCharacterFrame = 100;
 
 abstract class Game {
   static int _id = 0;
@@ -203,7 +204,7 @@ extension GameFunctions on Game {
     _updateCrates();
     _updateSpawnPointCollisions();
 
-    if (frame % 4 == 0){
+    if (frame % 4 == 0) {
       updateFrames(players);
       updateFrames(zombies);
       updateFrames(npcs);
@@ -211,9 +212,9 @@ extension GameFunctions on Game {
     compileGame(this);
   }
 
-  void updateFrames(List<Character> character){
-    for(Character character in character){
-      character.stateFrameCount = (character.stateFrameCount + 1) % 10;
+  void updateFrames(List<Character> character) {
+    for (Character character in character) {
+      character.stateFrameCount = min(character.stateFrameCount + 1, _maxCharacterFrame);
     }
   }
 
@@ -1047,17 +1048,15 @@ extension GameFunctions on Game {
         character: character,
         accuracy: getWeaponAccuracy(character.weapon),
         speed: getBulletSpeed(character.weapon),
-        type: ProjectileType.Bullet
-    );
+        type: ProjectileType.Bullet);
   }
 
-  Projectile spawnFireball(Character character){
+  Projectile spawnFireball(Character character) {
     return spawnProjectile(
         character: character,
         accuracy: 0,
         speed: 4.0,
-        type: ProjectileType.Fireball
-    );
+        type: ProjectileType.Fireball);
   }
 
   Projectile spawnProjectile({

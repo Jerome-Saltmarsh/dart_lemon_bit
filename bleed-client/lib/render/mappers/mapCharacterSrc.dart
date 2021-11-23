@@ -98,11 +98,10 @@ Float32List mapCharacterSrc({
       break;
 
     case CharacterState.Dead:
-      int _frame = min(2, frame);
       double _s = direction.index * _frameSize * 2;
-      double _f = _frame * _frameSize;
-      _src[0] = _s + _f + _humanDying.x;
-      _src[1] = shade.index * _frameSize + _humanDying.y;
+      double _f = min(2, frame) * _frameSize;
+      _src[0] = _humanDying.x + _s + _f;
+      _src[1] = _humanDying.y + shade.index * _frameSize;
       break;
 
     case CharacterState.Aiming:

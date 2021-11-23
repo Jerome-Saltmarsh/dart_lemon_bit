@@ -21,7 +21,6 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
     case GameEventType.Handgun_Fired:
       playAudioHandgunShot(x, y);
       spawnShell(x, y);
-      // render.gunShotFlashes.add(GunShotFlash(x: x, y: y, rotation: radians(xv, yv)));
       break;
     case GameEventType.Shotgun_Fired:
       playAudioShotgunShot(x, y);
@@ -35,7 +34,6 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
     case GameEventType.MachineGun_Fired:
       playAudioAssaultRifleShot(x, y);
       spawnShell(x, y);
-      // spawnShotSmoke(x, y, xv, yv);
       break;
     case GameEventType.Zombie_Hit:
       if (randomBool()) {
@@ -73,7 +71,6 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
             yv: yv * s + giveOrTake(r),
             zv: randomBetween(0, 0.07));
       }
-      // spawnFloatingText(x, y, constants.points.zombieKilled);
       break;
     case GameEventType.Zombie_killed_Explosion:
       playAudioZombieDeath(x, y);
@@ -94,7 +91,6 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
       spawnOrgan(x, y, 0.3,
           xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
 
-      // spawnFloatingText(x, y, constants.points.zombieKilled);
       break;
     case GameEventType.Zombie_Target_Acquired:
       playAudioZombieTargetAcquired(x, y);
