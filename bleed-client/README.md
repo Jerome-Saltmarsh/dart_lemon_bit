@@ -120,7 +120,8 @@
 [ ] Fix Editor
 -- CURRENT -- 
 [ ] Zombie Death
-[ ] Zombie Striking
+[ ] Zombie Idle
+[x] Zombie Striking
 [x] Zombie Walking
 [x] Handgun Firing
 [x] Human Shotgun Firing

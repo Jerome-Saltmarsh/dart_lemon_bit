@@ -43,8 +43,18 @@ Float32List mapCharacterSrc({
   int frame,
   Shade shade,
 }) {
+
+  bool zombie = type == CharacterType.Zombie;
+
   switch (state) {
     case CharacterState.Idle:
+
+      if (zombie){
+        _src[0] = atlas.zombie.idle.x + (direction.index * _frameSize);
+        _src[1] = atlas.zombie.idle.y + (shade.index * _frameSize);
+        break;
+      }
+
       switch(weapon){
         case Weapon.HandGun:
           _src[0] = _humanIdleHandgun.x + (direction.index * _frameSize);
