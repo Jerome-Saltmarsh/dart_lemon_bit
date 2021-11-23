@@ -5,16 +5,15 @@ import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums.dart';
+import 'package:bleed_client/render/constants/animations.dart';
+import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/enums/CharacterType.dart';
 import 'package:lemon_engine/classes/vector2.dart';
 
 const _frameSize = 64.0;
 
-const List<int> _manFramesFiringHandgun = [0, 1, 0];
-const List<int> _manFramesFiringShotgun = [0, 1, 0, 0, 0, 2, 0];
-
-final _manFramesFiringHandgunMax = _manFramesFiringHandgun.length - 1;
-final _manFramesFiringShotgunMax = _manFramesFiringShotgun.length - 1;
+final _manFramesFiringHandgunMax = animations.man.firingHandgun.length - 1;
+final _manFramesFiringShotgunMax = animations.man.firingShotgun.length - 1;
 
 const _framesPerDirection2 = 2;
 const _framesPerDirection3 = 3;
@@ -121,7 +120,7 @@ Float32List mapCharacterSrc({
     case CharacterState.Firing:
       switch (weapon) {
         case Weapon.HandGun:
-          int _frame = _manFramesFiringHandgun[min(frame, _manFramesFiringHandgunMax)];
+          int _frame = animations.man.firingHandgun[min(frame, _manFramesFiringHandgunMax)];
           double _di = direction.index * _frameSize * _framesPerDirection2;
           double _fr = _frame * _frameSize;
           _src[0] = _humanFiringHandgun.x + _di + _fr;
@@ -129,7 +128,7 @@ Float32List mapCharacterSrc({
           break;
 
         case Weapon.Shotgun:
-          int _frame = _manFramesFiringShotgun[min(frame, _manFramesFiringShotgunMax)];
+          int _frame = animations.man.firingShotgun[min(frame, _manFramesFiringShotgunMax)];
           double _di = direction.index * _frameSize * _framesPerDirection3;
           double _fr = _frame * _frameSize;
           _src[0] = _humanFiringShotgun.x + _di + _fr;
@@ -139,7 +138,7 @@ Float32List mapCharacterSrc({
         default:
           int _frame = -1;
           if (frame < _manFramesFiringShotgunMax) {
-            _frame = _manFramesFiringShotgun[frame];
+            _frame = animations.man.firingShotgun[frame];
           } else {
             _frame = _manFramesFiringShotgunMax - 1;
           }
@@ -151,7 +150,18 @@ Float32List mapCharacterSrc({
       }
       break;
     case CharacterState.Striking:
-      throw Exception("Not Implemented");
+      double _s = direction.index * _frameSize * 2;
+      double _f = (frame % 4) * _frameSize;
+
+      if (type == CharacterType.Human){
+        _src[0] = _s + _f + _humanRunning.x;
+        _src[1] = shade.index * _frameSize + _humanRunning.y;
+      } else
+      if (type == CharacterType.Zombie){
+        _src[0] = _s + _f + atlas.zombie.striking.x;
+        _src[1] = shade.index * _frameSize + atlas.zombie.striking.y;
+      }
+      break;
     case CharacterState.Running:
       double _s = direction.index * _frameSize * 4;
       double _f = (frame % 4) * _frameSize;
