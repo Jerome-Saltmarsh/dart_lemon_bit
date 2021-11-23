@@ -5,7 +5,6 @@ import 'package:lemon_math/diff.dart';
 import 'package:lemon_math/diff_over.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/give_or_take.dart';
-import 'package:lemon_math/randomBool.dart';
 import 'package:lemon_math/randomInt.dart';
 import 'package:lemon_math/randomItem.dart';
 
@@ -58,7 +57,6 @@ import 'TileNode.dart';
 import 'InteractableNpc.dart';
 
 const _none = -1;
-const _maxCharacterFrame = 100;
 
 abstract class Game {
   static int _id = 0;
@@ -696,16 +694,16 @@ extension GameFunctions on Game {
           double forceY =
               clampMagnitudeY(character.x - x, character.y - y, magnitude);
 
-          if (randomBool()) {
-            dispatch(GameEventType.Zombie_Killed, character.x, character.y,
-                forceX, forceY);
-            characterFace(character, x, y);
-            delayed(() => character.active = false, ms: randomInt(1000, 2000));
-          } else {
+          // if (randomBool()) {
+          //   dispatch(GameEventType.Zombie_Killed, character.x, character.y,
+          //       forceX, forceY);
+          //   characterFace(character, x, y);
+          //   delayed(() => character.active = false, ms: randomInt(1000, 2000));
+          // } else {
             character.active = false;
             dispatch(GameEventType.Zombie_killed_Explosion, character.x,
                 character.y, forceX, forceY);
-          }
+          // }
         }
       }
     }
@@ -890,15 +888,15 @@ extension GameFunctions on Game {
             (bullet.owner as Npc).clearTarget();
           }
 
-          if (randomBool()) {
-            dispatch(GameEventType.Zombie_Killed, character.x, character.y,
-                bullet.xv, bullet.yv);
-            delayed(() => character.active = false, ms: 2000);
-          } else {
+          // if (randomBool()) {
+          //   dispatch(GameEventType.Zombie_Killed, character.x, character.y,
+          //       bullet.xv, bullet.yv);
+          //   delayed(() => character.active = false, ms: 2000);
+          // } else {
             character.active = false;
             dispatch(GameEventType.Zombie_killed_Explosion, character.x,
                 character.y, bullet.xv, bullet.yv);
-          }
+          // }
         }
         break;
       }

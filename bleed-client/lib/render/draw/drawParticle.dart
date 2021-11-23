@@ -57,13 +57,9 @@ void drawParticle(Particle particle){
       drawCircle(x, y + heightShift, size * scaleShift, color);
       break;
     case ParticleType.Zombie_Head:
-    // drawCircle(x, y, _headSize / scaleShift, Colors.black45);
-    // drawCircle(x, y + heightShift, _headSize * scaleShift, getColorSkin(shading));
       drawAtlas(mapParticleToDst(particle), mapParticleToSrc(particle));
       break;
     case ParticleType.Human_Head:
-      // drawCircle(x, y, _headSize / scaleShift, Colors.black45);
-      // drawCircle(x, y + heightShift, _headSize * scaleShift, getColorSkin(shading));
       drawAtlas(mapParticleToDst(particle), mapParticleToSrc(particle));
       break;
     case ParticleType.Arm:
