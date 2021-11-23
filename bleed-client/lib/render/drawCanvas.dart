@@ -237,7 +237,7 @@ void _drawSprites() {
       Zombie zombie = game.zombies[indexZombie];
 
       if (!npcsRemaining || zombie.y < game.interactableNpcs[indexNpc].y) {
-        drawCharacter(game.zombies[indexZombie], CharacterType.Human);
+        drawCharacter(game.zombies[indexZombie], CharacterType.Zombie);
         indexZombie++;
         continue;
       }

@@ -32,6 +32,8 @@ final Vector2 _humanDying = Vector2(1, 1736);
 final Vector2 _humanFiringHandgun = Vector2(1, 258);
 final Vector2 _humanFiringShotgun = Vector2(1, 1);
 
+final Vector2 _zombieWalking = Vector2(1, 2720);
+
 void setCharacterSrc({
   CharacterType type,
   CharacterState state,
@@ -62,6 +64,12 @@ void setCharacterSrc({
     case CharacterState.Walking:
       double _s = direction.index * _frameSize * _framesPerDirection4;
       double _f = (frame % 4) * _frameSize;
+
+      if (type == CharacterType.Zombie){
+        src[0] = _s + _f + _zombieWalking.x;
+        src[1] = shade.index * _frameSize + _zombieWalking.y;
+        break;
+      }
 
       switch(weapon){
         case Weapon.HandGun:

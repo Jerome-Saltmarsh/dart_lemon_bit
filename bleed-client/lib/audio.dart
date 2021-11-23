@@ -185,6 +185,7 @@ AudioPlayer _getAudioPlayer() {
 }
 
 void _playAudio(String name, double x, double y) {
+  return;
   if (settings.audioMuted.value) return;
 
   try {

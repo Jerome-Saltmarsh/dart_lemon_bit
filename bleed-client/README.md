@@ -117,6 +117,7 @@
 [ ] Firebolt explode on impact
 [ ] Fix Zombies vanish on death bug
 [ ] Add myst to atlas
+[ ] Fix Editor
 -- CURRENT -- 
 [ ] Zombie Striking
 [ ] Zombie Walking
