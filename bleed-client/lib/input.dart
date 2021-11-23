@@ -2,7 +2,6 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Character.dart';
-import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
@@ -22,7 +21,6 @@ import 'package:lemon_math/randomItem.dart';
 
 import '../common.dart';
 import '../send.dart';
-import '../settings.dart';
 import 'common/enums/Direction.dart';
 import 'state.dart';
 import 'ui/logic/showTextBox.dart';
@@ -315,6 +313,7 @@ class _InputRequest {
 }
 
 void readPlayerInput() {
+  // TODO This should be reactive
   if (!playerAssigned) return;
 
   if (mouseAvailable) {

@@ -2,9 +2,13 @@
 import 'dart:typed_data';
 
 import 'package:bleed_client/classes/Particle.dart';
+import 'package:bleed_client/common/enums/Direction.dart';
+import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
+import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/state/particleSettings.dart';
+import 'package:bleed_client/utils.dart';
 
 final int _a = particleSettings.mystDuration - 25;
 final int _b = particleSettings.mystDuration - 50;
@@ -25,7 +29,25 @@ const _particleSize = 64.0;
 final Float32List _src = Float32List(4);
 
 Float32List mapParticleToSrc(Particle particle){
+
+  Shade shade = getShadeAtPosition(particle.x, particle.y);
+
   switch(particle.type){
+    case ParticleType.Shell:
+      Direction direction = convertAngleToDirection(particle.rotation);
+      _src[0] = atlas.particles.shell.x + (direction.index * 32.0);
+      _src[1] = atlas.particles.shell.y + shade.index * 32.0;
+      _src[2] = _src[0] + 32;
+      _src[3] = _src[1] + 32;
+      return _src;
+
+    case ParticleType.Blood:
+      _src[0] = atlas.particles.zombieHead.x;
+      _src[1] = atlas.particles.zombieHead.y + shade.index * 32.0;
+      _src[2] = _src[0] + 32;
+      _src[3] = _src[1] + 32;
+      return _src;
+
     case ParticleType.Human_Head:
       _src[0] = atlas.particles.zombieHead.x;
       _src[1] = atlas.particles.zombieHead.y;
