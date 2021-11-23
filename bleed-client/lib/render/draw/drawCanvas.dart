@@ -12,6 +12,7 @@ import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/enums/CharacterType.dart';
 import 'package:bleed_client/functions/calculateTileSrcRects.dart';
@@ -131,6 +132,9 @@ int compareParticles(Particle a, Particle b) {
   if (!b.active) {
     return -1;
   }
+  if (a.type == ParticleType.Blood) return -1;
+  if (b.type == ParticleType.Blood) return 1;
+
   return a.y > b.y ? 1 : -1;
 }
 
@@ -190,7 +194,7 @@ void _drawSprites() {
 
       if (!environmentRemaining ||
           humanY < game.environmentObjects[indexEnv].y) {
-        if (!particlesRemaining || humanY < game.particles[indexParticle].y) {
+        if (!particlesRemaining || humanY < game.particles[indexParticle].y && game.particles[indexParticle].type != ParticleType.Blood) {
           if (!zombiesRemaining || humanY < game.zombies[indexZombie].y) {
             if (!npcsRemaining || humanY < game.interactableNpcs[indexNpc].y) {
               drawCharacter(game.humans[indexHuman], CharacterType.Human);
@@ -207,7 +211,7 @@ void _drawSprites() {
 
       if (env.top > screen.bottom) return;
 
-      if (!particlesRemaining || env.y < game.particles[indexParticle].y) {
+      if (!particlesRemaining || env.y < game.particles[indexParticle].y && game.particles[indexParticle].type != ParticleType.Blood) {
         if (!zombiesRemaining || env.y < game.zombies[indexZombie].y) {
           if (!npcsRemaining || env.y < game.interactableNpcs[indexNpc].y) {
             drawEnvironmentObject(game.environmentObjects[indexEnv]);
@@ -220,6 +224,14 @@ void _drawSprites() {
 
     if (particlesRemaining) {
       Particle particle = game.particles[indexParticle];
+
+      if (particle.type == ParticleType.Blood){
+        if (onScreen(particle.x, particle.y)) {
+          drawParticle(particle);
+        }
+        indexParticle++;
+        continue;
+      }
 
       if (!zombiesRemaining || particle.y < game.zombies[indexZombie].y) {
         if (!npcsRemaining || particle.y < game.interactableNpcs[indexNpc].y) {
