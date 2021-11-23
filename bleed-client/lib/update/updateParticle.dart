@@ -52,7 +52,7 @@ void updateParticle(Particle particle){
   if (particle.z <= 0) {
     particle.z = 0;
   }
-  if (particle.type == ParticleType.Head && particle.duration & 2 == 0) {
+  if (particle.type == ParticleType.Human_Head && particle.duration & 2 == 0) {
     spawnBlood(particle.x, particle.y, particle.z);
   }
   if (particle.type == ParticleType.Arm && particle.duration & 2 == 0) {

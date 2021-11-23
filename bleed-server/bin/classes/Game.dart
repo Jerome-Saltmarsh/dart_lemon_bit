@@ -214,7 +214,7 @@ extension GameFunctions on Game {
 
   void updateFrames(List<Character> character) {
     for (Character character in character) {
-      character.stateFrameCount = min(character.stateFrameCount + 1, _maxCharacterFrame);
+      character.stateFrameCount = (character.stateFrameCount + 1) % 99;
     }
   }
 

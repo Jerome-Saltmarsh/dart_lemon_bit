@@ -7,7 +7,7 @@ import 'spawnParticle.dart';
 
 void spawnHead(double x, double y, double z, {double xv = 0, double yv = 0}) {
   spawnParticle(
-    type: ParticleType.Head,
+    type: ParticleType.Human_Head,
     x: x,
     y: y,
     z: z,

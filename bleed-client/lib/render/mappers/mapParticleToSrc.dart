@@ -26,10 +26,24 @@ final Float32List _src = Float32List(4);
 
 Float32List mapParticleToSrc(Particle particle){
   switch(particle.type){
+    case ParticleType.Human_Head:
+      _src[0] = atlas.particles.zombieHead.x;
+      _src[1] = atlas.particles.zombieHead.y;
+      _src[2] = _src[0] + 32;
+      _src[3] = _src[1] + 32;
+      return _src;
+
+    case ParticleType.Zombie_Head:
+      _src[0] = atlas.particles.zombieHead.x;
+      _src[1] = atlas.particles.zombieHead.y;
+      _src[2] = _src[0] + 32;
+      _src[3] = _src[1] + 32;
+      return _src;
+
     case ParticleType.Myst:
       int index = _mapMystDurationToIndex(particle.duration);
       _src[0] = atlas.myst.x;
-      _src[0] = atlas.myst.y + (index * _particleSize);
+      _src[1] = atlas.myst.y + (index * _particleSize);
       break;
     default:
       return _src;

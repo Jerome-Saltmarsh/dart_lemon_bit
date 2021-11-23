@@ -1,6 +1,7 @@
 enum ParticleType {
   Smoke,
-  Head,
+  Human_Head,
+  Zombie_Head,
   Shell,
   Arm,
   Organ,

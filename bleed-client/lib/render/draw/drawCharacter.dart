@@ -5,9 +5,8 @@ import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/render/enums/CharacterType.dart';
 import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/getters/isWaterAt.dart';
-import 'package:bleed_client/images.dart';
+import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/mappers/mapCharacterSrc.dart';
-import 'package:bleed_client/render/functions/drawRawAtlas.dart';
 import 'package:bleed_client/render/mappers/mapCharacterDst.dart';
 import 'package:lemon_engine/queries/on_screen.dart';
 
@@ -30,6 +29,3 @@ void drawCharacter(Character character, CharacterType type) {
       ));
 }
 
-void drawAtlas(Float32List dst, Float32List src) {
-  drawRawAtlas(images.atlas, dst, src);
-}

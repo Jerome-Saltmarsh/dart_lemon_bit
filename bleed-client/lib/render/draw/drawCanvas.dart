@@ -12,6 +12,7 @@ import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/enums/CharacterType.dart';
 import 'package:bleed_client/functions/calculateTileSrcRects.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
@@ -21,8 +22,7 @@ import 'package:bleed_client/render/draw/drawPlayerText.dart';
 import 'package:bleed_client/render/draw/drawCharacter.dart';
 import 'package:bleed_client/render/functions/emitLight.dart';
 import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
-import 'package:bleed_client/render/functions/drawBullets.dart';
-import 'package:bleed_client/render/functions/drawRawAtlas.dart';
+import 'package:bleed_client/render/draw/drawBullets.dart';
 import 'package:bleed_client/render/functions/resetDynamicShadesToBakeMap.dart';
 import 'package:bleed_client/render/state/dynamicShading.dart';
 import 'package:bleed_client/render/state/floatingText.dart';
@@ -257,8 +257,7 @@ bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {
 
 void drawEnvironmentObject(EnvironmentObject environmentObject) {
   if (!environmentObjectOnScreenScreen(environmentObject)) return;
-  drawRawAtlas(
-      images.atlas,
+  drawAtlas(
       environmentObject.dst,
       mapEnvironmentObjectToSrc(environmentObject),
   );

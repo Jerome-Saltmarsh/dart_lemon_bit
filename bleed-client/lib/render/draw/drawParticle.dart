@@ -5,6 +5,10 @@ import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/getters/getShading.dart';
+import 'package:bleed_client/render/draw/drawCharacter.dart';
+import 'package:bleed_client/render/draw/drawAtlas.dart';
+import 'package:bleed_client/render/mappers/mapParticleToDst.dart';
+import 'package:bleed_client/render/mappers/mapParticleToSrc.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/render/draw_circle.dart';
 import 'package:lemon_engine/state/paint.dart';
@@ -53,9 +57,12 @@ void drawParticle(Particle particle){
       }
       drawCircle(x, y + heightShift, size * scaleShift, color);
       break;
-    case ParticleType.Head:
+    case ParticleType.Human_Head:
       drawCircle(x, y, _headSize / scaleShift, Colors.black45);
       drawCircle(x, y + heightShift, _headSize * scaleShift, getColorSkin(shading));
+
+      drawAtlas(mapParticleToDst(particle), mapParticleToSrc(particle));
+
       break;
     case ParticleType.Arm:
       Color color = getColorSkin(shading);
