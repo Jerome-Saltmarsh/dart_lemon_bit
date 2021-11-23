@@ -42,8 +42,8 @@ Float32List mapParticleToSrc(Particle particle){
       return _src;
 
     case ParticleType.Blood:
-      _src[0] = atlas.particles.zombieHead.x;
-      _src[1] = atlas.particles.zombieHead.y + shade.index * 32.0;
+      _src[0] = atlas.particles.blood.x;
+      _src[1] = atlas.particles.blood.y + shade.index * 32.0;
       _src[2] = _src[0] + 32;
       _src[3] = _src[1] + 32;
       return _src;

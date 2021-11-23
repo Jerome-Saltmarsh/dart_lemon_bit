@@ -18,7 +18,7 @@ void spawnBlood(double x, double y, double z,
       duration: randomInt(90, 170),
       rotation: 0,
       rotationV: 0,
-      scale: 1,
-      scaleV: 0.0085,
+      scale: 0.4,
+      scaleV: 0,
       bounciness: 0);
 }
