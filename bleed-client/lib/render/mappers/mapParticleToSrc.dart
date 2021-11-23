@@ -75,7 +75,6 @@ Float32List mapParticleToSrc(Particle particle){
   return _src;
 }
 
-
 int _mapMystDurationToIndex(int duration){
   if (duration > _a){
     return _mystIndex02;
