@@ -76,11 +76,10 @@ Float32List mapParticleToSrc(Particle particle){
       _src[1] = atlas.myst.y + (index * _particleSize);
       break;
     default:
-      _src[0] = 0;
-      _src[1] = 0;
-      _src[2] = 0;
-      _src[3] = 0;
-      // print("Warning ${particle.type} has not been mapped");
+      _src[0] = atlas.particles.circle32.x;
+      _src[1] = atlas.particles.circle32.y;
+      _src[2] = _src[0] + 64;
+      _src[3] = _src[1] + 64;
       return _src;
   }
   _src[2] = _src[0] + _particleSize;
