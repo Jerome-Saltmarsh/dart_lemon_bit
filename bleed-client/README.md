@@ -115,6 +115,7 @@
 [ ] Quest Kill the vampire
 [ ] Splash Screen
 [ ] Firebolt explode on impact
+[ ] Optimize Parse Zombies
 [ ] Fix Zombies vanish on death bug
 [ ] Add myst to atlas
 [ ] Fix Editor
