@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:bleed_client/enums/ParticleType.dart';
 
 class Particle {
