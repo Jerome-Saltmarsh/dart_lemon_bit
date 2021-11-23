@@ -34,30 +34,30 @@ final Vector2 _humanFiringShotgun = Vector2(1, 1);
 
 final Vector2 _zombieWalking = Vector2(1, 2720);
 
+Float32List _src = Float32List(4);
 
-void setCharacterSrc({
+Float32List mapCharacterSrc({
   CharacterType type,
   CharacterState state,
   Weapon weapon,
   Direction direction,
   int frame,
   Shade shade,
-  Float32List src,
 }) {
   switch (state) {
     case CharacterState.Idle:
       switch(weapon){
         case Weapon.HandGun:
-          src[0] = _humanIdleHandgun.x + (direction.index * _frameSize);
-          src[1] = _humanIdleHandgun.y + (shade.index * _frameSize);
+          _src[0] = _humanIdleHandgun.x + (direction.index * _frameSize);
+          _src[1] = _humanIdleHandgun.y + (shade.index * _frameSize);
           break;
         case Weapon.Unarmed:
-          src[0] = _humanIdleUnarmed.x + (direction.index * _frameSize);
-          src[1] = _humanIdleUnarmed.y + (shade.index * _frameSize);
+          _src[0] = _humanIdleUnarmed.x + (direction.index * _frameSize);
+          _src[1] = _humanIdleUnarmed.y + (shade.index * _frameSize);
           break;
         default:
-          src[0] = _humanIdleShotgun.x + (direction.index * _frameSize);
-          src[1] = _humanIdleShotgun.y + (shade.index * _frameSize);
+          _src[0] = _humanIdleShotgun.x + (direction.index * _frameSize);
+          _src[1] = _humanIdleShotgun.y + (shade.index * _frameSize);
           break;
       }
       break;
@@ -67,23 +67,23 @@ void setCharacterSrc({
       double _f = (frame % 4) * _frameSize;
 
       if (type == CharacterType.Zombie){
-        src[0] = _s + _f + _zombieWalking.x;
-        src[1] = shade.index * _frameSize + _zombieWalking.y;
+        _src[0] = _s + _f + _zombieWalking.x;
+        _src[1] = shade.index * _frameSize + _zombieWalking.y;
         break;
       }
 
       switch(weapon){
         case Weapon.HandGun:
-          src[0] = _s + _f + _humanWalkingHandgun.x;
-          src[1] = shade.index * _frameSize + _humanWalkingHandgun.y;
+          _src[0] = _s + _f + _humanWalkingHandgun.x;
+          _src[1] = shade.index * _frameSize + _humanWalkingHandgun.y;
           break;
         case Weapon.Shotgun:
-          src[0] = _s + _f + _humanWalkingShotgun.x;
-          src[1] = shade.index * _frameSize + _humanWalkingShotgun.y;
+          _src[0] = _s + _f + _humanWalkingShotgun.x;
+          _src[1] = shade.index * _frameSize + _humanWalkingShotgun.y;
           break;
         default:
-          src[0] = _s + _f + _humanWalkingUnarmed.x;
-          src[1] = shade.index * _frameSize + _humanWalkingUnarmed.y;
+          _src[0] = _s + _f + _humanWalkingUnarmed.x;
+          _src[1] = shade.index * _frameSize + _humanWalkingUnarmed.y;
           break;
       }
       break;
@@ -92,8 +92,8 @@ void setCharacterSrc({
       int _frame = min(2, frame);
       double _s = direction.index * _frameSize * 2;
       double _f = _frame * _frameSize;
-      src[0] = _s + _f + _humanDying.x;
-      src[1] = shade.index * _frameSize + _humanDying.y;
+      _src[0] = _s + _f + _humanDying.x;
+      _src[1] = shade.index * _frameSize + _humanDying.y;
       break;
 
     case CharacterState.Aiming:
@@ -104,16 +104,16 @@ void setCharacterSrc({
           int _frame = _manFramesFiringHandgun[min(frame, _manFramesFiringHandgunMax)];
           double _di = direction.index * _frameSize * _framesPerDirection2;
           double _fr = _frame * _frameSize;
-          src[0] = _humanFiringHandgun.x + _di + _fr;
-          src[1] = _humanFiringHandgun.y + shade.index * _frameSize;
+          _src[0] = _humanFiringHandgun.x + _di + _fr;
+          _src[1] = _humanFiringHandgun.y + shade.index * _frameSize;
           break;
 
         case Weapon.Shotgun:
           int _frame = _manFramesFiringShotgun[min(frame, _manFramesFiringShotgunMax)];
           double _di = direction.index * _frameSize * _framesPerDirection3;
           double _fr = _frame * _frameSize;
-          src[0] = _humanFiringShotgun.x + _di + _fr;
-          src[1] = _humanFiringShotgun.y + shade.index * _frameSize;
+          _src[0] = _humanFiringShotgun.x + _di + _fr;
+          _src[1] = _humanFiringShotgun.y + shade.index * _frameSize;
           break;
 
         default:
@@ -125,8 +125,8 @@ void setCharacterSrc({
           }
           double _s = direction.index * _frameSize * 3;
           double _f = _frame * _frameSize;
-          src[0] = _s + _f + _humanFiringShotgun.x;
-          src[1] = shade.index * _frameSize + _humanFiringShotgun.y;
+          _src[0] = _s + _f + _humanFiringShotgun.x;
+          _src[1] = shade.index * _frameSize + _humanFiringShotgun.y;
           break;
       }
       break;
@@ -135,8 +135,8 @@ void setCharacterSrc({
     case CharacterState.Running:
       double _s = direction.index * _frameSize * 4;
       double _f = (frame % 4) * _frameSize;
-      src[0] = _s + _f + _humanRunning.x;
-      src[1] = shade.index * _frameSize + _humanRunning.y;
+      _src[0] = _s + _f + _humanRunning.x;
+      _src[1] = shade.index * _frameSize + _humanRunning.y;
       break;
 
     case CharacterState.Reloading:
@@ -150,11 +150,12 @@ void setCharacterSrc({
       }
       double _s = direction.index * _frameSize * 2;
       double _f = _frame * _frameSize;
-      src[0] = _s + _f + _humanChanging.x;
-      src[1] = shade.index * _frameSize + _humanChanging.y;
+      _src[0] = _s + _f + _humanChanging.x;
+      _src[1] = shade.index * _frameSize + _humanChanging.y;
       break;
   }
 
-  src[2] = src[0] + _frameSize;
-  src[3] = src[1] + _frameSize;
+  _src[2] = _src[0] + _frameSize;
+  _src[3] = _src[1] + _frameSize;
+  return _src;
 }

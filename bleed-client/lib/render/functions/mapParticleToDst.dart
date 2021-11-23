@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:bleed_client/classes/Particle.dart';
-import 'package:bleed_client/render/functions/setDst.dart';
+import 'package:bleed_client/render/functions/mapDst.dart';
 
 Float32List mapParticleToDst(Particle particle){
   return mapDst(

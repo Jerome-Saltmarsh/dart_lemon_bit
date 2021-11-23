@@ -1,9 +1,12 @@
 
 import 'dart:typed_data';
 
-void setSrc(Float32List src, {int index = 0, double left, double top, double right, double bottom}){
-  src[index] = left;
-  src[index + 1] = top;
-  src[index + 2] = right;
-  src[index + 3] = bottom;
+Float32List _src = Float32List(4);
+
+Float32List mapSrc({double left, double top, double right, double bottom}){
+  _src[0] = left;
+  _src[1] = top;
+  _src[2] = right;
+  _src[3] = bottom;
+  return _src;
 }
