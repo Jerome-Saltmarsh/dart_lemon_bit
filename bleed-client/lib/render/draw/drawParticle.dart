@@ -12,7 +12,7 @@ import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/opposite.dart';
 import 'package:lemon_math/random_between.dart';
 
-import '../utils.dart';
+import '../../utils.dart';
 
 const _headSize = 5.0;
 
