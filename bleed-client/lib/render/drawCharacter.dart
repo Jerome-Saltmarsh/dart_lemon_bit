@@ -2,13 +2,13 @@ import 'dart:typed_data';
 
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:bleed_client/render/enums/CharacterType.dart';
 import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/getters/isWaterAt.dart';
 import 'package:bleed_client/images.dart';
-import 'package:bleed_client/render/functions/setCharacterSrc.dart';
-import 'package:bleed_client/render/drawCharacterZombie.dart';
+import 'package:bleed_client/render/mappers/mapCharacterSrc.dart';
 import 'package:bleed_client/render/functions/drawRawAtlas.dart';
-import 'package:bleed_client/render/functions/setCharacterDst.dart';
+import 'package:bleed_client/render/mappers/mapCharacterDst.dart';
 import 'package:lemon_engine/queries/on_screen.dart';
 
 void drawCharacter(Character character, CharacterType type) {

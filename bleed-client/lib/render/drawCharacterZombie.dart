@@ -1,9 +1,5 @@
 
 
-enum CharacterType {
-  Human,
-  Zombie
-}
 
 // void drawCharacterZombie(Character character) {
 //   if (!character.alive && isWaterAt(character.x, character.y)) return;
