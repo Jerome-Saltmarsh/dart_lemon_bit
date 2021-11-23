@@ -356,25 +356,15 @@ void readPlayerInput() {
     requestDirection = getKeyDirection();
     if (requestDirection == Direction.None) {
       requestCharacterState = characterStateIdle;
-      if (mouseAvailable) {
-        double mouseWorldX = mouseX + camera.x;
-        double mouseWorldY = mouseY + camera.y;
-        for (Zombie zombie in game.zombies) {
-          if (diffOver(zombie.x, mouseWorldX, playerAutoAimDistance)) continue;
-          if (diffOver(zombie.y, mouseWorldY, playerAutoAimDistance)) continue;
-          requestCharacterState = characterStateAiming;
-          requestDirection = convertAngleToDirection(requestAim);
-          break;
-        }
-      }
       return;
-    } else {
-      if (inputRequest.sprint) {
-        requestCharacterState = characterStateRunning;
-      } else {
-        requestCharacterState = characterStateWalking;
-      }
     }
+
+    if (inputRequest.sprint) {
+      requestCharacterState = characterStateRunning;
+      return;
+    }
+
+    requestCharacterState = characterStateWalking;
   }
 }
 

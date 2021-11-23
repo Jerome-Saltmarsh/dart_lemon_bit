@@ -15,6 +15,7 @@ import 'spawners/spawnOrgan.dart';
 import 'spawners/spawnShell.dart';
 import 'spawners/spawnShotSmoke.dart';
 import 'spawners/spawnShrapnel.dart';
+import 'spawners/spawnZombieHead.dart';
 
 void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
   switch (type) {
@@ -82,7 +83,7 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
             yv: yv * s + giveOrTake(r),
             zv: randomBetween(0, 0.07));
       }
-      spawnHead(x, y, 0.3,
+      spawnZombieHead(x, y, 0.3,
           xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
       spawnArm(x, y, 0.3,
           xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
