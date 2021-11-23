@@ -34,6 +34,7 @@ final Vector2 _humanFiringShotgun = Vector2(1, 1);
 
 final Vector2 _zombieWalking = Vector2(1, 2720);
 
+
 void setCharacterSrc({
   CharacterType type,
   CharacterState state,

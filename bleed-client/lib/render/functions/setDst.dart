@@ -1,16 +1,19 @@
 import 'dart:typed_data';
 
-void setDst(
-    Float32List dst, {
+Float32List _dst = Float32List(4);
+
+Float32List mapDst(
+    {
       int index = 0,
       double scale = 1,
       double rotation = 0,
       double x,
       double y
     }){
-  dst[index] = scale;
-  dst[index + 1] = rotation;
-  dst[index + 2] = x;
-  dst[index + 3] = y;
+  _dst[index] = scale;
+  _dst[index + 1] = rotation;
+  _dst[index + 2] = x;
+  _dst[index + 3] = y;
+  return _dst;
 }
 

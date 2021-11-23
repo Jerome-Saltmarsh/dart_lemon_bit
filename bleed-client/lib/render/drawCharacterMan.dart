@@ -11,7 +11,6 @@ import 'package:bleed_client/render/functions/drawRawAtlas.dart';
 import 'package:bleed_client/render/functions/setCharacterDst.dart';
 import 'package:lemon_engine/queries/on_screen.dart';
 
-Float32List _dst = Float32List(4);
 Float32List _src = Float32List(4);
 
 void drawCharacter(Character character, CharacterType type) {
@@ -20,8 +19,6 @@ void drawCharacter(Character character, CharacterType type) {
 
   Shade shade = getShadeAtPosition(character.x, character.y);
   if (shade.index >= Shade.PitchBlack.index) return;
-
-  setCharacterDst(character, _dst);
 
   setCharacterSrc(
       type: type,
@@ -32,7 +29,7 @@ void drawCharacter(Character character, CharacterType type) {
       shade: shade,
       src: _src);
 
-  drawAtlas(_dst, _src);
+  drawAtlas(mapCharacterDst(character), _src);
 }
 
 void drawAtlas(Float32List dst, Float32List src){

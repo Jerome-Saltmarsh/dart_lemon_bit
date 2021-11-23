@@ -119,9 +119,9 @@
 [ ] Add myst to atlas
 [ ] Fix Editor
 -- CURRENT -- 
-[ ] Zombie Striking
-[ ] Zombie Walking
 [ ] Zombie Death
+[ ] Zombie Striking
+[x] Zombie Walking
 [x] Handgun Firing
 [x] Human Shotgun Firing
 [x] Human Shotgun Walking

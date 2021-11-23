@@ -5,8 +5,8 @@ import 'package:bleed_client/render/constants/manScale.dart';
 
 import 'setDst.dart';
 
-void setCharacterDst(Character character, Float32List dst) {
-  setDst(dst,
+Float32List mapCharacterDst(Character character) {
+  return mapDst(
       scale: manScale,
       x: character.x - manRenderSizeHalf,
       y: character.y - manRenderSizeHalf);
