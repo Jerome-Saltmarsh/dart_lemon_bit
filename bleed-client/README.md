@@ -119,7 +119,10 @@
 [ ] Add myst to atlas
 [ ] Fix Editor
 -- CURRENT -- 
+[ ] Blood Particle 
+[ ] Smoke Particle 
 [ ] Zombie Death
+[x] Shell Particle 
 [x] Zombie Idle
 [x] Zombie Striking
 [x] Zombie Walking
