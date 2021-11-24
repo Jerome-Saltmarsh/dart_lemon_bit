@@ -82,6 +82,7 @@ Widget buildTopLeft() {
         children: [
           buildTime(),
           buildMouseWorldPosition(),
+          text('Zombies: ${game.totalZombies}'),
         ],
       ));
 }

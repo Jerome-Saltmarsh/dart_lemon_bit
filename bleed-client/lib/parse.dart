@@ -531,6 +531,10 @@ int _consumeIntUnsafe() {
   return int.parse(_consumeStringUnsafe());
 }
 
+int _consumeSingleDigitInt(){
+  return int.parse(_consumeSingleCharacter());
+}
+
 bool _consumeBool() {
   return _consumeString() == _1 ? true : false;
 }
@@ -574,7 +578,7 @@ String _consumeString() {
   return buffer.toString();
 }
 
-StringBuffer _consumer = StringBuffer();
+final StringBuffer _consumer = StringBuffer();
 
 /// This is an optimized version of consume string
 /// It has all error checking removed
@@ -588,6 +592,12 @@ String _consumeStringUnsafe() {
   }
   _index++;
   return _consumer.toString();
+}
+
+String _consumeSingleCharacter() {
+  String char = _currentCharacter;
+  _index += 2;
+  return char;
 }
 
 double _consumeDouble() {
@@ -710,8 +720,8 @@ void _consumeHuman(Character character) {
 }
 
 void _consumeZombie(Zombie zombie) {
-  zombie.state = characterStates[_consumeIntUnsafe()];
-  zombie.direction = directions[_consumeIntUnsafe()];
+  zombie.state = characterStates[_consumeSingleDigitInt()];
+  zombie.direction = directions[_consumeSingleDigitInt()];
   zombie.x = _consumeDoubleUnsafe();
   zombie.y = _consumeDoubleUnsafe();
   zombie.frame = _consumeIntUnsafe();
