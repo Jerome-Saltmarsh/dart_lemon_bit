@@ -246,13 +246,13 @@ void stopRunDown() {
 }
 
 void melee() {
-  requestCharacterState = CharacterState.Striking;
-  requestDirection = convertAngleToDirection(requestAim);
+  inputRequest.requestCharacterState = CharacterState.Striking;
+  inputRequest.requestDirection = convertAngleToDirection(requestAim);
 }
 
 void stopMelee() {
-  if (requestCharacterState != CharacterState.Striking) return;
-  requestCharacterState = CharacterState.Idle;
+  if (inputRequest.requestCharacterState != CharacterState.Striking) return;
+  inputRequest.requestCharacterState = CharacterState.Idle;
 }
 
 void _handleKeyDownEvent(RawKeyDownEvent event) {
@@ -310,6 +310,8 @@ class _InputRequest {
   bool moveRight = false;
   bool moveDown = false;
   bool moveLeft = false;
+  Direction requestDirection = Direction.None;
+  CharacterState requestCharacterState = CharacterState.Idle;
 }
 
 void readPlayerInput() {
@@ -346,24 +348,24 @@ void readPlayerInput() {
       return;
     }
 
-    requestCharacterState = CharacterState.Firing;
+    inputRequest.requestCharacterState = CharacterState.Firing;
   } else {
-    if (requestCharacterState == CharacterState.Striking) {
+    if (inputRequest.requestCharacterState == CharacterState.Striking) {
       return;
     }
 
-    requestDirection = getKeyDirection();
-    if (requestDirection == Direction.None) {
-      requestCharacterState = CharacterState.Idle;
+    inputRequest.requestDirection = getKeyDirection();
+    if (inputRequest.requestDirection == Direction.None) {
+      inputRequest.requestCharacterState = CharacterState.Idle;
       return;
     }
 
     if (inputRequest.sprint) {
-      requestCharacterState = CharacterState.Running;
+      inputRequest.requestCharacterState = CharacterState.Running;
       return;
     }
 
-    requestCharacterState = CharacterState.Walking;
+    inputRequest.requestCharacterState = CharacterState.Walking;
   }
 }
 
