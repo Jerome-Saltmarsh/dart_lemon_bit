@@ -36,7 +36,6 @@ import 'package:lemon_engine/state/size.dart';
 import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import '../../tutorials.dart';
 import 'buildTextBox.dart';
 import 'dialogs.dart';
 
@@ -448,23 +447,6 @@ Stack buildGrenadeSlot() {
       buildTag(player.grenades)
     ],
   );
-}
-
-Widget buildViewTutorial() {
-  return Positioned(
-      bottom: 100,
-      child: Container(
-        width: screenWidth,
-        child: Row(
-          mainAxisAlignment: main.center,
-          children: [
-            Container(
-                padding: EdgeInsets.all(10),
-                color: Colors.black54,
-                child: text(tutorial.getText())),
-          ],
-        ),
-      ));
 }
 
 Widget buildViewScore() {

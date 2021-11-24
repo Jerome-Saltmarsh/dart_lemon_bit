@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Character.dart';
+import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
@@ -19,7 +20,6 @@ import 'package:lemon_math/diff_over.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/randomItem.dart';
 
-import '../common.dart';
 import '../send.dart';
 import 'common/enums/Direction.dart';
 import 'state.dart';
@@ -246,13 +246,13 @@ void stopRunDown() {
 }
 
 void melee() {
-  requestCharacterState = characterStateStriking;
+  requestCharacterState = CharacterState.Striking;
   requestDirection = convertAngleToDirection(requestAim);
 }
 
 void stopMelee() {
-  if (requestCharacterState != characterStateStriking) return;
-  requestCharacterState = characterStateIdle;
+  if (requestCharacterState != CharacterState.Striking) return;
+  requestCharacterState = CharacterState.Idle;
 }
 
 void _handleKeyDownEvent(RawKeyDownEvent event) {
@@ -346,24 +346,24 @@ void readPlayerInput() {
       return;
     }
 
-    requestCharacterState = characterStateFiring;
+    requestCharacterState = CharacterState.Firing;
   } else {
-    if (requestCharacterState == characterStateStriking) {
+    if (requestCharacterState == CharacterState.Striking) {
       return;
     }
 
     requestDirection = getKeyDirection();
     if (requestDirection == Direction.None) {
-      requestCharacterState = characterStateIdle;
+      requestCharacterState = CharacterState.Idle;
       return;
     }
 
     if (inputRequest.sprint) {
-      requestCharacterState = characterStateRunning;
+      requestCharacterState = CharacterState.Running;
       return;
     }
 
-    requestCharacterState = characterStateWalking;
+    requestCharacterState = CharacterState.Walking;
   }
 }
 
