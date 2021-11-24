@@ -290,7 +290,6 @@ void _compileNpc(StringBuffer buffer, Npc npc) {
   _writeInt(buffer, npc.x);
   _writeInt(buffer, npc.y);
   _write(buffer, npc.stateFrameCount);
-  _write(buffer, npc.pointMultiplier);
 }
 
 void _compileInteractableNpc(StringBuffer buffer, InteractableNpc npc) {

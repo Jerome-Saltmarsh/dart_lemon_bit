@@ -691,7 +691,6 @@ void _consumeZombie(Zombie zombie) {
   zombie.x = _consumeDouble();
   zombie.y = _consumeDouble();
   zombie.frame = _consumeInt();
-  zombie.scoreMultiplier = _consumeString();
 }
 
 void _consumeInteractableNpc(Character interactableNpc) {
