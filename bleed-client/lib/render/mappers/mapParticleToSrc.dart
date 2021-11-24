@@ -7,6 +7,7 @@ import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
+import 'package:bleed_client/render/enums/Hue.dart';
 import 'package:bleed_client/state/particleSettings.dart';
 import 'package:bleed_client/utils.dart';
 
@@ -26,18 +27,27 @@ const _mystIndex40 = 5;
 const _mystIndex50 = 6;
 const _particleSize = 64.0;
 
-const _pixelSize = 8.0;
-
 final Float32List _src = Float32List(4);
 
 Float32List mapParticleToSrc(Particle particle){
-
   Shade shade = getShadeAtPosition(particle.x, particle.y);
 
   switch(particle.type){
     case ParticleType.Pixel:
-      _src[0] = atlas.pixels.red1.x + 1;
-      _src[1] = atlas.pixels.red1.y + 1;
+      switch(particle.hue){
+        case Hue.White:
+          _src[0] = atlas.pixels.white1.x + 1;
+          _src[1] = atlas.pixels.white1.y + 1;
+          break;
+        case Hue.Red:
+          _src[0] = atlas.pixels.red1.x + 1;
+          _src[1] = atlas.pixels.red1.y + 1;
+          break;
+        case Hue.Yellow:
+          _src[0] = atlas.pixels.yellow1.x + 1;
+          _src[1] = atlas.pixels.yellow1.y + 1;
+          break;
+      }
       _src[2] = _src[0] + 6;
       _src[3] = _src[1] + 6;
       return _src;

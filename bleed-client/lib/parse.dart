@@ -309,7 +309,7 @@ void _parseEnvironmentObjects() {
         addParticleEmitter(ParticleEmitter(x: x, y: y, rate: 20, emit: emitMyst));
         break;
       case ObjectType.Torch:
-        addParticleEmitter(ParticleEmitter(x: x + 20, y: y - 25, rate: 10, emit: emitPixel));
+        addParticleEmitter(ParticleEmitter(x: x + 5, y: y - 50, rate: 10, emit: emitPixel));
         break;
       default:
         // ignore

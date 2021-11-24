@@ -1,4 +1,5 @@
 import 'package:bleed_client/enums/ParticleType.dart';
+import 'package:bleed_client/render/enums/Hue.dart';
 
 class Particle {
   bool active = false;
@@ -18,5 +19,6 @@ class Particle {
   double bounciness;
   double airFriction = 0.98;
   bool foreground = false;
+  Hue hue = Hue.White;
 }
 
