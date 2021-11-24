@@ -18,7 +18,6 @@ class _Settings {
   bool compilePaths = false;
   int floatingTextDuration = 100;
   int maxBulletHoles = 50;
-  int maxParticles = 200;
   int maxParticlesMinusOne = 299;
   double interactRadius = 60;
   double manRenderSize = 40.0;

@@ -32,7 +32,7 @@ void clearCompileGameState() {
   game.playerUUID = "";
   game.playerX = -1;
   game.playerY = -1;
-  game.totalZombies = 0;
+  game.totalZombies.value = 0;
   game.totalHumans = 0;
   game.totalProjectiles = 0;
   game.grenades.clear();

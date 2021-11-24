@@ -16,6 +16,7 @@ import 'Item.dart';
 import 'Particle.dart';
 
 class Game {
+  List<Vector2> deaths = [];
   List<int> collectables = [];
   List<Vector2> crates = [];
   int cratesTotal = 0;
@@ -29,7 +30,7 @@ class Game {
   final List<Character> humans = [];
   final List<Zombie> zombies = [];
   final List<Character> interactableNpcs = [];
-  int totalZombies = 0;
+  final Watch<int> totalZombies = Watch(0);
   int totalNpcs = 0;
   int totalHumans = 0;
   List<Projectile> projectiles = [];

@@ -69,16 +69,12 @@ Future init() async {
     sharedPreferences.setBool('audioMuted' , value);
   });
 
-  for (int i = 0; i < settings.maxParticles; i++) {
-    game.particles.add(Particle());
-  }
-
   for (int i = 0; i < 1000; i++) {
     game.projectiles.add(Projectile(0, 0, ProjectileType.Bullet, Direction.DownLeft));
     game.items.add(Item());
   }
 
-  for (int i = 0; i < 2000; i++) {
+  for (int i = 0; i < 1000; i++) {
     game.crates.add(Vector2(0, 0));
   }
 
@@ -87,7 +83,7 @@ Future init() async {
   }
 
   game.zombies.clear();
-  for (int i = 0; i < 5000; i++) {
+  for (int i = 0; i < 2500; i++) {
     game.zombies.add(Zombie());
   }
 
@@ -97,7 +93,7 @@ Future init() async {
   }
 
   game.humans.clear();
-  for (int i = 0; i < 1000; i++) {
+  for (int i = 0; i < 500; i++) {
     game.humans.add(Character());
   }
 

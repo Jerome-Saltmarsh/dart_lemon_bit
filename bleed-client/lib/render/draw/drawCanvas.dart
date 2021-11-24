@@ -10,6 +10,7 @@ import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
+import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
@@ -82,6 +83,10 @@ void renderCanvasPlay() {
   _drawGrenades(game.grenades);
   _drawSprites();
 
+  // for(Vector2 death in game.deaths){
+  //   drawCircleOutline(radius: 10, x: death.x, y: death.y, color: Colors.white);
+  // }
+
   if (settings.compilePaths) {
     drawDebugEnvironmentObjects();
     drawPaths();
@@ -143,12 +148,12 @@ void _sortParticles() {
       list: game.particles,
       compare: compareParticles,
       start: 0,
-      end: settings.maxParticles);
+      end: game.particles.length);
 }
 
 int getTotalActiveParticles() {
   int totalParticles = 0;
-  for (int i = 0; i < settings.maxParticles; i++) {
+  for (int i = 0; i < game.particles.length; i++) {
     if (game.particles[i].active) {
       totalParticles++;
     }
@@ -170,7 +175,7 @@ void _drawSprites() {
     _sortParticles();
   }
 
-  bool zombiesRemaining = indexZombie < game.totalZombies;
+  bool zombiesRemaining = indexZombie < game.totalZombies.value;
   bool humansRemaining = indexHuman < game.totalHumans;
   bool npcsRemaining = indexHuman < game.totalNpcs;
   bool environmentRemaining = indexEnv < totalEnvironment;
@@ -180,7 +185,7 @@ void _drawSprites() {
     humansRemaining = indexHuman < game.totalHumans;
     environmentRemaining = indexEnv < totalEnvironment;
     particlesRemaining = indexParticle < totalParticles;
-    zombiesRemaining = indexZombie < game.totalZombies;
+    zombiesRemaining = indexZombie < game.totalZombies.value;
     npcsRemaining = indexNpc < game.totalNpcs;
 
     if (!zombiesRemaining &&

@@ -687,8 +687,8 @@ ProjectileType _consumeProjectileType() {
 }
 
 void _parseZombies() {
-  game.totalZombies = _consumeInt();
-  for (int i = 0; i < game.totalZombies; i++){
+  game.totalZombies.value = _consumeInt();
+  for (int i = 0; i < game.totalZombies.value; i++){
     _consumeZombie(game.zombies[i]);
   }
 }

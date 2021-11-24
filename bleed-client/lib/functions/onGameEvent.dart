@@ -1,5 +1,7 @@
 
+import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/functions/spawners/spawnZombieLeg.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/randomBool.dart';
 import 'package:lemon_math/randomInt.dart';
@@ -76,7 +78,7 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
       break;
     case GameEventType.Zombie_killed_Explosion:
       print("GameEventType.Zombie_killed_Explosion");
-      playAudioZombieDeath(x, y);
+      game.deaths.add(Vector2(x, y));
       double s = 0.15;
       double r = 1;
       for (int i = 0; i < randomInt(2, 5); i++) {
@@ -97,7 +99,7 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
           xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
       spawnOrgan(x, y, 0.3,
           xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
-
+      playAudioZombieDeath(x, y);
       break;
     case GameEventType.Zombie_Target_Acquired:
       playAudioZombieTargetAcquired(x, y);
