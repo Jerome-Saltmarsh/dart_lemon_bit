@@ -143,8 +143,22 @@ abstract class Game {
 
   void onNpcSpawned(Npc npc) {}
 
+  GameEvent _getAvailableGameEvent() {
+    for (GameEvent gameEvent in gameEvents) {
+      if (gameEvent.frameDuration <= 0) {
+        gameEvent.frameDuration = 2;
+        gameEvent.assignNewId();
+        return gameEvent;
+      }
+    }
+    GameEvent empty = GameEvent(GameEventType.Credits_Acquired, 0, 0, 0, 0);
+    gameEvents.add(empty);
+    return empty;
+  }
+
   Game(this.scene, {this.maxPlayers = 64, this.shadeMax = Shade.Bright}) {
     this.crates.clear();
+
     for (Vector2 crate in scene.crates) {
       crates.add(Crate(x: crate.x, y: crate.y));
     }
@@ -695,15 +709,9 @@ extension GameFunctions on Game {
           double forceY =
               clampMagnitudeY(character.x - x, character.y - y, magnitude);
 
-          // if (randomBool()) {
-          //   dispatch(GameEventType.Zombie_Killed, character.x, character.y,
-          //       forceX, forceY);
-          //   characterFace(character, x, y);
-          //   delayed(() => character.active = false, ms: randomInt(1000, 2000));
-          // } else {
-            character.active = false;
-            dispatch(GameEventType.Zombie_killed_Explosion, character.x,
-                character.y, forceX, forceY);
+          character.active = false;
+          dispatch(GameEventType.Zombie_killed_Explosion, character.x,
+              character.y, forceX, forceY);
           // }
         }
       }
@@ -894,9 +902,9 @@ extension GameFunctions on Game {
           //       bullet.xv, bullet.yv);
           //   delayed(() => character.active = false, ms: 2000);
           // } else {
-            character.active = false;
-            dispatch(GameEventType.Zombie_killed_Explosion, character.x,
-                character.y, bullet.xv, bullet.yv);
+          character.active = false;
+          dispatch(GameEventType.Zombie_killed_Explosion, character.x,
+              character.y, bullet.xv, bullet.yv);
           // }
         }
         break;
@@ -1143,10 +1151,15 @@ extension GameFunctions on Game {
     return count;
   }
 
-  // TODO Optimize
   void dispatch(GameEventType type, double x, double y,
-      [double xv = 0, double xy = 0]) {
-    gameEvents.add(GameEvent(type, x, y, xv, xy));
+      [double xv = 0, double yv = 0]) {
+    GameEvent gameEvent = _getAvailableGameEvent();
+    gameEvent.type = type;
+    gameEvent.x = x;
+    gameEvent.y = y;
+    gameEvent.xv = xv;
+    gameEvent.yv = yv;
+    gameEvent.frameDuration = 2;
   }
 
   void updateZombieTargets() {
@@ -1321,12 +1334,9 @@ extension GameFunctions on Game {
   }
 
   void _updateGameEvents() {
-    // TODO Expensive operation
     for (int i = 0; i < gameEvents.length; i++) {
-      if (gameEvents[i].frameDuration-- < 0) {
-        gameEvents.removeAt(i);
-        i--;
-      }
+      if (gameEvents[i].frameDuration <= 0) continue;
+      gameEvents[i].frameDuration--;
     }
   }
 

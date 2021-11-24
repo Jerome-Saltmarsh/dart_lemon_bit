@@ -17,7 +17,7 @@ class Town extends Game {
   late InteractableNpc guard1;
   late InteractableNpc guard2;
 
-  final int _maxZombies = 50;
+  final int _maxZombies = 1;
   final int _framesPerZombieSpawn = 5;
 
   Town() : super(scenes.town) {

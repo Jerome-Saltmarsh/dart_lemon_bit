@@ -4,6 +4,7 @@ enum ParticleType {
   Zombie_Head,
   Shell,
   Arm,
+  Leg,
   Organ,
   Blood,
   Shrapnel,

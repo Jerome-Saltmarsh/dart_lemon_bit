@@ -1,4 +1,5 @@
 
+import 'package:bleed_client/functions/spawners/spawnZombieLeg.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/randomBool.dart';
 import 'package:lemon_math/randomInt.dart';
@@ -10,7 +11,6 @@ import '../spawn.dart';
 import 'spawnBulletHole.dart';
 import 'spawners/spawnArm.dart';
 import 'spawners/spawnBlood.dart';
-import 'spawners/spawnHead.dart';
 import 'spawners/spawnOrgan.dart';
 import 'spawners/spawnShell.dart';
 import 'spawners/spawnShotSmoke.dart';
@@ -63,6 +63,7 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
       }
       break;
     case GameEventType.Zombie_Killed:
+      print("GameEventType.Zombie_Killed");
       playAudioZombieDeath(x, y);
       double s = 0.15;
       double r = 1;
@@ -74,6 +75,7 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
       }
       break;
     case GameEventType.Zombie_killed_Explosion:
+      print("GameEventType.Zombie_killed_Explosion");
       playAudioZombieDeath(x, y);
       double s = 0.15;
       double r = 1;
@@ -88,6 +90,10 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
       spawnArm(x, y, 0.3,
           xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
       spawnArm(x, y, 0.3,
+          xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
+      spawnZombieLeg(x, y, 0.3,
+          xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
+      spawnZombieLeg(x, y, 0.3,
           xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
       spawnOrgan(x, y, 0.3,
           xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));

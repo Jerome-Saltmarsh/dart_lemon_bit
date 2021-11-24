@@ -20,6 +20,7 @@ class _Particles {
   final Vector2 zombieHead = Vector2(2397, 633);
   final Vector2 shell  = Vector2(2228, 1199);
   final Vector2 zombieArm  = Vector2(1052, 1479);
+  final Vector2 zombieLeg  = Vector2(1539, 2463);
   final Vector2 zombieTorso  = Vector2(1538, 1736);
   final Vector2 circle32 = Vector2(2410, 515);
 }

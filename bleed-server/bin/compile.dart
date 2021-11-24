@@ -169,10 +169,11 @@ void compileScore(StringBuffer buffer, List<Player> players) {
 void _compileGameEvents(StringBuffer buffer, List<GameEvent> gameEvents) {
   _write(buffer, ServerResponse.Game_Events.index);
   for (GameEvent gameEvent in gameEvents) {
+    if (gameEvent.frameDuration <= 0) continue;
     _write(buffer, gameEvent.id);
     _write(buffer, gameEvent.type.index);
-    _write(buffer, gameEvent.x.toInt());
-    _write(buffer, gameEvent.y.toInt());
+    _writeInt(buffer, gameEvent.x);
+    _writeInt(buffer, gameEvent.y);
     _write(buffer, gameEvent.xv.toStringAsFixed(1));
     _write(buffer, gameEvent.yv.toStringAsFixed(1));
   }

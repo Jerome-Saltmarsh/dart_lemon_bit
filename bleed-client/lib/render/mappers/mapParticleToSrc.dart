@@ -33,6 +33,14 @@ Float32List mapParticleToSrc(Particle particle){
   Shade shade = getShadeAtPosition(particle.x, particle.y);
 
   switch(particle.type){
+    case ParticleType.Leg:
+      Direction direction = convertAngleToDirection(particle.rotation);
+      _src[0] = atlas.particles.zombieLeg.x + (direction.index * 64.0);
+      _src[1] = atlas.particles.zombieLeg.y + shade.index * 64.0;
+      _src[2] = _src[0] + 64;
+      _src[3] = _src[1] + 64;
+      return _src;
+
     case ParticleType.Arm:
       Direction direction = convertAngleToDirection(particle.rotation);
       _src[0] = atlas.particles.zombieArm.x + (direction.index * 64.0);

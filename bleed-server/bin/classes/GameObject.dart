@@ -4,7 +4,7 @@ int _idCount = 0;
 
 
 class GameObject extends Positioned {
-  final int id = _idCount++;
+  int id = _idCount++;
   double z = 0;
   double xv = 0;
   double yv = 0;
@@ -12,6 +12,10 @@ class GameObject extends Positioned {
   double radius = 0;
   bool collidable = true;
   bool active = true;
+
+  void assignNewId(){
+    id = _idCount++;
+  }
 
   double get left => x - radius;
 

@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:bleed_client/enums/ParticleType.dart';
-import 'package:flutter/material.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/randomInt.dart';
 import 'package:lemon_math/random_between.dart';
@@ -9,9 +8,9 @@ import 'package:lemon_math/random_between.dart';
 import 'spawnParticle.dart';
 
 
-void spawnArm(double x, double y, double z, {double xv = 0, double yv = 0}) {
+void spawnZombieLeg(double x, double y, double z, {double xv = 0, double yv = 0}) {
   spawnParticle(
-      type: ParticleType.Arm,
+      type: ParticleType.Leg,
       x: x,
       y: y,
       z: z,

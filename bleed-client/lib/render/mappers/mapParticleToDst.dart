@@ -18,6 +18,7 @@ final Map<ParticleType, double> _particleTypeSize = {
   ParticleType.Organ: 64,
   ParticleType.FireYellow: _32,
   ParticleType.Arm: 64,
+  ParticleType.Leg: 64,
 };
 
 Float32List mapParticleToDst(Particle particle){
