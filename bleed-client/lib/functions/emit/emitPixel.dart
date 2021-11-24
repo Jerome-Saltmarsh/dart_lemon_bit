@@ -11,7 +11,7 @@ void emitPixel(Particle particle) {
   particle.duration = particleSettings.mystDuration;
   particle.z = 0.25;
   particle.weight = 0;
-  particle.scale = 5;
+  particle.scale = 1;
   particle.scaleV = 0;
   particle.rotation = 0;
   particle.rotationV = 0;

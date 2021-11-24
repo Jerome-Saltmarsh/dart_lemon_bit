@@ -26,6 +26,8 @@ const _mystIndex40 = 5;
 const _mystIndex50 = 6;
 const _particleSize = 64.0;
 
+const _pixelSize = 8.0;
+
 final Float32List _src = Float32List(4);
 
 Float32List mapParticleToSrc(Particle particle){
@@ -34,10 +36,10 @@ Float32List mapParticleToSrc(Particle particle){
 
   switch(particle.type){
     case ParticleType.Pixel:
-      _src[0] = atlas.pixels.red1.x;
-      _src[1] = atlas.pixels.red1.y;
-      _src[2] = _src[0] + 1;
-      _src[3] = _src[1] + 1;
+      _src[0] = atlas.pixels.red1.x + 1;
+      _src[1] = atlas.pixels.red1.y + 1;
+      _src[2] = _src[0] + 6;
+      _src[3] = _src[1] + 6;
       return _src;
     case ParticleType.Leg:
       Direction direction = convertAngleToDirection(particle.rotation);
