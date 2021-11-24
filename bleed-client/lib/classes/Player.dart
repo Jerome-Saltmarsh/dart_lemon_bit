@@ -1,6 +1,6 @@
 
+import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/Tile.dart';
-import 'package:bleed_client/enums.dart';
 import 'package:lemon_watch/watch.dart';
 
 class Player {

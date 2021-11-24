@@ -1,6 +1,6 @@
+import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
-import 'package:bleed_client/enums.dart';
 
 class Character {
   CharacterState state;

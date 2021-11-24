@@ -1,3 +1,4 @@
+import '../common/CharacterState.dart';
 import '../common/GameState.dart';
 import '../common/PlayerEvents.dart';
 import '../common/Quests.dart';

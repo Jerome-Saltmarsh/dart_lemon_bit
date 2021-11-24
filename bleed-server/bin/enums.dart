@@ -34,4 +34,4 @@ bool isBulletCollideable(Tile tile){
   return !isShootable(tile);
 }
 
-enum CharacterState { Idle, Walking, Dead, Aiming, Firing, Striking, Running, Reloading, ChangingWeapon }
+

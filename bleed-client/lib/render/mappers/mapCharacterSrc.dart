@@ -1,10 +1,10 @@
 import 'dart:math';
 import 'dart:typed_data';
 
+import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
-import 'package:bleed_client/enums.dart';
 import 'package:bleed_client/render/constants/animations.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/enums/CharacterType.dart';

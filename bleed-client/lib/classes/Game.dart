@@ -4,13 +4,13 @@ import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
+import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:lemon_watch/watch.dart';
 
-import '../enums.dart';
 import 'EnvironmentObject.dart';
 import 'Item.dart';
 import 'Particle.dart';

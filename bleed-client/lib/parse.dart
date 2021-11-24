@@ -9,6 +9,7 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
+import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/GameError.dart';
 import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/PlayerEvents.dart';
@@ -49,7 +50,6 @@ import 'common/classes/Vector2.dart';
 import 'common/enums/ObjectType.dart';
 import 'common/version.dart';
 import 'draw.dart';
-import 'enums.dart';
 import 'functions/onGameEvent.dart';
 import 'state/inventory.dart';
 import 'state.dart';
@@ -653,10 +653,9 @@ ProjectileType _consumeProjectileType() {
 }
 
 void _parseZombies() {
-  game.totalZombies = 0;
-  while (!_simiColonConsumed()) {
-    _consumeZombie(game.zombies[game.totalZombies]);
-    game.totalZombies++;
+  game.totalZombies = _consumeInt();
+  for (int i = 0; i < game.totalZombies; i++){
+    _consumeZombie(game.zombies[i]);
   }
 }
 

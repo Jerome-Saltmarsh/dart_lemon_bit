@@ -7,6 +7,7 @@ import 'classes/Game.dart';
 import 'classes/Inventory.dart';
 import 'classes/Player.dart';
 import 'classes/InteractableNpc.dart';
+import 'common/CharacterState.dart';
 import 'common/PlayerEvents.dart';
 import 'common/enums/Direction.dart';
 import 'common/enums/ProjectileType.dart';

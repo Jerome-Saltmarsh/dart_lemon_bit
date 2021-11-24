@@ -235,11 +235,15 @@ void _compilePlayers(StringBuffer buffer, List<Player> players) {
 
 void _compileZombies(StringBuffer buffer, List<Npc> npcs) {
   _write(buffer, _indexZombies);
+  int total = 0;
+  for (Npc npc in npcs) {
+    if (npc.active) total++;
+  }
+  _write(buffer, total);
   for (Npc npc in npcs) {
     if (!npc.active) continue;
     _compileNpc(buffer, npc);
   }
-  buffer.write(_semiColon);
 }
 
 void _compileInteractableNpcs(StringBuffer buffer, List<InteractableNpc> npcs) {

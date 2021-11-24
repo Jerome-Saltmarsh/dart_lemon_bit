@@ -8,6 +8,7 @@ import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/randomInt.dart';
 import 'package:lemon_math/randomItem.dart';
 
+import '../common/CharacterState.dart';
 import '../common/ItemType.dart';
 import '../common/Tile.dart';
 import '../common/enums/Direction.dart';
