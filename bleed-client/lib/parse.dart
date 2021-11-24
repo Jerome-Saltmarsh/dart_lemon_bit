@@ -544,11 +544,11 @@ Weapon _consumeWeapon() {
 }
 
 CharacterState _consumeCharacterState() {
-  return characterStates[_consumeInt()];
+  return characterStates[_consumeSingleDigitInt()];
 }
 
 Direction _consumeDirection() {
-  return directions[_consumeInt()];
+  return directions[_consumeSingleDigitInt()];
 }
 
 Tile _consumeTile() {
@@ -720,8 +720,8 @@ void _consumeHuman(Character character) {
 }
 
 void _consumeZombie(Zombie zombie) {
-  zombie.state = characterStates[_consumeSingleDigitInt()];
-  zombie.direction = directions[_consumeSingleDigitInt()];
+  zombie.state = _consumeCharacterState();
+  zombie.direction = _consumeDirection();
   zombie.x = _consumeDoubleUnsafe();
   zombie.y = _consumeDoubleUnsafe();
   zombie.frame = _consumeIntUnsafe();

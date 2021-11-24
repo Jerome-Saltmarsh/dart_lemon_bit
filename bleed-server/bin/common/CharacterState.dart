@@ -11,3 +11,4 @@ enum CharacterState {
 }
 
 const List<CharacterState> characterStates = CharacterState.values;
+
