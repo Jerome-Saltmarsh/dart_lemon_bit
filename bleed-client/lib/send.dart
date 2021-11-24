@@ -93,9 +93,9 @@ void sendRequestUpdatePlayer() {
   _write(game.gameId);
   _write(game.playerId);
   _write(game.playerUUID);
-  _write(inputRequest.requestCharacterState.index);
-  _write(inputRequest.requestDirection.index);
-  if (inputRequest.requestCharacterState == CharacterState.Firing) {
+  _write(characterController.characterState.index);
+  _write(characterController.direction.index);
+  if (characterController.characterState == CharacterState.Firing) {
     _write(requestAim.toStringAsFixed(2));
   } else {
     _write(requestAim.toInt());

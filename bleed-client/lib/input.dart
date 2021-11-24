@@ -40,7 +40,7 @@ bool get keyEquipMachineGun => keyPressed(LogicalKeyboardKey.digit4);
 
 bool get keyPressedSpace => keyPressed(LogicalKeyboardKey.space);
 
-bool get keySprintPressed => inputRequest.sprint;
+bool get keySprintPressed => characterController.sprint;
 
 bool get keyPressedReload => keyPressed(_keyReload);
 
@@ -60,7 +60,7 @@ bool panningCamera = false;
 
 Offset _mouseWorldStart;
 
-_InputRequest inputRequest = _InputRequest();
+final _CharacterController characterController = _CharacterController();
 
 void registerPlayKeyboardHandler() {
   RawKeyboard.instance.addListener(_handleKeyboardEvent);
@@ -183,7 +183,7 @@ void sayWaitASecond(){
 
 
 void toggleSprint() {
-  inputRequest.sprint = !inputRequest.sprint;
+  characterController.sprint = !characterController.sprint;
 }
 
 // triggered after a key is held longer than one frame
@@ -214,45 +214,45 @@ void throwGrenade() {
 }
 
 void runLeft() {
-  inputRequest.moveLeft = true;
+  characterController.moveLeft = true;
 }
 
 void runUp() {
-  inputRequest.moveUp = true;
+  characterController.moveUp = true;
 }
 
 void runRight() {
-  inputRequest.moveRight = true;
+  characterController.moveRight = true;
 }
 
 void runDown() {
-  inputRequest.moveDown = true;
+  characterController.moveDown = true;
 }
 
 void stopRunLeft() {
-  inputRequest.moveLeft = false;
+  characterController.moveLeft = false;
 }
 
 void stopRunUp() {
-  inputRequest.moveUp = false;
+  characterController.moveUp = false;
 }
 
 void stopRunRight() {
-  inputRequest.moveRight = false;
+  characterController.moveRight = false;
 }
 
 void stopRunDown() {
-  inputRequest.moveDown = false;
+  characterController.moveDown = false;
 }
 
 void melee() {
-  inputRequest.requestCharacterState = CharacterState.Striking;
-  inputRequest.requestDirection = convertAngleToDirection(requestAim);
+  characterController.characterState = CharacterState.Striking;
+  characterController.direction = convertAngleToDirection(requestAim);
 }
 
 void stopMelee() {
-  if (inputRequest.requestCharacterState != CharacterState.Striking) return;
-  inputRequest.requestCharacterState = CharacterState.Idle;
+  if (characterController.characterState != CharacterState.Striking) return;
+  characterController.characterState = CharacterState.Idle;
 }
 
 void _handleKeyDownEvent(RawKeyDownEvent event) {
@@ -304,14 +304,14 @@ void _handleKeyUpEvent(RawKeyUpEvent event) {
   _keyDownState[key] = false;
 }
 
-class _InputRequest {
+class _CharacterController {
   bool sprint = false;
   bool moveUp = false;
   bool moveRight = false;
   bool moveDown = false;
   bool moveLeft = false;
-  Direction requestDirection = Direction.None;
-  CharacterState requestCharacterState = CharacterState.Idle;
+  Direction direction = Direction.None;
+  CharacterState characterState = CharacterState.Idle;
 }
 
 void readPlayerInput() {
@@ -348,47 +348,47 @@ void readPlayerInput() {
       return;
     }
 
-    inputRequest.requestCharacterState = CharacterState.Firing;
+    characterController.characterState = CharacterState.Firing;
   } else {
-    if (inputRequest.requestCharacterState == CharacterState.Striking) {
+    if (characterController.characterState == CharacterState.Striking) {
       return;
     }
 
-    inputRequest.requestDirection = getKeyDirection();
-    if (inputRequest.requestDirection == Direction.None) {
-      inputRequest.requestCharacterState = CharacterState.Idle;
+    characterController.direction = getKeyDirection();
+    if (characterController.direction == Direction.None) {
+      characterController.characterState = CharacterState.Idle;
       return;
     }
 
-    if (inputRequest.sprint) {
-      inputRequest.requestCharacterState = CharacterState.Running;
+    if (characterController.sprint) {
+      characterController.characterState = CharacterState.Running;
       return;
     }
 
-    inputRequest.requestCharacterState = CharacterState.Walking;
+    characterController.characterState = CharacterState.Walking;
   }
 }
 
 Direction getKeyDirection() {
-  if (inputRequest.moveUp) {
-    if (inputRequest.moveRight) {
+  if (characterController.moveUp) {
+    if (characterController.moveRight) {
       return Direction.UpRight;
-    } else if (inputRequest.moveLeft) {
+    } else if (characterController.moveLeft) {
       return Direction.UpLeft;
     } else {
       return Direction.Up;
     }
-  } else if (inputRequest.moveDown) {
-    if (inputRequest.moveRight) {
+  } else if (characterController.moveDown) {
+    if (characterController.moveRight) {
       return Direction.DownRight;
-    } else if (inputRequest.moveLeft) {
+    } else if (characterController.moveLeft) {
       return Direction.DownLeft;
     } else {
       return Direction.Down;
     }
-  } else if (inputRequest.moveLeft) {
+  } else if (characterController.moveLeft) {
     return Direction.Left;
-  } else if (inputRequest.moveRight) {
+  } else if (characterController.moveRight) {
     return Direction.Right;
   }
   return Direction.None;

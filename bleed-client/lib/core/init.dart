@@ -126,7 +126,7 @@ Future init() async {
 
 
   onRightClickChanged.stream.listen((bool down) {
-    inputRequest.sprint = down;
+    characterController.sprint = down;
   });
 
   game.playerWeapon.onChanged(onPlayerWeaponChanged);
