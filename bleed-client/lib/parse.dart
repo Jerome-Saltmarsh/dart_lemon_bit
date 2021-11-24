@@ -527,6 +527,10 @@ int _consumeInt() {
   return value;
 }
 
+int _consumeIntUnsafe() {
+  return int.parse(_consumeStringUnsafe());
+}
+
 bool _consumeBool() {
   return _consumeString() == _1 ? true : false;
 }
@@ -570,8 +574,28 @@ String _consumeString() {
   return buffer.toString();
 }
 
+StringBuffer _consumer = StringBuffer();
+
+/// This is an optimized version of consume string
+/// It has all error checking removed
+String _consumeStringUnsafe() {
+  _consumer.clear();
+  String char = _currentCharacter;
+  while (char != _space) {
+    _consumer.write(char);
+    _index++;
+    char = _currentCharacter;
+  }
+  _index++;
+  return _consumer.toString();
+}
+
 double _consumeDouble() {
   return double.parse(_consumeString());
+}
+
+double _consumeDoubleUnsafe() {
+  return double.parse(_consumeStringUnsafe());
 }
 
 Vector2 _consumeVector2() {
@@ -686,11 +710,11 @@ void _consumeHuman(Character character) {
 }
 
 void _consumeZombie(Zombie zombie) {
-  zombie.state = _consumeCharacterState();
-  zombie.direction = _consumeDirection();
-  zombie.x = _consumeDouble();
-  zombie.y = _consumeDouble();
-  zombie.frame = _consumeInt();
+  zombie.state = characterStates[_consumeIntUnsafe()];
+  zombie.direction = directions[_consumeIntUnsafe()];
+  zombie.x = _consumeDoubleUnsafe();
+  zombie.y = _consumeDoubleUnsafe();
+  zombie.frame = _consumeIntUnsafe();
 }
 
 void _consumeInteractableNpc(Character interactableNpc) {
