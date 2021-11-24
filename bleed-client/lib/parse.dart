@@ -23,6 +23,7 @@ import 'package:bleed_client/enums/InventoryItemType.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/emit/emitMyst.dart';
+import 'package:bleed_client/functions/emit/emitPixel.dart';
 import 'package:bleed_client/functions/emitSmoke.dart';
 import 'package:bleed_client/getters/getTileAt.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
@@ -302,12 +303,13 @@ void _parseEnvironmentObjects() {
 
     switch(type){
       case ObjectType.SmokeEmitter:
-        game.particleEmitters
-            .add(ParticleEmitter(x: x, y: y, rate: 20, emit: emitSmoke));
+        addParticleEmitter(ParticleEmitter(x: x, y: y, rate: 20, emit: emitSmoke));
         break;
       case ObjectType.MystEmitter:
-        game.particleEmitters
-            .add(ParticleEmitter(x: x, y: y, rate: 20, emit: emitMyst));
+        addParticleEmitter(ParticleEmitter(x: x, y: y, rate: 20, emit: emitMyst));
+        break;
+      case ObjectType.Torch:
+        addParticleEmitter(ParticleEmitter(x: x + 20, y: y - 25, rate: 10, emit: emitPixel));
         break;
       default:
         // ignore
@@ -343,6 +345,10 @@ void _parseEnvironmentObjects() {
   // * on environmentObjects changed
   sortReversed(game.environmentObjects, environmentObjectY);
   applyEnvironmentObjectsToBakeMapping();
+}
+
+void addParticleEmitter(ParticleEmitter value){
+  game.particleEmitters.add(value);
 }
 
 double environmentObjectY(EnvironmentObject environmentObject) {

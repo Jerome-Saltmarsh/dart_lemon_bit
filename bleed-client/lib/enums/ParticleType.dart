@@ -9,5 +9,6 @@ enum ParticleType {
   Blood,
   Shrapnel,
   FireYellow,
-  Myst
+  Myst,
+  Pixel
 }

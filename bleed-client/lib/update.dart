@@ -2,7 +2,7 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/functions/cameraFollowPlayer.dart';
-import 'package:bleed_client/getters/getDeactiveParticle.dart';
+import 'package:bleed_client/functions/spawners/spawnParticle.dart';
 import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/settings.dart';
@@ -53,7 +53,7 @@ void updatePlayMode() {
 
 void emitAmbientMyst() {
   if (emitPart++ % 3 != 0) return;
-  Particle particle = getDeactiveParticle();
+  Particle particle = getAvailableParticle();
   if (particle == null) return;
   int row = getRandomRow();
   int column = getRandomColumn();
@@ -74,8 +74,7 @@ void updateParticleEmitters() {
   for (ParticleEmitter emitter in game.particleEmitters) {
     if (emitter.next-- > 0) continue;
     emitter.next = emitter.rate;
-    Particle particle = getDeactiveParticle();
-    if (particle == null) continue;
+    Particle particle = getAvailableParticle();
     particle.active = true;
     particle.x = emitter.x;
     particle.y = emitter.y;

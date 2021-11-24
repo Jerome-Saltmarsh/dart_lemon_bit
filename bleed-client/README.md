@@ -87,7 +87,6 @@
 [ ] Deploy dev endpoint
 [ ] Water Particles
 [ ] House 3
-[ ] FIX Zombies Collision
 [ ] Npc view range decreases at night
 [ ] Flash light on gunshot
 [ ] Zombie death particles
@@ -117,6 +116,7 @@
 [ ] Firebolt explode on impact
 [ ] Fix Editor
 -- CURRENT -- 
+[ ] Sparkle Particles
 [ ] Smoke Particle 
 [x] Add myst to atlas
 [x] Zombie Death
