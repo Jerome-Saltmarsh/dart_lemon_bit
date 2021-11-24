@@ -22,6 +22,6 @@ void spawnArm(double x, double y, double z, {double xv = 0, double yv = 0}) {
       duration: randomInt(90, 150),
       rotation: giveOrTake(pi),
       rotationV: giveOrTake(0.25),
-      scale: 1,
+      scale: 0.5,
       scaleV: 0);
 }
