@@ -15,9 +15,9 @@ final Map<ParticleType, double> _particleTypeSize = {
   ParticleType.Smoke: _32,
   ParticleType.Shrapnel: _32,
   ParticleType.Shell: _32,
-  ParticleType.Organ: _32,
+  ParticleType.Organ: 64,
   ParticleType.FireYellow: _32,
-  ParticleType.Arm: _32,
+  ParticleType.Arm: 64,
 };
 
 Float32List mapParticleToDst(Particle particle){

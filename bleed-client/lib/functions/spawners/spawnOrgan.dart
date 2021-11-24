@@ -19,7 +19,7 @@ void spawnOrgan(double x, double y, double z, {double xv = 0, double yv = 0}) {
       weight: 0.25,
       duration: randomInt(90, 150),
       rotation: giveOrTake(pi),
-      rotationV: 100,
+      rotationV: giveOrTake(0.25),
       scale: 1,
       scaleV: 0);
 }

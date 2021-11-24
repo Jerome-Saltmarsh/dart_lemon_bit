@@ -11,6 +11,7 @@ import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_engine/state/zoom.dart';
 import 'package:lemon_math/angle_between.dart';
+import 'package:lemon_math/pi2.dart';
 
 import 'common/Weapons.dart';
 
@@ -53,6 +54,7 @@ const double _eight = pi / 8.0;
 const double _quarter = pi / 4.0;
 
 Direction convertAngleToDirection(double angle) {
+  angle = angle % pi2;
   if (angle < _eight) {
     return Direction.Up;
   }
