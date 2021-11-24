@@ -115,14 +115,14 @@
 [ ] Quest Kill the vampire
 [ ] Splash Screen
 [ ] Firebolt explode on impact
-[ ] Fix Zombies vanish on death bug
-[ ] Add myst to atlas
 [ ] Fix Editor
 -- CURRENT -- 
 [ ] Smoke Particle 
-[ ] Zombie Death
-[ ] Zombie Torso Particle
-[ ] Zombie Legs Particle
+[x] Add myst to atlas
+[x] Zombie Death
+[x] Zombie Torso Particle
+[x] Zombie Legs Particle
+[x] Fix Zombies vanish on death bug
 [x] Blood Particle 
 [x] Optimize Parser
 [x] Shell Particle 
