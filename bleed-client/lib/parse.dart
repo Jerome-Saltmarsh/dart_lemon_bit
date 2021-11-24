@@ -402,21 +402,21 @@ void _parsePlayer() {
   if (player.meds != meds) {
     player.meds = meds;
   }
-  game.playerLives = _consumeInt();
-  player.equippedClips = _consumeInt();
-  player.equippedRounds.value = _consumeInt();
-  state.gameState = gameStates[_consumeInt()];
-  player.points = _consumeInt();
-  player.credits = _consumeInt();
+  game.playerLives = _consumeIntUnsafe();
+  player.equippedClips = _consumeIntUnsafe();
+  player.equippedRounds.value = _consumeIntUnsafe();
+  state.gameState = gameStates[_consumeSingleDigitInt()];
+  player.points = _consumeIntUnsafe();
+  player.credits = _consumeIntUnsafe();
   player.state.value = _consumeCharacterState();
   player.acquiredHandgun = _consumeBool();
   player.acquiredShotgun = _consumeBool();
   player.acquiredSniperRifle = _consumeBool();
   player.acquiredAssaultRifle = _consumeBool();
   player.tile = _consumeTile();
-  player.roundsHandgun = _consumeInt();
-  player.roundsShotgun = _consumeInt();
-  player.roundsSniperRifle = _consumeInt();
+  player.roundsHandgun = _consumeIntUnsafe();
+  player.roundsShotgun = _consumeIntUnsafe();
+  player.roundsSniperRifle = _consumeIntUnsafe();
   player.roundsAssaultRifle = _consumeInt();
 }
 
@@ -536,11 +536,11 @@ int _consumeSingleDigitInt(){
 }
 
 bool _consumeBool() {
-  return _consumeString() == _1 ? true : false;
+  return _consumeSingleCharacter() == _1 ? true : false;
 }
 
 Weapon _consumeWeapon() {
-  return weapons[_consumeInt()];
+  return weapons[_consumeSingleDigitInt()];
 }
 
 CharacterState _consumeCharacterState() {
