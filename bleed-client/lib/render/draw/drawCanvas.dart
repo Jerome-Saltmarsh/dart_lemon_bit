@@ -286,22 +286,40 @@ void _drawPlayerNames() {
   }
 }
 
+double mapWeaponAimLength(Weapon weapon){
+  switch(weapon){
+    case Weapon.Unarmed:
+      return 20;
+    case Weapon.HandGun:
+      return 20;
+    case Weapon.Shotgun:
+      return 25;
+    case Weapon.SniperRifle:
+      return 150;
+    case Weapon.AssaultRifle:
+      return 50;
+    default:
+      return 10;
+  }
+}
+
 void _drawMouseAim() {
-  if (game.playerWeapon.value == Weapon.HandGun) return;
-  if (game.playerWeapon.value == Weapon.Shotgun) return;
+  // if (game.playerWeapon.value == Weapon.HandGun) return;
+  // if (game.playerWeapon.value == Weapon.Shotgun) return;
   if (!mouseAvailable) return;
   if (!playerReady) return;
-  Character _player = getPlayer;
-  if (_player == null) return;
-  if (player.equippedRounds.value == 0) return;
-  Weapon weapon = _player.weapon;
+  // Character _player = getPlayer;
+  // if (_player == null) return;
+  // if (player.equippedRounds.value == 0) return;
   paint.strokeWidth = 3;
   double angle =
       angleBetween(mouseWorldX, mouseWorldY, game.playerX, game.playerY);
 
   double mouseDistance =
       distanceBetween(mouseWorldX, mouseWorldY, playerX, playerY);
-  double d = min(mouseDistance, weapon == Weapon.SniperRifle ? 150 : 35);
+
+  double scope = mapWeaponAimLength(game.playerWeapon.value);
+  double d = min(mouseDistance, scope);
 
   double vX = adjacent(angle, d);
   double vY = opposite(angle, d);
