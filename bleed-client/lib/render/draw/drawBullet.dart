@@ -43,6 +43,7 @@ void drawFireball(double x, double y, Direction direction){
       translateX: x,
       translateY: y
   );
+  // TODO use atlas instead
   globalCanvas.drawAtlas(
       images.fireball,
       [rsTransform],

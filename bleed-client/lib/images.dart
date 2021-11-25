@@ -7,7 +7,7 @@ import 'package:lemon_engine/functions/load_image.dart';
 import 'package:lemon_watch/watch.dart';
 
 final _Images images = _Images();
-const int _totalImages = 10;
+const int _totalImages = 3;
 
 Watch<int> _imagesLoaded = Watch(0, onChanged: (int value){
   download.value =  value / _totalImages;
@@ -31,16 +31,8 @@ Map<ObjectType, int> environmentObjectIndex = {
 };
 
 class _Images {
-  Image palisades;
-  Image tiles;
-  Image particles;
-  Image handgun;
-  Image items;
   Image crate;
-  Image circle64;
-  Image circle;
-  Image empty;
-  Image fireball;
+  Image fireball; // TODO delete
   Image atlas;
 
   Future<Image> _png(String fileName) async {
@@ -51,16 +43,8 @@ class _Images {
 
   Future load() async {
     atlas = await _png("atlas");
-    palisades = await _png("palisades");
-    tiles = await _png("tiles");
-    particles = await _png('particles');
-    handgun = await _png('weapon-handgun');
-    items = await _png("items");
     crate = await _png("crate");
-    circle64 = await _png("circle-64");
-    circle = await _png("circle");
     fireball = await _png("fireball");
-    empty = await _png("empty");
   }
 }
 
