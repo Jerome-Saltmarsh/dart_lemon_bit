@@ -17,8 +17,8 @@ class Town extends Game {
   late InteractableNpc guard1;
   late InteractableNpc guard2;
 
-  final int _maxZombies = 600;
-  final int _framesPerZombieSpawn = 1;
+  final int _maxZombies = 50;
+  final int _framesPerZombieSpawn = 5;
 
   Town() : super(scenes.town) {
     npcDavis = InteractableNpc(
@@ -125,33 +125,6 @@ class Town extends Game {
 
   @override
   void update() {
-    // double radius = 10;
-    // for (int i = 0; i < players.length; i++) {
-    //   Player player = players[i];
-    //   if (diffOver(player.x, -1281, radius)) continue;
-    //   if (diffOver(player.y, 2408, radius)) continue;
-    //   changeGame(player, world.cave);
-    //   i--;
-    // }
-    //
-    // // -145 1900
-    // for (int i = 0; i < players.length; i++) {
-    //   Player player = players[i];
-    //   if (diffOver(player.x, -145, 20)) continue;
-    //   if (diffOver(player.y, 1900, 20)) continue;
-    //   changeGame(player, world.tavern);
-    //   i--;
-    // }
-    //
-    // // -145 1900
-    // for (int i = 0; i < players.length; i++) {
-    //   Player player = players[i];
-    //   if (diffOver(player.x, -1232, 20)) continue;
-    //   if (diffOver(player.y, 1238, 20)) continue;
-    //   changeGame(player, world.wildernessNorth01);
-    //   i--;
-    // }
-
     if (frame % _framesPerZombieSpawn != 0) return;
     if (zombieCount > _maxZombies) return;
     spawnRandomZombie();

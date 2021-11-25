@@ -80,26 +80,17 @@
 [ ] Convert Project to Null Safe
 [ ] Persist Character on cloud
 [ ] Complete Quests to earn income and unlock upgrades
-[ ] Shotgun animation exaggerate body knock back
 [ ] Quest Window
-[ ] Editor translate environment object
 [ ] Zombies run through environment objects
 [ ] Deploy dev endpoint
 [ ] Water Particles
 [ ] House 3
 [ ] Npc view range decreases at night
-[ ] Flash light on gunshot
-[ ] Zombie death particles
-[ ] Zombie Idle Shadow
 [ ] Audio walk on grass
 [ ] Right click to pan
 [ ] Glow worms
 [ ] Flowing Bat
 [ ] Weapon Baseball Bat
-[ ] Npc wander
-[ ] Fix Zombie Idle animation
-[ ] Fix Changing Weapon Shade
-[ ] Design Palette
 [ ] Design Tree Model
 [ ] Remove player walk (its always better to run, no stamina)
 [ ] Right Click to aim (aiming improves accuracy)
@@ -111,13 +102,15 @@
 [ ] Slash Sword (Warrior)
 [ ] Object Cave Wall
 [ ] Design Cottage
+[ ] Zombies drop gems on death
 [ ] Quest Kill the vampire
 [ ] Splash Screen
 [ ] Firebolt explode on impact
-[ ] Fix Editor
 -- CURRENT -- 
-[ ] Sparkle Particles
-[ ] Smoke Particle 
+[ ] Cave Level
+[ ] Fix Editor
+[x] Sparkle Particles
+[x] Smoke Particle 
 [x] Add myst to atlas
 [x] Zombie Death
 [x] Zombie Torso Particle

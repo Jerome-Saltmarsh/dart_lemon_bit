@@ -65,7 +65,6 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
       }
       break;
     case GameEventType.Zombie_Killed:
-      print("GameEventType.Zombie_Killed");
       playAudioZombieDeath(x, y);
       double s = 0.15;
       double r = 1;
@@ -77,8 +76,6 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
       }
       break;
     case GameEventType.Zombie_killed_Explosion:
-      print("GameEventType.Zombie_killed_Explosion");
-      game.deaths.add(Vector2(x, y));
       double s = 0.15;
       double r = 1;
       for (int i = 0; i < randomInt(2, 5); i++) {

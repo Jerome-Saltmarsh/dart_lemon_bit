@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Character.dart';
@@ -10,21 +9,20 @@ import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
-import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
-import 'package:bleed_client/render/draw/drawAtlas.dart';
-import 'package:bleed_client/render/enums/CharacterType.dart';
 import 'package:bleed_client/functions/calculateTileSrcRects.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:bleed_client/render/constants/charWidth.dart';
-import 'package:bleed_client/render/draw/drawPlayerText.dart';
-import 'package:bleed_client/render/draw/drawCharacter.dart';
-import 'package:bleed_client/render/functions/emitLight.dart';
-import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
+import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/draw/drawBullets.dart';
+import 'package:bleed_client/render/draw/drawCharacter.dart';
+import 'package:bleed_client/render/draw/drawPlayerText.dart';
+import 'package:bleed_client/render/enums/CharacterType.dart';
+import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
+import 'package:bleed_client/render/functions/emitLight.dart';
 import 'package:bleed_client/render/functions/resetDynamicShadesToBakeMap.dart';
 import 'package:bleed_client/render/state/dynamicShading.dart';
 import 'package:bleed_client/render/state/floatingText.dart';
@@ -49,7 +47,6 @@ import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/opposite.dart';
 
 import '../../draw.dart';
-import '../../images.dart';
 import '../../state.dart';
 import 'drawGrenade.dart';
 import 'drawInteractableNpcs.dart';
@@ -57,7 +54,6 @@ import 'drawParticle.dart';
 
 final double _nameRadius = 100;
 int _flameIndex = 0;
-int _flameRenderIndex = 0;
 bool get dayTime => ambient.index == Shade.Bright.index;
 const animationFrameRate = 7; // frames per change;
 
@@ -66,7 +62,6 @@ void renderCanvasPlay() {
   if (frameRateValue++ % animationFrameRate == 0) {
     drawFrame++;
     _flameIndex = (_flameIndex + 1) % 4;
-    _flameRenderIndex = _flameIndex + 1;
   }
 
   if (!dayTime) {
@@ -81,11 +76,7 @@ void renderCanvasPlay() {
   drawProjectiles(game.projectiles);
   drawBulletHoles(game.bulletHoles);
   _drawGrenades(game.grenades);
-  _drawSprites();
-
-  // for(Vector2 death in game.deaths){
-  //   drawCircleOutline(radius: 10, x: death.x, y: death.y, color: Colors.white);
-  // }
+  drawSprites();
 
   if (settings.compilePaths) {
     drawDebugEnvironmentObjects();
@@ -161,7 +152,7 @@ int getTotalActiveParticles() {
   return totalParticles;
 }
 
-void _drawSprites() {
+void drawSprites() {
   int indexHuman = 0;
   int indexEnv = 0;
   int indexParticle = 0;

@@ -16,7 +16,6 @@ import 'Item.dart';
 import 'Particle.dart';
 
 class Game {
-  List<Vector2> deaths = [];
   List<int> collectables = [];
   List<Vector2> crates = [];
   int cratesTotal = 0;
