@@ -17,6 +17,7 @@ import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
+import 'package:bleed_client/update.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
@@ -172,6 +173,7 @@ Widget buildEditorUI() {
 void updateEditMode() {
   _onMouseLeftClick();
   _handleMouseDrag();
+  updateZoom();
   redrawCanvas();
 
   if (panning) {

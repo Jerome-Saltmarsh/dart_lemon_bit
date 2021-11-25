@@ -27,12 +27,7 @@ void updatePlayMode() {
   if (!connected) return;
   if (game.gameId < 0) return;
 
-  double sX = screenCenterWorldX;
-  double sY = screenCenterWorldY;
-  double zoomDiff = targetZoom - zoom;
-  zoom += zoomDiff * settings.zoomFollowSpeed;
-  cameraCenter(sX, sY);
-
+  updateZoom();
   _updateMenuVisible();
   framesSinceEvent++;
   readPlayerInput();
@@ -49,6 +44,14 @@ void updatePlayMode() {
   // }
 
   updatePlayer();
+}
+
+void updateZoom() {
+  double sX = screenCenterWorldX;
+  double sY = screenCenterWorldY;
+  double zoomDiff = targetZoom - zoom;
+  zoom += zoomDiff * settings.zoomFollowSpeed;
+  cameraCenter(sX, sY);
 }
 
 void emitAmbientMyst() {
