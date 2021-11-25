@@ -22,20 +22,11 @@ Rect mapTileToSrcRect(Tile tile) {
     case Tile.RandomItemSpawn:
       return _concrete;
     case Tile.Block:
-      if (editMode) {
         return _block;
-      }
-      return _grass;
     case Tile.Block_Horizontal:
-      if (editMode) {
-        return _block;
-      }
-      return _grass;
+      return _block;
     case Tile.Block_Vertical:
-      if (editMode) {
-        return _block;
-      }
-      return _grass;
+      return _block;
     case Tile.Water:
       return _water;
     case Tile.Long_Grass:
