@@ -31,18 +31,6 @@ void drawCharacterCircle(double x, double y, Color color) {
   drawCircle(x, y, 10, color);
 }
 
-void drawTileList() {
-  globalCanvas.drawRawAtlas(
-      images.tiles,
-      tilesRstTransforms,
-      tileSrcRects,
-      null,
-      null,
-      null,
-      paint
-  );
-}
-
 void renderTiles(List<List<Tile>> tiles) {
   _processTileTransforms(tiles);
   _loadTileRects(tiles);
@@ -86,19 +74,6 @@ void _loadTileRects(List<List<Tile>> tiles) {
     }
   }
 }
-
-List<Rect> mapTilesToSrcRects(List<List<Tile>> tiles) {
-  List<Rect> srcRects = [];
-  for (int x = 0; x < tiles.length; x++) {
-    for (int y = 0; y < tiles[0].length; y++) {
-      if (!isBlock(tiles[x][y])){
-        srcRects.add(mapTileToSrcRect(tiles[x][y]));
-      }
-    }
-  }
-  return srcRects;
-}
-
 
 RSTransform rsTransform(
     {double x, double y, double anchorX, double anchorY, double scale = 1}) {
@@ -232,8 +207,18 @@ void drawCircleOutline(
 
 void drawTiles() {
   // TODO Optimization: Null checks are expensive
-  if (game.tiles == null || game.tiles.isEmpty) return;
-  drawTileList();
+  if (game.tiles == null) return;
+  if (game.tiles.isEmpty == null) return;
+
+  globalCanvas.drawRawAtlas(
+      images.tiles,
+      tilesRstTransforms,
+      tileSrcRects,
+      null,
+      null,
+      null,
+      paint
+  );
 }
 
 void drawBulletHoles(List<Vector2> bulletHoles) {
