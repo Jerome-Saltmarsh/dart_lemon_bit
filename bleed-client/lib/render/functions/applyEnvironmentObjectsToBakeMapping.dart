@@ -11,11 +11,11 @@ void applyEnvironmentObjectsToBakeMapping(){
       continue;
     }
     if (env.type == ObjectType.House01){
-      emitLightMedium(bakeMap, env.x, env.y);
+      emitLightLow(bakeMap, env.x, env.y);
       continue;
     }
     if (env.type == ObjectType.House02){
-      emitLightMedium(bakeMap, env.x, env.y);
+      emitLightLow(bakeMap, env.x, env.y);
       continue;
     }
   }
