@@ -10,7 +10,6 @@ import 'package:bleed_client/utils.dart';
 import 'classes/State.dart';
 import 'enums/Mode.dart';
 
-Mode mode = Mode.Play;
 int frameRate = 5;
 int frameRateValue = 0;
 int serverFrame = 0;

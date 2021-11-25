@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/properties.dart';
+import 'package:bleed_client/watches/mode.dart';
 
 import '../rects.dart';
 

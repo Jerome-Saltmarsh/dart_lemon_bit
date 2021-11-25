@@ -8,6 +8,7 @@ import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/compose/views.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/utils.dart';
+import 'package:bleed_client/watches/mode.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:lemon_engine/state/size.dart';
 

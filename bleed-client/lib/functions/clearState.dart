@@ -6,6 +6,7 @@ import 'package:bleed_client/render/state/tileRects.dart';
 import 'package:bleed_client/render/state/tileTransforms.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
+import 'package:bleed_client/watches/mode.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/state/zoom.dart';
 
@@ -17,7 +18,7 @@ void clearState() {
   clearRender();
   zoom = 1;
   gameEvents.clear();
-  mode = Mode.Play;
+  mode.value = Mode.Play;
   state.lobby = null;
   state.lobbies.clear();
   refreshUI();

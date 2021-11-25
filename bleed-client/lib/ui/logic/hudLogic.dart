@@ -11,6 +11,7 @@ import 'package:bleed_client/state.dart';
 import 'package:bleed_client/ui/compose/dialogs.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/ui/state/tips.dart';
+import 'package:bleed_client/watches/mode.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:neuro/instance.dart';
 
@@ -56,18 +57,7 @@ void rebuildScore() {
 void _doNothing() {}
 
 void toggleEditMode() {
-  if (playMode) {
-    print("mode = Mode.Edit");
-    mode = Mode.Edit;
-    removeGeneratedEnvironmentObjects();
-    registerEditorKeyboardListener();
-    deregisterPlayKeyboardHandler();
-  } else {
-    print("mode = Mode.Play");
-    mode = Mode.Play;
-  }
-  rebuildUI();
-  redrawCanvas();
+  mode.value = playMode ? Mode.Edit : Mode.Play;
 }
 
 void toggleShowScore() {
