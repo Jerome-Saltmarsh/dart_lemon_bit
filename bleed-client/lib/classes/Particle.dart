@@ -19,6 +19,6 @@ class Particle {
   double bounciness;
   double airFriction = 0.98;
   bool foreground = false;
-  Hue hue = Hue.White;
+  int hue = 0;
 }
 

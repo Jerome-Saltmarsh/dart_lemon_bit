@@ -3,8 +3,8 @@ import 'package:bleed_client/common/classes/Vector2.dart';
 
 final _Atlas atlas = _Atlas();
 
-const _shadesX = 1;
-const _shadesY = 534;
+const _shadesX = 1.0;
+const _shadesY = 534.0;
 const _pixelSize = 8.0;
 
 class _Atlas {
@@ -31,6 +31,8 @@ class _Particles {
 }
 
 class _Pixels {
+  final double x = _shadesX;
+  final double y = _shadesY;
   final Vector2 red1 = Vector2(_shadesX + (11 * _pixelSize), _shadesY + (3 * _pixelSize));
   final Vector2 white1 = Vector2(_shadesX + (9 * _pixelSize), _shadesY + (3 * _pixelSize));
   final Vector2 yellow1 = Vector2(_shadesX + (23 * _pixelSize), _shadesY + (3 * _pixelSize));

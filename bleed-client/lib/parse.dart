@@ -23,7 +23,6 @@ import 'package:bleed_client/enums/InventoryItemType.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/emit/emitMyst.dart';
-import 'package:bleed_client/functions/emit/emitPixel.dart';
 import 'package:bleed_client/functions/emitSmoke.dart';
 import 'package:bleed_client/getters/getTileAt.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
@@ -309,7 +308,7 @@ void _parseEnvironmentObjects() {
         addParticleEmitter(ParticleEmitter(x: x, y: y, rate: 20, emit: emitMyst));
         break;
       case ObjectType.Torch:
-        addParticleEmitter(ParticleEmitter(x: x + 5, y: y - 50, rate: 10, emit: emitPixel));
+        // addParticleEmitter(ParticleEmitter(x: x, y: y - 40, rate: 10, emit: emitPixel));
         break;
       default:
         // ignore
@@ -559,10 +558,6 @@ Direction _consumeDirection() {
 
 Tile _consumeTile() {
   return tiles[_consumeInt()];
-}
-
-int parseInt(String value) {
-  return int.parse(value);
 }
 
 ServerResponse _consumeServerResponse() {
