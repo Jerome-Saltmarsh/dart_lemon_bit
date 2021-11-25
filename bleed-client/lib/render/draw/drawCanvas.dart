@@ -66,7 +66,7 @@ void renderCanvasPlay() {
 
   if (!dayTime) {
     resetDynamicShadesToBakeMap();
-    // applyCharacterLightEmission(game.humans);
+    applyCharacterLightEmission(game.humans);
     applyProjectileLighting();
     applyNpcLightEmission(game.interactableNpcs);
     applyDynamicShadeToTileSrc();
@@ -107,7 +107,7 @@ void applyProjectileLighting() {
   for (int i = 0; i < game.totalProjectiles; i++) {
     Projectile projectile = game.projectiles[i];
     if (projectile.type == ProjectileType.Fireball) {
-      applyLightBrightVerySmall(dynamicShading, projectile.x, projectile.y);
+      emitLightHigh(dynamicShading, projectile.x, projectile.y);
     }
   }
 }

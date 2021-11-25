@@ -31,11 +31,11 @@ class World {
       SpawnPoint(game: tavern, x: -145, y: 1900),
       SpawnPoint(game: wildernessWest01, x: -1281, y: 2408),
       SpawnPoint(game: wildernessNorth01, x: -1234, y: 1236),
-      SpawnPoint(game: cave, x: 241, y: 2571),
+      SpawnPoint(game: cave, x: 1300, y: 1310),
     ];
 
     cave.spawnPoints = [
-      SpawnPoint(game: town, x: 64, y: 64),
+      SpawnPoint(game: town, x: -618, y: 1000),
     ];
 
     tavern.spawnPoints = [

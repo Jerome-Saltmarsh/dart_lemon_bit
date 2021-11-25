@@ -145,11 +145,7 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.speakLetsGreeting: sayGreeting,
   keys.waitASecond: sayWaitASecond,
   keys.text: _onKeyPressedEnter,
-  // keys.ambientBright: setAmbientLightBright,
-  // keys.ambientMedium: setAmbientLightMedium,
-  // keys.ambientDark: setAmbientLightDark,
   keys.toggleLantern: toggleLantern,
-  // keys.ambientVeryDark: setAmbientLightVeryDark,
   keys.hourForwards: skipHour,
   keys.hourBackwards: reverseHour,
   keys.teleport: teleportToMouse,
@@ -162,7 +158,7 @@ void teleportToMouse(){
 }
 
 void toggleLantern(){
-  lantern = !lantern;
+  lantern = lanternModes[(lantern.index + 1) % lanternModes.length];
 }
 
 void _onKeyPressedEnter(){
