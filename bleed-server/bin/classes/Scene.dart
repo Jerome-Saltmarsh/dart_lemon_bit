@@ -164,14 +164,25 @@ class Scene {
 }
 
 int sortTileNodeVisits(TileNodeVisit a, TileNodeVisit b) {
-  int scoreA = a.travelled + a.remaining;
-  int scoreB = b.travelled + b.remaining;
-  if (scoreA < scoreB) return 1;
-  if (scoreA > scoreB) return -1;
+  if (a.score < b.score) return 1;
+  if (a.score > b.score) return -1;
   if (a.remaining < b.remaining) return 1;
   if (a.remaining > b.remaining) return -1;
+  if (a.travelled < b.travelled) return 1;
+  if (a.travelled > b.travelled) return -1;
   return 0;
 }
+
+bool isCloser(TileNodeVisit a, TileNodeVisit b) {
+  if (a.score < b.score) return true;
+  if (a.score > b.score) return false;
+  if (a.remaining < b.remaining) return true;
+  if (a.remaining > b.remaining) return false;
+  if (a.travelled < b.travelled) return true;
+  if (a.travelled > b.travelled) return false;
+  return true;
+}
+
 
 extension SceneFunctions on Scene {
 
@@ -208,43 +219,50 @@ extension SceneFunctions on Scene {
     startNode.search = _search;
 
     while (visits.isNotEmpty) {
-      if (visits.last.tileNode == endNode) {
-        TileNodeVisit visit = visits.last;
+      TileNodeVisit closest = visits[0];
+      int index = 0;
+
+      for(int i = 1; i < visits.length; i++){
+        if (closest.isCloserThan(visits[i])) continue;
+        closest = visits[i];
+        index = i;
+      }
+
+      if (closest.tileNode == endNode) {
         List<Vector2> nodes =
-            List.filled(visit.travelled, _vector2Zero, growable: true);
-        int index = visit.travelled - 1;
-        while (visit.previous != null) {
-          nodes[index] = visit.tileNode.position;
+        List.filled(closest.travelled, _vector2Zero, growable: true);
+        int index = closest.travelled - 1;
+        while (closest.previous != null) {
+          nodes[index] = closest.tileNode.position;
           index--;
-          visit = visit.previous!;
+          closest = closest.previous!;
         }
         visits.clear();
         return nodes;
       }
 
-      TileNodeVisit last = visits.removeLast();
+      visits.removeAt(index);
 
-      if (last.tileNode.up.open) {
-        visit(last.tileNode.up, last, visits, endNode);
-        if (last.tileNode.right.open) {
-          visit(last.tileNode.upRight, last, visits, endNode);
+      if (closest.tileNode.up.open) {
+        visit(closest.tileNode.up, closest, visits, endNode);
+        if (closest.tileNode.right.open) {
+          visit(closest.tileNode.upRight, closest, visits, endNode);
         }
-        if (last.tileNode.left.open) {
-          visit(last.tileNode.upRight, last, visits, endNode);
-        }
-      }
-      if (last.tileNode.down.open) {
-        visit(last.tileNode.down, last, visits, endNode);
-        if (last.tileNode.right.open) {
-          visit(last.tileNode.rightDown, last, visits, endNode);
-        }
-        if (last.tileNode.left.open) {
-          visit(last.tileNode.downLeft, last, visits, endNode);
+        if (closest.tileNode.left.open) {
+          visit(closest.tileNode.upRight, closest, visits, endNode);
         }
       }
-      visit(last.tileNode.right, last, visits, endNode);
-      visit(last.tileNode.left, last, visits, endNode);
-      visits.sort(sortTileNodeVisits);
+      if (closest.tileNode.down.open) {
+        visit(closest.tileNode.down, closest, visits, endNode);
+        if (closest.tileNode.right.open) {
+          visit(closest.tileNode.rightDown, closest, visits, endNode);
+        }
+        if (closest.tileNode.left.open) {
+          visit(closest.tileNode.downLeft, closest, visits, endNode);
+        }
+      }
+      visit(closest.tileNode.right, closest, visits, endNode);
+      visit(closest.tileNode.left, closest, visits, endNode);
     }
     return _emptyPath;
   }

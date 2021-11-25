@@ -4,6 +4,7 @@ class TileNodeVisit {
   TileNodeVisit? previous;
   late int travelled;
   int remaining;
+  late int score;
   TileNode tileNode;
 
   TileNodeVisit(this.previous, this.remaining, this.tileNode) {
@@ -12,6 +13,17 @@ class TileNodeVisit {
     } else {
       travelled = 0;
     }
+    score = travelled + remaining;
+  }
+
+  bool isCloserThan(TileNodeVisit that) {
+    if (this.score < that.score) return true;
+    if (this.score > that.score) return false;
+    if (this.remaining < that.remaining) return true;
+    if (this.remaining > that.remaining) return false;
+    if (this.travelled < that.travelled) return true;
+    if (this.travelled > that.travelled) return false;
+    return true;
   }
 }
 
