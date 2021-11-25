@@ -16,7 +16,7 @@ void spawnZombieHead(double x, double y, double z, {double xv = 0, double yv = 0
     z: z,
     xv: xv,
     yv: yv,
-    zv: randomBetween(0, 0.03),
+    zv: randomBetween(0.04, 0.08),
     weight: 0.25,
     duration: randomInt(90, 150),
     rotation: giveOrTake(pi),
