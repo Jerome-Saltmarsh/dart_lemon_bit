@@ -1,5 +1,6 @@
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/editor/state/editState.dart';
+import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
 import 'package:bleed_client/state/game.dart';
 
 void newScene() {
@@ -13,5 +14,5 @@ void newScene() {
   game.environmentObjects.clear();
   game.collectables.clear();
   game.items.clear();
-  renderTiles(game.tiles);
+  mapTilesToSrcAndDst(game.tiles);
 }

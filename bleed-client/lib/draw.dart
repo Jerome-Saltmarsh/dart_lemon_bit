@@ -6,6 +6,8 @@ import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/getters/inDarkness.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
+import 'package:bleed_client/render/constants/atlas.dart';
+import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/draw/drawRawAtlas.dart';
 import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/render/state/tileRects.dart';
@@ -30,50 +32,6 @@ import 'utils.dart';
 
 void drawCharacterCircle(double x, double y, Color color) {
   drawCircle(x, y, 10, color);
-}
-
-void renderTiles(List<List<Tile>> tiles) {
-  _processTileTransforms(tiles);
-  _loadTileRects(tiles);
-
-  int total = tileRects.length * 4;
-  tilesDst = Float32List(total);
-  tilesSrc = Float32List(total);
-
-  for (int i = 0; i < tileRects.length; ++i) {
-    final int index0 = i * 4;
-    final int index1 = index0 + 1;
-    final int index2 = index0 + 2;
-    final int index3 = index0 + 3;
-    final RSTransform rstTransform = tileTransforms[i];
-    final Rect rect = tileRects[i];
-    tilesDst[index0] = rstTransform.scos;
-    tilesDst[index1] = rstTransform.ssin;
-    tilesDst[index2] = rstTransform.tx;
-    tilesDst[index3] = rstTransform.ty + 24;
-    tilesSrc[index0] = rect.left;
-    tilesSrc[index1] = 0; // top
-    tilesSrc[index2] = rect.right;
-    tilesSrc[index3] = 48; // bottom
-  }
-}
-
-void _processTileTransforms(List<List<Tile>> tiles) {
-  tileTransforms.clear();
-  for (int x = 0; x < tiles.length; x++) {
-    for (int y = 0; y < tiles[0].length; y++) {
-      tileTransforms.add(getTileTransform(x, y));
-    }
-  }
-}
-
-void _loadTileRects(List<List<Tile>> tiles) {
-  tileRects.clear();
-  for (int row = 0; row < tiles.length; row++) {
-    for (int column = 0; column < tiles[0].length; column++) {
-        tileRects.add(mapTileToSrcRect(tiles[row][column]));
-    }
-  }
 }
 
 RSTransform rsTransform(
@@ -210,9 +168,7 @@ void drawTiles() {
   // TODO Optimization: Null checks are expensive
   if (game.tiles == null) return;
   if (game.tiles.isEmpty == null) return;
-
-  drawRawAtlas(
-      images.tiles,
+  drawAtlas(
       tilesDst,
       tilesSrc,
   );

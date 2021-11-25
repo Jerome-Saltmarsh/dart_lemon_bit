@@ -51,6 +51,7 @@ import 'common/enums/ObjectType.dart';
 import 'common/version.dart';
 import 'draw.dart';
 import 'functions/onGameEvent.dart';
+import 'render/functions/mapTilesToSrcAndDst.dart';
 import 'state/inventory.dart';
 import 'state.dart';
 
@@ -82,7 +83,7 @@ void parseState() {
       case ServerResponse.Tiles:
         _parseTiles();
         setBakeMapToAmbientLight();
-        renderTiles(game.tiles);
+        mapTilesToSrcAndDst(game.tiles);
         break;
 
       case ServerResponse.Paths:

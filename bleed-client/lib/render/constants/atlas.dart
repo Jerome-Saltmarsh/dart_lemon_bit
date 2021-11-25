@@ -13,6 +13,7 @@ class _Atlas {
   final _Zombie zombie = _Zombie();
   final _Particles particles = _Particles();
   final _Pixels pixels = _Pixels();
+  final Vector2 tiles = Vector2(1, 2977);
 }
 
 class _Zombie {

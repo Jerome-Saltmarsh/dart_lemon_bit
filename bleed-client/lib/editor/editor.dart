@@ -13,6 +13,7 @@ import 'package:bleed_client/editor/state/mouseWorldStart.dart';
 import 'package:bleed_client/editor/state/panning.dart';
 import 'package:bleed_client/editor/state/selectedCollectable.dart';
 import 'package:bleed_client/functions/saveScene.dart';
+import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
@@ -100,7 +101,7 @@ List<Widget> _buildTabMisc() {
       for (List<Tile> row in game.tiles) {
         row.add(Tile.Grass);
       }
-      renderTiles(game.tiles);
+      mapTilesToSrcAndDst(game.tiles);
     }),
     button("Tiles.Y++", () {
       List<Tile> row = [];
@@ -108,19 +109,19 @@ List<Widget> _buildTabMisc() {
         row.add(Tile.Grass);
       }
       game.tiles.add(row);
-      renderTiles(game.tiles);
+      mapTilesToSrcAndDst(game.tiles);
     }),
     if(game.tiles.length > 2)
     button("Tiles.X--", () {
       game.tiles.removeLast();
-      renderTiles(game.tiles);
+      mapTilesToSrcAndDst(game.tiles);
     }),
     if(game.tiles[0].length > 2)
       button("Tiles.Y--", () {
         for (int i = 0; i < game.tiles.length; i++) {
            game.tiles[i].removeLast();
         }
-        renderTiles(game.tiles);
+        mapTilesToSrcAndDst(game.tiles);
       }),
   ];
 }
@@ -245,7 +246,7 @@ void setTileAtMouse(Tile tile) {
   switch (tool) {
     case EditTool.Tile:
       game.tiles[row][column] = tile;
-      renderTiles(game.tiles);
+      mapTilesToSrcAndDst(game.tiles);
       break;
     case EditTool.EnvironmentObject:
       game.environmentObjects.add(EnvironmentObject(

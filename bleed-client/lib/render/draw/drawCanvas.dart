@@ -12,7 +12,7 @@ import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
-import 'package:bleed_client/functions/calculateTileSrcRects.dart';
+import 'package:bleed_client/render/functions/applyDynamicShadeToTileSrc.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:bleed_client/render/constants/charWidth.dart';
@@ -69,7 +69,7 @@ void renderCanvasPlay() {
     // applyCharacterLightEmission(game.humans);
     applyProjectileLighting();
     applyNpcLightEmission(game.interactableNpcs);
-    calculateTileSrcRects();
+    applyDynamicShadeToTileSrc();
   }
 
   drawTiles();
