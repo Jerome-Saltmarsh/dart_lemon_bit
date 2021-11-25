@@ -5,6 +5,9 @@ import 'package:flutter/rendering.dart';
 final _Colors colours = _Colors();
 
 class _Colors {
+
+  final Color black = Color.fromRGBO(24, 21, 26, 1);
+
   final Color redDarkest = Color.fromRGBO(66, 21, 46, 1);
   final Color redDark = Color.fromRGBO(174, 35, 52, 1);
   final Color orange = Color.fromRGBO(247, 150, 23, 1);
