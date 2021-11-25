@@ -66,11 +66,28 @@ void renderCanvasPlay() {
 
   if (!dayTime) {
     resetDynamicShadesToBakeMap();
+
+
+    if (mouseAvailable){
+      double distanceX = distanceBetween(playerX, playerY, mouseWorldX, mouseWorldY);
+      double maxDistance = 80;
+
+      if (distanceX < maxDistance){
+        emitLightHigh(dynamicShading, mouseWorldX, mouseWorldY);
+      }else{
+        double an = angleBetween(playerX, playerY, mouseWorldX, mouseWorldY);
+        double x = adjacent(an, maxDistance);
+        double y = opposite(an, maxDistance);
+        emitLightHigh(dynamicShading, playerX + x, playerY + y);
+      }
+    }
+
     applyCharacterLightEmission(game.humans);
     applyProjectileLighting();
     applyNpcLightEmission(game.interactableNpcs);
     applyDynamicShadeToTileSrc();
   }
+
 
   drawTiles();
   drawProjectiles(game.projectiles);
