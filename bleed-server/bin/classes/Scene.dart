@@ -76,6 +76,15 @@ class Scene {
               y: mapTilePositionY(row, column)+ _tileSizeHalf,
               type: ObjectType.Palisade_V));
         }
+
+        else
+
+        if (tile == Tile.Rock_Wall) {
+          environment.add(EnvironmentObject(
+              x: mapTilePositionX(row, column),
+              y: mapTilePositionY(row, column)+ _tileSizeHalf,
+              type: ObjectType.Rock_Wall));
+        }
       }
     }
 

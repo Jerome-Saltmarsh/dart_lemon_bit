@@ -2,7 +2,6 @@
 import 'dart:ui';
 
 import 'package:bleed_client/common/Tile.dart';
-import 'package:bleed_client/watches/mode.dart';
 
 import '../rects.dart';
 
@@ -47,6 +46,8 @@ Rect mapTileToSrcRect(Tile tile) {
       return _rock;
     case Tile.Black:
       return _black;
+    case Tile.Rock_Wall:
+      return _rockWall;
     case Tile.Boundary:
       throw Exception("Boundary has no rect");
   }
@@ -70,6 +71,7 @@ Rect _bridge = _frame(9);
 Rect _woodenFloor = _frame(10);
 Rect _rock = _frame(11);
 Rect _black = _frame(12);
+Rect _rockWall = _frame(13);
 
 
 Rect _frame(int index) {

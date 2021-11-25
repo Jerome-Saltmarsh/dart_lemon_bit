@@ -14,6 +14,7 @@ final Map<ObjectType, double> environmentObjectWidth = {
   ObjectType.Palisade: 48,
   ObjectType.Palisade_H: 48,
   ObjectType.Palisade_V: 48,
+  ObjectType.Rock_Wall: 48,
   ObjectType.Rock: 48,
   ObjectType.Grave: 48,
   ObjectType.Tree_Stump: 48,
@@ -31,6 +32,7 @@ final Map<ObjectType, double> environmentObjectHeight = {
   ObjectType.Palisade: 100,
   ObjectType.Palisade_H: 100,
   ObjectType.Palisade_V: 100,
+  ObjectType.Rock_Wall: 100,
   ObjectType.Rock: 48,
   ObjectType.Grave: 48,
   ObjectType.Tree_Stump: 48,
@@ -69,6 +71,7 @@ final Map<ObjectType, Vector2> objectTypeSrcPosition = {
   ObjectType.Palisade_V: _translations.palisades,
   ObjectType.Palisade_H: _translations.palisades,
   ObjectType.MystEmitter: atlas.circle,
+  ObjectType.Rock_Wall: atlas.rockWall,
 };
 
 final double _torchHeight = environmentObjectHeight[ObjectType.Torch];

@@ -14,7 +14,8 @@ enum ObjectType {
   Bridge,
   Tree_Stump,
   Rock_Small,
-  LongGrass
+  LongGrass,
+  Rock_Wall
 }
 
 final List<ObjectType> objectTypes = ObjectType.values;

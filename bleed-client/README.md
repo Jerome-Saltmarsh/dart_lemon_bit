@@ -100,7 +100,6 @@
 [ ] Add Name to Speech box
 [ ] Shoot Arrow (Archer)
 [ ] Slash Sword (Warrior)
-[ ] Object Cave Wall
 [ ] Design Cottage
 [ ] Zombies drop gems on death
 [ ] Quest Kill the vampire
@@ -108,7 +107,8 @@
 [ ] Firebolt explode on impact
 -- CURRENT -- 
 [ ] Cave Level
-[ ] Fix Editor
+[ ] Object Cave Wall
+[x] Fix Editor
 [x] Sparkle Particles
 [x] Smoke Particle 
 [x] Add myst to atlas

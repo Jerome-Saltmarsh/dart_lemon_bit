@@ -2434,8 +2434,8 @@
       "Long_Grass",
       "Long_Grass",
       "Grass",
-      "Grass",
-      "Grass",
+      "Rock_Wall",
+      "Rock_Wall",
       "Grass",
       "Concrete_Horizontal",
       "Grass",
@@ -2513,8 +2513,8 @@
       "Long_Grass",
       "Grass",
       "Grass",
-      "Grass",
-      "Grass",
+      "Rock_Wall",
+      "Rock_Wall",
       "Grass",
       "Concrete_Horizontal",
       "Grass",
@@ -2592,8 +2592,8 @@
       "Long_Grass",
       "Grass",
       "Grass",
-      "Grass",
-      "Grass",
+      "Rock_Wall",
+      "Rock_Wall",
       "Grass",
       "Concrete_Horizontal",
       "Grass",
@@ -5930,14 +5930,14 @@
       "type": "Torch"
     },
     {
-      "x": -398,
-      "y": 1506,
-      "type": "Tree01"
-    },
-    {
       "x": -49,
       "y": 1506,
       "type": "Tree02"
+    },
+    {
+      "x": -398,
+      "y": 1506,
+      "type": "Tree01"
     },
     {
       "x": 403,
@@ -6130,14 +6130,14 @@
       "type": "LongGrass"
     },
     {
-      "x": 430,
-      "y": 1701,
-      "type": "Rock_Small"
-    },
-    {
       "x": -1386,
       "y": 1701,
       "type": "Grave"
+    },
+    {
+      "x": 430,
+      "y": 1701,
+      "type": "Rock_Small"
     },
     {
       "x": -466,
@@ -6305,14 +6305,14 @@
       "type": "Tree01"
     },
     {
-      "x": -50,
-      "y": 1819,
-      "type": "LongGrass"
-    },
-    {
       "x": 1213,
       "y": 1819,
       "type": "Tree01"
+    },
+    {
+      "x": -50,
+      "y": 1819,
+      "type": "LongGrass"
     },
     {
       "x": -1156,
@@ -6330,22 +6330,22 @@
       "type": "Tree01"
     },
     {
-      "x": -772,
-      "y": 1843,
-      "type": "Tree01"
-    },
-    {
       "x": -320,
       "y": 1843,
       "type": "LongGrass"
     },
     {
-      "x": 1086,
-      "y": 1848,
+      "x": -772,
+      "y": 1843,
       "type": "Tree01"
     },
     {
       "x": -722,
+      "y": 1848,
+      "type": "Tree01"
+    },
+    {
+      "x": 1086,
       "y": 1848,
       "type": "Tree01"
     },
@@ -6510,14 +6510,14 @@
       "type": "Tree02"
     },
     {
-      "x": -410,
-      "y": 1985,
-      "type": "Rock"
-    },
-    {
       "x": 323,
       "y": 1985,
       "type": "Tree01"
+    },
+    {
+      "x": -410,
+      "y": 1985,
+      "type": "Rock"
     },
     {
       "x": -49,
@@ -6545,12 +6545,12 @@
       "type": "Torch"
     },
     {
-      "x": -1277,
+      "x": -689,
       "y": 2003,
       "type": "Tree01"
     },
     {
-      "x": -689,
+      "x": -1277,
       "y": 2003,
       "type": "Tree01"
     },
@@ -6580,14 +6580,14 @@
       "type": "LongGrass"
     },
     {
-      "x": -661,
-      "y": 2034,
-      "type": "Rock_Small"
-    },
-    {
       "x": -372,
       "y": 2034,
       "type": "LongGrass"
+    },
+    {
+      "x": -661,
+      "y": 2034,
+      "type": "Rock_Small"
     },
     {
       "x": 752,
@@ -6830,14 +6830,14 @@
       "type": "Tree01"
     },
     {
-      "x": -1084,
-      "y": 2338,
-      "type": "Tree02"
-    },
-    {
       "x": 988,
       "y": 2338,
       "type": "Tree01"
+    },
+    {
+      "x": -1084,
+      "y": 2338,
+      "type": "Tree02"
     },
     {
       "x": -928,

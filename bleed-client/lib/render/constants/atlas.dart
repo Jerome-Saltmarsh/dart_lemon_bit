@@ -14,6 +14,7 @@ class _Atlas {
   final _Particles particles = _Particles();
   final _Pixels pixels = _Pixels();
   final Vector2 tiles = Vector2(1, 2977);
+  final Vector2 rockWall = Vector2(2217, 1222);
 }
 
 class _Zombie {
@@ -24,7 +25,7 @@ class _Zombie {
 class _Particles {
   final Vector2 blood = Vector2(2366, 633);
   final Vector2 zombieHead = Vector2(2397, 633);
-  final Vector2 shell  = Vector2(2228, 1199);
+  final Vector2 shell  = Vector2(2072, 1623);
   final Vector2 zombieArm  = Vector2(1052, 1479);
   final Vector2 zombieLeg  = Vector2(1539, 2463);
   final Vector2 zombieTorso  = Vector2(1538, 1736);

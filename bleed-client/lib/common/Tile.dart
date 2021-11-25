@@ -20,6 +20,7 @@ enum Tile {
   Bridge,
   Rock,
   Black,
+  Rock_Wall
 }
 
 final List<Tile> tiles = Tile.values;

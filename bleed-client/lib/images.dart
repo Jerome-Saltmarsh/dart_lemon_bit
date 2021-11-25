@@ -28,6 +28,7 @@ Map<ObjectType, int> environmentObjectIndex = {
   ObjectType.Palisade_H: 1,
   ObjectType.Palisade_V: 2,
   ObjectType.MystEmitter: 0,
+  ObjectType.Rock_Wall: 0,
 };
 
 class _Images {
