@@ -6,11 +6,12 @@ import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/getters/inDarkness.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
+import 'package:bleed_client/render/draw/drawRawAtlas.dart';
 import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/render/state/tileRects.dart';
 import 'package:bleed_client/render/state/tileTransforms.dart';
-import 'package:bleed_client/render/state/tilesRstTransforms.dart';
-import 'package:bleed_client/render/state/tilesSrcRects.dart';
+import 'package:bleed_client/render/state/tilesDst.dart';
+import 'package:bleed_client/render/state/tilesSrc.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -36,8 +37,8 @@ void renderTiles(List<List<Tile>> tiles) {
   _loadTileRects(tiles);
 
   int total = tileRects.length * 4;
-  tilesRstTransforms = Float32List(total);
-  tileSrcRects = Float32List(total);
+  tilesDst = Float32List(total);
+  tilesSrc = Float32List(total);
 
   for (int i = 0; i < tileRects.length; ++i) {
     final int index0 = i * 4;
@@ -46,14 +47,14 @@ void renderTiles(List<List<Tile>> tiles) {
     final int index3 = index0 + 3;
     final RSTransform rstTransform = tileTransforms[i];
     final Rect rect = tileRects[i];
-    tilesRstTransforms[index0] = rstTransform.scos;
-    tilesRstTransforms[index1] = rstTransform.ssin;
-    tilesRstTransforms[index2] = rstTransform.tx;
-    tilesRstTransforms[index3] = rstTransform.ty + 24;
-    tileSrcRects[index0] = rect.left;
-    tileSrcRects[index1] = 0; // top
-    tileSrcRects[index2] = rect.right;
-    tileSrcRects[index3] = 48; // bottom
+    tilesDst[index0] = rstTransform.scos;
+    tilesDst[index1] = rstTransform.ssin;
+    tilesDst[index2] = rstTransform.tx;
+    tilesDst[index3] = rstTransform.ty + 24;
+    tilesSrc[index0] = rect.left;
+    tilesSrc[index1] = 0; // top
+    tilesSrc[index2] = rect.right;
+    tilesSrc[index3] = 48; // bottom
   }
 }
 
@@ -210,14 +211,10 @@ void drawTiles() {
   if (game.tiles == null) return;
   if (game.tiles.isEmpty == null) return;
 
-  globalCanvas.drawRawAtlas(
+  drawRawAtlas(
       images.tiles,
-      tilesRstTransforms,
-      tileSrcRects,
-      null,
-      null,
-      null,
-      paint
+      tilesDst,
+      tilesSrc,
   );
 }
 
