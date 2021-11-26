@@ -162,10 +162,13 @@ Float32List mapCharacterSrc({
 
       if (type == CharacterType.Human){
         int _frame = animations.man.strikingSword[min(frame, 3)];
-        double _di = direction.index * _frameSize * 2;
-        double _fr = _frame * _frameSize;
+        double _di = direction.index * 96.0 * 2;
+        double _fr = _frame * 96.0;
         _src[0] = atlas.human.striking.x + _di + _fr;
-        _src[1] = atlas.human.striking.y + shade.index * _frameSize;
+        _src[1] = atlas.human.striking.y + shade.index * 96.0;
+        _src[2] = _src[0] + 96;
+        _src[3] = _src[1] + 96;
+        return _src;
       } else
 
       if (type == CharacterType.Zombie){

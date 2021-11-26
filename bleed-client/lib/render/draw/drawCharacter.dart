@@ -18,7 +18,7 @@ void drawCharacter(Character character, CharacterType type) {
   if (shade.index >= Shade.PitchBlack.index) return;
 
   drawAtlas(
-      mapCharacterDst(character),
+      mapCharacterDst(character, type),
       mapCharacterSrc(
         type: type,
         state: character.state,
