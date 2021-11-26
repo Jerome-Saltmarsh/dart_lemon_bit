@@ -243,7 +243,7 @@ void stopRunDown() {
 
 void melee() {
   characterController.characterState = CharacterState.Striking;
-  characterController.direction = convertAngleToDirection(requestAim);
+  characterController.direction = convertAngleToDirection(characterController.requestAim);
 }
 
 void stopMelee() {
@@ -306,6 +306,7 @@ class _CharacterController {
   bool moveRight = false;
   bool moveDown = false;
   bool moveLeft = false;
+  double requestAim = 0;
   Direction direction = Direction.None;
   CharacterState characterState = CharacterState.Idle;
 }
@@ -315,7 +316,7 @@ void readPlayerInput() {
   if (!playerAssigned) return;
 
   if (mouseAvailable) {
-    requestAim = getMouseRotation();
+    characterController.requestAim = getMouseRotation();
   }
 
   if (keyPressedPan && !panningCamera) {

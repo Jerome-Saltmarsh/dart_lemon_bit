@@ -13,7 +13,6 @@ import 'enums/Mode.dart';
 int frameRate = 5;
 int frameRateValue = 0;
 int serverFrame = 0;
-double requestAim = 0;
 DateTime previousEvent = DateTime.now();
 int framesSinceEvent = 0;
 int lag = 0;

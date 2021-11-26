@@ -81,7 +81,7 @@ void sendRequestEquipAssaultRifle() {
   sendRequestEquip(Weapon.AssaultRifle);
 }
 
-String get aim => requestAim.toStringAsFixed(2);
+String get aim => characterController.requestAim.toStringAsFixed(2);
 
 void requestThrowGrenade(double strength) {
   send('${ClientRequest.Grenade.index} $session ${strength.toStringAsFixed(1)} $aim');
@@ -96,9 +96,9 @@ void sendRequestUpdatePlayer() {
   _write(characterController.characterState.index);
   _write(characterController.direction.index);
   if (characterController.characterState == CharacterState.Firing) {
-    _write(requestAim.toStringAsFixed(2));
+    _write(characterController.requestAim.toStringAsFixed(2));
   } else {
-    _write(requestAim.toInt());
+    _write(characterController.requestAim.toStringAsFixed(1));
   }
   send(_buffer.toString());
 }

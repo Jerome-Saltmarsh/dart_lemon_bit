@@ -111,7 +111,7 @@
 [ ] Human Bow
 [ ] Human Wand
 [ ] Object Cave Wall
-[ ] Human Sword
+[x] Human Sword
 [x] Tree Colors
 [x] Fix Editor
 [x] Sparkle Particles
