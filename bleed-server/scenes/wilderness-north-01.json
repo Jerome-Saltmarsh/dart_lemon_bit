@@ -1112,47 +1112,47 @@
     {
       "x": -305,
       "y": 731,
-      "type": "Tree02"
+      "type": "Tree01"
     },
     {
       "x": -209,
       "y": 779,
-      "type": "Tree02"
+      "type": "Tree01"
     },
     {
       "x": -180,
       "y": 320,
-      "type": "Tree02"
+      "type": "Tree01"
     },
     {
       "x": 25,
       "y": 243,
-      "type": "Tree02"
+      "type": "Tree01"
     },
     {
       "x": 100,
       "y": 316,
-      "type": "Tree02"
+      "type": "Tree01"
     },
     {
       "x": -188,
       "y": 394,
-      "type": "Tree02"
+      "type": "Tree01"
     },
     {
       "x": 575,
       "y": 862,
-      "type": "Tree02"
+      "type": "Tree01"
     },
     {
       "x": 323,
       "y": 1122,
-      "type": "Tree02"
+      "type": "Tree01"
     },
     {
       "x": 17,
       "y": 1165,
-      "type": "Tree02"
+      "type": "Tree01"
     }
   ]
 }

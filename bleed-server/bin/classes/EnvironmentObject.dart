@@ -34,7 +34,6 @@ final Map<ObjectType, double> _radiusMap = {
   ObjectType.House01: 40,
   ObjectType.House02: 40,
   ObjectType.Tree01: 8,
-  ObjectType.Tree02: 8,
   ObjectType.Rock: 14,
   ObjectType.Torch: 10,
   ObjectType.Tree_Stump: 8,

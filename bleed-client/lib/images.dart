@@ -21,7 +21,6 @@ Map<ObjectType, int> environmentObjectIndex = {
   ObjectType.LongGrass: 4,
   ObjectType.Torch: 0,
   ObjectType.Tree01: 0,
-  ObjectType.Tree02: 1,
   ObjectType.House01: 0,
   ObjectType.House02: 1,
   ObjectType.Palisade: 0,

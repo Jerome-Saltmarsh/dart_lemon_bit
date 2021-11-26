@@ -22,7 +22,6 @@ final Map<ObjectType, double> environmentObjectWidth = {
   ObjectType.LongGrass: 48,
   ObjectType.Torch: 25,
   ObjectType.Tree01: 96,
-  ObjectType.Tree02: 96,
   ObjectType.House01: 150,
   ObjectType.House02: 150,
   ObjectType.MystEmitter: 48
@@ -40,7 +39,6 @@ final Map<ObjectType, double> environmentObjectHeight = {
   ObjectType.LongGrass: 48,
   ObjectType.Torch: 70,
   ObjectType.Tree01: 96,
-  ObjectType.Tree02: 96,
   ObjectType.House01: 150,
   ObjectType.House02: 150,
   ObjectType.MystEmitter: 48
@@ -64,7 +62,6 @@ final Map<ObjectType, Vector2> objectTypeSrcPosition = {
   ObjectType.LongGrass: _translations.objects48,
   ObjectType.Torch: _translations.torches,
   ObjectType.Tree01: _translations.objects96,
-  ObjectType.Tree02: _translations.objects96,
   ObjectType.House01: _translations.objects150,
   ObjectType.House02: _translations.objects150,
   ObjectType.Palisade: _translations.palisades,

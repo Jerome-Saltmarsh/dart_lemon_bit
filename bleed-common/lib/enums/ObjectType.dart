@@ -3,7 +3,6 @@ enum ObjectType {
   Tree01,
   Rock,
   House02,
-  Tree02,
   Palisade,
   Grave,
   Palisade_H,
