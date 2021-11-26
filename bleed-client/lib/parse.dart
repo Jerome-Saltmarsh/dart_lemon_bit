@@ -23,6 +23,7 @@ import 'package:bleed_client/enums/InventoryItemType.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/emit/emitMyst.dart';
+import 'package:bleed_client/functions/emit/emitPixel.dart';
 import 'package:bleed_client/functions/emitSmoke.dart';
 import 'package:bleed_client/getters/getTileAt.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
@@ -309,7 +310,7 @@ void _parseEnvironmentObjects() {
         addParticleEmitter(ParticleEmitter(x: x, y: y, rate: 20, emit: emitMyst));
         break;
       case ObjectType.Torch:
-        // addParticleEmitter(ParticleEmitter(x: x, y: y - 40, rate: 10, emit: emitPixel));
+        // addParticleEmitter(ParticleEmitter(x: x, y: y - 40, rate: 75, emit: emitPixel));
         break;
       default:
         // ignore
@@ -325,7 +326,7 @@ void _parseEnvironmentObjects() {
     dst[2] = x - (width * 0.5);
     dst[3] = y - (height * 0.6666);
 
-    EnvironmentObject envObject = EnvironmentObject(
+    EnvironmentObject env = EnvironmentObject(
         x: x,
         y: y,
         type: type,
@@ -334,12 +335,12 @@ void _parseEnvironmentObjects() {
     );
 
     if (type == ObjectType.Torch){
-      game.torches.add(envObject);
+      game.torches.add(env);
     }
 
-    envObject.tileRow = getRow(envObject.x, envObject.y);
-    envObject.tileColumn = getColumn(envObject.x, envObject.y);
-    game.environmentObjects.add(envObject);
+    env.row = getRow(env.x, env.y);
+    env.column = getColumn(env.x, env.y);
+    game.environmentObjects.add(env);
   }
 
   // * on environmentObjects changed

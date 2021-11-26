@@ -7,8 +7,8 @@ import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 class EnvironmentObject {
   double x;
   double y;
-  int tileRow;
-  int tileColumn;
+  int row;
+  int column;
   final ObjectType type;
   final bool generated;
 

@@ -303,6 +303,9 @@ extension GameFunctions on Game {
     if (target.dead) return;
     changeCharacterHealth(target, -amount);
     if (target.alive) return;
+    if (target is Npc){
+      target.active = false;
+    }
     onKilledBy(target, src);
   }
 
@@ -807,12 +810,18 @@ extension GameFunctions on Game {
             npc.xv += velX(player.aimAngle, settings.knifeHitAcceleration);
             npc.yv += velY(player.aimAngle, settings.knifeHitAcceleration);
             applyDamage(player, npc, settings.damage.knife);
-            dispatch(
-                GameEventType.Zombie_Hit,
-                npc.x,
-                npc.y,
-                velX(player.aimAngle, settings.knifeHitAcceleration * 2),
-                velY(player.aimAngle, settings.knifeHitAcceleration * 2));
+
+            if (npc.dead){
+              dispatch(GameEventType.Zombie_killed_Explosion, npc.x,
+                  npc.y, npc.xv, npc.yv);
+            } else {
+              dispatch(
+                  GameEventType.Zombie_Hit,
+                  npc.x,
+                  npc.y,
+                  velX(player.aimAngle, settings.knifeHitAcceleration * 2),
+                  velY(player.aimAngle, settings.knifeHitAcceleration * 2));
+            }
             return;
           }
 
@@ -897,15 +906,9 @@ extension GameFunctions on Game {
             (bullet.owner as Npc).clearTarget();
           }
 
-          // if (randomBool()) {
-          //   dispatch(GameEventType.Zombie_Killed, character.x, character.y,
-          //       bullet.xv, bullet.yv);
-          //   delayed(() => character.active = false, ms: 2000);
-          // } else {
           character.active = false;
           dispatch(GameEventType.Zombie_killed_Explosion, character.x,
               character.y, bullet.xv, bullet.yv);
-          // }
         }
         break;
       }

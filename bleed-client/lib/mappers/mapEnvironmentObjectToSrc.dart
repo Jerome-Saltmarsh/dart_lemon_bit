@@ -76,14 +76,20 @@ final double _torchHeight = environmentObjectHeight[ObjectType.Torch];
 final Float32List _src = Float32List(4);
 
 Float32List mapEnvironmentObjectToSrc(EnvironmentObject env){
-  Shade shade = getShade(env.tileRow, env.tileColumn);
+  Shade shade = getShade(env.row, env.column);
+  ObjectType type = env.type;
+
+  // if (type == ObjectType.Tree01){
+  //   if (shade.index > 0){
+  //     shade = shades[shade.index - 1];
+  //   }
+  // }
 
   if (shade == Shade.PitchBlack){
     clearSrc(_src);
     return _src;
   }
 
-  ObjectType type = env.type;
   Vector2 translation = objectTypeSrcPosition[type];
   if (translation == null){
     throw Exception(type);

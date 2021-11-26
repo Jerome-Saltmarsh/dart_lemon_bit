@@ -7,10 +7,8 @@ import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
-import 'package:bleed_client/render/enums/Hue.dart';
 import 'package:bleed_client/state/particleSettings.dart';
 import 'package:bleed_client/utils.dart';
-import 'package:lemon_math/random_between.dart';
 
 final int _a = particleSettings.mystDuration - 25;
 final int _b = particleSettings.mystDuration - 50;
@@ -39,7 +37,6 @@ Float32List mapParticleToSrc(Particle particle){
       double y = atlas.pixels.y + (3 * 8);
       _src[0] = x;
       _src[1] = y;
-
       // switch(particle.hue){
       //   case Hue.White:
       //     _src[0] = atlas.pixels.white1.x + 1;

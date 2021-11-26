@@ -14,7 +14,12 @@ class _Atlas {
   final _Particles particles = _Particles();
   final _Pixels pixels = _Pixels();
   final Vector2 tiles = Vector2(1, 2977);
+  final _Human human = _Human();
   final Vector2 rockWall = Vector2(2217, 1222);
+}
+
+class _Human {
+  final Vector2 striking = Vector2(631, 2977);
 }
 
 class _Zombie {

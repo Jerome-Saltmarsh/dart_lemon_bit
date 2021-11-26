@@ -2,14 +2,12 @@ import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/editor/state/editState.dart';
 import 'package:bleed_client/editor/state/selectedCollectable.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
-import 'package:bleed_client/render/draw/drawEnvironmentObjects.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/render/draw_circle.dart';
 
 void renderCanvasEdit() {
   drawTiles();
-  drawEnvironmentObjects();
   drawSprites();
 
   if (selectedCollectable > 0) {

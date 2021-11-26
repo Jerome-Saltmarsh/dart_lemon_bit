@@ -9,9 +9,12 @@ import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/Weapons.dart';
+import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
+import 'package:bleed_client/getters/getShading.dart';
+import 'package:bleed_client/getters/getTileAt.dart';
 import 'package:bleed_client/render/functions/applyDynamicShadeToTileSrc.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
@@ -54,11 +57,11 @@ import 'drawParticle.dart';
 
 final double _nameRadius = 100;
 int _flameIndex = 0;
+
 bool get dayTime => ambient.index == Shade.Bright.index;
 const animationFrameRate = 7; // frames per change;
 
 void renderCanvasPlay() {
-
   if (frameRateValue++ % animationFrameRate == 0) {
     drawFrame++;
     _flameIndex = (_flameIndex + 1) % 4;
@@ -70,11 +73,22 @@ void renderCanvasPlay() {
     applyCharacterLightEmission(game.humans);
     applyProjectileLighting();
     applyNpcLightEmission(game.interactableNpcs);
-    applyDynamicShadeToTileSrc();
   }
 
+  // if (ambient.isLighterThan(Shade.PitchBlack)) {
+  //   for (EnvironmentObject env in game.environmentObjects) {
+  //     if (env.type != ObjectType.Tree01) continue;
+  //     Shade shade = getShade(env.row, env.column);
+  //     if (shade.index < 4){
+  //       Shade darker = shades[shade.index + 1];
+  //       dynamicShading[env.row][env.column] = darker;
+  //     }
+  //   }
+  // }
 
+  applyDynamicShadeToTileSrc();
   drawTiles();
+
   drawProjectiles(game.projectiles);
   drawBulletHoles(game.bulletHoles);
   _drawGrenades(game.grenades);
@@ -93,13 +107,14 @@ void renderCanvasPlay() {
 }
 
 void emitMouseLight() {
-  if (mouseAvailable){
-    double distanceX = distanceBetween(playerX, playerY, mouseWorldX, mouseWorldY);
+  if (mouseAvailable) {
+    double distanceX =
+        distanceBetween(playerX, playerY, mouseWorldX, mouseWorldY);
     double maxDistance = 80;
 
-    if (distanceX < maxDistance){
+    if (distanceX < maxDistance) {
       emitLightHigh(dynamicShading, mouseWorldX, mouseWorldY);
-    }else{
+    } else {
       double an = angleBetween(playerX, playerY, mouseWorldX, mouseWorldY);
       double x = adjacent(an, maxDistance);
       double y = opposite(an, maxDistance);
@@ -110,13 +125,14 @@ void emitMouseLight() {
 
 void drawDebugEnvironmentObjects() {
   paint.color = Colors.red;
-  for(EnvironmentObject env in game.environmentObjects){
+  for (EnvironmentObject env in game.environmentObjects) {
     drawLine(env.left, env.top, env.right, env.top); // top left to top right
-    drawLine(env.right, env.top, env.right, env.bottom); // top left to bottom right
+    drawLine(
+        env.right, env.top, env.right, env.bottom); // top left to bottom right
     drawLine(env.right, env.bottom, env.left, env.bottom);
     drawLine(env.left, env.top, env.left, env.bottom);
   }
-  for(EnvironmentObject env in game.environmentObjects){
+  for (EnvironmentObject env in game.environmentObjects) {
     drawCircle(env.x, env.y, env.radius, Colors.blue);
   }
 }
@@ -208,7 +224,9 @@ void drawSprites() {
 
       if (!environmentRemaining ||
           humanY < game.environmentObjects[indexEnv].y) {
-        if (!particlesRemaining || humanY < game.particles[indexParticle].y && game.particles[indexParticle].type != ParticleType.Blood) {
+        if (!particlesRemaining ||
+            humanY < game.particles[indexParticle].y &&
+                game.particles[indexParticle].type != ParticleType.Blood) {
           if (!zombiesRemaining || humanY < game.zombies[indexZombie].y) {
             if (!npcsRemaining || humanY < game.interactableNpcs[indexNpc].y) {
               drawCharacter(game.humans[indexHuman], CharacterType.Human);
@@ -225,7 +243,9 @@ void drawSprites() {
 
       if (env.top > screen.bottom) return;
 
-      if (!particlesRemaining || env.y < game.particles[indexParticle].y && game.particles[indexParticle].type != ParticleType.Blood) {
+      if (!particlesRemaining ||
+          env.y < game.particles[indexParticle].y &&
+              game.particles[indexParticle].type != ParticleType.Blood) {
         if (!zombiesRemaining || env.y < game.zombies[indexZombie].y) {
           if (!npcsRemaining || env.y < game.interactableNpcs[indexNpc].y) {
             drawEnvironmentObject(game.environmentObjects[indexEnv]);
@@ -239,7 +259,7 @@ void drawSprites() {
     if (particlesRemaining) {
       Particle particle = game.particles[indexParticle];
 
-      if (particle.type == ParticleType.Blood){
+      if (particle.type == ParticleType.Blood) {
         if (onScreen(particle.x, particle.y)) {
           drawParticle(particle);
         }
@@ -281,11 +301,11 @@ bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {
   return true;
 }
 
-void drawEnvironmentObject(EnvironmentObject environmentObject) {
-  if (!environmentObjectOnScreenScreen(environmentObject)) return;
+void drawEnvironmentObject(EnvironmentObject env) {
+  if (!environmentObjectOnScreenScreen(env)) return;
   drawAtlas(
-      environmentObject.dst,
-      mapEnvironmentObjectToSrc(environmentObject),
+    env.dst,
+    mapEnvironmentObjectToSrc(env),
   );
 }
 
@@ -300,8 +320,8 @@ void _drawPlayerNames() {
   }
 }
 
-double mapWeaponAimLength(Weapon weapon){
-  switch(weapon){
+double mapWeaponAimLength(Weapon weapon) {
+  switch (weapon) {
     case Weapon.Unarmed:
       return 20;
     case Weapon.HandGun:

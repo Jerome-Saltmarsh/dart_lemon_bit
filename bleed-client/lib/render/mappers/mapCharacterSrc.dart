@@ -159,14 +159,18 @@ Float32List mapCharacterSrc({
       }
       break;
     case CharacterState.Striking:
-      double _s = direction.index * _frameSize * 2;
-      double _f = (frame % 4) * _frameSize;
 
       if (type == CharacterType.Human){
-        _src[0] = _s + _f + _humanRunning.x;
-        _src[1] = shade.index * _frameSize + _humanRunning.y;
+        int _frame = animations.man.strikingSword[min(frame, 3)];
+        double _di = direction.index * _frameSize * 2;
+        double _fr = _frame * _frameSize;
+        _src[0] = atlas.human.striking.x + _di + _fr;
+        _src[1] = atlas.human.striking.y + shade.index * _frameSize;
       } else
+
       if (type == CharacterType.Zombie){
+        double _s = direction.index * _frameSize * 2;
+        double _f = (frame % 4) * _frameSize;
         _src[0] = _s + _f + atlas.zombie.striking.x;
         _src[1] = shade.index * _frameSize + atlas.zombie.striking.y;
       }

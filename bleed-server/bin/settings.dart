@@ -97,7 +97,7 @@ class Settings {
   final double playerSpeed = 2.75;
   final double machineGunBulletSpeed = 18;
   final int crateDeactiveDuration = 1000;
-  final double knifeHitAcceleration = 5;
+  final double knifeHitAcceleration = 3;
   final double itemCollectRadius = 10;
   final double chanceOfDropItem = goldenRatioInverse;
   final int itemDuration = 500;

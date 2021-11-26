@@ -109,10 +109,10 @@
 -- CURRENT -- 
 [ ] Cave Level
 [ ] Human Bow
-[ ] Human Sword
 [ ] Human Wand
 [ ] Object Cave Wall
-[ ] Tree Colors
+[ ] Human Sword
+[x] Tree Colors
 [x] Fix Editor
 [x] Sparkle Particles
 [x] Smoke Particle 
