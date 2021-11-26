@@ -17,11 +17,11 @@ void spawnZombieHead(double x, double y, double z, {double xv = 0, double yv = 0
     xv: xv,
     yv: yv,
     zv: randomBetween(0.04, 0.08),
-    weight: 0.25,
+    weight: 0.15,
     duration: randomInt(90, 150),
     rotation: giveOrTake(pi),
-    rotationV: giveOrTake(10),
-    scale: 1,
+    rotationV: 0.05,
+    scale: 0.75,
     scaleV: 0,
   );
 }

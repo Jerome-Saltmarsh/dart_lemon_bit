@@ -84,7 +84,7 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
             yv: yv * s + giveOrTake(r),
             zv: randomBetween(0, 0.07));
       }
-      spawnZombieHead(x, y, 0.4,
+      spawnZombieHead(x, y, 0.5,
           xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
       spawnArm(x, y, 0.3,
           xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));

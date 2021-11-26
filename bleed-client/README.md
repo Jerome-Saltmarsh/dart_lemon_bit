@@ -108,9 +108,9 @@
 [ ] Firebolt explode on impact
 -- CURRENT -- 
 [ ] Cave Level
-[ ] Human Bow
-[ ] Human Wand
 [ ] Object Cave Wall
+[ ] Human Wand
+[ ] Human Bow
 [x] Human Sword
 [x] Tree Colors
 [x] Fix Editor

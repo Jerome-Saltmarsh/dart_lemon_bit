@@ -101,10 +101,11 @@ Float32List mapParticleToSrc(Particle particle){
       return _src;
 
     case ParticleType.Zombie_Head:
-      _src[0] = atlas.particles.zombieHead.x;
-      _src[1] = atlas.particles.zombieHead.y + shade.index * 32.0;
-      _src[2] = _src[0] + 32;
-      _src[3] = _src[1] + 32;
+      Direction direction = convertAngleToDirection(particle.rotation);
+      _src[0] = atlas.particles.zombieHead.x + (direction.index * 64.0);
+      _src[1] = atlas.particles.zombieHead.y + shade.index * 64.0;
+      _src[2] = _src[0] + 64;
+      _src[3] = _src[1] + 64;
       return _src;
 
     case ParticleType.Myst:
