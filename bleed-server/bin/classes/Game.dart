@@ -539,6 +539,7 @@ extension GameFunctions on Game {
         break;
       case CharacterState.Striking:
         // @on character striking
+        faceAimDirection(character);
         character.stateDuration = settings.duration.knifeStrike;
         break;
       case CharacterState.Reloading:

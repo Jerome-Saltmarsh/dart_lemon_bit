@@ -20,7 +20,6 @@ import 'common/GameEventType.dart';
 import 'common/ServerResponse.dart';
 import 'common/PurchaseType.dart';
 import 'common/Weapons.dart';
-import 'enums.dart';
 import 'functions/loadScenes.dart';
 import 'games/world.dart';
 import 'settings.dart';
