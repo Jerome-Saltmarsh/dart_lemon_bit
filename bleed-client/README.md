@@ -89,6 +89,7 @@
 [ ] Audio walk on grass
 [ ] Right click to pan
 [ ] Glow worms
+[ ] Zombie Ragdoll Physics
 [ ] Flowing Bat
 [ ] Weapon Baseball Bat
 [ ] Design Tree Model
@@ -107,7 +108,11 @@
 [ ] Firebolt explode on impact
 -- CURRENT -- 
 [ ] Cave Level
+[ ] Human Bow
+[ ] Human Sword
+[ ] Human Wand
 [ ] Object Cave Wall
+[ ] Tree Colors
 [x] Fix Editor
 [x] Sparkle Particles
 [x] Smoke Particle 

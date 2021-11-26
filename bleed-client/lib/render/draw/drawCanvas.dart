@@ -66,22 +66,7 @@ void renderCanvasPlay() {
 
   if (!dayTime) {
     resetDynamicShadesToBakeMap();
-
-
-    if (mouseAvailable){
-      double distanceX = distanceBetween(playerX, playerY, mouseWorldX, mouseWorldY);
-      double maxDistance = 80;
-
-      if (distanceX < maxDistance){
-        emitLightHigh(dynamicShading, mouseWorldX, mouseWorldY);
-      }else{
-        double an = angleBetween(playerX, playerY, mouseWorldX, mouseWorldY);
-        double x = adjacent(an, maxDistance);
-        double y = opposite(an, maxDistance);
-        emitLightHigh(dynamicShading, playerX + x, playerY + y);
-      }
-    }
-
+    // emitMouseLight();
     applyCharacterLightEmission(game.humans);
     applyProjectileLighting();
     applyNpcLightEmission(game.interactableNpcs);
@@ -105,6 +90,22 @@ void renderCanvasPlay() {
   _drawPlayerNames();
   drawPlayerText();
   _drawMouseAim(); // TODO Expensive
+}
+
+void emitMouseLight() {
+  if (mouseAvailable){
+    double distanceX = distanceBetween(playerX, playerY, mouseWorldX, mouseWorldY);
+    double maxDistance = 80;
+
+    if (distanceX < maxDistance){
+      emitLightHigh(dynamicShading, mouseWorldX, mouseWorldY);
+    }else{
+      double an = angleBetween(playerX, playerY, mouseWorldX, mouseWorldY);
+      double x = adjacent(an, maxDistance);
+      double y = opposite(an, maxDistance);
+      emitLightHigh(dynamicShading, playerX + x, playerY + y);
+    }
+  }
 }
 
 void drawDebugEnvironmentObjects() {

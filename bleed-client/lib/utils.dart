@@ -82,13 +82,6 @@ Direction convertAngleToDirection(double angle) {
   return Direction.Up;
 }
 
-
-Timer periodic(Function function, {int seconds = 0, int ms = 0}) {
-  return Timer.periodic(Duration(seconds: seconds, milliseconds: ms), (timer) {
-    function();
-  });
-}
-
 repeat(Function function, int times, int milliseconds) {
   for (int i = 0; i < times; i++) {
     Future.delayed(Duration(milliseconds: milliseconds * i), function);
