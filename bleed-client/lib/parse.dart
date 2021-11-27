@@ -406,10 +406,6 @@ void _parsePlayer() {
     player.grenades = grenades;
   }
 
-  int meds = _consumeInt();
-  if (player.meds != meds) {
-    player.meds = meds;
-  }
   player.equippedRounds.value = _consumeIntUnsafe();
   player.points = _consumeIntUnsafe();
   player.credits = _consumeIntUnsafe();

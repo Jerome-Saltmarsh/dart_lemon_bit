@@ -159,31 +159,6 @@ Positioned _buildRespawnLight() {
           )));
 }
 
-Widget buildTop() {
-  return Positioned(
-      top: 0,
-      child: Container(
-        width: screenWidth,
-        height: 100,
-        child: Row(
-          mainAxisAlignment: main.center,
-          children: [
-            buildMedSlot(),
-            Container(
-              height: 50,
-              width: 100,
-              // color: Colors.blue,
-            ),
-            Container(
-              height: 50,
-              width: 100,
-              color: Colors.red,
-            )
-          ],
-        ),
-      ));
-}
-
 Widget buildTopRight() {
   return Positioned(
     top: _padding,
@@ -382,20 +357,6 @@ Widget buildWeaponSlot(WeaponType weaponType) {
       ),
     );
   });
-}
-
-Widget buildMedSlot() {
-  return Stack(children: [
-    onPressed(
-        hint: "Press H to use med kit",
-        callback: sendRequestUseMedKit,
-        child: buildImageSlot(
-            image: healthImage,
-            width: 120 * goldenRatioInverse,
-            height: 120 * goldenRatioInverse,
-            color: Colors.black38)),
-    buildTag(player.meds)
-  ]);
 }
 
 Widget buildBottomLeft() {

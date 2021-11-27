@@ -18,7 +18,6 @@ class Player {
   bool acquiredAssaultRifle = false;
   Tile tile = Tile.Grass;
   int grenades = 0;
-  int meds = 0;
   int roundsHandgun;
   int roundsShotgun;
   int roundsSniperRifle = 0;

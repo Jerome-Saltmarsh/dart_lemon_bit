@@ -22,7 +22,6 @@ class Player extends Character {
   int maxStamina = 200;
   Inventory inventory;
   int grenades;
-  int meds;
   int lives;
   int frameOfDeath = -1;
   int _points = 0;
@@ -80,7 +79,6 @@ class Player extends Character {
     required this.inventory,
     required this.game,
     this.grenades = 0,
-    this.meds = 0,
     this.lives = 0,
     required List<Weapon> weapons,
     required this.clips,

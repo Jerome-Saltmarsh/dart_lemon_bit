@@ -246,12 +246,6 @@ extension GameFunctions on Game {
           continue;
 
         switch (collectables[i].type) {
-          case CollectableType.Health:
-            if (player.meds >= settings.maxMeds) continue;
-            player.meds++;
-            dispatch(GameEventType.Item_Acquired, collectables[i].x,
-                collectables[i].y, 0, 0);
-            break;
           case CollectableType.Handgun_Ammo:
             if (!player.inventory.acquire(InventoryItemType.HandgunClip)) {
               continue;
