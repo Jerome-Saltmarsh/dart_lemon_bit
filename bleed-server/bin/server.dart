@@ -518,7 +518,10 @@ Player spawnPlayerInTown() {
     inventory: Inventory(0, 0, []),
     clips: Clips(),
     squad: 1,
-    weapons: [Weapon(type: WeaponType.HandGun, damage: 1, capacity: 24)]
+    weapons: [
+      Weapon(type: WeaponType.HandGun, damage: 1, capacity: 24),
+      Weapon(type: WeaponType.Shotgun, damage: 1, capacity: 12)
+    ]
   );
   world.town.players.add(player);
   return player;
