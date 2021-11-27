@@ -7,6 +7,7 @@ import 'classes/Game.dart';
 import 'classes/Inventory.dart';
 import 'classes/Player.dart';
 import 'classes/InteractableNpc.dart';
+import 'classes/Weapon.dart';
 import 'common/CharacterState.dart';
 import 'common/PlayerEvents.dart';
 import 'common/enums/Direction.dart';
@@ -259,45 +260,31 @@ void main() {
           break;
 
         case ClientRequest.Equip:
+
+          if (arguments.length < 4){
+            error(GameError.InvalidArguments, message: "ClientRequest.Equip Error: Expected 4 args but got ${arguments.length}");
+            return;
+          }
+
           Player? player = findPlayerById(arguments[3]);
           if (player == null) {
             errorPlayerNotFound();
             return;
           }
 
-          WeaponType weapon = WeaponType.values[int.parse(arguments[4])];
-          if (player.stateDuration > 0) return;
-          if (player.weapon == weapon) return;
-
-          switch (weapon) {
-            case WeaponType.HandGun:
-              if (!player.acquiredHandgun) {
-                errorWeaponNotAcquired();
-                return;
-              }
-              break;
-            case WeaponType.Shotgun:
-              if (!player.acquiredShotgun) {
-                errorWeaponNotAcquired();
-                return;
-              }
-              break;
-            case WeaponType.SniperRifle:
-              if (!player.acquiredSniperRifle) {
-                errorWeaponNotAcquired();
-                return;
-              }
-              break;
-            case WeaponType.AssaultRifle:
-              if (!player.acquiredAssaultRifle) {
-                errorWeaponNotAcquired();
-                return;
-              }
-              break;
+          int? weaponIndex = int.tryParse(arguments[4]);
+          if (weaponIndex == null){
+            error(GameError.InvalidArguments, message: "arg4, weapon-index: $weaponIndex integer expected");
+            return;
+          }
+          if (weaponIndex < 0){
+            error(GameError.InvalidArguments, message: "arg4, weapon-index: $weaponIndex must be greater than 0, got ");
+          }
+          if (weaponIndex >= player.weapons.length){
+            error(GameError.InvalidArguments, message: "arg4, weapon-index: $weaponIndex cannot be greater than player.weapons.length: ${player.weapons.length}");
           }
 
-          player.weapon = weapon;
-          player.game.setCharacterState(player, CharacterState.ChangingWeapon);
+          changeWeapon(player, weaponIndex);
           return;
 
         case ClientRequest.Grenade:
@@ -387,7 +374,7 @@ void main() {
               player.clips.handgun = 1;
               player.rounds.handgun = constants.maxRounds.handgun;
               player.addEvent(PlayerEventType.Acquired_Handgun, 1);
-              player.weapon = WeaponType.HandGun;
+              player.weapon = Weapon(type: WeaponType.HandGun, damage: 1);
               game.setCharacterState(player, CharacterState.ChangingWeapon);
               return;
 
@@ -400,7 +387,7 @@ void main() {
               player.clips.shotgun = 1;
               player.rounds.shotgun = constants.maxRounds.shotgun;
               player.addEvent(PlayerEventType.Acquired_Shotgun, 1);
-              player.weapon = WeaponType.Shotgun;
+              player.weapon = Weapon(type: WeaponType.Shotgun, damage: 1);
               game.setCharacterState(player, CharacterState.ChangingWeapon);
               return;
 
@@ -413,7 +400,7 @@ void main() {
               player.clips.sniperRifle = 1;
               player.rounds.sniperRifle = constants.maxRounds.sniperRifle;
               player.addEvent(PlayerEventType.Acquired_SniperRifle, 1);
-              player.weapon = WeaponType.SniperRifle;
+              player.weapon = Weapon(type: WeaponType.SniperRifle, damage: 1);
               game.setCharacterState(player, CharacterState.ChangingWeapon);
               return;
 
@@ -426,7 +413,7 @@ void main() {
               player.clips.assaultRifle = 1;
               player.rounds.assaultRifle = constants.maxRounds.assaultRifle;
               player.addEvent(PlayerEventType.Acquired_AssaultRifle, 1);
-              player.weapon = WeaponType.AssaultRifle;
+              player.weapon = Weapon(type: WeaponType.AssaultRifle, damage: 1);
               game.setCharacterState(player, CharacterState.ChangingWeapon);
               return;
           }
@@ -537,7 +524,7 @@ Player spawnPlayerInTown() {
     rounds:
         Rounds(handgun: 50, shotgun: 30, sniperRifle: 20, assaultRifle: 100),
     squad: 1,
-    weapon: WeaponType.HandGun,
+    weapon: Weapon(type: WeaponType.HandGun, damage: 1)
   );
   world.town.players.add(player);
   return player;

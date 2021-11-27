@@ -1,6 +1,7 @@
 import '../common/WeaponType.dart';
 import 'Npc.dart';
 import 'Player.dart';
+import 'Weapon.dart';
 
 class InteractableNpc extends Npc {
 
@@ -14,7 +15,6 @@ class InteractableNpc extends Npc {
     required double x,
     required double y,
     required int health,
-    required WeaponType weapon
-  })
-      : super(x: x, y: y, health: health, weapon: weapon);
+    required Weapon weapon
+  }) : super(x: x, y: y, health: health, weapon: weapon);
 }

@@ -57,6 +57,7 @@ import 'Scene.dart';
 import 'SpawnPoint.dart';
 import 'TileNode.dart';
 import 'InteractableNpc.dart';
+import 'Weapon.dart';
 
 const _none = -1;
 
@@ -323,7 +324,7 @@ extension GameFunctions on Game {
     }
 
     if (npc.targetSet) {
-      switch (npc.weapon) {
+      switch (npc.weapon.type) {
         case WeaponType.Unarmed:
           if (!targetWithinStrikingRange(npc, npc.target)) break;
           // @on npc target within striking range
@@ -444,7 +445,7 @@ extension GameFunctions on Game {
     double y = character.y + opp(character.aimAngle, d) - 5;
     character.state = CharacterState.Firing;
 
-    switch (character.weapon) {
+    switch (character.weapon.type) {
       case WeaponType.HandGun:
         // @on character fire handgun
         if (character is Player) {
@@ -547,7 +548,7 @@ extension GameFunctions on Game {
         // @on reload weapon
         Player player = character as Player;
 
-        switch (character.weapon) {
+        switch (character.weapon.type) {
           case WeaponType.HandGun:
             // @on reload handgun
             if (player.rounds.handgun >= constants.maxRounds.handgun) return;
@@ -900,8 +901,7 @@ extension GameFunctions on Game {
             // call interface instead
             owner.score.zombiesKilled++;
             if (character is Npc) {
-              owner.earnPoints(
-                  constants.points.zombieKilled * character.pointMultiplier);
+              owner.earnPoints(constants.points.zombieKilled);
             }
           } else if (bullet.owner is Npc) {
             // on zombie killed by npc
@@ -1058,28 +1058,10 @@ extension GameFunctions on Game {
   Projectile spawnBullet(Character character) {
     return spawnProjectile(
         character: character,
-        accuracy: getWeaponAccuracy(character.weapon),
-        speed: getBulletSpeed(character.weapon),
-        damage: getBulletDamage(character),
+        accuracy: getWeaponAccuracy(character.weapon.type),
+        speed: getBulletSpeed(character.weapon.type),
+        damage: character.weapon.damage,
         type: ProjectileType.Bullet);
-  }
-
-  int getBulletDamage(Character character){
-    switch(character.weapon){
-      case WeaponType.Unarmed:
-        throw Exception();
-      case WeaponType.HandGun:
-        return character.we
-      case WeaponType.Shotgun:
-        // TODO: Handle this case.
-        break;
-      case WeaponType.SniperRifle:
-        // TODO: Handle this case.
-        break;
-      case WeaponType.AssaultRifle:
-        // TODO: Handle this case.
-        break;
-    }
   }
 
   Projectile spawnFireball(Character character) {
@@ -1106,7 +1088,7 @@ extension GameFunctions on Game {
 
     double yv = velY(character.aimAngle + giveOrTake(accuracy), speed);
 
-    double range = getWeaponRange(character.weapon) +
+    double range = getWeaponRange(character.weapon.type) +
         giveOrTake(settings.weaponRangeVariation);
 
     Direction direction = convertAngleToDirection(character.aimAngle);
@@ -1157,7 +1139,10 @@ extension GameFunctions on Game {
       if (zombies[i].active) continue;
       return zombies[i];
     }
-    final Npc npc = Npc(x: 0, y: 0, health: settings.health.zombie, weapon: WeaponType.Unarmed);
+    final Npc npc = Npc(x: 0, y: 0, health: settings.health.zombie, weapon: Weapon(
+      type: WeaponType.Unarmed,
+      damage: 0
+    ));
     zombies.add(npc);
     return npc;
   }
@@ -1276,7 +1261,7 @@ extension GameFunctions on Game {
       closestDistance = distance2;
     }
 
-    double range = getWeaponRange(npc.weapon);
+    double range = getWeaponRange(npc.weapon.type);
     double actualDistance = distanceBetween(npc.x, npc.y, closest.x, closest.y);
     if (actualDistance > range) {
       npc.clearTarget();
@@ -1404,7 +1389,7 @@ extension GameFunctions on Game {
             }
             player.clips.handgun = settings.maxClips.handgun;
             player.rounds.handgun = settings.pickup.handgun;
-            player.weapon = WeaponType.HandGun;
+            // player.weapon = WeaponType.HandGun;
             break;
           case ItemType.Shotgun:
             // @on shotgun acquired
@@ -1419,7 +1404,7 @@ extension GameFunctions on Game {
               break;
             }
             player.rounds.shotgun = settings.pickup.shotgun;
-            player.weapon = WeaponType.Shotgun;
+            // player.weapon = WeaponType.Shotgun;
             break;
           case ItemType.SniperRifle:
             // @on sniper rifle acquired
@@ -1434,7 +1419,7 @@ extension GameFunctions on Game {
               break;
             }
             player.rounds.sniperRifle = settings.pickup.sniperRifle;
-            player.weapon = WeaponType.SniperRifle;
+            // player.weapon = WeaponType.SniperRifle;
             break;
           case ItemType.Assault_Rifle:
             // @on assault rifle acquired
@@ -1450,7 +1435,7 @@ extension GameFunctions on Game {
               break;
             }
             player.rounds.assaultRifle = settings.pickup.assaultRifle;
-            player.weapon = WeaponType.AssaultRifle;
+            // player.weapon = WeaponType.AssaultRifle;
             break;
           case ItemType.Credits:
             player.earnPoints(settings.collectCreditAmount);
@@ -1531,4 +1516,11 @@ void playerInteract(Player player) {
     if (environmentObject.type == ObjectType.House02) {}
     ;
   }
+}
+
+void changeWeapon(Player player, int index){
+  if (player.busy) return;
+  if (player.dead) return;
+  player.weapon = player.weapons[index];
+  player.game.setCharacterState(player, CharacterState.ChangingWeapon);
 }

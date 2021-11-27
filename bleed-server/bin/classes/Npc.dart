@@ -3,21 +3,27 @@ import '../common/classes/Vector2.dart';
 import '../enums/npc_mode.dart';
 import '../settings.dart';
 import 'Character.dart';
+import 'Weapon.dart';
 
 final Character _nonTarget =
-Character(x: 0, y: 0, weapon: WeaponType.AssaultRifle, health: 0, speed: 0);
+  Character(
+      x: 0,
+      y: 0,
+      weapon: Weapon(type: WeaponType.Unarmed, damage: 0),
+      health: 0,
+      speed: 0
+  );
 
 class Npc extends Character {
   Character target = _nonTarget;
   List<Vector2> path = [];
-  int pointMultiplier = 1;
   NpcMode mode = NpcMode.Aggressive;
 
   Npc({
     required double x,
     required double y,
-    int health = 100,
-    WeaponType weapon = WeaponType.Unarmed,
+    required int health,
+    required Weapon weapon
   })
       : super(
       x: x,

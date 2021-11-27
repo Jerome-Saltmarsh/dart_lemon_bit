@@ -153,7 +153,7 @@ bool targetWithinStrikingRange(GameObject source, GameObject target) {
 }
 
 bool targetWithinFiringRange(Character character, GameObject target){
-  double range = getWeaponRange(character.weapon);
+  double range = getWeaponRange(character.weapon.type);
   if (diffOver(character.x, target.x, range)) return false;
   if (diffOver(character.y, target.y, range)) return false;
   return true;

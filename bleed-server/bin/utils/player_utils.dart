@@ -2,7 +2,7 @@ import '../classes/Player.dart';
 import '../common/WeaponType.dart';
 
 int equippedWeaponRounds(Player player) {
-  switch (player.weapon) {
+  switch (player.weapon.type) {
     case WeaponType.HandGun:
       return player.rounds.handgun;
     case WeaponType.Shotgun:
@@ -17,7 +17,7 @@ int equippedWeaponRounds(Player player) {
 }
 
 int equippedWeaponClips(Player player) {
-  switch (player.weapon) {
+  switch (player.weapon.type) {
     case WeaponType.HandGun:
       return player.clips.handgun;
     case WeaponType.Shotgun:

@@ -14,6 +14,7 @@ import 'Character.dart';
 import 'Game.dart';
 import 'Inventory.dart';
 import 'Score.dart';
+import 'Weapon.dart';
 
 
 class Player extends Character {
@@ -51,6 +52,14 @@ class Player extends Character {
   CharacterState characterState = CharacterState.Idle;
 
   final List<PlayerEvent> events = [];
+
+  List<Weapon> weapons = [
+    Weapon(type: WeaponType.Unarmed, damage: 1),
+    Weapon(type: WeaponType.HandGun, damage: 1),
+    Weapon(type: WeaponType.Shotgun, damage: 1),
+    Weapon(type: WeaponType.SniperRifle, damage: 1),
+    Weapon(type: WeaponType.AssaultRifle, damage: 1),
+  ];
 
   void addEvent(PlayerEventType type, int value) {
     for (PlayerEvent event in events) {
@@ -90,7 +99,7 @@ class Player extends Character {
     this.grenades = 0,
     this.meds = 0,
     this.lives = 0,
-    WeaponType weapon = WeaponType.HandGun,
+    required Weapon weapon,
     required this.clips,
     required this.rounds,
     int squad = noSquad,

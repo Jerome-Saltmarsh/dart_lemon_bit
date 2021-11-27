@@ -114,7 +114,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, _playerIndex);
   _writeInt(buffer, player.x);
   _writeInt(buffer, player.y);
-  _write(buffer, player.weapon.index);
+  _write(buffer, player.weapon.type.index);
   _write(buffer, player.health.toInt());
   _write(buffer, player.maxHealth.toInt());
   _write(buffer, player.stamina);
@@ -278,7 +278,7 @@ void _compilePlayer(StringBuffer buffer, Player player) {
   _writeInt(buffer, player.x);
   _writeInt(buffer, player.y);
   _write(buffer, player.stateFrameCount);
-  _write(buffer, player.weapon.index);
+  _write(buffer, player.weapon.type.index);
   _write(buffer, player.squad);
   _write(buffer, player.name);
   _write(buffer, player.text);

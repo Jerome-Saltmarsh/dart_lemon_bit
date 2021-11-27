@@ -6,12 +6,13 @@ import '../constants/no_squad.dart';
 import '../interfaces/HasSquad.dart';
 import '../utils.dart';
 import 'GameObject.dart';
+import 'Weapon.dart';
 
 class Character extends GameObject implements HasSquad {
   CharacterState state = CharacterState.Idle;
   CharacterState previousState = CharacterState.Idle;
   Direction direction = Direction.Down;
-  WeaponType weapon;
+  Weapon weapon;
   double aimAngle = 0;
   double accuracy = 0;
   int stateDuration = 0;

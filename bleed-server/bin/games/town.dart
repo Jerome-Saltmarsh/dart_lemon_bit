@@ -2,6 +2,7 @@ import '../classes/Character.dart';
 import '../classes/Game.dart';
 import '../classes/Player.dart';
 import '../classes/InteractableNpc.dart';
+import '../classes/Weapon.dart';
 import '../common/Quests.dart';
 import '../common/WeaponType.dart';
 import '../enums/npc_mode.dart';
@@ -24,7 +25,7 @@ class Town extends Game {
         x: -100,
         y: 1650,
         health: 100,
-        weapon: WeaponType.Unarmed);
+        weapon: Weapon(type: WeaponType.Unarmed, damage: 0));
     npcDavis.mode = NpcMode.Ignore;
     npcs.add(npcDavis);
 
@@ -34,7 +35,7 @@ class Town extends Game {
         x: -300,
         y: 1950,
         health: 100,
-        weapon: WeaponType.Unarmed);
+        weapon: Weapon(type: WeaponType.Unarmed, damage: 0));
     npcSmith.mode = NpcMode.Ignore;
     npcs.add(npcSmith);
 
@@ -44,7 +45,7 @@ class Town extends Game {
         x: 180,
         y: 2000,
         health: 100,
-        weapon: WeaponType.SniperRifle);
+        weapon: Weapon(type: WeaponType.AssaultRifle, damage: 1));
     guard1.mode = NpcMode.Stand_Ground;
     npcs.add(guard1);
 
@@ -53,8 +54,7 @@ class Town extends Game {
         onInteractedWith: _onGuardInteractedWith,
         x: 215,
         y: 1970,
-        health: 100,
-        weapon: WeaponType.AssaultRifle);
+        health: 100,weapon: Weapon(type: WeaponType.SniperRifle, damage: 5));
     guard2.mode = NpcMode.Stand_Ground;
     npcs.add(guard2);
   }
