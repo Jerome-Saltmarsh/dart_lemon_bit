@@ -1,5 +1,4 @@
 {
-  "blocks": [],
   "collectables": [],
   "tiles": [
     [
@@ -31,7 +30,7 @@
       "Black",
       "Grass",
       "Grass",
-      "Grass",
+      "ZombieSpawn",
       "Grass",
       "Grass",
       "Concrete",
@@ -41,7 +40,7 @@
       "Grass",
       "Grass",
       "Grass",
-      "Grass",
+      "ZombieSpawn",
       "Grass",
       "Black",
       "Black",
@@ -57,7 +56,7 @@
       "Grass",
       "Grass",
       "Grass",
-      "Grass",
+      "ZombieSpawn",
       "Grass",
       "Grass",
       "Grass",
@@ -74,7 +73,7 @@
       "Black",
       "Black",
       "Long_Grass",
-      "Grass",
+      "ZombieSpawn",
       "Grass",
       "Grass",
       "Grass",
@@ -94,58 +93,9 @@
       "Grass",
       "Grass",
       "Grass",
-      "Grass",
+      "ZombieSpawn",
       "Black",
       "Black",
-      "Black",
-      "Black"
-    ],
-    [
-      "Black",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Black",
-      "Black",
-      "Black",
-      "Long_Grass",
-      "Long_Grass",
-      "Long_Grass",
-      "Long_Grass",
-      "Long_Grass",
-      "Long_Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Concrete",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
-      "Grass",
       "Black",
       "Black"
     ],
@@ -163,6 +113,55 @@
       "Grass",
       "Grass",
       "Grass",
+      "Black",
+      "Black",
+      "Black",
+      "ZombieSpawn",
+      "Long_Grass",
+      "Long_Grass",
+      "Long_Grass",
+      "Long_Grass",
+      "Long_Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Concrete",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Black",
+      "Black"
+    ],
+    [
+      "Black",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
+      "Grass",
       "Grass",
       "Grass",
       "Grass",
@@ -244,7 +243,7 @@
       "Grass",
       "Grass",
       "Grass",
-      "Grass",
+      "ZombieSpawn",
       "Black"
     ],
     [
@@ -297,7 +296,7 @@
       "Grass"
     ],
     [
-      "Grass",
+      "ZombieSpawn",
       "Grass",
       "Grass",
       "Grass",
@@ -441,7 +440,7 @@
       "Grass",
       "Grass",
       "Grass",
-      "Grass"
+      "ZombieSpawn"
     ],
     [
       "Grass",
@@ -836,7 +835,7 @@
       "Concrete"
     ],
     [
-      "Grass",
+      "ZombieSpawn",
       "Grass",
       "Grass",
       "Grass",
@@ -1124,7 +1123,7 @@
       "Grass",
       "Grass",
       "Grass",
-      "Grass",
+      "ZombieSpawn",
       "Grass",
       "Black",
       "Black"
@@ -1132,7 +1131,7 @@
     [
       "Black",
       "Black",
-      "Grass",
+      "ZombieSpawn",
       "Grass",
       "Grass",
       "Grass",
@@ -1150,7 +1149,7 @@
       "Grass",
       "Grass",
       "Grass",
-      "Grass",
+      "ZombieSpawn",
       "Grass",
       "Grass",
       "Long_Grass",
@@ -1186,6 +1185,7 @@
       "Black",
       "Black",
       "Grass",
+      "ZombieSpawn",
       "Grass",
       "Grass",
       "Grass",
@@ -1193,7 +1193,6 @@
       "Grass",
       "Grass",
       "Grass",
-      "Grass",
       "Black",
       "Black",
       "Black",
@@ -1204,7 +1203,7 @@
       "Black",
       "Black",
       "Black",
-      "Black",
+      "ZombieSpawn",
       "Long_Grass",
       "Long_Grass",
       "Grass",
@@ -1236,12 +1235,12 @@
       "type": "LongGrass"
     },
     {
-      "x": -45,
+      "x": 46,
       "y": 144,
       "type": "LongGrass"
     },
     {
-      "x": 46,
+      "x": -45,
       "y": 144,
       "type": "LongGrass"
     },
@@ -1446,14 +1445,14 @@
       "type": "Tree01"
     },
     {
-      "x": 21,
-      "y": 872,
-      "type": "Rock"
-    },
-    {
       "x": -125,
       "y": 872,
       "type": "Tree01"
+    },
+    {
+      "x": 21,
+      "y": 872,
+      "type": "Rock"
     },
     {
       "x": -835,
@@ -1501,6 +1500,11 @@
       "type": "Tree01"
     },
     {
+      "x": 142,
+      "y": 958,
+      "type": "Tree01"
+    },
+    {
       "x": 15,
       "y": 961,
       "type": "Tree01"
@@ -1516,22 +1520,17 @@
       "type": "Tree01"
     },
     {
-      "x": 142,
-      "y": 958,
-      "type": "Tree01"
-    },
-    {
       "x": -480,
       "y": 1031,
       "type": "Tree01"
     },
     {
-      "x": -386,
+      "x": -792,
       "y": 1039,
       "type": "Tree01"
     },
     {
-      "x": -792,
+      "x": -386,
       "y": 1039,
       "type": "Tree01"
     },
@@ -1626,13 +1625,13 @@
       "type": "Tree01"
     },
     {
-      "x": -420,
-      "y": 1308,
+      "x": -173,
+      "y": 1302,
       "type": "Tree01"
     },
     {
-      "x": -173,
-      "y": 1302,
+      "x": -420,
+      "y": 1308,
       "type": "Tree01"
     },
     {

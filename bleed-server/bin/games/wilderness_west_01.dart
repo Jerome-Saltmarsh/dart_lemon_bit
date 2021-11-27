@@ -4,6 +4,10 @@ import '../classes/Npc.dart';
 import '../classes/Player.dart';
 import '../common/Quests.dart';
 import '../instances/scenes.dart';
+import '../state.dart';
+
+const int _framesPerZombieSpawn = 10;
+const int _maxZombies = 20;
 
 class WildernessWest01 extends Game {
 
@@ -11,12 +15,14 @@ class WildernessWest01 extends Game {
 
   WildernessWest01() : super(scenes.wildernessWest01){
     boss = Npc(x: 0, y: 300, health: 100);
-    zombies.add(boss);
+    // zombies.add(boss);
   }
 
   @override
   void update() {
-    // TODO: implement update
+    if (frame % _framesPerZombieSpawn != 0) return;
+    if (zombieCount > _maxZombies) return;
+    spawnRandomZombieLevel(1);
   }
 
   @override

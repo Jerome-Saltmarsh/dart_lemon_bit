@@ -8,6 +8,7 @@ import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/randomInt.dart';
 import 'package:lemon_math/randomItem.dart';
 
+import '../bleed/zombie_health.dart';
 import '../common/CharacterState.dart';
 import '../common/ItemType.dart';
 import '../common/Tile.dart';
@@ -1116,34 +1117,43 @@ extension GameFunctions on Game {
     return bullet;
   }
 
-  Npc spawnZombie(double x, double y) {
+  Npc spawnZombie(double x, double y, {int health = 25}) {
+    Npc zombie = _getAvailableZombie();
+    zombie.active = true;
+    zombie.state = CharacterState.Idle;
+    zombie.stateDuration = 0;
+    zombie.previousState = CharacterState.Idle;
+    zombie.maxHealth = health;
+    zombie.health = health;
+    zombie.x = x;
+    zombie.y = y;
+    zombie.yv = 0;
+    zombie.xv = 0;
+    onNpcSpawned(zombie);
+    return zombie;
+  }
+
+  Npc _getAvailableZombie(){
     for (int i = 0; i < zombies.length; i++) {
       if (zombies[i].active) continue;
-      Npc npc = zombies[i];
-      npc.active = true;
-      npc.state = CharacterState.Idle;
-      npc.previousState = CharacterState.Idle;
-      npc.health = settings.health.zombie;
-      npc.x = x;
-      npc.y = y;
-      npc.yv = 0;
-      npc.xv = 0;
-      onNpcSpawned(npc);
-      return npc;
+      return zombies[i];
     }
-
-    Npc npc =
-        Npc(x: x, y: y, health: settings.health.zombie, weapon: Weapon.Unarmed);
+    final Npc npc = Npc(x: 0, y: 0, health: settings.health.zombie, weapon: Weapon.Unarmed);
     zombies.add(npc);
-    onNpcSpawned(npc);
     return npc;
   }
 
-  Npc spawnRandomZombie() {
+  Npc spawnRandomZombieLevel(int level){
+    return spawnRandomZombie(health: zombieHealth[clampInt(level, 0, maxZombieLevel)]);
+  }
+
+  Npc spawnRandomZombie({int health = 25}) {
     if (zombieSpawnPoints.isEmpty) throw ZombieSpawnPointsEmptyException();
     Vector2 spawnPoint = randomItem(zombieSpawnPoints);
-    return spawnZombie(spawnPoint.x + giveOrTake(radius.zombieSpawnVariation),
-        spawnPoint.y + giveOrTake(radius.zombieSpawnVariation));
+    return spawnZombie(
+        spawnPoint.x + giveOrTake(radius.zombieSpawnVariation),
+        spawnPoint.y + giveOrTake(radius.zombieSpawnVariation),
+        health: health);
   }
 
   int get zombieCount {

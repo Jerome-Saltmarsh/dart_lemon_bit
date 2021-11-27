@@ -2,14 +2,11 @@ import '../classes/Character.dart';
 import '../classes/Game.dart';
 import '../classes/Player.dart';
 import '../classes/InteractableNpc.dart';
-import '../classes/SpawnPoint.dart';
 import '../common/Quests.dart';
 import '../common/Weapons.dart';
-import '../common/classes/Vector2.dart';
 import '../enums/npc_mode.dart';
 import '../instances/scenes.dart';
 import '../state.dart';
-import '../values/world.dart';
 
 class Town extends Game {
   late InteractableNpc npcDavis;
@@ -17,7 +14,7 @@ class Town extends Game {
   late InteractableNpc guard1;
   late InteractableNpc guard2;
 
-  final int _maxZombies = 5;
+  final int _maxZombies = 20;
   final int _framesPerZombieSpawn = 5;
 
   Town() : super(scenes.town) {
@@ -115,39 +112,14 @@ class Town extends Game {
   }
 
   @override
-  void onPlayerKilled(Player player) {
-    // player.x = playerSpawnX;
-    // player.y = playerSpawnY;
-    // player.health = 100;
-    // player.state = CharacterState.Idle;
-    // player.stateDuration = 0;
-  }
-
-  @override
   void update() {
     if (frame % _framesPerZombieSpawn != 0) return;
-    if (zombieCount > _maxZombies) return;
-    spawnRandomZombie();
-  }
-
-  @override
-  Vector2 getSpawnPositionFrom(Game from) {
-    if (from == world.tavern) {
-      return Vector2(-120, 1917);
-    }
-    return Vector2(-1260, 2389);
+    if (zombieCount >= _maxZombies) return;
+    spawnRandomZombieLevel(0);
   }
 
   @override
   void onKilledBy(Character target, Character by) {
     // TODO: implement onKilledBy
-  }
-
-  @override
-  List<SpawnPoint> buildInternalSpawnPoints() {
-    return [
-      SpawnPoint(game: world.tavern, x: -145, y: 1900),
-      SpawnPoint(game: world.wildernessWest01, x: -1281, y: 2408),
-    ];
   }
 }
