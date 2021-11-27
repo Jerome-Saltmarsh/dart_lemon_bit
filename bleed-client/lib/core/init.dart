@@ -1,7 +1,6 @@
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Item.dart';
-import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CharacterState.dart';
@@ -10,6 +9,7 @@ import 'package:bleed_client/common/Weapons.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
+import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/events/onAmbientLightChanged.dart';
 import 'package:bleed_client/events/onCompiledGameChanged.dart';
@@ -20,6 +20,7 @@ import 'package:bleed_client/events/onTimeChanged.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/input.dart';
+import 'package:bleed_client/network/functions/connect.dart';
 import 'package:bleed_client/network/functions/send.dart';
 import 'package:bleed_client/network/streams/eventStream.dart';
 import 'package:bleed_client/network/streams/onConnect.dart';
@@ -44,11 +45,8 @@ import '../state/settings.dart';
 import '../ui/compose/dialogs.dart';
 
 Future init() async {
-  print("init()");
-  print("loading images");
   await images.load();
   await loadSharedPreferences();
-  print("loading images finished");
   registerPlayKeyboardHandler();
   registerOnMouseScroll(onMouseScroll);
   onConnectedController.stream.listen(_onConnected);
@@ -61,16 +59,17 @@ Future init() async {
   game.shadeMax.onChanged(onShadeMaxChanged);
 
   player.state.onChanged((CharacterState state) {
-     player.alive.value = state != CharacterState.Dead;
+    player.alive.value = state != CharacterState.Dead;
   });
 
   settings.audioMuted.onChanged((value) {
     if (sharedPreferences == null) return;
-    sharedPreferences.setBool('audioMuted' , value);
+    sharedPreferences.setBool('audioMuted', value);
   });
 
   for (int i = 0; i < 1000; i++) {
-    game.projectiles.add(Projectile(0, 0, ProjectileType.Bullet, Direction.DownLeft));
+    game.projectiles
+        .add(Projectile(0, 0, ProjectileType.Bullet, Direction.DownLeft));
     game.items.add(Item());
   }
 
@@ -120,12 +119,19 @@ Future init() async {
   initUI();
   rebuildUI();
 
-
   onRightClickChanged.stream.listen((bool down) {
     characterController.sprint = down;
   });
 
   game.playerWeapon.onChanged(onPlayerWeaponChanged);
+
+  if (Uri.base.hasQuery && Uri.base.queryParameters.containsKey('host')) {
+    Future.delayed(Duration(seconds: 1), () {
+      String host = Uri.base.queryParameters['host'];
+      String connectionString = parseHttpToWebSocket(host);
+      connect(connectionString);
+    });
+  }
 }
 
 void onPlayerWeaponChanged(Weapon weapon) {
@@ -144,7 +150,6 @@ void onPlayerWeaponChanged(Weapon weapon) {
       break;
   }
 }
-
 
 void _onEventReceivedFromServer(dynamic value) {
   lag = framesSinceEvent;
@@ -195,4 +200,3 @@ Future loadSharedPreferences() async {
   // }
   // );
 }
-

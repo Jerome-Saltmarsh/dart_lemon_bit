@@ -67,10 +67,10 @@ Map<Server, String> _uris = {
 };
 
 String _getConnectionString(Server server) {
-  return _parseHttpToWebSocket(_getUri(server));
+  return parseHttpToWebSocket(_getUri(server));
 }
 
-String _parseHttpToWebSocket(String url) {
+String parseHttpToWebSocket(String url) {
   return url.replaceAll("https", "wss") + "/:8080";
 }
 

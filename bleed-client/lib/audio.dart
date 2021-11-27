@@ -33,7 +33,7 @@ void playAudioSniperEquipped(double x, double y) {
   playAudioGunPickup(x, y);
 }
 
-void playAudioGunPickup(double x, double y){
+void playAudioGunPickup(double x, double y) {
   _playAudio("gun-pickup-01.mp3", x, y);
 }
 
@@ -93,11 +93,11 @@ void playAudioAcquireItem(double x, double y) {
   _playAudio('item-acquired.mp3', x, y);
 }
 
-void playAudioCollectStar(double x, double y){
+void playAudioCollectStar(double x, double y) {
   _playAudio('collect-star-4.mp3', x, y);
 }
 
-void playAudioHeal(double x, double y){
+void playAudioHeal(double x, double y) {
   _playAudio('revive-heal-1.mp3', x, y);
 }
 
@@ -185,16 +185,13 @@ AudioPlayer _getAudioPlayer() {
 }
 
 void _playAudio(String name, double x, double y) {
-  return;
   if (settings.audioMuted.value) return;
-
-  try {
-    double volume = _calculateVolume(x, y);
-    // if (volume < 0.025) return;
-    _getAudioPlayer().play('assets/audio/$name', isLocal: true, volume: volume);
-  } catch (error) {
+  double volume = _calculateVolume(x, y);
+  _getAudioPlayer()
+      .play('assets/audio/$name', isLocal: true, volume: volume)
+      .catchError((error) {
     // innocuous
-  }
+  });
 }
 
 double _calculateVolume(double x, double y) {
