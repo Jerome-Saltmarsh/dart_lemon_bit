@@ -403,6 +403,7 @@ void _parsePlayer() {
   }
 
   player.equippedRounds.value = _consumeIntUnsafe();
+  player.equippedCapacity.value = _consumeIntUnsafe();
   player.state.value = _consumeCharacterState();
   player.tile = _consumeTile();
 }

@@ -278,12 +278,11 @@ Widget buildSlot({String title}) {
   );
 }
 
-Widget buildImageSlot(
-    {DecorationImage image,
-    double width,
-    double height,
-    double borderWidth = 1,
-    Color color}) {
+Widget buildImageSlot({DecorationImage image,
+  double width,
+  double height,
+  double borderWidth = 1,
+  Color color}) {
   return Container(
     width: width,
     height: height,
@@ -314,7 +313,25 @@ Widget buildEquipWeaponSlot(Weapon weapon, int index) {
 Widget buildEquippedWeaponSlot(WeaponType weapon) {
   return Stack(
     children: [
-      buildWeaponSlot(weapon),
+      Column(
+        crossAxisAlignment: cross.start,
+        children: [
+          buildWeaponSlot(weapon),
+          WatchBuilder(player.equippedRounds, (int rounds) {
+            return Container(
+              width: 120,
+              height: 30,
+              color: Colors.white24,
+              alignment: Alignment.centerLeft,
+              child: Container(
+                width: 120 * rounds / player.equippedCapacity.value,
+                height: 30,
+                color: Colors.white,
+              ),
+            );
+          }),
+        ],
+      ),
       if (weapon != WeaponType.Unarmed)
         WatchBuilder(player.equippedRounds, buildTag),
     ],
@@ -323,36 +340,15 @@ Widget buildEquippedWeaponSlot(WeaponType weapon) {
 
 Widget buildWeaponSlot(WeaponType weaponType) {
   return mouseOver(builder: (BuildContext context, bool mouseOver) {
-    double width = 80;
-
     return Container(
       width: 120,
-      height: 170 * goldenRatioInverse,
-      child: Column(
-        crossAxisAlignment: cross.start,
-        children: [
-          Container(
-            width: 120,
-            height: 120 * goldenRatioInverse,
-            alignment: Alignment.center,
-            decoration: BoxDecoration(
-              image: mapWeaponToImage(weaponType),
-              color: mouseOver ? Colors.black45 : Colors.black26,
-              border: Border.all(color: Colors.white, width: 1),
-              borderRadius: borderRadius4,
-            ),
-          ),
-          Container(
-              width: width,
-              height: 30,
-              color: Colors.white,
-              alignment: Alignment.centerLeft,
-              child: Container(
-                // width: width * player.rou,
-                height: 30,
-                color: Colors.white,
-              ))
-        ],
+      height: 120 * goldenRatioInverse,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        image: mapWeaponToImage(weaponType),
+        color: mouseOver ? Colors.black45 : Colors.black26,
+        border: Border.all(color: Colors.white, width: 1),
+        borderRadius: borderRadius4,
       ),
     );
   });
@@ -583,11 +579,11 @@ Widget _buildViewRespawn() {
                                 children: [
                                   text("Youtube"),
                                   IconButton(
-                                      // onPressed: () {},
+                                    // onPressed: () {},
                                       icon: Icon(
-                                    Icons.link,
-                                    color: Colors.white,
-                                  ))
+                                        Icons.link,
+                                        color: Colors.white,
+                                      ))
                                 ],
                               ),
                             ),
@@ -661,20 +657,20 @@ Widget _buildViewRespawn() {
                       width16,
                       mouseOver(
                           builder: (BuildContext context, bool mouseOver) {
-                        return onPressed(
-                          child: border(
-                              child: text("RESPAWN",
-                                  fontWeight: bold,
-                                  decoration: mouseOver ? underline : null),
-                              padding: padding16,
-                              radius: borderRadius4,
-                              color: Colors.white,
-                              width: 1,
-                              fillColor: mouseOver ? black54 : black26),
-                          callback: sendRequestRevive,
-                          hint: "Click to respawn",
-                        );
-                      })
+                            return onPressed(
+                              child: border(
+                                  child: text("RESPAWN",
+                                      fontWeight: bold,
+                                      decoration: mouseOver ? underline : null),
+                                  padding: padding16,
+                                  radius: borderRadius4,
+                                  color: Colors.white,
+                                  width: 1,
+                                  fillColor: mouseOver ? black54 : black26),
+                              callback: sendRequestRevive,
+                              hint: "Click to respawn",
+                            );
+                          })
                     ],
                   ),
                 ],
@@ -725,12 +721,14 @@ Future<void> showChangeNameDialog() async {
           TextButton(
             child: const Text('PLAY'),
             onPressed:
-                hud.textEditingControllers.playerName.text.trim().length > 2
-                    ? () {
-                        // sendRequestSpawn(playerNameController.text.trim());
-                        Navigator.of(context).pop();
-                      }
-                    : null,
+            hud.textEditingControllers.playerName.text
+                .trim()
+                .length > 2
+                ? () {
+              // sendRequestSpawn(playerNameController.text.trim());
+              Navigator.of(context).pop();
+            }
+                : null,
           ),
         ],
       );
@@ -854,8 +852,8 @@ Widget buildServerList() {
               padding: padding4,
               decoration: active
                   ? BoxDecoration(
-                      border: Border.all(width: 2, color: Colors.white),
-                      borderRadius: borderRadius4)
+                  border: Border.all(width: 2, color: Colors.white),
+                  borderRadius: borderRadius4)
                   : null,
               margin: const EdgeInsets.only(bottom: 16),
               child: text(getServerName(server)),
@@ -876,11 +874,11 @@ Widget buildGameInfoDeathMatch() {
 Widget buildGameOver() {
   return Positioned(
       child: Container(
-    width: globalSize.width,
-    height: globalSize.height,
-    color: Colors.black45,
-    child: button("Game Over", clearState, fontSize: 30),
-  ));
+        width: globalSize.width,
+        height: globalSize.height,
+        color: Colors.black45,
+        child: button("Game Over", clearState, fontSize: 30),
+      ));
 }
 
 Widget buildViewWin() {
@@ -924,9 +922,9 @@ Widget buildDialog(Widget child) {
 
 void drawRing(Ring ring,
     {double percentage,
-    Color color,
-    Offset position,
-    Color backgroundColor = Colors.white}) {
+      Color color,
+      Offset position,
+      Color backgroundColor = Colors.white}) {
   setStrokeWidth(6);
   setColor(backgroundColor);
   for (int i = 0; i < ring.points.length - 1; i++) {

@@ -135,6 +135,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.maxHealth.toInt());
   _write(buffer, player.grenades);
   _write(buffer, player.weapon.rounds);
+  _write(buffer, player.weapon.capacity);
   _write(buffer, player.state.index);
   _write(buffer, player.currentTile.index);
 
