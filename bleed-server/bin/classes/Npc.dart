@@ -9,7 +9,7 @@ final Character _nonTarget =
   Character(
       x: 0,
       y: 0,
-      weapon: Weapon(type: WeaponType.Unarmed, damage: 0),
+      weapon: Weapon(type: WeaponType.Unarmed, damage: 0, capacity: 0),
       health: 0,
       speed: 0
   );

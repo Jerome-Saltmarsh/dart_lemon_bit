@@ -1141,7 +1141,8 @@ extension GameFunctions on Game {
     }
     final Npc npc = Npc(x: 0, y: 0, health: settings.health.zombie, weapon: Weapon(
       type: WeaponType.Unarmed,
-      damage: 0
+      damage: 0,
+      capacity: 0,
     ));
     zombies.add(npc);
     return npc;

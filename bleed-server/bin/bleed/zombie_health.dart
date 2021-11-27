@@ -1,9 +1,9 @@
 
 const List<int> zombieHealth = [
-  60,
-  75,
-  200,
-  500
+  10,
+  25,
+  65,
+  150
 ];
 
 final maxZombieLevel = zombieHealth.length - 1;

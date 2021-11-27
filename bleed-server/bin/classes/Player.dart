@@ -54,11 +54,11 @@ class Player extends Character {
   final List<PlayerEvent> events = [];
 
   List<Weapon> weapons = [
-    Weapon(type: WeaponType.Unarmed, damage: 1),
-    Weapon(type: WeaponType.HandGun, damage: 1),
-    Weapon(type: WeaponType.Shotgun, damage: 1),
-    Weapon(type: WeaponType.SniperRifle, damage: 1),
-    Weapon(type: WeaponType.AssaultRifle, damage: 1),
+    Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0),
+    Weapon(type: WeaponType.HandGun, damage: 1, capacity: 40),
+    Weapon(type: WeaponType.Shotgun, damage: 1, capacity: 20),
+    Weapon(type: WeaponType.SniperRifle, damage: 1, capacity: 15),
+    Weapon(type: WeaponType.AssaultRifle, damage: 1, capacity: 150),
   ];
 
   void addEvent(PlayerEventType type, int value) {

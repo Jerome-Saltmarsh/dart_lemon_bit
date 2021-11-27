@@ -25,7 +25,7 @@ class Town extends Game {
         x: -100,
         y: 1650,
         health: 100,
-        weapon: Weapon(type: WeaponType.Unarmed, damage: 0));
+        weapon: Weapon(type: WeaponType.Unarmed, damage: 0, capacity: 0));
     npcDavis.mode = NpcMode.Ignore;
     npcs.add(npcDavis);
 
@@ -35,7 +35,7 @@ class Town extends Game {
         x: -300,
         y: 1950,
         health: 100,
-        weapon: Weapon(type: WeaponType.Unarmed, damage: 0));
+        weapon: Weapon(type: WeaponType.Unarmed, damage: 0, capacity: 0));
     npcSmith.mode = NpcMode.Ignore;
     npcs.add(npcSmith);
 
@@ -45,7 +45,7 @@ class Town extends Game {
         x: 180,
         y: 2000,
         health: 100,
-        weapon: Weapon(type: WeaponType.AssaultRifle, damage: 1));
+        weapon: Weapon(type: WeaponType.AssaultRifle, damage: 1, capacity: 0));
     guard1.mode = NpcMode.Stand_Ground;
     npcs.add(guard1);
 
@@ -54,7 +54,7 @@ class Town extends Game {
         onInteractedWith: _onGuardInteractedWith,
         x: 215,
         y: 1970,
-        health: 100,weapon: Weapon(type: WeaponType.SniperRifle, damage: 5));
+        health: 100,weapon: Weapon(type: WeaponType.SniperRifle, damage: 5, capacity: 0));
     guard2.mode = NpcMode.Stand_Ground;
     npcs.add(guard2);
   }

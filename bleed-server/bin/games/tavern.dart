@@ -17,7 +17,7 @@ class Tavern extends Game {
         x: 0,
         y: 100,
         health: 100,
-        weapon: Weapon(type: WeaponType.Unarmed, damage: 0)
+        weapon: Weapon(type: WeaponType.Unarmed, damage: 0, capacity: 0)
     );
     oscar.mode = NpcMode.Ignore;
     npcs.add(oscar);
