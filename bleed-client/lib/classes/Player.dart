@@ -6,8 +6,6 @@ import 'package:lemon_watch/watch.dart';
 class Player {
   Watch<int> equippedRounds = Watch(0);
   int squad = -1;
-  int points = 0;
-  int credits = 0;
   Watch<double> health = Watch(0.0);
   double maxHealth = 0;
   bool acquiredHandgun = false;

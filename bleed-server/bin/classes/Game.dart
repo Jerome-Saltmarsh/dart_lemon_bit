@@ -637,8 +637,6 @@ extension GameFunctions on Game {
 
         if (!character.alive) {
           // @on npc killed by grenade
-          grenade.owner.earnPoints(settings.pointsEarned.zombieKilled);
-
           double forceX =
               clampMagnitudeX(character.x - x, character.y - y, magnitude);
           double forceY =
@@ -661,12 +659,6 @@ extension GameFunctions on Game {
 
       if (player.alive) {
         changeCharacterHealth(player, -settings.damage.grenade);
-        if (!player.alive) {
-          // @on player killed by grenade
-          if (!sameTeam(player, grenade.owner)) {
-            grenade.owner.earnPoints(settings.pointsEarned.playerKilled);
-          }
-        }
       }
     }
   }
@@ -792,7 +784,6 @@ extension GameFunctions on Game {
               if (bullet.owner is Player) {
                 // @on player killed by player
                 Player owner = bullet.owner as Player;
-                owner.earnPoints(settings.pointsEarned.playerKilled);
                 owner.score.playersKilled++;
               }
             }
@@ -812,9 +803,6 @@ extension GameFunctions on Game {
             Player owner = bullet.owner as Player;
             // call interface instead
             owner.score.zombiesKilled++;
-            if (character is Npc) {
-              owner.earnPoints(constants.points.zombieKilled);
-            }
           } else if (bullet.owner is Npc) {
             // on zombie killed by npc
             (bullet.owner as Npc).clearTarget();

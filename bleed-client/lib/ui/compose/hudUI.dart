@@ -807,16 +807,6 @@ Widget buildMessageBox(String message) {
       ));
 }
 
-Widget buildRow(int amount, String name, Function onPressed) {
-  return Row(
-    children: [
-      Container(width: 40, child: text(amount)),
-      width8,
-      button(name, state.player.points >= amount ? onPressed : null),
-    ],
-  );
-}
-
 Widget buildServer() {
   return MouseRegion(
     onEnter: (_) {

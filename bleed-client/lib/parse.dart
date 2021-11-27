@@ -405,8 +405,6 @@ void _parsePlayer() {
   }
 
   player.equippedRounds.value = _consumeIntUnsafe();
-  player.points = _consumeIntUnsafe();
-  player.credits = _consumeIntUnsafe();
   player.state.value = _consumeCharacterState();
   player.acquiredHandgun = _consumeBool();
   player.acquiredShotgun = _consumeBool();

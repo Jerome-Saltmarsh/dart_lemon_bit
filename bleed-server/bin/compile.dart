@@ -135,8 +135,6 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.maxHealth.toInt());
   _write(buffer, player.grenades);
   _write(buffer, player.weapon.rounds);
-  _write(buffer, player.points);
-  _write(buffer, player.credits);
   _write(buffer, player.state.index);
   _writeBool(buffer, true); // handgun acquired
   _writeBool(buffer, true); // shotgun acquired
@@ -176,7 +174,6 @@ void compileScore(StringBuffer buffer, List<Player> players) {
   _write(buffer, ServerResponse.Score.index);
   for (Player player in players) {
     _write(buffer, player.name);
-    _write(buffer, player.points);
     _write(buffer, player.pointsRecord);
   }
   _write(buffer, _semiColon);

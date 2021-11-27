@@ -22,8 +22,6 @@ class Player extends Character {
   int grenades;
   int lives;
   int frameOfDeath = -1;
-  int _points = 0;
-  int credits = 0;
   int pointsRecord = 0;
   Score score = Score();
   Clips clips = Clips();
@@ -51,25 +49,6 @@ class Player extends Character {
     }
     events.add(PlayerEvent(type, value));
   }
-
-  void earnPoints(int amount) {
-    _points += amount;
-    credits += amount;
-    if (points > pointsRecord) {
-      pointsRecord = points;
-    }
-  }
-
-  void removeCredits(int amount){
-    credits -= amount;
-  }
-
-  void resetPoints(){
-    _points = 0;
-    credits = 0;
-  }
-
-  int get points => _points;
 
   Player({
     required double x,
