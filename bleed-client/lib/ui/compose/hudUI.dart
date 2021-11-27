@@ -297,45 +297,54 @@ Widget buildImageSlot({DecorationImage image,
 }
 
 Widget buildEquipWeaponSlot(Weapon weapon, int index) {
-  return Stack(
+  return Row(
     children: [
-      onPressed(
-          child: buildWeaponSlot(weapon.type),
-          callback: () {
-            sendRequestEquip(index);
-            rebuildUI();
-          }),
-      if (weapon.type != WeaponType.Unarmed) buildTag(weapon.rounds),
+      buildAmmoBar(weapon.rounds / weapon.capacity),
+      Stack(
+        children: [
+          onPressed(
+              child: buildWeaponSlot(weapon.type),
+              callback: () {
+                sendRequestEquip(index);
+                rebuildUI();
+              }),
+          if (weapon.type != WeaponType.Unarmed) buildTag(weapon.rounds),
+        ],
+      ),
     ],
   );
 }
 
 Widget buildEquippedWeaponSlot(WeaponType weapon) {
-  return Stack(
+  return Row(
     children: [
-      Column(
-        crossAxisAlignment: cross.start,
+      WatchBuilder(player.equippedRounds, (int rounds) {
+        return buildAmmoBar(rounds / player.equippedCapacity.value);
+      }),
+      Stack(
         children: [
           buildWeaponSlot(weapon),
-          WatchBuilder(player.equippedRounds, (int rounds) {
-            return Container(
-              width: 120,
-              height: 30,
-              color: Colors.white24,
-              alignment: Alignment.centerLeft,
-              child: Container(
-                width: 120 * rounds / player.equippedCapacity.value,
-                height: 30,
-                color: Colors.white,
-              ),
-            );
-          }),
+          if (weapon != WeaponType.Unarmed)
+            WatchBuilder(player.equippedRounds, buildTag),
         ],
       ),
-      if (weapon != WeaponType.Unarmed)
-        WatchBuilder(player.equippedRounds, buildTag),
     ],
   );
+}
+
+Widget buildAmmoBar(double percentage){
+  return Container(
+    width: 40,
+    height: 75,
+    color: Colors.white24,
+    alignment: Alignment.bottomCenter,
+    child: Container(
+      width: 40,
+      height: 75 * percentage,
+      color: Colors.white,
+    ),
+  );
+
 }
 
 Widget buildWeaponSlot(WeaponType weaponType) {
