@@ -324,13 +324,13 @@ Widget buildImageSlot(
   );
 }
 
-Widget buildEquipWeaponSlot(Weapon weapon) {
+Widget buildEquipWeaponSlot(Weapon weapon, int index) {
   return Stack(
     children: [
       onPressed(
           child: buildWeaponSlot(weapon.type),
           callback: () {
-            sendRequestEquip(weapons.indexOf(weapon));
+            sendRequestEquip(index);
             rebuildUI();
           }),
       if (weapon.type != WeaponType.Unarmed) buildTag(weapon.rounds),
@@ -383,10 +383,12 @@ Widget buildBottomLeft() {
 }
 
 Widget buildExpandedWeapons(){
+  int index = -1;
   return Column(
     children: weapons.map((weapon) {
+      index++;
       return Container(
-        child: buildEquipWeaponSlot(weapon),
+        child: buildEquipWeaponSlot(weapon, index),
         margin: const EdgeInsets.only(bottom: 4),
       );
     }).toList(),
