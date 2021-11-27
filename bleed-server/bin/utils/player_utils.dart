@@ -1,21 +1,6 @@
 import '../classes/Player.dart';
 import '../common/WeaponType.dart';
 
-int equippedWeaponRounds(Player player) {
-  switch (player.weapon.type) {
-    case WeaponType.HandGun:
-      return player.rounds.handgun;
-    case WeaponType.Shotgun:
-      return player.rounds.shotgun;
-    case WeaponType.SniperRifle:
-      return player.rounds.sniperRifle;
-    case WeaponType.AssaultRifle:
-      return player.rounds.assaultRifle;
-    default:
-      return 0;
-  }
-}
-
 int equippedWeaponClips(Player player) {
   switch (player.weapon.type) {
     case WeaponType.HandGun:

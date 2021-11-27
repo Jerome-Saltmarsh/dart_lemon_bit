@@ -34,7 +34,6 @@ class Player extends Character {
   int pointsRecord = 0;
   Score score = Score();
   Clips clips = Clips();
-  Rounds rounds = Rounds();
   String message = "";
   String text = "";
   int textDuration = 0;
@@ -44,10 +43,6 @@ class Player extends Character {
 
   int handgunDamage = 10;
 
-  bool get acquiredHandgun => rounds.handgun > 0;
-  bool get acquiredShotgun => rounds.shotgun > 0;
-  bool get acquiredSniperRifle => rounds.sniperRifle > 0;
-  bool get acquiredAssaultRifle => rounds.assaultRifle > 0;
   Tile currentTile = Tile.PlayerSpawn;
   CharacterState characterState = CharacterState.Idle;
 
@@ -93,7 +88,6 @@ class Player extends Character {
     this.lives = 0,
     required List<Weapon> weapons,
     required this.clips,
-    required this.rounds,
     int squad = noSquad,
   }) : super(
             x: x,

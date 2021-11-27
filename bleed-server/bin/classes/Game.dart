@@ -215,7 +215,6 @@ extension GameFunctions on Game {
     _updateGrenades();
     _updateCollectables();
     _updateGameEvents();
-    _updateItems();
     _updateCrates();
     _updateSpawnPointCollisions();
 
@@ -432,8 +431,7 @@ extension GameFunctions on Game {
     faceAimDirection(character);
 
     if (character is Player) {
-      if (equippedWeaponRounds(character) <= 0) {
-        // @on character insufficient bullets to fire
+      if (character.weapon.rounds <= 0) {
         character.stateDuration = settings.coolDown.clipEmpty;
         dispatch(GameEventType.Clip_Empty, character.x, character.y, 0, 0);
         return;
@@ -444,22 +442,15 @@ extension GameFunctions on Game {
     double x = character.x + adj(character.aimAngle, d);
     double y = character.y + opp(character.aimAngle, d) - 5;
     character.state = CharacterState.Firing;
+    character.weapon.rounds--;
 
     switch (character.weapon.type) {
       case WeaponType.HandGun:
-        // @on character fire handgun
-        if (character is Player) {
-          character.rounds.handgun--;
-        }
         Projectile bullet = spawnBullet(character);
         character.stateDuration = coolDown.handgun;
         dispatch(GameEventType.Handgun_Fired, x, y, bullet.xv, bullet.yv);
         break;
       case WeaponType.Shotgun:
-        // @on character fire shotgun
-        if (character is Player) {
-          character.rounds.shotgun--;
-        }
         character.xv += velX(character.aimAngle + pi, 1);
         character.yv += velY(character.aimAngle + pi, 1);
         for (int i = 0; i < settings.shotgunBulletsPerShot; i++) {
@@ -470,19 +461,11 @@ extension GameFunctions on Game {
         dispatch(GameEventType.Shotgun_Fired, x, y, bullet.xv, bullet.yv);
         break;
       case WeaponType.SniperRifle:
-        // @on character fire sniper rifle
-        if (character is Player) {
-          character.rounds.sniperRifle--;
-        }
         Projectile bullet = spawnBullet(character);
         character.stateDuration = coolDown.sniperRifle;
         dispatch(GameEventType.SniperRifle_Fired, x, y, bullet.xv, bullet.yv);
         break;
       case WeaponType.AssaultRifle:
-        // @on character fire assault rifle
-        if (character is Player) {
-          character.rounds.assaultRifle--;
-        }
         Projectile bullet = spawnBullet(character);
         character.stateDuration = coolDown.assaultRifle;
         dispatch(GameEventType.MachineGun_Fired, x, y, bullet.xv, bullet.yv);
@@ -543,49 +526,6 @@ extension GameFunctions on Game {
         // @on character striking
         faceAimDirection(character);
         character.stateDuration = settings.duration.knifeStrike;
-        break;
-      case CharacterState.Reloading:
-        // @on reload weapon
-        Player player = character as Player;
-
-        switch (character.weapon.type) {
-          case WeaponType.HandGun:
-            // @on reload handgun
-            if (player.rounds.handgun >= constants.maxRounds.handgun) return;
-            if (player.clips.handgun <= 0) return;
-            player.rounds.handgun = constants.maxRounds.handgun;
-            player.clips.handgun--;
-            player.stateDuration = settings.reloadDuration.handgun;
-            break;
-          case WeaponType.Shotgun:
-            // @on reload shotgun
-            if (player.rounds.shotgun >= constants.maxRounds.shotgun) return;
-            if (player.clips.shotgun <= 0) return;
-            player.rounds.shotgun = constants.maxRounds.shotgun;
-            player.clips.shotgun--;
-            player.stateDuration = settings.reloadDuration.shotgun;
-            break;
-          case WeaponType.SniperRifle:
-            // @on reload sniper rifle
-            if (player.rounds.sniperRifle >= constants.maxRounds.sniperRifle)
-              return;
-            if (player.clips.sniperRifle <= 0) return;
-            player.rounds.sniperRifle = constants.maxRounds.sniperRifle;
-            player.clips.sniperRifle--;
-            player.stateDuration = settings.reloadDuration.sniperRifle;
-            break;
-          case WeaponType.AssaultRifle:
-            // @on reload assault rifle
-            if (player.rounds.assaultRifle >= constants.maxRounds.assaultRifle)
-              return;
-            if (player.clips.assaultRifle <= 0) return;
-            player.rounds.assaultRifle = constants.maxRounds.assaultRifle;
-            player.clips.assaultRifle--;
-            player.stateDuration = settings.reloadDuration.assaultRifle;
-            break;
-          default:
-            break;
-        }
         break;
       default:
         break;
@@ -1359,106 +1299,82 @@ extension GameFunctions on Game {
     }
   }
 
-  void _updateItems() {
-    for (int i = 0; i < items.length; i++) {
-      Item item = items[i];
-
-      // TODO Optimize
-      if (item.duration-- <= 0) {
-        items.removeAt(i);
-        i--;
-        continue;
-      }
-      for (Player player in players) {
-        if (diffOver(item.x, player.x, radius.item)) continue;
-        if (diffOver(item.y, player.y, radius.item)) continue;
-        if (player.dead) continue;
-
-        // @on item collectable
-
-        switch (item.type) {
-          case ItemType.Handgun:
-            // @on handgun acquired
-            if (player.acquiredHandgun) {
-              if (player.rounds.handgun >= constants.maxRounds.handgun)
-                continue;
-              player.rounds.handgun = min(
-                  player.rounds.handgun + settings.pickup.handgun,
-                  constants.maxRounds.handgun);
-              dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
-              break;
-            }
-            player.clips.handgun = settings.maxClips.handgun;
-            player.rounds.handgun = settings.pickup.handgun;
-            // player.weapon = WeaponType.HandGun;
-            break;
-          case ItemType.Shotgun:
-            // @on shotgun acquired
-            if (player.acquiredShotgun) {
-              if (player.rounds.shotgun >= constants.maxRounds.shotgun)
-                continue;
-              player.rounds.shotgun = clampInt(
-                  player.rounds.shotgun + settings.pickup.shotgun,
-                  0,
-                  constants.maxRounds.shotgun);
-              dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
-              break;
-            }
-            player.rounds.shotgun = settings.pickup.shotgun;
-            // player.weapon = WeaponType.Shotgun;
-            break;
-          case ItemType.SniperRifle:
-            // @on sniper rifle acquired
-            if (player.acquiredSniperRifle) {
-              if (player.rounds.sniperRifle >= constants.maxRounds.sniperRifle)
-                continue;
-              player.rounds.sniperRifle = clampInt(
-                  player.rounds.sniperRifle + settings.pickup.sniperRifle,
-                  0,
-                  constants.maxRounds.sniperRifle);
-              dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
-              break;
-            }
-            player.rounds.sniperRifle = settings.pickup.sniperRifle;
-            // player.weapon = WeaponType.SniperRifle;
-            break;
-          case ItemType.Assault_Rifle:
-            // @on assault rifle acquired
-            if (player.acquiredAssaultRifle) {
-              if (player.rounds.assaultRifle >=
-                  constants.maxRounds.assaultRifle) continue;
-              player.rounds.assaultRifle = clampInt(
-                  player.rounds.assaultRifle +
-                      constants.maxRounds.assaultRifle ~/ 5,
-                  0,
-                  constants.maxRounds.assaultRifle);
-              dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
-              break;
-            }
-            player.rounds.assaultRifle = settings.pickup.assaultRifle;
-            // player.weapon = WeaponType.AssaultRifle;
-            break;
-          case ItemType.Credits:
-            player.earnPoints(settings.collectCreditAmount);
-            dispatch(GameEventType.Credits_Acquired, item.x, item.y);
-            break;
-          case ItemType.Health:
-            if (player.health >= player.maxHealth) continue;
-            player.health = player.maxHealth;
-            dispatch(GameEventType.Health_Acquired, item.x, item.y);
-            break;
-          case ItemType.Grenade:
-            if (player.grenades >= settings.maxGrenades) continue;
-            player.grenades++;
-            dispatch(GameEventType.Item_Acquired, item.x, item.y);
-            break;
-        }
-
-        items.removeAt(i);
-        i--;
-      }
-    }
-  }
+  // void _updateItems() {
+  //   for (int i = 0; i < items.length; i++) {
+  //     Item item = items[i];
+  //
+  //     // TODO Optimize
+  //     if (item.duration-- <= 0) {
+  //       items.removeAt(i);
+  //       i--;
+  //       continue;
+  //     }
+  //     for (Player player in players) {
+  //       if (diffOver(item.x, player.x, radius.item)) continue;
+  //       if (diffOver(item.y, player.y, radius.item)) continue;
+  //       if (player.dead) continue;
+  //
+  //       // @on item collectable
+  //
+  //       switch (item.type) {
+  //         case ItemType.Handgun:
+  //           dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
+  //           break;
+  //         case ItemType.Shotgun:
+  //           dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
+  //           break;
+  //         case ItemType.SniperRifle:
+  //           // @on sniper rifle acquired
+  //           if (player.acquiredSniperRifle) {
+  //             if (player.rounds.sniperRifle >= constants.maxRounds.sniperRifle)
+  //               continue;
+  //             player.rounds.sniperRifle = clampInt(
+  //                 player.rounds.sniperRifle + settings.pickup.sniperRifle,
+  //                 0,
+  //                 constants.maxRounds.sniperRifle);
+  //             dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
+  //             break;
+  //           }
+  //           player.rounds.sniperRifle = settings.pickup.sniperRifle;
+  //           // player.weapon = WeaponType.SniperRifle;
+  //           break;
+  //         case ItemType.Assault_Rifle:
+  //           // @on assault rifle acquired
+  //           if (player.acquiredAssaultRifle) {
+  //             if (player.rounds.assaultRifle >=
+  //                 constants.maxRounds.assaultRifle) continue;
+  //             player.rounds.assaultRifle = clampInt(
+  //                 player.rounds.assaultRifle +
+  //                     constants.maxRounds.assaultRifle ~/ 5,
+  //                 0,
+  //                 constants.maxRounds.assaultRifle);
+  //             dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
+  //             break;
+  //           }
+  //           player.rounds.assaultRifle = settings.pickup.assaultRifle;
+  //           // player.weapon = WeaponType.AssaultRifle;
+  //           break;
+  //         case ItemType.Credits:
+  //           player.earnPoints(settings.collectCreditAmount);
+  //           dispatch(GameEventType.Credits_Acquired, item.x, item.y);
+  //           break;
+  //         case ItemType.Health:
+  //           if (player.health >= player.maxHealth) continue;
+  //           player.health = player.maxHealth;
+  //           dispatch(GameEventType.Health_Acquired, item.x, item.y);
+  //           break;
+  //         case ItemType.Grenade:
+  //           if (player.grenades >= settings.maxGrenades) continue;
+  //           player.grenades++;
+  //           dispatch(GameEventType.Item_Acquired, item.x, item.y);
+  //           break;
+  //       }
+  //
+  //       items.removeAt(i);
+  //       i--;
+  //     }
+  //   }
+  // }
 
   void _updateSpawnPointCollisions() {
     for (int i = 0; i < players.length; i++) {

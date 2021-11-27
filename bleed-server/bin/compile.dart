@@ -122,21 +122,21 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.grenades);
   _write(buffer, player.meds);
   _write(buffer, player.lives);
-  _write(buffer, equippedWeaponClips(player));
-  _write(buffer, equippedWeaponRounds(player));
+  _write(buffer, 0); // equipped weapon clips
+  _write(buffer, player.weapon.rounds);
   _write(buffer, player.gameState.index);
   _write(buffer, player.points);
   _write(buffer, player.credits);
   _write(buffer, player.state.index);
-  _writeBool(buffer, player.rounds.handgun > 0);
-  _writeBool(buffer, player.acquiredShotgun);
-  _writeBool(buffer, player.acquiredSniperRifle);
-  _writeBool(buffer, player.acquiredAssaultRifle);
+  _writeBool(buffer, true); // handgun acquired
+  _writeBool(buffer, true); // shotgun acquired
+  _writeBool(buffer, true); // sniper acquired
+  _writeBool(buffer, true); // assault rifle
   _write(buffer, player.currentTile.index);
-  _write(buffer, player.rounds.handgun);
-  _write(buffer, player.rounds.shotgun);
-  _write(buffer, player.rounds.sniperRifle);
-  _write(buffer, player.rounds.assaultRifle);
+  _write(buffer, 5); // handgun rounds
+  _write(buffer, 5); // shotgun rounds
+  _write(buffer, 5); // sniper rounds
+  _write(buffer, 5); // assault rifle rounds
 
   for (PlayerEvent playerEvent in player.events) {
     if (playerEvent.sent) continue;

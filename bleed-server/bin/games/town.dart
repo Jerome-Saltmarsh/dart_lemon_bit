@@ -64,11 +64,8 @@ class Town extends Game {
   void _onNpcInteractedWithMain(Player player) {
     player.health = 100;
 
-    if (player.rounds.shotgun < 25) {
-      player.rounds.shotgun = 25;
-    }
-    if (player.rounds.handgun < 40) {
-      player.rounds.handgun = 40;
+    for (Weapon weapon in player.weapons){
+      weapon.rounds = weapon.capacity;
     }
 
     switch (player.questMain) {
