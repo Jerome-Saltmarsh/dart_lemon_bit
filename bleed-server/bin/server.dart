@@ -183,31 +183,6 @@ void main() {
           sendCompiledPlayerState(game, player);
           return;
 
-        case ClientRequest.Medkit:
-          return;
-        // return;
-        // Game? game = findGameById(arguments[1]);
-        // if (game == null) {
-        //   errorGameNotFound();
-        //   return;
-        // }
-        // Player? player = game.findPlayerById(int.parse(arguments[2]));
-        // if (player == null) {
-        //   errorPlayerNotFound();
-        //   return;
-        // }
-        // if (arguments[3] != player.uuid) {
-        //   errorInvalidPlayerUUID();
-        //   return;
-        // }
-        // if (player.health == player.maxHealth) return;
-        // if (player.dead) return;
-        // if (player.meds <= 0) return;
-        // player.meds--;
-        // player.health = player.maxHealth;
-        // game.dispatch(GameEventType.Use_MedKit, player.x, player.y, 0, 0);
-        // break;
-
         case ClientRequest.Join:
           joinGame(world.town);
           break;
@@ -319,114 +294,7 @@ void main() {
           return;
 
         case ClientRequest.Purchase:
-          // if (arguments.length != 5) {
-          //   errorArgsExpected(5, arguments);
-          //   return;
-          // }
-          //
-          // String gameId = arguments[1];
-          // Game? game = findGameById(gameId);
-          // if (game == null) {
-          //   error(GameError.GameNotFound);
-          //   return;
-          // }
-          //
-          // int id = int.parse(arguments[2]);
-          // Player? player = game.findPlayerById(id);
-          // if (player == null) {
-          //   errorPlayerNotFound();
-          //   return;
-          // }
-          //
-          // String uuid = arguments[3];
-          // if (uuid != player.uuid) {
-          //   error(GameError.InvalidPlayerUUID);
-          //   return;
-          // }
-          //
-          // int? purchaseTypeIndex = int.tryParse(arguments[4]);
-          //
-          // if (purchaseTypeIndex == null) {
-          //   sendToClient(
-          //       '$errorIndex ${GameError.IntegerExpected} arguments[4] but got ${arguments[4]}');
-          //   return;
-          // }
-          //
-          // if (purchaseTypeIndex >= purchaseTypes.length) {
-          //   sendToClient(
-          //       '$errorIndex ${GameError.InvalidArguments} $purchaseTypeIndex is not a valid PurchaseType index');
-          //   return;
-          // }
-          //
-          // PurchaseType purchaseType = purchaseTypes[purchaseTypeIndex];
-          // int cost = getPurchaseTypeCost(purchaseType);
-          // if (player.points < cost) {
-          //   error(GameError.InsufficientFunds);
-          //   return;
-          // }
-          //
-          // switch (purchaseType) {
-          //   case PurchaseType.Weapon_Handgun:
-          //     if (player.acquiredHandgun) {
-          //       errorWeaponAlreadyAcquired();
-          //       return;
-          //     }
-          //     player.removeCredits(prices.weapon.handgun);
-          //     player.clips.handgun = 1;
-          //     player.rounds.handgun = constants.maxRounds.handgun;
-          //     player.addEvent(PlayerEventType.Acquired_Handgun, 1);
-          //     player.weapons = [Weapon(type: WeaponType.HandGun, damage: 1, capacity: 20)];
-          //     game.setCharacterState(player, CharacterState.ChangingWeapon);
-          //     return;
-          //
-          //   case PurchaseType.Weapon_Shotgun:
-          //     if (player.acquiredShotgun) {
-          //       errorWeaponAlreadyAcquired();
-          //       return;
-          //     }
-          //     player.removeCredits(prices.weapon.shotgun);
-          //     player.clips.shotgun = 1;
-          //     player.rounds.shotgun = constants.maxRounds.shotgun;
-          //     player.addEvent(PlayerEventType.Acquired_Shotgun, 1);
-          //     player.weapons = [Weapon(type: WeaponType.Shotgun, damage: 1, capacity: 15)];
-          //     game.setCharacterState(player, CharacterState.ChangingWeapon);
-          //     return;
-          //
-          //   case PurchaseType.Weapon_SniperRifle:
-          //     if (player.acquiredSniperRifle) {
-          //       errorWeaponAlreadyAcquired();
-          //       return;
-          //     }
-          //     player.removeCredits(prices.weapon.sniperRifle);
-          //     player.clips.sniperRifle = 1;
-          //     player.rounds.sniperRifle = constants.maxRounds.sniperRifle;
-          //     player.addEvent(PlayerEventType.Acquired_SniperRifle, 1);
-          //     player.weapons = [Weapon(type: WeaponType.SniperRifle, damage: 1, capacity: 15)];
-          //     game.setCharacterState(player, CharacterState.ChangingWeapon);
-          //     return;
-          //
-          //   case PurchaseType.Weapon_AssaultRifle:
-          //     if (player.acquiredAssaultRifle) {
-          //       errorWeaponAlreadyAcquired();
-          //       return;
-          //     }
-          //     player.removeCredits(prices.weapon.assaultRifle);
-          //     player.clips.assaultRifle = 1;
-          //     player.rounds.assaultRifle = constants.maxRounds.assaultRifle;
-          //     player.addEvent(PlayerEventType.Acquired_AssaultRifle, 1);
-          //     player.weapons = [Weapon(type: WeaponType.AssaultRifle, damage: 1, capacity: 100)];
-          //     game.setCharacterState(player, CharacterState.ChangingWeapon);
-          //     return;
-          // }
           return;
-
-        case ClientRequest.Score:
-          String gameId = arguments[1];
-          Game game = findGameById(gameId);
-          StringBuffer buffer = StringBuffer();
-          compileScore(buffer, game.players);
-          sendToClient(buffer.toString());
-          break;
 
         case ClientRequest.SetCompilePaths:
           if (arguments.length != 5) {

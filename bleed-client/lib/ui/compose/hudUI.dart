@@ -12,7 +12,6 @@ import 'package:bleed_client/functions/openLink.dart';
 import 'package:bleed_client/mappers/mapWeaponToDecorationImage.dart';
 import 'package:bleed_client/network/functions/disconnect.dart';
 import 'package:bleed_client/send.dart';
-import 'package:bleed_client/server.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/settings.dart';

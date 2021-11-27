@@ -43,7 +43,6 @@ import 'package:neuro/instance.dart';
 
 import 'classes/Score.dart';
 import 'common/GameEventType.dart';
-import 'common/GameState.dart';
 import 'common/Tile.dart';
 import 'common/WeaponType.dart';
 import 'common/classes/Vector2.dart';
