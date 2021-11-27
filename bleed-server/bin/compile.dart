@@ -9,6 +9,7 @@ import 'classes/Item.dart';
 import 'classes/Npc.dart';
 import 'classes/Player.dart';
 import 'classes/InteractableNpc.dart';
+import 'classes/Weapon.dart';
 import 'common/PlayerEvents.dart';
 import 'common/Tile.dart';
 import 'common/ServerResponse.dart';
@@ -110,6 +111,21 @@ String compileTiles(List<List<Tile>> tiles) {
   return buffer.toString();
 }
 
+void compileWeapons(StringBuffer buffer, List<Weapon> weapons){
+  _write(buffer, ServerResponse.Weapons.index);
+  _write(buffer, weapons.length);
+  for(Weapon weapon in weapons){
+    compileWeapon(buffer, weapon);
+  }
+}
+
+void compileWeapon(StringBuffer buffer, Weapon weapon){
+  _write(buffer, weapon.type.index);
+  _write(buffer, weapon.rounds);
+  _write(buffer, weapon.capacity);
+  _write(buffer, weapon.damage);
+}
+
 void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, _playerIndex);
   _writeInt(buffer, player.x);
@@ -138,22 +154,28 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, 5); // sniper rounds
   _write(buffer, 5); // assault rifle rounds
 
-  for (PlayerEvent playerEvent in player.events) {
-    if (playerEvent.sent) continue;
-    _compilePlayerEvents(buffer, player);
-    return;
-  }
+  _compilePlayerEvents(buffer, player);
 }
 
 void _compilePlayerEvents(StringBuffer buffer, Player player) {
-  _write(buffer, ServerResponse.Player_Events.index);
-  for (PlayerEvent playerEvent in player.events) {
-    if (playerEvent.sent) continue;
-    playerEvent.sent = true;
-    _write(buffer, playerEvent.type.index);
-    _write(buffer, playerEvent.value);
+
+  int total = 0;
+
+  for (PlayerEvent event in player.events) {
+    if (event.sent) continue;
+    total++;
   }
-  _write(buffer, _semiColon);
+
+  if (total == 0) return;
+
+  _write(buffer, ServerResponse.Player_Events.index);
+  _write(buffer, total);
+  for (PlayerEvent event in player.events) {
+    if (event.sent) continue;
+    event.sent = true;
+    _write(buffer, event.type.index);
+    _write(buffer, event.value);
+  }
 }
 
 void compileScore(StringBuffer buffer, List<Player> players) {

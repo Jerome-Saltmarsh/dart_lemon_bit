@@ -3,11 +3,11 @@ import 'dart:typed_data';
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
-import 'package:bleed_client/classes/InventoryItem.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/classes/Projectile.dart';
+import 'package:bleed_client/classes/Weapon.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/GameError.dart';
@@ -19,7 +19,6 @@ import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/core/init.dart';
-import 'package:bleed_client/enums/InventoryItemType.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/emit/emitMyst.dart';
@@ -51,10 +50,11 @@ import 'common/enums/ObjectType.dart';
 import 'common/version.dart';
 import 'functions/onGameEvent.dart';
 import 'render/functions/mapTilesToSrcAndDst.dart';
-import 'state/inventory.dart';
 import 'state.dart';
 
+
 // state
+List<Weapon> weapons = [];
 int _index = 0;
 // constants
 const String _space = " ";
@@ -64,7 +64,6 @@ const String _1 = "1";
 
 // enums
 const List<ServerResponse> serverResponses = ServerResponse.values;
-const List<WeaponType> weapons = WeaponType.values;
 const List<GameEventType> gameEventTypes = GameEventType.values;
 
 // properties
@@ -117,8 +116,12 @@ void parseState() {
         _parsePlayer();
         break;
 
-      case ServerResponse.Inventory:
-        _parseInventory();
+      case ServerResponse.Weapons:
+        weapons.clear();
+        int length = _consumeIntUnsafe();
+        for(int i = 0; i < length; i++){
+          weapons.add(_consumeWeapon());
+        }
         break;
 
       case ServerResponse.Players:
@@ -391,7 +394,7 @@ void _parseTiles() {
 void _parsePlayer() {
   game.playerX = _consumeDouble();
   game.playerY = _consumeDouble();
-  game.playerWeapon.value = _consumeWeapon();
+  game.playerWeapon.value = _consumeWeaponType();
   player.health.value = _consumeDouble();
   player.maxHealth = _consumeDouble();
   player.stamina = _consumeInt();
@@ -426,7 +429,8 @@ void _parsePlayer() {
 }
 
 void _parsePlayerEvents() {
-  while (!_simiColonConsumed()) {
+  int total = _consumeInt();
+  for(int i = 0; i < total; i++){
     PlayerEventType playerEvent = playerEventTypes[_consumeInt()];
     int value = _consumeInt();
     switch (playerEvent) {
@@ -435,33 +439,6 @@ void _parsePlayerEvents() {
         break;
     }
   }
-}
-
-void _parseInventory() {
-  inventory.rows = _consumeInt();
-  inventory.columns = _consumeInt();
-  int i = 0;
-  while (!_simiColonConsumed()) {
-    if (i < inventory.items.length) {
-      inventory.items[i].type = _consumeInventoryItemType();
-      inventory.items[i].row = _consumeInt();
-      inventory.items[i].column = _consumeInt();
-    } else {
-      InventoryItemType type = _consumeInventoryItemType();
-      int x = _consumeInt();
-      int y = _consumeInt();
-      inventory.items.add(InventoryItem(x, y, type));
-    }
-    i++;
-  }
-
-  while (inventory.items.length - i > 0) {
-    inventory.items.removeLast();
-  }
-}
-
-InventoryItemType _consumeInventoryItemType() {
-  return InventoryItemType.values[_consumeInt()];
 }
 
 void _parseCollectables() {
@@ -544,8 +521,21 @@ bool _consumeBool() {
   return _consumeSingleCharacter() == _1 ? true : false;
 }
 
-WeaponType _consumeWeapon() {
-  return weapons[_consumeSingleDigitInt()];
+WeaponType _consumeWeaponType() {
+  return weaponTypes[_consumeSingleDigitInt()];
+}
+
+Weapon _consumeWeapon(){
+  WeaponType type = _consumeWeaponType();
+  int rounds = _consumeIntUnsafe();
+  int capacity = _consumeIntUnsafe();
+  int damage = _consumeInt();
+  return Weapon(
+      type: type,
+      rounds: rounds,
+      capacity: capacity,
+      damage: damage
+  );
 }
 
 CharacterState _consumeCharacterState() {
@@ -708,7 +698,7 @@ void _consumeHuman(Character character) {
   character.x = _consumeDouble();
   character.y = _consumeDouble();
   character.frame = _consumeInt();
-  character.weapon = _consumeWeapon();
+  character.weapon = _consumeWeaponType();
   character.squad = _consumeInt();
   character.name = _consumeString();
 

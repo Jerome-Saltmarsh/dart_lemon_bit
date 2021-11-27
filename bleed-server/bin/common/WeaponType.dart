@@ -1,3 +1,3 @@
 enum WeaponType { Unarmed, HandGun, Shotgun, SniperRifle, AssaultRifle }
 
-List<WeaponType> weapons = WeaponType.values;
+List<WeaponType> weaponTypes = WeaponType.values;

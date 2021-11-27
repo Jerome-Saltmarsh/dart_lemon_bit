@@ -73,6 +73,7 @@ void main() {
     void sendCompiledPlayerState(Game game, Player player) {
       _buffer.clear();
       _buffer.write(game.compiled);
+      compileWeapons(_buffer, player.weapons);
       compilePlayer(_buffer, player);
       if (player.message.isNotEmpty) {
         compilePlayerMessage(_buffer, player.message);

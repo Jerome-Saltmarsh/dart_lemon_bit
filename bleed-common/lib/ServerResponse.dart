@@ -11,7 +11,6 @@ enum ServerResponse {
   Game_Joined,
   Scene,
   Collectables,
-  Inventory,
   Paths,
   MetaFortress,
   MetaDeathMatch,
@@ -27,4 +26,5 @@ enum ServerResponse {
   Game_Time,
   Scene_Changed,
   Scene_Shade_Max,
+  Weapons,
 }
