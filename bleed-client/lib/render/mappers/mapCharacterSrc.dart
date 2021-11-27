@@ -179,10 +179,32 @@ Float32List mapCharacterSrc({
       }
       break;
     case CharacterState.Running:
-      double _s = direction.index * _frameSize * 4;
+
+      double _s = direction.index * _frameSize * _framesPerDirection4;
       double _f = (frame % 4) * _frameSize;
-      _src[0] = _s + _f + _humanRunning.x;
-      _src[1] = shade.index * _frameSize + _humanRunning.y;
+
+      if (type == CharacterType.Zombie){
+        _src[0] = _s + _f + _zombieWalking.x;
+        _src[1] = shade.index * _frameSize + _zombieWalking.y;
+        break;
+      }
+
+      switch(weapon){
+        case Weapon.HandGun:
+          _src[0] = _s + _f + _humanWalkingHandgun.x;
+          _src[1] = shade.index * _frameSize + _humanWalkingHandgun.y;
+          break;
+        case Weapon.Shotgun:
+          _src[0] = _s + _f + _humanWalkingShotgun.x;
+          _src[1] = shade.index * _frameSize + _humanWalkingShotgun.y;
+          break;
+        default:
+          _s = direction.index * _frameSize * 4;
+          _f = (frame % 4) * _frameSize;
+          _src[0] = _s + _f + _humanRunning.x;
+          _src[1] = shade.index * _frameSize + _humanRunning.y;
+          break;
+      }
       break;
 
     case CharacterState.Reloading:
