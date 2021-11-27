@@ -137,10 +137,6 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.weapon.rounds);
   _write(buffer, player.state.index);
   _write(buffer, player.currentTile.index);
-  _write(buffer, 5); // handgun rounds
-  _write(buffer, 5); // shotgun rounds
-  _write(buffer, 5); // sniper rounds
-  _write(buffer, 5); // assault rifle rounds
 
   _compilePlayerEvents(buffer, player);
 }

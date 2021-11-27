@@ -405,10 +405,6 @@ void _parsePlayer() {
   player.equippedRounds.value = _consumeIntUnsafe();
   player.state.value = _consumeCharacterState();
   player.tile = _consumeTile();
-  player.roundsHandgun = _consumeIntUnsafe();
-  player.roundsShotgun = _consumeIntUnsafe();
-  player.roundsSniperRifle = _consumeIntUnsafe();
-  player.roundsAssaultRifle = _consumeInt();
 }
 
 void _parsePlayerEvents() {

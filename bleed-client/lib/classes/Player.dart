@@ -10,10 +10,6 @@ class Player {
   double maxHealth = 0;
   Tile tile = Tile.Grass;
   int grenades = 0;
-  int roundsHandgun;
-  int roundsShotgun;
-  int roundsSniperRifle = 0;
-  int roundsAssaultRifle = 0;
   Watch<String> message = Watch("");
   Watch<CharacterState> state = Watch(CharacterState.Idle);
   Watch<bool> alive = Watch(true);
