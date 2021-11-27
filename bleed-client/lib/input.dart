@@ -90,10 +90,10 @@ class _Keys {
   LogicalKeyboardKey runLeft = LogicalKeyboardKey.keyA;
   LogicalKeyboardKey throwGrenade = LogicalKeyboardKey.keyG;
   LogicalKeyboardKey melee = LogicalKeyboardKey.keyF;
-  LogicalKeyboardKey equipHandgun = LogicalKeyboardKey.digit1;
-  LogicalKeyboardKey equipShotgun = LogicalKeyboardKey.digit2;
-  LogicalKeyboardKey equipSniperRifle = LogicalKeyboardKey.digit3;
-  LogicalKeyboardKey equipAssaultRifle = LogicalKeyboardKey.digit4;
+  LogicalKeyboardKey equip1 = LogicalKeyboardKey.digit1;
+  LogicalKeyboardKey equip2 = LogicalKeyboardKey.digit2;
+  LogicalKeyboardKey equip3 = LogicalKeyboardKey.digit3;
+  LogicalKeyboardKey equip4 = LogicalKeyboardKey.digit4;
   LogicalKeyboardKey speakLetsGo = LogicalKeyboardKey.digit9;
   LogicalKeyboardKey speakLetsGreeting = LogicalKeyboardKey.digit8;
   LogicalKeyboardKey waitASecond = LogicalKeyboardKey.digit0;
@@ -143,7 +143,27 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.hourBackwards: reverseHour,
   keys.teleport: teleportToMouse,
   keys.casteFireball: sendRequestCastFireball,
+  keys.equip1: equip1,
+  keys.equip2: equip2,
+  keys.equip3: equip3,
+  keys.equip4: equip4,
 };
+
+void equip1(){
+  sendRequestEquip(0);
+}
+
+void equip2(){
+  sendRequestEquip(1);
+}
+
+void equip3(){
+  sendRequestEquip(2);
+}
+
+void equip4(){
+  sendRequestEquip(3);
+}
 
 void teleportToMouse(){
   if (!mouseAvailable) return;
