@@ -139,8 +139,8 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.equipShotgun: sendRequestEquipShotgun,
   keys.equipSniperRifle: sendRequestEquipSniperRifle,
   keys.equipAssaultRifle: sendRequestEquipAssaultRifle,
-  keys.sprint: toggleSprint,
-  keys.sprint2: toggleSprint,
+  // keys.sprint: toggleSprint,
+  // keys.sprint2: toggleSprint,
   keys.speakLetsGo: sayLetsGo,
   keys.speakLetsGreeting: sayGreeting,
   keys.waitASecond: sayWaitASecond,
@@ -301,7 +301,7 @@ void _handleKeyUpEvent(RawKeyUpEvent event) {
 }
 
 class _CharacterController {
-  bool sprint = false;
+  bool sprint = true;
   bool moveUp = false;
   bool moveRight = false;
   bool moveDown = false;
