@@ -397,8 +397,6 @@ void _parsePlayer() {
   game.playerWeapon.value = _consumeWeaponType();
   player.health.value = _consumeDouble();
   player.maxHealth = _consumeDouble();
-  player.stamina = _consumeInt();
-  player.staminaMax = _consumeInt();
 
   int grenades = _consumeInt();
 

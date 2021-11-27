@@ -18,8 +18,6 @@ class Player extends Character {
   final String uuid = generateUUID();
   String name = generateName();
   int lastUpdateFrame = 0;
-  int stamina = 0;
-  int maxStamina = 200;
   Inventory inventory;
   int grenades;
   int lives;
@@ -89,7 +87,5 @@ class Player extends Character {
             weapons: weapons,
             health: settings.health.player,
             speed: settings.playerSpeed,
-            squad: squad) {
-    stamina = maxStamina;
-  }
+            squad: squad);
 }

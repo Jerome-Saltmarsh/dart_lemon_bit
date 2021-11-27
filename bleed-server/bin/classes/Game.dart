@@ -478,13 +478,6 @@ extension GameFunctions on Game {
     if (value != CharacterState.Dead && character.busy) return;
 
     switch (value) {
-      case CharacterState.Running:
-        // @on character running
-        if (character is Player && character.stamina <= settings.minStamina) {
-          character.state = CharacterState.Walking;
-          return;
-        }
-        break;
       case CharacterState.Dead:
         // @on character death
         character.collidable = false;
@@ -706,26 +699,10 @@ extension GameFunctions on Game {
     }
 
     switch (player.state) {
-      case CharacterState.Running:
-        // player.stamina -= 3;
-        if (player.stamina <= 0) {
-          setCharacterState(player, CharacterState.Walking);
-        }
-        break;
       case CharacterState.Walking:
-        player.stamina += settings.staminaRefreshRate;
         if (player.lastUpdateFrame > 5) {
           setCharacterStateIdle(player);
         }
-        break;
-      case CharacterState.Idle:
-        player.stamina += settings.staminaRefreshRate;
-        break;
-      case CharacterState.Aiming:
-        player.stamina += settings.staminaRefreshRate;
-        break;
-      case CharacterState.Firing:
-        player.stamina += settings.staminaRefreshRate;
         break;
       case CharacterState.Striking:
         // @on player striking
@@ -772,7 +749,6 @@ extension GameFunctions on Game {
           }
         }
     }
-    player.stamina = clampInt(player.stamina, 0, player.maxStamina);
     player.currentTile = scene.tileAt(player.x, player.y);
   }
 
