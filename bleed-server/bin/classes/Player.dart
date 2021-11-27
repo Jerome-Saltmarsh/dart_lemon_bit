@@ -4,7 +4,7 @@ import '../common/PlayerEvents.dart';
 import '../common/Quests.dart';
 import '../constants/no_squad.dart';
 import '../common/Tile.dart';
-import '../common/Weapons.dart';
+import '../common/WeaponType.dart';
 import '../enums.dart';
 import '../functions/generateName.dart';
 import '../functions/generateUUID.dart';
@@ -40,6 +40,8 @@ class Player extends Character {
   MainQuest questMain = MainQuest.Introduction;
   bool sceneChanged = false;
   Game game;
+
+  int handgunDamage = 10;
 
   bool get acquiredHandgun => rounds.handgun > 0;
   bool get acquiredShotgun => rounds.shotgun > 0;
@@ -88,7 +90,7 @@ class Player extends Character {
     this.grenades = 0,
     this.meds = 0,
     this.lives = 0,
-    Weapon weapon = Weapon.HandGun,
+    WeaponType weapon = WeaponType.HandGun,
     required this.clips,
     required this.rounds,
     int squad = noSquad,

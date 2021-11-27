@@ -22,7 +22,6 @@ import 'package:lemon_math/randomItem.dart';
 
 import '../send.dart';
 import 'common/enums/Direction.dart';
-import 'state.dart';
 import 'ui/logic/showTextBox.dart';
 import 'utils.dart';
 

@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:bleed_client/common/Weapons.dart';
+import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/constants.dart';
 import 'package:bleed_client/constants.dart';
 import 'package:bleed_client/constants/colours.dart';
@@ -322,7 +322,7 @@ Widget buildImageSlot(
   );
 }
 
-Widget buildEquipWeaponSlot(Weapon weapon) {
+Widget buildEquipWeaponSlot(WeaponType weapon) {
   return Stack(
     children: [
       onPressed(
@@ -331,22 +331,22 @@ Widget buildEquipWeaponSlot(Weapon weapon) {
             sendRequestEquip(weapon);
             rebuildUI();
           }),
-      if (weapon != Weapon.Unarmed) buildTag(getWeaponRounds(weapon)),
+      if (weapon != WeaponType.Unarmed) buildTag(getWeaponRounds(weapon)),
     ],
   );
 }
 
-Widget buildEquippedWeaponSlot(Weapon weapon) {
+Widget buildEquippedWeaponSlot(WeaponType weapon) {
   return Stack(
     children: [
       buildWeaponSlot(weapon),
-      if (weapon != Weapon.Unarmed)
+      if (weapon != WeaponType.Unarmed)
         WatchBuilder(player.equippedRounds, buildTag),
     ],
   );
 }
 
-Widget buildSlotWeapon({Weapon weapon, int index}) {
+Widget buildSlotWeapon({WeaponType weapon, int index}) {
   bool acquired = weaponAcquired(weapon);
   return Column(
     children: [
@@ -359,7 +359,7 @@ Widget buildSlotWeapon({Weapon weapon, int index}) {
   );
 }
 
-Widget buildPurchaseWeaponSlot({Weapon weapon}) {
+Widget buildPurchaseWeaponSlot({WeaponType weapon}) {
   int price = mapWeaponPrice(weapon);
   return Stack(
     children: [
@@ -375,7 +375,7 @@ Widget buildPurchaseWeaponSlot({Weapon weapon}) {
   );
 }
 
-Widget buildWeaponSlot(Weapon weapon) {
+Widget buildWeaponSlot(WeaponType weapon) {
   return mouseOver(builder: (BuildContext context, bool mouseOver) {
     return Container(
       width: 120,
@@ -419,7 +419,7 @@ Widget buildWeaponMenu() {
           Column(
               mainAxisAlignment: main.end,
               crossAxisAlignment: cross.start,
-              children: getAcquiredNonEquippedWeapons().map((Weapon weapon) {
+              children: getAcquiredNonEquippedWeapons().map((WeaponType weapon) {
                 return Container(
                   child: buildEquipWeaponSlot(weapon),
                   margin: const EdgeInsets.only(bottom: 4),
@@ -431,8 +431,8 @@ Widget buildWeaponMenu() {
   });
 }
 
-List<Weapon> getAcquiredNonEquippedWeapons() {
-  return Weapon.values.where((Weapon weapon) {
+List<WeaponType> getAcquiredNonEquippedWeapons() {
+  return WeaponType.values.where((WeaponType weapon) {
     return weaponAcquired(weapon) && game.playerWeapon.value != weapon;
   }).toList();
 }
@@ -734,7 +734,7 @@ Widget _buildViewRespawn() {
   );
 }
 
-Widget buildWeaponButton(Weapon weapon) {
+Widget buildWeaponButton(WeaponType weapon) {
   return GestureDetector(
     onTap: () => sendRequestEquip(weapon),
     child: Container(

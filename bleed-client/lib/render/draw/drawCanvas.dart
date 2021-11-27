@@ -8,14 +8,10 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CollectableType.dart';
-import 'package:bleed_client/common/Weapons.dart';
-import 'package:bleed_client/common/enums/ObjectType.dart';
+import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
-import 'package:bleed_client/getters/getShading.dart';
-import 'package:bleed_client/getters/getTileAt.dart';
-import 'package:bleed_client/render/functions/applyDynamicShadeToTileSrc.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:bleed_client/render/constants/charWidth.dart';
@@ -24,6 +20,7 @@ import 'package:bleed_client/render/draw/drawBullets.dart';
 import 'package:bleed_client/render/draw/drawCharacter.dart';
 import 'package:bleed_client/render/draw/drawPlayerText.dart';
 import 'package:bleed_client/render/enums/CharacterType.dart';
+import 'package:bleed_client/render/functions/applyDynamicShadeToTileSrc.dart';
 import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
 import 'package:bleed_client/render/functions/emitLight.dart';
 import 'package:bleed_client/render/functions/resetDynamicShadesToBakeMap.dart';
@@ -320,17 +317,17 @@ void _drawPlayerNames() {
   }
 }
 
-double mapWeaponAimLength(Weapon weapon) {
+double mapWeaponAimLength(WeaponType weapon) {
   switch (weapon) {
-    case Weapon.Unarmed:
+    case WeaponType.Unarmed:
       return 20;
-    case Weapon.HandGun:
+    case WeaponType.HandGun:
       return 20;
-    case Weapon.Shotgun:
+    case WeaponType.Shotgun:
       return 25;
-    case Weapon.SniperRifle:
+    case WeaponType.SniperRifle:
       return 150;
-    case Weapon.AssaultRifle:
+    case WeaponType.AssaultRifle:
       return 50;
     default:
       return 10;

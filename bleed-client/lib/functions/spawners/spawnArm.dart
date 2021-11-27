@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:bleed_client/enums/ParticleType.dart';
-import 'package:flutter/material.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/randomInt.dart';
 import 'package:lemon_math/random_between.dart';

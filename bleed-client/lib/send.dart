@@ -1,5 +1,6 @@
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/PurchaseType.dart';
+import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/network/functions/send.dart';
 import 'package:bleed_client/network/functions/sinkMessage.dart';
@@ -7,7 +8,6 @@ import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/state/game.dart';
 
 import 'common/CharacterState.dart';
-import 'common/Weapons.dart';
 import 'state.dart';
 
 final StringBuffer _buffer = StringBuffer();
@@ -39,7 +39,7 @@ void sendRequestCastFireball(){
   send('${ClientRequest.CasteFireball.index} $session $aim');
 }
 
-void sendRequestEquip(Weapon weapon) {
+void sendRequestEquip(WeaponType weapon) {
   send('${ClientRequest.Equip.index} $session ${weapon.index}');
 }
 
@@ -52,15 +52,15 @@ void reverseHour(){
 }
 
 void sendRequestEquipHandgun() {
-  sendRequestEquip(Weapon.HandGun);
+  sendRequestEquip(WeaponType.HandGun);
 }
 
 void sendRequestEquipShotgun() {
-  sendRequestEquip(Weapon.Shotgun);
+  sendRequestEquip(WeaponType.Shotgun);
 }
 
 void sendRequestEquipSniperRifle() {
-  sendRequestEquip(Weapon.SniperRifle);
+  sendRequestEquip(WeaponType.SniperRifle);
 }
 
 void sendRequestUpdateLobby() {
@@ -78,7 +78,7 @@ void sendRequestLobbyExit() {
 }
 
 void sendRequestEquipAssaultRifle() {
-  sendRequestEquip(Weapon.AssaultRifle);
+  sendRequestEquip(WeaponType.AssaultRifle);
 }
 
 String get aim => characterController.requestAim.toStringAsFixed(2);
@@ -137,18 +137,18 @@ void purchaseWeaponAssaultRifle() {
   sendRequestPurchase(PurchaseType.Weapon_AssaultRifle);
 }
 
-void sendRequestPurchaseWeapon(Weapon weapon) {
+void sendRequestPurchaseWeapon(WeaponType weapon) {
   switch (weapon) {
-    case Weapon.HandGun:
+    case WeaponType.HandGun:
       purchaseWeaponHandgun();
       break;
-    case Weapon.Shotgun:
+    case WeaponType.Shotgun:
       purchaseWeaponShotgun();
       break;
-    case Weapon.SniperRifle:
+    case WeaponType.SniperRifle:
       purchaseWeaponSniperRifle();
       break;
-    case Weapon.AssaultRifle:
+    case WeaponType.AssaultRifle:
       purchaseWeaponAssaultRifle();
       break;
     default:

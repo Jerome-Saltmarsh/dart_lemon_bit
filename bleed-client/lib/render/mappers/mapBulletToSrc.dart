@@ -3,7 +3,6 @@
 import 'dart:typed_data';
 
 import 'package:bleed_client/classes/Projectile.dart';
-import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/getters/getShading.dart';

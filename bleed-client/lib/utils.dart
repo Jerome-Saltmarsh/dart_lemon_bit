@@ -13,15 +13,11 @@ import 'package:lemon_engine/state/zoom.dart';
 import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/pi2.dart';
 
-import 'common/Weapons.dart';
-
 double getMouseRotation() {
   return angleBetween(game.playerX, game.playerY, mouseWorldX, mouseWorldY);
 }
 
 bool get playerAssigned => game.playerId >= 0;
-
-Weapon previousWeapon;
 
 void drawLine(double x1, double y1, double x2, double y2) {
   globalCanvas.drawLine(offset(x1, y1), offset(x2, y2), paint);

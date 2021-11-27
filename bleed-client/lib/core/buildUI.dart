@@ -1,7 +1,6 @@
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/network/state/connecting.dart';
-import 'package:bleed_client/properties.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';

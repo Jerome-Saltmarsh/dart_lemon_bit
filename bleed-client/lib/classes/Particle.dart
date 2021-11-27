@@ -1,5 +1,4 @@
 import 'package:bleed_client/enums/ParticleType.dart';
-import 'package:bleed_client/render/enums/Hue.dart';
 
 class Particle {
   bool active = false;

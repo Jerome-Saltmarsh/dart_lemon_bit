@@ -1,5 +1,5 @@
 import 'package:bleed_client/common/CharacterState.dart';
-import 'package:bleed_client/common/Weapons.dart';
+import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 
 class Character {
@@ -8,7 +8,7 @@ class Character {
   double x;
   double y;
   int frame;
-  Weapon weapon;
+  WeaponType weapon;
   int squad;
   String name;
   String text;
@@ -22,7 +22,7 @@ class Character {
     this.x = 0,
     this.y = 0,
     this.frame = 0,
-    this.weapon = Weapon.Unarmed,
+    this.weapon = WeaponType.Unarmed,
     this.squad = 0,
     this.name = "",
     this.text = "",

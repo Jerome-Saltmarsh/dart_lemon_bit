@@ -1,14 +1,11 @@
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Player.dart';
 import 'package:bleed_client/classes/Score.dart';
-import 'package:bleed_client/common/CharacterState.dart';
-import 'package:bleed_client/common/Weapons.dart';
-import 'package:bleed_client/common/enums/Direction.dart';
+import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
 
 import 'classes/State.dart';
-import 'enums/Mode.dart';
 
 int frameRate = 5;
 int frameRateValue = 0;
@@ -67,32 +64,32 @@ Score get highScore {
   return highScore;
 }
 
-int getWeaponRounds(Weapon weapon) {
+int getWeaponRounds(WeaponType weapon) {
   switch (weapon) {
-    case Weapon.HandGun:
+    case WeaponType.HandGun:
       return player.roundsHandgun;
-    case Weapon.Shotgun:
+    case WeaponType.Shotgun:
       return player.roundsShotgun;
-    case Weapon.SniperRifle:
+    case WeaponType.SniperRifle:
       return player.roundsSniperRifle;
-    case Weapon.AssaultRifle:
+    case WeaponType.AssaultRifle:
       return player.roundsAssaultRifle;
     default:
       throw Exception("Could not get clips for $weapon");
   }
 }
 
-bool weaponAcquired(Weapon weapon) {
+bool weaponAcquired(WeaponType weapon) {
   switch (weapon) {
-    case Weapon.Unarmed:
+    case WeaponType.Unarmed:
       return true;
-    case Weapon.HandGun:
+    case WeaponType.HandGun:
       return player.acquiredHandgun;
-    case Weapon.Shotgun:
+    case WeaponType.Shotgun:
       return player.acquiredShotgun;
-    case Weapon.SniperRifle:
+    case WeaponType.SniperRifle:
       return player.acquiredSniperRifle;
-    case Weapon.AssaultRifle:
+    case WeaponType.AssaultRifle:
       return player.acquiredAssaultRifle;
     default:
       throw Exception("Could not get acquired for $weapon");

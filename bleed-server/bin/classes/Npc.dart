@@ -1,11 +1,11 @@
-import '../common/Weapons.dart';
+import '../common/WeaponType.dart';
 import '../common/classes/Vector2.dart';
 import '../enums/npc_mode.dart';
 import '../settings.dart';
 import 'Character.dart';
 
 final Character _nonTarget =
-Character(x: 0, y: 0, weapon: Weapon.AssaultRifle, health: 0, speed: 0);
+Character(x: 0, y: 0, weapon: WeaponType.AssaultRifle, health: 0, speed: 0);
 
 class Npc extends Character {
   Character target = _nonTarget;
@@ -17,7 +17,7 @@ class Npc extends Character {
     required double x,
     required double y,
     int health = 100,
-    Weapon weapon = Weapon.Unarmed,
+    WeaponType weapon = WeaponType.Unarmed,
   })
       : super(
       x: x,

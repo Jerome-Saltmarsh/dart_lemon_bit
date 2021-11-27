@@ -5,7 +5,7 @@ import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
-import 'package:bleed_client/common/Weapons.dart';
+import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
@@ -96,18 +96,18 @@ void initializeGameInstances() {
   }
 }
 
-void onPlayerWeaponChanged(Weapon weapon) {
+void onPlayerWeaponChanged(WeaponType weapon) {
   switch (weapon) {
-    case Weapon.HandGun:
+    case WeaponType.HandGun:
       playAudioReload(screenCenterWorldX, screenCenterWorldY);
       break;
-    case Weapon.Shotgun:
+    case WeaponType.Shotgun:
       playAudioCockShotgun(screenCenterWorldX, screenCenterWorldY);
       break;
-    case Weapon.SniperRifle:
+    case WeaponType.SniperRifle:
       playAudioSniperEquipped(screenCenterWorldX, screenCenterWorldY);
       break;
-    case Weapon.AssaultRifle:
+    case WeaponType.AssaultRifle:
       playAudioReload(screenCenterWorldX, screenCenterWorldY);
       break;
   }

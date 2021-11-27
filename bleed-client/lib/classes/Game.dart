@@ -6,7 +6,7 @@ import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/Tile.dart';
-import 'package:bleed_client/common/Weapons.dart';
+import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:lemon_watch/watch.dart';
@@ -45,7 +45,7 @@ class Game {
   String playerUUID = "";
   double playerX = -1;
   double playerY = -1;
-  Watch<Weapon> playerWeapon = Watch(Weapon.Unarmed);
+  Watch<WeaponType> playerWeapon = Watch(WeaponType.Unarmed);
   int playerLives = 0;
   CharacterState playerState = CharacterState.Idle;
   List<Item> items = [];

@@ -1,5 +1,5 @@
 
-import 'Weapons.dart';
+import 'WeaponType.dart';
 
 _Constants constants = _Constants();
 
@@ -34,33 +34,33 @@ class _Ammo {
   final int assaultRifle = 200;
 }
 
-int mapWeaponPrice(Weapon weapon){
+int mapWeaponPrice(WeaponType weapon){
   switch(weapon){
-    case Weapon.HandGun:
+    case WeaponType.HandGun:
       return prices.weapon.handgun;
-    case Weapon.Shotgun:
+    case WeaponType.Shotgun:
       return prices.weapon.shotgun;
-    case Weapon.SniperRifle:
+    case WeaponType.SniperRifle:
       return prices.weapon.sniperRifle;
-    case Weapon.AssaultRifle:
+    case WeaponType.AssaultRifle:
       return prices.weapon.assaultRifle;
-    case Weapon.Unarmed:
+    case WeaponType.Unarmed:
       return 0;
   }
   throw Exception("No price available for $weapon");
 }
 
-String mapWeaponName(Weapon weapon){
+String mapWeaponName(WeaponType weapon){
   switch(weapon){
-    case Weapon.HandGun:
+    case WeaponType.HandGun:
       return "Handgun";
-    case Weapon.Shotgun:
+    case WeaponType.Shotgun:
       return "Shotgun";
-    case Weapon.SniperRifle:
+    case WeaponType.SniperRifle:
       return "Sniper Rifle";
-    case Weapon.AssaultRifle:
+    case WeaponType.AssaultRifle:
       return "Assault Rifle";
-    case Weapon.Unarmed:
+    case WeaponType.Unarmed:
       return "Unarmed";
   }
 }
@@ -72,17 +72,17 @@ class _MaxRounds {
   final int assaultRifle = 250;
 }
 
-int getMaxRounds(Weapon weapon){
+int getMaxRounds(WeaponType weapon){
   switch(weapon){
-    case Weapon.Unarmed:
+    case WeaponType.Unarmed:
       return 0;
-    case Weapon.HandGun:
+    case WeaponType.HandGun:
       return constants.maxRounds.handgun;
-    case Weapon.Shotgun:
+    case WeaponType.Shotgun:
       return constants.maxRounds.shotgun;
-    case Weapon.SniperRifle:
+    case WeaponType.SniperRifle:
       return constants.maxRounds.sniperRifle;
-    case Weapon.AssaultRifle:
+    case WeaponType.AssaultRifle:
       return constants.maxRounds.assaultRifle;
   }
 }

@@ -19,7 +19,7 @@ import 'common/GameError.dart';
 import 'common/GameEventType.dart';
 import 'common/ServerResponse.dart';
 import 'common/PurchaseType.dart';
-import 'common/Weapons.dart';
+import 'common/WeaponType.dart';
 import 'functions/loadScenes.dart';
 import 'games/world.dart';
 import 'settings.dart';
@@ -265,30 +265,30 @@ void main() {
             return;
           }
 
-          Weapon weapon = Weapon.values[int.parse(arguments[4])];
+          WeaponType weapon = WeaponType.values[int.parse(arguments[4])];
           if (player.stateDuration > 0) return;
           if (player.weapon == weapon) return;
 
           switch (weapon) {
-            case Weapon.HandGun:
+            case WeaponType.HandGun:
               if (!player.acquiredHandgun) {
                 errorWeaponNotAcquired();
                 return;
               }
               break;
-            case Weapon.Shotgun:
+            case WeaponType.Shotgun:
               if (!player.acquiredShotgun) {
                 errorWeaponNotAcquired();
                 return;
               }
               break;
-            case Weapon.SniperRifle:
+            case WeaponType.SniperRifle:
               if (!player.acquiredSniperRifle) {
                 errorWeaponNotAcquired();
                 return;
               }
               break;
-            case Weapon.AssaultRifle:
+            case WeaponType.AssaultRifle:
               if (!player.acquiredAssaultRifle) {
                 errorWeaponNotAcquired();
                 return;
@@ -387,7 +387,7 @@ void main() {
               player.clips.handgun = 1;
               player.rounds.handgun = constants.maxRounds.handgun;
               player.addEvent(PlayerEventType.Acquired_Handgun, 1);
-              player.weapon = Weapon.HandGun;
+              player.weapon = WeaponType.HandGun;
               game.setCharacterState(player, CharacterState.ChangingWeapon);
               return;
 
@@ -400,7 +400,7 @@ void main() {
               player.clips.shotgun = 1;
               player.rounds.shotgun = constants.maxRounds.shotgun;
               player.addEvent(PlayerEventType.Acquired_Shotgun, 1);
-              player.weapon = Weapon.Shotgun;
+              player.weapon = WeaponType.Shotgun;
               game.setCharacterState(player, CharacterState.ChangingWeapon);
               return;
 
@@ -413,7 +413,7 @@ void main() {
               player.clips.sniperRifle = 1;
               player.rounds.sniperRifle = constants.maxRounds.sniperRifle;
               player.addEvent(PlayerEventType.Acquired_SniperRifle, 1);
-              player.weapon = Weapon.SniperRifle;
+              player.weapon = WeaponType.SniperRifle;
               game.setCharacterState(player, CharacterState.ChangingWeapon);
               return;
 
@@ -426,7 +426,7 @@ void main() {
               player.clips.assaultRifle = 1;
               player.rounds.assaultRifle = constants.maxRounds.assaultRifle;
               player.addEvent(PlayerEventType.Acquired_AssaultRifle, 1);
-              player.weapon = Weapon.AssaultRifle;
+              player.weapon = WeaponType.AssaultRifle;
               game.setCharacterState(player, CharacterState.ChangingWeapon);
               return;
           }
@@ -537,7 +537,7 @@ Player spawnPlayerInTown() {
     rounds:
         Rounds(handgun: 50, shotgun: 30, sniperRifle: 20, assaultRifle: 100),
     squad: 1,
-    weapon: Weapon.HandGun,
+    weapon: WeaponType.HandGun,
   );
   world.town.players.add(player);
   return player;

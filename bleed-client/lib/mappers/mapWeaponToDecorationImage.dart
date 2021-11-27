@@ -1,19 +1,19 @@
-import 'package:bleed_client/common/Weapons.dart';
+import 'package:bleed_client/common/WeaponType.dart';
 import 'package:flutter/painting.dart';
 
 final _DecorationImages _decorationImages = _DecorationImages();
 
-DecorationImage mapWeaponToImage(Weapon weapon) {
+DecorationImage mapWeaponToImage(WeaponType weapon) {
   switch (weapon) {
-    case Weapon.Unarmed:
+    case WeaponType.Unarmed:
       return _decorationImages.unarmed;
-    case Weapon.HandGun:
+    case WeaponType.HandGun:
       return _decorationImages.handgun;
-    case Weapon.Shotgun:
+    case WeaponType.Shotgun:
       return _decorationImages.shotgun;
-    case Weapon.SniperRifle:
+    case WeaponType.SniperRifle:
       return _decorationImages.sniper;
-    case Weapon.AssaultRifle:
+    case WeaponType.AssaultRifle:
       return _decorationImages.assaultRifle;
   }
   throw Exception("no image available for $weapon");

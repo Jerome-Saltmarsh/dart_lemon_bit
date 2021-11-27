@@ -1,5 +1,5 @@
 
-import '../bin/common/Weapons.dart';
+import '../bin/common/WeaponType.dart';
 import 'maths.dart';
 
 Settings settings = Settings();
@@ -16,60 +16,60 @@ _Range get _range => settings.range;
 
 _BulletSpeed _bulletSpeed = settings.bulletSpeed;
 
-double getBulletSpeed(Weapon weapon) {
+double getBulletSpeed(WeaponType weapon) {
   switch (weapon) {
-    case Weapon.HandGun:
+    case WeaponType.HandGun:
       return _bulletSpeed.handgun;
-    case Weapon.Shotgun:
+    case WeaponType.Shotgun:
       return _bulletSpeed.shotgun;
-    case Weapon.SniperRifle:
+    case WeaponType.SniperRifle:
       return _bulletSpeed.sniperRifle;
-    case Weapon.AssaultRifle:
+    case WeaponType.AssaultRifle:
       return _bulletSpeed.assaultRifle;
     default:
       throw Exception("no range found for $weapon");
   }
 }
 
-double getWeaponAccuracy(Weapon weapon){
+double getWeaponAccuracy(WeaponType weapon){
   switch (weapon){
-    case Weapon.HandGun:
+    case WeaponType.HandGun:
       return _accuracy.handgun;
-    case Weapon.Shotgun:
+    case WeaponType.Shotgun:
       return _accuracy.shotgun;
-    case Weapon.SniperRifle:
+    case WeaponType.SniperRifle:
       return _accuracy.sniperRifle;
-    case Weapon.AssaultRifle:
+    case WeaponType.AssaultRifle:
       return _accuracy.assaultRifle;
     default:
       throw Exception("No accuracy found for $weapon");
   }
 }
 
-int getWeaponDamage(Weapon weapon){
+int getWeaponDamage(WeaponType weapon){
   switch (weapon){
-    case Weapon.HandGun:
+    case WeaponType.HandGun:
       return _damage.handgun;
-    case Weapon.Shotgun:
+    case WeaponType.Shotgun:
       return _damage.shotgun;
-    case Weapon.SniperRifle:
+    case WeaponType.SniperRifle:
       return _damage.sniperRifle;
-    case Weapon.AssaultRifle:
+    case WeaponType.AssaultRifle:
       return _damage.assaultRifle;
     default:
       throw Exception("No accuracy found for $weapon");
   }
 }
 
-double getWeaponRange(Weapon weapon) {
+double getWeaponRange(WeaponType weapon) {
   switch (weapon) {
-    case Weapon.HandGun:
+    case WeaponType.HandGun:
       return _range.handgun;
-    case Weapon.Shotgun:
+    case WeaponType.Shotgun:
       return _range.shotgun;
-    case Weapon.SniperRifle:
+    case WeaponType.SniperRifle:
       return _range.sniperRifle;
-    case Weapon.AssaultRifle:
+    case WeaponType.AssaultRifle:
       return _range.assaultRifle;
     default:
       throw Exception("no range found for $weapon");

@@ -23,7 +23,6 @@ import 'package:bleed_client/enums/InventoryItemType.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/emit/emitMyst.dart';
-import 'package:bleed_client/functions/emit/emitPixel.dart';
 import 'package:bleed_client/functions/emitSmoke.dart';
 import 'package:bleed_client/getters/getTileAt.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
@@ -46,11 +45,10 @@ import 'classes/Score.dart';
 import 'common/GameEventType.dart';
 import 'common/GameState.dart';
 import 'common/Tile.dart';
-import 'common/Weapons.dart';
+import 'common/WeaponType.dart';
 import 'common/classes/Vector2.dart';
 import 'common/enums/ObjectType.dart';
 import 'common/version.dart';
-import 'draw.dart';
 import 'functions/onGameEvent.dart';
 import 'render/functions/mapTilesToSrcAndDst.dart';
 import 'state/inventory.dart';
@@ -66,7 +64,7 @@ const String _1 = "1";
 
 // enums
 const List<ServerResponse> serverResponses = ServerResponse.values;
-const List<Weapon> weapons = Weapon.values;
+const List<WeaponType> weapons = WeaponType.values;
 const List<GameEventType> gameEventTypes = GameEventType.values;
 
 // properties
@@ -546,7 +544,7 @@ bool _consumeBool() {
   return _consumeSingleCharacter() == _1 ? true : false;
 }
 
-Weapon _consumeWeapon() {
+WeaponType _consumeWeapon() {
   return weapons[_consumeSingleDigitInt()];
 }
 

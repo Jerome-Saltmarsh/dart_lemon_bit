@@ -2,7 +2,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:bleed_client/common/CharacterState.dart';
-import 'package:bleed_client/common/Weapons.dart';
+import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/render/constants/animations.dart';
@@ -38,7 +38,7 @@ Float32List _src = Float32List(4);
 Float32List mapCharacterSrc({
   CharacterType type,
   CharacterState state,
-  Weapon weapon,
+  WeaponType weapon,
   Direction direction,
   int frame,
   Shade shade,
@@ -56,11 +56,11 @@ Float32List mapCharacterSrc({
       }
 
       switch(weapon){
-        case Weapon.HandGun:
+        case WeaponType.HandGun:
           _src[0] = _humanIdleHandgun.x + (direction.index * _frameSize);
           _src[1] = _humanIdleHandgun.y + (shade.index * _frameSize);
           break;
-        case Weapon.Unarmed:
+        case WeaponType.Unarmed:
           _src[0] = _humanIdleUnarmed.x + (direction.index * _frameSize);
           _src[1] = _humanIdleUnarmed.y + (shade.index * _frameSize);
           break;
@@ -82,11 +82,11 @@ Float32List mapCharacterSrc({
       }
 
       switch(weapon){
-        case Weapon.HandGun:
+        case WeaponType.HandGun:
           _src[0] = _s + _f + _humanWalkingHandgun.x;
           _src[1] = shade.index * _frameSize + _humanWalkingHandgun.y;
           break;
-        case Weapon.Shotgun:
+        case WeaponType.Shotgun:
           _src[0] = _s + _f + _humanWalkingShotgun.x;
           _src[1] = shade.index * _frameSize + _humanWalkingShotgun.y;
           break;
@@ -106,7 +106,7 @@ Float32List mapCharacterSrc({
 
     case CharacterState.Aiming:
       switch (weapon) {
-        case Weapon.HandGun:
+        case WeaponType.HandGun:
           int _frame = 0;
           double _di = direction.index * _frameSize * _framesPerDirection2;
           double _fr = _frame * _frameSize;
@@ -114,7 +114,7 @@ Float32List mapCharacterSrc({
           _src[1] = _humanFiringHandgun.y + shade.index * _frameSize;
           break;
 
-        case Weapon.Shotgun:
+        case WeaponType.Shotgun:
           int _frame = 0;
           double _di = direction.index * _frameSize * _framesPerDirection3;
           double _fr = _frame * _frameSize;
@@ -128,7 +128,7 @@ Float32List mapCharacterSrc({
       break;
     case CharacterState.Firing:
       switch (weapon) {
-        case Weapon.HandGun:
+        case WeaponType.HandGun:
           int _frame = animations.man.firingHandgun[min(frame, _manFramesFiringHandgunMax)];
           double _di = direction.index * _frameSize * _framesPerDirection2;
           double _fr = _frame * _frameSize;
@@ -136,7 +136,7 @@ Float32List mapCharacterSrc({
           _src[1] = _humanFiringHandgun.y + shade.index * _frameSize;
           break;
 
-        case Weapon.Shotgun:
+        case WeaponType.Shotgun:
           int _frame = animations.man.firingShotgun[min(frame, _manFramesFiringShotgunMax)];
           double _di = direction.index * _frameSize * _framesPerDirection3;
           double _fr = _frame * _frameSize;
@@ -190,11 +190,11 @@ Float32List mapCharacterSrc({
       }
 
       switch(weapon){
-        case Weapon.HandGun:
+        case WeaponType.HandGun:
           _src[0] = _s + _f + _humanWalkingHandgun.x;
           _src[1] = shade.index * _frameSize + _humanWalkingHandgun.y;
           break;
-        case Weapon.Shotgun:
+        case WeaponType.Shotgun:
           _src[0] = _s + _f + _humanWalkingShotgun.x;
           _src[1] = shade.index * _frameSize + _humanWalkingShotgun.y;
           break;

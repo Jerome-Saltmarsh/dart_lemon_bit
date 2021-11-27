@@ -1,17 +1,10 @@
 import 'dart:math';
-import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/getters/inDarkness.dart';
-import 'package:bleed_client/images.dart';
-import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
-import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
-import 'package:bleed_client/render/draw/drawRawAtlas.dart';
 import 'package:bleed_client/render/state/paths.dart';
-import 'package:bleed_client/render/state/tileRects.dart';
-import 'package:bleed_client/render/state/tileTransforms.dart';
 import 'package:bleed_client/render/state/tilesDst.dart';
 import 'package:bleed_client/render/state/tilesSrc.dart';
 import 'package:bleed_client/state/game.dart';
