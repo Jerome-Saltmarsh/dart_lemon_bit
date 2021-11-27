@@ -47,25 +47,24 @@ import '../ui/compose/dialogs.dart';
 Future init() async {
   await images.load();
   await loadSharedPreferences();
-  registerPlayKeyboardHandler();
-  registerOnMouseScroll(onMouseScroll);
-  onConnectedController.stream.listen(_onConnected);
-  eventStream.stream.listen(_onEventReceivedFromServer);
-  observeCompiledGame(onCompiledGameChanged);
-  on(onGameJoined);
-  timeInSeconds.onChanged(onTimeChanged);
-  phase.onChanged(onPhaseChanged);
-  observeAmbientLight(onAmbientLightChanged);
-  game.shadeMax.onChanged(onShadeMaxChanged);
 
-  player.state.onChanged((CharacterState state) {
-    player.alive.value = state != CharacterState.Dead;
-  });
+  initializeGameInstances();
+  initializeEventListeners();
+  initAudioPlayers();
+  initUI();
+  rebuildUI();
 
-  settings.audioMuted.onChanged((value) {
-    if (sharedPreferences == null) return;
-    sharedPreferences.setBool('audioMuted', value);
-  });
+
+  if (Uri.base.hasQuery && Uri.base.queryParameters.containsKey('host')) {
+    Future.delayed(Duration(seconds: 1), () {
+      String host = Uri.base.queryParameters['host'];
+      String connectionString = parseHttpToWebSocket(host);
+      connect(connectionString);
+    });
+  }
+}
+
+void initializeGameInstances() {
 
   for (int i = 0; i < 1000; i++) {
     game.projectiles
@@ -95,6 +94,48 @@ Future init() async {
   for (int i = 0; i < 500; i++) {
     game.humans.add(Character());
   }
+}
+
+void onPlayerWeaponChanged(Weapon weapon) {
+  switch (weapon) {
+    case Weapon.HandGun:
+      playAudioReload(screenCenterWorldX, screenCenterWorldY);
+      break;
+    case Weapon.Shotgun:
+      playAudioCockShotgun(screenCenterWorldX, screenCenterWorldY);
+      break;
+    case Weapon.SniperRifle:
+      playAudioSniperEquipped(screenCenterWorldX, screenCenterWorldY);
+      break;
+    case Weapon.AssaultRifle:
+      playAudioReload(screenCenterWorldX, screenCenterWorldY);
+      break;
+  }
+}
+
+void initializeEventListeners(){
+
+  registerPlayKeyboardHandler();
+  registerOnMouseScroll(onMouseScroll);
+  onConnectedController.stream.listen(_onConnected);
+  eventStream.stream.listen(_onEventReceivedFromServer);
+  observeCompiledGame(onCompiledGameChanged);
+  on(onGameJoined);
+  timeInSeconds.onChanged(onTimeChanged);
+  phase.onChanged(onPhaseChanged);
+  observeAmbientLight(onAmbientLightChanged);
+  game.shadeMax.onChanged(onShadeMaxChanged);
+
+  player.state.onChanged((CharacterState state) {
+    player.alive.value = state != CharacterState.Dead;
+  });
+
+  settings.audioMuted.onChanged((value) {
+    if (sharedPreferences == null) return;
+    sharedPreferences.setBool('audioMuted', value);
+  });
+
+  game.playerWeapon.onChanged(onPlayerWeaponChanged);
 
   onDisconnected.stream.listen((event) {
     print("disconnect");
@@ -115,40 +156,10 @@ Future init() async {
     redrawCanvas();
   });
 
-  initAudioPlayers();
-  initUI();
-  rebuildUI();
-
   onRightClickChanged.stream.listen((bool down) {
     characterController.sprint = down;
   });
 
-  game.playerWeapon.onChanged(onPlayerWeaponChanged);
-
-  if (Uri.base.hasQuery && Uri.base.queryParameters.containsKey('host')) {
-    Future.delayed(Duration(seconds: 1), () {
-      String host = Uri.base.queryParameters['host'];
-      String connectionString = parseHttpToWebSocket(host);
-      connect(connectionString);
-    });
-  }
-}
-
-void onPlayerWeaponChanged(Weapon weapon) {
-  switch (weapon) {
-    case Weapon.HandGun:
-      playAudioReload(screenCenterWorldX, screenCenterWorldY);
-      break;
-    case Weapon.Shotgun:
-      playAudioCockShotgun(screenCenterWorldX, screenCenterWorldY);
-      break;
-    case Weapon.SniperRifle:
-      playAudioSniperEquipped(screenCenterWorldX, screenCenterWorldY);
-      break;
-    case Weapon.AssaultRifle:
-      playAudioReload(screenCenterWorldX, screenCenterWorldY);
-      break;
-  }
 }
 
 void _onEventReceivedFromServer(dynamic value) {
