@@ -136,10 +136,6 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.grenades);
   _write(buffer, player.weapon.rounds);
   _write(buffer, player.state.index);
-  _writeBool(buffer, true); // handgun acquired
-  _writeBool(buffer, true); // shotgun acquired
-  _writeBool(buffer, true); // sniper acquired
-  _writeBool(buffer, true); // assault rifle
   _write(buffer, player.currentTile.index);
   _write(buffer, 5); // handgun rounds
   _write(buffer, 5); // shotgun rounds

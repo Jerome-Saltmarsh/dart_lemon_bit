@@ -63,20 +63,3 @@ Score get highScore {
   }
   return highScore;
 }
-
-bool weaponAcquired(WeaponType weapon) {
-  switch (weapon) {
-    case WeaponType.Unarmed:
-      return true;
-    case WeaponType.HandGun:
-      return player.acquiredHandgun;
-    case WeaponType.Shotgun:
-      return player.acquiredShotgun;
-    case WeaponType.SniperRifle:
-      return player.acquiredSniperRifle;
-    case WeaponType.AssaultRifle:
-      return player.acquiredAssaultRifle;
-    default:
-      throw Exception("Could not get acquired for $weapon");
-  }
-}

@@ -388,12 +388,6 @@ Widget buildWeaponMenu() {
   });
 }
 
-List<WeaponType> getAcquiredNonEquippedWeapons() {
-  return WeaponType.values.where((WeaponType weapon) {
-    return weaponAcquired(weapon) && game.playerWeapon.value != weapon;
-  }).toList();
-}
-
 Stack buildGrenadeSlot() {
   return Stack(
     children: [

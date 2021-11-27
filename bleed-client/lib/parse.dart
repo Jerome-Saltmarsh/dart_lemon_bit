@@ -52,7 +52,6 @@ import 'functions/onGameEvent.dart';
 import 'render/functions/mapTilesToSrcAndDst.dart';
 import 'state.dart';
 
-
 // state
 int _index = 0;
 // constants
@@ -405,10 +404,6 @@ void _parsePlayer() {
 
   player.equippedRounds.value = _consumeIntUnsafe();
   player.state.value = _consumeCharacterState();
-  player.acquiredHandgun = _consumeBool();
-  player.acquiredShotgun = _consumeBool();
-  player.acquiredSniperRifle = _consumeBool();
-  player.acquiredAssaultRifle = _consumeBool();
   player.tile = _consumeTile();
   player.roundsHandgun = _consumeIntUnsafe();
   player.roundsShotgun = _consumeIntUnsafe();

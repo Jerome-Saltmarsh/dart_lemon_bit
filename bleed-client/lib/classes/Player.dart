@@ -8,10 +8,6 @@ class Player {
   int squad = -1;
   Watch<double> health = Watch(0.0);
   double maxHealth = 0;
-  bool acquiredHandgun = false;
-  bool acquiredShotgun = false;
-  bool acquiredSniperRifle = false;
-  bool acquiredAssaultRifle = false;
   Tile tile = Tile.Grass;
   int grenades = 0;
   int roundsHandgun;
