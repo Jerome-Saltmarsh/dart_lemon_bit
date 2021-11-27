@@ -410,10 +410,7 @@ void _parsePlayer() {
   if (player.meds != meds) {
     player.meds = meds;
   }
-  game.playerLives = _consumeIntUnsafe();
-  player.equippedClips = _consumeIntUnsafe();
   player.equippedRounds.value = _consumeIntUnsafe();
-  state.gameState = gameStates[_consumeSingleDigitInt()];
   player.points = _consumeIntUnsafe();
   player.credits = _consumeIntUnsafe();
   player.state.value = _consumeCharacterState();

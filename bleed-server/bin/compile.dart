@@ -137,10 +137,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.maxStamina);
   _write(buffer, player.grenades);
   _write(buffer, player.meds);
-  _write(buffer, player.lives);
-  _write(buffer, 0); // equipped weapon clips
   _write(buffer, player.weapon.rounds);
-  _write(buffer, player.gameState.index);
   _write(buffer, player.points);
   _write(buffer, player.credits);
   _write(buffer, player.state.index);

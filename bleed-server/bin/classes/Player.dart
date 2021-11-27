@@ -1,11 +1,8 @@
 import '../common/CharacterState.dart';
-import '../common/GameState.dart';
 import '../common/PlayerEvents.dart';
 import '../common/Quests.dart';
 import '../constants/no_squad.dart';
 import '../common/Tile.dart';
-import '../common/WeaponType.dart';
-import '../enums.dart';
 import '../functions/generateName.dart';
 import '../functions/generateUUID.dart';
 import '../settings.dart';
@@ -28,7 +25,6 @@ class Player extends Character {
   int meds;
   int lives;
   int frameOfDeath = -1;
-  GameState gameState = GameState.InProgress;
   int _points = 0;
   int credits = 0;
   int pointsRecord = 0;

@@ -79,12 +79,14 @@ Widget buildHealthBar() {
 
 Widget buildTopLeft() {
   return Positioned(
-      top: _padding, left: _padding, child: Column(
+      top: _padding,
+      left: _padding,
+      child: Column(
         crossAxisAlignment: cross.start,
         children: [
           buildTime(),
           buildMouseWorldPosition(),
-          WatchBuilder(game.totalZombies, (int value){
+          WatchBuilder(game.totalZombies, (int value) {
             return text('Zombies: $value');
           }),
         ],
@@ -190,15 +192,12 @@ Widget buildTopRight() {
   );
 }
 
-Widget buildMenu(){
+Widget buildMenu() {
   return WatchBuilder(hud.state.menuVisible, (bool value) {
     print("Build menu visible $value");
     if (!value)
       return Container(
-        child: const Icon(
-            Icons.menu,
-            size: _iconSize,
-            color: Colors.white),
+        child: const Icon(Icons.menu, size: _iconSize, color: Colors.white),
       );
 
     Widget iconToggleFullscreen = Tooltip(
@@ -348,17 +347,38 @@ Widget buildEquippedWeaponSlot(WeaponType weapon) {
   );
 }
 
-Widget buildWeaponSlot(WeaponType weapon) {
+Widget buildWeaponSlot(WeaponType weaponType) {
   return mouseOver(builder: (BuildContext context, bool mouseOver) {
+    double width = 80;
+
     return Container(
       width: 120,
-      height: 120 * goldenRatioInverse,
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        image: mapWeaponToImage(weapon),
-        color: mouseOver ? Colors.black45 : Colors.black26,
-        border: Border.all(color: Colors.white, width: 1),
-        borderRadius: borderRadius4,
+      height: 170 * goldenRatioInverse,
+      child: Column(
+        crossAxisAlignment: cross.start,
+        children: [
+          Container(
+            width: 120,
+            height: 120 * goldenRatioInverse,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              image: mapWeaponToImage(weaponType),
+              color: mouseOver ? Colors.black45 : Colors.black26,
+              border: Border.all(color: Colors.white, width: 1),
+              borderRadius: borderRadius4,
+            ),
+          ),
+          Container(
+              width: width,
+              height: 30,
+              color: Colors.white,
+              alignment: Alignment.centerLeft,
+              child: Container(
+                // width: width * player.rou,
+                height: 30,
+                color: Colors.white,
+              ))
+        ],
       ),
     );
   });
@@ -382,7 +402,7 @@ Widget buildBottomLeft() {
   return Positioned(bottom: _padding, left: _padding, child: buildWeaponMenu());
 }
 
-Widget buildExpandedWeapons(){
+Widget buildExpandedWeapons() {
   int index = -1;
   return Column(
     children: weapons.map((weapon) {

@@ -5,7 +5,6 @@ import 'package:lemon_watch/watch.dart';
 
 class Player {
   Watch<int> equippedRounds = Watch(0);
-  int equippedClips = 0;
   int stamina = 0;
   int staminaMax = 0;
   int squad = -1;

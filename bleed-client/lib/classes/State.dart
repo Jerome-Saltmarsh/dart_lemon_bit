@@ -11,7 +11,6 @@ class State {
   List<Lobby> lobbies = [];
   Player player = Player();
   String lobbyGameUuid = "";
-  GameState gameState = GameState.InProgress;
   DeathMatch deathMatch = DeathMatch();
   bool storeVisible = true;
   List<Score> score = [];

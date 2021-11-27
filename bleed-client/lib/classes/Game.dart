@@ -46,7 +46,6 @@ class Game {
   double playerX = -1;
   double playerY = -1;
   Watch<WeaponType> playerWeapon = Watch(WeaponType.Unarmed);
-  int playerLives = 0;
   CharacterState playerState = CharacterState.Idle;
   List<Item> items = [];
   int totalItems = 0;
