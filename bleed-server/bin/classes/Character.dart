@@ -22,6 +22,9 @@ class Character extends GameObject implements HasSquad {
   int squad;
   List<Weapon> weapons = [];
 
+  int level;
+  int experience;
+
   late int _health;
 
   int get health => _health;

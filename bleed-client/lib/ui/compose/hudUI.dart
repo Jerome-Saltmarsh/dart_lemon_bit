@@ -297,22 +297,47 @@ Widget buildImageSlot({DecorationImage image,
 }
 
 Widget buildEquipWeaponSlot(Weapon weapon, int index) {
-  return Row(
-    children: [
-      buildAmmoBar(weapon.rounds / weapon.capacity),
-      Stack(
+
+  return mouseOver(
+    builder: (BuildContext context, bool mouseOver){
+      return Row(
+        mainAxisAlignment: main.start,
         children: [
-          onPressed(
-              child: buildWeaponSlot(weapon.type),
-              callback: () {
-                sendRequestEquip(index);
-                rebuildUI();
-              }),
-          if (weapon.type != WeaponType.Unarmed) buildTag(weapon.rounds),
+          buildAmmoBar(weapon.rounds / weapon.capacity),
+          Stack(
+            children: [
+              onPressed(
+                  child: buildWeaponSlot(weapon.type),
+                  callback: () {
+                    sendRequestEquip(index);
+                    rebuildUI();
+                  }),
+              if (weapon.type != WeaponType.Unarmed) buildTag(weapon.rounds),
+            ],
+          ),
+          if (mouseOver)
+            buildWeaponStats(weapon)
         ],
-      ),
-    ],
+      );
+    }
   );
+}
+
+Widget buildWeaponStats(Weapon weapon){
+  return Container(
+    child: Column(
+      crossAxisAlignment: cross.start,
+      children: [
+        text(mapWeaponTypeToString(weapon.type)),
+        text("Damage: ${weapon.damage}"),
+        text("Capacity: ${weapon.capacity}"),
+      ],
+    ),
+  );
+}
+
+String mapWeaponTypeToString(WeaponType weaponType){
+  return weaponType.toString().replaceAll("WeaponType.", "");
 }
 
 Widget buildEquippedWeaponSlot(WeaponType weapon) {
@@ -370,6 +395,7 @@ Widget buildBottomLeft() {
 Widget buildExpandedWeapons() {
   int index = -1;
   return Column(
+    crossAxisAlignment: cross.start,
     children: weapons.map((weapon) {
       index++;
       return Container(

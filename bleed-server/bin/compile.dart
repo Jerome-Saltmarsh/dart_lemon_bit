@@ -131,8 +131,8 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _writeInt(buffer, player.x);
   _writeInt(buffer, player.y);
   _write(buffer, player.weapon.type.index);
-  _write(buffer, player.health.toInt());
-  _write(buffer, player.maxHealth.toInt());
+  _write(buffer, player.health);
+  _write(buffer, player.maxHealth);
   _write(buffer, player.grenades);
   _write(buffer, player.weapon.rounds);
   _write(buffer, player.weapon.capacity);

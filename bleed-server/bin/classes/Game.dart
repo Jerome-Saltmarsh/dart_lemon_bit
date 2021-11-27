@@ -303,6 +303,11 @@ extension GameFunctions on Game {
     if (target is Npc){
       target.active = false;
     }
+    if (src is Player){
+      if (target is Npc){
+        src.experience++;
+      }
+    }
     onKilledBy(target, src);
   }
 

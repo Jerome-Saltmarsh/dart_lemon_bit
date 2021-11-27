@@ -111,6 +111,7 @@
 [ ] Object Cave Wall
 [ ] Human Wand
 [ ] Human Bow
+[ ] Display Weapon Damage Stats (experience etc)
 [x] Human Sword
 [x] Tree Colors
 [x] Fix Editor
