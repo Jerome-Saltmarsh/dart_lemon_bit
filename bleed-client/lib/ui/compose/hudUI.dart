@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:bleed_client/classes/Weapon.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/constants.dart';
 import 'package:bleed_client/constants.dart';
@@ -15,6 +16,7 @@ import 'package:bleed_client/server.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/settings.dart';
+import 'package:bleed_client/state/weapons.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/decorationImages.dart';
@@ -322,16 +324,16 @@ Widget buildImageSlot(
   );
 }
 
-Widget buildEquipWeaponSlot(WeaponType weapon) {
+Widget buildEquipWeaponSlot(Weapon weapon) {
   return Stack(
     children: [
       onPressed(
-          child: buildWeaponSlot(weapon),
+          child: buildWeaponSlot(weapon.type),
           callback: () {
-            sendRequestEquip(weapon);
+            sendRequestEquip(weapons.indexOf(weapon));
             rebuildUI();
           }),
-      if (weapon != WeaponType.Unarmed) buildTag(getWeaponRounds(weapon)),
+      if (weapon.type != WeaponType.Unarmed) buildTag(weapon.rounds),
     ],
   );
 }
@@ -342,35 +344,6 @@ Widget buildEquippedWeaponSlot(WeaponType weapon) {
       buildWeaponSlot(weapon),
       if (weapon != WeaponType.Unarmed)
         WatchBuilder(player.equippedRounds, buildTag),
-    ],
-  );
-}
-
-Widget buildSlotWeapon({WeaponType weapon, int index}) {
-  bool acquired = weaponAcquired(weapon);
-  return Column(
-    children: [
-      if (!acquired && player.canPurchase)
-        buildPurchaseWeaponSlot(weapon: weapon),
-      if (player.canPurchase) height8,
-      if (!acquired) buildSlot(title: "Slot $index"),
-      if (acquired) buildEquipWeaponSlot(weapon),
-    ],
-  );
-}
-
-Widget buildPurchaseWeaponSlot({WeaponType weapon}) {
-  int price = mapWeaponPrice(weapon);
-  return Stack(
-    children: [
-      onPressed(
-          hint: '${mapWeaponName(weapon)} $price',
-          child: buildWeaponSlot(weapon),
-          callback: () {
-            sendRequestPurchaseWeapon(weapon);
-          }),
-      buildTag(price,
-          color: player.credits >= price ? colours.green : colours.blood),
     ],
   );
 }
@@ -409,22 +382,24 @@ Widget buildBottomLeft() {
   return Positioned(bottom: _padding, left: _padding, child: buildWeaponMenu());
 }
 
+Widget buildExpandedWeapons(){
+  return Column(
+    children: weapons.map((weapon) {
+      return Container(
+        child: buildEquipWeaponSlot(weapon),
+        margin: const EdgeInsets.only(bottom: 4),
+      );
+    }).toList(),
+  );
+}
+
 Widget buildWeaponMenu() {
   return mouseOver(builder: (BuildContext context, bool mouseOver) {
     return Column(
       mainAxisAlignment: main.end,
       crossAxisAlignment: cross.start,
       children: [
-        if (mouseOver)
-          Column(
-              mainAxisAlignment: main.end,
-              crossAxisAlignment: cross.start,
-              children: getAcquiredNonEquippedWeapons().map((WeaponType weapon) {
-                return Container(
-                  child: buildEquipWeaponSlot(weapon),
-                  margin: const EdgeInsets.only(bottom: 4),
-                );
-              }).toList()),
+        if (mouseOver) buildExpandedWeapons(),
         WatchBuilder(game.playerWeapon, buildEquippedWeaponSlot)
       ],
     );
@@ -731,16 +706,6 @@ Widget _buildViewRespawn() {
             )),
       ],
     ),
-  );
-}
-
-Widget buildWeaponButton(WeaponType weapon) {
-  return GestureDetector(
-    onTap: () => sendRequestEquip(weapon),
-    child: Container(
-        width: 120,
-        height: 50,
-        decoration: BoxDecoration(image: mapWeaponToImage(weapon))),
   );
 }
 

@@ -32,6 +32,7 @@ import 'package:bleed_client/render/functions/applyEnvironmentObjectsToBakeMappi
 import 'package:bleed_client/render/functions/setBakeMapToAmbientLight.dart';
 import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:bleed_client/state/weapons.dart';
 import 'package:bleed_client/ui/compose/dialogs.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/utils.dart';
@@ -54,7 +55,6 @@ import 'state.dart';
 
 
 // state
-List<Weapon> weapons = [];
 int _index = 0;
 // constants
 const String _space = " ";

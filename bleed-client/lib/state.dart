@@ -64,21 +64,6 @@ Score get highScore {
   return highScore;
 }
 
-int getWeaponRounds(WeaponType weapon) {
-  switch (weapon) {
-    case WeaponType.HandGun:
-      return player.roundsHandgun;
-    case WeaponType.Shotgun:
-      return player.roundsShotgun;
-    case WeaponType.SniperRifle:
-      return player.roundsSniperRifle;
-    case WeaponType.AssaultRifle:
-      return player.roundsAssaultRifle;
-    default:
-      throw Exception("Could not get clips for $weapon");
-  }
-}
-
 bool weaponAcquired(WeaponType weapon) {
   switch (weapon) {
     case WeaponType.Unarmed:

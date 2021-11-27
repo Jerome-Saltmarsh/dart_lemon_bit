@@ -39,8 +39,8 @@ void sendRequestCastFireball(){
   send('${ClientRequest.CasteFireball.index} $session $aim');
 }
 
-void sendRequestEquip(WeaponType weapon) {
-  send('${ClientRequest.Equip.index} $session ${weapon.index}');
+void sendRequestEquip(int index) {
+  send('${ClientRequest.Equip.index} $session $index');
 }
 
 void skipHour(){
@@ -49,18 +49,6 @@ void skipHour(){
 
 void reverseHour(){
   send(ClientRequest.ReverseHour.index.toString());
-}
-
-void sendRequestEquipHandgun() {
-  sendRequestEquip(WeaponType.HandGun);
-}
-
-void sendRequestEquipShotgun() {
-  sendRequestEquip(WeaponType.Shotgun);
-}
-
-void sendRequestEquipSniperRifle() {
-  sendRequestEquip(WeaponType.SniperRifle);
 }
 
 void sendRequestUpdateLobby() {
@@ -75,10 +63,6 @@ void sendRequestLobbyExit() {
   }
   // send(
   //     '${ClientRequest.Lobby_Exit.index.toString()} ${state.lobby.uuid} ${state.lobby.playerUuid}');
-}
-
-void sendRequestEquipAssaultRifle() {
-  sendRequestEquip(WeaponType.AssaultRifle);
 }
 
 String get aim => characterController.requestAim.toStringAsFixed(2);
