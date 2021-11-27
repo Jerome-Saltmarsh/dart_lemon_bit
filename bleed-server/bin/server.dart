@@ -374,7 +374,7 @@ void main() {
               player.clips.handgun = 1;
               player.rounds.handgun = constants.maxRounds.handgun;
               player.addEvent(PlayerEventType.Acquired_Handgun, 1);
-              player.weapon = Weapon(type: WeaponType.HandGun, damage: 1, capacity: 20);
+              player.weapons = [Weapon(type: WeaponType.HandGun, damage: 1, capacity: 20)];
               game.setCharacterState(player, CharacterState.ChangingWeapon);
               return;
 
@@ -387,7 +387,7 @@ void main() {
               player.clips.shotgun = 1;
               player.rounds.shotgun = constants.maxRounds.shotgun;
               player.addEvent(PlayerEventType.Acquired_Shotgun, 1);
-              player.weapon = Weapon(type: WeaponType.Shotgun, damage: 1, capacity: 15);
+              player.weapons = [Weapon(type: WeaponType.Shotgun, damage: 1, capacity: 15)];
               game.setCharacterState(player, CharacterState.ChangingWeapon);
               return;
 
@@ -400,7 +400,7 @@ void main() {
               player.clips.sniperRifle = 1;
               player.rounds.sniperRifle = constants.maxRounds.sniperRifle;
               player.addEvent(PlayerEventType.Acquired_SniperRifle, 1);
-              player.weapon = Weapon(type: WeaponType.SniperRifle, damage: 1, capacity: 15);
+              player.weapons = [Weapon(type: WeaponType.SniperRifle, damage: 1, capacity: 15)];
               game.setCharacterState(player, CharacterState.ChangingWeapon);
               return;
 
@@ -413,7 +413,7 @@ void main() {
               player.clips.assaultRifle = 1;
               player.rounds.assaultRifle = constants.maxRounds.assaultRifle;
               player.addEvent(PlayerEventType.Acquired_AssaultRifle, 1);
-              player.weapon = Weapon(type: WeaponType.AssaultRifle, damage: 1, capacity: 100);
+              player.weapons = [Weapon(type: WeaponType.AssaultRifle, damage: 1, capacity: 100)];
               game.setCharacterState(player, CharacterState.ChangingWeapon);
               return;
           }
@@ -519,7 +519,7 @@ Player spawnPlayerInTown() {
     rounds:
         Rounds(handgun: 50, shotgun: 30, sniperRifle: 20, assaultRifle: 100),
     squad: 1,
-    weapon: Weapon(type: WeaponType.HandGun, damage: 1, capacity: 24)
+    weapons: [Weapon(type: WeaponType.HandGun, damage: 1, capacity: 24)]
   );
   world.town.players.add(player);
   return player;

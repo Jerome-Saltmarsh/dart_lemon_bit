@@ -1522,6 +1522,8 @@ void playerInteract(Player player) {
 void changeWeapon(Player player, int index){
   if (player.busy) return;
   if (player.dead) return;
-  player.weapon = player.weapons[index];
+  if (index < 0) return;
+  if (index >= player.weapons.length) return;
+  player.equippedIndex = index;
   player.game.setCharacterState(player, CharacterState.ChangingWeapon);
 }

@@ -9,7 +9,7 @@ final Character _nonTarget =
   Character(
       x: 0,
       y: 0,
-      weapon: Weapon(type: WeaponType.Unarmed, damage: 0, capacity: 0),
+      weapons: [Weapon(type: WeaponType.Unarmed, damage: 0, capacity: 0)],
       health: 0,
       speed: 0
   );
@@ -28,7 +28,7 @@ class Npc extends Character {
       : super(
       x: x,
       y: y,
-      weapon: weapon,
+      weapons: [weapon],
       health: health,
       speed: settings.zombieSpeed);
 

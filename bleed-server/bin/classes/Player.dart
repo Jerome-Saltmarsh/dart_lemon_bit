@@ -53,14 +53,6 @@ class Player extends Character {
 
   final List<PlayerEvent> events = [];
 
-  List<Weapon> weapons = [
-    Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0),
-    Weapon(type: WeaponType.HandGun, damage: 1, capacity: 40),
-    Weapon(type: WeaponType.Shotgun, damage: 1, capacity: 20),
-    Weapon(type: WeaponType.SniperRifle, damage: 1, capacity: 15),
-    Weapon(type: WeaponType.AssaultRifle, damage: 1, capacity: 150),
-  ];
-
   void addEvent(PlayerEventType type, int value) {
     for (PlayerEvent event in events) {
       if (event.sent) continue;
@@ -99,14 +91,14 @@ class Player extends Character {
     this.grenades = 0,
     this.meds = 0,
     this.lives = 0,
-    required Weapon weapon,
+    required List<Weapon> weapons,
     required this.clips,
     required this.rounds,
     int squad = noSquad,
   }) : super(
             x: x,
             y: y,
-            weapon: weapon,
+            weapons: weapons,
             health: settings.health.player,
             speed: settings.playerSpeed,
             squad: squad) {

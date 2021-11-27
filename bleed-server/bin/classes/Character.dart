@@ -12,7 +12,7 @@ class Character extends GameObject implements HasSquad {
   CharacterState state = CharacterState.Idle;
   CharacterState previousState = CharacterState.Idle;
   Direction direction = Direction.Down;
-  Weapon weapon;
+  int equippedIndex = 0;
   double aimAngle = 0;
   double accuracy = 0;
   int stateDuration = 0;
@@ -20,10 +20,12 @@ class Character extends GameObject implements HasSquad {
   late int maxHealth;
   double speed;
   int squad;
+  List<Weapon> weapons = [];
 
   late int _health;
 
   int get health => _health;
+  Weapon get weapon => weapons[equippedIndex];
 
   set health(int value) {
     _health = clampInt(value, 0, maxHealth);
@@ -50,7 +52,7 @@ class Character extends GameObject implements HasSquad {
   Character({
     required double x,
     required double y,
-    required this.weapon,
+    required this.weapons,
     required int health,
     required this.speed,
     this.squad = noSquad,
