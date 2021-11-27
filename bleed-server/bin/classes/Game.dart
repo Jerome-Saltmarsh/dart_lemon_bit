@@ -41,7 +41,6 @@ import '../state.dart';
 import '../update.dart';
 import '../utils.dart';
 import '../utils/game_utils.dart';
-import '../utils/player_utils.dart';
 import 'Collectable.dart';
 import 'Crate.dart';
 import 'GameEvent.dart';
@@ -202,6 +201,9 @@ const secondsPerFrame = 5;
 
 const secondsPerHour = secondsPerMinute * minutesPerHour;
 
+const characterFramesChange = 4;
+const characterMaxFrames = 99;
+
 extension GameFunctions on Game {
   void updateAndCompile() {
     // @on update game
@@ -218,7 +220,7 @@ extension GameFunctions on Game {
     _updateCrates();
     _updateSpawnPointCollisions();
 
-    if (frame % 4 == 0) {
+    if (frame % characterFramesChange == 0) {
       updateFrames(players);
       updateFrames(zombies);
       updateFrames(npcs);
@@ -228,7 +230,7 @@ extension GameFunctions on Game {
 
   void updateFrames(List<Character> character) {
     for (Character character in character) {
-      character.stateFrameCount = (character.stateFrameCount + 1) % 99;
+      character.stateFrameCount = (character.stateFrameCount + 1) % characterMaxFrames;
     }
   }
 
