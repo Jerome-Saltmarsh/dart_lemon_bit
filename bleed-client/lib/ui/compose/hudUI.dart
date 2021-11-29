@@ -88,6 +88,7 @@ Widget buildTopLeft() {
           buildTotalZombies(),
           buildPlayerLevel(),
           buildPlayerExperience(),
+          buildPlayerNextLevelExperience(),
         ],
       ));
 }
@@ -97,7 +98,6 @@ Widget buildTotalZombies(){
     return text('Zombies: $value');
   });
 }
-
 
 Widget buildPlayerLevel(){
   return WatchBuilder(player.level, (int value) {
@@ -110,6 +110,13 @@ Widget buildPlayerExperience(){
     return text('Experience: $value');
   });
 }
+
+Widget buildPlayerNextLevelExperience(){
+  return WatchBuilder(player.experiencePercentage, (int value) {
+    return text('Required: $value');
+  });
+}
+
 
 Widget buildBottomRight() {
   return Positioned(bottom: _padding, right: _padding, child: buildHealthBar());

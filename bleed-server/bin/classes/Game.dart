@@ -230,7 +230,8 @@ extension GameFunctions on Game {
 
   void updateFrames(List<Character> character) {
     for (Character character in character) {
-      character.stateFrameCount = (character.stateFrameCount + 1) % characterMaxFrames;
+      character.stateFrameCount =
+          (character.stateFrameCount + 1) % characterMaxFrames;
     }
   }
 
@@ -300,13 +301,19 @@ extension GameFunctions on Game {
     if (target.dead) return;
     changeCharacterHealth(target, -amount);
     if (target.alive) return;
-    if (target is Npc){
+    if (target is Npc) {
       target.active = false;
     }
-    if (src is Player){
-      if (target is Npc){
-        // @ on zombie killed
-        src.experience += target.experience;
+    if (src is Player) {
+      if (target is Npc) {
+        if (src.level < maxPlayerLevel) {
+          src.experience += target.experience;
+          int experienceRequired = levelExperience[src.level];
+          if (src.experience >= experienceRequired){
+            // on player level increased
+            src.level++;
+          }
+        }
       }
     }
     onKilledBy(target, src);
@@ -725,9 +732,9 @@ extension GameFunctions on Game {
             npc.yv += velY(player.aimAngle, settings.knifeHitAcceleration);
             applyDamage(player, npc, settings.damage.knife);
 
-            if (npc.dead){
-              dispatch(GameEventType.Zombie_killed_Explosion, npc.x,
-                  npc.y, npc.xv, npc.yv);
+            if (npc.dead) {
+              dispatch(GameEventType.Zombie_killed_Explosion, npc.x, npc.y,
+                  npc.xv, npc.yv);
             } else {
               dispatch(
                   GameEventType.Zombie_Hit,
@@ -1024,7 +1031,8 @@ extension GameFunctions on Game {
     return bullet;
   }
 
-  Npc spawnZombie(double x, double y, {required int health, required int experience}) {
+  Npc spawnZombie(double x, double y,
+      {required int health, required int experience}) {
     Npc zombie = _getAvailableZombie();
     zombie.active = true;
     zombie.experience = experience;
@@ -1041,36 +1049,44 @@ extension GameFunctions on Game {
     return zombie;
   }
 
-  Npc _getAvailableZombie(){
+  Npc _getAvailableZombie() {
     for (int i = 0; i < zombies.length; i++) {
       if (zombies[i].active) continue;
       return zombies[i];
     }
-    final Npc npc = Npc(x: 0, y: 0, health: settings.health.zombie, weapon: Weapon(
-      type: WeaponType.Unarmed,
-      damage: 0,
-      capacity: 0,
-    ));
+    final Npc npc = Npc(
+        x: 0,
+        y: 0,
+        health: settings.health.zombie,
+        weapon: Weapon(
+          type: WeaponType.Unarmed,
+          damage: 0,
+          capacity: 0,
+        ));
     zombies.add(npc);
     return npc;
   }
 
-  Npc spawnRandomZombieLevel(int level){
+  Npc spawnRandomZombieLevel(int level) {
     return spawnRandomZombie(
-        health: zombieHealth[clampInt(level, 0, maxZombieLevel, )],
-        experience: zombieExperience[clampInt(level, 0, maxZombieLevel, )]
-    );
+        health: zombieHealth[clampInt(
+          level,
+          0,
+          maxZombieLevel,
+        )],
+        experience: zombieExperience[clampInt(
+          level,
+          0,
+          maxZombieLevel,
+        )]);
   }
 
   Npc spawnRandomZombie({int health = 25, required int experience}) {
     if (zombieSpawnPoints.isEmpty) throw ZombieSpawnPointsEmptyException();
     Vector2 spawnPoint = randomItem(zombieSpawnPoints);
-    return spawnZombie(
-        spawnPoint.x + giveOrTake(radius.zombieSpawnVariation),
+    return spawnZombie(spawnPoint.x + giveOrTake(radius.zombieSpawnVariation),
         spawnPoint.y + giveOrTake(radius.zombieSpawnVariation),
-        health: health,
-        experience: experience
-    );
+        health: health, experience: experience);
   }
 
   int get zombieCount {
@@ -1407,7 +1423,7 @@ void playerInteract(Player player) {
   }
 }
 
-void changeWeapon(Player player, int index){
+void changeWeapon(Player player, int index) {
   if (player.busy) return;
   if (player.dead) return;
   if (index < 0) return;

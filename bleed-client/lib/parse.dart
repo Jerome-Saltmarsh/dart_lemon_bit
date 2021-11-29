@@ -408,6 +408,8 @@ void _parsePlayer() {
   player.tile = _consumeTile();
   player.experience.value = _consumeInt();
   player.level.value = _consumeInt();
+  player.nextLevelExperience.value = _consumeInt();
+  player.experiencePercentage.value = _consumeInt();
 }
 
 void _parsePlayerEvents() {

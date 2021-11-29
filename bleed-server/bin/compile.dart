@@ -1,3 +1,4 @@
+import 'bleed/zombie_health.dart';
 import 'classes/Projectile.dart';
 import 'classes/Collectable.dart';
 import 'classes/Crate.dart';
@@ -140,6 +141,12 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.currentTile.index);
   _write(buffer, player.experience);
   _write(buffer, player.level);
+  int experienceRequired = levelExperience[player.level];
+  _write(buffer, experienceRequired);
+  double perc = player.experience / experienceRequired * 100;
+  _writeInt(buffer, perc); // todo make sure player is not max level
+
+
 
   _compilePlayerEvents(buffer, player);
 }
