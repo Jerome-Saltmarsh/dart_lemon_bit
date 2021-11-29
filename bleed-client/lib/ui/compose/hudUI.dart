@@ -80,13 +80,20 @@ Widget buildTopLeft() {
   return Positioned(
       top: _padding,
       left: _padding,
-      child: Column(
-        crossAxisAlignment: cross.start,
+      child: Row(
+        // crossAxisAlignment: cross.center,
         children: [
-          buildTime(),
+          Column(
+            crossAxisAlignment: cross.center,
+            children: [
+              buildTime(),
+              height4,
+              buildPlayerLevel(),
+            ],
+          ),
+          width8,
           // buildMouseWorldPosition(),
           // buildTotalZombies(),
-          buildPlayerLevel(),
           // buildPlayerExperience(),
           buildPlayerNextLevelExperience(),
         ],
@@ -101,34 +108,31 @@ Widget buildTotalZombies(){
 
 Widget buildPlayerLevel(){
   return WatchBuilder(player.level, (int value) {
-    return text('Level: $value');
-  });
-}
-
-Widget buildPlayerExperience(){
-  return WatchBuilder(player.experience, (int value) {
-    return text('Experience: $value');
+    return text('Level $value');
   });
 }
 
 Widget buildPlayerNextLevelExperience(){
-  return WatchBuilder(player.experiencePercentage, (int value) {
-    double percentage = value / 100.0;
-    return Container(
-      width: 100,
-      height: 50,
-      alignment: Alignment.centerLeft,
-      padding: EdgeInsets.all(3),
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.white, width: 4),
-          borderRadius: borderRadius4),
-      child: Container(
-        color: Colors.white,
-        width: 100 * percentage,
+  return Tooltip(
+    message: "Experience",
+    child: WatchBuilder(player.experiencePercentage, (int value) {
+      double percentage = value / 100.0;
+      return Container(
+        width: 100,
         height: 50,
-      ),
-    );
-  });
+        alignment: Alignment.centerLeft,
+        padding: EdgeInsets.all(3),
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.white, width: 4),
+            borderRadius: borderRadius4),
+        child: Container(
+          color: Colors.white,
+          width: 100 * percentage,
+          height: 50,
+        ),
+      );
+    }),
+  );
 }
 
 
@@ -137,9 +141,12 @@ Widget buildBottomRight() {
 }
 
 Widget buildTime() {
-  return WatchBuilder(timeInSeconds, (int value) {
-    return text("${padZero(timeInHours)} : ${padZero(timeInMinutes % 60)}");
-  });
+  return Tooltip(
+    message: "Time",
+    child: WatchBuilder(timeInSeconds, (int value) {
+      return text("${padZero(timeInHours)} : ${padZero(timeInMinutes % 60)}");
+    }),
+  );
 }
 
 Widget buildMouseWorldPosition() {
