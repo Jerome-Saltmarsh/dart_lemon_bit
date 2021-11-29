@@ -84,10 +84,10 @@ Widget buildTopLeft() {
         crossAxisAlignment: cross.start,
         children: [
           buildTime(),
-          buildMouseWorldPosition(),
-          buildTotalZombies(),
+          // buildMouseWorldPosition(),
+          // buildTotalZombies(),
           buildPlayerLevel(),
-          buildPlayerExperience(),
+          // buildPlayerExperience(),
           buildPlayerNextLevelExperience(),
         ],
       ));
@@ -113,7 +113,21 @@ Widget buildPlayerExperience(){
 
 Widget buildPlayerNextLevelExperience(){
   return WatchBuilder(player.experiencePercentage, (int value) {
-    return text('Required: $value');
+    double percentage = value / 100.0;
+    return Container(
+      width: 100,
+      height: 50,
+      alignment: Alignment.centerLeft,
+      padding: EdgeInsets.all(3),
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.white, width: 4),
+          borderRadius: borderRadius4),
+      child: Container(
+        color: Colors.white,
+        width: 100 * percentage,
+        height: 50,
+      ),
+    );
   });
 }
 
