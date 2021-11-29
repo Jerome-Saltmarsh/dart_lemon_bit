@@ -85,11 +85,22 @@ Widget buildTopLeft() {
         children: [
           buildTime(),
           buildMouseWorldPosition(),
-          WatchBuilder(game.totalZombies, (int value) {
-            return text('Zombies: $value');
-          }),
+          buildTotalZombies(),
+          buildExperience(),
         ],
       ));
+}
+
+Widget buildTotalZombies(){
+  return WatchBuilder(game.totalZombies, (int value) {
+    return text('Zombies: $value');
+  });
+}
+
+Widget buildExperience(){
+  return WatchBuilder(player.experience, (int value) {
+    return text('Experience: $value');
+  });
 }
 
 Widget buildBottomRight() {
@@ -325,6 +336,8 @@ Widget buildEquipWeaponSlot(Weapon weapon, int index) {
 
 Widget buildWeaponStats(Weapon weapon){
   return Container(
+    color: Colors.black38,
+    padding: padding8,
     child: Column(
       crossAxisAlignment: cross.start,
       children: [

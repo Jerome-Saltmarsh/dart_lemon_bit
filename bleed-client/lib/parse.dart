@@ -406,6 +406,7 @@ void _parsePlayer() {
   player.equippedCapacity.value = _consumeIntUnsafe();
   player.state.value = _consumeCharacterState();
   player.tile = _consumeTile();
+  player.experience.value = _consumeInt();
 }
 
 void _parsePlayerEvents() {

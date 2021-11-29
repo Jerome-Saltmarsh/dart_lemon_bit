@@ -19,11 +19,14 @@ class Npc extends Character {
   List<Vector2> path = [];
   NpcMode mode = NpcMode.Aggressive;
 
+  int experience;
+
   Npc({
     required double x,
     required double y,
     required int health,
-    required Weapon weapon
+    required Weapon weapon,
+    this.experience = 0,
   })
       : super(
       x: x,

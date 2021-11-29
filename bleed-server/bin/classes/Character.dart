@@ -1,6 +1,5 @@
 
 import '../common/CharacterState.dart';
-import '../common/WeaponType.dart';
 import '../common/enums/Direction.dart';
 import '../constants/no_squad.dart';
 import '../interfaces/HasSquad.dart';
@@ -21,9 +20,6 @@ class Character extends GameObject implements HasSquad {
   double speed;
   int squad;
   List<Weapon> weapons = [];
-
-  int level;
-  int experience;
 
   late int _health;
 

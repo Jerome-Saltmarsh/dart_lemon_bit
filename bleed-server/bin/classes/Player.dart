@@ -34,6 +34,8 @@ class Player extends Character {
 
   int handgunDamage = 10;
 
+  int experience = 0;
+
   Tile currentTile = Tile.PlayerSpawn;
   CharacterState characterState = CharacterState.Idle;
 

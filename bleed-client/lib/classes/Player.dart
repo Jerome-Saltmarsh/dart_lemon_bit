@@ -10,6 +10,7 @@ class Player {
   Watch<double> health = Watch(0.0);
   double maxHealth = 0;
   Tile tile = Tile.Grass;
+  Watch<int> experience = Watch(0);
   int grenades = 0;
   Watch<String> message = Watch("");
   Watch<CharacterState> state = Watch(CharacterState.Idle);

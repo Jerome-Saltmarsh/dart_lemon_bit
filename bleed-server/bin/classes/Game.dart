@@ -305,7 +305,8 @@ extension GameFunctions on Game {
     }
     if (src is Player){
       if (target is Npc){
-        src.experience++;
+        // @ on zombie killed
+        src.experience += target.experience;
       }
     }
     onKilledBy(target, src);
@@ -1023,9 +1024,10 @@ extension GameFunctions on Game {
     return bullet;
   }
 
-  Npc spawnZombie(double x, double y, {int health = 25}) {
+  Npc spawnZombie(double x, double y, {required int health, required int experience}) {
     Npc zombie = _getAvailableZombie();
     zombie.active = true;
+    zombie.experience = experience;
     zombie.state = CharacterState.Idle;
     zombie.stateDuration = 0;
     zombie.previousState = CharacterState.Idle;
@@ -1054,16 +1056,21 @@ extension GameFunctions on Game {
   }
 
   Npc spawnRandomZombieLevel(int level){
-    return spawnRandomZombie(health: zombieHealth[clampInt(level, 0, maxZombieLevel)]);
+    return spawnRandomZombie(
+        health: zombieHealth[clampInt(level, 0, maxZombieLevel, )],
+        experience: zombieExperience[clampInt(level, 0, maxZombieLevel, )]
+    );
   }
 
-  Npc spawnRandomZombie({int health = 25}) {
+  Npc spawnRandomZombie({int health = 25, required int experience}) {
     if (zombieSpawnPoints.isEmpty) throw ZombieSpawnPointsEmptyException();
     Vector2 spawnPoint = randomItem(zombieSpawnPoints);
     return spawnZombie(
         spawnPoint.x + giveOrTake(radius.zombieSpawnVariation),
         spawnPoint.y + giveOrTake(radius.zombieSpawnVariation),
-        health: health);
+        health: health,
+        experience: experience
+    );
   }
 
   int get zombieCount {
