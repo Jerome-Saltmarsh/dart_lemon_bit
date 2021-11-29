@@ -13,6 +13,12 @@ const List<int> zombieExperience = [
   15
 ];
 
+const List<int> levelExperience = [
+  5, // 5 experience required for level 1 and so on
+  10,
+  15
+];
+
 final maxZombieLevel = zombieHealth.length - 1;
 
 

@@ -139,6 +139,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.state.index);
   _write(buffer, player.currentTile.index);
   _write(buffer, player.experience);
+  _write(buffer, player.level);
 
   _compilePlayerEvents(buffer, player);
 }

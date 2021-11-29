@@ -407,6 +407,7 @@ void _parsePlayer() {
   player.state.value = _consumeCharacterState();
   player.tile = _consumeTile();
   player.experience.value = _consumeInt();
+  player.level.value = _consumeInt();
 }
 
 void _parsePlayerEvents() {

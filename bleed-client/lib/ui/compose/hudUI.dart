@@ -86,7 +86,8 @@ Widget buildTopLeft() {
           buildTime(),
           buildMouseWorldPosition(),
           buildTotalZombies(),
-          buildExperience(),
+          buildPlayerLevel(),
+          buildPlayerExperience(),
         ],
       ));
 }
@@ -97,7 +98,14 @@ Widget buildTotalZombies(){
   });
 }
 
-Widget buildExperience(){
+
+Widget buildPlayerLevel(){
+  return WatchBuilder(player.level, (int value) {
+    return text('Level: $value');
+  });
+}
+
+Widget buildPlayerExperience(){
   return WatchBuilder(player.experience, (int value) {
     return text('Experience: $value');
   });
