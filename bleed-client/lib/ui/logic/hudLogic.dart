@@ -44,11 +44,6 @@ void toggleEditMode() {
   mode.value = playMode ? Mode.Edit : Mode.Play;
 }
 
-void toggleShowScore() {
-  hud.state.showScore = !hud.state.showScore;
-  rebuildUI();
-}
-
 void closeMainMenuDialog() {
   if (contextMainMenuDialog == null) return;
   pop(contextMainMenuDialog);

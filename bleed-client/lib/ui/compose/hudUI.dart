@@ -270,16 +270,6 @@ Widget buildMenu() {
   });
 }
 
-Widget buildToggleScoreIcon() {
-  return Tooltip(
-    child: IconButton(
-        icon: Icon(Icons.format_list_numbered_rtl_outlined,
-            size: 35, color: Colors.white60),
-        onPressed: toggleShowScore),
-    message: hud.state.showScore ? "Hide Score" : "Show Score",
-  );
-}
-
 Widget _buildServerText() {
   return WatchBuilder(player.message, (String value) {
     if (value.isEmpty) return blank;

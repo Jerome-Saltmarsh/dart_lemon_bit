@@ -65,7 +65,6 @@ class _Hud {
 class _State {
   Watch<bool> textBoxVisible = Watch(false);
   bool observeMode = false;
-  bool showScore = true;
   bool showServers = false;
   bool expandScore = false;
   Watch<bool> menuVisible = Watch(false);
