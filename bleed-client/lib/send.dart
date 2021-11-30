@@ -1,4 +1,5 @@
 import 'package:bleed_client/common/ClientRequest.dart';
+import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/network/functions/send.dart';
 import 'package:bleed_client/network/functions/sinkMessage.dart';
@@ -55,8 +56,20 @@ void requestThrowGrenade(double strength) {
   send('${ClientRequest.Grenade.index} $session ${strength.toStringAsFixed(1)} $aim');
 }
 
-void sendRequestAcquireAbility() {
-  send('${ClientRequest.AcquireAbility.index} $session');
+void sendRequestAcquireShotgun(){
+  sendRequestAcquireAbility(WeaponType.Shotgun);
+}
+
+void sendRequestAcquireHandgun(){
+  sendRequestAcquireAbility(WeaponType.HandGun);
+}
+
+void sendRequestAcquireFirebolt(){
+  sendRequestAcquireAbility(WeaponType.Firebolt);
+}
+
+void sendRequestAcquireAbility(WeaponType type) {
+  send('${ClientRequest.AcquireAbility.index} $session ${type.index}');
 }
 
 void sendRequestUpdatePlayer() {

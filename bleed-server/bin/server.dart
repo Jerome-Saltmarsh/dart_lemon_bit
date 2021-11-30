@@ -90,9 +90,16 @@ void main() {
       sendToClient('$errorIndex ${error.index} $message');
     }
 
+    void errorInvalidArg(String message){
+      sendToClient('$errorIndex ${GameError.InvalidArguments.index} $message');
+    }
+
     void errorArgsExpected(int expected, List arguments) {
-      sendToClient(
-          '$errorIndex ${GameError.InvalidArguments.index} expected $expected but got ${arguments.length}');
+      errorInvalidArg('Invalid number of arguments received. Expected $expected but got ${arguments.length}');
+    }
+
+    void errorIntegerExpected(int index, got){
+      errorInvalidArg('Invalid type at index $index, expected integer but got $got');
     }
 
     void errorPlayerNotFound() {
@@ -203,6 +210,10 @@ void main() {
           return;
 
         case ClientRequest.AcquireAbility:
+          if (arguments.length != 3){
+            errorArgsExpected(3, arguments);
+            return;
+          }
           Player? player = findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
@@ -220,9 +231,43 @@ void main() {
             return;
           }
 
-          player.skillPoints--;
-          player.weapons.add(Weapon(type: WeaponType.Shotgun, damage: 1, capacity: 5));
-          player.weaponsDirty = true;
+          int? weaponTypeIndex = int.tryParse(arguments[2]);
+          if (weaponTypeIndex == null){
+            errorIntegerExpected(2, arguments[2]);
+            return;
+          }
+
+          if (weaponTypeIndex >= weaponTypes.length){
+            errorInvalidArg("WeaponType $weaponTypeIndex cannot be greater than ${weaponTypes.length}");
+            return;
+          }
+
+          if (weaponTypeIndex < 0){
+            errorInvalidArg("WeaponType $weaponTypeIndex cannot be negative");
+            return;
+          }
+
+          WeaponType type = weaponTypes[int.parse(arguments[2])];
+
+          switch(type){
+            case WeaponType.Shotgun:
+              player.weapons.add(Weapon(type: WeaponType.Shotgun, damage: 1, capacity: 5));
+              player.weaponsDirty = true;
+              player.skillPoints--;
+              break;
+
+            case WeaponType.HandGun:
+              player.weapons.add(Weapon(type: WeaponType.HandGun, damage: 1, capacity: 5));
+              player.weaponsDirty = true;
+              player.skillPoints--;
+              break;
+
+            case WeaponType.Firebolt:
+              player.weapons.add(Weapon(type: WeaponType.Firebolt, damage: 1, capacity: 5));
+              player.weaponsDirty = true;
+              player.skillPoints--;
+              break;
+          }
           break;
 
         case ClientRequest.Teleport:
@@ -377,6 +422,7 @@ Player spawnPlayerInTown() {
       Weapon(type: WeaponType.HandGun, damage: 1, capacity: 12),
     ]
   );
+  player.skillPoints = 1;
   world.town.players.add(player);
   return player;
 }

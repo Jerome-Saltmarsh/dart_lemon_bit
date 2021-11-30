@@ -15,6 +15,8 @@ DecorationImage mapWeaponToImage(WeaponType weapon) {
       return _decorationImages.sniper;
     case WeaponType.AssaultRifle:
       return _decorationImages.assaultRifle;
+    default:
+      return _decorationImages.unarmed;
   }
   throw Exception("no image available for $weapon");
 }

@@ -52,7 +52,7 @@ Widget buildSkillTree() {
                         if (!game.player.unlocked.shotgun)
                           text("Shotgun",
                               onPressed: pointsLeft
-                                  ? sendRequestAcquireAbility
+                                  ? sendRequestAcquireShotgun
                                   : null,
                               color: pointsLeft
                                   ? Colors.white
@@ -61,7 +61,16 @@ Widget buildSkillTree() {
                         if (!game.player.unlocked.handgun)
                           text("Handgun",
                               onPressed: pointsLeft
-                                  ? sendRequestAcquireAbility
+                                  ? sendRequestAcquireHandgun
+                                  : null,
+                              color: pointsLeft
+                                  ? Colors.white
+                                  : Colors.white38),
+
+                        if (!game.player.unlocked.firebolt)
+                          text("Firebolt",
+                              onPressed: pointsLeft
+                                  ? sendRequestAcquireFirebolt
                                   : null,
                               color: pointsLeft
                                   ? Colors.white

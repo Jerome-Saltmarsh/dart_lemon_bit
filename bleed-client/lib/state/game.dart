@@ -82,7 +82,21 @@ class _Player {
 class _Unlocked {
   bool get handgun => game.player.weaponUnlocked(WeaponType.HandGun);
   bool get shotgun => game.player.weaponUnlocked(WeaponType.Shotgun);
+  bool get firebolt => game.player.weaponUnlocked(WeaponType.Firebolt);
 }
+
+// Skill Tree
+// Handguns do 10% more damage
+// Handguns are 10% more accurate
+// Handguns are 10% more accurate
+
+// Wizard
+  // Firebolt
+
+// Bowman
+  // Magic Arrow
+
+//
 
 extension PlayerExtentions on _Player {
 
