@@ -102,23 +102,6 @@ void renderCanvasPlay() {
   _drawMouseAim(); // TODO Expensive
 }
 
-void emitMouseLight() {
-  if (mouseAvailable) {
-    double distanceX =
-        distanceBetween(playerX, playerY, mouseWorldX, mouseWorldY);
-    double maxDistance = 80;
-
-    if (distanceX < maxDistance) {
-      emitLightHigh(dynamicShading, mouseWorldX, mouseWorldY);
-    } else {
-      double an = angleBetween(playerX, playerY, mouseWorldX, mouseWorldY);
-      double x = adjacent(an, maxDistance);
-      double y = opposite(an, maxDistance);
-      emitLightHigh(dynamicShading, playerX + x, playerY + y);
-    }
-  }
-}
-
 void drawDebugEnvironmentObjects() {
   paint.color = Colors.red;
   for (EnvironmentObject env in game.environmentObjects) {
@@ -334,19 +317,14 @@ double mapWeaponAimLength(WeaponType weapon) {
 }
 
 void _drawMouseAim() {
-  // if (game.playerWeapon.value == Weapon.HandGun) return;
-  // if (game.playerWeapon.value == Weapon.Shotgun) return;
   if (!mouseAvailable) return;
   if (!playerReady) return;
-  // Character _player = getPlayer;
-  // if (_player == null) return;
-  // if (player.equippedRounds.value == 0) return;
   paint.strokeWidth = 3;
   double angle =
       angleBetween(mouseWorldX, mouseWorldY, game.player.x, game.player.y);
 
   double mouseDistance =
-      distanceBetween(mouseWorldX, mouseWorldY, playerX, playerY);
+      distanceBetween(mouseWorldX, mouseWorldY, game.player.x, game.player.y);
 
   double scope = mapWeaponAimLength(game.player.weapon.value);
   double d = min(mouseDistance, scope);

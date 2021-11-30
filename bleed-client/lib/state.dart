@@ -18,14 +18,4 @@ bool get playerReady =>
     game.player.x != -1 &&
     game.player.y != -1;
 
-// TODO Expensive string build
-String get session =>
-    '${game.gameId} ${game.player.id} ${game.player.uuid}';
-
-
-bool get gameStarted => game.gameId >= 0;
-
-double get playerX => game.player.x;
-
-double get playerY => game.player.y;
 

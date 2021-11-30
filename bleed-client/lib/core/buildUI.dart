@@ -23,7 +23,7 @@ Widget buildUI(BuildContext context) {
     return buildViewConnect();
   }
 
-  if (game.gameId < 0) {
+  if (game.id < 0) {
     // TODO consider case
     return buildViewConnecting();
   }
@@ -31,7 +31,7 @@ Widget buildUI(BuildContext context) {
 
   if (game.player.id < 0) {
     return text(
-        "player id is not assigned. player id: ${game.player.id}, game id: ${game.gameId}");
+        "player id is not assigned. player id: ${game.player.id}, game id: ${game.id}");
   }
 
   if (framesSinceEvent > 30) {

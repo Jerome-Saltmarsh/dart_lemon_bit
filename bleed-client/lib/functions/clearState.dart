@@ -26,7 +26,7 @@ void clearState() {
 
 void clearCompileGameState() {
   game.player.id = -1;
-  game.gameId = -1;
+  game.id = -1;
   game.player.uuid = "";
   game.player.x = -1;
   game.player.y = -1;

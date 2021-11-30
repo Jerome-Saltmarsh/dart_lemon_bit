@@ -6,11 +6,11 @@ import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/state/game.dart';
 
 import 'common/CharacterState.dart';
-import 'state.dart';
-
 final StringBuffer _buffer = StringBuffer();
 final gameUpdateIndex = ClientRequest.Update.index;
 const String _space = " ";
+
+String get session => game.player.uuid;
 
 void speak(String message){
   if (message.isEmpty) return;
@@ -62,8 +62,6 @@ void sendRequestAcquireAbility() {
 void sendRequestUpdatePlayer() {
   _buffer.clear();
   _write(gameUpdateIndex);
-  _write(game.gameId);
-  _write(game.player.id);
   _write(game.player.uuid);
   _write(characterController.characterState.index);
   _write(characterController.direction.index);

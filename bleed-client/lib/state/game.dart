@@ -44,7 +44,7 @@ class _Game {
   List<Particle> particles = [];
   List<ParticleEmitter> particleEmitters = [];
   List<double> grenades = [];
-  int gameId = -1;
+  int id = -1;
   int totalProjectiles = 0;
   List<Item> items = [];
   int totalItems = 0;

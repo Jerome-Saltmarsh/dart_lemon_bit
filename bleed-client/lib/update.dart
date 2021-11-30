@@ -24,7 +24,7 @@ double targetZoom = 1;
 
 void updatePlayMode() {
   if (!connected) return;
-  if (game.gameId < 0) return;
+  if (game.id < 0) return;
 
   updateZoom();
   _updateMenuVisible();

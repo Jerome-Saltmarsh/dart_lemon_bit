@@ -225,7 +225,7 @@ void parseState() {
         break;
 
       case ServerResponse.Collectables:
-        if (!gameStarted) return;
+        if (game.id < 0) return;
         _parseCollectables();
         break;
 
@@ -385,7 +385,7 @@ void _parsePlayerEvents() {
     int value = _consumeInt();
     switch (playerEvent) {
       case PlayerEventType.Acquired_Handgun:
-        playAudioAcquireItem(playerX, playerY);
+        playAudioAcquireItem(game.player.x, game.player.y);
         break;
     }
   }
@@ -411,10 +411,10 @@ void _parseGameJoined() {
   game.player.uuid = _consumeString();
   game.player.x = _consumeDouble();
   game.player.y = _consumeDouble();
-  game.gameId = _consumeInt();
+  game.id = _consumeInt();
   game.player.squad = _consumeInt();
   print(
-      "ServerResponse.Game_Joined: playerId: ${game.player.id} gameId: ${game.gameId}");
+      "ServerResponse.Game_Joined: playerId: ${game.player.id} gameId: ${game.id}");
 }
 
 ObjectType _consumeEnvironmentObjectType() {

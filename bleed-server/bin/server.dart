@@ -1,4 +1,3 @@
-import 'package:lemon_math/diff_over.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -37,10 +36,10 @@ Game findGameById(String id) {
   throw Exception();
 }
 
-Player? findPlayerById(String id) {
+Player? findPlayerByUuid(String uuid) {
   for (Game game in world.games) {
     for (Player player in game.players) {
-      if (player.uuid == id) {
+      if (player.uuid == uuid) {
         return player;
       }
     }
@@ -96,28 +95,12 @@ void main() {
           '$errorIndex ${GameError.InvalidArguments.index} expected $expected but got ${arguments.length}');
     }
 
-    void errorGameNotFound() {
-      error(GameError.GameNotFound);
-    }
-
     void errorPlayerNotFound() {
       error(GameError.PlayerNotFound);
     }
 
     void errorPlayerDead() {
       error(GameError.PlayerDead);
-    }
-
-    void errorInvalidPlayerUUID() {
-      error(GameError.InvalidPlayerUUID);
-    }
-
-    void errorWeaponNotAcquired() {
-      error(GameError.WeaponNotAcquired);
-    }
-
-    void errorWeaponAlreadyAcquired() {
-      error(GameError.WeaponAlreadyAcquired);
     }
 
     void onEvent(requestD) {
@@ -144,7 +127,7 @@ void main() {
 
       switch (request) {
         case ClientRequest.Update:
-          Player? player = findPlayerById(arguments[3]);
+          Player? player = findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -166,10 +149,10 @@ void main() {
           }
 
           CharacterState requestedState =
-              CharacterState.values[int.parse(arguments[4])];
+              CharacterState.values[int.parse(arguments[2])];
           Direction requestedDirection =
-              Direction.values[int.parse(arguments[5])];
-          double aim = double.parse(arguments[6]);
+              Direction.values[int.parse(arguments[3])];
+          double aim = double.parse(arguments[4]);
           player.aimAngle = aim;
           setDirection(player, requestedDirection);
           game.setCharacterState(player, requestedState);
@@ -185,8 +168,7 @@ void main() {
           break;
 
         case ClientRequest.Revive:
-          String uuid = arguments[3];
-          Player? player = findPlayerById(uuid);
+          Player? player = findPlayerByUuid(arguments[1]);
 
           if (player == null) {
             errorPlayerNotFound();
@@ -200,7 +182,7 @@ void main() {
           return;
 
         case ClientRequest.CasteFireball:
-          Player? player = findPlayerById(arguments[3]);
+          Player? player = findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -212,12 +194,12 @@ void main() {
           if (player.busy) {
             return;
           }
-          player.aimAngle = double.parse(arguments[4]);
+          player.aimAngle = double.parse(arguments[2]);
           player.game.spawnFireball(player);
           return;
 
         case ClientRequest.AcquireAbility:
-          Player? player = findPlayerById(arguments[3]);
+          Player? player = findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -234,31 +216,31 @@ void main() {
           break;
 
         case ClientRequest.Teleport:
-          Player? player = findPlayerById(arguments[3]);
+          Player? player = findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;
           }
-          double x = double.parse(arguments[4]);
-          double y = double.parse(arguments[5]);
+          double x = double.parse(arguments[2]);
+          double y = double.parse(arguments[3]);
           player.x = x;
           player.y = y;
           break;
 
         case ClientRequest.Equip:
 
-          if (arguments.length < 4){
-            error(GameError.InvalidArguments, message: "ClientRequest.Equip Error: Expected 4 args but got ${arguments.length}");
+          if (arguments.length < 3){
+            error(GameError.InvalidArguments, message: "ClientRequest.Equip Error: Expected 2 args but got ${arguments.length}");
             return;
           }
 
-          Player? player = findPlayerById(arguments[3]);
+          Player? player = findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;
           }
 
-          int? weaponIndex = int.tryParse(arguments[4]);
+          int? weaponIndex = int.tryParse(arguments[2]);
           if (weaponIndex == null){
             error(GameError.InvalidArguments, message: "arg4, weapon-index: $weaponIndex integer expected");
             return;
@@ -307,21 +289,21 @@ void main() {
           return;
 
         case ClientRequest.SetCompilePaths:
-          if (arguments.length != 5) {
-            errorArgsExpected(5, arguments);
+          if (arguments.length != 2) {
+            errorArgsExpected(2, arguments);
             return;
           }
 
-          String gameId = arguments[1];
-          Game? game = findGameById(gameId);
-          if (game == null) {
-            error(GameError.GameNotFound);
+          Player? player = findPlayerByUuid(arguments[1]);
+          if (player == null) {
+            errorPlayerNotFound();
             return;
           }
+
           // type gameId playerId playerUuid value
           int value = int.parse(arguments[4]);
-          game.compilePaths = value == 1;
-          print("game.compilePaths = ${game.compilePaths}");
+          player.game.compilePaths = value == 1;
+          print("game.compilePaths = ${player.game.compilePaths}");
           break;
 
         case ClientRequest.Version:
@@ -337,23 +319,10 @@ void main() {
           break;
 
         case ClientRequest.Speak:
-          String gameId = arguments[1];
-          Game? game = findGameById(gameId);
-          if (game == null) {
-            errorGameNotFound();
-            return;
-          }
 
-          int id = int.parse(arguments[2]);
-          Player? player = game.findPlayerById(id);
+          Player? player = findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
-            return;
-          }
-
-          String uuid = arguments[3];
-          if (uuid != player.uuid) {
-            errorInvalidPlayerUUID();
             return;
           }
 
@@ -364,8 +333,7 @@ void main() {
           break;
 
         case ClientRequest.Interact:
-          String uuid = arguments[3];
-          Player? player = findPlayerById(uuid);
+          Player? player = findPlayerByUuid(arguments[1]);
 
           if (player == null) {
             errorPlayerNotFound();

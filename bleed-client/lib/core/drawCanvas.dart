@@ -13,6 +13,6 @@ void drawCanvas(Canvas canvass, Size _size) {
   }
 
   if (!connected) return;
-  if (game.gameId < 0) return;
+  if (game.id < 0) return;
   renderCanvasPlay();
 }
