@@ -21,9 +21,13 @@ Widget text(dynamic value, {
           decoration: decoration,
           fontWeight: fontWeight));
   if (onPressed == null) return _text;
-  return GestureDetector(
-    child: _text,
-    onTap: onPressed,
+
+  return MouseRegion(
+    cursor: SystemMouseCursors.click,
+    child: GestureDetector(
+      child: _text,
+      onTap: onPressed,
+    ),
   );
 }
 

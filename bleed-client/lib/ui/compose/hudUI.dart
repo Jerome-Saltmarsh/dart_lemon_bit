@@ -76,7 +76,6 @@ Widget buildTopLeft() {
       top: _padding,
       left: _padding,
       child: Row(
-        // crossAxisAlignment: cross.center,
         children: [
           Column(
             crossAxisAlignment: cross.center,
@@ -87,9 +86,6 @@ Widget buildTopLeft() {
             ],
           ),
           width8,
-          // buildMouseWorldPosition(),
-          // buildTotalZombies(),
-          // buildPlayerExperience(),
           buildPlayerNextLevelExperience(),
           width8,
           text("Skills", onPressed: toggleSkillTreeVisible),
@@ -189,7 +185,7 @@ Widget buildSkillTree(){
     }
 
     return Positioned(
-        top: 100,
+        top: 50,
         child: Container(
           width: screenWidth,
           height: screenHeight,
@@ -197,16 +193,20 @@ Widget buildSkillTree(){
             mainAxisAlignment: main.center,
             crossAxisAlignment: cross.start,
             children: [
-              Container(
-                width: 300,
-                height: 100,
-                color: Colors.white24,
-                child: Column(
-                  children: [
-                    text("Skill Tree"),
-                    if (!shotgunUnlocked())
-                      text("Unlock Shotgun", onPressed: sendRequestAcquireAbility),
-                  ],
+              onPressed(
+                callback: (){},
+                child: Container(
+                  padding: padding8,
+                  width: 300,
+                  height: 100,
+                  color: Colors.white24,
+                  child: Column(
+                    children: [
+                      text("Skill Tree"),
+                      if (!shotgunUnlocked())
+                        text("Unlock Shotgun", onPressed: sendRequestAcquireAbility),
+                    ],
+                  ),
                 ),
               ),
             ],
