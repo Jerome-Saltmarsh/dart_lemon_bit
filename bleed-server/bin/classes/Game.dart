@@ -440,7 +440,10 @@ extension GameFunctions on Game {
     faceAimDirection(character);
 
     if (character is Player) {
-      if (character.weapon.rounds <= 0) {
+      if (
+        character.weapon.type != WeaponType.Unarmed &&
+        character.weapon.rounds <= 0
+      ) {
         character.stateDuration = settings.coolDown.clipEmpty;
         dispatch(GameEventType.Clip_Empty, character.x, character.y, 0, 0);
         return;
@@ -454,6 +457,11 @@ extension GameFunctions on Game {
     character.weapon.rounds--;
 
     switch (character.weapon.type) {
+      case WeaponType.Firebolt:
+        Projectile bullet = spawnFireball(character);
+        character.stateDuration = coolDown.fireball;
+        dispatch(GameEventType.Handgun_Fired, x, y, bullet.xv, bullet.yv);
+        break;
       case WeaponType.HandGun:
         Projectile bullet = spawnBullet(character);
         character.stateDuration = coolDown.handgun;

@@ -178,6 +178,7 @@ class _CoolDown {
   final int sniperRifle = 45;
   final int assaultRifle = 5;
   final int clipEmpty = 14;
+  final int fireball = 14;
 }
 
 class _Damage {
