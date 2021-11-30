@@ -49,20 +49,6 @@ void reverseHour(){
   send(ClientRequest.ReverseHour.index.toString());
 }
 
-void sendRequestUpdateLobby() {
-  // send(
-  //     '${ClientRequest.Lobby_Update.index.toString()} ${state.lobby.uuid} ${state.lobby.playerUuid}');
-}
-
-void sendRequestLobbyExit() {
-  if (state.lobby == null) {
-    print("sendRequestLobbyExit() state.lobby is null");
-    return;
-  }
-  // send(
-  //     '${ClientRequest.Lobby_Exit.index.toString()} ${state.lobby.uuid} ${state.lobby.playerUuid}');
-}
-
 String get aim => characterController.requestAim.toStringAsFixed(2);
 
 void requestThrowGrenade(double strength) {

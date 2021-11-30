@@ -126,8 +126,8 @@ void initializeEventListeners(){
   observeAmbientLight(onAmbientLightChanged);
   game.shadeMax.onChanged(onShadeMaxChanged);
 
-  player.state.onChanged((CharacterState state) {
-    player.alive.value = state != CharacterState.Dead;
+  game.player.state.onChanged((CharacterState state) {
+    game.player.alive.value = state != CharacterState.Dead;
   });
 
   settings.audioMuted.onChanged((value) {
@@ -135,7 +135,7 @@ void initializeEventListeners(){
     sharedPreferences.setBool('audioMuted', value);
   });
 
-  player.weapon.onChanged(onPlayerWeaponChanged);
+  game.player.weapon.onChanged(onPlayerWeaponChanged);
 
   onDisconnected.stream.listen((event) {
     print("disconnect");

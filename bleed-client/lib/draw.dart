@@ -20,7 +20,6 @@ import 'common/Tile.dart';
 import 'common/classes/Vector2.dart';
 import 'constants/colours.dart';
 import 'rects.dart';
-import 'state.dart';
 import 'utils.dart';
 
 void drawCharacterCircle(double x, double y, Color color) {
@@ -59,28 +58,28 @@ void drawDebugNpcs(List<NpcDebug> values){
 void drawPlayerHealth() {
   if (!playerAssigned) return;
 
-  double health = player.health.value / player.maxHealth;
-  double halfMaxHealth = player.maxHealth * 0.5;
+  double health = game.player.health.value / game.player.maxHealth;
+  double halfMaxHealth = game.player.maxHealth * 0.5;
   if (health > 0.5) {
     drawCharacterCircle(
         game.playerX,
         game.playerY,
         Color.lerp(
-            colours.yellow, colours.green, (player.health.value - halfMaxHealth) / halfMaxHealth));
+            colours.yellow, colours.green, (game.player.health.value - halfMaxHealth) / halfMaxHealth));
   } else {
     drawCharacterCircle(game.playerX, game.playerY,
-        Color.lerp(colours.blood, colours.yellow, player.health.value / halfMaxHealth));
+        Color.lerp(colours.blood, colours.yellow, game.player.health.value / halfMaxHealth));
   }
 }
 
 Color get healthColor {
-  double health = player.health.value / player.maxHealth;
-  double halfMaxHealth = player.maxHealth * 0.5;
+  double health = game.player.health.value / game.player.maxHealth;
+  double halfMaxHealth = game.player.maxHealth * 0.5;
   if (health > 0.5) {
     return Color.lerp(
-        colours.orange, colours.green, (player.health.value - halfMaxHealth) / halfMaxHealth);
+        colours.orange, colours.green, (game.player.health.value - halfMaxHealth) / halfMaxHealth);
   }
-  return Color.lerp(colours.blood, colours.orange, player.health.value / halfMaxHealth);
+  return Color.lerp(colours.blood, colours.orange, game.player.health.value / halfMaxHealth);
 }
 
 RSTransform getTileTransform(int x, int y) {

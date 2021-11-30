@@ -40,17 +40,17 @@ const double _padding = 8;
 const _iconSize = 45.0;
 
 Widget buildHealthBar() {
-  return WatchBuilder(player.health, (double health) {
+  return WatchBuilder(game.player.health, (double health) {
     if (health == null) {
       return CircularProgressIndicator();
     }
 
-    double percentage = health / player.maxHealth;
+    double percentage = health / game.player.maxHealth;
     double width = 120;
     double height = width * goldenRatioInverse;
 
     return Tooltip(
-      message: 'Health ${health.toInt()} / ${player.maxHealth}',
+      message: 'Health ${health.toInt()} / ${game.player.maxHealth}',
       child: Container(
         width: width,
         height: height,
@@ -107,7 +107,7 @@ Widget buildTotalZombies(){
 }
 
 Widget buildPlayerLevel(){
-  return WatchBuilder(player.level, (int value) {
+  return WatchBuilder(game.player.level, (int value) {
     return text('Level $value');
   });
 }
@@ -115,7 +115,7 @@ Widget buildPlayerLevel(){
 Widget buildPlayerNextLevelExperience(){
   return Tooltip(
     message: "Experience",
-    child: WatchBuilder(player.experiencePercentage, (int value) {
+    child: WatchBuilder(game.player.experiencePercentage, (int value) {
       double percentage = value / 100.0;
       return Container(
         width: 100,
@@ -164,7 +164,7 @@ String padZero(num value) {
 Widget buildHud() {
   print("buildHud()");
 
-  return WatchBuilder(player.alive, (bool alive) {
+  return WatchBuilder(game.player.alive, (bool alive) {
     return Stack(
       children: [
         buildTextBox(),
@@ -182,7 +182,14 @@ Widget buildHud() {
 }
 
 bool shotgunUnlocked(){
-  for(Weapon weapon in player.weapons){
+  for(Weapon weapon in game.player.weapons){
+    if(weapon.type == WeaponType.Shotgun) return true;
+  }
+  return false;
+}
+
+bool unlockedFirebolt(){
+  for(Weapon weapon in game.player.weapons){
     if(weapon.type == WeaponType.Shotgun) return true;
   }
   return false;
@@ -280,7 +287,7 @@ Widget buildMenu() {
 }
 
 Widget _buildServerText() {
-  return WatchBuilder(player.message, (String value) {
+  return WatchBuilder(game.player.message, (String value) {
     if (value.isEmpty) return blank;
 
     return Positioned(
@@ -293,7 +300,7 @@ Widget _buildServerText() {
             padding: padding16,
             child: Column(
               children: [
-                text(player.message.value),
+                text(game.player.message.value),
                 height16,
                 button("Next", clearPlayerMessage),
               ],
@@ -305,7 +312,7 @@ Widget _buildServerText() {
 }
 
 void clearPlayerMessage() {
-  player.message.value = "";
+  game.player.message.value = "";
 }
 
 Widget buildSlot({String title}) {
@@ -390,14 +397,14 @@ String mapWeaponTypeToString(WeaponType weaponType){
 Widget buildEquippedWeaponSlot(WeaponType weapon) {
   return Row(
     children: [
-      WatchBuilder(player.equippedRounds, (int rounds) {
-        return buildAmmoBar(rounds / player.equippedCapacity.value);
+      WatchBuilder(game.player.equippedRounds, (int rounds) {
+        return buildAmmoBar(rounds / game.player.equippedCapacity.value);
       }),
       Stack(
         children: [
           buildWeaponSlot(weapon),
           if (weapon != WeaponType.Unarmed)
-            WatchBuilder(player.equippedRounds, buildTag),
+            WatchBuilder(game.player.equippedRounds, buildTag),
         ],
       ),
     ],
@@ -443,7 +450,7 @@ Widget buildExpandedWeapons() {
   int index = -1;
   return Column(
     crossAxisAlignment: cross.start,
-    children: player.weapons.map((weapon) {
+    children: game.player.weapons.map((weapon) {
       index++;
       return Container(
         child: buildEquipWeaponSlot(weapon, index),
@@ -460,7 +467,7 @@ Widget buildWeaponMenu() {
       crossAxisAlignment: cross.start,
       children: [
         if (mouseOver) buildExpandedWeapons(),
-        WatchBuilder(player.weapon, buildEquippedWeaponSlot)
+        WatchBuilder(game.player.weapon, buildEquippedWeaponSlot)
       ],
     );
   });
@@ -476,7 +483,7 @@ Stack buildGrenadeSlot() {
               width: 120 * goldenRatioInverse,
               height: 120 * goldenRatioInverse,
               color: Colors.black38)),
-      buildTag(player.grenades)
+      buildTag(game.player.grenades)
     ],
   );
 }
@@ -764,7 +771,7 @@ Widget buildLowAmmo() {
             Container(
                 padding: EdgeInsets.all(10),
                 color: Colors.black26,
-                child: text(player.equippedRounds == 0 ? "Empty" : "Low Ammo",
+                child: text(game.player.equippedRounds == 0 ? "Empty" : "Low Ammo",
                     fontSize: 20)),
           ],
         ),
@@ -816,7 +823,7 @@ Widget buildServer() {
         child: Column(
           crossAxisAlignment: cross.center,
           children: [
-            if ((player.dead && !hud.state.observeMode) | hud.state.showServers)
+            if ((game.player.dead && !hud.state.observeMode) | hud.state.showServers)
               onPressed(
                   callback: disconnect,
                   child: Container(
@@ -825,7 +832,7 @@ Widget buildServer() {
                     child: text("Disconnect"),
                     padding: padding4,
                   )),
-            if ((player.dead && !hud.state.observeMode) ||
+            if ((game.player.dead && !hud.state.observeMode) ||
                 hud.state.showServers)
               buildServerList(),
             Container(

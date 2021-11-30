@@ -111,10 +111,10 @@ void parseState() {
 
 
   case ServerResponse.Weapons:
-        player.weapons.clear();
+        game.player.weapons.clear();
         int length = _consumeIntUnsafe();
         for(int i = 0; i < length; i++){
-          player.weapons.add(_consumeWeapon());
+          game.player.weapons.add(_consumeWeapon());
         }
         break;
 
@@ -123,19 +123,7 @@ void parseState() {
         break;
 
       case ServerResponse.Version:
-        state.serverVersion = _consumeInt();
-
-        if (state.serverVersion == version) {
-          joinGameCasual();
-          // joinGameOpenWorld();
-          break;
-        }
-        if (state.serverVersion < version) {
-          showErrorDialog(
-              "The server version ${state.serverVersion} you have connected to be older than your client $version. The game may not perform properly");
-          break;
-        }
-        showDialogClientUpdateAvailable();
+        joinGameCasual();
         break;
 
       case ServerResponse.Error:
@@ -161,11 +149,6 @@ void parseState() {
           clearState();
           disconnect();
           showErrorDialogPlayerNotFound();
-        }
-        if (error == GameError.LobbyNotFound) {
-          print("Server Error: Lobby not found");
-          state.lobby = null;
-          showErrorDialog("Lobby not found");
         }
         return;
 
@@ -216,7 +199,7 @@ void parseState() {
           message += _consumeString();
           message += " ";
         }
-        player.message.value = message.trim();
+        game.player.message.value = message.trim();
         break;
 
       case ServerResponse.Crates:
@@ -374,25 +357,25 @@ void _parseTiles() {
 void _parsePlayer() {
   game.playerX = _consumeDouble();
   game.playerY = _consumeDouble();
-  player.weapon.value = _consumeWeaponType();
-  player.health.value = _consumeDouble();
-  player.maxHealth = _consumeDouble();
+  game.player.weapon.value = _consumeWeaponType();
+  game.player.health.value = _consumeDouble();
+  game.player.maxHealth = _consumeDouble();
 
   int grenades = _consumeInt();
 
-  if (player.grenades != grenades) {
-    player.grenades = grenades;
+  if (game.player.grenades != grenades) {
+    game.player.grenades = grenades;
   }
 
-  player.equippedRounds.value = _consumeIntUnsafe();
-  player.equippedCapacity.value = _consumeIntUnsafe();
-  player.state.value = _consumeCharacterState();
-  player.tile = _consumeTile();
-  player.experience.value = _consumeInt();
-  player.level.value = _consumeInt();
-  player.skillPoints.value = _consumeInt();
-  player.nextLevelExperience.value = _consumeInt();
-  player.experiencePercentage.value = _consumeInt();
+  game.player.equippedRounds.value = _consumeIntUnsafe();
+  game.player.equippedCapacity.value = _consumeIntUnsafe();
+  game.player.state.value = _consumeCharacterState();
+  game.player.tile = _consumeTile();
+  game.player.experience.value = _consumeInt();
+  game.player.level.value = _consumeInt();
+  game.player.skillPoints.value = _consumeInt();
+  game.player.nextLevelExperience.value = _consumeInt();
+  game.player.experiencePercentage.value = _consumeInt();
 }
 
 void _parsePlayerEvents() {
@@ -429,7 +412,7 @@ void _parseGameJoined() {
   game.playerX = _consumeDouble();
   game.playerY = _consumeDouble();
   game.gameId = _consumeInt();
-  player.squad = _consumeInt();
+  game.player.squad = _consumeInt();
   print(
       "ServerResponse.Game_Joined: playerId: ${game.playerId} gameId: ${game.gameId}");
 }

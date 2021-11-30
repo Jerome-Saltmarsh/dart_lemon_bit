@@ -1,7 +1,4 @@
-import 'package:bleed_client/classes/Player.dart';
 import 'package:bleed_client/state/game.dart';
-
-import 'classes/State.dart';
 
 int frameRate = 5;
 int frameRateValue = 0;
@@ -25,9 +22,6 @@ bool get playerReady =>
 String get session =>
     '${game.gameId} ${game.playerId} ${game.playerUUID}';
 
-State state = State();
-
-Player get player => state.player;
 
 bool get gameStarted => game.gameId >= 0;
 

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:bleed_client/network/functions/disconnect.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
@@ -33,51 +34,6 @@ Future showErrorDialog(String message) async {
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text(message),
-      );
-    },
-  );
-}
-
-Future showDialogClientUpdateAvailable() async {
-  double height = 300;
-
-  return showDialog<void>(
-    context: globalContext,
-    barrierDismissible: false,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text("Update Available ${state.serverVersion}"),
-        actions: [
-          // onPressed(
-          //     callback: refreshPage,
-          //     child: text("Update", color: Colors.black)),
-          onPressed(
-              callback: () {
-                disconnect();
-                pop(context);
-              },
-              child: text("Cancel", color: Colors.black)),
-          onPressed(
-              callback: () {
-                pop(context);
-                // joinGameOpenWorld();
-              },
-              child: text("Ignore", color: Colors.black)),
-        ],
-        content: Container(
-          height: height,
-          width: height * goldenRatioInverse,
-          child: Row(
-            mainAxisAlignment: main.center,
-            children: [
-              mouseOver(builder: (BuildContext context, bool mouseOver){
-                Widget update = text("Update", color: Colors.black, fontSize: 40);
-                if (!mouseOver) return update;
-                return border(child: update, color: Colors.black, padding: padding8, radius: borderRadius4);
-              }),
-            ],
-          ),
-        ),
       );
     },
   );

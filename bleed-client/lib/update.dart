@@ -33,7 +33,7 @@ void updatePlayMode() {
   readPlayerInput();
   updateParticles();
   updateDeadCharacterBlood();
-  if (!panningCamera && player.alive.value) {
+  if (!panningCamera && game.player.alive.value) {
     cameraFollowPlayer();
   }
 

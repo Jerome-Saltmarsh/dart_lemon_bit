@@ -23,8 +23,6 @@ Widget buildUI(BuildContext context) {
     return buildViewConnect();
   }
 
-  if (state.lobby != null) return center(buildViewJoinedLobby());
-
   if (game.gameId < 0) {
     // TODO consider case
     return buildViewConnecting();

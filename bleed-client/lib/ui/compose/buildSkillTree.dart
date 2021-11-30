@@ -26,12 +26,22 @@ Widget buildSkillTree(){
                 callback: (){},
                 child: Container(
                   padding: padding8,
-                  width: 300,
+                  width: 400,
                   height: 100,
                   color: Colors.white24,
                   child: Column(
                     children: [
-                      text("Skill Tree"),
+                      Row(
+                        mainAxisAlignment: main.spread,
+                        children: [
+                          text(" "),
+                          text("Skills"),
+                          Tooltip(
+                              message: "Close",
+                              child: text("x", onPressed: hud.toggle.skillTree))
+                        ],
+                      ),
+                      height8,
                       if (!shotgunUnlocked())
                         text("Unlock Shotgun", onPressed: sendRequestAcquireAbility),
                     ],

@@ -2,6 +2,7 @@
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
+import 'package:bleed_client/classes/Player.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CharacterState.dart';
@@ -16,6 +17,8 @@ import 'Item.dart';
 import 'Particle.dart';
 
 class Game {
+  Player player = Player();
+  int serverVersion;
   List<int> collectables = [];
   List<Vector2> crates = [];
   int cratesTotal = 0;
