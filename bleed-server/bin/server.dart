@@ -230,6 +230,7 @@ void main() {
             return;
           }
           player.weapons.add(Weapon(type: WeaponType.Shotgun, damage: 1, capacity: 5));
+          player.weaponsDirty = true;
           break;
 
         case ClientRequest.Teleport:

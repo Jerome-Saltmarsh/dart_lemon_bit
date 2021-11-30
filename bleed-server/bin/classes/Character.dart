@@ -20,6 +20,7 @@ class Character extends GameObject implements HasSquad {
   double speed;
   int squad;
   List<Weapon> weapons = [];
+  bool weaponsDirty = false;
 
   late int _health;
 

@@ -12,14 +12,12 @@ import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/settings.dart';
-import 'package:bleed_client/state/weapons.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/decorationImages.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/ui/state/styleguide.dart';
-import 'package:bleed_client/utils/list_util.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:flutter/material.dart';
@@ -206,7 +204,8 @@ Widget buildSkillTree(){
                 child: Column(
                   children: [
                     text("Skill Tree"),
-                    text("Unlock Shotgun", onPressed: sendRequestAcquireAbility),
+                    if (!shotgunUnlocked())
+                      text("Unlock Shotgun", onPressed: sendRequestAcquireAbility),
                   ],
                 ),
               ),
@@ -214,6 +213,13 @@ Widget buildSkillTree(){
           ),
         ));
   });
+}
+
+bool shotgunUnlocked(){
+  for(Weapon weapon in player.weapons){
+    if(weapon.type == WeaponType.Shotgun) return true;
+  }
+  return false;
 }
 
 Positioned _buildRespawnLight() {
@@ -471,7 +477,7 @@ Widget buildExpandedWeapons() {
   int index = -1;
   return Column(
     crossAxisAlignment: cross.start,
-    children: weapons.map((weapon) {
+    children: player.weapons.map((weapon) {
       index++;
       return Container(
         child: buildEquipWeaponSlot(weapon, index),

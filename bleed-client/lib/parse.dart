@@ -32,8 +32,8 @@ import 'package:bleed_client/render/functions/applyEnvironmentObjectsToBakeMappi
 import 'package:bleed_client/render/functions/setBakeMapToAmbientLight.dart';
 import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/state/weapons.dart';
 import 'package:bleed_client/ui/compose/dialogs.dart';
+import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/utils/list_util.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
@@ -104,11 +104,17 @@ void parseState() {
         _parsePlayer();
         break;
 
-      case ServerResponse.Weapons:
-        weapons.clear();
+      case ServerResponse.Weapons_Dirty:
+        hud.skillTreeVisible.value = !hud.skillTreeVisible.value;
+        hud.skillTreeVisible.value = !hud.skillTreeVisible.value;
+        break;
+
+
+  case ServerResponse.Weapons:
+        player.weapons.clear();
         int length = _consumeIntUnsafe();
         for(int i = 0; i < length; i++){
-          weapons.add(_consumeWeapon());
+          player.weapons.add(_consumeWeapon());
         }
         break;
 

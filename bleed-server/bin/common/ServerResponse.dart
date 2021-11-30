@@ -25,4 +25,5 @@ enum ServerResponse {
   Scene_Changed,
   Scene_Shade_Max,
   Weapons,
+  Weapons_Dirty,
 }

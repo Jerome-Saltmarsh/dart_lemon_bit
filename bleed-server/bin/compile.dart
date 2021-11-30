@@ -146,9 +146,12 @@ void compilePlayer(StringBuffer buffer, Player player) {
   double perc = player.experience / experienceRequired * 100;
   _writeInt(buffer, perc); // todo make sure player is not max level
 
-
-
   _compilePlayerEvents(buffer, player);
+
+  if (player.weaponsDirty){
+    player.weaponsDirty = false;
+    _write(buffer, ServerResponse.Weapons_Dirty.index);
+  }
 }
 
 void _compilePlayerEvents(StringBuffer buffer, Player player) {
