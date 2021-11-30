@@ -2,15 +2,13 @@
 import '../bin/common/WeaponType.dart';
 import 'maths.dart';
 
-Settings settings = Settings();
+final Settings settings = Settings();
 
 _Radius get radius => settings.radius;
 
 _CoolDown get coolDown => settings.coolDown;
 
 _Accuracy get _accuracy => settings.accuracy;
-
-_Damage get _damage => settings.damage;
 
 _Range get _range => settings.range;
 
@@ -41,21 +39,8 @@ double getWeaponAccuracy(WeaponType weapon){
       return _accuracy.sniperRifle;
     case WeaponType.AssaultRifle:
       return _accuracy.assaultRifle;
-    default:
-      throw Exception("No accuracy found for $weapon");
-  }
-}
-
-int getWeaponDamage(WeaponType weapon){
-  switch (weapon){
-    case WeaponType.HandGun:
-      return _damage.handgun;
-    case WeaponType.Shotgun:
-      return _damage.shotgun;
-    case WeaponType.SniperRifle:
-      return _damage.sniperRifle;
-    case WeaponType.AssaultRifle:
-      return _damage.assaultRifle;
+    case WeaponType.Firebolt:
+      return _accuracy.firebolt;
     default:
       throw Exception("No accuracy found for $weapon");
   }
@@ -71,6 +56,8 @@ double getWeaponRange(WeaponType weapon) {
       return _range.sniperRifle;
     case WeaponType.AssaultRifle:
       return _range.assaultRifle;
+    case WeaponType.Firebolt:
+      return _range.firebolt;
     default:
       throw Exception("no range found for $weapon");
   }
@@ -182,6 +169,7 @@ class _Accuracy {
   final double sniperRifle = 0;
   final double shotgun = 0.15;
   final double assaultRifle = 0.1;
+  final double firebolt = 0.1;
 }
 
 class _CoolDown {
@@ -209,6 +197,7 @@ class _Range {
   final double sniperRifle = 600;
   final double assaultRifle = 450;
   final double zombieStrike = 20;
+  final double firebolt = 200;
 }
 
 class _BulletSpeed {

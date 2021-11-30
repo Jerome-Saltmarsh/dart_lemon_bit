@@ -437,7 +437,7 @@ Widget buildWeaponSlot(WeaponType weaponType) {
       height: 120 * goldenRatioInverse,
       alignment: Alignment.center,
       decoration: BoxDecoration(
-        image: mapWeaponToImage(weaponType),
+        image: mapWeaponTypeToImage[weaponType],
         color: mouseOver ? Colors.black45 : Colors.black26,
         border: Border.all(color: Colors.white, width: 1),
         borderRadius: borderRadius4,
