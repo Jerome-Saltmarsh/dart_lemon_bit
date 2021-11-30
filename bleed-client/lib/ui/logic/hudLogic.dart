@@ -40,17 +40,6 @@ void sendAndCloseTextBox(){
   hideTextBox();
 }
 
-clearUI() {
-  hud.stateSetters.score = null;
-}
-
-void rebuildScore() {
-  if (hud.stateSetters.score == null) return;
-  hud.stateSetters.score(_doNothing);
-}
-
-void _doNothing() {}
-
 void toggleEditMode() {
   mode.value = playMode ? Mode.Edit : Mode.Play;
 }

@@ -34,7 +34,6 @@ import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/weapons.dart';
 import 'package:bleed_client/ui/compose/dialogs.dart';
-import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/utils/list_util.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
@@ -449,8 +448,6 @@ void _parseScore() {
     if (a.points > b.points) return -1;
     return 1;
   });
-
-  rebuildScore();
 }
 
 void _parseGrenades() {

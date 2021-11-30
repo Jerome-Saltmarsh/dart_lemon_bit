@@ -16,11 +16,12 @@ import 'package:lemon_watch/watch.dart';
 
 import 'tips.dart';
 
+
 // properties
 bool get textFieldFocused => hud.focusNodes.textFieldMessage.hasPrimaryFocus;
 String get currentTip => tips[tipIndex];
 
-final HudState hud = HudState();
+final _Hud hud = _Hud();
 
 double squareSize = 80;
 double halfSquareSize = squareSize * 0.5;
@@ -54,16 +55,11 @@ int get enemiesLeft {
 }
 
 
-class HudState {
+class _Hud {
   final _State state = _State();
   final _FocusNodes focusNodes = _FocusNodes();
-  final _StateSetters stateSetters = _StateSetters();
   final _TextEditingControllers textEditingControllers = _TextEditingControllers();
   final _Properties properties = _Properties();
-}
-
-class _StateSetters {
-  StateSetter score;
 }
 
 class _State {
