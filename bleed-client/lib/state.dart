@@ -1,7 +1,5 @@
-import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Player.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/utils.dart';
 
 import 'classes/State.dart';
 
@@ -18,25 +16,10 @@ int serverFramesMS = 0;
 int actualFPS;
 Map<int, bool> gameEvents = Map();
 
-// TODO delete this
-Character get getPlayer {
-  if (!playerAssigned) return null;
-  if (!playerReady) return null;
-  if (game.totalHumans == 0) return null;
-  for (Character player in game.humans) {
-    if (player.x != game.playerX) continue;
-    if (player.y != game.playerY) continue;
-    return player;
-  }
-  return null;
-}
-
 bool get playerReady =>
     game.totalHumans > 0 &&
     game.playerX != -1 &&
     game.playerY != -1;
-
-String get playerName => getPlayer.name;
 
 // TODO Expensive string build
 String get session =>

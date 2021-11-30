@@ -7,7 +7,5 @@ class State {
   Lobby lobby;
   List<Lobby> lobbies = [];
   Player player = Player();
-  String lobbyGameUuid = "";
-  bool storeVisible = true;
   int serverVersion;
 }
