@@ -12,6 +12,7 @@ import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/settings.dart';
+import 'package:bleed_client/ui/compose/buildSkillTree.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/decorationImages.dart';
@@ -177,43 +178,6 @@ Widget buildHud() {
         buildSkillTree(),
       ],
     );
-  });
-}
-
-Widget buildSkillTree(){
-  return WatchBuilder(hud.skillTreeVisible, (bool visible){
-    if (!visible){
-      return Container();
-    }
-
-    return Positioned(
-        top: 50,
-        child: Container(
-          width: screenWidth,
-          height: screenHeight,
-          child: Row(
-            mainAxisAlignment: main.center,
-            crossAxisAlignment: cross.start,
-            children: [
-              onPressed(
-                callback: (){},
-                child: Container(
-                  padding: padding8,
-                  width: 300,
-                  height: 100,
-                  color: Colors.white24,
-                  child: Column(
-                    children: [
-                      text("Skill Tree"),
-                      if (!shotgunUnlocked())
-                        text("Unlock Shotgun", onPressed: sendRequestAcquireAbility),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ));
   });
 }
 
