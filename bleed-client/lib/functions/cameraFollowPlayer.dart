@@ -1,10 +1,9 @@
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/state/settings.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/state/camera.dart';
 
 void cameraFollowPlayer() {
-  cameraFollow(game.playerX, game.playerY, settings.cameraFollowSpeed);
+  cameraFollow(game.playerX, game.playerY, game.settings.cameraFollowSpeed);
 }
 
 void cameraFollow(double x, double y, double speed){

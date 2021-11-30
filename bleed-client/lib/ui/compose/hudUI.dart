@@ -10,7 +10,6 @@ import 'package:bleed_client/mappers/mapWeaponToDecorationImage.dart';
 import 'package:bleed_client/network/functions/disconnect.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/ui/compose/buildSkillTree.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
@@ -246,7 +245,7 @@ Widget buildMenu() {
     );
     Widget iconToggleAudio = Tooltip(
         child: IconButton(
-            icon: WatchBuilder(settings.audioMuted, (bool value) {
+            icon: WatchBuilder(game.settings.audioMuted, (bool value) {
               return Icon(value ? Icons.music_off : Icons.music_note_rounded,
                   size: _iconSize, color: Colors.white);
             }),
@@ -257,8 +256,8 @@ Widget buildMenu() {
       child: IconButton(
           icon: Icon(Icons.map, size: _iconSize, color: Colors.white),
           onPressed: () {
-            settings.compilePaths = !settings.compilePaths;
-            sendRequestSetCompilePaths(settings.compilePaths);
+            game.settings.compilePaths = !game.settings.compilePaths;
+            sendRequestSetCompilePaths(game.settings.compilePaths);
           }),
       message: "Toggle Paths",
     );
@@ -273,13 +272,13 @@ Widget buildMenu() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        if (settings.developMode) iconTogglePaths,
-        if (settings.developMode) width8,
-        if (settings.developMode) iconToggleEditMode,
+        if (game.settings.developMode) iconTogglePaths,
+        if (game.settings.developMode) width8,
+        if (game.settings.developMode) iconToggleEditMode,
         iconToggleAudio,
         width8,
         iconToggleFullscreen,
-        if (settings.developMode) width8,
+        if (game.settings.developMode) width8,
       ],
     );
   });

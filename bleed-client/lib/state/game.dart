@@ -18,6 +18,7 @@ import 'package:lemon_watch/watch.dart';
 final _Game game = _Game();
 
 class _Game {
+  final _Settings settings = _Settings();
   final _Player player = _Player();
   int serverVersion;
   List<int> collectables = [];
@@ -75,4 +76,23 @@ class _Player {
   bool get dead => !alive.value;
   // bool get canPurchase => tile == Tile.PlayerSpawn;
   bool get canPurchase => false;
+}
+
+void toggleAudioMuted(){
+  game.settings.audioMuted.value = !game.settings.audioMuted.value;
+}
+
+class _Settings {
+  Watch<bool> audioMuted = Watch(false);
+  double cameraFollowSpeed = 0.04;
+  double zoomFollowSpeed = 0.1;
+  double zoomSpeed = 0.0005;
+  double maxZoom = 0.1;
+  bool developMode = true;
+  bool compilePaths = false;
+  int floatingTextDuration = 100;
+  int maxBulletHoles = 50;
+  int maxParticlesMinusOne = 299;
+  double interactRadius = 60;
+  double manRenderSize = 40.0;
 }

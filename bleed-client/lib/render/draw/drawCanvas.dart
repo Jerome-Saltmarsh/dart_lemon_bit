@@ -27,7 +27,6 @@ import 'package:bleed_client/render/functions/resetDynamicShadesToBakeMap.dart';
 import 'package:bleed_client/render/state/dynamicShading.dart';
 import 'package:bleed_client/render/state/floatingText.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 import 'package:flutter/cupertino.dart';
@@ -91,7 +90,7 @@ void renderCanvasPlay() {
   _drawGrenades(game.grenades);
   drawSprites();
 
-  if (settings.compilePaths) {
+  if (game.settings.compilePaths) {
     drawDebugEnvironmentObjects();
     drawPaths();
     drawDebugNpcs(game.npcDebug);

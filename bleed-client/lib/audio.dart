@@ -1,5 +1,5 @@
 import 'package:audioplayers/audioplayers.dart';
-import 'package:bleed_client/state/settings.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/randomItem.dart';
@@ -12,7 +12,7 @@ void initAudioPlayers() {
 }
 
 void playAudioButtonHover() {
-  if (settings.audioMuted.value) return;
+  if (game.settings.audioMuted.value) return;
   _getAudioPlayer()
       .play('assets/audio/button-hover.mp3', isLocal: true, volume: 1);
 }
@@ -185,7 +185,7 @@ AudioPlayer _getAudioPlayer() {
 }
 
 void _playAudio(String name, double x, double y) {
-  if (settings.audioMuted.value) return;
+  if (game.settings.audioMuted.value) return;
   double volume = _calculateVolume(x, y);
   _getAudioPlayer()
       .play('assets/audio/$name', isLocal: true, volume: volume)

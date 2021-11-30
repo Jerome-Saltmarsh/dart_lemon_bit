@@ -41,7 +41,6 @@ import 'package:lemon_engine/functions/register_on_mouse_scroll.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../state/settings.dart';
 import '../ui/compose/dialogs.dart';
 
 Future init() async {
@@ -76,7 +75,7 @@ void initializeGameInstances() {
     game.crates.add(Vector2(0, 0));
   }
 
-  for (int i = 0; i < settings.maxBulletHoles; i++) {
+  for (int i = 0; i < game.settings.maxBulletHoles; i++) {
     game.bulletHoles.add(Vector2(0, 0));
   }
 
@@ -130,7 +129,7 @@ void initializeEventListeners(){
     game.player.alive.value = state != CharacterState.Dead;
   });
 
-  settings.audioMuted.onChanged((value) {
+  game.settings.audioMuted.onChanged((value) {
     if (sharedPreferences == null) return;
     sharedPreferences.setBool('audioMuted', value);
   });
@@ -186,7 +185,7 @@ void sendRequestJoinGame() {
 Future loadSharedPreferences() async {
   sharedPreferences = await SharedPreferences.getInstance();
   //@ on sharedPreferences loaded
-  settings.audioMuted.value = sharedPreferences.containsKey('audioMuted') &&
+  game.settings.audioMuted.value = sharedPreferences.containsKey('audioMuted') &&
       sharedPreferences.getBool('audioMuted');
 
   // if (sharedPreferences.containsKey('server')) {

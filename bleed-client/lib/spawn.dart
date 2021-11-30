@@ -3,13 +3,13 @@ import 'package:bleed_client/functions/spawners/spawnFireYellow.dart';
 import 'package:bleed_client/functions/spawners/spawnShrapnel.dart';
 import 'package:bleed_client/functions/spawners/spawnSmoke.dart';
 import 'package:bleed_client/render/state/floatingText.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/randomInt.dart';
 
 import 'audio.dart';
 import 'functions/spawnBulletHole.dart';
-import 'state/settings.dart';
 
 int get shrapnelCount => randomInt(4, 15);
 
@@ -32,7 +32,7 @@ void spawnExplosion(double x, double y) {
 void spawnFloatingText(double x, double y, dynamic value) {
   for (FloatingText text in floatingText) {
     if (text.duration > 0) continue;
-    text.duration = settings.floatingTextDuration;
+    text.duration = game.settings.floatingTextDuration;
     text.x = x;
     text.y = y;
     text.value = value.toString();
@@ -42,5 +42,5 @@ void spawnFloatingText(double x, double y, dynamic value) {
       x: x,
       y: y,
       value: value.toString(),
-      duration: settings.floatingTextDuration));
+      duration: game.settings.floatingTextDuration));
 }

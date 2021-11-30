@@ -4,7 +4,6 @@ import 'dart:ui';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/variables/lantern.dart';
@@ -355,8 +354,8 @@ void readPlayerInput() {
     double mY = mouseWorldY;
     for(int i = 0; i < game.totalNpcs; i++){
       Character interactableNpc = game.interactableNpcs[i];
-      if (diffOver(interactableNpc.x, mX, settings.interactRadius)) continue;
-      if (diffOver(interactableNpc.y, mY, settings.interactRadius)) continue;
+      if (diffOver(interactableNpc.x, mX, game.settings.interactRadius)) continue;
+      if (diffOver(interactableNpc.y, mY, game.settings.interactRadius)) continue;
       sendRequestInteract();
       return;
     }

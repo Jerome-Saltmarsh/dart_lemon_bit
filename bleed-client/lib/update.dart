@@ -5,7 +5,6 @@ import 'package:bleed_client/functions/cameraFollowPlayer.dart';
 import 'package:bleed_client/functions/spawners/spawnParticle.dart';
 import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/state/settings.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/update/updateParticles.dart';
 import 'package:bleed_client/update/updatePlayer.dart';
@@ -50,7 +49,7 @@ void updateZoom() {
   double sX = screenCenterWorldX;
   double sY = screenCenterWorldY;
   double zoomDiff = targetZoom - zoom;
-  zoom += zoomDiff * settings.zoomFollowSpeed;
+  zoom += zoomDiff * game.settings.zoomFollowSpeed;
   cameraCenter(sX, sY);
 }
 
