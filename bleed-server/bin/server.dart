@@ -103,6 +103,10 @@ void main() {
       error(GameError.PlayerDead);
     }
 
+    void errorInsufficientSkillPoints(){
+      error(GameError.InsufficientSkillPoints);
+    }
+
     void onEvent(requestD) {
       String requestString = requestD;
       List<String> arguments = requestString.split(_space);
@@ -211,6 +215,12 @@ void main() {
           if (player.busy) {
             return;
           }
+          if (player.skillPoints <= 0){
+            errorInsufficientSkillPoints();
+            return;
+          }
+
+          player.skillPoints--;
           player.weapons.add(Weapon(type: WeaponType.Shotgun, damage: 1, capacity: 5));
           player.weaponsDirty = true;
           break;

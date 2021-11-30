@@ -87,30 +87,41 @@ Widget buildTopLeft() {
           width8,
           buildPlayerNextLevelExperience(),
           width8,
-          Tooltip(
-              message: "Press T",
-              child: text("Skills", onPressed: toggleSkillTreeVisible)),
+          buildSkillsButton(),
         ],
       ));
+}
+
+Widget buildSkillsButton() {
+  return WatchBuilder(game.player.skillPoints, (int value) {
+    return onPressed(
+      callback: toggleSkillTreeVisible,
+      child: Row(children: [
+        Tooltip(message: "Press T", child: text("Skills")),
+        if (value > 0) width4,
+        if (value > 0) text(value)
+      ]),
+    );
+  });
 }
 
 void toggleSkillTreeVisible() {
   hud.skillTreeVisible.value = !hud.skillTreeVisible.value;
 }
 
-Widget buildTotalZombies(){
+Widget buildTotalZombies() {
   return WatchBuilder(game.totalZombies, (int value) {
     return text('Zombies: $value');
   });
 }
 
-Widget buildPlayerLevel(){
+Widget buildPlayerLevel() {
   return WatchBuilder(game.player.level, (int value) {
     return text('Level $value');
   });
 }
 
-Widget buildPlayerNextLevelExperience(){
+Widget buildPlayerNextLevelExperience() {
   return Tooltip(
     message: "Experience",
     child: WatchBuilder(game.player.experiencePercentage, (int value) {
@@ -132,7 +143,6 @@ Widget buildPlayerNextLevelExperience(){
     }),
   );
 }
-
 
 Widget buildBottomRight() {
   return Positioned(bottom: _padding, right: _padding, child: buildHealthBar());
@@ -179,16 +189,16 @@ Widget buildHud() {
   });
 }
 
-bool shotgunUnlocked(){
-  for(Weapon weapon in game.player.weapons){
-    if(weapon.type == WeaponType.Shotgun) return true;
+bool shotgunUnlocked() {
+  for (Weapon weapon in game.player.weapons) {
+    if (weapon.type == WeaponType.Shotgun) return true;
   }
   return false;
 }
 
-bool unlockedFirebolt(){
-  for(Weapon weapon in game.player.weapons){
-    if(weapon.type == WeaponType.Shotgun) return true;
+bool unlockedFirebolt() {
+  for (Weapon weapon in game.player.weapons) {
+    if (weapon.type == WeaponType.Shotgun) return true;
   }
   return false;
 }
@@ -328,11 +338,12 @@ Widget buildSlot({String title}) {
   );
 }
 
-Widget buildImageSlot({DecorationImage image,
-  double width,
-  double height,
-  double borderWidth = 1,
-  Color color}) {
+Widget buildImageSlot(
+    {DecorationImage image,
+    double width,
+    double height,
+    double borderWidth = 1,
+    Color color}) {
   return Container(
     width: width,
     height: height,
@@ -347,33 +358,29 @@ Widget buildImageSlot({DecorationImage image,
 }
 
 Widget buildEquipWeaponSlot(Weapon weapon, int index) {
-
-  return mouseOver(
-    builder: (BuildContext context, bool mouseOver){
-      return Row(
-        mainAxisAlignment: main.start,
-        children: [
-          buildAmmoBar(weapon.rounds / weapon.capacity),
-          Stack(
-            children: [
-              onPressed(
-                  child: buildWeaponSlot(weapon.type),
-                  callback: () {
-                    sendRequestEquip(index);
-                    rebuildUI();
-                  }),
-              if (weapon.type != WeaponType.Unarmed) buildTag(weapon.rounds),
-            ],
-          ),
-          if (mouseOver)
-            buildWeaponStats(weapon)
-        ],
-      );
-    }
-  );
+  return mouseOver(builder: (BuildContext context, bool mouseOver) {
+    return Row(
+      mainAxisAlignment: main.start,
+      children: [
+        buildAmmoBar(weapon.rounds / weapon.capacity),
+        Stack(
+          children: [
+            onPressed(
+                child: buildWeaponSlot(weapon.type),
+                callback: () {
+                  sendRequestEquip(index);
+                  rebuildUI();
+                }),
+            if (weapon.type != WeaponType.Unarmed) buildTag(weapon.rounds),
+          ],
+        ),
+        if (mouseOver) buildWeaponStats(weapon)
+      ],
+    );
+  });
 }
 
-Widget buildWeaponStats(Weapon weapon){
+Widget buildWeaponStats(Weapon weapon) {
   return Container(
     color: Colors.black38,
     padding: padding8,
@@ -388,7 +395,7 @@ Widget buildWeaponStats(Weapon weapon){
   );
 }
 
-String mapWeaponTypeToString(WeaponType weaponType){
+String mapWeaponTypeToString(WeaponType weaponType) {
   return weaponType.toString().replaceAll("WeaponType.", "");
 }
 
@@ -409,7 +416,7 @@ Widget buildEquippedWeaponSlot(WeaponType weapon) {
   );
 }
 
-Widget buildAmmoBar(double percentage){
+Widget buildAmmoBar(double percentage) {
   return Container(
     width: 40,
     height: 75,
@@ -421,7 +428,6 @@ Widget buildAmmoBar(double percentage){
       color: Colors.white,
     ),
   );
-
 }
 
 Widget buildWeaponSlot(WeaponType weaponType) {
@@ -529,32 +535,32 @@ Widget _buildViewRespawn() {
                           mainAxisAlignment: main.even,
                           children: [
                             onPressed(
-                                child: border(
-                                    child: Container(
-                                        width: 70,
-                                        alignment: Alignment.center,
-                                        child: text(
-                                          "Paypal",
-                                        )),
-                                    radius: borderRadius4,
-                                    padding: padding8),
-                                callback: () {
-                                  // openLink(links.paypal);
-                                },
-                                // hint: links.paypal
+                              child: border(
+                                  child: Container(
+                                      width: 70,
+                                      alignment: Alignment.center,
+                                      child: text(
+                                        "Paypal",
+                                      )),
+                                  radius: borderRadius4,
+                                  padding: padding8),
+                              callback: () {
+                                // openLink(links.paypal);
+                              },
+                              // hint: links.paypal
                             ),
                             onPressed(
-                                child: border(
-                                    child: Container(
-                                        width: 70,
-                                        alignment: Alignment.center,
-                                        child: text("Patreon")),
-                                    radius: borderRadius4,
-                                    padding: padding8),
-                                callback: () {
-                                  // openLink(links.patreon);
-                                },
-                                // hint: links.patreon
+                              child: border(
+                                  child: Container(
+                                      width: 70,
+                                      alignment: Alignment.center,
+                                      child: text("Patreon")),
+                                  radius: borderRadius4,
+                                  padding: padding8),
+                              callback: () {
+                                // openLink(links.patreon);
+                              },
+                              // hint: links.patreon
                             )
                           ],
                         ),
@@ -582,11 +588,11 @@ Widget _buildViewRespawn() {
                                 children: [
                                   text("Youtube"),
                                   IconButton(
-                                    // onPressed: () {},
+                                      // onPressed: () {},
                                       icon: Icon(
-                                        Icons.link,
-                                        color: Colors.white,
-                                      ))
+                                    Icons.link,
+                                    color: Colors.white,
+                                  ))
                                 ],
                               ),
                             ),
@@ -660,20 +666,20 @@ Widget _buildViewRespawn() {
                       width16,
                       mouseOver(
                           builder: (BuildContext context, bool mouseOver) {
-                            return onPressed(
-                              child: border(
-                                  child: text("RESPAWN",
-                                      fontWeight: bold,
-                                      decoration: mouseOver ? underline : null),
-                                  padding: padding16,
-                                  radius: borderRadius4,
-                                  color: Colors.white,
-                                  width: 1,
-                                  fillColor: mouseOver ? black54 : black26),
-                              callback: sendRequestRevive,
-                              hint: "Click to respawn",
-                            );
-                          })
+                        return onPressed(
+                          child: border(
+                              child: text("RESPAWN",
+                                  fontWeight: bold,
+                                  decoration: mouseOver ? underline : null),
+                              padding: padding16,
+                              radius: borderRadius4,
+                              color: Colors.white,
+                              width: 1,
+                              fillColor: mouseOver ? black54 : black26),
+                          callback: sendRequestRevive,
+                          hint: "Click to respawn",
+                        );
+                      })
                     ],
                   ),
                 ],
@@ -724,14 +730,12 @@ Future<void> showChangeNameDialog() async {
           TextButton(
             child: const Text('PLAY'),
             onPressed:
-            hud.textEditingControllers.playerName.text
-                .trim()
-                .length > 2
-                ? () {
-              // sendRequestSpawn(playerNameController.text.trim());
-              Navigator.of(context).pop();
-            }
-                : null,
+                hud.textEditingControllers.playerName.text.trim().length > 2
+                    ? () {
+                        // sendRequestSpawn(playerNameController.text.trim());
+                        Navigator.of(context).pop();
+                      }
+                    : null,
           ),
         ],
       );
@@ -769,7 +773,8 @@ Widget buildLowAmmo() {
             Container(
                 padding: EdgeInsets.all(10),
                 color: Colors.black26,
-                child: text(game.player.equippedRounds == 0 ? "Empty" : "Low Ammo",
+                child: text(
+                    game.player.equippedRounds == 0 ? "Empty" : "Low Ammo",
                     fontSize: 20)),
           ],
         ),
@@ -821,7 +826,8 @@ Widget buildServer() {
         child: Column(
           crossAxisAlignment: cross.center,
           children: [
-            if ((game.player.dead && !hud.state.observeMode) | hud.state.showServers)
+            if ((game.player.dead && !hud.state.observeMode) |
+                hud.state.showServers)
               onPressed(
                   callback: disconnect,
                   child: Container(
@@ -855,8 +861,8 @@ Widget buildServerList() {
               padding: padding4,
               decoration: active
                   ? BoxDecoration(
-                  border: Border.all(width: 2, color: Colors.white),
-                  borderRadius: borderRadius4)
+                      border: Border.all(width: 2, color: Colors.white),
+                      borderRadius: borderRadius4)
                   : null,
               margin: const EdgeInsets.only(bottom: 16),
               child: text(getServerName(server)),
@@ -867,11 +873,11 @@ Widget buildServerList() {
 Widget buildGameOver() {
   return Positioned(
       child: Container(
-        width: globalSize.width,
-        height: globalSize.height,
-        color: Colors.black45,
-        child: button("Game Over", clearState, fontSize: 30),
-      ));
+    width: globalSize.width,
+    height: globalSize.height,
+    color: Colors.black45,
+    child: button("Game Over", clearState, fontSize: 30),
+  ));
 }
 
 Widget buildViewWin() {
@@ -915,9 +921,9 @@ Widget buildDialog(Widget child) {
 
 void drawRing(Ring ring,
     {double percentage,
-      Color color,
-      Offset position,
-      Color backgroundColor = Colors.white}) {
+    Color color,
+    Offset position,
+    Color backgroundColor = Colors.white}) {
   setStrokeWidth(6);
   setColor(backgroundColor);
   for (int i = 0; i < ring.points.length - 1; i++) {

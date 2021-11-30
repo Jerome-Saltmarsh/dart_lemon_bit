@@ -18,5 +18,6 @@ enum GameError {
   IntegerExpected,
   InsufficientFunds,
   WeaponNotAcquired,
-  WeaponAlreadyAcquired
+  WeaponAlreadyAcquired,
+  InsufficientSkillPoints,
 }
