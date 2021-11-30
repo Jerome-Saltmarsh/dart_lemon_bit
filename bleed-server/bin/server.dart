@@ -6,20 +6,15 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import 'classes/Game.dart';
 import 'classes/Inventory.dart';
 import 'classes/Player.dart';
-import 'classes/InteractableNpc.dart';
 import 'classes/Weapon.dart';
 import 'common/CharacterState.dart';
-import 'common/PlayerEvents.dart';
 import 'common/enums/Direction.dart';
-import 'common/enums/ProjectileType.dart';
 import 'common/version.dart';
-import 'common/constants.dart';
 import 'compile.dart';
 import 'common/ClientRequest.dart';
 import 'common/GameError.dart';
 import 'common/GameEventType.dart';
 import 'common/ServerResponse.dart';
-import 'common/PurchaseType.dart';
 import 'common/WeaponType.dart';
 import 'functions/loadScenes.dart';
 import 'games/world.dart';
@@ -34,7 +29,6 @@ final int errorIndex = ServerResponse.Error.index;
 final StringBuffer _buffer = StringBuffer();
 
 const List<ClientRequest> clientRequests = ClientRequest.values;
-const List<PurchaseType> purchaseTypes = PurchaseType.values;
 final int clientRequestsLength = clientRequests.length;
 
 Game findGameById(String id) {

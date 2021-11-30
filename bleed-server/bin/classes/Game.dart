@@ -25,7 +25,6 @@ import 'Character.dart';
 import 'Collider.dart';
 import 'EnvironmentObject.dart';
 import '../common/classes/Vector2.dart';
-import '../common/constants.dart';
 import '../compile.dart';
 import '../constants.dart';
 import '../enums.dart';
