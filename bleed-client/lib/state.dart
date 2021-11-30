@@ -1,7 +1,5 @@
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Player.dart';
-import 'package:bleed_client/classes/Score.dart';
-import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
 
@@ -54,12 +52,3 @@ double get playerX => game.playerX;
 
 double get playerY => game.playerY;
 
-Score get highScore {
-  if (state.score.isEmpty) return null;
-  Score highScore = state.score.first;
-  for (Score score in state.score) {
-    if (score.record <= highScore.record) continue;
-    highScore = score;
-  }
-  return highScore;
-}

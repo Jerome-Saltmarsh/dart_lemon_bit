@@ -40,7 +40,6 @@ import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:neuro/instance.dart';
 
-import 'classes/Score.dart';
 import 'common/GameEventType.dart';
 import 'common/Tile.dart';
 import 'common/WeaponType.dart';
@@ -257,10 +256,6 @@ void parseState() {
         _parsePlayer();
         break;
 
-      case ServerResponse.Score:
-        _parseScore();
-        break;
-
       case ServerResponse.Items:
         game.totalItems = 0;
         while (!_simiColonConsumed()) {
@@ -431,23 +426,6 @@ void _parseCollectables() {
   while (!_simiColonConsumed()) {
     game.collectables.add(_consumeInt());
   }
-}
-
-void _parseScore() {
-  // TODO Optimize
-  state.score.clear();
-  while (!_simiColonConsumed()) {
-    Score score = Score();
-    score.playerName = _consumeString();
-    score.points = _consumeInt();
-    score.record = _consumeInt();
-    state.score.add(score);
-  }
-
-  state.score.sort((Score a, Score b) {
-    if (a.points > b.points) return -1;
-    return 1;
-  });
 }
 
 void _parseGrenades() {

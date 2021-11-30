@@ -3,7 +3,6 @@
 import 'dart:math';
 
 import 'package:bleed_client/classes/Character.dart';
-import 'package:bleed_client/classes/Score.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
@@ -31,10 +30,6 @@ double h = squareSize * inventory.rows + padding;
 
 int tipIndex = 0;
 
-int getScoreRecord(Score score) {
-  return score.record;
-}
-
 int get enemiesLeft {
   int count = 0;
 
@@ -56,6 +51,7 @@ int get enemiesLeft {
 
 
 class _Hud {
+  final Watch<bool> skillTreeVisible = Watch(false);
   final _State state = _State();
   final _FocusNodes focusNodes = _FocusNodes();
   final _TextEditingControllers textEditingControllers = _TextEditingControllers();

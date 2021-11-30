@@ -1,7 +1,6 @@
 
 import 'package:bleed_client/classes/DeathMatch.dart';
 import 'package:bleed_client/classes/Player.dart';
-import 'package:bleed_client/classes/Score.dart';
 
 import 'Lobby.dart';
 
@@ -12,6 +11,5 @@ class State {
   String lobbyGameUuid = "";
   DeathMatch deathMatch = DeathMatch();
   bool storeVisible = true;
-  List<Score> score = [];
   int serverVersion;
 }
