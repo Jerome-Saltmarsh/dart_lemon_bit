@@ -45,12 +45,7 @@ class Game {
   String playerUUID = "";
   double playerX = -1;
   double playerY = -1;
-  Watch<WeaponType> playerWeapon = Watch(WeaponType.Unarmed);
-  CharacterState playerState = CharacterState.Idle;
   List<Item> items = [];
   int totalItems = 0;
-  int lives = 0;
-  int wave = 1;
-  int nextWave = 2;
 }
 

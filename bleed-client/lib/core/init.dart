@@ -135,7 +135,7 @@ void initializeEventListeners(){
     sharedPreferences.setBool('audioMuted', value);
   });
 
-  game.playerWeapon.onChanged(onPlayerWeaponChanged);
+  player.weapon.onChanged(onPlayerWeaponChanged);
 
   onDisconnected.stream.listen((event) {
     print("disconnect");

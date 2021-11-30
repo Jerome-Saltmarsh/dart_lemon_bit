@@ -12,8 +12,6 @@ enum ServerResponse {
   Scene,
   Collectables,
   Paths,
-  MetaFortress,
-  MetaDeathMatch,
   Score,
   Player_Events,
   Items,

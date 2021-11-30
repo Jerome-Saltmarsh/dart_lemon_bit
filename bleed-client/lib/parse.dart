@@ -100,14 +100,6 @@ void parseState() {
         }
         break;
 
-      case ServerResponse.MetaFortress:
-        _parseMetaFortress();
-        break;
-
-      case ServerResponse.MetaDeathMatch:
-        _parseMetaDeathMatch();
-        break;
-
       case ServerResponse.Player:
         _parsePlayer();
         break;
@@ -349,16 +341,6 @@ double environmentObjectY(EnvironmentObject environmentObject) {
   return environmentObject.y;
 }
 
-void _parseMetaFortress() {
-  game.lives = _consumeInt();
-  game.wave = _consumeInt();
-  game.nextWave = _consumeInt();
-}
-
-void _parseMetaDeathMatch() {
-  state.deathMatch.numberOfAlivePlayers = _consumeInt();
-}
-
 void _parsePaths() {
   paths.clear();
   while (!_simiColonConsumed()) {
@@ -386,7 +368,7 @@ void _parseTiles() {
 void _parsePlayer() {
   game.playerX = _consumeDouble();
   game.playerY = _consumeDouble();
-  game.playerWeapon.value = _consumeWeaponType();
+  player.weapon.value = _consumeWeaponType();
   player.health.value = _consumeDouble();
   player.maxHealth = _consumeDouble();
 

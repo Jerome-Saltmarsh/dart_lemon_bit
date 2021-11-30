@@ -1,6 +1,7 @@
 
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/Tile.dart';
+import 'package:bleed_client/common/WeaponType.dart';
 import 'package:lemon_watch/watch.dart';
 
 class Player {
@@ -10,6 +11,7 @@ class Player {
   Watch<double> health = Watch(0.0);
   double maxHealth = 0;
   Tile tile = Tile.Grass;
+  Watch<WeaponType> weapon = Watch(WeaponType.Unarmed);
   Watch<int> experience = Watch(0);
   Watch<int> level = Watch(1);
   Watch<int> skillPoints = Watch(1);

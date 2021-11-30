@@ -94,9 +94,13 @@ Widget buildTopLeft() {
           // buildPlayerExperience(),
           buildPlayerNextLevelExperience(),
           width8,
-          text("Acquire Shotgun", onPressed: sendRequestAcquireAbility),
+          text("Skills", onPressed: toggleSkillTreeVisible),
         ],
       ));
+}
+
+void toggleSkillTreeVisible() {
+  hud.skillTreeVisible.value = !hud.skillTreeVisible.value;
 }
 
 Widget buildTotalZombies(){
@@ -174,8 +178,41 @@ Widget buildHud() {
         if (!alive && hud.state.observeMode) _buildRespawnLight(),
         _buildServerText(),
         buildTopRight(),
+        buildSkillTree(),
       ],
     );
+  });
+}
+
+Widget buildSkillTree(){
+  return WatchBuilder(hud.skillTreeVisible, (bool visible){
+    if (!visible){
+      return Container();
+    }
+
+    return Positioned(
+        top: 100,
+        child: Container(
+          width: screenWidth,
+          height: screenHeight,
+          child: Row(
+            mainAxisAlignment: main.center,
+            crossAxisAlignment: cross.start,
+            children: [
+              Container(
+                width: 300,
+                height: 100,
+                color: Colors.white24,
+                child: Column(
+                  children: [
+                    text("Skill Tree"),
+                    text("Unlock Shotgun", onPressed: sendRequestAcquireAbility),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ));
   });
 }
 
@@ -451,7 +488,7 @@ Widget buildWeaponMenu() {
       crossAxisAlignment: cross.start,
       children: [
         if (mouseOver) buildExpandedWeapons(),
-        WatchBuilder(game.playerWeapon, buildEquippedWeaponSlot)
+        WatchBuilder(player.weapon, buildEquippedWeaponSlot)
       ],
     );
   });
@@ -848,16 +885,6 @@ Widget buildServerList() {
               child: text(getServerName(server)),
             ));
       }).toList());
-}
-
-Widget buildGameInfoDeathMatch() {
-  return Positioned(
-      right: 10,
-      bottom: 10,
-      child: Container(
-          color: Colors.black45,
-          padding: EdgeInsets.all(8),
-          child: text("Enemies Left: $enemiesLeft", fontSize: 30)));
 }
 
 Widget buildGameOver() {

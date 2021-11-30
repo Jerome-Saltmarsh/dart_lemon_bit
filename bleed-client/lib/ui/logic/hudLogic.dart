@@ -50,7 +50,7 @@ void closeMainMenuDialog() {
 }
 
 void nextTip() {
-  tipIndex = (tipIndex + 1) % tips.length;
+  hud.state.tipIndex = (hud.state.tipIndex + 1) % tips.length;
   rebuildUI();
 }
 
