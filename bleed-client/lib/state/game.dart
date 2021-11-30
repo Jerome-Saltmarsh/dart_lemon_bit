@@ -1,4 +1,78 @@
 
-import 'package:bleed_client/classes/Game.dart';
+import 'package:bleed_client/classes/Character.dart';
+import 'package:bleed_client/classes/EnvironmentObject.dart';
+import 'package:bleed_client/classes/Item.dart';
+import 'package:bleed_client/classes/NpcDebug.dart';
+import 'package:bleed_client/classes/Particle.dart';
+import 'package:bleed_client/classes/ParticleEmitter.dart';
+import 'package:bleed_client/classes/Projectile.dart';
+import 'package:bleed_client/classes/Weapon.dart';
+import 'package:bleed_client/classes/Zombie.dart';
+import 'package:bleed_client/common/CharacterState.dart';
+import 'package:bleed_client/common/Tile.dart';
+import 'package:bleed_client/common/WeaponType.dart';
+import 'package:bleed_client/common/classes/Vector2.dart';
+import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:lemon_watch/watch.dart';
 
-final Game game = Game();
+final _Game game = _Game();
+
+class _Game {
+  final _Player player = _Player();
+  int serverVersion;
+  List<int> collectables = [];
+  List<Vector2> crates = [];
+  int cratesTotal = 0;
+  List<EnvironmentObject> environmentObjects = [];
+  List<EnvironmentObject> torches = [];
+  List<List<Tile>> tiles = [];
+  int totalColumns = 0;
+  int totalRows = 0;
+  List<NpcDebug> npcDebug = [];
+  final Watch<Shade> shadeMax = Watch(Shade.Bright);
+  final List<Character> humans = [];
+  final List<Zombie> zombies = [];
+  final List<Character> interactableNpcs = [];
+  final Watch<int> totalZombies = Watch(0);
+  int totalNpcs = 0;
+  int totalHumans = 0;
+  List<Projectile> projectiles = [];
+  List<Vector2> bulletHoles = [];
+  int totalSprites = 0;
+  int bulletHoleIndex = 0;
+  List<Particle> particles = [];
+  List<ParticleEmitter> particleEmitters = [];
+  List<double> grenades = [];
+  int gameId = -1;
+  int totalProjectiles = 0;
+  int playerId = -1;
+  String playerUUID = "";
+  double playerX = -1;
+  double playerY = -1;
+  List<Item> items = [];
+  int totalItems = 0;
+}
+
+class _Player {
+  final Watch<WeaponType> weapon = Watch(WeaponType.Unarmed);
+  final List<Weapon> weapons = [];
+  final Watch<int> equippedRounds = Watch(0);
+  final Watch<int> equippedCapacity = Watch(0);
+  int squad = -1;
+  Watch<double> health = Watch(0.0);
+  double maxHealth = 0;
+  Tile tile = Tile.Grass;
+  Watch<int> experience = Watch(0);
+  Watch<int> level = Watch(1);
+  Watch<int> skillPoints = Watch(1);
+  Watch<int> nextLevelExperience = Watch(1);
+  Watch<int> experiencePercentage = Watch(1);
+  int grenades = 0;
+  Watch<String> message = Watch("");
+  Watch<CharacterState> state = Watch(CharacterState.Idle);
+  Watch<bool> alive = Watch(true);
+
+  bool get dead => !alive.value;
+  // bool get canPurchase => tile == Tile.PlayerSpawn;
+  bool get canPurchase => false;
+}
