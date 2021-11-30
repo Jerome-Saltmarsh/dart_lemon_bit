@@ -49,8 +49,8 @@ Widget buildSkillTree() {
                           ],
                         ),
                         height8,
-                        if (!shotgunUnlocked())
-                          text("Unlock Shotgun",
+                        if (!game.player.unlocked.shotgun)
+                          text("Shotgun",
                               onPressed: pointsLeft
                                   ? sendRequestAcquireAbility
                                   : null,
@@ -58,7 +58,14 @@ Widget buildSkillTree() {
                                   ? Colors.white
                                   : Colors.white38),
 
-                        text("Upgrade Handgun Damage"),
+                        if (!game.player.unlocked.handgun)
+                          text("Handgun",
+                              onPressed: pointsLeft
+                                  ? sendRequestAcquireAbility
+                                  : null,
+                              color: pointsLeft
+                                  ? Colors.white
+                                  : Colors.white38),
                       ],
                     ),
                   ),

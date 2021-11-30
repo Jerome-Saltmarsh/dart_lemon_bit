@@ -72,10 +72,33 @@ class _Player {
   Watch<String> message = Watch("");
   Watch<CharacterState> state = Watch(CharacterState.Idle);
   Watch<bool> alive = Watch(true);
+  final _Unlocked unlocked = _Unlocked();
 
   bool get dead => !alive.value;
   // bool get canPurchase => tile == Tile.PlayerSpawn;
   bool get canPurchase => false;
+}
+
+class _Unlocked {
+  bool get handgun => game.player.weaponUnlocked(WeaponType.HandGun);
+  bool get shotgun => game.player.weaponUnlocked(WeaponType.Shotgun);
+}
+
+extension PlayerExtentions on _Player {
+
+  bool weaponUnlocked(WeaponType weaponType) {
+    for (Weapon weapon in weapons) {
+      if (weapon.type == weaponType) return true;
+    }
+    return false;
+  }
+
+  bool get shotgunUnlocked {
+    for (Weapon weapon in weapons) {
+      if (weapon.type == WeaponType.Shotgun) return true;
+    }
+    return false;
+  }
 }
 
 void toggleAudioMuted(){
