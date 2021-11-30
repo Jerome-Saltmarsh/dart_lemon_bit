@@ -2,6 +2,7 @@
 
 import 'dart:math';
 
+import 'package:bleed_client/ui/logic/toggle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
@@ -18,11 +19,18 @@ String get currentTip => tips[hud.state.tipIndex];
 final _Hud hud = _Hud();
 
 class _Hud {
+  final _Toggle toggle = _Toggle();
   final Watch<bool> skillTreeVisible = Watch(false);
   final _State state = _State();
   final _FocusNodes focusNodes = _FocusNodes();
   final _TextEditingControllers textEditingControllers = _TextEditingControllers();
   final _Properties properties = _Properties();
+}
+
+class _Toggle {
+  void skillTree(){
+    toggle(hud.skillTreeVisible);
+  }
 }
 
 class _State {

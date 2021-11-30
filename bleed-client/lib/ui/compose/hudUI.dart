@@ -88,7 +88,9 @@ Widget buildTopLeft() {
           width8,
           buildPlayerNextLevelExperience(),
           width8,
-          text("Skills", onPressed: toggleSkillTreeVisible),
+          Tooltip(
+              message: "Press T",
+              child: text("Skills", onPressed: toggleSkillTreeVisible)),
         ],
       ));
 }

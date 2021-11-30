@@ -19,6 +19,7 @@ import 'package:lemon_engine/state/zoom.dart';
 import 'package:lemon_math/diff_over.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/randomItem.dart';
+import 'package:lemon_watch/watch.dart';
 
 import '../send.dart';
 import 'common/enums/Direction.dart';
@@ -103,6 +104,7 @@ class _Keys {
   LogicalKeyboardKey hourBackwards = LogicalKeyboardKey.arrowLeft;
   LogicalKeyboardKey teleport = LogicalKeyboardKey.keyG;
   LogicalKeyboardKey casteFireball = LogicalKeyboardKey.keyZ;
+  LogicalKeyboardKey toggleSkillTree = LogicalKeyboardKey.keyT;
 }
 
 Map<LogicalKeyboardKey, bool> _keyDownState = {};
@@ -147,7 +149,7 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.equip2: equip2,
   keys.equip3: equip3,
   keys.equip4: equip4,
-
+  keys.toggleSkillTree: hud.toggle.skillTree,
 };
 
 void equip1(){
