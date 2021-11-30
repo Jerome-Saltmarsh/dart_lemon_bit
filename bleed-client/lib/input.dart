@@ -147,6 +147,7 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.equip2: equip2,
   keys.equip3: equip3,
   keys.equip4: equip4,
+
 };
 
 void equip1(){

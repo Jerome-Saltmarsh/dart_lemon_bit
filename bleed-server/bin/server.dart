@@ -216,6 +216,22 @@ void main() {
           player.game.spawnFireball(player);
           return;
 
+        case ClientRequest.AcquireAbility:
+          Player? player = findPlayerById(arguments[3]);
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+          if (player.dead) {
+            errorPlayerDead();
+            return;
+          }
+          if (player.busy) {
+            return;
+          }
+          player.weapons.add(Weapon(type: WeaponType.Shotgun, damage: 1, capacity: 5));
+          break;
+
         case ClientRequest.Teleport:
           Player? player = findPlayerById(arguments[3]);
           if (player == null) {
@@ -379,8 +395,7 @@ Player spawnPlayerInTown() {
     inventory: Inventory(0, 0, []),
     squad: 1,
     weapons: [
-      Weapon(type: WeaponType.HandGun, damage: 1, capacity: 24),
-      Weapon(type: WeaponType.Shotgun, damage: 1, capacity: 12)
+      Weapon(type: WeaponType.HandGun, damage: 1, capacity: 12),
     ]
   );
   world.town.players.add(player);

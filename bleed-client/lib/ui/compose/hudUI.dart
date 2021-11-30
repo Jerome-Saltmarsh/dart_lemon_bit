@@ -93,6 +93,8 @@ Widget buildTopLeft() {
           // buildTotalZombies(),
           // buildPlayerExperience(),
           buildPlayerNextLevelExperience(),
+          width8,
+          text("Acquire Shotgun", onPressed: sendRequestAcquireAbility),
         ],
       ));
 }

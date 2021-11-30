@@ -14,4 +14,5 @@ enum ClientRequest {
   ReverseHour,
   Teleport,
   CasteFireball,
+  AcquireAbility,
 }

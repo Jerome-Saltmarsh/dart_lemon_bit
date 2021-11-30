@@ -69,6 +69,10 @@ void requestThrowGrenade(double strength) {
   send('${ClientRequest.Grenade.index} $session ${strength.toStringAsFixed(1)} $aim');
 }
 
+void sendRequestAcquireAbility() {
+  send('${ClientRequest.AcquireAbility.index} $session');
+}
+
 void sendRequestUpdatePlayer() {
   _buffer.clear();
   _write(gameUpdateIndex);
@@ -84,7 +88,6 @@ void sendRequestUpdatePlayer() {
   }
   send(_buffer.toString());
 }
-
 
 void sendRequestSetCompilePaths(bool value) {
   paths.clear();
