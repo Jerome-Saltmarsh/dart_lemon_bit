@@ -15,8 +15,8 @@ Map<int, bool> gameEvents = Map();
 
 bool get playerReady =>
     game.totalHumans > 0 &&
-    game.playerX != -1 &&
-    game.playerY != -1;
+    game.player.x != -1 &&
+    game.player.y != -1;
 
 // TODO Expensive string build
 String get session =>
@@ -25,7 +25,7 @@ String get session =>
 
 bool get gameStarted => game.gameId >= 0;
 
-double get playerX => game.playerX;
+double get playerX => game.player.x;
 
-double get playerY => game.playerY;
+double get playerY => game.player.y;
 

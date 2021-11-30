@@ -168,8 +168,8 @@ void parseState() {
         print("ServerResponse.Scene_Changed");
         double x = _consumeDouble();
         double y = _consumeDouble();
-        game.playerX = x;
-        game.playerY = y;
+        game.player.x = x;
+        game.player.y = y;
         cameraCenter(x, y);
 
         Future.delayed(Duration(milliseconds: 150), () {
@@ -355,8 +355,8 @@ void _parseTiles() {
 }
 
 void _parsePlayer() {
-  game.playerX = _consumeDouble();
-  game.playerY = _consumeDouble();
+  game.player.x = _consumeDouble();
+  game.player.y = _consumeDouble();
   game.player.weapon.value = _consumeWeaponType();
   game.player.health.value = _consumeDouble();
   game.player.maxHealth = _consumeDouble();
@@ -409,8 +409,8 @@ void _parseGrenades() {
 void _parseGameJoined() {
   game.playerId = _consumeInt();
   game.playerUUID = _consumeString();
-  game.playerX = _consumeDouble();
-  game.playerY = _consumeDouble();
+  game.player.x = _consumeDouble();
+  game.player.y = _consumeDouble();
   game.gameId = _consumeInt();
   game.player.squad = _consumeInt();
   print(

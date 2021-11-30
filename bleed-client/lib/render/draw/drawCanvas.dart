@@ -308,7 +308,7 @@ void drawEnvironmentObject(EnvironmentObject env) {
 void _drawPlayerNames() {
   for (int i = 0; i < game.totalHumans; i++) {
     Character player = game.humans[i];
-    if (player.x == game.playerX) continue;
+    if (player.x == game.player.x) continue;
     if (diff(mouseWorldX, player.x) > _nameRadius) continue;
     if (diff(mouseWorldY, player.y) > _nameRadius) continue;
 
@@ -343,7 +343,7 @@ void _drawMouseAim() {
   // if (player.equippedRounds.value == 0) return;
   paint.strokeWidth = 3;
   double angle =
-      angleBetween(mouseWorldX, mouseWorldY, game.playerX, game.playerY);
+      angleBetween(mouseWorldX, mouseWorldY, game.player.x, game.player.y);
 
   double mouseDistance =
       distanceBetween(mouseWorldX, mouseWorldY, playerX, playerY);

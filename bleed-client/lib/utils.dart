@@ -14,7 +14,7 @@ import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/pi2.dart';
 
 double getMouseRotation() {
-  return angleBetween(game.playerX, game.playerY, mouseWorldX, mouseWorldY);
+  return angleBetween(game.player.x, game.player.y, mouseWorldX, mouseWorldY);
 }
 
 bool get playerAssigned => game.playerId >= 0;

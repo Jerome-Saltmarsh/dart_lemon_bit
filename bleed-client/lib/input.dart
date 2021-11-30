@@ -217,7 +217,7 @@ Map<LogicalKeyboardKey, Function> _keyReleasedHandlers = {
 void throwGrenade() {
   if (!mouseAvailable) return;
   double mouseDistance = distanceBetween(
-      game.playerX, game.playerY, mouseWorldX, mouseWorldY);
+      game.player.x, game.player.y, mouseWorldX, mouseWorldY);
   double maxRange = 400; // TODO refactor magic variable
   double throwDistance = min(mouseDistance, maxRange);
   double strength = throwDistance / maxRange;

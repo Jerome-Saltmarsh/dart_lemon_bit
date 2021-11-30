@@ -28,8 +28,8 @@ void clearCompileGameState() {
   game.playerId = -1;
   game.gameId = -1;
   game.playerUUID = "";
-  game.playerX = -1;
-  game.playerY = -1;
+  game.player.x = -1;
+  game.player.y = -1;
   game.totalZombies.value = 0;
   game.totalHumans = 0;
   game.totalProjectiles = 0;

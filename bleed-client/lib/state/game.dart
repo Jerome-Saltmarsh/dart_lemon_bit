@@ -48,13 +48,13 @@ class _Game {
   int totalProjectiles = 0;
   int playerId = -1;
   String playerUUID = "";
-  double playerX = -1;
-  double playerY = -1;
   List<Item> items = [];
   int totalItems = 0;
 }
 
 class _Player {
+  double x = -1;
+  double y = -1;
   final Watch<WeaponType> weapon = Watch(WeaponType.Unarmed);
   final List<Weapon> weapons = [];
   final Watch<int> equippedRounds = Watch(0);
