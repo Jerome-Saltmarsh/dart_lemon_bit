@@ -63,8 +63,8 @@ void sendRequestUpdatePlayer() {
   _buffer.clear();
   _write(gameUpdateIndex);
   _write(game.gameId);
-  _write(game.playerId);
-  _write(game.playerUUID);
+  _write(game.player.id);
+  _write(game.player.uuid);
   _write(characterController.characterState.index);
   _write(characterController.direction.index);
   if (characterController.characterState == CharacterState.Firing) {

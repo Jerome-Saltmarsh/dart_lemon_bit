@@ -46,13 +46,13 @@ class _Game {
   List<double> grenades = [];
   int gameId = -1;
   int totalProjectiles = 0;
-  int playerId = -1;
-  String playerUUID = "";
   List<Item> items = [];
   int totalItems = 0;
 }
 
 class _Player {
+  int id = -1;
+  String uuid = "";
   double x = -1;
   double y = -1;
   final Watch<WeaponType> weapon = Watch(WeaponType.Unarmed);

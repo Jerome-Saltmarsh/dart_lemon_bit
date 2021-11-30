@@ -25,9 +25,9 @@ void clearState() {
 }
 
 void clearCompileGameState() {
-  game.playerId = -1;
+  game.player.id = -1;
   game.gameId = -1;
-  game.playerUUID = "";
+  game.player.uuid = "";
   game.player.x = -1;
   game.player.y = -1;
   game.totalZombies.value = 0;

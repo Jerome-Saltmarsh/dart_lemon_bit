@@ -20,7 +20,7 @@ bool get playerReady =>
 
 // TODO Expensive string build
 String get session =>
-    '${game.gameId} ${game.playerId} ${game.playerUUID}';
+    '${game.gameId} ${game.player.id} ${game.player.uuid}';
 
 
 bool get gameStarted => game.gameId >= 0;

@@ -17,7 +17,7 @@ double getMouseRotation() {
   return angleBetween(game.player.x, game.player.y, mouseWorldX, mouseWorldY);
 }
 
-bool get playerAssigned => game.playerId >= 0;
+bool get playerAssigned => game.player.id >= 0;
 
 void drawLine(double x1, double y1, double x2, double y2) {
   globalCanvas.drawLine(offset(x1, y1), offset(x2, y2), paint);

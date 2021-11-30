@@ -29,9 +29,9 @@ Widget buildUI(BuildContext context) {
   }
   if (editMode) return buildEditorUI();
 
-  if (game.playerId < 0) {
+  if (game.player.id < 0) {
     return text(
-        "player id is not assigned. player id: ${game.playerId}, game id: ${game.gameId}");
+        "player id is not assigned. player id: ${game.player.id}, game id: ${game.gameId}");
   }
 
   if (framesSinceEvent > 30) {

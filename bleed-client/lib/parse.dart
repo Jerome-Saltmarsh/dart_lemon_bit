@@ -407,14 +407,14 @@ void _parseGrenades() {
 }
 
 void _parseGameJoined() {
-  game.playerId = _consumeInt();
-  game.playerUUID = _consumeString();
+  game.player.id = _consumeInt();
+  game.player.uuid = _consumeString();
   game.player.x = _consumeDouble();
   game.player.y = _consumeDouble();
   game.gameId = _consumeInt();
   game.player.squad = _consumeInt();
   print(
-      "ServerResponse.Game_Joined: playerId: ${game.playerId} gameId: ${game.gameId}");
+      "ServerResponse.Game_Joined: playerId: ${game.player.id} gameId: ${game.gameId}");
 }
 
 ObjectType _consumeEnvironmentObjectType() {
