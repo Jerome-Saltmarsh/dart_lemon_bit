@@ -1,3 +1,9 @@
+// health
+// magic
+// stamina
+// strength
+
+
 -- FEATURES -- 
 [ ] Critical Damage
 [ ] Accuracy
@@ -112,6 +118,8 @@
 [ ] Human Wand
 [ ] Human Bow
 [ ] Display Weapon Damage Stats (experience etc)
+[ ] Ability Tree
+[ ] Unlock fireboltz
 [x] Human Sword
 [x] Tree Colors
 [x] Fix Editor

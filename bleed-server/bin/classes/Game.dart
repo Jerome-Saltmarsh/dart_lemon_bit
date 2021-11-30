@@ -311,6 +311,7 @@ extension GameFunctions on Game {
           if (src.experience >= experienceRequired){
             // on player level increased
             src.level++;
+            src.skillPoints++;
           }
         }
       }

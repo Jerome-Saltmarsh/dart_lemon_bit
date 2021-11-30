@@ -6,7 +6,6 @@ import '../common/Tile.dart';
 import '../functions/generateName.dart';
 import '../functions/generateUUID.dart';
 import '../settings.dart';
-import '../utils/player_utils.dart';
 import 'Character.dart';
 import 'Game.dart';
 import 'Inventory.dart';
@@ -24,7 +23,6 @@ class Player extends Character {
   int frameOfDeath = -1;
   int pointsRecord = 0;
   Score score = Score();
-  Clips clips = Clips();
   String message = "";
   String text = "";
   int textDuration = 0;
@@ -36,6 +34,7 @@ class Player extends Character {
 
   int experience = 0;
   int level = 1;
+  int skillPoints = 0;
 
   Tile currentTile = Tile.PlayerSpawn;
   CharacterState characterState = CharacterState.Idle;
@@ -61,7 +60,6 @@ class Player extends Character {
     this.grenades = 0,
     this.lives = 0,
     required List<Weapon> weapons,
-    required this.clips,
     int squad = noSquad,
   }) : super(
             x: x,

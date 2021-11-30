@@ -1,6 +1,4 @@
 import 'package:bleed_client/common/ClientRequest.dart';
-import 'package:bleed_client/common/PurchaseType.dart';
-import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/network/functions/send.dart';
 import 'package:bleed_client/network/functions/sinkMessage.dart';
@@ -88,56 +86,9 @@ void sendRequestUpdatePlayer() {
 }
 
 
-void sendRequestPurchase(PurchaseType purchaseType) {
-  send('${ClientRequest.Purchase.index} $session ${purchaseType.index}');
-}
-
 void sendRequestSetCompilePaths(bool value) {
   paths.clear();
   send('${ClientRequest.SetCompilePaths.index} $session ${value ? 1 : 0}');
-}
-
-void purchaseAmmoHandgun() {
-  sendRequestPurchase(PurchaseType.Ammo_Handgun);
-}
-
-void purchaseAmmoShotgun() {
-  sendRequestPurchase(PurchaseType.Ammo_Shotgun);
-}
-
-void purchaseWeaponHandgun() {
-  sendRequestPurchase(PurchaseType.Weapon_Handgun);
-}
-
-void purchaseWeaponShotgun() {
-  sendRequestPurchase(PurchaseType.Weapon_Shotgun);
-}
-
-void purchaseWeaponSniperRifle() {
-  sendRequestPurchase(PurchaseType.Weapon_SniperRifle);
-}
-
-void purchaseWeaponAssaultRifle() {
-  sendRequestPurchase(PurchaseType.Weapon_AssaultRifle);
-}
-
-void sendRequestPurchaseWeapon(WeaponType weapon) {
-  switch (weapon) {
-    case WeaponType.HandGun:
-      purchaseWeaponHandgun();
-      break;
-    case WeaponType.Shotgun:
-      purchaseWeaponShotgun();
-      break;
-    case WeaponType.SniperRifle:
-      purchaseWeaponSniperRifle();
-      break;
-    case WeaponType.AssaultRifle:
-      purchaseWeaponAssaultRifle();
-      break;
-    default:
-      throw Exception("Could not request purchase $weapon");
-  }
 }
 
 void sendClientRequest(ClientRequest request) {

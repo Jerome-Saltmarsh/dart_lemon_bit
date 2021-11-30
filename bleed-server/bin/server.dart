@@ -21,7 +21,6 @@ import 'games/world.dart';
 import 'settings.dart';
 import 'update.dart';
 import 'utils.dart';
-import 'utils/player_utils.dart';
 import 'values/world.dart';
 
 const String _space = " ";
@@ -378,7 +377,6 @@ Player spawnPlayerInTown() {
     x: 0,
     y: 1750,
     inventory: Inventory(0, 0, []),
-    clips: Clips(),
     squad: 1,
     weapons: [
       Weapon(type: WeaponType.HandGun, damage: 1, capacity: 24),

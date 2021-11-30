@@ -3,12 +3,9 @@ import 'dart:math';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/classes/Weapon.dart';
 import 'package:bleed_client/common/WeaponType.dart';
-import 'package:bleed_client/common/constants.dart';
-import 'package:bleed_client/constants.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/functions/clearState.dart';
-import 'package:bleed_client/functions/openLink.dart';
 import 'package:bleed_client/mappers/mapWeaponToDecorationImage.dart';
 import 'package:bleed_client/network/functions/disconnect.dart';
 import 'package:bleed_client/send.dart';
@@ -49,12 +46,12 @@ Widget buildHealthBar() {
       return CircularProgressIndicator();
     }
 
-    double percentage = health / 100.0;
+    double percentage = health / player.maxHealth;
     double width = 120;
     double height = width * goldenRatioInverse;
 
     return Tooltip(
-      message: 'Health ${health.toInt()}',
+      message: 'Health ${health.toInt()} / ${player.maxHealth}',
       child: Container(
         width: width,
         height: height,
@@ -622,9 +619,10 @@ Widget _buildViewRespawn() {
                                     radius: borderRadius4,
                                     padding: padding8),
                                 callback: () {
-                                  openLink(links.paypal);
+                                  // openLink(links.paypal);
                                 },
-                                hint: links.paypal),
+                                // hint: links.paypal
+                            ),
                             onPressed(
                                 child: border(
                                     child: Container(
@@ -634,9 +632,10 @@ Widget _buildViewRespawn() {
                                     radius: borderRadius4,
                                     padding: padding8),
                                 callback: () {
-                                  openLink(links.patreon);
+                                  // openLink(links.patreon);
                                 },
-                                hint: links.patreon)
+                                // hint: links.patreon
+                            )
                           ],
                         ),
                         height8,
@@ -674,7 +673,7 @@ Widget _buildViewRespawn() {
                             onPressed(
                               hint: "Come and Hang!",
                               callback: () {
-                                openLink(links.discord);
+                                // openLink(links.discord);
                               },
                               child: Row(
                                 children: [

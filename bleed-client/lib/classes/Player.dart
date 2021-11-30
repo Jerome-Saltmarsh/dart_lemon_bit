@@ -12,6 +12,7 @@ class Player {
   Tile tile = Tile.Grass;
   Watch<int> experience = Watch(0);
   Watch<int> level = Watch(1);
+  Watch<int> skillPoints = Watch(1);
   Watch<int> nextLevelExperience = Watch(1);
   Watch<int> experiencePercentage = Watch(1);
   int grenades = 0;

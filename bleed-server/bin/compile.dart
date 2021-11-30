@@ -16,7 +16,6 @@ import 'common/Tile.dart';
 import 'common/ServerResponse.dart';
 import 'common/classes/Vector2.dart';
 import 'games/world.dart';
-import 'utils/player_utils.dart';
 
 // constants
 final int _collectablesIndex = ServerResponse.Collectables.index;
@@ -141,6 +140,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.currentTile.index);
   _write(buffer, player.experience);
   _write(buffer, player.level);
+  _write(buffer, player.skillPoints);
   int experienceRequired = levelExperience[player.level];
   _write(buffer, experienceRequired);
   double perc = player.experience / experienceRequired * 100;
