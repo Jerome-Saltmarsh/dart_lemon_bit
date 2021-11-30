@@ -307,9 +307,9 @@ extension GameFunctions on Game {
       if (target is Npc) {
         if (src.level < maxPlayerLevel) {
           src.experience += target.experience;
-          int experienceRequired = levelExperience[src.level];
-          if (src.experience >= experienceRequired){
+          while (src.experience >= levelExperience[src.level]){
             // on player level increased
+            src.experience -= levelExperience[src.level];
             src.level++;
             src.skillPoints++;
           }
@@ -498,8 +498,6 @@ extension GameFunctions on Game {
         character.state = value;
         if (character is Player) {
           // @on player killed
-          character.score.deaths++;
-
           for (Npc npc in zombies) {
             if (npc.target != character) continue;
             // @on npc target player killed
@@ -793,14 +791,6 @@ extension GameFunctions on Game {
           applyDamage(bullet.owner, character, bullet.damage);
 
           if (character is Player) {
-            if (character.dead) {
-              if (bullet.owner is Player) {
-                // @on player killed by player
-                Player owner = bullet.owner as Player;
-                owner.score.playersKilled++;
-              }
-            }
-
             dispatch(GameEventType.Player_Hit, character.x, character.y,
                 bullet.xv, bullet.yv);
             return;
@@ -812,11 +802,7 @@ extension GameFunctions on Game {
               bullet.xv, bullet.yv);
         } else {
           // @on zombie killed by player
-          if (bullet.owner is Player) {
-            Player owner = bullet.owner as Player;
-            // call interface instead
-            owner.score.zombiesKilled++;
-          } else if (bullet.owner is Npc) {
+          if (bullet.owner is Npc) {
             // on zombie killed by npc
             (bullet.owner as Npc).clearTarget();
           }

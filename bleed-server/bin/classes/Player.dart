@@ -9,7 +9,6 @@ import '../settings.dart';
 import 'Character.dart';
 import 'Game.dart';
 import 'Inventory.dart';
-import 'Score.dart';
 import 'Weapon.dart';
 
 
@@ -22,7 +21,6 @@ class Player extends Character {
   int lives;
   int frameOfDeath = -1;
   int pointsRecord = 0;
-  Score score = Score();
   String message = "";
   String text = "";
   int textDuration = 0;

@@ -41,7 +41,7 @@ Widget buildSkillTree() {
                           mainAxisAlignment: main.spread,
                           children: [
                             text(" "),
-                            text("Skills"),
+                            text("Skill Points $points"),
                             Tooltip(
                                 message: "Close",
                                 child:
@@ -57,6 +57,8 @@ Widget buildSkillTree() {
                               color: pointsLeft
                                   ? Colors.white
                                   : Colors.white38),
+
+                        text("Upgrade Handgun Damage"),
                       ],
                     ),
                   ),
