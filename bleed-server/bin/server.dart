@@ -77,6 +77,7 @@ void main() {
     void joinGame(Game game) {
       _buffer.clear();
       Player player = spawnPlayerInTown();
+      // Player player = spawnPlayerInWildernessEast();
       compilePlayer(_buffer, player);
       _buffer.write(
           '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${game.id} ${player.squad} ');
@@ -426,5 +427,24 @@ Player spawnPlayerInTown() {
   );
   player.skillPoints = 1;
   world.town.players.add(player);
+  return player;
+}
+
+
+Player spawnPlayerInWildernessEast() {
+  Player player = Player(
+      game: world.wildernessEast,
+      x: 0,
+      y: 1750,
+      inventory: Inventory(0, 0, []),
+      squad: 1,
+      weapons: [
+        Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0),
+        Weapon(type: WeaponType.HandGun, damage: 1, capacity: 12),
+        Weapon(type: WeaponType.Bow, damage: 3, capacity: 12),
+      ]
+  );
+  player.skillPoints = 1;
+  world.wildernessEast.players.add(player);
   return player;
 }

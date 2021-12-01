@@ -9,4 +9,5 @@ class _Scenes {
   late Scene wildernessWest01;
   late Scene wildernessNorth01;
   late Scene cave;
+  late Scene wildernessEast;
 }

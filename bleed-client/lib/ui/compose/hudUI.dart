@@ -359,10 +359,11 @@ Widget buildImageSlot(
 
 Widget buildEquipWeaponSlot(Weapon weapon, int index) {
   return mouseOver(builder: (BuildContext context, bool mouseOver) {
+    double p = weapon.capacity > 0 ? weapon.rounds / weapon.capacity : 1.0;
     return Row(
       mainAxisAlignment: main.start,
       children: [
-        buildAmmoBar(weapon.rounds / weapon.capacity),
+        buildAmmoBar(p),
         Stack(
           children: [
             onPressed(
@@ -403,6 +404,9 @@ Widget buildEquippedWeaponSlot(WeaponType weapon) {
   return Row(
     children: [
       WatchBuilder(game.player.equippedRounds, (int rounds) {
+        if (game.player.equippedCapacity.value == 0){
+          return buildAmmoBar(1);
+        }
         return buildAmmoBar(rounds / game.player.equippedCapacity.value);
       }),
       Stack(
