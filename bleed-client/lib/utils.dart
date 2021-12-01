@@ -23,56 +23,42 @@ void drawLine(double x1, double y1, double x2, double y2) {
   globalCanvas.drawLine(offset(x1, y1), offset(x2, y2), paint);
 }
 
-void drawLine3(double x1, double y1, double x2, double y2) {
-}
-
-void drawCustomLine(double x1, double y1, double x2, double y2, Paint paint) {
-  globalCanvas.drawLine(offset(x1, y1), offset(x2, y2), paint);
-}
 
 Offset offset(double x, double y) {
   return Offset(x, y);
 }
 
-dynamic rotationToPosX(double rotation, double distance) {
-  return -cos(rotation + (pi * 0.5)) * distance;
-}
+const double _piEighth = pi / 8.0;
+const double _piQuarter = pi / 4.0;
 
-dynamic rotationToPosY(double rotation, double distance) {
-  return -sin(rotation + (pi * 0.5)) * distance;
+double convertDirectionToAngle(Direction direction){
+  return -direction.index * _piQuarter;
 }
-
-double round(double value, {int decimals = 1}) {
-  return double.parse(value.toStringAsFixed(decimals));
-}
-
-const double _eight = pi / 8.0;
-const double _quarter = pi / 4.0;
 
 Direction convertAngleToDirection(double angle) {
   angle = angle % pi2;
-  if (angle < _eight) {
+  if (angle < _piEighth) {
     return Direction.Up;
   }
-  if (angle < _eight + (_quarter * 1)) {
+  if (angle < _piEighth + (_piQuarter * 1)) {
     return Direction.UpRight;
   }
-  if (angle < _eight + (_quarter * 2)) {
+  if (angle < _piEighth + (_piQuarter * 2)) {
     return Direction.Right;
   }
-  if (angle < _eight + (_quarter * 3)) {
+  if (angle < _piEighth + (_piQuarter * 3)) {
     return Direction.DownRight;
   }
-  if (angle < _eight + (_quarter * 4)) {
+  if (angle < _piEighth + (_piQuarter * 4)) {
     return Direction.Down;
   }
-  if (angle < _eight + (_quarter * 5)) {
+  if (angle < _piEighth + (_piQuarter * 5)) {
     return Direction.DownLeft;
   }
-  if (angle < _eight + (_quarter * 6)) {
+  if (angle < _piEighth + (_piQuarter * 6)) {
     return Direction.Left;
   }
-  if (angle < _eight + (_quarter * 7)) {
+  if (angle < _piEighth + (_piQuarter * 7)) {
     return Direction.UpLeft;
   }
   return Direction.Up;

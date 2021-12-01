@@ -12,7 +12,7 @@ _Accuracy get _accuracy => settings.accuracy;
 
 _Range get _range => settings.range;
 
-_BulletSpeed _bulletSpeed = settings.bulletSpeed;
+_ProjectileSpeed _bulletSpeed = settings.projectileSpeed;
 
 double getBulletSpeed(WeaponType weapon) {
   switch (weapon) {
@@ -73,7 +73,7 @@ class Settings {
   final _Damage damage = _Damage();
   final _Range range = _Range();
   final _Health health = _Health();
-  final _BulletSpeed bulletSpeed = _BulletSpeed();
+  final _ProjectileSpeed projectileSpeed = _ProjectileSpeed();
   final _Duration duration = _Duration();
   final _NpcSettings npc = _NpcSettings();
   final _MaxClips maxClips = _MaxClips();
@@ -174,6 +174,7 @@ class _Accuracy {
 
 class _CoolDown {
   final int handgun = 14;
+  final int bow = 20;
   final int shotgun = 30;
   final int sniperRifle = 45;
   final int assaultRifle = 5;
@@ -199,14 +200,16 @@ class _Range {
   final double assaultRifle = 450;
   final double zombieStrike = 20;
   final double firebolt = 200;
+  final double arrow = 300;
 }
 
-class _BulletSpeed {
+class _ProjectileSpeed {
   final double fireball = 4.0;
   final double handgun = 12.0;
   final double shotgun = 12.0;
   final double sniperRifle = 28;
   final double assaultRifle = 18;
+  final double arrow = 7;
 }
 
 class _NpcSettings {

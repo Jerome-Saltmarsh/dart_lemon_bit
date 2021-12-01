@@ -105,21 +105,13 @@
 [ ] Zombies drop gems on death
 [ ] Quest Kill the vampire
 [ ] Splash Screen
-[ ] Firebolt explode on impact
 -- CURRENT -- 
 [ ] Cave Level
 [ ] Object Cave Wall
 [ ] Human Wand
-[ ] Human Bow
 [ ] Display Weapon Damage Stats (experience etc)
 [ ] Ability Tree
-[ ] Ability vs Weapon
-[ ] Left click for weapon and right click for ability?
-[ ] Fire arrow can only be used if a bow is equipped
-[ ] Staff is required to perform magic
-[ ] When you spawn select your item (staff, 
-[ ] Primary, Secondary
-[ ] Fire Bow
+[ ] Human Bow
 [x] Fix chat
 [x] Unlock firebolt
 [x] Human Sword

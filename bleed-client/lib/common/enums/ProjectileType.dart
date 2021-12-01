@@ -2,8 +2,7 @@
 enum ProjectileType {
   Bullet,
   Fireball,
-  // Arrow,
-  // Throwing_Knife (Warrior)
+  Arrow,
 }
 
 const List<ProjectileType> projectileTypes = ProjectileType.values;

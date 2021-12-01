@@ -1,5 +1,6 @@
 enum GameEventType {
   Handgun_Fired,
+  Arrow_Fired,
   Shotgun_Fired,
   SniperRifle_Fired,
   MachineGun_Fired,

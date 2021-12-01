@@ -15,6 +15,7 @@ import 'package:lemon_engine/functions/key_pressed.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/state/camera.dart';
+import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_engine/state/zoom.dart';
 import 'package:lemon_math/diff_over.dart';
 import 'package:lemon_math/distance_between.dart';
@@ -104,6 +105,8 @@ class _Keys {
   LogicalKeyboardKey teleport = LogicalKeyboardKey.keyG;
   LogicalKeyboardKey casteFireball = LogicalKeyboardKey.keyZ;
   LogicalKeyboardKey toggleSkillTree = LogicalKeyboardKey.keyT;
+  LogicalKeyboardKey arrowUp = LogicalKeyboardKey.arrowUp;
+  LogicalKeyboardKey arrowDown = LogicalKeyboardKey.arrowDown;
 }
 
 Map<LogicalKeyboardKey, bool> _keyDownState = {};
@@ -150,6 +153,7 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.equip4: equip4,
   keys.toggleSkillTree: hud.toggle.skillTree,
 };
+
 
 void equip1(){
   sendRequestEquip(0);

@@ -16,6 +16,7 @@ class _Atlas {
   final Vector2 tiles = Vector2(1, 2977);
   final _Human human = _Human();
   final Vector2 rockWall = Vector2(2217, 1222);
+  final Vector2 arrow = Vector2(2415, 1);
 }
 
 class _Human {

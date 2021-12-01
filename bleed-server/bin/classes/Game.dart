@@ -462,6 +462,11 @@ extension GameFunctions on Game {
         character.stateDuration = coolDown.fireball;
         dispatch(GameEventType.Handgun_Fired, x, y, bullet.xv, bullet.yv);
         break;
+      case WeaponType.Bow:
+        Projectile bow = spawnArrow(character);
+        character.stateDuration = coolDown.bow;
+        dispatch(GameEventType.Arrow_Fired, x, y, bow.xv, bow.yv);
+        break;
       case WeaponType.HandGun:
         Projectile bullet = spawnBullet(character);
         character.stateDuration = coolDown.handgun;
@@ -967,6 +972,7 @@ extension GameFunctions on Game {
         character: character,
         accuracy: getWeaponAccuracy(character.weapon.type),
         speed: getBulletSpeed(character.weapon.type),
+        range: getWeaponRange(character.weapon.type),
         damage: character.weapon.damage,
         type: ProjectileType.Bullet);
   }
@@ -975,54 +981,59 @@ extension GameFunctions on Game {
     return spawnProjectile(
         character: character,
         accuracy: 0,
-        speed: 4.0,
+        speed: settings.projectileSpeed.fireball,
         damage: 100,
+        range: settings.range.firebolt,
         type: ProjectileType.Fireball);
+  }
+
+  Projectile spawnArrow(Character character) {
+    return spawnProjectile(
+        character: character,
+        accuracy: 0,
+        speed: settings.projectileSpeed.arrow,
+        damage: 100,
+        range: settings.range.arrow,
+        type: ProjectileType.Arrow);
   }
 
   Projectile spawnProjectile({
     required Character character,
     required double accuracy,
     required double speed,
+    required double range,
     required int damage,
     required ProjectileType type,
   }) {
     double spawnDistance = character.radius + 20;
     double x = character.x + adj(character.aimAngle, spawnDistance);
     double y = character.y + opp(character.aimAngle, spawnDistance);
-
     double xv = velX(character.aimAngle + giveOrTake(accuracy), speed);
-
     double yv = velY(character.aimAngle + giveOrTake(accuracy), speed);
-
-    double range = getWeaponRange(character.weapon.type) +
-        giveOrTake(settings.weaponRangeVariation);
-
     Direction direction = convertAngleToDirection(character.aimAngle);
 
     for (int i = 0; i < projectiles.length; i++) {
       if (projectiles[i].active) continue;
-      Projectile bullet = projectiles[i];
-      bullet.active = true;
-      bullet.xStart = x;
-      bullet.yStart = y;
-      bullet.x = x;
-      bullet.y = y;
-      bullet.xv = xv;
-      bullet.yv = yv;
-      bullet.owner = character;
-      bullet.range = range;
-      bullet.damage = damage;
-      bullet.direction = direction;
-      bullet.type = type;
-      return bullet;
+      Projectile projectile = projectiles[i];
+      projectile.active = true;
+      projectile.xStart = x;
+      projectile.yStart = y;
+      projectile.x = x;
+      projectile.y = y;
+      projectile.xv = xv;
+      projectile.yv = yv;
+      projectile.owner = character;
+      projectile.range = range;
+      projectile.damage = damage;
+      projectile.direction = direction;
+      projectile.type = type;
+      return projectile;
     }
 
-    Projectile bullet = Projectile(
-        x, y, xv, yv, character, range, damage, direction,
-        type: type);
-    projectiles.add(bullet);
-    return bullet;
+    Projectile projectile = Projectile(x, y, xv, yv, character, range, damage,
+        direction, type: type);
+    projectiles.add(projectile);
+    return projectile;
   }
 
   Npc spawnZombie(double x, double y,

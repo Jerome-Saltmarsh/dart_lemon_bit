@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Item.dart';
@@ -38,6 +40,7 @@ import 'package:bleed_client/watches/phase.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:lemon_engine/functions/register_on_mouse_scroll.dart';
 import 'package:lemon_engine/game.dart';
+import 'package:lemon_engine/state/paint.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../ui/compose/dialogs.dart';
@@ -45,7 +48,6 @@ import '../ui/compose/dialogs.dart';
 Future init() async {
   await images.load();
   await loadSharedPreferences();
-
   initializeGameInstances();
   initializeEventListeners();
   initAudioPlayers();
