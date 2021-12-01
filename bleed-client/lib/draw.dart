@@ -55,23 +55,6 @@ void drawDebugNpcs(List<NpcDebug> values){
   }
 }
 
-void drawPlayerHealth() {
-  if (!playerAssigned) return;
-
-  double health = game.player.health.value / game.player.maxHealth;
-  double halfMaxHealth = game.player.maxHealth * 0.5;
-  if (health > 0.5) {
-    drawCharacterCircle(
-        game.player.x,
-        game.player.y,
-        Color.lerp(
-            colours.yellow, colours.green, (game.player.health.value - halfMaxHealth) / halfMaxHealth));
-  } else {
-    drawCharacterCircle(game.player.x, game.player.y,
-        Color.lerp(colours.blood, colours.yellow, game.player.health.value / halfMaxHealth));
-  }
-}
-
 Color get healthColor {
   double health = game.player.health.value / game.player.maxHealth;
   double halfMaxHealth = game.player.maxHealth * 0.5;

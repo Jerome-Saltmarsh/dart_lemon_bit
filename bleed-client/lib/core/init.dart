@@ -27,7 +27,6 @@ import 'package:bleed_client/network/streams/onConnect.dart';
 import 'package:bleed_client/network/streams/onConnected.dart';
 import 'package:bleed_client/network/streams/onDisconnected.dart';
 import 'package:bleed_client/network/streams/onDone.dart';
-import 'package:bleed_client/onMouseScroll.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';

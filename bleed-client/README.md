@@ -1,8 +1,3 @@
-// health
-// magic
-// stamina
-// strength
-aw
 
 -- FEATURES -- 
 [ ] Critical Damage
@@ -119,7 +114,29 @@ aw
 [ ] Human Bow
 [ ] Display Weapon Damage Stats (experience etc)
 [ ] Ability Tree
-[ ] Unlock fireboltz
+[ ] Ability vs Weapon
+[ ] Left click for weapon and right click for ability?
+[ ] Fire arrow can only be used if a bow is equipped
+[ ] Staff is required to perform magic
+[ ] When you spawn select your item (staff, 
+[ ] Primary, Secondary
+
+[ ] Staff can upgrade in three ways
+    [ ] Water (Support Healing)
+    [ ] Fire (Glass Cannon)
+    [ ] Electric (AOE)
+
+[ ] Bow can be upgraded in three ways
+    [ ] Offensive
+    [ ] Split arrow
+    [ ] Other
+
+[ ] Sword can be upgraded in three ways
+    [ ] Each upgrade requires specific minerals and a character level
+
+
+[ ] Fix chat
+[x] Unlock firebolt
 [x] Human Sword
 [x] Tree Colors
 [x] Fix Editor

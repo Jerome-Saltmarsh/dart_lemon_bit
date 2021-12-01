@@ -6,6 +6,7 @@ import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
+import 'package:bleed_client/update.dart';
 import 'package:bleed_client/variables/lantern.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,6 @@ import 'package:lemon_engine/state/zoom.dart';
 import 'package:lemon_math/diff_over.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/randomItem.dart';
-import 'package:lemon_watch/watch.dart';
 
 import '../send.dart';
 import 'common/enums/Direction.dart';
@@ -213,6 +213,13 @@ Map<LogicalKeyboardKey, Function> _keyReleasedHandlers = {
   keys.runDown: stopRunDown,
   keys.melee: stopMelee,
 };
+
+void onMouseScroll(double amount) {
+  Offset center1 = screenCenterWorld;
+  targetZoom -= amount * game.settings.zoomSpeed;
+  if (targetZoom < game.settings.maxZoom) targetZoom = game.settings.maxZoom;
+  cameraCenter(center1.dx, center1.dy);
+}
 
 void throwGrenade() {
   if (!mouseAvailable) return;
