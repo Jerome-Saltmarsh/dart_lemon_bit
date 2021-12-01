@@ -144,6 +144,15 @@ Float32List mapCharacterSrc({
           _src[1] = _humanFiringShotgun.y + shade.index * _frameSize;
           break;
 
+        case WeaponType.Bow:
+          double size = 96;
+          double _di = direction.index * size;
+          _src[0] = atlas.human.firingBow.x + _di;
+          _src[1] = atlas.human.firingBow.y + shade.index * size;
+          _src[2] = _src[0] + size;
+          _src[3] = _src[1] + size;
+          break;
+
         default:
           int _frame = -1;
           if (frame < _manFramesFiringShotgunMax) {
