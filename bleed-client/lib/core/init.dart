@@ -65,8 +65,7 @@ Future init() async {
 }
 
 void initializeGameInstances() {
-
-  for (int i = 0; i < 1000; i++) {
+  for (int i = 0; i < 5000; i++) {
     game.projectiles
         .add(Projectile(0, 0, ProjectileType.Bullet, Direction.DownLeft));
     game.items.add(Item());

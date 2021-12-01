@@ -1,11 +1,9 @@
 import 'dart:math';
-import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
-import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
@@ -16,7 +14,6 @@ import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
-import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/constants/charWidth.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/draw/drawBullets.dart';
@@ -27,7 +24,6 @@ import 'package:bleed_client/render/functions/applyDynamicShadeToTileSrc.dart';
 import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
 import 'package:bleed_client/render/functions/emitLight.dart';
 import 'package:bleed_client/render/functions/resetDynamicShadesToBakeMap.dart';
-import 'package:bleed_client/render/mappers/mapDst.dart';
 import 'package:bleed_client/render/state/dynamicShading.dart';
 import 'package:bleed_client/render/state/floatingText.dart';
 import 'package:bleed_client/state/game.dart';
@@ -53,6 +49,7 @@ import '../../draw.dart';
 import '../../state.dart';
 import 'drawGrenade.dart';
 import 'drawInteractableNpcs.dart';
+import 'drawItem.dart';
 import 'drawParticle.dart';
 
 final double _nameRadius = 100;
@@ -99,16 +96,7 @@ void renderCanvasPlay() {
   _drawMouseAim(); // TODO Expensive
 }
 
-Float32List _src = Float32List(4);
 
-void drawItem(Item item){
-  int frame = drawFrame % 8;
-  _src[0] = atlas.items.x * frame * 64.0;
-  _src[1] = atlas.items.y;
-  _src[2] = _src[0] + 64;
-  _src[3] = _src[1]  + 64;
-  drawAtlas(mapDst(x: item.x, y: item.y), _src);
-}
 
 void drawDebugEnvironmentObjects() {
   paint.color = Colors.red;
