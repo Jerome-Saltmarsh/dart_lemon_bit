@@ -5,6 +5,7 @@ enum WeaponType {
   SniperRifle,
   AssaultRifle,
   Firebolt,
+  Bow
 }
 
 List<WeaponType> weaponTypes = WeaponType.values;

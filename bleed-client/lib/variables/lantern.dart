@@ -1,4 +1,4 @@
-LanternMode lantern = LanternMode.Off;
+LanternMode lantern = LanternMode.High;
 
 enum LanternMode {
   Off,

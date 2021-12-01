@@ -20,6 +20,7 @@ class _Atlas {
 
 class _Human {
   final Vector2 striking = Vector2(631, 2977);
+  final Vector2 firingBow = Vector2(1, 3218);
 }
 
 class _Zombie {

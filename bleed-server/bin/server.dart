@@ -420,6 +420,7 @@ Player spawnPlayerInTown() {
     squad: 1,
     weapons: [
       Weapon(type: WeaponType.HandGun, damage: 1, capacity: 12),
+      Weapon(type: WeaponType.Bow, damage: 3, capacity: 12),
     ]
   );
   player.skillPoints = 1;

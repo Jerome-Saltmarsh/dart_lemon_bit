@@ -1,4 +1,3 @@
-
 -- FEATURES -- 
 [ ] Critical Damage
 [ ] Accuracy
@@ -120,22 +119,8 @@
 [ ] Staff is required to perform magic
 [ ] When you spawn select your item (staff, 
 [ ] Primary, Secondary
-
-[ ] Staff can upgrade in three ways
-    [ ] Water (Support Healing)
-    [ ] Fire (Glass Cannon)
-    [ ] Electric (AOE)
-
-[ ] Bow can be upgraded in three ways
-    [ ] Offensive
-    [ ] Split arrow
-    [ ] Other
-
-[ ] Sword can be upgraded in three ways
-    [ ] Each upgrade requires specific minerals and a character level
-
-
-[ ] Fix chat
+[ ] Fire Bow
+[x] Fix chat
 [x] Unlock firebolt
 [x] Human Sword
 [x] Tree Colors
@@ -525,3 +510,32 @@ Input -> Network
 Game Loop -> Network Update
 
 receive compiled game state from the network, parse it into game state then render.
+
+-- DESIGN -- 
+[ ] Staff can upgrade in three ways
+[ ] Chakra
+[ ] Water (Support Healing)
+[ ] Fire (Glass Cannon)
+[ ] Electric (AOE)
+[ ] Bow can be upgraded in three ways
+[ ] Offensive
+[ ] Split arrow
+[ ] Other
+[ ] Sword can be upgraded in three ways
+[ ] Each upgrade requires specific minerals and a character level
+
+Gunman Class
+[ ] Handgun
+[ ] Shotgun
+
+Warlock Class
+[ ] 
+
+Samurai Class
+[ ] Specializes in sword
+
+Ninja Class
+[ ] Katana,
+[ ] throwing stars skills,
+[ ] Dash
+[ ] Explosives
