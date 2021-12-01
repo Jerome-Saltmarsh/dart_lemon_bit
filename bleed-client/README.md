@@ -112,6 +112,7 @@
 [ ] Display Weapon Damage Stats (experience etc)
 [ ] Ability Tree
 [ ] Human Bow
+[ ] Zombies drop items on death
 [x] Fix chat
 [x] Unlock firebolt
 [x] Human Sword

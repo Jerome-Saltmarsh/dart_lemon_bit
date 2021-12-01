@@ -307,7 +307,7 @@ extension GameFunctions on Game {
       if (target is Npc) {
         if (src.level < maxPlayerLevel) {
           src.experience += target.experience;
-          while (src.experience >= levelExperience[src.level]){
+          while (src.experience >= levelExperience[src.level]) {
             // on player level increased
             src.experience -= levelExperience[src.level];
             src.level++;
@@ -440,10 +440,8 @@ extension GameFunctions on Game {
     faceAimDirection(character);
 
     if (character is Player) {
-      if (
-        character.weapon.type != WeaponType.Unarmed &&
-        character.weapon.rounds <= 0
-      ) {
+      if (character.weapon.type != WeaponType.Unarmed &&
+          character.weapon.rounds <= 0) {
         character.stateDuration = settings.coolDown.clipEmpty;
         dispatch(GameEventType.Clip_Empty, character.x, character.y, 0, 0);
         return;
@@ -819,7 +817,9 @@ extension GameFunctions on Game {
             // on zombie killed by npc
             (bullet.owner as Npc).clearTarget();
           }
-
+          if (character is Npc) {
+            character.clearTarget();
+          }
           character.active = false;
           dispatch(GameEventType.Zombie_killed_Explosion, character.x,
               character.y, bullet.xv, bullet.yv);
@@ -1030,8 +1030,9 @@ extension GameFunctions on Game {
       return projectile;
     }
 
-    Projectile projectile = Projectile(x, y, xv, yv, character, range, damage,
-        direction, type: type);
+    Projectile projectile = Projectile(
+        x, y, xv, yv, character, range, damage, direction,
+        type: type);
     projectiles.add(projectile);
     return projectile;
   }
