@@ -237,12 +237,11 @@ void parseState() {
         break;
 
       case ServerResponse.Items:
-        game.totalItems = 0;
-        while (!_simiColonConsumed()) {
-          game.items[game.totalItems].type = _consumeItemType();
-          game.items[game.totalItems].x = _consumeDouble();
-          game.items[game.totalItems].y = _consumeDouble();
-          game.totalItems++;
+        game.totalItems = _consumeInt();
+        for(int i = 0; i < game.totalItems; i++){
+          game.items[i].type = _consumeItemType();
+          game.items[i].x = _consumeDouble();
+          game.items[i].y = _consumeDouble();
         }
         break;
       default:

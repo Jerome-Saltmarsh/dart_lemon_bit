@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
+import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
@@ -71,17 +72,6 @@ void renderCanvasPlay() {
     applyNpcLightEmission(game.interactableNpcs);
   }
 
-  // if (ambient.isLighterThan(Shade.PitchBlack)) {
-  //   for (EnvironmentObject env in game.environmentObjects) {
-  //     if (env.type != ObjectType.Tree01) continue;
-  //     Shade shade = getShade(env.row, env.column);
-  //     if (shade.index < 4){
-  //       Shade darker = shades[shade.index + 1];
-  //       dynamicShading[env.row][env.column] = darker;
-  //     }
-  //   }
-  // }
-
   applyDynamicShadeToTileSrc();
   drawTiles();
 
@@ -89,6 +79,10 @@ void renderCanvasPlay() {
   drawBulletHoles(game.bulletHoles);
   _drawGrenades(game.grenades);
   drawSprites();
+
+  // for (Item item in game.items) {
+  //   drawCircle(item.x, item.y, 10, Colors.white);
+  // }
 
   if (game.settings.compilePaths) {
     drawDebugEnvironmentObjects();

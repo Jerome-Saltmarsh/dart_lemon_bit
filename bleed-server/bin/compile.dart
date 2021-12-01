@@ -85,12 +85,12 @@ void _compileCrates(Game game) {
 
 void _compileItems(StringBuffer buffer, List<Item> items) {
   _write(buffer, ServerResponse.Items.index);
+  _write(buffer, items.length);
   for (Item item in items) {
     _write(buffer, item.type.index);
     _writeInt(buffer, item.x);
-    _write(buffer, item.y);
+    _writeInt(buffer, item.y);
   }
-  _write(buffer, _semiColon);
 }
 
 String compileTiles(List<List<Tile>> tiles) {
