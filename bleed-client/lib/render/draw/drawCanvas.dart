@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Character.dart';
@@ -15,6 +16,7 @@ import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
+import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/constants/charWidth.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/draw/drawBullets.dart';
@@ -25,6 +27,7 @@ import 'package:bleed_client/render/functions/applyDynamicShadeToTileSrc.dart';
 import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
 import 'package:bleed_client/render/functions/emitLight.dart';
 import 'package:bleed_client/render/functions/resetDynamicShadesToBakeMap.dart';
+import 'package:bleed_client/render/mappers/mapDst.dart';
 import 'package:bleed_client/render/state/dynamicShading.dart';
 import 'package:bleed_client/render/state/floatingText.dart';
 import 'package:bleed_client/state/game.dart';
@@ -80,9 +83,9 @@ void renderCanvasPlay() {
   _drawGrenades(game.grenades);
   drawSprites();
 
-  // for (Item item in game.items) {
-  //   drawCircle(item.x, item.y, 10, Colors.white);
-  // }
+  for(int i = 0; i < game.totalItems; i++){
+    drawItem(game.items[i]);
+  }
 
   if (game.settings.compilePaths) {
     drawDebugEnvironmentObjects();
@@ -94,6 +97,17 @@ void renderCanvasPlay() {
   _drawPlayerNames();
   drawPlayerText();
   _drawMouseAim(); // TODO Expensive
+}
+
+Float32List _src = Float32List(4);
+
+void drawItem(Item item){
+  int frame = drawFrame % 8;
+  _src[0] = atlas.items.x * frame * 64.0;
+  _src[1] = atlas.items.y;
+  _src[2] = _src[0] + 64;
+  _src[3] = _src[1]  + 64;
+  drawAtlas(mapDst(x: item.x, y: item.y), _src);
 }
 
 void drawDebugEnvironmentObjects() {

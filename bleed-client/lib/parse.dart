@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
+import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
@@ -239,9 +240,10 @@ void parseState() {
       case ServerResponse.Items:
         game.totalItems = _consumeInt();
         for(int i = 0; i < game.totalItems; i++){
-          game.items[i].type = _consumeItemType();
-          game.items[i].x = _consumeDouble();
-          game.items[i].y = _consumeDouble();
+          Item item = game.items[i];
+          item.type = _consumeItemType();
+          item.x = _consumeDouble();
+          item.y = _consumeDouble();
         }
         break;
       default:

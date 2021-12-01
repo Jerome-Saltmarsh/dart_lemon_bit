@@ -419,6 +419,7 @@ Player spawnPlayerInTown() {
     inventory: Inventory(0, 0, []),
     squad: 1,
     weapons: [
+      Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0),
       Weapon(type: WeaponType.HandGun, damage: 1, capacity: 12),
       Weapon(type: WeaponType.Bow, damage: 3, capacity: 12),
     ]
