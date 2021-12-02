@@ -8,6 +8,12 @@ import 'package:bleed_client/common/CharacterType.dart';
 
 import 'mapDst.dart';
 
+Map<CharacterType, double> mapCharacterTypeToScale = {
+  CharacterType.Zombie: calculateScale(64),
+  CharacterType.Witch: calculateScale(98),
+  CharacterType.Human: calculateScale(64),
+};
+
 Float32List mapCharacterDst(Character character, CharacterType type) {
 
   if (type == CharacterType.Human || type == CharacterType.Witch){

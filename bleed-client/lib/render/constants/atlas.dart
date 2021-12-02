@@ -21,8 +21,9 @@ class _Atlas {
   final _Witch witch = _Witch();
 }
 
-class _Witch {
-  final Vector2 idle = Vector2(1283, 3170);
+class  _Witch {
+  final Vector2 idle = Vector2(1, 3459);
+  final Vector2 running = Vector2(1, 3521);
 }
 
 class _Human {

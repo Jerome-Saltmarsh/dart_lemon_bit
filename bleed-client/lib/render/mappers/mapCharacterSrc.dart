@@ -55,7 +55,7 @@ Float32List mapCharacterSrc({
 
       if (type == CharacterType.Witch) {
         _src[0] = atlas.witch.idle.x + (direction.index * _frameSize);
-        _src[1] = atlas.witch.idle.y + (shade.index * _frameSize);
+        _src[1] = atlas.witch.idle.y;
         break;
       }
 
@@ -197,6 +197,14 @@ Float32List mapCharacterSrc({
       if (type == CharacterType.Zombie) {
         _src[0] = _s + _f + _zombieWalking.x;
         _src[1] = shade.index * _frameSize + _zombieWalking.y;
+        break;
+      }
+
+      if (type == CharacterType.Witch) {
+        _s = direction.index * _frameSize * 4;
+        _f = (frame % 4) * _frameSize;
+        _src[0] = atlas.witch.running.x + _s + _f;
+        _src[1] = atlas.witch.running.y;
         break;
       }
 
