@@ -1,4 +1,5 @@
 import '../common/CharacterState.dart';
+import '../common/HeroType.dart';
 import '../common/PlayerEvents.dart';
 import '../common/Quests.dart';
 import '../constants/no_squad.dart';
@@ -27,6 +28,7 @@ class Player extends Character {
   MainQuest questMain = MainQuest.Introduction;
   bool sceneChanged = false;
   Game game;
+  HeroType heroType = HeroType.None;
 
   int handgunDamage = 10;
 

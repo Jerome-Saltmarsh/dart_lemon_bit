@@ -91,16 +91,18 @@ void main() {
       sendToClient('$errorIndex ${error.index} $message');
     }
 
-    void errorInvalidArg(String message){
+    void errorInvalidArg(String message) {
       sendToClient('$errorIndex ${GameError.InvalidArguments.index} $message');
     }
 
     void errorArgsExpected(int expected, List arguments) {
-      errorInvalidArg('Invalid number of arguments received. Expected $expected but got ${arguments.length}');
+      errorInvalidArg(
+          'Invalid number of arguments received. Expected $expected but got ${arguments.length}');
     }
 
-    void errorIntegerExpected(int index, got){
-      errorInvalidArg('Invalid type at index $index, expected integer but got $got');
+    void errorIntegerExpected(int index, got) {
+      errorInvalidArg(
+          'Invalid type at index $index, expected integer but got $got');
     }
 
     void errorPlayerNotFound() {
@@ -111,7 +113,7 @@ void main() {
       error(GameError.PlayerDead);
     }
 
-    void errorInsufficientSkillPoints(){
+    void errorInsufficientSkillPoints() {
       error(GameError.InsufficientSkillPoints);
     }
 
@@ -210,8 +212,33 @@ void main() {
           player.game.spawnFireball(player);
           return;
 
+        case ClientRequest.SelectHeroType:
+          if (arguments.length != 3) {
+            errorArgsExpected(3, arguments);
+            return;
+          }
+
+          Player? player = findPlayerByUuid(arguments[1]);
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+
+          int? heroTypeIndex = int.tryParse(arguments[2]);
+          if (heroTypeIndex == null) {
+            errorIntegerExpected(1, arguments[2]);
+            return;
+          }
+          HeroType heroType = heroTypes[heroTypeIndex];
+          if (player.heroType != HeroType.None) {
+            error(GameError.HeroTypeAlreadySelected);
+            break;
+          }
+          player.heroType = heroType;
+          break;
+
         case ClientRequest.AcquireAbility:
-          if (arguments.length != 3){
+          if (arguments.length != 3) {
             errorArgsExpected(3, arguments);
             return;
           }
@@ -227,44 +254,48 @@ void main() {
           if (player.busy) {
             return;
           }
-          if (player.skillPoints <= 0){
+          if (player.skillPoints <= 0) {
             errorInsufficientSkillPoints();
             return;
           }
 
           int? weaponTypeIndex = int.tryParse(arguments[2]);
-          if (weaponTypeIndex == null){
+          if (weaponTypeIndex == null) {
             errorIntegerExpected(2, arguments[2]);
             return;
           }
 
-          if (weaponTypeIndex >= weaponTypes.length){
-            errorInvalidArg("WeaponType $weaponTypeIndex cannot be greater than ${weaponTypes.length}");
+          if (weaponTypeIndex >= weaponTypes.length) {
+            errorInvalidArg(
+                "WeaponType $weaponTypeIndex cannot be greater than ${weaponTypes.length}");
             return;
           }
 
-          if (weaponTypeIndex < 0){
+          if (weaponTypeIndex < 0) {
             errorInvalidArg("WeaponType $weaponTypeIndex cannot be negative");
             return;
           }
 
           WeaponType type = weaponTypes[int.parse(arguments[2])];
 
-          switch(type){
+          switch (type) {
             case WeaponType.Shotgun:
-              player.weapons.add(Weapon(type: WeaponType.Shotgun, damage: 1, capacity: 5));
+              player.weapons.add(
+                  Weapon(type: WeaponType.Shotgun, damage: 1, capacity: 5));
               player.weaponsDirty = true;
               player.skillPoints--;
               break;
 
             case WeaponType.HandGun:
-              player.weapons.add(Weapon(type: WeaponType.HandGun, damage: 1, capacity: 5));
+              player.weapons.add(
+                  Weapon(type: WeaponType.HandGun, damage: 1, capacity: 5));
               player.weaponsDirty = true;
               player.skillPoints--;
               break;
 
             case WeaponType.Firebolt:
-              player.weapons.add(Weapon(type: WeaponType.Firebolt, damage: 1, capacity: 5));
+              player.weapons.add(
+                  Weapon(type: WeaponType.Firebolt, damage: 1, capacity: 5));
               player.weaponsDirty = true;
               player.skillPoints--;
               break;
@@ -284,9 +315,10 @@ void main() {
           break;
 
         case ClientRequest.Equip:
-
-          if (arguments.length < 3){
-            error(GameError.InvalidArguments, message: "ClientRequest.Equip Error: Expected 2 args but got ${arguments.length}");
+          if (arguments.length < 3) {
+            error(GameError.InvalidArguments,
+                message:
+                    "ClientRequest.Equip Error: Expected 2 args but got ${arguments.length}");
             return;
           }
 
@@ -297,15 +329,20 @@ void main() {
           }
 
           int? weaponIndex = int.tryParse(arguments[2]);
-          if (weaponIndex == null){
-            error(GameError.InvalidArguments, message: "arg4, weapon-index: $weaponIndex integer expected");
+          if (weaponIndex == null) {
+            error(GameError.InvalidArguments,
+                message: "arg4, weapon-index: $weaponIndex integer expected");
             return;
           }
-          if (weaponIndex < 0){
-            error(GameError.InvalidArguments, message: "arg4, weapon-index: $weaponIndex must be greater than 0, got ");
+          if (weaponIndex < 0) {
+            error(GameError.InvalidArguments,
+                message:
+                    "arg4, weapon-index: $weaponIndex must be greater than 0, got ");
           }
-          if (weaponIndex >= player.weapons.length){
-            error(GameError.InvalidArguments, message: "arg4, weapon-index: $weaponIndex cannot be greater than player.weapons.length: ${player.weapons.length}");
+          if (weaponIndex >= player.weapons.length) {
+            error(GameError.InvalidArguments,
+                message:
+                    "arg4, weapon-index: $weaponIndex cannot be greater than player.weapons.length: ${player.weapons.length}");
           }
 
           changeWeapon(player, weaponIndex);
@@ -375,7 +412,6 @@ void main() {
           break;
 
         case ClientRequest.Speak:
-
           Player? player = findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
@@ -412,26 +448,23 @@ void main() {
   });
 }
 
-
 Player spawnPlayerInTown() {
   Player player = Player(
-    game: world.town,
-    x: 0,
-    y: 1750,
-    inventory: Inventory(0, 0, []),
-    squad: 1,
-    weapons: [
-      Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0),
-      Weapon(type: WeaponType.HandGun, damage: 1, capacity: 12),
-      Weapon(type: WeaponType.Bow, damage: 3, capacity: 12),
-      Weapon(type: WeaponType.SlowingCircle, damage: 3, capacity: 100),
-    ]
-  );
+      game: world.town,
+      x: 0,
+      y: 1750,
+      inventory: Inventory(0, 0, []),
+      squad: 1,
+      weapons: [
+        Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0),
+        Weapon(type: WeaponType.HandGun, damage: 1, capacity: 12),
+        Weapon(type: WeaponType.Bow, damage: 3, capacity: 12),
+        Weapon(type: WeaponType.SlowingCircle, damage: 3, capacity: 100),
+      ]);
   player.skillPoints = 1;
   world.town.players.add(player);
   return player;
 }
-
 
 Player spawnPlayerInWildernessEast() {
   Player player = Player(
@@ -444,8 +477,7 @@ Player spawnPlayerInWildernessEast() {
         Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0),
         Weapon(type: WeaponType.HandGun, damage: 1, capacity: 12),
         Weapon(type: WeaponType.Bow, damage: 3, capacity: 12),
-      ]
-  );
+      ]);
   player.skillPoints = 1;
   world.wildernessEast.players.add(player);
   return player;

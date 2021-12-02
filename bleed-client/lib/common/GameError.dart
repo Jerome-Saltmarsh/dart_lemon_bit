@@ -1,5 +1,6 @@
 
 enum GameError {
+  HeroTypeAlreadySelected,
   GameNotFound,
   PlayerNotFound,
   ClientRequestRequired,

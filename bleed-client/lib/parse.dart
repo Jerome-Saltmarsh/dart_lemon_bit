@@ -12,6 +12,7 @@ import 'package:bleed_client/classes/Weapon.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/GameError.dart';
+import 'package:bleed_client/common/HeroType.dart';
 import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/PlayerEvents.dart';
 import 'package:bleed_client/common/ServerResponse.dart';
@@ -377,6 +378,11 @@ void _parsePlayer() {
   game.player.skillPoints.value = _consumeInt();
   game.player.nextLevelExperience.value = _consumeInt();
   game.player.experiencePercentage.value = _consumeInt();
+  game.player.heroType.value = _consumeHeroType();
+}
+
+HeroType _consumeHeroType(){
+  return heroTypes[_consumeInt()];
 }
 
 void _parsePlayerEvents() {

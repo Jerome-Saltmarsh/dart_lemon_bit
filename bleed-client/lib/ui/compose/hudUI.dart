@@ -10,6 +10,7 @@ import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/mappers/mapWeaponToDecorationImage.dart';
 import 'package:bleed_client/network/functions/disconnect.dart';
 import 'package:bleed_client/send.dart';
+import 'package:bleed_client/server/server.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/compose/buildSkillTree.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
@@ -204,6 +205,7 @@ Widget buildSelectHero() {
               child: text(heroTypeToString(heroType), fontSize: fontSize,
                   onPressed: () {
                 game.player.heroType.value = heroType;
+                server.send.selectHeroType(heroType);
               }),
             );
           }).toList(),

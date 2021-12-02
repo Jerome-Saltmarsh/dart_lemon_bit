@@ -146,6 +146,8 @@ void compilePlayer(StringBuffer buffer, Player player) {
   double perc = player.experience / experienceRequired * 100;
   _writeInt(buffer, perc); // todo make sure player is not max level
 
+  _write(buffer, player.heroType.index);
+
   _compilePlayerEvents(buffer, player);
 
   if (player.weaponsDirty){
