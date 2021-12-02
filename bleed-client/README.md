@@ -113,8 +113,8 @@
 [ ] Ability Tree
 [ ] Human Bow
 [ ] Zombies drop items on death
-[ ] Cast Spell Slow Circle wd
 [ ] Fix Player Death Animation
+[ ] Cast Spell Slow Circle 
 [x] Fix chat
 [x] Unlock firebolt
 [x] Human Sword
