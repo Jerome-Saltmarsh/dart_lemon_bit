@@ -7,6 +7,7 @@ import 'classes/Inventory.dart';
 import 'classes/Player.dart';
 import 'classes/Weapon.dart';
 import 'common/CharacterState.dart';
+import 'common/HeroType.dart';
 import 'common/enums/Direction.dart';
 import 'common/version.dart';
 import 'compile.dart';
@@ -77,7 +78,6 @@ void main() {
     void joinGame(Game game) {
       _buffer.clear();
       Player player = spawnPlayerInTown();
-      // Player player = spawnPlayerInWildernessEast();
       compilePlayer(_buffer, player);
       _buffer.write(
           '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${game.id} ${player.squad} ');
@@ -411,6 +411,7 @@ void main() {
     print('Serving at wss://${server.address.host}:${server.port}');
   });
 }
+
 
 Player spawnPlayerInTown() {
   Player player = Player(

@@ -114,6 +114,7 @@
 [ ] Human Bow
 [ ] Zombies drop items on death
 [ ] Cast Spell Slow Circle wd
+[ ] Fix Player Death Animation
 [x] Fix chat
 [x] Unlock firebolt
 [x] Human Sword

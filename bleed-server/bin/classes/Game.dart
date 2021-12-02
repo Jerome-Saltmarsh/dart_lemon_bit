@@ -817,7 +817,7 @@ extension GameFunctions on Game {
           if (character is Npc) {
             character.clearTarget();
           }
-          items.add(Item(type: ItemType.Handgun, x: character.x, y: character.y));
+          // items.add(Item(type: ItemType.Handgun, x: character.x, y: character.y));
           character.active = false;
           dispatch(GameEventType.Zombie_killed_Explosion, character.x,
               character.y, bullet.xv, bullet.yv);

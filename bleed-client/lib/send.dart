@@ -68,6 +68,10 @@ void sendRequestAcquireFirebolt(){
   sendRequestAcquireAbility(WeaponType.Firebolt);
 }
 
+void sendRequestJoinGame() {
+  send('${ClientRequest.Join.index}');
+}
+
 void sendRequestAcquireAbility(WeaponType type) {
   send('${ClientRequest.AcquireAbility.index} $session ${type.index}');
 }

@@ -7,6 +7,7 @@ import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
+import 'package:bleed_client/common/HeroType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
@@ -158,7 +159,6 @@ void initializeEventListeners(){
   onRightClickChanged.stream.listen((bool down) {
     characterController.sprint = down;
   });
-
 }
 
 void _onEventReceivedFromServer(dynamic value) {
@@ -168,23 +168,12 @@ void _onEventReceivedFromServer(dynamic value) {
 }
 
 void _onConnected(_event) {
-  print("on connected");
-  rebuildUI();
-  Future.delayed(Duration(seconds: 1), rebuildUI);
+  print("Connection to server established");
   sendRequestJoinGame();
-}
-
-void joinGameCasual() {
-  // send(ClientRequest.Game_Join_Casual.index.toString());
-}
-
-void sendRequestJoinGame() {
-  send(ClientRequest.Join.index.toString());
 }
 
 Future loadSharedPreferences() async {
   sharedPreferences = await SharedPreferences.getInstance();
-  //@ on sharedPreferences loaded
   game.settings.audioMuted.value = sharedPreferences.containsKey('audioMuted') &&
       sharedPreferences.getBool('audioMuted');
 

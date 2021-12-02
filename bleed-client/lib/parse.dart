@@ -32,6 +32,7 @@ import 'package:bleed_client/network/state/connecting.dart';
 import 'package:bleed_client/render/functions/applyEnvironmentObjectsToBakeMapping.dart';
 import 'package:bleed_client/render/functions/setBakeMapToAmbientLight.dart';
 import 'package:bleed_client/render/state/paths.dart';
+import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/compose/dialogs.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
@@ -123,7 +124,7 @@ void parseState() {
         break;
 
       case ServerResponse.Version:
-        joinGameCasual();
+        sendRequestJoinGame();
         break;
 
       case ServerResponse.Error:
