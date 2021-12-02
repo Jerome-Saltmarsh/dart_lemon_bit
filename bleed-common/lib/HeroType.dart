@@ -4,6 +4,7 @@ enum HeroType {
   Archer,
   Witch,
   Knight,
+  Musketeer,
 }
 
 const List<HeroType> heroTypes = HeroType.values;

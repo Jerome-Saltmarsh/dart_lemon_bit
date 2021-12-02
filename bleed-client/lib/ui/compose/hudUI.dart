@@ -172,6 +172,7 @@ Widget dialog({
   double padding = 8,
   double width = 400,
   double height = 600,
+  Color color = Colors.white24,
 }) {
   return Container(
     width: screenWidth,
@@ -179,9 +180,9 @@ Widget dialog({
     alignment: Alignment.center,
     child: Container(
       padding: EdgeInsets.all(padding),
-      color: Colors.white38,
+      color: color,
       width: width,
-      height: 600,
+      height: height,
       child: child,
     ),
   );
@@ -195,7 +196,7 @@ Widget buildSelectHero() {
           child: Column(
         children: [
           height16,
-          text("Select a hero"),
+          text("Select Hero", fontSize: 30),
           height16,
           ...heroTypesExceptNone.map((heroType) {
             return Container(
