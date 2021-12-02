@@ -424,6 +424,7 @@ Player spawnPlayerInTown() {
       Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0),
       Weapon(type: WeaponType.HandGun, damage: 1, capacity: 12),
       Weapon(type: WeaponType.Bow, damage: 3, capacity: 12),
+      Weapon(type: WeaponType.SlowingCircle, damage: 3, capacity: 100),
     ]
   );
   player.skillPoints = 1;

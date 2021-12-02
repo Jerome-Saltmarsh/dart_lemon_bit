@@ -9,6 +9,7 @@ import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Weapon.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CharacterState.dart';
+import 'package:bleed_client/common/HeroType.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
@@ -59,6 +60,7 @@ class _Player {
   final List<Weapon> weapons = [];
   final Watch<int> equippedRounds = Watch(0);
   final Watch<int> equippedCapacity = Watch(0);
+  final Watch<HeroType> heroType = Watch(HeroType.None);
   int squad = -1;
   Watch<double> health = Watch(0.0);
   double maxHealth = 0;

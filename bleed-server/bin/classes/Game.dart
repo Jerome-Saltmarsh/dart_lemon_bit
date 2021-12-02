@@ -452,6 +452,10 @@ extension GameFunctions on Game {
     character.weapon.rounds--;
 
     switch (character.weapon.type) {
+      case WeaponType.SlowingCircle:
+        casteSlowingCircle(character, x, y);
+        character.stateDuration = coolDown.fireball;
+        break;
       case WeaponType.Firebolt:
         Projectile bullet = spawnFireball(character);
         character.stateDuration = coolDown.fireball;
@@ -983,6 +987,10 @@ extension GameFunctions on Game {
         damage: 100,
         range: settings.range.firebolt,
         type: ProjectileType.Fireball);
+  }
+
+  void casteSlowingCircle(Character character, double x, double y) {
+
   }
 
   Projectile spawnArrow(Character character) {

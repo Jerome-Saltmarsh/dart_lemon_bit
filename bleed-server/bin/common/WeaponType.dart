@@ -8,6 +8,9 @@ enum WeaponType {
   Bow,
   Wand,
   Musket,
+  SlowingCircle, // caste by witch
 }
 
 List<WeaponType> weaponTypes = WeaponType.values;
+
+

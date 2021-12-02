@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/classes/Weapon.dart';
+import 'package:bleed_client/common/HeroType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/constants/servers.dart';
@@ -36,13 +37,10 @@ import 'dialogs.dart';
 
 const double _padding = 8;
 const _iconSize = 45.0;
+final emptyContainer = Container();
 
 Widget buildHealthBar() {
   return WatchBuilder(game.player.health, (double health) {
-    if (health == null) {
-      return CircularProgressIndicator();
-    }
-
     double percentage = health / game.player.maxHealth;
     double width = 120;
     double height = width * goldenRatioInverse;
@@ -169,6 +167,52 @@ String padZero(num value) {
   return '0$t';
 }
 
+Widget dialog({
+  Widget child,
+  double padding = 8,
+  double width = 400,
+  double height = 600,
+}) {
+  return Container(
+    width: screenWidth,
+    height: screenHeight,
+    alignment: Alignment.center,
+    child: Container(
+      padding: EdgeInsets.all(padding),
+      color: Colors.white38,
+      width: width,
+      height: 600,
+      child: child,
+    ),
+  );
+}
+
+Widget buildSelectHero() {
+  final fontSize = 20;
+  return WatchBuilder(game.player.heroType, (HeroType value) {
+    if (value == HeroType.None) {
+      return dialog(
+          child: Column(
+        children: [
+          height16,
+          text("Select a hero"),
+          height16,
+          ...heroTypesExceptNone.map((heroType) {
+            return Container(
+              margin: const EdgeInsets.only(bottom: 8),
+              child: text(heroTypeToString(heroType), fontSize: fontSize,
+                  onPressed: () {
+                game.player.heroType.value = heroType;
+              }),
+            );
+          }).toList(),
+        ],
+      ));
+    }
+    return emptyContainer;
+  });
+}
+
 Widget buildHud() {
   print("buildHud()");
 
@@ -184,6 +228,7 @@ Widget buildHud() {
         _buildServerText(),
         buildTopRight(),
         buildSkillTree(),
+        buildSelectHero(),
       ],
     );
   });
@@ -404,7 +449,7 @@ Widget buildEquippedWeaponSlot(WeaponType weapon) {
   return Row(
     children: [
       WatchBuilder(game.player.equippedRounds, (int rounds) {
-        if (game.player.equippedCapacity.value == 0){
+        if (game.player.equippedCapacity.value == 0) {
           return buildAmmoBar(1);
         }
         return buildAmmoBar(rounds / game.player.equippedCapacity.value);

@@ -107,14 +107,14 @@
 [ ] Splash Screen
 -- CURRENT -- 
 [ ] Cave Level
-[ ] Object Cave Wall
-[ ] Human Wand
-[ ] Display Weapon Damage Stats (experience etc)
-[ ] Ability Tree
-[ ] Human Bow
-[ ] Zombies drop items on death
 [ ] Fix Player Death Animation
-[ ] Cast Spell Slow Circle 
+[ ] Ability Tree
+[ ] Hero Archer
+    [ ] Blender Designs
+[ ] Hero Witch
+    [ ] Blender Designs
+    [ ] Cast Spell Slow Circle
+[x] Object Cave Wall
 [x] Fix chat
 [x] Unlock firebolt
 [x] Human Sword
@@ -534,3 +534,10 @@ Ninja Class
 [ ] throwing stars skills,
 [ ] Dash
 [ ] Explosives
+
+// Each character has a standard attack
+// Knights slash their swords
+// Archers shoot arrows (longer range)
+// Witches shoot an orb (shorter range)
+
+// Hero's then have access to special abilities which can be unlocked as they gain levels
