@@ -917,6 +917,15 @@ extension GameFunctions on Game {
         }
         break;
       case CharacterState.Striking:
+        switch (character.type) {
+          case CharacterType.Witch:
+            if (character.stateDuration == 3) {
+              spawnFireball(character);
+            }
+            break;
+          default:
+            break;
+        }
         break;
       case CharacterState.Running:
         double runRatio = character.speed * (1.0 + goldenRatioInverse);
@@ -990,9 +999,7 @@ extension GameFunctions on Game {
         type: ProjectileType.Fireball);
   }
 
-  void casteSlowingCircle(Character character, double x, double y) {
-
-  }
+  void casteSlowingCircle(Character character, double x, double y) {}
 
   Projectile spawnArrow(Character character) {
     return spawnProjectile(

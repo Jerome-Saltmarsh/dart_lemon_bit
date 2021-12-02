@@ -1,3 +1,4 @@
+import 'package:lemon_math/angle_between.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -164,27 +165,34 @@ void main() {
             return;
           }
 
-          CharacterAction action = characterActions[int.parse(arguments[2])];
-          Direction direction = directions[int.parse(arguments[3])];
-          Ability ability = abilities[int.parse(arguments[4])];
+          if (!player.busy && !player.dead) {
+            CharacterAction action = characterActions[int.parse(arguments[2])];
+            double mouseX = double.parse(arguments[5]);
+            double mouseY = double.parse(arguments[6]);
 
-          setDirection(player, direction);
-
-          switch(action){
-            case CharacterAction.Idle:
-              game.setCharacterState(player, CharacterState.Idle);
-              break;
-            case CharacterAction.Attack:
-              // game.setCharacterState(player, CharacterState.Striking);
-              break;
-            case CharacterAction.Perform:
-              // TODO: Handle this case.
-              break;
-            case CharacterAction.Run:
-              game.setCharacterState(player, CharacterState.Running);
-              break;
+            switch (action) {
+              case CharacterAction.Idle:
+                game.setCharacterState(player, CharacterState.Idle);
+                break;
+              case CharacterAction.Attack:
+                player.aimAngle =
+                    angleBetween(mouseX, mouseY, player.x, player.y);
+                faceAimDirection(player);
+                game.setCharacterState(player, CharacterState.Striking);
+                break;
+              case CharacterAction.Perform:
+                Ability ability = abilities[int.parse(arguments[4])];
+                player.aimAngle =
+                    angleBetween(player.x, player.y, mouseX, mouseY);
+                faceAimDirection(player);
+                break;
+              case CharacterAction.Run:
+                Direction direction = directions[int.parse(arguments[3])];
+                setDirection(player, direction);
+                game.setCharacterState(player, CharacterState.Running);
+                break;
+            }
           }
-
           sendCompiledPlayerState(game, player);
           return;
 

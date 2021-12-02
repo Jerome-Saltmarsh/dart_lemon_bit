@@ -43,25 +43,23 @@ Float32List mapCharacterSrc({
   int frame,
   Shade shade,
 }) {
-
   bool zombie = type == CharacterType.Zombie;
 
   switch (state) {
     case CharacterState.Idle:
-
-      if (zombie){
+      if (zombie) {
         _src[0] = atlas.zombie.idle.x + (direction.index * _frameSize);
         _src[1] = atlas.zombie.idle.y + (shade.index * _frameSize);
         break;
       }
 
-      if (type == CharacterType.Witch){
+      if (type == CharacterType.Witch) {
         _src[0] = atlas.witch.idle.x + (direction.index * _frameSize);
         _src[1] = atlas.witch.idle.y + (shade.index * _frameSize);
         break;
       }
 
-      switch(weapon){
+      switch (weapon) {
         case WeaponType.HandGun:
           _src[0] = _humanIdleHandgun.x + (direction.index * _frameSize);
           _src[1] = _humanIdleHandgun.y + (shade.index * _frameSize);
@@ -81,13 +79,13 @@ Float32List mapCharacterSrc({
       double _s = direction.index * _frameSize * _framesPerDirection4;
       double _f = (frame % 4) * _frameSize;
 
-      if (type == CharacterType.Zombie){
+      if (type == CharacterType.Zombie) {
         _src[0] = _s + _f + _zombieWalking.x;
         _src[1] = shade.index * _frameSize + _zombieWalking.y;
         break;
       }
 
-      switch(weapon){
+      switch (weapon) {
         case WeaponType.HandGun:
           _src[0] = _s + _f + _humanWalkingHandgun.x;
           _src[1] = shade.index * _frameSize + _humanWalkingHandgun.y;
@@ -135,7 +133,8 @@ Float32List mapCharacterSrc({
     case CharacterState.Firing:
       switch (weapon) {
         case WeaponType.HandGun:
-          int _frame = animations.man.firingHandgun[min(frame, _manFramesFiringHandgunMax)];
+          int _frame = animations
+              .man.firingHandgun[min(frame, _manFramesFiringHandgunMax)];
           double _di = direction.index * _frameSize * _framesPerDirection2;
           double _fr = _frame * _frameSize;
           _src[0] = _humanFiringHandgun.x + _di + _fr;
@@ -143,7 +142,8 @@ Float32List mapCharacterSrc({
           break;
 
         case WeaponType.Shotgun:
-          int _frame = animations.man.firingShotgun[min(frame, _manFramesFiringShotgunMax)];
+          int _frame = animations
+              .man.firingShotgun[min(frame, _manFramesFiringShotgunMax)];
           double _di = direction.index * _frameSize * _framesPerDirection3;
           double _fr = _frame * _frameSize;
           _src[0] = _humanFiringShotgun.x + _di + _fr;
@@ -174,8 +174,12 @@ Float32List mapCharacterSrc({
       }
       break;
     case CharacterState.Striking:
-
-      if (type == CharacterType.Human){
+      if (zombie) {
+        double _s = direction.index * _frameSize * 2;
+        double _f = (frame % 4) * _frameSize;
+        _src[0] = _s + _f + atlas.zombie.striking.x;
+        _src[1] = shade.index * _frameSize + atlas.zombie.striking.y;
+      } else {
         int _frame = animations.man.strikingSword[min(frame, 3)];
         double _di = direction.index * 96.0 * 2;
         double _fr = _frame * 96.0;
@@ -184,27 +188,19 @@ Float32List mapCharacterSrc({
         _src[2] = _src[0] + 96;
         _src[3] = _src[1] + 96;
         return _src;
-      } else
-
-      if (type == CharacterType.Zombie){
-        double _s = direction.index * _frameSize * 2;
-        double _f = (frame % 4) * _frameSize;
-        _src[0] = _s + _f + atlas.zombie.striking.x;
-        _src[1] = shade.index * _frameSize + atlas.zombie.striking.y;
       }
       break;
     case CharacterState.Running:
-
       double _s = direction.index * _frameSize * _framesPerDirection4;
       double _f = (frame % 4) * _frameSize;
 
-      if (type == CharacterType.Zombie){
+      if (type == CharacterType.Zombie) {
         _src[0] = _s + _f + _zombieWalking.x;
         _src[1] = shade.index * _frameSize + _zombieWalking.y;
         break;
       }
 
-      switch(weapon){
+      switch (weapon) {
         case WeaponType.HandGun:
           _src[0] = _s + _f + _humanWalkingHandgun.x;
           _src[1] = shade.index * _frameSize + _humanWalkingHandgun.y;
