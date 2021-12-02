@@ -204,7 +204,6 @@ Widget buildSelectHero() {
               margin: const EdgeInsets.only(bottom: 8),
               child: text(heroTypeToString(heroType), fontSize: fontSize,
                   onPressed: () {
-                game.player.heroType.value = heroType;
                 server.send.selectHeroType(heroType);
               }),
             );
