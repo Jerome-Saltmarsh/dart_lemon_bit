@@ -1,3 +1,4 @@
+import '../common/CharacterType.dart';
 import '../common/WeaponType.dart';
 import '../common/classes/Vector2.dart';
 import '../enums/npc_mode.dart';
@@ -7,6 +8,7 @@ import 'Weapon.dart';
 
 final Character _nonTarget =
   Character(
+      type: CharacterType.Human,
       x: 0,
       y: 0,
       weapons: [Weapon(type: WeaponType.Unarmed, damage: 0, capacity: 0)],
@@ -22,6 +24,7 @@ class Npc extends Character {
   int experience;
 
   Npc({
+    required CharacterType type,
     required double x,
     required double y,
     required int health,
@@ -29,6 +32,7 @@ class Npc extends Character {
     this.experience = 0,
   })
       : super(
+      type: type,
       x: x,
       y: y,
       weapons: [weapon],

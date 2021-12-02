@@ -7,7 +7,7 @@ import 'classes/Inventory.dart';
 import 'classes/Player.dart';
 import 'classes/Weapon.dart';
 import 'common/CharacterState.dart';
-import 'common/HeroType.dart';
+import 'common/CharacterType.dart';
 import 'common/enums/Direction.dart';
 import 'common/version.dart';
 import 'compile.dart';
@@ -212,7 +212,7 @@ void main() {
           player.game.spawnFireball(player);
           return;
 
-        case ClientRequest.SelectHeroType:
+        case ClientRequest.SelectCharacterType:
           if (arguments.length != 3) {
             errorArgsExpected(3, arguments);
             return;
@@ -229,12 +229,13 @@ void main() {
             errorIntegerExpected(1, arguments[2]);
             return;
           }
-          HeroType heroType = heroTypes[heroTypeIndex];
-          if (player.heroType != HeroType.None) {
-            error(GameError.HeroTypeAlreadySelected);
+
+          CharacterType characterType = characterTypes[heroTypeIndex];
+          if (player.type != CharacterType.Human) {
+            error(GameError.CharacterTypeAlreadySelected);
             break;
           }
-          player.heroType = heroType;
+          player.type = characterType;
           break;
 
         case ClientRequest.AcquireAbility:

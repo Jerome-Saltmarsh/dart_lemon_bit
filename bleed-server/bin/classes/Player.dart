@@ -1,5 +1,5 @@
 import '../common/CharacterState.dart';
-import '../common/HeroType.dart';
+import '../common/CharacterType.dart';
 import '../common/PlayerEvents.dart';
 import '../common/Quests.dart';
 import '../constants/no_squad.dart';
@@ -28,7 +28,6 @@ class Player extends Character {
   MainQuest questMain = MainQuest.Introduction;
   bool sceneChanged = false;
   Game game;
-  HeroType heroType = HeroType.None;
 
   int handgunDamage = 10;
 
@@ -62,6 +61,7 @@ class Player extends Character {
     required List<Weapon> weapons,
     int squad = noSquad,
   }) : super(
+            type: CharacterType.Human,
             x: x,
             y: y,
             weapons: weapons,

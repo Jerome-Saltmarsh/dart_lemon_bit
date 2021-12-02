@@ -19,7 +19,7 @@ import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/draw/drawBullets.dart';
 import 'package:bleed_client/render/draw/drawCharacter.dart';
 import 'package:bleed_client/render/draw/drawPlayerText.dart';
-import 'package:bleed_client/render/enums/CharacterType.dart';
+import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/render/functions/applyDynamicShadeToTileSrc.dart';
 import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
 import 'package:bleed_client/render/functions/emitLight.dart';

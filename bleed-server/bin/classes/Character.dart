@@ -1,5 +1,6 @@
 
 import '../common/CharacterState.dart';
+import '../common/CharacterType.dart';
 import '../common/enums/Direction.dart';
 import '../constants/no_squad.dart';
 import '../interfaces/HasSquad.dart';
@@ -8,6 +9,7 @@ import 'GameObject.dart';
 import 'Weapon.dart';
 
 class Character extends GameObject implements HasSquad {
+  late CharacterType type;
   CharacterState state = CharacterState.Idle;
   CharacterState previousState = CharacterState.Idle;
   Direction direction = Direction.Down;
@@ -50,6 +52,7 @@ class Character extends GameObject implements HasSquad {
   bool get busy => stateDuration > 0;
 
   Character({
+    required this.type,
     required double x,
     required double y,
     required this.weapons,

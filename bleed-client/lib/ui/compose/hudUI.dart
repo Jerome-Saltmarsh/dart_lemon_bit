@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/classes/Weapon.dart';
-import 'package:bleed_client/common/HeroType.dart';
+import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/constants/servers.dart';
@@ -191,20 +191,20 @@ Widget dialog({
 
 Widget buildSelectHero() {
   final fontSize = 20;
-  return WatchBuilder(game.player.heroType, (HeroType value) {
-    if (value == HeroType.None) {
+  return WatchBuilder(game.player.characterType, (CharacterType value) {
+    if (value == CharacterType.Human) {
       return dialog(
           child: Column(
         children: [
           height16,
           text("Select Hero", fontSize: 30),
           height16,
-          ...heroTypesExceptNone.map((heroType) {
+          ...playableCharacterTypes.map((characterType) {
             return Container(
               margin: const EdgeInsets.only(bottom: 8),
-              child: text(heroTypeToString(heroType), fontSize: fontSize,
-                  onPressed: () {
-                server.send.selectHeroType(heroType);
+              child: text(characterTypeToString(characterType),
+                  fontSize: fontSize, onPressed: () {
+                server.send.selectCharacterType(characterType);
               }),
             );
           }).toList(),

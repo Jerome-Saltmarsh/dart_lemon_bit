@@ -15,5 +15,5 @@ enum ClientRequest {
   Teleport,
   CasteFireball,
   AcquireAbility,
-  SelectHeroType,
+  SelectCharacterType,
 }

@@ -7,7 +7,7 @@ import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/render/constants/animations.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
-import 'package:bleed_client/render/enums/CharacterType.dart';
+import 'package:bleed_client/common/CharacterType.dart';
 import 'package:lemon_engine/classes/vector2.dart';
 
 const _frameSize = 64.0;

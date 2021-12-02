@@ -6,8 +6,6 @@ import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CharacterState.dart';
-import 'package:bleed_client/common/ClientRequest.dart';
-import 'package:bleed_client/common/HeroType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/Direction.dart';

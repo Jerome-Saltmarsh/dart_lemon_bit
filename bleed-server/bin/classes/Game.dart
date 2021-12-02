@@ -10,6 +10,7 @@ import 'package:lemon_math/randomItem.dart';
 
 import '../bleed/zombie_health.dart';
 import '../common/CharacterState.dart';
+import '../common/CharacterType.dart';
 import '../common/ItemType.dart';
 import '../common/Tile.dart';
 import '../common/enums/Direction.dart';
@@ -1067,6 +1068,7 @@ extension GameFunctions on Game {
       return zombies[i];
     }
     final Npc npc = Npc(
+        type: CharacterType.Zombie,
         x: 0,
         y: 0,
         health: settings.health.zombie,

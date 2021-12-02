@@ -18,6 +18,11 @@ class _Atlas {
   final Vector2 rockWall = Vector2(2217, 1222);
   final Vector2 arrow = Vector2(517, 534);
   final Vector2 items = Vector2(1, 567);
+  final _Witch witch = _Witch();
+}
+
+class _Witch {
+  final Vector2 idle = Vector2(1283, 3170);
 }
 
 class _Human {

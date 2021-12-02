@@ -1,6 +1,6 @@
 
+import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
-import 'package:bleed_client/common/HeroType.dart';
 import 'package:bleed_client/network/functions/send.dart';
 import 'package:bleed_client/state/game.dart';
 
@@ -11,7 +11,7 @@ class _Server {
 }
 
 class _Send {
-  void selectHeroType(HeroType value){
-    send('${ClientRequest.SelectHeroType.index} ${game.player.uuid} ${value.index}');
+  void selectCharacterType(CharacterType value){
+    send('${ClientRequest.SelectCharacterType.index} ${game.player.uuid} ${value.index}');
   }
 }

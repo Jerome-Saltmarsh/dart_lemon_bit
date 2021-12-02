@@ -11,8 +11,8 @@ import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Weapon.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CharacterState.dart';
+import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameError.dart';
-import 'package:bleed_client/common/HeroType.dart';
 import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/PlayerEvents.dart';
 import 'package:bleed_client/common/ServerResponse.dart';
@@ -20,7 +20,6 @@ import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
-import 'package:bleed_client/core/init.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/emit/emitMyst.dart';
@@ -378,11 +377,11 @@ void _parsePlayer() {
   game.player.skillPoints.value = _consumeInt();
   game.player.nextLevelExperience.value = _consumeInt();
   game.player.experiencePercentage.value = _consumeInt();
-  game.player.heroType.value = _consumeHeroType();
+  game.player.characterType.value = _consumeCharacterType();
 }
 
-HeroType _consumeHeroType(){
-  return heroTypes[_consumeInt()];
+CharacterType _consumeCharacterType(){
+  return characterTypes[_consumeInt()];
 }
 
 void _parsePlayerEvents() {
