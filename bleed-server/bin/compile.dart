@@ -293,6 +293,7 @@ void _compileProjectile(StringBuffer buffer, Projectile projectile) {
 }
 
 void _compilePlayer(StringBuffer buffer, Player player) {
+  _write(buffer, player.type.index);
   _write(buffer, player.state.index);
   _write(buffer, player.direction.index);
   _writeInt(buffer, player.x);

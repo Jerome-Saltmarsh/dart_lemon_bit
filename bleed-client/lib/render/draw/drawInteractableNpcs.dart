@@ -7,7 +7,7 @@ import 'package:lemon_engine/render/draw_text.dart';
 import 'package:lemon_math/diff_over.dart';
 
 void drawInteractableNpc(Character npc) {
-  drawCharacter(npc, CharacterType.Human);
+  drawCharacter(npc);
   if (diffOver(npc.x, mouseWorldX, 50)) return;
   if (diffOver(npc.y, mouseWorldY, 50)) return;
   drawText(npc.name, npc.x - charWidth * npc.name.length, npc.y);

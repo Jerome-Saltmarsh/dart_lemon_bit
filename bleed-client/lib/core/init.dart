@@ -6,6 +6,7 @@ import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CharacterState.dart';
+import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
@@ -85,12 +86,12 @@ void initializeGameInstances() {
 
   game.interactableNpcs.clear();
   for (int i = 0; i < 200; i++) {
-    game.interactableNpcs.add(Character());
+    game.interactableNpcs.add(Character(type: CharacterType.Human));
   }
 
   game.humans.clear();
   for (int i = 0; i < 500; i++) {
-    game.humans.add(Character());
+    game.humans.add(Character(type: CharacterType.Human));
   }
 }
 

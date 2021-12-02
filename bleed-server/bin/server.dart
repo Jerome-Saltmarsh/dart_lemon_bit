@@ -224,13 +224,13 @@ void main() {
             return;
           }
 
-          int? heroTypeIndex = int.tryParse(arguments[2]);
-          if (heroTypeIndex == null) {
+          int? characterTypeIndex = int.tryParse(arguments[2]);
+          if (characterTypeIndex == null) {
             errorIntegerExpected(1, arguments[2]);
             return;
           }
 
-          CharacterType characterType = characterTypes[heroTypeIndex];
+          CharacterType characterType = characterTypes[characterTypeIndex];
           if (player.type != CharacterType.Human) {
             error(GameError.CharacterTypeAlreadySelected);
             break;

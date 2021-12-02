@@ -1,8 +1,10 @@
 import 'package:bleed_client/common/CharacterState.dart';
+import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 
 class Character {
+  CharacterType type;
   CharacterState state;
   Direction direction;
   double x;
@@ -17,6 +19,7 @@ class Character {
   bool get alive => state != CharacterState.Dead;
 
   Character({
+    this.type,
     this.state = CharacterState.Idle,
     this.direction = Direction.Down,
     this.x = 0,

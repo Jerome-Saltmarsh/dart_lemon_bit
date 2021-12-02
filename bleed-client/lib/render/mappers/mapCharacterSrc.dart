@@ -55,6 +55,12 @@ Float32List mapCharacterSrc({
         break;
       }
 
+      if (type == CharacterType.Witch){
+        _src[0] = atlas.witch.idle.x + (direction.index * _frameSize);
+        _src[1] = atlas.witch.idle.y + (shade.index * _frameSize);
+        break;
+      }
+
       switch(weapon){
         case WeaponType.HandGun:
           _src[0] = _humanIdleHandgun.x + (direction.index * _frameSize);

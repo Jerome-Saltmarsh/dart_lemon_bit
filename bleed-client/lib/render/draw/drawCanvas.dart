@@ -204,7 +204,7 @@ void drawSprites() {
                 game.particles[indexParticle].type != ParticleType.Blood) {
           if (!zombiesRemaining || humanY < game.zombies[indexZombie].y) {
             if (!npcsRemaining || humanY < game.interactableNpcs[indexNpc].y) {
-              drawCharacter(game.humans[indexHuman], CharacterType.Human);
+              drawCharacter(game.humans[indexHuman]);
               indexHuman++;
               continue;
             }
@@ -257,7 +257,7 @@ void drawSprites() {
       Zombie zombie = game.zombies[indexZombie];
 
       if (!npcsRemaining || zombie.y < game.interactableNpcs[indexNpc].y) {
-        drawCharacter(game.zombies[indexZombie], CharacterType.Zombie);
+        drawCharacter(game.zombies[indexZombie]);
         indexZombie++;
         continue;
       }

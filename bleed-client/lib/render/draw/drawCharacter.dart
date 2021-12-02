@@ -9,7 +9,7 @@ import 'package:bleed_client/render/mappers/mapCharacterDst.dart';
 import 'package:bleed_client/render/mappers/mapCharacterSrc.dart';
 import 'package:lemon_engine/queries/on_screen.dart';
 
-void drawCharacter(Character character, CharacterType type) {
+void drawCharacter(Character character) {
   if (!onScreen(character.x, character.y)) return;
   if (!character.alive && isWaterAt(character.x, character.y)) return;
 
@@ -17,9 +17,9 @@ void drawCharacter(Character character, CharacterType type) {
   if (shade.index >= Shade.PitchBlack.index) return;
 
   drawAtlas(
-      mapCharacterDst(character, type),
+      mapCharacterDst(character, character.type),
       mapCharacterSrc(
-        type: type,
+        type: character.type,
         state: character.state,
         weapon: character.weapon,
         direction: character.direction,

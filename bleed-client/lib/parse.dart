@@ -630,6 +630,7 @@ void _parseNpcs() {
 }
 
 void _consumeHuman(Character character) {
+  character.type = _consumeCharacterType();
   character.state = _consumeCharacterState();
   character.direction = _consumeDirection();
   character.x = _consumeDouble();

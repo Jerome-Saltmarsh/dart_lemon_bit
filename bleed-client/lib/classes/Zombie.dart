@@ -1,6 +1,6 @@
-
 import 'package:bleed_client/classes/Character.dart';
+import 'package:bleed_client/common/CharacterType.dart';
 
 class Zombie extends Character {
-  String scoreMultiplier = "1";
+  Zombie() : super(type: CharacterType.Zombie);
 }
