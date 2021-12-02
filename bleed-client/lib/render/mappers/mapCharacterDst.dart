@@ -10,7 +10,7 @@ import 'mapDst.dart';
 
 Float32List mapCharacterDst(Character character, CharacterType type) {
 
-  if (type == CharacterType.Human){
+  if (type == CharacterType.Human || type == CharacterType.Witch){
     if (character.state == CharacterState.Striking){
       return mapDst(
           scale: manScale,
