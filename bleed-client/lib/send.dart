@@ -84,14 +84,6 @@ void sendRequestUpdatePlayer() {
   _write(characterController.ability.index);
   _write(mouseWorldX.toInt());
   _write(mouseWorldY.toInt());
-  //
-  // _write(characterController.characterState.index);
-  // _write(characterController.direction.index);
-  // if (characterController.characterState == CharacterState.Firing) {
-  //   _write(characterController.requestAim.toStringAsFixed(2));
-  // } else {
-  //   _write(characterController.requestAim.toStringAsFixed(1));
-  // }
   send(_buffer.toString());
 }
 

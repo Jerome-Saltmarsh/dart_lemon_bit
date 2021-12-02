@@ -176,8 +176,10 @@ void main() {
                 break;
               case CharacterAction.Attack:
                 player.aimAngle =
-                    angleBetween(mouseX, mouseY, player.x, player.y);
-                faceAimDirection(player);
+                    angleBetween(player.x, player.y, mouseX, mouseY);
+                characterAimAt(player, mouseX, mouseY);
+                print('player.aimAngle: ${player.aimAngle}');
+                // faceAimDirection(player);
                 game.setCharacterState(player, CharacterState.Striking);
                 break;
               case CharacterAction.Perform:
