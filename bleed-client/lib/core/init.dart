@@ -156,7 +156,7 @@ void initializeEventListeners(){
   });
 
   onRightClickChanged.stream.listen((bool down) {
-    characterController.sprint = down;
+    // perform ability
   });
 }
 

@@ -7,7 +7,8 @@ enum CharacterState {
   Striking,
   Running,
   Reloading,
-  ChangingWeapon
+  ChangingWeapon,
+  Performing,
 }
 
 const List<CharacterState> characterStates = CharacterState.values;

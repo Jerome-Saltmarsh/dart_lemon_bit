@@ -2,6 +2,8 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Character.dart';
+import 'package:bleed_client/common/Ability.dart';
+import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
@@ -40,8 +42,6 @@ bool get keyEquipMachineGun => keyPressed(LogicalKeyboardKey.digit4);
 
 bool get keyPressedSpace => keyPressed(LogicalKeyboardKey.space);
 
-bool get keySprintPressed => characterController.sprint;
-
 bool get keyPressedReload => keyPressed(_keyReload);
 
 bool get keyPressedUseMedKit => keyPressed(LogicalKeyboardKey.keyH);
@@ -66,7 +66,7 @@ void registerPlayKeyboardHandler() {
   RawKeyboard.instance.addListener(_handleKeyboardEvent);
 }
 
-void deregisterPlayKeyboardHandler(){
+void deregisterPlayKeyboardHandler() {
   print("deregisterPlayKeyboardHandler()");
   RawKeyboard.instance.removeListener(_handleKeyboardEvent);
 }
@@ -123,11 +123,7 @@ final List<String> greetings = [
   'Greetings',
 ];
 
-final List<String> waitASecond = [
-  'Wait a second',
-  'Just a moment'
-];
-
+final List<String> waitASecond = ['Wait a second', 'Just a moment'];
 
 // triggered the first frame a key is down
 Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
@@ -154,51 +150,45 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.toggleSkillTree: hud.toggle.skillTree,
 };
 
-
-void equip1(){
+void equip1() {
   sendRequestEquip(0);
 }
 
-void equip2(){
+void equip2() {
   sendRequestEquip(1);
 }
 
-void equip3(){
+void equip3() {
   sendRequestEquip(2);
 }
 
-void equip4(){
+void equip4() {
   sendRequestEquip(3);
 }
 
-void teleportToMouse(){
+void teleportToMouse() {
   if (!mouseAvailable) return;
   sendRequestTeleport(mouseWorldX, mouseWorldY);
 }
 
-void toggleLantern(){
+void toggleLantern() {
   lantern = lanternModes[(lantern.index + 1) % lanternModes.length];
 }
 
-void _onKeyPressedEnter(){
+void _onKeyPressedEnter() {
   hud.state.textBoxVisible.value ? sendAndCloseTextBox() : showTextBox();
 }
 
-void sayGreeting(){
+void sayGreeting() {
   speak(randomItem(greetings));
 }
 
-void sayLetsGo(){
+void sayLetsGo() {
   speak(randomItem(letsGo));
 }
 
-void sayWaitASecond(){
+void sayWaitASecond() {
   speak(randomItem(waitASecond));
-}
-
-
-void toggleSprint() {
-  characterController.sprint = !characterController.sprint;
 }
 
 // triggered after a key is held longer than one frame
@@ -212,9 +202,6 @@ Map<LogicalKeyboardKey, Function> _keyHeldHandlers = {
 
 Map<LogicalKeyboardKey, Function> _keyReleasedHandlers = {
   keys.runLeft: stopRunLeft,
-  keys.runUp: stopRunUp,
-  keys.runRight: stopRunRight,
-  keys.runDown: stopRunDown,
   keys.melee: stopMelee,
 };
 
@@ -227,8 +214,8 @@ void onMouseScroll(double amount) {
 
 void throwGrenade() {
   if (!mouseAvailable) return;
-  double mouseDistance = distanceBetween(
-      game.player.x, game.player.y, mouseWorldX, mouseWorldY);
+  double mouseDistance =
+      distanceBetween(game.player.x, game.player.y, mouseWorldX, mouseWorldY);
   double maxRange = 400; // TODO refactor magic variable
   double throwDistance = min(mouseDistance, maxRange);
   double strength = throwDistance / maxRange;
@@ -236,52 +223,45 @@ void throwGrenade() {
 }
 
 void runLeft() {
-  characterController.moveLeft = true;
+  characterController.direction = Direction.Left;
+  characterController.action = CharacterAction.Run;
 }
 
 void runUp() {
-  characterController.moveUp = true;
+  characterController.direction = Direction.Up;
+  characterController.action = CharacterAction.Run;
 }
 
 void runRight() {
-  characterController.moveRight = true;
+  characterController.direction = Direction.Right;
+  characterController.action = CharacterAction.Run;
 }
 
 void runDown() {
-  characterController.moveDown = true;
+  characterController.direction = Direction.Down;
+  characterController.action = CharacterAction.Run;
 }
 
 void stopRunLeft() {
-  characterController.moveLeft = false;
-}
-
-void stopRunUp() {
-  characterController.moveUp = false;
-}
-
-void stopRunRight() {
-  characterController.moveRight = false;
-}
-
-void stopRunDown() {
-  characterController.moveDown = false;
+  characterController.direction = Direction.Left;
+  characterController.action = CharacterAction.Run;
 }
 
 void melee() {
-  characterController.characterState = CharacterState.Striking;
-  characterController.direction = convertAngleToDirection(characterController.requestAim);
+  // characterController.characterState = CharacterState.Striking;
+  // characterController.direction = convertAngleToDirection(characterController.requestAim);
 }
 
 void stopMelee() {
-  if (characterController.characterState != CharacterState.Striking) return;
-  characterController.characterState = CharacterState.Idle;
+  // if (characterController.characterState != CharacterState.Striking) return;
+  // characterController.characterState = CharacterState.Idle;
 }
 
 void _handleKeyDownEvent(RawKeyDownEvent event) {
   LogicalKeyboardKey key = event.logicalKey;
 
   if (hud.state.textBoxVisible.value) {
-    if (key == keys.text){
+    if (key == keys.text) {
       sendAndCloseTextBox();
     }
     return;
@@ -311,7 +291,6 @@ void _handleKeyDownEvent(RawKeyDownEvent event) {
   }
 }
 
-
 // on text box visible should disable the character keyboard and vicer vercer
 
 void _handleKeyUpEvent(RawKeyUpEvent event) {
@@ -327,23 +306,14 @@ void _handleKeyUpEvent(RawKeyUpEvent event) {
 }
 
 class _CharacterController {
-  bool sprint = true;
-  bool moveUp = false;
-  bool moveRight = false;
-  bool moveDown = false;
-  bool moveLeft = false;
-  double requestAim = 0;
   Direction direction = Direction.None;
-  CharacterState characterState = CharacterState.Idle;
+  CharacterAction action = CharacterAction.Idle;
+  Ability ability = Ability.None;
 }
 
 void readPlayerInput() {
   // TODO This should be reactive
   if (!playerAssigned) return;
-
-  if (mouseAvailable) {
-    characterController.requestAim = getMouseRotation();
-  }
 
   if (keyPressedPan && !panningCamera) {
     panningCamera = true;
@@ -360,60 +330,54 @@ void readPlayerInput() {
     camera.x += mouseWorldDiff.dx * zoom;
   }
 
-  if (mouseClicked || keyPressedSpace) {
+  characterController.action = CharacterAction.Idle;
+
+  if (primaryAttackRequested()) {
     double mX = mouseWorldX;
     double mY = mouseWorldY;
-    for(int i = 0; i < game.totalNpcs; i++){
+    for (int i = 0; i < game.totalNpcs; i++) {
       Character interactableNpc = game.interactableNpcs[i];
-      if (diffOver(interactableNpc.x, mX, game.settings.interactRadius)) continue;
-      if (diffOver(interactableNpc.y, mY, game.settings.interactRadius)) continue;
+      if (diffOver(interactableNpc.x, mX, game.settings.interactRadius))
+        continue;
+      if (diffOver(interactableNpc.y, mY, game.settings.interactRadius))
+        continue;
       sendRequestInteract();
       return;
     }
 
-    characterController.characterState = CharacterState.Firing;
-  } else {
-    if (characterController.characterState == CharacterState.Striking) {
-      return;
-    }
+    characterController.action = CharacterAction.Attack;
+    return;
+  }
 
-    characterController.direction = getKeyDirection();
-    if (characterController.direction == Direction.None) {
-      characterController.characterState = CharacterState.Idle;
-      return;
-    }
-
-    if (characterController.sprint) {
-      characterController.characterState = CharacterState.Running;
-      return;
-    }
-
-    characterController.characterState = CharacterState.Walking;
+  characterController.direction = getKeyDirection();
+  if (characterController.direction != Direction.None) {
+    characterController.action = CharacterAction.Run;
   }
 }
 
+bool primaryAttackRequested() => mouseClicked || keyPressedSpace;
+
 Direction getKeyDirection() {
-  if (characterController.moveUp) {
-    if (characterController.moveRight) {
+  if (keyPressed(keys.runUp)) {
+    if (keyPressed(keys.runRight)) {
       return Direction.UpRight;
-    } else if (characterController.moveLeft) {
+    } else if (keyPressed(keys.runLeft)) {
       return Direction.UpLeft;
     } else {
       return Direction.Up;
     }
-  } else if (characterController.moveDown) {
-    if (characterController.moveRight) {
+  } else if (keyPressed(keys.runDown)) {
+    if (keyPressed(keys.runRight)) {
       return Direction.DownRight;
-    } else if (characterController.moveLeft) {
+    } else if (keyPressed(keys.runLeft)) {
       return Direction.DownLeft;
     } else {
       return Direction.Down;
     }
-  } else if (characterController.moveLeft) {
+  } else if (keyPressed(keys.runLeft)) {
     return Direction.Left;
-  } else if (characterController.moveRight) {
+  } else if (keyPressed(keys.runRight)) {
     return Direction.Right;
   }
   return Direction.None;
 }
-

@@ -6,6 +6,8 @@ import 'classes/Game.dart';
 import 'classes/Inventory.dart';
 import 'classes/Player.dart';
 import 'classes/Weapon.dart';
+import 'common/Ability.dart';
+import 'common/CharacterAction.dart';
 import 'common/CharacterState.dart';
 import 'common/CharacterType.dart';
 import 'common/enums/Direction.dart';
@@ -162,14 +164,27 @@ void main() {
             return;
           }
 
-          CharacterState requestedState =
-              CharacterState.values[int.parse(arguments[2])];
-          Direction requestedDirection =
-              Direction.values[int.parse(arguments[3])];
-          double aim = double.parse(arguments[4]);
-          player.aimAngle = aim;
-          setDirection(player, requestedDirection);
-          game.setCharacterState(player, requestedState);
+          CharacterAction action = characterActions[int.parse(arguments[2])];
+          Direction direction = directions[int.parse(arguments[3])];
+          Ability ability = abilities[int.parse(arguments[4])];
+
+          setDirection(player, direction);
+
+          switch(action){
+            case CharacterAction.Idle:
+              game.setCharacterState(player, CharacterState.Idle);
+              break;
+            case CharacterAction.Attack:
+              // game.setCharacterState(player, CharacterState.Striking);
+              break;
+            case CharacterAction.Perform:
+              // TODO: Handle this case.
+              break;
+            case CharacterAction.Run:
+              game.setCharacterState(player, CharacterState.Running);
+              break;
+          }
+
           sendCompiledPlayerState(game, player);
           return;
 

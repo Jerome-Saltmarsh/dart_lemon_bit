@@ -5,6 +5,8 @@ import 'package:bleed_client/network/functions/send.dart';
 import 'package:bleed_client/network/functions/sinkMessage.dart';
 import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:lemon_engine/game.dart';
+import 'package:lemon_engine/properties/mouse_world.dart';
 
 import 'common/CharacterState.dart';
 final StringBuffer _buffer = StringBuffer();
@@ -35,7 +37,7 @@ void sendRequestTeleport(double x, double y){
 }
 
 void sendRequestCastFireball(){
-  send('${ClientRequest.CasteFireball.index} $session $aim');
+  // send('${ClientRequest.CasteFireball.index} $session $aim');
 }
 
 void sendRequestEquip(int index) {
@@ -50,10 +52,9 @@ void reverseHour(){
   send(ClientRequest.ReverseHour.index.toString());
 }
 
-String get aim => characterController.requestAim.toStringAsFixed(2);
 
 void requestThrowGrenade(double strength) {
-  send('${ClientRequest.Grenade.index} $session ${strength.toStringAsFixed(1)} $aim');
+  // send('${ClientRequest.Grenade.index} $session ${strength.toStringAsFixed(1)} $aim');
 }
 
 void sendRequestAcquireShotgun(){
@@ -80,13 +81,19 @@ void sendRequestUpdatePlayer() {
   _buffer.clear();
   _write(gameUpdateIndex);
   _write(game.player.uuid);
-  _write(characterController.characterState.index);
+  _write(characterController.action.index);
   _write(characterController.direction.index);
-  if (characterController.characterState == CharacterState.Firing) {
-    _write(characterController.requestAim.toStringAsFixed(2));
-  } else {
-    _write(characterController.requestAim.toStringAsFixed(1));
-  }
+  _write(characterController.ability.index);
+  _write(mouseWorldX.toInt());
+  _write(mouseWorldY.toInt());
+  //
+  // _write(characterController.characterState.index);
+  // _write(characterController.direction.index);
+  // if (characterController.characterState == CharacterState.Firing) {
+  //   _write(characterController.requestAim.toStringAsFixed(2));
+  // } else {
+  //   _write(characterController.requestAim.toStringAsFixed(1));
+  // }
   send(_buffer.toString());
 }
 
