@@ -9,3 +9,9 @@ bool withinRadius(Positioned positioned, Vector2 position, double radius){
   if (diffOver(positioned.y, position.y, radius)) return false;
   return true;
 }
+
+bool withinDistance(Positioned positioned, double x, double y, double radius){
+  if (diffOver(positioned.x, x, radius)) return false;
+  if (diffOver(positioned.y, y, radius)) return false;
+  return true;
+}

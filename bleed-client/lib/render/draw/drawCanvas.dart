@@ -8,6 +8,7 @@ import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
+import 'package:bleed_client/common/Ability.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
@@ -103,6 +104,11 @@ void renderCanvasPlay() {
 
   for (int i = 0; i < game.totalItems; i++) {
     drawItem(game.items[i]);
+  }
+
+  if (game.player.selectedAbility.value == Ability.SlowingCircle) {
+    drawCircleOutline(sides: 10,
+        radius: 30, x: mouseWorldX, y: mouseWorldY, color: Colors.white);
   }
 
   // drawDebugCharacters();

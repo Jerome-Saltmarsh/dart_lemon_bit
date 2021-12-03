@@ -109,11 +109,9 @@
 [ ] Cave Level
 [ ] Fix Player Death Animation
 [ ] Ability Tree
-[ ] Hero Archer
-    [ ] Blender Designs
-[ ] Hero Witch
-    [ ] Blender Designs
-    [ ] Cast Spell Slow Circle
+[ ] Witch Cast Spell Slow Circle
+[ ] Witch Caste Slowing Circle
+-- COMPLETED --
 [x] Object Cave Wall
 [x] Fix chat
 [x] Unlock firebolt
@@ -121,22 +119,22 @@
 [x] Tree Colors
 [x] Fix Editor
 [x] Sparkle Particles
-[x] Smoke Particle 
+[x] Smoke Particle
 [x] Add myst to atlas
 [x] Zombie Death
 [x] Zombie Torso Particle
 [x] Zombie Legs Particle
 [x] Fix Zombies vanish on death bug
-[x] Blood Particle 
+[x] Blood Particle
 [x] Optimize Parser
-[x] Shell Particle 
+[x] Shell Particle
 [x] Zombie Idle
 [x] Zombie Striking
 [x] Zombie Walking
 [x] Handgun Firing
 [x] Human Shotgun Firing
 [x] Human Shotgun Walking
--- FINISHED -- 
+-- FINISHED --
 [x] Handgun Idle
 [x] Handgun Walking
 [x] Shotgun Idle
@@ -152,11 +150,11 @@
 [x] Level Max Ambient Light
 [x] Ability Caste Fireball (Wizard)
 [x] Change scene
-    [x] Cave Level
-    [x] Tavern Level
-    [x] Camera Pans up 
-    [x] Player disappears when firing
-    [?] Zombies aren't drawing
+[x] Cave Level
+[x] Tavern Level
+[x] Camera Pans up
+[x] Player disappears when firing
+[?] Zombies aren't drawing
 [x] FIX BUG Torches don't go out during daylight
 [x] Spawn Myst at night    
 [x] UI Display Clock    
@@ -171,7 +169,7 @@
 [x] Publish Game Engine
 [x] Man Dead Shades
 [x] Zombie Strike Animation
-[x] Animate Pistol Shoot 
+[x] Animate Pistol Shoot
 [x] Refactor server collision detection
 [x] Zombie Walk Shadow
 [x] Fix boundary error
@@ -187,16 +185,16 @@
 [x] Zombies 3D render
 [x] Zombies 3D model
 [x] Human 3d Render
-    [x] Idle Handgun
-    [x] Walking Handgun
-    [x] Dead
-    [x] Striking
-    [x] Changing Weapon 
-    [x] Firing Handgun
-    [x] Running
-    [x] Firing Shotgun
-    [x] Walking
-    [x] Idle
+[x] Idle Handgun
+[x] Walking Handgun
+[x] Dead
+[x] Striking
+[x] Changing Weapon
+[x] Firing Handgun
+[x] Running
+[x] Firing Shotgun
+[x] Walking
+[x] Idle
 [x] Tree Stump
 [x] Design Bridge
 [x] Animated Torches
@@ -205,9 +203,9 @@
 [x] Torch
 [x] Myst Particles
 [x] Left click npc to interact
-[x] FIX Zombies walk into walls 
+[x] FIX Zombies walk into walls
 [x] FIX Player message box not showing up
-[x] Chat 
+[x] Chat
 [x] Fix particle float on water
 [x] Chimney Smoke Particles
 [x] Fix guards stop shooting bug
@@ -220,29 +218,11 @@
 [x] Switch between Quest Mode and Battle Mode
 [x] BUG Can't shoot over water
 [x] Npc's attack zombies
-[x] Npc player collision 
+[x] Npc player collision
 [x] Zombies spawn on edge of map
 [x] Interactable Npc Name Tag
 [x] Walls Tiles
 [x] Npc Talk Text
--- TIME TRIAL MISSIONS --
--- FORTRESS -- 
-[ ] Fortress life lost audio
-[ ] Fortress Cache Path 
--- DEATH MATCH 
-[ ] Rounds
--- TEAM CASUAL --
--- OFFICIAL RELEASE --
-[ ] Design 2nd level
-[ ] Running out of ammo causes weapon to drop
-[ ] Grenades should bounce off blocks
-[ ] Collect item particles
-[ ] Create decent 45 second youtube video
-[ ] Design Level, City
--- MAJOR BUGS --
-[ ] Bonus zombie point text is wrong
-[ ] NPC get stuck on crate
--- COMPLETED --
 [x] Fix movement controls
 [x] Disable spawn npcs request
 [x] Auto refresh browser once per day

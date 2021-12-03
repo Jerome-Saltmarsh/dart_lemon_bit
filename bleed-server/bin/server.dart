@@ -3,6 +3,7 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+import 'classes/Character.dart';
 import 'classes/Game.dart';
 import 'classes/Inventory.dart';
 import 'classes/Player.dart';
@@ -20,6 +21,7 @@ import 'common/GameEventType.dart';
 import 'common/ServerResponse.dart';
 import 'common/WeaponType.dart';
 import 'functions/loadScenes.dart';
+import 'functions/withinRadius.dart';
 import 'games/world.dart';
 import 'settings.dart';
 import 'update.dart';
@@ -180,9 +182,16 @@ void main() {
                 break;
               case CharacterAction.Perform:
                 Ability ability = abilities[int.parse(arguments[4])];
-                player.aimAngle =
-                    angleBetween(player.x, player.y, mouseX, mouseY);
-                faceAimDirection(player);
+                characterAimAt(player, mouseX, mouseY);
+                game.setCharacterState(player, CharacterState.Striking);
+                if (ability == Ability.SlowingCircle) {
+                  for (Character zombie in game.zombies) {
+                    if (withinDistance(zombie, mouseX, mouseY, 40)) {
+                      game.applyDamage(player, zombie, 100);
+                    }
+                  }
+                  game.dispatch(GameEventType.Slowing_Circle, mouseX, mouseY);
+                }
                 break;
               case CharacterAction.Run:
                 Direction direction = directions[int.parse(arguments[3])];

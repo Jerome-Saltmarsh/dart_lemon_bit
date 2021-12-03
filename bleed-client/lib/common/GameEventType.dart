@@ -23,4 +23,5 @@ enum GameEventType {
   Crate_Breaking,
   Ammo_Acquired,
   Credits_Acquired,
+  Slowing_Circle,
 }
