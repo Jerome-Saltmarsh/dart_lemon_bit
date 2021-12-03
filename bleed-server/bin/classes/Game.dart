@@ -931,7 +931,7 @@ extension GameFunctions on Game {
                   applyDamage(character, zombie, 100);
                 }
               }
-              dispatch(GameEventType.Slowing_Circle, character.abilityTarget.x,
+              dispatch(GameEventType.Explosion, character.abilityTarget.x,
                   character.abilityTarget.y);
             }
             break;
