@@ -656,13 +656,25 @@ extension GameFunctions on Game {
   }
 
   void spawnFreezeCircle({required double x, required double y}) {
-    for (Character character in zombies) {
+    applyFreezeTo(x: x, y: y, characters: zombies);
+    applyFreezeTo(x: x, y: y, characters: players);
+    dispatch(GameEventType.FreezeCircle, x, y, 0, 0);
+  }
+
+  void applyFreezeTo(
+      {required double x,
+      required double y,
+      required List<Character> characters}) {
+    for (Character character in characters) {
       if (!withinDistance(character, x, y, settings.radius.freezeCircle))
         continue;
-      character.frozen = true;
-      character.frozenDuration = settings.duration.frozen;
+      freeze(character);
     }
-    dispatch(GameEventType.FreezeCircle, x, y, 0, 0);
+  }
+
+  void freeze(Character character) {
+    character.frozen = true;
+    character.frozenDuration = settings.duration.frozen;
   }
 
   void spawnExplosion({required double x, required double y}) {
