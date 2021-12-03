@@ -32,9 +32,6 @@ void spawnExplosion(double x, double y) {
 
 void spawnFreezeCircle({double x, double y}){
   game.explosions.add(Explosion(x: x, y: y, type: ExplosionType.FreezeCircle));
-  for (int i = 0; i < randomInt(4, 10); i++) {
-    spawnFireYellow(x, y);
-  }
 }
 
 void spawnFloatingText(double x, double y, dynamic value) {
