@@ -128,14 +128,6 @@ void compileWeapon(StringBuffer buffer, Weapon weapon){
   _write(buffer, weapon.damage);
 }
 
-final _Maps maps = _Maps();
-
-class _Maps {
-  Map<Ability, double> abilityRange = {
-    Ability.None: 0,
-    Ability.SlowingCircle: 200,
-  };
-}
 
 void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, _playerIndex);
@@ -158,7 +150,8 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _writeInt(buffer, perc); // todo make sure player is not max level
 
   _write(buffer, player.type.index);
-  _write(buffer, maps.abilityRange[player.ability]);
+  _write(buffer, player.abilityTarget.x.toInt());
+  _write(buffer, player.abilityTarget.y.toInt());
 
   _compilePlayerEvents(buffer, player);
 

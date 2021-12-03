@@ -1,8 +1,13 @@
+import 'dart:math';
+
 import 'package:lemon_math/angle_between.dart';
+import 'package:lemon_math/distance_between.dart';
+import 'package:lemon_math/pi2.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+import 'bleed/maps/ability_range.dart';
 import 'classes/Character.dart';
 import 'classes/Game.dart';
 import 'classes/Inventory.dart';
@@ -23,6 +28,7 @@ import 'common/WeaponType.dart';
 import 'functions/loadScenes.dart';
 import 'functions/withinRadius.dart';
 import 'games/world.dart';
+import 'maths.dart';
 import 'settings.dart';
 import 'update.dart';
 import 'utils.dart';
@@ -122,6 +128,15 @@ void main() {
       error(GameError.InsufficientSkillPoints);
     }
 
+    /// radians
+    double angle2(double adjacent, double opposite) {
+      if (adjacent > 0)
+      {
+        return pi2 - (atan2(adjacent, opposite)  *  -1);
+      }
+      return atan2(adjacent, opposite);
+    }
+
     void onEvent(requestD) {
       String requestString = requestD;
       List<String> arguments = requestString.split(_space);
@@ -172,6 +187,19 @@ void main() {
             double mouseX = double.parse(arguments[5]);
             double mouseY = double.parse(arguments[6]);
 
+            Ability ability = abilities[int.parse(arguments[4])];
+            player.ability = ability;
+            double dis = distanceBetween(player.x, player.y, mouseX, mouseY);
+            double maxRange = getAbilityRange(ability);
+            if (dis <= maxRange){
+              player.abilityTarget.x = mouseX;
+              player.abilityTarget.y = mouseY;
+            }else{
+              double rotation = pi2 - angle2(player.x - mouseX, player.y - mouseY);
+              player.abilityTarget.x = player.x + adj(rotation, maxRange);
+              player.abilityTarget.y = player.y + opp(rotation, maxRange);
+            }
+
             switch (action) {
               case CharacterAction.Idle:
                 game.setCharacterState(player, CharacterState.Idle);
@@ -183,8 +211,16 @@ void main() {
               case CharacterAction.Perform:
                 Ability ability = abilities[int.parse(arguments[4])];
                 player.ability = ability;
-                player.abilityTarget.x = mouseX;
-                player.abilityTarget.y = mouseY;
+                double dis = distanceBetween(player.x, player.y, mouseX, mouseY);
+                double maxRange = getAbilityRange(ability);
+                if (dis <= maxRange){
+                  player.abilityTarget.x = mouseX;
+                  player.abilityTarget.y = mouseY;
+                }else{
+                  double rotation = angleBetween(player.x, player.y, mouseX, mouseY);
+                  player.abilityTarget.x = player.x + adj(rotation, maxRange);
+                  player.abilityTarget.y = player.y + opp(rotation, maxRange);
+                }
                 game.setCharacterState(player, CharacterState.Performing);
                 break;
               case CharacterAction.Run:
