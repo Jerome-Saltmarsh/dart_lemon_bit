@@ -568,6 +568,22 @@ extension GameFunctions on Game {
     return true;
   }
 
+  void deactivateProjectile(Projectile projectile) {
+    if (!projectile.active) return;
+    projectile.active = false;
+    if (scene.waterAt(projectile.x, projectile.y)) return;
+    switch (projectile.type) {
+      case ProjectileType.Bullet:
+        dispatch(GameEventType.Bullet_Hole, projectile.x, projectile.y, 0, 0);
+        break;
+      case ProjectileType.Fireball:
+        spawnExplosion(x: projectile.x, y: projectile.y);
+        break;
+      case ProjectileType.Arrow:
+        break;
+    }
+  }
+
   void _updateProjectiles() {
     // @on update bullet
     for (int i = 0; i < projectiles.length; i++) {
@@ -576,26 +592,13 @@ extension GameFunctions on Game {
       projectile.x += projectile.xv;
       projectile.y += projectile.yv;
       if (projectileDistanceTravelled(projectile) > projectile.range) {
-        if (!scene.waterAt(projectile.x, projectile.y)) {
-          switch(projectile.type){
-            case ProjectileType.Bullet:
-              dispatch(
-                  GameEventType.Bullet_Hole, projectile.x, projectile.y, 0, 0);
-              break;
-            case ProjectileType.Fireball:
-              spawnExplosion(x: projectile.x, y: projectile.y);
-              break;
-            case ProjectileType.Arrow:
-              break;
-          }
-        }
-        projectile.active = false;
+        deactivateProjectile(projectile);
       }
     }
 
     for (int i = 0; i < projectiles.length; i++) {
       if (scene.bulletCollisionAt(projectiles[i].x, projectiles[i].y)) {
-        projectiles[i].active = false;
+        deactivateProjectile(projectiles[i]);
       }
     }
 
@@ -608,7 +611,7 @@ extension GameFunctions on Game {
       for (EnvironmentObject environmentObject in scene.environment) {
         if (!environmentObject.collidable) continue;
         if (!overlapping(projectiles[i], environmentObject)) continue;
-        projectiles[i].active = false;
+        deactivateProjectile(projectiles[i]);
         break;
       }
     }
@@ -644,7 +647,6 @@ extension GameFunctions on Game {
   }
 
   void spawnExplosion({required double x, required double y}) {
-
     dispatch(GameEventType.Explosion, x, y, 0, 0);
 
     for (Character character in zombies) {
