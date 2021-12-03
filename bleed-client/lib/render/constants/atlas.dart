@@ -23,7 +23,7 @@ class _Atlas {
 
 class  _Witch {
   final Vector2 idle = Vector2(1, 3459);
-  final Vector2 running = Vector2(1, 3521);
+  final Vector2 running = Vector2(1, 3524);
   final Vector2 striking = Vector2(1, 3589);
 }
 
