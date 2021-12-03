@@ -108,6 +108,13 @@ Float32List mapParticleToSrc(Particle particle){
       _src[3] = _src[1] + 24;
       return _src;
 
+    case ParticleType.Shrapnel:
+      _src[0] = atlas.particles.circleBlackSmall.x;
+      _src[1] = atlas.particles.circleBlackSmall.y;
+      _src[2] = _src[0] + 7;
+      _src[3] = _src[1] + 7;
+      return _src;
+
     default:
       _src[0] = atlas.particles.circle32.x;
       _src[1] = atlas.particles.circle32.y;
