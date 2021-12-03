@@ -1,5 +1,5 @@
 
-import 'package:bleed_client/common/classes/Vector2.dart';
+import 'package:lemon_engine/classes/vector2.dart';
 
 final _Atlas atlas = _Atlas();
 
@@ -24,6 +24,7 @@ class _Atlas {
 class  _Witch {
   final Vector2 idle = Vector2(1, 3459);
   final Vector2 running = Vector2(1, 3521);
+  final Vector2 striking = Vector2(1, 3589);
 }
 
 class _Human {
