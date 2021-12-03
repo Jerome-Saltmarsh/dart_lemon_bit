@@ -711,13 +711,6 @@ extension GameFunctions on Game {
     }
   }
 
-  double angle2(double adjacent, double opposite) {
-    if (adjacent > 0) {
-      return pi2 - (atan2(adjacent, opposite) * -1);
-    }
-    return atan2(adjacent, opposite);
-  }
-
   void updatePlayer(Player player) {
     player.lastUpdateFrame++;
 
@@ -1490,4 +1483,26 @@ void changeWeapon(Player player, int index) {
   if (index >= player.weapons.length) return;
   player.equippedIndex = index;
   player.game.setCharacterState(player, CharacterState.ChangingWeapon);
+}
+
+void playerSetAbilityTarget(Player player, double x, double y){
+  double dis = distanceBetween(player.x, player.y, x, y);
+  double maxRange = getAbilityRange(player.ability);
+
+  if (dis > maxRange) {
+    double rotation = pi2 -
+        angle2(player.x - x, player.y - y);
+    player.abilityTarget.x = player.x + adj(rotation, maxRange);
+    player.abilityTarget.y = player.y + opp(rotation, maxRange);
+  }else{
+    player.abilityTarget.x = x;
+    player.abilityTarget.y = y;
+  }
+}
+
+double angle2(double adjacent, double opposite) {
+  if (adjacent > 0) {
+    return pi2 - (atan2(adjacent, opposite) * -1);
+  }
+  return atan2(adjacent, opposite);
 }
