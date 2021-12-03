@@ -7,6 +7,7 @@ import '../common/enums/Direction.dart';
 import '../constants/no_squad.dart';
 import '../interfaces/HasSquad.dart';
 import '../utils.dart';
+import 'Debuff.dart';
 import 'GameObject.dart';
 import 'Weapon.dart';
 
@@ -23,7 +24,18 @@ class Character extends GameObject implements HasSquad {
   int stateDuration = 0;
   int stateFrameCount = 0;
   late int maxHealth;
-  double speed;
+  late double _speed;
+  bool frozen = false;
+  int frozenDuration = 0;
+
+  double get speed {
+    if (frozen){
+      return _speed * 0.5;
+    }
+    return _speed;
+  }
+
+
   int squad;
   List<Weapon> weapons = [];
   bool weaponsDirty = false;
@@ -63,11 +75,12 @@ class Character extends GameObject implements HasSquad {
     required double y,
     required this.weapons,
     required int health,
-    required this.speed,
+    required double speed,
     this.squad = noSquad,
   }) : super(x, y) {
     maxHealth = health;
     _health = health;
+    _speed = speed;
   }
 
   @override

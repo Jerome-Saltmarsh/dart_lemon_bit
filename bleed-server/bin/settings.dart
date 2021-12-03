@@ -126,6 +126,7 @@ class Settings {
 
 class _Duration {
   final int knifeStrike = 15;
+  final int frozen = 60;
 }
 
 class _Pickup {
@@ -162,6 +163,7 @@ class _Radius {
   final double character = 20;
   final double interact = 60;
   final double zombieSpawnVariation = 5;
+  final double freezeCircle = 40;
 }
 
 class _Accuracy {

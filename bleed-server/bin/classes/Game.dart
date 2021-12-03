@@ -24,6 +24,7 @@ import '../enums/npc_mode.dart';
 import '../functions/insertionSort.dart';
 import '../functions/withinRadius.dart';
 import '../interfaces/HasSquad.dart';
+import 'Debuff.dart';
 import 'Projectile.dart';
 import 'Character.dart';
 import 'Collider.dart';
@@ -655,6 +656,12 @@ extension GameFunctions on Game {
   }
 
   void spawnFreezeCircle({required double x, required double y}) {
+    for (Character character in zombies) {
+      if (!withinDistance(character, x, y, settings.radius.freezeCircle))
+        continue;
+      character.frozen = true;
+      character.frozenDuration = settings.duration.frozen;
+    }
     dispatch(GameEventType.FreezeCircle, x, y, 0, 0);
   }
 
@@ -853,6 +860,13 @@ extension GameFunctions on Game {
       character.yv *= settings.velocityFriction;
     }
 
+    if (character.frozenDuration > 0) {
+      character.frozenDuration--;
+      if (character.frozenDuration == 0) {
+        character.frozen = false;
+      }
+    }
+
     if (character.dead) return;
 
     if (character.stateDuration > 0) {
@@ -929,7 +943,8 @@ extension GameFunctions on Game {
           case Ability.Explosion:
             final int castFrame = 3;
             if (character.stateDuration == castFrame) {
-              spawnExplosion(x: character.abilityTarget.x, y: character.abilityTarget.y);
+              spawnExplosion(
+                  x: character.abilityTarget.x, y: character.abilityTarget.y);
             }
             break;
           case Ability.Blink:
@@ -941,7 +956,8 @@ extension GameFunctions on Game {
           case Ability.FreezeCircle:
             final int castFrame = 3;
             if (character.stateDuration == castFrame) {
-              spawnFreezeCircle(x: character.abilityTarget.x, y: character.abilityTarget.y);
+              spawnFreezeCircle(
+                  x: character.abilityTarget.x, y: character.abilityTarget.y);
             }
             break;
           default:
@@ -1485,16 +1501,15 @@ void changeWeapon(Player player, int index) {
   player.game.setCharacterState(player, CharacterState.ChangingWeapon);
 }
 
-void playerSetAbilityTarget(Player player, double x, double y){
+void playerSetAbilityTarget(Player player, double x, double y) {
   double dis = distanceBetween(player.x, player.y, x, y);
   double maxRange = getAbilityRange(player.ability);
 
   if (dis > maxRange) {
-    double rotation = pi2 -
-        angle2(player.x - x, player.y - y);
+    double rotation = pi2 - angle2(player.x - x, player.y - y);
     player.abilityTarget.x = player.x + adj(rotation, maxRange);
     player.abilityTarget.y = player.y + opp(rotation, maxRange);
-  }else{
+  } else {
     player.abilityTarget.x = x;
     player.abilityTarget.y = y;
   }
