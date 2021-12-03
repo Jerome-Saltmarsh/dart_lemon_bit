@@ -177,6 +177,8 @@ void main() {
             CharacterAction action = characterActions[int.parse(arguments[2])];
             double mouseX = double.parse(arguments[4]);
             double mouseY = double.parse(arguments[5]);
+            player.abilityTarget.x = mouseX;
+            player.abilityTarget.y = mouseY;
 
             switch (action) {
               case CharacterAction.Idle:
