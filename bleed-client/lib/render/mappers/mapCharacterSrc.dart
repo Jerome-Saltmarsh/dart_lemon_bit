@@ -36,16 +36,21 @@ final Vector2 _zombieWalking = Vector2(1, 2720);
 Float32List _src = Float32List(4);
 
 
-double _animationX({
+Float32List _loop({
   Vector2 atlas,
   Direction direction,
-  double frameSize,
+  Shade shade,
+  double size,
   int framesPerDirection,
-  int frame
+  int frame,
 }){
-  double _s = direction.index * frameSize * framesPerDirection;
-  double _f = (frame % framesPerDirection) * _frame64;
-  return atlas.x + _s + _f;
+  double _s = direction.index * size * framesPerDirection;
+  double _f = (frame % framesPerDirection) * size;
+  _src[0] =  atlas.x + _s + _f;
+  _src[1] = atlas.y + (shade.index * size);
+  _src[2] = _src[0] + _frame64;
+  _src[3] = _src[1] + _frame64;
+  return _src;
 }
 
 Float32List mapCharacterSrcWitch({
@@ -60,15 +65,13 @@ Float32List mapCharacterSrcWitch({
       _src[1] = atlas.witch.idle.y;
       break;
     case CharacterState.Walking:
-      _src[0] = _animationX(
-          atlas: atlas.witch.running,
-          direction: direction,
-          frameSize: 64,
-          framesPerDirection: 4,
-          frame: frame
-      );
-      _src[1] = atlas.witch.running.y;
-      break;
+      return _loop(
+        atlas: atlas.witch.running,
+        direction: direction,
+        shade: Shade.Bright,
+        size: 64,
+        framesPerDirection: 4,
+        frame: frame);
     case CharacterState.Dead:
       // TODO: Handle this case.
       break;
@@ -79,25 +82,22 @@ Float32List mapCharacterSrcWitch({
       // TODO: Handle this case.
       break;
     case CharacterState.Striking:
-      _src[0] = _animationX(
-          atlas: atlas.witch.striking,
-          direction: direction,
-          frameSize: 64,
-          framesPerDirection: 4,
-          frame: frame
-      );
-      _src[1] = atlas.witch.running.y;
-      break;
-    case CharacterState.Running:
-      _src[0] = _animationX(
+      return _loop(
           atlas: atlas.witch.running,
           direction: direction,
-          frameSize: 64,
+          shade: Shade.Bright,
+          size: 64,
           framesPerDirection: 4,
-          frame: frame
-      );
-      _src[1] = atlas.witch.running.y;
+          frame: frame);
       break;
+    case CharacterState.Running:
+      return _loop(
+          atlas: atlas.witch.running,
+          direction: direction,
+          shade: Shade.Bright,
+          size: 64,
+          framesPerDirection: 4,
+          frame: frame);
     case CharacterState.Reloading:
       // TODO: Handle this case.
       break;
