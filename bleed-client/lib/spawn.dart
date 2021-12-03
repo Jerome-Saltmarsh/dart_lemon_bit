@@ -28,7 +28,7 @@ void spawnExplosion(double x, double y) {
   double r = 0.2;
   repeat(() {
     spawnSmoke(x, y, 0.01, xv: giveOrTake(r), yv: giveOrTake(r));
-  }, 15, 120);
+  }, 5, 50);
 }
 
 void spawnFloatingText(double x, double y, dynamic value) {

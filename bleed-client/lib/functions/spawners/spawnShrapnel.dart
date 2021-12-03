@@ -14,7 +14,7 @@ void spawnShrapnel(double x, double y) {
       yv: giveOrTake(2),
       zv: randomBetween(0.1, 0.4),
       weight: 0.5,
-      duration: randomInt(400, 600),
+      duration: randomInt(150, 200),
       scale: randomBetween(0.6, 1.25),
       scaleV: 0);
 }
