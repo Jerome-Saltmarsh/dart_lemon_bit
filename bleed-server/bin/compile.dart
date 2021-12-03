@@ -1,3 +1,4 @@
+import 'bleed/maps/ability_range.dart';
 import 'bleed/zombie_health.dart';
 import 'classes/Projectile.dart';
 import 'classes/Collectable.dart';
@@ -152,6 +153,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.type.index);
   _write(buffer, player.abilityTarget.x.toInt());
   _write(buffer, player.abilityTarget.y.toInt());
+  _writeInt(buffer, getAbilityRange(player.ability));
 
   _compilePlayerEvents(buffer, player);
 

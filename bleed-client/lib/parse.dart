@@ -380,6 +380,7 @@ void _parsePlayer() {
   game.player.characterType.value = _consumeCharacterType();
   game.player.abilityTarget.x = _consumeDouble();
   game.player.abilityTarget.y = _consumeDouble();
+  game.player.abilityRange = _consumeDouble();
 }
 
 CharacterType _consumeCharacterType(){

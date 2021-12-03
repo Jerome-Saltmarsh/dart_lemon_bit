@@ -107,8 +107,10 @@ void renderCanvasPlay() {
   }
 
   if (game.player.selectedAbility.value == Ability.SlowingCircle) {
-    drawCircleOutline(sides: 10,
-        radius: 30, x: game.player.abilityTarget.x, y: game.player.abilityTarget.y, color: Colors.white);
+    drawCircleOutline(sides: 24,
+        radius: game.player.abilityRange, x: game.player.x, y: game.player.y, color: Colors.white);
+
+    // drawCircleOutline(sides: 12, radius: game.player.)
   }
 
   // drawDebugCharacters();

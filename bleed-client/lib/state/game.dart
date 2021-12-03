@@ -65,6 +65,7 @@ class _Player {
   final Watch<int> equippedRounds = Watch(0);
   final Watch<int> equippedCapacity = Watch(0);
   Vector2 abilityTarget = Vector2(0, 0);
+  double abilityRange = 0;
   final Watch<CharacterType> characterType = Watch(CharacterType.Human);
   int squad = -1;
   Watch<double> health = Watch(0.0);
