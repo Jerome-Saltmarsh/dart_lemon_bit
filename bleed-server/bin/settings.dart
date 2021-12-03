@@ -116,7 +116,6 @@ class Settings {
   final int generateTilesY = 32;
 
   final int grenadeDuration = 800;
-  final double grenadeExplosionRadius = 75;
   final double grenadeSpeed = 18;
   final double grenadeFriction = 0.98;
 
@@ -164,6 +163,7 @@ class _Radius {
   final double interact = 60;
   final double zombieSpawnVariation = 5;
   final double freezeCircle = 40;
+  final double explosion = 75;
 }
 
 class _Accuracy {

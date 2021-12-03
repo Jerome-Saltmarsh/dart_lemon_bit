@@ -661,10 +661,11 @@ extension GameFunctions on Game {
     dispatch(GameEventType.FreezeCircle, x, y, 0, 0);
   }
 
-  void applyFreezeTo(
-      {required double x,
+  void applyFreezeTo({
+      required double x,
       required double y,
-      required List<Character> characters}) {
+      required List<Character> characters
+  }) {
     for (Character character in characters) {
       if (!withinDistance(character, x, y, settings.radius.freezeCircle))
         continue;
@@ -681,7 +682,7 @@ extension GameFunctions on Game {
     dispatch(GameEventType.Explosion, x, y, 0, 0);
 
     for (Character character in zombies) {
-      if (objectDistanceFrom(character, x, y) > settings.grenadeExplosionRadius)
+      if (objectDistanceFrom(character, x, y) > settings.radius.explosion)
         continue;
       double rotation = radiansBetween2(character, x, y);
       double magnitude = 10;
@@ -705,7 +706,7 @@ extension GameFunctions on Game {
     }
 
     for (Player player in players) {
-      if (objectDistanceFrom(player, x, y) > settings.grenadeExplosionRadius)
+      if (objectDistanceFrom(player, x, y) > settings.radius.explosion)
         continue;
       double rotation = radiansBetween2(player, x, y);
       double magnitude = 10;
