@@ -18,4 +18,5 @@ enum ClientRequest {
   SelectCharacterType,
   PerformPrimaryAttack,
   PerformAbility,
+  SelectAbility,
 }

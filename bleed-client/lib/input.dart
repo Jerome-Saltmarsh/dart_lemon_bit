@@ -151,12 +151,13 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
 };
 
 void equip1() {
-  // sendRequestEquip(0);
-  if (game.player.selectedAbility.value == Ability.SlowingCircle) {
-    game.player.selectedAbility.value = Ability.None;
-  } else {
-    game.player.selectedAbility.value = Ability.SlowingCircle;
-  }
+  sendRequestSetAbility(Ability.SlowingCircle);
+  //
+  // if (game.player.selectedAbility.value == Ability.SlowingCircle) {
+  //   game.player.selectedAbility.value = Ability.None;
+  // } else {
+  //   game.player.selectedAbility.value = Ability.SlowingCircle;
+  // }
 }
 
 void equip2() {

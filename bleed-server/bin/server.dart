@@ -298,6 +298,36 @@ void main() {
           player.type = characterType;
           break;
 
+        case ClientRequest.SelectAbility:
+          if (arguments.length != 3) {
+            errorArgsExpected(3, arguments);
+            return;
+          }
+
+          Player? player = findPlayerByUuid(arguments[1]);
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+
+          int? abilityIndex = int.tryParse(arguments[2]);
+
+          if (abilityIndex == null){
+            errorInvalidArg('arg[2] expected int but got $abilityIndex');
+            return;
+          }
+
+          if (abilityIndex > maxAbilityIndex){
+            errorInvalidArg('arg[2] $abilityIndex is greater than the max ability index $maxAbilityIndex');
+            return;
+          }
+
+          Ability ability = abilities[abilityIndex];
+          if (player.ability == ability){
+            player.ability = Ability.None;
+          }
+          break;
+
         case ClientRequest.AcquireAbility:
           if (arguments.length != 3) {
             errorArgsExpected(3, arguments);

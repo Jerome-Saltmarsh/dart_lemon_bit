@@ -1,3 +1,4 @@
+import 'package:bleed_client/common/Ability.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/input.dart';
@@ -40,6 +41,10 @@ void sendRequestCastFireball(){
 
 void sendRequestEquip(int index) {
   send('${ClientRequest.Equip.index} $session $index');
+}
+
+void sendRequestSetAbility(Ability ability) {
+  send('${ClientRequest.SelectAbility.index} $session ${ability.index}');
 }
 
 void skipHour(){
