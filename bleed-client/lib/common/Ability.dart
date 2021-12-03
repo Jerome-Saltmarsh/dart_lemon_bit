@@ -1,6 +1,6 @@
 enum Ability {
   None,
-  SlowingCircle,
+  FreezeCircle,
   Blink,
   Explosion,
   Fireball,

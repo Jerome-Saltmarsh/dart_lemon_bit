@@ -654,6 +654,10 @@ extension GameFunctions on Game {
     items.add(Item(type: randomItem(itemTypes), x: x, y: y));
   }
 
+  void spawnFreezeCircle({required double x, required double y}) {
+    dispatch(GameEventType.FreezeCircle, x, y, 0, 0);
+  }
+
   void spawnExplosion({required double x, required double y}) {
     dispatch(GameEventType.Explosion, x, y, 0, 0);
 
@@ -921,7 +925,7 @@ extension GameFunctions on Game {
         break;
       case CharacterState.Performing:
         switch (character.performing) {
-          // @on performing slowing circle
+          // @on performing
           case Ability.Explosion:
             final int castFrame = 3;
             if (character.stateDuration == castFrame) {
@@ -934,7 +938,12 @@ extension GameFunctions on Game {
               character.y = character.abilityTarget.y;
             }
             break;
-
+          case Ability.FreezeCircle:
+            final int castFrame = 3;
+            if (character.stateDuration == castFrame) {
+              spawnFreezeCircle(x: character.abilityTarget.x, y: character.abilityTarget.y);
+            }
+            break;
           default:
             break;
         }

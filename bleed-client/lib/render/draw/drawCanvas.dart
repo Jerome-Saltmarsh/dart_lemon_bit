@@ -110,6 +110,12 @@ void renderCanvasPlay() {
 
   // drawDebugCharacters();
 
+  for (Explosion explosion in game.explosions) {
+    if (explosion.type == ExplosionType.FreezeCircle) {
+      drawCircle(explosion.x, explosion.y, 35, Colors.blue);
+    }
+  }
+
   if (game.settings.compilePaths) {
     drawDebugEnvironmentObjects();
     drawPaths();

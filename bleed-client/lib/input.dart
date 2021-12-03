@@ -159,7 +159,7 @@ void equip2() {
 }
 
 void equip3() {
-  sendRequestEquip(2);
+  sendRequestSetAbility(Ability.FreezeCircle);
 }
 
 void equip4() {

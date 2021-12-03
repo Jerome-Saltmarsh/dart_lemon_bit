@@ -15,8 +15,7 @@ import 'functions/spawnBulletHole.dart';
 int get shrapnelCount => randomInt(4, 15);
 
 void spawnExplosion(double x, double y) {
-  print("spawnExplosion()");
-  game.explosions.add(Explosion(x: x, y: y));
+  game.explosions.add(Explosion(x: x, y: y, type: ExplosionType.Explosion));
   playAudioExplosion(x, y);
   spawnBulletHole(x, y);
   for (int i = 0; i < randomInt(4, 10); i++) {
@@ -29,6 +28,13 @@ void spawnExplosion(double x, double y) {
   repeat(() {
     spawnSmoke(x, y, 0.01, xv: giveOrTake(r), yv: giveOrTake(r));
   }, 5, 50);
+}
+
+void spawnFreezeCircle({double x, double y}){
+  game.explosions.add(Explosion(x: x, y: y, type: ExplosionType.FreezeCircle));
+  for (int i = 0; i < randomInt(4, 10); i++) {
+    spawnFireYellow(x, y);
+  }
 }
 
 void spawnFloatingText(double x, double y, dynamic value) {
