@@ -208,8 +208,8 @@ extension GameFunctions on Game {
     update();
     _updatePlayersAndNpcs();
     _updateCollisions();
-    _updateBullets();
-    _updateBullets(); // called twice to fix collision detection
+    _updateProjectiles();
+    _updateProjectiles(); // called twice to fix collision detection
     _updateNpcs();
     _updateGrenades();
     _updateCollectables();
@@ -568,19 +568,28 @@ extension GameFunctions on Game {
     return true;
   }
 
-  void _updateBullets() {
+  void _updateProjectiles() {
     // @on update bullet
     for (int i = 0; i < projectiles.length; i++) {
       if (!projectiles[i].active) continue;
-      Projectile bullet = projectiles[i];
-      bullet.x += bullet.xv;
-      bullet.y += bullet.yv;
-      if (bulletDistanceTravelled(bullet) > bullet.range) {
-        if (!scene.waterAt(bullet.x, bullet.y)) {
-          dispatch(GameEventType.Bullet_Hole, bullet.x, bullet.y, 0, 0);
+      Projectile projectile = projectiles[i];
+      projectile.x += projectile.xv;
+      projectile.y += projectile.yv;
+      if (projectileDistanceTravelled(projectile) > projectile.range) {
+        if (!scene.waterAt(projectile.x, projectile.y)) {
+          switch(projectile.type){
+            case ProjectileType.Bullet:
+              dispatch(
+                  GameEventType.Bullet_Hole, projectile.x, projectile.y, 0, 0);
+              break;
+            case ProjectileType.Fireball:
+              spawnExplosion(x: projectile.x, y: projectile.y);
+              break;
+            case ProjectileType.Arrow:
+              break;
+          }
         }
-
-        bullet.active = false;
+        projectile.active = false;
       }
     }
 
@@ -634,20 +643,9 @@ extension GameFunctions on Game {
     items.add(Item(type: randomItem(itemTypes), x: x, y: y));
   }
 
-  void spawnExplosion(Grenade grenade) {
-    double x = grenade.x;
-    double y = grenade.y;
+  void spawnExplosion({required double x, required double y}) {
 
     dispatch(GameEventType.Explosion, x, y, 0, 0);
-
-    for (Crate crate in crates) {
-      if (!crate.active) continue;
-      if (diffOver(grenade.x, crate.x, settings.grenadeExplosionRadius))
-        continue;
-      if (diffOver(grenade.y, crate.y, settings.grenadeExplosionRadius))
-        continue;
-      breakCrate(crate);
-    }
 
     for (Character character in zombies) {
       if (objectDistanceFrom(character, x, y) > settings.grenadeExplosionRadius)
@@ -975,7 +973,7 @@ extension GameFunctions on Game {
     grenades.add(grenade);
     delayed(() {
       grenades.remove(grenade);
-      spawnExplosion(grenade);
+      spawnExplosion(x: grenade.x, y: grenade.y);
     }, ms: settings.grenadeDuration);
   }
 

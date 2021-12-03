@@ -16,7 +16,7 @@ import 'settings.dart';
 const double tileSize = 48.0;
 const double halfTileSize = 24;
 
-double bulletDistanceTravelled(Projectile bullet) {
+double projectileDistanceTravelled(Projectile bullet) {
   return distanceBetween(bullet.x, bullet.y, bullet.xStart, bullet.yStart);
 }
 
