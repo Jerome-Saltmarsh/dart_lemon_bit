@@ -925,14 +925,7 @@ extension GameFunctions on Game {
           case Ability.Explosion:
             final int castFrame = 3;
             if (character.stateDuration == castFrame) {
-              for (Character zombie in zombies) {
-                if (withinDistance(zombie, character.abilityTarget.x,
-                    character.abilityTarget.y, 40)) {
-                  applyDamage(character, zombie, 100);
-                }
-              }
-              dispatch(GameEventType.Explosion, character.abilityTarget.x,
-                  character.abilityTarget.y);
+              spawnExplosion(x: character.abilityTarget.x, y: character.abilityTarget.y);
             }
             break;
           case Ability.Blink:
