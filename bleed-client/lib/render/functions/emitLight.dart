@@ -31,3 +31,12 @@ void emitLightHigh(List<List<Shade>> shader, double x, double y) {
   applyShadeRing(shader, row, column, 4, Shade.VeryDark);
 }
 
+void emitLightBrightSmall(List<List<Shade>> shader, double x, double y) {
+  int column = getColumn(x, y);
+  int row = getRow(x, y);
+  applyShade(shader, row, column, Shade.Bright);
+  applyShadeRing(shader, row, column, 1, Shade.Medium);
+  applyShadeRing(shader, row, column, 2, Shade.Dark);
+  applyShadeRing(shader, row, column, 3, Shade.VeryDark);
+}
+

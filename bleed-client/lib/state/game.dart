@@ -1,6 +1,7 @@
 
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
+import 'package:bleed_client/classes/Explosion.dart';
 import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/classes/Particle.dart';
@@ -19,6 +20,7 @@ import 'package:lemon_watch/watch.dart';
 final _Game game = _Game();
 
 class _Game {
+  final List<Explosion> explosions = [];
   final _Settings settings = _Settings();
   final _Player player = _Player();
   int serverVersion;

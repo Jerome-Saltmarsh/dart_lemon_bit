@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
+import 'package:bleed_client/classes/Explosion.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Projectile.dart';
@@ -70,6 +71,26 @@ void renderCanvasPlay() {
     applyCharacterLightEmission(game.humans);
     applyProjectileLighting();
     applyNpcLightEmission(game.interactableNpcs);
+
+    for (int i = 0; i < game.explosions.length; i++) {
+      Explosion explosion = game.explosions[i];
+      if (explosion.duration++ > explosionMaxDuration) {
+        game.explosions.removeAt(i);
+        i--;
+        break;
+      }
+
+      double p = explosion.duration / explosionMaxDuration;
+      if (p < 0.33) {
+        emitLightHigh(dynamicShading, explosion.x, explosion.y);
+        break;
+      }
+      if (p < 0.66) {
+        emitLightMedium(dynamicShading, explosion.x, explosion.y);
+        break;
+      }
+      emitLightLow(dynamicShading, explosion.x, explosion.y);
+    }
   }
 
   applyDynamicShadeToTileSrc();
@@ -80,15 +101,16 @@ void renderCanvasPlay() {
   _drawGrenades(game.grenades);
   drawSprites();
 
-  for(int i = 0; i < game.totalItems; i++){
+  for (int i = 0; i < game.totalItems; i++) {
     drawItem(game.items[i]);
   }
 
-  for(int i = 0; i < game.totalHumans; i++){
+  for (int i = 0; i < game.totalHumans; i++) {
     drawCircle(game.humans[i].x, game.humans[i].y, 10, Colors.white24);
   }
-  for(int i = 0; i < game.totalNpcs; i++){
-    drawCircle(game.interactableNpcs[i].x, game.interactableNpcs[i].y, 10, Colors.white24);
+  for (int i = 0; i < game.totalNpcs; i++) {
+    drawCircle(game.interactableNpcs[i].x, game.interactableNpcs[i].y, 10,
+        Colors.white24);
   }
 
   if (game.settings.compilePaths) {
@@ -102,8 +124,6 @@ void renderCanvasPlay() {
   drawPlayerText();
   _drawMouseAim(); // TODO Expensive
 }
-
-
 
 void drawDebugEnvironmentObjects() {
   paint.color = Colors.red;
@@ -123,7 +143,7 @@ void applyProjectileLighting() {
   for (int i = 0; i < game.totalProjectiles; i++) {
     Projectile projectile = game.projectiles[i];
     if (projectile.type == ProjectileType.Fireball) {
-      emitLightHigh(dynamicShading, projectile.x, projectile.y);
+      emitLightBrightSmall(dynamicShading, projectile.x, projectile.y);
     }
   }
 }

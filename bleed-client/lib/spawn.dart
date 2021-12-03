@@ -1,3 +1,4 @@
+import 'package:bleed_client/classes/Explosion.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/functions/spawners/spawnFireYellow.dart';
 import 'package:bleed_client/functions/spawners/spawnShrapnel.dart';
@@ -15,6 +16,7 @@ int get shrapnelCount => randomInt(4, 15);
 
 void spawnExplosion(double x, double y) {
   print("spawnExplosion()");
+  game.explosions.add(Explosion(x: x, y: y));
   playAudioExplosion(x, y);
   spawnBulletHole(x, y);
   for (int i = 0; i < randomInt(4, 10); i++) {

@@ -603,8 +603,8 @@ extension GameFunctions on Game {
     }
 
     insertionSort(list: projectiles, compare: compareGameObjectsY);
-    checkBulletCollision(zombies);
-    checkBulletCollision(players);
+    checkProjectileCollision(zombies);
+    checkProjectileCollision(players);
 
     for (int i = 0; i < projectiles.length; i++) {
       if (!projectiles[i].active) continue;
@@ -616,22 +616,22 @@ extension GameFunctions on Game {
       }
     }
 
-    for (int i = 0; i < crates.length; i++) {
-      if (!crates[i].active) continue;
-      Crate crate = crates[i];
-      applyCratePhysics(crate, players);
-      applyCratePhysics(crate, zombies);
-
-      for (int j = 0; j < projectiles.length; j++) {
-        if (!projectiles[j].active) continue;
-        if (diffOver(crate.x, projectiles[j].x, radius.crate)) continue;
-        if (diffOver(crate.y, projectiles[j].y, radius.crate)) continue;
-        // @on crate struck by bullet
-        breakCrate(crate);
-        projectiles[j].active = false;
-        break;
-      }
-    }
+    // for (int i = 0; i < crates.length; i++) {
+    //   if (!crates[i].active) continue;
+    //   Crate crate = crates[i];
+    //   applyCratePhysics(crate, players);
+    //   applyCratePhysics(crate, zombies);
+    //
+    //   for (int j = 0; j < projectiles.length; j++) {
+    //     if (!projectiles[j].active) continue;
+    //     if (diffOver(crate.x, projectiles[j].x, radius.crate)) continue;
+    //     if (diffOver(crate.y, projectiles[j].y, radius.crate)) continue;
+    //     // @on crate struck by bullet
+    //     breakCrate(crate);
+    //     projectiles[j].active = false;
+    //     break;
+    //   }
+    // }
   }
 
   void breakCrate(Crate crate) {
@@ -669,7 +669,6 @@ extension GameFunctions on Game {
           character.active = false;
           dispatch(GameEventType.Zombie_killed_Explosion, character.x,
               character.y, forceX, forceY);
-          // }
         }
       }
     }
@@ -781,43 +780,43 @@ extension GameFunctions on Game {
     }
   }
 
-  void checkBulletCollision(List<Character> characters) {
+  void checkProjectileCollision(List<Character> characters) {
     int s = 0;
     for (int i = 0; i < projectiles.length; i++) {
-      Projectile bullet = projectiles[i];
-      if (!bullet.active) continue;
+      Projectile projectile = projectiles[i];
+      if (!projectile.active) continue;
       for (int j = s; j < characters.length; j++) {
         Character character = characters[j];
         if (!character.active) continue;
         if (character.dead) continue;
-        if (character.left > bullet.right) continue;
-        if (bullet.left > character.right) continue;
-        if (bullet.top > character.bottom) continue;
-        if (bullet.bottom < character.top) continue;
+        if (character.left > projectile.right) continue;
+        if (projectile.left > character.right) continue;
+        if (projectile.top > character.bottom) continue;
+        if (projectile.bottom < character.top) continue;
 
-        bullet.active = false;
-        character.xv += bullet.xv * settings.bulletImpactVelocityTransfer;
-        character.yv += bullet.yv * settings.bulletImpactVelocityTransfer;
+        deactivateProjectile(projectile);
+        character.xv += projectile.xv * settings.bulletImpactVelocityTransfer;
+        character.yv += projectile.yv * settings.bulletImpactVelocityTransfer;
 
-        if (enemies(bullet, character)) {
+        if (enemies(projectile, character)) {
           // @on zombie hit by bullet
-          applyDamage(bullet.owner, character, bullet.damage);
+          applyDamage(projectile.owner, character, projectile.damage);
 
           if (character is Player) {
             dispatch(GameEventType.Player_Hit, character.x, character.y,
-                bullet.xv, bullet.yv);
+                projectile.xv, projectile.yv);
             return;
           }
         }
 
         if (character.alive) {
           dispatch(GameEventType.Zombie_Hit, character.x, character.y,
-              bullet.xv, bullet.yv);
+              projectile.xv, projectile.yv);
         } else {
           // @on zombie killed by player
-          if (bullet.owner is Npc) {
+          if (projectile.owner is Npc) {
             // on zombie killed by npc
-            (bullet.owner as Npc).clearTarget();
+            (projectile.owner as Npc).clearTarget();
           }
           if (character is Npc) {
             character.clearTarget();
@@ -825,15 +824,11 @@ extension GameFunctions on Game {
           // items.add(Item(type: ItemType.Handgun, x: character.x, y: character.y));
           character.active = false;
           dispatch(GameEventType.Zombie_killed_Explosion, character.x,
-              character.y, bullet.xv, bullet.yv);
+              character.y, projectile.xv, projectile.yv);
         }
         break;
       }
     }
-  }
-
-  void clearNpcs() {
-    zombies.clear();
   }
 
   void updateCharacter(Character character) {
