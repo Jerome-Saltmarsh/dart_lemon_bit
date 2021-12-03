@@ -45,6 +45,7 @@ class _Particles {
   final Vector2 zombieLeg  = Vector2(1539, 2463);
   final Vector2 zombieTorso  = Vector2(1538, 1736);
   final Vector2 circle32 = Vector2(2410, 515);
+  final Vector2 flame  = Vector2(2290, 1193);
 }
 
 class _Pixels {

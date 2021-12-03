@@ -7,6 +7,7 @@ import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
+import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/particleSettings.dart';
 import 'package:bleed_client/utils.dart';
 
@@ -37,20 +38,6 @@ Float32List mapParticleToSrc(Particle particle){
       double y = atlas.pixels.y + (3 * 8);
       _src[0] = x;
       _src[1] = y;
-      // switch(particle.hue){
-      //   case Hue.White:
-      //     _src[0] = atlas.pixels.white1.x + 1;
-      //     _src[1] = atlas.pixels.white1.y + 1;
-      //     break;
-      //   case Hue.Red:
-      //     _src[0] = atlas.pixels.red1.x + 1;
-      //     _src[1] = atlas.pixels.red1.y + 1;
-      //     break;
-      //   case Hue.Yellow:
-      //     _src[0] = atlas.pixels.yellow1.x + 1;
-      //     _src[1] = atlas.pixels.yellow1.y + 1;
-      //     break;
-      // }
       _src[2] = _src[0] + 6;
       _src[3] = _src[1] + 6;
       return _src;
@@ -113,6 +100,14 @@ Float32List mapParticleToSrc(Particle particle){
       _src[0] = atlas.myst.x;
       _src[1] = atlas.myst.y + (index * _particleSize);
       break;
+
+    case ParticleType.FireYellow:
+      _src[0] = atlas.particles.flame.x;
+      _src[1] = atlas.particles.flame.y + ((drawFrame % 4) * 24);
+      _src[2] = _src[0] + 25;
+      _src[3] = _src[1] + 24;
+      return _src;
+
     default:
       _src[0] = atlas.particles.circle32.x;
       _src[1] = atlas.particles.circle32.y;
