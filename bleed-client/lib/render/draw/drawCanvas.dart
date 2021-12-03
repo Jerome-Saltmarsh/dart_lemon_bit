@@ -84,6 +84,13 @@ void renderCanvasPlay() {
     drawItem(game.items[i]);
   }
 
+  for(int i = 0; i < game.totalHumans; i++){
+    drawCircle(game.humans[i].x, game.humans[i].y, 10, Colors.white24);
+  }
+  for(int i = 0; i < game.totalNpcs; i++){
+    drawCircle(game.interactableNpcs[i].x, game.interactableNpcs[i].y, 10, Colors.white24);
+  }
+
   if (game.settings.compilePaths) {
     drawDebugEnvironmentObjects();
     drawPaths();

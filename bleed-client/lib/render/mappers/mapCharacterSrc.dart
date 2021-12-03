@@ -53,6 +53,27 @@ Float32List _loop({
   return _src;
 }
 
+Float32List _animate({
+  Vector2 atlas,
+  List<int> animation,
+  Direction direction,
+  Shade shade,
+  double size,
+  int framesPerDirection,
+  int frame,
+}){
+
+  int animationFrame = min(frame, animation.length - 1);
+  int f = animation[animationFrame];
+  double _s = direction.index * size * framesPerDirection;
+  double _f = (f % framesPerDirection) * size;
+  _src[0] =  atlas.x + _s + _f;
+  _src[1] = atlas.y + (shade.index * size);
+  _src[2] = _src[0] + _frame64;
+  _src[3] = _src[1] + _frame64;
+  return _src;
+}
+
 Float32List mapCharacterSrcWitch({
   CharacterState state,
   Direction direction,
@@ -61,9 +82,13 @@ Float32List mapCharacterSrcWitch({
 
   switch (state) {
     case CharacterState.Idle:
-      _src[0] = atlas.witch.idle.x + (direction.index * _frame64);
-      _src[1] = atlas.witch.idle.y;
-      break;
+      return _loop(
+          atlas: atlas.witch.idle,
+          direction: direction,
+          shade: Shade.Bright,
+          size: 64,
+          framesPerDirection: 1,
+          frame: frame);
     case CharacterState.Walking:
       return _loop(
         atlas: atlas.witch.running,
@@ -82,14 +107,14 @@ Float32List mapCharacterSrcWitch({
       // TODO: Handle this case.
       break;
     case CharacterState.Striking:
-      return _loop(
-          atlas: atlas.witch.running,
+      return _animate(
+          animation: animations.witch.attacking,
+          atlas: atlas.witch.striking,
           direction: direction,
           shade: Shade.Bright,
           size: 64,
-          framesPerDirection: 4,
+          framesPerDirection: 2,
           frame: frame);
-      break;
     case CharacterState.Running:
       return _loop(
           atlas: atlas.witch.running,
