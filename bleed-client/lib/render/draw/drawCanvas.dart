@@ -106,21 +106,7 @@ void renderCanvasPlay() {
     drawItem(game.items[i]);
   }
 
-  if (game.player.ability.value == Ability.SlowingCircle) {
-    drawCircleOutline(
-        sides: 24,
-        radius: game.player.abilityRange,
-        x: game.player.x,
-        y: game.player.y,
-        color: Colors.white);
-
-    drawCircleOutline(
-        sides: 12,
-        radius: 25,
-        x: game.player.abilityTarget.x,
-        y: game.player.abilityTarget.y,
-        color: Colors.white);
-  }
+  drawAbility();
 
   // drawDebugCharacters();
 
@@ -134,6 +120,23 @@ void renderCanvasPlay() {
   _drawPlayerNames();
   drawPlayerText();
   _drawMouseAim(); // TODO Expensive
+}
+
+void drawAbility() {
+  if (game.player.ability.value == Ability.None) return;
+  drawCircleOutline(
+      sides: 24,
+      radius: game.player.abilityRange,
+      x: game.player.x,
+      y: game.player.y,
+      color: Colors.white);
+
+  drawCircleOutline(
+      sides: 12,
+      radius: 25,
+      x: game.player.abilityTarget.x,
+      y: game.player.abilityTarget.y,
+      color: Colors.white);
 }
 
 void drawDebugCharacters() {
