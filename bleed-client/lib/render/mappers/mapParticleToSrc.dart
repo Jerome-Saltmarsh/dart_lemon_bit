@@ -29,6 +29,8 @@ const _particleSize = 64.0;
 
 final Float32List _src = Float32List(4);
 
+const pixelSize = 6;
+
 Float32List mapParticleToSrc(Particle particle){
   Shade shade = getShadeAtPosition(particle.x, particle.y);
 
@@ -38,8 +40,8 @@ Float32List mapParticleToSrc(Particle particle){
       double y = atlas.pixels.y + (3 * 8);
       _src[0] = x;
       _src[1] = y;
-      _src[2] = _src[0] + 6;
-      _src[3] = _src[1] + 6;
+      _src[2] = _src[0] + pixelSize;
+      _src[3] = _src[1] + pixelSize;
       return _src;
     case ParticleType.Leg:
       Direction direction = convertAngleToDirection(particle.rotation);

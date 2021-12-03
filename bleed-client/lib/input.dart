@@ -5,6 +5,7 @@ import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/common/Ability.dart';
 import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/common/CharacterState.dart';
+import 'package:bleed_client/functions/onGameEvent.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
@@ -107,6 +108,7 @@ class _Keys {
   LogicalKeyboardKey toggleSkillTree = LogicalKeyboardKey.keyT;
   LogicalKeyboardKey arrowUp = LogicalKeyboardKey.arrowUp;
   LogicalKeyboardKey arrowDown = LogicalKeyboardKey.arrowDown;
+  LogicalKeyboardKey pixelExplosion = LogicalKeyboardKey.keyP;
 }
 
 Map<LogicalKeyboardKey, bool> _keyDownState = {};
@@ -148,6 +150,9 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.equip3: equip3,
   keys.equip4: equip4,
   keys.toggleSkillTree: hud.toggle.skillTree,
+  keys.pixelExplosion: (){
+    emitPixelExplosion(mouseWorldX, mouseWorldY);
+  },
 };
 
 void equip1() {

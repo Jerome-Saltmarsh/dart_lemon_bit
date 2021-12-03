@@ -6,6 +6,7 @@ import 'package:bleed_client/render/mappers/mapDst.dart';
 
 const double _32 = 32.0;
 const double _64 = 32.0;
+const zToHeightRatio = 0.4;
 
 final Map<ParticleType, double> _particleTypeSize = {
   ParticleType.Zombie_Head: _32,
@@ -24,7 +25,7 @@ final Map<ParticleType, double> _particleTypeSize = {
 
 Float32List mapParticleToDst(Particle particle){
   double size = _particleTypeSize[particle.type];
-  double renderScale = (1 + (particle.z * 0.4)) * particle.scale;
+  double renderScale = (1 + (particle.z * zToHeightRatio)) * particle.scale;
   double sizeHalf = size * renderScale * 0.5;
 
   return mapDst(

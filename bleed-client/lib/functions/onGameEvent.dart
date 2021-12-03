@@ -117,9 +117,7 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
       break;
     case GameEventType.Player_Death:
       playPlayerDeathAudio(x, y);
-      for(int i = 0; i < 20; i++){
-        emitPixel(x: x, y: y);
-      }
+      emitPixelExplosion(x, y);
       break;
     case GameEventType.Explosion:
       spawnExplosion(x.toDouble(), y.toDouble());
@@ -160,5 +158,12 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
     case GameEventType.Credits_Acquired:
       playAudioCollectStar(x, y);
       break;
+  }
+}
+
+void emitPixelExplosion(double x, double y) {
+
+  for(int i = 0; i < 20; i++){
+    emitPixel(x: x, y: y);
   }
 }
