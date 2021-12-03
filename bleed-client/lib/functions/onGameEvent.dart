@@ -1,4 +1,3 @@
-
 import 'package:bleed_client/functions/emit/emitPixel.dart';
 import 'package:bleed_client/functions/spawners/spawnParticle.dart';
 import 'package:bleed_client/functions/spawners/spawnZombieLeg.dart';
@@ -162,8 +161,7 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
 }
 
 void emitPixelExplosion(double x, double y) {
-
-  for(int i = 0; i < 20; i++){
+  for (int i = 0; i < 20; i++) {
     emitPixel(x: x, y: y);
   }
 }
