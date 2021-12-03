@@ -922,7 +922,7 @@ extension GameFunctions on Game {
       case CharacterState.Performing:
         switch (character.performing) {
           // @on performing slowing circle
-          case Ability.SlowingCircle:
+          case Ability.Explosion:
             final int castFrame = 3;
             if (character.stateDuration == castFrame) {
               for (Character zombie in zombies) {

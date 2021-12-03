@@ -151,7 +151,7 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
 };
 
 void equip1() {
-  sendRequestSetAbility(Ability.SlowingCircle);
+  sendRequestSetAbility(Ability.Explosion);
 }
 
 void equip2() {

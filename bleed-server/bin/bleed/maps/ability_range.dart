@@ -7,6 +7,7 @@ class _Maps {
   Map<Ability, double> abilityRange = {
     Ability.None: 0,
     Ability.SlowingCircle: 200,
+    Ability.Explosion: 200,
     Ability.Blink: 200,
   };
 }
