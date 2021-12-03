@@ -2,9 +2,11 @@ import 'dart:math';
 
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
+import 'package:bleed_client/functions/spawners/spawnParticle.dart';
 import 'package:lemon_math/random_between.dart';
 
-void emitPixel(Particle particle) {
+void emitPixel({double x, double y}) {
+  Particle particle = getAvailableParticle();
   particle.active = true;
   particle.type = ParticleType.Pixel;
   particle.duration = 150;

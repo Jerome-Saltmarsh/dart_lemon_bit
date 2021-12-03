@@ -81,6 +81,12 @@ Float32List mapCharacterSrcWitch({
 }) {
 
   switch (state) {
+    case CharacterState.Dead:
+      _src[0] = 1;
+      _src[1] = 1;
+      _src[2] = 2;
+      _src[3] = 2;
+      return _src;
     case CharacterState.Idle:
       return _loop(
           atlas: atlas.witch.idle,

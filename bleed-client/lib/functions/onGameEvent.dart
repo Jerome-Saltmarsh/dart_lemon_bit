@@ -1,4 +1,6 @@
 
+import 'package:bleed_client/functions/emit/emitPixel.dart';
+import 'package:bleed_client/functions/spawners/spawnParticle.dart';
 import 'package:bleed_client/functions/spawners/spawnZombieLeg.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/randomBool.dart';
@@ -115,6 +117,9 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
       break;
     case GameEventType.Player_Death:
       playPlayerDeathAudio(x, y);
+      for(int i = 0; i < 20; i++){
+        emitPixel(x: x, y: y);
+      }
       break;
     case GameEventType.Explosion:
       spawnExplosion(x.toDouble(), y.toDouble());

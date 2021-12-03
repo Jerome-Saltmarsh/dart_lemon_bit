@@ -222,7 +222,7 @@ Widget buildHud() {
     return Stack(
       children: [
         buildTextBox(),
-        if (alive) buildBottomLeft(),
+        // if (alive) buildBottomLeft(),
         if (alive) buildBottomRight(),
         buildTopLeft(),
         if (!hud.state.observeMode && !alive) _buildViewRespawn(),

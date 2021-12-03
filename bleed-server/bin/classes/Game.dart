@@ -501,6 +501,14 @@ extension GameFunctions on Game {
     }
   }
 
+  void onPlayerDeath(Player player){
+    dispatch(GameEventType.Player_Death, player.x, player.y);
+    for (Npc npc in zombies) {
+      if (npc.target != player) continue;
+      npc.clearTarget();
+    }
+  }
+
   void setCharacterState(Character character, CharacterState value) {
     // @on character set state
     if (character.dead) return;
@@ -514,12 +522,7 @@ extension GameFunctions on Game {
         character.stateFrameCount = duration;
         character.state = value;
         if (character is Player) {
-          // @on player killed
-          for (Npc npc in zombies) {
-            if (npc.target != character) continue;
-            // @on npc target player killed
-            npc.clearTarget();
-          }
+          onPlayerDeath(character);
         } else if (character is Npc) {
           character.clearTarget();
           onNpcKilled(character);
