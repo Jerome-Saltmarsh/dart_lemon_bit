@@ -43,6 +43,10 @@ void sendRequestEquip(int index) {
   send('${ClientRequest.Equip.index} $session $index');
 }
 
+void sendRequestDeselectAbility() {
+  send('${ClientRequest.DeselectAbility.index} $session');
+}
+
 void sendRequestSetAbility(Ability ability) {
   send('${ClientRequest.SelectAbility.index} $session ${ability.index}');
 }

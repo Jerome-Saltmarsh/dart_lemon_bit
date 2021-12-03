@@ -270,6 +270,20 @@ void main() {
           player.type = characterType;
           break;
 
+        case ClientRequest.DeselectAbility:
+          if (arguments.length != 2) {
+            errorArgsExpected(2, arguments);
+            return;
+          }
+
+          Player? player = findPlayerByUuid(arguments[1]);
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+          player.ability = Ability.None;
+          break;
+
         case ClientRequest.SelectAbility:
           if (arguments.length != 3) {
             errorArgsExpected(3, arguments);
@@ -299,6 +313,7 @@ void main() {
             player.ability = Ability.None;
           }else{
             player.ability = ability;
+            print("player.ability = $ability");
           }
           break;
 

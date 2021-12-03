@@ -156,7 +156,10 @@ void initializeEventListeners(){
   });
 
   onRightClickChanged.stream.listen((bool down) {
-    // perform ability
+    if (down){
+      print("request deselect");
+      sendRequestDeselectAbility();
+    }
   });
 }
 

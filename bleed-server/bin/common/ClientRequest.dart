@@ -19,4 +19,5 @@ enum ClientRequest {
   PerformPrimaryAttack,
   PerformAbility,
   SelectAbility,
+  DeselectAbility
 }

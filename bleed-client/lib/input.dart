@@ -152,16 +152,10 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
 
 void equip1() {
   sendRequestSetAbility(Ability.SlowingCircle);
-  //
-  // if (game.player.selectedAbility.value == Ability.SlowingCircle) {
-  //   game.player.selectedAbility.value = Ability.None;
-  // } else {
-  //   game.player.selectedAbility.value = Ability.SlowingCircle;
-  // }
 }
 
 void equip2() {
-  sendRequestEquip(1);
+  sendRequestSetAbility(Ability.Blink);
 }
 
 void equip3() {

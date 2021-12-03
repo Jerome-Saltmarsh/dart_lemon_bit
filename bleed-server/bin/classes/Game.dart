@@ -720,17 +720,6 @@ extension GameFunctions on Game {
         player.text = "";
       }
     }
-    //
-    // double dis = distanceBetween(
-    //     player.x, player.y, player.abilityTarget.x, player.abilityTarget.y);
-    // double maxRange = getAbilityRange(player.ability);
-    // if (dis > maxRange) {
-    //   double rotation = pi2 -
-    //       angle2(player.x - player.abilityTarget.x,
-    //           player.y - player.abilityTarget.y);
-    //   player.abilityTarget.x = player.x + adj(rotation, maxRange);
-    //   player.abilityTarget.y = player.y + opp(rotation, maxRange);
-    // }
 
     switch (player.state) {
       case CharacterState.Walking:
@@ -934,7 +923,8 @@ extension GameFunctions on Game {
         switch (character.performing) {
           // @on performing slowing circle
           case Ability.SlowingCircle:
-            if (character.stateDuration == 3) {
+            final int castFrame = 3;
+            if (character.stateDuration == castFrame) {
               for (Character zombie in zombies) {
                 if (withinDistance(zombie, character.abilityTarget.x,
                     character.abilityTarget.y, 40)) {
@@ -945,6 +935,13 @@ extension GameFunctions on Game {
                   character.abilityTarget.y);
             }
             break;
+          case Ability.Blink:
+            if (character.stateDuration == 3) {
+              character.x = character.abilityTarget.x;
+              character.y = character.abilityTarget.y;
+            }
+            break;
+
           default:
             break;
         }
