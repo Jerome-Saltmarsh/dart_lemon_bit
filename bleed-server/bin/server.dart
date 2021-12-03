@@ -128,15 +128,6 @@ void main() {
       error(GameError.InsufficientSkillPoints);
     }
 
-    /// radians
-    double angle2(double adjacent, double opposite) {
-      if (adjacent > 0)
-      {
-        return pi2 - (atan2(adjacent, opposite)  *  -1);
-      }
-      return atan2(adjacent, opposite);
-    }
-
     void onEvent(requestD) {
       String requestString = requestD;
       List<String> arguments = requestString.split(_space);
@@ -184,21 +175,9 @@ void main() {
 
           if (!player.busy && !player.dead) {
             CharacterAction action = characterActions[int.parse(arguments[2])];
-            double mouseX = double.parse(arguments[5]);
-            double mouseY = double.parse(arguments[6]);
+            double mouseX = double.parse(arguments[4]);
+            double mouseY = double.parse(arguments[5]);
 
-            Ability ability = abilities[int.parse(arguments[4])];
-            player.ability = ability;
-            double dis = distanceBetween(player.x, player.y, mouseX, mouseY);
-            double maxRange = getAbilityRange(ability);
-            if (dis <= maxRange){
-              player.abilityTarget.x = mouseX;
-              player.abilityTarget.y = mouseY;
-            }else{
-              double rotation = pi2 - angle2(player.x - mouseX, player.y - mouseY);
-              player.abilityTarget.x = player.x + adj(rotation, maxRange);
-              player.abilityTarget.y = player.y + opp(rotation, maxRange);
-            }
 
             switch (action) {
               case CharacterAction.Idle:
@@ -209,17 +188,11 @@ void main() {
                 game.setCharacterState(player, CharacterState.Striking);
                 break;
               case CharacterAction.Perform:
-                Ability ability = abilities[int.parse(arguments[4])];
-                player.ability = ability;
-                double dis = distanceBetween(player.x, player.y, mouseX, mouseY);
-                double maxRange = getAbilityRange(ability);
-                if (dis <= maxRange){
-                  player.abilityTarget.x = mouseX;
-                  player.abilityTarget.y = mouseY;
-                }else{
-                  double rotation = angleBetween(player.x, player.y, mouseX, mouseY);
-                  player.abilityTarget.x = player.x + adj(rotation, maxRange);
-                  player.abilityTarget.y = player.y + opp(rotation, maxRange);
+                Ability ability = player.ability;
+                if (ability == Ability.None){
+                  characterAimAt(player, mouseX, mouseY);
+                  game.setCharacterState(player, CharacterState.Striking);
+                  break;
                 }
                 game.setCharacterState(player, CharacterState.Performing);
                 break;

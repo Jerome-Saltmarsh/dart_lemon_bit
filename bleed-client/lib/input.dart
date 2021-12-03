@@ -339,24 +339,7 @@ void readPlayerInput() {
   characterController.action = CharacterAction.Idle;
 
   if (primaryAttackRequested()) {
-    // double mX = mouseWorldX;
-    // double mY = mouseWorldY;
-    // for (int i = 0; i < game.totalNpcs; i++) {
-    //   Character interactableNpc = game.interactableNpcs[i];
-    //   if (diffOver(interactableNpc.x, mX, game.settings.interactRadius))
-    //     continue;
-    //   if (diffOver(interactableNpc.y, mY, game.settings.interactRadius))
-    //     continue;
-    //   sendRequestInteract();
-    //   return;
-    // }
-    if (game.player.selectedAbility.value == Ability.None) {
-      characterController.action = CharacterAction.Attack;
-    } else {
-      characterController.action = CharacterAction.Perform;
-      characterController.ability = game.player.selectedAbility.value;
-      game.player.selectedAbility.value = Ability.None;
-    }
+    characterController.action = CharacterAction.Perform;
     return;
   }
 

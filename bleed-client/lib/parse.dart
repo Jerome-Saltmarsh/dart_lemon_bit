@@ -10,6 +10,7 @@ import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Weapon.dart';
 import 'package:bleed_client/classes/Zombie.dart';
+import 'package:bleed_client/common/Ability.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameError.dart';
@@ -381,6 +382,11 @@ void _parsePlayer() {
   game.player.abilityTarget.x = _consumeDouble();
   game.player.abilityTarget.y = _consumeDouble();
   game.player.abilityRange = _consumeDouble();
+  game.player.ability.value = _consumeAbility();
+}
+
+Ability _consumeAbility(){
+  return abilities[_consumeInt()];
 }
 
 CharacterType _consumeCharacterType(){

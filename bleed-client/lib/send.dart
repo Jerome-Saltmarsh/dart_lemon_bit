@@ -86,7 +86,6 @@ void sendRequestUpdatePlayer() {
   _write(game.player.uuid);
   _write(characterController.action.index);
   _write(characterController.direction.index);
-  _write(characterController.ability.index);
   _write(mouseWorldX.toInt());
   _write(mouseWorldY.toInt());
   send(_buffer.toString());

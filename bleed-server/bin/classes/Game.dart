@@ -8,6 +8,7 @@ import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/randomInt.dart';
 import 'package:lemon_math/randomItem.dart';
 
+import '../bleed/maps/ability_range.dart';
 import '../bleed/zombie_health.dart';
 import '../common/Ability.dart';
 import '../common/CharacterState.dart';
@@ -543,7 +544,8 @@ extension GameFunctions on Game {
         character.stateDuration = settings.duration.knifeStrike;
         break;
       case CharacterState.Performing:
-        characterAimAt(character, character.abilityTarget.x, character.abilityTarget.y);
+        characterAimAt(
+            character, character.abilityTarget.x, character.abilityTarget.y);
         character.stateDuration = settings.duration.knifeStrike;
         break;
       default:
@@ -709,6 +711,13 @@ extension GameFunctions on Game {
     }
   }
 
+  double angle2(double adjacent, double opposite) {
+    if (adjacent > 0) {
+      return pi2 - (atan2(adjacent, opposite) * -1);
+    }
+    return atan2(adjacent, opposite);
+  }
+
   void updatePlayer(Player player) {
     player.lastUpdateFrame++;
 
@@ -717,6 +726,17 @@ extension GameFunctions on Game {
       if (player.textDuration == 0) {
         player.text = "";
       }
+    }
+
+    double dis = distanceBetween(
+        player.x, player.y, player.abilityTarget.x, player.abilityTarget.y);
+    double maxRange = getAbilityRange(player.ability);
+    if (dis > maxRange) {
+      double rotation = pi2 -
+          angle2(player.x - player.abilityTarget.x,
+              player.y - player.abilityTarget.y);
+      player.abilityTarget.x = player.x + adj(rotation, maxRange);
+      player.abilityTarget.y = player.y + opp(rotation, maxRange);
     }
 
     switch (player.state) {
@@ -922,11 +942,13 @@ extension GameFunctions on Game {
           case Ability.SlowingCircle:
             if (character.stateDuration == 3) {
               for (Character zombie in zombies) {
-                if (withinDistance(zombie, character.abilityTarget.x, character.abilityTarget.y, 40)) {
+                if (withinDistance(zombie, character.abilityTarget.x,
+                    character.abilityTarget.y, 40)) {
                   applyDamage(character, zombie, 100);
                 }
               }
-              dispatch(GameEventType.Slowing_Circle, character.abilityTarget.x, character.abilityTarget.y);
+              dispatch(GameEventType.Slowing_Circle, character.abilityTarget.x,
+                  character.abilityTarget.y);
             }
             break;
           default:

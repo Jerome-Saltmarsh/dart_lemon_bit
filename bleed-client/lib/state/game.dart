@@ -55,7 +55,6 @@ class _Game {
 }
 
 class _Player {
-  Watch<Ability> selectedAbility = Watch(Ability.None);
   int id = -1;
   String uuid = "";
   double x = -1;
@@ -81,6 +80,7 @@ class _Player {
   Watch<CharacterState> state = Watch(CharacterState.Idle);
   Watch<bool> alive = Watch(true);
   final _Unlocked unlocked = _Unlocked();
+  final Watch<Ability> ability = Watch(Ability.None);
 
   bool get dead => !alive.value;
   // bool get canPurchase => tile == Tile.PlayerSpawn;

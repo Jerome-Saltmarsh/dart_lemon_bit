@@ -154,6 +154,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.abilityTarget.x.toInt());
   _write(buffer, player.abilityTarget.y.toInt());
   _writeInt(buffer, getAbilityRange(player.ability));
+  _write(buffer, player.ability.index);
 
   _compilePlayerEvents(buffer, player);
 
