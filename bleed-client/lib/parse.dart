@@ -378,6 +378,7 @@ void _parsePlayer() {
   game.player.nextLevelExperience.value = _consumeInt();
   game.player.experiencePercentage.value = _consumeInt();
   game.player.characterType.value = _consumeCharacterType();
+  game.player.abilityRange.value = _consumeDouble();
 }
 
 CharacterType _consumeCharacterType(){

@@ -11,11 +11,13 @@ import 'classes/Npc.dart';
 import 'classes/Player.dart';
 import 'classes/InteractableNpc.dart';
 import 'classes/Weapon.dart';
+import 'common/Ability.dart';
 import 'common/PlayerEvents.dart';
 import 'common/Tile.dart';
 import 'common/ServerResponse.dart';
 import 'common/classes/Vector2.dart';
 import 'games/world.dart';
+import 'settings.dart';
 
 // constants
 final int _collectablesIndex = ServerResponse.Collectables.index;
@@ -126,6 +128,15 @@ void compileWeapon(StringBuffer buffer, Weapon weapon){
   _write(buffer, weapon.damage);
 }
 
+final _Maps maps = _Maps();
+
+class _Maps {
+  Map<Ability, double> abilityRange = {
+    Ability.None: 0,
+    Ability.SlowingCircle: 200,
+  };
+}
+
 void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, _playerIndex);
   _writeInt(buffer, player.x);
@@ -147,6 +158,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _writeInt(buffer, perc); // todo make sure player is not max level
 
   _write(buffer, player.type.index);
+  _write(buffer, maps.abilityRange[player.ability]);
 
   _compilePlayerEvents(buffer, player);
 

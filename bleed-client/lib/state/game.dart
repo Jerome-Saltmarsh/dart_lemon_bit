@@ -64,6 +64,7 @@ class _Player {
   final List<Weapon> weapons = [];
   final Watch<int> equippedRounds = Watch(0);
   final Watch<int> equippedCapacity = Watch(0);
+  final Watch<double> abilityRange = Watch(0);
   final Watch<CharacterType> characterType = Watch(CharacterType.Human);
   int squad = -1;
   Watch<double> health = Watch(0.0);

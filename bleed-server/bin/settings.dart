@@ -201,6 +201,7 @@ class _Range {
   final double zombieStrike = 20;
   final double firebolt = 200;
   final double arrow = 300;
+  final double slowingCircle = 150;
 }
 
 class _ProjectileSpeed {
