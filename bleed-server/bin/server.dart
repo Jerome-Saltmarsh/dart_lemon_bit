@@ -178,14 +178,9 @@ void main() {
             double mouseX = double.parse(arguments[4]);
             double mouseY = double.parse(arguments[5]);
 
-
             switch (action) {
               case CharacterAction.Idle:
                 game.setCharacterState(player, CharacterState.Idle);
-                break;
-              case CharacterAction.Attack:
-                characterAimAt(player, mouseX, mouseY);
-                game.setCharacterState(player, CharacterState.Striking);
                 break;
               case CharacterAction.Perform:
                 Ability ability = player.ability;
@@ -194,7 +189,9 @@ void main() {
                   game.setCharacterState(player, CharacterState.Striking);
                   break;
                 }
+                player.performing = player.ability;
                 game.setCharacterState(player, CharacterState.Performing);
+                player.ability = Ability.None;
                 break;
               case CharacterAction.Run:
                 Direction direction = directions[int.parse(arguments[3])];
@@ -298,6 +295,8 @@ void main() {
           Ability ability = abilities[abilityIndex];
           if (player.ability == ability){
             player.ability = Ability.None;
+          }else{
+            player.ability = ability;
           }
           break;
 

@@ -938,7 +938,7 @@ extension GameFunctions on Game {
         }
         break;
       case CharacterState.Performing:
-        switch (character.ability) {
+        switch (character.performing) {
           case Ability.SlowingCircle:
             if (character.stateDuration == 3) {
               for (Character zombie in zombies) {
