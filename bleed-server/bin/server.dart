@@ -182,16 +182,10 @@ void main() {
                 break;
               case CharacterAction.Perform:
                 Ability ability = abilities[int.parse(arguments[4])];
-                characterAimAt(player, mouseX, mouseY);
-                game.setCharacterState(player, CharacterState.Striking);
-                if (ability == Ability.SlowingCircle) {
-                  for (Character zombie in game.zombies) {
-                    if (withinDistance(zombie, mouseX, mouseY, 40)) {
-                      game.applyDamage(player, zombie, 100);
-                    }
-                  }
-                  game.dispatch(GameEventType.Slowing_Circle, mouseX, mouseY);
-                }
+                player.ability = ability;
+                player.abilityTarget.x = mouseX;
+                player.abilityTarget.y = mouseY;
+                game.setCharacterState(player, CharacterState.Performing);
                 break;
               case CharacterAction.Run:
                 Direction direction = directions[int.parse(arguments[3])];

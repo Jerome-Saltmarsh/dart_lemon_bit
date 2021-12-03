@@ -9,6 +9,7 @@ import 'package:lemon_math/randomInt.dart';
 import 'package:lemon_math/randomItem.dart';
 
 import '../bleed/zombie_health.dart';
+import '../common/Ability.dart';
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
 import '../common/ItemType.dart';
@@ -20,6 +21,7 @@ import '../common/enums/Shade.dart';
 import '../constants/no_squad.dart';
 import '../enums/npc_mode.dart';
 import '../functions/insertionSort.dart';
+import '../functions/withinRadius.dart';
 import '../interfaces/HasSquad.dart';
 import 'Projectile.dart';
 import 'Character.dart';
@@ -540,6 +542,10 @@ extension GameFunctions on Game {
         faceAimDirection(character);
         character.stateDuration = settings.duration.knifeStrike;
         break;
+      case CharacterState.Performing:
+        characterAimAt(character, character.abilityTarget.x, character.abilityTarget.y);
+        character.stateDuration = settings.duration.knifeStrike;
+        break;
       default:
         break;
     }
@@ -908,6 +914,22 @@ extension GameFunctions on Game {
           case Direction.UpLeft:
             character.x -= velX(piQuarter, character.speed);
             character.y += velY(piQuarter, character.speed);
+            break;
+        }
+        break;
+      case CharacterState.Performing:
+        switch (character.ability) {
+          case Ability.SlowingCircle:
+            if (character.stateDuration == 3) {
+              for (Character zombie in zombies) {
+                if (withinDistance(zombie, character.abilityTarget.x, character.abilityTarget.y, 40)) {
+                  applyDamage(character, zombie, 100);
+                }
+              }
+              dispatch(GameEventType.Slowing_Circle, character.abilityTarget.x, character.abilityTarget.y);
+            }
+            break;
+          default:
             break;
         }
         break;

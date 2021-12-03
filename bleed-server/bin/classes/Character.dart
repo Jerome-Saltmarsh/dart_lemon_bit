@@ -1,6 +1,8 @@
 
+import '../common/Ability.dart';
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
+import '../common/classes/Vector2.dart';
 import '../common/enums/Direction.dart';
 import '../constants/no_squad.dart';
 import '../interfaces/HasSquad.dart';
@@ -10,6 +12,7 @@ import 'Weapon.dart';
 
 class Character extends GameObject implements HasSquad {
   late CharacterType type;
+  Ability ability = Ability.None;
   CharacterState state = CharacterState.Idle;
   CharacterState previousState = CharacterState.Idle;
   Direction direction = Direction.Down;
@@ -23,6 +26,8 @@ class Character extends GameObject implements HasSquad {
   int squad;
   List<Weapon> weapons = [];
   bool weaponsDirty = false;
+
+  Vector2 abilityTarget = Vector2(0, 0);
 
   late int _health;
 
