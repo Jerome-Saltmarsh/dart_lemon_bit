@@ -1,5 +1,6 @@
 import 'bleed/maps/ability_range.dart';
 import 'bleed/zombie_health.dart';
+import 'classes/Ability.dart';
 import 'classes/Projectile.dart';
 import 'classes/Collectable.dart';
 import 'classes/Crate.dart';
@@ -129,6 +130,18 @@ void compileWeapon(StringBuffer buffer, Weapon weapon){
   _write(buffer, weapon.damage);
 }
 
+void _compilePlayerAbilities(StringBuffer buffer, Player player){
+  _write(buffer, ServerResponse.Player_Abilities.index);
+  _compileAbility(buffer, player.ability1);
+  _compileAbility(buffer, player.ability2);
+  _compileAbility(buffer, player.ability3);
+  _compileAbility(buffer, player.ability4);
+}
+
+void _compileAbility(StringBuffer buffer, Ability ability){
+  _write(buffer, ability.type.index);
+  _write(buffer, ability.level);
+}
 
 void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, _playerIndex);
@@ -157,6 +170,11 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.ability.index);
 
   _compilePlayerEvents(buffer, player);
+
+  if (player.abilitiesDirty) {
+    _compilePlayerAbilities(buffer, player);
+    player.abilitiesDirty = false;
+  }
 
   if (player.weaponsDirty){
     player.weaponsDirty = false;

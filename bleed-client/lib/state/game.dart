@@ -1,4 +1,4 @@
-
+import 'package:bleed_client/classes/Ability.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/Explosion.dart';
@@ -82,14 +82,22 @@ class _Player {
   final _Unlocked unlocked = _Unlocked();
   final Watch<AbilityType> ability = Watch(AbilityType.None);
 
+  Ability ability1 = Ability();
+  Ability ability2 = Ability();
+  Ability ability3 = Ability();
+  Ability ability4 = Ability();
+
   bool get dead => !alive.value;
+
   // bool get canPurchase => tile == Tile.PlayerSpawn;
   bool get canPurchase => false;
 }
 
 class _Unlocked {
   bool get handgun => game.player.weaponUnlocked(WeaponType.HandGun);
+
   bool get shotgun => game.player.weaponUnlocked(WeaponType.Shotgun);
+
   bool get firebolt => game.player.weaponUnlocked(WeaponType.Firebolt);
 }
 
@@ -99,15 +107,14 @@ class _Unlocked {
 // Handguns are 10% more accurate
 
 // Wizard
-  // Firebolt
+// Firebolt
 
 // Bowman
-  // Magic Arrow
+// Magic Arrow
 
 //
 
 extension PlayerExtentions on _Player {
-
   bool weaponUnlocked(WeaponType weaponType) {
     for (Weapon weapon in weapons) {
       if (weapon.type == weaponType) return true;
@@ -123,7 +130,7 @@ extension PlayerExtentions on _Player {
   }
 }
 
-void toggleAudioMuted(){
+void toggleAudioMuted() {
   game.settings.audioMuted.value = !game.settings.audioMuted.value;
 }
 

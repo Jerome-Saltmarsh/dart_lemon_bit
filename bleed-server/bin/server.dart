@@ -191,7 +191,6 @@ void main() {
                   game.setCharacterState(player, CharacterState.Striking);
                   break;
                 }
-                player.performing = player.ability;
                 game.setCharacterState(player, CharacterState.Performing);
                 player.ability = AbilityType.None;
                 break;
@@ -255,6 +254,10 @@ void main() {
             errorPlayerNotFound();
             return;
           }
+          if (player.type != CharacterType.Human) {
+            error(GameError.CharacterTypeAlreadySelected);
+            break;
+          }
 
           int? characterTypeIndex = int.tryParse(arguments[2]);
           if (characterTypeIndex == null) {
@@ -262,12 +265,8 @@ void main() {
             return;
           }
 
-          CharacterType characterType = characterTypes[characterTypeIndex];
-          if (player.type != CharacterType.Human) {
-            error(GameError.CharacterTypeAlreadySelected);
-            break;
-          }
-          player.type = characterType;
+          player.type = characterTypes[characterTypeIndex];
+
           break;
 
         case ClientRequest.DeselectAbility:

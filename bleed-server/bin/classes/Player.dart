@@ -1,3 +1,4 @@
+import '../common/AbilityType.dart';
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
 import '../common/PlayerEvents.dart';
@@ -7,6 +8,7 @@ import '../common/Tile.dart';
 import '../functions/generateName.dart';
 import '../functions/generateUUID.dart';
 import '../settings.dart';
+import 'Ability.dart';
 import 'Character.dart';
 import 'Game.dart';
 import 'Inventory.dart';
@@ -37,6 +39,12 @@ class Player extends Character {
 
   Tile currentTile = Tile.PlayerSpawn;
   CharacterState characterState = CharacterState.Idle;
+
+  Ability ability1 = Ability(type: AbilityType.None, level: 0);
+  Ability ability2 = Ability(type: AbilityType.None, level: 0);
+  Ability ability3 = Ability(type: AbilityType.None, level: 0);
+  Ability ability4 = Ability(type: AbilityType.None, level: 0);
+  bool abilitiesDirty = true;
 
   final List<PlayerEvent> events = [];
 

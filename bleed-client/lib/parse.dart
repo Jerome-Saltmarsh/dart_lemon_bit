@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:bleed_client/audio.dart';
+import 'package:bleed_client/classes/Ability.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/Item.dart';
@@ -104,6 +105,13 @@ void parseState() {
 
       case ServerResponse.Player:
         _parsePlayer();
+        break;
+
+      case ServerResponse.Player_Abilities:
+        game.player.ability1 = _consumeAbility();
+        game.player.ability2 = _consumeAbility();
+        game.player.ability3 = _consumeAbility();
+        game.player.ability4 = _consumeAbility();
         break;
 
       case ServerResponse.Weapons_Dirty:
@@ -382,10 +390,10 @@ void _parsePlayer() {
   game.player.abilityTarget.x = _consumeDouble();
   game.player.abilityTarget.y = _consumeDouble();
   game.player.abilityRange = _consumeDouble();
-  game.player.ability.value = _consumeAbility();
+  game.player.ability.value = _consumeAbilityType();
 }
 
-AbilityType _consumeAbility(){
+AbilityType _consumeAbilityType(){
   return abilities[_consumeInt()];
 }
 
@@ -446,9 +454,15 @@ void _consumeSpace() {
   }
 }
 
+Ability _consumeAbility(){
+  final AbilityType type = _consumeAbilityType();
+  final int level = _consumeInt();
+  return Ability(type: type, level: level);
+}
+
 int _consumeInt() {
-  String string = _consumeString();
-  int value = int.tryParse(string);
+  final String string = _consumeString();
+  final int value = int.tryParse(string);
   if (value == null) {
     throw Exception("could not parse $string to int");
   }

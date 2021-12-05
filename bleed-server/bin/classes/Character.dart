@@ -7,14 +7,13 @@ import '../common/enums/Direction.dart';
 import '../constants/no_squad.dart';
 import '../interfaces/HasSquad.dart';
 import '../utils.dart';
-import 'Debuff.dart';
+import 'Ability.dart';
 import 'GameObject.dart';
 import 'Weapon.dart';
 
 class Character extends GameObject implements HasSquad {
   late CharacterType type;
   AbilityType ability = AbilityType.None;
-  AbilityType performing = AbilityType.None;
   CharacterState state = CharacterState.Idle;
   CharacterState previousState = CharacterState.Idle;
   Direction direction = Direction.Down;

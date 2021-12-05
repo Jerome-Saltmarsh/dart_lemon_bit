@@ -24,6 +24,7 @@ import '../enums/npc_mode.dart';
 import '../functions/insertionSort.dart';
 import '../functions/withinRadius.dart';
 import '../interfaces/HasSquad.dart';
+import 'Ability.dart';
 import 'Debuff.dart';
 import 'Projectile.dart';
 import 'Character.dart';
@@ -954,7 +955,7 @@ extension GameFunctions on Game {
         }
         break;
       case CharacterState.Performing:
-        switch (character.performing) {
+        switch (character.ability) {
           // @on performing
           case AbilityType.Explosion:
             final int castFrame = 3;
@@ -1536,4 +1537,34 @@ double angle2(double adjacent, double opposite) {
     return pi2 - (atan2(adjacent, opposite) * -1);
   }
   return atan2(adjacent, opposite);
+}
+
+
+void selectCharacterType(Player player, CharacterType value){
+  player.type = value;
+  player.abilitiesDirty = true;
+
+  switch(value){
+    case CharacterType.Human:
+      // TODO: Handle this case.
+      break;
+    case CharacterType.Zombie:
+      // TODO: Handle this case.
+      break;
+    case CharacterType.Witch:
+      player.ability1 = Ability(type: AbilityType.Explosion, level: 0);
+      player.ability2 = Ability(type: AbilityType.Blink, level: 0);
+      player.ability3 = Ability(type: AbilityType.FreezeCircle, level: 0);
+      player.ability4 = Ability(type: AbilityType.Fireball, level: 0);
+      break;
+    case CharacterType.Knight:
+      // TODO: Handle this case.
+      break;
+    case CharacterType.Archer:
+      // TODO: Handle this case.
+      break;
+    case CharacterType.Musketeer:
+      // TODO: Handle this case.
+      break;
+  }
 }
