@@ -18,20 +18,30 @@ String get currentTip => tips[hud.state.tipIndex];
 
 final _Hud hud = _Hud();
 
+class Bool extends Watch<bool> {
+  Bool(bool value) : super(value);
+
+  void toggle(){
+    this.value = !value;
+  }
+
+  void setTrue(){
+    value = true;
+  }
+
+  void setFalse(){
+    value = false;
+  }
+}
+
 class _Hud {
-  final _Toggle toggle = _Toggle();
-  final Watch<bool> skillTreeVisible = Watch(false);
+  final Bool skillTreeVisible = Bool(false);
   final _State state = _State();
   final _FocusNodes focusNodes = _FocusNodes();
   final _TextEditingControllers textEditingControllers = _TextEditingControllers();
   final _Properties properties = _Properties();
 }
 
-class _Toggle {
-  void skillTree(){
-    toggle(hud.skillTreeVisible);
-  }
-}
 
 class _State {
   int tipIndex = 0;

@@ -44,12 +44,12 @@ Widget buildSkillTree() {
                             Tooltip(
                                 message: "Close",
                                 child:
-                                    text("x", onPressed: hud.toggle.skillTree))
+                                    text("x", onPressed: hud.skillTreeVisible.setFalse))
                           ],
                         ),
                         height8,
                         if (!game.player.unlocked.shotgun)
-                          text("Shotgun",
+                          text("Explosion",
                               onPressed: pointsLeft
                                   ? sendRequestAcquireShotgun
                                   : null,
@@ -58,7 +58,7 @@ Widget buildSkillTree() {
                                   : Colors.white38),
 
                         if (!game.player.unlocked.handgun)
-                          text("Handgun",
+                          text("Blink",
                               onPressed: pointsLeft
                                   ? sendRequestAcquireHandgun
                                   : null,
@@ -67,7 +67,7 @@ Widget buildSkillTree() {
                                   : Colors.white38),
 
                         if (!game.player.unlocked.firebolt)
-                          text("Firebolt",
+                          text("Freeze",
                               onPressed: pointsLeft
                                   ? sendRequestAcquireFirebolt
                                   : null,
