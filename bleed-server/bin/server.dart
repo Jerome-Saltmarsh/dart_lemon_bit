@@ -192,7 +192,6 @@ void main() {
                   break;
                 }
                 game.setCharacterState(player, CharacterState.Performing);
-                player.ability = AbilityType.None;
                 break;
               case CharacterAction.Run:
                 Direction direction = directions[int.parse(arguments[3])];

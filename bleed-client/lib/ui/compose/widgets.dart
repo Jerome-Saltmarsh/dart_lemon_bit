@@ -31,22 +31,24 @@ Widget text(dynamic value, {
   );
 }
 
-Widget border(
-    {Widget child,
+Widget border({
+    Widget child,
     Color color,
     double width = 1,
     BorderRadius radius,
     EdgeInsets padding,
+    EdgeInsets margin,
     Alignment alignment,
     Color fillColor}) {
   return Container(
     alignment: alignment,
+    margin: margin,
+    padding: padding,
     decoration: BoxDecoration(
         border: color != null ? Border.all(color: color, width: width) : null,
         borderRadius: radius,
         color: fillColor),
     child: child,
-    padding: padding,
   );
 }
 

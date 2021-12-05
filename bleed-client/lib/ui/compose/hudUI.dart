@@ -517,12 +517,21 @@ Widget buildAbilities() {
 }
 
 Widget buildAbility(Ability ability) {
-  return WatchBuilder(ability.type, (AbilityType type){
-    return WatchBuilder(ability.level, (int level){
-      return text(type.toString().replaceAll("AbilityType.", "") + " $level");
+  return WatchBuilder(ability.type, (AbilityType type) {
+    return WatchBuilder(ability.level, (int level) {
+      return onPressed(
+        callback: (){
+          sendRequestSetAbility(ability.type.value);
+        },
+        child: border(
+            child: text("${abilityTypeToString(type)} $level"),
+            color: Colors.white,
+            margin: EdgeInsets.only(right: 4),
+            padding: EdgeInsets.all(4),
+        ),
+      );
     });
   });
-
 }
 
 Widget buildExpandedWeapons() {
