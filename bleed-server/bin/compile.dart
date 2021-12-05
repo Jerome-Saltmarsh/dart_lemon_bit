@@ -12,7 +12,7 @@ import 'classes/Npc.dart';
 import 'classes/Player.dart';
 import 'classes/InteractableNpc.dart';
 import 'classes/Weapon.dart';
-import 'common/Ability.dart';
+import 'common/AbilityType.dart';
 import 'common/PlayerEvents.dart';
 import 'common/Tile.dart';
 import 'common/ServerResponse.dart';

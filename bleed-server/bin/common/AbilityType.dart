@@ -1,4 +1,4 @@
-enum Ability {
+enum AbilityType {
   None,
   FreezeCircle,
   Blink,
@@ -6,6 +6,6 @@ enum Ability {
   Fireball,
 }
 
-final List<Ability> abilities = Ability.values;
+final List<AbilityType> abilities = AbilityType.values;
 
 final int maxAbilityIndex = abilities.length - 1;

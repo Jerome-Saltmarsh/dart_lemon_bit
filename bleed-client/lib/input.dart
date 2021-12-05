@@ -1,10 +1,8 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:bleed_client/classes/Character.dart';
-import 'package:bleed_client/common/Ability.dart';
+import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterAction.dart';
-import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/functions/onGameEvent.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
@@ -18,9 +16,7 @@ import 'package:lemon_engine/functions/key_pressed.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/state/camera.dart';
-import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_engine/state/zoom.dart';
-import 'package:lemon_math/diff_over.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/randomItem.dart';
 
@@ -156,15 +152,15 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
 };
 
 void equip1() {
-  sendRequestSetAbility(Ability.Explosion);
+  sendRequestSetAbility(AbilityType.Explosion);
 }
 
 void equip2() {
-  sendRequestSetAbility(Ability.Blink);
+  sendRequestSetAbility(AbilityType.Blink);
 }
 
 void equip3() {
-  sendRequestSetAbility(Ability.FreezeCircle);
+  sendRequestSetAbility(AbilityType.FreezeCircle);
 }
 
 void equip4() {
@@ -313,7 +309,7 @@ void _handleKeyUpEvent(RawKeyUpEvent event) {
 class _CharacterController {
   Direction direction = Direction.None;
   CharacterAction action = CharacterAction.Idle;
-  Ability ability = Ability.None;
+  AbilityType ability = AbilityType.None;
 }
 
 void readPlayerInput() {

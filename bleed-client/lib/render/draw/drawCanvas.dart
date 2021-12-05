@@ -8,7 +8,7 @@ import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
-import 'package:bleed_client/common/Ability.dart';
+import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
@@ -21,7 +21,6 @@ import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/draw/drawBullets.dart';
 import 'package:bleed_client/render/draw/drawCharacter.dart';
 import 'package:bleed_client/render/draw/drawPlayerText.dart';
-import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/render/functions/applyDynamicShadeToTileSrc.dart';
 import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
 import 'package:bleed_client/render/functions/emitLight.dart';
@@ -129,7 +128,7 @@ void renderCanvasPlay() {
 }
 
 void drawAbility() {
-  if (game.player.ability.value == Ability.None) return;
+  if (game.player.ability.value == AbilityType.None) return;
   drawCircleOutline(
       sides: 24,
       radius: game.player.abilityRange,

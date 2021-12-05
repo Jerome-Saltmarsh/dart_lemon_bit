@@ -13,7 +13,7 @@ import 'classes/Game.dart';
 import 'classes/Inventory.dart';
 import 'classes/Player.dart';
 import 'classes/Weapon.dart';
-import 'common/Ability.dart';
+import 'common/AbilityType.dart';
 import 'common/CharacterAction.dart';
 import 'common/CharacterState.dart';
 import 'common/CharacterType.dart';
@@ -185,15 +185,15 @@ void main() {
                 game.setCharacterState(player, CharacterState.Idle);
                 break;
               case CharacterAction.Perform:
-                Ability ability = player.ability;
-                if (ability == Ability.None){
+                AbilityType ability = player.ability;
+                if (ability == AbilityType.None){
                   characterAimAt(player, mouseX, mouseY);
                   game.setCharacterState(player, CharacterState.Striking);
                   break;
                 }
                 player.performing = player.ability;
                 game.setCharacterState(player, CharacterState.Performing);
-                player.ability = Ability.None;
+                player.ability = AbilityType.None;
                 break;
               case CharacterAction.Run:
                 Direction direction = directions[int.parse(arguments[3])];
@@ -281,7 +281,7 @@ void main() {
             errorPlayerNotFound();
             return;
           }
-          player.ability = Ability.None;
+          player.ability = AbilityType.None;
           break;
 
         case ClientRequest.SelectAbility:
@@ -308,9 +308,9 @@ void main() {
             return;
           }
 
-          Ability ability = abilities[abilityIndex];
+          AbilityType ability = abilities[abilityIndex];
           if (player.ability == ability){
-            player.ability = Ability.None;
+            player.ability = AbilityType.None;
           }else{
             player.ability = ability;
             print("player.ability = $ability");

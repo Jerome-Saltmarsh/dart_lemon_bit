@@ -10,7 +10,7 @@ import 'package:lemon_math/randomItem.dart';
 
 import '../bleed/maps/ability_range.dart';
 import '../bleed/zombie_health.dart';
-import '../common/Ability.dart';
+import '../common/AbilityType.dart';
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
 import '../common/ItemType.dart';
@@ -956,20 +956,20 @@ extension GameFunctions on Game {
       case CharacterState.Performing:
         switch (character.performing) {
           // @on performing
-          case Ability.Explosion:
+          case AbilityType.Explosion:
             final int castFrame = 3;
             if (character.stateDuration == castFrame) {
               spawnExplosion(
                   x: character.abilityTarget.x, y: character.abilityTarget.y);
             }
             break;
-          case Ability.Blink:
+          case AbilityType.Blink:
             if (character.stateDuration == 3) {
               character.x = character.abilityTarget.x;
               character.y = character.abilityTarget.y;
             }
             break;
-          case Ability.FreezeCircle:
+          case AbilityType.FreezeCircle:
             final int castFrame = 3;
             if (character.stateDuration == castFrame) {
               spawnFreezeCircle(

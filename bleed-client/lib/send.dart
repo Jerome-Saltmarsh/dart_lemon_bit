@@ -1,4 +1,3 @@
-import 'package:bleed_client/common/Ability.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/input.dart';
@@ -7,6 +6,8 @@ import 'package:bleed_client/network/functions/sinkMessage.dart';
 import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
+
+import 'common/AbilityType.dart';
 
 final StringBuffer _buffer = StringBuffer();
 final gameUpdateIndex = ClientRequest.Update.index;
@@ -47,7 +48,7 @@ void sendRequestDeselectAbility() {
   send('${ClientRequest.DeselectAbility.index} $session');
 }
 
-void sendRequestSetAbility(Ability ability) {
+void sendRequestSetAbility(AbilityType ability) {
   send('${ClientRequest.SelectAbility.index} $session ${ability.index}');
 }
 

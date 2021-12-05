@@ -9,7 +9,7 @@ import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Weapon.dart';
 import 'package:bleed_client/classes/Zombie.dart';
-import 'package:bleed_client/common/Ability.dart';
+import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/Tile.dart';
@@ -80,7 +80,7 @@ class _Player {
   Watch<CharacterState> state = Watch(CharacterState.Idle);
   Watch<bool> alive = Watch(true);
   final _Unlocked unlocked = _Unlocked();
-  final Watch<Ability> ability = Watch(Ability.None);
+  final Watch<AbilityType> ability = Watch(AbilityType.None);
 
   bool get dead => !alive.value;
   // bool get canPurchase => tile == Tile.PlayerSpawn;
