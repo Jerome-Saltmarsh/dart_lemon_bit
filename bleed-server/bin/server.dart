@@ -265,8 +265,7 @@ void main() {
             return;
           }
 
-          player.type = characterTypes[characterTypeIndex];
-
+          selectCharacterType(player, characterTypes[characterTypeIndex]);
           break;
 
         case ClientRequest.DeselectAbility:

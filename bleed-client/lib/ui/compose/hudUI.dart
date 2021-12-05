@@ -1,7 +1,9 @@
 import 'dart:math';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:bleed_client/classes/Ability.dart';
 import 'package:bleed_client/classes/Weapon.dart';
+import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
@@ -222,7 +224,7 @@ Widget buildHud() {
     return Stack(
       children: [
         buildTextBox(),
-        // if (alive) buildBottomLeft(),
+        if (alive) buildBottomLeft(),
         if (alive) buildBottomRight(),
         buildTopLeft(),
         if (!hud.state.observeMode && !alive) _buildViewRespawn(),
@@ -498,7 +500,29 @@ Widget buildWeaponSlot(WeaponType weaponType) {
 }
 
 Widget buildBottomLeft() {
-  return Positioned(bottom: _padding, left: _padding, child: buildWeaponMenu());
+  return Positioned(bottom: _padding, left: _padding, child: buildAbilities());
+}
+
+Widget buildAbilities() {
+  return Container(
+    child: Row(
+      children: [
+        buildAbility(game.player.ability1),
+        buildAbility(game.player.ability2),
+        buildAbility(game.player.ability3),
+        buildAbility(game.player.ability4),
+      ],
+    ),
+  );
+}
+
+Widget buildAbility(Ability ability) {
+  return WatchBuilder(ability.type, (AbilityType type){
+    return WatchBuilder(ability.level, (int level){
+      return text(type.toString().replaceAll("AbilityType.", "") + " $level");
+    });
+  });
+
 }
 
 Widget buildExpandedWeapons() {

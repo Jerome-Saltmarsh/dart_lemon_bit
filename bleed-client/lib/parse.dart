@@ -42,6 +42,7 @@ import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/utils/list_util.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/time.dart';
+import 'package:lemon_watch/watch.dart';
 import 'package:neuro/instance.dart';
 
 import 'common/GameEventType.dart';
@@ -108,10 +109,10 @@ void parseState() {
         break;
 
       case ServerResponse.Player_Abilities:
-        game.player.ability1 = _consumeAbility();
-        game.player.ability2 = _consumeAbility();
-        game.player.ability3 = _consumeAbility();
-        game.player.ability4 = _consumeAbility();
+        _consumeAbility(game.player.ability1);
+        _consumeAbility(game.player.ability2);
+        _consumeAbility(game.player.ability3);
+        _consumeAbility(game.player.ability4);
         break;
 
       case ServerResponse.Weapons_Dirty:
@@ -454,10 +455,9 @@ void _consumeSpace() {
   }
 }
 
-Ability _consumeAbility(){
-  final AbilityType type = _consumeAbilityType();
-  final int level = _consumeInt();
-  return Ability(type: type, level: level);
+void _consumeAbility(Ability ability){
+  ability.type.value = _consumeAbilityType();
+  ability.level.value = _consumeInt();
 }
 
 int _consumeInt() {
