@@ -517,21 +517,45 @@ Widget buildAbilities() {
 }
 
 Widget buildAbility(Ability ability) {
-  return WatchBuilder(ability.type, (AbilityType type) {
-    return WatchBuilder(ability.level, (int level) {
-      return onPressed(
-        callback: (){
-          sendRequestSetAbility(ability.type.value);
-        },
-        child: border(
-            child: text("${abilityTypeToString(type)} $level"),
-            color: Colors.white,
-            margin: EdgeInsets.only(right: 4),
-            padding: EdgeInsets.all(4),
-        ),
-      );
-    });
-  });
+  return WatchBuilder(
+    game.player.skillPoints,
+      (int points){
+        return WatchBuilder(ability.type, (AbilityType type) {
+
+          if (type == AbilityType.None) return emptyContainer;
+
+          return Column(
+            children: [
+              if (points > 0)
+              onPressed(
+                callback: (){
+                  // upgrade skill
+                },
+                hint: "Upgrade ${abilityTypeToString(type)}",
+                child: border(child: text("+", fontSize: 25),
+                  color: Colors.white,
+                  padding: EdgeInsets.symmetric(horizontal: 5),
+                ),
+              ),
+              height4,
+              WatchBuilder(ability.level, (int level) {
+                return onPressed(
+                  callback: (){
+                    sendRequestSetAbility(ability.type.value);
+                  },
+                  child: border(
+                    child: text("${abilityTypeToString(type)} $level"),
+                    color: Colors.white,
+                    margin: EdgeInsets.only(right: 4),
+                    padding: EdgeInsets.all(4),
+                  ),
+                );
+              }),
+            ],
+          );
+        });
+      }
+  );
 }
 
 Widget buildExpandedWeapons() {
