@@ -5,6 +5,7 @@ import 'package:bleed_client/classes/Ability.dart';
 import 'package:bleed_client/classes/Weapon.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterType.dart';
+import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/constants/servers.dart';
@@ -529,7 +530,7 @@ Widget buildAbility(Ability ability, int index) {
               if (points > 0)
               onPressed(
                 callback: (){
-                  // upgrade skill
+                  sendRequest.upgradeAbility(index);
                 },
                 hint: "Upgrade ${abilityTypeToString(type)}",
                 child: border(child: text("+", fontSize: 25),

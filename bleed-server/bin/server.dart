@@ -260,6 +260,42 @@ void main() {
           selectCharacterType(player, characterTypes[characterTypeIndex]);
           break;
 
+        case ClientRequest.Upgrade_Ability:
+          if (arguments.length != 3) {
+            errorArgsExpected(3, arguments);
+            return;
+          }
+
+          Player? player = findPlayerByUuid(arguments[1]);
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+
+          if (player.skillPoints < 1) {
+            error(GameError.SkillPointsRequired);
+            return;
+          }
+
+          int? upgradeIndex = int.tryParse(arguments[2]);
+          if (upgradeIndex == null){
+            errorInvalidArg('arg[2] expected int but got $upgradeIndex');
+            return;
+          }
+          if (upgradeIndex < 0){
+            errorInvalidArg('arg[2] $upgradeIndex must be greater than 0');
+            return;
+          }
+          if (upgradeIndex > 4){
+            errorInvalidArg('arg[2] $upgradeIndex must be less than 5');
+            return;
+          }
+
+          Ability ability = player.getAbilityByIndex(upgradeIndex);
+          ability.level++;
+          player.abilitiesDirty = true;
+          break;
+
         case ClientRequest.DeselectAbility:
           if (arguments.length != 2) {
             errorArgsExpected(2, arguments);

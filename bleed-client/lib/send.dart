@@ -7,13 +7,13 @@ import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 
-import 'common/AbilityType.dart';
-
 final StringBuffer _buffer = StringBuffer();
 final gameUpdateIndex = ClientRequest.Update.index;
 const String _space = " ";
 
 String get session => game.player.uuid;
+
+final _SendRequestToServer sendRequest = _SendRequestToServer();
 
 void speak(String message){
   if (message.isEmpty) return;
@@ -104,8 +104,8 @@ void sendRequestSetCompilePaths(bool value) {
   send('${ClientRequest.SetCompilePaths.index} $session ${value ? 1 : 0}');
 }
 
-void sendClientRequest(ClientRequest request) {
-  send(request.index.toString());
+void sendClientRequest(ClientRequest request, dynamic message) {
+  send('${request.index} $session $message');
 }
 
 void _write(dynamic value) {
@@ -115,4 +115,10 @@ void _write(dynamic value) {
 
 void request(ClientRequest request, String value) {
   send('${request.index} $value');
+}
+
+class _SendRequestToServer {
+  upgradeAbility(int index){
+    sendClientRequest(ClientRequest.Upgrade_Ability, index);
+  }
 }
