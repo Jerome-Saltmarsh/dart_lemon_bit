@@ -553,7 +553,7 @@ Player spawnPlayerInTown() {
         Weapon(type: WeaponType.Bow, damage: 3, capacity: 12),
         Weapon(type: WeaponType.SlowingCircle, damage: 3, capacity: 100),
       ]);
-  player.skillPoints = 1;
+  player.skillPoints = 4;
   world.town.players.add(player);
   return player;
 }

@@ -92,6 +92,10 @@ class _Keys {
   LogicalKeyboardKey equip2 = LogicalKeyboardKey.digit2;
   LogicalKeyboardKey equip3 = LogicalKeyboardKey.digit3;
   LogicalKeyboardKey equip4 = LogicalKeyboardKey.digit4;
+  LogicalKeyboardKey equip1B = LogicalKeyboardKey.keyQ;
+  LogicalKeyboardKey equip2B = LogicalKeyboardKey.keyE;
+  LogicalKeyboardKey equip3B = LogicalKeyboardKey.keyF;
+  LogicalKeyboardKey equip4B = LogicalKeyboardKey.keyC;
   LogicalKeyboardKey speakLetsGo = LogicalKeyboardKey.digit9;
   LogicalKeyboardKey speakLetsGreeting = LogicalKeyboardKey.digit8;
   LogicalKeyboardKey waitASecond = LogicalKeyboardKey.digit0;
@@ -145,6 +149,10 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.equip2: selectAbility2,
   keys.equip3: selectAbility3,
   keys.equip4: selectAbility4,
+  keys.equip1B: selectAbility1,
+  keys.equip2B: selectAbility2,
+  keys.equip3B: selectAbility3,
+  keys.equip4B: selectAbility4,
   keys.toggleSkillTree: hud.skillTreeVisible.toggle,
   keys.pixelExplosion: (){
     emitPixelExplosion(mouseWorldX, mouseWorldY);
