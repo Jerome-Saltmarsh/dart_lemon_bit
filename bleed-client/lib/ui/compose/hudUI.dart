@@ -552,13 +552,21 @@ Widget buildAbility(Ability ability, int index) {
   return WatchBuilder(
     game.player.skillPoints,
       (int points){
+
+      final bool unlocked = points > 0;
         return WatchBuilder(ability.type, (AbilityType type) {
 
           if (type == AbilityType.None) return emptyContainer;
 
           return Column(
             children: [
-              if (points > 0)
+              if (unlocked)
+                WatchBuilder(ability.cooldown, (int cooldown){
+                  return WatchBuilder(ability.cooldownRemaining, (int cooldownRemaining){
+                    return text('$cooldownRemaining / $cooldown');
+                  });
+                }),
+              if (unlocked)
               onPressed(
                 callback: (){
                   sendRequest.upgradeAbility(index);

@@ -13,10 +13,12 @@ import 'values/world.dart';
 const _minusOne = -1;
 const _one = 1;
 
+const fps = 30;
+
 void initUpdateLoop() {
   // @on init jobs
   Future.delayed(Duration(seconds: 3), () {
-    periodic(fixedUpdate, ms: 1000 ~/ 30);
+    periodic(fixedUpdate, ms: 1000 ~/ fps);
     periodic(jobNpcWander, seconds: 4);
     periodic(jobRemoveDisconnectedPlayers, seconds: 5);
     periodic(updateNpcTargets, ms: 500);

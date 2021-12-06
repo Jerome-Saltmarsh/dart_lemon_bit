@@ -192,8 +192,11 @@ void main() {
                   return;
                 }
 
+                // @on player perform ability
                 player.magic -= ability.magicCost;
                 player.performing = ability;
+                ability.cooldownRemaining = ability.cooldown;
+                player.abilitiesDirty = true;
                 player.ability = null;
                 game.setCharacterState(player, CharacterState.Performing);
                 break;
