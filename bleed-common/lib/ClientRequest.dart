@@ -3,7 +3,6 @@ enum ClientRequest {
   Update,
   Revive,
   Equip,
-  Grenade,
   Ping,
   Purchase,
   SetCompilePaths,

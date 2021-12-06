@@ -32,7 +32,7 @@ Map<ObjectType, int> environmentObjectIndex = {
 
 class _Images {
   Image crate;
-  Image fireball; // TODO delete
+  // Image fireball; // TODO delete
   Image atlas;
 
   Future<Image> _png(String fileName) async {
@@ -44,7 +44,7 @@ class _Images {
   Future load() async {
     atlas = await _png("atlas");
     crate = await _png("crate");
-    fireball = await _png("fireball");
+    // fireball = await _png("fireball");
   }
 }
 

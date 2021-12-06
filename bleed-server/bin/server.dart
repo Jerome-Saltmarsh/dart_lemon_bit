@@ -1,14 +1,8 @@
-import 'dart:math';
 
-import 'package:lemon_math/angle_between.dart';
-import 'package:lemon_math/distance_between.dart';
-import 'package:lemon_math/pi2.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import 'bleed/maps/ability_range.dart';
-import 'classes/Character.dart';
 import 'classes/Game.dart';
 import 'classes/Inventory.dart';
 import 'classes/Player.dart';
@@ -17,18 +11,16 @@ import 'common/AbilityType.dart';
 import 'common/CharacterAction.dart';
 import 'common/CharacterState.dart';
 import 'common/CharacterType.dart';
-import 'common/enums/Direction.dart';
-import 'common/version.dart';
-import 'compile.dart';
 import 'common/ClientRequest.dart';
 import 'common/GameError.dart';
 import 'common/GameEventType.dart';
 import 'common/ServerResponse.dart';
 import 'common/WeaponType.dart';
+import 'common/enums/Direction.dart';
+import 'common/version.dart';
+import 'compile.dart';
 import 'functions/loadScenes.dart';
-import 'functions/withinRadius.dart';
 import 'games/world.dart';
-import 'maths.dart';
 import 'settings.dart';
 import 'update.dart';
 import 'utils.dart';
@@ -423,36 +415,6 @@ void main() {
           }
 
           changeWeapon(player, weaponIndex);
-          return;
-
-        case ClientRequest.Grenade:
-          String gameId = arguments[1];
-          Game? game = findGameById(gameId);
-          if (game == null) {
-            error(GameError.GameNotFound);
-            return;
-          }
-
-          int id = int.parse(arguments[2]);
-          Player? player = game.findPlayerById(id);
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
-
-          String uuid = arguments[3];
-          if (uuid != player.uuid) {
-            error(GameError.InvalidPlayerUUID);
-            return;
-          }
-
-          if (player.grenades <= 0) return;
-
-          double strength = double.parse(arguments[4]);
-          double aim = double.parse(arguments[5]);
-          game.throwGrenade(player, aim, strength);
-          game.dispatch(GameEventType.Throw_Grenade, player.x, player.y, 0, 0);
-          player.grenades--;
           return;
 
         case ClientRequest.Purchase:

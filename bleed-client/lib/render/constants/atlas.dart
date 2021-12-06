@@ -1,4 +1,5 @@
 
+import 'package:bleed_client/classes/Item.dart';
 import 'package:lemon_engine/classes/vector2.dart';
 
 final _Atlas atlas = _Atlas();
@@ -19,6 +20,7 @@ class _Atlas {
   final Vector2 arrow = Vector2(517, 534);
   final Vector2 items = Vector2(1, 567);
   final _Witch witch = _Witch();
+  final _Projectiles projectiles = _Projectiles();
 }
 
 class  _Witch {
@@ -35,6 +37,10 @@ class _Human {
 class _Zombie {
   final Vector2 striking = Vector2(1, 2463);
   final Vector2 idle  = Vector2(1026, 2463);
+}
+
+class _Projectiles {
+  final _Item fireball = _Item(2324, 1193, 32, 4);
 }
 
 class _Particles {
@@ -55,4 +61,13 @@ class _Pixels {
   final Vector2 red1 = Vector2(_shadesX + (11 * _pixelSize), _shadesY + (3 * _pixelSize));
   final Vector2 white1 = Vector2(_shadesX + (9 * _pixelSize), _shadesY + (3 * _pixelSize));
   final Vector2 yellow1 = Vector2(_shadesX + (23 * _pixelSize), _shadesY + (3 * _pixelSize));
+}
+
+class _Item {
+  final double x;
+  final double y;
+  final double size;
+  final int frames;
+
+  _Item(this.x, this.y, this.size, this.frames);
 }
