@@ -502,7 +502,7 @@ extension GameFunctions on Game {
     }
   }
 
-  void onPlayerDeath(Player player){
+  void onPlayerDeath(Player player) {
     dispatch(GameEventType.Player_Death, player.x, player.y);
     for (Npc npc in zombies) {
       if (npc.target != player) continue;
@@ -590,7 +590,7 @@ extension GameFunctions on Game {
         dispatch(GameEventType.Bullet_Hole, projectile.x, projectile.y, 0, 0);
         break;
       case ProjectileType.Fireball:
-        spawnExplosion(x: projectile.x, y: projectile.y);
+        spawnExplosion(src: projectile.owner, x: projectile.x, y: projectile.y);
         break;
       case ProjectileType.Arrow:
         break;
@@ -665,11 +665,10 @@ extension GameFunctions on Game {
     dispatch(GameEventType.FreezeCircle, x, y, 0, 0);
   }
 
-  void applyFreezeTo({
-      required double x,
+  void applyFreezeTo(
+      {required double x,
       required double y,
-      required List<Character> characters
-  }) {
+      required List<Character> characters}) {
     for (Character character in characters) {
       if (!withinDistance(character, x, y, settings.radius.freezeCircle))
         continue;
@@ -682,30 +681,25 @@ extension GameFunctions on Game {
     character.frozenDuration = settings.duration.frozen;
   }
 
-  void spawnExplosion({required double x, required double y}) {
+  void spawnExplosion(
+      {required Character src, required double x, required double y}) {
     dispatch(GameEventType.Explosion, x, y, 0, 0);
 
-    for (Character character in zombies) {
-      if (objectDistanceFrom(character, x, y) > settings.radius.explosion)
-        continue;
-      double rotation = radiansBetween2(character, x, y);
+    for (Character zombie in zombies) {
+      if (!withinDistance(zombie, x, y, settings.radius.explosion)) continue;
+      double rotation = radiansBetween2(zombie, x, y);
       double magnitude = 10;
-      applyForce(character, rotation + pi, magnitude);
+      applyForce(zombie, rotation + pi, magnitude);
 
-      if (character.alive) {
-        changeCharacterHealth(character, -settings.damage.grenade);
+      if (zombie.dead) continue;
 
-        if (!character.alive) {
-          // @on npc killed by grenade
-          double forceX =
-              clampMagnitudeX(character.x - x, character.y - y, magnitude);
-          double forceY =
-              clampMagnitudeY(character.x - x, character.y - y, magnitude);
+      applyDamage(src, zombie, settings.damage.grenade);
 
-          character.active = false;
-          dispatch(GameEventType.Zombie_killed_Explosion, character.x,
-              character.y, forceX, forceY);
-        }
+      if (zombie.dead) {
+        double forceX = clampMagnitudeX(zombie.x - x, zombie.y - y, magnitude);
+        double forceY = clampMagnitudeY(zombie.x - x, zombie.y - y, magnitude);
+        dispatch(GameEventType.Zombie_killed_Explosion, zombie.x, zombie.y,
+            forceX, forceY);
       }
     }
 
@@ -961,7 +955,9 @@ extension GameFunctions on Game {
             final int castFrame = 3;
             if (character.stateDuration == castFrame) {
               spawnExplosion(
-                  x: character.abilityTarget.x, y: character.abilityTarget.y);
+                  src: character,
+                  x: character.abilityTarget.x,
+                  y: character.abilityTarget.y);
               character.performing = AbilityType.None;
             }
             break;
@@ -1043,7 +1039,7 @@ extension GameFunctions on Game {
     grenades.add(grenade);
     delayed(() {
       grenades.remove(grenade);
-      spawnExplosion(x: grenade.x, y: grenade.y);
+      spawnExplosion(src: player, x: grenade.x, y: grenade.y);
     }, ms: settings.grenadeDuration);
   }
 
@@ -1542,12 +1538,11 @@ double angle2(double adjacent, double opposite) {
   return atan2(adjacent, opposite);
 }
 
-
-void selectCharacterType(Player player, CharacterType value){
+void selectCharacterType(Player player, CharacterType value) {
   player.type = value;
   player.abilitiesDirty = true;
 
-  switch(value){
+  switch (value) {
     case CharacterType.Human:
       // TODO: Handle this case.
       break;
