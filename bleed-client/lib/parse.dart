@@ -460,6 +460,8 @@ void _consumeSpace() {
 void _consumeAbility(Ability ability){
   ability.type.value = _consumeAbilityType();
   ability.level.value = _consumeInt();
+  ability.cooldown.value = _consumeInt();
+  ability.cooldownRemaining.value = _consumeInt();
 }
 
 int _consumeInt() {

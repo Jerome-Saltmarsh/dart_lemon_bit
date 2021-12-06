@@ -139,6 +139,9 @@ void _compilePlayerAbilities(StringBuffer buffer, Player player) {
 void _compileAbility(StringBuffer buffer, Ability ability) {
   _write(buffer, ability.type.index);
   _write(buffer, ability.level);
+  _write(buffer, ability.cooldown);
+  _write(buffer, ability.cooldownRemaining);
+
 }
 
 void compilePlayer(StringBuffer buffer, Player player) {
