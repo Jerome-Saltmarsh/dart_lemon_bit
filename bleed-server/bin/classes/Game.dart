@@ -955,19 +955,21 @@ extension GameFunctions on Game {
         }
         break;
       case CharacterState.Performing:
-        switch (character.ability) {
+        switch (character.performing) {
           // @on performing
           case AbilityType.Explosion:
             final int castFrame = 3;
             if (character.stateDuration == castFrame) {
               spawnExplosion(
                   x: character.abilityTarget.x, y: character.abilityTarget.y);
+              character.performing = AbilityType.None;
             }
             break;
           case AbilityType.Blink:
             if (character.stateDuration == 3) {
               character.x = character.abilityTarget.x;
               character.y = character.abilityTarget.y;
+              character.performing = AbilityType.None;
             }
             break;
           case AbilityType.FreezeCircle:
@@ -975,6 +977,7 @@ extension GameFunctions on Game {
             if (character.stateDuration == castFrame) {
               spawnFreezeCircle(
                   x: character.abilityTarget.x, y: character.abilityTarget.y);
+              character.performing = AbilityType.None;
             }
             break;
           default:

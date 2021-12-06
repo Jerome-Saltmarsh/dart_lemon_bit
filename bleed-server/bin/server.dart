@@ -167,7 +167,9 @@ void main() {
           }
 
           if (!player.busy && !player.dead) {
-            CharacterAction action = characterActions[int.parse(arguments[2])];
+
+            int actionIndex = int.parse(arguments[2]);
+            CharacterAction action = characterActions[actionIndex];
             double mouseX = double.parse(arguments[4]);
             double mouseY = double.parse(arguments[5]);
 
@@ -184,6 +186,8 @@ void main() {
                   game.setCharacterState(player, CharacterState.Striking);
                   break;
                 }
+                player.performing = player.ability;
+                player.ability = AbilityType.None;
                 game.setCharacterState(player, CharacterState.Performing);
                 break;
               case CharacterAction.Run:

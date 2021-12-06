@@ -17,6 +17,7 @@ import 'Weapon.dart';
 
 class Player extends Character {
   final String uuid = generateUUID();
+
   String name = generateName();
   int lastUpdateFrame = 0;
   Inventory inventory;

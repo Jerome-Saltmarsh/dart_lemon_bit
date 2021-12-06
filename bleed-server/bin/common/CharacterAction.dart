@@ -1,7 +1,6 @@
 
 enum CharacterAction {
   Idle,
-  Attack,
   Perform,
   Run,
 }

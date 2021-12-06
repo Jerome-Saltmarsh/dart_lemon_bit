@@ -14,6 +14,7 @@ import 'Weapon.dart';
 class Character extends GameObject implements HasSquad {
   late CharacterType type;
   AbilityType ability = AbilityType.None;
+  AbilityType performing = AbilityType.None;
   CharacterState state = CharacterState.Idle;
   CharacterState previousState = CharacterState.Idle;
   Direction direction = Direction.Down;
