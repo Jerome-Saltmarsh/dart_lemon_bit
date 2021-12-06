@@ -286,6 +286,9 @@ void main() {
             return;
           }
 
+          if (player.busy) return;
+          if (player.dead) return;
+
           int? abilityIndex = int.tryParse(arguments[2]);
           if (abilityIndex == null){
             errorInvalidArg('arg[2] expected int but got $abilityIndex');
@@ -301,6 +304,13 @@ void main() {
           }
 
           Ability ability = player.getAbilityByIndex(abilityIndex);
+
+          if (ability.level < 1) {
+            player.ability = AbilityType.None;
+            error(GameError.SkillLocked);
+            return;
+          }
+
           if (player.ability == ability.type){
             player.ability = AbilityType.None;
           }else{
