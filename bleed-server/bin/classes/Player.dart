@@ -8,6 +8,7 @@ import '../common/Tile.dart';
 import '../functions/generateName.dart';
 import '../functions/generateUUID.dart';
 import '../settings.dart';
+import '../utils.dart';
 import 'Ability.dart';
 import 'Character.dart';
 import 'Game.dart';
@@ -37,8 +38,16 @@ class Player extends Character {
   int experience = 0;
   int level = 1;
   int skillPoints = 0;
-  int magic = 0;
+  int _magic = 0;
+
+  int get magic => _magic;
+
+  set magic(int value){
+    _magic = clampInt(value, 0, maxMagic);
+  }
+
   int maxMagic = 0;
+  int magicRegen = 1;
 
   Tile currentTile = Tile.PlayerSpawn;
   CharacterState characterState = CharacterState.Idle;

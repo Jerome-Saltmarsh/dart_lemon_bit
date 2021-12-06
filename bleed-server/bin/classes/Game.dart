@@ -24,7 +24,6 @@ import '../functions/insertionSort.dart';
 import '../functions/withinRadius.dart';
 import '../interfaces/HasSquad.dart';
 import 'Ability.dart';
-import 'Debuff.dart';
 import 'Projectile.dart';
 import 'Character.dart';
 import 'Collider.dart';
@@ -63,6 +62,7 @@ import 'InteractableNpc.dart';
 import 'Weapon.dart';
 
 const _none = -1;
+const _framesPerMagicRegen = 30;
 
 abstract class Game {
   static int _id = 0;
@@ -387,6 +387,13 @@ extension GameFunctions on Game {
   }
 
   void _updatePlayersAndNpcs() {
+
+    if (duration % _framesPerMagicRegen == 0) {
+      for (Player player in players) {
+        player.magic += player.magicRegen;
+      }
+    }
+
     for (int i = 0; i < players.length; i++) {
       updatePlayer(players[i]);
       updateCharacter(players[i]);
@@ -950,7 +957,7 @@ extension GameFunctions on Game {
       case CharacterState.Performing:
         Ability? ability = character.performing;
 
-        if (ability == null){
+        if (ability == null) {
           return;
         }
 
@@ -1523,7 +1530,6 @@ void changeWeapon(Player player, int index) {
 }
 
 void playerSetAbilityTarget(Player player, double x, double y) {
-
   Ability? ability = player.ability;
   if (ability == null) return;
 
@@ -1558,10 +1564,14 @@ void selectCharacterType(Player player, CharacterType value) {
       // TODO: Handle this case.
       break;
     case CharacterType.Witch:
-      player.ability1 = Ability(type: AbilityType.Explosion, level: 0, magicCost: 10, range: 200);
-      player.ability2 = Ability(type: AbilityType.Blink, level: 0, magicCost: 10, range: 200);
-      player.ability3 = Ability(type: AbilityType.FreezeCircle, level: 0, magicCost: 10, range: 200);
-      player.ability4 = Ability(type: AbilityType.Fireball, level: 0, magicCost: 10, range: 200);
+      player.ability1 = Ability(
+          type: AbilityType.Explosion, level: 0, magicCost: 10, range: 200);
+      player.ability2 =
+          Ability(type: AbilityType.Blink, level: 0, magicCost: 10, range: 200);
+      player.ability3 = Ability(
+          type: AbilityType.FreezeCircle, level: 0, magicCost: 10, range: 200);
+      player.ability4 = Ability(
+          type: AbilityType.Fireball, level: 0, magicCost: 10, range: 200);
       player.maxMagic = 100;
       player.magic = 100;
       break;
