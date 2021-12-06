@@ -180,14 +180,21 @@ void main() {
                 game.setCharacterState(player, CharacterState.Idle);
                 break;
               case CharacterAction.Perform:
-                AbilityType ability = player.ability;
-                if (ability == AbilityType.None){
+                Ability? ability = player.ability;
+                if (ability == null){
                   characterAimAt(player, mouseX, mouseY);
                   game.setCharacterState(player, CharacterState.Striking);
                   break;
                 }
-                player.performing = player.ability;
-                player.ability = AbilityType.None;
+
+                if (player.magic < ability.magicCost){
+                  error(GameError.InsufficientMana);
+                  return;
+                }
+
+                player.magic -= ability.magicCost;
+                player.performing = ability;
+                player.ability = null;
                 game.setCharacterState(player, CharacterState.Performing);
                 break;
               case CharacterAction.Run:
@@ -312,7 +319,7 @@ void main() {
             errorPlayerNotFound();
             return;
           }
-          player.ability = AbilityType.None;
+          player.ability = null;
           break;
 
         case ClientRequest.SelectAbility:
@@ -347,16 +354,17 @@ void main() {
           Ability ability = player.getAbilityByIndex(abilityIndex);
 
           if (ability.level < 1) {
-            player.ability = AbilityType.None;
+            player.ability = null;
             error(GameError.SkillLocked);
             return;
           }
 
           if (player.ability == ability.type){
-            player.ability = AbilityType.None;
-          }else{
-            player.ability = ability.type;
+            player.ability = null;
+            return;
           }
+
+          player.ability = ability;
           break;
 
         case ClientRequest.AcquireAbility:

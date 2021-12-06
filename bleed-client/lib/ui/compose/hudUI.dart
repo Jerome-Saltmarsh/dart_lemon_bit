@@ -75,7 +75,7 @@ Widget buildHealthBar() {
 Widget buildMagicBar() {
   return WatchBuilder(game.player.maxMagic, (int maxMagic) {
     return WatchBuilder(game.player.magic, (int magic){
-      double percentage = maxMagic / magic;
+      double percentage = magic / maxMagic;
       double width = 120;
       double height = width * goldenRatioInverse;
 

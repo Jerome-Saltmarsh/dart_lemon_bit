@@ -1,4 +1,3 @@
-import 'bleed/maps/ability_range.dart';
 import 'bleed/zombie_health.dart';
 import 'classes/Ability.dart';
 import 'classes/Projectile.dart';
@@ -19,7 +18,6 @@ import 'common/Tile.dart';
 import 'common/ServerResponse.dart';
 import 'common/classes/Vector2.dart';
 import 'games/world.dart';
-import 'settings.dart';
 
 // constants
 final int _collectablesIndex = ServerResponse.Collectables.index;
@@ -166,8 +164,16 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.type.index);
   _writeInt(buffer, player.abilityTarget.x);
   _writeInt(buffer, player.abilityTarget.y);
-  _writeInt(buffer, getAbilityRange(player.ability));
-  _write(buffer, player.ability.index);
+
+  Ability? ability = player.ability;
+  if (ability != null) {
+    _write(buffer, ability.range);
+    _write(buffer, ability.type.index);
+  } else {
+    _write(buffer, 0);
+    _write(buffer, AbilityType.None.index);
+  }
+
   _write(buffer, player.magic);
   _write(buffer, player.maxMagic);
 

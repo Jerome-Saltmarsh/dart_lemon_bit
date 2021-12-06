@@ -43,10 +43,10 @@ class Player extends Character {
   Tile currentTile = Tile.PlayerSpawn;
   CharacterState characterState = CharacterState.Idle;
 
-  Ability ability1 = Ability(type: AbilityType.None, level: 0);
-  Ability ability2 = Ability(type: AbilityType.None, level: 0);
-  Ability ability3 = Ability(type: AbilityType.None, level: 0);
-  Ability ability4 = Ability(type: AbilityType.None, level: 0);
+  Ability ability1 = Ability(type: AbilityType.None, level: 0, magicCost: 0, range: 0);
+  Ability ability2 = Ability(type: AbilityType.None, level: 0, magicCost: 0, range: 0);
+  Ability ability3 = Ability(type: AbilityType.None, level: 0, magicCost: 0, range: 0);
+  Ability ability4 = Ability(type: AbilityType.None, level: 0, magicCost: 0, range: 0);
   bool abilitiesDirty = true;
 
   final List<PlayerEvent> events = [];

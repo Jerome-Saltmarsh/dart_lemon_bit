@@ -8,7 +8,6 @@ import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/randomInt.dart';
 import 'package:lemon_math/randomItem.dart';
 
-import '../bleed/maps/ability_range.dart';
 import '../bleed/zombie_health.dart';
 import '../common/AbilityType.dart';
 import '../common/CharacterState.dart';
@@ -949,7 +948,13 @@ extension GameFunctions on Game {
         }
         break;
       case CharacterState.Performing:
-        switch (character.performing) {
+        Ability? ability = character.performing;
+
+        if (ability == null){
+          return;
+        }
+
+        switch (ability.type) {
           // @on performing
           case AbilityType.Explosion:
             final int castFrame = 3;
@@ -958,14 +963,14 @@ extension GameFunctions on Game {
                   src: character,
                   x: character.abilityTarget.x,
                   y: character.abilityTarget.y);
-              character.performing = AbilityType.None;
+              character.performing = null;
             }
             break;
           case AbilityType.Blink:
             if (character.stateDuration == 3) {
               character.x = character.abilityTarget.x;
               character.y = character.abilityTarget.y;
-              character.performing = AbilityType.None;
+              character.performing = null;
             }
             break;
           case AbilityType.FreezeCircle:
@@ -973,7 +978,7 @@ extension GameFunctions on Game {
             if (character.stateDuration == castFrame) {
               spawnFreezeCircle(
                   x: character.abilityTarget.x, y: character.abilityTarget.y);
-              character.performing = AbilityType.None;
+              character.performing = null;
             }
             break;
           default:
@@ -1518,13 +1523,16 @@ void changeWeapon(Player player, int index) {
 }
 
 void playerSetAbilityTarget(Player player, double x, double y) {
-  double dis = distanceBetween(player.x, player.y, x, y);
-  double maxRange = getAbilityRange(player.ability);
 
-  if (dis > maxRange) {
+  Ability? ability = player.ability;
+  if (ability == null) return;
+
+  double distance = distanceBetween(player.x, player.y, x, y);
+
+  if (distance > ability.range) {
     double rotation = pi2 - angle2(player.x - x, player.y - y);
-    player.abilityTarget.x = player.x + adj(rotation, maxRange);
-    player.abilityTarget.y = player.y + opp(rotation, maxRange);
+    player.abilityTarget.x = player.x + adj(rotation, ability.range);
+    player.abilityTarget.y = player.y + opp(rotation, ability.range);
   } else {
     player.abilityTarget.x = x;
     player.abilityTarget.y = y;
@@ -1550,10 +1558,10 @@ void selectCharacterType(Player player, CharacterType value) {
       // TODO: Handle this case.
       break;
     case CharacterType.Witch:
-      player.ability1 = Ability(type: AbilityType.Explosion, level: 0);
-      player.ability2 = Ability(type: AbilityType.Blink, level: 0);
-      player.ability3 = Ability(type: AbilityType.FreezeCircle, level: 0);
-      player.ability4 = Ability(type: AbilityType.Fireball, level: 0);
+      player.ability1 = Ability(type: AbilityType.Explosion, level: 0, magicCost: 10, range: 200);
+      player.ability2 = Ability(type: AbilityType.Blink, level: 0, magicCost: 10, range: 200);
+      player.ability3 = Ability(type: AbilityType.FreezeCircle, level: 0, magicCost: 10, range: 200);
+      player.ability4 = Ability(type: AbilityType.Fireball, level: 0, magicCost: 10, range: 200);
       player.maxMagic = 100;
       player.magic = 100;
       break;
