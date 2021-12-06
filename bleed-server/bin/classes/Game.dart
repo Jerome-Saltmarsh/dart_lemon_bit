@@ -1554,6 +1554,8 @@ void selectCharacterType(Player player, CharacterType value) {
       player.ability2 = Ability(type: AbilityType.Blink, level: 0);
       player.ability3 = Ability(type: AbilityType.FreezeCircle, level: 0);
       player.ability4 = Ability(type: AbilityType.Fireball, level: 0);
+      player.maxMagic = 100;
+      player.magic = 100;
       break;
     case CharacterType.Knight:
       // TODO: Handle this case.

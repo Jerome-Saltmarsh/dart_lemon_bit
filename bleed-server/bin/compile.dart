@@ -67,7 +67,7 @@ void compileGame(Game game) {
 String compileEnvironmentObjects(List<EnvironmentObject> environmentObjects) {
   StringBuffer buffer = StringBuffer();
   _write(buffer, ServerResponse.EnvironmentObjects.index);
-  for (EnvironmentObject environmentObject in environmentObjects){
+  for (EnvironmentObject environmentObject in environmentObjects) {
     _writeInt(buffer, environmentObject.x);
     _writeInt(buffer, environmentObject.y);
     _writeInt(buffer, environmentObject.radius);
@@ -115,22 +115,22 @@ String compileTiles(List<List<Tile>> tiles) {
   return buffer.toString();
 }
 
-void compileWeapons(StringBuffer buffer, List<Weapon> weapons){
+void compileWeapons(StringBuffer buffer, List<Weapon> weapons) {
   _write(buffer, ServerResponse.Weapons.index);
   _write(buffer, weapons.length);
-  for(Weapon weapon in weapons){
+  for (Weapon weapon in weapons) {
     compileWeapon(buffer, weapon);
   }
 }
 
-void compileWeapon(StringBuffer buffer, Weapon weapon){
+void compileWeapon(StringBuffer buffer, Weapon weapon) {
   _write(buffer, weapon.type.index);
   _write(buffer, weapon.rounds);
   _write(buffer, weapon.capacity);
   _write(buffer, weapon.damage);
 }
 
-void _compilePlayerAbilities(StringBuffer buffer, Player player){
+void _compilePlayerAbilities(StringBuffer buffer, Player player) {
   _write(buffer, ServerResponse.Player_Abilities.index);
   _compileAbility(buffer, player.ability1);
   _compileAbility(buffer, player.ability2);
@@ -138,7 +138,7 @@ void _compilePlayerAbilities(StringBuffer buffer, Player player){
   _compileAbility(buffer, player.ability4);
 }
 
-void _compileAbility(StringBuffer buffer, Ability ability){
+void _compileAbility(StringBuffer buffer, Ability ability) {
   _write(buffer, ability.type.index);
   _write(buffer, ability.level);
 }
@@ -164,10 +164,12 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _writeInt(buffer, perc); // todo make sure player is not max level
 
   _write(buffer, player.type.index);
-  _write(buffer, player.abilityTarget.x.toInt());
-  _write(buffer, player.abilityTarget.y.toInt());
+  _writeInt(buffer, player.abilityTarget.x);
+  _writeInt(buffer, player.abilityTarget.y);
   _writeInt(buffer, getAbilityRange(player.ability));
   _write(buffer, player.ability.index);
+  _write(buffer, player.magic);
+  _write(buffer, player.maxMagic);
 
   _compilePlayerEvents(buffer, player);
 
@@ -176,14 +178,13 @@ void compilePlayer(StringBuffer buffer, Player player) {
     player.abilitiesDirty = false;
   }
 
-  if (player.weaponsDirty){
+  if (player.weaponsDirty) {
     player.weaponsDirty = false;
     _write(buffer, ServerResponse.Weapons_Dirty.index);
   }
 }
 
 void _compilePlayerEvents(StringBuffer buffer, Player player) {
-
   int total = 0;
 
   for (PlayerEvent event in player.events) {
@@ -249,7 +250,7 @@ void _compilePaths(StringBuffer buffer, List<Npc> npcs) {
   buffer.write(_semiColon);
 }
 
-void _compileNpcDebug(StringBuffer buffer, List<Npc> npcs){
+void _compileNpcDebug(StringBuffer buffer, List<Npc> npcs) {
   _write(buffer, ServerResponse.NpcsDebug.index);
   for (Npc npc in npcs) {
     if (!npc.targetSet) continue;
@@ -355,7 +356,7 @@ void compilePlayerMessage(StringBuffer buffer, String message) {
   _writeSemiColon(buffer);
 }
 
-void _writeSemiColon(StringBuffer buffer){
+void _writeSemiColon(StringBuffer buffer) {
   _write(buffer, _semiColon);
 }
 

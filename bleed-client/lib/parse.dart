@@ -392,6 +392,8 @@ void _parsePlayer() {
   game.player.abilityTarget.y = _consumeDouble();
   game.player.abilityRange = _consumeDouble();
   game.player.ability.value = _consumeAbilityType();
+  game.player.magic.value = _consumeInt();
+  game.player.maxMagic.value = _consumeInt();
 }
 
 AbilityType _consumeAbilityType(){

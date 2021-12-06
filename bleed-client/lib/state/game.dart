@@ -82,6 +82,9 @@ class _Player {
   final _Unlocked unlocked = _Unlocked();
   final Watch<AbilityType> ability = Watch(AbilityType.None);
 
+  final Watch<int> magic = Watch(0);
+  final Watch<int> maxMagic = Watch(0);
+
   Ability ability1 = Ability();
   Ability ability2 = Ability();
   Ability ability3 = Ability();

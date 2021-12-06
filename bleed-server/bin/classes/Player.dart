@@ -37,6 +37,8 @@ class Player extends Character {
   int experience = 0;
   int level = 1;
   int skillPoints = 0;
+  int magic = 0;
+  int maxMagic = 0;
 
   Tile currentTile = Tile.PlayerSpawn;
   CharacterState characterState = CharacterState.Idle;

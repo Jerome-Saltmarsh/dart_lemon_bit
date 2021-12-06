@@ -110,15 +110,13 @@
 [ ] Ability Tree
 -- RELEASE 1ST JANUARY --
 The plan is to release several game modes like the warcraft 3 custom maps
-
 When the player loads into the game they start in the open world mode. To begin with this will be hard
 core mode and won't be possible to persist characters. 
-
 In the future the player will be able to store their character inside an sql database
-
 Game Modes include MMO, Dota, Base defense, 
 
-
+[ ] Ability Cooldown
+[ ] Mana
 -- COMPLETED --
 [x] Witch Cast Spell Slow Circle
 [x] Witch Caste Slowing Circle

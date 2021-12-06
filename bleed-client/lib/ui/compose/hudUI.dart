@@ -72,6 +72,36 @@ Widget buildHealthBar() {
   });
 }
 
+Widget buildMagicBar() {
+  return WatchBuilder(game.player.maxMagic, (int maxMagic) {
+    return WatchBuilder(game.player.magic, (int magic){
+      double percentage = maxMagic / magic;
+      double width = 120;
+      double height = width * goldenRatioInverse;
+
+      return Tooltip(
+        message: 'Magic $magic / $maxMagic',
+        child: Container(
+          width: width,
+          height: height,
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.white, width: 4),
+              borderRadius: borderRadius4),
+          alignment: Alignment.centerLeft,
+          padding: EdgeInsets.all(3),
+          child: Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+            ),
+            width: width * percentage,
+            height: height,
+          ),
+        ),
+      );
+    });
+  });
+}
+
 Widget buildTopLeft() {
   return Positioned(
       top: _padding,
@@ -497,7 +527,12 @@ Widget buildWeaponSlot(WeaponType weaponType) {
 }
 
 Widget buildBottomLeft() {
-  return Positioned(bottom: _padding, left: _padding, child: buildAbilities());
+  return Positioned(bottom: _padding, left: _padding, child: Row(
+    children: [
+      buildMagicBar(),
+      buildAbilities(),
+    ],
+  ));
 }
 
 Widget buildAbilities() {
