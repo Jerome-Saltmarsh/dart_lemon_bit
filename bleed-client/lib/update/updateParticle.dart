@@ -4,6 +4,8 @@ import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/functions/spawners/spawnBlood.dart';
 import 'package:bleed_client/getters/isWalkable.dart';
 
+const _spawnBloodRate = 8;
+
 void updateParticle(Particle particle){
   double gravity = 0.04;
   double bounceFriction = 0.99;
@@ -52,13 +54,13 @@ void updateParticle(Particle particle){
   if (particle.z <= 0) {
     particle.z = 0;
   }
-  if (particle.type == ParticleType.Human_Head && particle.duration & 2 == 0) {
+  if (particle.type == ParticleType.Human_Head && particle.duration % _spawnBloodRate == 0) {
     spawnBlood(particle.x, particle.y, particle.z);
   }
-  if (particle.type == ParticleType.Arm && particle.duration & 2 == 0) {
+  if (particle.type == ParticleType.Arm && particle.duration % _spawnBloodRate == 0) {
     spawnBlood(particle.x, particle.y, particle.z);
   }
-  if (particle.type == ParticleType.Organ && particle.duration & 2 == 0) {
+  if (particle.type == ParticleType.Organ && particle.duration % _spawnBloodRate == 0) {
     spawnBlood(particle.x, particle.y, particle.z);
   }
   if (particle.duration-- < 0) {

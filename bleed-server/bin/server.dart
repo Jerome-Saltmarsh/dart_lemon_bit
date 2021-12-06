@@ -293,6 +293,7 @@ void main() {
 
           Ability ability = player.getAbilityByIndex(upgradeIndex);
           ability.level++;
+          player.skillPoints--;
           player.abilitiesDirty = true;
           break;
 
