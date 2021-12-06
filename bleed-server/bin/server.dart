@@ -1,4 +1,3 @@
-
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -167,7 +166,6 @@ void main() {
           }
 
           if (!player.busy && !player.dead) {
-
             int actionIndex = int.parse(arguments[2]);
             CharacterAction action = characterActions[actionIndex];
             double mouseX = double.parse(arguments[4]);
@@ -181,14 +179,19 @@ void main() {
                 break;
               case CharacterAction.Perform:
                 Ability? ability = player.ability;
-                if (ability == null){
+                if (ability == null) {
                   characterAimAt(player, mouseX, mouseY);
                   game.setCharacterState(player, CharacterState.Striking);
                   break;
                 }
 
-                if (player.magic < ability.magicCost){
+                if (player.magic < ability.magicCost) {
                   error(GameError.InsufficientMana);
+                  return;
+                }
+
+                if (ability.cooldownRemaining > 0) {
+                  error(GameError.Cooldown_Remaining);
                   return;
                 }
 
@@ -292,15 +295,15 @@ void main() {
           }
 
           int? upgradeIndex = int.tryParse(arguments[2]);
-          if (upgradeIndex == null){
+          if (upgradeIndex == null) {
             errorInvalidArg('arg[2] expected int but got $upgradeIndex');
             return;
           }
-          if (upgradeIndex < 0){
+          if (upgradeIndex < 0) {
             errorInvalidArg('arg[2] $upgradeIndex must be greater than 0');
             return;
           }
-          if (upgradeIndex > 4){
+          if (upgradeIndex > 4) {
             errorInvalidArg('arg[2] $upgradeIndex must be less than 5');
             return;
           }
@@ -341,15 +344,15 @@ void main() {
           if (player.dead) return;
 
           int? abilityIndex = int.tryParse(arguments[2]);
-          if (abilityIndex == null){
+          if (abilityIndex == null) {
             errorInvalidArg('arg[2] expected int but got $abilityIndex');
             return;
           }
-          if (abilityIndex < 0){
+          if (abilityIndex < 0) {
             errorInvalidArg('arg[2] $abilityIndex must be greater than 0');
             return;
           }
-          if (abilityIndex > 4){
+          if (abilityIndex > 4) {
             errorInvalidArg('arg[2] $abilityIndex must be less than 5');
             return;
           }
@@ -362,13 +365,18 @@ void main() {
             return;
           }
 
-          if (player.ability == ability.type){
+          if (player.ability == ability.type) {
             player.ability = null;
             return;
           }
 
-          if (ability.magicCost > player.magic){
+          if (ability.magicCost > player.magic) {
             error(GameError.InsufficientMana);
+            return;
+          }
+
+          if (ability.cooldownRemaining > 0) {
+            error(GameError.Cooldown_Remaining);
             return;
           }
 
