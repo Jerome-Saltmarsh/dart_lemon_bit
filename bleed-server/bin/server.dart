@@ -3,6 +3,7 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+import 'classes/Ability.dart';
 import 'classes/Game.dart';
 import 'classes/Inventory.dart';
 import 'classes/Player.dart';
@@ -286,23 +287,24 @@ void main() {
           }
 
           int? abilityIndex = int.tryParse(arguments[2]);
-
           if (abilityIndex == null){
             errorInvalidArg('arg[2] expected int but got $abilityIndex');
             return;
           }
-
-          if (abilityIndex > maxAbilityIndex){
-            errorInvalidArg('arg[2] $abilityIndex is greater than the max ability index $maxAbilityIndex');
+          if (abilityIndex < 0){
+            errorInvalidArg('arg[2] $abilityIndex must be greater than 0');
+            return;
+          }
+          if (abilityIndex > 4){
+            errorInvalidArg('arg[2] $abilityIndex must be less than 5');
             return;
           }
 
-          AbilityType ability = abilities[abilityIndex];
-          if (player.ability == ability){
+          Ability ability = player.getAbilityByIndex(abilityIndex);
+          if (player.ability == ability.type){
             player.ability = AbilityType.None;
           }else{
-            player.ability = ability;
-            print("player.ability = $ability");
+            player.ability = ability.type;
           }
           break;
 

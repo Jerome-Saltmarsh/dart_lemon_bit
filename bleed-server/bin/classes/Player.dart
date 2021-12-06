@@ -48,6 +48,21 @@ class Player extends Character {
 
   final List<PlayerEvent> events = [];
 
+  Ability getAbilityByIndex(int index){
+    switch(index){
+      case 1:
+        return ability1;
+      case 2:
+        return ability2;
+      case 3:
+        return ability3;
+      case 4:
+        return ability4;
+      default:
+        throw Exception("could not get ability at index $index");
+    }
+  }
+
   void addEvent(PlayerEventType type, int value) {
     for (PlayerEvent event in events) {
       if (event.sent) continue;

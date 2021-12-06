@@ -48,8 +48,11 @@ void sendRequestDeselectAbility() {
   send('${ClientRequest.DeselectAbility.index} $session');
 }
 
-void sendRequestSetAbility(AbilityType ability) {
-  send('${ClientRequest.SelectAbility.index} $session ${ability.index}');
+void sendRequestSelectAbility(int index) {
+  if (index < 1 || index > 4){
+    throw Exception("sendRequestSelectAbility(index: $index) - index must be between 1 and 4 inclusive");
+  }
+  send('${ClientRequest.SelectAbility.index} $session $index');
 }
 
 void skipHour(){

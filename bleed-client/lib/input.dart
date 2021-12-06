@@ -141,30 +141,30 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.hourBackwards: reverseHour,
   keys.teleport: teleportToMouse,
   keys.casteFireball: sendRequestCastFireball,
-  keys.equip1: equip1,
-  keys.equip2: equip2,
-  keys.equip3: equip3,
-  keys.equip4: equip4,
+  keys.equip1: selectAbility1,
+  keys.equip2: selectAbility2,
+  keys.equip3: selectAbility3,
+  keys.equip4: selectAbility4,
   keys.toggleSkillTree: hud.skillTreeVisible.toggle,
   keys.pixelExplosion: (){
     emitPixelExplosion(mouseWorldX, mouseWorldY);
   },
 };
 
-void equip1() {
-  sendRequestSetAbility(AbilityType.Explosion);
+void selectAbility1() {
+  sendRequestSelectAbility(1);
 }
 
-void equip2() {
-  sendRequestSetAbility(AbilityType.Blink);
+void selectAbility2() {
+  sendRequestSelectAbility(2);
 }
 
-void equip3() {
-  sendRequestSetAbility(AbilityType.FreezeCircle);
+void selectAbility3() {
+  sendRequestSelectAbility(3);
 }
 
-void equip4() {
-  sendRequestEquip(3);
+void selectAbility4() {
+  sendRequestSelectAbility(4);
 }
 
 void teleportToMouse() {

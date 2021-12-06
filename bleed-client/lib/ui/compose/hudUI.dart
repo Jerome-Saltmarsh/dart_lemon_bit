@@ -507,16 +507,16 @@ Widget buildAbilities() {
   return Container(
     child: Row(
       children: [
-        buildAbility(game.player.ability1),
-        buildAbility(game.player.ability2),
-        buildAbility(game.player.ability3),
-        buildAbility(game.player.ability4),
+        buildAbility(game.player.ability1, 1),
+        buildAbility(game.player.ability2, 2),
+        buildAbility(game.player.ability3, 3),
+        buildAbility(game.player.ability4, 4),
       ],
     ),
   );
 }
 
-Widget buildAbility(Ability ability) {
+Widget buildAbility(Ability ability, int index) {
   return WatchBuilder(
     game.player.skillPoints,
       (int points){
@@ -541,7 +541,7 @@ Widget buildAbility(Ability ability) {
               WatchBuilder(ability.level, (int level) {
                 return onPressed(
                   callback: (){
-                    sendRequestSetAbility(ability.type.value);
+                    sendRequestSelectAbility(index);
                   },
                   child: border(
                     child: text("${abilityTypeToString(type)} $level"),
