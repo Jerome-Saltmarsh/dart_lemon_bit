@@ -364,6 +364,11 @@ void main() {
             return;
           }
 
+          if (ability.magicCost > player.magic){
+            error(GameError.InsufficientMana);
+            return;
+          }
+
           player.ability = ability;
           break;
 
