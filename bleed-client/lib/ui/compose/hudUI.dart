@@ -96,14 +96,10 @@ Widget buildTopLeft() {
 
 Widget buildSkillsButton() {
   return WatchBuilder(game.player.skillPoints, (int value) {
-    return onPressed(
-      callback: toggleSkillTreeVisible,
-      child: Row(children: [
-        Tooltip(message: "Press T", child: text("Skills")),
-        if (value > 0) width4,
-        if (value > 0) text(value)
-      ]),
-    );
+
+    if (value == 0) return emptyContainer;
+
+    return text("Skill Points $value", color: Colors.green);
   });
 }
 
@@ -532,7 +528,7 @@ Widget buildAbility(Ability ability, int index) {
                 callback: (){
                   sendRequest.upgradeAbility(index);
                 },
-                hint: "Upgrade ${abilityTypeToString(type)}",
+                hint: "${(ability.level.value == 0 ? "Learn" : "Upgrade")} ${abilityTypeToString(type)}",
                 child: border(child: text("+", fontSize: 25),
                   color: Colors.white,
                   padding: EdgeInsets.symmetric(horizontal: 5),
@@ -540,15 +536,18 @@ Widget buildAbility(Ability ability, int index) {
               ),
               height4,
               WatchBuilder(ability.level, (int level) {
+                final Color color = level == 0 ? Colors.white54 : Colors.white;
+
                 return onPressed(
                   callback: (){
                     sendRequestSelectAbility(index);
                   },
                   child: border(
-                    child: text("${abilityTypeToString(type)} $level"),
-                    color: Colors.white,
+                    child: text("${abilityTypeToString(type)} ${level == 0 ? "" : level}", color: color),
+                    color: color,
+                    fillColor: Colors.black38,
                     margin: EdgeInsets.only(right: 4),
-                    padding: EdgeInsets.all(4),
+                    padding: EdgeInsets.all(8),
                   ),
                 );
               }),
