@@ -55,6 +55,8 @@ Player? findPlayerByUuid(String uuid) {
   return null;
 }
 
+const cursorRadius = 20;
+
 void main() {
   print('Bleed Game Server Starting');
   initUpdateLoop();
@@ -175,6 +177,9 @@ void main() {
             double mouseX = double.parse(arguments[4]);
             double mouseY = double.parse(arguments[5]);
 
+            double mouseTop = mouseY - cursorRadius - settings.radius.character;
+            double mouseBottom = mouseY + cursorRadius + settings.radius.character;
+
             playerSetAbilityTarget(player, mouseX, mouseY);
 
             if (game.zombies.isNotEmpty) {
@@ -183,6 +188,8 @@ void main() {
               num closestY = diff(mouseY, closest.y);
               num close = min(closestX, closestY);
               for (Character npc in game.zombies) {
+                if (npc.y < mouseTop) continue;
+                if (npc.y > mouseBottom) break;
                 num closestX2 = diff(mouseX, npc.x);
                 num closestY2 = diff(mouseY, npc.y);
                 num closes2 = min(closestX2, closestY2);
