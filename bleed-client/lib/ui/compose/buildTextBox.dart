@@ -52,7 +52,7 @@ Widget buildTextBox() {
                   child: Row(
                     children: [
                       onPressed(callback: sendAndCloseTextBox, child: border(child: text("Send")), hint: "(Press Enter)"),
-                      width8,
+                      width16,
                       onPressed(callback: hideTextBox, child: text("Cancel", decoration: TextDecoration.underline), hint: ("(Press Escape")),
                     ],
                   ),
