@@ -156,6 +156,7 @@ final Widget height2 = height(2);
 final Widget height4 = height(4);
 final Widget height8 = height(8);
 final Widget height16 = height(16);
+final Widget height20 = height(20);
 final Widget height32 = height(32);
 final Widget height50 = height(50);
 

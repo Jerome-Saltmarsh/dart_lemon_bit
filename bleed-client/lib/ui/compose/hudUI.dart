@@ -130,7 +130,7 @@ Widget buildSkillsButton() {
   return WatchBuilder(game.player.skillPoints, (int value) {
     if (value == 0) return emptyContainer;
     return Container(
-        height: 86,
+        height: 103,
         alignment: Alignment.topLeft,
         child: border(
             color: Colors.white,
@@ -547,30 +547,60 @@ Widget buildBottomLeft() {
   ));
 }
 
-Widget buildClippedCircle(){
+Widget buildPercentageBox(double percentage, double size){
   return ClipPath(
-    clipper: MyCustomClipper(0),
+    clipper: MyCustomClipper(percentage),
     child: Container(
-      width: 200,
-      height: 200,
-      color: Colors.pink,
+      width: size,
+      height: size,
+      color: Colors.white,
     ),
   );
 }
 
+const oneEighth = 1.0 / 8.0;
+const oneQuarter = 1.0 / 4.0;
+const half = 1.0 / 2.0;
+
 class MyCustomClipper extends CustomClipper<Path> {
 
-  final double radians;
+  final double percentage;
 
-  MyCustomClipper(this.radians);
+  MyCustomClipper(this.percentage);
 
   @override
   Path getClip(Size size) {
+
+    final width = size.width;
+    final height = size. height;
+    final halfWidth = width * 0.5;
+    final halfHeight = height * 0.5;
+
     Path path = Path()
-      ..moveTo(size.width * 0.5, 0)
-      ..lineTo(size.width * 0.5, size.height * 0.5)
-      ..lineTo(0, size.height * 0.5)
-      ..close();
+      ..moveTo(halfWidth, 0);
+
+    if (percentage > oneEighth)
+      path.lineTo(0, 0);  // top left
+
+    if (percentage > oneQuarter)
+      path.lineTo(0, halfHeight); // center left
+
+    if (percentage > oneQuarter + oneEighth)
+      path.lineTo(0, height); // bottom left
+
+    if (percentage > half)
+      path.lineTo(halfWidth, height); // center bottom
+
+    if (percentage > half + oneEighth)
+      path.lineTo(width, height); // bottom right
+
+    if (percentage > half + oneQuarter)
+      path.lineTo(width, halfHeight); // center right
+
+    if (percentage > half + oneQuarter + oneEighth)
+      path.lineTo(width, 0); // top right
+
+    path.close();
     return path;
   }
 
@@ -582,7 +612,6 @@ Widget buildAbilities() {
   return Container(
     child: Row(
       children: [
-        // buildClippedCircle(),
         buildAbility(game.player.ability1, 1),
         buildAbility(game.player.ability2, 2),
         buildAbility(game.player.ability3, 3),
@@ -619,7 +648,7 @@ Widget buildAbility(Ability ability, int index) {
             ),
           );
         }),
-        height4,
+        height20,
         WatchBuilder(ability.level, (int level) {
           return WatchBuilder(ability.cooldown, (int cooldown){
             return WatchBuilder(ability.cooldownRemaining, (int cooldownRemaining){
@@ -656,7 +685,9 @@ Widget buildAbility(Ability ability, int index) {
                           height: 50,
                           alignment: Alignment.center,
                           color: Colors.black54,
-                          )
+                          ),
+                    // if (cooldownRemaining > 0)
+                    //   buildPercentageBox(0.66, 50),
 
                   ],
                 ),
