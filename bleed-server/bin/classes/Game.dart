@@ -1597,25 +1597,25 @@ void selectCharacterType(Player player, CharacterType value) {
           level: 0,
           magicCost: 10,
           range: 200,
-          cooldown: 100);
+          cooldown: 15);
       player.ability2 = Ability(
           type: AbilityType.Blink,
           level: 0,
           magicCost: 10,
           range: 200,
-          cooldown: 100);
+          cooldown: 10);
       player.ability3 = Ability(
           type: AbilityType.FreezeCircle,
           level: 0,
           magicCost: 10,
           range: 200,
-          cooldown: 100);
+          cooldown: 15);
       player.ability4 = Ability(
           type: AbilityType.Fireball,
           level: 0,
           magicCost: 10,
           range: 200,
-          cooldown: 100);
+          cooldown: 25);
       player.maxMagic = 100;
       player.magic = 100;
       break;
