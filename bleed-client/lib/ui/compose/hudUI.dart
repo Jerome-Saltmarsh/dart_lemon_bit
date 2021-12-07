@@ -614,6 +614,7 @@ Widget buildAbility(Ability ability, int index) {
           return WatchBuilder(ability.cooldown, (int cooldown){
             return WatchBuilder(ability.cooldownRemaining, (int cooldownRemaining){
               return onPressed(
+                hint: abilityTypeToString(ability.type.value),
                 callback: (){
                   sendRequestSelectAbility(index);
                 },
@@ -632,7 +633,15 @@ Widget buildAbility(Ability ability, int index) {
                           height: 50,
                           alignment: Alignment.center,
                           color: Colors.black54,
-                          child: text("${cooldownRemaining}s"))
+                          child: text("${cooldownRemaining}s")),
+                    if (level < 1)
+                      Container(
+                          width: 50,
+                          height: 50,
+                          alignment: Alignment.center,
+                          color: Colors.black54,
+                          )
+
                   ],
                 ),
               );
