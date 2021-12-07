@@ -36,6 +36,7 @@ class Bool extends Watch<bool> {
 
 class _Hud {
   final Bool skillTreeVisible = Bool(false);
+  Watch<bool> fullScreenDialogVisible = Watch(true);
   final _State state = _State();
   final _FocusNodes focusNodes = _FocusNodes();
   final _TextEditingControllers textEditingControllers = _TextEditingControllers();

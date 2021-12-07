@@ -38,6 +38,7 @@ class _MainAxis {
   final MainAxisAlignment center = MainAxisAlignment.center;
   final MainAxisAlignment between = MainAxisAlignment.spaceBetween;
   final MainAxisAlignment spread = MainAxisAlignment.spaceBetween;
+  final MainAxisAlignment apart = MainAxisAlignment.spaceBetween;
   final MainAxisAlignment even = MainAxisAlignment.spaceEvenly;
 }
 
