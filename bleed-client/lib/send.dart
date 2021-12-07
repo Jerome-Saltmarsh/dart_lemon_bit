@@ -94,12 +94,12 @@ void sendRequestUpdatePlayer() {
   _write(gameUpdateIndex);
   _write(game.player.uuid);
   _write(characterController.action.index);
+  characterController.action = CharacterAction.Idle;
   _write(characterController.direction.index);
   _write(mouseWorldX.toInt());
   _write(mouseWorldY.toInt());
   send(_buffer.toString());
 
-  characterController.action = CharacterAction.Idle;
 }
 
 void sendRequestSetCompilePaths(bool value) {
