@@ -73,7 +73,7 @@ Widget comingSoon({Widget child}) {
 
 Widget onPressed({Widget child, Function callback, dynamic hint}) {
   Widget widget = MouseRegion(
-      cursor: SystemMouseCursors.click,
+      cursor: callback != null ? SystemMouseCursors.click : SystemMouseCursors.forbidden,
       child: GestureDetector(child: child, onTap: callback));
 
   if (hint == null) return widget;

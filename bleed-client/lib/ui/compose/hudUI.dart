@@ -619,7 +619,7 @@ Widget buildAbility(Ability ability, int index) {
             return WatchBuilder(ability.cooldownRemaining, (int cooldownRemaining){
               return onPressed(
                 hint: abilityTypeToString(ability.type.value),
-                callback: (){
+                callback: level == 0 || cooldownRemaining > 0 ? null : (){
                   sendRequestSelectAbility(index);
                 },
                 child: Stack(
