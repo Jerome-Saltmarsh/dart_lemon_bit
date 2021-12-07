@@ -458,9 +458,9 @@ extension GameFunctions on Game {
     return null;
   }
 
-  void _characterFireWeapon(Character character) {
+  void _characterAttack(Character character) {
     if (character.dead) return;
-    if (character.stateDuration > 0) return;
+    if (character.busy) return;
     faceAimDirection(character);
 
     if (character is Player) {
@@ -562,7 +562,7 @@ extension GameFunctions on Game {
           setCharacterState(character, CharacterState.Striking);
           return;
         }
-        _characterFireWeapon(character);
+        _characterAttack(character);
         break;
       case CharacterState.Striking:
         // @on character striking
@@ -903,13 +903,7 @@ extension GameFunctions on Game {
 
     if (character.stateDuration > 0) {
       character.stateDuration--;
-
       if (character.stateDuration == 0) {
-        switch (character.state) {
-          case CharacterState.Reloading:
-            dispatch(GameEventType.Reloaded, character.x, character.y, 0, 0);
-            break;
-        }
         setCharacterState(character, CharacterState.Idle);
       }
     }
@@ -1011,7 +1005,7 @@ extension GameFunctions on Game {
         switch (character.type) {
           case CharacterType.Witch:
             if (character.stateDuration == 3) {
-              spawnFireball(character);
+              spawnBlueOrb(character);
             }
             break;
           default:
@@ -1088,6 +1082,16 @@ extension GameFunctions on Game {
         damage: 100,
         range: settings.range.firebolt,
         type: ProjectileType.Fireball);
+  }
+
+  Projectile spawnBlueOrb(Character character) {
+    return spawnProjectile(
+        character: character,
+        accuracy: 0,
+        speed: settings.projectileSpeed.fireball,
+        damage: 100,
+        range: settings.range.firebolt,
+        type: ProjectileType.Blue_Orb);
   }
 
   void casteSlowingCircle(Character character, double x, double y) {}

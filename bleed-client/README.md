@@ -114,7 +114,9 @@ When the player loads into the game they start in the open world mode. To begin 
 core mode and won't be possible to persist characters. 
 In the future the player will be able to store their character inside an sql database
 Game Modes include MMO, Dota, Base defense, 
-[ ] Ability cool down
+[ ] Items
+[ ] Attributes (Intelligence, Strength, Agility)
+[x] Ability cool down
 [x] Magic Regen
 [x] Magic
 -- COMPLETED --

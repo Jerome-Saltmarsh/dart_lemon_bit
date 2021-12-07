@@ -15,6 +15,7 @@ import 'package:bleed_client/render/mappers/mapDst.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:lemon_engine/render/draw_circle.dart';
 import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_math/piHalf.dart';
@@ -41,6 +42,9 @@ void drawProjectile(Projectile projectile) {
     case ProjectileType.Arrow:
       drawArrow(projectile.x, projectile.y,
           convertDirectionToAngle(projectile.direction));
+      break;
+    case ProjectileType.Blue_Orb:
+      drawCircle(projectile.x, projectile.y, 5, Colors.blue);
       break;
   }
 }

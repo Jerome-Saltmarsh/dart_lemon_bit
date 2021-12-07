@@ -540,6 +540,7 @@ Widget buildBottomLeft() {
     crossAxisAlignment: cross.end,
     children: [
       buildMagicBar(),
+      width8,
       buildAbilities(),
       buildSkillsButton(),
     ],
@@ -631,7 +632,7 @@ Widget buildAbility(Ability ability, int index) {
                   children: [
                     mouseOver(builder: (BuildContext context, bool mouseOver){
                       return buildDecorationImage(
-                          image: spell01,
+                          image: mapAbilityTypeToDecorationImage[type],
                           width: 50,
                           height: 50,
                           borderColor: mouseOver ? Colors.white : Colors.black54,
