@@ -191,8 +191,8 @@ void compilePlayer(StringBuffer buffer, Player player) {
     _writeInt(buffer, attackTarget.y);
   }else{
     _write(buffer, ServerResponse.Player_Attack_Target.index);
-    _writeInt(buffer, -1);
-    _writeInt(buffer, -1);
+    _writeInt(buffer, 0);
+    _writeInt(buffer, 0);
   }
 
   if (player.abilitiesDirty) {
