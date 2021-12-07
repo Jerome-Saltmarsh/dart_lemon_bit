@@ -987,6 +987,7 @@ extension GameFunctions on Game {
               dispatch(GameEventType.Teleported, character.x, character.y);
               character.x = character.abilityTarget.x;
               character.y = character.abilityTarget.y;
+              dispatch(GameEventType.Teleported, character.x, character.y);
               character.performing = null;
             }
             break;
