@@ -24,4 +24,5 @@ enum GameEventType {
   Ammo_Acquired,
   Credits_Acquired,
   FreezeCircle,
+  Teleported,
 }

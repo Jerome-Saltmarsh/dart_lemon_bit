@@ -984,6 +984,7 @@ extension GameFunctions on Game {
             break;
           case AbilityType.Blink:
             if (character.stateDuration == 3) {
+              dispatch(GameEventType.Teleported, character.x, character.y);
               character.x = character.abilityTarget.x;
               character.y = character.abilityTarget.y;
               character.performing = null;

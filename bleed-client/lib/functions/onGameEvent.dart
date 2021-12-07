@@ -124,6 +124,9 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
     case GameEventType.FreezeCircle:
       spawnFreezeCircle(x: x.toDouble(), y: y.toDouble());
       break;
+    case GameEventType.Teleported:
+      emitPixelExplosion(x.toDouble(), y.toDouble());
+      break;
     case GameEventType.Clip_Empty:
       playAudioClipEmpty(x, y);
       return;
