@@ -1,3 +1,5 @@
+import 'package:bleed_client/ui/logic/hudLogic.dart';
+import 'package:bleed_client/ui/logic/showTextBox.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:flutter/material.dart';
@@ -9,40 +11,54 @@ import 'widgets.dart';
 Widget buildTextBox() {
   return WatchBuilder(hud.state.textBoxVisible, (bool value){
     if (!value) return blank;
+
     return Positioned(
         bottom: 100,
         child: Container(
           width: screenWidth,
-          child: Row(
-            mainAxisAlignment: main.center,
-            children: [
-              Container(
-                  width: 300,
-                  height: 100,
-                  alignment: Alignment.center,
-                  decoration: boxDecoration(
-                    fillColor: Colors.black45
+          alignment: Alignment.center,
+          child: Container(
+            width: 400,
+            decoration: BoxDecoration(
+                borderRadius: borderRadius4,
+                color: Colors.black54),
+            child: Column(
+              mainAxisAlignment: main.center,
+              children: [
+                Container(
+                    width: 400,
+                    height: 100,
+                    alignment: Alignment.center,
+                    padding: padding8,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        hintText: 'message...',
+                        hintStyle: TextStyle(color: Colors.white60),
+                        focusColor: Colors.white,
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white60),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(color: Colors.white60),
+                        ),
+                      ),
+                      focusNode: hud.focusNodes.textFieldMessage,
+                      controller: hud.textEditingControllers.speak,
+                      maxLength: 50,
+                      style: TextStyle(color: Colors.white),
+                    )),
+                Container(
+                  margin: EdgeInsets.only(left: 8, bottom: 16),
+                  child: Row(
+                    children: [
+                      onPressed(callback: sendAndCloseTextBox, child: border(child: text("Send")), hint: "(Press Enter)"),
+                      width8,
+                      onPressed(callback: hideTextBox, child: text("Cancel", decoration: TextDecoration.underline), hint: ("(Press Escape")),
+                    ],
                   ),
-                  padding: padding8,
-                  child: TextField(
-                    decoration: InputDecoration(
-                      hintText: 'Press Enter to send',
-                      hintStyle: TextStyle(color: Colors.white60),
-                      focusColor: Colors.white,
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white60),
-                      ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(color: Colors.white60),
-                      ),
-                      suffixText: "(Press Enter)"
-                    ),
-                    focusNode: hud.focusNodes.textFieldMessage,
-                    controller: hud.textEditingControllers.speak,
-                    maxLength: 50,
-                    style: TextStyle(color: Colors.white),
-                  )),
-            ],
+                )
+              ],
+            ),
           ),
         ));
   },);
