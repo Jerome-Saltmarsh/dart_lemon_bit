@@ -2,14 +2,31 @@ import 'package:bleed_client/common/AbilityType.dart';
 import 'package:flutter/painting.dart';
 
 Map<AbilityType, DecorationImage> mapAbilityTypeToDecorationImage = {
-  AbilityType.Fireball: _load("fireball"),
-  AbilityType.FreezeCircle: _load("freeze"),
-  AbilityType.Blink: _load("flash"),
-  AbilityType.Explosion: _load("explode"),
+  AbilityType.Fireball: spellIcon("fireball"),
+  AbilityType.FreezeCircle: spellIcon("freeze"),
+  AbilityType.Blink: spellIcon("flash"),
+  AbilityType.Explosion: spellIcon("explode"),
 };
 
-DecorationImage _load(String name) {
+final _Icons icons = _Icons();
+
+class _Icons {
+  DecorationImage settings = _png('icon settings');
+  DecorationImage fullscreen = _png('icon fullscreen');
+}
+
+DecorationImage spellIcon(String name) {
+  return _png('spell-icon-$name');
+}
+
+DecorationImage _png(String name) {
   return DecorationImage(
-    image: AssetImage('images/spell-icon-$name.png'),
+    image: AssetImage('images/$name.png'),
+  );
+}
+
+DecorationImage loadDecorationImage(String name) {
+  return DecorationImage(
+    image: AssetImage(name),
   );
 }

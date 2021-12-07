@@ -262,18 +262,29 @@ Widget buildFullScreenDialog() {
         height: 60,
         borderColor: Colors.transparent,
         child: Row(
-          mainAxisAlignment: main.even,
+          mainAxisAlignment: main.center,
           children: [
             border(
-              child: text("Fullscreen", onPressed: () {
-                hud.fullScreenDialogVisible.value = false;
-                fullScreenEnter();
-              }),
+              child: onPressed(
+                hint: "F11",
+                callback: () {
+                  hud.fullScreenDialogVisible.value = false;
+                  fullScreenEnter();
+                },
+                child: Row(
+                  children: [
+                    text("Fullscreen"),
+                    buildDecorationImage(image: icons.fullscreen, width: 32,height: 32, borderWidth: 0),
+                  ],
+                ),
+              ),
             ),
-            border(
-              child: text("No Thanks", onPressed: () {
+            width16,
+            onPressed(
+              callback: (){
                 hud.fullScreenDialogVisible.value = false;
-              }),
+              },
+              child: text("No Thanks", decoration: TextDecoration.underline),
             ),
           ],
         ));
@@ -389,9 +400,7 @@ Widget buildMenu() {
   return WatchBuilder(hud.state.menuVisible, (bool value) {
     print("Build menu visible $value");
     if (!value)
-      return Container(
-        child: const Icon(Icons.menu, size: _iconSize, color: Colors.white),
-      );
+      return buildDecorationImage(image: icons.settings, width: 40, height: 40, borderWidth: 0);
 
     Widget iconToggleFullscreen = Tooltip(
       child: IconButton(
@@ -502,7 +511,7 @@ Widget buildDecorationImage({
     decoration: BoxDecoration(
       image: image,
       color: color,
-      border: Border.all(color: borderColor, width: borderWidth),
+      border: borderWidth > 0 ? Border.all(color: borderColor, width: borderWidth) : null,
       borderRadius: borderRadius4,
     ),
   );
