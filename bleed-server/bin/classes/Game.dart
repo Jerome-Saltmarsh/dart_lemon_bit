@@ -1,10 +1,13 @@
 import 'dart:math';
 
 import 'package:lemon_math/abs.dart';
+import 'package:lemon_math/angle.dart';
+import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/diff.dart';
 import 'package:lemon_math/diff_over.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/give_or_take.dart';
+import 'package:lemon_math/hypotenuse.dart';
 import 'package:lemon_math/randomInt.dart';
 import 'package:lemon_math/randomItem.dart';
 
@@ -625,7 +628,13 @@ extension GameFunctions on Game {
       Projectile projectile = projectiles[i];
       projectile.x += projectile.xv;
       projectile.y += projectile.yv;
-      if (projectileDistanceTravelled(projectile) > projectile.range) {
+
+      Positioned? target = projectile.target;
+      if (target != null) {
+        final double rot = radiansBetweenObject(projectile, target);
+        projectile.xv = adj(rot, projectile.speed);
+        projectile.yv = opp(rot, projectile.speed);
+      } else if (projectileDistanceTravelled(projectile) > projectile.range) {
         deactivateProjectile(projectile);
       }
     }
@@ -1126,25 +1135,20 @@ extension GameFunctions on Game {
     Positioned? target,
   }) {
     double spawnDistance = character.radius + 20;
-    double x = character.x + adj(character.aimAngle, spawnDistance);
-    double y = character.y + opp(character.aimAngle, spawnDistance);
-    double xv = velX(character.aimAngle + giveOrTake(accuracy), speed);
-    double yv = velY(character.aimAngle + giveOrTake(accuracy), speed);
-    Direction direction = convertAngleToDirection(character.aimAngle);
-
     Projectile projectile = getAvailableProjectile();
     projectile.target = target;
     projectile.active = true;
-    projectile.xStart = x;
-    projectile.yStart = y;
-    projectile.x = x;
-    projectile.y = y;
-    projectile.xv = xv;
-    projectile.yv = yv;
+    projectile.xStart = character.x + adj(character.aimAngle, spawnDistance);
+    projectile.yStart = character.y + opp(character.aimAngle, spawnDistance);
+    projectile.x = projectile.xStart;
+    projectile.y = projectile.yStart;
+    projectile.xv = velX(character.aimAngle + giveOrTake(accuracy), speed);
+    projectile.yv = velY(character.aimAngle + giveOrTake(accuracy), speed);
+    projectile.speed = hypotenuse(projectile.xv, projectile.yv);
     projectile.owner = character;
     projectile.range = range;
     projectile.damage = damage;
-    projectile.direction = direction;
+    projectile.direction = convertAngleToDirection(character.aimAngle);
     projectile.type = type;
     return projectile;
   }
@@ -1597,7 +1601,7 @@ void selectCharacterType(Player player, CharacterType value) {
       // TODO: Handle this case.
       break;
     case CharacterType.Witch:
-      player.attackRange = 100;
+      player.attackRange = 200;
       player.ability1 = Ability(
           type: AbilityType.Explosion,
           level: 0,

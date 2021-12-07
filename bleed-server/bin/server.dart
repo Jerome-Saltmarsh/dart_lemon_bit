@@ -195,19 +195,23 @@ void main() {
                     num close = min(closestX, closestY);
                     for (Character npc in game.zombies) {
                       num closestX2 = diff(mouseX, npc.x);
-                      num closestY2 = diff(mouseX, npc.y);
+                      num closestY2 = diff(mouseY, npc.y);
                       num closes2 = min(closestX2, closestY2);
                       if (closes2 < close) {
                         closest = npc;
                         close = closes2;
                       }
                     }
-                    if (withinDistance(closest, player.x, player.y, player.attackRange)) {
-                      player.attackTarget = closest;
+                    final clickRange = 35.0;
+                    if (withinDistance(closest, mouseX, mouseY, clickRange)) {
+                      if (withinDistance(
+                          closest, player.x, player.y, player.attackRange)) {
+                        player.attackTarget = closest;
+                        game.setCharacterState(player, CharacterState.Striking);
+                      }
                     }
                   }
-
-                  game.setCharacterState(player, CharacterState.Striking);
+                  // game.setCharacterState(player, CharacterState.Striking);
                   break;
                 }
 

@@ -14,6 +14,7 @@ class Projectile extends GameObject implements HasSquad {
   late ProjectileType type;
   late Direction direction;
   late Positioned? target;
+  late double speed;
 
   Projectile():super(0, 0);
 
