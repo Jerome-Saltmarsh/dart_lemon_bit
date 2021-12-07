@@ -32,11 +32,14 @@ import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
+import 'package:bleed_client/ui/logic/showTextBox.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/phase.dart';
 import 'package:bleed_client/watches/time.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:lemon_engine/functions/register_on_mouse_scroll.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -125,15 +128,27 @@ void initializeEventListeners() {
     performPrimaryAction();
   });
 
-  hud.state.textBoxVisible.onChanged((bool visible) {
-    if (visible) {
+  // registerKeyboardHandler((RawKeyEvent event) {
+  //   if (!hud.state.textBoxVisible.value) return;
+  //   if (event is RawKeyDownEvent) {
+  //     if (event.logicalKey == LogicalKeyboardKey.enter) {
+  //       sendAndCloseTextBox();
+  //     } else if (event.logicalKey == LogicalKeyboardKey.escape) {
+  //       hideTextBox();
+  //     }
+  //   }
+  // });
+
+  hud.focusNodes.textFieldMessage.addListener(() {
+    if (hud.textBoxFocused){
       deregisterPlayKeyboardHandler();
       registerTextBoxKeyboardHandler();
-    } else {
+    }else{
       registerPlayKeyboardHandler();
       deregisterTextBoxKeyboardHandler();
     }
   });
+
 
   game.player.state.onChanged((CharacterState state) {
     game.player.alive.value = state != CharacterState.Dead;

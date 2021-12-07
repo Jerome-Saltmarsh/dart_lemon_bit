@@ -41,6 +41,8 @@ class _Hud {
   final _FocusNodes focusNodes = _FocusNodes();
   final _TextEditingControllers textEditingControllers = _TextEditingControllers();
   final _Properties properties = _Properties();
+
+  bool get textBoxFocused => focusNodes.textFieldMessage.hasFocus;
 }
 
 

@@ -138,7 +138,6 @@ class _Keys {
   LogicalKeyboardKey hourBackwards = LogicalKeyboardKey.arrowLeft;
   LogicalKeyboardKey teleport = LogicalKeyboardKey.keyG;
   LogicalKeyboardKey casteFireball = LogicalKeyboardKey.keyZ;
-  LogicalKeyboardKey toggleSkillTree = LogicalKeyboardKey.keyT;
   LogicalKeyboardKey arrowUp = LogicalKeyboardKey.arrowUp;
   LogicalKeyboardKey arrowDown = LogicalKeyboardKey.arrowDown;
   LogicalKeyboardKey pixelExplosion = LogicalKeyboardKey.keyP;
@@ -186,10 +185,6 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.equip2B: selectAbility2,
   keys.equip3B: selectAbility3,
   keys.equip4B: selectAbility4,
-  keys.toggleSkillTree: hud.skillTreeVisible.toggle,
-  keys.pixelExplosion: () {
-    emitPixelExplosion(mouseWorldX, mouseWorldY);
-  },
 };
 
 void selectAbility1() {
@@ -297,6 +292,12 @@ void stopMelee() {
 void _handleKeyDownEventPlayMode(RawKeyDownEvent event) {
   LogicalKeyboardKey key = event.logicalKey;
 
+  if (key == LogicalKeyboardKey.enter){
+    if (hud.state.textBoxVisible.value){
+      sendAndCloseTextBox();
+    }
+  }
+
   if (!_keyDownState.containsKey(key)) {
     _keyDownState[key] = true;
     if (_keyPressedHandlers.containsKey(key)) {
@@ -344,7 +345,7 @@ void readPlayerInput() {
   // TODO This should be reactive
   if (!playerAssigned) return;
 
-  if (hud.state.textBoxVisible.value) return;
+  if (hud.textBoxFocused) return;
 
   if (characterController.action == CharacterAction.Perform) return;
 
