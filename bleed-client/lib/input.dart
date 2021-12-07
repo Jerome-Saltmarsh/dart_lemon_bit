@@ -161,10 +161,6 @@ final List<String> waitASecond = ['Wait a second', 'Just a moment'];
 Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.interact: sendRequestInteract,
   keys.perform: performPrimaryAction,
-  // keys.runLeft: runLeft,
-  // keys.runUp: runUp,
-  // keys.runRight: runRight,
-  // keys.runDown: runDown,
   keys.melee: melee,
   keys.speakLetsGo: sayLetsGo,
   keys.speakLetsGreeting: sayGreeting,

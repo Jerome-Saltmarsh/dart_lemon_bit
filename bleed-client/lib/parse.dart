@@ -42,6 +42,7 @@ import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/utils/list_util.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/time.dart';
+import 'package:lemon_engine/state/cursor.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:neuro/instance.dart';
 
@@ -107,6 +108,15 @@ void parseState() {
       case ServerResponse.Player_Attack_Target:
         game.player.attackTarget.x = _consumeDouble();
         game.player.attackTarget.y = _consumeDouble();
+
+        if (game.player.characterType.value == CharacterType.Witch){
+          if (game.player.attackTarget.x != 0 &&
+              game.player.attackTarget.y != 0) {
+            cursorType.value = CursorType.Click;
+          } else {
+            cursorType.value = CursorType.Precise;
+          }
+        }
         break;
 
       case ServerResponse.Player:
@@ -125,11 +135,10 @@ void parseState() {
         hud.skillTreeVisible.value = !hud.skillTreeVisible.value;
         break;
 
-
-  case ServerResponse.Weapons:
+      case ServerResponse.Weapons:
         game.player.weapons.clear();
         int length = _consumeIntUnsafe();
-        for(int i = 0; i < length; i++){
+        for (int i = 0; i < length; i++) {
           game.player.weapons.add(_consumeWeapon());
         }
         break;
@@ -255,7 +264,7 @@ void parseState() {
 
       case ServerResponse.Items:
         game.totalItems = _consumeInt();
-        for(int i = 0; i < game.totalItems; i++){
+        for (int i = 0; i < game.totalItems; i++) {
           Item item = game.items[i];
           item.type = _consumeItemType();
           item.x = _consumeDouble();
@@ -292,12 +301,14 @@ void _parseEnvironmentObjects() {
     double radius = _consumeDouble();
     ObjectType type = _consumeEnvironmentObjectType();
 
-    switch(type){
+    switch (type) {
       case ObjectType.SmokeEmitter:
-        addParticleEmitter(ParticleEmitter(x: x, y: y, rate: 20, emit: emitSmoke));
+        addParticleEmitter(
+            ParticleEmitter(x: x, y: y, rate: 20, emit: emitSmoke));
         break;
       case ObjectType.MystEmitter:
-        addParticleEmitter(ParticleEmitter(x: x, y: y, rate: 20, emit: emitMyst));
+        addParticleEmitter(
+            ParticleEmitter(x: x, y: y, rate: 20, emit: emitMyst));
         break;
       case ObjectType.Torch:
         // addParticleEmitter(ParticleEmitter(x: x, y: y - 40, rate: 75, emit: emitPixel));
@@ -316,15 +327,10 @@ void _parseEnvironmentObjects() {
     dst[2] = x - (width * 0.5);
     dst[3] = y - (height * 0.6666);
 
-    EnvironmentObject env = EnvironmentObject(
-        x: x,
-        y: y,
-        type: type,
-        dst: dst,
-        radius: radius
-    );
+    EnvironmentObject env =
+        EnvironmentObject(x: x, y: y, type: type, dst: dst, radius: radius);
 
-    if (type == ObjectType.Torch){
+    if (type == ObjectType.Torch) {
       game.torches.add(env);
     }
 
@@ -338,7 +344,7 @@ void _parseEnvironmentObjects() {
   applyEnvironmentObjectsToBakeMapping();
 }
 
-void addParticleEmitter(ParticleEmitter value){
+void addParticleEmitter(ParticleEmitter value) {
   game.particleEmitters.add(value);
 }
 
@@ -402,17 +408,17 @@ void _parsePlayer() {
   game.player.attackRange = _consumeDouble();
 }
 
-AbilityType _consumeAbilityType(){
+AbilityType _consumeAbilityType() {
   return abilities[_consumeInt()];
 }
 
-CharacterType _consumeCharacterType(){
+CharacterType _consumeCharacterType() {
   return characterTypes[_consumeInt()];
 }
 
 void _parsePlayerEvents() {
   int total = _consumeInt();
-  for(int i = 0; i < total; i++){
+  for (int i = 0; i < total; i++) {
     PlayerEventType playerEvent = playerEventTypes[_consumeInt()];
     int value = _consumeInt();
     switch (playerEvent) {
@@ -463,7 +469,7 @@ void _consumeSpace() {
   }
 }
 
-void _consumeAbility(Ability ability){
+void _consumeAbility(Ability ability) {
   ability.type.value = _consumeAbilityType();
   ability.level.value = _consumeInt();
   ability.cooldown.value = _consumeInt();
@@ -483,7 +489,7 @@ int _consumeIntUnsafe() {
   return int.parse(_consumeStringUnsafe());
 }
 
-int _consumeSingleDigitInt(){
+int _consumeSingleDigitInt() {
   return int.parse(_consumeSingleCharacter());
 }
 
@@ -495,17 +501,12 @@ WeaponType _consumeWeaponType() {
   return weaponTypes[_consumeSingleDigitInt()];
 }
 
-Weapon _consumeWeapon(){
+Weapon _consumeWeapon() {
   WeaponType type = _consumeWeaponType();
   int rounds = _consumeIntUnsafe();
   int capacity = _consumeIntUnsafe();
   int damage = _consumeInt();
-  return Weapon(
-      type: type,
-      rounds: rounds,
-      capacity: capacity,
-      damage: damage
-  );
+  return Weapon(type: type, rounds: rounds, capacity: capacity, damage: damage);
 }
 
 CharacterState _consumeCharacterState() {
@@ -649,7 +650,7 @@ ProjectileType _consumeProjectileType() {
 
 void _parseZombies() {
   game.totalZombies.value = _consumeInt();
-  for (int i = 0; i < game.totalZombies.value; i++){
+  for (int i = 0; i < game.totalZombies.value; i++) {
     _consumeZombie(game.zombies[i]);
   }
 }

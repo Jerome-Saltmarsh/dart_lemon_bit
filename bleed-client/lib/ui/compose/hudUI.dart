@@ -353,16 +353,7 @@ Widget buildHud() {
     return WatchBuilder(game.player.alive, (bool alive) {
       return Stack(
         children: [
-          Positioned(
-            left: 200,
-            top: 300,
-            child: WatchBuilder(
-              characterController.action,
-                (CharacterAction action){
-                return text(action);
-                }
-            ),
-          ),
+          // buildCharacterAction(),
           buildTextBox(),
           if (alive) buildBottomLeft(),
           if (alive) buildBottomRight(),
@@ -377,6 +368,19 @@ Widget buildHud() {
       );
     });
   });
+}
+
+Positioned buildCharacterAction() {
+  return Positioned(
+          left: 200,
+          top: 300,
+          child: WatchBuilder(
+            characterController.action,
+              (CharacterAction action){
+              return text(action);
+              }
+          ),
+        );
 }
 
 bool shotgunUnlocked() {

@@ -9,6 +9,7 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/AbilityType.dart';
+import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
@@ -123,6 +124,7 @@ void renderCanvasPlay() {
 
   if (game.player.attackTarget.x != 0){
     if (game.player.attackTarget.y != 0){
+      // todo optimize replace with with a png
       drawCircleOutline(
           sides: 8,
           radius: 20,
@@ -132,11 +134,13 @@ void renderCanvasPlay() {
     }
   }
 
-
   _drawFloatingTexts();
   _drawPlayerNames();
   drawPlayerText();
-  _drawMouseAim(); // TODO Expensive
+
+  // if (game.player.characterType.value != CharacterType.Witch){
+    _drawMouseAim(); // TODO Expensive
+  // }
 }
 
 void drawAbility() {
@@ -391,6 +395,8 @@ double mapWeaponAimLength(WeaponType weapon) {
 void _drawMouseAim() {
   if (!mouseAvailable) return;
   if (!playerReady) return;
+  if (game.player.dead) return;
+
   paint.strokeWidth = 3;
   double angle =
       angleBetween(mouseWorldX, mouseWorldY, game.player.x, game.player.y);
