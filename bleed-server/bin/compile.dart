@@ -179,6 +179,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
 
   _write(buffer, player.magic);
   _write(buffer, player.maxMagic);
+  _writeInt(buffer, player.attackRange);
 
   _compilePlayerEvents(buffer, player);
 

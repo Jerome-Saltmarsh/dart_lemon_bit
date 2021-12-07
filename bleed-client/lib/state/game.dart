@@ -94,6 +94,8 @@ class _Player {
 
   // bool get canPurchase => tile == Tile.PlayerSpawn;
   bool get canPurchase => false;
+
+  double attackRange = 0;
 }
 
 class _Unlocked {

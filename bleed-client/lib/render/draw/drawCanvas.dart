@@ -128,7 +128,15 @@ void renderCanvasPlay() {
 }
 
 void drawAbility() {
-  if (game.player.ability.value == AbilityType.None) return;
+  if (game.player.ability.value == AbilityType.None) {
+    drawCircleOutline(
+        sides: 24,
+        radius: game.player.attackRange,
+        x: game.player.x,
+        y: game.player.y,
+        color: Colors.white24);
+    return;
+  }
   drawCircleOutline(
       sides: 24,
       radius: game.player.abilityRange,
