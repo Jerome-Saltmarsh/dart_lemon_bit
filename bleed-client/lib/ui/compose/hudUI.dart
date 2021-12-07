@@ -602,9 +602,14 @@ Widget buildAbility(Ability ability, int index) {
             callback: (){
               sendRequest.upgradeAbility(index);
             },
-            child: border(child: text("+", fontSize: 25),
-              color: Colors.white,
-              padding: EdgeInsets.symmetric(horizontal: 5),
+            child: mouseOver(
+                builder: (BuildContext context, bool mouseOver){
+                  return border(child: text("+", fontSize: 25),
+                      color: Colors.white,
+                      fillColor: mouseOver ? Colors.white54 : Colors.white12,
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                  );
+                }
             ),
           );
         }),
