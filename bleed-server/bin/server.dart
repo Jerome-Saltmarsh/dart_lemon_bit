@@ -16,6 +16,7 @@ import 'common/CharacterState.dart';
 import 'common/CharacterType.dart';
 import 'common/ClientRequest.dart';
 import 'common/GameError.dart';
+import 'common/GameEventType.dart';
 import 'common/ServerResponse.dart';
 import 'common/WeaponType.dart';
 import 'common/enums/Direction.dart';
@@ -176,6 +177,34 @@ void main() {
 
             playerSetAbilityTarget(player, mouseX, mouseY);
 
+            if (game.zombies.isNotEmpty) {
+              Character closest = game.zombies[0];
+              num closestX = diff(mouseX, closest.x);
+              num closestY = diff(mouseY, closest.y);
+              num close = min(closestX, closestY);
+              for (Character npc in game.zombies) {
+                num closestX2 = diff(mouseX, npc.x);
+                num closestY2 = diff(mouseY, npc.y);
+                num closes2 = min(closestX2, closestY2);
+                if (closes2 < close) {
+                  closest = npc;
+                  close = closes2;
+                }
+              }
+              final clickRange = 50.0;
+              if (withinDistance(closest, mouseX, mouseY, clickRange)) {
+                if (withinDistance(closest, player.x, player.y, player.attackRange)) {
+                  player.attackTarget = closest;
+                }else{
+                  player.attackTarget = null;
+                }
+              }else{
+                player.attackTarget = null;
+              }
+            } else {
+              player.attackTarget = null;
+            }
+
             switch (action) {
               case CharacterAction.Idle:
                 game.setCharacterState(player, CharacterState.Idle);
@@ -183,31 +212,9 @@ void main() {
               case CharacterAction.Perform:
                 Ability? ability = player.ability;
                 if (ability == null) {
-                  characterAimAt(player, mouseX, mouseY);
-                  player.attackTarget = null;
-
-                  if (game.zombies.isNotEmpty) {
-                    Character closest = game.zombies[0];
-                    num closestX = diff(mouseX, closest.x);
-                    num closestY = diff(mouseY, closest.y);
-                    num close = min(closestX, closestY);
-                    for (Character npc in game.zombies) {
-                      num closestX2 = diff(mouseX, npc.x);
-                      num closestY2 = diff(mouseY, npc.y);
-                      num closes2 = min(closestX2, closestY2);
-                      if (closes2 < close) {
-                        closest = npc;
-                        close = closes2;
-                      }
-                    }
-                    final clickRange = 50.0;
-                    if (withinDistance(closest, mouseX, mouseY, clickRange)) {
-                      if (withinDistance(
-                          closest, player.x, player.y, player.attackRange)) {
-                        player.attackTarget = closest;
-                        game.setCharacterState(player, CharacterState.Striking);
-                      }
-                    }
+                  if (player.attackTarget != null){
+                    characterAimAt(player, mouseX, mouseY);
+                    game.setCharacterState(player, CharacterState.Striking);
                   }
                   break;
                 }

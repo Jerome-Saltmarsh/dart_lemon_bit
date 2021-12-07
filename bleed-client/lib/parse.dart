@@ -104,6 +104,11 @@ void parseState() {
         }
         break;
 
+      case ServerResponse.Player_Attack_Target:
+        game.player.attackTarget.x = _consumeDouble();
+        game.player.attackTarget.y = _consumeDouble();
+        break;
+
       case ServerResponse.Player:
         _parsePlayer();
         break;

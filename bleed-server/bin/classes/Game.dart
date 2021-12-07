@@ -65,7 +65,6 @@ import 'InteractableNpc.dart';
 import 'Weapon.dart';
 
 const _none = -1;
-const _framesPerMagicRegen = 30;
 
 abstract class Game {
   static int _id = 0;
@@ -101,6 +100,7 @@ abstract class Game {
 
   // TODO doesn't belong here
   StringBuffer buffer = StringBuffer();
+
 
   void changeGame(Player player, Game to) {
     if (player.game == to) return;
@@ -570,12 +570,12 @@ extension GameFunctions on Game {
       case CharacterState.Striking:
         // @on character striking
         faceAimDirection(character);
-        character.stateDuration = settings.duration.knifeStrike;
+        character.stateDuration = settings.duration.strike;
         break;
       case CharacterState.Performing:
         characterAimAt(
             character, character.abilityTarget.x, character.abilityTarget.y);
-        character.stateDuration = settings.duration.knifeStrike;
+        character.stateDuration = settings.duration.strike;
         break;
       default:
         break;
@@ -644,6 +644,7 @@ extension GameFunctions on Game {
     }
 
     for (int i = 0; i < projectiles.length; i++) {
+      if (!projectiles[i].collideWithEnvironment) continue;
       if (scene.bulletCollisionAt(projectiles[i].x, projectiles[i].y)) {
         deactivateProjectile(projectiles[i]);
       }

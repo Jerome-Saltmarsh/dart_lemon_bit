@@ -25,4 +25,5 @@ enum GameEventType {
   Credits_Acquired,
   FreezeCircle,
   Teleported,
+  EnemyTargeted,
 }

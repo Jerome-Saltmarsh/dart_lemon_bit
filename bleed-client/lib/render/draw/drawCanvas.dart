@@ -121,6 +121,20 @@ void renderCanvasPlay() {
     drawDebugNpcs(game.npcDebug);
   }
 
+  drawCircleOutline(
+      sides: 8,
+      radius: 20,
+      x: game.player.attackTarget.x,
+      y: game.player.attackTarget.y,
+      color: Colors.white24);
+
+  // drawCircleOutline(
+  //     sides: 8,
+  //     radius: 50,
+  //     x: mouseWorldX,
+  //     y: mouseWorldY,
+  //     color: Colors.white24);
+
   _drawFloatingTexts();
   _drawPlayerNames();
   drawPlayerText();

@@ -117,8 +117,9 @@ Game Modes include MMO, Dota, Base defense,
 [ ] Items
 [ ] Attributes (Intelligence, Strength, Agility)
 [ ] Cooldown widget
-[ ] Orb attacks heat seek target
-[ ] FIX BUG Can control player while text box open
+[ ] FIX BUG Sometimes left click does not register attack
+[x] Orb attacks heat seek target
+[x] FIX BUG Can control player while text box open
 [x] Ability cool down
 [x] Magic Regen
 [x] Magic

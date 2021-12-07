@@ -124,7 +124,7 @@ class Settings {
 }
 
 class _Duration {
-  final int knifeStrike = 15;
+  final int strike = 15;
   final int frozen = 60;
 }
 

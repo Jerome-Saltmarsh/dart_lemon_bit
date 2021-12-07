@@ -96,6 +96,8 @@ class _Player {
   bool get canPurchase => false;
 
   double attackRange = 0;
+
+  Vector2 attackTarget = Vector2(0, 0);
 }
 
 class _Unlocked {

@@ -1,5 +1,6 @@
 import 'bleed/zombie_health.dart';
 import 'classes/Ability.dart';
+import 'classes/Character.dart';
 import 'classes/Projectile.dart';
 import 'classes/Collectable.dart';
 import 'classes/Crate.dart';
@@ -182,6 +183,17 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _writeInt(buffer, player.attackRange);
 
   _compilePlayerEvents(buffer, player);
+
+  Character? attackTarget = player.attackTarget;
+  if (attackTarget != null){
+    _write(buffer, ServerResponse.Player_Attack_Target.index);
+    _writeInt(buffer, attackTarget.x);
+    _writeInt(buffer, attackTarget.y);
+  }else{
+    _write(buffer, ServerResponse.Player_Attack_Target.index);
+    _writeInt(buffer, -1);
+    _writeInt(buffer, -1);
+  }
 
   if (player.abilitiesDirty) {
     _compilePlayerAbilities(buffer, player);
