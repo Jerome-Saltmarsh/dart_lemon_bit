@@ -310,18 +310,22 @@ extension GameFunctions on Game {
     }
     if (src is Player) {
       if (target is Npc) {
-        if (src.level < maxPlayerLevel) {
-          src.experience += target.experience;
-          while (src.experience >= levelExperience[src.level]) {
-            // on player level increased
-            src.experience -= levelExperience[src.level];
-            src.level++;
-            src.abilityPoints++;
-          }
-        }
+        playerGainExperience(src, target.experience);
       }
     }
     onKilledBy(target, src);
+  }
+
+  void playerGainExperience(Player player, int experience){
+    if (player.level >= maxPlayerLevel) return;
+    player.experience += experience;
+    while (player.experience >= levelExperience[player.level]) {
+      // on player level increased
+      player.experience -= levelExperience[player.level];
+      player.level++;
+      player.abilityPoints++;
+      if (player.level >= maxPlayerLevel) return;
+    }
   }
 
   void updateNpc(Npc npc) {
@@ -1113,7 +1117,7 @@ extension GameFunctions on Game {
         character: character,
         accuracy: 0,
         speed: settings.projectileSpeed.fireball,
-        damage: 100,
+        damage: 1,
         range: settings.range.firebolt,
         target: character.attackTarget,
         type: ProjectileType.Blue_Orb);
