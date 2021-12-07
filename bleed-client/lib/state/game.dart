@@ -133,7 +133,7 @@ extension PlayerExtentions on _Player {
   }
 }
 
-void toggleAudioMuted() {
+void toggleAudio() {
   game.settings.audioMuted.value = !game.settings.audioMuted.value;
 }
 

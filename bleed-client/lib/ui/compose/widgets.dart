@@ -71,6 +71,16 @@ Widget comingSoon({Widget child}) {
   );
 }
 
+Widget button(String message, Function onPressed, {double fontSize}){
+  return pressed(
+      callback: onPressed,
+      child: border(child: text(message)));
+}
+
+Widget pressed({Widget child, Function callback, dynamic hint}) {
+  return onPressed(child: child, callback: callback, hint: hint);
+}
+
 Widget onPressed({Widget child, Function callback, dynamic hint}) {
   Widget widget = MouseRegion(
       cursor: callback != null ? SystemMouseCursors.click : SystemMouseCursors.forbidden,
@@ -123,21 +133,21 @@ class _RefreshState extends State<Refresh> {
   }
 }
 
-Widget button(String value, Function onPressed,
-    {double fontSize = 18.0,
-    ButtonStyle buttonStyle,
-    Alignment alignment = Alignment.centerLeft}) {
-  return OutlinedButton(
-    child: Container(
-        width: 200,
-        height: 50,
-        alignment: alignment,
-        child: Text(value,
-            style: TextStyle(color: white, fontSize: fontSize))),
-    style: buttonStyle ?? _buttonStyle,
-    onPressed: onPressed,
-  );
-}
+// Widget button(String value, Function onPressed,
+//     {double fontSize = 18.0,
+//     ButtonStyle buttonStyle,
+//     Alignment alignment = Alignment.centerLeft}) {
+//   return OutlinedButton(
+//     child: Container(
+//         width: 200,
+//         height: 50,
+//         alignment: alignment,
+//         child: Text(value,
+//             style: TextStyle(color: white, fontSize: fontSize))),
+//     style: buttonStyle ?? _buttonStyle,
+//     onPressed: onPressed,
+//   );
+// }
 
 Widget center(Widget child) {
   return Container(

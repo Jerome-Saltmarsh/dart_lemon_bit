@@ -28,6 +28,7 @@ import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/functions/fullscreen_enter.dart';
+import 'package:lemon_engine/functions/fullscreen_exit.dart';
 import 'package:lemon_engine/functions/toggle_fullscreen.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/fullscreen_active.dart';
@@ -269,25 +270,7 @@ Widget buildFullScreenDialog() {
         child: Row(
           mainAxisAlignment: main.center,
           children: [
-            border(
-              child: onPressed(
-                hint: "F11",
-                callback: () {
-                  hud.fullScreenDialogVisible.value = false;
-                  fullScreenEnter();
-                },
-                child: Row(
-                  children: [
-                    text("Fullscreen"),
-                    buildDecorationImage(
-                        image: icons.fullscreen,
-                        width: 32,
-                        height: 32,
-                        borderWidth: 0),
-                  ],
-                ),
-              ),
-            ),
+            buildToggleFullscreen(),
             width16,
             onPressed(
               callback: () {
@@ -298,6 +281,33 @@ Widget buildFullScreenDialog() {
           ],
         ));
   });
+}
+
+Widget buildToggleFullscreen() {
+  return border(
+    child: onPressed(
+      hint: "F11",
+      callback: () {
+        hud.fullScreenDialogVisible.value = false;
+        if (fullScreenActive){
+          fullScreenExit();
+        }else{
+          fullScreenEnter();
+        }
+      },
+      child: Row(
+        children: [
+          text(fullScreenActive ? "Exit Fullscreen" : "Fullscreen"),
+          width4,
+          buildDecorationImage(
+              image: icons.fullscreen,
+              width: 20,
+              height: 20,
+              borderWidth: 0),
+        ],
+      ),
+    ),
+  );
 }
 
 Widget buildSelectHero() {
@@ -405,57 +415,45 @@ Widget buildTopRight() {
   );
 }
 
+Widget buildToggleAudio(){
+  return WatchBuilder(game.settings.audioMuted, (bool audio){
+    return onPressed(
+        callback: toggleAudio,
+        child: border(child: text(audio ? "Audio On": "Audio Off")));
+  });
+}
+
+Widget _buildSettingsIcon(){
+  return buildDecorationImage(
+      image: icons.settings, width: 40, height: 40, borderWidth: 0);
+}
+
+Widget _buildToggleEdit(){
+  return button("Editor", toggleEditMode);
+}
+
+Widget buildTogglePaths(){
+  return button("Debug", toggleEditMode);
+}
+
+void toggleDebugMode(){
+  game.settings.compilePaths = !game.settings.compilePaths;
+  sendRequestSetCompilePaths(game.settings.compilePaths);
+}
+
 Widget buildMenu() {
   return WatchBuilder(hud.state.menuVisible, (bool value) {
-    print("Build menu visible $value");
-    if (!value)
-      return buildDecorationImage(
-          image: icons.settings, width: 40, height: 40, borderWidth: 0);
-
-    Widget iconToggleFullscreen = Tooltip(
-      child: IconButton(
-          icon: Icon(
-              fullScreenActive ? Icons.fullscreen_exit : Icons.fullscreen,
-              size: _iconSize,
-              color: Colors.white),
-          onPressed: toggleFullScreen),
-      message: fullScreenActive ? "Exit Fullscreen" : "Enter Fullscreen",
-    );
-    Widget iconToggleAudio = Tooltip(
-        child: IconButton(
-            icon: WatchBuilder(game.settings.audioMuted, (bool value) {
-              return Icon(value ? Icons.music_off : Icons.music_note_rounded,
-                  size: _iconSize, color: Colors.white);
-            }),
-            onPressed: toggleAudioMuted),
-        message: "Toggle Audio");
-
-    Widget iconTogglePaths = Tooltip(
-      child: IconButton(
-          icon: Icon(Icons.map, size: _iconSize, color: Colors.white),
-          onPressed: () {
-            game.settings.compilePaths = !game.settings.compilePaths;
-            sendRequestSetCompilePaths(game.settings.compilePaths);
-          }),
-      message: "Toggle Paths",
-    );
-
-    Widget iconToggleEditMode = Tooltip(
-      child: IconButton(
-          icon: Icon(Icons.edit, size: _iconSize, color: Colors.white),
-          onPressed: toggleEditMode),
-      message: "Edit",
-    );
+    if (!value) return _buildSettingsIcon();
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        if (game.settings.developMode) iconTogglePaths,
+        if (game.settings.developMode) buildTogglePaths(),
         if (game.settings.developMode) width8,
-        if (game.settings.developMode) iconToggleEditMode,
-        iconToggleAudio,
+        if (game.settings.developMode) _buildToggleEdit(),
+        buildToggleAudio(),
         width8,
-        iconToggleFullscreen,
+        buildToggleFullscreen(),
         if (game.settings.developMode) width8,
       ],
     );
@@ -1201,40 +1199,6 @@ Widget buildGameOver() {
   ));
 }
 
-Widget buildViewWin() {
-  return Positioned(
-      bottom: 200,
-      child: Container(
-        width: screenWidth,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-                color: Colors.black45,
-                child: button("YOU WIN", showDialogMainMenu,
-                    fontSize: 40, alignment: Alignment.center)),
-          ],
-        ),
-      ));
-}
-
-Widget buildViewLose() {
-  return Positioned(
-      bottom: 200,
-      child: Container(
-        width: screenWidth,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-                color: Colors.black45,
-                child: button("YOU LOSE", showDialogMainMenu,
-                    fontSize: 40, alignment: Alignment.center)),
-          ],
-        ),
-      ));
-}
-
 Widget buildDialog(Widget child) {
   return Positioned(
       top: 30, child: Container(width: screenWidth, child: child));
@@ -1260,3 +1224,4 @@ void drawRing(Ring ring,
         ring.points[i] + position, ring.points[i + 1] + position, paint);
   }
 }
+
