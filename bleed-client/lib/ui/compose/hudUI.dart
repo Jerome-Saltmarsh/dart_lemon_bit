@@ -539,7 +539,6 @@ Widget buildBottomLeft() {
   return Positioned(bottom: _padding, left: _padding, child: Row(
     crossAxisAlignment: cross.end,
     children: [
-      buildPercentageBox(0.66, 50),
       buildMagicBar(),
       width8,
       buildAbilities(),
@@ -614,8 +613,11 @@ Widget buildAbilities() {
     child: Row(
       children: [
         buildAbility(game.player.ability1, 1),
+        width4,
         buildAbility(game.player.ability2, 2),
+        width4,
         buildAbility(game.player.ability3, 3),
+        width4,
         buildAbility(game.player.ability4, 4),
       ],
     ),

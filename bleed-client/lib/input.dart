@@ -134,7 +134,6 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.runUp: runUp,
   keys.runRight: runRight,
   keys.runDown: runDown,
-  keys.throwGrenade: throwGrenade,
   keys.melee: melee,
   keys.speakLetsGo: sayLetsGo,
   keys.speakLetsGreeting: sayGreeting,
@@ -219,16 +218,6 @@ void onMouseScroll(double amount) {
   targetZoom -= amount * game.settings.zoomSpeed;
   if (targetZoom < game.settings.maxZoom) targetZoom = game.settings.maxZoom;
   cameraCenter(center1.dx, center1.dy);
-}
-
-void throwGrenade() {
-  if (!mouseAvailable) return;
-  double mouseDistance =
-      distanceBetween(game.player.x, game.player.y, mouseWorldX, mouseWorldY);
-  double maxRange = 400; // TODO refactor magic variable
-  double throwDistance = min(mouseDistance, maxRange);
-  double strength = throwDistance / maxRange;
-  requestThrowGrenade(strength);
 }
 
 void runLeft() {
