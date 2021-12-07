@@ -50,7 +50,7 @@ Widget buildHealthBar() {
     double height = width * goldenRatioInverse;
 
     return Tooltip(
-      message: 'Health ${health.toInt()} / ${game.player.maxHealth}',
+      message: 'Life ${health.toInt()} / ${game.player.maxHealth}',
       child: Container(
         width: width,
         height: height,
@@ -74,6 +74,9 @@ Widget buildHealthBar() {
 
 Widget buildMagicBar() {
   return WatchBuilder(game.player.maxMagic, (int maxMagic) {
+
+    if (maxMagic == 0) return emptyContainer;
+
     return WatchBuilder(game.player.magic, (int magic){
       double percentage = magic / maxMagic;
       double width = 120;
@@ -414,12 +417,14 @@ Widget buildSlot({String title}) {
   );
 }
 
-Widget buildImageSlot(
-    {DecorationImage image,
+Widget buildDecorationImage({
+    DecorationImage image,
     double width,
     double height,
     double borderWidth = 1,
-    Color color}) {
+    Color color,
+    Color borderColor = Colors.white,
+}) {
   return Container(
     width: width,
     height: height,
@@ -427,7 +432,7 @@ Widget buildImageSlot(
     decoration: BoxDecoration(
       image: image,
       color: color,
-      border: Border.all(color: Colors.white, width: borderWidth),
+      border: Border.all(color: borderColor, width: borderWidth),
       borderRadius: borderRadius4,
     ),
   );
@@ -528,6 +533,7 @@ Widget buildWeaponSlot(WeaponType weaponType) {
 
 Widget buildBottomLeft() {
   return Positioned(bottom: _padding, left: _padding, child: Row(
+    crossAxisAlignment: cross.end,
     children: [
       buildMagicBar(),
       buildAbilities(),
@@ -535,10 +541,42 @@ Widget buildBottomLeft() {
   ));
 }
 
+Widget buildClippedCircle(){
+  return ClipPath(
+    clipper: MyCustomClipper(0),
+    child: Container(
+      width: 200,
+      height: 200,
+      color: Colors.pink,
+    ),
+  );
+}
+
+class MyCustomClipper extends CustomClipper<Path> {
+
+  final double radians;
+
+  MyCustomClipper(this.radians);
+
+  @override
+  Path getClip(Size size) {
+    Path path = Path()
+      ..moveTo(size.width * 0.5, 0)
+      ..lineTo(size.width * 0.5, size.height * 0.5)
+      ..lineTo(0, size.height * 0.5)
+      ..close();
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
 Widget buildAbilities() {
   return Container(
     child: Row(
       children: [
+        // buildClippedCircle(),
         buildAbility(game.player.ability1, 1),
         buildAbility(game.player.ability2, 2),
         buildAbility(game.player.ability3, 3),
@@ -550,8 +588,7 @@ Widget buildAbilities() {
 
 Widget buildAbility(Ability ability, int index) {
   return WatchBuilder(
-    game.player.skillPoints,
-      (int points){
+    game.player.skillPoints, (int points){
 
       final bool unlocked = points > 0;
         return WatchBuilder(ability.type, (AbilityType type) {
@@ -560,12 +597,6 @@ Widget buildAbility(Ability ability, int index) {
 
           return Column(
             children: [
-              if (unlocked)
-                WatchBuilder(ability.cooldown, (int cooldown){
-                  return WatchBuilder(ability.cooldownRemaining, (int cooldownRemaining){
-                    return text('$cooldownRemaining / $cooldown');
-                  });
-                }),
               if (unlocked)
               onPressed(
                 callback: (){
@@ -579,20 +610,33 @@ Widget buildAbility(Ability ability, int index) {
               ),
               height4,
               WatchBuilder(ability.level, (int level) {
-                final Color color = level == 0 ? Colors.white54 : Colors.white;
-
-                return onPressed(
-                  callback: (){
-                    sendRequestSelectAbility(index);
-                  },
-                  child: border(
-                    child: text("${abilityTypeToString(type)} ${level == 0 ? "" : level}", color: color),
-                    color: color,
-                    fillColor: Colors.black38,
-                    margin: EdgeInsets.only(right: 4),
-                    padding: EdgeInsets.all(8),
-                  ),
-                );
+                return WatchBuilder(ability.cooldown, (int cooldown){
+                    return WatchBuilder(ability.cooldownRemaining, (int cooldownRemaining){
+                      return onPressed(
+                        callback: (){
+                          sendRequestSelectAbility(index);
+                        },
+                        child: Stack(
+                          children: [
+                            buildDecorationImage(
+                                image: spell01,
+                                width: 50,
+                                height: 50,
+                                borderColor: Colors.black54,
+                                borderWidth: 3
+                            ),
+                            if (cooldownRemaining > 0)
+                            Container(
+                                width: 50,
+                                height: 50,
+                                alignment: Alignment.center,
+                                color: Colors.black54,
+                                child: text("${cooldownRemaining}s"))
+                          ],
+                        ),
+                      );
+                    });
+                  });
               }),
             ],
           );
@@ -626,21 +670,6 @@ Widget buildWeaponMenu() {
       ],
     );
   });
-}
-
-Stack buildGrenadeSlot() {
-  return Stack(
-    children: [
-      Tooltip(
-          message: "Press G to throw grenade",
-          child: buildImageSlot(
-              image: grenades1Image,
-              width: 120 * goldenRatioInverse,
-              height: 120 * goldenRatioInverse,
-              color: Colors.black38)),
-      buildTag(game.player.grenades)
-    ],
-  );
 }
 
 Widget _buildViewRespawn() {
