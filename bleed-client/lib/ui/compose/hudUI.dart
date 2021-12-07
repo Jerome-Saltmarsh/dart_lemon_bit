@@ -602,7 +602,6 @@ Widget buildAbility(Ability ability, int index) {
             callback: (){
               sendRequest.upgradeAbility(index);
             },
-            hint: "${(ability.level.value == 0 ? "Learn" : "Upgrade")} ${abilityTypeToString(type)}",
             child: border(child: text("+", fontSize: 25),
               color: Colors.white,
               padding: EdgeInsets.symmetric(horizontal: 5),
@@ -620,13 +619,19 @@ Widget buildAbility(Ability ability, int index) {
                 },
                 child: Stack(
                   children: [
-                    buildDecorationImage(
-                        image: spell01,
-                        width: 50,
-                        height: 50,
-                        borderColor: Colors.black54,
-                        borderWidth: 3
-                    ),
+                    mouseOver(builder: (BuildContext context, bool mouseOver){
+                      return buildDecorationImage(
+                          image: spell01,
+                          width: 50,
+                          height: 50,
+                          borderColor: mouseOver ? Colors.white : Colors.black54,
+                          borderWidth: 3
+                      );
+                    }),
+                    if (level > 0) Container(
+                        color: Colors.black54,
+                        padding: padding4,
+                        child: text(level)),
                     if (cooldownRemaining > 0)
                       Container(
                           width: 50,
