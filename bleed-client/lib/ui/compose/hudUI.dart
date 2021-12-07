@@ -539,6 +539,7 @@ Widget buildBottomLeft() {
   return Positioned(bottom: _padding, left: _padding, child: Row(
     crossAxisAlignment: cross.end,
     children: [
+      buildPercentageBox(0.66, 50),
       buildMagicBar(),
       width8,
       buildAbilities(),

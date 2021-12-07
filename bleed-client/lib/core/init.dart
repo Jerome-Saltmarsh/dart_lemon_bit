@@ -1,10 +1,9 @@
-import 'dart:ui';
-
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
+import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
@@ -23,7 +22,6 @@ import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/network/functions/connect.dart';
-import 'package:bleed_client/network/functions/send.dart';
 import 'package:bleed_client/network/streams/eventStream.dart';
 import 'package:bleed_client/network/streams/onConnect.dart';
 import 'package:bleed_client/network/streams/onConnected.dart';
@@ -40,7 +38,6 @@ import 'package:bleed_client/watches/phase.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:lemon_engine/functions/register_on_mouse_scroll.dart';
 import 'package:lemon_engine/game.dart';
-import 'package:lemon_engine/state/paint.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../ui/compose/dialogs.dart';
@@ -53,6 +50,7 @@ Future init() async {
   initAudioPlayers();
   initUI();
   rebuildUI();
+
 
 
   if (Uri.base.hasQuery && Uri.base.queryParameters.containsKey('host')) {
@@ -124,6 +122,11 @@ void initializeEventListeners(){
   phase.onChanged(onPhaseChanged);
   observeAmbientLight(onAmbientLightChanged);
   game.shadeMax.onChanged(onShadeMaxChanged);
+
+  onLeftClicked.stream.listen((event) {
+    print("left clicked");
+    characterController.action = CharacterAction.Perform;
+  });
 
   game.player.state.onChanged((CharacterState state) {
     game.player.alive.value = state != CharacterState.Dead;

@@ -232,26 +232,31 @@ void throwGrenade() {
 }
 
 void runLeft() {
+  if (characterController.action == CharacterAction.Perform) return;
   characterController.direction = Direction.Left;
   characterController.action = CharacterAction.Run;
 }
 
 void runUp() {
+  if (characterController.action == CharacterAction.Perform) return;
   characterController.direction = Direction.Up;
   characterController.action = CharacterAction.Run;
 }
 
 void runRight() {
+  if (characterController.action == CharacterAction.Perform) return;
   characterController.direction = Direction.Right;
   characterController.action = CharacterAction.Run;
 }
 
 void runDown() {
+  if (characterController.action == CharacterAction.Perform) return;
   characterController.direction = Direction.Down;
   characterController.action = CharacterAction.Run;
 }
 
 void stopRunLeft() {
+  if (characterController.action == CharacterAction.Perform) return;
   characterController.direction = Direction.Left;
   characterController.action = CharacterAction.Run;
 }
@@ -324,6 +329,8 @@ void readPlayerInput() {
   // TODO This should be reactive
   if (!playerAssigned) return;
 
+  if (characterController.action == CharacterAction.Perform) return;
+
   if (keyPressedPan && !panningCamera) {
     panningCamera = true;
     _mouseWorldStart = mouseWorld;
@@ -337,13 +344,6 @@ void readPlayerInput() {
     Offset mouseWorldDiff = _mouseWorldStart - mouseWorld;
     camera.y += mouseWorldDiff.dy * zoom;
     camera.x += mouseWorldDiff.dx * zoom;
-  }
-
-  characterController.action = CharacterAction.Idle;
-
-  if (primaryAttackRequested()) {
-    characterController.action = CharacterAction.Perform;
-    return;
   }
 
   characterController.direction = getKeyDirection();

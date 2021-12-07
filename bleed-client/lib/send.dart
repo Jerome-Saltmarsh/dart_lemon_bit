@@ -1,3 +1,4 @@
+import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/input.dart';
@@ -97,6 +98,8 @@ void sendRequestUpdatePlayer() {
   _write(mouseWorldX.toInt());
   _write(mouseWorldY.toInt());
   send(_buffer.toString());
+
+  characterController.action = CharacterAction.Idle;
 }
 
 void sendRequestSetCompilePaths(bool value) {
