@@ -365,7 +365,9 @@ void main() {
             return;
           }
 
-          if (player.ability == ability.type) {
+          Ability? playerAbility = player.ability;
+
+          if (playerAbility != null && playerAbility.type == ability.type){
             player.ability = null;
             return;
           }
