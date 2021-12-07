@@ -26,6 +26,8 @@ class Character extends GameObject implements HasSquad {
   late double _speed;
   bool frozen = false;
   int frozenDuration = 0;
+  double attackRange = 25;
+  Character? attackTarget;
 
   double get speed {
     if (frozen){

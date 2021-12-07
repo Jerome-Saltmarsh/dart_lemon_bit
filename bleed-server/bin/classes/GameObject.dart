@@ -12,6 +12,7 @@ class GameObject extends Positioned {
   double radius = 0;
   bool collidable = true;
   bool active = true;
+  bool seekTarget = false;
 
   void assignNewId(){
     id = _idCount++;

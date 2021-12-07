@@ -116,6 +116,8 @@ In the future the player will be able to store their character inside an sql dat
 Game Modes include MMO, Dota, Base defense, 
 [ ] Items
 [ ] Attributes (Intelligence, Strength, Agility)
+[ ] Cooldown widget
+[ ] Orb attacks heat seek target
 [x] Ability cool down
 [x] Magic Regen
 [x] Magic

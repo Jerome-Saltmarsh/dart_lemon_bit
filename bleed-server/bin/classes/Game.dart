@@ -1100,6 +1100,7 @@ extension GameFunctions on Game {
         speed: settings.projectileSpeed.fireball,
         damage: 100,
         range: settings.range.firebolt,
+        target: character.attackTarget,
         type: ProjectileType.Blue_Orb);
   }
 
@@ -1122,6 +1123,7 @@ extension GameFunctions on Game {
     required double range,
     required int damage,
     required ProjectileType type,
+    Positioned? target,
   }) {
     double spawnDistance = character.radius + 20;
     double x = character.x + adj(character.aimAngle, spawnDistance);
@@ -1130,27 +1132,29 @@ extension GameFunctions on Game {
     double yv = velY(character.aimAngle + giveOrTake(accuracy), speed);
     Direction direction = convertAngleToDirection(character.aimAngle);
 
+    Projectile projectile = getAvailableProjectile();
+    projectile.target = target;
+    projectile.active = true;
+    projectile.xStart = x;
+    projectile.yStart = y;
+    projectile.x = x;
+    projectile.y = y;
+    projectile.xv = xv;
+    projectile.yv = yv;
+    projectile.owner = character;
+    projectile.range = range;
+    projectile.damage = damage;
+    projectile.direction = direction;
+    projectile.type = type;
+    return projectile;
+  }
+
+  Projectile getAvailableProjectile() {
     for (int i = 0; i < projectiles.length; i++) {
       if (projectiles[i].active) continue;
-      Projectile projectile = projectiles[i];
-      projectile.active = true;
-      projectile.xStart = x;
-      projectile.yStart = y;
-      projectile.x = x;
-      projectile.y = y;
-      projectile.xv = xv;
-      projectile.yv = yv;
-      projectile.owner = character;
-      projectile.range = range;
-      projectile.damage = damage;
-      projectile.direction = direction;
-      projectile.type = type;
-      return projectile;
+      return projectiles[i];
     }
-
-    Projectile projectile = Projectile(
-        x, y, xv, yv, character, range, damage, direction,
-        type: type);
+    Projectile projectile = Projectile();
     projectiles.add(projectile);
     return projectile;
   }
@@ -1581,6 +1585,7 @@ double angle2(double adjacent, double opposite) {
 }
 
 void selectCharacterType(Player player, CharacterType value) {
+  // @on set character type
   player.type = value;
   player.abilitiesDirty = true;
 
@@ -1592,6 +1597,7 @@ void selectCharacterType(Player player, CharacterType value) {
       // TODO: Handle this case.
       break;
     case CharacterType.Witch:
+      player.attackRange = 100;
       player.ability1 = Ability(
           type: AbilityType.Explosion,
           level: 0,

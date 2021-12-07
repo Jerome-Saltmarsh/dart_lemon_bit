@@ -1,10 +1,15 @@
+import 'dart:math';
+
+import 'package:lemon_math/diff.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import 'classes/Ability.dart';
+import 'classes/Character.dart';
 import 'classes/Game.dart';
 import 'classes/Inventory.dart';
+import 'classes/Npc.dart';
 import 'classes/Player.dart';
 import 'classes/Weapon.dart';
 import 'common/AbilityType.dart';
@@ -20,6 +25,7 @@ import 'common/enums/Direction.dart';
 import 'common/version.dart';
 import 'compile.dart';
 import 'functions/loadScenes.dart';
+import 'functions/withinRadius.dart';
 import 'games/world.dart';
 import 'settings.dart';
 import 'update.dart';
@@ -181,6 +187,26 @@ void main() {
                 Ability? ability = player.ability;
                 if (ability == null) {
                   characterAimAt(player, mouseX, mouseY);
+
+                  if (game.zombies.isNotEmpty) {
+                    Character closest = game.zombies[0];
+                    num closestX = diff(mouseX, closest.x);
+                    num closestY = diff(mouseY, closest.y);
+                    num close = min(closestX, closestY);
+                    for (Character npc in game.zombies) {
+                      num closestX2 = diff(mouseX, npc.x);
+                      num closestY2 = diff(mouseX, npc.y);
+                      num closes2 = min(closestX2, closestY2);
+                      if (closes2 < close) {
+                        closest = npc;
+                        close = closes2;
+                      }
+                    }
+                    if (withinDistance(closest, player.x, player.y, player.attackRange)) {
+                      player.attackTarget = closest;
+                    }
+                  }
+
                   game.setCharacterState(player, CharacterState.Striking);
                   break;
                 }
@@ -367,7 +393,7 @@ void main() {
 
           Ability? playerAbility = player.ability;
 
-          if (playerAbility != null && playerAbility.type == ability.type){
+          if (playerAbility != null && playerAbility.type == ability.type) {
             player.ability = null;
             return;
           }

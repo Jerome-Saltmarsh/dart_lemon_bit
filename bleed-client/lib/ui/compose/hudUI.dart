@@ -15,6 +15,7 @@ import 'package:bleed_client/network/functions/disconnect.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/server/server.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:bleed_client/ui/compose/BoxCircle.dart';
 import 'package:bleed_client/ui/compose/buildSkillTree.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
@@ -534,6 +535,8 @@ Widget buildWeaponSlot(WeaponType weaponType) {
     );
   });
 }
+
+ValueNotifier<double> ability1Perc = ValueNotifier(0.5);
 
 Widget buildBottomLeft() {
   return Positioned(bottom: _padding, left: _padding, child: Row(
