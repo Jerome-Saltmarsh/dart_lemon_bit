@@ -198,7 +198,12 @@ Widget buildBottomRight() {
 }
 
 Widget buildMessageBoxIcon() {
-  return border(child: text("Message", onPressed: toggleMessageBox));
+  return onPressed(
+      hint: "Press Enter",
+      callback: toggleMessageBox,
+      child: border(
+        child: text("Message"),
+      ));
 }
 
 Widget buildTime() {
@@ -274,14 +279,18 @@ Widget buildFullScreenDialog() {
                 child: Row(
                   children: [
                     text("Fullscreen"),
-                    buildDecorationImage(image: icons.fullscreen, width: 32,height: 32, borderWidth: 0),
+                    buildDecorationImage(
+                        image: icons.fullscreen,
+                        width: 32,
+                        height: 32,
+                        borderWidth: 0),
                   ],
                 ),
               ),
             ),
             width16,
             onPressed(
-              callback: (){
+              callback: () {
                 hud.fullScreenDialogVisible.value = false;
               },
               child: text("No Thanks", decoration: TextDecoration.underline),
@@ -400,7 +409,8 @@ Widget buildMenu() {
   return WatchBuilder(hud.state.menuVisible, (bool value) {
     print("Build menu visible $value");
     if (!value)
-      return buildDecorationImage(image: icons.settings, width: 40, height: 40, borderWidth: 0);
+      return buildDecorationImage(
+          image: icons.settings, width: 40, height: 40, borderWidth: 0);
 
     Widget iconToggleFullscreen = Tooltip(
       child: IconButton(
@@ -511,7 +521,9 @@ Widget buildDecorationImage({
     decoration: BoxDecoration(
       image: image,
       color: color,
-      border: borderWidth > 0 ? Border.all(color: borderColor, width: borderWidth) : null,
+      border: borderWidth > 0
+          ? Border.all(color: borderColor, width: borderWidth)
+          : null,
       borderRadius: borderRadius4,
     ),
   );
