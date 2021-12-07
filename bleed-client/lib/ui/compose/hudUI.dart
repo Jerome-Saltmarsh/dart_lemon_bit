@@ -587,62 +587,61 @@ Widget buildAbilities() {
 }
 
 Widget buildAbility(Ability ability, int index) {
-  return WatchBuilder(
-    game.player.skillPoints, (int points){
 
-      final bool unlocked = points > 0;
-        return WatchBuilder(ability.type, (AbilityType type) {
+  return WatchBuilder(ability.type, (AbilityType type) {
 
-          if (type == AbilityType.None) return emptyContainer;
+    if (type == AbilityType.None) return emptyContainer;
 
-          return Column(
-            children: [
-              if (unlocked)
-              onPressed(
-                callback: (){
-                  sendRequest.upgradeAbility(index);
-                },
-                hint: "${(ability.level.value == 0 ? "Learn" : "Upgrade")} ${abilityTypeToString(type)}",
-                child: border(child: text("+", fontSize: 25),
-                  color: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 5),
-                ),
-              ),
-              height4,
-              WatchBuilder(ability.level, (int level) {
-                return WatchBuilder(ability.cooldown, (int cooldown){
-                    return WatchBuilder(ability.cooldownRemaining, (int cooldownRemaining){
-                      return onPressed(
-                        callback: (){
-                          sendRequestSelectAbility(index);
-                        },
-                        child: Stack(
-                          children: [
-                            buildDecorationImage(
-                                image: spell01,
-                                width: 50,
-                                height: 50,
-                                borderColor: Colors.black54,
-                                borderWidth: 3
-                            ),
-                            if (cooldownRemaining > 0)
-                            Container(
-                                width: 50,
-                                height: 50,
-                                alignment: Alignment.center,
-                                color: Colors.black54,
-                                child: text("${cooldownRemaining}s"))
-                          ],
-                        ),
-                      );
-                    });
-                  });
-              }),
-            ],
+    return Column(
+      children: [
+        WatchBuilder(game.player.skillPoints, (int points){
+
+          if (points == 0) return emptyContainer;
+
+          return onPressed(
+            callback: (){
+              sendRequest.upgradeAbility(index);
+            },
+            hint: "${(ability.level.value == 0 ? "Learn" : "Upgrade")} ${abilityTypeToString(type)}",
+            child: border(child: text("+", fontSize: 25),
+              color: Colors.white,
+              padding: EdgeInsets.symmetric(horizontal: 5),
+            ),
           );
-        });
-      }
-  );
+        }),
+        height4,
+        WatchBuilder(ability.level, (int level) {
+          return WatchBuilder(ability.cooldown, (int cooldown){
+            return WatchBuilder(ability.cooldownRemaining, (int cooldownRemaining){
+              return onPressed(
+                callback: (){
+                  sendRequestSelectAbility(index);
+                },
+                child: Stack(
+                  children: [
+                    buildDecorationImage(
+                        image: spell01,
+                        width: 50,
+                        height: 50,
+                        borderColor: Colors.black54,
+                        borderWidth: 3
+                    ),
+                    if (cooldownRemaining > 0)
+                      Container(
+                          width: 50,
+                          height: 50,
+                          alignment: Alignment.center,
+                          color: Colors.black54,
+                          child: text("${cooldownRemaining}s"))
+                  ],
+                ),
+              );
+            });
+          });
+        }),
+      ],
+    );
+  });
 }
 
 Widget buildExpandedWeapons() {
