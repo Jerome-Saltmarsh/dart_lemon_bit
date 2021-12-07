@@ -124,8 +124,7 @@ void initializeEventListeners(){
   game.shadeMax.onChanged(onShadeMaxChanged);
 
   onLeftClicked.stream.listen((event) {
-    print("left clicked");
-    characterController.action = CharacterAction.Perform;
+    performPrimaryAction();
   });
 
   game.player.state.onChanged((CharacterState state) {

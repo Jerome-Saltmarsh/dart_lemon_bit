@@ -59,6 +59,10 @@ Offset _mouseWorldStart;
 
 final _CharacterController characterController = _CharacterController();
 
+void performPrimaryAction(){
+  characterController.action = CharacterAction.Perform;
+}
+
 void registerPlayKeyboardHandler() {
   RawKeyboard.instance.addListener(_handleKeyboardEvent);
 }
@@ -79,6 +83,7 @@ void _handleKeyboardEvent(RawKeyEvent event) {
 final _Keys keys = _Keys();
 
 class _Keys {
+  LogicalKeyboardKey perform = LogicalKeyboardKey.space;
   LogicalKeyboardKey interact = LogicalKeyboardKey.keyE;
   LogicalKeyboardKey sprint = LogicalKeyboardKey.keyQ;
   LogicalKeyboardKey sprint2 = LogicalKeyboardKey.keyC;
@@ -130,6 +135,7 @@ final List<String> waitASecond = ['Wait a second', 'Just a moment'];
 // triggered the first frame a key is down
 Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.interact: sendRequestInteract,
+  keys.perform: performPrimaryAction,
   keys.runLeft: runLeft,
   keys.runUp: runUp,
   keys.runRight: runRight,
@@ -340,8 +346,6 @@ void readPlayerInput() {
     characterController.action = CharacterAction.Run;
   }
 }
-
-bool primaryAttackRequested() => mouseClicked || keyPressedSpace;
 
 Direction getKeyDirection() {
   if (keyPressed(keys.runUp)) {
