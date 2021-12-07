@@ -187,6 +187,7 @@ void main() {
                 Ability? ability = player.ability;
                 if (ability == null) {
                   characterAimAt(player, mouseX, mouseY);
+                  player.attackTarget = null;
 
                   if (game.zombies.isNotEmpty) {
                     Character closest = game.zombies[0];
@@ -202,16 +203,17 @@ void main() {
                         close = closes2;
                       }
                     }
-                    final clickRange = 35.0;
+                    final clickRange = 50.0;
                     if (withinDistance(closest, mouseX, mouseY, clickRange)) {
                       if (withinDistance(
                           closest, player.x, player.y, player.attackRange)) {
                         player.attackTarget = closest;
                         game.setCharacterState(player, CharacterState.Striking);
+                      }else{
+                        print("outside of attack range");
                       }
                     }
                   }
-                  // game.setCharacterState(player, CharacterState.Striking);
                   break;
                 }
 

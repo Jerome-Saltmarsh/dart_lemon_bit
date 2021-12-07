@@ -651,6 +651,7 @@ extension GameFunctions on Game {
 
     for (int i = 0; i < projectiles.length; i++) {
       if (!projectiles[i].active) continue;
+      if (!projectiles[i].collideWithEnvironment) continue;
       for (EnvironmentObject environmentObject in scene.environment) {
         if (!environmentObject.collidable) continue;
         if (!overlapping(projectiles[i], environmentObject)) continue;
