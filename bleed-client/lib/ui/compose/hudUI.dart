@@ -122,17 +122,21 @@ Widget buildTopLeft() {
           width8,
           buildPlayerNextLevelExperience(),
           width8,
-          buildSkillsButton(),
         ],
       ));
 }
 
 Widget buildSkillsButton() {
   return WatchBuilder(game.player.skillPoints, (int value) {
-
     if (value == 0) return emptyContainer;
-
-    return text("Skill Points $value", color: Colors.green);
+    return Container(
+        height: 86,
+        alignment: Alignment.topLeft,
+        child: border(
+            color: Colors.white,
+            fillColor: Colors.black45,
+            padding: padding4,
+            child: text("Points $value", color: Colors.white, fontSize: 20)));
   });
 }
 
@@ -537,6 +541,7 @@ Widget buildBottomLeft() {
     children: [
       buildMagicBar(),
       buildAbilities(),
+      buildSkillsButton(),
     ],
   ));
 }
