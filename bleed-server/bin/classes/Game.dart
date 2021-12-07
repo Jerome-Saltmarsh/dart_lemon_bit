@@ -387,22 +387,22 @@ extension GameFunctions on Game {
   }
 
   void _updatePlayersAndNpcs() {
-    if (duration % fps == 0){
+    if (duration % fps == 0) {
       for (Player player in players) {
         player.magic += player.magicRegen;
-        if (player.ability1.cooldownRemaining > 0){
+        if (player.ability1.cooldownRemaining > 0) {
           player.ability1.cooldownRemaining--;
           player.abilitiesDirty = true;
         }
-        if (player.ability2.cooldownRemaining > 0){
+        if (player.ability2.cooldownRemaining > 0) {
           player.ability2.cooldownRemaining--;
           player.abilitiesDirty = true;
         }
-        if (player.ability3.cooldownRemaining > 0){
+        if (player.ability3.cooldownRemaining > 0) {
           player.ability3.cooldownRemaining--;
           player.abilitiesDirty = true;
         }
-        if (player.ability4.cooldownRemaining > 0){
+        if (player.ability4.cooldownRemaining > 0) {
           player.ability4.cooldownRemaining--;
           player.abilitiesDirty = true;
         }
@@ -994,6 +994,13 @@ extension GameFunctions on Game {
             if (character.stateDuration == castFrame) {
               spawnFreezeCircle(
                   x: character.abilityTarget.x, y: character.abilityTarget.y);
+              character.performing = null;
+            }
+            break;
+          case AbilityType.Fireball:
+            final int castFrame = 3;
+            if (character.stateDuration == castFrame) {
+              spawnFireball(character);
               character.performing = null;
             }
             break;
