@@ -1,9 +1,7 @@
-import 'dart:math';
 import 'dart:ui';
 
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterAction.dart';
-import 'package:bleed_client/functions/onGameEvent.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
@@ -17,8 +15,8 @@ import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/state/camera.dart';
 import 'package:lemon_engine/state/zoom.dart';
-import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/randomItem.dart';
+import 'package:lemon_watch/watch.dart';
 
 import '../send.dart';
 import 'common/enums/Direction.dart';
@@ -60,7 +58,7 @@ Offset _mouseWorldStart;
 final _CharacterController characterController = _CharacterController();
 
 void performPrimaryAction() {
-  characterController.action = CharacterAction.Perform;
+  setCharacterAction(CharacterAction.Perform);
 }
 
 final RawKeyboard rawKeyboard = RawKeyboard.instance;
@@ -163,10 +161,10 @@ final List<String> waitASecond = ['Wait a second', 'Just a moment'];
 Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.interact: sendRequestInteract,
   keys.perform: performPrimaryAction,
-  keys.runLeft: runLeft,
-  keys.runUp: runUp,
-  keys.runRight: runRight,
-  keys.runDown: runDown,
+  // keys.runLeft: runLeft,
+  // keys.runUp: runUp,
+  // keys.runRight: runRight,
+  // keys.runDown: runDown,
   keys.melee: melee,
   keys.speakLetsGo: sayLetsGo,
   keys.speakLetsGreeting: sayGreeting,
@@ -231,14 +229,13 @@ void sayWaitASecond() {
 // triggered after a key is held longer than one frame
 Map<LogicalKeyboardKey, Function> _keyHeldHandlers = {
   keys.interact: sendRequestInteract,
-  keys.runLeft: runLeft,
-  keys.runUp: runUp,
-  keys.runRight: runRight,
-  keys.runDown: runDown,
+  // keys.runLeft: runLeft,
+  // keys.runUp: runUp,
+  // keys.runRight: runRight,
+  // keys.runDown: runDown,
 };
 
 Map<LogicalKeyboardKey, Function> _keyReleasedHandlers = {
-  keys.runLeft: stopRunLeft,
   keys.melee: stopMelee,
 };
 
@@ -249,34 +246,29 @@ void onMouseScroll(double amount) {
   cameraCenter(center1.dx, center1.dy);
 }
 
-void runLeft() {
-  if (characterController.action == CharacterAction.Perform) return;
-  characterController.direction = Direction.Left;
-  characterController.action = CharacterAction.Run;
-}
-
-void runUp() {
-  if (characterController.action == CharacterAction.Perform) return;
-  characterController.direction = Direction.Up;
-  characterController.action = CharacterAction.Run;
-}
-
-void runRight() {
-  if (characterController.action == CharacterAction.Perform) return;
-  characterController.direction = Direction.Right;
-  characterController.action = CharacterAction.Run;
-}
-
-void runDown() {
-  if (characterController.action == CharacterAction.Perform) return;
-  characterController.direction = Direction.Down;
-  characterController.action = CharacterAction.Run;
-}
+// void runLeft() {
+//   setCharacterDirection(Direction.Left);
+//   setCharacterActionRun();
+// }
+//
+// void runUp() {
+//   setCharacterDirection(Direction.Up);
+//   setCharacterActionRun();
+// }
+//
+// void runRight() {
+//   setCharacterActionRun();
+//   setCharacterDirection(Direction.Right);
+// }
+//
+// void runDown() {
+//   setCharacterActionRun();
+//   setCharacterDirection(Direction.Down);
+// }
 
 void stopRunLeft() {
-  if (characterController.action == CharacterAction.Perform) return;
-  characterController.direction = Direction.Left;
-  characterController.action = CharacterAction.Run;
+  setCharacterActionRun();
+  setCharacterDirection(Direction.Left);
 }
 
 void melee() {
@@ -337,8 +329,21 @@ void _handleKeyUpEventPlayMode(RawKeyUpEvent event) {
 
 class _CharacterController {
   Direction direction = Direction.None;
-  CharacterAction action = CharacterAction.Idle;
+  final Watch<CharacterAction> action = Watch(CharacterAction.Idle);
   AbilityType ability = AbilityType.None;
+}
+
+void setCharacterAction(CharacterAction value){
+  if (value.index < characterController.action.value.index) return;
+  characterController.action.value = value;
+}
+
+void setCharacterActionRun(){
+  setCharacterAction(CharacterAction.Run);
+}
+
+void setCharacterDirection(Direction value){
+  characterController.direction = value;
 }
 
 void readPlayerInput() {
@@ -347,7 +352,7 @@ void readPlayerInput() {
 
   if (hud.textBoxFocused) return;
 
-  if (characterController.action == CharacterAction.Perform) return;
+  // if (characterController.action.value == CharacterAction.Perform) return;
 
   if (keyPressedPan && !panningCamera) {
     panningCamera = true;
@@ -366,7 +371,7 @@ void readPlayerInput() {
 
   characterController.direction = getKeyDirection();
   if (characterController.direction != Direction.None) {
-    characterController.action = CharacterAction.Run;
+    setCharacterActionRun();
   }
 }
 

@@ -93,8 +93,8 @@ void sendRequestUpdatePlayer() {
   _buffer.clear();
   _write(gameUpdateIndex);
   _write(game.player.uuid);
-  _write(characterController.action.index);
-  characterController.action = CharacterAction.Idle;
+  _write(characterController.action.value.index);
+  characterController.action.value = CharacterAction.Idle;
   _write(characterController.direction.index);
   _write(mouseWorldX.toInt());
   _write(mouseWorldY.toInt());

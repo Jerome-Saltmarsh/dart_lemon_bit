@@ -4,6 +4,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/classes/Ability.dart';
 import 'package:bleed_client/classes/Weapon.dart';
 import 'package:bleed_client/common/AbilityType.dart';
+import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/WeaponType.dart';
@@ -352,6 +353,16 @@ Widget buildHud() {
     return WatchBuilder(game.player.alive, (bool alive) {
       return Stack(
         children: [
+          Positioned(
+            left: 200,
+            top: 300,
+            child: WatchBuilder(
+              characterController.action,
+                (CharacterAction action){
+                return text(action);
+                }
+            ),
+          ),
           buildTextBox(),
           if (alive) buildBottomLeft(),
           if (alive) buildBottomRight(),

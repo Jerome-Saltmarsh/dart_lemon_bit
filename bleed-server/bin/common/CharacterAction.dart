@@ -1,8 +1,8 @@
 
 enum CharacterAction {
   Idle,
-  Perform,
   Run,
+  Perform,
 }
 
 final List<CharacterAction> characterActions = CharacterAction.values;
