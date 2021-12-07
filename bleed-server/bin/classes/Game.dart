@@ -629,11 +629,15 @@ extension GameFunctions on Game {
       projectile.x += projectile.xv;
       projectile.y += projectile.yv;
 
-      Positioned? target = projectile.target;
+      Character? target = projectile.target;
       if (target != null) {
-        final double rot = radiansBetweenObject(projectile, target);
-        projectile.xv = adj(rot, projectile.speed);
-        projectile.yv = opp(rot, projectile.speed);
+        if (target.dead) {
+          projectile.target = null;
+        }else{
+          final double rot = radiansBetweenObject(projectile, target);
+          projectile.xv = adj(rot, projectile.speed);
+          projectile.yv = opp(rot, projectile.speed);
+        }
       } else if (projectileDistanceTravelled(projectile) > projectile.range) {
         deactivateProjectile(projectile);
       }
@@ -1133,7 +1137,7 @@ extension GameFunctions on Game {
     required double range,
     required int damage,
     required ProjectileType type,
-    Positioned? target,
+    Character? target,
   }) {
     double spawnDistance = character.radius + 20;
     Projectile projectile = getAvailableProjectile();

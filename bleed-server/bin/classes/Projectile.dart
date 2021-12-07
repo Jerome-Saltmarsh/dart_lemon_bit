@@ -3,7 +3,6 @@ import '../common/enums/ProjectileType.dart';
 import '../interfaces/HasSquad.dart';
 import 'Character.dart';
 import 'GameObject.dart';
-import 'Positioned.dart';
 
 class Projectile extends GameObject implements HasSquad {
   late double xStart;
@@ -13,7 +12,7 @@ class Projectile extends GameObject implements HasSquad {
   late int damage;
   late ProjectileType type;
   late Direction direction;
-  late Positioned? target;
+  late Character? target;
   late double speed;
   late bool collideWithEnvironment = false;
 
