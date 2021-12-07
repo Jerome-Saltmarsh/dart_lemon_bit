@@ -59,24 +59,54 @@ Offset _mouseWorldStart;
 
 final _CharacterController characterController = _CharacterController();
 
-void performPrimaryAction(){
+void performPrimaryAction() {
   characterController.action = CharacterAction.Perform;
 }
 
+final RawKeyboard rawKeyboard = RawKeyboard.instance;
+
 void registerPlayKeyboardHandler() {
-  RawKeyboard.instance.addListener(_handleKeyboardEvent);
+  print("registerPlayKeyboardHandler()");
+  registerKeyboardHandler(_keyboardEventHandlerPlayMode);
+}
+
+
+void registerTextBoxKeyboardHandler(){
+  registerKeyboardHandler(_handleKeyboardEventTextBox);
+}
+
+void deregisterTextBoxKeyboardHandler(){
+  deregisterKeyboardHandler(_handleKeyboardEventTextBox);
 }
 
 void deregisterPlayKeyboardHandler() {
   print("deregisterPlayKeyboardHandler()");
-  RawKeyboard.instance.removeListener(_handleKeyboardEvent);
+  deregisterKeyboardHandler(_keyboardEventHandlerPlayMode);
 }
 
-void _handleKeyboardEvent(RawKeyEvent event) {
+void registerKeyboardHandler(Function(RawKeyEvent event) handler) {
+  rawKeyboard.addListener(handler);
+}
+
+void deregisterKeyboardHandler(Function(RawKeyEvent event) handler) {
+  rawKeyboard.removeListener(handler);
+}
+
+void _keyboardEventHandlerPlayMode(RawKeyEvent event) {
   if (event is RawKeyUpEvent) {
-    _handleKeyUpEvent(event);
+    _handleKeyUpEventPlayMode(event);
   } else if (event is RawKeyDownEvent) {
-    _handleKeyDownEvent(event);
+    _handleKeyDownEventPlayMode(event);
+  }
+}
+
+void _handleKeyboardEventTextBox(RawKeyEvent event) {
+  if (event is RawKeyDownEvent) {
+    if (event.logicalKey == LogicalKeyboardKey.enter) {
+      sendAndCloseTextBox();
+    } else if (event.logicalKey == LogicalKeyboardKey.escape) {
+      hideTextBox();
+    }
   }
 }
 
@@ -85,8 +115,6 @@ final _Keys keys = _Keys();
 class _Keys {
   LogicalKeyboardKey perform = LogicalKeyboardKey.space;
   LogicalKeyboardKey interact = LogicalKeyboardKey.keyE;
-  LogicalKeyboardKey sprint = LogicalKeyboardKey.keyQ;
-  LogicalKeyboardKey sprint2 = LogicalKeyboardKey.keyC;
   LogicalKeyboardKey runUp = LogicalKeyboardKey.keyW;
   LogicalKeyboardKey runRight = LogicalKeyboardKey.keyD;
   LogicalKeyboardKey runDown = LogicalKeyboardKey.keyS;
@@ -159,7 +187,7 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.equip3B: selectAbility3,
   keys.equip4B: selectAbility4,
   keys.toggleSkillTree: hud.skillTreeVisible.toggle,
-  keys.pixelExplosion: (){
+  keys.pixelExplosion: () {
     emitPixelExplosion(mouseWorldX, mouseWorldY);
   },
 };
@@ -266,18 +294,10 @@ void stopMelee() {
   // characterController.characterState = CharacterState.Idle;
 }
 
-void _handleKeyDownEvent(RawKeyDownEvent event) {
+void _handleKeyDownEventPlayMode(RawKeyDownEvent event) {
   LogicalKeyboardKey key = event.logicalKey;
 
-  if (hud.state.textBoxVisible.value) {
-    if (key == keys.text) {
-      sendAndCloseTextBox();
-    }
-    return;
-  }
-
   if (!_keyDownState.containsKey(key)) {
-    // on key pressed
     _keyDownState[key] = true;
     if (_keyPressedHandlers.containsKey(key)) {
       _keyPressedHandlers[key].call();
@@ -302,7 +322,7 @@ void _handleKeyDownEvent(RawKeyDownEvent event) {
 
 // on text box visible should disable the character keyboard and vicer vercer
 
-void _handleKeyUpEvent(RawKeyUpEvent event) {
+void _handleKeyUpEventPlayMode(RawKeyUpEvent event) {
   LogicalKeyboardKey key = event.logicalKey;
 
   if (hud.state.textBoxVisible.value) return;
@@ -323,6 +343,8 @@ class _CharacterController {
 void readPlayerInput() {
   // TODO This should be reactive
   if (!playerAssigned) return;
+
+  if (hud.state.textBoxVisible.value) return;
 
   if (characterController.action == CharacterAction.Perform) return;
 

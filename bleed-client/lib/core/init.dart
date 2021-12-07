@@ -32,6 +32,7 @@ import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
+import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/phase.dart';
@@ -50,8 +51,6 @@ Future init() async {
   initAudioPlayers();
   initUI();
   rebuildUI();
-
-
 
   if (Uri.base.hasQuery && Uri.base.queryParameters.containsKey('host')) {
     Future.delayed(Duration(seconds: 1), () {
@@ -110,8 +109,7 @@ void onPlayerWeaponChanged(WeaponType weapon) {
   }
 }
 
-void initializeEventListeners(){
-
+void initializeEventListeners() {
   registerPlayKeyboardHandler();
   registerOnMouseScroll(onMouseScroll);
   onConnectedController.stream.listen(_onConnected);
@@ -125,6 +123,16 @@ void initializeEventListeners(){
 
   onLeftClicked.stream.listen((event) {
     performPrimaryAction();
+  });
+
+  hud.state.textBoxVisible.onChanged((bool visible) {
+    if (visible) {
+      deregisterPlayKeyboardHandler();
+      registerTextBoxKeyboardHandler();
+    } else {
+      registerPlayKeyboardHandler();
+      deregisterTextBoxKeyboardHandler();
+    }
   });
 
   game.player.state.onChanged((CharacterState state) {
@@ -158,7 +166,7 @@ void initializeEventListeners(){
   });
 
   onRightClickChanged.stream.listen((bool down) {
-    if (down){
+    if (down) {
       print("request deselect");
       sendRequestDeselectAbility();
     }
@@ -178,8 +186,9 @@ void _onConnected(_event) {
 
 Future loadSharedPreferences() async {
   sharedPreferences = await SharedPreferences.getInstance();
-  game.settings.audioMuted.value = sharedPreferences.containsKey('audioMuted') &&
-      sharedPreferences.getBool('audioMuted');
+  game.settings.audioMuted.value =
+      sharedPreferences.containsKey('audioMuted') &&
+          sharedPreferences.getBool('audioMuted');
 
   // if (sharedPreferences.containsKey('server')) {
   //   Server server = servers[sharedPreferences.getInt('server')];

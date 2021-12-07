@@ -118,6 +118,7 @@ Game Modes include MMO, Dota, Base defense,
 [ ] Attributes (Intelligence, Strength, Agility)
 [ ] Cooldown widget
 [ ] Orb attacks heat seek target
+[ ] FIX BUG Can control player while text box open
 [x] Ability cool down
 [x] Magic Regen
 [x] Magic
