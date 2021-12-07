@@ -316,7 +316,7 @@ extension GameFunctions on Game {
             // on player level increased
             src.experience -= levelExperience[src.level];
             src.level++;
-            src.skillPoints++;
+            src.abilityPoints++;
           }
         }
       }
@@ -1593,6 +1593,8 @@ void selectCharacterType(Player player, CharacterType value) {
   // @on set character type
   player.type = value;
   player.abilitiesDirty = true;
+  player.level = 1;
+  player.abilityPoints = 1;
 
   switch (value) {
     case CharacterType.Human:
@@ -1630,7 +1632,7 @@ void selectCharacterType(Player player, CharacterType value) {
       player.maxMagic = 100;
       player.magic = 100;
       break;
-    case CharacterType.Knight:
+    case CharacterType.Swordsman:
       // TODO: Handle this case.
       break;
     case CharacterType.Archer:

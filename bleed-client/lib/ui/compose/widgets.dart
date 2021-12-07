@@ -33,10 +33,10 @@ Widget text(dynamic value, {
 
 Widget border({
     Widget child,
-    Color color,
+    Color color = Colors.white,
     double width = 1,
-    BorderRadius radius,
-    EdgeInsets padding,
+    BorderRadius radius = borderRadius4,
+    EdgeInsets padding = padding8,
     EdgeInsets margin,
     Alignment alignment,
     Color fillColor}) {

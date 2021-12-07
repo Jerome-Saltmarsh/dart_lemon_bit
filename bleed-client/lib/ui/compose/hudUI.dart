@@ -10,6 +10,7 @@ import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/functions/clearState.dart';
+import 'package:bleed_client/input.dart';
 import 'package:bleed_client/mappers/mapWeaponToDecorationImage.dart';
 import 'package:bleed_client/network/functions/disconnect.dart';
 import 'package:bleed_client/send.dart';
@@ -181,7 +182,20 @@ Widget buildPlayerNextLevelExperience() {
 }
 
 Widget buildBottomRight() {
-  return Positioned(bottom: _padding, right: _padding, child: buildHealthBar());
+  return WatchBuilder(game.player.characterType, (CharacterType type){
+    if (type == CharacterType.None) return emptyContainer;
+    return Positioned(bottom: _padding, right: _padding, child: Row(
+      children: [
+        buildMessageBoxIcon(),
+        width8,
+        buildHealthBar(),
+      ],
+    ));
+  });
+}
+
+Widget buildMessageBoxIcon(){
+  return border(child: text("Message", onPressed: toggleMessageBox));
 }
 
 Widget buildTime() {
@@ -211,14 +225,22 @@ Widget dialog({
   double width = 400,
   double height = 600,
   Color color = Colors.white24,
+  Color borderColor = Colors.white,
+  double borderWidth = 2,
+  BorderRadius borderRadius = borderRadius4,
 }) {
+
   return Container(
     width: screenWidth,
     height: screenHeight,
     alignment: Alignment.center,
     child: Container(
+        decoration: BoxDecoration(
+            border: Border.all(color: borderColor, width: borderWidth),
+            borderRadius: borderRadius,
+            color: color),
       padding: EdgeInsets.all(padding),
-      color: color,
+      // color: color,
       width: width,
       height: height,
       child: child,
@@ -228,48 +250,60 @@ Widget dialog({
 
 Widget buildSelectHero() {
   final fontSize = 20;
-  return WatchBuilder(game.player.characterType, (CharacterType value) {
-    if (value == CharacterType.Human) {
-      return dialog(
-          child: Column(
+  return dialog(
+      color: Colors.white24,
+      child: Column(
         children: [
           height16,
           text("Select Hero", fontSize: 30),
           height16,
           ...playableCharacterTypes.map((characterType) {
-            return Container(
-              margin: const EdgeInsets.only(bottom: 8),
-              child: text(characterTypeToString(characterType),
-                  fontSize: fontSize, onPressed: () {
-                server.send.selectCharacterType(characterType);
-              }),
+            return mouseOver(
+              builder: (BuildContext context, bool mouseOver){
+                return onPressed(
+                  callback: (){
+                    server.send.selectCharacterType(characterType);
+                  },
+                  child: border(
+                    margin: EdgeInsets.only(bottom: 16),
+                    fillColor: mouseOver ? Colors.black87 : Colors.black26,
+                    child: Container(
+                      width: 200,
+                      child: text(characterTypeToString(characterType),
+                          fontSize: fontSize),
+                    ),
+                  ),
+                );
+              },
             );
           }).toList(),
         ],
       ));
-    }
-    return emptyContainer;
-  });
 }
 
 Widget buildHud() {
-  print("buildHud()");
+  return WatchBuilder(game.player.characterType, (CharacterType value) {
+    if (value == CharacterType.None) {
+       return buildSelectHero();
+    }
 
-  return WatchBuilder(game.player.alive, (bool alive) {
-    return Stack(
-      children: [
-        buildTextBox(),
-        if (alive) buildBottomLeft(),
-        if (alive) buildBottomRight(),
-        buildTopLeft(),
-        if (!hud.state.observeMode && !alive) _buildViewRespawn(),
-        if (!alive && hud.state.observeMode) _buildRespawnLight(),
-        _buildServerText(),
-        buildTopRight(),
-        buildSkillTree(),
-        buildSelectHero(),
-      ],
-    );
+    return WatchBuilder(game.player.alive, (bool alive) {
+      return Stack(
+        children: [
+          buildTextBox(),
+          if (alive) buildBottomLeft(),
+          if (alive) buildBottomRight(),
+          buildTopLeft(),
+          if (!hud.state.observeMode && !alive) _buildViewRespawn(),
+          if (!alive && hud.state.observeMode) _buildRespawnLight(),
+          _buildServerText(),
+          buildTopRight(),
+          buildSkillTree(),
+        ],
+      );
+    });
+
+
   });
 }
 
@@ -535,8 +569,6 @@ Widget buildWeaponSlot(WeaponType weaponType) {
     );
   });
 }
-
-ValueNotifier<double> ability1Perc = ValueNotifier(0.5);
 
 Widget buildBottomLeft() {
   return Positioned(bottom: _padding, left: _padding, child: Row(

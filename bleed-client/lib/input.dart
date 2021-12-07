@@ -144,7 +144,7 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.speakLetsGo: sayLetsGo,
   keys.speakLetsGreeting: sayGreeting,
   keys.waitASecond: sayWaitASecond,
-  keys.text: _onKeyPressedEnter,
+  keys.text: toggleMessageBox,
   keys.toggleLantern: toggleLantern,
   keys.hourForwards: skipHour,
   keys.hourBackwards: reverseHour,
@@ -189,7 +189,7 @@ void toggleLantern() {
   lantern = lanternModes[(lantern.index + 1) % lanternModes.length];
 }
 
-void _onKeyPressedEnter() {
+void toggleMessageBox() {
   hud.state.textBoxVisible.value ? sendAndCloseTextBox() : showTextBox();
 }
 

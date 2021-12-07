@@ -9,16 +9,13 @@ import 'classes/Ability.dart';
 import 'classes/Character.dart';
 import 'classes/Game.dart';
 import 'classes/Inventory.dart';
-import 'classes/Npc.dart';
 import 'classes/Player.dart';
 import 'classes/Weapon.dart';
-import 'common/AbilityType.dart';
 import 'common/CharacterAction.dart';
 import 'common/CharacterState.dart';
 import 'common/CharacterType.dart';
 import 'common/ClientRequest.dart';
 import 'common/GameError.dart';
-import 'common/GameEventType.dart';
 import 'common/ServerResponse.dart';
 import 'common/WeaponType.dart';
 import 'common/enums/Direction.dart';
@@ -209,8 +206,6 @@ void main() {
                           closest, player.x, player.y, player.attackRange)) {
                         player.attackTarget = closest;
                         game.setCharacterState(player, CharacterState.Striking);
-                      }else{
-                        print("outside of attack range");
                       }
                     }
                   }
@@ -295,7 +290,7 @@ void main() {
             errorPlayerNotFound();
             return;
           }
-          if (player.type != CharacterType.Human) {
+          if (player.type != CharacterType.None) {
             error(GameError.CharacterTypeAlreadySelected);
             break;
           }
@@ -321,7 +316,7 @@ void main() {
             return;
           }
 
-          if (player.skillPoints < 1) {
+          if (player.abilityPoints < 1) {
             error(GameError.SkillPointsRequired);
             return;
           }
@@ -342,7 +337,7 @@ void main() {
 
           Ability ability = player.getAbilityByIndex(upgradeIndex);
           ability.level++;
-          player.skillPoints--;
+          player.abilityPoints--;
           player.abilitiesDirty = true;
           break;
 
@@ -434,7 +429,7 @@ void main() {
           if (player.busy) {
             return;
           }
-          if (player.skillPoints <= 0) {
+          if (player.abilityPoints <= 0) {
             errorInsufficientSkillPoints();
             return;
           }
@@ -463,21 +458,21 @@ void main() {
               player.weapons.add(
                   Weapon(type: WeaponType.Shotgun, damage: 1, capacity: 5));
               player.weaponsDirty = true;
-              player.skillPoints--;
+              player.abilityPoints--;
               break;
 
             case WeaponType.HandGun:
               player.weapons.add(
                   Weapon(type: WeaponType.HandGun, damage: 1, capacity: 5));
               player.weaponsDirty = true;
-              player.skillPoints--;
+              player.abilityPoints--;
               break;
 
             case WeaponType.Firebolt:
               player.weapons.add(
                   Weapon(type: WeaponType.Firebolt, damage: 1, capacity: 5));
               player.weaponsDirty = true;
-              player.skillPoints--;
+              player.abilityPoints--;
               break;
           }
           break;
@@ -611,7 +606,8 @@ Player spawnPlayerInTown() {
         Weapon(type: WeaponType.Bow, damage: 3, capacity: 12),
         Weapon(type: WeaponType.SlowingCircle, damage: 3, capacity: 100),
       ]);
-  player.skillPoints = 4;
+  player.abilityPoints = 0;
+  player.type = CharacterType.None;
   world.town.players.add(player);
   return player;
 }
@@ -628,7 +624,7 @@ Player spawnPlayerInWildernessEast() {
         Weapon(type: WeaponType.HandGun, damage: 1, capacity: 12),
         Weapon(type: WeaponType.Bow, damage: 3, capacity: 12),
       ]);
-  player.skillPoints = 1;
+  player.abilityPoints = 1;
   world.wildernessEast.players.add(player);
   return player;
 }

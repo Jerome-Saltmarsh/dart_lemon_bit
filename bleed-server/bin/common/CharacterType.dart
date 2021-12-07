@@ -1,8 +1,9 @@
 enum CharacterType {
+  None,
   Human,
   Zombie,
   Witch,
-  Knight,
+  Swordsman,
   Archer,
   Musketeer,
 }
@@ -11,7 +12,7 @@ const characterTypes = CharacterType.values;
 
 final List<CharacterType> playableCharacterTypes = [
   CharacterType.Witch,
-  CharacterType.Knight,
+  CharacterType.Swordsman,
   CharacterType.Archer,
   CharacterType.Musketeer,
 ];

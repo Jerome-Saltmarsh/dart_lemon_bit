@@ -37,7 +37,7 @@ class Player extends Character {
 
   int experience = 0;
   int level = 1;
-  int skillPoints = 0;
+  int abilityPoints = 0;
   int _magic = 0;
 
   int get magic => _magic;

@@ -170,7 +170,7 @@ Float32List mapCharacterSrc({
       break;
     case CharacterType.Witch:
       return mapCharacterSrcWitch(state: state, direction: direction, frame: frame);
-    case CharacterType.Knight:
+    case CharacterType.Swordsman:
       break;
     case CharacterType.Archer:
       break;
