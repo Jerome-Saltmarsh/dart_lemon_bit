@@ -21,6 +21,7 @@ import 'package:lemon_watch/watch.dart';
 final _Game game = _Game();
 
 class _Game {
+  final List<Vector2> clicks = [];
   final List<Explosion> explosions = [];
   final _Settings settings = _Settings();
   final _Player player = _Player();

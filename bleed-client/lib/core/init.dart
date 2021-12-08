@@ -42,6 +42,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/functions/register_on_mouse_scroll.dart';
 import 'package:lemon_engine/game.dart';
+import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../ui/compose/dialogs.dart';
@@ -127,6 +128,15 @@ void initializeEventListeners() {
   onLeftClicked.stream.listen((event) {
     performPrimaryAction();
   });
+
+  onPanStarted.stream.listen((event) {
+    performPrimaryAction();
+  });
+
+  onLongLeftClicked.stream.listen((event) {
+    performPrimaryAction();
+  });
+
 
   // registerKeyboardHandler((RawKeyEvent event) {
   //   if (!hud.state.textBoxVisible.value) return;

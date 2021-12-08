@@ -12,6 +12,7 @@ import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
+import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
@@ -104,6 +105,10 @@ void renderCanvasPlay() {
 
   for (int i = 0; i < game.totalItems; i++) {
     drawItem(game.items[i]);
+  }
+
+  for(Vector2 click in game.clicks){
+    drawCircle(click.x, click.y, 10, Colors.red);
   }
 
   drawAbility();

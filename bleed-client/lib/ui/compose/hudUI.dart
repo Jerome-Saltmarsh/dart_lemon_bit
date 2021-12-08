@@ -447,8 +447,8 @@ Widget _buildToggleEdit(){
   return button("Editor", toggleEditMode);
 }
 
-Widget buildTogglePaths(){
-  return button("Debug", toggleEditMode);
+Widget buildToggleDebug(){
+  return button("Debug", toggleDebugMode);
 }
 
 void toggleDebugMode(){
@@ -463,7 +463,7 @@ Widget buildMenu() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        if (game.settings.developMode) buildTogglePaths(),
+        if (game.settings.developMode) buildToggleDebug(),
         if (game.settings.developMode) width8,
         if (game.settings.developMode) _buildToggleEdit(),
         buildToggleAudio(),
