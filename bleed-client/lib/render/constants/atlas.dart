@@ -20,12 +20,19 @@ class _Atlas {
   final Vector2 arrow = Vector2(517, 534);
   final Vector2 items = Vector2(1, 567);
   final _Witch witch = _Witch();
+  final _Archer archer = _Archer();
   final _Projectiles projectiles = _Projectiles();
 }
 
 class  _Witch {
   final Vector2 idle = Vector2(1, 3459);
   final Vector2 running = Vector2(1, 3524);
+  final Vector2 striking = Vector2(1, 3589);
+}
+
+class  _Archer {
+  final Vector2 idle = Vector2(1, 3654);
+  final Vector2 running = Vector2(1, 3719);
   final Vector2 striking = Vector2(1, 3589);
 }
 

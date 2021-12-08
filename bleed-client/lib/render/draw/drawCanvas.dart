@@ -144,8 +144,10 @@ void renderCanvasPlay() {
   drawPlayerText();
 
   // if (game.player.characterType.value != CharacterType.Witch){
-    _drawMouseAim(); // TODO Expensive
+  //   _drawMouseAim(); // TODO Expensive
   // }
+
+  setColorWhite();
 }
 
 void drawAbility() {
@@ -416,7 +418,8 @@ void _drawMouseAim() {
   double vY = opposite(angle, d);
   Offset mouseOffset = Offset(mouseWorldX, mouseWorldY);
   Offset aimOffset = Offset(mouseWorldX + vX, mouseWorldY + vY);
-  _drawLine(mouseOffset, aimOffset, Colors.white);
+  _drawLine(mouseOffset, aimOffset, Colors.transparent);
+  setColorWhite();
 }
 
 // TODO Optimize

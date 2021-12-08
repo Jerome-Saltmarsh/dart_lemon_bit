@@ -8,6 +8,7 @@ import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/render/constants/animations.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/common/CharacterType.dart';
+import 'package:bleed_client/render/mappers/mapArcherToSrc.dart';
 import 'package:lemon_engine/classes/vector2.dart';
 
 const _frame64 = 64.0;
@@ -36,7 +37,7 @@ final Vector2 _zombieWalking = Vector2(1, 2720);
 Float32List _src = Float32List(4);
 
 
-Float32List _loop({
+Float32List loop({
   Vector2 atlas,
   Direction direction,
   Shade shade,
@@ -53,7 +54,7 @@ Float32List _loop({
   return _src;
 }
 
-Float32List _animate({
+Float32List animate({
   Vector2 atlas,
   List<int> animation,
   Direction direction,
@@ -88,7 +89,7 @@ Float32List mapCharacterSrcWitch({
       _src[3] = 2;
       return _src;
     case CharacterState.Idle:
-      return _loop(
+      return loop(
           atlas: atlas.witch.idle,
           direction: direction,
           shade: Shade.Bright,
@@ -96,7 +97,7 @@ Float32List mapCharacterSrcWitch({
           framesPerDirection: 1,
           frame: frame);
     case CharacterState.Walking:
-      return _loop(
+      return loop(
         atlas: atlas.witch.running,
         direction: direction,
         shade: Shade.Bright,
@@ -113,7 +114,7 @@ Float32List mapCharacterSrcWitch({
       // TODO: Handle this case.
       break;
     case CharacterState.Striking:
-      return _animate(
+      return animate(
           animation: animations.witch.attacking,
           atlas: atlas.witch.striking,
           direction: direction,
@@ -122,7 +123,7 @@ Float32List mapCharacterSrcWitch({
           framesPerDirection: 2,
           frame: frame);
     case CharacterState.Performing:
-      return _animate(
+      return animate(
           animation: animations.witch.attacking,
           atlas: atlas.witch.striking,
           direction: direction,
@@ -131,7 +132,7 @@ Float32List mapCharacterSrcWitch({
           framesPerDirection: 2,
           frame: frame);
     case CharacterState.Running:
-      return _loop(
+      return loop(
           atlas: atlas.witch.running,
           direction: direction,
           shade: Shade.Bright,
@@ -162,7 +163,6 @@ Float32List mapCharacterSrc({
   int frame,
   Shade shade,
 }) {
-
   switch(type){
     case CharacterType.Human:
       break;
@@ -173,11 +173,10 @@ Float32List mapCharacterSrc({
     case CharacterType.Swordsman:
       break;
     case CharacterType.Archer:
-      break;
+      return mapCharacterSrcArcher(state: state, direction: direction, frame: frame);
     case CharacterType.Musketeer:
       break;
   }
-
 
   bool zombie = type == CharacterType.Zombie;
 

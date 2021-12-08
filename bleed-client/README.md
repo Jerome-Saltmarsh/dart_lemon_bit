@@ -120,7 +120,9 @@ Game Modes include MMO, Dota, Base defense,
 [ ] Attributes (Intelligence, Strength, Agility)
 [ ] Cooldown widget
 [ ] Health bars
-[ ] FIX BUG Sometimes left click does not register attack
+[ ] Fix blue orb shoots off if target is killed
+[ ] Remove old atlas sprites
+[x] FIX BUG Sometimes left click does not register attack
 [x] Orb attacks heat seek target
 [x] FIX BUG Can control player while text box open
 [x] Ability cool down
