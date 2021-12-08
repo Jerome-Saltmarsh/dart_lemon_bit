@@ -1036,6 +1036,11 @@ extension GameFunctions on Game {
               spawnBlueOrb(character);
             }
             break;
+          case CharacterType.Archer:
+            if (character.stateDuration == 3) {
+              spawnArrow(character);
+            }
+            break;
           default:
             break;
         }
@@ -1645,7 +1650,7 @@ void selectCharacterType(Player player, CharacterType value) {
       // TODO: Handle this case.
       break;
     case CharacterType.Archer:
-      // TODO: Handle this case.
+      player.attackRange = 270;
       break;
     case CharacterType.Musketeer:
       // TODO: Handle this case.

@@ -13,5 +13,5 @@ class _Man {
 }
 
 class _Witch {
-  final List<int> attacking = [0, 0, 1, 1];
+  final List<int> attacking = [0, 1, 2, 3];
 }
