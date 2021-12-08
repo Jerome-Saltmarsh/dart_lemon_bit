@@ -6,6 +6,7 @@ Map<AbilityType, DecorationImage> mapAbilityTypeToDecorationImage = {
   AbilityType.FreezeCircle: spellIcon("freeze"),
   AbilityType.Blink: spellIcon("flash"),
   AbilityType.Explosion: spellIcon("explode"),
+  AbilityType.Dash: spellIcon("dash"),
 };
 
 final _Icons icons = _Icons();

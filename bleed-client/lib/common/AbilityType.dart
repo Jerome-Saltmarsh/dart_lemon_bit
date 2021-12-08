@@ -3,6 +3,7 @@ enum AbilityType {
   FreezeCircle,
   Blink,
   Explosion,
+  Dash,
   Fireball,
 }
 

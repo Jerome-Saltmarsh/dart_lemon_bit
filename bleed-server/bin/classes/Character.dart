@@ -31,10 +31,12 @@ class Character extends GameObject implements HasSquad {
 
   double get speed {
     if (frozen){
-      return _speed * 0.5;
+      return (_speed + speedModifier) * 0.5;
     }
-    return _speed;
+    return (_speed + speedModifier);
   }
+
+  double speedModifier = 0;
 
 
   int squad;

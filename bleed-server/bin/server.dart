@@ -11,6 +11,7 @@ import 'classes/Game.dart';
 import 'classes/Inventory.dart';
 import 'classes/Player.dart';
 import 'classes/Weapon.dart';
+import 'common/AbilityType.dart';
 import 'common/CharacterAction.dart';
 import 'common/CharacterState.dart';
 import 'common/CharacterType.dart';
@@ -421,6 +422,15 @@ void main() {
           if (ability.cooldownRemaining > 0) {
             error(GameError.Cooldown_Remaining);
             return;
+          }
+
+          if (ability is Dash){
+            if (ability.type == AbilityType.Dash){
+              ability.cooldownRemaining = ability.cooldown;
+              ability.durationRemaining = ability.duration;
+              player.speedModifier += dashSpeed;
+              break;
+            }
           }
 
           player.ability = ability;

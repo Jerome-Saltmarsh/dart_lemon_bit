@@ -109,13 +109,11 @@ void parseState() {
         game.player.attackTarget.x = _consumeDouble();
         game.player.attackTarget.y = _consumeDouble();
 
-        if (game.player.characterType.value == CharacterType.Witch){
-          if (game.player.attackTarget.x != 0 &&
-              game.player.attackTarget.y != 0) {
-            cursorType.value = CursorType.Click;
-          } else {
-            cursorType.value = CursorType.Precise;
-          }
+        if (game.player.attackTarget.x != 0 &&
+            game.player.attackTarget.y != 0) {
+          cursorType.value = CursorType.Click;
+        } else {
+          cursorType.value = CursorType.Precise;
         }
         break;
 

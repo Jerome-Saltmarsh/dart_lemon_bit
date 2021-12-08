@@ -101,7 +101,6 @@ abstract class Game {
   // TODO doesn't belong here
   StringBuffer buffer = StringBuffer();
 
-
   void changeGame(Player player, Game to) {
     if (player.game == to) return;
 
@@ -316,7 +315,7 @@ extension GameFunctions on Game {
     onKilledBy(target, src);
   }
 
-  void playerGainExperience(Player player, int experience){
+  void playerGainExperience(Player player, int experience) {
     if (player.level >= maxPlayerLevel) return;
     player.experience += experience;
     while (player.experience >= levelExperience[player.level]) {
@@ -393,28 +392,38 @@ extension GameFunctions on Game {
     npc.state = CharacterState.Idle;
   }
 
-  void _updatePlayersAndNpcs() {
-    if (duration % fps == 0) {
-      for (Player player in players) {
-        player.magic += player.magicRegen;
-        if (player.ability1.cooldownRemaining > 0) {
-          player.ability1.cooldownRemaining--;
-          player.abilitiesDirty = true;
-        }
-        if (player.ability2.cooldownRemaining > 0) {
-          player.ability2.cooldownRemaining--;
-          player.abilitiesDirty = true;
-        }
-        if (player.ability3.cooldownRemaining > 0) {
-          player.ability3.cooldownRemaining--;
-          player.abilitiesDirty = true;
-        }
-        if (player.ability4.cooldownRemaining > 0) {
-          player.ability4.cooldownRemaining--;
-          player.abilitiesDirty = true;
-        }
+  void _updatePlayersPerSecond() {
+    if (duration % fps != 0) return;
+
+    for (Player player in players) {
+      player.magic += player.magicRegen;
+
+      player.ability1.update();
+      player.ability2.update();
+      player.ability3.update();
+      player.ability4.update();
+
+      if (player.ability1.cooldownRemaining > 0) {
+        player.ability1.cooldownRemaining--;
+        player.abilitiesDirty = true;
+      }
+      if (player.ability2.cooldownRemaining > 0) {
+        player.ability2.cooldownRemaining--;
+        player.abilitiesDirty = true;
+      }
+      if (player.ability3.cooldownRemaining > 0) {
+        player.ability3.cooldownRemaining--;
+        player.abilitiesDirty = true;
+      }
+      if (player.ability4.cooldownRemaining > 0) {
+        player.ability4.cooldownRemaining--;
+        player.abilitiesDirty = true;
       }
     }
+  }
+
+  void _updatePlayersAndNpcs() {
+    _updatePlayersPerSecond();
 
     for (int i = 0; i < players.length; i++) {
       updatePlayer(players[i]);
@@ -637,7 +646,7 @@ extension GameFunctions on Game {
       if (target != null) {
         if (target.dead) {
           projectile.target = null;
-        }else{
+        } else {
           final double rot = radiansBetweenObject(projectile, target);
           projectile.xv = adj(rot, projectile.speed);
           projectile.yv = opp(rot, projectile.speed);
@@ -1620,6 +1629,8 @@ void selectCharacterType(Player player, CharacterType value) {
       break;
     case CharacterType.Witch:
       player.attackRange = 200;
+      player.maxMagic = 100;
+      player.magic = player.maxMagic;
       player.ability1 = Ability(
           type: AbilityType.Explosion,
           level: 0,
@@ -1644,14 +1655,33 @@ void selectCharacterType(Player player, CharacterType value) {
           magicCost: 10,
           range: 200,
           cooldown: 25);
-      player.maxMagic = 100;
-      player.magic = 100;
       break;
     case CharacterType.Swordsman:
       // TODO: Handle this case.
       break;
     case CharacterType.Archer:
       player.attackRange = 270;
+      player.maxMagic = 100;
+      player.magic = player.maxMagic;
+      player.ability1 = Dash(player);
+      player.ability2 = Ability(
+          type: AbilityType.Blink,
+          level: 0,
+          magicCost: 10,
+          range: 200,
+          cooldown: 10);
+      player.ability3 = Ability(
+          type: AbilityType.FreezeCircle,
+          level: 0,
+          magicCost: 10,
+          range: 200,
+          cooldown: 15);
+      player.ability4 = Ability(
+          type: AbilityType.Fireball,
+          level: 0,
+          magicCost: 10,
+          range: 200,
+          cooldown: 25);
       break;
     case CharacterType.Musketeer:
       // TODO: Handle this case.
