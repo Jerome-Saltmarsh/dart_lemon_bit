@@ -1137,6 +1137,7 @@ extension GameFunctions on Game {
         speed: settings.projectileSpeed.arrow,
         damage: 100,
         range: settings.range.arrow,
+        target: character.attackTarget,
         type: ProjectileType.Arrow);
   }
 
