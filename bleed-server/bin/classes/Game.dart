@@ -1144,7 +1144,7 @@ extension GameFunctions on Game {
         character: character,
         accuracy: 0,
         speed: settings.projectileSpeed.arrow,
-        damage: 100,
+        damage: 5,
         range: settings.range.arrow,
         target: character.attackTarget,
         type: ProjectileType.Arrow);
@@ -1628,7 +1628,7 @@ void selectCharacterType(Player player, CharacterType value) {
       // TODO: Handle this case.
       break;
     case CharacterType.Witch:
-      player.attackRange = 200;
+      player.attackRange = 170;
       player.maxMagic = 100;
       player.magic = player.maxMagic;
       player.ability1 = Ability(
@@ -1660,7 +1660,7 @@ void selectCharacterType(Player player, CharacterType value) {
       // TODO: Handle this case.
       break;
     case CharacterType.Archer:
-      player.attackRange = 270;
+      player.attackRange = 210;
       player.maxMagic = 100;
       player.magic = player.maxMagic;
       player.ability1 = Dash(player);
