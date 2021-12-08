@@ -49,7 +49,7 @@ Float32List mapCharacterSrcArcher({
       break;
     case CharacterState.Striking:
       return animate(
-          animation: animations.witch.attacking,
+          animation: animations.archer.firing,
           atlas: atlas.archer.firing,
           direction: direction,
           shade: Shade.Bright,
