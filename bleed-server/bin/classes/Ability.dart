@@ -30,7 +30,7 @@ class Ability {
   AbilityType type;
   int level;
   int magicCost;
-  int range;
+  double range;
   int cooldownRemaining = 0;
   int cooldown;
 

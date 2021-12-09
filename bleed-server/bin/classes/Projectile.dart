@@ -1,6 +1,8 @@
 import '../common/enums/Direction.dart';
 import '../common/enums/ProjectileType.dart';
 import '../interfaces/HasSquad.dart';
+import '../maths.dart';
+import '../utils.dart';
 import 'Character.dart';
 import 'GameObject.dart';
 
@@ -24,4 +26,10 @@ class Projectile extends GameObject implements HasSquad {
   int getSquad() {
     return owner.squad;
   }
+}
+
+void setProjectilAngle(Projectile projectile, double angle){
+  projectile.xv = velX(angle, projectile.speed);
+  projectile.yv = velY(angle, projectile.speed);
+  projectile.direction = convertAngleToDirection(angle);
 }

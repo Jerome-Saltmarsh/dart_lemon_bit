@@ -241,6 +241,7 @@ void main() {
                 ability.cooldownRemaining = ability.cooldown;
                 player.abilitiesDirty = true;
                 player.ability = null;
+                characterAimAt(player, mouseX, mouseY);
                 game.setCharacterState(player, CharacterState.Performing);
                 break;
               case CharacterAction.Run:

@@ -5,6 +5,7 @@ enum AbilityType {
   Explosion,
   Dash,
   Fireball,
+  Split_Arrow,
 }
 
 final List<AbilityType> abilities = AbilityType.values;

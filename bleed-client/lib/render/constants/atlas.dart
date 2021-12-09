@@ -34,7 +34,6 @@ class  _Archer {
   final Vector2 idle = Vector2(1, 3654);
   final Vector2 running = Vector2(1, 3719);
   final Vector2 firing = Vector2(1, 3784);
-  final Vector2 striking = Vector2(1, 3589);
 }
 
 class _Human {

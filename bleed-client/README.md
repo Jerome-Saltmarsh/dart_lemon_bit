@@ -105,21 +105,24 @@
 [ ] Zombies drop gems on death
 [ ] Quest Kill the vampire
 [ ] Splash Screen
--- CURRENT -- 
 [ ] Cave Level
 [ ] Ability Tree
--- RELEASE 1ST JANUARY --
-The plan is to release several game modes like the warcraft 3 custom maps
-When the player loads into the game they start in the open world mode. To begin with this will be hard
-core mode and won't be possible to persist characters. 
-In the future the player will be able to store their character inside an sql database
-Game Modes include MMO, Dota, Base defense, 
-[ ] Character - Swordsman
+[RELEASE]
+-- The plan is to release several game modes like the warcraft 3 custom maps
+-- When the player loads into the game they start in the open world mode. To begin with this will be hard
+-- core mode and won't be possible to persist characters. 
+-- In the future the player will be able to store their character inside an sql database
+-- Game Modes include MMO, Dota, Base defense, 
 [ ] Items
 [ ] Attributes (Intelligence, Strength, Agility)
 [ ] Cooldown widget
 [ ] Health bars
 [ ] Remove old atlas sprites
+[ ] Character - Swordsman
+[ ] Archer Ability - Long shot
+[ ] Archer Ability - Ice Arrow
+[ ] Archer Ability - Split Arrow
+[COMPLETED]
 [x] Fix Bug - blue orb shoots off if target is killed
 [x] Archer
 [x] FIX BUG Sometimes left click does not register attack
@@ -128,7 +131,6 @@ Game Modes include MMO, Dota, Base defense,
 [x] Ability cool down
 [x] Magic Regen
 [x] Magic
--- COMPLETED --
 [x] Witch Cast Spell Slow Circle
 [x] Witch Caste Slowing Circle
 [x] Object Cave Wall

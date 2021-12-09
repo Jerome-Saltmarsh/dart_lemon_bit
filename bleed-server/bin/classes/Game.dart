@@ -1024,6 +1024,21 @@ extension GameFunctions on Game {
               character.performing = null;
             }
             break;
+          case AbilityType.Split_Arrow:
+            final int castFrame = 3;
+            if (character.stateDuration == castFrame) {
+              Projectile arrow1 = spawnArrow(character);
+              double angle = piSixteenth;
+              arrow1.target = null;
+              setProjectilAngle(arrow1, character.aimAngle - angle);
+              Projectile arrow2 = spawnArrow(character);
+              arrow2.target = null;
+              Projectile arrow3 = spawnArrow(character);
+              arrow3.target = null;
+              setProjectilAngle(arrow3, character.aimAngle + angle);
+              character.performing = null;
+            }
+            break;
           default:
             break;
         }
@@ -1153,9 +1168,9 @@ extension GameFunctions on Game {
   }) {
     double spawnDistance = character.radius + 20;
     Projectile projectile = getAvailableProjectile();
-    if (target != null && target.alive && target.active){
+    if (target != null && target.alive && target.active) {
       projectile.target = target;
-    }else{
+    } else {
       projectile.target = null;
     }
     projectile.active = true;
@@ -1661,7 +1676,7 @@ void selectCharacterType(Player player, CharacterType value) {
       player.magic = player.maxMagic;
       player.ability1 = Dash(player);
       player.ability2 = Ability(
-          type: AbilityType.Blink,
+          type: AbilityType.Split_Arrow,
           level: 0,
           magicCost: 10,
           range: 200,

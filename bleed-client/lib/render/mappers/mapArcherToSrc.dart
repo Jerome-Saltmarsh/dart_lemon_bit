@@ -58,12 +58,12 @@ Float32List mapCharacterSrcArcher({
           frame: frame);
     case CharacterState.Performing:
       return animate(
-          animation: animations.witch.attacking,
-          atlas: atlas.witch.striking,
+          animation: animations.archer.firing,
+          atlas: atlas.archer.firing,
           direction: direction,
           shade: Shade.Bright,
           size: 64,
-          framesPerDirection: 2,
+          framesPerDirection: 4,
           frame: frame);
     case CharacterState.Running:
       return loop(
@@ -77,9 +77,6 @@ Float32List mapCharacterSrcArcher({
     // TODO: Handle this case.
       break;
     case CharacterState.ChangingWeapon:
-    // TODO: Handle this case.
-      break;
-    case CharacterState.Performing:
     // TODO: Handle this case.
       break;
   }
