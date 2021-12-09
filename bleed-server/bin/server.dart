@@ -179,7 +179,8 @@ void main() {
             double mouseY = double.parse(arguments[5]);
 
             double mouseTop = mouseY - cursorRadius - settings.radius.character;
-            double mouseBottom = mouseY + cursorRadius + settings.radius.character;
+            double mouseBottom =
+                mouseY + cursorRadius + settings.radius.character;
             playerSetAbilityTarget(player, mouseX, mouseY);
 
             player.attackTarget = null;
@@ -205,7 +206,8 @@ void main() {
               }
               final clickRange = 50.0;
               if (withinDistance(closest, mouseX, mouseY, clickRange)) {
-                if (withinDistance(closest, player.x, player.y, player.attackRange)) {
+                if (withinDistance(
+                    closest, player.x, player.y, player.attackRange)) {
                   player.attackTarget = closest;
                 }
               }
@@ -218,7 +220,7 @@ void main() {
               case CharacterAction.Perform:
                 Ability? ability = player.ability;
                 if (ability == null) {
-                  if (player.attackTarget != null){
+                  if (player.attackTarget != null) {
                     characterAimAt(player, mouseX, mouseY);
                     game.setCharacterState(player, CharacterState.Striking);
                   }
@@ -241,6 +243,7 @@ void main() {
                 ability.cooldownRemaining = ability.cooldown;
                 player.abilitiesDirty = true;
                 player.ability = null;
+
                 characterAimAt(player, mouseX, mouseY);
                 game.setCharacterState(player, CharacterState.Performing);
                 break;
@@ -440,13 +443,18 @@ void main() {
             return;
           }
 
-          if (ability is Dash){
-            if (ability.type == AbilityType.Dash){
-              ability.cooldownRemaining = ability.cooldown;
-              ability.durationRemaining = ability.duration;
-              player.speedModifier += dashSpeed;
-              break;
-            }
+          if (ability is Dash) {
+            ability.cooldownRemaining = ability.cooldown;
+            ability.durationRemaining = ability.duration;
+            player.speedModifier += dashSpeed;
+            break;
+          }
+
+          if (ability is IronShield) {
+            ability.cooldownRemaining = ability.cooldown;
+            ability.durationRemaining = ability.duration;
+            player.invincible = true;
+            break;
           }
 
           player.ability = ability;

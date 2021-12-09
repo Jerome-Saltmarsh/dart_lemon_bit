@@ -9,6 +9,7 @@ Map<AbilityType, DecorationImage> mapAbilityTypeToDecorationImage = {
   AbilityType.Dash: spellIcon("dash"),
   AbilityType.Split_Arrow: spellIcon("split-arrows"),
   AbilityType.Long_Shot: spellIcon("long-shot"),
+  AbilityType.Iron_Shield: spellIcon("iron-shield"),
 };
 
 final _Icons icons = _Icons();

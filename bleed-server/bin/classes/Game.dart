@@ -302,6 +302,7 @@ extension GameFunctions on Game {
 
   void applyDamage(Character src, Character target, int amount) {
     if (target.dead) return;
+    if (target.invincible) return;
     changeCharacterHealth(target, -amount);
     if (target.alive) return;
     if (target is Npc) {
@@ -1695,6 +1696,25 @@ void selectCharacterType(Player player, CharacterType value) {
     case CharacterType.Swordsman:
       player.attackRange = 50;
       player.maxMagic = 100;
+      player.ability1 = IronShield(player);
+      player.ability2 = Ability(
+          type: AbilityType.Explosion,
+          level: 0,
+          magicCost: 10,
+          range: 200,
+          cooldown: 15);
+      player.ability3 = Ability(
+          type: AbilityType.Explosion,
+          level: 0,
+          magicCost: 10,
+          range: 200,
+          cooldown: 15);
+      player.ability4 = Ability(
+          type: AbilityType.Explosion,
+          level: 0,
+          magicCost: 10,
+          range: 200,
+          cooldown: 15);
       break;
     case CharacterType.Archer:
       player.attackRange = 210;

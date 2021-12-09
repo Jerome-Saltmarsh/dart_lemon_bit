@@ -38,6 +38,7 @@ class Character extends GameObject implements HasSquad {
   }
 
   double speedModifier = 0;
+  bool invincible = false;
 
 
   int squad;

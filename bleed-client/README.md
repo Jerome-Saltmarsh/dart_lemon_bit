@@ -125,6 +125,7 @@
 [ ] Archer Ability - Long shot
 [ ] Archer Ability - Ice Arrow
 [ ] Archer Ability - Split Arrow
+[ ] Fix Bug render objects culled bottom
 [ ] Character - Swordsman
 [COMPLETED]
 [x] Fix Bug - blue orb shoots off if target is killed
