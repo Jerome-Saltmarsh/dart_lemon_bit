@@ -8,6 +8,7 @@ enum AbilityType {
   Split_Arrow,
   Long_Shot,
   Iron_Shield, // knight
+  Brutal_Strike, // knight
 }
 
 final List<AbilityType> abilities = AbilityType.values;

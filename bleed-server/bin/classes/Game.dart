@@ -897,6 +897,27 @@ extension GameFunctions on Game {
     }
   }
 
+  void applyStrike(Character src, Character target, int damage) {
+    if (target.dead) return;
+    applyDamage(src, target, damage);
+    double a = radiansBetween2(src, target.x, target.y);
+    /// calculate force by dividing damage by target's max health
+    applyForce(target, a, 5);
+    if (target is Npc == false) return;
+
+    if (target.dead) {
+      dispatch(GameEventType.Zombie_killed_Explosion, target.x, target.y,
+          target.xv, target.yv);
+    } else {
+      dispatch(
+          GameEventType.Zombie_Hit,
+          target.x,
+          target.y,
+          velX(src.aimAngle, settings.knifeHitAcceleration * 2),
+          velY(src.aimAngle, settings.knifeHitAcceleration * 2));
+    }
+  }
+
   void updateCharacter(Character character) {
     if (!character.active) return;
 
@@ -1041,6 +1062,19 @@ extension GameFunctions on Game {
             final int castFrame = 3;
             if (character.stateDuration == castFrame) {
               spawnArrow(character).range = ability.range;
+            }
+            break;
+
+          case AbilityType.Brutal_Strike:
+            final int castFrame = 8;
+            if (character.stateDuration == castFrame) {
+              character.performing = null;
+              const damage = 5;
+              for (Npc zombie in zombies){
+                if (distanceBetweenObjects(zombie, character) < character.attackRange) {
+                  applyStrike(character, zombie, damage);
+                }
+              }
             }
             break;
           default:
@@ -1696,13 +1730,13 @@ void selectCharacterType(Player player, CharacterType value) {
     case CharacterType.Swordsman:
       player.attackRange = 50;
       player.maxMagic = 100;
-      player.ability1 = IronShield(player);
-      player.ability2 = Ability(
-          type: AbilityType.Explosion,
+      player.ability1 = Ability(
+          type: AbilityType.Brutal_Strike,
           level: 0,
           magicCost: 10,
-          range: 200,
+          range: player.attackRange,
           cooldown: 15);
+      player.ability2 = IronShield(player);
       player.ability3 = Ability(
           type: AbilityType.Explosion,
           level: 0,
