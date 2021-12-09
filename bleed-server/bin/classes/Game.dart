@@ -1071,6 +1071,13 @@ extension GameFunctions on Game {
                 if (attackTarget.dead){
                   dispatch(GameEventType.Zombie_killed_Explosion, attackTarget.x, attackTarget.y,
                       attackTarget.xv, attackTarget.yv);
+                }else{
+                  dispatch(
+                      GameEventType.Zombie_Hit,
+                      attackTarget.x,
+                      attackTarget.y,
+                      velX(character.aimAngle, settings.knifeHitAcceleration * 2),
+                      velY(character.aimAngle, settings.knifeHitAcceleration * 2));
                 }
               }
             }
