@@ -6,6 +6,7 @@ enum AbilityType {
   Dash,
   Fireball,
   Split_Arrow,
+  Long_Shot,
 }
 
 final List<AbilityType> abilities = AbilityType.values;

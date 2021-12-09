@@ -1039,6 +1039,13 @@ extension GameFunctions on Game {
               character.performing = null;
             }
             break;
+
+          case AbilityType.Long_Shot:
+            final int castFrame = 3;
+            if (character.stateDuration == castFrame) {
+              spawnArrow(character).range = ability.range;
+            }
+            break;
           default:
             break;
         }
@@ -1674,18 +1681,18 @@ void selectCharacterType(Player player, CharacterType value) {
       player.attackRange = 210;
       player.maxMagic = 100;
       player.magic = player.maxMagic;
-      player.ability1 = Dash(player);
-      player.ability2 = Ability(
+      player.ability1 = Ability(
           type: AbilityType.Split_Arrow,
           level: 0,
           magicCost: 10,
           range: 200,
           cooldown: 10);
+      player.ability2 = Dash(player);
       player.ability3 = Ability(
-          type: AbilityType.FreezeCircle,
+          type: AbilityType.Long_Shot,
           level: 0,
           magicCost: 10,
-          range: 200,
+          range: 250,
           cooldown: 15);
       player.ability4 = Ability(
           type: AbilityType.Fireball,
