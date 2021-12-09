@@ -180,22 +180,26 @@ void main() {
 
             double mouseTop = mouseY - cursorRadius - settings.radius.character;
             double mouseBottom = mouseY + cursorRadius + settings.radius.character;
-
             playerSetAbilityTarget(player, mouseX, mouseY);
 
+            player.attackTarget = null;
+
+            // TODO remove game logic from server
             if (game.zombies.isNotEmpty) {
               Character closest = game.zombies[0];
               num closestX = diff(mouseX, closest.x);
               num closestY = diff(mouseY, closest.y);
               num close = min(closestX, closestY);
-              for (Character npc in game.zombies) {
-                if (npc.y < mouseTop) continue;
-                if (npc.y > mouseBottom) break;
-                num closestX2 = diff(mouseX, npc.x);
-                num closestY2 = diff(mouseY, npc.y);
+              for (Character zombie in game.zombies) {
+                if (zombie.dead) continue;
+                if (!zombie.active) continue;
+                if (zombie.y < mouseTop) continue;
+                if (zombie.y > mouseBottom) break;
+                num closestX2 = diff(mouseX, zombie.x);
+                num closestY2 = diff(mouseY, zombie.y);
                 num closes2 = min(closestX2, closestY2);
                 if (closes2 < close) {
-                  closest = npc;
+                  closest = zombie;
                   close = closes2;
                 }
               }
@@ -203,14 +207,8 @@ void main() {
               if (withinDistance(closest, mouseX, mouseY, clickRange)) {
                 if (withinDistance(closest, player.x, player.y, player.attackRange)) {
                   player.attackTarget = closest;
-                }else{
-                  player.attackTarget = null;
                 }
-              }else{
-                player.attackTarget = null;
               }
-            } else {
-              player.attackTarget = null;
             }
 
             switch (action) {

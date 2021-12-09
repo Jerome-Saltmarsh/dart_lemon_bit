@@ -644,7 +644,7 @@ extension GameFunctions on Game {
 
       Character? target = projectile.target;
       if (target != null) {
-        if (target.dead) {
+        if (target.dead || !target.active) {
           projectile.target = null;
         } else {
           final double rot = radiansBetweenObject(projectile, target);
@@ -677,23 +677,6 @@ extension GameFunctions on Game {
         break;
       }
     }
-
-    // for (int i = 0; i < crates.length; i++) {
-    //   if (!crates[i].active) continue;
-    //   Crate crate = crates[i];
-    //   applyCratePhysics(crate, players);
-    //   applyCratePhysics(crate, zombies);
-    //
-    //   for (int j = 0; j < projectiles.length; j++) {
-    //     if (!projectiles[j].active) continue;
-    //     if (diffOver(crate.x, projectiles[j].x, radius.crate)) continue;
-    //     if (diffOver(crate.y, projectiles[j].y, radius.crate)) continue;
-    //     // @on crate struck by bullet
-    //     breakCrate(crate);
-    //     projectiles[j].active = false;
-    //     break;
-    //   }
-    // }
   }
 
   void breakCrate(Crate crate) {
@@ -1041,12 +1024,13 @@ extension GameFunctions on Game {
       case CharacterState.Striking:
         switch (character.type) {
           case CharacterType.Witch:
-            if (character.stateDuration == 3) {
+            if (character.stateDuration == 3 && character.attackTarget != null) {
               spawnBlueOrb(character);
             }
             break;
           case CharacterType.Archer:
-            if (character.stateDuration == 3) {
+            if (character.stateDuration == 3 &&
+                character.attackTarget != null) {
               spawnArrow(character);
             }
             break;
