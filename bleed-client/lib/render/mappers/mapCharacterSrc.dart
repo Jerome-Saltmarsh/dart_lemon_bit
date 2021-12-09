@@ -9,6 +9,8 @@ import 'package:bleed_client/render/constants/animations.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/render/mappers/mapArcherToSrc.dart';
+import 'package:bleed_client/render/mappers/mapKnightToSrc.dart';
+import 'package:bleed_client/render/mappers/mapSrcWitch.dart';
 import 'package:lemon_engine/classes/vector2.dart';
 
 const _frame64 = 64.0;
@@ -75,86 +77,6 @@ Float32List animate({
   return _src;
 }
 
-Float32List mapCharacterSrcWitch({
-  CharacterState state,
-  Direction direction,
-  int frame
-}) {
-
-  switch (state) {
-    case CharacterState.Dead:
-      _src[0] = 1;
-      _src[1] = 1;
-      _src[2] = 2;
-      _src[3] = 2;
-      return _src;
-    case CharacterState.Idle:
-      return loop(
-          atlas: atlas.witch.idle,
-          direction: direction,
-          shade: Shade.Bright,
-          size: 64,
-          framesPerDirection: 1,
-          frame: frame);
-    case CharacterState.Walking:
-      return loop(
-        atlas: atlas.witch.running,
-        direction: direction,
-        shade: Shade.Bright,
-        size: 64,
-        framesPerDirection: 4,
-        frame: frame);
-    case CharacterState.Dead:
-      // TODO: Handle this case.
-      break;
-    case CharacterState.Aiming:
-      // TODO: Handle this case.
-      break;
-    case CharacterState.Firing:
-      // TODO: Handle this case.
-      break;
-    case CharacterState.Striking:
-      return animate(
-          animation: animations.witch.attacking,
-          atlas: atlas.witch.striking,
-          direction: direction,
-          shade: Shade.Bright,
-          size: 64,
-          framesPerDirection: 2,
-          frame: frame);
-    case CharacterState.Performing:
-      return animate(
-          animation: animations.witch.attacking,
-          atlas: atlas.witch.striking,
-          direction: direction,
-          shade: Shade.Bright,
-          size: 64,
-          framesPerDirection: 2,
-          frame: frame);
-    case CharacterState.Running:
-      return loop(
-          atlas: atlas.witch.running,
-          direction: direction,
-          shade: Shade.Bright,
-          size: 64,
-          framesPerDirection: 4,
-          frame: frame);
-    case CharacterState.Reloading:
-      // TODO: Handle this case.
-      break;
-    case CharacterState.ChangingWeapon:
-      // TODO: Handle this case.
-      break;
-    case CharacterState.Performing:
-      // TODO: Handle this case.
-      break;
-  }
-
-  _src[2] = _src[0] + _frame64;
-  _src[3] = _src[1] + _frame64;
-  return _src;
-}
-
 Float32List mapCharacterSrc({
   CharacterType type,
   CharacterState state,
@@ -169,13 +91,13 @@ Float32List mapCharacterSrc({
     case CharacterType.Zombie:
       break;
     case CharacterType.Witch:
-      return mapCharacterSrcWitch(state: state, direction: direction, frame: frame);
-    case CharacterType.Swordsman:
-      break;
+      return mapSrcWitch(state: state, direction: direction, frame: frame);
     case CharacterType.Archer:
-      return mapCharacterSrcArcher(state: state, direction: direction, frame: frame);
+      return mapSrcArcher(state: state, direction: direction, frame: frame);
     case CharacterType.Musketeer:
       break;
+    case CharacterType.Swordsman:
+      return mapSrcKnight(state: state, direction: direction, frame: frame);
   }
 
   bool zombie = type == CharacterType.Zombie;

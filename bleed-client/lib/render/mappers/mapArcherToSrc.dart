@@ -10,7 +10,7 @@ import 'package:bleed_client/render/mappers/mapCharacterSrc.dart';
 
 Float32List _src = Float32List(4);
 
-Float32List mapCharacterSrcArcher({
+Float32List mapSrcArcher({
   CharacterState state,
   Direction direction,
   int frame

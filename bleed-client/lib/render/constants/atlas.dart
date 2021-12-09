@@ -21,6 +21,7 @@ class _Atlas {
   final Vector2 items = Vector2(1, 567);
   final _Witch witch = _Witch();
   final _Archer archer = _Archer();
+  final _Knight knight = _Knight();
   final _Projectiles projectiles = _Projectiles();
 }
 
@@ -34,6 +35,11 @@ class  _Archer {
   final Vector2 idle = Vector2(1, 3654);
   final Vector2 running = Vector2(1, 3719);
   final Vector2 firing = Vector2(1, 3784);
+}
+
+class  _Knight {
+  final Vector2 idle = Vector2(1, 3849);
+  final Vector2 running = Vector2(1, 3914);
 }
 
 class _Human {
