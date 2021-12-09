@@ -49,21 +49,21 @@ Float32List mapSrcKnight({
       break;
     case CharacterState.Striking:
       return animate(
-          animation: animations.archer.firing,
-          atlas: atlas.archer.firing,
+          animation: animations.knight.striking,
+          atlas: atlas.knight.striking,
           direction: direction,
           shade: Shade.Bright,
           size: 64,
-          framesPerDirection: 4,
+          framesPerDirection: 3,
           frame: frame);
     case CharacterState.Performing:
       return animate(
-          animation: animations.archer.firing,
-          atlas: atlas.archer.firing,
+          animation: animations.knight.striking,
+          atlas: atlas.knight.striking,
           direction: direction,
           shade: Shade.Bright,
           size: 64,
-          framesPerDirection: 4,
+          framesPerDirection: 3,
           frame: frame);
     case CharacterState.Running:
       return loop(

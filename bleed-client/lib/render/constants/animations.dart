@@ -5,6 +5,7 @@ class _Animations {
   final _Man man = _Man();
   final _Witch witch = _Witch();
   final _Archer archer = _Archer();
+  final _Knight knight = _Knight();
 }
 
 class _Man {
@@ -19,5 +20,9 @@ class _Witch {
 
 class _Archer {
   final List<int> firing = [0, 1, 2, 3, 3, 3];
+}
+
+class _Knight {
+  final List<int> striking = [0, 1, 2, 2, 1, 1];
 }
 

@@ -40,6 +40,7 @@ class  _Archer {
 class  _Knight {
   final Vector2 idle = Vector2(1, 3849);
   final Vector2 running = Vector2(1, 3914);
+  final Vector2 striking = Vector2(1, 3979);
 }
 
 class _Human {

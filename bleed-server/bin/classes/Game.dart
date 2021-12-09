@@ -795,6 +795,8 @@ extension GameFunctions on Game {
           dispatch(GameEventType.Knife_Strike, player.x, player.y);
         }
 
+        if (player.type != CharacterType.Human) return;
+
         if (player.stateDuration == 8) {
           double frontX =
               player.x + velX(player.aimAngle, settings.range.knife);
@@ -810,6 +812,8 @@ extension GameFunctions on Game {
             npc.xv += velX(player.aimAngle, settings.knifeHitAcceleration);
             npc.yv += velY(player.aimAngle, settings.knifeHitAcceleration);
             applyDamage(player, npc, settings.damage.knife);
+            double a = angleBetween(player.x, player.y, npc.x, npc.y);
+            applyForce(npc, a, 5);
 
             if (npc.dead) {
               dispatch(GameEventType.Zombie_killed_Explosion, npc.x, npc.y,
@@ -823,13 +827,6 @@ extension GameFunctions on Game {
                   velY(player.aimAngle, settings.knifeHitAcceleration * 2));
             }
             return;
-          }
-
-          for (Crate crate in crates) {
-            if (!crate.active) continue;
-            if (diffOver(crate.x, frontX, radius.crate)) continue;
-            if (diffOver(crate.y, frontY, radius.crate)) continue;
-            breakCrate(crate);
           }
         }
     }
@@ -1062,6 +1059,16 @@ extension GameFunctions on Game {
             if (character.stateDuration == 3 &&
                 character.attackTarget != null) {
               spawnArrow(character);
+            }
+            break;
+          case CharacterType.Swordsman:
+            if (character.stateDuration == 6) {
+              final Character? attackTarget = character.attackTarget;
+              if (attackTarget != null){
+                applyDamage(character, attackTarget, 3);
+                double a = radiansBetween2(character, attackTarget.x, attackTarget.y);
+                applyForce(attackTarget, a, 5);
+              }
             }
             break;
           default:
@@ -1675,7 +1682,8 @@ void selectCharacterType(Player player, CharacterType value) {
           cooldown: 25);
       break;
     case CharacterType.Swordsman:
-      // TODO: Handle this case.
+      player.attackRange = 50;
+      player.maxMagic = 100;
       break;
     case CharacterType.Archer:
       player.attackRange = 210;

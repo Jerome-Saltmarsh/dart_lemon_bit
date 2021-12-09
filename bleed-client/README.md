@@ -113,15 +113,19 @@
 -- core mode and won't be possible to persist characters. 
 -- In the future the player will be able to store their character inside an sql database
 -- Game Modes include MMO, Dota, Base defense, 
+[ ] Save / Load Character
 [ ] Items
+[ ] Enemy Archer
+[ ] Enemy Mage
+[ ] Enemy Tank
 [ ] Attributes (Intelligence, Strength, Agility)
 [ ] Cooldown widget
 [ ] Health bars
 [ ] Remove old atlas sprites
-[ ] Character - Swordsman
 [ ] Archer Ability - Long shot
 [ ] Archer Ability - Ice Arrow
 [ ] Archer Ability - Split Arrow
+[ ] Character - Swordsman
 [COMPLETED]
 [x] Fix Bug - blue orb shoots off if target is killed
 [x] Archer
