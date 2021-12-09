@@ -466,6 +466,9 @@ Widget buildMenu() {
         if (game.settings.developMode) buildToggleDebug(),
         if (game.settings.developMode) width8,
         if (game.settings.developMode) _buildToggleEdit(),
+        button("Change Hero", (){
+          sendClientRequest(ClientRequest.Reset_Character_Type);
+        }),
         buildToggleAudio(),
         width8,
         buildToggleFullscreen(),

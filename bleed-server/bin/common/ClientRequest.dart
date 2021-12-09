@@ -20,4 +20,5 @@ enum ClientRequest {
   SelectAbility,
   DeselectAbility,
   Upgrade_Ability,
+  Reset_Character_Type,
 }

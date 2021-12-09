@@ -107,7 +107,7 @@ void sendRequestSetCompilePaths(bool value) {
   send('${ClientRequest.SetCompilePaths.index} $session ${value ? 1 : 0}');
 }
 
-void sendClientRequest(ClientRequest request, dynamic message) {
+void sendClientRequest(ClientRequest request, {dynamic message = ""}) {
   send('${request.index} $session $message');
 }
 
@@ -122,6 +122,6 @@ void request(ClientRequest request, String value) {
 
 class _SendRequestToServer {
   upgradeAbility(int index){
-    sendClientRequest(ClientRequest.Upgrade_Ability, index);
+    sendClientRequest(ClientRequest.Upgrade_Ability, message: index);
   }
 }

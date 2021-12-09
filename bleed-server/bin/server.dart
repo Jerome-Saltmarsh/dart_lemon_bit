@@ -318,6 +318,23 @@ void main() {
           selectCharacterType(player, characterTypes[characterTypeIndex]);
           break;
 
+        case ClientRequest.Reset_Character_Type:
+          if (arguments.length != 3) {
+            errorArgsExpected(3, arguments);
+            return;
+          }
+
+          Player? player = findPlayerByUuid(arguments[1]);
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+
+          player.type = CharacterType.None;
+          player.x = player.game.playerSpawnPoints[0].x;
+          player.y = player.game.playerSpawnPoints[0].y;
+          break;
+
         case ClientRequest.Upgrade_Ability:
           if (arguments.length != 3) {
             errorArgsExpected(3, arguments);
