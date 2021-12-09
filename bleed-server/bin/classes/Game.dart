@@ -139,7 +139,7 @@ abstract class Game {
 
   void onNpcKilled(Npc npc) {}
 
-  void onKilledBy(Character target, Character by);
+  // void onKilledBy(Character target, Character by);
 
   void onPlayerDisconnected(Player player) {}
 
@@ -312,7 +312,6 @@ extension GameFunctions on Game {
         playerGainExperience(src, target.experience);
       }
     }
-    onKilledBy(target, src);
   }
 
   void playerGainExperience(Player player, int experience) {
@@ -1068,6 +1067,11 @@ extension GameFunctions on Game {
                 applyDamage(character, attackTarget, 3);
                 double a = radiansBetween2(character, attackTarget.x, attackTarget.y);
                 applyForce(attackTarget, a, 5);
+
+                if (attackTarget.dead){
+                  dispatch(GameEventType.Zombie_killed_Explosion, attackTarget.x, attackTarget.y,
+                      attackTarget.xv, attackTarget.yv);
+                }
               }
             }
             break;
