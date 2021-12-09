@@ -547,6 +547,24 @@ extension GameFunctions on Game {
     }
   }
 
+  void setCharacterStateDead(Character character) {
+    if (character.dead) return;
+    character.state = CharacterState.Dead;
+    character.collidable = false;
+    character.stateFrameCount = duration;
+    if (character is Player) {
+      onPlayerDeath(character);
+    } else if (character is Npc) {
+      character.clearTarget();
+      onNpcKilled(character);
+    }
+
+    for (Projectile projectile in projectiles) {
+      if (projectile.target != character) continue;
+      projectile.target = null;
+    }
+  }
+
   void setCharacterState(Character character, CharacterState value) {
     // @on character set state
     if (character.dead) return;
@@ -555,16 +573,7 @@ extension GameFunctions on Game {
 
     switch (value) {
       case CharacterState.Dead:
-        // @on character death
-        character.collidable = false;
-        character.stateFrameCount = duration;
-        character.state = value;
-        if (character is Player) {
-          onPlayerDeath(character);
-        } else if (character is Npc) {
-          character.clearTarget();
-          onNpcKilled(character);
-        }
+        setCharacterStateDead(character);
         return;
       case CharacterState.ChangingWeapon:
         character.stateDuration = 10;
@@ -601,13 +610,10 @@ extension GameFunctions on Game {
   }
 
   void changeCharacterHealth(Character character, int amount) {
-    // @on change character health
     if (character.dead) return;
-
     character.health += amount;
-    if (character.health == 0) {
-      setCharacterState(character, CharacterState.Dead);
-    }
+    if (character.health > 0) return;
+    setCharacterStateDead(character);
   }
 
   bool overlapping(GameObject a, GameObject b) {
@@ -1024,7 +1030,8 @@ extension GameFunctions on Game {
       case CharacterState.Striking:
         switch (character.type) {
           case CharacterType.Witch:
-            if (character.stateDuration == 3 && character.attackTarget != null) {
+            if (character.stateDuration == 3 &&
+                character.attackTarget != null) {
               spawnBlueOrb(character);
             }
             break;
