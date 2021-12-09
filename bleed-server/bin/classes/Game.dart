@@ -563,6 +563,11 @@ extension GameFunctions on Game {
       if (projectile.target != character) continue;
       projectile.target = null;
     }
+
+    for (Player player in players) {
+      if (player.attackTarget != character) continue;
+      player.attackTarget = null;
+    }
   }
 
   void setCharacterState(Character character, CharacterState value) {
@@ -650,13 +655,9 @@ extension GameFunctions on Game {
 
       Character? target = projectile.target;
       if (target != null) {
-        if (target.dead || !target.active) {
-          projectile.target = null;
-        } else {
-          final double rot = radiansBetweenObject(projectile, target);
-          projectile.xv = adj(rot, projectile.speed);
-          projectile.yv = opp(rot, projectile.speed);
-        }
+        final double rot = radiansBetweenObject(projectile, target);
+        projectile.xv = adj(rot, projectile.speed);
+        projectile.yv = opp(rot, projectile.speed);
       } else if (projectileDistanceTravelled(projectile) > projectile.range) {
         deactivateProjectile(projectile);
       }
@@ -1152,7 +1153,11 @@ extension GameFunctions on Game {
   }) {
     double spawnDistance = character.radius + 20;
     Projectile projectile = getAvailableProjectile();
-    projectile.target = target;
+    if (target != null && target.alive && target.active){
+      projectile.target = target;
+    }else{
+      projectile.target = null;
+    }
     projectile.active = true;
     projectile.xStart = character.x + adj(character.aimAngle, spawnDistance);
     projectile.yStart = character.y + opp(character.aimAngle, spawnDistance);

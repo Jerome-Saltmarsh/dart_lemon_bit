@@ -119,8 +119,8 @@ Game Modes include MMO, Dota, Base defense,
 [ ] Attributes (Intelligence, Strength, Agility)
 [ ] Cooldown widget
 [ ] Health bars
-[ ] Fix Bug - blue orb shoots off if target is killed
 [ ] Remove old atlas sprites
+[x] Fix Bug - blue orb shoots off if target is killed
 [x] Archer
 [x] FIX BUG Sometimes left click does not register attack
 [x] Orb attacks heat seek target
