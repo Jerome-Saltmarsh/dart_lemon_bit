@@ -4,7 +4,7 @@ import 'Character.dart';
 
 class IronShield extends Ability {
   int durationRemaining = 0;
-  int duration = 2;
+  int duration = 4;
   Character character;
 
   IronShield(this.character)

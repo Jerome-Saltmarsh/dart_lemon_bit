@@ -222,21 +222,21 @@ void main() {
                 player.attackTarget = player.aimTarget;
 
                 if (ability == null) {
-                  if (player.attackTarget != null) {
+                  // if (player.attackTarget != null) {
                     characterAimAt(player, mouseX, mouseY);
                     game.setCharacterState(player, CharacterState.Striking);
-                  }
+                  // }
                   break;
                 }
 
                 if (player.magic < ability.magicCost) {
                   error(GameError.InsufficientMana);
-                  return;
+                  break;
                 }
 
                 if (ability.cooldownRemaining > 0) {
                   error(GameError.Cooldown_Remaining);
-                  return;
+                  break;
                 }
 
                 // @on player perform ability

@@ -396,6 +396,7 @@ extension GameFunctions on Game {
 
     for (Player player in players) {
       player.magic += player.magicRegen;
+      player.health += player.healthRegen;
 
       player.ability1.update();
       player.ability2.update();
@@ -1107,6 +1108,29 @@ extension GameFunctions on Game {
           case CharacterType.Swordsman:
             if (character.stateDuration == 6) {
               final Character? attackTarget = character.attackTarget;
+              // otherwise do a raycast hit
+
+              if (attackTarget == null){
+                List<Character> zombiesInAttackRadius = [];
+                double radiusTop = character.y - character.attackRange;
+                double radiusBottom = character.y + character.attackRange;
+                double radiusLeft = character.x - character.attackRange;
+                double radiusRight = character.x + character.attackRange;
+                for (Npc zombie in zombies) {
+                  if (zombie.bottom < radiusTop) continue;
+                  if (zombie.top > radiusBottom) break;
+                  if (zombie.right < radiusLeft) continue;
+                  if (zombie.left > radiusRight) continue;
+
+                  // double angle = angleBetween(x1, y1, x2, y2)
+
+                  if (distanceBetweenObjects(zombie, character) > character.attackRange) continue;
+
+                  zombiesInAttackRadius.add(zombie);
+                }
+              }
+
+
               if (attackTarget != null){
                 applyDamage(character, attackTarget, 3);
                 double a = radiansBetween2(character, attackTarget.x, attackTarget.y);
