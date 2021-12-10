@@ -918,6 +918,14 @@ extension GameFunctions on Game {
     }
   }
 
+  double calculateAngleDifference(double angleA, double angleB){
+    double diff = abs(angleA - angleB).toDouble();
+    if (diff < pi){
+      return diff;
+    }
+    return pi2 - diff;
+  }
+
   void updateCharacter(Character character) {
     if (!character.active) return;
 
@@ -1107,11 +1115,12 @@ extension GameFunctions on Game {
             break;
           case CharacterType.Swordsman:
             if (character.stateDuration == 6) {
-              final Character? attackTarget = character.attackTarget;
-              // otherwise do a raycast hit
+              Character? attackTarget = character.attackTarget;
 
+              // otherwise do a raycast hit
               if (attackTarget == null){
-                List<Character> zombiesInAttackRadius = [];
+                Character? target = null;
+                double targetAngle = 0;
                 double radiusTop = character.y - character.attackRange;
                 double radiusBottom = character.y + character.attackRange;
                 double radiusLeft = character.x - character.attackRange;
@@ -1121,13 +1130,18 @@ extension GameFunctions on Game {
                   if (zombie.top > radiusBottom) break;
                   if (zombie.right < radiusLeft) continue;
                   if (zombie.left > radiusRight) continue;
-
-                  // double angle = angleBetween(x1, y1, x2, y2)
-
+                  double angle = angleBetween(character.x, character.y, zombie.x, zombie.y);
+                  double angleDiff = calculateAngleDifference(angle, character.aimAngle);
+                  if (angleDiff > pi) continue;
                   if (distanceBetweenObjects(zombie, character) > character.attackRange) continue;
 
-                  zombiesInAttackRadius.add(zombie);
+                  if (target == null || angleDiff < targetAngle){
+                    target = zombie;
+                    targetAngle = angleDiff;
+                  }
                 }
+
+                attackTarget = target;
               }
 
 
