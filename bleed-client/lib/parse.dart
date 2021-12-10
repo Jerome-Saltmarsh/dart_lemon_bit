@@ -113,7 +113,7 @@ void parseState() {
             game.player.attackTarget.y != 0) {
           cursorType.value = CursorType.Click;
         } else {
-          cursorType.value = CursorType.Precise;
+          cursorType.value = CursorType.Basic;
         }
         break;
 

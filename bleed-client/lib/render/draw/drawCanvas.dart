@@ -104,13 +104,19 @@ void renderCanvasPlay() {
 
 
   if (mouseAvailable){
-    setColorWhite();
-    double angle = getAngleBetweenMouseAndPlayer();
-    double mouseDistance = getDistanceBetweenMouseAndPlayer();
-    double d = min(mouseDistance, game.player.attackRange);
-    double vX = adjacent(angle, d);
-    double vY = opposite(angle, d);
-    drawLine(game.player.x, game.player.y, game.player.x + vX, game.player.y + vY);
+
+    // drawCircle(mouseWorldX, mouseWorldY, 10, Colors.black26);
+    // setColorWhite();
+
+    if (game.player.characterType.value == CharacterType.Swordsman){
+      setColorWhite();
+      double angle = getAngleBetweenMouseAndPlayer();
+      double mouseDistance = getDistanceBetweenMouseAndPlayer();
+      double d = min(mouseDistance, game.player.attackRange);
+      double vX = adjacent(angle, d);
+      double vY = opposite(angle, d);
+      drawLine(game.player.x, game.player.y, game.player.x + vX, game.player.y + vY);
+    }
   }
 
   drawSprites();
