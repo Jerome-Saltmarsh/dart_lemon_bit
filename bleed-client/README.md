@@ -113,6 +113,7 @@
 -- core mode and won't be possible to persist characters. 
 -- In the future the player will be able to store their character inside an sql database
 -- Game Modes include MMO, Dota, Base defense, 
+-- The name of the land is Atlas
 [ ] Save / Load Character
 [ ] Items
 [ ] Enemy Archer
@@ -122,12 +123,10 @@
 [ ] Cooldown widget
 [ ] Health bars
 [ ] Remove old atlas sprites
-[ ] Archer Ability - Long shot
-[ ] Archer Ability - Ice Arrow
-[ ] Archer Ability - Split Arrow
 [ ] Fix Bug render objects culled bottom
-[ ] Character - Swordsman
+[ ] Player AI to walk towards out of range enemies and attack them
 [COMPLETED]
+[x] Character - Swordsman
 [x] Fix Bug - blue orb shoots off if target is killed
 [x] Archer
 [x] FIX BUG Sometimes left click does not register attack

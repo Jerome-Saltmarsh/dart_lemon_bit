@@ -101,6 +101,16 @@ void renderCanvasPlay() {
   drawProjectiles(game.projectiles);
   drawBulletHoles(game.bulletHoles);
   _drawGrenades(game.grenades);
+
+
+  if (mouseAvailable){
+    setColorWhite();
+    double angle = getAngleBetweenMouseAndPlayer();
+    double vX = adjacent(angle, game.player.attackRange);
+    double vY = opposite(angle, game.player.attackRange);
+    drawLine(game.player.x, game.player.y, game.player.x + vX, game.player.y + vY);
+  }
+
   drawSprites();
 
   for (int i = 0; i < game.totalItems; i++) {
@@ -114,6 +124,7 @@ void renderCanvasPlay() {
   drawAbility();
 
   // drawDebugCharacters();
+
 
   for (Explosion explosion in game.explosions) {
     if (explosion.type == ExplosionType.FreezeCircle) {
@@ -397,6 +408,10 @@ double mapWeaponAimLength(WeaponType weapon) {
     default:
       return 10;
   }
+}
+
+double getAngleBetweenMouseAndPlayer(){
+  return angleBetween(game.player.x, game.player.y, mouseWorldX, mouseWorldY);
 }
 
 void _drawMouseAim() {

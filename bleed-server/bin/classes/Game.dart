@@ -1,7 +1,6 @@
 import 'dart:math';
 
 import 'package:lemon_math/abs.dart';
-import 'package:lemon_math/angle.dart';
 import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/diff.dart';
 import 'package:lemon_math/diff_over.dart';
@@ -1025,6 +1024,7 @@ extension GameFunctions on Game {
               character.y = character.abilityTarget.y;
               dispatch(GameEventType.Teleported, character.x, character.y);
               character.performing = null;
+              character.attackTarget = null;
             }
             break;
           case AbilityType.FreezeCircle:
@@ -1033,6 +1033,7 @@ extension GameFunctions on Game {
               spawnFreezeCircle(
                   x: character.abilityTarget.x, y: character.abilityTarget.y);
               character.performing = null;
+              character.attackTarget = null;
             }
             break;
           case AbilityType.Fireball:
@@ -1040,6 +1041,7 @@ extension GameFunctions on Game {
             if (character.stateDuration == castFrame) {
               spawnFireball(character);
               character.performing = null;
+              character.attackTarget = null;
             }
             break;
           case AbilityType.Split_Arrow:
@@ -1055,6 +1057,7 @@ extension GameFunctions on Game {
               arrow3.target = null;
               setProjectilAngle(arrow3, character.aimAngle + angle);
               character.performing = null;
+              character.attackTarget = null;
             }
             break;
 
@@ -1062,6 +1065,8 @@ extension GameFunctions on Game {
             final int castFrame = 3;
             if (character.stateDuration == castFrame) {
               spawnArrow(character).range = ability.range;
+              character.attackTarget = null;
+              character.performing = null;
             }
             break;
 
@@ -1075,6 +1080,8 @@ extension GameFunctions on Game {
                   applyStrike(character, zombie, damage);
                 }
               }
+              character.attackTarget = null;
+              character.performing = null;
             }
             break;
           default:
@@ -1087,12 +1094,14 @@ extension GameFunctions on Game {
             if (character.stateDuration == 3 &&
                 character.attackTarget != null) {
               spawnBlueOrb(character);
+              character.attackTarget = null;
             }
             break;
           case CharacterType.Archer:
             if (character.stateDuration == 3 &&
                 character.attackTarget != null) {
               spawnArrow(character);
+              character.attackTarget = null;
             }
             break;
           case CharacterType.Swordsman:
@@ -1102,6 +1111,7 @@ extension GameFunctions on Game {
                 applyDamage(character, attackTarget, 3);
                 double a = radiansBetween2(character, attackTarget.x, attackTarget.y);
                 applyForce(attackTarget, a, 5);
+                character.attackTarget = null;
 
                 if (attackTarget.dead){
                   dispatch(GameEventType.Zombie_killed_Explosion, attackTarget.x, attackTarget.y,

@@ -183,7 +183,7 @@ void main() {
                 mouseY + cursorRadius + settings.radius.character;
             playerSetAbilityTarget(player, mouseX, mouseY);
 
-            player.attackTarget = null;
+            player.aimTarget = null;
 
             // TODO remove game logic from server
             if (game.zombies.isNotEmpty) {
@@ -208,7 +208,7 @@ void main() {
               if (withinDistance(closest, mouseX, mouseY, clickRange)) {
                 if (withinDistance(
                     closest, player.x, player.y, player.attackRange)) {
-                  player.attackTarget = closest;
+                  player.aimTarget = closest;
                 }
               }
             }
@@ -219,6 +219,8 @@ void main() {
                 break;
               case CharacterAction.Perform:
                 Ability? ability = player.ability;
+                player.attackTarget = player.aimTarget;
+
                 if (ability == null) {
                   if (player.attackTarget != null) {
                     characterAimAt(player, mouseX, mouseY);
