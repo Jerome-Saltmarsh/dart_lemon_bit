@@ -1120,7 +1120,7 @@ extension GameFunctions on Game {
               // otherwise do a raycast hit
               if (attackTarget == null){
                 Character? target = null;
-                double targetAngle = 0;
+                double targetDistance = 0;
                 double radiusTop = character.y - character.attackRange;
                 double radiusBottom = character.y + character.attackRange;
                 double radiusLeft = character.x - character.attackRange;
@@ -1133,11 +1133,11 @@ extension GameFunctions on Game {
                   double angle = angleBetween(character.x, character.y, zombie.x, zombie.y);
                   double angleDiff = calculateAngleDifference(angle, character.aimAngle);
                   if (angleDiff > pi) continue;
-                  if (distanceBetweenObjects(zombie, character) > character.attackRange) continue;
-
-                  if (target == null || angleDiff < targetAngle){
+                  double zombieDistance = distanceBetweenObjects(zombie, character);
+                  if (zombieDistance > character.attackRange) continue;
+                  if (target == null || zombieDistance < targetDistance){
                     target = zombie;
-                    targetAngle = angleDiff;
+                    targetDistance = zombieDistance;
                   }
                 }
 
