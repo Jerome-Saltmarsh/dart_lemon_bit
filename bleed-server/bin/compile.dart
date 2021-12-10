@@ -184,11 +184,11 @@ void compilePlayer(StringBuffer buffer, Player player) {
 
   _compilePlayerEvents(buffer, player);
 
-  Character? attackTarget = player.attackTarget;
-  if (attackTarget != null){
+  Character? aimTarget = player.aimTarget;
+  if (aimTarget != null){
     _write(buffer, ServerResponse.Player_Attack_Target.index);
-    _writeInt(buffer, attackTarget.x);
-    _writeInt(buffer, attackTarget.y);
+    _writeInt(buffer, aimTarget.x);
+    _writeInt(buffer, aimTarget.y);
   }else{
     _write(buffer, ServerResponse.Player_Attack_Target.index);
     _writeInt(buffer, 0);
