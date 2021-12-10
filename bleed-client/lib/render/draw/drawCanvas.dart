@@ -106,8 +106,10 @@ void renderCanvasPlay() {
   if (mouseAvailable){
     setColorWhite();
     double angle = getAngleBetweenMouseAndPlayer();
-    double vX = adjacent(angle, game.player.attackRange);
-    double vY = opposite(angle, game.player.attackRange);
+    double mouseDistance = getDistanceBetweenMouseAndPlayer();
+    double d = min(mouseDistance, game.player.attackRange);
+    double vX = adjacent(angle, d);
+    double vY = opposite(angle, d);
     drawLine(game.player.x, game.player.y, game.player.x + vX, game.player.y + vY);
   }
 
@@ -412,6 +414,10 @@ double mapWeaponAimLength(WeaponType weapon) {
 
 double getAngleBetweenMouseAndPlayer(){
   return angleBetween(game.player.x, game.player.y, mouseWorldX, mouseWorldY);
+}
+
+double getDistanceBetweenMouseAndPlayer(){
+  return distanceBetween(mouseWorldX, mouseWorldY, game.player.x, game.player.y);
 }
 
 void _drawMouseAim() {
