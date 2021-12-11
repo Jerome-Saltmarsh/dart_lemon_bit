@@ -11,6 +11,7 @@ Map<AbilityType, DecorationImage> mapAbilityTypeToDecorationImage = {
   AbilityType.Long_Shot: spellIcon("long-shot"),
   AbilityType.Iron_Shield: spellIcon("iron-shield"),
   AbilityType.Brutal_Strike: spellIcon("brutal-strike"),
+  AbilityType.Death_Strike: spellIcon("death-strike"),
 };
 
 final _Icons icons = _Icons();

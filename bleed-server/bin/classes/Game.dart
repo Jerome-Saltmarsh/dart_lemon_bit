@@ -1093,6 +1093,17 @@ extension GameFunctions on Game {
               character.performing = null;
             }
             break;
+          case AbilityType.Brutal_Strike:
+            final int castFrame = 8;
+            if (character.stateDuration == castFrame) {
+              Character? attackTarget = character.attackTarget;
+              if (attackTarget != null){
+                applyStrike(character, attackTarget, character.damage * 3);
+              }
+              character.attackTarget = null;
+              character.performing = null;
+            }
+            break;
           default:
             break;
         }
@@ -1786,10 +1797,10 @@ void selectCharacterType(Player player, CharacterType value) {
           cooldown: 15);
       player.ability2 = IronShield(player);
       player.ability3 = Ability(
-          type: AbilityType.Explosion,
+          type: AbilityType.Death_Strike,
           level: 0,
           magicCost: 10,
-          range: 200,
+          range: player.attackRange,
           cooldown: 15);
       player.ability4 = Ability(
           type: AbilityType.Explosion,
