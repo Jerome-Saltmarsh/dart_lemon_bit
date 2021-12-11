@@ -23,6 +23,6 @@ class _Archer {
 }
 
 class _Knight {
-  final List<int> striking = [0, 1, 2, 2, 1, 1];
+  final List<int> striking = [0, 1, 2, 2, 2, 2, 2];
 }
 
