@@ -97,29 +97,16 @@ void renderCanvasPlay() {
 
   applyDynamicShadeToTileSrc();
   drawTiles();
-
   drawProjectiles(game.projectiles);
   drawBulletHoles(game.bulletHoles);
-  _drawGrenades(game.grenades);
+  // _drawGrenades(game.grenades);
 
-
-  if (mouseAvailable){
-
-    // drawCircle(mouseWorldX, mouseWorldY, 10, Colors.black26);
-    // setColorWhite();
-
-    // drawMouseAim2();
-  }
 
   drawSprites();
 
-  for (int i = 0; i < game.totalItems; i++) {
-    drawItem(game.items[i]);
-  }
-
-  for(Vector2 click in game.clicks){
-    drawCircle(click.x, click.y, 10, Colors.red);
-  }
+  // for (int i = 0; i < game.totalItems; i++) {
+  //   drawItem(game.items[i]);
+  // }
 
   drawAbility();
 
@@ -138,17 +125,17 @@ void renderCanvasPlay() {
     drawDebugNpcs(game.npcDebug);
   }
 
-  if (game.player.attackTarget.x != 0){
-    if (game.player.attackTarget.y != 0){
-      // todo optimize replace with with a png
-      drawCircleOutline(
-          sides: 8,
-          radius: 20,
-          x: game.player.attackTarget.x,
-          y: game.player.attackTarget.y,
-          color: Colors.white24);
-    }
-  }
+  // if (game.player.attackTarget.x != 0){
+  //   if (game.player.attackTarget.y != 0){
+  //     // todo optimize replace with with a png
+  //     drawCircleOutline(
+  //         sides: 8,
+  //         radius: 20,
+  //         x: game.player.attackTarget.x,
+  //         y: game.player.attackTarget.y,
+  //         color: Colors.white24);
+  //   }
+  // }
 
   _drawFloatingTexts();
   _drawPlayerNames();
@@ -190,12 +177,16 @@ void drawAbility() {
       y: game.player.y,
       color: Colors.white);
 
-  drawCircleOutline(
-      sides: 12,
-      radius: 25,
-      x: game.player.abilityTarget.x,
-      y: game.player.abilityTarget.y,
-      color: Colors.white);
+  if (game.player.abilityRadius != 0){
+    if (mouseAvailable){
+      drawCircleOutline(
+          sides: 12,
+          radius: game.player.abilityRadius,
+          x: mouseWorldX,
+          y: mouseWorldY,
+          color: Colors.white);
+    }
+  }
 }
 
 void drawDebugCharacters() {

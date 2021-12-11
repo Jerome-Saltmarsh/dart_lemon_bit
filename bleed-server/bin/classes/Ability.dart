@@ -57,6 +57,7 @@ class Ability {
   double range;
   int cooldownRemaining = 0;
   int cooldown;
+  double radius;
 
   Ability({
     required this.type,
@@ -64,6 +65,7 @@ class Ability {
     required this.magicCost,
     required this.range,
     required this.cooldown,
+    this.radius = 0,
   });
 
   void update() {}

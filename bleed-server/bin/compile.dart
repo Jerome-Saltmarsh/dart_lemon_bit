@@ -142,7 +142,6 @@ void _compileAbility(StringBuffer buffer, Ability ability) {
   _write(buffer, ability.level);
   _write(buffer, ability.cooldown);
   _write(buffer, ability.cooldownRemaining);
-
 }
 
 void compilePlayer(StringBuffer buffer, Player player) {
@@ -172,8 +171,10 @@ void compilePlayer(StringBuffer buffer, Player player) {
   Ability? ability = player.ability;
   if (ability != null) {
     _write(buffer, ability.range);
+    _write(buffer, ability.radius);
     _write(buffer, ability.type.index);
   } else {
+    _write(buffer, 0);
     _write(buffer, 0);
     _write(buffer, AbilityType.None.index);
   }

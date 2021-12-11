@@ -21,7 +21,6 @@ import 'package:lemon_watch/watch.dart';
 final _Game game = _Game();
 
 class _Game {
-  final List<Vector2> clicks = [];
   final List<Explosion> explosions = [];
   final _Settings settings = _Settings();
   final _Player player = _Player();
@@ -66,6 +65,7 @@ class _Player {
   final Watch<int> equippedCapacity = Watch(0);
   Vector2 abilityTarget = Vector2(0, 0);
   double abilityRange = 0;
+  double abilityRadius = 0;
   final Watch<CharacterType> characterType = Watch(CharacterType.Human);
   int squad = -1;
   Watch<double> health = Watch(0.0);

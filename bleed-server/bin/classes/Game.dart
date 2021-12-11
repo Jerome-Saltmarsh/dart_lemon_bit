@@ -1766,7 +1766,9 @@ void selectCharacterType(Player player, CharacterType value) {
           level: 0,
           magicCost: 10,
           range: 200,
-          cooldown: 15);
+          cooldown: 15,
+          radius: settings.radius.explosion,
+      );
       player.ability2 = Ability(
           type: AbilityType.Blink,
           level: 0,
@@ -1778,7 +1780,9 @@ void selectCharacterType(Player player, CharacterType value) {
           level: 0,
           magicCost: 10,
           range: 200,
-          cooldown: 15);
+          cooldown: 15,
+          radius: settings.radius.explosion,
+      );
       player.ability4 = Ability(
           type: AbilityType.Fireball,
           level: 0,
