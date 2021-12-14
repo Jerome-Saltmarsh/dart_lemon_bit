@@ -14,7 +14,7 @@ void drawCharacter(Character character) {
   if (!character.alive && isWaterAt(character.x, character.y)) return;
 
   Shade shade = getShadeAtPosition(character.x, character.y);
-  if (shade.index >= Shade.PitchBlack.index) return;
+  if (shade.isDarkerThan(Shade.Dark)) return;
 
   final src = mapCharacterSrc(
     type: character.type,
