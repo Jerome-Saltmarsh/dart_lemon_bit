@@ -505,7 +505,7 @@ extension GameFunctions on Game {
         dispatch(GameEventType.Handgun_Fired, x, y, bullet.xv, bullet.yv);
         break;
       case WeaponType.Bow:
-        Projectile bow = spawnArrow(character);
+        Projectile bow = spawnArrow(character, damage: 5);
         character.stateDuration = coolDown.bow;
         dispatch(GameEventType.Arrow_Fired, x, y, bow.xv, bow.yv);
         break;
@@ -1056,13 +1056,13 @@ extension GameFunctions on Game {
           case AbilityType.Split_Arrow:
             final int castFrame = 3;
             if (character.stateDuration == castFrame) {
-              Projectile arrow1 = spawnArrow(character);
+              Projectile arrow1 = spawnArrow(character, damage: character.damage);
               double angle = piSixteenth;
               arrow1.target = null;
               setProjectilAngle(arrow1, character.aimAngle - angle);
-              Projectile arrow2 = spawnArrow(character);
+              Projectile arrow2 = spawnArrow(character, damage: character.damage);
               arrow2.target = null;
-              Projectile arrow3 = spawnArrow(character);
+              Projectile arrow3 = spawnArrow(character, damage: character.damage);
               arrow3.target = null;
               setProjectilAngle(arrow3, character.aimAngle + angle);
               character.performing = null;
@@ -1073,7 +1073,9 @@ extension GameFunctions on Game {
           case AbilityType.Long_Shot:
             final int castFrame = 3;
             if (character.stateDuration == castFrame) {
-              spawnArrow(character).range = ability.range;
+              final int damageMultiplier = 3;
+              spawnArrow(character,
+                  damage: character.damage * damageMultiplier).range = ability.range;
               character.attackTarget = null;
               character.performing = null;
             }
@@ -1120,7 +1122,7 @@ extension GameFunctions on Game {
           case CharacterType.Archer:
             if (character.stateDuration == 3 &&
                 character.attackTarget != null) {
-              spawnArrow(character);
+              spawnArrow(character, damage: character.damage);
               character.attackTarget = null;
             }
             break;
@@ -1265,12 +1267,12 @@ extension GameFunctions on Game {
 
   void casteSlowingCircle(Character character, double x, double y) {}
 
-  Projectile spawnArrow(Character character) {
+  Projectile spawnArrow(Character character, {required int damage}) {
     return spawnProjectile(
         character: character,
         accuracy: 0,
         speed: settings.projectileSpeed.arrow,
-        damage: 5,
+        damage: damage,
         range: settings.range.arrow,
         target: character.attackTarget,
         type: ProjectileType.Arrow);
@@ -1815,6 +1817,7 @@ void selectCharacterType(Player player, CharacterType value) {
       break;
     case CharacterType.Archer:
       player.attackRange = 210;
+      player.damage = 2;
       player.maxMagic = 100;
       player.magic = player.maxMagic;
       player.ability1 = Ability(

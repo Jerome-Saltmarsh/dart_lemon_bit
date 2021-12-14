@@ -121,10 +121,10 @@
 [ ] Enemy Tank
 [ ] Attributes (Intelligence, Strength, Agility)
 [ ] Cooldown widget
-[ ] Health bars
 [ ] Remove old atlas sprites
 [ ] Fix Bug render objects culled bottom
 [ ] Player AI to walk towards out of range enemies and attack them
+[ ] Health bars
 [COMPLETED]
 [x] Character - Swordsman
 [x] Fix Bug - blue orb shoots off if target is killed

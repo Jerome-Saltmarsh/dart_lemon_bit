@@ -14,6 +14,7 @@ class Character {
   int squad;
   String name;
   String text;
+  double health = 1;
 
   bool get dead => state == CharacterState.Dead;
   bool get alive => state != CharacterState.Dead;

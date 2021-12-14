@@ -362,6 +362,7 @@ void _compileNpc(StringBuffer buffer, Npc npc) {
   _writeInt(buffer, npc.x);
   _writeInt(buffer, npc.y);
   _write(buffer, npc.stateFrameCount);
+  _writeInt(buffer, (npc.health / npc.maxHealth) * 100);
 }
 
 void _compileInteractableNpc(StringBuffer buffer, InteractableNpc npc) {

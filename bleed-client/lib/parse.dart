@@ -687,6 +687,7 @@ void _consumeZombie(Zombie zombie) {
   zombie.x = _consumeDoubleUnsafe();
   zombie.y = _consumeDoubleUnsafe();
   zombie.frame = _consumeIntUnsafe();
+  zombie.health = _consumeDouble();
 }
 
 void _consumeInteractableNpc(Character interactableNpc) {
