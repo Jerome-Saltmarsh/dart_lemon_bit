@@ -18,5 +18,5 @@ void drawCharacterHealthBar(Character character){
   setColorWhite();
   globalCanvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom, _width, _height), paint);
   setColor(colours.red);
-  globalCanvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom, _width * (character.health / 100), _height), paint);
+  globalCanvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom, _width * character.health, _height), paint);
 }

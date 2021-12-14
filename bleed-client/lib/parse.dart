@@ -565,6 +565,10 @@ double _consumeDouble() {
   return double.parse(_consumeString());
 }
 
+double _consumePercentage(){
+  return _consumeDouble() * 0.01;
+}
+
 double _consumeDoubleUnsafe() {
   return double.parse(_consumeStringUnsafe());
 }
@@ -678,6 +682,7 @@ void _consumeHuman(Character character) {
     textBuffer.write(_space);
   }
   character.text = textBuffer.toString().trim();
+  character.health = _consumePercentage();
 }
 
 void _consumeZombie(Zombie zombie) {
@@ -686,7 +691,7 @@ void _consumeZombie(Zombie zombie) {
   zombie.x = _consumeDoubleUnsafe();
   zombie.y = _consumeDoubleUnsafe();
   zombie.frame = _consumeIntUnsafe();
-  zombie.health = _consumeDouble();
+  zombie.health = _consumePercentage();
 }
 
 void _consumeInteractableNpc(Character interactableNpc) {

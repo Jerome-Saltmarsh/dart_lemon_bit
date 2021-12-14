@@ -354,6 +354,7 @@ void _compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.name);
   _write(buffer, player.text);
   _write(buffer, _comma);
+  _write(buffer, (player.health / player.maxHealth) * 100);
 }
 
 void _compileNpc(StringBuffer buffer, Npc npc) {
