@@ -9,7 +9,7 @@ import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_math/golden_ratio.dart';
 
-const _width = 40.0;
+const _width = 35.0;
 const _widthHalf = _width * 0.5;
 const _height = _width * goldenRatioInverse * goldenRatioInverse * goldenRatioInverse;
 const _marginBottom = 50;

@@ -37,7 +37,9 @@ class Npc extends Character {
       y: y,
       weapons: [weapon],
       health: health,
-      speed: settings.zombieSpeed);
+      speed: settings.zombieSpeed,
+
+  );
 
   bool get targetSet => target != _nonTarget;
 

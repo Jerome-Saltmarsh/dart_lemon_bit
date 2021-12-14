@@ -5,6 +5,7 @@ import '../common/classes/Vector2.dart';
 import '../common/enums/Direction.dart';
 import '../constants/no_squad.dart';
 import '../interfaces/HasSquad.dart';
+import '../settings.dart';
 import '../utils.dart';
 import 'Ability.dart';
 import 'GameObject.dart';
@@ -82,7 +83,7 @@ class Character extends GameObject implements HasSquad {
     required int health,
     required double speed,
     this.squad = noSquad,
-  }) : super(x, y) {
+  }) : super(x, y, radius: settings.radius.character) {
     maxHealth = health;
     _health = health;
     _speed = speed;
