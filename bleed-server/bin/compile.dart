@@ -298,10 +298,10 @@ void _compileGrenades(StringBuffer buffer, List<Grenade> grenades) {
 
 void _compilePlayers(StringBuffer buffer, List<Player> players) {
   _write(buffer, _playersIndex);
+  _write(buffer, players.length);
   for (Player player in players) {
     _compilePlayer(buffer, player);
   }
-  buffer.write(_semiColon);
 }
 
 void _compileZombies(StringBuffer buffer, List<Npc> npcs) {

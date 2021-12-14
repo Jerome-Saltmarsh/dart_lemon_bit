@@ -592,10 +592,9 @@ bool _commaConsumed() {
 }
 
 void _parsePlayers() {
-  game.totalHumans = 0;
-  while (!_simiColonConsumed()) {
-    _consumeHuman(game.humans[game.totalHumans]);
-    game.totalHumans++;
+  game.totalHumans = _consumeInt();
+  for(int i = 0; i < game.totalHumans; i++){
+    _consumeHuman(game.humans[i]);
   }
 }
 

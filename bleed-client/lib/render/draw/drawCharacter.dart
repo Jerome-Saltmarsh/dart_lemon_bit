@@ -1,4 +1,3 @@
-
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
@@ -27,14 +26,11 @@ void drawCharacter(Character character) {
   );
 
   drawAtlas(
-      mapCharacterDst(character, character.type, src),
-      src,
+    mapCharacterDst(character, character.type, src),
+    src,
   );
 
-  if (character.type == CharacterType.Zombie){
-    if (shade.isLighterThan(Shade.VeryDark)){
-      drawCharacterHealthBar(character);
-    }
+  if (character.type == CharacterType.Zombie) {
+    drawCharacterHealthBar(character);
   }
 }
-
