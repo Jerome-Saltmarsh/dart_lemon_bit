@@ -1341,6 +1341,7 @@ extension GameFunctions on Game {
     zombie.previousState = CharacterState.Idle;
     zombie.maxHealth = health;
     zombie.health = health;
+    zombie.collidable = true;
     zombie.x = x;
     zombie.y = y;
     zombie.yv = 0;
