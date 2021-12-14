@@ -56,8 +56,6 @@ Player? findPlayerByUuid(String uuid) {
   return null;
 }
 
-const cursorRadius = 20;
-
 void main() {
   print('Bleed Game Server Starting');
   initUpdateLoop();
@@ -178,9 +176,9 @@ void main() {
             double mouseX = double.parse(arguments[4]);
             double mouseY = double.parse(arguments[5]);
 
-            double mouseTop = mouseY - cursorRadius - settings.radius.character;
+            double mouseTop = mouseY - settings.radius.cursor - settings.radius.character;
             double mouseBottom =
-                mouseY + cursorRadius + settings.radius.character;
+                mouseY + settings.radius.cursor + settings.radius.character;
             playerSetAbilityTarget(player, mouseX, mouseY);
 
             player.aimTarget = null;

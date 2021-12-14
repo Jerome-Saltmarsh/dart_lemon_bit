@@ -395,6 +395,7 @@ extension GameFunctions on Game {
     if (duration % fps != 0) return;
 
     for (Player player in players) {
+      if (player.dead) continue;
       player.magic += player.magicRegen;
       player.health += player.healthRegen;
 
@@ -1778,7 +1779,7 @@ void selectCharacterType(Player player, CharacterType value) {
       player.ability1 = Ability(
           type: AbilityType.Explosion,
           level: 0,
-          magicCost: 10,
+          magicCost:  60,
           range: 200,
           cooldown: 15,
           radius: settings.radius.explosion,

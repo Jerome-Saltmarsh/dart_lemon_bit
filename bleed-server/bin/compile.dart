@@ -355,6 +355,7 @@ void _compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.text);
   _write(buffer, _comma);
   _write(buffer, (player.health / player.maxHealth) * 100);
+  _write(buffer, (player.magic / player.maxMagic) * 100);
 }
 
 void _compileNpc(StringBuffer buffer, Npc npc) {
@@ -383,10 +384,6 @@ void compilePlayerMessage(StringBuffer buffer, String message) {
 
 void _writeSemiColon(StringBuffer buffer) {
   _write(buffer, _semiColon);
-}
-
-void _writeBool(StringBuffer buffer, bool value) {
-  _write(buffer, value ? _1 : _0);
 }
 
 void _writeInt(StringBuffer buffer, double value) {

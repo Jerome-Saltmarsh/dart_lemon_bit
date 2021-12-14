@@ -30,7 +30,9 @@ void drawCharacter(Character character) {
     src,
   );
 
-  // if (character.type == CharacterType.Zombie) {
-    drawCharacterHealthBar(character);
-  // }
+  if (character.type == CharacterType.Witch) {
+    drawCharacterMagicBar(character);
+  }
+
+  drawCharacterHealthBar(character);
 }
