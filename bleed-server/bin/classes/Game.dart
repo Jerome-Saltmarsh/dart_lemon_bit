@@ -658,6 +658,10 @@ extension GameFunctions on Game {
         final double rot = radiansBetweenObject(projectile, target);
         projectile.xv = adj(rot, projectile.speed);
         projectile.yv = opp(rot, projectile.speed);
+        if (distanceBetween(projectile.x, projectile.y, target.x, target.y) < settings.radius.character){
+          handleProjectileHit(projectile, target);
+        }
+
       } else if (projectileDistanceTravelled(projectile) > projectile.range) {
         deactivateProjectile(projectile);
       }
@@ -851,6 +855,9 @@ extension GameFunctions on Game {
     for (int i = 0; i < projectiles.length; i++) {
       Projectile projectile = projectiles[i];
       if (!projectile.active) continue;
+      if (projectile.target != null){
+        continue;
+      }
       for (int j = s; j < characters.length; j++) {
         Character character = characters[j];
         if (!character.active) continue;
@@ -859,41 +866,45 @@ extension GameFunctions on Game {
         if (projectile.left > character.right) continue;
         if (projectile.top > character.bottom) continue;
         if (projectile.bottom < character.top) continue;
-
-        deactivateProjectile(projectile);
-        character.xv += projectile.xv * settings.bulletImpactVelocityTransfer;
-        character.yv += projectile.yv * settings.bulletImpactVelocityTransfer;
-
-        if (enemies(projectile, character)) {
-          // @on zombie hit by bullet
-          applyDamage(projectile.owner, character, projectile.damage);
-
-          if (character is Player) {
-            dispatch(GameEventType.Player_Hit, character.x, character.y,
-                projectile.xv, projectile.yv);
-            return;
-          }
-        }
-
-        if (character.alive) {
-          dispatch(GameEventType.Zombie_Hit, character.x, character.y,
-              projectile.xv, projectile.yv);
-        } else {
-          // @on zombie killed by player
-          if (projectile.owner is Npc) {
-            // on zombie killed by npc
-            (projectile.owner as Npc).clearTarget();
-          }
-          if (character is Npc) {
-            character.clearTarget();
-          }
-          // items.add(Item(type: ItemType.Handgun, x: character.x, y: character.y));
-          character.active = false;
-          dispatch(GameEventType.Zombie_killed_Explosion, character.x,
-              character.y, projectile.xv, projectile.yv);
-        }
+        handleProjectileHit(projectile, character);
         break;
       }
+    }
+  }
+
+  void handleProjectileHit(Projectile projectile, Character character){
+
+    deactivateProjectile(projectile);
+    character.xv += projectile.xv * settings.bulletImpactVelocityTransfer;
+    character.yv += projectile.yv * settings.bulletImpactVelocityTransfer;
+
+    if (enemies(projectile, character)) {
+      // @on zombie hit by bullet
+      applyDamage(projectile.owner, character, projectile.damage);
+
+      if (character is Player) {
+        dispatch(GameEventType.Player_Hit, character.x, character.y,
+            projectile.xv, projectile.yv);
+        return;
+      }
+    }
+
+    if (character.alive) {
+      dispatch(GameEventType.Zombie_Hit, character.x, character.y,
+          projectile.xv, projectile.yv);
+    } else {
+      // @on zombie killed by player
+      if (projectile.owner is Npc) {
+        // on zombie killed by npc
+        (projectile.owner as Npc).clearTarget();
+      }
+      if (character is Npc) {
+        character.clearTarget();
+      }
+      // items.add(Item(type: ItemType.Handgun, x: character.x, y: character.y));
+      character.active = false;
+      dispatch(GameEventType.Zombie_killed_Explosion, character.x,
+          character.y, projectile.xv, projectile.yv);
     }
   }
 
