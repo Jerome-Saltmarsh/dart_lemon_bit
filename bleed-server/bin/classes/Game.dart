@@ -1857,4 +1857,8 @@ void selectCharacterType(Player player, CharacterType value) {
       // TODO: Handle this case.
       break;
   }
+
+
+  player.magic = player.maxMagic;
+  player.health = player.maxHealth;
 }

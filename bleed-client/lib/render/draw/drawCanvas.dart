@@ -99,18 +99,11 @@ void renderCanvasPlay() {
   drawTiles();
   drawProjectiles(game.projectiles);
   drawBulletHoles(game.bulletHoles);
-  // _drawGrenades(game.grenades);
-
 
   drawSprites();
 
-  // for (int i = 0; i < game.totalItems; i++) {
-  //   drawItem(game.items[i]);
-  // }
 
   drawAbility();
-
-  // drawDebugCharacters();
 
 
   for (Explosion explosion in game.explosions) {
@@ -141,10 +134,6 @@ void renderCanvasPlay() {
   _drawPlayerNames();
   drawPlayerText();
 
-  // if (game.player.characterType.value != CharacterType.Witch){
-  //   _drawMouseAim(); // TODO Expensive
-  // }
-
   setColorWhite();
 }
 
@@ -170,6 +159,9 @@ void drawAbility() {
         color: Colors.white24);
     return;
   }
+
+  drawText(game.player.ability.value.toString(), game.player.x, game.player.y + 50);
+
   drawCircleOutline(
       sides: 24,
       radius: game.player.abilityRange,

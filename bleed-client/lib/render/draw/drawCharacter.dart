@@ -30,7 +30,13 @@ void drawCharacter(Character character) {
     src,
   );
 
-  if (character.type == CharacterType.Witch) {
+  if (
+    character.type == CharacterType.Witch
+    ||
+    character.type == CharacterType.Swordsman
+    ||
+    character.type == CharacterType.Archer
+  ) {
     drawCharacterMagicBar(character);
   }
 

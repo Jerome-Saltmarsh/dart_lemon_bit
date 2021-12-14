@@ -42,10 +42,8 @@ import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import 'buildTextBox.dart';
-import 'dialogs.dart';
 
 const double _padding = 8;
-const _iconSize = 45.0;
 final emptyContainer = Container();
 
 Widget buildHealthBar() {
@@ -126,6 +124,7 @@ Widget buildTopLeft() {
           width8,
           buildPlayerNextLevelExperience(),
           width8,
+          buildMouseWorldPosition(),
         ],
       ));
 }
@@ -709,24 +708,33 @@ class MyCustomClipper extends CustomClipper<Path> {
 }
 
 Widget buildAbilities() {
-  return Container(
-    child: Row(
-      children: [
-        buildAbility(game.player.ability1, 1),
-        width4,
-        buildAbility(game.player.ability2, 2),
-        width4,
-        buildAbility(game.player.ability3, 3),
-        width4,
-        buildAbility(game.player.ability4, 4),
-      ],
-    ),
-  );
+  return WatchBuilder(game.player.ability, (AbilityType ability){
+    print("buildAbilities($ability)");
+    return Container(
+      child: Row(
+        children: [
+          buildAbility(game.player.ability1, 1, ability),
+          width4,
+          buildAbility(game.player.ability2, 2, ability),
+          width4,
+          buildAbility(game.player.ability3, 3, ability),
+          width4,
+          buildAbility(game.player.ability4, 4, ability),
+        ],
+      ),
+    );
+  });
 }
 
-Widget buildAbility(Ability ability, int index) {
+Widget buildAbility(Ability ability, int index, AbilityType selectedAbilityType) {
   return WatchBuilder(ability.type, (AbilityType type) {
     if (type == AbilityType.None) return emptyContainer;
+
+    bool selected = type == selectedAbilityType;
+
+    if (selected){
+      print('$selectedAbilityType selected');
+    }
 
     return Column(
       children: [
@@ -740,7 +748,7 @@ Widget buildAbility(Ability ability, int index) {
             child: mouseOver(builder: (BuildContext context, bool mouseOver) {
               return border(
                 child: text("+", fontSize: 25),
-                color: Colors.white,
+                color: selected ? Colors.white : Colors.white54,
                 fillColor: mouseOver ? Colors.white54 : Colors.white12,
                 padding: EdgeInsets.symmetric(horizontal: 5),
               );
@@ -767,7 +775,7 @@ Widget buildAbility(Ability ability, int index) {
                           width: 50,
                           height: 50,
                           borderColor:
-                              mouseOver ? Colors.white : Colors.black54,
+                              mouseOver || selected ? Colors.white : Colors.black54,
                           borderWidth: 3);
                     }),
                     if (level > 0)

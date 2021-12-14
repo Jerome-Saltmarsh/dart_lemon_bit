@@ -124,8 +124,10 @@
 [ ] Remove old atlas sprites
 [ ] Fix Bug render objects culled bottom
 [ ] Player AI to walk towards out of range enemies and attack them
-[ ] Health bars
+[ ] UI Indicate selected ability
+[ ] UI Indicate ability insufficient mana
 [COMPLETED]
+[x] Health bars
 [x] Character - Swordsman
 [x] Fix Bug - blue orb shoots off if target is killed
 [x] Archer
