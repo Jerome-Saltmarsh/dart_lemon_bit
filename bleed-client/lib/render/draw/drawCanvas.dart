@@ -100,8 +100,9 @@ void renderCanvasPlay() {
   drawProjectiles(game.projectiles);
   drawBulletHoles(game.bulletHoles);
 
-  drawSprites();
   drawAbility();
+  setColorWhite();
+  drawSprites();
 
 
   for (Explosion explosion in game.explosions) {
@@ -136,7 +137,7 @@ void renderCanvasPlay() {
 }
 
 void drawMouseAim2() {
-  if (game.player.characterType.value == CharacterType.Swordsman){
+  // if (game.player.characterType.value == CharacterType.Swordsman){
     setColorWhite();
     double angle = getAngleBetweenMouseAndPlayer();
     double mouseDistance = getDistanceBetweenMouseAndPlayer();
@@ -144,7 +145,7 @@ void drawMouseAim2() {
     double vX = adjacent(angle, d);
     double vY = opposite(angle, d);
     drawLine(game.player.x, game.player.y, game.player.x + vX, game.player.y + vY);
-  }
+  // }
 }
 
 void drawAbility() {
@@ -157,6 +158,8 @@ void drawAbility() {
         color: Colors.white24);
     return;
   }
+
+  drawMouseAim2();
 
   drawCircleOutline(
       sides: 24,
