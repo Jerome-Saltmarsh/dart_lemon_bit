@@ -1107,7 +1107,7 @@ extension GameFunctions on Game {
               character.performing = null;
             }
             break;
-          case AbilityType.Brutal_Strike:
+          case AbilityType.Death_Strike:
             final int castFrame = 8;
             if (character.stateDuration == castFrame) {
               Character? attackTarget = character.attackTarget;
@@ -1165,28 +1165,11 @@ extension GameFunctions on Game {
                     targetDistance = zombieDistance;
                   }
                 }
-
                 attackTarget = target;
               }
 
-
               if (attackTarget != null){
-                applyDamage(character, attackTarget, 3);
-                double a = radiansBetween2(character, attackTarget.x, attackTarget.y);
-                applyForce(attackTarget, a, 5);
-                character.attackTarget = null;
-
-                if (attackTarget.dead){
-                  dispatch(GameEventType.Zombie_killed_Explosion, attackTarget.x, attackTarget.y,
-                      attackTarget.xv, attackTarget.yv);
-                }else{
-                  dispatch(
-                      GameEventType.Zombie_Hit,
-                      attackTarget.x,
-                      attackTarget.y,
-                      velX(character.aimAngle, settings.knifeHitAcceleration * 2),
-                      velY(character.aimAngle, settings.knifeHitAcceleration * 2));
-                }
+                applyStrike(character, attackTarget, character.damage);
               }
             }
             break;

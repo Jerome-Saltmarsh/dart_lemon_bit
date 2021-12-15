@@ -14,7 +14,6 @@ final List<CharacterType> playableCharacterTypes = [
   CharacterType.Witch,
   CharacterType.Swordsman,
   CharacterType.Archer,
-  CharacterType.Musketeer,
 ];
 
 String characterTypeToString(CharacterType value){
