@@ -404,6 +404,7 @@ Widget buildBottomCenter() {
         width: screenWidth,
         child: Row(
           mainAxisAlignment: main.center,
+          crossAxisAlignment: cross.end,
           children: [
             Column(
               mainAxisAlignment: main.end,
@@ -792,6 +793,7 @@ Widget buildAbilities() {
     print("buildAbilities($ability)");
     return Container(
       child: Row(
+        crossAxisAlignment: cross.end,
         children: [
           buildAbility(game.player.ability1, 1, ability),
           width4,
@@ -818,6 +820,7 @@ Widget buildAbility(
     }
 
     return Column(
+      mainAxisAlignment: main.end,
       children: [
         WatchBuilder(game.player.skillPoints, (int points) {
           if (points == 0) return emptyContainer;
