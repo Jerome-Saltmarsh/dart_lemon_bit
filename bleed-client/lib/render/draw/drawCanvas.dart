@@ -101,8 +101,6 @@ void renderCanvasPlay() {
   drawBulletHoles(game.bulletHoles);
 
   drawSprites();
-
-
   drawAbility();
 
 
@@ -159,8 +157,6 @@ void drawAbility() {
         color: Colors.white24);
     return;
   }
-
-  drawText(game.player.ability.value.toString(), game.player.x, game.player.y + 50);
 
   drawCircleOutline(
       sides: 24,

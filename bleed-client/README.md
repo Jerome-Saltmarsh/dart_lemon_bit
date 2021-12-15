@@ -123,8 +123,8 @@
 [ ] Cooldown widget
 [ ] Remove old atlas sprites
 [ ] Fix Bug render objects culled bottom
-[ ] Player AI to walk towards out of range enemies and attack them
 [ ] UI Indicate ability insufficient mana
+[ ] Knight fix ability death strike
 [COMPLETED]
 [x] UI Indicate selected ability
 [x] Health bars

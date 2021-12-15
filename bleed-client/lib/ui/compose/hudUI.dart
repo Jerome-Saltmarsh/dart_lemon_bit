@@ -46,7 +46,11 @@ final emptyContainer = Container();
 
 Widget buildLevelBar() {
   double width = 200;
-  double height = width * goldenRatioInverse * goldenRatioInverse * goldenRatioInverse * goldenRatioInverse;
+  double height = width *
+      goldenRatioInverse *
+      goldenRatioInverse *
+      goldenRatioInverse *
+      goldenRatioInverse;
 
   return WatchBuilder(game.player.experiencePercentage, (double percentage) {
     return Container(
@@ -75,7 +79,8 @@ Widget buildLevelBar() {
             width: width,
             height: height,
             alignment: Alignment.center,
-            child: text('Level ${game.player.level.value}', color: Colors.black),
+            child:
+                text('Level ${game.player.level.value}', color: Colors.black),
           ),
         ],
       ),
@@ -83,10 +88,13 @@ Widget buildLevelBar() {
   });
 }
 
-
 Widget buildHealthBar() {
   double width = 200;
-  double height = width * goldenRatioInverse * goldenRatioInverse * goldenRatioInverse * goldenRatioInverse;
+  double height = width *
+      goldenRatioInverse *
+      goldenRatioInverse *
+      goldenRatioInverse *
+      goldenRatioInverse;
 
   return WatchBuilder(game.player.health, (double health) {
     double percentage = health / game.player.maxHealth;
@@ -116,7 +124,8 @@ Widget buildHealthBar() {
             width: width,
             height: height,
             alignment: Alignment.center,
-            child: text('${health.toInt()} / ${game.player.maxHealth}', color: Colors.black),
+            child: text('${health.toInt()} / ${game.player.maxHealth}',
+                color: Colors.black),
           ),
         ],
       ),
@@ -126,7 +135,11 @@ Widget buildHealthBar() {
 
 Widget buildMagicBar() {
   double width = 200;
-  double height = width * goldenRatioInverse * goldenRatioInverse * goldenRatioInverse * goldenRatioInverse;
+  double height = width *
+      goldenRatioInverse *
+      goldenRatioInverse *
+      goldenRatioInverse *
+      goldenRatioInverse;
 
   return WatchBuilder(game.player.magic, (double magic) {
     double percentage = magic / game.player.maxMagic.value;
@@ -156,7 +169,8 @@ Widget buildMagicBar() {
             width: width,
             height: height,
             alignment: Alignment.center,
-            child: text('${magic.toInt()} / ${game.player.maxMagic.value}', color: Colors.black),
+            child: text('${magic.toInt()} / ${game.player.maxMagic.value}',
+                color: Colors.black),
           ),
         ],
       ),
@@ -812,12 +826,7 @@ Widget buildAbility(
     Ability ability, int index, AbilityType selectedAbilityType) {
   return WatchBuilder(ability.type, (AbilityType type) {
     if (type == AbilityType.None) return emptyContainer;
-
     bool selected = type == selectedAbilityType;
-
-    if (selected) {
-      print('$selectedAbilityType selected');
-    }
 
     return Column(
       mainAxisAlignment: main.end,
@@ -841,52 +850,99 @@ Widget buildAbility(
         }),
         height20,
         WatchBuilder(ability.level, (int level) {
+          bool unlocked = level > 0;
+
+          if (!unlocked) {
+            return Stack(
+              children: [
+                buildDecorationImage(
+                    image: mapAbilityTypeToDecorationImage[type],
+                    width: 50,
+                    height: 50,
+                    borderColor: Colors.black54,
+                    borderWidth: 3),
+                Container(
+                  width: 50,
+                  height: 50,
+                  alignment: Alignment.center,
+                  color: Colors.black54,
+                )
+              ],
+            );
+          }
+
           return WatchBuilder(ability.cooldown, (int cooldown) {
             return WatchBuilder(ability.cooldownRemaining,
                 (int cooldownRemaining) {
-              return onPressed(
-                hint: abilityTypeToString(ability.type.value),
-                callback: level == 0 || cooldownRemaining > 0
-                    ? null
-                    : () {
-                        sendRequestSelectAbility(index);
-                      },
-                child: Stack(
+              if (cooldownRemaining > 0) {
+                return Stack(
                   children: [
-                    mouseOver(builder: (BuildContext context, bool mouseOver) {
-                      return buildDecorationImage(
-                          image: mapAbilityTypeToDecorationImage[type],
-                          width: 50,
-                          height: 50,
-                          borderColor: mouseOver || selected
-                              ? Colors.white
-                              : Colors.black54,
-                          borderWidth: 3);
-                    }),
-                    if (level > 0)
-                      Container(
-                          color: Colors.black54,
-                          padding: padding4,
-                          child: text(level)),
-                    if (cooldownRemaining > 0)
-                      Container(
-                          width: 50,
-                          height: 50,
-                          alignment: Alignment.center,
-                          color: Colors.black54,
-                          child: text("${cooldownRemaining}s")),
-                    if (level < 1)
-                      Container(
+                    buildDecorationImage(
+                        image: mapAbilityTypeToDecorationImage[type],
+                        width: 50,
+                        height: 50,
+                        borderColor: Colors.black54,
+                        borderWidth: 3),
+                    Container(
                         width: 50,
                         height: 50,
                         alignment: Alignment.center,
                         color: Colors.black54,
-                      ),
-                    // if (cooldownRemaining > 0)
-                    //   buildPercentageBox(0.66, 50),
+                        child: text("${cooldownRemaining}s"))
                   ],
-                ),
-              );
+                );
+              }
+
+              return WatchBuilder(ability.canAfford, (bool canAfford) {
+                if (!canAfford) {
+                  return Stack(
+                    children: [
+                      buildDecorationImage(
+                          image: mapAbilityTypeToDecorationImage[type],
+                          width: 50,
+                          height: 50,
+                          borderColor: Colors.black54,
+                          borderWidth: 3),
+                      Container(
+                        width: 50,
+                        height: 50,
+                        alignment: Alignment.center,
+                        color: Colors.red.withOpacity(0.5),
+                      ),
+                      Container(
+                          color: Colors.black54,
+                          padding: padding4,
+                          child: text(level))
+                    ],
+                  );
+                }
+
+                return onPressed(
+                  hint: abilityTypeToString(ability.type.value),
+                  callback: () {
+                    sendRequestSelectAbility(index);
+                  },
+                  child: Stack(
+                    children: [
+                      mouseOver(
+                          builder: (BuildContext context, bool mouseOver) {
+                        return buildDecorationImage(
+                            image: mapAbilityTypeToDecorationImage[type],
+                            width: 50,
+                            height: 50,
+                            borderColor: mouseOver || selected
+                                ? Colors.white
+                                : Colors.green,
+                            borderWidth: 3);
+                      }),
+                      Container(
+                          color: Colors.black54,
+                          padding: padding4,
+                          child: text(level)),
+                    ],
+                  ),
+                );
+              });
             });
           });
         }),

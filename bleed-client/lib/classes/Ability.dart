@@ -7,4 +7,6 @@ class Ability {
   Watch<int> level = Watch(0);
   Watch<int> cooldownRemaining = Watch(0);
   Watch<int> cooldown = Watch(0);
+  Watch<int> magicCost = Watch(0);
+  Watch<bool> canAfford = Watch(false);
 }

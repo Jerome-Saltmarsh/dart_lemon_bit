@@ -164,7 +164,7 @@ class _Radius {
   final double zombieSpawnVariation = 5;
   final double freezeCircle = 40;
   final double explosion = 75;
-  final double cursor = 30;
+  final double cursor = 35;
 }
 
 class _Accuracy {

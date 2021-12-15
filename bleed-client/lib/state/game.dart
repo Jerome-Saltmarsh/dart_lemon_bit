@@ -86,10 +86,19 @@ class _Player {
   final Watch<double> magic = Watch(0);
   final Watch<double> maxMagic = Watch(0);
 
-  Ability ability1 = Ability();
-  Ability ability2 = Ability();
-  Ability ability3 = Ability();
-  Ability ability4 = Ability();
+  final Ability ability1 = Ability();
+  final Ability ability2 = Ability();
+  final Ability ability3 = Ability();
+  final Ability ability4 = Ability();
+
+  _Player(){
+    magic.onChanged((double value) {
+      ability1.canAfford.value = value >= ability1.magicCost.value;
+      ability2.canAfford.value = value >= ability2.magicCost.value;
+      ability3.canAfford.value = value >= ability3.magicCost.value;
+      ability4.canAfford.value = value >= ability4.magicCost.value;
+    });
+  }
 
   bool get dead => !alive.value;
 

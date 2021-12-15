@@ -220,10 +220,14 @@ void main() {
                 player.attackTarget = player.aimTarget;
 
                 if (ability == null) {
-                  // if (player.attackTarget != null) {
+                  if (
+                    player.type == CharacterType.Swordsman
+                    ||
+                    player.attackTarget != null
+                  ) {
                     characterAimAt(player, mouseX, mouseY);
                     game.setCharacterState(player, CharacterState.Striking);
-                  // }
+                  }
                   break;
                 }
 

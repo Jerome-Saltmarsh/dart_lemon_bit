@@ -473,6 +473,7 @@ void _consumeAbility(Ability ability) {
   ability.level.value = _consumeInt();
   ability.cooldown.value = _consumeInt();
   ability.cooldownRemaining.value = _consumeInt();
+  ability.magicCost.value = _consumeInt();
 }
 
 int _consumeInt() {
