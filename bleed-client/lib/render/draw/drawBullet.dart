@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
+import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/getters/inDarkness.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/mappers/mapDirectionToAngle.dart';
@@ -44,7 +45,7 @@ void drawProjectile(Projectile projectile) {
           convertDirectionToAngle(projectile.direction));
       break;
     case ProjectileType.Blue_Orb:
-      drawCircle(projectile.x, projectile.y, 5, Colors.blue);
+      drawCircle(projectile.x, projectile.y, 5, colours.blue);
       break;
   }
 }

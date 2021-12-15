@@ -24,6 +24,6 @@ void drawCharacterHealthBar(Character character){
 void drawCharacterMagicBar(Character character){
   setColorWhite();
   globalCanvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom + _height, _width, _height), paint);
-  setColor(Colors.blue);
+  setColor(colours.blue);
   globalCanvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom + _height, _width * character.magic, _height), paint);
 }
