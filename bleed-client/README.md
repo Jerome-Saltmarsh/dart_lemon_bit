@@ -123,9 +123,9 @@
 [ ] Cooldown widget
 [ ] Remove old atlas sprites
 [ ] Fix Bug render objects culled bottom
-[ ] UI Indicate ability insufficient mana
 [ ] Knight fix ability death strike
 [COMPLETED]
+[x] UI Indicate ability insufficient mana
 [x] UI Indicate selected ability
 [x] Health bars
 [x] Character - Swordsman

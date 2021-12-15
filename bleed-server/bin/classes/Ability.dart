@@ -1,3 +1,4 @@
+import '../common/AbilityMode.dart';
 import '../common/AbilityType.dart';
 import 'Character.dart';
 
@@ -50,6 +51,19 @@ class Dash extends Ability {
   }
 }
 
+final Map<AbilityType, AbilityMode> _mapAbilityTypeToAbilityMode = {
+  AbilityType.FreezeCircle: AbilityMode.Area,
+  AbilityType.Blink: AbilityMode.Directed,
+  AbilityType.Explosion: AbilityMode.Area,
+  AbilityType.Dash: AbilityMode.Directed,
+  AbilityType.Fireball: AbilityMode.Targeted,
+  AbilityType.Split_Arrow: AbilityMode.Directed,
+  AbilityType.Long_Shot: AbilityMode.Targeted,
+  AbilityType.Iron_Shield: AbilityMode.Activated,
+  AbilityType.Brutal_Strike: AbilityMode.Directed,
+  AbilityType.Death_Strike: AbilityMode.Targeted,
+};
+
 class Ability {
   AbilityType type;
   int level;
@@ -58,6 +72,12 @@ class Ability {
   int cooldownRemaining = 0;
   int cooldown;
   double radius;
+
+  AbilityMode get mode {
+    AbilityMode? mode = _mapAbilityTypeToAbilityMode[type];
+    if (mode != null) return mode;
+    return AbilityMode.None;
+  }
 
   Ability({
     required this.type,

@@ -11,6 +11,7 @@ import 'classes/Game.dart';
 import 'classes/Inventory.dart';
 import 'classes/Player.dart';
 import 'classes/Weapon.dart';
+import 'common/AbilityMode.dart';
 import 'common/AbilityType.dart';
 import 'common/CharacterAction.dart';
 import 'common/CharacterState.dart';
@@ -239,6 +240,25 @@ void main() {
                 if (ability.cooldownRemaining > 0) {
                   error(GameError.Cooldown_Remaining);
                   break;
+                }
+
+                switch(ability.mode){
+                  case AbilityMode.None:
+                    return;
+                  case AbilityMode.Targeted:
+                    if (player.attackTarget == null){
+                      return;
+                    }
+                    break;
+                  case AbilityMode.Activated:
+                    // TODO: Handle this case.
+                    break;
+                  case AbilityMode.Area:
+                    // TODO: Handle this case.
+                    break;
+                  case AbilityMode.Directed:
+                    // TODO: Handle this case.
+                    break;
                 }
 
                 // @on player perform ability
