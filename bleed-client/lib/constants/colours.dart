@@ -14,6 +14,7 @@ class _Colors {
   final Color orange = Color.fromRGBO(247, 150, 23, 1);
   final Color green = Color.fromRGBO(30, 188, 115 , 1);
   final Color yellow = Color.fromRGBO(249, 194, 43, 1);
+  final Color blue = Colors.blue;
 
   final Color white = Color.fromRGBO(220, 220, 220, 1.0);
   final Color grey = Color.fromRGBO(120, 120, 120, 1.0);
@@ -24,6 +25,8 @@ class _Colors {
   final Color skinCaucasian03 = Color.fromRGBO(142, 96, 98, 1.0);
   final Color skinCaucasian04 = Color.fromRGBO(85, 56, 58, 1.0);
   final Color pitchBlack = Color.fromRGBO(28, 27, 23, 1.0);
+
+
 
   Color get blood => redDark;
 }

@@ -75,7 +75,7 @@ class _Player {
   Watch<int> level = Watch(1);
   Watch<int> skillPoints = Watch(1);
   Watch<int> nextLevelExperience = Watch(1);
-  Watch<int> experiencePercentage = Watch(1);
+  Watch<double> experiencePercentage = Watch(0);
   int grenades = 0;
   Watch<String> message = Watch("");
   Watch<CharacterState> state = Watch(CharacterState.Idle);
@@ -83,8 +83,8 @@ class _Player {
   final _Unlocked unlocked = _Unlocked();
   final Watch<AbilityType> ability = Watch(AbilityType.None);
 
-  final Watch<int> magic = Watch(0);
-  final Watch<int> maxMagic = Watch(0);
+  final Watch<double> magic = Watch(0);
+  final Watch<double> maxMagic = Watch(0);
 
   Ability ability1 = Ability();
   Ability ability2 = Ability();

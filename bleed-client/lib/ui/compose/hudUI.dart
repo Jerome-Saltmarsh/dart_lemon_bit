@@ -17,7 +17,6 @@ import 'package:bleed_client/network/functions/disconnect.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/server/server.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/ui/compose/BoxCircle.dart';
 import 'package:bleed_client/ui/compose/buildSkillTree.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
@@ -30,7 +29,6 @@ import 'package:bleed_client/watches/time.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/functions/fullscreen_enter.dart';
 import 'package:lemon_engine/functions/fullscreen_exit.dart';
-import 'package:lemon_engine/functions/toggle_fullscreen.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/fullscreen_active.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
@@ -46,64 +44,123 @@ import 'buildTextBox.dart';
 const double _padding = 8;
 final emptyContainer = Container();
 
+Widget buildLevelBar() {
+  double width = 200;
+  double height = width * goldenRatioInverse * goldenRatioInverse * goldenRatioInverse * goldenRatioInverse;
+
+  return WatchBuilder(game.player.experiencePercentage, (double percentage) {
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.white, width: 2),
+          borderRadius: borderRadius4),
+      alignment: Alignment.centerLeft,
+      padding: EdgeInsets.all(2),
+      child: Stack(
+        alignment: Alignment.centerLeft,
+        children: [
+          Container(
+            color: Colors.white,
+            width: width,
+            height: height,
+          ),
+          Container(
+            color: colours.yellow,
+            width: width * percentage,
+            height: height,
+          ),
+          Container(
+            color: Colors.transparent,
+            width: width,
+            height: height,
+            alignment: Alignment.center,
+            child: text('Level ${game.player.level.value}', color: Colors.black),
+          ),
+        ],
+      ),
+    );
+  });
+}
+
+
 Widget buildHealthBar() {
+  double width = 200;
+  double height = width * goldenRatioInverse * goldenRatioInverse * goldenRatioInverse * goldenRatioInverse;
+
   return WatchBuilder(game.player.health, (double health) {
     double percentage = health / game.player.maxHealth;
-    double width = 120;
-    double height = width * goldenRatioInverse;
-
-    return Tooltip(
-      message: 'Life ${health.toInt()} / ${game.player.maxHealth}',
-      child: Container(
-        width: width,
-        height: height,
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.white, width: 4),
-            borderRadius: borderRadius4),
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.white, width: 2),
+          borderRadius: borderRadius4),
+      alignment: Alignment.centerLeft,
+      padding: EdgeInsets.all(2),
+      child: Stack(
         alignment: Alignment.centerLeft,
-        padding: EdgeInsets.all(3),
-        child: Container(
-          decoration: BoxDecoration(
+        children: [
+          Container(
             color: Colors.white,
-            // borderRadius: borderRadius4
+            width: width,
+            height: height,
           ),
-          width: width * percentage,
-          height: height,
-        ),
+          Container(
+            color: colours.red,
+            width: width * percentage,
+            height: height,
+          ),
+          Container(
+            color: Colors.transparent,
+            width: width,
+            height: height,
+            alignment: Alignment.center,
+            child: text('${health.toInt()} / ${game.player.maxHealth}', color: Colors.black),
+          ),
+        ],
       ),
     );
   });
 }
 
 Widget buildMagicBar() {
-  return WatchBuilder(game.player.maxMagic, (int maxMagic) {
-    if (maxMagic == 0) return emptyContainer;
+  double width = 200;
+  double height = width * goldenRatioInverse * goldenRatioInverse * goldenRatioInverse * goldenRatioInverse;
 
-    return WatchBuilder(game.player.magic, (int magic) {
-      double percentage = magic / maxMagic;
-      double width = 120;
-      double height = width * goldenRatioInverse;
-
-      return Tooltip(
-        message: 'Magic $magic / $maxMagic',
-        child: Container(
-          width: width,
-          height: height,
-          decoration: BoxDecoration(
-              border: Border.all(color: Colors.white, width: 4),
-              borderRadius: borderRadius4),
-          alignment: Alignment.centerLeft,
-          padding: EdgeInsets.all(3),
-          child: Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-            ),
+  return WatchBuilder(game.player.magic, (double magic) {
+    double percentage = magic / game.player.maxMagic.value;
+    return Container(
+      width: width,
+      height: height,
+      decoration: BoxDecoration(
+          border: Border.all(color: Colors.white, width: 2),
+          borderRadius: borderRadius4),
+      alignment: Alignment.centerLeft,
+      padding: EdgeInsets.all(2),
+      child: Stack(
+        alignment: Alignment.centerLeft,
+        children: [
+          Container(
+            color: Colors.white,
+            width: width,
+            height: height,
+          ),
+          Container(
+            color: colours.blue,
             width: width * percentage,
             height: height,
           ),
-        ),
-      );
-    });
+          Container(
+            color: Colors.transparent,
+            width: width,
+            height: height,
+            alignment: Alignment.center,
+            child: text('${magic.toInt()} / ${game.player.maxMagic.value}', color: Colors.black),
+          ),
+        ],
+      ),
+    );
   });
 }
 
@@ -117,14 +174,14 @@ Widget buildTopLeft() {
             crossAxisAlignment: cross.center,
             children: [
               buildTime(),
-              height4,
-              buildPlayerLevel(),
+              // height4,
+              // buildPlayerLevel(),
             ],
           ),
-          width8,
-          buildPlayerNextLevelExperience(),
-          width8,
-          buildMouseWorldPosition(),
+          // width8,
+          // buildPlayerNextLevelExperience(),
+          // width8,
+          // buildMouseWorldPosition(),
         ],
       ));
 }
@@ -159,28 +216,28 @@ Widget buildPlayerLevel() {
   });
 }
 
-Widget buildPlayerNextLevelExperience() {
-  return Tooltip(
-    message: "Experience",
-    child: WatchBuilder(game.player.experiencePercentage, (int value) {
-      double percentage = value / 100.0;
-      return Container(
-        width: 100,
-        height: 50,
-        alignment: Alignment.centerLeft,
-        padding: EdgeInsets.all(3),
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.white, width: 4),
-            borderRadius: borderRadius4),
-        child: Container(
-          color: Colors.white,
-          width: 100 * percentage,
-          height: 50,
-        ),
-      );
-    }),
-  );
-}
+// Widget buildPlayerNextLevelExperience() {
+//   return Tooltip(
+//     message: "Experience",
+//     child: WatchBuilder(game.player.experiencePercentage, (int value) {
+//       double percentage = value / 100.0;
+//       return Container(
+//         width: 100,
+//         height: 50,
+//         alignment: Alignment.centerLeft,
+//         padding: EdgeInsets.all(3),
+//         decoration: BoxDecoration(
+//             border: Border.all(color: Colors.white, width: 4),
+//             borderRadius: borderRadius4),
+//         child: Container(
+//           color: Colors.white,
+//           width: 100 * percentage,
+//           height: 50,
+//         ),
+//       );
+//     }),
+//   );
+// }
 
 Widget buildBottomRight() {
   return WatchBuilder(game.player.characterType, (CharacterType type) {
@@ -289,9 +346,9 @@ Widget buildToggleFullscreen() {
       hint: "F11",
       callback: () {
         hud.fullScreenDialogVisible.value = false;
-        if (fullScreenActive){
+        if (fullScreenActive) {
           fullScreenExit();
-        }else{
+        } else {
           fullScreenEnter();
         }
       },
@@ -300,10 +357,7 @@ Widget buildToggleFullscreen() {
           text(fullScreenActive ? "Exit Fullscreen" : "Fullscreen"),
           width4,
           buildDecorationImage(
-              image: icons.fullscreen,
-              width: 20,
-              height: 20,
-              borderWidth: 0),
+              image: icons.fullscreen, width: 20, height: 20, borderWidth: 0),
         ],
       ),
     ),
@@ -343,6 +397,35 @@ Widget buildSelectHero() {
       ));
 }
 
+Widget buildBottomCenter() {
+  return Positioned(
+      bottom: _padding,
+      child: Container(
+        width: screenWidth,
+        child: Row(
+          mainAxisAlignment: main.center,
+          children: [
+            Column(
+              mainAxisAlignment: main.end,
+              children: [
+                buildHealthBar(),
+                height2,
+                buildMagicBar(),
+                height2,
+                buildLevelBar(),
+              ],
+            ),
+            width8,
+            buildAbilities(),
+            width8,
+            Container(
+              width: 200,
+            )
+          ],
+        ),
+      ));
+}
+
 Widget buildHud() {
   return WatchBuilder(game.player.characterType, (CharacterType value) {
     if (value == CharacterType.None) {
@@ -352,11 +435,11 @@ Widget buildHud() {
     return WatchBuilder(game.player.alive, (bool alive) {
       return Stack(
         children: [
-          // buildCharacterAction(),
           buildTextBox(),
-          if (alive) buildBottomLeft(),
-          if (alive) buildBottomRight(),
+          // if (alive) buildBottomLeft(),
+          // if (alive) buildBottomRight(),
           buildTopLeft(),
+          if (alive) buildBottomCenter(),
           if (!hud.state.observeMode && !alive) _buildViewRespawn(),
           if (!alive && hud.state.observeMode) _buildRespawnLight(),
           _buildServerText(),
@@ -371,15 +454,12 @@ Widget buildHud() {
 
 Positioned buildCharacterAction() {
   return Positioned(
-          left: 200,
-          top: 300,
-          child: WatchBuilder(
-            characterController.action,
-              (CharacterAction action){
-              return text(action);
-              }
-          ),
-        );
+    left: 200,
+    top: 300,
+    child: WatchBuilder(characterController.action, (CharacterAction action) {
+      return text(action);
+    }),
+  );
 }
 
 bool shotgunUnlocked() {
@@ -429,28 +509,28 @@ Widget buildTopRight() {
   );
 }
 
-Widget buildToggleAudio(){
-  return WatchBuilder(game.settings.audioMuted, (bool audio){
+Widget buildToggleAudio() {
+  return WatchBuilder(game.settings.audioMuted, (bool audio) {
     return onPressed(
         callback: toggleAudio,
-        child: border(child: text(audio ? "Audio On": "Audio Off")));
+        child: border(child: text(audio ? "Audio On" : "Audio Off")));
   });
 }
 
-Widget _buildSettingsIcon(){
+Widget _buildSettingsIcon() {
   return buildDecorationImage(
       image: icons.settings, width: 40, height: 40, borderWidth: 0);
 }
 
-Widget _buildToggleEdit(){
+Widget _buildToggleEdit() {
   return button("Editor", toggleEditMode);
 }
 
-Widget buildToggleDebug(){
+Widget buildToggleDebug() {
   return button("Debug", toggleDebugMode);
 }
 
-void toggleDebugMode(){
+void toggleDebugMode() {
   game.settings.compilePaths = !game.settings.compilePaths;
   sendRequestSetCompilePaths(game.settings.compilePaths);
 }
@@ -465,7 +545,7 @@ Widget buildMenu() {
         if (game.settings.developMode) buildToggleDebug(),
         if (game.settings.developMode) width8,
         if (game.settings.developMode) _buildToggleEdit(),
-        button("Change Hero", (){
+        button("Change Hero", () {
           sendClientRequest(ClientRequest.Reset_Character_Type);
         }),
         buildToggleAudio(),
@@ -637,20 +717,20 @@ Widget buildWeaponSlot(WeaponType weaponType) {
   });
 }
 
-Widget buildBottomLeft() {
-  return Positioned(
-      bottom: _padding,
-      left: _padding,
-      child: Row(
-        crossAxisAlignment: cross.end,
-        children: [
-          buildMagicBar(),
-          width8,
-          buildAbilities(),
-          buildSkillsButton(),
-        ],
-      ));
-}
+// Widget buildBottomLeft() {
+//   return Positioned(
+//       bottom: _padding,
+//       left: _padding,
+//       child: Row(
+//         crossAxisAlignment: cross.end,
+//         children: [
+//           buildMagicBar(),
+//           width8,
+//           buildAbilities(),
+//           buildSkillsButton(),
+//         ],
+//       ));
+// }
 
 Widget buildPercentageBox(double percentage, double size) {
   return ClipPath(
@@ -708,7 +788,7 @@ class MyCustomClipper extends CustomClipper<Path> {
 }
 
 Widget buildAbilities() {
-  return WatchBuilder(game.player.ability, (AbilityType ability){
+  return WatchBuilder(game.player.ability, (AbilityType ability) {
     print("buildAbilities($ability)");
     return Container(
       child: Row(
@@ -726,13 +806,14 @@ Widget buildAbilities() {
   });
 }
 
-Widget buildAbility(Ability ability, int index, AbilityType selectedAbilityType) {
+Widget buildAbility(
+    Ability ability, int index, AbilityType selectedAbilityType) {
   return WatchBuilder(ability.type, (AbilityType type) {
     if (type == AbilityType.None) return emptyContainer;
 
     bool selected = type == selectedAbilityType;
 
-    if (selected){
+    if (selected) {
       print('$selectedAbilityType selected');
     }
 
@@ -774,8 +855,9 @@ Widget buildAbility(Ability ability, int index, AbilityType selectedAbilityType)
                           image: mapAbilityTypeToDecorationImage[type],
                           width: 50,
                           height: 50,
-                          borderColor:
-                              mouseOver || selected ? Colors.white : Colors.black54,
+                          borderColor: mouseOver || selected
+                              ? Colors.white
+                              : Colors.black54,
                           borderWidth: 3);
                     }),
                     if (level > 0)
@@ -1250,4 +1332,3 @@ void drawRing(Ring ring,
         ring.points[i] + position, ring.points[i + 1] + position, paint);
   }
 }
-

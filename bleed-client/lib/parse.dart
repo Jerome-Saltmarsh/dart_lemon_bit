@@ -395,15 +395,15 @@ void _parsePlayer() {
   game.player.level.value = _consumeInt();
   game.player.skillPoints.value = _consumeInt();
   game.player.nextLevelExperience.value = _consumeInt();
-  game.player.experiencePercentage.value = _consumeInt();
+  game.player.experiencePercentage.value = _consumePercentage();
   game.player.characterType.value = _consumeCharacterType();
   game.player.abilityTarget.x = _consumeDouble();
   game.player.abilityTarget.y = _consumeDouble();
   game.player.abilityRange = _consumeDouble();
   game.player.abilityRadius = _consumeDouble();
   game.player.ability.value = _consumeAbilityType();
-  game.player.magic.value = _consumeInt();
-  game.player.maxMagic.value = _consumeInt();
+  game.player.magic.value = _consumeDouble();
+  game.player.maxMagic.value = _consumeDouble();
   game.player.attackRange = _consumeDouble();
 }
 
