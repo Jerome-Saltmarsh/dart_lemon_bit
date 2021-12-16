@@ -65,7 +65,7 @@ Widget buildLevelBar() {
         alignment: Alignment.centerLeft,
         children: [
           Container(
-            color: Colors.white,
+            color: colours.yellowDark,
             width: width,
             height: height,
           ),
@@ -80,7 +80,7 @@ Widget buildLevelBar() {
             height: height,
             alignment: Alignment.center,
             child:
-                text('Level ${game.player.level.value}', color: Colors.black),
+                text('Level ${game.player.level.value}'),
           ),
         ],
       ),
