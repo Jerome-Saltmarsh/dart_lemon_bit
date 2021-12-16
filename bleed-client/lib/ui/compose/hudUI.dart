@@ -110,7 +110,7 @@ Widget buildHealthBar() {
         alignment: Alignment.centerLeft,
         children: [
           Container(
-            color: Colors.white,
+            color: colours.redDarkest,
             width: width,
             height: height,
           ),
@@ -124,8 +124,7 @@ Widget buildHealthBar() {
             width: width,
             height: height,
             alignment: Alignment.center,
-            child: text('${health.toInt()} / ${game.player.maxHealth}',
-                color: Colors.black),
+            child: text('${health.toInt()} / ${game.player.maxHealth}'),
           ),
         ],
       ),
@@ -155,7 +154,7 @@ Widget buildMagicBar() {
         alignment: Alignment.centerLeft,
         children: [
           Container(
-            color: Colors.white,
+            color: colours.blueDarkest,
             width: width,
             height: height,
           ),
@@ -169,8 +168,7 @@ Widget buildMagicBar() {
             width: width,
             height: height,
             alignment: Alignment.center,
-            child: text('${magic.toInt()} / ${game.player.maxMagic.value}',
-                color: Colors.black),
+            child: text('${magic.toInt()} / ${game.player.maxMagic.value}'),
           ),
         ],
       ),
