@@ -159,7 +159,7 @@ class _Radius {
   final double spawnPoint = 20;
   final double item = 15;
   final double crate = 22;
-  final double character = 12;
+  final double character = 10;
   final double interact = 60;
   final double zombieSpawnVariation = 5;
   final double freezeCircle = 40;

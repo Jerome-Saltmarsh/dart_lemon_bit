@@ -93,6 +93,14 @@ void playAudioAcquireItem(double x, double y) {
   _playAudio('item-acquired.mp3', x, y);
 }
 
+void playAudioBuff1(double x, double y) {
+  _playAudio('buff-1.mp3', x, y);
+}
+
+void playMagicalSwoosh18(double x, double y) {
+  _playAudio('magical-swoosh-18.mp3', x, y);
+}
+
 void playAudioCollectStar(double x, double y) {
   _playAudio('collect-star-4.mp3', x, y);
 }

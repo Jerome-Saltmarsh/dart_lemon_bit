@@ -262,8 +262,8 @@ Widget buildBottomRight() {
         child: Row(
           children: [
             buildMessageBoxIcon(),
-            width8,
-            buildHealthBar(),
+            // width8,
+            // buildHealthBar(),
           ],
         ));
   });
@@ -452,7 +452,7 @@ Widget buildHud() {
         children: [
           buildTextBox(),
           // if (alive) buildBottomLeft(),
-          // if (alive) buildBottomRight(),
+          if (alive) buildBottomRight(),
           buildTopLeft(),
           if (alive) buildBottomCenter(),
           if (!hud.state.observeMode && !alive) _buildViewRespawn(),

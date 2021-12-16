@@ -424,6 +424,10 @@ void _parsePlayerEvents() {
       case PlayerEventType.Acquired_Handgun:
         playAudioAcquireItem(game.player.x, game.player.y);
         break;
+      case PlayerEventType.Level_Increased:
+        emitPixelExplosion(game.player.x, game.player.y, amount: 10);
+        playAudioBuff1(game.player.x, game.player.y);
+        break;
     }
   }
 }

@@ -15,6 +15,7 @@ import '../common/AbilityType.dart';
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
 import '../common/ItemType.dart';
+import '../common/PlayerEvents.dart';
 import '../common/Tile.dart';
 import '../common/enums/Direction.dart';
 import '../common/enums/ObjectType.dart';
@@ -137,8 +138,6 @@ abstract class Game {
   void update();
 
   void onNpcKilled(Npc npc) {}
-
-  // void onKilledBy(Character target, Character by);
 
   void onPlayerDisconnected(Player player) {}
 
@@ -322,6 +321,7 @@ extension GameFunctions on Game {
       player.experience -= levelExperience[player.level];
       player.level++;
       player.abilityPoints++;
+      player.events.add(PlayerEvent(PlayerEventType.Level_Increased, 1));
       if (player.level >= maxPlayerLevel) return;
     }
   }
@@ -1097,10 +1097,10 @@ extension GameFunctions on Game {
             final int castFrame = 8;
             if (character.stateDuration == castFrame) {
               character.performing = null;
-              const damage = 5;
+              const damageMultiplier = 2;
               for (Npc zombie in zombies){
                 if (distanceBetweenObjects(zombie, character) < character.attackRange) {
-                  applyStrike(character, zombie, damage);
+                  applyStrike(character, zombie, character.damage * damageMultiplier);
                 }
               }
               character.attackTarget = null;
@@ -1109,10 +1109,11 @@ extension GameFunctions on Game {
             break;
           case AbilityType.Death_Strike:
             final int castFrame = 8;
+            const damageMultiplier = 3;
             if (character.stateDuration == castFrame) {
               Character? attackTarget = character.attackTarget;
               if (attackTarget != null){
-                applyStrike(character, attackTarget, character.damage * 3);
+                applyStrike(character, attackTarget, character.damage * damageMultiplier);
               }
               character.attackTarget = null;
               character.performing = null;
@@ -1522,6 +1523,10 @@ extension GameFunctions on Game {
   void revive(Character character) {
     character.state = CharacterState.Idle;
     character.health = character.maxHealth;
+
+    if (character is Player) {
+      character.magic = character.maxMagic;
+    }
 
     if (playerSpawnPoints.isEmpty) {
       character.x = giveOrTake(settings.playerStartRadius);

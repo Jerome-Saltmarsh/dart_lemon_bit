@@ -115,15 +115,19 @@
 -- Game Modes include MMO, Dota, Base defense, 
 -- The name of the land is Atlas
 [ ] Save / Load Character
-[ ] Items
 [ ] Enemy Archer
 [ ] Enemy Mage
 [ ] Enemy Tank
 [ ] Attributes (Intelligence, Strength, Agility)
+[ ] Items
 [ ] Cooldown widget
 [ ] Remove old atlas sprites
+[ ] Replace town guards with archers
+[ ] Design witch attack orb sprite
+[ ] Design Freeze Circle sprite
+[ ] Implement Activity Level upgrades
 [ ] Fix Bug render objects culled bottom
-[ ] Knight fix ability death strike
+[x] Knight fix ability death strike
 [COMPLETED]
 [x] UI Indicate ability insufficient mana
 [x] UI Indicate selected ability

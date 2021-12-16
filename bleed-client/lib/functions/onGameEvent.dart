@@ -126,6 +126,7 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
       break;
     case GameEventType.Teleported:
       emitPixelExplosion(x.toDouble(), y.toDouble());
+      playMagicalSwoosh18(x, y);
       break;
     case GameEventType.EnemyTargeted:
       emitPixelExplosion(x.toDouble(), y.toDouble());
@@ -166,8 +167,8 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
   }
 }
 
-void emitPixelExplosion(double x, double y) {
-  for (int i = 0; i < 20; i++) {
+void emitPixelExplosion(double x, double y, {int amount = 20}) {
+  for (int i = 0; i < amount; i++) {
     emitPixel(x: x, y: y);
   }
 }
