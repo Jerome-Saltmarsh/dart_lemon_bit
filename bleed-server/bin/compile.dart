@@ -130,7 +130,6 @@ void compileWeapon(StringBuffer buffer, Weapon weapon) {
 }
 
 void _compilePlayerAbilities(StringBuffer buffer, Player player) {
-  print("_compilePlayerAbilities()");
   _write(buffer, ServerResponse.Player_Abilities.index);
   _compileAbility(buffer, player.ability1);
   _compileAbility(buffer, player.ability2);

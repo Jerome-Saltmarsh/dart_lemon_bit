@@ -472,6 +472,7 @@ void main() {
             ability.cooldownRemaining = ability.cooldown;
             ability.durationRemaining = ability.duration;
             player.speedModifier += dashSpeed;
+            player.dispatch(PlayerEvent.Dash_Activated);
             break;
           }
 

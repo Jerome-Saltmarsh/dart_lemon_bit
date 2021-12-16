@@ -107,6 +107,10 @@ class _PlayAudio {
   void unlock(double x, double y) {
     _playAudio('unlock.mp3', x, y);
   }
+
+  void buff11(double x, double y) {
+    _playAudio('buff-11.mp3', x, y);
+  }
 }
 
 void playAudioCollectStar(double x, double y) {

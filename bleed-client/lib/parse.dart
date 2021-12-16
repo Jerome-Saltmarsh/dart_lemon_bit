@@ -122,7 +122,6 @@ void parseState() {
         break;
 
       case ServerResponse.Player_Abilities:
-        print("ServerResponse.Player_Abilities");
         _consumeAbility(game.player.ability1);
         _consumeAbility(game.player.ability2);
         _consumeAbility(game.player.ability3);
@@ -427,6 +426,9 @@ void _parsePlayerEvents() {
         break;
       case PlayerEvent.Skill_Upgraded:
         playAudio.unlock(game.player.x, game.player.y);
+        break;
+      case PlayerEvent.Dash_Activated:
+        playAudio.buff11(game.player.x, game.player.y);
         break;
     }
   }
