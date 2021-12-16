@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bleed_client/constants/colors/white.dart';
 import 'package:bleed_client/constants/fontWeights/normal.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
+import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lemon_engine/state/size.dart';
@@ -39,11 +40,14 @@ Widget border({
     EdgeInsets padding = padding8,
     EdgeInsets margin,
     Alignment alignment,
-    Color fillColor}) {
+    Color fillColor,
+    double minWidth,
+}) {
   return Container(
     alignment: alignment,
     margin: margin,
     padding: padding,
+    width: minWidth,
     decoration: BoxDecoration(
         border: color != null ? Border.all(color: color, width: width) : null,
         borderRadius: radius,
@@ -71,10 +75,18 @@ Widget comingSoon({Widget child}) {
   );
 }
 
-Widget button(String message, Function onPressed, {double fontSize}){
+Widget button(String message, Function onPressed, {double fontSize, double minWidth}){
   return pressed(
       callback: onPressed,
-      child: border(child: text(message)));
+      child: mouseOver(
+          builder: (BuildContext context, bool mouseOver){
+            return border(
+                child: text(message),
+                fillColor: mouseOver ? Colors.black26 : Colors.transparent,
+                minWidth: minWidth,
+                alignment: Alignment.center
+            );
+          }));
 }
 
 Widget pressed({Widget child, Function callback, dynamic hint}) {
@@ -177,8 +189,6 @@ Widget width(double value) {
 final Widget width16 = width(16);
 final Widget width8 = width(8);
 final Widget width4 = width(4);
-
-ButtonStyle _buttonStyle = buildButtonStyle(white, 2);
 
 ButtonStyle buildButtonStyle(Color borderColor, double borderWidth) {
   return OutlinedButton.styleFrom(

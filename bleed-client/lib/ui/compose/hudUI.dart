@@ -443,11 +443,17 @@ Widget buildSelectGameDialog(){
   return WatchBuilder(hud.joinGameVisible, (bool visible){
         if (!visible) return emptyContainer;
         return dialog(
+          height: 300,
           child: Column(
+            crossAxisAlignment: cross.stretch,
             children: [
-              text("OPEN WORLD"),
-              text("MOBA"),
-              text("DEFENSE"),
+              text("Select Game"),
+              height8,
+              button("OPEN WORLD", (){}),
+              height8,
+              button("MOBA", (){}),
+              height8,
+              button("WAVE DEFENSE", (){}),
             ],
           )
         );
