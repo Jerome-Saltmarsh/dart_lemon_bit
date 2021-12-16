@@ -65,12 +65,12 @@ Widget buildLevelBar() {
         alignment: Alignment.centerLeft,
         children: [
           Container(
-            color: colours.yellowDark,
+            color: colours.purpleDarkest,
             width: width,
             height: height,
           ),
           Container(
-            color: colours.yellow,
+            color: colours.purple,
             width: width * percentage,
             height: height,
           ),
