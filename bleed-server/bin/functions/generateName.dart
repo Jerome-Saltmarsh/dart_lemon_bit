@@ -1,7 +1,5 @@
 import 'package:lemon_math/randomItem.dart';
 
-import '../maths.dart';
-
 List<String> adjectives = [
   "Blue",
   "Golden",

@@ -14,7 +14,7 @@ import 'classes/Player.dart';
 import 'classes/InteractableNpc.dart';
 import 'classes/Weapon.dart';
 import 'common/AbilityType.dart';
-import 'common/PlayerEvents.dart';
+import 'common/PlayerEvent.dart';
 import 'common/Tile.dart';
 import 'common/ServerResponse.dart';
 import 'common/classes/Vector2.dart';
@@ -212,7 +212,7 @@ void _compilePlayerEvents(StringBuffer buffer, Player player) {
   if (player.events.isEmpty) return;
   _write(buffer, ServerResponse.Player_Events.index);
   _write(buffer, player.events.length);
-  for (PlayerEventType event in player.events) {
+  for (PlayerEvent event in player.events) {
     _write(buffer, event.index);
   }
   player.events.clear();

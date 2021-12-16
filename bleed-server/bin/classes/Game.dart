@@ -15,7 +15,7 @@ import '../common/AbilityType.dart';
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
 import '../common/ItemType.dart';
-import '../common/PlayerEvents.dart';
+import '../common/PlayerEvent.dart';
 import '../common/Tile.dart';
 import '../common/enums/Direction.dart';
 import '../common/enums/ObjectType.dart';
@@ -321,7 +321,7 @@ extension GameFunctions on Game {
       player.experience -= levelExperience[player.level];
       player.level++;
       player.abilityPoints++;
-      player.events.add(PlayerEventType.Level_Increased);
+      player.events.add(PlayerEvent.Level_Up);
       if (player.level >= maxPlayerLevel) return;
     }
   }

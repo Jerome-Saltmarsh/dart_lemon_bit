@@ -9,4 +9,10 @@ class Ability {
   Watch<int> cooldown = Watch(0);
   Watch<int> magicCost = Watch(0);
   Watch<bool> canAfford = Watch(false);
+
+  Ability(){
+    level.onChanged((int value) {
+      print("${type.value} level changed to $value");
+    });
+  }
 }

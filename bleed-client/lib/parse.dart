@@ -16,7 +16,7 @@ import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameError.dart';
 import 'package:bleed_client/common/ItemType.dart';
-import 'package:bleed_client/common/PlayerEvents.dart';
+import 'package:bleed_client/common/PlayerEvent.dart';
 import 'package:bleed_client/common/ServerResponse.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
@@ -43,7 +43,6 @@ import 'package:bleed_client/utils/list_util.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:lemon_engine/state/cursor.dart';
-import 'package:lemon_watch/watch.dart';
 import 'package:neuro/instance.dart';
 
 import 'common/GameEventType.dart';
@@ -51,6 +50,7 @@ import 'common/Tile.dart';
 import 'common/WeaponType.dart';
 import 'common/classes/Vector2.dart';
 import 'common/enums/ObjectType.dart';
+import 'common/PlayerEvent.dart';
 import 'functions/onGameEvent.dart';
 import 'render/functions/mapTilesToSrcAndDst.dart';
 import 'state.dart';
@@ -418,24 +418,21 @@ CharacterType _consumeCharacterType() {
 void _parsePlayerEvents() {
   int total = _consumeInt();
   for (int i = 0; i < total; i++) {
-    PlayerEventType event = _consumePlayerEventType();
+    PlayerEvent event = _consumePlayerEventType();
     switch (event) {
-      case PlayerEventType.Acquired_Handgun:
-        playAudioAcquireItem(game.player.x, game.player.y);
-        break;
-      case PlayerEventType.Level_Increased:
+      case PlayerEvent.Level_Up:
         emitPixelExplosion(game.player.x, game.player.y, amount: 10);
         playAudioBuff1(game.player.x, game.player.y);
         break;
-      case PlayerEventType.Skill_Upgraded:
+      case PlayerEvent.Skill_Upgraded:
         playAudio.unlock(game.player.x, game.player.y);
         break;
     }
   }
 }
 
-PlayerEventType _consumePlayerEventType(){
-  return playerEventTypes[_consumeInt()];
+PlayerEvent _consumePlayerEventType(){
+  return playerEvents[_consumeInt()];
 }
 
 void _parseCollectables() {

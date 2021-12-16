@@ -12,14 +12,12 @@ import 'classes/Inventory.dart';
 import 'classes/Player.dart';
 import 'classes/Weapon.dart';
 import 'common/AbilityMode.dart';
-import 'common/AbilityType.dart';
 import 'common/CharacterAction.dart';
 import 'common/CharacterState.dart';
 import 'common/CharacterType.dart';
 import 'common/ClientRequest.dart';
 import 'common/GameError.dart';
-import 'common/GameEventType.dart';
-import 'common/PlayerEvents.dart';
+import 'common/PlayerEvent.dart';
 import 'common/ServerResponse.dart';
 import 'common/WeaponType.dart';
 import 'common/enums/Direction.dart';
@@ -398,7 +396,7 @@ void main() {
           ability.level++;
           player.abilityPoints--;
           player.abilitiesDirty = true;
-          player.dispatch(PlayerEventType.Skill_Upgraded);
+          player.dispatch(PlayerEvent.Skill_Upgraded);
           break;
 
         case ClientRequest.DeselectAbility:

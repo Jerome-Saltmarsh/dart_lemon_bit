@@ -1,7 +1,7 @@
 import '../common/AbilityType.dart';
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
-import '../common/PlayerEvents.dart';
+import '../common/PlayerEvent.dart';
 import '../common/Quests.dart';
 import '../constants/no_squad.dart';
 import '../common/Tile.dart';
@@ -60,9 +60,9 @@ class Player extends Character {
   Ability ability4 = Ability(type: AbilityType.None, level: 0, magicCost: 0, range: 0, cooldown: 0);
   bool abilitiesDirty = true;
 
-  final List<PlayerEventType> events = [];
+  final List<PlayerEvent> events = [];
 
-  void dispatch(PlayerEventType event){
+  void dispatch(PlayerEvent event){
     events.add(event);
   }
 
