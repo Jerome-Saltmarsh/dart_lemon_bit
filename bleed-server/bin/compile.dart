@@ -130,6 +130,7 @@ void compileWeapon(StringBuffer buffer, Weapon weapon) {
 }
 
 void _compilePlayerAbilities(StringBuffer buffer, Player player) {
+  print("_compilePlayerAbilities()");
   _write(buffer, ServerResponse.Player_Abilities.index);
   _compileAbility(buffer, player.ability1);
   _compileAbility(buffer, player.ability2);
@@ -184,14 +185,12 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.maxMagic);
   _writeInt(buffer, player.attackRange);
 
-  _compilePlayerEvents(buffer, player);
-
   Character? aimTarget = player.aimTarget;
-  if (aimTarget != null){
+  if (aimTarget != null) {
     _write(buffer, ServerResponse.Player_Attack_Target.index);
     _writeInt(buffer, aimTarget.x);
     _writeInt(buffer, aimTarget.y);
-  }else{
+  } else {
     _write(buffer, ServerResponse.Player_Attack_Target.index);
     _writeInt(buffer, 0);
     _writeInt(buffer, 0);
@@ -206,6 +205,8 @@ void compilePlayer(StringBuffer buffer, Player player) {
     player.weaponsDirty = false;
     _write(buffer, ServerResponse.Weapons_Dirty.index);
   }
+
+  _compilePlayerEvents(buffer, player);
 }
 
 void _compilePlayerEvents(StringBuffer buffer, Player player) {
@@ -382,6 +383,11 @@ void _writeInt(StringBuffer buffer, double value) {
 }
 
 void _write(StringBuffer buffer, dynamic value) {
+  if (value is num) {
+    if (value.isNaN) {
+      throw Exception();
+    }
+  }
   buffer.write(value);
   buffer.write(_space);
 }

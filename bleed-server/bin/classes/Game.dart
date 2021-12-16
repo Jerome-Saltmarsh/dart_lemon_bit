@@ -1820,24 +1820,23 @@ void selectCharacterType(Player player, CharacterType value) {
       player.attackRange = 210;
       player.damage = 2;
       player.maxMagic = 100;
-      player.magic = player.maxMagic;
       player.ability1 = Ability(
           type: AbilityType.Split_Arrow,
           level: 0,
-          magicCost: 10,
+          magicCost: 40,
           range: 200,
           cooldown: 10);
       player.ability2 = Dash(player);
       player.ability3 = Ability(
           type: AbilityType.Long_Shot,
           level: 0,
-          magicCost: 10,
+          magicCost: 40,
           range: 250,
           cooldown: 15);
       player.ability4 = Ability(
           type: AbilityType.Fireball,
           level: 0,
-          magicCost: 10,
+          magicCost: 70,
           range: 200,
           cooldown: 25);
       break;

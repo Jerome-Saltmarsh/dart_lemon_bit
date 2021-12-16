@@ -47,7 +47,7 @@ class Player extends Character {
     _magic = clampInt(value, 0, maxMagic);
   }
 
-  int maxMagic = 0;
+  int maxMagic = 100;
   int magicRegen = 1;
   int healthRegen = 1;
 

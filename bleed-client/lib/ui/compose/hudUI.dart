@@ -801,7 +801,7 @@ class MyCustomClipper extends CustomClipper<Path> {
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
-1
+
 Widget buildAbilities() {
   return Container(
     child: Row(

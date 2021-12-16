@@ -37,7 +37,7 @@ class Dash extends Ability {
       : super(
             type: AbilityType.Dash,
             level: 0,
-            magicCost: 10,
+            magicCost: 30,
             range: 0,
             cooldown: 15);
 

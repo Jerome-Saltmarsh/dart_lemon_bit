@@ -395,6 +395,7 @@ void main() {
           Ability ability = player.getAbilityByIndex(upgradeIndex);
           ability.level++;
           player.abilityPoints--;
+          print("player.abilitiesDirty = true;");
           player.abilitiesDirty = true;
           player.dispatch(PlayerEvent.Skill_Upgraded);
           break;
