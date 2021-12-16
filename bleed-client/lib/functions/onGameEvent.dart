@@ -126,7 +126,7 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
       break;
     case GameEventType.Teleported:
       emitPixelExplosion(x.toDouble(), y.toDouble());
-      playMagicalSwoosh18(x, y);
+      playAudioMagicalSwoosh18(x, y);
       break;
     case GameEventType.EnemyTargeted:
       emitPixelExplosion(x.toDouble(), y.toDouble());

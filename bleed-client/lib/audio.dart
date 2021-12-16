@@ -97,8 +97,16 @@ void playAudioBuff1(double x, double y) {
   _playAudio('buff-1.mp3', x, y);
 }
 
-void playMagicalSwoosh18(double x, double y) {
+void playAudioMagicalSwoosh18(double x, double y) {
   _playAudio('magical-swoosh-18.mp3', x, y);
+}
+
+final _PlayAudio playAudio = _PlayAudio();
+
+class _PlayAudio {
+  void unlock(double x, double y) {
+    _playAudio('unlock.mp3', x, y);
+  }
 }
 
 void playAudioCollectStar(double x, double y) {

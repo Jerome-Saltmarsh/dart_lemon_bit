@@ -19,6 +19,7 @@ import 'common/CharacterType.dart';
 import 'common/ClientRequest.dart';
 import 'common/GameError.dart';
 import 'common/GameEventType.dart';
+import 'common/PlayerEvents.dart';
 import 'common/ServerResponse.dart';
 import 'common/WeaponType.dart';
 import 'common/enums/Direction.dart';
@@ -397,6 +398,7 @@ void main() {
           ability.level++;
           player.abilityPoints--;
           player.abilitiesDirty = true;
+          player.events.add(PlayerEvent(PlayerEventType.Skill_Upgraded, 1));
           break;
 
         case ClientRequest.DeselectAbility:

@@ -18,7 +18,8 @@ enum PlayerEventType {
   ClipsChanged_Shotgun,
   ClipsChanged_SniperRifle,
   ClipsChanged_AssaultRifle,
-  Level_Increased
+  Level_Increased,
+  Skill_Upgraded,
 }
 
 class PlayerEvent {

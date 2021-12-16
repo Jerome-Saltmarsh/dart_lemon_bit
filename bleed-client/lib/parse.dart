@@ -428,6 +428,9 @@ void _parsePlayerEvents() {
         emitPixelExplosion(game.player.x, game.player.y, amount: 10);
         playAudioBuff1(game.player.x, game.player.y);
         break;
+      case PlayerEventType.Skill_Upgraded:
+        playAudio.unlock(game.player.x, game.player.y);
+        break;
     }
   }
 }
