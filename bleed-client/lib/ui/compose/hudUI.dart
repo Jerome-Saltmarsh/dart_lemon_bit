@@ -801,32 +801,28 @@ class MyCustomClipper extends CustomClipper<Path> {
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
 }
-
+1
 Widget buildAbilities() {
-  return WatchBuilder(game.player.ability, (AbilityType ability) {
-    print("buildAbilities($ability)");
-    return Container(
-      child: Row(
-        crossAxisAlignment: cross.end,
-        children: [
-          buildAbility(game.player.ability1, 1, ability),
-          width4,
-          buildAbility(game.player.ability2, 2, ability),
-          width4,
-          buildAbility(game.player.ability3, 3, ability),
-          width4,
-          buildAbility(game.player.ability4, 4, ability),
-        ],
-      ),
-    );
-  });
+  return Container(
+    child: Row(
+      crossAxisAlignment: cross.end,
+      children: [
+        buildAbility(game.player.ability1),
+        width4,
+        buildAbility(game.player.ability2),
+        width4,
+        buildAbility(game.player.ability3),
+        width4,
+        buildAbility(game.player.ability4),
+      ],
+    ),
+  );
+
 }
 
-Widget buildAbility(
-    Ability ability, int index, AbilityType selectedAbilityType) {
+Widget buildAbility(Ability ability) {
   return WatchBuilder(ability.type, (AbilityType type) {
     if (type == AbilityType.None) return emptyContainer;
-    bool selected = type == selectedAbilityType;
 
     return Column(
       mainAxisAlignment: main.end,
@@ -836,12 +832,12 @@ Widget buildAbility(
 
           return onPressed(
             callback: () {
-              sendRequest.upgradeAbility(index);
+              sendRequest.upgradeAbility(ability.index);
             },
             child: mouseOver(builder: (BuildContext context, bool mouseOver) {
               return border(
                 child: text("+", fontSize: 25),
-                color: selected ? Colors.white : Colors.white54,
+                color: Colors.white,
                 fillColor: mouseOver ? Colors.white54 : Colors.white12,
                 padding: EdgeInsets.symmetric(horizontal: 5),
               );
@@ -917,31 +913,33 @@ Widget buildAbility(
                   );
                 }
 
-                return onPressed(
-                  hint: abilityTypeToString(ability.type.value),
-                  callback: () {
-                    sendRequestSelectAbility(index);
-                  },
-                  child: Stack(
-                    children: [
-                      mouseOver(
-                          builder: (BuildContext context, bool mouseOver) {
-                        return buildDecorationImage(
-                            image: mapAbilityTypeToDecorationImage[type],
-                            width: 50,
-                            height: 50,
-                            borderColor: mouseOver || selected
-                                ? Colors.white
-                                : Colors.green,
-                            borderWidth: 3);
-                      }),
-                      Container(
-                          color: Colors.black54,
-                          padding: padding4,
-                          child: text(level)),
-                    ],
-                  ),
-                );
+                return WatchBuilder(ability.selected, (bool selected){
+                  return onPressed(
+                    hint: abilityTypeToString(ability.type.value),
+                    callback: () {
+                      sendRequestSelectAbility(ability.index);
+                    },
+                    child: Stack(
+                      children: [
+                        mouseOver(
+                            builder: (BuildContext context, bool mouseOver) {
+                              return buildDecorationImage(
+                                  image: mapAbilityTypeToDecorationImage[type],
+                                  width: 50,
+                                  height: 50,
+                                  borderColor: mouseOver || selected
+                                      ? Colors.white
+                                      : Colors.green,
+                                  borderWidth: 3);
+                            }),
+                        Container(
+                            color: Colors.black54,
+                            padding: padding4,
+                            child: text(level)),
+                      ],
+                    ),
+                  );
+                });
               });
             });
           });

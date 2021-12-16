@@ -86,10 +86,10 @@ class _Player {
   final Watch<double> magic = Watch(0);
   final Watch<double> maxMagic = Watch(0);
 
-  final Ability ability1 = Ability();
-  final Ability ability2 = Ability();
-  final Ability ability3 = Ability();
-  final Ability ability4 = Ability();
+  final Ability ability1 = Ability(1);
+  final Ability ability2 = Ability(2);
+  final Ability ability3 = Ability(3);
+  final Ability ability4 = Ability(4);
 
   _Player(){
     magic.onChanged((double value) {
@@ -97,6 +97,13 @@ class _Player {
       ability2.canAfford.value = value >= ability2.magicCost.value;
       ability3.canAfford.value = value >= ability3.magicCost.value;
       ability4.canAfford.value = value >= ability4.magicCost.value;
+    });
+
+    ability.onChanged((AbilityType abilityType) {
+      ability1.selected.value = ability1.type.value == abilityType;
+      ability2.selected.value = ability2.type.value == abilityType;
+      ability3.selected.value = ability3.type.value == abilityType;
+      ability4.selected.value = ability4.type.value == abilityType;
     });
   }
 
