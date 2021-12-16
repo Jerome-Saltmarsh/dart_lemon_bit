@@ -322,7 +322,14 @@ extension GameFunctions on Game {
       player.level++;
       player.abilityPoints++;
       player.events.add(PlayerEvent.Level_Up);
-      if (player.level >= maxPlayerLevel) return;
+      player.maxHealth += settings.levelUpHealthIncrease;
+      player.maxMagic += settings.levelUpMagicIncrease;
+      player.health = player.maxHealth;
+      player.magic = player.maxMagic;
+      if (player.level >= maxPlayerLevel) {
+        player.experience = 0;
+        return;
+      }
     }
   }
 

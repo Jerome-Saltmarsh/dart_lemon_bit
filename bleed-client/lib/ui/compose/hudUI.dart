@@ -439,6 +439,21 @@ Widget buildBottomCenter() {
       ));
 }
 
+Widget buildSelectGameDialog(){
+  return WatchBuilder(hud.joinGameVisible, (bool visible){
+        if (!visible) return emptyContainer;
+        return dialog(
+          child: Column(
+            children: [
+              text("OPEN WORLD"),
+              text("MOBA"),
+              text("DEFENSE"),
+            ],
+          )
+        );
+  });
+}
+
 Widget buildHud() {
   return WatchBuilder(game.player.characterType, (CharacterType value) {
     if (value == CharacterType.None) {
@@ -449,7 +464,7 @@ Widget buildHud() {
       return Stack(
         children: [
           buildTextBox(),
-          // if (alive) buildBottomLeft(),
+          buildSelectGameDialog(),
           if (alive) buildBottomRight(),
           buildTopLeft(),
           if (alive) buildBottomCenter(),
@@ -543,6 +558,10 @@ Widget buildToggleDebug() {
   return button("Debug", toggleDebugMode);
 }
 
+Widget buildSelectGameDialogToggle() {
+  return button("Join", hud.joinGameVisible.toggle);
+}
+
 void toggleDebugMode() {
   game.settings.compilePaths = !game.settings.compilePaths;
   sendRequestSetCompilePaths(game.settings.compilePaths);
@@ -558,6 +577,7 @@ Widget buildMenu() {
         if (game.settings.developMode) buildToggleDebug(),
         if (game.settings.developMode) width8,
         if (game.settings.developMode) _buildToggleEdit(),
+        buildSelectGameDialogToggle(),
         button("Change Hero", () {
           sendClientRequest(ClientRequest.Reset_Character_Type);
         }),

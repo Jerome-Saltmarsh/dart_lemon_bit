@@ -118,9 +118,9 @@ class Settings {
   final int grenadeDuration = 800;
   final double grenadeSpeed = 18;
   final double grenadeFriction = 0.98;
-
   final double minStamina = 60;
-
+  final int levelUpHealthIncrease = 5;
+  final int levelUpMagicIncrease = 5;
 }
 
 class _Duration {
