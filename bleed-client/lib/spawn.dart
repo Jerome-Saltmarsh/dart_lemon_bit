@@ -14,8 +14,28 @@ import 'functions/spawnBulletHole.dart';
 
 int get shrapnelCount => randomInt(4, 15);
 
+Effect getEffect(){
+  for(Effect effect in game.effects){
+    if (!effect.enabled) continue;
+    return effect;
+  }
+  Effect effect = Effect();
+  game.effects.add(effect);
+  return effect;
+}
+
+void spawnEffect({double x, double y, EffectType type, int duration}){
+  Effect effect = getEffect();
+  effect.x = x;
+  effect.y = y;
+  effect.type = type;
+  effect.maxDuration = duration;
+  effect.duration = 0;
+  effect.enabled = true;
+}
+
 void spawnExplosion(double x, double y) {
-  game.explosions.add(Explosion(x: x, y: y, type: ExplosionType.Explosion));
+  spawnEffect(x: x, y: y, type: EffectType.Explosion, duration: 30);
   playAudioExplosion(x, y);
   spawnBulletHole(x, y);
   for (int i = 0; i < randomInt(4, 10); i++) {
@@ -31,7 +51,7 @@ void spawnExplosion(double x, double y) {
 }
 
 void spawnFreezeCircle({double x, double y}){
-  game.explosions.add(Explosion(x: x, y: y, type: ExplosionType.FreezeCircle));
+  spawnEffect(x: x, y: y, type: EffectType.FreezeCircle, duration: 30);
 }
 
 void spawnFloatingText(double x, double y, dynamic value) {

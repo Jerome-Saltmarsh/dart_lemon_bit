@@ -21,7 +21,7 @@ import 'package:lemon_watch/watch.dart';
 final _Game game = _Game();
 
 class _Game {
-  final List<Explosion> explosions = [];
+  final List<Effect> effects = [];
   final _Settings settings = _Settings();
   final _Player player = _Player();
   int serverVersion;

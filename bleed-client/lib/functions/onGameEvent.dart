@@ -122,7 +122,7 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
       spawnExplosion(x, y);
       break;
     case GameEventType.FreezeCircle:
-      spawnFreezeCircle(x: x, y: y);
+      spawnFreezeCircle(x: x, y: y,);
       break;
     case GameEventType.Teleported:
       emitPixelExplosion(x, y);

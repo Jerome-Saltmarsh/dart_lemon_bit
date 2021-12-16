@@ -1,16 +1,20 @@
 
 const explosionMaxDuration = 30;
 
-enum ExplosionType {
+enum EffectType {
   Explosion,
   FreezeCircle,
 }
 
-class Explosion {
+class Effect {
   double x;
   double y;
   int duration = 0;
-  ExplosionType type;
+  int maxDuration;
+  EffectType type;
+  bool enabled = true;
 
-  Explosion({this.x, this.y, this.type});
+  Effect({this.x, this.y, this.type, int duration}){
+    maxDuration = duration;
+  }
 }

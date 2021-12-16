@@ -15,6 +15,7 @@ import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
@@ -74,24 +75,18 @@ void renderCanvasPlay() {
     applyProjectileLighting();
     applyNpcLightEmission(game.interactableNpcs);
 
-    for (int i = 0; i < game.explosions.length; i++) {
-      Explosion explosion = game.explosions[i];
-      if (explosion.duration++ > explosionMaxDuration) {
-        game.explosions.removeAt(i);
-        i--;
-        break;
-      }
-
-      double p = explosion.duration / explosionMaxDuration;
+    for (Effect effect in game.effects) {
+      if (!effect.enabled) continue;
+      double p = effect.duration / effect.maxDuration;
       if (p < 0.33) {
-        emitLightHigh(dynamicShading, explosion.x, explosion.y);
+        emitLightHigh(dynamicShading, effect.x, effect.y);
         break;
       }
       if (p < 0.66) {
-        emitLightMedium(dynamicShading, explosion.x, explosion.y);
+        emitLightMedium(dynamicShading, effect.x, effect.y);
         break;
       }
-      emitLightLow(dynamicShading, explosion.x, explosion.y);
+      emitLightLow(dynamicShading, effect.x, effect.y);
     }
   }
 
@@ -105,9 +100,23 @@ void renderCanvasPlay() {
   drawSprites();
 
 
-  for (Explosion explosion in game.explosions) {
-    if (explosion.type == ExplosionType.FreezeCircle) {
-      drawCircle(explosion.x, explosion.y, 35, Colors.blue);
+  for (Effect effect in game.effects) {
+    if (!effect.enabled) continue;
+    if (effect.duration++ > effect.maxDuration) {
+      effect.enabled = false;
+      break;
+    }
+
+    if (effect.type == EffectType.FreezeCircle) {
+      double p = effect.duration / effect.maxDuration;
+      double maxRadius = 75;
+      drawCircleOutline(
+          sides: 8,
+          radius: maxRadius * p,
+          x: effect.x,
+          y: effect.y,
+          color: colours.blue
+      );
     }
   }
 
