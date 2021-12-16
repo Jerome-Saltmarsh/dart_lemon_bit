@@ -119,17 +119,20 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
       emitPixelExplosion(x, y);
       break;
     case GameEventType.Explosion:
-      spawnExplosion(x.toDouble(), y.toDouble());
+      spawnExplosion(x, y);
       break;
     case GameEventType.FreezeCircle:
-      spawnFreezeCircle(x: x.toDouble(), y: y.toDouble());
+      spawnFreezeCircle(x: x, y: y);
       break;
     case GameEventType.Teleported:
-      emitPixelExplosion(x.toDouble(), y.toDouble());
+      emitPixelExplosion(x, y);
       playAudioMagicalSwoosh18(x, y);
       break;
     case GameEventType.EnemyTargeted:
-      emitPixelExplosion(x.toDouble(), y.toDouble());
+      emitPixelExplosion(x, y);
+      break;
+    case GameEventType.Arrow_Fired:
+      playAudio.arrowFlyingPast6(x, y);
       break;
     case GameEventType.Clip_Empty:
       playAudioClipEmpty(x, y);

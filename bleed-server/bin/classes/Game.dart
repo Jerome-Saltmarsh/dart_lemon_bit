@@ -796,11 +796,11 @@ extension GameFunctions on Game {
       case CharacterState.Striking:
         // @on player striking
         // @on character striking
+        if (player.type != CharacterType.Human) return;
+
         if (player.stateDuration == 10) {
           dispatch(GameEventType.Knife_Strike, player.x, player.y);
         }
-
-        if (player.type != CharacterType.Human) return;
 
         if (player.stateDuration == 8) {
           double frontX =
@@ -1264,6 +1264,7 @@ extension GameFunctions on Game {
   void casteSlowingCircle(Character character, double x, double y) {}
 
   Projectile spawnArrow(Character character, {required int damage}) {
+    dispatch(GameEventType.Arrow_Fired, character.x, character.y);
     return spawnProjectile(
         character: character,
         accuracy: 0,

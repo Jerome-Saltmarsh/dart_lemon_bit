@@ -111,6 +111,10 @@ class _PlayAudio {
   void buff11(double x, double y) {
     _playAudio('buff-11.mp3', x, y);
   }
+
+  void arrowFlyingPast6(double x, double y) {
+    _playAudio('arrow-flying-past-6.mp3', x, y);
+  }
 }
 
 void playAudioCollectStar(double x, double y) {
