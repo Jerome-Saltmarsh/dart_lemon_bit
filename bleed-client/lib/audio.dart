@@ -45,7 +45,7 @@ void playAudioCockShotgun(double x, double y) {
   _playAudio('cock-shotgun-03.mp3', x, y);
 }
 
-void playPlayerDeathAudio(double x, double y) {
+void playAudioPlayerDeath(double x, double y) {
   _playRandom(_maleScreams, x, y);
 }
 
@@ -114,6 +114,10 @@ class _PlayAudio {
 
   void arrowFlyingPast6(double x, double y) {
     _playAudio('arrow-flying-past-6.mp3', x, y);
+  }
+
+  void sciFiBlaster1(double x, double y) {
+    _playAudio('sci-fi-blaster-1.mp3', x, y);
   }
 }
 

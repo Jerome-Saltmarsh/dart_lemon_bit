@@ -26,4 +26,5 @@ enum GameEventType {
   FreezeCircle,
   Teleported,
   EnemyTargeted,
+  Blue_Orb_Fired,
 }

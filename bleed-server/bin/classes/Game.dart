@@ -1251,6 +1251,8 @@ extension GameFunctions on Game {
   }
 
   Projectile spawnBlueOrb(Character character) {
+
+    dispatch(GameEventType.Blue_Orb_Fired, character.x, character.y);
     return spawnProjectile(
         character: character,
         accuracy: 0,

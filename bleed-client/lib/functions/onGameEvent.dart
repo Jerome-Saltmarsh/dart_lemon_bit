@@ -115,7 +115,7 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
       }
       break;
     case GameEventType.Player_Death:
-      playPlayerDeathAudio(x, y);
+      // playAudioPlayerDeath(x, y);
       emitPixelExplosion(x, y);
       break;
     case GameEventType.Explosion:
@@ -127,6 +127,9 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
     case GameEventType.Teleported:
       emitPixelExplosion(x, y);
       playAudioMagicalSwoosh18(x, y);
+      break;
+    case GameEventType.Blue_Orb_Fired:
+      playAudio.sciFiBlaster1(x, y);
       break;
     case GameEventType.EnemyTargeted:
       emitPixelExplosion(x, y);
