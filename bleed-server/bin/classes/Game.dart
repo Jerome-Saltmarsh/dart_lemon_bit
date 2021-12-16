@@ -321,7 +321,7 @@ extension GameFunctions on Game {
       player.experience -= levelExperience[player.level];
       player.level++;
       player.abilityPoints++;
-      player.events.add(PlayerEvent(PlayerEventType.Level_Increased, 1));
+      player.events.add(PlayerEventType.Level_Increased);
       if (player.level >= maxPlayerLevel) return;
     }
   }

@@ -398,7 +398,7 @@ void main() {
           ability.level++;
           player.abilityPoints--;
           player.abilitiesDirty = true;
-          player.events.add(PlayerEvent(PlayerEventType.Skill_Upgraded, 1));
+          player.dispatch(PlayerEventType.Skill_Upgraded);
           break;
 
         case ClientRequest.DeselectAbility:

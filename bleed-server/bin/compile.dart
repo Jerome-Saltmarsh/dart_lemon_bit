@@ -209,23 +209,13 @@ void compilePlayer(StringBuffer buffer, Player player) {
 }
 
 void _compilePlayerEvents(StringBuffer buffer, Player player) {
-  int total = 0;
-
-  for (PlayerEvent event in player.events) {
-    if (event.sent) continue;
-    total++;
-  }
-
-  if (total == 0) return;
-
+  if (player.events.isEmpty) return;
   _write(buffer, ServerResponse.Player_Events.index);
-  _write(buffer, total);
-  for (PlayerEvent event in player.events) {
-    if (event.sent) continue;
-    event.sent = true;
-    _write(buffer, event.type.index);
-    _write(buffer, event.value);
+  _write(buffer, player.events.length);
+  for (PlayerEventType event in player.events) {
+    _write(buffer, event.index);
   }
+  player.events.clear();
 }
 
 void compileScore(StringBuffer buffer, List<Player> players) {

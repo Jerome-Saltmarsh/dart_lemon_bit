@@ -60,7 +60,11 @@ class Player extends Character {
   Ability ability4 = Ability(type: AbilityType.None, level: 0, magicCost: 0, range: 0, cooldown: 0);
   bool abilitiesDirty = true;
 
-  final List<PlayerEvent> events = [];
+  final List<PlayerEventType> events = [];
+
+  void dispatch(PlayerEventType event){
+    events.add(event);
+  }
 
   Ability getAbilityByIndex(int index){
     switch(index){
@@ -75,17 +79,6 @@ class Player extends Character {
       default:
         throw Exception("could not get ability at index $index");
     }
-  }
-
-  void addEvent(PlayerEventType type, int value) {
-    for (PlayerEvent event in events) {
-      if (event.sent) continue;
-      event.sent = false;
-      event.type = type;
-      event.value = value;
-      return;
-    }
-    events.add(PlayerEvent(type, value));
   }
 
   Player({

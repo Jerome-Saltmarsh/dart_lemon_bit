@@ -418,9 +418,8 @@ CharacterType _consumeCharacterType() {
 void _parsePlayerEvents() {
   int total = _consumeInt();
   for (int i = 0; i < total; i++) {
-    PlayerEventType playerEvent = playerEventTypes[_consumeInt()];
-    int value = _consumeInt();
-    switch (playerEvent) {
+    PlayerEventType event = _consumePlayerEventType();
+    switch (event) {
       case PlayerEventType.Acquired_Handgun:
         playAudioAcquireItem(game.player.x, game.player.y);
         break;
@@ -433,6 +432,10 @@ void _parsePlayerEvents() {
         break;
     }
   }
+}
+
+PlayerEventType _consumePlayerEventType(){
+  return playerEventTypes[_consumeInt()];
 }
 
 void _parseCollectables() {
