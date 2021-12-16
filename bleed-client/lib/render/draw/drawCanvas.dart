@@ -111,7 +111,7 @@ void renderCanvasPlay() {
       double p = effect.duration / effect.maxDuration;
       double maxRadius = 75;
       drawCircleOutline(
-          sides: 8,
+          sides: 16,
           radius: maxRadius * p,
           x: effect.x,
           y: effect.y,
