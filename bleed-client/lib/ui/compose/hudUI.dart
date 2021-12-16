@@ -447,8 +447,14 @@ Widget buildSelectGameDialog(){
           child: Column(
             crossAxisAlignment: cross.stretch,
             children: [
-              text("Select Game"),
-              height8,
+              Row(
+                mainAxisAlignment: main.apart,
+                children: [
+                  text("Select Game"),
+                  text("Close", onPressed: hud.joinGameVisible.toggle, decoration: TextDecoration.underline),
+                ],
+              ),
+              height16,
               button("OPEN WORLD", (){}),
               height8,
               button("MOBA", (){}),
