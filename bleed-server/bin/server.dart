@@ -25,6 +25,7 @@ import 'common/version.dart';
 import 'compile.dart';
 import 'functions/loadScenes.dart';
 import 'functions/withinRadius.dart';
+import 'games/moba.dart';
 import 'games/world.dart';
 import 'settings.dart';
 import 'update.dart';
@@ -41,6 +42,8 @@ final int clientRequestsLength = clientRequests.length;
 Player? findPlayerByUuid(String uuid) {
   return playerMap[uuid];
 }
+
+List<Moba> mobaGames = [];
 
 void main() {
   print('Bleed Game Server Starting');
@@ -69,15 +72,15 @@ void main() {
       sendToClient(_buffer.toString());
     }
 
-    void joinGame(Game game) {
+    void joinGameOpenWorld() {
       _buffer.clear();
       Player player = spawnPlayerInTown();
       compilePlayer(_buffer, player);
       _buffer.write(
-          '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${game.id} ${player.squad} ');
-      _buffer.write(game.compiledTiles);
-      _buffer.write(game.compiledEnvironmentObjects);
-      _buffer.write(game.compiled);
+          '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.squad} ');
+      _buffer.write(player.game.compiledTiles);
+      _buffer.write(player.game.compiledEnvironmentObjects);
+      _buffer.write(player.game.compiled);
       sendToClient(_buffer.toString());
     }
 
@@ -267,7 +270,14 @@ void main() {
           return;
 
         case ClientRequest.Join:
-          joinGame(world.town);
+          joinGameOpenWorld();
+          break;
+
+        case ClientRequest.Join_Moba:
+          if (mobaGames.isEmpty){
+
+          }
+
           break;
 
         case ClientRequest.Ping:
