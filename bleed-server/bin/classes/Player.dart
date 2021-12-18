@@ -12,7 +12,6 @@ import '../utils.dart';
 import 'Ability.dart';
 import 'Character.dart';
 import 'Game.dart';
-import 'Inventory.dart';
 import 'Weapon.dart';
 
 
@@ -20,7 +19,6 @@ class Player extends Character {
   final String uuid = generateUUID();
   String name = generateName();
   int lastUpdateFrame = 0;
-  Inventory inventory;
   int grenades;
   int lives;
   int frameOfDeath = -1;
@@ -84,7 +82,6 @@ class Player extends Character {
   Player({
     required double x,
     required double y,
-    required this.inventory,
     required this.game,
     this.grenades = 0,
     this.lives = 0,

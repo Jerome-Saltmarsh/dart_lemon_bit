@@ -54,7 +54,6 @@ import 'GameEvent.dart';
 import 'GameObject.dart';
 import 'Grenade.dart';
 import 'InteractableObject.dart';
-import 'Inventory.dart';
 import 'Item.dart';
 import 'Npc.dart';
 import 'Player.dart';
@@ -250,9 +249,6 @@ extension GameFunctions on Game {
 
         switch (collectables[i].type) {
           case CollectableType.Handgun_Ammo:
-            if (!player.inventory.acquire(InventoryItemType.HandgunClip)) {
-              continue;
-            }
             dispatch(GameEventType.Item_Acquired, collectables[i].x,
                 collectables[i].y, 0, 0);
             break;

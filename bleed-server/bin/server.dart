@@ -8,7 +8,6 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 import 'classes/Ability.dart';
 import 'classes/Character.dart';
 import 'classes/Game.dart';
-import 'classes/Inventory.dart';
 import 'classes/Player.dart';
 import 'classes/Weapon.dart';
 import 'common/AbilityMode.dart';
@@ -275,7 +274,8 @@ void main() {
 
         case ClientRequest.Join_Moba:
           if (mobaGames.isEmpty){
-
+              final Moba moba = Moba();
+              // final Player player = Player();
           }
 
           break;
@@ -668,7 +668,6 @@ Player spawnPlayerInTown() {
       game: world.town,
       x: 0,
       y: 1750,
-      inventory: Inventory(0, 0, []),
       squad: 1,
       weapons: [
         Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0),
