@@ -85,6 +85,18 @@ void sendRequestJoinGame() {
   send('${ClientRequest.Join.index}');
 }
 
+void sendRequestJoinGameMoba() {
+  send('${ClientRequest.Join_Moba.index}');
+}
+
+void sendRequestJoinGameOpenWorld() {
+  send('${ClientRequest.Join.index}');
+}
+
+void sendRequestJoinGameDefense() {
+  send('${ClientRequest.Join_Defense.index}');
+}
+
 void sendRequestAcquireAbility(WeaponType type) {
   send('${ClientRequest.AcquireAbility.index} $session ${type.index}');
 }

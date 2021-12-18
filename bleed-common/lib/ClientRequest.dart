@@ -1,5 +1,5 @@
 enum ClientRequest {
-  Join,
+  Join, // Open World
   Update,
   Revive,
   Equip,
@@ -21,4 +21,6 @@ enum ClientRequest {
   DeselectAbility,
   Upgrade_Ability,
   Reset_Character_Type,
+  Join_Moba,
+  Join_Defense
 }

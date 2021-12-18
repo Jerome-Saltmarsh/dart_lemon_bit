@@ -455,11 +455,11 @@ Widget buildSelectGameDialog(){
                 ],
               ),
               height16,
-              button("OPEN WORLD", (){}),
+              button("OPEN WORLD", sendRequestJoinGameOpenWorld),
               height8,
-              button("MOBA", (){}),
+              button("MOBA", sendRequestJoinGameMoba),
               height8,
-              button("WAVE DEFENSE", (){}),
+              button("WAVE DEFENSE", sendRequestJoinGameDefense),
             ],
           )
         );
