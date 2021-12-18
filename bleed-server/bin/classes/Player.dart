@@ -85,13 +85,11 @@ class Player extends Character {
     required this.game,
     this.grenades = 0,
     this.lives = 0,
-    required List<Weapon> weapons,
     int squad = noSquad,
   }) : super(
             type: CharacterType.Human,
             x: x,
             y: y,
-            weapons: weapons,
             health: settings.health.player,
             speed: settings.playerSpeed,
             squad: squad);

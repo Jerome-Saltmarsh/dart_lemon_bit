@@ -377,7 +377,6 @@ void _parseTiles() {
 void _parsePlayer() {
   game.player.x = _consumeDouble();
   game.player.y = _consumeDouble();
-  game.player.weapon.value = _consumeWeaponType();
   game.player.health.value = _consumeDouble();
   game.player.maxHealth = _consumeDouble();
 
@@ -387,8 +386,6 @@ void _parsePlayer() {
     game.player.grenades = grenades;
   }
 
-  game.player.equippedRounds.value = _consumeIntUnsafe();
-  game.player.equippedCapacity.value = _consumeIntUnsafe();
   game.player.state.value = _consumeCharacterState();
   game.player.tile = _consumeTile();
   game.player.experience.value = _consumeInt();
@@ -683,7 +680,6 @@ void _consumeHuman(Character character) {
   character.x = _consumeDouble();
   character.y = _consumeDouble();
   character.frame = _consumeInt();
-  character.weapon = _consumeWeaponType();
   character.squad = _consumeInt();
   character.name = _consumeString();
 

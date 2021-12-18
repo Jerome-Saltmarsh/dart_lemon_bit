@@ -1,4 +1,3 @@
-
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
 import '../common/classes/Vector2.dart';
@@ -29,10 +28,11 @@ class Character extends GameObject implements HasSquad {
   int frozenDuration = 0;
   double attackRange = 50;
   int damage = 1;
-  Character? attackTarget; // the character that was highlighted when the player clicked
+  Character?
+      attackTarget; // the character that was highlighted when the player clicked
 
   double get speed {
-    if (frozen){
+    if (frozen) {
       return (_speed + speedModifier) * 0.5;
     }
     return (_speed + speedModifier);
@@ -40,7 +40,6 @@ class Character extends GameObject implements HasSquad {
 
   double speedModifier = 0;
   bool invincible = false;
-
 
   int squad;
   List<Weapon> weapons = [];
@@ -51,6 +50,7 @@ class Character extends GameObject implements HasSquad {
   late int _health;
 
   int get health => _health;
+
   Weapon get weapon => weapons[equippedIndex];
 
   set health(int value) {
@@ -79,14 +79,16 @@ class Character extends GameObject implements HasSquad {
     required this.type,
     required double x,
     required double y,
-    required this.weapons,
     required int health,
     required double speed,
     this.squad = noSquad,
+    List<Weapon>? weapons,
   }) : super(x, y, radius: settings.radius.character) {
     maxHealth = health;
     _health = health;
     _speed = speed;
+
+    this.weapons = weapons ?? [];
   }
 
   @override

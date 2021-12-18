@@ -14,6 +14,10 @@ int time = 0;
 
 Map<String, Player> playerMap = {};
 
+void registerPlayer(Player player){
+  playerMap[player.uuid] = player;
+}
+
 class World {
   late Game town;
   late Game tavern;

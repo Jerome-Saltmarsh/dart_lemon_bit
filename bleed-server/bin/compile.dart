@@ -32,8 +32,6 @@ final int _indexNpcMessage = ServerResponse.NpcMessage.index;
 const String _space = ' ';
 const String _semiColon = '; ';
 const String _comma = ', ';
-const int _1 = 1;
-const int _0 = 0;
 
 void compileGame(Game game) {
   game.buffer.clear();
@@ -149,12 +147,9 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, _playerIndex);
   _writeInt(buffer, player.x);
   _writeInt(buffer, player.y);
-  _write(buffer, player.weapon.type.index);
   _write(buffer, player.health);
   _write(buffer, player.maxHealth);
   _write(buffer, player.grenades);
-  _write(buffer, player.weapon.rounds);
-  _write(buffer, player.weapon.capacity);
   _write(buffer, player.state.index);
   _write(buffer, player.currentTile.index);
   _write(buffer, player.experience);
@@ -340,7 +335,6 @@ void _compilePlayer(StringBuffer buffer, Player player) {
   _writeInt(buffer, player.x);
   _writeInt(buffer, player.y);
   _write(buffer, player.stateFrameCount);
-  _write(buffer, player.weapon.type.index);
   _write(buffer, player.squad);
   _write(buffer, player.name);
   _write(buffer, player.text);

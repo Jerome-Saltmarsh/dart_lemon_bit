@@ -164,7 +164,8 @@ void main() {
             double mouseX = double.parse(arguments[4]);
             double mouseY = double.parse(arguments[5]);
 
-            double mouseTop = mouseY - settings.radius.cursor - settings.radius.character;
+            double mouseTop =
+                mouseY - settings.radius.cursor - settings.radius.character;
             double mouseBottom =
                 mouseY + settings.radius.cursor + settings.radius.character;
             playerSetAbilityTarget(player, mouseX, mouseY);
@@ -208,11 +209,8 @@ void main() {
                 player.attackTarget = player.aimTarget;
 
                 if (ability == null) {
-                  if (
-                    player.type == CharacterType.Swordsman
-                    ||
-                    player.attackTarget != null
-                  ) {
+                  if (player.type == CharacterType.Swordsman ||
+                      player.attackTarget != null) {
                     characterAimAt(player, mouseX, mouseY);
                     game.setCharacterState(player, CharacterState.Striking);
                   }
@@ -229,11 +227,11 @@ void main() {
                   break;
                 }
 
-                switch(ability.mode){
+                switch (ability.mode) {
                   case AbilityMode.None:
                     return;
                   case AbilityMode.Targeted:
-                    if (player.attackTarget == null){
+                    if (player.attackTarget == null) {
                       return;
                     }
                     break;
@@ -273,9 +271,16 @@ void main() {
           break;
 
         case ClientRequest.Join_Moba:
-          if (mobaGames.isEmpty){
-              final Moba moba = Moba();
-              // final Player player = Player();
+          if (mobaGames.isEmpty) {
+            final Moba moba = Moba();
+            compileGame(moba);
+            _buffer.write(moba.compiledTiles);
+            _buffer.write(moba.compiledEnvironmentObjects);
+            _buffer.write(moba.compiled);
+            final Player player = Player(
+                x: 0, y: 100, game: moba, grenades: 0, lives: 1, squad: 1);
+            moba.players.add(player);
+            registerPlayer(player);
           }
 
           break;
@@ -664,21 +669,10 @@ void main() {
 }
 
 Player spawnPlayerInTown() {
-  Player player = Player(
-      game: world.town,
-      x: 0,
-      y: 1750,
-      squad: 1,
-      weapons: [
-        Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0),
-        Weapon(type: WeaponType.HandGun, damage: 1, capacity: 12),
-        Weapon(type: WeaponType.Bow, damage: 3, capacity: 12),
-        Weapon(type: WeaponType.SlowingCircle, damage: 3, capacity: 100),
-      ]);
+  Player player = Player(game: world.town, x: 0, y: 1750, squad: 1);
   player.abilityPoints = 0;
   player.type = CharacterType.None;
   world.town.players.add(player);
   playerMap[player.uuid] = player;
   return player;
 }
-
