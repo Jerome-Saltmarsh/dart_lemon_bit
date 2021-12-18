@@ -147,6 +147,7 @@ Widget _buildTools() {
             height: screenHeight - 100,
             child: SingleChildScrollView(
               child: Column(
+                // crossAxisAlignment: cross.stretch,
                 children: _getTabChildren().toList(),
               ),
             ),

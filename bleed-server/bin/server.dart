@@ -38,22 +38,8 @@ final StringBuffer _buffer = StringBuffer();
 const List<ClientRequest> clientRequests = ClientRequest.values;
 final int clientRequestsLength = clientRequests.length;
 
-Game findGameById(String id) {
-  for (Game game in world.games) {
-    if (game.id == id) return game;
-  }
-  throw Exception();
-}
-
 Player? findPlayerByUuid(String uuid) {
-  for (Game game in world.games) {
-    for (Player player in game.players) {
-      if (player.uuid == uuid) {
-        return player;
-      }
-    }
-  }
-  return null;
+  return playerMap[uuid];
 }
 
 void main() {
@@ -683,22 +669,7 @@ Player spawnPlayerInTown() {
   player.abilityPoints = 0;
   player.type = CharacterType.None;
   world.town.players.add(player);
+  playerMap[player.uuid] = player;
   return player;
 }
 
-Player spawnPlayerInWildernessEast() {
-  Player player = Player(
-      game: world.wildernessEast,
-      x: 0,
-      y: 1750,
-      inventory: Inventory(0, 0, []),
-      squad: 1,
-      weapons: [
-        Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0),
-        Weapon(type: WeaponType.HandGun, damage: 1, capacity: 12),
-        Weapon(type: WeaponType.Bow, damage: 3, capacity: 12),
-      ]);
-  player.abilityPoints = 1;
-  world.wildernessEast.players.add(player);
-  return player;
-}

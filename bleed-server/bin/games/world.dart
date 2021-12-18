@@ -1,4 +1,5 @@
 import '../classes/Game.dart';
+import '../classes/Player.dart';
 import '../classes/SpawnPoint.dart';
 import '../compile.dart';
 import 'cave.dart';
@@ -10,6 +11,8 @@ import 'wilderness_north_01.dart';
 
 // TODO remove global value
 int time = 0;
+
+Map<String, Player> playerMap = {};
 
 class World {
   late Game town;

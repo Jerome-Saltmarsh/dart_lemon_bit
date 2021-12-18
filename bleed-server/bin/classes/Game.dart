@@ -25,6 +25,7 @@ import '../constants/no_squad.dart';
 import '../enums/npc_mode.dart';
 import '../functions/insertionSort.dart';
 import '../functions/withinRadius.dart';
+import '../games/world.dart';
 import '../interfaces/HasSquad.dart';
 import 'Ability.dart';
 import 'Projectile.dart';
@@ -1524,6 +1525,7 @@ extension GameFunctions on Game {
       }
       player.active = false;
       players.removeAt(i);
+      playerMap.remove(player.uuid);
       i--;
 
       onPlayerDisconnected(player);
