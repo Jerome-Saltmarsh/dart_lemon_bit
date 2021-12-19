@@ -42,6 +42,12 @@ class Moba extends Game {
   Players getJoinTeam() {
     return players1.length > players2.length ? players2 : players1;
   }
+
+  @override
+  void onPlayerDisconnected(Player player){
+    players1.remove(player);
+    players2.remove(player);
+  }
 }
 
 Player playerJoin(Moba moba) {

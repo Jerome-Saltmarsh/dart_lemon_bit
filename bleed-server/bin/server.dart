@@ -63,9 +63,13 @@ void main() {
       webSocket.sink.add(response);
     }
 
+    void clearBuffer(){
+      _buffer.clear();
+    }
+
     void sendAndClearBuffer(){
       sendToClient(_buffer.toString());
-      _buffer.clear();
+      clearBuffer();
     }
 
     void sendCompiledPlayerState(Game game, Player player) {
@@ -81,15 +85,15 @@ void main() {
     }
 
     void joinGameOpenWorld() {
-      _buffer.clear();
+      clearBuffer();
       Player player = spawnPlayerInTown();
       compilePlayer(_buffer, player);
-      _buffer.write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.squad} ');
-      _buffer.write(player.game.compiledTiles);
-      _buffer.write(player.game.compiledEnvironmentObjects);
-      _buffer.write(player.game.compiled);
+      write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.squad}');
+      write(player.game.compiledTiles);
+      write(player.game.compiledEnvironmentObjects);
+      write(player.game.compiled);
       compilePlayersRemaining(_buffer, 0);
-      sendToClient(_buffer.toString());
+      sendAndClearBuffer();
     }
 
     void error(GameError error, {String message = ""}) {

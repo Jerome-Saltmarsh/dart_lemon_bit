@@ -138,6 +138,10 @@ abstract class Game {
 
   void update();
 
+  void onPlayerDisconnected(Player player){
+
+  }
+
   GameEvent _getAvailableGameEvent() {
     for (GameEvent gameEvent in gameEvents) {
       if (gameEvent.frameDuration <= 0) {
@@ -1508,6 +1512,7 @@ extension GameFunctions on Game {
       players.removeAt(i);
       playerMap.remove(player.uuid);
       i--;
+      onPlayerDisconnected(player);
     }
   }
 
