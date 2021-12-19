@@ -15,16 +15,14 @@ class _Global {
         }
       }
     }
-    final Moba moba = Moba();
-    addGame(moba);
-    return moba;
+    return Moba();
   }
 
-  void addGame(Game game) {
+  void onGameCreated(Game game){
     compileGame(game);
     game.compiledTiles = compileTiles(game.scene.tiles);
     game.compiledEnvironmentObjects = compileEnvironmentObjects(game.scene.environment);
-    global.games.add(game);
+    games.add(game);
   }
 }
 

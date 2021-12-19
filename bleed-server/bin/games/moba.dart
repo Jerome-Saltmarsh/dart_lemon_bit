@@ -25,11 +25,7 @@ class Moba extends Game {
   int team1Lives = 10;
   int team2Lives = 10;
 
-  Moba() : super(scenes.wildernessNorth01) {
-    //
-    compiledTiles = compileTiles(scene.tiles);
-    compiledEnvironmentObjects = compileEnvironmentObjects(scene.environment);
-  }
+  Moba() : super(scenes.wildernessNorth01);
 
   @override
   void update() {

@@ -153,7 +153,7 @@ abstract class Game {
 
   Game(this.scene, {this.shadeMax = Shade.Bright}) {
     this.crates.clear();
-    global.addGame(this);
+    global.onGameCreated(this);
 
     for (Vector2 crate in scene.crates) {
       crates.add(Crate(x: crate.x, y: crate.y));
