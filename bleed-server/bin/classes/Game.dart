@@ -252,13 +252,6 @@ extension GameFunctions on Game {
             dispatch(GameEventType.Item_Acquired, collectables[i].x,
                 collectables[i].y, 0, 0);
             break;
-
-          case CollectableType.Grenade:
-            if (player.grenades >= settings.maxGrenades) continue;
-            player.grenades++;
-            dispatch(GameEventType.Item_Acquired, collectables[i].x,
-                collectables[i].y, 0, 0);
-            break;
           default:
             break;
         }

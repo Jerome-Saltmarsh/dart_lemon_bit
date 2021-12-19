@@ -12,15 +12,12 @@ import '../utils.dart';
 import 'Ability.dart';
 import 'Character.dart';
 import 'Game.dart';
-import 'Weapon.dart';
 
 
 class Player extends Character {
   final String uuid = generateUUID();
   String name = generateName();
   int lastUpdateFrame = 0;
-  int grenades;
-  int lives;
   int frameOfDeath = -1;
   int pointsRecord = 0;
   String message = "";
@@ -80,11 +77,9 @@ class Player extends Character {
   }
 
   Player({
-    required double x,
-    required double y,
+    double x = 0,
+    double y = 0,
     required this.game,
-    this.grenades = 0,
-    this.lives = 0,
     int squad = noSquad,
   }) : super(
             type: CharacterType.Human,

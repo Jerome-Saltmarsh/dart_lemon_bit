@@ -26,6 +26,7 @@ import 'functions/loadScenes.dart';
 import 'functions/withinRadius.dart';
 import 'games/moba.dart';
 import 'games/world.dart';
+import 'global.dart';
 import 'settings.dart';
 import 'update.dart';
 import 'utils.dart';
@@ -38,11 +39,14 @@ final StringBuffer _buffer = StringBuffer();
 const List<ClientRequest> clientRequests = ClientRequest.values;
 final int clientRequestsLength = clientRequests.length;
 
+void write(dynamic value){
+  _buffer.write(value);
+  _buffer.write(_space);
+}
+
 Player? findPlayerByUuid(String uuid) {
   return playerMap[uuid];
 }
-
-List<Moba> mobaGames = [];
 
 void main() {
   print('Bleed Game Server Starting');
@@ -271,17 +275,12 @@ void main() {
           break;
 
         case ClientRequest.Join_Moba:
-          if (mobaGames.isEmpty) {
-            final Moba moba = Moba();
-            compileGame(moba);
-            _buffer.write(moba.compiledTiles);
-            _buffer.write(moba.compiledEnvironmentObjects);
-            _buffer.write(moba.compiled);
-            final Player player = Player(
-                x: 0, y: 100, game: moba, grenades: 0, lives: 1, squad: 1);
-            moba.players.add(player);
-            registerPlayer(player);
-          }
+          final Moba moba = findPendingMobaGame();
+          final Player player =
+              Player(x: 0, y: 100, game: moba, squad: 1);
+          moba.players.add(player);
+          registerPlayer(player);
+          compileWholeGame(moba);
 
           break;
 
@@ -675,4 +674,12 @@ Player spawnPlayerInTown() {
   world.town.players.add(player);
   playerMap[player.uuid] = player;
   return player;
+}
+
+
+void compileWholeGame(Game game){
+  compileGame(game);
+  write(game.compiledTiles);
+  write(game.compiledEnvironmentObjects);
+  write(game.compiled);
 }

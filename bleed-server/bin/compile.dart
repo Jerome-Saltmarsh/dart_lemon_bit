@@ -149,7 +149,6 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _writeInt(buffer, player.y);
   _write(buffer, player.health);
   _write(buffer, player.maxHealth);
-  _write(buffer, player.grenades);
   _write(buffer, player.state.index);
   _write(buffer, player.currentTile.index);
   _write(buffer, player.experience);

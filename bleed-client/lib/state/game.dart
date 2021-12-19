@@ -76,7 +76,6 @@ class _Player {
   Watch<int> skillPoints = Watch(1);
   Watch<int> nextLevelExperience = Watch(1);
   Watch<double> experiencePercentage = Watch(0);
-  int grenades = 0;
   Watch<String> message = Watch("");
   Watch<CharacterState> state = Watch(CharacterState.Idle);
   Watch<bool> alive = Watch(true);

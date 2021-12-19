@@ -379,13 +379,6 @@ void _parsePlayer() {
   game.player.y = _consumeDouble();
   game.player.health.value = _consumeDouble();
   game.player.maxHealth = _consumeDouble();
-
-  int grenades = _consumeInt();
-
-  if (game.player.grenades != grenades) {
-    game.player.grenades = grenades;
-  }
-
   game.player.state.value = _consumeCharacterState();
   game.player.tile = _consumeTile();
   game.player.experience.value = _consumeInt();
