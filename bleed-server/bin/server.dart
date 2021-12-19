@@ -288,7 +288,7 @@ void main() {
           break;
 
         case ClientRequest.Join_Moba:
-          final Moba moba = findPendingMobaGame();
+          final Moba moba = global.findPendingMobaGame();
           Player player = playerJoin(moba);
           compileWholeGame(moba);
           compilePlayerJoined(_buffer, player);

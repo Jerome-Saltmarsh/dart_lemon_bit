@@ -1,3 +1,3 @@
 import '../games/world.dart';
 
-World world = World();
+final World world = World();

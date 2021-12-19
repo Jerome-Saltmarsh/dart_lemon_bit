@@ -26,6 +26,7 @@ import '../enums/npc_mode.dart';
 import '../functions/insertionSort.dart';
 import '../functions/withinRadius.dart';
 import '../games/world.dart';
+import '../global.dart';
 import '../interfaces/HasSquad.dart';
 import 'Ability.dart';
 import 'Projectile.dart';
@@ -70,7 +71,6 @@ const _none = -1;
 abstract class Game {
   static int _id = 0;
   final String id = (_id++).toString();
-  final int maxPlayers;
   final Scene scene;
 
   /// Used to constrain the brightness of a level
@@ -151,8 +151,9 @@ abstract class Game {
     return empty;
   }
 
-  Game(this.scene, {this.maxPlayers = 64, this.shadeMax = Shade.Bright}) {
+  Game(this.scene, {this.shadeMax = Shade.Bright}) {
     this.crates.clear();
+    global.addGame(this);
 
     for (Vector2 crate in scene.crates) {
       crates.add(Crate(x: crate.x, y: crate.y));

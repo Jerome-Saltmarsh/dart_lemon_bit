@@ -27,40 +27,33 @@ void initUpdateLoop() {
 }
 
 void updateNpcTargets(Timer timer) {
-  for (Game game in world.games) {
+  for (Game game in global.games) {
     game.updateInteractableNpcTargets();
     game.updateZombieTargets();
   }
 }
 
-void updateWorldTime() {
+void updateOpenWorldTime() {
   time = (time + secondsPerFrame) % secondsPerDay;
 }
 
 void jobRemoveDisconnectedPlayers(Timer timer) {
-  for (Game game in world.games) {
+  for (Game game in global.games) {
     game.removeDisconnectedPlayers();
   }
 }
 
 void jobNpcWander(Timer timer) {
-  for (Game game in world.games) {
+  for (Game game in global.games) {
     game.jobNpcWander();
   }
 }
 
 void fixedUpdate(Timer timer) {
   frame++;
-  updateWorld();
+  updateOpenWorldTime();
 
-  for (Game mobaGame in global.mobaGames) {
-    mobaGame.updateAndCompile();
-  }
-}
-
-void updateWorld() {
-  updateWorldTime();
-  for (Game game in world.games) {
+  for (Game game in global.games) {
     game.updateAndCompile();
   }
 }

@@ -510,6 +510,7 @@ Widget buildNumberOfPlayersRequiredDialog(){
   return WatchBuilder(game.numberOfPlayersNeeded, (int number){
     if (number == 0) return emptyContainer;
     return dialog(
+      height: 80,
       child: text("Waiting for $number more players to join the game")
     );
   });
