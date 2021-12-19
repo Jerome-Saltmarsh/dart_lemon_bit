@@ -3,11 +3,11 @@ description: The server for Bleed
 version: 1.0.0
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: '>=2.14.0 <3.0.0'
 
 dependencies:
   lemon_math: ^1.1.4
   web_socket_channel: ^2.1.0
   shelf_web_socket: ^1.0.1
-  shelf_router: ^1.1.0
+  shelf_router: ^1.1.2
   uuid: ^3.0.4

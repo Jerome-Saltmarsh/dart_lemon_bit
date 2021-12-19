@@ -5,6 +5,7 @@ import 'package:lemon_math/hypotenuse.dart';
 import 'classes/Game.dart';
 import 'classes/GameObject.dart';
 import 'games/world.dart';
+import 'global.dart';
 import 'language.dart';
 import 'maths.dart';
 import 'state.dart';
@@ -51,6 +52,10 @@ void jobNpcWander(Timer timer) {
 void fixedUpdate(Timer timer) {
   frame++;
   updateWorld();
+
+  for (Game mobaGame in global.mobaGames) {
+    mobaGame.updateAndCompile();
+  }
 }
 
 void updateWorld() {

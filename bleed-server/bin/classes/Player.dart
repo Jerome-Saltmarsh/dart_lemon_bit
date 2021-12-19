@@ -80,12 +80,12 @@ class Player extends Character {
     double x = 0,
     double y = 0,
     required this.game,
-    int squad = noSquad,
+    int team = noSquad,
   }) : super(
             type: CharacterType.Human,
             x: x,
             y: y,
             health: settings.health.player,
             speed: settings.playerSpeed,
-            squad: squad);
+            squad: team);
 }

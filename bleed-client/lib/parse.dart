@@ -117,10 +117,6 @@ void parseState() {
         }
         break;
 
-      case ServerResponse.Player:
-        _parsePlayer();
-        break;
-
       case ServerResponse.Player_Abilities:
         _consumeAbility(game.player.ability1);
         _consumeAbility(game.player.ability2);

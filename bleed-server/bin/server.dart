@@ -63,24 +63,28 @@ void main() {
       webSocket.sink.add(response);
     }
 
+    void sendAndClearBuffer(){
+      sendToClient(_buffer.toString());
+      _buffer.clear();
+    }
+
     void sendCompiledPlayerState(Game game, Player player) {
       _buffer.clear();
       _buffer.write(game.compiled);
-      compileWeapons(_buffer, player.weapons);
+      // compileWeapons(_buffer, player.weapons);
       compilePlayer(_buffer, player);
       if (player.message.isNotEmpty) {
         compilePlayerMessage(_buffer, player.message);
         player.message = "";
       }
-      sendToClient(_buffer.toString());
+      sendAndClearBuffer();
     }
 
     void joinGameOpenWorld() {
       _buffer.clear();
       Player player = spawnPlayerInTown();
       compilePlayer(_buffer, player);
-      _buffer.write(
-          '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.squad} ');
+      _buffer.write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.squad} ');
       _buffer.write(player.game.compiledTiles);
       _buffer.write(player.game.compiledEnvironmentObjects);
       _buffer.write(player.game.compiled);
@@ -276,12 +280,10 @@ void main() {
 
         case ClientRequest.Join_Moba:
           final Moba moba = findPendingMobaGame();
-          final Player player =
-              Player(x: 0, y: 100, game: moba, squad: 1);
-          moba.players.add(player);
-          registerPlayer(player);
+          Player player = playerJoin(moba);
           compileWholeGame(moba);
-
+          compilePlayerJoined(_buffer, player);
+          sendAndClearBuffer();
           break;
 
         case ClientRequest.Ping:
@@ -668,7 +670,7 @@ void main() {
 }
 
 Player spawnPlayerInTown() {
-  Player player = Player(game: world.town, x: 0, y: 1750, squad: 1);
+  Player player = Player(game: world.town, x: 0, y: 1750, team: 1);
   player.abilityPoints = 0;
   player.type = CharacterType.None;
   world.town.players.add(player);

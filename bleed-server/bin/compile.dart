@@ -33,6 +33,10 @@ const String _space = ' ';
 const String _semiColon = '; ';
 const String _comma = ', ';
 
+void compilePlayerJoined(StringBuffer buffer, Player player){
+  _write(buffer, '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.squad} ');
+}
+
 void compileGame(Game game) {
   game.buffer.clear();
 

@@ -66,6 +66,7 @@ import 'Weapon.dart';
 
 const _none = -1;
 
+// This should be OpenWorldScene
 abstract class Game {
   static int _id = 0;
   final String id = (_id++).toString();

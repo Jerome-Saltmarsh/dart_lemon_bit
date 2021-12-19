@@ -22,5 +22,5 @@ enum ClientRequest {
   Upgrade_Ability,
   Reset_Character_Type,
   Join_Moba,
-  Join_Defense
+  Join_Defense,
 }
