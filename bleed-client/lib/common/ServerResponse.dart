@@ -28,4 +28,5 @@ enum ServerResponse {
   Weapons_Dirty,
   Player_Abilities,
   Player_Attack_Target,
+  Waiting_For_More_Players,
 }

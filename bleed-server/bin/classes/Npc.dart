@@ -28,14 +28,14 @@ class Npc extends Character {
     required double x,
     required double y,
     required int health,
-    required Weapon weapon,
+    Weapon? weapon,
     this.experience = 0,
   })
       : super(
       type: type,
       x: x,
       y: y,
-      weapons: [weapon],
+      weapons: weapon != null ? [weapon] : [],
       health: health,
       speed: settings.zombieSpeed,
 

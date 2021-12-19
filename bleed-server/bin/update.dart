@@ -39,7 +39,7 @@ void updateWorldTime() {
 
 void jobRemoveDisconnectedPlayers(Timer timer) {
   for (Game game in world.games) {
-    game.jobRemoveDisconnectedPlayers();
+    game.removeDisconnectedPlayers();
   }
 }
 

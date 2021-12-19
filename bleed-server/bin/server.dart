@@ -88,6 +88,7 @@ void main() {
       _buffer.write(player.game.compiledTiles);
       _buffer.write(player.game.compiledEnvironmentObjects);
       _buffer.write(player.game.compiled);
+      compilePlayersRemaining(_buffer, 0);
       sendToClient(_buffer.toString());
     }
 
@@ -153,6 +154,14 @@ void main() {
 
           player.lastUpdateFrame = 0;
           Game game = player.game;
+
+          if (game is Moba){
+            if (!game.started){
+              write(ServerResponse.Waiting_For_More_Players.index);
+              write(10 - game.players1.length - game.players2.length);
+              sendAndClearBuffer();
+            }
+          }
 
           if (player.sceneChanged) {
             player.sceneChanged = false;

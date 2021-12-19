@@ -18,6 +18,7 @@ import 'common/PlayerEvent.dart';
 import 'common/Tile.dart';
 import 'common/ServerResponse.dart';
 import 'common/classes/Vector2.dart';
+import 'games/moba.dart';
 import 'games/world.dart';
 
 // constants
@@ -386,4 +387,10 @@ void _write(StringBuffer buffer, dynamic value) {
   }
   buffer.write(value);
   buffer.write(_space);
+}
+
+
+void compilePlayersRemaining(StringBuffer buffer, int remaining){
+  _write(buffer, ServerResponse.Waiting_For_More_Players.index);
+  _write(buffer, remaining);
 }

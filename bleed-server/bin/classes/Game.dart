@@ -138,14 +138,6 @@ abstract class Game {
 
   void update();
 
-  void onNpcKilled(Npc npc) {}
-
-  void onPlayerDisconnected(Player player) {}
-
-  void onPlayerRevived(Player player) {}
-
-  void onNpcSpawned(Npc npc) {}
-
   GameEvent _getAvailableGameEvent() {
     for (GameEvent gameEvent in gameEvents) {
       if (gameEvent.frameDuration <= 0) {
@@ -555,7 +547,6 @@ extension GameFunctions on Game {
       onPlayerDeath(character);
     } else if (character is Npc) {
       character.clearTarget();
-      onNpcKilled(character);
     }
 
     for (Projectile projectile in projectiles) {
@@ -1332,7 +1323,6 @@ extension GameFunctions on Game {
     zombie.y = y;
     zombie.yv = 0;
     zombie.xv = 0;
-    onNpcSpawned(zombie);
     return zombie;
   }
 
@@ -1503,7 +1493,7 @@ extension GameFunctions on Game {
     }
   }
 
-  void jobRemoveDisconnectedPlayers() {
+  void removeDisconnectedPlayers() {
     for (int i = 0; i < players.length; i++) {
       if (players[i].lastUpdateFrame < settings.playerDisconnectFrames)
         continue;
@@ -1517,8 +1507,6 @@ extension GameFunctions on Game {
       players.removeAt(i);
       playerMap.remove(player.uuid);
       i--;
-
-      onPlayerDisconnected(player);
     }
   }
 
@@ -1539,7 +1527,6 @@ extension GameFunctions on Game {
       character.y = spawnPoint.y;
     }
 
-    onPlayerRevived(character as Player);
     character.collidable = true;
   }
 

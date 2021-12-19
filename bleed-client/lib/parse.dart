@@ -105,6 +105,10 @@ void parseState() {
         }
         break;
 
+      case ServerResponse.Waiting_For_More_Players:
+        game.numberOfPlayersNeeded.value = _consumeInt();
+        break;
+
       case ServerResponse.Player_Attack_Target:
         game.player.attackTarget.x = _consumeDouble();
         game.player.attackTarget.y = _consumeDouble();

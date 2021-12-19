@@ -192,8 +192,8 @@ Widget buildTopLeft() {
           ),
           // width8,
           // buildPlayerNextLevelExperience(),
-          // width8,
-          // buildMouseWorldPosition(),
+          width8,
+          buildMouseWorldPosition(),
         ],
       ));
 }
@@ -451,19 +451,32 @@ Widget buildSelectGameDialog(){
                 mainAxisAlignment: main.apart,
                 children: [
                   text("Select Game"),
-                  text("Close", onPressed: hud.joinGameVisible.toggle, decoration: TextDecoration.underline),
+                  text("Close",
+                      onPressed: closeJoinGameDialog,
+                      decoration: TextDecoration.underline
+                  ),
                 ],
               ),
               height16,
-              button("OPEN WORLD", sendRequestJoinGameOpenWorld),
+              button("OPEN WORLD", (){
+                closeJoinGameDialog();
+                sendRequestJoinGameOpenWorld();
+              }),
               height8,
-              button("MOBA", sendRequestJoinGameMoba),
-              height8,
-              button("WAVE DEFENSE", sendRequestJoinGameDefense),
+              button("MOBA", (){
+                closeJoinGameDialog();
+                sendRequestJoinGameMoba();
+              }),
+              // height8,
+              // button("WAVE DEFENSE", sendRequestJoinGameDefense),
             ],
           )
         );
   });
+}
+
+void closeJoinGameDialog(){
+  hud.joinGameVisible.setFalse();
 }
 
 Widget buildHud() {
@@ -486,9 +499,19 @@ Widget buildHud() {
           buildTopRight(),
           buildSkillTree(),
           buildFullScreenDialog(),
+          buildNumberOfPlayersRequiredDialog(),
         ],
       );
     });
+  });
+}
+
+Widget buildNumberOfPlayersRequiredDialog(){
+  return WatchBuilder(game.numberOfPlayersNeeded, (int number){
+    if (number == 0) return emptyContainer;
+    return dialog(
+      child: text("Waiting for $number more players to join the game")
+    );
   });
 }
 
