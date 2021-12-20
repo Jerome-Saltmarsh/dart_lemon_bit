@@ -9,11 +9,9 @@ import 'global.dart';
 import 'language.dart';
 import 'maths.dart';
 import 'state.dart';
-import 'values/world.dart';
 
 const _minusOne = -1;
 const _one = 1;
-
 const fps = 30;
 
 void initUpdateLoop() {
@@ -21,7 +19,7 @@ void initUpdateLoop() {
   Future.delayed(Duration(seconds: 3), () {
     periodic(fixedUpdate, ms: 1000 ~/ fps);
     periodic(jobNpcWander, seconds: 4);
-    periodic(jobRemoveDisconnectedPlayers, seconds: 5);
+    periodic(jobRemoveDisconnectedPlayers, seconds: 4);
     periodic(updateNpcTargets, ms: 500);
   });
 }
@@ -52,10 +50,7 @@ void jobNpcWander(Timer timer) {
 void fixedUpdate(Timer timer) {
   frame++;
   updateOpenWorldTime();
-
-  for (Game game in global.games) {
-    game.updateAndCompile();
-  }
+  global.update();
 }
 
 int compareGameObjectsX(GameObject a, GameObject b) {

@@ -81,6 +81,18 @@ void main() {
         compilePlayerMessage(_buffer, player.message);
         player.message = "";
       }
+
+      if (game is Moba){
+        if (!game.started){
+          compilePlayersRemaining(_buffer, game.totalPlayersRequired - game.players1.length - game.players2.length);
+          sendAndClearBuffer();
+          return;
+        } else {
+          compilePlayersRemaining(_buffer, 0);
+        }
+      }
+
+
       sendAndClearBuffer();
     }
 
@@ -161,9 +173,11 @@ void main() {
 
           if (game is Moba){
             if (!game.started){
-              write(ServerResponse.Waiting_For_More_Players.index);
-              write(10 - game.players1.length - game.players2.length);
+              compilePlayersRemaining(_buffer, game.totalPlayersRequired - game.players1.length - game.players2.length);
               sendAndClearBuffer();
+              return;
+            } else {
+              compilePlayersRemaining(_buffer, 0);
             }
           }
 

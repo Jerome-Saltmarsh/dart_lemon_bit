@@ -24,5 +24,12 @@ class _Global {
     game.compiledEnvironmentObjects = compileEnvironmentObjects(game.scene.environment);
     games.add(game);
   }
+
+  void update(){
+    for (Game game in games) {
+      if (!game.started) continue;
+      game.updateAndCompile();
+    }
+  }
 }
 

@@ -73,6 +73,8 @@ abstract class Game {
   final String id = (_id++).toString();
   final Scene scene;
 
+  late bool started;
+
   /// Used to constrain the brightness of a level
   /// For example a cave which is very dark even during day time
   /// or a dark forest
@@ -155,7 +157,7 @@ abstract class Game {
     return empty;
   }
 
-  Game(this.scene, {this.shadeMax = Shade.Bright}) {
+  Game(this.scene, {this.shadeMax = Shade.Bright, this.started = true}) {
     this.crates.clear();
     global.onGameCreated(this);
 
