@@ -104,6 +104,10 @@ abstract class Game {
   // TODO doesn't belong here
   StringBuffer buffer = StringBuffer();
 
+  void onGameStarted(){
+
+  }
+
   void changeGame(Player player, Game to) {
     if (player.game == to) return;
 

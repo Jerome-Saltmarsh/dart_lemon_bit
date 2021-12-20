@@ -1,3 +1,5 @@
+import 'package:lemon_math/give_or_take.dart';
+
 import '../classes/Game.dart';
 import '../classes/Npc.dart';
 import '../classes/Player.dart';
@@ -17,8 +19,8 @@ class Moba extends Game {
   Creeps creeps2 = [];
   Vector2 teamSpawn1 = Vector2(-600, 620);
   Vector2 teamSpawn2 = Vector2(-510, 625);
-  Vector2 creepSpawn1 = Vector2(300, 100);
-  Vector2 creepSpawn2 = Vector2(770, 900);
+  Vector2 creepSpawn1 = Vector2(-530, 625);
+  Vector2 creepSpawn2 = Vector2(800, 900);
 
   int totalPlayersRequired = 2;
   int team1Lives = 10;
@@ -36,6 +38,12 @@ class Moba extends Game {
     //
     // if (duration % 5 == 0){
     // }
+
+    for(Creep creep in creeps1) {
+       if (!creep.targetSet){
+         // creep.pa
+       }
+    }
   }
 
   Players getJoinTeam() {
@@ -46,6 +54,18 @@ class Moba extends Game {
   void onPlayerDisconnected(Player player){
     players1.remove(player);
     players2.remove(player);
+  }
+
+  @override
+  void onGameStarted(){
+    for(Player player in players1){
+      player.x = teamSpawn1.x += giveOrTake(5);
+      player.y = teamSpawn1.y += giveOrTake(5);
+    }
+    for(Player player in players2){
+      player.x = teamSpawn2.x += giveOrTake(5);
+      player.y = teamSpawn2.y += giveOrTake(5);
+    }
   }
 }
 
@@ -58,7 +78,7 @@ Player playerJoin(Moba moba) {
   moba.getJoinTeam().add(player);
   moba.started = moba.players1.length + moba.players2.length == moba.totalPlayersRequired;
   if (moba.started){
-    print("starting game");
+    moba.onGameStarted();
   }
   moba.players.add(player);
   return player;
@@ -68,7 +88,10 @@ class Creep extends Npc {
 
   final List<Vector2> checkpoints = [];
 
-  Creep(double x, double y)
-      : super(
-            x: x, y: y, type: CharacterType.Zombie, health: 20, experience: 1);
+  Creep(double x, double y) : super(
+      x: x,
+      y: y,
+      type: CharacterType.Zombie,
+      health: 20, experience: 1
+  );
 }
