@@ -18,7 +18,7 @@ class Moba extends Game {
   Creeps creeps1 = [];
   Creeps creeps2 = [];
   Vector2 teamSpawn1 = Vector2(-600, 620);
-  Vector2 teamSpawn2 = Vector2(-510, 625);
+  Vector2 teamSpawn2 = Vector2(850, 910);
   Vector2 creepSpawn1 = Vector2(-530, 625);
   Vector2 creepSpawn2 = Vector2(800, 900);
 
