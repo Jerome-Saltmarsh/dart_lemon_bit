@@ -1,9 +1,9 @@
-import 'Positioned.dart';
+import '../common/classes/Vector2.dart';
 
 int _idCount = 0;
 
 
-class GameObject extends Positioned {
+class GameObject extends Vector2 {
   int id = _idCount++;
   double z = 0;
   double xv = 0;

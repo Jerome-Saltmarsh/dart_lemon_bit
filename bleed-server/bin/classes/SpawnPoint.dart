@@ -1,7 +1,7 @@
+import '../common/classes/Vector2.dart';
 import 'Game.dart';
-import 'Positioned.dart';
 
-class SpawnPoint extends Positioned {
+class SpawnPoint extends Vector2 {
   final Game game;
 
   SpawnPoint({

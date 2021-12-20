@@ -57,7 +57,6 @@ import 'InteractableNpc.dart';
 import 'Item.dart';
 import 'Npc.dart';
 import 'Player.dart';
-import 'Positioned.dart';
 import 'Projectile.dart';
 import 'Scene.dart';
 import 'SpawnPoint.dart';
@@ -267,7 +266,7 @@ extension GameFunctions on Game {
   }
 
   /// calculates if there is a wall between two objects
-  bool isVisibleBetween(Positioned a, Positioned b) {
+  bool isVisibleBetween(Vector2 a, Vector2 b) {
     double r = radiansBetweenObject(a, b);
     double d = distanceBetweenObjects(a, b);
     double vX = adj(r, tileSize);
@@ -1442,6 +1441,10 @@ extension GameFunctions on Game {
         zombie.state = CharacterState.Idle;
       }
 
+      for (Npc npc in zombies){
+        if (!npc.alive) continue;
+      }
+
       for (int p = 0; p < players.length; p++) {
         Player player = players[p];
         if (!player.alive) continue;
@@ -1454,7 +1457,13 @@ extension GameFunctions on Game {
     }
   }
 
-  num cheapDistance(Positioned a, Positioned b) {
+  bool withinViewRange(Npc npc, Vector2 target){
+    // return withinRadius(npc, target, settings.npc.viewRange);
+    return true;
+    return true;
+  }
+
+  num cheapDistance(Vector2 a, Vector2 b) {
     return diff(a.y, b.y) + diff(a.x, b.x);
   }
 

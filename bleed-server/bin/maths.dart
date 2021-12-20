@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/hypotenuse.dart';
 
-import 'classes/Positioned.dart';
+import 'common/classes/Vector2.dart';
 import 'constants.dart';
 
 const double _0 = 0;
@@ -12,7 +12,7 @@ const double _1 = 1.0;
 const double goldenRatio = 1.61803398875;
 const double goldenRatioInverse = _1 / goldenRatio;
 
-double distanceBetweenObjects(Positioned a, Positioned b) {
+double distanceBetweenObjects(Vector2 a, Vector2 b) {
   return distanceBetween(a.x, a.y, b.x, b.y);
 }
 
@@ -26,11 +26,11 @@ int diffInt(int a, int b){
 }
 
 
-double radiansBetweenObject(Positioned a, Positioned b) {
+double radiansBetweenObject(Vector2 a, Vector2 b) {
   return radiansBetween(a.x, a.y, b.x, b.y);
 }
 
-double radiansBetween2(Positioned a, double x, double y) {
+double radiansBetween2(Vector2 a, double x, double y) {
   return radiansBetween(a.x, a.y, x, y);
 }
 
