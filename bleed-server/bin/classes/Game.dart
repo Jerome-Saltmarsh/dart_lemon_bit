@@ -1436,8 +1436,13 @@ extension GameFunctions on Game {
       if (zombie.targetSet) {
         // @on update npc with target
         // TODO check if there is a closer enemy
-        if (withinChaseRange(zombie, zombie.target)) continue;
-        zombie.clearTarget();
+        if (
+          zombie.target.dead ||
+          withinChaseRange(zombie, zombie.target)
+        ) {
+          zombie.clearTarget();
+        }
+
       }
 
       for (Npc npc in zombies){
@@ -1517,6 +1522,12 @@ extension GameFunctions on Game {
     }
     if (npc.team == value.team){
       throw Exception("Npc target same team");
+    }
+    if (npc.dead){
+      throw Exception("Npc cannot target dead");
+    }
+    if (!npc.active){
+      throw Exception("Npc cannot target deactive");
     }
     npc.target = value;
   }
