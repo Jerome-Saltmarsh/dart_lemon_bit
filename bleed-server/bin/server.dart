@@ -84,7 +84,7 @@ void main() {
 
       if (game is Moba){
         if (!game.started){
-          compilePlayersRemaining(_buffer, game.totalPlayersRequired - game.players1.length - game.players2.length);
+          compilePlayersRemaining(_buffer, game.totalPlayersRequired - game.players.length);
           sendAndClearBuffer();
           return;
         } else {
@@ -173,7 +173,7 @@ void main() {
 
           if (game is Moba){
             if (!game.started){
-              compilePlayersRemaining(_buffer, game.totalPlayersRequired - game.players1.length - game.players2.length);
+              compilePlayersRemaining(_buffer, game.totalPlayersRequired - game.players.length);
               sendAndClearBuffer();
               return;
             } else {
@@ -698,6 +698,7 @@ void main() {
 
 Player spawnPlayerInTown() {
   Player player = Player(game: world.town, x: 0, y: 1750, team: 1);
+  player.team = Teams.Good.index;
   player.abilityPoints = 0;
   player.type = CharacterType.None;
   world.town.players.add(player);

@@ -25,7 +25,6 @@ int diffInt(int a, int b){
   return absInt(a - b);
 }
 
-
 double radiansBetweenObject(Vector2 a, Vector2 b) {
   return radiansBetween(a.x, a.y, b.x, b.y);
 }

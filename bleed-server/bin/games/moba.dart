@@ -6,14 +6,11 @@ import '../classes/Player.dart';
 import '../common/CharacterType.dart';
 import '../common/classes/Vector2.dart';
 import '../instances/scenes.dart';
-import '../language.dart';
 import 'world.dart';
 
 typedef Players = List<Player>;
 
 class Moba extends Game {
-  Players players1 = [];
-  Players players2 = [];
   Vector2 teamSpawn1 = Vector2(-600, 620);
   Vector2 teamSpawn2 = Vector2(850, 910);
   Vector2 creepSpawn1 = Vector2(-530, 625);
@@ -38,41 +35,45 @@ class Moba extends Game {
     }
   }
 
-  void spawnCreeps(){
+  void spawnCreeps() {
     spawnZombie(creepSpawn1.x, creepSpawn1.y,
-      health: 10,
-      experience: 10,
-      objectives: copy(creep1Objects),
-      team: Teams.Good.index
-    );
+        health: 10,
+        experience: 10,
+        // objectives: copy(creep1Objects),
+        team: Teams.Good.index);
 
-    spawnZombie(creepSpawn2.x, creepSpawn2.y,
+    spawnZombie(
+      creepSpawn2.x, creepSpawn2.y,
       health: 10,
       experience: 10,
-      objectives: copy(creep1Objects),
-        team: Teams.Bad.index,
+      // objectives: copy(creep1Objects),
+      team: Teams.Bad.index,
     );
   }
 
-  Players getJoinTeam() {
-    return players1.length > players2.length ? players2 : players1;
+  int getJoinTeam() {
+    int totalGood = 0;
+    int totalBad = 0;
+    for (Player player in players) {
+      if (player.team == Teams.Good.index) totalGood++;
+      if (player.team == Teams.Bad.index) totalBad++;
+    }
+    return totalGood > totalBad ? Teams.Good.index : Teams.Bad.index;
   }
 
   @override
-  void onPlayerDisconnected(Player player) {
-    players1.remove(player);
-    players2.remove(player);
-  }
+  void onPlayerDisconnected(Player player) {}
 
   @override
   void onGameStarted() {
-    for (Player player in players1) {
-      player.x = teamSpawn1.x += giveOrTake(5);
-      player.y = teamSpawn1.y += giveOrTake(5);
-    }
-    for (Player player in players2) {
-      player.x = teamSpawn2.x += giveOrTake(5);
-      player.y = teamSpawn2.y += giveOrTake(5);
+    for (Player player in players) {
+      if (player.team == Teams.Good.index) {
+        player.x = teamSpawn1.x += giveOrTake(5);
+        player.y = teamSpawn1.y += giveOrTake(5);
+      } else {
+        player.x = teamSpawn2.x += giveOrTake(5);
+        player.y = teamSpawn2.y += giveOrTake(5);
+      }
     }
   }
 }
@@ -83,13 +84,12 @@ Player playerJoin(Moba moba) {
   }
   final Player player = Player(x: 0, y: 600, game: moba, team: 1);
   registerPlayer(player);
-  moba.getJoinTeam().add(player);
-  moba.started =
-      moba.players1.length + moba.players2.length == moba.totalPlayersRequired;
+  moba.players.add(player);
+  player.team = moba.getJoinTeam();
+  moba.started = moba.players.length == moba.totalPlayersRequired;
   if (moba.started) {
     moba.onGameStarted();
   }
-  moba.players.add(player);
   return player;
 }
 

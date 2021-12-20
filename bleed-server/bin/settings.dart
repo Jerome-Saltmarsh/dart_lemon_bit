@@ -103,7 +103,6 @@ class Settings {
 
   final double minVelocity = 0.005;
   final double velocityFriction = 0.88;
-  final double zombieChaseRange = 600;
   final double npcChaseRange = 600;
   final double weaponRangeVariation = 10.0;
   final double playerStartRadius = 50;
@@ -219,6 +218,7 @@ class _ProjectileSpeed {
 class _NpcSettings {
   final double destinationRadius = 15.0;
   final double viewRange = 300;
+  final double chaseRange = 600;
 }
 
 class _Health {

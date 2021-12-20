@@ -4,6 +4,7 @@ import 'package:lemon_math/abs.dart';
 import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/diff.dart';
 import 'package:lemon_math/diff_over.dart';
+import 'package:lemon_math/diff_under.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/hypotenuse.dart';
@@ -1433,23 +1434,24 @@ extension GameFunctions on Game {
       zombie = zombies[i];
       if (zombie.targetSet) {
         // @on update npc with target
-        if (diff(zombie.x, zombie.target.x) < settings.zombieChaseRange)
-          continue;
-        if (diff(zombie.y, zombie.target.y) < settings.zombieChaseRange)
-          continue;
+        // TODO check if there is a closer enemy
+        if (withinChaseRange(zombie, zombie.target)) continue;
         zombie.clearTarget();
         zombie.state = CharacterState.Idle;
       }
 
       for (Npc npc in zombies){
-        if (!npc.alive) continue;
+        if (npc.dead) continue;
+        if (zombie.team == npc.team) continue;
+        if (!withinViewRange(zombie, npc)) continue;
+        if (!isVisibleBetween(zombie, npc)) continue;
+        npc.target = npc;
       }
 
-      for (int p = 0; p < players.length; p++) {
-        Player player = players[p];
-        if (!player.alive) continue;
-        if (diff(player.x, zombie.x) > settings.npc.viewRange) continue;
-        if (diff(player.y, zombie.y) > settings.npc.viewRange) continue;
+      for (Player player in players) {
+        if (player.dead) continue;
+        if (zombie.team == player.team) continue;
+        if (!withinViewRange(zombie, player)) continue;
         if (!isVisibleBetween(zombie, player)) continue;
         zombie.target = player;
         break;
@@ -1458,10 +1460,13 @@ extension GameFunctions on Game {
   }
 
   bool withinViewRange(Npc npc, Vector2 target){
-    // return withinRadius(npc, target, settings.npc.viewRange);
-    return true;
-    return true;
+    return withinRadius(npc, target, settings.npc.viewRange);
   }
+
+  bool withinChaseRange(Npc npc, Vector2 target){
+    return withinRadius(npc, target, settings.npc.chaseRange);
+  }
+
 
   num cheapDistance(Vector2 a, Vector2 b) {
     return diff(a.y, b.y) + diff(a.x, b.x);
