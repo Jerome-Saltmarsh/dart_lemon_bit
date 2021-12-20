@@ -344,6 +344,7 @@ extension GameFunctions on Game {
       switch (npc.weapon.type) {
         case WeaponType.Unarmed:
           if (!targetWithinStrikingRange(npc, npc.target)) break;
+
           // @on npc target within striking range
           characterFaceObject(npc, npc.target);
           setCharacterState(npc, CharacterState.Striking);
@@ -1444,7 +1445,7 @@ extension GameFunctions on Game {
         if (zombie.team == npc.team) continue;
         if (!withinViewRange(zombie, npc)) continue;
         if (!isVisibleBetween(zombie, npc)) continue;
-        npc.target = npc;
+        setNpcTarget(zombie, npc);
       }
 
       for (Player player in players) {
@@ -1452,7 +1453,7 @@ extension GameFunctions on Game {
         if (zombie.team == player.team) continue;
         if (!withinViewRange(zombie, player)) continue;
         if (!isVisibleBetween(zombie, player)) continue;
-        zombie.target = player;
+        setNpcTarget(zombie, player);
         break;
       }
     }
@@ -1465,7 +1466,6 @@ extension GameFunctions on Game {
   bool withinChaseRange(Npc npc, Vector2 target){
     return withinRadius(npc, target, settings.npc.chaseRange);
   }
-
 
   num cheapDistance(Vector2 a, Vector2 b) {
     return diff(a.y, b.y) + diff(a.x, b.x);
@@ -1512,6 +1512,12 @@ extension GameFunctions on Game {
   }
 
   void setNpcTarget(Npc npc, Character value) {
+    if (npc == value) {
+      throw Exception("Npc cannot target itself");
+    }
+    if (npc.team == value.team){
+      throw Exception("Npc target same team");
+    }
     npc.target = value;
   }
 
