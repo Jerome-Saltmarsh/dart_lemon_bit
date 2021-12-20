@@ -14,34 +14,29 @@ import '../bleed/zombie_health.dart';
 import '../common/AbilityType.dart';
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
+import '../common/CollectableType.dart';
+import '../common/GameEventType.dart';
 import '../common/ItemType.dart';
 import '../common/PlayerEvent.dart';
 import '../common/Tile.dart';
+import '../common/WeaponType.dart';
+import '../common/classes/Vector2.dart';
 import '../common/enums/Direction.dart';
 import '../common/enums/ObjectType.dart';
 import '../common/enums/ProjectileType.dart';
 import '../common/enums/Shade.dart';
+import '../compile.dart';
+import '../constants.dart';
 import '../constants/no_squad.dart';
+import '../enums.dart';
 import '../enums/npc_mode.dart';
+import '../exceptions/ZombieSpawnPointsEmptyException.dart';
+import '../functions/applyForce.dart';
 import '../functions/insertionSort.dart';
 import '../functions/withinRadius.dart';
 import '../games/world.dart';
 import '../global.dart';
 import '../interfaces/HasSquad.dart';
-import 'Ability.dart';
-import 'Projectile.dart';
-import 'Character.dart';
-import 'Collider.dart';
-import 'EnvironmentObject.dart';
-import '../common/classes/Vector2.dart';
-import '../compile.dart';
-import '../constants.dart';
-import '../enums.dart';
-import '../common/CollectableType.dart';
-import '../common/GameEventType.dart';
-import '../common/WeaponType.dart';
-import '../exceptions/ZombieSpawnPointsEmptyException.dart';
-import '../functions/applyForce.dart';
 import '../language.dart';
 import '../maths.dart';
 import '../settings.dart';
@@ -49,20 +44,25 @@ import '../state.dart';
 import '../update.dart';
 import '../utils.dart';
 import '../utils/game_utils.dart';
+import 'Ability.dart';
+import 'Character.dart';
 import 'Collectable.dart';
+import 'Collider.dart';
 import 'Crate.dart';
+import 'EnvironmentObject.dart';
 import 'GameEvent.dart';
 import 'GameObject.dart';
 import 'Grenade.dart';
+import 'InteractableNpc.dart';
 import 'InteractableObject.dart';
 import 'Item.dart';
 import 'Npc.dart';
 import 'Player.dart';
 import 'Positioned.dart';
+import 'Projectile.dart';
 import 'Scene.dart';
 import 'SpawnPoint.dart';
 import 'TileNode.dart';
-import 'InteractableNpc.dart';
 import 'Weapon.dart';
 
 const _none = -1;
@@ -960,21 +960,21 @@ extension GameFunctions on Game {
       }
     }
 
-    while (!scene.tileWalkableAt(character.left, character.top)) {
-      character.x++;
-      character.y++;
+    if (!scene.tileWalkableAt(character.left, character.top)) {
+      character.x+=3;
+      character.y+=3;
     }
-    while (!scene.tileWalkableAt(character.right, character.top)) {
-      character.x--;
-      character.y++;
+    if (!scene.tileWalkableAt(character.right, character.top)) {
+      character.x-=3;
+      character.y+=3;
     }
-    while (!scene.tileWalkableAt(character.left, character.bottom)) {
-      character.x++;
-      character.y--;
+    if (!scene.tileWalkableAt(character.left, character.bottom)) {
+      character.x+=3;
+      character.y-=3;
     }
-    while (!scene.tileWalkableAt(character.right, character.bottom)) {
-      character.x--;
-      character.y--;
+    if (!scene.tileWalkableAt(character.right, character.bottom)) {
+      character.x-=3;
+      character.y-=3;
     }
 
     switch (character.state) {
@@ -1420,27 +1420,6 @@ extension GameFunctions on Game {
     }
   }
 
-  Character? findClosestCharacter(List<Character> list, double x, double y) {
-    int j = 0;
-    while (true) {
-      if (list[j].alive) break;
-      j++;
-      if (j >= list.length) {
-        return null;
-      }
-    }
-
-    Character closest = list[j];
-    num distance = diff(closest.y, y) + diff(closest.x, x);
-    for (int i = j + 1; i < list.length; i++) {
-      num distance2 = diff(closest.y, y) + diff(closest.x, x);
-      if (distance2 > distance) continue;
-      closest = list[i];
-      distance = distance2;
-    }
-    return closest;
-  }
-
   num cheapDistance(Positioned a, Positioned b) {
     return diff(a.y, b.y) + diff(a.x, b.x);
   }
@@ -1504,11 +1483,12 @@ extension GameFunctions on Game {
     for (int i = 0; i < players.length; i++) {
       if (players[i].lastUpdateFrame < settings.playerDisconnectFrames)
         continue;
+
+      print("removing disconnected player");
       Player player = players[i];
       for (Npc npc in zombies) {
-        if (npc.target == player) {
-          npc.clearTarget();
-        }
+        if (npc.target != player) continue;
+        npc.clearTarget();
       }
       player.active = false;
       players.removeAt(i);
@@ -1574,83 +1554,6 @@ extension GameFunctions on Game {
       gameEvents[i].frameDuration--;
     }
   }
-
-  // void _updateItems() {
-  //   for (int i = 0; i < items.length; i++) {
-  //     Item item = items[i];
-  //
-  //     // TODO Optimize
-  //     if (item.duration-- <= 0) {
-  //       items.removeAt(i);
-  //       i--;
-  //       continue;
-  //     }
-  //     for (Player player in players) {
-  //       if (diffOver(item.x, player.x, radius.item)) continue;
-  //       if (diffOver(item.y, player.y, radius.item)) continue;
-  //       if (player.dead) continue;
-  //
-  //       // @on item collectable
-  //
-  //       switch (item.type) {
-  //         case ItemType.Handgun:
-  //           dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
-  //           break;
-  //         case ItemType.Shotgun:
-  //           dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
-  //           break;
-  //         case ItemType.SniperRifle:
-  //           // @on sniper rifle acquired
-  //           if (player.acquiredSniperRifle) {
-  //             if (player.rounds.sniperRifle >= constants.maxRounds.sniperRifle)
-  //               continue;
-  //             player.rounds.sniperRifle = clampInt(
-  //                 player.rounds.sniperRifle + settings.pickup.sniperRifle,
-  //                 0,
-  //                 constants.maxRounds.sniperRifle);
-  //             dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
-  //             break;
-  //           }
-  //           player.rounds.sniperRifle = settings.pickup.sniperRifle;
-  //           // player.weapon = WeaponType.SniperRifle;
-  //           break;
-  //         case ItemType.Assault_Rifle:
-  //           // @on assault rifle acquired
-  //           if (player.acquiredAssaultRifle) {
-  //             if (player.rounds.assaultRifle >=
-  //                 constants.maxRounds.assaultRifle) continue;
-  //             player.rounds.assaultRifle = clampInt(
-  //                 player.rounds.assaultRifle +
-  //                     constants.maxRounds.assaultRifle ~/ 5,
-  //                 0,
-  //                 constants.maxRounds.assaultRifle);
-  //             dispatch(GameEventType.Ammo_Acquired, item.x, item.y);
-  //             break;
-  //           }
-  //           player.rounds.assaultRifle = settings.pickup.assaultRifle;
-  //           // player.weapon = WeaponType.AssaultRifle;
-  //           break;
-  //         case ItemType.Credits:
-  //           player.earnPoints(settings.collectCreditAmount);
-  //           dispatch(GameEventType.Credits_Acquired, item.x, item.y);
-  //           break;
-  //         case ItemType.Health:
-  //           if (player.health >= player.maxHealth) continue;
-  //           player.health = player.maxHealth;
-  //           dispatch(GameEventType.Health_Acquired, item.x, item.y);
-  //           break;
-  //         case ItemType.Grenade:
-  //           if (player.grenades >= settings.maxGrenades) continue;
-  //           player.grenades++;
-  //           dispatch(GameEventType.Item_Acquired, item.x, item.y);
-  //           break;
-  //       }
-  //
-  //       items.removeAt(i);
-  //       i--;
-  //     }
-  //   }
-  // }
 
   void _updateSpawnPointCollisions() {
     for (int i = 0; i < players.length; i++) {
