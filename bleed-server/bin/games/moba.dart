@@ -55,10 +55,13 @@ class Moba extends Game {
     int totalGood = 0;
     int totalBad = 0;
     for (Player player in players) {
-      if (player.team == Teams.Good.index) totalGood++;
-      if (player.team == Teams.Bad.index) totalBad++;
+      if (player.team == Teams.Good.index) {
+        totalGood++;
+      } else {
+        totalBad++;
+      }
     }
-    return totalGood > totalBad ? Teams.Good.index : Teams.Bad.index;
+    return totalGood > totalBad ? Teams.Bad.index : Teams.Good.index;
   }
 
   @override
@@ -84,8 +87,9 @@ Player playerJoin(Moba moba) {
   }
   final Player player = Player(x: 0, y: 600, game: moba, team: 1);
   registerPlayer(player);
-  moba.players.add(player);
   player.team = moba.getJoinTeam();
+  moba.players.add(player);
+  print("player.team = ${player.team}");
   moba.started = moba.players.length == moba.totalPlayersRequired;
   if (moba.started) {
     moba.onGameStarted();
