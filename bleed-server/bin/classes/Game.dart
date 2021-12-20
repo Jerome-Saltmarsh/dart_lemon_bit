@@ -1437,7 +1437,6 @@ extension GameFunctions on Game {
         // TODO check if there is a closer enemy
         if (withinChaseRange(zombie, zombie.target)) continue;
         zombie.clearTarget();
-        zombie.state = CharacterState.Idle;
       }
 
       for (Npc npc in zombies){
