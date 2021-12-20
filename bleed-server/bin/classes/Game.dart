@@ -1334,12 +1334,14 @@ extension GameFunctions on Game {
     return projectile;
   }
 
-  Npc spawnZombie(double x, double y, {
-        required int health,
-        required int experience,
-        required int team,
-        List<Vector2>? objectives,
-      }) {
+  Npc spawnZombie(
+    double x,
+    double y, {
+    required int health,
+    required int experience,
+    required int team,
+    List<Vector2>? objectives,
+  }) {
     Npc zombie = _getAvailableZombie();
     zombie.team = team;
     zombie.active = true;
@@ -1355,9 +1357,9 @@ extension GameFunctions on Game {
     zombie.yv = 0;
     zombie.xv = 0;
 
-    if (objectives != null){
+    if (objectives != null) {
       zombie.objectives = objectives;
-    }else{
+    } else {
       zombie.objectives = [];
     }
 
@@ -1400,13 +1402,8 @@ extension GameFunctions on Game {
   Npc spawnRandomZombie({int health = 25, required int experience}) {
     if (zombieSpawnPoints.isEmpty) throw ZombieSpawnPointsEmptyException();
     Vector2 spawnPoint = randomItem(zombieSpawnPoints);
-    return spawnZombie(
-        spawnPoint.x,
-        spawnPoint.y,
-        team: Teams.Bad.index,
-        health: health,
-        experience: experience
-    );
+    return spawnZombie(spawnPoint.x, spawnPoint.y,
+        team: Teams.Bad.index, health: health, experience: experience);
   }
 
   int get zombieCount {
@@ -1430,22 +1427,21 @@ extension GameFunctions on Game {
   }
 
   void updateZombieTargets() {
-    Npc zombie;
-    for (int i = 0; i < zombies.length; i++) {
-      zombie = zombies[i];
+    for (Npc zombie in zombies) {
+      if (zombie.dead) {
+        zombie.clearTarget();
+        continue;
+      }
+
       if (zombie.targetSet) {
         // @on update npc with target
         // TODO check if there is a closer enemy
-        if (
-          zombie.target.dead ||
-          withinChaseRange(zombie, zombie.target)
-        ) {
+        if (zombie.target.dead || withinChaseRange(zombie, zombie.target)) {
           zombie.clearTarget();
         }
-
       }
 
-      for (Npc npc in zombies){
+      for (Npc npc in zombies) {
         if (npc.dead) continue;
         if (zombie.team == npc.team) continue;
         if (!withinViewRange(zombie, npc)) continue;
@@ -1464,11 +1460,11 @@ extension GameFunctions on Game {
     }
   }
 
-  bool withinViewRange(Npc npc, Vector2 target){
+  bool withinViewRange(Npc npc, Vector2 target) {
     return withinRadius(npc, target, settings.npc.viewRange);
   }
 
-  bool withinChaseRange(Npc npc, Vector2 target){
+  bool withinChaseRange(Npc npc, Vector2 target) {
     return withinRadius(npc, target, settings.npc.chaseRange);
   }
 
@@ -1520,14 +1516,17 @@ extension GameFunctions on Game {
     if (npc == value) {
       throw Exception("Npc cannot target itself");
     }
-    if (npc.team == value.team){
+    if (npc.team == value.team) {
       throw Exception("Npc target same team");
     }
-    if (npc.dead){
+    if (value.dead) {
       throw Exception("Npc cannot target dead");
     }
-    if (!npc.active){
+    if (!value.active) {
       throw Exception("Npc cannot target deactive");
+    }
+    if (npc.dead) {
+      throw Exception("Npc cannot set target because self is dead");
     }
     npc.target = value;
   }

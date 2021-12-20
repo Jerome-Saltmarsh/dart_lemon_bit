@@ -49,6 +49,8 @@ class Npc extends Character {
 
   void clearTarget() {
     target = _nonTarget;
-    path = [];
+    if (path.isNotEmpty){
+      path = [];
+    }
   }
 }
