@@ -19,6 +19,7 @@ final Character _nonTarget =
 class Npc extends Character {
   Character target = _nonTarget;
   List<Vector2> path = [];
+  List<Vector2> objectives = [];
   NpcMode mode = NpcMode.Aggressive;
 
   int experience;
@@ -42,6 +43,9 @@ class Npc extends Character {
   );
 
   bool get targetSet => target != _nonTarget;
+  bool get pathSet => path.isNotEmpty;
+  bool get objectiveSet => objectives.isNotEmpty;
+  Vector2 get objective => objectives.last;
 
   void clearTarget() {
     target = _nonTarget;

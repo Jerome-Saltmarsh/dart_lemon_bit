@@ -107,13 +107,33 @@
 [ ] Splash Screen
 [ ] Cave Level
 [ ] Ability Tree
+[GAME TYPES]
+[ ] MOBA
+[ ] MMO
+[ ] DEFENSE
+[ ] SMASH BROS
+[ ] ROYAL
+[ ] SOCCER
+[ ] GOLDEN EYE
 [RELEASE]
 -- The plan is to release several game modes like the warcraft 3 custom maps
 -- When the player loads into the game they start in the open world mode. To begin with this will be hard
 -- core mode and won't be possible to persist characters. 
 -- In the future the player will be able to store their character inside an sql database
--- Game Modes include MMO, Dota, Base defense, 
 -- The name of the land is Atlas
+
+
+-- As far as I can see there are two paths forward
+-- The first is to simply focus on making the open world game as rich as possible before releasing
+-- Complete 5 characters
+-- Complete 4 realms
+    - Forest
+    - Caves
+    - Plains
+    - Swamps
+-- The alternative is to begin working on the moba mode
+    - The moba mode will take some time to complete
+    - 
 [ ] Save / Load Character
 [ ] Enemy Archer
 [ ] Enemy Mage

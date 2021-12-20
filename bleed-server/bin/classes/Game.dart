@@ -54,7 +54,6 @@ import 'GameEvent.dart';
 import 'GameObject.dart';
 import 'Grenade.dart';
 import 'InteractableNpc.dart';
-import 'InteractableObject.dart';
 import 'Item.dart';
 import 'Npc.dart';
 import 'Player.dart';
@@ -82,7 +81,6 @@ abstract class Game {
   int duration = 0;
   List<Npc> zombies = [];
   List<InteractableNpc> npcs = [];
-  List<InteractableObject> interactableObjects = [];
   List<SpawnPoint> spawnPoints = [];
   List<Player> players = [];
   List<Projectile> projectiles = [];
@@ -101,12 +99,9 @@ abstract class Game {
   String compiledEnvironmentObjects = "";
   bool compilePaths = false;
 
-  // TODO doesn't belong here
-  StringBuffer buffer = StringBuffer();
+  void onGameStarted() {}
 
-  void onGameStarted(){
-
-  }
+  void updateNpcBehavior(Npc npc) {}
 
   void changeGame(Player player, Game to) {
     if (player.game == to) return;
@@ -144,9 +139,7 @@ abstract class Game {
 
   void update();
 
-  void onPlayerDisconnected(Player player){
-
-  }
+  void onPlayerDisconnected(Player player) {}
 
   GameEvent _getAvailableGameEvent() {
     for (GameEvent gameEvent in gameEvents) {
@@ -219,10 +212,10 @@ extension GameFunctions on Game {
     _updateProjectiles();
     _updateProjectiles(); // called twice to fix collision detection
     _updateNpcs();
-    _updateGrenades();
-    _updateCollectables();
+    // _updateGrenades();
+    // _updateCollectables();
     _updateGameEvents();
-    _updateCrates();
+    // _updateCrates();
     _updateSpawnPointCollisions();
 
     if (frame % characterFramesChange == 0) {
@@ -333,10 +326,13 @@ extension GameFunctions on Game {
     if (npc.busy) return;
     if (npc.inactive) return;
 
-    // todo this belongs in update character
-    if (npc.state == CharacterState.Striking) {
-      if (npc.stateDuration-- > 0) return;
-      setCharacterStateIdle(npc);
+    if (npc.objectiveSet) {
+      if (withinRadius(npc, npc.objective, settings.radius.character)) {
+        npc.objectives.removeLast();
+        if (npc.objectiveSet) {
+          npcSetPathTo(npc, npc.objective.x, npc.objective.y);
+        }
+      }
     }
 
     if (npc.targetSet) {
@@ -659,10 +655,10 @@ extension GameFunctions on Game {
         final double rot = radiansBetweenObject(projectile, target);
         projectile.xv = adj(rot, projectile.speed);
         projectile.yv = opp(rot, projectile.speed);
-        if (distanceBetween(projectile.x, projectile.y, target.x, target.y) < settings.radius.character){
+        if (distanceBetween(projectile.x, projectile.y, target.x, target.y) <
+            settings.radius.character) {
           handleProjectileHit(projectile, target);
         }
-
       } else if (projectileDistanceTravelled(projectile) > projectile.range) {
         deactivateProjectile(projectile);
       }
@@ -856,7 +852,7 @@ extension GameFunctions on Game {
     for (int i = 0; i < projectiles.length; i++) {
       Projectile projectile = projectiles[i];
       if (!projectile.active) continue;
-      if (projectile.target != null){
+      if (projectile.target != null) {
         continue;
       }
       for (int j = s; j < characters.length; j++) {
@@ -873,8 +869,7 @@ extension GameFunctions on Game {
     }
   }
 
-  void handleProjectileHit(Projectile projectile, Character character){
-
+  void handleProjectileHit(Projectile projectile, Character character) {
     deactivateProjectile(projectile);
     character.xv += projectile.xv * settings.bulletImpactVelocityTransfer;
     character.yv += projectile.yv * settings.bulletImpactVelocityTransfer;
@@ -904,8 +899,8 @@ extension GameFunctions on Game {
       }
       // items.add(Item(type: ItemType.Handgun, x: character.x, y: character.y));
       character.active = false;
-      dispatch(GameEventType.Zombie_killed_Explosion, character.x,
-          character.y, projectile.xv, projectile.yv);
+      dispatch(GameEventType.Zombie_killed_Explosion, character.x, character.y,
+          projectile.xv, projectile.yv);
     }
   }
 
@@ -913,6 +908,7 @@ extension GameFunctions on Game {
     if (target.dead) return;
     applyDamage(src, target, damage);
     double a = radiansBetween2(src, target.x, target.y);
+
     /// calculate force by dividing damage by target's max health
     applyForce(target, a, 5);
     if (target is Npc == false) return;
@@ -930,9 +926,9 @@ extension GameFunctions on Game {
     }
   }
 
-  double calculateAngleDifference(double angleA, double angleB){
+  double calculateAngleDifference(double angleA, double angleB) {
     double diff = abs(angleA - angleB).toDouble();
-    if (diff < pi){
+    if (diff < pi) {
       return diff;
     }
     return pi2 - diff;
@@ -957,6 +953,11 @@ extension GameFunctions on Game {
 
     if (character.dead) return;
 
+    // if (npc.state == CharacterState.Striking) {
+    //   if (npc.stateDuration-- > 0) return;
+    //   setCharacterStateIdle(npc);
+    // }
+
     if (character.stateDuration > 0) {
       character.stateDuration--;
       if (character.stateDuration == 0) {
@@ -965,20 +966,20 @@ extension GameFunctions on Game {
     }
 
     if (!scene.tileWalkableAt(character.left, character.top)) {
-      character.x+=3;
-      character.y+=3;
+      character.x += 3;
+      character.y += 3;
     }
     if (!scene.tileWalkableAt(character.right, character.top)) {
-      character.x-=3;
-      character.y+=3;
+      character.x -= 3;
+      character.y += 3;
     }
     if (!scene.tileWalkableAt(character.left, character.bottom)) {
-      character.x+=3;
-      character.y-=3;
+      character.x += 3;
+      character.y -= 3;
     }
     if (!scene.tileWalkableAt(character.right, character.bottom)) {
-      character.x-=3;
-      character.y-=3;
+      character.x -= 3;
+      character.y -= 3;
     }
 
     switch (character.state) {
@@ -1068,13 +1069,16 @@ extension GameFunctions on Game {
           case AbilityType.Split_Arrow:
             final int castFrame = 3;
             if (character.stateDuration == castFrame) {
-              Projectile arrow1 = spawnArrow(character, damage: character.damage);
+              Projectile arrow1 =
+                  spawnArrow(character, damage: character.damage);
               double angle = piSixteenth;
               arrow1.target = null;
               setProjectilAngle(arrow1, character.aimAngle - angle);
-              Projectile arrow2 = spawnArrow(character, damage: character.damage);
+              Projectile arrow2 =
+                  spawnArrow(character, damage: character.damage);
               arrow2.target = null;
-              Projectile arrow3 = spawnArrow(character, damage: character.damage);
+              Projectile arrow3 =
+                  spawnArrow(character, damage: character.damage);
               arrow3.target = null;
               setProjectilAngle(arrow3, character.aimAngle + angle);
               character.performing = null;
@@ -1086,8 +1090,8 @@ extension GameFunctions on Game {
             final int castFrame = 3;
             if (character.stateDuration == castFrame) {
               final int damageMultiplier = 3;
-              spawnArrow(character,
-                  damage: character.damage * damageMultiplier).range = ability.range;
+              spawnArrow(character, damage: character.damage * damageMultiplier)
+                  .range = ability.range;
               character.attackTarget = null;
               character.performing = null;
             }
@@ -1098,9 +1102,11 @@ extension GameFunctions on Game {
             if (character.stateDuration == castFrame) {
               character.performing = null;
               const damageMultiplier = 2;
-              for (Npc zombie in zombies){
-                if (distanceBetweenObjects(zombie, character) < character.attackRange) {
-                  applyStrike(character, zombie, character.damage * damageMultiplier);
+              for (Npc zombie in zombies) {
+                if (distanceBetweenObjects(zombie, character) <
+                    character.attackRange) {
+                  applyStrike(
+                      character, zombie, character.damage * damageMultiplier);
                 }
               }
               character.attackTarget = null;
@@ -1112,8 +1118,9 @@ extension GameFunctions on Game {
             const damageMultiplier = 3;
             if (character.stateDuration == castFrame) {
               Character? attackTarget = character.attackTarget;
-              if (attackTarget != null){
-                applyStrike(character, attackTarget, character.damage * damageMultiplier);
+              if (attackTarget != null) {
+                applyStrike(character, attackTarget,
+                    character.damage * damageMultiplier);
               }
               character.attackTarget = null;
               character.performing = null;
@@ -1144,7 +1151,7 @@ extension GameFunctions on Game {
               Character? attackTarget = character.attackTarget;
 
               // otherwise do a raycast hit
-              if (attackTarget == null){
+              if (attackTarget == null) {
                 Character? target = null;
                 double targetDistance = 0;
                 double radiusTop = character.y - character.attackRange;
@@ -1156,12 +1163,15 @@ extension GameFunctions on Game {
                   if (zombie.top > radiusBottom) break;
                   if (zombie.right < radiusLeft) continue;
                   if (zombie.left > radiusRight) continue;
-                  double angle = angleBetween(character.x, character.y, zombie.x, zombie.y);
-                  double angleDiff = calculateAngleDifference(angle, character.aimAngle);
+                  double angle = angleBetween(
+                      character.x, character.y, zombie.x, zombie.y);
+                  double angleDiff =
+                      calculateAngleDifference(angle, character.aimAngle);
                   if (angleDiff > pi) continue;
-                  double zombieDistance = distanceBetweenObjects(zombie, character);
+                  double zombieDistance =
+                      distanceBetweenObjects(zombie, character);
                   if (zombieDistance > character.attackRange) continue;
-                  if (target == null || zombieDistance < targetDistance){
+                  if (target == null || zombieDistance < targetDistance) {
                     target = zombie;
                     targetDistance = zombieDistance;
                   }
@@ -1169,7 +1179,7 @@ extension GameFunctions on Game {
                 attackTarget = target;
               }
 
-              if (attackTarget != null){
+              if (attackTarget != null) {
                 applyStrike(character, attackTarget, character.damage);
               }
             }
@@ -1251,7 +1261,6 @@ extension GameFunctions on Game {
   }
 
   Projectile spawnBlueOrb(Character character) {
-
     dispatch(GameEventType.Blue_Orb_Fired, character.x, character.y);
     return spawnProjectile(
         character: character,
@@ -1472,15 +1481,8 @@ extension GameFunctions on Game {
     npc.target = value;
   }
 
-  void jobNpcWander() {
-    for (Npc npc in zombies) {
-      if (npc.inactive) continue;
-      if (npc.busy) continue;
-      if (npc.dead) continue;
-      if (npc.targetSet) continue;
-      if (npc.path.isNotEmpty) continue;
-      npcSetRandomDestination(npc);
-    }
+  void updateNpcObjective(Npc npc) {
+    npcSetRandomDestination(npc);
   }
 
   void removeDisconnectedPlayers() {
@@ -1532,7 +1534,6 @@ extension GameFunctions on Game {
   }
 
   void npcSetRandomDestination(Npc npc) {
-    // @on npc set random destination
     npcSetPathToTileNode(npc, getRandomOpenTileNode());
   }
 
@@ -1669,12 +1670,12 @@ void selectCharacterType(Player player, CharacterType value) {
       player.maxMagic = 100;
       player.magic = player.maxMagic;
       player.ability1 = Ability(
-          type: AbilityType.Explosion,
-          level: 0,
-          magicCost:  60,
-          range: 200,
-          cooldown: 15,
-          radius: settings.radius.explosion,
+        type: AbilityType.Explosion,
+        level: 0,
+        magicCost: 60,
+        range: 200,
+        cooldown: 15,
+        radius: settings.radius.explosion,
       );
       player.ability2 = Ability(
           type: AbilityType.Blink,
@@ -1683,12 +1684,12 @@ void selectCharacterType(Player player, CharacterType value) {
           range: 200,
           cooldown: 10);
       player.ability3 = Ability(
-          type: AbilityType.FreezeCircle,
-          level: 0,
-          magicCost: 10,
-          range: 200,
-          cooldown: 15,
-          radius: settings.radius.explosion,
+        type: AbilityType.FreezeCircle,
+        level: 0,
+        magicCost: 10,
+        range: 200,
+        cooldown: 15,
+        radius: settings.radius.explosion,
       );
       player.ability4 = Ability(
           type: AbilityType.Fireball,
@@ -1748,7 +1749,6 @@ void selectCharacterType(Player player, CharacterType value) {
       // TODO: Handle this case.
       break;
   }
-
 
   player.magic = player.maxMagic;
   player.health = player.maxHealth;

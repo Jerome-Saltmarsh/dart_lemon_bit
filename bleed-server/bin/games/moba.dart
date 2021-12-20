@@ -5,12 +5,19 @@ import '../classes/Npc.dart';
 import '../classes/Player.dart';
 import '../common/CharacterType.dart';
 import '../common/classes/Vector2.dart';
-import '../compile.dart';
+import '../functions/withinRadius.dart';
 import '../instances/scenes.dart';
 import 'world.dart';
 
 typedef Players = List<Player>;
 typedef Creeps = List<Creep>;
+
+
+
+/**
+ * TODO
+ *
+ */
 
 class Moba extends Game {
   Players players1 = [];
@@ -33,16 +40,13 @@ class Moba extends Game {
     if (!started) return;
     if (duration % 300 == 0) {
       spawnZombie(creepSpawn1.x, creepSpawn1.y, health: 10, experience: 10);
-      // spawnZombie(creepSpawn2.y, creepSpawn2.y, health: 10, experience: 10);
     }
-    //
-    // if (duration % 5 == 0){
-    // }
 
-    for(Creep creep in creeps1) {
-       if (!creep.targetSet){
-         // creep.pa
-       }
+    for (Creep creep in creeps1) {
+      if (withinDistance(creep, teamSpawn2.x, teamSpawn2.y, 30)) {
+        creep.active = false;
+        // lose lives
+      }
     }
   }
 
@@ -51,18 +55,18 @@ class Moba extends Game {
   }
 
   @override
-  void onPlayerDisconnected(Player player){
+  void onPlayerDisconnected(Player player) {
     players1.remove(player);
     players2.remove(player);
   }
 
   @override
-  void onGameStarted(){
-    for(Player player in players1){
+  void onGameStarted() {
+    for (Player player in players1) {
       player.x = teamSpawn1.x += giveOrTake(5);
       player.y = teamSpawn1.y += giveOrTake(5);
     }
-    for(Player player in players2){
+    for (Player player in players2) {
       player.x = teamSpawn2.x += giveOrTake(5);
       player.y = teamSpawn2.y += giveOrTake(5);
     }
@@ -76,8 +80,9 @@ Player playerJoin(Moba moba) {
   final Player player = Player(x: 0, y: 600, game: moba, team: 1);
   registerPlayer(player);
   moba.getJoinTeam().add(player);
-  moba.started = moba.players1.length + moba.players2.length == moba.totalPlayersRequired;
-  if (moba.started){
+  moba.started =
+      moba.players1.length + moba.players2.length == moba.totalPlayersRequired;
+  if (moba.started) {
     moba.onGameStarted();
   }
   moba.players.add(player);
@@ -85,13 +90,9 @@ Player playerJoin(Moba moba) {
 }
 
 class Creep extends Npc {
-
   final List<Vector2> checkpoints = [];
 
-  Creep(double x, double y) : super(
-      x: x,
-      y: y,
-      type: CharacterType.Zombie,
-      health: 20, experience: 1
-  );
+  Creep(double x, double y)
+      : super(
+            x: x, y: y, type: CharacterType.Zombie, health: 20, experience: 1);
 }

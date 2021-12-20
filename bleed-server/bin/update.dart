@@ -4,6 +4,7 @@ import 'package:lemon_math/hypotenuse.dart';
 
 import 'classes/Game.dart';
 import 'classes/GameObject.dart';
+import 'classes/Npc.dart';
 import 'games/world.dart';
 import 'global.dart';
 import 'language.dart';
@@ -18,8 +19,8 @@ void initUpdateLoop() {
   // @on init jobs
   Future.delayed(Duration(seconds: 3), () {
     periodic(fixedUpdate, ms: 1000 ~/ fps);
-    periodic(jobNpcWander, seconds: 4);
-    periodic(jobRemoveDisconnectedPlayers, seconds: 4);
+    periodic(updateNpcObjective, seconds: 4);
+    periodic(removeDisconnectedPlayers, seconds: 4);
     periodic(updateNpcTargets, ms: 500);
   });
 }
@@ -35,15 +36,28 @@ void updateOpenWorldTime() {
   time = (time + secondsPerFrame) % secondsPerDay;
 }
 
-void jobRemoveDisconnectedPlayers(Timer timer) {
+void removeDisconnectedPlayers(Timer timer) {
   for (Game game in global.games) {
     game.removeDisconnectedPlayers();
   }
 }
 
-void jobNpcWander(Timer timer) {
+void updateNpcObjective(Timer timer) {
   for (Game game in global.games) {
-    game.jobNpcWander();
+    for (Npc npc in game.zombies) {
+      if (npc.inactive) continue;
+      if (npc.busy) continue;
+      if (npc.dead) continue;
+      if (npc.targetSet) continue;
+      if (npc.pathSet) continue;
+      game.updateNpcObjective(npc);
+
+      if (npc.objectives.isEmpty) {
+        game.npcSetRandomDestination(npc);
+      } else {
+        game.npcSetPathTo(npc, npc.objective.x, npc.objective.y);
+      }
+    }
   }
 }
 

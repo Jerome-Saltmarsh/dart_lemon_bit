@@ -1,24 +1,21 @@
 import 'bleed/zombie_health.dart';
 import 'classes/Ability.dart';
 import 'classes/Character.dart';
-import 'classes/Projectile.dart';
 import 'classes/Collectable.dart';
-import 'classes/Crate.dart';
 import 'classes/EnvironmentObject.dart';
 import 'classes/Game.dart';
 import 'classes/GameEvent.dart';
 import 'classes/Grenade.dart';
-import 'classes/Item.dart';
+import 'classes/InteractableNpc.dart';
 import 'classes/Npc.dart';
 import 'classes/Player.dart';
-import 'classes/InteractableNpc.dart';
+import 'classes/Projectile.dart';
 import 'classes/Weapon.dart';
 import 'common/AbilityType.dart';
 import 'common/PlayerEvent.dart';
-import 'common/Tile.dart';
 import 'common/ServerResponse.dart';
+import 'common/Tile.dart';
 import 'common/classes/Vector2.dart';
-import 'games/moba.dart';
 import 'games/world.dart';
 
 // constants
@@ -39,31 +36,24 @@ void compilePlayerJoined(StringBuffer buffer, Player player){
 }
 
 void compileGame(Game game) {
-  game.buffer.clear();
+  final StringBuffer buffer = StringBuffer();
+  _compilePlayers(buffer, game.players);
+  _compileZombies(buffer, game.zombies);
+  _compileInteractableNpcs(buffer, game.npcs);
+  _compileProjectiles(buffer, game.projectiles);
+  _compileGameEvents(buffer, game.gameEvents);
 
-  _compilePlayers(game.buffer, game.players);
-  _compileZombies(game.buffer, game.zombies);
-  _compileInteractableNpcs(game.buffer, game.npcs);
-  _compileProjectiles(game.buffer, game.projectiles);
-  _compileGameEvents(game.buffer, game.gameEvents);
-  _compileGrenades(game.buffer, game.grenades);
-  _compileCollectables(game.buffer, game.collectables);
-
-  _write(game.buffer, ServerResponse.Game_Time.index);
-  _write(game.buffer, time);
+  _write(buffer, ServerResponse.Game_Time.index);
+  _write(buffer, time);
 
   if (game.compilePaths) {
-    _compilePaths(game.buffer, game.zombies);
-    _compileNpcDebug(game.buffer, game.npcs);
+    _compilePaths(buffer, game.zombies);
+    _compileNpcDebug(buffer, game.npcs);
   }
 
-  _write(game.buffer, ServerResponse.Scene_Shade_Max.index);
-  _write(game.buffer, game.shadeMax.index);
-
-  _compileCrates(game);
-  _compileItems(game.buffer, game.items);
-
-  game.compiled = game.buffer.toString();
+  _write(buffer, ServerResponse.Scene_Shade_Max.index);
+  _write(buffer, game.shadeMax.index);
+  game.compiled = buffer.toString();
 }
 
 String compileEnvironmentObjects(List<EnvironmentObject> environmentObjects) {
@@ -77,26 +67,6 @@ String compileEnvironmentObjects(List<EnvironmentObject> environmentObjects) {
   }
   _writeSemiColon(buffer);
   return buffer.toString();
-}
-
-void _compileCrates(Game game) {
-  _write(game.buffer, ServerResponse.Crates.index);
-  for (Crate crate in game.crates) {
-    if (crate.deactiveDuration > 0) continue;
-    _writeInt(game.buffer, crate.x);
-    _writeInt(game.buffer, crate.y);
-  }
-  _write(game.buffer, _semiColon);
-}
-
-void _compileItems(StringBuffer buffer, List<Item> items) {
-  _write(buffer, ServerResponse.Items.index);
-  _write(buffer, items.length);
-  for (Item item in items) {
-    _write(buffer, item.type.index);
-    _writeInt(buffer, item.x);
-    _writeInt(buffer, item.y);
-  }
 }
 
 String compileTiles(List<List<Tile>> tiles) {
