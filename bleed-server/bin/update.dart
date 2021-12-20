@@ -13,15 +13,20 @@ import 'state.dart';
 
 const _minusOne = -1;
 const _one = 1;
-const fps = 30;
+const msPerSecond = 1000;
+const framesPerSecond = 30;
+const msPerFrame = msPerSecond ~/ framesPerSecond;
+const msPerUpdateNpcTarget = 500;
+const secondsPerRemoveDisconnectedPlayers = 4;
+const secondsPerUpdateNpcObjective = 4;
 
 void initUpdateLoop() {
   // @on init jobs
   Future.delayed(Duration(seconds: 3), () {
-    periodic(fixedUpdate, ms: 1000 ~/ fps);
-    periodic(updateNpcObjective, seconds: 4);
-    periodic(removeDisconnectedPlayers, seconds: 4);
-    periodic(updateNpcTargets, ms: 500);
+    periodic(fixedUpdate, ms: msPerFrame);
+    periodic(updateNpcObjective, seconds: secondsPerUpdateNpcObjective);
+    periodic(removeDisconnectedPlayers, seconds: secondsPerRemoveDisconnectedPlayers);
+    periodic(updateNpcTargets, ms: msPerUpdateNpcTarget);
   });
 }
 

@@ -673,7 +673,7 @@ void _consumeHuman(Character character) {
   character.x = _consumeDouble();
   character.y = _consumeDouble();
   character.frame = _consumeInt();
-  character.squad = _consumeInt();
+  character.team = _consumeInt();
   character.name = _consumeString();
 
   StringBuffer textBuffer = StringBuffer();

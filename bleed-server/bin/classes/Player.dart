@@ -87,5 +87,5 @@ class Player extends Character {
             y: y,
             health: settings.health.player,
             speed: settings.playerSpeed,
-            squad: team);
+            team: team);
 }

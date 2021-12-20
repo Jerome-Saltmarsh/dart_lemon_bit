@@ -112,9 +112,11 @@
 [ ] MMO
 [ ] DEFENSE
 [ ] SMASH BROS
-[ ] ROYAL
+[ ] BATTLE ROYAL
 [ ] SOCCER
 [ ] GOLDEN EYE
+[ ] BATTLEFIELD (Capture flags)
+    - This uses guns and abilities
 [RELEASE]
 -- The plan is to release several game modes like the warcraft 3 custom maps
 -- When the player loads into the game they start in the open world mode. To begin with this will be hard
@@ -517,58 +519,9 @@
 # Symbolic Hard Link
 mklink /J common C:\Users\Jerome\github\bleed\bleed-common\lib
 
-// IDEAS
-// Captured Flags increase passive income
+# IDEAS
+- Captured Flags increase passive income
+- The shooter mode disables the mouse and provides and aiming circle instead
 
 #Goal
-The goal is to build something that people enjoy playing. If I can get a user base that plays consistently
-then that is success for me.
-
-
-# Architecture 
-
-
-
-Network -> Parse -> Game State -> Render
-
-Input -> Network
-
-Game Loop -> Network Update
-
-receive compiled game state from the network, parse it into game state then render.
-
--- DESIGN -- 
-[ ] Staff can upgrade in three ways
-[ ] Chakra
-[ ] Water (Support Healing)
-[ ] Fire (Glass Cannon)
-[ ] Electric (AOE)
-[ ] Bow can be upgraded in three ways
-[ ] Offensive
-[ ] Split arrow
-[ ] Other
-[ ] Sword can be upgraded in three ways
-[ ] Each upgrade requires specific minerals and a character level
-
-Gunman Class
-[ ] Handgun
-[ ] Shotgun
-
-Warlock Class
-[ ] 
-
-Samurai Class
-[ ] Specializes in sword
-
-Ninja Class
-[ ] Katana,
-[ ] throwing stars skills,
-[ ] Dash
-[ ] Explosives
-
-// Each character has a standard attack
-// Knights slash their swords
-// Archers shoot arrows (longer range)
-// Witches shoot an orb (shorter range)
-
-// Hero's then have access to special abilities which can be unlocked as they gain levels
+The goal is to platform which allows me to truly explore all of my creativity

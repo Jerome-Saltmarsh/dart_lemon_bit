@@ -100,7 +100,7 @@ void main() {
       clearBuffer();
       Player player = spawnPlayerInTown();
       compilePlayer(_buffer, player);
-      write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.squad}');
+      write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.team}');
       write(player.game.compiledTiles);
       write(player.game.compiledEnvironmentObjects);
       write(player.game.compiled);

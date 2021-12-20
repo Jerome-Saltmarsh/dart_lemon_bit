@@ -32,7 +32,7 @@ const String _semiColon = '; ';
 const String _comma = ', ';
 
 void compilePlayerJoined(StringBuffer buffer, Player player){
-  _write(buffer, '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.squad} ');
+  _write(buffer, '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.team} ');
 }
 
 void compileGame(Game game) {
@@ -309,7 +309,7 @@ void _compilePlayer(StringBuffer buffer, Player player) {
   _writeInt(buffer, player.x);
   _writeInt(buffer, player.y);
   _write(buffer, player.stateFrameCount);
-  _write(buffer, player.squad);
+  _write(buffer, player.team);
   _write(buffer, player.name);
   _write(buffer, player.text);
   _write(buffer, _comma);

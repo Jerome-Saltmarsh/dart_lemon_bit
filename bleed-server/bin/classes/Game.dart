@@ -66,6 +66,11 @@ import 'Weapon.dart';
 
 const _none = -1;
 
+enum Teams {
+  Good,
+  Bad,
+}
+
 // This should be OpenWorldScene
 abstract class Game {
   static int _id = 0;
@@ -123,7 +128,7 @@ abstract class Game {
     int count = 0;
     for (Player player in players) {
       if (!player.active) continue;
-      if (player.squad != squad) continue;
+      if (player.team != squad) continue;
       count++;
     }
     return count;
@@ -389,7 +394,7 @@ extension GameFunctions on Game {
   }
 
   void _updatePlayersPerSecond() {
-    if (duration % fps != 0) return;
+    if (duration % framesPerSecond != 0) return;
 
     for (Player player in players) {
       if (player.dead) continue;
@@ -758,9 +763,9 @@ extension GameFunctions on Game {
 
   bool sameTeam(Player a, Player b) {
     if (a == b) return true;
-    if (a.squad == noSquad) return false;
-    if (b.squad == noSquad) return false;
-    return a.squad == b.squad;
+    if (a.team == noSquad) return false;
+    if (b.team == noSquad) return false;
+    return a.team == b.team;
   }
 
   void _updateNpcs() {
@@ -1328,9 +1333,14 @@ extension GameFunctions on Game {
     return projectile;
   }
 
-  Npc spawnZombie(double x, double y,
-      {required int health, required int experience}) {
+  Npc spawnZombie(double x, double y, {
+        required int health,
+        required int experience,
+        required int team,
+        List<Vector2>? objectives,
+      }) {
     Npc zombie = _getAvailableZombie();
+    zombie.team = team;
     zombie.active = true;
     zombie.experience = experience;
     zombie.state = CharacterState.Idle;
@@ -1339,10 +1349,17 @@ extension GameFunctions on Game {
     zombie.maxHealth = health;
     zombie.health = health;
     zombie.collidable = true;
-    zombie.x = x;
-    zombie.y = y;
+    zombie.x = x + giveOrTake(radius.zombieSpawnVariation);
+    zombie.y = y + giveOrTake(radius.zombieSpawnVariation);
     zombie.yv = 0;
     zombie.xv = 0;
+
+    if (objectives != null){
+      zombie.objectives = objectives;
+    }else{
+      zombie.objectives = [];
+    }
+
     return zombie;
   }
 
@@ -1382,9 +1399,13 @@ extension GameFunctions on Game {
   Npc spawnRandomZombie({int health = 25, required int experience}) {
     if (zombieSpawnPoints.isEmpty) throw ZombieSpawnPointsEmptyException();
     Vector2 spawnPoint = randomItem(zombieSpawnPoints);
-    return spawnZombie(spawnPoint.x + giveOrTake(radius.zombieSpawnVariation),
-        spawnPoint.y + giveOrTake(radius.zombieSpawnVariation),
-        health: health, experience: experience);
+    return spawnZombie(
+        spawnPoint.x,
+        spawnPoint.y,
+        team: Teams.Bad.index,
+        health: health,
+        experience: experience
+    );
   }
 
   int get zombieCount {

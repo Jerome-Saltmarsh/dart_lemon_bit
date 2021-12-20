@@ -20,11 +20,11 @@ class Projectile extends GameObject implements HasSquad {
 
   Projectile():super(0, 0);
 
-  int get squad => owner.squad;
+  int get squad => owner.team;
 
   @override
   int getSquad() {
-    return owner.squad;
+    return owner.team;
   }
 }
 

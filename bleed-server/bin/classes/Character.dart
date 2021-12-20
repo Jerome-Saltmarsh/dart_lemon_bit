@@ -41,7 +41,7 @@ class Character extends GameObject implements HasSquad {
   double speedModifier = 0;
   bool invincible = false;
 
-  int squad;
+  int team;
   List<Weapon> weapons = [];
   bool weaponsDirty = false;
 
@@ -81,7 +81,7 @@ class Character extends GameObject implements HasSquad {
     required double y,
     required int health,
     required double speed,
-    this.squad = noSquad,
+    this.team = noSquad,
     List<Weapon>? weapons,
   }) : super(x, y, radius: settings.radius.character) {
     maxHealth = health;
@@ -93,6 +93,6 @@ class Character extends GameObject implements HasSquad {
 
   @override
   int getSquad() {
-    return squad;
+    return team;
   }
 }

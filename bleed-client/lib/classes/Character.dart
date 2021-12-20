@@ -11,7 +11,7 @@ class Character {
   double y;
   int frame;
   WeaponType weapon;
-  int squad;
+  int team;
   String name;
   String text;
   double health = 1; // percentage between 0 and 1
@@ -28,7 +28,7 @@ class Character {
     this.y = 0,
     this.frame = 0,
     this.weapon = WeaponType.Unarmed,
-    this.squad = 0,
+    this.team = 0,
     this.name = "",
     this.text = "",
   });

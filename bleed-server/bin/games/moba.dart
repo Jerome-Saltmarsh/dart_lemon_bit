@@ -5,49 +5,53 @@ import '../classes/Npc.dart';
 import '../classes/Player.dart';
 import '../common/CharacterType.dart';
 import '../common/classes/Vector2.dart';
-import '../functions/withinRadius.dart';
 import '../instances/scenes.dart';
+import '../language.dart';
 import 'world.dart';
 
 typedef Players = List<Player>;
-typedef Creeps = List<Creep>;
-
-
-
-/**
- * TODO
- *
- */
 
 class Moba extends Game {
   Players players1 = [];
   Players players2 = [];
-  Creeps creeps1 = [];
-  Creeps creeps2 = [];
   Vector2 teamSpawn1 = Vector2(-600, 620);
   Vector2 teamSpawn2 = Vector2(850, 910);
   Vector2 creepSpawn1 = Vector2(-530, 625);
   Vector2 creepSpawn2 = Vector2(800, 900);
 
+  List<Vector2> creep1Objects = [];
+  List<Vector2> creep2Objects = [];
+
   int totalPlayersRequired = 2;
   int team1Lives = 10;
   int team2Lives = 10;
+
+  final int framesPerCreepSpawn = 300;
 
   Moba() : super(scenes.wildernessNorth01, started: false);
 
   @override
   void update() {
     if (!started) return;
-    if (duration % 300 == 0) {
-      spawnZombie(creepSpawn1.x, creepSpawn1.y, health: 10, experience: 10);
+    if (duration % framesPerCreepSpawn == 0) {
+      spawnCreeps();
     }
+  }
 
-    for (Creep creep in creeps1) {
-      if (withinDistance(creep, teamSpawn2.x, teamSpawn2.y, 30)) {
-        creep.active = false;
-        // lose lives
-      }
-    }
+  void spawnCreeps(){
+    spawnZombie(creepSpawn1.x, creepSpawn1.y,
+      health: 10,
+      experience: 10,
+      objectives: copy(creep1Objects),
+      team: Teams.Good.index
+    );
+
+    spawnZombie(creepSpawn2.x, creepSpawn2.y,
+      health: 10,
+      experience: 10,
+      objectives: copy(creep1Objects),
+        team: Teams.Bad.index,
+    );
   }
 
   Players getJoinTeam() {
