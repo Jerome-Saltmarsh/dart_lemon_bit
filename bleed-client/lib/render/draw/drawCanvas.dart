@@ -72,6 +72,7 @@ void renderCanvasPlay() {
     resetDynamicShadesToBakeMap();
     // emitMouseLight();
     applyCharacterLightEmission(game.humans);
+    applyCharacterLightEmission(game.zombies);
     applyProjectileLighting();
     applyNpcLightEmission(game.interactableNpcs);
 

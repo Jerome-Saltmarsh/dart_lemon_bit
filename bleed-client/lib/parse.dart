@@ -395,6 +395,7 @@ void _parsePlayer() {
   game.player.magic.value = _consumeDouble();
   game.player.maxMagic.value = _consumeDouble();
   game.player.attackRange = _consumeDouble();
+  game.player.team = _consumeInt();
 }
 
 AbilityType _consumeAbilityType() {
@@ -693,6 +694,7 @@ void _consumeZombie(Zombie zombie) {
   zombie.y = _consumeDoubleUnsafe();
   zombie.frame = _consumeIntUnsafe();
   zombie.health = _consumePercentage();
+  zombie.team = _consumeInt();
 }
 
 void _consumeInteractableNpc(Character interactableNpc) {

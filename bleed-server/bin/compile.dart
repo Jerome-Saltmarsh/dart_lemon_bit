@@ -152,6 +152,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.magic);
   _write(buffer, player.maxMagic);
   _writeInt(buffer, player.attackRange);
+  _write(buffer, player.team);
 
   Character? aimTarget = player.aimTarget;
   if (aimTarget != null) {
@@ -324,6 +325,7 @@ void _compileNpc(StringBuffer buffer, Npc npc) {
   _writeInt(buffer, npc.y);
   _write(buffer, npc.stateFrameCount);
   _writeInt(buffer, (npc.health / npc.maxHealth) * 100);
+  _write(buffer, npc.team);
 }
 
 void _compileInteractableNpc(StringBuffer buffer, InteractableNpc npc) {

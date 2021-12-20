@@ -142,7 +142,7 @@ void resolveCollisionB(GameObject a, GameObject b) {
 }
 
 double collisionOverlap(GameObject a, GameObject b) {
-  return a.radius + b.radius - distanceBetweenObjects(a, b);
+  return a.radius + b.radius - distanceV2(a, b);
 }
 
 void resolveCollisionBetween(List<GameObject> gameObjectsA,

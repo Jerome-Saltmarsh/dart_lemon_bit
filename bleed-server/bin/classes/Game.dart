@@ -269,7 +269,7 @@ extension GameFunctions on Game {
   /// calculates if there is a wall between two objects
   bool isVisibleBetween(Vector2 a, Vector2 b) {
     double r = radiansBetweenObject(a, b);
-    double d = distanceBetweenObjects(a, b);
+    double d = distanceV2(a, b);
     double vX = adj(r, tileSize);
     double vY = opp(r, tileSize);
     int jumps = d ~/ tileSize;
@@ -301,6 +301,18 @@ extension GameFunctions on Game {
     if (src is Player) {
       if (target is Npc) {
         playerGainExperience(src, target.experience);
+      }
+    }
+
+    if (target is Npc && target.alive){
+      if (!target.targetSet) {
+        setNpcTarget(target, src);
+      }else{
+        double d1 = distanceV2(src, target);
+        double d2 = distanceV2(target, target.target);
+        if (d1 < d2){
+          setNpcTarget(target, src);
+        }
       }
     }
   }
@@ -447,7 +459,7 @@ extension GameFunctions on Game {
         double combinedRadius = character.radius + collider.radius;
         if (diffOver(character.x, collider.x, combinedRadius)) continue;
         if (diffOver(character.y, collider.y, combinedRadius)) continue;
-        double _distance = distanceBetweenObjects(character, collider);
+        double _distance = distanceV2(character, collider);
         if (_distance > combinedRadius) continue;
         double overlap = combinedRadius - _distance;
         double r = radiansBetweenObject(character, collider);
@@ -1109,7 +1121,7 @@ extension GameFunctions on Game {
               character.performing = null;
               const damageMultiplier = 2;
               for (Npc zombie in zombies) {
-                if (distanceBetweenObjects(zombie, character) <
+                if (distanceV2(zombie, character) <
                     character.attackRange) {
                   applyStrike(
                       character, zombie, character.damage * damageMultiplier);
@@ -1175,7 +1187,7 @@ extension GameFunctions on Game {
                       calculateAngleDifference(angle, character.aimAngle);
                   if (angleDiff > pi) continue;
                   double zombieDistance =
-                      distanceBetweenObjects(zombie, character);
+                      distanceV2(zombie, character);
                   if (zombieDistance > character.attackRange) continue;
                   if (target == null || zombieDistance < targetDistance) {
                     target = zombie;
@@ -1448,6 +1460,8 @@ extension GameFunctions on Game {
         if (!isVisibleBetween(zombie, npc)) continue;
         setNpcTarget(zombie, npc);
       }
+
+      if (zombie.targetSet) continue;
 
       for (Player player in players) {
         if (player.dead) continue;

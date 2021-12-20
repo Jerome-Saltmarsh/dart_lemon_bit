@@ -12,7 +12,7 @@ const double _1 = 1.0;
 const double goldenRatio = 1.61803398875;
 const double goldenRatioInverse = _1 / goldenRatio;
 
-double distanceBetweenObjects(Vector2 a, Vector2 b) {
+double distanceV2(Vector2 a, Vector2 b) {
   return distanceBetween(a.x, a.y, b.x, b.y);
 }
 

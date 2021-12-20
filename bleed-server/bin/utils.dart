@@ -40,7 +40,7 @@ void setDirection(Character character, Direction direction) {
 }
 
 bool withinViewRange(Npc npc, GameObject target) {
-  return distanceBetweenObjects(npc, target) < settings.npc.viewRange;
+  return distanceV2(npc, target) < settings.npc.viewRange;
 }
 
 bool arrivedAtPath(Npc npc) {

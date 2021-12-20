@@ -37,14 +37,14 @@ class Moba extends Game {
 
   void spawnCreeps() {
     spawnZombie(creepSpawn1.x, creepSpawn1.y,
-        health: 10,
+        health: 100,
         experience: 10,
         // objectives: copy(creep1Objects),
         team: Teams.Good.index);
 
     spawnZombie(
       creepSpawn2.x, creepSpawn2.y,
-      health: 10,
+      health: 100,
       experience: 10,
       // objectives: copy(creep1Objects),
       team: Teams.Bad.index,
