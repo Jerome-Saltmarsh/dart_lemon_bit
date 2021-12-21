@@ -40,7 +40,7 @@ final StringBuffer _buffer = StringBuffer();
 const List<ClientRequest> clientRequests = ClientRequest.values;
 final int clientRequestsLength = clientRequests.length;
 
-void write(dynamic value){
+void write(dynamic value) {
   _buffer.write(value);
   _buffer.write(_space);
 }
@@ -64,35 +64,40 @@ void main() {
       webSocket.sink.add(response);
     }
 
-    void clearBuffer(){
+    void clearBuffer() {
       _buffer.clear();
     }
 
-    void sendAndClearBuffer(){
+    void sendAndClearBuffer() {
       sendToClient(_buffer.toString());
       clearBuffer();
     }
 
     void sendCompiledPlayerState(Game game, Player player) {
-      _buffer.clear();
-      _buffer.write(game.compiled);
-      // compileWeapons(_buffer, player.weapons);
+      clearBuffer();
+      write(game.compiled);
       compilePlayer(_buffer, player);
       if (player.message.isNotEmpty) {
         compilePlayerMessage(_buffer, player.message);
         player.message = "";
       }
 
-      if (game is Moba){
-        if (!game.started){
-          compilePlayersRemaining(_buffer, game.totalPlayersRequired - game.players.length);
+      if (game is Moba) {
+        if (game.awaitingPlayers) {
+          compilePlayersRemaining(
+              _buffer, game.totalPlayersRequired - game.players.length);
           sendAndClearBuffer();
           return;
         } else {
           compilePlayersRemaining(_buffer, 0);
         }
-      }
 
+        if (game.inProgress){
+          write(ServerResponse.Team_Lives_Remaining.index);
+          write(game.teamLivesWest);
+          write(game.teamLivesEast);
+        }
+      }
 
       sendAndClearBuffer();
     }
@@ -101,7 +106,8 @@ void main() {
       clearBuffer();
       Player player = spawnPlayerInTown();
       compilePlayer(_buffer, player);
-      write('${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.team}');
+      write(
+          '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.team}');
       write(player.game.compiledTiles);
       write(player.game.compiledEnvironmentObjects);
       write(player.game.compiled);
@@ -172,13 +178,12 @@ void main() {
           player.lastUpdateFrame = 0;
           Game game = player.game;
 
-          if (game is Moba){
-            if (!game.started){
-              compilePlayersRemaining(_buffer, game.totalPlayersRequired - game.players.length);
+          if (game is Moba) {
+            if (game.awaitingPlayers) {
+              compilePlayersRemaining(
+                  _buffer, game.totalPlayersRequired - game.players.length);
               sendAndClearBuffer();
               return;
-            } else {
-              compilePlayersRemaining(_buffer, 0);
             }
           }
 
@@ -199,9 +204,6 @@ void main() {
             CharacterAction action = characterActions[actionIndex];
             double mouseX = double.parse(arguments[4]);
             double mouseY = double.parse(arguments[5]);
-            
-            write(ServerResponse.Debug_Cursor.index);
-            // write(angleBetween(x1, y1, x2, y2))
 
             double mouseTop =
                 mouseY - settings.radius.cursor - settings.radius.character;
@@ -710,7 +712,7 @@ Player spawnPlayerInTown() {
   return player;
 }
 
-void compileWholeGame(Game game){
+void compileWholeGame(Game game) {
   compileGame(game);
   write(game.compiledTiles);
   write(game.compiledEnvironmentObjects);

@@ -10,7 +10,7 @@ class _Global {
   Moba findPendingMobaGame() {
     for (Game game in global.games) {
       if (game is Moba){
-        if (!game.started) {
+        if (game.status == GameStatus.Awaiting_Players) {
           return game;
         }
       }
@@ -27,7 +27,7 @@ class _Global {
 
   void update(){
     for (Game game in games) {
-      if (!game.started) continue;
+      if (!game.inProgress) continue;
       game.updateAndCompile();
     }
   }

@@ -128,6 +128,15 @@ void parseState() {
         _consumeAbility(game.player.ability4);
         break;
 
+      case ServerResponse.Team_Victory:
+        game.teamVictory.value = _consumeInt();
+        break;
+
+      case ServerResponse.Team_Lives_Remaining:
+        game.teamLivesWest.value = _consumeInt();
+        game.teamLivesEast.value = _consumeInt();
+        break;
+
       case ServerResponse.Weapons_Dirty:
         hud.skillTreeVisible.value = !hud.skillTreeVisible.value;
         hud.skillTreeVisible.value = !hud.skillTreeVisible.value;

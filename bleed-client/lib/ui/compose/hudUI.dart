@@ -182,18 +182,16 @@ Widget buildTopLeft() {
       left: _padding,
       child: Row(
         children: [
-          Column(
-            crossAxisAlignment: cross.center,
-            children: [
-              buildTime(),
-              // height4,
-              // buildPlayerLevel(),
-            ],
-          ),
-          // width8,
-          // buildPlayerNextLevelExperience(),
+          buildTime(),
           width8,
-          buildMouseWorldPosition(),
+          WatchBuilder(game.teamLivesWest, (int lives){
+            return text("West: $lives");
+          }),
+          width8,
+          WatchBuilder(game.teamLivesEast, (int lives){
+            return text("East: $lives");
+          }),
+          // buildMouseWorldPosition(),
         ],
       ));
 }

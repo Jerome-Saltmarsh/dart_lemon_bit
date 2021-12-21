@@ -16,6 +16,7 @@ import 'common/PlayerEvent.dart';
 import 'common/ServerResponse.dart';
 import 'common/Tile.dart';
 import 'common/classes/Vector2.dart';
+import 'games/moba.dart';
 import 'games/world.dart';
 
 // constants
@@ -55,6 +56,11 @@ void compileGame(Game game) {
   _write(buffer, ServerResponse.Scene_Shade_Max.index);
   _write(buffer, game.shadeMax.index);
   game.compiled = buffer.toString();
+
+  if (game is Moba){
+    _write(buffer, ServerResponse.Team_Victory.index);
+    _write(buffer, game.teamVictory);
+  }
 
   game.compiledTeamText.clear();
 

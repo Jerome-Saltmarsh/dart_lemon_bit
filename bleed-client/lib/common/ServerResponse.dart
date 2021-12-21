@@ -30,5 +30,6 @@ enum ServerResponse {
   Player_Attack_Target,
   Waiting_For_More_Players,
   Player_Text,
-  Debug_Cursor,
+  Team_Victory,
+  Team_Lives_Remaining,
 }

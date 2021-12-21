@@ -72,13 +72,20 @@ class _Teams {
   final east = 1;
 }
 
+enum GameStatus {
+  Awaiting_Players,
+  In_Progress,
+  Finished,
+}
+
 // This should be OpenWorldScene
 abstract class Game {
   static int _id = 0;
   final String id = (_id++).toString();
   final Scene scene;
 
-  late bool started;
+  // late bool started;
+  late GameStatus status;
 
   /// Used to constrain the brightness of a level
   /// For example a cave which is very dark even during day time
@@ -108,6 +115,10 @@ abstract class Game {
   Map<int, StringBuffer> compiledTeamText = {
 
   };
+
+  bool get awaitingPlayers => status == GameStatus.Awaiting_Players;
+  bool get inProgress => status == GameStatus.In_Progress;
+  bool get statusFinished => status == GameStatus.Finished;
 
   void onGameStarted() {}
 
@@ -168,7 +179,7 @@ abstract class Game {
     return empty;
   }
 
-  Game(this.scene, {this.shadeMax = Shade.Bright, this.started = true}) {
+  Game(this.scene, {this.shadeMax = Shade.Bright, this.status = GameStatus.In_Progress}) {
     this.crates.clear();
     global.onGameCreated(this);
 

@@ -12,7 +12,7 @@ import 'world.dart';
 typedef Players = List<Player>;
 
 class Moba extends Game {
-
+  int teamVictory = -1;
   final Vector2 top = Vector2(0, 50);
   final Vector2 left = Vector2(-600, 620);
   final Vector2 right = Vector2(800, 900);
@@ -32,30 +32,22 @@ class Moba extends Game {
   final int framesPerCreepSpawn = 500;
   final int creepsPerSpawn = 5;
 
-  Moba() : super(scenes.wildernessNorth01, started: false){
-    creepWestObjectives = [
-      right,
-      top,
-      left
-    ];
+  Moba() : super(scenes.wildernessNorth01, status: GameStatus.Awaiting_Players) {
+    creepWestObjectives = [right, top, left];
 
-    creepEastObjectives = [
-      left,
-      top,
-      right
-    ];
+    creepEastObjectives = [left, top, right];
   }
 
   @override
   void update() {
-    if (!started) return;
+    if (status != GameStatus.In_Progress) return;
     if (duration % framesPerCreepSpawn == 0) {
       spawnCreeps();
     }
   }
 
   void spawnCreeps() {
-    for(int i = 0; i < creepsPerSpawn; i++){
+    for (int i = 0; i < creepsPerSpawn; i++) {
       spawnZombie(creepSpawn1.x, creepSpawn1.y,
           health: 100,
           experience: 10,
@@ -63,7 +55,8 @@ class Moba extends Game {
           team: teams.west);
 
       spawnZombie(
-        creepSpawnEast.x, creepSpawnEast.y,
+        creepSpawnEast.x,
+        creepSpawnEast.y,
         health: 100,
         experience: 10,
         objectives: copy(creepEastObjectives),
@@ -73,11 +66,19 @@ class Moba extends Game {
   }
 
   @override
-  onNpcObjectivesCompleted(Npc npc){
-    if (npc.team == teams.west){
+  onNpcObjectivesCompleted(Npc npc) {
+    if (teamVictory != -1) return;
+
+    if (npc.team == teams.west) {
       teamLivesEast--;
-    }else{
+      if (teamLivesEast <= 0) {
+        teamVictory = teams.west;
+      }
+    } else {
       teamLivesWest--;
+      if (teamLivesWest <= 0) {
+        teamVictory = teams.east;
+      }
     }
   }
 
@@ -112,16 +113,15 @@ class Moba extends Game {
 }
 
 Player playerJoin(Moba moba) {
-  if (moba.started) {
+  if (moba.status != GameStatus.Awaiting_Players) {
     throw Exception("Game already started");
   }
   final Player player = Player(x: 0, y: 600, game: moba, team: 1);
   registerPlayer(player);
   player.team = moba.getJoinTeam();
   moba.players.add(player);
-  print("player.team = ${player.team}");
-  moba.started = moba.players.length == moba.totalPlayersRequired;
-  if (moba.started) {
+  if (moba.players.length == moba.totalPlayersRequired){
+    moba.status = GameStatus.In_Progress;
     moba.onGameStarted();
   }
   return player;

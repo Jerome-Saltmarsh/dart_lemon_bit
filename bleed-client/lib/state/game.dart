@@ -25,6 +25,10 @@ class _Game {
   final List<Effect> effects = [];
   final _Settings settings = _Settings();
   final _Player player = _Player();
+  Watch<int> teamVictory = Watch(-1);
+  Watch<int> teamLivesWest = Watch(-1);
+  Watch<int> teamLivesEast = Watch(-1);
+
   int serverVersion;
   List<int> collectables = [];
   List<Vector2> crates = [];

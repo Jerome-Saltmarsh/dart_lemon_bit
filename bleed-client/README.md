@@ -150,8 +150,11 @@
 [ ] Design Freeze Circle sprite
 [ ] Implement Activity Level upgrades
 [ ] Fix Bug render objects culled bottom
-[x] Knight fix ability death strike
+[MOBA]
+[ ] Defense Tower
+[ ] Game Status
 [COMPLETED]
+[x] Knight fix ability death strike
 [x] UI Indicate ability insufficient mana
 [x] UI Indicate selected ability
 [x] Health bars
