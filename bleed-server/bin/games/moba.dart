@@ -15,12 +15,11 @@ import 'world.dart';
 typedef Players = List<Player>;
 
 class Moba extends Game {
-  int teamVictory = -1;
   final Vector2 top = Vector2(0, 50);
   final Vector2 left = Vector2(-600, 620);
   final Vector2 right = Vector2(800, 900);
 
-  Vector2 teamSpawnWest = Vector2(-600, 620);
+  final Vector2 teamSpawnWest = Vector2(-600, 620);
   Vector2 teamSpawnEast = Vector2(850, 910);
   Vector2 creepSpawn1 = Vector2(-530, 625);
   Vector2 creepSpawnEast = Vector2(800, 900);
@@ -28,7 +27,7 @@ class Moba extends Game {
   late List<Vector2> creepWestObjectives;
   late List<Vector2> creepEastObjectives;
 
-  int totalPlayersRequired = 2;
+  int totalPlayersRequired = 4;
   int teamLivesWest = 10;
   int teamLivesEast = 10;
 
@@ -70,19 +69,17 @@ class Moba extends Game {
 
   @override
   onNpcObjectivesCompleted(Npc npc) {
-    if (teamVictory != -1) return;
+    if (!inProgress) return;
     setCharacterStateDead(npc);
     dispatch(GameEventType.Objective_Reached, npc.x, npc.y);
     if (npc.team == teams.west) {
       teamLivesEast--;
       if (teamLivesEast <= 0) {
-        teamVictory = teams.west;
         status = GameStatus.Finished;
       }
     } else {
       teamLivesWest--;
       if (teamLivesWest <= 0) {
-        teamVictory = teams.east;
         status = GameStatus.Finished;
       }
     }

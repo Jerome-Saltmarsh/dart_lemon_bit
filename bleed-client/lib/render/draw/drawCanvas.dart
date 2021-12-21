@@ -11,6 +11,7 @@ import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/CollectableType.dart';
+import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
@@ -63,6 +64,9 @@ bool get dayTime => ambient.index == Shade.Bright.index;
 const animationFrameRate = 7; // frames per change;
 
 void renderCanvasPlay() {
+
+  if (game.status.value != GameStatus.In_Progress) return;
+
   if (frameRateValue++ % animationFrameRate == 0) {
     drawFrame++;
     _flameIndex = (_flameIndex + 1) % 4;

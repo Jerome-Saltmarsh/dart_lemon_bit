@@ -262,6 +262,16 @@ void parseState() {
         game.status.value = gameStatuses[_consumeInt()];
         break;
 
+      case ServerResponse.Lobby:
+        game.lobby.playerCount.value = _consumeInt();
+        game.lobby.players.clear();
+        for (int i = 0; i < game.lobby.playerCount.value; i++) {
+          String name = _consumeString();
+          int team = _consumeInt();
+          game.lobby.add(team: team, name: name);
+        }
+        break;
+
       case ServerResponse.Collectables:
         if (game.id < 0) return;
         _parseCollectables();
@@ -440,7 +450,7 @@ void _parsePlayerEvents() {
   }
 }
 
-PlayerEvent _consumePlayerEventType(){
+PlayerEvent _consumePlayerEventType() {
   return playerEvents[_consumeInt()];
 }
 
@@ -578,7 +588,7 @@ double _consumeDouble() {
   return double.parse(_consumeString());
 }
 
-double _consumePercentage(){
+double _consumePercentage() {
   return _consumeDouble() * 0.01;
 }
 
@@ -610,7 +620,7 @@ bool _commaConsumed() {
 
 void _parsePlayers() {
   game.totalHumans = _consumeInt();
-  for(int i = 0; i < game.totalHumans; i++){
+  for (int i = 0; i < game.totalHumans; i++) {
     _consumeHuman(game.humans[i]);
   }
 }

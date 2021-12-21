@@ -96,6 +96,15 @@ void compileGameStatus(StringBuffer buffer, Game game){
   _write(buffer, game.status.index);
 }
 
+void compileLobby(StringBuffer buffer, Game game){
+  _write(buffer, ServerResponse.Lobby.index);
+  _write(buffer, game.players.length);
+  for(Player player in game.players){
+    _write(buffer, player.name);
+    _write(buffer, player.team);
+  }
+}
+
 String compileEnvironmentObjects(List<EnvironmentObject> environmentObjects) {
   StringBuffer buffer = StringBuffer();
   _write(buffer, ServerResponse.EnvironmentObjects.index);

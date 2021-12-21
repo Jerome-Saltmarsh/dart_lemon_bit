@@ -178,6 +178,7 @@ void main() {
           if (game is Moba) {
 
             if (game.awaitingPlayers) {
+              compileLobby(_buffer, game);
               compileGameStatus(_buffer, game);
               compilePlayersRemaining(
                   _buffer, game.totalPlayersRequired - game.players.length);

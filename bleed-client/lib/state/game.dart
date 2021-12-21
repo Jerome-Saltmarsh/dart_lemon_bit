@@ -31,6 +31,7 @@ class _Game {
   final Watch<int> teamLivesEast = Watch(-1);
   final Watch<GameType> type = Watch(GameType.None);
   final Watch<GameStatus> status = Watch(GameStatus.Awaiting_Players);
+  final _Lobby lobby = _Lobby();
 
   int serverVersion;
   List<int> collectables = [];
@@ -60,6 +61,19 @@ class _Game {
   int totalProjectiles = 0;
   List<Item> items = [];
   int totalItems = 0;
+}
+
+class _Lobby {
+  final Watch<int> playerCount = Watch(0);
+  final List<_LobbyPlayer> players = [];
+
+  void add({int team, String name}) {
+    if (team == 0) {
+      players.insert(0, _LobbyPlayer(name, team));
+    } else {
+      players.add(_LobbyPlayer(name, team));
+    }
+  }
 }
 
 class _Player {
@@ -98,7 +112,7 @@ class _Player {
   final Ability ability3 = Ability(3);
   final Ability ability4 = Ability(4);
 
-  _Player(){
+  _Player() {
     magic.onChanged((double value) {
       ability1.canAfford.value = value >= ability1.magicCost.value;
       ability2.canAfford.value = value >= ability2.magicCost.value;
@@ -166,4 +180,12 @@ class _Settings {
   int maxParticlesMinusOne = 299;
   double interactRadius = 60;
   double manRenderSize = 40.0;
+}
+
+class _LobbyPlayer {
+  String name;
+  int team;
+  bool notSet = true;
+
+  _LobbyPlayer(this.name, this.team);
 }

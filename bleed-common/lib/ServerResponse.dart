@@ -33,4 +33,5 @@ enum ServerResponse {
   Team_Lives_Remaining,
   Game_Type,
   Game_Status,
+  Lobby
 }

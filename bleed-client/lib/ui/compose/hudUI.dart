@@ -505,7 +505,13 @@ Widget buildHud() {
 }
 
 Widget buildAwaitingPlayers(){
-  return dialog(child: text("Awaiting Players"));
+  return dialog(child: WatchBuilder(game.lobby.playerCount, (int value){
+    return Column(
+      children: game.lobby.players.map((lobbyPlayer){
+        return text("Team: ${lobbyPlayer.team} Player: ${lobbyPlayer.name}");
+      }).toList(),
+    );
+  }));
 }
 
 Widget buildGameFinished(){
