@@ -496,7 +496,19 @@ Widget buildHud() {
 }
 
 Widget buildHomePage(){
-  return text("HOME PAGE");
+  return Row(
+    children: [
+      text("HOME PAGE"),
+      button("MOBA", (){
+        closeJoinGameDialog();
+        sendRequestJoinGameMoba();
+      }),
+      button("Open World", (){
+        closeJoinGameDialog();
+        sendRequestJoinGameOpenWorld();
+      })
+    ],
+  );
 }
 
 Widget buildConnected(){
