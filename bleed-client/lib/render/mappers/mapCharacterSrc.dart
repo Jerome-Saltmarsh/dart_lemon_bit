@@ -38,7 +38,6 @@ final Vector2 _humanFiringShotgun = Vector2(1, 1);
 
 Float32List _src = Float32List(4);
 
-
 Float32List loop({
   Vector2 atlas,
   Direction direction,

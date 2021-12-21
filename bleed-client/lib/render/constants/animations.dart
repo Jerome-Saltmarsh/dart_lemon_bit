@@ -6,6 +6,11 @@ class _Animations {
   final _Witch witch = _Witch();
   final _Archer archer = _Archer();
   final _Knight knight = _Knight();
+  final _Zombie zombie = _Zombie();
+}
+
+class _Zombie {
+  final List<int> striking = [0, 1, 1, 1];
 }
 
 class _Man {
