@@ -298,19 +298,17 @@ extension GameFunctions on Game {
     if (target is Npc) {
       target.active = false;
     }
-    if (src is Player) {
-      if (target is Npc) {
-        playerGainExperience(src, target.experience);
-      }
+    if (src is Player && target is Npc) {
+      playerGainExperience(src, target.experience);
     }
 
-    if (target is Npc && target.alive){
+    if (target is Npc && target.alive) {
       if (!target.targetSet) {
         setNpcTarget(target, src);
-      }else{
+      } else {
         double d1 = distanceV2(src, target);
         double d2 = distanceV2(target, target.target);
-        if (d1 < d2){
+        if (d1 < d2) {
           setNpcTarget(target, src);
         }
       }
@@ -1121,8 +1119,7 @@ extension GameFunctions on Game {
               character.performing = null;
               const damageMultiplier = 2;
               for (Npc zombie in zombies) {
-                if (distanceV2(zombie, character) <
-                    character.attackRange) {
+                if (distanceV2(zombie, character) < character.attackRange) {
                   applyStrike(
                       character, zombie, character.damage * damageMultiplier);
                 }
@@ -1186,8 +1183,7 @@ extension GameFunctions on Game {
                   double angleDiff =
                       calculateAngleDifference(angle, character.aimAngle);
                   if (angleDiff > pi) continue;
-                  double zombieDistance =
-                      distanceV2(zombie, character);
+                  double zombieDistance = distanceV2(zombie, character);
                   if (zombieDistance > character.attackRange) continue;
                   if (target == null || zombieDistance < targetDistance) {
                     target = zombie;

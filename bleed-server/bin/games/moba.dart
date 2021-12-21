@@ -6,18 +6,24 @@ import '../classes/Player.dart';
 import '../common/CharacterType.dart';
 import '../common/classes/Vector2.dart';
 import '../instances/scenes.dart';
+import '../language.dart';
 import 'world.dart';
 
 typedef Players = List<Player>;
 
 class Moba extends Game {
+
+  final Vector2 top = Vector2(0, 50);
+  final Vector2 left = Vector2(-600, 620);
+  final Vector2 right = Vector2(800, 900);
+
   Vector2 teamSpawn1 = Vector2(-600, 620);
   Vector2 teamSpawn2 = Vector2(850, 910);
   Vector2 creepSpawn1 = Vector2(-530, 625);
   Vector2 creepSpawn2 = Vector2(800, 900);
 
-  List<Vector2> creep1Objects = [];
-  List<Vector2> creep2Objects = [];
+  late List<Vector2> creep1Objectives;
+  late List<Vector2> creep2Objectives;
 
   int totalPlayersRequired = 2;
   int team1Lives = 10;
@@ -25,7 +31,19 @@ class Moba extends Game {
 
   final int framesPerCreepSpawn = 300;
 
-  Moba() : super(scenes.wildernessNorth01, started: false);
+  Moba() : super(scenes.wildernessNorth01, started: false){
+    creep1Objectives = [
+      left,
+      top,
+      right
+    ];
+
+    creep2Objectives = [
+      right,
+      top,
+      left
+    ];
+  }
 
   @override
   void update() {
@@ -39,14 +57,14 @@ class Moba extends Game {
     spawnZombie(creepSpawn1.x, creepSpawn1.y,
         health: 100,
         experience: 10,
-        // objectives: copy(creep1Objects),
+        objectives: copy(creep1Objectives),
         team: Teams.Good.index);
 
     spawnZombie(
       creepSpawn2.x, creepSpawn2.y,
       health: 100,
       experience: 10,
-      // objectives: copy(creep1Objects),
+      objectives: copy(creep2Objectives),
       team: Teams.Bad.index,
     );
   }

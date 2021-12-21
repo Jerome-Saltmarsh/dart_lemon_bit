@@ -383,7 +383,7 @@ Widget buildSelectHero() {
       child: Column(
         children: [
           height16,
-          text("Select Hero", fontSize: 30),
+          text("Hero", fontSize: 30),
           height16,
           ...playableCharacterTypes.map((characterType) {
             return mouseOver(
