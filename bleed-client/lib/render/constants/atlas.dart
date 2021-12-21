@@ -1,5 +1,4 @@
 
-import 'package:bleed_client/classes/Item.dart';
 import 'package:lemon_engine/classes/vector2.dart';
 
 final _Atlas atlas = _Atlas();

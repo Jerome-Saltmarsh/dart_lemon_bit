@@ -6,7 +6,9 @@ import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/render/constants/animations.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
-import 'package:bleed_client/render/mappers/mapCharacterSrc.dart';
+import 'package:bleed_client/render/mappers/animate.dart';
+
+import 'loop.dart';
 
 final Float32List _src = Float32List(4);
 

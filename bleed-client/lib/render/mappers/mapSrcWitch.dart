@@ -7,6 +7,9 @@ import 'package:bleed_client/render/constants/animations.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/mappers/mapCharacterSrc.dart';
 
+import 'animate.dart';
+import 'loop.dart';
+
 Float32List _src = Float32List(4);
 
 Float32List mapSrcWitch({

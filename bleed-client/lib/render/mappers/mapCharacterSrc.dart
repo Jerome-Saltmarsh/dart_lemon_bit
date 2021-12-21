@@ -38,44 +38,6 @@ final Vector2 _humanFiringShotgun = Vector2(1, 1);
 
 Float32List _src = Float32List(4);
 
-Float32List loop({
-  Vector2 atlas,
-  Direction direction,
-  Shade shade,
-  double size,
-  int framesPerDirection,
-  int frame,
-}){
-  double _s = direction.index * size * framesPerDirection;
-  double _f = (frame % framesPerDirection) * size;
-  _src[0] =  atlas.x + _s + _f;
-  _src[1] = atlas.y + (shade.index * size);
-  _src[2] = _src[0] + _frame64;
-  _src[3] = _src[1] + _frame64;
-  return _src;
-}
-
-Float32List animate({
-  Vector2 atlas,
-  List<int> animation,
-  Direction direction,
-  Shade shade,
-  double size,
-  int framesPerDirection,
-  int frame,
-}){
-
-  int animationFrame = min(frame, animation.length - 1);
-  int f = animation[animationFrame];
-  double _s = direction.index * size * framesPerDirection;
-  double _f = (f % framesPerDirection) * size;
-  _src[0] =  atlas.x + _s + _f;
-  _src[1] = atlas.y + (shade.index * size);
-  _src[2] = _src[0] + _frame64;
-  _src[3] = _src[1] + _frame64;
-  return _src;
-}
-
 Float32List mapCharacterSrc({
   CharacterType type,
   CharacterState state,
