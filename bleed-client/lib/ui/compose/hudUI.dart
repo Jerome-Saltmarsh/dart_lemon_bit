@@ -490,10 +490,20 @@ void closeJoinGameDialog() {
 }
 
 Widget buildHud() {
+  return WatchBuilder(game.player.uuid, (String uuid){
+    return uuid.isEmpty ? buildHomePage() :buildConnected();
+  });
+}
+
+Widget buildHomePage(){
+  return text("HOME PAGE");
+}
+
+Widget buildConnected(){
   return WatchBuilder(game.status, (GameStatus gameStatus) {
     switch (gameStatus) {
       case GameStatus.Awaiting_Players:
-        return buildAwaitingPlayers();
+        return buildDialogLobby();
       case GameStatus.In_Progress:
         return buildGameInProgress();
       case GameStatus.Finished:
@@ -502,14 +512,21 @@ Widget buildHud() {
         throw Exception();
     }
   });
+
 }
 
-Widget buildAwaitingPlayers() {
+Widget buildDialogLobby() {
   return dialog(
       child: Column(
     crossAxisAlignment: cross.stretch,
     children: [
-      text("MOBA"),
+      Row(
+        mainAxisAlignment: main.apart,
+        children: [
+          text("MOBA"),
+          button("Cancel", game.leaveLobby),
+        ],
+      ),
       height16,
       WatchBuilder(game.lobby.playerCount, (int value) {
         return Column(

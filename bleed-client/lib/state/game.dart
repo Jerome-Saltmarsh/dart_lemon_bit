@@ -18,6 +18,7 @@ import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:bleed_client/server/server.dart';
 import 'package:lemon_watch/watch.dart';
 
 final _Game game = _Game();
@@ -61,6 +62,11 @@ class _Game {
   int totalProjectiles = 0;
   List<Item> items = [];
   int totalItems = 0;
+
+  void leaveLobby() {
+    player.uuid.value = "";
+    server.leaveLobby();
+  }
 }
 
 class _Lobby {
@@ -75,16 +81,16 @@ class _Lobby {
     }
   }
 
-  List<_LobbyPlayer> getPlayersOnTeam(int team){
+  List<_LobbyPlayer> getPlayersOnTeam(int team) {
     return players.where((element) => element.team == team).toList();
   }
 }
 
 class _Player {
   int id = -1;
-  String uuid = "";
   double x = -1;
   double y = -1;
+  final Watch<String> uuid = Watch("");
   final Watch<WeaponType> weapon = Watch(WeaponType.Unarmed);
   final List<Weapon> weapons = [];
   final Watch<int> equippedRounds = Watch(0);

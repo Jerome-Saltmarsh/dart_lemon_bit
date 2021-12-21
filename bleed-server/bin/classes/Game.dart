@@ -1585,6 +1585,7 @@ extension GameFunctions on Game {
     }
   }
 
+
   void revive(Character character) {
     character.state = CharacterState.Idle;
     character.health = character.maxHealth;

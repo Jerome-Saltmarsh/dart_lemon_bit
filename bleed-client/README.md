@@ -530,3 +530,27 @@ mklink /J common C:\Users\Jerome\github\bleed\bleed-common\lib
 
 #Goal
 The goal is to platform which allows me to truly explore all of my creativity
+
+# Domain Names
+battle-stars.com
+battle-stars.net
+battle-stars.io
+game-stars.io
+game-stars.net
+game-stars.online
+sprite-battles.com
+gamesplash.io
+game-splash.io
+game-corner.io
+fusion-games.io
+play-stream.io
+fun-stream.io
+
+game-stars.io
+fusion-games.io
+fusiongames.io
+game-fuse.com
+fusion-games.online
+# Home page
+Games
+Network

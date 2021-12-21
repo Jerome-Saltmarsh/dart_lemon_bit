@@ -65,8 +65,6 @@ const animationFrameRate = 7; // frames per change;
 
 void renderCanvasPlay() {
 
-  if (game.status.value != GameStatus.In_Progress) return;
-
   if (frameRateValue++ % animationFrameRate == 0) {
     drawFrame++;
     _flameIndex = (_flameIndex + 1) % 4;

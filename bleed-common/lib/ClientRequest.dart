@@ -23,4 +23,5 @@ enum ClientRequest {
   Reset_Character_Type,
   Join_Moba,
   Join_Defense,
+  Leave_Lobby,
 }

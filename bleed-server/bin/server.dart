@@ -387,6 +387,20 @@ void main() {
           selectCharacterType(player, characterTypes[characterTypeIndex]);
           break;
 
+        case ClientRequest.Leave_Lobby:
+          if (arguments.length != 2) {
+            errorArgsExpected(2, arguments);
+            return;
+          }
+
+          Player? player = findPlayerByUuid(arguments[1]);
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+          player.game.players.removeWhere((element) => element.uuid == player.uuid);
+          break;
+
         case ClientRequest.Reset_Character_Type:
           if (arguments.length != 3) {
             errorArgsExpected(3, arguments);

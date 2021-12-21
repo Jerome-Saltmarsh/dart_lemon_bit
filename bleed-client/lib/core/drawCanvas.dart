@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/editor/render/drawEditor.dart';
 import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
@@ -14,5 +15,7 @@ void drawCanvas(Canvas canvass, Size _size) {
 
   if (!connected) return;
   if (game.id < 0) return;
+  if (game.player.uuid.value.isEmpty) return;
+  if (game.status.value != GameStatus.In_Progress) return;
   renderCanvasPlay();
 }

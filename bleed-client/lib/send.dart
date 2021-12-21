@@ -12,7 +12,7 @@ final StringBuffer _buffer = StringBuffer();
 final gameUpdateIndex = ClientRequest.Update.index;
 const String _space = " ";
 
-String get session => game.player.uuid;
+String get session => game.player.uuid.value;
 
 final _SendRequestToServer sendRequest = _SendRequestToServer();
 
@@ -104,7 +104,7 @@ void sendRequestAcquireAbility(WeaponType type) {
 void sendRequestUpdatePlayer() {
   _buffer.clear();
   _write(gameUpdateIndex);
-  _write(game.player.uuid);
+  _write(session);
   _write(characterController.action.value.index);
   characterController.action.value = CharacterAction.Idle;
   _write(characterController.direction.index);
