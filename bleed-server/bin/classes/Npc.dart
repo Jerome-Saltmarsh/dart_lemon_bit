@@ -9,8 +9,8 @@ import 'Weapon.dart';
 final Character _nonTarget =
   Character(
       type: CharacterType.Human,
-      x: 0,
-      y: 0,
+      x: -100000,
+      y: -1000000,
       weapons: [Weapon(type: WeaponType.Unarmed, damage: 0, capacity: 0)],
       health: 0,
       speed: 0

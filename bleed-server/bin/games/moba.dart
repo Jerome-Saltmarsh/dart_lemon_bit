@@ -33,15 +33,15 @@ class Moba extends Game {
 
   Moba() : super(scenes.wildernessNorth01, started: false){
     creep1Objectives = [
-      left,
-      top,
-      right
-    ];
-
-    creep2Objectives = [
       right,
       top,
       left
+    ];
+
+    creep2Objectives = [
+      left,
+      top,
+      right
     ];
   }
 

@@ -4,7 +4,6 @@ import 'package:lemon_math/abs.dart';
 import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/diff.dart';
 import 'package:lemon_math/diff_over.dart';
-import 'package:lemon_math/diff_under.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/hypotenuse.dart';
@@ -342,7 +341,7 @@ extension GameFunctions on Game {
     if (npc.inactive) return;
 
     if (npc.objectiveSet) {
-      if (withinRadius(npc, npc.objective, settings.radius.character)) {
+      if (withinRadius(npc, npc.objective, 100)) {
         npc.objectives.removeLast();
         if (npc.objectiveSet) {
           npcSetPathTo(npc, npc.objective.x, npc.objective.y);
@@ -390,6 +389,7 @@ extension GameFunctions on Game {
     if (npc.path.isNotEmpty) {
       if (arrivedAtPath(npc)) {
         // @on npc arrived at path
+        // TODO removing first index is expensive
         npc.path.removeAt(0);
         if (npc.path.isEmpty) {
           npc.state = CharacterState.Idle;
@@ -1437,7 +1437,6 @@ extension GameFunctions on Game {
   void updateZombieTargets() {
     for (Npc zombie in zombies) {
       if (zombie.dead) {
-        zombie.clearTarget();
         continue;
       }
 
@@ -1449,12 +1448,17 @@ extension GameFunctions on Game {
         }
       }
 
+      double targetDistance = distanceV2(zombie, zombie.target);
+
       for (Npc npc in zombies) {
         if (npc.dead) continue;
         if (zombie.team == npc.team) continue;
         if (!withinViewRange(zombie, npc)) continue;
+        double npcDistance = distanceV2(zombie, npc);
+        if (npcDistance >= targetDistance) continue;
         if (!isVisibleBetween(zombie, npc)) continue;
         setNpcTarget(zombie, npc);
+        targetDistance = npcDistance;
       }
 
       if (zombie.targetSet) continue;
@@ -1463,8 +1467,11 @@ extension GameFunctions on Game {
         if (player.dead) continue;
         if (zombie.team == player.team) continue;
         if (!withinViewRange(zombie, player)) continue;
+        double npcDistance = distanceV2(zombie, player);
+        if (npcDistance >= targetDistance) continue;
         if (!isVisibleBetween(zombie, player)) continue;
         setNpcTarget(zombie, player);
+        targetDistance = npcDistance;
         break;
       }
     }
