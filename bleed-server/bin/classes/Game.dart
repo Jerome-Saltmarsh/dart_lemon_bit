@@ -355,13 +355,12 @@ extension GameFunctions on Game {
           if (!targetWithinStrikingRange(npc, npc.target)) break;
 
           // @on npc target within striking range
-          characterFaceObject(npc, npc.target);
+          characterFaceV2(npc, npc.target);
           setCharacterState(npc, CharacterState.Striking);
           applyDamage(npc, npc.target, settings.damage.zombieStrike);
           double speed = 0.1;
-          double rotation = radiansV2(npc, npc.target);
           dispatch(GameEventType.Zombie_Strike, npc.target.x, npc.target.y,
-              velX(rotation, speed), velY(rotation, speed));
+              velX(npc.aimAngle, speed), velY(npc.aimAngle, speed));
           return;
         default:
           if (!targetWithinFiringRange(npc, npc.target)) break;
@@ -379,7 +378,7 @@ extension GameFunctions on Game {
         }
         if (npc.path.length <= 1 &&
             !targetWithinStrikingRange(npc, npc.target)) {
-          characterFaceObject(npc, npc.target);
+          characterFaceV2(npc, npc.target);
           setCharacterState(npc, CharacterState.Walking);
           return;
         }

@@ -62,16 +62,16 @@ void characterFace(Character character, double x, double y) {
   characterFaceAngle(character, radiansBetween2(character, x, y));
 }
 
+void characterAimAt(Character character, double x, double y){
+  characterFaceAngle(character, radiansBetween2(character, x, y));
+}
+
 void characterFaceAngle(Character character, double angle){
+  character.aimAngle = angle;
   setDirection(character, convertAngleToDirection(angle));
 }
 
-void characterAimAt(Character character, double x, double y){
-  character.aimAngle = radiansBetween2(character, x, y);
-  setDirection(character, convertAngleToDirection(character.aimAngle));
-}
-
-void characterFaceObject(Character character, GameObject target) {
+void characterFaceV2(Character character, Vector2 target) {
   characterFace(character, target.x, target.y);
 }
 
