@@ -227,6 +227,7 @@ void main() {
               num closestY = diff(mouseY, closest.y);
               num close = min(closestX, closestY);
               for (Character zombie in game.zombies) {
+                if (zombie.team == player.team) continue;
                 if (zombie.dead) continue;
                 if (!zombie.active) continue;
                 if (zombie.y < mouseTop) continue;
