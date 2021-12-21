@@ -1,9 +1,9 @@
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:lemon_engine/classes/vector2.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:lemon_engine/classes/vector2.dart';
 
 Float32List _src = Float32List(4);
 

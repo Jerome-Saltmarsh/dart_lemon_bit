@@ -2,12 +2,12 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:bleed_client/common/CharacterState.dart';
+import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/render/constants/animations.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
-import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/render/mappers/mapArcherToSrc.dart';
 import 'package:bleed_client/render/mappers/mapKnightToSrc.dart';
 import 'package:bleed_client/render/mappers/mapSrcWitch.dart';

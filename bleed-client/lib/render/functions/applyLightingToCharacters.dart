@@ -2,7 +2,6 @@ import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/render/functions/emitLight.dart';
 import 'package:bleed_client/render/state/dynamicShading.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/variables/lantern.dart';
 
 void applyCharacterLightEmission(List<Character> characters) {
 

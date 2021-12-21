@@ -48,11 +48,11 @@ import 'package:lemon_engine/state/cursor.dart';
 import 'package:neuro/instance.dart';
 
 import 'common/GameEventType.dart';
+import 'common/PlayerEvent.dart';
 import 'common/Tile.dart';
 import 'common/WeaponType.dart';
 import 'common/classes/Vector2.dart';
 import 'common/enums/ObjectType.dart';
-import 'common/PlayerEvent.dart';
 import 'functions/onGameEvent.dart';
 import 'render/functions/mapTilesToSrcAndDst.dart';
 import 'state.dart';

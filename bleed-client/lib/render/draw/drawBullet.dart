@@ -1,5 +1,3 @@
-import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
@@ -8,7 +6,6 @@ import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/getters/inDarkness.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/mappers/mapDirectionToAngle.dart';
-import 'package:bleed_client/rects.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/mappers/mapBulletToSrc.dart';
@@ -19,8 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:lemon_engine/render/draw_circle.dart';
 import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_engine/state/paint.dart';
-import 'package:lemon_math/piHalf.dart';
-import 'package:lemon_math/randomItem.dart';
 
 const _scale = 0.33;
 const _size = 32;

@@ -12,9 +12,9 @@ final StringBuffer _buffer = StringBuffer();
 final gameUpdateIndex = ClientRequest.Update.index;
 const String _space = " ";
 
-String get session => game.player.uuid.value;
-
 final _SendRequestToServer sendRequest = _SendRequestToServer();
+
+String get session => game.session;
 
 void speak(String message){
   if (message.isEmpty) return;

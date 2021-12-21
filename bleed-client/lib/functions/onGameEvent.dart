@@ -1,5 +1,4 @@
 import 'package:bleed_client/functions/emit/emitPixel.dart';
-import 'package:bleed_client/functions/spawners/spawnParticle.dart';
 import 'package:bleed_client/functions/spawners/spawnZombieLeg.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/randomBool.dart';

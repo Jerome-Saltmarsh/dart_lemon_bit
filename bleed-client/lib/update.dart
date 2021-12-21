@@ -4,10 +4,10 @@ import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/functions/cameraFollowPlayer.dart';
 import 'package:bleed_client/functions/spawners/spawnParticle.dart';
 import 'package:bleed_client/network/state/connected.dart';
+import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/update/updateParticles.dart';
-import 'package:bleed_client/update/updatePlayer.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/state/zoom.dart';
@@ -25,6 +25,7 @@ double targetZoom = 1;
 void updatePlayMode() {
   if (!connected) return;
   if (game.id < 0) return;
+  if (game.session.isEmpty) return;
 
   updateZoom();
   _updateMenuVisible();
@@ -37,12 +38,7 @@ void updatePlayMode() {
   }
 
   updateParticleEmitters();
-
-  // if (ambientLight.index >= Shading.Dark.index) {
-  //   emitAmbientMyst();
-  // }
-
-  updatePlayer();
+  sendRequestUpdatePlayer();
 }
 
 void updateZoom() {
