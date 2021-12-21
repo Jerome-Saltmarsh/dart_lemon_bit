@@ -12,6 +12,7 @@ import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
+import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
@@ -25,9 +26,10 @@ class _Game {
   final List<Effect> effects = [];
   final _Settings settings = _Settings();
   final _Player player = _Player();
-  Watch<int> teamVictory = Watch(-1);
-  Watch<int> teamLivesWest = Watch(-1);
-  Watch<int> teamLivesEast = Watch(-1);
+  final Watch<int> teamVictory = Watch(-1);
+  final Watch<int> teamLivesWest = Watch(-1);
+  final Watch<int> teamLivesEast = Watch(-1);
+  final Watch<GameType> type = Watch(GameType.None);
 
   int serverVersion;
   List<int> collectables = [];
@@ -129,19 +131,6 @@ class _Unlocked {
 
   bool get firebolt => game.player.weaponUnlocked(WeaponType.Firebolt);
 }
-
-// Skill Tree
-// Handguns do 10% more damage
-// Handguns are 10% more accurate
-// Handguns are 10% more accurate
-
-// Wizard
-// Firebolt
-
-// Bowman
-// Magic Arrow
-
-//
 
 extension PlayerExtentions on _Player {
   bool weaponUnlocked(WeaponType weaponType) {

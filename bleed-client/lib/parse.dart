@@ -15,6 +15,7 @@ import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameError.dart';
+import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/PlayerEvent.dart';
 import 'package:bleed_client/common/ServerResponse.dart';
@@ -254,6 +255,10 @@ void parseState() {
       case ServerResponse.Game_Joined:
         _parseGameJoined();
         announce(GameJoined());
+        break;
+
+      case ServerResponse.Game_Type:
+        game.type.value = gameTypes[_consumeInt()];
         break;
 
       case ServerResponse.Collectables:

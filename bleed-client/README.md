@@ -153,6 +153,7 @@
 [MOBA]
 [ ] Defense Tower
 [ ] Game Status
+[ ] Fix bug starting new game should reset light maps
 [COMPLETED]
 [x] Knight fix ability death strike
 [x] UI Indicate ability insufficient mana

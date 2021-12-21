@@ -7,6 +7,7 @@ import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
+import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/constants/servers.dart';
@@ -184,12 +185,21 @@ Widget buildTopLeft() {
         children: [
           buildTime(),
           width8,
-          WatchBuilder(game.teamLivesWest, (int lives){
-            return text("West: $lives");
-          }),
-          width8,
-          WatchBuilder(game.teamLivesEast, (int lives){
-            return text("East: $lives");
+          WatchBuilder(game.type, (GameType value){
+            if (value == GameType.Moba){
+              return Row(
+                children: [
+                  WatchBuilder(game.teamLivesWest, (int lives){
+                    return text("West: $lives");
+                  }),
+                  width8,
+                  WatchBuilder(game.teamLivesEast, (int lives){
+                    return text("East: $lives");
+                  }),
+                ],
+              );
+            }
+            return emptyContainer;
           }),
           // buildMouseWorldPosition(),
         ],

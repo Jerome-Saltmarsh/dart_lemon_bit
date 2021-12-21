@@ -4,6 +4,7 @@ import '../classes/Game.dart';
 import '../classes/Npc.dart';
 import '../classes/Player.dart';
 import '../common/CharacterType.dart';
+import '../common/GameType.dart';
 import '../common/classes/Vector2.dart';
 import '../instances/scenes.dart';
 import '../language.dart';
@@ -32,7 +33,7 @@ class Moba extends Game {
   final int framesPerCreepSpawn = 500;
   final int creepsPerSpawn = 5;
 
-  Moba() : super(scenes.wildernessNorth01, status: GameStatus.Awaiting_Players) {
+  Moba() : super(scenes.wildernessNorth01, status: GameStatus.Awaiting_Players, gameType: GameType.Moba) {
     creepWestObjectives = [right, top, left];
 
     creepEastObjectives = [left, top, right];

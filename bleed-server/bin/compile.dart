@@ -48,6 +48,8 @@ void compileGame(Game game) {
   _write(buffer, ServerResponse.Game_Time.index);
   _write(buffer, time);
 
+
+
   if (game.compilePaths) {
     _compilePaths(buffer, game.zombies);
     _compileNpcDebug(buffer, game.npcs);
@@ -55,6 +57,10 @@ void compileGame(Game game) {
 
   _write(buffer, ServerResponse.Scene_Shade_Max.index);
   _write(buffer, game.shadeMax.index);
+
+  _write(buffer, ServerResponse.Game_Type.index);
+  _write(buffer, game.gameType.index);
+
   game.compiled = buffer.toString();
 
   if (game is Moba){

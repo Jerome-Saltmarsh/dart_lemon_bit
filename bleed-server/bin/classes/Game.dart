@@ -16,6 +16,7 @@ import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
 import '../common/CollectableType.dart';
 import '../common/GameEventType.dart';
+import '../common/GameType.dart';
 import '../common/ItemType.dart';
 import '../common/PlayerEvent.dart';
 import '../common/Tile.dart';
@@ -86,6 +87,7 @@ abstract class Game {
 
   // late bool started;
   late GameStatus status;
+  GameType gameType;
 
   /// Used to constrain the brightness of a level
   /// For example a cave which is very dark even during day time
@@ -179,7 +181,7 @@ abstract class Game {
     return empty;
   }
 
-  Game(this.scene, {this.shadeMax = Shade.Bright, this.status = GameStatus.In_Progress}) {
+  Game(this.scene, {this.gameType = GameType.Open_World, this.shadeMax = Shade.Bright, this.status = GameStatus.In_Progress}) {
     this.crates.clear();
     global.onGameCreated(this);
 
