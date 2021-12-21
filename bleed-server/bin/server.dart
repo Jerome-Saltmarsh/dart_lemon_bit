@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/diff.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
@@ -198,6 +199,9 @@ void main() {
             CharacterAction action = characterActions[actionIndex];
             double mouseX = double.parse(arguments[4]);
             double mouseY = double.parse(arguments[5]);
+            
+            write(ServerResponse.Debug_Cursor.index);
+            // write(angleBetween(x1, y1, x2, y2))
 
             double mouseTop =
                 mouseY - settings.radius.cursor - settings.radius.character;

@@ -14,8 +14,8 @@ Float32List loop({
   double size = 64,
   int framesPerDirection = 4,
 }){
-  double _s = direction.index * size * framesPerDirection;
-  double _f = (frame % framesPerDirection) * size;
+  final double _s = direction.index * size * framesPerDirection;
+  final double _f = (frame % framesPerDirection) * size;
   _src[0] =  atlas.x + _s + _f;
   _src[1] = atlas.y + (shade.index * size);
   _src[2] = _src[0] + size;

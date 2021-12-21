@@ -59,7 +59,11 @@ double objectDistanceFrom(GameObject gameObject, double x, double y) {
 }
 
 void characterFace(Character character, double x, double y) {
-  setDirection(character, convertAngleToDirection(radiansBetween2(character, x, y)));
+  characterFaceAngle(character, radiansBetween2(character, x, y));
+}
+
+void characterFaceAngle(Character character, double angle){
+  setDirection(character, convertAngleToDirection(angle));
 }
 
 void characterAimAt(Character character, double x, double y){

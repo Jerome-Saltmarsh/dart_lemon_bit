@@ -267,7 +267,7 @@ extension GameFunctions on Game {
 
   /// calculates if there is a wall between two objects
   bool isVisibleBetween(Vector2 a, Vector2 b) {
-    double r = radiansBetweenObject(a, b);
+    double r = radiansV2(a, b);
     double d = distanceV2(a, b);
     double vX = adj(r, tileSize);
     double vY = opp(r, tileSize);
@@ -359,7 +359,7 @@ extension GameFunctions on Game {
           setCharacterState(npc, CharacterState.Striking);
           applyDamage(npc, npc.target, settings.damage.zombieStrike);
           double speed = 0.1;
-          double rotation = radiansBetweenObject(npc, npc.target);
+          double rotation = radiansV2(npc, npc.target);
           dispatch(GameEventType.Zombie_Strike, npc.target.x, npc.target.y,
               velX(rotation, speed), velY(rotation, speed));
           return;
@@ -460,7 +460,7 @@ extension GameFunctions on Game {
         double _distance = distanceV2(character, collider);
         if (_distance > combinedRadius) continue;
         double overlap = combinedRadius - _distance;
-        double r = radiansBetweenObject(character, collider);
+        double r = radiansV2(character, collider);
         character.x -= adj(r, overlap);
         character.y -= opp(r, overlap);
       }
@@ -668,7 +668,7 @@ extension GameFunctions on Game {
 
       Character? target = projectile.target;
       if (target != null) {
-        final double rot = radiansBetweenObject(projectile, target);
+        final double rot = radiansV2(projectile, target);
         projectile.xv = adj(rot, projectile.speed);
         projectile.yv = opp(rot, projectile.speed);
         if (distanceBetween(projectile.x, projectile.y, target.x, target.y) <
@@ -968,11 +968,6 @@ extension GameFunctions on Game {
     }
 
     if (character.dead) return;
-
-    // if (npc.state == CharacterState.Striking) {
-    //   if (npc.stateDuration-- > 0) return;
-    //   setCharacterStateIdle(npc);
-    // }
 
     if (character.stateDuration > 0) {
       character.stateDuration--;

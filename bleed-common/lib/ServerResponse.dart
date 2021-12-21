@@ -29,4 +29,5 @@ enum ServerResponse {
   Player_Abilities,
   Player_Attack_Target,
   Waiting_For_More_Players,
+  Debug_Cursor,
 }
