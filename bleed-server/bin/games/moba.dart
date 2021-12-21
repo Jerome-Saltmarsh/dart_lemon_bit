@@ -29,7 +29,8 @@ class Moba extends Game {
   int team1Lives = 10;
   int team2Lives = 10;
 
-  final int framesPerCreepSpawn = 300;
+  final int framesPerCreepSpawn = 500;
+  final int creepsPerSpawn = 5;
 
   Moba() : super(scenes.wildernessNorth01, started: false){
     creep1Objectives = [
@@ -54,19 +55,21 @@ class Moba extends Game {
   }
 
   void spawnCreeps() {
-    spawnZombie(creepSpawn1.x, creepSpawn1.y,
+    for(int i = 0; i < creepsPerSpawn; i++){
+      spawnZombie(creepSpawn1.x, creepSpawn1.y,
+          health: 100,
+          experience: 10,
+          objectives: copy(creep1Objectives),
+          team: Teams.Good.index);
+
+      spawnZombie(
+        creepSpawn2.x, creepSpawn2.y,
         health: 100,
         experience: 10,
-        objectives: copy(creep1Objectives),
-        team: Teams.Good.index);
-
-    spawnZombie(
-      creepSpawn2.x, creepSpawn2.y,
-      health: 100,
-      experience: 10,
-      objectives: copy(creep2Objectives),
-      team: Teams.Bad.index,
-    );
+        objectives: copy(creep2Objectives),
+        team: Teams.Bad.index,
+      );
+    }
   }
 
   int getJoinTeam() {

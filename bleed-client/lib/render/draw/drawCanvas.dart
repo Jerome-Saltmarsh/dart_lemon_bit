@@ -142,7 +142,6 @@ void renderCanvasPlay() {
   _drawFloatingTexts();
   _drawPlayerNames();
   drawPlayerText();
-
   setColorWhite();
 }
 

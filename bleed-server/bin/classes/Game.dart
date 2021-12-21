@@ -103,6 +103,10 @@ abstract class Game {
   String compiledEnvironmentObjects = "";
   bool compilePaths = false;
 
+  Map<int, StringBuffer> compiledTeamText = {
+
+  };
+
   void onGameStarted() {}
 
   void updateNpcBehavior(Npc npc) {}
@@ -358,7 +362,7 @@ extension GameFunctions on Game {
           characterFaceV2(npc, npc.target);
           setCharacterState(npc, CharacterState.Striking);
           applyDamage(npc, npc.target, settings.damage.zombieStrike);
-          double speed = 0.1;
+          double speed = 0.2;
           dispatch(GameEventType.Zombie_Strike, npc.target.x, npc.target.y,
               velX(npc.aimAngle, speed), velY(npc.aimAngle, speed));
           return;

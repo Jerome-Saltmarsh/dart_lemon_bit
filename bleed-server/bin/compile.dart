@@ -31,8 +31,9 @@ const String _space = ' ';
 const String _semiColon = '; ';
 const String _comma = ', ';
 
-void compilePlayerJoined(StringBuffer buffer, Player player){
-  _write(buffer, '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.team} ');
+void compilePlayerJoined(StringBuffer buffer, Player player) {
+  _write(buffer,
+      '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.team} ');
 }
 
 void compileGame(Game game) {
@@ -54,6 +55,26 @@ void compileGame(Game game) {
   _write(buffer, ServerResponse.Scene_Shade_Max.index);
   _write(buffer, game.shadeMax.index);
   game.compiled = buffer.toString();
+
+  game.compiledTeamText.clear();
+
+  for (Player player in game.players) {
+    if (!game.compiledTeamText.containsKey(player.team)) {
+      StringBuffer buffer = StringBuffer();
+      buffer.write(ServerResponse.Player_Text.index);
+      buffer.write(_space);
+      game.compiledTeamText[player.team] = buffer;
+      buffer.write(_space);
+    }
+    game.compiledTeamText[player.team]?.write(player.x.toInt());
+    buffer.write(_space);
+    game.compiledTeamText[player.team]?.write(player.y.toInt());
+    buffer.write(_space);
+    game.compiledTeamText[player.team]?.write(player.text);
+    buffer.write(_space);
+    game.compiledTeamText[player.team]?.write(_comma);
+    buffer.write(_space);
+  }
 }
 
 String compileEnvironmentObjects(List<EnvironmentObject> environmentObjects) {
@@ -361,8 +382,7 @@ void _write(StringBuffer buffer, dynamic value) {
   buffer.write(_space);
 }
 
-
-void compilePlayersRemaining(StringBuffer buffer, int remaining){
+void compilePlayersRemaining(StringBuffer buffer, int remaining) {
   _write(buffer, ServerResponse.Waiting_For_More_Players.index);
   _write(buffer, remaining);
 }
