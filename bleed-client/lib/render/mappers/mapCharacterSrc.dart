@@ -11,6 +11,7 @@ import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/render/mappers/mapArcherToSrc.dart';
 import 'package:bleed_client/render/mappers/mapKnightToSrc.dart';
 import 'package:bleed_client/render/mappers/mapSrcWitch.dart';
+import 'package:bleed_client/render/mappers/mapSrcZombie.dart';
 import 'package:lemon_engine/classes/vector2.dart';
 
 const _frame64 = 64.0;
@@ -34,7 +35,6 @@ final Vector2 _humanDying = Vector2(1, 1736);
 final Vector2 _humanFiringHandgun = Vector2(1, 258);
 final Vector2 _humanFiringShotgun = Vector2(1, 1);
 
-final Vector2 _zombieWalking = Vector2(1, 2720);
 
 Float32List _src = Float32List(4);
 
@@ -89,7 +89,7 @@ Float32List mapCharacterSrc({
     case CharacterType.Human:
       break;
     case CharacterType.Zombie:
-      break;
+      return mapSrcZombie(state: state, direction: direction, frame: frame, shade: shade);
     case CharacterType.Witch:
       return mapSrcWitch(state: state, direction: direction, frame: frame);
     case CharacterType.Archer:
@@ -135,12 +135,6 @@ Float32List mapCharacterSrc({
     case CharacterState.Walking:
       double _s = direction.index * _frame64 * _framesPerDirection4;
       double _f = (frame % 4) * _frame64;
-
-      if (type == CharacterType.Zombie) {
-        _src[0] = _s + _f + _zombieWalking.x;
-        _src[1] = shade.index * _frame64 + _zombieWalking.y;
-        break;
-      }
 
       switch (weapon) {
         case WeaponType.HandGun:
@@ -250,21 +244,6 @@ Float32List mapCharacterSrc({
     case CharacterState.Running:
       double _s = direction.index * _frame64 * _framesPerDirection4;
       double _f = (frame % 4) * _frame64;
-
-      if (type == CharacterType.Zombie) {
-        _src[0] = _s + _f + _zombieWalking.x;
-        _src[1] = shade.index * _frame64 + _zombieWalking.y;
-        break;
-      }
-
-      if (type == CharacterType.Witch) {
-        _s = direction.index * _frame64 * 4;
-        _f = (frame % 4) * _frame64;
-        _src[0] = atlas.witch.running.x + _s + _f;
-        _src[1] = atlas.witch.running.y;
-        break;
-      }
-
       switch (weapon) {
         case WeaponType.HandGun:
           _src[0] = _s + _f + _humanWalkingHandgun.x;

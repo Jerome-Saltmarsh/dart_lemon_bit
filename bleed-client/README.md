@@ -136,6 +136,7 @@
 -- The alternative is to begin working on the moba mode
     - The moba mode will take some time to complete
     - 
+[ ] Fix zombie attack animation direction
 [ ] Save / Load Character
 [ ] Enemy Archer
 [ ] Enemy Mage

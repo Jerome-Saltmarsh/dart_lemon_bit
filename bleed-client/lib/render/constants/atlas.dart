@@ -51,6 +51,7 @@ class _Human {
 class _Zombie {
   final Vector2 striking = Vector2(1, 2463);
   final Vector2 idle  = Vector2(1026, 2463);
+  final Vector2 walking  = Vector2(1, 2720);
 }
 
 class _Projectiles {
