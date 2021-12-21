@@ -702,14 +702,13 @@ void main() {
 
 Player spawnPlayerInTown() {
   Player player = Player(game: world.town, x: 0, y: 1750, team: 1);
-  player.team = Teams.Good.index;
+  player.team = teams.west;
   player.abilityPoints = 0;
   player.type = CharacterType.None;
   world.town.players.add(player);
   playerMap[player.uuid] = player;
   return player;
 }
-
 
 void compileWholeGame(Game game){
   compileGame(game);

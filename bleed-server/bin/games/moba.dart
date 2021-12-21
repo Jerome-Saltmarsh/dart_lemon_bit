@@ -17,29 +17,29 @@ class Moba extends Game {
   final Vector2 left = Vector2(-600, 620);
   final Vector2 right = Vector2(800, 900);
 
-  Vector2 teamSpawn1 = Vector2(-600, 620);
-  Vector2 teamSpawn2 = Vector2(850, 910);
+  Vector2 teamSpawnWest = Vector2(-600, 620);
+  Vector2 teamSpawnEast = Vector2(850, 910);
   Vector2 creepSpawn1 = Vector2(-530, 625);
-  Vector2 creepSpawn2 = Vector2(800, 900);
+  Vector2 creepSpawnEast = Vector2(800, 900);
 
-  late List<Vector2> creep1Objectives;
-  late List<Vector2> creep2Objectives;
+  late List<Vector2> creepWestObjectives;
+  late List<Vector2> creepEastObjectives;
 
   int totalPlayersRequired = 2;
-  int team1Lives = 10;
-  int team2Lives = 10;
+  int teamWestLives = 10;
+  int teamEastLives = 10;
 
   final int framesPerCreepSpawn = 500;
   final int creepsPerSpawn = 5;
 
   Moba() : super(scenes.wildernessNorth01, started: false){
-    creep1Objectives = [
+    creepWestObjectives = [
       right,
       top,
       left
     ];
 
-    creep2Objectives = [
+    creepEastObjectives = [
       left,
       top,
       right
@@ -59,16 +59,23 @@ class Moba extends Game {
       spawnZombie(creepSpawn1.x, creepSpawn1.y,
           health: 100,
           experience: 10,
-          objectives: copy(creep1Objectives),
-          team: Teams.Good.index);
+          objectives: copy(creepWestObjectives),
+          team: teams.west);
 
       spawnZombie(
-        creepSpawn2.x, creepSpawn2.y,
+        creepSpawnEast.x, creepSpawnEast.y,
         health: 100,
         experience: 10,
-        objectives: copy(creep2Objectives),
-        team: Teams.Bad.index,
+        objectives: copy(creepEastObjectives),
+        team: teams.east,
       );
+    }
+  }
+
+  @override
+  onNpcObjectivesCompleted(Npc npc){
+    if (npc.team == teams.west){
+      teamEastLives--;
     }
   }
 
@@ -76,13 +83,13 @@ class Moba extends Game {
     int totalGood = 0;
     int totalBad = 0;
     for (Player player in players) {
-      if (player.team == Teams.Good.index) {
+      if (player.team == teams.west) {
         totalGood++;
       } else {
         totalBad++;
       }
     }
-    return totalGood > totalBad ? Teams.Bad.index : Teams.Good.index;
+    return totalGood > totalBad ? teams.east : teams.west;
   }
 
   @override
@@ -91,12 +98,12 @@ class Moba extends Game {
   @override
   void onGameStarted() {
     for (Player player in players) {
-      if (player.team == Teams.Good.index) {
-        player.x = teamSpawn1.x += giveOrTake(5);
-        player.y = teamSpawn1.y += giveOrTake(5);
+      if (player.team == teams.west) {
+        player.x = teamSpawnWest.x += giveOrTake(5);
+        player.y = teamSpawnWest.y += giveOrTake(5);
       } else {
-        player.x = teamSpawn2.x += giveOrTake(5);
-        player.y = teamSpawn2.y += giveOrTake(5);
+        player.x = teamSpawnEast.x += giveOrTake(5);
+        player.y = teamSpawnEast.y += giveOrTake(5);
       }
     }
   }

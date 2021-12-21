@@ -65,9 +65,11 @@ import 'Weapon.dart';
 
 const _none = -1;
 
-enum Teams {
-  Good,
-  Bad,
+final _Teams teams = _Teams();
+
+class _Teams {
+  final west = 0;
+  final east = 1;
 }
 
 // This should be OpenWorldScene
@@ -108,6 +110,10 @@ abstract class Game {
   };
 
   void onGameStarted() {}
+
+  void onNpcObjectivesCompleted(Npc npc){
+
+  }
 
   void updateNpcBehavior(Npc npc) {}
 
@@ -349,6 +355,8 @@ extension GameFunctions on Game {
         npc.objectives.removeLast();
         if (npc.objectiveSet) {
           npcSetPathTo(npc, npc.objective.x, npc.objective.y);
+        }else{
+          onNpcObjectivesCompleted(npc);
         }
       }
     }
@@ -1409,7 +1417,7 @@ extension GameFunctions on Game {
     if (zombieSpawnPoints.isEmpty) throw ZombieSpawnPointsEmptyException();
     Vector2 spawnPoint = randomItem(zombieSpawnPoints);
     return spawnZombie(spawnPoint.x, spawnPoint.y,
-        team: Teams.Bad.index, health: health, experience: experience);
+        team: teams.east, health: health, experience: experience);
   }
 
   int get zombieCount {
