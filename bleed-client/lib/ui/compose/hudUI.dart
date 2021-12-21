@@ -491,7 +491,7 @@ void closeJoinGameDialog() {
 
 Widget buildHud() {
   return WatchBuilder(game.status, (GameStatus gameStatus) {
-    switch(gameStatus){
+    switch (gameStatus) {
       case GameStatus.Awaiting_Players:
         return buildAwaitingPlayers();
       case GameStatus.In_Progress:
@@ -504,21 +504,33 @@ Widget buildHud() {
   });
 }
 
-Widget buildAwaitingPlayers(){
-  return dialog(child: WatchBuilder(game.lobby.playerCount, (int value){
-    return Column(
-      children: game.lobby.players.map((lobbyPlayer){
-        return text("Team: ${lobbyPlayer.team} Player: ${lobbyPlayer.name}");
-      }).toList(),
-    );
-  }));
+Widget buildAwaitingPlayers() {
+  return dialog(
+      child: Column(
+    crossAxisAlignment: cross.stretch,
+    children: [
+      text("MOBA"),
+      height16,
+      WatchBuilder(game.lobby.playerCount, (int value) {
+        return Column(
+          children: [
+            text("Team 1"),
+            ...game.lobby.getPlayersOnTeam(0).map((player) => text(player.name)),
+            height16,
+            text("Team 2"),
+            ...game.lobby.getPlayersOnTeam(1).map((player) => text(player.name)),
+          ],
+        );
+      }),
+    ],
+  ));
 }
 
-Widget buildGameFinished(){
+Widget buildGameFinished() {
   return dialog(child: text("Game Finished"));
 }
 
-Widget buildGameInProgress(){
+Widget buildGameInProgress() {
   return WatchBuilder(game.player.characterType, (CharacterType value) {
     if (value == CharacterType.None) {
       return buildDialogSelectHero();

@@ -74,6 +74,10 @@ class _Lobby {
       players.add(_LobbyPlayer(name, team));
     }
   }
+
+  List<_LobbyPlayer> getPlayersOnTeam(int team){
+    return players.where((element) => element.team == team).toList();
+  }
 }
 
 class _Player {
