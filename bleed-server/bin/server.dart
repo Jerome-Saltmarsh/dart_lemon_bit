@@ -179,6 +179,9 @@ void main() {
           Game game = player.game;
 
           if (game is Moba) {
+            if (player.type == CharacterType.Human){
+              sendToClient(ServerResponse.Character_Type_Required.index.toString());
+            }
             if (game.awaitingPlayers) {
               compilePlayersRemaining(
                   _buffer, game.totalPlayersRequired - game.players.length);

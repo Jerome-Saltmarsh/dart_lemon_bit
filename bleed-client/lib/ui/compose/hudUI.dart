@@ -384,7 +384,7 @@ Widget buildToggleFullscreen() {
   );
 }
 
-Widget buildSelectHero() {
+Widget buildDialogSelectHero() {
   final fontSize = 20;
   return dialog(
       color: Colors.white24,
@@ -490,7 +490,7 @@ void closeJoinGameDialog(){
 Widget buildHud() {
   return WatchBuilder(game.player.characterType, (CharacterType value) {
     if (value == CharacterType.None) {
-      return buildSelectHero();
+      return buildDialogSelectHero();
     }
 
     return WatchBuilder(game.player.alive, (bool alive) {

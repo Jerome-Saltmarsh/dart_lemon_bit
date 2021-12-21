@@ -261,6 +261,10 @@ void parseState() {
         game.type.value = gameTypes[_consumeInt()];
         break;
 
+      case ServerResponse.Character_Type_Required:
+        // hud.state.
+        break;
+
       case ServerResponse.Collectables:
         if (game.id < 0) return;
         _parseCollectables();

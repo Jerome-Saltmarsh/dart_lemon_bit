@@ -33,4 +33,5 @@ enum ServerResponse {
   Team_Victory,
   Team_Lives_Remaining,
   Game_Type,
+  Character_Type_Required,
 }

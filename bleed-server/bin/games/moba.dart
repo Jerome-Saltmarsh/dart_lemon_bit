@@ -118,6 +118,7 @@ Player playerJoin(Moba moba) {
     throw Exception("Game already started");
   }
   final Player player = Player(x: 0, y: 600, game: moba, team: 1);
+  player.type = CharacterType.None;
   registerPlayer(player);
   player.team = moba.getJoinTeam();
   moba.players.add(player);
