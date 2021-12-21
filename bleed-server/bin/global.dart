@@ -5,12 +5,12 @@ import 'games/moba.dart';
 final _Global global = _Global();
 
 class _Global {
-  List<Game> games = [];
+  final List<Game> games = [];
 
   Moba findPendingMobaGame() {
     for (Game game in global.games) {
       if (game is Moba){
-        if (game.status == GameStatus.Awaiting_Players) {
+        if (game.awaitingPlayers) {
           return game;
         }
       }

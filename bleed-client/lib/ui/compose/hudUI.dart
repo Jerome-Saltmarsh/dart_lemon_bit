@@ -7,6 +7,7 @@ import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
+import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
@@ -80,8 +81,7 @@ Widget buildLevelBar() {
             width: width,
             height: height,
             alignment: Alignment.center,
-            child:
-                text('Level ${game.player.level.value}'),
+            child: text('Level ${game.player.level.value}'),
           ),
         ],
       ),
@@ -185,15 +185,19 @@ Widget buildTopLeft() {
         children: [
           buildTime(),
           width8,
-          WatchBuilder(game.type, (GameType value){
-            if (value == GameType.Moba){
+          WatchBuilder(game.status, (GameStatus value) {
+            return text(value);
+          }),
+          width8,
+          WatchBuilder(game.type, (GameType value) {
+            if (value == GameType.Moba) {
               return Row(
                 children: [
-                  WatchBuilder(game.teamLivesWest, (int lives){
+                  WatchBuilder(game.teamLivesWest, (int lives) {
                     return text("West: $lives");
                   }),
                   width8,
-                  WatchBuilder(game.teamLivesEast, (int lives){
+                  WatchBuilder(game.teamLivesEast, (int lives) {
                     return text("East: $lives");
                   }),
                 ],
@@ -447,47 +451,68 @@ Widget buildBottomCenter() {
       ));
 }
 
-Widget buildSelectGameDialog(){
-  return WatchBuilder(hud.joinGameVisible, (bool visible){
-        if (!visible) return emptyContainer;
-        return dialog(
-          height: 300,
-          child: Column(
-            crossAxisAlignment: cross.stretch,
-            children: [
-              Row(
-                mainAxisAlignment: main.apart,
-                children: [
-                  text("Select Game"),
-                  text("Close",
-                      onPressed: closeJoinGameDialog,
-                      decoration: TextDecoration.underline
-                  ),
-                ],
-              ),
-              height16,
-              button("OPEN WORLD", (){
-                closeJoinGameDialog();
-                sendRequestJoinGameOpenWorld();
-              }),
-              height8,
-              button("MOBA", (){
-                closeJoinGameDialog();
-                sendRequestJoinGameMoba();
-              }),
-              // height8,
-              // button("WAVE DEFENSE", sendRequestJoinGameDefense),
-            ],
-          )
-        );
+Widget buildSelectGameDialog() {
+  return WatchBuilder(hud.joinGameVisible, (bool visible) {
+    if (!visible) return emptyContainer;
+    return dialog(
+        height: 300,
+        child: Column(
+          crossAxisAlignment: cross.stretch,
+          children: [
+            Row(
+              mainAxisAlignment: main.apart,
+              children: [
+                text("Select Game"),
+                text("Close",
+                    onPressed: closeJoinGameDialog,
+                    decoration: TextDecoration.underline),
+              ],
+            ),
+            height16,
+            button("OPEN WORLD", () {
+              closeJoinGameDialog();
+              sendRequestJoinGameOpenWorld();
+            }),
+            height8,
+            button("MOBA", () {
+              closeJoinGameDialog();
+              sendRequestJoinGameMoba();
+            }),
+            // height8,
+            // button("WAVE DEFENSE", sendRequestJoinGameDefense),
+          ],
+        ));
   });
 }
 
-void closeJoinGameDialog(){
+void closeJoinGameDialog() {
   hud.joinGameVisible.setFalse();
 }
 
 Widget buildHud() {
+  return WatchBuilder(game.status, (GameStatus gameStatus) {
+    switch(gameStatus){
+      case GameStatus.Awaiting_Players:
+        return buildAwaitingPlayers();
+      case GameStatus.In_Progress:
+        return buildGameInProgress();
+      case GameStatus.Finished:
+        return buildGameFinished();
+      default:
+        throw Exception();
+    }
+  });
+}
+
+Widget buildAwaitingPlayers(){
+  return dialog(child: text("Awaiting Players"));
+}
+
+Widget buildGameFinished(){
+  return dialog(child: text("Game Finished"));
+}
+
+Widget buildGameInProgress(){
   return WatchBuilder(game.player.characterType, (CharacterType value) {
     if (value == CharacterType.None) {
       return buildDialogSelectHero();
@@ -514,13 +539,12 @@ Widget buildHud() {
   });
 }
 
-Widget buildNumberOfPlayersRequiredDialog(){
-  return WatchBuilder(game.numberOfPlayersNeeded, (int number){
+Widget buildNumberOfPlayersRequiredDialog() {
+  return WatchBuilder(game.numberOfPlayersNeeded, (int number) {
     if (number == 0) return emptyContainer;
     return dialog(
-      height: 80,
-      child: text("Waiting for $number more players to join the game")
-    );
+        height: 80,
+        child: text("Waiting for $number more players to join the game"));
   });
 }
 
@@ -879,7 +903,6 @@ Widget buildAbilities() {
       ],
     ),
   );
-
 }
 
 Widget buildAbility(Ability ability) {
@@ -975,7 +998,7 @@ Widget buildAbility(Ability ability) {
                   );
                 }
 
-                return WatchBuilder(ability.selected, (bool selected){
+                return WatchBuilder(ability.selected, (bool selected) {
                   return onPressed(
                     hint: abilityTypeToString(ability.type.value),
                     callback: () {
@@ -985,15 +1008,15 @@ Widget buildAbility(Ability ability) {
                       children: [
                         mouseOver(
                             builder: (BuildContext context, bool mouseOver) {
-                              return buildDecorationImage(
-                                  image: mapAbilityTypeToDecorationImage[type],
-                                  width: 50,
-                                  height: 50,
-                                  borderColor: mouseOver || selected
-                                      ? Colors.white
-                                      : Colors.green,
-                                  borderWidth: 3);
-                            }),
+                          return buildDecorationImage(
+                              image: mapAbilityTypeToDecorationImage[type],
+                              width: 50,
+                              height: 50,
+                              borderColor: mouseOver || selected
+                                  ? Colors.white
+                                  : Colors.green,
+                              borderWidth: 3);
+                        }),
                         Container(
                             color: Colors.black54,
                             padding: padding4,

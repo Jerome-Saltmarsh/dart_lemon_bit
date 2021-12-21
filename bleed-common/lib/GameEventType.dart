@@ -27,4 +27,5 @@ enum GameEventType {
   Teleported,
   EnemyTargeted,
   Blue_Orb_Fired,
+  Objective_Reached,
 }

@@ -15,6 +15,7 @@ import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameError.dart';
+import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/PlayerEvent.dart';
@@ -127,10 +128,6 @@ void parseState() {
         _consumeAbility(game.player.ability2);
         _consumeAbility(game.player.ability3);
         _consumeAbility(game.player.ability4);
-        break;
-
-      case ServerResponse.Team_Victory:
-        game.teamVictory.value = _consumeInt();
         break;
 
       case ServerResponse.Team_Lives_Remaining:
@@ -261,8 +258,8 @@ void parseState() {
         game.type.value = gameTypes[_consumeInt()];
         break;
 
-      case ServerResponse.Character_Type_Required:
-        // hud.state.
+      case ServerResponse.Game_Status:
+        game.status.value = gameStatuses[_consumeInt()];
         break;
 
       case ServerResponse.Collectables:

@@ -4,6 +4,8 @@ import '../classes/Game.dart';
 import '../classes/Npc.dart';
 import '../classes/Player.dart';
 import '../common/CharacterType.dart';
+import '../common/GameEventType.dart';
+import '../common/GameStatus.dart';
 import '../common/GameType.dart';
 import '../common/classes/Vector2.dart';
 import '../instances/scenes.dart';
@@ -41,7 +43,7 @@ class Moba extends Game {
 
   @override
   void update() {
-    if (status != GameStatus.In_Progress) return;
+    if (!inProgress) return;
     if (duration % framesPerCreepSpawn == 0) {
       spawnCreeps();
     }
@@ -69,16 +71,19 @@ class Moba extends Game {
   @override
   onNpcObjectivesCompleted(Npc npc) {
     if (teamVictory != -1) return;
-
+    setCharacterStateDead(npc);
+    dispatch(GameEventType.Objective_Reached, npc.x, npc.y);
     if (npc.team == teams.west) {
       teamLivesEast--;
       if (teamLivesEast <= 0) {
         teamVictory = teams.west;
+        status = GameStatus.Finished;
       }
     } else {
       teamLivesWest--;
       if (teamLivesWest <= 0) {
         teamVictory = teams.east;
+        status = GameStatus.Finished;
       }
     }
   }
@@ -127,12 +132,4 @@ Player playerJoin(Moba moba) {
     moba.onGameStarted();
   }
   return player;
-}
-
-class Creep extends Npc {
-  final List<Vector2> checkpoints = [];
-
-  Creep(double x, double y)
-      : super(
-            x: x, y: y, type: CharacterType.Zombie, health: 20, experience: 1);
 }

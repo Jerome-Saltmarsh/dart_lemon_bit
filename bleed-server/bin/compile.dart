@@ -12,6 +12,7 @@ import 'classes/Player.dart';
 import 'classes/Projectile.dart';
 import 'classes/Weapon.dart';
 import 'common/AbilityType.dart';
+import 'common/GameStatus.dart';
 import 'common/PlayerEvent.dart';
 import 'common/ServerResponse.dart';
 import 'common/Tile.dart';
@@ -48,8 +49,6 @@ void compileGame(Game game) {
   _write(buffer, ServerResponse.Game_Time.index);
   _write(buffer, time);
 
-
-
   if (game.compilePaths) {
     _compilePaths(buffer, game.zombies);
     _compileNpcDebug(buffer, game.npcs);
@@ -61,12 +60,9 @@ void compileGame(Game game) {
   _write(buffer, ServerResponse.Game_Type.index);
   _write(buffer, game.gameType.index);
 
-  game.compiled = buffer.toString();
+  compileGameStatus(buffer, game);
 
-  if (game is Moba){
-    _write(buffer, ServerResponse.Team_Victory.index);
-    _write(buffer, game.teamVictory);
-  }
+  game.compiled = buffer.toString();
 
   game.compiledTeamText.clear();
 
@@ -87,6 +83,17 @@ void compileGame(Game game) {
     game.compiledTeamText[player.team]?.write(_comma);
     buffer.write(_space);
   }
+}
+
+void compileTeamLivesRemaining(StringBuffer buffer, Moba moba){
+  _write(buffer, ServerResponse.Team_Lives_Remaining.index);
+  _write(buffer, moba.teamLivesWest);
+  _write(buffer, moba.teamLivesEast);
+}
+
+void compileGameStatus(StringBuffer buffer, Game game){
+  _write(buffer, ServerResponse.Game_Status.index);
+  _write(buffer, game.status.index);
 }
 
 String compileEnvironmentObjects(List<EnvironmentObject> environmentObjects) {

@@ -12,6 +12,7 @@ import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
+import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/WeaponType.dart';
@@ -26,10 +27,10 @@ class _Game {
   final List<Effect> effects = [];
   final _Settings settings = _Settings();
   final _Player player = _Player();
-  final Watch<int> teamVictory = Watch(-1);
   final Watch<int> teamLivesWest = Watch(-1);
   final Watch<int> teamLivesEast = Watch(-1);
   final Watch<GameType> type = Watch(GameType.None);
+  final Watch<GameStatus> status = Watch(GameStatus.Awaiting_Players);
 
   int serverVersion;
   List<int> collectables = [];

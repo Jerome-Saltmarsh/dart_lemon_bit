@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/diff.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
@@ -93,9 +92,7 @@ void main() {
         }
 
         if (game.inProgress){
-          write(ServerResponse.Team_Lives_Remaining.index);
-          write(game.teamLivesWest);
-          write(game.teamLivesEast);
+          compileTeamLivesRemaining(_buffer, game);
         }
       }
 
@@ -146,8 +143,8 @@ void main() {
     }
 
     void onEvent(requestD) {
-      String requestString = requestD;
-      List<String> arguments = requestString.split(_space);
+      final String requestString = requestD;
+      final List<String> arguments = requestString.split(_space);
 
       if (arguments.isEmpty) {
         error(GameError.ClientRequestArgumentsEmpty);
@@ -165,28 +162,34 @@ void main() {
         return;
       }
 
-      ClientRequest request = clientRequests[clientRequestInt];
+      final ClientRequest request = clientRequests[clientRequestInt];
 
       switch (request) {
         case ClientRequest.Update:
-          Player? player = findPlayerByUuid(arguments[1]);
+          final Player? player = findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;
           }
 
           player.lastUpdateFrame = 0;
-          Game game = player.game;
+          final Game game = player.game;
 
           if (game is Moba) {
-            if (player.type == CharacterType.Human){
-              sendToClient(ServerResponse.Character_Type_Required.index.toString());
-            }
+
             if (game.awaitingPlayers) {
+              compileGameStatus(_buffer, game);
               compilePlayersRemaining(
                   _buffer, game.totalPlayersRequired - game.players.length);
               sendAndClearBuffer();
               return;
+            }
+
+            else
+
+            if (game.finished){
+              compileTeamLivesRemaining(_buffer, game);
+              compileGameStatus(_buffer, game);
             }
           }
 

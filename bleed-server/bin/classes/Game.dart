@@ -16,6 +16,7 @@ import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
 import '../common/CollectableType.dart';
 import '../common/GameEventType.dart';
+import '../common/GameStatus.dart';
 import '../common/GameType.dart';
 import '../common/ItemType.dart';
 import '../common/PlayerEvent.dart';
@@ -73,12 +74,6 @@ class _Teams {
   final east = 1;
 }
 
-enum GameStatus {
-  Awaiting_Players,
-  In_Progress,
-  Finished,
-}
-
 // This should be OpenWorldScene
 abstract class Game {
   static int _id = 0;
@@ -120,7 +115,7 @@ abstract class Game {
 
   bool get awaitingPlayers => status == GameStatus.Awaiting_Players;
   bool get inProgress => status == GameStatus.In_Progress;
-  bool get statusFinished => status == GameStatus.Finished;
+  bool get finished => status == GameStatus.Finished;
 
   void onGameStarted() {}
 
@@ -146,11 +141,11 @@ abstract class Game {
     player.sceneChanged = true;
   }
 
-  int numberOfPlayersInSquad(int squad) {
+  int numberOfPlayersOnTeam(int team) {
     int count = 0;
     for (Player player in players) {
       if (!player.active) continue;
-      if (player.team != squad) continue;
+      if (player.team != team) continue;
       count++;
     }
     return count;
@@ -1809,7 +1804,7 @@ void selectCharacterType(Player player, CharacterType value) {
       break;
     case CharacterType.Archer:
       player.attackRange = 210;
-      player.damage = 2;
+      player.damage = 18;
       player.maxMagic = 100;
       player.ability1 = Ability(
           type: AbilityType.Split_Arrow,

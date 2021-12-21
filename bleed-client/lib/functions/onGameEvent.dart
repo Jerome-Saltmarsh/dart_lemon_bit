@@ -131,6 +131,9 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
     case GameEventType.Blue_Orb_Fired:
       playAudio.sciFiBlaster1(x, y);
       break;
+    case GameEventType.Objective_Reached:
+      emitPixelExplosion(x, y);
+      break;
     case GameEventType.EnemyTargeted:
       emitPixelExplosion(x, y);
       break;
@@ -173,7 +176,7 @@ void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
   }
 }
 
-void emitPixelExplosion(double x, double y, {int amount = 20}) {
+void emitPixelExplosion(double x, double y, {int amount = 10}) {
   for (int i = 0; i < amount; i++) {
     emitPixel(x: x, y: y);
   }
