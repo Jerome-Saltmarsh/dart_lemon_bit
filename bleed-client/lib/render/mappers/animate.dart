@@ -11,10 +11,10 @@ Float32List animate({
   Vector2 atlas,
   List<int> animation,
   Direction direction,
-  Shade shade,
-  double size,
-  int framesPerDirection,
   int frame,
+  Shade shade = Shade.Bright,
+  double size = 64,
+  int framesPerDirection = 4,
 }){
 
   int animationFrame = min(frame, animation.length - 1);

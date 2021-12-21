@@ -494,10 +494,6 @@ int _consumeSingleDigitInt() {
   return int.parse(_consumeSingleCharacter());
 }
 
-bool _consumeBool() {
-  return _consumeSingleCharacter() == _1 ? true : false;
-}
-
 WeaponType _consumeWeaponType() {
   return weaponTypes[_consumeSingleDigitInt()];
 }

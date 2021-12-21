@@ -4,15 +4,15 @@ import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:lemon_engine/classes/vector2.dart';
 
-Float32List _src = Float32List(4);
+final Float32List _src = Float32List(4);
 
 Float32List loop({
   Vector2 atlas,
   Direction direction,
-  Shade shade,
-  double size = 64,
-  int framesPerDirection,
   int frame,
+  Shade shade = Shade.Bright,
+  double size = 64,
+  int framesPerDirection = 4,
 }){
   double _s = direction.index * size * framesPerDirection;
   double _f = (frame % framesPerDirection) * size;

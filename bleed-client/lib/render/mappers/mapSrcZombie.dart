@@ -8,7 +8,6 @@ import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 
 import 'loop.dart';
-import 'mapCharacterSrc.dart';
 
 
 Float32List mapSrcZombie({

@@ -3,7 +3,6 @@ import 'dart:typed_data';
 
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
-import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/render/constants/animations.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/mappers/animate.dart';
@@ -28,59 +27,35 @@ Float32List mapSrcArcher({
       return loop(
           atlas: atlas.archer.idle,
           direction: direction,
-          shade: Shade.Bright,
-          size: 64,
           framesPerDirection: 1,
-          frame: frame);
+          frame: frame
+      );
     case CharacterState.Walking:
       return loop(
           atlas: atlas.archer.running,
           direction: direction,
-          shade: Shade.Bright,
-          size: 64,
-          framesPerDirection: 4,
-          frame: frame);
-    case CharacterState.Dead:
-    // TODO: Handle this case.
-      break;
-    case CharacterState.Aiming:
-    // TODO: Handle this case.
-      break;
-    case CharacterState.Firing:
-    // TODO: Handle this case.
-      break;
+          frame: frame
+      );
     case CharacterState.Striking:
       return animate(
           animation: animations.archer.firing,
           atlas: atlas.archer.firing,
           direction: direction,
-          shade: Shade.Bright,
-          size: 64,
-          framesPerDirection: 4,
-          frame: frame);
+          frame: frame
+      );
     case CharacterState.Performing:
       return animate(
           animation: animations.archer.firing,
           atlas: atlas.archer.firing,
           direction: direction,
-          shade: Shade.Bright,
-          size: 64,
-          framesPerDirection: 4,
-          frame: frame);
+          frame: frame
+      );
     case CharacterState.Running:
       return loop(
           atlas: atlas.archer.running,
           direction: direction,
-          shade: Shade.Bright,
-          size: 64,
-          framesPerDirection: 4,
-          frame: frame);
-    case CharacterState.Reloading:
-    // TODO: Handle this case.
-      break;
-    case CharacterState.ChangingWeapon:
-    // TODO: Handle this case.
-      break;
+          frame: frame
+      );
   }
 
   _src[2] = _src[0] + 64;
