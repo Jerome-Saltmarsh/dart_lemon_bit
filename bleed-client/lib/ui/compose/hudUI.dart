@@ -453,16 +453,6 @@ void closeJoinGameDialog() {
   hud.joinGameVisible.setFalse();
 }
 
-Widget buildHud() {
-  print("buildHud()");
-  return WatchBuilder(game.player.uuid, (String uuid) {
-    if (uuid.isEmpty) {
-      return center(text("uuid.isEmpty"));
-    }
-    return buildConnected();
-  });
-}
-
 Widget align(Widget child, BuildContext context, Alignment alignment,
     {EdgeInsets padding}) {
   return Container(
@@ -474,21 +464,32 @@ Widget align(Widget child, BuildContext context, Alignment alignment,
 }
 
 Widget buildConnected() {
-  return WatchBuilder(game.status, (GameStatus gameStatus) {
-    switch (gameStatus) {
-      case GameStatus.Awaiting_Players:
-        return buildDialogLobby();
-      case GameStatus.In_Progress:
-        return buildGameInProgress();
-      case GameStatus.Finished:
-        return buildGameFinished();
-      default:
-        throw Exception();
+  print("buildConnected()");
+
+  return WatchBuilder(game.player.uuid, (String uuid) {
+    if (uuid.isEmpty) {
+      return center(text("uuid.isEmpty"));
     }
+    return WatchBuilder(game.status, (GameStatus gameStatus) {
+      switch (gameStatus) {
+        case GameStatus.Awaiting_Players:
+          return buildAwaitingPlayers();
+        case GameStatus.In_Progress:
+          return buildInProgress();
+        case GameStatus.Finished:
+          return buildFinished();
+        default:
+          throw Exception();
+      }
+    });
   });
 }
 
-Widget buildDialogLobby() {
+Widget buildGameStatus(GameStatus statue){
+
+}
+
+Widget buildAwaitingPlayers() {
   return dialog(
       child: Column(
     crossAxisAlignment: cross.stretch,
@@ -537,11 +538,11 @@ Widget buildDialogLobby() {
   ));
 }
 
-Widget buildGameFinished() {
+Widget buildFinished() {
   return dialog(child: text("Game Finished"));
 }
 
-Widget buildGameInProgress() {
+Widget buildInProgress() {
   return WatchBuilder(game.player.characterType, (CharacterType value) {
     if (value == CharacterType.None) {
       return buildDialogSelectHero();
@@ -674,7 +675,7 @@ Widget buildMenu() {
         if (game.settings.developMode) width8,
         if (game.settings.developMode) _buildToggleEdit(),
         buildSelectGameDialogToggle(),
-        button("Exit", (){
+        button("Exit", () {
           game.type.value = GameType.None;
         }),
         button("Change Hero", () {

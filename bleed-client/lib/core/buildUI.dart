@@ -8,6 +8,7 @@ import 'package:bleed_client/ui/compose/buildHomePage.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/compose/views.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
+import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/watches/mode.dart';
 import 'package:flutter/cupertino.dart';
@@ -31,58 +32,23 @@ Widget buildUI(BuildContext context) {
       }
 
       return WatchBuilder(connection, (Connection connection){
-
-        if (connection == Connection.Connecting) {
-          return buildViewConnecting();
-        } else if (!connected) {
-          return buildSelectServer();
-        }
-
         switch(connection) {
-          case Connection.None:
-            return text("Connection.None");
           case Connection.Connecting:
-            return buildViewConnecting();
+            return buildConnecting();
           case Connection.Connected:
-            return buildHud();
-          case Connection.Done:
-            return text("Connection.Done");
-          case Connection.Error:
-            return text("Connection.Error");
-          case Connection.Failed_To_Connect:
-            return text("Connection.Failed_To_Connect");
+            return buildConnected();
           default:
-            throw Exception();
+            return center(Column(
+              mainAxisAlignment: main.center,
+              children: [
+                text(connection),
+                height8,
+                button("Cancel", game.exit, minWidth: 100)
+              ],
+            ));
         }
 
-
-        if (game.id < 0) {
-          // TODO consider case
-          return buildViewConnecting();
-        }
-        if (editMode) return buildEditorUI();
-
-        if (game.player.id < 0) {
-          return text(
-              "player id is not assigned. player id: ${game.player.id}, game id: ${game.id}");
-        }
-
-        if (framesSinceEvent > 30) {
-          return Container(
-            width: globalSize.width,
-            height: globalSize.height,
-            alignment: Alignment.center,
-            child: Container(child: text("Reconnecting...", fontSize: 30)),
-          );
-        }
-        if (!playerAssigned) {
-          return Container(
-            width: globalSize.width,
-            height: globalSize.height,
-            alignment: Alignment.center,
-            child: text("Error: No Player Assigned"),
-          );
-        }
+        // todo check framesSinceEvent
       });
     });
   });

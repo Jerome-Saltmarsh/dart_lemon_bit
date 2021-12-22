@@ -13,7 +13,7 @@ import 'package:lemon_math/golden_ratio.dart';
 import '../../audio.dart';
 import '../state/flutter_constants.dart';
 
-Widget buildViewConnecting() {
+Widget buildConnecting() {
   return center(
       Column(
         mainAxisAlignment: main.center,

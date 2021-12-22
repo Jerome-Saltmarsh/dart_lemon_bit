@@ -74,6 +74,10 @@ class _Game {
   // functions
   void leaveLobby() {
     server.leaveLobby();
+    exit();
+  }
+
+  void exit(){
     game.type.value = GameType.None;
     clearSession();
     disconnect();
