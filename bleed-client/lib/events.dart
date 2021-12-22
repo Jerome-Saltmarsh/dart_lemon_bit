@@ -1,6 +1,7 @@
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/network.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:neuro/instance.dart';
 import 'package:neuro/neuro.dart';
 
@@ -23,10 +24,7 @@ final _Events events = _Events();
 class _Events {
   void onGameTypeChanged(GameType type) {
     print('events.onGameTypeChanged($type)');
-
-    // disconnect();
     game.clearSession();
-
     switch (type) {
       case GameType.None:
         break;
@@ -38,5 +36,6 @@ class _Events {
 
   void onServerTypeChanged(ServerType serverType) {
     print('events.onServerTypeChanged($serverType)');
+    sharedPreferences.setInt('server', serverType.index);
   }
 }

@@ -1,6 +1,5 @@
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/network.dart';
-import 'package:bleed_client/state/sharedPreferences.dart';
 
 
 // interface
@@ -9,7 +8,6 @@ String getServerName(ServerType server) {
 }
 
 void connectToWebSocketServer(ServerType server, GameType gameType) {
-  sharedPreferences.setInt('server', server.index);
   if (server == ServerType.LocalHost) {
     connectLocalHost();
     return;
@@ -47,6 +45,7 @@ Map<ServerType, String> _names = {
   ServerType.USA_East: "USA East",
   ServerType.USA_West: "USA West",
   ServerType.LocalHost: "Localhost",
+  ServerType.None: "None",
 };
 
 Map<ServerType, String> _uris = {
