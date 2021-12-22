@@ -75,7 +75,7 @@ Widget comingSoon({Widget child}) {
   );
 }
 
-Widget button(String message, Function onPressed, {double fontSize, double minWidth}){
+Widget button(dynamic message, Function onPressed, {double fontSize, double minWidth}){
   return pressed(
       callback: onPressed,
       child: mouseOver(

@@ -1,4 +1,5 @@
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
@@ -11,7 +12,7 @@ Widget buildHomePage(){
       Container(
           alignment: Alignment.center,
           height: 80,
-          child: text("QUEST-ARCADE", fontSize: 30)),
+          child: text("LEMON ARCADE", fontSize: 30)),
       button("MOBA", (){
         game.type.value = GameType.Moba;
       }),
@@ -19,6 +20,9 @@ Widget buildHomePage(){
       button("Open World", (){
         game.type.value = GameType.Open_World;
       }),
+      button(game.serverType.value, (){
+        game.serverType.value = ServerType.None;
+      })
     ],
   );
 }

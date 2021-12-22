@@ -548,25 +548,25 @@ Wow
 Fortnight
 
 # Domain Names
-questglade.com
 quest-glade.com
+quest-arcade.com
 fantasy-scroll.com
 fantasy-arcade.com
 game-portal.io
-heroes-portal.com
 fantasy-portal.com
+heroes-arcade.com
+heroes-portal.com
 heroes-summon.com
 heroes-domain.com
 heroes-glade.com
+heroes-sanctuary.com
 champions-glade.com
 champions-rift.com
 champions-portal.com
 champion-arcade.com
-quest-arcade.com
 mystical-arcade.com
 magic-arcade.com
 lost-arcade.com
-heroes-arcade.com
 lemon-arcade.com
 battle-stars.com
 battle-stars.net

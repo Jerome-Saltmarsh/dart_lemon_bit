@@ -6,17 +6,6 @@ import 'package:bleed_client/state/sharedPreferences.dart';
 
 import 'common/GameType.dart';
 
-
-// class GameJoined {}
-//
-// void dispatch(message) {
-//   announce(message);
-// }
-//
-// void on<T>(HandlerFunction<T> function) {
-//   neuro.handle(function);
-// }
-
 class Events {
 
   void _onGameTypeChanged(GameType type) {
@@ -33,7 +22,7 @@ class Events {
 
   void _onServerTypeChanged(ServerType serverType) {
     print('events.onServerTypeChanged($serverType)');
-    sharedPreferences.setInt('server', serverType.index);
+    storage.serverType = serverType;
   }
 
   void _onConnectionChanged(Connection connection) {

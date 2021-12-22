@@ -4,6 +4,7 @@ import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/functions/refreshPage.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
+import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,11 +36,10 @@ Widget buildConnecting() {
   );
 }
 
-Widget _buildServer(ServerType server) {
+Widget _buildServerTypeButton(ServerType server) {
   double height = 50;
   return Container(
     child: mouseOver(
-        onEnter: playAudioButtonHover,
         builder: (BuildContext context, bool hovering) {
       return onPressed(
           callback: () {
@@ -50,11 +50,10 @@ Widget _buildServer(ServerType server) {
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.white, width: hovering ? 4 : 2),
                 borderRadius: borderRadius4,
-                // color: hovering ? Colors.white30 : null
               ),
               width: height * (goldenRatio * 2),
               child: text(
-                  getServerName(server), fontWeight: hovering ? FontWeight.bold : FontWeight.normal,
+                  toString(server), fontWeight: hovering ? FontWeight.bold : FontWeight.normal,
                   fontSize: hovering ? 20 : 18
               ),
               alignment: Alignment.center));
@@ -63,16 +62,13 @@ Widget _buildServer(ServerType server) {
   );
 }
 
-Widget buildSelectServer() {
+Widget buildSelectServerType() {
   return center(
     SingleChildScrollView(
       child: Column(crossAxisAlignment: cross.center, children: [
-        height(50 * goldenRatioInverse),
-        text(game.type.value, fontSize: 120),
-        height(50 * goldenRatioInverse),
-        text("Select a server to connect to"),
-        height(50 * goldenRatioInverseB),
-        ...ServerType.values.map(_buildServer)
+        text("game-portal.io", fontSize: 45),
+        height32,
+        ...selectableServerTypes.map(_buildServerTypeButton)
       ]),
     ),
   );

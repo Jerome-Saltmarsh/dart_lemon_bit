@@ -23,7 +23,7 @@ Widget buildUI(BuildContext context) {
 
   return WatchBuilder(game.serverType, (ServerType serverType){
     if (serverType == ServerType.None){
-      return buildSelectServer();
+      return buildSelectServerType();
     }
 
     return WatchBuilder(game.type, (GameType type) {

@@ -183,10 +183,6 @@ Widget buildTopLeft() {
         children: [
           buildTime(),
           width8,
-          WatchBuilder(game.status, (GameStatus value) {
-            return text(value);
-          }),
-          width8,
           WatchBuilder(game.type, (GameType value) {
             if (value == GameType.Moba) {
               return Row(
@@ -483,10 +479,6 @@ Widget buildConnected() {
       }
     });
   });
-}
-
-Widget buildGameStatus(GameStatus statue){
-
 }
 
 Widget buildAwaitingPlayers() {

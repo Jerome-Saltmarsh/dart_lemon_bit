@@ -13,11 +13,9 @@ import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/events/onAmbientLightChanged.dart';
 import 'package:bleed_client/events/onCompiledGameChanged.dart';
-import 'package:bleed_client/events/onGameJoined.dart';
 import 'package:bleed_client/events/onPhaseChanged.dart';
 import 'package:bleed_client/events/onShadeMaxChanged.dart';
 import 'package:bleed_client/events/onTimeChanged.dart';
-import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/network.dart';
@@ -25,7 +23,6 @@ import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
-import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
@@ -104,30 +101,6 @@ void onPlayerWeaponChanged(WeaponType weapon) {
 void initializeEventListeners() {
   registerPlayKeyboardHandler();
   registerOnMouseScroll(onMouseScroll);
-  // connection.onChanged((value) {
-  //
-  //   switch(value){
-  //
-  //     case Connection.None:
-  //       // TODO: Handle this case.
-  //       break;
-  //     case Connection.Connecting:
-  //       // TODO: Handle this case.
-  //       break;
-  //     case Connection.Connected:
-  //       _onConnected();
-  //       break;
-  //     case Connection.Done:
-  //       clearState();
-  //       showDialogConnectFailed();
-  //       break;
-  //     case Connection.Error:
-  //       clearState();
-  //       showDialogConnectFailed();
-  //       break;
-  //   }
-  // });
-
   eventStream.stream.listen(_onEventReceivedFromServer);
   observeCompiledGame(onCompiledGameChanged);
   timeInSeconds.onChanged(onTimeChanged);
@@ -181,19 +154,6 @@ void initializeEventListeners() {
 
   game.player.weapon.onChanged(onPlayerWeaponChanged);
 
-  // onConnectController.stream.listen((event) {
-  //   print('on connect $event');
-  //   clearState();
-  //   sendRequestPing();
-  // });
-
-  // onDoneStream.stream.listen((event) {
-  //   print("connection done");
-  //   clearState();
-  //   rebuildUI();
-  //   redrawCanvas();
-  // });
-
   onRightClickChanged.stream.listen((bool down) {
     if (down) {
       print("request deselect");
@@ -208,36 +168,13 @@ void _onEventReceivedFromServer(dynamic value) {
   compiledGame = value;
 }
 
-void _onConnected() {
-  print("Connection to server established");
-  // sendRequestJoinGame();
-}
-
 Future loadSharedPreferences() async {
   sharedPreferences = await SharedPreferences.getInstance();
   game.settings.audioMuted.value =
       sharedPreferences.containsKey('audioMuted') &&
           sharedPreferences.getBool('audioMuted');
 
-  // if (sharedPreferences.containsKey('server')) {
-  //   Server server = servers[sharedPreferences.getInt('server')];
-  //   connectServer(server);
-  // }
-
-  // if (sharedPreferences.containsKey('last-refresh')) {
-  //   DateTime lastRefresh =
-  //   DateTime.parse(sharedPreferences.getString('last-refresh'));
-  //   DateTime now = DateTime.now();
-  //   if (now
-  //       .difference(lastRefresh)
-  //       .inHours > 1) {
-  //     sharedPreferences.setString(
-  //         'last-refresh', DateTime.now().toIso8601String());
-  //     refreshPage();
-  //   }
-  // } else {
-  //   sharedPreferences.setString(
-  //       'last-refresh', DateTime.now().toIso8601String());
-  // }
-  // );
+  if (storage.serverSaved){
+    game.serverType.value = storage.serverType;
+  }
 }

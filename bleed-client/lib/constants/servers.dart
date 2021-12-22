@@ -1,7 +1,6 @@
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/network.dart';
 
-
 void connectToWebSocketServer(ServerType server, GameType gameType) {
   if (server == ServerType.LocalHost) {
     _connectLocalHost();
@@ -30,7 +29,12 @@ enum ServerType {
 
 final List<ServerType> serverTypes = ServerType.values;
 
-// implementation
+String serverTypeToString(ServerType value){
+  return value.toString().replaceAll("ServerType.", "");
+}
+
+final List<ServerType> selectableServerTypes =
+    serverTypes.where((type) => type != ServerType.None).toList();
 
 final String sydneyMoba = "https://sydney-moba-1-osbmaezptq-ts.a.run.app";
 final String sydneyMMO = "https://sydney-mmo-1-osbmaezptq-ts.a.run.app";
@@ -40,7 +44,7 @@ String parseHttpToWebSocket(String url) {
 }
 
 String getHttpsConnectionString(ServerType server, GameType gameType) {
-  switch(server){
+  switch (server) {
     case ServerType.Australia:
       switch (gameType) {
         case GameType.Open_World:
@@ -54,5 +58,4 @@ String getHttpsConnectionString(ServerType server, GameType gameType) {
     default:
       throw Exception();
   }
-
 }
