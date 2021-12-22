@@ -13,21 +13,14 @@ Widget buildHomePage(){
           height: 80,
           child: text("QUEST-ARCADE", fontSize: 30)),
       button("MOBA", (){
-        // closeJoinGameDialog();
-        sendRequestJoinGameMoba();
+        game.type.value = GameType.Moba;
       }),
       height8,
       button("Open World", (){
-        // closeJoinGameDialog();
-        // sendRequestJoinGameOpenWorld();
         game.type.value = GameType.Open_World;
       }),
-      height8,
-      button("BLEED", (){
-        // closeJoinGameDialog();
-        sendRequestJoinGameOpenWorld();
-      })
-
     ],
   );
 }
+
+

@@ -38,6 +38,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../ui/compose/dialogs.dart';
 
 Future init() async {
+  Events();
   await images.load();
   await loadSharedPreferences();
   initializeGameInstances();
@@ -213,7 +214,7 @@ void _onEventReceivedFromServer(dynamic value) {
 
 void _onConnected() {
   print("Connection to server established");
-  sendRequestJoinGame();
+  // sendRequestJoinGame();
 }
 
 Future loadSharedPreferences() async {

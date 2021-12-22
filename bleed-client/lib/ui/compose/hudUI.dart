@@ -449,45 +449,12 @@ Widget buildBottomCenter() {
       ));
 }
 
-Widget buildSelectGameDialog() {
-  return WatchBuilder(hud.joinGameVisible, (bool visible) {
-    if (!visible) return emptyContainer;
-    return dialog(
-        height: 300,
-        child: Column(
-          crossAxisAlignment: cross.stretch,
-          children: [
-            Row(
-              mainAxisAlignment: main.apart,
-              children: [
-                text("Select Game"),
-                text("Close",
-                    onPressed: closeJoinGameDialog,
-                    decoration: TextDecoration.underline),
-              ],
-            ),
-            height16,
-            button("OPEN WORLD", () {
-              closeJoinGameDialog();
-              sendRequestJoinGameOpenWorld();
-            }),
-            height8,
-            button("MOBA", () {
-              closeJoinGameDialog();
-              sendRequestJoinGameMoba();
-            }),
-            // height8,
-            // button("WAVE DEFENSE", sendRequestJoinGameDefense),
-          ],
-        ));
-  });
-}
-
 void closeJoinGameDialog() {
   hud.joinGameVisible.setFalse();
 }
 
 Widget buildHud() {
+  print("buildHud()");
   return WatchBuilder(game.player.uuid, (String uuid) {
     if (uuid.isEmpty) {
       return center(text("uuid.isEmpty"));
@@ -584,7 +551,6 @@ Widget buildGameInProgress() {
       return Stack(
         children: [
           buildTextBox(),
-          buildSelectGameDialog(),
           if (alive) buildBottomRight(),
           buildTopLeft(),
           if (alive) buildBottomCenter(),

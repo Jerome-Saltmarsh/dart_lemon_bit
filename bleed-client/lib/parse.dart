@@ -151,7 +151,7 @@ void parseState() {
         break;
 
       case ServerResponse.Version:
-        sendRequestJoinGame();
+        // sendRequestJoinGame();
         break;
 
       case ServerResponse.Error:

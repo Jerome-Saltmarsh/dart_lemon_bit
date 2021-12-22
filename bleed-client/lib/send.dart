@@ -6,6 +6,7 @@ import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 
+import 'common/GameType.dart';
 import 'network.dart';
 
 final StringBuffer _buffer = StringBuffer();
@@ -81,21 +82,8 @@ void sendRequestAcquireFirebolt(){
   sendRequestAcquireAbility(WeaponType.Firebolt);
 }
 
-void sendRequestJoinGame() {
-  send('${ClientRequest.Join.index}');
-}
-
-void sendRequestJoinGameMoba() {
-  send('${ClientRequest.Join_Moba.index}');
-}
-
-void sendRequestJoinGameOpenWorld() {
-  print("sendRequestJoinGameOpenWorld()");
-  send('${ClientRequest.Join.index}');
-}
-
-void sendRequestJoinGameDefense() {
-  send('${ClientRequest.Join_Defense.index}');
+void sendRequestJoinGame(GameType type) {
+  send('${ClientRequest.Join.index} ${type.index}');
 }
 
 void sendRequestAcquireAbility(WeaponType type) {

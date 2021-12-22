@@ -16,6 +16,7 @@ import 'common/CharacterState.dart';
 import 'common/CharacterType.dart';
 import 'common/ClientRequest.dart';
 import 'common/GameError.dart';
+import 'common/GameType.dart';
 import 'common/PlayerEvent.dart';
 import 'common/ServerResponse.dart';
 import 'common/WeaponType.dart';
@@ -96,6 +97,14 @@ void main() {
         }
       }
 
+      sendAndClearBuffer();
+    }
+
+    void joinGameMoba() {
+      final Moba moba = global.findPendingMobaGame();
+      Player player = playerJoin(moba);
+      compileWholeGame(moba);
+      compilePlayerJoined(_buffer, player);
       sendAndClearBuffer();
     }
 
@@ -316,15 +325,38 @@ void main() {
           return;
 
         case ClientRequest.Join:
-          joinGameOpenWorld();
-          break;
+          if (arguments.length != 2) {
+            errorArgsExpected(2, arguments);
+            return;
+          }
+          final int? gameTypeIndex = int.tryParse(arguments[1]);
 
-        case ClientRequest.Join_Moba:
-          final Moba moba = global.findPendingMobaGame();
-          Player player = playerJoin(moba);
-          compileWholeGame(moba);
-          compilePlayerJoined(_buffer, player);
-          sendAndClearBuffer();
+          if (gameTypeIndex == null){
+            errorInvalidArg('expected integer at args[1]');
+            return;
+          }
+          if (gameTypeIndex >= gameTypes.length){
+            errorInvalidArg('game type index cannot exceed ${gameTypes.length - 1}');
+            return;
+          }
+          if (gameTypeIndex < 0){
+            errorInvalidArg('game type must be greater than 0');
+            return;
+          }
+
+          final GameType gameType = gameTypes[gameTypeIndex];
+
+          switch(gameType){
+            case GameType.None:
+              break;
+            case GameType.Open_World:
+              joinGameOpenWorld();
+              break;
+            case GameType.Moba:
+              joinGameMoba();
+              break;
+          }
+
           break;
 
         case ClientRequest.Ping:

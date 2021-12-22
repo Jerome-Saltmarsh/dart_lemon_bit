@@ -51,7 +51,9 @@ void dispose(){
 }
 
 void send(String message) {
-  if (!connected) return;
+  if (!connected) {
+    print("warning cannot send because not connected");
+  }
   sinkMessage(message);
 }
 

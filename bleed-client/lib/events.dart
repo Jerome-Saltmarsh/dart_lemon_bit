@@ -1,5 +1,6 @@
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/network.dart';
+import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:neuro/instance.dart';
@@ -7,7 +8,6 @@ import 'package:neuro/neuro.dart';
 
 import 'common/GameType.dart';
 
-class LobbyJoined {}
 
 class GameJoined {}
 
@@ -19,10 +19,9 @@ void on<T>(HandlerFunction<T> function) {
   neuro.handle(function);
 }
 
-final _Events events = _Events();
+class Events {
 
-class _Events {
-  void onGameTypeChanged(GameType type) {
+  void _onGameTypeChanged(GameType type) {
     print('events.onGameTypeChanged($type)');
     game.clearSession();
     switch (type) {
@@ -34,8 +33,22 @@ class _Events {
     }
   }
 
-  void onServerTypeChanged(ServerType serverType) {
+  void _onServerTypeChanged(ServerType serverType) {
     print('events.onServerTypeChanged($serverType)');
     sharedPreferences.setInt('server', serverType.index);
+  }
+
+  void _onConnectionChanged(Connection connection) {
+    print("events.onConnectionChanged($connection)");
+    if (connection == Connection.Connected) {
+      sendRequestJoinGame(game.type.value);
+    }
+  }
+
+  Events(){
+    print("Events()");
+    connection.onChanged(_onConnectionChanged);
+    game.type.onChanged(_onGameTypeChanged);
+    game.serverType.onChanged(_onServerTypeChanged);
   }
 }

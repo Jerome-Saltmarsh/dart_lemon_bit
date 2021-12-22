@@ -16,11 +16,6 @@ void initUI() {
   respondTo((GameJoined gameStarted) async {
     closeMainMenuDialog();
   });
-
-  on((LobbyJoined _) async {
-    closeMainMenuDialog();
-    rebuildUI();
-  });
 }
 
 void refreshUI() {
