@@ -1,6 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/functions/refreshPage.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
@@ -19,7 +20,7 @@ Widget buildViewConnecting() {
           Container(
             height: 80,
             child: AnimatedTextKit(repeatForever: true, animatedTexts: [
-              RotateAnimatedText("Connecting to server: $currentServerName",
+              RotateAnimatedText("Connecting to server: ${game.serverType.value}",
                   textStyle: TextStyle(color: Colors.white, fontSize: 30)),
             ]),
           ),
@@ -33,7 +34,7 @@ Widget buildViewConnecting() {
   );
 }
 
-Widget _buildServer(Server server) {
+Widget _buildServer(ServerType server) {
   double height = 50;
   return Container(
     child: mouseOver(
@@ -41,7 +42,7 @@ Widget _buildServer(Server server) {
         builder: (BuildContext context, bool hovering) {
       return onPressed(
           callback: () {
-            connectServer(server);
+            game.serverType.value = server;
           },
           child: Container(
               height: height,
@@ -61,16 +62,16 @@ Widget _buildServer(Server server) {
   );
 }
 
-Widget buildViewConnect() {
+Widget buildSelectServer() {
   return center(
     SingleChildScrollView(
       child: Column(crossAxisAlignment: cross.center, children: [
         height(50 * goldenRatioInverse),
-        text("BLEED", fontSize: 120),
+        text(game.type.value, fontSize: 120),
         height(50 * goldenRatioInverse),
-        text("Select a server to play on"),
+        text("Select a server to connect to"),
         height(50 * goldenRatioInverseB),
-        ...Server.values.map(_buildServer)
+        ...ServerType.values.map(_buildServer)
       ]),
     ),
   );

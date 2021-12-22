@@ -90,6 +90,7 @@ void sendRequestJoinGameMoba() {
 }
 
 void sendRequestJoinGameOpenWorld() {
+  print("sendRequestJoinGameOpenWorld()");
   send('${ClientRequest.Join.index}');
 }
 

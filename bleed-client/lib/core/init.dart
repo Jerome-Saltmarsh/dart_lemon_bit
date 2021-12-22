@@ -50,7 +50,7 @@ Future init() async {
     Future.delayed(Duration(seconds: 1), () {
       String host = Uri.base.queryParameters['host'];
       String connectionString = parseHttpToWebSocket(host);
-      connect(connectionString);
+      connectWebSocket(connectionString);
     });
   }
 }

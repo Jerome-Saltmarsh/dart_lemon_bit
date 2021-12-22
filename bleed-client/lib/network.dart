@@ -22,7 +22,7 @@ bool get connected => connection.value == Connection.Connected;
 bool get connecting => connection.value == Connection.Connecting;
 
 // interface
-void connect(String uri) {
+void connectWebSocket(String uri) {
   connection.value = Connection.Connecting;
   webSocketChannel = WebSocketChannel.connect(Uri.parse(uri));
   webSocketChannel.stream.listen(_onEvent, onError: _onError, onDone: _onDone);
@@ -38,7 +38,7 @@ void disconnect() {
   print('network.disconnect()');
   // if (!connected) return;
   // connection.value = Connection.Done;
-  // if (webSocketChannel == null) return;
+  if (webSocketChannel == null) return;
   webSocketChannel.sink.close();
 }
 

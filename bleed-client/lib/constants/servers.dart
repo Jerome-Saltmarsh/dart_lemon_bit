@@ -1,38 +1,31 @@
+import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/network.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 
-// state
-Server _currentServer;
 
 // interface
-String getServerName(Server server) {
+String getServerName(ServerType server) {
   return _names[server];
 }
 
-void connectServer(Server server) {
-  _currentServer = server;
+void connectToWebSocketServer(ServerType server, GameType gameType) {
   sharedPreferences.setInt('server', server.index);
-  if (server == Server.LocalHost) {
+  if (server == ServerType.LocalHost) {
     connectLocalHost();
     return;
   }
-  connect(_getConnectionString(server));
+
+  String httpsConnectionString = getHttpsConnectionString(server, gameType);
+  String wsConnectionString = parseHttpToWebSocket(httpsConnectionString);
+  connectWebSocket(wsConnectionString);
 }
 
 void connectLocalHost({int port = 8080}) {
-  _currentServer = Server.LocalHost;
-  connect('ws://localhost:$port');
+  connectWebSocket('ws://localhost:$port');
 }
 
-bool isServerConnected(Server server) {
-  return _currentServer == server;
-}
-
-Server get currentServer => _currentServer;
-
-String get currentServerName => getServerName(currentServer);
-
-enum Server {
+enum ServerType {
+  None,
   Australia,
   Brazil,
   Germany,
@@ -42,38 +35,55 @@ enum Server {
   LocalHost
 }
 
-final List<Server> servers = Server.values;
+final List<ServerType> serverTypes = ServerType.values;
 
 // implementation
 
-Map<Server, String> _names = {
-  Server.Australia: "Australia",
-  Server.Brazil: "Brazil",
-  Server.Germany: "Germany",
-  Server.South_Korea: "South Korea",
-  Server.USA_East: "USA East",
-  Server.USA_West: "USA West",
-  Server.LocalHost: "Localhost",
+Map<ServerType, String> _names = {
+  ServerType.Australia: "Australia",
+  ServerType.Brazil: "Brazil",
+  ServerType.Germany: "Germany",
+  ServerType.South_Korea: "South Korea",
+  ServerType.USA_East: "USA East",
+  ServerType.USA_West: "USA West",
+  ServerType.LocalHost: "Localhost",
 };
 
-Map<Server, String> _uris = {
-  Server.Australia: 'https://bleed-2-melbourne-osbmaezptq-km.a.run.app',
-  Server.Brazil: "https://bleed-2-sao-paulo-osbmaezptq-rj.a.run.app",
-  Server.Germany: 'https://bleed-frankfurt-15-osbmaezptq-ey.a.run.app',
-  Server.South_Korea: 'https://bleed-2-seoul-osbmaezptq-du.a.run.app',
-  Server.USA_East: 'https://bleed-usa-east-2-osbmaezptq-ue.a.run.app',
-  Server.USA_West: 'https://bleed-usa-west-2-osbmaezptq-uw.a.run.app',
-  Server.LocalHost: 'https://localhost'
+Map<ServerType, String> _uris = {
+  ServerType.Australia: 'https://bleed-osbmaezptq-ts.a.run.app',
+  ServerType.Brazil: "https://bleed-2-sao-paulo-osbmaezptq-rj.a.run.app",
+  ServerType.Germany: 'https://bleed-frankfurt-15-osbmaezptq-ey.a.run.app',
+  ServerType.South_Korea: 'https://bleed-2-seoul-osbmaezptq-du.a.run.app',
+  ServerType.USA_East: 'https://bleed-usa-east-2-osbmaezptq-ue.a.run.app',
+  ServerType.USA_West: 'https://bleed-usa-west-2-osbmaezptq-uw.a.run.app',
+  ServerType.LocalHost: 'https://localhost'
 };
 
-String _getConnectionString(Server server) {
-  return parseHttpToWebSocket(_getUri(server));
-}
+final String sydneyMoba = "https://sydney-moba-1-osbmaezptq-ts.a.run.app";
+final String sydneyMMO = "https://sydney-mmo-1-osbmaezptq-ts.a.run.app";
 
 String parseHttpToWebSocket(String url) {
   return url.replaceAll("https", "wss") + "/:8080";
 }
 
-String _getUri(Server server) {
+String _getUri(ServerType server) {
   return _uris[server];
+}
+
+String getHttpsConnectionString(ServerType server, GameType gameType) {
+  switch(server){
+    case ServerType.Australia:
+      switch (gameType) {
+        case GameType.Open_World:
+          return sydneyMMO;
+        case GameType.Moba:
+          return sydneyMoba;
+        default:
+          throw Exception();
+      }
+      break;
+    default:
+      throw Exception();
+  }
+
 }

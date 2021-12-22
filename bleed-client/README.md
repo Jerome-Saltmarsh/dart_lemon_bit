@@ -548,15 +548,21 @@ Wow
 Fortnight
 
 # Domain Names
+questglade.com
+quest-glade.com
+fantasy-scroll.com
 fantasy-arcade.com
-game-portal.com
+game-portal.io
+heroes-portal.com
+fantasy-portal.com
 heroes-summon.com
 heroes-domain.com
 heroes-glade.com
 champions-glade.com
 champions-rift.com
-quest-arcade.com
+champions-portal.com
 champion-arcade.com
+quest-arcade.com
 mystical-arcade.com
 magic-arcade.com
 lost-arcade.com
@@ -576,13 +582,8 @@ fusion-games.io
 play-stream.io
 fun-stream.io
 ultimate-games.io
-
-game-stars.io
-fusion-games.io
-fusiongames.io
-game-fuse.com
 mega-games.com
-fusion-games.online
+
 
 # Home page
 Games

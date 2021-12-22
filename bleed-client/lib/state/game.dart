@@ -18,21 +18,24 @@ import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
-import 'package:bleed_client/send.dart';
+import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/server/server.dart';
 import 'package:lemon_watch/watch.dart';
+
+import '../events.dart';
 
 final _Game game = _Game();
 
 class _Game {
   // state
+  final Watch<ServerType> serverType = Watch(ServerType.None, onChanged: events.onServerTypeChanged);
   final Watch<int> numberOfPlayersNeeded = Watch(0);
   final List<Effect> effects = [];
   final _Settings settings = _Settings();
   final _Player player = _Player();
   final Watch<int> teamLivesWest = Watch(-1);
   final Watch<int> teamLivesEast = Watch(-1);
-  final Watch<GameType> type = Watch(GameType.None);
+  final Watch<GameType> type = Watch(GameType.None, onChanged: events.onGameTypeChanged);
   final Watch<GameStatus> status = Watch(GameStatus.Awaiting_Players);
   final _Lobby lobby = _Lobby();
   int serverVersion;

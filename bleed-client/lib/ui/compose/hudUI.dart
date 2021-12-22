@@ -491,12 +491,15 @@ void closeJoinGameDialog() {
 }
 
 Widget buildHud() {
-  return WatchBuilder(game.player.uuid, (String uuid){
-    return uuid.isEmpty ? buildHomePage() :buildConnected();
+  return WatchBuilder(game.player.uuid, (String uuid) {
+    if (uuid.isEmpty) {
+      return text("uuid.isEmpty");
+    }
+    return buildConnected();
   });
 }
 
-Widget buildConnected(){
+Widget buildConnected() {
   return WatchBuilder(game.status, (GameStatus gameStatus) {
     switch (gameStatus) {
       case GameStatus.Awaiting_Players:
@@ -509,7 +512,6 @@ Widget buildConnected(){
         throw Exception();
     }
   });
-
 }
 
 Widget buildDialogLobby() {
@@ -526,27 +528,33 @@ Widget buildDialogLobby() {
       ),
       height16,
       WatchBuilder(game.lobby.playerCount, (int value) {
-        int count1 = 5 - game.lobby.players.where((player) => player.team == 0).length;
-        int count2 = 5 - game.lobby.players.where((player) => player.team == 1).length;
+        int count1 =
+            5 - game.lobby.players.where((player) => player.team == 0).length;
+        int count2 =
+            5 - game.lobby.players.where((player) => player.team == 1).length;
 
         List<Widget> a = [];
         List<Widget> b = [];
 
-        for(int i = 0; i < count1; i++){
+        for (int i = 0; i < count1; i++) {
           a.add(text("Waiting"));
         }
-        for(int i = 0; i < count2; i++){
+        for (int i = 0; i < count2; i++) {
           b.add(text("Waiting"));
         }
 
         return Column(
           children: [
             text("Team 1"),
-            ...game.lobby.getPlayersOnTeam(0).map((player) => text(player.name)),
+            ...game.lobby
+                .getPlayersOnTeam(0)
+                .map((player) => text(player.name)),
             ...a,
             height16,
             text("Team 2"),
-            ...game.lobby.getPlayersOnTeam(1).map((player) => text(player.name)),
+            ...game.lobby
+                .getPlayersOnTeam(1)
+                .map((player) => text(player.name)),
             ...b,
           ],
         );
@@ -1423,69 +1431,69 @@ Widget buildMessageBox(String message) {
       ));
 }
 
-Widget buildServer() {
-  return MouseRegion(
-    onEnter: (_) {
-      hud.state.showServers = true;
-      rebuildUI();
-    },
-    onExit: (_) {
-      hud.state.showServers = false;
-      rebuildUI();
-    },
-    child: Container(
-        padding: padding8,
-        width: 140,
-        decoration: BoxDecoration(
-          borderRadius: borderRadius4,
-          color: Colors.black45,
-        ),
-        child: Column(
-          crossAxisAlignment: cross.center,
-          children: [
-            if ((game.player.dead && !hud.state.observeMode) |
-                hud.state.showServers)
-              onPressed(
-                  callback: disconnect,
-                  child: Container(
-                    alignment: Alignment.center,
-                    margin: const EdgeInsets.only(bottom: 16),
-                    child: text("Disconnect"),
-                    padding: padding4,
-                  )),
-            if ((game.player.dead && !hud.state.observeMode) ||
-                hud.state.showServers)
-              buildServerList(),
-            Container(
-                padding: padding4, child: text(getServerName(currentServer))),
-          ],
-        )),
-  );
-}
+// Widget buildServer() {
+//   return MouseRegion(
+//     onEnter: (_) {
+//       hud.state.showServers = true;
+//       rebuildUI();
+//     },
+//     onExit: (_) {
+//       hud.state.showServers = false;
+//       rebuildUI();
+//     },
+//     child: Container(
+//         padding: padding8,
+//         width: 140,
+//         decoration: BoxDecoration(
+//           borderRadius: borderRadius4,
+//           color: Colors.black45,
+//         ),
+//         child: Column(
+//           crossAxisAlignment: cross.center,
+//           children: [
+//             if ((game.player.dead && !hud.state.observeMode) |
+//                 hud.state.showServers)
+//               onPressed(
+//                   callback: disconnect,
+//                   child: Container(
+//                     alignment: Alignment.center,
+//                     margin: const EdgeInsets.only(bottom: 16),
+//                     child: text("Disconnect"),
+//                     padding: padding4,
+//                   )),
+//             if ((game.player.dead && !hud.state.observeMode) ||
+//                 hud.state.showServers)
+//               buildServerList(),
+//             Container(
+//                 padding: padding4, child: text(getServerName(currentServer))),
+//           ],
+//         )),
+//   );
+// }
 
-Widget buildServerList() {
-  return Column(
-      crossAxisAlignment: cross.end,
-      children: servers.map((server) {
-        bool active = isServerConnected(server);
-        return onPressed(
-            hint: "Connect to ${getServerName(server)} server",
-            callback: () {
-              connectServer(server);
-              hud.state.showServers = false;
-            },
-            child: Container(
-              padding: padding4,
-              decoration: active
-                  ? BoxDecoration(
-                      border: Border.all(width: 2, color: Colors.white),
-                      borderRadius: borderRadius4)
-                  : null,
-              margin: const EdgeInsets.only(bottom: 16),
-              child: text(getServerName(server)),
-            ));
-      }).toList());
-}
+// Widget buildServerList() {
+//   return Column(
+//       crossAxisAlignment: cross.end,
+//       children: serverTypes.map((server) {
+//         bool active = isServerConnected(server);
+//         return onPressed(
+//             hint: "Connect to ${getServerName(server)} server",
+//             callback: () {
+//               connectServer(server);
+//               hud.state.showServers = false;
+//             },
+//             child: Container(
+//               padding: padding4,
+//               decoration: active
+//                   ? BoxDecoration(
+//                       border: Border.all(width: 2, color: Colors.white),
+//                       borderRadius: borderRadius4)
+//                   : null,
+//               margin: const EdgeInsets.only(bottom: 16),
+//               child: text(getServerName(server)),
+//             ));
+//       }).toList());
+// }
 
 Widget buildGameOver() {
   return Positioned(
