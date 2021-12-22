@@ -1568,7 +1568,7 @@ extension GameFunctions on Game {
 
   void removeDisconnectedPlayers() {
     for (int i = 0; i < players.length; i++) {
-      if (players[i].lastUpdateFrame < settings.playerDisconnectFrames)
+      if (players[i].lastUpdateFrame < settings.framesUntilPlayerDisconnected)
         continue;
 
       print("removing disconnected player");

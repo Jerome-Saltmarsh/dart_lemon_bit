@@ -551,6 +551,7 @@ game-stars.io
 fusion-games.io
 fusiongames.io
 game-fuse.com
+mega-games.com
 fusion-games.online
 
 # Home page
