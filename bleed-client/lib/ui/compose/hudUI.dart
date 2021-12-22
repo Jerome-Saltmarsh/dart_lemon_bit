@@ -493,10 +493,20 @@ void closeJoinGameDialog() {
 Widget buildHud() {
   return WatchBuilder(game.player.uuid, (String uuid) {
     if (uuid.isEmpty) {
-      return text("uuid.isEmpty");
+      return center(text("uuid.isEmpty"));
     }
     return buildConnected();
   });
+}
+
+Widget align(Widget child, BuildContext context, Alignment alignment,
+    {EdgeInsets padding}) {
+  return Container(
+      width: context.size.width,
+      height: context.size.height,
+      alignment: alignment,
+      padding: padding,
+      child: child);
 }
 
 Widget buildConnected() {
