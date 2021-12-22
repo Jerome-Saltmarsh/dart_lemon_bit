@@ -1,4 +1,5 @@
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/debug.dart';
 import 'package:bleed_client/network.dart';
 
 void connectToWebSocketServer(ServerType server, GameType gameType) {
@@ -33,8 +34,11 @@ String serverTypeToString(ServerType value){
   return value.toString().replaceAll("ServerType.", "");
 }
 
+
 final List<ServerType> selectableServerTypes =
-    serverTypes.where((type) => type != ServerType.None).toList();
+    serverTypes.where((type) => type != ServerType.None
+      && (debug || type != ServerType.LocalHost)
+    ).toList();
 
 final String sydneyMoba = "https://sydney-moba-1-osbmaezptq-ts.a.run.app";
 final String sydneyMMO = "https://sydney-mmo-1-osbmaezptq-ts.a.run.app";
