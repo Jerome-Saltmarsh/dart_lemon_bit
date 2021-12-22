@@ -6,7 +6,7 @@ import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 
-import 'network/functions/connect.dart';
+import 'network.dart';
 
 final StringBuffer _buffer = StringBuffer();
 final gameUpdateIndex = ClientRequest.Update.index;

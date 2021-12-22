@@ -3,7 +3,6 @@ import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/functions/cameraFollowPlayer.dart';
 import 'package:bleed_client/functions/spawners/spawnParticle.dart';
-import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
@@ -15,7 +14,7 @@ import 'package:lemon_math/randomInt.dart';
 
 import 'functions/emit/emitMyst.dart';
 import 'input.dart';
-import 'network/functions/connect.dart';
+import 'network.dart';
 import 'state.dart';
 import 'update/updateCharacters.dart';
 

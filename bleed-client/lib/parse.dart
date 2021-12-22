@@ -51,7 +51,7 @@ import 'common/WeaponType.dart';
 import 'common/classes/Vector2.dart';
 import 'common/enums/ObjectType.dart';
 import 'functions/onGameEvent.dart';
-import 'network/functions/connect.dart';
+import 'network.dart';
 import 'render/functions/mapTilesToSrcAndDst.dart';
 import 'state.dart';
 

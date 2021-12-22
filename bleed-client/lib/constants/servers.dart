@@ -1,4 +1,4 @@
-import 'package:bleed_client/network/functions/connect.dart';
+import 'package:bleed_client/network.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 
 // state

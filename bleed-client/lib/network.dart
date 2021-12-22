@@ -1,9 +1,8 @@
+import 'dart:async';
+
 import 'package:bleed_client/common/ClientRequest.dart';
-import 'package:bleed_client/network/state/connectionUri.dart';
-import 'package:bleed_client/network/state/webSocketChannel.dart';
-import 'package:bleed_client/network/streams/eventStream.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:lemon_watch/watch.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 enum Connection {
   None,
@@ -15,10 +14,12 @@ enum Connection {
 }
 
 // state
+WebSocketChannel webSocketChannel;
+String connectionUri = "";
 final Watch<Connection> connection = Watch(Connection.None);
+final StreamController eventStream = StreamController.broadcast();
 bool get connected => connection.value == Connection.Connected;
 bool get connecting => connection.value == Connection.Connecting;
-
 
 // interface
 void connect(String uri) {
