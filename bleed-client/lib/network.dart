@@ -35,15 +35,19 @@ void ping(){
 }
 
 void disconnect() {
-  print('disconnect()');
-  if (!connected) return;
-  connection.value = Connection.Done;
-  if (webSocketChannel == null) return;
+  print('network.disconnect()');
+  // if (!connected) return;
+  // connection.value = Connection.Done;
+  // if (webSocketChannel == null) return;
   webSocketChannel.sink.close();
 }
 
 void dispose(){
-  eventStream.close();
+  print("network.dispose()");
+  // eventStream.close();
+  // eventStream.onResume();
+  if (webSocketChannel == null) return;
+  webSocketChannel.sink.close();
 }
 
 void send(String message) {
@@ -57,21 +61,27 @@ void sinkMessage(String message) {
 
 void _onEvent(dynamic _response) {
   if (connecting) {
-    connection.value = Connection.Connected;
+    _onConnected();
   }
   eventStream.add(_response);
 }
 
+void _onConnected(){
+  print("network.onConnected()");
+  connection.value = Connection.Connected;
+}
+
 void _onError(dynamic value) {
+  print("network.onError()");
+}
+
+void _onDone() {
+  print("network.onDone()");
   connectionUri = "";
   if (connecting) {
     connection.value = Connection.Failed_To_Connect;
   } else {
-    connection.value = Connection.Error;
+    connection.value = Connection.Done;
   }
-}
-
-void _onDone() {
-  connectionUri = "";
-  connection.value = Connection.Done;
+  dispose();
 }
