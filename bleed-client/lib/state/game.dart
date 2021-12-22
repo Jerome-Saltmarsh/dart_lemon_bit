@@ -77,6 +77,7 @@ class _Game {
   }
 
   void clearSession(){
+    print("game.clearSession()");
     player.uuid.value = "";
   }
 }

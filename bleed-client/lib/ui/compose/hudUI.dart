@@ -11,11 +11,9 @@ import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
-import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/mappers/mapWeaponToDecorationImage.dart';
-import 'package:bleed_client/network.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/server/server.dart';
 import 'package:bleed_client/state/game.dart';
@@ -41,7 +39,6 @@ import 'package:lemon_engine/state/size.dart';
 import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import 'buildHomePage.dart';
 import 'buildTextBox.dart';
 
 const double _padding = 8;
@@ -711,7 +708,9 @@ Widget buildMenu() {
         if (game.settings.developMode) width8,
         if (game.settings.developMode) _buildToggleEdit(),
         buildSelectGameDialogToggle(),
-        button("Exit", game.clearSession),
+        button("Exit", (){
+          game.type.value = GameType.None;
+        }),
         button("Change Hero", () {
           sendClientRequest(ClientRequest.Reset_Character_Type);
         }),
