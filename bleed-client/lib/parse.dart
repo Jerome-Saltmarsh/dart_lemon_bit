@@ -253,7 +253,8 @@ void parseState() {
         break;
 
       case ServerResponse.Game_Type:
-        game.type.value = gameTypes[_consumeInt()];
+        // game.type.value = gameTypes[_consumeInt()];
+        var type = gameTypes[_consumeInt()];
         break;
 
       case ServerResponse.Game_Status:
