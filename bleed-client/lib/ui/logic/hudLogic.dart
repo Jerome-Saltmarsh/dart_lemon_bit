@@ -14,10 +14,6 @@ import 'showTextBox.dart';
 
 
 void initUI() {
-  onConnectError.stream.listen((event) {
-    showDialogConnectFailed();
-  });
-
   respondTo((GameJoined gameStarted) async {
     closeMainMenuDialog();
   });

@@ -1,3 +1,3 @@
 import 'dart:async';
 
-final StreamController onError = StreamController.broadcast();
+// final StreamController onError = StreamController.broadcast();

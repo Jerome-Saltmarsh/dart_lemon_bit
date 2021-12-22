@@ -1,4 +1,5 @@
 import 'package:bleed_client/editor/editor.dart';
+import 'package:bleed_client/network/functions/connect.dart';
 import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';

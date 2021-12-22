@@ -15,12 +15,12 @@ import 'package:lemon_math/randomInt.dart';
 
 import 'functions/emit/emitMyst.dart';
 import 'input.dart';
+import 'network/functions/connect.dart';
 import 'state.dart';
 import 'update/updateCharacters.dart';
 
 int emitPart = 0;
 double targetZoom = 1;
-
 
 void updatePlayMode() {
   if (!connected) return;

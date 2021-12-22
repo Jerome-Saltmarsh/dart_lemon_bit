@@ -15,7 +15,7 @@ import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/mappers/mapWeaponToDecorationImage.dart';
-import 'package:bleed_client/network/functions/disconnect.dart';
+import 'package:bleed_client/network/functions/connect.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/server/server.dart';
 import 'package:bleed_client/state/game.dart';

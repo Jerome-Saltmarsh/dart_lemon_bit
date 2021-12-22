@@ -21,9 +21,9 @@ import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/network/functions/connect.dart';
+import 'package:bleed_client/network/state/connected.dart';
 import 'package:bleed_client/network/streams/eventStream.dart';
 import 'package:bleed_client/network/streams/onConnect.dart';
-import 'package:bleed_client/network/streams/onConnected.dart';
 import 'package:bleed_client/network/streams/onDisconnected.dart';
 import 'package:bleed_client/network/streams/onDone.dart';
 import 'package:bleed_client/send.dart';
@@ -111,7 +111,30 @@ void onPlayerWeaponChanged(WeaponType weapon) {
 void initializeEventListeners() {
   registerPlayKeyboardHandler();
   registerOnMouseScroll(onMouseScroll);
-  onConnectedController.stream.listen(_onConnected);
+  connection.onChanged((value) {
+
+    switch(value){
+
+      case Connection.None:
+        // TODO: Handle this case.
+        break;
+      case Connection.Connecting:
+        // TODO: Handle this case.
+        break;
+      case Connection.Connected:
+        _onConnected();
+        break;
+      case Connection.Done:
+        clearState();
+        showDialogConnectFailed();
+        break;
+      case Connection.Error:
+        clearState();
+        showDialogConnectFailed();
+        break;
+    }
+  });
+
   eventStream.stream.listen(_onEventReceivedFromServer);
   observeCompiledGame(onCompiledGameChanged);
   on(onGameJoined);
@@ -166,24 +189,18 @@ void initializeEventListeners() {
 
   game.player.weapon.onChanged(onPlayerWeaponChanged);
 
-  onDisconnected.stream.listen((event) {
-    print("disconnect");
-    showDialogConnectFailed();
-    clearState();
-  });
+  // onConnectController.stream.listen((event) {
+  //   print('on connect $event');
+  //   clearState();
+  //   sendRequestPing();
+  // });
 
-  onConnectController.stream.listen((event) {
-    print('on connect $event');
-    clearState();
-    sendRequestPing();
-  });
-
-  onDoneStream.stream.listen((event) {
-    print("connection done");
-    clearState();
-    rebuildUI();
-    redrawCanvas();
-  });
+  // onDoneStream.stream.listen((event) {
+  //   print("connection done");
+  //   clearState();
+  //   rebuildUI();
+  //   redrawCanvas();
+  // });
 
   onRightClickChanged.stream.listen((bool down) {
     if (down) {
@@ -199,7 +216,7 @@ void _onEventReceivedFromServer(dynamic value) {
   compiledGame = value;
 }
 
-void _onConnected(_event) {
+void _onConnected() {
   print("Connection to server established");
   sendRequestJoinGame();
 }
