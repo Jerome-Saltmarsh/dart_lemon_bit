@@ -388,8 +388,8 @@ void main() {
           break;
 
         case ClientRequest.Leave_Lobby:
-          if (arguments.length != 2) {
-            errorArgsExpected(2, arguments);
+          if (arguments.length != 3) {
+            errorArgsExpected(3, arguments);
             return;
           }
 

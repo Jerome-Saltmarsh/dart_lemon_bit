@@ -541,13 +541,28 @@ Widget buildDialogLobby() {
       ),
       height16,
       WatchBuilder(game.lobby.playerCount, (int value) {
+        int count1 = 5 - game.lobby.players.where((player) => player.team == 0).length;
+        int count2 = 5 - game.lobby.players.where((player) => player.team == 1).length;
+
+        List<Widget> a = [];
+        List<Widget> b = [];
+
+        for(int i = 0; i < count1; i++){
+          a.add(text("Waiting"));
+        }
+        for(int i = 0; i < count2; i++){
+          b.add(text("Waiting"));
+        }
+
         return Column(
           children: [
             text("Team 1"),
             ...game.lobby.getPlayersOnTeam(0).map((player) => text(player.name)),
+            ...a,
             height16,
             text("Team 2"),
             ...game.lobby.getPlayersOnTeam(1).map((player) => text(player.name)),
+            ...b,
           ],
         );
       }),

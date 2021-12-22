@@ -69,8 +69,8 @@ class _Game {
 
   // functions
   void leaveLobby() {
-    player.uuid.value = "";
     server.leaveLobby();
+    player.uuid.value = "";
   }
 }
 
