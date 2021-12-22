@@ -42,7 +42,6 @@ import 'package:bleed_client/utils/list_util.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:lemon_engine/state/cursor.dart';
-import 'package:neuro/instance.dart';
 
 import 'common/GameEventType.dart';
 import 'common/PlayerEvent.dart';
@@ -249,7 +248,7 @@ void parseState() {
 
       case ServerResponse.Game_Joined:
         _parseGameJoined();
-        announce(GameJoined());
+        // announce(GameJoined());
         break;
 
       case ServerResponse.Game_Type:

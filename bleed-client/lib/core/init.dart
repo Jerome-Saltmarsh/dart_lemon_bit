@@ -35,8 +35,6 @@ import 'package:lemon_engine/functions/register_on_mouse_scroll.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../ui/compose/dialogs.dart';
-
 Future init() async {
   Events();
   await images.load();
@@ -44,7 +42,6 @@ Future init() async {
   initializeGameInstances();
   initializeEventListeners();
   initAudioPlayers();
-  initUI();
   rebuildUI();
 
   if (Uri.base.hasQuery && Uri.base.queryParameters.containsKey('host')) {
@@ -107,33 +104,32 @@ void onPlayerWeaponChanged(WeaponType weapon) {
 void initializeEventListeners() {
   registerPlayKeyboardHandler();
   registerOnMouseScroll(onMouseScroll);
-  connection.onChanged((value) {
-
-    switch(value){
-
-      case Connection.None:
-        // TODO: Handle this case.
-        break;
-      case Connection.Connecting:
-        // TODO: Handle this case.
-        break;
-      case Connection.Connected:
-        _onConnected();
-        break;
-      case Connection.Done:
-        clearState();
-        showDialogConnectFailed();
-        break;
-      case Connection.Error:
-        clearState();
-        showDialogConnectFailed();
-        break;
-    }
-  });
+  // connection.onChanged((value) {
+  //
+  //   switch(value){
+  //
+  //     case Connection.None:
+  //       // TODO: Handle this case.
+  //       break;
+  //     case Connection.Connecting:
+  //       // TODO: Handle this case.
+  //       break;
+  //     case Connection.Connected:
+  //       _onConnected();
+  //       break;
+  //     case Connection.Done:
+  //       clearState();
+  //       showDialogConnectFailed();
+  //       break;
+  //     case Connection.Error:
+  //       clearState();
+  //       showDialogConnectFailed();
+  //       break;
+  //   }
+  // });
 
   eventStream.stream.listen(_onEventReceivedFromServer);
   observeCompiledGame(onCompiledGameChanged);
-  on(onGameJoined);
   timeInSeconds.onChanged(onTimeChanged);
   phase.onChanged(onPhaseChanged);
   observeAmbientLight(onAmbientLightChanged);

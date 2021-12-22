@@ -7,16 +7,8 @@ import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/ui/state/tips.dart';
 import 'package:bleed_client/watches/mode.dart';
 import 'package:lemon_engine/game.dart';
-import 'package:neuro/instance.dart';
 
 import 'showTextBox.dart';
-
-
-void initUI() {
-  respondTo((GameJoined gameStarted) async {
-    closeMainMenuDialog();
-  });
-}
 
 void refreshUI() {
   hud.state.observeMode = false;
