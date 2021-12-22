@@ -31,8 +31,6 @@ import 'package:bleed_client/functions/emitSmoke.dart';
 import 'package:bleed_client/getters/getTileAt.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:bleed_client/network/functions/disconnect.dart';
-import 'package:bleed_client/network/state/connected.dart';
-import 'package:bleed_client/network/state/connecting.dart';
 import 'package:bleed_client/render/functions/applyEnvironmentObjectsToBakeMapping.dart';
 import 'package:bleed_client/render/functions/setBakeMapToAmbientLight.dart';
 import 'package:bleed_client/render/state/paths.dart';
@@ -245,8 +243,8 @@ void parseState() {
         break;
 
       case ServerResponse.Pong:
-        connected = true;
-        connecting = false;
+        // connected = true;
+        // connecting = false;
         break;
 
       case ServerResponse.Game_Joined:
