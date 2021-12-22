@@ -70,6 +70,10 @@ class _Game {
   // functions
   void leaveLobby() {
     server.leaveLobby();
+    clearSession();
+  }
+
+  void clearSession(){
     player.uuid.value = "";
   }
 }

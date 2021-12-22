@@ -41,6 +41,7 @@ import 'package:lemon_engine/state/size.dart';
 import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
+import 'buildHomePage.dart';
 import 'buildTextBox.dart';
 
 const double _padding = 8;
@@ -495,22 +496,6 @@ Widget buildHud() {
   });
 }
 
-Widget buildHomePage(){
-  return Row(
-    children: [
-      text("HOME PAGE"),
-      button("MOBA", (){
-        closeJoinGameDialog();
-        sendRequestJoinGameMoba();
-      }),
-      button("Open World", (){
-        closeJoinGameDialog();
-        sendRequestJoinGameOpenWorld();
-      })
-    ],
-  );
-}
-
 Widget buildConnected(){
   return WatchBuilder(game.status, (GameStatus gameStatus) {
     switch (gameStatus) {
@@ -708,6 +693,7 @@ Widget buildMenu() {
         if (game.settings.developMode) width8,
         if (game.settings.developMode) _buildToggleEdit(),
         buildSelectGameDialogToggle(),
+        button("Exit", game.clearSession),
         button("Change Hero", () {
           sendClientRequest(ClientRequest.Reset_Character_Type);
         }),

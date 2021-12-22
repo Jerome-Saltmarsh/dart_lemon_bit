@@ -521,6 +521,17 @@
 [x] Deploy Server on GCP
 [x] Isometric characters
 
+
+# Design
+
+The first time someone visits the site they are asked what region they would like to use
+Once they select it doesn't directly connect
+when the player selects a game to play it then connects to the server of that game using their region
+This way each game has a dedicated server
+
+Does the game type determine the ui layout
+or the character type?
+
 # Symbolic Hard Link
 mklink /J common C:\Users\Jerome\github\bleed\bleed-common\lib
 
@@ -528,10 +539,29 @@ mklink /J common C:\Users\Jerome\github\bleed\bleed-common\lib
 - Captured Flags increase passive income
 - The shooter mode disables the mouse and provides and aiming circle instead
 
-#Goal
+# Goal
 The goal is to platform which allows me to truly explore all of my creativity
 
+# Games
+Dota
+Wow
+Fortnight
+
 # Domain Names
+fantasy-arcade.com
+game-portal.com
+heroes-summon.com
+heroes-domain.com
+heroes-glade.com
+champions-glade.com
+champions-rift.com
+quest-arcade.com
+champion-arcade.com
+mystical-arcade.com
+magic-arcade.com
+lost-arcade.com
+heroes-arcade.com
+lemon-arcade.com
 battle-stars.com
 battle-stars.net
 battle-stars.io
