@@ -40,9 +40,13 @@ Positioned _buildTopRight() {
 }
 
 Widget _buildServerButton() {
-  return button(toString(game.serverType.value), () {
+  return button(
+      toString(game.serverType.value), () {
     game.serverType.value = ServerType.None;
-  }, minWidth: _buttonWidth);
+  },
+      minWidth: _buttonWidth,
+      hint: 'Region'
+  );
 }
 
 Container _buildTitle() {

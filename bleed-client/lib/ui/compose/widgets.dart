@@ -74,8 +74,9 @@ Widget comingSoon({Widget child}) {
 }
 
 Widget button(dynamic message, Function onPressed,
-    {double fontSize, double minWidth}) {
-  return pressed(
+    {double fontSize, double minWidth, String hint}) {
+
+  Widget _button = pressed(
       callback: onPressed,
       child: mouseOver(builder: (BuildContext context, bool mouseOver) {
         return border(
@@ -84,6 +85,11 @@ Widget button(dynamic message, Function onPressed,
             minWidth: minWidth,
             alignment: Alignment.center);
       }));
+
+  if (hint != null){
+    return Tooltip(message: hint, child: _button);
+  }
+  return _button;
 }
 
 Widget pressed({Widget child, Function callback, dynamic hint}) {
