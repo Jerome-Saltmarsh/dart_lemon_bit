@@ -359,17 +359,17 @@ Widget buildFullScreenDialog() {
 }
 
 Widget buildToggleFullscreen() {
-  return border(
-    child: onPressed(
-      hint: "F11",
-      callback: () {
-        hud.fullScreenDialogVisible.value = false;
-        if (fullScreenActive) {
-          fullScreenExit();
-        } else {
-          fullScreenEnter();
-        }
-      },
+  return onPressed(
+    callback: () {
+      hud.fullScreenDialogVisible.value = false;
+      if (fullScreenActive) {
+        fullScreenExit();
+      } else {
+        fullScreenEnter();
+      }
+    },
+    hint: "F11",
+    child: border(
       child: Row(
         children: [
           text(fullScreenActive ? "Exit Fullscreen" : "Fullscreen"),

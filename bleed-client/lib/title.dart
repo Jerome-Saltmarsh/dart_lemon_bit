@@ -1,5 +1,5 @@
 
-const title = "GAME STARS";
+const title = "HEROES ARCADE";
 
 // MOBA - HEROES LEAGUE
 

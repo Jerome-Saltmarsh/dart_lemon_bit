@@ -3,6 +3,7 @@ import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/title.dart';
 import 'package:bleed_client/toString.dart';
+import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,12 +21,22 @@ Widget buildHomePage() {
         height8,
       ],
     )),
-    Positioned(
-      child: _buildServerButton(),
-      top: 0,
-      right: 0,
-    )
+    _buildTopRight()
   ]);
+}
+
+Positioned _buildTopRight() {
+  return Positioned(
+    child: Row(
+      children: [
+        buildToggleFullscreen(),
+        width8,
+        _buildServerButton(),
+      ],
+    ),
+    top: 0,
+    right: 0,
+  );
 }
 
 Widget _buildServerButton() {
@@ -47,10 +58,13 @@ Widget _buildPanelGames() {
     children: [
       ...selectableGameTypes.map((GameType value) {
         return Container(
+          margin: const EdgeInsets.only(bottom: 16),
           child: Row(
             mainAxisAlignment: main.center,
             children: [
-              text(toString(value).toUpperCase()),
+              Container(
+                  width: 100,
+                  child: text(toString(value).toUpperCase())),
               width16,
               button(gameTypeNames[value],
                 () {
@@ -60,7 +74,6 @@ Widget _buildPanelGames() {
               ),
             ],
           ),
-          margin: const EdgeInsets.only(bottom: 8),
         );
       }).toList()
     ],

@@ -1,5 +1,6 @@
 import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
+import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/render/state/paths.dart';
@@ -91,6 +92,7 @@ void sendRequestAcquireAbility(WeaponType type) {
 }
 
 void sendRequestUpdatePlayer() {
+  if (game.status.value == GameStatus.Finished) return;
   _buffer.clear();
   _write(gameUpdateIndex);
   _write(session);

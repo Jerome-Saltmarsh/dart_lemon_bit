@@ -152,9 +152,10 @@
 [ ] Fix Bug render objects culled bottom
 [MOBA]
 [ ] Defense Tower
-[ ] Game Status
+[ ] Players cannot attack each other
 [ ] Fix bug starting new game should reset light maps
 [COMPLETED]
+[x] Game Status
 [x] Knight fix ability death strike
 [x] UI Indicate ability insufficient mana
 [x] UI Indicate selected ability
@@ -549,13 +550,15 @@ Fortnight
 
 # Domain Names
 players-arcade.com
-heroes-league.io
 quest-glade.com
 quest-arcade.com
 fantasy-scroll.com
 fantasy-arcade.com
 game-portal.io
 fantasy-portal.com
+heroes-league.io
+heroes-arcane.com
+heroes-guild.com
 heroes-arcade.com
 heroes-portal.com
 heroes-summon.com
@@ -585,7 +588,8 @@ play-stream.io
 fun-stream.io
 ultimate-games.io
 mega-games.com
-
+megagame-z.com
+mega-gamex.com
 
 # Home page
 Games
