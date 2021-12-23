@@ -21,4 +21,5 @@ class _Storage {
 
 class _Keys {
   final String server = 'server';
+  final String audio = 'audio';
 }

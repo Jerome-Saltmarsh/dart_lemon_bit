@@ -11,6 +11,7 @@ import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
+import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/constants/colours.dart';
@@ -94,6 +95,12 @@ void renderCanvasPlay() {
   drawBulletHoles(game.bulletHoles);
 
   drawAbility();
+
+  Vector2 attackTarget = game.player.attackTarget;
+  if (attackTarget.x != 0 && attackTarget.y != 0){
+    drawCircle(attackTarget.x, attackTarget.y, 25, Colors.white24);
+  }
+
   setColorWhite();
   drawSprites();
 

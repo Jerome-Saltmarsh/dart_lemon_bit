@@ -219,8 +219,7 @@ void main() {
             Character? closestEnemy = game.getClosestEnemy(mouseX, mouseY, player.team);
             player.aimTarget = null;
             if (closestEnemy != null){
-              final clickRange = 50.0;
-              if (withinDistance(closestEnemy, mouseX, mouseY, clickRange)) {
+              if (withinDistance(closestEnemy, mouseX, mouseY, settings.radius.cursor)) {
                 if (withinDistance(closestEnemy, player.x, player.y, player.attackRange)) {
                   player.aimTarget = closestEnemy;
                 }

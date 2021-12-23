@@ -244,30 +244,33 @@ extension GameFunctions on Game {
     return -1;
   }
 
+  Character? getClosestEnemyZombie({
+      required double x,
+      required double y,
+      required int team,
+      required double radius
+  }) {
+    double top = y - radius - settings.radius.character;
+    double bottom = y + radius + settings.radius.character;
+    double left = x - radius - settings.radius.character;
+    double right = x + radius + settings.radius.character;
 
-  Character? getClosestEnemyZombie(double x, double y, int team) {
-    int i = getFirstAliveZombieEnemyIndex(team);
-    if (i == -1) return null;
-
-    double top = y - settings.radius.cursor - settings.radius.character;
-    double bottom = x + settings.radius.cursor + settings.radius.character;
-
-    Character closest = zombies[i];
-    num closestX = diff(x, closest.x);
-    num closestY = diff(y, closest.y);
-    num close = min(closestX, closestY);
+    Character? closest = null;
+    double distance = -1;
     for (Character zombie in zombies) {
+      if (zombie.y < top) continue;
+      if (zombie.y > bottom) break;
+      if (zombie.x < left) continue;
+      if (zombie.x > right) continue;
       if (zombie.team == team) continue;
       if (zombie.dead) continue;
       if (!zombie.active) continue;
-      if (zombie.y < top) continue;
-      if (zombie.y > bottom) break;
-      num closestX2 = diff(x, zombie.x);
-      num closestY2 = diff(y, zombie.y);
-      num closes2 = min(closestX2, closestY2);
-      if (closes2 < close) {
+
+      double zombieDistance = distanceV2From(zombie, x, y);
+      if (closest == null || zombieDistance < distance) {
         closest = zombie;
-        close = closes2;
+        distance = zombieDistance;
+        continue;
       }
     }
     return closest;
@@ -301,17 +304,18 @@ extension GameFunctions on Game {
     return closest;
   }
 
-  Character? getClosestEnemy(double x, double y, int team){
-    Character? zombie = getClosestEnemyZombie(x, y, team);
+  Character? getClosestEnemy(double x, double y, int team) {
+    Character? zombie = getClosestEnemyZombie(
+        x: x, y: y, team: team, radius: settings.radius.cursor);
     Character? player = getClosestEnemyPlayer(x, y, team);
 
-    if (zombie == null){
-      if (player == null){
+    if (zombie == null) {
+      if (player == null) {
         return null;
       }
       return player;
     }
-    if (player == null){
+    if (player == null) {
       return zombie;
     }
 
@@ -319,7 +323,6 @@ extension GameFunctions on Game {
     double playerDistance = distanceV2From(player, x, y);
     return zombieDistance < playerDistance ? zombie : player;
   }
-
 
   void updateAndCompile() {
     // @on update game

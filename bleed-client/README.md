@@ -550,6 +550,7 @@ Wow
 Fortnight
 
 # Domain Names
+heroes-of-arcadia.com
 players-arcade.com
 quest-glade.com
 pixel-quest.com
