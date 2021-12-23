@@ -8,13 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lemon_engine/state/size.dart';
 
-Widget text(dynamic value, {
-    fontSize = 18,
+Widget text(dynamic value,
+    {fontSize = 18,
     Function onPressed,
     TextDecoration decoration = TextDecoration.none,
     FontWeight fontWeight = normal,
-    Color color = white
-}) {
+    Color color = white}) {
   Widget _text = Text(value.toString(),
       style: TextStyle(
           color: color,
@@ -33,15 +32,15 @@ Widget text(dynamic value, {
 }
 
 Widget border({
-    Widget child,
-    Color color = Colors.white,
-    double width = 1,
-    BorderRadius radius = borderRadius4,
-    EdgeInsets padding = padding8,
-    EdgeInsets margin,
-    Alignment alignment,
-    Color fillColor,
-    double minWidth,
+  Widget child,
+  Color color = Colors.white,
+  double width = 1,
+  BorderRadius radius = borderRadius4,
+  EdgeInsets padding = padding8,
+  EdgeInsets margin,
+  Alignment alignment,
+  Color fillColor,
+  double minWidth,
 }) {
   return Container(
     alignment: alignment,
@@ -56,12 +55,11 @@ Widget border({
   );
 }
 
-BoxDecoration boxDecoration({
-    double borderWidth = 2.0,
+BoxDecoration boxDecoration(
+    {double borderWidth = 2.0,
     Color borderColor = white,
     double borderRadius = 4,
-    Color fillColor
-    }) {
+    Color fillColor}) {
   return BoxDecoration(
       border: Border.all(color: borderColor, width: borderWidth),
       borderRadius: borderRadius4,
@@ -75,18 +73,17 @@ Widget comingSoon({Widget child}) {
   );
 }
 
-Widget button(dynamic message, Function onPressed, {double fontSize, double minWidth}){
+Widget button(dynamic message, Function onPressed,
+    {double fontSize, double minWidth}) {
   return pressed(
       callback: onPressed,
-      child: mouseOver(
-          builder: (BuildContext context, bool mouseOver){
-            return border(
-                child: text(message),
-                fillColor: mouseOver ? Colors.black26 : Colors.transparent,
-                minWidth: minWidth,
-                alignment: Alignment.center
-            );
-          }));
+      child: mouseOver(builder: (BuildContext context, bool mouseOver) {
+        return border(
+            child: text(message),
+            fillColor: mouseOver ? Colors.black26 : Colors.transparent,
+            minWidth: minWidth,
+            alignment: Alignment.center);
+      }));
 }
 
 Widget pressed({Widget child, Function callback, dynamic hint}) {
@@ -95,7 +92,9 @@ Widget pressed({Widget child, Function callback, dynamic hint}) {
 
 Widget onPressed({Widget child, Function callback, dynamic hint}) {
   Widget widget = MouseRegion(
-      cursor: callback != null ? SystemMouseCursors.click : SystemMouseCursors.forbidden,
+      cursor: callback != null
+          ? SystemMouseCursors.click
+          : SystemMouseCursors.forbidden,
       child: GestureDetector(child: child, onTap: callback));
 
   if (hint == null) return widget;
@@ -145,29 +144,21 @@ class _RefreshState extends State<Refresh> {
   }
 }
 
-// Widget button(String value, Function onPressed,
-//     {double fontSize = 18.0,
-//     ButtonStyle buttonStyle,
-//     Alignment alignment = Alignment.centerLeft}) {
-//   return OutlinedButton(
-//     child: Container(
-//         width: 200,
-//         height: 50,
-//         alignment: alignment,
-//         child: Text(value,
-//             style: TextStyle(color: white, fontSize: fontSize))),
-//     style: buttonStyle ?? _buttonStyle,
-//     onPressed: onPressed,
-//   );
-// }
-
 Widget center(Widget child) {
+  return fullScreen(child: child);
+}
+
+Widget fullScreen({Widget child, Alignment alignment = Alignment.center}) {
   return Container(
-    width: globalSize.width,
-    height: globalSize.height,
-    alignment: Alignment.center,
-    child: child,
-  );
+    alignment: alignment,
+      width: globalSize.width, height: globalSize.height, child: child);
+}
+
+Widget page({List<Widget> children}) {
+  return fullScreen(
+      child: Stack(
+    children: children,
+  ));
 }
 
 Widget height(double value) {
@@ -198,4 +189,8 @@ ButtonStyle buildButtonStyle(Color borderColor, double borderWidth) {
   );
 }
 
-final Widget blank = const Positioned(child: const Text(""), top: 0, left: 0,);
+final Widget blank = const Positioned(
+  child: const Text(""),
+  top: 0,
+  left: 0,
+);

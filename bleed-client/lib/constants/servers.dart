@@ -30,11 +30,6 @@ enum ServerType {
 
 final List<ServerType> serverTypes = ServerType.values;
 
-String serverTypeToString(ServerType value){
-  return value.toString().replaceAll("ServerType.", "");
-}
-
-
 final List<ServerType> selectableServerTypes =
     serverTypes.where((type) => type != ServerType.None
       && (debug || type != ServerType.LocalHost)
