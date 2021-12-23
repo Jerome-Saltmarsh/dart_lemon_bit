@@ -1933,3 +1933,37 @@ void selectCharacterType(Player player, CharacterType value) {
   player.magic = player.maxMagic;
   player.health = player.maxHealth;
 }
+
+
+Character? getClosestEnemy({
+  required double x,
+  required double y,
+  required int team,
+  required double radius,
+  required List<Character> characters,
+}) {
+  double top = y - radius;
+  double bottom = y + radius;
+  double left = x - radius;
+  double right = x + radius;
+
+  Character? closest = null;
+  double distance = -1;
+  for (Character character in characters) {
+    if (character.y < top) continue;
+    if (character.y > bottom) break;
+    if (character.x < left) continue;
+    if (character.x > right) continue;
+    if (character.team == team) continue;
+    if (character.dead) continue;
+    if (!character.active) continue;
+
+    double characterDistance = distanceV2From(character, x, y);
+    if (closest == null || characterDistance < distance) {
+      closest = character;
+      distance = characterDistance;
+      continue;
+    }
+  }
+  return closest;
+}
