@@ -98,7 +98,7 @@ void renderCanvasPlay() {
 
   Vector2 attackTarget = game.player.attackTarget;
   if (attackTarget.x != 0 && attackTarget.y != 0){
-    drawCircle(attackTarget.x, attackTarget.y, 25, Colors.white24);
+    drawCircle(attackTarget.x, attackTarget.y, 20, Colors.white24);
   }
 
   setColorWhite();
