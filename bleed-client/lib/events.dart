@@ -4,6 +4,8 @@ import 'package:bleed_client/network.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
+import 'package:lemon_engine/functions/fullscreen_enter.dart';
+import 'package:lemon_engine/functions/fullscreen_exit.dart';
 
 import 'common/GameType.dart';
 
@@ -27,8 +29,21 @@ class Events {
 
   void _onConnectionChanged(Connection connection) {
     print("events.onConnectionChanged($connection)");
-    if (connection == Connection.Connected) {
-      sendRequestJoinGame(game.type.value);
+
+    switch(connection){
+      case Connection.Connected:
+        sendRequestJoinGame(game.type.value);
+        fullScreenEnter();
+        break;
+      case Connection.Done:
+        fullScreenExit();
+        game.clearSession();
+        break;
+      case Connection.Failed_To_Connect:
+        fullScreenExit();
+        break;
+      default:
+        break;
     }
   }
 
