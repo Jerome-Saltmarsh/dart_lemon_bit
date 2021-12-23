@@ -15,6 +15,7 @@ import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/constants/colours.dart';
+import 'package:bleed_client/cube/scene.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
@@ -60,7 +61,11 @@ int _flameIndex = 0;
 bool get dayTime => ambient.index == Shade.Bright.index;
 const animationFrameRate = 7; // frames per change;
 
+final Scene scene = Scene();
+
 void renderCanvasPlay() {
+
+  // scene.render(globalCanvas, globalSize);
 
   if (frameRateValue++ % animationFrameRate == 0) {
     drawFrame++;

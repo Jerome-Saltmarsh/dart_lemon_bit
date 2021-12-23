@@ -17,10 +17,6 @@ import 'package:lemon_watch/watch_builder.dart';
 
 Widget buildUI(BuildContext context) {
 
-  if (globalSize == null) {
-    return buildLoadingScreen();
-  }
-
   return WatchBuilder(game.serverType, (ServerType serverType){
     if (serverType == ServerType.None){
       return buildSelectServerType();

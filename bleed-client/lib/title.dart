@@ -1,8 +1,2 @@
 
-const title = "HEROES ARCADE";
-
-// MOBA - HEROES LEAGUE
-
-// MMO - ATLAS ONLINE
-
-// ROYAL - FIELD DAY
+const title = "GAMESTREAM.ONLINE";

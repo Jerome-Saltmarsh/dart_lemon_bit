@@ -77,7 +77,6 @@
 [ ] Guards on walls
 [ ] Fall into water and die
 -- OPEN WORLD -- 
-[ ] Convert Project to Null Safe
 [ ] Persist Character on cloud
 [ ] Complete Quests to earn income and unlock upgrades
 [ ] Quest Window
@@ -96,7 +95,7 @@
 [ ] Remove player walk (its always better to run, no stamina)
 [ ] Right Click to aim (aiming improves accuracy)
 [ ] Fix Firing AssaultRifle animation
-[ ] Speech Box split sentences 
+[ ] Speech Box split sentences
 [ ] Remove material design to reduce disk size
 [ ] Add Name to Speech box
 [ ] Shoot Arrow (Archer)
@@ -116,7 +115,7 @@
 [ ] SOCCER
 [ ] GOLDEN EYE
 [ ] BATTLEFIELD (Capture flags)
-    - This uses guns and abilities
+- This uses guns and abilities
 [RELEASE]
 -- The plan is to release several game modes like the warcraft 3 custom maps
 -- When the player loads into the game they start in the open world mode. To begin with this will be hard
@@ -141,6 +140,7 @@
 [x] Hide enemy mana
 [x] Players cannot attack each other
 [COMPLETED]
+[x] Convert Project to Null Safe
 [x] Game Status
 [x] Knight fix ability death strike
 [x] UI Indicate ability insufficient mana
@@ -535,6 +535,16 @@ Wow
 Fortnight
 
 # Domain Names
+browser-games.io
+game-browser.com
+game-stream.io
+play-games.io
+play-stream.io
+findgames.io
+gamebrowse.io
+playstream.online
+gamestream.online
+gamestream.online
 heroes-of-arcadia.com
 players-arcade.com
 quest-glade.com
