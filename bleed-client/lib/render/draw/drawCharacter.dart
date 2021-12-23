@@ -7,6 +7,7 @@ import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/draw/drawCharacterHealthBar.dart';
 import 'package:bleed_client/render/mappers/mapCharacterDst.dart';
 import 'package:bleed_client/render/mappers/mapCharacterSrc.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/queries/on_screen.dart';
 
 void drawCharacter(Character character) {
@@ -31,13 +32,13 @@ void drawCharacter(Character character) {
   );
 
   if (
-    character.type == CharacterType.Witch
-    ||
-    character.type == CharacterType.Swordsman
-    ||
+    character.type == CharacterType.Witch ||
+    character.type == CharacterType.Swordsman ||
     character.type == CharacterType.Archer
   ) {
-    drawCharacterMagicBar(character);
+    if (character.team == game.player.team){
+      drawCharacterMagicBar(character);
+    }
   }
 
   drawCharacterHealthBar(character);

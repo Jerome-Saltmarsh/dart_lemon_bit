@@ -68,7 +68,6 @@ void renderCanvasPlay() {
 
   if (!dayTime) {
     resetDynamicShadesToBakeMap();
-    // emitMouseLight();
     applyCharacterLightEmission(game.humans);
     applyCharacterLightEmission(game.zombies);
     applyProjectileLighting();
@@ -98,7 +97,6 @@ void renderCanvasPlay() {
   setColorWhite();
   drawSprites();
 
-
   for (Effect effect in game.effects) {
     if (!effect.enabled) continue;
     if (effect.duration++ > effect.maxDuration) {
@@ -124,18 +122,6 @@ void renderCanvasPlay() {
     drawPaths();
     drawDebugNpcs(game.npcDebug);
   }
-
-  // if (game.player.attackTarget.x != 0){
-  //   if (game.player.attackTarget.y != 0){
-  //     // todo optimize replace with with a png
-  //     drawCircleOutline(
-  //         sides: 8,
-  //         radius: 20,
-  //         x: game.player.attackTarget.x,
-  //         y: game.player.attackTarget.y,
-  //         color: Colors.white24);
-  //   }
-  // }
 
   _drawFloatingTexts();
   _drawPlayerNames();

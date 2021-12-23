@@ -152,8 +152,9 @@
 [ ] Fix Bug render objects culled bottom
 [MOBA]
 [ ] Defense Tower
-[ ] Players cannot attack each other
 [ ] Fix bug starting new game should reset light maps
+[ ] Hide enemy mana
+[x] Players cannot attack each other
 [COMPLETED]
 [x] Game Status
 [x] Knight fix ability death strike
