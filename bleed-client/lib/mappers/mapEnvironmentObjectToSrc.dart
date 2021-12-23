@@ -71,7 +71,7 @@ final Map<ObjectType, Vector2> objectTypeSrcPosition = {
   ObjectType.Rock_Wall: atlas.rockWall,
 };
 
-final double _torchHeight = environmentObjectHeight[ObjectType.Torch];
+final double _torchHeight = environmentObjectHeight[ObjectType.Torch]!;
 
 final Float32List _src = Float32List(4);
 
@@ -79,24 +79,18 @@ Float32List mapEnvironmentObjectToSrc(EnvironmentObject env){
   Shade shade = getShade(env.row, env.column);
   ObjectType type = env.type;
 
-  // if (type == ObjectType.Tree01){
-  //   if (shade.index > 0){
-  //     shade = shades[shade.index - 1];
-  //   }
-  // }
-
   if (shade == Shade.PitchBlack){
     clearSrc(_src);
     return _src;
   }
 
-  Vector2 translation = objectTypeSrcPosition[type];
+  Vector2? translation = objectTypeSrcPosition[type];
   if (translation == null){
     throw Exception(type);
   }
-  int index =  environmentObjectIndex[type];
-  double width = environmentObjectWidth[type];
-  double height = environmentObjectHeight[type];
+  int index =  environmentObjectIndex[type]!;
+  double width = environmentObjectWidth[type]!;
+  double height = environmentObjectHeight[type]!;
   double left = index * width + translation.x;
   double right = left + width;
   double top = shade.index * height + translation.y;

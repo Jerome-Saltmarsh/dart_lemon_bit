@@ -1,3 +1,4 @@
+import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/editor/state/editState.dart';
 import 'package:bleed_client/editor/state/mouseWorldStart.dart';
@@ -19,26 +20,25 @@ void onEditorKeyDownEvent(RawKeyDownEvent event){
   }
 
   double v = 1.5;
-  if (event.logicalKey == LogicalKeyboardKey.keyW) {
-    if(editState.selectedObject != null) {
-      editState.selectedObject.y -= v;
+
+  EnvironmentObject? selectedObject = editState.selectedObject;
+
+  if (selectedObject != null){
+    if (event.logicalKey == LogicalKeyboardKey.keyW) {
+        selectedObject.y -= v;
+    }
+    if (event.logicalKey == LogicalKeyboardKey.keyS) {
+        selectedObject.y += v;
+    }
+    if (event.logicalKey == LogicalKeyboardKey.keyA) {
+        selectedObject.x -= v;
+    }
+    if (event.logicalKey == LogicalKeyboardKey.keyD) {
+        selectedObject.x += v;
     }
   }
-  if (event.logicalKey == LogicalKeyboardKey.keyS) {
-    if(editState.selectedObject != null) {
-      editState.selectedObject.y += v;
-    }
-  }
-  if (event.logicalKey == LogicalKeyboardKey.keyA) {
-    if(editState.selectedObject != null) {
-      editState.selectedObject.x -= v;
-    }
-  }
-  if (event.logicalKey == LogicalKeyboardKey.keyD) {
-    if(editState.selectedObject != null) {
-      editState.selectedObject.x += v;
-    }
-  }
+
+
 
   if (event.logicalKey == LogicalKeyboardKey.delete) {
     if(editState.selectedObject != null){

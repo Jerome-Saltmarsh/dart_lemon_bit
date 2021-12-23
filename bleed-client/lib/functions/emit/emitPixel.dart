@@ -12,7 +12,10 @@ const _initialVelocityMax = 0.25;
 const _minDuration = 50;
 const _maxDuration = 150;
 
-void emitPixel({double x, double y}) {
+void emitPixel({
+  required double x,
+  required double y
+}) {
   Particle particle = getAvailableParticle();
   particle.x = x;
   particle.y = y;

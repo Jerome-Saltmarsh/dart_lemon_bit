@@ -56,13 +56,13 @@ Container _buildTitle() {
 
 Widget _buildPanelGames() {
   return Column(
-    crossAxisAlignment: cross.stretch,
+    crossAxisAlignment: axis.cross.stretch,
     children: [
       ...selectableGameTypes.map((GameType value) {
         return Container(
           margin: const EdgeInsets.only(bottom: 16),
           child: Row(
-            mainAxisAlignment: main.center,
+            mainAxisAlignment: axis.main.center,
             children: [
               Container(
                   width: 100,

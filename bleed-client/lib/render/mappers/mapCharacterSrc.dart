@@ -35,16 +35,15 @@ final Vector2 _humanDying = Vector2(1, 1736);
 final Vector2 _humanFiringHandgun = Vector2(1, 258);
 final Vector2 _humanFiringShotgun = Vector2(1, 1);
 
-
-Float32List _src = Float32List(4);
+final Float32List _src = Float32List(4);
 
 Float32List mapCharacterSrc({
-  CharacterType type,
-  CharacterState state,
-  WeaponType weapon,
-  Direction direction,
-  int frame,
-  Shade shade,
+  required CharacterType type,
+  required CharacterState state,
+  required WeaponType weapon,
+  required Direction direction,
+  required int frame,
+  required Shade shade,
 }) {
   switch(type){
     case CharacterType.Human:

@@ -33,8 +33,6 @@ import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/fullscreen_active.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/state/build_context.dart';
-import 'package:lemon_engine/state/canvas.dart';
-import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_engine/state/size.dart';
 import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
@@ -304,7 +302,7 @@ String padZero(num value) {
 }
 
 Widget dialog({
-  Widget child,
+  required Widget child,
   double padding = 8,
   double width = 400,
   double height = 600,
@@ -395,11 +393,11 @@ Widget buildBottomCenter() {
       child: Container(
         width: screenWidth,
         child: Row(
-          mainAxisAlignment: main.center,
-          crossAxisAlignment: cross.end,
+          mainAxisAlignment: axis.main.center,
+          crossAxisAlignment: axis.cross.end,
           children: [
             Column(
-              mainAxisAlignment: main.end,
+              mainAxisAlignment: axis.main.end,
               children: [
                 buildHealthBar(),
                 height2,
@@ -421,16 +419,6 @@ Widget buildBottomCenter() {
 
 void closeJoinGameDialog() {
   hud.joinGameVisible.setFalse();
-}
-
-Widget align(Widget child, BuildContext context, Alignment alignment,
-    {EdgeInsets padding}) {
-  return Container(
-      width: context.size.width,
-      height: context.size.height,
-      alignment: alignment,
-      padding: padding,
-      child: child);
 }
 
 Widget buildConnected() {
@@ -458,10 +446,10 @@ Widget buildConnected() {
 Widget buildAwaitingPlayers() {
   return dialog(
       child: Column(
-    crossAxisAlignment: cross.stretch,
+    crossAxisAlignment: axis.cross.stretch,
     children: [
       Row(
-        mainAxisAlignment: main.apart,
+        mainAxisAlignment: axis.main.apart,
         children: [
           text("MOBA"),
           button("Cancel", game.leaveLobby),
@@ -572,9 +560,9 @@ Positioned _buildRespawnLight() {
       child: Container(
           width: screenWidth,
           child: Column(
-            crossAxisAlignment: cross.center,
+            crossAxisAlignment: axis.cross.center,
             children: [
-              Row(mainAxisAlignment: main.center, children: [
+              Row(mainAxisAlignment: axis.main.center, children: [
                 onPressed(
                     callback: () {
                       sendRequestRevive();
@@ -684,10 +672,10 @@ void clearPlayerMessage() {
   game.player.message.value = "";
 }
 
-Widget buildSlot({String title}) {
+Widget buildSlot({required String title}) {
   return Container(
     child: Column(
-      mainAxisAlignment: main.center,
+      mainAxisAlignment: axis.main.center,
       children: [
         text(title),
       ],
@@ -700,11 +688,11 @@ Widget buildSlot({String title}) {
 }
 
 Widget buildDecorationImage({
-  DecorationImage image,
-  double width,
-  double height,
+  required DecorationImage image,
+  double width = 150,
+  double height = 50,
   double borderWidth = 1,
-  Color color,
+  Color color = Colors.white,
   Color borderColor = Colors.white,
 }) {
   return Container(
@@ -726,7 +714,7 @@ Widget buildEquipWeaponSlot(Weapon weapon, int index) {
   return mouseOver(builder: (BuildContext context, bool mouseOver) {
     double p = weapon.capacity > 0 ? weapon.rounds / weapon.capacity : 1.0;
     return Row(
-      mainAxisAlignment: main.start,
+      mainAxisAlignment: axis.main.start,
       children: [
         buildAmmoBar(p),
         Stack(
@@ -751,7 +739,7 @@ Widget buildWeaponStats(Weapon weapon) {
     color: Colors.black38,
     padding: padding8,
     child: Column(
-      crossAxisAlignment: cross.start,
+      crossAxisAlignment: axis.cross.start,
       children: [
         text(mapWeaponTypeToString(weapon.type)),
         text("Damage: ${weapon.damage}"),
@@ -888,7 +876,7 @@ class MyCustomClipper extends CustomClipper<Path> {
 Widget buildAbilities() {
   return Container(
     child: Row(
-      crossAxisAlignment: cross.end,
+      crossAxisAlignment: axis.cross.end,
       children: [
         buildAbility(game.player.ability1),
         width4,
@@ -907,7 +895,7 @@ Widget buildAbility(Ability ability) {
     if (type == AbilityType.None) return emptyContainer;
 
     return Column(
-      mainAxisAlignment: main.end,
+      mainAxisAlignment: axis.main.end,
       children: [
         WatchBuilder(game.player.skillPoints, (int points) {
           if (points == 0) return emptyContainer;
@@ -934,7 +922,7 @@ Widget buildAbility(Ability ability) {
             return Stack(
               children: [
                 buildDecorationImage(
-                    image: mapAbilityTypeToDecorationImage[type],
+                    image: mapAbilityTypeToDecorationImage[type]!,
                     width: 50,
                     height: 50,
                     borderColor: Colors.black54,
@@ -956,7 +944,7 @@ Widget buildAbility(Ability ability) {
                 return Stack(
                   children: [
                     buildDecorationImage(
-                        image: mapAbilityTypeToDecorationImage[type],
+                        image: mapAbilityTypeToDecorationImage[type]!,
                         width: 50,
                         height: 50,
                         borderColor: Colors.black54,
@@ -976,7 +964,7 @@ Widget buildAbility(Ability ability) {
                   return Stack(
                     children: [
                       buildDecorationImage(
-                          image: mapAbilityTypeToDecorationImage[type],
+                          image: mapAbilityTypeToDecorationImage[type]!,
                           width: 50,
                           height: 50,
                           borderColor: Colors.black54,
@@ -1006,7 +994,7 @@ Widget buildAbility(Ability ability) {
                         mouseOver(
                             builder: (BuildContext context, bool mouseOver) {
                           return buildDecorationImage(
-                              image: mapAbilityTypeToDecorationImage[type],
+                              image: mapAbilityTypeToDecorationImage[type]!,
                               width: 50,
                               height: 50,
                               borderColor: mouseOver || selected
@@ -1034,7 +1022,7 @@ Widget buildAbility(Ability ability) {
 Widget buildExpandedWeapons() {
   int index = -1;
   return Column(
-    crossAxisAlignment: cross.start,
+    crossAxisAlignment: axis.cross.start,
     children: game.player.weapons.map((weapon) {
       index++;
       return Container(
@@ -1048,8 +1036,8 @@ Widget buildExpandedWeapons() {
 Widget buildWeaponMenu() {
   return mouseOver(builder: (BuildContext context, bool mouseOver) {
     return Column(
-      mainAxisAlignment: main.end,
-      crossAxisAlignment: cross.start,
+      mainAxisAlignment: axis.main.end,
+      crossAxisAlignment: axis.cross.start,
       children: [
         if (mouseOver) buildExpandedWeapons(),
         WatchBuilder(game.player.weapon, buildEquippedWeaponSlot)
@@ -1064,8 +1052,8 @@ Widget _buildViewRespawn() {
     width: screenWidth,
     height: screenHeight,
     child: Row(
-      mainAxisAlignment: main.center,
-      crossAxisAlignment: cross.center,
+      mainAxisAlignment: axis.main.center,
+      crossAxisAlignment: axis.cross.center,
       children: [
         Container(
             padding: padding16,
@@ -1074,7 +1062,7 @@ Widget _buildViewRespawn() {
                 borderRadius: borderRadius4, color: Colors.black38),
             child: SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: cross.center,
+                crossAxisAlignment: axis.cross.center,
                 children: [
                   Container(
                       decoration: BoxDecoration(
@@ -1093,12 +1081,12 @@ Widget _buildViewRespawn() {
                       color: black26,
                     ),
                     child: Column(
-                      crossAxisAlignment: cross.center,
+                      crossAxisAlignment: axis.cross.center,
                       children: [
                         text("Please Support Me"),
                         height16,
                         Row(
-                          mainAxisAlignment: main.even,
+                          mainAxisAlignment: axis.main.even,
                           children: [
                             onPressed(
                               child: border(
@@ -1136,56 +1124,6 @@ Widget _buildViewRespawn() {
                   ),
                   height8,
                   Container(
-                    padding: padding16,
-                    decoration: BoxDecoration(
-                      borderRadius: borderRadius4,
-                      color: black26,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        text("Community"),
-                        height8,
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            comingSoon(
-                              child: Row(
-                                children: [
-                                  text("Youtube"),
-                                  IconButton(
-                                      // onPressed: () {},
-                                      icon: Icon(
-                                    Icons.link,
-                                    color: Colors.white,
-                                  ))
-                                ],
-                              ),
-                            ),
-                            onPressed(
-                              hint: "Come and Hang!",
-                              callback: () {
-                                // openLink(links.discord);
-                              },
-                              child: Row(
-                                children: [
-                                  text("Discord"),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(
-                                        Icons.link,
-                                        color: Colors.white,
-                                      ))
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  height8,
-                  Container(
                     decoration: BoxDecoration(
                       borderRadius: borderRadius4,
                       color: black26,
@@ -1195,8 +1133,8 @@ Widget _buildViewRespawn() {
                       children: [
                         text("Hints"),
                         Row(
-                          mainAxisAlignment: main.center,
-                          crossAxisAlignment: cross.center,
+                          mainAxisAlignment: axis.main.center,
+                          crossAxisAlignment: axis.cross.center,
                           children: [
                             Container(
                                 width: 350,
@@ -1220,7 +1158,7 @@ Widget _buildViewRespawn() {
                   ),
                   height32,
                   Row(
-                    mainAxisAlignment: main.between,
+                    mainAxisAlignment: axis.main.between,
                     children: [
                       onPressed(
                           child: Container(
@@ -1236,7 +1174,7 @@ Widget _buildViewRespawn() {
                           child: border(
                               child: text("RESPAWN",
                                   fontWeight: bold,
-                                  decoration: mouseOver ? underline : null),
+                              ),
                               padding: padding16,
                               radius: borderRadius4,
                               color: Colors.white,
@@ -1256,7 +1194,7 @@ Widget _buildViewRespawn() {
   );
 }
 
-Widget buildImageButton(DecorationImage image, Function onTap,
+Widget buildImageButton(DecorationImage image, GestureTapCallback onTap,
     {double width = 120}) {
   return GestureDetector(
     onTap: onTap,
@@ -1340,7 +1278,7 @@ Widget buildLowAmmo() {
                 padding: EdgeInsets.all(10),
                 color: Colors.black26,
                 child: text(
-                    game.player.equippedRounds == 0 ? "Empty" : "Low Ammo",
+                    game.player.equippedRounds.value == 0 ? "Empty" : "Low Ammo",
                     fontSize: 20)),
           ],
         ),
@@ -1361,7 +1299,7 @@ Widget buildMessageBox(String message) {
       child: Container(
         width: screenWidth,
         child: Row(
-          mainAxisAlignment: main.center,
+          mainAxisAlignment: axis.main.center,
           children: [
             Container(
                 padding: padding8,
@@ -1451,23 +1389,3 @@ Widget buildDialog(Widget child) {
       top: 30, child: Container(width: screenWidth, child: child));
 }
 
-void drawRing(Ring ring,
-    {double percentage,
-    Color color,
-    Offset position,
-    Color backgroundColor = Colors.white}) {
-  setStrokeWidth(6);
-  setColor(backgroundColor);
-  for (int i = 0; i < ring.points.length - 1; i++) {
-    globalCanvas.drawLine(
-        ring.points[i] + position, ring.points[i + 1] + position, paint);
-  }
-
-  setStrokeWidth(3);
-  setColor(color);
-  int fillSides = (ring.sides * percentage).toInt();
-  for (int i = 0; i < fillSides; i++) {
-    globalCanvas.drawLine(
-        ring.points[i] + position, ring.points[i + 1] + position, paint);
-  }
-}

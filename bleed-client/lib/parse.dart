@@ -33,9 +33,7 @@ import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:bleed_client/render/functions/applyEnvironmentObjectsToBakeMapping.dart';
 import 'package:bleed_client/render/functions/setBakeMapToAmbientLight.dart';
 import 'package:bleed_client/render/state/paths.dart';
-import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/ui/compose/dialogs.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/utils/list_util.dart';
@@ -161,7 +159,6 @@ void parseState() {
           case GameError.GameNotFound:
             clearState();
             disconnect();
-            showErrorDialog("You were disconnected from the game");
             return;
           case GameError.InvalidArguments:
             if (compiledGame.length > 4) {
@@ -175,7 +172,6 @@ void parseState() {
         if (error == GameError.PlayerNotFound) {
           clearState();
           disconnect();
-          showErrorDialogPlayerNotFound();
         }
         return;
 
@@ -339,8 +335,8 @@ void _parseEnvironmentObjects() {
         break;
     }
 
-    double width = environmentObjectWidth[type];
-    double height = environmentObjectHeight[type];
+    double width = environmentObjectWidth[type]!;
+    double height = environmentObjectHeight[type]!;
 
     Float32List dst = Float32List(4);
     dst[0] = 1;
@@ -501,7 +497,7 @@ void _consumeAbility(Ability ability) {
 
 int _consumeInt() {
   final String string = _consumeString();
-  final int value = int.tryParse(string);
+  final int? value = int.tryParse(string);
   if (value == null) {
     throw Exception("could not parse $string to int");
   }

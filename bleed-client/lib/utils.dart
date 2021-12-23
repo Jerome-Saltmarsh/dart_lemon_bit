@@ -64,12 +64,6 @@ Direction convertAngleToDirection(double angle) {
   return Direction.Up;
 }
 
-repeat(Function function, int times, int milliseconds) {
-  for (int i = 0; i < times; i++) {
-    Future.delayed(Duration(milliseconds: milliseconds * i), function);
-  }
-}
-
 void cameraCenter(double x, double y) {
   camera.x = x - (screenCenterX / zoom);
   camera.y = y - (screenCenterY / zoom);

@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 typedef MouseOverBuilder = Widget Function(BuildContext context, bool mouseOver);
 
 Widget mouseOver({
-  MouseOverBuilder builder,
-  Function onEnter,
-  Function onExit
+  required MouseOverBuilder builder,
+  Function? onEnter,
+  Function? onExit
 }) {
   return Builder(builder: (context) {
     bool mouseOver = false;

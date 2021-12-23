@@ -1,4 +1,5 @@
 enum ItemType {
+  None,
   Health,
   Grenade,
   Credits,

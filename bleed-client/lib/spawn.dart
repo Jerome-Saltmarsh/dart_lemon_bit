@@ -24,7 +24,12 @@ Effect getEffect(){
   return effect;
 }
 
-void spawnEffect({double x, double y, EffectType type, int duration}){
+void spawnEffect({
+  required double x,
+  required double y,
+  required EffectType type,
+  required int duration,
+}){
   Effect effect = getEffect();
   effect.x = x;
   effect.y = y;
@@ -45,12 +50,15 @@ void spawnExplosion(double x, double y) {
     spawnFireYellow(x, y);
   }
   double r = 0.2;
-  repeat(() {
-    spawnSmoke(x, y, 0.01, xv: giveOrTake(r), yv: giveOrTake(r));
-  }, 5, 50);
+  // repeat(() {
+  //   spawnSmoke(x, y, 0.01, xv: giveOrTake(r), yv: giveOrTake(r));
+  // }, 5, 50);
 }
 
-void spawnFreezeCircle({double x, double y}){
+void spawnFreezeCircle({
+  required double x,
+  required double y
+}){
   spawnEffect(x: x, y: y, type: EffectType.FreezeCircle, duration: 30);
 }
 

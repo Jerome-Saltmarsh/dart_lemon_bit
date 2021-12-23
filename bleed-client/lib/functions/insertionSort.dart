@@ -1,8 +1,8 @@
 void insertionSort<E>({
-  List<E> list,
-  int Function(E, E) compare,
+  required List<E> list,
+  required int Function(E, E) compare,
   int start = 0,
-  int end
+  required int end
 }) {
   for (var pos = start + 1; pos < end; pos++) {
     var min = start;

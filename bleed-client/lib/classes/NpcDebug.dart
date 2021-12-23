@@ -5,5 +5,5 @@ class NpcDebug {
   double targetX;
   double targetY;
 
-  NpcDebug({this.x, this.y, this.targetX, this.targetY});
+  NpcDebug({required this.x, required this.y, required this.targetX, required this.targetY});
 }

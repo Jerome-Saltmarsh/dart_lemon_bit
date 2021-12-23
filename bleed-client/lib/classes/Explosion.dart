@@ -2,19 +2,16 @@
 const explosionMaxDuration = 30;
 
 enum EffectType {
+  None,
   Explosion,
   FreezeCircle,
 }
 
 class Effect {
-  double x;
-  double y;
+  double x = 0;
+  double y = 0;
   int duration = 0;
-  int maxDuration;
-  EffectType type;
-  bool enabled = true;
-
-  Effect({this.x, this.y, this.type, int duration}){
-    maxDuration = duration;
-  }
+  EffectType type = EffectType.None;
+  bool enabled = false;
+  int maxDuration = 0;
 }

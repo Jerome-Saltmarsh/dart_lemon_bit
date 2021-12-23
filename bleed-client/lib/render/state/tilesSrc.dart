@@ -1,4 +1,4 @@
 
 import 'dart:typed_data';
 
-Float32List tilesSrc;
+late Float32List tilesSrc;

@@ -10,7 +10,7 @@ dynamic valueObject;
 DateTime lastRefresh = DateTime.now();
 int drawFrame = 0;
 int serverFramesMS = 0;
-int actualFPS;
+int actualFPS = 0;
 Map<int, bool> gameEvents = Map();
 
 bool get playerReady =>

@@ -24,7 +24,7 @@ final Map<ParticleType, double> _particleTypeSize = {
 };
 
 Float32List mapParticleToDst(Particle particle){
-  double size = _particleTypeSize[particle.type];
+  double size = _particleTypeSize[particle.type]!;
   double renderScale = (1 + (particle.z * zToHeightRatio)) * particle.scale;
   double sizeHalf = size * renderScale * 0.5;
 

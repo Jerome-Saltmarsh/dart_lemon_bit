@@ -12,9 +12,9 @@ import 'loop.dart';
 final Float32List _src = Float32List(4);
 
 Float32List mapSrcArcher({
-  CharacterState state,
-  Direction direction,
-  int frame
+  required CharacterState state,
+  required Direction direction,
+  required int frame
 }) {
   switch (state) {
     case CharacterState.Dead:

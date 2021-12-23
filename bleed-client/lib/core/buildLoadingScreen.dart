@@ -15,7 +15,7 @@ Widget buildLoadingScreen(BuildContext context) {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Column(
-          mainAxisAlignment: main.center,
+          mainAxisAlignment: axis.main.center,
           children: [
             text("DOWNLOADING ${(value * 100).toInt()}%", color: Colors.black),
             Container(

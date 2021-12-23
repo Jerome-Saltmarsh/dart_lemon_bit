@@ -23,7 +23,7 @@ Widget buildTextBox() {
                 borderRadius: borderRadius4,
                 color: Colors.black54),
             child: Column(
-              mainAxisAlignment: main.center,
+              mainAxisAlignment: axis.main.center,
               children: [
                 Container(
                     width: 400,

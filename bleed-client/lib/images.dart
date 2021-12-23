@@ -31,7 +31,7 @@ Map<ObjectType, int> environmentObjectIndex = {
 };
 
 class _Images {
-  Image atlas;
+  late Image atlas;
 
   Future<Image> _png(String fileName) async {
     Image image = await loadImage('images/$fileName.png');

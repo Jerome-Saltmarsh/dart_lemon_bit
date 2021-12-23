@@ -18,7 +18,7 @@ import '../state/flutter_constants.dart';
 Widget buildConnecting() {
   return center(
       Column(
-        mainAxisAlignment: main.center,
+        mainAxisAlignment: axis.main.center,
         children: [
           Container(
             height: 80,
@@ -66,7 +66,7 @@ Widget _buildServerTypeButton(ServerType server) {
 Widget buildSelectServerType() {
   return center(
     SingleChildScrollView(
-      child: Column(crossAxisAlignment: cross.center, children: [
+      child: Column(crossAxisAlignment: axis.cross.center, children: [
         text(title, fontSize: 45),
         height32,
         ...selectableServerTypes.map(_buildServerTypeButton)

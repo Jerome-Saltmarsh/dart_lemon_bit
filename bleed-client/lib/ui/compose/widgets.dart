@@ -8,18 +8,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lemon_engine/state/size.dart';
 
-Widget text(dynamic value,
-    {fontSize = 18,
-    Function onPressed,
+Widget text(dynamic value, {
+    fontSize = 18,
+    GestureTapCallback? onPressed,
     TextDecoration decoration = TextDecoration.none,
     FontWeight fontWeight = normal,
-    Color color = white}) {
+    Color color = white
+}) {
   Widget _text = Text(value.toString(),
       style: TextStyle(
           color: color,
           fontSize: fontSize,
           decoration: decoration,
           fontWeight: fontWeight));
+
   if (onPressed == null) return _text;
 
   return MouseRegion(
@@ -32,15 +34,15 @@ Widget text(dynamic value,
 }
 
 Widget border({
-  Widget child,
+  required Widget child,
   Color color = Colors.white,
   double width = 1,
   BorderRadius radius = borderRadius4,
   EdgeInsets padding = padding8,
-  EdgeInsets margin,
-  Alignment alignment,
-  Color fillColor,
-  double minWidth,
+  EdgeInsets margin = EdgeInsets.zero,
+  Alignment alignment = Alignment.center,
+  Color fillColor = Colors.transparent,
+  double? minWidth,
 }) {
   return Container(
     alignment: alignment,
@@ -48,35 +50,32 @@ Widget border({
     padding: padding,
     width: minWidth,
     decoration: BoxDecoration(
-        border: color != null ? Border.all(color: color, width: width) : null,
+        border: Border.all(color: color, width: width),
         borderRadius: radius,
         color: fillColor),
     child: child,
   );
 }
 
-BoxDecoration boxDecoration(
-    {double borderWidth = 2.0,
+BoxDecoration boxDecoration({
+    double borderWidth = 2.0,
     Color borderColor = white,
     double borderRadius = 4,
-    Color fillColor}) {
+    Color fillColor = Colors.white,
+}) {
   return BoxDecoration(
       border: Border.all(color: borderColor, width: borderWidth),
       borderRadius: borderRadius4,
       color: fillColor);
 }
 
-Widget comingSoon({Widget child}) {
-  return Tooltip(
-    message: "Coming Soon",
-    child: child,
-  );
-}
+Widget button(dynamic message, GestureTapCallback onPressed, {
+  double? fontSize,
+  double? minWidth,
+  String? hint
+}) {
 
-Widget button(dynamic message, Function onPressed,
-    {double fontSize, double minWidth, String hint}) {
-
-  Widget _button = pressed(
+  final Widget _button = pressed(
       callback: onPressed,
       child: mouseOver(builder: (BuildContext context, bool mouseOver) {
         return border(
@@ -92,11 +91,14 @@ Widget button(dynamic message, Function onPressed,
   return _button;
 }
 
-Widget pressed({Widget child, Function callback, dynamic hint}) {
+Widget pressed({required Widget child, required GestureTapCallback? callback, dynamic hint}) {
   return onPressed(child: child, callback: callback, hint: hint);
 }
 
-Widget onPressed({Widget child, Function callback, dynamic hint}) {
+Widget onPressed({
+  required Widget child,
+  required GestureTapCallback? callback,
+  dynamic hint}) {
   Widget widget = MouseRegion(
       cursor: callback != null
           ? SystemMouseCursors.click
@@ -115,14 +117,14 @@ class Refresh extends StatefulWidget {
   final WidgetBuilder builder;
   final Duration duration;
 
-  Refresh({this.builder, this.duration});
+  Refresh({required this.builder, required this.duration});
 
   @override
   _RefreshState createState() => _RefreshState();
 }
 
 class _RefreshState extends State<Refresh> {
-  Timer timer;
+  late Timer timer;
   bool assigned = false;
 
   @override
@@ -154,13 +156,13 @@ Widget center(Widget child) {
   return fullScreen(child: child);
 }
 
-Widget fullScreen({Widget child, Alignment alignment = Alignment.center}) {
+Widget fullScreen({required Widget child, Alignment alignment = Alignment.center}) {
   return Container(
     alignment: alignment,
       width: globalSize.width, height: globalSize.height, child: child);
 }
 
-Widget page({List<Widget> children}) {
+Widget page({required List<Widget> children}) {
   return fullScreen(
       child: Stack(
     children: children,

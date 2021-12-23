@@ -5,4 +5,6 @@ class Item {
   ItemType type;
   double x;
   double y;
+
+  Item(this.type, this.x, this.y);
 }

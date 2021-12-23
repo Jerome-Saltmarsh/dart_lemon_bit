@@ -7,9 +7,9 @@ import 'package:lemon_engine/classes/vector2.dart';
 final Float32List _src = Float32List(4);
 
 Float32List loop({
-  Vector2 atlas,
-  Direction direction,
-  int frame,
+  required Vector2 atlas,
+  required Direction direction,
+  required int frame,
   Shade shade = Shade.Bright,
   double size = 64,
   int framesPerDirection = 4,

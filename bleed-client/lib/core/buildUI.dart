@@ -39,7 +39,7 @@ Widget buildUI(BuildContext context) {
             return buildConnected();
           default:
             return center(Column(
-              mainAxisAlignment: main.center,
+              mainAxisAlignment: axis.main.center,
               children: [
                 text(connection),
                 height8,

@@ -26,8 +26,13 @@ void drawCharacterCircle(double x, double y, Color color) {
   drawCircle(x, y, 10, color);
 }
 
-RSTransform rsTransform(
-    {double x, double y, double anchorX, double anchorY, double scale = 1}) {
+RSTransform rsTransform({
+  required double x,
+  required double y,
+  required double anchorX,
+  required double anchorY,
+  double scale = 1
+}) {
   return RSTransform.fromComponents(
     rotation: 0.0,
     scale: scale,
@@ -53,16 +58,6 @@ void drawDebugNpcs(List<NpcDebug> values){
   for (NpcDebug npc in values) {
     drawLine(npc.x, npc.y, npc.targetX, npc.targetY);
   }
-}
-
-Color get healthColor {
-  double health = game.player.health.value / game.player.maxHealth;
-  double halfMaxHealth = game.player.maxHealth * 0.5;
-  if (health > 0.5) {
-    return Color.lerp(
-        colours.orange, colours.green, (game.player.health.value - halfMaxHealth) / halfMaxHealth);
-  }
-  return Color.lerp(colours.blood, colours.orange, game.player.health.value / halfMaxHealth);
 }
 
 RSTransform getTileTransform(int x, int y) {
@@ -121,8 +116,13 @@ Tile getTile(int row, int column){
   return game.tiles[row][column];
 }
 
-void drawCircleOutline(
-    {int sides = 6, double radius, double x, double y, Color color}) {
+void drawCircleOutline({
+  required double radius,
+  required double x,
+  required double y,
+  required Color color,
+  int sides = 6
+}) {
   double r = (pi * 2) / sides;
   List<Offset> points = [];
   Offset z = Offset(x, y);

@@ -39,7 +39,6 @@ class _Game {
   final Watch<GameType> type = Watch(GameType.None);
   final Watch<GameStatus> status = Watch(GameStatus.Awaiting_Players);
   final _Lobby lobby = _Lobby();
-  int serverVersion;
   List<int> collectables = [];
   List<Vector2> crates = [];
   int cratesTotal = 0;
@@ -93,7 +92,10 @@ class _Lobby {
   final Watch<int> playerCount = Watch(0);
   final List<_LobbyPlayer> players = [];
 
-  void add({int team, String name}) {
+  void add({
+    required int team,
+    required String name
+  }) {
     if (team == 0) {
       players.insert(0, _LobbyPlayer(name, team));
     } else {

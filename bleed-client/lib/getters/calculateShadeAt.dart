@@ -11,11 +11,11 @@ Shade calculateShadeAt(double x, double y) {
   Shade shading = Shade.Dark;
 
   for (Character player in game.humans) {
-    double xDiff = diff(x, player.x);
+    num xDiff = diff(x, player.x);
     if (xDiff > _dark) continue;
-    double yDiff = diff(y, player.y);
+    num yDiff = diff(y, player.y);
     if (yDiff > _dark) continue;
-    double total = xDiff + yDiff;
+    num total = xDiff + yDiff;
 
     if (total < _light) {
       return Shade.Bright;

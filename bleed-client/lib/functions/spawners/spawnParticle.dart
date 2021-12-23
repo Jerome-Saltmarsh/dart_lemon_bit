@@ -2,10 +2,10 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/state/game.dart';
 
-void spawnParticle(
-    {ParticleType type,
-    double x,
-    double y,
+void spawnParticle({
+    required ParticleType type,
+    required double x,
+    required double y,
     double z = 0,
     double xv = 0,
     double yv = 0,
@@ -17,7 +17,8 @@ void spawnParticle(
     double rotation = 0,
     double rotationV = 0,
     bounciness = 0.5,
-    double airFriction = 0.98}) {
+    double airFriction = 0.98
+}) {
 
   Particle particle = getAvailableParticle();
   particle.type = type;

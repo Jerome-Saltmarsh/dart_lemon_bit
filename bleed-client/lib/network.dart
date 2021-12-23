@@ -14,7 +14,7 @@ enum Connection {
 }
 
 // state
-WebSocketChannel webSocketChannel;
+late WebSocketChannel webSocketChannel;
 String connectionUri = "";
 final Watch<Connection> connection = Watch(Connection.None);
 final StreamController eventStream = StreamController.broadcast();

@@ -5,6 +5,7 @@ import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
+import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
@@ -41,20 +42,20 @@ Future init() async {
   initAudioPlayers();
   rebuildUI();
 
-  if (Uri.base.hasQuery && Uri.base.queryParameters.containsKey('host')) {
-    Future.delayed(Duration(seconds: 1), () {
-      String host = Uri.base.queryParameters['host'];
-      String connectionString = parseHttpToWebSocket(host);
-      connectWebSocket(connectionString);
-    });
-  }
+  // if (Uri.base.hasQuery && Uri.base.queryParameters.containsKey('host')) {
+  //   Future.delayed(Duration(seconds: 1), () {
+  //     String host = Uri.base.queryParameters['host'];
+  //     String connectionString = parseHttpToWebSocket(host);
+  //     connectWebSocket(connectionString);
+  //   });
+  // }
 }
 
 void initializeGameInstances() {
   for (int i = 0; i < 5000; i++) {
     game.projectiles
         .add(Projectile(0, 0, ProjectileType.Bullet, Direction.DownLeft));
-    game.items.add(Item());
+    game.items.add(Item(ItemType.None, 0, 0));
   }
 
   for (int i = 0; i < 1000; i++) {
@@ -170,9 +171,9 @@ void _onEventReceivedFromServer(dynamic value) {
 
 Future loadSharedPreferences() async {
   sharedPreferences = await SharedPreferences.getInstance();
-  game.settings.audioMuted.value =
-      sharedPreferences.containsKey('audioMuted') &&
-          sharedPreferences.getBool('audioMuted');
+  // game.settings.audioMuted.value =
+  //     sharedPreferences.containsKey('audioMuted') &&
+  //         sharedPreferences.getBool('audioMuted');
 
   if (storage.serverSaved){
     game.serverType.value = storage.serverType;

@@ -53,7 +53,7 @@ bool get keyPressedMelee => keyPressed(LogicalKeyboardKey.keyF);
 
 bool panningCamera = false;
 
-Offset _mouseWorldStart;
+Offset _mouseWorldStart = Offset(0, 0);
 
 final _CharacterController characterController = _CharacterController();
 
@@ -289,15 +289,15 @@ void _handleKeyDownEventPlayMode(RawKeyDownEvent event) {
   if (!_keyDownState.containsKey(key)) {
     _keyDownState[key] = true;
     if (_keyPressedHandlers.containsKey(key)) {
-      _keyPressedHandlers[key].call();
+      _keyPressedHandlers[key]?.call();
     }
     return;
   }
 
-  if (_keyDownState[key]) {
+  if (_keyDownState[key]!) {
     // on key held
     if (_keyHeldHandlers.containsKey(key)) {
-      _keyHeldHandlers[key].call();
+      _keyHeldHandlers[key]?.call();
     }
     return;
   }
@@ -305,7 +305,7 @@ void _handleKeyDownEventPlayMode(RawKeyDownEvent event) {
   // on key pressed
   _keyDownState[key] = true;
   if (_keyPressedHandlers.containsKey(key)) {
-    _keyPressedHandlers[key].call();
+    _keyPressedHandlers[key]?.call();
   }
 }
 
@@ -317,7 +317,7 @@ void _handleKeyUpEventPlayMode(RawKeyUpEvent event) {
   if (hud.state.textBoxVisible.value) return;
 
   if (_keyReleasedHandlers.containsKey(key)) {
-    _keyReleasedHandlers[key].call();
+    _keyReleasedHandlers[key]?.call();
   }
 
   _keyDownState[key] = false;

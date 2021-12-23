@@ -21,7 +21,7 @@ class Character {
   bool get alive => state != CharacterState.Dead;
 
   Character({
-    this.type,
+    required this.type,
     this.state = CharacterState.Idle,
     this.direction = Direction.Down,
     this.x = 0,

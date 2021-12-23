@@ -46,7 +46,7 @@ void drawProjectile(Projectile projectile) {
 }
 
 void drawFireball(double x, double y, Direction direction) {
-  double angle = mapDirectionToAngle[direction];
+  double angle = mapDirectionToAngle[direction]!;
   RSTransform rsTransform = RSTransform.fromComponents(
       rotation: angle,
       scale: 1,

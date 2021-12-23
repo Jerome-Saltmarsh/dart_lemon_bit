@@ -11,10 +11,10 @@ import 'loop.dart';
 
 
 Float32List mapSrcZombie({
-  CharacterState state,
-  Direction direction,
-  Shade shade,
-  int frame
+  required CharacterState state,
+  required Direction direction,
+  required Shade shade,
+  required int frame
 }) {
   switch (state) {
     case CharacterState.Idle:

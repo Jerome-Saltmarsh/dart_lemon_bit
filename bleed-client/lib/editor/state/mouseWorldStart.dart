@@ -1,4 +1,4 @@
 
 import 'package:flutter/material.dart';
 
-Offset mouseWorldStart;
+Offset mouseWorldStart = Offset(0, 0);

@@ -1,3 +1,4 @@
+import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/editor/state/editState.dart';
 import 'package:bleed_client/editor/state/selectedCollectable.dart';
@@ -16,10 +17,11 @@ void renderCanvasEdit() {
     drawCircleOutline(x: x, y: y, radius: 50, color: Colors.white, sides: 10);
   }
 
+  EnvironmentObject? selectedObject = editState.selectedObject;
 
-  if (editState.selectedObject != null){
-    drawCircleOutline(x: editState.selectedObject.x, y: editState.selectedObject.y, radius: 50, color: Colors.white, sides: 10);
-    drawCircle(editState.selectedObject.x, editState.selectedObject.y,
+  if (selectedObject != null){
+    drawCircleOutline(x: selectedObject.x, y: selectedObject.y, radius: 50, color: Colors.white, sides: 10);
+    drawCircle(selectedObject.x, selectedObject.y,
         15, Colors.white70);
   }
 }

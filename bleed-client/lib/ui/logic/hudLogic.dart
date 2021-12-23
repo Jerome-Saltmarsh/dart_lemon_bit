@@ -1,8 +1,6 @@
 
 import 'package:bleed_client/enums/Mode.dart';
-import 'package:bleed_client/events.dart';
 import 'package:bleed_client/send.dart';
-import 'package:bleed_client/ui/compose/dialogs.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/ui/state/tips.dart';
 import 'package:bleed_client/watches/mode.dart';
@@ -24,11 +22,6 @@ void sendAndCloseTextBox(){
 
 void toggleEditMode() {
   mode.value = playMode ? Mode.Edit : Mode.Play;
-}
-
-void closeMainMenuDialog() {
-  if (contextMainMenuDialog == null) return;
-  pop(contextMainMenuDialog);
 }
 
 void nextTip() {

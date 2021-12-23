@@ -7,8 +7,8 @@ const int tileCanvasHeight = 48;
 const int tileCanvasWidthHalf = tileCanvasWidth ~/ 2;
 const int tileCanvasHeightHalf = tileCanvasHeight ~/ 2;
 
-List<Rect> rectsExplosion;
-List<Rect> rectsCharacter;
+List<Rect> rectsExplosion = [];
+List<Rect> rectsCharacter = [];
 Rect rectParticleSmoke = rect(0, 64, 64);
 Rect rectParticleBlood = rect(1, 64, 64);
 Rect rectParticleHead = rect(2, 64, 64);

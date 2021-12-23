@@ -11,6 +11,11 @@ class ParticleEmitter {
   int next = 0;
   Function(Particle particle) emit;
 
-  ParticleEmitter({this.x, this.y, this.rate, this.emit});
+  ParticleEmitter({
+    required this.x,
+    required this.y,
+    required this.rate,
+    required this.emit
+  });
 }
 

@@ -23,8 +23,8 @@ Widget buildSkillTree() {
             width: screenWidth,
             height: screenHeight,
             child: Row(
-              mainAxisAlignment: main.center,
-              crossAxisAlignment: cross.start,
+              mainAxisAlignment: axis.main.center,
+              crossAxisAlignment: axis.cross.start,
               children: [
                 onPressed(
                   callback: () {},
@@ -34,10 +34,10 @@ Widget buildSkillTree() {
                     height: 100,
                     color: Colors.white24,
                     child: Column(
-                      crossAxisAlignment: cross.start,
+                      crossAxisAlignment: axis.cross.start,
                       children: [
                         Row(
-                          mainAxisAlignment: main.spread,
+                          mainAxisAlignment: axis.main.spread,
                           children: [
                             text(" "),
                             text("Skill Points $points"),

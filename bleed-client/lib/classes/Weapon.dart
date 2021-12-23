@@ -6,5 +6,11 @@ class Weapon {
   int damage;
   int capacity;
   int rounds;
-  Weapon({this.type, this.damage, this.capacity, this.rounds});
+
+  Weapon({
+    required this.type,
+    required this.damage,
+    required this.capacity,
+    required this.rounds
+  });
 }

@@ -1,7 +1,7 @@
 import 'package:bleed_client/constants/servers.dart';
 
 String getServerName(ServerType server) {
-  return _serverTypeNames[server];
+  return _serverTypeNames[server]!;
 }
 
 final Map<ServerType, String> _serverTypeNames = {

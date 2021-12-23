@@ -1,14 +1,13 @@
 import 'dart:typed_data';
 
-Float32List _dst = Float32List(4);
+final Float32List _dst = Float32List(4);
 
-Float32List mapDst(
-    {
+Float32List mapDst({
+      required double x,
+      required double y,
       double scale = 1.0,
       double rotation = 0,
-      double x,
-      double y
-    }){
+}){
   _dst[0] = scale;
   _dst[1] = rotation;
   _dst[2] = x;

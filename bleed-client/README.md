@@ -123,24 +123,8 @@
 -- core mode and won't be possible to persist characters. 
 -- In the future the player will be able to store their character inside an sql database
 -- The name of the land is Atlas
-
-
--- As far as I can see there are two paths forward
--- The first is to simply focus on making the open world game as rich as possible before releasing
--- Complete 5 characters
--- Complete 4 realms
-    - Forest
-    - Caves
-    - Plains
-    - Swamps
--- The alternative is to begin working on the moba mode
-    - The moba mode will take some time to complete
-    - 
-[ ] Fix zombie attack animation direction
+[MMO]
 [ ] Save / Load Character
-[ ] Enemy Archer
-[ ] Enemy Mage
-[ ] Enemy Tank
 [ ] Attributes (Intelligence, Strength, Agility)
 [ ] Items
 [ ] Cooldown widget
@@ -153,7 +137,8 @@
 [MOBA]
 [ ] Defense Tower
 [ ] Fix bug starting new game should reset light maps
-[ ] Hide enemy mana
+[ ] Fix Game Time
+[x] Hide enemy mana
 [x] Players cannot attack each other
 [COMPLETED]
 [x] Game Status

@@ -31,7 +31,7 @@ import 'package:lemon_math/diff_over.dart';
 import 'state/editState.dart';
 
 _ToolTab _tab = _ToolTab.Tiles;
-StateSetter _toolsStateSetter;
+// StateSetter _toolsStateSetter;
 
 enum _ToolTab { Tiles, Objects, All, Misc }
 
@@ -51,7 +51,7 @@ Widget _buildTabs() {
         _setTab(_ToolTab.Misc);
       }),
     ],
-    mainAxisAlignment: main.even,
+    mainAxisAlignment: axis.main.even,
   );
 }
 
@@ -128,18 +128,18 @@ List<Widget> _buildTabMisc() {
 }
 
 void _rebuildTools(){
-  _toolsStateSetter((){});
+  // _toolsStateSetter((){});
 }
 
 Widget _buildTools() {
   return StatefulBuilder(builder: (BuildContext context, StateSetter setState){
     print("_buildTools()");
-    _toolsStateSetter = setState;
+    // _toolsStateSetter = setState;
     return Positioned(
       left: 0,
       top: 0,
       child: Column(
-        crossAxisAlignment: cross.start,
+        crossAxisAlignment: axis.cross.start,
         children: [
           _buildTabs(),
           height8,
@@ -252,12 +252,13 @@ void setTileAtMouse(Tile tile) {
       mapTilesToSrcAndDst(game.tiles);
       break;
     case EditTool.EnvironmentObject:
-      game.environmentObjects.add(EnvironmentObject(
-          x: mouseWorldX,
-          y: mouseWorldY,
-          type: editState.environmentObjectType));
-      print("added house");
-      redrawCanvas();
+      // TODO
+      // game.environmentObjects.add(EnvironmentObject(
+      //     x: mouseWorldX,
+      //     y: mouseWorldY,
+      //     type: editState.environmentObjectType));
+      // print("added house");
+      // redrawCanvas();
       break;
   }
 }

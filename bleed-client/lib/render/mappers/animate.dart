@@ -8,10 +8,10 @@ import 'package:lemon_engine/classes/vector2.dart';
 Float32List _src = Float32List(4);
 
 Float32List animate({
-  Vector2 atlas,
-  List<int> animation,
-  Direction direction,
-  int frame,
+  required Vector2 atlas,
+  required List<int> animation,
+  required Direction direction,
+  required int frame,
   Shade shade = Shade.Bright,
   double size = 64,
   int framesPerDirection = 4,

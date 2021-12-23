@@ -9,12 +9,12 @@ import 'package:bleed_client/render/constants/atlas.dart';
 import 'animate.dart';
 import 'loop.dart';
 
-Float32List _src = Float32List(4);
+final Float32List _src = Float32List(4);
 
 Float32List mapSrcWitch({
-  CharacterState state,
-  Direction direction,
-  int frame
+  required CharacterState state,
+  required Direction direction,
+  required int frame
 }) {
 
   switch (state) {

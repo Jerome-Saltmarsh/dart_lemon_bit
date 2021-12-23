@@ -26,13 +26,16 @@ final Color black26 = Colors.black26;
 final Color black45 = Colors.black45;
 final Color black54 = Colors.black54;
 
-
 const FontWeight bold = FontWeight.bold;
 
-_MainAxis main = _MainAxis();
-_CrossAxis cross = _CrossAxis();
+final _Axis axis = _Axis();
 
-class _MainAxis {
+class _Axis {
+  final _Main main = _Main();
+  final _Cross cross = _Cross();
+}
+
+class _Main {
   final MainAxisAlignment start = MainAxisAlignment.start;
   final MainAxisAlignment end = MainAxisAlignment.end;
   final MainAxisAlignment center = MainAxisAlignment.center;
@@ -42,7 +45,7 @@ class _MainAxis {
   final MainAxisAlignment even = MainAxisAlignment.spaceEvenly;
 }
 
-class _CrossAxis {
+class _Cross {
   final CrossAxisAlignment center = CrossAxisAlignment.center;
   final CrossAxisAlignment start = CrossAxisAlignment.start;
   final CrossAxisAlignment end = CrossAxisAlignment.end;
