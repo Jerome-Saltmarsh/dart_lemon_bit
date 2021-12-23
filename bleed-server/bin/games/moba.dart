@@ -14,42 +14,42 @@ import 'world.dart';
 
 typedef Players = List<Player>;
 
+const _playersPerTeam = 1;
+final int _framesPerCreepSpawn = 500;
+final int _creepsPerSpawn = 5;
+
 class Moba extends Game {
   final Vector2 top = Vector2(0, 50);
   final Vector2 left = Vector2(-600, 620);
   final Vector2 right = Vector2(800, 900);
 
   final Vector2 teamSpawnWest = Vector2(-600, 620);
-  Vector2 teamSpawnEast = Vector2(850, 910);
-  Vector2 creepSpawn1 = Vector2(-530, 625);
-  Vector2 creepSpawnEast = Vector2(800, 900);
+  final Vector2 teamSpawnEast = Vector2(850, 910);
+  final Vector2 creepSpawn1 = Vector2(-530, 625);
+  final Vector2 creepSpawnEast = Vector2(800, 900);
 
   late List<Vector2> creepWestObjectives;
   late List<Vector2> creepEastObjectives;
 
-  int totalPlayersRequired = 4;
+  final int totalPlayersRequired = _playersPerTeam * 2;
   int teamLivesWest = 10;
   int teamLivesEast = 10;
 
-  final int framesPerCreepSpawn = 500;
-  final int creepsPerSpawn = 5;
 
   Moba() : super(scenes.wildernessNorth01, status: GameStatus.Awaiting_Players, gameType: GameType.Moba) {
     creepWestObjectives = [right, top, left];
-
     creepEastObjectives = [left, top, right];
   }
 
   @override
   void update() {
-    if (!inProgress) return;
-    if (duration % framesPerCreepSpawn == 0) {
+    if (duration % _framesPerCreepSpawn == 0) {
       spawnCreeps();
     }
   }
 
   void spawnCreeps() {
-    for (int i = 0; i < creepsPerSpawn; i++) {
+    for (int i = 0; i < _creepsPerSpawn; i++) {
       spawnZombie(creepSpawn1.x, creepSpawn1.y,
           health: 100,
           experience: 10,

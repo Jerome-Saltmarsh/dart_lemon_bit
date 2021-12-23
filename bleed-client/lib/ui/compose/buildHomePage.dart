@@ -1,11 +1,13 @@
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:bleed_client/title.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
+import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:flutter/cupertino.dart';
 
-const _buttonWidth = 150.0;
+const _buttonWidth = 180.0;
 
 Widget buildHomePage() {
   return page(children: [
@@ -36,21 +38,27 @@ Container _buildTitle() {
   return Container(
       alignment: Alignment.center,
       height: 80,
-      child: text("LEMON ARCADE", fontSize: 30));
+      child: text(title, fontSize: 30));
 }
 
 Widget _buildPanelGames() {
   return Column(
+    crossAxisAlignment: cross.stretch,
     children: [
-      text("Games"),
       ...selectableGameTypes.map((GameType value) {
         return Container(
-          child: button(
-            toString(value),
-            () {
-              game.type.value = value;
-            },
-            minWidth: _buttonWidth,
+          child: Row(
+            mainAxisAlignment: main.center,
+            children: [
+              text(toString(value).toUpperCase()),
+              width16,
+              button(gameTypeNames[value],
+                () {
+                  game.type.value = value;
+                },
+                minWidth: _buttonWidth,
+              ),
+            ],
           ),
           margin: const EdgeInsets.only(bottom: 8),
         );

@@ -176,7 +176,7 @@ abstract class Game {
     return empty;
   }
 
-  Game(this.scene, {this.gameType = GameType.Open_World, this.shadeMax = Shade.Bright, this.status = GameStatus.In_Progress}) {
+  Game(this.scene, {this.gameType = GameType.MMO, this.shadeMax = Shade.Bright, this.status = GameStatus.In_Progress}) {
     this.crates.clear();
     global.onGameCreated(this);
 
@@ -225,6 +225,16 @@ const characterFramesChange = 4;
 const characterMaxFrames = 99;
 
 extension GameFunctions on Game {
+
+  int getFirstAliveZombieEnemyIndex(int team){
+    for (int i = 0; i < zombies.length; i++) {
+      if (zombies[i].dead) continue;
+      if (zombies[i].team == team) continue;
+      return i;
+    }
+    return -1;
+  }
+
   void updateAndCompile() {
     // @on update game
     duration++;

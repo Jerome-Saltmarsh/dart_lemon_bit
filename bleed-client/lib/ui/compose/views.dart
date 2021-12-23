@@ -12,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:lemon_math/golden_ratio.dart';
 
 import '../../audio.dart';
+import '../../title.dart';
 import '../state/flutter_constants.dart';
 
 Widget buildConnecting() {
@@ -66,7 +67,7 @@ Widget buildSelectServerType() {
   return center(
     SingleChildScrollView(
       child: Column(crossAxisAlignment: cross.center, children: [
-        text("game-portal.io", fontSize: 45),
+        text(title, fontSize: 45),
         height32,
         ...selectableServerTypes.map(_buildServerTypeButton)
       ]),

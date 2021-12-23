@@ -46,7 +46,7 @@ String getHttpsConnectionString(ServerType server, GameType gameType) {
   switch (server) {
     case ServerType.Australia:
       switch (gameType) {
-        case GameType.Open_World:
+        case GameType.MMO:
           return sydneyMMO;
         case GameType.Moba:
           return sydneyMoba;

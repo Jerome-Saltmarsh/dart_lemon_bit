@@ -548,6 +548,8 @@ Wow
 Fortnight
 
 # Domain Names
+players-arcade.com
+heroes-league.io
 quest-glade.com
 quest-arcade.com
 fantasy-scroll.com

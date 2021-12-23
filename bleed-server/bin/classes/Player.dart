@@ -34,7 +34,26 @@ class Player extends Character {
   int abilityPoints = 0;
   int _magic = 0;
 
-  Character? aimTarget; // the currently highlighted character
+  Character? _aimTarget; // the currently highlighted character
+
+  Character? get aimTarget => _aimTarget;
+
+  set aimTarget(Character? value){
+    if (value == null){
+      _aimTarget = null;
+      return;
+    }
+    if (value.team == team){
+      throw Exception("cannot aim at same team");
+    }
+    if (value.dead){
+      throw Exception("cannot aim at dead target");
+    }
+    if (!value.active){
+      throw Exception("cannot aim at inactive target");
+    }
+    _aimTarget = value;
+  }
 
   int get magic => _magic;
 

@@ -92,7 +92,7 @@ void main() {
           compilePlayersRemaining(_buffer, 0);
         }
 
-        if (game.inProgress){
+        if (game.inProgress) {
           compileTeamLivesRemaining(_buffer, game);
         }
       }
@@ -185,7 +185,6 @@ void main() {
           final Game game = player.game;
 
           if (game is Moba) {
-
             if (game.awaitingPlayers) {
               compileLobby(_buffer, game);
               compileGameStatus(_buffer, game);
@@ -193,11 +192,7 @@ void main() {
                   _buffer, game.totalPlayersRequired - game.players.length);
               sendAndClearBuffer();
               return;
-            }
-
-            else
-
-            if (game.finished){
+            } else if (game.finished) {
               compileTeamLivesRemaining(_buffer, game);
               compileGameStatus(_buffer, game);
             }
@@ -229,9 +224,10 @@ void main() {
 
             player.aimTarget = null;
 
-            // TODO remove game logic from server
-            if (game.zombies.isNotEmpty) {
-              Character closest = game.zombies[0];
+            int i = game.getFirstAliveZombieEnemyIndex(player.team);
+
+            if (i != -1) {
+              Character closest = game.zombies[i];
               num closestX = diff(mouseX, closest.x);
               num closestY = diff(mouseY, closest.y);
               num close = min(closestX, closestY);
@@ -331,25 +327,26 @@ void main() {
           }
           final int? gameTypeIndex = int.tryParse(arguments[1]);
 
-          if (gameTypeIndex == null){
+          if (gameTypeIndex == null) {
             errorInvalidArg('expected integer at args[1]');
             return;
           }
-          if (gameTypeIndex >= gameTypes.length){
-            errorInvalidArg('game type index cannot exceed ${gameTypes.length - 1}');
+          if (gameTypeIndex >= gameTypes.length) {
+            errorInvalidArg(
+                'game type index cannot exceed ${gameTypes.length - 1}');
             return;
           }
-          if (gameTypeIndex < 0){
+          if (gameTypeIndex < 0) {
             errorInvalidArg('game type must be greater than 0');
             return;
           }
 
           final GameType gameType = gameTypes[gameTypeIndex];
 
-          switch(gameType){
+          switch (gameType) {
             case GameType.None:
               break;
-            case GameType.Open_World:
+            case GameType.MMO:
               joinGameOpenWorld();
               break;
             case GameType.Moba:
@@ -430,7 +427,8 @@ void main() {
             errorPlayerNotFound();
             return;
           }
-          player.game.players.removeWhere((element) => element.uuid == player.uuid);
+          player.game.players
+              .removeWhere((element) => element.uuid == player.uuid);
           break;
 
         case ClientRequest.Reset_Character_Type:
