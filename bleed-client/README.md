@@ -551,6 +551,7 @@ Fortnight
 # Domain Names
 players-arcade.com
 quest-glade.com
+pixel-quest.com
 quest-arcade.com
 fantasy-scroll.com
 fantasy-arcade.com
@@ -566,6 +567,7 @@ heroes-domain.com
 heroes-glade.com
 heroes-sanctuary.com
 champions-glade.com
+champions-realm.com
 champions-rift.com
 champions-portal.com
 champion-arcade.com

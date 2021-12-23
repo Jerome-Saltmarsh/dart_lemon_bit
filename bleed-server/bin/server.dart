@@ -216,40 +216,13 @@ void main() {
             double mouseX = double.parse(arguments[4]);
             double mouseY = double.parse(arguments[5]);
 
-            double mouseTop =
-                mouseY - settings.radius.cursor - settings.radius.character;
-            double mouseBottom =
-                mouseY + settings.radius.cursor + settings.radius.character;
-            playerSetAbilityTarget(player, mouseX, mouseY);
-
+            Character? closestEnemy = game.getClosestEnemy(mouseX, mouseY, player.team);
             player.aimTarget = null;
-
-            int i = game.getFirstAliveZombieEnemyIndex(player.team);
-
-            if (i != -1) {
-              Character closest = game.zombies[i];
-              num closestX = diff(mouseX, closest.x);
-              num closestY = diff(mouseY, closest.y);
-              num close = min(closestX, closestY);
-              for (Character zombie in game.zombies) {
-                if (zombie.team == player.team) continue;
-                if (zombie.dead) continue;
-                if (!zombie.active) continue;
-                if (zombie.y < mouseTop) continue;
-                if (zombie.y > mouseBottom) break;
-                num closestX2 = diff(mouseX, zombie.x);
-                num closestY2 = diff(mouseY, zombie.y);
-                num closes2 = min(closestX2, closestY2);
-                if (closes2 < close) {
-                  closest = zombie;
-                  close = closes2;
-                }
-              }
+            if (closestEnemy != null){
               final clickRange = 50.0;
-              if (withinDistance(closest, mouseX, mouseY, clickRange)) {
-                if (withinDistance(
-                    closest, player.x, player.y, player.attackRange)) {
-                  player.aimTarget = closest;
+              if (withinDistance(closestEnemy, mouseX, mouseY, clickRange)) {
+                if (withinDistance(closestEnemy, player.x, player.y, player.attackRange)) {
+                  player.aimTarget = closestEnemy;
                 }
               }
             }

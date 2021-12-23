@@ -109,19 +109,17 @@ abstract class Game {
   String compiledEnvironmentObjects = "";
   bool compilePaths = false;
 
-  Map<int, StringBuffer> compiledTeamText = {
-
-  };
+  Map<int, StringBuffer> compiledTeamText = {};
 
   bool get awaitingPlayers => status == GameStatus.Awaiting_Players;
+
   bool get inProgress => status == GameStatus.In_Progress;
+
   bool get finished => status == GameStatus.Finished;
 
   void onGameStarted() {}
 
-  void onNpcObjectivesCompleted(Npc npc){
-
-  }
+  void onNpcObjectivesCompleted(Npc npc) {}
 
   void updateNpcBehavior(Npc npc) {}
 
@@ -176,7 +174,10 @@ abstract class Game {
     return empty;
   }
 
-  Game(this.scene, {this.gameType = GameType.MMO, this.shadeMax = Shade.Bright, this.status = GameStatus.In_Progress}) {
+  Game(this.scene,
+      {this.gameType = GameType.MMO,
+      this.shadeMax = Shade.Bright,
+      this.status = GameStatus.In_Progress}) {
     this.crates.clear();
     global.onGameCreated(this);
 
@@ -225,8 +226,7 @@ const characterFramesChange = 4;
 const characterMaxFrames = 99;
 
 extension GameFunctions on Game {
-
-  int getFirstAliveZombieEnemyIndex(int team){
+  int getFirstAliveZombieEnemyIndex(int team) {
     for (int i = 0; i < zombies.length; i++) {
       if (zombies[i].dead) continue;
       if (zombies[i].team == team) continue;
@@ -234,6 +234,92 @@ extension GameFunctions on Game {
     }
     return -1;
   }
+
+  int getFirstAlivePlayerEnemyIndex(int team) {
+    for (int i = 0; i < players.length; i++) {
+      if (players[i].dead) continue;
+      if (players[i].team == team) continue;
+      return i;
+    }
+    return -1;
+  }
+
+
+  Character? getClosestEnemyZombie(double x, double y, int team) {
+    int i = getFirstAliveZombieEnemyIndex(team);
+    if (i == -1) return null;
+
+    double top = y - settings.radius.cursor - settings.radius.character;
+    double bottom = x + settings.radius.cursor + settings.radius.character;
+
+    Character closest = zombies[i];
+    num closestX = diff(x, closest.x);
+    num closestY = diff(y, closest.y);
+    num close = min(closestX, closestY);
+    for (Character zombie in zombies) {
+      if (zombie.team == team) continue;
+      if (zombie.dead) continue;
+      if (!zombie.active) continue;
+      if (zombie.y < top) continue;
+      if (zombie.y > bottom) break;
+      num closestX2 = diff(x, zombie.x);
+      num closestY2 = diff(y, zombie.y);
+      num closes2 = min(closestX2, closestY2);
+      if (closes2 < close) {
+        closest = zombie;
+        close = closes2;
+      }
+    }
+    return closest;
+  }
+
+  Character? getClosestEnemyPlayer(double x, double y, int team) {
+    int i = getFirstAlivePlayerEnemyIndex(team);
+    if (i == -1) return null;
+
+    double top = y - settings.radius.cursor - settings.radius.character;
+    double bottom = x + settings.radius.cursor + settings.radius.character;
+
+    Character closest = players[i];
+    num closestX = diff(x, closest.x);
+    num closestY = diff(y, closest.y);
+    num close = min(closestX, closestY);
+    for (Character player in players) {
+      if (player.team == team) continue;
+      if (player.dead) continue;
+      if (!player.active) continue;
+      if (player.y < top) continue;
+      if (player.y > bottom) break;
+      num closestX2 = diff(x, player.x);
+      num closestY2 = diff(y, player.y);
+      num closes2 = min(closestX2, closestY2);
+      if (closes2 < close) {
+        closest = player;
+        close = closes2;
+      }
+    }
+    return closest;
+  }
+
+  Character? getClosestEnemy(double x, double y, int team){
+    Character? zombie = getClosestEnemyZombie(x, y, team);
+    Character? player = getClosestEnemyPlayer(x, y, team);
+
+    if (zombie == null){
+      if (player == null){
+        return null;
+      }
+      return player;
+    }
+    if (player == null){
+      return zombie;
+    }
+
+    double zombieDistance = distanceV2From(zombie, x, y);
+    double playerDistance = distanceV2From(player, x, y);
+    return zombieDistance < playerDistance ? zombie : player;
+  }
+
 
   void updateAndCompile() {
     // @on update game
@@ -373,7 +459,7 @@ extension GameFunctions on Game {
         npc.objectives.removeLast();
         if (npc.objectiveSet) {
           npcSetPathTo(npc, npc.objective.x, npc.objective.y);
-        }else{
+        } else {
           onNpcObjectivesCompleted(npc);
         }
       }
@@ -1594,7 +1680,6 @@ extension GameFunctions on Game {
       onPlayerDisconnected(player);
     }
   }
-
 
   void revive(Character character) {
     character.state = CharacterState.Idle;

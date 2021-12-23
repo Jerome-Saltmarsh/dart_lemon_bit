@@ -333,35 +333,9 @@ Widget dialog({
   );
 }
 
-Widget buildFullScreenDialog() {
-  return WatchBuilder(hud.fullScreenDialogVisible, (bool visible) {
-    if (!visible) return emptyContainer;
-    return dialog(
-        color: Colors.transparent,
-        margin: EdgeInsets.only(top: 16),
-        alignment: Alignment.topCenter,
-        height: 60,
-        borderColor: Colors.transparent,
-        child: Row(
-          mainAxisAlignment: main.center,
-          children: [
-            buildToggleFullscreen(),
-            width16,
-            onPressed(
-              callback: () {
-                hud.fullScreenDialogVisible.value = false;
-              },
-              child: text("No Thanks", decoration: TextDecoration.underline),
-            ),
-          ],
-        ));
-  });
-}
-
 Widget buildToggleFullscreen() {
   return onPressed(
     callback: () {
-      hud.fullScreenDialogVisible.value = false;
       if (fullScreenActive) {
         fullScreenExit();
       } else {
@@ -552,7 +526,6 @@ Widget buildInProgress() {
           _buildServerText(),
           buildTopRight(),
           buildSkillTree(),
-          buildFullScreenDialog(),
           buildNumberOfPlayersRequiredDialog(),
         ],
       );

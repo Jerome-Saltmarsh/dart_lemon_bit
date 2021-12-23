@@ -29,8 +29,6 @@ Positioned _buildTopRight() {
   return Positioned(
     child: Row(
       children: [
-        buildToggleFullscreen(),
-        width8,
         _buildServerButton(),
       ],
     ),

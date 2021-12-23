@@ -16,6 +16,10 @@ double distanceV2(Vector2 a, Vector2 b) {
   return distanceBetween(a.x, a.y, b.x, b.y);
 }
 
+double distanceV2From(Vector2 a, double x, double y) {
+  return distanceBetween(a.x, a.y, x, y);
+}
+
 int absInt(int value) {
   if (value < _0) return -value;
   return value;
