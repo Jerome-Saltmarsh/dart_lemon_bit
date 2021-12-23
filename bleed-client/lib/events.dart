@@ -1,4 +1,5 @@
 import 'package:bleed_client/constants/servers.dart';
+import 'package:bleed_client/functions/cameraCenterPlayer.dart';
 import 'package:bleed_client/network.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
@@ -7,7 +8,6 @@ import 'package:bleed_client/state/sharedPreferences.dart';
 import 'common/GameType.dart';
 
 class Events {
-
   void _onGameTypeChanged(GameType type) {
     print('events.onGameTypeChanged($type)');
     game.clearSession();
@@ -32,10 +32,24 @@ class Events {
     }
   }
 
-  Events(){
+  void _onPlayerUuidChanged(String uuid) {
+    if (uuid.isNotEmpty) {
+      cameraCenterPlayer();
+    }
+  }
+
+  void _onPlayerAlivedChanged(bool value) {
+    if (value) {
+      cameraCenterPlayer();
+    }
+  }
+
+  Events() {
     print("Events()");
     connection.onChanged(_onConnectionChanged);
     game.type.onChanged(_onGameTypeChanged);
     game.serverType.onChanged(_onServerTypeChanged);
+    game.player.uuid.onChanged(_onPlayerUuidChanged);
+    game.player.alive.onChanged(_onPlayerAlivedChanged);
   }
 }
