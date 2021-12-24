@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/classes/Ability.dart';
 import 'package:bleed_client/classes/Character.dart';
@@ -24,12 +23,12 @@ import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
-import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/emit/emitMyst.dart';
 import 'package:bleed_client/functions/emitSmoke.dart';
 import 'package:bleed_client/getters/getTileAt.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
+import 'package:bleed_client/parser/parseCubePlayers.dart';
 import 'package:bleed_client/render/functions/applyEnvironmentObjectsToBakeMapping.dart';
 import 'package:bleed_client/render/functions/setBakeMapToAmbientLight.dart';
 import 'package:bleed_client/render/state/paths.dart';
@@ -39,6 +38,7 @@ import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/utils/list_util.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/time.dart';
+import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/state/cursor.dart';
 
 import 'common/GameEventType.dart';
@@ -87,28 +87,28 @@ void parseState() {
         break;
 
       case ServerResponse.Game_Time:
-        timeInSeconds(_consumeInt());
+        timeInSeconds(consumeInt());
         break;
 
       case ServerResponse.NpcsDebug:
         game.npcDebug.clear();
         while (!_simiColonConsumed()) {
           game.npcDebug.add(NpcDebug(
-            x: _consumeDouble(),
-            y: _consumeDouble(),
-            targetX: _consumeDouble(),
-            targetY: _consumeDouble(),
+            x: consumeDouble(),
+            y: consumeDouble(),
+            targetX: consumeDouble(),
+            targetY: consumeDouble(),
           ));
         }
         break;
 
       case ServerResponse.Waiting_For_More_Players:
-        game.numberOfPlayersNeeded.value = _consumeInt();
+        game.numberOfPlayersNeeded.value = consumeInt();
         break;
 
       case ServerResponse.Player_Attack_Target:
-        game.player.attackTarget.x = _consumeDouble();
-        game.player.attackTarget.y = _consumeDouble();
+        game.player.attackTarget.x = consumeDouble();
+        game.player.attackTarget.y = consumeDouble();
 
         if (game.player.attackTarget.x != 0 &&
             game.player.attackTarget.y != 0) {
@@ -126,8 +126,8 @@ void parseState() {
         break;
 
       case ServerResponse.Team_Lives_Remaining:
-        game.teamLivesWest.value = _consumeInt();
-        game.teamLivesEast.value = _consumeInt();
+        game.teamLivesWest.value = consumeInt();
+        game.teamLivesEast.value = consumeInt();
         break;
 
       case ServerResponse.Weapons_Dirty:
@@ -189,8 +189,8 @@ void parseState() {
 
       case ServerResponse.Scene_Changed:
         print("ServerResponse.Scene_Changed");
-        double x = _consumeDouble();
-        double y = _consumeDouble();
+        double x = consumeDouble();
+        double y = consumeDouble();
         game.player.x = x;
         game.player.y = y;
         cameraCenter(x, y);
@@ -228,8 +228,8 @@ void parseState() {
       case ServerResponse.Crates:
         game.cratesTotal = 0;
         while (!_simiColonConsumed()) {
-          game.crates[game.cratesTotal].x = _consumeDouble();
-          game.crates[game.cratesTotal].y = _consumeDouble();
+          game.crates[game.cratesTotal].x = consumeDouble();
+          game.crates[game.cratesTotal].y = consumeDouble();
           game.cratesTotal++;
         }
         break;
@@ -244,24 +244,32 @@ void parseState() {
 
       case ServerResponse.Game_Joined:
         _parseGameJoined();
-        // announce(GameJoined());
         break;
 
       case ServerResponse.Game_Type:
         // game.type.value = gameTypes[_consumeInt()];
-        var type = gameTypes[_consumeInt()];
+        var type = gameTypes[consumeInt()];
         break;
 
       case ServerResponse.Game_Status:
-        game.status.value = gameStatuses[_consumeInt()];
+        game.status.value = gameStatuses[consumeInt()];
+        break;
+
+      case ServerResponse.Cube_Joined:
+        game.player.uuid.value = _consumeString();
+        break;
+
+      case ServerResponse.Cube_Players:
+        parseCubePlayers();
+        redrawCanvas();
         break;
 
       case ServerResponse.Lobby:
-        game.lobby.playerCount.value = _consumeInt();
+        game.lobby.playerCount.value = consumeInt();
         game.lobby.players.clear();
         for (int i = 0; i < game.lobby.playerCount.value; i++) {
           String name = _consumeString();
-          int team = _consumeInt();
+          int team = consumeInt();
           game.lobby.add(team: team, name: name);
         }
         break;
@@ -280,12 +288,12 @@ void parseState() {
         break;
 
       case ServerResponse.Items:
-        game.totalItems = _consumeInt();
+        game.totalItems = consumeInt();
         for (int i = 0; i < game.totalItems; i++) {
           Item item = game.items[i];
           item.type = _consumeItemType();
-          item.x = _consumeDouble();
-          item.y = _consumeDouble();
+          item.x = consumeDouble();
+          item.y = consumeDouble();
         }
         break;
       default:
@@ -313,9 +321,9 @@ void _parseEnvironmentObjects() {
   game.torches.clear();
 
   while (!_simiColonConsumed()) {
-    double x = _consumeDouble();
-    double y = _consumeDouble();
-    double radius = _consumeDouble();
+    double x = consumeDouble();
+    double y = consumeDouble();
+    double radius = consumeDouble();
     ObjectType type = _consumeEnvironmentObjectType();
 
     switch (type) {
@@ -381,8 +389,8 @@ void _parsePaths() {
 }
 
 void _parseTiles() {
-  game.totalRows = _consumeInt();
-  game.totalColumns = _consumeInt();
+  game.totalRows = consumeInt();
+  game.totalColumns = consumeInt();
   game.tiles.clear();
   for (int row = 0; row < game.totalRows; row++) {
     List<Tile> column = [];
@@ -394,39 +402,39 @@ void _parseTiles() {
 }
 
 void _parsePlayer() {
-  game.player.x = _consumeDouble();
-  game.player.y = _consumeDouble();
-  game.player.health.value = _consumeDouble();
-  game.player.maxHealth = _consumeDouble();
+  game.player.x = consumeDouble();
+  game.player.y = consumeDouble();
+  game.player.health.value = consumeDouble();
+  game.player.maxHealth = consumeDouble();
   game.player.state.value = _consumeCharacterState();
   game.player.tile = _consumeTile();
-  game.player.experience.value = _consumeInt();
-  game.player.level.value = _consumeInt();
-  game.player.skillPoints.value = _consumeInt();
-  game.player.nextLevelExperience.value = _consumeInt();
+  game.player.experience.value = consumeInt();
+  game.player.level.value = consumeInt();
+  game.player.skillPoints.value = consumeInt();
+  game.player.nextLevelExperience.value = consumeInt();
   game.player.experiencePercentage.value = _consumePercentage();
   game.player.characterType.value = _consumeCharacterType();
-  game.player.abilityTarget.x = _consumeDouble();
-  game.player.abilityTarget.y = _consumeDouble();
-  game.player.abilityRange = _consumeDouble();
-  game.player.abilityRadius = _consumeDouble();
+  game.player.abilityTarget.x = consumeDouble();
+  game.player.abilityTarget.y = consumeDouble();
+  game.player.abilityRange = consumeDouble();
+  game.player.abilityRadius = consumeDouble();
   game.player.ability.value = _consumeAbilityType();
-  game.player.magic.value = _consumeDouble();
-  game.player.maxMagic.value = _consumeDouble();
-  game.player.attackRange = _consumeDouble();
-  game.player.team = _consumeInt();
+  game.player.magic.value = consumeDouble();
+  game.player.maxMagic.value = consumeDouble();
+  game.player.attackRange = consumeDouble();
+  game.player.team = consumeInt();
 }
 
 AbilityType _consumeAbilityType() {
-  return abilities[_consumeInt()];
+  return abilities[consumeInt()];
 }
 
 CharacterType _consumeCharacterType() {
-  return characterTypes[_consumeInt()];
+  return characterTypes[consumeInt()];
 }
 
 void _parsePlayerEvents() {
-  int total = _consumeInt();
+  int total = consumeInt();
   for (int i = 0; i < total; i++) {
     PlayerEvent event = _consumePlayerEventType();
     switch (event) {
@@ -445,36 +453,36 @@ void _parsePlayerEvents() {
 }
 
 PlayerEvent _consumePlayerEventType() {
-  return playerEvents[_consumeInt()];
+  return playerEvents[consumeInt()];
 }
 
 void _parseCollectables() {
   // todo this is really expensive
   game.collectables.clear();
   while (!_simiColonConsumed()) {
-    game.collectables.add(_consumeInt());
+    game.collectables.add(consumeInt());
   }
 }
 
 void _parseGrenades() {
   game.grenades.clear();
   while (!_simiColonConsumed()) {
-    game.grenades.add(_consumeDouble());
+    game.grenades.add(consumeDouble());
   }
 }
 
 void _parseGameJoined() {
-  game.player.id = _consumeInt();
+  game.player.id = consumeInt();
   game.player.uuid.value = _consumeString();
-  game.player.x = _consumeDouble();
-  game.player.y = _consumeDouble();
-  game.id = _consumeInt();
-  game.player.squad = _consumeInt();
+  game.player.x = consumeDouble();
+  game.player.y = consumeDouble();
+  game.id = consumeInt();
+  game.player.squad = consumeInt();
   print(      "ServerResponse.Game_Joined: playerId: ${game.player.id} gameId: ${game.id}");
 }
 
 ObjectType _consumeEnvironmentObjectType() {
-  return objectTypes[_consumeInt()];
+  return objectTypes[consumeInt()];
 }
 
 void _next() {
@@ -489,13 +497,13 @@ void _consumeSpace() {
 
 void _consumeAbility(Ability ability) {
   ability.type.value = _consumeAbilityType();
-  ability.level.value = _consumeInt();
-  ability.cooldown.value = _consumeInt();
-  ability.cooldownRemaining.value = _consumeInt();
-  ability.magicCost.value = _consumeInt();
+  ability.level.value = consumeInt();
+  ability.cooldown.value = consumeInt();
+  ability.cooldownRemaining.value = consumeInt();
+  ability.magicCost.value = consumeInt();
 }
 
-int _consumeInt() {
+int consumeInt() {
   final String string = _consumeString();
   final int? value = int.tryParse(string);
   if (value == null) {
@@ -520,7 +528,7 @@ Weapon _consumeWeapon() {
   WeaponType type = _consumeWeaponType();
   int rounds = _consumeIntUnsafe();
   int capacity = _consumeIntUnsafe();
-  int damage = _consumeInt();
+  int damage = consumeInt();
   return Weapon(type: type, rounds: rounds, capacity: capacity, damage: damage);
 }
 
@@ -533,11 +541,11 @@ Direction _consumeDirection() {
 }
 
 Tile _consumeTile() {
-  return tiles[_consumeInt()];
+  return tiles[consumeInt()];
 }
 
 ServerResponse _consumeServerResponse() {
-  int responseInt = _consumeInt();
+  int responseInt = consumeInt();
   if (responseInt >= ServerResponse.values.length) {
     throw Exception('$responseInt is not a valid server response');
   }
@@ -577,12 +585,12 @@ String _consumeSingleCharacter() {
   return char;
 }
 
-double _consumeDouble() {
+double consumeDouble() {
   return double.parse(_consumeString());
 }
 
 double _consumePercentage() {
-  return _consumeDouble() * 0.01;
+  return consumeDouble() * 0.01;
 }
 
 double _consumeDoubleUnsafe() {
@@ -590,7 +598,7 @@ double _consumeDoubleUnsafe() {
 }
 
 Vector2 _consumeVector2() {
-  return Vector2(_consumeDouble(), _consumeDouble());
+  return Vector2(consumeDouble(), consumeDouble());
 }
 
 bool _simiColonConsumed() {
@@ -612,26 +620,26 @@ bool _commaConsumed() {
 }
 
 void _parsePlayers() {
-  game.totalHumans = _consumeInt();
+  game.totalHumans = consumeInt();
   for (int i = 0; i < game.totalHumans; i++) {
     _consumeHuman(game.humans[i]);
   }
 }
 
 GameError _consumeError() {
-  return GameError.values[_consumeInt()];
+  return GameError.values[consumeInt()];
 }
 
 void _consumeEvents() {
   int events = 0;
   while (!_simiColonConsumed()) {
     events++;
-    int id = _consumeInt();
+    int id = consumeInt();
     GameEventType type = _consumeEventType();
-    double x = _consumeDouble();
-    double y = _consumeDouble();
-    double xv = _consumeDouble();
-    double yv = _consumeDouble();
+    double x = consumeDouble();
+    double y = consumeDouble();
+    double xv = consumeDouble();
+    double yv = consumeDouble();
     if (!gameEvents.containsKey(id)) {
       gameEvents[id] = true;
       onGameEvent(type, x, y, xv, yv);
@@ -643,19 +651,19 @@ void _consumeEvents() {
 }
 
 GameEventType _consumeEventType() {
-  return gameEventTypes[_consumeInt()];
+  return gameEventTypes[consumeInt()];
 }
 
 ItemType _consumeItemType() {
-  return itemTypes[_consumeInt()];
+  return itemTypes[consumeInt()];
 }
 
 void _parseProjectiles() {
   game.totalProjectiles = 0;
   while (!_simiColonConsumed()) {
     Projectile projectile = game.projectiles[game.totalProjectiles];
-    projectile.x = _consumeDouble();
-    projectile.y = _consumeDouble();
+    projectile.x = consumeDouble();
+    projectile.y = consumeDouble();
     projectile.type = _consumeProjectileType();
     projectile.direction = _consumeDirection();
     game.totalProjectiles++;
@@ -663,11 +671,11 @@ void _parseProjectiles() {
 }
 
 ProjectileType _consumeProjectileType() {
-  return projectileTypes[_consumeInt()];
+  return projectileTypes[consumeInt()];
 }
 
 void _parseZombies() {
-  game.totalZombies.value = _consumeInt();
+  game.totalZombies.value = consumeInt();
   for (int i = 0; i < game.totalZombies.value; i++) {
     _consumeZombie(game.zombies[i]);
   }
@@ -685,10 +693,10 @@ void _consumeHuman(Character character) {
   character.type = _consumeCharacterType();
   character.state = _consumeCharacterState();
   character.direction = _consumeDirection();
-  character.x = _consumeDouble();
-  character.y = _consumeDouble();
-  character.frame = _consumeInt();
-  character.team = _consumeInt();
+  character.x = consumeDouble();
+  character.y = consumeDouble();
+  character.frame = consumeInt();
+  character.team = consumeInt();
   character.name = _consumeString();
 
   StringBuffer textBuffer = StringBuffer();
@@ -708,18 +716,19 @@ void _consumeZombie(Zombie zombie) {
   zombie.y = _consumeDoubleUnsafe();
   zombie.frame = _consumeIntUnsafe();
   zombie.health = _consumePercentage();
-  zombie.team = _consumeInt();
+  zombie.team = consumeInt();
 }
 
 void _consumeInteractableNpc(Character interactableNpc) {
   interactableNpc.state = _consumeCharacterState();
   interactableNpc.direction = _consumeDirection();
-  interactableNpc.x = _consumeDouble();
-  interactableNpc.y = _consumeDouble();
-  interactableNpc.frame = _consumeInt();
+  interactableNpc.x = consumeDouble();
+  interactableNpc.y = consumeDouble();
+  interactableNpc.frame = consumeInt();
   interactableNpc.name = _consumeString();
 }
 
 Shade _consumeShade() {
-  return shades[_consumeInt()];
+  return shades[consumeInt()];
 }
+

@@ -8,7 +8,9 @@ import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 
 import 'common/GameType.dart';
+import 'cube/camera3d.dart';
 import 'network.dart';
+import 'package:vector_math/vector_math_64.dart';
 
 final StringBuffer _buffer = StringBuffer();
 final gameUpdateIndex = ClientRequest.Update.index;
@@ -127,4 +129,23 @@ class _SendRequestToServer {
   upgradeAbility(int index){
     sendClientRequest(ClientRequest.Upgrade_Ability, message: index);
   }
+}
+
+void sendRequestUpdateCube3D(){
+  _write(ClientRequest.Update_Cube3D.index);
+  _write(game.player.uuid.value);
+  _writeVector3(camera3D.position);
+  _writeVector3(camera3D.rotation);
+  _sendAndClearBuffer();
+}
+
+void _sendAndClearBuffer(){
+  send(_buffer.toString());
+  _buffer.clear();
+}
+
+void _writeVector3(Vector3 value){
+  _write(value.x.toInt());
+  _write(value.y.toInt());
+  _write(value.z.toInt());
 }

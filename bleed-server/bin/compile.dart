@@ -1,3 +1,5 @@
+import 'package:bleed_server/CubeGame.dart';
+
 import 'bleed/zombie_health.dart';
 import 'classes/Ability.dart';
 import 'classes/Character.dart';
@@ -60,7 +62,7 @@ void compileGame(Game game) {
   // _write(buffer, ServerResponse.Game_Type.index);
   // _write(buffer, game.gameType.index);
 
-  compileGameStatus(buffer, game);
+  compileGameStatus(buffer, game.status);
 
   game.compiled = buffer.toString();
 
@@ -91,9 +93,9 @@ void compileTeamLivesRemaining(StringBuffer buffer, Moba moba){
   _write(buffer, moba.teamLivesEast);
 }
 
-void compileGameStatus(StringBuffer buffer, Game game){
+void compileGameStatus(StringBuffer buffer, GameStatus gameStatus){
   _write(buffer, ServerResponse.Game_Status.index);
-  _write(buffer, game.status.index);
+  _write(buffer, gameStatus.index);
 }
 
 void compileLobby(StringBuffer buffer, Game game){
@@ -414,3 +416,19 @@ void compilePlayersRemaining(StringBuffer buffer, int remaining) {
   _write(buffer, ServerResponse.Waiting_For_More_Players.index);
   _write(buffer, remaining);
 }
+
+void compileCubePlayers(StringBuffer buffer, List<CubePlayer> cubePlayers) {
+  _write(buffer, ServerResponse.Cube_Players.index);
+  _write(buffer, cubePlayers.length);
+  for (CubePlayer player in cubePlayers) {
+    writeVector3(buffer, player.position);
+    writeVector3(buffer, player.rotation);
+  }
+}
+
+void writeVector3(StringBuffer buffer, Vector3 value) {
+  _writeInt(buffer, value.x);
+  _writeInt(buffer, value.y);
+  _writeInt(buffer, value.z);
+}
+

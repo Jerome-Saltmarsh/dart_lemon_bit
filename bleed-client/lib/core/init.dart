@@ -11,6 +11,7 @@ import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/constants/servers.dart';
+import 'package:bleed_client/cube/init_cube.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/events/onAmbientLightChanged.dart';
 import 'package:bleed_client/events/onCompiledGameChanged.dart';
@@ -41,6 +42,8 @@ Future init() async {
   initializeEventListeners();
   initAudioPlayers();
   rebuildUI();
+
+  initCube();
 
   // if (Uri.base.hasQuery && Uri.base.queryParameters.containsKey('host')) {
   //   Future.delayed(Duration(seconds: 1), () {

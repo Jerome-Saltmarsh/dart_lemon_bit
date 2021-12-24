@@ -426,13 +426,18 @@ Widget buildConnected() {
 
   return WatchBuilder(game.player.uuid, (String uuid) {
     if (uuid.isEmpty) {
-      return center(text("uuid.isEmpty"));
+      return center(text("game.player.uuid is empty"));
     }
     return WatchBuilder(game.status, (GameStatus gameStatus) {
       switch (gameStatus) {
         case GameStatus.Awaiting_Players:
           return buildAwaitingPlayers();
         case GameStatus.In_Progress:
+
+          if (game.type.value == GameType.CUBE3D){
+            return text("CUBE3d");
+          }
+
           return buildInProgress();
         case GameStatus.Finished:
           return buildFinished();

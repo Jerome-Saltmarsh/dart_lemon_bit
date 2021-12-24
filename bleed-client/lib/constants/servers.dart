@@ -35,8 +35,9 @@ final List<ServerType> selectableServerTypes =
       && (debug || type != ServerType.LocalHost)
     ).toList();
 
-final String sydneyMoba = "https://sydney-moba-1-osbmaezptq-ts.a.run.app";
-final String sydneyMMO = "https://sydney-mmo-1-osbmaezptq-ts.a.run.app";
+final String sydneyMoba = "https://sydney-2-osbmaezptq-ts.a.run.app";
+final String sydneyMMO = "https://sydney-2-osbmaezptq-ts.a.run.app";
+final String _default = "https://sydney-2-osbmaezptq-ts.a.run.app";
 
 String parseHttpToWebSocket(String url) {
   return url.replaceAll("https", "wss") + "/:8080";
@@ -51,9 +52,8 @@ String getHttpsConnectionString(ServerType server, GameType gameType) {
         case GameType.Moba:
           return sydneyMoba;
         default:
-          throw Exception();
+          return _default;
       }
-      break;
     default:
       throw Exception();
   }

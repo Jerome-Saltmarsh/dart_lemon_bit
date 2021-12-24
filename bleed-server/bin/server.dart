@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bleed_server/CubeGame.dart';
 import 'package:lemon_math/diff.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
@@ -16,6 +17,7 @@ import 'common/CharacterState.dart';
 import 'common/CharacterType.dart';
 import 'common/ClientRequest.dart';
 import 'common/GameError.dart';
+import 'common/GameStatus.dart';
 import 'common/GameType.dart';
 import 'common/PlayerEvent.dart';
 import 'common/ServerResponse.dart';
@@ -108,6 +110,12 @@ void main() {
       sendAndClearBuffer();
     }
 
+    void joinCube3D(){
+      final CubePlayer cubePlayer = CubePlayer(position: Vector3(), rotation: Vector3());
+      cubeGame.players.add(cubePlayer);
+      sendToClient('${ServerResponse.Cube_Joined.index} ${cubePlayer.uuid}');
+    }
+
     void joinGameOpenWorld() {
       clearBuffer();
       Player player = spawnPlayerInTown();
@@ -174,6 +182,27 @@ void main() {
       final ClientRequest request = clientRequests[clientRequestInt];
 
       switch (request) {
+        case ClientRequest.Update_Cube3D:
+          final String playerUUid = arguments[1];
+          CubePlayer? player = findCubePlayer(playerUUid);
+
+          if (player == null) {
+            return;
+          }
+
+          player.position.x = double.parse(arguments[2]);
+          player.position.y = double.parse(arguments[3]);
+          player.position.z = double.parse(arguments[4]);
+          player.rotation.x = double.parse(arguments[5]);
+          player.rotation.y = double.parse(arguments[6]);
+          player.rotation.z = double.parse(arguments[7]);
+
+          StringBuffer buffer = StringBuffer();
+          compileCubePlayers(buffer, cubeGame.players);
+          compileGameStatus(buffer, GameStatus.In_Progress);
+          sendToClient(buffer.toString());
+          break;
+
         case ClientRequest.Update:
           final Player? player = findPlayerByUuid(arguments[1]);
           if (player == null) {
@@ -187,14 +216,14 @@ void main() {
           if (game is Moba) {
             if (game.awaitingPlayers) {
               compileLobby(_buffer, game);
-              compileGameStatus(_buffer, game);
+              compileGameStatus(_buffer, game.status);
               compilePlayersRemaining(
                   _buffer, game.totalPlayersRequired - game.players.length);
               sendAndClearBuffer();
               return;
             } else if (game.finished) {
               compileTeamLivesRemaining(_buffer, game);
-              compileGameStatus(_buffer, game);
+              compileGameStatus(_buffer, game.status);
             }
           }
 
@@ -314,7 +343,6 @@ void main() {
           }
 
           final GameType gameType = gameTypes[gameTypeIndex];
-
           switch (gameType) {
             case GameType.None:
               break;
@@ -324,8 +352,10 @@ void main() {
             case GameType.Moba:
               joinGameMoba();
               break;
+            case GameType.CUBE3D:
+              joinCube3D();
+              break;
           }
-
           break;
 
         case ClientRequest.Ping:

@@ -1,5 +1,8 @@
 import 'package:bleed_client/classes/Particle.dart';
+import 'package:bleed_client/cube/camera3d.dart';
+import 'package:vector_math/vector_math_64.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
+import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/functions/cameraFollowPlayer.dart';
 import 'package:bleed_client/functions/spawners/spawnParticle.dart';
@@ -23,9 +26,24 @@ double targetZoom = 1;
 
 void updatePlayMode() {
   if (!connected) return;
-  if (game.id < 0) return;
-  if (game.session.isEmpty) return;
+  if (game.player.uuid.value.isEmpty) return;
 
+  switch(game.type.value){
+    case GameType.None:
+      break;
+    case GameType.MMO:
+      _updateBleed();
+      break;
+    case GameType.Moba:
+      _updateBleed();
+      break;
+    case GameType.CUBE3D:
+      sendRequestUpdateCube3D();
+      break;
+  }
+}
+
+void _updateBleed(){
   updateZoom();
   _updateMenuVisible();
   framesSinceEvent++;
@@ -35,7 +53,6 @@ void updatePlayMode() {
   if (!panningCamera && game.player.alive.value) {
     cameraFollowPlayer();
   }
-
   updateParticleEmitters();
   sendRequestUpdatePlayer();
 }

@@ -55,6 +55,7 @@ class _Game {
   final Watch<int> totalZombies = Watch(0);
   int totalNpcs = 0;
   int totalHumans = 0;
+  int totalCubes = 0;
   List<Projectile> projectiles = [];
   List<Vector2> bulletHoles = [];
   int totalSprites = 0;

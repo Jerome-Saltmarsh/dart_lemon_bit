@@ -4,6 +4,7 @@ import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
+
 enum Connection {
   None,
   Connecting,

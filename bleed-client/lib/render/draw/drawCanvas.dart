@@ -10,6 +10,7 @@ import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CollectableType.dart';
+import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
@@ -43,6 +44,7 @@ import 'package:lemon_engine/render/draw_text.dart';
 import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_engine/state/screen.dart';
+import 'package:lemon_engine/state/size.dart';
 import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/diff.dart';
@@ -63,9 +65,12 @@ const animationFrameRate = 7; // frames per change;
 
 final Scene scene = Scene();
 
-void renderCanvasPlay() {
+void renderGame() {
 
-  // scene.render(globalCanvas, globalSize);
+  if (game.type.value == GameType.CUBE3D){
+    scene.render(globalCanvas, globalSize);
+    return;
+  }
 
   if (frameRateValue++ % animationFrameRate == 0) {
     drawFrame++;

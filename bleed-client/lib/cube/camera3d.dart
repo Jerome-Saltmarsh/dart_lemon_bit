@@ -39,10 +39,7 @@ class Camera3D {
     return makeViewMatrix(position, target, up);
   }
 
-  Quaternion get rotation {
-    return Quaternion.euler(
-        radians(target.y), radians(target.x), radians(target.z));
-  }
+  Vector3 get rotation => target - position;
 
   Matrix4 get projectionMatrix {
     final double top = near * math.tan(radians(fov) / 2.0) / zoom;
