@@ -261,7 +261,6 @@ void parseState() {
 
       case ServerResponse.Cube_Players:
         parseCubePlayers();
-        redrawCanvas();
         break;
 
       case ServerResponse.Lobby:
