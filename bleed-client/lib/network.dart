@@ -64,14 +64,9 @@ void sinkMessage(String message) {
 
 void _onEvent(dynamic _response) {
   if (connecting) {
-    _onConnected();
+    connection.value = Connection.Connected;
   }
   eventStream.add(_response);
-}
-
-void _onConnected(){
-  print("network.onConnected()");
-  connection.value = Connection.Connected;
 }
 
 void _onError(dynamic value) {

@@ -1,4 +1,5 @@
 import 'package:bleed_client/constants/servers.dart';
+import 'package:bleed_client/document/request_pointer_lock.dart';
 import 'package:bleed_client/functions/cameraCenterPlayer.dart';
 import 'package:bleed_client/network.dart';
 import 'package:bleed_client/send.dart';
@@ -34,6 +35,9 @@ class Events {
       case Connection.Connected:
         sendRequestJoinGame(game.type.value);
         fullScreenEnter();
+        if (game.type.value == GameType.CUBE3D){
+          requestPointerLock();
+        }
         break;
       case Connection.Done:
         fullScreenExit();

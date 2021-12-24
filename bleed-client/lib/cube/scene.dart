@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'dart:typed_data';
+import 'package:lemon_engine/state/size.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'object.dart';
 import 'camera3d.dart';
@@ -238,8 +239,8 @@ class Scene {
   void render(Canvas canvas, Size size) {
     // check if texture needs to update
 
-    camera3D.viewportWidth = size.width;
-    camera3D.viewportHeight = size.height;
+    camera3D.viewportWidth = globalSize.width;
+    camera3D.viewportHeight = globalSize.height;
 
     if (_needsUpdateTexture) {
       _needsUpdateTexture = false;
