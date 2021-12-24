@@ -42,7 +42,6 @@ Future init() async {
   initializeEventListeners();
   initAudioPlayers();
   rebuildUI();
-
   initCube();
 
   // if (Uri.base.hasQuery && Uri.base.queryParameters.containsKey('host')) {

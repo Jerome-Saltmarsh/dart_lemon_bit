@@ -9,6 +9,9 @@ import 'light.dart';
 
 typedef ObjectCreatedCallback = void Function(Object object);
 
+int _sceneVertexCount = 0;
+int _sceneFaceCount = 0;
+
 class Scene {
   Scene({VoidCallback? onUpdate, ObjectCreatedCallback? onObjectCreated}) {
     this._onUpdate = onUpdate;
@@ -23,14 +26,12 @@ class Scene {
   BlendMode textureBlendMode = BlendMode.srcOver;
   VoidCallback? _onUpdate;
   ObjectCreatedCallback? _onObjectCreated;
-  int vertexCount = 0;
-  int faceCount = 0;
   bool _needsUpdateTexture = false;
 
   // calculate the total number of vertices and faces
   void _calculateVertices(Object o) {
-    vertexCount += o.mesh.vertices.length;
-    faceCount += o.mesh.indices.length;
+    _sceneVertexCount += o.mesh.vertices.length;
+    _sceneFaceCount += o.mesh.indices.length;
     final List<Object> children = o.children;
     for (int i = 0; i < children.length; i++) {
       _calculateVertices(children[i]);
@@ -38,10 +39,10 @@ class Scene {
   }
 
   RenderMesh _makeRenderMesh() {
-    vertexCount = 0;
-    faceCount = 0;
+    _sceneVertexCount = 0;
+    _sceneFaceCount = 0;
     _calculateVertices(world);
-    final renderMesh = RenderMesh(vertexCount, faceCount);
+    final renderMesh = RenderMesh(_sceneVertexCount, _sceneFaceCount);
     renderMesh.texture = texture;
     return renderMesh;
   }
@@ -236,6 +237,10 @@ class Scene {
 
   void render(Canvas canvas, Size size) {
     // check if texture needs to update
+
+    camera3D.viewportWidth = size.width;
+    camera3D.viewportHeight = size.height;
+
     if (_needsUpdateTexture) {
       _needsUpdateTexture = false;
       _updateTexture();

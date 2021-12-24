@@ -435,7 +435,7 @@ Widget buildConnected() {
         case GameStatus.In_Progress:
 
           if (game.type.value == GameType.CUBE3D){
-            return text("CUBE3d");
+            return text("CUBE3D");
           }
 
           return buildInProgress();

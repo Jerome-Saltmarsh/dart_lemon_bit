@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/classes/Ability.dart';
 import 'package:bleed_client/classes/Character.dart';
@@ -38,7 +39,6 @@ import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/utils/list_util.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/time.dart';
-import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/state/cursor.dart';
 
 import 'common/GameEventType.dart';

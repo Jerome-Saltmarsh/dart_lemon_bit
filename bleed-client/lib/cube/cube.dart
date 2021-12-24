@@ -12,6 +12,6 @@ Object cube({required Vector3 position, required Vector3 rotation}) {
       fileName: assets.cube,
       position: position,
       rotation: rotation,
-      lighting: true
+      lighting: false,
   );
 }
