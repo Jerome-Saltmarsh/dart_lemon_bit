@@ -1,3 +1,5 @@
+import 'package:bleed_server/CubeGame.dart';
+
 import 'classes/Game.dart';
 import 'classes/Player.dart';
 import 'compile.dart';
@@ -29,6 +31,9 @@ class _Global {
   }
 
   void update() {
+
+    cubeGame.update();
+
     for (Game game in games) {
       if (game.awaitingPlayers) {
         for (int i = 0; i < game.players.length; i++) {

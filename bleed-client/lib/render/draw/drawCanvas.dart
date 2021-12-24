@@ -44,7 +44,6 @@ import 'package:lemon_engine/render/draw_text.dart';
 import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_engine/state/screen.dart';
-import 'package:lemon_engine/state/size.dart';
 import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/diff.dart';
@@ -65,10 +64,11 @@ const animationFrameRate = 7; // frames per change;
 
 final Scene scene = Scene();
 
-void renderGame() {
+void renderGame(Canvas canvas, Size size) {
 
   if (game.type.value == GameType.CUBE3D){
-    scene.render(globalCanvas, globalSize);
+    setColorWhite();
+    scene.render(canvas, size);
     return;
   }
 

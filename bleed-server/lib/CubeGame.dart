@@ -8,17 +8,17 @@ final CubeGame cubeGame = CubeGame([
 ]);
 
 class CubeGame {
-  final List<CubePlayer> players;
-  CubeGame(this.players);
+  final List<CubePlayer> cubes;
+  CubeGame(this.cubes);
 
   void update(){
-    if (players.isEmpty) return;
-    players[0].rotation.x += 0.1;
+    if (cubes.isEmpty) return;
+    cubes[0].rotation.x += 0.1;
   }
 }
 
 CubePlayer? findCubePlayer(String uuid){
-  for(CubePlayer block in cubeGame.players) {
+  for(CubePlayer block in cubeGame.cubes) {
     if (block.uuid == uuid) {
       return block;
     }

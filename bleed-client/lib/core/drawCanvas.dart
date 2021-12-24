@@ -8,7 +8,7 @@ import 'package:bleed_client/render/draw/drawCanvas.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/watches/mode.dart';
 
-void drawCanvas(Canvas canvass, Size _size) {
+void drawCanvas(Canvas canvas, Size size) {
   if (editMode) {
     renderCanvasEdit();
     return;
@@ -18,5 +18,5 @@ void drawCanvas(Canvas canvass, Size _size) {
   if (!connected) return;
   if (game.player.uuid.value.isEmpty) return;
   if (game.status.value != GameStatus.In_Progress) return;
-  renderGame();
+  renderGame(canvas, size);
 }

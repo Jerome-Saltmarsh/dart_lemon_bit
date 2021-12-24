@@ -4,6 +4,7 @@ import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/game.dart';
+import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import 'widgets.dart';
@@ -15,7 +16,7 @@ Widget buildTextBox() {
     return Positioned(
         bottom: 100,
         child: Container(
-          width: screenWidth,
+          width: screen.width,
           alignment: Alignment.center,
           child: Container(
             width: 400,

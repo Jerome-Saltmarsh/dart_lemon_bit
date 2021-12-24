@@ -5,12 +5,13 @@ import 'package:universal_html/html.dart';
 import 'package:vector_math/vector_math_64.dart';
 
 void initCube(){
+  print("initCube()");
   document.addEventListener("mousemove", (value){
     if (value is MouseEvent){
       camera3D.rotateCamera(
           value.movement.x.toDouble(),
           value.movement.y.toDouble(),
-          1.0
+          0.5
       );
     }
   }, false);

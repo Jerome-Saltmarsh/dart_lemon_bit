@@ -23,7 +23,7 @@ import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/state/camera.dart';
 import 'package:lemon_engine/state/mouseDragging.dart';
-import 'package:lemon_engine/state/size.dart';
+import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_engine/state/zoom.dart';
 import 'package:lemon_math/diff.dart';
 import 'package:lemon_math/diff_over.dart';
@@ -144,7 +144,7 @@ Widget _buildTools() {
           _buildTabs(),
           height8,
           Container(
-            height: screenHeight - 100,
+            height: screen.height - 100,
             child: SingleChildScrollView(
               child: Column(
                 // crossAxisAlignment: cross.stretch,
@@ -160,8 +160,8 @@ Widget _buildTools() {
 
 Widget buildEditorUI() {
   return Container(
-    width: globalSize.width,
-    height: globalSize.height,
+    width: screen.width,
+    height: screen.height,
     alignment: Alignment.center,
     child: Stack(
       children: [

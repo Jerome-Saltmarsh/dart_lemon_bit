@@ -33,7 +33,7 @@ import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/fullscreen_active.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/state/build_context.dart';
-import 'package:lemon_engine/state/size.dart';
+import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -314,8 +314,8 @@ Widget dialog({
   EdgeInsets margin = EdgeInsets.zero,
 }) {
   return Container(
-    width: screenWidth,
-    height: screenHeight,
+    width: screen.width,
+    height: screen.height,
     alignment: alignment,
     child: Container(
       margin: margin,
@@ -391,7 +391,7 @@ Widget buildBottomCenter() {
   return Positioned(
       bottom: _padding,
       child: Container(
-        width: screenWidth,
+        width: screen.width,
         child: Row(
           mainAxisAlignment: axis.main.center,
           crossAxisAlignment: axis.cross.end,
@@ -563,7 +563,7 @@ Positioned _buildRespawnLight() {
   return Positioned(
       top: 30,
       child: Container(
-          width: screenWidth,
+          width: screen.width,
           child: Column(
             crossAxisAlignment: axis.cross.center,
             children: [
@@ -654,7 +654,7 @@ Widget _buildServerText() {
 
     return Positioned(
         child: Container(
-          width: screenWidth,
+          width: screen.width,
           alignment: Alignment.center,
           child: Container(
             width: 300,
@@ -1054,15 +1054,15 @@ Widget buildWeaponMenu() {
 Widget _buildViewRespawn() {
   print("buildViewRespawn()");
   return Container(
-    width: screenWidth,
-    height: screenHeight,
+    width: screen.width,
+    height: screen.height,
     child: Row(
       mainAxisAlignment: axis.main.center,
       crossAxisAlignment: axis.cross.center,
       children: [
         Container(
             padding: padding16,
-            width: max(screenWidth * goldenRatioInverseB, 480),
+            width: max(screen.width * goldenRatioInverseB, 480),
             decoration: BoxDecoration(
                 borderRadius: borderRadius4, color: Colors.black38),
             child: SingleChildScrollView(
@@ -1275,7 +1275,7 @@ Widget buildLowAmmo() {
   return Positioned(
       bottom: 80,
       child: Container(
-        width: screenWidth,
+        width: screen.width,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -1302,7 +1302,7 @@ Widget buildMessageBox(String message) {
   return Positioned(
       bottom: 120,
       child: Container(
-        width: screenWidth,
+        width: screen.width,
         child: Row(
           mainAxisAlignment: axis.main.center,
           children: [
@@ -1382,8 +1382,8 @@ Widget buildMessageBox(String message) {
 Widget buildGameOver() {
   return Positioned(
       child: Container(
-    width: globalSize.width,
-    height: globalSize.height,
+    width: screen.width,
+    height: screen.height,
     color: Colors.black45,
     child: button("Game Over", clearState, fontSize: 30),
   ));
@@ -1391,6 +1391,6 @@ Widget buildGameOver() {
 
 Widget buildDialog(Widget child) {
   return Positioned(
-      top: 30, child: Container(width: screenWidth, child: child));
+      top: 30, child: Container(width: screen.width, child: child));
 }
 

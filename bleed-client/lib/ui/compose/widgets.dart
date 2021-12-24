@@ -6,7 +6,8 @@ import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:lemon_engine/state/size.dart';
+import 'package:lemon_engine/game.dart';
+import 'package:lemon_engine/state/screen.dart';
 
 Widget text(dynamic value, {
     fontSize = 18,
@@ -159,7 +160,7 @@ Widget center(Widget child) {
 Widget fullScreen({required Widget child, Alignment alignment = Alignment.center}) {
   return Container(
     alignment: alignment,
-      width: globalSize.width, height: globalSize.height, child: child);
+      width: screen.width, height: screen.height, child: child);
 }
 
 Widget page({required List<Widget> children}) {

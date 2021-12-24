@@ -1,5 +1,6 @@
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/cube/camera3d.dart';
+import 'package:lemon_engine/state/screen.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/common/GameType.dart';
@@ -97,5 +98,5 @@ void updateParticleEmitters() {
 }
 
 void _updateMenuVisible() {
-  hud.state.menuVisible.value = mouseAvailable && mouseX > screenWidth - 400 && mouseY < 200;
+  hud.state.menuVisible.value = mouseAvailable && mouseX > screen.width - 400 && mouseY < 200;
 }

@@ -60,47 +60,6 @@ class Camera3D {
     target += position;
   }
 
-  void trackBall(Vector2 from, Vector2 to, [double sensitivity = 1.0]) {
-    // final double x = -(to.x - from.x) * sensitivity / (viewportWidth * 0.5);
-    // final double y = (to.y - from.y) * sensitivity / (viewportHeight * 0.5);
-    // Vector2 delta = Vector2(x, y);
-    // Vector3 moveDirection = Vector3(delta.x, delta.y, 0);
-    // final double angle = moveDirection.length;
-    // if (angle > 0) {
-    //   Vector3 _eye = position - target;
-    //   Vector3 eyeDirection = _eye.normalized();
-    //   Vector3 upDirection = up.normalized();
-    //   Vector3 sidewaysDirection = upDirection.cross(eyeDirection).normalized();
-    //   upDirection.scale(delta.y);
-    //   sidewaysDirection.scale(delta.x);
-    //   moveDirection = upDirection + sidewaysDirection;
-    //   Vector3 axis = moveDirection.cross(_eye).normalized();
-    //   Quaternion q = Quaternion.axisAngle(axis, angle);
-    //   q.rotate(position);
-    //   q.rotate(up);
-    // }
-    final double x = -(to.x - from.x) * sensitivity / (viewportWidth * 0.5);
-    final double y = (to.y - from.y) * sensitivity / (viewportHeight * 0.5);
-    // Vector2 delta = Vector2(x, y);
-    // Vector3 moveDirection = Vector3(delta.x, delta.y, 0);
-    // final double angle = moveDirection.length;
-    // // if (angle > 0) {
-    // Vector3 _eye = position - target;
-    // Vector3 eyeDirection = _eye.normalized();
-    // Vector3 upDirection = up.normalized();
-    // Vector3 sidewaysDirection = upDirection.cross(eyeDirection).normalized();
-    // upDirection.scale(delta.y);
-    // sidewaysDirection.scale(delta.x);
-    // moveDirection = upDirection + sidewaysDirection;
-    // Vector3 axis = moveDirection.cross(_eye).normalized();
-    Quaternion q = Quaternion.axisAngle(upAxis, x);
-    Quaternion q2 = Quaternion.axisAngle(rightAxis, y);
-    target -= position;
-    q.rotate(target);
-    q2.rotate(target);
-    target += position;
-  }
-
   void applyRotate(Vector3 axis, double angle){
     target -= position;
     Quaternion q = Quaternion.axisAngle(upAxis, angle);

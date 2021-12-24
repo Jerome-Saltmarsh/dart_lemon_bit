@@ -1,6 +1,6 @@
 import 'dart:ui';
 import 'dart:typed_data';
-import 'package:lemon_engine/state/size.dart';
+import 'package:lemon_engine/state/screen.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'object.dart';
 import 'camera3d.dart';
@@ -14,9 +14,7 @@ int _sceneVertexCount = 0;
 int _sceneFaceCount = 0;
 
 class Scene {
-  Scene({VoidCallback? onUpdate, ObjectCreatedCallback? onObjectCreated}) {
-    this._onUpdate = onUpdate;
-    this._onObjectCreated = onObjectCreated;
+  Scene() {
     world = Object(scene: this);
   }
 
@@ -25,8 +23,6 @@ class Scene {
   Image? texture;
   BlendMode blendMode = BlendMode.srcOver;
   BlendMode textureBlendMode = BlendMode.srcOver;
-  VoidCallback? _onUpdate;
-  ObjectCreatedCallback? _onObjectCreated;
   bool _needsUpdateTexture = false;
 
   // calculate the total number of vertices and faces
@@ -239,8 +235,8 @@ class Scene {
   void render(Canvas canvas, Size size) {
     // check if texture needs to update
 
-    camera3D.viewportWidth = globalSize.width;
-    camera3D.viewportHeight = globalSize.height;
+    camera3D.viewportWidth = screen.width;
+    camera3D.viewportHeight = screen.height;
 
     if (_needsUpdateTexture) {
       _needsUpdateTexture = false;
@@ -309,11 +305,6 @@ class Scene {
 
   void objectCreated(Object object) {
     updateTexture();
-    if (_onObjectCreated != null) _onObjectCreated!(object);
-  }
-
-  void update() {
-    if (_onUpdate != null) _onUpdate!();
   }
 
   void _getAllMesh(List<Mesh> meshes, Object object) {
@@ -328,13 +319,11 @@ class Scene {
     final meshes = <Mesh>[];
     _getAllMesh(meshes, world);
     texture = await packingTexture(meshes);
-    update();
   }
 
   /// Mark needs update texture
   void updateTexture() {
     _needsUpdateTexture = true;
-    update();
   }
 }
 

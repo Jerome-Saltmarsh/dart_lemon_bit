@@ -5,6 +5,7 @@ import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/game.dart';
+import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 Widget buildSkillTree() {
@@ -20,8 +21,8 @@ Widget buildSkillTree() {
       return Positioned(
           top: 50,
           child: Container(
-            width: screenWidth,
-            height: screenHeight,
+            width: screen.width,
+            height: screen.height,
             child: Row(
               mainAxisAlignment: axis.main.center,
               crossAxisAlignment: axis.cross.start,

@@ -112,7 +112,7 @@ void main() {
 
     void joinCube3D(){
       final CubePlayer cubePlayer = CubePlayer(position: Vector3(), rotation: Vector3());
-      cubeGame.players.add(cubePlayer);
+      cubeGame.cubes.add(cubePlayer);
       sendToClient('${ServerResponse.Cube_Joined.index} ${cubePlayer.uuid}');
     }
 
@@ -198,7 +198,7 @@ void main() {
           player.rotation.z = double.parse(arguments[7]);
 
           StringBuffer buffer = StringBuffer();
-          compileCubePlayers(buffer, cubeGame.players);
+          compileCubePlayers(buffer, cubeGame.cubes);
           compileGameStatus(buffer, GameStatus.In_Progress);
           sendToClient(buffer.toString());
           break;
