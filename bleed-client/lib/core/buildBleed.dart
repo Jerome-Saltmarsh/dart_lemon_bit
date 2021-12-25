@@ -17,7 +17,7 @@ Widget buildBleed(){
     buildUI: buildUI,
     drawCanvas: drawCanvas,
     drawCanvasAfterUpdate: false,
-    backgroundColor: colours.black,
+    backgroundColor: colours.white,
     buildLoadingScreen: buildLoadingScreen
   );
 }

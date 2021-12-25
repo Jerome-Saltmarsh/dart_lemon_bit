@@ -235,8 +235,8 @@ class Scene {
   void render(Canvas canvas, Size size) {
     // check if texture needs to update
 
-    camera3D.viewportWidth = screen.width;
-    camera3D.viewportHeight = screen.height;
+    // camera3D.viewportWidth = screen.width;
+    // camera3D.viewportHeight = screen.height;
 
     if (_needsUpdateTexture) {
       _needsUpdateTexture = false;
