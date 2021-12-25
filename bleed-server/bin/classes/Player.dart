@@ -6,16 +6,15 @@ import '../common/Quests.dart';
 import '../constants/no_squad.dart';
 import '../common/Tile.dart';
 import '../functions/generateName.dart';
-import '../functions/generateUUID.dart';
 import '../settings.dart';
 import '../utils.dart';
 import 'Ability.dart';
 import 'Character.dart';
+import 'Entity.dart';
 import 'Game.dart';
 
 
-class Player extends Character {
-  final String uuid = generateUUID();
+class Player extends Character with Entity {
   String name = generateName();
   int lastUpdateFrame = 0;
   int frameOfDeath = -1;

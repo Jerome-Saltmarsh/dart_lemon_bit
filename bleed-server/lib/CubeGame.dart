@@ -30,10 +30,10 @@ CubePlayer? findCubePlayer(String uuid){
   return null;
 }
 
-final Uuid _uuid = Uuid();
+final Uuid _uuidGenerator = Uuid();
 
-String generateUUID(){
-  return _uuid.v1();
+String generateUUID() {
+  return _uuidGenerator.v4();
 }
 
 class CubePlayer {

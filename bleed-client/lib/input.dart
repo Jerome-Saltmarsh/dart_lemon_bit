@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterAction.dart';
+import 'package:bleed_client/cube/camera3d.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
@@ -20,6 +21,7 @@ import 'package:lemon_watch/watch.dart';
 
 import '../send.dart';
 import 'common/enums/Direction.dart';
+import 'cube/v3.dart';
 import 'ui/logic/showTextBox.dart';
 import 'utils.dart';
 
@@ -136,9 +138,7 @@ class _Keys {
   LogicalKeyboardKey hourBackwards = LogicalKeyboardKey.arrowLeft;
   LogicalKeyboardKey teleport = LogicalKeyboardKey.keyG;
   LogicalKeyboardKey casteFireball = LogicalKeyboardKey.keyZ;
-  LogicalKeyboardKey arrowUp = LogicalKeyboardKey.arrowUp;
-  LogicalKeyboardKey arrowDown = LogicalKeyboardKey.arrowDown;
-  LogicalKeyboardKey pixelExplosion = LogicalKeyboardKey.keyP;
+  LogicalKeyboardKey cubeFace0 = LogicalKeyboardKey.keyO;
 }
 
 Map<LogicalKeyboardKey, bool> _keyDownState = {};
@@ -179,6 +179,9 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.equip2B: selectAbility2,
   keys.equip3B: selectAbility3,
   keys.equip4B: selectAbility4,
+  keys.cubeFace0: (){
+    camera3D.rotation = v3(0, 0, 0);
+  }
 };
 
 void selectAbility1() {

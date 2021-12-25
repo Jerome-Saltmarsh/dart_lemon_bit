@@ -41,6 +41,10 @@ class Camera3D {
 
   Vector3 get rotation => target - position;
 
+  set rotation(Vector3 value){
+    target = position + value;
+  }
+
   Matrix4 get projectionMatrix {
     final double top = near * math.tan(radians(fov) / 2.0) / zoom;
     final double bottom = -top;

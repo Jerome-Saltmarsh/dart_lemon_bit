@@ -67,13 +67,14 @@ class Events {
   }
 
   void _onPlayerUuidChanged(String uuid) {
-    print("_onPlayerUuidChanged($uuid)");
+    print("events.onPlayerUuidChanged($uuid)");
     if (uuid.isNotEmpty) {
       cameraCenterPlayer();
     }
   }
 
   void _onPlayerAlivedChanged(bool value) {
+    print("events.onPlayerAlivedChanged($value)");
     if (value) {
       cameraCenterPlayer();
     }

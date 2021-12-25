@@ -11,6 +11,7 @@ import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
+import 'package:bleed_client/cube/camera3d.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/mappers/mapWeaponToDecorationImage.dart';
@@ -434,8 +435,9 @@ Widget buildConnected(GameType gameType) {
           return buildAwaitingPlayers();
         case GameStatus.In_Progress:
           if (gameType == GameType.CUBE3D){
-            // return buildCube3D();
-            return emptyContainer;
+            return Refresh((){
+              return text(camera3D.rotation);
+            });
           }
           return buildInProgress();
         case GameStatus.Finished:
