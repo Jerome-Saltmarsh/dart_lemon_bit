@@ -1,5 +1,7 @@
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/servers.dart';
+import 'package:bleed_client/cube/widget.dart';
+import 'package:bleed_client/main.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/title.dart';
 import 'package:bleed_client/toString.dart';
@@ -7,6 +9,7 @@ import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:lemon_engine/game.dart';
 
 const _buttonWidth = 180.0;
 
@@ -18,7 +21,6 @@ Widget buildHomePage() {
         _buildTitle(),
         height8,
         _buildPanelGames(),
-        height8,
       ],
     )),
     _buildTopRight()

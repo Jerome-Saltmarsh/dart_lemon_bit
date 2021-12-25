@@ -20,7 +20,6 @@ void clearState() {
   gameEvents.clear();
   mode.value = Mode.Play;
   refreshUI();
-  rebuildUI();
   redrawCanvas();
 }
 

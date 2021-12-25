@@ -11,7 +11,7 @@ void initCube(){
       camera3D.rotateCamera(
           value.movement.x.toDouble(),
           value.movement.y.toDouble(),
-          0.5
+          1.0
       );
     }
   }, false);

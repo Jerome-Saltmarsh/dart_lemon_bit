@@ -24,6 +24,7 @@ bool get connecting => connection.value == Connection.Connecting;
 
 // interface
 void connectWebSocket(String uri) {
+  print("network.connectWebSocket($uri)");
   connection.value = Connection.Connecting;
   webSocketChannel = WebSocketChannel.connect(Uri.parse(uri));
   webSocketChannel.stream.listen(_onEvent, onError: _onError, onDone: _onDone);

@@ -9,6 +9,8 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/watches/mode.dart';
 
 void drawCanvas(Canvas canvas, Size size) {
+
+
   if (editMode) {
     renderCanvasEdit();
     return;

@@ -24,7 +24,6 @@ Watch<Mode> mode = Watch(Mode.Play, onChanged: (value){
     game.particles.clear();
     timeInSeconds.value = 60 * 60 * 10;
   }
-  rebuildUI();
   redrawCanvas();
 });
 

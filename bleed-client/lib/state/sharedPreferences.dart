@@ -13,8 +13,9 @@ class _Storage {
   bool get serverSaved => sharedPreferences.containsKey(_keys.server);
   int? get _serverIndex => sharedPreferences.getInt(_keys.server);
   ServerType get serverType => serverTypes[_serverIndex ?? ServerType.None.index];
-  set serverType(ServerType value){
-    print("server type saved: $value");
+
+  void saveServerType(ServerType value){
+    print("storage.saveServerType($value)");
     sharedPreferences.setInt('server', value.index);
   }
 }

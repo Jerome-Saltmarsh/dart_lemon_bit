@@ -1,5 +1,6 @@
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/servers.dart';
+import 'package:bleed_client/cube/widget.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/network.dart';
 import 'package:bleed_client/state.dart';
@@ -19,8 +20,8 @@ Widget buildUI(BuildContext context) {
       return buildSelectServerType();
     }
 
-    return WatchBuilder(game.type, (GameType type) {
-      if (type == GameType.None) {
+    return WatchBuilder(game.type, (GameType gameType) {
+      if (gameType == GameType.None) {
         return buildHomePage();
       }
 
@@ -29,7 +30,7 @@ Widget buildUI(BuildContext context) {
           case Connection.Connecting:
             return buildConnecting();
           case Connection.Connected:
-            return buildConnected();
+            return buildConnected(gameType);
           default:
             return center(Column(
               mainAxisAlignment: axis.main.center,

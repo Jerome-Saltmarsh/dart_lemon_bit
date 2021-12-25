@@ -1,4 +1,6 @@
+import 'package:bleed_client/cube/camera3d.dart';
 import 'package:bleed_client/cube/cube.dart';
+import 'package:bleed_client/cube/widget.dart';
 import 'package:bleed_client/parse.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
 import 'package:bleed_client/state/game.dart';
@@ -10,8 +12,12 @@ void parseCubePlayers(){
   for (int i = 0; i < game.totalCubes; i++){
     Vector3 position = _consumeVector3();
     Vector3 rotation = _consumeVector3();
-    scene.world.add(cube(position: position, rotation: rotation));
+    if (position.x != camera3D.position.x && position.y != camera3D.position.y){
+      scene.world.add(cube(position: position, rotation: rotation));
+    }
   }
+
+  cubeFrame.value++;
 }
 
 Vector3 _consumeVector3(){

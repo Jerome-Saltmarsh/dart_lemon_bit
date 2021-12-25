@@ -67,7 +67,7 @@ final Scene scene = Scene();
 void renderGame(Canvas canvas, Size size) {
 
   if (game.type.value == GameType.CUBE3D){
-    setColorWhite();
+    // setColorWhite();
     scene.render(canvas, size);
     return;
   }

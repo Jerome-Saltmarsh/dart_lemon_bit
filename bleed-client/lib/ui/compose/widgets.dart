@@ -6,16 +6,14 @@ import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/state/screen.dart';
 
-Widget text(dynamic value, {
-    fontSize = 18,
+Widget text(dynamic value,
+    {fontSize = 18,
     GestureTapCallback? onPressed,
     TextDecoration decoration = TextDecoration.none,
     FontWeight fontWeight = normal,
-    Color color = white
-}) {
+    Color color = white}) {
   Widget _text = Text(value.toString(),
       style: TextStyle(
           color: color,
@@ -59,10 +57,10 @@ Widget border({
 }
 
 BoxDecoration boxDecoration({
-    double borderWidth = 2.0,
-    Color borderColor = white,
-    double borderRadius = 4,
-    Color fillColor = Colors.white,
+  double borderWidth = 2.0,
+  Color borderColor = white,
+  double borderRadius = 4,
+  Color fillColor = Colors.white,
 }) {
   return BoxDecoration(
       border: Border.all(color: borderColor, width: borderWidth),
@@ -70,12 +68,8 @@ BoxDecoration boxDecoration({
       color: fillColor);
 }
 
-Widget button(dynamic message, GestureTapCallback onPressed, {
-  double? fontSize,
-  double? minWidth,
-  String? hint
-}) {
-
+Widget button(dynamic message, GestureTapCallback onPressed,
+    {double? fontSize, double? minWidth, String? hint}) {
   final Widget _button = pressed(
       callback: onPressed,
       child: mouseOver(builder: (BuildContext context, bool mouseOver) {
@@ -86,20 +80,23 @@ Widget button(dynamic message, GestureTapCallback onPressed, {
             alignment: Alignment.center);
       }));
 
-  if (hint != null){
+  if (hint != null) {
     return Tooltip(message: hint, child: _button);
   }
   return _button;
 }
 
-Widget pressed({required Widget child, required GestureTapCallback? callback, dynamic hint}) {
+Widget pressed(
+    {required Widget child,
+    required GestureTapCallback? callback,
+    dynamic hint}) {
   return onPressed(child: child, callback: callback, hint: hint);
 }
 
-Widget onPressed({
-  required Widget child,
-  required GestureTapCallback? callback,
-  dynamic hint}) {
+Widget onPressed(
+    {required Widget child,
+    required GestureTapCallback? callback,
+    dynamic hint}) {
   Widget widget = MouseRegion(
       cursor: callback != null
           ? SystemMouseCursors.click
@@ -114,11 +111,16 @@ Widget onPressed({
   );
 }
 
-class Refresh extends StatefulWidget {
-  final WidgetBuilder builder;
-  final Duration duration;
 
-  Refresh({required this.builder, required this.duration});
+typedef RefreshBuilder = Widget Function();
+
+class Refresh extends StatefulWidget {
+  final RefreshBuilder builder;
+  late final Duration duration;
+
+  Refresh(this.builder, {int seconds = 0, int milliseconds = 100}) {
+    this.duration = Duration(seconds: seconds, milliseconds: milliseconds);
+  }
 
   @override
   _RefreshState createState() => _RefreshState();
@@ -143,7 +145,7 @@ class _RefreshState extends State<Refresh> {
 
   @override
   Widget build(BuildContext context) {
-    return widget.builder(context);
+    return widget.builder();
   }
 
   @override
@@ -157,10 +159,13 @@ Widget center(Widget child) {
   return fullScreen(child: child);
 }
 
-Widget fullScreen({required Widget child, Alignment alignment = Alignment.center}) {
+Widget fullScreen(
+    {required Widget child, Alignment alignment = Alignment.center}) {
   return Container(
-    alignment: alignment,
-      width: screen.width, height: screen.height, child: child);
+      alignment: alignment,
+      width: screen.width,
+      height: screen.height,
+      child: child);
 }
 
 Widget page({required List<Widget> children}) {

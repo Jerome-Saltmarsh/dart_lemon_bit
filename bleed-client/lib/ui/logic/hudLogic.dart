@@ -26,6 +26,5 @@ void toggleEditMode() {
 
 void nextTip() {
   hud.state.tipIndex = (hud.state.tipIndex + 1) % tips.length;
-  rebuildUI();
 }
 

@@ -1,14 +1,11 @@
 import 'dart:ui';
 import 'dart:typed_data';
-import 'package:lemon_engine/state/screen.dart';
 import 'package:vector_math/vector_math_64.dart';
 import 'object.dart';
 import 'camera3d.dart';
 import 'mesh.dart';
 import 'material.dart';
 import 'light.dart';
-
-typedef ObjectCreatedCallback = void Function(Object object);
 
 int _sceneVertexCount = 0;
 int _sceneFaceCount = 0;
@@ -89,8 +86,8 @@ class Scene {
     final Matrix4 transform = projection * view * model;
 
     // apply transform and add vertices to renderMesh
-    final double viewportWidth = camera3D.viewportWidth;
-    final double viewportHeight = camera3D.viewportHeight;
+    final double viewportWidth = 100;
+    final double viewportHeight = 100;
     final Float32List positions = renderMesh.positions;
     final Float32List positionsZ = renderMesh.positionsZ;
     final List<Vector3> vertices = o.mesh.vertices;
@@ -234,10 +231,6 @@ class Scene {
 
   void render(Canvas canvas, Size size) {
     // check if texture needs to update
-
-    // camera3D.viewportWidth = screen.width;
-    // camera3D.viewportHeight = screen.height;
-
     if (_needsUpdateTexture) {
       _needsUpdateTexture = false;
       _updateTexture();

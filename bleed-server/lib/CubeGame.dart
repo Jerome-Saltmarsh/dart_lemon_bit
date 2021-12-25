@@ -2,9 +2,13 @@ import 'package:uuid/uuid.dart';
 
 final CubeGame cubeGame = CubeGame([
   CubePlayer(position: Vector3(), rotation: Vector3()),
-  CubePlayer(position: Vector3(x: 3), rotation: Vector3()),
-  CubePlayer(position: Vector3(y: 3), rotation: Vector3()),
-  CubePlayer(position: Vector3(x: 3, y: 3), rotation: Vector3(x: 45)),
+  CubePlayer(position: Vector3(x: 2), rotation: Vector3()),
+  CubePlayer(position: Vector3(z: 2), rotation: Vector3()),
+  CubePlayer(position: Vector3(y: 2), rotation: Vector3()),
+  CubePlayer(position: Vector3(x: -5, y: 0), rotation: Vector3()),
+  CubePlayer(position: Vector3(x: -10, y: 0), rotation: Vector3()),
+  CubePlayer(position: Vector3(z: -10, y: 0), rotation: Vector3()),
+  CubePlayer(position: Vector3(x: -10, z: -10, y: 0), rotation: Vector3()),
 ]);
 
 class CubeGame {

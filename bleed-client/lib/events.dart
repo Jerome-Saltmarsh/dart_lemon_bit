@@ -1,5 +1,5 @@
+
 import 'package:bleed_client/constants/servers.dart';
-import 'package:bleed_client/document/request_pointer_lock.dart';
 import 'package:bleed_client/functions/cameraCenterPlayer.dart';
 import 'package:bleed_client/network.dart';
 import 'package:bleed_client/send.dart';
@@ -17,6 +17,17 @@ class Events {
     switch (type) {
       case GameType.None:
         break;
+      // case GameType.CUBE3D:
+      //   if (game.type.value == GameType.CUBE3D){
+      //     requestPointerLock();
+      //     overrideBuilder.value = (BuildContext context){
+      //       return buildCube3D();
+      //     };
+      //     Timer.periodic(Duration(milliseconds: 50), (timer) {
+      //       cubeFrame.value++;
+      //     });
+      //   }
+      //   break;
       default:
         connectToWebSocketServer(game.serverType.value, type);
         break;
@@ -25,7 +36,7 @@ class Events {
 
   void _onServerTypeChanged(ServerType serverType) {
     print('events.onServerTypeChanged($serverType)');
-    storage.serverType = serverType;
+    storage.saveServerType(serverType);
   }
 
   void _onConnectionChanged(Connection connection) {
@@ -35,9 +46,13 @@ class Events {
       case Connection.Connected:
         sendRequestJoinGame(game.type.value);
         fullScreenEnter();
-        if (game.type.value == GameType.CUBE3D){
-          requestPointerLock();
-        }
+        // if (game.type.value == GameType.CUBE3D){
+        //   requestPointerLock();
+        //   overrideBuilder.value = (BuildContext context){
+        //     return buildCube3D();
+        //   };
+        //   // Future.
+        // }
         break;
       case Connection.Done:
         fullScreenExit();

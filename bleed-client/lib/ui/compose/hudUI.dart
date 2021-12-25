@@ -29,7 +29,6 @@ import 'package:bleed_client/watches/time.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/functions/fullscreen_enter.dart';
 import 'package:lemon_engine/functions/fullscreen_exit.dart';
-import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/fullscreen_active.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/state/build_context.dart';
@@ -421,23 +420,23 @@ void closeJoinGameDialog() {
   hud.joinGameVisible.setFalse();
 }
 
-Widget buildConnected() {
-  print("buildConnected()");
+Widget buildConnected(GameType gameType) {
+  print("ui.buildConnected()");
 
   return WatchBuilder(game.player.uuid, (String uuid) {
     if (uuid.isEmpty) {
       return center(text("game.player.uuid is empty"));
     }
+
     return WatchBuilder(game.status, (GameStatus gameStatus) {
       switch (gameStatus) {
         case GameStatus.Awaiting_Players:
           return buildAwaitingPlayers();
         case GameStatus.In_Progress:
-
-          if (game.type.value == GameType.CUBE3D){
-            return text("CUBE3D");
+          if (gameType == GameType.CUBE3D){
+            // return buildCube3D();
+            return emptyContainer;
           }
-
           return buildInProgress();
         case GameStatus.Finished:
           return buildFinished();
@@ -502,6 +501,7 @@ Widget buildFinished() {
 }
 
 Widget buildInProgress() {
+
   return WatchBuilder(game.player.characterType, (CharacterType value) {
     if (value == CharacterType.None) {
       return buildDialogSelectHero();
@@ -728,7 +728,6 @@ Widget buildEquipWeaponSlot(Weapon weapon, int index) {
                 child: buildWeaponSlot(weapon.type),
                 callback: () {
                   sendRequestEquip(index);
-                  rebuildUI();
                 }),
             if (weapon.type != WeaponType.Unarmed) buildTag(weapon.rounds),
           ],
@@ -1170,7 +1169,6 @@ Widget _buildViewRespawn() {
                               padding: padding16, child: text("Close")),
                           callback: () {
                             hud.state.observeMode = true;
-                            rebuildUI();
                           }),
                       width16,
                       mouseOver(

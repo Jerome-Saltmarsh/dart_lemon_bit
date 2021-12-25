@@ -15,8 +15,8 @@ class Camera3D {
     this.near = 0.1,
     this.far = 1000,
     this.zoom = 1.0,
-    this.viewportWidth = 100.0,
-    this.viewportHeight = 100.0,
+    this.viewportWidth = 600.0,
+    this.viewportHeight = 600.0,
   }) {
     if (position != null) position.copyInto(this.position);
     if (target != null) target.copyInto(this.target);
