@@ -4,6 +4,7 @@ import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/cube/camera3d.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/update.dart';
@@ -139,6 +140,7 @@ class _Keys {
   LogicalKeyboardKey teleport = LogicalKeyboardKey.keyG;
   LogicalKeyboardKey casteFireball = LogicalKeyboardKey.keyZ;
   LogicalKeyboardKey cubeFace0 = LogicalKeyboardKey.keyO;
+  LogicalKeyboardKey cubeFaceI = LogicalKeyboardKey.keyI;
 }
 
 Map<LogicalKeyboardKey, bool> _keyDownState = {};
@@ -180,7 +182,21 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.equip3B: selectAbility3,
   keys.equip4B: selectAbility4,
   keys.cubeFace0: (){
-    camera3D.rotation = v3(0, 0, 0);
+    // storage.
+    camera3D.target.x = storage.get('target.x');
+    camera3D.target.y = storage.get('target.y');
+    camera3D.target.z = storage.get('target.z');
+    camera3D.position.x = storage.get('position.x');
+    camera3D.position.y = storage.get('position.y');
+    camera3D.position.z = storage.get('position.z');
+  },
+  keys.cubeFaceI: (){
+    storage.put('target.x', camera3D.target.x);
+    storage.put('target.y', camera3D.target.y);
+    storage.put('target.z', camera3D.target.z);
+    storage.put('position.x', camera3D.position.x);
+    storage.put('position.y', camera3D.position.y);
+    storage.put('position.z', camera3D.position.z);
   }
 };
 

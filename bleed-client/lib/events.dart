@@ -73,8 +73,8 @@ class Events {
     }
   }
 
-  void _onPlayerAlivedChanged(bool value) {
-    print("events.onPlayerAlivedChanged($value)");
+  void _onPlayerAliveChanged(bool value) {
+    print("events.onPlayerAliveChanged($value)");
     if (value) {
       cameraCenterPlayer();
     }
@@ -86,6 +86,6 @@ class Events {
     game.type.onChanged(_onGameTypeChanged);
     game.serverType.onChanged(_onServerTypeChanged);
     game.player.uuid.onChanged(_onPlayerUuidChanged);
-    game.player.alive.onChanged(_onPlayerAlivedChanged);
+    game.player.alive.onChanged(_onPlayerAliveChanged);
   }
 }

@@ -78,6 +78,7 @@ class _Game {
   }
 
   void exit(){
+    print("game.exit()");
     game.type.value = GameType.None;
     clearSession();
     disconnect();

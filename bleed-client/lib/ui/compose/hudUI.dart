@@ -435,9 +435,14 @@ Widget buildConnected(GameType gameType) {
           return buildAwaitingPlayers();
         case GameStatus.In_Progress:
           if (gameType == GameType.CUBE3D){
-            return Refresh((){
-              return text(camera3D.rotation);
-            });
+            return Column(
+              children: [
+                button('Exit', game.exit),
+                Refresh((){
+                  return text(camera3D.rotation);
+                }),
+              ],
+            );
           }
           return buildInProgress();
         case GameStatus.Finished:
