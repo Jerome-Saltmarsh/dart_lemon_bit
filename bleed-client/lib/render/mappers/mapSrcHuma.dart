@@ -19,11 +19,6 @@ const _framesPerDirection2 = 2;
 const _framesPerDirection3 = 3;
 const _framesPerDirection4 = 4;
 
-// final Vector2 _humanChanging = Vector2(1, 1479);
-final Vector2 _humanDying = Vector2(1, 1736);
-final Vector2 _humanFiringHandgun = Vector2(1, 258);
-final Vector2 _humanFiringShotgun = Vector2(1, 1);
-
 final Float32List _src = Float32List(4);
 
 
@@ -66,8 +61,8 @@ Float32List mapSrcHuman({
     case CharacterState.Dead:
       double _s = direction.index * _size * 2;
       double _f = min(2, frame) * _size;
-      _src[0] = _humanDying.x + _s + _f;
-      _src[1] = _humanDying.y + _size;
+      _src[0] = atlas.human.dying.x + _s + _f;
+      _src[1] = atlas.human.dying.y + _size;
       break;
 
     case CharacterState.Aiming:
@@ -76,16 +71,16 @@ Float32List mapSrcHuman({
           int _frame = 0;
           double _di = direction.index * _size * _framesPerDirection2;
           double _fr = _frame * _size;
-          _src[0] = _humanFiringHandgun.x + _di + _fr;
-          _src[1] = _humanFiringHandgun.y + _size;
+          _src[0] = atlas.human.handgun.firing.x + _di + _fr;
+          _src[1] = atlas.human.handgun.firing.y + _size;
           break;
 
         case WeaponType.Shotgun:
           int _frame = 0;
           double _di = direction.index * _size * _framesPerDirection3;
           double _fr = _frame * _size;
-          _src[0] = _humanFiringShotgun.x + _di + _fr;
-          _src[1] = _humanFiringShotgun.y + _size;
+          _src[0] = atlas.human.shotgun.firing.x + _di + _fr;
+          _src[1] = atlas.human.shotgun.firing.y + _size;
           break;
 
         default:
@@ -99,8 +94,8 @@ Float32List mapSrcHuman({
               .man.firingHandgun[min(frame, _manFramesFiringHandgunMax)];
           double _di = direction.index * _size * _framesPerDirection2;
           double _fr = _frame * _size;
-          _src[0] = _humanFiringHandgun.x + _di + _fr;
-          _src[1] = _humanFiringHandgun.y + _size;
+          _src[0] = atlas.human.handgun.firing.x + _di + _fr;
+          _src[1] = atlas.human.handgun.firing.y + _size;
           break;
 
         case WeaponType.Shotgun:
@@ -108,8 +103,8 @@ Float32List mapSrcHuman({
               .man.firingShotgun[min(frame, _manFramesFiringShotgunMax)];
           double _di = direction.index * _size * _framesPerDirection3;
           double _fr = _frame * _size;
-          _src[0] = _humanFiringShotgun.x + _di + _fr;
-          _src[1] = _humanFiringShotgun.y + _size;
+          _src[0] = atlas.human.shotgun.firing.x + _di + _fr;
+          _src[1] = atlas.human.shotgun.firing.y + _size;
           break;
 
         case WeaponType.Bow:
@@ -130,8 +125,8 @@ Float32List mapSrcHuman({
           }
           double _s = direction.index * _size * 3;
           double _f = _frame * _size;
-          _src[0] = _s + _f + _humanFiringShotgun.x;
-          _src[1] = _size + _humanFiringShotgun.y;
+          _src[0] = _s + _f + atlas.human.shotgun.firing.x;
+          _src[1] = atlas.human.shotgun.firing.y;
           break;
       }
       break;

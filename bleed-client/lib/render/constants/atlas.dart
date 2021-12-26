@@ -31,6 +31,8 @@ class _Human {
   final Vector2 striking = Vector2(631, 2977);
   final Vector2 firingBow = Vector2(1, 3218);
   final Vector2 changing = Vector2(1, 1479);
+  final Vector2 dying = Vector2(1, 1736);
+
 }
 
 class _Unarmed {
@@ -42,11 +44,13 @@ class _Unarmed {
 class _Handgun {
   final Vector2 idle = Vector2(1026, 258);
   final Vector2 walking = Vector2(1, 708);
+  final Vector2 firing = Vector2(1, 258);
 }
 
 class _Shotgun {
   final Vector2 idle = Vector2(1539, 258);
   final Vector2 walking = Vector2(1, 965);
+  final Vector2 firing = Vector2(1, 1);
 }
 
 class  _Witch {
