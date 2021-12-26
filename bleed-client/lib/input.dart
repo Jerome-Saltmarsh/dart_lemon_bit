@@ -114,39 +114,42 @@ final _Keys keys = _Keys();
 final _Key key = _Key();
 
 class _Key {
-  LogicalKeyboardKey arrowUp = LogicalKeyboardKey.arrowUp;
-  LogicalKeyboardKey arrowDown = LogicalKeyboardKey.arrowDown;
-  LogicalKeyboardKey arrowLeft = LogicalKeyboardKey.arrowLeft;
-  LogicalKeyboardKey arrowRight = LogicalKeyboardKey.arrowRight;
-  LogicalKeyboardKey space = LogicalKeyboardKey.space;
-  LogicalKeyboardKey a = LogicalKeyboardKey.keyA;
-  LogicalKeyboardKey b = LogicalKeyboardKey.keyB;
-  LogicalKeyboardKey c = LogicalKeyboardKey.keyC;
-  LogicalKeyboardKey d = LogicalKeyboardKey.keyD;
-  LogicalKeyboardKey e = LogicalKeyboardKey.keyE;
-  LogicalKeyboardKey f = LogicalKeyboardKey.keyF;
-  LogicalKeyboardKey g = LogicalKeyboardKey.keyG;
-  LogicalKeyboardKey h = LogicalKeyboardKey.keyH;
-  LogicalKeyboardKey i = LogicalKeyboardKey.keyI;
-  LogicalKeyboardKey j = LogicalKeyboardKey.keyJ;
-  LogicalKeyboardKey k = LogicalKeyboardKey.keyK;
-  LogicalKeyboardKey l = LogicalKeyboardKey.keyL;
-  LogicalKeyboardKey m = LogicalKeyboardKey.keyM;
-  LogicalKeyboardKey n = LogicalKeyboardKey.keyN;
-  LogicalKeyboardKey o = LogicalKeyboardKey.keyO;
-  LogicalKeyboardKey p = LogicalKeyboardKey.keyP;
-  LogicalKeyboardKey q = LogicalKeyboardKey.keyQ;
-  LogicalKeyboardKey r = LogicalKeyboardKey.keyR;
-  LogicalKeyboardKey s = LogicalKeyboardKey.keyS;
-  LogicalKeyboardKey t = LogicalKeyboardKey.keyT;
-  LogicalKeyboardKey u = LogicalKeyboardKey.keyU;
-  LogicalKeyboardKey v = LogicalKeyboardKey.keyV;
-  LogicalKeyboardKey w = LogicalKeyboardKey.keyW;
-  LogicalKeyboardKey x = LogicalKeyboardKey.keyX;
-  LogicalKeyboardKey y = LogicalKeyboardKey.keyY;
-  LogicalKeyboardKey z = LogicalKeyboardKey.keyZ;
-  LogicalKeyboardKey digit0 = LogicalKeyboardKey.digit0;
-  LogicalKeyboardKey digit1 = LogicalKeyboardKey.digit1;
+  final LogicalKeyboardKey arrowUp = LogicalKeyboardKey.arrowUp;
+  final LogicalKeyboardKey arrowDown = LogicalKeyboardKey.arrowDown;
+  final LogicalKeyboardKey arrowLeft = LogicalKeyboardKey.arrowLeft;
+  final LogicalKeyboardKey arrowRight = LogicalKeyboardKey.arrowRight;
+  final LogicalKeyboardKey space = LogicalKeyboardKey.space;
+  final LogicalKeyboardKey a = LogicalKeyboardKey.keyA;
+  final LogicalKeyboardKey b = LogicalKeyboardKey.keyB;
+  final LogicalKeyboardKey c = LogicalKeyboardKey.keyC;
+  final LogicalKeyboardKey d = LogicalKeyboardKey.keyD;
+  final LogicalKeyboardKey e = LogicalKeyboardKey.keyE;
+  final LogicalKeyboardKey f = LogicalKeyboardKey.keyF;
+  final LogicalKeyboardKey g = LogicalKeyboardKey.keyG;
+  final LogicalKeyboardKey h = LogicalKeyboardKey.keyH;
+  final LogicalKeyboardKey i = LogicalKeyboardKey.keyI;
+  final LogicalKeyboardKey j = LogicalKeyboardKey.keyJ;
+  final LogicalKeyboardKey k = LogicalKeyboardKey.keyK;
+  final LogicalKeyboardKey l = LogicalKeyboardKey.keyL;
+  final LogicalKeyboardKey m = LogicalKeyboardKey.keyM;
+  final LogicalKeyboardKey n = LogicalKeyboardKey.keyN;
+  final LogicalKeyboardKey o = LogicalKeyboardKey.keyO;
+  final LogicalKeyboardKey p = LogicalKeyboardKey.keyP;
+  final LogicalKeyboardKey q = LogicalKeyboardKey.keyQ;
+  final LogicalKeyboardKey r = LogicalKeyboardKey.keyR;
+  final LogicalKeyboardKey s = LogicalKeyboardKey.keyS;
+  final LogicalKeyboardKey t = LogicalKeyboardKey.keyT;
+  final LogicalKeyboardKey u = LogicalKeyboardKey.keyU;
+  final LogicalKeyboardKey v = LogicalKeyboardKey.keyV;
+  final LogicalKeyboardKey w = LogicalKeyboardKey.keyW;
+  final LogicalKeyboardKey x = LogicalKeyboardKey.keyX;
+  final LogicalKeyboardKey y = LogicalKeyboardKey.keyY;
+  final LogicalKeyboardKey z = LogicalKeyboardKey.keyZ;
+  final LogicalKeyboardKey digit0 = LogicalKeyboardKey.digit0;
+  final LogicalKeyboardKey digit1 = LogicalKeyboardKey.digit1;
+  final LogicalKeyboardKey digit2 = LogicalKeyboardKey.digit2;
+  final LogicalKeyboardKey digit3 = LogicalKeyboardKey.digit3;
+  final LogicalKeyboardKey digit4 = LogicalKeyboardKey.digit4;
 }
 
 class _Keys {
@@ -209,8 +212,8 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.hourBackwards: reverseHour,
   keys.teleport: teleportToMouse,
   keys.casteFireball: sendRequestCastFireball,
-  keys.equip1: selectAbility1,
-  keys.equip2: selectAbility2,
+  key.digit1: selectAbility1,
+  key.digit2: selectAbility2,
   keys.equip3: selectAbility3,
   keys.equip4: selectAbility4,
   keys.equip1B: selectAbility1,
