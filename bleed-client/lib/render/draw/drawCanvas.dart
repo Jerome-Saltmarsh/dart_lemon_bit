@@ -9,6 +9,7 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/AbilityType.dart';
+import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/WeaponType.dart';

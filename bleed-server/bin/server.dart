@@ -111,10 +111,10 @@ void main() {
       sendAndClearBuffer();
     }
 
-    void joinHunter(){
+    void joinBattleRoyal(){
       final Hunter hunter = global.findPendingHunterGame();
       final Player player = Player(x: 0, y: 600, game: hunter, team: -1);
-      player.type = CharacterType.None;
+      player.type = CharacterType.Human;
       registerPlayer(player);
       hunter.players.add(player);
       compileWholeGame(hunter);
@@ -369,7 +369,7 @@ void main() {
               joinCube3D();
               break;
             case GameType.BATTLE_ROYAL:
-              joinHunter();
+              joinBattleRoyal();
               break;
           }
           break;

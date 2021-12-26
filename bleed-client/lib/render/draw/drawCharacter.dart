@@ -12,7 +12,9 @@ import 'package:lemon_engine/queries/on_screen.dart';
 
 void drawCharacter(Character character) {
   if (!onScreen(character.x, character.y)) return;
-  if (!character.alive && isWaterAt(character.x, character.y)) return;
+  if (!character.alive) return;
+  // if (isWaterAt(character.x, character.y)) return;
+  if (character.type == CharacterType.None) return;
 
   Shade shade = getShadeAtPosition(character.x, character.y);
   if (shade.isDarkerThan(Shade.Dark)) return;

@@ -20,5 +20,6 @@ class InteractableNpc extends Npc {
             x: x,
             y: y,
             health: health,
-            weapon: weapon);
+            weapon: weapon
+  );
 }

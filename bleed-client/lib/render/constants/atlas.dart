@@ -22,6 +22,19 @@ class _Atlas {
   final _Archer archer = _Archer();
   final _Knight knight = _Knight();
   final _Projectiles projectiles = _Projectiles();
+  final _Human _human = _Human();
+}
+
+class _Human {
+  final _Unarmed unarmed = _Unarmed();
+  final Vector2 striking = Vector2(631, 2977);
+  final Vector2 firingBow = Vector2(1, 3218);
+}
+
+class _Unarmed {
+  final Vector2 idle = Vector2(1538, 1);
+  final Vector2 walking = Vector2(1, 1222);
+
 }
 
 class  _Witch {
@@ -40,11 +53,6 @@ class  _Knight {
   final Vector2 idle = Vector2(1, 3849);
   final Vector2 running = Vector2(1, 3914);
   final Vector2 striking = Vector2(1, 3979);
-}
-
-class _Human {
-  final Vector2 striking = Vector2(631, 2977);
-  final Vector2 firingBow = Vector2(1, 3218);
 }
 
 class _Zombie {
