@@ -11,7 +11,7 @@ import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:lemon_engine/game.dart';
 
-const _buttonWidth = 180.0;
+const _buttonWidth = 220.0;
 
 Widget buildSelectGame() {
   return page(children: [
@@ -40,7 +40,7 @@ Positioned _buildTopRight() {
 }
 
 Widget _buildServerButton() {
-  return button(toString(game.serverType.value), () {
+  return button("REGION ${toString(game.serverType.value).toUpperCase()}", () {
     game.serverType.value = ServerType.None;
   }, minWidth: _buttonWidth, hint: 'Region');
 }
@@ -49,7 +49,7 @@ Container _buildTitle() {
   return Container(
       alignment: Alignment.center,
       height: 80,
-      child: text(title, fontSize: 30));
+      child: text(title, fontSize: 40));
 }
 
 Widget _buildPanelGames() {
@@ -58,13 +58,14 @@ Widget _buildPanelGames() {
     children: [
       ...selectableGameTypes.map((GameType value) {
         final Widget type =
-            Container(width: 140, child: text(toString(value).toUpperCase()));
+            Container(width: 160, child: text(toString(value).toUpperCase()));
         final Widget joinButton = button(
-          gameTypeNames[value],
+          text(gameTypeNames[value], fontSize: 20, fontWeight: FontWeight.bold),
           () {
             game.type.value = value;
           },
           minWidth: _buttonWidth,
+          borderWidth: 3
         );
         return Container(
           margin: const EdgeInsets.only(bottom: 16),

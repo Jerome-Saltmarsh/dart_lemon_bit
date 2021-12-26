@@ -68,13 +68,18 @@ BoxDecoration boxDecoration({
       color: fillColor);
 }
 
-Widget button(dynamic message, GestureTapCallback onPressed,
-    {double? fontSize, double? minWidth, String? hint}) {
+Widget button(dynamic value, GestureTapCallback onPressed, {
+  double? fontSize,
+  double? minWidth,
+  String? hint,
+  double borderWidth = 1,
+}) {
   final Widget _button = pressed(
       callback: onPressed,
       child: mouseOver(builder: (BuildContext context, bool mouseOver) {
         return border(
-            child: text(message),
+            width: borderWidth,
+            child: value is Widget ? value : text(value),
             fillColor: mouseOver ? Colors.black26 : Colors.transparent,
             minWidth: minWidth,
             alignment: Alignment.center);
