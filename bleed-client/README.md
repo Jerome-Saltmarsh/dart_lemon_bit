@@ -138,9 +138,11 @@
 [ ] Defense Tower
 [ ] Fix bug starting new game should reset light maps
 [ ] Fix Game Time
+[TODAY'S GOAL]
+[ ] Battle Royale Mode
+[COMPLETED]
 [x] Hide enemy mana
 [x] Players cannot attack each other
-[COMPLETED]
 [x] Convert Project to Null Safe
 [x] Game Status
 [x] Knight fix ability death strike

@@ -113,10 +113,15 @@ void main() {
       final Hunter hunter = global.findPendingHunterGame();
       final Player player = Player(x: 0, y: 600, game: hunter, team: -1);
       player.type = CharacterType.Human;
+      player.weapons = [
+        Weapon(type: WeaponType.HandGun, damage: 1, capacity: 35),
+      ];
       registerPlayer(player);
       hunter.players.add(player);
       compileWholeGame(hunter);
       compilePlayerJoined(_buffer, player);
+      compilePlayerWeapon(_buffer, player);
+      compilePlayerWeapons(_buffer, player);
       compileGameStatus(_buffer, hunter.status);
       sendAndClearBuffer();
     }

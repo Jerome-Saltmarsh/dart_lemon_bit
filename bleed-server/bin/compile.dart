@@ -140,10 +140,10 @@ String compileTiles(List<List<Tile>> tiles) {
   return buffer.toString();
 }
 
-void compileWeapons(StringBuffer buffer, List<Weapon> weapons) {
+void compilePlayerWeapons(StringBuffer buffer, Player player) {
   _write(buffer, ServerResponse.Weapons.index);
-  _write(buffer, weapons.length);
-  for (Weapon weapon in weapons) {
+  _write(buffer, player.weapons.length);
+  for (Weapon weapon in player.weapons) {
     compileWeapon(buffer, weapon);
   }
 }
@@ -225,16 +225,20 @@ void compilePlayer(StringBuffer buffer, Player player) {
 
   if (player.equippedWeaponChanged) {
     player.equippedWeaponChanged = false;
-    _write(buffer, ServerResponse.Player_Weapon.index);
-    _write(buffer, player.weapon.type.index);
+    compilePlayerWeapon(buffer, player);
   }
 
   if (player.weaponsDirty) {
     player.weaponsDirty = false;
-    compileWeapons(buffer, player.weapons);
+    compilePlayerWeapons(buffer, player);
   }
 
   _compilePlayerEvents(buffer, player);
+}
+
+void compilePlayerWeapon(StringBuffer buffer, Player player){
+  _write(buffer, ServerResponse.Player_Weapon.index);
+  _write(buffer, player.weapon.type.index);
 }
 
 void _compilePlayerEvents(StringBuffer buffer, Player player) {
