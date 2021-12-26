@@ -19,9 +19,7 @@ const _framesPerDirection2 = 2;
 const _framesPerDirection3 = 3;
 const _framesPerDirection4 = 4;
 
-// final Vector2 _humanWalkingHandgun = Vector2(1, 708);
-// final Vector2 _humanWalkingShotgun = Vector2(1, 965);
-final Vector2 _humanChanging = Vector2(1, 1479);
+// final Vector2 _humanChanging = Vector2(1, 1479);
 final Vector2 _humanDying = Vector2(1, 1736);
 final Vector2 _humanFiringHandgun = Vector2(1, 258);
 final Vector2 _humanFiringShotgun = Vector2(1, 1);
@@ -178,8 +176,8 @@ Float32List mapSrcHuman({
       }
       double _s = direction.index * _size * 2;
       double _f = _frame * _size;
-      _src[0] = _s + _f + _humanChanging.x;
-      _src[1] = _size + _humanChanging.y;
+      _src[0] = _s + _f + atlas.human.changing.x;
+      _src[1] = _size + atlas.human.changing.y;
       break;
   }
   _src[2] = _src[0] + _size;

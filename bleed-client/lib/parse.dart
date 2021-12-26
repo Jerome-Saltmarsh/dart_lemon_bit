@@ -58,14 +58,10 @@ int _index = 0;
 const String _space = " ";
 const String _semiColon = ";";
 const String _comma = ",";
-const String _1 = "1";
 
 // enums
 const List<ServerResponse> serverResponses = ServerResponse.values;
 const List<GameEventType> gameEventTypes = GameEventType.values;
-
-// properties
-// String get _text => event;
 
 String get _currentCharacter => compiledGame[_index];
 
