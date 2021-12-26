@@ -12,6 +12,7 @@ import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/cube/camera3d.dart';
+import 'package:bleed_client/debug.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/mappers/mapWeaponToDecorationImage.dart';
@@ -698,15 +699,14 @@ Widget buildMenu() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        if (game.settings.developMode) buildToggleDebug(),
-        if (game.settings.developMode) width8,
-        if (game.settings.developMode) _buildToggleEdit(),
+        if (debug) buildToggleDebug(),
+        if (debug) width8,
+        if (debug) _buildToggleEdit(),
         buttons.exit,
         buttons.changeCharacter,
         buttons.audio,
         width8,
         buildToggleFullscreen(),
-        if (game.settings.developMode) width8,
       ],
     );
   });
