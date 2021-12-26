@@ -18,6 +18,7 @@ import 'common/GameStatus.dart';
 import 'common/PlayerEvent.dart';
 import 'common/ServerResponse.dart';
 import 'common/Tile.dart';
+import 'common/WeaponType.dart';
 import 'common/classes/Vector2.dart';
 import 'games/moba.dart';
 import 'games/world.dart';
@@ -374,6 +375,7 @@ void _compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, _comma);
   _write(buffer, (player.health / player.maxHealth) * 100);
   _write(buffer, (player.magic / player.maxMagic) * 100);
+  _write(buffer, player.isHuman ? player.weapon.type.index : WeaponType.Unarmed.index);
 }
 
 void _compileNpc(StringBuffer buffer, Npc npc) {

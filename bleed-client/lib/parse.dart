@@ -701,6 +701,7 @@ void _consumeHuman(Character character) {
   character.text = textBuffer.toString().trim();
   character.health = _consumePercentage();
   character.magic = _consumePercentage();
+  character.weapon = _consumeWeaponType();
 }
 
 void _consumeZombie(Zombie zombie) {

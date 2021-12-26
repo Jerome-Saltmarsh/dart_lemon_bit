@@ -75,6 +75,8 @@ class Player extends Character with Entity {
 
   final List<PlayerEvent> events = [];
 
+  bool get isHuman => type == CharacterType.Human;
+
   void dispatch(PlayerEvent event){
     events.add(event);
   }
