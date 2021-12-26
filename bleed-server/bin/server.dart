@@ -250,99 +250,98 @@ void main() {
             return;
           }
 
-          if (!player.busy && !player.dead) {
-            int actionIndex = int.parse(arguments[2]);
-            CharacterAction action = characterActions[actionIndex];
-            double mouseX = double.parse(arguments[4]);
-            double mouseY = double.parse(arguments[5]);
+          if (player.busy || player.dead){
+            sendCompiledPlayerState(game, player);
+            return;
+          }
 
+          final int actionIndex = int.parse(arguments[2]);
+          final CharacterAction action = characterActions[actionIndex];
+          final double mouseX = double.parse(arguments[4]);
+          final double mouseY = double.parse(arguments[5]);
 
-            if (!player.isHuman) {
-              Character? closestEnemy = game.getClosestEnemy(
-                  mouseX,
-                  mouseY,
-                  player.team
-              );
+          if (!player.isHuman) {
+            Character? closestEnemy =
+                game.getClosestEnemy(mouseX, mouseY, player.team);
 
-              player.aimTarget = null;
-              if (closestEnemy != null) {
+            player.aimTarget = null;
+            if (closestEnemy != null) {
+              if (withinDistance(
+                  closestEnemy, mouseX, mouseY, settings.radius.cursor)) {
                 if (withinDistance(
-                    closestEnemy, mouseX, mouseY, settings.radius.cursor)) {
-                  if (withinDistance(
-                      closestEnemy, player.x, player.y, player.attackRange)) {
-                    player.aimTarget = closestEnemy;
-                  }
+                    closestEnemy, player.x, player.y, player.attackRange)) {
+                  player.aimTarget = closestEnemy;
                 }
               }
             }
+          }
 
-            switch (action) {
-              case CharacterAction.Idle:
-                game.setCharacterState(player, CharacterState.Idle);
+          switch (action) {
+            case CharacterAction.Idle:
+              game.setCharacterState(player, CharacterState.Idle);
+              break;
+            case CharacterAction.Perform:
+              if (player.isHuman) {
+                characterFace(player, mouseX, mouseY);
+                game.setCharacterState(player, CharacterState.Firing);
                 break;
-              case CharacterAction.Perform:
+              }
+              Ability? ability = player.ability;
+              player.attackTarget = player.aimTarget;
 
-                if (player.isHuman){
-                  game.setCharacterState(player, CharacterState.Firing);
-                  break;
+              if (ability == null) {
+                if (player.type == CharacterType.Swordsman ||
+                    player.attackTarget != null) {
+                  characterAimAt(player, mouseX, mouseY);
+                  game.setCharacterState(player, CharacterState.Striking);
                 }
-                Ability? ability = player.ability;
-                player.attackTarget = player.aimTarget;
+                break;
+              }
 
-                if (ability == null) {
-                  if (player.type == CharacterType.Swordsman ||
-                      player.attackTarget != null) {
-                    characterAimAt(player, mouseX, mouseY);
-                    game.setCharacterState(player, CharacterState.Striking);
+              if (player.magic < ability.magicCost) {
+                error(GameError.InsufficientMana);
+                break;
+              }
+
+              if (ability.cooldownRemaining > 0) {
+                error(GameError.Cooldown_Remaining);
+                break;
+              }
+
+              switch (ability.mode) {
+                case AbilityMode.None:
+                  return;
+                case AbilityMode.Targeted:
+                  if (player.attackTarget == null) {
+                    return;
                   }
                   break;
-                }
-
-                if (player.magic < ability.magicCost) {
-                  error(GameError.InsufficientMana);
+                case AbilityMode.Activated:
+                  // TODO: Handle this case.
                   break;
-                }
-
-                if (ability.cooldownRemaining > 0) {
-                  error(GameError.Cooldown_Remaining);
+                case AbilityMode.Area:
+                  // TODO: Handle this case.
                   break;
-                }
+                case AbilityMode.Directed:
+                  // TODO: Handle this case.
+                  break;
+              }
 
-                switch (ability.mode) {
-                  case AbilityMode.None:
-                    return;
-                  case AbilityMode.Targeted:
-                    if (player.attackTarget == null) {
-                      return;
-                    }
-                    break;
-                  case AbilityMode.Activated:
-                    // TODO: Handle this case.
-                    break;
-                  case AbilityMode.Area:
-                    // TODO: Handle this case.
-                    break;
-                  case AbilityMode.Directed:
-                    // TODO: Handle this case.
-                    break;
-                }
+              // @on player perform ability
+              player.magic -= ability.magicCost;
+              player.performing = ability;
+              ability.cooldownRemaining = ability.cooldown;
+              player.abilitiesDirty = true;
+              player.ability = null;
 
-                // @on player perform ability
-                player.magic -= ability.magicCost;
-                player.performing = ability;
-                ability.cooldownRemaining = ability.cooldown;
-                player.abilitiesDirty = true;
-                player.ability = null;
-
-                characterAimAt(player, mouseX, mouseY);
-                game.setCharacterState(player, CharacterState.Performing);
-                break;
-              case CharacterAction.Run:
-                Direction direction = directions[int.parse(arguments[3])];
-                setDirection(player, direction);
-                game.setCharacterState(player, CharacterState.Running);
-                break;
-            }
+              characterAimAt(player, mouseX, mouseY);
+              game.setCharacterState(player, CharacterState.Performing);
+              break;
+            case CharacterAction.Run:
+              Direction direction = directions[int.parse(arguments[3])];
+              setDirection(player, direction);
+              game.setCharacterState(player, CharacterState.Running);
+              break;
           }
           sendCompiledPlayerState(game, player);
           return;
