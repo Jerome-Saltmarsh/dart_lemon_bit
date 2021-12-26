@@ -107,13 +107,14 @@
 [ ] Cave Level
 [ ] Ability Tree
 [GAME TYPES]
+[ ] COUNTER STRIKE
 [ ] MOBA
 [ ] MMO
-[ ] DEFENSE
+[ ] FORTRESS DEFENSE
 [ ] SMASH BROS
 [ ] BATTLE ROYAL
 [ ] SOCCER
-[ ] GOLDEN EYE
+[ ] GOLDEN EYE / PERFECT DARK
 [ ] BATTLEFIELD (Capture flags)
 - This uses guns and abilities
 [RELEASE]

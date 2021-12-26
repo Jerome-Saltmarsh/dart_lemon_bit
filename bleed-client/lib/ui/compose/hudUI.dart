@@ -13,6 +13,7 @@ import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/cube/camera3d.dart';
 import 'package:bleed_client/debug.dart';
+import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/mappers/mapWeaponToDecorationImage.dart';
@@ -467,23 +468,17 @@ class _Buttons {
         callback: toggleAudio,
         child: border(child: text(audio ? "Audio On" : "Audio Off")));
   });
-}
 
-
-Widget topLeft({required Widget child}) {
-  return Positioned(
-    top: 0,
-    left: 0,
-    child: child,
+  final Widget leaveRegion =  button(
+      "REGION ${toString(game.region.value).toUpperCase()}",
+      deselectRegion,
+      minWidth: 200,
+      hint: 'Region'
   );
 }
 
-Widget topRight({required Widget child}) {
-  return Positioned(
-    top: 0,
-    right: 0,
-    child: child,
-  );
+void deselectRegion(){
+  game.region.value = Region.None;
 }
 
 Widget buildUIHunter() {

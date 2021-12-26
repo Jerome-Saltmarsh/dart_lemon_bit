@@ -213,3 +213,20 @@ final Widget blank = const Positioned(
   top: 0,
   left: 0,
 );
+
+
+Widget topLeft({required Widget child, double padding = 0}) {
+  return Positioned(
+    top: padding,
+    left: padding,
+    child: child,
+  );
+}
+
+Widget topRight({required Widget child, double padding = 0}) {
+  return Positioned(
+    top: padding,
+    right: padding,
+    child: child,
+  );
+}

@@ -717,8 +717,7 @@ extension GameFunctions on Game {
         character.stateDuration = settings.duration.strike;
         break;
       case CharacterState.Performing:
-        characterAimAt(
-            character, character.abilityTarget.x, character.abilityTarget.y);
+        characterAimAt(character, character.abilityTarget.x, character.abilityTarget.y);
         character.stateDuration = settings.duration.strike;
         break;
       default:
