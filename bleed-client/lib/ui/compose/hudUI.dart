@@ -419,10 +419,6 @@ Widget buildBottomCenter() {
       ));
 }
 
-void closeJoinGameDialog() {
-  hud.joinGameVisible.setFalse();
-}
-
 Widget buildConnected(GameType gameType) {
   print("ui.buildConnected()");
 
@@ -457,7 +453,20 @@ Widget buildConnected(GameType gameType) {
   });
 }
 
-final Widget exitButton = button('Exit', game.exit);
+final _Buttons buttons = _Buttons();
+
+class _Buttons {
+  final Widget exit = button('Exit', game.exit);
+  final Widget changeCharacter = button("Change Hero", () {
+    sendClientRequest(ClientRequest.Reset_Character_Type);
+  });
+  final Widget audio = WatchBuilder(game.settings.audioMuted, (bool audio) {
+    return onPressed(
+        callback: toggleAudio,
+        child: border(child: text(audio ? "Audio On" : "Audio Off")));
+  });
+}
+
 
 Widget topLeft({required Widget child}) {
   return Positioned(
@@ -479,7 +488,7 @@ Widget buildUIHunter() {
   return Stack(
     children: [
       topLeft(child: text("HUNTER GAME")),
-      topRight(child: exitButton),
+      topRight(child: buttons.exit),
     ],
   );
 }
@@ -487,7 +496,7 @@ Widget buildUIHunter() {
 Widget buildUI3DCube() {
   return Column(
     children: [
-      exitButton,
+      buttons.exit,
       Refresh(() {
         return text('camera3D.rotation: ${camera3D.rotation}');
       }),
@@ -574,6 +583,7 @@ Widget buildUIStandardRolePlaying() {
       return Stack(
         children: [
           topLeft(child: text("Gun Mode")),
+          topRight(child: buttons.exit),
         ],
       );
     }
@@ -663,14 +673,6 @@ Widget buildTopRight() {
   );
 }
 
-Widget buildToggleAudio() {
-  return WatchBuilder(game.settings.audioMuted, (bool audio) {
-    return onPressed(
-        callback: toggleAudio,
-        child: border(child: text(audio ? "Audio On" : "Audio Off")));
-  });
-}
-
 Widget _buildSettingsIcon() {
   return buildDecorationImage(
       image: icons.settings, width: 40, height: 40, borderWidth: 0);
@@ -682,10 +684,6 @@ Widget _buildToggleEdit() {
 
 Widget buildToggleDebug() {
   return button("Debug", toggleDebugMode);
-}
-
-Widget buildSelectGameDialogToggle() {
-  return button("Join", hud.joinGameVisible.toggle);
 }
 
 void toggleDebugMode() {
@@ -703,14 +701,9 @@ Widget buildMenu() {
         if (game.settings.developMode) buildToggleDebug(),
         if (game.settings.developMode) width8,
         if (game.settings.developMode) _buildToggleEdit(),
-        buildSelectGameDialogToggle(),
-        button("Exit", () {
-          game.type.value = GameType.None;
-        }),
-        button("Change Hero", () {
-          sendClientRequest(ClientRequest.Reset_Character_Type);
-        }),
-        buildToggleAudio(),
+        buttons.exit,
+        buttons.changeCharacter,
+        buttons.audio,
         width8,
         buildToggleFullscreen(),
         if (game.settings.developMode) width8,
