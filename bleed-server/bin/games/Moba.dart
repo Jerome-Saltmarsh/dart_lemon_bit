@@ -35,7 +35,6 @@ class Moba extends Game {
   int teamLivesWest = 10;
   int teamLivesEast = 10;
 
-
   Moba() : super(scenes.wildernessNorth01, status: GameStatus.Awaiting_Players, gameType: GameType.Moba) {
     creepWestObjectives = [right, top, left];
     creepEastObjectives = [left, top, right];

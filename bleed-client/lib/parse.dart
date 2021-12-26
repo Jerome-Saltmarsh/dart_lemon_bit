@@ -126,7 +126,7 @@ void parseState() {
         break;
 
       case ServerResponse.Player_Weapon:
-        game.player.weapon.value = _consumeWeaponType();
+        game.player.weaponType.value = _consumeWeaponType();
         break;
 
       case ServerResponse.Weapons:

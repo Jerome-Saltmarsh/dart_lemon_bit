@@ -113,7 +113,7 @@ class _Player {
   double x = -1;
   double y = -1;
   final Watch<String> uuid = Watch("");
-  final Watch<WeaponType> weapon = Watch(WeaponType.Unarmed);
+  final Watch<WeaponType> weaponType = Watch(WeaponType.Unarmed);
   final List<Weapon> weapons = [];
   final Watch<int> equippedRounds = Watch(0);
   final Watch<int> equippedCapacity = Watch(0);

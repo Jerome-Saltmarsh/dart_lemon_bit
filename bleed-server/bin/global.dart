@@ -3,8 +3,8 @@ import 'package:bleed_server/CubeGame.dart';
 import 'classes/Game.dart';
 import 'classes/Player.dart';
 import 'compile.dart';
-import 'games/Hunter.dart';
-import 'games/moba.dart';
+import 'games/Royal.dart';
+import 'games/Moba.dart';
 import 'settings.dart';
 
 final _Global global = _Global();
@@ -23,15 +23,15 @@ class _Global {
     return Moba();
   }
 
-  Hunter findPendingHunterGame() {
+  Royal findPendingHunterGame() {
     for (Game game in global.games) {
-      if (game is Hunter) {
+      if (game is Royal) {
         if (game.awaitingPlayers) {
           return game;
         }
       }
     }
-    return Hunter();
+    return Royal();
   }
 
 

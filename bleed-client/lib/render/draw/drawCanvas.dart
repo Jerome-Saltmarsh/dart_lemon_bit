@@ -103,12 +103,18 @@ void renderGame(Canvas canvas, Size size) {
   drawProjectiles(game.projectiles);
   drawBulletHoles(game.bulletHoles);
 
-  drawAbility();
 
-  Vector2 attackTarget = game.player.attackTarget;
-  if (attackTarget.x != 0 && attackTarget.y != 0){
-    drawCircle(attackTarget.x, attackTarget.y, 20, Colors.white24);
+
+  if (game.player.isHuman){
+    // drawCircle(game.player.w.x, attackTarget.y, 20, Colors.white24);
+  } else {
+    drawAbility();
+    Vector2 attackTarget = game.player.attackTarget;
+    if (attackTarget.x != 0 && attackTarget.y != 0){
+      drawCircle(attackTarget.x, attackTarget.y, 20, Colors.white24);
+    }
   }
+
 
   setColorWhite();
   drawSprites();
@@ -433,7 +439,7 @@ void _drawMouseAim() {
   double mouseDistance =
       distanceBetween(mouseWorldX, mouseWorldY, game.player.x, game.player.y);
 
-  double scope = mapWeaponAimLength(game.player.weapon.value);
+  double scope = mapWeaponAimLength(game.player.weaponType.value);
   double d = min(mouseDistance, scope);
 
   double vX = adjacent(angle, d);

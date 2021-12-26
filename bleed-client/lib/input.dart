@@ -161,7 +161,6 @@ class _Keys {
   LogicalKeyboardKey runDown = key.s;
   LogicalKeyboardKey runLeft = key.a;
   LogicalKeyboardKey throwGrenade = key.g;
-  LogicalKeyboardKey melee = key.f;
   LogicalKeyboardKey equip1 = key.digit1;
   LogicalKeyboardKey equip2 = LogicalKeyboardKey.digit2;
   LogicalKeyboardKey equip3 = LogicalKeyboardKey.digit3;
@@ -203,7 +202,6 @@ final List<String> waitASecond = ['Wait a second', 'Just a moment'];
 Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.interact: sendRequestInteract,
   keys.perform: performPrimaryAction,
-  keys.melee: melee,
   keys.speakLetsGo: sayLetsGo,
   keys.speakLetsGreeting: sayGreeting,
   keys.waitASecond: sayWaitASecond,
@@ -243,7 +241,13 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   },
   keys.equip1B: selectAbility1,
   keys.equip2B: selectAbility2,
-  keys.equip3B: selectAbility3,
+  keys.equip3B: (){
+    if (game.player.isHuman){
+      melee();
+    }else{
+      selectAbility3();
+    }
+  },
   keys.equip4B: selectAbility4,
   keys.cubeFace0: (){
     // storage.
@@ -334,7 +338,7 @@ Map<LogicalKeyboardKey, Function> _keyHeldHandlers = {
 };
 
 Map<LogicalKeyboardKey, Function> _keyReleasedHandlers = {
-  keys.melee: stopMelee,
+  // keys.melee: stopMelee,
 };
 
 void onMouseScroll(double amount) {
@@ -344,40 +348,17 @@ void onMouseScroll(double amount) {
   cameraCenter(center1.dx, center1.dy);
 }
 
-// void runLeft() {
-//   setCharacterDirection(Direction.Left);
-//   setCharacterActionRun();
-// }
-//
-// void runUp() {
-//   setCharacterDirection(Direction.Up);
-//   setCharacterActionRun();
-// }
-//
-// void runRight() {
-//   setCharacterActionRun();
-//   setCharacterDirection(Direction.Right);
-// }
-//
-// void runDown() {
-//   setCharacterActionRun();
-//   setCharacterDirection(Direction.Down);
-// }
-
 void stopRunLeft() {
   setCharacterActionRun();
   setCharacterDirection(Direction.Left);
 }
 
 void melee() {
-  // characterController.characterState = CharacterState.Striking;
+  // characterController.action.value = CharacterAction.
   // characterController.direction = convertAngleToDirection(characterController.requestAim);
+  // sendRequestMe
 }
 
-void stopMelee() {
-  // if (characterController.characterState != CharacterState.Striking) return;
-  // characterController.characterState = CharacterState.Idle;
-}
 
 void _handleKeyDownEventPlayMode(RawKeyDownEvent event) {
   LogicalKeyboardKey key = event.logicalKey;

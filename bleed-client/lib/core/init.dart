@@ -153,7 +153,7 @@ void initializeEventListeners() {
     sharedPreferences.setBool('audioMuted', value);
   });
 
-  game.player.weapon.onChanged(onPlayerWeaponChanged);
+  game.player.weaponType.onChanged(onPlayerWeaponChanged);
 
   onRightClickChanged.stream.listen((bool down) {
     if (down) {

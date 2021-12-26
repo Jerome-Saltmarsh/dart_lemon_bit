@@ -441,7 +441,7 @@ Widget buildConnected(GameType gameType) {
             case GameType.Moba:
               return buildUIStandardRolePlaying();
             case GameType.BATTLE_ROYAL:
-              return buildUIHunter();
+              return buildUIBattleRoyal();
             case GameType.CUBE3D:
               return buildUI3DCube();
             default:
@@ -481,10 +481,10 @@ void deselectRegion(){
   game.region.value = Region.None;
 }
 
-Widget buildUIHunter() {
+Widget buildUIBattleRoyal() {
   return Stack(
     children: [
-      topLeft(child: text("HUNTER GAME")),
+      topLeft(child: text("ZOMBIE ROYAL")),
       topRight(child: buttons.exit),
     ],
   );
@@ -525,7 +525,7 @@ Widget buildUIAwaitingPlayers() {
       Row(
         mainAxisAlignment: axis.main.apart,
         children: [
-          text("MOBA"),
+          text(toString(game.type.value)),
           button("Cancel", game.leaveLobby),
         ],
       ),
@@ -578,7 +578,7 @@ Widget buildUIStandardRolePlaying() {
 
     if (value == CharacterType.Human) {
 
-      return WatchBuilder(game.player.weapon, (WeaponType weaponType){
+      return WatchBuilder(game.player.weaponType, (WeaponType weaponType){
         return Stack(
           children: [
             topLeft(child: text(toString(weaponType))),
@@ -1107,7 +1107,7 @@ Widget buildWeaponMenu() {
       crossAxisAlignment: axis.cross.start,
       children: [
         if (mouseOver) buildExpandedWeapons(),
-        WatchBuilder(game.player.weapon, buildEquippedWeaponSlot)
+        WatchBuilder(game.player.weaponType, buildEquippedWeaponSlot)
       ],
     );
   });

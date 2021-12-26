@@ -25,8 +25,8 @@ import 'common/version.dart';
 import 'compile.dart';
 import 'functions/loadScenes.dart';
 import 'functions/withinRadius.dart';
-import 'games/Hunter.dart';
-import 'games/moba.dart';
+import 'games/Royal.dart';
+import 'games/Moba.dart';
 import 'games/world.dart';
 import 'global.dart';
 import 'settings.dart';
@@ -110,7 +110,7 @@ void main() {
     }
 
     void joinBattleRoyal(){
-      final Hunter hunter = global.findPendingHunterGame();
+      final Royal hunter = global.findPendingHunterGame();
       final Player player = Player(x: 0, y: 600, game: hunter, team: -1);
       player.type = CharacterType.Human;
       player.weapons = [

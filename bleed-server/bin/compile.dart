@@ -20,7 +20,7 @@ import 'common/ServerResponse.dart';
 import 'common/Tile.dart';
 import 'common/WeaponType.dart';
 import 'common/classes/Vector2.dart';
-import 'games/moba.dart';
+import 'games/Moba.dart';
 import 'games/world.dart';
 
 // constants
