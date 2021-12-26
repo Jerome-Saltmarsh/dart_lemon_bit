@@ -13,7 +13,7 @@ import 'package:lemon_engine/game.dart';
 
 const _buttonWidth = 180.0;
 
-Widget buildHomePage() {
+Widget buildSelectGame() {
   return page(children: [
     fullScreen(
         child: Column(
@@ -40,13 +40,9 @@ Positioned _buildTopRight() {
 }
 
 Widget _buildServerButton() {
-  return button(
-      toString(game.serverType.value), () {
+  return button(toString(game.serverType.value), () {
     game.serverType.value = ServerType.None;
-  },
-      minWidth: _buttonWidth,
-      hint: 'Region'
-  );
+  }, minWidth: _buttonWidth, hint: 'Region');
 }
 
 Container _buildTitle() {
@@ -61,21 +57,23 @@ Widget _buildPanelGames() {
     crossAxisAlignment: axis.cross.stretch,
     children: [
       ...selectableGameTypes.map((GameType value) {
+        final Widget type =
+            Container(width: 140, child: text(toString(value).toUpperCase()));
+        final Widget joinButton = button(
+          gameTypeNames[value],
+          () {
+            game.type.value = value;
+          },
+          minWidth: _buttonWidth,
+        );
         return Container(
           margin: const EdgeInsets.only(bottom: 16),
           child: Row(
             mainAxisAlignment: axis.main.center,
             children: [
-              Container(
-                  width: 100,
-                  child: text(toString(value).toUpperCase())),
+              joinButton,
               width16,
-              button(gameTypeNames[value],
-                () {
-                  game.type.value = value;
-                },
-                minWidth: _buttonWidth,
-              ),
+              type,
             ],
           ),
         );

@@ -19,7 +19,7 @@ Widget buildUI(BuildContext context) {
 
     return WatchBuilder(game.type, (GameType gameType) {
       if (gameType == GameType.None) {
-        return buildHomePage();
+        return buildSelectGame();
       }
 
       return WatchBuilder(connection, (Connection connection){
