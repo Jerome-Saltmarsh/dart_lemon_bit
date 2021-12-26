@@ -100,7 +100,7 @@ Float32List mapSrcHuman({
           double _di = direction.index * _size * _framesPerDirection2;
           double _fr = _frame * _size;
           _src[0] = atlas.human.handgun.firing.x + _di + _fr;
-          _src[1] = atlas.human.handgun.firing.y + _size;
+          _src[1] = atlas.human.handgun.firing.y;
           break;
 
         case WeaponType.Shotgun:
@@ -109,7 +109,7 @@ Float32List mapSrcHuman({
           double _di = direction.index * _size * _framesPerDirection3;
           double _fr = _frame * _size;
           _src[0] = atlas.human.shotgun.firing.x + _di + _fr;
-          _src[1] = atlas.human.shotgun.firing.y + _size;
+          _src[1] = atlas.human.shotgun.firing.y;
           break;
 
         default:
@@ -144,6 +144,18 @@ Float32List mapSrcHuman({
               frame: frame
           );
         case WeaponType.Shotgun:
+          return loop(
+              atlas: atlas.human.shotgun.walking,
+              direction: direction,
+              frame: frame
+          );
+        case WeaponType.SniperRifle:
+          return loop(
+              atlas: atlas.human.shotgun.walking,
+              direction: direction,
+              frame: frame
+          );
+        case WeaponType.AssaultRifle:
           return loop(
               atlas: atlas.human.shotgun.walking,
               direction: direction,
