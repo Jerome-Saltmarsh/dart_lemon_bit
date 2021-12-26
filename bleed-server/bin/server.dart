@@ -368,7 +368,7 @@ void main() {
             case GameType.CUBE3D:
               joinCube3D();
               break;
-            case GameType.HUNTER:
+            case GameType.BATTLE_ROYAL:
               joinHunter();
               break;
           }

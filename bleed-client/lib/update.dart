@@ -39,7 +39,7 @@ void updatePlayMode() {
     case GameType.Moba:
       _updateBleed();
       break;
-    case GameType.HUNTER:
+    case GameType.BATTLE_ROYAL:
       _updateBleed();
       break;
     case GameType.CUBE3D:

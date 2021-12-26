@@ -441,7 +441,7 @@ Widget buildConnected(GameType gameType) {
               return buildUIStandardRolePlaying();
             case GameType.Moba:
               return buildUIStandardRolePlaying();
-            case GameType.HUNTER:
+            case GameType.BATTLE_ROYAL:
               return buildUIHunter();
             case GameType.CUBE3D:
               return buildUI3DCube();
