@@ -8,6 +8,8 @@ import 'package:bleed_client/render/constants/animations.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:lemon_engine/classes/vector2.dart';
 
+import 'loop.dart';
+
 const _size = 64.0;
 
 final _manFramesFiringHandgunMax = animations.man.firingHandgun.length - 1;
@@ -31,12 +33,11 @@ final Vector2 _humanFiringShotgun = Vector2(1, 1);
 
 final Float32List _src = Float32List(4);
 
-Float32List mapSrcHuman({
-  required WeaponType weapon,
-  required CharacterState state,
-  required Direction direction,
-  required int frame
-}) {
+Float32List mapSrcHuman(
+    {required WeaponType weapon,
+    required CharacterState state,
+    required Direction direction,
+    required int frame}) {
   switch (state) {
     case CharacterState.Idle:
       switch (weapon) {
@@ -169,11 +170,11 @@ Float32List mapSrcHuman({
           _src[1] = _size + _humanWalkingShotgun.y;
           break;
         default:
-          _s = direction.index * _size * 4;
-          _f = (frame % 4) * _size;
-          _src[0] = _s + _f + _humanRunning.x;
-          _src[1] = _size + _humanRunning.y;
-          break;
+          return loop(
+            atlas: _humanRunning,
+            direction: direction,
+            frame: frame,
+          );
       }
       break;
 

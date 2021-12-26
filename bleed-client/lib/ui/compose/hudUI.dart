@@ -356,7 +356,7 @@ Widget buildToggleFullscreen() {
   );
 }
 
-Widget buildDialogSelectHero() {
+Widget buildDialogSelectCharacterType() {
   final fontSize = 20;
   return dialog(
       color: Colors.white24,
@@ -559,7 +559,7 @@ Widget buildUIStandardRolePlaying() {
 
   return WatchBuilder(game.player.characterType, (CharacterType value) {
     if (value == CharacterType.None) {
-      return buildDialogSelectHero();
+      return buildDialogSelectCharacterType();
     }
 
     return WatchBuilder(game.player.alive, (bool alive) {
