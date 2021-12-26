@@ -125,6 +125,11 @@ void parseState() {
         game.teamLivesEast.value = consumeInt();
         break;
 
+      case ServerResponse.Game_Meta:
+        game.teamSize.value = consumeInt();
+        game.numberOfTeams.value = consumeInt();
+        break;
+
       case ServerResponse.Player_Weapon:
         game.player.weaponType.value = _consumeWeaponType();
         break;
