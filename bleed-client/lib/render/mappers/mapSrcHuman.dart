@@ -168,7 +168,7 @@ Float32List mapSrcHuman({
       double _s = direction.index * _size * 2;
       double _f = _frame * _size;
       _src[0] = _s + _f + atlas.human.changing.x;
-      _src[1] = _size + atlas.human.changing.y;
+      _src[1] = atlas.human.changing.y;
       break;
   }
   _src[2] = _src[0] + _size;

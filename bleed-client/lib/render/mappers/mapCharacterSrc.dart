@@ -10,7 +10,7 @@ import 'package:bleed_client/render/constants/animations.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/mappers/mapArcherToSrc.dart';
 import 'package:bleed_client/render/mappers/mapKnightToSrc.dart';
-import 'package:bleed_client/render/mappers/mapSrcHuma.dart';
+import 'package:bleed_client/render/mappers/mapSrcHuman.dart';
 import 'package:bleed_client/render/mappers/mapSrcWitch.dart';
 import 'package:bleed_client/render/mappers/mapSrcZombie.dart';
 

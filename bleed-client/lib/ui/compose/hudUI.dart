@@ -40,6 +40,7 @@ import 'package:lemon_engine/state/zoom.dart';
 import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
+import '../../toString.dart';
 import 'buildTextBox.dart';
 
 const double _padding = 8;
@@ -581,12 +582,15 @@ Widget buildUIStandardRolePlaying() {
     }
 
     if (value == CharacterType.Human) {
-      return Stack(
-        children: [
-          topLeft(child: text("Gun Mode")),
-          topRight(child: buttons.exit),
-        ],
-      );
+
+      return WatchBuilder(game.player.weapon, (WeaponType weaponType){
+        return Stack(
+          children: [
+            topLeft(child: text(toString(weaponType))),
+            topRight(child: buttons.exit),
+          ],
+        );
+      });
     }
 
     return WatchBuilder(game.player.alive, (bool alive) {
