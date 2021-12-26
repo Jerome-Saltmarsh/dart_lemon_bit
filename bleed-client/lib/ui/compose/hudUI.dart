@@ -442,7 +442,7 @@ Widget buildConnected(GameType gameType) {
             case GameType.Moba:
               return buildUIStandardRolePlaying();
             case GameType.HUNTER:
-              return text("HUNTER GAME");
+              return buildUIHunter();
             case GameType.CUBE3D:
               return buildUI3DCube();
             default:
@@ -457,10 +457,29 @@ Widget buildConnected(GameType gameType) {
   });
 }
 
+final Widget exitButton = button('Exit', game.exit);
+
+Widget topLeft({required Widget child}){
+  return Positioned(top: 0, left: 0, child: child,);
+}
+
+Widget topRight({required Widget child}){
+  return Positioned(top: 0, right: 0, child: child,);
+}
+
+Widget buildUIHunter(){
+  return Stack(
+    children: [
+      topLeft(child: text("HUNTER GAME")),
+      topRight(child: exitButton),
+    ],
+  );
+}
+
 Widget buildUI3DCube(){
   return Column(
     children: [
-      button('Exit', game.exit),
+      exitButton,
       Refresh((){
         return text('camera3D.rotation: ${camera3D.rotation}');
       }),

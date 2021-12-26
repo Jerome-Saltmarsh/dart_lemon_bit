@@ -94,7 +94,6 @@ void sendRequestAcquireAbility(WeaponType type) {
 }
 
 void sendRequestUpdatePlayer() {
-  if (game.status.value == GameStatus.Finished) return;
   _buffer.clear();
   _write(gameUpdateIndex);
   _write(session);

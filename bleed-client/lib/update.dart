@@ -16,6 +16,7 @@ import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/state/zoom.dart';
 import 'package:lemon_math/randomInt.dart';
 
+import 'common/GameStatus.dart';
 import 'functions/emit/emitMyst.dart';
 import 'input.dart';
 import 'network.dart';
@@ -38,6 +39,9 @@ void updatePlayMode() {
     case GameType.Moba:
       _updateBleed();
       break;
+    case GameType.HUNTER:
+      _updateBleed();
+      break;
     case GameType.CUBE3D:
       sendRequestUpdateCube3D();
       break;
@@ -45,6 +49,8 @@ void updatePlayMode() {
 }
 
 void _updateBleed(){
+  if (game.status.value == GameStatus.Finished) return;
+
   updateZoom();
   _updateMenuVisible();
   framesSinceEvent++;
