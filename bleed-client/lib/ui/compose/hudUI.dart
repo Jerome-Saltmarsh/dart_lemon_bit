@@ -436,7 +436,7 @@ Widget buildConnected(GameType gameType) {
         case GameStatus.Awaiting_Players:
           return buildUIAwaitingPlayers();
         case GameStatus.In_Progress:
-          switch(gameType){
+          switch (gameType) {
             case GameType.MMO:
               return buildUIStandardRolePlaying();
             case GameType.Moba:
@@ -459,15 +459,23 @@ Widget buildConnected(GameType gameType) {
 
 final Widget exitButton = button('Exit', game.exit);
 
-Widget topLeft({required Widget child}){
-  return Positioned(top: 0, left: 0, child: child,);
+Widget topLeft({required Widget child}) {
+  return Positioned(
+    top: 0,
+    left: 0,
+    child: child,
+  );
 }
 
-Widget topRight({required Widget child}){
-  return Positioned(top: 0, right: 0, child: child,);
+Widget topRight({required Widget child}) {
+  return Positioned(
+    top: 0,
+    right: 0,
+    child: child,
+  );
 }
 
-Widget buildUIHunter(){
+Widget buildUIHunter() {
   return Stack(
     children: [
       topLeft(child: text("HUNTER GAME")),
@@ -476,11 +484,11 @@ Widget buildUIHunter(){
   );
 }
 
-Widget buildUI3DCube(){
+Widget buildUI3DCube() {
   return Column(
     children: [
       exitButton,
-      Refresh((){
+      Refresh(() {
         return text('camera3D.rotation: ${camera3D.rotation}');
       }),
       // Refresh((){
@@ -489,13 +497,14 @@ Widget buildUI3DCube(){
       // Refresh((){
       //   return text('camera3D.viewportHeight: ${camera3D.viewportHeight.toInt()}');
       // }),
-      Refresh((){
+      Refresh(() {
         return text('camera3D.fov: ${camera3D.fov.toInt()}');
       }),
-      Refresh((){
-        return text('camera.position: { x: ${camera.x.toInt()}, y: ${camera.y.toInt()}}');
+      Refresh(() {
+        return text(
+            'camera.position: { x: ${camera.x.toInt()}, y: ${camera.y.toInt()}}');
       }),
-      Refresh((){
+      Refresh(() {
         return text('camera.zoom: $zoom');
       }),
     ],
@@ -556,10 +565,17 @@ Widget buildFinished() {
 }
 
 Widget buildUIStandardRolePlaying() {
-
   return WatchBuilder(game.player.characterType, (CharacterType value) {
     if (value == CharacterType.None) {
       return buildDialogSelectCharacterType();
+    }
+
+    if (value == CharacterType.Human) {
+      return Stack(
+        children: [
+          topLeft(child: text("Gun Mode")),
+        ],
+      );
     }
 
     return WatchBuilder(game.player.alive, (bool alive) {
@@ -1230,8 +1246,9 @@ Widget _buildViewRespawn() {
                           builder: (BuildContext context, bool mouseOver) {
                         return onPressed(
                           child: border(
-                              child: text("RESPAWN",
-                                  fontWeight: bold,
+                              child: text(
+                                "RESPAWN",
+                                fontWeight: bold,
                               ),
                               padding: padding16,
                               radius: borderRadius4,
@@ -1336,7 +1353,9 @@ Widget buildLowAmmo() {
                 padding: EdgeInsets.all(10),
                 color: Colors.black26,
                 child: text(
-                    game.player.equippedRounds.value == 0 ? "Empty" : "Low Ammo",
+                    game.player.equippedRounds.value == 0
+                        ? "Empty"
+                        : "Low Ammo",
                     fontSize: 20)),
           ],
         ),
@@ -1446,4 +1465,3 @@ Widget buildDialog(Widget child) {
   return Positioned(
       top: 30, child: Container(width: screen.width, child: child));
 }
-
