@@ -1792,7 +1792,7 @@ void changeWeapon(Player player, int index) {
   if (index == player.equippedIndex) return;
   if (index >= player.weapons.length) return;
   player.equippedIndex = index;
-  player.weaponsDirty = true;
+  player.equippedWeaponChanged = true;
   player.game.setCharacterState(player, CharacterState.ChangingWeapon);
 }
 
