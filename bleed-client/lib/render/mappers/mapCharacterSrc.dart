@@ -25,8 +25,8 @@ Float32List mapCharacterSrc({
   switch (type) {
     case CharacterType.Human:
       return mapSrcHuman(
-          weapon: weapon,
-          state: state,
+          weaponType: weapon,
+          characterState: state,
           direction: direction,
           frame: frame
       );

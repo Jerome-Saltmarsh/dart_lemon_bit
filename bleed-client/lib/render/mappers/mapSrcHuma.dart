@@ -19,13 +19,8 @@ const _framesPerDirection2 = 2;
 const _framesPerDirection3 = 3;
 const _framesPerDirection4 = 4;
 
-// final Vector2 _humanIdleUnarmed = Vector2(1538, 1);
-final Vector2 _humanIdleHandgun = Vector2(1026, 258);
-final Vector2 _humanIdleShotgun = Vector2(1539, 258);
-// final Vector2 _humanWalkingUnarmed = Vector2(1, 1222);
 final Vector2 _humanWalkingHandgun = Vector2(1, 708);
 final Vector2 _humanWalkingShotgun = Vector2(1, 965);
-final Vector2 _humanRunning = Vector2(0, 2206);
 final Vector2 _humanChanging = Vector2(1, 1479);
 final Vector2 _humanDying = Vector2(1, 1736);
 final Vector2 _humanFiringHandgun = Vector2(1, 258);
@@ -33,34 +28,49 @@ final Vector2 _humanFiringShotgun = Vector2(1, 1);
 
 final Float32List _src = Float32List(4);
 
-Float32List mapSrcHuman(
-    {required WeaponType weapon,
-    required CharacterState state,
+Float32List mapSrcHuman({
+    required WeaponType weaponType,
+    required CharacterState characterState,
     required Direction direction,
-    required int frame}) {
-  switch (state) {
+    required int frame
+}) {
+  switch (characterState) {
     case CharacterState.Idle:
-      switch (weapon) {
+      switch (weaponType) {
         case WeaponType.HandGun:
-          _src[0] = _humanIdleHandgun.x + (direction.index * _size);
-          _src[1] = _humanIdleHandgun.y;
-          break;
+          return single(
+            atlas: atlas.human.handgun.idle,
+            direction: direction,
+          );
+        case WeaponType.Shotgun:
+          return single(
+            atlas: atlas.human.shotgun.idle,
+            direction: direction,
+          );
         case WeaponType.Unarmed:
-          _src[0] = atlas.human.unarmed.idle.x + (direction.index * _size);
-          _src[1] = atlas.human.unarmed.idle.y;
-          break;
+          return single(
+            atlas: atlas.human.unarmed.idle,
+            direction: direction,
+          );
+        case WeaponType.SniperRifle:
+          return single(
+            atlas: atlas.human.shotgun.idle,
+            direction: direction,
+          );
+        case WeaponType.AssaultRifle:
+          return single(
+            atlas: atlas.human.shotgun.idle,
+            direction: direction,
+          );
         default:
-          _src[0] = _humanIdleShotgun.x + (direction.index * _size);
-          _src[1] = _humanIdleShotgun.y;
-          break;
+          return throw Exception("could not map $weaponType to animation");
       }
-      break;
 
     case CharacterState.Walking:
       double _s = direction.index * _size * _framesPerDirection4;
       double _f = (frame % 4) * _size;
 
-      switch (weapon) {
+      switch (weaponType) {
         case WeaponType.HandGun:
           _src[0] = _s + _f + _humanWalkingHandgun.x;
           _src[1] = _humanWalkingHandgun.y;
@@ -84,7 +94,7 @@ Float32List mapSrcHuman(
       break;
 
     case CharacterState.Aiming:
-      switch (weapon) {
+      switch (weaponType) {
         case WeaponType.HandGun:
           int _frame = 0;
           double _di = direction.index * _size * _framesPerDirection2;
@@ -106,7 +116,7 @@ Float32List mapSrcHuman(
       }
       break;
     case CharacterState.Firing:
-      switch (weapon) {
+      switch (weaponType) {
         case WeaponType.HandGun:
           int _frame = animations
               .man.firingHandgun[min(frame, _manFramesFiringHandgunMax)];
@@ -160,7 +170,7 @@ Float32List mapSrcHuman(
     case CharacterState.Running:
       double _s = direction.index * _size * _framesPerDirection4;
       double _f = (frame % 4) * _size;
-      switch (weapon) {
+      switch (weaponType) {
         case WeaponType.HandGun:
           _src[0] = _s + _f + _humanWalkingHandgun.x;
           _src[1] = _size + _humanWalkingHandgun.y;
@@ -171,7 +181,7 @@ Float32List mapSrcHuman(
           break;
         default:
           return loop(
-            atlas: _humanRunning,
+            atlas: atlas.human.unarmed.running,
             direction: direction,
             frame: frame,
           );

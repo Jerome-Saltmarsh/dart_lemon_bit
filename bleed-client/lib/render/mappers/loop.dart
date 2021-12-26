@@ -22,3 +22,18 @@ Float32List loop({
   _src[3] = _src[1] + size;
   return _src;
 }
+
+Float32List single({
+  required Vector2 atlas,
+  required Direction direction,
+  Shade shade = Shade.Bright,
+  double size = 64,
+}){
+  final double _s = direction.index * size;
+  final double _f = size;
+  _src[0] =  atlas.x + _s + _f;
+  _src[1] = atlas.y + (shade.index * size);
+  _src[2] = _src[0] + size;
+  _src[3] = _src[1] + size;
+  return _src;
+}
