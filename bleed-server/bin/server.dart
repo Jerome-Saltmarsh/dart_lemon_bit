@@ -256,12 +256,22 @@ void main() {
             double mouseX = double.parse(arguments[4]);
             double mouseY = double.parse(arguments[5]);
 
-            Character? closestEnemy = game.getClosestEnemy(mouseX, mouseY, player.team);
-            player.aimTarget = null;
-            if (closestEnemy != null){
-              if (withinDistance(closestEnemy, mouseX, mouseY, settings.radius.cursor)) {
-                if (withinDistance(closestEnemy, player.x, player.y, player.attackRange)) {
-                  player.aimTarget = closestEnemy;
+
+            if (!player.isHuman) {
+              Character? closestEnemy = game.getClosestEnemy(
+                  mouseX,
+                  mouseY,
+                  player.team
+              );
+
+              player.aimTarget = null;
+              if (closestEnemy != null) {
+                if (withinDistance(
+                    closestEnemy, mouseX, mouseY, settings.radius.cursor)) {
+                  if (withinDistance(
+                      closestEnemy, player.x, player.y, player.attackRange)) {
+                    player.aimTarget = closestEnemy;
+                  }
                 }
               }
             }
@@ -271,6 +281,11 @@ void main() {
                 game.setCharacterState(player, CharacterState.Idle);
                 break;
               case CharacterAction.Perform:
+
+                if (player.isHuman){
+                  game.setCharacterState(player, CharacterState.Firing);
+                  break;
+                }
                 Ability? ability = player.ability;
                 player.attackTarget = player.aimTarget;
 
