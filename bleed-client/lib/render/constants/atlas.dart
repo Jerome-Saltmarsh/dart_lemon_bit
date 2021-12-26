@@ -14,10 +14,10 @@ class _Atlas {
   final _Particles particles = _Particles();
   final _Pixels pixels = _Pixels();
   final Vector2 tiles = Vector2(1, 2977);
-  final _Human human = _Human();
   final Vector2 rockWall = Vector2(2217, 1222);
   final Vector2 arrow = Vector2(517, 534);
   final Vector2 items = Vector2(1, 567);
+  final _Human human = _Human();
   final _Witch witch = _Witch();
   final _Archer archer = _Archer();
   final _Knight knight = _Knight();
@@ -40,10 +40,12 @@ class _Unarmed {
 
 class _Handgun {
   final Vector2 idle = Vector2(1026, 258);
+  final Vector2 walking = Vector2(1, 708);
 }
 
 class _Shotgun {
   final Vector2 idle = Vector2(1539, 258);
+  final Vector2 walking = Vector2(1, 965);
 }
 
 class  _Witch {

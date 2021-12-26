@@ -19,14 +19,15 @@ const _framesPerDirection2 = 2;
 const _framesPerDirection3 = 3;
 const _framesPerDirection4 = 4;
 
-final Vector2 _humanWalkingHandgun = Vector2(1, 708);
-final Vector2 _humanWalkingShotgun = Vector2(1, 965);
+// final Vector2 _humanWalkingHandgun = Vector2(1, 708);
+// final Vector2 _humanWalkingShotgun = Vector2(1, 965);
 final Vector2 _humanChanging = Vector2(1, 1479);
 final Vector2 _humanDying = Vector2(1, 1736);
 final Vector2 _humanFiringHandgun = Vector2(1, 258);
 final Vector2 _humanFiringShotgun = Vector2(1, 1);
 
 final Float32List _src = Float32List(4);
+
 
 Float32List mapSrcHuman({
     required WeaponType weaponType,
@@ -36,49 +37,27 @@ Float32List mapSrcHuman({
 }) {
   switch (characterState) {
     case CharacterState.Idle:
-      switch (weaponType) {
-        case WeaponType.HandGun:
-          return single(
-            atlas: atlas.human.handgun.idle,
-            direction: direction,
-          );
-        case WeaponType.Shotgun:
-          return single(
-            atlas: atlas.human.shotgun.idle,
-            direction: direction,
-          );
-        case WeaponType.Unarmed:
-          return single(
-            atlas: atlas.human.unarmed.idle,
-            direction: direction,
-          );
-        case WeaponType.SniperRifle:
-          return single(
-            atlas: atlas.human.shotgun.idle,
-            direction: direction,
-          );
-        case WeaponType.AssaultRifle:
-          return single(
-            atlas: atlas.human.shotgun.idle,
-            direction: direction,
-          );
-        default:
-          return throw Exception("could not map $weaponType to animation");
-      }
-
+      return single(
+        atlas: _idleWeaponTypeVector2[weaponType] ?? _idleWeaponTypeVector2[WeaponType.Unarmed]!,
+        direction: direction,
+      );
     case CharacterState.Walking:
       double _s = direction.index * _size * _framesPerDirection4;
       double _f = (frame % 4) * _size;
 
       switch (weaponType) {
         case WeaponType.HandGun:
-          _src[0] = _s + _f + _humanWalkingHandgun.x;
-          _src[1] = _humanWalkingHandgun.y;
-          break;
+          return loop(
+            atlas: atlas.human.handgun.walking,
+            direction: direction,
+            frame: frame
+          );
         case WeaponType.Shotgun:
-          _src[0] = _s + _f + _humanWalkingShotgun.x;
-          _src[1] = _humanWalkingShotgun.y;
-          break;
+          return loop(
+              atlas: atlas.human.shotgun.walking,
+              direction: direction,
+              frame: frame
+          );
         default:
           _src[0] = _s + _f + atlas.human.unarmed.walking.x;
           _src[1] = atlas.human.unarmed.walking.y;
@@ -168,17 +147,19 @@ Float32List mapSrcHuman({
       _src[3] = _src[1] + 96;
       return _src;
     case CharacterState.Running:
-      double _s = direction.index * _size * _framesPerDirection4;
-      double _f = (frame % 4) * _size;
       switch (weaponType) {
         case WeaponType.HandGun:
-          _src[0] = _s + _f + _humanWalkingHandgun.x;
-          _src[1] = _size + _humanWalkingHandgun.y;
-          break;
+          return loop(
+              atlas: atlas.human.handgun.walking,
+              direction: direction,
+              frame: frame
+          );
         case WeaponType.Shotgun:
-          _src[0] = _s + _f + _humanWalkingShotgun.x;
-          _src[1] = _size + _humanWalkingShotgun.y;
-          break;
+          return loop(
+              atlas: atlas.human.shotgun.walking,
+              direction: direction,
+              frame: frame
+          );
         default:
           return loop(
             atlas: atlas.human.unarmed.running,
@@ -186,8 +167,6 @@ Float32List mapSrcHuman({
             frame: frame,
           );
       }
-      break;
-
     case CharacterState.Reloading:
       throw Exception("Not Implemented");
     case CharacterState.ChangingWeapon:
@@ -207,3 +186,11 @@ Float32List mapSrcHuman({
   _src[3] = _src[1] + _size;
   return _src;
 }
+
+final Map<WeaponType, Vector2> _idleWeaponTypeVector2 = {
+  WeaponType.HandGun: atlas.human.handgun.idle,
+  WeaponType.Shotgun: atlas.human.shotgun.idle,
+  WeaponType.SniperRifle: atlas.human.shotgun.idle,
+  WeaponType.AssaultRifle: atlas.human.shotgun.idle,
+  WeaponType.Unarmed: atlas.human.unarmed.idle,
+};
