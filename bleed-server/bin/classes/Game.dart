@@ -627,20 +627,6 @@ extension GameFunctions on Game {
     character.weapon.rounds--;
 
     switch (character.weapon.type) {
-      case WeaponType.SlowingCircle:
-        casteSlowingCircle(character, x, y);
-        character.stateDuration = coolDown.fireball;
-        break;
-      case WeaponType.Firebolt:
-        Projectile bullet = spawnFireball(character);
-        character.stateDuration = coolDown.fireball;
-        dispatch(GameEventType.Handgun_Fired, x, y, bullet.xv, bullet.yv);
-        break;
-      case WeaponType.Bow:
-        Projectile bow = spawnArrow(character, damage: 5);
-        character.stateDuration = coolDown.bow;
-        dispatch(GameEventType.Arrow_Fired, x, y, bow.xv, bow.yv);
-        break;
       case WeaponType.HandGun:
         Projectile bullet = spawnBullet(character);
         character.stateDuration = coolDown.handgun;
@@ -1840,10 +1826,14 @@ void selectCharacterType(Player player, CharacterType value) {
 
   switch (value) {
     case CharacterType.Human:
-      // TODO: Handle this case.
+      player.weapons = [
+        Weapon(type: WeaponType.HandGun, damage: 1, capacity: 21),
+        Weapon(type: WeaponType.Shotgun, damage: 1, capacity: 12),
+        Weapon(type: WeaponType.SniperRifle, damage: 1, capacity: 8),
+        Weapon(type: WeaponType.AssaultRifle, damage: 1, capacity: 100),
+      ];
       break;
     case CharacterType.Zombie:
-      // TODO: Handle this case.
       break;
     case CharacterType.Witch:
       player.attackRange = 170;

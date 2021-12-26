@@ -1,7 +1,5 @@
-import 'dart:math';
 
 import 'package:bleed_server/CubeGame.dart';
-import 'package:lemon_math/diff.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -643,13 +641,6 @@ void main() {
             case WeaponType.HandGun:
               player.weapons.add(
                   Weapon(type: WeaponType.HandGun, damage: 1, capacity: 5));
-              player.weaponsDirty = true;
-              player.abilityPoints--;
-              break;
-
-            case WeaponType.Firebolt:
-              player.weapons.add(
-                  Weapon(type: WeaponType.Firebolt, damage: 1, capacity: 5));
               player.weaponsDirty = true;
               player.abilityPoints--;
               break;

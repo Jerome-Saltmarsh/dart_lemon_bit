@@ -39,8 +39,6 @@ double getWeaponAccuracy(WeaponType weapon){
       return _accuracy.sniperRifle;
     case WeaponType.AssaultRifle:
       return _accuracy.assaultRifle;
-    case WeaponType.Firebolt:
-      return _accuracy.firebolt;
     default:
       throw Exception("No accuracy found for $weapon");
   }
@@ -56,8 +54,6 @@ double getWeaponRange(WeaponType weapon) {
       return _range.sniperRifle;
     case WeaponType.AssaultRifle:
       return _range.assaultRifle;
-    case WeaponType.Firebolt:
-      return _range.firebolt;
     default:
       throw Exception("no range found for $weapon");
   }

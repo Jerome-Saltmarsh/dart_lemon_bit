@@ -169,7 +169,7 @@ class _Player {
 
   double attackRange = 0;
   int team = 0;
-
+  bool get isHuman => characterType.value == CharacterType.Human;
   Vector2 attackTarget = Vector2(0, 0);
 }
 

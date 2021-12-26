@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:bleed_client/common/CharacterType.dart';
 import 'package:lemon_engine/state/camera.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterAction.dart';
@@ -212,10 +213,34 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.hourBackwards: reverseHour,
   keys.teleport: teleportToMouse,
   keys.casteFireball: sendRequestCastFireball,
-  key.digit1: selectAbility1,
-  key.digit2: selectAbility2,
-  keys.equip3: selectAbility3,
-  keys.equip4: selectAbility4,
+  key.digit1: (){
+    if (game.player.isHuman){
+      sendRequestEquip(1);
+    }else{
+      selectAbility1();
+    }
+  },
+  key.digit2: (){
+    if (game.player.isHuman){
+      sendRequestEquip(2);
+    }else{
+      selectAbility2();
+    }
+  },
+  keys.equip3: (){
+    if (game.player.isHuman){
+      sendRequestEquip(3);
+    }else{
+      selectAbility3();
+    }
+  },
+  keys.equip4: (){
+    if (game.player.isHuman){
+      sendRequestEquip(4);
+    }else{
+      selectAbility4();
+    }
+  },
   keys.equip1B: selectAbility1,
   keys.equip2B: selectAbility2,
   keys.equip3B: selectAbility3,
