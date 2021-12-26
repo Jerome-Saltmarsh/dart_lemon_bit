@@ -177,8 +177,6 @@ class _Unlocked {
   bool get handgun => game.player.weaponUnlocked(WeaponType.HandGun);
 
   bool get shotgun => game.player.weaponUnlocked(WeaponType.Shotgun);
-
-  bool get firebolt => game.player.weaponUnlocked(WeaponType.Firebolt);
 }
 
 extension PlayerExtentions on _Player {

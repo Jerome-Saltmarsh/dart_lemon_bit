@@ -81,10 +81,6 @@ void sendRequestAcquireHandgun(){
   sendRequestAcquireAbility(WeaponType.HandGun);
 }
 
-void sendRequestAcquireFirebolt(){
-  sendRequestAcquireAbility(WeaponType.Firebolt);
-}
-
 void sendRequestJoinGame(GameType type) {
   send('${ClientRequest.Join.index} ${type.index}');
 }

@@ -6,9 +6,7 @@ final Map<WeaponType, DecorationImage> mapWeaponTypeToImage = {
   WeaponType.Shotgun: _load("weapon-shotgun"),
   WeaponType.Unarmed: _load("weapon-unarmed"),
   WeaponType.SniperRifle: _load("weapon-sniper-rifle"),
-  WeaponType.Firebolt: _load("weapon-fireball"),
   WeaponType.AssaultRifle: _load("weapon-machine-gun"),
-  WeaponType.Bow: _load("weapon-bow"),
 };
 
 DecorationImage _load(String filename) {

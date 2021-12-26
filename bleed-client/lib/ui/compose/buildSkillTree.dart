@@ -66,15 +66,6 @@ Widget buildSkillTree() {
                               color: pointsLeft
                                   ? Colors.white
                                   : Colors.white38),
-
-                        if (!game.player.unlocked.firebolt)
-                          text("Freeze",
-                              onPressed: pointsLeft
-                                  ? sendRequestAcquireFirebolt
-                                  : null,
-                              color: pointsLeft
-                                  ? Colors.white
-                                  : Colors.white38),
                       ],
                     ),
                   ),

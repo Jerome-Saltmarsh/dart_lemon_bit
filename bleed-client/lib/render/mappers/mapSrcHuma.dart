@@ -21,7 +21,6 @@ const _framesPerDirection4 = 4;
 
 final Float32List _src = Float32List(4);
 
-
 Float32List mapSrcHuman({
     required WeaponType weaponType,
     required CharacterState characterState,
@@ -39,6 +38,12 @@ Float32List mapSrcHuman({
       double _f = (frame % 4) * _size;
 
       switch (weaponType) {
+        case WeaponType.Unarmed:
+          return loop(
+              atlas: atlas.human.unarmed.walking,
+              direction: direction,
+              frame: frame
+          );
         case WeaponType.HandGun:
           return loop(
             atlas: atlas.human.handgun.walking,
@@ -105,15 +110,6 @@ Float32List mapSrcHuman({
           double _fr = _frame * _size;
           _src[0] = atlas.human.shotgun.firing.x + _di + _fr;
           _src[1] = atlas.human.shotgun.firing.y + _size;
-          break;
-
-        case WeaponType.Bow:
-          double size = 96;
-          double _di = direction.index * size;
-          _src[0] = atlas.human.firingBow.x + _di;
-          _src[1] = atlas.human.firingBow.y + size;
-          _src[2] = _src[0] + size;
-          _src[3] = _src[1] + size;
           break;
 
         default:
