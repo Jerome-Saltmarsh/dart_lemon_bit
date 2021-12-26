@@ -176,8 +176,8 @@ abstract class Game {
     return empty;
   }
 
-  Game(this.scene,
-      {this.gameType = GameType.MMO,
+  Game(this.scene, {
+      this.gameType = GameType.MMO,
       this.shadeMax = Shade.Bright,
       this.status = GameStatus.In_Progress}) {
     this.crates.clear();
