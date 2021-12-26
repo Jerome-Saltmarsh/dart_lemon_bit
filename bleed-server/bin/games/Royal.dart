@@ -1,4 +1,3 @@
-
 import '../classes/Game.dart';
 import '../classes/Player.dart';
 import '../classes/Weapon.dart';
@@ -9,12 +8,8 @@ import '../common/WeaponType.dart';
 import '../common/classes/Vector2.dart';
 import '../instances/scenes.dart';
 
-
 class Royal extends Game {
-
-  Royal() : super(scenes.wildernessWest01,
-      gameType: GameType.BATTLE_ROYAL
-  ){
+  Royal() : super(scenes.wildernessWest01, gameType: GameType.BATTLE_ROYAL) {
     status = GameStatus.Awaiting_Players;
     teamSize = 1;
     numberOfTeams = 2;
@@ -28,16 +23,16 @@ class Royal extends Game {
     }
     Vector2 spawnPoint = getNextSpawnPoint();
     final Player player = Player(
-        game: this,
-        x: spawnPoint.x,
-        y: spawnPoint.y,
-        team: -1,
-        type: CharacterType.Human,
+      game: this,
+      x: spawnPoint.x,
+      y: spawnPoint.y,
+      team: -1,
+      type: CharacterType.Human,
     );
     player.weapons = [
       Weapon(type: WeaponType.HandGun, damage: 25, capacity: 35),
     ];
-    if (players.length >= playersRequired){
+    if (players.length >= playersRequired) {
       status = GameStatus.In_Progress;
       onGameStarted();
     }
@@ -45,7 +40,9 @@ class Royal extends Game {
   }
 
   @override
-  void update() {
+  void onPlayerDeath(Player player) {
+    if (numberOfAlivePlayers == 1) {
+      status = GameStatus.Finished;
+    }
   }
 }
-

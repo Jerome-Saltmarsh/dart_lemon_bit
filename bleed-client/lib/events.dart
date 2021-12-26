@@ -1,4 +1,5 @@
 
+import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/functions/cameraCenterPlayer.dart';
 import 'package:bleed_client/network.dart';
@@ -86,6 +87,10 @@ class Events {
     }
   }
 
+  void _onGameStatusChanged(GameStatus value){
+    print('events.onGameStatusChanged($value)');
+  }
+
   Events() {
     print("Events()");
     connection.onChanged(_onConnectionChanged);
@@ -93,5 +98,6 @@ class Events {
     game.region.onChanged(_onServerTypeChanged);
     game.player.uuid.onChanged(_onPlayerUuidChanged);
     game.player.alive.onChanged(_onPlayerAliveChanged);
+    game.status.onChanged(_onGameStatusChanged);
   }
 }

@@ -239,6 +239,7 @@ void main() {
               compileTeamLivesRemaining(_buffer, game);
             }
             compileGameStatus(_buffer, game.status);
+            sendToClient(_buffer.toString());
             return;
           }
 

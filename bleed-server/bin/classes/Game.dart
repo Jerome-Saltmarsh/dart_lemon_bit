@@ -121,6 +121,9 @@ abstract class Game {
 
   void onGameStarted() {}
 
+  void onPlayerDeath(Player player) {
+  }
+
   void onNpcObjectivesCompleted(Npc npc) {}
 
   void updateNpcBehavior(Npc npc) {}
@@ -159,9 +162,11 @@ abstract class Game {
     return playersRemaining;
   }
 
-  void update();
+  void update() {}
 
   void onPlayerDisconnected(Player player) {}
+
+
 
   GameEvent _getAvailableGameEvent() {
     for (GameEvent gameEvent in gameEvents) {
@@ -659,20 +664,17 @@ extension GameFunctions on Game {
     }
   }
 
-  void onPlayerDeath(Player player) {
-    dispatch(GameEventType.Player_Death, player.x, player.y);
-    for (Npc npc in zombies) {
-      if (npc.target != player) continue;
-      npc.clearTarget();
-    }
-  }
-
   void setCharacterStateDead(Character character) {
     if (character.dead) return;
     character.state = CharacterState.Dead;
     character.collidable = false;
     character.stateFrameCount = duration;
     if (character is Player) {
+      dispatch(GameEventType.Player_Death, character.x, character.y);
+      for (Npc npc in zombies) {
+        if (npc.target != character) continue;
+        npc.clearTarget();
+      }
       onPlayerDeath(character);
     } else if (character is Npc) {
       character.clearTarget();
