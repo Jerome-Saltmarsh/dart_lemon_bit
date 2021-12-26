@@ -10,7 +10,6 @@ import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
-import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/cube/init_cube.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/events/onAmbientLightChanged.dart';
@@ -177,6 +176,6 @@ Future loadSharedPreferences() async {
   //         sharedPreferences.getBool('audioMuted');
 
   if (storage.serverSaved){
-    game.serverType.value = storage.serverType;
+    game.region.value = storage.serverType;
   }
 }

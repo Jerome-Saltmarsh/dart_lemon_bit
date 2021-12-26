@@ -1,6 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:bleed_client/constants/getServerTypeName.dart';
 import 'package:bleed_client/constants/servers.dart';
+import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/functions/refreshPage.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
@@ -11,7 +11,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_math/golden_ratio.dart';
 
-import '../../audio.dart';
 import '../../title.dart';
 import '../state/flutter_constants.dart';
 
@@ -23,7 +22,7 @@ Widget buildConnecting() {
           Container(
             height: 80,
             child: AnimatedTextKit(repeatForever: true, animatedTexts: [
-              RotateAnimatedText("Connecting to server: ${game.serverType.value}",
+              RotateAnimatedText("Connecting to server: ${game.region.value}",
                   textStyle: TextStyle(color: Colors.white, fontSize: 30)),
             ]),
           ),
@@ -37,14 +36,14 @@ Widget buildConnecting() {
   );
 }
 
-Widget _buildServerTypeButton(ServerType server) {
+Widget _buildServerTypeButton(Region server) {
   double height = 50;
   return Container(
     child: mouseOver(
         builder: (BuildContext context, bool hovering) {
       return onPressed(
           callback: () {
-            game.serverType.value = server;
+            game.region.value = server;
           },
           child: Container(
               height: height,

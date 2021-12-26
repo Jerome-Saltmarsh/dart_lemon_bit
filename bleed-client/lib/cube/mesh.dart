@@ -1,12 +1,14 @@
 import 'dart:async';
 import 'dart:collection';
 import 'dart:io';
+import 'dart:math' as math;
 import 'dart:typed_data';
 import 'dart:ui';
-import 'dart:math' as math;
-import 'package:vector_math/vector_math_64.dart';
+
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:path/path.dart' as path;
+import 'package:vector_math/vector_math_64.dart';
+
 import 'material.dart';
 
 class Polygon {

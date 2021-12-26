@@ -2,11 +2,8 @@ import 'package:bleed_client/classes/Explosion.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/functions/spawners/spawnFireYellow.dart';
 import 'package:bleed_client/functions/spawners/spawnShrapnel.dart';
-import 'package:bleed_client/functions/spawners/spawnSmoke.dart';
 import 'package:bleed_client/render/state/floatingText.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/utils.dart';
-import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/randomInt.dart';
 
 import 'audio.dart';

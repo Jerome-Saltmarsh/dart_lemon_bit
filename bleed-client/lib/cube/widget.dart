@@ -1,4 +1,5 @@
 import 'dart:ui';
+
 import 'package:bleed_client/cube/cube.dart';
 import 'package:bleed_client/cube/v3.dart';
 import 'package:bleed_client/document/request_pointer_lock.dart';
@@ -8,6 +9,7 @@ import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart' hide Image;
 import 'package:lemon_engine/state/paint.dart';
+
 import 'camera3d.dart';
 
 final cubeFrame = ValueNotifier<int>(0);

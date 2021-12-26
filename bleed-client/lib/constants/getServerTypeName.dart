@@ -1,17 +1,17 @@
-import 'package:bleed_client/constants/servers.dart';
+import 'package:bleed_client/enums/Region.dart';
 
-String getServerName(ServerType server) {
-  return _serverTypeNames[server]!;
+String getRegionName(Region server) {
+  return _regionNames[server]!;
 }
 
-final Map<ServerType, String> _serverTypeNames = {
-  ServerType.Australia: "Australia",
-  ServerType.Brazil: "Brazil",
-  ServerType.Germany: "Germany",
-  ServerType.South_Korea: "South Korea",
-  ServerType.USA_East: "USA East",
-  ServerType.USA_West: "USA West",
-  ServerType.LocalHost: "Localhost",
-  ServerType.None: "None",
+final Map<Region, String> _regionNames = {
+  Region.Australia: "Australia",
+  Region.Brazil: "Brazil",
+  Region.Germany: "Germany",
+  Region.South_Korea: "South Korea",
+  Region.USA_East: "USA East",
+  Region.USA_West: "USA West",
+  Region.LocalHost: "Localhost",
+  Region.None: "None",
 };
 

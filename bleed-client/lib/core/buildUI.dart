@@ -1,5 +1,5 @@
 import 'package:bleed_client/common/GameType.dart';
-import 'package:bleed_client/constants/servers.dart';
+import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/network.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/compose/buildHomePage.dart';
@@ -12,8 +12,8 @@ import 'package:lemon_watch/watch_builder.dart';
 
 Widget buildUI(BuildContext context) {
 
-  return WatchBuilder(game.serverType, (ServerType serverType){
-    if (serverType == ServerType.None){
+  return WatchBuilder(game.region, (Region serverType){
+    if (serverType == Region.None){
       return buildSelectServerType();
     }
 

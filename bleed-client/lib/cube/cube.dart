@@ -1,6 +1,6 @@
-import 'object.dart';
-
 import 'package:vector_math/vector_math_64.dart';
+
+import 'object.dart';
 
 final _Assets assets = _Assets();
 

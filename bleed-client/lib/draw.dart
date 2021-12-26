@@ -18,7 +18,6 @@ import 'package:lemon_engine/state/paint.dart';
 
 import 'common/Tile.dart';
 import 'common/classes/Vector2.dart';
-import 'constants/colours.dart';
 import 'rects.dart';
 import 'utils.dart';
 

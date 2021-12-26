@@ -11,6 +11,7 @@ import 'package:lemon_engine/state/camera.dart';
 import 'package:lemon_engine/state/zoom.dart';
 
 import 'common/GameType.dart';
+import 'enums/Region.dart';
 
 class Events {
   void _onGameTypeChanged(GameType type) {
@@ -34,12 +35,12 @@ class Events {
       //   }
       //   break;
       default:
-        connectToWebSocketServer(game.serverType.value, type);
+        connectToWebSocketServer(game.region.value, type);
         break;
     }
   }
 
-  void _onServerTypeChanged(ServerType serverType) {
+  void _onServerTypeChanged(Region serverType) {
     print('events.onServerTypeChanged($serverType)');
     storage.saveServerType(serverType);
   }
@@ -89,7 +90,7 @@ class Events {
     print("Events()");
     connection.onChanged(_onConnectionChanged);
     game.type.onChanged(_onGameTypeChanged);
-    game.serverType.onChanged(_onServerTypeChanged);
+    game.region.onChanged(_onServerTypeChanged);
     game.player.uuid.onChanged(_onPlayerUuidChanged);
     game.player.alive.onChanged(_onPlayerAliveChanged);
   }

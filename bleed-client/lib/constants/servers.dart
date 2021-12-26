@@ -1,9 +1,10 @@
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/debug.dart';
+import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/network.dart';
 
-void connectToWebSocketServer(ServerType server, GameType gameType) {
-  if (server == ServerType.LocalHost) {
+void connectToWebSocketServer(Region server, GameType gameType) {
+  if (server == Region.LocalHost) {
     _connectLocalHost();
     return;
   }
@@ -17,22 +18,12 @@ void _connectLocalHost({int port = 8080}) {
   connectWebSocket('ws://localhost:$port');
 }
 
-enum ServerType {
-  None,
-  Australia,
-  Brazil,
-  Germany,
-  South_Korea,
-  USA_East,
-  USA_West,
-  LocalHost
-}
 
-final List<ServerType> serverTypes = ServerType.values;
+final List<Region> serverTypes = Region.values;
 
-final List<ServerType> selectableServerTypes =
-    serverTypes.where((type) => type != ServerType.None
-      && (debug || type != ServerType.LocalHost)
+final List<Region> selectableServerTypes =
+    serverTypes.where((type) => type != Region.None
+      && (debug || type != Region.LocalHost)
     ).toList();
 
 final String sydneyMoba = "https://sydney-2-osbmaezptq-ts.a.run.app";
@@ -43,9 +34,9 @@ String parseHttpToWebSocket(String url) {
   return url.replaceAll("https", "wss") + "/:8080";
 }
 
-String getHttpsConnectionString(ServerType server, GameType gameType) {
+String getHttpsConnectionString(Region server, GameType gameType) {
   switch (server) {
-    case ServerType.Australia:
+    case Region.Australia:
       switch (gameType) {
         case GameType.MMO:
           return sydneyMMO;

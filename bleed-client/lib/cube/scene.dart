@@ -1,13 +1,15 @@
-import 'dart:ui';
 import 'dart:typed_data';
+import 'dart:ui';
+
 import 'package:bleed_client/cube/widget.dart';
 import 'package:lemon_engine/state/paint.dart';
 import 'package:vector_math/vector_math_64.dart';
-import 'object.dart';
+
 import 'camera3d.dart';
-import 'mesh.dart';
-import 'material.dart';
 import 'light.dart';
+import 'material.dart';
+import 'mesh.dart';
+import 'object.dart';
 
 int _sceneVertexCount = 0;
 int _sceneFaceCount = 0;

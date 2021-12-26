@@ -1,15 +1,11 @@
 import 'package:bleed_client/common/GameType.dart';
-import 'package:bleed_client/constants/servers.dart';
-import 'package:bleed_client/cube/widget.dart';
-import 'package:bleed_client/main.dart';
+import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/title.dart';
 import 'package:bleed_client/toString.dart';
-import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:lemon_engine/game.dart';
 
 const _buttonWidth = 220.0;
 
@@ -40,8 +36,8 @@ Positioned _buildTopRight() {
 }
 
 Widget _buildServerButton() {
-  return button("REGION ${toString(game.serverType.value).toUpperCase()}", () {
-    game.serverType.value = ServerType.None;
+  return button("REGION ${toString(game.region.value).toUpperCase()}", () {
+    game.region.value = Region.None;
   }, minWidth: _buttonWidth, hint: 'Region');
 }
 

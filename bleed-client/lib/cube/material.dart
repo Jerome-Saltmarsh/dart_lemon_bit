@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:io';
 import 'dart:typed_data';
-import 'package:vector_math/vector_math_64.dart';
+import 'dart:ui';
+
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:path/path.dart' as path;
-import 'dart:ui';
+import 'package:vector_math/vector_math_64.dart';
 
 class Material {
   Material()
