@@ -532,7 +532,7 @@ Widget buildUIAwaitingPlayers() {
       height16,
       WatchBuilder(game.lobby.playerCount, (int value) {
 
-        if (game.teamSize.value == 1){
+        if (game.teamSize.value == 1) {
           List<Widget> playerNames = [];
 
           for(int i = 0; i < game.lobby.players.length; i++){

@@ -112,16 +112,7 @@ void main() {
 
     void joinBattleRoyal() {
       final Royal royal = global.findPendingRoyalGames();
-      final Vector2 position = royal.getNextSpawnPoint();
-      final Player player = Player(
-          game: royal,
-          x: position.x,
-          y: position.y,
-          team: -1,
-          type: CharacterType.Human);
-      player.weapons = [
-        Weapon(type: WeaponType.HandGun, damage: 1, capacity: 35),
-      ];
+      final Player player = royal.playerJoin();
       compileWholeGame(royal);
       compilePlayerJoined(_buffer, player);
       compilePlayerWeapon(_buffer, player);
