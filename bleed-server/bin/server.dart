@@ -20,6 +20,7 @@ import 'common/GameType.dart';
 import 'common/PlayerEvent.dart';
 import 'common/ServerResponse.dart';
 import 'common/WeaponType.dart';
+import 'common/classes/Vector2.dart';
 import 'common/enums/Direction.dart';
 import 'common/version.dart';
 import 'compile.dart';
@@ -106,23 +107,29 @@ void main() {
       final Player player = playerJoinMoba(moba);
       compileWholeGame(moba);
       compilePlayerJoined(_buffer, player);
+      compileGameMeta(_buffer, moba);
       sendAndClearBuffer();
     }
 
     void joinBattleRoyal(){
-      final Royal hunter = global.findPendingHunterGame();
-      final Player player = Player(x: 0, y: 600, game: hunter, team: -1);
-      player.type = CharacterType.Human;
+      final Royal royal = global.findPendingRoyalGames();
+      final Vector2 position = royal.getNextSpawnPoint();
+      final Player player = Player(
+          game: royal,
+          x: position.x,
+          y: position.y,
+          team: -1,
+          type: CharacterType.Human
+      );
       player.weapons = [
         Weapon(type: WeaponType.HandGun, damage: 1, capacity: 35),
       ];
-      registerPlayer(player);
-      hunter.players.add(player);
-      compileWholeGame(hunter);
+      compileWholeGame(royal);
       compilePlayerJoined(_buffer, player);
       compilePlayerWeapon(_buffer, player);
       compilePlayerWeapons(_buffer, player);
-      compileGameStatus(_buffer, hunter.status);
+      compileGameStatus(_buffer, royal.status);
+      compileGameMeta(_buffer, royal);
       sendAndClearBuffer();
     }
 
@@ -783,13 +790,12 @@ void main() {
 }
 
 Player spawnPlayerInTown() {
-  Player player = Player(game: world.town, x: 0, y: 1750, team: 1);
-  player.team = teams.west;
-  player.abilityPoints = 0;
-  player.type = CharacterType.None;
-  world.town.players.add(player);
-  playerMap[player.uuid] = player;
-  return player;
+  return Player(
+      game: world.town,
+      x: 0, y: 1750,
+      team: teams.west,
+      type: CharacterType.None
+  );
 }
 
 void compileWholeGame(Game game) {

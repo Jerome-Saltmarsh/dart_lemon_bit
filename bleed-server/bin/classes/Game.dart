@@ -89,6 +89,8 @@ abstract class Game {
   /// or a dark forest
   Shade shadeMax = Shade.Bright;
   int duration = 0;
+  int teamSize = 1;
+  int numberOfTeams = 2;
   List<Npc> zombies = [];
   List<InteractableNpc> npcs = [];
   List<SpawnPoint> spawnPoints = [];

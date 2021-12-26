@@ -37,6 +37,8 @@ class _Game {
   final Watch<GameType> type = Watch(GameType.None);
   final Watch<GameStatus> status = Watch(GameStatus.Awaiting_Players);
   final _Lobby lobby = _Lobby();
+  final Watch<int> teamSize = Watch(0);
+  final Watch<int> numberOfTeams = Watch(0);
   List<int> collectables = [];
   List<Vector2> crates = [];
   int cratesTotal = 0;

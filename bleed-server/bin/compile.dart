@@ -100,6 +100,12 @@ void compileGameStatus(StringBuffer buffer, GameStatus gameStatus) {
   _write(buffer, gameStatus.index);
 }
 
+void compileGameMeta(StringBuffer buffer, Game game) {
+  _write(buffer, ServerResponse.Game_Meta.index);
+  _write(buffer, game.teamSize);
+  _write(buffer, game.numberOfTeams);
+}
+
 void compileLobby(StringBuffer buffer, Game game) {
   _write(buffer, ServerResponse.Lobby.index);
   _write(buffer, game.players.length);

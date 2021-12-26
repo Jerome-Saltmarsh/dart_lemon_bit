@@ -10,11 +10,13 @@ import 'world.dart';
 
 class Royal extends Game {
 
-  int maxPlayers = 2;
-
   Royal() : super(scenes.wildernessWest01){
     status = GameStatus.Awaiting_Players;
+    teamSize = 1;
+    numberOfTeams = 2;
   }
+
+  int get playersRequired => teamSize * numberOfTeams;
 
   Player playerJoinMoba() {
     if (status != GameStatus.Awaiting_Players) {
@@ -30,7 +32,7 @@ class Royal extends Game {
     player.type = CharacterType.Human;
     registerPlayer(player);
     players.add(player);
-    if (players.length == maxPlayers){
+    if (players.length == playersRequired){
       status = GameStatus.In_Progress;
       onGameStarted();
     }

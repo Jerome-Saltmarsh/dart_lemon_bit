@@ -36,4 +36,5 @@ enum ServerResponse {
   Lobby,
   Cube_Players,
   Cube_Joined,
+  Game_Meta,
 }

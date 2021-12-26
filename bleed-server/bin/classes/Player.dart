@@ -6,6 +6,7 @@ import '../common/Quests.dart';
 import '../constants/no_squad.dart';
 import '../common/Tile.dart';
 import '../functions/generateName.dart';
+import '../global.dart';
 import '../settings.dart';
 import '../utils.dart';
 import 'Ability.dart';
@@ -97,15 +98,18 @@ class Player extends Character with Entity {
   }
 
   Player({
+    required this.game,
     double x = 0,
     double y = 0,
-    required this.game,
     int team = noSquad,
+    CharacterType type = CharacterType.Human
   }) : super(
-            type: CharacterType.Human,
+            type: type,
             x: x,
             y: y,
             health: settings.health.player,
             speed: settings.playerSpeed,
-            team: team);
+            team: team){
+    global.onPlayerCreated(this);
+  }
 }

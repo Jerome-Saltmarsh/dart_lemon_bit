@@ -14,7 +14,6 @@ import 'world.dart';
 
 typedef Players = List<Player>;
 
-const _playersPerTeam = 1;
 final int _framesPerCreepSpawn = 500;
 final int _creepsPerSpawn = 5;
 
@@ -31,7 +30,7 @@ class Moba extends Game {
   late List<Vector2> creepWestObjectives;
   late List<Vector2> creepEastObjectives;
 
-  final int totalPlayersRequired = _playersPerTeam * 2;
+  int get totalPlayersRequired => teamSize * numberOfTeams;
   int teamLivesWest = 10;
   int teamLivesEast = 10;
 
@@ -118,11 +117,13 @@ Player playerJoinMoba(Moba moba) {
   if (moba.status != GameStatus.Awaiting_Players) {
     throw Exception("Game already started");
   }
-  final Player player = Player(x: 0, y: 600, game: moba, team: 1);
-  player.type = CharacterType.None;
-  registerPlayer(player);
-  player.team = moba.getJoinTeam();
-  moba.players.add(player);
+  final Player player = Player(
+    x: 0,
+    y: 600,
+    game: moba,
+    team: moba.getJoinTeam(),
+    type: CharacterType.None,
+  );
   if (moba.players.length == moba.totalPlayersRequired){
     moba.status = GameStatus.In_Progress;
     moba.onGameStarted();
