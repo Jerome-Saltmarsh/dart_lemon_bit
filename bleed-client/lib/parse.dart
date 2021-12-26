@@ -126,9 +126,8 @@ void parseState() {
         game.teamLivesEast.value = consumeInt();
         break;
 
-      case ServerResponse.Weapons_Dirty:
-        hud.skillTreeVisible.value = !hud.skillTreeVisible.value;
-        hud.skillTreeVisible.value = !hud.skillTreeVisible.value;
+      case ServerResponse.Player_Weapon:
+        game.player.weapon.value = _consumeWeaponType();
         break;
 
       case ServerResponse.Weapons:

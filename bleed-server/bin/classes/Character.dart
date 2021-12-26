@@ -44,6 +44,7 @@ class Character extends GameObject implements HasSquad {
   int team;
   List<Weapon> weapons = [];
   bool weaponsDirty = false;
+  bool equippedWeaponChanged = false;
 
   Vector2 abilityTarget = Vector2(0, 0);
 

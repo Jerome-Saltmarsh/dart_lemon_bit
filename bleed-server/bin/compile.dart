@@ -37,7 +37,8 @@ const String _comma = ', ';
 
 void compilePlayerJoined(StringBuffer buffer, Player player) {
   _write(buffer,
-      '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.team} ');
+      '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player
+          .x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.team} ');
 }
 
 void compileGame(Game game) {
@@ -87,21 +88,21 @@ void compileGame(Game game) {
   }
 }
 
-void compileTeamLivesRemaining(StringBuffer buffer, Moba moba){
+void compileTeamLivesRemaining(StringBuffer buffer, Moba moba) {
   _write(buffer, ServerResponse.Team_Lives_Remaining.index);
   _write(buffer, moba.teamLivesWest);
   _write(buffer, moba.teamLivesEast);
 }
 
-void compileGameStatus(StringBuffer buffer, GameStatus gameStatus){
+void compileGameStatus(StringBuffer buffer, GameStatus gameStatus) {
   _write(buffer, ServerResponse.Game_Status.index);
   _write(buffer, gameStatus.index);
 }
 
-void compileLobby(StringBuffer buffer, Game game){
+void compileLobby(StringBuffer buffer, Game game) {
   _write(buffer, ServerResponse.Lobby.index);
   _write(buffer, game.players.length);
-  for(Player player in game.players){
+  for (Player player in game.players) {
     _write(buffer, player.name);
     _write(buffer, player.team);
   }
@@ -217,13 +218,19 @@ void compilePlayer(StringBuffer buffer, Player player) {
   }
 
   if (player.abilitiesDirty) {
-    _compilePlayerAbilities(buffer, player);
     player.abilitiesDirty = false;
+    _compilePlayerAbilities(buffer, player);
+  }
+
+  if (player.equippedWeaponChanged) {
+    player.equippedWeaponChanged = false;
+    _write(buffer, ServerResponse.Player_Weapon.index);
+    _write(buffer, player.weapon.type.index);
   }
 
   if (player.weaponsDirty) {
     player.weaponsDirty = false;
-    _write(buffer, ServerResponse.Weapons_Dirty.index);
+    compileWeapons(buffer, player.weapons);
   }
 
   _compilePlayerEvents(buffer, player);
