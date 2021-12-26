@@ -1,4 +1,3 @@
-
 import 'package:bleed_server/CubeGame.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
@@ -111,7 +110,7 @@ void main() {
       sendAndClearBuffer();
     }
 
-    void joinBattleRoyal(){
+    void joinBattleRoyal() {
       final Royal royal = global.findPendingRoyalGames();
       final Vector2 position = royal.getNextSpawnPoint();
       final Player player = Player(
@@ -119,8 +118,7 @@ void main() {
           x: position.x,
           y: position.y,
           team: -1,
-          type: CharacterType.Human
-      );
+          type: CharacterType.Human);
       player.weapons = [
         Weapon(type: WeaponType.HandGun, damage: 1, capacity: 35),
       ];
@@ -133,8 +131,9 @@ void main() {
       sendAndClearBuffer();
     }
 
-    void joinCube3D(){
-      final CubePlayer cubePlayer = CubePlayer(position: Vector3(), rotation: Vector3());
+    void joinCube3D() {
+      final CubePlayer cubePlayer =
+          CubePlayer(position: Vector3(), rotation: Vector3());
       cubeGame.cubes.add(cubePlayer);
       sendToClient('${ServerResponse.Cube_Joined.index} ${cubePlayer.uuid}');
     }
@@ -236,18 +235,17 @@ void main() {
           player.lastUpdateFrame = 0;
           final Game game = player.game;
 
-          if (game is Moba) {
-            if (game.awaitingPlayers) {
-              compileLobby(_buffer, game);
-              compileGameStatus(_buffer, game.status);
-              compilePlayersRemaining(
-                  _buffer, game.totalPlayersRequired - game.players.length);
-              sendAndClearBuffer();
-              return;
-            } else if (game.finished) {
-              compileTeamLivesRemaining(_buffer, game);
-              compileGameStatus(_buffer, game.status);
-            }
+          if (game.awaitingPlayers) {
+            compileLobby(_buffer, game);
+            compileGameStatus(_buffer, game.status);
+            compileGameMeta(_buffer, game);
+            sendAndClearBuffer();
+            return;
+          }
+
+          if (game is Moba && game.finished) {
+            compileTeamLivesRemaining(_buffer, game);
+            compileGameStatus(_buffer, game.status);
           }
 
           if (player.sceneChanged) {
@@ -262,7 +260,7 @@ void main() {
             return;
           }
 
-          if (player.busy || player.dead){
+          if (player.busy || player.dead) {
             sendCompiledPlayerState(game, player);
             return;
           }
@@ -792,10 +790,10 @@ void main() {
 Player spawnPlayerInTown() {
   return Player(
       game: world.town,
-      x: 0, y: 1750,
+      x: 0,
+      y: 1750,
       team: teams.west,
-      type: CharacterType.None
-  );
+      type: CharacterType.None);
 }
 
 void compileWholeGame(Game game) {
