@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'package:lemon_engine/state/camera.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/cube/camera3d.dart';
@@ -15,14 +15,12 @@ import 'package:flutter/services.dart';
 import 'package:lemon_engine/functions/key_pressed.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
-import 'package:lemon_engine/state/camera.dart';
 import 'package:lemon_engine/state/zoom.dart';
 import 'package:lemon_math/randomItem.dart';
 import 'package:lemon_watch/watch.dart';
 
 import '../send.dart';
 import 'common/enums/Direction.dart';
-import 'cube/v3.dart';
 import 'ui/logic/showTextBox.dart';
 import 'utils.dart';
 
@@ -113,16 +111,54 @@ void _handleKeyboardEventTextBox(RawKeyEvent event) {
 
 final _Keys keys = _Keys();
 
+final _Key key = _Key();
+
+class _Key {
+  LogicalKeyboardKey arrowUp = LogicalKeyboardKey.arrowUp;
+  LogicalKeyboardKey arrowDown = LogicalKeyboardKey.arrowDown;
+  LogicalKeyboardKey arrowLeft = LogicalKeyboardKey.arrowLeft;
+  LogicalKeyboardKey arrowRight = LogicalKeyboardKey.arrowRight;
+  LogicalKeyboardKey space = LogicalKeyboardKey.space;
+  LogicalKeyboardKey a = LogicalKeyboardKey.keyA;
+  LogicalKeyboardKey b = LogicalKeyboardKey.keyB;
+  LogicalKeyboardKey c = LogicalKeyboardKey.keyC;
+  LogicalKeyboardKey d = LogicalKeyboardKey.keyD;
+  LogicalKeyboardKey e = LogicalKeyboardKey.keyE;
+  LogicalKeyboardKey f = LogicalKeyboardKey.keyF;
+  LogicalKeyboardKey g = LogicalKeyboardKey.keyG;
+  LogicalKeyboardKey h = LogicalKeyboardKey.keyH;
+  LogicalKeyboardKey i = LogicalKeyboardKey.keyI;
+  LogicalKeyboardKey j = LogicalKeyboardKey.keyJ;
+  LogicalKeyboardKey k = LogicalKeyboardKey.keyK;
+  LogicalKeyboardKey l = LogicalKeyboardKey.keyL;
+  LogicalKeyboardKey m = LogicalKeyboardKey.keyM;
+  LogicalKeyboardKey n = LogicalKeyboardKey.keyN;
+  LogicalKeyboardKey o = LogicalKeyboardKey.keyO;
+  LogicalKeyboardKey p = LogicalKeyboardKey.keyP;
+  LogicalKeyboardKey q = LogicalKeyboardKey.keyQ;
+  LogicalKeyboardKey r = LogicalKeyboardKey.keyR;
+  LogicalKeyboardKey s = LogicalKeyboardKey.keyS;
+  LogicalKeyboardKey t = LogicalKeyboardKey.keyT;
+  LogicalKeyboardKey u = LogicalKeyboardKey.keyU;
+  LogicalKeyboardKey v = LogicalKeyboardKey.keyV;
+  LogicalKeyboardKey w = LogicalKeyboardKey.keyW;
+  LogicalKeyboardKey x = LogicalKeyboardKey.keyX;
+  LogicalKeyboardKey y = LogicalKeyboardKey.keyY;
+  LogicalKeyboardKey z = LogicalKeyboardKey.keyZ;
+  LogicalKeyboardKey digit0 = LogicalKeyboardKey.digit0;
+  LogicalKeyboardKey digit1 = LogicalKeyboardKey.digit1;
+}
+
 class _Keys {
-  LogicalKeyboardKey perform = LogicalKeyboardKey.space;
-  LogicalKeyboardKey interact = LogicalKeyboardKey.keyE;
-  LogicalKeyboardKey runUp = LogicalKeyboardKey.keyW;
-  LogicalKeyboardKey runRight = LogicalKeyboardKey.keyD;
-  LogicalKeyboardKey runDown = LogicalKeyboardKey.keyS;
-  LogicalKeyboardKey runLeft = LogicalKeyboardKey.keyA;
-  LogicalKeyboardKey throwGrenade = LogicalKeyboardKey.keyG;
-  LogicalKeyboardKey melee = LogicalKeyboardKey.keyF;
-  LogicalKeyboardKey equip1 = LogicalKeyboardKey.digit1;
+  LogicalKeyboardKey perform = key.space;
+  LogicalKeyboardKey interact = key.e;
+  LogicalKeyboardKey runUp = key.w;
+  LogicalKeyboardKey runRight = key.d;
+  LogicalKeyboardKey runDown = key.s;
+  LogicalKeyboardKey runLeft = key.a;
+  LogicalKeyboardKey throwGrenade = key.g;
+  LogicalKeyboardKey melee = key.f;
+  LogicalKeyboardKey equip1 = key.digit1;
   LogicalKeyboardKey equip2 = LogicalKeyboardKey.digit2;
   LogicalKeyboardKey equip3 = LogicalKeyboardKey.digit3;
   LogicalKeyboardKey equip4 = LogicalKeyboardKey.digit4;
@@ -197,7 +233,26 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
     storage.put('position.x', camera3D.position.x);
     storage.put('position.y', camera3D.position.y);
     storage.put('position.z', camera3D.position.z);
-  }
+  },
+  key.arrowUp: (){
+    // camera3D.viewportWidth += 100;
+    // camera3D.viewportHeight  = camera3D.viewportWidth;
+  },
+  key.arrowDown: (){
+    // camera3D.viewportWidth -= 100;
+    // camera3D.viewportHeight  = camera3D.viewportWidth;
+  },
+  key.arrowRight: (){
+    camera3D.fov += 10;
+  },
+  key.arrowLeft: (){
+    camera3D.fov -= 10;
+  },
+  key.u: (){
+    camera.x = 0;
+    camera.y = 0;
+    zoom = 1;
+  },
 };
 
 void selectAbility1() {

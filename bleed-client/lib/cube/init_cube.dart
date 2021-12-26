@@ -19,35 +19,35 @@ void initCube(){
   RawKeyboard.instance.addListener(onRawKeyEvent);
 }
 
-Camera3D get camera => camera3D;
+Camera3D get _camera => camera3D;
 
 void onRawKeyEvent(RawKeyEvent event) {
   if (event is RawKeyDownEvent) {
     if (event.logicalKey == LogicalKeyboardKey.keyW) {
-      double cameraTargetY = camera.target.y;
-      camera.target.y = camera.position.y;
-      translateCamera(camera.backward.normalized());
-      camera.target.y = cameraTargetY;
+      double cameraTargetY = _camera.target.y;
+      _camera.target.y = _camera.position.y;
+      translateCamera(_camera.backward.normalized());
+      _camera.target.y = cameraTargetY;
     }
     if (event.logicalKey == LogicalKeyboardKey.keyS) {
-      double cameraTargetY = camera.target.y;
-      camera.target.y = camera.position.y;
-      translateCamera(camera.forward.normalized());
-      camera.target.y = cameraTargetY;
+      double cameraTargetY = _camera.target.y;
+      _camera.target.y = _camera.position.y;
+      translateCamera(_camera.forward.normalized());
+      _camera.target.y = cameraTargetY;
     }
     if (event.logicalKey == LogicalKeyboardKey.keyA) {
-      translateCamera(camera.left.normalized());
+      translateCamera(_camera.left.normalized());
     }
     if (event.logicalKey == LogicalKeyboardKey.keyD) {
-      translateCamera(camera.right.normalized());
+      translateCamera(_camera.right.normalized());
     }
   }
 }
 
 void translateCamera(Vector3 translation) {
-  Vector3 f = camera.target - camera.position;
-  camera.position.x += translation.x;
-  camera.position.z += translation.z;
-  camera.target = camera.position + f;
+  Vector3 f = _camera.target - _camera.position;
+  _camera.position.x += translation.x;
+  _camera.position.z += translation.z;
+  _camera.target = _camera.position + f;
 }
 

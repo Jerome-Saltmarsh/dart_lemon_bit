@@ -33,7 +33,9 @@ import 'package:lemon_engine/functions/fullscreen_exit.dart';
 import 'package:lemon_engine/properties/fullscreen_active.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/state/build_context.dart';
+import 'package:lemon_engine/state/camera.dart';
 import 'package:lemon_engine/state/screen.dart';
+import 'package:lemon_engine/state/zoom.dart';
 import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -432,19 +434,20 @@ Widget buildConnected(GameType gameType) {
     return WatchBuilder(game.status, (GameStatus gameStatus) {
       switch (gameStatus) {
         case GameStatus.Awaiting_Players:
-          return buildAwaitingPlayers();
+          return buildUIAwaitingPlayers();
         case GameStatus.In_Progress:
-          if (gameType == GameType.CUBE3D){
-            return Column(
-              children: [
-                button('Exit', game.exit),
-                Refresh((){
-                  return text(camera3D.rotation);
-                }),
-              ],
-            );
+          switch(gameType){
+            case GameType.MMO:
+              return buildUIStandardRolePlaying();
+            case GameType.Moba:
+              return buildUIStandardRolePlaying();
+            case GameType.HUNTER:
+              return text("HUNTER GAME");
+            case GameType.CUBE3D:
+              return buildUI3DCube();
+            default:
+              return text(gameType);
           }
-          return buildInProgress();
         case GameStatus.Finished:
           return buildFinished();
         default:
@@ -454,7 +457,33 @@ Widget buildConnected(GameType gameType) {
   });
 }
 
-Widget buildAwaitingPlayers() {
+Widget buildUI3DCube(){
+  return Column(
+    children: [
+      button('Exit', game.exit),
+      Refresh((){
+        return text('camera3D.rotation: ${camera3D.rotation}');
+      }),
+      // Refresh((){
+      //   return text('camera3D.viewportWidth: ${camera3D.viewportWidth.toInt()}');
+      // }),
+      // Refresh((){
+      //   return text('camera3D.viewportHeight: ${camera3D.viewportHeight.toInt()}');
+      // }),
+      Refresh((){
+        return text('camera3D.fov: ${camera3D.fov.toInt()}');
+      }),
+      Refresh((){
+        return text('camera.position: { x: ${camera.x.toInt()}, y: ${camera.y.toInt()}}');
+      }),
+      Refresh((){
+        return text('camera.zoom: $zoom');
+      }),
+    ],
+  );
+}
+
+Widget buildUIAwaitingPlayers() {
   return dialog(
       child: Column(
     crossAxisAlignment: axis.cross.stretch,
@@ -507,7 +536,7 @@ Widget buildFinished() {
   return dialog(child: text("Game Finished"));
 }
 
-Widget buildInProgress() {
+Widget buildUIStandardRolePlaying() {
 
   return WatchBuilder(game.player.characterType, (CharacterType value) {
     if (value == CharacterType.None) {

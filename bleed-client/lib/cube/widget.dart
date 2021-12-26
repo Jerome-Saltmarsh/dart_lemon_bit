@@ -25,8 +25,8 @@ Widget buildCube3D() {
     home: Scaffold(
       body: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
-        camera3D.viewportWidth = constraints.maxWidth;
-        camera3D.viewportHeight = constraints.maxHeight;
+        // camera3D.viewportWidth = constraints.maxWidth;
+        // camera3D.viewportHeight = constraints.maxHeight;
         return Stack(
           children: [
             CustomPaint(
@@ -39,8 +39,8 @@ Widget buildCube3D() {
                 child: Column(
                   crossAxisAlignment: axis.cross.end,
                   children: [
-                    Text("viewport.width: ${camera3D.viewportWidth.toInt()}"),
-                    Text("viewport.height: ${camera3D.viewportHeight.toInt()}"),
+                    // Text("viewport.width: ${camera3D.viewportWidth.toInt()}"),
+                    // Text("viewport.height: ${camera3D.viewportHeight.toInt()}"),
                     Refresh((){
                       return Text("camera.position: ${camera3D.position}");
                     }),

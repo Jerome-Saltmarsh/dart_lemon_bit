@@ -7,6 +7,8 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:lemon_engine/functions/fullscreen_enter.dart';
 import 'package:lemon_engine/functions/fullscreen_exit.dart';
+import 'package:lemon_engine/state/camera.dart';
+import 'package:lemon_engine/state/zoom.dart';
 
 import 'common/GameType.dart';
 
@@ -14,6 +16,9 @@ class Events {
   void _onGameTypeChanged(GameType type) {
     print('events.onGameTypeChanged($type)');
     game.clearSession();
+    camera.x = 0;
+    camera.y = 0;
+    zoom = 1;
     switch (type) {
       case GameType.None:
         break;

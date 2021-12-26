@@ -27,6 +27,7 @@ import 'common/version.dart';
 import 'compile.dart';
 import 'functions/loadScenes.dart';
 import 'functions/withinRadius.dart';
+import 'games/Hunter.dart';
 import 'games/moba.dart';
 import 'games/world.dart';
 import 'global.dart';
@@ -104,9 +105,21 @@ void main() {
 
     void joinGameMoba() {
       final Moba moba = global.findPendingMobaGame();
-      Player player = playerJoin(moba);
+      final Player player = playerJoinMoba(moba);
       compileWholeGame(moba);
       compilePlayerJoined(_buffer, player);
+      sendAndClearBuffer();
+    }
+
+    void joinHunter(){
+      final Hunter hunter = global.findPendingHunterGame();
+      final Player player = Player(x: 0, y: 600, game: hunter, team: -1);
+      player.type = CharacterType.None;
+      registerPlayer(player);
+      hunter.players.add(player);
+      compileWholeGame(hunter);
+      compilePlayerJoined(_buffer, player);
+      compileGameStatus(_buffer, hunter.status);
       sendAndClearBuffer();
     }
 
@@ -354,6 +367,9 @@ void main() {
               break;
             case GameType.CUBE3D:
               joinCube3D();
+              break;
+            case GameType.HUNTER:
+              joinHunter();
               break;
           }
           break;

@@ -129,7 +129,7 @@ packages:
       name: lemon_engine
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.8"
+    version: "0.2.0"
   lemon_math:
     dependency: "direct main"
     description:

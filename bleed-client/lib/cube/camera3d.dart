@@ -6,6 +6,9 @@ final Camera3D camera3D = Camera3D();
 final upAxis = Vector3(0, 1, 0);
 final rightAxis = Vector3(1, 0, 0);
 
+const viewportWidth = 100;
+const viewportHeight = 100;
+
 class Camera3D {
   Camera3D({
     Vector3? position,
@@ -15,8 +18,8 @@ class Camera3D {
     this.near = 0.1,
     this.far = 1000,
     this.zoom = 1.0,
-    this.viewportWidth = 600.0,
-    this.viewportHeight = 600.0,
+    // this.viewportWidth = 500,
+    // this.viewportHeight = 500,
   }) {
     if (position != null) position.copyInto(this.position);
     if (target != null) target.copyInto(this.target);
@@ -30,8 +33,8 @@ class Camera3D {
   double near;
   double far;
   double zoom;
-  double viewportWidth;
-  double viewportHeight;
+  // double viewportWidth;
+  // double viewportHeight;
 
   double get aspectRatio => viewportWidth / viewportHeight;
 

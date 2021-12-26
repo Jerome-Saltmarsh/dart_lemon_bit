@@ -115,7 +115,7 @@ class Moba extends Game {
   }
 }
 
-Player playerJoin(Moba moba) {
+Player playerJoinMoba(Moba moba) {
   if (moba.status != GameStatus.Awaiting_Players) {
     throw Exception("Game already started");
   }
