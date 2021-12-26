@@ -46,7 +46,7 @@ void sendRequestCastFireball(){
 }
 
 void sendRequestEquip(int index) {
-  send('${ClientRequest.Equip.index} $session $index');
+  send('${ClientRequest.Equip.index} $session ${index - 1}');
 }
 
 void sendRequestDeselectAbility() {
