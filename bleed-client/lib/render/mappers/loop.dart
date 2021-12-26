@@ -29,9 +29,7 @@ Float32List single({
   Shade shade = Shade.Bright,
   double size = 64,
 }){
-  final double _s = direction.index * size;
-  final double _f = size;
-  _src[0] =  atlas.x + _s + _f;
+  _src[0] = atlas.x + direction.index * size;
   _src[1] = atlas.y + (shade.index * size);
   _src[2] = _src[0] + size;
   _src[3] = _src[1] + size;
