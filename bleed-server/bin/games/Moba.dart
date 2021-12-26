@@ -10,7 +10,6 @@ import '../common/GameType.dart';
 import '../common/classes/Vector2.dart';
 import '../instances/scenes.dart';
 import '../language.dart';
-import 'world.dart';
 
 typedef Players = List<Player>;
 
@@ -34,9 +33,15 @@ class Moba extends Game {
   int teamLivesWest = 10;
   int teamLivesEast = 10;
 
-  Moba() : super(scenes.wildernessNorth01, status: GameStatus.Awaiting_Players, gameType: GameType.Moba) {
+  Moba() : super(
+      scenes.wildernessNorth01,
+      status: GameStatus.Awaiting_Players,
+      gameType: GameType.Moba
+  ) {
     creepWestObjectives = [right, top, left];
     creepEastObjectives = [left, top, right];
+    teamSize = 2;
+    numberOfTeams = 2;
   }
 
   @override
@@ -111,22 +116,22 @@ class Moba extends Game {
       }
     }
   }
+
+  Player playerJoin() {
+    final Player player = Player(
+      x: 0,
+      y: 600,
+      game: this,
+      team: getJoinTeam(),
+      type: CharacterType.None,
+    );
+    if (players.length == totalPlayersRequired){
+      status = GameStatus.In_Progress;
+      onGameStarted();
+    }
+    return player;
+  }
+
 }
 
-Player playerJoinMoba(Moba moba) {
-  if (moba.status != GameStatus.Awaiting_Players) {
-    throw Exception("Game already started");
-  }
-  final Player player = Player(
-    x: 0,
-    y: 600,
-    game: moba,
-    team: moba.getJoinTeam(),
-    type: CharacterType.None,
-  );
-  if (moba.players.length == moba.totalPlayersRequired){
-    moba.status = GameStatus.In_Progress;
-    moba.onGameStarted();
-  }
-  return player;
-}
+

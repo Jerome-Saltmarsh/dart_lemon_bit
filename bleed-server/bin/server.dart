@@ -104,7 +104,7 @@ void main() {
 
     void joinGameMoba() {
       final Moba moba = global.findPendingMobaGame();
-      final Player player = playerJoinMoba(moba);
+      final Player player = moba.playerJoin();
       compileWholeGame(moba);
       compilePlayerJoined(_buffer, player);
       compileGameMeta(_buffer, moba);
