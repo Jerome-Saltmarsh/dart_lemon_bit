@@ -35,7 +35,7 @@ class Royal extends Game {
         type: CharacterType.Human,
     );
     player.weapons = [
-      Weapon(type: WeaponType.HandGun, damage: 1, capacity: 35),
+      Weapon(type: WeaponType.HandGun, damage: 25, capacity: 35),
     ];
     if (players.length >= playersRequired){
       status = GameStatus.In_Progress;

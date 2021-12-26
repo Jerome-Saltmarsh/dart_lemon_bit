@@ -234,9 +234,12 @@ void main() {
             return;
           }
 
-          if (game is Moba && game.finished) {
-            compileTeamLivesRemaining(_buffer, game);
+          if (game.finished) {
+            if (game is Moba) {
+              compileTeamLivesRemaining(_buffer, game);
+            }
             compileGameStatus(_buffer, game.status);
+            return;
           }
 
           if (player.sceneChanged) {
