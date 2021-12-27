@@ -5,23 +5,21 @@ import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:flutter/cupertino.dart';
 
-import '../widgets.dart';
-
 const _buttonWidth = 220.0;
 
-Widget buildRegion() {
-  return page(children: [
-    fullScreen(
-        child: Column(
-      children: [
-        titleGameStream,
-        height8,
-        games,
-      ],
-    )),
-    topLeft(child: buttons.leaveRegion),
-  ]);
-}
+// Widget buildRegion() {
+//   return page(children: [
+//     fullScreen(
+//         child: Column(
+//       children: [
+//         titleGameStream,
+//         height8,
+//         games,
+//       ],
+//     )),
+//     topLeft(child: buttons.leaveRegion),
+//   ]);
+// }
 
 Widget titleGameStream = Container(
     alignment: Alignment.center, height: 80, child: text("gamestream.online", fontSize: 40));

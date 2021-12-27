@@ -20,13 +20,13 @@ Widget buildUI(BuildContext context) {
 
     return WatchBuilder(game.type, (GameType gameType) {
       if (gameType == GameType.None) {
-        return buildRegion();
+        return views.selectGame;
       }
 
       return WatchBuilder(webSocket.connection, (Connection connection){
         switch(connection) {
           case Connection.Connecting:
-            return buildConnecting();
+            return views.connecting;
           case Connection.Connected:
             return buildConnected(gameType);
           default:

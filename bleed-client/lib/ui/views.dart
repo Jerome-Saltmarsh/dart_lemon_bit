@@ -5,7 +5,9 @@ import 'package:bleed_client/functions/refreshPage.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/toString.dart';
+import 'package:bleed_client/ui/compose/buildHomePage.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
+import 'package:bleed_client/ui/widgets.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +21,8 @@ final _BuildView _buildView = _BuildView();
 
 class _Views {
   final Widget selectRegion = _buildView.selectRegion();
+  final Widget selectGame = _buildView.selectGame();
+  final Widget connecting = _buildView.connecting();
 }
 
 class _BuildView {
@@ -33,29 +37,44 @@ class _BuildView {
       ),
     );
   }
+
+  Widget selectGame() {
+    return page(children: [
+      fullScreen(
+          child: Column(
+            children: [
+              titleGameStream,
+              height8,
+              games,
+            ],
+          )),
+      topLeft(child: buttons.leaveRegion),
+    ]);
+  }
+
+  Widget connecting() {
+    return center(
+        Column(
+          mainAxisAlignment: axis.main.center,
+          children: [
+            Container(
+              height: 80,
+              child: AnimatedTextKit(repeatForever: true, animatedTexts: [
+                RotateAnimatedText("Connecting to server: ${game.region.value}",
+                    textStyle: TextStyle(color: Colors.white, fontSize: 30)),
+              ]),
+            ),
+            height32,
+            onPressed(child: text("Cancel"), callback: (){
+              sharedPreferences.remove('server');
+              refreshPage();
+            }),
+          ],
+        )
+    );
+  }
 }
 
-Widget buildConnecting() {
-  return center(
-      Column(
-        mainAxisAlignment: axis.main.center,
-        children: [
-          Container(
-            height: 80,
-            child: AnimatedTextKit(repeatForever: true, animatedTexts: [
-              RotateAnimatedText("Connecting to server: ${game.region.value}",
-                  textStyle: TextStyle(color: Colors.white, fontSize: 30)),
-            ]),
-          ),
-          height32,
-          onPressed(child: text("Cancel"), callback: (){
-            sharedPreferences.remove('server');
-            refreshPage();
-          }),
-        ],
-      )
-  );
-}
 
 Widget _buildServerTypeButton(Region server) {
   double height = 50;
