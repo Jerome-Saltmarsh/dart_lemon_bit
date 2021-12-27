@@ -4,6 +4,7 @@ import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/functions/refreshPage.dart';
+import 'package:bleed_client/logic.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/toString.dart';
@@ -18,19 +19,56 @@ import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../title.dart';
+import '../webSocket.dart';
 import 'state/flutter_constants.dart';
 
 final _Views views = _Views();
 final _BuildView _buildView = _BuildView();
 
 class _Views {
+  final Widget main = _buildView.main();
   final Widget selectRegion = _buildView.selectRegion();
   final Widget selectGame = _buildView.selectGame();
   final Widget connecting = _buildView.connecting();
   final Widget connected = _buildView.connected();
+  final Widget connection = _buildView.connection();
 }
 
 class _BuildView {
+
+  Widget main(){
+    return WatchBuilder(game.region, (Region serverType){
+      if (serverType == Region.None){
+        return views.selectRegion;
+      }
+      return WatchBuilder(game.type, (GameType gameType) {
+        if (gameType == GameType.None) {
+          return views.selectGame;
+        }
+        return WatchBuilder(webSocket.connection, (Connection connection){
+          switch(connection) {
+            case Connection.Connecting:
+              return views.connecting;
+            case Connection.Connected:
+              return views.connected;
+            default:
+              return views.connection;
+          }
+        });
+      });
+    });
+  }
+
+  Widget connection(){
+    return center(Column(
+      mainAxisAlignment: axis.main.center,
+      children: [
+        text(connection),
+        height8,
+        button("Cancel", logic.exit, minWidth: 100)
+      ],
+    ));
+  }
 
   Widget connected() {
     print("buildView.connected()");;
