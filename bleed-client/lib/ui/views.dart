@@ -1,4 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:bleed_client/common/GameStatus.dart';
+import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/functions/refreshPage.dart';
@@ -6,12 +8,14 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/buildHomePage.dart';
+import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_math/golden_ratio.dart';
+import 'package:lemon_watch/watch_builder.dart';
 
 import '../title.dart';
 import 'state/flutter_constants.dart';
@@ -23,9 +27,45 @@ class _Views {
   final Widget selectRegion = _buildView.selectRegion();
   final Widget selectGame = _buildView.selectGame();
   final Widget connecting = _buildView.connecting();
+  final Widget connected = _buildView.connected();
 }
 
 class _BuildView {
+
+  Widget connected() {
+    print("buildView.connected()");;
+
+    return WatchBuilder(game.player.uuid, (String uuid) {
+      if (uuid.isEmpty) {
+        return center(text("game.player.uuid is empty"));
+      }
+
+      return WatchBuilder(game.status, (GameStatus gameStatus) {
+        switch (gameStatus) {
+          case GameStatus.Awaiting_Players:
+            return buildUIAwaitingPlayers();
+          case GameStatus.In_Progress:
+            switch (game.type.value) {
+              case GameType.MMO:
+                return buildUIStandardRolePlaying();
+              case GameType.Moba:
+                return buildUIStandardRolePlaying();
+              case GameType.BATTLE_ROYAL:
+                return buildUIBattleRoyal();
+              case GameType.CUBE3D:
+                return buildUI3DCube();
+              default:
+                return text(game.type.value);
+            }
+          case GameStatus.Finished:
+            return buildFinished();
+          default:
+            throw Exception();
+        }
+      });
+    });
+  }
+
   Widget selectRegion() {
     return center(
       SingleChildScrollView(

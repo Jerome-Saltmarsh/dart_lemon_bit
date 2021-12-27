@@ -28,7 +28,7 @@ Widget buildUI(BuildContext context) {
           case Connection.Connecting:
             return views.connecting;
           case Connection.Connected:
-            return buildConnected(gameType);
+            return views.connected;
           default:
             return center(Column(
               mainAxisAlignment: axis.main.center,

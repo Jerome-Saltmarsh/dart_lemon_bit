@@ -267,40 +267,6 @@ Widget buildBottomCenter() {
       ));
 }
 
-Widget buildConnected(GameType gameType) {
-  print("ui.buildConnected()");
-
-  return WatchBuilder(game.player.uuid, (String uuid) {
-    if (uuid.isEmpty) {
-      return center(text("game.player.uuid is empty"));
-    }
-
-    return WatchBuilder(game.status, (GameStatus gameStatus) {
-      switch (gameStatus) {
-        case GameStatus.Awaiting_Players:
-          return buildUIAwaitingPlayers();
-        case GameStatus.In_Progress:
-          switch (gameType) {
-            case GameType.MMO:
-              return buildUIStandardRolePlaying();
-            case GameType.Moba:
-              return buildUIStandardRolePlaying();
-            case GameType.BATTLE_ROYAL:
-              return buildUIBattleRoyal();
-            case GameType.CUBE3D:
-              return buildUI3DCube();
-            default:
-              return text(gameType);
-          }
-        case GameStatus.Finished:
-          return buildFinished();
-        default:
-          throw Exception();
-      }
-    });
-  });
-}
-
 Widget buildUIBattleRoyal() {
   return layout(
     topLeft: text("ZOMBIE ROYAL"),
