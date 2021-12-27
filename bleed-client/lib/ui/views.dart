@@ -125,7 +125,7 @@ class _BuildView {
               widgets.gamesList,
             ],
           )),
-      topLeft(child: buttons.leaveRegion),
+      topLeft(child: buttons.region),
     ]);
   }
 

@@ -10,11 +10,11 @@ enum GameType {
 final List<GameType> gameTypes = GameType.values;
 
 final List<GameType> selectableGameTypes = [
-    GameType.Moba,
     GameType.MMO,
-    GameType.CUBE3D,
+    GameType.Moba,
     GameType.BATTLE_ROYAL,
-    GameType.TACTICAL_COMBAT,
+    // GameType.CUBE3D,
+    // GameType.TACTICAL_COMBAT,
 ];
 
 final Map<GameType, String> gameTypeNames = {

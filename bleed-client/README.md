@@ -141,9 +141,9 @@
 [ ] Battle Royale Mode
 [BUGS]
 [ ] Objects culled at bottom of screen
-[ ] Witch caste explosion nothing happens  
-[ ] Archer fire multi arrow wrong direction  
 [COMPLETED]
+[x] Witch caste explosion nothing happens  
+[x] Archer fire multi arrow wrong direction  
 [x] Hide enemy mana
 [x] Players cannot attack each other
 [x] Convert Project to Null Safe

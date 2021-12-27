@@ -102,5 +102,5 @@ void updateParticleEmitters() {
 }
 
 void _updateMenuVisible() {
-  hud.state.menuVisible.value = mouseAvailable && mouseX > screen.width - 400 && mouseY < 200;
+  hud.state.menuVisible.value = mouseAvailable && mouseX > screen.width - 500 && mouseY < 200;
 }

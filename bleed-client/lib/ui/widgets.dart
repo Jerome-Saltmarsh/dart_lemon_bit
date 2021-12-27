@@ -1,4 +1,5 @@
 import 'package:bleed_client/common/ClientRequest.dart';
+import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/build.dart';
@@ -35,10 +36,9 @@ class _Buttons {
         child: border(child: text(audio ? "Audio On" : "Audio Off")));
   });
 
-  final Widget leaveRegion =  button(
-      "REGION ${enumString(game.region.value).toUpperCase()}",
-      logic.deselectRegion,
-      minWidth: 200,
-      hint: 'Region'
-  );
+  final Widget region = WatchBuilder(game.region, (Region region) {
+    return button("REGION ${enumString(region).toUpperCase()}",
+        logic.deselectRegion,
+        minWidth: 200, hint: 'Region');
+  });
 }
