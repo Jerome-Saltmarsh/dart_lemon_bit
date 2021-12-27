@@ -30,7 +30,7 @@ class _Logic {
     print("logic.exit()");
     game.type.value = GameType.None;
     clearSession();
-    disconnect();
+    webSocket.disconnect();
   }
 
   // functions

@@ -17,7 +17,7 @@ void drawCanvas(Canvas canvas, Size size) {
   }
 
   if (game.type.value == GameType.None) return;
-  if (!connected) return;
+  if (!webSocket.connected) return;
   if (game.player.uuid.value.isEmpty) return;
   if (game.status.value != GameStatus.In_Progress) return;
   renderGame(canvas, size);

@@ -157,7 +157,7 @@ void parseState() {
         switch (error) {
           case GameError.GameNotFound:
             clearState();
-            disconnect();
+            webSocket.disconnect();
             return;
           case GameError.InvalidArguments:
             if (compiledGame.length > 4) {
@@ -170,7 +170,7 @@ void parseState() {
         }
         if (error == GameError.PlayerNotFound) {
           clearState();
-          disconnect();
+          webSocket.disconnect();
         }
         return;
 

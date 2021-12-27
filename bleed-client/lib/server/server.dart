@@ -16,6 +16,6 @@ class _Server {
 
 class _Send {
   void selectCharacterType(CharacterType value){
-    send('${ClientRequest.SelectCharacterType.index} $session ${value.index}');
+    webSocket.send('${ClientRequest.SelectCharacterType.index} $session ${value.index}');
   }
 }

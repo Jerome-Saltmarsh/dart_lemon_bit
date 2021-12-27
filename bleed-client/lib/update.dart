@@ -25,7 +25,7 @@ int emitPart = 0;
 double targetZoom = 1;
 
 void updatePlayMode() {
-  if (!connected) return;
+  if (!webSocket.connected) return;
   if (game.player.uuid.value.isEmpty) return;
 
   switch(game.type.value){

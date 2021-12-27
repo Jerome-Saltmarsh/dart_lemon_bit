@@ -23,7 +23,7 @@ Widget buildUI(BuildContext context) {
         return buildSelectGame();
       }
 
-      return WatchBuilder(connection, (Connection connection){
+      return WatchBuilder(webSocket.connection, (Connection connection){
         switch(connection) {
           case Connection.Connecting:
             return buildConnecting();

@@ -21,23 +21,23 @@ String get session => game.session;
 
 void speak(String message){
   if (message.isEmpty) return;
-  send('${ClientRequest.Speak.index} $session $message');
+  webSocket.send('${ClientRequest.Speak.index} $session $message');
 }
 
 void sendRequestInteract(){
-  send('${ClientRequest.Interact.index} $session');
+  webSocket.send('${ClientRequest.Interact.index} $session');
 }
 
 void sendRequestPing(){
-  sinkMessage(ClientRequest.Ping.index.toString());
+  webSocket.sinkMessage(ClientRequest.Ping.index.toString());
 }
 
 void sendRequestRevive() {
-  send('${ClientRequest.Revive.index} $session');
+  webSocket.send('${ClientRequest.Revive.index} $session');
 }
 
 void sendRequestTeleport(double x, double y){
-  send('${ClientRequest.Teleport.index} $session ${x.toInt()} ${y.toInt()} ');
+  webSocket.send('${ClientRequest.Teleport.index} $session ${x.toInt()} ${y.toInt()} ');
 }
 
 void sendRequestCastFireball(){
@@ -45,26 +45,26 @@ void sendRequestCastFireball(){
 }
 
 void sendRequestEquip(int index) {
-  send('${ClientRequest.Equip.index} $session ${index - 1}');
+  webSocket.send('${ClientRequest.Equip.index} $session ${index - 1}');
 }
 
 void sendRequestDeselectAbility() {
-  send('${ClientRequest.DeselectAbility.index} $session');
+  webSocket.send('${ClientRequest.DeselectAbility.index} $session');
 }
 
 void sendRequestSelectAbility(int index) {
   if (index < 1 || index > 4){
     throw Exception("sendRequestSelectAbility(index: $index) - index must be between 1 and 4 inclusive");
   }
-  send('${ClientRequest.SelectAbility.index} $session $index');
+  webSocket.send('${ClientRequest.SelectAbility.index} $session $index');
 }
 
 void skipHour(){
-  send(ClientRequest.SkipHour.index.toString());
+  webSocket.send(ClientRequest.SkipHour.index.toString());
 }
 
 void reverseHour(){
-  send(ClientRequest.ReverseHour.index.toString());
+  webSocket.send(ClientRequest.ReverseHour.index.toString());
 }
 
 
@@ -81,11 +81,11 @@ void sendRequestAcquireHandgun(){
 }
 
 void sendRequestJoinGame(GameType type) {
-  send('${ClientRequest.Join.index} ${type.index}');
+  webSocket.send('${ClientRequest.Join.index} ${type.index}');
 }
 
 void sendRequestAcquireAbility(WeaponType type) {
-  send('${ClientRequest.AcquireAbility.index} $session ${type.index}');
+  webSocket.send('${ClientRequest.AcquireAbility.index} $session ${type.index}');
 }
 
 void sendRequestUpdatePlayer() {
@@ -97,17 +97,17 @@ void sendRequestUpdatePlayer() {
   _write(characterController.direction.index);
   _write(mouseWorldX.toInt());
   _write(mouseWorldY.toInt());
-  send(_buffer.toString());
+  webSocket.send(_buffer.toString());
 
 }
 
 void sendRequestSetCompilePaths(bool value) {
   paths.clear();
-  send('${ClientRequest.SetCompilePaths.index} $session ${value ? 1 : 0}');
+  webSocket.send('${ClientRequest.SetCompilePaths.index} $session ${value ? 1 : 0}');
 }
 
 void sendClientRequest(ClientRequest request, {dynamic message = ""}) {
-  send('${request.index} $session $message');
+  webSocket.send('${request.index} $session $message');
 }
 
 void _write(dynamic value) {
@@ -116,7 +116,7 @@ void _write(dynamic value) {
 }
 
 void request(ClientRequest request, String value) {
-  send('${request.index} $value');
+  webSocket.send('${request.index} $value');
 }
 
 class _SendRequestToServer {
@@ -134,7 +134,7 @@ void sendRequestUpdateCube3D(){
 }
 
 void _sendAndClearBuffer(){
-  send(_buffer.toString());
+  webSocket.send(_buffer.toString());
   _buffer.clear();
 }
 

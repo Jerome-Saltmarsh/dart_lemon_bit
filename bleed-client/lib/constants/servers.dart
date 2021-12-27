@@ -11,11 +11,11 @@ void connectToWebSocketServer(Region server, GameType gameType) {
 
   String httpsConnectionString = getHttpsConnectionString(server, gameType);
   String wsConnectionString = parseHttpToWebSocket(httpsConnectionString);
-  connectWebSocket(wsConnectionString);
+  webSocket.connect(wsConnectionString);
 }
 
 void _connectLocalHost({int port = 8080}) {
-  connectWebSocket('ws://localhost:$port');
+  webSocket.connect('ws://localhost:$port');
 }
 
 
