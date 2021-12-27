@@ -443,8 +443,8 @@ class _Widgets {
 
 class _Buttons {
   final Widget debug = button("Debug", toggleDebugMode);
-  final Widget exit = button('Exit', game.exit);
-  final Widget edit = button("Edit", toggleEditMode);
+  final Widget exit = button('Exit', logic.exit);
+  final Widget edit = button("Edit", logic.toggleEditMode);
   final Widget changeCharacter = button("Change Hero", () {
     sendClientRequest(ClientRequest.Reset_Character_Type);
   });
@@ -531,7 +531,7 @@ Widget buildUIAwaitingPlayers() {
         mainAxisAlignment: axis.main.apart,
         children: [
           text(toString(game.type.value)),
-          button("Cancel", game.leaveLobby),
+          button("Cancel", logic.leaveLobby),
         ],
       ),
       height16,

@@ -18,6 +18,7 @@ import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/network.dart';
 import 'package:bleed_client/server/server.dart';
@@ -26,7 +27,7 @@ import 'package:lemon_watch/watch.dart';
 final _Game game = _Game();
 
 class _Game {
-  // state
+  final Watch<Mode> mode = Watch(Mode.Play);
   final Watch<Region> region = Watch(Region.None);
   final Watch<int> numberOfPlayersNeeded = Watch(0);
   final List<Effect> effects = [];
@@ -70,24 +71,6 @@ class _Game {
 
   // properties
   String get session => player.uuid.value;
-
-  // functions
-  void leaveLobby() {
-    server.leaveLobby();
-    exit();
-  }
-
-  void exit(){
-    print("game.exit()");
-    game.type.value = GameType.None;
-    clearSession();
-    disconnect();
-  }
-
-  void clearSession(){
-    print("game.clearSession()");
-    player.uuid.value = "";
-  }
 }
 
 class _Lobby {

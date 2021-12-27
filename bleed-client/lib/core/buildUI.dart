@@ -1,5 +1,6 @@
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/enums/Region.dart';
+import 'package:bleed_client/logic.dart';
 import 'package:bleed_client/network.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/compose/buildHomePage.dart';
@@ -34,7 +35,7 @@ Widget buildUI(BuildContext context) {
               children: [
                 text(connection),
                 height8,
-                button("Cancel", game.exit, minWidth: 100)
+                button("Cancel", logic.exit, minWidth: 100)
               ],
             ));
         }

@@ -1,6 +1,7 @@
 
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/send.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/state/hudState.dart';
 import 'package:bleed_client/ui/state/tips.dart';
 import 'package:bleed_client/watches/mode.dart';
@@ -17,10 +18,6 @@ void sendAndCloseTextBox(){
   print("sendAndCloseTextBox()");
   speak(hud.textEditingControllers.speak.text);
   hideTextBox();
-}
-
-void toggleEditMode() {
-  mode.value = playMode ? Mode.Edit : Mode.Play;
 }
 
 void nextTip() {
