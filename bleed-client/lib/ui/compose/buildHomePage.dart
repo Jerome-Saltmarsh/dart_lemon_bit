@@ -5,7 +5,7 @@ import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'hudUI.dart';
+import '../widgets.dart';
 
 const _buttonWidth = 220.0;
 
@@ -14,7 +14,7 @@ Widget buildSelectGame() {
     fullScreen(
         child: Column(
       children: [
-        titleText,
+        titleGameStream,
         height8,
         games,
       ],
@@ -23,7 +23,7 @@ Widget buildSelectGame() {
   ]);
 }
 
-Widget titleText = Container(
+Widget titleGameStream = Container(
     alignment: Alignment.center, height: 80, child: text("gamestream.online", fontSize: 40));
 
 Widget games = Column(
@@ -31,7 +31,7 @@ Widget games = Column(
   children: [
     ...selectableGameTypes.map((GameType value) {
       final Widget type =
-          Container(width: 160, child: text(toString(value).toUpperCase()));
+          Container(width: 160, child: text(enumString(value).toUpperCase()));
       final Widget joinButton = button(
           text(gameTypeNames[value], fontSize: 20, fontWeight: FontWeight.bold),
           () {
@@ -51,3 +51,5 @@ Widget games = Column(
     }).toList()
   ],
 );
+
+

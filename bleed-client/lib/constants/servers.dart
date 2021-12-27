@@ -2,7 +2,7 @@ import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/debug.dart';
 import 'package:bleed_client/enums/Region.dart';
-import 'package:bleed_client/network.dart';
+import 'package:bleed_client/webSocket.dart';
 
 void connectToWebSocketServer(Region server, GameType gameType) {
   if (server == Region.LocalHost) {

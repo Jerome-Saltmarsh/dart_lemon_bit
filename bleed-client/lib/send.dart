@@ -9,7 +9,7 @@ import 'package:vector_math/vector_math_64.dart';
 
 import 'common/GameType.dart';
 import 'cube/camera3d.dart';
-import 'network.dart';
+import 'webSocket.dart';
 
 final StringBuffer _buffer = StringBuffer();
 final gameUpdateIndex = ClientRequest.Update.index;

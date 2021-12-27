@@ -53,7 +53,7 @@ Widget _buildServerTypeButton(Region server) {
               ),
               width: height * (goldenRatio * 2),
               child: text(
-                  toString(server), fontWeight: hovering ? FontWeight.bold : FontWeight.normal,
+                  enumString(server), fontWeight: hovering ? FontWeight.bold : FontWeight.normal,
                   fontSize: hovering ? 20 : 18
               ),
               alignment: Alignment.center));

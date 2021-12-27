@@ -1,4 +1,4 @@
-String toString(dynamic value){
+String enumString(dynamic value){
   String text = value.toString();
   int index = text.indexOf(".");
   if (index == -1) return text;

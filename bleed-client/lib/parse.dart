@@ -47,7 +47,7 @@ import 'common/WeaponType.dart';
 import 'common/classes/Vector2.dart';
 import 'common/enums/ObjectType.dart';
 import 'functions/onGameEvent.dart';
-import 'network.dart';
+import 'webSocket.dart';
 import 'render/functions/mapTilesToSrcAndDst.dart';
 import 'state.dart';
 

@@ -16,11 +16,11 @@ final _WebSocket webSocket = _WebSocket();
 
 class _WebSocket {
   late WebSocketChannel webSocketChannel;
-  String connectionUri = "";
   final Watch<Connection> connection = Watch(Connection.None);
   final StreamController eventStream = StreamController.broadcast();
   bool get connected => connection.value == Connection.Connected;
   bool get connecting => connection.value == Connection.Connecting;
+  String connectionUri = "";
 
   // interface
   void connect({required String uri, required dynamic message}) {

@@ -42,141 +42,11 @@ import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../../toString.dart';
+import '../widgets.dart';
 import 'buildTextBox.dart';
 
 const double _padding = 8;
 final emptyContainer = Container();
-
-Widget buildExperienceBar() {
-  double levelBarWidth = 200;
-  double levelBarHeight = levelBarWidth *
-      goldenRatioInverse *
-      goldenRatioInverse *
-      goldenRatioInverse *
-      goldenRatioInverse;
-
-  return WatchBuilder(game.player.experiencePercentage, (double percentage) {
-    return Container(
-      width: levelBarWidth,
-      height: levelBarHeight,
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.white, width: 2),
-          borderRadius: borderRadius4),
-      alignment: Alignment.centerLeft,
-      padding: EdgeInsets.all(2),
-      child: Stack(
-        alignment: Alignment.centerLeft,
-        children: [
-          Container(
-            color: colours.purpleDarkest,
-            width: levelBarWidth,
-            height: levelBarHeight,
-          ),
-          Container(
-            color: colours.purple,
-            width: levelBarWidth * percentage,
-            height: levelBarHeight,
-          ),
-          Container(
-            color: Colors.transparent,
-            width: levelBarWidth,
-            height: levelBarHeight,
-            alignment: Alignment.center,
-            child: text('Level ${game.player.level.value}'),
-          ),
-        ],
-      ),
-    );
-  });
-}
-
-Widget buildHealthBar() {
-  double width = 200;
-  double height = width *
-      goldenRatioInverse *
-      goldenRatioInverse *
-      goldenRatioInverse *
-      goldenRatioInverse;
-
-  return WatchBuilder(game.player.health, (double health) {
-    double percentage = health / game.player.maxHealth;
-    return Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.white, width: 2),
-          borderRadius: borderRadius4),
-      alignment: Alignment.centerLeft,
-      padding: EdgeInsets.all(2),
-      child: Stack(
-        alignment: Alignment.centerLeft,
-        children: [
-          Container(
-            color: colours.redDarkest,
-            width: width,
-            height: height,
-          ),
-          Container(
-            color: colours.red,
-            width: width * percentage,
-            height: height,
-          ),
-          Container(
-            color: Colors.transparent,
-            width: width,
-            height: height,
-            alignment: Alignment.center,
-            child: text('${health.toInt()} / ${game.player.maxHealth}'),
-          ),
-        ],
-      ),
-    );
-  });
-}
-
-Widget buildMagicBar() {
-  double width = 200;
-  double height = width *
-      goldenRatioInverse *
-      goldenRatioInverse *
-      goldenRatioInverse *
-      goldenRatioInverse;
-
-  return WatchBuilder(game.player.magic, (double magic) {
-    double percentage = magic / game.player.maxMagic.value;
-    return Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.white, width: 2),
-          borderRadius: borderRadius4),
-      alignment: Alignment.centerLeft,
-      padding: EdgeInsets.all(2),
-      child: Stack(
-        alignment: Alignment.centerLeft,
-        children: [
-          Container(
-            color: colours.blueDarkest,
-            width: width,
-            height: height,
-          ),
-          Container(
-            color: colours.blue,
-            width: width * percentage,
-            height: height,
-          ),
-          Container(
-            color: Colors.transparent,
-            width: width,
-            height: height,
-            alignment: Alignment.center,
-            child: text('${magic.toInt()} / ${game.player.maxMagic.value}'),
-          ),
-        ],
-      ),
-    );
-  });
-}
 
 Widget buildTopLeft() {
   return Positioned(
@@ -431,37 +301,6 @@ Widget buildConnected(GameType gameType) {
   });
 }
 
-final _Buttons buttons = _Buttons();
-final _Widgets widgets = _Widgets();
-
-class _Widgets {
-  final Widget experienceBar = buildExperienceBar();
-  final Widget healthBar = buildHealthBar();
-  final Widget magicBar = buildMagicBar();
-  final Widget abilities = buildAbilities();
-}
-
-class _Buttons {
-  final Widget debug = button("Debug", toggleDebugMode);
-  final Widget exit = button('Exit', logic.exit);
-  final Widget edit = button("Edit", logic.toggleEditMode);
-  final Widget changeCharacter = button("Change Hero", () {
-    sendClientRequest(ClientRequest.Reset_Character_Type);
-  });
-  final Widget audio = WatchBuilder(game.settings.audioMuted, (bool audio) {
-    return onPressed(
-        callback: logic.toggleAudio,
-        child: border(child: text(audio ? "Audio On" : "Audio Off")));
-  });
-
-  final Widget leaveRegion =  button(
-      "REGION ${toString(game.region.value).toUpperCase()}",
-      logic.deselectRegion,
-      minWidth: 200,
-      hint: 'Region'
-  );
-}
-
 Widget buildUIBattleRoyal() {
   return layout(
     topLeft: text("ZOMBIE ROYAL"),
@@ -530,7 +369,7 @@ Widget buildUIAwaitingPlayers() {
       Row(
         mainAxisAlignment: axis.main.apart,
         children: [
-          text(toString(game.type.value)),
+          text(enumString(game.type.value)),
           button("Cancel", logic.leaveLobby),
         ],
       ),
@@ -602,7 +441,7 @@ Widget buildUIStandardRolePlaying() {
       return WatchBuilder(game.player.weaponType, (WeaponType weaponType){
         return Stack(
           children: [
-            topLeft(child: text(toString(weaponType))),
+            topLeft(child: text(enumString(weaponType))),
             topRight(child: buttons.exit),
           ],
         );
@@ -951,152 +790,6 @@ class MyCustomClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(CustomClipper<Path> oldClipper) => false;
-}
-
-Widget buildAbilities() {
-  return Container(
-    child: Row(
-      crossAxisAlignment: axis.cross.end,
-      children: [
-        buildAbility(game.player.ability1),
-        width4,
-        buildAbility(game.player.ability2),
-        width4,
-        buildAbility(game.player.ability3),
-        width4,
-        buildAbility(game.player.ability4),
-      ],
-    ),
-  );
-}
-
-Widget buildAbility(Ability ability) {
-  return WatchBuilder(ability.type, (AbilityType type) {
-    if (type == AbilityType.None) return emptyContainer;
-
-    return Column(
-      mainAxisAlignment: axis.main.end,
-      children: [
-        WatchBuilder(game.player.skillPoints, (int points) {
-          if (points == 0) return emptyContainer;
-
-          return onPressed(
-            callback: () {
-              sendRequest.upgradeAbility(ability.index);
-            },
-            child: mouseOver(builder: (BuildContext context, bool mouseOver) {
-              return border(
-                child: text("+", fontSize: 25),
-                color: Colors.white,
-                fillColor: mouseOver ? Colors.white54 : Colors.white12,
-                padding: EdgeInsets.symmetric(horizontal: 5),
-              );
-            }),
-          );
-        }),
-        height20,
-        WatchBuilder(ability.level, (int level) {
-          bool unlocked = level > 0;
-
-          if (!unlocked) {
-            return Stack(
-              children: [
-                buildDecorationImage(
-                    image: mapAbilityTypeToDecorationImage[type]!,
-                    width: 50,
-                    height: 50,
-                    borderColor: Colors.black54,
-                    borderWidth: 3),
-                Container(
-                  width: 50,
-                  height: 50,
-                  alignment: Alignment.center,
-                  color: Colors.black54,
-                )
-              ],
-            );
-          }
-
-          return WatchBuilder(ability.cooldown, (int cooldown) {
-            return WatchBuilder(ability.cooldownRemaining,
-                (int cooldownRemaining) {
-              if (cooldownRemaining > 0) {
-                return Stack(
-                  children: [
-                    buildDecorationImage(
-                        image: mapAbilityTypeToDecorationImage[type]!,
-                        width: 50,
-                        height: 50,
-                        borderColor: Colors.black54,
-                        borderWidth: 3),
-                    Container(
-                        width: 50,
-                        height: 50,
-                        alignment: Alignment.center,
-                        color: Colors.black54,
-                        child: text("${cooldownRemaining}s"))
-                  ],
-                );
-              }
-
-              return WatchBuilder(ability.canAfford, (bool canAfford) {
-                if (!canAfford) {
-                  return Stack(
-                    children: [
-                      buildDecorationImage(
-                          image: mapAbilityTypeToDecorationImage[type]!,
-                          width: 50,
-                          height: 50,
-                          borderColor: Colors.black54,
-                          borderWidth: 3),
-                      Container(
-                        width: 50,
-                        height: 50,
-                        alignment: Alignment.center,
-                        color: Colors.red.withOpacity(0.5),
-                      ),
-                      Container(
-                          color: Colors.black54,
-                          padding: padding4,
-                          child: text(level))
-                    ],
-                  );
-                }
-
-                return WatchBuilder(ability.selected, (bool selected) {
-                  return onPressed(
-                    hint: abilityTypeToString(ability.type.value),
-                    callback: () {
-                      sendRequestSelectAbility(ability.index);
-                    },
-                    child: Stack(
-                      children: [
-                        mouseOver(
-                            builder: (BuildContext context, bool mouseOver) {
-                          return buildDecorationImage(
-                              image: mapAbilityTypeToDecorationImage[type]!,
-                              width: 50,
-                              height: 50,
-                              borderColor: mouseOver || selected
-                                  ? Colors.white
-                                  : Colors.green,
-                              borderWidth: 3);
-                        }),
-                        Container(
-                            color: Colors.black54,
-                            padding: padding4,
-                            child: text(level)),
-                      ],
-                    ),
-                  );
-                });
-              });
-            });
-          });
-        }),
-      ],
-    );
-  });
 }
 
 Widget buildExpandedWeapons() {

@@ -7,7 +7,7 @@ import 'package:bleed_client/functions/cameraCenterPlayer.dart';
 import 'package:bleed_client/functions/removeGeneratedEnvironmentObjects.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/logic.dart';
-import 'package:bleed_client/network.dart';
+import 'package:bleed_client/webSocket.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';

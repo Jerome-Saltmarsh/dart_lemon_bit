@@ -19,7 +19,7 @@ import 'package:bleed_client/events/onShadeMaxChanged.dart';
 import 'package:bleed_client/events/onTimeChanged.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/input.dart';
-import 'package:bleed_client/network.dart';
+import 'package:bleed_client/webSocket.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';

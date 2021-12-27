@@ -17,7 +17,7 @@ import 'package:lemon_math/randomInt.dart';
 import 'common/GameStatus.dart';
 import 'functions/emit/emitMyst.dart';
 import 'input.dart';
-import 'network.dart';
+import 'webSocket.dart';
 import 'state.dart';
 import 'update/updateCharacters.dart';
 

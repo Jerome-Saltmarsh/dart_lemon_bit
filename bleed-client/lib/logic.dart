@@ -1,7 +1,7 @@
 
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/Region.dart';
-import 'package:bleed_client/network.dart';
+import 'package:bleed_client/webSocket.dart';
 import 'package:bleed_client/server/server.dart';
 import 'package:bleed_client/state/game.dart';
 
