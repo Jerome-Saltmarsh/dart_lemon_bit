@@ -230,3 +230,19 @@ Widget topRight({required Widget child, double padding = 0}) {
     child: child,
   );
 }
+
+Widget bottomRight({required Widget child, double padding = 0}) {
+  return Positioned(
+    bottom: padding,
+    right: padding,
+    child: child,
+  );
+}
+
+Widget bottomLeft({required Widget child, double padding = 0}) {
+  return Positioned(
+    bottom: padding,
+    left: padding,
+    child: child,
+  );
+}

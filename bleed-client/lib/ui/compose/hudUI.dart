@@ -459,7 +459,9 @@ Widget buildConnected(GameType gameType) {
 final _Buttons buttons = _Buttons();
 
 class _Buttons {
+  final Widget debug = button("Debug", toggleDebugMode);
   final Widget exit = button('Exit', game.exit);
+  final Widget edit = button("Edit", toggleEditMode);
   final Widget changeCharacter = button("Change Hero", () {
     sendClientRequest(ClientRequest.Reset_Character_Type);
   });
@@ -482,12 +484,36 @@ void deselectRegion(){
 }
 
 Widget buildUIBattleRoyal() {
+  return layout(
+    topLeft: text("ZOMBIE ROYAL"),
+    topRight: buttons.exit,
+    bottomRight: buttons.edit,
+  );
+}
+
+Widget layout({
+  Widget? topLeft,
+  Widget? topRight,
+  Widget? bottomRight,
+  Widget? bottomLeft,
+  List<Widget>? children,
+  double padding = 0
+}){
   return Stack(
     children: [
-      topLeft(child: text("ZOMBIE ROYAL")),
-      topRight(child: buttons.exit),
+      if (topLeft != null)
+        Positioned(top: padding, left: padding, child: topLeft,),
+      if (topRight != null)
+        Positioned(top: padding, right: padding, child: topRight,),
+      if (bottomRight != null)
+        Positioned(top: padding, right: padding, child: bottomRight,),
+      if (bottomLeft != null)
+        Positioned(top: padding, right: padding, child: bottomLeft,),
+      if (children != null)
+        ...children
     ],
   );
+
 }
 
 Widget buildUI3DCube() {
@@ -694,14 +720,6 @@ Widget _buildSettingsIcon() {
       image: icons.settings, width: 40, height: 40, borderWidth: 0);
 }
 
-Widget _buildToggleEdit() {
-  return button("Editor", toggleEditMode);
-}
-
-Widget buildToggleDebug() {
-  return button("Debug", toggleDebugMode);
-}
-
 void toggleDebugMode() {
   game.settings.compilePaths = !game.settings.compilePaths;
   sendRequestSetCompilePaths(game.settings.compilePaths);
@@ -714,9 +732,9 @@ Widget buildMenu() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        if (debug) buildToggleDebug(),
+        if (debug) buttons.debug,
         if (debug) width8,
-        if (debug) _buildToggleEdit(),
+        if (debug) buttons.edit,
         buttons.exit,
         buttons.changeCharacter,
         buttons.audio,
