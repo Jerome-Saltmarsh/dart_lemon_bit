@@ -1,10 +1,10 @@
 
 import 'package:bleed_client/constants/colours.dart';
+import 'package:bleed_client/ui/views.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/game.dart';
 
 import 'buildLoadingScreen.dart';
-import 'buildUI.dart';
 import 'drawCanvas.dart';
 import 'init.dart';
 import 'update.dart';
@@ -14,7 +14,7 @@ Widget buildBleed(){
     title: "BLEED",
     init: init,
     update: update,
-    buildUI: buildUI,
+    buildUI: buildView,
     drawCanvas: drawCanvas,
     drawCanvasAfterUpdate: false,
     backgroundColor: colours.white,

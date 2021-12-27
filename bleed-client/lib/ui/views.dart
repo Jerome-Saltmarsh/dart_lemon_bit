@@ -22,11 +22,33 @@ import '../title.dart';
 import '../webSocket.dart';
 import 'state/flutter_constants.dart';
 
-final _Views views = _Views();
+Widget buildView(BuildContext context){
+  return WatchBuilder(game.region, (Region serverType){
+    if (serverType == Region.None){
+      return _views.selectRegion;
+    }
+    return WatchBuilder(game.type, (GameType gameType) {
+      if (gameType == GameType.None) {
+        return _views.selectGame;
+      }
+      return WatchBuilder(webSocket.connection, (Connection connection){
+        switch(connection) {
+          case Connection.Connecting:
+            return _views.connecting;
+          case Connection.Connected:
+            return _views.connected;
+          default:
+            return _views.connection;
+        }
+      });
+    });
+  });
+}
+
+final _Views _views = _Views();
 final _BuildView _buildView = _BuildView();
 
 class _Views {
-  final Widget main = _buildView.main();
   final Widget selectRegion = _buildView.selectRegion();
   final Widget selectGame = _buildView.selectGame();
   final Widget connecting = _buildView.connecting();
@@ -35,29 +57,6 @@ class _Views {
 }
 
 class _BuildView {
-
-  Widget main(){
-    return WatchBuilder(game.region, (Region serverType){
-      if (serverType == Region.None){
-        return views.selectRegion;
-      }
-      return WatchBuilder(game.type, (GameType gameType) {
-        if (gameType == GameType.None) {
-          return views.selectGame;
-        }
-        return WatchBuilder(webSocket.connection, (Connection connection){
-          switch(connection) {
-            case Connection.Connecting:
-              return views.connecting;
-            case Connection.Connected:
-              return views.connected;
-            default:
-              return views.connection;
-          }
-        });
-      });
-    });
-  }
 
   Widget connection(){
     return center(Column(
@@ -71,7 +70,7 @@ class _BuildView {
   }
 
   Widget connected() {
-    print("buildView.connected()");;
+    print("buildView.connected()");
 
     return WatchBuilder(game.player.uuid, (String uuid) {
       if (uuid.isEmpty) {
@@ -179,15 +178,3 @@ Widget _buildServerTypeButton(Region server) {
     margin: EdgeInsets.only(bottom: height * goldenRatioInverseB),
   );
 }
-
-// Widget buildSelectServerType() {
-//   return center(
-//     SingleChildScrollView(
-//       child: Column(crossAxisAlignment: axis.cross.center, children: [
-//         text(title, fontSize: 45),
-//         height32,
-//         ...selectableServerTypes.map(_buildServerTypeButton)
-//       ]),
-//     ),
-//   );
-// }
