@@ -8,12 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:lemon_engine/state/screen.dart';
 
-Widget text(dynamic value,
-    {fontSize = 18,
+Widget text(dynamic value, {
+    fontSize = 18,
     GestureTapCallback? onPressed,
     TextDecoration decoration = TextDecoration.none,
     FontWeight fontWeight = normal,
-    Color color = white}) {
+    Color color = white
+}) {
   Widget _text = Text(value.toString(),
       style: TextStyle(
           color: color,

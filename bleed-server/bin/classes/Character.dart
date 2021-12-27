@@ -28,8 +28,8 @@ class Character extends GameObject implements HasSquad {
   int frozenDuration = 0;
   double attackRange = 50;
   int damage = 1;
-  Character?
-      attackTarget; // the character that was highlighted when the player clicked
+  /// the character that was highlighted when the player clicked
+  Character? attackTarget;
 
   double get speed {
     if (frozen) {
