@@ -13,9 +13,9 @@ import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/cube/camera3d.dart';
 import 'package:bleed_client/debug.dart';
-import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/input.dart';
+import 'package:bleed_client/logic.dart';
 import 'package:bleed_client/mappers/mapWeaponToDecorationImage.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/server/server.dart';
@@ -47,9 +47,9 @@ import 'buildTextBox.dart';
 const double _padding = 8;
 final emptyContainer = Container();
 
-Widget buildLevelBar() {
-  double width = 200;
-  double height = width *
+Widget buildExperienceBar() {
+  double levelBarWidth = 200;
+  double levelBarHeight = levelBarWidth *
       goldenRatioInverse *
       goldenRatioInverse *
       goldenRatioInverse *
@@ -57,8 +57,8 @@ Widget buildLevelBar() {
 
   return WatchBuilder(game.player.experiencePercentage, (double percentage) {
     return Container(
-      width: width,
-      height: height,
+      width: levelBarWidth,
+      height: levelBarHeight,
       decoration: BoxDecoration(
           border: Border.all(color: Colors.white, width: 2),
           borderRadius: borderRadius4),
@@ -69,18 +69,18 @@ Widget buildLevelBar() {
         children: [
           Container(
             color: colours.purpleDarkest,
-            width: width,
-            height: height,
+            width: levelBarWidth,
+            height: levelBarHeight,
           ),
           Container(
             color: colours.purple,
-            width: width * percentage,
-            height: height,
+            width: levelBarWidth * percentage,
+            height: levelBarHeight,
           ),
           Container(
             color: Colors.transparent,
-            width: width,
-            height: height,
+            width: levelBarWidth,
+            height: levelBarHeight,
             alignment: Alignment.center,
             child: text('Level ${game.player.level.value}'),
           ),
@@ -237,29 +237,6 @@ Widget buildPlayerLevel() {
   });
 }
 
-// Widget buildPlayerNextLevelExperience() {
-//   return Tooltip(
-//     message: "Experience",
-//     child: WatchBuilder(game.player.experiencePercentage, (int value) {
-//       double percentage = value / 100.0;
-//       return Container(
-//         width: 100,
-//         height: 50,
-//         alignment: Alignment.centerLeft,
-//         padding: EdgeInsets.all(3),
-//         decoration: BoxDecoration(
-//             border: Border.all(color: Colors.white, width: 4),
-//             borderRadius: borderRadius4),
-//         child: Container(
-//           color: Colors.white,
-//           width: 100 * percentage,
-//           height: 50,
-//         ),
-//       );
-//     }),
-//   );
-// }
-
 Widget buildBottomRight() {
   return WatchBuilder(game.player.characterType, (CharacterType type) {
     if (type == CharacterType.None) return emptyContainer;
@@ -269,8 +246,6 @@ Widget buildBottomRight() {
         child: Row(
           children: [
             buildMessageBoxIcon(),
-            // width8,
-            // buildHealthBar(),
           ],
         ));
   });
@@ -404,15 +379,15 @@ Widget buildBottomCenter() {
             Column(
               mainAxisAlignment: axis.main.end,
               children: [
-                buildHealthBar(),
+                widgets.healthBar,
                 height2,
-                buildMagicBar(),
+                widgets.magicBar,
                 height2,
-                buildLevelBar(),
+                widgets.experienceBar,
               ],
             ),
             width8,
-            buildAbilities(),
+            widgets.abilities,
             width8,
             Container(
               width: 200,
@@ -457,6 +432,14 @@ Widget buildConnected(GameType gameType) {
 }
 
 final _Buttons buttons = _Buttons();
+final _Widgets widgets = _Widgets();
+
+class _Widgets {
+  final Widget experienceBar = buildExperienceBar();
+  final Widget healthBar = buildHealthBar();
+  final Widget magicBar = buildMagicBar();
+  final Widget abilities = buildAbilities();
+}
 
 class _Buttons {
   final Widget debug = button("Debug", toggleDebugMode);
@@ -467,20 +450,16 @@ class _Buttons {
   });
   final Widget audio = WatchBuilder(game.settings.audioMuted, (bool audio) {
     return onPressed(
-        callback: toggleAudio,
+        callback: logic.toggleAudio,
         child: border(child: text(audio ? "Audio On" : "Audio Off")));
   });
 
   final Widget leaveRegion =  button(
       "REGION ${toString(game.region.value).toUpperCase()}",
-      deselectRegion,
+      logic.deselectRegion,
       minWidth: 200,
       hint: 'Region'
   );
-}
-
-void deselectRegion(){
-  game.region.value = Region.None;
 }
 
 Widget buildUIBattleRoyal() {

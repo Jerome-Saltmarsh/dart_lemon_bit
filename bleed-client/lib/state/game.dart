@@ -195,9 +195,7 @@ extension PlayerExtentions on _Player {
   }
 }
 
-void toggleAudio() {
-  game.settings.audioMuted.value = !game.settings.audioMuted.value;
-}
+
 
 class _Settings {
   Watch<bool> audioMuted = Watch(false);
