@@ -9,9 +9,9 @@ import 'drawCanvas.dart';
 import 'init.dart';
 import 'update.dart';
 
-Widget buildBleed(){
+Widget buildGameStream(){
   return Game(
-    title: "BLEED",
+    title: "GAMESTREAM",
     init: init,
     update: update,
     buildUI: buildView,

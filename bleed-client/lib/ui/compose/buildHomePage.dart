@@ -7,23 +7,6 @@ import 'package:flutter/cupertino.dart';
 
 const _buttonWidth = 220.0;
 
-// Widget buildRegion() {
-//   return page(children: [
-//     fullScreen(
-//         child: Column(
-//       children: [
-//         titleGameStream,
-//         height8,
-//         games,
-//       ],
-//     )),
-//     topLeft(child: buttons.leaveRegion),
-//   ]);
-// }
-
-Widget titleGameStream = Container(
-    alignment: Alignment.center, height: 80, child: text("gamestream.online", fontSize: 40));
-
 Widget games = Column(
   crossAxisAlignment: axis.cross.stretch,
   children: [

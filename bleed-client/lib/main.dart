@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:url_strategy/url_strategy.dart';
 
-Watch<Widget> activeWidget = Watch(buildBleed());
+Watch<Widget> activeWidget = Watch(buildGameStream());
 
 void main() {
   setPathUrlStrategy();

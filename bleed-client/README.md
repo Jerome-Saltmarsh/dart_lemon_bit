@@ -133,13 +133,16 @@
 [ ] Design witch attack orb sprite
 [ ] Design Freeze Circle sprite
 [ ] Implement Activity Level upgrades
-[ ] Fix Bug render objects culled bottom
 [MOBA]
 [ ] Defense Tower
 [ ] Fix bug starting new game should reset light maps
 [ ] Fix Game Time
 [TODAY'S GOAL]
 [ ] Battle Royale Mode
+[BUGS]
+[ ] Objects culled at bottom of screen
+[ ] Witch caste explosion nothing happens  
+[ ] Archer fire multi arrow wrong direction  
 [COMPLETED]
 [x] Hide enemy mana
 [x] Players cannot attack each other

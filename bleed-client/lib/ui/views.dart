@@ -120,9 +120,9 @@ class _BuildView {
       fullScreen(
           child: Column(
             children: [
-              titleGameStream,
+              widgets.title,
               height8,
-              games,
+              widgets.gamesList,
             ],
           )),
       topLeft(child: buttons.leaveRegion),
