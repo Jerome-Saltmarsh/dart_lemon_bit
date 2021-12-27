@@ -174,7 +174,7 @@ void _compileAbility(StringBuffer buffer, Ability ability) {
   _write(buffer, ability.level);
   _write(buffer, ability.cooldown);
   _write(buffer, ability.cooldownRemaining);
-  _write(buffer, ability.magicCost);
+  _write(buffer, ability.cost);
 }
 
 void compilePlayer(StringBuffer buffer, Player player) {

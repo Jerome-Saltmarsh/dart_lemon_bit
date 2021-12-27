@@ -293,6 +293,7 @@ void main() {
               }
               Ability? ability = player.ability;
               player.attackTarget = player.aimTarget;
+              playerSetAbilityTarget(player, mouseX, mouseY);
 
               if (ability == null) {
                 if (player.type == CharacterType.Swordsman ||
@@ -303,7 +304,7 @@ void main() {
                 break;
               }
 
-              if (player.magic < ability.magicCost) {
+              if (player.magic < ability.cost) {
                 error(GameError.InsufficientMana);
                 break;
               }
@@ -333,7 +334,7 @@ void main() {
               }
 
               // @on player perform ability
-              player.magic -= ability.magicCost;
+              player.magic -= ability.cost;
               player.performing = ability;
               ability.cooldownRemaining = ability.cooldown;
               player.abilitiesDirty = true;
@@ -580,7 +581,7 @@ void main() {
             return;
           }
 
-          if (ability.magicCost > player.magic) {
+          if (ability.cost > player.magic) {
             error(GameError.InsufficientMana);
             return;
           }

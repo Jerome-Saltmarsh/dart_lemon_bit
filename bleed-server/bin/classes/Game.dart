@@ -1847,7 +1847,7 @@ void selectCharacterType(Player player, CharacterType value) {
       player.ability1 = Ability(
         type: AbilityType.Explosion,
         level: 0,
-        magicCost: 60,
+        cost: 60,
         range: 200,
         cooldown: 15,
         radius: settings.radius.explosion,
@@ -1855,13 +1855,13 @@ void selectCharacterType(Player player, CharacterType value) {
       player.ability2 = Ability(
           type: AbilityType.Blink,
           level: 0,
-          magicCost: 10,
+          cost: 10,
           range: 200,
           cooldown: 10);
       player.ability3 = Ability(
         type: AbilityType.FreezeCircle,
         level: 0,
-        magicCost: 10,
+        cost: 10,
         range: 200,
         cooldown: 15,
         radius: settings.radius.explosion,
@@ -1869,7 +1869,7 @@ void selectCharacterType(Player player, CharacterType value) {
       player.ability4 = Ability(
           type: AbilityType.Fireball,
           level: 0,
-          magicCost: 10,
+          cost: 10,
           range: 200,
           cooldown: 25);
       break;
@@ -1879,20 +1879,20 @@ void selectCharacterType(Player player, CharacterType value) {
       player.ability1 = Ability(
           type: AbilityType.Brutal_Strike,
           level: 0,
-          magicCost: 10,
+          cost: 10,
           range: player.attackRange,
           cooldown: 15);
       player.ability2 = IronShield(player);
       player.ability3 = Ability(
           type: AbilityType.Death_Strike,
           level: 0,
-          magicCost: 10,
+          cost: 10,
           range: player.attackRange,
           cooldown: 15);
       player.ability4 = Ability(
           type: AbilityType.Explosion,
           level: 0,
-          magicCost: 10,
+          cost: 10,
           range: 200,
           cooldown: 15);
       break;
@@ -1903,20 +1903,20 @@ void selectCharacterType(Player player, CharacterType value) {
       player.ability1 = Ability(
           type: AbilityType.Split_Arrow,
           level: 0,
-          magicCost: 40,
+          cost: 40,
           range: 200,
           cooldown: 10);
       player.ability2 = Dash(player);
       player.ability3 = Ability(
           type: AbilityType.Long_Shot,
           level: 0,
-          magicCost: 40,
+          cost: 40,
           range: 250,
           cooldown: 15);
       player.ability4 = Ability(
           type: AbilityType.Fireball,
           level: 0,
-          magicCost: 70,
+          cost: 70,
           range: 200,
           cooldown: 25);
       break;
