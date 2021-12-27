@@ -11,8 +11,29 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_math/golden_ratio.dart';
 
-import '../../title.dart';
-import '../state/flutter_constants.dart';
+import '../title.dart';
+import 'state/flutter_constants.dart';
+
+final _Views views = _Views();
+final _BuildView _buildView = _BuildView();
+
+class _Views {
+  final Widget selectRegion = _buildView.selectRegion();
+}
+
+class _BuildView {
+  Widget selectRegion() {
+    return center(
+      SingleChildScrollView(
+        child: Column(crossAxisAlignment: axis.cross.center, children: [
+          text(title, fontSize: 45),
+          height32,
+          ...selectableServerTypes.map(_buildServerTypeButton)
+        ]),
+      ),
+    );
+  }
+}
 
 Widget buildConnecting() {
   return center(
@@ -62,14 +83,14 @@ Widget _buildServerTypeButton(Region server) {
   );
 }
 
-Widget buildSelectServerType() {
-  return center(
-    SingleChildScrollView(
-      child: Column(crossAxisAlignment: axis.cross.center, children: [
-        text(title, fontSize: 45),
-        height32,
-        ...selectableServerTypes.map(_buildServerTypeButton)
-      ]),
-    ),
-  );
-}
+// Widget buildSelectServerType() {
+//   return center(
+//     SingleChildScrollView(
+//       child: Column(crossAxisAlignment: axis.cross.center, children: [
+//         text(title, fontSize: 45),
+//         height32,
+//         ...selectableServerTypes.map(_buildServerTypeButton)
+//       ]),
+//     ),
+//   );
+// }

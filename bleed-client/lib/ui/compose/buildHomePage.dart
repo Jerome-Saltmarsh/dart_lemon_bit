@@ -9,7 +9,7 @@ import '../widgets.dart';
 
 const _buttonWidth = 220.0;
 
-Widget buildSelectGame() {
+Widget buildRegion() {
   return page(children: [
     fullScreen(
         child: Column(
