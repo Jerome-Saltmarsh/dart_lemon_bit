@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -24,17 +23,13 @@ class _WebSocket {
   bool get connecting => connection.value == Connection.Connecting;
 
   // interface
-  void connect(String uri) {
+  void connect({required String uri, required dynamic message}) {
     print("webSocket.connect($uri)");
     connection.value = Connection.Connecting;
     webSocketChannel = WebSocketChannel.connect(Uri.parse(uri));
     webSocketChannel.stream.listen(_onEvent, onError: _onError, onDone: _onDone);
     connectionUri = uri;
-    ping();
-  }
-
-  void ping(){
-    sinkMessage(ClientRequest.Ping.index.toString());
+    sinkMessage(message);
   }
 
   void disconnect() {

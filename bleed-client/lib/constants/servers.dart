@@ -1,3 +1,4 @@
+import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/debug.dart';
 import 'package:bleed_client/enums/Region.dart';
@@ -11,13 +12,16 @@ void connectToWebSocketServer(Region server, GameType gameType) {
 
   String httpsConnectionString = getHttpsConnectionString(server, gameType);
   String wsConnectionString = parseHttpToWebSocket(httpsConnectionString);
-  webSocket.connect(wsConnectionString);
+  _connectToServer('ws://localhost:$wsConnectionString');
 }
 
 void _connectLocalHost({int port = 8080}) {
-  webSocket.connect('ws://localhost:$port');
+  _connectToServer('ws://localhost:$port');
 }
 
+void _connectToServer(String uri){
+  webSocket.connect(uri: uri, message: ClientRequest.Ping.index.toString());
+}
 
 final List<Region> serverTypes = Region.values;
 
