@@ -149,8 +149,9 @@ class _BuildView {
 
   Widget awaitingPlayers() {
     return layout(
-      topLeft: text("game stream"),
-      topRight: button(text("Exit", fontSize: 20), logic.leaveLobby, borderWidth: 3, fillColor: colours.orange, fillColorMouseOver: colours.redDark),
+      padding: 8,
+      topLeft: button(text("Back", fontSize: 20), logic.leaveLobby, borderWidth: 3, fillColor: colours.orange, fillColorMouseOver: colours.redDark),
+      topRight: text("GAMESTREAM", fontSize: 25),
       children: [dialog(
         padding: 16,
           color: colours.black05,
