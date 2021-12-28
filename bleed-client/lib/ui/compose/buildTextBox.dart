@@ -1,7 +1,7 @@
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/logic/showTextBox.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
-import 'package:bleed_client/ui/state/hudState.dart';
+import 'package:bleed_client/ui/state/hud.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_watch/watch_builder.dart';

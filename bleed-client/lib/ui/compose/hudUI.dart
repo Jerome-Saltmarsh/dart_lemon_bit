@@ -20,7 +20,7 @@ import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/decorationImages.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
-import 'package:bleed_client/ui/state/hudState.dart';
+import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/ui/state/styleguide.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:bleed_client/watches/time.dart';
@@ -38,7 +38,6 @@ import 'package:lemon_watch/watch_builder.dart';
 
 import '../../toString.dart';
 import '../widgets.dart';
-import 'buildTextBox.dart';
 
 const double _padding = 8;
 final emptyContainer = Container();
@@ -322,43 +321,6 @@ Widget buildUI3DCube() {
   );
 }
 
-Widget buildUIStandardRolePlaying() {
-  return WatchBuilder(game.player.characterType, (CharacterType value) {
-    if (value == CharacterType.None) {
-      return buildDialogSelectCharacterType();
-    }
-
-    if (value == CharacterType.Human) {
-
-      return WatchBuilder(game.player.weaponType, (WeaponType weaponType){
-        return Stack(
-          children: [
-            topLeft(child: text(enumString(weaponType))),
-            topRight(child: buttons.exit),
-          ],
-        );
-      });
-    }
-
-    return WatchBuilder(game.player.alive, (bool alive) {
-      return Stack(
-        children: [
-          buildTextBox(),
-          if (alive) buildBottomRight(),
-          buildTopLeft(),
-          if (alive) buildBottomCenter(),
-          if (!hud.state.observeMode && !alive) _buildViewRespawn(),
-          if (!alive && hud.state.observeMode) _buildRespawnLight(),
-          _buildServerText(),
-          buildTopRight(),
-          buildSkillTree(),
-          buildNumberOfPlayersRequiredDialog(),
-        ],
-      );
-    });
-  });
-}
-
 Widget buildNumberOfPlayersRequiredDialog() {
   return WatchBuilder(game.numberOfPlayersNeeded, (int number) {
     if (number == 0) return emptyContainer;
@@ -390,31 +352,6 @@ bool unlockedFirebolt() {
     if (weapon.type == WeaponType.Shotgun) return true;
   }
   return false;
-}
-
-Positioned _buildRespawnLight() {
-  return Positioned(
-      top: 30,
-      child: Container(
-          width: screen.width,
-          child: Column(
-            crossAxisAlignment: axis.cross.center,
-            children: [
-              Row(mainAxisAlignment: axis.main.center, children: [
-                onPressed(
-                    callback: () {
-                      sendRequestRevive();
-                      hud.state.observeMode = false;
-                    },
-                    child: border(
-                        child: text("Respawn", fontSize: 30),
-                        padding: padding8,
-                        radius: borderRadius4))
-              ]),
-              height32,
-              text("Hold E to pan camera")
-            ],
-          )));
 }
 
 Widget buildTopRight() {
@@ -452,31 +389,6 @@ Widget buildMenu() {
         buildToggleFullscreen(),
       ],
     );
-  });
-}
-
-Widget _buildServerText() {
-  return WatchBuilder(game.player.message, (String value) {
-    if (value.isEmpty) return blank;
-
-    return Positioned(
-        child: Container(
-          width: screen.width,
-          alignment: Alignment.center,
-          child: Container(
-            width: 300,
-            color: Colors.black45,
-            padding: padding16,
-            child: Column(
-              children: [
-                text(game.player.message.value),
-                height16,
-                button("Next", clearPlayerMessage),
-              ],
-            ),
-          ),
-        ),
-        bottom: 100);
   });
 }
 
@@ -709,154 +621,6 @@ Widget buildWeaponMenu() {
       ],
     );
   });
-}
-
-Widget _buildViewRespawn() {
-  print("buildViewRespawn()");
-  return Container(
-    width: screen.width,
-    height: screen.height,
-    child: Row(
-      mainAxisAlignment: axis.main.center,
-      crossAxisAlignment: axis.cross.center,
-      children: [
-        Container(
-            padding: padding16,
-            width: max(screen.width * goldenRatioInverseB, 480),
-            decoration: BoxDecoration(
-                borderRadius: borderRadius4, color: Colors.black38),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: axis.cross.center,
-                children: [
-                  Container(
-                      decoration: BoxDecoration(
-                        borderRadius: borderRadius4,
-                        color: colours.blood,
-                      ),
-                      padding: padding8,
-                      child: text("BLEED beta v1.0.0")),
-                  height16,
-                  text("YOU DIED", fontSize: 30, decoration: underline),
-                  height16,
-                  Container(
-                    padding: padding16,
-                    decoration: BoxDecoration(
-                      borderRadius: borderRadius4,
-                      color: black26,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: axis.cross.center,
-                      children: [
-                        text("Please Support Me"),
-                        height16,
-                        Row(
-                          mainAxisAlignment: axis.main.even,
-                          children: [
-                            onPressed(
-                              child: border(
-                                  child: Container(
-                                      width: 70,
-                                      alignment: Alignment.center,
-                                      child: text(
-                                        "Paypal",
-                                      )),
-                                  radius: borderRadius4,
-                                  padding: padding8),
-                              callback: () {
-                                // openLink(links.paypal);
-                              },
-                              // hint: links.paypal
-                            ),
-                            onPressed(
-                              child: border(
-                                  child: Container(
-                                      width: 70,
-                                      alignment: Alignment.center,
-                                      child: text("Patreon")),
-                                  radius: borderRadius4,
-                                  padding: padding8),
-                              callback: () {
-                                // openLink(links.patreon);
-                              },
-                              // hint: links.patreon
-                            )
-                          ],
-                        ),
-                        height8,
-                      ],
-                    ),
-                  ),
-                  height8,
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: borderRadius4,
-                      color: black26,
-                    ),
-                    padding: padding16,
-                    child: Column(
-                      children: [
-                        text("Hints"),
-                        Row(
-                          mainAxisAlignment: axis.main.center,
-                          crossAxisAlignment: axis.cross.center,
-                          children: [
-                            Container(
-                                width: 350,
-                                alignment: Alignment.center,
-                                child: text(currentTip)),
-                            width16,
-                            Tooltip(
-                              message: "Next Hint",
-                              child: IconButton(
-                                  onPressed: nextTip,
-                                  icon: Icon(
-                                    Icons.arrow_forward,
-                                    color: Colors.white,
-                                    size: 30,
-                                  )),
-                            )
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  height32,
-                  Row(
-                    mainAxisAlignment: axis.main.between,
-                    children: [
-                      onPressed(
-                          child: Container(
-                              padding: padding16, child: text("Close")),
-                          callback: () {
-                            hud.state.observeMode = true;
-                          }),
-                      width16,
-                      mouseOver(
-                          builder: (BuildContext context, bool mouseOver) {
-                        return onPressed(
-                          child: border(
-                              child: text(
-                                "RESPAWN",
-                                fontWeight: bold,
-                              ),
-                              padding: padding16,
-                              radius: borderRadius4,
-                              color: Colors.white,
-                              width: 1,
-                              fillColor: mouseOver ? black54 : black26),
-                          callback: sendRequestRevive,
-                          hint: "Click to respawn",
-                        );
-                      })
-                    ],
-                  ),
-                ],
-              ),
-            )),
-      ],
-    ),
-  );
 }
 
 Widget buildImageButton(DecorationImage image, GestureTapCallback onTap,

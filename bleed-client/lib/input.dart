@@ -6,7 +6,7 @@ import 'package:bleed_client/cube/camera3d.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
-import 'package:bleed_client/ui/state/hudState.dart';
+import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/update.dart';
 import 'package:bleed_client/variables/lantern.dart';
 import 'package:flutter/cupertino.dart';

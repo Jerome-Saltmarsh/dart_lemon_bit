@@ -1,3 +1,4 @@
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
@@ -13,6 +14,7 @@ import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
+import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -95,11 +97,11 @@ class _BuildView {
           case GameStatus.In_Progress:
             switch (game.type.value) {
               case GameType.MMO:
-                return buildUIStandardRolePlaying();
+                return hud.buildView.standardMagic();
               case GameType.Moba:
-                return buildUIStandardRolePlaying();
+                return hud.buildView.standardMagic();
               case GameType.BATTLE_ROYAL:
-                return buildUIBattleRoyal();
+                return hud.buildView.standardMagic();
               case GameType.CUBE3D:
                 return buildUI3DCube();
               default:
@@ -252,3 +254,7 @@ Widget _buildSelectRegionButton(Region region) {
     fillColor: colours.black05,
   );
 }
+
+
+
+

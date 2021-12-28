@@ -1,5 +1,5 @@
 
-import 'package:bleed_client/ui/state/hudState.dart';
+import 'package:bleed_client/ui/state/hud.dart';
 
 void showTextBox(){
   hud.state.textBoxVisible.value = true;
