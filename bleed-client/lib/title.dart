@@ -1,2 +1,2 @@
 
-const title = "GAMESTREAM.ONLINE";
+const title = "GAMESTREAM";

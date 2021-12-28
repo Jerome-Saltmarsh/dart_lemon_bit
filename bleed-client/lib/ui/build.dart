@@ -179,7 +179,7 @@ class _Build {
               text(gameTypeNames[value], fontSize: 20, fontWeight: FontWeight.bold),
                   () {
                 game.type.value = value;
-              }, minWidth: _buttonWidth, borderWidth: 3);
+              }, width: _buttonWidth, borderWidth: 3);
           return Container(
             margin: const EdgeInsets.only(bottom: 16),
             child: Row(

@@ -64,7 +64,7 @@ class _BuildView {
       children: [
         text(connection),
         height8,
-        button("Cancel", logic.exit, minWidth: 100)
+        button("Cancel", logic.exit, width: 100)
       ],
     ));
   }
@@ -108,8 +108,11 @@ class _BuildView {
       SingleChildScrollView(
         child: Column(crossAxisAlignment: axis.cross.center, children: [
           text(title, fontSize: 45),
+          height16,
+          Container(
+              child: text("Welcome to gamestream. Please select a region")),
           height32,
-          ...selectableServerTypes.map(_buildServerTypeButton)
+          ...selectableServerTypes.map(_buildSelectRegionButton)
         ]),
       ),
     );
@@ -153,28 +156,13 @@ class _BuildView {
 }
 
 
-Widget _buildServerTypeButton(Region server) {
-  double height = 50;
-  return Container(
-    child: mouseOver(
-        builder: (BuildContext context, bool hovering) {
-      return onPressed(
-          callback: () {
-            game.region.value = server;
-          },
-          child: Container(
-              height: height,
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.white, width: hovering ? 4 : 2),
-                borderRadius: borderRadius4,
-              ),
-              width: height * (goldenRatio * 2),
-              child: text(
-                  enumString(server), fontWeight: hovering ? FontWeight.bold : FontWeight.normal,
-                  fontSize: hovering ? 20 : 18
-              ),
-              alignment: Alignment.center));
-    }),
-    margin: EdgeInsets.only(bottom: height * goldenRatioInverseB),
+Widget _buildSelectRegionButton(Region region) {
+  return button(enumString(region), (){
+    game.region.value = region;
+  },
+    margin: EdgeInsets.only(bottom: 8),
+    width: 150,
+    borderWidth: 3,
+    fontSize: 30,
   );
 }

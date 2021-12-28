@@ -34,12 +34,12 @@ Widget text(dynamic value, {
 }
 
 Widget border({
-  required Widget child,
+  required dynamic child,
   Color color = Colors.white,
   double width = 1,
   BorderRadius radius = borderRadius4,
   EdgeInsets padding = padding8,
-  EdgeInsets margin = EdgeInsets.zero,
+  EdgeInsets? margin,
   Alignment alignment = Alignment.center,
   Color fillColor = Colors.transparent,
   double? minWidth,
@@ -53,7 +53,7 @@ Widget border({
         border: Border.all(color: color, width: width),
         borderRadius: radius,
         color: fillColor),
-    child: child,
+    child: child is Widget ? child : text(child),
   );
 }
 
@@ -71,18 +71,20 @@ BoxDecoration boxDecoration({
 
 Widget button(dynamic value, GestureTapCallback onPressed, {
   double? fontSize,
-  double? minWidth,
+  double? width,
   String? hint,
   double borderWidth = 1,
+  EdgeInsets? margin,
 }) {
   final Widget _button = pressed(
       callback: onPressed,
       child: mouseOver(builder: (BuildContext context, bool mouseOver) {
         return border(
+            margin: margin,
             width: borderWidth,
-            child: value is Widget ? value : text(value),
+            child: value,
             fillColor: mouseOver ? Colors.black26 : Colors.transparent,
-            minWidth: minWidth,
+            minWidth: width,
             alignment: Alignment.center);
       }));
 
@@ -165,8 +167,10 @@ Widget center(Widget child) {
   return fullScreen(child: child);
 }
 
-Widget fullScreen(
-    {required Widget child, Alignment alignment = Alignment.center}) {
+Widget fullScreen({
+  required Widget child,
+  Alignment alignment = Alignment.center
+}) {
   return Container(
       alignment: alignment,
       width: screen.width,

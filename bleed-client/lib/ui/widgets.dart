@@ -39,6 +39,6 @@ class _Buttons {
   final Widget region = WatchBuilder(game.region, (Region region) {
     return button("REGION ${enumString(region).toUpperCase()}",
         logic.deselectRegion,
-        minWidth: 200, hint: 'Region');
+        width: 200, hint: 'Region');
   });
 }
