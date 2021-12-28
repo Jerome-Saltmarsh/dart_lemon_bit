@@ -6,9 +6,11 @@ import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/editor/enums/EditTool.dart';
+import 'package:bleed_client/editor/events/onEditorKeyDownEvent.dart';
 import 'package:bleed_client/editor/functions/resetTiles.dart';
 import 'package:bleed_client/editor/render/buildEnvironmentType.dart';
 import 'package:bleed_client/editor/state/editTool.dart';
+import 'package:bleed_client/editor/state/keys.dart';
 import 'package:bleed_client/editor/state/mouseDragClickProcess.dart';
 import 'package:bleed_client/editor/state/mouseWorldStart.dart';
 import 'package:bleed_client/editor/state/panning.dart';
@@ -23,6 +25,7 @@ import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:bleed_client/update.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/state/camera.dart';
@@ -45,6 +48,21 @@ final _Editor editor = _Editor();
 class _Editor {
   onMouseLeftClicked(){
     print("editor.onMouseLeftClicked()");
+  }
+
+  void onKeyboardEvent(RawKeyEvent event) {
+    if (event is RawKeyDownEvent) {
+      onEditorKeyDownEvent(event);
+      return;
+    }
+    if (event is RawKeyUpEvent) {
+      if (event.logicalKey == keys.pan) {
+        panning = false;
+      }
+      if (event.logicalKey == keys.selectTileType) {
+        editState.tile = tileAtMouse;
+      }
+    }
   }
 }
 
