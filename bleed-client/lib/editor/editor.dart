@@ -30,8 +30,6 @@ import 'package:lemon_engine/state/camera.dart';
 import 'package:lemon_engine/state/mouseDragging.dart';
 import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_engine/state/zoom.dart';
-import 'package:lemon_math/diff.dart';
-import 'package:lemon_math/diff_over.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:lemon_watch/watch_builder.dart';
@@ -42,52 +40,57 @@ enum _ToolTab { Tiles, Objects, All, Misc }
 
 final _Editor editor = _Editor();
 
-class _Editor {
+final _Style _style = _Style();
 
+class _Style {
+  final double buttonWidth = 200;
+  final Color highlight = colours.purple;
+}
+
+class _Editor {
   final Watch<EnvironmentObject?> selectedObject = Watch(null);
   final Watch<_ToolTab> tab = Watch(_ToolTab.Tiles);
   final Watch<Tile> tile = Watch(Tile.Grass);
   final Watch<ObjectType> objectType = Watch(objectTypes.first);
 
-  init(){
+  init() {
     print("editor.init()");
     keyboardEvents.listen(onKeyboardEvent);
     mouseEvents.onLeftClicked.value = _onMouseLeftClicked;
     selectedObject.onChanged(_onSelectedObjectChanged);
   }
 
-  _onSelectedObjectChanged(EnvironmentObject? environmentObject){
+  _onSelectedObjectChanged(EnvironmentObject? environmentObject) {
     print("editor._onSelectedObjectChanged($environmentObject)");
     redrawCanvas();
   }
 
-  _onMouseLeftClicked(){
-
+  _onMouseLeftClicked() {
     final double selectRadius = 25;
-    if (game.environmentObjects.isNotEmpty){
-       EnvironmentObject closest = findClosest(game.environmentObjects, mouseWorldX, mouseWorldY);
-       double closestDistance = distanceFromMouse(closest.x, closest.y);
-       if (closestDistance <= selectRadius){
-          editor.selectedObject.value = closest;
-          return;
-       } else if (editor.selectedObject.value != null) {
-          editor.selectedObject.value = null;
-          return;
-       }
+    if (game.environmentObjects.isNotEmpty) {
+      EnvironmentObject closest =
+          findClosest(game.environmentObjects, mouseWorldX, mouseWorldY);
+      double closestDistance = distanceFromMouse(closest.x, closest.y);
+      if (closestDistance <= selectRadius) {
+        editor.selectedObject.value = closest;
+        return;
+      } else if (editor.selectedObject.value != null) {
+        editor.selectedObject.value = null;
+        return;
+      }
     }
 
-    switch(tab.value){
+    switch (tab.value) {
       case _ToolTab.Tiles:
         setTileAtMouse(editor.tile.value);
         break;
       case _ToolTab.Objects:
-        game.environmentObjects.add(
-            EnvironmentObject(
-                x: mouseWorldX,
-                y: mouseWorldY,
-                type: editor.objectType.value,
-                radius: 0,
-            ));
+        game.environmentObjects.add(EnvironmentObject(
+          x: mouseWorldX,
+          y: mouseWorldY,
+          type: editor.objectType.value,
+          radius: 0,
+        ));
         redrawCanvas();
         break;
       case _ToolTab.All:
@@ -114,7 +117,7 @@ class _Editor {
     }
   }
 
-  void deleteSelected(){
+  void deleteSelected() {
     if (editor.selectedObject.value == null) return;
     game.environmentObjects.remove(editor.selectedObject.value);
     editor.selectedObject.value = null;
@@ -127,9 +130,11 @@ Widget _buildTabs(_ToolTab activeTab) {
     children: _ToolTab.values.map((tab) {
       bool active = tab == activeTab;
 
-      return button(enumString(tab), () {
-        editor.tab.value = tab;
-      },
+      return button(
+        enumString(tab),
+        () {
+          editor.tab.value = tab;
+        },
         fillColor: active ? colours.purpleDarkest : Colors.transparent,
       );
     }).toList(),
@@ -152,11 +157,15 @@ List<Widget> _getTabChildren(_ToolTab tab) {
 
 List<Widget> _buildObjectList() {
   return game.environmentObjects.map((env) {
-
-    return text(parseEnvironmentObjectTypeToString(env.type), onPressed: (){
-      editor.selectedObject.value = env;
-      cameraCenter(env.x, env.y);
-      redrawCanvas();
+    return NullableWatchBuilder<EnvironmentObject?>(editor.selectedObject,
+        (EnvironmentObject? selected) {
+      return button(enumString(env.type), () {
+        editor.selectedObject.value = env;
+        cameraCenter(env.x, env.y);
+        redrawCanvas();
+      }, fillColor: env == selected ? _style.highlight : colours.transparent,
+        width: _style.buttonWidth,
+      );
     });
   }).toList();
 }
@@ -167,14 +176,13 @@ List<Widget> _buildTabEnvironmentObjects() {
 
 List<Widget> _buildTabTiles() {
   return Tile.values.map((tile) {
-    return WatchBuilder(editor.tile, (Tile selected){
+    return WatchBuilder(editor.tile, (Tile selected) {
       return button(enumString(tile), () {
         editor.tile.value = tile;
       },
-        width: 200,
-        alignment: Alignment.centerLeft,
-        fillColor: selected == tile ? colours.purple : colours.transparent
-      );
+          width: _style.buttonWidth,
+          alignment: Alignment.centerLeft,
+          fillColor: selected == tile ? _style.highlight : colours.transparent);
     });
   }).toList();
 }
@@ -319,7 +327,7 @@ void setTile({
   required int row,
   required int column,
   required Tile tile,
-}){
+}) {
   if (row < 0) return;
   if (column < 0) return;
   if (row >= game.totalRows) return;
@@ -329,18 +337,16 @@ void setTile({
 }
 
 Widget _buildEnvironmentType(ObjectType type) {
-  return WatchBuilder(editor.objectType, (ObjectType selected){
+  return WatchBuilder(editor.objectType, (ObjectType selected) {
     return button(parseEnvironmentObjectTypeToString(type), () {
       editor.objectType.value = type;
     },
         fillColor: type == selected ? colours.purple : colours.transparent,
         width: 200,
-        alignment: Alignment.centerLeft
-    );
+        alignment: Alignment.centerLeft);
   });
 }
 
-
-double distanceFromMouse(double x, double y){
+double distanceFromMouse(double x, double y) {
   return distanceBetween(mouseWorldX, mouseWorldY, x, y);
 }
