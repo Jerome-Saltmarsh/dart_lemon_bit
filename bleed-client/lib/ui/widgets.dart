@@ -27,6 +27,7 @@ class _Buttons {
   final Widget debug = button("Debug", toggleDebugMode);
   final Widget exit = button('Exit', logic.exit);
   final Widget edit = button("Edit", logic.toggleEditMode);
+  final Widget editor = button("Editor", logic.openEditor);
   final Widget changeCharacter = button("Change Hero", () {
     sendClientRequest(ClientRequest.Reset_Character_Type);
   });

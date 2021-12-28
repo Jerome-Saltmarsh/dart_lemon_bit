@@ -3,6 +3,8 @@ import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/constants/servers.dart';
+import 'package:bleed_client/editor/editor.dart';
+import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/functions/refreshPage.dart';
 import 'package:bleed_client/logic.dart';
@@ -21,23 +23,31 @@ import '../webSocket.dart';
 import 'state/flutter_constants.dart';
 
 Widget buildView(BuildContext context){
-  return WatchBuilder(game.region, (Region serverType){
-    if (serverType == Region.None){
-      return _views.selectRegion;
+
+  return WatchBuilder(game.mode, (Mode mode) {
+
+    if (mode == Mode.Edit){
+      return buildEditorUI();
     }
-    return WatchBuilder(game.type, (GameType gameType) {
-      if (gameType == GameType.None) {
-        return _views.selectGame;
+
+    return WatchBuilder(game.region, (Region serverType){
+      if (serverType == Region.None){
+        return _views.selectRegion;
       }
-      return WatchBuilder(webSocket.connection, (Connection connection){
-        switch(connection) {
-          case Connection.Connecting:
-            return _views.connecting;
-          case Connection.Connected:
-            return _views.connected;
-          default:
-            return _views.connection;
+      return WatchBuilder(game.type, (GameType gameType) {
+        if (gameType == GameType.None) {
+          return _views.selectGame;
         }
+        return WatchBuilder(webSocket.connection, (Connection connection){
+          switch(connection) {
+            case Connection.Connecting:
+              return _views.connecting;
+            case Connection.Connected:
+              return _views.connected;
+            default:
+              return _views.connection;
+          }
+        });
       });
     });
   });
@@ -117,17 +127,18 @@ class _BuildView {
   }
 
   Widget selectGame() {
-    return page(children: [
-      fullScreen(
-          child: Column(
+    return layout(
+        topLeft: buttons.region,
+        topRight: buttons.editor,
+        children: [
+          Column(
             children: [
               widgets.title,
               height8,
               widgets.gamesList,
-            ],
-          )),
-      topLeft(child: buttons.region),
-    ]);
+          ],)
+        ]
+    );
   }
 
   Widget connecting() {

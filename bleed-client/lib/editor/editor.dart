@@ -31,7 +31,6 @@ import 'package:lemon_math/diff_over.dart';
 import 'state/editState.dart';
 
 _ToolTab _tab = _ToolTab.Tiles;
-// StateSetter _toolsStateSetter;
 
 enum _ToolTab { Tiles, Objects, All, Misc }
 
@@ -72,7 +71,6 @@ List<Widget> _getTabChildren() {
     case _ToolTab.Misc:
       return _buildTabMisc();
   }
-  throw Exception();
 }
 
 List<Widget> _buildObjectList(){

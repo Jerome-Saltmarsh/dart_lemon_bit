@@ -1,4 +1,5 @@
 
+import 'package:bleed_client/editor/functions/resetTiles.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/webSocket.dart';
@@ -24,6 +25,12 @@ class _Logic {
 
   void toggleEditMode() {
     game.mode.value = game.mode.value == Mode.Play ? Mode.Edit : Mode.Play;
+  }
+
+  void openEditor(){
+    resetTiles(rows: 40, columns: 40);
+    game.mode.value = Mode.Edit;
+
   }
 
   void exit(){

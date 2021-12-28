@@ -23,23 +23,23 @@ import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/angle_between.dart';
+import 'package:lemon_math/diff_over.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/opposite.dart';
 
 void drawCanvas(Canvas canvas, Size size) {
-
-
   if (editMode) {
     renderCanvasEdit();
     return;
   }
 
-  if (game.region.value == Region.None){
+  if (game.region.value == Region.None) {
     renderCanvasSelectRegion();
     return;
   }
   if (game.type.value == GameType.None) {
-    renderCanvasSelectGame();;
+    renderCanvasSelectGame();
+    ;
     return;
   }
   if (!webSocket.connected) return;
@@ -55,43 +55,60 @@ double x = 50;
 double y = 50;
 int frame = 0;
 
-void renderCanvasSelectGame(){
+void renderCanvasSelectGame() {
   frame++;
   final double angle = angleBetween(x, y, mouseWorldX, mouseWorldY);
-  final Direction direction = convertAngleToDirection(angle);
+  Direction direction = convertAngleToDirection(angle);
 
   // direction = (direction + 1) % directions.length;
   // drawArcher(x: x, y: y, state: CharacterState.Idle, direction: directions[direction], frame: 1, scale: 1);
-  final distance = distanceBetween(
-    x,
-    y,
-    mouseWorldX,
-    mouseWorldY
-  );
+  final distance = distanceBetween(x, y, mouseWorldX, mouseWorldY);
 
   CharacterState state = CharacterState.Idle;
-  if (distance > 100){
-    final double speed = 8;
-    x += adjacent(angle, speed);
-    y += opposite(angle, speed);
+  // if (distance > 100){
+  //   final double speed = 8;
+  //   x += adjacent(angle, speed);
+  //   y += opposite(angle, speed);
+  //   state = CharacterState.Running;
+  // }
+
+  double yDiff = y - mouseWorldY;
+  double speed = 5;
+
+  if (yDiff < -speed) {
     state = CharacterState.Running;
+    direction = Direction.Down;
+    y += speed;
+  } else if (yDiff > speed) {
+    state = CharacterState.Running;
+    direction = Direction.Up;
+    y -= speed;
+  } else {
+    state = CharacterState.Idle;
+    direction = Direction.Right;
   }
 
-  drawArcher(x: x, y: y, state: state, direction: direction, frame: frame, scale: 1);
+  drawArcher(
+      x: x, y: y, state: state, direction: direction, frame: frame, scale: 1);
   _redraw();
 }
 
-void renderCanvasSelectRegion(){
+void renderCanvasSelectRegion() {
   frame++;
   direction = (direction + 1) % directions.length;
-  drawWitch(x: 50, y: 100, state: CharacterState.Idle, direction: directions[direction], frame: 1, scale: 1);
+  drawWitch(
+      x: 50,
+      y: 100,
+      state: CharacterState.Idle,
+      direction: directions[direction],
+      frame: 1,
+      scale: 1);
   _redraw();
 }
 
-void _redraw(){
+void _redraw() {
   Future.delayed(_frameRate, redrawCanvas);
 }
-
 
 void drawArcher({
   required double x,
@@ -100,8 +117,9 @@ void drawArcher({
   required Direction direction,
   required int frame,
   double scale = 1,
-}){
-  drawAtlas(mapDst(x: x, y: y, scale: scale), mapSrcArcher(state: state, direction: direction, frame: frame));
+}) {
+  drawAtlas(mapDst(x: x, y: y, scale: scale),
+      mapSrcArcher(state: state, direction: direction, frame: frame));
 }
 
 void drawWitch({
@@ -111,7 +129,7 @@ void drawWitch({
   required Direction direction,
   required int frame,
   double scale = 1,
-}){
-  drawAtlas(mapDst(x: x, y: y, scale: scale), mapSrcWitch(state: state, direction: direction, frame: frame));
+}) {
+  drawAtlas(mapDst(x: x, y: y, scale: scale),
+      mapSrcWitch(state: state, direction: direction, frame: frame));
 }
-
