@@ -39,10 +39,11 @@ class _Buttons {
   });
 
   final Widget region = WatchBuilder(game.region, (Region region) {
-    return button(enumString(region),
+    return button(text(enumString(region), fontSize: 20),
         logic.deselectRegion,
-        width: 200, hint: 'Region',
-        fillColor: colours.orange
+        width: 170, hint: 'Region',
+        fillColor: colours.orange,
+        borderWidth: 2
     );
   });
 }
