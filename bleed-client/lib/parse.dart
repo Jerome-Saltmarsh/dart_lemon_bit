@@ -341,24 +341,17 @@ void _parseEnvironmentObjects() {
         break;
     }
 
-    double width = environmentObjectWidth[type]!;
-    double height = environmentObjectHeight[type]!;
-
-    Float32List dst = Float32List(4);
-    dst[0] = 1;
-    dst[1] = 0;
-    dst[2] = x - (width * 0.5);
-    dst[3] = y - (height * 0.6666);
-
-    EnvironmentObject env =
-        EnvironmentObject(x: x, y: y, type: type, dst: dst, radius: radius);
+    final EnvironmentObject env = EnvironmentObject(
+        x: x,
+        y: y,
+        type: type,
+        radius: radius
+    );
 
     if (type == ObjectType.Torch) {
       game.torches.add(env);
     }
 
-    env.row = getRow(env.x, env.y);
-    env.column = getColumn(env.x, env.y);
     game.environmentObjects.add(env);
   }
 

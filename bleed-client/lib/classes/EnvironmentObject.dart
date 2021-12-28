@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 
 import 'package:bleed_client/common/enums/ObjectType.dart';
+import 'package:bleed_client/getters/getTileAt.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 
 class EnvironmentObject {
@@ -12,7 +13,7 @@ class EnvironmentObject {
   final ObjectType type;
   final bool generated;
 
-  final Float32List dst;
+  late final Float32List dst;
 
   late double _top;
   late double _right;
@@ -32,15 +33,22 @@ class EnvironmentObject {
     required this.x,
     required this.y,
     required this.type,
-    required this.dst,
+    required this.radius,
     this.generated = false,
-    required this.radius}) {
+  }) {
     _width = environmentObjectWidth[type]!;
     height = environmentObjectHeight[type]!;
-    double widthHalf = _width * 0.5;
+    final double widthHalf = _width * 0.5;
     _top = y - height * 0.666;
     _right = x + widthHalf;
     _bottom = y + height * 0.333;
     _left = x - widthHalf;
+    dst = Float32List(4);
+    dst[0] = 1;
+    dst[1] = 0;
+    dst[2] = x - (_width * 0.5);
+    dst[3] = y - (height * 0.6666);
+    row = getRow(x, y);
+    column = getColumn(x, y);
   }
 }

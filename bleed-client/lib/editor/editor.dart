@@ -81,7 +81,14 @@ class _Editor {
         setTileAtMouse(editor.tile.value);
         break;
       case _ToolTab.Objects:
-        // TODO: Handle this case.
+        game.environmentObjects.add(
+            EnvironmentObject(
+                x: mouseWorldX,
+                y: mouseWorldY,
+                type: editor.objectType.value,
+                radius: 0,
+            ));
+        redrawCanvas();
         break;
       case _ToolTab.All:
         break;
