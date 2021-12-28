@@ -152,6 +152,7 @@ List<Widget> _getTabChildren(_ToolTab tab) {
 
 List<Widget> _buildObjectList() {
   return game.environmentObjects.map((env) {
+
     return text(parseEnvironmentObjectTypeToString(env.type), onPressed: (){
       editor.selectedObject.value = env;
       cameraCenter(env.x, env.y);
