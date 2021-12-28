@@ -19,6 +19,7 @@ import 'package:lemon_engine/state/camera.dart';
 import 'package:lemon_engine/state/zoom.dart';
 
 import 'common/GameType.dart';
+import 'constants/colours.dart';
 import 'enums/Region.dart';
 
 class Events {
@@ -83,25 +84,14 @@ class Events {
         mouseEvents.onLeftClicked.value = performPrimaryAction;
         mouseEvents.onPanStarted.value = performPrimaryAction;
         mouseEvents.onLongLeftClicked.value = performPrimaryAction;
-
-
-        // if (game.type.value == GameType.CUBE3D){
-        //   requestPointerLock();
-        //   overrideBuilder.value = (BuildContext context){
-        //     return buildCube3D();
-        //   };
-        //   // Future.
-        // }
         break;
       case Connection.Done:
         fullScreenExit();
         logic.clearSession();
+        game.status.value = GameStatus.None;
         mouseEvents.onLeftClicked.value = null;
         mouseEvents.onPanStarted.value = null;
         mouseEvents.onLongLeftClicked.value = null;
-        break;
-      case Connection.Failed_To_Connect:
-        fullScreenExit();
         break;
       default:
         break;
@@ -126,9 +116,11 @@ class Events {
     print('events.onGameStatusChanged($value)');
     switch(value){
       case GameStatus.In_Progress:
+        ui.backgroundColor.value = colours.black;
         fullScreenEnter();
         break;
       default:
+        ui.backgroundColor.value = colours.white;
         fullScreenExit();
         break;
     }
