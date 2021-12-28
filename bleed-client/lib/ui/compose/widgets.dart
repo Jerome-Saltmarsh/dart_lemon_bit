@@ -70,11 +70,12 @@ BoxDecoration boxDecoration({
 }
 
 Widget button(dynamic value, GestureTapCallback onPressed, {
-  double? fontSize,
   double? width,
   String? hint,
   double borderWidth = 1,
   EdgeInsets? margin,
+  Color fillColorMouseOver = Colors.black26,
+  Color fillColor = Colors.transparent,
 }) {
   final Widget _button = pressed(
       callback: onPressed,
@@ -83,7 +84,7 @@ Widget button(dynamic value, GestureTapCallback onPressed, {
             margin: margin,
             width: borderWidth,
             child: value,
-            fillColor: mouseOver ? Colors.black26 : Colors.transparent,
+            fillColor: mouseOver ? fillColorMouseOver : fillColor,
             minWidth: width,
             alignment: Alignment.center);
       }));

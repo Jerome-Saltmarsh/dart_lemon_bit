@@ -1,6 +1,7 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/functions/refreshPage.dart';
@@ -157,12 +158,17 @@ class _BuildView {
 
 
 Widget _buildSelectRegionButton(Region region) {
-  return button(enumString(region), (){
-    game.region.value = region;
-  },
+  return button(
+    text(
+        enumString(region),
+        fontSize: 25,
+        // fontWeight: FontWeight.bold
+    ), (){
+          game.region.value = region;
+        },
     margin: EdgeInsets.only(bottom: 8),
-    width: 150,
+    width: 180,
     borderWidth: 3,
-    fontSize: 30,
+    fillColor: colours.black05,
   );
 }

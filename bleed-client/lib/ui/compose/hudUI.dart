@@ -1,19 +1,14 @@
 import 'dart:math';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
-import 'package:bleed_client/classes/Ability.dart';
 import 'package:bleed_client/classes/Weapon.dart';
-import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/common/CharacterType.dart';
-import 'package:bleed_client/common/ClientRequest.dart';
-import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/cube/camera3d.dart';
 import 'package:bleed_client/debug.dart';
-import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/logic.dart';
 import 'package:bleed_client/mappers/mapWeaponToDecorationImage.dart';
@@ -1115,17 +1110,3 @@ Widget buildMessageBox(String message) {
 //       }).toList());
 // }
 
-Widget buildGameOver() {
-  return Positioned(
-      child: Container(
-    width: screen.width,
-    height: screen.height,
-    color: Colors.black45,
-    child: button("Game Over", clearState, fontSize: 30),
-  ));
-}
-
-Widget buildDialog(Widget child) {
-  return Positioned(
-      top: 30, child: Container(width: screen.width, child: child));
-}
