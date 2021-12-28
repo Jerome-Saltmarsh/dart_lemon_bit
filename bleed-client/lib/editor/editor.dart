@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
+import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/editor/enums/EditTool.dart';
 import 'package:bleed_client/editor/functions/resetTiles.dart';
@@ -38,30 +39,33 @@ import 'state/editState.dart';
 final Watch<_ToolTab> _tab = Watch(_ToolTab.Tiles);
 enum _ToolTab { Tiles, Objects, All, Misc }
 
-Widget _buildTabs() {
+Widget _buildTabs(_ToolTab activeTab) {
   return Row(
     children: _ToolTab.values.map((tab) {
+      bool active = tab == activeTab;
+
       return button(enumString(tab), () {
         _tab.value = tab;
-      });
+      },
+        fillColor: active ? colours.aqua : Colors.transparent,
+      );
     }).toList(),
     mainAxisAlignment: axis.main.even,
   );
 }
 
 List<Widget> _getTabChildren(_ToolTab tab) {
-    switch (tab) {
-      case _ToolTab.Tiles:
-        return _buildTabTiles();
-      case _ToolTab.Objects:
-        return _buildTabEnvironmentObjects();
-      case _ToolTab.All:
-        return _buildObjectList();
-      case _ToolTab.Misc:
-        return _buildTabMisc();
-    }
+  switch (tab) {
+    case _ToolTab.Tiles:
+      return _buildTabTiles();
+    case _ToolTab.Objects:
+      return _buildTabEnvironmentObjects();
+    case _ToolTab.All:
+      return _buildObjectList();
+    case _ToolTab.Misc:
+      return _buildTabMisc();
+  }
 }
-
 
 List<Widget> _buildObjectList() {
   return game.environmentObjects.map((e) {
@@ -125,24 +129,26 @@ Widget buildEditorUI() {
 
 final Widget _exitEditor = button("Exit", logic.toggleEditMode);
 
-final Widget _toolTabs = Column(
-  crossAxisAlignment: axis.cross.start,
-  children: [
-    _buildTabs(),
-    height8,
-    Container(
-      height: screen.height - 100,
-      child: WatchBuilder(_tab, (_ToolTab tab){
-        return SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: axis.cross.start,
-            children: _getTabChildren(tab),
+final Widget _toolTabs = Builder(builder: (BuildContext context) {
+  return WatchBuilder(_tab, (_ToolTab tab) {
+    return Column(
+      crossAxisAlignment: axis.cross.start,
+      children: [
+        _buildTabs(tab),
+        height8,
+        Container(
+          height: screen.height - 100,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: axis.cross.start,
+              children: _getTabChildren(tab),
+            ),
           ),
-        );
-      }),
-    )
-  ],
-);
+        )
+      ],
+    );
+  });
+});
 
 void updateEditMode() {
   _onMouseLeftClick();
@@ -225,13 +231,13 @@ void setTileAtMouse(Tile tile) {
       mapTilesToSrcAndDst(game.tiles);
       break;
     case EditTool.EnvironmentObject:
-    // TODO
-    // game.environmentObjects.add(EnvironmentObject(
-    //     x: mouseWorldX,
-    //     y: mouseWorldY,
-    //     type: editState.environmentObjectType));
-    // print("added house");
-    // redrawCanvas();
+      // TODO
+      // game.environmentObjects.add(EnvironmentObject(
+      //     x: mouseWorldX,
+      //     y: mouseWorldY,
+      //     type: editState.environmentObjectType));
+      // print("added house");
+      // redrawCanvas();
       break;
   }
 }
