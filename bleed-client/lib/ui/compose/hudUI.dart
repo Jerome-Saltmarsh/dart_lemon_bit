@@ -261,14 +261,6 @@ Widget buildBottomCenter() {
       ));
 }
 
-Widget buildUIBattleRoyal() {
-  return layout(
-    topLeft: text("ZOMBIE ROYAL"),
-    topRight: buttons.exit,
-    bottomRight: buttons.edit,
-  );
-}
-
 Widget layout({
   Widget? topLeft,
   Widget? topRight,

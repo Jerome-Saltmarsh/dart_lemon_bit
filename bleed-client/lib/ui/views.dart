@@ -72,14 +72,16 @@ class _Views {
 class _BuildView {
 
   Widget connection(){
-    return center(Column(
-      mainAxisAlignment: axis.main.center,
-      children: [
-        text(enumString(webSocket.connection.value)),
-        height8,
-        button("Cancel", logic.exit, width: 100)
-      ],
-    ));
+    return WatchBuilder(webSocket.connection, (Connection value){
+      return center(Column(
+        mainAxisAlignment: axis.main.center,
+        children: [
+          text(enumString(value)),
+          height8,
+          button("Cancel", logic.exit, width: 100)
+        ],
+      ));
+    });
   }
 
   Widget connected() {
