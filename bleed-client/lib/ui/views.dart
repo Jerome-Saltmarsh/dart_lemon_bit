@@ -79,7 +79,6 @@ final Map<Connection, String> connectionMessage = {
 };
 
 class _BuildView {
-
   Widget connection(){
     return WatchBuilder(webSocket.connection, (Connection value){
       return center(Column(
@@ -154,8 +153,8 @@ class _BuildView {
             Row(
               mainAxisAlignment: axis.main.apart,
               children: [
-                text(enumString(game.type.value)),
-                button("Cancel", logic.leaveLobby),
+                text(enumString(game.type.value), fontSize: 25, fontWeight: FontWeight.bold),
+                button(text("Cancel", fontSize: 20), logic.leaveLobby, borderWidth: 3, fillColor: colours.orange, fillColorMouseOver: colours.redDark),
               ],
             ),
             height16,
@@ -171,7 +170,11 @@ class _BuildView {
                   playerNames.add(text("Waiting"));
                 }
                 return Column(
-                  children: playerNames,
+                  crossAxisAlignment: axis.cross.start,
+                  children: [
+                    text("Players", decoration: underline),
+                    ...playerNames
+                  ],
                 );
               }
 

@@ -283,7 +283,6 @@ Widget layout({
         ...children
     ],
   );
-
 }
 
 Widget buildUI3DCube() {
