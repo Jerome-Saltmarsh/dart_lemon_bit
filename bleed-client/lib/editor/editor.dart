@@ -54,7 +54,6 @@ class _Editor {
   }
 
   _onMouseLeftClicked(){
-    print("editor.onMouseLeftClicked()");
     selectedCollectable = -1;
     final double r = 50;
 
