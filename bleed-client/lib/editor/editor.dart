@@ -40,6 +40,14 @@ import 'state/editState.dart';
 final Watch<_ToolTab> _tab = Watch(_ToolTab.Tiles);
 enum _ToolTab { Tiles, Objects, All, Misc }
 
+final _Editor editor = _Editor();
+
+class _Editor {
+  onMouseLeftClicked(){
+    print("editor.onMouseLeftClicked()");
+  }
+}
+
 Widget _buildTabs(_ToolTab activeTab) {
   return Row(
     children: _ToolTab.values.map((tab) {
@@ -192,7 +200,6 @@ void _handleMouseDrag() {
 void _onMouseLeftClick([bool drag = false]) {
   if (!drag && !mouseClicked) return;
   selectedCollectable = -1;
-
   double r = 50;
 
   for (int i = 0; i < game.collectables.length; i += 3) {

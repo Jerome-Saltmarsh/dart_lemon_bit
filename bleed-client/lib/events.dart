@@ -1,6 +1,7 @@
 
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/constants/servers.dart';
+import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/editor/functions/registerEditorKeyboardListener.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/functions/cameraCenterPlayer.dart';
@@ -32,6 +33,15 @@ class Events {
     game.player.alive.onChanged(_onPlayerAliveChanged);
     game.status.onChanged(_onGameStatusChanged);
     game.mode.onChanged(_onGameModeChanged);
+    mouseEvents.onLeftClicked.onChanged(_onMouseLeftClickedChanged);
+  }
+
+  void _onMouseLeftClickedChanged(Function? function){
+     if (function == null){
+       print("mouseEvents.onLeftClicked.onChanged(null)");
+     }else{
+       print("mouseEvents.onLeftClicked.onChanged($function)");
+     }
   }
 
   void _onGameTypeChanged(GameType type) {
@@ -72,6 +82,11 @@ class Events {
       case Connection.Connected:
         sendRequestJoinGame(game.type.value);
         fullScreenEnter();
+        mouseEvents.onLeftClicked.value = performPrimaryAction;
+        mouseEvents.onPanStarted.value = performPrimaryAction;
+        mouseEvents.onLongLeftClicked.value = performPrimaryAction;
+
+
         // if (game.type.value == GameType.CUBE3D){
         //   requestPointerLock();
         //   overrideBuilder.value = (BuildContext context){
@@ -83,6 +98,9 @@ class Events {
       case Connection.Done:
         fullScreenExit();
         logic.clearSession();
+        mouseEvents.onLeftClicked.value = null;
+        mouseEvents.onPanStarted.value = null;
+        mouseEvents.onLongLeftClicked.value = null;
         break;
       case Connection.Failed_To_Connect:
         fullScreenExit();
@@ -113,6 +131,7 @@ class Events {
   void _onGameModeChanged(Mode mode){
     print("_onGameModeChanged($mode)");
     if (mode == Mode.Edit) {
+      // onLeftClicked.stream.listen(editor.onMouseLeftClicked);
       removeGeneratedEnvironmentObjects();
       deregisterPlayKeyboardHandler();
       registerEditorKeyboardListener();

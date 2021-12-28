@@ -109,18 +109,6 @@ void initializeEventListeners() {
   observeAmbientLight(onAmbientLightChanged);
   game.shadeMax.onChanged(onShadeMaxChanged);
 
-  onLeftClicked.stream.listen((event) {
-    performPrimaryAction();
-  });
-
-  onPanStarted.stream.listen((event) {
-    performPrimaryAction();
-  });
-
-  onLongLeftClicked.stream.listen((event) {
-    performPrimaryAction();
-  });
-
 
   // registerKeyboardHandler((RawKeyEvent event) {
   //   if (!hud.state.textBoxVisible.value) return;
