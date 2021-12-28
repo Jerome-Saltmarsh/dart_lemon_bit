@@ -1,4 +1,5 @@
 import 'package:bleed_client/common/ClientRequest.dart';
+import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
@@ -38,8 +39,10 @@ class _Buttons {
   });
 
   final Widget region = WatchBuilder(game.region, (Region region) {
-    return button("REGION ${enumString(region).toUpperCase()}",
+    return button(enumString(region),
         logic.deselectRegion,
-        width: 200, hint: 'Region');
+        width: 200, hint: 'Region',
+        fillColor: colours.orange
+    );
   });
 }

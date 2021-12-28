@@ -57,6 +57,11 @@ Widget buildView(BuildContext context){
 
 final _Views _views = _Views();
 final _BuildView _buildView = _BuildView();
+final _Style _style = _Style();
+
+class _Style {
+   final double viewPadding = 8;
+}
 
 class _Views {
   final Widget selectRegion = _buildView.selectRegion();
@@ -234,6 +239,7 @@ class _BuildView {
 
   Widget selectGame() {
     return layout(
+        padding: _style.viewPadding,
         topLeft: buttons.region,
         topRight: buttons.editor,
         children: [
