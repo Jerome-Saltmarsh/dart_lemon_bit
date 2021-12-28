@@ -162,6 +162,8 @@ class _BuildView {
             height16,
             WatchBuilder(game.lobby.playerCount, (int value) {
 
+              int totalPlayersRequired = game.numberOfTeams.value * game.teamSize.value;
+
               if (game.teamSize.value == 1) {
                 List<Widget> playerNames = [];
 
@@ -174,7 +176,7 @@ class _BuildView {
                 return Column(
                   crossAxisAlignment: axis.cross.start,
                   children: [
-                    text("Players", decoration: underline, fontSize: 22),
+                    text("Players ${game.lobby.players.length} / $totalPlayersRequired", decoration: underline, fontSize: 22),
                     height8,
                     ...playerNames
                   ],
