@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui';
 
@@ -15,6 +16,7 @@ import 'package:bleed_client/render/draw/drawCanvas.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/watches/mode.dart';
 import 'package:flutter/material.dart';
+import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/render/draw_circle.dart';
 import 'package:lemon_engine/state/paint.dart';
 
@@ -36,8 +38,13 @@ void drawCanvas(Canvas canvas, Size size) {
   renderGame(canvas, size);
 }
 
+int direction = 0;
+final Duration frameRate = Duration(milliseconds: 60);
+
 void renderSelectGameCanvas(Canvas canvas, Size size){
-  drawArcher(x: 50, y: 100, state: CharacterState.Idle, direction: Direction.DownRight, frame: 1, scale: 0.4);
+  direction = (direction + 1) % directions.length;
+  drawArcher(x: 50, y: 100, state: CharacterState.Idle, direction: directions[direction], frame: 1, scale: 1);
+  Future.delayed(frameRate, redrawCanvas);
 }
 
 void drawArcher({

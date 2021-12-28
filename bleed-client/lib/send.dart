@@ -1,6 +1,7 @@
 import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/WeaponType.dart';
+import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/state/game.dart';
@@ -94,11 +95,10 @@ void sendRequestUpdatePlayer() {
   _write(session);
   _write(characterController.action.value.index);
   characterController.action.value = CharacterAction.Idle;
-  _write(characterController.direction.index);
+  _write(characterController.direction?.index);
   _write(mouseWorldX.toInt());
   _write(mouseWorldY.toInt());
   webSocket.send(_buffer.toString());
-
 }
 
 void sendRequestSetCompilePaths(bool value) {

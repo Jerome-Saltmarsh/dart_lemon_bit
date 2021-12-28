@@ -7,7 +7,9 @@ enum Direction {
   UpLeft,
   Left,
   DownLeft,
-  None,
+  // None,
 }
+
+
 
 const List<Direction> directions = Direction.values;

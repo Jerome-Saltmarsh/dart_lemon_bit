@@ -407,7 +407,7 @@ void _handleKeyUpEventPlayMode(RawKeyUpEvent event) {
 }
 
 class _CharacterController {
-  Direction direction = Direction.None;
+  Direction direction = Direction.Down;
   final Watch<CharacterAction> action = Watch(CharacterAction.Idle);
   AbilityType ability = AbilityType.None;
 }
@@ -447,14 +447,14 @@ void readPlayerInput() {
     camera.y += mouseWorldDiff.dy * zoom;
     camera.x += mouseWorldDiff.dx * zoom;
   }
-
-  characterController.direction = getKeyDirection();
-  if (characterController.direction != Direction.None) {
+  final Direction? direction = getKeyDirection();
+  if (direction != null){
+    characterController.direction = direction;
     setCharacterActionRun();
   }
 }
 
-Direction getKeyDirection() {
+Direction? getKeyDirection() {
   if (keyPressed(keys.runUp)) {
     if (keyPressed(keys.runRight)) {
       return Direction.UpRight;
@@ -476,5 +476,5 @@ Direction getKeyDirection() {
   } else if (keyPressed(keys.runRight)) {
     return Direction.Right;
   }
-  return Direction.None;
+  return null;
 }
