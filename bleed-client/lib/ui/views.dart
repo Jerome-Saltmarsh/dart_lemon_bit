@@ -145,9 +145,14 @@ class _BuildView {
     return dialog(child: text("Game Finished"));
   }
 
+  final Widget _waiting = text("Waiting", color: Colors.white54);
+
   Widget awaitingPlayers() {
     return layout(
+      topLeft: text("game stream"),
+      topRight: button(text("Exit", fontSize: 20), logic.leaveLobby, borderWidth: 3, fillColor: colours.orange, fillColorMouseOver: colours.redDark),
       children: [dialog(
+        padding: 16,
           color: colours.black05,
           borderWidth: 6,
           child: Column(
@@ -156,8 +161,8 @@ class _BuildView {
               Row(
                 mainAxisAlignment: axis.main.apart,
                 children: [
-                  text(enumString(game.type.value), fontSize: 25, fontWeight: FontWeight.bold),
-                  button(text("Cancel", fontSize: 20), logic.leaveLobby, borderWidth: 3, fillColor: colours.orange, fillColorMouseOver: colours.redDark),
+                  text(enumString(game.type.value), fontSize: 35, fontWeight: FontWeight.bold),
+                  // button(text("Cancel", fontSize: 20), logic.leaveLobby, borderWidth: 3, fillColor: colours.orange, fillColorMouseOver: colours.redDark),
                 ],
               ),
               height16,
@@ -174,7 +179,7 @@ class _BuildView {
                     playerNames.add(text(game.lobby.players[i].name, fontSize: 20));
                   }
                   for(int i = 0; i < game.numberOfTeams.value - game.lobby.players.length; i++){
-                    playerNames.add(text("Waiting", fontSize: 20, color: Colors.white54));
+                    playerNames.add(_waiting);
                   }
                   return Column(
                     crossAxisAlignment: axis.cross.start,
@@ -196,21 +201,24 @@ class _BuildView {
                 List<Widget> b = [];
 
                 for (int i = 0; i < count1; i++) {
-                  a.add(text("Waiting"));
+                  a.add(_waiting);
                 }
                 for (int i = 0; i < count2; i++) {
-                  b.add(text("Waiting"));
+                  b.add(_waiting);
                 }
 
                 return Column(
+                  crossAxisAlignment: axis.cross.start,
                   children: [
-                    text("Team 1"),
+                    text("Team 1", decoration: underline),
+                    height8,
                     ...game.lobby
                         .getPlayersOnTeam(0)
                         .map((player) => text(player.name)),
                     ...a,
                     height16,
-                    text("Team 2"),
+                    text("Team 2", decoration: underline),
+                    height8,
                     ...game.lobby
                         .getPlayersOnTeam(1)
                         .map((player) => text(player.name)),
