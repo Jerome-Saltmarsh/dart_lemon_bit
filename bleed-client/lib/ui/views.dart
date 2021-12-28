@@ -111,7 +111,7 @@ class _BuildView {
           text(title, fontSize: 45),
           height16,
           Container(
-              child: text("Welcome to gamestream. Please select a region")),
+              child: text("Welcome! Please select a region")),
           height32,
           ...selectableServerTypes.map(_buildSelectRegionButton)
         ]),
