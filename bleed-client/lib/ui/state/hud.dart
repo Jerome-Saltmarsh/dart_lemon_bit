@@ -292,7 +292,7 @@ Widget _buildViewRespawn() {
                                   padding: padding16,
                                   radius: borderRadius4,
                                   color: Colors.white,
-                                  width: 1,
+                                  borderWidth: 1,
                                   fillColor: mouseOver ? black54 : black26),
                               callback: sendRequestRevive,
                               hint: "Click to respawn",

@@ -9,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../logic.dart';
+import '../styles.dart';
 import '../toString.dart';
 import 'compose/hudUI.dart';
 
@@ -21,7 +22,7 @@ class _Widgets {
   final Widget magicBar = build.magicBar();
   final Widget abilities = build.abilities();
   final Widget gamesList = build.gamesList();
-  final Widget title = Container(alignment: Alignment.center, height: 80, child: text("GAMESTREAM", fontSize: 40));
+  final Widget title = border(child: text("GAMESTREAM.ONLINE", fontSize: 30, fontWeight: bold), borderWidth: 6);
 }
 
 class _Buttons {

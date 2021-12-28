@@ -132,18 +132,21 @@ class _BuildView {
   }
 
   Widget selectRegion() {
-    return center(
-      SingleChildScrollView(
-        child: Column(crossAxisAlignment: axis.cross.center, children: [
-          text(title, fontSize: 45),
-          height16,
-          Container(
-              child: text("Welcome! Please select a region")),
-          height32,
-          ...selectableServerTypes.map(_buildSelectRegionButton)
-        ]),
-      ),
-    );
+    return layout(
+        padding: 8,
+        topLeft: widgets.title,
+        children: [
+      center(
+        SingleChildScrollView(
+          child: Column(crossAxisAlignment: axis.cross.center, children: [
+            height16,
+            Container(child: text("REGION", fontSize: 50, fontWeight: bold)),
+            height16,
+            ...selectableServerTypes.map(_buildSelectRegionButton)
+          ]),
+        ),
+      )
+    ]);
   }
 
   Widget gameFinished() {

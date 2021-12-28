@@ -36,21 +36,21 @@ Widget text(dynamic value, {
 Widget border({
   required dynamic child,
   Color color = Colors.white,
-  double width = 1,
+  double borderWidth = 1,
   BorderRadius radius = borderRadius4,
   EdgeInsets padding = padding8,
   EdgeInsets? margin,
   Alignment alignment = Alignment.center,
   Color fillColor = Colors.transparent,
-  double? minWidth,
+  double? width,
 }) {
   return Container(
     alignment: alignment,
     margin: margin,
     padding: padding,
-    width: minWidth,
+    width: width,
     decoration: BoxDecoration(
-        border: Border.all(color: color, width: width),
+        border: Border.all(color: color, width: borderWidth),
         borderRadius: radius,
         color: fillColor),
     child: child is Widget ? child : text(child),
@@ -83,10 +83,10 @@ Widget button(dynamic value, GestureTapCallback onPressed, {
       child: mouseOver(builder: (BuildContext context, bool mouseOver) {
         return border(
             margin: margin,
-            width: borderWidth,
+            borderWidth: borderWidth,
             child: value,
             fillColor: mouseOver ? fillColorMouseOver : fillColor,
-            minWidth: width,
+            width: width,
             alignment: alignment);
       }));
 
