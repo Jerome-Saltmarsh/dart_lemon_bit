@@ -1,6 +1,6 @@
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/classes/Vector2.dart';
-import 'package:bleed_client/editor/state/editState.dart';
+import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/editor/state/mouseWorldStart.dart';
 import 'package:bleed_client/editor/state/panning.dart';
 import 'package:bleed_client/state/game.dart';
@@ -19,9 +19,8 @@ void onEditorKeyDownEvent(RawKeyDownEvent event){
     }
   }
 
-  double v = 1.5;
-
-  EnvironmentObject? selectedObject = editState.selectedObject;
+  final double v = 1.5;
+  final EnvironmentObject? selectedObject = editor.selectedObject.value;
 
   if (selectedObject != null){
     if (event.logicalKey == LogicalKeyboardKey.keyW) {
@@ -38,14 +37,8 @@ void onEditorKeyDownEvent(RawKeyDownEvent event){
     }
   }
 
-
-
   if (event.logicalKey == LogicalKeyboardKey.delete) {
-    if(editState.selectedObject != null){
-      game.environmentObjects.remove(editState.selectedObject);
-      editState.selectedObject = null;
-      redrawCanvas();
-    }
+    editor.deleteSelected();
   }
   if (event.logicalKey == LogicalKeyboardKey.space && !panning) {
     panning = true;

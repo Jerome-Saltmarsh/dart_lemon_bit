@@ -7,7 +7,6 @@ import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/editor/events/onEditorKeyDownEvent.dart';
 import 'package:bleed_client/editor/functions/resetTiles.dart';
-import 'package:bleed_client/editor/render/buildEnvironmentType.dart';
 import 'package:bleed_client/editor/state/keys.dart';
 import 'package:bleed_client/editor/state/mouseDragClickProcess.dart';
 import 'package:bleed_client/editor/state/mouseWorldStart.dart';
@@ -36,7 +35,6 @@ import 'package:lemon_watch/watch.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../logic.dart';
-import 'state/editState.dart';
 
 enum _ToolTab { Tiles, Objects, All, Misc }
 
@@ -44,6 +42,7 @@ final _Editor editor = _Editor();
 
 class _Editor {
 
+  final Watch<EnvironmentObject?> selectedObject = Watch(null);
   final Watch<_ToolTab> tab = Watch(_ToolTab.Tiles);
   final Watch<Tile> tile = Watch(Tile.Grass);
   final Watch<ObjectType> objectType = Watch(objectTypes.first);
@@ -85,6 +84,13 @@ class _Editor {
       }
     }
   }
+
+  void deleteSelected(){
+    if (editor.selectedObject.value == null) return;
+    game.environmentObjects.remove(editor.selectedObject.value);
+    editor.selectedObject.value = null;
+    redrawCanvas();
+  }
 }
 
 Widget _buildTabs(_ToolTab activeTab) {
@@ -118,7 +124,7 @@ List<Widget> _getTabChildren(_ToolTab tab) {
 List<Widget> _buildObjectList() {
   return game.environmentObjects.map((env) {
     return text(parseEnvironmentObjectTypeToString(env.type), onPressed: (){
-      editState.selectedObject = env;
+      editor.selectedObject.value = env;
       cameraCenter(env.x, env.y);
       redrawCanvas();
     });
@@ -259,7 +265,7 @@ void _onMouseLeftClick([bool drag = false]) {
   for (EnvironmentObject environmentObject in game.environmentObjects) {
     if (diffOver(environmentObject.x, mouseWorldX, selectRadius)) continue;
     if (diffOver(environmentObject.y, mouseWorldY, selectRadius)) continue;
-    editState.selectedObject = environmentObject;
+    editor.selectedObject.value = environmentObject;
     redrawCanvas();
     return;
   }
