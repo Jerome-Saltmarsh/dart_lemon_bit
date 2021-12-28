@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
+import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/draw.dart';
@@ -31,6 +32,7 @@ import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_engine/state/zoom.dart';
 import 'package:lemon_math/diff.dart';
 import 'package:lemon_math/diff_over.dart';
+import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -51,28 +53,27 @@ class _Editor {
     print("editor.init()");
     keyboardEvents.listen(onKeyboardEvent);
     mouseEvents.onLeftClicked.value = _onMouseLeftClicked;
+    selectedObject.onChanged(_onSelectedObjectChanged);
+  }
+
+  _onSelectedObjectChanged(EnvironmentObject? environmentObject){
+    print("editor._onSelectedObjectChanged($environmentObject)");
+    redrawCanvas();
   }
 
   _onMouseLeftClicked(){
-    selectedCollectable = -1;
-    final double r = 50;
-
-    for (int i = 0; i < game.collectables.length; i += 3) {
-      final double x = game.collectables[i + 1].toDouble();
-      final double y = game.collectables[i + 2].toDouble();
-      if (diff(x, mouseWorldX) < r && diff(y, mouseWorldY) < r) {
-        selectedCollectable = i;
-        return;
-      }
-    }
 
     final double selectRadius = 25;
-    for (EnvironmentObject environmentObject in game.environmentObjects) {
-      if (diffOver(environmentObject.x, mouseWorldX, selectRadius)) continue;
-      if (diffOver(environmentObject.y, mouseWorldY, selectRadius)) continue;
-      editor.selectedObject.value = environmentObject;
-      redrawCanvas();
-      return;
+    if (game.environmentObjects.isNotEmpty){
+       EnvironmentObject closest = findClosest(game.environmentObjects, mouseWorldX, mouseWorldY);
+       double closestDistance = distanceFromMouse(closest.x, closest.y);
+       if (closestDistance <= selectRadius){
+          editor.selectedObject.value = closest;
+          return;
+       } else if (editor.selectedObject.value != null) {
+          editor.selectedObject.value = null;
+          return;
+       }
     }
 
     switch(tab.value){
@@ -94,6 +95,8 @@ class _Editor {
       case _ToolTab.Misc:
         break;
     }
+
+    redrawCanvas();
   }
 
   onKeyboardEvent(RawKeyEvent event) {
@@ -334,4 +337,9 @@ Widget _buildEnvironmentType(ObjectType type) {
         alignment: Alignment.centerLeft
     );
   });
+}
+
+
+double distanceFromMouse(double x, double y){
+  return distanceBetween(mouseWorldX, mouseWorldY, x, y);
 }
