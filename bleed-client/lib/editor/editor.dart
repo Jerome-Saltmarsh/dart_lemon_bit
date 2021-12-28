@@ -43,7 +43,7 @@ final _Editor editor = _Editor();
 final _Style _style = _Style();
 
 class _Style {
-  final double buttonWidth = 200;
+  final double buttonWidth = 230;
   final Color highlight = colours.purple;
 }
 
