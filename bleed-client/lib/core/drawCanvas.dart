@@ -34,7 +34,6 @@ void drawCanvas(Canvas canvas, Size size) {
   }
   if (game.type.value == GameType.None) {
     renderCanvasSelectGame();
-    ;
     return;
   }
   if (!webSocket.connected) return;

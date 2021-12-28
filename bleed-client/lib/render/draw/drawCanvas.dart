@@ -269,6 +269,7 @@ int getTotalActiveParticles() {
 }
 
 void drawSprites() {
+  setColorWhite();
   int indexHuman = 0;
   int indexEnv = 0;
   int indexParticle = 0;
