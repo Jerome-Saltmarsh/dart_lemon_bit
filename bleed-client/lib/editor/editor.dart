@@ -21,6 +21,7 @@ import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:bleed_client/update.dart';
+import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
@@ -68,8 +69,12 @@ List<Widget> _getTabChildren(_ToolTab tab) {
 }
 
 List<Widget> _buildObjectList() {
-  return game.environmentObjects.map((e) {
-    return text(parseEnvironmentObjectTypeToString(e.type));
+  return game.environmentObjects.map((env) {
+    return text(parseEnvironmentObjectTypeToString(env.type), onPressed: (){
+      editState.selectedObject = env;
+      cameraCenter(env.x, env.y);
+      redrawCanvas();
+    });
   }).toList();
 }
 

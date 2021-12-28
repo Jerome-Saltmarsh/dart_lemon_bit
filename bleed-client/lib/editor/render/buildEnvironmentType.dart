@@ -11,7 +11,10 @@ Widget buildEnvironmentType(ObjectType type) {
   return button(parseEnvironmentObjectTypeToString(type), () {
     tool = EditTool.EnvironmentObject;
     editState.environmentObjectType = type;
-  });
+  },
+  width: 200,
+    alignment: Alignment.centerLeft
+  );
 }
 
 Widget buildEnvironmentObject(EnvironmentObject type) {
