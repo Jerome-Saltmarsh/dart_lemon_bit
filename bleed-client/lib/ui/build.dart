@@ -7,7 +7,7 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/state/decorationImages.dart';
-import 'package:bleed_client/ui/state/flutter_constants.dart';
+import 'package:bleed_client/styles.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

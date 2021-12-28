@@ -19,7 +19,7 @@ import 'package:bleed_client/ui/compose/buildSkillTree.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/decorationImages.dart';
-import 'package:bleed_client/ui/state/flutter_constants.dart';
+import 'package:bleed_client/styles.dart';
 import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/ui/state/styleguide.dart';
 import 'package:bleed_client/utils/widget_utils.dart';

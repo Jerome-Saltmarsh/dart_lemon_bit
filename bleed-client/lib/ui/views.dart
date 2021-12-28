@@ -22,7 +22,7 @@ import 'package:lemon_watch/watch_builder.dart';
 
 import '../title.dart';
 import '../webSocket.dart';
-import 'state/flutter_constants.dart';
+import '../styles.dart';
 
 Widget buildView(BuildContext context){
 
@@ -147,6 +147,8 @@ class _BuildView {
 
   Widget awaitingPlayers() {
     return dialog(
+        color: colours.black05,
+        borderWidth: 6,
         child: Column(
           crossAxisAlignment: axis.cross.stretch,
           children: [
@@ -164,15 +166,16 @@ class _BuildView {
                 List<Widget> playerNames = [];
 
                 for(int i = 0; i < game.lobby.players.length; i++){
-                  playerNames.add(text(game.lobby.players[i].name));
+                  playerNames.add(text(game.lobby.players[i].name, fontSize: 20));
                 }
                 for(int i = 0; i < game.numberOfTeams.value - game.lobby.players.length; i++){
-                  playerNames.add(text("Waiting"));
+                  playerNames.add(text("Waiting", fontSize: 20, color: Colors.white54));
                 }
                 return Column(
                   crossAxisAlignment: axis.cross.start,
                   children: [
-                    text("Players", decoration: underline),
+                    text("Players", decoration: underline, fontSize: 22),
+                    height8,
                     ...playerNames
                   ],
                 );

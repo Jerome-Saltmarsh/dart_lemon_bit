@@ -24,7 +24,7 @@ import 'package:lemon_watch/watch_builder.dart';
 
 import '../../send.dart';
 import '../widgets.dart';
-import 'flutter_constants.dart';
+import '../../styles.dart';
 import 'tips.dart';
 
 

@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_math/golden_ratio.dart';
 
-import 'flutter_constants.dart';
+import '../../styles.dart';
 
 StyleGuide styleGuide = StyleGuide();
 

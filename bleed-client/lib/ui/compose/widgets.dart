@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bleed_client/constants/colors/white.dart';
 import 'package:bleed_client/constants/fontWeights/normal.dart';
-import 'package:bleed_client/ui/state/flutter_constants.dart';
+import 'package:bleed_client/styles.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
