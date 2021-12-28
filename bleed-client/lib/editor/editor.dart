@@ -45,6 +45,7 @@ final _Editor editor = _Editor();
 class _Editor {
 
   final Watch<_ToolTab> tab = Watch(_ToolTab.Tiles);
+  final Watch<Tile> tile = Watch(Tile.Grass);
   final Watch<ObjectType> objectType = Watch(objectTypes.first);
 
   init(){
@@ -80,7 +81,7 @@ class _Editor {
         panning = false;
       }
       if (event.logicalKey == keys.selectTileType) {
-        editState.tile = tileAtMouse;
+        editor.tile.value = tileAtMouse;
       }
     }
   }
@@ -94,7 +95,7 @@ Widget _buildTabs(_ToolTab activeTab) {
       return button(enumString(tab), () {
         editor.tab.value = tab;
       },
-        fillColor: active ? colours.aqua : Colors.transparent,
+        fillColor: active ? colours.purpleDarkest : Colors.transparent,
       );
     }).toList(),
     mainAxisAlignment: axis.main.even,
@@ -125,21 +126,27 @@ List<Widget> _buildObjectList() {
 }
 
 List<Widget> _buildTabEnvironmentObjects() {
-  return ObjectType.values.map(buildEnvironmentType).toList();
+  return ObjectType.values.map(_buildEnvironmentType).toList();
 }
 
 List<Widget> _buildTabTiles() {
   return Tile.values.map((tile) {
-    return button(parseTileToString(tile), () {
-      editState.tile = tile;
-    }, width: 200, alignment: Alignment.centerLeft);
+    return WatchBuilder(editor.tile, (Tile selected){
+      return button(enumString(tile), () {
+        editor.tile.value = tile;
+      },
+        width: 200,
+        alignment: Alignment.centerLeft,
+        fillColor: selected == tile ? colours.purple : colours.transparent
+      );
+    });
   }).toList();
 }
 
 List<Widget> _buildTabMisc() {
   return [
     button("Save", saveScene),
-    button("New", newScene),
+    button("New", resetTiles),
     button("Tiles.X++", () {
       for (List<Tile> row in game.tiles) {
         row.add(Tile.Grass);
@@ -231,7 +238,7 @@ void _handleMouseDrag() {
     return;
   }
 
-  setTileAtMouse(editState.tile);
+  setTileAtMouse(editor.tile.value);
 }
 
 void _onMouseLeftClick([bool drag = false]) {
@@ -257,7 +264,7 @@ void _onMouseLeftClick([bool drag = false]) {
     return;
   }
 
-  setTileAtMouse(editState.tile);
+  setTileAtMouse(editor.tile.value);
 }
 
 Tile get tileAtMouse {
@@ -285,3 +292,14 @@ void setTile({
   mapTilesToSrcAndDst(game.tiles);
 }
 
+Widget _buildEnvironmentType(ObjectType type) {
+  return WatchBuilder(editor.objectType, (ObjectType selected){
+    return button(parseEnvironmentObjectTypeToString(type), () {
+      editor.objectType.value = type;
+    },
+        fillColor: type == selected ? colours.purple : colours.transparent,
+        width: 200,
+        alignment: Alignment.centerLeft
+    );
+  });
+}

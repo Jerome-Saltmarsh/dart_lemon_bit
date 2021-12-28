@@ -28,7 +28,7 @@ class _Logic {
   }
 
   void openEditor(){
-    resetTiles(rows: 40, columns: 40);
+    newScene(rows: 40, columns: 40);
     game.mode.value = Mode.Edit;
 
   }
