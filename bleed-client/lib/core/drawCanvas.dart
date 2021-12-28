@@ -37,7 +37,7 @@ void drawCanvas(Canvas canvas, Size size) {
 }
 
 void renderSelectGameCanvas(Canvas canvas, Size size){
-  drawArcher(x: 50, y: 100, state: CharacterState.Idle, direction: Direction.DownRight, frame: 1);
+  drawArcher(x: 50, y: 100, state: CharacterState.Idle, direction: Direction.DownRight, frame: 1, scale: 0.4);
 }
 
 void drawArcher({
@@ -45,7 +45,8 @@ void drawArcher({
   required double y,
   required CharacterState state,
   required Direction direction,
-  required int frame
+  required int frame,
+  double scale = 1,
 }){
-  drawAtlas(mapDst(x: x, y: y), mapSrcArcher(state: state, direction: direction, frame: frame));
+  drawAtlas(mapDst(x: x, y: y, scale: scale), mapSrcArcher(state: state, direction: direction, frame: frame));
 }
