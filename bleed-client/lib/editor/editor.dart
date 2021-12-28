@@ -78,7 +78,7 @@ List<Widget> _buildTabTiles() {
     return button(parseTileToString(tile), () {
       tool = EditTool.Tile;
       editState.tile = tile;
-    }, width: 200);
+    }, width: 200, alignment: Alignment.centerLeft);
   }).toList();
 }
 

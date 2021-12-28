@@ -76,6 +76,7 @@ Widget button(dynamic value, GestureTapCallback onPressed, {
   EdgeInsets? margin,
   Color fillColorMouseOver = Colors.black26,
   Color fillColor = Colors.transparent,
+  Alignment alignment = Alignment.center
 }) {
   final Widget _button = pressed(
       callback: onPressed,
@@ -86,7 +87,7 @@ Widget button(dynamic value, GestureTapCallback onPressed, {
             child: value,
             fillColor: mouseOver ? fillColorMouseOver : fillColor,
             minWidth: width,
-            alignment: Alignment.center);
+            alignment: alignment);
       }));
 
   if (hint != null) {
