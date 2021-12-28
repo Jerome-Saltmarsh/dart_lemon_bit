@@ -55,10 +55,30 @@ class _Editor {
 
   _onMouseLeftClicked(){
     print("editor.onMouseLeftClicked()");
+    selectedCollectable = -1;
+    final double r = 50;
+
+    for (int i = 0; i < game.collectables.length; i += 3) {
+      final double x = game.collectables[i + 1].toDouble();
+      final double y = game.collectables[i + 2].toDouble();
+      if (diff(x, mouseWorldX) < r && diff(y, mouseWorldY) < r) {
+        selectedCollectable = i;
+        return;
+      }
+    }
+
+    final double selectRadius = 25;
+    for (EnvironmentObject environmentObject in game.environmentObjects) {
+      if (diffOver(environmentObject.x, mouseWorldX, selectRadius)) continue;
+      if (diffOver(environmentObject.y, mouseWorldY, selectRadius)) continue;
+      editor.selectedObject.value = environmentObject;
+      redrawCanvas();
+      return;
+    }
 
     switch(tab.value){
       case _ToolTab.Tiles:
-        // TODO: Handle this case.
+        setTileAtMouse(editor.tile.value);
         break;
       case _ToolTab.Objects:
         // TODO: Handle this case.
@@ -249,28 +269,28 @@ void _handleMouseDrag() {
 
 void _onMouseLeftClick([bool drag = false]) {
   if (!drag && !mouseClicked) return;
-  selectedCollectable = -1;
-  double r = 50;
-
-  for (int i = 0; i < game.collectables.length; i += 3) {
-    double x = game.collectables[i + 1].toDouble();
-    double y = game.collectables[i + 2].toDouble();
-    if (diff(x, mouseWorldX) < r && diff(y, mouseWorldY) < r) {
-      selectedCollectable = i;
-      return;
-    }
-  }
-
-  double selectRadius = 25;
-  for (EnvironmentObject environmentObject in game.environmentObjects) {
-    if (diffOver(environmentObject.x, mouseWorldX, selectRadius)) continue;
-    if (diffOver(environmentObject.y, mouseWorldY, selectRadius)) continue;
-    editor.selectedObject.value = environmentObject;
-    redrawCanvas();
-    return;
-  }
-
-  setTileAtMouse(editor.tile.value);
+  // selectedCollectable = -1;
+  // double r = 50;
+  //
+  // for (int i = 0; i < game.collectables.length; i += 3) {
+  //   double x = game.collectables[i + 1].toDouble();
+  //   double y = game.collectables[i + 2].toDouble();
+  //   if (diff(x, mouseWorldX) < r && diff(y, mouseWorldY) < r) {
+  //     selectedCollectable = i;
+  //     return;
+  //   }
+  // }
+  //
+  // double selectRadius = 25;
+  // for (EnvironmentObject environmentObject in game.environmentObjects) {
+  //   if (diffOver(environmentObject.x, mouseWorldX, selectRadius)) continue;
+  //   if (diffOver(environmentObject.y, mouseWorldY, selectRadius)) continue;
+  //   editor.selectedObject.value = environmentObject;
+  //   redrawCanvas();
+  //   return;
+  // }
+  //
+  // setTileAtMouse(editor.tile.value);
 }
 
 Tile get tileAtMouse {
