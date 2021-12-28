@@ -13,12 +13,18 @@ import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/mappers/mapArcherToSrc.dart';
 import 'package:bleed_client/render/mappers/mapDst.dart';
 import 'package:bleed_client/render/mappers/mapSrcWitch.dart';
+import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/webSocket.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/watches/mode.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/game.dart';
+import 'package:lemon_engine/properties/mouse_world.dart';
+import 'package:lemon_math/adjacent.dart';
+import 'package:lemon_math/angle_between.dart';
+import 'package:lemon_math/distance_between.dart';
+import 'package:lemon_math/opposite.dart';
 
 void drawCanvas(Canvas canvas, Size size) {
 
@@ -43,15 +49,40 @@ void drawCanvas(Canvas canvas, Size size) {
 }
 
 int direction = 0;
-final Duration _frameRate = Duration(milliseconds: 100);
+final Duration _frameRate = Duration(milliseconds: 80);
+
+double x = 50;
+double y = 50;
+int frame = 0;
 
 void renderCanvasSelectGame(){
-  direction = (direction + 1) % directions.length;
-  drawArcher(x: 50, y: 100, state: CharacterState.Idle, direction: directions[direction], frame: 1, scale: 1);
+  frame++;
+  final double angle = angleBetween(x, y, mouseWorldX, mouseWorldY);
+  final Direction direction = convertAngleToDirection(angle);
+
+  // direction = (direction + 1) % directions.length;
+  // drawArcher(x: x, y: y, state: CharacterState.Idle, direction: directions[direction], frame: 1, scale: 1);
+  final distance = distanceBetween(
+    x,
+    y,
+    mouseWorldX,
+    mouseWorldY
+  );
+
+  CharacterState state = CharacterState.Idle;
+  if (distance > 100){
+    final double speed = 8;
+    x += adjacent(angle, speed);
+    y += opposite(angle, speed);
+    state = CharacterState.Running;
+  }
+
+  drawArcher(x: x, y: y, state: state, direction: direction, frame: frame, scale: 1);
   _redraw();
 }
 
 void renderCanvasSelectRegion(){
+  frame++;
   direction = (direction + 1) % directions.length;
   drawWitch(x: 50, y: 100, state: CharacterState.Idle, direction: directions[direction], frame: 1, scale: 1);
   _redraw();

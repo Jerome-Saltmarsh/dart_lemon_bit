@@ -20,7 +20,7 @@ class _Widgets {
   final Widget magicBar = build.magicBar();
   final Widget abilities = build.abilities();
   final Widget gamesList = build.gamesList();
-  final Widget title = Container(alignment: Alignment.center, height: 80, child: text("gamestream.online", fontSize: 40));
+  final Widget title = Container(alignment: Alignment.center, height: 80, child: text("GAMESTREAM", fontSize: 40));
 }
 
 class _Buttons {

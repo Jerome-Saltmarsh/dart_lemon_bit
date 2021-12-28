@@ -95,7 +95,7 @@ void sendRequestUpdatePlayer() {
   _write(session);
   _write(characterController.action.value.index);
   characterController.action.value = CharacterAction.Idle;
-  _write(characterController.direction?.index);
+  _write(characterController.direction.index);
   _write(mouseWorldX.toInt());
   _write(mouseWorldY.toInt());
   webSocket.send(_buffer.toString());
