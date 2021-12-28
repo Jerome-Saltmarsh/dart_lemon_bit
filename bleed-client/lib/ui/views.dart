@@ -91,7 +91,7 @@ class _BuildView {
       return WatchBuilder(game.status, (GameStatus gameStatus) {
         switch (gameStatus) {
           case GameStatus.Awaiting_Players:
-            return _views.awaitingPlayers;
+            return _buildView.awaitingPlayers();
           case GameStatus.In_Progress:
             switch (game.type.value) {
               case GameType.MMO:
