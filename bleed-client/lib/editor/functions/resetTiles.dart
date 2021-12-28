@@ -21,6 +21,8 @@ void resetTiles({
   required int rows,
   required int columns,
 }){
+  game.totalRows = rows;
+  game.totalColumns = columns;
   game.tiles.clear();
   for (int row = 0; row < rows; row++) {
     List<Tile> columnTiles = [];

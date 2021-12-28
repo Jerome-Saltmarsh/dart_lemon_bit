@@ -121,7 +121,7 @@ Widget buildMessageBoxIcon() {
       hint: "Press Enter",
       callback: toggleMessageBox,
       child: border(
-        child: text("Message"),
+        child: text("Say"),
       ));
 }
 
