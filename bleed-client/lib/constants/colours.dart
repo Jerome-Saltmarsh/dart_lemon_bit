@@ -22,6 +22,7 @@ class _Colors {
   final Color aquaDarkest =  Color.fromRGBO(11, 94, 101, 1);
   final Color purple =  Color.fromRGBO(168, 132, 243, 1);
   final Color purpleDarkest =  Color.fromRGBO(69, 41, 63, 1);
+  final Color transparent =  Colors.transparent;
 
   final Color white = Color.fromRGBO(220, 220, 220, 1.0);
   final Color grey = Color.fromRGBO(120, 120, 120, 1.0);

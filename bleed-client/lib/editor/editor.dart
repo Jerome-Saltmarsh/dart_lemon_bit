@@ -5,11 +5,9 @@ import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/draw.dart';
-import 'package:bleed_client/editor/enums/EditTool.dart';
 import 'package:bleed_client/editor/events/onEditorKeyDownEvent.dart';
 import 'package:bleed_client/editor/functions/resetTiles.dart';
 import 'package:bleed_client/editor/render/buildEnvironmentType.dart';
-import 'package:bleed_client/editor/state/editTool.dart';
 import 'package:bleed_client/editor/state/keys.dart';
 import 'package:bleed_client/editor/state/mouseDragClickProcess.dart';
 import 'package:bleed_client/editor/state/mouseWorldStart.dart';
@@ -57,6 +55,19 @@ class _Editor {
 
   _onMouseLeftClicked(){
     print("editor.onMouseLeftClicked()");
+
+    switch(tab.value){
+      case _ToolTab.Tiles:
+        // TODO: Handle this case.
+        break;
+      case _ToolTab.Objects:
+        // TODO: Handle this case.
+        break;
+      case _ToolTab.All:
+        break;
+      case _ToolTab.Misc:
+        break;
+    }
   }
 
   onKeyboardEvent(RawKeyEvent event) {
