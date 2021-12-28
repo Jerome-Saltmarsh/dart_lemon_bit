@@ -78,7 +78,7 @@ List<Widget> _buildTabTiles() {
     return button(parseTileToString(tile), () {
       tool = EditTool.Tile;
       editState.tile = tile;
-    });
+    }, width: 200);
   }).toList();
 }
 
@@ -135,6 +135,7 @@ final Widget _toolTabs = Column(
       child: WatchBuilder(_tab, (_ToolTab tab){
         return SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: axis.cross.start,
             children: _getTabChildren(tab),
           ),
         );
