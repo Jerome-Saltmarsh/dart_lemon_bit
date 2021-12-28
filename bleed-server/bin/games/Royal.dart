@@ -9,7 +9,7 @@ import '../common/classes/Vector2.dart';
 import '../instances/scenes.dart';
 
 class Royal extends Game {
-  Royal() : super(scenes.wildernessWest01, gameType: GameType.BATTLE_ROYAL) {
+  Royal() : super(scenes.royal, gameType: GameType.BATTLE_ROYAL) {
     status = GameStatus.Awaiting_Players;
     teamSize = 1;
     numberOfTeams = 2;

@@ -20,6 +20,7 @@ void loadScenes() {
   loadScene('wilderness-west-01').then((value) => scenes.wildernessWest01 = value);
   loadScene('wilderness-north-01').then((value) => scenes.wildernessNorth01 = value);
   loadScene('wilderness-east').then((value) => scenes.wildernessEast = value);
+  loadScene('royal').then((value) => scenes.royal = value);
 }
 
 Future<Scene> loadScene(String name) async {

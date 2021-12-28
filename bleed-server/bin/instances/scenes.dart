@@ -10,4 +10,5 @@ class _Scenes {
   late Scene wildernessNorth01;
   late Scene cave;
   late Scene wildernessEast;
+  late Scene royal;
 }
