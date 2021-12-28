@@ -71,7 +71,7 @@ class _BuildView {
     return center(Column(
       mainAxisAlignment: axis.main.center,
       children: [
-        text(connection),
+        text(enumString(webSocket.connection.value)),
         height8,
         button("Cancel", logic.exit, width: 100)
       ],
