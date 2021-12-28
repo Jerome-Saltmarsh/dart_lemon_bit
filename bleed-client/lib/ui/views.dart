@@ -69,6 +69,15 @@ class _Views {
   final Widget awaitingPlayers = _buildView.awaitingPlayers();
 }
 
+final Map<Connection, String> connectionMessage = {
+    Connection.Done: "Connection to the server was lost",
+    Connection.Error: "An error occurred with the connection to the server",
+    Connection.Connected: "Connected to server",
+    Connection.Connecting: "Connecting to server",
+    Connection.Failed_To_Connect: "Failed to establish a connection with the server",
+    Connection.None: "There is no connection to the server",
+};
+
 class _BuildView {
 
   Widget connection(){
@@ -76,8 +85,8 @@ class _BuildView {
       return center(Column(
         mainAxisAlignment: axis.main.center,
         children: [
-          text(enumString(value)),
-          height8,
+          text(connectionMessage[value], fontSize: 25),
+          height16,
           button("Cancel", logic.exit, width: 100)
         ],
       ));
