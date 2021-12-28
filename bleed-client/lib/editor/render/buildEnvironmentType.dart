@@ -7,10 +7,11 @@ import 'package:bleed_client/editor/state/editTool.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:flutter/material.dart';
 
+import '../editor.dart';
+
 Widget buildEnvironmentType(ObjectType type) {
   return button(parseEnvironmentObjectTypeToString(type), () {
-    tool = EditTool.EnvironmentObject;
-    editState.environmentObjectType = type;
+    editor.objectType.value = type;
   },
   width: 200,
     alignment: Alignment.centerLeft
@@ -19,7 +20,6 @@ Widget buildEnvironmentType(ObjectType type) {
 
 Widget buildEnvironmentObject(EnvironmentObject type) {
   return button(parseEnvironmentObjectTypeToString(type.type), () {
-    tool = EditTool.EnvironmentObject;
     editState.selectedObject = type;
   });
 }

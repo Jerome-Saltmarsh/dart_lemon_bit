@@ -99,11 +99,11 @@ double get mouseUnprojectPositionX =>
 double get mouseUnprojectPositionY =>
     projectedToWorldY(mouseWorldX, mouseWorldY);
 
-int get mouseTileX {
+int get mouseColumn {
   return mouseUnprojectPositionX ~/ tileSize;
 }
 
-int get mouseTileY {
+int get mouseRow {
   return mouseUnprojectPositionY ~/ tileSize;
 }
 

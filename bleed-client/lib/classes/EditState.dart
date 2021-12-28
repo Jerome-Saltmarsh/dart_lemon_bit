@@ -4,6 +4,5 @@ import 'package:bleed_client/common/enums/ObjectType.dart';
 
 class EditState {
   Tile tile = Tile.Grass;
-  ObjectType environmentObjectType = ObjectType.House01;
   EnvironmentObject? selectedObject;
 }

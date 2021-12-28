@@ -9,7 +9,6 @@ Widget buildTiles() {
   return Column(
       children: Tile.values.map((tile) {
         return button(tile.toString(), () {
-          tool = EditTool.Tile;
           editState.tile = tile;
         });
       }).toList());

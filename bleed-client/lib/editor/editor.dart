@@ -40,12 +40,14 @@ import 'package:lemon_watch/watch_builder.dart';
 import '../logic.dart';
 import 'state/editState.dart';
 
-final Watch<_ToolTab> _tab = Watch(_ToolTab.Tiles);
 enum _ToolTab { Tiles, Objects, All, Misc }
 
 final _Editor editor = _Editor();
 
 class _Editor {
+
+  final Watch<_ToolTab> tab = Watch(_ToolTab.Tiles);
+  final Watch<ObjectType> objectType = Watch(objectTypes.first);
 
   init(){
     print("editor.init()");
@@ -79,7 +81,7 @@ Widget _buildTabs(_ToolTab activeTab) {
       bool active = tab == activeTab;
 
       return button(enumString(tab), () {
-        _tab.value = tab;
+        editor.tab.value = tab;
       },
         fillColor: active ? colours.aqua : Colors.transparent,
       );
@@ -118,7 +120,6 @@ List<Widget> _buildTabEnvironmentObjects() {
 List<Widget> _buildTabTiles() {
   return Tile.values.map((tile) {
     return button(parseTileToString(tile), () {
-      tool = EditTool.Tile;
       editState.tile = tile;
     }, width: 200, alignment: Alignment.centerLeft);
   }).toList();
@@ -168,7 +169,7 @@ Widget buildEditorUI() {
 final Widget _exitEditor = button("Exit", logic.toggleEditMode);
 
 final Widget _toolTabs = Builder(builder: (BuildContext context) {
-  return WatchBuilder(_tab, (_ToolTab tab) {
+  return WatchBuilder(editor.tab, (_ToolTab tab) {
     return Column(
       crossAxisAlignment: axis.cross.start,
       children: [
@@ -249,32 +250,27 @@ void _onMouseLeftClick([bool drag = false]) {
 }
 
 Tile get tileAtMouse {
-  try {
-    return game.tiles[mouseTileY][mouseTileX];
-  } catch (e) {
-    return Tile.Boundary;
-  }
+  if (mouseRow < 0) return Tile.Boundary;
+  if (mouseColumn < 0) return Tile.Boundary;
+  if (mouseRow >= game.totalRows) return Tile.Boundary;
+  if (mouseColumn >= game.totalColumns) return Tile.Boundary;
+  return game.tiles[mouseRow][mouseColumn];
 }
 
 void setTileAtMouse(Tile tile) {
-  int row = mouseTileY;
-  int column = mouseTileX;
+  setTile(row: mouseRow, column: mouseColumn, tile: tile);
+}
+
+void setTile({
+  required int row,
+  required int column,
+  required Tile tile,
+}){
   if (row < 0) return;
   if (column < 0) return;
-
-  switch (tool) {
-    case EditTool.Tile:
-      game.tiles[row][column] = tile;
-      mapTilesToSrcAndDst(game.tiles);
-      break;
-    case EditTool.EnvironmentObject:
-      // TODO
-      // game.environmentObjects.add(EnvironmentObject(
-      //     x: mouseWorldX,
-      //     y: mouseWorldY,
-      //     type: editState.environmentObjectType));
-      // print("added house");
-      // redrawCanvas();
-      break;
-  }
+  if (row >= game.totalRows) return;
+  if (column >= game.totalColumns) return;
+  game.tiles[row][column] = tile;
+  mapTilesToSrcAndDst(game.tiles);
 }
+
