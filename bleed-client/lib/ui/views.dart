@@ -27,7 +27,7 @@ Widget buildView(BuildContext context){
   return WatchBuilder(game.mode, (Mode mode) {
 
     if (mode == Mode.Edit){
-      return buildEditorUI();
+      return _views.editor;
     }
 
     return WatchBuilder(game.region, (Region serverType){
@@ -62,6 +62,7 @@ class _Views {
   final Widget connecting = _buildView.connecting();
   final Widget connected = _buildView.connected();
   final Widget connection = _buildView.connection();
+  final Widget editor = buildEditorUI();
 }
 
 class _BuildView {

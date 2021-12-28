@@ -15,6 +15,7 @@ import 'package:bleed_client/editor/state/selectedCollectable.dart';
 import 'package:bleed_client/functions/saveScene.dart';
 import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/compose/widgets.dart';
 import 'package:bleed_client/ui/state/flutter_constants.dart';
 import 'package:bleed_client/update.dart';
@@ -28,6 +29,7 @@ import 'package:lemon_engine/state/zoom.dart';
 import 'package:lemon_math/diff.dart';
 import 'package:lemon_math/diff_over.dart';
 
+import '../logic.dart';
 import 'state/editState.dart';
 
 _ToolTab _tab = _ToolTab.Tiles;
@@ -37,16 +39,16 @@ enum _ToolTab { Tiles, Objects, All, Misc }
 Widget _buildTabs() {
   return Row(
     children: [
-      button("Tiles", (){
+      button("Tiles", () {
         _setTab(_ToolTab.Tiles);
       }),
-      button("Objects", (){
+      button("Objects", () {
         _setTab(_ToolTab.Objects);
       }),
-      button("All", (){
+      button("All", () {
         _setTab(_ToolTab.All);
       }),
-      button("Misc", (){
+      button("Misc", () {
         _setTab(_ToolTab.Misc);
       }),
     ],
@@ -54,10 +56,9 @@ Widget _buildTabs() {
   );
 }
 
-void _setTab(_ToolTab value){
-  if(_tab == value) return;
+void _setTab(_ToolTab value) {
+  if (_tab == value) return;
   _tab = value;
-  _rebuildTools();
 }
 
 List<Widget> _getTabChildren() {
@@ -73,17 +74,17 @@ List<Widget> _getTabChildren() {
   }
 }
 
-List<Widget> _buildObjectList(){
-  return game.environmentObjects.map((e){
+List<Widget> _buildObjectList() {
+  return game.environmentObjects.map((e) {
     return text(parseEnvironmentObjectTypeToString(e.type));
   }).toList();
 }
 
-List<Widget> _buildTabEnvironmentObjects(){
+List<Widget> _buildTabEnvironmentObjects() {
   return ObjectType.values.map(buildEnvironmentType).toList();
 }
 
-List<Widget> _buildTabTiles(){
+List<Widget> _buildTabTiles() {
   return Tile.values.map((tile) {
     return button(parseTileToString(tile), () {
       tool = EditTool.Tile;
@@ -110,64 +111,46 @@ List<Widget> _buildTabMisc() {
       game.tiles.add(row);
       mapTilesToSrcAndDst(game.tiles);
     }),
-    if(game.tiles.length > 2)
-    button("Tiles.X--", () {
-      game.tiles.removeLast();
-      mapTilesToSrcAndDst(game.tiles);
-    }),
-    if(game.tiles[0].length > 2)
+    if (game.tiles.length > 2)
+      button("Tiles.X--", () {
+        game.tiles.removeLast();
+        mapTilesToSrcAndDst(game.tiles);
+      }),
+    if (game.tiles[0].length > 2)
       button("Tiles.Y--", () {
         for (int i = 0; i < game.tiles.length; i++) {
-           game.tiles[i].removeLast();
+          game.tiles[i].removeLast();
         }
         mapTilesToSrcAndDst(game.tiles);
       }),
   ];
 }
 
-void _rebuildTools(){
-  // _toolsStateSetter((){});
-}
-
-Widget _buildTools() {
-  return StatefulBuilder(builder: (BuildContext context, StateSetter setState){
-    print("_buildTools()");
-    // _toolsStateSetter = setState;
-    return Positioned(
-      left: 0,
-      top: 0,
-      child: Column(
-        crossAxisAlignment: axis.cross.start,
-        children: [
-          _buildTabs(),
-          height8,
-          Container(
-            height: screen.height - 100,
-            child: SingleChildScrollView(
-              child: Column(
-                // crossAxisAlignment: cross.stretch,
-                children: _getTabChildren().toList(),
-              ),
-            ),
-          )
-        ],
-      ),
-    );
-  });
-}
-
 Widget buildEditorUI() {
-  return Container(
-    width: screen.width,
-    height: screen.height,
-    alignment: Alignment.center,
-    child: Stack(
-      children: [
-        _buildTools(),
-      ],
-    ),
+  print('buildEditorUI()');
+  return layout(
+    topLeft: _toolTabs,
+    topRight: _exitEditor,
   );
 }
+
+final Widget _exitEditor = button("Exit", logic.toggleEditMode);
+
+final Widget _toolTabs = Column(
+  crossAxisAlignment: axis.cross.start,
+  children: [
+    _buildTabs(),
+    height8,
+    Container(
+      height: screen.height - 100,
+      child: SingleChildScrollView(
+        child: Column(
+          children: _getTabChildren().toList(),
+        ),
+      ),
+    )
+  ],
+);
 
 void updateEditMode() {
   _onMouseLeftClick();
