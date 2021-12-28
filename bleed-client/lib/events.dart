@@ -80,7 +80,6 @@ class Events {
     switch(connection){
       case Connection.Connected:
         sendRequestJoinGame(game.type.value);
-        fullScreenEnter();
         mouseEvents.onLeftClicked.value = performPrimaryAction;
         mouseEvents.onPanStarted.value = performPrimaryAction;
         mouseEvents.onLongLeftClicked.value = performPrimaryAction;
@@ -125,8 +124,13 @@ class Events {
 
   void _onGameStatusChanged(GameStatus value){
     print('events.onGameStatusChanged($value)');
-    if (value == GameStatus.Finished){
-      fullScreenExit();
+    switch(value){
+      case GameStatus.In_Progress:
+        fullScreenEnter();
+        break;
+      default:
+        fullScreenExit();
+        break;
     }
   }
 

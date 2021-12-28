@@ -53,7 +53,6 @@ class _BuildView {
       }
 
       if (value == CharacterType.Human) {
-
         return WatchBuilder(game.player.weaponType, (WeaponType weaponType){
           return Stack(
             children: [
