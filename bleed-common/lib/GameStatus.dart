@@ -1,5 +1,6 @@
 
 enum GameStatus {
+  None,
   Awaiting_Players,
   In_Progress,
   Finished,

@@ -63,6 +63,8 @@ class _Views {
   final Widget connected = _buildView.connected();
   final Widget connection = _buildView.connection();
   final Widget editor = buildEditorUI();
+  final Widget gameFinished = _buildView.gameFinished();
+  final Widget awaitingPlayers = _buildView.awaitingPlayers();
 }
 
 class _BuildView {
@@ -89,7 +91,7 @@ class _BuildView {
       return WatchBuilder(game.status, (GameStatus gameStatus) {
         switch (gameStatus) {
           case GameStatus.Awaiting_Players:
-            return buildUIAwaitingPlayers();
+            return _views.awaitingPlayers;
           case GameStatus.In_Progress:
             switch (game.type.value) {
               case GameType.MMO:
@@ -104,9 +106,9 @@ class _BuildView {
                 return text(game.type.value);
             }
           case GameStatus.Finished:
-            return buildFinished();
+            return _views.gameFinished;
           default:
-            throw Exception();
+            return text(enumString(gameStatus));
         }
       });
     });
@@ -125,6 +127,75 @@ class _BuildView {
         ]),
       ),
     );
+  }
+
+  Widget gameFinished() {
+    return dialog(child: text("Game Finished"));
+  }
+
+  Widget awaitingPlayers() {
+    return dialog(
+        child: Column(
+          crossAxisAlignment: axis.cross.stretch,
+          children: [
+            Row(
+              mainAxisAlignment: axis.main.apart,
+              children: [
+                text(enumString(game.type.value)),
+                button("Cancel", logic.leaveLobby),
+              ],
+            ),
+            height16,
+            WatchBuilder(game.lobby.playerCount, (int value) {
+
+              if (game.teamSize.value == 1) {
+                List<Widget> playerNames = [];
+
+                for(int i = 0; i < game.lobby.players.length; i++){
+                  playerNames.add(text(game.lobby.players[i].name));
+                }
+                for(int i = 0; i < game.numberOfTeams.value - game.lobby.players.length; i++){
+                  playerNames.add(text("Waiting"));
+                }
+                return Column(
+                  children: playerNames,
+                );
+              }
+
+              int count1 =
+                  5 - game.lobby.players.where((player) => player.team == 0).length;
+              int count2 =
+                  5 - game.lobby.players.where((player) => player.team == 1).length;
+
+
+              List<Widget> a = [];
+              List<Widget> b = [];
+
+              for (int i = 0; i < count1; i++) {
+                a.add(text("Waiting"));
+              }
+              for (int i = 0; i < count2; i++) {
+                b.add(text("Waiting"));
+              }
+
+              return Column(
+                children: [
+                  text("Team 1"),
+                  ...game.lobby
+                      .getPlayersOnTeam(0)
+                      .map((player) => text(player.name)),
+                  ...a,
+                  height16,
+                  text("Team 2"),
+                  ...game.lobby
+                      .getPlayersOnTeam(1)
+                      .map((player) => text(player.name)),
+                  ...b,
+                ],
+              );
+            }),
+          ],
+        ));
   }
 
   Widget selectGame() {

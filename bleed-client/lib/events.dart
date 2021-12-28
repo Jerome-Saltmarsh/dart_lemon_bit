@@ -125,6 +125,9 @@ class Events {
 
   void _onGameStatusChanged(GameStatus value){
     print('events.onGameStatusChanged($value)');
+    if (value == GameStatus.Finished){
+      fullScreenExit();
+    }
   }
 
   void _onGameModeChanged(Mode mode){

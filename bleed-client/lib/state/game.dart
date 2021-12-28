@@ -20,8 +20,6 @@ import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/Region.dart';
-import 'package:bleed_client/webSocket.dart';
-import 'package:bleed_client/server/server.dart';
 import 'package:lemon_watch/watch.dart';
 
 final _Game game = _Game();
