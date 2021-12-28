@@ -2,7 +2,6 @@
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/editor/editor.dart';
-import 'package:bleed_client/editor/functions/registerEditorKeyboardListener.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/functions/cameraCenterPlayer.dart';
 import 'package:bleed_client/functions/removeGeneratedEnvironmentObjects.dart';
@@ -134,8 +133,8 @@ class Events {
       // onLeftClicked.stream.listen(editor.onMouseLeftClicked);
       removeGeneratedEnvironmentObjects();
       deregisterPlayKeyboardHandler();
-      registerEditorKeyboardListener();
-      mouseEvents.onLeftClicked.value = editor.onMouseLeftClicked;
+      // registerEditorKeyboardListener();
+      editor.init();
       game.totalZombies.value = 0;
       game.totalProjectiles = 0;
       game.totalNpcs = 0;

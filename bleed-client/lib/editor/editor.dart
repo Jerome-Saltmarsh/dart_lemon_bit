@@ -46,11 +46,18 @@ enum _ToolTab { Tiles, Objects, All, Misc }
 final _Editor editor = _Editor();
 
 class _Editor {
-  onMouseLeftClicked(){
+
+  init(){
+    print("editor.init()");
+    keyboardEvents.listen(onKeyboardEvent);
+    mouseEvents.onLeftClicked.value = _onMouseLeftClicked;
+  }
+
+  _onMouseLeftClicked(){
     print("editor.onMouseLeftClicked()");
   }
 
-  void onKeyboardEvent(RawKeyEvent event) {
+  onKeyboardEvent(RawKeyEvent event) {
     if (event is RawKeyDownEvent) {
       onEditorKeyDownEvent(event);
       return;
