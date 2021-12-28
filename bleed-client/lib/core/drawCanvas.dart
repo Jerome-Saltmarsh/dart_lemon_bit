@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:bleed_client/common/CharacterState.dart';
@@ -8,24 +7,20 @@ import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/editor/render/drawEditor.dart';
 import 'package:bleed_client/enums/Region.dart';
-import 'package:bleed_client/images.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
+import 'package:bleed_client/render/draw/drawCanvas.dart';
 import 'package:bleed_client/render/mappers/mapArcherToSrc.dart';
 import 'package:bleed_client/render/mappers/mapDst.dart';
 import 'package:bleed_client/render/mappers/mapSrcWitch.dart';
-import 'package:bleed_client/utils.dart';
-import 'package:bleed_client/webSocket.dart';
-import 'package:bleed_client/render/draw/drawCanvas.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/watches/mode.dart';
+import 'package:bleed_client/webSocket.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
-import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/angle_between.dart';
-import 'package:lemon_math/diff_over.dart';
 import 'package:lemon_math/distance_between.dart';
-import 'package:lemon_math/opposite.dart';
 
 void drawCanvas(Canvas canvas, Size size) {
   if (editMode) {

@@ -6,6 +6,7 @@ import 'package:bleed_client/render/draw/drawCanvas.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/render/draw_circle.dart';
+import 'package:lemon_engine/state/paint.dart';
 
 void renderCanvasEdit() {
   drawTiles();

@@ -139,9 +139,7 @@ void drawCircleOutline({
 }
 
 void drawTiles() {
-  // TODO Optimization: Null checks are expensive
-  if (game.tiles == null) return;
-  if (game.tiles.isEmpty == null) return;
+  setColorWhite();
   drawAtlas(
       tilesDst,
       tilesSrc,
