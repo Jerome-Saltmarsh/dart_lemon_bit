@@ -1,13 +1,12 @@
 
 import 'dart:typed_data';
 
+import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/getters/getTileAt.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 
-class EnvironmentObject {
-  double x;
-  double y;
+class EnvironmentObject extends Vector2 {
   late int row;
   late int column;
   final ObjectType type;
@@ -30,12 +29,12 @@ class EnvironmentObject {
   double get left => _left;
 
   EnvironmentObject({
-    required this.x,
-    required this.y,
+    required double x,
+    required double y,
     required this.type,
     required this.radius,
     this.generated = false,
-  }) {
+  }) :super(x, y) {
     _width = environmentObjectWidth[type]!;
     height = environmentObjectHeight[type]!;
     final double widthHalf = _width * 0.5;

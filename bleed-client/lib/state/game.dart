@@ -201,3 +201,8 @@ class _LobbyPlayer {
 
   _LobbyPlayer(this.name, this.team);
 }
+
+mixin Position {
+  double x = 0;
+  double y = 0;
+}
