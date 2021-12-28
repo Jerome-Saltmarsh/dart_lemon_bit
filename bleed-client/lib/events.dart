@@ -135,6 +135,7 @@ class Events {
       removeGeneratedEnvironmentObjects();
       deregisterPlayKeyboardHandler();
       registerEditorKeyboardListener();
+      mouseEvents.onLeftClicked.value = editor.onMouseLeftClicked;
       game.totalZombies.value = 0;
       game.totalProjectiles = 0;
       game.totalNpcs = 0;
