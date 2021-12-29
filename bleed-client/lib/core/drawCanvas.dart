@@ -61,17 +61,9 @@ double y = 50;
 
 
 void renderCanvasSelectGame() {
-
   final double angle = angleBetween(x, y, mouseWorldX, mouseWorldY);
   Direction direction = convertAngleToDirection(angle);
   CharacterState state = CharacterState.Idle;
-  // if (distance > 100){
-  //   final double speed = 8;
-  //   x += adjacent(angle, speed);
-  //   y += opposite(angle, speed);
-  //   state = CharacterState.Running;
-  // }
-
   double yDiff = y - mouseWorldY;
   double speed = 5;
 
@@ -99,18 +91,21 @@ void renderCanvasSelectGame() {
 }
 
 void renderCanvasSelectRegion() {
+  final double x = screenToWorldX(screen.width * 0.5) - 32;
+  final double y = screenToWorldY(70);
+  final double angle = angleBetweenMouse(x, y);
+  final Direction direction = convertAngleToDirection(angle);
+
+  drawLine(x, y, mouseWorldX, mouseWorldY);
+
   drawArcher(
-      x: screenToWorldX(screen.width * 0.5) - 32,
-      y: screenToWorldY(70),
+      x: x,
+      y: y,
       state: CharacterState.Running,
-      direction: Direction.DownRight,
+      direction: direction,
       frame: animationFrame,
       scale: 1);
 }
-
-// void _redraw() {
-//   Future.delayed(_frameRate, redrawCanvas);
-// }
 
 void drawArcher({
   required double x,
@@ -133,4 +128,9 @@ void drawWitch({
 }) {
   drawAtlas(mapDst(x: x, y: y, scale: scale),
       mapSrcWitch(state: state, direction: direction, frame: frame));
+}
+
+
+double angleBetweenMouse(double x, double y){
+  return angleBetween(x, y, mouseWorldX, mouseWorldY);
 }

@@ -179,12 +179,13 @@ Widget center(Widget child) {
 
 Widget fullScreen({
   required Widget child,
-  Alignment alignment = Alignment.center
+  Alignment alignment = Alignment.center,
 }) {
   return Container(
       alignment: alignment,
       width: screen.width,
       height: screen.height,
+      // color: Colors.red,
       child: child);
 }
 

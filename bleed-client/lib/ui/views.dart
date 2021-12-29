@@ -20,7 +20,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import '../title.dart';
 import '../webSocket.dart';
 import '../styles.dart';
 
@@ -136,17 +135,16 @@ class _BuildView {
         padding: 8,
         topLeft: widgets.title,
         children: [
-      center(
-        SingleChildScrollView(
-          child: Column(crossAxisAlignment: axis.cross.center, children: [
-            height16,
-            Container(child: text("REGION", fontSize: 50, fontWeight: bold)),
-            height16,
-            ...selectableServerTypes.map(_buildSelectRegionButton)
-          ]),
-        ),
-      )
-    ]);
+          SingleChildScrollView(
+            child: Column(
+                mainAxisAlignment: axis.main.center,
+                crossAxisAlignment: axis.cross.center, children: [
+              height16,
+              Container(child: text("REGION", fontSize: 50, fontWeight: bold)),
+              height16,
+              ...selectableServerTypes.map(_buildSelectRegionButton)
+            ]),
+          )    ]);
   }
 
   Widget gameFinished() {
