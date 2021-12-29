@@ -22,7 +22,7 @@ class _Widgets {
   final Widget magicBar = build.magicBar();
   final Widget abilities = build.abilities();
   final Widget gamesList = build.gamesList();
-  final Widget title = border(child: text("GAMESTREAM.ONLINE", fontSize: 30, fontWeight: bold), borderWidth: 6);
+  final Widget title = border(child: text("GAMESTREAM.ONLINE", fontSize: 30, fontWeight: bold), borderWidth: 6, radius: BorderRadius.only(topLeft: radius4, bottomLeft: radius4));
 }
 
 class _Buttons {
@@ -42,9 +42,12 @@ class _Buttons {
   final Widget region = WatchBuilder(game.region, (Region region) {
     return button(text(enumString(region), fontSize: 20),
         logic.deselectRegion,
-        width: 170, hint: 'Region',
+        width: 185, hint: 'Region',
+        height: 63,
         fillColor: colours.orange,
-        borderWidth: 2
+        borderColor: colours.orange,
+        borderWidth: 6,
+        borderRadius: BorderRadius.only(topRight: radius4, bottomRight: radius4),
     );
   });
 }

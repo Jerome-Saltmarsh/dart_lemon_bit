@@ -43,12 +43,14 @@ Widget border({
   Alignment alignment = Alignment.center,
   Color fillColor = Colors.transparent,
   double? width,
+  double? height,
 }) {
   return Container(
     alignment: alignment,
     margin: margin,
     padding: padding,
     width: width,
+    height: height,
     decoration: BoxDecoration(
         border: Border.all(color: color, width: borderWidth),
         borderRadius: radius,
@@ -71,11 +73,14 @@ BoxDecoration boxDecoration({
 
 Widget button(dynamic value, GestureTapCallback onPressed, {
   double? width,
+  double? height,
   String? hint,
   double borderWidth = 1,
   EdgeInsets? margin,
+  BorderRadius borderRadius = borderRadius4,
   Color fillColorMouseOver = Colors.black26,
   Color fillColor = Colors.transparent,
+  Color borderColor = Colors.white,
   Alignment alignment = Alignment.center
 }) {
   final Widget _button = pressed(
@@ -83,10 +88,13 @@ Widget button(dynamic value, GestureTapCallback onPressed, {
       child: mouseOver(builder: (BuildContext context, bool mouseOver) {
         return border(
             margin: margin,
+            radius: borderRadius,
             borderWidth: borderWidth,
             child: value,
+            color: borderColor,
             fillColor: mouseOver ? fillColorMouseOver : fillColor,
             width: width,
+            height: height,
             alignment: alignment);
       }));
 
@@ -198,6 +206,7 @@ final Widget height16 = height(16);
 final Widget height20 = height(20);
 final Widget height32 = height(32);
 final Widget height50 = height(50);
+final Widget height64 = height(64);
 
 Widget width(double value) {
   return Container(width: value);

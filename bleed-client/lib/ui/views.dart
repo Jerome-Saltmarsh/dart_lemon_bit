@@ -243,13 +243,17 @@ class _BuildView {
   Widget selectGame() {
     return layout(
         padding: _style.viewPadding,
-        topLeft: buttons.region,
+        topLeft: Row(
+          children: [
+            widgets.title,
+            buttons.region,
+          ],
+        ),
         topRight: buttons.editor,
         children: [
           Column(
             children: [
-              widgets.title,
-              height8,
+              height64,
               widgets.gamesList,
           ],)
         ]
