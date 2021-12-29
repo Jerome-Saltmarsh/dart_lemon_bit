@@ -16,6 +16,7 @@ import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_math/pi2.dart';
@@ -76,12 +77,17 @@ class _BuildView {
             buildTopRight(),
             buildSkillTree(),
             buildNumberOfPlayersRequiredDialog(),
+            // bottomLeft(child: fps),
           ],
         );
       });
     });
   }
 }
+
+final Widget fps = WatchBuilder(ui.fps, (int fps){
+  return text("fps $fps");
+});
 
 
 class _State {

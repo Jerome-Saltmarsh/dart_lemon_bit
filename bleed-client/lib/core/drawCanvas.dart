@@ -24,7 +24,17 @@ import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/distance_between.dart';
 
+int frame = 0;
+int animationRate = 8;
+int animationFrame = 1;
+
+
 void drawCanvas(Canvas canvas, Size size) {
+  frame++;
+  if (frame % animationRate == 0){
+    animationFrame++;
+  }
+
   if (editMode) {
     renderCanvasEdit();
     return;
@@ -45,18 +55,15 @@ void drawCanvas(Canvas canvas, Size size) {
 }
 
 int direction = 0;
-final Duration _frameRate = Duration(milliseconds: 80);
 
 double x = 50;
 double y = 50;
-int frame = 0;
+
 
 void renderCanvasSelectGame() {
-  frame++;
+
   final double angle = angleBetween(x, y, mouseWorldX, mouseWorldY);
   Direction direction = convertAngleToDirection(angle);
-
-
   CharacterState state = CharacterState.Idle;
   // if (distance > 100){
   //   final double speed = 8;
@@ -82,22 +89,23 @@ void renderCanvasSelectGame() {
   }
 
   drawArcher(
-      x: x, y: y, state: state, direction: direction, frame: frame, scale: 1);
-  // _redraw();
+      x: x,
+      y: y,
+      state: state,
+      direction: direction,
+      frame: animationFrame,
+      scale: 1
+  );
 }
 
 void renderCanvasSelectRegion() {
-  frame++;
-  direction = (direction + 1) % directions.length;
-
   drawArcher(
       x: screenToWorldX(screen.width * 0.5) - 32,
-      y: screenToWorldY(50),
+      y: screenToWorldY(70),
       state: CharacterState.Running,
-      direction: directions[direction],
-      frame: frame,
+      direction: Direction.DownRight,
+      frame: animationFrame,
       scale: 1);
-  // _redraw();
 }
 
 // void _redraw() {
