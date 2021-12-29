@@ -16,7 +16,7 @@ Widget buildGameStream(){
     update: update,
     buildUI: buildView,
     drawCanvas: drawCanvas,
-    drawCanvasAfterUpdate: false,
+    drawCanvasAfterUpdate: true,
     backgroundColor: colours.white,
     buildLoadingScreen: buildLoadingScreen
   );

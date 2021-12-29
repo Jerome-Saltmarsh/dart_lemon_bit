@@ -17,8 +17,10 @@ import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/watches/mode.dart';
 import 'package:bleed_client/webSocket.dart';
 import 'package:flutter/material.dart';
+import 'package:lemon_engine/functions/screen_to_world.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
+import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/distance_between.dart';
 
@@ -54,9 +56,6 @@ void renderCanvasSelectGame() {
   final double angle = angleBetween(x, y, mouseWorldX, mouseWorldY);
   Direction direction = convertAngleToDirection(angle);
 
-  // direction = (direction + 1) % directions.length;
-  // drawArcher(x: x, y: y, state: CharacterState.Idle, direction: directions[direction], frame: 1, scale: 1);
-  final distance = distanceBetween(x, y, mouseWorldX, mouseWorldY);
 
   CharacterState state = CharacterState.Idle;
   // if (distance > 100){
@@ -84,25 +83,26 @@ void renderCanvasSelectGame() {
 
   drawArcher(
       x: x, y: y, state: state, direction: direction, frame: frame, scale: 1);
-  _redraw();
+  // _redraw();
 }
 
 void renderCanvasSelectRegion() {
   frame++;
   direction = (direction + 1) % directions.length;
-  drawWitch(
-      x: 50,
-      y: 100,
-      state: CharacterState.Idle,
+
+  drawArcher(
+      x: screenToWorldX(screen.width * 0.5) - 32,
+      y: screenToWorldY(50),
+      state: CharacterState.Running,
       direction: directions[direction],
-      frame: 1,
+      frame: frame,
       scale: 1);
-  _redraw();
+  // _redraw();
 }
 
-void _redraw() {
-  Future.delayed(_frameRate, redrawCanvas);
-}
+// void _redraw() {
+//   Future.delayed(_frameRate, redrawCanvas);
+// }
 
 void drawArcher({
   required double x,
@@ -112,8 +112,7 @@ void drawArcher({
   required int frame,
   double scale = 1,
 }) {
-  drawAtlas(mapDst(x: x, y: y, scale: scale),
-      mapSrcArcher(state: state, direction: direction, frame: frame));
+  drawAtlas(mapDst(x: x, y: y, scale: scale), mapSrcArcher(state: state, direction: direction, frame: frame));
 }
 
 void drawWitch({

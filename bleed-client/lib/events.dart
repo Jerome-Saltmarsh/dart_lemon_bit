@@ -80,6 +80,7 @@ class Events {
 
     switch(connection){
       case Connection.Connected:
+        ui.drawCanvasAfterUpdate = false;
         sendRequestJoinGame(game.type.value);
         mouseEvents.onLeftClicked.value = performPrimaryAction;
         mouseEvents.onPanStarted.value = performPrimaryAction;
@@ -92,6 +93,7 @@ class Events {
         mouseEvents.onLeftClicked.value = null;
         mouseEvents.onPanStarted.value = null;
         mouseEvents.onLongLeftClicked.value = null;
+        ui.drawCanvasAfterUpdate = true;
         break;
       default:
         break;
