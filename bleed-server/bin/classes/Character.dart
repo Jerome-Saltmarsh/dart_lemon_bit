@@ -44,7 +44,6 @@ class Character extends GameObject implements HasSquad {
   int team;
   List<Weapon> weapons = [];
   bool weaponsDirty = false;
-  bool equippedWeaponChanged = false;
 
   Vector2 abilityTarget = Vector2(0, 0);
 
@@ -75,6 +74,8 @@ class Character extends GameObject implements HasSquad {
   bool get striking => state == CharacterState.Striking;
 
   bool get busy => stateDuration > 0;
+
+  bool get deadOrBusy => dead || busy;
 
   Character({
     required this.type,

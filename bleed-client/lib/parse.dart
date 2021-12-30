@@ -129,6 +129,7 @@ void parseState() {
 
       case ServerResponse.Player_Weapon:
         player.weaponType.value = _consumeWeaponType();
+        player.weaponRounds.value = consumeInt();
         break;
 
       case ServerResponse.Weapons:
@@ -272,10 +273,6 @@ void parseState() {
       case ServerResponse.Collectables:
         if (game.id < 0) return;
         _parseCollectables();
-        break;
-
-      case ServerResponse.Player_Weapon_Rounds:
-        _parsePlayerWeaponRounds();
         break;
 
       case ServerResponse.Player_Events:
@@ -461,10 +458,6 @@ void _parseCollectables() {
   while (!_simiColonConsumed()) {
     game.collectables.add(consumeInt());
   }
-}
-
-void _parsePlayerWeaponRounds(){
-  player.weaponRounds.value = consumeInt();
 }
 
 void _parseGrenades() {

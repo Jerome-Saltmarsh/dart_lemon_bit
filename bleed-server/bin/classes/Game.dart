@@ -1791,13 +1791,11 @@ void playerInteract(Player player) {
 }
 
 void changeWeapon(Player player, int index) {
-  if (player.busy) return;
-  if (player.dead) return;
+  if (player.deadOrBusy) return;
   if (index < 0) return;
   if (index == player.equippedIndex) return;
   if (index >= player.weapons.length) return;
   player.equippedIndex = index;
-  player.equippedWeaponChanged = true;
   player.game.setCharacterState(player, CharacterState.ChangingWeapon);
 }
 

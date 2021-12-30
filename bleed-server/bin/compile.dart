@@ -217,11 +217,6 @@ void compilePlayer(StringBuffer buffer, Player player) {
     _compilePlayerAbilities(buffer, player);
   }
 
-  if (player.equippedWeaponChanged) {
-    player.equippedWeaponChanged = false;
-    compilePlayerWeapon(buffer, player);
-  }
-
   if (player.weaponsDirty) {
     player.weaponsDirty = false;
     compilePlayerWeapons(buffer, player);
@@ -232,7 +227,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
     // do nothing
   } else
   if (player.type == CharacterType.Human){
-    compilePlayerRoundsRemaining(buffer, player);
+    compilePlayerWeapon(buffer, player);
   } else {
     _compilePlayerAbility(buffer, player);
   }
@@ -254,14 +249,10 @@ void _compilePlayerAbility(StringBuffer buffer, Player player){
   }
 }
 
-void compilePlayerRoundsRemaining(StringBuffer buffer, Player player){
-  _write(buffer, ServerResponse.Player_Weapon_Rounds.index);
-  _write(buffer, player.weapon.rounds);
-}
-
 void compilePlayerWeapon(StringBuffer buffer, Player player){
   _write(buffer, ServerResponse.Player_Weapon.index);
   _write(buffer, player.weapon.type.index);
+  _write(buffer, player.weapon.rounds);
 }
 
 void _compilePlayerEvents(StringBuffer buffer, Player player) {
