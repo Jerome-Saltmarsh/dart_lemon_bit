@@ -28,12 +28,8 @@ import '../widgets.dart';
 import '../../styles.dart';
 import 'tips.dart';
 
-
-// properties
-bool get textFieldFocused => hud.focusNodes.textFieldMessage.hasPrimaryFocus;
-String get currentTip => tips[hud.state.tipIndex];
-
 final _Hud hud = _Hud();
+final _BuildHud buildHud = _BuildHud();
 
 class _Hud {
   final Bool skillTreeVisible = Bool(false);
@@ -41,48 +37,57 @@ class _Hud {
   final _FocusNodes focusNodes = _FocusNodes();
   final _TextEditingControllers textEditingControllers = _TextEditingControllers();
   final _Properties properties = _Properties();
-  bool get textBoxFocused => focusNodes.textFieldMessage.hasFocus;
-
-  final _BuildView buildView = _BuildView();
 }
 
-class _BuildView {
-  Widget standardMagic() {
+extension HudProperties on _Hud {
+  bool get textBoxFocused => focusNodes.textFieldMessage.hasFocus;
+  String get currentTip => tips[hud.state.tipIndex];
+  bool get textFieldFocused => hud.focusNodes.textFieldMessage.hasPrimaryFocus;
+}
+
+class _BuildHud {
+  Widget playerCharacterType() {
     return WatchBuilder(game.player.characterType, (CharacterType value) {
       if (value == CharacterType.None) {
         return buildDialog.selectCharacterType();
       }
-
       if (value == CharacterType.Human) {
-        return WatchBuilder(game.player.weaponType, (WeaponType weaponType){
-          return Stack(
-            children: [
-              topLeft(child: text(enumString(weaponType))),
-              topRight(child: buttons.exit),
-            ],
-          );
-        });
+        return _buildHudWeapons();
       }
-
-      return WatchBuilder(game.player.alive, (bool alive) {
-        return Stack(
-          children: [
-            buildTextBox(),
-            if (alive) buildBottomRight(),
-            buildTopLeft(),
-            if (alive) buildBottomCenter(),
-            if (!hud.state.observeMode && !alive) _buildViewRespawn(),
-            if (!alive && hud.state.observeMode) _buildRespawnLight(),
-            _buildServerText(),
-            buildTopRight(),
-            buildSkillTree(),
-            buildNumberOfPlayersRequiredDialog(),
-            // bottomLeft(child: fps),
-          ],
-        );
-      });
+      return _buildHudAbilities();
     });
   }
+}
+
+Widget _buildHudWeapons(){
+  return WatchBuilder(game.player.weaponType, (WeaponType weaponType){
+    return Stack(
+      children: [
+        topLeft(child: text(enumString(weaponType))),
+        topRight(child: buttons.exit),
+      ],
+    );
+  });
+}
+
+Widget _buildHudAbilities(){
+  return WatchBuilder(game.player.alive, (bool alive) {
+    return Stack(
+      children: [
+        buildTextBox(),
+        if (alive) buildBottomRight(),
+        buildTopLeft(),
+        if (alive) buildBottomCenter(),
+        if (!hud.state.observeMode && !alive) _buildViewRespawn(),
+        if (!alive && hud.state.observeMode) _buildRespawnLight(),
+        _buildServerText(),
+        buildTopRight(),
+        buildSkillTree(),
+        buildNumberOfPlayersRequiredDialog(),
+        // bottomLeft(child: fps),
+      ],
+    );
+  });
 }
 
 final Widget fps = WatchBuilder(ui.fps, (int fps){
@@ -269,7 +274,7 @@ Widget _buildViewRespawn() {
                             Container(
                                 width: 350,
                                 alignment: Alignment.center,
-                                child: text(currentTip)),
+                                child: text(hud.currentTip)),
                             width16,
                           ],
                         ),

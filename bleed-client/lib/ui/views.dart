@@ -112,11 +112,11 @@ class _BuildView {
           case GameStatus.In_Progress:
             switch (game.type.value) {
               case GameType.MMO:
-                return hud.buildView.standardMagic();
+                return buildHud.playerCharacterType();
               case GameType.Moba:
-                return hud.buildView.standardMagic();
+                return buildHud.playerCharacterType();
               case GameType.BATTLE_ROYAL:
-                return hud.buildView.standardMagic();
+                return buildHud.playerCharacterType();
               case GameType.CUBE3D:
                 return buildUI3DCube();
               default:
