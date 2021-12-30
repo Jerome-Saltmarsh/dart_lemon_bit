@@ -99,11 +99,11 @@ void parseState() {
         break;
 
       case ServerResponse.Player_Attack_Target:
-        game.player.attackTarget.x = consumeDouble();
-        game.player.attackTarget.y = consumeDouble();
+        player.attackTarget.x = consumeDouble();
+        player.attackTarget.y = consumeDouble();
 
-        if (game.player.attackTarget.x != 0 &&
-            game.player.attackTarget.y != 0) {
+        if (player.attackTarget.x != 0 &&
+            player.attackTarget.y != 0) {
           cursorType.value = CursorType.Click;
         } else {
           cursorType.value = CursorType.Basic;
@@ -111,10 +111,10 @@ void parseState() {
         break;
 
       case ServerResponse.Player_Abilities:
-        _consumeAbility(game.player.ability1);
-        _consumeAbility(game.player.ability2);
-        _consumeAbility(game.player.ability3);
-        _consumeAbility(game.player.ability4);
+        _consumeAbility(player.ability1);
+        _consumeAbility(player.ability2);
+        _consumeAbility(player.ability3);
+        _consumeAbility(player.ability4);
         break;
 
       case ServerResponse.Team_Lives_Remaining:
@@ -128,14 +128,14 @@ void parseState() {
         break;
 
       case ServerResponse.Player_Weapon:
-        game.player.weaponType.value = _consumeWeaponType();
+        player.weaponType.value = _consumeWeaponType();
         break;
 
       case ServerResponse.Weapons:
-        game.player.weapons.clear();
+        player.weapons.clear();
         int length = _consumeIntUnsafe();
         for (int i = 0; i < length; i++) {
-          game.player.weapons.add(_consumeWeapon());
+          player.weapons.add(_consumeWeapon());
         }
         break;
 
@@ -187,8 +187,8 @@ void parseState() {
         print("ServerResponse.Scene_Changed");
         double x = consumeDouble();
         double y = consumeDouble();
-        game.player.x = x;
-        game.player.y = y;
+        player.x = x;
+        player.y = y;
         cameraCenter(x, y);
 
         Future.delayed(Duration(milliseconds: 150), () {
@@ -218,7 +218,7 @@ void parseState() {
           message += _consumeString();
           message += " ";
         }
-        game.player.message.value = message.trim();
+        player.message.value = message.trim();
         break;
 
       case ServerResponse.Crates:
@@ -252,7 +252,7 @@ void parseState() {
         break;
 
       case ServerResponse.Cube_Joined:
-        game.player.uuid.value = _consumeString();
+        player.uuid.value = _consumeString();
         break;
 
       case ServerResponse.Cube_Players:
@@ -398,30 +398,30 @@ void _parseTiles() {
 }
 
 void _parsePlayer() {
-  game.player.x = consumeDouble();
-  game.player.y = consumeDouble();
-  game.player.health.value = consumeDouble();
-  game.player.maxHealth = consumeDouble();
-  game.player.state.value = _consumeCharacterState();
-  game.player.tile = _consumeTile();
-  game.player.experience.value = consumeInt();
-  game.player.level.value = consumeInt();
-  game.player.skillPoints.value = consumeInt();
-  game.player.nextLevelExperience.value = consumeInt();
-  game.player.experiencePercentage.value = _consumePercentage();
-  game.player.characterType.value = _consumeCharacterType();
-  game.player.abilityTarget.x = consumeDouble();
-  game.player.abilityTarget.y = consumeDouble();
-  game.player.magic.value = consumeDouble();
-  game.player.maxMagic.value = consumeDouble();
-  game.player.attackRange = consumeDouble();
-  game.player.team = consumeInt();
+  player.x = consumeDouble();
+  player.y = consumeDouble();
+  player.health.value = consumeDouble();
+  player.maxHealth = consumeDouble();
+  player.state.value = _consumeCharacterState();
+  player.tile = _consumeTile();
+  player.experience.value = consumeInt();
+  player.level.value = consumeInt();
+  player.skillPoints.value = consumeInt();
+  player.nextLevelExperience.value = consumeInt();
+  player.experiencePercentage.value = _consumePercentage();
+  player.characterType.value = _consumeCharacterType();
+  player.abilityTarget.x = consumeDouble();
+  player.abilityTarget.y = consumeDouble();
+  player.magic.value = consumeDouble();
+  player.maxMagic.value = consumeDouble();
+  player.attackRange = consumeDouble();
+  player.team = consumeInt();
 }
 
 void _parsePlayerAbility(){
-  game.player.abilityRange = consumeDouble();
-  game.player.abilityRadius = consumeDouble();
-  game.player.ability.value = _consumeAbilityType();
+  player.ability.value = _consumeAbilityType();
+  player.abilityRange = consumeDouble();
+  player.abilityRadius = consumeDouble();
 }
 
 AbilityType _consumeAbilityType() {
@@ -438,14 +438,14 @@ void _parsePlayerEvents() {
     PlayerEvent event = _consumePlayerEventType();
     switch (event) {
       case PlayerEvent.Level_Up:
-        emitPixelExplosion(game.player.x, game.player.y, amount: 10);
-        playAudioBuff1(game.player.x, game.player.y);
+        emitPixelExplosion(player.x, player.y, amount: 10);
+        playAudioBuff1(player.x, player.y);
         break;
       case PlayerEvent.Skill_Upgraded:
-        playAudio.unlock(game.player.x, game.player.y);
+        playAudio.unlock(player.x, player.y);
         break;
       case PlayerEvent.Dash_Activated:
-        playAudio.buff11(game.player.x, game.player.y);
+        playAudio.buff11(player.x, player.y);
         break;
     }
   }
@@ -464,7 +464,7 @@ void _parseCollectables() {
 }
 
 void _parsePlayerWeaponRounds(){
-  game.player.weaponRounds.value = consumeInt();
+  player.weaponRounds.value = consumeInt();
 }
 
 void _parseGrenades() {
@@ -475,13 +475,13 @@ void _parseGrenades() {
 }
 
 void _parseGameJoined() {
-  game.player.id = consumeInt();
-  game.player.uuid.value = _consumeString();
-  game.player.x = consumeDouble();
-  game.player.y = consumeDouble();
+  player.id = consumeInt();
+  player.uuid.value = _consumeString();
+  player.x = consumeDouble();
+  player.y = consumeDouble();
   game.id = consumeInt();
-  game.player.squad = consumeInt();
-  print(      "ServerResponse.Game_Joined: playerId: ${game.player.id} gameId: ${game.id}");
+  player.squad = consumeInt();
+  print(      "ServerResponse.Game_Joined: playerId: ${player.id} gameId: ${game.id}");
 }
 
 ObjectType _consumeEnvironmentObjectType() {

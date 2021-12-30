@@ -244,13 +244,13 @@ void _compilePlayerAbility(StringBuffer buffer, Player player){
   _write(buffer, ServerResponse.Player_Ability.index);
   final Ability? ability = player.ability;
   if (ability != null) {
+    _write(buffer, ability.type.index);
     _write(buffer, ability.range);
     _write(buffer, ability.radius);
-    _write(buffer, ability.type.index);
   } else {
-    _write(buffer, 0);
-    _write(buffer, 0);
     _write(buffer, AbilityType.None.index);
+    _write(buffer, 0);
+    _write(buffer, 0);
   }
 }
 

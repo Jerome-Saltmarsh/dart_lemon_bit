@@ -24,6 +24,8 @@ import 'package:lemon_watch/watch.dart';
 
 final _Game game = _Game();
 
+_Player get player => game.player;
+
 class _Game {
   final Watch<Mode> mode = Watch(Mode.Play);
   final Watch<Region> region = Watch(Region.None);
