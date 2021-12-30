@@ -196,17 +196,6 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _writeInt(buffer, player.abilityTarget.x);
   _writeInt(buffer, player.abilityTarget.y);
 
-  Ability? ability = player.ability;
-  if (ability != null) {
-    _write(buffer, ability.range);
-    _write(buffer, ability.radius);
-    _write(buffer, ability.type.index);
-  } else {
-    _write(buffer, 0);
-    _write(buffer, 0);
-    _write(buffer, AbilityType.None.index);
-  }
-
   _write(buffer, player.magic);
   _write(buffer, player.maxMagic);
   _writeInt(buffer, player.attackRange);
@@ -238,11 +227,31 @@ void compilePlayer(StringBuffer buffer, Player player) {
     compilePlayerWeapons(buffer, player);
   }
 
+
+  if (player.type == CharacterType.None) {
+    // do nothing
+  } else
   if (player.type == CharacterType.Human){
     compilePlayerRoundsRemaining(buffer, player);
+  } else {
+    _compilePlayerAbility(buffer, player);
   }
 
   _compilePlayerEvents(buffer, player);
+}
+
+void _compilePlayerAbility(StringBuffer buffer, Player player){
+  _write(buffer, ServerResponse.Player_Ability.index);
+  final Ability? ability = player.ability;
+  if (ability != null) {
+    _write(buffer, ability.range);
+    _write(buffer, ability.radius);
+    _write(buffer, ability.type.index);
+  } else {
+    _write(buffer, 0);
+    _write(buffer, 0);
+    _write(buffer, AbilityType.None.index);
+  }
 }
 
 void compilePlayerRoundsRemaining(StringBuffer buffer, Player player){

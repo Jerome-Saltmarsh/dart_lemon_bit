@@ -282,6 +282,10 @@ void parseState() {
         _parsePlayerEvents();
         return;
 
+      case ServerResponse.Player_Ability:
+        _parsePlayerAbility();
+        break;
+
       case ServerResponse.Player:
         _parsePlayer();
         break;
@@ -408,13 +412,16 @@ void _parsePlayer() {
   game.player.characterType.value = _consumeCharacterType();
   game.player.abilityTarget.x = consumeDouble();
   game.player.abilityTarget.y = consumeDouble();
-  game.player.abilityRange = consumeDouble();
-  game.player.abilityRadius = consumeDouble();
-  game.player.ability.value = _consumeAbilityType();
   game.player.magic.value = consumeDouble();
   game.player.maxMagic.value = consumeDouble();
   game.player.attackRange = consumeDouble();
   game.player.team = consumeInt();
+}
+
+void _parsePlayerAbility(){
+  game.player.abilityRange = consumeDouble();
+  game.player.abilityRadius = consumeDouble();
+  game.player.ability.value = _consumeAbilityType();
 }
 
 AbilityType _consumeAbilityType() {
