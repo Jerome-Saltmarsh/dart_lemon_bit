@@ -1,4 +1,4 @@
-import 'package:bleed_client/ui/compose/widgets.dart';
+import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/styles.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

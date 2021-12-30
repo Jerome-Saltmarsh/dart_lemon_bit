@@ -51,7 +51,7 @@ void compileGame(Game game) {
   _compileGameEvents(buffer, game.gameEvents);
 
   _write(buffer, ServerResponse.Game_Time.index);
-  _write(buffer, time);
+  _write(buffer, game.getTime());
 
   if (game.compilePaths) {
     _compilePaths(buffer, game.zombies);
@@ -60,9 +60,6 @@ void compileGame(Game game) {
 
   _write(buffer, ServerResponse.Scene_Shade_Max.index);
   _write(buffer, game.shadeMax.index);
-
-  // _write(buffer, ServerResponse.Game_Type.index);
-  // _write(buffer, game.gameType.index);
 
   compileGameStatus(buffer, game.status);
 

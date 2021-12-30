@@ -1,11 +1,19 @@
+import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/send.dart';
+import 'package:bleed_client/server/server.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/build.dart';
-import 'package:bleed_client/ui/compose/widgets.dart';
+import 'package:bleed_client/flutterkit.dart';
+import 'package:bleed_client/ui/state/decorationImages.dart';
+import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:lemon_engine/functions/fullscreen_enter.dart';
+import 'package:lemon_engine/functions/fullscreen_exit.dart';
+import 'package:lemon_engine/properties/fullscreen_active.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../logic.dart';
@@ -15,6 +23,43 @@ import 'compose/hudUI.dart';
 
 final _Widgets widgets = _Widgets();
 final _Buttons buttons = _Buttons();
+
+final _BuildDialog buildDialog = _BuildDialog();
+
+class _BuildDialog {
+  Widget selectCharacterType() {
+    final fontSize = 20;
+    return dialog(
+        color: Colors.white24,
+        child: Column(
+          children: [
+            height16,
+            text("Hero", fontSize: 30),
+            height16,
+            ...playableCharacterTypes.map((characterType) {
+              return mouseOver(
+                builder: (BuildContext context, bool mouseOver) {
+                  return onPressed(
+                    callback: () {
+                      server.send.selectCharacterType(characterType);
+                    },
+                    child: border(
+                      margin: EdgeInsets.only(bottom: 16),
+                      fillColor: mouseOver ? Colors.black87 : Colors.black26,
+                      child: Container(
+                        width: 200,
+                        child: text(characterTypeToString(characterType),
+                            fontSize: fontSize),
+                      ),
+                    ),
+                  );
+                },
+              );
+            }).toList(),
+          ],
+        ));
+  }
+}
 
 class _Widgets {
   final Widget experienceBar = build.experienceBar();
@@ -50,4 +95,27 @@ class _Buttons {
         borderRadius: BorderRadius.only(topRight: radius4, bottomRight: radius4),
     );
   });
+}
+
+Widget buildToggleFullscreen() {
+  return onPressed(
+    callback: () {
+      if (fullScreenActive) {
+        fullScreenExit();
+      } else {
+        fullScreenEnter();
+      }
+    },
+    hint: "F11",
+    child: border(
+      child: Row(
+        children: [
+          text(fullScreenActive ? "Exit Fullscreen" : "Fullscreen"),
+          width4,
+          buildDecorationImage(
+              image: icons.fullscreen, width: 20, height: 20, borderWidth: 0),
+        ],
+      ),
+    ),
+  );
 }

@@ -8,6 +8,8 @@ import '../common/WeaponType.dart';
 import '../enums/npc_mode.dart';
 import '../instances/scenes.dart';
 import '../state.dart';
+import '../values/world.dart';
+import 'world.dart';
 
 class Town extends Game {
   late InteractableNpc npcDavis;
@@ -118,5 +120,10 @@ class Town extends Game {
   @override
   void onKilledBy(Character target, Character by) {
     // TODO: implement onKilledBy
+  }
+
+  @override
+  int getTime() {
+    return worldTime;
   }
 }

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import 'widgets.dart';
+import '../../flutterkit.dart';
 
 Widget buildTextBox() {
   return WatchBuilder(hud.state.textBoxVisible, (bool value){

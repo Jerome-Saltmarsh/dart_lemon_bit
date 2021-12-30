@@ -13,11 +13,12 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
-import 'package:bleed_client/ui/compose/widgets.dart';
+import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../webSocket.dart';
@@ -135,20 +136,27 @@ class _BuildView {
         padding: 8,
         topLeft: widgets.title,
         children: [
-          SingleChildScrollView(
-            child: Column(
-                mainAxisAlignment: axis.main.center,
-                crossAxisAlignment: axis.cross.center, children: [
-              height16,
-              Container(child: text("REGION", fontSize: 50, fontWeight: bold)),
-              height16,
-              ...selectableServerTypes.map(_buildSelectRegionButton)
-            ]),
+          Container(
+            margin: EdgeInsets.only(top: 140),
+            child: SingleChildScrollView(
+              child: Column(
+                  mainAxisAlignment: axis.main.center,
+                  crossAxisAlignment: axis.cross.center, children: [
+                Container(child: text("REGION", fontSize: 50, fontWeight: bold)),
+                height16,
+                ...selectableServerTypes.map(_buildSelectRegionButton)
+              ]),
+            ),
           )    ]);
   }
 
   Widget gameFinished() {
-    return dialog(child: text("Game Finished"));
+    return dialog(
+        child: layout(
+          topLeft: text("Game Finished"),
+          topRight: text("Exit"),
+        )
+    );
   }
 
   final Widget _waiting = text("Waiting", color: Colors.white54);
@@ -173,7 +181,7 @@ class _BuildView {
                 ],
               ),
               height16,
-              text("Welcome, the game will automatically start once all players have joined."),
+              border(child: text("The game will start automatically once all players have joined")),
               height16,
               WatchBuilder(game.lobby.playerCount, (int value) {
 

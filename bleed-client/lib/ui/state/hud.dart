@@ -11,7 +11,7 @@ import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/buildSkillTree.dart';
 import 'package:bleed_client/ui/compose/buildTextBox.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
-import 'package:bleed_client/ui/compose/widgets.dart';
+import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +50,7 @@ class _BuildView {
   Widget standardMagic() {
     return WatchBuilder(game.player.characterType, (CharacterType value) {
       if (value == CharacterType.None) {
-        return buildDialogSelectCharacterType();
+        return buildDialog.selectCharacterType();
       }
 
       if (value == CharacterType.Human) {

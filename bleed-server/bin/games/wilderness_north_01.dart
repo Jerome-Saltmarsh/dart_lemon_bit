@@ -2,18 +2,20 @@
 import '../classes/Character.dart';
 import '../classes/Game.dart';
 import '../instances/scenes.dart';
+import '../values/world.dart';
+import 'world.dart';
 
 class WildernessNorth01 extends Game {
 
   WildernessNorth01() : super(scenes.wildernessNorth01);
 
   @override
-  void onKilledBy(Character target, Character by) {
-    // TODO: implement onKilledBy
+  void update() {
+    // TODO: implement update
   }
 
   @override
-  void update() {
-    // TODO: implement update
+  int getTime() {
+    return worldTime;
   }
 }

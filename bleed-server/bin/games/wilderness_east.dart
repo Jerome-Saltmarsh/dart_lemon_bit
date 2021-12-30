@@ -2,6 +2,8 @@
 import '../classes/Character.dart';
 import '../classes/Game.dart';
 import '../instances/scenes.dart';
+import '../values/world.dart';
+import 'world.dart';
 
 class WildernessEast extends Game {
   WildernessEast() : super(scenes.wildernessEast);
@@ -14,5 +16,10 @@ class WildernessEast extends Game {
   @override
   void update() {
     // TODO: implement update
+  }
+
+  @override
+  int getTime() {
+    return worldTime;
   }
 }

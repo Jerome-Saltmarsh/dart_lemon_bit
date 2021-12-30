@@ -7,8 +7,12 @@ import '../common/GameType.dart';
 import '../common/WeaponType.dart';
 import '../common/classes/Vector2.dart';
 import '../instances/scenes.dart';
+import '../utils/game_utils.dart';
 
 class Royal extends Game {
+
+  final List<Player> score = [];
+
   Royal() : super(scenes.royal, gameType: GameType.BATTLE_ROYAL) {
     status = GameStatus.Awaiting_Players;
     teamSize = 1;
@@ -41,8 +45,14 @@ class Royal extends Game {
 
   @override
   void onPlayerDeath(Player player) {
+    score.add(player);
     if (numberOfAlivePlayers == 1) {
       status = GameStatus.Finished;
     }
+  }
+
+  @override
+  int getTime() {
+    return calculateTime(hour: 9);
   }
 }

@@ -10,6 +10,7 @@ import '../common/GameType.dart';
 import '../common/classes/Vector2.dart';
 import '../instances/scenes.dart';
 import '../language.dart';
+import '../utils/game_utils.dart';
 
 typedef Players = List<Player>;
 
@@ -132,6 +133,14 @@ class Moba extends Game {
     return player;
   }
 
+  @override
+  int getTime() {
+    return calculateTime(hour: 6);
+  }
 }
+
+
+
+
 
 

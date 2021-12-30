@@ -137,8 +137,10 @@
 [ ] Defense Tower
 [ ] Fix bug starting new game should reset light maps
 [ ] Fix Game Time
-[TODAY'S GOAL]
-[ ] Battle Royale Mode
+[ROYAL]
+[ ] Design Map  
+[ ] Score  
+[ ] Weapon UI
 [BUGS]
 [ ] Objects culled at bottom of screen
 [COMPLETED]

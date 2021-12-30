@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/classes/Weapon.dart';
@@ -6,28 +5,20 @@ import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
-import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/cube/camera3d.dart';
 import 'package:bleed_client/debug.dart';
 import 'package:bleed_client/input.dart';
-import 'package:bleed_client/logic.dart';
 import 'package:bleed_client/mappers/mapWeaponToDecorationImage.dart';
 import 'package:bleed_client/send.dart';
-import 'package:bleed_client/server/server.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/ui/compose/buildSkillTree.dart';
-import 'package:bleed_client/ui/compose/widgets.dart';
-import 'package:bleed_client/ui/logic/hudLogic.dart';
-import 'package:bleed_client/ui/state/decorationImages.dart';
 import 'package:bleed_client/styles.dart';
+import 'package:bleed_client/flutterkit.dart';
+import 'package:bleed_client/ui/state/decorationImages.dart';
 import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/ui/state/styleguide.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:flutter/material.dart';
-import 'package:lemon_engine/functions/fullscreen_enter.dart';
-import 'package:lemon_engine/functions/fullscreen_exit.dart';
-import 'package:lemon_engine/properties/fullscreen_active.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/state/build_context.dart';
 import 'package:lemon_engine/state/camera.dart';
@@ -36,7 +27,6 @@ import 'package:lemon_engine/state/zoom.dart';
 import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import '../../toString.dart';
 import '../widgets.dart';
 
 const double _padding = 8;
@@ -143,92 +133,6 @@ String padZero(num value) {
   String t = value.toInt().toString();
   if (t.length >= 2) return t;
   return '0$t';
-}
-
-Widget dialog({
-  required Widget child,
-  double padding = 8,
-  double width = 400,
-  double height = 600,
-  Color color = Colors.white24,
-  Color borderColor = Colors.white,
-  double borderWidth = 2,
-  BorderRadius borderRadius = borderRadius4,
-  Alignment alignment = Alignment.center,
-  EdgeInsets margin = EdgeInsets.zero,
-}) {
-  return Container(
-    width: screen.width,
-    height: screen.height,
-    alignment: alignment,
-    child: Container(
-      margin: margin,
-      decoration: BoxDecoration(
-          border: Border.all(color: borderColor, width: borderWidth),
-          borderRadius: borderRadius,
-          color: color),
-      padding: EdgeInsets.all(padding),
-      width: width,
-      height: height,
-      child: child,
-    ),
-  );
-}
-
-Widget buildToggleFullscreen() {
-  return onPressed(
-    callback: () {
-      if (fullScreenActive) {
-        fullScreenExit();
-      } else {
-        fullScreenEnter();
-      }
-    },
-    hint: "F11",
-    child: border(
-      child: Row(
-        children: [
-          text(fullScreenActive ? "Exit Fullscreen" : "Fullscreen"),
-          width4,
-          buildDecorationImage(
-              image: icons.fullscreen, width: 20, height: 20, borderWidth: 0),
-        ],
-      ),
-    ),
-  );
-}
-
-Widget buildDialogSelectCharacterType() {
-  final fontSize = 20;
-  return dialog(
-      color: Colors.white24,
-      child: Column(
-        children: [
-          height16,
-          text("Hero", fontSize: 30),
-          height16,
-          ...playableCharacterTypes.map((characterType) {
-            return mouseOver(
-              builder: (BuildContext context, bool mouseOver) {
-                return onPressed(
-                  callback: () {
-                    server.send.selectCharacterType(characterType);
-                  },
-                  child: border(
-                    margin: EdgeInsets.only(bottom: 16),
-                    fillColor: mouseOver ? Colors.black87 : Colors.black26,
-                    child: Container(
-                      width: 200,
-                      child: text(characterTypeToString(characterType),
-                          fontSize: fontSize),
-                    ),
-                  ),
-                );
-              },
-            );
-          }).toList(),
-        ],
-      ));
 }
 
 Widget buildBottomCenter() {

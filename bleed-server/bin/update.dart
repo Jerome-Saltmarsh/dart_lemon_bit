@@ -10,6 +10,7 @@ import 'global.dart';
 import 'language.dart';
 import 'maths.dart';
 import 'state.dart';
+import 'values/world.dart';
 
 const _minusOne = -1;
 const _one = 1;
@@ -38,7 +39,7 @@ void updateNpcTargets(Timer timer) {
 }
 
 void updateOpenWorldTime() {
-  time = (time + secondsPerFrame) % secondsPerDay;
+  worldTime = (worldTime + secondsPerFrame) % secondsPerDay;
 }
 
 void removeDisconnectedPlayers(Timer timer) {

@@ -93,10 +93,12 @@ void renderCanvasSelectGame() {
 void renderCanvasSelectRegion() {
   final double x = screenToWorldX(screen.width * 0.5) - 32;
   final double y = screenToWorldY(70);
-  final double angle = angleBetweenMouse(x, y);
+  final double x2 = x + 32;
+  final double y2 = y + 32;
+  final double angle = angleBetweenMouse(x2, y2);
   final Direction direction = convertAngleToDirection(angle);
 
-  drawLine(x, y, mouseWorldX, mouseWorldY);
+  // drawLine(x2, y, mouseWorldX, mouseWorldY);
 
   drawArcher(
       x: x,

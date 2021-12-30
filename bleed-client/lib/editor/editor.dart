@@ -18,7 +18,7 @@ import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
-import 'package:bleed_client/ui/compose/widgets.dart';
+import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/styles.dart';
 import 'package:bleed_client/update.dart';
 import 'package:bleed_client/utils.dart';

@@ -15,12 +15,15 @@ Widget text(dynamic value, {
     FontWeight fontWeight = normal,
     Color color = white
 }) {
-  Widget _text = Text(value.toString(),
+  Widget _text = Text(
+      value.toString(),
       style: TextStyle(
           color: color,
           fontSize: fontSize,
           decoration: decoration,
-          fontWeight: fontWeight));
+          fontWeight: fontWeight
+      )
+  );
 
   if (onPressed == null) return _text;
 
@@ -104,22 +107,27 @@ Widget button(dynamic value, GestureTapCallback onPressed, {
   return _button;
 }
 
-Widget pressed(
-    {required Widget child,
-    required GestureTapCallback? callback,
-    dynamic hint}) {
+Widget pressed({
+  required Widget child,
+  required GestureTapCallback? callback,
+  dynamic hint
+}) {
   return onPressed(child: child, callback: callback, hint: hint);
 }
 
-Widget onPressed(
-    {required Widget child,
+Widget onPressed({
+    required Widget child,
     required GestureTapCallback? callback,
-    dynamic hint}) {
+    dynamic hint
+}) {
   Widget widget = MouseRegion(
       cursor: callback != null
           ? SystemMouseCursors.click
           : SystemMouseCursors.forbidden,
-      child: GestureDetector(child: child, onTap: callback));
+      child: GestureDetector(
+          child: child,
+          onTap: callback
+      ));
 
   if (hint == null) return widget;
 
@@ -263,3 +271,35 @@ Widget bottomLeft({required Widget child, double padding = 0}) {
     child: child,
   );
 }
+
+Widget dialog({
+  required Widget child,
+  double padding = 8,
+  double width = 400,
+  double height = 600,
+  Color color = Colors.white24,
+  Color borderColor = Colors.white,
+  double borderWidth = 2,
+  BorderRadius borderRadius = borderRadius4,
+  Alignment alignment = Alignment.center,
+  EdgeInsets margin = EdgeInsets.zero,
+}) {
+  return Container(
+    width: screen.width,
+    height: screen.height,
+    alignment: alignment,
+    child: Container(
+      margin: margin,
+      decoration: BoxDecoration(
+          border: Border.all(color: borderColor, width: borderWidth),
+          borderRadius: borderRadius,
+          color: color),
+      padding: EdgeInsets.all(padding),
+      width: width,
+      height: height,
+      child: child,
+    ),
+  );
+}
+
+

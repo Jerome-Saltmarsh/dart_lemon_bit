@@ -119,6 +119,8 @@ abstract class Game {
 
   bool get finished => status == GameStatus.Finished;
 
+  int getTime();
+
   void onGameStarted() {}
 
   void onPlayerDeath(Player player) {

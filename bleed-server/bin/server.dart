@@ -739,11 +739,11 @@ void main() {
           break;
 
         case ClientRequest.SkipHour:
-          time = (time + secondsPerHour) % secondsPerDay;
+          worldTime = (worldTime + secondsPerHour) % secondsPerDay;
           break;
 
         case ClientRequest.ReverseHour:
-          time = (time - secondsPerHour) % secondsPerDay;
+          worldTime = (worldTime - secondsPerHour) % secondsPerDay;
           break;
 
         case ClientRequest.Speak:

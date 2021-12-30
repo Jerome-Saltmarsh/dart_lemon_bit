@@ -8,14 +8,14 @@ import 'tavern.dart';
 import 'town.dart';
 import 'wilderness_north_01.dart';
 
-// TODO remove global value
-int time = 0;
 
 Map<String, Player> playerMap = {};
 
 void registerPlayer(Player player){
   playerMap[player.uuid] = player;
 }
+
+int worldTime = 0;
 
 class World {
   late Game town;

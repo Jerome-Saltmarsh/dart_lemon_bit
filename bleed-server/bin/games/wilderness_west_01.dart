@@ -8,6 +8,8 @@ import '../common/Quests.dart';
 import '../common/WeaponType.dart';
 import '../instances/scenes.dart';
 import '../state.dart';
+import '../values/world.dart';
+import 'world.dart';
 
 const int _framesPerZombieSpawn = 10;
 const int _maxZombies = 20;
@@ -42,5 +44,10 @@ class WildernessWest01 extends Game {
     if (player.questMain.index <= MainQuest.Kill_Zombie_Boss.index){
       player.questMain = MainQuest.Kill_Zombie_Boss_Talk_To_Smith;
     }
+  }
+
+  @override
+  int getTime() {
+    return worldTime;
   }
 }
