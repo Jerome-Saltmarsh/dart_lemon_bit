@@ -1,11 +1,11 @@
 {
-    "name": "spaceblast",
-    "short_name": "spaceblast",
+    "name": "gamestream",
+    "short_name": "gamestream",
     "start_url": ".",
     "display": "minimal-ui",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A gravity simulation made using Flutter",
+    "description": "An online gaming platform",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
