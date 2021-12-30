@@ -9,10 +9,9 @@ void connectToWebSocketServer(Region server, GameType gameType) {
     _connectLocalHost();
     return;
   }
-
-  String httpsConnectionString = getHttpsConnectionString(server, gameType);
-  String wsConnectionString = parseHttpToWebSocket(httpsConnectionString);
-  _connectToServer('ws://localhost:$wsConnectionString');
+  final String httpsConnectionString = getHttpsConnectionString(server, gameType);
+  final String wsConnectionString = parseHttpToWebSocket(httpsConnectionString);
+  _connectToServer(wsConnectionString);
 }
 
 void _connectLocalHost({int port = 8080}) {
@@ -30,15 +29,16 @@ final List<Region> selectableServerTypes =
       && (debug || type != Region.LocalHost)
     ).toList();
 
-final String sydneyMoba = "https://sydney-2-osbmaezptq-ts.a.run.app";
-final String sydneyMMO = "https://sydney-2-osbmaezptq-ts.a.run.app";
-final String _default = "https://sydney-2-osbmaezptq-ts.a.run.app";
+const String _default = "https://gamestream-sydney-1-osbmaezptq-ts.a.run.app";
+const String sydneyMoba = "https://gamestream-sydney-1-osbmaezptq-ts.a.run.app";
+const String sydneyMMO = "https://gamestream-sydney-1-osbmaezptq-ts.a.run.app";
 
 String parseHttpToWebSocket(String url) {
   return url.replaceAll("https", "wss") + "/:8080";
 }
 
 String getHttpsConnectionString(Region server, GameType gameType) {
+  print("etHttpsConnectionString(server: $server)");
   switch (server) {
     case Region.Australia:
       switch (gameType) {

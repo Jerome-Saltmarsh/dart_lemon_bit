@@ -393,7 +393,7 @@ void main() {
           break;
 
         case ClientRequest.Ping:
-          sendToClient('${ServerResponse.Pong.index} ;');
+          sendToClient(ServerResponse.Pong.index.toString());
           break;
 
         case ClientRequest.Revive:
