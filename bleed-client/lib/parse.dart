@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/classes/Ability.dart';
@@ -27,8 +26,6 @@ import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/emit/emitMyst.dart';
 import 'package:bleed_client/functions/emitSmoke.dart';
-import 'package:bleed_client/getters/getTileAt.dart';
-import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:bleed_client/parser/parseCubePlayers.dart';
 import 'package:bleed_client/render/functions/applyEnvironmentObjectsToBakeMapping.dart';
 import 'package:bleed_client/render/functions/setBakeMapToAmbientLight.dart';
@@ -47,9 +44,9 @@ import 'common/WeaponType.dart';
 import 'common/classes/Vector2.dart';
 import 'common/enums/ObjectType.dart';
 import 'functions/onGameEvent.dart';
-import 'webSocket.dart';
 import 'render/functions/mapTilesToSrcAndDst.dart';
 import 'state.dart';
+import 'webSocket.dart';
 
 // state
 int _index = 0;
@@ -277,6 +274,10 @@ void parseState() {
         _parseCollectables();
         break;
 
+      case ServerResponse.Player_Weapon_Rounds:
+        _parsePlayerWeaponRounds();
+        break;
+
       case ServerResponse.Player_Events:
         _parsePlayerEvents();
         return;
@@ -453,6 +454,10 @@ void _parseCollectables() {
   while (!_simiColonConsumed()) {
     game.collectables.add(consumeInt());
   }
+}
+
+void _parsePlayerWeaponRounds(){
+  game.player.weaponRounds.value = consumeInt();
 }
 
 void _parseGrenades() {

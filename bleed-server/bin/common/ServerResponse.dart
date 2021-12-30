@@ -29,6 +29,7 @@ enum ServerResponse {
   Player_Abilities,
   Player_Attack_Target,
   Waiting_For_More_Players,
+  Player_Weapon_Rounds,
   Player_Text,
   Team_Lives_Remaining,
   Game_Type,

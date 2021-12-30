@@ -14,6 +14,8 @@ import 'classes/Player.dart';
 import 'classes/Projectile.dart';
 import 'classes/Weapon.dart';
 import 'common/AbilityType.dart';
+import 'common/CharacterState.dart';
+import 'common/CharacterType.dart';
 import 'common/GameStatus.dart';
 import 'common/PlayerEvent.dart';
 import 'common/ServerResponse.dart';
@@ -236,7 +238,16 @@ void compilePlayer(StringBuffer buffer, Player player) {
     compilePlayerWeapons(buffer, player);
   }
 
+  if (player.type == CharacterType.Human){
+    compilePlayerRoundsRemaining(buffer, player);
+  }
+
   _compilePlayerEvents(buffer, player);
+}
+
+void compilePlayerRoundsRemaining(StringBuffer buffer, Player player){
+  _write(buffer, ServerResponse.Player_Weapon_Rounds.index);
+  _write(buffer, player.weapon.rounds);
 }
 
 void compilePlayerWeapon(StringBuffer buffer, Player player){

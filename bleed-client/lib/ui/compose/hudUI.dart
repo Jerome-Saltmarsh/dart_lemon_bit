@@ -374,7 +374,7 @@ String mapWeaponTypeToString(WeaponType weaponType) {
 Widget buildEquippedWeaponSlot(WeaponType weapon) {
   return Row(
     children: [
-      WatchBuilder(game.player.equippedRounds, (int rounds) {
+      WatchBuilder(game.player.weaponRounds, (int rounds) {
         if (game.player.equippedCapacity.value == 0) {
           return buildAmmoBar(1);
         }
@@ -384,7 +384,7 @@ Widget buildEquippedWeaponSlot(WeaponType weapon) {
         children: [
           buildWeaponSlot(weapon),
           if (weapon != WeaponType.Unarmed)
-            WatchBuilder(game.player.equippedRounds, buildTag),
+            WatchBuilder(game.player.weaponRounds, buildTag),
         ],
       ),
     ],
@@ -602,7 +602,7 @@ Widget buildLowAmmo() {
                 padding: EdgeInsets.all(10),
                 color: Colors.black26,
                 child: text(
-                    game.player.equippedRounds.value == 0
+                    game.player.weaponRounds.value == 0
                         ? "Empty"
                         : "Low Ammo",
                     fontSize: 20)),
