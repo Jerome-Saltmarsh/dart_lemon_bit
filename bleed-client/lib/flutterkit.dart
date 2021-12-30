@@ -15,7 +15,7 @@ Widget text(dynamic value, {
     FontWeight fontWeight = normal,
     Color color = white
 }) {
-  Widget _text = Text(
+  final Widget _text = Text(
       value.toString(),
       style: TextStyle(
           color: color,
@@ -120,7 +120,7 @@ Widget onPressed({
     required GestureTapCallback? callback,
     dynamic hint
 }) {
-  Widget widget = MouseRegion(
+  final Widget widget = MouseRegion(
       cursor: callback != null
           ? SystemMouseCursors.click
           : SystemMouseCursors.forbidden,
