@@ -65,6 +65,7 @@ Widget _buildHudWeapons(){
       children: [
         topLeft(child: text(enumString(weaponType))),
         topRight(child: buttons.exit),
+        bottomLeft(child: buildWeaponMenu())
       ],
     );
   });
