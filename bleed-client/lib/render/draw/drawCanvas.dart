@@ -145,6 +145,10 @@ void renderGame(Canvas canvas, Size size) {
     drawDebugNpcs(game.npcDebug);
   }
 
+  if (game.type.value == GameType.BATTLE_ROYAL){
+    drawCircleOutline(sides: 50, radius: game.royal.radius, x: game.royal.mapCenter.x, y: game.royal.mapCenter.y, color: Colors.red);
+  }
+
   _drawFloatingTexts();
   _drawPlayerNames();
   drawPlayerText();

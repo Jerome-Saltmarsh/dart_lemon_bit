@@ -260,6 +260,11 @@ void parseState() {
         parseCubePlayers();
         break;
 
+      case ServerResponse.Game_Royal:
+        game.royal.mapCenter = _consumeVector2();
+        game.royal.radius = consumeDouble();
+        break;
+
       case ServerResponse.Lobby:
         game.lobby.playerCount.value = consumeInt();
         game.lobby.players.clear();

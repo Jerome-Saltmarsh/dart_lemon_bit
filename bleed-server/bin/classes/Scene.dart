@@ -1,5 +1,6 @@
 import '../common/Tile.dart';
 import '../common/enums/ObjectType.dart';
+import '../utils.dart';
 import 'EnvironmentObject.dart';
 import '../common/classes/Vector2.dart';
 import '../enums.dart';
@@ -192,8 +193,9 @@ bool isCloser(TileNodeVisit a, TileNodeVisit b) {
   return true;
 }
 
-
 extension SceneFunctions on Scene {
+
+  Vector2 getCenterPosition() => getTilePosition(rows ~/ 2, columns ~/ 2);
 
   List<Vector2> findPath(double x1, double y1, double x2, double y2) {
     TileNode startNode = tileNodeAt(x1, y1);

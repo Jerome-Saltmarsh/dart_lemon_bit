@@ -235,6 +235,9 @@ const characterFramesChange = 4;
 const characterMaxFrames = 99;
 
 extension GameFunctions on Game {
+
+  Vector2 getSceneCenter() => getTilePosition(scene.rows ~/ 2, scene.columns ~/ 2);
+
   int getFirstAliveZombieEnemyIndex(int team) {
     for (int i = 0; i < zombies.length; i++) {
       if (zombies[i].dead) continue;
@@ -666,6 +669,7 @@ extension GameFunctions on Game {
     }
   }
 
+  // kill character
   void setCharacterStateDead(Character character) {
     if (character.dead) return;
     character.state = CharacterState.Dead;

@@ -17,12 +17,14 @@ import 'common/AbilityType.dart';
 import 'common/CharacterState.dart';
 import 'common/CharacterType.dart';
 import 'common/GameStatus.dart';
+import 'common/GameType.dart';
 import 'common/PlayerEvent.dart';
 import 'common/ServerResponse.dart';
 import 'common/Tile.dart';
 import 'common/WeaponType.dart';
 import 'common/classes/Vector2.dart';
 import 'games/Moba.dart';
+import 'games/Royal.dart';
 import 'games/world.dart';
 
 // constants
@@ -65,6 +67,10 @@ void compileGame(Game game) {
 
   compileGameStatus(buffer, game.status);
 
+  if (game is Royal) {
+    compileRoyal(buffer, game);
+  }
+
   game.compiled = buffer.toString();
 
   game.compiledTeamText.clear();
@@ -97,6 +103,13 @@ void compileTeamLivesRemaining(StringBuffer buffer, Moba moba) {
 void compileGameStatus(StringBuffer buffer, GameStatus gameStatus) {
   _write(buffer, ServerResponse.Game_Status.index);
   _write(buffer, gameStatus.index);
+}
+
+void compileRoyal(StringBuffer buffer, Royal royal){
+  _write(buffer, ServerResponse.Game_Royal.index);
+  _write(buffer, royal.boundaryCenter.x.toInt());
+  _write(buffer, royal.boundaryCenter.y.toInt());
+  _write(buffer, royal.boundaryRadius.toInt());
 }
 
 void compileGameMeta(StringBuffer buffer, Game game) {

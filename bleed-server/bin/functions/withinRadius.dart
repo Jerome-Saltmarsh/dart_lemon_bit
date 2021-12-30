@@ -1,7 +1,7 @@
 
-import 'package:lemon_math/diff_over.dart';
-import 'package:lemon_math/distance_between.dart';
+import 'dart:math';
 
+import 'package:lemon_math/diff.dart';
 import '../common/classes/Vector2.dart';
 
 bool withinRadius(Vector2 a, Vector2 b, double radius){
@@ -9,7 +9,15 @@ bool withinRadius(Vector2 a, Vector2 b, double radius){
 }
 
 bool withinDistance(Vector2 positioned, double x, double y, double radius){
-  if (diffOver(positioned.x, x, radius)) return false;
-  if (diffOver(positioned.y, y, radius)) return false;
-  return distanceBetween(positioned.x, positioned.y, x, y) <= radius;
+  final xDiff = diff(positioned.x, x);
+  if (xDiff > radius) return false;
+
+  final yDiff = diff(positioned.y, y);
+  if (yDiff > radius) return false;
+
+  return magnitude(xDiff, yDiff) <= radius;
+}
+
+double magnitude(num adjacent, num opposite){
+  return sqrt((adjacent * adjacent) + (opposite * opposite));
 }

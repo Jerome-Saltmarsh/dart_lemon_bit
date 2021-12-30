@@ -69,8 +69,15 @@ class _Game {
   List<Item> items = [];
   int totalItems = 0;
 
+  final _Royal royal = _Royal();
+
   // properties
   String get session => player.uuid.value;
+}
+
+class _Royal {
+  double radius = 0;
+  Vector2 mapCenter = Vector2(0, 0);
 }
 
 class _Lobby {
