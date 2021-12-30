@@ -50,6 +50,11 @@ class Royal extends Game {
   }
 
   @override
+  void onPlayerDisconnected(Player player) {
+    onPlayerDeath(player);
+  }
+
+  @override
   void onPlayerDeath(Player player) {
     score.add(player);
     if (numberOfAlivePlayers == 1) {
