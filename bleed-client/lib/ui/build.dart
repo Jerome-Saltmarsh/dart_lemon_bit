@@ -2,12 +2,14 @@ import 'package:bleed_client/classes/Ability.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/colours.dart';
+import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/ui/state/decorationImages.dart';
 import 'package:bleed_client/styles.dart';
+import 'package:bleed_client/ui/widgets.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -166,6 +168,27 @@ class _Build {
         ],
       ),
     );
+  }
+
+  Widget title(){
+    return WatchBuilder(game.region, (Region region){
+      return Row(
+        children: [
+          border(
+              child: text("GAMESTREAM.ONLINE",
+                  fontSize: 30,
+                  fontWeight: bold
+              ),
+              borderWidth: 6,
+              radius: const BorderRadius.only(topLeft: radius4, bottomLeft: radius4)
+          ),
+          if (region != Region.None)
+            buttons.region,
+        ],
+      );
+    });
+
+
   }
 
   Widget gamesList(){

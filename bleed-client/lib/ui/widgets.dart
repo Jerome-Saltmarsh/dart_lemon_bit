@@ -67,7 +67,7 @@ class _Widgets {
   final Widget magicBar = build.magicBar();
   final Widget abilities = build.abilities();
   final Widget gamesList = build.gamesList();
-  final Widget title = border(child: text("GAMESTREAM.ONLINE", fontSize: 30, fontWeight: bold), borderWidth: 6, radius: BorderRadius.only(topLeft: radius4, bottomLeft: radius4));
+  final Widget title = build.title();
 }
 
 class _Buttons {

@@ -18,7 +18,6 @@ import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../webSocket.dart';
@@ -247,6 +246,26 @@ class _BuildView {
   }
 
   Widget selectGame() {
+    return layout(
+        padding: 8,
+        topLeft: widgets.title,
+        topRight: buttons.editor,
+        children: [
+          Container(
+            margin: EdgeInsets.only(top: 140),
+            child: SingleChildScrollView(
+              child: Column(
+                  mainAxisAlignment: axis.main.center,
+                  crossAxisAlignment: axis.cross.center, children: [
+                Container(child: text("GAMES", fontSize: 50, fontWeight: bold)),
+                height16,
+                widgets.gamesList
+                // ...selectableServerTypes.map(_buildSelectRegionButton)
+              ]),
+            ),
+          )    ]);
+
+
     return layout(
         padding: _style.viewPadding,
         topLeft: Row(
