@@ -7,21 +7,21 @@ import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/Region.dart';
+import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/functions/refreshPage.dart';
 import 'package:bleed_client/logic.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
-import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import '../webSocket.dart';
 import '../styles.dart';
+import '../webSocket.dart';
 
 Widget buildView(BuildContext context){
 
@@ -56,11 +56,6 @@ Widget buildView(BuildContext context){
 
 final _Views _views = _Views();
 final _BuildView _buildView = _BuildView();
-final _Style _style = _Style();
-
-class _Style {
-   final double viewPadding = 8;
-}
 
 class _Views {
   final Widget selectRegion = _buildView.selectRegion();
@@ -141,7 +136,7 @@ class _BuildView {
               child: Column(
                   mainAxisAlignment: axis.main.center,
                   crossAxisAlignment: axis.cross.center, children: [
-                Container(child: text("REGION", fontSize: 50, fontWeight: bold)),
+                Container(child: text("SELECT REGION", fontSize: 50, fontWeight: bold)),
                 height16,
                 ...selectableServerTypes.map(_buildSelectRegionButton)
               ]),
@@ -257,32 +252,12 @@ class _BuildView {
               child: Column(
                   mainAxisAlignment: axis.main.center,
                   crossAxisAlignment: axis.cross.center, children: [
-                Container(child: text("GAMES", fontSize: 50, fontWeight: bold)),
+                Container(child: text("SELECT GAME", fontSize: 50, fontWeight: bold)),
                 height16,
                 widgets.gamesList
-                // ...selectableServerTypes.map(_buildSelectRegionButton)
               ]),
             ),
           )    ]);
-
-
-    return layout(
-        padding: _style.viewPadding,
-        topLeft: Row(
-          children: [
-            widgets.title,
-            buttons.region,
-          ],
-        ),
-        topRight: buttons.editor,
-        children: [
-          Column(
-            children: [
-              height64,
-              widgets.gamesList,
-          ],)
-        ]
-    );
   }
 
   Widget connecting() {
