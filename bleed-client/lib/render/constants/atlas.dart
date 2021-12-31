@@ -22,6 +22,9 @@ class _Atlas {
   final _Archer archer = _Archer();
   final _Knight knight = _Knight();
   final _Projectiles projectiles = _Projectiles();
+
+  final Vector2 cloud = Vector2(1, 4044);
+  final Vector2 cloudSize = Vector2(43, 29);
 }
 
 class _Human {
