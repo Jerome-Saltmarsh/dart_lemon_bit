@@ -11,5 +11,8 @@ void drawParticle(Particle particle){
   if (!onScreen(particle.x, particle.y)) return;
   Shade shade = getShadeAtPosition(particle.x, particle.y);
   if (equalOrDarkerToVeryDark(shade)) return;
-  drawAtlas(mapParticleToDst(particle), mapParticleToSrc(particle));
+  drawAtlas(
+      dst: mapParticleToDst(particle),
+      src: mapParticleToSrc(particle)
+  );
 }

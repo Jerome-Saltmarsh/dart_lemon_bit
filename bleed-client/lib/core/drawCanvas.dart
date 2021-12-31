@@ -117,7 +117,10 @@ void drawArcher({
   required int frame,
   double scale = 1,
 }) {
-  drawAtlas(mapDst(x: x, y: y, scale: scale), mapSrcArcher(state: state, direction: direction, frame: frame));
+  drawAtlas(
+      dst: mapDst(x: x, y: y, scale: scale),
+      src: mapSrcArcher(state: state, direction: direction, frame: frame)
+  );
 }
 
 void drawWitch({
@@ -128,8 +131,10 @@ void drawWitch({
   required int frame,
   double scale = 1,
 }) {
-  drawAtlas(mapDst(x: x, y: y, scale: scale),
-      mapSrcWitch(state: state, direction: direction, frame: frame));
+  drawAtlas(
+      dst: mapDst(x: x, y: y, scale: scale),
+      src: mapSrcWitch(state: state, direction: direction, frame: frame)
+  );
 }
 
 

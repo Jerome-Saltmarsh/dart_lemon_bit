@@ -26,11 +26,12 @@ void drawProjectile(Projectile projectile) {
     case ProjectileType.Bullet:
       if (inDarkness(projectile.x, projectile.y)) return;
       drawAtlas(
-          mapDst(
+          dst: mapDst(
               x: projectile.x - renderSizeHalf,
               y: projectile.y - renderSizeHalf,
               scale: 0.25),
-          mapProjectileToSrc(projectile));
+          src: mapProjectileToSrc(projectile)
+      );
       break;
     case ProjectileType.Fireball:
       drawFireball(projectile.x, projectile.y, projectile.direction);

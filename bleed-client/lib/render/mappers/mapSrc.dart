@@ -5,8 +5,8 @@ final Float32List _src = Float32List(4);
 Float32List mapSrc({
   required double x,
   required double y,
-  required double width,
-  required double height
+  double width = 64,
+  double height = 64
 }){
   _src[0] = x;
   _src[1] = y;

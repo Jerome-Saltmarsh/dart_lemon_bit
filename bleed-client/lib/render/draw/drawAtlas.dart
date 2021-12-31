@@ -6,6 +6,6 @@ import 'package:bleed_client/images.dart';
 
 import 'drawRawAtlas.dart';
 
-void drawAtlas(Float32List dst, Float32List src) {
+void drawAtlas({required Float32List dst, required Float32List src}) {
   drawRawAtlas(images.atlas, dst, src);
 }

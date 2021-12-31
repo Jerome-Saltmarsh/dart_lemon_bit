@@ -28,8 +28,8 @@ void drawCharacter(Character character) {
   );
 
   drawAtlas(
-    mapCharacterDst(character, character.type, src),
-    src,
+    dst: mapCharacterDst(character, character.type, src),
+    src: src,
   );
 
   if (

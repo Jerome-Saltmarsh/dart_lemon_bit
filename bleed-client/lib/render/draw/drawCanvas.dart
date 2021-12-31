@@ -391,8 +391,8 @@ bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {
 void drawEnvironmentObject(EnvironmentObject env) {
   if (!environmentObjectOnScreenScreen(env)) return;
   drawAtlas(
-    env.dst,
-    mapEnvironmentObjectToSrc(env),
+    dst: env.dst,
+    src: mapEnvironmentObjectToSrc(env),
   );
 }
 

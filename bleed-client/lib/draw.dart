@@ -141,8 +141,8 @@ void drawCircleOutline({
 void drawTiles() {
   setColorWhite();
   drawAtlas(
-      tilesDst,
-      tilesSrc,
+      dst: tilesDst,
+      src: tilesSrc,
   );
 }
 
