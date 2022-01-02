@@ -25,6 +25,7 @@ class _Atlas {
 
   final Vector2 cloud = Vector2(1, 4044);
   final Vector2 cloudSize = Vector2(43, 29);
+  final _Fish fish = _Fish();
 }
 
 class _Fish {

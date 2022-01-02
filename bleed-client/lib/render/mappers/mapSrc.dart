@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+import 'package:lemon_math/Vector2.dart';
+
 final Float32List _src = Float32List(4);
 
 Float32List mapSrc({

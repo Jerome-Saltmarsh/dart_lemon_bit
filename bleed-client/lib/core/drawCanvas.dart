@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:ui';
 
 import 'package:bleed_client/common/CharacterState.dart';
@@ -7,23 +6,25 @@ import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/editor/render/drawEditor.dart';
 import 'package:bleed_client/enums/Region.dart';
+import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
-import 'package:bleed_client/render/mappers/drawCloud.dart';
+import 'package:bleed_client/render/mappers/animate.dart';
+import 'package:bleed_client/render/mappers/loop.dart';
 import 'package:bleed_client/render/mappers/mapArcherToSrc.dart';
 import 'package:bleed_client/render/mappers/mapDst.dart';
+import 'package:bleed_client/render/mappers/mapSrc.dart';
 import 'package:bleed_client/render/mappers/mapSrcWitch.dart';
+import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/watches/mode.dart';
 import 'package:bleed_client/webSocket.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/functions/screen_to_world.dart';
-import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_math/angle_between.dart';
-import 'package:lemon_math/distance_between.dart';
 
 int frame = 0;
 int animationRate = 8;
@@ -81,6 +82,8 @@ void renderCanvasSelectGame() {
     direction = Direction.Right;
   }
 
+  drawFish(x: 400, y: 400, direction: Direction.DownRight, frame: 1);
+
   drawArcher(
       x: x,
       y: y,
@@ -93,9 +96,19 @@ void renderCanvasSelectGame() {
 
 void drawFish({
   required double x,
-  required double y
+  required double y,
+  required int frame,
+  required Direction direction,
 }){
-
+    drawAtlas(
+        dst: mapDst(x: x, y: y),
+        src: loop(
+            atlas: atlas.fish.swimming,
+            direction: direction,
+            frame: frame,
+            size: 80,
+        )
+    );
 }
 
 void renderCanvasSelectRegion() {
@@ -108,6 +121,8 @@ void renderCanvasSelectRegion() {
 
   // drawLine(x2, y, mouseWorldX, mouseWorldY);
   // drawCloud(x: mouseWorldX, y: mouseWorldY);
+
+  drawFish(x: 400, y: 400, direction: Direction.Down, frame: animationFrame);
 
   drawArcher(
       x: x,

@@ -9,3 +9,4 @@ import 'drawRawAtlas.dart';
 void drawAtlas({required Float32List dst, required Float32List src}) {
   drawRawAtlas(images.atlas, dst, src);
 }
+
