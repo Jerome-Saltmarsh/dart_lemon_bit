@@ -1,8 +1,6 @@
 import 'dart:ui';
-
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
-import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/draw.dart';
@@ -30,6 +28,7 @@ import 'package:lemon_engine/state/camera.dart';
 import 'package:lemon_engine/state/mouseDragging.dart';
 import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_engine/state/zoom.dart';
+import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:lemon_watch/watch_builder.dart';

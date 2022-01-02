@@ -123,6 +123,9 @@
 -- core mode and won't be possible to persist characters. 
 -- In the future the player will be able to store their character inside an sql database
 -- The name of the land is Atlas
+[SUBSCRIPTION]
+[ ] Stripe Payment
+[ ] Single sign on
 [MMO]
 [ ] Save / Load Character
 [ ] Attributes (Intelligence, Strength, Agility)
@@ -543,6 +546,7 @@ Wow
 Fortnight
 
 # Domain Names
+gamepond.io
 browser-games.io
 game-browser.com
 game-stream.io

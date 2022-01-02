@@ -1,6 +1,5 @@
 import '../common/AbilityMode.dart';
 import '../common/AbilityType.dart';
-import '../common/classes/Vector2.dart';
 import 'Character.dart';
 
 

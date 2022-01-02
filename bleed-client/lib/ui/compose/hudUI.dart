@@ -171,6 +171,7 @@ Widget layout({
   Widget? bottomRight,
   Widget? bottomLeft,
   List<Widget>? children,
+  Widget? child,
   double padding = 0
 }){
   return Stack(
@@ -180,11 +181,13 @@ Widget layout({
       if (topRight != null)
         Positioned(top: padding, right: padding, child: topRight,),
       if (bottomRight != null)
-        Positioned(top: padding, right: padding, child: bottomRight,),
+        Positioned(bottom: padding, right: padding, child: bottomRight,),
       if (bottomLeft != null)
-        Positioned(top: padding, right: padding, child: bottomLeft,),
+        Positioned(bottom: padding, left: padding, child: bottomLeft,),
       if (children != null)
-        ...children
+        ...children,
+      if (child != null)
+        child,
     ],
   );
 }

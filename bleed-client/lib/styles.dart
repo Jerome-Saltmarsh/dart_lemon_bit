@@ -20,6 +20,15 @@ const Radius radius8 = Radius.circular(8);
 const Radius radius16 = Radius.circular(16);
 const Radius radius32 = Radius.circular(32);
 
+final _Radius radius = _Radius();
+
+class _Radius {
+  final Radius circular4 = const Radius.circular(4);
+  final Radius circular8 = const Radius.circular(8);
+  final Radius circular16 = const Radius.circular(16);
+  final Radius circular32 = const Radius.circular(32);
+}
+
 final Border border3 = Border.all(width: 3.0);
 
 final Color black26 = Colors.black26;

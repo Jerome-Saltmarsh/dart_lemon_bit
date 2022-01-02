@@ -35,6 +35,7 @@ class _WebSocket {
   void disconnect() {
     print('network.disconnect()');
     webSocketChannel.sink.close();
+    connection.value = Connection.None;
   }
 
   void dispose(){

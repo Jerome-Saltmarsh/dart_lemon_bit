@@ -1,8 +1,9 @@
+import 'package:lemon_math/Vector2.dart';
+
 import '../common/Tile.dart';
 import '../common/enums/ObjectType.dart';
 import '../utils.dart';
 import 'EnvironmentObject.dart';
-import '../common/classes/Vector2.dart';
 import '../enums.dart';
 import '../maths.dart';
 import 'TileNode.dart';

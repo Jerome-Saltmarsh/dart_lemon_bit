@@ -65,7 +65,7 @@ class Events {
       //   }
       //   break;
       default:
-        connectToWebSocketServer(game.region.value, type);
+        // connectToWebSocketServer(game.region.value, type);
         break;
     }
   }

@@ -202,6 +202,7 @@ class _Build {
               text(gameTypeNames[value], fontSize: 20, fontWeight: FontWeight.bold),
                   () {
                 game.type.value = value;
+                game.type.value = value;
               }, width: _buttonWidth, borderWidth: 3,
             fillColor: colours.black05,
           );

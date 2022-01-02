@@ -36,12 +36,12 @@ import 'package:bleed_client/utils/list_util.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:lemon_engine/state/cursor.dart';
+import 'package:lemon_math/Vector2.dart';
 
 import 'common/GameEventType.dart';
 import 'common/PlayerEvent.dart';
 import 'common/Tile.dart';
 import 'common/WeaponType.dart';
-import 'common/classes/Vector2.dart';
 import 'common/enums/ObjectType.dart';
 import 'functions/onGameEvent.dart';
 import 'render/functions/mapTilesToSrcAndDst.dart';
@@ -378,7 +378,7 @@ double environmentObjectY(EnvironmentObject environmentObject) {
 void _parsePaths() {
   paths.clear();
   while (!_simiColonConsumed()) {
-    List<Vector2> path = [];
+    final List<Vector2> path = [];
     paths.add(path);
     while (!_commaConsumed()) {
       path.add(_consumeVector2());

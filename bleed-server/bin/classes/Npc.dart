@@ -1,6 +1,7 @@
+import 'package:lemon_math/Vector2.dart';
+
 import '../common/CharacterType.dart';
 import '../common/WeaponType.dart';
-import '../common/classes/Vector2.dart';
 import '../enums/npc_mode.dart';
 import '../settings.dart';
 import 'Character.dart';

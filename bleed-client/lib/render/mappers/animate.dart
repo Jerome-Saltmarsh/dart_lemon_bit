@@ -3,9 +3,9 @@ import 'dart:typed_data';
 
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
-import 'package:lemon_engine/classes/vector2.dart';
+import 'package:lemon_math/Vector2.dart';
 
-Float32List _src = Float32List(4);
+final Float32List _src = Float32List(4);
 
 Float32List animate({
   required Vector2 atlas,

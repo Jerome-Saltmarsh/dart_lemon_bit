@@ -1,4 +1,5 @@
 
+import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/editor/functions/resetTiles.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/Region.dart';
@@ -8,13 +9,18 @@ import 'package:bleed_client/state/game.dart';
 
 import 'common/GameType.dart';
 
-// perform
-// get
-// query
-
 final _Logic logic = _Logic();
 
 class _Logic {
+
+  void connectToSelectedGame(){
+    connectToWebSocketServer(game.region.value, game.type.value);
+  }
+
+  void deselectGameType(){
+    game.type.value = GameType.None;
+  }
+
   void deselectRegion(){
     game.region.value = Region.None;
   }

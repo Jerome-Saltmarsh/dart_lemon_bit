@@ -19,7 +19,6 @@ import 'common/GameType.dart';
 import 'common/PlayerEvent.dart';
 import 'common/ServerResponse.dart';
 import 'common/WeaponType.dart';
-import 'common/classes/Vector2.dart';
 import 'common/enums/Direction.dart';
 import 'common/version.dart';
 import 'compile.dart';

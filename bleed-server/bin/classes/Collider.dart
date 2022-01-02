@@ -1,5 +1,5 @@
 
-import '../common/classes/Vector2.dart';
+import 'package:lemon_math/Vector2.dart';
 
 class Collider extends Vector2 {
   double radius;

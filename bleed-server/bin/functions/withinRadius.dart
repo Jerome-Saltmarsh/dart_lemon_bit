@@ -1,8 +1,8 @@
 
 import 'dart:math';
 
+import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/diff.dart';
-import '../common/classes/Vector2.dart';
 
 bool withinRadius(Vector2 a, Vector2 b, double radius){
   return withinDistance(a, b.x, b.y, radius);

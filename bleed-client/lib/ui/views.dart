@@ -45,6 +45,19 @@ Widget buildView(BuildContext context){
               return _views.connecting;
             case Connection.Connected:
               return _views.connected;
+            case Connection.None:
+              return Stack(children: [
+                _views.selectGame,
+                dialog(
+                    color: colours.white,
+                    child: Column(
+                  children: [
+                    text(gameTypeNames[gameType]),
+                    button("Play", logic.connectToSelectedGame),
+                    button("Close", logic.deselectGameType),
+                  ],
+                )),
+              ],);
             default:
               return _views.connection;
           }
@@ -85,7 +98,10 @@ class _BuildView {
         children: [
           text(connectionMessage[value], fontSize: 25),
           height16,
-          button("Cancel", logic.exit, width: 100)
+          button("Cancel", (){
+            logic.exit();
+            webSocket.disconnect();
+          }, width: 100)
         ],
       ));
     });
@@ -241,23 +257,42 @@ class _BuildView {
   }
 
   Widget selectGame() {
-    return layout(
-        padding: 8,
-        topLeft: widgets.title,
-        topRight: buttons.editor,
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 140),
-            child: SingleChildScrollView(
-              child: Column(
-                  mainAxisAlignment: axis.main.center,
-                  crossAxisAlignment: axis.cross.center, children: [
-                Container(child: text("SELECT GAME", fontSize: 50, fontWeight: bold)),
-                height16,
-                widgets.gamesList
-              ]),
-            ),
-          )    ]);
+    return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints){
+        return Container(
+          // color: colours.green,
+          width: constraints.maxWidth,
+          height: constraints.maxHeight,
+          child: layout(
+              padding: 8,
+              topLeft: widgets.title,
+              bottomLeft: buttons.editor,
+              topRight: Row(
+                children: [
+                  buttons.login,
+                  width4,
+                  buttons.register,
+                ],
+              ),
+              children: [
+                Container(
+                  margin: const EdgeInsets.only(top: 140),
+                  child: SingleChildScrollView(
+                    child: Column(
+                        mainAxisAlignment: axis.main.center,
+                        crossAxisAlignment: axis.cross.center, children: [
+                      // Container(child: text("SELECT GAME", fontSize: 50, fontWeight: bold)),
+                      height16,
+                      widgets.gamesList,
+                      button("Subscribe for just \$9.99 per month to access all games", (){
+
+                      }),
+                    ]),
+                  ),
+                )    ]),
+        );
+      },
+    );
   }
 
   Widget connecting() {

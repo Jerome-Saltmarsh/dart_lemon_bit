@@ -1,3 +1,5 @@
+import 'package:lemon_math/Vector2.dart';
+
 import '../classes/Character.dart';
 import '../classes/Game.dart';
 import '../classes/Player.dart';
@@ -6,7 +8,6 @@ import '../common/CharacterType.dart';
 import '../common/GameStatus.dart';
 import '../common/GameType.dart';
 import '../common/WeaponType.dart';
-import '../common/classes/Vector2.dart';
 import '../functions/withinRadius.dart';
 import '../instances/scenes.dart';
 import '../utils/game_utils.dart';

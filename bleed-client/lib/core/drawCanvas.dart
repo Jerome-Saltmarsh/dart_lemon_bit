@@ -9,6 +9,7 @@ import 'package:bleed_client/editor/render/drawEditor.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
+import 'package:bleed_client/render/mappers/drawCloud.dart';
 import 'package:bleed_client/render/mappers/mapArcherToSrc.dart';
 import 'package:bleed_client/render/mappers/mapDst.dart';
 import 'package:bleed_client/render/mappers/mapSrcWitch.dart';
@@ -90,6 +91,13 @@ void renderCanvasSelectGame() {
   );
 }
 
+void drawFish({
+  required double x,
+  required double y
+}){
+
+}
+
 void renderCanvasSelectRegion() {
   final double x = screenToWorldX(screen.width * 0.5) - 32;
   final double y = screenToWorldY(70);
@@ -99,6 +107,7 @@ void renderCanvasSelectRegion() {
   final Direction direction = convertAngleToDirection(angle);
 
   // drawLine(x2, y, mouseWorldX, mouseWorldY);
+  // drawCloud(x: mouseWorldX, y: mouseWorldY);
 
   drawArcher(
       x: x,

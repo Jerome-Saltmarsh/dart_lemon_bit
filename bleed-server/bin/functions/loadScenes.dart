@@ -1,11 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:lemon_math/Vector2.dart';
+
 import '../classes/Collectable.dart';
 import '../classes/Scene.dart';
 import '../common/Tile.dart';
 import '../classes/EnvironmentObject.dart';
-import '../common/classes/Vector2.dart';
 import '../common/CollectableType.dart';
 import '../common/enums/ObjectType.dart';
 import '../instances/scenes.dart';

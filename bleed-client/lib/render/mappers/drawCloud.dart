@@ -5,7 +5,10 @@ import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/mappers/mapDst.dart';
 import 'package:bleed_client/render/mappers/mapSrc.dart';
 
-drawCloud(double x, double y){
+drawCloud({
+  required double x,
+  required double y,
+}){
   drawAtlas(
       dst: mapDst(x: x, y: y),
       src: mapSrc(

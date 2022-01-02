@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/abs.dart';
 import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/diff.dart';
@@ -22,7 +23,6 @@ import '../common/ItemType.dart';
 import '../common/PlayerEvent.dart';
 import '../common/Tile.dart';
 import '../common/WeaponType.dart';
-import '../common/classes/Vector2.dart';
 import '../common/enums/Direction.dart';
 import '../common/enums/ObjectType.dart';
 import '../common/enums/ProjectileType.dart';

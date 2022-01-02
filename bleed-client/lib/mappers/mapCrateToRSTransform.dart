@@ -1,7 +1,7 @@
 
 import 'dart:ui';
 
-import 'package:bleed_client/common/classes/Vector2.dart';
+import 'package:lemon_math/Vector2.dart';
 
 RSTransform mapCrateToRSTransform(Vector2 crate){
   return RSTransform.fromComponents(

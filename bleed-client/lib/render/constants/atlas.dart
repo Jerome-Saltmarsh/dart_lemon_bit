@@ -1,5 +1,5 @@
 
-import 'package:lemon_engine/classes/vector2.dart';
+import 'package:lemon_math/Vector2.dart';
 
 final _Atlas atlas = _Atlas();
 
@@ -25,6 +25,10 @@ class _Atlas {
 
   final Vector2 cloud = Vector2(1, 4044);
   final Vector2 cloudSize = Vector2(43, 29);
+}
+
+class _Fish {
+  final Vector2 swimming = Vector2(1, 1544);
 }
 
 class _Human {

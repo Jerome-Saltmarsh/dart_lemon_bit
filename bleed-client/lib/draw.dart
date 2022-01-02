@@ -15,9 +15,9 @@ import 'package:lemon_engine/queries/on_screen.dart';
 import 'package:lemon_engine/render/draw_circle.dart';
 import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_engine/state/paint.dart';
+import 'package:lemon_math/Vector2.dart';
 
 import 'common/Tile.dart';
-import 'common/classes/Vector2.dart';
 import 'rects.dart';
 import 'utils.dart';
 

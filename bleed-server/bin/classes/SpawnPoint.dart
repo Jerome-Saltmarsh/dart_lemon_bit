@@ -1,4 +1,5 @@
-import '../common/classes/Vector2.dart';
+import 'package:lemon_math/Vector2.dart';
+
 import 'Game.dart';
 
 class SpawnPoint extends Vector2 {

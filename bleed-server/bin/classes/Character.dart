@@ -1,6 +1,7 @@
+import 'package:lemon_math/Vector2.dart';
+
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
-import '../common/classes/Vector2.dart';
 import '../common/enums/Direction.dart';
 import '../constants/no_squad.dart';
 import '../interfaces/HasSquad.dart';

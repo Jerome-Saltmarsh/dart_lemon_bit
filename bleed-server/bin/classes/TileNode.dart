@@ -1,4 +1,4 @@
-import '../common/classes/Vector2.dart';
+import 'package:lemon_math/Vector2.dart';
 
 class TileNodeVisit {
   TileNodeVisit? previous;

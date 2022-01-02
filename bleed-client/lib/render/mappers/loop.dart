@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/render/mappers/mapSrc.dart';
-import 'package:lemon_engine/classes/vector2.dart';
+import 'package:lemon_math/Vector2.dart';
 
 Float32List loop({
   required Vector2 atlas,

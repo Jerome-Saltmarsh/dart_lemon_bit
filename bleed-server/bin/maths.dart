@@ -1,9 +1,9 @@
 import 'dart:math';
 
+import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/hypotenuse.dart';
 
-import 'common/classes/Vector2.dart';
 import 'constants.dart';
 
 const double _0 = 0;

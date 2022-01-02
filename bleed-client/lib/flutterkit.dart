@@ -188,13 +188,17 @@ Widget center(Widget child) {
 Widget fullScreen({
   required Widget child,
   Alignment alignment = Alignment.center,
+  Color? color,
 }) {
-  return Container(
-      alignment: alignment,
-      width: screen.width,
-      height: screen.height,
-      // color: Colors.red,
-      child: child);
+  return LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints){
+        return Container(
+            alignment: alignment,
+            width: constraints.maxWidth,
+            height: constraints.maxHeight,
+            color: color,
+            child: child);
+      });
 }
 
 Widget page({required List<Widget> children}) {

@@ -8,7 +8,7 @@ import 'package:bleed_client/images.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/state.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
-import 'package:lemon_engine/classes/vector2.dart';
+import 'package:lemon_math/Vector2.dart';
 
 final Map<ObjectType, double> environmentObjectWidth = {
   ObjectType.Palisade: 48,

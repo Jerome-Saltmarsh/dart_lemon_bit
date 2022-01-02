@@ -12,7 +12,6 @@ import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
-import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/constants/colours.dart';
@@ -44,6 +43,7 @@ import 'package:lemon_engine/render/draw_text.dart';
 import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_engine/state/screen.dart';
+import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/diff.dart';
@@ -109,7 +109,7 @@ void renderGame(Canvas canvas, Size size) {
     // drawCircle(game.player.w.x, attackTarget.y, 20, Colors.white24);
   } else {
     drawAbility();
-    Vector2 attackTarget = game.player.attackTarget;
+    final Vector2 attackTarget = game.player.attackTarget;
     if (attackTarget.x != 0 && attackTarget.y != 0){
       drawCircle(attackTarget.x, attackTarget.y, 20, Colors.white24);
     }

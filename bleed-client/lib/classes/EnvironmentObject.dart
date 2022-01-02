@@ -1,10 +1,10 @@
 
 import 'dart:typed_data';
 
-import 'package:bleed_client/common/classes/Vector2.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/getters/getTileAt.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
+import 'package:lemon_math/Vector2.dart';
 
 class EnvironmentObject extends Vector2 {
   late int row;

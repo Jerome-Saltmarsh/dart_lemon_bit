@@ -1,3 +1,4 @@
+import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/give_or_take.dart';
 
 import '../classes/Game.dart';
@@ -7,7 +8,6 @@ import '../common/CharacterType.dart';
 import '../common/GameEventType.dart';
 import '../common/GameStatus.dart';
 import '../common/GameType.dart';
-import '../common/classes/Vector2.dart';
 import '../instances/scenes.dart';
 import '../language.dart';
 import '../utils/game_utils.dart';
