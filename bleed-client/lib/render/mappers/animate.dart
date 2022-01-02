@@ -16,9 +16,8 @@ Float32List animate({
   int framesPerDirection = 4,
 }){
   final int animationFrame = min(frame, animation.length - 1);
-  final int f = animation[animationFrame];
   final double _s = direction.index * size * framesPerDirection;
-  final double _f = (f % framesPerDirection) * size;
+  final double _f = (animation[animationFrame] % framesPerDirection) * size;
   return mapSrc(
       x: atlas.x + _s + _f,
       y: atlas.y + (shade.index * size),
