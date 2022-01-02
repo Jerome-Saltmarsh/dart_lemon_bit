@@ -3,9 +3,8 @@ import 'dart:typed_data';
 
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:bleed_client/render/mappers/mapSrc.dart';
 import 'package:lemon_math/Vector2.dart';
-
-final Float32List _src = Float32List(4);
 
 Float32List animate({
   required Vector2 atlas,
@@ -16,14 +15,14 @@ Float32List animate({
   double size = 64,
   int framesPerDirection = 4,
 }){
-
-  int animationFrame = min(frame, animation.length - 1);
-  int f = animation[animationFrame];
-  double _s = direction.index * size * framesPerDirection;
-  double _f = (f % framesPerDirection) * size;
-  _src[0] =  atlas.x + _s + _f;
-  _src[1] = atlas.y + (shade.index * size);
-  _src[2] = _src[0] + size;
-  _src[3] = _src[1] + size;
-  return _src;
+  final int animationFrame = min(frame, animation.length - 1);
+  final int f = animation[animationFrame];
+  final double _s = direction.index * size * framesPerDirection;
+  final double _f = (f % framesPerDirection) * size;
+  return mapSrc(
+      x: atlas.x + _s + _f,
+      y: atlas.y + (shade.index * size),
+      width: size,
+      height: size,
+  );
 }
