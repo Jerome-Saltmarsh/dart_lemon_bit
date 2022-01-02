@@ -20,6 +20,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
+import '../authentication.dart';
 import '../styles.dart';
 import '../webSocket.dart';
 
@@ -145,6 +146,8 @@ class _BuildView {
     return layout(
         padding: 8,
         topLeft: widgets.title,
+        topRight: button("Google Sign In", signInWithGooglePressed,
+        fillColor: colours.green),
         children: [
           Container(
             margin: EdgeInsets.only(top: 140),
@@ -338,3 +341,8 @@ Widget _buildSelectRegionButton(Region region) {
 
 
 
+Future signInWithGooglePressed() async {
+  print("signInWithGoogle()");
+  final result = await signInWithGoogle();
+  print(result);
+}

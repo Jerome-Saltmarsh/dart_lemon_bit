@@ -74,7 +74,7 @@ BoxDecoration boxDecoration({
       color: fillColor);
 }
 
-Widget button(dynamic value, GestureTapCallback onPressed, {
+Widget button(dynamic value, Function onPressed, {
   double? width,
   double? height,
   String? hint,
@@ -109,7 +109,7 @@ Widget button(dynamic value, GestureTapCallback onPressed, {
 
 Widget pressed({
   required Widget child,
-  required GestureTapCallback? callback,
+  required Function? callback,
   dynamic hint
 }) {
   return onPressed(child: child, callback: callback, hint: hint);
@@ -117,7 +117,7 @@ Widget pressed({
 
 Widget onPressed({
     required Widget child,
-    required GestureTapCallback? callback,
+    required Function? callback,
     dynamic hint
 }) {
   final Widget widget = MouseRegion(
@@ -126,7 +126,10 @@ Widget onPressed({
           : SystemMouseCursors.forbidden,
       child: GestureDetector(
           child: child,
-          onTap: callback
+          onTap: (){
+            if (callback == null) return;
+            callback();
+          }
       ));
 
   if (hint == null) return widget;
