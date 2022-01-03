@@ -15,13 +15,12 @@ import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/state/hud.dart';
+import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/ui/widgets.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import '../authentication.dart';
 import '../styles.dart';
 import '../webSocket.dart';
 
@@ -37,33 +36,44 @@ Widget buildView(BuildContext context){
       if (serverType == Region.None){
         return _views.selectRegion;
       }
-      return WatchBuilder(game.type, (GameType gameType) {
-        if (gameType == GameType.None) {
-          return _views.selectGame;
+
+      return WatchBuilder(ui.dialog, (Dialogs dialogs){
+        switch(dialogs){
+          case Dialogs.Games:
+            return WatchBuilder(game.type, (GameType gameType) {
+              if (gameType == GameType.None) {
+                return _views.selectGame;
+              }
+              return WatchBuilder(webSocket.connection, (Connection connection){
+                switch(connection) {
+                  case Connection.Connecting:
+                    return _views.connecting;
+                  case Connection.Connected:
+                    return _views.connected;
+                  case Connection.None:
+                    return Stack(children: [
+                      _views.selectGame,
+                      dialog(
+                          color: colours.white,
+                          child: Column(
+                            children: [
+                              text(gameTypeNames[gameType]),
+                              button("Play", logic.connectToSelectedGame),
+                              button("Close", logic.deselectGameType),
+                            ],
+                          )),
+                    ],);
+                  default:
+                    return _views.connection;
+                }
+              });
+            });
+
+          case Dialogs.Account:
+            return dialog(child: text("My Account"));
+          case Dialogs.Confirm_Logout:
+            return dialog(child: text("Confirm Logout"));
         }
-        return WatchBuilder(webSocket.connection, (Connection connection){
-          switch(connection) {
-            case Connection.Connecting:
-              return _views.connecting;
-            case Connection.Connected:
-              return _views.connected;
-            case Connection.None:
-              return Stack(children: [
-                _views.selectGame,
-                dialog(
-                    color: colours.white,
-                    child: Column(
-                  children: [
-                    text(gameTypeNames[gameType]),
-                    button("Play", logic.connectToSelectedGame),
-                    button("Close", logic.deselectGameType),
-                  ],
-                )),
-              ],);
-            default:
-              return _views.connection;
-          }
-        });
       });
     });
   });
@@ -147,15 +157,7 @@ class _BuildView {
     return layout(
         padding: 8,
         topLeft: widgets.title,
-        topRight: NullableWatchBuilder<UserCredential?>(userCredentials, (UserCredential? credentials){
-          if (credentials == null || credentials.user == null){
-              return button(
-                "Google Sign In", signInWithGoogle,
-                fillColor: colours.green
-              );
-          }
-          return button(credentials.user!.displayName, signOut);
-        }),
+        topRight: buttons.menu,
         children: [
           Container(
             margin: EdgeInsets.only(top: 140),
@@ -271,20 +273,13 @@ class _BuildView {
     return LayoutBuilder(
       builder: (BuildContext context, BoxConstraints constraints){
         return Container(
-          // color: colours.green,
           width: constraints.maxWidth,
           height: constraints.maxHeight,
           child: layout(
               padding: 8,
               topLeft: widgets.title,
               bottomLeft: buttons.editor,
-              topRight: Row(
-                children: [
-                  buttons.login,
-                  width4,
-                  buttons.register,
-                ],
-              ),
+              topRight: buttons.menu,
               children: [
                 Container(
                   margin: const EdgeInsets.only(top: 140),
@@ -292,12 +287,8 @@ class _BuildView {
                     child: Column(
                         mainAxisAlignment: axis.main.center,
                         crossAxisAlignment: axis.cross.center, children: [
-                      // Container(child: text("SELECT GAME", fontSize: 50, fontWeight: bold)),
                       height16,
                       widgets.gamesList,
-                      button("Subscribe for just \$9.99 per month to access all games", (){
-
-                      }),
                     ]),
                   ),
                 )    ]),

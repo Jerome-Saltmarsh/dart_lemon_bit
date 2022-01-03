@@ -1,3 +1,4 @@
+import 'package:bleed_client/authentication.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/constants/colours.dart';
@@ -8,7 +9,9 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/build.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/ui/state/decorationImages.dart';
+import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/functions/fullscreen_enter.dart';
@@ -68,14 +71,36 @@ class _Widgets {
   final Widget abilities = build.abilities();
   final Widget gamesList = build.gamesList();
   final Widget title = build.title();
+
+  final Widget settingsMenu = Column(
+    children: [
+      buttons.account,
+      height4,
+      buttons.logout,
+    ],
+  );
 }
 
 class _Buttons {
+  final Widget account = button("Account", (){
+    ui.dialog.value = Dialogs.Account;
+  }, width: 200);
+  final Widget logout =   button('Logout', signOut, width: 200);
+  final Widget menu = NullableWatchBuilder<UserCredential?>(userCredentials, (UserCredential? credentials){
+    if (credentials == null || credentials.user == null){
+      return button(
+          "Login / Register", signInWithGoogle,
+          fillColor: colours.green
+      );
+    }
+    return mouseOver(builder: (BuildContext context, bool mouseOver){
+      return mouseOver ? widgets.settingsMenu : buttons.account;
+    });
+  });
   final Widget debug = button("Debug", toggleDebugMode);
   final Widget exit = button('Exit', logic.exit);
   final Widget edit = button("Edit", logic.toggleEditMode);
   final Widget editor = button("Editor", logic.openEditor);
-  final Widget login = button("Login", logic.openEditor);
   final Widget register = button("Register", logic.openEditor);
   final Widget changeCharacter = button("Change Hero", () {
     sendClientRequest(ClientRequest.Reset_Character_Type);
