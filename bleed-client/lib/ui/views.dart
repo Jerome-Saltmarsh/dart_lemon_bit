@@ -16,6 +16,7 @@ import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/ui/widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_watch/watch_builder.dart';
@@ -146,8 +147,15 @@ class _BuildView {
     return layout(
         padding: 8,
         topLeft: widgets.title,
-        topRight: button("Google Sign In", signInWithGooglePressed,
-        fillColor: colours.green),
+        topRight: NullableWatchBuilder<UserCredential?>(userCredentials, (UserCredential? credentials){
+          if (credentials == null || credentials.user == null){
+              return button(
+                "Google Sign In", signInWithGoogle,
+                fillColor: colours.green
+              );
+          }
+          return text(credentials.user!.displayName);
+        }),
         children: [
           Container(
             margin: EdgeInsets.only(top: 140),
@@ -336,13 +344,4 @@ Widget _buildSelectRegionButton(Region region) {
     borderWidth: 3,
     fillColor: colours.black05,
   );
-}
-
-
-
-
-Future signInWithGooglePressed() async {
-  print("signInWithGoogle()");
-  final result = await signInWithGoogle();
-  print(result);
 }
