@@ -80,17 +80,10 @@ Future<String> signInWithEmailPassword(String email, String password) async {
     return 'Successfully logged in, User UID: ${user.uid}';
 }
 
-
-Future<String> signOut() async {
+void signOut() async {
+  print("signOut()");
+  userCredentials.value = null;
   await _auth.signOut();
-
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  prefs.setBool('auth', false);
-
-  uid = "";
-  userEmail = "";
-
-  return 'User signed out';
 }
 
 Future<FirebaseApp> _buildFirebaseApp(){

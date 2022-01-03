@@ -154,7 +154,7 @@ class _BuildView {
                 fillColor: colours.green
               );
           }
-          return text(credentials.user!.displayName);
+          return button(credentials.user!.displayName, signOut);
         }),
         children: [
           Container(
