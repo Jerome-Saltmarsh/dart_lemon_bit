@@ -19,7 +19,7 @@ final _Icons icons = _Icons();
 class _Icons {
   DecorationImage settings = _png('icon settings');
   DecorationImage fullscreen = _png('icon fullscreen');
-  DecorationImage google = _png('google_icon');
+  DecorationImage google = _png('icons/google_logo');
 }
 
 DecorationImage spellIcon(String name) {

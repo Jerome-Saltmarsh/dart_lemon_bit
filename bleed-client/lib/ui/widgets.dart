@@ -27,8 +27,17 @@ import 'compose/hudUI.dart';
 
 final _Widgets widgets = _Widgets();
 final _Buttons buttons = _Buttons();
+final _Logos logos = _Logos();
 
 final _BuildDialog buildDialog = _BuildDialog();
+
+class _Logos {
+  Widget google = Container(
+    width: 30,
+    height: 30,
+    decoration: BoxDecoration(image: icons.google),
+  );
+}
 
 class _BuildDialog {
   Widget selectCharacterType() {
@@ -85,19 +94,26 @@ class _Widgets {
 }
 
 class _Buttons {
-  final Widget account = button("Account", (){
+  final Widget account = button("Account", () {
     ui.dialog.value = Dialogs.Account;
   }, width: 200);
-  final Widget logout =   button('Logout', signOut, width: 200);
-  final Widget subscribe = button("Subscribe \$4.99", redirectToCheckout, width: 200);
-  final Widget menu = NullableWatchBuilder<UserCredential?>(userCredentials, (UserCredential? credentials){
-    if (credentials == null || credentials.user == null){
-      return button(
-          "Login / Register", signInWithGoogle,
-          fillColor: colours.green
+  final Widget logout = button('Logout', signOut, width: 200);
+  final Widget subscribe =
+      button("Subscribe \$4.99", redirectToCheckout, width: 200);
+  final Widget menu = NullableWatchBuilder<UserCredential?>(userCredentials,
+      (UserCredential? credentials) {
+    if (credentials == null || credentials.user == null) {
+      return button(Row(
+        children: [
+          logos.google,
+          width16,
+          text("Sign in with Google", color: Colors.black),
+        ],
+      ), signInWithGoogle,
+        fillColor: Colors.white
       );
     }
-    return mouseOver(builder: (BuildContext context, bool mouseOver){
+    return mouseOver(builder: (BuildContext context, bool mouseOver) {
       return mouseOver ? widgets.settingsMenu : buttons.account;
     });
   });
@@ -116,14 +132,16 @@ class _Buttons {
   });
 
   final Widget region = WatchBuilder(game.region, (Region region) {
-    return button(text(enumString(region), fontSize: 20),
-        logic.deselectRegion,
-        width: 185, hint: 'Region',
-        height: 63,
-        fillColor: colours.orange,
-        borderColor: colours.orange,
-        borderWidth: 6,
-        borderRadius: BorderRadius.only(topRight: radius4, bottomRight: radius4),
+    return button(
+      text(enumString(region), fontSize: 20),
+      logic.deselectRegion,
+      width: 185,
+      hint: 'Region',
+      height: 63,
+      fillColor: colours.orange,
+      borderColor: colours.orange,
+      borderWidth: 6,
+      borderRadius: BorderRadius.only(topRight: radius4, bottomRight: radius4),
     );
   });
 }
