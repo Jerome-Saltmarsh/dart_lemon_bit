@@ -79,7 +79,7 @@ class _Widgets {
       height4,
       buttons.logout,
       height4,
-      button("Stripe", redirectToCheckout),
+      button("Subscribe", redirectToCheckout),
     ],
   );
 }
