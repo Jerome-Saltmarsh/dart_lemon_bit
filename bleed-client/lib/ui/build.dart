@@ -1,6 +1,7 @@
 import 'package:bleed_client/classes/Ability.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/constants/colors/white.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/send.dart';
@@ -175,9 +176,17 @@ class _Build {
       return Row(
         children: [
           border(
+              // child: Text("GAMESTREAM.ONLINE",
+              //     style: TextStyle(
+              //         fontSize: 30,
+              //         fontWeight: bold,
+              //         fontFamily: 'PressStart2P',
+              //         color: white,
+              //     ),
+              //
+              // ),
               child: text("GAMESTREAM.ONLINE",
-                  fontSize: 30,
-                  fontWeight: bold
+                fontSize: 30,
               ),
               borderWidth: 6,
               radius: const BorderRadius.only(topLeft: radius4, bottomLeft: radius4)

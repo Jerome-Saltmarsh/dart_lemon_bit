@@ -144,6 +144,9 @@
 [ ] Design Map  
 [ ] Score  
 [ ] Weapon UI
+[SUBSCRIPTION]
+[ ] When a subscription is made it must be saved to a cloud database
+[ ] When a player enters a premium game it must check their subscription  
 [BUGS]
 [ ] Objects culled at bottom of screen
 [COMPLETED]

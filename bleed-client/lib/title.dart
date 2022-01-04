@@ -1,2 +1,0 @@
-
-const title = "GAMESTREAM";
