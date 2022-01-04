@@ -110,7 +110,10 @@ class _Buttons {
           text("Sign in with Google", color: Colors.black),
         ],
       ), signInWithGoogle,
-        fillColor: Colors.white
+        fillColor: Colors.white,
+        fillColorMouseOver: Colors.white,
+        borderColorMouseOver: colours.blue,
+        borderWidth: 3,
       );
     }
     return mouseOver(builder: (BuildContext context, bool mouseOver) {
