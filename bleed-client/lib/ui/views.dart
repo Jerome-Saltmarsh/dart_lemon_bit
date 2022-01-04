@@ -1,5 +1,6 @@
 
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:bleed_client/authentication.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/colours.dart';
@@ -17,6 +18,7 @@ import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/ui/widgets.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_watch/watch_builder.dart';
@@ -31,12 +33,10 @@ Widget buildView(BuildContext context){
     if (mode == Mode.Edit){
       return _views.editor;
     }
-
     return WatchBuilder(game.region, (Region serverType){
       if (serverType == Region.None){
         return _views.selectRegion;
       }
-
       return WatchBuilder(ui.dialog, (Dialogs dialogs){
         switch(dialogs){
           case Dialogs.Games:
@@ -70,7 +70,7 @@ Widget buildView(BuildContext context){
             });
 
           case Dialogs.Account:
-            return dialog(child: text("My Account"));
+            return _views.account;
           case Dialogs.Confirm_Logout:
             return dialog(child: text("Confirm Logout"));
         }
@@ -83,6 +83,7 @@ final _Views _views = _Views();
 final _BuildView _buildView = _BuildView();
 
 class _Views {
+  final Widget account = _buildView.account();
   final Widget selectRegion = _buildView.selectRegion();
   final Widget selectGame = _buildView.selectGame();
   final Widget connecting = _buildView.connecting();
@@ -150,6 +151,32 @@ class _BuildView {
             return text(enumString(gameStatus));
         }
       });
+    });
+  }
+
+  Widget account(){
+    return NullableWatchBuilder<UserCredential?>(userCredentials, (UserCredential? credentials){
+      if (credentials == null){
+        return dialog(child: text("No one logged in"));
+      }
+      final User? user = credentials.user;
+
+      if (user == null){
+        return dialog(child: text("No one logged in"));
+      }
+
+      return dialog(child: Column(
+        crossAxisAlignment: axis.cross.start,
+        children: [
+          text('${credentials.user!.displayName}`s Account', fontSize: 25),
+
+          text("Card Number"),
+          Container(
+              width: 250,
+              child: TextField()),
+          button('Subscribe', (){}),
+        ],
+      ));
     });
   }
 

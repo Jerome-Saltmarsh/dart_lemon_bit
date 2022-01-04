@@ -20,6 +20,7 @@ import 'package:lemon_engine/properties/fullscreen_active.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../logic.dart';
+import '../stripe.dart';
 import '../styles.dart';
 import '../toString.dart';
 import 'compose/hudUI.dart';
@@ -77,6 +78,8 @@ class _Widgets {
       buttons.account,
       height4,
       buttons.logout,
+      height4,
+      button("Stripe", redirectToCheckout),
     ],
   );
 }
