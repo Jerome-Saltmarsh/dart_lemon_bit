@@ -325,25 +325,27 @@ class _BuildView {
   }
 
   Widget connecting() {
-    return center(
-        Column(
-          mainAxisAlignment: axis.main.center,
-          children: [
-            Container(
-              height: 80,
-              child: AnimatedTextKit(repeatForever: true, animatedTexts: [
-                RotateAnimatedText("Connecting to server: ${game.region.value}",
-                    textStyle: TextStyle(color: Colors.white, fontSize: 30)),
-              ]),
-            ),
-            height32,
-            onPressed(child: text("Cancel"), callback: (){
-              sharedPreferences.remove('server');
-              refreshPage();
-            }),
-          ],
-        )
-    );
+    return WatchBuilder(game.region, (Region region){
+      return center(
+          Column(
+            mainAxisAlignment: axis.main.center,
+            children: [
+              Container(
+                height: 80,
+                child: AnimatedTextKit(repeatForever: true, animatedTexts: [
+                  RotateAnimatedText("Connecting to server: ${enumString(region)}",
+                      textStyle: TextStyle(color: Colors.white, fontSize: 30)),
+                ]),
+              ),
+              height32,
+              onPressed(child: text("Cancel"), callback: (){
+                sharedPreferences.remove('server');
+                refreshPage();
+              }),
+            ],
+          )
+      );
+    });
   }
 }
 

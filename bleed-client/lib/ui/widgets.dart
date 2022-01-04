@@ -79,7 +79,7 @@ class _Widgets {
       height4,
       buttons.logout,
       height4,
-      button("Subscribe", redirectToCheckout),
+      buttons.subscribe,
     ],
   );
 }
@@ -89,6 +89,7 @@ class _Buttons {
     ui.dialog.value = Dialogs.Account;
   }, width: 200);
   final Widget logout =   button('Logout', signOut, width: 200);
+  final Widget subscribe = button("Subscribe \$4.99", redirectToCheckout, width: 200);
   final Widget menu = NullableWatchBuilder<UserCredential?>(userCredentials, (UserCredential? credentials){
     if (credentials == null || credentials.user == null){
       return button(
