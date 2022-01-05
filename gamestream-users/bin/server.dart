@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:googleapis/bigquery/v2.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 
@@ -13,6 +14,8 @@ import 'helpers.dart';
 // https://github.com/dart-lang/samples/tree/master/server/google_apis
 final _Project project = _Project();
 final jsonEncoder = JsonEncoder();
+final jsonDecoder = JsonDecoder();
+
 FirestoreApi? firestore;
 
 class _Project {
@@ -56,7 +59,17 @@ Future<AutoRefreshingAuthClient> getAuthClient() {
   );
 }
 
+final _Responses _responses = _Responses();
+
+class _Responses {
+  final firestoreIsNull = Response.internalServerError(body: 'firestore is null');
+}
+
 FutureOr<Response> _echoRequest(Request request) async {
+  if (firestore == null){
+    return _responses.firestoreIsNull;
+  }
+
   final path = request.url.path;
   switch(path){
     case "webhook":
@@ -72,9 +85,29 @@ FutureOr<Response> _echoRequest(Request request) async {
       );
       return Response.ok('Success $result');
     case "users":
+
+      if (request.method == 'POST') {
+        print("request.method == 'POST'");
+        final bodyString = await request.readAsString();
+        if (bodyString.isEmpty){
+          return Response.forbidden('body is empty');
+        }
+        final body = jsonDecoder.convert(bodyString);
+        if (body is Map == false){
+          return Response.forbidden('body is not map');
+        }
+        final bodyMap = body as Map;
+
+        if (!bodyMap.containsKey('id')){
+          return Response.forbidden('body requires field id');
+        }
+        final userId = bodyMap['id'];
+        subscribeUser(userId);
+      }
+
       final params = request.requestedUri.queryParameters;
       if (!params.containsKey('id')) {
-        final users = await documents.get(name('users'));
+        final users = await documents.get(_name('users'));
         print(users.toString());
         return Response.ok(users.toString());
       }
@@ -86,18 +119,22 @@ FutureOr<Response> _echoRequest(Request request) async {
         throw Exception("firestore is null");
       }
       final user = await database.findUserById(id);
-      // .catchError((DetailedApiRequestError error){
-      //     if (error.status == 404){
-      //       return null;
-      //     }
-      //     throw error;
-      // });
+      if (user == null){
+        return Response.notFound("user with id $id could not be found");
+      }
       final fields = jsonEncoder.convert(user.fields);
       return Response.ok(fields);
     default:
       return Response.ok('Cannot handle request "${request.url}"');
   }
 }
+
+// Future<CommitResponse> commit(CommitRequest request) {
+//   return documents.commit(
+//     request,
+//     'projects/${project.id}/databases/(default)',
+//   );
+// }
 
 
 
@@ -118,41 +155,58 @@ CommitRequest _incrementRequest(String projectId) => CommitRequest(
   ],
 );
 
-CommitRequest subscribeUser(String userId) => CommitRequest(
-  writes: [
-    Write(
-      transform: DocumentTransform(
-        document:
-        'projects/${project.id}/databases/(default)/documents/users/$userId',
-        fieldTransforms: [
-          FieldTransform(
-            fieldPath: 'count',
-            increment: Value(integerValue: '1'),
-          ),
-          FieldTransform(
-            fieldPath: 'date',
-            increment: Value(timestampValue: getTimestamp()),
-          )
-
-        ],
+Future<CommitResponse> subscribeUser(String userId){
+  print("subscribeUser('$userId'");
+  final request = CommitRequest(
+    writes: [
+      Write(
+        transform: DocumentTransform(
+          document: _name('users/$userId'),
+          fieldTransforms: [
+            FieldTransform(
+              fieldPath: 'date',
+              increment: Value(timestampValue: _getTimestamp()),
+            ),
+          ],
+        ),
       ),
-    ),
-  ],
-);
+    ],
+  );
+  return database.commit(request);
+}
 
-String getTimestamp() => DateTime.now().millisecondsSinceEpoch.toString();
+String _getTimestamp() => DateTime.now().millisecondsSinceEpoch.toString();
 
 ProjectsDatabasesDocumentsResource get documents => firestore!.projects.databases.documents;
 
 final _Database database = _Database();
 
 class _Database {
-  Future<Document> findUserById(String id){
+  Future<Document?> findUserById(String id) {
     print("findUserById('$id')");
-    return documents.get(name('users/$id'));
+    return _findUserById(id)
+        .then<Document?>((value) => Future.value(value))
+        .catchError((error) {
+      if (error is DetailedApiRequestError && error.status == 404) {
+        return null;
+      }
+      throw error;
+    });
   }
+
+  Future<Document?> _findUserById(String id){
+    return documents.get(_name('users/$id'));
+  }
+
+  Future<CommitResponse> commit(CommitRequest request) {
+    return documents.commit(
+      request,
+      'projects/${project.id}/databases/(default)',
+    );
+  }
+
 }
 
-String name(String value){
+String _name(String value){
   return 'projects/${project.id}/databases/(default)/documents/$value';
 }
