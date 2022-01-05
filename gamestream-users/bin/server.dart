@@ -102,7 +102,8 @@ FutureOr<Response> _echoRequest(Request request) async {
           return Response.forbidden('body requires field id');
         }
         final userId = bodyMap['id'];
-        subscribeUser(userId);
+        final response = await subscribeUser(userId);
+        return Response.ok(response.toString());
       }
 
       final params = request.requestedUri.queryParameters;
@@ -156,7 +157,9 @@ CommitRequest _incrementRequest(String projectId) => CommitRequest(
 );
 
 Future<CommitResponse> subscribeUser(String userId){
-  print("subscribeUser('$userId'");
+  print("subscribeUser('$userId')");
+  final timeStamp = _getTimestamp();
+  print("timestamp = $timeStamp");
   final request = CommitRequest(
     writes: [
       Write(
@@ -165,7 +168,7 @@ Future<CommitResponse> subscribeUser(String userId){
           fieldTransforms: [
             FieldTransform(
               fieldPath: 'date',
-              increment: Value(timestampValue: _getTimestamp()),
+              increment: Value(timestampValue: timeStamp),
             ),
           ],
         ),
@@ -175,7 +178,7 @@ Future<CommitResponse> subscribeUser(String userId){
   return database.commit(request);
 }
 
-String _getTimestamp() => DateTime.now().millisecondsSinceEpoch.toString();
+String _getTimestamp() => DateTime.now().toUtc().toIso8601String();
 
 ProjectsDatabasesDocumentsResource get documents => firestore!.projects.databases.documents;
 
@@ -184,7 +187,7 @@ final _Database database = _Database();
 class _Database {
   Future<Document?> findUserById(String id) {
     print("findUserById('$id')");
-    return _findUserById(id)
+    return documents.get(_name('users/$id'))
         .then<Document?>((value) => Future.value(value))
         .catchError((error) {
       if (error is DetailedApiRequestError && error.status == 404) {
@@ -194,11 +197,8 @@ class _Database {
     });
   }
 
-  Future<Document?> _findUserById(String id){
-    return documents.get(_name('users/$id'));
-  }
-
   Future<CommitResponse> commit(CommitRequest request) {
+    print("database.commit()");
     return documents.commit(
       request,
       'projects/${project.id}/databases/(default)',
