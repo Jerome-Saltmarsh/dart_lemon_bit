@@ -1,5 +1,6 @@
 
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
@@ -11,7 +12,7 @@ import 'helpers.dart';
 
 // https://github.com/dart-lang/samples/tree/master/server/google_apis
 final _Project project = _Project();
-
+final jsonEncoder = JsonEncoder();
 FirestoreApi? firestore;
 
 class _Project {
@@ -73,7 +74,7 @@ FutureOr<Response> _echoRequest(Request request) async {
     case "users":
       final params = request.requestedUri.queryParameters;
       if (!params.containsKey('id')) {
-        final users = await documents.get('users');
+        final users = await documents.get(name('users'));
         print(users.toString());
         return Response.ok(users.toString());
       }
@@ -85,11 +86,20 @@ FutureOr<Response> _echoRequest(Request request) async {
         throw Exception("firestore is null");
       }
       final user = await database.findUserById(id);
-      return Response.ok(user.toString());
+      // .catchError((DetailedApiRequestError error){
+      //     if (error.status == 404){
+      //       return null;
+      //     }
+      //     throw error;
+      // });
+      final fields = jsonEncoder.convert(user.fields);
+      return Response.ok(fields);
     default:
       return Response.ok('Cannot handle request "${request.url}"');
   }
 }
+
+
 
 CommitRequest _incrementRequest(String projectId) => CommitRequest(
   writes: [
@@ -139,7 +149,7 @@ final _Database database = _Database();
 class _Database {
   Future<Document> findUserById(String id){
     print("findUserById('$id')");
-    return documents.get('projects/${project.id}/databases/(default)/documents/users/$id');
+    return documents.get(name('users/$id'));
   }
 }
 
