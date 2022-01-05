@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 
@@ -11,12 +13,10 @@ import 'helpers.dart';
 void main() async {
   var handler =
   const Pipeline().addMiddleware(logRequests()).addHandler(_echoRequest);
-  var server = await shelf_io.serve(handler, '0.0.0.0', 8080);
-  // Enable content compression
+  var server = await shelf_io.serve(handler, '0.0.0.0', 8082);
   server.autoCompress = true;
   print('Serving at http://${server.address.host}:${server.port}');
 
-  // final projectId = await currentProjectId();
   // print('Current GCP project id: $projectId');
 
   // final authClient = await clientViaApplicationDefaultCredentials(
@@ -24,14 +24,15 @@ void main() async {
   // );
 }
 
-Response _echoRequest(Request request){
+FutureOr<Response> _echoRequest(Request request) async {
   final path = request.url.path;
   switch(path){
     case "webhook":
       print("handling webhook");
       return Response.ok('Request for "${request.url}"');
     case "project":
-      return Response.ok('Request for "${request.url}"');
+      final projectId = await currentProjectId();
+      return Response.ok('project-id: $projectId');
     default:
       return Response.ok('Cannot handle request "${request.url}"');
   }
