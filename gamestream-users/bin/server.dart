@@ -102,15 +102,13 @@ FutureOr<Response> _echoRequest(Request request) async {
           return Response.forbidden('body requires field id');
         }
         final userId = bodyMap['id'];
-        final response = await subscribeUser(userId);
+        final response = await database.createUser(userId);
         return Response.ok(response.toString());
       }
 
       final params = request.requestedUri.queryParameters;
       if (!params.containsKey('id')) {
-        final users = await documents.get(_name('users'));
-        print(users.toString());
-        return Response.ok(users.toString());
+        return Response.forbidden('id required');
       }
       final id = params['id'];
       if (id == null) {
@@ -156,37 +154,44 @@ CommitRequest _incrementRequest(String projectId) => CommitRequest(
   ],
 );
 
-Future<CommitResponse> subscribeUser(String userId){
-  print("subscribeUser('$userId')");
-  final timeStamp = _getTimestamp();
-  print("timestamp = $timeStamp");
-  final request = CommitRequest(
-    writes: [
-      Write(
-        transform: DocumentTransform(
-          document: _name('users/$userId'),
-          fieldTransforms: [
-            FieldTransform(
-              fieldPath: 'date',
-              increment: Value(timestampValue: timeStamp),
-            ),
-          ],
-        ),
-      ),
-    ],
-  );
-  return database.commit(request);
-}
+// Future<CommitResponse> subscribeUser(String userId){
+//   print("subscribeUser('$userId')");
+//   final timeStamp = _getTimestamp();
+//   print("timestamp = $timeStamp");
+//   final request = CommitRequest(
+//     writes: [
+//       Write(
+//         transform: DocumentTransform(
+//           document: _name('users/$userId'),
+//           fieldTransforms: [
+//             // FieldTransform(
+//             //   fieldPath: 'date',
+//             //   increment: Value(timestampValue: timeStamp),
+//             // ),
+//             FieldTransform(
+//               fieldPath: 'subscribed',
+//               increment: Value(booleanValue: true),
+//             ),
+//           ],
+//         ),
+//       ),
+//     ],
+//   );
+//   return database.commit(request);
+// }
 
 String _getTimestamp() => DateTime.now().toUtc().toIso8601String();
 
-ProjectsDatabasesDocumentsResource get documents => firestore!.projects.databases.documents;
+
 
 final _Database database = _Database();
 
 class _Database {
+
+  ProjectsDatabasesDocumentsResource get documents => firestore!.projects.databases.documents;
+
   Future<Document?> findUserById(String id) {
-    print("findUserById('$id')");
+    print("database.findUserById('$id')");
     return documents.get(_name('users/$id'))
         .then<Document?>((value) => Future.value(value))
         .catchError((error) {
@@ -198,13 +203,29 @@ class _Database {
   }
 
   Future<CommitResponse> commit(CommitRequest request) {
-    print("database.commit()");
     return documents.commit(
       request,
       'projects/${project.id}/databases/(default)',
     );
   }
 
+  Future<Document> createUser(String userId) async {
+    print("database.createUser('$userId')");
+    if (userId.isEmpty){
+      throw Exception("userId is null");
+    }
+
+    final document = Document(
+      createTime: _getTimestamp(),
+    );
+    final parent = 'projects/${project.id}/databases/(default)/documents';
+    return await documents.createDocument(
+        document,
+        parent,
+        'users',
+        documentId: userId
+    );
+  }
 }
 
 String _name(String value){
