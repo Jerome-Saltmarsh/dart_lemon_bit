@@ -10,26 +10,43 @@ import 'package:googleapis_auth/auth_io.dart';
 import 'helpers.dart';
 
 // https://github.com/dart-lang/samples/tree/master/server/google_apis
-
 final _Project project = _Project();
 
-late FirestoreApi firestore;
+FirestoreApi? firestore;
 
 class _Project {
   String id = "";
 }
 
 void main() async {
+  initFirestore();
+  initProjectId();
+  initServer();
+}
+
+void initServer() async {
+  print("initServer()");
   var handler =
   const Pipeline().addMiddleware(logRequests()).addHandler(_echoRequest);
   var server = await shelf_io.serve(handler, '0.0.0.0', 8082);
-  print('Serving at http://${server.address.host}:${server.port}');
   server.autoCompress = true;
+  print('Serving at http://${server.address.host}:${server.port}');
+}
 
-
-  project.id = await currentProjectId();
+void initFirestore() async {
+  print("initFirestore()");
+  print("getAuthClient");
   final authClient = await getAuthClient();
+  print("authClient set");
+  print("init firestore api");
   firestore = FirestoreApi(authClient);
+  print("firestore api initialized");
+}
+
+void initProjectId() async {
+  print("initProjectId()");
+  project.id = await currentProjectId();
+  print("project.id = ${project.id}");
 }
 
 Future<AutoRefreshingAuthClient> getAuthClient() {
@@ -48,24 +65,25 @@ FutureOr<Response> _echoRequest(Request request) async {
       final projectId = await currentProjectId();
       return Response.ok('project-id: $projectId');
     case "increment":
-      final result = await firestore.projects.databases.documents.commit(
+      final result = await firestore!.projects.databases.documents.commit(
         _incrementRequest(project.id),
         'projects/${project.id}/databases/(default)',
       );
       return Response.ok('Success $result');
     case "users":
       final params = request.requestedUri.queryParameters;
-      if (params.containsKey('id')){
-        final id = params['id'];
-        if (id == null){
-          return Response.forbidden('id is empty');
-        }
-        final user = await findUserById(id);
-        return Response.ok(user.toString());
-      }else{
+      if (!params.containsKey('id')) {
         return Response.forbidden('id required');
       }
-      return Response.ok('Success subscribed');
+      final id = params['id'];
+      if (id == null) {
+        return Response.forbidden('id is empty');
+      }
+      if (firestore == null){
+        throw Exception("firestore is null");
+      }
+      final user = await findUserById(id);
+      return Response.ok(user.toString());
     default:
       return Response.ok('Cannot handle request "${request.url}"');
   }
@@ -112,10 +130,10 @@ CommitRequest subscribeUser(String userId) => CommitRequest(
 
 String getTimestamp() => DateTime.now().millisecondsSinceEpoch.toString();
 
-ProjectsDatabasesDocumentsResource get documents => firestore.projects.databases.documents;
+ProjectsDatabasesDocumentsResource get documents => firestore!.projects.databases.documents;
 
 
 Future<Document> findUserById(String id){
-  print("findUserById($id)");
+  print("findUserById('$id')");
   return documents.get('users/$id');
 }
