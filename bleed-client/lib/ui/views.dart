@@ -185,6 +185,7 @@ class _BuildView {
         padding: 8,
         topLeft: widgets.title,
         topRight: buttons.menu,
+        bottomLeft: text("v0.01", color: Colors.black),
         children: [
           Container(
             margin: EdgeInsets.only(top: 140),

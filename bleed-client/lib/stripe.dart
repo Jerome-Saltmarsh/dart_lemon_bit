@@ -1,10 +1,7 @@
 @JS()
 library stripe;
 
-import 'package:bleed_client/authentication.dart';
 import 'package:js/js.dart';
-
-const _apiKey = "pk_test_51KDkJgBamGAHT4Os9qGLDnx3rJc9awLjMXAO60ohrn7FRlhb2lB6Vr2wQOQmXPSt5LBYntGp3JRRvnRFYNQcY4Cz00GyeislDS";
 
 @JS()
 class Stripe {
@@ -25,8 +22,10 @@ class CheckoutOptions {
   external String get cancelUrl;
 
   external String get sessionId;
-  // external String get sessionId;
+
   external String get customerEmail;
+
+  external String get clientReferenceId;
 
   external factory CheckoutOptions({
     List<LineItem> lineItems,
@@ -34,8 +33,8 @@ class CheckoutOptions {
     String successUrl,
     String cancelUrl,
     String sessionId,
-    // String customer,
-    String customerEmail
+    String clientReferenceId,
+    String customerEmail,
   });
 }
 
@@ -49,24 +48,29 @@ class LineItem {
   external factory LineItem({String price, int quantity});
 }
 
+// config
+const _apiKey = "pk_test_51KDkJgBamGAHT4Os9qGLDnx3rJc9awLjMXAO60ohrn7FRlhb2lB6Vr2wQOQmXPSt5LBYntGp3JRRvnRFYNQcY4Cz00GyeislDS";
+const _price = 'price_1KE2cmBamGAHT4Osredql7tb';
 
-void stripeCheckout({required String email}) {
-  print("redirectToCheckout()");
+// https://stripe.com/docs/api/checkout/sessions/object
+void stripeCheckout({required String userId, String? email}) {
+  print("stripeCheckout(userId: '$userId', email: '$email')");
 
-  if (email.isEmpty){
-    throw Exception('email is empty');
+  if (userId.isEmpty) {
+    throw Exception("userId is empty");
   }
 
   Stripe(_apiKey).redirectToCheckout(CheckoutOptions(
     lineItems: [
       LineItem(
-        price: 'price_1KE2cmBamGAHT4Osredql7tb',
+        price: _price,
         quantity: 1,
       )
     ],
     mode: 'subscription',
     successUrl: 'https://gamestream.online',
     cancelUrl: 'https://gamestream.online',
-    customerEmail: email,
+    clientReferenceId: userId,
+    customerEmail: email ?? '',
   ));
 }

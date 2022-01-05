@@ -96,10 +96,11 @@ class _Widgets {
 final authenticationRequired = Exception("Authentication Required");
 
 void openStripeCheckout(){
+  print("openStripeCheckout()");
   if (!authenticated){
     throw authenticationRequired;
   }
-  stripeCheckout(email: user!.email!);
+  stripeCheckout(userId: user!.uid, email: user!.email);
 }
 
 class _Buttons {
