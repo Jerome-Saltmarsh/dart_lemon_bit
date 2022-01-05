@@ -28,7 +28,7 @@ void initServer() async {
   print("initServer()");
   var handler =
   const Pipeline().addMiddleware(logRequests()).addHandler(_echoRequest);
-  var server = await shelf_io.serve(handler, '0.0.0.0', 8082);
+  var server = await shelf_io.serve(handler, '0.0.0.0', 8080);
   server.autoCompress = true;
   print('Serving at http://${server.address.host}:${server.port}');
 }
@@ -73,7 +73,9 @@ FutureOr<Response> _echoRequest(Request request) async {
     case "users":
       final params = request.requestedUri.queryParameters;
       if (!params.containsKey('id')) {
-        return Response.forbidden('id required');
+        final users = await documents.get('users');
+        print(users.toString());
+        return Response.ok(users.toString());
       }
       final id = params['id'];
       if (id == null) {
@@ -82,7 +84,7 @@ FutureOr<Response> _echoRequest(Request request) async {
       if (firestore == null){
         throw Exception("firestore is null");
       }
-      final user = await findUserById(id);
+      final user = await database.findUserById(id);
       return Response.ok(user.toString());
     default:
       return Response.ok('Cannot handle request "${request.url}"');
@@ -132,8 +134,15 @@ String getTimestamp() => DateTime.now().millisecondsSinceEpoch.toString();
 
 ProjectsDatabasesDocumentsResource get documents => firestore!.projects.databases.documents;
 
+final _Database database = _Database();
 
-Future<Document> findUserById(String id){
-  print("findUserById('$id')");
-  return documents.get('users/$id');
+class _Database {
+  Future<Document> findUserById(String id){
+    print("findUserById('$id')");
+    return documents.get('projects/${project.id}/databases/(default)/documents/users/$id');
+  }
+}
+
+String name(String value){
+  return 'projects/${project.id}/databases/(default)/documents/$value';
 }
