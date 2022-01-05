@@ -10,12 +10,26 @@ import 'package:googleapis_auth/auth_io.dart';
 import 'helpers.dart';
 
 // https://github.com/dart-lang/samples/tree/master/server/google_apis
+
+final _Project project = _Project();
+
+late FirestoreApi firestore;
+
+class _Project {
+  String id = "";
+}
+
 void main() async {
   var handler =
   const Pipeline().addMiddleware(logRequests()).addHandler(_echoRequest);
   var server = await shelf_io.serve(handler, '0.0.0.0', 8082);
-  server.autoCompress = true;
   print('Serving at http://${server.address.host}:${server.port}');
+  server.autoCompress = true;
+
+
+  project.id = await currentProjectId();
+  final authClient = await getAuthClient();
+  firestore = FirestoreApi(authClient);
 }
 
 Future<AutoRefreshingAuthClient> getAuthClient() {
@@ -34,26 +48,35 @@ FutureOr<Response> _echoRequest(Request request) async {
       final projectId = await currentProjectId();
       return Response.ok('project-id: $projectId');
     case "increment":
-      final authClient = await getAuthClient();
-      final api = FirestoreApi(authClient);
-      final projectId = await currentProjectId();
-      final result = await api.projects.databases.documents.commit(
-        _incrementRequest(projectId),
-        'projects/$projectId/databases/(default)',
+      final result = await firestore.projects.databases.documents.commit(
+        _incrementRequest(project.id),
+        'projects/${project.id}/databases/(default)',
       );
       return Response.ok('Success $result');
+    case "users":
+      final params = request.requestedUri.queryParameters;
+      if (params.containsKey('id')){
+        final id = params['id'];
+        if (id == null){
+          return Response.forbidden('id is empty');
+        }
+        final user = await findUserById(id);
+        return Response.ok(user.toString());
+      }else{
+        return Response.forbidden('id required');
+      }
+      return Response.ok('Success subscribed');
     default:
       return Response.ok('Cannot handle request "${request.url}"');
   }
 }
-
 
 CommitRequest _incrementRequest(String projectId) => CommitRequest(
   writes: [
     Write(
       transform: DocumentTransform(
         document:
-        'projects/$projectId/databases/(default)/documents/settings/count',
+        'projects/$projectId/databases/(default)/documents/users/count',
         fieldTransforms: [
           FieldTransform(
             fieldPath: 'count',
@@ -64,3 +87,35 @@ CommitRequest _incrementRequest(String projectId) => CommitRequest(
     ),
   ],
 );
+
+CommitRequest subscribeUser(String userId) => CommitRequest(
+  writes: [
+    Write(
+      transform: DocumentTransform(
+        document:
+        'projects/${project.id}/databases/(default)/documents/users/$userId',
+        fieldTransforms: [
+          FieldTransform(
+            fieldPath: 'count',
+            increment: Value(integerValue: '1'),
+          ),
+          FieldTransform(
+            fieldPath: 'date',
+            increment: Value(timestampValue: getTimestamp()),
+          )
+
+        ],
+      ),
+    ),
+  ],
+);
+
+String getTimestamp() => DateTime.now().millisecondsSinceEpoch.toString();
+
+ProjectsDatabasesDocumentsResource get documents => firestore.projects.databases.documents;
+
+
+Future<Document> findUserById(String id){
+  print("findUserById($id)");
+  return documents.get('users/$id');
+}
