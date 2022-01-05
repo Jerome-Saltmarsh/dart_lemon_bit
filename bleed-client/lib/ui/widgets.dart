@@ -93,13 +93,22 @@ class _Widgets {
   );
 }
 
+final authenticationRequired = Exception("Authentication Required");
+
+void openStripeCheckout(){
+  if (!authenticated){
+    throw authenticationRequired;
+  }
+  stripeCheckout(email: user!.email!);
+}
+
 class _Buttons {
   final Widget account = button("Account", () {
     ui.dialog.value = Dialogs.Account;
   }, width: 200);
   final Widget logout = button('Logout', signOut, width: 200);
   final Widget subscribe =
-      button("Subscribe \$4.99", redirectToCheckout, width: 200);
+      button("Subscribe \$4.99", openStripeCheckout, width: 200);
   final Widget menu = NullableWatchBuilder<UserCredential?>(userCredentials,
       (UserCredential? credentials) {
     if (credentials == null || credentials.user == null) {

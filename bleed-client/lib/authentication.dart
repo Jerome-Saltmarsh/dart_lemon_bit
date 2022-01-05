@@ -10,6 +10,8 @@ final Watch<UserCredential?> userCredentials = Watch(null);
 
 User? get user => userCredentials.value?.user;
 
+bool get authenticated => user != null;
+
 // String? name = "";
 // String? imageUrl = "";
 final FirebaseAuth _auth = FirebaseAuth.instance;

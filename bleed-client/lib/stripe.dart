@@ -1,6 +1,7 @@
 @JS()
 library stripe;
 
+import 'package:bleed_client/authentication.dart';
 import 'package:js/js.dart';
 
 const _apiKey = "pk_test_51KDkJgBamGAHT4Os9qGLDnx3rJc9awLjMXAO60ohrn7FRlhb2lB6Vr2wQOQmXPSt5LBYntGp3JRRvnRFYNQcY4Cz00GyeislDS";
@@ -24,6 +25,8 @@ class CheckoutOptions {
   external String get cancelUrl;
 
   external String get sessionId;
+  // external String get sessionId;
+  external String get customerEmail;
 
   external factory CheckoutOptions({
     List<LineItem> lineItems,
@@ -31,6 +34,8 @@ class CheckoutOptions {
     String successUrl,
     String cancelUrl,
     String sessionId,
+    // String customer,
+    String customerEmail
   });
 }
 
@@ -44,7 +49,14 @@ class LineItem {
   external factory LineItem({String price, int quantity});
 }
 
-void redirectToCheckout() {
+
+void stripeCheckout({required String email}) {
+  print("redirectToCheckout()");
+
+  if (email.isEmpty){
+    throw Exception('email is empty');
+  }
+
   Stripe(_apiKey).redirectToCheckout(CheckoutOptions(
     lineItems: [
       LineItem(
@@ -53,7 +65,8 @@ void redirectToCheckout() {
       )
     ],
     mode: 'subscription',
-    successUrl: 'http://localhost:8081/#/success',
-    cancelUrl: 'http://localhost:8081/#/cancel',
+    successUrl: 'https://gamestream.online',
+    cancelUrl: 'https://gamestream.online',
+    customerEmail: email,
   ));
 }

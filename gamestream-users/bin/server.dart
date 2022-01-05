@@ -11,6 +11,12 @@ import 'package:googleapis_auth/auth_io.dart';
 
 import 'helpers.dart';
 
+
+/// Check if user is subscribed on server
+/// Display user subscription information on website
+///
+
+// https://stripe.com/docs/webhooks
 // https://github.com/dart-lang/samples/tree/master/server/google_apis
 final _Project project = _Project();
 final jsonEncoder = JsonEncoder();
@@ -31,7 +37,7 @@ void main() async {
 void initServer() async {
   print("initServer()");
   var handler =
-  const Pipeline().addMiddleware(logRequests()).addHandler(_echoRequest);
+  const Pipeline().addMiddleware(logRequests()).addHandler(handleRequest);
   var server = await shelf_io.serve(handler, '0.0.0.0', 8080);
   server.autoCompress = true;
   print('Serving at http://${server.address.host}:${server.port}');
@@ -65,16 +71,13 @@ class _Responses {
   final firestoreIsNull = Response.internalServerError(body: 'firestore is null');
 }
 
-FutureOr<Response> _echoRequest(Request request) async {
-  if (firestore == null){
-    return _responses.firestoreIsNull;
-  }
-
+FutureOr<Response> handleRequest(Request request) async {
   final path = request.url.path;
   switch(path){
-    case "webhook":
-      print("handling webhook");
-      return Response.ok('Request for "${request.url}"');
+    case "stripe_event request received":
+      print("stripe_event");
+      request.readAsString().then(handleStripeEvent);
+      return Response.ok('');
     case "project":
       final projectId = await currentProjectId();
       return Response.ok('project-id: $projectId');
@@ -85,6 +88,9 @@ FutureOr<Response> _echoRequest(Request request) async {
       );
       return Response.ok('Success $result');
     case "users":
+      if (firestore == null){
+        return _responses.firestoreIsNull;
+      }
 
       if (request.method == 'POST') {
         print("request.method == 'POST'");
@@ -154,35 +160,12 @@ CommitRequest _incrementRequest(String projectId) => CommitRequest(
   ],
 );
 
-// Future<CommitResponse> subscribeUser(String userId){
-//   print("subscribeUser('$userId')");
-//   final timeStamp = _getTimestamp();
-//   print("timestamp = $timeStamp");
-//   final request = CommitRequest(
-//     writes: [
-//       Write(
-//         transform: DocumentTransform(
-//           document: _name('users/$userId'),
-//           fieldTransforms: [
-//             // FieldTransform(
-//             //   fieldPath: 'date',
-//             //   increment: Value(timestampValue: timeStamp),
-//             // ),
-//             FieldTransform(
-//               fieldPath: 'subscribed',
-//               increment: Value(booleanValue: true),
-//             ),
-//           ],
-//         ),
-//       ),
-//     ],
-//   );
-//   return database.commit(request);
-// }
+void handleStripeEvent(String eventString) async {
+  print("handleStripeEvent()");
+  print(eventString);
+}
 
 String _getTimestamp() => DateTime.now().toUtc().toIso8601String();
-
-
 
 final _Database database = _Database();
 
@@ -230,4 +213,16 @@ class _Database {
 
 String _name(String value){
   return 'projects/${project.id}/databases/(default)/documents/$value';
+}
+
+Future<Map> getBody(Request request) async {
+  final bodyString = await request.readAsString();
+  if (bodyString.isEmpty){
+    return {};
+  }
+  final body = jsonDecoder.convert(bodyString);
+  if (body is Map == false){
+    return {};
+  }
+  return body as Map;
 }
