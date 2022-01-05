@@ -16,12 +16,12 @@ void main() async {
   var server = await shelf_io.serve(handler, '0.0.0.0', 8082);
   server.autoCompress = true;
   print('Serving at http://${server.address.host}:${server.port}');
+}
 
-  // print('Current GCP project id: $projectId');
-
-  // final authClient = await clientViaApplicationDefaultCredentials(
-  //   scopes: [FirestoreApi.datastoreScope],
-  // );
+Future<AutoRefreshingAuthClient> getAuthClient() {
+  return clientViaApplicationDefaultCredentials(
+    scopes: [FirestoreApi.datastoreScope],
+  );
 }
 
 FutureOr<Response> _echoRequest(Request request) async {
@@ -33,8 +33,34 @@ FutureOr<Response> _echoRequest(Request request) async {
     case "project":
       final projectId = await currentProjectId();
       return Response.ok('project-id: $projectId');
+    case "increment":
+      final authClient = await getAuthClient();
+      final api = FirestoreApi(authClient);
+      final projectId = await currentProjectId();
+      final result = await api.projects.databases.documents.commit(
+        _incrementRequest(projectId),
+        'projects/$projectId/databases/(default)',
+      );
+      return Response.ok('Success $result');
     default:
       return Response.ok('Cannot handle request "${request.url}"');
   }
 }
 
+
+CommitRequest _incrementRequest(String projectId) => CommitRequest(
+  writes: [
+    Write(
+      transform: DocumentTransform(
+        document:
+        'projects/$projectId/databases/(default)/documents/settings/count',
+        fieldTransforms: [
+          FieldTransform(
+            fieldPath: 'count',
+            increment: Value(integerValue: '1'),
+          )
+        ],
+      ),
+    ),
+  ],
+);
