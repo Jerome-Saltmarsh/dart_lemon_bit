@@ -38,6 +38,8 @@ Widget buildView(BuildContext context){
       }
       return WatchBuilder(game.dialog, (Dialogs dialogs){
         switch(dialogs){
+          case Dialogs.Login:
+            return dialog(child: text("Login screen"));
           case Dialogs.Invalid_Arguments:
             return dialog(child: text("Invalid Arguments"));
           case Dialogs.Subscription_Required:

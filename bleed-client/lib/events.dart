@@ -47,6 +47,11 @@ class Events {
     print(error);
 
     switch (error) {
+      case GameError.PlayerId_Required:
+        clearState();
+        webSocket.disconnect();
+        game.dialog.value = Dialogs.Login;
+        return;
       case GameError.Subscription_Required:
         game.dialog.value = Dialogs.Subscription_Required;
         return;

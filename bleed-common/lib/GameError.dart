@@ -26,4 +26,5 @@ enum GameError {
   SkillLocked,
   SkillPointsRequired,
   Subscription_Required,
+  PlayerId_Required,
 }

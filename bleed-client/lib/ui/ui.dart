@@ -4,4 +4,5 @@ enum Dialogs {
   Subscription_Required,
   Invalid_Arguments,
   Confirm_Logout,
+  Login,
 }

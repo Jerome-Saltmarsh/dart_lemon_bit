@@ -399,7 +399,7 @@ void main() {
               break;
             case GameType.BATTLE_ROYAL:
               if (arguments.length < 3) {
-                errorArgsExpected(3, arguments);
+                error(GameError.PlayerId_Required);
                 return;
               }
 
