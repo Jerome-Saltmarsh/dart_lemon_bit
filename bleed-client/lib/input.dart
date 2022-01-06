@@ -238,7 +238,6 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
     storage.put('position.y', camera3D.position.y);
     storage.put('position.z', camera3D.position.z);
   },
-  key.arrowUp: sendRequest.spawnZombie,
   key.arrowDown: (){
   },
   key.arrowRight: sendRequest.hourIncrease,
@@ -296,10 +295,7 @@ void sayWaitASecond() {
 // triggered after a key is held longer than one frame
 Map<LogicalKeyboardKey, Function> _keyHeldHandlers = {
   keys.interact: sendRequestInteract,
-  // keys.runLeft: runLeft,
-  // keys.runUp: runUp,
-  // keys.runRight: runRight,
-  // keys.runDown: runDown,
+  key.arrowUp: sendRequest.spawnZombie,
 };
 
 Map<LogicalKeyboardKey, Function> _keyReleasedHandlers = {
