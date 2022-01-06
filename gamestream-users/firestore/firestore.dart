@@ -5,29 +5,30 @@ import 'package:googleapis_auth/auth_io.dart';
 import 'package:googleapis/firestore/v1.dart';
 import 'package:http/http.dart' as http;
 
-String projectId = "";
-FirestoreApi? firestoreApi;
+String _projectId = "";
+FirestoreApi? _firestoreApi;
 
+// https://github.com/dart-lang/samples/tree/master/server/google_apis
 void initFirestore() async {
   print("initFirestore()");
   print("getAuthClient");
-  final authClient = await getAuthClient();
+  final authClient = await _getAuthClient();
   print("authClient set");
   print("init firestore api");
-  firestoreApi = FirestoreApi(authClient);
+  _firestoreApi = FirestoreApi(authClient);
   print("firestore api initialized");
   print("initProjectId()");
-  projectId = await currentProjectId();
-  print("project.id = $projectId");
+  _projectId = await _currentProjectId();
+  print("project.id = $_projectId");
 }
 
-Future<AutoRefreshingAuthClient> getAuthClient() {
+Future<AutoRefreshingAuthClient> _getAuthClient() {
   return clientViaApplicationDefaultCredentials(
     scopes: [FirestoreApi.datastoreScope],
   );
 }
 
-Future<String> currentProjectId() async {
+Future<String> _currentProjectId() async {
   for (var envKey in gcpProjectIdEnvironmentVariables) {
     final value = Platform.environment[envKey];
     if (value != null) return value;
@@ -71,15 +72,13 @@ const gcpProjectIdEnvironmentVariables = {
   'GOOGLE_CLOUD_PROJECT',
 };
 
-
-
 String _getTimestamp() => DateTime.now().toUtc().toIso8601String();
 
 final _Database database = _Database();
 
 class _Database {
 
-  ProjectsDatabasesDocumentsResource get documents => firestoreApi!.projects.databases.documents;
+  ProjectsDatabasesDocumentsResource get documents => _firestoreApi!.projects.databases.documents;
 
   Future<Document?> findUserById(String id) {
     print("database.findUserById('$id')");
@@ -96,7 +95,7 @@ class _Database {
   Future<CommitResponse> commit(CommitRequest request) {
     return documents.commit(
       request,
-      'projects/$projectId/databases/(default)',
+      'projects/$_projectId/databases/(default)',
     );
   }
 
@@ -120,7 +119,7 @@ class _Database {
     );
 
 
-    final parent = 'projects/$projectId/databases/(default)/documents';
+    final parent = 'projects/$_projectId/databases/(default)/documents';
     return await documents.createDocument(
       document,
       parent,
@@ -132,5 +131,5 @@ class _Database {
 }
 
 String _name(String value){
-  return 'projects/$projectId/databases/(default)/documents/$value';
+  return 'projects/$_projectId/databases/(default)/documents/$value';
 }

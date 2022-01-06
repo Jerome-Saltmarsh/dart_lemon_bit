@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 String _projectId = "";
 FirestoreApi? _firestoreApi;
 
+// https://github.com/dart-lang/samples/tree/master/server/google_apis
 void initFirestore() async {
   print("initFirestore()");
   print("getAuthClient");
@@ -70,8 +71,6 @@ const gcpProjectIdEnvironmentVariables = {
   'CLOUDSDK_CORE_PROJECT',
   'GOOGLE_CLOUD_PROJECT',
 };
-
-
 
 String _getTimestamp() => DateTime.now().toUtc().toIso8601String();
 
