@@ -82,7 +82,7 @@ void renderCanvasSelectGame() {
     direction = Direction.Right;
   }
 
-  drawFish(x: 400, y: 400, direction: Direction.DownRight, frame: 1);
+  // drawFish(x: 400, y: 400, direction: Direction.DownRight, frame: 1);
 
   drawArcher(
       x: x,
@@ -121,8 +121,7 @@ void renderCanvasSelectRegion() {
 
   // drawLine(x2, y, mouseWorldX, mouseWorldY);
   // drawCloud(x: mouseWorldX, y: mouseWorldY);
-
-  drawFish(x: 400, y: 400, direction: Direction.Down, frame: animationFrame);
+  // drawFish(x: 400, y: 400, direction: Direction.Down, frame: animationFrame);
 
   drawArcher(
       x: x,
