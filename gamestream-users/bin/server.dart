@@ -12,10 +12,6 @@ import 'package:googleapis_auth/auth_io.dart';
 import 'helpers.dart';
 
 
-/// Check if user is subscribed on server
-/// Display user subscription information on website
-///
-
 // https://stripe.com/docs/webhooks
 // https://github.com/dart-lang/samples/tree/master/server/google_apis
 final _Project project = _Project();

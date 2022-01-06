@@ -1,4 +1,5 @@
 import 'package:bleed_client/audio.dart';
+import 'package:bleed_client/authentication.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Projectile.dart';
@@ -28,6 +29,7 @@ import 'package:bleed_client/watches/ambientLight.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/phase.dart';
 import 'package:bleed_client/watches/time.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lemon_engine/functions/register_on_mouse_scroll.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_math/Vector2.dart';
@@ -159,11 +161,21 @@ void _onEventReceivedFromServer(dynamic value) {
 
 Future loadSharedPreferences() async {
   sharedPreferences = await SharedPreferences.getInstance();
+  _loadStateFromSharedPreferences();
+}
+
+void _loadStateFromSharedPreferences(){
+  print("_loadStateFromSharedPreferences()");
+
+  if (storage.serverSaved) {
+    game.region.value = storage.serverType;
+  }
+
+  if (storage.authorizationRemembered){
+    authorization.value = storage.recallAuthorization();
+  }
+
   // game.settings.audioMuted.value =
   //     sharedPreferences.containsKey('audioMuted') &&
   //         sharedPreferences.getBool('audioMuted');
-
-  if (storage.serverSaved){
-    game.region.value = storage.serverType;
-  }
 }

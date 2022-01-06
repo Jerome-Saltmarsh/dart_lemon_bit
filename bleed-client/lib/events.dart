@@ -1,17 +1,18 @@
 
+import 'package:bleed_client/authentication.dart';
 import 'package:bleed_client/common/GameStatus.dart';
-import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/functions/cameraCenterPlayer.dart';
 import 'package:bleed_client/functions/removeGeneratedEnvironmentObjects.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/logic.dart';
-import 'package:bleed_client/webSocket.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/watches/time.dart';
+import 'package:bleed_client/webSocket.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lemon_engine/functions/fullscreen_enter.dart';
 import 'package:lemon_engine/functions/fullscreen_exit.dart';
 import 'package:lemon_engine/game.dart';
@@ -34,6 +35,16 @@ class Events {
     game.status.onChanged(_onGameStatusChanged);
     game.mode.onChanged(_onGameModeChanged);
     mouseEvents.onLeftClicked.onChanged(_onMouseLeftClickedChanged);
+    authorization.onChanged(_onAuthorizationChanged);
+  }
+
+  void _onAuthorizationChanged(Authorization? value) async {
+    print("events.onUserCredentialsChanged()");
+    if (value == null) {
+      storage.forgetAuthorization();
+    } else {
+      storage.rememberAuthorization(value);
+    }
   }
 
   void _onMouseLeftClickedChanged(Function? function){

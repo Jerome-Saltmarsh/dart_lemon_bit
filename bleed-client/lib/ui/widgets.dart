@@ -100,7 +100,10 @@ void openStripeCheckout(){
   if (!authenticated){
     throw authenticationRequired;
   }
-  stripeCheckout(userId: user!.uid, email: user!.email);
+  stripeCheckout(
+      userId: authorization.value!.userId,
+      email: authorization.value!.email
+  );
 }
 
 class _Buttons {
@@ -110,9 +113,10 @@ class _Buttons {
   final Widget logout = button('Logout', signOut, width: 200);
   final Widget subscribe =
       button("Subscribe \$4.99", openStripeCheckout, width: 200);
-  final Widget menu = NullableWatchBuilder<UserCredential?>(userCredentials,
-      (UserCredential? credentials) {
-    if (credentials == null || credentials.user == null) {
+  final Widget menu = NullableWatchBuilder<Authorization?>(authorization,
+      (Authorization? authorization) {
+
+    if (authorization == null) {
       return button(Row(
         children: [
           logos.google,

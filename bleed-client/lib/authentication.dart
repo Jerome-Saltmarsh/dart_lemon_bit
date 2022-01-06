@@ -6,17 +6,29 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 final GoogleSignIn _googleSignIn = GoogleSignIn();
 
-final Watch<UserCredential?> userCredentials = Watch(null);
+// final Watch<UserCredential?> userCredentials = Watch(null);
 
-User? get user => userCredentials.value?.user;
+final Watch<Authorization?> authorization = Watch(null);
 
-bool get authenticated => user != null;
+// User? get user => userCredentials.value?.user;
+
+bool get authenticated => authorization != null;
 
 // String? name = "";
 // String? imageUrl = "";
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
-bool authSignedIn = false;
+
+// void signInWithJwtToken(String jwtToken) async {
+//   print('signInWithJwtToken()');
+//   final credentials = await _auth.signInWithCustomToken(jwtToken).catchError((error){
+//     print("failed to create credentials with jwt token");
+//     throw error;
+//   });
+//   print("user credentials created");
+//   userCredentials.value = credentials;
+// }
+
 String? uid = "";
 String? userEmail = "";
 
@@ -84,7 +96,7 @@ Future<String> signInWithEmailPassword(String email, String password) async {
 
 void signOut() async {
   print("signOut()");
-  userCredentials.value = null;
+  authorization.value = null;
   await _auth.signOut();
 }
 
@@ -115,35 +127,18 @@ void signInWithGoogle() async {
   );
 
   print("setting user credentials");
-  userCredentials.value = await _auth.signInWithCredential(credential);
+  final credentials = await _auth.signInWithCredential(credential);
+
+  if (credentials.user == null){
+    throw Exception('credentials.user is null');
+  }
+
   print("user credentials set");
-
-
-  // if (user != null) {
-  //   // // Checking if email and name is null
-  //   // assert(user.uid != null);
-  //   // assert(user.email != null);
-  //   // assert(user.displayName != null);
-  //   // assert(user.photoURL != null);
-  //
-  //   uid = user.uid;
-  //   name = user.displayName;
-  //   userEmail = user.email;
-  //   imageUrl = user.photoURL;
-  //
-  //   assert(!user.isAnonymous);
-  //   assert(await user.getIdToken() != null);
-  //
-  //   final User? currentUser = _auth.currentUser;
-  //   assert(user.uid == currentUser!.uid);
-  //
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   prefs.setBool('auth', true);
-  //
-  //   return 'Google sign in successful, User UID: ${user.uid}';
-  // }
-  //
-  // throw Exception();
+  authorization.value = Authorization(
+      userId: credentials.user!.uid,
+      displayName: credentials.user!.displayName,
+      email: credentials.user!.email
+  );
 }
 
 void signOutGoogle() async {
@@ -158,19 +153,13 @@ void signOutGoogle() async {
   print("User signed out of Google account");
 }
 
-Future getUser() async {
-  // Initialize Firebase
-  await Firebase.initializeApp();
-
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  bool authSignedIn = prefs.getBool('auth') ?? false;
-
-  final User? user = _auth.currentUser;
-
-  if (authSignedIn == true) {
-    if (user != null) {
-      uid = user.uid;
-      userEmail = user.email;
-    }
-  }
+class Authorization {
+  final String userId;
+  final String? email;
+  final String? displayName;
+  Authorization({
+    required this.userId,
+    this.displayName,
+    this.email = "",
+  });
 }

@@ -155,20 +155,15 @@ class _BuildView {
   }
 
   Widget account(){
-    return NullableWatchBuilder<UserCredential?>(userCredentials, (UserCredential? credentials){
-      if (credentials == null){
-        return dialog(child: text("No one logged in"));
-      }
-      final User? user = credentials.user;
-
-      if (user == null){
+    return NullableWatchBuilder<Authorization?>(authorization, (Authorization? authorization){
+      if (authorization == null){
         return dialog(child: text("No one logged in"));
       }
 
       return dialog(child: Column(
         crossAxisAlignment: axis.cross.start,
         children: [
-          text('${credentials.user!.displayName}`s Account', fontSize: 25),
+          text('${authorization.displayName}`s Account', fontSize: 25),
 
           text("Card Number"),
           Container(

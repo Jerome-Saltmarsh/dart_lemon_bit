@@ -123,9 +123,6 @@
 -- core mode and won't be possible to persist characters. 
 -- In the future the player will be able to store their character inside an sql database
 -- The name of the land is Atlas
-[SUBSCRIPTION]
-[ ] Stripe Payment
-[ ] Single sign on
 [MMO]
 [ ] Save / Load Character
 [ ] Attributes (Intelligence, Strength, Agility)
@@ -145,10 +142,12 @@
 [ ] Score  
 [ ] Weapon UI
 [SUBSCRIPTION]
-[ ] When a subscription is made it must be saved to a cloud database
 [ ] When a player enters a premium game it must check their subscription  
+[ ] When a subscription is made it must be saved to a cloud database
 [BUGS]
 [ ] Objects culled at bottom of screen
+[UI]
+[ ] Auto sign on (remember login)
 [COMPLETED]
 [x] Witch caste explosion nothing happens  
 [x] Archer fire multi arrow wrong direction  
