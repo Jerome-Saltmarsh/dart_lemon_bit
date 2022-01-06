@@ -1515,7 +1515,7 @@ extension GameFunctions on Game {
         )]);
   }
 
-  Npc spawnRandomZombie({int health = 25, required int experience}) {
+  Npc spawnRandomZombie({int health = 25, int experience = 1}) {
     if (zombieSpawnPoints.isEmpty) throw ZombieSpawnPointsEmptyException();
     Vector2 spawnPoint = randomItem(zombieSpawnPoints);
     return spawnZombie(spawnPoint.x, spawnPoint.y,

@@ -1,5 +1,6 @@
 import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
+import 'package:bleed_client/common/Modify_Game.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/input.dart';
@@ -125,7 +126,21 @@ void request(ClientRequest request, String value) {
 
 class _SendRequestToServer {
   upgradeAbility(int index){
+    print("sendRequest.upgradeAbility(index: $index)");
     sendClientRequest(ClientRequest.Upgrade_Ability, message: index);
+  }
+
+  spawnZombie(){
+    modifyGame(ModifyGame.Spawn_Zombie);
+  }
+
+  removeZombie(){
+    modifyGame(ModifyGame.Remove_Zombie);
+  }
+
+  modifyGame(ModifyGame request){
+    print("sendRequest.modifyGame($request)");
+    sendClientRequest(ClientRequest.Modify_Game, message: request.index);
   }
 }
 

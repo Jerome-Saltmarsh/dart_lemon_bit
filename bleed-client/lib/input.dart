@@ -25,51 +25,23 @@ import 'common/enums/Direction.dart';
 import 'ui/logic/showTextBox.dart';
 import 'utils.dart';
 
-LogicalKeyboardKey _keyReload = LogicalKeyboardKey.keyR;
-
-bool get keyPressedSpawnZombie => keyPressed(LogicalKeyboardKey.keyP);
-
-bool get keyEquipHandGun => keyPressed(LogicalKeyboardKey.digit1);
-
-bool get keyEquipShotgun => keyPressed(LogicalKeyboardKey.digit2);
-
-bool get keyEquipSniperRifle => keyPressed(LogicalKeyboardKey.digit3);
-
-bool get keyEquipMachineGun => keyPressed(LogicalKeyboardKey.digit4);
-
-bool get keyPressedSpace => keyPressed(LogicalKeyboardKey.space);
-
-bool get keyPressedReload => keyPressed(_keyReload);
-
-bool get keyPressedUseMedKit => keyPressed(LogicalKeyboardKey.keyH);
-
-bool get keyPressedMenu => keyPressed(LogicalKeyboardKey.escape);
-
-bool get keyPressedThrowGrenade => keyPressed(LogicalKeyboardKey.keyG);
-
-bool get keyPressedShowStore => keyPressed(LogicalKeyboardKey.keyI);
-
 bool get keyPressedPan => keyPressed(LogicalKeyboardKey.keyE);
-
-bool get keyPressedMelee => keyPressed(LogicalKeyboardKey.keyF);
 
 bool panningCamera = false;
 
 Offset _mouseWorldStart = Offset(0, 0);
 
 final _CharacterController characterController = _CharacterController();
+final RawKeyboard rawKeyboard = RawKeyboard.instance;
 
 void performPrimaryAction() {
   setCharacterAction(CharacterAction.Perform);
 }
 
-final RawKeyboard rawKeyboard = RawKeyboard.instance;
-
 void registerPlayKeyboardHandler() {
   print("registerPlayKeyboardHandler()");
   registerKeyboardHandler(_keyboardEventHandlerPlayMode);
 }
-
 
 void registerTextBoxKeyboardHandler(){
   registerKeyboardHandler(_handleKeyboardEventTextBox);
@@ -266,10 +238,7 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
     storage.put('position.y', camera3D.position.y);
     storage.put('position.z', camera3D.position.z);
   },
-  key.arrowUp: (){
-    // camera3D.viewportWidth += 100;
-    // camera3D.viewportHeight  = camera3D.viewportWidth;
-  },
+  key.arrowUp: sendRequest.spawnZombie,
   key.arrowDown: (){
     // camera3D.viewportWidth -= 100;
     // camera3D.viewportHeight  = camera3D.viewportWidth;
@@ -286,6 +255,8 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
     zoom = 1;
   },
 };
+
+
 
 void selectAbility1() {
   sendRequestSelectAbility(1);

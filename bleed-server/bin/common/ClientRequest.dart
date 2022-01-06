@@ -1,6 +1,6 @@
 enum ClientRequest {
-  Join,
   Update,
+  Join,
   Update_Cube3D,
   Revive,
   Equip,
@@ -23,4 +23,5 @@ enum ClientRequest {
   Upgrade_Ability,
   Reset_Character_Type,
   Leave_Lobby,
+  Modify_Game,
 }

@@ -17,6 +17,7 @@ import 'common/ClientRequest.dart';
 import 'common/GameError.dart';
 import 'common/GameStatus.dart';
 import 'common/GameType.dart';
+import 'common/Modify_Game.dart';
 import 'common/PlayerEvent.dart';
 import 'common/ServerResponse.dart';
 import 'common/WeaponType.dart';
@@ -476,6 +477,44 @@ void main() {
           }
 
           selectCharacterType(player, characterTypes[characterTypeIndex]);
+          break;
+
+        case ClientRequest.Modify_Game:
+
+          if (arguments.length != 3) {
+            errorArgsExpected(3, arguments);
+            return;
+          }
+
+          Player? player = findPlayerByUuid(arguments[1]);
+          if (player == null) {
+            errorPlayerNotFound();
+            return;
+          }
+
+          int? modifyGameIndex = int.tryParse(arguments[2]);
+          if (modifyGameIndex == null){
+            errorIntegerExpected(2, arguments[2]);
+            return;
+          }
+          if (modifyGameIndex < 0){
+            errorInvalidArg('gameModificationIndex: $modifyGameIndex cannot be negative');
+            return;
+          }
+          if (modifyGameIndex >= gameModifications.length){
+            errorInvalidArg('gameModificationIndex: $modifyGameIndex not a valid index');
+            return;
+          }
+
+          final ModifyGame modifyGame = gameModifications[modifyGameIndex];
+          switch(modifyGame){
+            case ModifyGame.Spawn_Zombie:
+              player.game.spawnRandomZombie();
+              break;
+            case ModifyGame.Remove_Zombie:
+              // TODO: Handle this case.
+              break;
+          }
           break;
 
         case ClientRequest.Leave_Lobby:
