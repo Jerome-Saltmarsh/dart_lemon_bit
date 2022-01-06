@@ -18,6 +18,7 @@ import 'package:bleed_client/events/onCompiledGameChanged.dart';
 import 'package:bleed_client/events/onPhaseChanged.dart';
 import 'package:bleed_client/events/onShadeMaxChanged.dart';
 import 'package:bleed_client/events/onTimeChanged.dart';
+import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/webSocket.dart';
@@ -45,10 +46,6 @@ Future init() async {
   initAudioPlayers();
   initCube();
 
-  sub((GameError error) async {
-    print('handling error');
-    print(error);
-  });
 
   // if (Uri.base.hasQuery && Uri.base.queryParameters.containsKey('host')) {
   //   Future.delayed(Duration(seconds: 1), () {
@@ -116,6 +113,7 @@ void initializeEventListeners() {
   phase.onChanged(onPhaseChanged);
   observeAmbientLight(onAmbientLightChanged);
   game.shadeMax.onChanged(onShadeMaxChanged);
+
 
 
   // registerKeyboardHandler((RawKeyEvent event) {

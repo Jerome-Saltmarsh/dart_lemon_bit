@@ -108,7 +108,7 @@ void openStripeCheckout(){
 
 class _Buttons {
   final Widget account = button("Account", () {
-    ui.dialog.value = Dialogs.Account;
+    game.dialog.value = Dialogs.Account;
   }, width: 200);
   final Widget logout = NullableWatchBuilder<Authorization?>(authorization, (Authorization? authorization){
     if (authorization == null){

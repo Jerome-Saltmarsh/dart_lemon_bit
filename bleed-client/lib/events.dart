@@ -1,5 +1,6 @@
 
 import 'package:bleed_client/authentication.dart';
+import 'package:bleed_client/common/GameError.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/enums/Mode.dart';
@@ -10,9 +11,11 @@ import 'package:bleed_client/logic.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
+import 'package:bleed_client/ui/ui.dart';
+import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:bleed_client/webSocket.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/functions/fullscreen_enter.dart';
 import 'package:lemon_engine/functions/fullscreen_exit.dart';
 import 'package:lemon_engine/game.dart';
@@ -22,6 +25,7 @@ import 'package:lemon_engine/state/zoom.dart';
 import 'common/GameType.dart';
 import 'constants/colours.dart';
 import 'enums/Region.dart';
+import 'functions/clearState.dart';
 
 class Events {
 
@@ -36,6 +40,34 @@ class Events {
     game.mode.onChanged(_onGameModeChanged);
     mouseEvents.onLeftClicked.onChanged(_onMouseLeftClickedChanged);
     authorization.onChanged(_onAuthorizationChanged);
+    sub(_onGameError);
+  }
+
+  Future _onGameError(GameError error) async {
+    print(error);
+
+    switch (error) {
+      case GameError.Subscription_Required:
+        game.dialog.value = Dialogs.Subscription_Required;
+        return;
+      case GameError.GameNotFound:
+        clearState();
+        webSocket.disconnect();
+        return;
+      case GameError.InvalidArguments:
+        if (compiledGame.length > 4) {
+          String message = compiledGame.substring(4, compiledGame.length);
+          print('Invalid Arguments: $message');
+        }
+        game.dialog.value = Dialogs.Invalid_Arguments;
+        return;
+      default:
+        break;
+    }
+    if (error == GameError.PlayerNotFound) {
+      clearState();
+      webSocket.disconnect();
+    }
   }
 
   void _onAuthorizationChanged(Authorization? value) async {

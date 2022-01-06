@@ -152,30 +152,6 @@ void parseState() {
       case ServerResponse.Error:
         GameError error = _consumeError();
         pub(error);
-        print(error);
-
-        switch (error) {
-          case GameError.Subscription_Required:
-            pub(error);
-            break;
-
-          case GameError.GameNotFound:
-            clearState();
-            webSocket.disconnect();
-            return;
-          case GameError.InvalidArguments:
-            if (compiledGame.length > 4) {
-              String message = compiledGame.substring(4, compiledGame.length);
-              print('Invalid Arguments: $message');
-            }
-            return;
-          default:
-            break;
-        }
-        if (error == GameError.PlayerNotFound) {
-          clearState();
-          webSocket.disconnect();
-        }
         return;
 
       case ServerResponse.Bullets:

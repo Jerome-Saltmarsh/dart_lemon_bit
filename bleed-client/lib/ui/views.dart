@@ -18,7 +18,6 @@ import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/ui/widgets.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_watch/watch_builder.dart';
@@ -37,8 +36,12 @@ Widget buildView(BuildContext context){
       if (serverType == Region.None){
         return _views.selectRegion;
       }
-      return WatchBuilder(ui.dialog, (Dialogs dialogs){
+      return WatchBuilder(game.dialog, (Dialogs dialogs){
         switch(dialogs){
+          case Dialogs.Invalid_Arguments:
+            return dialog(child: text("Invalid Arguments"));
+          case Dialogs.Subscription_Required:
+            return dialog(child: text("Subscription Required"));
           case Dialogs.Games:
             return WatchBuilder(game.type, (GameType gameType) {
               if (gameType == GameType.None) {
