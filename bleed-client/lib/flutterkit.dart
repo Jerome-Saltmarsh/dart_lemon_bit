@@ -194,26 +194,18 @@ Widget fullScreen({
   Alignment alignment = Alignment.center,
   Color? color,
 }) {
-  return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints){
-        return Container(
-            alignment: alignment,
-            width: constraints.maxWidth,
-            height: constraints.maxHeight,
-            color: color,
-            child: child);
-      });
-}
+  return Container(
+      alignment: alignment,
+      width: screen.width,
+      height: screen.height,
+      color: color,
+      child: child
+  );
 
-Widget page({required List<Widget> children}) {
-  return fullScreen(
-      child: Stack(
-    children: children,
-  ));
 }
 
 Widget height(double value) {
-  return Container(height: value);
+  return SizedBox(height: value);
 }
 
 final Widget height2 = height(2);
@@ -226,7 +218,7 @@ final Widget height50 = height(50);
 final Widget height64 = height(64);
 
 Widget width(double value) {
-  return Container(width: value);
+  return SizedBox(width: value);
 }
 
 final Widget width16 = width(16);

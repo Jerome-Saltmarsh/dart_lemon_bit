@@ -6,3 +6,9 @@ enum Dialogs {
   Confirm_Logout,
   Login,
 }
+
+final _UIOptions uiOptions = _UIOptions();
+
+class _UIOptions {
+  bool showTotalZombies = false;
+}

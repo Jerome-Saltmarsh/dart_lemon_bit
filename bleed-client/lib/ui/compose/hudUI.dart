@@ -166,6 +166,7 @@ Widget buildBottomCenter() {
 }
 
 Widget layout({
+  bool expand = true,
   Widget? topLeft,
   Widget? topRight,
   Widget? bottomRight,
@@ -174,7 +175,7 @@ Widget layout({
   Widget? child,
   double padding = 0
 }){
-  return Stack(
+  final stack = Stack(
     children: [
       if (topLeft != null)
         Positioned(top: padding, left: padding, child: topLeft,),
@@ -190,6 +191,8 @@ Widget layout({
         child,
     ],
   );
+
+  return expand ? fullScreen(child: stack): stack;
 }
 
 Widget buildUI3DCube() {
