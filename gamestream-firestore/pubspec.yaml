@@ -1,5 +1,5 @@
-name: gamestream_users
-description: A restful server for gamestream
+name: gamestream_firestore
+description: A library for accessing gamestream's firestore
 version: 1.0.0
 # homepage: https://www.example.com
 
