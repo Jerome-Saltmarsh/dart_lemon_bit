@@ -26,12 +26,11 @@ void initServer({String address = '0.0.0.0', int port = 8080}) async {
 FutureOr<Response> handleRequest(Request request) async {
   final path = request.url.path;
   print("handleRequest($path)");
-
   switch(path){
+    case "hello":
+      return Response.ok('world');
     case "stripe_event":
       request.readAsString().then(handleStripeEvent);
-      // final body = await request.readAsString();
-      // await handleStripeEvent(body);
       return Response.ok('');
     case "users":
       final params = request.requestedUri.queryParameters;
