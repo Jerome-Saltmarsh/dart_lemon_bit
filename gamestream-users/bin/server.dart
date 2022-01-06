@@ -168,30 +168,55 @@ typedef Json = Map<String, dynamic>;
 Future handleStripeEvent(String eventString) async {
   print("handleStripeEvent()");
 
+  if (eventString.isEmpty){
+    throw Exception('event string is empty');
+  }
+
   final event = jsonDecode(eventString) as Json;
-
   if (!event.containsKey('type')){
-    throw Exception("event does not contain type");
+    throw Exception("event object does not contain type");
   }
+
   final type = event['type'];
+  print("event.type: '$type'");
 
-  if (!event.containsKey('data')){
-    throw Exception("event does not contain data");
+  switch(type){
+    case 'checkout.session.completed':
+      webhooks.checkoutSessionCompleted(event);
+      break;
+    default:
+      print('no handler for stripe event $type');
+      break;
   }
-
-  String userId = "";
-
-  final data = event['data'] as Json;
-  final obj = data['object'] as Json;
-
-  if (obj.containsKey('client_reference_id')) {
-    print("data.object contains client_reference_id");
-    userId = obj['client_reference_id'];
-  }
-
-  print("event: {type: '$type', userId: '$userId'}");
-  database.createUser(userId);
 }
+
+// stripe webhook handlers
+final webhooks = _StripeWebhooks();
+
+class _StripeWebhooks {
+  void checkoutSessionCompleted(Json event){
+
+    if (!event.containsKey('data')){
+      throw Exception("event does not contain data");
+    }
+
+    final data = event['data'] as Json;
+
+    if (!data.containsKey('object')){
+      throw Exception("data does not contain object");
+    }
+
+    final obj = data['object'] as Json;
+
+    if (!obj.containsKey('client_reference_id')) {
+      throw Exception('Object does not contain client_reference_id');
+    }
+
+    final userId = obj['client_reference_id'];
+    database.createUser(userId);
+  }
+}
+
 
 String _getTimestamp() => DateTime.now().toUtc().toIso8601String();
 
