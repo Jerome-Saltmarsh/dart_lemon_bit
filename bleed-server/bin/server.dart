@@ -514,6 +514,12 @@ void main() {
             case ModifyGame.Remove_Zombie:
               // TODO: Handle this case.
               break;
+            case ModifyGame.Hour_Increase:
+              worldTime += secondsPerHour;
+              break;
+            case ModifyGame.Hour_Decrease:
+              worldTime -= secondsPerHour;
+              break;
           }
           break;
 

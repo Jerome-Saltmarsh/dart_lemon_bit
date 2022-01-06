@@ -240,15 +240,9 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   },
   key.arrowUp: sendRequest.spawnZombie,
   key.arrowDown: (){
-    // camera3D.viewportWidth -= 100;
-    // camera3D.viewportHeight  = camera3D.viewportWidth;
   },
-  key.arrowRight: (){
-    camera3D.fov += 10;
-  },
-  key.arrowLeft: (){
-    camera3D.fov -= 10;
-  },
+  key.arrowRight: sendRequest.hourIncrease,
+  key.arrowLeft: sendRequest.hourDecrease,
   key.u: (){
     camera.x = 0;
     camera.y = 0;

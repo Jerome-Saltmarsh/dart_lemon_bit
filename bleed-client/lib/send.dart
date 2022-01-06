@@ -138,6 +138,14 @@ class _SendRequestToServer {
     modifyGame(ModifyGame.Remove_Zombie);
   }
 
+  hourIncrease(){
+    modifyGame(ModifyGame.Hour_Increase);
+  }
+
+  hourDecrease(){
+    modifyGame(ModifyGame.Hour_Decrease);
+  }
+
   modifyGame(ModifyGame request){
     print("sendRequest.modifyGame($request)");
     sendClientRequest(ClientRequest.Modify_Game, message: request.index);
