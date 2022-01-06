@@ -141,14 +141,14 @@
 [ ] Design Map  
 [ ] Score  
 [ ] Weapon UI
-[SUBSCRIPTION]
-[ ] When a player enters a premium game it must check their subscription  
-[ ] When a subscription is made it must be saved to a cloud database
 [BUGS]
-[ ] Objects culled at bottom of screen
-[UI]
-[ ] Auto sign on (remember login)
+[ ] Objects culled at bottom of screen  
+[SUBSCRIPTION]
+[ ] When a subscription is made it must be saved to a cloud database
+[ ] UI check user subscription  
+[ ] When a player enters a premium game it must check their subscription  
 [COMPLETED]
+[x] Auto sign on (remember login)
 [x] Witch caste explosion nothing happens  
 [x] Archer fire multi arrow wrong direction  
 [x] Hide enemy mana

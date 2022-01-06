@@ -110,7 +110,12 @@ class _Buttons {
   final Widget account = button("Account", () {
     ui.dialog.value = Dialogs.Account;
   }, width: 200);
-  final Widget logout = button('Logout', signOut, width: 200);
+  final Widget logout = NullableWatchBuilder<Authorization?>(authorization, (Authorization? authorization){
+    if (authorization == null){
+      text ('No User Logged In');
+    }
+    return button('Logout ${authorization?.displayName}', signOut, width: 200);
+  });
   final Widget subscribe =
       button("Subscribe \$4.99", openStripeCheckout, width: 200);
   final Widget menu = NullableWatchBuilder<Authorization?>(authorization,
