@@ -35,6 +35,7 @@ import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/utils/list_util.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/time.dart';
+import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/state/cursor.dart';
 import 'package:lemon_math/Vector2.dart';
 
@@ -150,9 +151,14 @@ void parseState() {
 
       case ServerResponse.Error:
         GameError error = _consumeError();
+        pub(error);
         print(error);
 
         switch (error) {
+          case GameError.Subscription_Required:
+            pub(error);
+            break;
+
           case GameError.GameNotFound:
             clearState();
             webSocket.disconnect();
@@ -302,7 +308,6 @@ void parseState() {
         }
         break;
       default:
-        print("parser not implemented $serverResponse");
         return;
     }
 

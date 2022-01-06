@@ -6,6 +6,7 @@ import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
+import 'package:bleed_client/common/GameError.dart';
 import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
@@ -29,7 +30,7 @@ import 'package:bleed_client/watches/ambientLight.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/phase.dart';
 import 'package:bleed_client/watches/time.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/functions/register_on_mouse_scroll.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_math/Vector2.dart';
@@ -43,6 +44,11 @@ Future init() async {
   initializeEventListeners();
   initAudioPlayers();
   initCube();
+
+  sub((GameError error) async {
+    print('handling error');
+    print(error);
+  });
 
   // if (Uri.base.hasQuery && Uri.base.queryParameters.containsKey('host')) {
   //   Future.delayed(Duration(seconds: 1), () {

@@ -5,78 +5,64 @@ import 'package:googleapis_auth/auth_io.dart';
 import 'package:googleapis/firestore/v1.dart';
 import 'package:http/http.dart' as http;
 
-String _projectId = "";
-FirestoreApi? _firestoreApi;
+final _Firestore firestore = _Firestore();
 
-// https://github.com/dart-lang/samples/tree/master/server/google_apis
-void initFirestore() async {
-  print("initFirestore()");
-  print("getAuthClient");
-  final authClient = await _getAuthClient();
-  print("authClient set");
-  print("init firestore api");
-  _firestoreApi = FirestoreApi(authClient);
-  print("firestore api initialized");
-  print("initProjectId()");
-  _projectId = await _currentProjectId();
-  print("project.id = $_projectId");
-}
+class _Firestore {
 
-Future<AutoRefreshingAuthClient> _getAuthClient() {
-  return clientViaApplicationDefaultCredentials(
-    scopes: [FirestoreApi.datastoreScope],
-  );
-}
+  String _projectId = "";
+  FirestoreApi? _firestoreApi;
 
-Future<String> _currentProjectId() async {
-  for (var envKey in gcpProjectIdEnvironmentVariables) {
-    final value = Platform.environment[envKey];
-    if (value != null) return value;
+  // https://github.com/dart-lang/samples/tree/master/server/google_apis
+  void init() async {
+    print("firestore.init()");
+    final authClient = await _getAuthClient();
+    _firestoreApi = FirestoreApi(authClient);
+    _projectId = await _getProjectId();
+    print("firestore initialized");
   }
 
-  const host = 'http://metadata.google.internal/';
-  final url = Uri.parse('$host/computeMetadata/v1/project/project-id');
-
-  try {
-    final response = await http.get(
-      url,
-      headers: {'Metadata-Flavor': 'Google'},
+  Future<AutoRefreshingAuthClient> _getAuthClient() {
+    return clientViaApplicationDefaultCredentials(
+      scopes: [FirestoreApi.datastoreScope],
     );
+  }
 
-    if (response.statusCode != 200) {
-      throw HttpException(
-        '${response.body} (${response.statusCode})',
-        uri: url,
-      );
+  Future<String> _getProjectId() async {
+    for (var envKey in _gcpProjectIdEnvironmentVariables) {
+      final value = Platform.environment[envKey];
+      if (value != null) return value;
     }
 
-    return response.body;
-  } on SocketException {
-    stderr.writeln(
-      '''
+    const host = 'http://metadata.google.internal/';
+    final url = Uri.parse('$host/computeMetadata/v1/project/project-id');
+
+    try {
+      final response = await http.get(
+        url,
+        headers: {'Metadata-Flavor': 'Google'},
+      );
+
+      if (response.statusCode != 200) {
+        throw HttpException(
+          '${response.body} (${response.statusCode})',
+          uri: url,
+        );
+      }
+
+      return response.body;
+    } on SocketException {
+      stderr.writeln(
+        '''
 Could not connect to $host.
 If not running on Google Cloud, one of these environment variables must be set
 to the target Google Project ID:
-${gcpProjectIdEnvironmentVariables.join('\n')}
+${_gcpProjectIdEnvironmentVariables.join('\n')}
 ''',
-    );
-    rethrow;
+      );
+      rethrow;
+    }
   }
-}
 
-
-const gcpProjectIdEnvironmentVariables = {
-  'GCP_PROJECT',
-  'GCLOUD_PROJECT',
-  'CLOUDSDK_CORE_PROJECT',
-  'GOOGLE_CLOUD_PROJECT',
-};
-
-String _getTimestamp() => DateTime.now().toUtc().toIso8601String();
-
-final _Database database = _Database();
-
-class _Database {
 
   ProjectsDatabasesDocumentsResource get documents => _firestoreApi!.projects.databases.documents;
 
@@ -90,6 +76,11 @@ class _Database {
       }
       throw error;
     });
+  }
+
+
+  String _name(String value){
+    return 'projects/$_projectId/databases/(default)/documents/$value';
   }
 
   Future<CommitResponse> commit(CommitRequest request) {
@@ -130,6 +121,11 @@ class _Database {
   }
 }
 
-String _name(String value){
-  return 'projects/$_projectId/databases/(default)/documents/$value';
-}
+const _gcpProjectIdEnvironmentVariables = {
+  'GCP_PROJECT',
+  'GCLOUD_PROJECT',
+  'CLOUDSDK_CORE_PROJECT',
+  'GOOGLE_CLOUD_PROJECT',
+};
+
+String _getTimestamp() => DateTime.now().toUtc().toIso8601String();

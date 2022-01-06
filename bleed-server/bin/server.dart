@@ -1,4 +1,5 @@
 import 'package:bleed_server/CubeGame.dart';
+import 'package:bleed_server/firestore/firestore.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -28,6 +29,7 @@ import 'games/Royal.dart';
 import 'games/Moba.dart';
 import 'games/world.dart';
 import 'global.dart';
+import 'services.dart';
 import 'settings.dart';
 import 'update.dart';
 import 'utils.dart';
@@ -49,10 +51,16 @@ Player? findPlayerByUuid(String uuid) {
   return playerMap[uuid];
 }
 
+const subscriptionLockEnabled = false;
+
 void main() {
   print('Bleed Game Server Starting');
   initUpdateLoop();
   loadScenes();
+
+  if (subscriptionLockEnabled){
+    firestore.init();
+  }
 
   int totalConnections = 0;
 
@@ -161,6 +169,10 @@ void main() {
 
     void errorPlayerNotFound() {
       error(GameError.PlayerNotFound);
+    }
+
+    void errorSubscriptionRequired() {
+      error(GameError.Subscription_Required);
     }
 
     void errorPlayerDead() {
@@ -352,7 +364,7 @@ void main() {
           return;
 
         case ClientRequest.Join:
-          if (arguments.length != 2) {
+          if (arguments.length < 2) {
             errorArgsExpected(2, arguments);
             return;
           }
@@ -386,6 +398,17 @@ void main() {
               joinCube3D();
               break;
             case GameType.BATTLE_ROYAL:
+              if (arguments.length < 3) {
+                errorArgsExpected(3, arguments);
+                return;
+              }
+
+              final playerId = arguments[2];
+              if (!services.subscription.isSubscribed(playerId)){
+                errorSubscriptionRequired();
+                return;
+              }
+
               joinBattleRoyal();
               break;
           }

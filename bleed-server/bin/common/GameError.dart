@@ -25,4 +25,5 @@ enum GameError {
   Cooldown_Remaining,
   SkillLocked,
   SkillPointsRequired,
+  Subscription_Required,
 }

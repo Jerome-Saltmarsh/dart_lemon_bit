@@ -9,7 +9,7 @@ import '../firestore/firestore.dart';
 
 // https://stripe.com/docs/webhooks
 void main() async {
-  initFirestore();
+  firestore.init();
   initServer();
 }
 
@@ -41,7 +41,7 @@ FutureOr<Response> handleRequest(Request request) async {
       if (id == null) {
         return Response.forbidden('id is empty');
       }
-      final user = await database.findUserById(id);
+      final user = await firestore.findUserById(id);
       if (user == null){
         return Response.notFound("user with id $id could not be found");
       }
@@ -104,7 +104,7 @@ class _StripeWebhooks {
     final userGameStreamId = obj['client_reference_id'];
     final userStripeId = obj['customer'];
     final email = obj['customer_email'];
-    database.createUser(
+    firestore.createUser(
       userIdGameStream: userGameStreamId,
       userIdStripe: userStripeId,
       email: email,

@@ -39,4 +39,5 @@ enum ServerResponse {
   Cube_Joined,
   Game_Meta,
   Game_Royal,
+  Subscription_Required,
 }
