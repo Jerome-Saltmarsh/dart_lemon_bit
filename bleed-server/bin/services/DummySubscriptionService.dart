@@ -4,8 +4,8 @@ import '../services.dart';
 
 class DummySubscriptionService extends SubscriptionService {
   @override
-  bool isSubscribed(String playerId) {
-    return true;
+  Future<bool> isSubscribed(String playerId) {
+    return Future.value(true);
   }
 
   @override

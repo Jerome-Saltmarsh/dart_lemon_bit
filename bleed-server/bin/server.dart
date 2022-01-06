@@ -1,5 +1,4 @@
 import 'package:bleed_server/CubeGame.dart';
-import 'package:bleed_server/firestore/firestore.dart';
 import 'package:bleed_server/system.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
@@ -405,12 +404,16 @@ void main() {
               }
 
               final playerId = arguments[2];
-              if (!services.subscription.isSubscribed(playerId)){
-                errorSubscriptionRequired();
-                return;
-              }
-
-              joinBattleRoyal();
+              services.subscription.isSubscribed(playerId).then((
+                  bool isSubscribed
+              ) {
+                  if (isSubscribed) {
+                    joinBattleRoyal();
+                  } else {
+                    errorSubscriptionRequired();
+                  }
+                }
+              );
               break;
           }
           break;

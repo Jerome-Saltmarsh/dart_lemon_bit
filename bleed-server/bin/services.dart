@@ -13,6 +13,6 @@ class _Services {
 }
 
 abstract class SubscriptionService {
-  bool isSubscribed(String playerId);
+  Future<bool> isSubscribed(String playerId);
   void init();
 }
