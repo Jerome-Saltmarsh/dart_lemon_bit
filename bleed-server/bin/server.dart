@@ -1,5 +1,6 @@
 import 'package:bleed_server/CubeGame.dart';
 import 'package:bleed_server/firestore/firestore.dart';
+import 'package:bleed_server/system.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -51,17 +52,17 @@ Player? findPlayerByUuid(String uuid) {
   return playerMap[uuid];
 }
 
-const subscriptionLockEnabled = false;
 
 void main() {
-  print('Bleed Game Server Starting');
+  print('gamestream.online server starting');
+  if (isLocalMachine){
+    print("Environment Detected: Jerome's Computer");
+  }else{
+    print("Environment Detected: Google Cloud Machine");
+  }
+  services.subscription.init();
   initUpdateLoop();
   loadScenes();
-
-  if (subscriptionLockEnabled){
-    firestore.init();
-  }
-
   int totalConnections = 0;
 
   var handler = webSocketHandler((WebSocketChannel webSocket) {

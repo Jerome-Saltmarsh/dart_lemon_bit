@@ -5,6 +5,12 @@ import '../services.dart';
 class DummySubscriptionService extends SubscriptionService {
   @override
   bool isSubscribed(String playerId) {
-    return false;
+    return true;
+  }
+
+  @override
+  void init() {
+    print("dummySubscriptionService.init()");
+    // nothing to do
   }
 }

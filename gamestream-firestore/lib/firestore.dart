@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 
 final _Firestore firestore = _Firestore();
 
+
+
 class _Firestore {
 
   String _projectId = "";
@@ -15,9 +17,9 @@ class _Firestore {
   // https://github.com/dart-lang/samples/tree/master/server/google_apis
   void init() async {
     print("firestore.init()");
+    _projectId = await _getProjectId();
     final authClient = await _getAuthClient();
     _firestoreApi = FirestoreApi(authClient);
-    _projectId = await _getProjectId();
     print("firestore initialized");
   }
 
