@@ -11,3 +11,6 @@ dependencies:
   shelf_web_socket: ^1.0.1
   shelf_router: ^1.1.2
   uuid: ^3.0.4
+#  shelf: ^1.2.0
+  googleapis: ^7.0.0
+  googleapis_auth: ^1.1.0
