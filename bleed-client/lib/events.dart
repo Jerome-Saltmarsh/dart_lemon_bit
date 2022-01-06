@@ -124,7 +124,7 @@ class Events {
     switch(connection){
       case Connection.Connected:
         ui.drawCanvasAfterUpdate = false;
-        sendRequestJoinGame(game.type.value);
+        sendRequestJoinGame(game.type.value, playerId: authorization.value?.userId);
         mouseEvents.onLeftClicked.value = performPrimaryAction;
         mouseEvents.onPanStarted.value = performPrimaryAction;
         mouseEvents.onLongLeftClicked.value = performPrimaryAction;

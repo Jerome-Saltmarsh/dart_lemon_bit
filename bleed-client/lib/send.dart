@@ -81,8 +81,12 @@ void sendRequestAcquireHandgun(){
   sendRequestAcquireAbility(WeaponType.HandGun);
 }
 
-void sendRequestJoinGame(GameType type) {
-  webSocket.send('${ClientRequest.Join.index} ${type.index}');
+void sendRequestJoinGame(GameType type, {String? playerId}) {
+  if (playerId == null){
+    webSocket.send('${ClientRequest.Join.index} ${type.index}');
+  }else{
+    webSocket.send('${ClientRequest.Join.index} ${type.index} $playerId');
+  }
 }
 
 void sendRequestAcquireAbility(WeaponType type) {
