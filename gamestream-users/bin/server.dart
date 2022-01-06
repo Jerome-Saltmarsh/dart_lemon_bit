@@ -95,25 +95,25 @@ FutureOr<Response> handleRequest(Request request) async {
         return _responses.firestoreIsNull;
       }
 
-      if (request.method == 'POST') {
-        print("request.method == 'POST'");
-        final bodyString = await request.readAsString();
-        if (bodyString.isEmpty){
-          return Response.forbidden('body is empty');
-        }
-        final body = jsonDecoder.convert(bodyString);
-        if (body is Map == false){
-          return Response.forbidden('body is not map');
-        }
-        final bodyMap = body as Map;
-
-        if (!bodyMap.containsKey('id')){
-          return Response.forbidden('body requires field id');
-        }
-        final userId = bodyMap['id'];
-        final response = await database.createUser(userId);
-        return Response.ok(response.toString());
-      }
+      // if (request.method == 'POST') {
+      //   print("request.method == 'POST'");
+      //   final bodyString = await request.readAsString();
+      //   if (bodyString.isEmpty){
+      //     return Response.forbidden('body is empty');
+      //   }
+      //   final body = jsonDecoder.convert(bodyString);
+      //   if (body is Map == false){
+      //     return Response.forbidden('body is not map');
+      //   }
+      //   final bodyMap = body as Map;
+      //
+      //   if (!bodyMap.containsKey('id')){
+      //     return Response.forbidden('body requires field id');
+      //   }
+      //   final userId = bodyMap['id'];
+      //   // final response = await database.createUser(userId);
+      //   return Response.ok(response.toString());
+      // }
 
       final params = request.requestedUri.queryParameters;
       if (!params.containsKey('id')) {
@@ -212,8 +212,14 @@ class _StripeWebhooks {
       throw Exception('Object does not contain client_reference_id');
     }
 
-    final userId = obj['client_reference_id'];
-    database.createUser(userId);
+    final userGameStreamId = obj['client_reference_id'];
+    final userStripeId = obj['customer'];
+    final email = obj['customer_email'];
+    database.createUser(
+      userIdGameStream: userGameStreamId,
+      userIdStripe: userStripeId,
+      email: email,
+    );
   }
 }
 
@@ -245,21 +251,33 @@ class _Database {
     );
   }
 
-  Future<Document> createUser(String userId) async {
-    print("database.createUser('$userId')");
-    if (userId.isEmpty){
+  Future<Document> createUser({
+    required String userIdGameStream,
+    required String userIdStripe,
+    String? email,
+  }) async {
+    print("database.createUser('$userIdGameStream')");
+    if (userIdGameStream.isEmpty){
       throw Exception("userId is null");
     }
 
     final document = Document(
       createTime: _getTimestamp(),
+      fields: {
+        'stripe_customer_id': Value(stringValue: userIdStripe),
+        if (email != null)
+          'email': Value(stringValue: email),
+      }
     );
+
+
     final parent = 'projects/${project.id}/databases/(default)/documents';
     return await documents.createDocument(
         document,
         parent,
         'users',
-        documentId: userId
+        documentId: userIdGameStream,
+      // $fields:
     );
   }
 }
