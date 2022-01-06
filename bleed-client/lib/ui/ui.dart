@@ -10,5 +10,5 @@ enum Dialogs {
 final _UIOptions uiOptions = _UIOptions();
 
 class _UIOptions {
-  bool showTotalZombies = false;
+  bool showTotalZombies = true;
 }

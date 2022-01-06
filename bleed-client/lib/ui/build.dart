@@ -171,6 +171,12 @@ class _Build {
     );
   }
 
+  Widget totalZombies(){
+    return WatchBuilder(game.totalZombies, (int zombies){
+      return text("Zombies: $zombies");
+    });
+  }
+
   Widget title(){
     return WatchBuilder(game.region, (Region region){
       return Row(

@@ -61,7 +61,6 @@ class _Game {
   int totalCubes = 0;
   List<Projectile> projectiles = [];
   List<Vector2> bulletHoles = [];
-  int totalSprites = 0;
   int bulletHoleIndex = 0;
   List<Particle> particles = [];
   List<ParticleEmitter> particleEmitters = [];

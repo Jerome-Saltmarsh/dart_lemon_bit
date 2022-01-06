@@ -298,31 +298,23 @@ class _BuildView {
   }
 
   Widget selectGame() {
-    return LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints){
-        return Container(
-          width: constraints.maxWidth,
-          height: constraints.maxHeight,
-          child: layout(
-              padding: 8,
-              topLeft: widgets.title,
-              bottomLeft: buttons.editor,
-              topRight: buttons.menu,
-              children: [
-                Container(
-                  margin: const EdgeInsets.only(top: 140),
-                  child: SingleChildScrollView(
-                    child: Column(
-                        mainAxisAlignment: axis.main.center,
-                        crossAxisAlignment: axis.cross.center, children: [
-                      height16,
-                      widgets.gamesList,
-                    ]),
-                  ),
-                )    ]),
-        );
-      },
-    );
+    return layout(
+        padding: 8,
+        topLeft: widgets.title,
+        bottomLeft: buttons.editor,
+        topRight: buttons.menu,
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 140),
+            child: SingleChildScrollView(
+              child: Column(
+                  mainAxisAlignment: axis.main.center,
+                  crossAxisAlignment: axis.cross.center, children: [
+                height16,
+                widgets.gamesList,
+              ]),
+            ),
+          )    ]);
   }
 
   Widget connecting() {

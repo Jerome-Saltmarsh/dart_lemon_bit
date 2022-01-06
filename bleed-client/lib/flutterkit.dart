@@ -272,6 +272,19 @@ Widget bottomLeft({required Widget child, double padding = 0}) {
   );
 }
 
+Widget bottomCenter({required Widget child, double padding = 0}){
+  return Positioned(
+      bottom: padding,
+      child: Container(
+        width: screen.width,
+        child: Row(
+          mainAxisAlignment: axis.main.center,
+          crossAxisAlignment: axis.cross.end,
+          children: [child],
+        ),
+      ));
+}
+
 Widget dialog({
   required Widget child,
   double padding = 8,

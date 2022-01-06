@@ -81,6 +81,7 @@ class _Widgets {
   final Widget abilities = build.abilities();
   final Widget gamesList = build.gamesList();
   final Widget title = build.title();
+  final Widget totalZombies = build.totalZombies();
 
   final Widget settingsMenu = Column(
     children: [

@@ -16,6 +16,7 @@ import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/ui/state/decorationImages.dart';
 import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/ui/state/styleguide.dart';
+import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:flutter/material.dart';
@@ -36,30 +37,38 @@ Widget buildTopLeft() {
   return Positioned(
       top: _padding,
       left: _padding,
-      child: Row(
+      child: Column(
+        crossAxisAlignment: axis.cross.start,
         children: [
-          buildTime(),
-          width8,
-          WatchBuilder(game.type, (GameType value) {
-            if (value == GameType.Moba) {
-              return Row(
-                children: [
-                  WatchBuilder(game.teamLivesWest, (int lives) {
-                    return text("West: $lives");
-                  }),
-                  width8,
-                  WatchBuilder(game.teamLivesEast, (int lives) {
-                    return text("East: $lives");
-                  }),
-                ],
-              );
-            }
-            return emptyContainer;
-          }),
-          // buildMouseWorldPosition(),
+          Row(
+            children: [
+              buildTime(),
+              width8,
+              WatchBuilder(game.type, (GameType value) {
+                if (value == GameType.Moba) {
+                  return Row(
+                    children: [
+                      WatchBuilder(game.teamLivesWest, (int lives) {
+                        return text("West: $lives");
+                      }),
+                      width8,
+                      WatchBuilder(game.teamLivesEast, (int lives) {
+                        return text("East: $lives");
+                      }),
+                    ],
+                  );
+                }
+                return emptyContainer;
+              }),
+              // buildMouseWorldPosition(),
+            ],
+          ),
+          if (uiOptions.showTotalZombies)
+            widgets.totalZombies,
         ],
       ));
 }
+
 
 Widget buildSkillsButton() {
   return WatchBuilder(game.player.skillPoints, (int value) {
