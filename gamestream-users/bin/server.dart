@@ -73,10 +73,13 @@ class _Responses {
 
 FutureOr<Response> handleRequest(Request request) async {
   final path = request.url.path;
+  print("handleRequest($path)");
+
   switch(path){
-    case "stripe_event request received":
-      print("stripe_event");
+    case "stripe_event":
       request.readAsString().then(handleStripeEvent);
+      // final body = await request.readAsString();
+      // await handleStripeEvent(body);
       return Response.ok('');
     case "project":
       final projectId = await currentProjectId();
@@ -130,7 +133,7 @@ FutureOr<Response> handleRequest(Request request) async {
       final fields = jsonEncoder.convert(user.fields);
       return Response.ok(fields);
     default:
-      return Response.ok('Cannot handle request "${request.url}"');
+      return Response.notFound('Cannot handle request "${request.url}"');
   }
 }
 
@@ -160,9 +163,34 @@ CommitRequest _incrementRequest(String projectId) => CommitRequest(
   ],
 );
 
-void handleStripeEvent(String eventString) async {
+typedef Json = Map<String, dynamic>;
+
+Future handleStripeEvent(String eventString) async {
   print("handleStripeEvent()");
-  print(eventString);
+
+  final event = jsonDecode(eventString) as Json;
+
+  if (!event.containsKey('type')){
+    throw Exception("event does not contain type");
+  }
+  final type = event['type'];
+
+  if (!event.containsKey('data')){
+    throw Exception("event does not contain data");
+  }
+
+  String userId = "";
+
+  final data = event['data'] as Json;
+  final obj = data['object'] as Json;
+
+  if (obj.containsKey('client_reference_id')) {
+    print("data.object contains client_reference_id");
+    userId = obj['client_reference_id'];
+  }
+
+  print("event: {type: '$type', userId: '$userId'}");
+  database.createUser(userId);
 }
 
 String _getTimestamp() => DateTime.now().toUtc().toIso8601String();
