@@ -37,7 +37,7 @@ class _Logos {
   Widget google = Container(
     width: 30,
     height: 30,
-    decoration: BoxDecoration(image: icons.google),
+    decoration: BoxDecoration(image: decorationImages.google),
   );
 }
 
@@ -236,7 +236,7 @@ Widget buildToggleFullscreen() {
           text(fullScreenActive ? "Exit Fullscreen" : "Fullscreen"),
           width4,
           buildDecorationImage(
-              image: icons.fullscreen, width: 20, height: 20, borderWidth: 0),
+              image: decorationImages.fullscreen, width: 20, height: 20, borderWidth: 0),
         ],
       ),
     ),

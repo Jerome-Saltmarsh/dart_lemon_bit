@@ -275,7 +275,7 @@ Widget buildTopRight() {
 
 Widget _buildSettingsIcon() {
   return buildDecorationImage(
-      image: icons.settings, width: 40, height: 40, borderWidth: 0);
+      image: decorationImages.settings, width: 40, height: 40, borderWidth: 0);
 }
 
 void toggleDebugMode() {

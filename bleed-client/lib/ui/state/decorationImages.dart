@@ -14,12 +14,13 @@ Map<AbilityType, DecorationImage> mapAbilityTypeToDecorationImage = {
   AbilityType.Death_Strike: spellIcon("death-strike"),
 };
 
-final _Icons icons = _Icons();
+final _DecorationImages decorationImages = _DecorationImages();
 
-class _Icons {
+class _DecorationImages {
   DecorationImage settings = _png('icon settings');
   DecorationImage fullscreen = _png('icon fullscreen');
   DecorationImage google = _png('icons/google_logo');
+  DecorationImage royal = _png('icon-battle-royal');
 }
 
 DecorationImage spellIcon(String name) {

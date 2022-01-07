@@ -2,16 +2,14 @@ import 'package:bleed_client/assets.dart';
 import 'package:bleed_client/classes/Ability.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/GameType.dart';
-import 'package:bleed_client/constants/colors/white.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/enums/Region.dart';
+import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/toString.dart';
-import 'package:bleed_client/flutterkit.dart';
-import 'package:bleed_client/ui/state/decorationImages.dart';
 import 'package:bleed_client/styles.dart';
-import 'package:bleed_client/ui/widgets.dart';
+import 'package:bleed_client/toString.dart';
+import 'package:bleed_client/ui/state/decorationImages.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -254,6 +252,13 @@ class _Build {
             child: Row(
               mainAxisAlignment: axis.main.center,
               children: [
+                Container(
+                  width: 180,
+                  height: 111,
+                  decoration: BoxDecoration(
+                    image: decorationImages.royal
+                  ),
+                ),
                 joinButton,
                 width16,
                 type,

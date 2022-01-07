@@ -13,8 +13,8 @@ final List<GameType> selectableGameTypes = [
     GameType.MMO,
     GameType.Moba,
     GameType.BATTLE_ROYAL,
-    // GameType.CUBE3D,
-    // GameType.TACTICAL_COMBAT,
+    GameType.CUBE3D,
+    GameType.TACTICAL_COMBAT,
 ];
 
 final Map<GameType, String> gameTypeNames = {
