@@ -32,43 +32,42 @@ Widget buildLoginDialog(){
   return dialog(child: buttons.signInWithGoogleB);
 }
 
-Widget buildView(BuildContext context){
-  return layout(
-      padding: 8,
-      expand: true,
-      topLeft: widgets.title,
-      topRight: buttons.menu,
-      bottomRight: widgets.timeZone,
-      bottomLeft: widgets.theme,
-      child: WatchBuilder(game.mode, (Mode mode) {
-        if (mode == Mode.Edit) {
-          return _views.editor;
-        }
-        return WatchBuilder(game.region, (Region serverType) {
-          if (serverType == Region.None) {
-            return _views.selectRegion;
-          }
-          return WatchBuilder(game.dialog, (Dialogs dialogs) {
-            switch (dialogs) {
-              case Dialogs.Login:
-                return buildLoginDialog();
-              case Dialogs.Invalid_Arguments:
-                return dialog(child: text("Invalid Arguments"));
-              case Dialogs.Subscription_Required:
-                return dialog(child: text("Subscription Required"));
-              case Dialogs.Games:
-                return WatchBuilder(game.type, (GameType gameType) {
-                  if (gameType == GameType.None) {
-                    return _views.selectGame;
-                  }
-                  return WatchBuilder(webSocket.connection,
-                      (Connection connection) {
-                    switch (connection) {
-                      case Connection.Connecting:
-                        return _views.connecting;
-                      case Connection.Connected:
-                        return _views.connected;
-                      case Connection.None:
+Widget buildView(BuildContext context) {
+  return WatchBuilder(game.mode, (Mode mode) {
+    if (mode == Mode.Edit) {
+      return _views.editor;
+    }
+    return WatchBuilder(webSocket.connection, (Connection connection) {
+      switch (connection) {
+        case Connection.Connecting:
+          return _views.connecting;
+        case Connection.Connected:
+          return _views.connected;
+        case Connection.None:
+          return layout(
+              padding: 8,
+              expand: true,
+              topLeft: widgets.title,
+              topRight: buttons.menu,
+              bottomRight: widgets.timeZone,
+              bottomLeft: widgets.theme,
+              child: WatchBuilder(game.region, (Region serverType) {
+                if (serverType == Region.None) {
+                  return _views.selectRegion;
+                }
+                return WatchBuilder(game.dialog, (Dialogs dialogs) {
+                  switch (dialogs) {
+                    case Dialogs.Login:
+                      return buildLoginDialog();
+                    case Dialogs.Invalid_Arguments:
+                      return dialog(child: text("Invalid Arguments"));
+                    case Dialogs.Subscription_Required:
+                      return dialog(child: text("Subscription Required"));
+                    case Dialogs.Games:
+                      return WatchBuilder(game.type, (GameType gameType) {
+                        if (gameType == GameType.None) {
+                          return _views.selectGame;
+                        }
                         return Stack(
                           children: [
                             _views.selectGame,
@@ -83,20 +82,20 @@ Widget buildView(BuildContext context){
                                 )),
                           ],
                         );
-                      default:
-                        return _views.connection;
-                    }
-                  });
+                      });
+                    case Dialogs.Account:
+                      return _views.account;
+                    case Dialogs.Confirm_Logout:
+                      return dialog(child: text("Confirm Logout"));
+                  }
                 });
+              }));
 
-              case Dialogs.Account:
-                return _views.account;
-              case Dialogs.Confirm_Logout:
-                return dialog(child: text("Confirm Logout"));
-            }
-          });
-        });
-      }));
+        default:
+          return _views.connection;
+      }
+    });
+  });
 }
 
 final _Views _views = _Views();
