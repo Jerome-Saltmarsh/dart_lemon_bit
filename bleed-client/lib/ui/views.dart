@@ -194,22 +194,25 @@ class _BuildView {
         bottomLeft: Row(
           children: [
             onHover((bool hovering){
+              const _width = 150.0;
+              final theme = border(child: text("Theme"), width: _width);
+
               if (!hovering){
-                return text("Theme");
+                return theme;
               }else{
                 return Column(
                   crossAxisAlignment: axis.cross.start,
                   children: [
                     button("PressStart2P", (){
                       ui.themeData.value = themes.pressStart2P;
-                    }),
+                    }, width: _width),
                     button("ConcertOne", (){
                       ui.themeData.value = themes.concertOne;
-                    }),
+                    }, width: _width),
                     button("Standard", (){
                       ui.themeData.value = null;
-                    }),
-                    text("Theme")
+                    }, width: _width),
+                    theme
                   ],
                 );
               }
