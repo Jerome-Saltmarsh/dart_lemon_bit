@@ -100,7 +100,7 @@ class _State {
   bool observeMode = false;
   bool showServers = false;
   bool expandScore = false;
-  Watch<bool> menuVisible = Watch(false);
+  // Watch<bool> menuVisible = Watch(false);
 }
 
 class _Properties {

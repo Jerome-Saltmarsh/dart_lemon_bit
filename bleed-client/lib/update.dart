@@ -50,7 +50,6 @@ void _updateBleed(){
   if (game.status.value == GameStatus.Finished) return;
 
   updateZoom();
-  _updateMenuVisible();
   framesSinceEvent++;
   readPlayerInput();
   updateParticles();
@@ -99,8 +98,4 @@ void updateParticleEmitters() {
     particle.y = emitter.y;
     emitter.emit(particle);
   }
-}
-
-void _updateMenuVisible() {
-  hud.state.menuVisible.value = mouseAvailable && mouseX > screen.width - 500 && mouseY < 200;
 }

@@ -20,8 +20,10 @@ import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lemon_engine/game.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
+import '../assets.dart';
 import '../styles.dart';
 import '../webSocket.dart';
 
@@ -186,6 +188,13 @@ class _BuildView {
         color: Colors.blue,
         topLeft: widgets.title,
         topRight: buttons.menu,
+        bottomLeft: Row(
+          children: [
+            button("PressStart2P", (){
+              ui.themeData.value = ThemeData(fontFamily: assets.fonts.pressStart2P);
+            })
+          ],
+        ),
         child: Row(
           mainAxisAlignment: axis.main.center,
           children: [
@@ -360,8 +369,8 @@ Widget _buildSelectRegionButton(Region region) {
           game.region.value = region;
         },
     margin: EdgeInsets.only(bottom: 8),
-    width: 180,
+    width: 200,
     borderWidth: 3,
-    fillColor: colours.black05,
+    fillColor: colours.black15,
   );
 }

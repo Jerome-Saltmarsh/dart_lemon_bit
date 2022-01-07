@@ -284,8 +284,13 @@ void toggleDebugMode() {
 }
 
 Widget buildMenu() {
-  return WatchBuilder(hud.state.menuVisible, (bool value) {
-    if (!value) return _buildSettingsIcon();
+  return mouseOver(builder: (BuildContext context, bool mouseOver){
+
+    final menu = border(child: text("Menu"));
+
+    if (!mouseOver){
+      return menu;
+    }
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -298,9 +303,13 @@ Widget buildMenu() {
         buttons.audio,
         width8,
         buildToggleFullscreen(),
+        width8,
+        menu,
       ],
     );
+
   });
+
 }
 
 void clearPlayerMessage() {
