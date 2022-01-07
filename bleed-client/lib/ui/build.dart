@@ -379,7 +379,15 @@ Region detectRegion(){
   final timeZoneName = DateTime.now().timeZoneName.toLowerCase();
 
   if (timeZoneName.contains('australia')){
+    print('australia detected');
     return Region.Australia;
+  }
+  if (timeZoneName.contains('new zealand')){
+    print('australia detected');
+    return Region.Australia;
+  }
+  if (timeZoneName.contains('european')){
+    return Region.Germany;
   }
 
   return Region.None;
