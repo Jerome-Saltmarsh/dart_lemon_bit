@@ -1,3 +1,4 @@
+import 'package:bleed_client/assets.dart';
 import 'package:bleed_client/authentication.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
@@ -16,6 +17,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/functions/fullscreen_enter.dart';
 import 'package:lemon_engine/functions/fullscreen_exit.dart';
+import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/fullscreen_active.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -82,8 +84,9 @@ class _Widgets {
   final Widget gamesList = build.gamesList();
   final Widget title = build.title();
   final Widget totalZombies = build.totalZombies();
-
   final Widget timeZone = build.timeZone();
+  final Widget theme = build.theme();
+
 
   final Widget settingsMenu = Column(
     children: [
@@ -111,6 +114,10 @@ void openStripeCheckout(){
 
 class _Buttons {
 
+  final Widget login = button("Login", (){
+      game.dialog.value = Dialogs.Login;
+  });
+
   final Widget signInWithGoogleB = button(Row(
     children: [
       logos.google,
@@ -135,11 +142,13 @@ class _Buttons {
   });
   final Widget subscribe =
       button("Subscribe \$4.99", openStripeCheckout, width: 200);
+
   final Widget menu = NullableWatchBuilder<Authorization?>(authorization,
       (Authorization? authorization) {
 
     if (authorization == null) {
-      return buttons.signInWithGoogleB;
+      return buttons.login;
+      // return buttons.signInWithGoogleB;
     }
     return mouseOver(builder: (BuildContext context, bool mouseOver) {
       return mouseOver ? widgets.settingsMenu : buttons.account;

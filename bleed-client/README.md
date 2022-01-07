@@ -147,6 +147,7 @@
 [ ] When a subscription is made it must be saved to a cloud database
 [ ] UI check user subscription  
 [ ] When a player enters a premium game it must check their subscription  
+[ ] WS server should restfully call the subscription service  
 [COMPLETED]
 [x] Auto sign on (remember login)
 [x] Witch caste explosion nothing happens  

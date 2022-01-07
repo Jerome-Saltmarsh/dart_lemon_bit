@@ -1,3 +1,4 @@
+import 'package:bleed_client/assets.dart';
 import 'package:bleed_client/classes/Ability.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/GameType.dart';
@@ -14,6 +15,7 @@ import 'package:bleed_client/ui/widgets.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lemon_engine/game.dart';
 import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -169,6 +171,33 @@ class _Build {
         ],
       ),
     );
+  }
+
+  Widget theme(){
+    return onHover((bool hovering){
+      const _width = 150.0;
+      final theme = border(child: text("Theme"), width: _width);
+
+      if (!hovering){
+        return theme;
+      }else{
+        return Column(
+          crossAxisAlignment: axis.cross.start,
+          children: [
+            button("PressStart2P", (){
+              ui.themeData.value = themes.pressStart2P;
+            }, width: _width),
+            button("ConcertOne", (){
+              ui.themeData.value = themes.concertOne;
+            }, width: _width),
+            button("Standard", (){
+              ui.themeData.value = null;
+            }, width: _width),
+            theme
+          ],
+        );
+      }
+    });
   }
 
   Widget timeZone(){

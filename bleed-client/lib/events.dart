@@ -15,6 +15,7 @@ import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:bleed_client/webSocket.dart';
+import 'package:flutter/material.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/functions/fullscreen_enter.dart';
 import 'package:lemon_engine/functions/fullscreen_exit.dart';
@@ -170,7 +171,7 @@ class Events {
         fullScreenEnter();
         break;
       default:
-        ui.backgroundColor.value = colours.white;
+        ui.backgroundColor.value = Colors.blue;
         fullScreenExit();
         break;
     }

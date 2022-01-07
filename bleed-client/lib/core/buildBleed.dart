@@ -13,15 +13,12 @@ import 'update.dart';
 Widget buildGameStream(){
   return Game(
     title: "GAMESTREAM.ONLINE",
-    // themeData: ThemeData(
-    //   fontFamily: assets.fonts.pressStart2P
-    // ),
     init: init,
     update: update,
     buildUI: buildView,
     drawCanvas: drawCanvas,
     drawCanvasAfterUpdate: true,
-    backgroundColor: colours.white,
+    backgroundColor: Colors.blue,
     buildLoadingScreen: buildLoadingScreen
   );
 }
