@@ -172,17 +172,51 @@ class _Buttons {
   });
 
   final Widget region = WatchBuilder(game.region, (Region region) {
-    return button(
-      text(enumString(region), fontSize: 20),
-      logic.deselectRegion,
-      width: 185,
-      hint: 'Region',
-      // height: 63,
-      fillColor: colours.green,
-      borderColor: colours.green,
-      borderWidth: 6,
-      borderRadius: BorderRadius.only(topRight: radius4, bottomRight: radius4),
-    );
+
+    const _width = 200.0;
+    const _height = 63.0;
+
+    return onHover((bool hovering){
+
+      if (!hovering){
+        return button(
+          text(enumString(region), fontSize: 20),
+          logic.deselectRegion,
+          width: _width,
+          hint: 'Region',
+          height: _height,
+          fillColor: colours.green,
+          borderColor: colours.green,
+          borderWidth: 6,
+          borderRadius: BorderRadius.only(topRight: radius4, bottomRight: radius4),
+        );
+      }
+
+      return Container(
+        color: colours.black20,
+        child: Column(
+          children: [
+            border(
+                width: _width,
+                height: _height,
+                fillColor: colours.green,
+                color: colours.green,
+                radius: borderRadius0,
+                child: text("Region", fontSize: 20)),
+            ...selectableRegions.map((value) {
+            return button(text(enumString(value)), (){
+              game.region.value = value;
+            },
+            fillColor: region == value ? Colors.red : Colors.orange,
+            width: _width,
+            height: _height,
+              borderRadius: borderRadius0,
+            );
+          }).toList()],
+        ),
+      );
+
+    });
   });
 }
 

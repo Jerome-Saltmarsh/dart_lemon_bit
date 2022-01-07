@@ -17,7 +17,7 @@ Widget buildLoadingScreen(BuildContext context) {
         Column(
           mainAxisAlignment: axis.main.center,
           children: [
-            text("DOWNLOADING ${(value * 100).toInt()}%", color: Colors.black),
+            text("GAMESTREAM ${(value * 100).toInt()}%", color: Colors.black),
             Container(
               width: _width,
               height: _height,

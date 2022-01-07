@@ -187,6 +187,10 @@ Widget layout({
 }){
   final stack = Stack(
     children: [
+      if (children != null)
+        ...children,
+      if (child != null)
+        child,
       if (topLeft != null)
         Positioned(top: padding, left: padding, child: topLeft,),
       if (topRight != null)
@@ -195,10 +199,6 @@ Widget layout({
         Positioned(bottom: padding, right: padding, child: bottomRight,),
       if (bottomLeft != null)
         Positioned(bottom: padding, left: padding, child: bottomLeft,),
-      if (children != null)
-        ...children,
-      if (child != null)
-        child,
     ],
   );
 

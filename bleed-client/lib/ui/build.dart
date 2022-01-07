@@ -217,34 +217,21 @@ class _Build {
   }
 
   Widget title(){
-    return WatchBuilder(game.region, (Region region){
-      return Row(
-        children: [
-          text("GAMESTREAM",
-            fontSize: 60,
-            fontFamily: assets.fonts.libreBarcode39Text
-          ),
-          // border(
-          //     // child: Text("GAMESTREAM.ONLINE",
-          //     //     style: TextStyle(
-          //     //         fontSize: 30,
-          //     //         fontWeight: bold,
-          //     //         fontFamily: 'PressStart2P',
-          //     //         color: white,
-          //     //     ),
-          //     //
-          //     // ),
-          //     child: text("GAMESTREAM.ONLINE",
-          //       fontSize: 30,
-          //     ),
-          //     borderWidth: 6,
-          //     radius: const BorderRadius.only(topLeft: radius4, bottomLeft: radius4)
-          // ),
-        ],
-      );
-    });
+    return text("GAMESTREAM",
+        fontSize: 60,
+        color: Colors.black,
+        fontFamily: assets.fonts.libreBarcode39Text
+    );
+  }
 
-
+  Widget titleStandard(){
+    return border(
+        child: text("GAMESTREAM.ONLINE",
+          fontSize: 30,
+        ),
+        borderWidth: 6,
+        radius: const BorderRadius.only(topLeft: radius4, bottomLeft: radius4)
+    );
   }
 
   Widget gamesList(){

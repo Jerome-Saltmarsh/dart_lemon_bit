@@ -54,6 +54,7 @@ Widget buildView(BuildContext context) {
               expand: true,
               topLeft: widgets.title,
               topRight: Row(
+                crossAxisAlignment: axis.cross.start,
                 children: [
                   buttons.region,
                   width4,
