@@ -108,6 +108,20 @@ void openStripeCheckout(){
 }
 
 class _Buttons {
+
+  final Widget signInWithGoogleB = button(Row(
+    children: [
+      logos.google,
+      width16,
+      text("Sign in with Google", color: Colors.black),
+    ],
+  ), signInWithGoogle,
+    fillColor: Colors.white,
+    fillColorMouseOver: Colors.white,
+    borderColorMouseOver: colours.blue,
+    borderWidth: 3,
+  );
+
   final Widget account = button("Account", () {
     game.dialog.value = Dialogs.Account;
   }, width: 200);
@@ -123,18 +137,7 @@ class _Buttons {
       (Authorization? authorization) {
 
     if (authorization == null) {
-      return button(Row(
-        children: [
-          logos.google,
-          width16,
-          text("Sign in with Google", color: Colors.black),
-        ],
-      ), signInWithGoogle,
-        fillColor: Colors.white,
-        fillColorMouseOver: Colors.white,
-        borderColorMouseOver: colours.blue,
-        borderWidth: 3,
-      );
+      return buttons.signInWithGoogleB;
     }
     return mouseOver(builder: (BuildContext context, bool mouseOver) {
       return mouseOver ? widgets.settingsMenu : buttons.account;

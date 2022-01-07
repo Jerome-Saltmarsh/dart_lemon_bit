@@ -182,23 +182,30 @@ class _BuildView {
 
   Widget selectRegion() {
     return layout(
-        padding: 8,
+        expand: true,
+        color: Colors.blue,
         topLeft: widgets.title,
         topRight: buttons.menu,
-        bottomLeft: text("v0.01", color: Colors.black),
-        children: [
-          Container(
-            margin: EdgeInsets.only(top: 140),
-            child: SingleChildScrollView(
-              child: Column(
-                  mainAxisAlignment: axis.main.center,
-                  crossAxisAlignment: axis.cross.center, children: [
-                Container(child: text("SELECT REGION", fontSize: 50, fontWeight: bold)),
-                height16,
-                ...selectableServerTypes.map(_buildSelectRegionButton)
-              ]),
+        child: Row(
+          mainAxisAlignment: axis.main.center,
+          children: [
+            Container(
+              margin: EdgeInsets.only(top: 140),
+              child: SingleChildScrollView(
+                child: Column(
+                    mainAxisAlignment: axis.main.center,
+                    crossAxisAlignment: axis.cross.center,
+                    children: [
+                      Container(
+                          child: text("SELECT REGION",
+                              fontSize: 50, fontWeight: bold)),
+                      height16,
+                      ...selectableServerTypes.map(_buildSelectRegionButton)
+                    ]),
+              ),
             ),
-          )    ]);
+          ],
+        ));
   }
 
   Widget gameFinished() {

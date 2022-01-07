@@ -195,9 +195,9 @@ Widget fullScreen({
   Color? color,
 }) {
   return Container(
-      alignment: alignment,
-      width: screen.width,
-      height: screen.height,
+      // alignment: alignment,
+      width: double.infinity,
+      height: double.infinity,
       color: color,
       child: child
   );

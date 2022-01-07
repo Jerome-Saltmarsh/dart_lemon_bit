@@ -182,7 +182,8 @@ Widget layout({
   Widget? bottomLeft,
   List<Widget>? children,
   Widget? child,
-  double padding = 0
+  double padding = 0,
+  Color? color,
 }){
   final stack = Stack(
     children: [
@@ -201,7 +202,7 @@ Widget layout({
     ],
   );
 
-  return expand ? fullScreen(child: stack): stack;
+  return expand ? fullScreen(child: stack, color: color): stack;
 }
 
 Widget buildUI3DCube() {

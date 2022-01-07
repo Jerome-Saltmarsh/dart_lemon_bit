@@ -29,9 +29,9 @@ final List<Region> selectableServerTypes =
       && (debug || type != Region.LocalHost)
     ).toList();
 
-const String _default = "https://server-ws-sydney-2-osbmaezptq-ts.a.run.app";
-const String sydneyMoba = "https://server-ws-sydney-2-osbmaezptq-ts.a.run.app";
-const String sydneyMMO = "https://server-ws-sydney-2-osbmaezptq-ts.a.run.app";
+const String _default = "https://gamestream-server-sydney-3-osbmaezptq-ts.a.run.app";
+const String sydneyMoba = "https://gamestream-server-sydney-3-osbmaezptq-ts.a.run.app";
+const String sydneyMMO = "https://gamestream-server-sydney-3-osbmaezptq-ts.a.run.app";
 
 String parseHttpToWebSocket(String url) {
   return url.replaceAll("https", "wss") + "/:8080";
