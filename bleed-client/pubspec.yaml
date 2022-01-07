@@ -48,6 +48,12 @@ flutter:
     - family: Gugi-Regular
       fonts:
         - asset: fonts/Gugi-Regular.ttf
+    - family: GermaniaOne-Regular
+      fonts:
+        - asset: fonts/GermaniaOne-Regular.ttf
+    - family: LibreBarcode39Text-Regular
+      fonts:
+        - asset: fonts/LibreBarcode39Text-Regular.ttf
   assets:
      - images/
      - audio/

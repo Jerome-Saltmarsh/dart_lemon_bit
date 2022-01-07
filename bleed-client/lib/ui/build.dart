@@ -187,14 +187,17 @@ class _Build {
             button("PressStart2P", (){
               ui.themeData.value = themes.pressStart2P;
             }, width: _width),
-            button("ConcertOne", (){
-              ui.themeData.value = themes.concertOne;
-            }, width: _width),
             button("Gugi", (){
               ui.themeData.value = themes.gugi;
             }, width: _width),
+            button("GermanioOne", (){
+              ui.themeData.value = themes.germaniaOne;
+            }, width: _width),
             button("Slackey", (){
               ui.themeData.value = themes.slackey;
+            }, width: _width),
+            button(assets.fonts.libreBarcode39Text, (){
+              ui.themeData.value = themes.libreBarcode39Text;
             }, width: _width),
             button("Standard", (){
               ui.themeData.value = null;
