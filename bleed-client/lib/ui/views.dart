@@ -184,6 +184,7 @@ class _BuildView {
 
   Widget selectRegion() {
     return layout(
+        padding: 8,
         expand: true,
         color: Colors.blue,
         topLeft: widgets.title,
