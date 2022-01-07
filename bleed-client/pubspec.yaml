@@ -39,6 +39,9 @@ flutter:
     - family: LuckiestGuy-Regular
       fonts:
         - asset: fonts/LuckiestGuy-Regular.ttf
+    - family: ConcertOne-Regular
+      fonts:
+        - asset: fonts/ConcertOne-Regular.ttf
   assets:
      - images/
      - audio/

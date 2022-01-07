@@ -202,6 +202,9 @@ class _BuildView {
                     button("PressStart2P", (){
                       ui.themeData.value = themes.pressStart2P;
                     }),
+                    button("ConcertOne", (){
+                      ui.themeData.value = themes.concertOne;
+                    }),
                     button("Standard", (){
                       ui.themeData.value = null;
                     }),

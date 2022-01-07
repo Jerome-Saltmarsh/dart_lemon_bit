@@ -9,8 +9,10 @@ class _Assets {
 
 class _Fonts {
   final String pressStart2P = 'PressStart2P';
+  final String concertOne = 'ConcertOne-Regular';
 }
 
 class _Themes {
   final pressStart2P = ThemeData(fontFamily: assets.fonts.pressStart2P);
+  final concertOne = ThemeData(fontFamily: assets.fonts.concertOne);
 }
