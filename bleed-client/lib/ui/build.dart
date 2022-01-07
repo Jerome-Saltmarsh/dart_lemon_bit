@@ -174,7 +174,7 @@ class _Build {
   Widget theme(){
     return onHover((bool hovering){
       const _width = 150.0;
-      final theme = border(child: text("Theme"), width: _width);
+      final theme = border(child: text("Theme"), width: _width, radius: borderRadius0);
 
       if (!hovering){
         return theme;
@@ -184,19 +184,19 @@ class _Build {
           children: [
             button("PressStart2P", (){
               ui.themeData.value = themes.pressStart2P;
-            }, width: _width),
+            }, width: _width, borderRadius: borderRadius0, fillColorMouseOver: colours.green),
             button("Gugi", (){
               ui.themeData.value = themes.gugi;
-            }, width: _width),
+            }, width: _width, borderRadius: borderRadius0, fillColorMouseOver: colours.green),
             button("GermanioOne", (){
               ui.themeData.value = themes.germaniaOne;
-            }, width: _width),
+            }, width: _width, borderRadius: borderRadius0, fillColorMouseOver: colours.green),
             button("Slackey", (){
               ui.themeData.value = themes.slackey;
-            }, width: _width),
+            }, width: _width, borderRadius: borderRadius0, fillColorMouseOver: colours.green),
             button("Standard", (){
               ui.themeData.value = null;
-            }, width: _width),
+            }, width: _width, borderRadius: borderRadius0, fillColorMouseOver: colours.green),
             theme
           ],
         );
