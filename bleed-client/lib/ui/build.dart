@@ -196,9 +196,6 @@ class _Build {
             button("Slackey", (){
               ui.themeData.value = themes.slackey;
             }, width: _width),
-            button(assets.fonts.libreBarcode39Text, (){
-              ui.themeData.value = themes.libreBarcode39Text;
-            }, width: _width),
             button("Standard", (){
               ui.themeData.value = null;
             }, width: _width),
@@ -223,24 +220,26 @@ class _Build {
     return WatchBuilder(game.region, (Region region){
       return Row(
         children: [
-          border(
-              // child: Text("GAMESTREAM.ONLINE",
-              //     style: TextStyle(
-              //         fontSize: 30,
-              //         fontWeight: bold,
-              //         fontFamily: 'PressStart2P',
-              //         color: white,
-              //     ),
-              //
-              // ),
-              child: text("GAMESTREAM.ONLINE",
-                fontSize: 30,
-              ),
-              borderWidth: 6,
-              radius: const BorderRadius.only(topLeft: radius4, bottomLeft: radius4)
+          text("GAMESTREAM",
+            fontSize: 60,
+            fontFamily: assets.fonts.libreBarcode39Text
           ),
-          if (region != Region.None)
-            buttons.region,
+          // border(
+          //     // child: Text("GAMESTREAM.ONLINE",
+          //     //     style: TextStyle(
+          //     //         fontSize: 30,
+          //     //         fontWeight: bold,
+          //     //         fontFamily: 'PressStart2P',
+          //     //         color: white,
+          //     //     ),
+          //     //
+          //     // ),
+          //     child: text("GAMESTREAM.ONLINE",
+          //       fontSize: 30,
+          //     ),
+          //     borderWidth: 6,
+          //     radius: const BorderRadius.only(topLeft: radius4, bottomLeft: radius4)
+          // ),
         ],
       );
     });

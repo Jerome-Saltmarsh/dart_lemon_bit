@@ -177,7 +177,7 @@ class _Buttons {
       logic.deselectRegion,
       width: 185,
       hint: 'Region',
-      height: 63,
+      // height: 63,
       fillColor: colours.green,
       borderColor: colours.green,
       borderWidth: 6,

@@ -13,7 +13,8 @@ Widget text(dynamic value, {
     GestureTapCallback? onPressed,
     TextDecoration decoration = TextDecoration.none,
     FontWeight fontWeight = normal,
-    Color color = white
+    Color color = white,
+    String? fontFamily,
 }) {
   final Widget _text = Text(
       value.toString(),
@@ -21,7 +22,8 @@ Widget text(dynamic value, {
           color: color,
           fontSize: fontSize,
           decoration: decoration,
-          fontWeight: fontWeight
+          fontWeight: fontWeight,
+          fontFamily: fontFamily
       )
   );
 

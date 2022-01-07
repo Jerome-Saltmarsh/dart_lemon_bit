@@ -53,7 +53,13 @@ Widget buildView(BuildContext context) {
               padding: 8,
               expand: true,
               topLeft: widgets.title,
-              topRight: buttons.menu,
+              topRight: Row(
+                children: [
+                  buttons.region,
+                  width4,
+                  buttons.menu,
+                ],
+              ),
               bottomRight: buttons.editor,
               bottomLeft: widgets.theme,
               child: WatchBuilder(game.region, (Region serverType) {
