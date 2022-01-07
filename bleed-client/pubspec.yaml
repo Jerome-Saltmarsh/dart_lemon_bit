@@ -42,6 +42,9 @@ flutter:
     - family: ConcertOne-Regular
       fonts:
         - asset: fonts/ConcertOne-Regular.ttf
+    - family: Slackey-Regular
+      fonts:
+        - asset: fonts/Slackey-Regular.ttf
   assets:
      - images/
      - audio/

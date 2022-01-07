@@ -118,12 +118,16 @@ class _Buttons {
       game.dialog.value = Dialogs.Login;
   }, width: 120, borderWidth: 2);
 
-  final Widget signInWithGoogleB = button(Row(
-    children: [
-      logos.google,
-      width16,
-      text("Sign in with Google", color: Colors.black),
-    ],
+  final Widget signInWithGoogleB = button(Container(
+    padding: EdgeInsets.symmetric(horizontal: 8),
+    child: Row(
+      mainAxisAlignment: axis.main.apart,
+      children: [
+        logos.google,
+        width16,
+        text("Sign in with Google", color: Colors.black),
+      ],
+    ),
   ), signInWithGoogle,
     fillColor: Colors.white,
     fillColorMouseOver: Colors.white,

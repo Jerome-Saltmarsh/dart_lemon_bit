@@ -1,4 +1,3 @@
-
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/authentication.dart';
 import 'package:bleed_client/common/GameStatus.dart';
@@ -25,8 +24,17 @@ import 'package:lemon_watch/watch_builder.dart';
 import '../styles.dart';
 import '../webSocket.dart';
 
-Widget buildLoginDialog(){
-  return dialog(child: buttons.signInWithGoogleB);
+Widget buildLoginDialog() {
+  return dialog(
+      child: layout(
+          bottomRight: button("cancel", () {
+            game.dialog.value = Dialogs.Games;
+          }),
+          child: Column(
+            children: [
+              buttons.signInWithGoogleB,
+            ],
+          )));
 }
 
 Widget buildView(BuildContext context) {
@@ -111,23 +119,24 @@ class _Views {
 }
 
 final Map<Connection, String> connectionMessage = {
-    Connection.Done: "Connection to the server was lost",
-    Connection.Error: "An error occurred with the connection to the server",
-    Connection.Connected: "Connected to server",
-    Connection.Connecting: "Connecting to server",
-    Connection.Failed_To_Connect: "Failed to establish a connection with the server",
-    Connection.None: "There is no connection to the server",
+  Connection.Done: "Connection to the server was lost",
+  Connection.Error: "An error occurred with the connection to the server",
+  Connection.Connected: "Connected to server",
+  Connection.Connecting: "Connecting to server",
+  Connection.Failed_To_Connect:
+      "Failed to establish a connection with the server",
+  Connection.None: "There is no connection to the server",
 };
 
 class _BuildView {
-  Widget connection(){
-    return WatchBuilder(webSocket.connection, (Connection value){
+  Widget connection() {
+    return WatchBuilder(webSocket.connection, (Connection value) {
       return center(Column(
         mainAxisAlignment: axis.main.center,
         children: [
           text(connectionMessage[value], fontSize: 25),
           height16,
-          button("Cancel", (){
+          button("Cancel", () {
             logic.exit();
             webSocket.disconnect();
           }, width: 100)
@@ -170,22 +179,21 @@ class _BuildView {
     });
   }
 
-  Widget account(){
-    return NullableWatchBuilder<Authorization?>(authorization, (Authorization? authorization){
-      if (authorization == null){
+  Widget account() {
+    return NullableWatchBuilder<Authorization?>(authorization,
+        (Authorization? authorization) {
+      if (authorization == null) {
         return dialog(child: text("No one logged in"));
       }
 
-      return dialog(child: Column(
+      return dialog(
+          child: Column(
         crossAxisAlignment: axis.cross.start,
         children: [
           text('${authorization.displayName}`s Account', fontSize: 25),
-
           text("Card Number"),
-          Container(
-              width: 250,
-              child: TextField()),
-          button('Subscribe', (){}),
+          Container(width: 250, child: TextField()),
+          button('Subscribe', () {}),
         ],
       ));
     });
@@ -217,97 +225,114 @@ class _BuildView {
   Widget gameFinished() {
     return dialog(
         child: layout(
-          topLeft: text("Game Finished"),
-          topRight: text("Exit"),
-        )
-    );
+      topLeft: text("Game Finished"),
+      topRight: text("Exit"),
+    ));
   }
 
   final Widget _waiting = text("Waiting", color: Colors.white54);
 
   Widget awaitingPlayers() {
     return layout(
-      padding: 8,
-      topLeft: button(text("Back", fontSize: 20), logic.leaveLobby, borderWidth: 3, fillColor: colours.orange, fillColorMouseOver: colours.redDark),
-      topRight: text("GAMESTREAM", fontSize: 25),
-      children: [dialog(
-        padding: 16,
-          color: colours.black05,
-          borderWidth: 6,
-          child: Column(
-            crossAxisAlignment: axis.cross.stretch,
-            children: [
-              Row(
-                mainAxisAlignment: axis.main.apart,
+        padding: 8,
+        topLeft: button(text("Back", fontSize: 20), logic.leaveLobby,
+            borderWidth: 3,
+            fillColor: colours.orange,
+            fillColorMouseOver: colours.redDark),
+        topRight: text("GAMESTREAM", fontSize: 25),
+        children: [
+          dialog(
+              padding: 16,
+              color: colours.black05,
+              borderWidth: 6,
+              child: Column(
+                crossAxisAlignment: axis.cross.stretch,
                 children: [
-                  text(enumString(game.type.value), fontSize: 35, fontWeight: FontWeight.bold),
-                  // button(text("Cancel", fontSize: 20), logic.leaveLobby, borderWidth: 3, fillColor: colours.orange, fillColorMouseOver: colours.redDark),
-                ],
-              ),
-              height16,
-              border(child: text("The game will start automatically once all players have joined")),
-              height16,
-              WatchBuilder(game.lobby.playerCount, (int value) {
-
-                int totalPlayersRequired = game.numberOfTeams.value * game.teamSize.value;
-
-                if (game.teamSize.value == 1) {
-                  List<Widget> playerNames = [];
-
-                  for(int i = 0; i < game.lobby.players.length; i++){
-                    playerNames.add(text(game.lobby.players[i].name, fontSize: 20));
-                  }
-                  for(int i = 0; i < game.numberOfTeams.value - game.lobby.players.length; i++){
-                    playerNames.add(_waiting);
-                  }
-                  return Column(
-                    crossAxisAlignment: axis.cross.start,
+                  Row(
+                    mainAxisAlignment: axis.main.apart,
                     children: [
-                      text("Players ${game.lobby.players.length} / $totalPlayersRequired", decoration: underline, fontSize: 22),
-                      height8,
-                      ...playerNames
+                      text(enumString(game.type.value),
+                          fontSize: 35, fontWeight: FontWeight.bold),
+                      // button(text("Cancel", fontSize: 20), logic.leaveLobby, borderWidth: 3, fillColor: colours.orange, fillColorMouseOver: colours.redDark),
                     ],
-                  );
-                }
+                  ),
+                  height16,
+                  border(
+                      child: text(
+                          "The game will start automatically once all players have joined")),
+                  height16,
+                  WatchBuilder(game.lobby.playerCount, (int value) {
+                    int totalPlayersRequired =
+                        game.numberOfTeams.value * game.teamSize.value;
 
-                int count1 =
-                    5 - game.lobby.players.where((player) => player.team == 0).length;
-                int count2 =
-                    5 - game.lobby.players.where((player) => player.team == 1).length;
+                    if (game.teamSize.value == 1) {
+                      List<Widget> playerNames = [];
 
+                      for (int i = 0; i < game.lobby.players.length; i++) {
+                        playerNames.add(
+                            text(game.lobby.players[i].name, fontSize: 20));
+                      }
+                      for (int i = 0;
+                          i <
+                              game.numberOfTeams.value -
+                                  game.lobby.players.length;
+                          i++) {
+                        playerNames.add(_waiting);
+                      }
+                      return Column(
+                        crossAxisAlignment: axis.cross.start,
+                        children: [
+                          text(
+                              "Players ${game.lobby.players.length} / $totalPlayersRequired",
+                              decoration: underline,
+                              fontSize: 22),
+                          height8,
+                          ...playerNames
+                        ],
+                      );
+                    }
 
-                List<Widget> a = [];
-                List<Widget> b = [];
+                    int count1 = 5 -
+                        game.lobby.players
+                            .where((player) => player.team == 0)
+                            .length;
+                    int count2 = 5 -
+                        game.lobby.players
+                            .where((player) => player.team == 1)
+                            .length;
 
-                for (int i = 0; i < count1; i++) {
-                  a.add(_waiting);
-                }
-                for (int i = 0; i < count2; i++) {
-                  b.add(_waiting);
-                }
+                    List<Widget> a = [];
+                    List<Widget> b = [];
 
-                return Column(
-                  crossAxisAlignment: axis.cross.start,
-                  children: [
-                    text("Team 1", decoration: underline),
-                    height8,
-                    ...game.lobby
-                        .getPlayersOnTeam(0)
-                        .map((player) => text(player.name)),
-                    ...a,
-                    height16,
-                    text("Team 2", decoration: underline),
-                    height8,
-                    ...game.lobby
-                        .getPlayersOnTeam(1)
-                        .map((player) => text(player.name)),
-                    ...b,
-                  ],
-                );
-              }),
-            ],
-          )),
-    ]);
+                    for (int i = 0; i < count1; i++) {
+                      a.add(_waiting);
+                    }
+                    for (int i = 0; i < count2; i++) {
+                      b.add(_waiting);
+                    }
+
+                    return Column(
+                      crossAxisAlignment: axis.cross.start,
+                      children: [
+                        text("Team 1", decoration: underline),
+                        height8,
+                        ...game.lobby
+                            .getPlayersOnTeam(0)
+                            .map((player) => text(player.name)),
+                        ...a,
+                        height16,
+                        text("Team 2", decoration: underline),
+                        height8,
+                        ...game.lobby
+                            .getPlayersOnTeam(1)
+                            .map((player) => text(player.name)),
+                        ...b,
+                      ],
+                    );
+                  }),
+                ],
+              )),
+        ]);
   }
 
   Widget selectGame() {
@@ -326,44 +351,43 @@ class _BuildView {
   }
 
   Widget connecting() {
-    return WatchBuilder(game.region, (Region region){
-      return center(
-          Column(
-            mainAxisAlignment: axis.main.center,
-            children: [
-              Container(
-                height: 80,
-                child: AnimatedTextKit(repeatForever: true, animatedTexts: [
-                  RotateAnimatedText("Connecting to server: ${enumString(region)}",
-                      textStyle: TextStyle(color: Colors.white, fontSize: 30)),
-                ]),
-              ),
-              height32,
-              onPressed(child: text("Cancel"), callback: (){
+    return WatchBuilder(game.region, (Region region) {
+      return center(Column(
+        mainAxisAlignment: axis.main.center,
+        children: [
+          Container(
+            height: 80,
+            child: AnimatedTextKit(repeatForever: true, animatedTexts: [
+              RotateAnimatedText("Connecting to server: ${enumString(region)}",
+                  textStyle: TextStyle(color: Colors.white, fontSize: 30)),
+            ]),
+          ),
+          height32,
+          onPressed(
+              child: text("Cancel"),
+              callback: () {
                 sharedPreferences.remove('server');
                 refreshPage();
               }),
-            ],
-          )
-      );
+        ],
+      ));
     });
   }
 }
 
-
 Widget _buildSelectRegionButton(Region region) {
   return button(
     text(
-        enumString(region),
-        fontSize: 25,
-        // fontWeight: FontWeight.bold
-    ), (){
-          game.region.value = region;
-        },
+      enumString(region),
+      fontSize: 25,
+      // fontWeight: FontWeight.bold
+    ),
+    () {
+      game.region.value = region;
+    },
     margin: EdgeInsets.only(bottom: 8),
     width: 200,
     borderWidth: 3,
     fillColor: colours.black15,
   );
 }
-
