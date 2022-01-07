@@ -215,10 +215,13 @@ class _Build {
   }
 
   Widget title(){
-    return text("GAMESTREAM",
-        fontSize: 60,
-        color: Colors.black,
-        fontFamily: assets.fonts.libreBarcode39Text
+    return border(
+      radius: borderRadius2,
+      child: text("GAMESTREAM",
+          fontSize: 60,
+          color: Colors.white,
+          fontFamily: assets.fonts.libreBarcode39Text
+      ),
     );
   }
 
@@ -247,10 +250,13 @@ class _Build {
               }, width: _buttonWidth, borderWidth: 3,
             fillColor: colours.black05,
           );
+
+
           return Container(
-            margin: const EdgeInsets.only(bottom: 16),
+            margin: const EdgeInsets.only(bottom: 32),
             child: Row(
               mainAxisAlignment: axis.main.center,
+              crossAxisAlignment: axis.cross.start,
               children: [
                 Container(
                   width: 180,
@@ -259,9 +265,15 @@ class _Build {
                     image: decorationImages.royal
                   ),
                 ),
-                joinButton,
                 width16,
-                type,
+                Column(
+                  crossAxisAlignment: axis.cross.start,
+                  children: [
+                    joinButton,
+                    height8,
+                    type,
+                  ],
+                ),
               ],
             ),
           );

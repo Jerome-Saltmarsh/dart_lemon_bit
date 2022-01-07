@@ -167,11 +167,11 @@ class Events {
     print('events.onGameStatusChanged($value)');
     switch(value){
       case GameStatus.In_Progress:
-        ui.backgroundColor.value = colours.black;
+        // ui.backgroundColor.value = colours.black;
         fullScreenEnter();
         break;
       default:
-        ui.backgroundColor.value = Colors.blue;
+        // ui.backgroundColor.value = Colors.black;
         fullScreenExit();
         break;
     }
