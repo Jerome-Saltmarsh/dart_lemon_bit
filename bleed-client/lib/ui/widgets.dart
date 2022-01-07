@@ -116,7 +116,7 @@ class _Buttons {
 
   final Widget login = button("Login", (){
       game.dialog.value = Dialogs.Login;
-  });
+  }, width: 120, borderWidth: 2);
 
   final Widget signInWithGoogleB = button(Row(
     children: [
@@ -148,7 +148,6 @@ class _Buttons {
 
     if (authorization == null) {
       return buttons.login;
-      // return buttons.signInWithGoogleB;
     }
     return mouseOver(builder: (BuildContext context, bool mouseOver) {
       return mouseOver ? widgets.settingsMenu : buttons.account;

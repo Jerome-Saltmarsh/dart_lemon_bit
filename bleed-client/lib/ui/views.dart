@@ -18,13 +18,10 @@ import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/ui/widgets.dart';
-import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lemon_engine/game.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import '../assets.dart';
 import '../styles.dart';
 import '../webSocket.dart';
 
@@ -195,61 +192,26 @@ class _BuildView {
   }
 
   Widget selectRegion() {
-    return layout(
-        padding: 8,
-        expand: true,
-        color: Colors.blue,
-        topLeft: widgets.title,
-        topRight: buttons.menu,
-        bottomRight: widgets.timeZone,
-        bottomLeft: Row(
-          children: [
-            onHover((bool hovering){
-              const _width = 150.0;
-              final theme = border(child: text("Theme"), width: _width);
-
-              if (!hovering){
-                return theme;
-              }else{
-                return Column(
-                  crossAxisAlignment: axis.cross.start,
-                  children: [
-                    button("PressStart2P", (){
-                      ui.themeData.value = themes.pressStart2P;
-                    }, width: _width),
-                    button("ConcertOne", (){
-                      ui.themeData.value = themes.concertOne;
-                    }, width: _width),
-                    button("Standard", (){
-                      ui.themeData.value = null;
-                    }, width: _width),
-                    theme
-                  ],
-                );
-              }
-            })
-          ],
+    return Row(
+      mainAxisAlignment: axis.main.center,
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 140),
+          child: SingleChildScrollView(
+            child: Column(
+                mainAxisAlignment: axis.main.center,
+                crossAxisAlignment: axis.cross.center,
+                children: [
+                  Container(
+                      child: text("SELECT REGION",
+                          fontSize: 50, fontWeight: bold)),
+                  height16,
+                  ...selectableServerTypes.map(_buildSelectRegionButton)
+                ]),
+          ),
         ),
-        child: Row(
-          mainAxisAlignment: axis.main.center,
-          children: [
-            Container(
-              margin: EdgeInsets.only(top: 140),
-              child: SingleChildScrollView(
-                child: Column(
-                    mainAxisAlignment: axis.main.center,
-                    crossAxisAlignment: axis.cross.center,
-                    children: [
-                      Container(
-                          child: text("SELECT REGION",
-                              fontSize: 50, fontWeight: bold)),
-                      height16,
-                      ...selectableServerTypes.map(_buildSelectRegionButton)
-                    ]),
-              ),
-            ),
-          ],
-        ));
+      ],
+    );
   }
 
   Widget gameFinished() {
