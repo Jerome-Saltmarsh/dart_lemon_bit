@@ -45,6 +45,9 @@ flutter:
     - family: Slackey-Regular
       fonts:
         - asset: fonts/Slackey-Regular.ttf
+    - family: Gugi-Regular
+      fonts:
+        - asset: fonts/Gugi-Regular.ttf
   assets:
      - images/
      - audio/

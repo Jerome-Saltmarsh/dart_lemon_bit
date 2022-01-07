@@ -190,6 +190,9 @@ class _Build {
             button("ConcertOne", (){
               ui.themeData.value = themes.concertOne;
             }, width: _width),
+            button("Gugi", (){
+              ui.themeData.value = themes.gugi;
+            }, width: _width),
             button("Slackey", (){
               ui.themeData.value = themes.slackey;
             }, width: _width),
