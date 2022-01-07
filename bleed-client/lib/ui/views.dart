@@ -18,6 +18,7 @@ import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/ui/widgets.dart';
+import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/game.dart';
@@ -191,11 +192,22 @@ class _BuildView {
         topRight: buttons.menu,
         bottomLeft: Row(
           children: [
-            button("PressStart2P", (){
-              if (ui.themeData.value != themes.pressStart2P){
-                ui.themeData.value = themes.pressStart2P;
+            onHover((bool hovering){
+              if (!hovering){
+                return text("Theme");
               }else{
-                ui.themeData.value = null;
+                return Column(
+                  crossAxisAlignment: axis.cross.start,
+                  children: [
+                    button("PressStart2P", (){
+                      ui.themeData.value = themes.pressStart2P;
+                    }),
+                    button("Standard", (){
+                      ui.themeData.value = null;
+                    }),
+                    text("Theme")
+                  ],
+                );
               }
             })
           ],
