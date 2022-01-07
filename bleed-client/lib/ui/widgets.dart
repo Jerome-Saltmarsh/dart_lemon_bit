@@ -178,8 +178,8 @@ class _Buttons {
       width: 185,
       hint: 'Region',
       height: 63,
-      fillColor: colours.orange,
-      borderColor: colours.orange,
+      fillColor: colours.green,
+      borderColor: colours.green,
       borderWidth: 6,
       borderRadius: BorderRadius.only(topRight: radius4, bottomRight: radius4),
     );
