@@ -191,7 +191,11 @@ class _BuildView {
         bottomLeft: Row(
           children: [
             button("PressStart2P", (){
-              ui.themeData.value = ThemeData(fontFamily: assets.fonts.pressStart2P);
+              if (ui.themeData.value != themes.pressStart2P){
+                ui.themeData.value = themes.pressStart2P;
+              }else{
+                ui.themeData.value = null;
+              }
             })
           ],
         ),
