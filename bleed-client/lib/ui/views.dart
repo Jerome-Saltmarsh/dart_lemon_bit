@@ -190,6 +190,7 @@ class _BuildView {
         color: Colors.blue,
         topLeft: widgets.title,
         topRight: buttons.menu,
+        bottomRight: widgets.timeZone,
         bottomLeft: Row(
           children: [
             onHover((bool hovering){
@@ -394,3 +395,4 @@ Widget _buildSelectRegionButton(Region region) {
     fillColor: colours.black15,
   );
 }
+

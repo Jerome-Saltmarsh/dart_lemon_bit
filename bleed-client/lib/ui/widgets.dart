@@ -83,6 +83,8 @@ class _Widgets {
   final Widget title = build.title();
   final Widget totalZombies = build.totalZombies();
 
+  final Widget timeZone = build.timeZone();
+
   final Widget settingsMenu = Column(
     children: [
       buttons.account,

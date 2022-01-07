@@ -19,6 +19,7 @@ import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/Region.dart';
+import 'package:bleed_client/ui/build.dart';
 import 'package:bleed_client/ui/ui.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_watch/watch.dart';
@@ -30,7 +31,7 @@ _Player get player => game.player;
 class _Game {
   final Watch<Dialogs> dialog = Watch(Dialogs.Games);
   final Watch<Mode> mode = Watch(Mode.Play);
-  final Watch<Region> region = Watch(Region.None);
+  final Watch<Region> region = Watch(detectRegion());
   final Watch<int> numberOfPlayersNeeded = Watch(0);
   final List<Effect> effects = [];
   final _Settings settings = _Settings();

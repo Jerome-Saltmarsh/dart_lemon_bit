@@ -171,6 +171,10 @@ class _Build {
     );
   }
 
+  Widget timeZone(){
+    return text(DateTime.now().timeZoneName);
+  }
+
   Widget totalZombies(){
     return WatchBuilder(game.totalZombies, (int zombies){
       return text("Zombies: $zombies");
@@ -367,4 +371,16 @@ class _Build {
       );
     });
   }
+}
+
+
+Region detectRegion(){
+  print("detectRegion()");
+  final timeZoneName = DateTime.now().timeZoneName.toLowerCase();
+
+  if (timeZoneName.contains('australia')){
+    return Region.Australia;
+  }
+
+  return Region.None;
 }
