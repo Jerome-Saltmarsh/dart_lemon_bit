@@ -49,7 +49,7 @@ Widget buildView(BuildContext context) {
               expand: true,
               topLeft: widgets.title,
               topRight: buttons.menu,
-              bottomRight: widgets.timeZone,
+              bottomRight: buttons.editor,
               bottomLeft: widgets.theme,
               child: WatchBuilder(game.region, (Region serverType) {
                 if (serverType == Region.None) {
@@ -349,23 +349,18 @@ class _BuildView {
   }
 
   Widget selectGame() {
-    return layout(
-        padding: 8,
-        topLeft: widgets.title,
-        bottomLeft: buttons.editor,
-        topRight: buttons.menu,
-        children: [
-          Container(
-            margin: const EdgeInsets.only(top: 140),
-            child: SingleChildScrollView(
-              child: Column(
-                  mainAxisAlignment: axis.main.center,
-                  crossAxisAlignment: axis.cross.center, children: [
-                height16,
-                widgets.gamesList,
-              ]),
-            ),
-          )    ]);
+    return Container(
+      margin: const EdgeInsets.only(top: 140),
+      child: SingleChildScrollView(
+        child: Column(
+            mainAxisAlignment: axis.main.center,
+            crossAxisAlignment: axis.cross.center,
+            children: [
+              height16,
+              widgets.gamesList,
+            ]),
+      ),
+    );
   }
 
   Widget connecting() {
