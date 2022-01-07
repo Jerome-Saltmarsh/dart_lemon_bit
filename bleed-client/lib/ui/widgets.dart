@@ -116,7 +116,7 @@ class _Buttons {
 
   final Widget login = button("Login", (){
       game.dialog.value = Dialogs.Login;
-  }, width: 120, borderWidth: 2);
+  }, width: 200, height: 63, borderWidth: 2);
 
   final Widget signInWithGoogleB = button(Container(
     padding: EdgeInsets.symmetric(horizontal: 8),
