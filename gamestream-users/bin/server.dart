@@ -48,8 +48,10 @@ FutureOr<Response> handleRequest(Request request) async {
       }
       final Map<String, Object> _headers = {};
       _headers['Content-Type'] = 'application/json';
-      final fields = jsonEncode(user.fields);
-      return Response.ok(fields, headers: _headers);
+      _headers['Access-Control-Allow-Headers'] = "Access-Control-Allow-Origin, Accept";
+      _headers['Access-Control-Allow-Origin'] = "*";
+      final body = jsonEncode(user.fields);
+      return Response.ok(body, headers: _headers);
     default:
       return Response.notFound('Cannot handle request "${request.url}"');
   }
