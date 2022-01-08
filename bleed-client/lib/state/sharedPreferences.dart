@@ -117,6 +117,69 @@ class _Storage {
   }
 }
 
+extension SharedPreferencesExtensions on SharedPreferences {
+
+  void putAny(String key, dynamic value){
+    print("storage.put({key: '$key', value: '$value'})");
+
+    if (key.isEmpty) throw Exception("key is empty");
+
+    if (value == null){
+      print('cannot store key $key because value is null');
+      return;
+    }
+
+    if (value is String){
+      sharedPreferences.setString(key, value);
+      return;
+    }
+
+    if (value is int){
+      sharedPreferences.setInt(key, value);
+      return;
+    }
+
+    if (value is double){
+      sharedPreferences.setDouble(key, value);
+      return;
+    }
+
+    if (value is bool){
+      sharedPreferences.setBool(key, value);
+      return;
+    }
+
+    if (value is DateTime){
+      sharedPreferences.setString(key, value.toIso8601String());
+      return;
+    }
+
+    throw Exception('cannot store value');
+  }
+
+  T getAny<T>(String key){
+    if (!sharedPreferences.containsKey(key)){
+      throw Exception('shared preference does not contain key $key');
+    }
+    if (T == int){
+      return sharedPreferences.getInt(key) as T;
+    }
+    if (T == double){
+      return sharedPreferences.getDouble(key) as T;
+    }
+    if (T == String){
+      return sharedPreferences.getString(key) as T;
+    }
+    if (T == bool){
+      return sharedPreferences.getBool(key) as T;
+    }
+    if (T.toString().startsWith('DateTime')){
+      return DateTime.parse(sharedPreferences.getString(key)!) as T;
+    }
+    throw Exception("cannot get value for key $key");
+  }
+}
+
 class _Keys {
   final String server = 'server';
   final String audio = 'audio';

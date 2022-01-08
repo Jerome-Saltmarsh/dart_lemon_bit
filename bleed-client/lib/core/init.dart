@@ -175,9 +175,12 @@ void _loadStateFromSharedPreferences(){
   if (storage.authorizationRemembered) {
     authentication.value = storage.recallAuthorization();
 
-    if (storage.contains('subscription')) {
-      print("loading subscription from cache");
-      game.subscription.value = storage.get('subscription');
-    }
+    // if (storage.contains('subscription')) {
+    //   print("loading subscription from cache");
+    //   game.subscription.value = storage.get('subscription');
+    // }
+    final sub = game.subscription.value;
+
+    print(sub);
   }
 }

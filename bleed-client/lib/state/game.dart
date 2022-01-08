@@ -1,3 +1,4 @@
+import 'package:bleed_client/Cache.dart';
 import 'package:bleed_client/classes/Ability.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
@@ -29,7 +30,7 @@ final _Game game = _Game();
 _Player get player => game.player;
 
 class _Game {
-  final Watch<DateTime?> subscription = Watch(null);
+  final Cache<DateTime?> subscription = Cache(key: 'subscription', value: null);
   final Watch<Dialogs> dialog = Watch(Dialogs.Games);
   final Watch<Mode> mode = Watch(Mode.Play);
   final Watch<Region> region = Watch(detectRegion());
