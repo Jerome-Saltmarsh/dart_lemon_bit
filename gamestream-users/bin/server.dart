@@ -29,35 +29,48 @@ FutureOr<Response> handleRequest(Request request) async {
   print("handleRequest($path)");
   switch(path){
     case "hello":
-      return Response.ok('world');
+      return Response.ok('world', headers: headersTextPlain);
     case "stripe_event":
       request.readAsString().then(handleStripeEvent);
-      return Response.ok('');
+      return Response.ok('', headers: headersTextPlain);
     case "users":
       final params = request.requestedUri.queryParameters;
       if (!params.containsKey('id')) {
-        return Response.forbidden('id required');
+        return Response.forbidden('id required', headers: headersTextPlain);
       }
       final id = params['id'];
       if (id == null) {
-        return Response.forbidden('id is empty');
+        return Response.forbidden('id is empty', headers: headersTextPlain);
       }
       final user = await firestore.findUserById(id);
       if (user == null){
-        return Response.notFound("user with id $id could not be found");
+        return Response.notFound("user with id $id could not be found", headers: headersTextPlain);
       }
-      final Map<String, Object> _headers = {};
-      _headers['Content-Type'] = 'application/json';
-      _headers['Access-Control-Allow-Headers'] = "Access-Control-Allow-Origin, Accept";
-      _headers['Access-Control-Allow-Origin'] = "*";
       final body = jsonEncode(user.fields);
-      return Response.ok(body, headers: _headers);
+      return Response.ok(body, headers: headersJson);
     default:
-      return Response.notFound('Cannot handle request "${request.url}"');
+      return Response.notFound('Cannot handle request "${request.url}"', headers: headersTextPlain);
   }
 }
 
 typedef Json = Map<String, dynamic>;
+
+Map<String, Object> get headersJson {
+  final Map<String, Object> _headers = {};
+  _headers['Content-Type'] = 'application/json';
+  _headers['Access-Control-Allow-Headers'] = "Access-Control-Allow-Origin, Accept";
+  _headers['Access-Control-Allow-Origin'] = "*";
+  return _headers;
+}
+
+Map<String, Object> get headersTextPlain {
+  final Map<String, Object> _headers = {};
+  _headers['Content-Type'] = 'text/plain';
+  _headers['Access-Control-Allow-Headers'] = "Access-Control-Allow-Origin, Accept";
+  _headers['Access-Control-Allow-Origin'] = "*";
+  return _headers;
+}
+
 
 Future handleStripeEvent(String eventString) async {
   print("handleStripeEvent()");
