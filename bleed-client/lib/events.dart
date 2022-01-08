@@ -135,6 +135,7 @@ class Events {
         mouseEvents.onLeftClicked.value = performPrimaryAction;
         mouseEvents.onPanStarted.value = performPrimaryAction;
         mouseEvents.onLongLeftClicked.value = performPrimaryAction;
+        fullScreenEnter();
         break;
       case Connection.Done:
         fullScreenExit();

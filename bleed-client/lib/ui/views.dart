@@ -10,6 +10,7 @@ import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/functions/refreshPage.dart';
 import 'package:bleed_client/logic.dart';
+import 'package:bleed_client/services/userService.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/toString.dart';
@@ -62,6 +63,11 @@ Widget buildView(BuildContext context) {
                 topRight: Row(
                   crossAxisAlignment: axis.cross.start,
                   children: [
+                    if (authenticated)
+                    button("get user", (){
+                      getUser(authentication.value!.userId);
+                    }),
+
                     if (authenticated)
                     button(text("Subscribe for \$4.99 per month"), openStripeCheckout,
                       margin: EdgeInsets.only(top: 12),

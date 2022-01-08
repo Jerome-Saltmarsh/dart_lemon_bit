@@ -7,6 +7,7 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 
 import '../firestore/firestore.dart';
 
+// gcloud builds submit --tag gcr.io/gogameserver/rest-server
 // https://stripe.com/docs/webhooks
 void main() async {
   firestore.init();
@@ -45,8 +46,10 @@ FutureOr<Response> handleRequest(Request request) async {
       if (user == null){
         return Response.notFound("user with id $id could not be found");
       }
+      final Map<String, Object> _headers = {};
+      _headers['Content-Type'] = 'application/json';
       final fields = jsonEncode(user.fields);
-      return Response.ok(fields);
+      return Response.ok(fields, headers: _headers);
     default:
       return Response.notFound('Cannot handle request "${request.url}"');
   }
