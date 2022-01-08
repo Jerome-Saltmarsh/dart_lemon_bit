@@ -40,7 +40,7 @@ class Events {
     game.status.onChanged(_onGameStatusChanged);
     game.mode.onChanged(_onGameModeChanged);
     mouseEvents.onLeftClicked.onChanged(_onMouseLeftClickedChanged);
-    authorization.onChanged(_onAuthorizationChanged);
+    authentication.onChanged(_onAuthorizationChanged);
     sub(_onGameError);
   }
 
@@ -76,7 +76,7 @@ class Events {
     }
   }
 
-  void _onAuthorizationChanged(Authorization? value) async {
+  void _onAuthorizationChanged(Authentication? value) async {
     print("events.onUserCredentialsChanged()");
     if (value == null) {
       storage.forgetAuthorization();
@@ -130,7 +130,7 @@ class Events {
     switch(connection){
       case Connection.Connected:
         ui.drawCanvasAfterUpdate = false;
-        sendRequestJoinGame(game.type.value, playerId: authorization.value?.userId);
+        sendRequestJoinGame(game.type.value, playerId: authentication.value?.userId);
         mouseEvents.onLeftClicked.value = performPrimaryAction;
         mouseEvents.onPanStarted.value = performPrimaryAction;
         mouseEvents.onLongLeftClicked.value = performPrimaryAction;

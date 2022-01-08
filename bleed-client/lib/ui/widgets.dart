@@ -105,8 +105,8 @@ void openStripeCheckout(){
     throw authenticationRequired;
   }
   stripeCheckout(
-      userId: authorization.value!.userId,
-      email: authorization.value!.email
+      userId: authentication.value!.userId,
+      email: authentication.value!.email
   );
 }
 
@@ -141,7 +141,7 @@ class _Buttons {
     ),
   );
 
-  final Widget logout = NullableWatchBuilder<Authorization?>(authorization, (Authorization? authorization){
+  final Widget logout = NullableWatchBuilder<Authentication?>(authentication, (Authentication? authorization){
     if (authorization == null){
       text ('No User Logged In');
     }
@@ -150,8 +150,8 @@ class _Buttons {
   final Widget subscribe =
       button("Subscribe \$4.99", openStripeCheckout, width: 200);
 
-  final Widget menu = NullableWatchBuilder<Authorization?>(authorization,
-      (Authorization? authorization) {
+  final Widget menu = NullableWatchBuilder<Authentication?>(authentication,
+      (Authentication? authorization) {
 
     if (authorization == null) {
       return buttons.login;

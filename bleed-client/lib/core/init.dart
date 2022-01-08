@@ -173,7 +173,7 @@ void _loadStateFromSharedPreferences(){
   }
 
   if (storage.authorizationRemembered){
-    authorization.value = storage.recallAuthorization();
+    authentication.value = storage.recallAuthorization();
   }
 
   // game.settings.audioMuted.value =

@@ -4,20 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final GoogleSignIn _googleSignIn = GoogleSignIn();
+final Watch<Authentication?> authentication = Watch(null);
 
-// final Watch<UserCredential?> userCredentials = Watch(null);
+bool get authenticated => authentication.value != null;
 
-final Watch<Authorization?> authorization = Watch(null);
-
-// User? get user => userCredentials.value?.user;
-
-bool get authenticated => authorization != null;
-
-// String? name = "";
-// String? imageUrl = "";
 final FirebaseAuth _auth = FirebaseAuth.instance;
 
+final GoogleSignIn _googleSignIn = GoogleSignIn();
 
 // void signInWithJwtToken(String jwtToken) async {
 //   print('signInWithJwtToken()');
@@ -96,7 +89,7 @@ Future<String> signInWithEmailPassword(String email, String password) async {
 
 void signOut() async {
   print("signOut()");
-  authorization.value = null;
+  authentication.value = null;
   await _auth.signOut();
 }
 
@@ -134,7 +127,7 @@ void signInWithGoogle() async {
   }
 
   print("user credentials set");
-  authorization.value = Authorization(
+  authentication.value = Authentication(
       userId: credentials.user!.uid,
       displayName: credentials.user!.displayName,
       email: credentials.user!.email
@@ -153,11 +146,11 @@ void signOutGoogle() async {
   print("User signed out of Google account");
 }
 
-class Authorization {
+class Authentication {
   final String userId;
   final String? email;
   final String? displayName;
-  Authorization({
+  Authentication({
     required this.userId,
     this.displayName,
     this.email = "",

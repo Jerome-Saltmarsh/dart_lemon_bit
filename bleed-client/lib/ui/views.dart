@@ -44,6 +44,7 @@ Widget buildView(BuildContext context) {
     if (mode == Mode.Edit) {
       return _views.editor;
     }
+
     return WatchBuilder(webSocket.connection, (Connection connection) {
       switch (connection) {
         case Connection.Connecting:
@@ -195,8 +196,8 @@ class _BuildView {
   }
 
   Widget account() {
-    return NullableWatchBuilder<Authorization?>(authorization,
-        (Authorization? authorization) {
+    return NullableWatchBuilder<Authentication?>(authentication,
+        (Authentication? authorization) {
       if (authorization == null) {
         return dialog(child: text("No one logged in"));
       }

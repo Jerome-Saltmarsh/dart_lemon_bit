@@ -19,7 +19,7 @@ class _Storage {
     sharedPreferences.setInt('server', value.index);
   }
 
-  void rememberAuthorization(Authorization authorization){
+  void rememberAuthorization(Authentication authorization){
     print("storage.rememberAuthorization()");
     put(_keys.userId, authorization.userId);
     put(_keys.userEmail, authorization.email);
@@ -32,12 +32,12 @@ class _Storage {
     sharedPreferences.remove(_keys.userName);
   }
 
-  Authorization recallAuthorization() {
+  Authentication recallAuthorization() {
     print("recallAuthorization()");
     final userId = get<String>(_keys.userId);
     final email = get<String>(_keys.userEmail);
     final displayName = get<String>(_keys.userName);
-    return Authorization(
+    return Authentication(
       userId: userId,
       email: email,
       displayName: displayName,
