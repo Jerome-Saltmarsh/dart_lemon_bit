@@ -63,7 +63,7 @@ Widget buildView(BuildContext context) {
                   crossAxisAlignment: axis.cross.start,
                   children: [
                     if (authenticated)
-                    button(text("Subscribe \$4.99 per month"), openStripeCheckout,
+                    button(text("Subscribe for \$4.99 per month"), openStripeCheckout,
                       margin: EdgeInsets.only(top: 12),
                       height: style.buttonHeight * goldenRatioInverse,
                       // width: style.buttonWidth * goldenRatioInverse
