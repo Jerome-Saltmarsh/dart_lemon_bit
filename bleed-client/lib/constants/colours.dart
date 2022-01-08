@@ -17,6 +17,7 @@ class _Colors {
   final Color red = Color.fromRGBO(234, 79, 54, 1.0);
   final Color orange = Color.fromRGBO(247, 150, 23, 1);
   final Color green = Color.fromRGBO(30, 188, 115 , 1);
+  final Color greenDark = Color.fromRGBO(20, 114, 71, 1.0);
   final Color yellow = Color.fromRGBO(251, 185, 84, 1);
   final Color yellowDark  = Color.fromRGBO(158, 69, 57, 1);
   final Color blue =  Color.fromRGBO(77, 155, 230, 1);
@@ -28,6 +29,7 @@ class _Colors {
   final Color transparent =  Colors.transparent;
 
   final Color white = Color.fromRGBO(220, 220, 220, 1.0);
+  final Color white05 = Colors.white.withOpacity(0.05);
   final Color grey = Color.fromRGBO(120, 120, 120, 1.0);
   final Color greyDark = Color.fromRGBO(60, 60, 60, 1.0);
 

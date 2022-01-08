@@ -110,9 +110,14 @@ void openStripeCheckout(){
 
 class _Buttons {
 
-  final Widget login = button("Login", (){
+  final Widget login = button("Sign In/Up", (){
       game.dialog.value = Dialogs.Login;
-  }, width: style.buttonWidth, height: style.buttonHeight, borderWidth: 2);
+  }, width: style.buttonWidth, height: style.buttonHeight, borderWidth: 3,
+    fillColor: colours.green,
+    borderColor: colours.green,
+    fillColorMouseOver: colours.green,
+    borderRadius: borderRadius2,
+  );
 
   final Widget signInWithGoogleB = button(Container(
     padding: EdgeInsets.symmetric(horizontal: 8),
@@ -139,7 +144,13 @@ class _Buttons {
   //   ),
   // );
 
-  final Widget account = border(child: text("Account"), height: style.buttonHeight, width: style.buttonWidth);
+  final Widget account = border(child: text("Account"),
+      height: style.buttonHeight,
+      width: style.buttonWidth,
+      fillColor: colours.green,
+      color: colours.green,
+      radius: borderRadius2,
+  );
 
   final Widget logout = NullableWatchBuilder<Authentication?>(authentication, (Authentication? authorization){
     if (authorization == null){
@@ -148,7 +159,8 @@ class _Buttons {
     return button('Logout ${authorization?.displayName}',
         signOut,
         width: style.buttonWidth,
-        height: style.buttonHeight
+        height: style.buttonHeight,
+        fillColorMouseOver: colours.white05,
     );
   });
   final Widget subscribe =
@@ -161,7 +173,8 @@ class _Buttons {
     game.dialog.value = Dialogs.Subscription;
   },
       width: style.buttonWidth,
-      height: style.buttonHeight
+      height: style.buttonHeight,
+      fillColorMouseOver: colours.white05,
   );
 
   final Widget menu = mouseOver(builder: (BuildContext context, bool mouseOver) {
@@ -190,11 +203,8 @@ class _Buttons {
           text(enumString(region), fontSize: 20),
           logic.deselectRegion,
           width: style.buttonWidth,
-          hint: 'Region',
           height: style.buttonHeight,
-          fillColor: colours.green,
-          borderColor: colours.green,
-          borderWidth: 6,
+          borderWidth: 1,
           borderRadius: borderRadius2,
         );
       }
@@ -206,15 +216,16 @@ class _Buttons {
             border(
                 width: style.buttonWidth,
                 height: style.buttonHeight,
-                fillColor: colours.green,
-                color: colours.green,
                 radius: borderRadius0,
-                child: text("Region", fontSize: 20)),
+                child: text("Select Region", fontSize: 20)),
             ...selectableRegions.map((value) {
-            return button(text(enumString(value)), (){
+              final bool selected = region == value;
+
+            return button(text(enumString(value), fontWeight: selected ? bold : FontWeight.normal), (){
               game.region.value = value;
             },
-            fillColor: region == value ? Colors.red : Colors.orange,
+              fillColorMouseOver: selected ? colours.green : colours.white05,
+              fillColor: selected ? colours.green : Colors.transparent,
               width: style.buttonWidth,
               height: style.buttonHeight,
               borderRadius: borderRadius0,

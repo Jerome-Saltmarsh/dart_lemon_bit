@@ -72,13 +72,6 @@ Widget buildView(BuildContext context) {
                   topRight: Row(
                     crossAxisAlignment: axis.cross.start,
                     children: [
-                      // if (subscribed)
-                      //   text("You are subscribed!"),
-
-                      // if (authenticated)
-                      //   button("get user", (){
-                      //     getUserSubscriptionExpiration(authentication.value!.userId);
-                      //   }),
 
                       if (authenticated && !subscribed)
                         button(text("Subscribe for \$4.99 per month"), openStripeCheckout,
