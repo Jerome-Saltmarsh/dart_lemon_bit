@@ -1,23 +1,21 @@
-import 'package:bleed_client/assets.dart';
 import 'package:bleed_client/authentication.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/enums/Region.dart';
+import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/server/server.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/build.dart';
-import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/ui/state/decorationImages.dart';
+import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/functions/fullscreen_enter.dart';
 import 'package:lemon_engine/functions/fullscreen_exit.dart';
-import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/fullscreen_active.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -136,8 +134,8 @@ class _Buttons {
   );
 
   final Widget account = Container(
-    width: 63,
-    height: 63,
+    width: style.buttonHeight,
+    height: style.buttonHeight,
     decoration: BoxDecoration(
         image: decorationImages.profile
     ),
@@ -177,19 +175,15 @@ class _Buttons {
   });
 
   final Widget region = WatchBuilder(game.region, (Region region) {
-
-    const _width = 200.0;
-    const _height = 63.0;
-
     return onHover((bool hovering){
 
       if (!hovering){
         return button(
           text(enumString(region), fontSize: 20),
           logic.deselectRegion,
-          width: _width,
+          width: style.buttonWidth,
           hint: 'Region',
-          height: _height,
+          height: style.buttonHeight,
           fillColor: colours.green,
           borderColor: colours.green,
           borderWidth: 6,
@@ -202,8 +196,8 @@ class _Buttons {
         child: Column(
           children: [
             border(
-                width: _width,
-                height: _height,
+                width: style.buttonWidth,
+                height: style.buttonHeight,
                 fillColor: colours.green,
                 color: colours.green,
                 radius: borderRadius0,
@@ -213,8 +207,8 @@ class _Buttons {
               game.region.value = value;
             },
             fillColor: region == value ? Colors.red : Colors.orange,
-            width: _width,
-            height: _height,
+              width: style.buttonWidth,
+              height: style.buttonHeight,
               borderRadius: borderRadius0,
             );
           }).toList()],

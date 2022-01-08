@@ -10,6 +10,7 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/styles.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/state/decorationImages.dart';
+import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -215,13 +216,23 @@ class _Build {
   }
 
   Widget title(){
+
+    final _text = text("GAMESTREAM",
+        fontSize: 60,
+        color: Colors.white,
+        fontFamily: assets.fonts.libreBarcode39Text
+    );
+
+    // return _text;
+
     return border(
+      // color: Colors.transparent,
+      // width: width,
+      // height: height,
+      // padding: EdgeInsets.all(8),
+      height: style.buttonHeight,
       radius: borderRadius2,
-      child: text("GAMESTREAM",
-          fontSize: 60,
-          color: Colors.white,
-          fontFamily: assets.fonts.libreBarcode39Text
-      ),
+      child: _text,
     );
   }
 

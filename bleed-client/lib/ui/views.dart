@@ -15,11 +15,12 @@ import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/state/hud.dart';
+import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:lemon_engine/state/screen.dart';
+import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../styles.dart';
@@ -57,6 +58,11 @@ Widget buildView(BuildContext context) {
               topRight: Row(
                 crossAxisAlignment: axis.cross.start,
                 children: [
+                  button(text("Subscribe"), (){},
+                      margin: EdgeInsets.only(top: 12),
+                      height: style.buttonHeight * goldenRatioInverse,
+                      width: style.buttonWidth * goldenRatioInverse),
+                  width16,
                   buttons.region,
                   width4,
                   buttons.menu,
@@ -399,3 +405,4 @@ Widget _buildSelectRegionButton(Region region) {
     fillColor: colours.black15,
   );
 }
+
