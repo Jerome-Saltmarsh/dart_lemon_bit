@@ -29,6 +29,7 @@ final _Game game = _Game();
 _Player get player => game.player;
 
 class _Game {
+  final Watch<DateTime?> subscription = Watch(null);
   final Watch<Dialogs> dialog = Watch(Dialogs.Games);
   final Watch<Mode> mode = Watch(Mode.Play);
   final Watch<Region> region = Watch(detectRegion());

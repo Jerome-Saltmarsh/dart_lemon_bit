@@ -3,9 +3,12 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 
-void getUser(String userId) async {
+Future<DateTime?> getUserSubscriptionExpiration(String userId) async {
+  print("getUserSubscriptionExpiration($userId)");
+
+  if (userId.isEmpty) throw Exception("user is Empty");
+
   var url = Uri.https('rest-server-3-osbmaezptq-ts.a.run.app', '/users', {'id': userId});
 
   // Await the http get response, then decode the json-formatted response.
@@ -22,22 +25,16 @@ void getUser(String userId) async {
     if (!body.containsKey('status')){
       throw Exception("response missing status");
     }
-    final status = body['status'];
+    // final status = body['status'];
 
     if (!body.containsKey('sub_exp')){
       throw Exception("response missing sub_exp field");
     }
-    final subExpString = (body['sub_exp'] as String);
-    final utc = DateTime.now().toUtc();
-    final subExp = DateTime.parse(subExpString);
-
-    if (subExp.isAfter(utc)){
-      print("not expired");
-    }else{
-      print("Expired");
-    }
+    final subExpString = body['sub_exp'];
+    // final utc = DateTime.now().toUtc();
+    return DateTime.parse(subExpString);
     // TODO
-  } else {
-    print('Request failed with status: ${response.statusCode}.');
   }
+  print('Request failed with status: ${response.statusCode}.');
+  return null;
 }

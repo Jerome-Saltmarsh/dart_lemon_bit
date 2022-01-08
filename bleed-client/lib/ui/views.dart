@@ -49,82 +49,90 @@ Widget buildView(BuildContext context) {
     return NullableWatchBuilder<Authentication?>(authentication, (Authentication? auth){
       final bool authenticated = auth != null;
 
-      return WatchBuilder(webSocket.connection, (Connection connection) {
-        switch (connection) {
-          case Connection.Connecting:
-            return _views.connecting;
-          case Connection.Connected:
-            return _views.connected;
-          case Connection.None:
-            return layout(
-                padding: 8,
-                expand: true,
-                topLeft: widgets.title,
-                topRight: Row(
-                  crossAxisAlignment: axis.cross.start,
-                  children: [
-                    if (authenticated)
-                    button("get user", (){
-                      getUser(authentication.value!.userId);
-                    }),
+      return NullableWatchBuilder<DateTime?>(game.subscription, (DateTime? subscription){
+        final now = DateTime.now().toUtc();
+        bool subscribed = subscription != null && subscription.isAfter(now);
 
-                    if (authenticated)
-                    button(text("Subscribe for \$4.99 per month"), openStripeCheckout,
-                      margin: EdgeInsets.only(top: 12),
-                      height: style.buttonHeight * goldenRatioInverse,
-                      // width: style.buttonWidth * goldenRatioInverse
-                    ),
-                    width16,
-                    buttons.region,
-                    width4,
-                    buttons.menu,
-                  ],
-                ),
-                bottomRight: buttons.editor,
-                bottomLeft: widgets.theme,
-                child: WatchBuilder(game.region, (Region serverType) {
-                  if (serverType == Region.None) {
-                    return _views.selectRegion;
-                  }
-                  return WatchBuilder(game.dialog, (Dialogs dialogs) {
-                    switch (dialogs) {
-                      case Dialogs.Login:
-                        return buildLoginDialog();
-                      case Dialogs.Invalid_Arguments:
-                        return dialog(child: text("Invalid Arguments"));
-                      case Dialogs.Subscription_Required:
-                        return dialog(child: text("Subscription Required"));
-                      case Dialogs.Games:
-                        return WatchBuilder(game.type, (GameType gameType) {
-                          if (gameType == GameType.None) {
-                            return _views.selectGame;
-                          }
-                          return Stack(
-                            children: [
-                              _views.selectGame,
-                              dialog(
-                                  color: colours.white,
-                                  child: Column(
-                                    children: [
-                                      text(gameTypeNames[gameType]),
-                                      button("Play", logic.connectToSelectedGame),
-                                      button("Close", logic.deselectGameType),
-                                    ],
-                                  )),
-                            ],
-                          );
-                        });
-                      case Dialogs.Account:
-                        return _views.account;
-                      case Dialogs.Confirm_Logout:
-                        return dialog(child: text("Confirm Logout"));
+        return WatchBuilder(webSocket.connection, (Connection connection) {
+          switch (connection) {
+            case Connection.Connecting:
+              return _views.connecting;
+            case Connection.Connected:
+              return _views.connected;
+            case Connection.None:
+              return layout(
+                  padding: 8,
+                  expand: true,
+                  topLeft: widgets.title,
+                  topRight: Row(
+                    crossAxisAlignment: axis.cross.start,
+                    children: [
+                      if (subscribed)
+                        text("You are subscribed!"),
+
+                      if (authenticated)
+                        button("get user", (){
+                          getUserSubscriptionExpiration(authentication.value!.userId);
+                        }),
+
+                      if (authenticated)
+                        button(text("Subscribe for \$4.99 per month"), openStripeCheckout,
+                          margin: EdgeInsets.only(top: 12),
+                          height: style.buttonHeight * goldenRatioInverse,
+                          // width: style.buttonWidth * goldenRatioInverse
+                        ),
+                      width16,
+                      buttons.region,
+                      width4,
+                      buttons.menu,
+                    ],
+                  ),
+                  bottomRight: buttons.editor,
+                  bottomLeft: widgets.theme,
+                  child: WatchBuilder(game.region, (Region serverType) {
+                    if (serverType == Region.None) {
+                      return _views.selectRegion;
                     }
-                  });
-                }));
+                    return WatchBuilder(game.dialog, (Dialogs dialogs) {
+                      switch (dialogs) {
+                        case Dialogs.Login:
+                          return buildLoginDialog();
+                        case Dialogs.Invalid_Arguments:
+                          return dialog(child: text("Invalid Arguments"));
+                        case Dialogs.Subscription_Required:
+                          return dialog(child: text("Subscription Required"));
+                        case Dialogs.Games:
+                          return WatchBuilder(game.type, (GameType gameType) {
+                            if (gameType == GameType.None) {
+                              return _views.selectGame;
+                            }
+                            return Stack(
+                              children: [
+                                _views.selectGame,
+                                dialog(
+                                    color: colours.white,
+                                    child: Column(
+                                      children: [
+                                        text(gameTypeNames[gameType]),
+                                        button("Play", logic.connectToSelectedGame),
+                                        button("Close", logic.deselectGameType),
+                                      ],
+                                    )),
+                              ],
+                            );
+                          });
+                        case Dialogs.Account:
+                          return _views.account;
+                        case Dialogs.Confirm_Logout:
+                          return dialog(child: text("Confirm Logout"));
+                      }
+                    });
+                  }));
 
-          default:
-            return _views.connection;
-        }
+            default:
+              return _views.connection;
+          }
+        });
       });
     });
   });

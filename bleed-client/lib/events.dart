@@ -9,6 +9,7 @@ import 'package:bleed_client/functions/removeGeneratedEnvironmentObjects.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/logic.dart';
 import 'package:bleed_client/send.dart';
+import 'package:bleed_client/services/userService.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/ui/ui.dart';
@@ -40,7 +41,7 @@ class Events {
     game.status.onChanged(_onGameStatusChanged);
     game.mode.onChanged(_onGameModeChanged);
     mouseEvents.onLeftClicked.onChanged(_onMouseLeftClickedChanged);
-    authentication.onChanged(_onAuthorizationChanged);
+    authentication.onChanged(_onAuthenticationChanged);
     sub(_onGameError);
   }
 
@@ -76,12 +77,14 @@ class Events {
     }
   }
 
-  void _onAuthorizationChanged(Authentication? value) async {
+  void _onAuthenticationChanged(Authentication? value) async {
     print("events._onAuthorizationChanged()");
     if (value == null) {
+      game.subscription.value = null;
       storage.forgetAuthorization();
     } else {
       storage.rememberAuthorization(value);
+      updateUserSubscription(value.userId);
     }
     game.dialog.value = Dialogs.Games;
   }
@@ -200,4 +203,10 @@ class Events {
     }
     redrawCanvas();
   }
+}
+
+
+void updateUserSubscription(String userId) async {
+  print("updateUserSubscription()");
+  game.subscription.value = await getUserSubscriptionExpiration(userId);
 }
