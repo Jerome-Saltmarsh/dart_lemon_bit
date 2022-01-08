@@ -22,6 +22,7 @@ class _DecorationImages {
   DecorationImage google = _png('icons/google_logo');
   DecorationImage royal = _png('icon-battle-royal');
   DecorationImage mmo = _png('games/game-icon-mmo');
+  DecorationImage heroesLeague = _png('games/game-icon-heroes-league');
 }
 
 DecorationImage spellIcon(String name) {

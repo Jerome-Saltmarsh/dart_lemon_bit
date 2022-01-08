@@ -437,4 +437,5 @@ Region detectRegion(){
 final Map<GameType, DecorationImage> gameTypeDecorationImage = {
   GameType.MMO: decorationImages.mmo,
   GameType.BATTLE_ROYAL: decorationImages.royal,
+  GameType.Moba: decorationImages.heroesLeague,
 };
