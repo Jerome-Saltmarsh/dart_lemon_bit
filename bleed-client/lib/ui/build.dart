@@ -262,7 +262,7 @@ class _Build {
                   width: 180,
                   height: 111,
                   decoration: BoxDecoration(
-                    image: decorationImages.royal
+                    image: gameTypeDecorationImage[value] ?? decorationImages.royal,
                   ),
                 ),
                 width16,
@@ -433,3 +433,8 @@ Region detectRegion(){
 
   return Region.None;
 }
+
+final Map<GameType, DecorationImage> gameTypeDecorationImage = {
+  GameType.MMO: decorationImages.mmo,
+  GameType.BATTLE_ROYAL: decorationImages.royal,
+};

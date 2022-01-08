@@ -21,6 +21,7 @@ class _DecorationImages {
   DecorationImage fullscreen = _png('icon fullscreen');
   DecorationImage google = _png('icons/google_logo');
   DecorationImage royal = _png('icon-battle-royal');
+  DecorationImage mmo = _png('games/game-icon-mmo');
 }
 
 DecorationImage spellIcon(String name) {

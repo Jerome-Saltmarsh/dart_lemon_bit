@@ -180,6 +180,7 @@ Widget layout({
   Widget? topRight,
   Widget? bottomRight,
   Widget? bottomLeft,
+  Widget? top,
   List<Widget>? children,
   Widget? child,
   double padding = 0,
@@ -199,6 +200,8 @@ Widget layout({
         Positioned(bottom: padding, right: padding, child: bottomRight,),
       if (bottomLeft != null)
         Positioned(bottom: padding, left: padding, child: bottomLeft,),
+      if (top != null)
+        Positioned(top: padding, child: top),
     ],
   );
 
