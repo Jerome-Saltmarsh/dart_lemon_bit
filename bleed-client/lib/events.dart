@@ -25,7 +25,6 @@ import 'package:lemon_engine/state/camera.dart';
 import 'package:lemon_engine/state/zoom.dart';
 
 import 'common/GameType.dart';
-import 'constants/colours.dart';
 import 'enums/Region.dart';
 import 'functions/clearState.dart';
 
@@ -40,9 +39,19 @@ class Events {
     game.player.alive.onChanged(_onPlayerAliveChanged);
     game.status.onChanged(_onGameStatusChanged);
     game.mode.onChanged(_onGameModeChanged);
+    game.subscription.onChanged(_onSubscriptionChanged);
     mouseEvents.onLeftClicked.onChanged(_onMouseLeftClickedChanged);
     authentication.onChanged(_onAuthenticationChanged);
     sub(_onGameError);
+  }
+
+  void _onSubscriptionChanged(DateTime? value){
+    print("events.onSubscriptionChanged($value)");
+    if (value == null){
+      storage.remove('subscription');
+    }else{
+      storage.put('subscription', value);
+    }
   }
 
   Future _onGameError(GameError error) async {

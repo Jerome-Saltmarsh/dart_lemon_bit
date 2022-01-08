@@ -172,11 +172,12 @@ void _loadStateFromSharedPreferences(){
     game.region.value = storage.serverType;
   }
 
-  if (storage.authorizationRemembered){
+  if (storage.authorizationRemembered) {
     authentication.value = storage.recallAuthorization();
-  }
 
-  // game.settings.audioMuted.value =
-  //     sharedPreferences.containsKey('audioMuted') &&
-  //         sharedPreferences.getBool('audioMuted');
+    if (storage.contains('subscription')) {
+      print("loading subscription from cache");
+      game.subscription.value = storage.get('subscription');
+    }
+  }
 }

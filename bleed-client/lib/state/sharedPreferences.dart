@@ -48,8 +48,14 @@ class _Storage {
 
   String get userId => get(_keys.userId);
 
+  void remove(String key){
+    sharedPreferences.remove(key);
+  }
+
   void put(String key, dynamic value){
     print("storage.put({key: '$key', value: '$value'})");
+
+    if (key.isEmpty) throw Exception("key is empty");
 
     if (value == null){
       print('cannot store key $key because value is null');
@@ -76,10 +82,22 @@ class _Storage {
       return;
     }
 
+    if (value is DateTime){
+      sharedPreferences.setString(key, value.toIso8601String());
+      return;
+    }
+
     throw Exception('cannot store value');
   }
 
+  bool contains(String key){
+    return sharedPreferences.containsKey(key);
+  }
+
   T get<T>(String key){
+    if (!sharedPreferences.containsKey(key)){
+      throw Exception('shared preference does not contain key $key');
+    }
     if (T == int){
       return sharedPreferences.getInt(key) as T;
     }
@@ -91,6 +109,9 @@ class _Storage {
     }
     if (T == bool){
       return sharedPreferences.getBool(key) as T;
+    }
+    if (T.toString().startsWith('DateTime')){
+      return DateTime.parse(sharedPreferences.getString(key)!) as T;
     }
     throw Exception("cannot get value for key $key");
   }
