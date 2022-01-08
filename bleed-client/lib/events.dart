@@ -77,12 +77,13 @@ class Events {
   }
 
   void _onAuthorizationChanged(Authentication? value) async {
-    print("events.onUserCredentialsChanged()");
+    print("events._onAuthorizationChanged()");
     if (value == null) {
       storage.forgetAuthorization();
     } else {
       storage.rememberAuthorization(value);
     }
+    game.dialog.value = Dialogs.Games;
   }
 
   void _onMouseLeftClickedChanged(Function? function){
