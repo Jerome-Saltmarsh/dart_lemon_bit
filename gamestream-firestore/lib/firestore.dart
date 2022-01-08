@@ -65,7 +65,6 @@ ${_gcpProjectIdEnvironmentVariables.join('\n')}
     }
   }
 
-
   ProjectsDatabasesDocumentsResource get documents => _firestoreApi!.projects.databases.documents;
 
   Future<Document?> findUserById(String id) {
@@ -103,9 +102,10 @@ ${_gcpProjectIdEnvironmentVariables.join('\n')}
     }
 
     final document = Document(
-        createTime: _getTimestamp(),
+        createTime: _getTimestampNow(),
         fields: {
           'stripe_customer_id': Value(stringValue: userIdStripe),
+          'sub_exp': Value(timestampValue: _getTimeStampOneMonth()),
           if (email != null)
             'email': Value(stringValue: email),
         }
@@ -130,4 +130,9 @@ const _gcpProjectIdEnvironmentVariables = {
   'GOOGLE_CLOUD_PROJECT',
 };
 
-String _getTimestamp() => DateTime.now().toUtc().toIso8601String();
+String _getTimestampNow() => DateTime.now().toUtc().toIso8601String();
+String _getTimeStampOneMonth() => DateTime.now().add(Duration(hours: _hoursPerMonth)).toUtc().toIso8601String();
+
+const _hoursPerMonth = _hoursPerYear ~/ _monthsPerYear;
+const _monthsPerYear = 12;
+const _hoursPerYear = 8760;

@@ -43,14 +43,37 @@ FutureOr<Response> handleRequest(Request request) async {
         return Response.forbidden('id is empty', headers: headersTextPlain);
       }
       final user = await firestore.findUserById(id);
+      final Json response = Json();
       if (user == null){
-        return Response.notFound("user with id $id could not be found", headers: headersTextPlain);
+        response['status'] = 'error';
+        response['message'] = 'user with id $id could not be found';
+        return ok(response);
       }
-      final body = jsonEncode(user.fields);
-      return Response.ok(body, headers: headersJson);
+      final fields = user.fields;
+
+      if (fields == null){
+        response['status'] = 'error';
+        response['message'] = 'user with id $id was found however had no fields';
+        return ok(response);
+      }
+
+      final subExp = fields['sub_exp'];
+      if (subExp == null){
+        response['status'] = 'error';
+        response['message'] = 'user with id $id was found does not have a sub_exp field';
+        return ok(response);
+      }
+
+      response['sub_exp'] = subExp.timestampValue;
+      response['status'] = 'success';
+      return ok(response);
     default:
       return Response.notFound('Cannot handle request "${request.url}"', headers: headersTextPlain);
   }
+}
+
+Response ok(response){
+  return Response.ok(jsonEncode(response), headers: headersJson);
 }
 
 typedef Json = Map<String, dynamic>;
@@ -102,6 +125,7 @@ final webhooks = _StripeWebhooks();
 
 class _StripeWebhooks {
   void checkoutSessionCompleted(Json event){
+    print("stripe.checkoutSessionCompleted()");
 
     if (!event.containsKey('data')){
       throw Exception("event does not contain data");
