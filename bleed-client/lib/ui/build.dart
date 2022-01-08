@@ -449,4 +449,5 @@ final Map<GameType, DecorationImage> gameTypeDecorationImage = {
   GameType.MMO: decorationImages.mmo,
   GameType.BATTLE_ROYAL: decorationImages.zombieRoyal,
   GameType.Moba: decorationImages.heroesLeague,
+  GameType.CUBE3D: decorationImages.cube,
 };
