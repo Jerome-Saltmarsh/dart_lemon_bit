@@ -6,7 +6,7 @@ final _Colors colours = _Colors();
 
 class _Colors {
 
-  final Color black = Color.fromRGBO(24, 21, 26, 1);
+  final Color black = Color.fromRGBO(24, 21, 26, 1.0);
   final Color black05 = Colors.black.withOpacity(0.05);
   final Color black10 = Colors.black.withOpacity(0.1);
   final Color black15 = Colors.black.withOpacity(0.15);

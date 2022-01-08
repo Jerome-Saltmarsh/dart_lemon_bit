@@ -10,7 +10,6 @@ import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/functions/refreshPage.dart';
 import 'package:bleed_client/logic.dart';
-import 'package:bleed_client/services/userService.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/toString.dart';
@@ -71,6 +70,7 @@ Widget buildView(BuildContext context) {
                   topLeft: widgets.title,
                   topRight: Row(
                     crossAxisAlignment: axis.cross.start,
+                    mainAxisAlignment: axis.main.end,
                     children: [
 
                       if (authenticated && !subscribed)

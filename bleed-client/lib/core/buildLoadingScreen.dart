@@ -1,3 +1,4 @@
+import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/styles.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,31 +11,37 @@ const double _width = 300;
 const double _height = 50;
 
 Widget buildLoadingScreen(BuildContext context) {
-  return WatchBuilder(download, (double value) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Column(
-          mainAxisAlignment: axis.main.center,
-          children: [
-            text("GAMESTREAM ${(value * 100).toInt()}%", color: Colors.black),
-            Container(
-              width: _width,
-              height: _height,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.black, width: 2),
-              ),
-              alignment: Alignment.centerLeft,
-              child: Container(
-                color: Colors.black,
-                width: _width * value,
+  print(colours.black.value.toRadixString(16));
+
+  return fullScreen(
+    color: colours.black,
+    child: WatchBuilder(download, (double value) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Column(
+            mainAxisAlignment: axis.main.center,
+            children: [
+              text("GAMESTREAM ${(value * 100).toInt()}%", color: Colors.white),
+              height8,
+              Container(
+                width: _width,
                 height: _height,
-              ),
-            )
-          ],
-        ),
-      ],
-    );
-  });
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  border: Border.all(color: Colors.white, width: 2),
+                ),
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  color: Colors.black,
+                  width: _width * value,
+                  height: _height,
+                ),
+              )
+            ],
+          ),
+        ],
+      );
+    }),
+  );
 }
