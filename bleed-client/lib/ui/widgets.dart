@@ -135,9 +135,14 @@ class _Buttons {
     borderWidth: 3,
   );
 
-  final Widget account = button("Account", () {
-    game.dialog.value = Dialogs.Account;
-  }, width: 200);
+  final Widget account = Container(
+    width: 63,
+    height: 63,
+    decoration: BoxDecoration(
+        image: decorationImages.profile
+    ),
+  );
+
   final Widget logout = NullableWatchBuilder<Authorization?>(authorization, (Authorization? authorization){
     if (authorization == null){
       text ('No User Logged In');
@@ -188,7 +193,7 @@ class _Buttons {
           fillColor: colours.green,
           borderColor: colours.green,
           borderWidth: 6,
-          borderRadius: BorderRadius.only(topRight: radius4, bottomRight: radius4),
+          borderRadius: borderRadius2,
         );
       }
 

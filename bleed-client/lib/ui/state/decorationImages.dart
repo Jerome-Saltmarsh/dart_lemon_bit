@@ -24,6 +24,7 @@ class _DecorationImages {
   DecorationImage mmo = _png('games/game-icon-mmo');
   DecorationImage heroesLeague = _png('games/game-icon-heroes-league');
   DecorationImage zombieRoyal = _png('games/game-icon-zombie-royal');
+  DecorationImage profile = _png('icons/icon-profile');
 }
 
 DecorationImage spellIcon(String name) {
