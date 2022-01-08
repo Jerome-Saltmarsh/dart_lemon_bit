@@ -29,13 +29,18 @@ import '../webSocket.dart';
 
 Widget buildLoginDialog() {
   return dialog(
+      padding: 16,
       child: layout(
-          bottomRight: button("cancel", () {
+          bottomRight: button("Close X", () {
             game.dialog.value = Dialogs.Games;
-          }),
+          }, fillColor: colours.black15),
           child: Column(
+            crossAxisAlignment: axis.cross.start,
             children: [
+              text("Sign In", fontWeight: bold),
+              height32,
               buttons.signInWithGoogleB,
+              height32,
             ],
           )));
 }
