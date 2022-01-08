@@ -2,6 +2,7 @@
 import 'package:bleed_client/authentication.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/enums/Region.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 late SharedPreferences sharedPreferences;
@@ -130,27 +131,32 @@ extension SharedPreferencesExtensions on SharedPreferences {
     }
 
     if (value is String){
-      sharedPreferences.setString(key, value);
+      setString(key, value);
       return;
     }
 
     if (value is int){
-      sharedPreferences.setInt(key, value);
+      setInt(key, value);
       return;
     }
 
     if (value is double){
-      sharedPreferences.setDouble(key, value);
+      setDouble(key, value);
       return;
     }
 
     if (value is bool){
-      sharedPreferences.setBool(key, value);
+      setBool(key, value);
       return;
     }
 
     if (value is DateTime){
-      sharedPreferences.setString(key, value.toIso8601String());
+      setString(key, value.toIso8601String());
+      return;
+    }
+
+    if (value is Enum) {
+      setInt(key, value.index);
       return;
     }
 
@@ -158,25 +164,25 @@ extension SharedPreferencesExtensions on SharedPreferences {
   }
 
   T getAny<T>(String key){
-    if (!sharedPreferences.containsKey(key)){
+    if (!containsKey(key)){
       throw Exception('shared preference does not contain key $key');
     }
     if (T == int){
-      return sharedPreferences.getInt(key) as T;
+      return getInt(key) as T;
     }
     if (T == double){
-      return sharedPreferences.getDouble(key) as T;
+      return getDouble(key) as T;
     }
     if (T == String){
-      return sharedPreferences.getString(key) as T;
+      return getString(key) as T;
     }
     if (T == bool){
-      return sharedPreferences.getBool(key) as T;
+      return getBool(key) as T;
     }
     if (T.toString().startsWith('DateTime')){
-      return DateTime.parse(sharedPreferences.getString(key)!) as T;
+      return DateTime.parse(getString(key)!) as T;
     }
-    throw Exception("cannot get value for key $key");
+     throw Exception("cannot get value for key $key, type: ${T.toString()}");
   }
 }
 

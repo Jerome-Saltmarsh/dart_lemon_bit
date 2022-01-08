@@ -5,6 +5,7 @@ enum Dialogs {
   Invalid_Arguments,
   Confirm_Logout,
   Login,
+  Subscription,
 }
 
 final _UIOptions uiOptions = _UIOptions();

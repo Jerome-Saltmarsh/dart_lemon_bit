@@ -84,7 +84,9 @@ Widget buildView(BuildContext context) {
                       width16,
                       buttons.region,
                       width4,
-                      buttons.menu,
+                      if (!authenticated) buttons.login,
+                      if (authenticated)  buttons.menu,
+
                     ],
                   ),
                   bottomRight: buttons.editor,
@@ -95,6 +97,58 @@ Widget buildView(BuildContext context) {
                     }
                     return WatchBuilder(game.dialog, (Dialogs dialogs) {
                       switch (dialogs) {
+                        case Dialogs.Subscription:
+
+                          if (!authenticated) {
+                            return dialog(
+                                child: Column(
+                                  children: [
+                                    border(child: text("My Subscription")),
+                                    text("Authentication required"),
+                                  ],
+                                )
+                            );
+                          }
+
+                          return dialog(
+                            padding: 16,
+                              child: Column(
+                            crossAxisAlignment: axis.cross.start,
+                            children: [
+                                Row(
+                                  mainAxisAlignment: axis.main.apart,
+                                  children: [
+                                    Container(
+                                      child: text("My Subscription", fontWeight: bold),
+                                      alignment: Alignment.center,
+                                    ),
+                                    button('close x', (){
+                                      game.dialog.value = Dialogs.Games;
+                                    }, fillColor: colours.black20)
+                                  ],
+                                ),
+                              height16,
+                              text("Name"),
+                              text(auth.displayName),
+                              height16,
+                              text("Email"),
+                              text(auth.email),
+                              height16,
+                              text("Renews"),
+                              Row(
+                                mainAxisAlignment: axis.main.apart,
+                                children: [
+                                  text(game.subscription.value.toString()),
+
+                                ],
+                              ),
+                              height32,
+                              button("Cancel Subscription", (){
+                              }, fillColor: colours.red)
+                            ],
+                          ),
+
+                          );
                         case Dialogs.Login:
                           return buildLoginDialog();
                         case Dialogs.Invalid_Arguments:

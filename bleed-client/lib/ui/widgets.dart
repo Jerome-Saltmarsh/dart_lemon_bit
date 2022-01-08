@@ -89,10 +89,8 @@ class _Widgets {
   final Widget settingsMenu = Column(
     children: [
       buttons.account,
-      height4,
+      buttons.subscription,
       buttons.logout,
-      height4,
-      buttons.subscribe,
     ],
   );
 }
@@ -133,33 +131,43 @@ class _Buttons {
     borderWidth: 3,
   );
 
-  final Widget account = Container(
-    width: style.buttonHeight,
-    height: style.buttonHeight,
-    decoration: BoxDecoration(
-        image: decorationImages.profile
-    ),
-  );
+  // final Widget account = Container(
+  //   width: style.buttonHeight,
+  //   height: style.buttonHeight,
+  //   decoration: BoxDecoration(
+  //       image: decorationImages.profile
+  //   ),
+  // );
+
+  final Widget account = border(child: text("Account"), height: style.buttonHeight, width: style.buttonWidth);
 
   final Widget logout = NullableWatchBuilder<Authentication?>(authentication, (Authentication? authorization){
     if (authorization == null){
       text ('No User Logged In');
     }
-    return button('Logout ${authorization?.displayName}', signOut, width: 200);
+    return button('Logout ${authorization?.displayName}',
+        signOut,
+        width: style.buttonWidth,
+        height: style.buttonHeight
+    );
   });
   final Widget subscribe =
-      button("Subscribe \$4.99", openStripeCheckout, width: 200);
+      button("Subscribe \$4.99", openStripeCheckout,
+          width: style.buttonWidth,
+          height: style.buttonHeight
+      );
 
-  final Widget menu = NullableWatchBuilder<Authentication?>(authentication,
-      (Authentication? authorization) {
+  final Widget subscription = button("My Subscription", (){
+    game.dialog.value = Dialogs.Subscription;
+  },
+      width: style.buttonWidth,
+      height: style.buttonHeight
+  );
 
-    if (authorization == null) {
-      return buttons.login;
-    }
-    return mouseOver(builder: (BuildContext context, bool mouseOver) {
-      return mouseOver ? widgets.settingsMenu : buttons.account;
-    });
+  final Widget menu = mouseOver(builder: (BuildContext context, bool mouseOver) {
+    return mouseOver ? widgets.settingsMenu : buttons.account;
   });
+
   final Widget debug = button("Debug", toggleDebugMode);
   final Widget exit = button('Exit', logic.exit);
   final Widget edit = button("Edit", logic.toggleEditMode);
