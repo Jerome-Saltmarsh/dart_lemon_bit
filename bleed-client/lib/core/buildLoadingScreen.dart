@@ -16,6 +16,7 @@ Widget buildLoadingScreen(BuildContext context) {
   return fullScreen(
     color: colours.black,
     child: WatchBuilder(download, (double value) {
+      value = 0.6182;
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
