@@ -18,6 +18,7 @@ import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/ui/widgets.dart';
+import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_math/golden_ratio.dart';
@@ -86,8 +87,22 @@ Widget buildView(BuildContext context) {
                       buttons.region,
                       width16,
                       if (!authenticated) buttons.login,
-                      if (authenticated)  buttons.menu,
-
+                      if (authenticated)  mouseOver(builder: (BuildContext context, bool mouseOver) {
+                        return mouseOver ? Column(
+                          children: [
+                            buttons.account,
+                            if (subscribed)
+                            buttons.subscription,
+                            if (!subscribed)
+                              button("Subscribe", openStripeCheckout,
+                                width: style.buttonWidth,
+                                height: style.buttonHeight,
+                                fillColorMouseOver: colours.white05,
+                              ),
+                            buttons.logout,
+                          ],
+                        ) : buttons.account;
+                      }),
                     ],
                   ),
                   bottomRight: buttons.editor,

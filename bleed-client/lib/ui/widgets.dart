@@ -192,7 +192,13 @@ class _Buttons {
   );
 
   final Widget menu = mouseOver(builder: (BuildContext context, bool mouseOver) {
-    return mouseOver ? widgets.settingsMenu : buttons.account;
+    return mouseOver ? Column(
+      children: [
+        buttons.account,
+        buttons.subscription,
+        buttons.logout,
+      ],
+    ) : buttons.account;
   });
 
   final Widget debug = button("Debug", toggleDebugMode);
