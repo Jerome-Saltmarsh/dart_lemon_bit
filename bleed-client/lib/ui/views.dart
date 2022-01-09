@@ -21,6 +21,7 @@ import 'package:bleed_client/ui/widgets.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -119,7 +120,7 @@ Widget buildView(BuildContext context) {
                     return WatchBuilder(game.dialog, (Dialogs dialogs) {
                       switch (dialogs) {
                         case Dialogs.Subscription:
-
+                          // @build subscription dialog
                           if (!authenticated) {
                             return dialog(
                                 child: Column(
@@ -137,6 +138,8 @@ Widget buildView(BuildContext context) {
                               child: text("Not subscribed")
                             );
                           }
+
+                          final formattedSubscription = dateFormat.format(subscription);
 
                           return dialog(
                             padding: 16,
@@ -165,18 +168,19 @@ Widget buildView(BuildContext context) {
                               if (!expired)
                               text("Renews"),
                               if (expired)
-                                text("Expired", color: colours.red),
-                              Row(
-                                mainAxisAlignment: axis.main.apart,
-                                children: [
-                                  text(game.subscription.value.toString()),
-
-                                ],
-                              ),
+                                Row(
+                                  children: [
+                                    text("Expired", color: colours.red),
+                                    width8,
+                                    button("Renew", (){}, fillColor: colours.green)
+                                  ],
+                                ),
+                              text(formattedSubscription),
                               height32,
                               if (!expired)
                               button("Cancel Subscription", (){
-                              }, fillColor: colours.red)
+                              }, fillColor: colours.red),
+
                             ],
                           ),
 
@@ -498,3 +502,5 @@ Widget _buildSelectRegionButton(Region region) {
   );
 }
 
+
+final dateFormat = DateFormat(DateFormat.MONTH_WEEKDAY_DAY);
