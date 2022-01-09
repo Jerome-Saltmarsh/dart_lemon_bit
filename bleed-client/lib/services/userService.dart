@@ -9,7 +9,7 @@ Future<DateTime?> getUserSubscriptionExpiration(String userId) async {
 
   if (userId.isEmpty) throw Exception("user is Empty");
 
-  var url = Uri.https('rest-server-3-osbmaezptq-ts.a.run.app', '/users', {'id': userId});
+  var url = Uri.https('rest-server-5-osbmaezptq-ey.a.run.app', '/users', {'id': userId});
 
   // Await the http get response, then decode the json-formatted response.
   var response = await http.get(url, headers: {

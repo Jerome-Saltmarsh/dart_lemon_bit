@@ -7,8 +7,6 @@ import 'package:http/http.dart' as http;
 
 final _Firestore firestore = _Firestore();
 
-
-
 class _Firestore {
 
   String _projectId = "";
@@ -67,7 +65,17 @@ ${_gcpProjectIdEnvironmentVariables.join('\n')}
 
   ProjectsDatabasesDocumentsResource get documents => _firestoreApi!.projects.databases.documents;
 
-  Future<Document?> findUserById(String id) {
+  Future<Document?> findUserById(String id) async {
+    int tries = 0;
+    while(_firestoreApi == null){
+      tries++;
+      if (tries > 10){
+        throw Exception("tries greater than 5");
+      }
+      print("firestoreApi is null, waiting 1 second for it to load, try: $tries");
+      await Future.delayed(_oneSecond);
+    }
+
     print("database.findUserById('$id')");
     return documents.get(_name('users/$id'))
         .then<Document?>((value) => Future.value(value))
@@ -136,3 +144,5 @@ String _getTimeStampOneMonth() => DateTime.now().add(Duration(hours: _hoursPerMo
 const _hoursPerMonth = _hoursPerYear ~/ _monthsPerYear;
 const _monthsPerYear = 12;
 const _hoursPerYear = 8760;
+
+const _oneSecond = Duration(seconds: 1);

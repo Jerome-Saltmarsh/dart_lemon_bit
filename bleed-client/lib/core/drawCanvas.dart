@@ -9,13 +9,11 @@ import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
-import 'package:bleed_client/render/mappers/animate.dart';
 import 'package:bleed_client/render/mappers/loop.dart';
 import 'package:bleed_client/render/mappers/mapArcherToSrc.dart';
 import 'package:bleed_client/render/mappers/mapDst.dart';
 import 'package:bleed_client/render/mappers/mapSrc.dart';
 import 'package:bleed_client/render/mappers/mapSrcWitch.dart';
-import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/watches/mode.dart';
@@ -23,7 +21,9 @@ import 'package:bleed_client/webSocket.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/functions/screen_to_world.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
+import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_engine/state/screen.dart';
+import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/angle_between.dart';
 
 int frame = 0;
@@ -42,15 +42,17 @@ void drawCanvas(Canvas canvas, Size size) {
     return;
   }
 
-  if (game.region.value == Region.None) {
-    renderCanvasSelectRegion();
-    return;
+  // if (game.region.value == Region.None) {
+  //   renderCanvasSelectRegion();
+  //   return;
+  // }
+  // if (game.type.value == GameType.None) {
+  //   renderCanvasSelectGame();
+  //   return;
+  // }
+  if (!webSocket.connected) {
+    renderBackground();
   }
-  if (game.type.value == GameType.None) {
-    renderCanvasSelectGame();
-    return;
-  }
-  if (!webSocket.connected) return;
   if (game.player.uuid.value.isEmpty) return;
   if (game.status.value != GameStatus.In_Progress) return;
   renderGame(canvas, size);
@@ -61,6 +63,16 @@ int direction = 0;
 double x = 50;
 double y = 50;
 
+final Vector2 star = Vector2(100, 100);
+double rotation = 0;
+double scale = 1;
+
+void renderBackground(){
+  // drawStar(x: star.x, y: star.y, rotation: rotation, scale: scale);
+  // rotation += 0.01;
+  // scale -= 0.001;
+
+}
 
 void renderCanvasSelectGame() {
   final double angle = angleBetween(x, y, mouseWorldX, mouseWorldY);
@@ -130,6 +142,18 @@ void renderCanvasSelectRegion() {
       direction: direction,
       frame: animationFrame,
       scale: 1);
+}
+
+void drawStar({
+  required double x,
+  required double y,
+  double rotation = 0,
+  double scale = 1.0,
+}){
+  drawAtlas(
+      dst: mapDst(x: x, y: y, scale: scale, rotation: rotation),
+      src: mapSrc(x: atlas.star.x, y: atlas.star.y, width: 128, height: 128),
+  );
 }
 
 void drawArcher({
