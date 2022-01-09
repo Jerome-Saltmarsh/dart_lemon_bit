@@ -55,7 +55,8 @@ Widget buildView(BuildContext context) {
 
       return NullableWatchBuilder<DateTime?>(game.subscription, (DateTime? subscription){
         final now = DateTime.now().toUtc();
-        bool subscribed = subscription != null && subscription.isAfter(now);
+        final bool subscribed = subscription != null;
+        final expired = subscription != null && now.isAfter(subscription);
 
         return WatchBuilder(webSocket.connection, (Connection connection) {
           switch (connection) {
@@ -103,8 +104,15 @@ Widget buildView(BuildContext context) {
                                   children: [
                                     border(child: text("My Subscription")),
                                     text("Authentication required"),
+                                    buttons.login,
                                   ],
                                 )
+                            );
+                          }
+
+                          if (!subscribed){
+                            return dialog(
+                              child: text("Not subscribed")
                             );
                           }
 
@@ -132,7 +140,10 @@ Widget buildView(BuildContext context) {
                               text("Email"),
                               text(auth.email),
                               height16,
+                              if (!expired)
                               text("Renews"),
+                              if (expired)
+                                text("Expired", color: colours.red),
                               Row(
                                 mainAxisAlignment: axis.main.apart,
                                 children: [
@@ -141,6 +152,7 @@ Widget buildView(BuildContext context) {
                                 ],
                               ),
                               height32,
+                              if (!expired)
                               button("Cancel Subscription", (){
                               }, fillColor: colours.red)
                             ],
