@@ -107,6 +107,8 @@ Widget buildView(BuildContext context) {
                   ),
                   bottomRight: Row(
                     children: [
+                      buttons.showDialogSubscribed,
+                      width8,
                       buttons.loginFake,
                       width8,
                       buttons.editor,
@@ -119,6 +121,17 @@ Widget buildView(BuildContext context) {
                     }
                     return WatchBuilder(game.dialog, (Dialogs dialogs) {
                       switch (dialogs) {
+                        case Dialogs.Subscription_Successful:
+                          return dialog(
+                            height: 200,
+                            width: 200 * goldenRatio,
+                            child: layout(child: text("Thank you for subscribing!"),
+                              bottomRight: button("Great", (){
+                                game.dialog.value = Dialogs.Games;
+                              }),
+                            )
+                          );
+
                         case Dialogs.Subscription:
                           // @build subscription dialog
                           if (!authenticated) {
@@ -142,6 +155,8 @@ Widget buildView(BuildContext context) {
                           final formattedSubscription = dateFormat.format(subscription);
 
                           return dialog(
+                            color: colours.white05,
+                            borderColor: colours.white05,
                             padding: 16,
                               child: Column(
                             crossAxisAlignment: axis.cross.start,

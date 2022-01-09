@@ -12,6 +12,12 @@ class _Colors {
   final Color black15 = Colors.black.withOpacity(0.15);
   final Color black20 = Colors.black.withOpacity(0.2);
 
+  final Color white = Colors.white;
+  final Color white05 = Colors.white.withOpacity(0.05);
+  final Color white10 = Colors.white.withOpacity(0.10);
+
+  final Color none = Colors.transparent;
+
   final Color redDarkest = Color.fromRGBO(66, 21, 46, 1);
   final Color redDark = Color.fromRGBO(179, 56, 49, 1);
   final Color red = Color.fromRGBO(234, 79, 54, 1.0);
@@ -28,8 +34,6 @@ class _Colors {
   final Color purpleDarkest =  Color.fromRGBO(69, 41, 63, 1);
   final Color transparent =  Colors.transparent;
 
-  final Color white = Color.fromRGBO(220, 220, 220, 1.0);
-  final Color white05 = Colors.white.withOpacity(0.05);
   final Color grey = Color.fromRGBO(120, 120, 120, 1.0);
   final Color greyDark = Color.fromRGBO(60, 60, 60, 1.0);
 

@@ -44,12 +44,18 @@ Future init() async {
   initCube();
 
 
+  // print(Uri.base.path);
+  // if (Uri.base.hasQuery && Uri.base.queryParameters.containsKey('subscribed')) {
+  //   game.dialog.value = Dialogs.Subscription_Successful;
+  // }
+
   // if (Uri.base.hasQuery && Uri.base.queryParameters.containsKey('host')) {
-  //   Future.delayed(Duration(seconds: 1), () {
-  //     String host = Uri.base.queryParameters['host'];
-  //     String connectionString = parseHttpToWebSocket(host);
-  //     connectWebSocket(connectionString);
-  //   });
+  //   // Future.delayed(Duration(seconds: 1), () {
+  //   //   String host = Uri.base.queryParameters['host'];
+  //   //   String connectionString = parseHttpToWebSocket(host);
+  //   //   connectWebSocket(connectionString);
+  //   // });
+  //   print(Uri.base.path);
   // }
 }
 

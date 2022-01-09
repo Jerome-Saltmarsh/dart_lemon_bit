@@ -6,6 +6,7 @@ enum Dialogs {
   Confirm_Logout,
   Login,
   Subscription,
+  Subscription_Successful,
 }
 
 final _UIOptions uiOptions = _UIOptions();

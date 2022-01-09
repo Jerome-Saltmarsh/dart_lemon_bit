@@ -29,6 +29,14 @@ final _Game game = _Game();
 
 _Player get player => game.player;
 
+void setDialog(Dialogs value){
+  game.dialog.value = value;
+}
+
+void setDialogGames(){
+  setDialog(Dialogs.Games);
+}
+
 class _Game {
   final Cache<DateTime?> subscription = Cache(key: 'subscription', value: null);
   final Watch<Dialogs> dialog = Watch(Dialogs.Games);

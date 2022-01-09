@@ -51,6 +51,10 @@ class Events {
       storage.remove('subscription');
     }else{
       storage.put('subscription', value);
+      if (!storage.contains('subscription_dialog_shown')){
+          storage.put('subscription_dialog_shown', 'true');
+          game.dialog.value = Dialogs.Subscription_Successful;
+      }
     }
   }
 

@@ -124,6 +124,12 @@ class _Buttons {
     authentication.value = Authentication(userId: "test123", displayName: "Test 123", email: "test@email.com");
   });
 
+  final Widget showDialogSubscribed = button("Sub Success", (){
+    game.dialog.value = Dialogs.Subscription_Successful;
+  });
+
+
+
 
   final Widget signInWithGoogleB = button(Container(
     padding: EdgeInsets.symmetric(horizontal: 8),
