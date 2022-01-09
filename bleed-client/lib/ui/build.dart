@@ -5,6 +5,7 @@ import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/flutterkit.dart';
+import 'package:bleed_client/logic.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/styles.dart';
@@ -262,46 +263,35 @@ class _Build {
 
 
               return Container(
-                color: Colors.red,
-                width: double.infinity,
                 margin: const EdgeInsets.only(bottom: 32),
                 child: onPressed(
                   callback: (){
-                    game.type.value = value;
+                    // game.type.value = value;
+                    logic.play(value);
                   },
-                  child: SizedBox(
-                    width: 600,
-                    child: ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxWidth: 500,
-                      ),
-                      // color: Colors.blue,
-                      // width: 500,
-                      child: Container(
-                        color: colours.blue,
-                        child: Row(
-                          mainAxisAlignment: axis.main.center,
+                  child: Container(
+                    color: colours.black,
+                    child: Row(
+                      mainAxisAlignment: axis.main.center,
+                      crossAxisAlignment: axis.cross.start,
+                      children: [
+                        Container(
+                          width: 180,
+                          height: 111,
+                          decoration: BoxDecoration(
+                            image: gameTypeDecorationImage[value] ?? decorationImages.royal,
+                          ),
+                        ),
+                        width16,
+                        Column(
                           crossAxisAlignment: axis.cross.start,
                           children: [
-                            Container(
-                              width: 180,
-                              height: 111,
-                              decoration: BoxDecoration(
-                                image: gameTypeDecorationImage[value] ?? decorationImages.royal,
-                              ),
-                            ),
-                            width16,
-                            Column(
-                              crossAxisAlignment: axis.cross.start,
-                              children: [
-                                joinButton,
-                                height8,
-                                type,
-                              ],
-                            ),
+                            joinButton,
+                            height8,
+                            type,
                           ],
                         ),
-                      ),
+                      ],
                     ),
                   ),
                 ),

@@ -13,6 +13,11 @@ final _Logic logic = _Logic();
 
 class _Logic {
 
+  void play(GameType gameType){
+    game.type.value = gameType;
+    connectToWebSocketServer(game.region.value, gameType);
+  }
+
   void connectToSelectedGame(){
     connectToWebSocketServer(game.region.value, game.type.value);
   }
