@@ -22,6 +22,7 @@ import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -70,6 +71,7 @@ Widget buildView(BuildContext context) {
           final now = DateTime.now().toUtc();
           final bool subscribed = subscription != null;
           final expired = subscription != null && now.isAfter(subscription);
+          final bool subscriptionValid = !expired;
 
           return WatchBuilder(webSocket.connection, (Connection connection) {
             switch (connection) {
@@ -82,19 +84,26 @@ Widget buildView(BuildContext context) {
                     padding: 16,
                     expand: true,
                     topLeft: widgets.title,
+                    top: () {
+                      if (!subscriptionValid) return empty;
+                      return Container(
+                        width: screen.width,
+                        child: Row(
+                          mainAxisAlignment: axis.main.center,
+                          children: [
+                            button(text("Subscribe for \$4.99 per month"), openStripeCheckout,
+                              // margin: EdgeInsets.only(top: 12),
+                              height: style.buttonHeight * goldenRatioInverse,
+                              // width: style.buttonWidth * goldenRatioInverse
+                            ),
+                          ],
+                        ),
+                      );
+                    }(),
                     topRight: Row(
                       crossAxisAlignment: axis.cross.start,
                       mainAxisAlignment: axis.main.end,
                       children: [
-
-                        if (authenticated && !subscribed)
-                          button(text("Subscribe for \$4.99 per month"), openStripeCheckout,
-                            margin: EdgeInsets.only(top: 12),
-                            height: style.buttonHeight * goldenRatioInverse,
-                            // width: style.buttonWidth * goldenRatioInverse
-                          ),
-                        // width16,
-                        width16,
                         buttons.region,
                         width16,
                         if (!authenticated) buttons.login,
@@ -133,13 +142,23 @@ Widget buildView(BuildContext context) {
                       return WatchBuilder(game.dialog, (Dialogs dialogs) {
                         switch (dialogs) {
                           case Dialogs.Subscription_Successful:
+                            final name = auth != null ? auth.displayName : "";
+
                             return dialog(
-                                height: 200,
-                                width: 200 * goldenRatio,
-                                child: layout(child: text("Thank you for subscribing!"),
+                                padding: 16,
+                                height: 180,
+                                width: 180 * goldenRatio,
+                                child: layout(child: Column(
+                                  crossAxisAlignment: axis.cross.start,
+                                  children: [
+                                    text("Welcome $name", fontSize: 20, fontWeight: bold),
+                                    height16,
+                                    text("Thank you very much for subscribing to gamestream"),
+                                  ],
+                                ),
                                   bottomRight: button("Great", (){
                                     game.dialog.value = Dialogs.Games;
-                                  }),
+                                  }, fillColor: colours.green),
                                 )
                             );
 
@@ -531,3 +550,14 @@ Widget _buildSelectRegionButton(Region region) {
 
 
 final dateFormat = DateFormat(DateFormat.MONTH_WEEKDAY_DAY);
+
+
+final empty = SizedBox();
+
+Widget build(BuildFunction function){
+ return Builder(builder: (context){
+   return function();
+ },);
+}
+
+typedef BuildFunction = Widget Function();

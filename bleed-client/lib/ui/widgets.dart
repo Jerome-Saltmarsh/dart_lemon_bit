@@ -121,7 +121,8 @@ class _Buttons {
   );
 
   final Widget loginFake = button("Fake Login", (){
-    authentication.value = Authentication(userId: "test_01", displayName: "Test_01", email: "test_01@email.com");
+    final val = "test_02";
+    authentication.value = Authentication(userId: val, displayName: val, email: "$val@email.com");
   });
 
   final Widget showDialogSubscribed = button("Sub Success", (){

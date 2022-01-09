@@ -51,9 +51,12 @@ class Events {
       storage.remove('subscription');
     }else{
       storage.put('subscription', value);
-      if (!storage.contains('subscription_dialog_shown')){
-          storage.put('subscription_dialog_shown', 'true');
+      if (authenticated){
+        final flagName = 'subscription_dialog_shown_${authentication.value!.userId}';
+        if (!storage.contains(flagName)){
+          storage.put(flagName, 'true');
           game.dialog.value = Dialogs.Subscription_Successful;
+        }
       }
     }
   }
