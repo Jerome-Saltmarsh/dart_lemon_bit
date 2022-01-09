@@ -65,7 +65,7 @@ Widget buildView(BuildContext context) {
               return _views.connected;
             case Connection.None:
               return layout(
-                  padding: 8,
+                  padding: 16,
                   expand: true,
                   topLeft: widgets.title,
                   topRight: Row(
@@ -81,7 +81,7 @@ Widget buildView(BuildContext context) {
                         ),
                       width16,
                       buttons.region,
-                      width4,
+                      width16,
                       if (!authenticated) buttons.login,
                       if (authenticated)  buttons.menu,
 

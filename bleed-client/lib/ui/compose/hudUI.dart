@@ -185,6 +185,7 @@ Widget layout({
   Widget? child,
   double padding = 0,
   Color? color,
+  Widget? foreground,
 }){
   final stack = Stack(
     children: [
@@ -202,6 +203,8 @@ Widget layout({
         Positioned(bottom: padding, left: padding, child: bottomLeft,),
       if (top != null)
         Positioned(top: padding, child: top),
+      if (foreground != null)
+        foreground,
     ],
   );
 
