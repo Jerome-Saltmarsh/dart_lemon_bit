@@ -225,7 +225,7 @@ final _BuildView _buildView = _BuildView();
 class _Views {
   final Widget account = _buildView.account();
   final Widget selectRegion = _buildView.selectRegion();
-  final Widget selectGame = _buildView.selectGame();
+  final Widget selectGame = widgets.gamesList;
   final Widget connecting = _buildView.connecting();
   final Widget connected = _buildView.connected();
   final Widget connection = _buildView.connection();
@@ -449,21 +449,6 @@ class _BuildView {
                 ],
               )),
         ]);
-  }
-
-  Widget selectGame() {
-    return Container(
-      margin: const EdgeInsets.only(top: 140),
-      child: SingleChildScrollView(
-        child: Column(
-            mainAxisAlignment: axis.main.center,
-            crossAxisAlignment: axis.cross.center,
-            children: [
-              height16,
-              widgets.gamesList,
-            ]),
-      ),
-    );
   }
 
   Widget connecting() {

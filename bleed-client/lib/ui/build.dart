@@ -244,49 +244,72 @@ class _Build {
   }
 
   Widget gamesList(){
-    return Column(
-      crossAxisAlignment: axis.cross.stretch,
-      children: [
-        ...selectableGameTypes.map((GameType value) {
-          final Widget type =
-          Container(width: 160, child: text(enumString(value).toUpperCase()));
-          final Widget joinButton = button(
-              text(gameTypeNames[value], fontSize: 20, fontWeight: FontWeight.bold),
-                  () {
-                game.type.value = value;
-                game.type.value = value;
-              }, width: _buttonWidth, borderWidth: 3,
-            fillColor: colours.black05,
-          );
+    return Container(
+      margin: const EdgeInsets.only(top: 120),
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: axis.cross.center,
+          children: [
+            ...selectableGameTypes.map((GameType value) {
+              final Widget type = text(enumString(value).toUpperCase());
+              final Widget joinButton = button(
+                  text(gameTypeNames[value], fontSize: 20, fontWeight: FontWeight.bold),
+                      () {
+                    game.type.value = value;
+                  }, width: _buttonWidth, borderWidth: 3,
+                fillColor: colours.black05,
+              );
 
 
-          return Container(
-            margin: const EdgeInsets.only(bottom: 32),
-            child: Row(
-              mainAxisAlignment: axis.main.center,
-              crossAxisAlignment: axis.cross.start,
-              children: [
-                Container(
-                  width: 180,
-                  height: 111,
-                  decoration: BoxDecoration(
-                    image: gameTypeDecorationImage[value] ?? decorationImages.royal,
+              return Container(
+                color: Colors.red,
+                width: double.infinity,
+                margin: const EdgeInsets.only(bottom: 32),
+                child: onPressed(
+                  callback: (){
+                    game.type.value = value;
+                  },
+                  child: SizedBox(
+                    width: 600,
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: 500,
+                      ),
+                      // color: Colors.blue,
+                      // width: 500,
+                      child: Container(
+                        color: colours.blue,
+                        child: Row(
+                          mainAxisAlignment: axis.main.center,
+                          crossAxisAlignment: axis.cross.start,
+                          children: [
+                            Container(
+                              width: 180,
+                              height: 111,
+                              decoration: BoxDecoration(
+                                image: gameTypeDecorationImage[value] ?? decorationImages.royal,
+                              ),
+                            ),
+                            width16,
+                            Column(
+                              crossAxisAlignment: axis.cross.start,
+                              children: [
+                                joinButton,
+                                height8,
+                                type,
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-                width16,
-                Column(
-                  crossAxisAlignment: axis.cross.start,
-                  children: [
-                    joinButton,
-                    height8,
-                    type,
-                  ],
-                ),
-              ],
-            ),
-          );
-        }).toList()
-      ],
+              );
+            }).toList()
+          ],
+        ),
+      ),
     );
   }
 
