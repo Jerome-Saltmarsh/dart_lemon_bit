@@ -144,12 +144,16 @@ class _Buttons {
   //   ),
   // );
 
-  final Widget account = border(child: text("Account"),
+  final Widget account = button(text("Account"), (){
+    game.dialog.value = Dialogs.Subscription;
+  },
       height: style.buttonHeight,
       width: style.buttonWidth,
       fillColor: colours.green,
-      color: colours.green,
-      radius: borderRadius2,
+      fillColorMouseOver: colours.green,
+      borderColorMouseOver: colours.green,
+    borderColor: colours.green,
+      borderRadius: borderRadius2,
   );
 
   final Widget logout = NullableWatchBuilder<Authentication?>(authentication, (Authentication? authorization){
