@@ -17,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:lemon_engine/functions/fullscreen_enter.dart';
 import 'package:lemon_engine/functions/fullscreen_exit.dart';
 import 'package:lemon_engine/properties/fullscreen_active.dart';
+import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../logic.dart';
@@ -121,12 +122,7 @@ class _Buttons {
 
   final Widget loginFake = button("Fake Login", (){
     authentication.value = Authentication(userId: "test123", displayName: "Test 123", email: "test@email.com");
-  }, width: style.buttonWidth, height: style.buttonHeight, borderWidth: 3,
-    fillColor: colours.green,
-    borderColor: colours.green,
-    fillColorMouseOver: colours.green,
-    borderRadius: borderRadius2,
-  );
+  });
 
 
   final Widget signInWithGoogleB = button(Container(
@@ -223,7 +219,7 @@ class _Buttons {
           text(enumString(region), fontSize: 20),
           logic.deselectRegion,
           width: style.buttonWidth,
-          height: style.buttonHeight,
+          height: style.buttonHeight * goldenRatioInverse,
           borderWidth: 1,
           borderRadius: borderRadius2,
         );
@@ -237,7 +233,7 @@ class _Buttons {
                 width: style.buttonWidth,
                 height: style.buttonHeight,
                 radius: borderRadius0,
-                child: text("Select Region", fontSize: 20)),
+                child: text("Select Region", fontSize: 20, decoration: underline)),
             ...selectableRegions.map((value) {
               final bool selected = region == value;
 

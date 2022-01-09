@@ -82,7 +82,6 @@ Widget buildView(BuildContext context) {
                           // width: style.buttonWidth * goldenRatioInverse
                         ),
                       // width16,
-                      // buttons.loginFake,
                       width16,
                       buttons.region,
                       width16,
@@ -105,7 +104,13 @@ Widget buildView(BuildContext context) {
                       }),
                     ],
                   ),
-                  bottomRight: buttons.editor,
+                  bottomRight: Row(
+                    children: [
+                      buttons.loginFake,
+                      width8,
+                      buttons.editor,
+                    ],
+                  ),
                   bottomLeft: widgets.theme,
                   child: WatchBuilder(game.region, (Region serverType) {
                     if (serverType == Region.None) {
