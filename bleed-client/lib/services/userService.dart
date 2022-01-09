@@ -9,7 +9,7 @@ Future<DateTime?> getUserSubscriptionExpiration(String userId) async {
 
   if (userId.isEmpty) throw Exception("user is Empty");
 
-  var url = Uri.https('rest-server-5-osbmaezptq-ey.a.run.app', '/users', {'id': userId});
+  var url = Uri.https('rest-server-6-osbmaezptq-ey.a.run.app', '/users', {'id': userId});
 
   // Await the http get response, then decode the json-formatted response.
   var response = await http.get(url, headers: {
@@ -25,15 +25,23 @@ Future<DateTime?> getUserSubscriptionExpiration(String userId) async {
     if (!body.containsKey('status')){
       throw Exception("response missing status");
     }
-    // final status = body['status'];
+
+    final status = body['status'];
+
+    if (status == 'user_not_found') {
+      print("user not found in subscription service");
+      return null;
+    }
+
+    if (status != 'success'){
+      throw Exception(response.body);
+    }
 
     if (!body.containsKey('sub_exp')){
       throw Exception("response missing sub_exp field");
     }
     final subExpString = body['sub_exp'];
-    // final utc = DateTime.now().toUtc();
     return DateTime.parse(subExpString);
-    // TODO
   }
   print('Request failed with status: ${response.statusCode}.');
   return null;

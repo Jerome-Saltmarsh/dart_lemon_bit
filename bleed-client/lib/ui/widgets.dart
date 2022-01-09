@@ -119,6 +119,16 @@ class _Buttons {
     borderRadius: borderRadius2,
   );
 
+  final Widget loginFake = button("Fake Login", (){
+    authentication.value = Authentication(userId: "test123", displayName: "Test 123", email: "test@email.com");
+  }, width: style.buttonWidth, height: style.buttonHeight, borderWidth: 3,
+    fillColor: colours.green,
+    borderColor: colours.green,
+    fillColorMouseOver: colours.green,
+    borderRadius: borderRadius2,
+  );
+
+
   final Widget signInWithGoogleB = button(Container(
     padding: EdgeInsets.symmetric(horizontal: 8),
     child: Row(

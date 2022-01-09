@@ -81,6 +81,8 @@ Widget buildView(BuildContext context) {
                           // width: style.buttonWidth * goldenRatioInverse
                         ),
                       width16,
+                      buttons.loginFake,
+                      width16,
                       buttons.region,
                       width16,
                       if (!authenticated) buttons.login,

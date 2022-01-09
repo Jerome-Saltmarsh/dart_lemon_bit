@@ -45,7 +45,7 @@ FutureOr<Response> handleRequest(Request request) async {
       final user = await firestore.findUserById(id);
       final Json response = Json();
       if (user == null){
-        response['status'] = 'error';
+        response['status'] = 'user_not_found';
         response['message'] = 'user with id $id could not be found';
         return ok(response);
       }
@@ -53,6 +53,7 @@ FutureOr<Response> handleRequest(Request request) async {
 
       if (fields == null){
         response['status'] = 'error';
+        response['reason'] = 'no_fields';
         response['message'] = 'user with id $id was found however had no fields';
         return ok(response);
       }
@@ -60,6 +61,7 @@ FutureOr<Response> handleRequest(Request request) async {
       final subExp = fields['sub_exp'];
       if (subExp == null){
         response['status'] = 'error';
+        response['reason'] = 'no_sub_exp_field';
         response['message'] = 'user with id $id was found does not have a sub_exp field';
         return ok(response);
       }
