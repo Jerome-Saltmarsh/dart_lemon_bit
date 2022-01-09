@@ -514,7 +514,7 @@ class _BuildView {
           Container(
             height: 80,
             child: AnimatedTextKit(repeatForever: true, animatedTexts: [
-              RotateAnimatedText("Connecting to server: ${enumString(region)}",
+              RotateAnimatedText("Connecting to ${enumString(game.type.value)} (${enumString(region)})",
                   textStyle: TextStyle(color: Colors.white, fontSize: 30)),
             ]),
           ),
