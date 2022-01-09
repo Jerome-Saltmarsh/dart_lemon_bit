@@ -121,7 +121,7 @@ class _Buttons {
   );
 
   final Widget loginFake = button("Fake Login", (){
-    authentication.value = Authentication(userId: "test123", displayName: "Test 123", email: "test@email.com");
+    authentication.value = Authentication(userId: "test_01", displayName: "Test_01", email: "test_01@email.com");
   });
 
   final Widget showDialogSubscribed = button("Sub Success", (){
@@ -141,7 +141,9 @@ class _Buttons {
         text("Sign in with Google", color: Colors.black),
       ],
     ),
-  ), signInWithGoogle,
+  ), (){
+    signInWithGoogle();
+  },
     fillColor: Colors.white,
     fillColorMouseOver: Colors.white,
     borderColorMouseOver: colours.blue,

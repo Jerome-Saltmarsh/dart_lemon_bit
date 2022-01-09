@@ -218,8 +218,12 @@ class Events {
   }
 }
 
-
 void updateUserSubscription(String userId) async {
   print("updateUserSubscription()");
-  game.subscription.value = await getUserSubscriptionExpiration(userId);
+  game.signingIn.value = true;
+  game.subscription.value = await getUserSubscriptionExpiration(userId).catchError((error){
+    print(error);
+    return null;
+  });
+  game.signingIn.value = false;
 }

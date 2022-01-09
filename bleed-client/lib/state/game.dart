@@ -38,6 +38,7 @@ void setDialogGames(){
 }
 
 class _Game {
+  final Watch<bool> signingIn = Watch(false);
   final Cache<DateTime?> subscription = Cache(key: 'subscription', value: null);
   final Watch<Dialogs> dialog = Watch(Dialogs.Games);
   final Watch<Mode> mode = Watch(Mode.Play);
@@ -225,3 +226,4 @@ mixin Position {
   double x = 0;
   double y = 0;
 }
+
