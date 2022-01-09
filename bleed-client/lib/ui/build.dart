@@ -226,13 +226,10 @@ class _Build {
     // return _text;
 
     return border(
-      // color: Colors.transparent,
-      // width: width,
-      // height: height,
-      // padding: EdgeInsets.all(8),
       height: style.buttonHeight,
       radius: borderRadius2,
       child: _text,
+      borderWidth: 2,
     );
   }
 
