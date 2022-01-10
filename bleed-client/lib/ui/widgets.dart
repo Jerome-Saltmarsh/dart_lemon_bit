@@ -242,11 +242,6 @@ class _Buttons {
         color: colours.black20,
         child: Column(
           children: [
-            border(
-                width: style.buttonWidth,
-                height: style.buttonHeight * goldenRatioInverse,
-                radius: borderRadius0,
-                child: text("Select Region", fontSize: 20, decoration: underline)),
             ...selectableRegions.map((value) {
               final bool selected = region == value;
 
@@ -259,7 +254,13 @@ class _Buttons {
               height: style.buttonHeight,
               borderRadius: borderRadius0,
             );
-          }).toList()],
+          }).toList(),
+            border(
+                width: style.buttonWidth,
+                height: style.buttonHeight * goldenRatioInverse,
+                radius: borderRadius0,
+                child: text("Select Region", fontSize: 20, decoration: underline)),
+          ],
         ),
       );
 

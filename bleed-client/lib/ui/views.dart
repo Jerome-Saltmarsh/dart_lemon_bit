@@ -117,7 +117,7 @@ Widget buildView(BuildContext context) {
                               height: style.buttonHeight * goldenRatioInverse,
                             ),
                             if (subscriptionExpired)
-                              button(text("Subscription Expired", color: colours.red), (){
+                              button(text("Subscription Expired", color: colours.red, decoration: underline), (){
                                 game.dialog.value = Dialogs.Subscription;
                               },
                                 fillColorMouseOver: colours.white05,
