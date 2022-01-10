@@ -36,12 +36,16 @@ Widget buildLoginDialog() {
   return dialog(
       padding: 16,
       color: colours.white05,
-      borderColor: colours.white10,
+      borderColor: colours.none,
+      height: 300,
       borderWidth: 3,
       child: layout(
           bottomRight: button("No Thanks", () {
             game.dialog.value = Dialogs.Games;
-          }, fillColor: colours.black15),
+          }, fillColor: colours.none,
+            borderColor: colours.none,
+          ),
+
           child: Column(
             crossAxisAlignment: axis.cross.start,
             children: [
