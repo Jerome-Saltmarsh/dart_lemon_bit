@@ -37,9 +37,10 @@ Widget buildLoginDialog() {
       padding: 16,
       color: colours.white05,
       borderColor: colours.none,
-      height: 300,
+      height: 400,
       borderWidth: 3,
       child: layout(
+          bottomLeft: button("Sign up", (){}),
           bottomRight: button("No Thanks", () {
             game.dialog.value = Dialogs.Games;
           }, fillColor: colours.none,
@@ -54,6 +55,8 @@ Widget buildLoginDialog() {
               buttons.signInWithGoogleB,
               height16,
               buttons.signInWithFacebookButton,
+              // height16,
+              // buttons.signInWithUsernamePassword,
               height32,
             ],
           )));

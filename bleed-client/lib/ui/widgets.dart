@@ -173,6 +173,27 @@ class _Buttons {
     borderWidth: 1,
   );
 
+  final Widget signInWithUsernamePassword = button(
+    Container(
+      padding: EdgeInsets.symmetric(horizontal: 8),
+      child: Row(
+        mainAxisAlignment: axis.main.apart,
+        children: [
+          logos.facebook,
+          width16,
+          text("Enter Username Password", color: Colors.white),
+        ],
+      ),
+    ), () async {
+
+  },
+    fillColor: colours.facebook,
+    fillColorMouseOver: colours.facebook,
+    borderColorMouseOver: colours.white,
+    borderColor: colours.facebook,
+    borderWidth: 1,
+  );
+
   final Widget signInWithGoogleB = button(Container(
     padding: EdgeInsets.symmetric(horizontal: 8),
     child: Row(
@@ -195,14 +216,6 @@ class _Buttons {
     borderColorMouseOver: colours.black20,
     borderWidth: 1,
   );
-
-  // final Widget account = Container(
-  //   width: style.buttonHeight,
-  //   height: style.buttonHeight,
-  //   decoration: BoxDecoration(
-  //       image: decorationImages.profile
-  //   ),
-  // );
 
   final Widget account = button(text("Account"), (){
     game.dialog.value = Dialogs.Subscription;
