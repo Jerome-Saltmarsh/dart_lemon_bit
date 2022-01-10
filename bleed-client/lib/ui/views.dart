@@ -244,6 +244,7 @@ Widget buildView(BuildContext context) {
                                 bottomLeft: (subscriptionExpired)
                                     ? null
                                     : button("Cancel Subscription", () {},
+                                    hint: "If you decide to cancel your subscription you will continue to be able to play premium games until $formattedSubscription",
                                     borderColor: colours.none,
                                 fillColor: colours.red),
                                   bottomRight: button(text('close', fontWeight: bold), () {
@@ -661,7 +662,7 @@ Widget buildLayoutLoadingGame(){
         child: Row(
           mainAxisAlignment: axis.main.center,
           children: [
-            text("Loading Game.."),
+            text("JOINING GAME.."),
           ],
         ),
       )

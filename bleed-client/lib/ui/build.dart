@@ -265,13 +265,15 @@ class _Build {
 
 
               return Container(
-                margin: const EdgeInsets.only(bottom: 32),
+                margin: const EdgeInsets.only(bottom: 16),
+                color: colours.white05,
                 width: 600,
                 child: onPressed(
                   callback: (){
                     logic.play(value);
                   },
                   child: Row(
+                    mainAxisAlignment: axis.main.center,
                     crossAxisAlignment: axis.cross.start,
                     children: [
                       Container(
