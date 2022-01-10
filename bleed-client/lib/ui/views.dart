@@ -323,14 +323,14 @@ Widget buildView(BuildContext context) {
                                           ? subscribeButton
                                           : playButton,
                                   bottomRight: button("No Thanks", logic.deselectGameType,
-                                      fillColor: colours.black05,
+                                      fillColor: colours.none,
                                       borderColor: colours.none,
                                   ),
                                   child: Column(
                                     crossAxisAlignment: axis.cross.start,
                                     children: [
                                       text(gameTypeNames[gameType], fontSize: 25),
-                                      height16,
+                                      height32,
                                       if (!isFreeToPlay && !authenticated)
                                         border(child: text(
                                             "* This is a premium game which requires an active subscription to play",
