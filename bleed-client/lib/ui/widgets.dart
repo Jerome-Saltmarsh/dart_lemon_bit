@@ -289,15 +289,18 @@ class _Buttons {
   final Widget region = WatchBuilder(game.region, (Region region) {
     return onHover((bool hovering){
 
+      final currentRegion  =   button(
+        text(enumString(region), fontSize: 20),
+        (){},
+        width: style.buttonWidth,
+        height: style.buttonHeight * goldenRatioInverse,
+        borderWidth: 1,
+        borderRadius: borderRadius2,
+      );
+
+
       if (!hovering){
-        return button(
-          text(enumString(region), fontSize: 20),
-          logic.deselectRegion,
-          width: style.buttonWidth,
-          height: style.buttonHeight * goldenRatioInverse,
-          borderWidth: 1,
-          borderRadius: borderRadius2,
-        );
+        return currentRegion;
       }
 
       return Container(
@@ -317,11 +320,7 @@ class _Buttons {
               borderRadius: borderRadius0,
             );
           }).toList(),
-            border(
-                width: style.buttonWidth,
-                height: style.buttonHeight * goldenRatioInverse,
-                radius: borderRadius0,
-                child: text("Select Region", fontSize: 20, decoration: underline)),
+            currentRegion,
           ],
         ),
       );
