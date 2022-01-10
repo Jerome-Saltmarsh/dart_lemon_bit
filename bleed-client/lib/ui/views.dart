@@ -111,23 +111,25 @@ Widget buildView(BuildContext context) {
 
                       return Container(
                         width: screen.width,
+                        margin: EdgeInsets.only(top: 20),
                         child: Row(
                           mainAxisAlignment: axis.main.center,
                           children: [
-                            if (subscriptionActive) text("Subscribed", color: colours.green),
                             if (!subscribed)
                             button(text("Subscribe for \$4.99 per month"), logic.openStripeCheckout,
                               height: style.buttonHeight * goldenRatioInverse,
                             ),
-                            if (subscriptionExpired)
-                              button(text("Subscription Expired", color: colours.red, decoration: underline), (){
-                                game.dialog.value = Dialogs.Subscription;
-                              },
-                                fillColorMouseOver: colours.white05,
-                                borderColor: colours.none,
-                      borderColorMouseOver: colours.transparent,
-                                margin: EdgeInsets.only(top: 16
-                                ),
+                            if (subscription != null && subscriptionExpired)
+                              Row(
+                                children: [
+                                  onPressed(
+                                    callback: logic.showDialogSubscription,
+                                    child: border(
+                                        color: colours.red,
+                                        child: text("Your subscription expired on ${dateFormat.format(subscription)}", color: colours.red)),
+                                  ),
+                                  width8,
+                                  button(text("Renew"), logic.showDialogSubscription, borderColor: colours.none),                                ],
                               ),
                           ],
                         ),
@@ -297,7 +299,7 @@ Widget buildView(BuildContext context) {
                               );
 
                               final loginButton = button(text("Play", fontSize: 25, fontWeight: bold),
-                                  logic.showLoginDialog,
+                                  logic.showDialogLogin,
                                   fillColor: colours.green,
                                   borderWidth: 2
                               );
@@ -636,7 +638,7 @@ Widget _buildSelectRegionButton(Region region) {
 }
 
 
-final dateFormat = DateFormat(DateFormat.MONTH_WEEKDAY_DAY);
+final dateFormat = DateFormat(DateFormat.YEAR_MONTH_DAY);
 
 final empty = SizedBox();
 

@@ -66,8 +66,12 @@ class _Logic {
     game.player.uuid.value = "";
   }
 
-  void showLoginDialog(){
+  void showDialogLogin(){
     game.dialog.value = Dialogs.Login;
+  }
+
+  void showDialogSubscription(){
+    game.dialog.value = Dialogs.Subscription;
   }
 
   void openStripeCheckout() {
