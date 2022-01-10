@@ -87,6 +87,7 @@ Widget button(dynamic value, Function onPressed, {
   Color fillColor = Colors.transparent,
   Color borderColor = Colors.white,
   Color borderColorMouseOver = Colors.white,
+  int? fontSize = 18,
   Alignment alignment = Alignment.center
 }) {
   final Widget _button = pressed(
@@ -96,7 +97,7 @@ Widget button(dynamic value, Function onPressed, {
             margin: margin,
             radius: borderRadius,
             borderWidth: borderWidth,
-            child: value,
+            child: value is Widget ? value : text(value, fontSize: fontSize),
             color: mouseOver ? borderColorMouseOver : borderColor,
             fillColor: mouseOver ? fillColorMouseOver : fillColor,
             width: width,

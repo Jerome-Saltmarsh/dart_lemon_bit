@@ -498,16 +498,14 @@ class _BuildView {
   Widget awaitingPlayers() {
     return layout(
         padding: 8,
-        topLeft: button(text("Back", fontSize: 20), logic.leaveLobby,
-            borderWidth: 3,
-            fillColor: colours.orange,
-            fillColorMouseOver: colours.redDark),
-        topRight: text("GAMESTREAM", fontSize: 25),
-        children: [
-          dialog(
-              padding: 16,
-              color: colours.black05,
-              borderWidth: 6,
+        topLeft: widgets.title,
+        child: dialog(
+            padding: 16,
+            color: colours.white05,
+            borderColor: colours.none,
+            // borderWidth: 6,
+            child: layout(
+              bottomRight: button("Cancel", logic.leaveLobby, borderColor: colours.none, fontSize: 25),
               child: Column(
                 crossAxisAlignment: axis.cross.stretch,
                 children: [
@@ -532,8 +530,8 @@ class _BuildView {
                       List<Widget> playerNames = [];
 
                       for (int i = 0; i < game.lobby.players.length; i++) {
-                        playerNames.add(
-                            text(game.lobby.players[i].name, fontSize: 20));
+                        playerNames
+                            .add(text(game.lobby.players[i].name, fontSize: 20));
                       }
                       for (int i = 0;
                           i <
@@ -594,8 +592,8 @@ class _BuildView {
                     );
                   }),
                 ],
-              )),
-        ]);
+              ),
+            )));
   }
 
   Widget connecting() {
