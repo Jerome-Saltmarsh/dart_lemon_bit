@@ -28,6 +28,7 @@ class _DecorationImages {
   DecorationImage cube = _png('games/game-icon-cube-3d');
   DecorationImage counterStrike = _png('games/game-icon-counter-strike');
   DecorationImage atlas = _png('games/game-icon-atlas');
+  DecorationImage login = _png('icons/icon-login');
 }
 
 DecorationImage spellIcon(String name) {

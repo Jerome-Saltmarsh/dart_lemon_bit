@@ -109,9 +109,25 @@ void openStripeCheckout(){
   );
 }
 
+final _iconLogin = Container(
+  width: 32,
+  height: 32,
+  decoration: BoxDecoration(
+      image: decorationImages.login
+  ),
+);
+
 class _Buttons {
 
-  final Widget login = button("Sign In/Up", (){
+  final Widget login = button(Row(
+    mainAxisAlignment: axis.main.center,
+    children: [
+      width16,
+      text("LOGIN", fontSize: 20, fontWeight: bold),
+      width16,
+      _iconLogin,
+    ],
+  ), (){
       game.dialog.value = Dialogs.Login;
   }, width: style.buttonWidth, height: style.buttonHeight, borderWidth: 3,
     fillColor: colours.green,

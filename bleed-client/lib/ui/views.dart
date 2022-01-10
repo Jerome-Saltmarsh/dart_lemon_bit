@@ -288,7 +288,7 @@ Widget buildView(BuildContext context) {
                                 children: [
                                   _views.selectGame,
                                   dialog(
-                                      color: colours.white,
+                                      color: colours.black,
                                       child: Column(
                                         children: [
                                           text(gameTypeNames[gameType]),
