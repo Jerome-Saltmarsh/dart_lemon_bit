@@ -35,7 +35,7 @@ Widget buildLoginDialog() {
   return dialog(
       padding: 16,
       child: layout(
-          bottomRight: button("Close X", () {
+          bottomRight: button("No Thanks", () {
             game.dialog.value = Dialogs.Games;
           }, fillColor: colours.black15),
           child: Column(
@@ -131,11 +131,14 @@ Widget buildView(BuildContext context) {
                     ),
                     bottomRight: dev(Row(
                       children: [
-                        buttons.showDialogSubscribed,
-                        width8,
-                        buttons.loginFake,
-                        width8,
-                        buttons.editor,
+                        // width8,
+                        // buttons.showDialogSubscribed,
+                        // width8,
+                        // buttons.loginFake,
+                        // width8,
+                        // buttons.editor,
+                        // width8,
+                        buttons.region,
                       ],
                     )),
                     bottomLeft: dev(widgets.theme),

@@ -240,7 +240,7 @@ class _Buttons {
           children: [
             border(
                 width: style.buttonWidth,
-                height: style.buttonHeight,
+                height: style.buttonHeight * goldenRatioInverse,
                 radius: borderRadius0,
                 child: text("Select Region", fontSize: 20, decoration: underline)),
             ...selectableRegions.map((value) {
