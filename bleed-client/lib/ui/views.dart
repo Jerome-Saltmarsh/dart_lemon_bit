@@ -519,8 +519,8 @@ class _BuildView {
                   ),
                   height16,
                   border(
-                      child: text(
-                          "The game will start automatically once all players have joined")),
+                      color: colours.white60,
+                      child: text("The game will start automatically once all players have joined", color: colours.white60)),
                   height16,
                   WatchBuilder(game.lobby.playerCount, (int value) {
                     int totalPlayersRequired =
