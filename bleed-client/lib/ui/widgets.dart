@@ -140,10 +140,10 @@ class _Buttons {
     borderRadius: borderRadius2,
   );
 
-  final Widget loginFake = button("Fake Login", (){
-    final val = "test_02";
-    authentication.value = Authentication(userId: val, displayName: val, email: "$val@email.com");
-  });
+  final Widget loginTestUser01 = _buildFakeLoginButton('test_01', "(Active Sub)");
+  final Widget loginTestUser02 = _buildFakeLoginButton('test_02', "(Expired Sub)");
+  final Widget loginTestUser03 = _buildFakeLoginButton('test_03', "(No Sub)");
+
 
   final Widget showDialogSubscribed = button("Sub Success", (){
     game.dialog.value = Dialogs.Subscription_Successful;
@@ -339,4 +339,10 @@ Widget buildToggleFullscreen() {
       ),
     ),
   );
+}
+
+Widget _buildFakeLoginButton(String userId, String text){
+  return button('$userId $text', (){
+    authentication.value = Authentication(userId: userId, displayName: userId, email: "$userId@email.com");
+  });
 }

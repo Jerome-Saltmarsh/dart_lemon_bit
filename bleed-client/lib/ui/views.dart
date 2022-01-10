@@ -171,10 +171,12 @@ Widget buildView(BuildContext context) {
                               if (hovering) ...[
                                 widgets.theme,
                                 buttons.showDialogSubscribed,
-                                buttons.loginFake,
-                                button("Logging In", (){
-                                  game.signingIn.value = true;
-                                }),
+                                buttons.loginTestUser01,
+                                buttons.loginTestUser02,
+                                buttons.loginTestUser03,
+                                // button("Logging In", (){
+                                //   game.signingIn.value = true;
+                                // }),
                                 buttons.editor,
                               ],
                               border(child: "Debug")
