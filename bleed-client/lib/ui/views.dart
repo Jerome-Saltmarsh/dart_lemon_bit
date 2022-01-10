@@ -234,48 +234,50 @@ Widget buildView(BuildContext context) {
 
                             return dialog(
                               color: colours.white05,
-                              borderColor: colours.white05,
+                              borderColor: colours.none,
                               padding: 16,
-                              child: Column(
-                                crossAxisAlignment: axis.cross.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: axis.main.apart,
+                              child: layout(
+                                  bottomRight: button('close', () {
+                                    game.dialog.value = Dialogs.Games;
+                                  }, fillColor: colours.black20),
+                                  child: Column(
+                                    crossAxisAlignment: axis.cross.start,
                                     children: [
-                                      Container(
-                                        child: text("My Subscription", fontWeight: bold),
-                                        alignment: Alignment.center,
+                                      Row(
+                                        mainAxisAlignment: axis.main.apart,
+                                        children: [
+                                          Container(
+                                            child: text("My Subscription",
+                                                fontSize: 30,
+                                                fontWeight: bold),
+                                            alignment: Alignment.center,
+                                          ),
+                                        ],
                                       ),
-                                      button('close x', (){
-                                        game.dialog.value = Dialogs.Games;
-                                      }, fillColor: colours.black20)
+                                      height32,
+                                      text("Name"),
+                                      text(auth.displayName),
+                                      height16,
+                                      text("Email"),
+                                      text(auth.email),
+                                      height16,
+                                      if (!subscriptionExpired) text("Renews"),
+                                      if (subscriptionExpired)
+                                        Row(
+                                          children: [
+                                            text("Expired", color: colours.red),
+                                            width8,
+                                            button("Renew", () {},
+                                                fillColor: colours.green)
+                                          ],
+                                        ),
+                                      text(formattedSubscription),
+                                      height32,
+                                      if (!subscriptionExpired)
+                                        button("Cancel Subscription", () {},
+                                            fillColor: colours.red),
                                     ],
-                                  ),
-                                  height16,
-                                  text("Name"),
-                                  text(auth.displayName),
-                                  height16,
-                                  text("Email"),
-                                  text(auth.email),
-                                  height16,
-                                  if (!subscriptionExpired)
-                                    text("Renews"),
-                                  if (subscriptionExpired)
-                                    Row(
-                                      children: [
-                                        text("Expired", color: colours.red),
-                                        width8,
-                                        button("Renew", (){}, fillColor: colours.green)
-                                      ],
-                                    ),
-                                  text(formattedSubscription),
-                                  height32,
-                                  if (!subscriptionExpired)
-                                    button("Cancel Subscription", (){
-                                    }, fillColor: colours.red),
-
-                                ],
-                              ),
+                                  )),
 
                             );
                           case Dialogs.Login:
