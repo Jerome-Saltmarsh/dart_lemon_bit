@@ -72,8 +72,8 @@ Widget buildView(BuildContext context) {
         return NullableWatchBuilder<DateTime?>(game.subscription, (DateTime? subscription){
           final now = DateTime.now().toUtc();
           final bool subscribed = subscription != null;
-          final expired = subscription != null && now.isAfter(subscription);
-          final bool subscriptionValid = !expired;
+          final subscriptionExpired = subscription != null && now.isAfter(subscription);
+          final bool subscriptionValid = !subscriptionExpired;
 
           return WatchBuilder(webSocket.connection, (Connection connection) {
             switch (connection) {
@@ -86,16 +86,20 @@ Widget buildView(BuildContext context) {
                     padding: 16,
                     expand: true,
                     topLeft: widgets.title,
-                    top: () {
-                      if (!subscriptionValid) return empty;
+                    top: !authenticated || subscriptionValid ? null : () {
+
                       return Container(
                         width: screen.width,
                         child: Row(
                           mainAxisAlignment: axis.main.center,
                           children: [
+                            if (subscriptionValid) text("Subscribed", color: colours.green),
+                            if (!subscribed)
                             button(text("Subscribe for \$4.99 per month"), openStripeCheckout,
                               height: style.buttonHeight * goldenRatioInverse,
                             ),
+                            if (subscriptionExpired)
+                              text("Subscription Expired", color: colours.red),
                           ],
                         ),
                       );
@@ -210,9 +214,9 @@ Widget buildView(BuildContext context) {
                                   text("Email"),
                                   text(auth.email),
                                   height16,
-                                  if (!expired)
+                                  if (!subscriptionExpired)
                                     text("Renews"),
-                                  if (expired)
+                                  if (subscriptionExpired)
                                     Row(
                                       children: [
                                         text("Expired", color: colours.red),
@@ -222,7 +226,7 @@ Widget buildView(BuildContext context) {
                                     ),
                                   text(formattedSubscription),
                                   height32,
-                                  if (!expired)
+                                  if (!subscriptionExpired)
                                     button("Cancel Subscription", (){
                                     }, fillColor: colours.red),
 

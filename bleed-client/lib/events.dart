@@ -45,18 +45,18 @@ class Events {
     sub(_onGameError);
   }
 
-  void _onSubscriptionChanged(DateTime? value){
+  void _onSubscriptionChanged(DateTime? value) {
     print("events.onSubscriptionChanged($value)");
-    if (value == null){
+    if (value == null) {
       storage.remove('subscription');
-    }else{
-      storage.put('subscription', value);
-      if (authenticated){
-        final flagName = 'subscription_dialog_shown_${authentication.value!.userId}';
-        if (!storage.contains(flagName)){
-          storage.put(flagName, 'true');
-          game.dialog.value = Dialogs.Subscription_Successful;
-        }
+      return;
+    }
+    storage.put('subscription', value);
+    if (authenticated) {
+      final flagName = 'subscription_dialog_shown_${authentication.value!.userId}';
+      if (!storage.contains(flagName)) {
+        storage.put(flagName, 'true');
+        game.dialog.value = Dialogs.Subscription_Successful;
       }
     }
   }
