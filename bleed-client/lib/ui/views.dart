@@ -61,6 +61,7 @@ Widget buildLoginDialog() {
 }
 
 Widget buildView(BuildContext context) {
+
   return WatchBuilder(game.mode, (Mode mode) {
     if (mode == Mode.Edit) {
       return _views.editor;
@@ -412,8 +413,9 @@ class _BuildView {
     print("buildView.connected()");
 
     return WatchBuilder(game.player.uuid, (String uuid) {
+
       if (uuid.isEmpty) {
-        return center(text("game.player.uuid is empty"));
+        return buildLayoutLoadingGame();
       }
 
       return WatchBuilder(game.status, (GameStatus gameStatus) {
@@ -646,4 +648,18 @@ final empty = SizedBox();
 
 Widget? dev(Widget child){
   return isLocalHost ? child : null;
+}
+
+Widget buildLayoutLoadingGame(){
+  return layout(
+      topLeft: widgets.title,
+      child: fullScreen(
+        child: Row(
+          mainAxisAlignment: axis.main.center,
+          children: [
+            text("Loading Game.."),
+          ],
+        ),
+      )
+  );
 }
