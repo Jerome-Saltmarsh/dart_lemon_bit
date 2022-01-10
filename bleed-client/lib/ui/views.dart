@@ -61,12 +61,22 @@ Widget buildView(BuildContext context) {
       return WatchBuilder(game.signingIn, (bool signingIn){
 
         if (signingIn){
-          return fullScreen(child: Row(
-            mainAxisAlignment: axis.main.center,
-            children: [
-              text("Signing In"),
-            ],
-          ));
+          return layout(
+            topLeft: widgets.title,
+            child: Row(
+              mainAxisAlignment: axis.main.center,
+              children: [
+                text("Signing In"),
+              ],
+            )
+          );
+          //
+          // return fullScreen(child: Row(
+          //   mainAxisAlignment: axis.main.center,
+          //   children: [
+          //     text("Signing In"),
+          //   ],
+          // ));
         }
 
         return NullableWatchBuilder<DateTime?>(game.subscription, (DateTime? subscription){
@@ -138,17 +148,24 @@ Widget buildView(BuildContext context) {
                       ],
                     ),
                     bottomRight: buttons.region,
-                    bottomLeft: dev(Row(
-                      children: [
-                        widgets.theme,
-                        width8,
-                        buttons.showDialogSubscribed,
-                        width8,
-                        buttons.loginFake,
-                        width8,
-                        buttons.editor,
-                        width8,
-                      ],
+                    bottomLeft: dev(onHover((bool hovering){
+
+                      return Container(
+                        width: style.buttonWidth,
+                        child: Column(
+                          crossAxisAlignment: axis.cross.start,
+                          children: [
+                              if (hovering) ...[
+                                widgets.theme,
+                                buttons.showDialogSubscribed,
+                                buttons.loginFake,
+                                buttons.editor,
+                              ],
+                              border(child: "Debug")
+                          ],
+                        ),
+                      );
+                    }
                     )),
                     child: WatchBuilder(game.region, (Region serverType) {
                       if (serverType == Region.None) {

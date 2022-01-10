@@ -176,12 +176,12 @@ class _Build {
   Widget theme(){
     return onHover((bool hovering){
       const _width = 150.0;
-      final theme = border(child: text("Theme"), width: _width, radius: borderRadius0);
+      final theme = border(child: text("Theme"), radius: borderRadius0);
 
       if (!hovering){
         return theme;
       }else{
-        return Column(
+        return Row(
           crossAxisAlignment: axis.cross.start,
           children: [
             button("PressStart2P", (){
