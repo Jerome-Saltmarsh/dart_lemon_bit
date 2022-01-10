@@ -124,6 +124,14 @@ final _iconLogin = Container(
   ),
 );
 
+final _iconSettings = Container(
+  width: 32,
+  height: 32,
+  decoration: BoxDecoration(
+      image: decorationImages.settings2
+  ),
+);
+
 class _Buttons {
 
   final Widget login = button(Row(
@@ -217,7 +225,7 @@ class _Buttons {
     borderWidth: 1,
   );
 
-  final Widget account = button(text("Account"), (){
+  final Widget account = button(_iconSettings, (){
     game.dialog.value = Dialogs.Subscription;
   },
       height: style.buttonHeight,

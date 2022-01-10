@@ -30,6 +30,7 @@ class _DecorationImages {
   DecorationImage counterStrike = _png('games/game-icon-counter-strike');
   DecorationImage atlas = _png('games/game-icon-atlas');
   DecorationImage login = _png('icons/icon-login');
+  DecorationImage settings2 = _png('icons/icon-settings');
 }
 
 DecorationImage spellIcon(String name) {
