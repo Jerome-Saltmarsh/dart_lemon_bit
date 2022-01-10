@@ -175,6 +175,7 @@ Widget buildView(BuildContext context) {
                                 buttons.loginTestUser01,
                                 buttons.loginTestUser02,
                                 buttons.loginTestUser03,
+                                buttons.spawnRandomUser,
                                 // button("Logging In", (){
                                 //   game.signingIn.value = true;
                                 // }),
@@ -240,9 +241,16 @@ Widget buildView(BuildContext context) {
                               borderColor: colours.none,
                               padding: 16,
                               child: layout(
-                                  bottomRight: button('close', () {
+                                bottomLeft: (subscriptionExpired)
+                                    ? null
+                                    : button("Cancel Subscription", () {},
+                                    borderColor: colours.none,
+                                fillColor: colours.red),
+                                  bottomRight: button(text('close', fontWeight: bold), () {
                                     game.dialog.value = Dialogs.Games;
-                                  }, fillColor: colours.black20),
+                                  }, fillColor: colours.none,
+
+                                  ),
                                   child: Column(
                                     crossAxisAlignment: axis.cross.start,
                                     children: [
@@ -264,7 +272,7 @@ Widget buildView(BuildContext context) {
                                       text("Email"),
                                       text(auth.email),
                                       height16,
-                                      if (!subscriptionExpired) text("Renews"),
+                                      if (!subscriptionExpired) text("Automatically Renews"),
                                       if (subscriptionExpired)
                                         Row(
                                           children: [
@@ -275,10 +283,6 @@ Widget buildView(BuildContext context) {
                                           ],
                                         ),
                                       text(formattedSubscription),
-                                      height32,
-                                      if (!subscriptionExpired)
-                                        button("Cancel Subscription", () {},
-                                            fillColor: colours.red),
                                     ],
                                   )),
 

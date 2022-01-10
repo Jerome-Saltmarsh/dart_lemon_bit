@@ -18,6 +18,7 @@ import 'package:lemon_engine/functions/fullscreen_enter.dart';
 import 'package:lemon_engine/functions/fullscreen_exit.dart';
 import 'package:lemon_engine/properties/fullscreen_active.dart';
 import 'package:lemon_math/golden_ratio.dart';
+import 'package:lemon_math/random.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../logic.dart';
@@ -144,6 +145,10 @@ class _Buttons {
   final Widget loginTestUser02 = _buildFakeLoginButton('test_02', "(Expired Sub)");
   final Widget loginTestUser03 = _buildFakeLoginButton('test_03', "(No Sub)");
 
+  final Widget spawnRandomUser = button("Random User", (){
+    final userId = 'random_${random.nextInt(9999999)}';
+    authentication.value = Authentication(userId: userId, displayName: userId, email: "$userId@email.com");
+  });
 
   final Widget showDialogSubscribed = button("Sub Success", (){
     game.dialog.value = Dialogs.Subscription_Successful;
