@@ -1,8 +1,12 @@
 
+import 'package:bleed_client/authentication.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/editor/functions/resetTiles.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/Region.dart';
+import 'package:bleed_client/stripe.dart';
+import 'package:bleed_client/ui/ui.dart';
+import 'package:bleed_client/ui/widgets.dart';
 import 'package:bleed_client/webSocket.dart';
 import 'package:bleed_client/server/server.dart';
 import 'package:bleed_client/state/game.dart';
@@ -60,5 +64,20 @@ class _Logic {
   void clearSession(){
     print("logic.clearSession()");
     game.player.uuid.value = "";
+  }
+
+  void showLoginDialog(){
+    game.dialog.value = Dialogs.Login;
+  }
+
+  void openStripeCheckout() {
+    print("openStripeCheckout()");
+    if (!authenticated){
+      throw Exception("User must be authenticated to open stripe checkout");
+    }
+    stripeCheckout(
+        userId: authentication.value!.userId,
+        email: authentication.value!.email
+    );
   }
 }

@@ -116,7 +116,7 @@ Widget buildView(BuildContext context) {
                           children: [
                             if (subscriptionActive) text("Subscribed", color: colours.green),
                             if (!subscribed)
-                            button(text("Subscribe for \$4.99 per month"), openStripeCheckout,
+                            button(text("Subscribe for \$4.99 per month"), logic.openStripeCheckout,
                               height: style.buttonHeight * goldenRatioInverse,
                             ),
                             if (subscriptionExpired)
@@ -147,7 +147,7 @@ Widget buildView(BuildContext context) {
                               if (subscribed)
                                 buttons.subscription,
                               if (!subscribed)
-                                button("Subscribe", openStripeCheckout,
+                                button("Subscribe", logic.openStripeCheckout,
                                   width: style.buttonWidth,
                                   height: style.buttonHeight,
                                   fillColorMouseOver: colours.white05,
@@ -288,16 +288,38 @@ Widget buildView(BuildContext context) {
                                 return build.gamesList(subscriptionActive);
                               }
 
+                              bool isFreeToPlay = freeToPlay.contains(gameType);
+
+                              final playButton = button(text("Play", fontSize: 25, fontWeight: bold),
+                                  logic.connectToSelectedGame,
+                                  fillColor: colours.green,
+                                  borderWidth: 2
+                              );
+
+                              final loginButton = button(text("Login", fontSize: 25, fontWeight: bold),
+                                  logic.showLoginDialog,
+                                  fillColor: colours.green,
+                                  borderWidth: 2
+                              );
+
+                              final subscribeButton = button(text("Subscribe", fontSize: 25, fontWeight: bold),
+                                  logic.connectToSelectedGame,
+                                  fillColor: colours.green,
+                                  borderWidth: 2
+                              );
+
                               return dialog(
                                   color: colours.white05,
                                   borderColor: colours.none,
                                   padding: 16,
                                   child: layout(
-                                  bottomLeft: button(text("Play", fontSize: 25, fontWeight: bold),
-                                    logic.connectToSelectedGame,
-                                    fillColor: colours.green,
-                                    borderWidth: 2
-                                  ),
+                                  bottomLeft: isFreeToPlay
+                                      ? playButton
+                                      : !authenticated
+                                        ? loginButton
+                                        : !subscriptionActive
+                                          ? subscribeButton
+                                          : playButton,
                                   bottomRight: button("No Thanks", logic.deselectGameType,
                                       fillColor: colours.black05,
                                       borderColor: colours.none,

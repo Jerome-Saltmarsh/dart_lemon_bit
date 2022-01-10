@@ -105,17 +105,6 @@ class _Widgets {
 
 final authenticationRequired = Exception("Authentication Required");
 
-void openStripeCheckout(){
-  print("openStripeCheckout()");
-  if (!authenticated){
-    throw authenticationRequired;
-  }
-  stripeCheckout(
-      userId: authentication.value!.userId,
-      email: authentication.value!.email
-  );
-}
-
 final _iconLogin = Container(
   width: 32,
   height: 32,
@@ -249,7 +238,7 @@ class _Buttons {
     );
   });
   final Widget subscribe =
-      button("Subscribe \$4.99", openStripeCheckout,
+      button("Subscribe \$4.99", logic.openStripeCheckout,
           width: style.buttonWidth,
           height: style.buttonHeight
       );
