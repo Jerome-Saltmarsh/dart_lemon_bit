@@ -48,6 +48,8 @@ Widget buildLoginDialog() {
               text("Sign in", fontWeight: bold, fontSize: 25),
               height32,
               buttons.signInWithGoogleB,
+              height16,
+              buttons.signInWithFacebookButton,
               height32,
             ],
           )));

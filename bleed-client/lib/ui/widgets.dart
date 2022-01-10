@@ -38,6 +38,13 @@ class _Logos {
     height: 30,
     decoration: BoxDecoration(image: decorationImages.google),
   );
+  Widget facebook = Container(
+    width: 30,
+    height: 30,
+    decoration: BoxDecoration(
+        color: Colors.white,
+        image: decorationImages.facebook),
+  );
 }
 
 class _BuildDialog {
@@ -145,8 +152,26 @@ class _Buttons {
     game.dialog.value = Dialogs.Subscription_Successful;
   });
 
+  final Widget signInWithFacebookButton = button(
+    Container(
+    padding: EdgeInsets.symmetric(horizontal: 8),
+    child: Row(
+      mainAxisAlignment: axis.main.apart,
+      children: [
+        logos.facebook,
+        width16,
+        text("Continue with Facebook", color: Colors.white),
+      ],
+    ),
+  ), () async {
 
-
+  },
+    fillColor: colours.facebook,
+    fillColorMouseOver: colours.facebook,
+    borderColorMouseOver: colours.white,
+    borderColor: colours.facebook,
+    borderWidth: 1,
+  );
 
   final Widget signInWithGoogleB = button(Container(
     padding: EdgeInsets.symmetric(horizontal: 8),
@@ -155,7 +180,7 @@ class _Buttons {
       children: [
         logos.google,
         width16,
-        text("Sign in with Google", color: Colors.black),
+        text("Continue with Google", color: Colors.black),
       ],
     ),
   ), () async {
@@ -167,8 +192,8 @@ class _Buttons {
   },
     fillColor: Colors.white,
     fillColorMouseOver: Colors.white,
-    borderColorMouseOver: colours.blue,
-    borderWidth: 3,
+    borderColorMouseOver: colours.black20,
+    borderWidth: 1,
   );
 
   // final Widget account = Container(
