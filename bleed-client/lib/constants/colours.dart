@@ -16,6 +16,7 @@ class _Colors {
   final Color white = Colors.white;
   final Color white05 = Colors.white.withOpacity(0.05);
   final Color white10 = Colors.white.withOpacity(0.10);
+  final Color white60 = Colors.white.withOpacity(0.60);
   final Color white80 = Colors.white.withOpacity(0.80);
 
   final Color none = Colors.transparent;

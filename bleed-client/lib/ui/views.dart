@@ -296,7 +296,7 @@ Widget buildView(BuildContext context) {
                                   borderWidth: 2
                               );
 
-                              final loginButton = button(text("Login", fontSize: 25, fontWeight: bold),
+                              final loginButton = button(text("Play", fontSize: 25, fontWeight: bold),
                                   logic.showLoginDialog,
                                   fillColor: colours.green,
                                   borderWidth: 2
@@ -312,6 +312,8 @@ Widget buildView(BuildContext context) {
                                   color: colours.white05,
                                   borderColor: colours.none,
                                   padding: 16,
+                                  height: 300,
+                                  width: 300 * goldenRatio,
                                   child: layout(
                                   bottomLeft: isFreeToPlay
                                       ? playButton
@@ -325,8 +327,17 @@ Widget buildView(BuildContext context) {
                                       borderColor: colours.none,
                                   ),
                                   child: Column(
+                                    crossAxisAlignment: axis.cross.start,
                                     children: [
                                       text(gameTypeNames[gameType], fontSize: 25),
+                                      height16,
+                                      if (!isFreeToPlay && !authenticated)
+                                        border(child: text(
+                                            "* This is a premium game which requires an active subscription to play",
+                                            color: colours.white60
+                                          ),
+                                        color: colours.white80
+                                        )
                                     ],
                                   )
                               ));
