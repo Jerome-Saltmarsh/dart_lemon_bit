@@ -104,7 +104,7 @@ Future<FirebaseApp> _buildFirebaseApp(){
   );
 }
 
-void signInWithGoogle() async {
+Future signInWithGoogle() async {
   print("signInWithGoogle()");
   await _buildFirebaseApp();
 
@@ -120,7 +120,9 @@ void signInWithGoogle() async {
   );
 
   print("setting user credentials");
-  final credentials = await _auth.signInWithCredential(credential);
+  final credentials = await _auth.signInWithCredential(credential).catchError((error){
+    print(error);
+  });
 
   if (credentials.user == null){
     throw Exception('credentials.user is null');

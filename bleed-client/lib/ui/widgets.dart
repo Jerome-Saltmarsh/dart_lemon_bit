@@ -142,8 +142,12 @@ class _Buttons {
         text("Sign in with Google", color: Colors.black),
       ],
     ),
-  ), (){
-    signInWithGoogle();
+  ), () async {
+    game.signingIn.value = true;
+    signInWithGoogle().catchError((error){
+      print(error);
+      game.signingIn.value = false;
+    });
   },
     fillColor: Colors.white,
     fillColorMouseOver: Colors.white,
