@@ -35,6 +35,9 @@ import '../webSocket.dart';
 Widget buildLoginDialog() {
   return dialog(
       padding: 16,
+      color: colours.white05,
+      borderColor: colours.white10,
+      borderWidth: 3,
       child: layout(
           bottomRight: button("No Thanks", () {
             game.dialog.value = Dialogs.Games;
@@ -42,7 +45,7 @@ Widget buildLoginDialog() {
           child: Column(
             crossAxisAlignment: axis.cross.start,
             children: [
-              text("Sign In", fontWeight: bold),
+              text("Sign in", fontWeight: bold, fontSize: 25),
               height32,
               buttons.signInWithGoogleB,
               height32,
