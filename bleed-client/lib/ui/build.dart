@@ -456,7 +456,7 @@ Region detectRegion(){
 }
 
 final Map<GameType, DecorationImage> gameTypeDecorationImage = {
-  GameType.MMO: decorationImages.mmo,
+  GameType.MMO: decorationImages.atlas,
   GameType.BATTLE_ROYAL: decorationImages.zombieRoyal,
   GameType.Moba: decorationImages.heroesLeague,
   GameType.CUBE3D: decorationImages.cube,

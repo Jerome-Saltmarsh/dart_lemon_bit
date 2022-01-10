@@ -34,6 +34,8 @@ import 'package:lemon_engine/game.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+final isLocalHost = Uri.base.host == 'localhost';
+
 Future init() async {
   Events();
   await images.load();
@@ -42,12 +44,11 @@ Future init() async {
   initializeEventListeners();
   initAudioPlayers();
   initCube();
-
-
-  // print(Uri.base.path);
-  // if (Uri.base.hasQuery && Uri.base.queryParameters.containsKey('subscribed')) {
-  //   game.dialog.value = Dialogs.Subscription_Successful;
-  // }
+  if (isLocalHost){
+    print("Environment: Localhost");
+  }else{
+    print("Environment: Production");
+  }
 
   // if (Uri.base.hasQuery && Uri.base.queryParameters.containsKey('host')) {
   //   // Future.delayed(Duration(seconds: 1), () {

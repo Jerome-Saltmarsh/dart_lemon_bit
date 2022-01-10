@@ -4,6 +4,7 @@ import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/constants/servers.dart';
+import 'package:bleed_client/core/init.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/Region.dart';
@@ -26,6 +27,7 @@ import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
+import '../settings.dart';
 import '../styles.dart';
 import '../webSocket.dart';
 
@@ -92,9 +94,7 @@ Widget buildView(BuildContext context) {
                           mainAxisAlignment: axis.main.center,
                           children: [
                             button(text("Subscribe for \$4.99 per month"), openStripeCheckout,
-                              // margin: EdgeInsets.only(top: 12),
                               height: style.buttonHeight * goldenRatioInverse,
-                              // width: style.buttonWidth * goldenRatioInverse
                             ),
                           ],
                         ),
@@ -125,7 +125,7 @@ Widget buildView(BuildContext context) {
                         }),
                       ],
                     ),
-                    bottomRight: Row(
+                    bottomRight: dev(Row(
                       children: [
                         buttons.showDialogSubscribed,
                         width8,
@@ -133,8 +133,8 @@ Widget buildView(BuildContext context) {
                         width8,
                         buttons.editor,
                       ],
-                    ),
-                    bottomLeft: widgets.theme,
+                    )),
+                    bottomLeft: dev(widgets.theme),
                     child: WatchBuilder(game.region, (Region serverType) {
                       if (serverType == Region.None) {
                         return _views.selectRegion;
@@ -561,3 +561,7 @@ Widget build(BuildFunction function){
 }
 
 typedef BuildFunction = Widget Function();
+
+Widget? dev(Widget child){
+  return isLocalHost ? child : null;
+}
