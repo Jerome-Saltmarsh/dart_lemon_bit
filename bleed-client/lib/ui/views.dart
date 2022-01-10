@@ -99,7 +99,15 @@ Widget buildView(BuildContext context) {
                               height: style.buttonHeight * goldenRatioInverse,
                             ),
                             if (subscriptionExpired)
-                              text("Subscription Expired", color: colours.red),
+                              button(text("Subscription Expired", color: colours.red), (){
+                                game.dialog.value = Dialogs.Subscription;
+                              },
+                                fillColorMouseOver: colours.white05,
+                                borderColor: colours.none,
+                      borderColorMouseOver: colours.transparent,
+                                margin: EdgeInsets.only(top: 16
+                                ),
+                              ),
                           ],
                         ),
                       );
@@ -108,8 +116,8 @@ Widget buildView(BuildContext context) {
                       crossAxisAlignment: axis.cross.start,
                       mainAxisAlignment: axis.main.end,
                       children: [
-                        buttons.region,
-                        width16,
+                        // buttons.region,
+                        // width16,
                         if (!authenticated) buttons.login,
                         if (authenticated)  mouseOver(builder: (BuildContext context, bool mouseOver) {
                           return mouseOver ? Column(
@@ -129,19 +137,19 @@ Widget buildView(BuildContext context) {
                         }),
                       ],
                     ),
-                    bottomRight: dev(Row(
+                    bottomRight: buttons.region,
+                    bottomLeft: dev(Row(
                       children: [
-                        // width8,
-                        // buttons.showDialogSubscribed,
-                        // width8,
-                        // buttons.loginFake,
-                        // width8,
-                        // buttons.editor,
-                        // width8,
-                        buttons.region,
+                        widgets.theme,
+                        width8,
+                        buttons.showDialogSubscribed,
+                        width8,
+                        buttons.loginFake,
+                        width8,
+                        buttons.editor,
+                        width8,
                       ],
                     )),
-                    bottomLeft: dev(widgets.theme),
                     child: WatchBuilder(game.region, (Region serverType) {
                       if (serverType == Region.None) {
                         return _views.selectRegion;
