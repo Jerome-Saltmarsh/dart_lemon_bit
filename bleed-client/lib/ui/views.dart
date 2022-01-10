@@ -27,6 +27,7 @@ import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
+import '../assets.dart';
 import '../settings.dart';
 import '../styles.dart';
 import '../webSocket.dart';
@@ -62,12 +63,19 @@ Widget buildView(BuildContext context) {
 
         if (signingIn){
           return layout(
-            topLeft: widgets.title,
-            child: Row(
-              mainAxisAlignment: axis.main.center,
-              children: [
-                text("Signing In"),
-              ],
+            // topLeft: widgets.title,
+            child: fullScreen(
+              child: Row(
+                mainAxisAlignment: axis.main.center,
+                children: [
+                  AnimatedTextKit(repeatForever: true, animatedTexts: [
+                    RotateAnimatedText("Signing in to gamestream",
+                        textStyle: TextStyle(color: Colors.white, fontSize: 45,
+                          fontFamily: assets.fonts.libreBarcode39Text
+                        )),
+                  ])
+                ],
+              ),
             )
           );
           //
@@ -159,6 +167,9 @@ Widget buildView(BuildContext context) {
                                 widgets.theme,
                                 buttons.showDialogSubscribed,
                                 buttons.loginFake,
+                                button("Logging In", (){
+                                  game.signingIn.value = true;
+                                }),
                                 buttons.editor,
                               ],
                               border(child: "Debug")
