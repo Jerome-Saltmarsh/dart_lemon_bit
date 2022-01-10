@@ -243,55 +243,63 @@ class _Build {
     );
   }
 
-  Widget gamesList(){
+  Widget gamesList(bool subscriptionActive){
+    int index = 0;
     return Container(
+      width: double.infinity,
       margin: const EdgeInsets.only(top: 120),
       child: SingleChildScrollView(
         child: Column(
-          crossAxisAlignment: axis.cross.center,
           children: [
             ...selectableGameTypes.map((GameType value) {
+              index++;
               final Widget type = text(enumString(value).toUpperCase());
               final Widget joinButton = button(
-                  text(gameTypeNames[value], fontSize: 20, fontWeight: FontWeight.bold),
+                  text('$index. ${gameTypeNames[value]}', fontSize: 20, fontWeight: FontWeight.bold),
                       () {
                     game.type.value = value;
                   }, width: _buttonWidth, borderWidth: 3,
+                alignment: Alignment.centerLeft,
                 fillColor: colours.black05,
               );
 
 
               return Container(
                 margin: const EdgeInsets.only(bottom: 32),
+                width: 600,
                 child: onPressed(
                   callback: (){
-                    // game.type.value = value;
                     logic.play(value);
                   },
-                  child: Container(
-                    color: colours.black,
-                    child: Row(
-                      mainAxisAlignment: axis.main.center,
-                      crossAxisAlignment: axis.cross.start,
-                      children: [
-                        Container(
-                          width: 180,
-                          height: 111,
-                          decoration: BoxDecoration(
-                            image: gameTypeDecorationImage[value] ?? decorationImages.royal,
+                  child: Row(
+                    crossAxisAlignment: axis.cross.start,
+                    children: [
+                      Container(
+                        width: 180,
+                        height: 111,
+                        decoration: BoxDecoration(
+                          image: gameTypeDecorationImage[value] ?? decorationImages.royal,
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: axis.main.apart,
+                        crossAxisAlignment: axis.cross.start,
+                        children: [
+                          Column(
+                            crossAxisAlignment: axis.cross.end,
+                            children: [
+                              joinButton,
+                              height8,
+                              type,
+                            ],
                           ),
-                        ),
-                        width16,
-                        Column(
-                          crossAxisAlignment: axis.cross.start,
-                          children: [
-                            joinButton,
-                            height8,
-                            type,
-                          ],
-                        ),
-                      ],
-                    ),
+                          if (!subscriptionActive && freeToPlay.contains(value))
+                            Container(child: text("FREE"), margin: EdgeInsets.only(left: 8),),
+                          if (!subscriptionActive && !freeToPlay.contains(value))
+                            Container(child: text("PREMIUM"), margin: EdgeInsets.only(left: 8),),
+                        ],
+                      )
+                    ],
                   ),
                 ),
               );

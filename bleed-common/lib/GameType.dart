@@ -24,3 +24,8 @@ final Map<GameType, String> gameTypeNames = {
     GameType.BATTLE_ROYAL: "ZOMBIE ROYAL",
     GameType.TACTICAL_COMBAT: "COUNTER STRIKE",
 };
+
+final List<GameType> freeToPlay = [
+    GameType.MMO,
+    GameType.Moba,
+];

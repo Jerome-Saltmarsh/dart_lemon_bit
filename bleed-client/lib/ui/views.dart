@@ -28,9 +28,9 @@ import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../assets.dart';
-import '../settings.dart';
 import '../styles.dart';
 import '../webSocket.dart';
+import 'build.dart';
 
 Widget buildLoginDialog() {
   return dialog(
@@ -55,8 +55,6 @@ Widget buildLoginDialog() {
               buttons.signInWithGoogleB,
               height16,
               buttons.signInWithFacebookButton,
-              // height16,
-              // buttons.signInWithUsernamePassword,
               height32,
             ],
           )));
@@ -90,20 +88,13 @@ Widget buildView(BuildContext context) {
               ),
             )
           );
-          //
-          // return fullScreen(child: Row(
-          //   mainAxisAlignment: axis.main.center,
-          //   children: [
-          //     text("Signing In"),
-          //   ],
-          // ));
         }
 
         return NullableWatchBuilder<DateTime?>(game.subscription, (DateTime? subscription){
           final now = DateTime.now().toUtc();
           final bool subscribed = subscription != null;
           final subscriptionExpired = subscription != null && now.isAfter(subscription);
-          final bool subscriptionValid = !subscriptionExpired;
+          final bool subscriptionActive = subscription != null && !subscriptionExpired;
 
           return WatchBuilder(webSocket.connection, (Connection connection) {
             switch (connection) {
@@ -116,14 +107,14 @@ Widget buildView(BuildContext context) {
                     padding: 16,
                     expand: true,
                     topLeft: widgets.title,
-                    top: !authenticated || subscriptionValid ? null : () {
+                    top: !authenticated || subscriptionActive ? null : () {
 
                       return Container(
                         width: screen.width,
                         child: Row(
                           mainAxisAlignment: axis.main.center,
                           children: [
-                            if (subscriptionValid) text("Subscribed", color: colours.green),
+                            if (subscriptionActive) text("Subscribed", color: colours.green),
                             if (!subscribed)
                             button(text("Subscribe for \$4.99 per month"), openStripeCheckout,
                               height: style.buttonHeight * goldenRatioInverse,
@@ -294,22 +285,29 @@ Widget buildView(BuildContext context) {
                           case Dialogs.Games:
                             return WatchBuilder(game.type, (GameType gameType) {
                               if (gameType == GameType.None) {
-                                return _views.selectGame;
+                                return build.gamesList(subscriptionActive);
                               }
-                              return Stack(
-                                children: [
-                                  _views.selectGame,
-                                  dialog(
-                                      color: colours.black,
-                                      child: Column(
-                                        children: [
-                                          text(gameTypeNames[gameType]),
-                                          button("Play", logic.connectToSelectedGame),
-                                          button("Close", logic.deselectGameType),
-                                        ],
-                                      )),
-                                ],
-                              );
+
+                              return dialog(
+                                  color: colours.white05,
+                                  borderColor: colours.none,
+                                  padding: 16,
+                                  child: layout(
+                                  bottomLeft: button(text("Play", fontSize: 25, fontWeight: bold),
+                                    logic.connectToSelectedGame,
+                                    fillColor: colours.green,
+                                    borderWidth: 2
+                                  ),
+                                  bottomRight: button("No Thanks", logic.deselectGameType,
+                                      fillColor: colours.black05,
+                                      borderColor: colours.none,
+                                  ),
+                                  child: Column(
+                                    children: [
+                                      text(gameTypeNames[gameType], fontSize: 25),
+                                    ],
+                                  )
+                              ));
                             });
                           case Dialogs.Account:
                             return _views.account;
@@ -335,7 +333,7 @@ final _BuildView _buildView = _BuildView();
 class _Views {
   final Widget account = _buildView.account();
   final Widget selectRegion = _buildView.selectRegion();
-  final Widget selectGame = widgets.gamesList;
+  // final Widget selectGame = widgets.gamesList;
   final Widget connecting = _buildView.connecting();
   final Widget connected = _buildView.connected();
   final Widget connection = _buildView.connection();
@@ -599,23 +597,15 @@ Widget _buildSelectRegionButton(Region region) {
     margin: EdgeInsets.only(bottom: 8),
     width: 200,
     borderWidth: 3,
-    fillColor: colours.black15,
+    // fillColor: colours.black15,
+    fillColorMouseOver: colours.black15,
   );
 }
 
 
 final dateFormat = DateFormat(DateFormat.MONTH_WEEKDAY_DAY);
 
-
 final empty = SizedBox();
-
-Widget build(BuildFunction function){
- return Builder(builder: (context){
-   return function();
- },);
-}
-
-typedef BuildFunction = Widget Function();
 
 Widget? dev(Widget child){
   return isLocalHost ? child : null;

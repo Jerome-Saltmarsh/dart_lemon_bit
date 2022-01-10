@@ -87,7 +87,7 @@ class _Widgets {
   final Widget healthBar = build.healthBar();
   final Widget magicBar = build.magicBar();
   final Widget abilities = build.abilities();
-  final Widget gamesList = build.gamesList();
+  // final Widget gamesList = build.gamesList();
   final Widget title = build.title();
   final Widget totalZombies = build.totalZombies();
   final Widget timeZone = build.timeZone();
@@ -313,8 +313,8 @@ class _Buttons {
             return button(text(enumString(value), fontWeight: selected ? bold : FontWeight.normal), (){
               game.region.value = value;
             },
-              fillColorMouseOver: selected ? colours.green : colours.white05,
-              fillColor: selected ? colours.green : Colors.transparent,
+              fillColorMouseOver: selected ? colours.green : colours.none,
+              fillColor: selected ? colours.green : colours.white05,
               width: style.buttonWidth,
               height: style.buttonHeight,
               borderRadius: borderRadius0,
