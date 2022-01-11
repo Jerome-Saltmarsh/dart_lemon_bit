@@ -70,6 +70,10 @@ class _Logic {
     game.dialog.value = Dialogs.Login;
   }
 
+  void showDialogGames(){
+    game.dialog.value = Dialogs.Games;
+  }
+
   void showDialogSubscription(){
     game.dialog.value = Dialogs.Subscription;
   }

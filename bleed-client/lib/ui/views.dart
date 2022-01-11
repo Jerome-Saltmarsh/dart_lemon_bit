@@ -240,14 +240,19 @@ Widget buildView(BuildContext context) {
                           case Dialogs.Subscription:
                           // @build subscription dialog
                             if (!authenticated) {
-                              return dialog(
-                                  child: Column(
-                                    children: [
-                                      border(child: text("My Subscription")),
-                                      text("Authentication required"),
-                                      buttons.login,
-                                    ],
-                                  )
+                              return layout(
+                                bottomLeft: buttons.login,
+                                bottomRight: button("Close", logic.showDialogGames),
+                                child: dialog(
+                                    child: Column(
+                                      crossAxisAlignment: axis.cross.start,
+                                      children: [
+                                        border(child: text("ACCOUNT")),
+                                        height16,
+                                        text("Authentication Required"),
+                                      ],
+                                    )
+                                ),
                               );
                             }
 
@@ -285,18 +290,49 @@ Widget buildView(BuildContext context) {
                                       Tooltip(
                                           message: "The name other players see in game",
                                           child: text("Display Name")),
-                                      onHover((hovering) {
-                                        return Row(
-                                          children: [
-                                            text(account.displayName),
-                                            if (hovering) ...[
-                                              width8,
-                                              onPressed(child: buildIconEdit(), callback: () {
-                                                game.dialog.value = Dialogs.Change_Display_Name;
-                                              })
-                                            ]
-                                          ],
-                                        );
+                                      StatefulBuilder(
+                                          builder: (context, setState) {
+                                        return onHover((hovering) {
+
+                                          if (_editingName){
+                                            if (account.displayName != null) {
+                                              _nameController.text =
+                                                  account.displayName!;
+                                            } else {
+                                              _nameController.text = "";
+                                            }
+
+                                            return Row(
+                                              children: [
+                                                Container(
+                                                    width: 200,
+                                                    child: TextField(controller: _nameController,)),
+                                                button("Save", (){
+                                                  print("Saving display name");
+                                                }),
+                                                button("cancel", (){
+                                                  print("Saving display name");
+                                                })
+                                              ],
+                                            );
+                                          }
+
+                                          return Row(
+                                            children: [
+                                              text(account.displayName),
+                                              if (hovering) ...[
+                                                width8,
+                                                onPressed(
+                                                    child: buildIconEdit(),
+                                                    callback: () {
+                                                      setState((){
+                                                        _editingName = true;
+                                                      });
+                                                    })
+                                              ]
+                                            ],
+                                          );
+                                        });
                                       }),
                                       height16,
                                       text("Name"),
@@ -700,3 +736,7 @@ Widget buildLayoutLoadingGame(){
       )
   );
 }
+
+bool _editingName = false;
+final _nameController = TextEditingController();
+

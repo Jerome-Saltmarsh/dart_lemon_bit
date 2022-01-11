@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:gamestream_users/firestore.dart';
+import 'package:googleapis/firestore/v1.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 
@@ -29,21 +30,19 @@ FutureOr<Response> handleRequest(Request request) async {
   final path = request.url.path;
   print("handleRequest($path)");
   switch(path){
-    case "hello":
+    case 'hello':
       return Response.ok('world', headers: headersTextPlain);
     case "stripe_event":
       request.readAsString().then(handleStripeEvent);
       return Response.ok('', headers: headersTextPlain);
     case "users":
       final params = request.requestedUri.queryParameters;
-      if (!params.containsKey('id')) {
-        return Response.forbidden('id required', headers: headersTextPlain);
-      }
       final id = params['id'];
       if (id == null) {
         return Response.forbidden('id is empty', headers: headersTextPlain);
       }
       final user = await firestore.findUserById(id);
+
       final Json response = Json();
       response['id'] = id;
       if (user == null){
@@ -51,12 +50,25 @@ FutureOr<Response> handleRequest(Request request) async {
       }
 
       final fields = user.fields;
+
       if (fields == null){
         return error(response, 'fields_null');
       }
 
       if (fields.isEmpty){
         return error(response, 'fields_empty');
+      }
+
+      if (request.method == 'PATCH'){
+        // user.fields[fieldNames.displayName] =
+        final displayName = params[fieldNames.displayName];
+
+        if (displayName == null){
+          return error(response, 'field_missing_display_name');
+        }
+
+        await firestore.patchDisplayName(userId: id, displayName: displayName);
+        return Response.ok('patched', headers: headersTextPlain);
       }
 
       final displayName = fields[fieldNames.displayName];

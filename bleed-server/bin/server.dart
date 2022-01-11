@@ -139,9 +139,10 @@ void main() {
       sendToClient('${ServerResponse.Cube_Joined.index} ${cubePlayer.uuid}');
     }
 
-    void joinGameOpenWorld() {
+    void joinGameOpenWorld({required String playerName}) {
       clearBuffer();
       Player player = spawnPlayerInTown();
+      player.name = playerName;
       compilePlayer(_buffer, player);
       write(
           '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.team}');
@@ -392,7 +393,17 @@ void main() {
             case GameType.None:
               break;
             case GameType.MMO:
-              joinGameOpenWorld();
+              if (arguments.length < 3) {
+                joinGameOpenWorld(playerName: generateName());
+                return;
+              }
+              final playerId = arguments[2];
+              userService.getAccount(playerId).then((account){
+                if (account == null || !account.subscriptionActive) {
+                  return errorSubscriptionRequired();
+                }
+                joinGameOpenWorld(playerName: account.displayName ?? generateName());
+              });
               break;
             case GameType.Moba:
               joinGameMoba();

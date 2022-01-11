@@ -215,11 +215,16 @@ class Events {
 }
 
 void signInAccount(String userId) async {
-  print("updateUserSubscription()");
+  print("signInAccount()");
   game.signingIn.value = true;
   game.account.value = await userService.getAccount(userId).catchError((error){
     print(error);
     return null;
   });
+
+  if (game.account.value == null){
+    // create a new account
+  }
+
   game.signingIn.value = false;
 }

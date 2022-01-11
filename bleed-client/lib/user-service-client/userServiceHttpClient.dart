@@ -26,33 +26,36 @@ class UserServiceHttpClient {
       print(error);
       throw error;
     });
-    if (response.statusCode == 200) {
-      var body = jsonDecode(response.body) as Map<String, dynamic>;
 
-      final error = body[fieldNames.error];
-      if (error != null) {
-        if (error == "not_found"){
-          return null;
-        }
-        throw Exception(body);
-      }
-
-      DateTime? subscriptionExpirationDate;
-      final subscriptionExpirationDateString = body[fieldNames.subscriptionExpirationDate];
-      if (subscriptionExpirationDateString != null){
-          subscriptionExpirationDate = DateTime.parse(subscriptionExpirationDateString);
-      }
-
-      final displayName = body[fieldNames.displayName];
-
-      return Account(
-        userId: userId,
-        subscriptionExpirationDate: subscriptionExpirationDate,
-        displayName: displayName,
-      );
+    if (response.statusCode != 200) {
+      print('Request failed with status: ${response.statusCode}.');
+      return null;
     }
-    print('Request failed with status: ${response.statusCode}.');
-    return null;
+    var body = jsonDecode(response.body) as Map<String, dynamic>;
+
+    final error = body[fieldNames.error];
+    if (error != null) {
+      if (error == "not_found") {
+        return null;
+      }
+      throw Exception(body);
+    }
+
+    DateTime? subscriptionExpirationDate;
+    final subscriptionExpirationDateString =
+        body[fieldNames.subscriptionExpirationDate];
+    if (subscriptionExpirationDateString != null) {
+      subscriptionExpirationDate =
+          DateTime.parse(subscriptionExpirationDateString);
+    }
+
+    final displayName = body[fieldNames.displayName];
+
+    return Account(
+      userId: userId,
+      subscriptionExpirationDate: subscriptionExpirationDate,
+      displayName: displayName,
+    );
   }
 }
 

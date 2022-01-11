@@ -146,6 +146,7 @@ Widget onPressed({
 
 
 typedef RefreshBuilder = Widget Function();
+typedef WidgetFunction = Widget Function();
 
 class Refresh extends StatefulWidget {
   final RefreshBuilder builder;

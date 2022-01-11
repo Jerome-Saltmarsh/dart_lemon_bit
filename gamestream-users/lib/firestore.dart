@@ -100,6 +100,22 @@ ${_gcpProjectIdEnvironmentVariables.join('\n')}
     );
   }
 
+  Future<Document> patchDisplayName({
+    required String userId,
+    required String displayName
+  }) async {
+
+    print("patchDisplayName()");
+    final user = await findUserById(userId);
+    if (user == null){
+      throw Exception("user not found");
+    }
+    user.fields![fieldNames.displayName] = Value(stringValue: displayName);
+    await documents.patch(user, user.name ?? _name(userId));
+    print("username patched successfully");
+    return user;
+  }
+
   Future<Document> createUser({
     required String userIdGameStream,
     required String userIdStripe,
@@ -122,7 +138,6 @@ ${_gcpProjectIdEnvironmentVariables.join('\n')}
             fieldNames.email: Value(stringValue: email),
         }
     );
-
 
     final parent = 'projects/$_projectId/databases/(default)/documents';
     return await documents.createDocument(
