@@ -9,14 +9,13 @@ import 'package:bleed_client/functions/removeGeneratedEnvironmentObjects.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/logic.dart';
 import 'package:bleed_client/send.dart';
-import 'package:bleed_client/services/userService.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/ui/ui.dart';
+import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:bleed_client/webSocket.dart';
-import 'package:flutter/material.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/functions/fullscreen_enter.dart';
 import 'package:lemon_engine/functions/fullscreen_exit.dart';
@@ -94,7 +93,7 @@ class Events {
       storage.forgetAuthorization();
     } else {
       storage.rememberAuthorization(value);
-      updateUserSubscription(value.userId);
+      signInAccount(value.userId);
     }
     game.dialog.value = Dialogs.Games;
   }
@@ -215,7 +214,7 @@ class Events {
   }
 }
 
-void updateUserSubscription(String userId) async {
+void signInAccount(String userId) async {
   print("updateUserSubscription()");
   game.signingIn.value = true;
   game.account.value = await userService.getAccount(userId).catchError((error){

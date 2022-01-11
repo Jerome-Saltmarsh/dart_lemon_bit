@@ -67,10 +67,11 @@ ${_gcpProjectIdEnvironmentVariables.join('\n')}
 
   Future<Document?> findUserById(String id) async {
     int tries = 0;
+    final int maxTries = 10;
     while(_firestoreApi == null){
       tries++;
-      if (tries > 10){
-        throw Exception("tries greater than 5");
+      if (tries > maxTries){
+        throw Exception("exceeded max tries: $maxTries");
       }
       print("firestoreApi is null, waiting 1 second for it to load, try: $tries");
       await Future.delayed(_oneSecond);
@@ -102,6 +103,7 @@ ${_gcpProjectIdEnvironmentVariables.join('\n')}
   Future<Document> createUser({
     required String userIdGameStream,
     required String userIdStripe,
+    required String displayName,
     String? email,
   }) async {
     print("database.createUser('$userIdGameStream')");
@@ -114,6 +116,8 @@ ${_gcpProjectIdEnvironmentVariables.join('\n')}
         fields: {
           fieldNames.stripeCustomerId: Value(stringValue: userIdStripe),
           fieldNames.subscriptionExpirationDate: Value(timestampValue: _getTimeStampOneMonth()),
+          fieldNames.subscriptionCreatedDate: Value(timestampValue: _getTimestampNow()),
+          fieldNames.displayName: Value(stringValue: displayName),
           if (email != null)
             fieldNames.email: Value(stringValue: email),
         }
@@ -152,6 +156,7 @@ final _FieldNames fieldNames = _FieldNames();
 
 class _FieldNames {
   final String subscriptionExpirationDate = "subscription_expiration_date";
+  final String subscriptionCreatedDate = "subscription_created_date";
   final String subscriptionStatus = "subscription_status";
   final String error = "error";
   final String stripeCustomerId = 'stripe_customer_id';

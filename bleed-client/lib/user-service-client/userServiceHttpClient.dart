@@ -7,16 +7,16 @@ import 'package:http/http.dart' as http;
 final userService = UserServiceHttpClient("rest-server-11-osbmaezptq-ey.a.run.app");
 
 class UserServiceHttpClient {
-  final String host;
+  final String _host;
 
-  UserServiceHttpClient(this.host);
+  UserServiceHttpClient(this._host);
 
   Future<Account?> getAccount(String userId) async {
     print("getUserSubscriptionExpiration($userId)");
 
     if (userId.isEmpty) throw Exception("user is Empty");
 
-    var url = Uri.https(host, '/users', {'id': userId});
+    var url = Uri.https(_host, '/users', {'id': userId});
 
     // Await the http get response, then decode the json-formatted response.
     var response = await http.get(url, headers: {
@@ -55,7 +55,6 @@ class UserServiceHttpClient {
     return null;
   }
 }
-
 
 class Account {
   final String userId;

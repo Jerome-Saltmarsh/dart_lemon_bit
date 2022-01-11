@@ -20,9 +20,9 @@ import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/Region.dart';
-import 'package:bleed_client/services/userService.dart';
 import 'package:bleed_client/ui/build.dart';
 import 'package:bleed_client/ui/ui.dart';
+import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_watch/watch.dart';
 

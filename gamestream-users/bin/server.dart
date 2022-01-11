@@ -1,6 +1,7 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:gamestream_users/firestore.dart';
 import 'package:shelf/shelf.dart';
@@ -171,12 +172,20 @@ class _StripeWebhooks {
     final userGameStreamId = obj['client_reference_id'];
     final userStripeId = obj['customer'];
     final email = obj['customer_email'];
+
     firestore.createUser(
       userIdGameStream: userGameStreamId,
       userIdStripe: userStripeId,
       email: email,
+      displayName: _generateRandomName(),
     );
   }
+}
+
+final _random = Random();
+
+String _generateRandomName(){
+  return 'Player_${_random.nextInt(9999999)}';
 }
 
 

@@ -11,7 +11,6 @@ import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/functions/refreshPage.dart';
 import 'package:bleed_client/logic.dart';
-import 'package:bleed_client/services/userService.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/toString.dart';
@@ -20,6 +19,7 @@ import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/ui/widgets.dart';
+import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,6 +32,8 @@ import '../assets.dart';
 import '../styles.dart';
 import '../webSocket.dart';
 import 'build.dart';
+
+final nameController = TextEditingController();
 
 Widget buildLoginDialog() {
   return dialog(
@@ -217,6 +219,24 @@ Widget buildView(BuildContext context) {
                                 )
                             );
 
+                          case Dialogs.Change_Display_Name:
+
+                            if (account != null && account.displayName != null){
+                              nameController.text = account.displayName!;
+                            }else{
+                              nameController.text = "";
+                            }
+
+                            return dialog(
+                              child: layout(
+                                child: TextField(
+                                  controller: nameController,
+                                ),
+                                bottomLeft: button("Save", (){}),
+                                bottomRight: text("Cancel"),
+                              ),
+                            );
+
                           case Dialogs.Subscription:
                           // @build subscription dialog
                             if (!authenticated) {
@@ -258,21 +278,27 @@ Widget buildView(BuildContext context) {
                                   child: Column(
                                     crossAxisAlignment: axis.cross.start,
                                     children: [
-                                      Row(
-                                        mainAxisAlignment: axis.main.apart,
-                                        children: [
-                                          Container(
-                                            child: text("My Subscription",
-                                                fontSize: 30,
-                                                fontWeight: bold),
-                                            alignment: Alignment.center,
-                                          ),
-                                        ],
-                                      ),
+                                      text("ACCOUNT",
+                                          fontSize: 30,
+                                          fontWeight: bold),
                                       height32,
-                                      text("Display Name"),
-                                      text(account.displayName),
-                                      height32,
+                                      Tooltip(
+                                          message: "The name other players see in game",
+                                          child: text("Display Name")),
+                                      onHover((hovering) {
+                                        return Row(
+                                          children: [
+                                            text(account.displayName),
+                                            if (hovering) ...[
+                                              width8,
+                                              onPressed(child: buildIconEdit(), callback: () {
+                                                game.dialog.value = Dialogs.Change_Display_Name;
+                                              })
+                                            ]
+                                          ],
+                                        );
+                                      }),
+                                      height16,
                                       text("Name"),
                                       text(auth.displayName),
                                       height16,

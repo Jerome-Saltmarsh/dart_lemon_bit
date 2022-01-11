@@ -5,6 +5,7 @@ import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
+import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/cube/camera3d.dart';
 import 'package:bleed_client/debug.dart';
 import 'package:bleed_client/input.dart';
@@ -282,6 +283,14 @@ Widget buildTopRight() {
 Widget _buildSettingsIcon() {
   return buildDecorationImage(
       image: decorationImages.settings, width: 40, height: 40, borderWidth: 0);
+}
+
+Widget buildIconEdit({
+  double size = 20
+}) {
+  return buildDecorationImage(
+      color: colours.none,
+      image: decorationImages.edit, width: size, height: size, borderWidth: 0);
 }
 
 void toggleDebugMode() {

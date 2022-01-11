@@ -56,7 +56,6 @@ class UserServiceHttpClient {
   }
 }
 
-
 class Account {
   final String userId;
   final DateTime? subscriptionExpirationDate;
