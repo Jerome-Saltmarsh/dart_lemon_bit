@@ -414,9 +414,12 @@ Widget buildView(BuildContext context) {
                                   height: 300,
                                   width: 300 * goldenRatio,
                                   child: layout(
-                                    topRight: text(enumString(game.region.value),color: colours.white60, onPressed: (){
-                                      game.dialog.value = Dialogs.Change_Region;
-                                    }),
+                                    topRight: Tooltip(
+                                      message: "The region determines which server you connect to. The distance of a server may greatly impact your gameplay experience",
+                                      child: text(enumString(game.region.value),color: colours.white60, onPressed: (){
+                                        game.dialog.value = Dialogs.Change_Region;
+                                      }),
+                                    ),
                                   bottomLeft: isFreeToPlay
                                       ? playButton
                                       : !authenticated
