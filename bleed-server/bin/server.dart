@@ -1,5 +1,6 @@
 import 'package:bleed_server/CubeGame.dart';
 import 'package:bleed_server/system.dart';
+import 'package:bleed_server/user-service-client/userServiceHttpClient.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -24,13 +25,13 @@ import 'common/WeaponType.dart';
 import 'common/enums/Direction.dart';
 import 'common/version.dart';
 import 'compile.dart';
+import 'functions/generateName.dart';
 import 'functions/loadScenes.dart';
 import 'functions/withinRadius.dart';
 import 'games/Royal.dart';
 import 'games/Moba.dart';
 import 'games/world.dart';
 import 'global.dart';
-import 'services.dart';
 import 'settings.dart';
 import 'update.dart';
 import 'utils.dart';
@@ -60,7 +61,6 @@ void main() {
   }else{
     print("Environment Detected: Google Cloud Machine");
   }
-  services.subscription.init();
   initUpdateLoop();
   loadScenes();
   int totalConnections = 0;
@@ -118,9 +118,11 @@ void main() {
       sendAndClearBuffer();
     }
 
-    void joinBattleRoyal() {
+    void joinBattleRoyal(String playerName) {
+      print('$playerName joining battle royal');
       final Royal royal = global.findPendingRoyalGames();
       final Player player = royal.playerJoin();
+      player.name = playerName;
       compileWholeGame(royal);
       compilePlayerJoined(_buffer, player);
       compilePlayerWeapon(_buffer, player);
@@ -400,21 +402,17 @@ void main() {
               break;
             case GameType.BATTLE_ROYAL:
               if (arguments.length < 3) {
-                error(GameError.PlayerId_Required);
-                return;
+                return error(GameError.PlayerId_Required);
               }
 
               final playerId = arguments[2];
-              services.subscription.isSubscribed(playerId).then((
-                  bool isSubscribed
-              ) {
-                  if (isSubscribed) {
-                    joinBattleRoyal();
-                  } else {
-                    errorSubscriptionRequired();
-                  }
+              userService.getAccount(playerId).then((account){
+                if (account == null || !account.subscriptionActive) {
+                  return errorSubscriptionRequired();
                 }
-              );
+                joinBattleRoyal(account.displayName ?? generateName());
+              });
+
               break;
           }
           break;
