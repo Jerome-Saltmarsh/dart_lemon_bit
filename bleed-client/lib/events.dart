@@ -21,6 +21,7 @@ import 'package:lemon_engine/functions/fullscreen_enter.dart';
 import 'package:lemon_engine/functions/fullscreen_exit.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/state/camera.dart';
+import 'package:lemon_engine/state/cursor.dart';
 import 'package:lemon_engine/state/zoom.dart';
 
 import 'common/GameType.dart';
@@ -157,6 +158,7 @@ class Events {
         mouseEvents.onPanStarted.value = null;
         mouseEvents.onLongLeftClicked.value = null;
         ui.drawCanvasAfterUpdate = true;
+        cursorType.value = CursorType.Basic;
         break;
       default:
         break;

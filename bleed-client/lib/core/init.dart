@@ -31,6 +31,7 @@ import 'package:bleed_client/watches/time.dart';
 import 'package:bleed_client/webSocket.dart';
 import 'package:lemon_engine/functions/register_on_mouse_scroll.dart';
 import 'package:lemon_engine/game.dart';
+import 'package:lemon_engine/state/cursor.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -49,6 +50,8 @@ Future init() async {
   }else{
     print("Environment: Production");
   }
+
+  cursorType.value = CursorType.Basic;
 
   // if (Uri.base.hasQuery && Uri.base.queryParameters.containsKey('host')) {
   //   // Future.delayed(Duration(seconds: 1), () {
