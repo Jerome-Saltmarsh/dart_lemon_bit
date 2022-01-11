@@ -271,6 +271,7 @@ Widget buildView(BuildContext context) {
                                       ),
                                       height32,
                                       text("Display Name"),
+                                      text(account.displayName),
                                       height32,
                                       text("Name"),
                                       text(auth.displayName),
