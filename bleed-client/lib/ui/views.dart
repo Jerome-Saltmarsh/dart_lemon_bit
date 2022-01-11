@@ -8,6 +8,7 @@ import 'package:bleed_client/core/init.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/Region.dart';
+import 'package:bleed_client/events.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/functions/refreshPage.dart';
 import 'package:bleed_client/logic.dart';
@@ -26,6 +27,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_math/golden_ratio.dart';
+import 'package:lemon_watch/watch.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../assets.dart';
@@ -287,17 +289,13 @@ Widget buildView(BuildContext context) {
                                           fontSize: 30,
                                           fontWeight: bold),
                                       height32,
-                                      Tooltip(
-                                          message: "The name other players see in game",
-                                          child: text("Display Name")),
-                                      StatefulBuilder(
-                                          builder: (context, setState) {
+                                      text("Public Name"),
+                                      WatchBuilder(_editingName, (editing){
                                         return onHover((hovering) {
-
-                                          if (_editingName){
+                                          if (_editingName.value){
                                             if (account.displayName != null) {
                                               _nameController.text =
-                                                  account.displayName!;
+                                              account.displayName!;
                                             } else {
                                               _nameController.text = "";
                                             }
@@ -306,29 +304,35 @@ Widget buildView(BuildContext context) {
                                               children: [
                                                 Container(
                                                     width: 200,
-                                                    child: TextField(controller: _nameController,)),
-                                                button("Save", (){
-                                                  print("Saving display name");
-                                                  userService.patchDisplayName(userId: account.userId, displayName: _nameController.text);
+                                                    child: TextField(
+                                                      style: TextStyle(color: colours.white80),
+                                                      controller: _nameController, cursorColor: colours.green,)),
+                                                button("Save", () async {
+                                                  _editingName.value = false;
+                                                  await userService.patchDisplayName(userId: account.userId, displayName: _nameController.text).catchError((error){
+                                                     // ignore
+                                                  });
+                                                  await refreshAccountDetails();
                                                 }),
+                                                width8,
                                                 button("cancel", (){
-                                                  print("Saving display name");
-                                                })
+                                                  _editingName.value = false;
+                                                }, borderColor: colours.none)
                                               ],
                                             );
                                           }
 
                                           return Row(
                                             children: [
-                                              text(account.displayName),
+                                              text(account.displayName, color: colours.white60, onPressed: (){
+                                                _editingName.value = true;
+                                              }),
                                               if (hovering) ...[
                                                 width8,
                                                 onPressed(
                                                     child: buildIconEdit(),
                                                     callback: () {
-                                                      setState((){
-                                                        _editingName = true;
-                                                      });
+                                                      _editingName.value = true;
                                                     })
                                               ]
                                             ],
@@ -337,10 +341,10 @@ Widget buildView(BuildContext context) {
                                       }),
                                       height16,
                                       text("Name"),
-                                      text(auth.displayName),
+                                      text(auth.displayName, color: colours.white60),
                                       height16,
                                       text("Email"),
-                                      text(auth.email),
+                                      text(auth.email, color: colours.white60),
                                       height16,
                                       if (!subscriptionExpired) text("Automatically Renews"),
                                       if (subscriptionExpired)
@@ -352,7 +356,7 @@ Widget buildView(BuildContext context) {
                                                 fillColor: colours.green)
                                           ],
                                         ),
-                                      text(formattedSubscription),
+                                      text(formattedSubscription, color: colours.white60),
                                     ],
                                   )),
 
@@ -738,6 +742,6 @@ Widget buildLayoutLoadingGame(){
   );
 }
 
-bool _editingName = false;
+final Watch<bool> _editingName = Watch(false);
 final _nameController = TextEditingController();
 

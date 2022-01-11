@@ -15,9 +15,7 @@ class UserServiceHttpClient {
     print("patchDisplayName()");
     var url = Uri.https(_host, '/users', {'id': userId, 'display_name': displayName});
     final json = '{"title": "Hello"}';
-    return http.patch(url, body: json, headers: _headersJson).catchError((error){
-      print(error);
-    });
+    await http.patch(url, body: json, headers: _headersJson);
   }
 
   Future<Account?> getAccount(String userId) async {
