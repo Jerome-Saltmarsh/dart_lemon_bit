@@ -223,12 +223,26 @@ class _Buttons {
   },
       height: style.buttonHeight,
       width: style.buttonWidth,
-      fillColor: colours.green,
+      fillColor: colours.none,
       fillColorMouseOver: colours.green,
       borderColorMouseOver: colours.green,
-    borderColor: colours.green,
+      borderColor: colours.none,
       borderRadius: borderRadius2,
   );
+
+  Widget buildAccount(bool hovering){
+    return button(_iconSettings, (){
+      game.dialog.value = Dialogs.Subscription;
+    },
+      height: style.buttonHeight,
+      width: style.buttonWidth,
+      fillColor: hovering ? colours.green : colours.none,
+      fillColorMouseOver: colours.green,
+      borderColorMouseOver: colours.green,
+      borderColor: hovering ? colours.green : colours.none,
+      borderRadius: borderRadius2,
+    );
+  }
 
   final Widget logout = NullableWatchBuilder<Authentication?>(authentication, (Authentication? authorization){
     if (authorization == null){
@@ -289,6 +303,7 @@ class _Buttons {
         height: style.buttonHeight * goldenRatioInverse,
         borderWidth: 1,
         borderRadius: borderRadius2,
+        borderColor: colours.none,
       );
 
 

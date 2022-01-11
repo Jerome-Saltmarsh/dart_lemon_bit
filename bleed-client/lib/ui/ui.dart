@@ -8,6 +8,7 @@ enum Dialogs {
   Subscription,
   Subscription_Successful,
   Change_Display_Name,
+  Change_Region,
 }
 
 final _UIOptions uiOptions = _UIOptions();

@@ -153,7 +153,7 @@ Widget buildView(BuildContext context) {
                         if (authenticated)  mouseOver(builder: (BuildContext context, bool mouseOver) {
                           return mouseOver ? Column(
                             children: [
-                              buttons.account,
+                              buttons.buildAccount(mouseOver),
                               if (subscribed)
                                 buttons.subscription,
                               if (!subscribed)
@@ -168,7 +168,7 @@ Widget buildView(BuildContext context) {
                         }),
                       ],
                     ),
-                    bottomRight: buttons.region,
+                    // bottomRight: buttons.region,
                     bottomLeft: dev(onHover((bool hovering){
 
                       return Container(
@@ -219,6 +219,20 @@ Widget buildView(BuildContext context) {
                                     game.dialog.value = Dialogs.Games;
                                   }, fillColor: colours.green),
                                 )
+                            );
+
+                          case Dialogs.Change_Region:
+                            return dialog(
+                              child: layout(
+                                bottomRight: text("Close", onPressed: (){
+                                  game.dialog.value = Dialogs.Games;
+                                }),
+                                child: Column(
+                                  children: selectableRegions.map((e){
+                                    return text(enumString(e));
+                                  }).toList(),
+                                )
+                              )
                             );
 
                           case Dialogs.Change_Display_Name:
@@ -400,6 +414,9 @@ Widget buildView(BuildContext context) {
                                   height: 300,
                                   width: 300 * goldenRatio,
                                   child: layout(
+                                    topRight: text(enumString(game.region.value),color: colours.white60, onPressed: (){
+                                      game.dialog.value = Dialogs.Change_Region;
+                                    }),
                                   bottomLeft: isFreeToPlay
                                       ? playButton
                                       : !authenticated

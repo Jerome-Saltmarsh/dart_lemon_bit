@@ -280,11 +280,6 @@ Widget buildTopRight() {
   );
 }
 
-Widget _buildSettingsIcon() {
-  return buildDecorationImage(
-      image: decorationImages.settings, width: 40, height: 40, borderWidth: 0);
-}
-
 Widget buildIconEdit({
   double size = 20
 }) {
