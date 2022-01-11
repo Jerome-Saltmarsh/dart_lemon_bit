@@ -105,13 +105,19 @@ ${_gcpProjectIdEnvironmentVariables.join('\n')}
     required String displayName
   }) async {
 
-    print("patchDisplayName()");
+    print("patchDisplayName($displayName)");
     final user = await findUserById(userId);
     if (user == null){
       throw Exception("user not found");
     }
-    user.fields![fieldNames.displayName] = Value(stringValue: displayName);
-    await documents.patch(user, user.name ?? _name(userId));
+    final fields = user.fields;
+
+    if (fields == null){
+      throw Exception("user fields null");
+    }
+
+    fields[fieldNames.displayName] = Value(stringValue: displayName);
+    await documents.patch(user, user.name!);
     print("username patched successfully");
     return user;
   }

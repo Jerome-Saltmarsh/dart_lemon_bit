@@ -309,6 +309,7 @@ Widget buildView(BuildContext context) {
                                                     child: TextField(controller: _nameController,)),
                                                 button("Save", (){
                                                   print("Saving display name");
+                                                  userService.patchDisplayName(userId: account.userId, displayName: _nameController.text);
                                                 }),
                                                 button("cancel", (){
                                                   print("Saving display name");

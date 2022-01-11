@@ -4,12 +4,21 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-final userService = UserServiceHttpClient("rest-server-11-osbmaezptq-ey.a.run.app");
+final userService = UserServiceHttpClient("rest-server-30-osbmaezptq-ey.a.run.app");
 
 class UserServiceHttpClient {
   final String _host;
 
   UserServiceHttpClient(this._host);
+
+  Future patchDisplayName({required String userId, required String displayName}) async {
+    print("patchDisplayName()");
+    var url = Uri.https(_host, '/users', {'id': userId, 'display_name': displayName});
+    final json = '{"title": "Hello"}';
+    return http.patch(url, body: json, headers: _headersJson).catchError((error){
+      print(error);
+    });
+  }
 
   Future<Account?> getAccount(String userId) async {
     print("getUserSubscriptionExpiration($userId)");
@@ -19,10 +28,7 @@ class UserServiceHttpClient {
     var url = Uri.https(_host, '/users', {'id': userId});
 
     // Await the http get response, then decode the json-formatted response.
-    var response = await http.get(url, headers: {
-      "Accept": "application/json",
-      "Access-Control-Allow-Origin": "*"
-    }).catchError((error){
+    var response = await http.get(url, headers: _headers).catchError((error){
       print(error);
       throw error;
     });
@@ -77,6 +83,16 @@ class Account {
 
   Account({required this.userId, this.subscriptionExpirationDate, this.displayName});
 }
+
+final _headers = {
+  "Accept": "*/*",
+  "Access-Control-Allow-Origin": "*",
+};
+
+final _headersJson = {
+  "Accept": "*/*",
+  "Access-Control-Allow-Origin": "*",
+};
 
 enum SubscriptionStatus{
   None,

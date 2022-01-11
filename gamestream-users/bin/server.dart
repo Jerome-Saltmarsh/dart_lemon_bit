@@ -28,7 +28,7 @@ void initServer({String address = '0.0.0.0', int port = 8080}) async {
 
 FutureOr<Response> handleRequest(Request request) async {
   final path = request.url.path;
-  print("handleRequest($path)");
+  print("handleRequest(path: '$path', method: '${request.method}')");
   switch(path){
     case 'hello':
       return Response.ok('world', headers: headersTextPlain);
@@ -59,7 +59,9 @@ FutureOr<Response> handleRequest(Request request) async {
         return error(response, 'fields_empty');
       }
 
-      if (request.method == 'PATCH'){
+      if (request.method == 'PATCH' || request.method == 'OPTIONS'){
+        print("received user patch request");
+
         // user.fields[fieldNames.displayName] =
         final displayName = params[fieldNames.displayName];
 
@@ -68,7 +70,11 @@ FutureOr<Response> handleRequest(Request request) async {
         }
 
         await firestore.patchDisplayName(userId: id, displayName: displayName);
-        return Response.ok('patched', headers: headersTextPlain);
+        response['status'] = 'success';
+        response['request'] = 'patch';
+        response['field'] = 'display_name';
+        response['value'] = displayName;
+        return ok(response);
       }
 
       final displayName = fields[fieldNames.displayName];
@@ -116,21 +122,21 @@ Response error(response, String error){
 
 typedef Json = Map<String, dynamic>;
 
-Map<String, Object> get headersJson {
+final headersJson = (){
   final Map<String, Object> _headers = {};
   _headers['Content-Type'] = 'application/json';
   _headers['Access-Control-Allow-Headers'] = "Access-Control-Allow-Origin, Accept";
   _headers['Access-Control-Allow-Origin'] = "*";
   return _headers;
-}
+}();
 
-Map<String, Object> get headersTextPlain {
+final headersTextPlain = (){
   final Map<String, Object> _headers = {};
   _headers['Content-Type'] = 'text/plain';
   _headers['Access-Control-Allow-Headers'] = "Access-Control-Allow-Origin, Accept";
   _headers['Access-Control-Allow-Origin'] = "*";
   return _headers;
-}
+}();
 
 
 Future handleStripeEvent(String eventString) async {
