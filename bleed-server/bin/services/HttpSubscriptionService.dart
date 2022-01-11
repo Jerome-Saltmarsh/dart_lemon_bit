@@ -1,8 +1,10 @@
 
+import 'package:bleed_server/user-service-client/userServiceHttpClient.dart';
+
 import '../services.dart';
-import 'userService.dart';
 
 class HttpSubscriptionService extends SubscriptionService {
+
   @override
   void init() {
     print("HttpSubscriptionService.init()");
@@ -10,8 +12,8 @@ class HttpSubscriptionService extends SubscriptionService {
 
   @override
   Future<bool> isSubscribed(String playerId) async {
-    final subscription = await getUserSubscriptionExpiration(playerId);
-    final now = DateTime.now().toUtc();
-    return subscription != null && now.isBefore(subscription);
+    final account = await userService.getAccount(playerId);
+    if (account == null) return false;
+    return account.subscriptionActive;
   }
 }
