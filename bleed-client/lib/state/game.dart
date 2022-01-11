@@ -20,6 +20,7 @@ import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/Region.dart';
+import 'package:bleed_client/services/userService.dart';
 import 'package:bleed_client/ui/build.dart';
 import 'package:bleed_client/ui/ui.dart';
 import 'package:lemon_math/Vector2.dart';
@@ -39,7 +40,7 @@ void setDialogGames(){
 
 class _Game {
   final Watch<bool> signingIn = Watch(false);
-  final Cache<DateTime?> subscription = Cache(key: 'subscription', value: null);
+  final Watch<Account?> account = Watch(null);
   final Watch<Dialogs> dialog = Watch(Dialogs.Games);
   final Watch<Mode> mode = Watch(Mode.Play);
   final Watch<Region> region = Watch(detectRegion());

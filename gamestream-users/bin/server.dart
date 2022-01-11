@@ -58,9 +58,9 @@ FutureOr<Response> handleRequest(Request request) async {
         return error(response, 'fields_empty');
       }
 
-      final displayName = fields['display_name'];
+      final displayName = fields[fieldNames.displayName];
       if (displayName != null){
-        response['display_name'] = displayName.stringValue;
+        response[fieldNames.displayName] = displayName.stringValue;
       }
 
       final subscriptionExpires = fields[fieldNames.subscriptionExpirationDate];

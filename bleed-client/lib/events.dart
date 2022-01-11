@@ -39,26 +39,20 @@ class Events {
     game.player.alive.onChanged(_onPlayerAliveChanged);
     game.status.onChanged(_onGameStatusChanged);
     game.mode.onChanged(_onGameModeChanged);
-    game.subscription.onChanged(_onSubscriptionChanged);
+    game.account.onChanged(onAccountChanged);
     mouseEvents.onLeftClicked.onChanged(_onMouseLeftClickedChanged);
     authentication.onChanged(_onAuthenticationChanged);
     sub(_onGameError);
   }
 
-  void _onSubscriptionChanged(DateTime? value) {
-    print("events.onSubscriptionChanged($value)");
-    if (value == null) {
-      storage.remove('subscription');
-      return;
-    }
-    storage.put('subscription', value);
-    if (authenticated) {
-      final flagName = 'subscription_dialog_shown_${authentication.value!.userId}';
-      if (!storage.contains(flagName)) {
-        storage.put(flagName, 'true');
-        game.dialog.value = Dialogs.Subscription_Successful;
-      }
-    }
+  void onAccountChanged(Account? value) {
+    print("events.onAccountChanged($value)");
+    if (value == null) return;
+    if (!value.subscriptionActive) return;
+    final flagName = 'subscription_dialog_shown_${value.userId}';
+    if (storage.contains(flagName)) return;
+    storage.put(flagName, 'true');
+    game.dialog.value = Dialogs.Subscription_Successful;
   }
 
   Future _onGameError(GameError error) async {
@@ -96,7 +90,7 @@ class Events {
   void _onAuthenticationChanged(Authentication? value) async {
     print("events._onAuthorizationChanged()");
     if (value == null) {
-      game.subscription.value = null;
+      game.account.value = null;
       storage.forgetAuthorization();
     } else {
       storage.rememberAuthorization(value);
@@ -224,7 +218,7 @@ class Events {
 void updateUserSubscription(String userId) async {
   print("updateUserSubscription()");
   game.signingIn.value = true;
-  game.subscription.value = await getUserSubscriptionExpiration(userId).catchError((error){
+  game.account.value = await userService.getAccount(userId).catchError((error){
     print(error);
     return null;
   });

@@ -156,4 +156,5 @@ class _FieldNames {
   final String error = "error";
   final String stripeCustomerId = 'stripe_customer_id';
   final String email = 'email';
+  final String displayName = 'display_name';
 }

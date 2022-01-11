@@ -4,53 +4,91 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-Future<DateTime?> getUserSubscriptionExpiration(String userId) async {
-  print("getUserSubscriptionExpiration($userId)");
+final userService = UserServiceHttpClient("rest-server-11-osbmaezptq-ey.a.run.app");
 
-  if (userId.isEmpty) throw Exception("user is Empty");
+class UserServiceHttpClient {
+  final String host;
 
-  var url = Uri.https('rest-server-6-osbmaezptq-ey.a.run.app', '/users', {'id': userId});
+  UserServiceHttpClient(this.host);
 
-  // Await the http get response, then decode the json-formatted response.
-  var response = await http.get(url, headers: {
-    "Accept": "application/json",
-    "Access-Control-Allow-Origin": "*"
-  }).catchError((error){
-    print(error);
-    throw error;
-  });
-  if (response.statusCode == 200) {
-    var body = jsonDecode(response.body) as Map<String, dynamic>;
+  Future<Account?> getAccount(String userId) async {
+    print("getUserSubscriptionExpiration($userId)");
 
-    if (!body.containsKey('status')){
-      throw Exception("response missing status");
+    if (userId.isEmpty) throw Exception("user is Empty");
+
+    var url = Uri.https(host, '/users', {'id': userId});
+
+    // Await the http get response, then decode the json-formatted response.
+    var response = await http.get(url, headers: {
+      "Accept": "application/json",
+      "Access-Control-Allow-Origin": "*"
+    }).catchError((error){
+      print(error);
+      throw error;
+    });
+    if (response.statusCode == 200) {
+      var body = jsonDecode(response.body) as Map<String, dynamic>;
+
+      final error = body[fieldNames.error];
+      if (error != null) {
+        if (error == "not_found"){
+          return null;
+        }
+        throw Exception(body);
+      }
+
+      DateTime? subscriptionExpirationDate;
+      final subscriptionExpirationDateString = body[fieldNames.subscriptionExpirationDate];
+      if (subscriptionExpirationDateString != null){
+          subscriptionExpirationDate = DateTime.parse(subscriptionExpirationDateString);
+      }
+
+      final displayName = body[fieldNames.displayName];
+
+      return Account(
+        userId: userId,
+        subscriptionExpirationDate: subscriptionExpirationDate,
+        displayName: displayName,
+      );
     }
-
-    final status = body['status'];
-
-    if (status == 'user_not_found') {
-      print("user not found in subscription service");
-      return null;
-    }
-
-    if (status != 'success'){
-      throw Exception(response.body);
-    }
-
-    if (!body.containsKey('sub_exp')){
-      throw Exception("response missing sub_exp field");
-    }
-    final subExpString = body['sub_exp'];
-    return DateTime.parse(subExpString);
+    print('Request failed with status: ${response.statusCode}.');
+    return null;
   }
-  print('Request failed with status: ${response.statusCode}.');
-  return null;
 }
+
 
 class Account {
   final String userId;
-  final DateTime? subscription;
-  final String displayName;
+  final DateTime? subscriptionExpirationDate;
+  final String? displayName;
 
-  Account(this.userId, this.subscription, this.displayName);
+  bool get subscriptionActive => subscriptionStatus == SubscriptionStatus.Active;
+  bool get subscriptionExpired => subscriptionStatus == SubscriptionStatus.Expired;
+  bool get subscriptionNone => subscriptionStatus == SubscriptionStatus.None;
+
+  SubscriptionStatus get subscriptionStatus {
+    if (subscriptionExpirationDate == null) return SubscriptionStatus.None;
+    final now = DateTime.now().toUtc();
+    if (subscriptionExpirationDate!.isBefore(now)) return SubscriptionStatus.Expired;
+    return SubscriptionStatus.Active;
+  }
+
+  Account({required this.userId, this.subscriptionExpirationDate, this.displayName});
+}
+
+enum SubscriptionStatus{
+  None,
+  Active,
+  Expired
+}
+
+final _FieldNames fieldNames = _FieldNames();
+
+class _FieldNames {
+  final String subscriptionExpirationDate = "subscription_expiration_date";
+  final String subscriptionStatus = "subscription_status";
+  final String error = "error";
+  final String stripeCustomerId = 'stripe_customer_id';
+  final String email = 'email';
+  final String displayName = 'display_name';
 }

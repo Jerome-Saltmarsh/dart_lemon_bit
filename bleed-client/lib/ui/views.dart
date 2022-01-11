@@ -11,6 +11,7 @@ import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/functions/refreshPage.dart';
 import 'package:bleed_client/logic.dart';
+import 'package:bleed_client/services/userService.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/toString.dart';
@@ -91,11 +92,13 @@ Widget buildView(BuildContext context) {
           );
         }
 
-        return NullableWatchBuilder<DateTime?>(game.subscription, (DateTime? subscription){
+        return NullableWatchBuilder<Account?>(game.account, (Account? account){
           final now = DateTime.now().toUtc();
-          final bool subscribed = subscription != null;
-          final subscriptionExpired = subscription != null && now.isAfter(subscription);
-          final bool subscriptionActive = subscription != null && !subscriptionExpired;
+          final bool subscribed = account != null && account.subscriptionExpirationDate != null;
+          final subscriptionExpired = account != null
+              && account.subscriptionExpirationDate != null
+              && now.isAfter(account.subscriptionExpirationDate!);
+          final bool subscriptionActive = account != null && !subscriptionExpired;
 
           return WatchBuilder(webSocket.connection, (Connection connection) {
             switch (connection) {
@@ -120,14 +123,14 @@ Widget buildView(BuildContext context) {
                             button(text("Subscribe for \$4.99 per month"), logic.openStripeCheckout,
                               height: style.buttonHeight * goldenRatioInverse,
                             ),
-                            if (subscription != null && subscriptionExpired)
+                            if (account != null && subscriptionExpired)
                               Row(
                                 children: [
                                   onPressed(
                                     callback: logic.showDialogSubscription,
                                     child: border(
                                         color: colours.red,
-                                        child: text("Your subscription expired on ${dateFormat.format(subscription)}", color: colours.red)),
+                                        child: text("Your subscription expired on ${dateFormat.format(account.subscriptionExpirationDate!)}", color: colours.red)),
                                   ),
                                   width8,
                                   button(text("Renew"), logic.showDialogSubscription, borderColor: colours.none),                                ],
@@ -234,7 +237,7 @@ Widget buildView(BuildContext context) {
                               );
                             }
 
-                            final formattedSubscription = dateFormat.format(subscription);
+                            final formattedSubscription = dateFormat.format(account.subscriptionExpirationDate!);
 
                             return dialog(
                               color: colours.white05,
