@@ -144,9 +144,13 @@
 [BUGS]
 [ ] Objects culled at bottom of screen  
 [SUBSCRIPTION]
-[ ] When a subscription is made it must be saved to a cloud database
-[ ] When a player enters a premium game it must check their subscription  
-[ ] WS server should restfully call the subscription service  
+[ ] Sign in with Facebook
+[ ] Cancel Subscription 
+[ ] Live subscription  
+[ ] Display Name  
+[x] When a subscription is made it must be saved to a cloud database
+[x] When a player enters a premium game it must check their subscription  
+[x] WS server should restfully call the subscription service  
 [x] UI check user subscription
 [COMPLETED]
 [x] Auto sign on (remember login)

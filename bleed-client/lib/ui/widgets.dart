@@ -22,7 +22,6 @@ import 'package:lemon_math/random.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../logic.dart';
-import '../stripe.dart';
 import '../styles.dart';
 import '../toString.dart';
 import 'compose/hudUI.dart';
@@ -235,7 +234,7 @@ class _Buttons {
     if (authorization == null){
       text ('No User Logged In');
     }
-    return button('Logout ${authorization?.displayName}',
+    return button('Logout',
         signOut,
         width: style.buttonWidth,
         height: style.buttonHeight,
@@ -245,10 +244,10 @@ class _Buttons {
   final Widget subscribe =
       button("Subscribe \$4.99", logic.openStripeCheckout,
           width: style.buttonWidth,
-          height: style.buttonHeight
+          height: style.buttonHeight,
       );
 
-  final Widget subscription = button("My Subscription", (){
+  final Widget subscription = button("Account", (){
     game.dialog.value = Dialogs.Subscription;
   },
       width: style.buttonWidth,

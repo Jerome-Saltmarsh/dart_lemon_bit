@@ -112,10 +112,10 @@ ${_gcpProjectIdEnvironmentVariables.join('\n')}
     final document = Document(
         createTime: _getTimestampNow(),
         fields: {
-          'stripe_customer_id': Value(stringValue: userIdStripe),
-          'sub_exp': Value(timestampValue: _getTimeStampOneMonth()),
+          fieldNames.stripeCustomerId: Value(stringValue: userIdStripe),
+          fieldNames.subscriptionExpirationDate: Value(timestampValue: _getTimeStampOneMonth()),
           if (email != null)
-            'email': Value(stringValue: email),
+            fieldNames.email: Value(stringValue: email),
         }
     );
 
@@ -146,3 +146,14 @@ const _monthsPerYear = 12;
 const _hoursPerYear = 8760;
 
 const _oneSecond = Duration(seconds: 1);
+
+
+final _FieldNames fieldNames = _FieldNames();
+
+class _FieldNames {
+  final String subscriptionExpirationDate = "subscription_expiration_date";
+  final String subscriptionStatus = "subscription_status";
+  final String error = "error";
+  final String stripeCustomerId = 'stripe_customer_id';
+  final String email = 'email';
+}

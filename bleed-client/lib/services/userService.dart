@@ -46,3 +46,11 @@ Future<DateTime?> getUserSubscriptionExpiration(String userId) async {
   print('Request failed with status: ${response.statusCode}.');
   return null;
 }
+
+class Account {
+  final String userId;
+  final DateTime? subscription;
+  final String displayName;
+
+  Account(this.userId, this.subscription, this.displayName);
+}

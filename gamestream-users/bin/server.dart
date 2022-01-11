@@ -2,10 +2,10 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:gamestream_users/firestore.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 
-import '../firestore/firestore.dart';
 
 // gcloud builds submit --tag gcr.io/gogameserver/rest-server
 // https://stripe.com/docs/webhooks
@@ -44,37 +44,60 @@ FutureOr<Response> handleRequest(Request request) async {
       }
       final user = await firestore.findUserById(id);
       final Json response = Json();
+      response['id'] = id;
       if (user == null){
-        response['status'] = 'user_not_found';
-        response['message'] = 'user with id $id could not be found';
-        return ok(response);
+        return error(response, 'not_found');
       }
+
       final fields = user.fields;
-
       if (fields == null){
-        response['status'] = 'error';
-        response['reason'] = 'no_fields';
-        response['message'] = 'user with id $id was found however had no fields';
+        return error(response, 'fields_null');
+      }
+
+      if (fields.isEmpty){
+        return error(response, 'fields_empty');
+      }
+
+      final displayName = fields['display_name'];
+      if (displayName != null){
+        response['display_name'] = displayName.stringValue;
+      }
+
+      final subscriptionExpires = fields[fieldNames.subscriptionExpirationDate];
+      if (subscriptionExpires == null){
+        response[fieldNames.subscriptionStatus] = 'not_subscribed';
         return ok(response);
       }
 
-      final subExp = fields['sub_exp'];
-      if (subExp == null){
-        response['status'] = 'error';
-        response['reason'] = 'no_sub_exp_field';
-        response['message'] = 'user with id $id was found does not have a sub_exp field';
-        return ok(response);
+      final timestampValue = subscriptionExpires.timestampValue;
+      if (timestampValue == null) {
+        return error(response, 'subscription_expiration_timestamp_is_null');
       }
 
-      response['sub_exp'] = subExp.timestampValue;
-      response['status'] = 'success';
+      response[fieldNames.subscriptionExpirationDate] = timestampValue;
+
+      final date = DateTime.tryParse(timestampValue);
+      if (date == null) {
+        return error(response, 'subscription_timestamp_parse_error');
+      }
+
+      response[fieldNames.subscriptionStatus] = isExpired(date) ? 'expired' : 'active';
       return ok(response);
     default:
       return Response.notFound('Cannot handle request "${request.url}"', headers: headersTextPlain);
   }
 }
 
+bool isExpired(DateTime value){
+  return DateTime.now().toUtc().isAfter(value);
+}
+
 Response ok(response){
+  return Response.ok(jsonEncode(response), headers: headersJson);
+}
+
+Response error(response, String error){
+  response['error'] = error;
   return Response.ok(jsonEncode(response), headers: headersJson);
 }
 

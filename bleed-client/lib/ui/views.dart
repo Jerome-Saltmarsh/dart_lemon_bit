@@ -267,6 +267,8 @@ Widget buildView(BuildContext context) {
                                         ],
                                       ),
                                       height32,
+                                      text("Display Name"),
+                                      height32,
                                       text("Name"),
                                       text(auth.displayName),
                                       height16,
