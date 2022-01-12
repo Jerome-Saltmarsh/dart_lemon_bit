@@ -26,6 +26,8 @@ import '../styles.dart';
 import '../toString.dart';
 import 'compose/hudUI.dart';
 
+final closeDialogButton = button("close", setDialogGames, borderColor: colours.none);
+
 final _Widgets widgets = _Widgets();
 final _Buttons buttons = _Buttons();
 final _Logos logos = _Logos();
@@ -55,7 +57,7 @@ class _BuildDialog {
         child: Column(
           children: [
             height16,
-            text("Hero", fontSize: 30),
+            text("Hero", size: 30),
             height16,
             ...playableCharacterTypes.map((characterType) {
               return mouseOver(
@@ -70,7 +72,7 @@ class _BuildDialog {
                       child: Container(
                         width: 200,
                         child: text(characterTypeToString(characterType),
-                            fontSize: fontSize),
+                            size: fontSize),
                       ),
                     ),
                   );
@@ -127,7 +129,7 @@ class _Buttons {
     mainAxisAlignment: axis.main.center,
     children: [
       width16,
-      text("LOGIN", fontSize: 20, fontWeight: bold),
+      text("LOGIN", size: 20, weight: bold),
       width16,
       _iconLogin,
     ],
@@ -297,7 +299,7 @@ class _Buttons {
     return onHover((bool hovering){
 
       final currentRegion  =   button(
-        text(enumString(region), fontSize: 20),
+        text(enumString(region), size: 20),
         (){},
         width: style.buttonWidth,
         height: style.buttonHeight * goldenRatioInverse,
@@ -318,7 +320,7 @@ class _Buttons {
             ...selectableRegions.map((value) {
               final bool selected = region == value;
 
-            return button(text(enumString(value), fontWeight: selected ? bold : FontWeight.normal), (){
+            return button(text(enumString(value), weight: selected ? bold : FontWeight.normal), (){
               game.region.value = value;
             },
               fillColorMouseOver: selected ? colours.green : colours.none,

@@ -55,7 +55,7 @@ Widget buildLoginDialog() {
           child: Column(
             crossAxisAlignment: axis.cross.start,
             children: [
-              text("Sign in", fontWeight: bold, fontSize: 25),
+              text("Sign in", weight: bold, size: 25),
               height32,
               buttons.signInWithGoogleB,
               height16,
@@ -210,7 +210,7 @@ Widget buildView(BuildContext context) {
                                 child: layout(child: Column(
                                   crossAxisAlignment: axis.cross.start,
                                   children: [
-                                    text("Welcome $name", fontSize: 20, fontWeight: bold),
+                                    text("Welcome $name", size: 20, weight: bold),
                                     height16,
                                     text("Thank you very much for subscribing to gamestream"),
                                   ],
@@ -223,14 +223,28 @@ Widget buildView(BuildContext context) {
 
                           case Dialogs.Change_Region:
                             return dialog(
+                              padding: 16,
+                              borderColor: colours.none,
+                              color: colours.white05,
                               child: layout(
-                                bottomRight: text("Close", onPressed: (){
-                                  game.dialog.value = Dialogs.Games;
-                                }),
+                                bottomRight: closeDialogButton,
                                 child: Column(
-                                  children: selectableRegions.map((e){
-                                    return text(enumString(e));
-                                  }).toList(),
+                                  crossAxisAlignment: axis.cross.start,
+                                  children: [
+                                    border(
+                                        color: colours.white60,
+                                        child: text("For best performance select the region which is nearest to you", color: colours.white60, italic: true)),
+                                    height32,
+                                    ...selectableRegions.map((region){
+                                    return button(enumString(region), (){
+                                      game.region.value = region;
+                                      setDialogGames();
+                                    },
+                                        fillColor: region == game.region.value ? colours.black20 : colours.white05,
+                                        borderColor: colours.none,
+                                        fillColorMouseOver: colours.green,
+                                        margin: const EdgeInsets.only(bottom: 8));
+                                  }).toList()],
                                 )
                               )
                             );
@@ -249,7 +263,7 @@ Widget buildView(BuildContext context) {
                                   controller: nameController,
                                 ),
                                 bottomLeft: button("Save", (){}),
-                                bottomRight: text("Cancel"),
+                                bottomRight: button("Cancel", setDialogGames, borderColor: colours.none),
                               ),
                             );
 
@@ -291,7 +305,7 @@ Widget buildView(BuildContext context) {
                                     hint: "If you decide to cancel your subscription you will continue to be able to play premium games until $formattedSubscription",
                                     borderColor: colours.none,
                                 fillColor: colours.red),
-                                  bottomRight: button(text('close', fontWeight: bold), () {
+                                  bottomRight: button(text('close', weight: bold), () {
                                     game.dialog.value = Dialogs.Games;
                                   }, fillColor: colours.none,
 
@@ -300,8 +314,8 @@ Widget buildView(BuildContext context) {
                                     crossAxisAlignment: axis.cross.start,
                                     children: [
                                       text("ACCOUNT",
-                                          fontSize: 30,
-                                          fontWeight: bold),
+                                          size: 30,
+                                          weight: bold),
                                       height32,
                                       text("Public Name"),
                                       WatchBuilder(_editingName, (editing){
@@ -389,19 +403,19 @@ Widget buildView(BuildContext context) {
 
                               bool isFreeToPlay = freeToPlay.contains(gameType);
 
-                              final playButton = button(text("Play", fontSize: 25, fontWeight: bold),
+                              final playButton = button(text("Play", size: 25, weight: bold),
                                   logic.connectToSelectedGame,
                                   fillColor: colours.green,
                                   borderWidth: 2
                               );
 
-                              final loginButton = button(text("Play", fontSize: 25, fontWeight: bold),
+                              final loginButton = button(text("Play", size: 25, weight: bold),
                                   logic.showDialogLogin,
                                   fillColor: colours.green,
                                   borderWidth: 2
                               );
 
-                              final subscribeButton = button(text("Subscribe", fontSize: 25, fontWeight: bold),
+                              final subscribeButton = button(text("Subscribe", size: 25, weight: bold),
                                   logic.connectToSelectedGame,
                                   fillColor: colours.green,
                                   borderWidth: 2
@@ -415,7 +429,7 @@ Widget buildView(BuildContext context) {
                                   width: 300 * goldenRatio,
                                   child: layout(
                                     topRight: Tooltip(
-                                      message: "The region determines which server you connect to. The distance of a server may greatly impact your gameplay experience",
+                                      message: "Change Region",
                                       child: text(enumString(game.region.value),color: colours.white60, onPressed: (){
                                         game.dialog.value = Dialogs.Change_Region;
                                       }),
@@ -434,7 +448,7 @@ Widget buildView(BuildContext context) {
                                   child: Column(
                                     crossAxisAlignment: axis.cross.start,
                                     children: [
-                                      text(gameTypeNames[gameType], fontSize: 25),
+                                      text(gameTypeNames[gameType], size: 25),
                                       height32,
                                       if (!isFreeToPlay && !authenticated)
                                         border(child: text(
@@ -496,7 +510,7 @@ class _BuildView {
       return center(Column(
         mainAxisAlignment: axis.main.center,
         children: [
-          text(connectionMessage[value], fontSize: 25),
+          text(connectionMessage[value], size: 25),
           height16,
           button("Cancel", () {
             logic.exit();
@@ -553,7 +567,7 @@ class _BuildView {
           child: Column(
         crossAxisAlignment: axis.cross.start,
         children: [
-          text('${authorization.displayName}`s Account', fontSize: 25),
+          text('${authorization.displayName}`s Account', size: 25),
           text("Card Number"),
           Container(width: 250, child: TextField()),
           button('Subscribe', () {}),
@@ -575,7 +589,7 @@ class _BuildView {
                 children: [
                   Container(
                       child: text("SELECT REGION",
-                          fontSize: 50, fontWeight: bold)),
+                          size: 50, weight: bold)),
                   height16,
                   ...selectableServerTypes.map(_buildSelectRegionButton)
                 ]),
@@ -613,7 +627,7 @@ class _BuildView {
                     mainAxisAlignment: axis.main.apart,
                     children: [
                       text(enumString(game.type.value),
-                          fontSize: 35, fontWeight: FontWeight.bold),
+                          size: 35, weight: FontWeight.bold),
                       // button(text("Cancel", fontSize: 20), logic.leaveLobby, borderWidth: 3, fillColor: colours.orange, fillColorMouseOver: colours.redDark),
                     ],
                   ),
@@ -631,7 +645,7 @@ class _BuildView {
 
                       for (int i = 0; i < game.lobby.players.length; i++) {
                         playerNames
-                            .add(text(game.lobby.players[i].name, fontSize: 20));
+                            .add(text(game.lobby.players[i].name, size: 20));
                       }
                       for (int i = 0;
                           i <
@@ -646,7 +660,7 @@ class _BuildView {
                           text(
                               "Players ${game.lobby.players.length} / $totalPlayersRequired",
                               decoration: underline,
-                              fontSize: 22),
+                              size: 22),
                           height8,
                           ...playerNames
                         ],
@@ -725,7 +739,7 @@ Widget _buildSelectRegionButton(Region region) {
   return button(
     text(
       enumString(region),
-      fontSize: 25,
+      size: 25,
       // fontWeight: FontWeight.bold
     ),
     () {

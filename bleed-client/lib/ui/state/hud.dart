@@ -145,7 +145,7 @@ Positioned _buildRespawnLight() {
                       hud.state.observeMode = false;
                     },
                     child: border(
-                        child: text("Respawn", fontSize: 30),
+                        child: text("Respawn", size: 30),
                         padding: padding8,
                         radius: borderRadius4))
               ]),
@@ -206,7 +206,7 @@ Widget _buildViewRespawn() {
                       padding: padding8,
                       child: text("BLEED beta v1.0.0")),
                   height16,
-                  text("YOU DIED", fontSize: 30, decoration: underline),
+                  text("YOU DIED", size: 30, decoration: underline),
                   height16,
                   Container(
                     padding: padding16,
@@ -297,7 +297,7 @@ Widget _buildViewRespawn() {
                               child: border(
                                   child: text(
                                     "RESPAWN",
-                                    fontWeight: bold,
+                                    weight: bold,
                                   ),
                                   padding: padding16,
                                   radius: borderRadius4,

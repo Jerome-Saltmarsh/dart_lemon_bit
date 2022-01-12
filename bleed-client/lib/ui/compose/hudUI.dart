@@ -81,7 +81,7 @@ Widget buildSkillsButton() {
             color: Colors.white,
             fillColor: Colors.black45,
             padding: padding4,
-            child: text("Points $value", color: Colors.white, fontSize: 20)));
+            child: text("Points $value", color: Colors.white, size: 20)));
   });
 }
 
@@ -639,7 +639,7 @@ Widget buildLowAmmo() {
                     game.player.weaponRounds.value == 0
                         ? "Empty"
                         : "Low Ammo",
-                    fontSize: 20)),
+                    size: 20)),
           ],
         ),
       ));
@@ -650,7 +650,7 @@ Widget buildTag(dynamic value, {Color color = Colors.white}) {
       width: 40,
       height: 30,
       alignment: Alignment.center,
-      child: text(value, fontWeight: FontWeight.bold, color: color));
+      child: text(value, weight: FontWeight.bold, color: color));
 }
 
 Widget buildMessageBox(String message) {
@@ -664,7 +664,7 @@ Widget buildMessageBox(String message) {
             Container(
                 padding: padding8,
                 color: Colors.black26,
-                child: text(message, fontSize: 20)),
+                child: text(message, size: 20)),
           ],
         ),
       ));

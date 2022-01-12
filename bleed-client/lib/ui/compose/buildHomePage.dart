@@ -14,7 +14,7 @@ Widget games = Column(
       final Widget type =
           Container(width: 160, child: text(enumString(value).toUpperCase()));
       final Widget joinButton = button(
-          text(gameTypeNames[value], fontSize: 20, fontWeight: FontWeight.bold),
+          text(gameTypeNames[value], size: 20, weight: FontWeight.bold),
           () {
         game.type.value = value;
       }, width: _buttonWidth, borderWidth: 3);

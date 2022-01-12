@@ -42,7 +42,7 @@ class _Build {
               },
               child: mouseOver(builder: (BuildContext context, bool mouseOver) {
                 return border(
-                  child: text("+", fontSize: 25),
+                  child: text("+", size: 25),
                   color: Colors.white,
                   fillColor: mouseOver ? Colors.white54 : Colors.white12,
                   padding: EdgeInsets.symmetric(horizontal: 5),
@@ -218,9 +218,9 @@ class _Build {
   Widget title(){
 
     final _text = text("GAMESTREAM",
-        fontSize: 60,
+        size: 60,
         color: Colors.white,
-        fontFamily: assets.fonts.libreBarcode39Text
+        family: assets.fonts.libreBarcode39Text
     );
 
     // return _text;
@@ -236,7 +236,7 @@ class _Build {
   Widget titleStandard(){
     return border(
         child: text("GAMESTREAM.ONLINE",
-          fontSize: 30,
+          size: 30,
         ),
         borderWidth: 6,
         radius: const BorderRadius.only(topLeft: radius4, bottomLeft: radius4)
@@ -255,7 +255,7 @@ class _Build {
               index++;
               final Widget type = text(enumString(value).toUpperCase());
               final Widget joinButton = button(
-                  text('$index. ${gameTypeNames[value]}', fontSize: 20, fontWeight: FontWeight.bold),
+                  text('$index. ${gameTypeNames[value]}', size: 20, weight: FontWeight.bold),
                       () {
                     game.type.value = value;
                   }, width: _buttonWidth, borderWidth: 3,

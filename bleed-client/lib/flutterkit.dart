@@ -9,21 +9,23 @@ import 'package:flutter/widgets.dart';
 import 'package:lemon_engine/state/screen.dart';
 
 Widget text(dynamic value, {
-    fontSize = 18,
+    size = 18,
     GestureTapCallback? onPressed,
     TextDecoration decoration = TextDecoration.none,
-    FontWeight fontWeight = normal,
+    FontWeight weight = normal,
+    bool italic = false,
     Color color = white,
-    String? fontFamily,
+    String? family,
 }) {
   final Widget _text = Text(
       value.toString(),
       style: TextStyle(
           color: color,
-          fontSize: fontSize,
+          fontSize: size,
           decoration: decoration,
-          fontWeight: fontWeight,
-          fontFamily: fontFamily
+          fontWeight: weight,
+          fontFamily: family,
+          fontStyle: italic ? FontStyle.italic : FontStyle.normal
       )
   );
 
@@ -97,7 +99,7 @@ Widget button(dynamic value, Function onPressed, {
             margin: margin,
             radius: borderRadius,
             borderWidth: borderWidth,
-            child: value is Widget ? value : text(value, fontSize: fontSize),
+            child: value is Widget ? value : text(value, size: fontSize),
             color: mouseOver ? borderColorMouseOver : borderColor,
             fillColor: mouseOver ? fillColorMouseOver : fillColor,
             width: width,
