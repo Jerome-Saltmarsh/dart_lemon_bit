@@ -288,6 +288,11 @@ Widget buildIconEdit({
       image: decorationImages.edit, width: size, height: size, borderWidth: 0);
 }
 
+final playIcon = buildDecorationImage(
+    color: colours.none,
+    image: decorationImages.play, width: 40, height: 40, borderWidth: 0);
+
+
 void toggleDebugMode() {
   game.settings.compilePaths = !game.settings.compilePaths;
   sendRequestSetCompilePaths(game.settings.compilePaths);

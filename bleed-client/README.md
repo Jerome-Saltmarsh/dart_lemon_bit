@@ -145,9 +145,11 @@
 [ ] Objects culled at bottom of screen  
 [SUBSCRIPTION]
 [ ] Sign in with Facebook
-[ ] Cancel Subscription 
 [ ] Live subscription  
 [ ] Display Name  
+[ ] Design Games List View
+[ ] Show youtube video of game in preview  
+[ ] Cancel Subscription
 [x] When a subscription is made it must be saved to a cloud database
 [x] When a player enters a premium game it must check their subscription  
 [x] WS server should restfully call the subscription service  
@@ -315,8 +317,8 @@
 [x] Collect Sniper Rifle
 [x] Rebuilding the ui unnecessarily is extremely expensive
 [x] Improve Connection screen 
-    [x] Add cancel button
-    [x] Show animation
+[x] Add cancel button
+[x] Show animation
 [x] Multiple pistol shot audios
 [x] How do players acquire more grenades?
 [x] How do players acquire more ammo?

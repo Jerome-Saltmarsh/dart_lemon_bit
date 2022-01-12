@@ -253,61 +253,59 @@ class _Build {
           children: [
             ...selectableGameTypes.map((GameType value) {
               index++;
-              final Widget type = text(enumString(value).toUpperCase(), color: colours.white618);
-              final Widget joinButton = button(
-                  text('$index. ${gameTypeNames[value]}', size: 20, weight: FontWeight.bold, color: colours.white80),
-                      () {
-                    game.type.value = value;
-                  },
-                borderColor: colours.none,
-                width: _buttonWidth, borderWidth: 3,
-                alignment: Alignment.centerLeft,
-                fillColor: colours.black05,
+              final Widget type = text(enumString(value).toUpperCase(), color: colours.white618, size: 16);
+              final Widget joinButton = text(gameTypeNames[value], size: 20, weight: FontWeight.bold, color: colours.white80);
 
-              );
-
-
-              return Container(
-                margin: const EdgeInsets.only(bottom: 16),
-                color: colours.white05,
-                width: 600,
-                child: onPressed(
-                  callback: (){
-                    game.type.value = value;
-                  },
-                  child: Row(
-                    mainAxisAlignment: axis.main.center,
-                    crossAxisAlignment: axis.cross.start,
-                    children: [
-                      Container(
-                        width: 180,
-                        height: 111,
-                        decoration: BoxDecoration(
-                          image: gameTypeDecorationImage[value] ?? decorationImages.royal,
-                        ),
-                      ),
-                      Row(
-                        mainAxisAlignment: axis.main.apart,
-                        crossAxisAlignment: axis.cross.start,
+              return onHover((hovering){
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 16),
+                  color: colours.white05,
+                  width: 600,
+                  child: onPressed(
+                    callback: (){
+                      game.type.value = value;
+                    },
+                    child: border(
+                      color: hovering ? colours.white05 : colours.none,
+                      borderWidth: 3,
+                      child: Row(
+                        crossAxisAlignment: axis.cross.center,
                         children: [
-                          Column(
-                            crossAxisAlignment: axis.cross.end,
+                          Stack(
                             children: [
-                              joinButton,
-                              height8,
-                              type,
+                              Container(
+                                width: 180,
+                                height: 111,
+                                decoration: BoxDecoration(
+                                  image: gameTypeDecorationImage[value] ?? decorationImages.royal,
+                                ),
+                              ),
+                              if (hovering)
+                              Positioned(
+                                  left: 70,
+                                  height: 100,
+                                  child: playIcon),
                             ],
                           ),
-                          if (!subscriptionActive && freeToPlay.contains(value))
-                            Container(child: text("FREE"), margin: EdgeInsets.only(left: 8),),
-                          if (!subscriptionActive && !freeToPlay.contains(value))
-                            Container(child: text("PREMIUM"), margin: EdgeInsets.only(left: 8),),
+                          width8,
+                          // Expanded(
+                          //   child: Row(
+                          //     mainAxisAlignment: axis.main.apart,
+                          //     crossAxisAlignment: axis.cross.start,
+                          //     children: [
+                          //       joinButton,
+                          //       type,
+                          //     ],
+                          //   ),
+                          // )
+                          Expanded(child: Center(child: joinButton)),
                         ],
-                      )
-                    ],
+                      ),
+                    ),
                   ),
-                ),
-              );
+                );
+              });
+
             }).toList()
           ],
         ),

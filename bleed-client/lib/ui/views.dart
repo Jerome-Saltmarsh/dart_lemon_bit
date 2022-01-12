@@ -413,7 +413,7 @@ Widget buildView(BuildContext context) {
 
                               );
 
-                              final loginButton = button(text("Play", size: 25, weight: bold),
+                              final loginButton = button(text("Login", size: 25, weight: bold),
                                   logic.showDialogLogin,
                                   fillColor: colours.green,
                                   borderWidth: 2

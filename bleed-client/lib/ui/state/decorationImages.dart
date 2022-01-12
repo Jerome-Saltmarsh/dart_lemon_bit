@@ -18,6 +18,7 @@ final _DecorationImages decorationImages = _DecorationImages();
 
 class _DecorationImages {
   DecorationImage edit = _png('icons/icon-edit');
+  DecorationImage play = _png('icons/icon-play');
   DecorationImage fullscreen = _png('icon fullscreen');
   DecorationImage google = _png('icons/google_logo');
   DecorationImage facebook = _png('icons/icon-facebook');
