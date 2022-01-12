@@ -253,14 +253,17 @@ class _Build {
           children: [
             ...selectableGameTypes.map((GameType value) {
               index++;
-              final Widget type = text(enumString(value).toUpperCase());
+              final Widget type = text(enumString(value).toUpperCase(), color: colours.white618);
               final Widget joinButton = button(
-                  text('$index. ${gameTypeNames[value]}', size: 20, weight: FontWeight.bold),
+                  text('$index. ${gameTypeNames[value]}', size: 20, weight: FontWeight.bold, color: colours.white80),
                       () {
                     game.type.value = value;
-                  }, width: _buttonWidth, borderWidth: 3,
+                  },
+                borderColor: colours.none,
+                width: _buttonWidth, borderWidth: 3,
                 alignment: Alignment.centerLeft,
                 fillColor: colours.black05,
+
               );
 
 
@@ -270,7 +273,7 @@ class _Build {
                 width: 600,
                 child: onPressed(
                   callback: (){
-                    logic.play(value);
+                    game.type.value = value;
                   },
                   child: Row(
                     mainAxisAlignment: axis.main.center,

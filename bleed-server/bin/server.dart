@@ -399,10 +399,10 @@ void main() {
               }
               final playerId = arguments[2];
               userService.getAccount(playerId).then((account){
-                if (account == null || !account.subscriptionActive) {
-                  return errorSubscriptionRequired();
+                if (account != null && account.displayName != null) {
+                  joinGameOpenWorld(playerName: account.displayName!);
                 }
-                joinGameOpenWorld(playerName: account.displayName ?? generateName());
+                joinGameOpenWorld(playerName: generateName());
               });
               break;
             case GameType.Moba:
