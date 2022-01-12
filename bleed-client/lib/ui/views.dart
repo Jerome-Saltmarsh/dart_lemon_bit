@@ -430,9 +430,11 @@ Widget buildView(BuildContext context) {
                                   child: layout(
                                     topRight: Tooltip(
                                       message: "Change Region",
-                                      child: text(enumString(game.region.value),color: colours.white60, onPressed: (){
+                                      child: button(text(enumString(game.region.value), color: colours.white80),(){
                                         game.dialog.value = Dialogs.Change_Region;
-                                      }),
+                                      },
+                                        borderColor: colours.none
+                                      ),
                                     ),
                                   bottomLeft: isFreeToPlay
                                       ? playButton
