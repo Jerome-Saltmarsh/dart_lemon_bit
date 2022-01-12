@@ -301,6 +301,7 @@ Widget buildView(BuildContext context) {
                               color: colours.white05,
                               borderColor: colours.none,
                               padding: 16,
+                              height: 450,
                               child: layout(
                                 bottomLeft: (subscriptionExpired)
                                     ? null
@@ -308,7 +309,7 @@ Widget buildView(BuildContext context) {
                                     hint: "If you decide to cancel your subscription you will continue to be able to play premium games until $formattedSubscription",
                                     borderColor: colours.none,
                                 fillColor: colours.red),
-                                  bottomRight: button(text('close', weight: bold), () {
+                                  bottomRight: button(text('back', weight: bold), () {
                                     game.dialog.value = Dialogs.Games;
                                   }, fillColor: colours.none,
 
