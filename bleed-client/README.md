@@ -149,9 +149,9 @@
 [ ] Sign up with email password  
 [ ] Live subscription  
 [ ] Display Name  
-[ ] Design Games List View
 [ ] Show youtube video of game in preview  
 [ ] Cancel Subscription
+[x] Design Games List View
 [x] When a subscription is made it must be saved to a cloud database
 [x] When a player enters a premium game it must check their subscription  
 [x] WS server should restfully call the subscription service  

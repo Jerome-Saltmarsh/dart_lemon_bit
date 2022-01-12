@@ -300,7 +300,7 @@ class _Build {
                           text(gameTypeNames[gameType],
                               size: hovering ? 25 : 20,
                               weight: FontWeight.bold,
-                              color: !subscriptionActive && freeToPlay.contains(gameType) ? colours.white80 : colours.white382
+                              color: subscriptionActive || freeToPlay.contains(gameType) ? colours.white80 : colours.white382
 
                           )
                           )),
