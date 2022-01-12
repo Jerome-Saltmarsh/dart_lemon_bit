@@ -223,6 +223,7 @@ Widget buildView(BuildContext context) {
 
                           case Dialogs.Change_Region:
                             return dialog(
+                              height: 500,
                               padding: 16,
                               borderColor: colours.none,
                               color: colours.white05,
@@ -233,7 +234,9 @@ Widget buildView(BuildContext context) {
                                   children: [
                                     border(
                                         color: colours.white60,
-                                        child: text("For best performance select the region which is nearest to you", color: colours.white60, italic: true)),
+                                        child: text("For best performance select the region which is nearest to you", color: colours.white60, italic: true,
+                                          size: 15,
+                                        )),
                                     height32,
                                     ...selectableRegions.map((region){
                                     return button(enumString(region), (){
@@ -430,10 +433,12 @@ Widget buildView(BuildContext context) {
                                   child: layout(
                                     topRight: Tooltip(
                                       message: "Change Region",
-                                      child: button(text(enumString(game.region.value), color: colours.white80),(){
+                                      child: button(text(enumString(game.region.value),
+                                          color: colours.white80),(){
                                         game.dialog.value = Dialogs.Change_Region;
                                       },
-                                        borderColor: colours.none
+                                        borderColor: colours.none,
+                                          fillColor: colours.black20,
                                       ),
                                     ),
                                   bottomLeft: isFreeToPlay
