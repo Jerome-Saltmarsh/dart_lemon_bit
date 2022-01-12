@@ -233,7 +233,7 @@ Widget buildView(BuildContext context) {
                                   crossAxisAlignment: axis.cross.start,
                                   children: [
                                     border(
-                                        color: colours.white60,
+                                        color: colours.white618,
                                         child: text("For best performance select the region which is nearest to you", color: colours.white60, italic: true,
                                           size: 15,
                                         )),
@@ -406,10 +406,11 @@ Widget buildView(BuildContext context) {
 
                               bool isFreeToPlay = freeToPlay.contains(gameType);
 
-                              final playButton = button(text("Play", size: 25, weight: bold),
+                              final playButton = button(text("Play", size: 25, weight: bold, color: colours.white80),
                                   logic.connectToSelectedGame,
-                                  fillColor: colours.green,
-                                  borderWidth: 2
+                                  borderWidth: 2,
+                                  borderColor: colours.white618
+
                               );
 
                               final loginButton = button(text("Play", size: 25, weight: bold),
@@ -448,14 +449,14 @@ Widget buildView(BuildContext context) {
                                         : !subscriptionActive
                                           ? subscribeButton
                                           : playButton,
-                                  bottomRight: button("No Thanks", logic.deselectGameType,
+                                  bottomRight: button(text("Back", color: colours.white618), logic.deselectGameType,
                                       fillColor: colours.none,
                                       borderColor: colours.none,
                                   ),
                                   child: Column(
                                     crossAxisAlignment: axis.cross.start,
                                     children: [
-                                      text(gameTypeNames[gameType], size: 25),
+                                      text(gameTypeNames[gameType], size: 25, color: colours.white80),
                                       height32,
                                       if (!isFreeToPlay && !authenticated)
                                         border(child: text(
