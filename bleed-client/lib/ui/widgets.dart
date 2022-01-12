@@ -136,9 +136,10 @@ class _Buttons {
   ), (){
       game.dialog.value = Dialogs.Login;
   }, width: style.buttonWidth, height: style.buttonHeight, borderWidth: 3,
-    fillColor: colours.green,
-    borderColor: colours.green,
+    fillColor: colours.none,
+    borderColor: colours.none,
     fillColorMouseOver: colours.green,
+    borderColorMouseOver: colours.green,
     borderRadius: borderRadius2,
   );
 

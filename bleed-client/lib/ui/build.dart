@@ -260,7 +260,7 @@ class _Build {
                 return Container(
                   margin: const EdgeInsets.only(bottom: 16),
                   color: colours.white05,
-                  width: 600,
+                  width: 500,
                   child: onPressed(
                     callback: (){
                       game.type.value = value;
