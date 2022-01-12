@@ -46,7 +46,7 @@ Widget buildLoginDialog() {
       borderWidth: 3,
       child: layout(
           bottomLeft: button("Sign up", (){}),
-          bottomRight: button("No Thanks", () {
+          bottomRight: button("Back", () {
             game.dialog.value = Dialogs.Games;
           }, fillColor: colours.none,
             borderColor: colours.none,

@@ -145,6 +145,8 @@
 [ ] Objects culled at bottom of screen  
 [SUBSCRIPTION]
 [ ] Sign in with Facebook
+[ ] Sign in with email password
+[ ] Sign up with email password  
 [ ] Live subscription  
 [ ] Display Name  
 [ ] Design Games List View

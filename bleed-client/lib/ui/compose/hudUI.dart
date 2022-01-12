@@ -290,7 +290,7 @@ Widget buildIconEdit({
 
 final playIcon = buildDecorationImage(
     color: colours.none,
-    image: decorationImages.play, width: 40, height: 40, borderWidth: 0);
+    image: decorationImages.play, width: 60, height: 60, borderWidth: 0);
 
 
 void toggleDebugMode() {

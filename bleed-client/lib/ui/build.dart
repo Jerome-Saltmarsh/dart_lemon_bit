@@ -251,10 +251,17 @@ class _Build {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            ...selectableGameTypes.map((GameType value) {
+            ...selectableGameTypes.map((GameType gameType) {
               index++;
-              final Widget type = text(enumString(value).toUpperCase(), color: colours.white618, size: 16);
-              final Widget joinButton = text(gameTypeNames[value], size: 20, weight: FontWeight.bold, color: colours.white80);
+              final Widget type = text(enumString(gameType).toUpperCase(), color: colours.white618, size: 16);
+              // final Widget joinButton = text(gameTypeNames[gameType],
+              //     size: 20,
+              //     weight: FontWeight.bold,
+              //     color: !subscriptionActive && freeToPlay.contains(gameType) ? colours.white80 : colours.white382
+              //
+              // );
+
+              final subRequired = !subscriptionActive && !freeToPlay.contains(type);
 
               return onHover((hovering){
                 return Container(
@@ -263,7 +270,7 @@ class _Build {
                   width: 500,
                   child: onPressed(
                     callback: (){
-                      game.type.value = value;
+                      game.type.value = gameType;
                     },
                     child: border(
                       color: hovering ? colours.white05 : colours.none,
@@ -277,28 +284,26 @@ class _Build {
                                 width: 180,
                                 height: 111,
                                 decoration: BoxDecoration(
-                                  image: gameTypeDecorationImage[value] ?? decorationImages.royal,
+                                  image: gameTypeDecorationImage[gameType] ?? decorationImages.royal,
                                 ),
                               ),
                               if (hovering)
                               Positioned(
-                                  left: 70,
+                                  left: 60,
                                   height: 100,
                                   child: playIcon),
                             ],
                           ),
                           width8,
-                          // Expanded(
-                          //   child: Row(
-                          //     mainAxisAlignment: axis.main.apart,
-                          //     crossAxisAlignment: axis.cross.start,
-                          //     children: [
-                          //       joinButton,
-                          //       type,
-                          //     ],
-                          //   ),
-                          // )
-                          Expanded(child: Center(child: joinButton)),
+                          Expanded(child: Center(child:
+
+                          text(gameTypeNames[gameType],
+                              size: hovering ? 25 : 20,
+                              weight: FontWeight.bold,
+                              color: !subscriptionActive && freeToPlay.contains(gameType) ? colours.white80 : colours.white382
+
+                          )
+                          )),
                         ],
                       ),
                     ),
