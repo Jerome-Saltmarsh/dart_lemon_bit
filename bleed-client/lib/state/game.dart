@@ -38,8 +38,16 @@ void setDialogGames(){
   setDialog(Dialogs.Games);
 }
 
+enum LoginStatus {
+  Logged_Out,
+  Logging_In,
+  Creating_Account,
+  Logged_In,
+  Logging_Out,
+}
+
 class _Game {
-  final Watch<bool> signingIn = Watch(false);
+  final Watch<LoginStatus> signingIn = Watch(LoginStatus.Logged_Out);
   final Watch<Account?> account = Watch(null);
   final Watch<Dialogs> dialog = Watch(Dialogs.Games);
   final Watch<Mode> mode = Watch(Mode.Play);

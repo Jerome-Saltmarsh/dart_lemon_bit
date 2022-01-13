@@ -75,9 +75,9 @@ Widget buildView(BuildContext context) {
     return NullableWatchBuilder<Authentication?>(authentication, (Authentication? auth){
       final bool authenticated = auth != null;
 
-      return WatchBuilder(game.signingIn, (bool signingIn){
+      return WatchBuilder(game.signingIn, (LoginStatus loginStatus){
 
-        if (signingIn){
+        if (loginStatus != LoginStatus.Logged_In && loginStatus != LoginStatus.Logged_Out){
           return layout(
             // topLeft: widgets.title,
             child: fullScreen(
@@ -85,7 +85,7 @@ Widget buildView(BuildContext context) {
                 mainAxisAlignment: axis.main.center,
                 children: [
                   AnimatedTextKit(repeatForever: true, animatedTexts: [
-                    RotateAnimatedText("Signing in to gamestream",
+                    RotateAnimatedText(enumString(loginStatus),
                         textStyle: TextStyle(color: Colors.white, fontSize: 45,
                           fontFamily: assets.fonts.libreBarcode39Text
                         )),
