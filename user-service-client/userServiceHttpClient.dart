@@ -2,31 +2,22 @@
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
-// var dio = Dio(
-//   BaseOptions(
-//     headers: {
-//       "Accept": "*/*",
-//       "Access-Control-Allow-Origin": "*",
-//     },
-//     baseUrl: "https://rest-server-37-osbmaezptq-ey.a.run.app",
-//
-//   )
-//
-// );
 
-final userService = UserServiceHttpClient("rest-server-42-osbmaezptq-ey.a.run.app");
+final userService = UserServiceHttpClient("rest-server-11-osbmaezptq-ey.a.run.app");
 
 class UserServiceHttpClient {
   final String _host;
 
   UserServiceHttpClient(this._host);
 
-  Future patchDisplayName({required String userId, required String displayName}) async {
+  Future<Map<String, dynamic>> patchDisplayName({required String userId, required String displayName}) async {
     print("patchDisplayName()");
     var url = Uri.https(_host, '/users', {'id': userId, 'display_name': displayName, 'method': 'patch'});
     final json = '{"title": "Hello"}';
-    await http.patch(url, body: json, headers: _headers);
+    final response = await http.patch(url, body: json, headers: _headers);
+    return jsonDecode(response.body);
   }
 
   Future createAccount({

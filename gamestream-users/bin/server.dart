@@ -48,6 +48,7 @@ FutureOr<Response> handleRequest(Request request) async {
       }
 
       if (method == 'FIND'){
+        return error(response, 'disabled');
         print("(server) handling find request");
         final displayName = params[fieldNames.displayName];
         if (displayName == null){
@@ -59,7 +60,6 @@ FutureOr<Response> handleRequest(Request request) async {
         }
         return ok(result.fields);
       }
-
 
       final id = params['id'];
       if (id == null) {
@@ -83,6 +83,11 @@ FutureOr<Response> handleRequest(Request request) async {
 
         if (displayName.length < 4){
           return error(response, 'display_name_too_short');
+        }
+
+        final existing = await firestore.findUser(displayName: displayName);
+        if (existing != null){
+          return error(response, 'display_name_already_taken');
         }
 
         await firestore.patchDisplayName(userId: id, displayName: displayName);

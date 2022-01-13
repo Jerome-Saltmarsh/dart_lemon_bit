@@ -59,16 +59,8 @@ class _Firestore {
     });
   }
 
-
   String getUserDocumentName(String value){
-    return buildDocumentName(projectId: _projectId, collection: _collectionName);
-  }
-
-  Future<CommitResponse> commit(CommitRequest request) {
-    return documents.commit(
-      request,
-      'projects/$_projectId/databases/(default)',
-    );
+    return '${buildDocumentName(projectId: _projectId, collection: _collectionName)}/$value';
   }
 
   Future<Document> patchDisplayName({

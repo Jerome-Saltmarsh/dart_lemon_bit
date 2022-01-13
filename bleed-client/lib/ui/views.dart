@@ -311,55 +311,102 @@ Widget buildView(BuildContext context) {
                                           weight: bold),
                                       height32,
                                       text("Public Name"),
-                                      WatchBuilder(_editingName, (editing){
-                                        return onHover((hovering) {
-                                          if (_editingName.value){
-                                            if (account.displayName != null) {
-                                              _nameController.text =
-                                              account.displayName!;
-                                            } else {
-                                              _nameController.text = "";
-                                            }
 
-                                            return Row(
-                                              children: [
-                                                Container(
-                                                    width: 200,
-                                                    child: TextField(
-                                                      style: TextStyle(color: colours.white80),
-                                                      controller: _nameController, cursorColor: colours.green,)),
-                                                button("Save", () async {
-                                                  _editingName.value = false;
-                                                  await userService.patchDisplayName(userId: account.userId, displayName: _nameController.text).catchError((error){
-                                                     // ignore
-                                                  });
-                                                  await refreshAccountDetails();
-                                                }),
-                                                width8,
-                                                button("cancel", (){
-                                                  _editingName.value = false;
-                                                }, borderColor: colours.none)
-                                              ],
-                                            );
-                                          }
+                                      Builder(
+                                        builder: (context) {
 
-                                          return Row(
-                                            children: [
-                                              text(account.displayName, color: colours.white60, onPressed: (){
-                                                _editingName.value = true;
-                                              }),
-                                              if (hovering) ...[
-                                                width8,
-                                                onPressed(
-                                                    child: buildIconEdit(),
-                                                    callback: () {
+                                          String? errorMessage;
+
+                                          return StatefulBuilder(
+                                              builder: (context, setState) {
+                                            return WatchBuilder(_editingName,
+                                                (editing) {
+                                              return onHover((hovering) {
+                                                if (_editingName.value) {
+                                                  if (account.displayName != null) {
+                                                    _nameController.text =
+                                                        account.displayName!;
+                                                  } else {
+                                                    _nameController.text = "";
+                                                  }
+
+                                                  return Column(
+                                                    children: [
+                                                      if (errorMessage != null)
+                                                        text(errorMessage, color: colours.red),
+                                                      Row(
+                                                        children: [
+                                                          Container(
+                                                              width: 200,
+                                                              child: TextField(
+                                                                style: TextStyle(
+                                                                    color: colours
+                                                                        .white80),
+                                                                controller:
+                                                                    _nameController,
+                                                                cursorColor:
+                                                                    colours.green,
+                                                              )),
+                                                          button("Save", () async {
+                                                            errorMessage = null;
+                                                            await userService
+                                                                .patchDisplayName(
+                                                                    userId:
+                                                                        account.userId,
+                                                                    displayName:
+                                                                        _nameController
+                                                                            .text)
+                                                                .then((response) {
+                                                              final error =
+                                                                  response['error'];
+
+                                                              if (error != null) {
+                                                                if (error ==
+                                                                    'display_name_already_taken') {
+                                                                  // pub
+                                                                }
+                                                              }
+                                                              _editingName.value =
+                                                                  false;
+                                                            }).catchError((error) {
+                                                              // pub and error occurred
+                                                            });
+                                                            await refreshAccountDetails();
+                                                          }),
+                                                          width8,
+                                                          button("cancel", () {
+                                                            errorMessage = null;
+                                                            _editingName.value = false;
+                                                          }, borderColor: colours.none)
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  );
+                                                }
+
+                                                return Row(
+                                                  children: [
+                                                    text(account.displayName,
+                                                        color: colours.white60,
+                                                        onPressed: () {
                                                       _editingName.value = true;
-                                                    })
-                                              ]
-                                            ],
-                                          );
-                                        });
-                                      }),
+                                                    }),
+                                                    if (hovering) ...[
+                                                      width8,
+                                                      onPressed(
+                                                          child: buildIconEdit(),
+                                                          callback: () {
+                                                            _editingName.value =
+                                                                true;
+                                                          })
+                                                    ]
+                                                  ],
+                                                );
+                                              });
+                                            });
+                                          });
+                                        }
+                                      ),
                                       height16,
                                       text("Name"),
                                       text(account.displayName ?? "None", color: colours.white60),
