@@ -227,7 +227,7 @@ Widget buildEditorUI() {
   );
 }
 
-final Widget _exitEditor = button("Exit", logic.toggleEditMode);
+final Widget _exitEditor = button("Exit", actions.toggleEditMode);
 
 final Widget _toolTabs = Builder(builder: (BuildContext context) {
   return WatchBuilder(editor.tab, (_ToolTab tab) {

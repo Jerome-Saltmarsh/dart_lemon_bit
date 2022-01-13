@@ -69,12 +69,15 @@ class UserServiceHttpClient {
           DateTime.parse(subscriptionExpirationDateString);
     }
 
+    final email = body[fieldNames.email];
+
     final displayName = body[fieldNames.displayName];
 
     return Account(
       userId: userId,
       subscriptionExpirationDate: subscriptionExpirationDate,
       displayName: displayName,
+      email: email,
     );
   }
 }
@@ -83,6 +86,7 @@ class Account {
   final String userId;
   final DateTime? subscriptionExpirationDate;
   final String? displayName;
+  final String? email;
 
   bool get subscriptionActive => subscriptionStatus == SubscriptionStatus.Active;
   bool get subscriptionExpired => subscriptionStatus == SubscriptionStatus.Expired;
@@ -95,7 +99,12 @@ class Account {
     return SubscriptionStatus.Active;
   }
 
-  Account({required this.userId, this.subscriptionExpirationDate, this.displayName});
+  Account({
+    required this.userId,
+    this.subscriptionExpirationDate,
+    this.displayName,
+    this.email
+  });
 }
 
 final _headers = {

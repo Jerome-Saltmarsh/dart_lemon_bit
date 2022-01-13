@@ -99,7 +99,7 @@ class _Widgets {
   final Widget settingsMenu = Column(
     children: [
       buttons.account,
-      buttons.subscription,
+      buttons.showDialogAccount,
       buttons.logout,
     ],
   );
@@ -222,7 +222,11 @@ class _Buttons {
   );
 
   final Widget account = button(_iconSettings, (){
-    game.dialog.value = Dialogs.Subscription;
+    if (game.dialog.value != Dialogs.Subscription){
+      game.dialog.value = Dialogs.Subscription;
+    }else{
+      game.dialog.value = Dialogs.Games;
+    }
   },
       height: style.buttonHeight,
       width: style.buttonWidth,
@@ -235,7 +239,11 @@ class _Buttons {
 
   Widget buildAccount(bool hovering){
     return button(_iconSettings, (){
-      game.dialog.value = Dialogs.Subscription;
+      if (game.dialog.value != Dialogs.Subscription){
+        game.dialog.value = Dialogs.Subscription;
+      }else{
+        game.dialog.value = Dialogs.Games;
+      }
     },
       height: style.buttonHeight,
       width: style.buttonWidth,
@@ -259,12 +267,12 @@ class _Buttons {
     );
   });
   final Widget subscribe =
-      button("Subscribe \$4.99", logic.openStripeCheckout,
+      button("Subscribe \$4.99", actions.openStripeCheckout,
           width: style.buttonWidth,
           height: style.buttonHeight,
       );
 
-  final Widget subscription = button("Account", (){
+  final Widget showDialogAccount = button("Account", (){
     game.dialog.value = Dialogs.Subscription;
   },
       width: style.buttonWidth,
@@ -276,23 +284,23 @@ class _Buttons {
     return mouseOver ? Column(
       children: [
         buttons.account,
-        buttons.subscription,
+        buttons.showDialogAccount,
         buttons.logout,
       ],
     ) : buttons.account;
   });
 
   final Widget debug = button("Debug", toggleDebugMode);
-  final Widget exit = button('Exit', logic.exit);
-  final Widget edit = button("Edit", logic.toggleEditMode);
-  final Widget editor = button("Editor", logic.openEditor);
-  final Widget register = button("Register", logic.openEditor);
+  final Widget exit = button('Exit', actions.exit);
+  final Widget edit = button("Edit", actions.toggleEditMode);
+  final Widget editor = button("Editor", actions.openEditor);
+  final Widget register = button("Register", actions.openEditor);
   final Widget changeCharacter = button("Change Hero", () {
     sendClientRequest(ClientRequest.Reset_Character_Type);
   });
   final Widget audio = WatchBuilder(game.settings.audioMuted, (bool audio) {
     return onPressed(
-        callback: logic.toggleAudio,
+        callback: actions.toggleAudio,
         child: border(child: text(audio ? "Audio On" : "Audio Off")));
   });
 

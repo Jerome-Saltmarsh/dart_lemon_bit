@@ -136,7 +136,7 @@ class Events {
 
   void _onGameTypeChanged(GameType type) {
     print('events.onGameTypeChanged($type)');
-    logic.clearSession();
+    actions.clearSession();
     camera.x = 0;
     camera.y = 0;
     zoom = 1;
@@ -180,7 +180,7 @@ class Events {
         break;
       case Connection.Done:
         fullScreenExit();
-        logic.clearSession();
+        actions.clearSession();
         game.status.value = GameStatus.None;
         mouseEvents.onLeftClicked.value = null;
         mouseEvents.onPanStarted.value = null;

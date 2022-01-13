@@ -13,7 +13,7 @@ import 'package:bleed_client/state/game.dart';
 
 import 'common/GameType.dart';
 
-final _Logic logic = _Logic();
+final _Logic actions = _Logic();
 
 class _Logic {
 
