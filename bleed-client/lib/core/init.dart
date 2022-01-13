@@ -112,7 +112,7 @@ void onPlayerWeaponChanged(WeaponType weapon) {
 }
 
 void initializeEventListeners() {
-  registerPlayKeyboardHandler();
+  // registerPlayKeyboardHandler();
   registerOnMouseScroll(onMouseScroll);
   webSocket.eventStream.stream.listen(_onEventReceivedFromServer);
   observeCompiledGame(onCompiledGameChanged);

@@ -252,6 +252,12 @@ Widget buildView(BuildContext context) {
                               )
                             );
 
+                          case Dialogs.Login_Error:
+                            return dialog(
+                              child: layout(child: text("Login Error"),
+                              bottomRight: backButton)
+                            );
+
                           case Dialogs.Change_Display_Name:
 
                             if (account != null && account.displayName != null){

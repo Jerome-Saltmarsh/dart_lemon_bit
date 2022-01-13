@@ -1,6 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -90,7 +90,10 @@ Future<String> signInWithEmailPassword(String email, String password) async {
 void signOut() async {
   print("signOut()");
   authentication.value = null;
-  await _auth.signOut();
+  await _auth.signOut().catchError((error){
+    print("Safely Caught");
+    print(error);
+  });
 }
 
 Future<FirebaseApp> _buildFirebaseApp(){

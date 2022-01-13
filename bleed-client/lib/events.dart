@@ -11,6 +11,7 @@ import 'package:bleed_client/logic.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
+import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
@@ -39,13 +40,28 @@ class Events {
     game.player.alive.onChanged(_onPlayerAliveChanged);
     game.status.onChanged(_onGameStatusChanged);
     game.mode.onChanged(_onGameModeChanged);
-    game.account.onChanged(onAccountChanged);
+    game.account.onChanged(_onAccountChanged);
+    game.dialog.onChanged(_onGameDialogChanged);
     mouseEvents.onLeftClicked.onChanged(_onMouseLeftClickedChanged);
     authentication.onChanged(_onAuthenticationChanged);
     sub(_onGameError);
+    sub(_onLoginException);
   }
 
-  void onAccountChanged(Account? value) {
+  void _onGameDialogChanged(Dialogs value){
+    print("onGameDialogChanged(${enumString(value)})");
+  }
+
+  Future _onLoginException(LoginException error) async {
+    print("onLoginException()");
+    signOut();
+
+    Future.delayed(Duration(seconds: 1), (){
+      game.dialog.value = Dialogs.Login_Error;
+    });
+  }
+
+  void _onAccountChanged(Account? value) {
     print("events.onAccountChanged($value)");
     if (value == null) return;
     if (!value.subscriptionActive) return;
@@ -91,10 +107,19 @@ class Events {
     print("events._onAuthorizationChanged()");
     if (value == null) {
       game.account.value = null;
+      game.signingIn.value = false;
       storage.forgetAuthorization();
     } else {
+
+      final email = value.email;
+
+      if (email == null){
+        throw Exception("authentication.email is null");
+      }
+
       storage.rememberAuthorization(value);
-      signInAccount(value.userId);
+      signInOrCreateAccount(userId: value.userId, email: email);
+
     }
     game.dialog.value = Dialogs.Games;
   }
@@ -149,6 +174,7 @@ class Events {
         mouseEvents.onPanStarted.value = performPrimaryAction;
         mouseEvents.onLongLeftClicked.value = performPrimaryAction;
         fullScreenEnter();
+        registerPlayKeyboardHandler();
         break;
       case Connection.Done:
         fullScreenExit();
@@ -159,6 +185,7 @@ class Events {
         mouseEvents.onLongLeftClicked.value = null;
         ui.drawCanvasAfterUpdate = true;
         cursorType.value = CursorType.Basic;
+        deregisterPlayKeyboardHandler();
         break;
       default:
         break;
@@ -216,10 +243,33 @@ class Events {
   }
 }
 
-void signInAccount(String userId) async {
+Future signInAccount(String userId) async {
   print("signInAccount()");
   game.signingIn.value = true;
   await refreshAccountDetails();
+  game.signingIn.value = false;
+}
+
+class LoginException implements Exception {
+  final Exception cause;
+  LoginException(this.cause);
+}
+
+Future signInOrCreateAccount({required String userId, required String email}) async {
+  print("signInOrCreateAccount()");
+  game.signingIn.value = true;
+  final account = await userService.findById(userId).catchError((error){
+    pub(LoginException(error));
+    throw error;
+  });
+  if (account == null){
+    print("No account found. Creating new account");
+    await userService.createAccount(userId: userId, email: email);
+    game.account.value = await userService.findById(userId);
+  }else{
+    print("Existing Account found");
+    game.account.value = account;
+  }
   game.signingIn.value = false;
 }
 
@@ -230,8 +280,9 @@ Future refreshAccountDetails() async {
     game.account.value = null;
     return;
   }
-  game.account.value = await userService.getAccount(auth.userId).catchError((error){
-    print(error);
-    return null;
+
+  game.account.value = await userService.findById(auth.userId).catchError((error){
+     pub(LoginException(error));
+     return null;
   });
 }

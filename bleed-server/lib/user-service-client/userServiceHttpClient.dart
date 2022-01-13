@@ -4,7 +4,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-final userService = UserServiceHttpClient("rest-server-30-osbmaezptq-ey.a.run.app");
+final userService = UserServiceHttpClient("rest-server-37-osbmaezptq-ey.a.run.app");
 
 class UserServiceHttpClient {
   final String _host;
@@ -15,25 +15,30 @@ class UserServiceHttpClient {
     print("patchDisplayName()");
     var url = Uri.https(_host, '/users', {'id': userId, 'display_name': displayName});
     final json = '{"title": "Hello"}';
-    await http.patch(url, body: json, headers: _headersJson);
+    await http.patch(url, body: json, headers: _headers);
   }
 
-  Future<Account?> getAccount(String userId) async {
-    print("getUserSubscriptionExpiration($userId)");
+  Future createAccount({
+    required String userId,
+    required String email
+  }) async {
+    print("createAccount");
+
+    var url = Uri.https(_host, '/users', {'id': userId, 'email': email});
+    await http.post(url, headers: _headers);
+  }
+
+  Future<Account?> findById(String userId) async {
+    print("getAccount()");
 
     if (userId.isEmpty) throw Exception("user is Empty");
 
-    var url = Uri.https(_host, '/users', {'id': userId});
+    var url = Uri.https(_host, '/users', {'id': userId, 'method': 'get'});
 
-    // Await the http get response, then decode the json-formatted response.
-    var response = await http.get(url, headers: _headers).catchError((error){
-      print(error);
-      throw error;
-    });
+    var response = await http.get(url, headers: _headers);
 
     if (response.statusCode != 200) {
-      print('Request failed with status: ${response.statusCode}.');
-      return null;
+      throw Exception('Request failed with status: ${response.statusCode}.');
     }
     var body = jsonDecode(response.body) as Map<String, dynamic>;
 
@@ -87,11 +92,6 @@ final _headers = {
   "Access-Control-Allow-Origin": "*",
 };
 
-final _headersJson = {
-  "Accept": "*/*",
-  "Access-Control-Allow-Origin": "*",
-};
-
 enum SubscriptionStatus{
   None,
   Active,
@@ -108,3 +108,12 @@ class _FieldNames {
   final String email = 'email';
   final String displayName = 'display_name';
 }
+
+
+// Future get(Uri url, ) async {
+//   final client = Client();
+//   final method = 'GET';
+//   final request = Request(method, url);
+//   final streamedResponse = await client.send(request);
+//   return await Response.fromStream(streamedResponse);
+// }

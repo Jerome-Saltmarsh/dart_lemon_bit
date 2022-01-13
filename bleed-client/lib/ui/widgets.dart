@@ -368,3 +368,9 @@ Widget _buildFakeLoginButton(String userId, String text){
     authentication.value = Authentication(userId: userId, displayName: userId, email: "$userId@email.com");
   });
 }
+
+final backButton = button("Back", () {
+  game.dialog.value = Dialogs.Games;
+}, fillColor: colours.none,
+  borderColor: colours.none,
+);

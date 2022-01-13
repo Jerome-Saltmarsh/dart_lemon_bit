@@ -27,4 +27,5 @@ enum GameError {
   SkillPointsRequired,
   Subscription_Required,
   PlayerId_Required,
+  Login_Error,
 }

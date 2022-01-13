@@ -197,5 +197,5 @@ class _FieldNames {
 final _random = Random();
 
 String generateRandomName(){
-  return 'Player_${_random.nextInt(9999999)}';
+  return 'New_Player_${10000 + _random.nextInt(99999999)}';
 }
