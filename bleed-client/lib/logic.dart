@@ -88,4 +88,8 @@ class _Logic {
         email: authentication.value!.email
     );
   }
+
+  void cancelSubscription(){
+
+  }
 }

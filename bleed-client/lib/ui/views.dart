@@ -785,7 +785,10 @@ Widget _buildSubscriptionStatus(SubscriptionStatus status){
      case SubscriptionStatus.None:
        return button("Subscribe \$4.99", actions.openStripeCheckout);
      case SubscriptionStatus.Active:
-       return text("Cancel Subscription");
+       return button("Cancel Subscription", actions.cancelSubscription,
+          fillColor: colours.red,
+         borderColor: colours.none,
+       );
      case SubscriptionStatus.Expired:
        return text("Renew Subscription");
    }

@@ -34,8 +34,13 @@ class UserServiceHttpClient {
     required String email,
     String? displayName
   }) async {
-    print("createAccount");
-    var url = Uri.https(_host, '/users', {'id': userId, 'email': email, 'method': "post", 'display_name': displayName});
+    print("createAccount()");
+    var url = Uri.https(_host, '/users', {
+      'id': userId,
+      'email': email,
+      'method': "post",
+      'display_name': displayName
+    });
     await http.post(url, headers: _headers);
   }
 
