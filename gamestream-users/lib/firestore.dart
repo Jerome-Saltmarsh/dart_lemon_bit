@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:googleapis/firestore/v1.dart';
@@ -9,16 +10,22 @@ final _Firestore firestore = _Firestore();
 
 class _Firestore {
 
-  String _projectId = "";
+  String _projectId = "gogameserver";
   FirestoreApi? _firestoreApi;
 
   // https://github.com/dart-lang/samples/tree/master/server/google_apis
   void init() async {
     print("firestore.init()");
-    _projectId = await _getProjectId();
-    final authClient = await _getAuthClient();
-    _firestoreApi = FirestoreApi(authClient);
-    print("firestore initialized");
+
+    // _getProjectId().then((value){
+    //   _projectId = value;
+    //   print("projectId = '$value'");
+    // });
+
+    _getAuthClient().then((authClient){
+      _firestoreApi = FirestoreApi(authClient);
+      print("_firestoreApi set");
+    });
   }
 
   Future<AutoRefreshingAuthClient> _getAuthClient() {
@@ -27,41 +34,41 @@ class _Firestore {
     );
   }
 
-  Future<String> _getProjectId() async {
-    for (var envKey in _gcpProjectIdEnvironmentVariables) {
-      final value = Platform.environment[envKey];
-      if (value != null) return value;
-    }
-
-    const host = 'http://metadata.google.internal/';
-    final url = Uri.parse('$host/computeMetadata/v1/project/project-id');
-
-    try {
-      final response = await http.get(
-        url,
-        headers: {'Metadata-Flavor': 'Google'},
-      );
-
-      if (response.statusCode != 200) {
-        throw HttpException(
-          '${response.body} (${response.statusCode})',
-          uri: url,
-        );
-      }
-
-      return response.body;
-    } on SocketException {
-      stderr.writeln(
-        '''
-Could not connect to $host.
-If not running on Google Cloud, one of these environment variables must be set
-to the target Google Project ID:
-${_gcpProjectIdEnvironmentVariables.join('\n')}
-''',
-      );
-      rethrow;
-    }
-  }
+//   Future<String> _getProjectId() async {
+//     for (var envKey in _gcpProjectIdEnvironmentVariables) {
+//       final value = Platform.environment[envKey];
+//       if (value != null) return value;
+//     }
+//
+//     const host = 'http://metadata.google.internal/';
+//     final url = Uri.parse('$host/computeMetadata/v1/project/project-id');
+//
+//     try {
+//       final response = await http.get(
+//         url,
+//         headers: {'Metadata-Flavor': 'Google'},
+//       );
+//
+//       if (response.statusCode != 200) {
+//         throw HttpException(
+//           '${response.body} (${response.statusCode})',
+//           uri: url,
+//         );
+//       }
+//
+//       return response.body;
+//     } on SocketException {
+//       stderr.writeln(
+//         '''
+// Could not connect to $host.
+// If not running on Google Cloud, one of these environment variables must be set
+// to the target Google Project ID:
+// ${_gcpProjectIdEnvironmentVariables.join('\n')}
+// ''',
+//       );
+//       rethrow;
+//     }
+//   }
 
   ProjectsDatabasesDocumentsResource get documents => _firestoreApi!.projects.databases.documents;
 
@@ -124,8 +131,8 @@ ${_gcpProjectIdEnvironmentVariables.join('\n')}
 
   Future<Document> createUser({
     required String userIdGameStream,
-    required String userIdStripe,
     required String displayName,
+    String? userIdStripe,
     String? email,
   }) async {
     print("database.createUser('$userIdGameStream')");
@@ -136,6 +143,7 @@ ${_gcpProjectIdEnvironmentVariables.join('\n')}
     final document = Document(
         createTime: _getTimestampNow(),
         fields: {
+          if (userIdStripe != null)
           fieldNames.stripeCustomerId: Value(stringValue: userIdStripe),
           fieldNames.subscriptionExpirationDate: Value(timestampValue: _getTimeStampOneMonth()),
           fieldNames.subscriptionCreatedDate: Value(timestampValue: _getTimestampNow()),
@@ -183,4 +191,11 @@ class _FieldNames {
   final String stripeCustomerId = 'stripe_customer_id';
   final String email = 'email';
   final String displayName = 'display_name';
+}
+
+// Generate name serve
+final _random = Random();
+
+String generateRandomName(){
+  return 'Player_${_random.nextInt(9999999)}';
 }

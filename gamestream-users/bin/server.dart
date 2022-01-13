@@ -1,10 +1,8 @@
 
 import 'dart:async';
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:gamestream_users/firestore.dart';
-import 'package:googleapis/firestore/v1.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 
@@ -28,7 +26,10 @@ void initServer({String address = '0.0.0.0', int port = 8080}) async {
 
 FutureOr<Response> handleRequest(Request request) async {
   final path = request.url.path;
-  print("handleRequest(path: '$path', method: '${request.method}')");
+  print("handleRequest(path: '$path', method: '${request.method}', host: '${request.url.host}')");
+  final Json response = Json();
+
+
   switch(path){
     case 'hello':
       return Response.ok('world', headers: headersTextPlain);
@@ -39,72 +40,100 @@ FutureOr<Response> handleRequest(Request request) async {
       final params = request.requestedUri.queryParameters;
       final id = params['id'];
       if (id == null) {
-        return Response.forbidden('id is empty', headers: headersTextPlain);
+        return error(response, 'id_required');
       }
+
+      response['id'] = id;
       final user = await firestore.findUserById(id);
 
-      final Json response = Json();
-      response['id'] = id;
-      if (user == null){
-        return error(response, 'not_found');
-      }
+      if (request.method == "GET"){
 
-      final fields = user.fields;
-
-      if (fields == null){
-        return error(response, 'fields_null');
-      }
-
-      if (fields.isEmpty){
-        return error(response, 'fields_empty');
-      }
-
-      if (request.method == 'PATCH' || request.method == 'OPTIONS'){
-        print("received user patch request");
-
-        // user.fields[fieldNames.displayName] =
-        final displayName = params[fieldNames.displayName];
-
-        if (displayName == null){
-          return error(response, 'field_missing_display_name');
+        if (user == null){
+          return error(response, 'not_found');
         }
 
-        await firestore.patchDisplayName(userId: id, displayName: displayName);
-        response['status'] = 'success';
-        response['request'] = 'patch';
-        response['field'] = 'display_name';
-        response['value'] = displayName;
+        final fields = user.fields;
+
+        if (fields == null){
+          return error(response, 'fields_null');
+        }
+
+        if (fields.isEmpty){
+          return error(response, 'fields_empty');
+        }
+
+        if (request.method == 'PATCH' || request.method == 'OPTIONS'){
+          print("received user patch request");
+
+          // user.fields[fieldNames.displayName] =
+          final displayName = params[fieldNames.displayName];
+
+          if (displayName == null){
+            return error(response, 'field_missing_display_name');
+          }
+
+          await firestore.patchDisplayName(userId: id, displayName: displayName);
+          response['status'] = 'success';
+          response['request'] = 'patch';
+          response['field'] = 'display_name';
+          response['value'] = displayName;
+          return ok(response);
+        }
+
+        final displayName = fields[fieldNames.displayName];
+        if (displayName != null){
+          response[fieldNames.displayName] = displayName.stringValue;
+        }
+
+        final subscriptionExpires = fields[fieldNames.subscriptionExpirationDate];
+        if (subscriptionExpires == null){
+          response[fieldNames.subscriptionStatus] = 'not_subscribed';
+          return ok(response);
+        }
+
+        final timestampValue = subscriptionExpires.timestampValue;
+        if (timestampValue == null) {
+          return error(response, 'subscription_expiration_timestamp_is_null');
+        }
+
+        response[fieldNames.subscriptionExpirationDate] = timestampValue;
+
+        final date = DateTime.tryParse(timestampValue);
+        if (date == null) {
+          return error(response, 'subscription_timestamp_parse_error');
+        }
+
+        response[fieldNames.subscriptionStatus] = isExpired(date) ? 'expired' : 'active';
         return ok(response);
       }
 
-      final displayName = fields[fieldNames.displayName];
-      if (displayName != null){
-        response[fieldNames.displayName] = displayName.stringValue;
+      if (request.method == "POST"){
+
+        if (user != null){
+          return error(response, 'already_exists');
+        }
+
+        final email = params['email'];
+
+        if (email == null){
+          error(response, 'email_required');
+        }
+
+        final newUser = await firestore.createUser(
+            userIdGameStream: id,
+            email: email,
+            displayName: generateRandomName()
+        );
+
+        return ok(newUser);
       }
+      break;
 
-      final subscriptionExpires = fields[fieldNames.subscriptionExpirationDate];
-      if (subscriptionExpires == null){
-        response[fieldNames.subscriptionStatus] = 'not_subscribed';
-        return ok(response);
-      }
-
-      final timestampValue = subscriptionExpires.timestampValue;
-      if (timestampValue == null) {
-        return error(response, 'subscription_expiration_timestamp_is_null');
-      }
-
-      response[fieldNames.subscriptionExpirationDate] = timestampValue;
-
-      final date = DateTime.tryParse(timestampValue);
-      if (date == null) {
-        return error(response, 'subscription_timestamp_parse_error');
-      }
-
-      response[fieldNames.subscriptionStatus] = isExpired(date) ? 'expired' : 'active';
-      return ok(response);
     default:
-      return Response.notFound('Cannot handle request "${request.url}"', headers: headersTextPlain);
+      break;
   }
+
+  return Response.notFound("Cannot handle request: {url: '${request.url}', method: '${request.method}'}", headers: headersTextPlain);
 }
 
 bool isExpired(DateTime value){
@@ -195,15 +224,11 @@ class _StripeWebhooks {
       userIdGameStream: userGameStreamId,
       userIdStripe: userStripeId,
       email: email,
-      displayName: _generateRandomName(),
+      displayName: generateRandomName(),
     );
   }
 }
 
-final _random = Random();
 
-String _generateRandomName(){
-  return 'Player_${_random.nextInt(9999999)}';
-}
 
 
