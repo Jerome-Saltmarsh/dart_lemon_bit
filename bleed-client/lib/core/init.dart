@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/authentication.dart';
 import 'package:bleed_client/classes/Character.dart';
@@ -11,6 +13,7 @@ import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/cube/init_cube.dart';
+import 'package:bleed_client/document/request_pointer_lock.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/events/onAmbientLightChanged.dart';
 import 'package:bleed_client/events/onCompiledGameChanged.dart';
@@ -37,6 +40,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 final isLocalHost = Uri.base.host == 'localhost';
 
+int start = 0;
+final streamText = "|~ |||  | ~|| | ||| | ||~ |  ||  | ||||~ | |  |";
+final streamLength = 20;
+
+int index = 0;
+
 Future init() async {
   Events();
   await images.load();
@@ -50,6 +59,37 @@ Future init() async {
   }else{
     print("Environment: Production");
   }
+
+  // repeat update title for loading
+
+
+  Timer.periodic(Duration(milliseconds: 100), (timer) {
+    index = (index + 1) % 4;
+    setFavicon('archer${index + 1}.png');
+  });
+
+  // Timer.periodic(Duration(milliseconds: 100), (timer) {
+  //     final buffer = StringBuffer('GAMESTREAM');
+  //     // start = (start + 1) % streamText.length;
+  //     start--;
+  //     if (start < 0){
+  //       start = streamText.length - 1;
+  //     }
+  //     if (start + streamLength < streamText.length){
+  //       for(int i = 0; i < streamLength; i++){
+  //         buffer.write(streamText[start + i]);
+  //       }
+  //     }else{
+  //       int diff = streamText.length - start;
+  //       for(int i = 0; i < diff; i++){
+  //         buffer.write(streamText[start + i]);
+  //       }
+  //       for(int i = 0; i < streamLength - diff; i++){
+  //         buffer.write(streamText[i]);
+  //       }
+  //     }
+  //     setDocumentTitle(buffer.toString());
+  // });
 
   cursorType.value = CursorType.Basic;
 
