@@ -1,16 +1,16 @@
 import 'dart:async';
-import 'dart:io';
 import 'dart:math';
 
 import 'package:googleapis_auth/auth_io.dart';
 import 'package:googleapis/firestore/v1.dart';
-import 'package:http/http.dart' as http;
 
 final _Firestore firestore = _Firestore();
 
 class _Firestore {
 
-  String _projectId = "gogameserver";
+  final _projectId = "gogameserver";
+  final _collectionName = 'users';
+
   FirestoreApi? _firestoreApi;
 
   // https://github.com/dart-lang/samples/tree/master/server/google_apis
@@ -34,42 +34,6 @@ class _Firestore {
     );
   }
 
-//   Future<String> _getProjectId() async {
-//     for (var envKey in _gcpProjectIdEnvironmentVariables) {
-//       final value = Platform.environment[envKey];
-//       if (value != null) return value;
-//     }
-//
-//     const host = 'http://metadata.google.internal/';
-//     final url = Uri.parse('$host/computeMetadata/v1/project/project-id');
-//
-//     try {
-//       final response = await http.get(
-//         url,
-//         headers: {'Metadata-Flavor': 'Google'},
-//       );
-//
-//       if (response.statusCode != 200) {
-//         throw HttpException(
-//           '${response.body} (${response.statusCode})',
-//           uri: url,
-//         );
-//       }
-//
-//       return response.body;
-//     } on SocketException {
-//       stderr.writeln(
-//         '''
-// Could not connect to $host.
-// If not running on Google Cloud, one of these environment variables must be set
-// to the target Google Project ID:
-// ${_gcpProjectIdEnvironmentVariables.join('\n')}
-// ''',
-//       );
-//       rethrow;
-//     }
-//   }
-
   ProjectsDatabasesDocumentsResource get documents => _firestoreApi!.projects.databases.documents;
 
   Future<Document?> findUserById(String id) async {
@@ -85,7 +49,7 @@ class _Firestore {
     }
 
     print("database.findUserById('$id')");
-    return documents.get(_name('users/$id'))
+    return documents.get(getUserDocumentName(id))
         .then<Document?>((value) => Future.value(value))
         .catchError((error) {
       if (error is DetailedApiRequestError && error.status == 404) {
@@ -96,8 +60,8 @@ class _Firestore {
   }
 
 
-  String _name(String value){
-    return 'projects/$_projectId/databases/(default)/documents/$value';
+  String getUserDocumentName(String value){
+    return buildDocumentName(projectId: _projectId, collection: _collectionName);
   }
 
   Future<CommitResponse> commit(CommitRequest request) {
@@ -160,6 +124,37 @@ class _Firestore {
     await documents.patch(userDocument, userDocument.name!);
   }
 
+  Future<Document?> findUser({required String displayName}) async {
+
+    print("(firestore) findUser(displayName: '$displayName')");
+
+    final query = RunQueryRequest(
+        structuredQuery: StructuredQuery(
+          from: [
+            CollectionSelector(
+              collectionId: _collectionName
+            )
+          ],
+          where: Filter(
+              fieldFilter: FieldFilter(
+                 field: FieldReference(fieldPath: 'display_name'),
+                     op: 'EQUAL',
+                value: Value(stringValue: displayName),
+              )
+          )
+        )
+    );
+    print("query created");
+    final responses = await documents.runQuery(query, parent);
+    print("response received");
+
+    for (var response in responses.toList()) {
+      return response.document;
+    }
+
+    return null;
+  }
+
   Future<Document> createUser({
     required String userId,
     required String displayName,
@@ -180,7 +175,6 @@ class _Firestore {
         }
     );
 
-    final parent = 'projects/$_projectId/databases/(default)/documents';
     return await documents.createDocument(
       document,
       parent,
@@ -189,14 +183,9 @@ class _Firestore {
       // $fields:
     );
   }
-}
 
-// const _gcpProjectIdEnvironmentVariables = {
-//   'GCP_PROJECT',
-//   'GCLOUD_PROJECT',
-//   'CLOUDSDK_CORE_PROJECT',
-//   'GOOGLE_CLOUD_PROJECT',
-// };
+  String get parent => buildParentName(projectId: _projectId);
+}
 
 String _getTimestampNow() => DateTime.now().toUtc().toIso8601String();
 String _getTimeStampOneMonth() => DateTime.now().add(Duration(hours: _hoursPerMonth)).toUtc().toIso8601String();
@@ -206,7 +195,6 @@ const _monthsPerYear = 12;
 const _hoursPerYear = 8760;
 
 const _oneSecond = Duration(seconds: 1);
-
 
 final _FieldNames fieldNames = _FieldNames();
 
@@ -222,9 +210,70 @@ class _FieldNames {
   final String displayName = 'display_name';
 }
 
+String buildDocumentName({
+  required String projectId,
+  required String collection
+}){
+  return '${buildParentName(projectId: projectId)}/$collection';
+}
+
+String buildParentName({
+  required String projectId,
+  String databaseName = '(default)'
+}){
+  return 'projects/$projectId/databases/$databaseName/documents';
+}
+
+
 // Generate name serve
 final _random = Random();
 
 String generateRandomName(){
   return 'New_Player_${10000 + _random.nextInt(99999999)}';
 }
+
+
+
+//   Future<String> _getProjectId() async {
+//     for (var envKey in _gcpProjectIdEnvironmentVariables) {
+//       final value = Platform.environment[envKey];
+//       if (value != null) return value;
+//     }
+//
+//     const host = 'http://metadata.google.internal/';
+//     final url = Uri.parse('$host/computeMetadata/v1/project/project-id');
+//
+//     try {
+//       final response = await http.get(
+//         url,
+//         headers: {'Metadata-Flavor': 'Google'},
+//       );
+//
+//       if (response.statusCode != 200) {
+//         throw HttpException(
+//           '${response.body} (${response.statusCode})',
+//           uri: url,
+//         );
+//       }
+//
+//       return response.body;
+//     } on SocketException {
+//       stderr.writeln(
+//         '''
+// Could not connect to $host.
+// If not running on Google Cloud, one of these environment variables must be set
+// to the target Google Project ID:
+// ${_gcpProjectIdEnvironmentVariables.join('\n')}
+// ''',
+//       );
+//       rethrow;
+//     }
+//   }
+
+// const _gcpProjectIdEnvironmentVariables = {
+//   'GCP_PROJECT',
+//   'GCLOUD_PROJECT',
+//   'CLOUDSDK_CORE_PROJECT',
+//   'GOOGLE_CLOUD_PROJECT',
+// };
+

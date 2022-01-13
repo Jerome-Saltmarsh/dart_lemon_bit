@@ -40,11 +40,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 final isLocalHost = Uri.base.host == 'localhost';
 
-int start = 0;
-final streamText = "|~ |||  | ~|| | ||| | ||~ |  ||  | ||||~ | |  |";
-final streamLength = 20;
-
-int index = 0;
+// int start = 0;
+// final streamText = "|~ |||  | ~|| | ||| | ||~ |  ||  | ||||~ | |  |";
+// final streamLength = 20;
+//
+// int index = 0;
 
 Future init() async {
   Events();
@@ -63,10 +63,10 @@ Future init() async {
   // repeat update title for loading
 
 
-  Timer.periodic(Duration(milliseconds: 100), (timer) {
-    index = (index + 1) % 4;
-    setFavicon('archer${index + 1}.png');
-  });
+  // Timer.periodic(Duration(milliseconds: 100), (timer) {
+  //   index = (index + 1) % 4;
+  //   setFavicon('archer${index + 1}.png');
+  // });
 
   // Timer.periodic(Duration(milliseconds: 100), (timer) {
   //     final buffer = StringBuffer('GAMESTREAM');

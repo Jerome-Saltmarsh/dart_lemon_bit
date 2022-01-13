@@ -41,18 +41,57 @@ FutureOr<Response> handleRequest(Request request) async {
 
       case "users":
       final params = request.requestedUri.queryParameters;
-      final id = params['id'];
-      if (id == null) {
-        return error(response, 'id_required');
-      }
 
       final method = params['method']?.toUpperCase();
       if (method == null){
         return error(response, 'method_required');
       }
 
+      if (method == 'FIND'){
+        print("(server) handling find request");
+        final displayName = params[fieldNames.displayName];
+        if (displayName == null){
+          return error(response, 'display_name_required');
+        }
+        final result = await firestore.findUser(displayName: displayName);
+        if (result == null){
+          return error(response, 'not_found');
+        }
+        return ok(result.fields);
+      }
+
+
+      final id = params['id'];
+      if (id == null) {
+        return error(response, 'id_required');
+      }
+
       response['id'] = id;
       final user = await firestore.findUserById(id);
+
+      if (request.method == 'PATCH'){
+
+        var displayName = params[fieldNames.displayName];
+
+        if (displayName == null){
+          response['fieldName'] = 'display_name';
+          return error(response, 'field_missing');
+        }
+
+        displayName = displayName.trim();
+        displayName = displayName.replaceAll(" ", "_");
+
+        if (displayName.length < 4){
+          return error(response, 'display_name_too_short');
+        }
+
+        await firestore.patchDisplayName(userId: id, displayName: displayName);
+        response['status'] = 'success';
+        response['request'] = 'patch';
+        response['field'] = 'display_name';
+        response['value'] = displayName;
+        return ok(response);
+      }
 
       if (method == "GET"){
 
@@ -68,24 +107,6 @@ FutureOr<Response> handleRequest(Request request) async {
 
         if (fields.isEmpty){
           return error(response, 'fields_empty');
-        }
-
-        if (request.method == 'PATCH'){
-          print("received user patch request");
-
-          // user.fields[fieldNames.displayName] =
-          final displayName = params[fieldNames.displayName];
-
-          if (displayName == null){
-            return error(response, 'field_missing_display_name');
-          }
-
-          await firestore.patchDisplayName(userId: id, displayName: displayName);
-          response['status'] = 'success';
-          response['request'] = 'patch';
-          response['field'] = 'display_name';
-          response['value'] = displayName;
-          return ok(response);
         }
 
         final displayName = fields[fieldNames.displayName];
@@ -113,7 +134,7 @@ FutureOr<Response> handleRequest(Request request) async {
 
         response[fieldNames.subscriptionStatus] = isExpired(date) ? 'expired' : 'active';
         return ok(response);
-      }
+      } // GET
 
       if (method == "POST"){
 
@@ -127,16 +148,14 @@ FutureOr<Response> handleRequest(Request request) async {
           error(response, 'email_required');
         }
 
-        final displayName = params['display_name'];
-
         final newUser = await firestore.createUser(
             userId: id,
             email: email,
-            displayName: displayName != null && displayName.isNotEmpty ? displayName : generateRandomName()
+            displayName: generateRandomName()
         );
 
         return ok(newUser);
-      }
+      } // POST
       break;
 
     default:
