@@ -31,22 +31,30 @@ FutureOr<Response> handleRequest(Request request) async {
 
 
   switch(path){
+
     case 'hello':
       return Response.ok('world', headers: headersTextPlain);
-    case "stripe_event":
+
+      case "stripe_event":
       request.readAsString().then(handleStripeEvent);
       return Response.ok('', headers: headersTextPlain);
-    case "users":
+
+      case "users":
       final params = request.requestedUri.queryParameters;
       final id = params['id'];
       if (id == null) {
         return error(response, 'id_required');
       }
 
+      final method = params['method']?.toUpperCase();
+      if (method == null){
+        return error(response, 'method_required');
+      }
+
       response['id'] = id;
       final user = await firestore.findUserById(id);
 
-      if (request.method == "GET"){
+      if (method == "GET"){
 
         if (user == null){
           return error(response, 'not_found');
@@ -62,7 +70,7 @@ FutureOr<Response> handleRequest(Request request) async {
           return error(response, 'fields_empty');
         }
 
-        if (request.method == 'PATCH' || request.method == 'OPTIONS'){
+        if (request.method == 'PATCH'){
           print("received user patch request");
 
           // user.fields[fieldNames.displayName] =
@@ -107,7 +115,7 @@ FutureOr<Response> handleRequest(Request request) async {
         return ok(response);
       }
 
-      if (request.method == "POST"){
+      if (method == "POST"){
 
         if (user != null){
           return error(response, 'already_exists');
@@ -216,19 +224,15 @@ class _StripeWebhooks {
       throw Exception('Object does not contain client_reference_id');
     }
 
-    final userGameStreamId = obj['client_reference_id'];
-    final userStripeId = obj['customer'];
-    final email = obj['customer_email'];
+    final userId = obj['client_reference_id'];
+    final stripeCustomerId = obj['customer'];
+    final stripePaymentEmail = obj['customer_email'];
 
-    firestore.createUser(
-      userIdGameStream: userGameStreamId,
-      userIdStripe: userStripeId,
-      email: email,
-      displayName: generateRandomName(),
+    firestore.subscribe(
+        userId: userId,
+        stripeCustomerId: stripeCustomerId,
+        stripePaymentEmail: stripePaymentEmail
     );
   }
 }
-
-
-
 

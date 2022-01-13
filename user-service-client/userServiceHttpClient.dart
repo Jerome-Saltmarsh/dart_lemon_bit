@@ -1,10 +1,21 @@
 
 
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 
-final userService = UserServiceHttpClient("rest-server-37-osbmaezptq-ey.a.run.app");
+// var dio = Dio(
+//   BaseOptions(
+//     headers: {
+//       "Accept": "*/*",
+//       "Access-Control-Allow-Origin": "*",
+//     },
+//     baseUrl: "https://rest-server-37-osbmaezptq-ey.a.run.app",
+//
+//   )
+//
+// );
+
+final userService = UserServiceHttpClient("rest-server-41-osbmaezptq-ey.a.run.app");
 
 class UserServiceHttpClient {
   final String _host;

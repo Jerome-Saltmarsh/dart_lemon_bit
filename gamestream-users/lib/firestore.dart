@@ -124,9 +124,40 @@ class _Firestore {
     }
 
     fields[fieldNames.displayName] = Value(stringValue: displayName);
-    await documents.patch(user, user.name!);
+    await saveUser(user);
     print("username patched successfully");
     return user;
+  }
+
+  Future<Document> subscribe({
+    required String userId,
+    required String stripeCustomerId,
+    required String stripePaymentEmail,
+}) async {
+      print("subscribing new user(userId: $userId, customerId: $stripePaymentEmail, email: $stripePaymentEmail)");
+
+      final user = await findUserById(userId);
+      // TODO Store this information in an errors table
+      if (user == null) throw Exception("user null");
+      final fields = user.fields;
+
+      if (fields == null){
+        throw Exception("user.fields null");
+      }
+
+      fields[fieldNames.stripeCustomerId] = Value(stringValue: stripeCustomerId);
+      fields[fieldNames.stripePaymentEmail] = Value(stringValue: stripePaymentEmail);
+      fields[fieldNames.subscriptionCreatedDate] = Value(timestampValue: _getTimestampNow());
+      fields[fieldNames.subscriptionExpirationDate] = Value(timestampValue: _getTimeStampOneMonth());
+      saveUser(user);
+      return user;
+  }
+
+  Future saveUser(Document userDocument) async {
+    if (userDocument.name == null){
+      throw Exception("Cannot save because user document.name is null");
+    }
+    await documents.patch(userDocument, userDocument.name!);
   }
 
   Future<Document> createUser({
@@ -144,10 +175,8 @@ class _Firestore {
         createTime: _getTimestampNow(),
         fields: {
           if (userIdStripe != null)
-          fieldNames.stripeCustomerId: Value(stringValue: userIdStripe),
-          fieldNames.subscriptionExpirationDate: Value(timestampValue: _getTimeStampOneMonth()),
-          fieldNames.subscriptionCreatedDate: Value(timestampValue: _getTimestampNow()),
           fieldNames.displayName: Value(stringValue: displayName),
+          fieldNames.accountCreation_date: Value(timestampValue: _getTimestampNow()),
           if (email != null)
             fieldNames.email: Value(stringValue: email),
         }
@@ -164,12 +193,12 @@ class _Firestore {
   }
 }
 
-const _gcpProjectIdEnvironmentVariables = {
-  'GCP_PROJECT',
-  'GCLOUD_PROJECT',
-  'CLOUDSDK_CORE_PROJECT',
-  'GOOGLE_CLOUD_PROJECT',
-};
+// const _gcpProjectIdEnvironmentVariables = {
+//   'GCP_PROJECT',
+//   'GCLOUD_PROJECT',
+//   'CLOUDSDK_CORE_PROJECT',
+//   'GOOGLE_CLOUD_PROJECT',
+// };
 
 String _getTimestampNow() => DateTime.now().toUtc().toIso8601String();
 String _getTimeStampOneMonth() => DateTime.now().add(Duration(hours: _hoursPerMonth)).toUtc().toIso8601String();
@@ -184,11 +213,13 @@ const _oneSecond = Duration(seconds: 1);
 final _FieldNames fieldNames = _FieldNames();
 
 class _FieldNames {
+  final String accountCreation_date = "account_creation_date";
   final String subscriptionExpirationDate = "subscription_expiration_date";
   final String subscriptionCreatedDate = "subscription_created_date";
   final String subscriptionStatus = "subscription_status";
   final String error = "error";
   final String stripeCustomerId = 'stripe_customer_id';
+  final String stripePaymentEmail = 'stripe_payment_email';
   final String email = 'email';
   final String displayName = 'display_name';
 }
