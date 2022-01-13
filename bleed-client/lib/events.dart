@@ -271,6 +271,9 @@ Future signInOrCreateAccount({required String userId, required String email}) as
     await userService.createAccount(userId: userId, email: email);
     game.signingIn.value = LoginStatus.Logging_In;
     game.account.value = await userService.findById(userId);
+    if (game.account.value == null){
+      throw Exception("failed to find new account");
+    }
   }else{
     print("Existing Account found");
     game.account.value = account;

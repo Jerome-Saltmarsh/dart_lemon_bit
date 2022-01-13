@@ -124,7 +124,7 @@ Widget buildView(BuildContext context) {
                           mainAxisAlignment: axis.main.center,
                           children: [
                             if (!subscribed)
-                            button(text("Subscribe for \$4.99 per month"), logic.openStripeCheckout,
+                            button(text("Subscribe for \$4.99 per month to unlock all games"), logic.openStripeCheckout,
                               height: style.buttonHeight * goldenRatioInverse,
                             ),
                             if (account != null && subscriptionExpired)

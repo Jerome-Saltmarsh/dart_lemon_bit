@@ -24,7 +24,7 @@ class UserServiceHttpClient {
 
   Future patchDisplayName({required String userId, required String displayName}) async {
     print("patchDisplayName()");
-    var url = Uri.https(_host, '/users', {'id': userId, 'display_name': displayName});
+    var url = Uri.https(_host, '/users', {'id': userId, 'display_name': displayName, 'method': 'patch'});
     final json = '{"title": "Hello"}';
     await http.patch(url, body: json, headers: _headers);
   }
@@ -35,7 +35,7 @@ class UserServiceHttpClient {
   }) async {
     print("createAccount");
 
-    var url = Uri.https(_host, '/users', {'id': userId, 'email': email});
+    var url = Uri.https(_host, '/users', {'id': userId, 'email': email, 'method': "post"});
     await http.post(url, headers: _headers);
   }
 
