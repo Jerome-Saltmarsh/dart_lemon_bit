@@ -161,20 +161,18 @@ class _Firestore {
   }
 
   Future<Document> createUser({
-    required String userIdGameStream,
+    required String userId,
     required String displayName,
-    String? userIdStripe,
     String? email,
   }) async {
-    print("database.createUser('$userIdGameStream')");
-    if (userIdGameStream.isEmpty){
+    print("database.createUser('$userId')");
+    if (userId.isEmpty){
       throw Exception("userId is null");
     }
 
     final document = Document(
         createTime: _getTimestampNow(),
         fields: {
-          if (userIdStripe != null)
           fieldNames.displayName: Value(stringValue: displayName),
           fieldNames.accountCreation_date: Value(timestampValue: _getTimestampNow()),
           if (email != null)
@@ -187,7 +185,7 @@ class _Firestore {
       document,
       parent,
       'users',
-      documentId: userIdGameStream,
+      documentId: userId,
       // $fields:
     );
   }

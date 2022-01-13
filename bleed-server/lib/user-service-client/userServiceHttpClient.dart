@@ -15,7 +15,7 @@ import 'package:http/http.dart' as http;
 //
 // );
 
-final userService = UserServiceHttpClient("rest-server-41-osbmaezptq-ey.a.run.app");
+final userService = UserServiceHttpClient("rest-server-42-osbmaezptq-ey.a.run.app");
 
 class UserServiceHttpClient {
   final String _host;
@@ -31,11 +31,11 @@ class UserServiceHttpClient {
 
   Future createAccount({
     required String userId,
-    required String email
+    required String email,
+    String? displayName
   }) async {
     print("createAccount");
-
-    var url = Uri.https(_host, '/users', {'id': userId, 'email': email, 'method': "post"});
+    var url = Uri.https(_host, '/users', {'id': userId, 'email': email, 'method': "post", 'display_name': displayName});
     await http.post(url, headers: _headers);
   }
 

@@ -121,8 +121,7 @@ class Events {
       }
 
       storage.rememberAuthorization(value);
-      signInOrCreateAccount(userId: value.userId, email: email);
-
+      signInOrCreateAccount(userId: value.userId, email: email, displayName: value.displayName);
     }
     game.dialog.value = Dialogs.Games;
   }
@@ -258,7 +257,11 @@ class LoginException implements Exception {
   LoginException(this.cause);
 }
 
-Future signInOrCreateAccount({required String userId, required String email}) async {
+Future signInOrCreateAccount({
+  required String userId,
+  required String email,
+  String? displayName
+}) async {
   print("signInOrCreateAccount()");
   game.signingIn.value = LoginStatus.Logging_In;
   final account = await userService.findById(userId).catchError((error){
@@ -268,7 +271,7 @@ Future signInOrCreateAccount({required String userId, required String email}) as
   if (account == null){
     print("No account found. Creating new account");
     game.signingIn.value = LoginStatus.Creating_Account;
-    await userService.createAccount(userId: userId, email: email);
+    await userService.createAccount(userId: userId, email: email, displayName: displayName);
     game.signingIn.value = LoginStatus.Logging_In;
     game.account.value = await userService.findById(userId);
     if (game.account.value == null){

@@ -127,10 +127,12 @@ FutureOr<Response> handleRequest(Request request) async {
           error(response, 'email_required');
         }
 
+        final displayName = params['display_name'];
+
         final newUser = await firestore.createUser(
-            userIdGameStream: id,
+            userId: id,
             email: email,
-            displayName: generateRandomName()
+            displayName: displayName != null && displayName.isNotEmpty ? displayName : generateRandomName()
         );
 
         return ok(newUser);
