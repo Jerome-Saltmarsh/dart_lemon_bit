@@ -56,25 +56,40 @@ class UserServiceHttpClient {
     }
 
     DateTime? subscriptionExpirationDate;
+    DateTime? subscriptionCreationDate;
     final subscriptionExpirationDateString = body[fieldNames.subscriptionExpirationDate];
     if (subscriptionExpirationDateString != null) {
-      subscriptionExpirationDate = DateTime.parse(subscriptionExpirationDateString);
+      final subscriptionCreatedDateString = body[fieldNames.subscriptionCreatedDate];
+      if (subscriptionCreatedDateString == null) {
+        throw Exception("subscriptionCreatedDateString is null");
+      }
+      subscriptionExpirationDate = parseDateTime(subscriptionExpirationDateString);
+      subscriptionCreationDate = parseDateTime(subscriptionCreatedDateString);
     }
 
     final accountCreationDateString = body[fieldNames.accountCreationDate];
-
     if (accountCreationDateString == null){
       throw Exception("account_creation_date field missing from response");
     }
 
-    final accountCreationDate = DateTime.parse(accountCreationDateString);
+    final accountCreationDate = parseDateTime(accountCreationDateString);
 
     final email = body[fieldNames.email];
     final privateName = body[fieldNames.private_name];
+
+    if (privateName == null){
+      throw Exception("private name is null");
+    }
+
     final publicName = body[fieldNames.public_name];
+
+    if (publicName == null){
+      throw Exception("public name is null");
+    }
 
     return Account(
       userId: userId,
+      subscriptionCreationDate: subscriptionCreationDate,
       subscriptionExpirationDate: subscriptionExpirationDate,
       accountCreationDate: accountCreationDate,
       publicName: publicName,
@@ -87,9 +102,10 @@ class UserServiceHttpClient {
 class Account {
   final String userId;
   final DateTime? subscriptionExpirationDate;
+  final DateTime? subscriptionCreationDate;
   final DateTime accountCreationDate;
-  final String? publicName;
-  final String? privateName;
+  final String publicName;
+  final String privateName;
   final String? email;
 
   bool get subscriptionActive => subscriptionStatus == SubscriptionStatus.Active;
@@ -106,9 +122,10 @@ class Account {
   Account({
     required this.userId,
     required this.accountCreationDate,
+    required this.publicName,
+    required this.privateName,
     this.subscriptionExpirationDate,
-    this.publicName,
-    this.privateName,
+    this.subscriptionCreationDate,
     this.email
   });
 }
@@ -135,6 +152,7 @@ class _FieldNames {
   final String email = 'email';
   final String public_name = 'public_name';
   final String private_name = 'private_name';
+  final String subscriptionCreatedDate = "subscription_created_date";
 }
 
 
@@ -145,3 +163,7 @@ class _FieldNames {
 //   final streamedResponse = await client.send(request);
 //   return await Response.fromStream(streamedResponse);
 // }
+
+DateTime parseDateTime(String value){
+  return DateTime.parse(value);
+}
