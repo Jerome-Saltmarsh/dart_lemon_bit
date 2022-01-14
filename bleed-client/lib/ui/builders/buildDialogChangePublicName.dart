@@ -37,6 +37,8 @@ Widget buildDialogChangePublicName(){
 
 Widget buildDialogMessage(String message){
   return dialog(
+      color: colours.white05,
+      borderColor: none,
       child: layout(
         child: text(message)
     )
