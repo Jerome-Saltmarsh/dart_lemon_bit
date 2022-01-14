@@ -463,6 +463,9 @@ Widget buildWatchAuthentication(){
                                         }
                                     ),
                                     height16,
+                                    text("Created"),
+                                    text(formatDate(account.accountCreationDate), color: colours.white60),
+                                    height16,
                                     text("Private Name"),
                                     text(account.privateName ?? "None", color: colours.white60),
                                     height16,
@@ -893,4 +896,8 @@ Widget _buildSubscriptionStatus(SubscriptionStatus status){
      case SubscriptionStatus.Expired:
        return text("Renew Subscription");
    }
+}
+
+String formatDate(DateTime value){
+  return dateFormat.format(value);
 }

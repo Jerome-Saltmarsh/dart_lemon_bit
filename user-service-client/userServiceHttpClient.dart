@@ -3,7 +3,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-final userService = UserServiceHttpClient("rest-server-osbmaezptq-ey.a.run.app");
+final userService = UserServiceHttpClient("rest-server-3-osbmaezptq-ey.a.run.app");
 
 class UserServiceHttpClient {
   final String _host;
@@ -56,12 +56,18 @@ class UserServiceHttpClient {
     }
 
     DateTime? subscriptionExpirationDate;
-    final subscriptionExpirationDateString =
-        body[fieldNames.subscriptionExpirationDate];
+    final subscriptionExpirationDateString = body[fieldNames.subscriptionExpirationDate];
     if (subscriptionExpirationDateString != null) {
-      subscriptionExpirationDate =
-          DateTime.parse(subscriptionExpirationDateString);
+      subscriptionExpirationDate = DateTime.parse(subscriptionExpirationDateString);
     }
+
+    final accountCreationDateString = body[fieldNames.accountCreationDate];
+
+    if (accountCreationDateString == null){
+      throw Exception("account_creation_date field missing from response");
+    }
+
+    final accountCreationDate = DateTime.parse(accountCreationDateString);
 
     final email = body[fieldNames.email];
     final privateName = body[fieldNames.private_name];
@@ -70,6 +76,7 @@ class UserServiceHttpClient {
     return Account(
       userId: userId,
       subscriptionExpirationDate: subscriptionExpirationDate,
+      accountCreationDate: accountCreationDate,
       publicName: publicName,
       privateName: privateName,
       email: email,
@@ -80,6 +87,7 @@ class UserServiceHttpClient {
 class Account {
   final String userId;
   final DateTime? subscriptionExpirationDate;
+  final DateTime accountCreationDate;
   final String? publicName;
   final String? privateName;
   final String? email;
@@ -97,6 +105,7 @@ class Account {
 
   Account({
     required this.userId,
+    required this.accountCreationDate,
     this.subscriptionExpirationDate,
     this.publicName,
     this.privateName,
@@ -118,6 +127,7 @@ enum SubscriptionStatus{
 final _FieldNames fieldNames = _FieldNames();
 
 class _FieldNames {
+  final String accountCreationDate = "account_creation_date";
   final String subscriptionExpirationDate = "subscription_expiration_date";
   final String subscriptionStatus = "subscription_status";
   final String error = "error";

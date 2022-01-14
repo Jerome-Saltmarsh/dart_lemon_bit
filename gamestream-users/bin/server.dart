@@ -128,25 +128,16 @@ FutureOr<Response> handleRequest(Request request) async {
           response[fieldNames.private_name] = privateName.stringValue;
         }
 
-        final subscriptionExpires = fields[fieldNames.subscriptionExpirationDate];
-        if (subscriptionExpires == null){
-          response[fieldNames.subscriptionStatus] = 'not_subscribed';
-          return ok(response);
+        final subscriptionExpirationDate = fields[fieldNames.subscriptionExpirationDate];
+        if (subscriptionExpirationDate != null) {
+            response[fieldNames.subscriptionExpirationDate] = subscriptionExpirationDate.timestampValue;
         }
 
-        final timestampValue = subscriptionExpires.timestampValue;
-        if (timestampValue == null) {
-          return error(response, 'subscription_expiration_timestamp_is_null');
+        final accountCreationDate = fields[fieldNames.account_creation_date];
+        if (accountCreationDate != null) {
+            response[fieldNames.account_creation_date] = accountCreationDate.timestampValue;
         }
 
-        response[fieldNames.subscriptionExpirationDate] = timestampValue;
-
-        final date = DateTime.tryParse(timestampValue);
-        if (date == null) {
-          return error(response, 'subscription_timestamp_parse_error');
-        }
-
-        response[fieldNames.subscriptionStatus] = isExpired(date) ? 'expired' : 'active';
         return ok(response);
       } // GET
 
