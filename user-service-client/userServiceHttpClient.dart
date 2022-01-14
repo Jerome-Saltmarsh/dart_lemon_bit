@@ -2,10 +2,8 @@
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:http/http.dart';
 
-
-final userService = UserServiceHttpClient("rest-server-11-osbmaezptq-ey.a.run.app");
+final userService = UserServiceHttpClient("rest-server-osbmaezptq-ey.a.run.app");
 
 class UserServiceHttpClient {
   final String _host;
@@ -23,14 +21,14 @@ class UserServiceHttpClient {
   Future createAccount({
     required String userId,
     required String email,
-    String? displayName
+    String? privateName
   }) async {
     print("createAccount()");
     var url = Uri.https(_host, '/users', {
       'id': userId,
       'email': email,
       'method': "post",
-      'display_name': displayName
+      'private_name': privateName
     });
     await http.post(url, headers: _headers);
   }
@@ -66,13 +64,14 @@ class UserServiceHttpClient {
     }
 
     final email = body[fieldNames.email];
-
-    final displayName = body[fieldNames.displayName];
+    final privateName = body[fieldNames.private_name];
+    final publicName = body[fieldNames.public_name];
 
     return Account(
       userId: userId,
       subscriptionExpirationDate: subscriptionExpirationDate,
-      displayName: displayName,
+      publicName: publicName,
+      privateName: privateName,
       email: email,
     );
   }
@@ -81,7 +80,8 @@ class UserServiceHttpClient {
 class Account {
   final String userId;
   final DateTime? subscriptionExpirationDate;
-  final String? displayName;
+  final String? publicName;
+  final String? privateName;
   final String? email;
 
   bool get subscriptionActive => subscriptionStatus == SubscriptionStatus.Active;
@@ -98,7 +98,8 @@ class Account {
   Account({
     required this.userId,
     this.subscriptionExpirationDate,
-    this.displayName,
+    this.publicName,
+    this.privateName,
     this.email
   });
 }
@@ -122,7 +123,8 @@ class _FieldNames {
   final String error = "error";
   final String stripeCustomerId = 'stripe_customer_id';
   final String email = 'email';
-  final String displayName = 'display_name';
+  final String public_name = 'public_name';
+  final String private_name = 'private_name';
 }
 
 

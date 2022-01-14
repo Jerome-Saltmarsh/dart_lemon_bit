@@ -57,7 +57,8 @@ class Events {
     signOut();
 
     Future.delayed(Duration(seconds: 1), (){
-      game.dialog.value = Dialogs.Login_Error;
+      // game.dialog.value = Dialogs.Login_Error;
+      game.errorMessage.value = error.cause.toString();
     });
   }
 
@@ -103,9 +104,9 @@ class Events {
     }
   }
 
-  void _onAuthenticationChanged(Authentication? value) async {
+  void _onAuthenticationChanged(Authentication? auth) async {
     print("events._onAuthorizationChanged()");
-    if (value == null) {
+    if (auth == null) {
       game.account.value = null;
       game.signingIn.value = LoginStatus.Logging_Out;
       Future.delayed(Duration(seconds: 1), (){
@@ -114,14 +115,14 @@ class Events {
       storage.forgetAuthorization();
     } else {
 
-      final email = value.email;
+      final email = auth.email;
 
       if (email == null){
         throw Exception("authentication.email is null");
       }
 
-      storage.rememberAuthorization(value);
-      signInOrCreateAccount(userId: value.userId, email: email, displayName: value.displayName);
+      storage.rememberAuthorization(auth);
+      signInOrCreateAccount(userId: auth.userId, email: email, privateName: auth.displayName);
     }
     game.dialog.value = Dialogs.Games;
   }
@@ -260,7 +261,7 @@ class LoginException implements Exception {
 Future signInOrCreateAccount({
   required String userId,
   required String email,
-  String? displayName
+  String? privateName
 }) async {
   print("signInOrCreateAccount()");
   game.signingIn.value = LoginStatus.Logging_In;
@@ -271,7 +272,7 @@ Future signInOrCreateAccount({
   if (account == null){
     print("No account found. Creating new account");
     game.signingIn.value = LoginStatus.Creating_Account;
-    await userService.createAccount(userId: userId, email: email, displayName: displayName);
+    await userService.createAccount(userId: userId, email: email, privateName: privateName);
     game.signingIn.value = LoginStatus.Logging_In;
     game.account.value = await userService.findById(userId);
     if (game.account.value == null){

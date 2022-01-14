@@ -14,7 +14,6 @@ import 'package:bleed_client/functions/refreshPage.dart';
 import 'package:bleed_client/logic.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
-import 'package:bleed_client/stripe.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/state/hud.dart';
@@ -68,19 +67,69 @@ Widget buildLoginDialog() {
 
 Widget buildView(BuildContext context) {
 
+  return NullableWatchBuilder<String?>(game.errorMessage, (String? message){
+    if (message == null) return buildWatchGameMode();
+    return buildErrorDialog(message);
+  });
+}
+
+Widget buildErrorDialog(String message){
+  return dialog(
+      color: colours.orange,
+      borderColor: colours.none,
+      height: 400,
+      child: layout(
+          child: Column(
+            crossAxisAlignment: axis.cross.start,
+            children: [
+              text("Error"),
+              text(message),
+            ],
+          ),
+          bottomRight: text("okay", onPressed: actions.closeErrorMessage)
+      )
+  );
+}
+
+Widget buildWatchErrorMessage(){
+  return NullableWatchBuilder<String?>(game.errorMessage, (String? message){
+    if (message == null) return empty;
+    return dialog(
+      color: colours.orange,
+      borderColor: colours.none,
+      height: 400,
+      child: layout(
+        child: Column(
+          crossAxisAlignment: axis.cross.start,
+          children: [
+            text("Error"),
+            text(message),
+          ],
+        ),
+        bottomRight: text("okay", onPressed: actions.closeErrorMessage)
+      )
+    );
+  });
+}
+
+Widget buildWatchGameMode(){
   return WatchBuilder(game.mode, (Mode mode) {
     if (mode == Mode.Edit) {
       return _views.editor;
     }
+    return buildWatchAuthentication();
+  });
+}
 
-    return NullableWatchBuilder<Authentication?>(authentication, (Authentication? auth){
-      final bool authenticated = auth != null;
+Widget buildWatchAuthentication(){
+  return NullableWatchBuilder<Authentication?>(authentication, (Authentication? auth){
+    final bool authenticated = auth != null;
 
-      return WatchBuilder(game.signingIn, (LoginStatus loginStatus){
+    return WatchBuilder(game.signingIn, (LoginStatus loginStatus){
 
-        if (loginStatus != LoginStatus.Logged_In && loginStatus != LoginStatus.Logged_Out){
-          return layout(
-            // topLeft: widgets.title,
+      if (loginStatus != LoginStatus.Logged_In && loginStatus != LoginStatus.Logged_Out){
+        return layout(
+          // topLeft: widgets.title,
             child: fullScreen(
               child: Row(
                 mainAxisAlignment: axis.main.center,
@@ -88,388 +137,394 @@ Widget buildView(BuildContext context) {
                   AnimatedTextKit(repeatForever: true, animatedTexts: [
                     RotateAnimatedText(enumString(loginStatus),
                         textStyle: TextStyle(color: Colors.white, fontSize: 45,
-                          fontFamily: assets.fonts.libreBarcode39Text
+                            fontFamily: assets.fonts.libreBarcode39Text
                         )),
                   ])
                 ],
               ),
             )
-          );
-        }
+        );
+      }
 
-        return NullableWatchBuilder<Account?>(game.account, (Account? account){
-          final now = DateTime.now().toUtc();
-          final bool subscribed = account != null && account.subscriptionExpirationDate != null;
-          final subscriptionExpired = account != null
-              && account.subscriptionExpirationDate != null
-              && now.isAfter(account.subscriptionExpirationDate!);
-          final bool subscriptionActive = account != null && !subscriptionExpired;
+      return NullableWatchBuilder<Account?>(game.account, (Account? account){
+        final now = DateTime.now().toUtc();
+        final bool subscribed = account != null && account.subscriptionExpirationDate != null;
+        final subscriptionExpired = account != null
+            && account.subscriptionExpirationDate != null
+            && now.isAfter(account.subscriptionExpirationDate!);
+        final bool subscriptionActive = account != null && !subscriptionExpired;
 
-          return WatchBuilder(webSocket.connection, (Connection connection) {
-            switch (connection) {
-              case Connection.Connecting:
-                return _views.connecting;
-              case Connection.Connected:
-                return _views.connected;
-              case Connection.None:
-                return layout(
-                    padding: 16,
-                    expand: true,
-                    topLeft: widgets.title,
-                    top: !authenticated || subscriptionActive ? null : () {
+        return WatchBuilder(webSocket.connection, (Connection connection) {
+          switch (connection) {
+            case Connection.Connecting:
+              return _views.connecting;
+            case Connection.Connected:
+              return _views.connected;
+            case Connection.None:
+              return layout(
+                  padding: 16,
+                  expand: true,
+                  topLeft: widgets.title,
+                  top: !authenticated || subscriptionActive ? null : () {
 
-                      return Container(
-                        width: screen.width,
-                        margin: EdgeInsets.only(top: 20),
-                        child: Row(
-                          mainAxisAlignment: axis.main.center,
-                          children: [
-                            if (!subscribed)
+                    return Container(
+                      width: screen.width,
+                      margin: EdgeInsets.only(top: 20),
+                      child: Row(
+                        mainAxisAlignment: axis.main.center,
+                        children: [
+                          if (!subscribed)
                             button(text("Subscribe for \$4.99 per month to unlock all games"), actions.openStripeCheckout,
                               height: style.buttonHeight * goldenRatioInverse,
                             ),
-                            if (account != null && subscriptionExpired)
-                              Row(
-                                children: [
-                                  onPressed(
-                                    callback: actions.showDialogSubscription,
-                                    child: border(
-                                        color: colours.red,
-                                        child: text("Your subscription expired on ${dateFormat.format(account.subscriptionExpirationDate!)}", color: colours.red)),
-                                  ),
-                                  width8,
-                                  button(text("Renew"), actions.showDialogSubscription, borderColor: colours.none),                                ],
-                              ),
-                          ],
-                        ),
-                      );
-                    }(),
-                    topRight: Row(
-                      crossAxisAlignment: axis.cross.start,
-                      mainAxisAlignment: axis.main.end,
-                      children: [
-                        // buttons.region,
-                        // width16,
-                        if (!authenticated) buttons.login,
-                        if (authenticated)  mouseOver(builder: (BuildContext context, bool mouseOver) {
-                          return mouseOver ? Column(
-                            children: [
-                              buttons.buildAccount(mouseOver),
-                              buttons.showDialogAccount,
-                              buttons.logout,
-                            ],
-                          ) : buttons.account;
-                        }),
-                      ],
-                    ),
-                    // bottomRight: buttons.region,
-                    bottomLeft: dev(onHover((bool hovering){
-
-                      return Container(
-                        width: style.buttonWidth,
-                        child: Column(
-                          crossAxisAlignment: axis.cross.start,
-                          children: [
-                              if (hovering) ...[
-                                widgets.theme,
-                                buttons.showDialogSubscribed,
-                                buttons.loginTestUser01,
-                                buttons.loginTestUser02,
-                                buttons.loginTestUser03,
-                                buttons.spawnRandomUser,
-                                // button("Logging In", (){
-                                //   game.signingIn.value = true;
-                                // }),
-                                buttons.editor,
-                              ],
-                              border(child: "Debug")
-                          ],
-                        ),
-                      );
-                    }
-                    )),
-                    child: WatchBuilder(game.region, (Region serverType) {
-                      if (serverType == Region.None) {
-                        return _views.selectRegion;
-                      }
-                      return WatchBuilder(game.dialog, (Dialogs dialogs) {
-                        switch (dialogs) {
-                          case Dialogs.Subscription_Successful:
-                            final name = auth != null ? auth.displayName : "";
-
-                            return dialog(
-                                padding: 16,
-                                height: 180,
-                                width: 180 * goldenRatio,
-                                child: layout(child: Column(
-                                  crossAxisAlignment: axis.cross.start,
-                                  children: [
-                                    text("Welcome $name", size: 20, weight: bold),
-                                    height16,
-                                    text("Thank you very much for subscribing to gamestream"),
-                                  ],
+                          if (account != null && subscriptionExpired)
+                            Row(
+                              children: [
+                                onPressed(
+                                  callback: actions.showDialogSubscription,
+                                  child: border(
+                                      color: colours.red,
+                                      child: text("Your subscription expired on ${dateFormat.format(account.subscriptionExpirationDate!)}", color: colours.red)),
                                 ),
-                                  bottomRight: button("Great", (){
-                                    game.dialog.value = Dialogs.Games;
-                                  }, fillColor: colours.green),
-                                )
-                            );
+                                width8,
+                                button(text("Renew"), actions.showDialogSubscription, borderColor: colours.none),                                ],
+                            ),
+                        ],
+                      ),
+                    );
+                  }(),
+                  topRight: Row(
+                    crossAxisAlignment: axis.cross.start,
+                    mainAxisAlignment: axis.main.end,
+                    children: [
+                      // buttons.region,
+                      // width16,
+                      if (!authenticated) buttons.login,
+                      if (authenticated)  mouseOver(builder: (BuildContext context, bool mouseOver) {
+                        return mouseOver ? Column(
+                          children: [
+                            buttons.buildAccount(mouseOver),
+                            buttons.showDialogAccount,
+                            buttons.logout,
+                          ],
+                        ) : buttons.account;
+                      }),
+                    ],
+                  ),
+                  // bottomRight: buttons.region,
+                  bottomLeft: dev(onHover((bool hovering){
 
-                          case Dialogs.Change_Region:
-                            return dialog(
+                    return Container(
+                      width: style.buttonWidth,
+                      child: Column(
+                        crossAxisAlignment: axis.cross.start,
+                        children: [
+                          if (hovering) ...[
+                            widgets.theme,
+                            buttons.showDialogSubscribed,
+                            buttons.loginTestUser01,
+                            buttons.loginTestUser02,
+                            buttons.loginTestUser03,
+                            buttons.spawnRandomUser,
+                            // button("Logging In", (){
+                            //   game.signingIn.value = true;
+                            // }),
+                            buttons.editor,
+                          ],
+                          border(child: "Debug")
+                        ],
+                      ),
+                    );
+                  }
+                  )),
+                  child: WatchBuilder(game.region, (Region serverType) {
+                    if (serverType == Region.None) {
+                      return _views.selectRegion;
+                    }
+                    return WatchBuilder(game.dialog, (Dialogs dialogs) {
+                      switch (dialogs) {
+                        case Dialogs.Subscription_Successful:
+                          final name = auth != null ? auth.displayName : "";
+
+                          return dialog(
+                              padding: 16,
+                              height: 180,
+                              width: 180 * goldenRatio,
+                              child: layout(child: Column(
+                                crossAxisAlignment: axis.cross.start,
+                                children: [
+                                  text("Welcome $name", size: 20, weight: bold),
+                                  height16,
+                                  text("Thank you very much for subscribing to gamestream"),
+                                ],
+                              ),
+                                bottomRight: button("Great", (){
+                                  game.dialog.value = Dialogs.Games;
+                                }, fillColor: colours.green),
+                              )
+                          );
+
+                        case Dialogs.Change_Region:
+                          return dialog(
                               height: 500,
                               padding: 16,
                               borderColor: colours.none,
                               color: colours.white05,
                               child: layout(
-                                bottomRight: closeDialogButton,
-                                child: Column(
-                                  crossAxisAlignment: axis.cross.start,
-                                  children: [
-                                    border(
-                                        color: colours.white618,
-                                        child: text("For best performance select the region which is nearest to you", color: colours.white60, italic: true,
-                                          size: 15,
-                                        )),
-                                    height32,
-                                    ...selectableRegions.map((region){
-                                    return button(enumString(region), (){
-                                      game.region.value = region;
-                                      setDialogGames();
-                                    },
-                                        fillColor: region == game.region.value ? colours.black20 : colours.white05,
-                                        borderColor: colours.none,
-                                        fillColorMouseOver: colours.green,
-                                        margin: const EdgeInsets.only(bottom: 8));
-                                  }).toList()],
-                                )
-                              )
-                            );
-
-                          case Dialogs.Login_Error:
-                            return dialog(
-                              child: layout(child: text("Login Error"),
-                              bottomRight: backButton)
-                            );
-
-                          case Dialogs.Change_Display_Name:
-
-                            if (account != null && account.displayName != null){
-                              nameController.text = account.displayName!;
-                            }else{
-                              nameController.text = "";
-                            }
-
-                            return dialog(
-                              child: layout(
-                                child: TextField(
-                                  controller: nameController,
-                                ),
-                                bottomLeft: button("Save", (){}),
-                                bottomRight: button("Cancel", setDialogGames, borderColor: colours.none),
-                              ),
-                            );
-
-                          case Dialogs.Subscription:
-                          // @build subscription dialog
-                            if (account == null) {
-                              return layout(
-                                bottomLeft: buttons.login,
-                                bottomRight: button("Close", actions.showDialogGames),
-                                child: dialog(
-                                    child: Column(
-                                      crossAxisAlignment: axis.cross.start,
-                                      children: [
-                                        border(child: text("ACCOUNT")),
-                                        height16,
-                                        text("Authentication Required"),
-                                      ],
-                                    )
-                                ),
-                              );
-                            }
-
-                            // final formattedSubscription = dateFormat.format(account.subscriptionExpirationDate!);
-
-                            return dialog(
-                              color: colours.white05,
-                              borderColor: colours.none,
-                              padding: 16,
-                              height: 450,
-                              child: layout(
-                                bottomLeft: _buildSubscriptionStatus(account.subscriptionStatus),
-                                  bottomRight: button(text('back', weight: bold), () {
-                                    game.dialog.value = Dialogs.Games;
-                                  }, fillColor: colours.none,
-
-                                  ),
+                                  bottomRight: closeDialogButton,
                                   child: Column(
                                     crossAxisAlignment: axis.cross.start,
                                     children: [
-                                      text("ACCOUNT",
-                                          size: 30,
-                                          weight: bold),
+                                      border(
+                                          color: colours.white618,
+                                          child: text("For best performance select the region which is nearest to you", color: colours.white60, italic: true,
+                                            size: 15,
+                                          )),
                                       height32,
-                                      text("Public Name"),
+                                      ...selectableRegions.map((region){
+                                        return button(enumString(region), (){
+                                          game.region.value = region;
+                                          setDialogGames();
+                                        },
+                                            fillColor: region == game.region.value ? colours.black20 : colours.white05,
+                                            borderColor: colours.none,
+                                            fillColorMouseOver: colours.green,
+                                            margin: const EdgeInsets.only(bottom: 8));
+                                      }).toList()],
+                                  )
+                              )
+                          );
 
-                                      Builder(
+                        case Dialogs.Login_Error:
+                          return dialog(
+                              child: layout(child: text("Login Error"),
+                                  bottomRight: backButton)
+                          );
+
+                        case Dialogs.Change_Display_Name:
+
+                          if (account != null && account.publicName != null){
+                            nameController.text = account.publicName!;
+                          }else{
+                            nameController.text = "";
+                          }
+
+                          return dialog(
+                            child: layout(
+                              child: TextField(
+                                controller: nameController,
+                              ),
+                              bottomLeft: button("Save", (){}),
+                              bottomRight: button("Cancel", setDialogGames, borderColor: colours.none),
+                            ),
+                          );
+
+                        case Dialogs.Subscription:
+                        // @build subscription dialog
+                          if (account == null) {
+                            return layout(
+                              bottomLeft: buttons.login,
+                              bottomRight: button("Close", actions.showDialogGames),
+                              child: dialog(
+                                  child: Column(
+                                    crossAxisAlignment: axis.cross.start,
+                                    children: [
+                                      border(child: text("ACCOUNT")),
+                                      height16,
+                                      text("Authentication Required"),
+                                    ],
+                                  )
+                              ),
+                            );
+                          }
+
+                          // final formattedSubscription = dateFormat.format(account.subscriptionExpirationDate!);
+
+                          return dialog(
+                            color: colours.white05,
+                            borderColor: colours.none,
+                            padding: 16,
+                            height: 450,
+                            child: layout(
+                                bottomLeft: _buildSubscriptionStatus(account.subscriptionStatus),
+                                bottomRight: button(text('back', weight: bold), () {
+                                  game.dialog.value = Dialogs.Games;
+                                }, fillColor: colours.none,
+
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: axis.cross.start,
+                                  children: [
+                                    text("ACCOUNT",
+                                        size: 30,
+                                        weight: bold),
+                                    height32,
+                                    text("Public Name"),
+
+                                    Builder(
                                         builder: (context) {
 
                                           String? errorMessage;
 
                                           return StatefulBuilder(
                                               builder: (context, setState) {
-                                            return WatchBuilder(_editingName,
-                                                (editing) {
-                                              return onHover((hovering) {
-                                                if (_editingName.value) {
-                                                  if (account.displayName != null) {
-                                                    _nameController.text =
-                                                        account.displayName!;
-                                                  } else {
-                                                    _nameController.text = "";
-                                                  }
+                                                return WatchBuilder(_editingName,
+                                                        (editing) {
+                                                      return onHover((hovering) {
+                                                        if (_editingName.value) {
+                                                          if (account.publicName != null) {
+                                                            _nameController.text =
+                                                            account.publicName!;
+                                                          } else {
+                                                            _nameController.text = "";
+                                                          }
 
-                                                  return Column(
-                                                    children: [
-                                                      if (errorMessage != null)
-                                                        text(errorMessage, color: colours.red),
-                                                      Row(
-                                                        children: [
-                                                          Container(
-                                                              width: 200,
-                                                              child: TextField(
-                                                                style: TextStyle(
-                                                                    color: colours
-                                                                        .white80),
-                                                                controller:
-                                                                    _nameController,
-                                                                cursorColor:
-                                                                    colours.green,
-                                                              )),
-                                                          button("Save", () async {
-                                                            errorMessage = null;
-                                                            await userService
-                                                                .patchDisplayName(
-                                                                    userId:
+                                                          return Column(
+                                                            children: [
+                                                              if (errorMessage != null)
+                                                                text(errorMessage, color: colours.red),
+                                                              Row(
+                                                                children: [
+                                                                  Container(
+                                                                      width: 200,
+                                                                      child: TextField(
+                                                                        style: TextStyle(
+                                                                            color: colours
+                                                                                .white80),
+                                                                        controller:
+                                                                        _nameController,
+                                                                        cursorColor:
+                                                                        colours.green,
+                                                                      )),
+                                                                  button("Save", () async {
+                                                                    print("Save Pressed");
+                                                                    await userService
+                                                                        .patchDisplayName(
+                                                                        userId:
                                                                         account.userId,
-                                                                    displayName:
+                                                                        displayName:
                                                                         _nameController
                                                                             .text)
-                                                                .then((response) {
-                                                              final error =
-                                                                  response['error'];
+                                                                        .then((response) {
+                                                                      final error =
+                                                                      response['error'];
+                                                                      game.errorMessage.value = "Name already taken";
 
-                                                              if (error != null) {
-                                                                if (error ==
-                                                                    'display_name_already_taken') {
-                                                                  // pub
-                                                                }
-                                                              }
-                                                              _editingName.value =
-                                                                  false;
-                                                            }).catchError((error) {
-                                                              // pub and error occurred
-                                                            });
-                                                            await refreshAccountDetails();
-                                                          }),
-                                                          width8,
-                                                          button("cancel", () {
-                                                            errorMessage = null;
-                                                            _editingName.value = false;
-                                                          }, borderColor: colours.none)
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  );
-                                                }
+                                                                      if (error != null) {
+                                                                        if (error ==
+                                                                            'display_name_already_taken') {
+                                                                          game.errorMessage.value = "Name already taken";
+                                                                        }
+                                                                      }
 
-                                                return Row(
-                                                  children: [
-                                                    text(account.displayName,
-                                                        color: colours.white60,
-                                                        onPressed: () {
-                                                      _editingName.value = true;
-                                                    }),
-                                                    if (hovering) ...[
-                                                      width8,
-                                                      onPressed(
-                                                          child: buildIconEdit(),
-                                                          callback: () {
-                                                            _editingName.value =
-                                                                true;
-                                                          })
-                                                    ]
-                                                  ],
-                                                );
+                                                                      final status = response['status'];
+
+                                                                      if (status == 'success'){
+                                                                        game.errorMessage.value = "Success";
+                                                                      }
+                                                                      _editingName.value = false;
+                                                                    }).catchError((error) {
+                                                                      game.errorMessage.value =  error.toString();
+                                                                    });
+                                                                    await refreshAccountDetails();
+                                                                  }),
+                                                                  width8,
+                                                                  button("cancel", () {
+                                                                    errorMessage = null;
+                                                                    _editingName.value = false;
+                                                                  }, borderColor: colours.none)
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          );
+                                                        }
+
+                                                        return Row(
+                                                          children: [
+                                                            text(account.publicName,
+                                                                color: colours.white60,
+                                                                onPressed: () {
+                                                                  _editingName.value = true;
+                                                                }),
+                                                            if (hovering) ...[
+                                                              width8,
+                                                              onPressed(
+                                                                  child: buildIconEdit(),
+                                                                  callback: () {
+                                                                    _editingName.value =
+                                                                    true;
+                                                                  })
+                                                            ]
+                                                          ],
+                                                        );
+                                                      });
+                                                    });
                                               });
-                                            });
-                                          });
                                         }
+                                    ),
+                                    height16,
+                                    text("Private Name"),
+                                    text(account.publicName ?? "None", color: colours.white60),
+                                    height16,
+                                    text("Email"),
+                                    text(account.email ?? "None", color: colours.white60),
+                                    height16,
+                                    if (!subscriptionExpired) text("Automatically Renews"),
+                                    if (subscriptionExpired)
+                                      Row(
+                                        children: [
+                                          text("Expired", color: colours.red),
+                                          width8,
+                                          button("Renew", () {},
+                                              fillColor: colours.green)
+                                        ],
                                       ),
-                                      height16,
-                                      text("Name"),
-                                      text(account.displayName ?? "None", color: colours.white60),
-                                      height16,
-                                      text("Email"),
-                                      text(account.email ?? "None", color: colours.white60),
-                                      height16,
-                                      if (!subscriptionExpired) text("Automatically Renews"),
-                                      if (subscriptionExpired)
-                                        Row(
-                                          children: [
-                                            text("Expired", color: colours.red),
-                                            width8,
-                                            button("Renew", () {},
-                                                fillColor: colours.green)
-                                          ],
-                                        ),
-                                      if (account.subscriptionActive)
-                                        text(dateFormat.format(account.subscriptionExpirationDate!), color: colours.white60),
-                                    ],
-                                  )),
+                                    if (account.subscriptionActive)
+                                      text(dateFormat.format(account.subscriptionExpirationDate!), color: colours.white60),
+                                  ],
+                                )),
+
+                          );
+                        case Dialogs.Login:
+                          return buildLoginDialog();
+                        case Dialogs.Invalid_Arguments:
+                          return dialog(child: text("Invalid Arguments"));
+                        case Dialogs.Subscription_Required:
+                          return dialog(child: text("Subscription Required"));
+                        case Dialogs.Games:
+                          return WatchBuilder(game.type, (GameType gameType) {
+                            if (gameType == GameType.None) {
+                              return build.gamesList(subscriptionActive);
+                            }
+
+                            bool isFreeToPlay = freeToPlay.contains(gameType);
+
+                            final playButton = button(text("Play", size: 25, weight: bold, color: colours.white80),
+                                actions.connectToSelectedGame,
+                                borderWidth: 2,
+                                borderColor: colours.white618
 
                             );
-                          case Dialogs.Login:
-                            return buildLoginDialog();
-                          case Dialogs.Invalid_Arguments:
-                            return dialog(child: text("Invalid Arguments"));
-                          case Dialogs.Subscription_Required:
-                            return dialog(child: text("Subscription Required"));
-                          case Dialogs.Games:
-                            return WatchBuilder(game.type, (GameType gameType) {
-                              if (gameType == GameType.None) {
-                                return build.gamesList(subscriptionActive);
-                              }
 
-                              bool isFreeToPlay = freeToPlay.contains(gameType);
+                            final loginButton = button(text("Login", size: 25, weight: bold),
+                                actions.showDialogLogin,
+                                fillColor: colours.green,
+                                borderWidth: 2
+                            );
 
-                              final playButton = button(text("Play", size: 25, weight: bold, color: colours.white80),
-                                  actions.connectToSelectedGame,
-                                  borderWidth: 2,
-                                  borderColor: colours.white618
+                            final subscribeButton = button(text("Subscribe", size: 25, weight: bold),
+                                actions.connectToSelectedGame,
+                                fillColor: colours.green,
+                                borderWidth: 2
+                            );
 
-                              );
-
-                              final loginButton = button(text("Login", size: 25, weight: bold),
-                                  actions.showDialogLogin,
-                                  fillColor: colours.green,
-                                  borderWidth: 2
-                              );
-
-                              final subscribeButton = button(text("Subscribe", size: 25, weight: bold),
-                                  actions.connectToSelectedGame,
-                                  fillColor: colours.green,
-                                  borderWidth: 2
-                              );
-
-                              return dialog(
-                                  color: colours.white05,
-                                  borderColor: colours.none,
-                                  padding: 16,
-                                  height: 300,
-                                  width: 300 * goldenRatio,
-                                  child: layout(
+                            return dialog(
+                                color: colours.white05,
+                                borderColor: colours.none,
+                                padding: 16,
+                                height: 300,
+                                width: 300 * goldenRatio,
+                                child: layout(
                                     topRight: Tooltip(
                                       message: "Change Region",
                                       child: button(text(enumString(game.region.value),
@@ -477,48 +532,47 @@ Widget buildView(BuildContext context) {
                                         game.dialog.value = Dialogs.Change_Region;
                                       },
                                         borderColor: colours.none,
-                                          fillColor: colours.black20,
+                                        fillColor: colours.black20,
                                       ),
                                     ),
-                                  bottomLeft: isFreeToPlay
-                                      ? playButton
-                                      : !authenticated
+                                    bottomLeft: isFreeToPlay
+                                        ? playButton
+                                        : !authenticated
                                         ? loginButton
                                         : !subscriptionActive
-                                          ? subscribeButton
-                                          : playButton,
-                                  bottomRight: button(text("Back", color: colours.white618), actions.deselectGameType,
+                                        ? subscribeButton
+                                        : playButton,
+                                    bottomRight: button(text("Back", color: colours.white618), actions.deselectGameType,
                                       fillColor: colours.none,
                                       borderColor: colours.none,
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment: axis.cross.start,
-                                    children: [
-                                      text(gameTypeNames[gameType], size: 25, color: colours.white80),
-                                      height32,
-                                      if (!isFreeToPlay && !authenticated)
-                                        border(child: text(
-                                            "* This is a premium game which requires an active subscription to play",
-                                            color: colours.white60
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment: axis.cross.start,
+                                      children: [
+                                        text(gameTypeNames[gameType], size: 25, color: colours.white80),
+                                        height32,
+                                        if (!isFreeToPlay && !authenticated)
+                                          border(child: text(
+                                              "* This is a premium game which requires an active subscription to play",
+                                              color: colours.white60
                                           ),
-                                        color: colours.white80
-                                        )
-                                    ],
-                                  )
-                              ));
-                            });
-                          case Dialogs.Account:
-                            return _views.account;
-                          case Dialogs.Confirm_Logout:
-                            return dialog(child: text("Confirm Logout"));
-                        }
-                      });
-                    }));
+                                              color: colours.white80
+                                          )
+                                      ],
+                                    )
+                                ));
+                          });
+                        case Dialogs.Account:
+                          return _views.account;
+                        case Dialogs.Confirm_Logout:
+                          return dialog(child: text("Confirm Logout"));
+                      }
+                    });
+                  }));
 
-              default:
-                return _views.connection;
-            }
-          });
+            default:
+              return _views.connection;
+          }
         });
       });
     });

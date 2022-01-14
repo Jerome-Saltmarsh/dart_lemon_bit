@@ -79,7 +79,7 @@ class _Firestore {
       throw Exception("user fields null");
     }
 
-    fields[fieldNames.displayName] = Value(stringValue: displayName);
+    fields[fieldNames.public_name] = Value(stringValue: displayName);
     await saveUser(user);
     print("username patched successfully");
     return user;
@@ -149,8 +149,9 @@ class _Firestore {
 
   Future<Document> createUser({
     required String userId,
-    required String displayName,
-    String? email,
+    required String privateName,
+    required String publicName,
+    required String email,
   }) async {
     print("database.createUser('$userId')");
     if (userId.isEmpty){
@@ -160,10 +161,11 @@ class _Firestore {
     final document = Document(
         createTime: _getTimestampNow(),
         fields: {
-          fieldNames.displayName: Value(stringValue: displayName),
-          fieldNames.accountCreation_date: Value(timestampValue: _getTimestampNow()),
-          if (email != null)
-            fieldNames.email: Value(stringValue: email),
+          fieldNames.private_name: Value(stringValue: privateName),
+          fieldNames.public_name: Value(stringValue: publicName),
+          fieldNames.account_creation_date: Value(timestampValue: _getTimestampNow()),
+          fieldNames.email: Value(stringValue: email),
+
         }
     );
 
@@ -191,7 +193,7 @@ const _oneSecond = Duration(seconds: 1);
 final _FieldNames fieldNames = _FieldNames();
 
 class _FieldNames {
-  final String accountCreation_date = "account_creation_date";
+  final String account_creation_date = "account_creation_date";
   final String subscriptionExpirationDate = "subscription_expiration_date";
   final String subscriptionCreatedDate = "subscription_created_date";
   final String subscriptionStatus = "subscription_status";
@@ -199,7 +201,8 @@ class _FieldNames {
   final String stripeCustomerId = 'stripe_customer_id';
   final String stripePaymentEmail = 'stripe_payment_email';
   final String email = 'email';
-  final String displayName = 'display_name';
+  final String public_name = 'public_name';
+  final String private_name = 'private_name';
 }
 
 String buildDocumentName({

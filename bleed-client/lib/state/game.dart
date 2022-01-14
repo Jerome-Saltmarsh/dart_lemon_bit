@@ -47,6 +47,7 @@ enum LoginStatus {
 }
 
 class _Game {
+  final Watch<String?> errorMessage = Watch(null);
   final Watch<LoginStatus> signingIn = Watch(LoginStatus.Logged_Out);
   final Watch<Account?> account = Watch(null);
   final Watch<Dialogs> dialog = Watch(Dialogs.Games);

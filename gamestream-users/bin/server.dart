@@ -49,16 +49,16 @@ FutureOr<Response> handleRequest(Request request) async {
 
       if (method == 'FIND'){
         return error(response, 'disabled');
-        print("(server) handling find request");
-        final displayName = params[fieldNames.displayName];
-        if (displayName == null){
-          return error(response, 'display_name_required');
-        }
-        final result = await firestore.findUser(displayName: displayName);
-        if (result == null){
-          return error(response, 'not_found');
-        }
-        return ok(result.fields);
+        // print("(server) handling find request");
+        // final displayName = params[fieldNames.displayName];
+        // if (displayName == null){
+        //   return error(response, 'display_name_required');
+        // }
+        // final result = await firestore.findUser(displayName: displayName);
+        // if (result == null){
+        //   return error(response, 'not_found');
+        // }
+        // return ok(result.fields);
       }
 
       final id = params['id'];
@@ -69,32 +69,31 @@ FutureOr<Response> handleRequest(Request request) async {
       response['id'] = id;
       final user = await firestore.findUserById(id);
 
-      if (request.method == 'PATCH'){
+      if (method == 'PATCH'){
 
-        var displayName = params[fieldNames.displayName];
+        var publicName = params[fieldNames.public_name];
 
-        if (displayName == null){
-          response['fieldName'] = 'display_name';
-          return error(response, 'field_missing');
+        if (publicName == null){
+          return errorFieldMissing(response, fieldNames.public_name);
         }
 
-        displayName = displayName.trim();
-        displayName = displayName.replaceAll(" ", "_");
+        publicName = publicName.trim();
+        publicName = publicName.replaceAll(" ", "_");
 
-        if (displayName.length < 4){
+        if (publicName.length < 4){
           return error(response, 'display_name_too_short');
         }
 
-        final existing = await firestore.findUser(displayName: displayName);
+        final existing = await firestore.findUser(displayName: publicName);
         if (existing != null){
           return error(response, 'display_name_already_taken');
         }
 
-        await firestore.patchDisplayName(userId: id, displayName: displayName);
+        await firestore.patchDisplayName(userId: id, displayName: publicName);
         response['status'] = 'success';
         response['request'] = 'patch';
         response['field'] = 'display_name';
-        response['value'] = displayName;
+        response['value'] = publicName;
         return ok(response);
       }
 
@@ -114,9 +113,14 @@ FutureOr<Response> handleRequest(Request request) async {
           return error(response, 'fields_empty');
         }
 
-        final displayName = fields[fieldNames.displayName];
-        if (displayName != null){
-          response[fieldNames.displayName] = displayName.stringValue;
+        final publicName = fields[fieldNames.public_name];
+        if (publicName != null){
+          response[fieldNames.public_name] = publicName.stringValue;
+        }
+
+        final privateName = fields[fieldNames.private_name];
+        if (privateName != null){
+          response[fieldNames.private_name] = privateName.stringValue;
         }
 
         final subscriptionExpires = fields[fieldNames.subscriptionExpirationDate];
@@ -147,21 +151,25 @@ FutureOr<Response> handleRequest(Request request) async {
           return error(response, 'already_exists');
         }
 
-        final email = params['email'];
+        final email = params[fieldNames.email];
 
         if (email == null){
-          error(response, 'email_required');
+          return errorFieldMissing(response, fieldNames.email);
         }
 
+        final publicName = generateRandomName();
+        final privateName = params[fieldNames.private_name] ?? publicName;
         final newUser = await firestore.createUser(
-            userId: id,
-            email: email,
-            displayName: generateRandomName()
+          userId: id,
+          email: email,
+          privateName: privateName,
+          publicName: publicName,
         );
-
         return ok(newUser);
       } // POST
-      break;
+
+      response['method'] = method;
+      return error(response, "unknown_method");
 
     default:
       break;
@@ -181,6 +189,12 @@ Response ok(response){
 Response error(response, String error){
   response['error'] = error;
   return Response.ok(jsonEncode(response), headers: headersJson);
+}
+
+Response errorFieldMissing(response, String fieldName){
+  response['error'] = error;
+  response['fieldName'] = fieldName;
+  return error(response, 'field_missing');
 }
 
 typedef Json = Map<String, dynamic>;

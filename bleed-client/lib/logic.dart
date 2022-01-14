@@ -13,9 +13,13 @@ import 'package:bleed_client/state/game.dart';
 
 import 'common/GameType.dart';
 
-final _Logic actions = _Logic();
+final _Actions actions = _Actions();
 
-class _Logic {
+class _Actions {
+
+  void closeErrorMessage(){
+    game.errorMessage.value = null;
+  }
 
   void play(GameType gameType){
     game.type.value = gameType;
