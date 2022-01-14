@@ -21,6 +21,10 @@ class _Actions {
     game.dialog.value = Dialogs.Change_Public_Name;
   }
 
+  void showDialogAccount(){
+    game.dialog.value = Dialogs.Account;
+  }
+
   void closeErrorMessage(){
     game.errorMessage.value = null;
   }
@@ -83,7 +87,7 @@ class _Actions {
   }
 
   void showDialogSubscription(){
-    game.dialog.value = Dialogs.Subscription;
+    game.dialog.value = Dialogs.Account;
   }
 
   void openStripeCheckout() {

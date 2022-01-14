@@ -1,11 +1,10 @@
 enum Dialogs {
   Games,
-  Account,
   Subscription_Required,
   Invalid_Arguments,
   Confirm_Logout,
   Login,
-  Subscription,
+  Account,
   Subscription_Successful,
   Welcome,
   Change_Public_Name,

@@ -333,7 +333,7 @@ Widget buildWatchAuthentication(){
                             ),
                           );
 
-                        case Dialogs.Subscription:
+                        case Dialogs.Account:
                         // @build subscription dialog
                           if (account == null) {
                             return layout(
@@ -500,8 +500,6 @@ Widget buildWatchAuthentication(){
                                     )
                                 ));
                           });
-                        case Dialogs.Account:
-                          return _views.account;
                         case Dialogs.Confirm_Logout:
                           return dialog(child: text("Confirm Logout"));
                       }
@@ -521,9 +519,7 @@ final _Views _views = _Views();
 final _BuildView _buildView = _BuildView();
 
 class _Views {
-  final Widget account = _buildView.account();
   final Widget selectRegion = _buildView.selectRegion();
-  // final Widget selectGame = widgets.gamesList;
   final Widget connecting = _buildView.connecting();
   final Widget connected = _buildView.connected();
   final Widget connection = _buildView.connection();
@@ -591,26 +587,6 @@ class _BuildView {
             return text(enumString(gameStatus));
         }
       });
-    });
-  }
-
-  Widget account() {
-    return NullableWatchBuilder<Authentication?>(authentication,
-        (Authentication? authorization) {
-      if (authorization == null) {
-        return dialog(child: text("No one logged in"));
-      }
-
-      return dialog(
-          child: Column(
-        crossAxisAlignment: axis.cross.start,
-        children: [
-          text('${authorization.displayName}`s Account', size: 25),
-          text("Card Number"),
-          Container(width: 250, child: TextField()),
-          button('Subscribe', () {}),
-        ],
-      ));
     });
   }
 

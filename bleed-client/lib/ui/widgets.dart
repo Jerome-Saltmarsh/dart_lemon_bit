@@ -222,8 +222,8 @@ class _Buttons {
   );
 
   final Widget account = button(_iconSettings, (){
-    if (game.dialog.value != Dialogs.Subscription){
-      game.dialog.value = Dialogs.Subscription;
+    if (game.dialog.value != Dialogs.Account){
+      game.dialog.value = Dialogs.Account;
     }else{
       game.dialog.value = Dialogs.Games;
     }
@@ -239,8 +239,8 @@ class _Buttons {
 
   Widget buildAccount(bool hovering){
     return button(_iconSettings, (){
-      if (game.dialog.value != Dialogs.Subscription){
-        game.dialog.value = Dialogs.Subscription;
+      if (game.dialog.value != Dialogs.Account){
+        game.dialog.value = Dialogs.Account;
       }else{
         game.dialog.value = Dialogs.Games;
       }
@@ -273,7 +273,7 @@ class _Buttons {
       );
 
   final Widget showDialogAccount = button("Account", (){
-    game.dialog.value = Dialogs.Subscription;
+    game.dialog.value = Dialogs.Account;
   },
       width: style.buttonWidth,
       height: style.buttonHeight,

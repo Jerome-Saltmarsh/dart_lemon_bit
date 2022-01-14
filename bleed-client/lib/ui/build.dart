@@ -12,6 +12,7 @@ import 'package:bleed_client/styles.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/state/decorationImages.dart';
 import 'package:bleed_client/ui/style.dart';
+import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -228,7 +229,13 @@ class _Build {
     return onPressed(
       callback: (){
         game.type.value = GameType.None;
-        actions.showDialogGames();
+        if (game.dialog.value == Dialogs.Games){
+          actions.showDialogAccount();
+        }else{
+          actions.showDialogGames();
+        }
+
+
       },
       child: border(
         height: style.buttonHeight,
