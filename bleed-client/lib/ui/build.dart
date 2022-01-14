@@ -225,11 +225,17 @@ class _Build {
 
     // return _text;
 
-    return border(
-      height: style.buttonHeight,
-      radius: borderRadius2,
-      child: _text,
-      borderWidth: 2,
+    return onPressed(
+      callback: (){
+        game.type.value = GameType.None;
+        actions.showDialogGames();
+      },
+      child: border(
+        height: style.buttonHeight,
+        radius: borderRadius2,
+        child: _text,
+        borderWidth: 2,
+      ),
     );
   }
 
