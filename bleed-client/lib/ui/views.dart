@@ -178,12 +178,15 @@ Widget buildWatchAuthentication(){
                           mainAxisAlignment: axis.main.center,
                           children: [
                             if (account.subscriptionNone)
-                              Row(
-                                children: [
-                                  widgets.subscriptionButton,
-                                  width16,
-                                  text("\$9.99 per month to unlock all games", color: colours.white80),
-                                ],
+                              onHover((hovering){
+                                return Row(
+                                  children: [
+                                    widgets.subscriptionButton,
+                                    width16,
+                                    onPressed(child: text("\$9.99 per month to unlock all games", color: colours.white80, underline: hovering), callback: actions.openStripeCheckout),
+                                  ],
+                                );
+                              }
                               ),
                             if (account.subscriptionExpired)
                               Row(
