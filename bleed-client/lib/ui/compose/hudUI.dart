@@ -281,7 +281,7 @@ Widget buildTopRight() {
 }
 
 Widget buildIconEdit({
-  double size = 20
+  double size = 19
 }) {
   return buildDecorationImage(
       color: colours.none,

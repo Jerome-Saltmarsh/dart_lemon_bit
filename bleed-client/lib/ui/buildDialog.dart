@@ -7,6 +7,7 @@ import 'package:bleed_client/ui/constants.dart';
 import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
+import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
@@ -57,7 +58,14 @@ Widget buildDialogAccount(){
               height32,
               _buildRow("Private Name", account.privateName),
               height8,
-              onPressed(child: _buildRow("Public Name", account.publicName), callback: actions.showDialogChangePublicName),
+              onHover((hovering){
+                return onPressed(child: _buildRow("Public Name", Row(
+                  mainAxisAlignment: axis.main.apart,
+                  children: [
+                    if (hovering) buildIconEdit(),
+                    if (!hovering) text(""),
+                    text(account.publicName, color: colours.white60, size: 16)],)), callback: actions.showDialogChangePublicName);
+              }),
               height8,
               _buildRow("Email", account.email),
               height8,
@@ -115,12 +123,13 @@ Widget _buildSubscriptionStatus(SubscriptionStatus status){
   }
 }
 
-Widget _buildRow(String title, String value){
+Widget _buildRow(String title, dynamic value){
   return Row(
     mainAxisAlignment: axis.main.apart,
     children: [
       text(title, color: colours.white85),
       Container(
+        height: 40,
           alignment: Alignment.centerRight,
           padding: const EdgeInsets.all(8),
           width: style.dialogMediumWidth * goldenRatio_0618,
@@ -128,7 +137,7 @@ Widget _buildRow(String title, String value){
             color: colours.black382,
             borderRadius: borderRadius4,
           ),
-          child: text(value, color: colours.white60, size: 16)),
+          child: value is Widget ? value : text(value, color: colours.white60, size: 16)),
     ],
   );
 }

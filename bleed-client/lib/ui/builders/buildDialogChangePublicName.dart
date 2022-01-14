@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
+import '../../actions.dart';
 import '../../flutterkit.dart';
 import '../../styles.dart';
 import '../widgets.dart';
@@ -27,7 +28,13 @@ Widget buildDialogChangePublicName() {
             children: [
               buildDialogTitle("OOPS!"),
               height16,
-              text("An active subscription is needed to change your public name", color: colours.white618),
+              Row(
+                children: [
+                  text("An ", color: colours.white618),
+                  text("active subscription", color: colours.green, bold: true, onPressed: actions.openStripeCheckout),
+                  text(" is needed to change your public name", color: colours.white618),
+                ],
+              ),
             ],
           ));
     }
