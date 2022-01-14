@@ -464,7 +464,7 @@ Widget buildWatchAuthentication(){
                                     ),
                                     height16,
                                     text("Private Name"),
-                                    text(account.publicName ?? "None", color: colours.white60),
+                                    text(account.privateName ?? "None", color: colours.white60),
                                     height16,
                                     text("Email"),
                                     text(account.email ?? "None", color: colours.white60),

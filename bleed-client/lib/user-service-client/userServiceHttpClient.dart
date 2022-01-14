@@ -23,7 +23,7 @@ class UserServiceHttpClient {
     required String email,
     String? privateName
   }) async {
-    print("createAccount()");
+    print("createAccount(email: '$email', privateName: '$privateName')");
     var url = Uri.https(_host, '/users', {
       'id': userId,
       'email': email,

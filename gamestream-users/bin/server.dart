@@ -113,6 +113,11 @@ FutureOr<Response> handleRequest(Request request) async {
           return error(response, 'fields_empty');
         }
 
+        final email = fields[fieldNames.email];
+        if (email != null){
+          response[fieldNames.email] = email.stringValue;
+        }
+
         final publicName = fields[fieldNames.public_name];
         if (publicName != null){
           response[fieldNames.public_name] = publicName.stringValue;
