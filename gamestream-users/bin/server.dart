@@ -1,6 +1,7 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:gamestream_users/firestore.dart';
 import 'package:shelf/shelf.dart';
@@ -272,3 +273,9 @@ class _StripeWebhooks {
   }
 }
 
+// Generate name serve
+final _random = Random();
+
+String generateRandomName(){
+  return 'Player_${100000 + _random.nextInt(999999999)}';
+}

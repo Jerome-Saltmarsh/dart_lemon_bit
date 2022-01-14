@@ -1,8 +1,7 @@
 import 'dart:async';
-import 'dart:math';
 
-import 'package:googleapis_auth/auth_io.dart';
 import 'package:googleapis/firestore/v1.dart';
+import 'package:googleapis_auth/auth_io.dart';
 
 final _Firestore firestore = _Firestore();
 
@@ -217,15 +216,6 @@ String buildParentName({
 }){
   return 'projects/$projectId/databases/$databaseName/documents';
 }
-
-
-// Generate name serve
-final _random = Random();
-
-String generateRandomName(){
-  return 'New_Player_${10000 + _random.nextInt(99999999)}';
-}
-
 
 
 //   Future<String> _getProjectId() async {
