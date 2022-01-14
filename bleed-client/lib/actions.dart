@@ -95,7 +95,7 @@ class _Actions {
     if (!authenticated){
       throw Exception("User must be authenticated to open stripe checkout");
     }
-    game.signingIn.value = LoginStatus.Opening_Stripe;
+    game.signingIn.value = LoginStatus.Opening_Secure_Payment;
     stripeCheckout(
         userId: authentication.value!.userId,
         email: authentication.value!.email
