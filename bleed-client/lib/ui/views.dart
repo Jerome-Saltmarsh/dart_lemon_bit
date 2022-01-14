@@ -264,6 +264,22 @@ Widget buildWatchAuthentication(){
                               )
                           );
 
+                        case Dialogs.Welcome:
+                          return dialog(
+                            child: layout(
+                              child: Column(
+                                children: [
+                                  Column(
+                                    children: [
+                                      text("WELCOME TO GAMESTREAM!"),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              bottomRight: text("Next"),
+                            )
+                          );
+
                         case Dialogs.Change_Region:
                           return dialog(
                               height: 500,
@@ -359,118 +375,36 @@ Widget buildWatchAuthentication(){
                                         size: 30,
                                         weight: bold),
                                     height32,
-                                    text("Public Name"),
-
-                                    Builder(
-                                        builder: (context) {
-
-                                          String? errorMessage;
-
-                                          return StatefulBuilder(
-                                              builder: (context, setState) {
-                                                return WatchBuilder(_editingName,
-                                                        (editing) {
-                                                      return onHover((hovering) {
-                                                        if (_editingName.value) {
-                                                          if (account.publicName != null) {
-                                                            _nameController.text =
-                                                            account.publicName!;
-                                                          } else {
-                                                            _nameController.text = "";
-                                                          }
-
-                                                          return Column(
-                                                            children: [
-                                                              if (errorMessage != null)
-                                                                text(errorMessage, color: colours.red),
-                                                              Row(
-                                                                children: [
-                                                                  Container(
-                                                                      width: 200,
-                                                                      child: TextField(
-                                                                        style: TextStyle(
-                                                                            color: colours
-                                                                                .white80),
-                                                                        controller:
-                                                                        _nameController,
-                                                                        cursorColor:
-                                                                        colours.green,
-                                                                      )),
-                                                                  button("Save", () async {
-                                                                    print("Save Pressed");
-                                                                    await userService
-                                                                        .patchDisplayName(
-                                                                        userId:
-                                                                        account.userId,
-                                                                        displayName:
-                                                                        _nameController
-                                                                            .text)
-                                                                        .then((response) {
-                                                                      final error =
-                                                                      response['error'];
-                                                                      game.errorMessage.value = "Name already taken";
-
-                                                                      if (error != null) {
-                                                                        if (error ==
-                                                                            'display_name_already_taken') {
-                                                                          game.errorMessage.value = "Name already taken";
-                                                                        }
-                                                                      }
-
-                                                                      final status = response['status'];
-
-                                                                      if (status == 'success'){
-                                                                        game.errorMessage.value = "Success";
-                                                                      }
-                                                                      _editingName.value = false;
-                                                                    }).catchError((error) {
-                                                                      game.errorMessage.value =  error.toString();
-                                                                    });
-                                                                    await refreshAccountDetails();
-                                                                  }),
-                                                                  width8,
-                                                                  button("cancel", () {
-                                                                    errorMessage = null;
-                                                                    _editingName.value = false;
-                                                                  }, borderColor: colours.none)
-                                                                ],
-                                                              ),
-                                                            ],
-                                                          );
-                                                        }
-
-                                                        return Row(
-                                                          children: [
-                                                            text(account.publicName,
-                                                                color: colours.white60,
-                                                                onPressed: () {
-                                                                  _editingName.value = true;
-                                                                }),
-                                                            if (hovering) ...[
-                                                              width8,
-                                                              onPressed(
-                                                                  child: buildIconEdit(),
-                                                                  callback: () {
-                                                                    _editingName.value =
-                                                                    true;
-                                                                  })
-                                                            ]
-                                                          ],
-                                                        );
-                                                      });
-                                                    });
-                                              });
-                                        }
-                                    ),
-                                    height16,
-                                    text("Created"),
-                                    text(formatDate(account.accountCreationDate), color: colours.white60),
-                                    height16,
                                     text("Private Name"),
-                                    text(account.privateName ?? "None", color: colours.white60),
+                                    text(account.privateName, color: colours.white60),
+                                    height16,
+                                    onHover((hovering) {
+                                      return onPressed(
+                                        callback: (){
+
+                                        },
+                                        child: Column(
+                                          crossAxisAlignment: axis.cross.start,
+                                          children: [
+                                            text("Public Name"),
+                                            Row(
+                                              children: [
+                                                text(account.publicName ?? "None",
+                                                    color: colours.white60),
+                                                if (hovering)
+                                                  margin(child: buildIconEdit(), left: 8),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    }),
                                     height16,
                                     text("Email"),
                                     text(account.email ?? "None", color: colours.white60),
+                                    height16,
+                                    text("Created"),
+                                    text(formatDate(account.accountCreationDate), color: colours.white60),
                                     height16,
                                     if (!subscriptionExpired) text("Automatically Renews"),
                                     if (subscriptionExpired)
@@ -900,4 +834,22 @@ Widget _buildSubscriptionStatus(SubscriptionStatus status){
 
 String formatDate(DateTime value){
   return dateFormat.format(value);
+}
+
+Widget margin({
+  required Widget child,
+  double left = 0,
+  double top = 0,
+  double right = 0,
+  double bottom = 0
+}){
+  return Container(
+    child: child,
+    margin: EdgeInsets.only(
+        left: left,
+        top: top,
+        right: right,
+        bottom: bottom
+    )
+  );
 }

@@ -65,6 +65,17 @@ class Events {
   void _onAccountChanged(Account? value) {
     print("events.onAccountChanged($value)");
     if (value == null) return;
+
+    final nowUtc = DateTime.now().toUtc();
+    final durationSinceAccountCreation = nowUtc.difference(value.accountCreationDate);
+    print("Duration: ${durationSinceAccountCreation.inMinutes}");
+
+    if (durationSinceAccountCreation.inMinutes <= 1){
+      game.dialog.value = Dialogs.Welcome;
+      return;
+    }
+
+
     if (!value.subscriptionActive) return;
     final flagName = 'subscription_dialog_shown_${value.userId}';
     if (storage.contains(flagName)) return;

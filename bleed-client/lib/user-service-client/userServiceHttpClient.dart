@@ -13,8 +13,8 @@ class UserServiceHttpClient {
   Future<Map<String, dynamic>> patchDisplayName({required String userId, required String displayName}) async {
     print("patchDisplayName()");
     var url = Uri.https(_host, '/users', {'id': userId, 'display_name': displayName, 'method': 'patch'});
-    final json = '{"title": "Hello"}';
-    final response = await http.patch(url, body: json, headers: _headers);
+    // final json = '{"title": "Hello"}';
+    final response = await http.patch(url, body: '', headers: _headers);
     return jsonDecode(response.body);
   }
 
