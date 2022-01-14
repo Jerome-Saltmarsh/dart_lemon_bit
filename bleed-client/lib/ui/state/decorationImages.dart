@@ -1,4 +1,5 @@
 import 'package:bleed_client/common/AbilityType.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 
 Map<AbilityType, DecorationImage> mapAbilityTypeToDecorationImage = {
@@ -17,21 +18,22 @@ Map<AbilityType, DecorationImage> mapAbilityTypeToDecorationImage = {
 final _DecorationImages decorationImages = _DecorationImages();
 
 class _DecorationImages {
-  DecorationImage edit = _png('icons/icon-edit');
-  DecorationImage play = _png('icons/icon-play');
-  DecorationImage fullscreen = _png('icon fullscreen');
-  DecorationImage google = _png('icons/google_logo');
-  DecorationImage facebook = _png('icons/icon-facebook');
-  DecorationImage royal = _png('icon-battle-royal');
-  DecorationImage mmo = _png('games/game-icon-mmo');
-  DecorationImage heroesLeague = _png('games/game-icon-heroes-league');
-  DecorationImage zombieRoyal = _png('games/game-icon-zombie-royal');
-  DecorationImage profile = _png('icons/icon-profile');
-  DecorationImage cube = _png('games/game-icon-cube-3d');
-  DecorationImage counterStrike = _png('games/game-icon-counter-strike');
-  DecorationImage atlas = _png('games/game-icon-atlas');
-  DecorationImage login = _png('icons/icon-login');
-  DecorationImage settings2 = _png('icons/icon-settings');
+  final creditCard = _png('icons/icon-credit-card');
+  final edit = _png('icons/icon-edit');
+  final play = _png('icons/icon-play');
+  final fullscreen = _png('icon fullscreen');
+  final google = _png('icons/google_logo');
+  final facebook = _png('icons/icon-facebook');
+  final royal = _png('icon-battle-royal');
+  final mmo = _png('games/game-icon-mmo');
+  final heroesLeague = _png('games/game-icon-heroes-league');
+  final zombieRoyal = _png('games/game-icon-zombie-royal');
+  final profile = _png('icons/icon-profile');
+  final cube = _png('games/game-icon-cube-3d');
+  final counterStrike = _png('games/game-icon-counter-strike');
+  final atlas = _png('games/game-icon-atlas');
+  final login = _png('icons/icon-login');
+  final settings2 = _png('icons/icon-settings');
 }
 
 DecorationImage spellIcon(String name) {
@@ -47,5 +49,30 @@ DecorationImage _png(String name) {
 DecorationImage loadDecorationImage(String name) {
   return DecorationImage(
     image: AssetImage(name),
+  );
+}
+
+Widget buildImage(String assetName, {
+  required double width,
+  required double height,
+  Color color = Colors.transparent,
+  double borderWidth = 0,
+  Color borderColor = Colors.white,
+  Radius? borderRadius,
+}){
+  return Container(
+    width: width,
+    height: height,
+    alignment: Alignment.center,
+    decoration: BoxDecoration(
+      image: DecorationImage(
+        image: AssetImage(assetName),
+      ),
+      color: color,
+      border: borderWidth > 0
+          ? Border.all(color: borderColor, width: borderWidth)
+          : null,
+      // borderRadius: borderRadius ?? Radius.circular(4),
+    ),
   );
 }

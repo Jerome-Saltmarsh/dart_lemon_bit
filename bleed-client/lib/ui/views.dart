@@ -15,6 +15,7 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
+import 'package:bleed_client/ui/state/decorationImages.dart';
 import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/ui.dart';
@@ -127,7 +128,6 @@ Widget buildWatchAuthentication(){
 
       if (loginStatus != LoginStatus.Logged_In && loginStatus != LoginStatus.Logged_Out){
         return layout(
-          // topLeft: widgets.title,
             child: fullScreen(
               child: Row(
                 mainAxisAlignment: axis.main.center,
@@ -163,34 +163,45 @@ Widget buildWatchAuthentication(){
                   padding: 16,
                   expand: true,
                   topLeft: widgets.title,
-                  top: !authenticated || subscriptionActive ? null : () {
+                  top: Builder(
+                    builder: (context) {
 
-                    return Container(
-                      width: screen.width,
-                      margin: EdgeInsets.only(top: 20),
-                      child: Row(
-                        mainAxisAlignment: axis.main.center,
-                        children: [
-                          if (!subscribed)
-                            button(text("Subscribe for \$4.99 per month to unlock all games"), actions.openStripeCheckout,
-                              height: style.buttonHeight * goldenRatioInverse,
-                            ),
-                          if (account != null && subscriptionExpired)
-                            Row(
-                              children: [
-                                onPressed(
-                                  callback: actions.showDialogSubscription,
-                                  child: border(
-                                      color: colours.red,
-                                      child: text("Your subscription expired on ${dateFormat.format(account.subscriptionExpirationDate!)}", color: colours.red)),
-                                ),
-                                width8,
-                                button(text("Renew"), actions.showDialogSubscription, borderColor: colours.none),                                ],
-                            ),
-                        ],
-                      ),
-                    );
-                  }(),
+                      if (account == null){
+                        return empty;
+                      }
+
+
+                      return Container(
+                        width: screen.width,
+                        margin: EdgeInsets.only(top: 20),
+                        child: Row(
+                          mainAxisAlignment: axis.main.center,
+                          children: [
+                            if (account.subscriptionNone)
+                              Row(
+                                children: [
+                                  widgets.subscriptionButton,
+                                  width16,
+                                  text("\$9.99 per month to unlock all games", color: colours.white80),
+                                ],
+                              ),
+                            if (account.subscriptionExpired)
+                              Row(
+                                children: [
+                                  onPressed(
+                                    callback: actions.showDialogSubscription,
+                                    child: border(
+                                        color: colours.red,
+                                        child: text("Your subscription expired on ${dateFormat.format(account.subscriptionExpirationDate!)}", color: colours.red)),
+                                  ),
+                                  width8,
+                                  button(text("Renew"), actions.showDialogSubscription, borderColor: colours.none),                                ],
+                              ),
+                          ],
+                        ),
+                      );
+                    }
+                  ),
                   topRight: Row(
                     crossAxisAlignment: axis.cross.start,
                     mainAxisAlignment: axis.main.end,
@@ -795,7 +806,14 @@ final subscriptionCostPerMonth = "\$9.99";
 Widget _buildSubscriptionStatus(SubscriptionStatus status){
    switch(status){
      case SubscriptionStatus.None:
-       return button(text("Subscribe $subscriptionCostPerMonth per month", bold: true),  actions.openStripeCheckout, fillColor: colours.green, borderColor: colours.none,
+       return button(Row(
+         children: [
+           icons.creditCard,
+           width4,
+           text("SUBSCRIBE", bold: true),
+           width4,
+         ],
+       ),  actions.openStripeCheckout, fillColor: colours.green, borderColor: colours.none,
         fillColorMouseOver: colours.green
        );
      case SubscriptionStatus.Active:

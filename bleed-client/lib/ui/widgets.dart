@@ -96,6 +96,21 @@ class _Widgets {
   final Widget theme = build.theme();
 
 
+  final subscriptionButton = button(
+      Row(
+        children: [
+          icons.creditCard,
+          width4,
+          text("SUBSCRIBE", bold: true),
+          width4,
+        ],
+      ),
+      actions.openStripeCheckout,
+      fillColor: colours.green,
+      borderColor: colours.none,
+      fillColorMouseOver: colours.green);
+
+
   final Widget settingsMenu = Column(
     children: [
       buttons.account,
@@ -382,3 +397,9 @@ final backButton = button("Back", () {
 }, fillColor: colours.none,
   borderColor: colours.none,
 );
+
+final icons = _Icons();
+
+class _Icons {
+  final creditCard = buildDecorationImage(image: decorationImages.creditCard, color: none, width: 32, height: 32, borderColor: none);
+}

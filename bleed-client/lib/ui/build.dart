@@ -25,7 +25,6 @@ import 'compose/hudUI.dart';
 final _Build build = _Build();
 
 class _Build {
-  final _buttonWidth = 220.0;
 
   Widget buildAbility(Ability ability) {
     return WatchBuilder(ability.type, (AbilityType type) {
