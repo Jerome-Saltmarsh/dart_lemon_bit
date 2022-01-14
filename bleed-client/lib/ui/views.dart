@@ -703,15 +703,19 @@ Widget buildTopMessage(){
                 return text("Sign in and subscribe to unlock all games", color: colours.white618, onPressed: actions.showDialogLogin, underline: hovering, italic: true);
               }),
             if (account != null && account.subscriptionNone)
-              onHover((hovering){
-                return Row(
-                  children: [
-                    widgets.subscriptionButton,
-                    width16,
-                    onPressed(child: text("\$9.99 per month to unlock all games", color: colours.white80, underline: hovering), callback: actions.openStripeCheckout),
-                  ],
-                );
-              }
+              button(
+                  Row(
+                    children: [
+                      text("Subscribe", color: colours.green, bold: true, size: 20),
+                      onPressed(child: text(" for \$9.99 per month to unlock all games", color: colours.white80, size: 20), callback: actions.openStripeCheckout),
+                    ],
+                  )
+              ,
+                  actions.openStripeCheckout,
+              fillColor: none,
+                fillColorMouseOver: none,
+                borderColor: none,
+                borderColorMouseOver:colours.white80
               ),
             if (account != null && account.subscriptionExpired)
               Row(

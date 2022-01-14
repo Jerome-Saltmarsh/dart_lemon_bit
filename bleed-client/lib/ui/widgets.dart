@@ -392,7 +392,7 @@ Widget _buildFakeLoginButton(String userId, String text){
   });
 }
 
-final backButton = button("Back", () {
+final backButton = button(text("Back", color: colours.white80), () {
   game.dialog.value = Dialogs.Games;
 }, fillColor: colours.none,
   borderColor: colours.none,
