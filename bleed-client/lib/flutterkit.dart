@@ -14,6 +14,7 @@ Widget text(dynamic value, {
     TextDecoration decoration = TextDecoration.none,
     FontWeight weight = normal,
     bool italic = false,
+    bool bold = false,
     Color color = white,
     String? family,
 }) {
@@ -23,7 +24,7 @@ Widget text(dynamic value, {
           color: color,
           fontSize: size,
           decoration: decoration,
-          fontWeight: weight,
+          fontWeight: bold ? FontWeight.bold : weight,
           fontFamily: family,
           fontStyle: italic ? FontStyle.italic : FontStyle.normal
       )

@@ -8,7 +8,6 @@ import 'package:bleed_client/core/init.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/Region.dart';
-import 'package:bleed_client/events.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/functions/refreshPage.dart';
 import 'package:bleed_client/logic.dart';
@@ -27,7 +26,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_math/golden_ratio.dart';
-import 'package:lemon_watch/watch.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../assets.dart';
@@ -354,19 +352,16 @@ Widget buildWatchAuthentication(){
                             );
                           }
 
-                          // final formattedSubscription = dateFormat.format(account.subscriptionExpirationDate!);
-
                           return dialog(
-                            color: colours.white05,
-                            borderColor: colours.none,
+                            color: white05,
+                            borderColor: none,
                             padding: 16,
                             height: 450,
                             child: layout(
                                 bottomLeft: _buildSubscriptionStatus(account.subscriptionStatus),
-                                bottomRight: button(text('back', weight: bold), () {
-                                  game.dialog.value = Dialogs.Games;
-                                }, fillColor: colours.none,
-
+                                bottomRight: account.subscriptionNone
+                                    ? button(text("back", color: colours.white80), actions.showDialogGames, fillColor: none, borderColor: none)
+                                    : button(text('back', weight: bold), actions.showDialogGames, fillColor: none,
                                 ),
                                 child: Column(
                                   crossAxisAlignment: axis.cross.start,
@@ -824,7 +819,7 @@ final subscriptionCostPerMonth = "\$9.99";
 Widget _buildSubscriptionStatus(SubscriptionStatus status){
    switch(status){
      case SubscriptionStatus.None:
-       return button("Subscribe $subscriptionCostPerMonth", actions.openStripeCheckout, fillColor: colours.green, borderColor: colours.none,
+       return button(text("Subscribe $subscriptionCostPerMonth per month", bold: true),  actions.openStripeCheckout, fillColor: colours.green, borderColor: colours.none,
         fillColorMouseOver: colours.green
        );
      case SubscriptionStatus.Active:

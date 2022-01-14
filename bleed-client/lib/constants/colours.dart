@@ -4,6 +4,9 @@ import 'package:flutter/rendering.dart';
 
 final _Colors colours = _Colors();
 
+final Color none = Colors.transparent;
+final Color white05 = Colors.white.withOpacity(0.05);
+
 class _Colors {
 
   final Color facebook = Color.fromRGBO(66, 103, 178, 1);
