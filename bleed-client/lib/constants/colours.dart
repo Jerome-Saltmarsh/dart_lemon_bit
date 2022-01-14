@@ -15,6 +15,7 @@ class _Colors {
   final Color black10 = Colors.black.withOpacity(0.1);
   final Color black15 = Colors.black.withOpacity(0.15);
   final Color black20 = Colors.black.withOpacity(0.2);
+  final Color black382 = Colors.black.withOpacity(0.382);
 
   final Color white = Colors.white;
   final Color white05 = Colors.white.withOpacity(0.05);
@@ -24,6 +25,8 @@ class _Colors {
   final Color white618 = Colors.white.withOpacity(0.618);
   final Color white70 = Colors.white.withOpacity(0.70);
   final Color white80 = Colors.white.withOpacity(0.80);
+  final Color white85 = Colors.white.withOpacity(0.85);
+  final Color white90 = Colors.white.withOpacity(0.90);
 
   final Color none = Colors.transparent;
 

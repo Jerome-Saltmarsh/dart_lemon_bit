@@ -1,4 +1,5 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/authentication.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
@@ -10,12 +11,10 @@ import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/functions/refreshPage.dart';
-import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
-import 'package:bleed_client/ui/state/decorationImages.dart';
 import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/ui.dart';
@@ -24,6 +23,7 @@ import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:golden_ratio/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_math/golden_ratio.dart';
@@ -35,6 +35,9 @@ import '../webSocket.dart';
 import 'build.dart';
 
 final nameController = TextEditingController();
+
+// const dialogHeight = 400.0;
+// const dialogWidth = dialogHeight * goldenRatio_1381;
 
 Widget buildLoginDialog() {
   return dialog(
@@ -165,17 +168,21 @@ Widget buildWatchAuthentication(){
                   top: Builder(
                     builder: (context) {
 
-                      if (account == null){
-                        return empty;
-                      }
+                      // if (account == null){
+                      //   return empty;
+                      // }
 
                       return Container(
                         width: screen.width,
-                        margin: EdgeInsets.only(top: 20),
+                        margin: EdgeInsets.only(top: 30),
                         child: Row(
                           mainAxisAlignment: axis.main.center,
                           children: [
-                            if (account.subscriptionNone)
+                            if (account == null)
+                              onHover((hovering){
+                                return text("Sign in and subscribe to unlock all games", color: colours.white618, onPressed: actions.showDialogLogin, underline: hovering, italic: true);
+                              }),
+                            if (account != null && account.subscriptionNone)
                               onHover((hovering){
                                 return Row(
                                   children: [
@@ -186,7 +193,7 @@ Widget buildWatchAuthentication(){
                                 );
                               }
                               ),
-                            if (account.subscriptionExpired)
+                            if (account != null && account.subscriptionExpired)
                               Row(
                                 children: [
                                   onPressed(
@@ -330,7 +337,7 @@ Widget buildWatchAuthentication(){
                         case Dialogs.Change_Public_Name:
 
                           if (account != null){
-                            nameController.text = account.publicName!;
+                            nameController.text = account.publicName;
                           }else{
                             nameController.text = "";
                           }
@@ -368,7 +375,8 @@ Widget buildWatchAuthentication(){
                             color: white05,
                             borderColor: none,
                             padding: 16,
-                            height: 450,
+                            height: style.dialogMediumHeight,
+                            width: style.dialogMediumWidth,
                             child: layout(
                                 bottomLeft: _buildSubscriptionStatus(account.subscriptionStatus),
                                 bottomRight: account.subscriptionNone
@@ -382,55 +390,36 @@ Widget buildWatchAuthentication(){
                                         size: 30,
                                         weight: bold),
                                     height32,
-                                    text("Private Name"),
-                                    text(account.privateName, color: colours.white60),
-                                    height16,
-                                    onHover((hovering) {
-                                      return onPressed(
-                                        callback: actions.showDialogChangePublicName,
-                                        child: Column(
-                                          crossAxisAlignment: axis.cross.start,
-                                          children: [
-                                            text("Public Name"),
+                                    _buildRow("Private Name", account.privateName),
+                                    height8,
+                                    onPressed(child: _buildRow("Public Name", account.publicName), callback: actions.showDialogChangePublicName),
+                                    height8,
+                                    _buildRow("Email", account.email),
+                                    height8,
+                                    _buildRow("Joined", formatDate(account.accountCreationDate)),
+                                    height8,
+                                    if (!account.subscriptionNone)
+                                    border(
+                                      child: Column(
+                                        crossAxisAlignment: axis.cross.start,
+                                        children: [
+                                          if (account.subscriptionActive) text("Subscription Active", color: colours.green),
+                                          height16,
+                                          if (account.subscriptionActive) text("Automatically Renews"),
+                                          if (subscriptionExpired)
                                             Row(
                                               children: [
-                                                text(account.publicName ?? "None",
-                                                    color: colours.white60),
-                                                width16,
-                                                if (hovering)
-                                                  Row(
-                                                    children: [
-                                                      buildIconEdit(),
-                                                      width4,
-                                                      text("change", italic: true)
-                                                    ],
-                                                  ),
-
+                                                text("Expired", color: colours.red),
+                                                width8,
+                                                button("Renew", () {},
+                                                    fillColor: colours.green)
                                               ],
                                             ),
-                                          ],
-                                        ),
-                                      );
-                                    }),
-                                    height16,
-                                    text("Email"),
-                                    text(account.email ?? "None", color: colours.white60),
-                                    height16,
-                                    text("Created"),
-                                    text(formatDate(account.accountCreationDate), color: colours.white60),
-                                    height16,
-                                    if (account.subscriptionActive) text("Automatically Renews"),
-                                    if (subscriptionExpired)
-                                      Row(
-                                        children: [
-                                          text("Expired", color: colours.red),
-                                          width8,
-                                          button("Renew", () {},
-                                              fillColor: colours.green)
+                                          if (account.subscriptionActive)
+                                            text(dateFormat.format(account.subscriptionExpirationDate!), color: colours.white60),
                                         ],
                                       ),
-                                    if (account.subscriptionActive)
-                                      text(dateFormat.format(account.subscriptionExpirationDate!), color: colours.white60),
+                                    ),
                                   ],
                                 )),
 
@@ -846,5 +835,21 @@ Widget margin({
         right: right,
         bottom: bottom
     )
+  );
+}
+
+
+Widget _buildRow(String title, String value){
+  return Row(
+    mainAxisAlignment: axis.main.apart,
+    children: [
+      text(title, color: colours.white85),
+      Container(
+          alignment: Alignment.centerRight,
+          padding: const EdgeInsets.all(8),
+          width: style.dialogMediumWidth * goldenRatio_0618,
+          color: colours.black382,
+          child: text(value, color: colours.white60, size: 16)),
+    ],
   );
 }

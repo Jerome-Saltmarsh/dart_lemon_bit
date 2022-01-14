@@ -75,6 +75,11 @@ class UserServiceHttpClient {
     final accountCreationDate = parseDateTime(accountCreationDateString);
 
     final email = body[fieldNames.email];
+
+    if (email == null){
+      throw Exception("email is null");
+    }
+
     final privateName = body[fieldNames.private_name];
 
     if (privateName == null){
@@ -101,12 +106,12 @@ class UserServiceHttpClient {
 
 class Account {
   final String userId;
-  final DateTime? subscriptionExpirationDate;
-  final DateTime? subscriptionCreationDate;
   final DateTime accountCreationDate;
   final String publicName;
   final String privateName;
-  final String? email;
+  final String email;
+  final DateTime? subscriptionExpirationDate;
+  final DateTime? subscriptionCreationDate;
 
   bool get subscriptionActive => subscriptionStatus == SubscriptionStatus.Active;
   bool get subscriptionExpired => subscriptionStatus == SubscriptionStatus.Expired;
@@ -124,9 +129,9 @@ class Account {
     required this.accountCreationDate,
     required this.publicName,
     required this.privateName,
+    required this.email,
     this.subscriptionExpirationDate,
     this.subscriptionCreationDate,
-    this.email
   });
 }
 
