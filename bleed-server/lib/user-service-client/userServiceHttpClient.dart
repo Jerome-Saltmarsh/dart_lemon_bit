@@ -3,7 +3,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-final userService = UserServiceHttpClient("rest-server-3-osbmaezptq-ey.a.run.app");
+final userService = UserServiceHttpClient("rest-server-osbmaezptq-ey.a.run.app");
 
 class UserServiceHttpClient {
   final String _host;

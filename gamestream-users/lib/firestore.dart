@@ -178,6 +178,19 @@ class _Firestore {
   }
 
   String get parent => buildParentName(projectId: _projectId);
+
+  Future waitForFirestoreApi() async {
+    int tries = 0;
+    int maxTries = 10;
+    while(_firestoreApi == null){
+      tries++;
+      if (tries > maxTries){
+        throw Exception("exceeded max tries: $maxTries");
+      }
+      print("firestoreApi is null, waiting 1 second for it to load, try: $tries");
+      await Future.delayed(_oneSecond);
+    }
+  }
 }
 
 String _getTimestampNow() => DateTime.now().toUtc().toIso8601String();
@@ -260,4 +273,3 @@ String buildParentName({
 //   'CLOUDSDK_CORE_PROJECT',
 //   'GOOGLE_CLOUD_PROJECT',
 // };
-

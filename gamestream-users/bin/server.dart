@@ -26,6 +26,7 @@ void initServer({String address = '0.0.0.0', int port = 8080}) async {
 }
 
 FutureOr<Response> handleRequest(Request request) async {
+
   final path = request.url.path;
   print("handleRequest(path: '$path', method: '${request.method}', host: '${request.url.host}')");
   final Json response = Json();
@@ -132,6 +133,11 @@ FutureOr<Response> handleRequest(Request request) async {
         final subscriptionExpirationDate = fields[fieldNames.subscriptionExpirationDate];
         if (subscriptionExpirationDate != null) {
             response[fieldNames.subscriptionExpirationDate] = subscriptionExpirationDate.timestampValue;
+            final subscriptionCreatedDate = fields[fieldNames.subscriptionCreatedDate];
+            if (subscriptionCreatedDate == null){
+              return errorFieldMissing(response, fieldNames.subscriptionCreatedDate);
+            }
+            response[fieldNames.subscriptionCreatedDate] = subscriptionCreatedDate.timestampValue;
         }
 
         final accountCreationDate = fields[fieldNames.account_creation_date];

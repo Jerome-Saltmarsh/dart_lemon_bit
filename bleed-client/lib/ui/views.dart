@@ -329,7 +329,7 @@ Widget buildWatchAuthentication(){
 
                         case Dialogs.Change_Public_Name:
 
-                          if (account != null && account.publicName != null){
+                          if (account != null){
                             nameController.text = account.publicName!;
                           }else{
                             nameController.text = "";
