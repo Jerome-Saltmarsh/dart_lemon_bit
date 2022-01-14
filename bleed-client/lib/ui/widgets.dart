@@ -32,7 +32,7 @@ final _Widgets widgets = _Widgets();
 final _Buttons buttons = _Buttons();
 final _Logos logos = _Logos();
 
-final _BuildDialog buildDialog = _BuildDialog();
+final _BuildDialog buildHudDialog = _BuildDialog();
 
 class _Logos {
   Widget google = Container(

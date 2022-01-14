@@ -132,3 +132,49 @@ Widget _buildRow(String title, String value){
     ],
   );
 }
+
+Widget buildDialog({
+  required Widget child,
+  required double width,
+  required double height
+}){
+  return dialog(
+      color: colours.white05,
+      borderColor: none,
+      padding: 16,
+      width: width,
+      height: height,
+      child: layout(
+          child: child,
+          bottomRight: backButton
+      )
+  );
+}
+
+Widget buildDialogMedium({required Widget child, Widget? bottomLeft}){
+  return buildDialog(
+      width: style.dialogMediumWidth,
+      height: style.dialogMediumHeight,
+      child: layout(
+          child: child,
+          bottomLeft: bottomLeft,
+          bottomRight: backButton
+      )
+  );
+}
+
+Widget buildDialogSmall({required Widget child, Widget? bottomLeft}){
+  return buildDialog(
+      width: style.dialogSmallWidth,
+      height: style.dialogSmallHeight,
+      child: layout(
+          child: child,
+          bottomLeft: bottomLeft,
+          bottomRight: backButton
+      )
+  );
+}
+
+Widget buildDialogTitle(String value){
+  return text(value, size: style.dialogTitleSize, color: colours.white85);
+}

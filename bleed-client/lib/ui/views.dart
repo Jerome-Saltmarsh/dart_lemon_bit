@@ -686,42 +686,48 @@ Widget watchAccount(Widget builder(Account? value)) {
 }
 
 Widget buildTopMessage(){
+  print("buildTopMessage()");
   return watchAccount((account) {
-    return Container(
-      width: screen.width,
-      margin: EdgeInsets.only(top: 20),
-      child: Row(
-        mainAxisAlignment: axis.main.center,
-        children: [
-          if (account == null)
-            onHover((hovering){
-              return text("Sign in and subscribe to unlock all games", color: colours.white618, onPressed: actions.showDialogLogin, underline: hovering, italic: true);
-            }),
-          if (account != null && account.subscriptionNone)
-            onHover((hovering){
-              return Row(
+    return WatchBuilder(game.dialog, (dialog){
+
+      if (dialog != Dialogs.Games) return empty;
+
+      return Container(
+        width: screen.width,
+        margin: EdgeInsets.only(top: 20),
+        child: Row(
+          mainAxisAlignment: axis.main.center,
+          children: [
+            if (account == null)
+              onHover((hovering){
+                return text("Sign in and subscribe to unlock all games", color: colours.white618, onPressed: actions.showDialogLogin, underline: hovering, italic: true);
+              }),
+            if (account != null && account.subscriptionNone)
+              onHover((hovering){
+                return Row(
+                  children: [
+                    widgets.subscriptionButton,
+                    width16,
+                    onPressed(child: text("\$9.99 per month to unlock all games", color: colours.white80, underline: hovering), callback: actions.openStripeCheckout),
+                  ],
+                );
+              }
+              ),
+            if (account != null && account.subscriptionExpired)
+              Row(
                 children: [
-                  widgets.subscriptionButton,
-                  width16,
-                  onPressed(child: text("\$9.99 per month to unlock all games", color: colours.white80, underline: hovering), callback: actions.openStripeCheckout),
-                ],
-              );
-            }
-            ),
-          if (account != null && account.subscriptionExpired)
-            Row(
-              children: [
-                onPressed(
-                  callback: actions.showDialogSubscription,
-                  child: border(
-                      color: colours.red,
-                      child: text("Your subscription expired on ${formatDate(account.subscriptionExpirationDate!)}", color: colours.red)),
-                ),
-                width8,
-                button(text("Renew"), actions.showDialogSubscription, borderColor: colours.none),                                ],
-            ),
-        ],
-      ),
-    );
+                  onPressed(
+                    callback: actions.showDialogSubscription,
+                    child: border(
+                        color: colours.red,
+                        child: text("Your subscription expired on ${formatDate(account.subscriptionExpirationDate!)}", color: colours.red)),
+                  ),
+                  width8,
+                  button(text("Renew"), actions.showDialogSubscription, borderColor: colours.none),                                ],
+              ),
+          ],
+        ),
+      );
+    });
   });
 }
