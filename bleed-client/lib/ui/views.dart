@@ -14,7 +14,10 @@ import 'package:bleed_client/functions/refreshPage.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/toString.dart';
+import 'package:bleed_client/ui/buildDialog.dart';
+import 'package:bleed_client/ui/builders/buildDialogChangePublicName.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
+import 'package:bleed_client/ui/constants.dart';
 import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/ui.dart';
@@ -23,8 +26,6 @@ import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:golden_ratio/constants.dart';
-import 'package:intl/intl.dart';
 import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
@@ -200,7 +201,7 @@ Widget buildWatchAuthentication(){
                                     callback: actions.showDialogSubscription,
                                     child: border(
                                         color: colours.red,
-                                        child: text("Your subscription expired on ${dateFormat.format(account.subscriptionExpirationDate!)}", color: colours.red)),
+                                        child: text("Your subscription expired on ${formatDate(account.subscriptionExpirationDate!)}", color: colours.red)),
                                   ),
                                   width8,
                                   button(text("Renew"), actions.showDialogSubscription, borderColor: colours.none),                                ],
@@ -335,97 +336,9 @@ Widget buildWatchAuthentication(){
                           );
 
                         case Dialogs.Change_Public_Name:
-
-                          if (account != null){
-                            nameController.text = account.publicName;
-                          }else{
-                            nameController.text = "";
-                          }
-
-                          return dialog(
-                            child: layout(
-                              child: TextField(
-                                controller: nameController,
-                              ),
-                              bottomLeft: button("Save", (){}),
-                              bottomRight: button("Cancel", setDialogGames, borderColor: colours.none),
-                            ),
-                          );
-
+                          return buildDialogChangePublicName();
                         case Dialogs.Account:
-                        // @build subscription dialog
-                          if (account == null) {
-                            return layout(
-                              bottomLeft: buttons.login,
-                              bottomRight: button("Close", actions.showDialogGames),
-                              child: dialog(
-                                  child: Column(
-                                    crossAxisAlignment: axis.cross.start,
-                                    children: [
-                                      border(child: text("ACCOUNT")),
-                                      height16,
-                                      text("Authentication Required"),
-                                    ],
-                                  )
-                              ),
-                            );
-                          }
-
-                          return dialog(
-                            color: white05,
-                            borderColor: none,
-                            padding: 16,
-                            height: style.dialogMediumHeight,
-                            width: style.dialogMediumWidth,
-                            child: layout(
-                                bottomLeft: _buildSubscriptionStatus(account.subscriptionStatus),
-                                bottomRight: account.subscriptionNone
-                                    ? button(text("back", color: colours.white80), actions.showDialogGames, fillColor: none, borderColor: none)
-                                    : button(text('back', weight: bold), actions.showDialogGames, fillColor: none,
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: axis.cross.start,
-                                  children: [
-                                    text("MY ACCOUNT",
-                                        size: 30,
-                                        weight: bold,
-                                        color: colours.white85
-                                    ),
-                                    height32,
-                                    _buildRow("Private Name", account.privateName),
-                                    height8,
-                                    onPressed(child: _buildRow("Public Name", account.publicName), callback: actions.showDialogChangePublicName),
-                                    height8,
-                                    _buildRow("Email", account.email),
-                                    height8,
-                                    _buildRow("Joined", formatDate(account.accountCreationDate)),
-                                    height8,
-                                    if (!account.subscriptionNone)
-                                    border(
-                                      child: Column(
-                                        crossAxisAlignment: axis.cross.start,
-                                        children: [
-                                          if (account.subscriptionActive) text("Subscription Active", color: colours.green),
-                                          height16,
-                                          if (account.subscriptionActive) text("Automatically Renews"),
-                                          if (subscriptionExpired)
-                                            Row(
-                                              children: [
-                                                text("Expired", color: colours.red),
-                                                width8,
-                                                button("Renew", () {},
-                                                    fillColor: colours.green)
-                                              ],
-                                            ),
-                                          if (account.subscriptionActive)
-                                            text(dateFormat.format(account.subscriptionExpirationDate!), color: colours.white60),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                )),
-
-                          );
+                          return buildDialogAccount();
                         case Dialogs.Login:
                           return buildLoginDialog();
                         case Dialogs.Invalid_Arguments:
@@ -770,9 +683,6 @@ Widget _buildSelectRegionButton(Region region) {
   );
 }
 
-
-final dateFormat = DateFormat(DateFormat.YEAR_MONTH_DAY);
-
 final empty = SizedBox();
 
 Widget? dev(Widget child){
@@ -793,34 +703,6 @@ Widget buildLayoutLoadingGame(){
   );
 }
 
-final subscriptionCostPerMonth = "\$9.99";
-
-Widget _buildSubscriptionStatus(SubscriptionStatus status){
-   switch(status){
-     case SubscriptionStatus.None:
-       return button(Row(
-         children: [
-           icons.creditCard,
-           width4,
-           text("SUBSCRIBE", bold: true),
-           width4,
-         ],
-       ),  actions.openStripeCheckout, fillColor: colours.green, borderColor: colours.none,
-        fillColorMouseOver: colours.green
-       );
-     case SubscriptionStatus.Active:
-       return button("Cancel Subscription", actions.cancelSubscription,
-          fillColor: colours.red,
-         borderColor: colours.none,
-       );
-     case SubscriptionStatus.Expired:
-       return text("Renew Subscription");
-   }
-}
-
-String formatDate(DateTime value){
-  return dateFormat.format(value);
-}
 
 Widget margin({
   required Widget child,
@@ -841,20 +723,3 @@ Widget margin({
 }
 
 
-Widget _buildRow(String title, String value){
-  return Row(
-    mainAxisAlignment: axis.main.apart,
-    children: [
-      text(title, color: colours.white85),
-      Container(
-          alignment: Alignment.centerRight,
-          padding: const EdgeInsets.all(8),
-          width: style.dialogMediumWidth * goldenRatio_0618,
-          decoration: BoxDecoration(
-            color: colours.black382,
-            borderRadius: borderRadius4,
-          ),
-          child: text(value, color: colours.white60, size: 16)),
-    ],
-  );
-}

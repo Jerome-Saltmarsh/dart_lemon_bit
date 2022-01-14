@@ -403,3 +403,5 @@ final icons = _Icons();
 class _Icons {
   final creditCard = buildDecorationImage(image: decorationImages.creditCard, color: none, width: 32, height: 32, borderColor: none);
 }
+
+
