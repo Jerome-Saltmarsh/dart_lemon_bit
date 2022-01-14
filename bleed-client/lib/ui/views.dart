@@ -412,7 +412,7 @@ Widget buildWatchAuthentication(){
                                     text("Created"),
                                     text(formatDate(account.accountCreationDate), color: colours.white60),
                                     height16,
-                                    if (!subscriptionExpired) text("Automatically Renews"),
+                                    if (account.subscriptionActive) text("Automatically Renews"),
                                     if (subscriptionExpired)
                                       Row(
                                         children: [
@@ -819,15 +819,14 @@ Widget buildLayoutLoadingGame(){
   );
 }
 
-final Watch<bool> _editingName = Watch(false);
-final _nameController = TextEditingController();
-
-
+final subscriptionCostPerMonth = "\$9.99";
 
 Widget _buildSubscriptionStatus(SubscriptionStatus status){
    switch(status){
      case SubscriptionStatus.None:
-       return button("Subscribe \$4.99", actions.openStripeCheckout);
+       return button("Subscribe $subscriptionCostPerMonth", actions.openStripeCheckout, fillColor: colours.green, borderColor: colours.none,
+        fillColorMouseOver: colours.green
+       );
      case SubscriptionStatus.Active:
        return button("Cancel Subscription", actions.cancelSubscription,
           fillColor: colours.red,
