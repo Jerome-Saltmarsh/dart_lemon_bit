@@ -174,7 +174,7 @@ Widget buildWatchAuthentication(){
 
                       return Container(
                         width: screen.width,
-                        margin: EdgeInsets.only(top: 30),
+                        margin: EdgeInsets.only(top: 20),
                         child: Row(
                           mainAxisAlignment: axis.main.center,
                           children: [
@@ -386,9 +386,11 @@ Widget buildWatchAuthentication(){
                                 child: Column(
                                   crossAxisAlignment: axis.cross.start,
                                   children: [
-                                    text("ACCOUNT",
+                                    text("MY ACCOUNT",
                                         size: 30,
-                                        weight: bold),
+                                        weight: bold,
+                                        color: colours.white85
+                                    ),
                                     height32,
                                     _buildRow("Private Name", account.privateName),
                                     height8,
@@ -848,7 +850,10 @@ Widget _buildRow(String title, String value){
           alignment: Alignment.centerRight,
           padding: const EdgeInsets.all(8),
           width: style.dialogMediumWidth * goldenRatio_0618,
-          color: colours.black382,
+          decoration: BoxDecoration(
+            color: colours.black382,
+            borderRadius: borderRadius4,
+          ),
           child: text(value, color: colours.white60, size: 16)),
     ],
   );
