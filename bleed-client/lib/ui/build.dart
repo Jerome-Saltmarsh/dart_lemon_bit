@@ -5,7 +5,7 @@ import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/flutterkit.dart';
-import 'package:bleed_client/logic.dart';
+import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/styles.dart';

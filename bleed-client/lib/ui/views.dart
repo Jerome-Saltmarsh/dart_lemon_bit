@@ -10,7 +10,7 @@ import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/functions/refreshPage.dart';
-import 'package:bleed_client/logic.dart';
+import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/toString.dart';
@@ -146,7 +146,6 @@ Widget buildWatchAuthentication(){
 
       return NullableWatchBuilder<Account?>(game.account, (Account? account){
         final now = DateTime.now().toUtc();
-        final bool subscribed = account != null && account.subscriptionExpirationDate != null;
         final subscriptionExpired = account != null
             && account.subscriptionExpirationDate != null
             && now.isAfter(account.subscriptionExpirationDate!);
@@ -169,7 +168,6 @@ Widget buildWatchAuthentication(){
                       if (account == null){
                         return empty;
                       }
-
 
                       return Container(
                         width: screen.width,

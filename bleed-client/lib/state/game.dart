@@ -44,6 +44,7 @@ enum LoginStatus {
   Creating_Account,
   Logged_In,
   Logging_Out,
+  Opening_Stripe,
 }
 
 class _Game {

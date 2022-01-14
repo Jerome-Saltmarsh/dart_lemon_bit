@@ -33,7 +33,7 @@ import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import '../logic.dart';
+import '../actions.dart';
 
 enum _ToolTab { Tiles, Objects, All, Misc }
 

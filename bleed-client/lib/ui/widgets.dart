@@ -21,7 +21,7 @@ import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_math/random.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import '../logic.dart';
+import '../actions.dart';
 import '../styles.dart';
 import '../toString.dart';
 import 'compose/hudUI.dart';
