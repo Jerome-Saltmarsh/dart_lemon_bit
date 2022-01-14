@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 const EdgeInsets padding16 = EdgeInsets.all(16);
 const EdgeInsets padding8 = EdgeInsets.all(8);
 const EdgeInsets padding4 = EdgeInsets.all(4);
+const EdgeInsets padding0 = EdgeInsets.zero;
 const BorderRadius borderRadius0 = BorderRadius.zero;
 const BorderRadius borderRadius2 = BorderRadius.all(radius2);
 const BorderRadius borderRadius4 = BorderRadius.all(radius4);

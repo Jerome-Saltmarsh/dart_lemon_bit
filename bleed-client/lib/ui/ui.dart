@@ -8,7 +8,7 @@ enum Dialogs {
   Subscription,
   Subscription_Successful,
   Welcome,
-  Change_Display_Name,
+  Change_Public_Name,
   Change_Region,
   Login_Error,
 }

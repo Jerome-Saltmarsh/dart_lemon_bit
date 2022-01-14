@@ -17,6 +17,10 @@ final _Actions actions = _Actions();
 
 class _Actions {
 
+  void showDialogChangePublicName(){
+    game.dialog.value = Dialogs.Change_Public_Name;
+  }
+
   void closeErrorMessage(){
     game.errorMessage.value = null;
   }

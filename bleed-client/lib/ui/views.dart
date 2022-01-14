@@ -317,7 +317,7 @@ Widget buildWatchAuthentication(){
                                   bottomRight: backButton)
                           );
 
-                        case Dialogs.Change_Display_Name:
+                        case Dialogs.Change_Public_Name:
 
                           if (account != null && account.publicName != null){
                             nameController.text = account.publicName!;
@@ -380,9 +380,7 @@ Widget buildWatchAuthentication(){
                                     height16,
                                     onHover((hovering) {
                                       return onPressed(
-                                        callback: (){
-
-                                        },
+                                        callback: actions.showDialogChangePublicName,
                                         child: Column(
                                           crossAxisAlignment: axis.cross.start,
                                           children: [
@@ -391,8 +389,16 @@ Widget buildWatchAuthentication(){
                                               children: [
                                                 text(account.publicName ?? "None",
                                                     color: colours.white60),
+                                                width16,
                                                 if (hovering)
-                                                  margin(child: buildIconEdit(), left: 8),
+                                                  Row(
+                                                    children: [
+                                                      buildIconEdit(),
+                                                      width4,
+                                                      text("change", italic: true)
+                                                    ],
+                                                  ),
+
                                               ],
                                             ),
                                           ],
