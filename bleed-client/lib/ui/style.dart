@@ -14,4 +14,7 @@ class _Style {
 
   get dialogSmallHeight => style.dialogMediumHeight * goldenRatio_0618;
   get dialogSmallWidth => style.dialogMediumWidth * goldenRatio_0618;
+
+  get dialogLargeHeight => style.dialogMediumHeight * goldenRatio_1381;
+  get dialogLargeWidth => style.dialogMediumWidth * goldenRatio_1618;
 }

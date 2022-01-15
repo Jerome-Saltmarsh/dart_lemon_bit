@@ -18,6 +18,7 @@ Map<AbilityType, DecorationImage> mapAbilityTypeToDecorationImage = {
 final _DecorationImages decorationImages = _DecorationImages();
 
 class _DecorationImages {
+  final mail = _png('icons/icon-mail');
   final cherries = _png('icons/icon-cherries');
   final creditCard = _png('icons/icon-credit-card');
   final edit = _png('icons/icon-edit');

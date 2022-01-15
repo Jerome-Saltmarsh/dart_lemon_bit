@@ -25,6 +25,14 @@ class _Actions {
     game.dialog.value = Dialogs.Account;
   }
 
+  void showDialogWelcome(){
+    game.dialog.value = Dialogs.Welcome;
+  }
+
+  void showDialogSubscriptionSuccessful(){
+    game.dialog.value = Dialogs.Subscription_Successful;
+  }
+
   void closeErrorMessage(){
     game.errorMessage.value = null;
   }

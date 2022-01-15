@@ -5,9 +5,9 @@ import 'package:bleed_client/styles.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/constants.dart';
 import 'package:bleed_client/ui/style.dart';
+import 'package:bleed_client/ui/views.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
-import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
@@ -176,6 +176,18 @@ Widget buildDialogMedium({required Widget child, Widget? bottomLeft}){
   );
 }
 
+Widget buildDialogLarge({required Widget child, Widget? bottomLeft}){
+  return buildDialog(
+      width: style.dialogLargeWidth,
+      height: style.dialogLargeHeight,
+      child: layout(
+          child: child,
+          bottomLeft: bottomLeft,
+          bottomRight: backButton
+      )
+  );
+}
+
 Widget buildDialogSmall({required Widget child, Widget? bottomLeft}){
   return buildDialog(
       width: style.dialogSmallWidth,
@@ -189,5 +201,119 @@ Widget buildDialogSmall({required Widget child, Widget? bottomLeft}){
 }
 
 Widget buildDialogTitle(String value){
-  return text(value, size: style.dialogTitleSize, color: colours.white85);
+  return text(value.toUpperCase(), size: style.dialogTitleSize, color: colours.white85);
 }
+
+Widget buildDialogWelcome(){
+
+  return watchAccount((account){
+    return buildDialogLarge(
+        bottomLeft: widgets.subscribeButton,
+        child: Column(
+          children: [
+            height16,
+            Row(
+              mainAxisAlignment: axis.main.apart,
+              children: [
+                Row(
+                  children: [
+                    buildDialogTitle("Inbox"),
+                    width16,
+                    icons.mail,
+                  ],
+                ),
+                border(
+                    padding: padding16,
+                    color: none,
+                    fillColor: colours.black20,
+                    child: buildDialogTitle("welcome to gamestream")),
+              ],
+            ),
+            height16,
+            buildInfo(child: Column(
+              crossAxisAlignment: axis.cross.start,
+              children: [
+                if (account != null)
+                  text("Dear ${account.privateName}!", color: colours.white618),
+                  height32,
+                  text("Thank you for joining gamestream :)", color: colours.white618),
+                height16,
+                Row(
+                  children: [
+                    text("Simply purchase an ", color: colours.white618),
+                    text("active subscription", color: colours.green, bold: true, onPressed: actions.openStripeCheckout),
+                    text(" to unlock all the games", color: colours.white618),
+                  ],
+                ),
+                height16,
+                text("within our library!", color: colours.white618),
+                height24,
+                text("Boundless adventures await!", color: colours.white618),
+                height32,
+                text("Kind regards", color: colours.white618),
+                height16,
+                text("From Jerome (founder and ceo)", color: colours.white618),
+              ],
+            ))
+          ],
+        )
+    );
+
+  });
+
+}
+
+final _nameController = TextEditingController();
+
+Widget buildDialogChangePublicName() {
+  return NullableWatchBuilder<Account?>(game.account, (Account? account) {
+    if (account == null) {
+      return buildDialogMessage("Account required to change public name");
+    }
+
+    if (!account.subscriptionActive) {
+      return buildDialogMedium(
+          bottomLeft: widgets.subscribeButton,
+          child: Column(
+            crossAxisAlignment: axis.cross.start,
+            children: [
+              buildDialogTitle("OOPS!"),
+              height32,
+              border(
+                fillColor: colours.white05,
+                color: none,
+                padding: padding16,
+                child: Column(
+                  crossAxisAlignment: axis.cross.start,
+                  children: [
+                    Row(
+                      children: [
+                        text("An ", color: colours.white618),
+                        text("active subscription", color: colours.green, bold: true, onPressed: actions.openStripeCheckout),
+                        text(" is needed to change", color: colours.white618),
+                      ],
+                    ),
+                    text("your public name", color: colours.white618),
+                  ],
+                ),
+              ),
+            ],
+          ));
+    }
+
+    return dialog(
+      child: layout(
+        child: TextField(
+          controller: _nameController,
+        ),
+        bottomLeft: button("Save", () {}),
+        bottomRight: button("Cancel", setDialogGames, borderColor: none),
+      ),
+    );
+  });
+}
+
+Widget buildDialogMessage(String message) {
+  return buildDialogMedium(child: text(message));
+}
+

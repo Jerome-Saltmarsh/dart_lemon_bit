@@ -14,10 +14,9 @@ import 'package:bleed_client/functions/refreshPage.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/toString.dart';
-import 'package:bleed_client/ui/buildDialog.dart';
-import 'package:bleed_client/ui/builders/buildDialogChangePublicName.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/constants.dart';
+import 'package:bleed_client/ui/dialogs.dart';
 import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/ui.dart';
@@ -208,6 +207,7 @@ Widget buildWatchAuthentication(){
                             //   game.signingIn.value = true;
                             // }),
                             buttons.editor,
+                            button("Show Dialog - Welcome", actions.showDialogWelcome),
                           ],
                           border(child: "Debug")
                         ],
@@ -243,20 +243,7 @@ Widget buildWatchAuthentication(){
                           );
 
                         case Dialogs.Welcome:
-                          return dialog(
-                            child: layout(
-                              child: Column(
-                                children: [
-                                  Column(
-                                    children: [
-                                      text("WELCOME TO GAMESTREAM!"),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              bottomRight: text("Next"),
-                            )
-                          );
+                          return buildDialogWelcome();
 
                         case Dialogs.Change_Region:
                           return dialog(
@@ -716,7 +703,6 @@ Widget buildTopMessage(){
                   )
               ,
                   actions.openStripeCheckout,
-              fillColor: none,
                 fillColorMouseOver: none,
                 borderColor: none,
                 borderColorMouseOver:colours.white80

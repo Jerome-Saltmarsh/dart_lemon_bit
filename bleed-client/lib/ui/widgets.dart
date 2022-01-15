@@ -96,7 +96,7 @@ class _Widgets {
   final Widget theme = build.theme();
 
 
-  final subscriptionButton = button(
+  final subscribeButton = button(
       Row(
         children: [
           icons.creditCard,
@@ -167,9 +167,7 @@ class _Buttons {
     authentication.value = Authentication(userId: userId, displayName: userId, email: "$userId@email.com");
   });
 
-  final Widget showDialogSubscribed = button("Sub Success", (){
-    game.dialog.value = Dialogs.Subscription_Successful;
-  });
+  final Widget showDialogSubscribed = button("Sub Success", actions.showDialogSubscriptionSuccessful);
 
   final Widget signInWithFacebookButton = button(
     Container(
@@ -404,6 +402,15 @@ final icons = _Icons();
 class _Icons {
   final creditCard = buildDecorationImage(image: decorationImages.creditCard, color: none, width: 32, height: 32, borderColor: none);
   final cherries = buildDecorationImage(image: decorationImages.cherries, color: none, width: 32, height: 32, borderColor: none);
+  final mail = buildDecorationImage(image: decorationImages.mail, color: none, width: 48, height: 48, borderColor: none);
 }
 
 
+Widget buildInfo({required Widget child}){
+  return border(
+    fillColor: colours.white05,
+    color: none,
+    padding: padding16,
+    child: child,
+  );
+}
