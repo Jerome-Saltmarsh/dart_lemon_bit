@@ -99,7 +99,7 @@ Widget _buildSubscriptionPanel(Account account){
               if (!account.subscriptionActive)
               widgets.textUpgrade,
               if (account.subscriptionActive)
-                text("cancel", color: colours.white80, onPressed: actions.showDialogConfirmCancelSubscription, italic: true),
+                text("Cancel", color: colours.white80, onPressed: actions.showDialogConfirmCancelSubscription, italic: true),
             ],
           ),
           height16,
