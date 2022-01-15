@@ -659,6 +659,12 @@ Widget watchAccount(Widget builder(Account? value)) {
   });
 }
 
+Widget watchGameType(Widget builder(GameType value)) {
+  return WatchBuilder<GameType>(game.type, (type) {
+    return builder(type);
+  });
+}
+
 Widget buildTopMessage(){
   print("buildTopMessage()");
   return watchAccount((account) {
