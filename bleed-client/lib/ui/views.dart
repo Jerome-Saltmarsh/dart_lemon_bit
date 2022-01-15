@@ -26,6 +26,7 @@ import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
@@ -195,6 +196,9 @@ Widget buildWatchAuthentication(){
                         children: [
                           if (hovering) ...[
                             widgets.theme,
+                            button("Font Jetbrains", (){
+                              ui.themeData.value = themes.jetbrains;
+                            }, width: 200, borderRadius: borderRadius0, fillColorMouseOver: colours.green),
                             buttons.showDialogSubscribed,
                             buttons.loginTestUser01,
                             buttons.loginTestUser02,

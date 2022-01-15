@@ -58,6 +58,9 @@ flutter:
     - family: LibreBarcode39Text-Regular
       fonts:
         - asset: fonts/LibreBarcode39Text-Regular.ttf
+    - family: JetBrainsMono-Regular
+      fonts:
+        - asset: fonts/JetBrainsMono-Regular.ttf
   assets:
      - images/
      - audio/

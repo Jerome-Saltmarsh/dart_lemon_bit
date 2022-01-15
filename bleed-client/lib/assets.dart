@@ -8,6 +8,7 @@ class _Assets {
 }
 
 class _Fonts {
+  final String jetbrains = 'JetBrainsMono-Regular';
   final String pressStart2P = 'PressStart2P';
   final String slackey = 'Slackey-Regular';
   final String gugi = 'Gugi-Regular';
@@ -21,4 +22,5 @@ class _Themes {
   final gugi = ThemeData(fontFamily: assets.fonts.gugi);
   final germaniaOne = ThemeData(fontFamily: assets.fonts.germanioOne);
   final libreBarcode39Text = ThemeData(fontFamily: assets.fonts.libreBarcode39Text);
+  final jetbrains = ThemeData(fontFamily: assets.fonts.jetbrains);
 }

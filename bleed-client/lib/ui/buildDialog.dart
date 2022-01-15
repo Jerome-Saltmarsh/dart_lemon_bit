@@ -58,14 +58,18 @@ Widget buildDialogAccount(){
               height32,
               _buildRow("Private Name", account.privateName),
               height8,
-              onHover((hovering){
-                return onPressed(child: _buildRow("Public Name", Row(
-                  mainAxisAlignment: axis.main.apart,
-                  children: [
-                    if (hovering) buildIconEdit(),
-                    if (!hovering) text(""),
-                    text(account.publicName, color: colours.white60, size: 16)],)), callback: actions.showDialogChangePublicName);
-              }),
+              onPressed(
+                  child: _buildRow(
+                      "Public Name",
+                      Row(
+                        mainAxisAlignment: axis.main.apart,
+                        children: [
+                          buildIconEdit(),
+                          text(account.publicName,
+                              color: colours.white60, size: 16)
+                        ],
+                      )),
+                  callback: actions.showDialogChangePublicName),
               height8,
               _buildRow("Email", account.email),
               height8,
