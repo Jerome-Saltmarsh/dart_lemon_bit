@@ -227,7 +227,7 @@ Widget buildDialogWelcome(){
                 border(
                     padding: padding16,
                     color: none,
-                    fillColor: colours.black20,
+                    fillColor: colours.black15,
                     child: buildDialogTitle("welcome to gamestream")),
               ],
             ),
@@ -246,11 +246,11 @@ Widget buildDialogWelcome(){
                     onHover((hov){
                       return text("purchase an active subscription", color: colours.green, bold: true, onPressed: actions.openStripeCheckout, underline: hov);
                     }),
-                    text(" to unlock all the games", color: colours.white618),
+                    text(" for \$9.99 per month", color: colours.white618),
                   ],
                 ),
                 height16,
-                text("  within our library.", color: colours.white618),
+                text("  to unlock all the games within our library.", color: colours.white618),
                 height24,
                 text("  Boundless adventure awaits!", color: colours.white618),
                 height32,

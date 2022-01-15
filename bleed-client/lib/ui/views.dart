@@ -693,6 +693,15 @@ Widget buildTopMessage(){
               onHover((hovering){
                 return text("Sign in and subscribe to unlock all games", color: colours.white618, onPressed: actions.showDialogLogin, underline: hovering, italic: true);
               }),
+            if (account != null && account.subscriptionActive)
+              margin(
+                top: 10,
+                child: Row(
+                  children: [
+                    text("Subscription Active", color: colours.green, size: 18),
+                  ],
+                ),
+              ),
             if (account != null && account.subscriptionNone)
               button(
                   Row(

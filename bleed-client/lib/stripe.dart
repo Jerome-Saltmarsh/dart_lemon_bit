@@ -50,7 +50,7 @@ class LineItem {
 
 // config
 const _apiKey = "pk_test_51KDkJgBamGAHT4Os9qGLDnx3rJc9awLjMXAO60ohrn7FRlhb2lB6Vr2wQOQmXPSt5LBYntGp3JRRvnRFYNQcY4Cz00GyeislDS";
-const _price = 'price_1KE2cmBamGAHT4Osredql7tb';
+const _price = 'price_1KI47PBamGAHT4OsTxM3xTgA';
 
 // https://stripe.com/docs/api/checkout/sessions/object
 void stripeCheckout({required String userId, String? email}) {
