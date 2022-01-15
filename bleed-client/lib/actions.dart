@@ -105,9 +105,14 @@ class _Actions {
 
   void openStripeCheckout() {
     print("openStripeCheckout()");
-    if (!authenticated){
-      throw Exception("User must be authenticated to open stripe checkout");
+    final account = game.account.value;
+    if (account == null){
+      throw Exception("Cannot open stripe checkout, account is null");
     }
+    if (account.subscriptionActive){
+      throw Exception("Account subscription already active");
+    }
+
     game.signingIn.value = LoginStatus.Opening_Secure_Payment;
     stripeCheckout(
         userId: authentication.value!.userId,

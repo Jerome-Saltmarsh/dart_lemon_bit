@@ -39,7 +39,8 @@ Widget buildDialogAccount(){
     return buildDialog(
         width: style.dialogMediumWidth,
         height: style.dialogMediumWidth * goldenRatio_1618,
-        bottomLeft: _buildSubscriptionStatus(account.subscriptionStatus),
+        // bottomLeft: margin(child: _buildSubscriptionStatus(account.subscriptionStatus), bottom: 32),
+        bottomRight: margin(child: widgets.closeButton, bottom: 32),
         child:
     Column(
       crossAxisAlignment: axis.cross.start,
@@ -69,7 +70,7 @@ Widget buildDialogAccount(){
         _buildRow("Email", account.email),
         height8,
         _buildRow("Joined", formatDate(account.accountCreationDate)),
-        height32,
+        height50,
 
         border(
           padding: padding16,
@@ -79,7 +80,13 @@ Widget buildDialogAccount(){
             child: Column(
               crossAxisAlignment: axis.cross.start,
               children: [
-                text("MY SUBSCRIPTION", bold: true),
+                Row(
+                  mainAxisAlignment: axis.main.apart,
+                  children: [
+                    text("MY SUBSCRIPTION", bold: true),
+                    widgets.textUpgrade,
+                  ],
+                ),
                 height16,
                 _buildRow("Status", "Not Active"),
                 height8,
@@ -88,33 +95,7 @@ Widget buildDialogAccount(){
                 _buildRow("Ends", "-"),
               ],
             )
-
         ),
-
-
-
-        if (!account.subscriptionNone)
-          border(
-            child: Column(
-              crossAxisAlignment: axis.cross.start,
-              children: [
-                if (account.subscriptionActive) text("Subscription Active", color: colours.green),
-                height16,
-                if (account.subscriptionActive) text("Automatically Renews"),
-                if (account.subscriptionExpired)
-                  Row(
-                    children: [
-                      text("Expired", color: colours.red),
-                      width8,
-                      button("Renew", () {},
-                          fillColor: colours.green)
-                    ],
-                  ),
-                if (account.subscriptionActive)
-                  text(dateFormat.format(account.subscriptionExpirationDate!), color: colours.white60),
-              ],
-            ),
-          ),
       ],
     )
     );

@@ -89,12 +89,19 @@ class _Widgets {
   final Widget healthBar = build.healthBar();
   final Widget magicBar = build.magicBar();
   final Widget abilities = build.abilities();
-  // final Widget gamesList = build.gamesList();
   final Widget title = build.title();
   final Widget totalZombies = build.totalZombies();
   final Widget timeZone = build.timeZone();
   final Widget theme = build.theme();
 
+  final textUpgrade = button(
+    text("PURCHASE", color: green, bold: true),
+    actions.openStripeCheckout,
+    fillColor: none,
+    borderColor: green,
+    borderColorMouseOver: green,
+    borderWidth: 2,
+  );
 
   final closeButton = button(text("Close", color: colours.white618), () {
     game.dialog.value = Dialogs.Games;
