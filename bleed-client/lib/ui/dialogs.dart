@@ -36,70 +36,87 @@ Widget buildDialogAccount(){
       );
     }
 
-    return dialog(
-      color: white05,
-      borderColor: none,
-      padding: 16,
-      height: style.dialogMediumHeight,
-      width: style.dialogMediumWidth,
-      child: layout(
-          bottomLeft: _buildSubscriptionStatus(account.subscriptionStatus),
-          bottomRight: account.subscriptionNone
-              ? button(text("back", color: colours.white80), actions.showDialogGames, fillColor: none, borderColor: none)
-              : button(text('back', weight: bold), actions.showDialogGames, fillColor: none,
-          ),
-          child: Column(
-            crossAxisAlignment: axis.cross.start,
-            children: [
-              text("MY ACCOUNT",
-                  size: 30,
-                  weight: bold,
-                  color: colours.white85
-              ),
-              height32,
-              _buildRow("Private Name", account.privateName),
-              height8,
-              onPressed(
-                  child: _buildRow(
-                      "Public Name",
-                      Row(
-                        mainAxisAlignment: axis.main.apart,
-                        children: [
-                          buildIconEdit(),
-                          text(account.publicName,
-                              color: colours.white60, size: 16)
-                        ],
-                      )),
-                  callback: actions.showDialogChangePublicName),
-              height8,
-              _buildRow("Email", account.email),
-              height8,
-              _buildRow("Joined", formatDate(account.accountCreationDate)),
-              height8,
-              if (!account.subscriptionNone)
-                border(
-                  child: Column(
-                    crossAxisAlignment: axis.cross.start,
+    return buildDialog(
+        width: style.dialogMediumWidth,
+        height: style.dialogMediumWidth * goldenRatio_1618,
+        bottomLeft: _buildSubscriptionStatus(account.subscriptionStatus),
+        child:
+    Column(
+      crossAxisAlignment: axis.cross.start,
+      children: [
+        height32,
+        text("MY ACCOUNT",
+            size: 30,
+            weight: bold,
+            color: colours.white85
+        ),
+        height32,
+        _buildRow("Private Name", account.privateName),
+        height8,
+        onPressed(
+            child: _buildRow(
+                "Public Name",
+                Row(
+                  mainAxisAlignment: axis.main.apart,
+                  children: [
+                    buildIconEdit(),
+                    text(account.publicName,
+                        color: colours.white60, size: 16)
+                  ],
+                )),
+            callback: actions.showDialogChangePublicName),
+        height8,
+        _buildRow("Email", account.email),
+        height8,
+        _buildRow("Joined", formatDate(account.accountCreationDate)),
+        height32,
+
+        border(
+          padding: padding16,
+          alignment: Alignment.centerLeft,
+          fillColor: colours.white05,
+            color: none,
+            child: Column(
+              crossAxisAlignment: axis.cross.start,
+              children: [
+                text("MY SUBSCRIPTION", bold: true),
+                height16,
+                _buildRow("Status", "Not Active"),
+                height8,
+                _buildRow("Started", "-"),
+                height8,
+                _buildRow("Ends", "-"),
+              ],
+            )
+
+        ),
+
+
+
+        if (!account.subscriptionNone)
+          border(
+            child: Column(
+              crossAxisAlignment: axis.cross.start,
+              children: [
+                if (account.subscriptionActive) text("Subscription Active", color: colours.green),
+                height16,
+                if (account.subscriptionActive) text("Automatically Renews"),
+                if (account.subscriptionExpired)
+                  Row(
                     children: [
-                      if (account.subscriptionActive) text("Subscription Active", color: colours.green),
-                      height16,
-                      if (account.subscriptionActive) text("Automatically Renews"),
-                      if (account.subscriptionExpired)
-                        Row(
-                          children: [
-                            text("Expired", color: colours.red),
-                            width8,
-                            button("Renew", () {},
-                                fillColor: colours.green)
-                          ],
-                        ),
-                      if (account.subscriptionActive)
-                        text(dateFormat.format(account.subscriptionExpirationDate!), color: colours.white60),
+                      text("Expired", color: colours.red),
+                      width8,
+                      button("Renew", () {},
+                          fillColor: colours.green)
                     ],
                   ),
-                ),
-            ],
-          )),
+                if (account.subscriptionActive)
+                  text(dateFormat.format(account.subscriptionExpirationDate!), color: colours.white60),
+              ],
+            ),
+          ),
+      ],
+    )
     );
   });
 }
@@ -108,16 +125,17 @@ Widget buildDialogAccount(){
 Widget _buildSubscriptionStatus(SubscriptionStatus status){
   switch(status){
     case SubscriptionStatus.None:
-      return button(Row(
-        children: [
-          icons.creditCard,
-          width4,
-          text("SUBSCRIBE", bold: true),
-          width4,
-        ],
-      ),  actions.openStripeCheckout, fillColor: colours.green, borderColor: colours.none,
-          fillColorMouseOver: colours.green
-      );
+      return text("UPGRADE TO PREMIUM", color: colours.green);
+      // return button(Row(
+      //   children: [
+      //     // icons.creditCard,
+      //     // width4,
+      //     text("SUBSCRIBE", bold: true),
+      //     // width4,
+      //   ],
+      // ),  actions.openStripeCheckout, fillColor: colours.green, borderColor: colours.none,
+      //     fillColorMouseOver: colours.green
+      // );
     case SubscriptionStatus.Active:
       return button("Cancel Subscription", actions.cancelSubscription,
         fillColor: colours.red,
@@ -172,11 +190,8 @@ Widget buildDialogMedium({required Widget child, Widget? bottomLeft}){
   return buildDialog(
       width: style.dialogMediumWidth,
       height: style.dialogMediumHeight,
-      child: layout(
-          child: child,
-          bottomLeft: bottomLeft,
-          bottomRight: backButton
-      )
+      bottomLeft: bottomLeft,
+      child: child
   );
 }
 
@@ -187,6 +202,16 @@ Widget buildDialogLarge({required Widget child, Widget? bottomLeft, Widget? bott
       bottomLeft: bottomLeft,
       bottomRight: bottomRight,
       child: child,
+  );
+}
+
+Widget buildDialogMax({required Widget child, Widget? bottomLeft, Widget? bottomRight}){
+  return buildDialog(
+    width: style.dialogLargeWidth,
+    height: double.infinity,
+    bottomLeft: bottomLeft,
+    bottomRight: bottomRight,
+    child: child,
   );
 }
 
@@ -292,11 +317,11 @@ Widget buildDialogWelcome(){
                 if (account != null)
                   text("Dear ${account.privateName}", color: colours.white618),
                   height32,
-                  text("  Thank you for joining gamestream :)", color: colours.white618),
+                  text("Thank you for joining gamestream :)", color: colours.white618),
                 height16,
                 Row(
                   children: [
-                    text("  Simply ", color: colours.white618),
+                    text("Simply ", color: colours.white618),
                     onHover((hov){
                       return text("purchase an active subscription", color: colours.green, bold: true, onPressed: actions.openStripeCheckout, underline: hov);
                     }),
@@ -304,9 +329,9 @@ Widget buildDialogWelcome(){
                   ],
                 ),
                 height16,
-                text("  to unlock all the games within our library.", color: colours.white618),
+                text("to unlock all the games within our library.", color: colours.white618),
                 height24,
-                text("  Boundless adventure awaits!", color: colours.white618),
+                text("Boundless adventure awaits!", color: colours.white618),
                 height32,
                 text("Kind regards,", color: colours.white618),
                 height16,
