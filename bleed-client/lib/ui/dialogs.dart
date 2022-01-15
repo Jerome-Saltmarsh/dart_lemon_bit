@@ -150,7 +150,9 @@ Widget _buildRow(String title, dynamic value){
 Widget buildDialog({
   required Widget child,
   required double width,
-  required double height
+  required double height,
+  Widget? bottomRight,
+  Widget? bottomLeft,
 }){
   return dialog(
       color: colours.white05,
@@ -160,7 +162,8 @@ Widget buildDialog({
       height: height,
       child: layout(
           child: child,
-          bottomRight: backButton
+          bottomLeft: bottomLeft,
+          bottomRight: bottomRight ?? backButton
       )
   );
 }
@@ -177,15 +180,13 @@ Widget buildDialogMedium({required Widget child, Widget? bottomLeft}){
   );
 }
 
-Widget buildDialogLarge({required Widget child, Widget? bottomLeft}){
+Widget buildDialogLarge({required Widget child, Widget? bottomLeft, Widget? bottomRight}){
   return buildDialog(
       width: style.dialogLargeWidth,
       height: style.dialogLargeHeight,
-      child: layout(
-          child: child,
-          bottomLeft: bottomLeft,
-          bottomRight: backButton
-      )
+      bottomLeft: bottomLeft,
+      bottomRight: bottomRight,
+      child: child,
   );
 }
 
@@ -210,9 +211,9 @@ Widget buildDialogWelcome(){
   return watchAccount((account){
     return buildDialogLarge(
         bottomLeft: widgets.subscribeButton,
+        bottomRight: widgets.closeButton,
         child: Column(
           children: [
-            height16,
             Row(
               mainAxisAlignment: axis.main.apart,
               children: [
@@ -235,13 +236,13 @@ Widget buildDialogWelcome(){
               crossAxisAlignment: axis.cross.start,
               children: [
                 if (account != null)
-                  text("Dear ${account.privateName}!", color: colours.white618),
+                  text("Dear ${account.privateName}", color: colours.white618),
                   height32,
-                  text("Thank you for joining gamestream :)", color: colours.white618),
+                  text("  Thank you for joining gamestream :)", color: colours.white618),
                 height16,
                 Row(
                   children: [
-                    text("Simply ", color: colours.white618),
+                    text("  Simply ", color: colours.white618),
                     onHover((hov){
                       return text("purchase an active subscription", color: colours.green, bold: true, onPressed: actions.openStripeCheckout, underline: hov);
                     }),
@@ -249,11 +250,11 @@ Widget buildDialogWelcome(){
                   ],
                 ),
                 height16,
-                text("within our library!", color: colours.white618),
+                text("  within our library.", color: colours.white618),
                 height24,
-                text("Boundless adventures await!", color: colours.white618),
+                text("  Boundless adventure awaits!", color: colours.white618),
                 height32,
-                text("Kind regards", color: colours.white618),
+                text("Kind regards,", color: colours.white618),
                 height16,
                 text("From Jerome (founder and ceo)", color: colours.white618),
               ],

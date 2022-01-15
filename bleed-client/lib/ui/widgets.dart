@@ -96,6 +96,13 @@ class _Widgets {
   final Widget theme = build.theme();
 
 
+  final closeButton = button(text("Close", color: colours.white618), () {
+    game.dialog.value = Dialogs.Games;
+  }, fillColor: colours.none,
+    fillColorMouseOver: none,
+    borderColor: colours.none,
+  );
+
   final subscribeButton = button(
       Row(
         children: [
