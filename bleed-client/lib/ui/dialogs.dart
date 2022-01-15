@@ -8,6 +8,7 @@ import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/views.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
+import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
@@ -240,8 +241,10 @@ Widget buildDialogWelcome(){
                 height16,
                 Row(
                   children: [
-                    text("Simply purchase an ", color: colours.white618),
-                    text("active subscription", color: colours.green, bold: true, onPressed: actions.openStripeCheckout),
+                    text("Simply ", color: colours.white618),
+                    onHover((hov){
+                      return text("purchase an active subscription", color: colours.green, bold: true, onPressed: actions.openStripeCheckout, underline: hov);
+                    }),
                     text(" to unlock all the games", color: colours.white618),
                   ],
                 ),
