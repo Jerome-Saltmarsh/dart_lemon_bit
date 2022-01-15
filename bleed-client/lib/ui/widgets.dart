@@ -395,5 +395,6 @@ Widget buildMenuButton(String text, Function onPressed){
     fillColorMouseOver: colours.black05,
     borderColorMouseOver: colours.none,
     borderRadius: borderRadius0,
+    boldOnHover: true
   );
 }
