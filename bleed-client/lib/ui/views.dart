@@ -178,9 +178,9 @@ Widget buildWatchAuthentication(){
                         return mouseOver ? Column(
                           children: [
                             buttons.buildAccount(mouseOver),
-                            buttons.showDialogAccount,
-                            buttons.showDialogGames,
-                            buttons.logout,
+                            buttons.buttonAccount,
+                            buttons.buttonGames,
+                            buttons.buttonLogout,
                           ],
                         ) : buttons.account;
                       }),

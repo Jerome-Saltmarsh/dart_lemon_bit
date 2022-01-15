@@ -17,6 +17,11 @@ final _Actions actions = _Actions();
 
 class _Actions {
 
+  void logout() {
+    print("signOut()");
+    signOut();
+  }
+
   void showDialogChangePublicName(){
     game.dialog.value = Dialogs.Change_Public_Name;
   }

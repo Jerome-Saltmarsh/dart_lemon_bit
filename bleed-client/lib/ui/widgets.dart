@@ -118,15 +118,6 @@ class _Widgets {
       fillColor: colours.green,
       borderColor: colours.none,
       fillColorMouseOver: colours.green);
-
-
-  final Widget settingsMenu = Column(
-    children: [
-      buttons.account,
-      buttons.showDialogAccount,
-      buttons.logout,
-    ],
-  );
 }
 
 final authenticationRequired = Exception("Authentication Required");
@@ -277,48 +268,10 @@ class _Buttons {
     );
   }
 
-  final Widget logout = NullableWatchBuilder<Authentication?>(authentication, (Authentication? authorization){
-    if (authorization == null){
-      text ('No User Logged In');
-    }
-    return button('Logout',
-        signOut,
-        width: style.buttonWidth,
-        height: style.buttonHeight,
-        fillColorMouseOver: colours.white05,
-    );
-  });
-  final Widget subscribe =
-      button("Subscribe \$4.99", actions.openStripeCheckout,
-          width: style.buttonWidth,
-          height: style.buttonHeight,
-      );
+  final Widget buttonLogout = buildMenuButton("Logout", actions.logout);
+  final Widget buttonAccount = buildMenuButton("Account", actions.showDialogAccount);
+  final Widget buttonGames = buildMenuButton("Games", actions.showDialogGames);
 
-  final Widget showDialogAccount = button("Account", (){
-    game.dialog.value = Dialogs.Account;
-  },
-      width: style.buttonWidth,
-      height: style.buttonHeight,
-      fillColorMouseOver: colours.white05,
-  );
-
-  final Widget showDialogGames = button("Games", (){
-    game.dialog.value = Dialogs.Games;
-  },
-    width: style.buttonWidth,
-    height: style.buttonHeight,
-    fillColorMouseOver: colours.white05,
-  );
-
-  final Widget menu = mouseOver(builder: (BuildContext context, bool mouseOver) {
-    return mouseOver ? Column(
-      children: [
-        buttons.account,
-        buttons.showDialogAccount,
-        buttons.logout,
-      ],
-    ) : buttons.account;
-  });
 
   final Widget debug = button("Debug", toggleDebugMode);
   final Widget exit = button('Exit', actions.exit);
@@ -429,5 +382,18 @@ Widget buildInfo({required Widget child}){
     color: none,
     padding: padding16,
     child: child,
+  );
+}
+
+Widget buildMenuButton(String text, Function onPressed){
+  return button(text,
+    onPressed,
+    width: style.buttonWidth,
+    height: style.buttonHeight,
+    borderColor: none,
+    fillColor: colours.white05,
+    fillColorMouseOver: colours.black05,
+    borderColorMouseOver: colours.none,
+    borderRadius: borderRadius0,
   );
 }
