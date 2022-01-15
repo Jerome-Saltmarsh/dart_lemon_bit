@@ -18,7 +18,8 @@ import '../flutterkit.dart';
 
 
 Widget buildDialogAccount(){
-  return NullableWatchBuilder<Account?>(game.account, (Account? account){
+
+  return watchAccount((account){
     if (account == null) {
       return layout(
         bottomLeft: buttons.login,
@@ -71,60 +72,41 @@ Widget buildDialogAccount(){
         height8,
         _buildRow("Joined", formatDate(account.accountCreationDate)),
         height50,
-
-        border(
-          padding: padding16,
-          alignment: Alignment.centerLeft,
-          fillColor: colours.white05,
-            color: none,
-            child: Column(
-              crossAxisAlignment: axis.cross.start,
-              children: [
-                Row(
-                  mainAxisAlignment: axis.main.apart,
-                  children: [
-                    text("MY SUBSCRIPTION", bold: true),
-                    widgets.textUpgrade,
-                  ],
-                ),
-                height16,
-                _buildRow("Status", "Not Active"),
-                height8,
-                _buildRow("Started", "-"),
-                height8,
-                _buildRow("Ends", "-"),
-              ],
-            )
-        ),
+        _buildSubscriptionPanel(account),
       ],
     )
     );
   });
 }
 
-
-Widget _buildSubscriptionStatus(SubscriptionStatus status){
-  switch(status){
-    case SubscriptionStatus.None:
-      return text("UPGRADE TO PREMIUM", color: colours.green);
-      // return button(Row(
-      //   children: [
-      //     // icons.creditCard,
-      //     // width4,
-      //     text("SUBSCRIBE", bold: true),
-      //     // width4,
-      //   ],
-      // ),  actions.openStripeCheckout, fillColor: colours.green, borderColor: colours.none,
-      //     fillColorMouseOver: colours.green
-      // );
-    case SubscriptionStatus.Active:
-      return button("Cancel Subscription", actions.cancelSubscription,
-        fillColor: colours.red,
-        borderColor: colours.none,
-      );
-    case SubscriptionStatus.Expired:
-      return text("Renew Subscription");
-  }
+Widget _buildSubscriptionPanel(Account account){
+  return border(
+      padding: padding16,
+      alignment: Alignment.centerLeft,
+      fillColor: colours.white05,
+      color: none,
+      child: Column(
+        crossAxisAlignment: axis.cross.start,
+        children: [
+          Row(
+            mainAxisAlignment: axis.main.apart,
+            children: [
+              text("MY SUBSCRIPTION", bold: true),
+              if (!account.subscriptionActive)
+              widgets.textUpgrade,
+              if (account.subscriptionActive)
+                text("CANCEL"),
+            ],
+          ),
+          height16,
+          _buildRow("Status", account.subscriptionNone ? "Not Active" : account.subscriptionActive ? text("ACTIVE", color: green) : text("EXPIRED", color: colours.red)),
+          height8,
+          _buildRow("Started", "-"),
+          height8,
+          _buildRow("Ends", "-"),
+        ],
+      )
+  );
 }
 
 Widget _buildRow(String title, dynamic value){
@@ -249,7 +231,7 @@ Widget buildDialogSubscriptionSuccessful(){
                 Row(
                   children: [
                     text("such as ", color: colours.white618),
-                    text("Change your in game name", color: colours.green),
+                    text("Change your in game name", color: colours.green, onPressed: actions.showDialogChangePublicName),
                   ],
                 ),
                 height32,
