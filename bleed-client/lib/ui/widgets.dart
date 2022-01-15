@@ -392,9 +392,10 @@ Widget _buildFakeLoginButton(String userId, String text){
   });
 }
 
-final backButton = button(text("Back", color: colours.white80), () {
+final backButton = button(text("Back", color: colours.white618), () {
   game.dialog.value = Dialogs.Games;
 }, fillColor: colours.none,
+  fillColorMouseOver: none,
   borderColor: colours.none,
 );
 
@@ -402,6 +403,7 @@ final icons = _Icons();
 
 class _Icons {
   final creditCard = buildDecorationImage(image: decorationImages.creditCard, color: none, width: 32, height: 32, borderColor: none);
+  final cherries = buildDecorationImage(image: decorationImages.cherries, color: none, width: 32, height: 32, borderColor: none);
 }
 
 

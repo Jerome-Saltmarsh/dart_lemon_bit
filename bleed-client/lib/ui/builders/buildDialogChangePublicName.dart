@@ -27,14 +27,26 @@ Widget buildDialogChangePublicName() {
             crossAxisAlignment: axis.cross.start,
             children: [
               buildDialogTitle("OOPS!"),
-              height16,
-              Row(
-                children: [
-                  text("An ", color: colours.white618),
-                  text("active subscription", color: colours.green, bold: true, onPressed: actions.openStripeCheckout),
-                  text(" is needed to change your public name", color: colours.white618),
-                ],
+              height32,
+              border(
+                fillColor: colours.white05,
+                color: none,
+                padding: padding16,
+                child: Column(
+                  crossAxisAlignment: axis.cross.start,
+                  children: [
+                    Row(
+                      children: [
+                        text("An ", color: colours.white618),
+                        text("active subscription", color: colours.green, bold: true, onPressed: actions.openStripeCheckout),
+                        text(" is needed to change", color: colours.white618),
+                      ],
+                    ),
+                    text("your public name", color: colours.white618),
+                  ],
+                ),
               ),
+
             ],
           ));
     }
