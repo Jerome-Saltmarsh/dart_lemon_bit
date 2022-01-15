@@ -103,6 +103,8 @@ class _Widgets {
     borderColor: colours.none,
   );
 
+  final buttonChangeDisplayName = button("Change Public Name", actions.showDialogChangePublicName);
+
   final subscribeButton = button(
       Row(
         children: [
@@ -298,6 +300,14 @@ class _Buttons {
       width: style.buttonWidth,
       height: style.buttonHeight,
       fillColorMouseOver: colours.white05,
+  );
+
+  final Widget showDialogGames = button("Games", (){
+    game.dialog.value = Dialogs.Games;
+  },
+    width: style.buttonWidth,
+    height: style.buttonHeight,
+    fillColorMouseOver: colours.white05,
   );
 
   final Widget menu = mouseOver(builder: (BuildContext context, bool mouseOver) {

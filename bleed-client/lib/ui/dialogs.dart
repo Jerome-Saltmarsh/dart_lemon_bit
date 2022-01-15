@@ -206,6 +206,60 @@ Widget buildDialogTitle(String value){
   return text(value.toUpperCase(), size: style.dialogTitleSize, color: colours.white85);
 }
 
+Widget buildDialogSubscriptionSuccessful(){
+  return watchAccount((account){
+    return buildDialogLarge(
+        bottomLeft: widgets.buttonChangeDisplayName,
+        bottomRight: widgets.closeButton,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: axis.main.apart,
+              children: [
+                Row(
+                  children: [
+                    buildDialogTitle("Inbox"),
+                    width16,
+                    icons.mail,
+                  ],
+                ),
+                border(
+                    padding: padding16,
+                    color: none,
+                    fillColor: colours.black15,
+                    child: buildDialogTitle("Subscription Activated")),
+              ],
+            ),
+            height16,
+            buildInfo(child: Column(
+              crossAxisAlignment: axis.cross.start,
+              children: [
+                text("Dear ${account != null ? account.privateName : "Anonymous"}", color: colours.white618),
+                height32,
+                text("Congratulations! Your premium account has officially been activated.", color: colours.white618),
+                height16,
+                text("This means you have access to all the games in the library plus a ton more", color: colours.white618),
+                height16,
+                Row(
+                  children: [
+                    text("such as ", color: colours.white618),
+                    text("Change your in game name", color: colours.green),
+                  ],
+                ),
+                height32,
+                text("You can cancel your subscription any time via the account dialog", color: colours.white618),
+                height32,
+                text("Kind regards,", color: colours.white618),
+                height16,
+                text("From Jerome (founder and ceo)", color: colours.white618),
+              ],
+            ))
+          ],
+        )
+    );
+  });
+}
+
 Widget buildDialogWelcome(){
 
   return watchAccount((account){

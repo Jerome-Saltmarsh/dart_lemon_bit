@@ -179,6 +179,7 @@ Widget buildWatchAuthentication(){
                           children: [
                             buttons.buildAccount(mouseOver),
                             buttons.showDialogAccount,
+                            buttons.showDialogGames,
                             buttons.logout,
                           ],
                         ) : buttons.account;
@@ -222,25 +223,7 @@ Widget buildWatchAuthentication(){
                     return WatchBuilder(game.dialog, (Dialogs dialogs) {
                       switch (dialogs) {
                         case Dialogs.Subscription_Successful:
-                          final name = auth != null ? auth.displayName : "";
-
-                          return dialog(
-                              padding: 16,
-                              height: 180,
-                              width: 180 * goldenRatio,
-                              child: layout(child: Column(
-                                crossAxisAlignment: axis.cross.start,
-                                children: [
-                                  text("Welcome $name", size: 20, weight: bold),
-                                  height16,
-                                  text("Thank you very much for subscribing to gamestream"),
-                                ],
-                              ),
-                                bottomRight: button("Great", (){
-                                  game.dialog.value = Dialogs.Games;
-                                }, fillColor: colours.green),
-                              )
-                          );
+                          return buildDialogSubscriptionSuccessful();
 
                         case Dialogs.Welcome:
                           return buildDialogWelcome();
