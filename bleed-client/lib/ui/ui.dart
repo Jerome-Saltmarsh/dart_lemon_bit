@@ -10,6 +10,7 @@ enum Dialogs {
   Change_Public_Name,
   Change_Region,
   Login_Error,
+  Confirm_Cancel_Subscription,
 }
 
 final _UIOptions uiOptions = _UIOptions();

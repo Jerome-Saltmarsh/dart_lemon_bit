@@ -37,10 +37,6 @@ FutureOr<Response> handleRequest(Request request) async {
     case 'hello':
       return Response.ok('world', headers: headersTextPlain);
 
-      case "stripe_event":
-      request.readAsString().then(handleStripeEvent);
-      return Response.ok('', headers: headersTextPlain);
-
       case "users":
       final params = request.requestedUri.queryParameters;
 
@@ -218,66 +214,6 @@ final headersTextPlain = (){
   return _headers;
 }();
 
-
-Future handleStripeEvent(String eventString) async {
-  print("handleStripeEvent()");
-
-  if (eventString.isEmpty){
-    throw Exception('event string is empty');
-  }
-
-  final event = jsonDecode(eventString) as Json;
-  if (!event.containsKey('type')){
-    throw Exception("event object does not contain type");
-  }
-
-  final type = event['type'];
-  print("event.type: '$type'");
-
-  switch(type){
-    case 'checkout.session.completed':
-      webhooks.checkoutSessionCompleted(event);
-      break;
-    default:
-      print('no handler for stripe event $type');
-      break;
-  }
-}
-
-// stripe webhook handlers
-final webhooks = _StripeWebhooks();
-
-class _StripeWebhooks {
-  void checkoutSessionCompleted(Json event){
-    print("stripe.checkoutSessionCompleted()");
-
-    if (!event.containsKey('data')){
-      throw Exception("event does not contain data");
-    }
-
-    final data = event['data'] as Json;
-
-    if (!data.containsKey('object')){
-      throw Exception("data does not contain object");
-    }
-
-    final obj = data['object'] as Json;
-
-    if (!obj.containsKey('client_reference_id')) {
-      throw Exception('Object does not contain client_reference_id');
-    }
-
-    final userId = obj['client_reference_id'];
-    final stripeCustomerId = obj['customer'];
-    final stripePaymentEmail = obj['customer_email'];
-
-    firestore.subscribe(
-        userId: userId,
-        stripeCustomerId: stripeCustomerId,
-        stripePaymentEmail: stripePaymentEmail
-    );
-  }
-}
 
 // Generate name serve
 final _random = Random();

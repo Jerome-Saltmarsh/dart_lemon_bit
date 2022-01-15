@@ -80,6 +80,10 @@ Widget buildDialogAccount(){
 }
 
 Widget _buildSubscriptionPanel(Account account){
+
+  final subscriptionStarted = account.subscriptionCreationDate;
+  final subscriptionEnds = account.subscriptionExpirationDate;
+
   return border(
       padding: padding16,
       alignment: Alignment.centerLeft,
@@ -91,19 +95,19 @@ Widget _buildSubscriptionPanel(Account account){
           Row(
             mainAxisAlignment: axis.main.apart,
             children: [
-              text("MY SUBSCRIPTION", bold: true),
+              text("MY SUBSCRIPTION", bold: true, color: colours.white80),
               if (!account.subscriptionActive)
               widgets.textUpgrade,
               if (account.subscriptionActive)
-                text("CANCEL"),
+                text("cancel", color: colours.white80, onPressed: actions.showDialogConfirmCancelSubscription, italic: true),
             ],
           ),
           height16,
           _buildRow("Status", account.subscriptionNone ? "Not Active" : account.subscriptionActive ? text("ACTIVE", color: green) : text("EXPIRED", color: colours.red)),
           height8,
-          _buildRow("Started", "-"),
+          _buildRow("Started", subscriptionStarted == null ? "-" : formatDate(subscriptionStarted)),
           height8,
-          _buildRow("Ends", "-"),
+          _buildRow(subscriptionEnds == null ? "Ends" : account.subscriptionExpired ? "Ended" : "Renews", subscriptionEnds == null ?  "-" : formatDate(subscriptionEnds)),
         ],
       )
   );
@@ -362,4 +366,11 @@ Widget buildDialogChangePublicName() {
 Widget buildDialogMessage(String message) {
   return buildDialogMedium(child: text(message));
 }
+
+Widget buildDialogConfirmCancelSubscription(){
+  return buildDialogMedium(child: text("Are you sure you want to cancel your subscription?"),
+    bottomLeft: button(text("CONFIRM", color: colours.red), actions.cancelSubscription, fillColor: none, borderColor: colours.red)
+  );
+}
+
 

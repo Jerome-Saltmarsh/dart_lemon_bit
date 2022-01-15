@@ -17,6 +17,10 @@ final _Actions actions = _Actions();
 
 class _Actions {
 
+  void cancelSubscription(){
+
+  }
+
   void logout() {
     print("signOut()");
     signOut();
@@ -120,7 +124,7 @@ class _Actions {
     );
   }
 
-  void cancelSubscription(){
-
+  void showDialogConfirmCancelSubscription() {
+    game.dialog.value = Dialogs.Confirm_Cancel_Subscription;
   }
 }

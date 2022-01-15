@@ -69,7 +69,6 @@ Widget buildLoginDialog() {
 }
 
 Widget buildView(BuildContext context) {
-
   return NullableWatchBuilder<String?>(game.errorMessage, (String? message){
     if (message == null) return buildWatchGameMode();
     return buildErrorDialog(message);
@@ -222,6 +221,7 @@ Widget buildWatchAuthentication(){
                     }
                     return WatchBuilder(game.dialog, (Dialogs dialogs) {
                       switch (dialogs) {
+
                         case Dialogs.Subscription_Successful:
                           return buildDialogSubscriptionSuccessful();
 
@@ -348,6 +348,9 @@ Widget buildWatchAuthentication(){
                           });
                         case Dialogs.Confirm_Logout:
                           return dialog(child: text("Confirm Logout"));
+
+                        case Dialogs.Confirm_Cancel_Subscription:
+                          return buildDialogConfirmCancelSubscription();
                       }
                     });
                   }));
@@ -695,7 +698,7 @@ Widget buildTopMessage(){
                 top: 10,
                 child: Row(
                   children: [
-                    text("Subscription Active", color: colours.green, size: 18),
+                    text("Subscription Active", color: colours.green, size: 18, onPressed: actions.showDialogAccount),
                   ],
                 ),
               ),
@@ -717,13 +720,11 @@ Widget buildTopMessage(){
               Row(
                 children: [
                   onPressed(
-                    callback: actions.showDialogSubscription,
-                    child: border(
-                        color: colours.red,
-                        child: text("Your subscription expired on ${formatDate(account.subscriptionExpirationDate!)}", color: colours.red)),
+                    callback: actions.openStripeCheckout,
+                    child: text("Your subscription expired on ${formatDate(account.subscriptionExpirationDate!)}", color: colours.red),
                   ),
-                  width8,
-                  button(text("Renew"), actions.showDialogSubscription, borderColor: colours.none),                                ],
+                  width16,
+                  button(text("Renew", color: green), actions.openStripeCheckout, borderColor: colours.green),                                ],
               ),
           ],
         ),
