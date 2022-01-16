@@ -9,12 +9,13 @@ class _Style {
   final buttonWidth = 200.0;
   get buttonHeight => style.buttonWidth * goldenRatio_0381;
 
-  final dialogMediumHeight = 390.0;
-  get dialogMediumWidth => style.dialogMediumHeight * goldenRatio_1381;
+  final dialogHeightMedium = 390.0;
+  get dialogWidthMedium => style.dialogHeightMedium * goldenRatio_1381;
 
-  get dialogSmallHeight => style.dialogMediumHeight * goldenRatio_0618;
-  get dialogSmallWidth => style.dialogMediumWidth * goldenRatio_0618;
+  get dialogHeightVerySmall => style.dialogHeightMedium * goldenRatio_0381;
+  get dialogHeightSmall => style.dialogHeightMedium * goldenRatio_0618;
+  get dialogWidthSmall => style.dialogWidthMedium * goldenRatio_0618;
 
-  get dialogLargeHeight => style.dialogMediumHeight * goldenRatio_1381;
-  get dialogLargeWidth => style.dialogMediumWidth * goldenRatio_1618;
+  get dialogHeightLarge => style.dialogHeightMedium * goldenRatio_1381;
+  get dialogWidthLarge => style.dialogWidthMedium * goldenRatio_1618;
 }

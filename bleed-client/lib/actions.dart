@@ -35,7 +35,11 @@ class _Actions {
   }
 
   void showDialogWelcome(){
-    game.dialog.value = Dialogs.Welcome;
+    game.dialog.value = Dialogs.Welcome_1;
+  }
+
+  void showDialogWelcome2(){
+    game.dialog.value = Dialogs.Welcome_2;
   }
 
   void showDialogSubscriptionSuccessful(){
@@ -114,7 +118,8 @@ class _Actions {
       throw Exception("Cannot open stripe checkout, account is null");
     }
     if (account.subscriptionActive){
-      throw Exception("Account subscription already active");
+      actions.showErrorMessage("This account already has an active premium subscription");
+      return;
     }
 
     game.signingIn.value = LoginStatus.Opening_Secure_Payment;
@@ -126,5 +131,9 @@ class _Actions {
 
   void showDialogConfirmCancelSubscription() {
     game.dialog.value = Dialogs.Confirm_Cancel_Subscription;
+  }
+
+  void showErrorMessage(String message){
+    game.errorMessage.value = message;
   }
 }

@@ -38,8 +38,8 @@ Widget buildDialogAccount(){
     }
 
     return buildDialog(
-        width: style.dialogMediumWidth,
-        height: style.dialogMediumWidth * goldenRatio_1618,
+        width: style.dialogWidthMedium,
+        height: style.dialogWidthMedium * goldenRatio_1618,
         // bottomLeft: margin(child: _buildSubscriptionStatus(account.subscriptionStatus), bottom: 32),
         bottomRight: margin(child: widgets.closeButton, bottom: 32),
         child:
@@ -122,7 +122,7 @@ Widget _buildRow(String title, dynamic value){
         height: 40,
           alignment: Alignment.centerRight,
           padding: const EdgeInsets.all(8),
-          width: style.dialogMediumWidth * goldenRatio_0618,
+          width: style.dialogWidthMedium * goldenRatio_0618,
           decoration: BoxDecoration(
             color: colours.black382,
             borderRadius: borderRadius4,
@@ -148,24 +148,25 @@ Widget buildDialog({
       child: layout(
           child: child,
           bottomLeft: bottomLeft,
-          bottomRight: bottomRight ?? backButton
+          bottomRight: bottomRight
       )
   );
 }
 
-Widget buildDialogMedium({required Widget child, Widget? bottomLeft}){
+Widget buildDialogMedium({required Widget child, Widget? bottomLeft, Widget? bottomRight}){
   return buildDialog(
-      width: style.dialogMediumWidth,
-      height: style.dialogMediumHeight,
+      width: style.dialogWidthMedium,
+      height: style.dialogHeightMedium,
       bottomLeft: bottomLeft,
+      bottomRight: bottomRight,
       child: child
   );
 }
 
 Widget buildDialogLarge({required Widget child, Widget? bottomLeft, Widget? bottomRight}){
   return buildDialog(
-      width: style.dialogLargeWidth,
-      height: style.dialogLargeHeight,
+      width: style.dialogWidthLarge,
+      height: style.dialogHeightLarge,
       bottomLeft: bottomLeft,
       bottomRight: bottomRight,
       child: child,
@@ -174,7 +175,7 @@ Widget buildDialogLarge({required Widget child, Widget? bottomLeft, Widget? bott
 
 Widget buildDialogMax({required Widget child, Widget? bottomLeft, Widget? bottomRight}){
   return buildDialog(
-    width: style.dialogLargeWidth,
+    width: style.dialogWidthLarge,
     height: double.infinity,
     bottomLeft: bottomLeft,
     bottomRight: bottomRight,
@@ -182,15 +183,13 @@ Widget buildDialogMax({required Widget child, Widget? bottomLeft, Widget? bottom
   );
 }
 
-Widget buildDialogSmall({required Widget child, Widget? bottomLeft}){
+Widget buildDialogSmall({required Widget child, Widget? bottomLeft, Widget? bottomRight}){
   return buildDialog(
-      width: style.dialogSmallWidth,
-      height: style.dialogSmallHeight,
-      child: layout(
-          child: child,
-          bottomLeft: bottomLeft,
-          bottomRight: backButton
-      )
+      width: style.dialogWidthSmall,
+      height: style.dialogHeightSmall,
+      bottomLeft: bottomLeft,
+      bottomRight: bottomRight,
+      child: child
   );
 }
 
@@ -252,65 +251,61 @@ Widget buildDialogSubscriptionSuccessful(){
   });
 }
 
-Widget buildDialogWelcome(){
-
+Widget buildDialogWelcome1(){
   return watchAccount((account){
-    return buildDialogLarge(
-        bottomLeft: widgets.subscribeButton,
-        bottomRight: widgets.closeButton,
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: axis.main.apart,
-              children: [
-                Row(
-                  children: [
-                    buildDialogTitle("Inbox"),
-                    width16,
-                    icons.mail,
-                  ],
-                ),
-                border(
-                    padding: padding16,
-                    color: none,
-                    fillColor: colours.black15,
-                    child: buildDialogTitle("welcome to gamestream")),
-              ],
-            ),
-            height16,
-            buildInfo(child: Column(
-              crossAxisAlignment: axis.cross.start,
-              children: [
-                if (account != null)
-                  text("Dear ${account.privateName}", color: colours.white618),
-                  height32,
-                  text("Thank you for joining gamestream :)", color: colours.white618),
-                height16,
-                Row(
-                  children: [
-                    text("Simply ", color: colours.white618),
-                    onHover((hov){
-                      return text("purchase an active subscription", color: colours.green, bold: true, onPressed: actions.openStripeCheckout, underline: hov);
-                    }),
-                    text(" for \$9.99 per month", color: colours.white618),
-                  ],
-                ),
-                height16,
-                text("to unlock all the games within our library.", color: colours.white618),
-                height24,
-                text("Boundless adventure awaits!", color: colours.white618),
-                height32,
-                text("Kind regards,", color: colours.white618),
-                height16,
-                text("From Jerome (founder and ceo)", color: colours.white618),
-              ],
-            ))
-          ],
-        )
-    );
-
+      return buildDialog(
+          width: style.dialogWidthMedium,
+          height: style.dialogHeightSmall,
+          child: Column(
+            crossAxisAlignment: axis.cross.start,
+            children: [
+              Container(
+                  width: double.infinity,
+                  color: colours.white05,
+                  padding: padding16,
+                  child: Column(
+                    crossAxisAlignment: axis.cross.start,
+                    children: [
+                      text("Hi ${account == null ? 'anon': account.privateName}", color: colours.white80),
+                      height32,
+                      text("Thank you for joining gamestream!", color: colours.white80)
+                    ],
+                  )),
+            ],
+          ),
+        bottomRight: text("Next", onPressed: actions.showDialogWelcome2, color: colours.white80)
+      );
   });
+}
 
+Widget buildDialogWelcome2(){
+  return buildDialog(
+      width: style.dialogWidthMedium,
+      height: style.dialogHeightSmall,
+      child: Column(
+        crossAxisAlignment: axis.cross.start,
+        children: [
+          Container(
+              width: double.infinity,
+              color: colours.white05,
+              padding: padding16,
+              child: Column(
+                crossAxisAlignment: axis.cross.start,
+                children: [
+                  text("Many of our games can be played for free.", color: colours.white80),
+                  height16,
+                  text("A premium membership costs \$9.99 per month", color: colours.white80),
+                  height8,
+                  text("and will unlock every game in our library", color: colours.white80),
+                ],
+              )),
+        ],
+      ),
+      bottomRight: button(text("PREMIUM MEMBERSHIP", color: green), actions.openStripeCheckout, fillColor: none, borderColor: green),
+      bottomLeft: Container(
+          padding: padding8,
+          child: text("Perhaps Later", onPressed: actions.showDialogGames, color: colours.white80)),
+  );
 }
 
 final _nameController = TextEditingController();

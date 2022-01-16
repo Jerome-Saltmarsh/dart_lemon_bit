@@ -77,17 +77,18 @@ Widget buildView(BuildContext context) {
 
 Widget buildErrorDialog(String message){
   return dialog(
+      width: style.dialogWidthMedium,
+      height: style.dialogHeightVerySmall,
       color: colours.orange,
       borderColor: colours.none,
-      height: 400,
       child: layout(
-          child: Column(
-            crossAxisAlignment: axis.cross.start,
-            children: [
-              text("Error"),
-              text(message),
-            ],
-          ),
+          child: Container(
+              decoration: BoxDecoration(
+                color: colours.black10,
+                borderRadius: borderRadius4,
+              ),
+              padding: padding16,
+              child: text(message, color: colours.white),),
           bottomRight: text("okay", onPressed: actions.closeErrorMessage)
       )
   );
@@ -225,8 +226,11 @@ Widget buildWatchAuthentication(){
                         case Dialogs.Subscription_Successful:
                           return buildDialogSubscriptionSuccessful();
 
-                        case Dialogs.Welcome:
-                          return buildDialogWelcome();
+                        case Dialogs.Welcome_1:
+                          return buildDialogWelcome1();
+
+                        case Dialogs.Welcome_2:
+                          return buildDialogWelcome2();
 
                         case Dialogs.Change_Region:
                           return dialog(
