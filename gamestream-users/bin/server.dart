@@ -158,7 +158,10 @@ Future<Response> _getUser(Document user, Json response) async {
   }
 
   final subscriptionIdField = fields[fieldNames.subscriptionId];
-  if (subscriptionIdField != null) {
+
+  if (subscriptionIdField == null){
+    response[fieldNames.subscriptionStatus] = 'not_subscribed';
+  } else {
     final subscriptionId = subscriptionIdField.stringValue;
     if (subscriptionId == null) {
       return error(response, "subscription_id_not_string");
@@ -180,11 +183,6 @@ Future<Response> _getUser(Document user, Json response) async {
     if (endedAt != null){
       response[fieldNames.subscriptionEndedAt] = endedAt;
     }
-
-
-
-    // response[fieldNames.subscriptionCreatedDate] = formatDate(subscription.currentPeriodStart);
-    // response[fieldNames.subscriptionExpirationDate] = formatDate(subscription.currentPeriodEnd);
   }
 
   final email = fields[fieldNames.email];
