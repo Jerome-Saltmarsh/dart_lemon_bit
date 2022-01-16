@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
@@ -26,10 +25,16 @@ class StripeApi {
     };
   }
 
-  Future<Response> getSubscription(String subscriptionId){
+  Future<String> getSubscription(String subscriptionId) async {
     print("stripeApi.getSubscription('$subscriptionId)'");
     final uri = Uri(scheme: scheme, host: host, path: 'v1/subscriptions/$subscriptionId');
-    return http.get(uri, headers: _headers);
+    final response = await  http.get(uri, headers: _headers);
+
+    if (response.statusCode != 200){
+
+    }
+
+    return response.body;
   }
 
   Future<Response> deleteSubscription(String subscriptionId){

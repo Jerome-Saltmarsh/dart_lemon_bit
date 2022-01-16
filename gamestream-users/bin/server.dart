@@ -1,18 +1,27 @@
 
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'dart:math';
+import 'package:typedef/json.dart';
 
 import 'package:gamestream_users/firestore.dart';
 import 'package:gamestream_users/stripe.dart';
+import 'package:googleapis/firestore/v1.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
+import 'dart:io' show Platform;
 
+
+final devMode = Platform.localHostname == "Jerome";
 
 // gcloud builds submit --tag gcr.io/gogameserver/rest-server
 // https://stripe.com/docs/webhooks
 void main() async {
-  // firestore.init();
+  if (!devMode){
+    print("production mode detected: starting firestore service");
+    firestore.init();
+  }
   initServer();
 }
 
@@ -32,21 +41,15 @@ FutureOr<Response> handleRequest(Request request) async {
   print("handleRequest(path: '$path', method: '${request.method}', host: '${request.url.host}')");
   final Json response = Json();
 
-
   switch(path){
-
     case 'subscriptions':
       final params = request.requestedUri.queryParameters;
       final subscriptionId = params['id'];
-      if (subscriptionId == null){
+      if (subscriptionId == null) {
         return error(response, 'id is null');
       }
       final subscription = await stripeApi.getSubscription(subscriptionId);
-      return ok("done");
-
-
-    case 'hello':
-      return Response.ok('world', headers: headersTextPlain);
+      return ok(subscription);
 
     case "users":
       final params = request.requestedUri.queryParameters;
@@ -55,19 +58,8 @@ FutureOr<Response> handleRequest(Request request) async {
         return error(response, 'method_required');
       }
 
-
       if (method == 'FIND'){
-        return error(response, 'disabled');
-        // print("(server) handling find request");
-        // final displayName = params[fieldNames.displayName];
-        // if (displayName == null){
-        //   return error(response, 'display_name_required');
-        // }
-        // final result = await firestore.findUser(displayName: displayName);
-        // if (result == null){
-        //   return error(response, 'not_found');
-        // }
-        // return ok(result.fields);
+        return _findUser(response);
       }
 
       final id = params['id'];
@@ -75,188 +67,195 @@ FutureOr<Response> handleRequest(Request request) async {
         return error(response, 'id_required');
       }
 
+      if (method == 'POST'){
+        return _createUser(response, params, id);
+      }
+
       response['id'] = id;
       final user = await firestore.findUserById(id);
 
-      if (method == 'CANCEL_SUBSCRIPTION'){
-        if (user == null){
-          return error(response, 'not_found');
-        }
 
-        final fields = user.fields;
-        if (fields == null){
-          return error(response, 'fields_null');
-        }
-
-        final subscriptionIdField = fields[fieldNames.subscriptionId];
-        if (subscriptionIdField == null) {
-          return error(response, "user_not_subscribed");
-        }
-
-        final subscriptionId = subscriptionIdField.stringValue;
-        if (subscriptionId == null){
-          return error(response, "subscription_id_not_string");
-        }
-
-        final deleteResponse = await stripeApi.deleteSubscription(subscriptionId);
-        return ok(deleteResponse.body);
-        // final subscription = await stripe.subscription.get(subscriptionId);
-        // subscription.status;
-
-      } // CANCEL_SUBSCRIPTION
-
-      if (method == "CUSTOMER"){
-        if (user == null){
-          return error(response, 'not_found');
-        }
-        final fields = user.fields;
-        if (fields == null){
-          return error(response, 'fields_null');
-        }
-
-        final stripeCustomerIdField = fields[fieldNames.stripeCustomerId];
-        if (stripeCustomerIdField == null) {
-          return error(response, "user_not_subscribed");
-        }
-
-        final stripeCustomerId = stripeCustomerIdField.stringValue;
-        if (stripeCustomerId == null){
-          return error(response, "stripe_customer_id_not_string");
-        }
-
-        // final stripeCustomer = await stripe.customer.retrieve(stripeCustomerId);
-        // stripeCustomer.toJson().forEach((key, value) {
-        //   response[key] = value;
-        // });
-
-        return ok(response);
-
-      } // cancel_subscription
-
-
-      if (method == 'PATCH'){
-
-        var publicName = params[fieldNames.public_name];
-
-        if (publicName == null){
-          return errorFieldMissing(response, fieldNames.public_name);
-        }
-
-        publicName = publicName.trim();
-        publicName = publicName.replaceAll(" ", "_");
-
-        if (publicName.length < 4){
-          return error(response, 'display_name_too_short');
-        }
-
-        final existing = await firestore.findUser(displayName: publicName);
-        if (existing != null){
-          return error(response, 'display_name_already_taken');
-        }
-
-        await firestore.patchDisplayName(userId: id, displayName: publicName);
-        response['status'] = 'success';
-        response['request'] = 'patch';
-        response['field'] = 'display_name';
-        response['value'] = publicName;
-        return ok(response);
+      if (user == null){
+        return error(response, 'not_found');
       }
 
-      if (method == "GET"){
+      switch(method){
+        case 'CANCEL_SUBSCRIPTION':
+          return await _cancelSubscription(user, response);
 
-        if (user == null){
-          return error(response, 'not_found');
-        }
+        case 'PATCH':
+          return await _patchUser(params, response, id);
 
-        final fields = user.fields;
+        case 'GET_SUBSCRIPTION':
+          final fields = user.fields;
+          if (fields == null) {
+            throw Exception('user fields are null');
+          }
+          if (fields.isEmpty) {
+            throw Exception('user fields are empty');
+          }
 
-        if (fields == null){
-          return error(response, 'fields_null');
-        }
-
-        if (fields.isEmpty){
-          return error(response, 'fields_empty');
-        }
-
-
-        final subscriptionIdField = fields[fieldNames.subscriptionId];
-        if (subscriptionIdField != null) {
+          final subscriptionIdField = fields[fieldNames.subscriptionId];
+          if (subscriptionIdField == null) {
+            response[fieldNames.subscriptionStatus] = 'not_subscribed';
+            return ok(response);
+          }
           final subscriptionId = subscriptionIdField.stringValue;
           if (subscriptionId == null){
-            return error(response, "subscription_id_not_string");
+            throw Exception('subscription_id is not a string value');
           }
+
           final subscription = await stripeApi.getSubscription(subscriptionId);
-          print("(server) subscription found");
-          response['subscription'] = subscription.body;
-          // response[fieldNames.subscriptionCreatedDate] = formatDate(subscription.currentPeriodStart);
-          // response[fieldNames.subscriptionExpirationDate] = formatDate(subscription.currentPeriodEnd);
-        }
+          return ok(subscription);
 
+        case 'GET':
+          return await _getUser(user, response);
 
-        final email = fields[fieldNames.email];
-        if (email != null){
-          response[fieldNames.email] = email.stringValue;
-        }
-
-        final publicName = fields[fieldNames.public_name];
-        if (publicName != null){
-          response[fieldNames.public_name] = publicName.stringValue;
-        }
-
-        final privateName = fields[fieldNames.private_name];
-        if (privateName != null){
-          response[fieldNames.private_name] = privateName.stringValue;
-        }
-
-        // final subscriptionExpirationDate = fields[fieldNames.subscriptionExpirationDate];
-        // if (subscriptionExpirationDate != null) {
-        //     response[fieldNames.subscriptionExpirationDate] = subscriptionExpirationDate.timestampValue;
-        //     final subscriptionCreatedDate = fields[fieldNames.subscriptionCreatedDate];
-        //     if (subscriptionCreatedDate == null){
-        //       return errorFieldMissing(response, fieldNames.subscriptionCreatedDate);
-        //     }
-        //     response[fieldNames.subscriptionCreatedDate] = subscriptionCreatedDate.timestampValue;
-        // }
-
-        final accountCreationDate = fields[fieldNames.account_creation_date];
-        if (accountCreationDate != null) {
-            response[fieldNames.account_creation_date] = accountCreationDate.timestampValue;
-        }
-
-        return ok(response);
-      } // GET
-
-      if (method == "POST"){
-
-        if (user != null){
-          return error(response, 'already_exists');
-        }
-
-        final email = params[fieldNames.email];
-
-        if (email == null){
-          return errorFieldMissing(response, fieldNames.email);
-        }
-
-        final publicName = generateRandomName();
-        final privateName = params[fieldNames.private_name] ?? publicName;
-        final newUser = await firestore.createUser(
-          userId: id,
-          email: email,
-          privateName: privateName,
-          publicName: publicName,
-        );
-        return ok(newUser);
-      } // POST
-
-      response['method'] = method;
-      return error(response, "unknown_method");
+        default:
+          return error(response, "unknown_method");
+      }
 
     default:
-      break;
+      return error(response, 'unknown_endpoint');
+  }
+}
+
+Future<Response> _createUser(Json response, Map<String, String> params, String id) async {
+
+  final user = await firestore.findUserById(id);
+
+  if (user != null){
+    return error(response, 'already_exists');
   }
 
-  return Response.notFound("Cannot handle request: {url: '${request.url}', method: '${request.method}'}", headers: headersTextPlain);
+  final email = params[fieldNames.email];
+
+  if (email == null){
+    return errorFieldMissing(response, fieldNames.email);
+  }
+
+  final publicName = generateRandomName();
+  final privateName = params[fieldNames.private_name] ?? publicName;
+  final newUser = await firestore.createUser(
+    userId: id,
+    email: email,
+    privateName: privateName,
+    publicName: publicName,
+  );
+  return ok(newUser);
+}
+
+Future<Response> _getUser(Document user, Json response) async {
+
+  final fields = user.fields;
+
+  if (fields == null) {
+    return error(response, 'fields_null');
+  }
+
+  if (fields.isEmpty) {
+    return error(response, 'fields_empty');
+  }
+
+  final subscriptionIdField = fields[fieldNames.subscriptionId];
+  if (subscriptionIdField != null) {
+    final subscriptionId = subscriptionIdField.stringValue;
+    if (subscriptionId == null) {
+      return error(response, "subscription_id_not_string");
+    }
+    final subscription = await stripeApi.getSubscription(subscriptionId);
+    // response[fieldNames.subscriptionStatus] = subscription.
+    // response[fieldNames.subscriptionCreatedDate] = formatDate(subscription.currentPeriodStart);
+    // response[fieldNames.subscriptionExpirationDate] = formatDate(subscription.currentPeriodEnd);
+  }
+
+  final email = fields[fieldNames.email];
+  if (email != null) {
+    response[fieldNames.email] = email.stringValue;
+  }
+
+  final publicName = fields[fieldNames.public_name];
+  if (publicName != null) {
+    response[fieldNames.public_name] = publicName.stringValue;
+  }
+
+  final privateName = fields[fieldNames.private_name];
+  if (privateName != null) {
+    response[fieldNames.private_name] = privateName.stringValue;
+  }
+
+  final accountCreationDate = fields[fieldNames.account_creation_date];
+  if (accountCreationDate != null) {
+    response[fieldNames.account_creation_date] =
+        accountCreationDate.timestampValue;
+  }
+
+  return ok(response);
+}
+
+Future<Response> _patchUser(Map<String, String> params, Json response, String id) async {
+
+  var publicName = params[fieldNames.public_name];
+
+  if (publicName == null){
+    return errorFieldMissing(response, fieldNames.public_name);
+  }
+
+  publicName = publicName.trim();
+  publicName = publicName.replaceAll(" ", "_");
+
+  if (publicName.length < 4){
+    return error(response, 'display_name_too_short');
+  }
+
+  final existing = await firestore.findUser(displayName: publicName);
+  if (existing != null){
+    return error(response, 'display_name_already_taken');
+  }
+
+  await firestore.patchDisplayName(userId: id, displayName: publicName);
+  response['status'] = 'success';
+  response['request'] = 'patch';
+  response['field'] = 'display_name';
+  response['value'] = publicName;
+  return ok(response);
+}
+
+Response _findUser(Json response) {
+  return error(response, 'disabled');
+  // print("(server) handling find request");
+  // final displayName = params[fieldNames.displayName];
+  // if (displayName == null){
+  //   return error(response, 'display_name_required');
+  // }
+  // final result = await firestore.findUser(displayName: displayName);
+  // if (result == null){
+  //   return error(response, 'not_found');
+  // }
+  // return ok(result.fields);
+}
+
+Future<Response> _cancelSubscription(Document user, Json response) async {
+
+  final fields = user.fields;
+  if (fields == null){
+    return error(response, 'fields_null');
+  }
+
+  final subscriptionIdField = fields[fieldNames.subscriptionId];
+  if (subscriptionIdField == null) {
+    return error(response, "user_not_subscribed");
+  }
+
+  final subscriptionId = subscriptionIdField.stringValue;
+  if (subscriptionId == null){
+    return error(response, "subscription_id_not_string");
+  }
+
+  final deleteResponse = await stripeApi.deleteSubscription(subscriptionId);
+  return ok(deleteResponse.body);
+  // final subscription = await stripe.subscription.get(subscriptionId);
+  // subscription.status;
 }
 
 bool isExpired(DateTime value){
@@ -278,7 +277,7 @@ Response errorFieldMissing(response, String fieldName){
   return error(response, 'field_missing');
 }
 
-typedef Json = Map<String, dynamic>;
+// typedef Json = Map<String, dynamic>;
 
 final headersJson = (){
   final Map<String, Object> _headers = {};

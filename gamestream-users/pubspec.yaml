@@ -12,4 +12,5 @@ dependencies:
   googleapis_auth: ^1.1.0
   stripe: ^4.5.0
   http: ^0.13.4
+  typedef: ^1.0.0
 
