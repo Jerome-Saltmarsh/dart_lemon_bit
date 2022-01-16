@@ -29,11 +29,9 @@ class StripeApi {
     print("stripeApi.getSubscription('$subscriptionId)'");
     final uri = Uri(scheme: scheme, host: host, path: 'v1/subscriptions/$subscriptionId');
     final response = await  http.get(uri, headers: _headers);
-
     if (response.statusCode != 200){
-
+        throw Exception('statusCode: ${response.statusCode}, body:${response.body}');
     }
-
     return response.body;
   }
 

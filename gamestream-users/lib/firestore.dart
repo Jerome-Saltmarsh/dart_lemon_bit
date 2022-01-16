@@ -210,6 +210,11 @@ class _FieldNames {
   final String subscriptionExpirationDate = "subscription_expiration_date";
   final String subscriptionCreatedDate = "subscription_created_date";
   final String subscriptionStatus = "subscription_status";
+  final String subscriptionStartDate = "subscription_start_date";
+  final String subscriptionEndedAt = "subscription_ended_at";
+  final String subscriptionLiveMode = "subscription_live_mode";
+  final String subscriptionCurrentPeriodStart = "subscription_current_period_start";
+  final String subscriptionCurrentPeriodEnd = "subscription_current_period_end";
   final String error = "error";
   final String stripeCustomerId = 'stripe_customer_id';
   final String stripePaymentEmail = 'stripe_payment_email';

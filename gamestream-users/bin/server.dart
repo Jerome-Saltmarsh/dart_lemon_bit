@@ -163,8 +163,26 @@ Future<Response> _getUser(Document user, Json response) async {
     if (subscriptionId == null) {
       return error(response, "subscription_id_not_string");
     }
-    final subscription = await stripeApi.getSubscription(subscriptionId);
-    // response[fieldNames.subscriptionStatus] = subscription.
+    final subscriptionString = await stripeApi.getSubscription(subscriptionId);
+    final subscription = jsonDecode(subscriptionString);
+    final status = subscription['status'];
+    if (status == null){
+      throw Exception("subscription.status is null");
+    }
+
+    response[fieldNames.subscriptionStatus] = status;
+    response[fieldNames.subscriptionLiveMode] = subscription['livemode'];
+    response[fieldNames.subscriptionCurrentPeriodStart] = subscription['current_period_start'];
+    response[fieldNames.subscriptionCurrentPeriodEnd] = subscription['current_period_end'];
+    response[fieldNames.subscriptionStartDate] = subscription['start_date'];
+
+    final endedAt = subscription[fieldNames.subscriptionEndedAt];
+    if (endedAt != null){
+      response[fieldNames.subscriptionEndedAt] = endedAt;
+    }
+
+
+
     // response[fieldNames.subscriptionCreatedDate] = formatDate(subscription.currentPeriodStart);
     // response[fieldNames.subscriptionExpirationDate] = formatDate(subscription.currentPeriodEnd);
   }
