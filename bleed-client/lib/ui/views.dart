@@ -701,44 +701,57 @@ Widget buildTopMessage(){
         });
       }
 
-        if (account.subscriptionActive)
-          return margin(
-            top: 10,
-            child: Row(
+      if (account.subscriptionActive) {
+        return margin(
+          top: 10,
+          child: text("Subscription Active",
+              color: colours.green,
+              size: 18,
+              onPressed: actions.showDialogAccount),
+        );
+      }
+
+      if (account.subscriptionNone) {
+        return button(
+            Row(
               children: [
-                text("Subscription Active", color: colours.green, size: 18, onPressed: actions.showDialogAccount),
+                text("Subscribe", color: colours.green, bold: true, size: 20),
+                onPressed(
+                    child: text(" for \$9.99 per month to unlock all games",
+                        color: colours.white80, size: 20),
+                    callback: actions.openStripeCheckout),
               ],
             ),
-          );
+            actions.openStripeCheckout,
+            fillColorMouseOver: none,
+            borderColor: none,
+            borderColorMouseOver: colours.white80);
+      }
 
+      if (account.subscriptionEnded) {
+        return Row(
+          children: [
+            onPressed(
+              callback: actions.openStripeCheckout,
+              child: text(
+                  "Your subscription expired on ${formatDate(account.subscriptionEndDate!)}",
+                  color: colours.red),
+            ),
+            width16,
+            button(text("Renew", color: green), actions.openStripeCheckout,
+                borderColor: colours.green),
+          ],
+        );
+      }
 
-        if (account.subscriptionNone)
-          return button(
-              Row(
-                children: [
-                  text("Subscribe", color: colours.green, bold: true, size: 20),
-                  onPressed(child: text(" for \$9.99 per month to unlock all games", color: colours.white80, size: 20), callback: actions.openStripeCheckout),
-                ],
-              )
-              ,
-              actions.openStripeCheckout,
-              fillColorMouseOver: none,
-              borderColor: none,
-              borderColorMouseOver:colours.white80
-          );
+      if (account.subscriptionStatus == SubscriptionStatus.Canceled){
+        final subscriptionEndDate = account.subscriptionEndDate;
+        if (subscriptionEndDate != null){
+          return text("Your subscription has been cancelled and ends on ${formatDate(subscriptionEndDate)}");
+        }
+      }
 
-        if (account.subscriptionEnded)
-          return Row(
-            children: [
-              onPressed(
-                callback: actions.openStripeCheckout,
-                child: text("Your subscription expired on ${formatDate(account.subscriptionEndDate!)}", color: colours.red),
-              ),
-              width16,
-              button(text("Renew", color: green), actions.openStripeCheckout, borderColor: colours.green),                                ],
-          );
-
-        return empty;
+      return empty;
     });
   });
 }

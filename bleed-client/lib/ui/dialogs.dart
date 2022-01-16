@@ -90,7 +90,7 @@ Widget _buildSubscriptionPanel(Account account){
         mainAxisAlignment: axis.main.apart,
         children: [
           text("MY SUBSCRIPTION", bold: true, color: colours.white80),
-          if (!account.subscriptionActive) widgets.textUpgrade,
+          if (!account.subscriptionActive) widgets.textReactivateSubscription,
           if (account.subscriptionActive)
             text("Cancel",
                 color: colours.white80,
@@ -384,8 +384,8 @@ Widget buildDialogMessage(String message) {
 
 Widget buildDialogConfirmCancelSubscription(){
   return buildDialogMedium(child: panel(child: text("Are you sure you want to cancel your subscription?", color: colours.white80)),
-    bottomLeft: button(text("CONFIRM", color: colours.red), actions.cancelSubscription, fillColor: none, borderColor: colours.red),
-    bottomRight: widgets.closeButton
+    bottomLeft: button(text("YES", color: colours.red, bold: true), actions.cancelSubscription, fillColor: none, borderColor: colours.red, borderWidth: 2, width: 100),
+    bottomRight: widgets.buttonNo
   );
 }
 
