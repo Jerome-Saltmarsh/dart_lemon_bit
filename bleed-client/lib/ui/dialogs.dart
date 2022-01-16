@@ -104,7 +104,7 @@ Widget _buildSubscriptionPanel(Account account){
             ],
           ),
           height16,
-          _buildRow("Status", enumString(account.subscriptionStatus)),
+          _buildRow("Status", text(enumString(account.subscriptionStatus), color: getSubscriptionStatusColor(account.subscriptionStatus))),
           height8,
           _buildRow("Started", subscriptionStarted == null ? "-" : formatDate(subscriptionStarted)),
           height8,
@@ -112,6 +112,16 @@ Widget _buildSubscriptionPanel(Account account){
         ],
       )
   );
+}
+
+Color getSubscriptionStatusColor(SubscriptionStatus value){
+  if (value == SubscriptionStatus.Active){
+    return colours.green;
+  }
+  if (value == SubscriptionStatus.Not_Subscribed){
+    return colours.white80;
+  }
+  return colours.orange;
 }
 
 Widget _buildRow(String title, dynamic value){
