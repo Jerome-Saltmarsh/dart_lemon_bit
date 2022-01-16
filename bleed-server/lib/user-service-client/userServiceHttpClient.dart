@@ -60,8 +60,8 @@ class UserServiceHttpClient {
     final currentPeriodStart = body['subscription_current_period_start'];
     if (currentPeriodStart != null) {
       final currentPeriodEnd = body['subscription_current_period_end'];
-      subscriptionExpirationDate = parseEpoch(currentPeriodStart);
-      subscriptionCreationDate = parseEpoch(currentPeriodEnd);
+      subscriptionCreationDate = parseEpoch(currentPeriodStart);
+      subscriptionExpirationDate = parseEpoch(currentPeriodEnd);
     }
 
     final accountCreationDateString = body[fieldNames.accountCreationDate];
@@ -156,15 +156,6 @@ class _FieldNames {
   final String private_name = 'private_name';
   final String subscriptionCreatedDate = "subscription_created_date";
 }
-
-
-// Future get(Uri url, ) async {
-//   final client = Client();
-//   final method = 'GET';
-//   final request = Request(method, url);
-//   final streamedResponse = await client.send(request);
-//   return await Response.fromStream(streamedResponse);
-// }
 
 DateTime parseDateTime(String value){
   return DateTime.parse(value);
