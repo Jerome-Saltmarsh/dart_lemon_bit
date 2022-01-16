@@ -166,7 +166,15 @@ Widget buildWatchAuthentication(){
                   padding: 16,
                   expand: true,
                   topLeft: widgets.title,
-                  top: buildTopMessage(),
+                  top:  Container(
+                      width: screen.width,
+                      margin: EdgeInsets.only(top: 20),
+                      child: Row(
+                          mainAxisAlignment: axis.main.center,
+                          children: [
+                            buildTopMessage()
+                          ])
+                  ),
                   topRight: Row(
                     crossAxisAlignment: axis.cross.start,
                     mainAxisAlignment: axis.main.end,
@@ -679,60 +687,58 @@ Widget buildTopMessage(){
 
       if (dialog != Dialogs.Games) return empty;
 
-      return Container(
-        width: screen.width,
-        margin: EdgeInsets.only(top: 20),
-        child: Row(
-          mainAxisAlignment: axis.main.center,
-          children: [
-            if (account == null)
-              onHover((hovering){
-                return margin(
-                  top: 10,
-                  child: Row(
-                    children: [
-                      text("Sign in and subscribe", color: colours.green, underline: hovering, onPressed: actions.showDialogLogin),
-                      text(" to unlock all games", color: colours.white618, onPressed: actions.showDialogLogin, underline: hovering),
-                    ],
-                  ),
-                );
-              }),
-            if (account != null && account.subscriptionActive)
-              margin(
-                top: 10,
-                child: Row(
-                  children: [
-                    text("Subscription Active", color: colours.green, size: 18, onPressed: actions.showDialogAccount),
-                  ],
-                ),
-              ),
-            if (account != null && account.subscriptionNone)
-              button(
-                  Row(
-                    children: [
-                      text("Subscribe", color: colours.green, bold: true, size: 20),
-                      onPressed(child: text(" for \$9.99 per month to unlock all games", color: colours.white80, size: 20), callback: actions.openStripeCheckout),
-                    ],
-                  )
-              ,
-                  actions.openStripeCheckout,
-                fillColorMouseOver: none,
-                borderColor: none,
-                borderColorMouseOver:colours.white80
-              ),
-            if (account != null && account.subscriptionEnded)
+      if (account == null){
+        return onHover((hovering){
+          return margin(
+            top: 10,
+            child: Row(
+              children: [
+                text("Sign in and subscribe", color: colours.green, underline: hovering, onPressed: actions.showDialogLogin),
+                text(" to unlock all games", color: colours.white618, onPressed: actions.showDialogLogin, underline: hovering),
+              ],
+            ),
+          );
+        });
+      }
+
+        if (account.subscriptionActive)
+          return margin(
+            top: 10,
+            child: Row(
+              children: [
+                text("Subscription Active", color: colours.green, size: 18, onPressed: actions.showDialogAccount),
+              ],
+            ),
+          );
+
+
+        if (account.subscriptionNone)
+          return button(
               Row(
                 children: [
-                  onPressed(
-                    callback: actions.openStripeCheckout,
-                    child: text("Your subscription expired on ${formatDate(account.subscriptionEndDate!)}", color: colours.red),
-                  ),
-                  width16,
-                  button(text("Renew", color: green), actions.openStripeCheckout, borderColor: colours.green),                                ],
+                  text("Subscribe", color: colours.green, bold: true, size: 20),
+                  onPressed(child: text(" for \$9.99 per month to unlock all games", color: colours.white80, size: 20), callback: actions.openStripeCheckout),
+                ],
+              )
+              ,
+              actions.openStripeCheckout,
+              fillColorMouseOver: none,
+              borderColor: none,
+              borderColorMouseOver:colours.white80
+          );
+
+        if (account.subscriptionEnded)
+          return Row(
+            children: [
+              onPressed(
+                callback: actions.openStripeCheckout,
+                child: text("Your subscription expired on ${formatDate(account.subscriptionEndDate!)}", color: colours.red),
               ),
-          ],
-        ),
-      );
+              width16,
+              button(text("Renew", color: green), actions.openStripeCheckout, borderColor: colours.green),                                ],
+          );
+
+        return empty;
     });
   });
 }

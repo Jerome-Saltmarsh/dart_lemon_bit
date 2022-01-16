@@ -101,8 +101,10 @@ Widget _buildSubscriptionPanel(Account account){
       height16,
       _buildRow(
           "Status",
-          text(enumString(account.subscriptionStatus),
-              color: getSubscriptionStatusColor(account.subscriptionStatus))),
+          text(formatSubscriptionStatus(account.subscriptionStatus),
+              color: getSubscriptionStatusColor(account.subscriptionStatus)
+          )
+      ),
       height8,
       _buildRow(
           "Started",
@@ -390,3 +392,6 @@ Widget buildDialogConfirmCancelSubscription(){
 
 
 
+String formatSubscriptionStatus(value){
+  return value == SubscriptionStatus.Canceled ? "Cancelled" : enumString(value);
+}
