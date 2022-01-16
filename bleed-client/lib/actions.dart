@@ -4,12 +4,11 @@ import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/editor/functions/resetTiles.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/Region.dart';
-import 'package:bleed_client/stripe.dart';
-import 'package:bleed_client/ui/ui.dart';
-import 'package:bleed_client/ui/widgets.dart';
-import 'package:bleed_client/webSocket.dart';
 import 'package:bleed_client/server/server.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:bleed_client/stripe.dart';
+import 'package:bleed_client/ui/ui.dart';
+import 'package:bleed_client/webSocket.dart';
 
 import 'common/GameType.dart';
 

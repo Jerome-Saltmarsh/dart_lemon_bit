@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:gamestream_users/firestore.dart';
+import 'package:gamestream_users/stripe.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 
@@ -37,9 +38,8 @@ FutureOr<Response> handleRequest(Request request) async {
     case 'hello':
       return Response.ok('world', headers: headersTextPlain);
 
-      case "users":
+    case "users":
       final params = request.requestedUri.queryParameters;
-
       final method = params['method']?.toUpperCase();
       if (method == null){
         return error(response, 'method_required');
@@ -66,6 +66,34 @@ FutureOr<Response> handleRequest(Request request) async {
 
       response['id'] = id;
       final user = await firestore.findUserById(id);
+
+      if (method == "CUSTOMER"){
+        if (user == null){
+          return error(response, 'not_found');
+        }
+        final fields = user.fields;
+        if (fields == null){
+          return error(response, 'fields_null');
+        }
+
+        final stripeCustomerIdField = fields[fieldNames.stripeCustomerId];
+        if (stripeCustomerIdField == null) {
+          return error(response, "user_not_subscribed");
+        }
+
+        final stripeCustomerId = stripeCustomerIdField.stringValue;
+        if (stripeCustomerId == null){
+          return error(response, "stripe_customer_id_not_string");
+        }
+
+        final stripeCustomer = await stripe.customer.retrieve(stripeCustomerId);
+        stripeCustomer.toJson().forEach((key, value) {
+          response[key] = value;
+        });
+        return ok(response);
+
+      } // cancel_subscription
+
 
       if (method == 'PATCH'){
 

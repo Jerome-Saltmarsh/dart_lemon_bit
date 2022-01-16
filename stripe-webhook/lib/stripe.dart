@@ -47,10 +47,13 @@ class _StripeWebhooks {
     final userId = obj['client_reference_id'];
     final stripeCustomerId = obj['customer'];
     final stripePaymentEmail = obj['customer_email'];
+    final subscriptionId = obj['subscription'];
+
 
     firestore.subscribe(
         userId: userId,
         stripeCustomerId: stripeCustomerId,
+        subscriptionId: subscriptionId,
         stripePaymentEmail: stripePaymentEmail
     );
   }

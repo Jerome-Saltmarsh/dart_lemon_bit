@@ -83,6 +83,7 @@ class _Firestore {
     required String userId,
     required String stripeCustomerId,
     required String stripePaymentEmail,
+    required String subscriptionId,
 }) async {
       print("subscribing new user(userId: $userId, customerId: $stripePaymentEmail, email: $stripePaymentEmail)");
 
@@ -96,6 +97,7 @@ class _Firestore {
       }
 
       fields[fieldNames.stripeCustomerId] = Value(stringValue: stripeCustomerId);
+      fields[fieldNames.subscriptionId] = Value(stringValue: subscriptionId);
       fields[fieldNames.stripePaymentEmail] = Value(stringValue: stripePaymentEmail);
       fields[fieldNames.subscriptionCreatedDate] = Value(timestampValue: _getTimestampNow());
       fields[fieldNames.subscriptionExpirationDate] = Value(timestampValue: _getTimeStampOneMonth());
@@ -202,6 +204,7 @@ final _FieldNames fieldNames = _FieldNames();
 class _FieldNames {
   final String account_creation_date = "account_creation_date";
   final String subscriptionExpirationDate = "subscription_expiration_date";
+  final String subscriptionId = "subscription_id";
   final String subscriptionCreatedDate = "subscription_created_date";
   final String error = "error";
   final String stripeCustomerId = 'stripe_customer_id';
