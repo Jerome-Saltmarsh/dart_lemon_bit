@@ -3,7 +3,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
-final userService = UserServiceHttpClient("rest-server-12-osbmaezptq-ey.a.run.app");
+final userService = UserServiceHttpClient("rest-server-1-osbmaezptq-ey.a.run.app");
 
 class UserServiceHttpClient {
   final String _host;
@@ -57,14 +57,11 @@ class UserServiceHttpClient {
 
     DateTime? subscriptionExpirationDate;
     DateTime? subscriptionCreationDate;
-    final subscriptionExpirationDateString = body[fieldNames.subscriptionExpirationDate];
-    if (subscriptionExpirationDateString != null) {
-      final subscriptionCreatedDateString = body[fieldNames.subscriptionCreatedDate];
-      if (subscriptionCreatedDateString == null) {
-        throw Exception("subscriptionCreatedDateString is null");
-      }
-      subscriptionExpirationDate = parseDateTime(subscriptionExpirationDateString);
-      subscriptionCreationDate = parseDateTime(subscriptionCreatedDateString);
+    final currentPeriodStart = body['subscription_current_period_start'];
+    if (currentPeriodStart != null) {
+      final currentPeriodEnd = body['subscription_current_period_end'];
+      subscriptionExpirationDate = parseEpoch(currentPeriodStart);
+      subscriptionCreationDate = parseEpoch(currentPeriodEnd);
     }
 
     final accountCreationDateString = body[fieldNames.accountCreationDate];
@@ -171,4 +168,8 @@ class _FieldNames {
 
 DateTime parseDateTime(String value){
   return DateTime.parse(value);
+}
+
+DateTime parseEpoch(int epoch){
+  return DateTime.fromMillisecondsSinceEpoch(epoch * 1000).toLocal();
 }
