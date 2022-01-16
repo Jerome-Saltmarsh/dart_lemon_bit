@@ -80,37 +80,45 @@ Widget buildDialogAccount(){
 }
 
 Widget _buildSubscriptionPanel(Account account){
-
   final subscriptionStartDate = account.subscriptionStartDate;
   final subscriptionEndDate = account.subscriptionEndDate;
-
-  return border(
-      padding: padding16,
-      alignment: Alignment.centerLeft,
-      fillColor: colours.white05,
-      color: none,
+  return panel(
       child: Column(
-        crossAxisAlignment: axis.cross.start,
+    crossAxisAlignment: axis.cross.start,
+    children: [
+      Row(
+        mainAxisAlignment: axis.main.apart,
         children: [
-          Row(
-            mainAxisAlignment: axis.main.apart,
-            children: [
-              text("MY SUBSCRIPTION", bold: true, color: colours.white80),
-              if (!account.subscriptionActive)
-              widgets.textUpgrade,
-              if (account.subscriptionActive)
-                text("Cancel", color: colours.white80, onPressed: actions.showDialogConfirmCancelSubscription, italic: true),
-            ],
-          ),
-          height16,
-          _buildRow("Status", text(enumString(account.subscriptionStatus), color: getSubscriptionStatusColor(account.subscriptionStatus))),
-          height8,
-          _buildRow("Started", subscriptionStartDate == null ? "-" : formatDate(subscriptionStartDate)),
-          height8,
-          _buildRow(account.subscriptionActive ? "Renews" : account.subscriptionEnded ? "Ended" : "Ends", subscriptionEndDate == null ?  "-" : formatDate(subscriptionEndDate)),
+          text("MY SUBSCRIPTION", bold: true, color: colours.white80),
+          if (!account.subscriptionActive) widgets.textUpgrade,
+          if (account.subscriptionActive)
+            text("Cancel",
+                color: colours.white80,
+                onPressed: actions.showDialogConfirmCancelSubscription,
+                italic: true),
         ],
-      )
-  );
+      ),
+      height16,
+      _buildRow(
+          "Status",
+          text(enumString(account.subscriptionStatus),
+              color: getSubscriptionStatusColor(account.subscriptionStatus))),
+      height8,
+      _buildRow(
+          "Started",
+          subscriptionStartDate == null
+              ? "-"
+              : formatDate(subscriptionStartDate)),
+      height8,
+      _buildRow(
+          account.subscriptionActive
+              ? "Renews"
+              : account.subscriptionEnded
+                  ? "Ended"
+                  : "Ends",
+          subscriptionEndDate == null ? "-" : formatDate(subscriptionEndDate)),
+    ],
+  ));
 }
 
 Color getSubscriptionStatusColor(SubscriptionStatus value){
