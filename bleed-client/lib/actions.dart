@@ -8,6 +8,7 @@ import 'package:bleed_client/server/server.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/stripe.dart';
 import 'package:bleed_client/ui/ui.dart';
+import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
 import 'package:bleed_client/webSocket.dart';
 
 import 'common/GameType.dart';
@@ -17,7 +18,13 @@ final _Actions actions = _Actions();
 class _Actions {
 
   void cancelSubscription(){
-
+    print("actions.cancelSubscription()");
+    final account = game.account.value;
+    if (account == null) {
+      actions.showErrorMessage('Account is null');
+      return;
+    }
+    userService.cancelSubscription(account.userId);
   }
 
   void logout() {

@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'package:bleed_client/toString.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 final userService = UserServiceHttpClient("rest-server-1-osbmaezptq-ey.a.run.app");
 
@@ -106,6 +107,12 @@ class UserServiceHttpClient {
       email: email,
       subscriptionStatus: subscriptionStatus,
     );
+  }
+
+  Future<Response> cancelSubscription(String userId) async {
+    print("userService.cancelSubscription('$userId')");
+    final url = Uri.https(_host, '/users', {'id': userId, 'method': 'cancel_subscription'});
+    return http.get(url, headers: _headers);
   }
 }
 
