@@ -99,8 +99,8 @@ class UserServiceHttpClient {
 
     return Account(
       userId: userId,
-      subscriptionStart: subscriptionCreationDate,
-      subscriptionEnd: subscriptionExpirationDate,
+      subscriptionStartDate: subscriptionCreationDate,
+      subscriptionEndDate: subscriptionExpirationDate,
       accountCreationDate: accountCreationDate,
       publicName: publicName,
       privateName: privateName,
@@ -123,8 +123,8 @@ class Account {
   final String publicName;
   final String privateName;
   final String email;
-  final DateTime? subscriptionStart;
-  final DateTime? subscriptionEnd;
+  final DateTime? subscriptionStartDate;
+  final DateTime? subscriptionEndDate;
 
   bool get subscriptionActive => subscriptionStatus == SubscriptionStatus.Active;
   bool get subscriptionEnded => subscriptionStatus == SubscriptionStatus.Ended;
@@ -137,8 +137,8 @@ class Account {
     required this.privateName,
     required this.email,
     required this.subscriptionStatus,
-    this.subscriptionEnd,
-    this.subscriptionStart,
+    this.subscriptionEndDate,
+    this.subscriptionStartDate,
   });
 }
 

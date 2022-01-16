@@ -9,7 +9,6 @@ import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/views.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
-import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
@@ -82,8 +81,8 @@ Widget buildDialogAccount(){
 
 Widget _buildSubscriptionPanel(Account account){
 
-  final subscriptionStarted = account.subscriptionStart;
-  final subscriptionEnds = account.subscriptionEnd;
+  final subscriptionStartDate = account.subscriptionStartDate;
+  final subscriptionEndDate = account.subscriptionEndDate;
 
   return border(
       padding: padding16,
@@ -106,9 +105,9 @@ Widget _buildSubscriptionPanel(Account account){
           height16,
           _buildRow("Status", text(enumString(account.subscriptionStatus), color: getSubscriptionStatusColor(account.subscriptionStatus))),
           height8,
-          _buildRow("Started", subscriptionStarted == null ? "-" : formatDate(subscriptionStarted)),
+          _buildRow("Started", subscriptionStartDate == null ? "-" : formatDate(subscriptionStartDate)),
           height8,
-          _buildRow(subscriptionEnds == null ? "Ends" : account.subscriptionEnded ? "Ended" : "Renews", subscriptionEnds == null ?  "-" : formatDate(subscriptionEnds)),
+          _buildRow(account.subscriptionActive ? "Renews" : account.subscriptionEnded ? "Ended" : "Ends", subscriptionEndDate == null ?  "-" : formatDate(subscriptionEndDate)),
         ],
       )
   );
