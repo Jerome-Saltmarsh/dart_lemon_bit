@@ -1,6 +1,7 @@
 
 
 import 'dart:convert';
+import 'package:bleed_client/toString.dart';
 import 'package:http/http.dart' as http;
 
 final userService = UserServiceHttpClient("rest-server-1-osbmaezptq-ey.a.run.app");
@@ -85,6 +86,12 @@ class UserServiceHttpClient {
 
     final publicName = body[fieldNames.public_name];
 
+    SubscriptionStatus subscriptionStatus = SubscriptionStatus.Not_Subscribed;
+    final subscriptionStatusString = body[fieldNames.subscriptionStatus];
+    if (subscriptionStatusString != null){
+      subscriptionStatus = parseSubscriptionStatus(subscriptionStatusString);
+    }
+
     if (publicName == null){
       throw Exception("public name is null");
     }
@@ -97,11 +104,13 @@ class UserServiceHttpClient {
       publicName: publicName,
       privateName: privateName,
       email: email,
+      subscriptionStatus: subscriptionStatus,
     );
   }
 }
 
 class Account {
+  final SubscriptionStatus subscriptionStatus;
   final String userId;
   final DateTime accountCreationDate;
   final String publicName;
@@ -111,15 +120,15 @@ class Account {
   final DateTime? subscriptionCreationDate;
 
   bool get subscriptionActive => subscriptionStatus == SubscriptionStatus.Active;
-  bool get subscriptionExpired => subscriptionStatus == SubscriptionStatus.Expired;
-  bool get subscriptionNone => subscriptionStatus == SubscriptionStatus.None;
+  bool get subscriptionExpired => subscriptionStatus == SubscriptionStatus.Ended;
+  bool get subscriptionNone => subscriptionStatus == SubscriptionStatus.Not_Subscribed;
 
-  SubscriptionStatus get subscriptionStatus {
-    if (subscriptionExpirationDate == null) return SubscriptionStatus.None;
-    final now = DateTime.now().toUtc();
-    if (subscriptionExpirationDate!.isBefore(now)) return SubscriptionStatus.Expired;
-    return SubscriptionStatus.Active;
-  }
+  // SubscriptionStatus get subscriptionStatus {
+  //   if (subscriptionExpirationDate == null) return SubscriptionStatus.None;
+  //   final now = DateTime.now().toUtc();
+  //   if (subscriptionExpirationDate!.isBefore(now)) return SubscriptionStatus.Ended;
+  //   return SubscriptionStatus.Active;
+  // }
 
   Account({
     required this.userId,
@@ -127,6 +136,7 @@ class Account {
     required this.publicName,
     required this.privateName,
     required this.email,
+    required this.subscriptionStatus,
     this.subscriptionExpirationDate,
     this.subscriptionCreationDate,
   });
@@ -137,10 +147,28 @@ final _headers = {
   "Access-Control-Allow-Origin": "*",
 };
 
-enum SubscriptionStatus{
-  None,
+enum SubscriptionStatus {
+  Not_Subscribed,
   Active,
-  Expired
+  Past_Due,
+  Unpaid,
+  Canceled,
+  Incomplete,
+  Incomplete_Expired,
+  Trialing,
+  All,
+  Ended
+}
+
+final List<SubscriptionStatus> subscriptionStatuses = SubscriptionStatus.values;
+
+SubscriptionStatus parseSubscriptionStatus(String value){
+  for(SubscriptionStatus status in subscriptionStatuses){
+    if (enumString(status).toLowerCase() == value.toLowerCase()){
+      return status;
+    }
+  }
+  throw Exception("could not parse $value to subscription status");
 }
 
 final _FieldNames fieldNames = _FieldNames();

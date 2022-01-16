@@ -2,6 +2,7 @@ import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/styles.dart';
+import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/constants.dart';
 import 'package:bleed_client/ui/style.dart';
@@ -103,7 +104,7 @@ Widget _buildSubscriptionPanel(Account account){
             ],
           ),
           height16,
-          _buildRow("Status", account.subscriptionNone ? "Not Active" : account.subscriptionActive ? text("ACTIVE", color: green) : text("EXPIRED", color: colours.red)),
+          _buildRow("Status", enumString(account.subscriptionStatus)),
           height8,
           _buildRow("Started", subscriptionStarted == null ? "-" : formatDate(subscriptionStarted)),
           height8,
