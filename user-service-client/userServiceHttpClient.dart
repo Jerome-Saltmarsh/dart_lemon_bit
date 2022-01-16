@@ -99,8 +99,8 @@ class UserServiceHttpClient {
 
     return Account(
       userId: userId,
-      subscriptionCreationDate: subscriptionCreationDate,
-      subscriptionExpirationDate: subscriptionExpirationDate,
+      subscriptionStart: subscriptionCreationDate,
+      subscriptionEnd: subscriptionExpirationDate,
       accountCreationDate: accountCreationDate,
       publicName: publicName,
       privateName: privateName,
@@ -123,19 +123,12 @@ class Account {
   final String publicName;
   final String privateName;
   final String email;
-  final DateTime? subscriptionExpirationDate;
-  final DateTime? subscriptionCreationDate;
+  final DateTime? subscriptionStart;
+  final DateTime? subscriptionEnd;
 
   bool get subscriptionActive => subscriptionStatus == SubscriptionStatus.Active;
-  bool get subscriptionExpired => subscriptionStatus == SubscriptionStatus.Ended;
+  bool get subscriptionEnded => subscriptionStatus == SubscriptionStatus.Ended;
   bool get subscriptionNone => subscriptionStatus == SubscriptionStatus.Not_Subscribed;
-
-  // SubscriptionStatus get subscriptionStatus {
-  //   if (subscriptionExpirationDate == null) return SubscriptionStatus.None;
-  //   final now = DateTime.now().toUtc();
-  //   if (subscriptionExpirationDate!.isBefore(now)) return SubscriptionStatus.Ended;
-  //   return SubscriptionStatus.Active;
-  // }
 
   Account({
     required this.userId,
@@ -144,8 +137,8 @@ class Account {
     required this.privateName,
     required this.email,
     required this.subscriptionStatus,
-    this.subscriptionExpirationDate,
-    this.subscriptionCreationDate,
+    this.subscriptionEnd,
+    this.subscriptionStart,
   });
 }
 

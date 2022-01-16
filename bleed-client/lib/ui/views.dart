@@ -151,8 +151,8 @@ Widget buildWatchAuthentication(){
       return NullableWatchBuilder<Account?>(game.account, (Account? account){
         final now = DateTime.now().toUtc();
         final subscriptionExpired = account != null
-            && account.subscriptionExpirationDate != null
-            && now.isAfter(account.subscriptionExpirationDate!);
+            && account.subscriptionEnd != null
+            && now.isAfter(account.subscriptionEnd!);
         final bool subscriptionActive = account != null && !subscriptionExpired;
 
         return WatchBuilder(webSocket.connection, (Connection connection) {
@@ -720,12 +720,12 @@ Widget buildTopMessage(){
                 borderColor: none,
                 borderColorMouseOver:colours.white80
               ),
-            if (account != null && account.subscriptionExpired)
+            if (account != null && account.subscriptionEnded)
               Row(
                 children: [
                   onPressed(
                     callback: actions.openStripeCheckout,
-                    child: text("Your subscription expired on ${formatDate(account.subscriptionExpirationDate!)}", color: colours.red),
+                    child: text("Your subscription expired on ${formatDate(account.subscriptionEnd!)}", color: colours.red),
                   ),
                   width16,
                   button(text("Renew", color: green), actions.openStripeCheckout, borderColor: colours.green),                                ],

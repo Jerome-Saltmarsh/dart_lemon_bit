@@ -82,8 +82,8 @@ Widget buildDialogAccount(){
 
 Widget _buildSubscriptionPanel(Account account){
 
-  final subscriptionStarted = account.subscriptionCreationDate;
-  final subscriptionEnds = account.subscriptionExpirationDate;
+  final subscriptionStarted = account.subscriptionStart;
+  final subscriptionEnds = account.subscriptionEnd;
 
   return border(
       padding: padding16,
@@ -108,7 +108,7 @@ Widget _buildSubscriptionPanel(Account account){
           height8,
           _buildRow("Started", subscriptionStarted == null ? "-" : formatDate(subscriptionStarted)),
           height8,
-          _buildRow(subscriptionEnds == null ? "Ends" : account.subscriptionExpired ? "Ended" : "Renews", subscriptionEnds == null ?  "-" : formatDate(subscriptionEnds)),
+          _buildRow(subscriptionEnds == null ? "Ends" : account.subscriptionEnded ? "Ended" : "Renews", subscriptionEnds == null ?  "-" : formatDate(subscriptionEnds)),
         ],
       )
   );
@@ -374,9 +374,12 @@ Widget buildDialogMessage(String message) {
 }
 
 Widget buildDialogConfirmCancelSubscription(){
-  return buildDialogMedium(child: text("Are you sure you want to cancel your subscription?"),
-    bottomLeft: button(text("CONFIRM", color: colours.red), actions.cancelSubscription, fillColor: none, borderColor: colours.red)
+  return buildDialogMedium(child: block(child: text("Are you sure you want to cancel your subscription?", color: colours.white80)),
+    bottomLeft: button(text("CONFIRM", color: colours.red), actions.cancelSubscription, fillColor: none, borderColor: colours.red),
+    bottomRight: widgets.closeButton
   );
 }
+
+
 
 

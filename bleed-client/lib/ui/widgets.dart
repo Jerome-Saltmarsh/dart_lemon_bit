@@ -405,3 +405,14 @@ Widget buildMenuButton(String text, Function onPressed){
     boldOnHover: true
   );
 }
+
+Widget block({required Widget child}){
+  return Container(
+    padding: padding16,
+    child: child,
+    decoration: BoxDecoration(
+      color: colours.white05,
+      borderRadius: borderRadius4,
+    ),
+  );
+}
