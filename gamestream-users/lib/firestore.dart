@@ -205,6 +205,7 @@ const _oneSecond = Duration(seconds: 1);
 final _FieldNames fieldNames = _FieldNames();
 
 class _FieldNames {
+  final String subscriptionId = "subscription_id";
   final String account_creation_date = "account_creation_date";
   final String subscriptionExpirationDate = "subscription_expiration_date";
   final String subscriptionCreatedDate = "subscription_created_date";

@@ -45,6 +45,7 @@ FutureOr<Response> handleRequest(Request request) async {
         return error(response, 'method_required');
       }
 
+
       if (method == 'FIND'){
         return error(response, 'disabled');
         // print("(server) handling find request");
@@ -66,6 +67,33 @@ FutureOr<Response> handleRequest(Request request) async {
 
       response['id'] = id;
       final user = await firestore.findUserById(id);
+
+      if (method == 'CANCEL_SUBSCRIPTION'){
+        if (user == null){
+          return error(response, 'not_found');
+        }
+
+        final fields = user.fields;
+        if (fields == null){
+          return error(response, 'fields_null');
+        }
+
+        final subscriptionIdField = fields[fieldNames.subscriptionId];
+        if (subscriptionIdField == null) {
+          return error(response, "user_not_subscribed");
+        }
+
+        final subscriptionId = subscriptionIdField.stringValue;
+        if (subscriptionId == null){
+          return error(response, "subscription_id_not_string");
+        }
+
+        final deleteResponse = await stripeApi.deleteSubscription(subscriptionId: subscriptionId);
+        return ok(deleteResponse.body);
+        // final subscription = await stripe.subscription.get(subscriptionId);
+        // subscription.status;
+
+      } // CANCEL_SUBSCRIPTION
 
       if (method == "CUSTOMER"){
         if (user == null){
@@ -90,6 +118,7 @@ FutureOr<Response> handleRequest(Request request) async {
         stripeCustomer.toJson().forEach((key, value) {
           response[key] = value;
         });
+
         return ok(response);
 
       } // cancel_subscription
