@@ -229,10 +229,10 @@ class _Buttons {
       ],
     ),
   ), () async {
-    game.signingIn.value = LoginStatus.Logging_In;
+    game.operationStatus.value = OperationStatus.Logging_In;
     signInWithGoogle().catchError((error){
       print(error);
-      game.signingIn.value = LoginStatus.Logged_Out;
+      game.operationStatus.value = OperationStatus.Logged_Out;
     });
   },
     fillColor: Colors.white,
@@ -406,7 +406,7 @@ Widget buildMenuButton(String text, Function onPressed){
   );
 }
 
-Widget block({required Widget child}){
+Widget panel({required Widget child}){
   return Container(
     padding: padding16,
     child: child,

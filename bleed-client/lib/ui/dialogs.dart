@@ -373,7 +373,7 @@ Widget buildDialogMessage(String message) {
 }
 
 Widget buildDialogConfirmCancelSubscription(){
-  return buildDialogMedium(child: block(child: text("Are you sure you want to cancel your subscription?", color: colours.white80)),
+  return buildDialogMedium(child: panel(child: text("Are you sure you want to cancel your subscription?", color: colours.white80)),
     bottomLeft: button(text("CONFIRM", color: colours.red), actions.cancelSubscription, fillColor: none, borderColor: colours.red),
     bottomRight: widgets.closeButton
   );

@@ -128,9 +128,9 @@ Widget buildWatchAuthentication(){
   return NullableWatchBuilder<Authentication?>(authentication, (Authentication? auth){
     final bool authenticated = auth != null;
 
-    return WatchBuilder(game.signingIn, (LoginStatus loginStatus){
+    return WatchBuilder(game.operationStatus, (OperationStatus loginStatus){
 
-      if (loginStatus != LoginStatus.Logged_In && loginStatus != LoginStatus.Logged_Out){
+      if (loginStatus != OperationStatus.Logged_In && loginStatus != OperationStatus.Logged_Out){
         return layout(
             child: fullScreen(
               child: Row(

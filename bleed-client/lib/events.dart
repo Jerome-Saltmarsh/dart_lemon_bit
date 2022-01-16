@@ -123,9 +123,9 @@ class Events {
     print("events._onAuthorizationChanged()");
     if (auth == null) {
       game.account.value = null;
-      game.signingIn.value = LoginStatus.Logging_Out;
+      game.operationStatus.value = OperationStatus.Logging_Out;
       Future.delayed(Duration(seconds: 1), (){
-        game.signingIn.value = LoginStatus.Logged_Out;
+        game.operationStatus.value = OperationStatus.Logged_Out;
       });
       storage.forgetAuthorization();
     } else {
@@ -263,9 +263,9 @@ class Events {
 
 Future signInAccount(String userId) async {
   print("signInAccount()");
-  game.signingIn.value = LoginStatus.Logging_In;
+  game.operationStatus.value = OperationStatus.Logging_In;
   await refreshAccountDetails();
-  game.signingIn.value = LoginStatus.Logged_In;
+  game.operationStatus.value = OperationStatus.Logged_In;
 }
 
 class LoginException implements Exception {
@@ -279,16 +279,16 @@ Future signInOrCreateAccount({
   String? privateName
 }) async {
   print("signInOrCreateAccount()");
-  game.signingIn.value = LoginStatus.Logging_In;
+  game.operationStatus.value = OperationStatus.Logging_In;
   final account = await userService.findById(userId).catchError((error){
     pub(LoginException(error));
     throw error;
   });
   if (account == null){
     print("No account found. Creating new account");
-    game.signingIn.value = LoginStatus.Creating_Account;
+    game.operationStatus.value = OperationStatus.Creating_Account;
     await userService.createAccount(userId: userId, email: email, privateName: privateName);
-    game.signingIn.value = LoginStatus.Logging_In;
+    game.operationStatus.value = OperationStatus.Logging_In;
     game.account.value = await userService.findById(userId);
     if (game.account.value == null){
       throw Exception("failed to find new account");
@@ -297,7 +297,7 @@ Future signInOrCreateAccount({
     print("Existing Account found");
     game.account.value = account;
   }
-  game.signingIn.value = LoginStatus.Logged_In;
+  game.operationStatus.value = OperationStatus.Logged_In;
 }
 
 Future refreshAccountDetails() async {
