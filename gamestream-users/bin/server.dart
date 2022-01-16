@@ -12,7 +12,7 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 // gcloud builds submit --tag gcr.io/gogameserver/rest-server
 // https://stripe.com/docs/webhooks
 void main() async {
-  firestore.init();
+  // firestore.init();
   initServer();
 }
 
@@ -34,6 +34,16 @@ FutureOr<Response> handleRequest(Request request) async {
 
 
   switch(path){
+
+    case 'subscriptions':
+      final params = request.requestedUri.queryParameters;
+      final subscriptionId = params['id'];
+      if (subscriptionId == null){
+        return error(response, 'id is null');
+      }
+      final subscription = await stripeApi.getSubscription(subscriptionId);
+      return ok("done");
+
 
     case 'hello':
       return Response.ok('world', headers: headersTextPlain);
@@ -88,7 +98,7 @@ FutureOr<Response> handleRequest(Request request) async {
           return error(response, "subscription_id_not_string");
         }
 
-        final deleteResponse = await stripeApi.deleteSubscription(subscriptionId: subscriptionId);
+        final deleteResponse = await stripeApi.deleteSubscription(subscriptionId);
         return ok(deleteResponse.body);
         // final subscription = await stripe.subscription.get(subscriptionId);
         // subscription.status;
@@ -114,10 +124,10 @@ FutureOr<Response> handleRequest(Request request) async {
           return error(response, "stripe_customer_id_not_string");
         }
 
-        final stripeCustomer = await stripe.customer.retrieve(stripeCustomerId);
-        stripeCustomer.toJson().forEach((key, value) {
-          response[key] = value;
-        });
+        // final stripeCustomer = await stripe.customer.retrieve(stripeCustomerId);
+        // stripeCustomer.toJson().forEach((key, value) {
+        //   response[key] = value;
+        // });
 
         return ok(response);
 
@@ -168,6 +178,21 @@ FutureOr<Response> handleRequest(Request request) async {
           return error(response, 'fields_empty');
         }
 
+
+        final subscriptionIdField = fields[fieldNames.subscriptionId];
+        if (subscriptionIdField != null) {
+          final subscriptionId = subscriptionIdField.stringValue;
+          if (subscriptionId == null){
+            return error(response, "subscription_id_not_string");
+          }
+          final subscription = await stripeApi.getSubscription(subscriptionId);
+          print("(server) subscription found");
+          response['subscription'] = subscription.body;
+          // response[fieldNames.subscriptionCreatedDate] = formatDate(subscription.currentPeriodStart);
+          // response[fieldNames.subscriptionExpirationDate] = formatDate(subscription.currentPeriodEnd);
+        }
+
+
         final email = fields[fieldNames.email];
         if (email != null){
           response[fieldNames.email] = email.stringValue;
@@ -183,15 +208,15 @@ FutureOr<Response> handleRequest(Request request) async {
           response[fieldNames.private_name] = privateName.stringValue;
         }
 
-        final subscriptionExpirationDate = fields[fieldNames.subscriptionExpirationDate];
-        if (subscriptionExpirationDate != null) {
-            response[fieldNames.subscriptionExpirationDate] = subscriptionExpirationDate.timestampValue;
-            final subscriptionCreatedDate = fields[fieldNames.subscriptionCreatedDate];
-            if (subscriptionCreatedDate == null){
-              return errorFieldMissing(response, fieldNames.subscriptionCreatedDate);
-            }
-            response[fieldNames.subscriptionCreatedDate] = subscriptionCreatedDate.timestampValue;
-        }
+        // final subscriptionExpirationDate = fields[fieldNames.subscriptionExpirationDate];
+        // if (subscriptionExpirationDate != null) {
+        //     response[fieldNames.subscriptionExpirationDate] = subscriptionExpirationDate.timestampValue;
+        //     final subscriptionCreatedDate = fields[fieldNames.subscriptionCreatedDate];
+        //     if (subscriptionCreatedDate == null){
+        //       return errorFieldMissing(response, fieldNames.subscriptionCreatedDate);
+        //     }
+        //     response[fieldNames.subscriptionCreatedDate] = subscriptionCreatedDate.timestampValue;
+        // }
 
         final accountCreationDate = fields[fieldNames.account_creation_date];
         if (accountCreationDate != null) {
@@ -277,4 +302,9 @@ final _random = Random();
 
 String generateRandomName(){
   return 'Player_${100000 + _random.nextInt(999999999)}';
+}
+
+
+String formatDate(DateTime date){
+  return date.toUtc().toIso8601String();
 }
