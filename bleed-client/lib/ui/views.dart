@@ -751,8 +751,15 @@ Widget buildTopMessage(){
         final subscriptionEndDate = account.subscriptionEndDate;
         if (subscriptionEndDate != null){
           return margin(
-              top: 10,
-              child: text("Your subscription has been cancelled and ends on ${formatDate(subscriptionEndDate)}", color: colours.white618));
+              child: Column(
+                children: [
+                  text("Your subscription has been cancelled - ends ${formatDate(subscriptionEndDate)}", color: colours.white618,
+                    onPressed: actions.showDialogAccount
+                  ),
+                  height8,
+                  text("Reactivate", color: green, onPressed: actions.openStripeCheckout),
+                ],
+              ));
         }
       }
 
