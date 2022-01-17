@@ -148,9 +148,10 @@
 [ ] Sign in with email password
 [ ] Sign up with email password  
 [ ] Live subscription  
-[ ] Display Name  
 [ ] Show youtube video of game in preview  
-[ ] Cancel Subscription
+[ ] Change Public Name Dialog
+[ ] Subscription activated dialog  
+[x] Cancel Subscription
 [x] Design Games List View
 [x] When a subscription is made it must be saved to a cloud database
 [x] When a player enters a premium game it must check their subscription  

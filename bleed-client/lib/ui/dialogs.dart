@@ -9,6 +9,7 @@ import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/views.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
+import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
@@ -92,10 +93,16 @@ Widget _buildSubscriptionPanel(Account account){
           text("MY SUBSCRIPTION", bold: true, color: colours.white80),
           if (!account.subscriptionActive) widgets.textReactivateSubscription,
           if (account.subscriptionActive)
-            text("Cancel",
-                color: colours.white80,
-                onPressed: actions.showDialogConfirmCancelSubscription,
-                italic: true),
+
+            panelDark(
+              expand: false,
+              child: onHover((hovering) {
+                return text("Cancel",
+                    color: hovering ? colours.orange : colours.white80,
+                    onPressed: actions.showDialogConfirmCancelSubscription,
+                );
+              }),
+            ),
         ],
       ),
       height16,
@@ -383,7 +390,7 @@ Widget buildDialogChangePublicName() {
 }
 
 Widget buildDialogMessage(String message) {
-  return buildDialogMedium(child: panel(child: text(message)),
+  return buildDialogMedium(child: panel(child: text(message, color: colours.white80)),
     bottomRight: widgets.buttonOkay,
   );
 }

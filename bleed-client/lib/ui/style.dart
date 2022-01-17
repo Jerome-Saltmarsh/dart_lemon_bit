@@ -18,4 +18,12 @@ class _Style {
 
   get dialogHeightLarge => style.dialogHeightMedium * goldenRatio_1381;
   get dialogWidthLarge => style.dialogWidthMedium * goldenRatio_1618;
+
+  final _FontSize fontSize = _FontSize();
+}
+
+class _FontSize {
+    final int large = 25;
+    final int normal = 18;
+    final int small = 15;
 }

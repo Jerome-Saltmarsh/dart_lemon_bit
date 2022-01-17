@@ -423,14 +423,24 @@ Widget buildMenuButton(String text, Function onPressed){
   );
 }
 
-Widget panel({required Widget child}){
+Widget panelDark({required Widget child, bool expand = true}){
+  return panel(child: child, expand: expand, color: colours.black10);
+}
+
+Widget panelLight({required Widget child, bool expand = true}){
+  return panel(child: child, expand: expand, color: colours.white05);
+}
+
+Widget panel({required Widget child, bool expand = true, Color? color}){
   return Container(
     padding: padding16,
     child: child,
-    width: double.infinity,
+    width: expand ? double.infinity : null,
     decoration: BoxDecoration(
-      color: colours.white05,
+      color: color ?? colours.white05,
       borderRadius: borderRadius4,
     ),
   );
 }
+
+
