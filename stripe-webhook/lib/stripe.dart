@@ -8,13 +8,10 @@ typedef Json = Map<String, dynamic>;
 class _StripeWebhooks {
 
   void handleEvent(Json event){
-
     final type = event['type'];
     if (type == null){
       throw Exception("event.type is null");
     }
-    print("event.type: '$type'");
-
     switch(type){
       case 'checkout.session.completed':
         _checkoutSessionCompleted(event);

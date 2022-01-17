@@ -150,7 +150,8 @@
 [ ] Live subscription  
 [ ] Show youtube video of game in preview  
 [ ] Change Public Name Dialog
-[ ] Subscription activated dialog  
+[ ] Subscription activated dialog
+[ ] Stripe Webhooks, Catch save subscription errors
 [x] Cancel Subscription
 [x] Design Games List View
 [x] When a subscription is made it must be saved to a cloud database

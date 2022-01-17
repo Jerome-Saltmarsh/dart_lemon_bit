@@ -12,6 +12,8 @@ class _Firestore {
 
   FirestoreApi? _firestoreApi;
 
+  final List<SaveSubscription> todo = [];
+
   // https://github.com/dart-lang/samples/tree/master/server/google_apis
   void init() async {
     print("firestore.init()");
@@ -74,21 +76,19 @@ class _Firestore {
     }
 
     fields[fieldNames.public_name] = Value(stringValue: displayName);
-    await saveUser(user);
+    await patchUserDocument(user);
     print("username patched successfully");
     return user;
   }
 
-  Future<Document> subscribe({
+  Future subscribe({
     required String userId,
     required String stripeCustomerId,
     required String stripePaymentEmail,
     required String subscriptionId,
-}) async {
+  }) async {
       print("subscribing new user(userId: $userId, customerId: $stripePaymentEmail, email: $stripePaymentEmail)");
-
       final user = await findUserById(userId);
-      // TODO Store this information in an errors table
       if (user == null) throw Exception("user null");
       final fields = user.fields;
 
@@ -96,20 +96,33 @@ class _Firestore {
         throw Exception("user.fields null");
       }
 
-      fields[fieldNames.stripeCustomerId] = Value(stringValue: stripeCustomerId);
       fields[fieldNames.subscriptionId] = Value(stringValue: subscriptionId);
-      fields[fieldNames.stripePaymentEmail] = Value(stringValue: stripePaymentEmail);
-      fields[fieldNames.subscriptionCreatedDate] = Value(timestampValue: _getTimestampNow());
-      fields[fieldNames.subscriptionExpirationDate] = Value(timestampValue: _getTimeStampOneMonth());
-      saveUser(user);
-      return user;
+      await patchUserDocument(user);
   }
 
-  Future saveUser(Document userDocument) async {
-    if (userDocument.name == null){
-      throw Exception("Cannot save because user document.name is null");
+  Future patchUserDocument(Document userDocument) async {
+    final documentName = userDocument.name;
+    if (documentName == null){
+      throw Exception("firestore.patchUserDocument - Cannot patch because user document.name is null");
     }
-    await documents.patch(userDocument, userDocument.name!);
+
+    final maxAttempts = 10;
+    final Duration pauseDuration = Duration(seconds: 1);
+
+    for(int i = 1; i <= maxAttempts; i++){
+      bool saveSucceeded = true;
+      await documents.patch(userDocument, documentName).catchError((error) async {
+        print("(firestore) patch error attempt: $i");
+        saveSucceeded = false;
+        await Future.delayed(pauseDuration);
+      });
+      if (saveSucceeded){
+        return;
+      }
+    }
+
+    // TODO Store this in memory and try again later
+    throw Exception("firestore.saveUser() - failed");
   }
 
   Future<Document?> findUser({required String displayName}) async {
@@ -191,11 +204,6 @@ class _Firestore {
 }
 
 String _getTimestampNow() => DateTime.now().toUtc().toIso8601String();
-String _getTimeStampOneMonth() => DateTime.now().add(Duration(hours: _hoursPerMonth)).toUtc().toIso8601String();
-
-const _hoursPerMonth = _hoursPerYear ~/ _monthsPerYear;
-const _monthsPerYear = 12;
-const _hoursPerYear = 8760;
 
 const _oneSecond = Duration(seconds: 1);
 
@@ -228,3 +236,18 @@ String buildParentName({
   return 'projects/$projectId/databases/$databaseName/documents';
 }
 
+final JobService jobService = JobService();
+
+class JobService {
+  final List<SaveSubscription> todo = [];
+  final List<SaveSubscription> completed = [];
+}
+
+class SaveSubscription {
+  final String subscriptionId;
+  final String userId;
+  SaveSubscription({
+    required  this.subscriptionId,
+    required this.userId
+  });
+}
