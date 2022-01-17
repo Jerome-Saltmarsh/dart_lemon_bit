@@ -12,12 +12,12 @@ class _Firestore {
 
   FirestoreApi? _firestoreApi;
 
-  // https://github.com/dart-lang/samples/tree/master/server/google_apis
-  void init() async {
-    _getAuthClient().then((authClient){
-      _firestoreApi = FirestoreApi(authClient);
-    });
-  }
+  // // https://github.com/dart-lang/samples/tree/master/server/google_apis
+  // void init() async {
+  //   _getAuthClient().then((authClient){
+  //     _firestoreApi = FirestoreApi(authClient);
+  //   });
+  // }
 
   Future<AutoRefreshingAuthClient> _getAuthClient() {
     return clientViaApplicationDefaultCredentials(
@@ -25,21 +25,27 @@ class _Firestore {
     );
   }
 
-  ProjectsDatabasesDocumentsResource get documents => _firestoreApi!.projects.databases.documents;
+  Future<FirestoreApi> getFirestoreApi() async {
+     if (_firestoreApi != null) return Future.value(_firestoreApi);
+     final authClient = await _getAuthClient().catchError((error){
+       print("firestore failed to get auth client");
+       throw error;
+     });
+     _firestoreApi = FirestoreApi(authClient);
+     return Future.value(_firestoreApi);
+  }
+
+  Future<ProjectsDatabasesDocumentsResource> getDocuments() async {
+    final api = await getFirestoreApi().catchError((error){
+      print("firestore failed to get firestoreApi instance");
+      throw error;
+    });
+    return api.projects.databases.documents;
+  }
 
   Future<Document?> findUserById(String id) async {
-    int tries = 0;
-    final int maxTries = 10;
-    while(_firestoreApi == null){
-      tries++;
-      if (tries > maxTries){
-        throw Exception("exceeded max tries: $maxTries");
-      }
-      print("firestoreApi is null, waiting 1 second for it to load, try: $tries");
-      await Future.delayed(_oneSecond);
-    }
-
-    print("database.findUserById('$id')");
+    print("firestore.findUserById('$id')");
+    final documents = await getDocuments();
     return documents.get(getUserDocumentName(id))
         .then<Document?>((value) => Future.value(value))
         .catchError((error) {
@@ -82,7 +88,8 @@ class _Firestore {
     required String stripePaymentEmail,
     required String subscriptionId,
   }) async {
-      print("subscribing new user(userId: $userId, customerId: $stripePaymentEmail, email: $stripePaymentEmail)");
+      print("firestore.subscribe('userId: '$userId', subscriptionId: '$subscriptionId')");
+
       final user = await findUserById(userId);
       if (user == null) throw Exception("user null");
       final fields = user.fields;
@@ -103,6 +110,7 @@ class _Firestore {
 
     final maxAttempts = 10;
     final Duration pauseDuration = Duration(seconds: 1);
+    final documents = await getDocuments();
 
     for(int i = 1; i <= maxAttempts; i++){
       bool saveSucceeded = true;
@@ -121,7 +129,6 @@ class _Firestore {
   }
 
   Future<Document?> findUser({required String displayName}) async {
-
     print("(firestore) findUser(displayName: '$displayName')");
 
     final query = RunQueryRequest(
@@ -140,14 +147,11 @@ class _Firestore {
           )
         )
     );
-    print("query created");
+    final documents = await getDocuments();
     final responses = await documents.runQuery(query, parent);
-    print("response received");
-
     for (var response in responses.toList()) {
       return response.document;
     }
-
     return null;
   }
 
@@ -173,7 +177,8 @@ class _Firestore {
         }
     );
 
-    return await documents.createDocument(
+    final docs = await getDocuments();
+    return await docs.createDocument(
       document,
       parent,
       'users',

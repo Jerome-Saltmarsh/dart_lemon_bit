@@ -17,7 +17,7 @@ class _StripeWebhooks {
         _checkoutSessionCompleted(event);
         break;
       default:
-        print('no handler for stripe event $type');
+        // print('no handler for stripe event $type');
         break;
     }
   }
@@ -45,7 +45,6 @@ class _StripeWebhooks {
     final stripeCustomerId = obj['customer'];
     final stripePaymentEmail = obj['customer_email'];
     final subscriptionId = obj['subscription'];
-
 
     firestore.subscribe(
         userId: userId,

@@ -2,7 +2,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:gamestream_stripe_webhook/firestore.dart';
 import 'package:gamestream_stripe_webhook/stripe.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
@@ -11,7 +10,8 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 // gcloud builds submit --tag gcr.io/gogameserver/gamestream-stripe-webhook
 // https://stripe.com/docs/webhooks
 void main() async {
-  firestore.init();
+  print("new container instance created");
+  // firestore.init();
   initServer();
 }
 
@@ -22,7 +22,6 @@ void initServer({String address = '0.0.0.0', int port = 8080}) async {
       .addHandler(handleRequest);
   var server = await shelf_io.serve(handler, address, port);
   server.autoCompress = true;
-  print('Serving at http://${server.address.host}:${server.port}');
 }
 
 FutureOr<Response> handleRequest(Request request) async {
