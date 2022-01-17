@@ -217,6 +217,10 @@ Widget buildDialogTitle(String value){
   return text(value.toUpperCase(), size: style.dialogTitleSize, color: colours.white85);
 }
 
+Widget buildDialogSubscriptionCancelled(){
+  return buildDialogMessage("Your subscription has been cancelled");
+}
+
 Widget buildDialogSubscriptionSuccessful(){
   return watchAccount((account){
     return buildDialogLarge(
@@ -379,7 +383,9 @@ Widget buildDialogChangePublicName() {
 }
 
 Widget buildDialogMessage(String message) {
-  return buildDialogMedium(child: text(message));
+  return buildDialogMedium(child: panel(child: text(message)),
+    bottomRight: widgets.buttonOkay,
+  );
 }
 
 Widget buildDialogConfirmCancelSubscription(){

@@ -12,6 +12,7 @@ enum Dialogs {
   Change_Region,
   Login_Error,
   Confirm_Cancel_Subscription,
+  Subscription_Cancelled,
 }
 
 final _UIOptions uiOptions = _UIOptions();

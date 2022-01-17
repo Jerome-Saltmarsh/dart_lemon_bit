@@ -231,6 +231,9 @@ Widget buildWatchAuthentication(){
                     return WatchBuilder(game.dialog, (Dialogs dialogs) {
                       switch (dialogs) {
 
+                        case Dialogs.Subscription_Cancelled:
+                          return buildDialogSubscriptionCancelled();
+
                         case Dialogs.Subscription_Successful:
                           return buildDialogSubscriptionSuccessful();
 

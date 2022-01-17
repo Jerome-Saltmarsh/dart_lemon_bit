@@ -108,18 +108,20 @@ class _Widgets {
     actions.openStripeCheckout,
     fillColor: none,
     borderColorMouseOver: green,
+    borderColor: none,
   );
 
-  final closeButton = button(text("Close", color: colours.white618), () {
-    game.dialog.value = Dialogs.Games;
-  }, fillColor: colours.none,
+  final closeButton = button(text("Close", color: colours.white618), actions.showDialogGames, fillColor: colours.none,
     fillColorMouseOver: none,
     borderColor: colours.none,
   );
 
-  final buttonNo = button(text("No", color: colours.white80), () {
-    game.dialog.value = Dialogs.Games;
-  }, fillColor: colours.none,
+  final buttonOkay = button(text("Okay", color: colours.white80), actions.showDialogGames, fillColor: colours.none,
+    fillColorMouseOver: none,
+    borderColor: colours.none,
+  );
+
+  final buttonNo = button(text("No", color: colours.white80), actions.showDialogGames, fillColor: colours.none,
     fillColorMouseOver: none,
     borderColor: colours.none,
     width: 100,

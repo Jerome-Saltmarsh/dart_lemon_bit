@@ -28,6 +28,12 @@ class _Actions {
     game.operationStatus.value = OperationStatus.Cancelling_Subscription;
     await userService.cancelSubscription(account.userId);
     refreshAccountDetails();
+
+    if (game.account.value != null){
+      game.operationStatus.value = OperationStatus.Logged_In;
+    }
+
+    game.dialog.value = Dialogs.Subscription_Cancelled;
   }
 
   void logout() {
