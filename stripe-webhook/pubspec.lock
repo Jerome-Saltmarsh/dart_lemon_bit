@@ -36,6 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.0.1"
+  gcloud:
+    dependency: "direct main"
+    description:
+      name: gcloud
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.8.5"
   googleapis:
     dependency: "direct main"
     description:

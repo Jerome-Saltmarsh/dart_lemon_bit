@@ -224,7 +224,7 @@ Widget buildDialogTitle(String value){
 }
 
 Widget buildDialogSubscriptionCancelled(){
-  return buildDialogMessage("Your subscription has been cancelled");
+  return buildDialogMessage("Premium subscription cancelled");
 }
 
 Widget buildDialogSubscriptionSuccessful(){

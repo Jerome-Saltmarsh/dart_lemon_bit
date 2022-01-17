@@ -752,7 +752,7 @@ Widget buildTopMessage(){
         if (subscriptionEndDate != null){
           return margin(
             top: 10,
-              child:                   text("Premium subscription canceled, ends ${formatDate(subscriptionEndDate)}", color: colours.white618,
+              child:                   text("Premium subscription cancelled : ends ${formatDate(subscriptionEndDate)}", color: colours.white618,
                   onPressed: actions.showDialogAccount
               ));
         }

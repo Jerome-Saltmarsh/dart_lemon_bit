@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:googleapis/firestore/v1.dart';
 import 'package:googleapis_auth/auth_io.dart';
 
+import 'package:googleapis_auth/auth_io.dart' as auth;
+
 final _Firestore firestore = _Firestore();
 
 class _Firestore {
@@ -12,17 +14,15 @@ class _Firestore {
 
   FirestoreApi? _firestoreApi;
 
-  // // https://github.com/dart-lang/samples/tree/master/server/google_apis
-  // void init() async {
-  //   _getAuthClient().then((authClient){
-  //     _firestoreApi = FirestoreApi(authClient);
-  //   });
-  // }
+  void init() async {
+    _firestoreApi = await getFirestoreApi();
+  }
 
   Future<AutoRefreshingAuthClient> _getAuthClient() {
-    return clientViaApplicationDefaultCredentials(
-      scopes: [FirestoreApi.datastoreScope],
-    );
+    return auth.clientViaMetadataServer();
+    // return clientViaApplicationDefaultCredentials(
+    //   scopes: [FirestoreApi.datastoreScope],
+    // );
   }
 
   Future<FirestoreApi> getFirestoreApi() async {
@@ -46,14 +46,38 @@ class _Firestore {
   Future<Document?> findUserById(String id) async {
     print("firestore.findUserById('$id')");
     final documents = await getDocuments();
-    return documents.get(getUserDocumentName(id))
+    final documentName = getUserDocumentName(id);
+    return documents.get(documentName)
         .then<Document?>((value) => Future.value(value))
         .catchError((error) {
       if (error is DetailedApiRequestError && error.status == 404) {
+        print("no user could be found with id '$id'");
         return null;
       }
+      print("firestore.findUserById failed");
+      print(error);
       throw error;
     });
+  }
+
+  Future<Document?> safelyFindUserById(String id) async {
+    print("safelyFindUserById('$id')");
+    for (int attempt = 1; attempt < 10; attempt++){
+      bool errorOccurred = false;
+      final user = await findUserById(id).catchError((error){
+        errorOccurred = true;
+        print("safelyFindUser error occurred: Attempt $attempt / 10");
+        print(error);
+      });
+      if (!errorOccurred){
+        if (attempt > 1){
+          print("find user succeeded on attempt $attempt");
+        }
+        return user;
+      }
+    }
+    print("Failed to get user after 10 tries");
+    throw Exception("safelyFindUserById() failed");
   }
 
   String getUserDocumentName(String value){
@@ -66,7 +90,7 @@ class _Firestore {
   }) async {
 
     print("patchDisplayName($displayName)");
-    final user = await findUserById(userId);
+    final user = await safelyFindUserById(userId);
     if (user == null){
       throw Exception("user not found");
     }
@@ -89,9 +113,10 @@ class _Firestore {
     required String subscriptionId,
   }) async {
       print("firestore.subscribe('userId: '$userId', subscriptionId: '$subscriptionId')");
-
-      final user = await findUserById(userId);
+      print("firestore.subscribe.findUserById()");
+      final user = await safelyFindUserById(userId);
       if (user == null) throw Exception("user null");
+      print("firestore.subscribe.findUserById() - finished");
       final fields = user.fields;
 
       if (fields == null){
@@ -103,6 +128,7 @@ class _Firestore {
   }
 
   Future patchUserDocument(Document userDocument) async {
+    print("firestore.patchUserDocument()");
     final documentName = userDocument.name;
     if (documentName == null){
       throw Exception("firestore.patchUserDocument - Cannot patch because user document.name is null");
@@ -120,6 +146,7 @@ class _Firestore {
         await Future.delayed(pauseDuration);
       });
       if (saveSucceeded){
+        print("patch user succeeded");
         return;
       }
     }

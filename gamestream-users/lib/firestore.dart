@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:googleapis/firestore/v1.dart';
 import 'package:googleapis_auth/auth_io.dart';
+import 'package:googleapis_auth/auth_io.dart' as auth;
 
 final _Firestore firestore = _Firestore();
 
@@ -28,9 +29,10 @@ class _Firestore {
   }
 
   Future<AutoRefreshingAuthClient> _getAuthClient() {
-    return clientViaApplicationDefaultCredentials(
-      scopes: [FirestoreApi.datastoreScope],
-    );
+    return auth.clientViaMetadataServer();
+    // return clientViaApplicationDefaultCredentials(
+    //   scopes: [FirestoreApi.datastoreScope],
+    // );
   }
 
   ProjectsDatabasesDocumentsResource get documents => _firestoreApi!.projects.databases.documents;

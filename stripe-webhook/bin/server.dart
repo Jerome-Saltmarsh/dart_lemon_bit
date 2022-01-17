@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:gamestream_stripe_webhook/firestore.dart';
 import 'package:gamestream_stripe_webhook/stripe.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
@@ -11,12 +12,13 @@ import 'package:shelf/shelf_io.dart' as shelf_io;
 // https://stripe.com/docs/webhooks
 void main() async {
   print("new container instance created");
-  // firestore.init();
   initServer();
 }
 
 void initServer({String address = '0.0.0.0', int port = 8080}) async {
-  print("initServer({address: '$address', port: '$port'})");
+  // print("initServer({address: '$address', port: '$port'})");
+  firestore.init();
+
   var handler = const Pipeline()
       // .addMiddleware(logRequests())
       .addHandler(handleRequest);
@@ -25,12 +27,14 @@ void initServer({String address = '0.0.0.0', int port = 8080}) async {
 }
 
 FutureOr<Response> handleRequest(Request request) async {
+  // if (request.url.path == 'pub'){
+  //   // publishEvent();
+  //   return Response.ok('published', headers: headersTextPlain);
+  // }
+
   request.readAsString().then(handleStripeEvent);
   return Response.ok('', headers: headersTextPlain);
 }
-
-typedef Json = Map<String, dynamic>;
-
 
 final headersTextPlain = (){
   final Map<String, Object> _headers = {};
@@ -39,7 +43,6 @@ final headersTextPlain = (){
   _headers['Access-Control-Allow-Origin'] = "*";
   return _headers;
 }();
-
 
 Future handleStripeEvent(String eventString) async {
   if (eventString.isEmpty){
