@@ -237,8 +237,8 @@ Widget buildWatchAuthentication(){
                         case Dialogs.Subscription_Successful:
                           return buildDialogSubscriptionSuccessful();
 
-                        case Dialogs.Welcome_1:
-                          return buildDialogWelcome1();
+                        case Dialogs.Account_Created:
+                          return buildDialogAccountCreated();
 
                         case Dialogs.Welcome_2:
                           return buildDialogWelcome2();
@@ -751,14 +751,9 @@ Widget buildTopMessage(){
         final subscriptionEndDate = account.subscriptionEndDate;
         if (subscriptionEndDate != null){
           return margin(
-              child: Column(
-                children: [
-                  text("Your subscription has been cancelled - ends ${formatDate(subscriptionEndDate)}", color: colours.white618,
-                    onPressed: actions.showDialogAccount
-                  ),
-                  height8,
-                  text("Reactivate", color: green, onPressed: actions.openStripeCheckout),
-                ],
+            top: 10,
+              child:                   text("Premium subscription canceled, ends ${formatDate(subscriptionEndDate)}", color: colours.white618,
+                  onPressed: actions.showDialogAccount
               ));
         }
       }

@@ -8,6 +8,7 @@ import 'package:bleed_client/send.dart';
 import 'package:bleed_client/server/server.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/build.dart';
+import 'package:bleed_client/ui/dialogs.dart';
 import 'package:bleed_client/ui/state/decorationImages.dart';
 import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/ui.dart';
@@ -104,22 +105,16 @@ class _Widgets {
   );
 
   final textReactivateSubscription = button(
-    text("Reactivate", color: green, bold: true),
+    text("Subscribe", color: green, underline: true),
     actions.openStripeCheckout,
     fillColor: none,
     borderColorMouseOver: green,
     borderColor: none,
   );
 
-  final closeButton = button(text("Close", color: colours.white618), actions.showDialogGames, fillColor: colours.none,
-    fillColorMouseOver: none,
-    borderColor: colours.none,
-  );
-
-  final buttonOkay = button(text("Okay", color: colours.white80), actions.showDialogGames, fillColor: colours.none,
-    fillColorMouseOver: none,
-    borderColor: colours.none,
-  );
+  final buttonClose = buildButton("Close", actions.showDialogGames);
+  final buttonOkay = buildButton("Okay", actions.showDialogGames);
+  final buttonGreat = buildButton("Great", actions.showDialogGames);
 
   final buttonNo = button(text("No", color: colours.white80), actions.showDialogGames, fillColor: colours.none,
     fillColorMouseOver: none,

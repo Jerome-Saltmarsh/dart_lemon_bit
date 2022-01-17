@@ -50,7 +50,7 @@ class _Actions {
   }
 
   void showDialogWelcome(){
-    game.dialog.value = Dialogs.Welcome_1;
+    game.dialog.value = Dialogs.Account_Created;
   }
 
   void showDialogWelcome2(){

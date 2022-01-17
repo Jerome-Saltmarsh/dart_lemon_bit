@@ -6,7 +6,7 @@ enum Dialogs {
   Login,
   Account,
   Subscription_Successful,
-  Welcome_1,
+  Account_Created,
   Welcome_2,
   Change_Public_Name,
   Change_Region,

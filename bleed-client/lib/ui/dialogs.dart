@@ -42,7 +42,7 @@ Widget buildDialogAccount(){
         width: style.dialogWidthMedium,
         height: style.dialogWidthMedium * goldenRatio_1618,
         // bottomLeft: margin(child: _buildSubscriptionStatus(account.subscriptionStatus), bottom: 32),
-        bottomRight: margin(child: widgets.closeButton, bottom: 32),
+        bottomRight: margin(child: widgets.buttonClose, bottom: 32),
         child:
     Column(
       crossAxisAlignment: axis.cross.start,
@@ -90,10 +90,9 @@ Widget _buildSubscriptionPanel(Account account){
       Row(
         mainAxisAlignment: axis.main.apart,
         children: [
-          text("MY SUBSCRIPTION", bold: true, color: colours.white80),
+          text("PREMIUM", bold: true, color: colours.white80),
           if (!account.subscriptionActive) widgets.textReactivateSubscription,
           if (account.subscriptionActive)
-
             panelDark(
               expand: false,
               child: onHover((hovering) {
@@ -233,43 +232,12 @@ Widget buildDialogSubscriptionSuccessful(){
     width: style.dialogWidthMedium,
     height: style.dialogHeightSmall,
     child: Center(child: text("Premium subscription activated", color: colours.white95)),
-    // bottomRight: button(text("Next", color: colours.white618, underline: true),
-    //     actions.showDialogChangePublicName,
-    //     borderColor: none,
-    //     fillColor: none,
-    //     borderColorMouseOver: colours.white618,
-    //     fillColorMouseOver: none,
-    //     borderWidth: 2
-    // ),
-    bottomRight: buildButton("Next", actions.showDialogChangePublicName),
+    bottomRight: widgets.buttonGreat
   );
 }
 
-Widget buildDialogWelcome1(){
-  return watchAccount((account){
-      return buildDialog(
-          width: style.dialogWidthMedium,
-          height: style.dialogHeightSmall,
-          child: Column(
-            crossAxisAlignment: axis.cross.start,
-            children: [
-              Container(
-                  width: double.infinity,
-                  color: colours.white05,
-                  padding: padding16,
-                  child: Column(
-                    crossAxisAlignment: axis.cross.start,
-                    children: [
-                      text("Hi ${account == null ? 'anon': account.privateName}", color: colours.white80),
-                      height32,
-                      text("Thank you for joining gamestream!", color: colours.white80)
-                    ],
-                  )),
-            ],
-          ),
-        bottomRight: text("Next", onPressed: actions.showDialogWelcome2, color: colours.white80)
-      );
-  });
+Widget buildDialogAccountCreated(){
+  return buildDialogMessage("New account created", bottomRight: widgets.buttonClose);
 }
 
 Widget buildDialogWelcome2(){
@@ -311,32 +279,12 @@ Widget buildDialogChangePublicName() {
     }
 
     if (!account.subscriptionActive) {
-      return buildDialogMedium(
-          bottomLeft: widgets.subscribeButton,
-          child: Column(
-            crossAxisAlignment: axis.cross.start,
-            children: [
-              buildDialogTitle("OOPS!"),
-              height32,
-              border(
-                fillColor: colours.white05,
-                color: none,
-                padding: padding16,
-                child: Column(
-                  crossAxisAlignment: axis.cross.start,
-                  children: [
-                    Row(
-                      children: [
-                        text("An ", color: colours.white618),
-                        text("active subscription", color: colours.green, bold: true, onPressed: actions.openStripeCheckout),
-                        text(" is needed to change", color: colours.white618),
-                      ],
-                    ),
-                    text("your public name", color: colours.white618),
-                  ],
-                ),
-              ),
-            ],
+      return buildDialog(
+          width: style.dialogWidthMedium,
+          height: style.dialogHeightSmall,
+          bottomRight: widgets.buttonOkay,
+          child: Center(
+            child: text("This features requires a premium subscription", color: colours.white80),
           ));
     }
 
@@ -352,9 +300,12 @@ Widget buildDialogChangePublicName() {
   });
 }
 
-Widget buildDialogMessage(String message) {
-  return buildDialogMedium(child: panel(child: text(message, color: colours.white80)),
-    bottomRight: widgets.buttonOkay,
+Widget buildDialogMessage(String message, {Widget? bottomRight}) {
+  return buildDialog(
+      width: style.dialogWidthMedium,
+      height: style.dialogHeightSmall,
+      child: Center(child: text(message, color: colours.white95)),
+      bottomRight: bottomRight ?? widgets.buttonOkay
   );
 }
 
@@ -364,9 +315,6 @@ Widget buildDialogConfirmCancelSubscription(){
     bottomRight: widgets.buttonNo
   );
 }
-
-
-
 
 String formatSubscriptionStatus(value){
   return value == SubscriptionStatus.Canceled ? "Cancelled" : enumString(value);

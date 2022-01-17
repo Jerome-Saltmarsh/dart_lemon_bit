@@ -66,17 +66,17 @@ class Events {
     print("events.onAccountChanged($account)");
     if (account == null) return;
 
-    final nowUtc = DateTime.now().toUtc();
-    final durationSinceAccountCreation = nowUtc.difference(account.accountCreationDate);
+    // final nowUtc = DateTime.now().toUtc();
+    // final durationSinceAccountCreation = nowUtc.difference(account.accountCreationDate);
 
-    if (durationSinceAccountCreation.inMinutes <= 1){
-      final flag = 'welcome_dialog_shown_${account.userId}';
-      if (!storage.contains(flag)) {
-        storage.put(flag, 'true');
-        actions.showDialogWelcome();
-        return;
-      }
-    }
+    // if (durationSinceAccountCreation.inMinutes <= 1){
+    //   final flag = 'welcome_dialog_shown_${account.userId}';
+    //   if (!storage.contains(flag)) {
+    //     storage.put(flag, 'true');
+    //     actions.showDialogWelcome();
+    //     return;
+    //   }
+    // }
 
     if (account.subscriptionActive){
       final flag = 'subscription_dialog_shown_${account.userId}';
@@ -293,6 +293,7 @@ Future signInOrCreateAccount({
     if (game.account.value == null){
       throw Exception("failed to find new account");
     }
+    game.dialog.value = Dialogs.Account_Created;
   }else{
     print("Existing Account found");
     game.account.value = account;
