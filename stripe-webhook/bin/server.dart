@@ -18,7 +18,7 @@ void main() async {
 void initServer({String address = '0.0.0.0', int port = 8080}) async {
   print("initServer({address: '$address', port: '$port'})");
   var handler = const Pipeline()
-      .addMiddleware(logRequests())
+      // .addMiddleware(logRequests())
       .addHandler(handleRequest);
   var server = await shelf_io.serve(handler, address, port);
   server.autoCompress = true;

@@ -12,15 +12,10 @@ class _Firestore {
 
   FirestoreApi? _firestoreApi;
 
-  final List<SaveSubscription> todo = [];
-
   // https://github.com/dart-lang/samples/tree/master/server/google_apis
   void init() async {
-    print("firestore.init()");
-
     _getAuthClient().then((authClient){
       _firestoreApi = FirestoreApi(authClient);
-      print("_firestoreApi set");
     });
   }
 
