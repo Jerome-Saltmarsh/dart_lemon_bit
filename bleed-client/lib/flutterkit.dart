@@ -10,7 +10,7 @@ import 'package:lemon_engine/state/screen.dart';
 
 Widget text(dynamic value, {
     size = 18,
-    GestureTapCallback? onPressed,
+    Function? onPressed,
     TextDecoration decoration = TextDecoration.none,
     FontWeight weight = normal,
     bool italic = false,
@@ -37,7 +37,9 @@ Widget text(dynamic value, {
     cursor: SystemMouseCursors.click,
     child: GestureDetector(
       child: _text,
-      onTap: onPressed,
+      onTap: (){
+        onPressed();
+      },
     ),
   );
 }

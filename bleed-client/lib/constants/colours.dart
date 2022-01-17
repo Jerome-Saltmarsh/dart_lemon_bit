@@ -1,6 +1,7 @@
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:golden_ratio/constants.dart';
 
 final _Colors colours = _Colors();
 
@@ -17,7 +18,8 @@ class _Colors {
   final Color black10 = Colors.black.withOpacity(0.1);
   final Color black15 = Colors.black.withOpacity(0.15);
   final Color black20 = Colors.black.withOpacity(0.2);
-  final Color black382 = Colors.black.withOpacity(0.382);
+  final Color black382 = Colors.black.withOpacity(goldenRatio_0381);
+  final Color black618 = Colors.black.withOpacity(goldenRatio_0618);
 
   final Color white = Colors.white;
   final Color white05 = Colors.white.withOpacity(0.05);
@@ -29,6 +31,7 @@ class _Colors {
   final Color white80 = Colors.white.withOpacity(0.80);
   final Color white85 = Colors.white.withOpacity(0.85);
   final Color white90 = Colors.white.withOpacity(0.90);
+  final Color white95 = Colors.white.withOpacity(0.95);
 
   final Color none = Colors.transparent;
 

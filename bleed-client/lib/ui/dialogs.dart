@@ -229,57 +229,20 @@ Widget buildDialogSubscriptionCancelled(){
 }
 
 Widget buildDialogSubscriptionSuccessful(){
-  return watchAccount((account){
-    return buildDialogLarge(
-        bottomLeft: widgets.buttonChangeDisplayName,
-        bottomRight: widgets.closeButton,
-        child: Column(
-          children: [
-            Row(
-              mainAxisAlignment: axis.main.apart,
-              children: [
-                Row(
-                  children: [
-                    buildDialogTitle("Inbox"),
-                    width16,
-                    icons.mail,
-                  ],
-                ),
-                border(
-                    padding: padding16,
-                    color: none,
-                    fillColor: colours.black15,
-                    child: buildDialogTitle("Subscription Activated")),
-              ],
-            ),
-            height16,
-            buildInfo(child: Column(
-              crossAxisAlignment: axis.cross.start,
-              children: [
-                text("Dear ${account != null ? account.privateName : "Anonymous"}", color: colours.white618),
-                height32,
-                text("Congratulations! Your premium account has officially been activated.", color: colours.white618),
-                height16,
-                text("This means you have access to all the games in the library plus a ton more", color: colours.white618),
-                height16,
-                Row(
-                  children: [
-                    text("such as ", color: colours.white618),
-                    text("Change your in game name", color: colours.green, onPressed: actions.showDialogChangePublicName),
-                  ],
-                ),
-                height32,
-                text("You can cancel your subscription any time via the account dialog", color: colours.white618),
-                height32,
-                text("Kind regards,", color: colours.white618),
-                height16,
-                text("From Jerome (founder and ceo)", color: colours.white618),
-              ],
-            ))
-          ],
-        )
-    );
-  });
+  return buildDialog(
+    width: style.dialogWidthMedium,
+    height: style.dialogHeightSmall,
+    child: Center(child: text("Premium subscription activated", color: colours.white95)),
+    // bottomRight: button(text("Next", color: colours.white618, underline: true),
+    //     actions.showDialogChangePublicName,
+    //     borderColor: none,
+    //     fillColor: none,
+    //     borderColorMouseOver: colours.white618,
+    //     fillColorMouseOver: none,
+    //     borderWidth: 2
+    // ),
+    bottomRight: buildButton("Next", actions.showDialogChangePublicName),
+  );
 }
 
 Widget buildDialogWelcome1(){
@@ -407,4 +370,10 @@ Widget buildDialogConfirmCancelSubscription(){
 
 String formatSubscriptionStatus(value){
   return value == SubscriptionStatus.Canceled ? "Cancelled" : enumString(value);
+}
+
+Widget buildButton(String value, Function action){
+  return onHover((hovering){
+    return text(value, color: hovering ? colours.white80 : colours.white618, underline: true, onPressed: action);
+  });
 }
