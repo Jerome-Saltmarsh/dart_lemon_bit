@@ -750,7 +750,9 @@ Widget buildTopMessage(){
       if (account.subscriptionStatus == SubscriptionStatus.Canceled){
         final subscriptionEndDate = account.subscriptionEndDate;
         if (subscriptionEndDate != null){
-          return text("Your subscription has been cancelled and ends on ${formatDate(subscriptionEndDate)}");
+          return margin(
+              top: 10,
+              child: text("Your subscription has been cancelled and ends on ${formatDate(subscriptionEndDate)}", color: colours.white618));
         }
       }
 

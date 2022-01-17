@@ -427,6 +427,7 @@ Widget panel({required Widget child}){
   return Container(
     padding: padding16,
     child: child,
+    width: double.infinity,
     decoration: BoxDecoration(
       color: colours.white05,
       borderRadius: borderRadius4,
