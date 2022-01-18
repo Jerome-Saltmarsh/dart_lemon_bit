@@ -175,17 +175,22 @@ class _Actions {
       throw error;
     });
 
-     final responseError = response['error'];
-
-     if (responseError != null){
-        showErrorMessage(responseError);
-        return;
-     }
-
-     final responseStatus = response['status'];
-
-     if (responseStatus == 'success'){
-        // show dialog username changed
+     switch(response){
+       case ChangeNameStatus.Success:
+         showErrorMessage("Name Changed successfully");
+         break;
+       case ChangeNameStatus.Taken:
+         showErrorMessage("'$value' already taken");
+         break;
+       case ChangeNameStatus.Too_Short:
+         showErrorMessage("At least 7 characters long");
+         break;
+       case ChangeNameStatus.Too_Long:
+         showErrorMessage("At least 7 characters long");
+         break;
+       case ChangeNameStatus.Other:
+         showErrorMessage("Something went wrong");
+         break;
      }
   }
 }

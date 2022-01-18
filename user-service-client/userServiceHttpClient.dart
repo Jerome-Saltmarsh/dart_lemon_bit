@@ -12,13 +12,18 @@ class UserServiceHttpClient {
 
   UserServiceHttpClient(this._host);
 
-  Future<Map<String, dynamic>> changePublicName({required String userId, required String publicName}) async {
+  Future<ChangeNameStatus> changePublicName({required String userId, required String publicName}) async {
     print("userService.changePublicName()");
     var url = Uri.https(_host, '/users', {'id': userId, 'public_name': publicName, 'method': 'change_public_name'});
-    final response = await http.get(url, headers: _headers).catchError((error){
-      print(error);
-    });
-    return jsonDecode(response.body);
+    final response = await http.get(url, headers: _headers);
+    final responseBody = jsonDecode(response.body);
+    final responseError = responseBody['error'];
+
+    if (responseError != null){
+      return stringEnum(responseError, changeNameStatuses);
+    }
+
+    return ChangeNameStatus.Success;
   }
 
   Future createAccount({
@@ -196,3 +201,15 @@ DateTime parseDateTime(String value){
 DateTime parseEpoch(int epoch){
   return DateTime.fromMillisecondsSinceEpoch(epoch * 1000).toLocal();
 }
+
+
+enum ChangeNameStatus {
+  Success,
+  Taken,
+  Too_Short,
+  Too_Long,
+  Other
+}
+
+final List<ChangeNameStatus> changeNameStatuses = ChangeNameStatus.values;
+

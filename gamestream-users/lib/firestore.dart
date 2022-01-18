@@ -117,9 +117,8 @@ class _Firestore {
     await documents.patch(userDocument, userDocument.name!);
   }
 
-  Future<Document?> findUser({required String displayName}) async {
-
-    print("(firestore) findUser(displayName: '$displayName')");
+  Future<Document?> findUser({required String publicName}) async {
+    print("(firestore) findUser(displayName: '$publicName')");
 
     final query = RunQueryRequest(
         structuredQuery: StructuredQuery(
@@ -130,21 +129,17 @@ class _Firestore {
           ],
           where: Filter(
               fieldFilter: FieldFilter(
-                 field: FieldReference(fieldPath: 'display_name'),
+                 field: FieldReference(fieldPath: fieldNames.public_name),
                      op: 'EQUAL',
-                value: Value(stringValue: displayName),
+                value: Value(stringValue: publicName),
               )
           )
         )
     );
-    print("query created");
     final responses = await documents.runQuery(query, parent);
-    print("response received");
-
     for (var response in responses.toList()) {
       return response.document;
     }
-
     return null;
   }
 

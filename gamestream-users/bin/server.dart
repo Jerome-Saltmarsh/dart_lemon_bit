@@ -221,13 +221,17 @@ Future<Response> _changePublicName({
   publicName = publicName.trim();
   publicName = publicName.replaceAll(" ", "_");
 
-  if (publicName.length < 4){
-    return buildError('display_name_too_short');
+  if (publicName.length < 8){
+    return buildError('too_short');
   }
 
-  final existing = await firestore.findUser(displayName: publicName);
+  if (publicName.length > 15){
+    return buildError('too_long');
+  }
+
+  final existing = await firestore.findUser(publicName: publicName);
   if (existing != null){
-    return buildError('display_name_already_taken');
+    return buildError('taken');
   }
 
   await firestore.patchDisplayName(userId: userId, displayName: publicName);
