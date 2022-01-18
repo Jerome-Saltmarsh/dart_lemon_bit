@@ -168,6 +168,24 @@ class _Actions {
        showErrorMessage("Name entered is empty");
        return;
      }
-     final response = await userService.changePublicName(userId: account.userId, publicName: value);
+     final response = await userService
+        .changePublicName(userId: account.userId, publicName: value)
+        .catchError((error) {
+      showErrorMessage(error.toString());
+      throw error;
+    });
+
+     final responseError = response['error'];
+
+     if (responseError != null){
+        showErrorMessage(responseError);
+        return;
+     }
+
+     final responseStatus = response['status'];
+
+     if (responseStatus == 'success'){
+        // show dialog username changed
+     }
   }
 }

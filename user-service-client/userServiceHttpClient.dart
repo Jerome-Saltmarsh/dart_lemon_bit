@@ -15,8 +15,9 @@ class UserServiceHttpClient {
   Future<Map<String, dynamic>> changePublicName({required String userId, required String publicName}) async {
     print("userService.changePublicName()");
     var url = Uri.https(_host, '/users', {'id': userId, 'public_name': publicName, 'method': 'change_public_name'});
-    final json = '{"title": "Hello"}';
-    final response = await http.patch(url, body: json, headers: _headers);
+    final response = await http.get(url, headers: _headers).catchError((error){
+      print(error);
+    });
     return jsonDecode(response.body);
   }
 
