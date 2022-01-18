@@ -82,13 +82,15 @@ Widget buildErrorDialog(String message){
       color: colours.orange,
       borderColor: colours.none,
       child: layout(
-          child: Container(
-              decoration: BoxDecoration(
-                color: colours.black10,
-                borderRadius: borderRadius4,
-              ),
-              padding: padding16,
-              child: text(message, color: colours.white),),
+          child: Center(
+            child: Container(
+                decoration: BoxDecoration(
+                  color: colours.black10,
+                  borderRadius: borderRadius4,
+                ),
+                padding: padding16,
+                child: text(message, color: colours.white),),
+          ),
           bottomRight: text("okay", onPressed: actions.closeErrorMessage)
       )
   );
