@@ -38,10 +38,9 @@ void setDialogGames(){
 }
 
 enum OperationStatus {
-  Logged_Out,
-  Logging_In,
+  None,
+  Authenticating,
   Creating_Account,
-  Logged_In,
   Logging_Out,
   Opening_Secure_Payment,
   Cancelling_Subscription,
@@ -49,7 +48,7 @@ enum OperationStatus {
 
 class _Game {
   final Watch<String?> errorMessage = Watch(null);
-  final Watch<OperationStatus> operationStatus = Watch(OperationStatus.Logged_Out);
+  final Watch<OperationStatus> operationStatus = Watch(OperationStatus.None);
   final Watch<Account?> account = Watch(null);
   final Watch<Dialogs> dialog = Watch(Dialogs.Games);
   final Watch<Mode> mode = Watch(Mode.Play);

@@ -31,9 +31,8 @@ class _Actions {
     refreshAccountDetails();
 
     if (game.account.value != null){
-      game.operationStatus.value = OperationStatus.Logged_In;
+      game.operationStatus.value = OperationStatus.None;
     }
-    // game.dialog.value = Dialogs.Subscription_Status_Changed;
   }
 
   void logout() {

@@ -117,7 +117,7 @@ class Events {
       game.account.value = null;
       game.operationStatus.value = OperationStatus.Logging_Out;
       Future.delayed(Duration(seconds: 1), (){
-        game.operationStatus.value = OperationStatus.Logged_Out;
+        game.operationStatus.value = OperationStatus.None;
       });
       storage.forgetAuthorization();
     } else {
@@ -255,9 +255,9 @@ class Events {
 
 Future signInAccount(String userId) async {
   print("signInAccount()");
-  game.operationStatus.value = OperationStatus.Logging_In;
+  game.operationStatus.value = OperationStatus.Authenticating;
   await refreshAccountDetails();
-  game.operationStatus.value = OperationStatus.Logged_In;
+  game.operationStatus.value = OperationStatus.None;
 }
 
 class LoginException implements Exception {
@@ -271,7 +271,7 @@ Future signInOrCreateAccount({
   String? privateName
 }) async {
   print("signInOrCreateAccount()");
-  game.operationStatus.value = OperationStatus.Logging_In;
+  game.operationStatus.value = OperationStatus.Authenticating;
   final account = await userService.findById(userId).catchError((error){
     pub(LoginException(error));
     throw error;
@@ -280,7 +280,7 @@ Future signInOrCreateAccount({
     print("No account found. Creating new account");
     game.operationStatus.value = OperationStatus.Creating_Account;
     await userService.createAccount(userId: userId, email: email, privateName: privateName);
-    game.operationStatus.value = OperationStatus.Logging_In;
+    game.operationStatus.value = OperationStatus.Authenticating;
     game.account.value = await userService.findById(userId);
     if (game.account.value == null){
       throw Exception("failed to find new account");
@@ -290,7 +290,7 @@ Future signInOrCreateAccount({
     print("Existing Account found");
     game.account.value = account;
   }
-  game.operationStatus.value = OperationStatus.Logged_In;
+  game.operationStatus.value = OperationStatus.None;
 }
 
 Future refreshAccountDetails() async {

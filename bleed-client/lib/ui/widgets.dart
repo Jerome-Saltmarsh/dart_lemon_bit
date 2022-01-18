@@ -241,10 +241,10 @@ class _Buttons {
       ],
     ),
   ), () async {
-    game.operationStatus.value = OperationStatus.Logging_In;
+    game.operationStatus.value = OperationStatus.Authenticating;
     signInWithGoogle().catchError((error){
       print(error);
-      game.operationStatus.value = OperationStatus.Logged_Out;
+      game.operationStatus.value = OperationStatus.None;
     });
   },
     fillColor: Colors.white,

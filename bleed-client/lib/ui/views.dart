@@ -114,28 +114,15 @@ Widget buildWatchGameMode(){
   });
 }
 
+
 Widget buildWatchAuthentication(){
   return NullableWatchBuilder<Authentication?>(authentication, (Authentication? auth){
     final bool authenticated = auth != null;
 
-    return WatchBuilder(game.operationStatus, (OperationStatus loginStatus){
+    return WatchBuilder(game.operationStatus, (OperationStatus operationStatus){
 
-      if (loginStatus != OperationStatus.Logged_In && loginStatus != OperationStatus.Logged_Out){
-        return layout(
-            child: fullScreen(
-              child: Row(
-                mainAxisAlignment: axis.main.center,
-                children: [
-                  AnimatedTextKit(repeatForever: true, animatedTexts: [
-                    RotateAnimatedText(enumString(loginStatus),
-                        textStyle: TextStyle(color: Colors.white, fontSize: 45,
-                            fontFamily: assets.fonts.libreBarcode39Text
-                        )),
-                  ])
-                ],
-              ),
-            )
-        );
+      if (operationStatus != OperationStatus.None){
+        return buildViewOperationStatus(operationStatus);
       }
 
       return NullableWatchBuilder<Account?>(game.account, (Account? account){
@@ -202,9 +189,6 @@ Widget buildWatchAuthentication(){
                             buttons.loginTestUser02,
                             buttons.loginTestUser03,
                             buttons.spawnRandomUser,
-                            // button("Logging In", (){
-                            //   game.signingIn.value = true;
-                            // }),
                             buttons.editor,
                             button("Show Dialog - Welcome", actions.showDialogWelcome),
                           ],
@@ -370,6 +354,24 @@ Widget buildWatchAuthentication(){
       });
     });
   });
+}
+
+Widget buildViewOperationStatus(OperationStatus operationStatus) {
+  return layout(
+      child: fullScreen(
+        child: Row(
+          mainAxisAlignment: axis.main.center,
+          children: [
+            AnimatedTextKit(repeatForever: true, animatedTexts: [
+              RotateAnimatedText(enumString(operationStatus),
+                  textStyle: TextStyle(color: Colors.white, fontSize: 45,
+                      fontFamily: assets.fonts.libreBarcode39Text
+                  )),
+            ])
+          ],
+        ),
+      )
+  );
 }
 
 final _Views _views = _Views();
