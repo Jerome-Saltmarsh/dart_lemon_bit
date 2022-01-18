@@ -255,8 +255,9 @@ class _Build {
     );
   }
 
-  Widget gamesList(bool subscriptionActive){
-    int index = 0;
+  Widget gamesList(){
+    final account = game.account.value;
+    final premiumActive = account != null && account.isPremium;
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(top: 120),
@@ -264,7 +265,6 @@ class _Build {
         child: Column(
           children: [
             ...selectableGameTypes.map((GameType gameType) {
-              index++;
               final Widget type = text(enumString(gameType).toUpperCase(), color: colours.white618, size: 16);
               // final Widget joinButton = text(gameTypeNames[gameType],
               //     size: 20,
@@ -273,7 +273,7 @@ class _Build {
               //
               // );
 
-              final subRequired = !subscriptionActive && !freeToPlay.contains(type);
+              final subRequired = !premiumActive && !freeToPlay.contains(type);
 
               return onHover((hovering){
                 return Container(
@@ -312,7 +312,7 @@ class _Build {
                           text(gameTypeNames[gameType],
                               size: hovering ? 25 : 20,
                               weight: FontWeight.bold,
-                              color: subscriptionActive || freeToPlay.contains(gameType) ? colours.white80 : colours.white382
+                              color: premiumActive || freeToPlay.contains(gameType) ? colours.white80 : colours.white382
 
                           )
                           )),

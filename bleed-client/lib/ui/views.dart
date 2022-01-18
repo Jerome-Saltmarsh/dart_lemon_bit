@@ -136,20 +136,14 @@ WatchBuilder<Connection> buildWatchConnection(Account? account) {
       case Connection.Connected:
         return _views.connected;
       case Connection.None:
-        return buildLayoutAccount(account);
+        return buildViewConnectionNone();
       default:
         return _views.connection;
     }
   });
 }
 
-Widget buildLayoutAccount(Account? account) {
-  final now = DateTime.now().toUtc();
-  final subscriptionExpired = account != null
-      && account.subscriptionEndDate != null
-      && now.isAfter(account.subscriptionEndDate!);
-  final bool subscriptionActive = account != null && !subscriptionExpired;
-
+Widget buildViewConnectionNone() {
   return layout(
       padding: 16,
       expand: true,
@@ -183,39 +177,7 @@ Widget buildLayoutAccount(Account? account) {
             return buildDialogWelcome2();
 
           case Dialogs.Change_Region:
-            return dialog(
-                height: 500,
-                padding: 16,
-                borderColor: colours.none,
-                color: colours.white05,
-                child: layout(
-                    bottomRight: closeDialogButton,
-                    child: Column(
-                      crossAxisAlignment: axis.cross.start,
-                      children: [
-                        border(
-                            color: colours.white618,
-                            child: text(
-                              "For best performance select the region which is nearest to you",
-                              color: colours.white60,
-                              italic: true,
-                              size: 15,
-                            )),
-                        height32,
-                        ...selectableRegions.map((region) {
-                          return button(enumString(region), () {
-                            game.region.value = region;
-                            setDialogGames();
-                          },
-                              fillColor: region == game.region.value
-                                  ? colours.black20
-                                  : colours.white05,
-                              borderColor: colours.none,
-                              fillColorMouseOver: colours.green,
-                              margin: const EdgeInsets.only(bottom: 8));
-                        }).toList()
-                      ],
-                    )));
+            return buildDialogChangeRegion();
 
           case Dialogs.Login_Error:
             return dialog(
@@ -224,81 +186,22 @@ Widget buildLayoutAccount(Account? account) {
 
           case Dialogs.Change_Public_Name:
             return buildDialogChangePublicName();
+
           case Dialogs.Account:
             return buildDialogAccount();
+
           case Dialogs.Login:
             return buildLoginDialog();
+
           case Dialogs.Invalid_Arguments:
             return dialog(child: text("Invalid Arguments"));
+
           case Dialogs.Subscription_Required:
             return dialog(child: text("Subscription Required"));
+
           case Dialogs.Games:
-            return WatchBuilder(game.type, (GameType gameType) {
-              if (gameType == GameType.None) {
-                return build.gamesList(subscriptionActive);
-              }
+            return buildDialogGames();
 
-              bool isFreeToPlay = freeToPlay.contains(gameType);
-
-              final playButton = button(
-                  text("Play", size: 25, weight: bold, color: colours.white80),
-                  actions.connectToSelectedGame,
-                  borderWidth: 2,
-                  borderColor: colours.white618);
-
-              final loginButton = button(text("Login", size: 25, weight: bold),
-                  actions.showDialogLogin,
-                  fillColor: colours.green, borderWidth: 2);
-
-              final subscribeButton = button(
-                  text("Subscribe", size: 25, weight: bold),
-                  actions.connectToSelectedGame,
-                  fillColor: colours.green,
-                  borderWidth: 2);
-
-              return dialog(
-                  color: colours.white05,
-                  borderColor: colours.none,
-                  padding: 16,
-                  height: 300,
-                  width: 300 * goldenRatio,
-                  child: layout(
-                      topRight: Tooltip(
-                        message: "Change Region",
-                        child: button(
-                          text(enumString(game.region.value),
-                              color: colours.white80),
-                          () {
-                            game.dialog.value = Dialogs.Change_Region;
-                          },
-                          borderColor: colours.none,
-                          fillColor: colours.black20,
-                        ),
-                      ),
-                      bottomLeft: isFreeToPlay
-                          ? playButton
-                          : !authenticated
-                              ? loginButton
-                              : !subscriptionActive
-                                  ? subscribeButton
-                                  : playButton,
-                      bottomRight:
-                          buildButton("Back", actions.deselectGameType),
-                      child: Column(
-                        crossAxisAlignment: axis.cross.start,
-                        children: [
-                          text(gameTypeNames[gameType],
-                              size: 25, color: colours.white80),
-                          height32,
-                          if (!isFreeToPlay && !authenticated)
-                            border(
-                                child: text(
-                                    "Premium games require a premium membership to play",
-                                    color: colours.white60),
-                                color: colours.white80)
-                        ],
-                      )));
-            });
           case Dialogs.Confirm_Logout:
             return dialog(child: text("Confirm Logout"));
 
@@ -306,6 +209,95 @@ Widget buildLayoutAccount(Account? account) {
             return buildDialogConfirmCancelSubscription();
         }
       }));
+}
+
+WatchBuilder<GameType> buildDialogGames() {
+  return WatchBuilder(game.type, (GameType gameType) {
+    if (gameType == GameType.None) {
+      return build.gamesList();
+    }
+
+    bool isFreeToPlay = freeToPlay.contains(gameType);
+
+    final playButton = button(
+        text("Play", size: 25, weight: bold, color: colours.white80),
+        actions.connectToSelectedGame,
+        borderWidth: 2,
+        borderColor: colours.white618);
+
+    return dialog(
+        color: colours.white05,
+        borderColor: colours.none,
+        padding: 16,
+        height: 300,
+        width: 300 * goldenRatio,
+        child: layout(
+            topRight: Tooltip(
+              message: "Change Region",
+              child: button(
+                text(enumString(game.region.value),
+                    color: colours.white80),
+                () {
+                  game.dialog.value = Dialogs.Change_Region;
+                },
+                borderColor: colours.none,
+                fillColor: colours.black20,
+              ),
+            ),
+            bottomLeft: playButton,
+            bottomRight:
+                buildButton("Back", actions.deselectGameType),
+            child: Column(
+              crossAxisAlignment: axis.cross.start,
+              children: [
+                text(gameTypeNames[gameType],
+                    size: 25, color: colours.white80),
+                height32,
+                if (!isFreeToPlay && !authenticated)
+                  border(
+                      child: text(
+                          "Premium games require a premium membership to play",
+                          color: colours.white60),
+                      color: colours.white80)
+              ],
+            )));
+  });
+}
+
+Widget buildDialogChangeRegion() {
+  return dialog(
+      height: 500,
+      padding: 16,
+      borderColor: colours.none,
+      color: colours.white05,
+      child: layout(
+          bottomRight: closeDialogButton,
+          child: Column(
+            crossAxisAlignment: axis.cross.start,
+            children: [
+              border(
+                  color: colours.white618,
+                  child: text(
+                    "For best performance select the region which is nearest to you",
+                    color: colours.white60,
+                    italic: true,
+                    size: 15,
+                  )),
+              height32,
+              ...selectableRegions.map((region) {
+                return button(enumString(region), () {
+                  game.region.value = region;
+                  setDialogGames();
+                },
+                    fillColor: region == game.region.value
+                        ? colours.black20
+                        : colours.white05,
+                    borderColor: colours.none,
+                    fillColorMouseOver: colours.green,
+                    margin: const EdgeInsets.only(bottom: 8));
+              }).toList()
+            ],
+          )));
 }
 
 Row buildMenuMain() {
