@@ -13,7 +13,7 @@ final _Keys _keys = _Keys();
 class _Storage {
   bool get serverSaved => sharedPreferences.containsKey(_keys.server);
   int? get _serverIndex => sharedPreferences.getInt(_keys.server);
-  Region get serverType => serverTypes[_serverIndex ?? Region.None.index];
+  Region get serverType => serverTypes[_serverIndex ?? Region.Australia.index];
 
   void saveServerType(Region value){
     print("storage.saveServerType($value)");

@@ -1,7 +1,6 @@
 import 'package:bleed_client/core/init.dart';
 
 enum Region {
-  None,
   Australia,
   Brazil,
   Germany,
@@ -14,7 +13,6 @@ enum Region {
 final List<Region> regions = Region.values;
 
 final selectableRegions = regions.where((element){
-  if (element == Region.None) return false;
   if (element == Region.LocalHost && !isLocalHost) return false;
   return true;
 }).toList();

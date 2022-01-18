@@ -25,8 +25,7 @@ void _connectToServer(String uri){
 final List<Region> serverTypes = Region.values;
 
 final List<Region> selectableServerTypes =
-    serverTypes.where((type) => type != Region.None
-      && (debug || type != Region.LocalHost)
+    serverTypes.where((type) => (debug || type != Region.LocalHost)
     ).toList();
 
 const String _default = "https://gamestream-sydney-osbmaezptq-ts.a.run.app";

@@ -12,6 +12,5 @@ final Map<Region, String> _regionNames = {
   Region.USA_East: "USA East",
   Region.USA_West: "USA West",
   Region.LocalHost: "Localhost",
-  Region.None: "None",
 };
 

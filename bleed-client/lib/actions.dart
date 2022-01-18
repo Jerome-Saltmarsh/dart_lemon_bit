@@ -81,10 +81,6 @@ class _Actions {
     game.type.value = GameType.None;
   }
 
-  void deselectRegion(){
-    game.region.value = Region.None;
-  }
-
   void toggleAudio() {
     game.settings.audioMuted.value = !game.settings.audioMuted.value;
   }

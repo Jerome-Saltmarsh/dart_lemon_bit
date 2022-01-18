@@ -479,7 +479,7 @@ Region detectRegion(){
     return Region.Germany;
   }
 
-  return Region.None;
+  return Region.Australia;
 }
 
 final Map<GameType, DecorationImage> gameTypeDecorationImage = {
