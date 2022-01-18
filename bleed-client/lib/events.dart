@@ -66,25 +66,17 @@ class Events {
     print("events.onAccountChanged($account)");
     if (account == null) return;
 
-    // final nowUtc = DateTime.now().toUtc();
-    // final durationSinceAccountCreation = nowUtc.difference(account.accountCreationDate);
+    final fla = 'subscription_status_${account.userId}';
 
-    // if (durationSinceAccountCreation.inMinutes <= 1){
-    //   final flag = 'welcome_dialog_shown_${account.userId}';
-    //   if (!storage.contains(flag)) {
-    //     storage.put(flag, 'true');
-    //     actions.showDialogWelcome();
-    //     return;
-    //   }
-    // }
-
-    if (account.subscriptionActive){
-      final flag = 'subscription_dialog_shown_${account.userId}';
-      if (!storage.contains(flag)) {
-        storage.put(flag, 'true');
-        actions.showDialogSubscriptionSuccessful();
-      }
+    if (storage.contains(fla)){
+       final storedSubscriptionStatusString = storage.get<String>(fla);
+       final storedSubscriptionStatus = parseSubscriptionStatus(storedSubscriptionStatusString);
+       if (storedSubscriptionStatus != account.subscriptionStatus){
+         actions.showDialogSubscriptionStatusChanged();
+       }
     }
+
+    storage.put(fla, enumString(account.subscriptionStatus));
   }
 
   Future _onGameError(GameError error) async {

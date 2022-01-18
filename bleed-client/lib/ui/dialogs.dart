@@ -227,13 +227,26 @@ Widget buildDialogSubscriptionCancelled(){
   return buildDialogMessage("Premium subscription cancelled");
 }
 
+Widget buildDialogSubscriptionStatus(){
+  final account = game.account.value;
+  if (account == null){
+    return buildDialogMessage("Account is null");
+  }
+
+  final subscriptionStatus = account.subscriptionStatus;
+
+  switch(subscriptionStatus){
+    case SubscriptionStatus.Active:
+      return buildDialogSubscriptionSuccessful();
+    case SubscriptionStatus.Canceled:
+      return buildDialogSubscriptionCancelled();
+    default:
+      return buildDialogMessage("Premium subscription ${enumString(subscriptionStatus)}");
+  }
+}
+
 Widget buildDialogSubscriptionSuccessful(){
-  return buildDialog(
-    width: style.dialogWidthMedium,
-    height: style.dialogHeightSmall,
-    child: Center(child: text("Premium subscription activated", color: colours.white95)),
-    bottomRight: widgets.buttonGreat
-  );
+  return buildDialogMessage("Premium subscription active", bottomRight: widgets.buttonGreat);
 }
 
 Widget buildDialogAccountCreated(){
@@ -273,31 +286,47 @@ Widget buildDialogWelcome2(){
 final _nameController = TextEditingController();
 
 Widget buildDialogChangePublicName() {
-  return NullableWatchBuilder<Account?>(game.account, (Account? account) {
-    if (account == null) {
-      return buildDialogMessage("Account required to change public name");
-    }
+  final account = game.account.value;
 
-    if (!account.subscriptionActive) {
-      return buildDialog(
-          width: style.dialogWidthMedium,
-          height: style.dialogHeightSmall,
-          bottomRight: widgets.buttonOkay,
-          child: Center(
-            child: text("This features requires a premium subscription", color: colours.white80),
-          ));
-    }
+  if (account == null){
+    return buildDialogMessage("Account is null");
+  }
 
-    return dialog(
-      child: layout(
-        child: TextField(
-          controller: _nameController,
+  if (!account.isPremium){
+    return buildDialogMessage("Premium subscription required");
+  }
+
+  _nameController.text = account.publicName;
+
+  return buildDialog(
+    width: style.dialogWidthMedium,
+    height: style.dialogHeightSmall,
+    bottomLeft: buildButton("Save", (){
+      actions.changeAccountPublicName(_nameController.text);
+    }),
+    bottomRight: widgets.buttonClose,
+      child: TextField(
+        controller: _nameController,
+        autofocus: true,
+        cursorColor: colours.white80,
+        style: TextStyle(
+          color: colours.white90
         ),
-        bottomLeft: button("Save", () {}),
-        bottomRight: button("Cancel", setDialogGames, borderColor: none),
+        decoration: InputDecoration(
+          hintText: "Public Name",
+          enabledBorder: UnderlineInputBorder(
+            borderSide: BorderSide(color: colours.white618)
+          ),
+          focusedBorder: UnderlineInputBorder(
+              borderSide: BorderSide(color: colours.white618)
+          ),
+          hoverColor: colours.white80,
+          focusColor: colours.white80,
+          fillColor: colours.white80
+        ),
       ),
-    );
-  });
+  );
+
 }
 
 Widget buildDialogMessage(String message, {Widget? bottomRight}) {
@@ -310,9 +339,12 @@ Widget buildDialogMessage(String message, {Widget? bottomRight}) {
 }
 
 Widget buildDialogConfirmCancelSubscription(){
-  return buildDialogMedium(child: panel(child: text("Are you sure you want to cancel your subscription?", color: colours.white80)),
+  return buildDialog(
+    width: style.dialogWidthMedium,
+    height: style.dialogHeightSmall,
+    child: Center(child: text("Cancel premium subscription?", color: colours.white90)),
     bottomLeft: button(text("YES", color: colours.red, bold: true), actions.cancelSubscription, fillColor: none, borderColor: colours.red, borderWidth: 2, width: 100),
-    bottomRight: widgets.buttonNo
+    bottomRight: buildButton("NO", actions.showDialogAccount),
   );
 }
 

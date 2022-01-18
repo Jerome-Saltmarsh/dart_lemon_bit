@@ -231,6 +231,9 @@ Widget buildWatchAuthentication(){
                     return WatchBuilder(game.dialog, (Dialogs dialogs) {
                       switch (dialogs) {
 
+                        case Dialogs.Subscription_Status_Changed:
+                          return buildDialogSubscriptionStatus();
+
                         case Dialogs.Subscription_Cancelled:
                           return buildDialogSubscriptionCancelled();
 
@@ -707,7 +710,7 @@ Widget buildTopMessage(){
       if (account.subscriptionActive) {
         return margin(
           top: 10,
-          child: text("Subscription Active",
+          child: text("Premium Subscription Active",
               color: colours.green,
               size: 18,
               onPressed: actions.showDialogAccount),

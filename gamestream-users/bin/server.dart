@@ -83,8 +83,12 @@ FutureOr<Response> handleRequest(Request request) async {
         case 'CANCEL_SUBSCRIPTION':
           return await _cancelSubscription(user, response);
 
-        case 'PATCH':
-          return await _patchUser(params, response, id);
+        case 'CHANGE_PUBLIC_NAME':
+          var publicName = params[fieldNames.public_name];
+          if (publicName == null){
+            return errorFieldMissing(response, fieldNames.public_name);
+          }
+          return await _changePublicName(userId: id, publicName: publicName);
 
         case 'GET_SUBSCRIPTION':
           final fields = user.fields;
@@ -209,32 +213,27 @@ Future<Response> _getUser(Document user, Json response) async {
   return ok(response);
 }
 
-Future<Response> _patchUser(Map<String, String> params, Json response, String id) async {
-
-  var publicName = params[fieldNames.public_name];
-
-  if (publicName == null){
-    return errorFieldMissing(response, fieldNames.public_name);
-  }
+Future<Response> _changePublicName({
+  required String userId,
+  required String publicName
+}) async {
 
   publicName = publicName.trim();
   publicName = publicName.replaceAll(" ", "_");
 
   if (publicName.length < 4){
-    return error(response, 'display_name_too_short');
+    return buildError('display_name_too_short');
   }
 
   final existing = await firestore.findUser(displayName: publicName);
   if (existing != null){
-    return error(response, 'display_name_already_taken');
+    return buildError('display_name_already_taken');
   }
 
-  await firestore.patchDisplayName(userId: id, displayName: publicName);
-  response['status'] = 'success';
-  response['request'] = 'patch';
-  response['field'] = 'display_name';
-  response['value'] = publicName;
-  return ok(response);
+  await firestore.patchDisplayName(userId: userId, displayName: publicName);
+  return ok({
+    'status': 'success'
+  });
 }
 
 Response _findUser(Json response) {
@@ -285,6 +284,10 @@ Response ok(response){
 Response error(response, String error){
   response['error'] = error;
   return Response.ok(jsonEncode(response), headers: headersJson);
+}
+
+Response buildError(String error){
+  return Response.ok(jsonEncode({'error': error}), headers: headersJson);
 }
 
 Response errorFieldMissing(response, String fieldName){

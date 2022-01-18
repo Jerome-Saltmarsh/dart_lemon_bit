@@ -5,18 +5,18 @@ import 'package:bleed_client/toString.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
-final userService = UserServiceHttpClient("rest-server-1-osbmaezptq-ey.a.run.app");
+final userService = UserServiceHttpClient("rest-server-osbmaezptq-ey.a.run.app");
 
 class UserServiceHttpClient {
   final String _host;
 
   UserServiceHttpClient(this._host);
 
-  Future<Map<String, dynamic>> patchDisplayName({required String userId, required String displayName}) async {
-    print("patchDisplayName()");
-    var url = Uri.https(_host, '/users', {'id': userId, 'display_name': displayName, 'method': 'patch'});
-    // final json = '{"title": "Hello"}';
-    final response = await http.patch(url, body: '', headers: _headers);
+  Future<Map<String, dynamic>> changePublicName({required String userId, required String publicName}) async {
+    print("userService.changePublicName()");
+    var url = Uri.https(_host, '/users', {'id': userId, 'public_name': publicName, 'method': 'change_public_name'});
+    final json = '{"title": "Hello"}';
+    final response = await http.patch(url, body: json, headers: _headers);
     return jsonDecode(response.body);
   }
 
@@ -130,6 +130,8 @@ class Account {
   bool get subscriptionEnded => subscriptionStatus == SubscriptionStatus.Ended;
   bool get subscriptionNone => subscriptionStatus == SubscriptionStatus.Not_Subscribed;
 
+  bool get isPremium => subscriptionEndDate != null && subscriptionEndDate!.isAfter(DateTime.now());
+
   Account({
     required this.userId,
     required this.accountCreationDate,
@@ -163,8 +165,9 @@ enum SubscriptionStatus {
 final List<SubscriptionStatus> subscriptionStatuses = SubscriptionStatus.values;
 
 SubscriptionStatus parseSubscriptionStatus(String value){
+  value = value.trim().replaceAll("_", " ").toLowerCase();
   for(SubscriptionStatus status in subscriptionStatuses){
-    if (enumString(status).toLowerCase() == value.toLowerCase()){
+    if (enumString(status).toLowerCase() == value){
       return status;
     }
   }

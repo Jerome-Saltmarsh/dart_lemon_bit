@@ -20,6 +20,7 @@ class _Actions {
 
   void cancelSubscription() async {
     print("actions.cancelSubscription()");
+    actions.showDialogAccount();
     final account = game.account.value;
     if (account == null) {
       actions.showErrorMessage('Account is null');
@@ -32,8 +33,7 @@ class _Actions {
     if (game.account.value != null){
       game.operationStatus.value = OperationStatus.Logged_In;
     }
-
-    game.dialog.value = Dialogs.Subscription_Cancelled;
+    // game.dialog.value = Dialogs.Subscription_Status_Changed;
   }
 
   void logout() {
@@ -59,6 +59,10 @@ class _Actions {
 
   void showDialogSubscriptionSuccessful(){
     game.dialog.value = Dialogs.Subscription_Successful;
+  }
+
+  void showDialogSubscriptionStatusChanged(){
+    game.dialog.value = Dialogs.Subscription_Status_Changed;
   }
 
   void closeErrorMessage(){
@@ -150,5 +154,20 @@ class _Actions {
 
   void showErrorMessage(String message){
     game.errorMessage.value = message;
+  }
+
+  void changeAccountPublicName(String value) async {
+    print("actions.changePublicName('$value')");
+     final account = game.account.value;
+     if (account == null) {
+       showErrorMessage("Account is null");
+       return;
+     }
+     value = value.trim();
+     if (value.isEmpty){
+       showErrorMessage("Name entered is empty");
+       return;
+     }
+     final response = await userService.changePublicName(userId: account.userId, publicName: value);
   }
 }
