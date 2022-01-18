@@ -5,12 +5,20 @@ import 'package:bleed_client/toString.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
-final userService = UserServiceHttpClient("rest-server-osbmaezptq-ey.a.run.app");
+final userService = UserServiceHttpClient("rest-server-5-osbmaezptq-ey.a.run.app");
 
 class UserServiceHttpClient {
   final String _host;
 
   UserServiceHttpClient(this._host);
+
+  Future<int> getVersion() async {
+    var url = Uri.https(_host, '/version');
+    final response = await http.get(url, headers: _headers);
+    final responseBody = jsonDecode(response.body);
+    final val = responseBody['version'];
+    return val;
+  }
 
   Future<ChangeNameStatus> changePublicName({required String userId, required String publicName}) async {
     print("userService.changePublicName()");
@@ -20,6 +28,7 @@ class UserServiceHttpClient {
     final responseError = responseBody['error'];
 
     if (responseError != null){
+      print(responseError);
       return stringEnum(responseError, changeNameStatuses);
     }
 

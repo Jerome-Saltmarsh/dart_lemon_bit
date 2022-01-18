@@ -66,17 +66,17 @@ class Events {
     print("events.onAccountChanged($account)");
     if (account == null) return;
 
-    final fla = 'subscription_status_${account.userId}';
+    final flag = 'subscription_status_${account.userId}';
 
-    if (storage.contains(fla)){
-       final storedSubscriptionStatusString = storage.get<String>(fla);
+    if (storage.contains(flag)){
+       final storedSubscriptionStatusString = storage.get<String>(flag);
        final storedSubscriptionStatus = parseSubscriptionStatus(storedSubscriptionStatusString);
        if (storedSubscriptionStatus != account.subscriptionStatus){
          actions.showDialogSubscriptionStatusChanged();
        }
     }
 
-    storage.put(fla, enumString(account.subscriptionStatus));
+    storage.put(flag, enumString(account.subscriptionStatus));
   }
 
   Future _onGameError(GameError error) async {

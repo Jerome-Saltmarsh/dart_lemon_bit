@@ -12,7 +12,7 @@ import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'dart:io' show Platform;
 
-
+const version = 1;
 final devMode = Platform.localHostname == "Jerome";
 
 // gcloud builds submit --tag gcr.io/gogameserver/rest-server
@@ -42,6 +42,10 @@ FutureOr<Response> handleRequest(Request request) async {
   final Json response = Json();
 
   switch(path){
+    case 'version':
+      response['version'] = version;
+      return ok(response);
+
     case 'subscriptions':
       final params = request.requestedUri.queryParameters;
       final subscriptionId = params['id'];
@@ -56,10 +60,6 @@ FutureOr<Response> handleRequest(Request request) async {
       final method = params['method']?.toUpperCase();
       if (method == null){
         return error(response, 'method_required');
-      }
-
-      if (method == 'FIND'){
-        return _findUser(response);
       }
 
       final id = params['id'];
@@ -88,7 +88,7 @@ FutureOr<Response> handleRequest(Request request) async {
           if (publicName == null){
             return errorFieldMissing(response, fieldNames.public_name);
           }
-          return await _changePublicName(userId: id, publicName: publicName);
+          return await changePublicName(userId: id, publicName: publicName);
 
         case 'GET_SUBSCRIPTION':
           final fields = user.fields;
@@ -213,13 +213,12 @@ Future<Response> _getUser(Document user, Json response) async {
   return ok(response);
 }
 
-Future<Response> _changePublicName({
+Future<Response> changePublicName({
   required String userId,
   required String publicName
 }) async {
-
-  publicName = publicName.trim();
-  publicName = publicName.replaceAll(" ", "_");
+  publicName = publicName.trim().replaceAll(" ", "_");
+  print("server.changePublicName($publicName)");
 
   if (publicName.length < 8){
     return buildError('too_short');
@@ -229,29 +228,18 @@ Future<Response> _changePublicName({
     return buildError('too_long');
   }
 
-  final existing = await firestore.findUser(publicName: publicName);
+  final existing = await firestore.findUserByPublicName(publicName);
   if (existing != null){
+    print("$publicName already taken");
     return buildError('taken');
   }
 
-  await firestore.patchDisplayName(userId: userId, displayName: publicName);
+  print("No existing user with name $publicName found, continuing to patch");
+
+  await firestore.patchPublicName(userId: userId, publicName: publicName);
   return ok({
     'status': 'success'
   });
-}
-
-Response _findUser(Json response) {
-  return error(response, 'disabled');
-  // print("(server) handling find request");
-  // final displayName = params[fieldNames.displayName];
-  // if (displayName == null){
-  //   return error(response, 'display_name_required');
-  // }
-  // final result = await firestore.findUser(displayName: displayName);
-  // if (result == null){
-  //   return error(response, 'not_found');
-  // }
-  // return ok(result.fields);
 }
 
 Future<Response> _cancelSubscription(Document user, Json response) async {

@@ -64,12 +64,12 @@ class _Firestore {
     return '${buildDocumentName(projectId: _projectId, collection: _collectionName)}/$value';
   }
 
-  Future<Document> patchDisplayName({
+  Future<Document> patchPublicName({
     required String userId,
-    required String displayName
+    required String publicName
   }) async {
 
-    print("patchDisplayName($displayName)");
+    print("firestore.patchPublicName($publicName)");
     final user = await findUserById(userId);
     if (user == null){
       throw Exception("user not found");
@@ -80,9 +80,9 @@ class _Firestore {
       throw Exception("user fields null");
     }
 
-    fields[fieldNames.public_name] = Value(stringValue: displayName);
+    fields[fieldNames.public_name] = Value(stringValue: publicName);
     await saveUser(user);
-    print("username patched successfully");
+    print("public_named patched successfully");
     return user;
   }
 
@@ -117,9 +117,8 @@ class _Firestore {
     await documents.patch(userDocument, userDocument.name!);
   }
 
-  Future<Document?> findUser({required String publicName}) async {
-    print("(firestore) findUser(displayName: '$publicName')");
-
+  Future<Document?> findUserByPublicName(String publicName) async {
+    print("firestore.findUserByPublicName('$publicName')");
     final query = RunQueryRequest(
         structuredQuery: StructuredQuery(
           from: [
@@ -138,6 +137,15 @@ class _Firestore {
     );
     final responses = await documents.runQuery(query, parent);
     for (var response in responses.toList()) {
+      final doc = response.document;
+      if (doc == null) continue;
+      final docFields = doc.fields;
+      if (docFields == null) continue;
+      final publicNameField = docFields[fieldNames.public_name];
+      if (publicNameField == null) continue;
+      final publicNameString = publicNameField.stringValue;
+      if (publicNameString == null) continue;
+      if (publicNameString.toLowerCase() != publicName.toLowerCase()) continue;
       return response.document;
     }
     return null;

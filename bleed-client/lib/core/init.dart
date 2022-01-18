@@ -13,7 +13,6 @@ import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/cube/init_cube.dart';
-import 'package:bleed_client/document/request_pointer_lock.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/events/onAmbientLightChanged.dart';
 import 'package:bleed_client/events/onCompiledGameChanged.dart';
@@ -27,6 +26,7 @@ import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/ui/state/hud.dart';
+import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/phase.dart';
@@ -61,7 +61,6 @@ Future init() async {
   }
 
   // repeat update title for loading
-
 
   // Timer.periodic(Duration(milliseconds: 100), (timer) {
   //   index = (index + 1) % 4;
@@ -225,4 +224,8 @@ void _loadStateFromSharedPreferences(){
   if (storage.authorizationRemembered) {
     authentication.value = storage.recallAuthorization();
   }
+
+  userService.getVersion().then((version) {
+      print("server-version: $version");
+  });
 }
