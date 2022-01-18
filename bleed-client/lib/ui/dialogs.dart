@@ -343,8 +343,8 @@ Widget buildDialogConfirmCancelSubscription(){
     width: style.dialogWidthMedium,
     height: style.dialogHeightSmall,
     child: Center(child: text("Cancel premium subscription?", color: colours.white90)),
-    bottomLeft: button(text("YES", color: colours.red, bold: true), actions.cancelSubscription, fillColor: none, borderColor: colours.red, borderWidth: 2, width: 100),
-    bottomRight: buildButton("NO", actions.showDialogAccount),
+    bottomLeft: button(text("YES", color: colours.red, bold: false), actions.cancelSubscription, fillColor: none, borderColor: colours.none, width: 100),
+    bottomRight: button(text("NO", color: colours.green, bold: true), actions.showDialogAccount, fillColor: none, borderColor: colours.green, width: 100),
   );
 }
 
