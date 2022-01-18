@@ -256,7 +256,7 @@ class Events {
 Future signInAccount(String userId) async {
   print("signInAccount()");
   game.operationStatus.value = OperationStatus.Authenticating;
-  await refreshAccountDetails();
+  await updateAccount();
   game.operationStatus.value = OperationStatus.None;
 }
 
@@ -293,7 +293,7 @@ Future signInOrCreateAccount({
   game.operationStatus.value = OperationStatus.None;
 }
 
-Future refreshAccountDetails() async {
+Future updateAccount() async {
   print("refreshAccountDetails()");
   final auth = authentication.value;
   if (auth == null) {
@@ -301,8 +301,10 @@ Future refreshAccountDetails() async {
     return;
   }
 
+  game.operationStatus.value = OperationStatus.Updating_Account;
   game.account.value = await userService.findById(auth.userId).catchError((error){
      pub(LoginException(error));
      return null;
   });
+  game.operationStatus.value = OperationStatus.None;
 }

@@ -28,11 +28,8 @@ class _Actions {
     }
     game.operationStatus.value = OperationStatus.Cancelling_Subscription;
     await userService.cancelSubscription(account.userId);
-    refreshAccountDetails();
-
-    if (game.account.value != null){
-      game.operationStatus.value = OperationStatus.None;
-    }
+    await updateAccount();
+    game.operationStatus.value = OperationStatus.None;
   }
 
   void logout() {
