@@ -42,7 +42,7 @@ enum OperationStatus {
   Authenticating,
   Creating_Account,
   Logging_Out,
-  Opening_Secure_Payment,
+  Opening_Secure_Payment_Session,
   Cancelling_Subscription,
 }
 

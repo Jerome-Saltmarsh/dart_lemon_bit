@@ -140,7 +140,7 @@ class _Actions {
       return;
     }
 
-    game.operationStatus.value = OperationStatus.Opening_Secure_Payment;
+    game.operationStatus.value = OperationStatus.Opening_Secure_Payment_Session;
     stripeCheckout(
         userId: authentication.value!.userId,
         email: authentication.value!.email
