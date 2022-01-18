@@ -233,7 +233,22 @@ Widget buildDialogGameTypeSelected(GameType gameType) {
 
   if (!canPlay){
     return buildDialogMessage(
-        "Requires a premium membership to play",
+        Row(
+          mainAxisAlignment: axis.main.center,
+          children: [
+              text("Requires a ", color: colours.white85),
+              onHover((hovering){
+                return text("premium account",
+                    underline: hovering,
+                    color: green,
+                    onPressed: account == null
+                        ? actions.showDialogLogin
+                        : actions.openStripeCheckout
+                );
+              }),
+              text(" to play", color: colours.white85),
+          ],
+        ),
         bottomRight: buildButton("Back", actions.deselectGameType)
     );
   }

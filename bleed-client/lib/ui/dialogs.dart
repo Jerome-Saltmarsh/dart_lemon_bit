@@ -329,11 +329,11 @@ Widget buildDialogChangePublicName() {
 
 }
 
-Widget buildDialogMessage(String message, {Widget? bottomRight}) {
+Widget buildDialogMessage(dynamic message, {Widget? bottomRight}) {
   return buildDialog(
       width: style.dialogWidthMedium,
       height: style.dialogHeightSmall,
-      child: Center(child: text(message, color: colours.white95)),
+      child: Center(child: message is Widget ? message : text(message, color: colours.white95)),
       bottomRight: bottomRight ?? widgets.buttonOkay
   );
 }
