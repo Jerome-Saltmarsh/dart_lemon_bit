@@ -69,8 +69,17 @@ Widget buildLoginDialog() {
 }
 
 Widget buildView(BuildContext context) {
+  return Stack(
+    children: [
+        buildWatchGameMode(),
+        buildWatchErrorMessage(),
+    ],
+  );
+}
+
+Widget buildWatchErrorMessage(){
   return NullableWatchBuilder<String?>(game.errorMessage, (String? message){
-    if (message == null) return buildWatchGameMode();
+    if (message == null) return empty;
     return buildErrorDialog(message);
   });
 }
@@ -94,27 +103,6 @@ Widget buildErrorDialog(String message){
           bottomRight: text("okay", onPressed: actions.closeErrorMessage)
       )
   );
-}
-
-Widget buildWatchErrorMessage(){
-  return NullableWatchBuilder<String?>(game.errorMessage, (String? message){
-    if (message == null) return empty;
-    return dialog(
-      color: colours.orange,
-      borderColor: colours.none,
-      height: 400,
-      child: layout(
-        child: Column(
-          crossAxisAlignment: axis.cross.start,
-          children: [
-            text("Error"),
-            text(message),
-          ],
-        ),
-        bottomRight: text("okay", onPressed: actions.closeErrorMessage)
-      )
-    );
-  });
 }
 
 Widget buildWatchGameMode(){
