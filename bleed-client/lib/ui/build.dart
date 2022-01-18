@@ -1,3 +1,4 @@
+import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/assets.dart';
 import 'package:bleed_client/classes/Ability.dart';
 import 'package:bleed_client/common/AbilityType.dart';
@@ -5,11 +6,9 @@ import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/flutterkit.dart';
-import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/styles.dart';
-import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/state/decorationImages.dart';
 import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/ui.dart';
@@ -265,15 +264,6 @@ class _Build {
         child: Column(
           children: [
             ...selectableGameTypes.map((GameType gameType) {
-              final Widget type = text(enumString(gameType).toUpperCase(), color: colours.white618, size: 16);
-              // final Widget joinButton = text(gameTypeNames[gameType],
-              //     size: 20,
-              //     weight: FontWeight.bold,
-              //     color: !subscriptionActive && freeToPlay.contains(gameType) ? colours.white80 : colours.white382
-              //
-              // );
-
-              final subRequired = !premiumActive && !freeToPlay.contains(type);
 
               return onHover((hovering){
                 return Container(

@@ -226,13 +226,24 @@ Widget buildDialogGames() {
 
 Widget buildDialogGameTypeSelected(GameType gameType) {
 
-  bool isFreeToPlay = freeToPlay.contains(gameType);
+  final account = game.account.value;
+  final premiumActive = account != null && account.isPremium;
+  final isFreeToPlay = freeToPlay.contains(gameType);
+  final canPlay = isFreeToPlay || premiumActive;
+
+  if (!canPlay){
+    return buildDialogMessage(
+        "Requires a premium membership to play",
+        bottomRight: buildButton("Back", actions.deselectGameType)
+    );
+  }
 
   final playButton = button(
       text("Play", size: 18, weight: bold, color: colours.green),
       actions.connectToSelectedGame,
-      borderColor: none,
-      fillColor: colours.black382
+      borderColor: green,
+      fillColor: none,
+      width: 100,
   );
 
   return dialog(

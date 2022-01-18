@@ -353,7 +353,10 @@ String formatSubscriptionStatus(value){
 }
 
 Widget buildButton(String value, Function action){
-  return onHover((hovering){
-    return text(value, color: hovering ? colours.white80 : colours.white618, underline: true, onPressed: action);
-  });
+  return Container(
+    padding: padding16,
+    child: onHover((hovering){
+      return text(value, color: hovering ? colours.white80 : colours.white618, underline: true, onPressed: action);
+    }),
+  );
 }
