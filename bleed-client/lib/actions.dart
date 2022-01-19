@@ -183,10 +183,10 @@ class _Actions {
         showErrorMessage("'$value' already taken");
         break;
       case ChangeNameStatus.Too_Short:
-        showErrorMessage("At least 7 characters long");
+        showErrorMessage("Too short");
         break;
       case ChangeNameStatus.Too_Long:
-        showErrorMessage("At least 7 characters long");
+        showErrorMessage("Too long");
         break;
       case ChangeNameStatus.Other:
         showErrorMessage("Something went wrong");
