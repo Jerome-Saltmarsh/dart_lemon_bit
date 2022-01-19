@@ -129,7 +129,7 @@ class Events {
       }
 
       storage.rememberAuthorization(auth);
-      signInOrCreateAccount(userId: auth.userId, email: email, privateName: auth.displayName);
+      signInOrCreateAccount(userId: auth.userId, email: email, privateName: auth.name);
     }
     game.dialog.value = Dialogs.Games;
   }

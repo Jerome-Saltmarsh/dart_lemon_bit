@@ -24,7 +24,7 @@ class _Storage {
     print("storage.rememberAuthorization()");
     put(_keys.userId, authorization.userId);
     put(_keys.userEmail, authorization.email);
-    put(_keys.userName, authorization.displayName);
+    put(_keys.userName, authorization.name);
   }
 
   void forgetAuthorization(){
@@ -41,7 +41,7 @@ class _Storage {
     return Authentication(
       userId: userId,
       email: email,
-      displayName: displayName,
+      name: displayName,
     );
   }
 

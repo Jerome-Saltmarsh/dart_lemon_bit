@@ -122,20 +122,28 @@ Future signInWithGoogle() async {
     idToken: googleSignInAuthentication.idToken,
   );
 
-  print("setting user credentials");
   final credentials = await _auth.signInWithCredential(credential).catchError((error){
     print(error);
   });
 
-  if (credentials.user == null){
+  final user = credentials.user;
+  if (user == null){
     throw Exception('credentials.user is null');
   }
 
-  print("user credentials set");
+  final displayName = user.displayName;
+  if (displayName == null){
+    throw Exception("user.displayName is null");
+  }
+
+  final email = user.email;
+  if (email == null){
+    throw Exception("user.email is null");
+  }
   authentication.value = Authentication(
-      userId: credentials.user!.uid,
-      displayName: credentials.user!.displayName,
-      email: credentials.user!.email
+      userId: user.uid,
+      name: displayName,
+      email: email,
   );
 }
 
@@ -153,11 +161,11 @@ void signOutGoogle() async {
 
 class Authentication {
   final String userId;
-  final String? email;
-  final String? displayName;
+  final String email;
+  final String name;
   Authentication({
     required this.userId,
-    this.displayName,
-    this.email = "",
+    required this.name,
+    required this.email,
   });
 }

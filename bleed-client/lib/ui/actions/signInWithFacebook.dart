@@ -16,7 +16,14 @@ void loginWithFacebook() async {
 
      if (accessToken == null) throw Exception("access token is null");
 
-      authentication.value = Authentication(userId: accessToken.userId, displayName: 'facebook_user', email: "facebookUser@email.com");
+     final userData = await FacebookAuth.instance.getUserData(
+       fields: "name,email"
+     );
+
+     final privateName = userData['name'];
+     final email = userData['email'];
+
+      authentication.value = Authentication(userId: accessToken.userId, name: privateName, email: email);
   }
 }
 
