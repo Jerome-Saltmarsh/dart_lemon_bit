@@ -37,6 +37,45 @@
     }
   </script>
 
+<!--      <script>-->
+<!--  window.fbAsyncInit = function() {-->
+<!--    FB.init({-->
+<!--      appId            : 'YOUR_APP_ID',-->
+<!--      autoLogAppEvents : true,-->
+<!--      xfbml            : true,-->
+<!--      version          : 'v7.0'-->
+<!--    });-->
+<!--  };-->
+<!--</script>-->
+
+
+      <script>
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '652186692488193',
+      cookie     : true,
+      xfbml      : true,
+      version    : 'v12.0'
+    });
+
+    FB.AppEvents.logPageView();
+
+  };
+
+      </script>
+
+      <script async defer crossorigin="anonymous"
+              src="https://connect.facebook.net/en_US/sdk.js"></script>
+      <script src="https://flutterfacebooklogin.s3.us-east-2.amazonaws.com/web_interop.js"></script>
+
+      <!--  (function(d, s, id){-->
+<!--     var js, fjs = d.getElementsByTagName(s)[0];-->
+<!--     if (d.getElementById(id)) {return;}-->
+<!--     js = d.createElement(s); js.id = id;-->
+<!--     js.src = "https://connect.facebook.net/en_US/sdk.js";-->
+<!--     fjs.parentNode.insertBefore(js, fjs);-->
+<!--   }(document, 'script', 'facebook-jssdk'));-->
+
 
   <script>
     // Import the functions you need from the SDKs you need

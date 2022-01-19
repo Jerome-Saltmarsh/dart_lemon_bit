@@ -25,6 +25,7 @@ import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_math/golden_ratio.dart';
@@ -40,7 +41,7 @@ final nameController = TextEditingController();
 // const dialogHeight = 400.0;
 // const dialogWidth = dialogHeight * goldenRatio_1381;
 
-Widget buildLoginDialog() {
+Widget buildDialogLogin() {
   return dialog(
       padding: 16,
       color: colours.white05,
@@ -54,13 +55,12 @@ Widget buildLoginDialog() {
           }, fillColor: colours.none,
             borderColor: colours.none,
           ),
-
           child: Column(
             crossAxisAlignment: axis.cross.start,
             children: [
-              text("Sign in", weight: bold, size: 25),
+              // text("Sign in", weight: bold, size: 25),
               height32,
-              buttons.signInWithGoogleB,
+              buttons.signInWithGoogleButton,
               height16,
               buttons.signInWithFacebookButton,
               height32,
@@ -159,7 +159,35 @@ Widget buildViewConnectionNone() {
       ),
       topRight: buildMenuMain(),
       bottomLeft: buildMenuDebug(),
-      child: buildWatchBuilderDialog());
+      child: buildWatchBuilderDialog(),
+      // foreground: buildLoginSuggestionBox()
+  );
+}
+
+Positioned buildLoginSuggestionBox() {
+  return Positioned(
+        top: 8,
+        right: 8,
+        child: Container(
+          padding: padding16,
+            decoration: BoxDecoration(
+              color: colours.white,
+              borderRadius: borderRadius4,
+            ),
+            width: 230.0 * goldenRatio_1618,
+            height: 230,
+            child: Column(
+              crossAxisAlignment: axis.cross.center,
+              children: [
+                height16,
+                buttons.signInWithGoogleButton,
+                height16,
+                buttons.signInWithFacebookButton,
+                height32,
+                text("Close", color: colours.black618, underline: true),
+              ],
+            ))
+    );
 }
 
 WatchBuilder<Dialogs> buildWatchBuilderDialog() {
@@ -195,7 +223,7 @@ WatchBuilder<Dialogs> buildWatchBuilderDialog() {
           return buildDialogAccount();
 
         case Dialogs.Login:
-          return buildLoginDialog();
+          return buildDialogLogin();
 
         case Dialogs.Invalid_Arguments:
           return dialog(child: text("Invalid Arguments"));
@@ -335,13 +363,24 @@ Widget buildDialogChangeRegion() {
           )));
 }
 
-Row buildMenuMain() {
+Widget buildMenuMain() {
+
+  if (!authenticated) {
+    return Column(
+      crossAxisAlignment: axis.cross.end,
+      children: [
+        buttons.signInWithGoogleButton,
+        height8,
+        buttons.signInWithFacebookButton,
+      ],
+    );
+  }
+
   return Row(
       crossAxisAlignment: axis.cross.start,
       mainAxisAlignment: axis.main.end,
       children: [
-        if (!authenticated) buttons.login,
-        if (authenticated)  mouseOver(builder: (BuildContext context, bool mouseOver) {
+        mouseOver(builder: (BuildContext context, bool mouseOver) {
           return mouseOver ? Column(
             children: [
               buttons.buildAccount(mouseOver),

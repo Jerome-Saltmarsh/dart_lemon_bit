@@ -1,4 +1,5 @@
 import 'package:bleed_client/authentication.dart';
+import 'package:bleed_client/ui/actions/signInWithFacebook.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/constants/colours.dart';
@@ -188,29 +189,56 @@ class _Buttons {
 
   final Widget showDialogSubscribed = button("Sub Success", actions.showDialogSubscriptionSuccessful);
 
+
   final Widget signInWithFacebookButton = button(
     Container(
+      width: 220,
     padding: EdgeInsets.symmetric(horizontal: 8),
     child: Row(
       mainAxisAlignment: axis.main.apart,
       children: [
         logos.facebook,
         width16,
-        text("Continue with Facebook", color: Colors.white),
+        text("Continue", color: Colors.white),
+      ],
+    ),
+  ), loginWithFacebook,
+    fillColor: colours.facebook,
+    fillColorMouseOver: colours.facebook,
+    borderColorMouseOver: none,
+    borderColor: none,
+    borderWidth: 1,
+  );
+
+  final Widget signInWithGoogleButton = button(
+    Container(
+      width: 220,
+    padding: EdgeInsets.symmetric(horizontal: 8),
+    child: Row(
+      mainAxisAlignment: axis.main.apart,
+      children: [
+        logos.google,
+        width16,
+        text("Continue", color: Colors.black),
       ],
     ),
   ), () async {
-
+    game.operationStatus.value = OperationStatus.Authenticating;
+    signInWithGoogle().catchError((error){
+      print(error);
+      game.operationStatus.value = OperationStatus.None;
+    });
   },
-    fillColor: colours.facebook,
-    fillColorMouseOver: colours.facebook,
-    borderColorMouseOver: colours.white,
-    borderColor: colours.facebook,
+    borderColor: colours.black618,
+    borderColorMouseOver: colours.black618,
+    fillColor: Colors.white,
+    fillColorMouseOver: Colors.white,
     borderWidth: 1,
   );
 
   final Widget signInWithUsernamePassword = button(
     Container(
+      width: 220,
       padding: EdgeInsets.symmetric(horizontal: 8),
       child: Row(
         mainAxisAlignment: axis.main.apart,
@@ -225,31 +253,8 @@ class _Buttons {
   },
     fillColor: colours.facebook,
     fillColorMouseOver: colours.facebook,
-    borderColorMouseOver: colours.white,
-    borderColor: colours.facebook,
-    borderWidth: 1,
-  );
-
-  final Widget signInWithGoogleB = button(Container(
-    padding: EdgeInsets.symmetric(horizontal: 8),
-    child: Row(
-      mainAxisAlignment: axis.main.apart,
-      children: [
-        logos.google,
-        width16,
-        text("Continue with Google", color: Colors.black),
-      ],
-    ),
-  ), () async {
-    game.operationStatus.value = OperationStatus.Authenticating;
-    signInWithGoogle().catchError((error){
-      print(error);
-      game.operationStatus.value = OperationStatus.None;
-    });
-  },
-    fillColor: Colors.white,
-    fillColorMouseOver: Colors.white,
-    borderColorMouseOver: colours.black20,
+    borderColorMouseOver: none,
+    borderColor: none,
     borderWidth: 1,
   );
 

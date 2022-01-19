@@ -143,13 +143,12 @@
 [ ] Weapon UI
 [BUGS]
 [ ] Objects culled at bottom of screen  
-[SUBSCRIPTION]
+[WEBSITE]
 [ ] Sign in with Facebook
 [ ] Sign in with email password
 [ ] Sign up with email password  
 [ ] Live subscription  
 [ ] Show youtube video of game in preview  
-[ ] Subscription activated dialog
 [ ] Stripe Webhooks, Catch save subscription errors
 [ ] Fix Change Public Name Dialog Error
 [ ] Popup Auto suggest sign in 
