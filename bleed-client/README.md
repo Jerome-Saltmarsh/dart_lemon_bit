@@ -560,7 +560,11 @@ Wow
 Fortnight
 
 # Domain Names
+arcadestream.com
+gamecloud.com
+cloudygames.com
 gamepond.io
+gamepond.com
 browser-games.io
 game-browser.com
 game-stream.io

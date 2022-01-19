@@ -45,7 +45,7 @@ class _Logos {
     width: 30,
     height: 30,
     decoration: BoxDecoration(
-        color: Colors.white,
+        color: none,
         image: decorationImages.facebook),
   );
 }
