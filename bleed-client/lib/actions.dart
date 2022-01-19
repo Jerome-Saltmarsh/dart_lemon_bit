@@ -149,39 +149,48 @@ class _Actions {
 
   void changeAccountPublicName(String value) async {
     print("actions.changePublicName('$value')");
-     final account = game.account.value;
-     if (account == null) {
-       showErrorMessage("Account is null");
-       return;
-     }
-     value = value.trim();
-     if (value.isEmpty){
-       showErrorMessage("Name entered is empty");
-       return;
-     }
-     final response = await userService
+    final account = game.account.value;
+    if (account == null) {
+      showErrorMessage("Account is null");
+      return;
+    }
+    value = value.trim();
+
+    if (value == account.publicName){
+      return;
+    }
+
+    if (value.isEmpty) {
+      showErrorMessage("Name entered is empty");
+      return;
+    }
+    game.operationStatus.value = OperationStatus.Changing_Public_Name;
+    final response = await userService
         .changePublicName(userId: account.userId, publicName: value)
         .catchError((error) {
       showErrorMessage(error.toString());
       throw error;
     });
+    game.operationStatus.value = OperationStatus.None;
 
-     switch(response){
-       case ChangeNameStatus.Success:
-         showErrorMessage("Name Changed successfully");
-         break;
-       case ChangeNameStatus.Taken:
-         showErrorMessage("'$value' already taken");
-         break;
-       case ChangeNameStatus.Too_Short:
-         showErrorMessage("At least 7 characters long");
-         break;
-       case ChangeNameStatus.Too_Long:
-         showErrorMessage("At least 7 characters long");
-         break;
-       case ChangeNameStatus.Other:
-         showErrorMessage("Something went wrong");
-         break;
-     }
+    switch (response) {
+      case ChangeNameStatus.Success:
+        updateAccount();
+        showDialogAccount();
+        showErrorMessage("Name Changed successfully");
+        break;
+      case ChangeNameStatus.Taken:
+        showErrorMessage("'$value' already taken");
+        break;
+      case ChangeNameStatus.Too_Short:
+        showErrorMessage("At least 7 characters long");
+        break;
+      case ChangeNameStatus.Too_Long:
+        showErrorMessage("At least 7 characters long");
+        break;
+      case ChangeNameStatus.Other:
+        showErrorMessage("Something went wrong");
+        break;
+    }
   }
 }

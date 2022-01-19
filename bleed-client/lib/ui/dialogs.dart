@@ -301,10 +301,10 @@ Widget buildDialogChangePublicName() {
   return buildDialog(
     width: style.dialogWidthMedium,
     height: style.dialogHeightSmall,
-    bottomLeft: buildButton("Save", (){
+    bottomLeft: buildButtonPrimary("Save", (){
       actions.changeAccountPublicName(_nameController.text);
-    }),
-    bottomRight: widgets.buttonClose,
+    },),
+    bottomRight: buildButton('back', actions.showDialogAccount),
       child: TextField(
         controller: _nameController,
         autofocus: true,
@@ -357,6 +357,15 @@ Widget buildButton(String value, Function action){
     padding: padding16,
     child: onHover((hovering){
       return text(value, color: hovering ? colours.white80 : colours.white618, underline: true, onPressed: action);
+    }),
+  );
+}
+
+Widget buildButtonPrimary(String value, Function action){
+  return Container(
+    padding: padding16,
+    child: onHover((hovering){
+      return text(value, color: colours.green, underline: hovering, onPressed: action, bold: true);
     }),
   );
 }

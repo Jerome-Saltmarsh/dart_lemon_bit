@@ -45,6 +45,7 @@ enum OperationStatus {
   Opening_Secure_Payment_Session,
   Cancelling_Subscription,
   Updating_Account,
+  Changing_Public_Name,
 }
 
 class _Game {
