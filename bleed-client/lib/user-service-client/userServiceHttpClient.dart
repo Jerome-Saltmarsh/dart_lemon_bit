@@ -5,7 +5,7 @@ import 'package:bleed_client/toString.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
-final userService = UserServiceHttpClient("rest-server-5-osbmaezptq-ey.a.run.app");
+final userService = UserServiceHttpClient("rest-server-7-osbmaezptq-ey.a.run.app");
 
 class UserServiceHttpClient {
   final String _host;
@@ -27,7 +27,7 @@ class UserServiceHttpClient {
     final responseBody = jsonDecode(response.body);
     final responseError = responseBody['error'];
 
-    if (responseError != null){
+    if (responseError != null && responseError != 'same_value'){
       print(responseError);
       return stringEnum(responseError, changeNameStatuses);
     }

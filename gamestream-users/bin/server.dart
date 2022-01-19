@@ -230,6 +230,16 @@ Future<Response> changePublicName({
 
   final existing = await firestore.findUserByPublicName(publicName);
   if (existing != null){
+    final existingName = existing.name;
+
+    if (existingName != null){
+       final segments = existingName.split("/");
+       final existingUserId = segments.last;
+       if (existingUserId == userId){
+         return buildError('same_value');
+       }
+    }
+
     print("$publicName already taken");
     return buildError('taken');
   }
