@@ -216,7 +216,7 @@ class _Build {
 
   Widget title(){
 
-    final _text = text("GAMESTREAM",
+    final _text = text("GAMESPLASH",
         size: 60,
         color: Colors.white,
         family: assets.fonts.libreBarcode39Text
@@ -477,6 +477,6 @@ final Map<GameType, DecorationImage> gameTypeDecorationImage = {
   GameType.BATTLE_ROYAL: decorationImages.zombieRoyal,
   GameType.Moba: decorationImages.heroesLeague,
   GameType.CUBE3D: decorationImages.cube,
-  GameType.TACTICAL_COMBAT: decorationImages.counterStrike,
+  GameType.DeathMatch: decorationImages.counterStrike,
 };
 

@@ -106,7 +106,7 @@ class _Widgets {
   );
 
   final textReactivateSubscription = button(
-    text("Subscribe", color: green, underline: true),
+    text("Activate", color: green, underline: true),
     actions.openStripeCheckout,
     fillColor: none,
     borderColorMouseOver: green,

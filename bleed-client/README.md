@@ -559,6 +559,8 @@ Wow
 Fortnight
 
 # Domain Names
+gamestash.com
+gamesplash.com
 arcadestream.com
 gamecloud.com
 cloudygames.com
@@ -599,6 +601,7 @@ champions-portal.com
 champion-arcade.com
 mystical-arcade.com
 magic-arcade.com
+lemonstash.com
 lost-arcade.com
 lemon-arcade.com
 battle-stars.com

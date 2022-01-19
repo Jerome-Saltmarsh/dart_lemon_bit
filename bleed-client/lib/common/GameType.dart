@@ -4,7 +4,7 @@ enum GameType {
     Moba,
     BATTLE_ROYAL,
     CUBE3D,
-    TACTICAL_COMBAT,
+    DeathMatch,
 }
 
 final List<GameType> gameTypes = GameType.values;
@@ -14,7 +14,7 @@ final List<GameType> selectableGameTypes = [
     GameType.Moba,
     GameType.BATTLE_ROYAL,
     GameType.CUBE3D,
-    GameType.TACTICAL_COMBAT,
+    GameType.DeathMatch,
 ];
 
 final Map<GameType, String> gameTypeNames = {
@@ -22,7 +22,7 @@ final Map<GameType, String> gameTypeNames = {
     GameType.MMO: "BLEED MMO",
     GameType.CUBE3D: "CUBE 3D",
     GameType.BATTLE_ROYAL: "ZOMBIE ROYAL",
-    GameType.TACTICAL_COMBAT: "COUNTER STRIKE",
+    GameType.DeathMatch: "COUNTER STRIKE",
 };
 
 final List<GameType> freeToPlay = [
