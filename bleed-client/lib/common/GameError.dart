@@ -28,4 +28,5 @@ enum GameError {
   Subscription_Required,
   PlayerId_Required,
   Login_Error,
+  Account_Not_Found,
 }

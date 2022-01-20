@@ -1,3 +1,4 @@
+import 'package:lemon_math/random.dart';
 import 'package:lemon_math/randomItem.dart';
 
 List<String> adjectives = [
@@ -112,5 +113,5 @@ List<String> nouns = [
 ];
 
 String generateName() {
-  return '${randomItem(adjectives)}_${randomItem(nouns)}';
+  return 'Anon${random.nextInt(999999) + 10000}';
 }

@@ -175,8 +175,12 @@ void main() {
       error(GameError.PlayerNotFound);
     }
 
-    void errorSubscriptionRequired() {
+    void errorPremiumAccountOnly() {
       error(GameError.Subscription_Required);
+    }
+
+    void errorAccountNotFound() {
+      error(GameError.GameNotFound);
     }
 
     void errorPlayerDead() {
@@ -398,11 +402,12 @@ void main() {
                 return;
               }
               final playerId = arguments[2];
-              userService.getAccount(playerId).then((account){
-                if (account != null && account.displayName != null) {
-                  joinGameOpenWorld(playerName: account.displayName!);
+              userService.findById(playerId).then((account){
+                if (account != null) {
+                  joinGameOpenWorld(playerName: account.publicName);
+                } else {
+                  joinGameOpenWorld(playerName: generateName());
                 }
-                joinGameOpenWorld(playerName: generateName());
               });
               break;
             case GameType.Moba:
@@ -417,11 +422,14 @@ void main() {
               }
 
               final playerId = arguments[2];
-              userService.getAccount(playerId).then((account){
-                if (account == null || !account.subscriptionActive) {
-                  return errorSubscriptionRequired();
+              userService.findById(playerId).then((account){
+                if (account == null){
+                  return errorAccountNotFound();
                 }
-                joinBattleRoyal(account.displayName ?? generateName());
+                if (!account.isPremium) {
+                  return errorPremiumAccountOnly();
+                }
+                joinBattleRoyal(account.publicName);
               });
 
               break;

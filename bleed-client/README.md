@@ -1,4 +1,4 @@
--- FEATURES -- 
+[IDEAS] 
 [ ] Critical Damage
 [ ] Accuracy
 [ ] Weapon Smg
@@ -17,11 +17,6 @@
 [ ] Cursor Cooldown Circle
 [ ] Explosion Crater
 [ ] Random Power up Square 
-    [ ] Double Damage
-    [ ] Infinite Sprint
-    [ ] Full Health
-    [ ] Full Ammo
-    [ ] Points 50
 [ ] Fire Shotgun Animation
 [ ] Fire Handgun Animation
 [ ] Fire Assault Rifle Animation
@@ -37,32 +32,9 @@
 [ ] Heal animation
 [ ] Find Promotions for you weapons
 [ ] Right click activates items special ability
-    [ ] Shotgun double bullets
-    [ ] Handgun double damage / Speed
-    [ ] Sniper 
 [ ] Body Armor
 [ ] Connect to specific container instance
-    [ ] Support auto reconnect
-    [ ] Invite friend to container
 [ ] Gain XP and levelsp
-    [ ] Perk Stamina Boost
-    [ ] Perk Health Boost
-    [ ] Perk Damage Boost (cost 2 perks)
--- REFACTOR --
-[ ] Merge Maths lib into common
-[ ] Client Cache Particles-
--- BUSINESS --
-[ ] Setup Patreon
-[ ] Setup Discord
-[ ] Publish on Reddit
-[ ] Setup Youtube Channel
--- MINOR BUGS --
-[ ] Dead players pass through barriers
-[ ] Score ui displays error on respawn
-[ ] Prevent Duplicate Names
-[ ] UI Score Lag
--- UI --
--- IDEAS --
 [ ] Animate tiles flowing water
 [ ] Dynamic Shadow direction
 [ ] Black Fade Screen on change scene
@@ -76,36 +48,6 @@
 [ ] Send custom news updates to client
 [ ] Guards on walls
 [ ] Fall into water and die
--- OPEN WORLD -- 
-[ ] Persist Character on cloud
-[ ] Complete Quests to earn income and unlock upgrades
-[ ] Quest Window
-[ ] Zombies run through environment objects
-[ ] Deploy dev endpoint
-[ ] Water Particles
-[ ] House 3
-[ ] Npc view range decreases at night
-[ ] Audio walk on grass
-[ ] Right click to pan
-[ ] Glow worms
-[ ] Zombie Ragdoll Physics
-[ ] Flowing Bat
-[ ] Weapon Baseball Bat
-[ ] Design Tree Model
-[ ] Remove player walk (its always better to run, no stamina)
-[ ] Right Click to aim (aiming improves accuracy)
-[ ] Fix Firing AssaultRifle animation
-[ ] Speech Box split sentences
-[ ] Remove material design to reduce disk size
-[ ] Add Name to Speech box
-[ ] Shoot Arrow (Archer)
-[ ] Slash Sword (Warrior)
-[ ] Design Cottage
-[ ] Zombies drop gems on death
-[ ] Quest Kill the vampire
-[ ] Splash Screen
-[ ] Cave Level
-[ ] Ability Tree
 [GAME TYPES]
 [ ] COUNTER STRIKE
 [ ] MOBA
@@ -116,13 +58,6 @@
 [ ] SOCCER
 [ ] GOLDEN EYE / PERFECT DARK
 [ ] BATTLEFIELD (Capture flags)
-- This uses guns and abilities
-[RELEASE]
--- The plan is to release several game modes like the warcraft 3 custom maps
--- When the player loads into the game they start in the open world mode. To begin with this will be hard
--- core mode and won't be possible to persist characters. 
--- In the future the player will be able to store their character inside an sql database
--- The name of the land is Atlas
 [MMO]
 [ ] Save / Load Character
 [ ] Attributes (Intelligence, Strength, Agility)
@@ -141,17 +76,19 @@
 [ ] Design Map  
 [ ] Score  
 [ ] Weapon UI
+[DEATHMATCH]
+[ ]  
 [BUGS]
 [ ] Objects culled at bottom of screen  
 [WEBSITE]
-[ ] Sign in with Facebook
 [ ] Sign in with email password
 [ ] Sign up with email password  
 [ ] Live subscription  
 [ ] Show youtube video of game in preview  
 [ ] Stripe Webhooks, Catch save subscription errors
-[ ] Fix Change Public Name Dialog Error
-[ ] Popup Auto suggest sign in 
+[ ] Popup Auto suggest sign in
+[x] Sign in with Facebook
+[x] Fix Change Public Name Dialog Error
 [x] Cancel Subscription
 [x] Design Games List View
 [x] When a subscription is made it must be saved to a cloud database

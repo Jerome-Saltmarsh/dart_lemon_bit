@@ -1,7 +1,6 @@
 
 
 import 'dart:convert';
-import 'package:bleed_client/toString.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
@@ -29,7 +28,7 @@ class UserServiceHttpClient {
 
     if (responseError != null && responseError != 'same_value'){
       print(responseError);
-      return stringEnum(responseError, changeNameStatuses);
+      return _stringEnum(responseError, changeNameStatuses);
     }
 
     return ChangeNameStatus.Success;
@@ -182,7 +181,7 @@ final List<SubscriptionStatus> subscriptionStatuses = SubscriptionStatus.values;
 SubscriptionStatus parseSubscriptionStatus(String value){
   value = value.trim().replaceAll("_", " ").toLowerCase();
   for(SubscriptionStatus status in subscriptionStatuses){
-    if (enumString(status).toLowerCase() == value){
+    if (_enumString(status).toLowerCase() == value){
       return status;
     }
   }
@@ -222,3 +221,19 @@ enum ChangeNameStatus {
 
 final List<ChangeNameStatus> changeNameStatuses = ChangeNameStatus.values;
 
+T _stringEnum<T>(String text, List<T> values){
+  final textFixed = text.trim().toLowerCase().replaceAll(" ", "_");
+  for(T status in values){
+    if (status.toString().toLowerCase().contains(textFixed)){
+      return status;
+    }
+  }
+  throw Exception("Could not parse $text");
+}
+
+String _enumString(dynamic value){
+  String text = value.toString();
+  int index = text.indexOf(".");
+  if (index == -1) return text;
+  return text.substring(index + 1, text.length).replaceAll("_", " ");
+}
