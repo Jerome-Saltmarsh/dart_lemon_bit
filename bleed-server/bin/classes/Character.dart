@@ -2,6 +2,7 @@ import 'package:lemon_math/Vector2.dart';
 
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
+import '../common/WeaponType.dart';
 import '../common/enums/Direction.dart';
 import '../constants/no_squad.dart';
 import '../interfaces/HasSquad.dart';
@@ -90,8 +91,9 @@ class Character extends GameObject implements HasSquad {
     maxHealth = health;
     _health = health;
     _speed = speed;
-
-    this.weapons = weapons ?? [];
+    this.weapons = weapons ?? [
+      Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0)
+    ];
   }
 
   @override

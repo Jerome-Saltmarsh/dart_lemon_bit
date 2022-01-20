@@ -120,7 +120,7 @@ void main() {
 
     void joinBattleRoyal(String playerName) {
       print('$playerName joining battle royal');
-      final Royal royal = global.findPendingRoyalGames();
+      final GameRoyal royal = global.findPendingRoyalGames();
       final Player player = royal.playerJoin();
       player.name = playerName;
       compileWholeGame(royal);
@@ -244,11 +244,17 @@ void main() {
 
           player.lastUpdateFrame = 0;
           final Game game = player.game;
+          compileGameStatus(_buffer, game.status);
 
           if (game.awaitingPlayers) {
             compileLobby(_buffer, game);
-            compileGameStatus(_buffer, game.status);
             compileGameMeta(_buffer, game);
+            sendAndClearBuffer();
+            return;
+          }
+
+          if (game.countingDown){
+            compileCountDownFramesRemaining(_buffer, game);
             sendAndClearBuffer();
             return;
           }

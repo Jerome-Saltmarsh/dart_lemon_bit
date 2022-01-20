@@ -1,3 +1,4 @@
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/authentication.dart';
@@ -28,7 +29,6 @@ import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/state/screen.dart';
-import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../assets.dart';
@@ -691,6 +691,14 @@ Widget buildViewConnected() {
     }
     return WatchBuilder(game.status, (GameStatus gameStatus) {
       switch (gameStatus) {
+        case GameStatus.Counting_Down:
+          return buildDialog(
+            width: style.dialogWidthMedium,
+            height: style.dialogHeightMedium,
+            child: WatchBuilder(game.countDownFramesRemaining, (int frames){
+              // double seconds =  frames /~ 30;
+              return text("Game starting in $frames frames");
+            }));
         case GameStatus.Awaiting_Players:
           return buildLayoutLobby() ;
         case GameStatus.In_Progress:
@@ -826,4 +834,21 @@ bool isAccountName(String publicName){
   final account = game.account.value;
   if (account == null) return false;
   return account.publicName == publicName;
+}
+
+Widget statefulBuilder(Widget Function(Function rebuild) build) {
+  return StatefulBuilder(builder: (context, setState){
+    Function rebuild = (){
+      setState((){});
+    };
+    return build(rebuild);
+  });
+}
+
+void a(){
+  int b = 5;
+  statefulBuilder((rebuild) {
+      b = 10;
+      return text(b);
+  });
 }

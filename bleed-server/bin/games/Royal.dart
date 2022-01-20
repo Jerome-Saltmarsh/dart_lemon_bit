@@ -1,25 +1,25 @@
 import 'package:lemon_math/Vector2.dart';
 
-import '../classes/Character.dart';
 import '../classes/Game.dart';
 import '../classes/Player.dart';
-import '../classes/Weapon.dart';
 import '../common/CharacterType.dart';
 import '../common/GameStatus.dart';
 import '../common/GameType.dart';
-import '../common/WeaponType.dart';
 import '../functions/withinRadius.dart';
 import '../instances/scenes.dart';
+import '../update.dart';
 import '../utils/game_utils.dart';
 
-class Royal extends Game {
+class GameRoyal extends Game {
 
   final List<Player> score = [];
   final boundaryRadiusShrinkRate = 0.02;
   double boundaryRadius = 1000;
   Vector2 boundaryCenter = Vector2(0, 0);
 
-  Royal() : super(scenes.royal, gameType: GameType.BATTLE_ROYAL) {
+  final time = calculateTime(hour: 9);
+
+  GameRoyal() : super(scenes.royal, gameType: GameType.BATTLE_ROYAL) {
     status = GameStatus.Awaiting_Players;
     teamSize = 1;
     numberOfTeams = 2;
@@ -40,19 +40,20 @@ class Royal extends Game {
       team: -1,
       type: CharacterType.Human,
     );
-    player.weapons = [
-      Weapon(type: WeaponType.HandGun, damage: 25, capacity: 35),
-    ];
     if (players.length >= playersRequired) {
-      status = GameStatus.In_Progress;
-      onGameStarted();
+      status = GameStatus.Counting_Down;
     }
     return player;
   }
 
   @override
   void onPlayerDisconnected(Player player) {
-    onPlayerDeath(player);
+    if (inProgress){
+      onPlayerDeath(player);
+    }else if (countingDown){
+      // status = GameStatus.Awaiting_Players;
+      // _countDownFrame = _totalCountdownFrames;
+    }
   }
 
   @override
@@ -65,16 +66,19 @@ class Royal extends Game {
 
   @override
   int getTime() {
-    return calculateTime(hour: 9);
+    return time;
   }
 
   @override
   void update(){
-    boundaryRadius -= boundaryRadiusShrinkRate;
-    for (Player player in players) {
-      if (player.dead) continue;
-      if (withinDeathBoundary(player)) continue;
-      setCharacterStateDead(player);
+    if (inProgress) {
+      boundaryRadius -= boundaryRadiusShrinkRate;
+      for (Player player in players) {
+        if (player.dead) continue;
+        if (withinDeathBoundary(player)) continue;
+        setCharacterStateDead(player);
+      }
+      return;
     }
   }
 
@@ -83,6 +87,3 @@ class Royal extends Game {
   }
 }
 
-void killCharacter(Character character){
-
-}

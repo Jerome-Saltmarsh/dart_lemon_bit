@@ -2,6 +2,7 @@ import 'package:bleed_server/CubeGame.dart';
 
 import 'classes/Game.dart';
 import 'classes/Player.dart';
+import 'common/GameStatus.dart';
 import 'compile.dart';
 import 'games/Royal.dart';
 import 'games/Moba.dart';
@@ -24,8 +25,8 @@ class _Global {
     return Moba();
   }
 
-  Royal findPendingRoyalGames() {
-    return findGameAwaitingPlayers<Royal>() ?? Royal();
+  GameRoyal findPendingRoyalGames() {
+    return findGameAwaitingPlayers<GameRoyal>() ?? GameRoyal();
   }
 
   T? findGameAwaitingPlayers<T extends Game>() {
@@ -54,21 +55,38 @@ class _Global {
 
   void update() {
 
-    cubeGame.update();
+    // cubeGame.update();
 
     for (Game game in games) {
-      if (game.awaitingPlayers) {
-        for (int i = 0; i < game.players.length; i++) {
-          Player player = game.players[i];
-          player.lastUpdateFrame++;
-          if (player.lastUpdateFrame > settings.framesUntilPlayerDisconnected) {
-            game.players.removeAt(i);
-            i--;
+
+      switch(game.status) {
+
+        case GameStatus.Awaiting_Players:
+          for (int i = 0; i < game.players.length; i++) {
+            Player player = game.players[i];
+            player.lastUpdateFrame++;
+            if (player.lastUpdateFrame > settings.framesUntilPlayerDisconnected) {
+              game.players.removeAt(i);
+              i--;
+            }
           }
-        }
+          break;
+
+        case GameStatus.Counting_Down:
+          game.countDownFramesRemaining--;
+          if (game.countDownFramesRemaining <= 0) {
+            game.status = GameStatus.In_Progress;
+            game.onGameStarted();
+          }
+          break;
+
+        case GameStatus.In_Progress:
+          game.updateAndCompile();
+          break;
+
+        case GameStatus.Finished:
+          break;
       }
-      if (!game.inProgress) continue;
-      game.updateAndCompile();
     }
   }
 }

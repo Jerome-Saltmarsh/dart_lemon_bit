@@ -83,6 +83,11 @@ void parseState() {
         timeInSeconds(consumeInt());
         break;
 
+      case ServerResponse.Lobby_CountDown:
+        game.countDownFramesRemaining.value = consumeInt();
+        print("count down frames remaining: ${game.countDownFramesRemaining.value}");
+        break;
+
       case ServerResponse.NpcsDebug:
         game.npcDebug.clear();
         while (!_simiColonConsumed()) {

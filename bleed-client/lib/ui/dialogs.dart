@@ -159,9 +159,9 @@ Widget _buildRow(String title, dynamic value){
 }
 
 Widget buildDialog({
-  required Widget child,
   required double width,
   required double height,
+  required Widget child,
   Widget? bottomRight,
   Widget? bottomLeft,
 }){

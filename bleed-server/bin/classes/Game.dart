@@ -84,6 +84,16 @@ abstract class Game {
   late GameStatus status;
   GameType gameType;
 
+  bool get countingDown => status == GameStatus.Counting_Down;
+  bool get inProgress => status == GameStatus.In_Progress;
+  bool get finished => status == GameStatus.Finished;
+  bool get awaitingPlayers => status == GameStatus.Awaiting_Players;
+
+  void cancelCountDown(){
+    status = GameStatus.Awaiting_Players;
+    countDownFramesRemaining = 0;
+  }
+
   /// Used to constrain the brightness of a level
   /// For example a cave which is very dark even during day time
   /// or a dark forest
@@ -113,11 +123,8 @@ abstract class Game {
 
   Map<int, StringBuffer> compiledTeamText = {};
 
-  bool get awaitingPlayers => status == GameStatus.Awaiting_Players;
+  int countDownFramesRemaining = framesPerSecond * 3;
 
-  bool get inProgress => status == GameStatus.In_Progress;
-
-  bool get finished => status == GameStatus.Finished;
 
   int getTime();
 
@@ -345,10 +352,7 @@ extension GameFunctions on Game {
     _updateProjectiles();
     _updateProjectiles(); // called twice to fix collision detection
     _updateNpcs();
-    // _updateGrenades();
-    // _updateCollectables();
     _updateGameEvents();
-    // _updateCrates();
     _updateSpawnPointCollisions();
 
     if (frame % characterFramesChange == 0) {
@@ -1675,7 +1679,13 @@ extension GameFunctions on Game {
       players.removeAt(i);
       playerMap.remove(player.uuid);
       i--;
-      onPlayerDisconnected(player);
+
+      if (status == GameStatus.Awaiting_Players){
+        cancelCountDown();
+      }
+      if (status == GameStatus.In_Progress){
+        onPlayerDisconnected(player);
+      }
     }
   }
 

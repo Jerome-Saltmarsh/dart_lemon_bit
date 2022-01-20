@@ -40,4 +40,5 @@ enum ServerResponse {
   Game_Meta,
   Game_Royal,
   Subscription_Required,
+  Lobby_CountDown,
 }

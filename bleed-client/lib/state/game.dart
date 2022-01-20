@@ -49,6 +49,7 @@ enum OperationStatus {
 }
 
 class _Game {
+  final Watch<int> countDownFramesRemaining = Watch(0);
   final Watch<String?> errorMessage = Watch(null);
   final Watch<OperationStatus> operationStatus = Watch(OperationStatus.None);
   final Watch<Account?> account = Watch(null);

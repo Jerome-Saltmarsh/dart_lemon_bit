@@ -65,7 +65,7 @@ void compileGame(Game game) {
 
   compileGameStatus(buffer, game.status);
 
-  if (game is Royal) {
+  if (game is GameRoyal) {
     compileRoyal(buffer, game);
   }
 
@@ -103,11 +103,17 @@ void compileGameStatus(StringBuffer buffer, GameStatus gameStatus) {
   _write(buffer, gameStatus.index);
 }
 
-void compileRoyal(StringBuffer buffer, Royal royal){
+void compileRoyal(StringBuffer buffer, GameRoyal royal){
   _write(buffer, ServerResponse.Game_Royal.index);
   _write(buffer, royal.boundaryCenter.x.toInt());
   _write(buffer, royal.boundaryCenter.y.toInt());
   _write(buffer, royal.boundaryRadius.toInt());
+}
+
+void compileCountDownFramesRemaining(StringBuffer buffer, Game game) {
+  _write(buffer, ServerResponse.Lobby_CountDown.index);
+  _write(buffer, game.countDownFramesRemaining);
+  print("count down remaining: ${game.countDownFramesRemaining}");
 }
 
 void compileGameMeta(StringBuffer buffer, Game game) {

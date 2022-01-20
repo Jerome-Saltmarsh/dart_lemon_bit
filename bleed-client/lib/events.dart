@@ -189,7 +189,6 @@ class Events {
       case Connection.Done:
         fullScreenExit();
         actions.clearSession();
-        game.status.value = GameStatus.None;
         mouseEvents.onLeftClicked.value = null;
         mouseEvents.onPanStarted.value = null;
         mouseEvents.onLongLeftClicked.value = null;
