@@ -270,6 +270,7 @@ void compilePlayerWeapon(StringBuffer buffer, Player player){
   _write(buffer, ServerResponse.Player_Weapon.index);
   _write(buffer, player.weapon.type.index);
   _write(buffer, player.weapon.rounds);
+  _write(buffer, player.weapon.capacity);
 }
 
 void _compilePlayerEvents(StringBuffer buffer, Player player) {

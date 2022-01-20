@@ -236,7 +236,14 @@ void main() {
           break;
 
         case ClientRequest.Update:
-          final Player? player = findPlayerByUuid(arguments[1]);
+
+          if (arguments.length < 2){
+            errorInvalidArg("player id required");
+            return;
+          }
+
+          final playerId = arguments[1];
+          final Player? player = findPlayerByUuid(playerId);
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -263,10 +270,11 @@ void main() {
             if (game is Moba) {
               compileTeamLivesRemaining(_buffer, game);
             }
-            compileGameStatus(_buffer, game.status);
             sendToClient(_buffer.toString());
             return;
           }
+
+          // if game in progress
 
           if (player.sceneChanged) {
             player.sceneChanged = false;

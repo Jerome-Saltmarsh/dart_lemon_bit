@@ -62,6 +62,7 @@ class _BuildHud {
 Widget _buildHudWeapons(){
   return WatchBuilder(game.player.weaponType, (WeaponType weaponType){
     return layout(
+      padding: 16,
       topLeft: text(enumString(weaponType)),
       topRight: buttons.exit,
       bottomLeft: buildWeaponMenu(),

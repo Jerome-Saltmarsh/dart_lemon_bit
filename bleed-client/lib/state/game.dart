@@ -134,7 +134,7 @@ class _Player {
   final Watch<WeaponType> weaponType = Watch(WeaponType.Unarmed);
   final List<Weapon> weapons = [];
   final Watch<int> weaponRounds = Watch(0);
-  final Watch<int> equippedCapacity = Watch(0);
+  final Watch<int> weaponCapacity = Watch(0);
   Vector2 abilityTarget = Vector2(0, 0);
   double abilityRange = 0;
   double abilityRadius = 0;

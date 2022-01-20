@@ -21,6 +21,7 @@ import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:flutter/material.dart';
+import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/state/build_context.dart';
 import 'package:lemon_engine/state/camera.dart';
@@ -374,7 +375,6 @@ Widget buildEquipWeaponSlot(Weapon weapon, int index) {
     return Row(
       mainAxisAlignment: axis.main.start,
       children: [
-        buildAmmoBar(p),
         Stack(
           children: [
             onPressed(
@@ -385,6 +385,7 @@ Widget buildEquipWeaponSlot(Weapon weapon, int index) {
             if (weapon.type != WeaponType.Unarmed) buildTag(weapon.rounds),
           ],
         ),
+        buildAmmoBar(p, weapon.type.name),
         if (mouseOver) buildWeaponStats(weapon)
       ],
     );
@@ -410,36 +411,55 @@ String mapWeaponTypeToString(WeaponType weaponType) {
   return weaponType.toString().replaceAll("WeaponType.", "");
 }
 
-Widget buildEquippedWeaponSlot(WeaponType weapon) {
-  return Row(
+Widget buildEquippedWeaponSlot(WeaponType weaponType) {
+  return Column(
     children: [
-      WatchBuilder(game.player.weaponRounds, (int rounds) {
-        if (game.player.equippedCapacity.value == 0) {
-          return buildAmmoBar(1);
-        }
-        return buildAmmoBar(rounds / game.player.equippedCapacity.value);
-      }),
       Stack(
         children: [
-          buildWeaponSlot(weapon),
-          if (weapon != WeaponType.Unarmed)
+          buildWeaponSlot(weaponType),
+          if (weaponType != WeaponType.Unarmed)
             WatchBuilder(game.player.weaponRounds, buildTag),
         ],
       ),
+      WatchBuilder(game.player.weaponRounds, (int rounds) {
+        print("game.player.weaponRounds = $rounds");
+        if (game.player.weaponCapacity.value == 0) {
+          return buildAmmoBar(1, weaponType.name);
+        }
+        return buildAmmoBar(rounds / game.player.weaponCapacity.value, weaponType.name);
+      }),
     ],
   );
 }
 
-Widget buildAmmoBar(double percentage) {
+Widget buildAmmoBar(double percentage, String message) {
+  final width = 120.0;
+  final height = width * goldenRatio_0381;
   return Container(
-    width: 40,
-    height: 75,
+    width: width,
+    height: height,
     color: Colors.white24,
     alignment: Alignment.bottomCenter,
-    child: Container(
-      width: 40,
-      height: 75 * percentage,
-      color: Colors.white,
+    child: Stack(
+      children: [
+        Container(
+          width: width,
+          height: height,
+          color: Colors.white54,
+        ),
+        Container(
+          width: width * percentage,
+          height: height,
+          color: Colors.white,
+        ),
+        Container(
+          width: width,
+          height: height,
+          alignment: Alignment.center,
+          color: none,
+          child: text(message, color: colours.black)
+        ),
+      ],
     ),
   );
 }

@@ -696,8 +696,8 @@ Widget buildViewConnected() {
             width: style.dialogWidthMedium,
             height: style.dialogHeightMedium,
             child: WatchBuilder(game.countDownFramesRemaining, (int frames){
-              // double seconds =  frames /~ 30;
-              return text("Game starting in $frames frames");
+              final seconds =  frames /~ 30;
+              return Center(child: text("Starting in $seconds seconds"));
             }));
         case GameStatus.Awaiting_Players:
           return buildLayoutLobby() ;

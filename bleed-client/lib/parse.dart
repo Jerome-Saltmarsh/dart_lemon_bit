@@ -136,6 +136,7 @@ void parseState() {
       case ServerResponse.Player_Weapon:
         player.weaponType.value = _consumeWeaponType();
         player.weaponRounds.value = consumeInt();
+        player.weaponCapacity.value = consumeInt();
         break;
 
       case ServerResponse.Weapons:
