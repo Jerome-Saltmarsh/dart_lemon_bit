@@ -134,7 +134,7 @@ WatchBuilder<Connection> buildWatchConnection(Account? account) {
       case Connection.Connecting:
         return _views.connecting;
       case Connection.Connected:
-        return _views.connected;
+        return buildViewConnected();
       case Connection.None:
         return buildViewConnectionNone();
       default:
@@ -446,11 +446,9 @@ final _BuildView _buildView = _BuildView();
 class _Views {
   final Widget selectRegion = _buildView.selectRegion();
   final Widget connecting = _buildView.connecting();
-  final Widget connected = _buildView.connected();
   final Widget connection = _buildView.connection();
   final Widget editor = buildEditorUI();
   final Widget gameFinished = _buildView.gameFinished();
-  final Widget awaitingPlayers = _buildView.awaitingPlayers();
 }
 
 final Map<Connection, String> connectionMessage = {
@@ -477,41 +475,6 @@ class _BuildView {
           }, width: 100)
         ],
       ));
-    });
-  }
-
-  Widget connected() {
-    print("buildView.connected()");
-
-    return WatchBuilder(game.player.uuid, (String uuid) {
-
-      if (uuid.isEmpty) {
-        return buildLayoutLoadingGame();
-      }
-
-      return WatchBuilder(game.status, (GameStatus gameStatus) {
-        switch (gameStatus) {
-          case GameStatus.Awaiting_Players:
-            return _buildView.awaitingPlayers();
-          case GameStatus.In_Progress:
-            switch (game.type.value) {
-              case GameType.MMO:
-                return buildHud.playerCharacterType();
-              case GameType.Moba:
-                return buildHud.playerCharacterType();
-              case GameType.BATTLE_ROYAL:
-                return buildHud.playerCharacterType();
-              case GameType.CUBE3D:
-                return buildUI3DCube();
-              default:
-                return text(game.type.value);
-            }
-          case GameStatus.Finished:
-            return _views.gameFinished;
-          default:
-            return text(enumString(gameStatus));
-        }
-      });
     });
   }
 
@@ -544,109 +507,6 @@ class _BuildView {
       topLeft: text("Game Finished"),
       topRight: text("Exit"),
     ));
-  }
-
-  final Widget _waiting = text("Waiting", color: Colors.white54);
-
-  Widget awaitingPlayers() {
-    return layout(
-        padding: 8,
-        topLeft: widgets.title,
-        child: dialog(
-            padding: 16,
-            color: colours.white05,
-            borderColor: colours.none,
-            // borderWidth: 6,
-            child: layout(
-              bottomRight: button("Cancel", actions.leaveLobby, borderColor: colours.none, fontSize: 25),
-              child: Column(
-                crossAxisAlignment: axis.cross.stretch,
-                children: [
-                  Row(
-                    mainAxisAlignment: axis.main.apart,
-                    children: [
-                      text(enumString(game.type.value),
-                          size: 35, weight: FontWeight.bold),
-                      // button(text("Cancel", fontSize: 20), logic.leaveLobby, borderWidth: 3, fillColor: colours.orange, fillColorMouseOver: colours.redDark),
-                    ],
-                  ),
-                  height16,
-                  border(
-                      color: colours.white60,
-                      child: text("The game will start automatically once all players have joined", color: colours.white60)),
-                  height16,
-                  WatchBuilder(game.lobby.playerCount, (int value) {
-                    int totalPlayersRequired =
-                        game.numberOfTeams.value * game.teamSize.value;
-
-                    if (game.teamSize.value == 1) {
-                      List<Widget> playerNames = [];
-
-                      for (int i = 0; i < game.lobby.players.length; i++) {
-                        playerNames
-                            .add(text(game.lobby.players[i].name, size: 20));
-                      }
-                      for (int i = 0;
-                          i <
-                              game.numberOfTeams.value -
-                                  game.lobby.players.length;
-                          i++) {
-                        playerNames.add(_waiting);
-                      }
-                      return Column(
-                        crossAxisAlignment: axis.cross.start,
-                        children: [
-                          text(
-                              "Players ${game.lobby.players.length} / $totalPlayersRequired",
-                              decoration: underline,
-                              size: 22),
-                          height8,
-                          ...playerNames
-                        ],
-                      );
-                    }
-
-                    int count1 = 5 -
-                        game.lobby.players
-                            .where((player) => player.team == 0)
-                            .length;
-                    int count2 = 5 -
-                        game.lobby.players
-                            .where((player) => player.team == 1)
-                            .length;
-
-                    List<Widget> a = [];
-                    List<Widget> b = [];
-
-                    for (int i = 0; i < count1; i++) {
-                      a.add(_waiting);
-                    }
-                    for (int i = 0; i < count2; i++) {
-                      b.add(_waiting);
-                    }
-
-                    return Column(
-                      crossAxisAlignment: axis.cross.start,
-                      children: [
-                        text("Team 1", decoration: underline),
-                        height8,
-                        ...game.lobby
-                            .getPlayersOnTeam(0)
-                            .map((player) => text(player.name)),
-                        ...a,
-                        height16,
-                        text("Team 2", decoration: underline),
-                        height8,
-                        ...game.lobby
-                            .getPlayersOnTeam(1)
-                            .map((player) => text(player.name)),
-                        ...b,
-                      ],
-                    );
-                  }),
-                ],
-              ),
-            )));
   }
 
   Widget connecting() {
@@ -822,4 +682,144 @@ Widget buildTopMessage(){
       return empty;
     });
   });
+}
+
+Widget buildViewConnected() {
+  return WatchBuilder(game.player.uuid, (String uuid) {
+    if (uuid.isEmpty) {
+      return buildLayoutLoadingGame();
+    }
+    return WatchBuilder(game.status, (GameStatus gameStatus) {
+      switch (gameStatus) {
+        case GameStatus.Awaiting_Players:
+          return buildLayoutLobby() ;
+        case GameStatus.In_Progress:
+          switch (game.type.value) {
+            case GameType.MMO:
+              return buildHud.playerCharacterType();
+            case GameType.Moba:
+              return buildHud.playerCharacterType();
+            case GameType.BATTLE_ROYAL:
+              return buildHud.playerCharacterType();
+            case GameType.CUBE3D:
+              return buildUI3DCube();
+            default:
+              return text(game.type.value);
+          }
+        case GameStatus.Finished:
+          return _views.gameFinished;
+        default:
+          return text(enumString(gameStatus));
+      }
+    });
+  });
+}
+
+final Widget _textWaiting = text("Waiting", color: Colors.white54);
+
+Widget buildLayoutLobby() {
+  return layout(
+      padding: 8,
+      topLeft: widgets.title,
+      child: dialog(
+          padding: 16,
+          color: colours.white05,
+          borderColor: colours.none,
+          child: layout(
+            bottomRight: button("Cancel", actions.leaveLobby, borderColor: colours.none, fontSize: 25),
+            child: Column(
+              crossAxisAlignment: axis.cross.stretch,
+              children: [
+                Row(
+                  mainAxisAlignment: axis.main.apart,
+                  children: [
+                    text(enumString(game.type.value),
+                        size: 35, weight: FontWeight.bold),
+                  ],
+                ),
+                height16,
+                border(
+                    color: colours.white60,
+                    child: text("The game will start automatically once all players have joined", color: colours.white60)),
+                height16,
+                WatchBuilder(game.lobby.playerCount, (int value) {
+                  int totalPlayersRequired =
+                      game.numberOfTeams.value * game.teamSize.value;
+
+                  if (game.teamSize.value == 1) {
+                    List<Widget> playerNames = [];
+
+                    for (int i = 0; i < game.lobby.players.length; i++) {
+                      final isMe = isAccountName(game.lobby.players[i].name);
+                      playerNames
+                          .add(text(game.lobby.players[i].name, size: 20, color: isMe ? colours.green : colours.white90));
+                    }
+                    for (int i = 0;
+                    i <
+                        game.numberOfTeams.value -
+                            game.lobby.players.length;
+                    i++) {
+                      playerNames.add(_textWaiting);
+                    }
+                    return Column(
+                      crossAxisAlignment: axis.cross.start,
+                      children: [
+                        text(
+                            "Players ${game.lobby.players.length} / $totalPlayersRequired",
+                            decoration: underline,
+                            size: 22),
+                        height8,
+                        ...playerNames
+                      ],
+                    );
+                  }
+
+                  int count1 = 5 -
+                      game.lobby.players
+                          .where((player) => player.team == 0)
+                          .length;
+                  int count2 = 5 -
+                      game.lobby.players
+                          .where((player) => player.team == 1)
+                          .length;
+
+                  List<Widget> a = [];
+                  List<Widget> b = [];
+
+                  for (int i = 0; i < count1; i++) {
+                    a.add(_textWaiting);
+                  }
+                  for (int i = 0; i < count2; i++) {
+                    b.add(_textWaiting);
+                  }
+
+                  return Column(
+                    crossAxisAlignment: axis.cross.start,
+                    children: [
+                      text("Team 1", decoration: underline),
+                      height8,
+                      ...game.lobby
+                          .getPlayersOnTeam(0)
+                          .map((player) => text(player.name)),
+                      ...a,
+                      height16,
+                      text("Team 2", decoration: underline),
+                      height8,
+                      ...game.lobby
+                          .getPlayersOnTeam(1)
+                          .map((player) => text(player.name)),
+                      ...b,
+                    ],
+                  );
+                }),
+              ],
+            ),
+          )));
+}
+
+
+bool isAccountName(String publicName){
+  final account = game.account.value;
+  if (account == null) return false;
+  return account.publicName == publicName;
 }
