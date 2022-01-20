@@ -44,7 +44,6 @@ class Events {
     game.dialog.onChanged(_onGameDialogChanged);
     game.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
     mouseEvents.onLeftClicked.onChanged(_onMouseLeftClickedChanged);
-    authentication.onChanged(_onAuthenticationChanged);
     sub(_onGameError);
     sub(_onLoginException);
   }
@@ -75,9 +74,7 @@ class Events {
   void _onAccountChanged(Account? account) {
     print("events.onAccountChanged($account)");
     if (account == null) return;
-
     final flag = 'subscription_status_${account.userId}';
-
     if (storage.contains(flag)){
        final storedSubscriptionStatusString = storage.get<String>(flag);
        final storedSubscriptionStatus = parseSubscriptionStatus(storedSubscriptionStatusString);
@@ -85,8 +82,8 @@ class Events {
          actions.showDialogSubscriptionStatusChanged();
        }
     }
-
     storage.put(flag, enumString(account.subscriptionStatus));
+    actions.showDialogGames();
   }
 
   Future _onGameError(GameError error) async {
@@ -122,29 +119,6 @@ class Events {
         actions.showErrorMessage(error.name);
         break;
     }
-  }
-
-  void _onAuthenticationChanged(Authentication? auth) async {
-    print("events._onAuthorizationChanged()");
-    if (auth == null) {
-      game.account.value = null;
-      game.operationStatus.value = OperationStatus.Logging_Out;
-      Future.delayed(Duration(seconds: 1), (){
-        game.operationStatus.value = OperationStatus.None;
-      });
-      storage.forgetAuthorization();
-    } else {
-
-      final email = auth.email;
-
-      if (email == null){
-        throw Exception("authentication.email is null");
-      }
-
-      storage.rememberAuthorization(auth);
-      signInOrCreateAccount(userId: auth.userId, email: email, privateName: auth.name);
-    }
-    game.dialog.value = Dialogs.Games;
   }
 
   void _onMouseLeftClickedChanged(Function? function){
@@ -262,58 +236,8 @@ class Events {
   }
 }
 
-Future signInAccount(String userId) async {
-  print("signInAccount()");
-  game.operationStatus.value = OperationStatus.Authenticating;
-  await updateAccount();
-  game.operationStatus.value = OperationStatus.None;
-}
-
 class LoginException implements Exception {
   final Exception cause;
   LoginException(this.cause);
 }
 
-Future signInOrCreateAccount({
-  required String userId,
-  required String email,
-  String? privateName
-}) async {
-  print("signInOrCreateAccount()");
-  game.operationStatus.value = OperationStatus.Authenticating;
-  final account = await userService.findById(userId).catchError((error){
-    pub(LoginException(error));
-    throw error;
-  });
-  if (account == null){
-    print("No account found. Creating new account");
-    game.operationStatus.value = OperationStatus.Creating_Account;
-    await userService.createAccount(userId: userId, email: email, privateName: privateName);
-    game.operationStatus.value = OperationStatus.Authenticating;
-    game.account.value = await userService.findById(userId);
-    if (game.account.value == null){
-      throw Exception("failed to find new account");
-    }
-    game.dialog.value = Dialogs.Account_Created;
-  }else{
-    print("Existing Account found");
-    game.account.value = account;
-  }
-  game.operationStatus.value = OperationStatus.None;
-}
-
-Future updateAccount() async {
-  print("refreshAccountDetails()");
-  final auth = authentication.value;
-  if (auth == null) {
-    game.account.value = null;
-    return;
-  }
-
-  game.operationStatus.value = OperationStatus.Updating_Account;
-  game.account.value = await userService.findById(auth.userId).catchError((error){
-     pub(LoginException(error));
-     return null;
-  });
-  game.operationStatus.value = OperationStatus.None;
-}

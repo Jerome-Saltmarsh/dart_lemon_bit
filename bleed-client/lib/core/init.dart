@@ -38,6 +38,8 @@ import 'package:lemon_engine/state/cursor.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../actions.dart';
+
 final isLocalHost = Uri.base.host == 'localhost';
 
 // int start = 0;
@@ -222,7 +224,7 @@ void _loadStateFromSharedPreferences(){
   }
 
   if (storage.authorizationRemembered) {
-    authentication.value = storage.recallAuthorization();
+    actions.login(storage.recallAuthorization());
   }
 
   userService.getVersion().then((version) {

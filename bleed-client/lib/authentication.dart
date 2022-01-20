@@ -4,11 +4,10 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final Watch<Authentication?> authentication = Watch(null);
+// final Watch<Authentication?> authentication = Watch(null);
+// bool get authenticated => authentication.value != null;
 
-bool get authenticated => authentication.value != null;
-
-final FirebaseAuth _auth = FirebaseAuth.instance;
+final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
 
 final GoogleSignIn _googleSignIn = GoogleSignIn();
 
@@ -29,7 +28,7 @@ Future<String> registerWithEmailPassword(String email, String password) async {
   // Initialize Firebase
   await Firebase.initializeApp();
 
-  final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+  final UserCredential userCredential = await firebaseAuth.createUserWithEmailAndPassword(
     email: email,
     password: password,
   );
@@ -57,7 +56,7 @@ Future<String> signInWithEmailPassword(String email, String password) async {
   // Initialize Firebase
   await Firebase.initializeApp();
 
-  final UserCredential userCredential = await _auth.signInWithEmailAndPassword(
+  final UserCredential userCredential = await firebaseAuth.signInWithEmailAndPassword(
     email: email,
     password: password,
   );
@@ -78,7 +77,7 @@ Future<String> signInWithEmailPassword(String email, String password) async {
     assert(!user.isAnonymous);
     assert(await user.getIdToken() != null);
 
-    final User currentUser = _auth.currentUser!;
+    final User currentUser = firebaseAuth.currentUser!;
     assert(user.uid == currentUser.uid);
 
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -89,14 +88,17 @@ Future<String> signInWithEmailPassword(String email, String password) async {
 
 void signOut() async {
   print("signOut()");
-  authentication.value = null;
-  await _auth.signOut().catchError((error){
+  await firebaseAuth.signOut().catchError((error){
     print("Safely Caught");
     print(error);
   });
 }
 
-Future<FirebaseApp> _buildFirebaseApp(){
+bool _initialized = false;
+
+Future _initFirebaseApp() async {
+  if (_initialized) return;
+  _initialized = true;
   return Firebase.initializeApp(
       options: FirebaseOptions(
           apiKey: 'AIzaSyBvLdB53px2cU4_5QvQQLPRz18y-MvsLJE',
@@ -107,9 +109,9 @@ Future<FirebaseApp> _buildFirebaseApp(){
   );
 }
 
-Future signInWithGoogle() async {
+Future<Authentication> getGoogleAuthentication() async {
   print("signInWithGoogle()");
-  await _buildFirebaseApp();
+  await _initFirebaseApp();
 
   final GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
 
@@ -122,7 +124,7 @@ Future signInWithGoogle() async {
     idToken: googleSignInAuthentication.idToken,
   );
 
-  final credentials = await _auth.signInWithCredential(credential).catchError((error){
+  final credentials = await firebaseAuth.signInWithCredential(credential).catchError((error){
     print(error);
   });
 
@@ -140,7 +142,7 @@ Future signInWithGoogle() async {
   if (email == null){
     throw Exception("user.email is null");
   }
-  authentication.value = Authentication(
+  return Authentication(
       userId: user.uid,
       name: displayName,
       email: email,
@@ -149,7 +151,7 @@ Future signInWithGoogle() async {
 
 void signOutGoogle() async {
   await _googleSignIn.signOut();
-  await _auth.signOut();
+  await firebaseAuth.signOut();
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setBool('auth', false);

@@ -255,7 +255,7 @@ packages:
       name: lemon_watch
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
   matcher:
     dependency: transitive
     description:

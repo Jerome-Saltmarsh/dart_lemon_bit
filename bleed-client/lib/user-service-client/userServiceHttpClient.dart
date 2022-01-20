@@ -37,7 +37,7 @@ class UserServiceHttpClient {
   Future createAccount({
     required String userId,
     required String email,
-    String? privateName
+    required String privateName,
   }) async {
     print("createAccount(email: '$email', privateName: '$privateName')");
     var url = Uri.https(_host, '/users', {

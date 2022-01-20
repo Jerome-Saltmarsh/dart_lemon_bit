@@ -184,7 +184,7 @@ class _Buttons {
 
   final Widget spawnRandomUser = button("Random User", (){
     final userId = 'random_${random.nextInt(9999999)}';
-    authentication.value = Authentication(userId: userId, name: userId, email: "$userId@email.com");
+    actions.login(Authentication(userId: userId, name: userId, email: "$userId@email.com"));
   });
 
   final Widget showDialogSubscribed = button("Sub Success", actions.showDialogSubscriptionSuccessful);
@@ -202,7 +202,7 @@ class _Buttons {
         text("Continue", color: Colors.white),
       ],
     ),
-  ), loginWithFacebook,
+  ), getAuthenticationFacebook,
     fillColor: colours.facebook,
     fillColorMouseOver: colours.facebook,
     borderColorMouseOver: none,
@@ -222,13 +222,7 @@ class _Buttons {
         text("Continue", color: Colors.black),
       ],
     ),
-  ), () async {
-    game.operationStatus.value = OperationStatus.Authenticating;
-    signInWithGoogle().catchError((error){
-      print(error);
-      game.operationStatus.value = OperationStatus.None;
-    });
-  },
+  ), actions.loginWithGoogle,
     borderColor: colours.black618,
     borderColorMouseOver: colours.black618,
     fillColor: Colors.white,
@@ -380,7 +374,7 @@ Widget buildToggleFullscreen() {
 
 Widget _buildFakeLoginButton(String userId, String text){
   return button('$userId $text', (){
-    authentication.value = Authentication(userId: userId, name: userId, email: "$userId@email.com");
+     actions.login(Authentication(userId: userId, name: userId, email: "$userId@email.com"));
   });
 }
 

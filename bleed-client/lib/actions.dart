@@ -7,10 +7,14 @@ import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/server/server.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/stripe.dart';
+import 'package:bleed_client/ui/actions/signInWithFacebook.dart';
 import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
 import 'package:bleed_client/webSocket.dart';
+import 'package:flutter/services.dart';
+import 'package:lemon_dispatch/instance.dart';
 
 import 'common/GameType.dart';
 
@@ -33,8 +37,14 @@ class _Actions {
   }
 
   void logout() {
-    print("signOut()");
+    print("actions.logout()");
+    game.operationStatus.value = OperationStatus.Logging_Out;
     signOut();
+    storage.forgetAuthorization();
+    game.account.value = null;
+    Future.delayed(Duration(seconds: 1), (){
+      game.operationStatus.value = OperationStatus.None;
+    });
   }
 
   void showDialogChangePublicName(){
@@ -63,6 +73,40 @@ class _Actions {
 
   void showDialogSubscriptionRequired(){
     game.dialog.value = Dialogs.Subscription_Required;
+  }
+
+  void loginWithGoogle() async {
+    print("actions.loginWithGoogle()");
+    game.operationStatus.value = OperationStatus.Authenticating;
+    await getGoogleAuthentication().then(login).catchError((error){
+      if (error is PlatformException){
+        if (error.code == "popup_closed_by_user"){
+          return;
+        }
+        showErrorMessage(error.code);
+        return;
+      }
+      showErrorMessage(error.toString());
+    });
+    game.operationStatus.value = OperationStatus.None;
+  }
+
+  void loginWithFacebook() async {
+    final facebookAuthentication = await getAuthenticationFacebook();
+    if (facebookAuthentication == null){
+      return;
+    }
+    login(facebookAuthentication);
+  }
+
+  Future login(Authentication authentication){
+    print("actions.login()");
+    storage.rememberAuthorization(authentication);
+    return signInOrCreateAccount(
+        userId: authentication.userId,
+        email: authentication.email,
+        privateName: authentication.name
+    );
   }
 
   void closeErrorMessage(){
@@ -127,20 +171,21 @@ class _Actions {
   }
 
   void openStripeCheckout() {
-    print("openStripeCheckout()");
+    print("actions.openStripeCheckout()");
     final account = game.account.value;
     if (account == null){
-      throw Exception("Cannot open stripe checkout, account is null");
+      showErrorMessage("Account is null");
+      return;
     }
     if (account.subscriptionActive){
-      actions.showErrorMessage("This account already has an active premium subscription");
+      showErrorMessage("Premium subscription already active");
       return;
     }
 
     game.operationStatus.value = OperationStatus.Opening_Secure_Payment_Session;
     stripeCheckout(
-        userId: authentication.value!.userId,
-        email: authentication.value!.email
+        userId: account.userId,
+        email: account.email
     );
   }
 
@@ -203,5 +248,48 @@ class _Actions {
         showErrorMessage("Something went wrong");
         break;
     }
+  }
+
+  Future updateAccount() async {
+    print("refreshAccountDetails()");
+    final account = game.account.value;
+    if (account == null){
+      return;
+    }
+
+    game.operationStatus.value = OperationStatus.Updating_Account;
+    game.account.value = await userService.findById(account.userId).catchError((error){
+      pub(LoginException(error));
+      return null;
+    });
+    game.operationStatus.value = OperationStatus.None;
+  }
+
+  Future signInOrCreateAccount({
+    required String userId,
+    required String email,
+    required String privateName
+  }) async {
+    print("actions.signInOrCreateAccount()");
+    game.operationStatus.value = OperationStatus.Authenticating;
+    final account = await userService.findById(userId).catchError((error){
+      pub(LoginException(error));
+      throw error;
+    });
+    if (account == null){
+      print("No account found. Creating new account");
+      game.operationStatus.value = OperationStatus.Creating_Account;
+      await userService.createAccount(userId: userId, email: email, privateName: privateName);
+      game.operationStatus.value = OperationStatus.Authenticating;
+      game.account.value = await userService.findById(userId);
+      if (game.account.value == null){
+        throw Exception("failed to find new account");
+      }
+      game.dialog.value = Dialogs.Account_Created;
+    }else{
+      print("Existing Account found");
+      game.account.value = account;
+    }
+    game.operationStatus.value = OperationStatus.None;
   }
 }

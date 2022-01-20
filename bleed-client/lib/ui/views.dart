@@ -32,6 +32,7 @@ import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../assets.dart';
+import '../getters.dart';
 import '../styles.dart';
 import '../webSocket.dart';
 import 'build.dart';
@@ -317,7 +318,7 @@ Widget buildDialogGameTypeSelected(GameType gameType) {
               text(gameTypeNames[gameType],
                   size: 25, color: colours.white80),
               height32,
-              if (!isFreeToPlay && !authenticated)
+              if (!isFreeToPlay && getters.premiumAccountAuthenticated)
                 border(
                     child: text(
                         "Premium games require a premium membership to play",
@@ -364,19 +365,19 @@ Widget buildDialogChangeRegion() {
 }
 
 Widget buildMenuMain() {
+  return watchAccount((Account? account){
+    if (account == null) {
+      return Column(
+        crossAxisAlignment: axis.cross.end,
+        children: [
+          buttons.signInWithGoogleButton,
+          height8,
+          buttons.signInWithFacebookButton,
+        ],
+      );
+    }
 
-  if (!authenticated) {
-    return Column(
-      crossAxisAlignment: axis.cross.end,
-      children: [
-        buttons.signInWithGoogleButton,
-        height8,
-        buttons.signInWithFacebookButton,
-      ],
-    );
-  }
-
-  return Row(
+    return Row(
       crossAxisAlignment: axis.cross.start,
       mainAxisAlignment: axis.main.end,
       children: [
@@ -392,6 +393,7 @@ Widget buildMenuMain() {
         }),
       ],
     );
+  });
 }
 
 Widget? buildMenuDebug() {
