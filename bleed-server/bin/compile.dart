@@ -92,7 +92,7 @@ void compileGame(Game game) {
   }
 }
 
-void compileTeamLivesRemaining(StringBuffer buffer, Moba moba) {
+void compileTeamLivesRemaining(StringBuffer buffer, GameMoba moba) {
   _write(buffer, ServerResponse.Team_Lives_Remaining.index);
   _write(buffer, moba.teamLivesWest);
   _write(buffer, moba.teamLivesEast);
@@ -113,7 +113,6 @@ void compileRoyal(StringBuffer buffer, GameRoyal royal){
 void compileCountDownFramesRemaining(StringBuffer buffer, Game game) {
   _write(buffer, ServerResponse.Lobby_CountDown.index);
   _write(buffer, game.countDownFramesRemaining);
-  print("count down remaining: ${game.countDownFramesRemaining}");
 }
 
 void compileGameMeta(StringBuffer buffer, Game game) {
@@ -418,6 +417,9 @@ void compileString(StringBuffer buffer, String text){
   // text
   final encoded = utf8.encode(text);
   _write(buffer, encoded.length);
+  for(int coded in encoded){
+    _write(buffer, coded);
+  }
 }
 
 void _compileNpc(StringBuffer buffer, Npc npc) {

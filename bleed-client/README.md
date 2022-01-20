@@ -72,10 +72,6 @@
 [ ] Defense Tower
 [ ] Fix bug starting new game should reset light maps
 [ ] Fix Game Time
-[ROYAL]
-[ ] Design Map  
-[ ] Score  
-[ ] Weapon UI
 [DEATHMATCH]
 [ ]  
 [BUGS]
@@ -87,6 +83,12 @@
 [ ] Show youtube video of game in preview  
 [ ] Stripe Webhooks, Catch save subscription errors
 [ ] Popup Auto suggest sign in
+[ROYAL]
+[ ] Implement game over dialog
+[ ] Design Map  
+[ ] Score  
+[ ] Weapon UI
+[ ] Fix melee attack
 [x] Sign in with Facebook
 [x] Fix Change Public Name Dialog Error
 [x] Cancel Subscription

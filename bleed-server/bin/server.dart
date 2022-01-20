@@ -64,7 +64,7 @@ void main() {
   initUpdateLoop();
   loadScenes();
 
-  var handler = webSocketHandler(buildWebSocketHandler);
+  var handler = webSocketHandler(buildWebSocketHandler,);
 
   shelf_io.serve(handler, settings.host, settings.port).then((server) {
     print('Serving at wss://${server.address.host}:${server.port}');
@@ -115,7 +115,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
         player.message = "";
       }
 
-      if (game is Moba) {
+      if (game is GameMoba) {
         if (game.awaitingPlayers) {
           compilePlayersRemaining(
               _buffer, game.totalPlayersRequired - game.players.length);
@@ -134,7 +134,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     }
 
     void joinGameMoba() {
-      final Moba moba = global.findPendingMobaGame();
+      final GameMoba moba = global.findPendingMobaGame();
       final Player player = moba.playerJoin();
       compileWholeGame(moba);
       compilePlayerJoined(_buffer, player);
@@ -163,7 +163,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       sendToClient('${ServerResponse.Cube_Joined.index} ${cubePlayer.uuid}');
     }
 
-    void joinGameOpenWorld({required String playerName}) {
+    void joinGameMMO({required String playerName}) {
       clearBuffer();
       Player player = spawnPlayerInTown();
       player.name = playerName;
@@ -291,7 +291,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
 
           if (game.finished) {
-            if (game is Moba) {
+            if (game is GameMoba) {
               compileTeamLivesRemaining(_buffer, game);
             }
             sendToClient(_buffer.toString());
@@ -436,16 +436,14 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               break;
             case GameType.MMO:
               if (arguments.length < 3) {
-                joinGameOpenWorld(playerName: generateName());
-                return;
+                return joinGameMMO(playerName: generateName());
               }
               final playerId = arguments[2];
               userService.findById(playerId).then((account){
-                if (account != null) {
-                  joinGameOpenWorld(playerName: account.publicName);
-                } else {
-                  joinGameOpenWorld(playerName: generateName());
+                if (account == null) {
+                  return errorAccountNotFound();
                 }
+                joinGameMMO(playerName: generateName());
               });
               break;
             case GameType.Moba:

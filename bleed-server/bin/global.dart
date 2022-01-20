@@ -14,15 +14,15 @@ final _Global global = _Global();
 class _Global {
   final List<Game> games = [];
 
-  Moba findPendingMobaGame() {
+  GameMoba findPendingMobaGame() {
     for (Game game in global.games) {
-      if (game is Moba) {
+      if (game is GameMoba) {
         if (game.awaitingPlayers) {
           return game;
         }
       }
     }
-    return Moba();
+    return GameMoba();
   }
 
   GameRoyal findPendingRoyalGames() {

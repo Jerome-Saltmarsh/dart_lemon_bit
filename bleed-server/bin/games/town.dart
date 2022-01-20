@@ -1,14 +1,12 @@
-import '../classes/Character.dart';
 import '../classes/Game.dart';
-import '../classes/Player.dart';
 import '../classes/InteractableNpc.dart';
+import '../classes/Player.dart';
 import '../classes/Weapon.dart';
 import '../common/Quests.dart';
 import '../common/WeaponType.dart';
 import '../enums/npc_mode.dart';
 import '../instances/scenes.dart';
 import '../state.dart';
-import '../values/world.dart';
 import 'world.dart';
 
 class Town extends Game {
@@ -115,11 +113,6 @@ class Town extends Game {
     if (frame % _framesPerZombieSpawn != 0) return;
     if (zombieCount >= _maxZombies) return;
     spawnRandomZombieLevel(0);
-  }
-
-  @override
-  void onKilledBy(Character target, Character by) {
-    // TODO: implement onKilledBy
   }
 
   @override

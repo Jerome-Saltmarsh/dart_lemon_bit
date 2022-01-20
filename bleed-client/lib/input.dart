@@ -123,6 +123,7 @@ class _Key {
   final LogicalKeyboardKey digit2 = LogicalKeyboardKey.digit2;
   final LogicalKeyboardKey digit3 = LogicalKeyboardKey.digit3;
   final LogicalKeyboardKey digit4 = LogicalKeyboardKey.digit4;
+  final LogicalKeyboardKey digit5 = LogicalKeyboardKey.digit5;
 }
 
 class _Keys {
@@ -137,6 +138,7 @@ class _Keys {
   LogicalKeyboardKey equip2 = LogicalKeyboardKey.digit2;
   LogicalKeyboardKey equip3 = LogicalKeyboardKey.digit3;
   LogicalKeyboardKey equip4 = LogicalKeyboardKey.digit4;
+  LogicalKeyboardKey equip5 = LogicalKeyboardKey.digit5;
   LogicalKeyboardKey equip1B = LogicalKeyboardKey.keyQ;
   LogicalKeyboardKey equip2B = LogicalKeyboardKey.keyE;
   LogicalKeyboardKey equip3B = LogicalKeyboardKey.keyF;
@@ -209,6 +211,11 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
       sendRequestEquip(4);
     }else{
       selectAbility4();
+    }
+  },
+  keys.equip5: (){
+    if (game.player.isHuman){
+       // sendRequestEquip(index)
     }
   },
   keys.equip1B: selectAbility1,

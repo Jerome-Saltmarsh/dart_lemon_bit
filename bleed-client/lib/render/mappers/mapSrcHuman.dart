@@ -17,7 +17,6 @@ final _manFramesFiringShotgunMax = animations.man.firingShotgun.length - 1;
 
 const _framesPerDirection2 = 2;
 const _framesPerDirection3 = 3;
-const _framesPerDirection4 = 4;
 
 final Float32List _src = Float32List(4);
 
@@ -27,6 +26,7 @@ Float32List mapSrcHuman({
     required Direction direction,
     required int frame
 }) {
+
   switch (characterState) {
     case CharacterState.Idle:
       return single(
@@ -34,9 +34,6 @@ Float32List mapSrcHuman({
         direction: direction,
       );
     case CharacterState.Walking:
-      double _s = direction.index * _size * _framesPerDirection4;
-      double _f = (frame % 4) * _size;
-
       switch (weaponType) {
         case WeaponType.Unarmed:
           return loop(
@@ -57,11 +54,8 @@ Float32List mapSrcHuman({
               frame: frame
           );
         default:
-          _src[0] = _s + _f + atlas.human.unarmed.walking.x;
-          _src[1] = atlas.human.unarmed.walking.y;
-          break;
+          return loop(atlas: atlas.human.unarmed.walking, direction: direction, frame: frame);
       }
-      break;
 
     case CharacterState.Dead:
       double _s = direction.index * _size * 2;

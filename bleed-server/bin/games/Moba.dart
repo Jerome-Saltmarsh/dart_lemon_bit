@@ -17,7 +17,7 @@ typedef Players = List<Player>;
 final int _framesPerCreepSpawn = 500;
 final int _creepsPerSpawn = 5;
 
-class Moba extends Game {
+class GameMoba extends Game {
   final Vector2 top = Vector2(0, 50);
   final Vector2 left = Vector2(-600, 620);
   final Vector2 right = Vector2(800, 900);
@@ -34,7 +34,7 @@ class Moba extends Game {
   int teamLivesWest = 10;
   int teamLivesEast = 10;
 
-  Moba() : super(
+  GameMoba() : super(
       scenes.wildernessNorth01,
       status: GameStatus.Awaiting_Players,
       gameType: GameType.Moba

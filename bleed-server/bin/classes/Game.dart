@@ -1846,6 +1846,7 @@ void selectCharacterType(Player player, CharacterType value) {
   switch (value) {
     case CharacterType.Human:
       player.weapons = [
+        Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0),
         Weapon(type: WeaponType.HandGun, damage: 1, capacity: 21),
         Weapon(type: WeaponType.Shotgun, damage: 1, capacity: 12),
         Weapon(type: WeaponType.SniperRifle, damage: 1, capacity: 8),
