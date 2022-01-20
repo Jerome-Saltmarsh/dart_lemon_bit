@@ -456,12 +456,12 @@ Widget buildAmmoBar({
         Container(
           width: width,
           height: height,
-          color: Colors.white54,
+          color: colours.white382,
         ),
         Container(
           width: width * percentage,
           height: height,
-          color: Colors.white,
+          color: colours.white618,
         ),
         Container(
           width: width,

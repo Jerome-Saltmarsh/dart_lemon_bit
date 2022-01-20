@@ -1,5 +1,6 @@
 
 import 'package:bleed_client/authentication.dart';
+import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameError.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/editor/editor.dart';
@@ -42,10 +43,20 @@ class Events {
     game.mode.onChanged(_onGameModeChanged);
     game.account.onChanged(_onAccountChanged);
     game.dialog.onChanged(_onGameDialogChanged);
+    game.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
     mouseEvents.onLeftClicked.onChanged(_onMouseLeftClickedChanged);
     authentication.onChanged(_onAuthenticationChanged);
     sub(_onGameError);
     sub(_onLoginException);
+  }
+
+  void _onPlayerCharacterTypeChanged(CharacterType characterType){
+    print("events.onCharacterTypeChanged($characterType)");
+    if (characterType == CharacterType.Human){
+      cursorType.value = CursorType.Precise;
+    }else{
+      cursorType.value = CursorType.Basic;
+    }
   }
 
   void _onGameDialogChanged(Dialogs value){
