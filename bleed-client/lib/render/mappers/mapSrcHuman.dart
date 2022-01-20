@@ -6,6 +6,7 @@ import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/render/constants/animations.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
+import 'package:bleed_client/render/mappers/animate.dart';
 import 'package:lemon_math/Vector2.dart';
 
 import 'loop.dart';
@@ -58,44 +59,29 @@ Float32List mapSrcHuman({
       }
 
     case CharacterState.Dead:
-      double _s = direction.index * _size * 2;
-      double _f = min(2, frame) * _size;
-      _src[0] = atlas.human.dying.x + _s + _f;
-      _src[1] = atlas.human.dying.y + _size;
-      break;
+      return single(atlas: atlas.human.dying, direction: direction);
 
     case CharacterState.Aiming:
       switch (weaponType) {
         case WeaponType.HandGun:
-          int _frame = 0;
-          double _di = direction.index * _size * _framesPerDirection2;
-          double _fr = _frame * _size;
-          _src[0] = atlas.human.handgun.firing.x + _di + _fr;
-          _src[1] = atlas.human.handgun.firing.y + _size;
-          break;
+          return single(atlas: atlas.human.handgun.firing, direction: direction);
 
         case WeaponType.Shotgun:
-          int _frame = 0;
-          double _di = direction.index * _size * _framesPerDirection3;
-          double _fr = _frame * _size;
-          _src[0] = atlas.human.shotgun.firing.x + _di + _fr;
-          _src[1] = atlas.human.shotgun.firing.y + _size;
-          break;
+          return single(atlas: atlas.human.shotgun.firing, direction: direction);
 
         default:
           throw Exception("Cannot aim unarmed");
       }
-      break;
     case CharacterState.Firing:
       switch (weaponType) {
         case WeaponType.HandGun:
-          int _frame = animations
-              .man.firingHandgun[min(frame, _manFramesFiringHandgunMax)];
-          double _di = direction.index * _size * _framesPerDirection2;
-          double _fr = _frame * _size;
-          _src[0] = atlas.human.handgun.firing.x + _di + _fr;
-          _src[1] = atlas.human.handgun.firing.y;
-          break;
+          return animate(
+              atlas: atlas.human.handgun.firing,
+              animation: animations.man.firingHandgun,
+              direction: direction,
+              frame: frame,
+              framesPerDirection: 2,
+          );
 
         case WeaponType.Shotgun:
           int _frame = animations
