@@ -1,6 +1,6 @@
 import 'package:bleed_server/CubeGame.dart';
 import 'package:lemon_math/Vector2.dart';
-
+import 'dart:convert';
 import 'bleed/zombie_health.dart';
 import 'classes/Ability.dart';
 import 'classes/Character.dart';
@@ -412,6 +412,12 @@ void _compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, (player.health / player.maxHealth) * 100);
   _write(buffer, (player.magic / player.maxMagic) * 100);
   _write(buffer, player.isHuman ? player.weapon.type.index : WeaponType.Unarmed.index);
+}
+
+void compileString(StringBuffer buffer, String text){
+  // text
+  final encoded = utf8.encode(text);
+  _write(buffer, encoded.length);
 }
 
 void _compileNpc(StringBuffer buffer, Npc npc) {

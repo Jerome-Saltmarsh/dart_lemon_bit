@@ -85,7 +85,6 @@ void parseState() {
 
       case ServerResponse.Lobby_CountDown:
         game.countDownFramesRemaining.value = consumeInt();
-        print("count down frames remaining: ${game.countDownFramesRemaining.value}");
         break;
 
       case ServerResponse.NpcsDebug:

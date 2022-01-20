@@ -28,8 +28,8 @@ import 'compile.dart';
 import 'functions/generateName.dart';
 import 'functions/loadScenes.dart';
 import 'functions/withinRadius.dart';
-import 'games/Royal.dart';
 import 'games/Moba.dart';
+import 'games/Royal.dart';
 import 'games/world.dart';
 import 'global.dart';
 import 'settings.dart';
@@ -63,9 +63,33 @@ void main() {
   }
   initUpdateLoop();
   loadScenes();
-  int totalConnections = 0;
 
-  var handler = webSocketHandler((WebSocketChannel webSocket) {
+  var handler = webSocketHandler(buildWebSocketHandler);
+
+  shelf_io.serve(handler, settings.host, settings.port).then((server) {
+    print('Serving at wss://${server.address.host}:${server.port}');
+  });
+}
+
+Player spawnPlayerInTown() {
+  return Player(
+      game: world.town,
+      x: 0,
+      y: 1750,
+      team: teams.west,
+      type: CharacterType.None);
+}
+
+void compileWholeGame(Game game) {
+  compileGame(game);
+  write(game.compiledTiles);
+  write(game.compiledEnvironmentObjects);
+  write(game.compiled);
+}
+
+int totalConnections = 0;
+
+void buildWebSocketHandler(WebSocketChannel webSocket) {
     totalConnections++;
     print("New connection established. Total Connections $totalConnections");
 
@@ -134,7 +158,7 @@ void main() {
 
     void joinCube3D() {
       final CubePlayer cubePlayer =
-          CubePlayer(position: Vector3(), rotation: Vector3());
+      CubePlayer(position: Vector3(), rotation: Vector3());
       cubeGame.cubes.add(cubePlayer);
       sendToClient('${ServerResponse.Cube_Joined.index} ${cubePlayer.uuid}');
     }
@@ -300,7 +324,7 @@ void main() {
 
           if (!player.isHuman) {
             Character? closestEnemy =
-                game.getClosestEnemy(mouseX, mouseY, player.team);
+            game.getClosestEnemy(mouseX, mouseY, player.team);
 
             player.aimTarget = null;
             if (closestEnemy != null) {
@@ -356,13 +380,13 @@ void main() {
                   }
                   break;
                 case AbilityMode.Activated:
-                  // TODO: Handle this case.
+                // TODO: Handle this case.
                   break;
                 case AbilityMode.Area:
-                  // TODO: Handle this case.
+                // TODO: Handle this case.
                   break;
                 case AbilityMode.Directed:
-                  // TODO: Handle this case.
+                // TODO: Handle this case.
                   break;
               }
 
@@ -543,7 +567,7 @@ void main() {
               player.game.spawnRandomZombie();
               break;
             case ModifyGame.Remove_Zombie:
-              // TODO: Handle this case.
+            // TODO: Handle this case.
               break;
             case ModifyGame.Hour_Increase:
               worldTime += secondsPerHour;
@@ -785,7 +809,7 @@ void main() {
           if (arguments.length < 3) {
             error(GameError.InvalidArguments,
                 message:
-                    "ClientRequest.Equip Error: Expected 2 args but got ${arguments.length}");
+                "ClientRequest.Equip Error: Expected 2 args but got ${arguments.length}");
             return;
           }
 
@@ -804,12 +828,12 @@ void main() {
           if (weaponIndex < 0) {
             error(GameError.InvalidArguments,
                 message:
-                    "arg4, weapon-index: $weaponIndex must be greater than 0, got ");
+                "arg4, weapon-index: $weaponIndex must be greater than 0, got ");
           }
           if (weaponIndex >= player.weapons.length) {
             error(GameError.InvalidArguments,
                 message:
-                    "arg4, weapon-index: $weaponIndex cannot be greater than player.weapons.length: ${player.weapons.length}");
+                "arg4, weapon-index: $weaponIndex cannot be greater than player.weapons.length: ${player.weapons.length}");
           }
 
           changeWeapon(player, weaponIndex);
@@ -878,25 +902,4 @@ void main() {
     }
 
     webSocket.stream.listen(onEvent);
-  });
-
-  shelf_io.serve(handler, settings.host, settings.port).then((server) {
-    print('Serving at wss://${server.address.host}:${server.port}');
-  });
-}
-
-Player spawnPlayerInTown() {
-  return Player(
-      game: world.town,
-      x: 0,
-      y: 1750,
-      team: teams.west,
-      type: CharacterType.None);
-}
-
-void compileWholeGame(Game game) {
-  compileGame(game);
-  write(game.compiledTiles);
-  write(game.compiledEnvironmentObjects);
-  write(game.compiled);
-}
+  }
