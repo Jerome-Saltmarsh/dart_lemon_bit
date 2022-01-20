@@ -496,13 +496,15 @@ Wow
 Fortnight
 
 # Domain Names
-gamestash.com
-gamesplash.com
+gameboss.com        (1,450E)
+streamygames.com    (1E)
+cloudygames.com     (290E)
+gamesplash.com      (1,000E)
+gamecloud.com       (14,000E)
+gamepatch.com       (5,000E)
+gamestash.com       (taken)
 arcadestream.com
-gamecloud.com
-cloudygames.com
-gamepond.io
-gamepond.com
+gamepond.com        (12,000E)
 browser-games.io
 game-browser.com
 game-stream.io

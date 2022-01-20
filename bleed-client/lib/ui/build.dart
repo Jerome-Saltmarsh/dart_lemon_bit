@@ -215,14 +215,11 @@ class _Build {
   }
 
   Widget title(){
-
-    final _text = text("GAMESPLASH",
+    final _text = text("GAMESTREAM",
         size: 60,
         color: Colors.white,
         family: assets.fonts.libreBarcode39Text
     );
-
-    // return _text;
 
     return onPressed(
       callback: (){
@@ -232,8 +229,6 @@ class _Build {
         }else{
           actions.showDialogGames();
         }
-
-
       },
       child: border(
         height: style.buttonHeight,

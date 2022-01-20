@@ -385,7 +385,7 @@ Widget buildEquipWeaponSlot(Weapon weapon, int index) {
             if (weapon.type != WeaponType.Unarmed) buildTag(weapon.rounds),
           ],
         ),
-        buildAmmoBar(p, weapon.type.name),
+        buildAmmoBar(capacity: weapon.capacity, rounds:weapon.rounds, weaponType: weapon.type),
         if (mouseOver) buildWeaponStats(weapon)
       ],
     );
@@ -411,29 +411,40 @@ String mapWeaponTypeToString(WeaponType weaponType) {
   return weaponType.toString().replaceAll("WeaponType.", "");
 }
 
-Widget buildEquippedWeaponSlot(WeaponType weaponType) {
-  return Column(
-    children: [
-      Stack(
-        children: [
-          buildWeaponSlot(weaponType),
-          if (weaponType != WeaponType.Unarmed)
-            WatchBuilder(game.player.weaponRounds, buildTag),
-        ],
-      ),
-      WatchBuilder(game.player.weaponRounds, (int rounds) {
-        print("game.player.weaponRounds = $rounds");
-        if (game.player.weaponCapacity.value == 0) {
-          return buildAmmoBar(1, weaponType.name);
-        }
-        return buildAmmoBar(rounds / game.player.weaponCapacity.value, weaponType.name);
-      }),
-    ],
-  );
+Widget buildEquippedWeaponSlot() {
+
+  return WatchBuilder(game.player.weaponType, (WeaponType weaponType){
+      return WatchBuilder(game.player.weaponCapacity, (int weaponCapacity){
+          return WatchBuilder(game.player.weaponRounds, (int weaponRounds){
+            return Column(
+              children: [
+                Stack(
+                  children: [
+                    buildWeaponSlot(weaponType),
+                    // if (weaponType != WeaponType.Unarmed)
+                    //   buildTag(weaponRounds),
+                  ],
+                ),
+                if (weaponCapacity == 0)
+                  buildAmmoBar(rounds: 1, capacity: 1, weaponType: weaponType),
+                if (weaponCapacity > 0)
+                  buildAmmoBar(rounds: weaponRounds,
+                      capacity: weaponCapacity,
+                      weaponType: weaponType),
+              ],
+            );
+          });
+      });
+  });
 }
 
-Widget buildAmmoBar(double percentage, String message) {
-  final width = 120.0;
+Widget buildAmmoBar({
+  required int rounds,
+  required int capacity,
+  required WeaponType weaponType,
+}) {
+  final percentage = rounds / capacity;
+  final width = 180.0;
   final height = width * goldenRatio_0381;
   return Container(
     width: width,
@@ -457,7 +468,7 @@ Widget buildAmmoBar(double percentage, String message) {
           height: height,
           alignment: Alignment.center,
           color: none,
-          child: text(message, color: colours.black)
+          child: text('${weaponType.name} $rounds/$capacity', color: colours.black, bold: true)
         ),
       ],
     ),
@@ -571,7 +582,7 @@ Widget buildWeaponMenu() {
       crossAxisAlignment: axis.cross.start,
       children: [
         if (mouseOver) buildExpandedWeapons(),
-        WatchBuilder(game.player.weaponType, buildEquippedWeaponSlot)
+        buildEquippedWeaponSlot(),
       ],
     );
   });

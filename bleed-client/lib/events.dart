@@ -183,7 +183,6 @@ class Events {
         mouseEvents.onLeftClicked.value = performPrimaryAction;
         mouseEvents.onPanStarted.value = performPrimaryAction;
         mouseEvents.onLongLeftClicked.value = performPrimaryAction;
-        fullScreenEnter();
         registerPlayKeyboardHandler();
         break;
       case Connection.Done:
@@ -219,11 +218,9 @@ class Events {
     print('events.onGameStatusChanged($value)');
     switch(value){
       case GameStatus.In_Progress:
-        // ui.backgroundColor.value = colours.black;
         fullScreenEnter();
         break;
       default:
-        // ui.backgroundColor.value = Colors.black;
         fullScreenExit();
         break;
     }
