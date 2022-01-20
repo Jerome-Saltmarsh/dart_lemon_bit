@@ -293,8 +293,8 @@ Widget buildDialogGameTypeSelected(GameType gameType) {
       color: colours.white05,
       borderColor: colours.none,
       padding: 16,
-      height: 300,
-      width: 300 * goldenRatio,
+      height: style.dialogHeightMedium,
+      width: style.dialogWidthMedium,
       child: layout(
           topRight: Tooltip(
             message: "Change Region",
@@ -737,7 +737,7 @@ Widget buildLayoutLobby() {
             fillColor: colours.white05,
             color: none,
             child: text(
-                "waiting for players to join",
+                "waiting for more players to join",
                 color: colours.white618)),
         height32,
         WatchBuilder(game.lobby.playerCount, (int value) {
