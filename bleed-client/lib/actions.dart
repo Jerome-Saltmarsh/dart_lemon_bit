@@ -4,6 +4,7 @@ import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/editor/functions/resetTiles.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/events.dart';
+import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/server/server.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/stripe.dart';
@@ -58,6 +59,10 @@ class _Actions {
 
   void showDialogSubscriptionStatusChanged(){
     game.dialog.value = Dialogs.Subscription_Status_Changed;
+  }
+
+  void showDialogSubscriptionRequired(){
+    game.dialog.value = Dialogs.Subscription_Required;
   }
 
   void closeErrorMessage(){
@@ -145,6 +150,12 @@ class _Actions {
 
   void showErrorMessage(String message){
     game.errorMessage.value = message;
+  }
+
+  void disconnect(){
+    print("actions.disconnect()");
+    clearState();
+    webSocket.disconnect();
   }
 
   void changeAccountPublicName(String value) async {

@@ -1,4 +1,5 @@
 
+import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/authentication.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameError.dart';
@@ -8,7 +9,6 @@ import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/functions/cameraCenterPlayer.dart';
 import 'package:bleed_client/functions/removeGeneratedEnvironmentObjects.dart';
 import 'package:bleed_client/input.dart';
-import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
@@ -28,7 +28,6 @@ import 'package:lemon_engine/state/zoom.dart';
 
 import 'common/GameType.dart';
 import 'enums/Region.dart';
-import 'functions/clearState.dart';
 
 class Events {
 
@@ -91,34 +90,37 @@ class Events {
   }
 
   Future _onGameError(GameError error) async {
-    print(error);
-
+    print("events.onGameEvent('$error'");
     switch (error) {
       case GameError.PlayerId_Required:
-        clearState();
-        webSocket.disconnect();
-        game.dialog.value = Dialogs.Login;
+        actions.disconnect();
+        actions.showDialogLogin();
         return;
       case GameError.Subscription_Required:
-        game.dialog.value = Dialogs.Subscription_Required;
+        actions.disconnect();
+        actions.showDialogSubscriptionRequired();
         return;
       case GameError.GameNotFound:
-        clearState();
-        webSocket.disconnect();
+        actions.disconnect();
+        actions.showErrorMessage("game could not be found");
         return;
       case GameError.InvalidArguments:
+        actions.disconnect();
         if (compiledGame.length > 4) {
           String message = compiledGame.substring(4, compiledGame.length);
-          print('Invalid Arguments: $message');
+          actions.showErrorMessage("Invalid Arguments: $message");
+          return;
         }
-        game.dialog.value = Dialogs.Invalid_Arguments;
+        actions.showErrorMessage("game could not be found");
         return;
-      default:
+      case GameError.PlayerNotFound:
+        actions.disconnect();
+        actions.showErrorMessage("Player could not be found");
         break;
-    }
-    if (error == GameError.PlayerNotFound) {
-      clearState();
-      webSocket.disconnect();
+      default:
+        actions.disconnect();
+        actions.showErrorMessage(error.name);
+        break;
     }
   }
 
