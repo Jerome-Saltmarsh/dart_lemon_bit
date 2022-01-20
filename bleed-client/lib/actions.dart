@@ -16,6 +16,7 @@ import 'package:bleed_client/webSocket.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_dispatch/instance.dart';
 
+import 'classes/Authentication.dart';
 import 'common/GameType.dart';
 
 final _Actions actions = _Actions();
@@ -39,7 +40,12 @@ class _Actions {
   void logout() {
     print("actions.logout()");
     game.operationStatus.value = OperationStatus.Logging_Out;
-    signOut();
+
+    firebaseAuth.signOut().catchError(print);
+    googleSignIn.signOut().catchError((error){
+      print(error);
+    });
+
     storage.forgetAuthorization();
     game.account.value = null;
     Future.delayed(Duration(seconds: 1), (){
@@ -164,6 +170,10 @@ class _Actions {
 
   void showDialogGames(){
     game.dialog.value = Dialogs.Games;
+  }
+
+  void store(String key, dynamic value){
+    storage.put(key, value);
   }
 
   void showDialogSubscription(){

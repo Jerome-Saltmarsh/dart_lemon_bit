@@ -1,5 +1,7 @@
 
+import 'package:bleed_client/exceptions.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:bleed_client/state/sharedPreferences.dart';
 
 final _Getters getters = _Getters();
 

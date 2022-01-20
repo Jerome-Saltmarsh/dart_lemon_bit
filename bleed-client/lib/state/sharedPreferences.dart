@@ -1,5 +1,6 @@
 
 import 'package:bleed_client/authentication.dart';
+import 'package:bleed_client/classes/Authentication.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:flutter/cupertino.dart';

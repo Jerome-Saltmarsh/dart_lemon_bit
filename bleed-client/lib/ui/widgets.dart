@@ -1,4 +1,5 @@
 import 'package:bleed_client/authentication.dart';
+import 'package:bleed_client/classes/Authentication.dart';
 import 'package:bleed_client/ui/actions/signInWithFacebook.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/ClientRequest.dart';

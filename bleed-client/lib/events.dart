@@ -63,7 +63,8 @@ class Events {
 
   Future _onLoginException(LoginException error) async {
     print("onLoginException()");
-    signOut();
+
+    actions.logout();
 
     Future.delayed(Duration(seconds: 1), (){
       // game.dialog.value = Dialogs.Login_Error;
@@ -82,7 +83,7 @@ class Events {
          actions.showDialogSubscriptionStatusChanged();
        }
     }
-    storage.put(flag, enumString(account.subscriptionStatus));
+    actions.store(flag, enumString(account.subscriptionStatus));
     actions.showDialogGames();
   }
 

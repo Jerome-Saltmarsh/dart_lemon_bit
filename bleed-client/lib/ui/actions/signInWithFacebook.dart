@@ -1,4 +1,5 @@
 import 'package:bleed_client/authentication.dart';
+import 'package:bleed_client/classes/Authentication.dart';
 import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 bool _initialized = false;

@@ -1,0 +1,5 @@
+
+
+class AccountNullException implements Exception {
+
+}
