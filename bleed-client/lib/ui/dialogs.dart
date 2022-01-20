@@ -227,6 +227,10 @@ Widget buildDialogSubscriptionCancelled(){
   return buildDialogMessage("Premium subscription cancelled");
 }
 
+Widget buildDialogPremiumAccountRequired(){
+  return buildDialogMessage("Premium subscription required");
+}
+
 Widget buildDialogSubscriptionStatus(){
   final account = game.account.value;
   if (account == null){
@@ -352,11 +356,11 @@ String formatSubscriptionStatus(value){
   return value == SubscriptionStatus.Canceled ? "Cancelled" : enumString(value);
 }
 
-Widget buildButton(String value, Function action){
+Widget buildButton(String value, Function action, {bool underline = false}){
   return Container(
     padding: padding16,
     child: onHover((hovering){
-      return text(value, color: hovering ? colours.white80 : colours.white618, underline: true, onPressed: action);
+      return text(value, color: hovering ? colours.white80 : colours.white618, underline: underline, onPressed: action);
     }),
   );
 }
@@ -365,7 +369,7 @@ Widget buildButtonPrimary(String value, Function action){
   return Container(
     padding: padding16,
     child: onHover((hovering){
-      return text(value, color: colours.green, underline: hovering, onPressed: action, bold: true);
+      return text(value, color: colours.green, underline: true, onPressed: action, bold: true);
     }),
   );
 }

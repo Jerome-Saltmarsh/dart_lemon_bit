@@ -253,78 +253,44 @@ Widget buildDialogGames() {
 }
 
 Widget buildDialogGameTypeSelected(GameType gameType) {
+  return watchAccount((Account? account){
+    final isFreeToPlay = freeToPlay.contains(gameType);
+    final canPlay = isFreeToPlay || getters.premiumAccountAuthenticated;
+    if (!canPlay){
+      return buildDialogPremiumAccountRequired();
+    }
 
-  final account = game.account.value;
-  final premiumActive = account != null && account.isPremium;
-  final isFreeToPlay = freeToPlay.contains(gameType);
-  final canPlay = isFreeToPlay || premiumActive;
-
-  if (!canPlay){
-    return buildDialogMessage(
-        Row(
-          mainAxisAlignment: axis.main.center,
-          children: [
-              text("Requires a ", color: colours.white85),
-              onHover((hovering){
-                return text("premium account",
-                    underline: hovering,
-                    color: green,
-                    onPressed: account == null
-                        ? actions.showDialogLogin
-                        : actions.openStripeCheckout
-                );
-              }),
-              text(" to play", color: colours.white85),
-          ],
-        ),
-        bottomRight: buildButton("Back", actions.deselectGameType)
-    );
-  }
-
-  final playButton = button(
-      text("Play", size: 18, weight: bold, color: colours.green),
-      actions.connectToSelectedGame,
-      borderColor: green,
-      fillColor: none,
-      width: 100,
-  );
-
-  return dialog(
-      color: colours.white05,
-      borderColor: colours.none,
-      padding: 16,
-      height: style.dialogHeightMedium,
-      width: style.dialogWidthMedium,
-      child: layout(
-          topRight: Tooltip(
-            message: "Change Region",
-            child: button(
-              text(enumString(game.region.value),
-                  color: colours.white80),
-              () {
-                game.dialog.value = Dialogs.Change_Region;
-              },
-              borderColor: colours.none,
-              fillColor: colours.black20,
+    return dialog(
+        color: colours.white05,
+        borderColor: colours.none,
+        padding: 16,
+        height: style.dialogHeightMedium,
+        width: style.dialogWidthMedium,
+        child: layout(
+            topRight: Tooltip(
+              message: "Change Region",
+              child: button(
+                text(enumString(game.region.value),
+                    color: colours.white80),
+                    () {
+                  game.dialog.value = Dialogs.Change_Region;
+                },
+                borderColor: colours.none,
+                fillColor: colours.black20,
+              ),
             ),
-          ),
-          bottomLeft: playButton,
-          bottomRight:
-              buildButton("Back", actions.deselectGameType),
-          child: Column(
-            crossAxisAlignment: axis.cross.start,
-            children: [
-              text(gameTypeNames[gameType],
-                  size: 25, color: colours.white80),
-              height32,
-              if (!isFreeToPlay && getters.premiumAccountAuthenticated)
-                border(
-                    child: text(
-                        "Premium games require a premium membership to play",
-                        color: colours.white60),
-                    color: colours.white80)
-            ],
-          )));
+            bottomLeft: buildButtonPrimary("PLAY", actions.connectToSelectedGame),
+            bottomRight:
+            buildButton("back", actions.deselectGameType),
+            child: Column(
+              crossAxisAlignment: axis.cross.start,
+              children: [
+                text(gameTypeNames[gameType],
+                    size: 25, color: colours.white80),
+                height32,
+              ],
+            )));
+  });
 }
 
 Widget buildDialogChangeRegion() {
@@ -697,7 +663,7 @@ Widget buildViewConnected() {
             width: style.dialogWidthMedium,
             height: style.dialogHeightMedium,
             child: WatchBuilder(game.countDownFramesRemaining, (int frames){
-              final seconds =  frames /~ 30;
+              final seconds =  frames ~/ 30.0;
               return Center(child: text("Starting in $seconds seconds"));
             }));
         case GameStatus.Awaiting_Players:
