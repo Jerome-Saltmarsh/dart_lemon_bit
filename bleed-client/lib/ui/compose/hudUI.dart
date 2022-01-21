@@ -468,7 +468,7 @@ Widget buildAmmoBar({
           height: height,
           alignment: Alignment.center,
           color: none,
-          child: text('${weaponType.name} $rounds/$capacity', color: colours.black, bold: true)
+          child: text('${weaponType.name} ${weaponType != WeaponType.Unarmed ? "$rounds/$capacity" : ""}', color: colours.black, bold: true)
         ),
       ],
     ),
