@@ -4,9 +4,11 @@ import 'package:lemon_math/give_or_take.dart';
 import '../classes/Crate.dart';
 import '../classes/Game.dart';
 import '../classes/Player.dart';
+import '../classes/Weapon.dart';
 import '../common/CharacterType.dart';
 import '../common/GameStatus.dart';
 import '../common/GameType.dart';
+import '../common/WeaponType.dart';
 import '../functions/withinRadius.dart';
 import '../instances/scenes.dart';
 import '../utilities.dart';
@@ -82,14 +84,35 @@ class GameRoyal extends Game {
 
   @override
   void update(){
-    if (inProgress) {
-      boundaryRadius -= boundaryRadiusShrinkRate;
-      for (Player player in players) {
-        if (player.dead) continue;
-        if (withinDeathBoundary(player)) continue;
-        setCharacterStateDead(player);
+    boundaryRadius -= boundaryRadiusShrinkRate;
+    _killPlayersOutsideBoundary();
+
+    for (Player player in players) {
+      for (int i = 0; i < crates.length; i++) {
+        final crate = crates[i];
+        if (!withinRadius(player, crate, 30)) continue;
+        final index = getIndexOfWeaponType(player, WeaponType.HandGun);
+        if (index >= 0) continue;
+        player.weapons.add(Weapon(
+          type: WeaponType.HandGun,
+          damage: 5,
+          capacity: 12,
+        ));
+        player.weaponsDirty = true;
+        crates.removeAt(i);
+        cratesDirty = true;
+        i--;
       }
-      return;
+    }
+
+    return;
+  }
+
+  void _killPlayersOutsideBoundary() {
+    for (Player player in players) {
+      if (player.dead) continue;
+      if (withinDeathBoundary(player)) continue;
+      setCharacterStateDead(player);
     }
   }
 

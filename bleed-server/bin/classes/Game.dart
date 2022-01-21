@@ -342,6 +342,7 @@ extension GameFunctions on Game {
     return zombieDistance < playerDistance ? zombie : player;
   }
 
+  /// Gets called while the game is in progress
   void updateAndCompile() {
     // @on update game
     duration++;
@@ -353,8 +354,6 @@ extension GameFunctions on Game {
     _updateNpcs();
     _updateGameEvents();
     _updateSpawnPointCollisions();
-
-
 
     if (frame % characterFramesChange == 0) {
       updateFrames(players);

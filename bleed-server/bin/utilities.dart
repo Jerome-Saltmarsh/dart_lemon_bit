@@ -5,11 +5,14 @@ import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/randomItem.dart';
 
+import 'classes/Player.dart';
 import 'classes/Projectile.dart';
 import 'classes/Character.dart';
 import 'classes/GameObject.dart';
 import 'classes/Npc.dart';
+import 'classes/Weapon.dart';
 import 'common/CollectableType.dart';
+import 'common/WeaponType.dart';
 import 'common/enums/Direction.dart';
 import 'constants.dart';
 import 'maths.dart';
@@ -21,6 +24,8 @@ const secondsPerMinute = 60;
 const minutesPerHour = 60;
 const _minusOne = -1;
 const _one = 1;
+
+double tilesLeftY = 0;
 
 double projectileDistanceTravelled(Projectile bullet) {
   return distanceBetween(bullet.x, bullet.y, bullet.xStart, bullet.yStart);
@@ -38,6 +43,7 @@ int clampInt(int value, int min, int max) {
   return value;
 }
 
+// TODO impertinent logic
 void setDirection(Character character, Direction direction) {
   if (character.dead) return;
   if (character.busy) return;
@@ -115,8 +121,6 @@ Direction convertAngleToDirection(double angle) {
   }
   return Direction.Up;
 }
-
-double tilesLeftY = 0;
 
 void applyMovement(GameObject gameObject) {
   gameObject.x += gameObject.xv;
@@ -206,4 +210,15 @@ void _insertionSort<E>({
     list.setRange(min + 1, pos + 1, list, min);
     list[min] = element;
   }
+}
+
+
+/// returns -1 if the player does not have the weapon
+int getIndexOfWeaponType(Player player, WeaponType type){
+  for(int i = 0; i < player.weapons.length; i++){
+      if (player.weapons[i].type == type){
+        return i;
+      }
+  }
+  return -1;
 }
