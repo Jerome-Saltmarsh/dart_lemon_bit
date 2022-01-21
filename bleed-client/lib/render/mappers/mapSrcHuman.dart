@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:bleed_client/common/CharacterState.dart';
@@ -10,13 +9,6 @@ import 'package:bleed_client/render/mappers/animate.dart';
 import 'package:lemon_math/Vector2.dart';
 
 import 'loop.dart';
-
-const _size = 64.0;
-
-final _manFramesFiringShotgunMax = animations.human.firingShotgun.length - 1;
-const _framesPerDirection3 = 3;
-
-final Float32List _src = Float32List(4);
 
 Float32List mapSrcHuman({
     required WeaponType weaponType,
@@ -143,21 +135,16 @@ Float32List mapSrcHuman({
     case CharacterState.Reloading:
       throw Exception("Not Implemented");
     case CharacterState.ChangingWeapon:
-      int _frame = -1;
-      if (frame < 2) {
-        _frame = frame;
-      } else {
-        _frame = 1;
-      }
-      double _s = direction.index * _size * 2;
-      double _f = _frame * _size;
-      _src[0] = _s + _f + atlas.human.changing.x;
-      _src[1] = atlas.human.changing.y;
-      break;
+      return animate(
+        atlas: atlas.human.changing,
+        animation: animations.human.changing,
+        direction: direction,
+        frame: frame,
+        framesPerDirection: 2,
+      );
   }
-  _src[2] = _src[0] + _size;
-  _src[3] = _src[1] + _size;
-  return _src;
+
+  throw Exception("Could not map src to human");
 }
 
 final Map<WeaponType, Vector2> _idleWeaponTypeVector2 = {

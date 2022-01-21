@@ -17,6 +17,7 @@ class _Man {
   final List<int> firingHandgun = [0, 1, 0];
   final List<int> firingShotgun = [0, 1, 0, 0, 0, 2, 0];
   final List<int> strikingSword = [0, 0, 1, 1];
+  final List<int> changing = [0, 1];
 }
 
 class _Witch {
