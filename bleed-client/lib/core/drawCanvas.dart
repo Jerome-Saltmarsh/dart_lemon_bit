@@ -54,9 +54,6 @@ void drawCanvas(Canvas canvas, Size size) {
 }
 
 void renderBackground(){
-  // drawStar(x: star.x, y: star.y, rotation: rotation, scale: scale);
-  // rotation += 0.01;
-  // scale -= 0.001;
     drawItem(Item(type: ItemType.Handgun, x: 100, y: 100));
 }
 

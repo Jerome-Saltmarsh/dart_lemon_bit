@@ -73,10 +73,12 @@ void compileGame(Game game) {
   if (game is GameRoyal) {
     compileRoyal(buffer, game);
   }
+  compileItems(buffer, game.items);
 
   game.compiled = buffer.toString();
+  /// GAME COMPILATION FINISHED
+
   game.compiledTeamText.clear();
-  compileItems(buffer, game.items);
 
   for (Player player in game.players) {
     if (!game.compiledTeamText.containsKey(player.team)) {

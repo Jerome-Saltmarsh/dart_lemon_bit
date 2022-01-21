@@ -10,8 +10,6 @@ import 'classes/Projectile.dart';
 import 'classes/Character.dart';
 import 'classes/GameObject.dart';
 import 'classes/Npc.dart';
-import 'classes/Weapon.dart';
-import 'common/CollectableType.dart';
 import 'common/WeaponType.dart';
 import 'common/enums/Direction.dart';
 import 'constants.dart';
@@ -169,9 +167,6 @@ double perspectiveProjectX(double x, double y) {
 double perspectiveProjectY(double x, double y) {
   return x + y;
 }
-
-
-CollectableType get randomCollectableType => randomItem(CollectableType.values);
 
 int calculateTime({int minute = 0, int hour = 0}){
   return secondsPerMinute * minutesPerHour * hour + minute;
