@@ -44,7 +44,7 @@ class GameRoyal extends Game {
     }
 
     for (int i = 0; i < 10; i++){
-      final item = Item(type: ItemType.Handgun, x:  randomX, y: randomX);
+      final item = Item(type: ItemType.Handgun, x:  randomX, y: randomY);
       items.add(item);
     }
     sortVertically(items);
@@ -75,7 +75,7 @@ class GameRoyal extends Game {
   void onPlayerDisconnected(Player player) {
     if (inProgress){
       onPlayerDeath(player);
-    }else if (countingDown){
+    } else if (countingDown){
       // status = GameStatus.Awaiting_Players;
       // _countDownFrame = _totalCountdownFrames;
     }

@@ -569,12 +569,25 @@ extension GameFunctions on Game {
     updateCollisionBetween(players);
     resolveCollisionBetween(zombies, players, resolveCollisionA);
     resolveCollisionBetween(players, npcs, resolveCollisionB);
+
+    for (Player player in players) {
+      for(int i = 0; i < items.length; i++){
+          final item = items[i];
+          if (item.top > player.bottom) break;
+          if (item.bottom < player.top) continue;
+          if (item.right < player.left) continue;
+          if (item.left > player.right) continue;
+          items.removeAt(i);
+          i--;
+      }
+    }
   }
 
   void sortGameObjects() {
     sortVertically(zombies);
     sortVertically(players);
     sortVertically(npcs);
+    sortVertically(items);
   }
 
   Player? findPlayerById(int id) {
