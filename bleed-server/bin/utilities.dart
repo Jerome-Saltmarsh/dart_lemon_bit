@@ -192,7 +192,6 @@ void sortVertically(List<Vector2> items) {
   }
 }
 
-
 /// returns -1 if the player does not have the weapon
 int getIndexOfWeaponType(Player player, WeaponType type){
   for(int i = 0; i < player.weapons.length; i++){

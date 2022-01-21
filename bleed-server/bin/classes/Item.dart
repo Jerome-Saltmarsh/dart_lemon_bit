@@ -13,6 +13,6 @@ class Item extends GameObject {
     required double x,
     required double y,
     bool this.timed = false
-  }) : super(x, y);
+  }) : super(x, y, radius: 25);
 }
 
