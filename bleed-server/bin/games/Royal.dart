@@ -57,6 +57,9 @@ class GameRoyal extends Game {
   @override
   bool onPlayerItemCollision(Player player, Item item){
     if (item.type == ItemType.Handgun){
+
+        final unarmed = player.unarmed;
+
         final handGunIndex = getIndexOfWeaponType(player, WeaponType.HandGun);
         if (handGunIndex == -1){
             player.weapons.add(
@@ -71,6 +74,10 @@ class GameRoyal extends Game {
           final weapon = player.weapons[handGunIndex];
           weapon.rounds += 10;
           dispatch(GameEventType.Item_Acquired, item.x, item.y);
+        }
+
+        if (unarmed){
+          player.equippedIndex = getIndexOfWeaponType(player, WeaponType.HandGun);
         }
     }
     return true;

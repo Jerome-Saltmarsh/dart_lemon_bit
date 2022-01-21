@@ -3,6 +3,7 @@ import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
 import '../common/PlayerEvent.dart';
 import '../common/Quests.dart';
+import '../common/WeaponType.dart';
 import '../constants/no_squad.dart';
 import '../common/Tile.dart';
 import '../functions/generateName.dart';
@@ -13,6 +14,7 @@ import 'Ability.dart';
 import 'Character.dart';
 import 'Entity.dart';
 import 'Game.dart';
+import 'Weapon.dart';
 
 
 class Player extends Character with Entity {
@@ -26,9 +28,7 @@ class Player extends Character with Entity {
   MainQuest questMain = MainQuest.Introduction;
   bool sceneChanged = false;
   Game game;
-
   int handgunDamage = 10;
-
   int experience = 0;
   int level = 1;
   int abilityPoints = 0;
@@ -76,26 +76,11 @@ class Player extends Character with Entity {
 
   final List<PlayerEvent> events = [];
 
-  bool get isHuman => type == CharacterType.Human;
 
   void dispatch(PlayerEvent event){
     events.add(event);
   }
 
-  Ability getAbilityByIndex(int index){
-    switch(index){
-      case 1:
-        return ability1;
-      case 2:
-        return ability2;
-      case 3:
-        return ability3;
-      case 4:
-        return ability4;
-      default:
-        throw Exception("could not get ability at index $index");
-    }
-  }
 
   Player({
     required this.game,
@@ -111,5 +96,33 @@ class Player extends Character with Entity {
             speed: settings.playerSpeed,
             team: team){
     global.onPlayerCreated(this);
+  }
+}
+
+extension PlayerProperties on Player {
+
+  bool get isHuman => type == CharacterType.Human;
+
+  bool get unarmed {
+    for(Weapon weapon in weapons){
+      if (weapon.type == WeaponType.Unarmed) continue;
+      return false;
+    }
+    return true;
+  }
+
+  Ability getAbilityByIndex(int index){
+    switch(index){
+      case 1:
+        return ability1;
+      case 2:
+        return ability2;
+      case 3:
+        return ability3;
+      case 4:
+        return ability4;
+      default:
+        throw Exception("could not get ability at index $index");
+    }
   }
 }
