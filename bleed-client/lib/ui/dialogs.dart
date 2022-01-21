@@ -228,7 +228,10 @@ Widget buildDialogSubscriptionCancelled(){
 }
 
 Widget buildDialogPremiumAccountRequired(){
-  return buildDialogMessage("Premium subscription required");
+  return buildDialogMessage("Premium subscription required", bottomRight: buildButton("okay", (){
+    actions.deselectGameType();
+    actions.showDialogGames();
+  }));
 }
 
 Widget buildDialogSubscriptionStatus(){

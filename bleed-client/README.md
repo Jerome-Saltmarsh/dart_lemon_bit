@@ -87,8 +87,9 @@
 [ ] Implement game over dialog
 [ ] Design Map  
 [ ] Score  
+[ ] 
 [ ] Weapon UI
-[ ] Fix melee attack
+[x] Fix melee attack
 [x] Sign in with Facebook
 [x] Fix Change Public Name Dialog Error
 [x] Cancel Subscription
