@@ -34,7 +34,7 @@ import 'games/world.dart';
 import 'global.dart';
 import 'settings.dart';
 import 'update.dart';
-import 'utils.dart';
+import 'utilities.dart';
 import 'values/world.dart';
 
 const String _space = " ";
@@ -153,6 +153,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       compilePlayerWeapons(_buffer, player);
       compileGameStatus(_buffer, royal.status);
       compileGameMeta(_buffer, royal);
+      compileCrates(_buffer, royal.crates);
       sendAndClearBuffer();
     }
 

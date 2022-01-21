@@ -2,7 +2,7 @@ import 'package:lemon_math/Vector2.dart';
 
 import '../common/Tile.dart';
 import '../common/enums/ObjectType.dart';
-import '../utils.dart';
+import '../utilities.dart';
 import 'EnvironmentObject.dart';
 import '../enums.dart';
 import '../maths.dart';

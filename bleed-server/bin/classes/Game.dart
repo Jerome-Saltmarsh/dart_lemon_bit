@@ -34,7 +34,6 @@ import '../enums.dart';
 import '../enums/npc_mode.dart';
 import '../exceptions/ZombieSpawnPointsEmptyException.dart';
 import '../functions/applyForce.dart';
-import '../functions/insertionSort.dart';
 import '../functions/withinRadius.dart';
 import '../games/world.dart';
 import '../global.dart';
@@ -44,8 +43,7 @@ import '../maths.dart';
 import '../settings.dart';
 import '../state.dart';
 import '../update.dart';
-import '../utils.dart';
-import '../utils/game_utils.dart';
+import '../utilities.dart';
 import 'Ability.dart';
 import 'Character.dart';
 import 'Collectable.dart';
@@ -356,6 +354,8 @@ extension GameFunctions on Game {
     _updateGameEvents();
     _updateSpawnPointCollisions();
 
+
+
     if (frame % characterFramesChange == 0) {
       updateFrames(players);
       updateFrames(zombies);
@@ -611,9 +611,9 @@ extension GameFunctions on Game {
   }
 
   void sortGameObjects() {
-    insertionSort(list: zombies, compare: compareGameObjectsY);
-    insertionSort(list: players, compare: compareGameObjectsY);
-    insertionSort(list: npcs, compare: compareGameObjectsY);
+    sortVertically(zombies);
+    sortVertically(players);
+    sortVertically(npcs);
   }
 
   Player? findPlayerById(int id) {
@@ -805,7 +805,7 @@ extension GameFunctions on Game {
       }
     }
 
-    insertionSort(list: projectiles, compare: compareGameObjectsY);
+    sortVertically(projectiles);
     checkProjectileCollision(zombies);
     checkProjectileCollision(players);
 

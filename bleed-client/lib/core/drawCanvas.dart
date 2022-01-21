@@ -50,6 +50,7 @@ void drawCanvas(Canvas canvas, Size size) {
 
   if (!webSocket.connected) {
     renderBackground();
+    return;
   }
   if (game.player.uuid.value.isEmpty) return;
   if (game.status.value == GameStatus.Awaiting_Players) return;

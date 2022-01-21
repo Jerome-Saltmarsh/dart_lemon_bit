@@ -10,7 +10,7 @@ import '../common/GameStatus.dart';
 import '../common/GameType.dart';
 import '../instances/scenes.dart';
 import '../language.dart';
-import '../utils/game_utils.dart';
+import '../utilities.dart';
 
 typedef Players = List<Player>;
 

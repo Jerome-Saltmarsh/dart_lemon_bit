@@ -9,7 +9,7 @@ import '../common/GameStatus.dart';
 import '../common/GameType.dart';
 import '../functions/withinRadius.dart';
 import '../instances/scenes.dart';
-import '../utils/game_utils.dart';
+import '../utilities.dart';
 
 class GameRoyal extends Game {
 
@@ -26,11 +26,15 @@ class GameRoyal extends Game {
     numberOfTeams = 2;
     boundaryCenter = getSceneCenter();
 
-    for(int i = 0; i < 10; i++){
-      final crate = Crate(x: giveOrTake(500), y: 500);
+    for (int i = 0; i < 10; i++) {
+      final crate = Crate(
+          x: boundaryCenter.x + giveOrTake(500),
+          y: boundaryCenter.y + giveOrTake(500),
+      );
       crates.add(crate);
       cratesDirty = true;
     }
+    sortVertically(crates);
   }
 
   int get playersRequired => teamSize * numberOfTeams;
@@ -93,4 +97,6 @@ class GameRoyal extends Game {
     return withinRadius(position, boundaryCenter, boundaryRadius);
   }
 }
+
+
 

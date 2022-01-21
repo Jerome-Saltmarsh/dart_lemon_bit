@@ -2,7 +2,7 @@ import '../common/enums/Direction.dart';
 import '../common/enums/ProjectileType.dart';
 import '../interfaces/HasSquad.dart';
 import '../maths.dart';
-import '../utils.dart';
+import '../utilities.dart';
 import 'Character.dart';
 import 'GameObject.dart';
 

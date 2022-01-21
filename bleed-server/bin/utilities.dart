@@ -3,11 +3,13 @@ import 'package:lemon_math/diff.dart';
 import 'package:lemon_math/diff_over.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/give_or_take.dart';
+import 'package:lemon_math/randomItem.dart';
 
 import 'classes/Projectile.dart';
 import 'classes/Character.dart';
 import 'classes/GameObject.dart';
 import 'classes/Npc.dart';
+import 'common/CollectableType.dart';
 import 'common/enums/Direction.dart';
 import 'constants.dart';
 import 'maths.dart';
@@ -15,6 +17,10 @@ import 'settings.dart';
 
 const double tileSize = 48.0;
 const double halfTileSize = 24;
+const secondsPerMinute = 60;
+const minutesPerHour = 60;
+const _minusOne = -1;
+const _one = 1;
 
 double projectileDistanceTravelled(Projectile bullet) {
   return distanceBetween(bullet.x, bullet.y, bullet.xStart, bullet.yStart);
@@ -158,4 +164,46 @@ double perspectiveProjectX(double x, double y) {
 
 double perspectiveProjectY(double x, double y) {
   return x + y;
+}
+
+
+CollectableType get randomCollectableType => randomItem(CollectableType.values);
+
+int calculateTime({int minute = 0, int hour = 0}){
+  return secondsPerMinute * minutesPerHour * hour + minute;
+}
+
+void sortVertically(List<Vector2> vectors){
+  _insertionSort(list: vectors, compare: _compareVectorsY);
+}
+
+int _compareVectorsY(Vector2 a, Vector2 b) {
+  if (a.y < b.y) {
+    return _minusOne;
+  }
+  return _one;
+}
+
+void _insertionSort<E>({
+  required List<E> list,
+  required int Function(E, E) compare,
+}) {
+  int start = 0;
+  int end = list.length;
+
+  for (var pos = start + 1; pos < end; pos++) {
+    var min = start;
+    var max = pos;
+    var element = list[pos];
+    while (min < max) {
+      var mid = min + ((max - min) >> 1);
+      if (compare(element, list[mid]) < 0) {
+        max = mid;
+      } else {
+        min = mid + 1;
+      }
+    }
+    list.setRange(min + 1, pos + 1, list, min);
+    list[min] = element;
+  }
 }

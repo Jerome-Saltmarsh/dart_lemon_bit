@@ -63,7 +63,7 @@ void compileGame(Game game) {
 
   if (game.cratesDirty){
     game.cratesDirty = false;
-    _compileCrates(buffer, game.crates);
+    compileCrates(buffer, game.crates);
   }
 
   _write(buffer, ServerResponse.Scene_Shade_Max.index);
@@ -98,7 +98,7 @@ void compileGame(Game game) {
   }
 }
 
-void _compileCrates(StringBuffer buffer, List<Crate> crates) {
+void compileCrates(StringBuffer buffer, List<Crate> crates) {
   _write(buffer, ServerResponse.Crates.index);
   _write(buffer, crates.length);
   for (Crate crate in crates) {

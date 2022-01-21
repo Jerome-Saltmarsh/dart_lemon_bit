@@ -8,7 +8,7 @@ import '../common/Tile.dart';
 import '../functions/generateName.dart';
 import '../global.dart';
 import '../settings.dart';
-import '../utils.dart';
+import '../utilities.dart';
 import 'Ability.dart';
 import 'Character.dart';
 import 'Entity.dart';

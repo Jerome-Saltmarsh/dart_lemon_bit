@@ -584,7 +584,9 @@ double _consumeDoubleUnsafe() {
 }
 
 Vector2 _consumeVector2() {
-  return Vector2(consumeDouble(), consumeDouble());
+  final x = _consumeIntUnsafe();
+  final y = _consumeIntUnsafe();
+  return Vector2(x.toDouble(), y.toDouble());
 }
 
 bool _simiColonConsumed() {

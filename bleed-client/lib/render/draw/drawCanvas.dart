@@ -139,6 +139,10 @@ void renderGame(Canvas canvas, Size size) {
     }
   }
 
+  for(Vector2 crate in game.crates){
+    drawCircle(crate.x, crate.y, 30, colours.red);
+  }
+
   if (game.settings.compilePaths) {
     drawDebugEnvironmentObjects();
     drawPaths();

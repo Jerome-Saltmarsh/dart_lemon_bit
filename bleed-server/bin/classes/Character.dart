@@ -7,7 +7,7 @@ import '../common/enums/Direction.dart';
 import '../constants/no_squad.dart';
 import '../interfaces/HasSquad.dart';
 import '../settings.dart';
-import '../utils.dart';
+import '../utilities.dart';
 import 'Ability.dart';
 import 'GameObject.dart';
 import 'Weapon.dart';

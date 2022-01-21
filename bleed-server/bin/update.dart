@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/hypotenuse.dart';
 
 import 'classes/Game.dart';
@@ -10,10 +11,7 @@ import 'global.dart';
 import 'language.dart';
 import 'maths.dart';
 import 'state.dart';
-import 'values/world.dart';
 
-const _minusOne = -1;
-const _one = 1;
 const msPerSecond = 1000;
 const framesPerSecond = 30;
 const msPerFrame = msPerSecond ~/ framesPerSecond;
@@ -71,20 +69,6 @@ void fixedUpdate(Timer timer) {
   frame++;
   updateOpenWorldTime();
   global.update();
-}
-
-int compareGameObjectsX(GameObject a, GameObject b) {
-  if (a.x < b.x) {
-    return _minusOne;
-  }
-  return _one;
-}
-
-int compareGameObjectsY(GameObject a, GameObject b) {
-  if (a.y < b.y) {
-    return _minusOne;
-  }
-  return _one;
 }
 
 void updateCollisionBetween(List<GameObject> gameObjects) {
