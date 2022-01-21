@@ -5,6 +5,7 @@ import 'bleed/zombie_health.dart';
 import 'classes/Ability.dart';
 import 'classes/Character.dart';
 import 'classes/Collectable.dart';
+import 'classes/Crate.dart';
 import 'classes/EnvironmentObject.dart';
 import 'classes/Game.dart';
 import 'classes/GameEvent.dart';
@@ -60,6 +61,11 @@ void compileGame(Game game) {
     _compileNpcDebug(buffer, game.npcs);
   }
 
+  if (game.cratesDirty){
+    game.cratesDirty = false;
+    _compileCrates(buffer, game.crates);
+  }
+
   _write(buffer, ServerResponse.Scene_Shade_Max.index);
   _write(buffer, game.shadeMax.index);
 
@@ -89,6 +95,14 @@ void compileGame(Game game) {
     buffer.write(_space);
     game.compiledTeamText[player.team]?.write(_comma);
     buffer.write(_space);
+  }
+}
+
+void _compileCrates(StringBuffer buffer, List<Crate> crates) {
+  _write(buffer, ServerResponse.Crates.index);
+  _write(buffer, crates.length);
+  for (Crate crate in crates) {
+    _writeVector2Int(buffer, crate);
   }
 }
 
@@ -453,6 +467,11 @@ void _writeSemiColon(StringBuffer buffer) {
 
 void _writeInt(StringBuffer buffer, double value) {
   _write(buffer, value.toInt());
+}
+
+void _writeVector2Int(StringBuffer buffer, Vector2 vector2){
+  _writeInt(buffer, vector2.x);
+  _writeInt(buffer, vector2.y);
 }
 
 void _write(StringBuffer buffer, dynamic value) {

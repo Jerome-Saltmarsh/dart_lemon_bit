@@ -1,9 +1,9 @@
-class Crate {
-  double x;
-  double y;
+import 'package:lemon_math/Vector2.dart';
+
+class Crate extends Vector2 {
   int deactiveDuration = 0;
 
   bool get active => deactiveDuration <= 0;
 
-  Crate({required this.x, required this.y});
+  Crate({required double x, required double y}) : super(x, y);
 }

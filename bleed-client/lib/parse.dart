@@ -210,11 +210,10 @@ void parseState() {
         break;
 
       case ServerResponse.Crates:
-        game.cratesTotal = 0;
-        while (!_simiColonConsumed()) {
-          game.crates[game.cratesTotal].x = consumeDouble();
-          game.crates[game.cratesTotal].y = consumeDouble();
-          game.cratesTotal++;
+        game.cratesTotal = consumeInt();
+        game.crates.clear();
+        for (int i = 0; i < game.cratesTotal; i++) {
+          game.crates.add(_consumeVector2());
         }
         break;
       case ServerResponse.Grenades:

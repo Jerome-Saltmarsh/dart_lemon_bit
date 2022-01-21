@@ -109,6 +109,7 @@ abstract class Game {
   List<Grenade> grenades = [];
   List<GameEvent> gameEvents = [];
   List<Crate> crates = [];
+  bool cratesDirty = false;
 
   final List<Collider> colliders = [];
   final List<Collectable> collectables = [];

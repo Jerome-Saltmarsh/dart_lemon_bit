@@ -23,7 +23,6 @@ import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/game.dart';
@@ -415,7 +414,6 @@ class _Views {
   final Widget connecting = _buildView.connecting();
   final Widget connection = _buildView.connection();
   final Widget editor = buildEditorUI();
-  final Widget gameFinished = _buildView.gameFinished();
 }
 
 final Map<Connection, String> connectionMessage = {
@@ -437,7 +435,7 @@ class _BuildView {
           text(connectionMessage[value], size: 25),
           height16,
           button("Cancel", () {
-            actions.exit();
+            actions.exitGame();
             webSocket.disconnect();
           }, width: 100)
         ],
@@ -468,13 +466,6 @@ class _BuildView {
     );
   }
 
-  Widget gameFinished() {
-    return dialog(
-        child: layout(
-      topLeft: text("Game Finished"),
-      topRight: text("Exit"),
-    ));
-  }
 
   Widget connecting() {
     return WatchBuilder(game.region, (Region region) {
@@ -682,7 +673,7 @@ Widget buildViewConnected() {
               return text(game.type.value);
           }
         case GameStatus.Finished:
-          return _views.gameFinished;
+          return buildDialogGameFinished();
         default:
           return text(enumString(gameStatus));
       }
@@ -782,20 +773,11 @@ Widget buildLayoutLobby() {
       ],
     ),
   );
-
-  // return layout(
-  //     padding: 8,
-  //     topLeft: widgets.title,
-  //     child: dialog(
-  //         padding: 16,
-  //         color: colours.white05,
-  //         borderColor: colours.none,
-  //         child: layout(
-  //           bottomRight: button("Cancel", actions.leaveLobby, borderColor: colours.none, fontSize: 25),
-  //           child: ,
-  //         )));
 }
 
+Widget buildDialogGameFinished(){
+  return buildDialogMedium(child: Center(child: text("Game Finished")), bottomRight: buildButton("Exit", actions.exitGame));
+}
 
 bool isAccountName(String publicName){
   final account = game.account.value;
@@ -809,13 +791,5 @@ Widget statefulBuilder(Widget Function(Function rebuild) build) {
       setState((){});
     };
     return build(rebuild);
-  });
-}
-
-void a(){
-  int b = 5;
-  statefulBuilder((rebuild) {
-      b = 10;
-      return text(b);
   });
 }

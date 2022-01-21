@@ -54,9 +54,6 @@ class _Global {
   }
 
   void update() {
-
-    // cubeGame.update();
-
     for (Game game in games) {
 
       switch(game.status) {

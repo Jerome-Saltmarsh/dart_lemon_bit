@@ -1,5 +1,7 @@
 import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/give_or_take.dart';
 
+import '../classes/Crate.dart';
 import '../classes/Game.dart';
 import '../classes/Player.dart';
 import '../common/CharacterType.dart';
@@ -24,6 +26,12 @@ class GameRoyal extends Game {
     teamSize = 1;
     numberOfTeams = 2;
     boundaryCenter = getSceneCenter();
+
+    for(int i = 0; i < 10; i++){
+      final crate = Crate(x: giveOrTake(500), y: 500);
+      crates.add(crate);
+      cratesDirty = true;
+    }
   }
 
   int get playersRequired => teamSize * numberOfTeams;

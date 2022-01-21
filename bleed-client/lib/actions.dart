@@ -146,7 +146,7 @@ class _Actions {
 
   }
 
-  void exit(){
+  void exitGame(){
     print("logic.exit()");
     game.type.value = GameType.None;
     clearSession();
@@ -156,7 +156,7 @@ class _Actions {
   // functions
   void leaveLobby() {
     server.leaveLobby();
-    exit();
+    exitGame();
   }
 
   void clearSession(){

@@ -293,7 +293,7 @@ class _Buttons {
 
 
   final Widget debug = button("Debug", toggleDebugMode);
-  final Widget exit = button('Exit', actions.exit);
+  final Widget exit = button('Exit', actions.exitGame);
   final Widget edit = button("Edit", actions.toggleEditMode);
   final Widget editor = button("Editor", actions.openEditor);
   final Widget register = button("Register", actions.openEditor);
