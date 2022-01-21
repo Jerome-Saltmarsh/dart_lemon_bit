@@ -1,4 +1,5 @@
 
+import '../common/CommonSettings.dart';
 import '../common/ItemType.dart';
 import '../settings.dart';
 import 'GameObject.dart';
@@ -13,6 +14,6 @@ class Item extends GameObject {
     required double x,
     required double y,
     bool this.timed = false
-  }) : super(x, y, radius: 25);
+  }) : super(x, y, radius: commonSettings.itemRadius);
 }
 

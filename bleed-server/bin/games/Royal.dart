@@ -7,6 +7,7 @@ import '../classes/Item.dart';
 import '../classes/Player.dart';
 import '../classes/Weapon.dart';
 import '../common/CharacterType.dart';
+import '../common/GameEventType.dart';
 import '../common/GameStatus.dart';
 import '../common/GameType.dart';
 import '../common/ItemType.dart';
@@ -55,6 +56,23 @@ class GameRoyal extends Game {
 
   @override
   bool onPlayerItemCollision(Player player, Item item){
+    if (item.type == ItemType.Handgun){
+        final handGunIndex = getIndexOfWeaponType(player, WeaponType.HandGun);
+        if (handGunIndex == -1){
+            player.weapons.add(
+                Weapon(
+                  type: WeaponType.HandGun,
+                  damage: 1,
+                  capacity: 50,
+                  rounds: 10
+                )
+            );
+        } else {
+          final weapon = player.weapons[handGunIndex];
+          weapon.rounds += 10;
+          dispatch(GameEventType.Item_Acquired, item.x, item.y);
+        }
+    }
     return true;
   }
 

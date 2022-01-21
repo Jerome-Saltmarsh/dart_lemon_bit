@@ -9,6 +9,7 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/AbilityType.dart';
+import 'package:bleed_client/common/CommonSettings.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
@@ -147,7 +148,7 @@ void drawItems() {
 }
 
 void drawItem(Item item) {
-  drawCircleOutline(radius: 25, x: item.x, y: item.y, color: white);
+  drawCircleOutline(radius: commonSettings.itemRadius, x: item.x, y: item.y, color: white);
   drawAtlas(
       dst: dst(item, translateX: -32, translateY: -32),
       src: srcLoop(
