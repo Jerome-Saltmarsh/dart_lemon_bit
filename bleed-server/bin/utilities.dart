@@ -172,23 +172,24 @@ int calculateTime({int minute = 0, int hour = 0}){
   return secondsPerMinute * minutesPerHour * hour + minute;
 }
 
-void sortVertically(List<Vector2> list){
+void sortVertically(List<Vector2> items) {
   int start = 0;
-  int end = list.length;
+  int end = items.length;
   for (var pos = start + 1; pos < end; pos++) {
     var min = start;
     var max = pos;
-    var element = list[pos];
+    var element = items[pos];
     while (min < max) {
       var mid = min + ((max - min) >> 1);
-      if (element.y < list[mid].y) {
+      if (element.y < items[mid].y) {
         max = mid;
       } else {
         min = mid + 1;
       }
     }
-    list.setRange(min + 1, pos + 1, list, min);
-    list[min] = element;
+    items.setRange(min + 1, pos + 1, items, min);
+    items[min] = element;
+  }
 }
 
 
