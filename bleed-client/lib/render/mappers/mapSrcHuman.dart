@@ -96,7 +96,7 @@ Float32List mapSrcHuman({
         animation: animations.human.strikingSword,
         direction: direction,
         frame: frame,
-        framesPerDirection: 3,
+        framesPerDirection: 2,
         size: 96
       );
     case CharacterState.Running:

@@ -345,7 +345,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             case CharacterAction.Perform:
               if (player.isHuman) {
                 characterFace(player, mouseX, mouseY);
-                game.setCharacterState(player, CharacterState.Firing);
+                if (player.weapon.type == WeaponType.Unarmed){
+                  game.setCharacterState(player, CharacterState.Striking);
+                } else {
+                  game.setCharacterState(player, CharacterState.Firing);
+                }
                 break;
               }
               Ability? ability = player.ability;
