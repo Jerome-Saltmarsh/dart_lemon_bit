@@ -1,6 +1,5 @@
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:golden_ratio/constants.dart';
 
 final _Colors colours = _Colors();
@@ -79,5 +78,4 @@ Color getColorSkin(Shade shading){
     case Shade.PitchBlack:
       return colours.pitchBlack;
   }
-  throw Exception();
 }

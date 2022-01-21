@@ -24,14 +24,14 @@ Float32List mapSrcArcher({
       _src[3] = 2;
       return _src;
     case CharacterState.Idle:
-      return loop(
+      return srcLoop(
           atlas: atlas.archer.idle,
           direction: direction,
           framesPerDirection: 1,
           frame: frame
       );
     case CharacterState.Walking:
-      return loop(
+      return srcLoop(
           atlas: atlas.archer.running,
           direction: direction,
           frame: frame
@@ -51,7 +51,7 @@ Float32List mapSrcArcher({
           frame: frame
       );
     case CharacterState.Running:
-      return loop(
+      return srcLoop(
           atlas: atlas.archer.running,
           direction: direction,
           frame: frame

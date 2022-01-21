@@ -1,8 +1,8 @@
 
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
-import 'package:bleed_client/webSocket.dart';
 import 'package:bleed_client/send.dart';
+import 'package:bleed_client/webSocket.dart';
 
 final _Server server = _Server();
 

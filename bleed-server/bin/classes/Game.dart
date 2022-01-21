@@ -46,7 +46,6 @@ import '../update.dart';
 import '../utilities.dart';
 import 'Ability.dart';
 import 'Character.dart';
-import 'Collectable.dart';
 import 'Collider.dart';
 import 'Crate.dart';
 import 'EnvironmentObject.dart';
@@ -110,7 +109,6 @@ abstract class Game {
   bool cratesDirty = false;
 
   final List<Collider> colliders = [];
-  final List<Collectable> collectables = [];
   final List<Vector2> playerSpawnPoints = [];
   final List<Item> items = [];
   int spawnPointIndex = 0;
@@ -218,8 +216,6 @@ abstract class Game {
             break;
           case Tile.RandomItemSpawn:
             Vector2 tilePosition = getTilePosition(row, column);
-            collectables.add(Collectable(
-                tilePosition.x, tilePosition.y, randomCollectableType));
             break;
           default:
             break;
@@ -370,34 +366,6 @@ extension GameFunctions on Game {
     }
   }
 
-  void _updateCollectables() {
-    // @on update collectables
-    for (Player player in players) {
-      for (int i = 0; i < collectables.length; i++) {
-        if (!collectables[i].active) continue;
-
-        if (abs(player.x - collectables[i].x) > settings.itemCollectRadius)
-          continue;
-        if (abs(player.y - collectables[i].y) > settings.itemCollectRadius)
-          continue;
-
-        switch (collectables[i].type) {
-          case CollectableType.Handgun_Ammo:
-            dispatch(GameEventType.Item_Acquired, collectables[i].x,
-                collectables[i].y, 0, 0);
-            break;
-          default:
-            break;
-        }
-        collectables[i].active = false;
-        // TODO expensive call
-        delayed(() {
-          activateCollectable(collectables[i]);
-        }, seconds: settings.itemReactivationInSeconds);
-      }
-    }
-  }
-
   /// calculates if there is a wall between two objects
   bool isVisibleBetween(Vector2 a, Vector2 b) {
     double r = radiansV2(a, b);
@@ -415,11 +383,6 @@ extension GameFunctions on Game {
       y += vY;
     }
     return true;
-  }
-
-  void activateCollectable(Collectable collectable) {
-    collectable.active = true;
-    collectable.setType(randomCollectableType);
   }
 
   void applyDamage(Character src, Character target, int amount) {

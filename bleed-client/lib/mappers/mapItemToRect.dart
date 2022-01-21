@@ -8,7 +8,7 @@ import 'package:bleed_client/state.dart';
 Rect mapItemToRect(ItemType item) {
   switch (item) {
     case ItemType.Health:
-      return _health[drawFrame % _healthFrames];
+      return _health[0];
     case ItemType.Grenade:
       return _grenade[0];
     case ItemType.Credits:

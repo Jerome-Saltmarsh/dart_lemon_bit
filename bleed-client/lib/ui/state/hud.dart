@@ -6,16 +6,13 @@ import 'package:bleed_client/Bool.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
+import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/buildSkillTree.dart';
 import 'package:bleed_client/ui/compose/buildTextBox.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
-import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_math/golden_ratio.dart';
@@ -24,8 +21,8 @@ import 'package:lemon_watch/watch.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../../send.dart';
-import '../widgets.dart';
 import '../../styles.dart';
+import '../widgets.dart';
 import 'tips.dart';
 
 final _Hud hud = _Hud();

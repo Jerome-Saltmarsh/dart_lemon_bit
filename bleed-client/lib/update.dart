@@ -6,20 +6,18 @@ import 'package:bleed_client/functions/cameraFollowPlayer.dart';
 import 'package:bleed_client/functions/spawners/spawnParticle.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/update/updateParticles.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:lemon_engine/game.dart';
-import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_engine/state/zoom.dart';
 import 'package:lemon_math/randomInt.dart';
 
 import 'common/GameStatus.dart';
 import 'functions/emit/emitMyst.dart';
 import 'input.dart';
-import 'webSocket.dart';
 import 'state.dart';
 import 'update/updateCharacters.dart';
+import 'webSocket.dart';
 
 int emitPart = 0;
 double targetZoom = 1;
@@ -50,7 +48,7 @@ void _updateBleed(){
   if (game.status.value == GameStatus.Finished) return;
 
   updateZoom();
-  framesSinceEvent++;
+  game.framesSinceEvent++;
   readPlayerInput();
   updateParticles();
   updateDeadCharacterBlood();

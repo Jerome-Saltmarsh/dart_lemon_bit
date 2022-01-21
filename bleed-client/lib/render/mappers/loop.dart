@@ -5,7 +5,7 @@ import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/render/mappers/mapSrc.dart';
 import 'package:lemon_math/Vector2.dart';
 
-Float32List loop({
+Float32List srcLoop({
   required Vector2 atlas,
   required Direction direction,
   required int frame,
@@ -22,7 +22,7 @@ Float32List loop({
       height: size);
 }
 
-Float32List single({
+Float32List srcSingle({
   required Vector2 atlas,
   required Direction direction,
   Shade shade = Shade.Bright,

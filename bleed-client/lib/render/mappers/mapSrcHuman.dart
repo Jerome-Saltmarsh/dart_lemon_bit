@@ -19,44 +19,44 @@ Float32List mapSrcHuman({
 
   switch (characterState) {
     case CharacterState.Idle:
-      return single(
+      return srcSingle(
         atlas: _idleWeaponTypeVector2[weaponType] ?? _idleWeaponTypeVector2[WeaponType.Unarmed]!,
         direction: direction,
       );
     case CharacterState.Walking:
       switch (weaponType) {
         case WeaponType.Unarmed:
-          return loop(
+          return srcLoop(
               atlas: atlas.human.unarmed.walking,
               direction: direction,
               frame: frame
           );
         case WeaponType.HandGun:
-          return loop(
+          return srcLoop(
             atlas: atlas.human.handgun.walking,
             direction: direction,
             frame: frame
           );
         case WeaponType.Shotgun:
-          return loop(
+          return srcLoop(
               atlas: atlas.human.shotgun.walking,
               direction: direction,
               frame: frame
           );
         default:
-          return loop(atlas: atlas.human.unarmed.walking, direction: direction, frame: frame);
+          return srcLoop(atlas: atlas.human.unarmed.walking, direction: direction, frame: frame);
       }
 
     case CharacterState.Dead:
-      return single(atlas: atlas.human.dying, direction: direction);
+      return srcSingle(atlas: atlas.human.dying, direction: direction);
 
     case CharacterState.Aiming:
       switch (weaponType) {
         case WeaponType.HandGun:
-          return single(atlas: atlas.human.handgun.firing, direction: direction);
+          return srcSingle(atlas: atlas.human.handgun.firing, direction: direction);
 
         case WeaponType.Shotgun:
-          return single(atlas: atlas.human.shotgun.firing, direction: direction);
+          return srcSingle(atlas: atlas.human.shotgun.firing, direction: direction);
 
         default:
           throw Exception("Cannot aim unarmed");
@@ -101,31 +101,31 @@ Float32List mapSrcHuman({
     case CharacterState.Running:
       switch (weaponType) {
         case WeaponType.HandGun:
-          return loop(
+          return srcLoop(
               atlas: atlas.human.handgun.walking,
               direction: direction,
               frame: frame
           );
         case WeaponType.Shotgun:
-          return loop(
+          return srcLoop(
               atlas: atlas.human.shotgun.walking,
               direction: direction,
               frame: frame
           );
         case WeaponType.SniperRifle:
-          return loop(
+          return srcLoop(
               atlas: atlas.human.shotgun.walking,
               direction: direction,
               frame: frame
           );
         case WeaponType.AssaultRifle:
-          return loop(
+          return srcLoop(
               atlas: atlas.human.shotgun.walking,
               direction: direction,
               frame: frame
           );
         default:
-          return loop(
+          return srcLoop(
             atlas: atlas.human.unarmed.running,
             direction: direction,
             frame: frame,

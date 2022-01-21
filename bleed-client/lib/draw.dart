@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/getters/inDarkness.dart';
@@ -8,7 +7,6 @@ import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/render/state/tilesDst.dart';
 import 'package:bleed_client/render/state/tilesSrc.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/queries/on_screen.dart';

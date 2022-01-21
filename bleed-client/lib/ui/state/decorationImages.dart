@@ -1,6 +1,5 @@
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 
 Map<AbilityType, DecorationImage> mapAbilityTypeToDecorationImage = {
   AbilityType.Fireball: spellIcon("fireball"),

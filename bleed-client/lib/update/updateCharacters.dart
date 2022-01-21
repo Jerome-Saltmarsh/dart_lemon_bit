@@ -1,12 +1,9 @@
+import 'package:bleed_client/core/drawCanvas.dart';
 import 'package:bleed_client/functions/spawners/spawnBlood.dart';
-import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
 
-
-
-
 void updateDeadCharacterBlood() {
-  if (drawFrame % 8 == 0) return;
+  if (timeline.frame % 2 == 0) return;
 
   for (int i = 0; i < game.totalZombies.value; i++) {
     if (game.zombies[i].alive) continue;

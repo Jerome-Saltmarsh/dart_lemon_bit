@@ -4,19 +4,18 @@ import 'dart:convert';
 import 'bleed/zombie_health.dart';
 import 'classes/Ability.dart';
 import 'classes/Character.dart';
-import 'classes/Collectable.dart';
 import 'classes/Crate.dart';
 import 'classes/EnvironmentObject.dart';
 import 'classes/Game.dart';
 import 'classes/GameEvent.dart';
 import 'classes/Grenade.dart';
 import 'classes/InteractableNpc.dart';
+import 'classes/Item.dart';
 import 'classes/Npc.dart';
 import 'classes/Player.dart';
 import 'classes/Projectile.dart';
 import 'classes/Weapon.dart';
 import 'common/AbilityType.dart';
-import 'common/CharacterState.dart';
 import 'common/CharacterType.dart';
 import 'common/GameStatus.dart';
 import 'common/PlayerEvent.dart';
@@ -76,8 +75,8 @@ void compileGame(Game game) {
   }
 
   game.compiled = buffer.toString();
-
   game.compiledTeamText.clear();
+  compileItems(buffer, game.items);
 
   for (Player player in game.players) {
     if (!game.compiledTeamText.containsKey(player.team)) {
@@ -103,6 +102,15 @@ void compileCrates(StringBuffer buffer, List<Crate> crates) {
   _write(buffer, crates.length);
   for (Crate crate in crates) {
     _writeVector2Int(buffer, crate);
+  }
+}
+
+void compileItems(StringBuffer buffer, List<Item> items) {
+  _write(buffer, ServerResponse.Items.index);
+  _write(buffer, items.length);
+  for (Item item in items) {
+    _write(buffer, item.type.index);
+    _writeVector2Int(buffer, item);
   }
 }
 
@@ -315,16 +323,6 @@ void _compileGameEvents(StringBuffer buffer, List<GameEvent> gameEvents) {
     _writeInt(buffer, gameEvent.y);
     _write(buffer, gameEvent.xv.toStringAsFixed(1));
     _write(buffer, gameEvent.yv.toStringAsFixed(1));
-  }
-  buffer.write(_semiColon);
-}
-
-void _compileCollectables(StringBuffer buffer, List<Collectable> collectables) {
-  buffer.write(_collectablesIndex);
-  buffer.write(_space);
-  for (Collectable collectable in collectables) {
-    if (!collectable.active) continue;
-    buffer.write(collectable.compiled);
   }
   buffer.write(_semiColon);
 }

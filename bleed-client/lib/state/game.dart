@@ -49,6 +49,9 @@ enum OperationStatus {
 }
 
 class _Game {
+  int framesSinceEvent = 0;
+  int lag = 0;
+  final Map<int, bool> gameEvents = Map();
   final Watch<int> countDownFramesRemaining = Watch(0);
   final Watch<String?> errorMessage = Watch(null);
   final Watch<OperationStatus> operationStatus = Watch(OperationStatus.None);
@@ -93,7 +96,7 @@ class _Game {
   int id = -1;
   int totalProjectiles = 0;
   List<Item> items = [];
-  int totalItems = 0;
+  int itemsTotal = 0;
 
   final _Royal royal = _Royal();
 

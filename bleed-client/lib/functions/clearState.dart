@@ -16,7 +16,7 @@ void clearState() {
   clearCompileGameState();
   clearRender();
   zoom = 1;
-  gameEvents.clear();
+  game.gameEvents.clear();
   game.mode.value = Mode.Play;
   refreshUI();
   redrawCanvas();

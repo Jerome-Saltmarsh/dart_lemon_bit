@@ -3,11 +3,9 @@ import 'dart:io';
 
 import 'package:lemon_math/Vector2.dart';
 
-import '../classes/Collectable.dart';
 import '../classes/Scene.dart';
 import '../common/Tile.dart';
 import '../classes/EnvironmentObject.dart';
-import '../common/CollectableType.dart';
 import '../common/enums/ObjectType.dart';
 import '../instances/scenes.dart';
 
@@ -35,13 +33,6 @@ Scene _mapStringToScene(String text) {
   Map<String, dynamic> json = _decoder.convert(text);
 
   List collectablesInts = json['collectables'];
-  List<Collectable> collectables = [];
-  for (int i = 0; i < collectablesInts.length; i += 3) {
-    CollectableType type = CollectableType.values[collectablesInts[i]];
-    double x = collectablesInts[i + 1].toDouble();
-    double y = collectablesInts[i + 2].toDouble();
-    collectables.add(Collectable(x, y, type));
-  }
 
   List<Vector2> playerSpawnPoints = [];
   if (json.containsKey('player-spawn-points')) {

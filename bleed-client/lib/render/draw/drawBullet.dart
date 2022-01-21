@@ -3,6 +3,7 @@ import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/constants/colours.dart';
+import 'package:bleed_client/core/drawCanvas.dart';
 import 'package:bleed_client/getters/inDarkness.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/mappers/mapDirectionToAngle.dart';
@@ -56,7 +57,7 @@ void drawFireball(double x, double y, Direction direction) {
       translateX: x,
       translateY: y);
 
-  int frame = drawFrame % 4;
+  int frame = timeline.frame % 4;
 
   Rect rect = Rect.fromLTWH(atlas.projectiles.fireball.x, atlas.projectiles.fireball.y + (frame * atlas.projectiles.fireball.size),
       atlas.projectiles.fireball.size, atlas.projectiles.fireball.size);

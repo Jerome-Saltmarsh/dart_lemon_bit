@@ -25,7 +25,7 @@ Float32List mapSrcWitch({
       _src[3] = 2;
       return _src;
     case CharacterState.Idle:
-      return loop(
+      return srcLoop(
           atlas: atlas.witch.idle,
           direction: direction,
           shade: Shade.Bright,
@@ -33,7 +33,7 @@ Float32List mapSrcWitch({
           framesPerDirection: 1,
           frame: frame);
     case CharacterState.Walking:
-      return loop(
+      return srcLoop(
           atlas: atlas.witch.running,
           direction: direction,
           shade: Shade.Bright,
@@ -68,7 +68,7 @@ Float32List mapSrcWitch({
           framesPerDirection: 2,
           frame: frame);
     case CharacterState.Running:
-      return loop(
+      return srcLoop(
           atlas: atlas.witch.running,
           direction: direction,
           shade: Shade.Bright,

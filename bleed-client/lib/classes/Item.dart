@@ -1,10 +1,8 @@
 
 import 'package:bleed_client/common/ItemType.dart';
+import 'package:lemon_math/Vector2.dart';
 
-class Item {
+class Item extends Vector2 {
   ItemType type;
-  double x;
-  double y;
-
-  Item(this.type, this.x, this.y);
+  Item({required this.type, required double x, required double y}): super(x, y);
 }

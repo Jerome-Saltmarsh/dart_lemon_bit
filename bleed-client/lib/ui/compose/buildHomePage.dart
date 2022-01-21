@@ -1,8 +1,8 @@
 import 'package:bleed_client/common/GameType.dart';
-import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/flutterkit.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/styles.dart';
+import 'package:bleed_client/toString.dart';
 import 'package:flutter/cupertino.dart';
 
 const _buttonWidth = 220.0;

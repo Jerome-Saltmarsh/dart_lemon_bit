@@ -1,24 +1,26 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/Explosion.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
+import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/AbilityType.dart';
-import 'package:bleed_client/common/CollectableType.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
+import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/constants/colours.dart';
+import 'package:bleed_client/core/drawCanvas.dart';
 import 'package:bleed_client/cube/scene.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
+import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/constants/charWidth.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/draw/drawBullets.dart';
@@ -28,12 +30,13 @@ import 'package:bleed_client/render/functions/applyDynamicShadeToTileSrc.dart';
 import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
 import 'package:bleed_client/render/functions/emitLight.dart';
 import 'package:bleed_client/render/functions/resetDynamicShadesToBakeMap.dart';
+import 'package:bleed_client/render/mappers/loop.dart';
+import 'package:bleed_client/render/mappers/mapDst.dart';
 import 'package:bleed_client/render/state/dynamicShading.dart';
 import 'package:bleed_client/render/state/floatingText.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
@@ -51,13 +54,10 @@ import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/opposite.dart';
 
 import '../../draw.dart';
-import '../../state.dart';
-import 'drawGrenade.dart';
 import 'drawInteractableNpcs.dart';
 import 'drawParticle.dart';
 
 final double _nameRadius = 100;
-int _flameIndex = 0;
 
 bool get dayTime => ambient.index == Shade.Bright.index;
 const animationFrameRate = 7; // frames per change;
@@ -69,11 +69,6 @@ void renderGame(Canvas canvas, Size size) {
   if (game.type.value == GameType.CUBE3D){
     scene.render(canvas, size);
     return;
-  }
-
-  if (frameRateValue++ % animationFrameRate == 0) {
-    drawFrame++;
-    _flameIndex = (_flameIndex + 1) % 4;
   }
 
   if (!dayTime) {
@@ -118,7 +113,53 @@ void renderGame(Canvas canvas, Size size) {
 
   setColorWhite();
   drawSprites();
+  drawEffects();
+  drawItems();
+  // drawCrates();
 
+  if (game.settings.compilePaths) {
+    drawDebugEnvironmentObjects();
+    drawPaths();
+    drawDebugNpcs(game.npcDebug);
+  }
+
+  if (game.type.value == GameType.BATTLE_ROYAL){
+    drawRoyalPerimeter();
+  }
+
+  _drawFloatingTexts();
+  _drawPlayerNames();
+  drawPlayerText();
+  setColorWhite();
+}
+
+void drawCrates() {
+  for(Vector2 crate in game.crates){
+    drawCircle(crate.x, crate.y, 30, colours.red);
+  }
+}
+
+void drawItems() {
+  for (int i = 0; i < game.itemsTotal; i++){
+    drawItem(game.items[i]);
+  }
+}
+
+void drawItem(Item item) {
+  drawAtlas(
+      dst: dst(item),
+      src: srcLoop(
+          atlas: atlas.items,
+          direction: Direction.Down,
+          frame: timeline.frame,
+          framesPerDirection: 8));
+}
+
+void drawRoyalPerimeter() {
+  drawCircleOutline(sides: 50, radius: game.royal.radius, x: game.royal.mapCenter.x, y: game.royal.mapCenter.y, color: Colors.red);
+}
+
+void drawEffects() {
   for (Effect effect in game.effects) {
     if (!effect.enabled) continue;
     if (effect.duration++ > effect.maxDuration) {
@@ -138,25 +179,6 @@ void renderGame(Canvas canvas, Size size) {
       );
     }
   }
-
-  for(Vector2 crate in game.crates){
-    drawCircle(crate.x, crate.y, 30, colours.red);
-  }
-
-  if (game.settings.compilePaths) {
-    drawDebugEnvironmentObjects();
-    drawPaths();
-    drawDebugNpcs(game.npcDebug);
-  }
-
-  if (game.type.value == GameType.BATTLE_ROYAL){
-    drawCircleOutline(sides: 50, radius: game.royal.radius, x: game.royal.mapCenter.x, y: game.royal.mapCenter.y, color: Colors.red);
-  }
-
-  _drawFloatingTexts();
-  _drawPlayerNames();
-  drawPlayerText();
-  setColorWhite();
 }
 
 void drawMouseAim2() {
@@ -438,7 +460,6 @@ double getDistanceBetweenMouseAndPlayer(){
 
 void _drawMouseAim() {
   if (!mouseAvailable) return;
-  if (!playerReady) return;
   if (game.player.dead) return;
 
   paint.strokeWidth = 3;
@@ -459,16 +480,8 @@ void _drawMouseAim() {
   setColorWhite();
 }
 
-// TODO Optimize
-void drawCollectable(CollectableType type, double x, double y) {}
-
 void _drawLine(Offset a, Offset b, Color color) {
   paint.color = color;
   globalCanvas.drawLine(a, b, paint);
 }
 
-void _drawGrenades(List<double> grenades) {
-  for (int i = 0; i < grenades.length; i += 3) {
-    drawGrenade(grenades[i], grenades[i + 1], grenades[i + 2]);
-  }
-}

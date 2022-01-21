@@ -3,11 +3,13 @@ import 'package:lemon_math/give_or_take.dart';
 
 import '../classes/Crate.dart';
 import '../classes/Game.dart';
+import '../classes/Item.dart';
 import '../classes/Player.dart';
 import '../classes/Weapon.dart';
 import '../common/CharacterType.dart';
 import '../common/GameStatus.dart';
 import '../common/GameType.dart';
+import '../common/ItemType.dart';
 import '../common/WeaponType.dart';
 import '../functions/withinRadius.dart';
 import '../instances/scenes.dart';
@@ -22,6 +24,10 @@ class GameRoyal extends Game {
 
   final time = calculateTime(hour: 9);
 
+  get _randomSpawnRadius => 500;
+  double get randomX => boundaryCenter.x + giveOrTake(_randomSpawnRadius);
+  double get randomY => boundaryCenter.y + giveOrTake(_randomSpawnRadius);
+
   GameRoyal() : super(scenes.royal, gameType: GameType.BATTLE_ROYAL) {
     status = GameStatus.Awaiting_Players;
     teamSize = 1;
@@ -30,12 +36,18 @@ class GameRoyal extends Game {
 
     for (int i = 0; i < 10; i++) {
       final crate = Crate(
-          x: boundaryCenter.x + giveOrTake(500),
-          y: boundaryCenter.y + giveOrTake(500),
+          x: randomX,
+          y: randomY,
       );
       crates.add(crate);
       cratesDirty = true;
     }
+
+    for (int i = 0; i < 10; i++){
+      final item = Item(type: ItemType.Handgun, x:  randomX, y: randomX);
+      items.add(item);
+    }
+    sortVertically(items);
     sortVertically(crates);
   }
 

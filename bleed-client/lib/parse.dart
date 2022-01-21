@@ -23,7 +23,6 @@ import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
-import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/functions/emit/emitMyst.dart';
 import 'package:bleed_client/functions/emitSmoke.dart';
 import 'package:bleed_client/parser/parseCubePlayers.dart';
@@ -47,7 +46,6 @@ import 'common/enums/ObjectType.dart';
 import 'functions/onGameEvent.dart';
 import 'render/functions/mapTilesToSrcAndDst.dart';
 import 'state.dart';
-import 'webSocket.dart';
 
 // state
 int _index = 0;
@@ -60,15 +58,23 @@ const String _comma = ",";
 const List<ServerResponse> serverResponses = ServerResponse.values;
 const List<GameEventType> gameEventTypes = GameEventType.values;
 
-String get _currentCharacter => compiledGame[_index];
+String get _currentCharacter {
+  // debug mode
+  // if (_index >= compiledGame.length){
+  //   throw Exception("parser exceeded length while parsing $_currentServerResponse");
+  // }
+  return compiledGame[_index];
+}
+
+late ServerResponse _currentServerResponse;
 
 // functions
 void parseState() {
   _index = 0;
   compiledGame = compiledGame.trim();
   while (_index < compiledGame.length) {
-    ServerResponse serverResponse = _consumeServerResponse();
-    switch (serverResponse) {
+    _currentServerResponse = _consumeServerResponse();
+    switch (_currentServerResponse) {
       case ServerResponse.Tiles:
         _parseTiles();
         setBakeMapToAmbientLight();
@@ -209,12 +215,12 @@ void parseState() {
         player.message.value = message.trim();
         break;
 
+      case ServerResponse.Items:
+        parseItems();
+        break;
+
       case ServerResponse.Crates:
-        game.cratesTotal = consumeInt();
-        game.crates.clear();
-        for (int i = 0; i < game.cratesTotal; i++) {
-          game.crates.add(_consumeVector2());
-        }
+        parseCrates();
         break;
       case ServerResponse.Grenades:
         _parseGrenades();
@@ -279,8 +285,8 @@ void parseState() {
         break;
 
       case ServerResponse.Items:
-        game.totalItems = consumeInt();
-        for (int i = 0; i < game.totalItems; i++) {
+        game.itemsTotal = consumeInt();
+        for (int i = 0; i < game.itemsTotal; i++) {
           Item item = game.items[i];
           item.type = _consumeItemType();
           item.x = consumeDouble();
@@ -302,6 +308,24 @@ void parseState() {
       }
       break;
     }
+  }
+}
+
+void parseItems() {
+  game.itemsTotal = consumeInt();
+  for(int i = 0; i < game.itemsTotal; i++){
+    final item = game.items[i];
+    item.type = _consumeItemType();
+    item.x = consumeDouble();
+    item.y = consumeDouble();
+  }
+}
+
+void parseCrates() {
+  game.cratesTotal = consumeInt();
+  game.crates.clear();
+  for (int i = 0; i < game.cratesTotal; i++) {
+    game.crates.add(_consumeVector2());
   }
 }
 
@@ -585,8 +609,8 @@ double _consumeDoubleUnsafe() {
 
 Vector2 _consumeVector2() {
   final x = _consumeIntUnsafe();
-  final y = _consumeIntUnsafe();
-  return Vector2(x.toDouble(), y.toDouble());
+  final y = consumeDouble();
+  return Vector2(x.toDouble(), y);
 }
 
 bool _simiColonConsumed() {
@@ -628,13 +652,13 @@ void _consumeEvents() {
     double y = consumeDouble();
     double xv = consumeDouble();
     double yv = consumeDouble();
-    if (!gameEvents.containsKey(id)) {
-      gameEvents[id] = true;
+    if (!game.gameEvents.containsKey(id)) {
+      game.gameEvents[id] = true;
       onGameEvent(type, x, y, xv, yv);
     }
   }
   if (events == 0) {
-    gameEvents.clear(); // free up memory
+    game.gameEvents.clear(); // free up memory
   }
 }
 

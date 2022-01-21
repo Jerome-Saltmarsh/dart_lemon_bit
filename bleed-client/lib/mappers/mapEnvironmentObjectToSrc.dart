@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:bleed_client/core/drawCanvas.dart';
 import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
@@ -96,7 +97,7 @@ Float32List mapEnvironmentObjectToSrc(EnvironmentObject env){
   double top = shade.index * height + translation.y;
 
   if (type == ObjectType.Torch && ambient.isDarkerThan(Shade.Bright)){
-    top = _translations.torches.y + ((drawFrame % 4) * _torchHeight) + _torchHeight;
+    top = _translations.torches.y + ((timeline.frame % 4) * _torchHeight) + _torchHeight;
   }
 
   double bottom = top + height;

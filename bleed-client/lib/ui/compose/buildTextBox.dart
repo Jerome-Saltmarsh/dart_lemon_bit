@@ -1,6 +1,6 @@
+import 'package:bleed_client/styles.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/logic/showTextBox.dart';
-import 'package:bleed_client/styles.dart';
 import 'package:bleed_client/ui/state/hud.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/state/screen.dart';

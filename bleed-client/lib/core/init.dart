@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:bleed_client/audio.dart';
-import 'package:bleed_client/authentication.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Projectile.dart';
@@ -108,7 +107,7 @@ void initializeGameInstances() {
   for (int i = 0; i < 5000; i++) {
     game.projectiles
         .add(Projectile(0, 0, ProjectileType.Bullet, Direction.DownLeft));
-    game.items.add(Item(ItemType.None, 0, 0));
+    game.items.add(Item(type: ItemType.None, x: 0, y: 0));
   }
 
   for (int i = 0; i < 1000; i++) {
@@ -206,8 +205,8 @@ void initializeEventListeners() {
 }
 
 void _onEventReceivedFromServer(dynamic value) {
-  lag = framesSinceEvent;
-  framesSinceEvent = 0;
+  game.lag = game.framesSinceEvent;
+  game.framesSinceEvent = 0;
   compiledGame = value;
 }
 

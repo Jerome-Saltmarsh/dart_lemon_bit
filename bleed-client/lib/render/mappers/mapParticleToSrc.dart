@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:bleed_client/core/drawCanvas.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
@@ -105,7 +106,7 @@ Float32List mapParticleToSrc(Particle particle){
 
     case ParticleType.FireYellow:
       _src[0] = atlas.particles.flame.x;
-      _src[1] = atlas.particles.flame.y + ((drawFrame % 4) * 24);
+      _src[1] = atlas.particles.flame.y + ((timeline.frame % 4) * 24);
       _src[2] = _src[0] + 25;
       _src[3] = _src[1] + 24;
       return _src;

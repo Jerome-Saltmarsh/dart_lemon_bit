@@ -18,7 +18,7 @@ Float32List mapSrcZombie({
 }) {
   switch (state) {
     case CharacterState.Idle:
-        return loop(
+        return srcLoop(
             atlas: atlas.zombie.idle,
             direction: direction,
             shade: shade,
@@ -27,7 +27,7 @@ Float32List mapSrcZombie({
         );
 
     case CharacterState.Walking:
-      return loop(
+      return srcLoop(
           atlas: atlas.zombie.walking,
           direction: direction,
           shade: shade,
@@ -36,7 +36,7 @@ Float32List mapSrcZombie({
       );
 
     case CharacterState.Striking:
-      return loop(
+      return srcLoop(
           atlas: atlas.zombie.striking,
           direction: direction,
           shade: shade,
