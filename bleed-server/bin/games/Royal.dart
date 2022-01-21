@@ -53,6 +53,12 @@ class GameRoyal extends Game {
 
   int get playersRequired => teamSize * numberOfTeams;
 
+  @override
+  bool onPlayerItemCollision(Player player, Item item){
+    return true;
+  }
+
+
   Player playerJoin() {
     if (status != GameStatus.Awaiting_Players) {
       throw Exception("Game already started");

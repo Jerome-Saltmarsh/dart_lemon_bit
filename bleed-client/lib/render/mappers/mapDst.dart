@@ -17,6 +17,10 @@ Float32List mapDst({
   return _dst;
 }
 
-Float32List dst(Vector2 vector2, {double scale = 1.0}){
-  return mapDst(x: vector2.x, y: vector2.y, scale: scale);
+Float32List dst(Vector2 vector2, {double scale = 1.0, double translateX = 0, double translateY = 0}){
+  return mapDst(
+      x: vector2.x + translateX,
+      y: vector2.y + translateY,
+      scale: scale
+  );
 }

@@ -14,6 +14,7 @@ import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:bleed_client/constants/colors/white.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/core/drawCanvas.dart';
 import 'package:bleed_client/cube/scene.dart';
@@ -146,8 +147,9 @@ void drawItems() {
 }
 
 void drawItem(Item item) {
+  drawCircleOutline(radius: 25, x: item.x, y: item.y, color: white);
   drawAtlas(
-      dst: dst(item),
+      dst: dst(item, translateX: -32, translateY: -32),
       src: srcLoop(
           atlas: atlas.items,
           direction: Direction.Down,
