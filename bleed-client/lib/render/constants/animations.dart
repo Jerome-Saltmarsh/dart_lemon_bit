@@ -2,7 +2,7 @@
 final _Animations animations = _Animations();
 
 class _Animations {
-  final _Man man = _Man();
+  final _Man human = _Man();
   final _Witch witch = _Witch();
   final _Archer archer = _Archer();
   final _Knight knight = _Knight();

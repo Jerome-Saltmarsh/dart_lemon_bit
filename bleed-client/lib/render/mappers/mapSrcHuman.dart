@@ -13,10 +13,7 @@ import 'loop.dart';
 
 const _size = 64.0;
 
-final _manFramesFiringHandgunMax = animations.man.firingHandgun.length - 1;
-final _manFramesFiringShotgunMax = animations.man.firingShotgun.length - 1;
-
-const _framesPerDirection2 = 2;
+final _manFramesFiringShotgunMax = animations.human.firingShotgun.length - 1;
 const _framesPerDirection3 = 3;
 
 final Float32List _src = Float32List(4);
@@ -77,44 +74,39 @@ Float32List mapSrcHuman({
         case WeaponType.HandGun:
           return animate(
               atlas: atlas.human.handgun.firing,
-              animation: animations.man.firingHandgun,
+              animation: animations.human.firingHandgun,
               direction: direction,
               frame: frame,
               framesPerDirection: 2,
           );
 
         case WeaponType.Shotgun:
-          int _frame = animations
-              .man.firingShotgun[min(frame, _manFramesFiringShotgunMax)];
-          double _di = direction.index * _size * _framesPerDirection3;
-          double _fr = _frame * _size;
-          _src[0] = atlas.human.shotgun.firing.x + _di + _fr;
-          _src[1] = atlas.human.shotgun.firing.y;
-          break;
+          return animate(
+            atlas: atlas.human.shotgun.firing,
+            animation: animations.human.firingShotgun,
+            direction: direction,
+            frame: frame,
+            framesPerDirection: 3,
+          );
 
         default:
-          int _frame = -1;
-          if (frame < _manFramesFiringShotgunMax) {
-            _frame = animations.man.firingShotgun[frame];
-          } else {
-            _frame = _manFramesFiringShotgunMax - 1;
-          }
-          double _s = direction.index * _size * 3;
-          double _f = _frame * _size;
-          _src[0] = _s + _f + atlas.human.shotgun.firing.x;
-          _src[1] = atlas.human.shotgun.firing.y;
-          break;
+          return animate(
+            atlas: atlas.human.shotgun.firing,
+            animation: animations.human.firingShotgun,
+            direction: direction,
+            frame: frame,
+            framesPerDirection: 3,
+          );
       }
-      break;
     case CharacterState.Striking:
-      int _frame = animations.man.strikingSword[min(frame, 3)];
-      double _di = direction.index * 96.0 * 2;
-      double _fr = _frame * 96.0;
-      _src[0] = atlas.human.striking.x + _di + _fr;
-      _src[1] = atlas.human.striking.y + 96.0;
-      _src[2] = _src[0] + 96;
-      _src[3] = _src[1] + 96;
-      return _src;
+      return animate(
+        atlas: atlas.human.striking,
+        animation: animations.human.strikingSword,
+        direction: direction,
+        frame: frame,
+        framesPerDirection: 3,
+        size: 96
+      );
     case CharacterState.Running:
       switch (weaponType) {
         case WeaponType.HandGun:
