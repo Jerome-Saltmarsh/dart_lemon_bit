@@ -133,6 +133,11 @@ abstract class Game {
 
   void updateNpcBehavior(Npc npc) {}
 
+  /// Returning true will cause the item to be removed
+  bool onPlayerItemCollision(Player player, Item item){
+      return true;
+  }
+
   void changeGame(Player player, Game to) {
     if (player.game == to) return;
 
@@ -577,8 +582,10 @@ extension GameFunctions on Game {
           if (item.bottom < player.top) continue;
           if (item.right < player.left) continue;
           if (item.left > player.right) continue;
-          items.removeAt(i);
-          i--;
+          if (onPlayerItemCollision(player, item)){
+            items.removeAt(i);
+            i--;
+          }
       }
     }
   }
