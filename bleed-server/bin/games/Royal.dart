@@ -9,13 +9,12 @@ import '../common/GameStatus.dart';
 import '../common/GameType.dart';
 import '../functions/withinRadius.dart';
 import '../instances/scenes.dart';
-import '../update.dart';
 import '../utils/game_utils.dart';
 
 class GameRoyal extends Game {
 
   final List<Player> score = [];
-  final boundaryRadiusShrinkRate = 0.02;
+  final boundaryRadiusShrinkRate = 0.05;
   double boundaryRadius = 1000;
   Vector2 boundaryCenter = Vector2(0, 0);
 

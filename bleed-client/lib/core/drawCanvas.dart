@@ -2,10 +2,8 @@ import 'dart:ui';
 
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/GameStatus.dart';
-import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/editor/render/drawEditor.dart';
-import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
@@ -21,15 +19,23 @@ import 'package:bleed_client/webSocket.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/functions/screen_to_world.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
-import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/angle_between.dart';
 
+// TODO floating state
 int frame = 0;
+// TODO floating state
 int animationRate = 8;
+// TODO floating state
 int animationFrame = 1;
 
+int direction = 0;
+double x = 50;
+double y = 50;
+final Vector2 star = Vector2(100, 100);
+double rotation = 0;
+double scale = 1;
 
 void drawCanvas(Canvas canvas, Size size) {
   frame++;
@@ -42,30 +48,13 @@ void drawCanvas(Canvas canvas, Size size) {
     return;
   }
 
-  // if (game.region.value == Region.None) {
-  //   renderCanvasSelectRegion();
-  //   return;
-  // }
-  // if (game.type.value == GameType.None) {
-  //   renderCanvasSelectGame();
-  //   return;
-  // }
   if (!webSocket.connected) {
     renderBackground();
   }
   if (game.player.uuid.value.isEmpty) return;
-  if (game.status.value != GameStatus.In_Progress) return;
+  if (game.status.value == GameStatus.Awaiting_Players) return;
   renderGame(canvas, size);
 }
-
-int direction = 0;
-
-double x = 50;
-double y = 50;
-
-final Vector2 star = Vector2(100, 100);
-double rotation = 0;
-double scale = 1;
 
 void renderBackground(){
   // drawStar(x: star.x, y: star.y, rotation: rotation, scale: scale);
@@ -93,8 +82,6 @@ void renderCanvasSelectGame() {
     state = CharacterState.Idle;
     direction = Direction.Right;
   }
-
-  // drawFish(x: 400, y: 400, direction: Direction.DownRight, frame: 1);
 
   drawArcher(
       x: x,
