@@ -42,6 +42,7 @@ class _Human {
   final Vector2 firingBow = Vector2(1, 3218);
   final Vector2 changing = Vector2(1, 1479);
   final Vector2 dying = Vector2(1, 1736);
+  final Vector2 punching  = Vector2(1, 66);
 
 }
 

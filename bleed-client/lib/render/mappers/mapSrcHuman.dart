@@ -92,12 +92,11 @@ Float32List mapSrcHuman({
       }
     case CharacterState.Striking:
       return animate(
-        atlas: atlas.human.striking,
+        atlas: atlas.human.punching,
         animation: animations.human.strikingSword,
         direction: direction,
         frame: frame,
         framesPerDirection: 2,
-        size: 96
       );
     case CharacterState.Running:
       switch (weaponType) {
