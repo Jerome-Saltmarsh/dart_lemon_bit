@@ -392,6 +392,11 @@ extension GameFunctions on Game {
   void applyDamage(Character src, Character target, int amount) {
     if (target.dead) return;
     if (target.invincible) return;
+
+    if (target.armour > 0) {
+
+    }
+
     changeCharacterHealth(target, -amount);
     if (target.alive) return;
     if (target is Npc) {

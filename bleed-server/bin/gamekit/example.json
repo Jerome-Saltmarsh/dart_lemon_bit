@@ -1,0 +1,10 @@
+
+
+{
+  "triggers": [
+    {
+      "trigger": "OnHealthCollected",
+      "action": "health + 10"
+    }
+  ]
+}

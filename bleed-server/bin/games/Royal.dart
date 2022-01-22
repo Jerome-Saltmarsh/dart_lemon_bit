@@ -53,6 +53,9 @@ class GameRoyal extends Game {
     for (int i = 0; i < 5; i++){
       items.add(Item(type: ItemType.Armour, x:  randomX, y: randomY));
     }
+    for (int i = 0; i < 5; i++){
+      items.add(Item(type: ItemType.Health, x:  randomX, y: randomY));
+    }
 
     sortVertically(items);
     sortVertically(crates);
@@ -62,6 +65,7 @@ class GameRoyal extends Game {
 
   @override
   bool onPlayerItemCollision(Player player, Item item){
+
     final itemWeaponType = item.type.weaponType;
     if (itemWeaponType != null){
       dispatch(GameEventType.Item_Acquired, item.x, item.y);
@@ -77,6 +81,15 @@ class GameRoyal extends Game {
         final weapon = player.weapons[weaponIndex];
         weapon.rounds += _getWeaponTypeRounds(itemWeaponType);
       }
+      return true;
+    }
+
+    if (item.type == ItemType.Armour) {
+      player.armour = player.maxArmour;
+    }
+
+    if (item.type == ItemType.Health){
+      player.health += 10;
     }
 
     return true;
@@ -86,7 +99,7 @@ class GameRoyal extends Game {
     return Weapon(
         type: type,
         damage: _getWeaponTypeDamage(type),
-        capacity: _getWeaponTypeRounds(type),
+        capacity: _getWeaponTypeCapacity(type),
         rounds: _getWeaponTypeRounds(type),
     );
   }
@@ -135,8 +148,6 @@ class GameRoyal extends Game {
         return 120;
     }
   }
-
-
 
   Player playerJoin() {
     if (status != GameStatus.Awaiting_Players) {

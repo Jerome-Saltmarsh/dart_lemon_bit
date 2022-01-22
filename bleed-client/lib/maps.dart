@@ -12,5 +12,6 @@ class _Maps {
     ItemType.Handgun: atlas.items.handgun,
     ItemType.Shotgun: atlas.items.shotgun,
     ItemType.Armour: atlas.items.armour,
+    ItemType.Health: atlas.items.health,
   };
 }

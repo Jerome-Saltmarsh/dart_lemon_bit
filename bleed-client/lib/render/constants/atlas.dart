@@ -36,6 +36,8 @@ class _Items {
   final Vector2 handgun = Vector2(1, 567);
   final Vector2 shotgun = Vector2(1, 632);
   final Vector2 armour = Vector2(1, 1634);
+  final Vector2 health = Vector2(1, 1698);
+  final Vector2 crate = Vector2(1, 1763);
 }
 
 class _Fish {

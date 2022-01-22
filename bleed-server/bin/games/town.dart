@@ -1,3 +1,4 @@
+import '../classes/Crate.dart';
 import '../classes/Game.dart';
 import '../classes/InteractableNpc.dart';
 import '../classes/Player.dart';
@@ -28,6 +29,9 @@ class Town extends Game {
         weapon: Weapon(type: WeaponType.Unarmed, damage: 0, capacity: 0));
     npcDavis.mode = NpcMode.Ignore;
     npcs.add(npcDavis);
+
+    crates.add(Crate(x: 0, y: 300));
+    cratesDirty = true;
 
     npcSmith = InteractableNpc(
         name: "Smith",

@@ -11,7 +11,6 @@ import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CommonSettings.dart';
 import 'package:bleed_client/common/GameType.dart';
-import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
@@ -36,6 +35,7 @@ import 'package:bleed_client/render/functions/emitLight.dart';
 import 'package:bleed_client/render/functions/resetDynamicShadesToBakeMap.dart';
 import 'package:bleed_client/render/mappers/loop.dart';
 import 'package:bleed_client/render/mappers/mapDst.dart';
+import 'package:bleed_client/render/mappers/mapSrc.dart';
 import 'package:bleed_client/render/state/dynamicShading.dart';
 import 'package:bleed_client/render/state/floatingText.dart';
 import 'package:bleed_client/state/game.dart';
@@ -138,9 +138,13 @@ void renderGame(Canvas canvas, Size size) {
 }
 
 void drawCrates() {
-  for(Vector2 crate in game.crates){
-    drawCircle(crate.x, crate.y, 30, colours.red);
+  for(Vector2 crate in game.crates) {
+    draw(dst: crate, src: atlas.items.crate);
   }
+}
+
+void draw({required Vector2 dst, required Vector2 src, double size = 64}){
+  drawAtlas(dst: buildDst(dst, translateY: -size / 2, translateX: -size / 2), src: buildSrc(src));
 }
 
 void drawItems() {
@@ -152,7 +156,7 @@ void drawItems() {
 void drawItem(Item item) {
   drawCircleOutline(radius: commonSettings.itemRadius, x: item.x, y: item.y, color: white);
   drawAtlas(
-      dst: dst(item, translateX: -32, translateY: -32),
+      dst: buildDst(item, translateX: -32, translateY: -32),
       src: srcLoop(
           atlas: maps.itemAtlas[item.type]!,
           direction: Direction.Down,

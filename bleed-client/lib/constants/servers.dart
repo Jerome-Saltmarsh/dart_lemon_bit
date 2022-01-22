@@ -4,6 +4,22 @@ import 'package:bleed_client/debug.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/webSocket.dart';
 
+// Build upgrade orbs
+// Each weapon has 3 orb slots
+
+// Fire Orb
+// Water Orb
+// Leaf orb
+// Energy Orb
+
+// Ring of Healing
+// 1 Fire Orb
+// 1 Leaf Orb
+// 1 Water Orb
+// 1 Energy Orb
+
+// Ring of Greater Healing
+
 void connectToWebSocketServer(Region server, GameType gameType) {
   if (server == Region.LocalHost) {
     _connectLocalHost();
@@ -28,9 +44,9 @@ final List<Region> selectableServerTypes =
     serverTypes.where((type) => (debug || type != Region.LocalHost)
     ).toList();
 
-const String _default = "https://gamestream-8-osbmaezptq-ts.a.run.app";
-const String sydneyMoba = "https://gamestream-8-osbmaezptq-ts.a.run.app";
-const String sydneyMMO = "https://gamestream-8-osbmaezptq-ts.a.run.app";
+const String _default = "https://gamestream-99-osbmaezptq-ts.a.run.app";
+const String sydneyMoba = "https://gamestream-99-osbmaezptq-ts.a.run.app";
+const String sydneyMMO = "https://gamestream-99-osbmaezptq-ts.a.run.app";
 
 String parseHttpToWebSocket(String url) {
   return url.replaceAll("https", "wss") + "/:8080";

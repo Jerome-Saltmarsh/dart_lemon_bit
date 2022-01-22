@@ -88,7 +88,7 @@
 [ ] Design Map  
 [ ] Score  
 [ ] Body Armor
-[ ] Crates
+[ ] Break Crates
 [ ] Weapon UI
 [x] Fix melee attack
 [x] Sign in with Facebook
