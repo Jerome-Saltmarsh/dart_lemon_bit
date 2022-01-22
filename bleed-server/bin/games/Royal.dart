@@ -58,29 +58,80 @@ class GameRoyal extends Game {
 
   @override
   bool onPlayerItemCollision(Player player, Item item){
-    if (item.type == ItemType.Handgun){
-        dispatch(GameEventType.Item_Acquired, item.x, item.y);
-        final previouslyUnarmed = player.unarmed;
-        final handGunIndex = getIndexOfWeaponType(player, WeaponType.HandGun);
-        if (handGunIndex == -1){
-            player.weapons.add(
-                Weapon(
-                  type: WeaponType.HandGun,
-                  damage: 1,
-                  capacity: 50,
-                  rounds: 10
-                )
-            );
-        } else {
-          final weapon = player.weapons[handGunIndex];
-          weapon.rounds += 10;
+    final itemWeaponType = item.type.weaponType;
+    if (itemWeaponType != null){
+      dispatch(GameEventType.Item_Acquired, item.x, item.y);
+      final weaponIndex = getIndexOfWeaponType(player, itemWeaponType);
+      if (weaponIndex == -1){
+        player.weapons.add(_buildWeapon(itemWeaponType));
+        player.equippedIndex = getIndexOfWeaponType(player, itemWeaponType);
+        final weaponType = item.type.weaponType;
+        if (weaponType != null) {
+          player.equip(weaponType);
         }
-        if (previouslyUnarmed){
-          player.equippedIndex = getIndexOfWeaponType(player, WeaponType.HandGun);
-        }
+      } else {
+        final weapon = player.weapons[weaponIndex];
+        weapon.rounds += _getWeaponTypeRounds(itemWeaponType);
+      }
     }
+
     return true;
   }
+
+  Weapon _buildWeapon(WeaponType type){
+    return Weapon(
+        type: type,
+        damage: _getWeaponTypeDamage(type),
+        capacity: _getWeaponTypeRounds(type),
+        rounds: _getWeaponTypeRounds(type),
+    );
+  }
+
+  int _getWeaponTypeDamage(WeaponType type){
+    switch(type){
+      case WeaponType.Unarmed:
+        return 0;
+      case WeaponType.HandGun:
+        return 5;
+      case WeaponType.Shotgun:
+        return 3;
+      case WeaponType.SniperRifle:
+        return 20;
+      case WeaponType.AssaultRifle:
+        return 4;
+    }
+  }
+
+  int _getWeaponTypeRounds(WeaponType type){
+    switch(type){
+      case WeaponType.Unarmed:
+        return 0;
+      case WeaponType.HandGun:
+        return 10;
+      case WeaponType.Shotgun:
+        return 8;
+      case WeaponType.SniperRifle:
+        return 5;
+      case WeaponType.AssaultRifle:
+        return 15;
+    }
+  }
+
+  int _getWeaponTypeCapacity(WeaponType type){
+    switch(type){
+      case WeaponType.Unarmed:
+        return 0;
+      case WeaponType.HandGun:
+        return 50;
+      case WeaponType.Shotgun:
+        return 20;
+      case WeaponType.SniperRifle:
+        return 12;
+      case WeaponType.AssaultRifle:
+        return 120;
+    }
+  }
+
 
 
   Player playerJoin() {

@@ -12,6 +12,8 @@ import 'Ability.dart';
 import 'GameObject.dart';
 import 'Weapon.dart';
 
+const _notFound = -1;
+
 class Character extends GameObject implements HasSquad {
   late CharacterType type;
   Ability? ability = null;
@@ -99,5 +101,21 @@ class Character extends GameObject implements HasSquad {
   @override
   int getSquad() {
     return team;
+  }
+
+  void equip(WeaponType type){
+    final weaponIndex = getIndexOfWeaponType(type);
+    if (weaponIndex == _notFound) return;
+    equippedIndex = weaponIndex;
+  }
+
+  /// returns -1 if the player does not have the weapon
+  int getIndexOfWeaponType(WeaponType type){
+    for(int i = 0; i < weapons.length; i++){
+      if (weapons[i].type == type){
+        return i;
+      }
+    }
+    return _notFound;
   }
 }
