@@ -214,7 +214,7 @@ class _Build {
   }
 
   Widget title(){
-    final _text = text("GAMESTREAM",
+    final _text = text("STREAMWARE",
         size: 60,
         color: Colors.white,
         family: assets.fonts.libreBarcode39Text

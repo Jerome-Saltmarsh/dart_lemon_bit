@@ -35,6 +35,7 @@ class _Atlas {
 class _Items {
   final Vector2 handgun = Vector2(1, 567);
   final Vector2 shotgun = Vector2(1, 632);
+  final Vector2 armour = Vector2(1, 1634);
 }
 
 class _Fish {

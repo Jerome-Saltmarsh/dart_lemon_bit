@@ -11,5 +11,6 @@ class _Maps {
   final Map<ItemType, Vector2> itemAtlas = {
     ItemType.Handgun: atlas.items.handgun,
     ItemType.Shotgun: atlas.items.shotgun,
+    ItemType.Armour: atlas.items.armour,
   };
 }
