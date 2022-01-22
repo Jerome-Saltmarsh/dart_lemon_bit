@@ -87,7 +87,8 @@
 [ ] Implement game over dialog
 [ ] Design Map  
 [ ] Score  
-[ ] 
+[ ] Body Armor
+[ ] Crates
 [ ] Weapon UI
 [x] Fix melee attack
 [x] Sign in with Facebook
@@ -499,6 +500,11 @@ Wow
 Fortnight
 
 # Domain Names
+streamware.online   (60E)
+popstream.com       (10,000E)
+streamware.io       (60E)
+streamware.tv       (60E)
+spritestars.com     (1E)
 gameboss.com        (1,450E)
 streamygames.com    (1E)
 cloudygames.com     (290E)

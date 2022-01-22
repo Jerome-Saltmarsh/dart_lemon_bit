@@ -18,7 +18,6 @@ class _Atlas {
   final Vector2 tiles = Vector2(1, 2977);
   final Vector2 rockWall = Vector2(2217, 1222);
   final Vector2 arrow = Vector2(517, 534);
-  final Vector2 items = Vector2(1, 567);
   final _Human human = _Human();
   final _Witch witch = _Witch();
   final _Archer archer = _Archer();
@@ -28,6 +27,14 @@ class _Atlas {
   final Vector2 cloud = Vector2(1, 4044);
   final Vector2 cloudSize = Vector2(43, 29);
   final _Fish fish = _Fish();
+
+  final _Items items = _Items();
+
+}
+
+class _Items {
+  final Vector2 handgun = Vector2(1, 567);
+  final Vector2 shotgun = Vector2(1, 632);
 }
 
 class _Fish {

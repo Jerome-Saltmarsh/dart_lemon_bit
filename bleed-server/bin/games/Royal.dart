@@ -44,9 +44,11 @@ class GameRoyal extends Game {
       cratesDirty = true;
     }
 
-    for (int i = 0; i < 10; i++){
-      final item = Item(type: ItemType.Handgun, x:  randomX, y: randomY);
-      items.add(item);
+    for (int i = 0; i < 5; i++){
+      items.add(Item(type: ItemType.Handgun, x:  randomX, y: randomY));
+    }
+    for (int i = 0; i < 5; i++){
+      items.add(Item(type: ItemType.Shotgun, x:  randomX, y: randomY));
     }
     sortVertically(items);
     sortVertically(crates);

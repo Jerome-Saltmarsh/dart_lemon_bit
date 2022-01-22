@@ -11,6 +11,7 @@ import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CommonSettings.dart';
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
@@ -22,6 +23,7 @@ import 'package:bleed_client/cube/scene.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
+import 'package:bleed_client/maps.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/constants/charWidth.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
@@ -152,7 +154,7 @@ void drawItem(Item item) {
   drawAtlas(
       dst: dst(item, translateX: -32, translateY: -32),
       src: srcLoop(
-          atlas: atlas.items,
+          atlas: maps.itemAtlas[item.type]!,
           direction: Direction.Down,
           frame: timeline.frame,
           framesPerDirection: 8));
