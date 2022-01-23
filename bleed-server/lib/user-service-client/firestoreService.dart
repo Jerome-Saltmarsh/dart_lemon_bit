@@ -9,7 +9,9 @@ import 'package:typedef/json.dart';
 final firestoreService = _FirestoreService();
 
 class _FirestoreService {
-  final String _host = "gamestream-firestore-osbmaezptq-ey.a.run.app";
+  final String _url = "https://gamestream-firestore-2-osbmaezptq-ey.a.run.app";
+
+  String get _host => _url.replaceAll("https://", "");
 
   Future<int> getVersion() async {
     var url = Uri.https(_host, '/version');
