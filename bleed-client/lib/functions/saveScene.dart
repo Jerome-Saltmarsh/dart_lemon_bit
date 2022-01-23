@@ -6,20 +6,17 @@ import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:lemon_math/Vector2.dart';
+import 'package:typedef/json.dart';
 
 void saveScene() {
-  FlutterClipboard.copy(_mapCompileGameToJson());
+  FlutterClipboard.copy(mapCompileGameToJson());
 }
 
-String toJson(Object object) {
-  return JsonEncoder().convert(object);
+String mapCompileGameToJson() {
+  return jsonEncode(compileGameToJson());
 }
 
-String _mapCompileGameToJson() {
-  return toJson(_mapCompiledGameToObject());
-}
-
-Object _mapCompiledGameToObject() {
+Json compileGameToJson() {
   return {
     "collectables": game.collectables,
     "tiles": _compileTiles(game.tiles),

@@ -18,6 +18,7 @@ import 'package:bleed_client/styles.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/update.dart';
+import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -222,7 +223,16 @@ Widget buildEditorUI() {
   print('buildEditorUI()');
   return layout(
     topLeft: _toolTabs,
-    topRight: _exitEditor,
+    topRight: Row(
+      children: [
+        text("Save", onPressed: (){
+          print("(ui) save button pressed");
+          userService.createMap(title: 'hello', map: compileGameToJson());
+        }),
+        width8,
+        _exitEditor,
+      ],
+    ),
   );
 }
 

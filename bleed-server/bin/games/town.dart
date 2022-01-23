@@ -31,7 +31,6 @@ class Town extends Game {
     npcs.add(npcDavis);
 
     crates.add(Crate(x: 0, y: 300));
-    cratesDirty = true;
 
     npcSmith = InteractableNpc(
         name: "Smith",

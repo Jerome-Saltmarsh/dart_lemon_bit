@@ -182,6 +182,34 @@ class _Firestore {
     );
   }
 
+  Future<Document> createMap({
+    required String name,
+    required String mapId,
+    required String data,
+  }) async {
+    print("database.createMap('$mapId')");
+    if (mapId.isEmpty){
+      throw Exception("mapId is null");
+    }
+
+    final document = Document(
+        createTime: _getTimestampNow(),
+        fields: {
+          'title': Value(stringValue: name),
+          fieldNames.creation_date: Value(timestampValue: _getTimestampNow()),
+          'data': Value(stringValue: data),
+        }
+    );
+
+    return await documents.createDocument(
+      document,
+      parent,
+      'maps',
+      documentId: mapId,
+    );
+  }
+
+
   String get parent => buildParentName(projectId: _projectId);
 
   Future waitForFirestoreApi() async {
@@ -212,6 +240,7 @@ final _FieldNames fieldNames = _FieldNames();
 class _FieldNames {
   final String subscriptionId = "subscription_id";
   final String account_creation_date = "account_creation_date";
+  final String creation_date = "creation_date";
   final String subscriptionExpirationDate = "subscription_expiration_date";
   final String subscriptionCreatedDate = "subscription_created_date";
   final String subscriptionStatus = "subscription_status";

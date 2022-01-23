@@ -139,6 +139,7 @@ void renderGame(Canvas canvas, Size size) {
 
 void drawCrates() {
   for(Vector2 crate in game.crates) {
+    drawCircle(crate.x, crate.y, 30, colours.red);
     draw(dst: crate, src: atlas.items.crate);
   }
 }

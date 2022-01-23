@@ -4,8 +4,9 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:typedef/json.dart';
 
-final userService = UserServiceHttpClient("rest-server-7-osbmaezptq-ey.a.run.app");
+final userService = UserServiceHttpClient("rest-server-20-osbmaezptq-ey.a.run.app");
 
 class UserServiceHttpClient {
   final String _host;
@@ -129,6 +130,52 @@ class UserServiceHttpClient {
     final url = Uri.https(_host, '/users', {'id': userId, 'method': 'cancel_subscription'});
     return http.get(url, headers: _headers);
   }
+
+  Future<Response> createMap({required String title, required Json map}){
+
+    // final bo = jsonEncode(map);
+
+    final test = jsonEncode(<String, String>{
+      'hello': 'world'
+    });
+
+    print("userService.createMap(title: '$title')");
+    return post(endpoint: 'maps', params: {
+      'title': title,
+    }, method: 'create',
+      body: test,
+    );
+  }
+
+  Future<Response> send({required String endpoint, required Json params, required String method}){
+    params['method'] = method;
+    final url = Uri.https(_host, '/$endpoint', params);
+    return http.get(url, headers: _headers);
+  }
+
+  Future<Response> post({required String endpoint, required Json params, required Object body, required String method}){
+    params['method'] = method;
+    final url = Uri.https(_host, '/$endpoint', params);
+    return http.post(url, headers: {
+      header.contentType: contentType.applicationJsonUTF8,
+      // header.accept: "*/*",
+      header.accessControlAllowOrigin: "*",
+    }, body: body);
+  }
+}
+
+final _ContentType contentType = _ContentType();
+final _Headers header = _Headers();
+
+class _ContentType {
+  final applicationJson = "applications/json";
+  final applicationJsonUTF8 = "application/json; charset=UTF-8";
+}
+
+class _Headers {
+   final String contentType = "Content-Type";
+   final String accept = "Accept";
+   final String accessControlAllowOrigin = "Access-Control-Allow-Origin";
 }
 
 class Account {

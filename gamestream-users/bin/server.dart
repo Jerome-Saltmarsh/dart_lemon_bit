@@ -28,26 +28,42 @@ void main() async {
 void initServer({String address = '0.0.0.0', int port = 8080}) async {
   print("initServer({address: '$address', port: '$port'})");
   var handler = const Pipeline()
-      .addMiddleware(logRequests())
+      // .addMiddleware(logRequests())
       .addHandler(handleRequest);
   var server = await shelf_io.serve(handler, address, port);
-  server.autoCompress = true;
+  // server.autoCompress = true;
   print('Serving at http://${server.address.host}:${server.port}');
 }
 
 FutureOr<Response> handleRequest(Request request) async {
-
   final path = request.url.path;
-  print("handleRequest(path: '$path', method: '${request.method}', host: '${request.url.host}')");
+  final params = request.requestedUri.queryParameters;
+  // print("handleRequest(path: '$path', method: '${request.method}', host: '${request.url.host}')");
   final Json response = Json();
 
+  // https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
+  if (request.method == 'OPTIONS'){
+    print("Handling preflight response check");
+    return Response.ok("", headers: {
+      "Access-Control-Allow-Origin": "*",
+      'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Methods': 'POST,GET,DELETE,PUT,OPTIONS',
+    });
+  }
+
   switch(path){
+    case 'maps':
+      print("(server) maps");
+      request.readAsString().then((bodyString){
+        firestore.createMap(name: 'test-map-1', mapId: 'test-1', data: bodyString);
+      });
+      return ok(response);
+
     case 'version':
       response['version'] = version;
       return ok(response);
 
     case 'subscriptions':
-      final params = request.requestedUri.queryParameters;
       final subscriptionId = params['id'];
       if (subscriptionId == null) {
         return error(response, 'id is null');
@@ -56,7 +72,6 @@ FutureOr<Response> handleRequest(Request request) async {
       return ok(subscription);
 
     case "users":
-      final params = request.requestedUri.queryParameters;
       final method = params['method']?.toUpperCase();
       if (method == null){
         return error(response, 'method_required');
@@ -303,16 +318,18 @@ Response errorFieldMissing(response, String fieldName){
 final headersJson = (){
   final Map<String, Object> _headers = {};
   _headers['Content-Type'] = 'application/json';
-  _headers['Access-Control-Allow-Headers'] = "Access-Control-Allow-Origin, Accept";
+  _headers['Access-Control-Allow-Headers'] = "*";
   _headers['Access-Control-Allow-Origin'] = "*";
+  _headers['Access-Control-Allow-Methods'] = 'POST,GET,DELETE,PUT,OPTIONS';
   return _headers;
 }();
 
 final headersTextPlain = (){
   final Map<String, Object> _headers = {};
   _headers['Content-Type'] = 'text/plain';
-  _headers['Access-Control-Allow-Headers'] = "Access-Control-Allow-Origin, Accept";
+  _headers['Access-Control-Allow-Headers'] = "*";
   _headers['Access-Control-Allow-Origin'] = "*";
+  _headers['Access-Control-Allow-Methods'] = 'POST,GET,DELETE,PUT,OPTIONS';
   return _headers;
 }();
 

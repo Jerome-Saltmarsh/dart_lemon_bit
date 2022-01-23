@@ -60,10 +60,6 @@ void compileGame(Game game) {
     _compileNpcDebug(buffer, game.npcs);
   }
 
-  if (game.cratesDirty){
-    game.cratesDirty = false;
-    compileCrates(buffer, game.crates);
-  }
 
   _write(buffer, ServerResponse.Scene_Shade_Max.index);
   _write(buffer, game.shadeMax.index);
@@ -73,7 +69,9 @@ void compileGame(Game game) {
   if (game is GameRoyal) {
     compileRoyal(buffer, game);
   }
+
   compileItems(buffer, game.items);
+  compileCrates(buffer, game.crates);
 
   game.compiled = buffer.toString();
   /// GAME COMPILATION FINISHED

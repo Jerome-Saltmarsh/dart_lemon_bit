@@ -226,7 +226,7 @@ void _loadStateFromSharedPreferences(){
     actions.login(storage.recallAuthorization());
   }
 
-  userService.getVersion().then((version) {
-      print("server-version: $version");
-  });
+  // userService.getVersion().then((version) {
+  //     print("server-version: $version");
+  // });
 }
