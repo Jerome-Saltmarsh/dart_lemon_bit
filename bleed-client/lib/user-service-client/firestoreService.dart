@@ -131,11 +131,14 @@ class _FirestoreService {
     return http.get(url, headers: _headers);
   }
 
-  Future<Response> loadMap(String mapId) async {
+  Future<Json> loadMap(String mapId) async {
      final response = await get('maps', params: {
        'id': mapId
      });
-     return response;
+     final body = utf8.decode(response.bodyBytes);
+     final json = jsonDecode(body);
+     final json2 = jsonDecode(json);
+     return json2;
   }
 
   Future<Response> createMap({required String title, required Json map}){

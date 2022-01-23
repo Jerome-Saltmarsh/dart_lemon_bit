@@ -266,6 +266,7 @@ FutureBuilder<List<String>> buildDialogLoadMaps() {
             width: style.dialogWidthMedium,
             child: Column(children: mapNames.map((name){
               return text(name, onPressed: (){
+                 // TODO convert the json map to the game
                  firestoreService.loadMap(name);
               });
             }).toList()),
