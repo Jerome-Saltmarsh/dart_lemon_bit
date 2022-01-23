@@ -74,7 +74,7 @@ FutureOr<Response> handleRequest(Request request) async {
         if (dataString == null){
           return internalServerError("map $mapId data field is not of type string");
         }
-        return ok(dataString);
+        return Response.ok(dataString, headers: headersJson);
       }
 
       if (request.method == "POST"){
