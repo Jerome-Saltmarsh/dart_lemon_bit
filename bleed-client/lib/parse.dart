@@ -38,6 +38,7 @@ import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/state/cursor.dart';
 import 'package:lemon_math/Vector2.dart';
 
+import 'actions.dart';
 import 'common/GameEventType.dart';
 import 'common/PlayerEvent.dart';
 import 'common/Tile.dart';
@@ -77,8 +78,6 @@ void parseState() {
     switch (_currentServerResponse) {
       case ServerResponse.Tiles:
         _parseTiles();
-        setBakeMapToAmbientLight();
-        mapTilesToSrcAndDst(game.tiles);
         break;
 
       case ServerResponse.Paths:
@@ -406,6 +405,7 @@ void _parseTiles() {
     }
     game.tiles.add(column);
   }
+  actions.onTilesChanged();
 }
 
 void _parsePlayer() {

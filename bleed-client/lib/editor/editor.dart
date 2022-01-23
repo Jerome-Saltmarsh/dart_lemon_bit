@@ -196,7 +196,7 @@ List<Widget> _buildTabMisc() {
       for (List<Tile> row in game.tiles) {
         row.add(Tile.Grass);
       }
-      mapTilesToSrcAndDst(game.tiles);
+      mapTilesToSrcAndDst();
     }),
     button("Tiles.Y++", () {
       List<Tile> row = [];
@@ -204,19 +204,19 @@ List<Widget> _buildTabMisc() {
         row.add(Tile.Grass);
       }
       game.tiles.add(row);
-      mapTilesToSrcAndDst(game.tiles);
+      mapTilesToSrcAndDst();
     }),
     if (game.tiles.length > 2)
       button("Tiles.X--", () {
         game.tiles.removeLast();
-        mapTilesToSrcAndDst(game.tiles);
+        mapTilesToSrcAndDst();
       }),
     if (game.tiles[0].length > 2)
       button("Tiles.Y--", () {
         for (int i = 0; i < game.tiles.length; i++) {
           game.tiles[i].removeLast();
         }
-        mapTilesToSrcAndDst(game.tiles);
+        mapTilesToSrcAndDst();
       }),
   ];
 }
@@ -363,7 +363,7 @@ void setTile({
   if (row >= game.totalRows) return;
   if (column >= game.totalColumns) return;
   game.tiles[row][column] = tile;
-  mapTilesToSrcAndDst(game.tiles);
+  mapTilesToSrcAndDst();
 }
 
 Widget _buildEnvironmentType(ObjectType type) {

@@ -6,6 +6,8 @@ import 'package:bleed_client/editor/functions/resetTiles.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
+import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
+import 'package:bleed_client/render/functions/setBakeMapToAmbientLight.dart';
 import 'package:bleed_client/server/server.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
@@ -23,6 +25,12 @@ import 'common/GameType.dart';
 final _Actions actions = _Actions();
 
 class _Actions {
+
+  void onTilesChanged(){
+    setBakeMapToAmbientLight();
+    mapTilesToSrcAndDst();
+  }
+
   void showDialogSelectMap(){
     print("actions.showDialogSelectMap()");
     editor.dialog.value = EditorDialog.Load;

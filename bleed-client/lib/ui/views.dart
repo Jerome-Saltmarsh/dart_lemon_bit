@@ -12,6 +12,7 @@ import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/functions/refreshPage.dart';
+import 'package:bleed_client/mappers/mapJsonToTiles.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/toString.dart';
@@ -267,18 +268,10 @@ FutureBuilder<List<String>> buildDialogLoadMaps() {
             width: style.dialogWidthMedium,
             child: Column(children: mapNames.map((name){
               return text(name, onPressed: () async {
-                 // TODO convert the json map to the game
                  final mapJson = await firestoreService.loadMap(name);
-                 final rows = mapJson['tiles'];
-                 List<List<Tile>> tiles = [];
-                 for(var row in rows){
-                    List<Tile> columns = [];
-                    tiles.add(columns);
-                    for(var column in row){
-
-                    }
-                 }
-
+                 final jsonRows = mapJson['tiles'];
+                 game.tiles = mapJsonToTiles(jsonRows);
+                 actions.onTilesChanged();
               });
             }).toList()),
             bottomRight: buildButton("Close", actions.closeEditorDialog),

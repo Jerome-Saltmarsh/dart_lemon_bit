@@ -9,10 +9,12 @@ import 'package:bleed_client/render/state/tileRects.dart';
 import 'package:bleed_client/render/state/tileTransforms.dart';
 import 'package:bleed_client/render/state/tilesDst.dart';
 import 'package:bleed_client/render/state/tilesSrc.dart';
+import 'package:bleed_client/state/game.dart';
 
-void mapTilesToSrcAndDst(List<List<Tile>> tiles) {
-  _processTileTransforms(tiles);
-  _loadTileRects(tiles);
+void mapTilesToSrcAndDst() {
+  print("mapTilesToSrcAndDst()");
+  _processTileTransforms();
+  _loadTileRects();
 
   int total = tileRects.length * 4;
   tilesDst = Float32List(total);
@@ -36,7 +38,8 @@ void mapTilesToSrcAndDst(List<List<Tile>> tiles) {
   }
 }
 
-void _processTileTransforms(List<List<Tile>> tiles) {
+void _processTileTransforms() {
+  final tiles = game.tiles;
   tileTransforms.clear();
   for (int x = 0; x < tiles.length; x++) {
     for (int y = 0; y < tiles[0].length; y++) {
@@ -45,7 +48,8 @@ void _processTileTransforms(List<List<Tile>> tiles) {
   }
 }
 
-void _loadTileRects(List<List<Tile>> tiles) {
+void _loadTileRects() {
+  final tiles = game.tiles;
   tileRects.clear();
   for (int row = 0; row < tiles.length; row++) {
     for (int column = 0; column < tiles[0].length; column++) {
