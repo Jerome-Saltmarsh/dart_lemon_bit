@@ -3,8 +3,8 @@ import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/draw.dart';
+import 'package:bleed_client/editor/actions.dart';
 import 'package:bleed_client/editor/events/onEditorKeyDownEvent.dart';
-import 'package:bleed_client/editor/functions/resetTiles.dart';
 import 'package:bleed_client/editor/state/keys.dart';
 import 'package:bleed_client/editor/state/mouseDragClickProcess.dart';
 import 'package:bleed_client/editor/state/mouseWorldStart.dart';
@@ -54,7 +54,7 @@ class _EditorState {
 
 class _Editor {
   final state = _EditorState();
-  final actions = _EditorActions();
+  final actions = EditorActions();
   final Watch<EnvironmentObject?> selectedObject = Watch(null);
   final Watch<_ToolTab> tab = Watch(_ToolTab.Tiles);
   final Watch<Tile> tile = Watch(Tile.Grass);
@@ -244,7 +244,7 @@ Widget buildLayoutEditor() {
         topLeft: _toolTabs,
         topRight: Row(
           children: [
-            text("New", onPressed: resetTiles),
+            text("Clear", onPressed: editor.actions.resetTiles),
             width8,
             text("Load", onPressed: actions.showEditorDialogLoadMap),
             width8,
@@ -416,44 +416,6 @@ Widget _buildEditorDialogSaveMap(){
     );
 }
 
-class _EditorActions {
-
-  void startProcess(String value){
-    print("editor.actions.startProcess('$value')");
-    editor.state.process.value = value;
-  }
-
-  void endProcess(){
-    print("editor.actions.processFinished('${editor.state.process.value}')");
-    editor.state.process.value = "";
-  }
-
-
-  void closeDialog(){
-    editor.dialog.value = EditorDialog.None;
-  }
-
-   void saveMapToFirestore() async {
-     print("editor.actions.saveMapToFirestore()");
-     final mapId = editor.mapNameController.text;
-     if (mapId.isEmpty) {
-       actions.showErrorMessage("map id cannot be empty");
-       return;
-     }
-     editor.actions.startProcess("Saving new map");
-     firestoreService.createMap(
-         mapId: mapId,
-         map: compileGameToJson()
-     ).whenComplete(editor.actions.endProcess);
-   }
-
-  void loadMapFromFirestore(String name) async {
-    final mapJson = await firestoreService.loadMap(name);
-    final jsonRows = mapJson['tiles'];
-    game.tiles = mapJsonToTiles(jsonRows);
-    actions.updateTileRender();
-  }
-}
 
 FutureBuilder<List<String>> buildEditorDialogLoadMaps() {
   return FutureBuilder<List<String>>(

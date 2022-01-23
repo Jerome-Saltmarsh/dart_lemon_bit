@@ -2,7 +2,6 @@
 import 'package:bleed_client/authentication.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/editor/editor.dart';
-import 'package:bleed_client/editor/functions/resetTiles.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/OperationStatus.dart';
 import 'package:bleed_client/events.dart';
@@ -162,7 +161,7 @@ class _Actions {
   }
 
   void openEditor(){
-    newScene(rows: 40, columns: 40);
+    editor.actions.newScene();
     game.mode.value = Mode.Edit;
   }
 
