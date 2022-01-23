@@ -64,7 +64,7 @@ Float32List mapSrcHuman({
     case CharacterState.Firing:
       switch (weaponType) {
         case WeaponType.HandGun:
-          return animate(
+          return srcAnimate(
               atlas: atlas.human.handgun.firing,
               animation: animations.human.firingHandgun,
               direction: direction,
@@ -73,7 +73,7 @@ Float32List mapSrcHuman({
           );
 
         case WeaponType.Shotgun:
-          return animate(
+          return srcAnimate(
             atlas: atlas.human.shotgun.firing,
             animation: animations.human.firingShotgun,
             direction: direction,
@@ -82,7 +82,7 @@ Float32List mapSrcHuman({
           );
 
         default:
-          return animate(
+          return srcAnimate(
             atlas: atlas.human.shotgun.firing,
             animation: animations.human.firingShotgun,
             direction: direction,
@@ -91,7 +91,7 @@ Float32List mapSrcHuman({
           );
       }
     case CharacterState.Striking:
-      return animate(
+      return srcAnimate(
         atlas: atlas.human.punching,
         animation: animations.human.strikingSword,
         direction: direction,
@@ -134,7 +134,7 @@ Float32List mapSrcHuman({
     case CharacterState.Reloading:
       throw Exception("Not Implemented");
     case CharacterState.ChangingWeapon:
-      return animate(
+      return srcAnimate(
         atlas: atlas.human.changing,
         animation: animations.human.changing,
         direction: direction,

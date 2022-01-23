@@ -50,7 +50,7 @@ Float32List mapSrcKnight({
     // TODO: Handle this case.
       break;
     case CharacterState.Striking:
-      return animate(
+      return srcAnimate(
           animation: animations.knight.striking,
           atlas: atlas.knight.striking,
           direction: direction,
@@ -59,7 +59,7 @@ Float32List mapSrcKnight({
           framesPerDirection: 3,
           frame: frame);
     case CharacterState.Performing:
-      return animate(
+      return srcAnimate(
           animation: animations.knight.striking,
           atlas: atlas.knight.striking,
           direction: direction,

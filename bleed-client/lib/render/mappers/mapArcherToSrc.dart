@@ -9,20 +9,12 @@ import 'package:bleed_client/render/mappers/animate.dart';
 
 import 'loop.dart';
 
-final Float32List _src = Float32List(4);
-
 Float32List mapSrcArcher({
   required CharacterState state,
   required Direction direction,
   required int frame
 }) {
   switch (state) {
-    case CharacterState.Dead:
-      _src[0] = 1;
-      _src[1] = 1;
-      _src[2] = 2;
-      _src[3] = 2;
-      return _src;
     case CharacterState.Idle:
       return srcLoop(
           atlas: atlas.archer.idle,
@@ -37,14 +29,14 @@ Float32List mapSrcArcher({
           frame: frame
       );
     case CharacterState.Striking:
-      return animate(
+      return srcAnimate(
           animation: animations.archer.firing,
           atlas: atlas.archer.firing,
           direction: direction,
           frame: frame
       );
     case CharacterState.Performing:
-      return animate(
+      return srcAnimate(
           animation: animations.archer.firing,
           atlas: atlas.archer.firing,
           direction: direction,
@@ -58,7 +50,5 @@ Float32List mapSrcArcher({
       );
   }
 
-  _src[2] = _src[0] + 64;
-  _src[3] = _src[1] + 64;
-  return _src;
+  throw Exception("Could not parse archer to src");
 }

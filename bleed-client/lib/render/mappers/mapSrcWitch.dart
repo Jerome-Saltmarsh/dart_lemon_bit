@@ -50,7 +50,7 @@ Float32List mapSrcWitch({
     // TODO: Handle this case.
       break;
     case CharacterState.Striking:
-      return animate(
+      return srcAnimate(
           animation: animations.witch.attacking,
           atlas: atlas.witch.striking,
           direction: direction,
@@ -59,7 +59,7 @@ Float32List mapSrcWitch({
           framesPerDirection: 2,
           frame: frame);
     case CharacterState.Performing:
-      return animate(
+      return srcAnimate(
           animation: animations.witch.attacking,
           atlas: atlas.witch.striking,
           direction: direction,

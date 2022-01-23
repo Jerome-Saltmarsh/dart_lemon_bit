@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/rects.dart';
-import 'package:bleed_client/state.dart';
 
 // interface
 Rect mapItemToRect(ItemType item) {

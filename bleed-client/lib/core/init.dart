@@ -101,6 +101,8 @@ void onPlayerWeaponChanged(WeaponType weapon) {
     case WeaponType.AssaultRifle:
       playAudioReload(screenCenterWorldX, screenCenterWorldY);
       break;
+    default:
+      break;
   }
 }
 
