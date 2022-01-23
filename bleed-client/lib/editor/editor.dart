@@ -246,7 +246,7 @@ Widget _buildEditorDialog(){
       print("buildEditorDialog($dialog)");
       switch(dialog){
         case EditorDialog.Load:
-          return buildDialogLoadMap();
+          return buildDialogLoadMaps();
         default:
           return empty;
       }

@@ -15,7 +15,7 @@ import 'dart:io' show Platform;
 const version = 1;
 final devMode = Platform.localHostname == "Jerome";
 
-// gcloud builds submit --tag gcr.io/gogameserver/rest-server
+// gcloud builds submit --tag gcr.io/gogameserver/gamestream-firestore
 // https://stripe.com/docs/webhooks
 void main() async {
   if (!devMode){
@@ -53,8 +53,28 @@ FutureOr<Response> handleRequest(Request request) async {
     case 'maps':
       if (request.method == "GET"){
         print("(server) maps.get");
+        final mapId = params['id'];
+        if (mapId == null){
           final ids = await firestore.getMapIds();
           return ok(ids);
+        }
+        final results = await firestore.findMapById(mapId);
+        if (results == null){
+          return notFound('no map could be found with id $mapId');
+        }
+        final fields = results.fields;
+        if (fields == null){
+          return internalServerError('map $mapId does not have any fields');
+        }
+        final data = fields['data'];
+        if (data == null){
+          return internalServerError("map $mapId does not have a 'data' field");
+        }
+        final dataString = data.stringValue;
+        if (dataString == null){
+          return internalServerError("map $mapId data field is not of type string");
+        }
+        return ok(dataString);
       }
 
       if (request.method == "POST"){
@@ -302,6 +322,15 @@ bool isExpired(DateTime value){
 Response ok(response){
   return Response.ok(jsonEncode(response), headers: headersJson);
 }
+
+Response internalServerError(String message){
+  return Response.internalServerError(body: message, headers: headersJson);
+}
+
+Response notFound(String message){
+  return Response.notFound(message, headers: headersJson);
+}
+
 
 Response error(response, String error){
   response['error'] = error;

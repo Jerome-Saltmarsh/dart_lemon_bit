@@ -212,6 +212,10 @@ class _Actions {
     game.errorMessage.value = message;
   }
 
+  void closeEditorDialog(){
+    editor.dialog.value = EditorDialog.None;
+  }
+
   void disconnect(){
     print("actions.disconnect()");
     clearState();

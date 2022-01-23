@@ -244,7 +244,7 @@ WatchBuilder<Dialogs> buildWatchBuilderDialog() {
     });
 }
 
-FutureBuilder<List<String>> buildDialogLoadMap() {
+FutureBuilder<List<String>> buildDialogLoadMaps() {
   return FutureBuilder<List<String>>(
       future: firestoreService.getMapNames(),
     builder: (context, response){
@@ -263,8 +263,14 @@ FutureBuilder<List<String>> buildDialogLoadMap() {
         }
         return buildDialog(
             height: style.dialogHeightLarge,
-            width: style.dialogWidthLarge,
-            child: Column(children: mapNames.map(text).toList()));
+            width: style.dialogWidthMedium,
+            child: Column(children: mapNames.map((name){
+              return text(name, onPressed: (){
+                 firestoreService.loadMap(name);
+              });
+            }).toList()),
+            bottomRight: buildButton("Close", actions.closeEditorDialog),
+        );
     },
   );
 }

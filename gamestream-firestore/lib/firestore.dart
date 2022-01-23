@@ -6,22 +6,21 @@ import 'package:googleapis_auth/auth_io.dart' as auth;
 
 final _Firestore firestore = _Firestore();
 
+class _Collections {
+  final String users = "users";
+  final String maps = "maps";
+}
+
 class _Firestore {
 
   final _projectId = "gogameserver";
-  final _collectionName = 'users';
+  final _Collections collections = _Collections();
 
   FirestoreApi? _firestoreApi;
 
   // https://github.com/dart-lang/samples/tree/master/server/google_apis
   void init() async {
     print("firestore.init()");
-
-    // _getProjectId().then((value){
-    //   _projectId = value;
-    //   print("projectId = '$value'");
-    // });
-
     _getAuthClient().then((authClient){
       _firestoreApi = FirestoreApi(authClient);
       print("_firestoreApi set");
@@ -30,14 +29,19 @@ class _Firestore {
 
   Future<AutoRefreshingAuthClient> _getAuthClient() {
     return auth.clientViaMetadataServer();
-    // return clientViaApplicationDefaultCredentials(
-    //   scopes: [FirestoreApi.datastoreScope],
-    // );
   }
 
   ProjectsDatabasesDocumentsResource get documents => _firestoreApi!.projects.databases.documents;
 
   Future<Document?> findUserById(String id) async {
+    return findDocumentById(collection: collections.users, id: id);
+  }
+
+  Future<Document?> findMapById(String id) {
+     return findDocumentById(collection: collections.maps, id: id);
+  }
+
+  Future<Document?> findDocumentById({required String collection, required String id}) async {
     int tries = 0;
     final int maxTries = 10;
     while(_firestoreApi == null){
@@ -49,8 +53,7 @@ class _Firestore {
       await Future.delayed(_oneSecond);
     }
 
-    print("database.findUserById('$id')");
-    return documents.get(getUserDocumentName(id))
+    return documents.get(getDocumentName(collection: collection, value: id))
         .then<Document?>((value) => Future.value(value))
         .catchError((error) {
       if (error is DetailedApiRequestError && error.status == 404) {
@@ -59,7 +62,8 @@ class _Firestore {
       throw error;
     });
   }
-  
+
+
   Future<List<String>> getMapIds() async {
     print("firestore.getMapIds()");
     final list = await documents.list(parent, "maps");
@@ -75,8 +79,16 @@ class _Firestore {
     return names;
   }
 
-  String getUserDocumentName(String value){
-    return '${buildDocumentName(projectId: _projectId, collection: _collectionName)}/$value';
+  String getDocumentNameUser(String value){
+    return getDocumentName(collection: collections.users, value: value);
+  }
+
+  String getDocumentNameMap(String value){
+    return getDocumentName(collection: collections.maps, value: value);
+  }
+
+  String getDocumentName({required String collection, required String value}){
+    return '${buildDocumentName(projectId: _projectId, collection: collections.maps)}/$value';
   }
 
   Future<Document> patchPublicName({
@@ -138,7 +150,7 @@ class _Firestore {
         structuredQuery: StructuredQuery(
           from: [
             CollectionSelector(
-              collectionId: _collectionName
+              collectionId: collections.users
             )
           ],
           where: Filter(

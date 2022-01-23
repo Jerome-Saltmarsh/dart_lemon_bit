@@ -9,7 +9,7 @@ import 'package:typedef/json.dart';
 final firestoreService = _FirestoreService();
 
 class _FirestoreService {
-  final String _url = "https://gamestream-firestore-2-osbmaezptq-ey.a.run.app";
+  final String _url = "https://gamestream-firestore-10-osbmaezptq-ey.a.run.app";
 
   String get _host => _url.replaceAll("https://", "");
 
@@ -129,6 +129,13 @@ class _FirestoreService {
     print("userService.cancelSubscription('$userId')");
     final url = Uri.https(_host, '/users', {'id': userId, 'method': 'cancel_subscription'});
     return http.get(url, headers: _headers);
+  }
+
+  Future<Response> loadMap(String mapId) async {
+     final response = await get('maps', params: {
+       'id': mapId
+     });
+     return response;
   }
 
   Future<Response> createMap({required String title, required Json map}){
