@@ -14,6 +14,7 @@ enum Dialogs {
   Login_Error,
   Confirm_Cancel_Subscription,
   Subscription_Cancelled,
+  Select_Map,
 }
 
 final _UIOptions uiOptions = _UIOptions();

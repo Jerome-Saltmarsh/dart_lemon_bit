@@ -59,6 +59,15 @@ class _Firestore {
       throw error;
     });
   }
+  
+  Future<List<String>> getMapIds() async {
+    final response = await documents.listCollectionIds(ListCollectionIdsRequest(
+        pageSize: 100
+    ), parent);
+    final ids = response.collectionIds;
+    if (ids == null) return [];
+    return ids;
+  }
 
   String getUserDocumentName(String value){
     return '${buildDocumentName(projectId: _projectId, collection: _collectionName)}/$value';

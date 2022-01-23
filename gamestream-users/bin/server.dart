@@ -54,9 +54,18 @@ FutureOr<Response> handleRequest(Request request) async {
   switch(path){
     case 'maps':
       print("(server) maps");
-      request.readAsString().then((bodyString){
-        firestore.createMap(name: 'test-map-1', mapId: 'test-1', data: bodyString);
-      });
+
+      if (request.method == "GET"){
+          final ids = await firestore.getMapIds();
+          return ok(ids);
+      }
+
+      if (request.method == "POST"){
+        request.readAsString().then((bodyString){
+          firestore.createMap(name: 'test-map-1', mapId: 'test-1', data: bodyString);
+        });
+      }
+
       return ok(response);
 
     case 'version':

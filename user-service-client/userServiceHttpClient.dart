@@ -140,8 +140,22 @@ class UserServiceHttpClient {
     );
   }
 
-  Future<Response> send({required String endpoint, required Json params, required String method}){
-    params['method'] = method;
+  Future<List<String>> getMapNames() async {
+    final response = await get('maps');
+    final body = jsonDecode(response.body);
+    final names = body['names'];
+    if (names == null){
+      throw Exception("response.body.names is null");
+    }
+    return names;
+  }
+
+  Future<Response> get(String endpoint, {Json? params, String? method}){
+
+    if (method != null && params != null){
+      params['method'] = method;
+    }
+
     final url = Uri.https(_host, '/$endpoint', params);
     return http.get(url, headers: _headers);
   }

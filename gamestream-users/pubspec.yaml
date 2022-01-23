@@ -1,5 +1,5 @@
 name: gamestream_users
-description: A restful server for gamestream
+description: A restful server for accessing the firestore database
 version: 1.0.0
 # homepage: https://www.example.com
 

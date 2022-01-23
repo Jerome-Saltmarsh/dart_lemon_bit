@@ -219,12 +219,14 @@ List<Widget> _buildTabMisc() {
   ];
 }
 
-Widget buildEditorUI() {
-  print('buildEditorUI()');
+Widget buildLayoutEditor() {
+  print('buildLayoutEditor()');
   return layout(
     topLeft: _toolTabs,
     topRight: Row(
       children: [
+        text("Load", onPressed: actions.showDialogSelectMap),
+        width8,
         text("Save", onPressed: (){
           print("(ui) save button pressed");
           userService.createMap(title: 'hello', map: compileGameToJson());

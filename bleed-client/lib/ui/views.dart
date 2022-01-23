@@ -107,7 +107,7 @@ Widget buildErrorDialog(String message){
 Widget buildWatchGameMode(){
   return WatchBuilder(game.mode, (Mode mode) {
     if (mode == Mode.Edit) {
-      return _views.editor;
+      return buildLayoutEditor();
     }
     return buildWatchOperationStatus();
   });
@@ -159,7 +159,6 @@ Widget buildViewConnectionNone() {
       topRight: buildMenuMain(),
       bottomLeft: buildMenuDebug(),
       child: buildWatchBuilderDialog(),
-      // foreground: buildLoginSuggestionBox()
   );
 }
 
@@ -192,6 +191,9 @@ Positioned buildLoginSuggestionBox() {
 WatchBuilder<Dialogs> buildWatchBuilderDialog() {
   return WatchBuilder(game.dialog, (Dialogs dialogs) {
       switch (dialogs) {
+        case Dialogs.Select_Map:
+          return buildDialogSelectMap();
+
         case Dialogs.Subscription_Status_Changed:
           return buildDialogSubscriptionStatus();
 
@@ -240,6 +242,29 @@ WatchBuilder<Dialogs> buildWatchBuilderDialog() {
           return buildDialogConfirmCancelSubscription();
       }
     });
+}
+
+FutureBuilder<List<String>> buildDialogSelectMap() {
+  return FutureBuilder<List<String>>(
+      future: userService.getMapNames(),
+    builder: (context, response){
+        if (response.connectionState == ConnectionState.waiting){
+          return buildDialogMessage("Loading Maps");
+        }
+        if (response.hasError){
+          return buildErrorDialog(response.error.toString());
+        }
+
+        final mapNames = response.data;
+        if (mapNames == null){
+          return buildDialogMessage("no maps found");
+        }
+        return buildDialog(
+            height: style.dialogHeightLarge,
+            width: style.dialogWidthLarge,
+            child: Column(children: mapNames.map(text).toList()));
+    },
+  );
 }
 
 Widget buildDialogGames() {
@@ -413,7 +438,6 @@ class _Views {
   final Widget selectRegion = _buildView.selectRegion();
   final Widget connecting = _buildView.connecting();
   final Widget connection = _buildView.connection();
-  final Widget editor = buildEditorUI();
 }
 
 final Map<Connection, String> connectionMessage = {

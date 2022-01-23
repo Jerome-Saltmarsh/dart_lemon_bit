@@ -22,6 +22,10 @@ import 'common/GameType.dart';
 final _Actions actions = _Actions();
 
 class _Actions {
+  void showDialogSelectMap(){
+    print("actions.showDialogSelectMap()");
+    game.dialog.value = Dialogs.Select_Map;
+  }
 
   void cancelSubscription() async {
     print("actions.cancelSubscription()");
