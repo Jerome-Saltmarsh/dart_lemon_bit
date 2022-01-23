@@ -132,18 +132,11 @@ class UserServiceHttpClient {
   }
 
   Future<Response> createMap({required String title, required Json map}){
-
-    // final bo = jsonEncode(map);
-
-    final test = jsonEncode(<String, String>{
-      'hello': 'world'
-    });
-
     print("userService.createMap(title: '$title')");
     return post(endpoint: 'maps', params: {
       'title': title,
     }, method: 'create',
-      body: test,
+      body: jsonEncode(map),
     );
   }
 
