@@ -17,6 +17,7 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/styles.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
+import 'package:bleed_client/ui/views.dart';
 import 'package:bleed_client/update.dart';
 import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
 import 'package:bleed_client/utils.dart';
@@ -51,6 +52,7 @@ class _Editor {
   final Watch<_ToolTab> tab = Watch(_ToolTab.Tiles);
   final Watch<Tile> tile = Watch(Tile.Grass);
   final Watch<ObjectType> objectType = Watch(objectTypes.first);
+  final Watch<EditorDialog> dialog = Watch(EditorDialog.None);
 
   init() {
     print("editor.init()");
@@ -235,7 +237,25 @@ Widget buildLayoutEditor() {
         _exitEditor,
       ],
     ),
+    child: _buildEditorDialog()
   );
+}
+
+Widget _buildEditorDialog(){
+    return WatchBuilder(editor.dialog, (dialog){
+      print("buildEditorDialog($dialog)");
+      switch(dialog){
+        case EditorDialog.Load:
+          return buildDialogLoadMap();
+        default:
+          return empty;
+      }
+    });
+}
+
+enum EditorDialog {
+  None,
+  Load
 }
 
 final Widget _exitEditor = button("Exit", actions.toggleEditMode);

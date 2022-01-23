@@ -191,8 +191,8 @@ Positioned buildLoginSuggestionBox() {
 WatchBuilder<Dialogs> buildWatchBuilderDialog() {
   return WatchBuilder(game.dialog, (Dialogs dialogs) {
       switch (dialogs) {
-        case Dialogs.Select_Map:
-          return buildDialogSelectMap();
+        case Dialogs.Editor:
+          return buildLayoutEditor();
 
         case Dialogs.Subscription_Status_Changed:
           return buildDialogSubscriptionStatus();
@@ -244,7 +244,7 @@ WatchBuilder<Dialogs> buildWatchBuilderDialog() {
     });
 }
 
-FutureBuilder<List<String>> buildDialogSelectMap() {
+FutureBuilder<List<String>> buildDialogLoadMap() {
   return FutureBuilder<List<String>>(
       future: userService.getMapNames(),
     builder: (context, response){
@@ -533,8 +533,6 @@ Widget _buildSelectRegionButton(Region region) {
     fillColorMouseOver: colours.black15,
   );
 }
-
-final empty = SizedBox();
 
 Widget? dev(Widget child){
   return isLocalHost ? child : null;

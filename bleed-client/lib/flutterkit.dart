@@ -7,6 +7,8 @@ import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/state/screen.dart';
 
+final empty = SizedBox();
+
 Widget text(dynamic value, {
     size = 18,
     Function? onPressed,

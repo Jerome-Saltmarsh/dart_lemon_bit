@@ -1,4 +1,5 @@
 enum Dialogs {
+  Editor,
   Games,
   Subscription_Required,
   Invalid_Arguments,
@@ -14,7 +15,6 @@ enum Dialogs {
   Login_Error,
   Confirm_Cancel_Subscription,
   Subscription_Cancelled,
-  Select_Map,
 }
 
 final _UIOptions uiOptions = _UIOptions();

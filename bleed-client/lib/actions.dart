@@ -1,6 +1,7 @@
 
 import 'package:bleed_client/authentication.dart';
 import 'package:bleed_client/constants/servers.dart';
+import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/editor/functions/resetTiles.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/events.dart';
@@ -24,7 +25,7 @@ final _Actions actions = _Actions();
 class _Actions {
   void showDialogSelectMap(){
     print("actions.showDialogSelectMap()");
-    game.dialog.value = Dialogs.Select_Map;
+    editor.dialog.value = EditorDialog.Load;
   }
 
   void cancelSubscription() async {
@@ -147,7 +148,6 @@ class _Actions {
   void openEditor(){
     newScene(rows: 40, columns: 40);
     game.mode.value = Mode.Edit;
-
   }
 
   void exitGame(){
