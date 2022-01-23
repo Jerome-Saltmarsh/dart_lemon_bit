@@ -8,7 +8,7 @@ import 'package:clipboard/clipboard.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:typedef/json.dart';
 
-void saveScene() {
+void copyCompiledGameToClipboard() {
   FlutterClipboard.copy(mapCompileGameToJson());
 }
 

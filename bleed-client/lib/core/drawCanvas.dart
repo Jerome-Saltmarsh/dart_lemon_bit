@@ -1,9 +1,7 @@
 import 'dart:ui';
 
-import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/GameStatus.dart';
-import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/editor/render/drawEditor.dart';
 import 'package:bleed_client/render/constants/atlas.dart';

@@ -48,7 +48,12 @@ class _Style {
   final Color highlight = colours.purple;
 }
 
+class _EditorState {
+  final Watch<String> process = Watch("");
+}
+
 class _Editor {
+  final state = _EditorState();
   final actions = _EditorActions();
   final Watch<EnvironmentObject?> selectedObject = Watch(null);
   final Watch<_ToolTab> tab = Watch(_ToolTab.Tiles);
@@ -193,8 +198,7 @@ List<Widget> _buildTabTiles() {
 
 List<Widget> _buildTabMisc() {
   return [
-    button("Save", saveScene),
-    button("New", resetTiles),
+    button("Copy to Clipboard", copyCompiledGameToClipboard),
     button("Tiles.X++", () {
       for (List<Tile> row in game.tiles) {
         row.add(Tile.Grass);
@@ -226,19 +230,33 @@ List<Widget> _buildTabMisc() {
 
 Widget buildLayoutEditor() {
   print('buildLayoutEditor()');
-  return layout(
-    topLeft: _toolTabs,
-    topRight: Row(
-      children: [
-        text("Load", onPressed: actions.showEditorDialogLoadMap),
-        width8,
-        text("Save", onPressed: actions.showEditorDialogSave),
-        width8,
-        _exitEditor,
-      ],
-    ),
-    child: _buildEditorDialog()
-  );
+
+  return WatchBuilder(editor.state.process, (String process){
+    if (process.isNotEmpty){
+      return buildDialog(
+          width: style.dialogWidthMedium,
+          height: style.dialogHeightMedium,
+          child: Center(child: text(process))
+      );
+    }
+
+    return layout(
+        topLeft: _toolTabs,
+        topRight: Row(
+          children: [
+            text("New", onPressed: resetTiles),
+            width8,
+            text("Load", onPressed: actions.showEditorDialogLoadMap),
+            width8,
+            text("Save", onPressed: actions.showEditorDialogSave),
+            width8,
+            _exitEditor,
+          ],
+        ),
+        child: _buildEditorDialog()
+    );
+  });
+
 }
 
 Widget _buildEditorDialog(){
@@ -251,6 +269,8 @@ Widget _buildEditorDialog(){
           return buildEditorDialogLoadMaps();
         case EditorDialog.Save:
           return _buildEditorDialogSaveMap();
+        case EditorDialog.Loading_Map:
+          return buildDialogMessage("Loading Map");
       }
     });
 }
@@ -259,6 +279,7 @@ enum EditorDialog {
   None,
   Load,
   Save,
+  Loading_Map
 }
 
 final Widget _exitEditor = button("Exit", actions.toggleEditMode);
@@ -391,15 +412,47 @@ Widget _buildEditorDialogSaveMap(){
         child: Column(children: [
             TextField(controller: editor.mapNameController),
         ],),
-        bottomRight: buildButton('save', editor.actions.saveMap)
+        bottomRight: buildButton('save', editor.actions.saveMapToFirestore)
     );
 }
 
 class _EditorActions {
-   void saveMap(){
-     print("editor.actions.saveMap()");
-     actions.saveNewMap(editor.mapNameController.text);
+
+  void startProcess(String value){
+    print("editor.actions.startProcess('$value')");
+    editor.state.process.value = value;
+  }
+
+  void endProcess(){
+    print("editor.actions.processFinished('${editor.state.process.value}')");
+    editor.state.process.value = "";
+  }
+
+
+  void closeDialog(){
+    editor.dialog.value = EditorDialog.None;
+  }
+
+   void saveMapToFirestore() async {
+     print("editor.actions.saveMapToFirestore()");
+     final mapId = editor.mapNameController.text;
+     if (mapId.isEmpty) {
+       actions.showErrorMessage("map id cannot be empty");
+       return;
+     }
+     editor.actions.startProcess("Saving new map");
+     firestoreService.createMap(
+         mapId: mapId,
+         map: compileGameToJson()
+     ).whenComplete(editor.actions.endProcess);
    }
+
+  void loadMapFromFirestore(String name) async {
+    final mapJson = await firestoreService.loadMap(name);
+    final jsonRows = mapJson['tiles'];
+    game.tiles = mapJsonToTiles(jsonRows);
+    actions.updateTileRender();
+  }
 }
 
 FutureBuilder<List<String>> buildEditorDialogLoadMaps() {
@@ -426,12 +479,8 @@ FutureBuilder<List<String>> buildEditorDialogLoadMaps() {
           child: Column(
               crossAxisAlignment: axis.cross.start,
               children: mapNames.map((name){
-
                 return button(name, () async {
-                  final mapJson = await firestoreService.loadMap(name);
-                  final jsonRows = mapJson['tiles'];
-                  game.tiles = mapJsonToTiles(jsonRows);
-                  actions.updateTileRender();
+                  editor.actions.loadMapFromFirestore(name);
                 },
                   borderColor: none,
                   borderColorMouseOver: colours.white80,
@@ -440,7 +489,7 @@ FutureBuilder<List<String>> buildEditorDialogLoadMaps() {
                 );
           }).toList()),
         ),
-        bottomRight: buildButton("Close", actions.closeEditorDialog, underline: true),
+        bottomRight: buildButton("Close", editor.actions.closeDialog, underline: true),
       );
     },
   );

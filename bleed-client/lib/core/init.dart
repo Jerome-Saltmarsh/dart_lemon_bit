@@ -21,11 +21,9 @@ import 'package:bleed_client/events/onTimeChanged.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/send.dart';
-import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/ui/state/hud.dart';
-import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/phase.dart';
@@ -41,12 +39,6 @@ import '../actions.dart';
 
 final isLocalHost = Uri.base.host == 'localhost';
 
-// int start = 0;
-// final streamText = "|~ |||  | ~|| | ||| | ||~ |  ||  | ||||~ | |  |";
-// final streamLength = 20;
-//
-// int index = 0;
-
 Future init() async {
   Events();
   await images.load();
@@ -55,52 +47,13 @@ Future init() async {
   initializeEventListeners();
   initAudioPlayers();
   initCube();
-  if (isLocalHost){
+  if (isLocalHost) {
     print("Environment: Localhost");
-  }else{
+  } else {
     print("Environment: Production");
   }
 
-  // repeat update title for loading
-
-  // Timer.periodic(Duration(milliseconds: 100), (timer) {
-  //   index = (index + 1) % 4;
-  //   setFavicon('archer${index + 1}.png');
-  // });
-
-  // Timer.periodic(Duration(milliseconds: 100), (timer) {
-  //     final buffer = StringBuffer('GAMESTREAM');
-  //     // start = (start + 1) % streamText.length;
-  //     start--;
-  //     if (start < 0){
-  //       start = streamText.length - 1;
-  //     }
-  //     if (start + streamLength < streamText.length){
-  //       for(int i = 0; i < streamLength; i++){
-  //         buffer.write(streamText[start + i]);
-  //       }
-  //     }else{
-  //       int diff = streamText.length - start;
-  //       for(int i = 0; i < diff; i++){
-  //         buffer.write(streamText[start + i]);
-  //       }
-  //       for(int i = 0; i < streamLength - diff; i++){
-  //         buffer.write(streamText[i]);
-  //       }
-  //     }
-  //     setDocumentTitle(buffer.toString());
-  // });
-
   cursorType.value = CursorType.Basic;
-
-  // if (Uri.base.hasQuery && Uri.base.queryParameters.containsKey('host')) {
-  //   // Future.delayed(Duration(seconds: 1), () {
-  //   //   String host = Uri.base.queryParameters['host'];
-  //   //   String connectionString = parseHttpToWebSocket(host);
-  //   //   connectWebSocket(connectionString);
-  //   // });
-  //   print(Uri.base.path);
-  // }
 }
 
 void initializeGameInstances() {

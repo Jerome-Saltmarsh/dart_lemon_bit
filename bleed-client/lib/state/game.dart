@@ -18,6 +18,7 @@ import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums/Mode.dart';
+import 'package:bleed_client/enums/OperationStatus.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/ui/build.dart';
 import 'package:bleed_client/ui/ui.dart';
@@ -35,17 +36,6 @@ void setDialog(Dialogs value){
 
 void setDialogGames(){
   setDialog(Dialogs.Games);
-}
-
-enum OperationStatus {
-  None,
-  Authenticating,
-  Creating_Account,
-  Logging_Out,
-  Opening_Secure_Payment_Session,
-  Cancelling_Subscription,
-  Updating_Account,
-  Changing_Public_Name,
 }
 
 class _Game {
