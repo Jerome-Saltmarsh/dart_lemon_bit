@@ -140,10 +140,12 @@ class _FirestoreService {
 
   Future<List<String>> getMapNames() async {
     final response = await get('maps');
-    final body = jsonDecode(response.body);
-    final names = body['names'];
-    if (names == null){
-      throw Exception("response.body.names is null");
+    final body = jsonDecode(response.body) as List<dynamic>;
+    final List<String> names = [];
+    for(var entry in body){
+      if (entry is String){
+        names.add(entry);
+      }
     }
     return names;
   }

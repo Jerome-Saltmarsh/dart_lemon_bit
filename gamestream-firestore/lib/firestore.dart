@@ -62,25 +62,17 @@ class _Firestore {
   
   Future<List<String>> getMapIds() async {
     print("firestore.getMapIds()");
-    final list = await documents.list(parent, "maps");
+    final list = await documents.list(parent, "maps", $fields: "name");
     final docs = list.documents;
     if (docs == null) return [];
     List<String> names = [];
     for(var doc in docs){
       final docName = doc.name;
       if (docName == null) continue;
-      names.add(docName);
+      final segments = docName.split('/');
+      names.add(segments.last);
     }
     return names;
-
-    // maps.documents.
-
-
-    final response = await documents.listCollectionIds(ListCollectionIdsRequest(
-    ), '$parent/maps');
-    final ids = response.collectionIds;
-    if (ids == null) return [];
-    return ids;
   }
 
   String getUserDocumentName(String value){
