@@ -3,6 +3,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/core/init.dart';
@@ -265,9 +266,19 @@ FutureBuilder<List<String>> buildDialogLoadMaps() {
             height: style.dialogHeightLarge,
             width: style.dialogWidthMedium,
             child: Column(children: mapNames.map((name){
-              return text(name, onPressed: (){
+              return text(name, onPressed: () async {
                  // TODO convert the json map to the game
-                 firestoreService.loadMap(name);
+                 final mapJson = await firestoreService.loadMap(name);
+                 final rows = mapJson['tiles'];
+                 List<List<Tile>> tiles = [];
+                 for(var row in rows){
+                    List<Tile> columns = [];
+                    tiles.add(columns);
+                    for(var column in row){
+
+                    }
+                 }
+
               });
             }).toList()),
             bottomRight: buildButton("Close", actions.closeEditorDialog),

@@ -1,3 +1,5 @@
+import 'package:bleed_client/toString.dart';
+
 enum Tile {
   Concrete,
   Grass,
@@ -52,3 +54,11 @@ bool isBlock(Tile tile){
 bool isWater(Tile tile){
   return _water.contains(tile);
 }
+
+final Map<String, Tile> tileNames = (){
+  final Map<String, Tile> vals = Map();
+  tiles.forEach((element) {
+    vals[enumString(element)] = element;
+  });
+  return vals;
+}();
