@@ -5,6 +5,7 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 
 void setBakeMapToAmbientLight(){
+  print("setBakeMapToAmbientLight()");
   bakeMap.clear();
   dynamicShading.clear();
 

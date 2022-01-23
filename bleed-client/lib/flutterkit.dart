@@ -9,22 +9,30 @@ import 'package:lemon_engine/state/screen.dart';
 
 final empty = SizedBox();
 
+
+class _FlutterKitConfiguration {
+  Color defaultTextColor = Colors.white;
+  double defaultTextFontSize = 18;
+}
+
+final _FlutterKitConfiguration flutterKitConfiguration = _FlutterKitConfiguration();
+
 Widget text(dynamic value, {
-    size = 18,
+    num? size,
     Function? onPressed,
     TextDecoration decoration = TextDecoration.none,
     FontWeight weight = normal,
     bool italic = false,
     bool bold = false,
     bool underline = false,
-    Color color = white,
+    Color? color,
     String? family,
 }) {
   final Widget _text = Text(
       value.toString(),
       style: TextStyle(
-          color: color,
-          fontSize: size,
+          color: color ?? flutterKitConfiguration.defaultTextColor,
+          fontSize: size?.toDouble() ?? flutterKitConfiguration.defaultTextFontSize,
           decoration: underline ? TextDecoration.underline : decoration,
           fontWeight: bold ? FontWeight.bold : weight,
           fontFamily: family,

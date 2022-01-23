@@ -6,6 +6,7 @@ import 'package:bleed_client/editor/functions/resetTiles.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
+import 'package:bleed_client/functions/saveScene.dart';
 import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
 import 'package:bleed_client/render/functions/setBakeMapToAmbientLight.dart';
 import 'package:bleed_client/server/server.dart';
@@ -26,12 +27,18 @@ final _Actions actions = _Actions();
 
 class _Actions {
 
-  void onTilesChanged(){
+  void showEditorDialogSave(){
+    print("actions.showEditorDialogSave()");
+    editor.dialog.value = EditorDialog.Save;
+  }
+
+  void updateTileRender(){
+    print("actions.updateTileRender()");
     setBakeMapToAmbientLight();
     mapTilesToSrcAndDst();
   }
 
-  void showDialogSelectMap(){
+  void showEditorDialogLoadMap(){
     print("actions.showDialogSelectMap()");
     editor.dialog.value = EditorDialog.Load;
   }
@@ -318,5 +325,17 @@ class _Actions {
       game.account.value = account;
     }
     game.operationStatus.value = OperationStatus.None;
+  }
+
+  void saveNewMap(String mapId){
+    print("actions.saveNewMap(mapId: '$mapId')");
+    if (mapId.isEmpty) {
+      actions.showErrorMessage("map id cannot be empty");
+      return;
+    }
+    firestoreService.createMap(
+        mapId: mapId,
+        map: compileGameToJson()
+    );
   }
 }

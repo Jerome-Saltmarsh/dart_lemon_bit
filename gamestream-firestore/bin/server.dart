@@ -79,11 +79,14 @@ FutureOr<Response> handleRequest(Request request) async {
 
       if (request.method == "POST"){
         print("(server) maps.post");
+        final mapId = params['id'];
+        if (mapId == null){
+          return notFound("id_required");
+        }
         request.readAsString().then((bodyString){
-          firestore.createMap(name: 'test-map-1', mapId: 'test-1', data: bodyString);
+          firestore.createMap(mapId: mapId, data: bodyString);
         });
       }
-
       return ok(response);
 
     case 'version':
@@ -328,9 +331,8 @@ Response internalServerError(String message){
 }
 
 Response notFound(String message){
-  return Response.notFound(message, headers: headersJson);
+  return Response.notFound(message, headers: headersTextPlain);
 }
-
 
 Response error(response, String error){
   response['error'] = error;
@@ -346,8 +348,6 @@ Response errorFieldMissing(response, String fieldName){
   response['fieldName'] = fieldName;
   return error(response, 'field_missing');
 }
-
-// typedef Json = Map<String, dynamic>;
 
 final headersJson = (){
   final Map<String, Object> _headers = {};

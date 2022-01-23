@@ -1,10 +1,9 @@
 String enumString(dynamic value){
-  String text = value.toString();
-  int index = text.indexOf(".");
+  final text = value.toString();
+  final index = text.indexOf(".");
   if (index == -1) return text;
   return text.substring(index + 1, text.length).replaceAll("_", " ");
 }
-
 
 T stringEnum<T>(String text, List<T> values){
   final textFixed = text.trim().toLowerCase().replaceAll(" ", "_");

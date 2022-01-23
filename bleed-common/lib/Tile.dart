@@ -27,11 +27,6 @@ enum Tile {
 
 final List<Tile> tiles = Tile.values;
 
-Tile parseStringToTile(String text){
-  return tiles.firstWhere((element) => parseTileToString(element) == text, orElse: (){
-    throw Exception("could not parse $text to tile");
-  });
-}
 
 String parseTileToString(Tile tile){
   return tile.toString().replaceAll("Tile.", "");
@@ -55,10 +50,21 @@ bool isWater(Tile tile){
   return _water.contains(tile);
 }
 
-final Map<String, Tile> tileNames = (){
-  final Map<String, Tile> vals = Map();
-  tiles.forEach((element) {
-    vals[enumString(element)] = element;
+List<List<Tile>> mapJsonToTiles(dynamic json){
+  final List<List<Tile>> rows = [];
+  for(var jsonRow in json){
+    final List<Tile> column = [];
+    rows.add(column);
+    for(var jsonColumn in jsonRow){
+      final Tile tile = parseStringToTile(jsonColumn);
+      column.add(tile);
+    }
+  }
+  return rows;
+}
+
+Tile parseStringToTile(String text){
+  return tiles.firstWhere((tile) => parseTileToString(tile) == text, orElse: (){
+    throw Exception("could not parse $text to tile");
   });
-  return vals;
-}();
+}

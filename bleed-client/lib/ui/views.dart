@@ -12,7 +12,6 @@ import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/functions/refreshPage.dart';
-import 'package:bleed_client/mappers/mapJsonToTiles.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/toString.dart';
@@ -244,40 +243,6 @@ WatchBuilder<Dialogs> buildWatchBuilderDialog() {
           return buildDialogConfirmCancelSubscription();
       }
     });
-}
-
-FutureBuilder<List<String>> buildDialogLoadMaps() {
-  return FutureBuilder<List<String>>(
-      future: firestoreService.getMapNames(),
-    builder: (context, response){
-        if (response.connectionState == ConnectionState.waiting){
-          return buildDialogMessage("Loading Maps");
-        }
-        if (response.hasError){
-          actions.showErrorMessage(response.error.toString());
-          editor.dialog.value = EditorDialog.None;
-          return buildDialogMessage("Closing");
-        }
-
-        final mapNames = response.data;
-        if (mapNames == null){
-          return buildDialogMessage("no maps found");
-        }
-        return buildDialog(
-            height: style.dialogHeightLarge,
-            width: style.dialogWidthMedium,
-            child: Column(children: mapNames.map((name){
-              return text(name, onPressed: () async {
-                 final mapJson = await firestoreService.loadMap(name);
-                 final jsonRows = mapJson['tiles'];
-                 game.tiles = mapJsonToTiles(jsonRows);
-                 actions.onTilesChanged();
-              });
-            }).toList()),
-            bottomRight: buildButton("Close", actions.closeEditorDialog),
-        );
-    },
-  );
 }
 
 Widget buildDialogGames() {

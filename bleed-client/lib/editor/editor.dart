@@ -17,7 +17,8 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/styles.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
-import 'package:bleed_client/ui/views.dart';
+import 'package:bleed_client/ui/dialogs.dart';
+import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/update.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/utils.dart';
@@ -48,11 +49,13 @@ class _Style {
 }
 
 class _Editor {
+  final actions = _EditorActions();
   final Watch<EnvironmentObject?> selectedObject = Watch(null);
   final Watch<_ToolTab> tab = Watch(_ToolTab.Tiles);
   final Watch<Tile> tile = Watch(Tile.Grass);
   final Watch<ObjectType> objectType = Watch(objectTypes.first);
   final Watch<EditorDialog> dialog = Watch(EditorDialog.None);
+  final TextEditingController mapNameController = TextEditingController();
 
   init() {
     print("editor.init()");
@@ -227,12 +230,9 @@ Widget buildLayoutEditor() {
     topLeft: _toolTabs,
     topRight: Row(
       children: [
-        text("Load", onPressed: actions.showDialogSelectMap),
+        text("Load", onPressed: actions.showEditorDialogLoadMap),
         width8,
-        text("Save", onPressed: (){
-          print("(ui) save button pressed");
-          firestoreService.createMap(title: 'hello', map: compileGameToJson());
-        }),
+        text("Save", onPressed: actions.showEditorDialogSave),
         width8,
         _exitEditor,
       ],
@@ -242,20 +242,23 @@ Widget buildLayoutEditor() {
 }
 
 Widget _buildEditorDialog(){
-    return WatchBuilder(editor.dialog, (dialog){
+    return WatchBuilder(editor.dialog, (EditorDialog dialog){
       print("buildEditorDialog($dialog)");
       switch(dialog){
-        case EditorDialog.Load:
-          return buildDialogLoadMaps();
-        default:
+        case EditorDialog.None:
           return empty;
+        case EditorDialog.Load:
+          return buildEditorDialogLoadMaps();
+        case EditorDialog.Save:
+          return _buildEditorDialogSaveMap();
       }
     });
 }
 
 enum EditorDialog {
   None,
-  Load
+  Load,
+  Save,
 }
 
 final Widget _exitEditor = button("Exit", actions.toggleEditMode);
@@ -379,4 +382,66 @@ Widget _buildEnvironmentType(ObjectType type) {
 
 double distanceFromMouse(double x, double y) {
   return distanceBetween(mouseWorldX, mouseWorldY, x, y);
+}
+
+Widget _buildEditorDialogSaveMap(){
+    return buildDialog(
+        width: style.dialogWidthMedium,
+        height: style.dialogHeightMedium,
+        child: Column(children: [
+            TextField(controller: editor.mapNameController),
+        ],),
+        bottomRight: buildButton('save', editor.actions.saveMap)
+    );
+}
+
+class _EditorActions {
+   void saveMap(){
+     print("editor.actions.saveMap()");
+     actions.saveNewMap(editor.mapNameController.text);
+   }
+}
+
+FutureBuilder<List<String>> buildEditorDialogLoadMaps() {
+  return FutureBuilder<List<String>>(
+    future: firestoreService.getMapNames(),
+    builder: (context, response){
+      if (response.connectionState == ConnectionState.waiting){
+        return buildDialogMessage("Loading Maps");
+      }
+      if (response.hasError){
+        actions.showErrorMessage(response.error.toString());
+        editor.dialog.value = EditorDialog.None;
+        return buildDialogMessage("Closing");
+      }
+
+      final mapNames = response.data;
+      if (mapNames == null){
+        return buildDialogMessage("no maps found");
+      }
+      return buildDialog(
+        height: style.dialogHeightLarge,
+        width: style.dialogWidthMedium,
+        child: SingleChildScrollView(
+          child: Column(
+              crossAxisAlignment: axis.cross.start,
+              children: mapNames.map((name){
+
+                return button(name, () async {
+                  final mapJson = await firestoreService.loadMap(name);
+                  final jsonRows = mapJson['tiles'];
+                  game.tiles = mapJsonToTiles(jsonRows);
+                  actions.updateTileRender();
+                },
+                  borderColor: none,
+                  borderColorMouseOver: colours.white80,
+                  fillColor: none,
+                  fillColorMouseOver: none,
+                );
+          }).toList()),
+        ),
+        bottomRight: buildButton("Close", actions.closeEditorDialog, underline: true),
+      );
+    },
+  );
 }

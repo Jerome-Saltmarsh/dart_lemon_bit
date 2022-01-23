@@ -9,7 +9,7 @@ import 'package:typedef/json.dart';
 final firestoreService = _FirestoreService();
 
 class _FirestoreService {
-  final String _url = "https://gamestream-firestore-10-osbmaezptq-ey.a.run.app";
+  final String _url = "https://gamestream-firestore-9-osbmaezptq-ey.a.run.app";
 
   String get _host => _url.replaceAll("https://", "");
 
@@ -136,16 +136,14 @@ class _FirestoreService {
        'id': mapId
      });
      final body = utf8.decode(response.bodyBytes);
-     final json = jsonDecode(body);
-     final json2 = jsonDecode(json);
-     return json2;
+     return jsonDecode(body);
   }
 
-  Future<Response> createMap({required String title, required Json map}){
-    print("userService.createMap(title: '$title')");
+  Future<Response> createMap({required String mapId, required Json map}){
+    print("firestoreService.createMap(id: '$mapId')");
     return post(endpoint: 'maps', params: {
-      'title': title,
-    }, method: 'create',
+      'id': mapId,
+    },
       body: jsonEncode(map),
     );
   }
@@ -172,12 +170,14 @@ class _FirestoreService {
     return http.get(url, headers: _headers);
   }
 
-  Future<Response> post({required String endpoint, required Json params, required Object body, required String method}){
-    params['method'] = method;
+  Future<Response> post({
+    required String endpoint,
+    required Json params,
+    required Object body
+  }){
     final url = Uri.https(_host, '/$endpoint', params);
     return http.post(url, headers: {
       header.contentType: contentType.applicationJsonUTF8,
-      // header.accept: "*/*",
       header.accessControlAllowOrigin: "*",
     }, body: body);
   }

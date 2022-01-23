@@ -210,7 +210,6 @@ class _Firestore {
   }
 
   Future<Document> createMap({
-    required String name,
     required String mapId,
     required String data,
   }) async {
@@ -219,11 +218,30 @@ class _Firestore {
       throw Exception("mapId is null");
     }
 
+    // final jsonMap = jsonDecode(data);
+    // final jsonTiles = jsonMap['tiles'];
+    // if (jsonTiles == null){
+    //   throw Exception("json.tiles is null");
+    // }
+    //
+    // final List<Value> rowValues = [];
+    // for(var jsonRow in jsonTiles){
+    //    for(var jsonColumn in jsonRow){
+    //      final List<Value> tileNames = [];
+    //      for(var tileName in jsonColumn){
+    //        tileNames.add(Value(stringValue: tileName));
+    //      }
+    //      final columnValue = Value(arrayValue: ArrayValue(values: tileNames));
+    //      rowValues.add(columnValue);
+    //    }
+    // }
+    //
+    // final tileValues = Value(arrayValue: ArrayValue(values: rowValues));
+
     final document = Document(
         createTime: _getTimestampNow(),
         fields: {
-          'title': Value(stringValue: name),
-          fieldNames.creation_date: Value(timestampValue: _getTimestampNow()),
+          // 'tiles': tileValues,
           'data': Value(stringValue: data),
         }
     );

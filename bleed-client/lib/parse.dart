@@ -405,7 +405,7 @@ void _parseTiles() {
     }
     game.tiles.add(column);
   }
-  actions.onTilesChanged();
+  actions.updateTileRender();
 }
 
 void _parsePlayer() {
