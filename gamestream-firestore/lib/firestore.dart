@@ -61,9 +61,10 @@ class _Firestore {
   }
   
   Future<List<String>> getMapIds() async {
+    print("firestore.getMapIds()");
     final response = await documents.listCollectionIds(ListCollectionIdsRequest(
         pageSize: 100
-    ), parent);
+    ), '$parent/maps');
     final ids = response.collectionIds;
     if (ids == null) return [];
     return ids;

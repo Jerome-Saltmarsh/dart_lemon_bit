@@ -13,7 +13,7 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/ui.dart';
-import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
+import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:bleed_client/webSocket.dart';
@@ -42,9 +42,14 @@ class Events {
     game.account.onChanged(_onAccountChanged);
     game.dialog.onChanged(_onGameDialogChanged);
     game.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
+    game.errorMessage.onChanged(_onErrorMessageChanged);
     mouseEvents.onLeftClicked.onChanged(_onMouseLeftClickedChanged);
     sub(_onGameError);
     sub(_onLoginException);
+  }
+
+  void _onErrorMessageChanged(String? message){
+    print("onErrorMessageChanged('$message')");
   }
 
   void _onPlayerCharacterTypeChanged(CharacterType characterType){

@@ -2,16 +2,16 @@
 
 import 'dart:convert';
 
+import 'package:bleed_client/actions.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 import 'package:typedef/json.dart';
 
-final userService = UserServiceHttpClient("rest-server-20-osbmaezptq-ey.a.run.app");
+final firestoreService = _FirestoreService();
 
-class UserServiceHttpClient {
-  final String _host;
-
-  UserServiceHttpClient(this._host);
+class _FirestoreService {
+  final String _host = "rest-server-22-osbmaezptq-ey.a.run.app";
 
   Future<int> getVersion() async {
     var url = Uri.https(_host, '/version');

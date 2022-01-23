@@ -12,7 +12,7 @@ import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/stripe.dart';
 import 'package:bleed_client/ui/actions/signInWithFacebook.dart';
 import 'package:bleed_client/ui/ui.dart';
-import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
+import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/webSocket.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_dispatch/instance.dart';
@@ -37,7 +37,7 @@ class _Actions {
       return;
     }
     game.operationStatus.value = OperationStatus.Cancelling_Subscription;
-    await userService.cancelSubscription(account.userId);
+    await firestoreService.cancelSubscription(account.userId);
     await updateAccount();
     game.operationStatus.value = OperationStatus.None;
   }
@@ -121,6 +121,7 @@ class _Actions {
   }
 
   void closeErrorMessage(){
+    print("actions.closeErrorMessage()");
     game.errorMessage.value = null;
   }
 
@@ -235,7 +236,7 @@ class _Actions {
       return;
     }
     game.operationStatus.value = OperationStatus.Changing_Public_Name;
-    final response = await userService
+    final response = await firestoreService
         .changePublicName(userId: account.userId, publicName: value)
         .catchError((error) {
       showErrorMessage(error.toString());
@@ -272,7 +273,7 @@ class _Actions {
     }
 
     game.operationStatus.value = OperationStatus.Updating_Account;
-    game.account.value = await userService.findById(account.userId).catchError((error){
+    game.account.value = await firestoreService.findById(account.userId).catchError((error){
       pub(LoginException(error));
       return null;
     });
@@ -286,16 +287,16 @@ class _Actions {
   }) async {
     print("actions.signInOrCreateAccount()");
     game.operationStatus.value = OperationStatus.Authenticating;
-    final account = await userService.findById(userId).catchError((error){
+    final account = await firestoreService.findById(userId).catchError((error){
       pub(LoginException(error));
       throw error;
     });
     if (account == null){
       print("No account found. Creating new account");
       game.operationStatus.value = OperationStatus.Creating_Account;
-      await userService.createAccount(userId: userId, email: email, privateName: privateName);
+      await firestoreService.createAccount(userId: userId, email: email, privateName: privateName);
       game.operationStatus.value = OperationStatus.Authenticating;
-      game.account.value = await userService.findById(userId);
+      game.account.value = await firestoreService.findById(userId);
       if (game.account.value == null){
         throw Exception("failed to find new account");
       }

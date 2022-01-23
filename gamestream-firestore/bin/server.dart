@@ -3,10 +3,10 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'package:gamestream_firestore/firestore.dart';
+import 'package:gamestream_firestore/stripe.dart';
 import 'package:typedef/json.dart';
 
-import 'package:gamestream_users/firestore.dart';
-import 'package:gamestream_users/stripe.dart';
 import 'package:googleapis/firestore/v1.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
@@ -26,19 +26,17 @@ void main() async {
 }
 
 void initServer({String address = '0.0.0.0', int port = 8080}) async {
-  print("initServer({address: '$address', port: '$port'})");
   var handler = const Pipeline()
       // .addMiddleware(logRequests())
       .addHandler(handleRequest);
   var server = await shelf_io.serve(handler, address, port);
-  // server.autoCompress = true;
+  server.autoCompress = true;
   print('Serving at http://${server.address.host}:${server.port}');
 }
 
 FutureOr<Response> handleRequest(Request request) async {
   final path = request.url.path;
   final params = request.requestedUri.queryParameters;
-  // print("handleRequest(path: '$path', method: '${request.method}', host: '${request.url.host}')");
   final Json response = Json();
 
   // https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
@@ -53,14 +51,14 @@ FutureOr<Response> handleRequest(Request request) async {
 
   switch(path){
     case 'maps':
-      print("(server) maps");
-
       if (request.method == "GET"){
+        print("(server) maps.get");
           final ids = await firestore.getMapIds();
           return ok(ids);
       }
 
       if (request.method == "POST"){
+        print("(server) maps.post");
         request.readAsString().then((bodyString){
           firestore.createMap(name: 'test-map-1', mapId: 'test-1', data: bodyString);
         });
@@ -295,8 +293,6 @@ Future<Response> _cancelSubscription(Document user, Json response) async {
 
   final deleteResponse = await stripeApi.deleteSubscription(subscriptionId);
   return ok(deleteResponse.body);
-  // final subscription = await stripe.subscription.get(subscriptionId);
-  // subscription.status;
 }
 
 bool isExpired(DateTime value){

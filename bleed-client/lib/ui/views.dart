@@ -21,7 +21,7 @@ import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/ui/widgets.dart';
-import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
+import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
@@ -83,7 +83,7 @@ Widget buildWatchErrorMessage(){
   });
 }
 
-Widget buildErrorDialog(String message){
+Widget buildErrorDialog(String message, {Widget? bottomRight}){
   return dialog(
       width: style.dialogWidthMedium,
       height: style.dialogHeightVerySmall,
@@ -99,7 +99,7 @@ Widget buildErrorDialog(String message){
                 padding: padding16,
                 child: text(message, color: colours.white),),
           ),
-          bottomRight: text("okay", onPressed: actions.closeErrorMessage)
+          bottomRight: bottomRight ?? text("okay", onPressed: actions.closeErrorMessage)
       )
   );
 }
@@ -246,13 +246,15 @@ WatchBuilder<Dialogs> buildWatchBuilderDialog() {
 
 FutureBuilder<List<String>> buildDialogLoadMap() {
   return FutureBuilder<List<String>>(
-      future: userService.getMapNames(),
+      future: firestoreService.getMapNames(),
     builder: (context, response){
         if (response.connectionState == ConnectionState.waiting){
           return buildDialogMessage("Loading Maps");
         }
         if (response.hasError){
-          return buildErrorDialog(response.error.toString());
+          actions.showErrorMessage(response.error.toString());
+          editor.dialog.value = EditorDialog.None;
+          return buildDialogMessage("Closing");
         }
 
         final mapNames = response.data;

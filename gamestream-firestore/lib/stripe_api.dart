@@ -39,12 +39,5 @@ class StripeApi {
     print("stripeApi.deleteSubscription('$subscriptionId')");
     final uri = Uri(scheme: scheme, host: host, path: 'v1/subscriptions/$subscriptionId');
     return http.delete(uri, headers: _headers);
-    // ..baseUrl = baseUrl
-    // ..responseType = ResponseType.json
-    // ..contentType = 'application/x-www-form-urlencoded'
-    // ..headers = {
-    // 'Authorization': 'Basic ${base64Encode(utf8.encode('$apiKey:'))}',
-    // 'Stripe-Version': version,
-    // 'Content-Type': 'application/x-www-form-urlencoded',
   }
 }

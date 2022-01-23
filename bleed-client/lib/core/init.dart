@@ -25,7 +25,7 @@ import 'package:bleed_client/state.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/ui/state/hud.dart';
-import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
+import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/phase.dart';

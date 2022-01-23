@@ -21,7 +21,7 @@ import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/ui/build.dart';
 import 'package:bleed_client/ui/ui.dart';
-import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
+import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_watch/watch.dart';
 

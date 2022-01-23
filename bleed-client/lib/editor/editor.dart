@@ -19,7 +19,7 @@ import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/views.dart';
 import 'package:bleed_client/update.dart';
-import 'package:bleed_client/user-service-client/userServiceHttpClient.dart';
+import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -231,7 +231,7 @@ Widget buildLayoutEditor() {
         width8,
         text("Save", onPressed: (){
           print("(ui) save button pressed");
-          userService.createMap(title: 'hello', map: compileGameToJson());
+          firestoreService.createMap(title: 'hello', map: compileGameToJson());
         }),
         width8,
         _exitEditor,
