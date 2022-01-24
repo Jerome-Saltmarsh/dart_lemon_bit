@@ -3,7 +3,7 @@ import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/constants/colours.dart';
-import 'package:bleed_client/core/drawCanvas.dart';
+import 'package:bleed_client/modules/core/render.dart';
 import 'package:bleed_client/getters/inDarkness.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/mappers/mapDirectionToAngle.dart';

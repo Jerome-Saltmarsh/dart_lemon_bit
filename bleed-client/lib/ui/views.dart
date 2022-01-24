@@ -5,7 +5,7 @@ import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/constants/servers.dart';
-import 'package:bleed_client/core/init.dart';
+import 'package:bleed_client/modules/core/init.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/OperationStatus.dart';
 import 'package:bleed_client/enums/Region.dart';

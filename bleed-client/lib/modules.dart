@@ -1,5 +1,5 @@
 
-import 'core/module.dart';
+import 'modules/core/module.dart';
 import 'modules/editor/module.dart';
 import 'modules/website/module.dart';
 

@@ -34,7 +34,7 @@ class _Timeline {
   }
 }
 
-void drawCanvas(Canvas canvas, Size size) {
+void drawCanvas2(Canvas canvas, Size size) {
   timeline.update();
 
   if (editMode) {

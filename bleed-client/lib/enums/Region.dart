@@ -1,4 +1,4 @@
-import 'package:bleed_client/core/init.dart';
+import 'package:bleed_client/modules/core/init.dart';
 
 enum Region {
   Australia,

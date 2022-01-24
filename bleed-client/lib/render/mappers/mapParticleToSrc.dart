@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
-import 'package:bleed_client/core/drawCanvas.dart';
+import 'package:bleed_client/modules/core/render.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
