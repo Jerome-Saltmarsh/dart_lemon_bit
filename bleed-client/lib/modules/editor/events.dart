@@ -6,11 +6,11 @@ import 'package:bleed_client/modules/editor/mixin.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:flutter/services.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_math/Vector2.dart';
 
-import 'module.dart';
 import 'enums.dart';
 
 class EditorEvents with EditorScope {
@@ -20,6 +20,11 @@ class EditorEvents with EditorScope {
     keyboardEvents.listen(onKeyboardEvent);
     mouseEvents.onLeftClicked.value = onMouseLeftClicked;
     editor.state.selectedObject.onChanged(onSelectedObjectChanged);
+    engine.state.mouseLeftDownFrames.onChanged(onMouseLeftDown);
+  }
+
+  void onMouseLeftDown(int frames){
+      print("onMouseLeftDown($frames)");
   }
 
   onSelectedObjectChanged(EnvironmentObject? environmentObject) {
@@ -115,26 +120,4 @@ class EditorEvents with EditorScope {
       state.mouseWorldStart = mouseWorld;
     }
   }
-
-  void handleMouseDrag() {
-    if (!state.mouseDragging) {
-      state.mouseDragClickProcess = false;
-      return;
-    }
-
-    if (!state.mouseDragClickProcess) {
-      state.mouseDragClickProcess = true;
-      events.onMouseLeftClicked();
-      return;
-    }
-
-    if (state.selectedCollectable > -1) {
-      game.collectables[state.selectedCollectable + 1] = mouseWorldX.toInt();
-      game.collectables[state.selectedCollectable + 2] = mouseWorldY.toInt();
-      return;
-    }
-
-    setTileAtMouse(editor.state.tile.value);
-  }
-
 }
