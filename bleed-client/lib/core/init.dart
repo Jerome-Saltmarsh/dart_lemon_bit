@@ -37,7 +37,6 @@ import 'package:lemon_math/Vector2.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../actions.dart';
-import 'module.dart';
 
 final isLocalHost = Uri.base.host == 'localhost';
 

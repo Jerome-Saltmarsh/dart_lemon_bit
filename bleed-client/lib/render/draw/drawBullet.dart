@@ -11,7 +11,6 @@ import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/mappers/mapBulletToSrc.dart';
 import 'package:bleed_client/render/mappers/mapDst.dart';
-import 'package:bleed_client/state.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/render/draw_circle.dart';

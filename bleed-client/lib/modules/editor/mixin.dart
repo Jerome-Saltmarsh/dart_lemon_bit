@@ -1,9 +1,9 @@
 
-import 'package:bleed_client/editor/config.dart';
-import 'package:bleed_client/editor/events.dart';
-import 'package:bleed_client/editor/state.dart';
 
+import 'config.dart';
 import 'editor.dart';
+import 'events.dart';
+import 'state.dart';
 
 abstract class EditorScope {
   EditorState get state => editor.state;

@@ -3,23 +3,21 @@ import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameError.dart';
 import 'package:bleed_client/common/GameStatus.dart';
-import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/functions/cameraCenterPlayer.dart';
 import 'package:bleed_client/functions/removeGeneratedEnvironmentObjects.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/modules.dart';
+import 'package:bleed_client/modules/editor/editor.dart';
+import 'package:bleed_client/modules/website/enums.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/toString.dart';
-import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:bleed_client/webSocket.dart';
-import 'package:bleed_client/website/enums.dart';
-import 'package:bleed_client/website/module.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/functions/fullscreen_enter.dart';
 import 'package:lemon_engine/functions/fullscreen_exit.dart';
@@ -29,7 +27,6 @@ import 'package:lemon_engine/state/cursor.dart';
 import 'package:lemon_engine/state/zoom.dart';
 
 import 'common/GameType.dart';
-import 'core/module.dart';
 import 'enums/Region.dart';
 
 class Events {

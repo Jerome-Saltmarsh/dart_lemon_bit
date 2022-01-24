@@ -5,26 +5,25 @@ import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/constants/colours.dart';
-import 'package:bleed_client/editor/state.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/functions/saveScene.dart';
 import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/styles.dart';
+import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/dialogs.dart';
 import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/utils.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import '../toString.dart';
 import 'editor.dart';
 import 'enums.dart';
+import 'state.dart';
 
 
 class EditorBuilder {

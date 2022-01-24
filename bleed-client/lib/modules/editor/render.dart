@@ -1,10 +1,11 @@
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/draw.dart';
-import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/render/draw_circle.dart';
+
+import 'editor.dart';
 
 void renderEditor() {
   drawTiles();

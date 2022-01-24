@@ -1,5 +1,4 @@
 import 'package:bleed_client/classes/Particle.dart';
-import 'package:bleed_client/core/module.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/render/state/paths.dart';

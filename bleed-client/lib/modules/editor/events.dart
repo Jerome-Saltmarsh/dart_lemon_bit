@@ -1,10 +1,9 @@
 
 
 import 'package:bleed_client/classes/EnvironmentObject.dart';
-import 'package:bleed_client/editor/mixin.dart';
+import 'package:bleed_client/modules/editor/mixin.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';

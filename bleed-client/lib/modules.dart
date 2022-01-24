@@ -1,6 +1,6 @@
 
 import 'core/module.dart';
-import 'website/module.dart';
+import 'modules/website/module.dart';
 
 final modules = _Modules();
 

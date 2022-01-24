@@ -1,12 +1,11 @@
 
 import 'package:bleed_client/authentication.dart';
 import 'package:bleed_client/constants/servers.dart';
-import 'package:bleed_client/editor/editor.dart';
-import 'package:bleed_client/editor/enums.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/OperationStatus.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
+import 'package:bleed_client/modules/website/enums.dart';
 import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
 import 'package:bleed_client/render/functions/setBakeMapToAmbientLight.dart';
 import 'package:bleed_client/server/server.dart';
@@ -16,14 +15,14 @@ import 'package:bleed_client/stripe.dart';
 import 'package:bleed_client/ui/actions/signInWithFacebook.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/webSocket.dart';
-import 'package:bleed_client/website/enums.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_dispatch/instance.dart';
 
 import 'classes/Authentication.dart';
 import 'common/GameType.dart';
 import 'modules.dart';
-import 'website/module.dart';
+import 'modules/editor/editor.dart';
+import 'modules/editor/enums.dart';
 
 final _Actions actions = _Actions();
 

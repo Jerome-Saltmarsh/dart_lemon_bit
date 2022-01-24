@@ -1,13 +1,14 @@
-import 'package:bleed_client/editor/actions.dart';
-import 'package:bleed_client/editor/builder.dart';
-import 'package:bleed_client/editor/config.dart';
-import 'package:bleed_client/editor/events.dart';
-import 'package:bleed_client/editor/state.dart';
 import 'package:bleed_client/update.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/state/camera.dart';
 import 'package:lemon_engine/state/zoom.dart';
+
+import 'actions.dart';
+import 'builder.dart';
+import 'config.dart';
+import 'events.dart';
+import 'state.dart';
 
 final _EditorModule editor = _EditorModule();
 

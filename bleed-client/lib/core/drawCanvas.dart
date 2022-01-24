@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
-import 'package:bleed_client/editor/render.dart';
+import 'package:bleed_client/modules/editor/render.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';

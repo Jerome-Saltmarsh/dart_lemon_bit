@@ -27,7 +27,6 @@ import 'package:bleed_client/functions/emit/emitMyst.dart';
 import 'package:bleed_client/functions/emitSmoke.dart';
 import 'package:bleed_client/parser/parseCubePlayers.dart';
 import 'package:bleed_client/render/functions/applyEnvironmentObjectsToBakeMapping.dart';
-import 'package:bleed_client/render/functions/setBakeMapToAmbientLight.dart';
 import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
@@ -45,8 +44,6 @@ import 'common/Tile.dart';
 import 'common/WeaponType.dart';
 import 'common/enums/ObjectType.dart';
 import 'functions/onGameEvent.dart';
-import 'render/functions/mapTilesToSrcAndDst.dart';
-import 'state.dart';
 
 // state
 int _index = 0;
