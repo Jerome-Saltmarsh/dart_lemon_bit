@@ -11,7 +11,7 @@ import 'package:bleed_client/ui/widgets.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:bleed_client/webSocket.dart';
-import 'package:bleed_client/website/website.dart';
+import 'package:bleed_client/website/module.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 

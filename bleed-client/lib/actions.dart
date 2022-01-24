@@ -23,7 +23,7 @@ import 'package:lemon_dispatch/instance.dart';
 import 'classes/Authentication.dart';
 import 'common/GameType.dart';
 import 'modules.dart';
-import 'website/website.dart';
+import 'website/module.dart';
 
 final _Actions actions = _Actions();
 

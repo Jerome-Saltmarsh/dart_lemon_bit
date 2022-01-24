@@ -16,7 +16,7 @@ import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:bleed_client/website/enums.dart';
-import 'package:bleed_client/website/website.dart';
+import 'package:bleed_client/website/module.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_math/golden_ratio.dart';

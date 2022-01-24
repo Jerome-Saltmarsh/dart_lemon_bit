@@ -19,7 +19,7 @@ import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:bleed_client/webSocket.dart';
 import 'package:bleed_client/website/enums.dart';
-import 'package:bleed_client/website/website.dart';
+import 'package:bleed_client/website/module.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/functions/fullscreen_enter.dart';
 import 'package:lemon_engine/functions/fullscreen_exit.dart';
