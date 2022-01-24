@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 
 import '../flutterkit.dart';
+import '../modules.dart';
 
 
 Widget buildDialogAccount(){

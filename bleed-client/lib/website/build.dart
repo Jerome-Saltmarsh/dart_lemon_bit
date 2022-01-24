@@ -2,6 +2,7 @@
 import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/core/module.dart';
+import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/dialogs.dart';
 import 'package:bleed_client/ui/style.dart';

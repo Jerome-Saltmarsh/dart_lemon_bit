@@ -7,9 +7,7 @@ import 'package:bleed_client/core/state.dart';
 ///   -- website
 ///   -- editor
 ///   -- game
-final core = _CoreModule();
-
-class _CoreModule {
+class CoreModule {
   final state = CoreState();
   final build = CoreBuild();
 }

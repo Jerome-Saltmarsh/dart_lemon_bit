@@ -7,6 +7,7 @@ import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/core/module.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/flutterkit.dart';
+import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/styles.dart';

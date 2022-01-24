@@ -14,7 +14,6 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/stripe.dart';
 import 'package:bleed_client/ui/actions/signInWithFacebook.dart';
-import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/webSocket.dart';
 import 'package:bleed_client/website/enums.dart';
@@ -23,7 +22,7 @@ import 'package:lemon_dispatch/instance.dart';
 
 import 'classes/Authentication.dart';
 import 'common/GameType.dart';
-import 'core/module.dart';
+import 'modules.dart';
 import 'website/website.dart';
 
 final _Actions actions = _Actions();

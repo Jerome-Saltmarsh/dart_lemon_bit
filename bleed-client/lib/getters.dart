@@ -1,7 +1,6 @@
 
-import 'package:bleed_client/state/game.dart';
+import 'modules.dart';
 
-import 'core/module.dart';
 
 final _Getters getters = _Getters();
 
