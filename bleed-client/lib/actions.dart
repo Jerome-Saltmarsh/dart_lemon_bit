@@ -161,17 +161,17 @@ class _Actions {
   }
 
   void toggleEditMode() {
-    game.mode.value = game.mode.value == Mode.Play ? Mode.Edit : Mode.Play;
+    core.state.mode.value = core.state.mode.value == Mode.Play ? Mode.Edit : Mode.Play;
   }
 
   void setModePlay() {
     print("actions.setModePlay()");
-    game.mode.value = game.mode.value = Mode.Play;
+    core.state.mode.value = core.state.mode.value = Mode.Play;
   }
 
   void openMapEditor(){
     editor.actions.newScene();
-    game.mode.value = Mode.Edit;
+    core.state.mode.value = Mode.Edit;
   }
 
   void exitGame(){

@@ -109,7 +109,7 @@ Widget buildErrorDialog(String message, {Widget? bottomRight}){
 }
 
 Widget buildWatchGameMode(){
-  return WatchBuilder(game.mode, (Mode mode) {
+  return WatchBuilder(core.state.mode, (Mode mode) {
     if (mode == Mode.Edit) {
       return editor.build.buildLayoutEditor();
     }

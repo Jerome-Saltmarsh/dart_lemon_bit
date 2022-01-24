@@ -1,4 +1,5 @@
 import 'package:bleed_client/classes/Particle.dart';
+import 'package:bleed_client/core/module.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/render/state/tileRects.dart';
@@ -9,7 +10,6 @@ import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/state/zoom.dart';
 import 'package:lemon_math/Vector2.dart';
 
-import '../state.dart';
 
 void clearState() {
   print('clearState()');
@@ -17,7 +17,7 @@ void clearState() {
   clearRender();
   zoom = 1;
   game.gameEvents.clear();
-  game.mode.value = Mode.Play;
+  core.state.mode.value = Mode.Play;
   refreshUI();
   redrawCanvas();
 }

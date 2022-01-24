@@ -41,7 +41,7 @@ class Events {
     game.player.uuid.onChanged(_onPlayerUuidChanged);
     game.player.alive.onChanged(_onPlayerAliveChanged);
     game.status.onChanged(_onGameStatusChanged);
-    game.mode.onChanged(_onGameModeChanged);
+    core.state.mode.onChanged(_onGameModeChanged);
     core.state.account.onChanged(_onAccountChanged);
     website.state.dialog.onChanged(_onGameDialogChanged);
     game.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
