@@ -7,6 +7,7 @@ import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/functions/saveScene.dart';
+import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/styles.dart';
@@ -21,7 +22,7 @@ import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import 'editor.dart';
+import 'module.dart';
 import 'enums.dart';
 import 'state.dart';
 

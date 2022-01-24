@@ -1,6 +1,7 @@
 
 
 import 'package:bleed_client/classes/EnvironmentObject.dart';
+import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/modules/editor/mixin.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
@@ -9,7 +10,7 @@ import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_math/Vector2.dart';
 
-import 'editor.dart';
+import 'module.dart';
 import 'enums.dart';
 
 class EditorEvents with EditorScope {

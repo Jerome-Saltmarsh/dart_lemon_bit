@@ -1,13 +1,14 @@
 import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/functions/saveScene.dart';
+import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/modules/editor/mixin.dart';
 import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:lemon_engine/game.dart';
 
-import 'editor.dart';
+import 'module.dart';
 import 'enums.dart';
 
 

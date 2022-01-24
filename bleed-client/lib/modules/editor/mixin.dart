@@ -1,7 +1,8 @@
 
 
+import 'package:bleed_client/modules.dart';
+
 import 'config.dart';
-import 'editor.dart';
 import 'events.dart';
 import 'state.dart';
 

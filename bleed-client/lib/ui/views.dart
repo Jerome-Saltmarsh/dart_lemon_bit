@@ -12,7 +12,7 @@ import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/functions/refreshPage.dart';
 import 'package:bleed_client/modules.dart';
-import 'package:bleed_client/modules/editor/editor.dart';
+import 'package:bleed_client/modules/editor/module.dart';
 import 'package:bleed_client/modules/website/enums.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';

@@ -10,9 +10,7 @@ import 'config.dart';
 import 'events.dart';
 import 'state.dart';
 
-final _EditorModule editor = _EditorModule();
-
-class _EditorModule {
+class EditorModule {
   final state = EditorState();
   final actions = EditorActions();
   final build = EditorBuilder();
