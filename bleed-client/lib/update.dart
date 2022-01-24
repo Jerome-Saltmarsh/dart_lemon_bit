@@ -28,6 +28,9 @@ void updatePlayMode() {
   switch(game.type.value){
     case GameType.None:
       break;
+    case GameType.Custom:
+      _updateBleed();
+      break;
     case GameType.MMO:
       _updateBleed();
       break;
@@ -40,14 +43,16 @@ void updatePlayMode() {
     case GameType.CUBE3D:
       sendRequestUpdateCube3D();
       break;
+    default:
+      throw Exception("No update for ${game.type.value}");
   }
 }
 
 void _updateBleed(){
   if (game.status.value == GameStatus.Finished) return;
 
-  updateZoom();
   game.framesSinceEvent++;
+  updateZoom();
   readPlayerInput();
   updateParticles();
   updateDeadCharacterBlood();
