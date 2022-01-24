@@ -116,18 +116,17 @@ class EditorBuilder {
           topRight: Row(
             children: [
               buttonClear(),
-              width8,
+              width16,
               buttonLoad(),
-              width8,
+              width16,
               buttonSave(),
-              width8,
+              width16,
               buttonExit(),
             ],
           ),
           child: _buildEditorDialog()
       );
     });
-
   }
 
   Widget buttonClear() => text("Clear", onPressed: editor.actions.resetTiles);
@@ -183,7 +182,7 @@ class EditorBuilder {
   }
 
   Widget buttonExit(){
-    return button("Exit", actions.setModePlay);
+    return buildButton("Exit", actions.setModePlay);
   }
 
   Widget buildEnvironmentType(ObjectType type) {
