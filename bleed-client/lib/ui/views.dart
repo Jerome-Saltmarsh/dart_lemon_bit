@@ -81,7 +81,7 @@ Widget buildView(BuildContext context) {
 }
 
 Widget buildWatchErrorMessage(){
-  return NullableWatchBuilder<String?>(game.errorMessage, (String? message){
+  return NullableWatchBuilder<String?>(core.state.errorMessage, (String? message){
     if (message == null) return empty;
     return buildErrorDialog(message);
   });

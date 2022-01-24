@@ -27,6 +27,7 @@ import 'package:lemon_engine/state/cursor.dart';
 import 'package:lemon_engine/state/zoom.dart';
 
 import 'common/GameType.dart';
+import 'core/module.dart';
 import 'enums/Region.dart';
 
 class Events {
@@ -43,7 +44,7 @@ class Events {
     game.account.onChanged(_onAccountChanged);
     game.dialog.onChanged(_onGameDialogChanged);
     game.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
-    game.errorMessage.onChanged(_onErrorMessageChanged);
+    core.state.errorMessage.onChanged(_onErrorMessageChanged);
     mouseEvents.onLeftClicked.onChanged(_onMouseLeftClickedChanged);
     sub(_onGameError);
     sub(_onLoginException);
@@ -73,7 +74,7 @@ class Events {
 
     Future.delayed(Duration(seconds: 1), (){
       // game.dialog.value = Dialogs.Login_Error;
-      game.errorMessage.value = error.cause.toString();
+      core.state.errorMessage.value = error.cause.toString();
     });
   }
 

@@ -44,7 +44,6 @@ class _Game {
   int lag = 0;
   final Map<int, bool> gameEvents = Map();
   final Watch<int> countDownFramesRemaining = Watch(0);
-  final Watch<String?> errorMessage = Watch(null);
   final Watch<Account?> account = Watch(null);
   final Watch<WebsiteDialog> dialog = Watch(WebsiteDialog.Games);
   final Watch<Mode> mode = Watch(Mode.Play);

@@ -139,7 +139,7 @@ class _Actions {
 
   void closeErrorMessage(){
     print("actions.closeErrorMessage()");
-    game.errorMessage.value = null;
+    core.state.errorMessage.value = null;
   }
 
   void play(GameType gameType){
@@ -231,7 +231,7 @@ class _Actions {
   }
 
   void showErrorMessage(String message){
-    game.errorMessage.value = message;
+    core.state.errorMessage.value = message;
   }
 
   void disconnect(){
