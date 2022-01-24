@@ -82,8 +82,10 @@ class WebsiteBuilder {
             child: Column(
               children: mapNames.map((mapName) => margin(
                 bottom: 16,
-                child: button(mapName, (){
-                }, fillColor: none, fillColorMouseOver: none),
+                child: button(text(mapName, color: colours.white618), (){
+                },
+                    alignment: Alignment.centerLeft,
+                    fillColor: colours.white05, fillColorMouseOver: colours.white10, borderColor: none, borderColorMouseOver: none),
               )).toList(),
             ),
           )
