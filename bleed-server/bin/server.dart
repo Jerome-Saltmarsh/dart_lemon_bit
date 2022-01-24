@@ -438,6 +438,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
             final mapId = arguments[indexMapId];
             final customMap = await firestoreService.loadMap(mapId);
+            print("success");
             // if (customMap == null){
             //   return errorCustomMapNotFound();
             // }

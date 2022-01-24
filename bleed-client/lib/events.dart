@@ -171,7 +171,18 @@ class Events {
       case Connection.Connected:
         ui.drawCanvasAfterUpdate = false;
         if (game.type.value == GameType.Custom){
-
+          final account = game.account.value;
+          if (account == null){
+            actions.showErrorMessage("Account required to play custom map");
+            return;
+          }
+          final mapName = game.customGameName;
+          if (mapName == null){
+            actions.showErrorMessage("No custom map chosen");
+            actions.disconnect();
+            return;
+          }
+          sendRequestJoinCustomGame(mapName: mapName, playerId: account.userId);
         }else{
           sendRequestJoinGame(game.type.value, playerId: game.account.value?.userId);
         }
