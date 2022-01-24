@@ -41,7 +41,7 @@ class Events {
     game.player.alive.onChanged(_onPlayerAliveChanged);
     game.status.onChanged(_onGameStatusChanged);
     game.mode.onChanged(_onGameModeChanged);
-    game.account.onChanged(_onAccountChanged);
+    core.state.account.onChanged(_onAccountChanged);
     game.dialog.onChanged(_onGameDialogChanged);
     game.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
     core.state.errorMessage.onChanged(_onErrorMessageChanged);
@@ -172,7 +172,7 @@ class Events {
       case Connection.Connected:
         ui.drawCanvasAfterUpdate = false;
         if (game.type.value == GameType.Custom){
-          final account = game.account.value;
+          final account = core.state.account.value;
           if (account == null){
             actions.showErrorMessage("Account required to play custom map");
             return;
@@ -185,7 +185,7 @@ class Events {
           }
           sendRequestJoinCustomGame(mapName: mapName, playerId: account.userId);
         }else{
-          sendRequestJoinGame(game.type.value, playerId: game.account.value?.userId);
+          sendRequestJoinGame(game.type.value, playerId: core.state.account.value?.userId);
         }
 
         mouseEvents.onLeftClicked.value = performPrimaryAction;

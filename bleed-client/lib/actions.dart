@@ -48,7 +48,7 @@ class _Actions {
   void cancelSubscription() async {
     print("actions.cancelSubscription()");
     actions.showDialogAccount();
-    final account = game.account.value;
+    final account = core.state.account.value;
     if (account == null) {
       actions.showErrorMessage('Account is null');
       return;
@@ -69,7 +69,7 @@ class _Actions {
     });
 
     storage.forgetAuthorization();
-    game.account.value = null;
+    core.state.account.value = null;
     Future.delayed(Duration(seconds: 1), (){
       core.state.operationStatus.value = OperationStatus.None;
     });
@@ -209,7 +209,7 @@ class _Actions {
 
   void openStripeCheckout() {
     print("actions.openStripeCheckout()");
-    final account = game.account.value;
+    final account = core.state.account.value;
     if (account == null){
       showErrorMessage("Account is null");
       return;
@@ -242,7 +242,7 @@ class _Actions {
 
   void changeAccountPublicName(String value) async {
     print("actions.changePublicName('$value')");
-    final account = game.account.value;
+    final account = core.state.account.value;
     if (account == null) {
       showErrorMessage("Account is null");
       return;
@@ -289,13 +289,13 @@ class _Actions {
 
   Future updateAccount() async {
     print("refreshAccountDetails()");
-    final account = game.account.value;
+    final account = core.state.account.value;
     if (account == null){
       return;
     }
 
     core.state.operationStatus.value = OperationStatus.Updating_Account;
-    game.account.value = await firestoreService.findUserById(account.userId).catchError((error){
+    core.state.account.value = await firestoreService.findUserById(account.userId).catchError((error){
       pub(LoginException(error));
       return null;
     });
@@ -318,14 +318,14 @@ class _Actions {
       core.state.operationStatus.value = OperationStatus.Creating_Account;
       await firestoreService.createAccount(userId: userId, email: email, privateName: privateName);
       core.state.operationStatus.value = OperationStatus.Authenticating;
-      game.account.value = await firestoreService.findUserById(userId);
-      if (game.account.value == null){
+      core.state.account.value = await firestoreService.findUserById(userId);
+      if (core.state.account.value == null){
         throw Exception("failed to find new account");
       }
       game.dialog.value = WebsiteDialog.Account_Created;
     }else{
       print("Existing Account found");
-      game.account.value = account;
+      core.state.account.value = account;
     }
     core.state.operationStatus.value = OperationStatus.None;
   }

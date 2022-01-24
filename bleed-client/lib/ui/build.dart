@@ -4,6 +4,7 @@ import 'package:bleed_client/classes/Ability.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/colours.dart';
+import 'package:bleed_client/core/module.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/send.dart';
@@ -250,7 +251,7 @@ class _Build {
   }
 
   Widget gamesList(){
-    final account = game.account.value;
+    final account = core.state.account.value;
     final premiumActive = account != null && account.isPremium;
     return Container(
       width: double.infinity,

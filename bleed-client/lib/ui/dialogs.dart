@@ -1,5 +1,6 @@
 import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/constants/colours.dart';
+import 'package:bleed_client/core/module.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/styles.dart';
 import 'package:bleed_client/toString.dart';
@@ -233,7 +234,7 @@ Widget buildDialogPremiumAccountRequired(){
 }
 
 Widget buildDialogSubscriptionStatus(){
-  final account = game.account.value;
+  final account = core.state.account.value;
   if (account == null){
     return buildDialogMessage("Account is null");
   }
@@ -291,7 +292,7 @@ Widget buildDialogWelcome2(){
 final _nameController = TextEditingController();
 
 Widget buildDialogChangePublicName() {
-  final account = game.account.value;
+  final account = core.state.account.value;
 
   if (account == null){
     return buildDialogMessage("Account is null");

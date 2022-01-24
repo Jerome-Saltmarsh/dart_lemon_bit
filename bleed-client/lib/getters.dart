@@ -1,13 +1,15 @@
 
 import 'package:bleed_client/state/game.dart';
 
+import 'core/module.dart';
+
 final _Getters getters = _Getters();
 
 class _Getters {
-  bool get authenticated => game.account.isNotNull;
+  bool get authenticated => core.state.account.isNotNull;
 
   bool get premiumAccountAuthenticated {
-    final account = game.account.value;
+    final account = core.state.account.value;
     if (account == null){
       return false;
     }

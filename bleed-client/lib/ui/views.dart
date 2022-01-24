@@ -511,7 +511,7 @@ Widget margin({
 
 
 Widget watchAccount(Widget builder(Account? value)) {
-  return NullableWatchBuilder<Account?>(game.account, (Account? account) {
+  return NullableWatchBuilder<Account?>(core.state.account, (Account? account) {
     return builder(account);
   });
 }
@@ -742,7 +742,7 @@ Widget buildDialogGameFinished(){
 }
 
 bool isAccountName(String publicName){
-  final account = game.account.value;
+  final account = core.state.account.value;
   if (account == null) return false;
   return account.publicName == publicName;
 }
