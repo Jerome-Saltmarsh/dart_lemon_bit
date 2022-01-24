@@ -622,6 +622,8 @@ Widget buildViewConnected() {
           switch (game.type.value) {
             case GameType.MMO:
               return buildHud.playerCharacterType();
+            case GameType.Custom:
+              return buildHud.playerCharacterType();
             case GameType.Moba:
               return buildHud.playerCharacterType();
             case GameType.BATTLE_ROYAL:

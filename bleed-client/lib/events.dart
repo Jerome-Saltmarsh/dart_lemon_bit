@@ -236,20 +236,13 @@ class Events {
   void _onGameModeChanged(Mode mode){
     print("_onGameModeChanged($mode)");
     if (mode == Mode.Edit) {
-      // onLeftClicked.stream.listen(editor.onMouseLeftClicked);
       removeGeneratedEnvironmentObjects();
       deregisterPlayKeyboardHandler();
-      // registerEditorKeyboardListener();
       editor.events.register();
       game.totalZombies.value = 0;
       game.totalProjectiles = 0;
       game.totalNpcs = 0;
       game.totalHumans = 0;
-      game.zombies.clear();
-      game.projectiles.clear();
-      game.interactableNpcs.clear();
-      game.humans.clear();
-      game.particles.clear();
       timeInSeconds.value = 60 * 60 * 10;
     }
     redrawCanvas();
