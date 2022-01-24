@@ -23,4 +23,8 @@ class WebsiteActions {
   void _log(String value){
     print("website.actions.$value()");
   }
+
+  void showDialogChangeRegion(){
+    game.dialog.value = WebsiteDialog.Change_Region;
+  }
 }

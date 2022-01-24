@@ -1,6 +1,7 @@
 
 import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/constants/colours.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/dialogs.dart';
 import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/views.dart';
@@ -10,11 +11,27 @@ import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:bleed_client/webSocket.dart';
 import 'package:bleed_client/website/website.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 import '../flutterkit.dart';
 import '../styles.dart';
+import '../toString.dart';
+import 'enums.dart';
 
-class WebsiteBuilder {
+class WebsiteBuild {
+
+  Widget buttonRegion(){
+    return Tooltip(
+      message: "Change Region",
+      child: button(
+        text(enumString(game.region.value),
+            color: colours.white80),
+            website.actions.showDialogChangeRegion,
+        borderColor: colours.none,
+        fillColor: colours.black20,
+      ),
+    );
+  }
 
   Widget mainMenu() {
     return watchAccount((Account? account){
@@ -86,15 +103,21 @@ class WebsiteBuilder {
           bottomRight: closeDialogButton,
           child: SingleChildScrollView(
             child: Column(
-              children: mapNames.map((mapName) => margin(
-                bottom: 16,
-                child: button(text(mapName, color: colours.white618), (){
-                  // connect to custom game
-                  website.actions.connectToCustomGame(mapName);
-                },
-                    alignment: Alignment.centerLeft,
-                    fillColor: colours.white05, fillColorMouseOver: colours.white10, borderColor: none, borderColorMouseOver: none),
-              )).toList(),
+              children: [
+                buttonRegion(),
+                height16,
+                Column(
+                  children: mapNames.map((mapName) => margin(
+                    bottom: 16,
+                    child: button(text(mapName, color: colours.white618), (){
+                      // connect to custom game
+                      website.actions.connectToCustomGame(mapName);
+                    },
+                        alignment: Alignment.centerLeft,
+                        fillColor: colours.white05, fillColorMouseOver: colours.white10, borderColor: none, borderColorMouseOver: none),
+                  )).toList(),
+                ),
+              ],
             ),
           )
       );

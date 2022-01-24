@@ -271,18 +271,7 @@ Widget buildDialogGameTypeSelected(GameType gameType) {
         height: style.dialogHeightMedium,
         width: style.dialogWidthMedium,
         child: layout(
-            topRight: Tooltip(
-              message: "Change Region",
-              child: button(
-                text(enumString(game.region.value),
-                    color: colours.white80),
-                    () {
-                  game.dialog.value = WebsiteDialog.Change_Region;
-                },
-                borderColor: colours.none,
-                fillColor: colours.black20,
-              ),
-            ),
+            topRight: website.build.buttonRegion(),
             bottomLeft: buildButtonPrimary("PLAY", actions.connectToSelectedGame),
             bottomRight:
             buildButton("back", actions.deselectGameType),
