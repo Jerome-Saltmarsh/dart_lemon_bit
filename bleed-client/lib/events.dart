@@ -18,6 +18,7 @@ import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:bleed_client/webSocket.dart';
 import 'package:bleed_client/website/enums.dart';
+import 'package:bleed_client/website/website.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/functions/fullscreen_enter.dart';
 import 'package:lemon_engine/functions/fullscreen_exit.dart';
@@ -42,7 +43,7 @@ class Events {
     game.status.onChanged(_onGameStatusChanged);
     game.mode.onChanged(_onGameModeChanged);
     core.state.account.onChanged(_onAccountChanged);
-    game.dialog.onChanged(_onGameDialogChanged);
+    website.state.dialog.onChanged(_onGameDialogChanged);
     game.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
     core.state.errorMessage.onChanged(_onErrorMessageChanged);
     mouseEvents.onLeftClicked.onChanged(_onMouseLeftClickedChanged);

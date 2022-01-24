@@ -3,6 +3,7 @@
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:bleed_client/website/website.dart';
 
 import 'enums.dart';
 
@@ -10,7 +11,7 @@ class WebsiteActions {
 
   void showDialogCustomMaps(){
     _log("showDialogCustomMaps");
-    game.dialog.value = WebsiteDialog.Custom_Maps;
+    website.state.dialog.value = WebsiteDialog.Custom_Maps;
   }
 
   void connectToCustomGame(String customGame){
@@ -25,6 +26,6 @@ class WebsiteActions {
   }
 
   void showDialogChangeRegion(){
-    game.dialog.value = WebsiteDialog.Change_Region;
+    website.state.dialog.value = WebsiteDialog.Change_Region;
   }
 }

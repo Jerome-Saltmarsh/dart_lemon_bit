@@ -170,7 +170,7 @@ class _Buttons {
       _iconLogin,
     ],
   ), (){
-      game.dialog.value = WebsiteDialog.Login;
+    website.state.dialog.value = WebsiteDialog.Login;
   }, width: style.buttonWidth, height: style.buttonHeight, borderWidth: 3,
     fillColor: colours.none,
     borderColor: colours.none,
@@ -254,10 +254,10 @@ class _Buttons {
   );
 
   final Widget account = button(_iconSettings, (){
-    if (game.dialog.value != WebsiteDialog.Account){
-      game.dialog.value = WebsiteDialog.Account;
+    if (website.state.dialog.value != WebsiteDialog.Account){
+      website.state.dialog.value = WebsiteDialog.Account;
     }else{
-      game.dialog.value = WebsiteDialog.Games;
+      website.state.dialog.value = WebsiteDialog.Games;
     }
   },
       height: style.buttonHeight,
@@ -271,10 +271,10 @@ class _Buttons {
 
   Widget buildAccount(bool hovering){
     return button(_iconSettings, (){
-      if (game.dialog.value != WebsiteDialog.Account){
-        game.dialog.value = WebsiteDialog.Account;
+      if (website.state.dialog.value != WebsiteDialog.Account){
+        website.state.dialog.value = WebsiteDialog.Account;
       }else{
-        game.dialog.value = WebsiteDialog.Games;
+        website.state.dialog.value = WebsiteDialog.Games;
       }
     },
       height: style.buttonHeight,
@@ -380,7 +380,7 @@ Widget _buildFakeLoginButton(String userId, String text){
 }
 
 final backButton = button(text("Back", color: colours.white618), () {
-  game.dialog.value = WebsiteDialog.Games;
+  website.state.dialog.value = WebsiteDialog.Games;
 }, fillColor: colours.none,
   fillColorMouseOver: none,
   borderColor: colours.none,

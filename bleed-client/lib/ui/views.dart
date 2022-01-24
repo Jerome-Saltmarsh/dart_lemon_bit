@@ -54,7 +54,7 @@ Widget buildDialogLogin() {
       child: layout(
           bottomLeft: button("Sign up", (){}),
           bottomRight: button("Back", () {
-            game.dialog.value = WebsiteDialog.Games;
+            website.state.dialog.value = WebsiteDialog.Games;
           }, fillColor: colours.none,
             borderColor: colours.none,
           ),
@@ -193,7 +193,7 @@ Positioned buildLoginSuggestionBox() {
 }
 
 WatchBuilder<WebsiteDialog> buildWatchBuilderDialog() {
-  return WatchBuilder(game.dialog, (WebsiteDialog dialogs) {
+  return WatchBuilder(website.state.dialog, (WebsiteDialog dialogs) {
       switch (dialogs) {
         case WebsiteDialog.Custom_Maps:
           return website.build.dialogCustomMaps();
@@ -525,7 +525,7 @@ Widget watchGameType(Widget builder(GameType value)) {
 Widget buildTopMessage(){
   print("buildTopMessage()");
   return watchAccount((account) {
-    return WatchBuilder(game.dialog, (dialog){
+    return WatchBuilder(website.state.dialog, (dialog){
 
       if (dialog != WebsiteDialog.Games) return empty;
 

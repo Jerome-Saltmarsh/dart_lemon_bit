@@ -24,6 +24,7 @@ import 'package:lemon_dispatch/instance.dart';
 import 'classes/Authentication.dart';
 import 'common/GameType.dart';
 import 'core/module.dart';
+import 'website/website.dart';
 
 final _Actions actions = _Actions();
 
@@ -76,31 +77,31 @@ class _Actions {
   }
 
   void showDialogChangePublicName(){
-    game.dialog.value = WebsiteDialog.Change_Public_Name;
+    website.state.dialog.value = WebsiteDialog.Change_Public_Name;
   }
 
   void showDialogAccount(){
-    game.dialog.value = WebsiteDialog.Account;
+    website.state.dialog.value = WebsiteDialog.Account;
   }
 
   void showDialogWelcome(){
-    game.dialog.value = WebsiteDialog.Account_Created;
+    website.state.dialog.value = WebsiteDialog.Account_Created;
   }
 
   void showDialogWelcome2(){
-    game.dialog.value = WebsiteDialog.Welcome_2;
+    website.state.dialog.value = WebsiteDialog.Welcome_2;
   }
 
   void showDialogSubscriptionSuccessful(){
-    game.dialog.value = WebsiteDialog.Subscription_Successful;
+    website.state.dialog.value = WebsiteDialog.Subscription_Successful;
   }
 
   void showDialogSubscriptionStatusChanged(){
-    game.dialog.value = WebsiteDialog.Subscription_Status_Changed;
+    website.state.dialog.value = WebsiteDialog.Subscription_Status_Changed;
   }
 
   void showDialogSubscriptionRequired(){
-    game.dialog.value = WebsiteDialog.Subscription_Required;
+    website.state.dialog.value = WebsiteDialog.Subscription_Required;
   }
 
   void loginWithGoogle() async {
@@ -192,11 +193,11 @@ class _Actions {
   }
 
   void showDialogLogin(){
-    game.dialog.value = WebsiteDialog.Login;
+    website.state.dialog.value = WebsiteDialog.Login;
   }
 
   void showDialogGames(){
-    game.dialog.value = WebsiteDialog.Games;
+    website.state.dialog.value = WebsiteDialog.Games;
   }
 
   void store(String key, dynamic value){
@@ -204,7 +205,7 @@ class _Actions {
   }
 
   void showDialogSubscription(){
-    game.dialog.value = WebsiteDialog.Account;
+    website.state.dialog.value = WebsiteDialog.Account;
   }
 
   void openStripeCheckout() {
@@ -227,7 +228,7 @@ class _Actions {
   }
 
   void showDialogConfirmCancelSubscription() {
-    game.dialog.value = WebsiteDialog.Confirm_Cancel_Subscription;
+    website.state.dialog.value = WebsiteDialog.Confirm_Cancel_Subscription;
   }
 
   void showErrorMessage(String message){
@@ -322,7 +323,7 @@ class _Actions {
       if (core.state.account.value == null){
         throw Exception("failed to find new account");
       }
-      game.dialog.value = WebsiteDialog.Account_Created;
+      website.state.dialog.value = WebsiteDialog.Account_Created;
     }else{
       print("Existing Account found");
       core.state.account.value = account;

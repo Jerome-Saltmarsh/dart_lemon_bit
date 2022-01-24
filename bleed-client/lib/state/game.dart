@@ -24,6 +24,7 @@ import 'package:bleed_client/ui/build.dart';
 import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/website/enums.dart';
+import 'package:bleed_client/website/website.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -32,7 +33,7 @@ final _Game game = _Game();
 _Player get player => game.player;
 
 void setDialog(WebsiteDialog value){
-  game.dialog.value = value;
+  website.state.dialog.value = value;
 }
 
 void setDialogGames(){
@@ -44,7 +45,6 @@ class _Game {
   int lag = 0;
   final Map<int, bool> gameEvents = Map();
   final Watch<int> countDownFramesRemaining = Watch(0);
-  final Watch<WebsiteDialog> dialog = Watch(WebsiteDialog.Games);
   final Watch<Mode> mode = Watch(Mode.Play);
   final Watch<Region> region = Watch(detectRegion());
   final Watch<int> numberOfPlayersNeeded = Watch(0);
