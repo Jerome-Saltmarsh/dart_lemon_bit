@@ -17,6 +17,7 @@ import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/constants/colors/white.dart';
 import 'package:bleed_client/constants/colours.dart';
+import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/modules/core/render.dart';
 import 'package:bleed_client/cube/scene.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
@@ -161,7 +162,7 @@ void drawItem(Item item) {
       src: srcLoop(
           atlas: maps.itemAtlas[item.type]!,
           direction: Direction.Down,
-          frame: timeline.frame,
+          frame: core.state.timeline.frame,
           framesPerDirection: 8));
 }
 

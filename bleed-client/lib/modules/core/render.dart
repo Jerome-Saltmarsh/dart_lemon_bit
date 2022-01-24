@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
+import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/modules/editor/render.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
@@ -19,23 +20,8 @@ import 'package:flutter/material.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_math/angle_between.dart';
 
-final _Timeline timeline = _Timeline();
-
-class _Timeline {
-  int _frame = 0;
-  int rate = 8;
-  int frame = 1;
-
-  void update(){
-    _frame++;
-    if (_frame % rate == 0){
-      frame++;
-    }
-  }
-}
-
 void drawCanvas2(Canvas canvas, Size size) {
-  timeline.update();
+  core.state.timeline.update();
 
   if (editMode) {
     renderEditor();

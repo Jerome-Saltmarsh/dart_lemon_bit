@@ -1,5 +1,6 @@
 
 
+import 'package:bleed_client/classes/Timeline.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/OperationStatus.dart';
 import 'package:bleed_client/enums/Region.dart';
@@ -14,4 +15,5 @@ class CoreState {
   final Watch<Region> region = Watch(Region.Australia);
   final String title = "GAMESTREAM";
   final Watch<double> download = Watch(0);
+  final Timeline timeline = Timeline();
 }
