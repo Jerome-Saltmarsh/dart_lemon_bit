@@ -1,5 +1,4 @@
 enum Dialogs {
-  Editor,
   Games,
   Subscription_Required,
   Invalid_Arguments,

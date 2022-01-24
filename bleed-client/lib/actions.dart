@@ -2,6 +2,7 @@
 import 'package:bleed_client/authentication.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/editor/editor.dart';
+import 'package:bleed_client/editor/enums.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/OperationStatus.dart';
 import 'package:bleed_client/events.dart';
@@ -28,7 +29,7 @@ class _Actions {
 
   void showEditorDialogSave(){
     print("actions.showEditorDialogSave()");
-    editor.dialog.value = EditorDialog.Save;
+    editor.state.dialog.value = EditorDialog.Save;
   }
 
   void updateTileRender(){
@@ -39,7 +40,7 @@ class _Actions {
 
   void showEditorDialogLoadMap(){
     print("actions.showDialogSelectMap()");
-    editor.dialog.value = EditorDialog.Load;
+    editor.state.dialog.value = EditorDialog.Load;
   }
 
   void cancelSubscription() async {
@@ -158,6 +159,11 @@ class _Actions {
 
   void toggleEditMode() {
     game.mode.value = game.mode.value == Mode.Play ? Mode.Edit : Mode.Play;
+  }
+
+  void setModePlay() {
+    print("actions.setModePlay()");
+    game.mode.value = game.mode.value = Mode.Play;
   }
 
   void openEditor(){

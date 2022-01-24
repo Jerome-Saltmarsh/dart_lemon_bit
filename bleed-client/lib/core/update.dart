@@ -6,6 +6,6 @@ void update() {
   if (playMode) {
     updatePlayMode();
   } else {
-    updateEditMode();
+    editor.update();
   }
 }

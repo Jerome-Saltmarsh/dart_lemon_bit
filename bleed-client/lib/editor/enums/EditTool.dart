@@ -1,1 +1,0 @@
-enum EditTool { Tile, EnvironmentObject }

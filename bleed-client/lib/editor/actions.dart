@@ -1,15 +1,23 @@
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/editor/editor.dart';
+import 'package:bleed_client/editor/enums.dart';
+import 'package:bleed_client/editor/mixin.dart';
 import 'package:bleed_client/functions/saveScene.dart';
 import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
+import 'package:lemon_engine/game.dart';
 
 import '../actions.dart';
 
-final EditorActions editorActions = EditorActions();
+class EditorActions with EditorScope {
 
-class EditorActions {
+  void deleteSelected() {
+    if (state.selectedObject.value == null) return;
+    game.environmentObjects.remove(state.selectedObject.value);
+    state.selectedObject.value = null;
+    redrawCanvas();
+  }
 
   void resetTiles() {
     newScene(rows: game.totalRows, columns: game.totalColumns);
@@ -55,12 +63,12 @@ class EditorActions {
 
   void closeDialog(){
     print("editor.actions.closeDialog()");
-    editor.dialog.value = EditorDialog.None;
+    editor.state.dialog.value = EditorDialog.None;
   }
 
   void saveMapToFirestore() async {
     print("editor.actions.saveMapToFirestore()");
-    final mapId = editor.mapNameController.text;
+    final mapId = editor.state.mapNameController.text;
     if (mapId.isEmpty) {
       actions.showErrorMessage("map id cannot be empty");
       return;
@@ -77,5 +85,9 @@ class EditorActions {
     final jsonRows = mapJson['tiles'];
     game.tiles = mapJsonToTiles(jsonRows);
     actions.updateTileRender();
+  }
+
+  void showErrorMessage(String message) {
+    actions.showErrorMessage(message);
   }
 }

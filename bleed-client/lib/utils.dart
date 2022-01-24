@@ -2,6 +2,8 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:bleed_client/common/enums/Direction.dart';
+import 'package:bleed_client/draw.dart';
+import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
@@ -10,7 +12,11 @@ import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_engine/state/zoom.dart';
 import 'package:lemon_math/angle_between.dart';
+import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/pi2.dart';
+
+import 'common/Tile.dart';
+import 'editor/editor.dart';
 
 double getMouseRotation() {
   return angleBetween(game.player.x, game.player.y, mouseWorldX, mouseWorldY);
@@ -68,4 +74,34 @@ void cameraCenter(double x, double y) {
   camera.y = y - (screenCenterY / zoom);
 }
 
+
+Tile get tileAtMouse {
+  if (mouseRow < 0) return Tile.Boundary;
+  if (mouseColumn < 0) return Tile.Boundary;
+  if (mouseRow >= game.totalRows) return Tile.Boundary;
+  if (mouseColumn >= game.totalColumns) return Tile.Boundary;
+  return game.tiles[mouseRow][mouseColumn];
+}
+
+
+void setTileAtMouse(Tile tile) {
+  setTile(row: mouseRow, column: mouseColumn, tile: tile);
+}
+
+void setTile({
+  required int row,
+  required int column,
+  required Tile tile,
+}) {
+  if (row < 0) return;
+  if (column < 0) return;
+  if (row >= game.totalRows) return;
+  if (column >= game.totalColumns) return;
+  game.tiles[row][column] = tile;
+  mapTilesToSrcAndDst();
+}
+
+double distanceFromMouse(double x, double y) {
+  return distanceBetween(mouseWorldX, mouseWorldY, x, y);
+}
 

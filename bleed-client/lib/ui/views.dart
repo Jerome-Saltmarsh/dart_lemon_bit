@@ -109,7 +109,7 @@ Widget buildErrorDialog(String message, {Widget? bottomRight}){
 Widget buildWatchGameMode(){
   return WatchBuilder(game.mode, (Mode mode) {
     if (mode == Mode.Edit) {
-      return buildLayoutEditor();
+      return editor.build.buildLayoutEditor();
     }
     return buildWatchOperationStatus();
   });
@@ -193,9 +193,6 @@ Positioned buildLoginSuggestionBox() {
 WatchBuilder<Dialogs> buildWatchBuilderDialog() {
   return WatchBuilder(game.dialog, (Dialogs dialogs) {
       switch (dialogs) {
-        case Dialogs.Editor:
-          return buildLayoutEditor();
-
         case Dialogs.Subscription_Status_Changed:
           return buildDialogSubscriptionStatus();
 

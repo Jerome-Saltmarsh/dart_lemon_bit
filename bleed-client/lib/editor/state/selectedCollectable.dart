@@ -1,1 +1,0 @@
-int selectedCollectable = -1;

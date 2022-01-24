@@ -223,7 +223,7 @@ class Events {
       removeGeneratedEnvironmentObjects();
       deregisterPlayKeyboardHandler();
       // registerEditorKeyboardListener();
-      editor.init();
+      editor.events.register();
       game.totalZombies.value = 0;
       game.totalProjectiles = 0;
       game.totalNpcs = 0;
