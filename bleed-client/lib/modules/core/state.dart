@@ -13,4 +13,5 @@ class CoreState {
   final Watch<Mode> mode = Watch(Mode.Play);
   final Watch<Region> region = Watch(Region.Australia);
   final String title = "GAMESTREAM";
+  final Watch<double> download = Watch(0);
 }

@@ -6,11 +6,13 @@ import 'package:bleed_client/modules/core/buildLoadingScreen.dart';
 import 'package:lemon_engine/functions/load_image.dart';
 import 'package:lemon_watch/watch.dart';
 
+import 'modules.dart';
+
 final _Images images = _Images();
 const int _totalImages = 3;
 
 Watch<int> _imagesLoaded = Watch(0, onChanged: (int value){
-  download.value =  value / _totalImages;
+  core.state.download.value =  value / _totalImages;
 });
 
 Map<ObjectType, int> environmentObjectIndex = {
