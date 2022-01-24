@@ -1,4 +1,5 @@
 
+import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/ui/dialogs.dart';
 import 'package:bleed_client/ui/style.dart';
@@ -38,6 +39,7 @@ class WebsiteBuilder {
                 buttons.buildAccount(mouseOver),
                 buttons.buttonAccount,
                 buttons.buttonGames,
+                buttonEditor(),
                 buttonCustomMap(),
                 buttons.buttonLogout,
               ],
@@ -50,6 +52,10 @@ class WebsiteBuilder {
 
   Widget buttonCustomMap(){
     return buildMenuButton("Custom", website.actions.showDialogCustomMaps);
+  }
+
+  Widget buttonEditor(){
+    return buildMenuButton("Map Editor", actions.openMapEditor);
   }
 
 
@@ -83,6 +89,8 @@ class WebsiteBuilder {
               children: mapNames.map((mapName) => margin(
                 bottom: 16,
                 child: button(text(mapName, color: colours.white618), (){
+                  // connect to custom game
+                  website.actions.connectToCustomGame(mapName);
                 },
                     alignment: Alignment.centerLeft,
                     fillColor: colours.white05, fillColorMouseOver: colours.white10, borderColor: none, borderColorMouseOver: none),
@@ -91,7 +99,5 @@ class WebsiteBuilder {
           )
       );
     },);
-
-
   }
 }

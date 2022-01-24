@@ -26,6 +26,7 @@ enum GameError {
   SkillLocked,
   SkillPointsRequired,
   Subscription_Required,
+  Custom_Map_Not_Found,
   PlayerId_Required,
   Login_Error,
   Account_Not_Found,

@@ -204,6 +204,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       error(GameError.Subscription_Required);
     }
 
+    void errorCustomMapNotFound() {
+      error(GameError.Custom_Map_Not_Found);
+    }
+
     void errorAccountNotFound() {
       error(GameError.GameNotFound);
     }
@@ -414,6 +418,36 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           sendCompiledPlayerState(game, player);
           return;
 
+        case ClientRequest.Join_Custom:
+          if (arguments.length < 3) {
+            errorArgsExpected(3, arguments);
+            return;
+          }
+          final indexPlayerId = 1;
+          final indexMapId = 2;
+
+
+          final playerId = arguments[indexPlayerId];
+          firestoreService.findUserById(playerId).then((account) async {
+            if (account == null){
+              return errorAccountNotFound();
+            }
+            if (!account.isPremium) {
+              return errorPremiumAccountOnly();
+            }
+
+            final mapId = arguments[indexMapId];
+            final customMap = await firestoreService.loadMap(mapId);
+            // if (customMap == null){
+            //   return errorCustomMapNotFound();
+            // }
+
+            // find existing custom map session and try to join it
+            // or create a new game and join that instead
+
+          });
+          break;
+
         case ClientRequest.Join:
           if (arguments.length < 2) {
             errorArgsExpected(2, arguments);
@@ -444,7 +478,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 return joinGameMMO(playerName: generateName());
               }
               final playerId = arguments[2];
-              firestoreService.findById(playerId).then((account){
+              firestoreService.findUserById(playerId).then((account){
                 if (account == null) {
                   return errorAccountNotFound();
                 }
@@ -463,7 +497,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               }
 
               final playerId = arguments[2];
-              firestoreService.findById(playerId).then((account){
+              firestoreService.findUserById(playerId).then((account){
                 if (account == null){
                   return errorAccountNotFound();
                 }

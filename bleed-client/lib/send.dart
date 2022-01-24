@@ -89,6 +89,11 @@ void sendRequestJoinGame(GameType type, {String? playerId}) {
   }
 }
 
+void sendRequestJoinCustomGame({required String customMapName, required String playerId}) {
+  print("sendRequestJoinCustomGame()");
+  webSocket.send('${ClientRequest.Join_Custom.index} $playerId $customMapName');
+}
+
 void sendRequestAcquireAbility(WeaponType type) {
   webSocket.send('${ClientRequest.AcquireAbility.index} $session ${type.index}');
 }

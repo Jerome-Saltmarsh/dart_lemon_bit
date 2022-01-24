@@ -5,6 +5,7 @@ enum GameType {
     BATTLE_ROYAL,
     CUBE3D,
     DeathMatch,
+    Custom
 }
 
 final List<GameType> gameTypes = GameType.values;

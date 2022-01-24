@@ -167,7 +167,7 @@ class _Actions {
     game.mode.value = game.mode.value = Mode.Play;
   }
 
-  void openEditor(){
+  void openMapEditor(){
     editor.actions.newScene();
     game.mode.value = Mode.Edit;
   }
