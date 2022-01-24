@@ -17,6 +17,7 @@ import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:bleed_client/webSocket.dart';
+import 'package:bleed_client/website/enums.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/functions/fullscreen_enter.dart';
 import 'package:lemon_engine/functions/fullscreen_exit.dart';
@@ -61,7 +62,7 @@ class Events {
     }
   }
 
-  void _onGameDialogChanged(Dialogs value){
+  void _onGameDialogChanged(WebsiteDialog value){
     print("onGameDialogChanged(${enumString(value)})");
   }
 

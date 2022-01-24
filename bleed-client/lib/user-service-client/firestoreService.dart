@@ -9,7 +9,7 @@ import 'package:typedef/json.dart';
 final firestoreService = _FirestoreService();
 
 class _FirestoreService {
-  final String _url = "https://gamestream-firestore-9-osbmaezptq-ey.a.run.app";
+  final String _url = "https://gamestream-firestore-13-osbmaezptq-ey.a.run.app";
 
   String get _host => _url.replaceAll("https://", "");
 
@@ -51,19 +51,17 @@ class _FirestoreService {
     await http.post(url, headers: _headers);
   }
 
-  Future<Account?> findById(String userId) async {
-    print("getAccount()");
+  Future<Account?> findUserById(String userId) async {
+    print("firestoreService.findUserById()");
 
-    if (userId.isEmpty) throw Exception("user is Empty");
+    if (userId.isEmpty) throw Exception("userId is Empty");
 
-    var url = Uri.https(_host, '/users', {'id': userId, 'method': 'get'});
-
-    var response = await http.get(url, headers: _headers);
+    var response = await get('users', params: {'id': userId});
 
     if (response.statusCode != 200) {
       throw Exception('Request failed with status: ${response.statusCode}.');
     }
-    var body = jsonDecode(response.body) as Map<String, dynamic>;
+    var body = jsonDecode(response.body) as Json;
 
     final error = body[fieldNames.error];
     if (error != null) {

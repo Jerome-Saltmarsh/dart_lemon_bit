@@ -17,6 +17,7 @@ import 'package:bleed_client/ui/actions/signInWithFacebook.dart';
 import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/webSocket.dart';
+import 'package:bleed_client/website/enums.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_dispatch/instance.dart';
 
@@ -74,31 +75,31 @@ class _Actions {
   }
 
   void showDialogChangePublicName(){
-    game.dialog.value = Dialogs.Change_Public_Name;
+    game.dialog.value = WebsiteDialog.Change_Public_Name;
   }
 
   void showDialogAccount(){
-    game.dialog.value = Dialogs.Account;
+    game.dialog.value = WebsiteDialog.Account;
   }
 
   void showDialogWelcome(){
-    game.dialog.value = Dialogs.Account_Created;
+    game.dialog.value = WebsiteDialog.Account_Created;
   }
 
   void showDialogWelcome2(){
-    game.dialog.value = Dialogs.Welcome_2;
+    game.dialog.value = WebsiteDialog.Welcome_2;
   }
 
   void showDialogSubscriptionSuccessful(){
-    game.dialog.value = Dialogs.Subscription_Successful;
+    game.dialog.value = WebsiteDialog.Subscription_Successful;
   }
 
   void showDialogSubscriptionStatusChanged(){
-    game.dialog.value = Dialogs.Subscription_Status_Changed;
+    game.dialog.value = WebsiteDialog.Subscription_Status_Changed;
   }
 
   void showDialogSubscriptionRequired(){
-    game.dialog.value = Dialogs.Subscription_Required;
+    game.dialog.value = WebsiteDialog.Subscription_Required;
   }
 
   void loginWithGoogle() async {
@@ -190,11 +191,11 @@ class _Actions {
   }
 
   void showDialogLogin(){
-    game.dialog.value = Dialogs.Login;
+    game.dialog.value = WebsiteDialog.Login;
   }
 
   void showDialogGames(){
-    game.dialog.value = Dialogs.Games;
+    game.dialog.value = WebsiteDialog.Games;
   }
 
   void store(String key, dynamic value){
@@ -202,7 +203,7 @@ class _Actions {
   }
 
   void showDialogSubscription(){
-    game.dialog.value = Dialogs.Account;
+    game.dialog.value = WebsiteDialog.Account;
   }
 
   void openStripeCheckout() {
@@ -225,7 +226,7 @@ class _Actions {
   }
 
   void showDialogConfirmCancelSubscription() {
-    game.dialog.value = Dialogs.Confirm_Cancel_Subscription;
+    game.dialog.value = WebsiteDialog.Confirm_Cancel_Subscription;
   }
 
   void showErrorMessage(String message){
@@ -293,7 +294,7 @@ class _Actions {
     }
 
     game.operationStatus.value = OperationStatus.Updating_Account;
-    game.account.value = await firestoreService.findById(account.userId).catchError((error){
+    game.account.value = await firestoreService.findUserById(account.userId).catchError((error){
       pub(LoginException(error));
       return null;
     });
@@ -307,7 +308,7 @@ class _Actions {
   }) async {
     print("actions.signInOrCreateAccount()");
     game.operationStatus.value = OperationStatus.Authenticating;
-    final account = await firestoreService.findById(userId).catchError((error){
+    final account = await firestoreService.findUserById(userId).catchError((error){
       pub(LoginException(error));
       throw error;
     });
@@ -316,11 +317,11 @@ class _Actions {
       game.operationStatus.value = OperationStatus.Creating_Account;
       await firestoreService.createAccount(userId: userId, email: email, privateName: privateName);
       game.operationStatus.value = OperationStatus.Authenticating;
-      game.account.value = await firestoreService.findById(userId);
+      game.account.value = await firestoreService.findUserById(userId);
       if (game.account.value == null){
         throw Exception("failed to find new account");
       }
-      game.dialog.value = Dialogs.Account_Created;
+      game.dialog.value = WebsiteDialog.Account_Created;
     }else{
       print("Existing Account found");
       game.account.value = account;

@@ -1,8 +1,3 @@
-import 'package:bleed_client/classes/EnvironmentObject.dart';
-import 'package:bleed_client/common/Tile.dart';
-import 'package:bleed_client/common/enums/ObjectType.dart';
-import 'package:bleed_client/constants/colours.dart';
-import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/editor/actions.dart';
 import 'package:bleed_client/editor/builder.dart';
 import 'package:bleed_client/editor/config.dart';

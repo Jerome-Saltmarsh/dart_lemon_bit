@@ -52,8 +52,9 @@ class _Firestore {
       print("firestoreApi is null, waiting 1 second for it to load, try: $tries");
       await Future.delayed(_oneSecond);
     }
+    final documentName =  getDocumentName(collection: collection, value: id);
 
-    return documents.get(getDocumentName(collection: collection, value: id))
+    return documents.get(documentName)
         .then<Document?>((value) => Future.value(value))
         .catchError((error) {
       if (error is DetailedApiRequestError && error.status == 404) {
@@ -79,16 +80,8 @@ class _Firestore {
     return names;
   }
 
-  String getDocumentNameUser(String value){
-    return getDocumentName(collection: collections.users, value: value);
-  }
-
-  String getDocumentNameMap(String value){
-    return getDocumentName(collection: collections.maps, value: value);
-  }
-
   String getDocumentName({required String collection, required String value}){
-    return '${buildDocumentName(projectId: _projectId, collection: collections.maps)}/$value';
+    return '${buildDocumentName(projectId: _projectId, collection: collection)}/$value';
   }
 
   Future<Document> patchPublicName({

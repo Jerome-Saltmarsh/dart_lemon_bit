@@ -3,7 +3,6 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
-import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/core/init.dart';
@@ -25,6 +24,8 @@ import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
+import 'package:bleed_client/website/enums.dart';
+import 'package:bleed_client/website/website.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/game.dart';
@@ -52,7 +53,7 @@ Widget buildDialogLogin() {
       child: layout(
           bottomLeft: button("Sign up", (){}),
           bottomRight: button("Back", () {
-            game.dialog.value = Dialogs.Games;
+            game.dialog.value = WebsiteDialog.Games;
           }, fillColor: colours.none,
             borderColor: colours.none,
           ),
@@ -158,7 +159,7 @@ Widget buildViewConnectionNone() {
                 buildTopMessage()
               ])
       ),
-      topRight: buildMenuMain(),
+      topRight: website.build.mainMenu(),
       bottomLeft: buildMenuDebug(),
       child: buildWatchBuilderDialog(),
   );
@@ -190,54 +191,57 @@ Positioned buildLoginSuggestionBox() {
     );
 }
 
-WatchBuilder<Dialogs> buildWatchBuilderDialog() {
-  return WatchBuilder(game.dialog, (Dialogs dialogs) {
+WatchBuilder<WebsiteDialog> buildWatchBuilderDialog() {
+  return WatchBuilder(game.dialog, (WebsiteDialog dialogs) {
       switch (dialogs) {
-        case Dialogs.Subscription_Status_Changed:
+        case WebsiteDialog.Custom_Maps:
+          return website.build.dialogCustomMaps();
+
+        case WebsiteDialog.Subscription_Status_Changed:
           return buildDialogSubscriptionStatus();
 
-        case Dialogs.Subscription_Cancelled:
+        case WebsiteDialog.Subscription_Cancelled:
           return buildDialogSubscriptionCancelled();
 
-        case Dialogs.Subscription_Successful:
+        case WebsiteDialog.Subscription_Successful:
           return buildDialogSubscriptionSuccessful();
 
-        case Dialogs.Account_Created:
+        case WebsiteDialog.Account_Created:
           return buildDialogAccountCreated();
 
-        case Dialogs.Welcome_2:
+        case WebsiteDialog.Welcome_2:
           return buildDialogWelcome2();
 
-        case Dialogs.Change_Region:
+        case WebsiteDialog.Change_Region:
           return buildDialogChangeRegion();
 
-        case Dialogs.Login_Error:
+        case WebsiteDialog.Login_Error:
           return dialog(
               child: layout(
                   child: text("Login Error"), bottomRight: backButton));
 
-        case Dialogs.Change_Public_Name:
+        case WebsiteDialog.Change_Public_Name:
           return buildDialogChangePublicName();
 
-        case Dialogs.Account:
+        case WebsiteDialog.Account:
           return buildDialogAccount();
 
-        case Dialogs.Login:
+        case WebsiteDialog.Login:
           return buildDialogLogin();
 
-        case Dialogs.Invalid_Arguments:
+        case WebsiteDialog.Invalid_Arguments:
           return dialog(child: text("Invalid Arguments"));
 
-        case Dialogs.Subscription_Required:
+        case WebsiteDialog.Subscription_Required:
           return dialog(child: text("Subscription Required"));
 
-        case Dialogs.Games:
+        case WebsiteDialog.Games:
           return buildDialogGames();
 
-        case Dialogs.Confirm_Logout:
+        case WebsiteDialog.Confirm_Logout:
           return dialog(child: text("Confirm Logout"));
 
-        case Dialogs.Confirm_Cancel_Subscription:
+        case WebsiteDialog.Confirm_Cancel_Subscription:
           return buildDialogConfirmCancelSubscription();
       }
     });
@@ -273,7 +277,7 @@ Widget buildDialogGameTypeSelected(GameType gameType) {
                 text(enumString(game.region.value),
                     color: colours.white80),
                     () {
-                  game.dialog.value = Dialogs.Change_Region;
+                  game.dialog.value = WebsiteDialog.Change_Region;
                 },
                 borderColor: colours.none,
                 fillColor: colours.black20,
@@ -327,38 +331,6 @@ Widget buildDialogChangeRegion() {
               }).toList()
             ],
           )));
-}
-
-Widget buildMenuMain() {
-  return watchAccount((Account? account){
-    if (account == null) {
-      return Column(
-        crossAxisAlignment: axis.cross.end,
-        children: [
-          buttons.signInWithGoogleButton,
-          height8,
-          buttons.signInWithFacebookButton,
-        ],
-      );
-    }
-
-    return Row(
-      crossAxisAlignment: axis.cross.start,
-      mainAxisAlignment: axis.main.end,
-      children: [
-        mouseOver(builder: (BuildContext context, bool mouseOver) {
-          return mouseOver ? Column(
-            children: [
-              buttons.buildAccount(mouseOver),
-              buttons.buttonAccount,
-              buttons.buttonGames,
-              buttons.buttonLogout,
-            ],
-          ) : buttons.account;
-        }),
-      ],
-    );
-  });
 }
 
 Widget? buildMenuDebug() {
@@ -565,7 +537,7 @@ Widget buildTopMessage(){
   return watchAccount((account) {
     return WatchBuilder(game.dialog, (dialog){
 
-      if (dialog != Dialogs.Games) return empty;
+      if (dialog != WebsiteDialog.Games) return empty;
 
       if (account == null){
         return onHover((hovering){

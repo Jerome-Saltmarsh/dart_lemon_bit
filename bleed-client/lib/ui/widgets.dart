@@ -14,6 +14,7 @@ import 'package:bleed_client/ui/state/decorationImages.dart';
 import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
+import 'package:bleed_client/website/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/functions/fullscreen_enter.dart';
 import 'package:lemon_engine/functions/fullscreen_exit.dart';
@@ -168,7 +169,7 @@ class _Buttons {
       _iconLogin,
     ],
   ), (){
-      game.dialog.value = Dialogs.Login;
+      game.dialog.value = WebsiteDialog.Login;
   }, width: style.buttonWidth, height: style.buttonHeight, borderWidth: 3,
     fillColor: colours.none,
     borderColor: colours.none,
@@ -252,10 +253,10 @@ class _Buttons {
   );
 
   final Widget account = button(_iconSettings, (){
-    if (game.dialog.value != Dialogs.Account){
-      game.dialog.value = Dialogs.Account;
+    if (game.dialog.value != WebsiteDialog.Account){
+      game.dialog.value = WebsiteDialog.Account;
     }else{
-      game.dialog.value = Dialogs.Games;
+      game.dialog.value = WebsiteDialog.Games;
     }
   },
       height: style.buttonHeight,
@@ -269,10 +270,10 @@ class _Buttons {
 
   Widget buildAccount(bool hovering){
     return button(_iconSettings, (){
-      if (game.dialog.value != Dialogs.Account){
-        game.dialog.value = Dialogs.Account;
+      if (game.dialog.value != WebsiteDialog.Account){
+        game.dialog.value = WebsiteDialog.Account;
       }else{
-        game.dialog.value = Dialogs.Games;
+        game.dialog.value = WebsiteDialog.Games;
       }
     },
       height: style.buttonHeight,
@@ -288,6 +289,7 @@ class _Buttons {
   final Widget buttonLogout = buildMenuButton("Logout", actions.logout);
   final Widget buttonAccount = buildMenuButton("Account", actions.showDialogAccount);
   final Widget buttonGames = buildMenuButton("Games", actions.showDialogGames);
+  final Widget buttonCustom = buildMenuButton("Custom", actions.showDialogGames);
 
 
   final Widget debug = button("Debug", toggleDebugMode);
@@ -378,7 +380,7 @@ Widget _buildFakeLoginButton(String userId, String text){
 }
 
 final backButton = button(text("Back", color: colours.white618), () {
-  game.dialog.value = Dialogs.Games;
+  game.dialog.value = WebsiteDialog.Games;
 }, fillColor: colours.none,
   fillColorMouseOver: none,
   borderColor: colours.none,

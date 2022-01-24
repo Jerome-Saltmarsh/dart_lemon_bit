@@ -324,7 +324,6 @@ Widget buildMenu() {
       ],
     );
   });
-
 }
 
 void clearPlayerMessage() {

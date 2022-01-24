@@ -23,6 +23,7 @@ import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/ui/build.dart';
 import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
+import 'package:bleed_client/website/enums.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -30,12 +31,12 @@ final _Game game = _Game();
 
 _Player get player => game.player;
 
-void setDialog(Dialogs value){
+void setDialog(WebsiteDialog value){
   game.dialog.value = value;
 }
 
 void setDialogGames(){
-  setDialog(Dialogs.Games);
+  setDialog(WebsiteDialog.Games);
 }
 
 class _Game {
@@ -46,7 +47,7 @@ class _Game {
   final Watch<String?> errorMessage = Watch(null);
   final Watch<OperationStatus> operationStatus = Watch(OperationStatus.None);
   final Watch<Account?> account = Watch(null);
-  final Watch<Dialogs> dialog = Watch(Dialogs.Games);
+  final Watch<WebsiteDialog> dialog = Watch(WebsiteDialog.Games);
   final Watch<Mode> mode = Watch(Mode.Play);
   final Watch<Region> region = Watch(detectRegion());
   final Watch<int> numberOfPlayersNeeded = Watch(0);

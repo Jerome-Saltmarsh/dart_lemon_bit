@@ -13,6 +13,7 @@ import 'package:bleed_client/ui/state/decorationImages.dart';
 import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
+import 'package:bleed_client/website/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_math/golden_ratio.dart';
@@ -223,7 +224,7 @@ class _Build {
     return onPressed(
       callback: (){
         game.type.value = GameType.None;
-        if (game.dialog.value == Dialogs.Games){
+        if (game.dialog.value == WebsiteDialog.Games){
           actions.showDialogAccount();
         }else{
           actions.showDialogGames();

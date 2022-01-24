@@ -102,31 +102,32 @@ FutureOr<Response> handleRequest(Request request) async {
       return ok(subscription);
 
     case "users":
-      final method = params['method']?.toUpperCase();
-      if (method == null){
-        return error(response, 'method_required');
-      }
 
       final id = params['id'];
       if (id == null) {
-        return error(response, 'id_required');
+        return notFound('param_required__id');
       }
 
-      if (method == 'POST'){
+      if (request.method == 'POST'){
         return _createUser(response, params, id);
       }
 
       response['id'] = id;
-      final user = await firestore.findUserById(id);
+      final userDocument = await firestore.findUserById(id);
 
+      if (userDocument == null){
+        return notFound('no_user_found');
+      }
 
-      if (user == null){
-        return error(response, 'not_found');
+      final method = params['method']?.toUpperCase();
+
+      if (method == null) {
+        return await mapUserDocumentToResponse(userDocument, response);
       }
 
       switch(method){
         case 'CANCEL_SUBSCRIPTION':
-          return await _cancelSubscription(user, response);
+          return await _cancelSubscription(userDocument, response);
 
         case 'CHANGE_PUBLIC_NAME':
           var publicName = params[fieldNames.public_name];
@@ -136,7 +137,7 @@ FutureOr<Response> handleRequest(Request request) async {
           return await changePublicName(userId: id, publicName: publicName);
 
         case 'GET_SUBSCRIPTION':
-          final fields = user.fields;
+          final fields = userDocument.fields;
           if (fields == null) {
             throw Exception('user fields are null');
           }
@@ -156,9 +157,6 @@ FutureOr<Response> handleRequest(Request request) async {
 
           final subscription = await stripeApi.getSubscription(subscriptionId);
           return ok(subscription);
-
-        case 'GET':
-          return await _getUser(user, response);
 
         default:
           return error(response, "unknown_method");
@@ -194,7 +192,7 @@ Future<Response> _createUser(Json response, Map<String, String> params, String i
   return ok(newUser);
 }
 
-Future<Response> _getUser(Document user, Json response) async {
+Future<Response> mapUserDocumentToResponse(Document user, Json response) async {
 
   final fields = user.fields;
 
