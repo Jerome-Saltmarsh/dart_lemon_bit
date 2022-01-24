@@ -1,4 +1,5 @@
 
+import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/ui/dialogs.dart';
 import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/views.dart';
@@ -6,6 +7,7 @@ import 'package:bleed_client/ui/widgets.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:bleed_client/webSocket.dart';
+import 'package:bleed_client/website/website.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../flutterkit.dart';
@@ -36,6 +38,7 @@ class WebsiteBuilder {
                 buttons.buildAccount(mouseOver),
                 buttons.buttonAccount,
                 buttons.buttonGames,
+                buttonCustomMap(),
                 buttons.buttonLogout,
               ],
             ) : buttons.account;
@@ -43,6 +46,10 @@ class WebsiteBuilder {
         ],
       );
     });
+  }
+
+  Widget buttonCustomMap(){
+    return buildMenuButton("Custom", website.actions.showDialogCustomMaps);
   }
 
 
@@ -70,10 +77,14 @@ class WebsiteBuilder {
       return buildDialog(
           width: style.dialogWidthMedium,
           height: style.dialogHeightLarge,
+          bottomRight: closeDialogButton,
           child: SingleChildScrollView(
             child: Column(
-              children: mapNames.map((e) => buildButton(e, (){
-              })).toList(),
+              children: mapNames.map((mapName) => margin(
+                bottom: 16,
+                child: button(mapName, (){
+                }, fillColor: none, fillColorMouseOver: none),
+              )).toList(),
             ),
           )
       );

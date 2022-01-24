@@ -15,6 +15,7 @@ import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/ui.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:bleed_client/website/enums.dart';
+import 'package:bleed_client/website/website.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/functions/fullscreen_enter.dart';
 import 'package:lemon_engine/functions/fullscreen_exit.dart';
@@ -289,7 +290,6 @@ class _Buttons {
   final Widget buttonLogout = buildMenuButton("Logout", actions.logout);
   final Widget buttonAccount = buildMenuButton("Account", actions.showDialogAccount);
   final Widget buttonGames = buildMenuButton("Games", actions.showDialogGames);
-  final Widget buttonCustom = buildMenuButton("Custom", actions.showDialogGames);
 
 
   final Widget debug = button("Debug", toggleDebugMode);
