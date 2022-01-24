@@ -6,6 +6,7 @@ import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/core/init.dart';
+import 'package:bleed_client/core/module.dart';
 import 'package:bleed_client/editor/editor.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/enums/OperationStatus.dart';
@@ -118,7 +119,7 @@ Widget buildWatchGameMode(){
 
 
 Widget buildWatchOperationStatus(){
-  return WatchBuilder(game.operationStatus, (OperationStatus operationStatus){
+  return WatchBuilder(core.state.operationStatus, (OperationStatus operationStatus){
     if (operationStatus != OperationStatus.None){
       return buildViewOperationStatus(operationStatus);
     }

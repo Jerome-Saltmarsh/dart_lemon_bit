@@ -23,6 +23,7 @@ import 'package:lemon_dispatch/instance.dart';
 
 import 'classes/Authentication.dart';
 import 'common/GameType.dart';
+import 'core/module.dart';
 
 final _Actions actions = _Actions();
 
@@ -52,15 +53,15 @@ class _Actions {
       actions.showErrorMessage('Account is null');
       return;
     }
-    game.operationStatus.value = OperationStatus.Cancelling_Subscription;
+    core.state.operationStatus.value = OperationStatus.Cancelling_Subscription;
     await firestoreService.cancelSubscription(account.userId);
     await updateAccount();
-    game.operationStatus.value = OperationStatus.None;
+    core.state.operationStatus.value = OperationStatus.None;
   }
 
   void logout() {
     print("actions.logout()");
-    game.operationStatus.value = OperationStatus.Logging_Out;
+    core.state.operationStatus.value = OperationStatus.Logging_Out;
 
     firebaseAuth.signOut().catchError(print);
     googleSignIn.signOut().catchError((error){
@@ -70,7 +71,7 @@ class _Actions {
     storage.forgetAuthorization();
     game.account.value = null;
     Future.delayed(Duration(seconds: 1), (){
-      game.operationStatus.value = OperationStatus.None;
+      core.state.operationStatus.value = OperationStatus.None;
     });
   }
 
@@ -104,7 +105,7 @@ class _Actions {
 
   void loginWithGoogle() async {
     print("actions.loginWithGoogle()");
-    game.operationStatus.value = OperationStatus.Authenticating;
+    core.state.operationStatus.value = OperationStatus.Authenticating;
     await getGoogleAuthentication().then(login).catchError((error){
       if (error is PlatformException){
         if (error.code == "popup_closed_by_user"){
@@ -115,7 +116,7 @@ class _Actions {
       }
       showErrorMessage(error.toString());
     });
-    game.operationStatus.value = OperationStatus.None;
+    core.state.operationStatus.value = OperationStatus.None;
   }
 
   void loginWithFacebook() async {
@@ -218,7 +219,7 @@ class _Actions {
       return;
     }
 
-    game.operationStatus.value = OperationStatus.Opening_Secure_Payment_Session;
+    core.state.operationStatus.value = OperationStatus.Opening_Secure_Payment_Session;
     stripeCheckout(
         userId: account.userId,
         email: account.email
@@ -256,14 +257,14 @@ class _Actions {
       showErrorMessage("Name entered is empty");
       return;
     }
-    game.operationStatus.value = OperationStatus.Changing_Public_Name;
+    core.state.operationStatus.value = OperationStatus.Changing_Public_Name;
     final response = await firestoreService
         .changePublicName(userId: account.userId, publicName: value)
         .catchError((error) {
       showErrorMessage(error.toString());
       throw error;
     });
-    game.operationStatus.value = OperationStatus.None;
+    core.state.operationStatus.value = OperationStatus.None;
 
     switch (response) {
       case ChangeNameStatus.Success:
@@ -293,12 +294,12 @@ class _Actions {
       return;
     }
 
-    game.operationStatus.value = OperationStatus.Updating_Account;
+    core.state.operationStatus.value = OperationStatus.Updating_Account;
     game.account.value = await firestoreService.findUserById(account.userId).catchError((error){
       pub(LoginException(error));
       return null;
     });
-    game.operationStatus.value = OperationStatus.None;
+    core.state.operationStatus.value = OperationStatus.None;
   }
 
   Future signInOrCreateAccount({
@@ -307,16 +308,16 @@ class _Actions {
     required String privateName
   }) async {
     print("actions.signInOrCreateAccount()");
-    game.operationStatus.value = OperationStatus.Authenticating;
+    core.state.operationStatus.value = OperationStatus.Authenticating;
     final account = await firestoreService.findUserById(userId).catchError((error){
       pub(LoginException(error));
       throw error;
     });
     if (account == null){
       print("No account found. Creating new account");
-      game.operationStatus.value = OperationStatus.Creating_Account;
+      core.state.operationStatus.value = OperationStatus.Creating_Account;
       await firestoreService.createAccount(userId: userId, email: email, privateName: privateName);
-      game.operationStatus.value = OperationStatus.Authenticating;
+      core.state.operationStatus.value = OperationStatus.Authenticating;
       game.account.value = await firestoreService.findUserById(userId);
       if (game.account.value == null){
         throw Exception("failed to find new account");
@@ -326,6 +327,6 @@ class _Actions {
       print("Existing Account found");
       game.account.value = account;
     }
-    game.operationStatus.value = OperationStatus.None;
+    core.state.operationStatus.value = OperationStatus.None;
   }
 }
