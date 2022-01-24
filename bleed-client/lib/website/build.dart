@@ -1,6 +1,7 @@
 
 import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/constants/colours.dart';
+import 'package:bleed_client/core/module.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/dialogs.dart';
 import 'package:bleed_client/ui/style.dart';
@@ -24,7 +25,7 @@ class WebsiteBuild {
     return Tooltip(
       message: "Change Region",
       child: button(
-        text(enumString(game.region.value),
+        text(enumString(core.state.region.value),
             color: colours.white80),
             website.actions.showDialogChangeRegion,
         borderColor: colours.none,

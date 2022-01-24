@@ -2,6 +2,7 @@
 
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/servers.dart';
+import 'package:bleed_client/core/module.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/website/website.dart';
 
@@ -18,7 +19,7 @@ class WebsiteActions {
     _log("connectToCustomGame");
     game.type.value = GameType.Custom;
     game.customGameName = customGame;
-    connectToWebSocketServer(game.region.value, GameType.Custom);
+    connectToWebSocketServer(core.state.region.value, GameType.Custom);
   }
 
   void _log(String value){

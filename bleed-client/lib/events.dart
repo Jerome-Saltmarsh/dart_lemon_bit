@@ -37,7 +37,7 @@ class Events {
     print("Events()");
     webSocket.connection.onChanged(_onConnectionChanged);
     game.type.onChanged(_onGameTypeChanged);
-    game.region.onChanged(_onServerTypeChanged);
+    core.state.region.onChanged(_onServerTypeChanged);
     game.player.uuid.onChanged(_onPlayerUuidChanged);
     game.player.alive.onChanged(_onPlayerAliveChanged);
     game.status.onChanged(_onGameStatusChanged);

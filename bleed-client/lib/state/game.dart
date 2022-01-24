@@ -45,7 +45,6 @@ class _Game {
   int lag = 0;
   final Map<int, bool> gameEvents = Map();
   final Watch<int> countDownFramesRemaining = Watch(0);
-  final Watch<Region> region = Watch(detectRegion());
   final Watch<int> numberOfPlayersNeeded = Watch(0);
   final List<Effect> effects = [];
   final _Settings settings = _Settings();

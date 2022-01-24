@@ -2,6 +2,7 @@ import 'package:bleed_client/classes/Authentication.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/constants/colours.dart';
+import 'package:bleed_client/core/module.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/send.dart';
@@ -306,7 +307,7 @@ class _Buttons {
         child: border(child: text(audio ? "Audio On" : "Audio Off")));
   });
 
-  final Widget region = WatchBuilder(game.region, (Region region) {
+  final Widget region = WatchBuilder(core.state.region, (Region region) {
     return onHover((bool hovering){
 
       final currentRegion  =   button(
@@ -332,7 +333,7 @@ class _Buttons {
               final bool selected = region == value;
 
             return button(text(enumString(value), weight: selected ? bold : FontWeight.normal), (){
-              game.region.value = value;
+              core.state.region.value = value;
             },
               fillColorMouseOver: selected ? colours.green : colours.none,
               fillColor: selected ? colours.green : colours.white05,

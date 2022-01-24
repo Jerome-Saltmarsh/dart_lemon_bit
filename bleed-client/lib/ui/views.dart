@@ -309,10 +309,10 @@ Widget buildDialogChangeRegion() {
               height32,
               ...selectableRegions.map((region) {
                 return button(enumString(region), () {
-                  game.region.value = region;
+                  core.state.region.value = region;
                   setDialogGames();
                 },
-                    fillColor: region == game.region.value
+                    fillColor: region == core.state.region.value
                         ? colours.black20
                         : colours.white05,
                     borderColor: colours.none,
@@ -430,7 +430,7 @@ class _BuildView {
 
 
   Widget connecting() {
-    return WatchBuilder(game.region, (Region region) {
+    return WatchBuilder(core.state.region, (Region region) {
       return center(Column(
         mainAxisAlignment: axis.main.center,
         children: [
@@ -462,7 +462,7 @@ Widget _buildSelectRegionButton(Region region) {
       // fontWeight: FontWeight.bold
     ),
     () {
-      game.region.value = region;
+      core.state.region.value = region;
     },
     margin: EdgeInsets.only(bottom: 8),
     width: 200,

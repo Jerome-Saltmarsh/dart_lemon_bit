@@ -145,11 +145,11 @@ class _Actions {
 
   void play(GameType gameType){
     game.type.value = gameType;
-    connectToWebSocketServer(game.region.value, gameType);
+    connectToWebSocketServer(core.state.region.value, gameType);
   }
 
   void connectToSelectedGame(){
-    connectToWebSocketServer(game.region.value, game.type.value);
+    connectToWebSocketServer(core.state.region.value, game.type.value);
   }
 
   void deselectGameType(){
