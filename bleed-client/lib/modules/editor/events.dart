@@ -20,7 +20,6 @@ class EditorEvents with EditorScope {
     keyboardEvents.listen(onKeyboardEvent);
     mouseEvents.onLeftClicked.value = onMouseLeftClicked;
     editor.state.selectedObject.onChanged(onSelectedObjectChanged);
-    engine.state.mouseLeftDownFrames.onChanged(onMouseLeftDown);
   }
 
   void onMouseLeftDown(int frames){

@@ -12,7 +12,6 @@ class EditorState {
   bool panning = false;
   bool mouseDragging = false;
   Offset mouseWorldStart = Offset(0, 0);
-  bool mouseDragClickProcess = false;
   final Watch<String> process = Watch("");
   final Watch<EnvironmentObject?> selectedObject = Watch(null);
   final Watch<ToolTab> tab = Watch(ToolTab.Tiles);
