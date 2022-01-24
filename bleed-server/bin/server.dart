@@ -437,15 +437,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             }
 
             final mapId = arguments[indexMapId];
-            final customMap = await firestoreService.loadMap(mapId);
-            print("success");
-            // if (customMap == null){
-            //   return errorCustomMapNotFound();
-            // }
-
-            // find existing custom map session and try to join it
-            // or create a new game and join that instead
-
+            final customGame = await findOrCreateCustomGame(mapId);
+            final Player player = customGame.playerJoin();
+            compileWholeGame(customGame);
+            compilePlayerJoined(_buffer, player);
+            compileGameMeta(_buffer, customGame);
+            sendAndClearBuffer();
           });
           break;
 

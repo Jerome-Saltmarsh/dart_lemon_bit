@@ -1,9 +1,11 @@
 import 'package:bleed_server/CubeGame.dart';
+import 'package:bleed_server/user-service-client/firestoreService.dart';
 
 import 'classes/Game.dart';
 import 'classes/Player.dart';
 import 'common/GameStatus.dart';
 import 'compile.dart';
+import 'functions/loadScenes.dart';
 import 'games/Royal.dart';
 import 'games/Moba.dart';
 import 'games/world.dart';
@@ -86,4 +88,16 @@ class _Global {
       }
     }
   }
+}
+
+Future<CustomGame> findOrCreateCustomGame(String mapId) async {
+  for(Game game in global.games){
+    if (game is CustomGame == false) continue;
+    final customGame = game as CustomGame;
+    if (customGame.mapId != mapId) continue;
+    return customGame;
+  }
+  final customMapJson = await firestoreService.loadMap(mapId);
+  final scene = mapJsonToScene(customMapJson);
+  return CustomGame(scene, mapId);
 }

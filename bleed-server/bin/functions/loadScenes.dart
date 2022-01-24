@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:lemon_math/Vector2.dart';
+import 'package:typedef/json.dart';
 
 import '../classes/Scene.dart';
 import '../common/Tile.dart';
@@ -23,16 +24,14 @@ void loadScenes() {
 }
 
 Future<Scene> loadScene(String name) async {
-  String dir = Directory.current.path;
-  File fortressFile = File('$dir/scenes/$name.json');
-  String text = await fortressFile.readAsString();
-  return _mapStringToScene(text);
+  final String dir = Directory.current.path;
+  final File fortressFile = File('$dir/scenes/$name.json');
+  final String text = await fortressFile.readAsString();
+  final Json sceneJson = jsonDecode(text);
+  return mapJsonToScene(sceneJson);
 }
 
-Scene _mapStringToScene(String text) {
-  Map<String, dynamic> json = _decoder.convert(text);
-
-  List collectablesInts = json['collectables'];
+Scene mapJsonToScene(Json json) {
 
   List<Vector2> playerSpawnPoints = [];
   if (json.containsKey('player-spawn-points')) {

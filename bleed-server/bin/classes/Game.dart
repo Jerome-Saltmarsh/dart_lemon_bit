@@ -1964,3 +1964,19 @@ Character? getClosestEnemy({
   }
   return closest;
 }
+
+
+class CustomGame extends Game {
+  final String mapId;
+
+  CustomGame(Scene scene, this.mapId) : super(scene);
+
+  @override
+  int getTime() {
+    return calculateTime(hour: 12);
+  }
+
+  Player playerJoin() {
+    return Player(game: this, type: CharacterType.Human, y: 500);
+  }
+}
