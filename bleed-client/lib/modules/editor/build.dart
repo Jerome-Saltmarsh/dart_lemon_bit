@@ -56,13 +56,13 @@ class EditorBuild {
   Widget _mainMenu() {
     return Row(
           children: [
-            buttonClear(),
+            _buttonClear(),
             width16,
-            buttonLoad(),
+            _buttonLoad(),
             width16,
-            buttonSave(),
+            _buttonSave(),
             width16,
-            buttonExit(),
+            _buttonExit(),
           ],
         );
   }
@@ -132,11 +132,11 @@ class EditorBuild {
     ];
   }
 
-  Widget buttonClear() => text("Clear", onPressed: editor.actions.resetTiles);
+  Widget _buttonClear() => text("Clear", onPressed: editor.actions.resetTiles);
 
-  Widget buttonLoad() => text("Load", onPressed: actions.showEditorDialogLoadMap);
+  Widget _buttonLoad() => text("Load", onPressed: actions.showEditorDialogLoadMap);
 
-  Widget buttonSave() => text("Save", onPressed: actions.showEditorDialogSave);
+  Widget _buttonSave() => text("Save", onPressed: actions.showEditorDialogSave);
 
   Widget _buildEditorDialog(){
     return WatchBuilder(editor.state.dialog, (EditorDialog dialog){
@@ -154,10 +154,10 @@ class EditorBuild {
     });
   }
 
-  Widget _buildTabs(ToolTab activeTab) {
+  Widget _buildTabs(ToolTab toolTab) {
     return Row(
       children: ToolTab.values.map((tab) {
-        bool active = tab == activeTab;
+        bool active = tab == toolTab;
 
         return button(
           enumString(tab),
@@ -187,10 +187,19 @@ class EditorBuild {
   }
 
   List<Widget> _tabUnits() {
-    return [text("Units")];
+    return Unit.values.map((unit) {
+      return WatchBuilder(state.unit, (Unit selected) {
+        return button(enumString(unit), () {
+          state.unit.value = unit;
+        },
+            width: _buttonWidth,
+            alignment: Alignment.centerLeft,
+            fillColor: selected == unit ? _highlight : colours.transparent);
+      });
+    }).toList();
   }
 
-  Widget buttonExit(){
+  Widget _buttonExit(){
     return buildButton("Exit", actions.setModePlay);
   }
 
