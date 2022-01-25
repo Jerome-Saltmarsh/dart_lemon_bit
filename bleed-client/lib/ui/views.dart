@@ -104,7 +104,7 @@ WatchBuilder<Connection> buildWatchConnection(Account? account) {
       case Connection.Connecting:
         return _views.connecting;
       case Connection.Connected:
-        return buildViewConnected();
+        return modules.game.build.buildUIGame();
       case Connection.None:
         return buildViewConnectionNone();
       default:
@@ -551,46 +551,6 @@ Widget buildTopMessage(){
   });
 }
 
-Widget buildViewConnected() {
-  return WatchBuilder(game.player.uuid, (String uuid) {
-    if (uuid.isEmpty) {
-      return buildLayoutLoadingGame();
-    }
-    return WatchBuilder(game.status, (GameStatus gameStatus) {
-      switch (gameStatus) {
-        case GameStatus.Counting_Down:
-          return buildDialog(
-            width: style.dialogWidthMedium,
-            height: style.dialogHeightMedium,
-            child: WatchBuilder(game.countDownFramesRemaining, (int frames){
-              final seconds =  frames ~/ 30.0;
-              return Center(child: text("Starting in $seconds seconds"));
-            }));
-        case GameStatus.Awaiting_Players:
-          return buildLayoutLobby() ;
-        case GameStatus.In_Progress:
-          switch (game.type.value) {
-            case GameType.MMO:
-              return buildHud.playerCharacterType();
-            case GameType.Custom:
-              return buildHud.playerCharacterType();
-            case GameType.Moba:
-              return buildHud.playerCharacterType();
-            case GameType.BATTLE_ROYAL:
-              return buildHud.playerCharacterType();
-            case GameType.CUBE3D:
-              return buildUI3DCube();
-            default:
-              return text(game.type.value);
-          }
-        case GameStatus.Finished:
-          return buildDialogGameFinished();
-        default:
-          return text(enumString(gameStatus));
-      }
-    });
-  });
-}
 
 final Widget _textWaiting = text("- waiting", color: colours.white382);
 
