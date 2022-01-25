@@ -14,23 +14,20 @@ void renderEditor(Canvas canvas, Size size) {
   drawSprites();
   final state = editor.state;
 
+  _drawSelectedObject();
+  
   for(Character character in state.characters){
     drawCharacter(character);
   }
 
-  final selectedCollectable = editor.state.selectedCollectable;
+}
 
-  if (selectedCollectable > 0) {
-    double x = game.collectables[selectedCollectable + 1].toDouble();
-    double y = game.collectables[selectedCollectable + 2].toDouble();
-    drawCircleOutline(x: x, y: y, radius: 50, color: Colors.white, sides: 10);
-  }
-
+void _drawSelectedObject() {
   final Vector2? selectedObject = editor.state.selected.value;
-  if (selectedObject != null){
-    drawCircleOutline(x: selectedObject.x, y: selectedObject.y, radius: 50, color: Colors.white, sides: 10);
-    engine.draw.circle(selectedObject.x, selectedObject.y,
+  if (selectedObject == null) return;
+
+  drawCircleOutline(x: selectedObject.x, y: selectedObject.y, radius: 50, color: Colors.white, sides: 10);
+  engine.draw.circle(selectedObject.x, selectedObject.y,
         15, Colors.white70);
 
-  }
 }
