@@ -238,10 +238,10 @@ packages:
   lemon_engine:
     dependency: "direct main"
     description:
-      name: lemon_engine
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.02"
+      path: "C:\\Users\\Jerome\\github\\dart-lemon-engine"
+      relative: false
+    source: path
+    version: "0.3.03"
   lemon_math:
     dependency: "direct main"
     description:

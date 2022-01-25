@@ -17,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render/draw_circle.dart';
 import 'package:lemon_engine/state/canvas.dart';
-import 'package:lemon_engine/state/paint.dart';
 
 const _scale = 0.33;
 const _size = 32;

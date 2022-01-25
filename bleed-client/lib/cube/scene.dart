@@ -2,7 +2,6 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:bleed_client/cube/widget.dart';
-import 'package:lemon_engine/state/paint.dart';
 import 'package:vector_math/vector_math_64.dart';
 
 import 'camera3d.dart';
@@ -243,7 +242,7 @@ class Scene {
     // create render mesh from objects
     final renderMesh = _makeRenderMesh();
 
-    setColorRed();
+    // setColorRed();
     canvas.translate(200, 200);
     canvas.scale(1, 1);
     canvas.drawLine(Offset(0, 0), Offset(viewportWidth.toDouble(), viewportHeight.toDouble()), globalPaint);

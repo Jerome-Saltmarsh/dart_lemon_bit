@@ -6,7 +6,6 @@ import 'package:bleed_client/render/draw/drawCanvas.dart';
 import 'package:bleed_client/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/state/paint.dart';
 
 import 'camera3d.dart';
 

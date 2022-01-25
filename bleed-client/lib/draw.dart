@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:bleed_client/classes/NpcDebug.dart';
+import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/getters/inDarkness.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/state/paths.dart';
@@ -13,7 +14,6 @@ import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/queries/on_screen.dart';
 import 'package:lemon_engine/render/draw_circle.dart';
 import 'package:lemon_engine/state/canvas.dart';
-import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_math/Vector2.dart';
 
 import 'common/Tile.dart';
@@ -42,7 +42,7 @@ RSTransform rsTransform({
 }
 
 void drawPaths() {
-  setColor(Colors.blue);
+  engine.actions.setPaintColor(colours.blue);
   for (List<Vector2> path in paths) {
     for (int i = 0; i < path.length - 1; i++) {
       drawLine(path[i].x, path[i].y, path[i + 1].x, path[i + 1].y);
@@ -51,7 +51,7 @@ void drawPaths() {
 }
 
 void drawDebugNpcs(List<NpcDebug> values){
-  setColor(Colors.yellow);
+  engine.actions.setPaintColor(Colors.yellow);
 
   for (NpcDebug npc in values) {
     drawLine(npc.x, npc.y, npc.targetX, npc.targetY);
@@ -124,7 +124,7 @@ void drawCircleOutline({
   double r = (pi * 2) / sides;
   List<Offset> points = [];
   Offset z = Offset(x, y);
-  setColor(color);
+  engine.actions.setPaintColor(color);
 
   engine.state.paint.strokeWidth = 3;
 
@@ -138,7 +138,7 @@ void drawCircleOutline({
 }
 
 void drawTiles() {
-  setColorWhite();
+  engine.actions.setPaintColorWhite();
   drawAtlas(
       dst: tilesDst,
       src: tilesSrc,

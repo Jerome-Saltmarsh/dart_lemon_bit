@@ -50,7 +50,6 @@ import 'package:lemon_engine/queries/on_screen.dart';
 import 'package:lemon_engine/render/draw_circle.dart';
 import 'package:lemon_engine/render/draw_text.dart';
 import 'package:lemon_engine/state/canvas.dart';
-import 'package:lemon_engine/state/paint.dart';
 import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/adjacent.dart';
@@ -116,8 +115,7 @@ void renderGame(Canvas canvas, Size size) {
     }
   }
 
-
-  setColorWhite();
+  engine.actions.setPaintColorWhite();
   drawSprites();
   drawEffects();
   drawItems();
@@ -136,7 +134,7 @@ void renderGame(Canvas canvas, Size size) {
   _drawFloatingTexts();
   _drawPlayerNames();
   drawPlayerText();
-  setColorWhite();
+  engine.actions.setPaintColorWhite();
 }
 
 void drawCrates() {
@@ -195,7 +193,7 @@ void drawEffects() {
 
 void drawMouseAim2() {
   // if (game.player.characterType.value == CharacterType.Swordsman){
-    setColorWhite();
+  engine.actions.setPaintColorWhite();
     double angle = getAngleBetweenMouseAndPlayer();
     double mouseDistance = getDistanceBetweenMouseAndPlayer();
     double d = min(mouseDistance, game.player.attackRange);
@@ -311,7 +309,7 @@ int getTotalActiveParticles() {
 }
 
 void drawSprites() {
-  setColorWhite();
+  engine.actions.setPaintColorWhite();
   int indexHuman = 0;
   int indexEnv = 0;
   int indexParticle = 0;
@@ -489,7 +487,7 @@ void _drawMouseAim() {
   Offset mouseOffset = Offset(mouseWorldX, mouseWorldY);
   Offset aimOffset = Offset(mouseWorldX + vX, mouseWorldY + vY);
   _drawLine(mouseOffset, aimOffset, Colors.transparent);
-  setColorWhite();
+  engine.actions.setPaintColorWhite();
 }
 
 void _drawLine(Offset a, Offset b, Color color) {
