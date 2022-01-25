@@ -22,11 +22,11 @@ import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/state/build_context.dart';
 import 'package:lemon_engine/state/camera.dart';
 import 'package:lemon_engine/state/screen.dart';
-import 'package:lemon_engine/state/zoom.dart';
 import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -234,7 +234,7 @@ Widget buildUI3DCube() {
             'camera.position: { x: ${camera.x.toInt()}, y: ${camera.y.toInt()}}');
       }),
       Refresh(() {
-        return text('camera.zoom: $zoom');
+        return text('camera.zoom: ${engine.state.zoom}');
       }),
     ],
   );

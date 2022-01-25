@@ -8,8 +8,8 @@ import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/update/updateParticles.dart';
 import 'package:bleed_client/utils.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/game.dart';
-import 'package:lemon_engine/state/zoom.dart';
 import 'package:lemon_math/randomInt.dart';
 
 import 'common/GameStatus.dart';
@@ -66,8 +66,8 @@ void _updateBleed(){
 void updateZoom() {
   double sX = screenCenterWorldX;
   double sY = screenCenterWorldY;
-  double zoomDiff = targetZoom - zoom;
-  zoom += zoomDiff * game.settings.zoomFollowSpeed;
+  double zoomDiff = targetZoom - engine.state.zoom;
+  engine.state.zoom += zoomDiff * game.settings.zoomFollowSpeed;
   cameraCenter(sX, sY);
 }
 

@@ -5,12 +5,12 @@ import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/state/camera.dart';
 import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_engine/state/paint.dart';
-import 'package:lemon_engine/state/zoom.dart';
 import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/pi2.dart';
@@ -69,10 +69,9 @@ Direction convertAngleToDirection(double angle) {
 }
 
 void cameraCenter(double x, double y) {
-  camera.x = x - (screenCenterX / zoom);
-  camera.y = y - (screenCenterY / zoom);
+  camera.x = x - (screenCenterX / engine.state.zoom);
+  camera.y = y - (screenCenterY / engine.state.zoom);
 }
-
 
 Tile get tileAtMouse {
   if (mouseRow < 0) return Tile.Boundary;

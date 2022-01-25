@@ -8,7 +8,6 @@ import 'package:bleed_client/functions/removeGeneratedEnvironmentObjects.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/modules/website/enums.dart';
-import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/toString.dart';
@@ -23,7 +22,6 @@ import 'package:lemon_engine/functions/fullscreen_exit.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/state/camera.dart';
 import 'package:lemon_engine/state/cursor.dart';
-import 'package:lemon_engine/state/zoom.dart';
 
 import 'common/GameType.dart';
 import 'enums/Region.dart';
@@ -129,7 +127,7 @@ class Events {
     actions.clearSession();
     camera.x = 0;
     camera.y = 0;
-    zoom = 1;
+    engine.state.zoom = 1;
     switch (type) {
       case GameType.None:
         break;
