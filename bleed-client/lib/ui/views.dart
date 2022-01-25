@@ -69,15 +69,6 @@ Widget buildDialogLogin() {
           )));
 }
 
-Widget buildView(BuildContext context) {
-  return Stack(
-    children: [
-        buildWatchGameMode(),
-        buildWatchErrorMessage(),
-    ],
-  );
-}
-
 Widget buildWatchErrorMessage(){
   return NullableWatchBuilder<String?>(core.state.errorMessage, (String? message){
     if (message == null) return empty;
@@ -105,16 +96,6 @@ Widget buildErrorDialog(String message, {Widget? bottomRight}){
       )
   );
 }
-
-Widget buildWatchGameMode(){
-  return WatchBuilder(core.state.mode, (Mode mode) {
-    if (mode == Mode.Edit) {
-      return editor.build.buildLayoutEditor();
-    }
-    return buildWatchOperationStatus();
-  });
-}
-
 
 Widget buildWatchOperationStatus(){
   return WatchBuilder(core.state.operationStatus, (OperationStatus operationStatus){

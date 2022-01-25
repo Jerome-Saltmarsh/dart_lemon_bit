@@ -2,6 +2,7 @@
 
 import 'package:bleed_client/assets.dart';
 import 'package:bleed_client/constants/colours.dart';
+import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/styles.dart';
@@ -21,14 +22,33 @@ class CoreBuild {
       title: core.state.title,
       init: init,
       update: update,
-      buildUI: buildView,
-      drawCanvas: drawCanvas2,
+      buildUI: buildUI,
+      drawCanvas: renderCore,
       drawCanvasAfterUpdate: true,
       backgroundColor: colours.black,
       buildLoadingScreen: buildLoadingScreen,
       themeData: themes.jetbrains,
     );
   }
+
+  Widget buildUI(BuildContext context) {
+    return Stack(
+      children: [
+        buildWatchGameMode(),
+        buildWatchErrorMessage(),
+      ],
+    );
+  }
+
+  Widget buildWatchGameMode(){
+    return WatchBuilder(core.state.mode, (Mode mode) {
+      if (mode == Mode.Edit) {
+        return editor.build.buildLayoutEditor();
+      }
+      return buildWatchOperationStatus();
+    });
+  }
+
 
   Widget buildLoadingScreen(BuildContext context) {
     final double _width = 300;

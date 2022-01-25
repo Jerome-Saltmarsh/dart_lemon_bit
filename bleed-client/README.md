@@ -90,6 +90,10 @@
 [ ] Body Armor
 [ ] Break Crates
 [ ] Weapon UI
+[EDITOR]
+[ ] Save
+[ ] Add Units
+[COMPLETED]
 [x] Fix melee attack
 [x] Sign in with Facebook
 [x] Fix Change Public Name Dialog Error
@@ -99,7 +103,6 @@
 [x] When a player enters a premium game it must check their subscription  
 [x] WS server should restfully call the subscription service  
 [x] UI check user subscription
-[COMPLETED]
 [x] Auto sign on (remember login)
 [x] Witch caste explosion nothing happens  
 [x] Archer fire multi arrow wrong direction  

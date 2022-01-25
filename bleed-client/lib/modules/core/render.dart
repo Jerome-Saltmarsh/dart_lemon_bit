@@ -20,7 +20,7 @@ import 'package:flutter/material.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_math/angle_between.dart';
 
-void drawCanvas2(Canvas canvas, Size size) {
+void renderCore(Canvas canvas, Size size) {
   core.state.timeline.update();
 
   if (editMode) {
