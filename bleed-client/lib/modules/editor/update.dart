@@ -10,7 +10,6 @@ import 'package:lemon_engine/state/camera.dart';
 import 'package:lemon_engine/state/zoom.dart';
 
 void updateEditor() {
-  _handleMouseDrag();
   updateZoom();
   redrawCanvas();
   if (editor.state.panning) {
@@ -18,18 +17,4 @@ void updateEditor() {
     camera.y += mouseWorldDiff.dy * zoom;
     camera.x += mouseWorldDiff.dx * zoom;
   }
-}
-
-void _handleMouseDrag() {
-  if (!engine.state.mouseLeftDown.value) {
-    return;
-  }
-  editor.events.onMouseLeftClicked();
-
-  if (editor.state.selectedCollectable > -1) {
-    game.collectables[editor.state.selectedCollectable + 1] = mouseWorldX.toInt();
-    game.collectables[editor.state.selectedCollectable + 2] = mouseWorldY.toInt();
-    return;
-  }
-  setTileAtMouse(editor.state.tile.value);
 }

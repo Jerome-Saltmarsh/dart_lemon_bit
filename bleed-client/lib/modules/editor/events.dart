@@ -19,11 +19,22 @@ class EditorEvents with EditorScope {
     print("editor.events.register()");
     keyboardEvents.listen(onKeyboardEvent);
     engine.callbacks.onLeftClicked = onMouseLeftClicked;
+    engine.callbacks.onMouseDragging = onMouseDragging;
     editor.state.selectedObject.onChanged(onSelectedObjectChanged);
   }
 
   void onMouseLeftDown(int frames){
       print("onMouseLeftDown($frames)");
+  }
+
+  void onMouseDragging(){
+    if (editor.state.selectedCollectable > -1) {
+      game.collectables[editor.state.selectedCollectable + 1] = mouseWorldX.toInt();
+      game.collectables[editor.state.selectedCollectable + 2] = mouseWorldY.toInt();
+      return;
+    }
+
+    setTileAtMouse(editor.state.tile.value);
   }
 
   onSelectedObjectChanged(EnvironmentObject? environmentObject) {
