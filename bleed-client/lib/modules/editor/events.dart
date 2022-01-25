@@ -28,19 +28,14 @@ class EditorEvents with EditorScope {
     editor.state.selectedObject.onChanged(onSelectedObjectChanged);
   }
 
-  void onMouseLeftDown(int frames){
-      print("onMouseLeftDown($frames)");
-  }
-
   void onMouseMoved(Offset position, Offset previous){
-    print("editor.onMouseMoved()");
     if (state.panning) {
       final positionX = screenToWorldX(position.dx);
       final positionY = screenToWorldY(position.dy);
       final previousX = screenToWorldX(previous.dx);
       final previousY = screenToWorldY(previous.dy);
-      double diffX = previousX - positionX;
-      double diffY = previousY - positionY;
+      final diffX = previousX - positionX;
+      final diffY = previousY - positionY;
       camera.x += diffX * zoom;
       camera.y += diffY * zoom;
     }

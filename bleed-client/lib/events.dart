@@ -183,6 +183,7 @@ class Events {
 
   void _onGameModeChanged(Mode mode){
     print("_onGameModeChanged($mode)");
+    engine.actions.clearCallbacks();
     if (mode == Mode.Edit) {
       removeGeneratedEnvironmentObjects();
       deregisterPlayKeyboardHandler();
