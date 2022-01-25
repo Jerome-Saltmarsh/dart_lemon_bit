@@ -36,31 +36,27 @@ class CoreBuild {
   Widget buildUI(BuildContext context) {
     return Stack(
       children: [
-        buildWatchGameMode(),
+        buildWatchOperationStatus(),
         buildWatchErrorMessage(),
       ],
     );
   }
 
-  Widget buildWatchGameMode(){
-    return WatchBuilder(core.state.mode, (Mode mode) {
-      if (mode == Mode.Edit) {
-        return editor.build.buildEditorUI();
-      }
-      return buildWatchOperationStatus();
-    });
-  }
-
   Widget buildWatchOperationStatus(){
     return WatchBuilder(core.state.operationStatus, (OperationStatus operationStatus){
       if (operationStatus != OperationStatus.None){
-        return buildViewOperationStatus(operationStatus);
+        return _layoutOperationStatus(operationStatus);
       }
-      return watchAccount(buildAccount);
+      return WatchBuilder(core.state.mode, (Mode mode) {
+        if (mode == Mode.Edit) {
+          return editor.build.buildEditorUI();
+        }
+        return watchAccount(buildAccount);
+      });
     });
   }
 
-  Widget buildViewOperationStatus(OperationStatus operationStatus) {
+  Widget _layoutOperationStatus(OperationStatus operationStatus) {
     return layout(
         child: fullScreen(
           child: Row(

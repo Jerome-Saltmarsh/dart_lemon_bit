@@ -43,7 +43,6 @@ import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/game.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/angle_between.dart';

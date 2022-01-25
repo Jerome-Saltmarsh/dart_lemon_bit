@@ -7,6 +7,7 @@ enum OperationStatus {
   Cancelling_Subscription,
   Updating_Account,
   Changing_Public_Name,
+  Loading_Map,
 }
 
 enum Mode {
