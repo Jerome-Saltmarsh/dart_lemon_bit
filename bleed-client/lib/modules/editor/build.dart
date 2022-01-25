@@ -68,11 +68,11 @@ class EditorBuild {
   }
 
 
-  List<Widget> buildTabEnvironmentObjects() {
+  List<Widget> _tabObjects() {
     return ObjectType.values.map(buildEnvironmentType).toList();
   }
 
-  List<Widget> buildTabTiles() {
+  List<Widget> _tabTiles() {
     return Tile.values.map((tile) {
       return WatchBuilder(state.tile, (Tile selected) {
         return button(enumString(tile), () {
@@ -85,7 +85,7 @@ class EditorBuild {
     }).toList();
   }
 
-  List<Widget> buildObjectList() {
+  List<Widget> _tabAll() {
     return game.environmentObjects.map((env) {
       return NullableWatchBuilder<EnvironmentObject?>(editor.state.selectedObject,
               (EnvironmentObject? selected) {
@@ -100,7 +100,7 @@ class EditorBuild {
     }).toList();
   }
 
-  List<Widget> _buildTabMisc() {
+  List<Widget> _tabMisc() {
     return [
       button("Copy to Clipboard", copyCompiledGameToClipboard),
       button("Tiles.X++", () {
@@ -171,17 +171,23 @@ class EditorBuild {
     );
   }
 
-  List<Widget> _getTabChildren(ToolTab tab) {
-    switch (tab) {
+  List<Widget> _toolTab(ToolTab toolTab) {
+    switch (toolTab) {
       case ToolTab.Tiles:
-        return buildTabTiles();
+        return _tabTiles();
       case ToolTab.Objects:
-        return buildTabEnvironmentObjects();
+        return _tabObjects();
       case ToolTab.All:
-        return editor.build.buildObjectList();
+        return _tabAll();
       case ToolTab.Misc:
-        return _buildTabMisc();
+        return _tabMisc();
+      case ToolTab.Units:
+        return _tabUnits();
     }
+  }
+
+  List<Widget> _tabUnits() {
+    return [text("Units")];
   }
 
   Widget buttonExit(){
@@ -223,7 +229,7 @@ class EditorBuild {
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: axis.cross.start,
-                  children: _getTabChildren(tab),
+                  children: _toolTab(tab),
                 ),
               ),
             )

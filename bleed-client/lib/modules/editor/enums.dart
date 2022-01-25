@@ -2,6 +2,7 @@ enum ToolTab {
   Tiles,
   Objects,
   All,
+  Units,
   Misc
 }
 
