@@ -171,9 +171,11 @@ class Events {
     print('events.onGameStatusChanged($value)');
     switch(value){
       case GameStatus.In_Progress:
+        // engine.state.drawCanvas = modules.game.render;
         fullScreenEnter();
         break;
       default:
+        engine.state.drawCanvas = null;
         fullScreenExit();
         break;
     }
@@ -181,8 +183,10 @@ class Events {
 
   void _onGameModeChanged(Mode mode){
     print("_onGameModeChanged($mode)");
+    engine.state.drawCanvas = null;
     engine.actions.clearCallbacks();
     if (mode == Mode.Edit) {
+      engine.state.drawCanvas = editor.render;
       removeGeneratedEnvironmentObjects();
       deregisterPlayKeyboardHandler();
       editor.events.register();

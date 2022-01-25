@@ -26,7 +26,7 @@ class CoreBuild {
       init: init,
       update: update,
       buildUI: buildUI,
-      drawCanvas: renderCore,
+      drawCanvas: null,
       drawCanvasAfterUpdate: true,
       backgroundColor: colours.black,
       buildLoadingScreen: buildLoadingScreen,

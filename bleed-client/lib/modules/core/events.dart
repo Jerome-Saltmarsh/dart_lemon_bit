@@ -18,6 +18,7 @@ class CoreEvents {
 
     switch(connection){
       case Connection.Connected:
+        engine.state.drawCanvas = modules.game.render;
         ui.drawCanvasAfterUpdate = false;
         if (game.type.value == GameType.Custom){
           final account = core.state.account.value;
@@ -44,9 +45,8 @@ class CoreEvents {
       case Connection.Done:
         fullScreenExit();
         actions.clearSession();
-        engine.callbacks.onLeftClicked = null;
-        engine.callbacks.onPanStarted = null;
-        engine.callbacks.onLongLeftClicked = null;
+        engine.actions.clearCallbacks();
+        engine.state.drawCanvas = null;
         ui.drawCanvasAfterUpdate = true;
         cursorType.value = CursorType.Basic;
         deregisterPlayKeyboardHandler();

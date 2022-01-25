@@ -24,7 +24,7 @@ void renderCore(Canvas canvas, Size size) {
   core.state.timeline.update();
 
   if (editMode) {
-    renderEditor();
+    // renderEditor();
     return;
   }
 
