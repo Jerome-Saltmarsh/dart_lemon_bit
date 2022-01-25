@@ -1,4 +1,4 @@
-import 'package:bleed_client/enums/Mode.dart';
+import 'package:bleed_client/modules/core/enums.dart';
 
 import '../modules.dart';
 

@@ -1,7 +1,6 @@
 
 import 'package:bleed_client/authentication.dart';
 import 'package:bleed_client/constants/servers.dart';
-import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/modules/core/enums.dart';

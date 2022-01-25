@@ -1,6 +1,10 @@
+import 'package:bleed_client/modules/core/module.dart';
+import 'package:bleed_client/modules/editor/module.dart';
+import 'package:bleed_client/modules/website/module.dart';
+
 import 'modules/modules.dart';
 
 final modules = Modules();
-get core => modules.core;
-get website => modules.website;
-get editor => modules.editor;
+CoreModule get core => modules.core;
+WebsiteModule get website => modules.website;
+EditorModule get editor => modules.editor;

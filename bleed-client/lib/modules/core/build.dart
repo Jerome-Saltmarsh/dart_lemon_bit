@@ -3,7 +3,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/assets.dart';
 import 'package:bleed_client/constants/colours.dart';
-import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/modules/core/enums.dart';
@@ -47,7 +46,7 @@ class CoreBuild {
   Widget buildWatchGameMode(){
     return WatchBuilder(core.state.mode, (Mode mode) {
       if (mode == Mode.Edit) {
-        return editor.build.buildLayoutEditor();
+        return editor.build.buildEditorUI();
       }
       return buildWatchOperationStatus();
     });

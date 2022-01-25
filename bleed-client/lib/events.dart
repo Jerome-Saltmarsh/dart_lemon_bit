@@ -3,12 +3,10 @@ import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameError.dart';
 import 'package:bleed_client/common/GameStatus.dart';
-import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/functions/cameraCenterPlayer.dart';
 import 'package:bleed_client/functions/removeGeneratedEnvironmentObjects.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/modules.dart';
-import 'package:bleed_client/modules/editor/module.dart';
 import 'package:bleed_client/modules/website/enums.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
@@ -28,6 +26,7 @@ import 'package:lemon_engine/state/zoom.dart';
 
 import 'common/GameType.dart';
 import 'enums/Region.dart';
+import 'modules/core/enums.dart';
 
 class Events {
 

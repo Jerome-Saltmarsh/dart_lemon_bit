@@ -8,3 +8,8 @@ enum OperationStatus {
   Updating_Account,
   Changing_Public_Name,
 }
+
+enum Mode {
+  Play,
+  Edit,
+}

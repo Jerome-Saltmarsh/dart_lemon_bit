@@ -22,17 +22,50 @@ import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
-import 'module.dart';
 import 'enums.dart';
 import 'state.dart';
 
 
-class EditorBuilder {
+class EditorBuild {
 
-  final double buttonWidth = 230;
-  final Color highlight = colours.purple;
+  final _buttonWidth = 230.0;
+  final _highlight = colours.purple;
 
   EditorState get state => editor.state;
+
+  Widget buildEditorUI() {
+    print('editor.build.buildEditorUI()');
+
+    return WatchBuilder(editor.state.process, (String process){
+      if (process.isNotEmpty){
+        return buildDialog(
+            width: style.dialogWidthMedium,
+            height: style.dialogHeightMedium,
+            child: Center(child: text(process))
+        );
+      }
+
+      return layout(
+          topLeft: _toolTabs(),
+          topRight: _mainMenu(),
+          child: _buildEditorDialog()
+      );
+    });
+  }
+
+  Widget _mainMenu() {
+    return Row(
+          children: [
+            buttonClear(),
+            width16,
+            buttonLoad(),
+            width16,
+            buttonSave(),
+            width16,
+            buttonExit(),
+          ],
+        );
+  }
 
 
   List<Widget> buildTabEnvironmentObjects() {
@@ -45,9 +78,9 @@ class EditorBuilder {
         return button(enumString(tile), () {
           state.tile.value = tile;
         },
-            width: buttonWidth,
+            width: _buttonWidth,
             alignment: Alignment.centerLeft,
-            fillColor: selected == tile ? highlight : colours.transparent);
+            fillColor: selected == tile ? _highlight : colours.transparent);
       });
     }).toList();
   }
@@ -60,7 +93,7 @@ class EditorBuilder {
               editor.state.selectedObject.value = env;
               cameraCenter(env.x, env.y);
               redrawCanvas();
-            }, fillColor: env == selected ? highlight : colours.transparent,
+            }, fillColor: env == selected ? _highlight : colours.transparent,
               width: style.buttonWidth,
             );
           });
@@ -97,36 +130,6 @@ class EditorBuilder {
           mapTilesToSrcAndDst();
         }),
     ];
-  }
-
-  Widget buildLayoutEditor() {
-    print('buildLayoutEditor()');
-
-    return WatchBuilder(editor.state.process, (String process){
-      if (process.isNotEmpty){
-        return buildDialog(
-            width: style.dialogWidthMedium,
-            height: style.dialogHeightMedium,
-            child: Center(child: text(process))
-        );
-      }
-
-      return layout(
-          topLeft: toolTabs(),
-          topRight: Row(
-            children: [
-              buttonClear(),
-              width16,
-              buttonLoad(),
-              width16,
-              buttonSave(),
-              width16,
-              buttonExit(),
-            ],
-          ),
-          child: _buildEditorDialog()
-      );
-    });
   }
 
   Widget buttonClear() => text("Clear", onPressed: editor.actions.resetTiles);
@@ -207,7 +210,7 @@ class EditorBuilder {
     );
   }
 
-  Widget toolTabs(){
+  Widget _toolTabs(){
     return Builder(builder: (BuildContext context) {
       return WatchBuilder(state.tab, (ToolTab tab) {
         return Column(
