@@ -2,9 +2,9 @@
 import 'package:bleed_client/authentication.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/enums/Mode.dart';
-import 'package:bleed_client/enums/OperationStatus.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/functions/clearState.dart';
+import 'package:bleed_client/modules/core/enums.dart';
 import 'package:bleed_client/modules/website/enums.dart';
 import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
 import 'package:bleed_client/render/functions/setBakeMapToAmbientLight.dart';

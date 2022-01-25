@@ -6,13 +6,10 @@ import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/modules/core/init.dart';
-import 'package:bleed_client/enums/Mode.dart';
-import 'package:bleed_client/enums/OperationStatus.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/functions/refreshPage.dart';
 import 'package:bleed_client/modules.dart';
-import 'package:bleed_client/modules/editor/module.dart';
 import 'package:bleed_client/modules/website/enums.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
@@ -95,15 +92,6 @@ Widget buildErrorDialog(String message, {Widget? bottomRight}){
           bottomRight: bottomRight ?? text("okay", onPressed: actions.closeErrorMessage)
       )
   );
-}
-
-Widget buildWatchOperationStatus(){
-  return WatchBuilder(core.state.operationStatus, (OperationStatus operationStatus){
-    if (operationStatus != OperationStatus.None){
-      return buildViewOperationStatus(operationStatus);
-    }
-    return watchAccount(buildAccount);
-  });
 }
 
 Widget buildAccount(Account? account) {
@@ -328,24 +316,6 @@ Widget? buildMenuDebug() {
       );
     }
     ));
-}
-
-Widget buildViewOperationStatus(OperationStatus operationStatus) {
-  return layout(
-      child: fullScreen(
-        child: Row(
-          mainAxisAlignment: axis.main.center,
-          children: [
-            AnimatedTextKit(repeatForever: true, animatedTexts: [
-              RotateAnimatedText(enumString(operationStatus),
-                  textStyle: TextStyle(color: Colors.white, fontSize: 45,
-                      fontFamily: assets.fonts.libreBarcode39Text
-                  )),
-            ])
-          ],
-        ),
-      )
-  );
 }
 
 final _Views _views = _Views();

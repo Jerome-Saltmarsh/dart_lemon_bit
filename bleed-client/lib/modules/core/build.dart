@@ -1,11 +1,15 @@
 
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/assets.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/enums/Mode.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/modules.dart';
+import 'package:bleed_client/modules/core/enums.dart';
 import 'package:bleed_client/styles.dart';
+import 'package:bleed_client/toString.dart';
+import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/views.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/game.dart';
@@ -49,6 +53,32 @@ class CoreBuild {
     });
   }
 
+  Widget buildWatchOperationStatus(){
+    return WatchBuilder(core.state.operationStatus, (OperationStatus operationStatus){
+      if (operationStatus != OperationStatus.None){
+        return buildViewOperationStatus(operationStatus);
+      }
+      return watchAccount(buildAccount);
+    });
+  }
+
+  Widget buildViewOperationStatus(OperationStatus operationStatus) {
+    return layout(
+        child: fullScreen(
+          child: Row(
+            mainAxisAlignment: axis.main.center,
+            children: [
+              AnimatedTextKit(repeatForever: true, animatedTexts: [
+                RotateAnimatedText(enumString(operationStatus),
+                    textStyle: TextStyle(color: Colors.white, fontSize: 45,
+                        fontFamily: assets.fonts.libreBarcode39Text
+                    )),
+              ])
+            ],
+          ),
+        )
+    );
+  }
 
   Widget buildLoadingScreen(BuildContext context) {
     final double _width = 300;
