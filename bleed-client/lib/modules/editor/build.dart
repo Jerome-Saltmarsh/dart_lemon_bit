@@ -171,7 +171,7 @@ class EditorBuild {
         case EditorDialog.Load:
           return buildEditorDialogLoadMaps();
         case EditorDialog.Save:
-          return buildEditorDialogSaveMap();
+          return _dialogSaveMap();
         case EditorDialog.Loading_Map:
           return buildDialogMessage("Loading Map");
       }
@@ -234,13 +234,14 @@ class EditorBuild {
     });
   }
 
-  Widget buildEditorDialogSaveMap(){
+  Widget _dialogSaveMap(){
     return buildDialog(
         width: style.dialogWidthMedium,
         height: style.dialogHeightMedium,
         child: Column(children: [
           TextField(controller: state.mapNameController),
         ],),
+        bottomLeft: buildButton('cancel', editor.actions.closeDialog),
         bottomRight: buildButton('save', editor.actions.saveMapToFirestore)
     );
   }

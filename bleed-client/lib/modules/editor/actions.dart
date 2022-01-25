@@ -9,7 +9,6 @@ import 'package:bleed_client/modules/editor/mixin.dart';
 import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
-import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:typedef/json.dart';
 
