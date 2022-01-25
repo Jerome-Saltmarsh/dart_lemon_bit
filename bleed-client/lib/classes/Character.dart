@@ -2,13 +2,12 @@ import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
+import 'package:lemon_math/Vector2.dart';
 
-class Character {
+class Character extends Vector2{
   CharacterType type;
   CharacterState state;
   Direction direction;
-  double x;
-  double y;
   int frame;
   WeaponType weapon;
   int team;
@@ -24,12 +23,12 @@ class Character {
     required this.type,
     this.state = CharacterState.Idle,
     this.direction = Direction.Down,
-    this.x = 0,
-    this.y = 0,
+    double x = 0,
+    double y = 0,
     this.frame = 0,
     this.weapon = WeaponType.Unarmed,
     this.team = 0,
     this.name = "",
     this.text = "",
-  });
+  }): super(x, y);
 }

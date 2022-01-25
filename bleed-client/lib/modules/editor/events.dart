@@ -74,8 +74,7 @@ class EditorEvents with EditorScope {
   onMouseLeftClicked() {
     final double selectRadius = 25;
     if (game.environmentObjects.isNotEmpty) {
-      EnvironmentObject closest =
-      findClosest(game.environmentObjects, mouseWorldX, mouseWorldY);
+      EnvironmentObject closest = closestToMouse(game.environmentObjects);
       double closestDistance = distanceFromMouse(closest.x, closest.y);
       if (closestDistance <= selectRadius) {
         state.selectedObject.value = closest;
@@ -86,7 +85,12 @@ class EditorEvents with EditorScope {
       }
     }
 
-    switch (editor.state.tab.value) {
+    if (state.characters.isNotEmpty){
+       final closestCharacter = closestToMouse(state.characters);
+    }
+
+
+    switch (state.tab.value) {
       case ToolTab.Units:
         state.characters.add(Character(type: editor.state.characterType.value, x: mouseWorldX, y: mouseWorldY));
         break;

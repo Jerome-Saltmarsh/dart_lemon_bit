@@ -7,6 +7,7 @@ import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/game.dart';
+import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/pi2.dart';
@@ -99,3 +100,7 @@ double distanceFromMouse(double x, double y) {
   return distanceBetween(mouseWorldX, mouseWorldY, x, y);
 }
 
+
+T closestToMouse<T extends Vector2>(List<T> values){
+  return findClosest(values, mouseWorldX, mouseWorldY);
+}
