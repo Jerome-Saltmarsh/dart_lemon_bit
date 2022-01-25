@@ -13,7 +13,7 @@ void renderEditor(Canvas canvas, Size size) {
   drawSprites();
   final state = editor.state;
 
-  for(Character character in state.units){
+  for(Character character in state.characters){
     drawCharacter(character);
   }
 

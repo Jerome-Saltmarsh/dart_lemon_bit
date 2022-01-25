@@ -3,6 +3,7 @@
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/CharacterType.dart';
+import 'package:bleed_client/input.dart';
 import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/modules/editor/mixin.dart';
 import 'package:bleed_client/state/game.dart';
@@ -25,6 +26,7 @@ class EditorEvents with EditorScope {
     engine.callbacks.onLeftClicked = onMouseLeftClicked;
     engine.callbacks.onMouseDragging = onMouseDragging;
     engine.callbacks.onMouseMoved = onMouseMoved;
+    engine.callbacks.onMouseScroll = onMouseScroll;
     editor.state.selectedObject.onChanged(onSelectedObjectChanged);
   }
 
@@ -88,7 +90,7 @@ class EditorEvents with EditorScope {
 
     switch (editor.state.tab.value) {
       case ToolTab.Units:
-        state.units.add(Character(type: editor.state.characterType.value, x: mouseWorldX, y: mouseWorldY));
+        state.characters.add(Character(type: editor.state.characterType.value, x: mouseWorldX, y: mouseWorldY));
         break;
       case ToolTab.Tiles:
         setTileAtMouse(editor.state.tile.value);

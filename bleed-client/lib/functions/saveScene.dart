@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
+import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:bleed_client/toString.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:typedef/json.dart';
@@ -22,8 +25,22 @@ Json compileGameToJson() {
     "tiles": _compileTiles(game.tiles),
     "crates": _compileCrates(game.crates),
     "environment": _compileEnvironmentObjects(game.environmentObjects),
+    'characters': compileCharactersToJson(editor.state.characters),
   };
 }
+
+List<dynamic> compileCharactersToJson(List<Character> characters){
+  return characters.map(compileCharacterToJson).toList();
+}
+
+Json compileCharacterToJson(Character character){
+  return {
+    'type': enumString(character.type.name),
+    'x': character.x.toInt(),
+    'y': character.y.toInt(),
+  };
+}
+
 
 List<int> _compileCrates(List<Vector2> crates) {
   List<int> values = [];

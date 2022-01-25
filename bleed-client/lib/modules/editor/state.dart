@@ -22,5 +22,5 @@ class EditorState {
   final Watch<ObjectType> objectType = Watch(objectTypes.first);
   final Watch<EditorDialog> dialog = Watch(EditorDialog.None);
   final mapNameController = TextEditingController();
-  List<Character> units = [];
+  List<Character> characters = [];
 }
