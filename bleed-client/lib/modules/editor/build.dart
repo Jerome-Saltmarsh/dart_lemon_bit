@@ -94,10 +94,10 @@ class EditorBuild {
 
   List<Widget> _tabAll() {
     return game.environmentObjects.map((env) {
-      return NullableWatchBuilder<Vector2?>(editor.state.selectedObject,
+      return NullableWatchBuilder<Vector2?>(editor.state.selected,
               (Vector2? selected) {
             return button(enumString(env.type), () {
-              editor.state.selectedObject.value = env;
+              editor.state.selected.value = env;
               cameraCenter(env.x, env.y);
               redrawCanvas();
             }, fillColor: env == selected ? _highlight : colours.transparent,

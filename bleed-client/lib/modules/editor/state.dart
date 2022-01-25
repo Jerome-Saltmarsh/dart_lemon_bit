@@ -17,7 +17,7 @@ class EditorState {
   bool mouseDragging = false;
   Offset mouseWorldStart = Offset(0, 0);
   final Watch<String> process = Watch("");
-  final Watch<Vector2?> selectedObject = Watch(null);
+  final Watch<Vector2?> selected = Watch(null);
   final Watch<ToolTab> tab = Watch(ToolTab.Tiles);
   final Watch<Tile> tile = Watch(Tile.Grass);
   final Watch<CharacterType> characterType = Watch(CharacterType.Human);

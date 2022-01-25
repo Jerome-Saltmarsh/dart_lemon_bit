@@ -25,7 +25,7 @@ class EditorEvents with EditorScope {
     engine.callbacks.onMouseDragging = onMouseDragging;
     engine.callbacks.onMouseMoved = onMouseMoved;
     engine.callbacks.onMouseScroll = onMouseScroll;
-    editor.state.selectedObject.onChanged(onSelectedObjectChanged);
+    editor.state.selected.onChanged(onSelectedObjectChanged);
   }
 
   void onMouseMoved(Offset position, Offset previous){
@@ -72,21 +72,24 @@ class EditorEvents with EditorScope {
   }
 
   onMouseLeftClicked() {
+    state.selected.value = null;
     final double selectRadius = 25;
     if (game.environmentObjects.isNotEmpty) {
       EnvironmentObject closest = closestToMouse(game.environmentObjects);
       double closestDistance = distanceFromMouse(closest.x, closest.y);
       if (closestDistance <= selectRadius) {
-        state.selectedObject.value = closest;
-        return;
-      } else if (state.selectedObject.value != null) {
-        state.selectedObject.value = null;
+        state.selected.value = closest;
         return;
       }
     }
 
     if (state.characters.isNotEmpty){
-       final closestCharacter = closestToMouse(state.characters);
+       final closest = closestToMouse(state.characters);
+       double closestDistance = distanceFromMouse(closest.x, closest.y);
+       if (closestDistance <= selectRadius) {
+         state.selected.value = closest;
+         return;
+       }
     }
 
 
@@ -126,7 +129,7 @@ class EditorEvents with EditorScope {
     }
 
     final double v = 1.5;
-    final Vector2? selectedObject = editor.state.selectedObject.value;
+    final Vector2? selectedObject = editor.state.selected.value;
 
     if (selectedObject != null){
       if (event.logicalKey == LogicalKeyboardKey.keyW) {

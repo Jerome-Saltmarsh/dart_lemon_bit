@@ -20,9 +20,9 @@ import 'enums.dart';
 class EditorActions with EditorScope {
 
   void deleteSelected() {
-    if (state.selectedObject.value == null) return;
-    game.environmentObjects.remove(state.selectedObject.value);
-    state.selectedObject.value = null;
+    if (state.selected.value == null) return;
+    game.environmentObjects.remove(state.selected.value);
+    state.selected.value = null;
     redrawCanvas();
   }
 

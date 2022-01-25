@@ -26,7 +26,7 @@ void renderEditor(Canvas canvas, Size size) {
     drawCircleOutline(x: x, y: y, radius: 50, color: Colors.white, sides: 10);
   }
 
-  final Vector2? selectedObject = editor.state.selectedObject.value;
+  final Vector2? selectedObject = editor.state.selected.value;
   if (selectedObject != null){
     drawCircleOutline(x: selectedObject.x, y: selectedObject.y, radius: 50, color: Colors.white, sides: 10);
     engine.draw.circle(selectedObject.x, selectedObject.y,
