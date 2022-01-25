@@ -10,6 +10,7 @@ import 'package:lemon_watch/watch.dart';
 import 'enums.dart';
 
 class EditorState {
+  final Watch<int> startingHour = Watch(12);
   int selectedCollectable = -1;
   bool panning = false;
   bool mouseDragging = false;

@@ -135,6 +135,22 @@ class EditorBuild {
           }
           mapTilesToSrcAndDst();
         }),
+
+      Row(children: [
+         text("Start Hour:"),
+          width8,
+          WatchBuilder(state.startingHour, (int value){
+            return text(value);
+          }),
+        width8,
+        button("-", (){
+          state.startingHour.value--;
+        }),
+        width8,
+        button("+", (){
+          state.startingHour.value++;
+        }),
+      ],)
     ];
   }
 
