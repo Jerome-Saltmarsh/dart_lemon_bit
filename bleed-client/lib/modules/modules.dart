@@ -1,4 +1,3 @@
-import 'package:bleed_client/modules/editor/update.dart';
 
 import 'core/module.dart';
 import 'editor/module.dart';

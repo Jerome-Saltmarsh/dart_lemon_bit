@@ -8,7 +8,6 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:lemon_engine/game.dart';
 
-import 'module.dart';
 import 'enums.dart';
 
 

@@ -4,7 +4,6 @@ import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/modules.dart';
-import 'package:bleed_client/modules/editor/render.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
@@ -17,7 +16,7 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/watches/mode.dart';
 import 'package:bleed_client/webSocket.dart';
 import 'package:flutter/material.dart';
-import 'package:lemon_engine/properties/mouse_world.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/angle_between.dart';
 
 void renderCore(Canvas canvas, Size size) {

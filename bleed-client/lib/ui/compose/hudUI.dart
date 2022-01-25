@@ -23,9 +23,6 @@ import 'package:bleed_client/watches/time.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/properties/mouse_world.dart';
-import 'package:lemon_engine/state/build_context.dart';
-import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
@@ -148,7 +145,7 @@ Widget buildBottomCenter() {
   return Positioned(
       bottom: _padding,
       child: Container(
-        width: screen.width,
+        width: engine.state.screen.width,
         child: Row(
           mainAxisAlignment: axis.main.center,
           crossAxisAlignment: axis.cross.end,
@@ -599,45 +596,6 @@ Widget buildImageButton(DecorationImage image, GestureTapCallback onTap,
   );
 }
 
-Future<void> showChangeNameDialog() async {
-  return showDialog<void>(
-    context: globalContext,
-    barrierDismissible: false, // user must tap button!
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Welcome to Bleed'),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              Text('WASD keys to move'),
-              Text('Hold SPACE to aim'),
-              Text('Left click to shoot'),
-              Text('Please enter a name'),
-              TextField(
-                autofocus: true,
-                focusNode: FocusNode(),
-                controller: hud.textEditingControllers.playerName,
-              )
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: const Text('PLAY'),
-            onPressed:
-                hud.textEditingControllers.playerName.text.trim().length > 2
-                    ? () {
-                        // sendRequestSpawn(playerNameController.text.trim());
-                        Navigator.of(context).pop();
-                      }
-                    : null,
-          ),
-        ],
-      );
-    },
-  );
-}
-
 Widget buildLoadingScreen() {
   return Row(
     mainAxisAlignment: MainAxisAlignment.center,
@@ -661,7 +619,7 @@ Widget buildLowAmmo() {
   return Positioned(
       bottom: 80,
       child: Container(
-        width: screen.width,
+        width: engine.state.screen.width,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -690,7 +648,7 @@ Widget buildMessageBox(String message) {
   return Positioned(
       bottom: 120,
       child: Container(
-        width: screen.width,
+        width: engine.state.screen.width,
         child: Row(
           mainAxisAlignment: axis.main.center,
           children: [

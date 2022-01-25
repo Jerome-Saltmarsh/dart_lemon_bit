@@ -13,8 +13,8 @@ import 'package:bleed_client/ui/compose/buildTextBox.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/game.dart';
-import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_math/pi2.dart';
 import 'package:lemon_watch/watch.dart';
@@ -132,7 +132,7 @@ Positioned _buildRespawnLight() {
   return Positioned(
       top: 30,
       child: Container(
-          width: screen.width,
+          width: engine.state.screen.width,
           child: Column(
             crossAxisAlignment: axis.cross.center,
             children: [
@@ -159,7 +159,7 @@ Widget _buildServerText() {
 
     return Positioned(
         child: Container(
-          width: screen.width,
+          width: engine.state.screen.width,
           alignment: Alignment.center,
           child: Container(
             width: 300,
@@ -181,15 +181,15 @@ Widget _buildServerText() {
 Widget _buildViewRespawn() {
   print("buildViewRespawn()");
   return Container(
-    width: screen.width,
-    height: screen.height,
+    width: engine.state.screen.width,
+    height: engine.state.screen.height,
     child: Row(
       mainAxisAlignment: axis.main.center,
       crossAxisAlignment: axis.cross.center,
       children: [
         Container(
             padding: padding16,
-            width: max(screen.width * goldenRatioInverseB, 480),
+            width: max(engine.state.screen.width * goldenRatioInverseB, 480),
             decoration: BoxDecoration(
                 borderRadius: borderRadius4, color: Colors.black38),
             child: SingleChildScrollView(

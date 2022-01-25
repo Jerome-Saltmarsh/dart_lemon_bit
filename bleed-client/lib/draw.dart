@@ -10,10 +10,6 @@ import 'package:bleed_client/render/state/tilesSrc.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/properties/mouse_world.dart';
-import 'package:lemon_engine/queries/on_screen.dart';
-import 'package:lemon_engine/render/draw_circle.dart';
-import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_math/Vector2.dart';
 
 import 'common/Tile.dart';
@@ -21,7 +17,7 @@ import 'rects.dart';
 import 'utils.dart';
 
 void drawCharacterCircle(double x, double y, Color color) {
-  drawCircle(x, y, 10, color);
+  engine.draw.circle(x, y, 10, color);
 }
 
 RSTransform rsTransform({
@@ -133,7 +129,7 @@ void drawCircleOutline({
     points.add(Offset(cos(a1) * radius, sin(a1) * radius));
   }
   for (int i = 0; i < points.length - 1; i++) {
-    globalCanvas.drawLine(points[i] + z, points[i + 1] + z, engine.state.paint);
+    engine.state.canvas.drawLine(points[i] + z, points[i + 1] + z, engine.state.paint);
   }
 }
 
@@ -148,9 +144,9 @@ void drawTiles() {
 void drawBulletHoles(List<Vector2> bulletHoles) {
   for (Vector2 bulletHole in bulletHoles) {
     if (bulletHole.x == 0) return;
-    if (!onScreen(bulletHole.x, bulletHole.y)) continue;
+    if (!engine.queries.onScreen(bulletHole.x, bulletHole.y)) continue;
     if (inDarkness(bulletHole.x, bulletHole.y)) continue;
-    drawCircle(bulletHole.x, bulletHole.y, 2, Colors.black);
+    engine.draw.circle(bulletHole.x, bulletHole.y, 2, Colors.black);
   }
 }
 

@@ -16,9 +16,7 @@ import 'package:bleed_client/ui/state/decorationImages.dart';
 import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:lemon_engine/functions/fullscreen_enter.dart';
-import 'package:lemon_engine/functions/fullscreen_exit.dart';
-import 'package:lemon_engine/properties/fullscreen_active.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_math/random.dart';
 import 'package:lemon_watch/watch_builder.dart';
@@ -353,9 +351,9 @@ Widget buildToggleFullscreen() {
   return onPressed(
     callback: () {
       if (fullScreenActive) {
-        fullScreenExit();
+        engine.actions.fullScreenExit();
       } else {
-        fullScreenEnter();
+        engine.actions.fullScreenEnter();
       }
     },
     hint: "F11",

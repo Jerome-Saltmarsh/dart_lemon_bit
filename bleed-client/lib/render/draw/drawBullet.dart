@@ -3,11 +3,10 @@ import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/constants/colours.dart';
-import 'package:bleed_client/modules.dart';
-import 'package:bleed_client/modules/core/render.dart';
 import 'package:bleed_client/getters/inDarkness.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/mappers/mapDirectionToAngle.dart';
+import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/mappers/mapBulletToSrc.dart';
@@ -15,8 +14,6 @@ import 'package:bleed_client/render/mappers/mapDst.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/render/draw_circle.dart';
-import 'package:lemon_engine/state/canvas.dart';
 
 const _scale = 0.33;
 const _size = 32;
@@ -42,7 +39,7 @@ void drawProjectile(Projectile projectile) {
           convertDirectionToAngle(projectile.direction));
       break;
     case ProjectileType.Blue_Orb:
-      drawCircle(projectile.x, projectile.y, 5, colours.blue);
+      engine.draw.circle(projectile.x, projectile.y, 5, colours.blue);
       break;
   }
 }
@@ -63,7 +60,7 @@ void drawFireball(double x, double y, Direction direction) {
       atlas.projectiles.fireball.size, atlas.projectiles.fireball.size);
 
   // TODO use atlas instead
-  globalCanvas.drawAtlas(images.atlas, [rsTransform],
+  engine.state.canvas.drawAtlas(images.atlas, [rsTransform],
       [rect], null, null, null, engine.state.paint);
 }
 
@@ -77,6 +74,6 @@ void drawArrow(double x, double y, double angle) {
       anchorY: 9,
       translateX: x,
       translateY: y);
-  globalCanvas.drawAtlas(
+  engine.state.canvas.drawAtlas(
       images.atlas, [rsTransform], [_rectArrow], null, null, null, engine.state.paint);
 }

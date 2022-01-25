@@ -5,7 +5,7 @@ import 'package:bleed_client/constants/fontWeights/normal.dart';
 import 'package:bleed_client/styles.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:lemon_engine/state/screen.dart';
+import 'package:lemon_engine/engine.dart';
 
 final empty = SizedBox();
 
@@ -297,7 +297,7 @@ Widget bottomCenter({required Widget child, double padding = 0}){
   return Positioned(
       bottom: padding,
       child: Container(
-        width: screen.width,
+        width: engine.state.screen.width,
         child: Row(
           mainAxisAlignment: axis.main.center,
           crossAxisAlignment: axis.cross.end,
@@ -319,8 +319,8 @@ Widget dialog({
   EdgeInsets margin = EdgeInsets.zero,
 }) {
   return Container(
-    width: screen.width,
-    height: screen.height,
+    width: engine.state.screen.width,
+    height: engine.state.screen.height,
     alignment: alignment,
     child: Container(
       margin: margin,

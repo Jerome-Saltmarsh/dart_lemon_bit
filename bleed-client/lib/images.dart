@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:bleed_client/common/enums/ObjectType.dart';
-import 'package:lemon_engine/functions/load_image.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'modules.dart';

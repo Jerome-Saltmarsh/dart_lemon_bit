@@ -20,8 +20,8 @@ import 'package:bleed_client/ui/views.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/game.dart';
-import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import 'enums.dart';
@@ -238,7 +238,7 @@ class EditorBuild {
             _buildTabs(tab),
             height8,
             Container(
-              height: screen.height - 100,
+              height: engine.state.screen.height - 100,
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: axis.cross.start,

@@ -7,10 +7,10 @@ import 'package:bleed_client/render/draw/drawCharacterHealthBar.dart';
 import 'package:bleed_client/render/mappers/mapCharacterDst.dart';
 import 'package:bleed_client/render/mappers/mapCharacterSrc.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:lemon_engine/queries/on_screen.dart';
+import 'package:lemon_engine/engine.dart';
 
 void drawCharacter(Character character) {
-  if (!onScreen(character.x, character.y)) return;
+  if (!engine.queries.onScreen(character.x, character.y)) return;
   if (!character.alive) return;
   // if (isWaterAt(character.x, character.y)) return;
 

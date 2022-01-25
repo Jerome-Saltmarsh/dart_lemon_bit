@@ -17,13 +17,12 @@ import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/constants/colors/white.dart';
 import 'package:bleed_client/constants/colours.dart';
-import 'package:bleed_client/modules.dart';
-import 'package:bleed_client/modules/core/render.dart';
 import 'package:bleed_client/cube/scene.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:bleed_client/maps.dart';
+import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/constants/charWidth.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
@@ -45,12 +44,6 @@ import 'package:bleed_client/watches/ambientLight.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/game.dart';
-import 'package:lemon_engine/properties/mouse_world.dart';
-import 'package:lemon_engine/queries/on_screen.dart';
-import 'package:lemon_engine/render/draw_circle.dart';
-import 'package:lemon_engine/render/draw_text.dart';
-import 'package:lemon_engine/state/canvas.dart';
-import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/angle_between.dart';
@@ -111,7 +104,7 @@ void renderGame(Canvas canvas, Size size) {
     drawAbility();
     final Vector2 attackTarget = game.player.attackTarget;
     if (attackTarget.x != 0 && attackTarget.y != 0){
-      drawCircle(attackTarget.x, attackTarget.y, 20, Colors.white24);
+      engine.draw.circle(attackTarget.x, attackTarget.y, 20, Colors.white24);
     }
   }
 
@@ -139,7 +132,7 @@ void renderGame(Canvas canvas, Size size) {
 
 void drawCrates() {
   for(Vector2 crate in game.crates) {
-    drawCircle(crate.x, crate.y, 30, colours.red);
+    engine.draw.circle(crate.x, crate.y, 30, colours.red);
     draw(dst: crate, src: atlas.items.crate);
   }
 }
@@ -224,23 +217,21 @@ void drawAbility() {
       color: Colors.white);
 
   if (game.player.abilityRadius != 0){
-    if (mouseAvailable){
-      drawCircleOutline(
-          sides: 12,
-          radius: game.player.abilityRadius,
-          x: mouseWorldX,
-          y: mouseWorldY,
-          color: Colors.white);
-    }
+    drawCircleOutline(
+        sides: 12,
+        radius: game.player.abilityRadius,
+        x: mouseWorldX,
+        y: mouseWorldY,
+        color: Colors.white);
   }
 }
 
 void drawDebugCharacters() {
   for (int i = 0; i < game.totalHumans; i++) {
-    drawCircle(game.humans[i].x, game.humans[i].y, 10, Colors.white24);
+    engine.draw.circle(game.humans[i].x, game.humans[i].y, 10, Colors.white24);
   }
   for (int i = 0; i < game.totalNpcs; i++) {
-    drawCircle(game.interactableNpcs[i].x, game.interactableNpcs[i].y, 10,
+    engine.draw.circle(game.interactableNpcs[i].x, game.interactableNpcs[i].y, 10,
         Colors.white24);
   }
 }
@@ -255,7 +246,7 @@ void drawDebugEnvironmentObjects() {
     drawLine(env.left, env.top, env.left, env.bottom);
   }
   for (EnvironmentObject env in game.environmentObjects) {
-    drawCircle(env.x, env.y, env.radius, Colors.blue);
+    engine.draw.circle(env.x, env.y, env.radius, Colors.blue);
   }
 }
 
@@ -268,12 +259,14 @@ void applyProjectileLighting() {
   }
 }
 
+final _floatingTextStyle = TextStyle(color: Colors.white);
+
 void _drawFloatingTexts() {
   for (FloatingText floatingText in floatingText) {
     if (floatingText.duration == 0) continue;
     floatingText.duration--;
     floatingText.y -= 0.5;
-    drawText(floatingText.value, floatingText.x, floatingText.y);
+    engine.draw.text(floatingText.value, floatingText.x, floatingText.y, style: _floatingTextStyle);
   }
 }
 
@@ -364,7 +357,7 @@ void drawSprites() {
     if (environmentRemaining) {
       EnvironmentObject env = game.environmentObjects[indexEnv];
 
-      if (env.top > screen.bottom) return;
+      if (env.top > engine.state.screen.bottom) return;
 
       if (!particlesRemaining ||
           env.y < game.particles[indexParticle].y &&
@@ -383,7 +376,7 @@ void drawSprites() {
       Particle particle = game.particles[indexParticle];
 
       if (particle.type == ParticleType.Blood) {
-        if (onScreen(particle.x, particle.y)) {
+        if (engine.queries.onScreen(particle.x, particle.y)) {
           drawParticle(particle);
         }
         indexParticle++;
@@ -392,7 +385,7 @@ void drawSprites() {
 
       if (!zombiesRemaining || particle.y < game.zombies[indexZombie].y) {
         if (!npcsRemaining || particle.y < game.interactableNpcs[indexNpc].y) {
-          if (onScreen(particle.x, particle.y)) {
+          if (engine.queries.onScreen(particle.x, particle.y)) {
             drawParticle(particle);
           }
           indexParticle++;
@@ -417,10 +410,10 @@ void drawSprites() {
 }
 
 bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {
-  if (environmentObject.top > screen.bottom) return false;
-  if (environmentObject.right < screen.left) return false;
-  if (environmentObject.left > screen.right) return false;
-  if (environmentObject.bottom < screen.top) return false;
+  if (environmentObject.top > engine.state.screen.bottom) return false;
+  if (environmentObject.right < engine.state.screen.left) return false;
+  if (environmentObject.left > engine.state.screen.right) return false;
+  if (environmentObject.bottom < engine.state.screen.top) return false;
   return true;
 }
 
@@ -432,6 +425,8 @@ void drawEnvironmentObject(EnvironmentObject env) {
   );
 }
 
+final _playerNameTextStyle = TextStyle(color: Colors.white);
+
 void _drawPlayerNames() {
   for (int i = 0; i < game.totalHumans; i++) {
     Character player = game.humans[i];
@@ -439,7 +434,7 @@ void _drawPlayerNames() {
     if (diff(mouseWorldX, player.x) > _nameRadius) continue;
     if (diff(mouseWorldY, player.y) > _nameRadius) continue;
 
-    drawText(player.name, player.x - charWidth * player.name.length, player.y);
+    engine.draw.text(player.name, player.x - charWidth * player.name.length, player.y, style: _playerNameTextStyle);
   }
 }
 
@@ -469,7 +464,6 @@ double getDistanceBetweenMouseAndPlayer(){
 }
 
 void _drawMouseAim() {
-  if (!mouseAvailable) return;
   if (game.player.dead) return;
 
   engine.state.paint.strokeWidth = 3;
@@ -492,6 +486,6 @@ void _drawMouseAim() {
 
 void _drawLine(Offset a, Offset b, Color color) {
   engine.state.paint.color = color;
-  globalCanvas.drawLine(a, b, engine.state.paint);
+  engine.state.canvas.drawLine(a, b, engine.state.paint);
 }
 

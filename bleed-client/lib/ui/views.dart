@@ -1,15 +1,14 @@
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/actions.dart';
-import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/constants/servers.dart';
-import 'package:bleed_client/modules/core/init.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/functions/refreshPage.dart';
 import 'package:bleed_client/modules.dart';
+import 'package:bleed_client/modules/core/init.dart';
 import 'package:bleed_client/modules/website/enums.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
@@ -17,15 +16,14 @@ import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/constants.dart';
 import 'package:bleed_client/ui/dialogs.dart';
-import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/game.dart';
-import 'package:lemon_engine/state/screen.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../assets.dart';
@@ -119,7 +117,7 @@ Widget buildViewConnectionNone() {
       expand: true,
       topLeft: widgets.title,
       top:  Container(
-          width: screen.width,
+          width: engine.state.screen.width,
           margin: EdgeInsets.only(top: 20),
           child: Row(
               mainAxisAlignment: axis.main.center,

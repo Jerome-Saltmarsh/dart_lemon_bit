@@ -15,7 +15,6 @@ import 'package:lemon_engine/game.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import 'init.dart';
-import 'render.dart';
 import 'update.dart';
 
 class CoreBuild {

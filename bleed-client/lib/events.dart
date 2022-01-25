@@ -17,10 +17,8 @@ import 'package:bleed_client/watches/time.dart';
 import 'package:bleed_client/webSocket.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/functions/fullscreen_enter.dart';
-import 'package:lemon_engine/functions/fullscreen_exit.dart';
 import 'package:lemon_engine/game.dart';
-import 'package:lemon_engine/state/cursor.dart';
+import 'package:lemon_engine/enums.dart';
 
 import 'common/GameType.dart';
 import 'enums/Region.dart';
@@ -52,9 +50,9 @@ class Events {
   void _onPlayerCharacterTypeChanged(CharacterType characterType){
     print("events.onCharacterTypeChanged($characterType)");
     if (characterType == CharacterType.Human){
-      cursorType.value = CursorType.Precise;
+      engine.state.cursorType.value = CursorType.Precise;
     }else{
-      cursorType.value = CursorType.Basic;
+      engine.state.cursorType.value = CursorType.Basic;
     }
   }
 
@@ -171,11 +169,11 @@ class Events {
     switch(value){
       case GameStatus.In_Progress:
         // engine.state.drawCanvas = modules.game.render;
-        fullScreenEnter();
+        engine.actions.fullScreenEnter();
         break;
       default:
         engine.state.drawCanvas = null;
-        fullScreenExit();
+        engine.actions.fullScreenExit();
         break;
     }
   }

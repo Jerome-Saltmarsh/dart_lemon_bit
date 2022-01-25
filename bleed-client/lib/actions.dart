@@ -20,7 +20,6 @@ import 'package:lemon_dispatch/instance.dart';
 import 'classes/Authentication.dart';
 import 'common/GameType.dart';
 import 'modules.dart';
-import 'modules/editor/module.dart';
 import 'modules/editor/enums.dart';
 
 final _Actions actions = _Actions();

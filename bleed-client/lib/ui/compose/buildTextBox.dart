@@ -3,7 +3,7 @@ import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/logic/showTextBox.dart';
 import 'package:bleed_client/ui/state/hud.dart';
 import 'package:flutter/material.dart';
-import 'package:lemon_engine/state/screen.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../../flutterkit.dart';
@@ -15,7 +15,7 @@ Widget buildTextBox() {
     return Positioned(
         bottom: 100,
         child: Container(
-          width: screen.width,
+          width: engine.state.screen.width,
           alignment: Alignment.center,
           child: Container(
             width: 400,

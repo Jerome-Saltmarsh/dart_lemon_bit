@@ -6,7 +6,7 @@ import 'package:bleed_client/render/draw/drawCanvas.dart';
 import 'package:bleed_client/render/draw/drawCharacter.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:flutter/material.dart';
-import 'package:lemon_engine/render/draw_circle.dart';
+import 'package:lemon_engine/engine.dart';
 
 void renderEditor(Canvas canvas, Size size) {
   drawTiles();
@@ -28,7 +28,8 @@ void renderEditor(Canvas canvas, Size size) {
   final EnvironmentObject? selectedObject = editor.state.selectedObject.value;
   if (selectedObject != null){
     drawCircleOutline(x: selectedObject.x, y: selectedObject.y, radius: 50, color: Colors.white, sides: 10);
-    drawCircle(selectedObject.x, selectedObject.y,
+    engine.draw.circle(selectedObject.x, selectedObject.y,
         15, Colors.white70);
+
   }
 }

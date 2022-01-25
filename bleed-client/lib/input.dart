@@ -11,9 +11,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/functions/key_pressed.dart';
 import 'package:lemon_engine/game.dart';
-import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_math/randomItem.dart';
 import 'package:lemon_watch/watch.dart';
 
@@ -272,7 +270,6 @@ void selectAbility4() {
 }
 
 void teleportToMouse() {
-  if (!mouseAvailable) return;
   sendRequestTeleport(mouseWorldX, mouseWorldY);
 }
 

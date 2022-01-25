@@ -8,9 +8,8 @@ import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/webSocket.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/functions/fullscreen_exit.dart';
 import 'package:lemon_engine/game.dart';
-import 'package:lemon_engine/state/cursor.dart';
+import 'package:lemon_engine/enums.dart';
 
 class CoreEvents {
   void onConnectionChanged(Connection connection) {
@@ -40,12 +39,12 @@ class CoreEvents {
         modules.game.events.register();
         break;
       case Connection.Done:
-        fullScreenExit();
+        engine.actions.fullScreenExit();
         actions.clearSession();
         engine.actions.clearCallbacks();
         engine.state.drawCanvas = null;
         ui.drawCanvasAfterUpdate = true;
-        cursorType.value = CursorType.Basic;
+        engine.state.cursorType.value = CursorType.Basic;
         deregisterPlayKeyboardHandler();
         break;
       default:

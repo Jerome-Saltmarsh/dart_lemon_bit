@@ -7,8 +7,6 @@ import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/game.dart';
-import 'package:lemon_engine/properties/mouse_world.dart';
-import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/pi2.dart';
@@ -22,7 +20,7 @@ double getMouseRotation() {
 bool get playerAssigned => game.player.id >= 0;
 
 void drawLine(double x1, double y1, double x2, double y2) {
-  globalCanvas.drawLine(offset(x1, y1), offset(x2, y2), engine.state.paint);
+  engine.state.canvas.drawLine(offset(x1, y1), offset(x2, y2), engine.state.paint);
 }
 
 
