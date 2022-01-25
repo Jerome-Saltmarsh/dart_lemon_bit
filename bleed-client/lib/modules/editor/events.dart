@@ -4,11 +4,13 @@ import 'dart:ui';
 
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
+import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/modules/editor/mixin.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/game.dart';
@@ -110,6 +112,11 @@ class EditorEvents with EditorScope {
           type: editor.state.objectType.value,
           radius: 0,
         ));
+
+        if (editor.state.objectType.value == ObjectType.Torch){
+          // modules.game.state
+        }
+
         redrawCanvas();
         break;
       case ToolTab.All:
