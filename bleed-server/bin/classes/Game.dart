@@ -202,6 +202,26 @@ abstract class Game {
       crates.add(Crate(x: crate.x, y: crate.y));
     }
 
+    for(Character character in scene.characters){
+      if (character.type == CharacterType.Zombie){
+        zombies.add(Npc(type: CharacterType.Zombie, x: character.x, y: character.y, health: 100));
+      }else{
+        npcs.add(InteractableNpc(
+            name: "Bob",
+            onInteractedWith: (Player player){},
+            x: character.x,
+            y: character.y,
+            health: 100,
+            weapon: Weapon(
+              type: WeaponType.HandGun,
+              rounds: 10,
+              capacity: 10,
+              damage: 5,
+            )
+        ));
+      }
+    }
+
     for (EnvironmentObject environmentObject in scene.environment) {
       if (environmentObject.radius > 0) {
         colliders.add(Collider(environmentObject.x, environmentObject.y,
@@ -1921,9 +1941,6 @@ void selectCharacterType(Player player, CharacterType value) {
           cost: 70,
           range: 200,
           cooldown: 25);
-      break;
-    case CharacterType.Musketeer:
-      // TODO: Handle this case.
       break;
   }
 

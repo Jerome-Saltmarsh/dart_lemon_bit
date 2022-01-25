@@ -260,10 +260,6 @@ void compilePlayer(StringBuffer buffer, Player player) {
     compilePlayerWeapons(buffer, player);
   }
 
-
-  if (player.type == CharacterType.None) {
-    // do nothing
-  } else
   if (player.type == CharacterType.Human){
     compilePlayerWeapon(buffer, player);
   } else {

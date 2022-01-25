@@ -3,6 +3,7 @@ import 'package:lemon_math/Vector2.dart';
 import '../common/Tile.dart';
 import '../common/enums/ObjectType.dart';
 import '../utilities.dart';
+import 'Character.dart';
 import 'EnvironmentObject.dart';
 import '../enums.dart';
 import '../maths.dart';
@@ -35,6 +36,7 @@ double perspectiveProjectY(double x, double y) {
 }
 
 class Scene {
+  final List<Character> characters;
   final List<List<Tile>> tiles;
   final List<Vector2> crates;
   final List<EnvironmentObject> environment;
@@ -47,7 +49,8 @@ class Scene {
   Scene({
     required this.tiles,
     required this.crates,
-    required this.environment
+    required this.environment,
+    required this.characters,
   }) {
     rows = tiles.length;
     columns = tiles[0].length;

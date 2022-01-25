@@ -77,7 +77,7 @@ Player spawnPlayerInTown() {
       x: 0,
       y: 1750,
       team: teams.west,
-      type: CharacterType.None);
+      type: CharacterType.Human);
 }
 
 void compileWholeGame(Game game) {
@@ -555,7 +555,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             errorPlayerNotFound();
             return;
           }
-          if (player.type != CharacterType.None) {
+          if (player.type != CharacterType.Human) {
             error(GameError.CharacterTypeAlreadySelected);
             break;
           }
@@ -640,7 +640,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          player.type = CharacterType.None;
+          player.type = CharacterType.Human;
           player.x = player.game.playerSpawnPoints[0].x;
           player.y = player.game.playerSpawnPoints[0].y;
           break;

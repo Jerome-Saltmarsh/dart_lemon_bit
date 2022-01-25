@@ -4,7 +4,9 @@ import 'dart:io';
 import 'package:lemon_math/Vector2.dart';
 import 'package:typedef/json.dart';
 
+import '../classes/Character.dart';
 import '../classes/Scene.dart';
+import '../common/CharacterType.dart';
 import '../common/Tile.dart';
 import '../classes/EnvironmentObject.dart';
 import '../common/enums/ObjectType.dart';
@@ -95,10 +97,23 @@ Scene mapJsonToScene(Json json) {
     tiles.add(_row);
   }
 
+  final List<Character> characters = [];
+
+  if (json.containsKey('characters')){
+    List characterJson = json['characters'];
+    for (Json characterJson in characterJson) {
+      final type = parseCharacterType(characterJson['type']);
+      final x = (characterJson['x'] as int).toDouble();
+      final y = (characterJson['y'] as int).toDouble();
+      characters.add(Character(type: type, x: x, y: y, health: 100, speed: 1));
+    }
+  }
+
   return Scene(
       tiles: tiles,
       crates: crates,
-      environment: environment
+      environment: environment,
+      characters: characters,
   );
 }
 
