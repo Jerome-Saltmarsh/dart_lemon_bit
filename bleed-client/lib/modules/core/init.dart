@@ -113,7 +113,6 @@ void initializeEventListeners() {
   observeCompiledGame(onCompiledGameChanged);
   modules.game.state.time.onChanged(onTimeChanged);
   phase.onChanged(onPhaseChanged);
-  observeAmbientLight(onAmbientLightChanged);
   game.shadeMax.onChanged(onShadeMaxChanged);
 
 
