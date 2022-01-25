@@ -103,7 +103,6 @@ Widget buildPlayerLevel() {
 
 Widget buildBottomRight() {
   return WatchBuilder(game.player.characterType, (CharacterType type) {
-    if (type == CharacterType.None) return emptyContainer;
     return Positioned(
         bottom: _padding,
         right: _padding,

@@ -2,6 +2,7 @@
 
 import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
+import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/constants/colours.dart';
@@ -15,6 +16,7 @@ import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/dialogs.dart';
 import 'package:bleed_client/ui/style.dart';
+import 'package:bleed_client/ui/views.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
@@ -54,17 +56,21 @@ class EditorBuild {
   }
 
   Widget _mainMenu() {
-    return Row(
-          children: [
-            _buttonClear(),
-            width16,
-            _buttonLoad(),
-            width16,
-            _buttonSave(),
-            width16,
-            _buttonExit(),
-          ],
-        );
+    return margin(
+      top: 16,
+      right: 16,
+      child: Row(
+            children: [
+              _buttonClear(),
+              width16,
+              _buttonLoad(),
+              width16,
+              _buttonSave(),
+              width16,
+              _buttonExit(),
+            ],
+          ),
+    );
   }
 
 
@@ -138,6 +144,8 @@ class EditorBuild {
 
   Widget _buttonSave() => text("Save", onPressed: actions.showEditorDialogSave);
 
+  Widget _buttonExit() => text("Exit", onPressed: actions.setModePlay);
+
   Widget _buildEditorDialog(){
     return WatchBuilder(editor.state.dialog, (EditorDialog dialog){
       print("buildEditorDialog($dialog)");
@@ -187,20 +195,16 @@ class EditorBuild {
   }
 
   List<Widget> _tabUnits() {
-    return Unit.values.map((unit) {
-      return WatchBuilder(state.unit, (Unit selected) {
+    return characterTypes.map((unit) {
+      return WatchBuilder(state.characterType, (selected) {
         return button(enumString(unit), () {
-          state.unit.value = unit;
+          state.characterType.value = unit;
         },
             width: _buttonWidth,
             alignment: Alignment.centerLeft,
             fillColor: selected == unit ? _highlight : colours.transparent);
       });
     }).toList();
-  }
-
-  Widget _buttonExit(){
-    return buildButton("Exit", actions.setModePlay);
   }
 
   Widget buildEnvironmentType(ObjectType type) {

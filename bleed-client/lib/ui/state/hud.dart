@@ -45,9 +45,9 @@ extension HudProperties on _Hud {
 class _BuildHud {
   Widget playerCharacterType() {
     return WatchBuilder(game.player.characterType, (CharacterType value) {
-      if (value == CharacterType.None) {
-        return buildHudDialog.selectCharacterType();
-      }
+      // if (value == CharacterType.None) {
+      //   return buildHudDialog.selectCharacterType();
+      // }
       if (value == CharacterType.Human) {
         return _buildHudWeapons();
       }

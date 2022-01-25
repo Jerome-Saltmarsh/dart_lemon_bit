@@ -1,11 +1,9 @@
 enum CharacterType {
-  None,
   Human,
   Zombie,
   Witch,
   Swordsman,
   Archer,
-  Musketeer,
 }
 
 const characterTypes = CharacterType.values;

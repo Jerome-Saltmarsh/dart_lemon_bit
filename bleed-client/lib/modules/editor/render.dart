@@ -1,7 +1,9 @@
+import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
+import 'package:bleed_client/render/draw/drawCharacter.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/render/draw_circle.dart';
@@ -9,6 +11,11 @@ import 'package:lemon_engine/render/draw_circle.dart';
 void renderEditor(Canvas canvas, Size size) {
   drawTiles();
   drawSprites();
+  final state = editor.state;
+
+  for(Character character in state.units){
+    drawCharacter(character);
+  }
 
   final selectedCollectable = editor.state.selectedCollectable;
 

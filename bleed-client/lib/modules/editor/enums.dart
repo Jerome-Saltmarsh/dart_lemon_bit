@@ -17,8 +17,3 @@ enum EditorDialog {
   Save,
   Loading_Map
 }
-
-enum Unit {
-  Zombie,
-  Human,
-}
