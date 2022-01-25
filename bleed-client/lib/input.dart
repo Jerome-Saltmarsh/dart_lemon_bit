@@ -308,10 +308,7 @@ Map<LogicalKeyboardKey, Function> _keyReleasedHandlers = {
 };
 
 void onMouseScroll(double amount) {
-  Offset center1 = screenCenterWorld;
   targetZoom -= amount * game.settings.zoomSpeed;
-  if (targetZoom < game.settings.maxZoom) targetZoom = game.settings.maxZoom;
-  cameraCenter(center1.dx, center1.dy);
 }
 
 void stopRunLeft() {

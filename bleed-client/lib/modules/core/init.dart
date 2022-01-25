@@ -30,7 +30,7 @@ import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/phase.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:bleed_client/webSocket.dart';
-import 'package:lemon_engine/functions/register_on_mouse_scroll.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/state/cursor.dart';
 import 'package:lemon_math/Vector2.dart';
@@ -108,8 +108,7 @@ void onPlayerWeaponChanged(WeaponType weapon) {
 }
 
 void initializeEventListeners() {
-  // registerPlayKeyboardHandler();
-  registerOnMouseScroll(onMouseScroll);
+  engine.callbacks.onMouseScroll = onMouseScroll;
   webSocket.eventStream.stream.listen(_onEventReceivedFromServer);
   observeCompiledGame(onCompiledGameChanged);
   timeInSeconds.onChanged(onTimeChanged);

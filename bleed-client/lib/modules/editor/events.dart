@@ -5,10 +5,14 @@ import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/modules/editor/mixin.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/engine.dart';
+import 'package:lemon_engine/functions/screen_to_world.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
+import 'package:lemon_engine/state/camera.dart';
+import 'package:lemon_engine/state/zoom.dart';
 import 'package:lemon_math/Vector2.dart';
 
 import 'enums.dart';
@@ -20,11 +24,26 @@ class EditorEvents with EditorScope {
     keyboardEvents.listen(onKeyboardEvent);
     engine.callbacks.onLeftClicked = onMouseLeftClicked;
     engine.callbacks.onMouseDragging = onMouseDragging;
+    engine.callbacks.onMouseMoved = onMouseMoved;
     editor.state.selectedObject.onChanged(onSelectedObjectChanged);
   }
 
   void onMouseLeftDown(int frames){
       print("onMouseLeftDown($frames)");
+  }
+
+  void onMouseMoved(Offset position, Offset previous){
+    print("editor.onMouseMoved()");
+    if (state.panning) {
+      final positionX = screenToWorldX(position.dx);
+      final positionY = screenToWorldY(position.dy);
+      final previousX = screenToWorldX(previous.dx);
+      final previousY = screenToWorldY(previous.dy);
+      double diffX = previousX - positionX;
+      double diffY = previousY - positionY;
+      camera.x += diffX * zoom;
+      camera.y += diffY * zoom;
+    }
   }
 
   void onMouseDragging(){
