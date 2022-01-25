@@ -1,5 +1,7 @@
 import 'package:bleed_client/actions.dart';
+import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
+import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/functions/saveScene.dart';
@@ -24,7 +26,7 @@ class EditorActions with EditorScope {
     redrawCanvas();
   }
 
-  void resetTiles() {
+  void clear() {
     newScene(rows: game.totalRows, columns: game.totalColumns);
   }
 
@@ -36,6 +38,7 @@ class EditorActions with EditorScope {
     game.totalRows = rows;
     game.totalColumns = columns;
     game.tiles.clear();
+    editor.state.characters.clear();
     for (int row = 0; row < rows; row++) {
       List<Tile> columnTiles = [];
       for (int column = 0; column < columns; column++) {
@@ -113,6 +116,16 @@ class EditorActions with EditorScope {
 
     final jsonMisc = mapJson['misc'];
     editor.state.startingHour.value = jsonMisc['start-hour'] ?? 12;
+
+    List<Character> characters = [];
+    for(Json json in mapJson['characters']){
+      final x = (json['x'] as int).toDouble();
+      final y = (json['y'] as int).toDouble();
+      final type = parseCharacterType(json['type']);
+      characters.add(Character(type: type, x: x, y: y));
+    }
+    editor.state.characters = characters;
+
     actions.updateTileRender();
     redrawCanvas();
   }
