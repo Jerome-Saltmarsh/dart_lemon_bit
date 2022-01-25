@@ -37,10 +37,7 @@ class CoreEvents {
           sendRequestJoinGame(game.type.value, playerId: core.state.account.value?.userId);
         }
 
-        engine.callbacks.onLeftClicked = performPrimaryAction;
-        engine.callbacks.onPanStarted = performPrimaryAction;
-        engine.callbacks.onLongLeftClicked = performPrimaryAction;
-        registerPlayKeyboardHandler();
+        modules.game.events.register();
         break;
       case Connection.Done:
         fullScreenExit();
