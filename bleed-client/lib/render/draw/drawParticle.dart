@@ -8,7 +8,7 @@ import 'package:bleed_client/render/queries/equalOrDarkerToVeryDark.dart';
 import 'package:lemon_engine/engine.dart';
 
 void drawParticle(Particle particle){
-  if (!engine.queries.onScreen(particle.x, particle.y)) return;
+  if (!onScreen(particle.x, particle.y)) return;
   Shade shade = getShadeAtPosition(particle.x, particle.y);
   if (equalOrDarkerToVeryDark(shade)) return;
   drawAtlas(

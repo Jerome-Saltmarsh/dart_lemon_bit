@@ -144,7 +144,7 @@ void drawTiles() {
 void drawBulletHoles(List<Vector2> bulletHoles) {
   for (Vector2 bulletHole in bulletHoles) {
     if (bulletHole.x == 0) return;
-    if (!engine.queries.onScreen(bulletHole.x, bulletHole.y)) continue;
+    if (!onScreen(bulletHole.x, bulletHole.y)) continue;
     if (inDarkness(bulletHole.x, bulletHole.y)) continue;
     engine.draw.circle(bulletHole.x, bulletHole.y, 2, Colors.black);
   }

@@ -376,7 +376,7 @@ void drawSprites() {
       Particle particle = game.particles[indexParticle];
 
       if (particle.type == ParticleType.Blood) {
-        if (engine.queries.onScreen(particle.x, particle.y)) {
+        if (onScreen(particle.x, particle.y)) {
           drawParticle(particle);
         }
         indexParticle++;
@@ -385,7 +385,7 @@ void drawSprites() {
 
       if (!zombiesRemaining || particle.y < game.zombies[indexZombie].y) {
         if (!npcsRemaining || particle.y < game.interactableNpcs[indexNpc].y) {
-          if (engine.queries.onScreen(particle.x, particle.y)) {
+          if (onScreen(particle.x, particle.y)) {
             drawParticle(particle);
           }
           indexParticle++;

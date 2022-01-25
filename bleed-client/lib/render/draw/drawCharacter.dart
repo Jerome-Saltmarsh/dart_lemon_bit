@@ -10,7 +10,7 @@ import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/engine.dart';
 
 void drawCharacter(Character character) {
-  if (!engine.queries.onScreen(character.x, character.y)) return;
+  if (!onScreen(character.x, character.y)) return;
   if (!character.alive) return;
   // if (isWaterAt(character.x, character.y)) return;
 

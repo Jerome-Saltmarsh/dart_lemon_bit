@@ -1,5 +1,7 @@
 
 
+import 'dart:ui';
+
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/input.dart';
@@ -7,7 +9,6 @@ import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/modules/editor/mixin.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/game.dart';
@@ -27,12 +28,12 @@ class EditorEvents with EditorScope {
     editor.state.selectedObject.onChanged(onSelectedObjectChanged);
   }
 
-  void onMouseMoved(Vector2 position, Vector2 previous){
+  void onMouseMoved(Offset position, Offset previous){
     if (state.panning) {
-      final positionX = screenToWorldX(position.x);
-      final positionY = screenToWorldY(position.y);
-      final previousX = screenToWorldX(previous.x);
-      final previousY = screenToWorldY(previous.y);
+      final positionX = screenToWorldX(position.dx);
+      final positionY = screenToWorldY(position.dy);
+      final previousX = screenToWorldX(previous.dx);
+      final previousY = screenToWorldY(previous.dy);
       final diffX = previousX - positionX;
       final diffY = previousY - positionY;
       engine.state.camera.x += diffX * engine.state.zoom;
