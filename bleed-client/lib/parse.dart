@@ -25,6 +25,7 @@ import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/functions/emit/emitMyst.dart';
 import 'package:bleed_client/functions/emitSmoke.dart';
+import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/parser/parseCubePlayers.dart';
 import 'package:bleed_client/render/functions/applyEnvironmentObjectsToBakeMapping.dart';
 import 'package:bleed_client/render/state/paths.dart';
@@ -309,7 +310,7 @@ void parseState() {
 }
 
 void parseGameTime() {
-  timeInSeconds(consumeInt());
+  modules.game.state.timeInSeconds.value = consumeInt();
 }
 
 void parseItems() {
