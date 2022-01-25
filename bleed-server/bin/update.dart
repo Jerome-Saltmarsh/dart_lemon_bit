@@ -134,17 +134,19 @@ void resolveCollisionBetween(List<GameObject> gameObjectsA,
     List<GameObject> gameObjectsB, CollisionResolver resolve) {
   int minJ = 0;
   for (int i = 0; i < gameObjectsA.length; i++) {
-    if (!gameObjectsA[i].collidable) continue;
+    final a = gameObjectsA[i];
+    if (!a.collidable) continue;
     for (int j = minJ; j < gameObjectsB.length; j++) {
-      if (!gameObjectsB[j].collidable) continue;
-      if (gameObjectsA[i].bottom < gameObjectsB[j].top) {
+      final b = gameObjectsB[j];
+      if (!b.collidable) continue;
+      if (a.bottom < b.top) {
         minJ++;
         break;
       }
-      if (gameObjectsA[i].top > gameObjectsB[j].bottom) continue;
-      if (gameObjectsA[i].right < gameObjectsB[j].left) continue;
-      if (gameObjectsA[i].left > gameObjectsB[j].right) continue;
-      resolve(gameObjectsA[i], gameObjectsB[j]);
+      if (a.top > b.bottom) continue;
+      if (a.right < b.left) continue;
+      if (a.left > b.right) continue;
+      resolve(a, b);
     }
   }
 }
