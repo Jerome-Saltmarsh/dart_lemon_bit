@@ -83,6 +83,7 @@ class EditorActions with EditorScope {
   }
 
   void loadMapFromFirestore(String name) async {
+    closeDialog();
     core.state.operationStatus.value = OperationStatus.Loading_Map;
     final mapJson = await firestoreService.loadMap(name).whenComplete((){
       core.state.operationStatus.value = OperationStatus.None;
