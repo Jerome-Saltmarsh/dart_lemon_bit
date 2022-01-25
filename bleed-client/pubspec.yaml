@@ -17,7 +17,7 @@ dependencies:
   lemon_dispatch: 0.3.1
   lemon_watch: ^1.0.5
   lemon_math: ^1.1.5
-  lemon_engine: ^0.2.98
+  lemon_engine: ^0.2.99
   audioplayers: ^0.19.1
   universal_html: ^2.0.8
   positioned_tap_detector: ^1.0.3
