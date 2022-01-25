@@ -18,7 +18,7 @@ class EditorEvents with EditorScope {
   register() {
     print("editor.events.register()");
     keyboardEvents.listen(onKeyboardEvent);
-    mouseEvents.onLeftClicked.value = onMouseLeftClicked;
+    engine.callbacks.onLeftClicked = onMouseLeftClicked;
     editor.state.selectedObject.onChanged(onSelectedObjectChanged);
   }
 

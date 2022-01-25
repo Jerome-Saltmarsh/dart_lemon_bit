@@ -17,6 +17,7 @@ import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:bleed_client/watches/time.dart';
 import 'package:bleed_client/webSocket.dart';
 import 'package:lemon_dispatch/instance.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/functions/fullscreen_enter.dart';
 import 'package:lemon_engine/functions/fullscreen_exit.dart';
 import 'package:lemon_engine/game.dart';
@@ -43,7 +44,6 @@ class Events {
     website.state.dialog.onChanged(_onGameDialogChanged);
     game.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
     core.state.errorMessage.onChanged(_onErrorMessageChanged);
-    mouseEvents.onLeftClicked.onChanged(_onMouseLeftClickedChanged);
     sub(_onGameError);
     sub(_onLoginException);
   }
@@ -124,14 +124,6 @@ class Events {
     }
   }
 
-  void _onMouseLeftClickedChanged(Function? function){
-     if (function == null){
-       print("mouseEvents.onLeftClicked.onChanged(null)");
-     }else{
-       print("mouseEvents.onLeftClicked.onChanged($function)");
-     }
-  }
-
   void _onGameTypeChanged(GameType type) {
     print('events.onGameTypeChanged($type)');
     actions.clearSession();
@@ -186,17 +178,17 @@ class Events {
           sendRequestJoinGame(game.type.value, playerId: core.state.account.value?.userId);
         }
 
-        mouseEvents.onLeftClicked.value = performPrimaryAction;
-        mouseEvents.onPanStarted.value = performPrimaryAction;
-        mouseEvents.onLongLeftClicked.value = performPrimaryAction;
+        engine.callbacks.onLeftClicked = performPrimaryAction;
+        engine.callbacks.onPanStarted = performPrimaryAction;
+        engine.callbacks.onLongLeftClicked = performPrimaryAction;
         registerPlayKeyboardHandler();
         break;
       case Connection.Done:
         fullScreenExit();
         actions.clearSession();
-        mouseEvents.onLeftClicked.value = null;
-        mouseEvents.onPanStarted.value = null;
-        mouseEvents.onLongLeftClicked.value = null;
+        engine.callbacks.onLeftClicked = null;
+        engine.callbacks.onPanStarted = null;
+        engine.callbacks.onLongLeftClicked = null;
         ui.drawCanvasAfterUpdate = true;
         cursorType.value = CursorType.Basic;
         deregisterPlayKeyboardHandler();
