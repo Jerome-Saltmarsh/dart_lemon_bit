@@ -83,7 +83,7 @@ void parseState() {
         break;
 
       case ServerResponse.Game_Time:
-        timeInSeconds(consumeInt());
+        parseGameTime();
         break;
 
       case ServerResponse.Lobby_CountDown:
@@ -306,6 +306,10 @@ void parseState() {
       break;
     }
   }
+}
+
+void parseGameTime() {
+  timeInSeconds(consumeInt());
 }
 
 void parseItems() {

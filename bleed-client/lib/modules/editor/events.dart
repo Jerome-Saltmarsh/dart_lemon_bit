@@ -26,6 +26,8 @@ class EditorEvents with EditorScope {
     engine.callbacks.onMouseMoved = onMouseMoved;
     engine.callbacks.onMouseScroll = onMouseScroll;
     editor.state.selected.onChanged(onSelectedObjectChanged);
+    editor.state.startingHour.onChanged((hour){
+    });
   }
 
   void onMouseMoved(Offset position, Offset previous){

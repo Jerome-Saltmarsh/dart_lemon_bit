@@ -15,7 +15,7 @@ void renderEditor(Canvas canvas, Size size) {
   final state = editor.state;
 
   _drawSelectedObject();
-  
+
   for(Character character in state.characters){
     drawCharacter(character);
   }
