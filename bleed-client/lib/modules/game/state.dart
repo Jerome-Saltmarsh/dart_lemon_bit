@@ -6,5 +6,5 @@ import 'package:lemon_watch/watch.dart';
 class GameState {
   final Watch<Shade> ambientLight = Watch(Shade.VeryDark);
   /// In seconds
-  final Watch<int> timeInSeconds = Watch(0);
+  final Watch<int> time = Watch(0);
 }

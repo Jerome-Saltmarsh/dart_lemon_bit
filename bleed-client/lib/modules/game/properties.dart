@@ -8,6 +8,6 @@ class GameProperties {
   }
 
   double get timeInMinutes {
-    return modules.game.state.timeInSeconds.value / 60.0;
+    return modules.game.state.time.value / 60.0;
   }
 }

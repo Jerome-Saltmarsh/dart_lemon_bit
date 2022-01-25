@@ -111,7 +111,7 @@ void initializeEventListeners() {
   engine.callbacks.onMouseScroll = onMouseScroll;
   webSocket.eventStream.stream.listen(_onEventReceivedFromServer);
   observeCompiledGame(onCompiledGameChanged);
-  modules.game.state.timeInSeconds.onChanged(onTimeChanged);
+  modules.game.state.time.onChanged(onTimeChanged);
   phase.onChanged(onPhaseChanged);
   observeAmbientLight(onAmbientLightChanged);
   game.shadeMax.onChanged(onShadeMaxChanged);

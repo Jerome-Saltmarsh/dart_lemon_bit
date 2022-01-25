@@ -191,7 +191,7 @@ class Events {
       game.totalProjectiles = 0;
       game.totalNpcs = 0;
       game.totalHumans = 0;
-      modules.game.state.timeInSeconds.value = 60 * 60 * 10;
+      modules.game.state.time.value = 60 * 60 * 10;
     }
     redrawCanvas();
   }

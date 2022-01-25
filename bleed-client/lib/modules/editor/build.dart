@@ -140,16 +140,16 @@ class EditorBuild {
       Row(children: [
          text("Start Hour:"),
           width8,
-          WatchBuilder(state.startingHour, (int value){
-            return text(value);
+          WatchBuilder(modules.game.state.time, (int value){
+            return text(modules.game.properties.timeInHours);
           }),
         width8,
         button("-", (){
-          state.startingHour.value--;
+          modules.game.state.time.value -= (60 * 60);
         }),
         width8,
         button("+", (){
-          state.startingHour.value++;
+          modules.game.state.time.value += (60 * 60);
         }),
       ],)
     ];
