@@ -1652,7 +1652,7 @@ extension GameFunctions on Game {
     if (npc == value) {
       throw Exception("Npc cannot target itself");
     }
-    if (npc.team == value.team) {
+    if (npc.team == value.team && npc.team != -1) {
       throw Exception("Npc target same team");
     }
     if (value.dead) {
