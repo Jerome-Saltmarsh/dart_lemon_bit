@@ -26,6 +26,13 @@ Json compileGameToJson() {
     "crates": _compileCrates(game.crates),
     "environment": _compileEnvironmentObjects(game.environmentObjects),
     'characters': compileCharactersToJson(editor.state.characters),
+    "misc" : _compileMisc(),
+  };
+}
+
+Json _compileMisc(){
+  return {
+    'start-hour': editor.state.startingHour.value
   };
 }
 

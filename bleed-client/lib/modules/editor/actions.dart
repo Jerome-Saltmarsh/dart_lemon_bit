@@ -9,6 +9,7 @@ import 'package:bleed_client/modules/editor/mixin.dart';
 import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:typedef/json.dart';
 
@@ -99,10 +100,9 @@ class EditorActions with EditorScope {
         .whenComplete(core.actions.operationCompleted)
     ;
     final jsonRows = mapJson['tiles'];
-    final jsonEnvironment = mapJson['environment'];
     game.tiles = mapJsonToTiles(jsonRows);
-    // game.environmentObjects = mapJson
 
+    final jsonEnvironment = mapJson['environment'];
     List<EnvironmentObject> envObjects = [];
     for(Json envJson in jsonEnvironment){
       final x = (envJson['x'] as int).toDouble();
@@ -111,7 +111,11 @@ class EditorActions with EditorScope {
       envObjects.add(EnvironmentObject(x: x, y: y, type: type, radius: 25));
     }
     game.environmentObjects = envObjects;
+
+    final jsonMisc = mapJson['misc'];
+    editor.state.startingHour.value = jsonMisc['start-hour'] ?? 12;
     actions.updateTileRender();
+    redrawCanvas();
   }
 
   void showErrorMessage(String message) {
