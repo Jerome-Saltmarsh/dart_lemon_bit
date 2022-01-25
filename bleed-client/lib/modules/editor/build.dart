@@ -140,7 +140,7 @@ class EditorBuild {
 
   Widget _buttonClear() => text("Clear", onPressed: editor.actions.resetTiles);
 
-  Widget _buttonLoad() => text("Load", onPressed: actions.showEditorDialogLoadMap);
+  Widget _buttonLoad() => text("Load", onPressed: editor.actions.showDialogLoadMap);
 
   Widget _buttonSave() => text("Save", onPressed: actions.showEditorDialogSave);
 

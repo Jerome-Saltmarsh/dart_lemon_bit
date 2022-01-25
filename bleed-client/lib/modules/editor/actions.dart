@@ -1,5 +1,7 @@
 import 'package:bleed_client/actions.dart';
+import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
+import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/functions/saveScene.dart';
 import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/modules/core/enums.dart';
@@ -8,6 +10,7 @@ import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:lemon_engine/game.dart';
+import 'package:typedef/json.dart';
 
 import 'enums.dart';
 
@@ -68,6 +71,11 @@ class EditorActions with EditorScope {
     editor.state.dialog.value = EditorDialog.None;
   }
 
+  void showDialogLoadMap(){
+    print("actions.showDialogSelectMap()");
+    editor.state.dialog.value = EditorDialog.Load;
+  }
+
   void saveMapToFirestore() async {
     print("editor.actions.saveMapToFirestore()");
     final mapId = editor.state.mapNameController.text;
@@ -75,21 +83,34 @@ class EditorActions with EditorScope {
       actions.showErrorMessage("map id cannot be empty");
       return;
     }
-    editor.actions.startProcess("Saving new map");
+    closeDialog();
+    core.state.operationStatus.value = OperationStatus.Saving_Map;
     firestoreService.createMap(
         mapId: mapId,
         map: compileGameToJson()
-    ).whenComplete(editor.actions.endProcessAndCloseDialogs);
+    ).whenComplete(core.actions.operationCompleted);
   }
 
   void loadMapFromFirestore(String name) async {
     closeDialog();
     core.state.operationStatus.value = OperationStatus.Loading_Map;
-    final mapJson = await firestoreService.loadMap(name).whenComplete((){
-      core.state.operationStatus.value = OperationStatus.None;
-    });
+    final mapJson = await firestoreService
+        .loadMap(name)
+        .whenComplete(core.actions.operationCompleted)
+    ;
     final jsonRows = mapJson['tiles'];
+    final jsonEnvironment = mapJson['environment'];
     game.tiles = mapJsonToTiles(jsonRows);
+    // game.environmentObjects = mapJson
+
+    List<EnvironmentObject> envObjects = [];
+    for(Json envJson in jsonEnvironment){
+      final x = (envJson['x'] as int).toDouble();
+      final y = (envJson['y'] as int).toDouble();
+      final type = parseObjectTypeFromString(envJson['type']);
+      envObjects.add(EnvironmentObject(x: x, y: y, type: type, radius: 25));
+    }
+    game.environmentObjects = envObjects;
     actions.updateTileRender();
   }
 

@@ -37,11 +37,6 @@ class _Actions {
     mapTilesToSrcAndDst();
   }
 
-  void showEditorDialogLoadMap(){
-    print("actions.showDialogSelectMap()");
-    editor.state.dialog.value = EditorDialog.Load;
-  }
-
   void cancelSubscription() async {
     print("actions.cancelSubscription()");
     actions.showDialogAccount();

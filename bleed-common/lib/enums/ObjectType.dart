@@ -24,7 +24,7 @@ String parseEnvironmentObjectTypeToString(ObjectType type){
 }
 
 ObjectType parseObjectTypeFromString(String value){
-  return objectTypes.firstWhere((type) => parseEnvironmentObjectTypeToString(type) == value, orElse: (){
+     return objectTypes.firstWhere((type) => parseEnvironmentObjectTypeToString(type) == value, orElse: (){
     throw Exception("could not parse $value to type");
   });
 }

@@ -1,4 +1,5 @@
 
+import 'package:bleed_client/modules/core/actions.dart';
 import 'package:bleed_client/modules/core/build.dart';
 import 'package:bleed_client/modules/core/events.dart';
 import 'package:bleed_client/modules/core/state.dart';
@@ -8,4 +9,5 @@ class CoreModule {
   final state = CoreState();
   final build = CoreBuild();
   final events = CoreEvents();
+  final actions = CoreActions();
 }

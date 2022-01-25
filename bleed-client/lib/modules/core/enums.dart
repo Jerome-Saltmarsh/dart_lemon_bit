@@ -8,6 +8,7 @@ enum OperationStatus {
   Updating_Account,
   Changing_Public_Name,
   Loading_Map,
+  Saving_Map,
 }
 
 enum Mode {
