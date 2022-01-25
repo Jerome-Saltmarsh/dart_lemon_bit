@@ -27,13 +27,11 @@ import 'package:bleed_client/functions/emit/emitMyst.dart';
 import 'package:bleed_client/functions/emitSmoke.dart';
 import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/parser/parseCubePlayers.dart';
-import 'package:bleed_client/render/functions/applyEnvironmentObjectsToBakeMapping.dart';
 import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/utils/list_util.dart';
 import 'package:bleed_client/watches/compiledGame.dart';
-import 'package:bleed_client/watches/time.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
@@ -375,7 +373,7 @@ void _parseEnvironmentObjects() {
 
   // * on environmentObjects changed
   sortReversed(game.environmentObjects, environmentObjectY);
-  applyEnvironmentObjectsToBakeMapping();
+  modules.game.actions.applyEnvironmentObjectsToBakeMapping();
 }
 
 void addParticleEmitter(ParticleEmitter value) {

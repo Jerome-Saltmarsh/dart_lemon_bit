@@ -114,7 +114,7 @@ class EditorEvents with EditorScope {
         ));
 
         if (editor.state.objectType.value == ObjectType.Torch){
-          // modules.game.state
+          modules.game.actions.applyEnvironmentObjectsToBakeMapping();
         }
 
         redrawCanvas();

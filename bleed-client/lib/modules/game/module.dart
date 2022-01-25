@@ -1,6 +1,7 @@
 
 
 
+import 'package:bleed_client/modules/game/actions.dart';
 import 'package:bleed_client/modules/game/build.dart';
 import 'package:bleed_client/modules/game/events.dart';
 import 'package:bleed_client/modules/game/properties.dart';
@@ -12,5 +13,6 @@ class GameModule {
   final events = GameEvents();
   final build = GameBuild();
   final properties = GameProperties();
+  final actions = GameActions();
   final render = renderGame;
 }
