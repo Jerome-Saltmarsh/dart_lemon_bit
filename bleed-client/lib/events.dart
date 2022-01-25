@@ -33,7 +33,7 @@ class Events {
 
   Events() {
     print("Events()");
-    webSocket.connection.onChanged(_onConnectionChanged);
+    webSocket.connection.onChanged(core.events.onConnectionChanged);
     game.type.onChanged(_onGameTypeChanged);
     core.state.region.onChanged(_onServerTypeChanged);
     game.player.uuid.onChanged(_onPlayerUuidChanged);
@@ -153,49 +153,6 @@ class Events {
   void _onServerTypeChanged(Region serverType) {
     print('events.onServerTypeChanged($serverType)');
     storage.saveServerType(serverType);
-  }
-
-  void _onConnectionChanged(Connection connection) {
-    print("events.onConnectionChanged($connection)");
-
-    switch(connection){
-      case Connection.Connected:
-        ui.drawCanvasAfterUpdate = false;
-        if (game.type.value == GameType.Custom){
-          final account = core.state.account.value;
-          if (account == null){
-            actions.showErrorMessage("Account required to play custom map");
-            return;
-          }
-          final mapName = game.customGameName;
-          if (mapName == null){
-            actions.showErrorMessage("No custom map chosen");
-            actions.disconnect();
-            return;
-          }
-          sendRequestJoinCustomGame(mapName: mapName, playerId: account.userId);
-        }else{
-          sendRequestJoinGame(game.type.value, playerId: core.state.account.value?.userId);
-        }
-
-        engine.callbacks.onLeftClicked = performPrimaryAction;
-        engine.callbacks.onPanStarted = performPrimaryAction;
-        engine.callbacks.onLongLeftClicked = performPrimaryAction;
-        registerPlayKeyboardHandler();
-        break;
-      case Connection.Done:
-        fullScreenExit();
-        actions.clearSession();
-        engine.callbacks.onLeftClicked = null;
-        engine.callbacks.onPanStarted = null;
-        engine.callbacks.onLongLeftClicked = null;
-        ui.drawCanvasAfterUpdate = true;
-        cursorType.value = CursorType.Basic;
-        deregisterPlayKeyboardHandler();
-        break;
-      default:
-        break;
-    }
   }
 
   void _onPlayerUuidChanged(String uuid) {
