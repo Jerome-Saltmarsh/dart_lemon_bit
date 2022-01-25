@@ -11,7 +11,6 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/functions/screen_to_world.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
-import 'package:lemon_engine/state/camera.dart';
 import 'package:lemon_math/Vector2.dart';
 
 import 'enums.dart';
@@ -35,8 +34,8 @@ class EditorEvents with EditorScope {
       final previousY = screenToWorldY(previous.dy);
       final diffX = previousX - positionX;
       final diffY = previousY - positionY;
-      camera.x += diffX * engine.state.zoom;
-      camera.y += diffY * engine.state.zoom;
+      engine.state.camera.x += diffX * engine.state.zoom;
+      engine.state.camera.y += diffY * engine.state.zoom;
     }
   }
 

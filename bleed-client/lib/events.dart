@@ -20,7 +20,6 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/functions/fullscreen_enter.dart';
 import 'package:lemon_engine/functions/fullscreen_exit.dart';
 import 'package:lemon_engine/game.dart';
-import 'package:lemon_engine/state/camera.dart';
 import 'package:lemon_engine/state/cursor.dart';
 
 import 'common/GameType.dart';
@@ -125,8 +124,8 @@ class Events {
   void _onGameTypeChanged(GameType type) {
     print('events.onGameTypeChanged($type)');
     actions.clearSession();
-    camera.x = 0;
-    camera.y = 0;
+    engine.state.camera.x = 0;
+    engine.state.camera.y = 0;
     engine.state.zoom = 1;
     switch (type) {
       case GameType.None:

@@ -5,6 +5,7 @@ import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
 import 'package:bleed_client/styles.dart';
 import 'package:flutter/material.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/state/paint.dart';
 
 import 'camera3d.dart';
@@ -62,7 +63,7 @@ Widget buildCube3D() {
   );
 }
 
-Paint get globalPaint => paint;
+Paint get globalPaint => engine.state.paint;
 
 class _CubePainter extends CustomPainter {
   const _CubePainter(Listenable repaint) : super(repaint: repaint);

@@ -14,6 +14,7 @@ import 'package:bleed_client/render/mappers/mapBulletToSrc.dart';
 import 'package:bleed_client/render/mappers/mapDst.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/render/draw_circle.dart';
 import 'package:lemon_engine/state/canvas.dart';
 import 'package:lemon_engine/state/paint.dart';
@@ -64,7 +65,7 @@ void drawFireball(double x, double y, Direction direction) {
 
   // TODO use atlas instead
   globalCanvas.drawAtlas(images.atlas, [rsTransform],
-      [rect], null, null, null, paint);
+      [rect], null, null, null, engine.state.paint);
 }
 
 Rect _rectArrow = Rect.fromLTWH(atlas.arrow.x, atlas.arrow.y, 18, 51);
@@ -78,5 +79,5 @@ void drawArrow(double x, double y, double angle) {
       translateX: x,
       translateY: y);
   globalCanvas.drawAtlas(
-      images.atlas, [rsTransform], [_rectArrow], null, null, null, paint);
+      images.atlas, [rsTransform], [_rectArrow], null, null, null, engine.state.paint);
 }

@@ -8,6 +8,7 @@ import 'package:bleed_client/render/state/tilesDst.dart';
 import 'package:bleed_client/render/state/tilesSrc.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:flutter/material.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/queries/on_screen.dart';
 import 'package:lemon_engine/render/draw_circle.dart';
@@ -125,14 +126,14 @@ void drawCircleOutline({
   Offset z = Offset(x, y);
   setColor(color);
 
-  paint.strokeWidth = 3;
+  engine.state.paint.strokeWidth = 3;
 
   for (int i = 0; i <= sides; i++) {
     double a1 = i * r;
     points.add(Offset(cos(a1) * radius, sin(a1) * radius));
   }
   for (int i = 0; i < points.length - 1; i++) {
-    globalCanvas.drawLine(points[i] + z, points[i + 1] + z, paint);
+    globalCanvas.drawLine(points[i] + z, points[i + 1] + z, engine.state.paint);
   }
 }
 

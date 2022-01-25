@@ -43,6 +43,7 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 import 'package:flutter/material.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/properties/mouse_world.dart';
 import 'package:lemon_engine/queries/on_screen.dart';
@@ -247,7 +248,7 @@ void drawDebugCharacters() {
 }
 
 void drawDebugEnvironmentObjects() {
-  paint.color = Colors.red;
+  engine.state.paint.color = Colors.red;
   for (EnvironmentObject env in game.environmentObjects) {
     drawLine(env.left, env.top, env.right, env.top); // top left to top right
     drawLine(
@@ -473,7 +474,7 @@ void _drawMouseAim() {
   if (!mouseAvailable) return;
   if (game.player.dead) return;
 
-  paint.strokeWidth = 3;
+  engine.state.paint.strokeWidth = 3;
   double angle =
       angleBetween(mouseWorldX, mouseWorldY, game.player.x, game.player.y);
 
@@ -492,7 +493,7 @@ void _drawMouseAim() {
 }
 
 void _drawLine(Offset a, Offset b, Color color) {
-  paint.color = color;
-  globalCanvas.drawLine(a, b, paint);
+  engine.state.paint.color = color;
+  globalCanvas.drawLine(a, b, engine.state.paint);
 }
 
