@@ -51,8 +51,8 @@ class EditorEvents with EditorScope {
     setTileAtMouse(editor.state.tile.value);
   }
 
-  onSelectedObjectChanged(EnvironmentObject? environmentObject) {
-    print("editor._onSelectedObjectChanged($environmentObject)");
+  onSelectedObjectChanged(Vector2? value) {
+    print("editor._onSelectedObjectChanged($value)");
     redrawCanvas();
   }
 
@@ -126,7 +126,7 @@ class EditorEvents with EditorScope {
     }
 
     final double v = 1.5;
-    final EnvironmentObject? selectedObject = editor.state.selectedObject.value;
+    final Vector2? selectedObject = editor.state.selectedObject.value;
 
     if (selectedObject != null){
       if (event.logicalKey == LogicalKeyboardKey.keyW) {

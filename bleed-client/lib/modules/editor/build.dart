@@ -22,6 +22,7 @@ import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/game.dart';
+import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import 'enums.dart';
@@ -93,8 +94,8 @@ class EditorBuild {
 
   List<Widget> _tabAll() {
     return game.environmentObjects.map((env) {
-      return NullableWatchBuilder<EnvironmentObject?>(editor.state.selectedObject,
-              (EnvironmentObject? selected) {
+      return NullableWatchBuilder<Vector2?>(editor.state.selectedObject,
+              (Vector2? selected) {
             return button(enumString(env.type), () {
               editor.state.selectedObject.value = env;
               cameraCenter(env.x, env.y);
