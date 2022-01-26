@@ -8,7 +8,7 @@ import 'package:bleed_client/state/game.dart';
 import '../../draw.dart';
 
 class IsometricProperties {
-  
+
   bool get dayTime => modules.isometric.state.ambient.value.index == Shade.Bright.index;
 
   Tile get tileAtMouse {
