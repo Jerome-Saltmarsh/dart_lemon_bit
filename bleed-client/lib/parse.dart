@@ -373,7 +373,7 @@ void _parseEnvironmentObjects() {
 
   // * on environmentObjects changed
   sortReversed(game.environmentObjects, environmentObjectY);
-  modules.game.actions.applyEnvironmentObjectsToBakeMapping();
+  modules.isometric.actions.applyEnvironmentObjectsToBakeMapping();
 }
 
 void addParticleEmitter(ParticleEmitter value) {

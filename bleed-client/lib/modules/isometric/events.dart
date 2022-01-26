@@ -21,6 +21,6 @@ class IsometricEvents {
     setBakeMapToAmbientLight();
     modules.isometric.actions.resetDynamicShadesToBakeMap();
     applyDynamicShadeToTileSrc();
-    modules.game.actions.applyEnvironmentObjectsToBakeMapping();
+    modules.isometric.actions.applyEnvironmentObjectsToBakeMapping();
   }
 }

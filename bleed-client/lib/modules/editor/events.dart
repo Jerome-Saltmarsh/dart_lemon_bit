@@ -120,7 +120,7 @@ class EditorEvents with EditorScope {
 
         if (editor.state.objectType.value == ObjectType.Torch){
           modules.isometric.actions.updateTileRender();
-          modules.game.actions.applyEnvironmentObjectsToBakeMapping();
+          modules.isometric.actions.applyEnvironmentObjectsToBakeMapping();
         }
 
         redrawCanvas();
