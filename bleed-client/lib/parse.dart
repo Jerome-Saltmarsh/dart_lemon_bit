@@ -406,7 +406,7 @@ void _parseTiles() {
     }
     game.tiles.add(column);
   }
-  actions.updateTileRender();
+  modules.isometric.actions.updateTileRender();
 }
 
 void _parsePlayer() {

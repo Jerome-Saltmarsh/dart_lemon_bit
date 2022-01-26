@@ -2,6 +2,7 @@
 
 import 'dart:ui';
 
+import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
@@ -114,6 +115,7 @@ class EditorEvents with EditorScope {
         ));
 
         if (editor.state.objectType.value == ObjectType.Torch){
+          modules.isometric.actions.updateTileRender();
           modules.game.actions.applyEnvironmentObjectsToBakeMapping();
         }
 

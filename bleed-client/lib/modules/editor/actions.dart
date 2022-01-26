@@ -51,7 +51,7 @@ class EditorActions with EditorScope {
     game.environmentObjects.clear();
     game.collectables.clear();
     game.items.clear();
-    actions.updateTileRender();
+    modules.isometric.actions.updateTileRender();
   }
 
   void startProcess(String value){
@@ -126,7 +126,7 @@ class EditorActions with EditorScope {
     }
     editor.state.characters = characters;
 
-    actions.updateTileRender();
+    modules.isometric.actions.updateTileRender();
     redrawCanvas();
   }
 

@@ -31,12 +31,6 @@ class _Actions {
     editor.state.dialog.value = EditorDialog.Save;
   }
 
-  void updateTileRender(){
-    print("actions.updateTileRender()");
-    setBakeMapToAmbientLight();
-    mapTilesToSrcAndDst();
-  }
-
   void cancelSubscription() async {
     print("actions.cancelSubscription()");
     actions.showDialogAccount();
