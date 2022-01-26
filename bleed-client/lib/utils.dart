@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/draw.dart';
+import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/engine.dart';
@@ -94,7 +95,7 @@ void setTile({
   if (column >= game.totalColumns) return;
   if (game.tiles[row][column] == tile) return;
   game.tiles[row][column] = tile;
-  mapTilesToSrcAndDst();
+  modules.isometric.actions.mapTilesToSrcAndDst();
 }
 
 double distanceFromMouse(double x, double y) {
