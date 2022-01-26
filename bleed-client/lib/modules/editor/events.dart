@@ -138,6 +138,7 @@ class EditorEvents with EditorScope {
     modules.isometric.actions.updateTileRender();
     modules.isometric.actions.applyEnvironmentObjectsToBakeMapping();
     modules.isometric.actions.setBakeMapToAmbientLight();
+    modules.isometric.actions.setDynamicMapToAmbientLight();
   }
 
   void onEditorKeyDownEvent(RawKeyDownEvent event){

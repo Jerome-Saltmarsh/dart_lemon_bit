@@ -6,12 +6,13 @@ class IsometricEvents {
 
   void register(){
     print("isometric.events.register()");
-    modules.isometric.subscriptions.onAmbientLightChanged = modules.isometric.state.ambient.onChanged(_onAmbientLightChanged);
+    modules.isometric.subscriptions.onAmbientLightChanged = modules.isometric.state.ambient.onChanged(_onAmbientShadeChanged);
   }
 
-  void _onAmbientLightChanged(Shade value){
+  void _onAmbientShadeChanged(Shade value){
     print("isometric.events.onAmbientLightChanged($value)");
     modules.isometric.actions.setBakeMapToAmbientLight();
+    modules.isometric.actions.setDynamicMapToAmbientLight();
     modules.isometric.actions.resetDynamicShadesToBakeMap();
     modules.isometric.actions.applyDynamicShadeToTileSrc();
     modules.isometric.actions.applyEnvironmentObjectsToBakeMapping();

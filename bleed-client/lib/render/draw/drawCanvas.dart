@@ -14,7 +14,6 @@ import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
-import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/constants/colors/white.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/cube/scene.dart';
@@ -51,8 +50,6 @@ import 'drawInteractableNpcs.dart';
 import 'drawParticle.dart';
 
 final double _nameRadius = 100;
-
-// bool get dayTime => modules.isometric.state.ambient.value.index == Shade.Bright.index;
 const animationFrameRate = 7; // frames per change;
 
 final Scene scene = Scene();

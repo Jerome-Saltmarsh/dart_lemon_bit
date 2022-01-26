@@ -29,18 +29,25 @@ class IsometricActions {
   }
 
   void setBakeMapToAmbientLight(){
-    print("setBakeMapToAmbientLight()");
+    print("isometric.actions.setBakeMapToAmbientLight()()");
     _state.bakeMap.clear();
-    _state.dynamicShading.clear();
+    for (int row = 0; row < game.totalRows; row++) {
+      final List<Shade> _baked = [];
+      _state.bakeMap.add(_baked);
+      for (int column = 0; column < game.totalColumns; column++) {
+        _baked.add(_state.ambient.value);
+      }
+    }
+  }
 
+  void setDynamicMapToAmbientLight(){
+    print("isometric.actions.setDynamicMapToAmbientLight()");
+    _state.dynamicShading.clear();
     for (int row = 0; row < game.totalRows; row++) {
       final List<Shade> _dynamic = [];
-      final List<Shade> _baked = [];
       modules.isometric.state.dynamicShading.add(_dynamic);
-      modules.isometric.state.bakeMap.add(_baked);
       for (int column = 0; column < game.totalColumns; column++) {
         _dynamic.add(modules.isometric.state.ambient.value);
-        _baked.add(modules.isometric.state.ambient.value);
       }
     }
   }
@@ -75,6 +82,7 @@ class IsometricActions {
   void updateTileRender(){
     print("actions.updateTileRender()");
     setBakeMapToAmbientLight();
+    setDynamicMapToAmbientLight();
     mapTilesToSrcAndDst();
   }
 }
