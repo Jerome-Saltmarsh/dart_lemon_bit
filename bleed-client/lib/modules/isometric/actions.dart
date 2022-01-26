@@ -14,7 +14,6 @@ import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/functions/emitLight.dart';
 import 'package:bleed_client/render/state/tileRects.dart';
 import 'package:bleed_client/render/state/tileTransforms.dart';
-import 'package:bleed_client/render/state/tilesSrc.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 
@@ -99,9 +98,11 @@ class IsometricActions {
     _processTileTransforms();
     _loadTileRects();
 
-    int total = tileRects.length * 4;
+    final total = tileRects.length * 4;
     final tilesDst = Float32List(total);
     final tilesSrc = Float32List(total);
+    final tileSize = 48;
+    final tileSizeHalf = tileSize / 2;
 
     for (int i = 0; i < tileRects.length; ++i) {
       final int index0 = i * 4;
@@ -113,17 +114,15 @@ class IsometricActions {
       tilesDst[index0] = rstTransform.scos;
       tilesDst[index1] = rstTransform.ssin;
       tilesDst[index2] = rstTransform.tx;
-      tilesDst[index3] = rstTransform.ty + 24;
+      tilesDst[index3] = rstTransform.ty + tileSizeHalf;
       tilesSrc[index0] = atlas.tiles.x + rect.left;
       tilesSrc[index1] = atlas.tiles.y;
-      tilesSrc[index2] = tilesSrc[index0] + 48;
-      tilesSrc[index3] = tilesSrc[index1] + 48;
+      tilesSrc[index2] = tilesSrc[index0] + tileSize;
+      tilesSrc[index3] = tilesSrc[index1] + tileSize;
     }
-
     modules.isometric.state.tilesDst = tilesDst;
-    modules.isometric.state.tilesSrc = tilesDst;
+    modules.isometric.state.tilesSrc = tilesSrc;
   }
-
 
   void setAmbientLightAccordingToPhase(Phase phase){
     print("setAmbientLightAccordingToPhase($phase)");
@@ -158,10 +157,21 @@ class IsometricActions {
     tileTransforms.clear();
     for (int x = 0; x < tiles.length; x++) {
       for (int y = 0; y < tiles[0].length; y++) {
-        tileTransforms.add(getTileTransform(x, y));
+        tileTransforms.add(_buildTileRSTransform(x, y));
       }
     }
   }
+
+  RSTransform _buildTileRSTransform(int x, int y) {
+    return RSTransform.fromComponents(
+        rotation: 0.0,
+        scale: 1.0,
+        anchorX: modules.isometric.constants.halfTileSize,
+        anchorY: modules.isometric.constants.tileSize,
+        translateX: getTileWorldX(x, y),
+        translateY: getTileWorldY(x, y));
+  }
+
 
   void _loadTileRects() {
     final tiles = game.tiles;

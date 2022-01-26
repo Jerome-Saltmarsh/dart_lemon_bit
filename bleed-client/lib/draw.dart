@@ -53,16 +53,6 @@ void drawDebugNpcs(List<NpcDebug> values){
   }
 }
 
-RSTransform getTileTransform(int x, int y) {
-  return RSTransform.fromComponents(
-      rotation: 0.0,
-      scale: 1.0,
-      anchorX: halfTileSize,
-      anchorY: halfTileSize,
-      translateX: getTileWorldX(x, y),
-      translateY: getTileWorldY(x, y));
-}
-
 double getTileWorldX(int row, int column){
   return perspectiveProjectX(row * halfTileSize, column * halfTileSize);
 }
