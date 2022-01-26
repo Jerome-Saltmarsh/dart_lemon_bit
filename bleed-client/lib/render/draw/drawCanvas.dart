@@ -32,11 +32,9 @@ import 'package:bleed_client/render/draw/drawPlayerText.dart';
 import 'package:bleed_client/render/functions/applyDynamicShadeToTileSrc.dart';
 import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
 import 'package:bleed_client/render/functions/emitLight.dart';
-import 'package:bleed_client/render/functions/resetDynamicShadesToBakeMap.dart';
 import 'package:bleed_client/render/mappers/loop.dart';
 import 'package:bleed_client/render/mappers/mapDst.dart';
 import 'package:bleed_client/render/mappers/mapSrc.dart';
-import 'package:bleed_client/render/state/dynamicShading.dart';
 import 'package:bleed_client/render/state/floatingText.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
@@ -99,7 +97,7 @@ void renderGame(Canvas canvas, Size size) {
 
 void applyLighting() {
   if (!dayTime) {
-    resetDynamicShadesToBakeMap();
+    modules.isometric.actions.resetDynamicShadesToBakeMap();
     applyCharacterLightEmission(game.humans);
     applyCharacterLightEmission(game.zombies);
     applyProjectileLighting();

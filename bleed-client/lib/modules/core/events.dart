@@ -35,7 +35,6 @@ class CoreEvents {
         }else{
           sendRequestJoinGame(game.type.value, playerId: core.state.account.value?.userId);
         }
-
         modules.game.events.register();
         break;
       case Connection.Done:
