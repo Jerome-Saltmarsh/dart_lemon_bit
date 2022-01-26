@@ -6,8 +6,6 @@ import 'package:bleed_client/getters/inDarkness.dart';
 import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/state/paths.dart';
-import 'package:bleed_client/render/state/tilesDst.dart';
-import 'package:bleed_client/render/state/tilesSrc.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
@@ -138,7 +136,7 @@ void drawTiles() {
   engine.actions.setPaintColorWhite();
   drawAtlas(
       dst: modules.isometric.state.tilesDst,
-      src: tilesSrc,
+      src: modules.isometric.state.tilesSrc,
   );
 }
 

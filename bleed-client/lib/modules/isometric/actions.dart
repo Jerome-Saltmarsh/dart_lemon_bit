@@ -12,7 +12,6 @@ import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/modules/isometric/state.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/functions/emitLight.dart';
-import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
 import 'package:bleed_client/render/state/tileRects.dart';
 import 'package:bleed_client/render/state/tileTransforms.dart';
 import 'package:bleed_client/render/state/tilesSrc.dart';
@@ -30,8 +29,8 @@ class IsometricActions {
     for (int row = 0; row < game.totalRows; row++) {
       for (int column = 0; column < game.totalColumns; column++) {
         Shade shade = dynamicShading[row][column];
-        tilesSrc[i + 1] = atlas.tiles.y + shade.index * _size; // top
-        tilesSrc[i + 3] = tilesSrc[i + 1] + _size; // bottom
+        _state.tilesSrc[i + 1] = atlas.tiles.y + shade.index * _size; // top
+        _state.tilesSrc[i + 3] = _state.tilesSrc[i + 1] + _size; // bottom
         i += 4;
       }
     }
@@ -102,7 +101,7 @@ class IsometricActions {
 
     int total = tileRects.length * 4;
     final tilesDst = Float32List(total);
-    tilesSrc = Float32List(total);
+    final tilesSrc = Float32List(total);
 
     for (int i = 0; i < tileRects.length; ++i) {
       final int index0 = i * 4;
@@ -122,6 +121,7 @@ class IsometricActions {
     }
 
     modules.isometric.state.tilesDst = tilesDst;
+    modules.isometric.state.tilesSrc = tilesDst;
   }
 
 
@@ -186,6 +186,4 @@ class IsometricActions {
     game.tiles[row][column] = tile;
     modules.isometric.actions.mapTilesToSrcAndDst();
   }
-
-
 }

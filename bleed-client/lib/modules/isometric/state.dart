@@ -13,4 +13,5 @@ class IsometricState {
   final List<List<Shade>> bakeMap = [];
   final Watch<int> time = Watch(0);
   late Float32List tilesDst;
+  late Float32List tilesSrc;
 }
