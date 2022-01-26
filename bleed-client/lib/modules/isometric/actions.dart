@@ -6,7 +6,6 @@ import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/draw.dart';
-import 'package:bleed_client/enums/Phase.dart';
 import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
 import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/modules/isometric/state.dart';
@@ -15,7 +14,6 @@ import 'package:bleed_client/render/functions/emitLight.dart';
 import 'package:bleed_client/render/state/tileRects.dart';
 import 'package:bleed_client/render/state/tileTransforms.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/watches/ambientLight.dart';
 
 class IsometricActions {
 

@@ -1,4 +1,4 @@
-import 'package:bleed_client/enums/Phase.dart';
+import 'package:bleed_client/modules/isometric/enums.dart';
 
 Phase mapHourToPhase(int hour) {
   if (hour < 2) return Phase.MidNight;

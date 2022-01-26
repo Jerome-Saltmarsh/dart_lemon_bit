@@ -1,6 +1,7 @@
 
 import 'package:bleed_client/common/enums/Shade.dart';
-import 'package:bleed_client/enums/Phase.dart';
+
+import 'enums.dart';
 
 class IsometricMaps {
 
