@@ -126,31 +126,8 @@ class IsometricActions {
 
   void setAmbientLightAccordingToPhase(Phase phase){
     print("setAmbientLightAccordingToPhase($phase)");
-    switch (phase) {
-      case Phase.EarlyMorning:
-        setAmbientLightDark();
-        break;
-      case Phase.Morning:
-        setAmbientLightMedium();
-        break;
-      case Phase.Day:
-        setAmbientLightBright();
-        break;
-      case Phase.EarlyEvening:
-        setAmbientLightMedium();
-        break;
-      case Phase.Evening:
-        setAmbientLightDark();
-        break;
-      case Phase.Night:
-        setAmbientLightVeryDark();
-        break;
-      case Phase.MidNight:
-        setAmbientLightPitchBlack();
-        break;
-    }
+    ambient = modules.isometric.maps.phaseShade[phase]!;
   }
-
 
   void _processTileTransforms() {
     final tiles = game.tiles;

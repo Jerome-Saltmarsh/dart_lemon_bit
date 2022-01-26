@@ -1,6 +1,5 @@
 import 'package:bleed_client/mappers/mapHourToPhase.dart';
 import 'package:bleed_client/modules.dart';
-import 'package:bleed_client/watches/phase.dart';
 
 const _secondsPerMinute = 60;
 const _minutesPerHour = 60;

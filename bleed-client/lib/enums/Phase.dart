@@ -7,3 +7,5 @@ enum Phase {
   Night, // 9
   MidNight, // - 5
 }
+
+final List<Phase> phases = Phase.values;

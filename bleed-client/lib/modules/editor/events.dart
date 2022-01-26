@@ -26,24 +26,18 @@ class EditorEvents with EditorScope {
     engine.callbacks.onMouseDragging = onMouseDragging;
     engine.callbacks.onMouseMoved = onMouseMoved;
     engine.callbacks.onMouseScroll = onMouseScroll;
-    editor.state.selected.onChanged(onSelectedObjectChanged);
-    modules.isometric.state.time.onChanged((hour){
-
-    });
-
     engine.callbacks.onKeyPressed = onKeyPressed;
     engine.callbacks.onKeyReleased = onKeyReleased;
+    editor.state.selected.onChanged(onSelectedObjectChanged);
   }
 
   void onKeyPressed(LogicalKeyboardKey key){
-    print("editor.onKeyPressed($key)");
     if (key == editor.config.keys.pan){
       state.panning = true;
     }
   }
 
   void onKeyReleased(LogicalKeyboardKey key){
-    print("editor.onKeyReleased($key)");
     if (key == editor.config.keys.pan){
       state.panning = false;
     }

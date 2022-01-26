@@ -12,26 +12,3 @@ set ambient(Shade value) {
   modules.isometric.state.ambient.value = value;
 }
 
-observeAmbientLight(Function(Shade value) function) {
-  modules.isometric.state.ambient.onChanged(function);
-}
-
-void setAmbientLightBright(){
-  ambient = Shade.Bright;
-}
-
-void setAmbientLightMedium(){
-  ambient = Shade.Medium;
-}
-
-void setAmbientLightDark(){
-  ambient = Shade.Dark;
-}
-
-void setAmbientLightVeryDark(){
-  ambient = Shade.VeryDark;
-}
-
-void setAmbientLightPitchBlack(){
-  ambient = Shade.PitchBlack;
-}
