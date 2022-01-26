@@ -1,9 +1,7 @@
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/events/onShadeMaxChanged.dart';
-import 'package:bleed_client/events/onTimeChanged.dart';
-import 'package:bleed_client/mappers/mapHourToPhase.dart';
+import 'package:bleed_client/modules.dart';
 
-import '../../modules.dart';
 import 'enums.dart';
 
 class IsometricEvents {
@@ -17,16 +15,12 @@ class IsometricEvents {
     modules.isometric.state.hour.onChanged(onHourChanged);
   }
 
-  final _secondsPerMinute = 60;
-  final _minutesPerHour = 60;
-
-
   void onTimeChanged(int timeInSeconds) {
-    double timeInMinutes = timeInSeconds / _secondsPerMinute;
-    double timeInHours = timeInMinutes / _minutesPerHour;
+    final timeInMinutes = timeInSeconds / 60;
+    final timeInHours = timeInMinutes / 60;
     modules.isometric.state.hour.value = timeInHours.toInt();
   }
-  
+
   void onHourChanged(int hour){
     print("isometric.events.onHourChanged($hour)");
     modules.isometric.state.phase.value = modules.isometric.map.hourToPhase(hour);
@@ -42,11 +36,10 @@ class IsometricEvents {
   }
 
   void onPhaseChanged(Phase phase){
-    print("setAmbientLightAccordingToPhase($phase)");
+    print("isometric.events.onPhaseChanged($phase)");
     final phaseBrightness = modules.isometric.map.phaseToShade(phase);
     final maxAmbientBrightness = modules.isometric.state.maxAmbientBrightness.value;
     if (maxAmbientBrightness.isDarkerThan(phaseBrightness)) return;
     modules.isometric.state.ambient.value = phaseBrightness;
   }
-
 }
