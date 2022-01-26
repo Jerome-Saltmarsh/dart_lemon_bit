@@ -10,7 +10,7 @@ class IsometricEvents {
     if (isometric.state.eventsRegistered) return;
     print("isometric.events.register()");
     isometric.state.eventsRegistered = true;
-    isometric.subscriptions.onAmbientChanged = isometric.state.ambient.onChanged(_onAmbientChanged);
+    isometric.subscriptions.onAmbientChanged = isometric.state.ambient.onChanged(onAmbientChanged);
     isometric.state.time.onChanged(onTimeChanged);
     isometric.state.phase.onChanged(onPhaseChanged);
     isometric.state.maxAmbientBrightness.onChanged(onMaxAmbientBrightnessChanged);
@@ -28,20 +28,16 @@ class IsometricEvents {
     modules.isometric.state.phase.value = modules.isometric.map.hourToPhase(hour);
   }
 
-  void _onAmbientChanged(Shade value){
-    print("isometric.events.onAmbientLightChanged($value)");
-    modules.isometric.actions.resetBakeMap();
-    modules.isometric.actions.applyEnvironmentObjectsToBakeMapping();
-    modules.isometric.actions.resetDynamicMap();
-    modules.isometric.actions.resetDynamicShadesToBakeMap();
-    modules.isometric.actions.applyDynamicShadeToTileSrc();
-  }
-
   void onPhaseChanged(Phase phase){
     print("isometric.events.onPhaseChanged($phase)");
     final phaseBrightness = modules.isometric.map.phaseToShade(phase);
     final maxAmbientBrightness = modules.isometric.state.maxAmbientBrightness.value;
     if (maxAmbientBrightness.isDarkerThan(phaseBrightness)) return;
     modules.isometric.state.ambient.value = phaseBrightness;
+  }
+
+  void onAmbientChanged(Shade value){
+    print("isometric.events.onAmbientChanged($value)");
+    modules.isometric.actions.resetLighting();
   }
 }

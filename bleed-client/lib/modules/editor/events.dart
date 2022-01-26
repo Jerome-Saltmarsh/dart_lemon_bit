@@ -16,7 +16,6 @@ import 'package:flutter/services.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
 
-import '../../draw.dart';
 import 'enums.dart';
 
 class EditorEvents with EditorScope {
@@ -68,12 +67,12 @@ class EditorEvents with EditorScope {
     setTileAtMouse(editor.state.tile.value);
   }
 
-  onSelectedObjectChanged(Vector2? value) {
+  void onSelectedObjectChanged(Vector2? value) {
     print("editor._onSelectedObjectChanged($value)");
     engine.actions.redrawCanvas();
   }
 
-  onMouseLeftClicked() {
+  void onMouseLeftClicked() {
     state.selected.value = null;
     final double selectRadius = 25;
     if (modules.isometric.state.environmentObjects.isNotEmpty) {
@@ -114,7 +113,7 @@ class EditorEvents with EditorScope {
         ));
 
         if (editor.state.objectType.value == ObjectType.Torch){
-          onTorchAdded();
+          isometric.actions.resetLighting();
         }
 
         break;

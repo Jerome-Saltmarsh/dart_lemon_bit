@@ -35,6 +35,15 @@ class IsometricActions {
     }
   }
 
+  /// Expensive method
+  void resetLighting(){
+    resetBakeMap();
+    applyEnvironmentObjectsToBakeMapping();
+    resetDynamicMap();
+    resetDynamicShadesToBakeMap();
+    applyDynamicShadeToTileSrc();
+  }
+
   void resetBakeMap(){
     print("isometric.actions.resetBakeMap()");
     state.bakeMap.clear();
