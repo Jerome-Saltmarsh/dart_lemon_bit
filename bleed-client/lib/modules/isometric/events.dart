@@ -18,7 +18,7 @@ class IsometricEvents {
 
   void _onAmbientLightChanged(Shade value){
     print("isometric.events.onAmbientLightChanged($value)");
-    setBakeMapToAmbientLight();
+    modules.isometric.actions.setBakeMapToAmbientLight();
     modules.isometric.actions.resetDynamicShadesToBakeMap();
     applyDynamicShadeToTileSrc();
     modules.isometric.actions.applyEnvironmentObjectsToBakeMapping();
