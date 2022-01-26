@@ -158,7 +158,7 @@ class EditorBuild {
 
   Widget _buttonLoad() => text("Load", onPressed: editor.actions.showDialogLoadMap);
 
-  Widget _buttonSave() => text("Save", onPressed: actions.showEditorDialogSave);
+  Widget _buttonSave() => text("Save", onPressed: editor.actions.showDialogSave);
 
   Widget _buttonExit() => text("Exit", onPressed: actions.setModePlay);
 

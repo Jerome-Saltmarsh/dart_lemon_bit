@@ -79,6 +79,12 @@ class EditorActions with EditorScope {
     editor.state.dialog.value = EditorDialog.Load;
   }
 
+  void showDialogSave(){
+    print("actions.showEditorDialogSave()");
+    editor.state.dialog.value = EditorDialog.Save;
+  }
+
+
   void saveMapToFirestore() async {
     print("editor.actions.saveMapToFirestore()");
     final mapId = editor.state.mapNameController.text;

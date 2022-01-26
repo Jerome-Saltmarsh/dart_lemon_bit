@@ -26,11 +26,6 @@ final _Actions actions = _Actions();
 
 class _Actions {
 
-  void showEditorDialogSave(){
-    print("actions.showEditorDialogSave()");
-    editor.state.dialog.value = EditorDialog.Save;
-  }
-
   void cancelSubscription() async {
     print("actions.cancelSubscription()");
     actions.showDialogAccount();
