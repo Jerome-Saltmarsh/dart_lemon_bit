@@ -298,7 +298,7 @@ Widget? buildMenuDebug() {
             if (hovering) ...[
               widgets.theme,
               button("Font Jetbrains", (){
-                ui.themeData.value = themes.jetbrains;
+                engine.state.themeData.value = themes.jetbrains;
               }, width: 200, borderRadius: borderRadius0, fillColorMouseOver: colours.green),
               buttons.showDialogSubscribed,
               buttons.loginTestUser01,

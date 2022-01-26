@@ -19,7 +19,6 @@ import 'package:bleed_client/events/onTimeChanged.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/modules.dart';
-import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/ui/state/hud.dart';
@@ -131,13 +130,6 @@ void initializeEventListeners() {
   });
 
   game.player.weaponType.onChanged(onPlayerWeaponChanged);
-
-  onRightClickChanged.stream.listen((bool down) {
-    if (down) {
-      print("request deselect");
-      sendRequestDeselectAbility();
-    }
-  });
 }
 
 void _onEventReceivedFromServer(dynamic value) {

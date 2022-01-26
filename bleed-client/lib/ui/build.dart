@@ -15,6 +15,7 @@ import 'package:bleed_client/ui/state/decorationImages.dart';
 import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
@@ -183,19 +184,19 @@ class _Build {
           crossAxisAlignment: axis.cross.start,
           children: [
             button("PressStart2P", (){
-              ui.themeData.value = themes.pressStart2P;
+              engine.state.themeData.value = themes.pressStart2P;
             }, width: _width, borderRadius: borderRadius0, fillColorMouseOver: colours.green),
             button("Gugi", (){
-              ui.themeData.value = themes.gugi;
+              engine.state.themeData.value = themes.gugi;
             }, width: _width, borderRadius: borderRadius0, fillColorMouseOver: colours.green),
             button("GermanioOne", (){
-              ui.themeData.value = themes.germaniaOne;
+              engine.state.themeData.value = themes.germaniaOne;
             }, width: _width, borderRadius: borderRadius0, fillColorMouseOver: colours.green),
             button("Slackey", (){
-              ui.themeData.value = themes.slackey;
+              engine.state.themeData.value = themes.slackey;
             }, width: _width, borderRadius: borderRadius0, fillColorMouseOver: colours.green),
             button("Standard", (){
-              ui.themeData.value = null;
+              engine.state.themeData.value = null;
             }, width: _width, borderRadius: borderRadius0, fillColorMouseOver: colours.green),
             theme
           ],

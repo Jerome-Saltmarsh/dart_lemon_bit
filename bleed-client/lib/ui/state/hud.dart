@@ -14,7 +14,6 @@ import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/game.dart';
 import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_math/pi2.dart';
 import 'package:lemon_watch/watch.dart';
@@ -87,10 +86,9 @@ Widget _buildHudAbilities(){
   });
 }
 
-final Widget fps = WatchBuilder(ui.fps, (int fps){
+final Widget fps = WatchBuilder(engine.state.fps, (int fps){
   return text("fps $fps");
 });
-
 
 class _State {
   int tipIndex = 0;
@@ -98,7 +96,6 @@ class _State {
   bool observeMode = false;
   bool showServers = false;
   bool expandScore = false;
-  // Watch<bool> menuVisible = Watch(false);
 }
 
 class _Properties {

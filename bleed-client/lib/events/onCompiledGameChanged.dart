@@ -9,5 +9,5 @@ void onCompiledGameChanged(String value){
     return;
   }
   parseState();
-  redrawCanvas();
+  engine.actions.redrawCanvas();
 }

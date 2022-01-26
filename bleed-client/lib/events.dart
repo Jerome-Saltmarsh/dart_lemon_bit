@@ -193,7 +193,7 @@ class Events {
       game.totalHumans = 0;
       modules.isometric.state.time.value = 60 * 60 * 10;
     }
-    redrawCanvas();
+    engine.actions.redrawCanvas();
   }
 }
 

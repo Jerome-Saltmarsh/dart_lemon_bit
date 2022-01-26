@@ -19,7 +19,7 @@ void clearState() {
   game.gameEvents.clear();
   core.state.mode.value = Mode.Play;
   refreshUI();
-  redrawCanvas();
+  engine.actions.redrawCanvas();
 }
 
 void clearCompileGameState() {

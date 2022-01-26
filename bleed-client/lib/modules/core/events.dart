@@ -8,7 +8,6 @@ import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/webSocket.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/game.dart';
 import 'package:lemon_engine/enums.dart';
 
 class CoreEvents {
@@ -18,7 +17,7 @@ class CoreEvents {
     switch(connection){
       case Connection.Connected:
         engine.state.drawCanvas = modules.game.render;
-        ui.drawCanvasAfterUpdate = false;
+        engine.state.drawCanvasAfterUpdate = false;
         if (game.type.value == GameType.Custom){
           final account = core.state.account.value;
           if (account == null){
@@ -42,7 +41,7 @@ class CoreEvents {
         actions.clearSession();
         engine.actions.clearCallbacks();
         engine.state.drawCanvas = null;
-        ui.drawCanvasAfterUpdate = true;
+        engine.state.drawCanvasAfterUpdate = true;
         engine.state.cursorType.value = CursorType.Basic;
         deregisterPlayKeyboardHandler();
         break;
@@ -50,5 +49,4 @@ class CoreEvents {
         break;
     }
   }
-
 }

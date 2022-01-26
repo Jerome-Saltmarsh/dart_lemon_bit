@@ -14,7 +14,6 @@ class EditorState {
   int selectedCollectable = -1;
   bool panning = false;
   bool mouseDragging = false;
-  Offset mouseWorldStart = Offset(0, 0);
   final Watch<String> process = Watch("");
   final Watch<Vector2?> selected = Watch(null);
   final Watch<ToolTab> tab = Watch(ToolTab.Tiles);

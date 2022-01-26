@@ -11,6 +11,7 @@ import 'package:bleed_client/modules/editor/mixin.dart';
 import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/game.dart';
 import 'package:typedef/json.dart';
 
@@ -23,7 +24,7 @@ class EditorActions with EditorScope {
     if (state.selected.value == null) return;
     modules.isometric.state.environmentObjects.remove(state.selected.value);
     state.selected.value = null;
-    redrawCanvas();
+    engine.actions.redrawCanvas();
   }
 
   void clear() {
@@ -132,7 +133,7 @@ class EditorActions with EditorScope {
     editor.state.characters = characters;
 
     modules.isometric.actions.updateTileRender();
-    redrawCanvas();
+    engine.actions.redrawCanvas();
   }
 
   void showErrorMessage(String message) {

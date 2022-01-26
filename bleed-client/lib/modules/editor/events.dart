@@ -2,7 +2,6 @@
 
 import 'dart:ui';
 
-import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
@@ -15,7 +14,6 @@ import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/game.dart';
 import 'package:lemon_math/Vector2.dart';
 
 import 'enums.dart';
@@ -24,7 +22,6 @@ class EditorEvents with EditorScope {
 
   register() {
     print("editor.events.register()");
-    keyboardEvents.listen(onKeyboardEvent);
     engine.callbacks.onLeftClicked = onMouseLeftClicked;
     engine.callbacks.onMouseDragging = onMouseDragging;
     engine.callbacks.onMouseMoved = onMouseMoved;
@@ -33,6 +30,23 @@ class EditorEvents with EditorScope {
     modules.isometric.state.time.onChanged((hour){
 
     });
+
+    engine.callbacks.onKeyPressed = onKeyPressed;
+    engine.callbacks.onKeyReleased = onKeyReleased;
+  }
+
+  void onKeyPressed(LogicalKeyboardKey key){
+    print("editor.onKeyPressed($key)");
+    if (key == editor.config.keys.pan){
+      state.panning = true;
+    }
+  }
+
+  void onKeyReleased(LogicalKeyboardKey key){
+    print("editor.onKeyReleased($key)");
+    if (key == editor.config.keys.pan){
+      state.panning = false;
+    }
   }
 
   void onMouseMoved(Offset position, Offset previous){
@@ -60,22 +74,7 @@ class EditorEvents with EditorScope {
 
   onSelectedObjectChanged(Vector2? value) {
     print("editor._onSelectedObjectChanged($value)");
-    redrawCanvas();
-  }
-
-  onKeyboardEvent(RawKeyEvent event) {
-    if (event is RawKeyDownEvent) {
-      onEditorKeyDownEvent(event);
-      return;
-    }
-    if (event is RawKeyUpEvent) {
-      if (event.logicalKey == editor.config.keys.pan) {
-        state.panning = false;
-      }
-      if (event.logicalKey == config.keys.selectTileType) {
-        state.tile.value = modules.isometric.properties.tileAtMouse;
-      }
-    }
+    engine.actions.redrawCanvas();
   }
 
   onMouseLeftClicked() {
@@ -122,7 +121,7 @@ class EditorEvents with EditorScope {
           onTorchAdded();
         }
 
-        redrawCanvas();
+        engine.actions.redrawCanvas();
         break;
       case ToolTab.All:
         break;
@@ -130,7 +129,7 @@ class EditorEvents with EditorScope {
         break;
     }
 
-    redrawCanvas();
+    engine.actions.redrawCanvas();
   }
 
   void onTorchAdded(){
@@ -146,7 +145,7 @@ class EditorEvents with EditorScope {
       for (Vector2 position in game.crates) {
         position.x = mouseWorldX;
         position.y = mouseWorldY;
-        redrawCanvas();
+        engine.actions.redrawCanvas();
         return;
       }
     }
@@ -172,9 +171,8 @@ class EditorEvents with EditorScope {
     if (event.logicalKey == LogicalKeyboardKey.delete) {
       editor.actions.deleteSelected();
     }
-    if (event.logicalKey == LogicalKeyboardKey.space && !state.panning) {
-      state.panning = true;
-      state.mouseWorldStart = mouseWorld;
-    }
+    // if (event.logicalKey == LogicalKeyboardKey.space && !state.panning) {
+    //   state.panning = true;
+    // }
   }
 }
