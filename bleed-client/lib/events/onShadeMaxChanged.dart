@@ -1,6 +1,5 @@
 
 import 'package:bleed_client/common/enums/Shade.dart';
-import 'package:bleed_client/setters/setAmbientLightAccordingToPhase.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 import 'package:bleed_client/watches/phase.dart';
 
@@ -17,5 +16,5 @@ void onShadeMaxChanged(Shade shade){
 
 void applyAmbientLightToCurrentPhase() {
   print("applyAmbientLightToCurrentPhase");
-  setAmbientLightAccordingToPhase(phase.value);
+  modules.isometric.actions.setAmbientLightAccordingToPhase(phase.value);
 }

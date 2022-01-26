@@ -56,6 +56,7 @@ final Scene scene = Scene();
 
 void renderGame(Canvas canvas, Size size) {
   applyEmissionsToDynamicShadeMap();
+  modules.isometric.actions.applyDynamicShadeToTileSrc();
   drawTiles();
   drawProjectiles(game.projectiles);
   drawBulletHoles(game.bulletHoles);
@@ -91,30 +92,27 @@ void renderGame(Canvas canvas, Size size) {
 }
 
 void applyEmissionsToDynamicShadeMap() {
-  if (!modules.isometric.properties.dayTime) {
-    modules.isometric.actions.resetDynamicShadesToBakeMap();
-    applyCharacterLightEmission(game.humans);
-    applyCharacterLightEmission(game.zombies);
-    applyProjectileLighting();
-    applyNpcLightEmission(game.interactableNpcs);
-    final dynamicShading = modules.isometric.state.dynamicShading;
+  if (modules.isometric.properties.dayTime) return;
+  modules.isometric.actions.resetDynamicShadesToBakeMap();
+  applyCharacterLightEmission(game.humans);
+  applyCharacterLightEmission(game.zombies);
+  applyProjectileLighting();
+  applyNpcLightEmission(game.interactableNpcs);
+  final dynamicShading = modules.isometric.state.dynamicShading;
 
-    for (Effect effect in game.effects) {
-      if (!effect.enabled) continue;
-      double p = effect.duration / effect.maxDuration;
-      if (p < 0.33) {
-        emitLightHigh(dynamicShading, effect.x, effect.y);
-        break;
-      }
-      if (p < 0.66) {
-        emitLightMedium(dynamicShading, effect.x, effect.y);
-        break;
-      }
-      emitLightLow(dynamicShading, effect.x, effect.y);
+  for (Effect effect in game.effects) {
+    if (!effect.enabled) continue;
+    double p = effect.duration / effect.maxDuration;
+    if (p < 0.33) {
+      emitLightHigh(dynamicShading, effect.x, effect.y);
+      break;
     }
+    if (p < 0.66) {
+      emitLightMedium(dynamicShading, effect.x, effect.y);
+      break;
+    }
+    emitLightLow(dynamicShading, effect.x, effect.y);
   }
-
-  modules.isometric.actions.applyDynamicShadeToTileSrc();
 }
 
 void drawCrates() {

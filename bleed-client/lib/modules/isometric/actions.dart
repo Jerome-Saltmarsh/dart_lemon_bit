@@ -1,6 +1,7 @@
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:bleed_client/enums/Phase.dart';
 import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/modules/isometric/state.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
@@ -84,5 +85,32 @@ class IsometricActions {
     setBakeMapToAmbientLight();
     setDynamicMapToAmbientLight();
     mapTilesToSrcAndDst();
+  }
+
+  void setAmbientLightAccordingToPhase(Phase phase){
+    print("setAmbientLightAccordingToPhase($phase)");
+    switch (phase) {
+      case Phase.EarlyMorning:
+        setAmbientLightDark();
+        break;
+      case Phase.Morning:
+        setAmbientLightMedium();
+        break;
+      case Phase.Day:
+        setAmbientLightBright();
+        break;
+      case Phase.EarlyEvening:
+        setAmbientLightMedium();
+        break;
+      case Phase.Evening:
+        setAmbientLightDark();
+        break;
+      case Phase.Night:
+        setAmbientLightVeryDark();
+        break;
+      case Phase.MidNight:
+        setAmbientLightPitchBlack();
+        break;
+    }
   }
 }

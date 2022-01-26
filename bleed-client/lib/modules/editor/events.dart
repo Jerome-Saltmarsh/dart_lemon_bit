@@ -135,10 +135,10 @@ class EditorEvents with EditorScope {
 
   void onTorchAdded(){
     print("editor.events.onTorchAdded()");
-    modules.isometric.actions.updateTileRender();
-    modules.isometric.actions.applyEnvironmentObjectsToBakeMapping();
-    modules.isometric.actions.setBakeMapToAmbientLight();
-    modules.isometric.actions.setDynamicMapToAmbientLight();
+    // modules.isometric.actions.updateTileRender();
+    // modules.isometric.actions.applyEnvironmentObjectsToBakeMapping();
+    // modules.isometric.actions.setBakeMapToAmbientLight();
+    // modules.isometric.actions.setDynamicMapToAmbientLight();
   }
 
   void onEditorKeyDownEvent(RawKeyDownEvent event){

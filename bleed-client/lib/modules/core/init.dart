@@ -14,7 +14,6 @@ import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/cube/init_cube.dart';
 import 'package:bleed_client/events.dart';
 import 'package:bleed_client/events/onCompiledGameChanged.dart';
-import 'package:bleed_client/events/onPhaseChanged.dart';
 import 'package:bleed_client/events/onShadeMaxChanged.dart';
 import 'package:bleed_client/events/onTimeChanged.dart';
 import 'package:bleed_client/images.dart';
@@ -109,7 +108,7 @@ void initializeEventListeners() {
   webSocket.eventStream.stream.listen(_onEventReceivedFromServer);
   observeCompiledGame(onCompiledGameChanged);
   modules.isometric.state.time.onChanged(onTimeChanged);
-  phase.onChanged(onPhaseChanged);
+  phase.onChanged(modules.isometric.actions.setAmbientLightAccordingToPhase);
   game.shadeMax.onChanged(onShadeMaxChanged);
 
 
