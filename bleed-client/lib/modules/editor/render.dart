@@ -4,12 +4,12 @@ import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
 import 'package:bleed_client/render/draw/drawCharacter.dart';
-import 'package:bleed_client/state/game.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
 
 void renderEditor(Canvas canvas, Size size) {
+  // applyLighting();
   drawTiles();
   drawSprites();
   final state = editor.state;

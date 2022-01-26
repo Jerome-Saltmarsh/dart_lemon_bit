@@ -1,4 +1,5 @@
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/state/dynamicShading.dart';
 import 'package:bleed_client/render/state/tilesSrc.dart';
@@ -8,6 +9,7 @@ const _size = 48.0;
 
 void applyDynamicShadeToTileSrc() {
   int i = 0;
+  final dynamicShading = modules.game.state.dynamicShading;
   for (int row = 0; row < game.totalRows; row++) {
     for (int column = 0; column < game.totalColumns; column++) {
       Shade shade = dynamicShading[row][column];

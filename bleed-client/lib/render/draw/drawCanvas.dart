@@ -62,44 +62,12 @@ const animationFrameRate = 7; // frames per change;
 final Scene scene = Scene();
 
 void renderGame(Canvas canvas, Size size) {
-
-  if (game.type.value == GameType.CUBE3D){
-    scene.render(canvas, size);
-    return;
-  }
-
-  if (!dayTime) {
-    resetDynamicShadesToBakeMap();
-    applyCharacterLightEmission(game.humans);
-    applyCharacterLightEmission(game.zombies);
-    applyProjectileLighting();
-    applyNpcLightEmission(game.interactableNpcs);
-
-    for (Effect effect in game.effects) {
-      if (!effect.enabled) continue;
-      double p = effect.duration / effect.maxDuration;
-      if (p < 0.33) {
-        emitLightHigh(dynamicShading, effect.x, effect.y);
-        break;
-      }
-      if (p < 0.66) {
-        emitLightMedium(dynamicShading, effect.x, effect.y);
-        break;
-      }
-      emitLightLow(dynamicShading, effect.x, effect.y);
-    }
-  }
-
-  applyDynamicShadeToTileSrc();
+  applyLighting();
   drawTiles();
   drawProjectiles(game.projectiles);
   drawBulletHoles(game.bulletHoles);
 
-
-
-  if (game.player.isHuman){
-    // drawCircle(game.player.w.x, attackTarget.y, 20, Colors.white24);
-  } else {
+  if (!game.player.isHuman){
     drawAbility();
     final Vector2 attackTarget = game.player.attackTarget;
     if (attackTarget.x != 0 && attackTarget.y != 0){
@@ -127,6 +95,33 @@ void renderGame(Canvas canvas, Size size) {
   _drawPlayerNames();
   drawPlayerText();
   engine.actions.setPaintColorWhite();
+}
+
+void applyLighting() {
+  if (!dayTime) {
+    resetDynamicShadesToBakeMap();
+    applyCharacterLightEmission(game.humans);
+    applyCharacterLightEmission(game.zombies);
+    applyProjectileLighting();
+    applyNpcLightEmission(game.interactableNpcs);
+    final dynamicShading = modules.game.state.dynamicShading;
+
+    for (Effect effect in game.effects) {
+      if (!effect.enabled) continue;
+      double p = effect.duration / effect.maxDuration;
+      if (p < 0.33) {
+        emitLightHigh(dynamicShading, effect.x, effect.y);
+        break;
+      }
+      if (p < 0.66) {
+        emitLightMedium(dynamicShading, effect.x, effect.y);
+        break;
+      }
+      emitLightLow(dynamicShading, effect.x, effect.y);
+    }
+  }
+
+  applyDynamicShadeToTileSrc();
 }
 
 void drawCrates() {
@@ -253,7 +248,7 @@ void applyProjectileLighting() {
   for (int i = 0; i < game.totalProjectiles; i++) {
     Projectile projectile = game.projectiles[i];
     if (projectile.type == ProjectileType.Fireball) {
-      emitLightBrightSmall(dynamicShading, projectile.x, projectile.y);
+      emitLightBrightSmall(modules.game.state.dynamicShading, projectile.x, projectile.y);
     }
   }
 }

@@ -7,4 +7,5 @@ class GameState {
   final Watch<Shade> ambientLight = Watch(Shade.VeryDark);
   /// In seconds
   final Watch<int> time = Watch(0);
+  final List<List<Shade>> dynamicShading = [];
 }
