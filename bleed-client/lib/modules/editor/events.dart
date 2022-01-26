@@ -73,7 +73,7 @@ class EditorEvents with EditorScope {
         state.panning = false;
       }
       if (event.logicalKey == config.keys.selectTileType) {
-        state.tile.value = tileAtMouse;
+        state.tile.value = modules.isometric.properties.tileAtMouse;
       }
     }
   }
@@ -99,7 +99,7 @@ class EditorEvents with EditorScope {
        }
     }
 
-    if (tileAtMouse == Tile.Boundary){
+    if (modules.isometric.properties.tileAtMouse == Tile.Boundary){
       return;
     }
 

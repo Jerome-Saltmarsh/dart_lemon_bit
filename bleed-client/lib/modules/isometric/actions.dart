@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/EnvironmentObject.dart';
+import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/draw.dart';
@@ -171,5 +172,20 @@ class IsometricActions {
       }
     }
   }
+
+  void setTile({
+    required int row,
+    required int column,
+    required Tile tile,
+  }) {
+    if (row < 0) return;
+    if (column < 0) return;
+    if (row >= game.totalRows) return;
+    if (column >= game.totalColumns) return;
+    if (game.tiles[row][column] == tile) return;
+    game.tiles[row][column] = tile;
+    modules.isometric.actions.mapTilesToSrcAndDst();
+  }
+
 
 }

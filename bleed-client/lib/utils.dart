@@ -4,7 +4,6 @@ import 'dart:ui';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/modules.dart';
-import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/game.dart';
@@ -71,37 +70,14 @@ void cameraCenter(double x, double y) {
   engine.state.camera.y = y - (screenCenterY / engine.state.zoom);
 }
 
-Tile get tileAtMouse {
-  if (mouseRow < 0) return Tile.Boundary;
-  if (mouseColumn < 0) return Tile.Boundary;
-  if (mouseRow >= game.totalRows) return Tile.Boundary;
-  if (mouseColumn >= game.totalColumns) return Tile.Boundary;
-  return game.tiles[mouseRow][mouseColumn];
-}
-
 
 void setTileAtMouse(Tile tile) {
-  setTile(row: mouseRow, column: mouseColumn, tile: tile);
-}
-
-void setTile({
-  required int row,
-  required int column,
-  required Tile tile,
-}) {
-  if (row < 0) return;
-  if (column < 0) return;
-  if (row >= game.totalRows) return;
-  if (column >= game.totalColumns) return;
-  if (game.tiles[row][column] == tile) return;
-  game.tiles[row][column] = tile;
-  modules.isometric.actions.mapTilesToSrcAndDst();
+  modules.isometric.actions.setTile(row: mouseRow, column: mouseColumn, tile: tile);
 }
 
 double distanceFromMouse(double x, double y) {
   return distanceBetween(mouseWorldX, mouseWorldY, x, y);
 }
-
 
 T closestToMouse<T extends Vector2>(List<T> values){
   return findClosest(values, mouseWorldX, mouseWorldY);
