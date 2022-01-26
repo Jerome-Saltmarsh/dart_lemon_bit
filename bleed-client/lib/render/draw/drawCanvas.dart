@@ -104,7 +104,7 @@ void applyLighting() {
     applyCharacterLightEmission(game.zombies);
     applyProjectileLighting();
     applyNpcLightEmission(game.interactableNpcs);
-    final dynamicShading = modules.game.state.dynamicShading;
+    final dynamicShading = modules.isometric.state.dynamicShading;
 
     for (Effect effect in game.effects) {
       if (!effect.enabled) continue;
@@ -248,7 +248,7 @@ void applyProjectileLighting() {
   for (int i = 0; i < game.totalProjectiles; i++) {
     Projectile projectile = game.projectiles[i];
     if (projectile.type == ProjectileType.Fireball) {
-      emitLightBrightSmall(modules.game.state.dynamicShading, projectile.x, projectile.y);
+      emitLightBrightSmall(modules.isometric.state.dynamicShading, projectile.x, projectile.y);
     }
   }
 }

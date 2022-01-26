@@ -7,13 +7,13 @@ import 'package:bleed_client/state/game.dart';
 void applyCharacterLightEmission(List<Character> characters) {
   for(Character character in characters){
     if (character.team == game.player.team){
-      emitLightHigh(modules.game.state.dynamicShading, character.x, character.y);
+      emitLightHigh(modules.isometric.state.dynamicShading, character.x, character.y);
     }
   }
 }
 
 void applyNpcLightEmission(List<Character> characters) {
-  final dynamicShading = modules.game.state.dynamicShading;
+  final dynamicShading = modules.isometric.state.dynamicShading;
   for (Character character in characters) {
     emitLightMedium(dynamicShading, character.x, character.y);
   }

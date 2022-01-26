@@ -18,5 +18,5 @@ Shade getShade(int row, int column){
   if (column >= game.totalColumns){
     return Shade.VeryDark;
   }
-  return modules.game.state.dynamicShading[row][column];
+  return modules.isometric.state.dynamicShading[row][column];
 }

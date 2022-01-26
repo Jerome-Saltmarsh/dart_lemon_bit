@@ -9,7 +9,7 @@ const _size = 48.0;
 
 void applyDynamicShadeToTileSrc() {
   int i = 0;
-  final dynamicShading = modules.game.state.dynamicShading;
+  final dynamicShading = modules.isometric.state.dynamicShading;
   for (int row = 0; row < game.totalRows; row++) {
     for (int column = 0; column < game.totalColumns; column++) {
       Shade shade = dynamicShading[row][column];
