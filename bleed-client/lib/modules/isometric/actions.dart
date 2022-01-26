@@ -7,6 +7,7 @@ import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
+import 'package:bleed_client/modules/isometric/state.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/functions/emitLight.dart';
@@ -15,6 +16,9 @@ import 'package:bleed_client/render/state/tileTransforms.dart';
 import 'package:bleed_client/state/game.dart';
 
 class IsometricActions {
+
+  IsometricState get state => modules.isometric.state;
+
 
   void applyDynamicShadeToTileSrc() {
     final _size = 48.0;
@@ -31,20 +35,23 @@ class IsometricActions {
     }
   }
 
-  void setBakeMapToAmbientLight(){
-    print("isometric.actions.setBakeMapToAmbientLight()()");
-    modules.isometric.state.bakeMap.clear();
+  void resetBakeMap(){
+    print("isometric.actions.resetBakeMap()");
+    state.bakeMap.clear();
     for (int row = 0; row < game.totalRows; row++) {
       final List<Shade> _baked = [];
-      modules.isometric.state.bakeMap.add(_baked);
+      state.bakeMap.add(_baked);
       for (int column = 0; column < game.totalColumns; column++) {
-        _baked.add(modules.isometric.state.ambient.value);
+        _baked.add(state.ambient.value);
       }
     }
+
+    applyEnvironmentObjectsToBakeMapping();
   }
 
-  void setDynamicMapToAmbientLight(){
-    print("isometric.actions.setDynamicMapToAmbientLight()");
+
+  void resetDynamicMap(){
+    print("isometric.actions.resetDynamicMap()");
     modules.isometric.state.dynamicShading.clear();
     for (int row = 0; row < game.totalRows; row++) {
       final List<Shade> _dynamic = [];
@@ -84,8 +91,8 @@ class IsometricActions {
 
   void updateTileRender(){
     print("actions.updateTileRender()");
-    setBakeMapToAmbientLight();
-    setDynamicMapToAmbientLight();
+    resetBakeMap();
+    resetDynamicMap();
     mapTilesToSrcAndDst();
   }
 

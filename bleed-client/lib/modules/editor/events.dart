@@ -16,6 +16,7 @@ import 'package:flutter/services.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
 
+import '../../draw.dart';
 import 'enums.dart';
 
 class EditorEvents with EditorScope {
@@ -116,7 +117,6 @@ class EditorEvents with EditorScope {
           onTorchAdded();
         }
 
-        engine.actions.redrawCanvas();
         break;
       case ToolTab.All:
         break;
