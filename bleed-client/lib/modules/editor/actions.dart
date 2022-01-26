@@ -115,7 +115,7 @@ class EditorActions with EditorScope {
     game.environmentObjects = envObjects;
 
     final jsonMisc = mapJson['misc'];
-    modules.game.state.time.value = jsonMisc['start-hour'] ?? 12;
+    modules.isometric.state.time.value = jsonMisc['start-hour'] ?? 12;
 
     List<Character> characters = [];
     for(Json json in mapJson['characters']){

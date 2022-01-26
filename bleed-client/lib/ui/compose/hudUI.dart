@@ -124,14 +124,14 @@ Widget buildMessageBoxIcon() {
 Widget buildTime() {
   return Tooltip(
     message: "Time",
-    child: WatchBuilder(modules.game.state.time, (int value) {
+    child: WatchBuilder(modules.isometric.state.time, (int value) {
       return text("${padZero(modules.game.properties.timeInHours)} : ${padZero(modules.game.properties.timeInMinutes % 60)}");
     }),
   );
 }
 
 Widget buildMouseWorldPosition() {
-  return WatchBuilder(modules.game.state.time, (int value) {
+  return WatchBuilder(modules.isometric.state.time, (int value) {
     return text("Mouse X: ${mouseWorldX.toInt()}, Y: ${mouseWorldY.toInt()}");
   });
 }

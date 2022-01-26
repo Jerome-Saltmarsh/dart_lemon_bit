@@ -6,4 +6,5 @@ import 'package:lemon_watch/watch.dart';
 class IsometricState {
   final Watch<Shade> ambientLight = Watch(Shade.VeryDark);
   final List<List<Shade>> dynamicShading = [];
+  final Watch<int> time = Watch(0);
 }

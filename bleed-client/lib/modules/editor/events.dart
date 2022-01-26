@@ -28,7 +28,7 @@ class EditorEvents with EditorScope {
     engine.callbacks.onMouseMoved = onMouseMoved;
     engine.callbacks.onMouseScroll = onMouseScroll;
     editor.state.selected.onChanged(onSelectedObjectChanged);
-    modules.game.state.time.onChanged((hour){
+    modules.isometric.state.time.onChanged((hour){
 
     });
   }

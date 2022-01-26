@@ -32,7 +32,7 @@ Json compileGameToJson() {
 
 Json _compileMisc(){
   return {
-    'start-hour': modules.game.state.time.value
+    'start-hour': modules.isometric.state.time.value
   };
 }
 
