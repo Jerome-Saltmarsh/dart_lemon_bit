@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
+import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/modules.dart';
@@ -98,6 +99,9 @@ class EditorEvents with EditorScope {
        }
     }
 
+    if (tileAtMouse == Tile.Boundary){
+      return;
+    }
 
     switch (state.tab.value) {
       case ToolTab.Units:

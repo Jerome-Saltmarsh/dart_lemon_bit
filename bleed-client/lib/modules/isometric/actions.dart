@@ -9,7 +9,7 @@ class IsometricActions {
     final dynamicShading = modules.isometric.state.dynamicShading;
     for (int row = 0; row < dynamicShading.length; row++) {
       for (int column = 0; column < dynamicShading[0].length; column++) {
-        dynamicShading[row][column] = bakeMap[row][column];
+        dynamicShading[row][column] = modules.isometric.state.bakeMap[row][column];
       }
     }
   }

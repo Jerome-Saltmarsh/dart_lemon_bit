@@ -121,7 +121,7 @@ class _Widgets {
     width: 100,
   );
 
-  final buttonChangeDisplayName = button(text("Change Public Name", color: colours.green), actions.showDialogChangePublicName, borderColor: colours.green);
+  final buttonChangeDisplayName = button(text("Change Public Name", color: colours.green), website.actions.showDialogChangePublicName, borderColor: colours.green);
 
   final subscribeButton = button(
       Row(

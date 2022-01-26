@@ -9,6 +9,10 @@ import 'enums.dart';
 
 class WebsiteActions {
 
+  void showDialogChangePublicName(){
+    website.state.dialog.value = WebsiteDialog.Change_Public_Name;
+  }
+
   void showDialogCustomMaps(){
     _log("showDialogCustomMaps");
     website.state.dialog.value = WebsiteDialog.Custom_Maps;

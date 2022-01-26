@@ -56,10 +56,6 @@ class _Actions {
     });
   }
 
-  void showDialogChangePublicName(){
-    website.state.dialog.value = WebsiteDialog.Change_Public_Name;
-  }
-
   void showDialogAccount(){
     website.state.dialog.value = WebsiteDialog.Account;
   }

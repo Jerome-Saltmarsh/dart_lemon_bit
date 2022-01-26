@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/hypotenuse.dart';
 
 import 'classes/Game.dart';
