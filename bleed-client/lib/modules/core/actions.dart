@@ -1,6 +1,6 @@
 
-import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/modules/core/enums.dart';
+import 'package:bleed_client/modules/modules.dart';
 
 class CoreActions {
 

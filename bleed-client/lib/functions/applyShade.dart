@@ -1,6 +1,6 @@
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/getters/outOfBounds.dart';
-import 'package:bleed_client/modules.dart';
+import 'package:bleed_client/modules/modules.dart';
 
 void applyShade(
     List<List<Shade>> shader, int row, int column, Shade value) {

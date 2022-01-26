@@ -1,4 +1,4 @@
-import 'package:bleed_client/modules.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/update.dart';
 import 'package:bleed_client/watches/mode.dart';
 

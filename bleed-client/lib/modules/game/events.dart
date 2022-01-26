@@ -1,7 +1,7 @@
 
 
 import 'package:bleed_client/input.dart';
-import 'package:bleed_client/modules.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 
 

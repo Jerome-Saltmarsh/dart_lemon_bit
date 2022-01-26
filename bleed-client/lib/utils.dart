@@ -3,10 +3,9 @@ import 'dart:ui';
 
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/draw.dart';
-import 'package:bleed_client/modules.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/game.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/distance_between.dart';
@@ -70,9 +69,8 @@ void cameraCenter(double x, double y) {
   engine.state.camera.y = y - (screenCenterY / engine.state.zoom);
 }
 
-
 void setTileAtMouse(Tile tile) {
-  modules.isometric.actions.setTile(row: mouseRow, column: mouseColumn, tile: tile);
+  isometric.actions.setTile(row: mouseRow, column: mouseColumn, tile: tile);
 }
 
 double distanceFromMouse(double x, double y) {

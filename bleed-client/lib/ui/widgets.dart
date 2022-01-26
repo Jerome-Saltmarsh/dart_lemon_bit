@@ -4,7 +4,7 @@ import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/flutterkit.dart';
-import 'package:bleed_client/modules.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/modules/website/enums.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/server/server.dart';

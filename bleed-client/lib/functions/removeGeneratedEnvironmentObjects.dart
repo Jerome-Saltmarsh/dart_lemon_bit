@@ -1,8 +1,7 @@
 
 
 import 'package:bleed_client/common/ObjectType.dart';
-import 'package:bleed_client/modules.dart';
-import 'package:bleed_client/state/game.dart';
+import 'package:bleed_client/modules/modules.dart';
 
 void removeGeneratedEnvironmentObjects(){
   print("removeGeneratedEnvironmentObjects()");

@@ -1,5 +1,5 @@
 
-import 'package:bleed_client/modules.dart';
+import 'package:bleed_client/modules/modules.dart';
 
 class GameProperties {
 

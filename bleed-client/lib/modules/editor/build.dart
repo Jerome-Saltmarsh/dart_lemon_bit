@@ -7,7 +7,7 @@ import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/functions/saveScene.dart';
-import 'package:bleed_client/modules.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/styles.dart';
 import 'package:bleed_client/toString.dart';

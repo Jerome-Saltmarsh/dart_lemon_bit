@@ -11,7 +11,7 @@ import 'package:bleed_client/debug.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/mappers/mapWeaponToDecorationImage.dart';
-import 'package:bleed_client/modules.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/styles.dart';
@@ -123,7 +123,7 @@ Widget buildMessageBoxIcon() {
 Widget buildTime() {
   return Tooltip(
     message: "Time",
-    child: WatchBuilder(modules.isometric.state.time, (int value) {
+    child: WatchBuilder(isometric.state.time, (int value) {
       return text("${padZero(modules.game.properties.timeInHours)} : ${padZero(modules.game.properties.timeInMinutes % 60)}");
     }),
   );

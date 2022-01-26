@@ -2,10 +2,9 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:bleed_client/common/enums/ObjectType.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
-
-import 'modules.dart';
 
 final _Images images = _Images();
 const int _totalImages = 3;

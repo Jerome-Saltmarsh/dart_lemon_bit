@@ -21,7 +21,7 @@ import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:bleed_client/maps.dart';
-import 'package:bleed_client/modules.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/constants/charWidth.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';

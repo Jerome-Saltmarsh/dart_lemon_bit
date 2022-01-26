@@ -1,7 +1,6 @@
 
 import 'package:bleed_client/common/enums/Shade.dart';
-
-import '../modules.dart';
+import 'package:bleed_client/modules/modules.dart';
 
 void onMaxAmbientBrightnessChanged(Shade maxShade){
   print("onShadeMaxChanged($maxShade)");

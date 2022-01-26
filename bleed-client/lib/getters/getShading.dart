@@ -1,8 +1,7 @@
 
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/getters/getTileAt.dart';
-import 'package:bleed_client/modules.dart';
-import 'package:bleed_client/render/state/dynamicShading.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
 
 Shade getShadeAtPosition(double x, double y){

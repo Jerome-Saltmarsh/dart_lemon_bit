@@ -2,7 +2,7 @@
 import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/flutterkit.dart';
-import 'package:bleed_client/modules.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/styles.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/dialogs.dart';
@@ -11,7 +11,6 @@ import 'package:bleed_client/ui/views.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 

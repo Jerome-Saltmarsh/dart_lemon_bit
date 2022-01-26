@@ -7,8 +7,7 @@ import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
-import 'package:bleed_client/modules.dart';
-import 'package:bleed_client/modules/isometric/state.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/functions/emitLight.dart';
 import 'package:bleed_client/render/state/tileRects.dart';
@@ -17,17 +16,16 @@ import 'package:bleed_client/state/game.dart';
 
 class IsometricActions {
 
-  IsometricState get _state => modules.isometric.state;
-
   void applyDynamicShadeToTileSrc() {
     final _size = 48.0;
     int i = 0;
-    final dynamicShading = _state.dynamicShading;
+    final state = modules.isometric.state;
+    final dynamicShading = state.dynamicShading;
     for (int row = 0; row < game.totalRows; row++) {
       for (int column = 0; column < game.totalColumns; column++) {
         Shade shade = dynamicShading[row][column];
-        _state.tilesSrc[i + 1] = atlas.tiles.y + shade.index * _size; // top
-        _state.tilesSrc[i + 3] = _state.tilesSrc[i + 1] + _size; // bottom
+        state.tilesSrc[i + 1] = atlas.tiles.y + shade.index * _size; // top
+        state.tilesSrc[i + 3] = state.tilesSrc[i + 1] + _size; // bottom
         i += 4;
       }
     }
@@ -35,19 +33,19 @@ class IsometricActions {
 
   void setBakeMapToAmbientLight(){
     print("isometric.actions.setBakeMapToAmbientLight()()");
-    _state.bakeMap.clear();
+    modules.isometric.state.bakeMap.clear();
     for (int row = 0; row < game.totalRows; row++) {
       final List<Shade> _baked = [];
-      _state.bakeMap.add(_baked);
+      modules.isometric.state.bakeMap.add(_baked);
       for (int column = 0; column < game.totalColumns; column++) {
-        _baked.add(_state.ambient.value);
+        _baked.add(modules.isometric.state.ambient.value);
       }
     }
   }
 
   void setDynamicMapToAmbientLight(){
     print("isometric.actions.setDynamicMapToAmbientLight()");
-    _state.dynamicShading.clear();
+    modules.isometric.state.dynamicShading.clear();
     for (int row = 0; row < game.totalRows; row++) {
       final List<Shade> _dynamic = [];
       modules.isometric.state.dynamicShading.add(_dynamic);

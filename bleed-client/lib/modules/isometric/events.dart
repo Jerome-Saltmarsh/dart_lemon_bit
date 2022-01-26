@@ -1,20 +1,20 @@
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/events/onShadeMaxChanged.dart';
-import 'package:bleed_client/modules.dart';
+import 'package:bleed_client/modules/modules.dart';
 
 import 'enums.dart';
 
 class IsometricEvents {
 
   void register(){
-    if (modules.isometric.state.eventsRegistered) return;
+    if (isometric.state.eventsRegistered) return;
     print("isometric.events.register()");
-    modules.isometric.state.eventsRegistered = true;
-    modules.isometric.subscriptions.onAmbientChanged = modules.isometric.state.ambient.onChanged(_onAmbientChanged);
-    modules.isometric.state.time.onChanged(onTimeChanged);
-    modules.isometric.state.phase.onChanged(onPhaseChanged);
-    modules.isometric.state.maxAmbientBrightness.onChanged(onMaxAmbientBrightnessChanged);
-    modules.isometric.state.hour.onChanged(onHourChanged);
+    isometric.state.eventsRegistered = true;
+    isometric.subscriptions.onAmbientChanged = isometric.state.ambient.onChanged(_onAmbientChanged);
+    isometric.state.time.onChanged(onTimeChanged);
+    isometric.state.phase.onChanged(onPhaseChanged);
+    isometric.state.maxAmbientBrightness.onChanged(onMaxAmbientBrightnessChanged);
+    isometric.state.hour.onChanged(onHourChanged);
   }
 
   void onTimeChanged(int timeInSeconds) {

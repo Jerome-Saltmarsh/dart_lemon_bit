@@ -2,7 +2,7 @@
 
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/servers.dart';
-import 'package:bleed_client/modules.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
 
 import 'enums.dart';

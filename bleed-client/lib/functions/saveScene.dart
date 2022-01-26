@@ -4,7 +4,7 @@ import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
-import 'package:bleed_client/modules.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:clipboard/clipboard.dart';
@@ -24,7 +24,7 @@ Json compileGameToJson() {
     "collectables": game.collectables,
     "tiles": _compileTiles(game.tiles),
     "crates": _compileCrates(game.crates),
-    "environment": _compileEnvironmentObjects(modules.isometric.state.environmentObjects),
+    "environment": _compileEnvironmentObjects(isometric.state.environmentObjects),
     'characters': compileCharactersToJson(editor.state.characters),
     "misc" : _compileMisc(),
   };

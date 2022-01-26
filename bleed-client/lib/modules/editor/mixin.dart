@@ -1,6 +1,6 @@
 
 
-import 'package:bleed_client/modules.dart';
+import 'package:bleed_client/modules/modules.dart';
 
 import 'config.dart';
 import 'events.dart';

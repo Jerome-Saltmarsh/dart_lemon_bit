@@ -6,7 +6,7 @@ import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/functions/cameraCenterPlayer.dart';
 import 'package:bleed_client/functions/removeGeneratedEnvironmentObjects.dart';
 import 'package:bleed_client/input.dart';
-import 'package:bleed_client/modules.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/modules/website/enums.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';

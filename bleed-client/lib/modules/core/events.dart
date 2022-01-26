@@ -3,7 +3,7 @@
 import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/input.dart';
-import 'package:bleed_client/modules.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/webSocket.dart';

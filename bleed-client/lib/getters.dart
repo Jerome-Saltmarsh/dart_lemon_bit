@@ -1,5 +1,5 @@
 
-import 'modules.dart';
+import 'modules/modules.dart';
 
 
 final _Getters getters = _Getters();

@@ -1,6 +1,6 @@
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/draw.dart';
-import 'package:bleed_client/modules.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
 import 'package:bleed_client/render/draw/drawCharacter.dart';
 import 'package:flutter/material.dart';

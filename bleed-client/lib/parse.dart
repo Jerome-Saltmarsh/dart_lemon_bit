@@ -25,7 +25,7 @@ import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/functions/emit/emitMyst.dart';
 import 'package:bleed_client/functions/emitSmoke.dart';
-import 'package:bleed_client/modules.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/parser/parseCubePlayers.dart';
 import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/state/game.dart';
@@ -37,7 +37,6 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_engine/enums.dart';
 
-import 'actions.dart';
 import 'common/GameEventType.dart';
 import 'common/PlayerEvent.dart';
 import 'common/Tile.dart';

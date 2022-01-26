@@ -7,8 +7,8 @@ import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/functions/refreshPage.dart';
-import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/modules/core/init.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/modules/website/enums.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
@@ -23,7 +23,6 @@ import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/game.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../assets.dart';

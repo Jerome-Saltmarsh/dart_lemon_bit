@@ -6,7 +6,7 @@ import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/flutterkit.dart';
-import 'package:bleed_client/modules.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/modules/website/enums.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
@@ -16,7 +16,6 @@ import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/game.dart';
 import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 

@@ -1,5 +1,6 @@
 import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/constants/colours.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/styles.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
@@ -13,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 
 import '../flutterkit.dart';
-import '../modules.dart';
 
 
 Widget buildDialogAccount(){
