@@ -106,9 +106,6 @@ void initializeEventListeners() {
   engine.callbacks.onMouseScroll = onMouseScroll;
   webSocket.eventStream.stream.listen(_onEventReceivedFromServer);
   observeCompiledGame(onCompiledGameChanged);
-  modules.isometric.state.time.onChanged(onTimeChanged);
-  modules.isometric.state.phase.onChanged(modules.isometric.actions.setAmbientLightAccordingToPhase);
-  game.shadeMax.onChanged(onShadeMaxChanged);
 
   hud.focusNodes.textFieldMessage.addListener(() {
     if (hud.textBoxFocused){

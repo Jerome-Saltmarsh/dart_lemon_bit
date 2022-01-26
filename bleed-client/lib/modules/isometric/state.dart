@@ -16,4 +16,6 @@ class IsometricState {
   final Watch<Phase> phase = Watch(Phase.Day);
   late Float32List tilesDst;
   late Float32List tilesSrc;
+  /// Used by caves and inside to control ambient light
+  final Watch<Shade> maxAmbientBrightness = Watch(Shade.Bright);
 }

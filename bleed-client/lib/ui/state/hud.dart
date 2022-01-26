@@ -59,7 +59,7 @@ Widget _buildHudWeapons(){
   return WatchBuilder(game.player.weaponType, (WeaponType weaponType){
     return layout(
       padding: 16,
-      // topLeft: text(enumString(weaponType)),
+      topLeft: buildTime(),
       topRight: buttons.exit,
       bottomLeft: buildWeaponMenu(),
     );

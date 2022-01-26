@@ -59,7 +59,6 @@ class _Game {
   int totalColumns = 0;
   int totalRows = 0;
   List<NpcDebug> npcDebug = [];
-  final Watch<Shade> shadeMax = Watch(Shade.Bright);
   final List<Character> humans = [];
   final List<Zombie> zombies = [];
   final List<Character> interactableNpcs = [];

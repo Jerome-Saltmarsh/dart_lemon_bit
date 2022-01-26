@@ -170,7 +170,7 @@ void parseState() {
         break;
 
       case ServerResponse.Scene_Shade_Max:
-        game.shadeMax.value = _consumeShade();
+        modules.isometric.state.maxAmbientBrightness.value = _consumeShade();
         break;
 
       case ServerResponse.Scene_Changed:

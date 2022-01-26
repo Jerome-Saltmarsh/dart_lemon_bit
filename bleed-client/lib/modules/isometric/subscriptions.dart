@@ -2,10 +2,10 @@
 import 'dart:async';
 
 class IsometricSubscriptions {
-  StreamSubscription? onAmbientLightChanged;
+  StreamSubscription? onAmbientChanged;
 
   void cancel(){
     print("isometric.subscriptions.cance()");
-    onAmbientLightChanged?.cancel();
+    onAmbientChanged?.cancel();
   }
 }

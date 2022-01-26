@@ -124,9 +124,9 @@ class IsometricActions {
     modules.isometric.state.tilesSrc = tilesSrc;
   }
 
-  void setAmbientLightAccordingToPhase(Phase phase){
+  void setAmbientAccordingToPhase(Phase phase){
     print("setAmbientLightAccordingToPhase($phase)");
-    ambient = modules.isometric.maps.phaseShade[phase]!;
+    modules.isometric.state.ambient.value = modules.isometric.maps.phaseToShade(phase);
   }
 
   void _processTileTransforms() {
