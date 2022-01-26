@@ -111,19 +111,6 @@ void initializeEventListeners() {
   phase.onChanged(modules.isometric.actions.setAmbientLightAccordingToPhase);
   game.shadeMax.onChanged(onShadeMaxChanged);
 
-
-
-  // registerKeyboardHandler((RawKeyEvent event) {
-  //   if (!hud.state.textBoxVisible.value) return;
-  //   if (event is RawKeyDownEvent) {
-  //     if (event.logicalKey == LogicalKeyboardKey.enter) {
-  //       sendAndCloseTextBox();
-  //     } else if (event.logicalKey == LogicalKeyboardKey.escape) {
-  //       hideTextBox();
-  //     }
-  //   }
-  // });
-
   hud.focusNodes.textFieldMessage.addListener(() {
     if (hud.textBoxFocused){
       deregisterPlayKeyboardHandler();
@@ -133,7 +120,6 @@ void initializeEventListeners() {
       deregisterTextBoxKeyboardHandler();
     }
   });
-
 
   game.player.state.onChanged((CharacterState state) {
     game.player.alive.value = state != CharacterState.Dead;

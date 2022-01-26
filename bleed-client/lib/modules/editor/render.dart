@@ -8,7 +8,6 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
 
 void renderEditor(Canvas canvas, Size size) {
-  applyEmissionsToDynamicShadeMap();
   drawTiles();
   drawSprites();
   _drawSelectedObject();

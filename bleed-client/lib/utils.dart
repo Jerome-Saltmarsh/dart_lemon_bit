@@ -92,6 +92,7 @@ void setTile({
   if (column < 0) return;
   if (row >= game.totalRows) return;
   if (column >= game.totalColumns) return;
+  if (game.tiles[row][column] == tile) return;
   game.tiles[row][column] = tile;
   mapTilesToSrcAndDst();
 }
