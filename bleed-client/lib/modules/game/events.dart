@@ -15,7 +15,7 @@ class GameEvents {
     engine.callbacks.onLeftClicked = performPrimaryAction;
     engine.callbacks.onPanStarted = performPrimaryAction;
     engine.callbacks.onLongLeftClicked = performPrimaryAction;
-    modules.game.state.ambientLight.onChanged(onAmbientLightChanged);
+    modules.isometric.state.ambientLight.onChanged(onAmbientLightChanged);
     registerPlayKeyboardHandler();
   }
 

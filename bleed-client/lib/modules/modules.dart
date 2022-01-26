@@ -1,4 +1,6 @@
 
+import 'package:bleed_client/modules/isometric/module.dart';
+
 import 'core/module.dart';
 import 'editor/module.dart';
 import 'game/module.dart';
@@ -9,4 +11,5 @@ class Modules {
   final website = WebsiteModule();
   final editor = EditorModule();
   final game = GameModule();
+  final isometric = IsometricModule();
 }
