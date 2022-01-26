@@ -107,7 +107,7 @@ void initializeEventListeners() {
   webSocket.eventStream.stream.listen(_onEventReceivedFromServer);
   observeCompiledGame(onCompiledGameChanged);
   modules.isometric.state.time.onChanged(onTimeChanged);
-  phase.onChanged(modules.isometric.actions.setAmbientLightAccordingToPhase);
+  modules.isometric.state.phase.onChanged(modules.isometric.actions.setAmbientLightAccordingToPhase);
   game.shadeMax.onChanged(onShadeMaxChanged);
 
   hud.focusNodes.textFieldMessage.addListener(() {

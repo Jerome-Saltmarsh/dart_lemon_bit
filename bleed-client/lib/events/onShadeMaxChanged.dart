@@ -16,5 +16,5 @@ void onShadeMaxChanged(Shade shade){
 
 void applyAmbientLightToCurrentPhase() {
   print("applyAmbientLightToCurrentPhase");
-  modules.isometric.actions.setAmbientLightAccordingToPhase(phase.value);
+  modules.isometric.actions.setAmbientLightAccordingToPhase(modules.isometric.state.phase.value);
 }

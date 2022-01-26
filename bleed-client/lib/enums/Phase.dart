@@ -6,5 +6,4 @@ enum Phase {
   Evening, // 5 - 9
   Night, // 9
   MidNight, // - 5
-  None,
 }

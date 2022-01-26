@@ -1,4 +1,5 @@
 import 'package:bleed_client/mappers/mapHourToPhase.dart';
+import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/watches/phase.dart';
 
 const _secondsPerMinute = 60;
@@ -12,5 +13,5 @@ void onTimeChanged(int timeInSeconds) {
   int _h = timeInHours.toInt();
   if (_hour == _h) return;
   _hour = _h;
-  phase.value = mapHourToPhase(_hour);
+  modules.isometric.state.phase.value = mapHourToPhase(_hour);
 }
