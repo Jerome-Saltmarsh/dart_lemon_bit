@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
+import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/state/tileRects.dart';
 import 'package:bleed_client/render/state/tileTransforms.dart';
@@ -16,7 +17,7 @@ void mapTilesToSrcAndDst() {
   _loadTileRects();
 
   int total = tileRects.length * 4;
-  tilesDst = Float32List(total);
+  final tilesDst = Float32List(total);
   tilesSrc = Float32List(total);
 
   for (int i = 0; i < tileRects.length; ++i) {
@@ -35,6 +36,8 @@ void mapTilesToSrcAndDst() {
     tilesSrc[index2] = tilesSrc[index0] + 48;
     tilesSrc[index3] = tilesSrc[index1] + 48;
   }
+
+  modules.isometric.state.tilesDst = tilesDst;
 }
 
 void _processTileTransforms() {

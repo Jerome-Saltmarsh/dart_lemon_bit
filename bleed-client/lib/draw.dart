@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/getters/inDarkness.dart';
+import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/render/state/tilesDst.dart';
@@ -136,7 +137,7 @@ void drawCircleOutline({
 void drawTiles() {
   engine.actions.setPaintColorWhite();
   drawAtlas(
-      dst: tilesDst,
+      dst: modules.isometric.state.tilesDst,
       src: tilesSrc,
   );
 }
