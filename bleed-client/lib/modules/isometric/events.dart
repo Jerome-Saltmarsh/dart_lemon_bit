@@ -15,7 +15,7 @@ class IsometricEvents {
     print("isometric.events.register()");
     _subscriptions.onAmbientLightChanged = modules.isometric.state.ambientLight.onChanged(_onAmbientLightChanged);
   }
-  
+
   void _onAmbientLightChanged(Shade value){
     print("isometric.events.onAmbientLightChanged($value)");
     setBakeMapToAmbientLight();

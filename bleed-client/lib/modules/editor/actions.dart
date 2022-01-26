@@ -51,7 +51,7 @@ class EditorActions with EditorScope {
     game.environmentObjects.clear();
     game.collectables.clear();
     game.items.clear();
-    mapTilesToSrcAndDst();
+    actions.updateTileRender();
   }
 
   void startProcess(String value){

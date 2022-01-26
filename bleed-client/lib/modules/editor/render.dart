@@ -1,5 +1,4 @@
 import 'package:bleed_client/classes/Character.dart';
-import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
@@ -9,17 +8,17 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
 
 void renderEditor(Canvas canvas, Size size) {
-  // applyLighting();
+  applyLighting();
   drawTiles();
   drawSprites();
-  final state = editor.state;
-
   _drawSelectedObject();
+  _drawCharacters();
+}
 
-  for(Character character in state.characters){
+void _drawCharacters() {
+  for(Character character in editor.state.characters){
     drawCharacter(character);
   }
-
 }
 
 void _drawSelectedObject() {
