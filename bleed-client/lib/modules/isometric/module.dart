@@ -15,5 +15,5 @@ class IsometricModule {
   final events = IsometricEvents();
   final properties = IsometricProperties();
   final constants = IsometricConstants();
-  final maps = IsometricMaps();
+  final map = IsometricMaps();
 }

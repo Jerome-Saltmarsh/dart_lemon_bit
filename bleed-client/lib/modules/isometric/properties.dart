@@ -20,6 +20,6 @@ class IsometricProperties {
   }
 
   Shade get currentPhaseShade {
-    return modules.isometric.maps.phaseToShade(modules.isometric.state.phase.value);
+    return modules.isometric.map.phaseToShade(modules.isometric.state.phase.value);
   }
 }

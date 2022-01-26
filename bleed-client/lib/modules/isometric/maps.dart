@@ -30,4 +30,16 @@ class IsometricMaps {
   Shade phaseToShade(Phase phase){
     return _phaseShade[phase]!;
   }
+
+  Phase hourToPhase(int hour) {
+    if (hour < 2) return Phase.MidNight;
+    if (hour < 4) return Phase.Night;
+    if (hour < 6) return Phase.EarlyMorning;
+    if (hour < 10) return Phase.Morning;
+    if (hour < 16) return Phase.Day;
+    if (hour < 18) return Phase.EarlyEvening;
+    if (hour < 20) return Phase.Evening;
+    return Phase.Night;
+  }
+
 }

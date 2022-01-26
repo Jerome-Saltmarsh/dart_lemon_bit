@@ -365,7 +365,6 @@ Widget buildDecorationImage({
 
 Widget buildEquipWeaponSlot(Weapon weapon, int index) {
   return mouseOver(builder: (BuildContext context, bool mouseOver) {
-    double p = weapon.capacity > 0 ? weapon.rounds / weapon.capacity : 1.0;
     return Row(
       mainAxisAlignment: axis.main.start,
       children: [
