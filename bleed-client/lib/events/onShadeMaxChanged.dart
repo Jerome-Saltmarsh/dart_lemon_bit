@@ -5,14 +5,12 @@ import '../modules.dart';
 
 void onMaxAmbientBrightnessChanged(Shade maxShade){
   print("onShadeMaxChanged($maxShade)");
-  if (maxShade.isDarkerThan(modules.isometric.state.ambient.value)){
-    modules.isometric.state.ambient.value = maxShade;
-  } else if (maxShade.isLighterThan(modules.isometric.state.ambient.value)) {
-    applyAmbientLightToCurrentPhase();
-  }
-}
+  final ambient = modules.isometric.state.ambient.value;
+  if (maxShade == ambient) return;
 
-void applyAmbientLightToCurrentPhase() {
-  print("applyAmbientLightToCurrentPhase");
-  modules.isometric.actions.setAmbientAccordingToPhase(modules.isometric.state.phase.value);
+  if (maxShade.isDarkerThan(ambient)){
+    modules.isometric.state.ambient.value = maxShade;
+    return;
+  }
+  modules.isometric.state.ambient.value = modules.isometric.properties.currentPhaseShade;
 }

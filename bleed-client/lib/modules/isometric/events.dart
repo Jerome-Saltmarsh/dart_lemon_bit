@@ -12,7 +12,7 @@ class IsometricEvents {
     print("isometric.events.register()");
     modules.isometric.subscriptions.onAmbientChanged = modules.isometric.state.ambient.onChanged(_onAmbientChanged);
     modules.isometric.state.time.onChanged(onTimeChanged);
-    modules.isometric.state.phase.onChanged(modules.isometric.actions.setAmbientAccordingToPhase);
+    modules.isometric.state.phase.onChanged(onPhaseChanged);
     modules.isometric.state.maxAmbientBrightness.onChanged(onMaxAmbientBrightnessChanged);
   }
 
@@ -23,6 +23,14 @@ class IsometricEvents {
     modules.isometric.actions.resetDynamicShadesToBakeMap();
     modules.isometric.actions.applyDynamicShadeToTileSrc();
     modules.isometric.actions.applyEnvironmentObjectsToBakeMapping();
+  }
+
+  void onPhaseChanged(Phase phase){
+    print("setAmbientLightAccordingToPhase($phase)");
+    final phaseBrightness = modules.isometric.maps.phaseToShade(phase);
+    final maxAmbientBrightness = modules.isometric.state.maxAmbientBrightness.value;
+    if (maxAmbientBrightness.isDarkerThan(phaseBrightness)) return;
+    modules.isometric.state.ambient.value = phaseBrightness;
   }
 
 }

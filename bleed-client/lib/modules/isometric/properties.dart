@@ -18,4 +18,8 @@ class IsometricProperties {
     if (mouseColumn >= game.totalColumns) return Tile.Boundary;
     return game.tiles[mouseRow][mouseColumn];
   }
+
+  Shade get currentPhaseShade {
+    return modules.isometric.maps.phaseToShade(modules.isometric.state.phase.value);
+  }
 }

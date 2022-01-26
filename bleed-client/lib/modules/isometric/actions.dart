@@ -124,11 +124,6 @@ class IsometricActions {
     modules.isometric.state.tilesSrc = tilesSrc;
   }
 
-  void setAmbientAccordingToPhase(Phase phase){
-    print("setAmbientLightAccordingToPhase($phase)");
-    modules.isometric.state.ambient.value = modules.isometric.maps.phaseToShade(phase);
-  }
-
   void _processTileTransforms() {
     final tiles = game.tiles;
     tileTransforms.clear();
