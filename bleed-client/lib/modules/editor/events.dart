@@ -81,8 +81,8 @@ class EditorEvents with EditorScope {
   onMouseLeftClicked() {
     state.selected.value = null;
     final double selectRadius = 25;
-    if (game.environmentObjects.isNotEmpty) {
-      EnvironmentObject closest = closestToMouse(game.environmentObjects);
+    if (modules.isometric.state.environmentObjects.isNotEmpty) {
+      EnvironmentObject closest = closestToMouse(modules.isometric.state.environmentObjects);
       double closestDistance = distanceFromMouse(closest.x, closest.y);
       if (closestDistance <= selectRadius) {
         state.selected.value = closest;
@@ -111,7 +111,7 @@ class EditorEvents with EditorScope {
         setTileAtMouse(editor.state.tile.value);
         break;
       case ToolTab.Objects:
-        game.environmentObjects.add(EnvironmentObject(
+        modules.isometric.state.environmentObjects.add(EnvironmentObject(
           x: mouseWorldX,
           y: mouseWorldY,
           type: editor.state.objectType.value,

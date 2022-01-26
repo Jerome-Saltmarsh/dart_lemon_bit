@@ -331,7 +331,7 @@ void parseCrates() {
 
 void _parseEnvironmentObjects() {
   print("parseEnvironmentObjects()");
-  game.environmentObjects.clear();
+  modules.isometric.state.environmentObjects.clear();
   game.torches.clear();
 
   while (!_simiColonConsumed()) {
@@ -368,11 +368,11 @@ void _parseEnvironmentObjects() {
       game.torches.add(env);
     }
 
-    game.environmentObjects.add(env);
+    modules.isometric.state.environmentObjects.add(env);
   }
 
   // * on environmentObjects changed
-  sortReversed(game.environmentObjects, environmentObjectY);
+  sortReversed(modules.isometric.state.environmentObjects, environmentObjectY);
   modules.isometric.actions.applyEnvironmentObjectsToBakeMapping();
 }
 

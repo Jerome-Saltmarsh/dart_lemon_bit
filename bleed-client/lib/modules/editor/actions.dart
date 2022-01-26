@@ -21,7 +21,7 @@ class EditorActions with EditorScope {
 
   void deleteSelected() {
     if (state.selected.value == null) return;
-    game.environmentObjects.remove(state.selected.value);
+    modules.isometric.state.environmentObjects.remove(state.selected.value);
     state.selected.value = null;
     redrawCanvas();
   }
@@ -48,7 +48,7 @@ class EditorActions with EditorScope {
     }
     game.crates.clear();
     game.particleEmitters.clear();
-    game.environmentObjects.clear();
+    modules.isometric.state.environmentObjects.clear();
     game.collectables.clear();
     game.items.clear();
     modules.isometric.actions.updateTileRender();
@@ -111,14 +111,13 @@ class EditorActions with EditorScope {
     game.tiles = mapJsonToTiles(jsonRows);
 
     final jsonEnvironment = mapJson['environment'];
-    List<EnvironmentObject> envObjects = [];
+    modules.isometric.state.environmentObjects.clear();
     for(Json envJson in jsonEnvironment){
       final x = (envJson['x'] as int).toDouble();
       final y = (envJson['y'] as int).toDouble();
       final type = parseObjectTypeFromString(envJson['type']);
-      envObjects.add(EnvironmentObject(x: x, y: y, type: type, radius: 25));
+      modules.isometric.state.environmentObjects.add(EnvironmentObject(x: x, y: y, type: type, radius: 25));
     }
-    game.environmentObjects = envObjects;
 
     final jsonMisc = mapJson['misc'];
     modules.isometric.state.time.value = jsonMisc['start-hour'] ?? 12;

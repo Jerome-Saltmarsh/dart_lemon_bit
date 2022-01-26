@@ -230,14 +230,14 @@ void drawDebugCharacters() {
 
 void drawDebugEnvironmentObjects() {
   engine.state.paint.color = Colors.red;
-  for (EnvironmentObject env in game.environmentObjects) {
+  for (EnvironmentObject env in modules.isometric.state.environmentObjects) {
     drawLine(env.left, env.top, env.right, env.top); // top left to top right
     drawLine(
         env.right, env.top, env.right, env.bottom); // top left to bottom right
     drawLine(env.right, env.bottom, env.left, env.bottom);
     drawLine(env.left, env.top, env.left, env.bottom);
   }
-  for (EnvironmentObject env in game.environmentObjects) {
+  for (EnvironmentObject env in modules.isometric.state.environmentObjects) {
     engine.draw.circle(env.x, env.y, env.radius, Colors.blue);
   }
 }
@@ -300,9 +300,8 @@ void drawSprites() {
   int indexParticle = 0;
   int indexZombie = 0;
   int indexNpc = 0;
-  int totalParticles = getTotalActiveParticles();
-
-  int totalEnvironment = game.environmentObjects.length;
+  final totalParticles = getTotalActiveParticles();
+  final totalEnvironment = modules.isometric.state.environmentObjects.length;
 
   if (totalParticles > 0) {
     _sortParticles();
@@ -331,7 +330,7 @@ void drawSprites() {
       double humanY = game.humans[indexHuman].y;
 
       if (!environmentRemaining ||
-          humanY < game.environmentObjects[indexEnv].y) {
+          humanY < modules.isometric.state.environmentObjects[indexEnv].y) {
         if (!particlesRemaining ||
             humanY < game.particles[indexParticle].y &&
                 game.particles[indexParticle].type != ParticleType.Blood) {
@@ -347,16 +346,14 @@ void drawSprites() {
     }
 
     if (environmentRemaining) {
-      EnvironmentObject env = game.environmentObjects[indexEnv];
-
+      final env = modules.isometric.state.environmentObjects[indexEnv];
       if (env.top > engine.state.screen.bottom) return;
-
       if (!particlesRemaining ||
           env.y < game.particles[indexParticle].y &&
               game.particles[indexParticle].type != ParticleType.Blood) {
         if (!zombiesRemaining || env.y < game.zombies[indexZombie].y) {
           if (!npcsRemaining || env.y < game.interactableNpcs[indexNpc].y) {
-            drawEnvironmentObject(game.environmentObjects[indexEnv]);
+            drawEnvironmentObject(modules.isometric.state.environmentObjects[indexEnv]);
             indexEnv++;
             continue;
           }

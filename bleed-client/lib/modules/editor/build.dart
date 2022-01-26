@@ -92,7 +92,7 @@ class EditorBuild {
   }
 
   List<Widget> _tabAll() {
-    return game.environmentObjects.map((env) {
+    return modules.isometric.state.environmentObjects.map((env) {
       return NullableWatchBuilder<Vector2?>(editor.state.selected,
               (Vector2? selected) {
             return button(enumString(env.type), () {

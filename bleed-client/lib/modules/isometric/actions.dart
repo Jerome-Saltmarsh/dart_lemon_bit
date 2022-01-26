@@ -9,7 +9,7 @@ import 'package:bleed_client/state/game.dart';
 class IsometricActions {
 
   void applyEnvironmentObjectsToBakeMapping(){
-    for (EnvironmentObject env in game.environmentObjects){
+    for (EnvironmentObject env in modules.isometric.state.environmentObjects){
       if (env.type == ObjectType.Torch){
         emitLightHigh(modules.isometric.state.bakeMap, env.x, env.y);
         continue;
