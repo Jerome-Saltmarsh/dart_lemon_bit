@@ -54,13 +54,13 @@ import 'drawParticle.dart';
 
 final double _nameRadius = 100;
 
-bool get dayTime => ambient.index == Shade.Bright.index;
+bool get dayTime => modules.isometric.state.ambient.value.index == Shade.Bright.index;
 const animationFrameRate = 7; // frames per change;
 
 final Scene scene = Scene();
 
 void renderGame(Canvas canvas, Size size) {
-  applyLighting();
+  applyEmissionsToDynamicShadeMap();
   drawTiles();
   drawProjectiles(game.projectiles);
   drawBulletHoles(game.bulletHoles);
@@ -95,7 +95,7 @@ void renderGame(Canvas canvas, Size size) {
   engine.actions.setPaintColorWhite();
 }
 
-void applyLighting() {
+void applyEmissionsToDynamicShadeMap() {
   if (!dayTime) {
     modules.isometric.actions.resetDynamicShadesToBakeMap();
     applyCharacterLightEmission(game.humans);
@@ -119,7 +119,7 @@ void applyLighting() {
     }
   }
 
-  applyDynamicShadeToTileSrc();
+  modules.isometric.actions.applyDynamicShadeToTileSrc();
 }
 
 void drawCrates() {

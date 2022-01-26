@@ -4,11 +4,13 @@ import 'package:bleed_client/setters/setAmbientLightAccordingToPhase.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 import 'package:bleed_client/watches/phase.dart';
 
+import '../modules.dart';
+
 void onShadeMaxChanged(Shade shade){
   print("onShadeMaxChanged($shade)");
-  if (shade.isDarkerThan(ambient)){
+  if (shade.isDarkerThan(modules.isometric.state.ambient.value)){
     ambient = shade;
-  } else if (shade.isLighterThan(ambient)) {
+  } else if (shade.isLighterThan(modules.isometric.state.ambient.value)) {
     applyAmbientLightToCurrentPhase();
   }
 }

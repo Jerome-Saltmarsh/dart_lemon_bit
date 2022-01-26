@@ -3,14 +3,30 @@ import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/modules.dart';
 import 'package:bleed_client/modules/isometric/state.dart';
+import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/functions/emitLight.dart';
 import 'package:bleed_client/render/functions/mapTilesToSrcAndDst.dart';
+import 'package:bleed_client/render/state/tilesSrc.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/watches/ambientLight.dart';
 
 class IsometricActions {
 
   IsometricState get _state => modules.isometric.state;
+
+  void applyDynamicShadeToTileSrc() {
+    final _size = 48.0;
+    int i = 0;
+    final dynamicShading = _state.dynamicShading;
+    for (int row = 0; row < game.totalRows; row++) {
+      for (int column = 0; column < game.totalColumns; column++) {
+        Shade shade = dynamicShading[row][column];
+        tilesSrc[i + 1] = atlas.tiles.y + shade.index * _size; // top
+        tilesSrc[i + 3] = tilesSrc[i + 1] + _size; // bottom
+        i += 4;
+      }
+    }
+  }
 
   void setBakeMapToAmbientLight(){
     print("setBakeMapToAmbientLight()");
@@ -23,8 +39,8 @@ class IsometricActions {
       modules.isometric.state.dynamicShading.add(_dynamic);
       modules.isometric.state.bakeMap.add(_baked);
       for (int column = 0; column < game.totalColumns; column++) {
-        _dynamic.add(ambient);
-        _baked.add(ambient);
+        _dynamic.add(modules.isometric.state.ambient.value);
+        _baked.add(modules.isometric.state.ambient.value);
       }
     }
   }

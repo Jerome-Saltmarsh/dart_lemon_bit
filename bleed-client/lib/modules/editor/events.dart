@@ -119,8 +119,7 @@ class EditorEvents with EditorScope {
         ));
 
         if (editor.state.objectType.value == ObjectType.Torch){
-          modules.isometric.actions.updateTileRender();
-          modules.isometric.actions.applyEnvironmentObjectsToBakeMapping();
+          onTorchAdded();
         }
 
         redrawCanvas();
@@ -132,6 +131,13 @@ class EditorEvents with EditorScope {
     }
 
     redrawCanvas();
+  }
+
+  void onTorchAdded(){
+    print("editor.events.onTorchAdded()");
+    modules.isometric.actions.updateTileRender();
+    modules.isometric.actions.applyEnvironmentObjectsToBakeMapping();
+    modules.isometric.actions.setBakeMapToAmbientLight();
   }
 
   void onEditorKeyDownEvent(RawKeyDownEvent event){

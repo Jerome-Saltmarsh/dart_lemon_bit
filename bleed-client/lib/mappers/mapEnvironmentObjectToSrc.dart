@@ -95,7 +95,7 @@ Float32List mapEnvironmentObjectToSrc(EnvironmentObject env){
   double right = left + width;
   double top = shade.index * height + translation.y;
 
-  if (type == ObjectType.Torch && ambient.isDarkerThan(Shade.Bright)){
+  if (type == ObjectType.Torch && modules.isometric.state.ambient.value.isDarkerThan(Shade.Bright)){
     top = _translations.torches.y + ((core.state.timeline.frame % 4) * _torchHeight) + _torchHeight;
   }
 
