@@ -7,7 +7,9 @@ import 'enums.dart';
 class IsometricEvents {
 
   void register(){
+    if (modules.isometric.state.eventsRegistered) return;
     print("isometric.events.register()");
+    modules.isometric.state.eventsRegistered = true;
     modules.isometric.subscriptions.onAmbientChanged = modules.isometric.state.ambient.onChanged(_onAmbientChanged);
     modules.isometric.state.time.onChanged(onTimeChanged);
     modules.isometric.state.phase.onChanged(onPhaseChanged);

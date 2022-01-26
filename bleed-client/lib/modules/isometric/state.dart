@@ -9,6 +9,7 @@ import 'package:lemon_watch/watch.dart';
 import 'enums.dart';
 
 class IsometricState {
+  bool eventsRegistered = false;
   final Watch<int> hour = Watch(0);
   final List<EnvironmentObject> environmentObjects = [];
   final Watch<Shade> ambient = Watch(Shade.VeryDark);

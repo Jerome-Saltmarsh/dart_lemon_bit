@@ -22,6 +22,7 @@ class EditorEvents with EditorScope {
 
   register() {
     print("editor.events.register()");
+    modules.isometric.events.register();
     engine.callbacks.onLeftClicked = onMouseLeftClicked;
     engine.callbacks.onMouseDragging = onMouseDragging;
     engine.callbacks.onMouseMoved = onMouseMoved;
