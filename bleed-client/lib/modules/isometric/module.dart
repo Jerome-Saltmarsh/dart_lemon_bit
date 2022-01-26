@@ -2,6 +2,7 @@
 
 import 'package:bleed_client/modules/isometric/actions.dart';
 import 'package:bleed_client/modules/isometric/events.dart';
+import 'package:bleed_client/modules/isometric/properties.dart';
 import 'package:bleed_client/modules/isometric/state.dart';
 import 'package:bleed_client/modules/isometric/subscriptions.dart';
 
@@ -10,4 +11,5 @@ class IsometricModule {
   final actions = IsometricActions();
   final subscriptions = IsometricSubscriptions();
   final events = IsometricEvents();
+  final properties = IsometricProperties();
 }

@@ -29,7 +29,6 @@ import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/draw/drawBullets.dart';
 import 'package:bleed_client/render/draw/drawCharacter.dart';
 import 'package:bleed_client/render/draw/drawPlayerText.dart';
-import 'package:bleed_client/render/functions/applyDynamicShadeToTileSrc.dart';
 import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
 import 'package:bleed_client/render/functions/emitLight.dart';
 import 'package:bleed_client/render/mappers/loop.dart';
@@ -38,7 +37,6 @@ import 'package:bleed_client/render/mappers/mapSrc.dart';
 import 'package:bleed_client/render/state/floatingText.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
-import 'package:bleed_client/watches/ambientLight.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
@@ -54,7 +52,7 @@ import 'drawParticle.dart';
 
 final double _nameRadius = 100;
 
-bool get dayTime => modules.isometric.state.ambient.value.index == Shade.Bright.index;
+// bool get dayTime => modules.isometric.state.ambient.value.index == Shade.Bright.index;
 const animationFrameRate = 7; // frames per change;
 
 final Scene scene = Scene();
@@ -96,7 +94,7 @@ void renderGame(Canvas canvas, Size size) {
 }
 
 void applyEmissionsToDynamicShadeMap() {
-  if (!dayTime) {
+  if (!modules.isometric.properties.dayTime) {
     modules.isometric.actions.resetDynamicShadesToBakeMap();
     applyCharacterLightEmission(game.humans);
     applyCharacterLightEmission(game.zombies);
