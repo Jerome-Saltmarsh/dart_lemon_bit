@@ -4,6 +4,7 @@ import 'package:bleed_client/actions.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
+import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/modules/modules.dart';
@@ -143,6 +144,10 @@ class EditorBuild {
         button("-", modules.isometric.actions.detractHour),
         width8,
         button("+", modules.isometric.actions.addHour),
+        width8,
+        WatchBuilder(modules.isometric.state.ambient, (Shade ambient){
+          return text(ambient.name);
+        })
       ],)
     ];
   }

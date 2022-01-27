@@ -218,4 +218,9 @@ class IsometricActions with IsometricScope {
   void addHour(){
     modules.isometric.state.time.value += secondsPerHour;
   }
+
+  void setHour(int hour) {
+    print("isometric.actions.setHour($hour)");
+    state.time.value = hour * secondsPerHour;
+  }
 }

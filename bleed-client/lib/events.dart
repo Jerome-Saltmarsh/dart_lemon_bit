@@ -182,14 +182,12 @@ class Events {
     engine.actions.clearCallbacks();
     if (mode == Mode.Edit) {
       engine.state.drawCanvas = editor.render;
+      modules.editor.events.onActivated();
       removeGeneratedEnvironmentObjects();
       deregisterPlayKeyboardHandler();
-      editor.events.register();
       game.totalZombies.value = 0;
       game.totalProjectiles = 0;
       game.totalNpcs = 0;
-      game.totalHumans = 0;
-      modules.isometric.state.time.value = 60 * 60 * 10;
     }
     engine.actions.redrawCanvas();
   }

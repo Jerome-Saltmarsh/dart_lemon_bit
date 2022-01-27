@@ -12,7 +12,6 @@ class IsometricEvents {
     isometric.state.eventsRegistered = true;
     isometric.subscriptions.onAmbientChanged = isometric.state.ambient.onChanged(onAmbientChanged);
     isometric.state.time.onChanged(onTimeChanged);
-    isometric.state.phase.onChanged(onPhaseChanged);
     isometric.state.maxAmbientBrightness.onChanged(onMaxAmbientBrightnessChanged);
     isometric.state.hour.onChanged(onHourChanged);
   }
@@ -25,11 +24,7 @@ class IsometricEvents {
 
   void onHourChanged(int hour){
     print("isometric.events.onHourChanged($hour)");
-    modules.isometric.state.phase.value = modules.isometric.map.hourToPhase(hour);
-  }
-
-  void onPhaseChanged(Phase phase){
-    print("isometric.events.onPhaseChanged($phase)");
+    final phase = modules.isometric.map.hourToPhase(hour);
     final phaseBrightness = modules.isometric.map.phaseToShade(phase);
     final maxAmbientBrightness = modules.isometric.state.maxAmbientBrightness.value;
     if (maxAmbientBrightness.isDarkerThan(phaseBrightness)) return;

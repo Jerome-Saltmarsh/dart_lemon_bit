@@ -16,4 +16,9 @@ class IsometricModule {
   final properties = IsometricProperties();
   final constants = IsometricConstants();
   final map = IsometricMaps();
+
+  IsometricModule(){
+     state.hour.value = 0;
+     state.hour.value = 12;
+  }
 }

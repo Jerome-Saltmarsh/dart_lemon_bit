@@ -6,6 +6,7 @@ import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/input.dart';
+import 'package:bleed_client/modules/core/enums.dart';
 import 'package:bleed_client/modules/editor/mixin.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
@@ -19,9 +20,15 @@ import 'enums.dart';
 
 class EditorEvents with EditorScope {
 
+  onActivated(){
+    print("editor.events.onActivated()");
+    modules.isometric.actions.setHour(12);
+    modules.editor.events.register();
+    modules.isometric.events.register();
+  }
+
   register() {
     print("editor.events.register()");
-    modules.isometric.events.register();
     engine.callbacks.onLeftClicked = onMouseLeftClicked;
     engine.callbacks.onMouseDragging = onMouseDragging;
     engine.callbacks.onMouseMoved = onMouseMoved;

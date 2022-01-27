@@ -19,7 +19,7 @@ class IsometricState {
   final List<List<Shade>> dynamicShading = [];
   final List<List<Shade>> bakeMap = [];
   final Watch<int> time = Watch(0);
-  final Watch<Phase> phase = Watch(Phase.Day);
+  // final Watch<Phase> phase = Watch(Phase.Day);
   List<List<Tile>> tiles = [];
   late Float32List tilesDst;
   late Float32List tilesSrc;
