@@ -101,7 +101,7 @@ void onPlayerWeaponChanged(WeaponType weapon) {
 
 void initializeEventListeners() {
   engine.callbacks.onMouseScroll = onMouseScroll;
-  webSocket.eventStream.stream.listen(_onEventReceivedFromServer);
+  // webSocket.eventStream.stream.listen(_onEventReceivedFromServer);
   // observeCompiledGame(onCompiledGameChanged);
 
   hud.focusNodes.textFieldMessage.addListener(() {

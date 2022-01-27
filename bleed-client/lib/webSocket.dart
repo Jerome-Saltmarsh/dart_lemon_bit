@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:bleed_client/parse.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -22,6 +24,8 @@ class _WebSocket {
   bool get connecting => connection.value == Connection.Connecting;
   String connectionUri = "";
 
+  String event = "";
+
   // interface
   void connect({required String uri, required dynamic message}) {
     print("webSocket.connect($uri)");
@@ -41,6 +45,7 @@ class _WebSocket {
   void dispose(){
     print("network.dispose()");
     webSocketChannel.sink.close();
+    eventStream.close();
   }
 
   void send(String message) {
@@ -59,7 +64,9 @@ class _WebSocket {
     if (connecting) {
       connection.value = Connection.Connected;
     }
-    eventStream.add(_response);
+    compiledGame = _response;
+    parseState();
+    engine.actions.redrawCanvas();
   }
 
   void _onError(dynamic value) {
