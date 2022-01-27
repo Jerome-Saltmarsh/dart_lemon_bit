@@ -156,34 +156,4 @@ class EditorActions with EditorScope {
   void showErrorMessage(String message) {
     actions.showErrorMessage(message);
   }
-
-  void addRow(){
-    for (final row in isometric.state.tiles) {
-      row.add(Tile.Grass);
-    }
-    isometric.actions.refreshTileSize();
-    isometric.actions.resetTilesSrcDst();
-  }
-
-  void removeRow(){
-    isometric.state.tiles.removeLast();
-    isometric.actions.refreshTileSize();
-    isometric.actions.resetTilesSrcDst();
-  }
-
-  void addColumn() {
-    for (int i = 0; i < isometric.state.tiles.length; i++) {
-      isometric.state.tiles[i].removeLast();
-    }
-    isometric.actions.refreshTileSize();
-    isometric.actions.resetTilesSrcDst();
-  }
-  
-  void removeColumn() {
-    for (int i = 0; i < isometric.state.tiles.length; i++) {
-      isometric.state.tiles[i].removeLast();
-    }
-    isometric.actions.refreshTileSize();
-    isometric.actions.resetTilesSrcDst();
-  }
 }

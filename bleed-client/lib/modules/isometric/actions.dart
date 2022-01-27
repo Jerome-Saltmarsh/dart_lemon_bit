@@ -170,7 +170,38 @@ class IsometricActions with IsometricScope {
       tilesSrc[index2] = tilesSrc[index0] + tileSize;
       tilesSrc[index3] = tilesSrc[index1] + tileSize;
     }
-    modules.isometric.state.tilesDst = tilesDst;
-    modules.isometric.state.tilesSrc = tilesSrc;
+    state.tilesDst = tilesDst;
+    state.tilesSrc = tilesSrc;
+  }
+
+
+  void addRow(){
+    for (final row in state.tiles) {
+      row.add(Tile.Grass);
+    }
+    refreshTileSize();
+    resetTilesSrcDst();
+  }
+
+  void removeRow(){
+    state.tiles.removeLast();
+    refreshTileSize();
+    resetTilesSrcDst();
+  }
+
+  void addColumn() {
+    for (int i = 0; i < state.tiles.length; i++) {
+      state.tiles[i].removeLast();
+    }
+    refreshTileSize();
+    resetTilesSrcDst();
+  }
+
+  void removeColumn() {
+    for (int i = 0; i < state.tiles.length; i++) {
+      state.tiles[i].removeLast();
+    }
+    refreshTileSize();
+    resetTilesSrcDst();
   }
 }

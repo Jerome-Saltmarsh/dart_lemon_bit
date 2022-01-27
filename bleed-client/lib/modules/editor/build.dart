@@ -110,8 +110,8 @@ class EditorBuild {
           WatchBuilder(modules.isometric.state.totalRows, (int total){
             return text("Rows $total");
           }),
-          button("-", editor.actions.removeRow),
-          button("+", editor.actions.addRow)
+          button("-", isometric.actions.removeRow),
+          button("+", isometric.actions.addRow)
         ],
       ),
       Row(
@@ -119,8 +119,8 @@ class EditorBuild {
             WatchBuilder(modules.isometric.state.totalColumns, (int total){
                return text("Columns $total");
             }),
-            button("-", editor.actions.removeColumn),
-            button("+", editor.actions.addColumn)
+            button("-", isometric.actions.removeColumn),
+            button("+", isometric.actions.addColumn)
         ],
       ),
       Row(children: [
