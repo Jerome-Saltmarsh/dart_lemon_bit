@@ -202,39 +202,33 @@ class _Firestore {
     );
   }
 
+  Future patchMap({
+    required Document document,
+    required String data
+  }) async {
+    print("firestore.patchMap()");
+    if (document.fields == null){
+      document.fields = {};
+    }
+    final documentName = document.name;
+    if (documentName == null){
+      throw Exception("Map document name is null");
+    }
+    document.fields!['data'] = Value(stringValue: data);
+    await documents.patch(document, documentName);
+  }
+
   Future<Document> createMap({
     required String mapId,
     required String data,
   }) async {
-    print("database.createMap('$mapId')");
+    print("firestore.createMap('$mapId')");
     if (mapId.isEmpty){
       throw Exception("mapId is null");
     }
-
-    // final jsonMap = jsonDecode(data);
-    // final jsonTiles = jsonMap['tiles'];
-    // if (jsonTiles == null){
-    //   throw Exception("json.tiles is null");
-    // }
-    //
-    // final List<Value> rowValues = [];
-    // for(var jsonRow in jsonTiles){
-    //    for(var jsonColumn in jsonRow){
-    //      final List<Value> tileNames = [];
-    //      for(var tileName in jsonColumn){
-    //        tileNames.add(Value(stringValue: tileName));
-    //      }
-    //      final columnValue = Value(arrayValue: ArrayValue(values: tileNames));
-    //      rowValues.add(columnValue);
-    //    }
-    // }
-    //
-    // final tileValues = Value(arrayValue: ArrayValue(values: rowValues));
-
     final document = Document(
         createTime: _getTimestampNow(),
         fields: {
-          // 'tiles': tileValues,
           'data': Value(stringValue: data),
         }
     );

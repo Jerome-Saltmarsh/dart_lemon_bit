@@ -41,7 +41,6 @@ FutureOr<Response> handleRequest(Request request) async {
 
   // https://stackoverflow.com/questions/43871637/no-access-control-allow-origin-header-is-present-on-the-requested-resource-whe
   if (request.method == 'OPTIONS'){
-    print("Handling preflight response check");
     return Response.ok("", headers: {
       "Access-Control-Allow-Origin": "*",
       'Access-Control-Allow-Headers': '*',
@@ -49,7 +48,7 @@ FutureOr<Response> handleRequest(Request request) async {
     });
   }
 
-  switch(path){
+  switch(path) {
     case 'maps':
       if (request.method == "GET"){
         print("(server) maps.get");
@@ -83,8 +82,13 @@ FutureOr<Response> handleRequest(Request request) async {
         if (mapId == null){
           return notFound("id_required");
         }
-        request.readAsString().then((bodyString){
-          firestore.createMap(mapId: mapId, data: bodyString);
+        request.readAsString().then((data) async {
+          final existingMap = await firestore.findMapById(mapId);
+          if (existingMap == null){
+            firestore.createMap(mapId: mapId, data: data);
+          } else {
+            firestore.patchMap(document: existingMap, data: data);
+          }
         });
       }
       return ok(response);
