@@ -17,3 +17,12 @@ enum EditorDialog {
   Save,
   Loading_Map
 }
+
+enum TimeSpeed {
+  Stopped,
+  Slow,
+  Normal,
+  Fast,
+}
+
+final List<TimeSpeed> timeSpeeds = TimeSpeed.values;

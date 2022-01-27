@@ -7,12 +7,11 @@ import 'package:typedef/json.dart';
 import '../classes/Character.dart';
 import '../classes/Scene.dart';
 import '../common/CharacterType.dart';
+import '../common/SceneJson.dart';
 import '../common/Tile.dart';
 import '../classes/EnvironmentObject.dart';
 import '../common/enums/ObjectType.dart';
 import '../instances/scenes.dart';
-
-final JsonDecoder _decoder = JsonDecoder();
 
 void loadScenes() {
   print("loadScenes()");
@@ -45,26 +44,26 @@ Scene parseJsonToScene(Json json) {
     }
   }
 
-  List<Vector2> zombieSpawnPoints = [];
+  final List<Vector2> zombieSpawnPoints = [];
 
   if (json.containsKey('zombie-spawn-points')) {
-    List zombieSpawnPointsInts = json['zombie-spawn-points'];
+    final List zombieSpawnPointsInts = json['zombie-spawn-points'];
     for (int i = 0; i < zombieSpawnPointsInts.length; i += 2) {
-      int x = zombieSpawnPointsInts[i];
-      int y = zombieSpawnPointsInts[i + 1];
+      final int x = zombieSpawnPointsInts[i];
+      final int y = zombieSpawnPointsInts[i + 1];
       zombieSpawnPoints.add(Vector2(x.toDouble(), y.toDouble()));
     }
   }
 
-  List<EnvironmentObject> environment = [];
+  final List<EnvironmentObject> environment = [];
 
   if (json.containsKey('environment')) {
-    List jsonItems = json['environment'];
+    final List jsonItems = json['environment'];
     for (dynamic item in jsonItems) {
-      int x = item['x'];
-      int y = item['y'];
-      String typeName = item['type'];
-      ObjectType type = parseObjectTypeFromString(typeName);
+      final int x = item['x'];
+      final int y = item['y'];
+      final String typeName = item['type'];
+      final ObjectType type = parseObjectTypeFromString(typeName);
       environment.add(EnvironmentObject(
         x: x.toDouble(),
         y: y.toDouble(),
@@ -109,16 +108,20 @@ Scene parseJsonToScene(Json json) {
     }
   }
 
+  final scene = Scene(
+    tiles: tiles,
+    crates: crates,
+    environment: environment,
+    characters: characters,
+  );
 
-  if (json.containsKey('start-time')){
-     final startTime = json['start-time'];
+  if (json.containsKey(sceneFieldNames.startTime)){
+     scene.startHour = json[sceneFieldNames.startTime];
+  }
+  if (json.containsKey(sceneFieldNames.secondsPerFrame)){
+    scene.secondsPerFrames = json[sceneFieldNames.secondsPerFrame];
   }
 
-  return Scene(
-      tiles: tiles,
-      crates: crates,
-      environment: environment,
-      characters: characters,
-  );
+  return scene;
 }
 

@@ -150,7 +150,19 @@ class EditorBuild {
         WatchBuilder(modules.isometric.state.ambient, (Shade ambient){
           return text(ambient.name);
         })
-      ],)
+      ],),
+      Row(children: [
+        Container(
+          width: _textWidth,
+          child: WatchBuilder(modules.editor.state.timeSpeed, (TimeSpeed timeSpeed){
+            return text("Time Speed ${timeSpeed.name}");
+          }),
+        ),
+        width8,
+        button("-", modules.editor.actions.timeSpeedDecrease),
+        width8,
+        button("+", modules.editor.actions.timeSpeedIncrease),
+      ],),
     ];
   }
 

@@ -172,4 +172,18 @@ class EditorActions with EditorScope {
   void showErrorMessage(String message) {
     actions.showErrorMessage(message);
   }
+
+  void timeSpeedIncrease() {
+    int currentIndex = state.timeSpeed.value.index;
+    if (currentIndex < timeSpeeds.length - 1){
+      state.timeSpeed.value = timeSpeeds[currentIndex + 1];
+    }
+  }
+
+  void timeSpeedDecrease() {
+    int currentIndex = state.timeSpeed.value.index;
+    if (currentIndex > 0){
+      state.timeSpeed.value = timeSpeeds[currentIndex - 1];
+    }
+  }
 }

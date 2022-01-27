@@ -46,6 +46,9 @@ class Scene {
   late final int rows;
   late final int columns;
 
+  int? startHour;
+  int? secondsPerFrames;
+
   Scene({
     required this.tiles,
     required this.crates,

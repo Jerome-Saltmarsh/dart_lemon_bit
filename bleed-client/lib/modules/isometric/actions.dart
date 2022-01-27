@@ -5,7 +5,7 @@ import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
-import 'package:bleed_client/constants.dart';
+import 'package:bleed_client/common/constants.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
 import 'package:bleed_client/modules/isometric/scope.dart';
@@ -181,9 +181,11 @@ class IsometricActions with IsometricScope {
 
 
   void addRow(){
-    for (final row in state.tiles) {
+    final List<Tile> row = [];
+    for(int i = 0; i < state.tiles[0].length; i++){
       row.add(Tile.Grass);
     }
+    state.tiles.add(row);
     refreshTileSize();
     resetTilesSrcDst();
   }
@@ -195,8 +197,8 @@ class IsometricActions with IsometricScope {
   }
 
   void addColumn() {
-    for (int i = 0; i < state.tiles.length; i++) {
-      state.tiles[i].removeLast();
+    for (final row in state.tiles) {
+      row.add(Tile.Grass);
     }
     refreshTileSize();
     resetTilesSrcDst();
