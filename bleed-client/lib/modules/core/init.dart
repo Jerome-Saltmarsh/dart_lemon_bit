@@ -17,6 +17,7 @@ import 'package:bleed_client/events/onCompiledGameChanged.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/modules/modules.dart';
+import 'package:bleed_client/parse.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/ui/state/hud.dart';
@@ -101,7 +102,7 @@ void onPlayerWeaponChanged(WeaponType weapon) {
 void initializeEventListeners() {
   engine.callbacks.onMouseScroll = onMouseScroll;
   webSocket.eventStream.stream.listen(_onEventReceivedFromServer);
-  observeCompiledGame(onCompiledGameChanged);
+  // observeCompiledGame(onCompiledGameChanged);
 
   hud.focusNodes.textFieldMessage.addListener(() {
     if (hud.textBoxFocused){
@@ -129,6 +130,8 @@ void _onEventReceivedFromServer(dynamic value) {
   game.lag = game.framesSinceEvent;
   game.framesSinceEvent = 0;
   compiledGame = value;
+  parseState();
+  engine.actions.redrawCanvas();
 }
 
 Future loadSharedPreferences() async {

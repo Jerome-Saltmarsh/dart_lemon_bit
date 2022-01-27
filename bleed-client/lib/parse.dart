@@ -55,6 +55,8 @@ const String _comma = ",";
 const List<ServerResponse> serverResponses = ServerResponse.values;
 const List<GameEventType> gameEventTypes = GameEventType.values;
 
+String compiledGame = "";
+
 String get _currentCharacter {
   // debug mode
   // if (_index >= compiledGame.length){
