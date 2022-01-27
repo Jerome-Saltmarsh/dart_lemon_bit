@@ -91,9 +91,12 @@
 [ ] Break Crates
 [ ] Weapon UI
 [EDITOR]
-[ ] Time Speed
 [ ] Play button
+[ ] Time Speed
 [ ] Flames spawn in tile center
+[ ] Unit Team
+[ ] Unit Health / Damage / Type
+[ ] Load Royal Map from cloud
 [x] Save
 [x] Add Units
 [COMPLETED]

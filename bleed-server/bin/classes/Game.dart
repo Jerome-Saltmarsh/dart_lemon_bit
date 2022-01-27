@@ -1721,6 +1721,9 @@ extension GameFunctions on Game {
   }
 
   Vector2 getNextSpawnPoint() {
+    if (playerSpawnPoints.isEmpty){
+      throw Exception("player spawn points is empty (scene: '${scene.name}')");
+    }
     spawnPointIndex = (spawnPointIndex + 1) % playerSpawnPoints.length;
     return playerSpawnPoints[spawnPointIndex];
   }
@@ -1983,11 +1986,10 @@ Character? getClosestEnemy({
 }
 
 class CustomGame extends Game {
-  final String mapId;
   int timeInSeconds = calculateTime(hour: 12);
   int secondsPerFrame = 1;
 
-  CustomGame(Scene scene, this.mapId) : super(scene){
+  CustomGame(Scene scene) : super(scene){
     if (scene.startHour != null){
       timeInSeconds = scene.startHour! * secondsPerHour;
     }

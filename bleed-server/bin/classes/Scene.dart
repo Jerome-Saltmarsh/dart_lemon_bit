@@ -40,6 +40,7 @@ class Scene {
   final List<List<Tile>> tiles;
   final List<Vector2> crates;
   final List<EnvironmentObject> environment;
+  final String name;
   late Vector2 fortressPosition;
 
   late final List<List<TileNode>> tileNodes;
@@ -54,6 +55,7 @@ class Scene {
     required this.crates,
     required this.environment,
     required this.characters,
+    required this.name,
   }) {
     rows = tiles.length;
     columns = tiles[0].length;

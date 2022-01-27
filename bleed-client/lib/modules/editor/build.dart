@@ -110,7 +110,6 @@ class EditorBuild {
     final _textWidth = 150.0;
 
     return [
-      // button("Copy to Clipboard", copyCompiledGameToClipboard, width: _width),
       Row(
         children: [
           Container(
@@ -163,6 +162,8 @@ class EditorBuild {
         width8,
         button("+", modules.editor.actions.timeSpeedIncrease),
       ],),
+
+      
     ];
   }
 

@@ -3,11 +3,11 @@ import 'package:bleed_client/modules/modules.dart';
 
 class GameProperties {
 
-  double get timeInHours {
-    return timeInMinutes / 60;
+  int get timeInHours {
+    return timeInMinutes ~/ Duration.minutesPerHour;
   }
 
   double get timeInMinutes {
-    return modules.isometric.state.time.value / 60.0;
+    return modules.isometric.state.time.value / Duration.secondsPerMinute;
   }
 }

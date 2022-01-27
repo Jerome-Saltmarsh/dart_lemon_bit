@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:bleed_server/user-service-client/firestoreService.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:typedef/json.dart';
 
@@ -15,24 +16,29 @@ import '../instances/scenes.dart';
 
 void loadScenes() {
   print("loadScenes()");
-  loadScene('town').then((value) => scenes.town = value);
-  loadScene('tavern').then((value) => scenes.tavern = value);
-  loadScene('cave').then((value) => scenes.cave = value);
-  loadScene('wilderness-west-01').then((value) => scenes.wildernessWest01 = value);
-  loadScene('wilderness-north-01').then((value) => scenes.wildernessNorth01 = value);
-  loadScene('wilderness-east').then((value) => scenes.wildernessEast = value);
-  loadScene('royal').then((value) => scenes.royal = value);
+  loadSceneFromFile('town').then((value) => scenes.town = value);
+  loadSceneFromFile('tavern').then((value) => scenes.tavern = value);
+  loadSceneFromFile('cave').then((value) => scenes.cave = value);
+  loadSceneFromFile('wilderness-west-01').then((value) => scenes.wildernessWest01 = value);
+  loadSceneFromFile('wilderness-north-01').then((value) => scenes.wildernessNorth01 = value);
+  loadSceneFromFile('wilderness-east').then((value) => scenes.wildernessEast = value);
+  loadSceneFromFireStore('royal').then((value) => scenes.royal = value);
 }
 
-Future<Scene> loadScene(String name) async {
+Future<Scene> loadSceneFromFile(String name) async {
   final String dir = Directory.current.path;
   final File fortressFile = File('$dir/scenes/$name.json');
   final String text = await fortressFile.readAsString();
   final Json sceneJson = jsonDecode(text);
-  return parseJsonToScene(sceneJson);
+  return parseJsonToScene(sceneJson, name);
 }
 
-Scene parseJsonToScene(Json json) {
+Future<Scene> loadSceneFromFireStore(String name) async {
+  final Json sceneJson = await firestoreService.loadMap(name);
+  return parseJsonToScene(sceneJson, name);
+}
+
+Scene parseJsonToScene(Json json, String name) {
 
   List<Vector2> playerSpawnPoints = [];
   if (json.containsKey('player-spawn-points')) {
@@ -113,6 +119,7 @@ Scene parseJsonToScene(Json json) {
     crates: crates,
     environment: environment,
     characters: characters,
+    name: name
   );
 
   if (json.containsKey(sceneFieldNames.startTime)){
