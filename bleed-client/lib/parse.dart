@@ -397,13 +397,13 @@ void _parsePaths() {
 void _parseTiles() {
   modules.isometric.state.totalRows = consumeInt();
   modules.isometric.state.totalColumns = consumeInt();
-  game.tiles.clear();
+  isometric.state.tiles.clear();
   for (int row = 0; row < modules.isometric.state.totalRows; row++) {
     List<Tile> column = [];
     for (int columnIndex = 0; columnIndex < modules.isometric.state.totalColumns; columnIndex++) {
       column.add(_consumeTile());
     }
-    game.tiles.add(column);
+    isometric.state.tiles.add(column);
   }
   modules.isometric.actions.updateTileRender();
 }

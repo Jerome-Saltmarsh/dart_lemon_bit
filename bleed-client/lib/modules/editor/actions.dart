@@ -56,14 +56,14 @@ class EditorActions with EditorScope {
     print("editor.actions.newScene()");
     modules.isometric.state.totalRows = rows;
     modules.isometric.state.totalColumns = columns;
-    game.tiles.clear();
+    isometric.state.tiles.clear();
     editor.state.characters.clear();
     for (int row = 0; row < rows; row++) {
       List<Tile> columnTiles = [];
       for (int column = 0; column < columns; column++) {
         columnTiles.add(tile);
       }
-      game.tiles.add(columnTiles);
+      isometric.state.tiles.add(columnTiles);
     }
     game.crates.clear();
     game.particleEmitters.clear();
@@ -127,7 +127,7 @@ class EditorActions with EditorScope {
         .whenComplete(core.actions.operationCompleted)
     ;
     final jsonRows = mapJson['tiles'];
-    game.tiles = mapJsonToTiles(jsonRows);
+    isometric.state.tiles = mapJsonToTiles(jsonRows);
 
     final jsonEnvironment = mapJson['environment'];
     modules.isometric.state.environmentObjects.clear();

@@ -17,7 +17,7 @@ class IsometricProperties with IsometricScope {
     if (mouseColumn < 0) return Tile.Boundary;
     if (mouseRow >= state.totalRows) return Tile.Boundary;
     if (mouseColumn >= state.totalColumns) return Tile.Boundary;
-    return game.tiles[mouseRow][mouseColumn];
+    return state.tiles[mouseRow][mouseColumn];
   }
 
   Shade get currentPhaseShade {

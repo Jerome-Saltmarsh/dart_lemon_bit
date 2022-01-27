@@ -54,7 +54,6 @@ class _Game {
   List<Vector2> crates = [];
   int cratesTotal = 0;
   List<EnvironmentObject> torches = [];
-  List<List<Tile>> tiles = [];
   List<NpcDebug> npcDebug = [];
   final List<Character> humans = [];
   final List<Zombie> zombies = [];

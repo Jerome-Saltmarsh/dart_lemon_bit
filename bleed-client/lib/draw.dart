@@ -96,7 +96,7 @@ Tile getTile(int row, int column){
   if (column < 0) return Tile.Boundary;
   if (row >= modules.isometric.state.totalRows) return Tile.Boundary;
   if (column >= modules.isometric.state.totalColumns) return Tile.Boundary;
-  return game.tiles[row][column];
+  return isometric.state.tiles[row][column];
 }
 
 void drawCircleOutline({

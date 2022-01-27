@@ -106,31 +106,32 @@ class EditorBuild {
 
   List<Widget> _tabMisc() {
     final _width = 200.0;
+    final tiles = modules.isometric.state.tiles;
     return [
       // button("Copy to Clipboard", copyCompiledGameToClipboard, width: _width),
       button("Tiles.X++", () {
-        for (List<Tile> row in game.tiles) {
+        for (List<Tile> row in tiles) {
           row.add(Tile.Grass);
         }
         modules.isometric.actions.resetTilesSrcDst();
       }, width: _width, alignment: Alignment.centerLeft),
       button("Tiles.Y++", () {
         List<Tile> row = [];
-        for (int i = 0; i < game.tiles[0].length; i++) {
+        for (int i = 0; i < tiles[0].length; i++) {
           row.add(Tile.Grass);
         }
-        game.tiles.add(row);
+        tiles.add(row);
         modules.isometric.actions.resetTilesSrcDst();
       }, width: _width, alignment: Alignment.centerLeft),
-      if (game.tiles.length > 2)
+      if (tiles.length > 2)
         button("Tiles.X--", () {
-          game.tiles.removeLast();
+          tiles.removeLast();
           modules.isometric.actions.resetTilesSrcDst();
         }, width: _width, alignment: Alignment.centerLeft),
-      if (game.tiles[0].length > 2)
+      if (tiles[0].length > 2)
         button("Tiles.Y--", () {
-          for (int i = 0; i < game.tiles.length; i++) {
-            game.tiles[i].removeLast();
+          for (int i = 0; i < tiles.length; i++) {
+            tiles[i].removeLast();
           }
           modules.isometric.actions.resetTilesSrcDst();
         }, width: _width, alignment: Alignment.centerLeft),

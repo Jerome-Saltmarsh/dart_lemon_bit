@@ -108,8 +108,8 @@ class IsometricActions with IsometricScope {
     if (column < 0) return;
     if (row >= state.totalRows) return;
     if (column >= state.totalColumns) return;
-    if (game.tiles[row][column] == tile) return;
-    game.tiles[row][column] = tile;
+    if (state.tiles[row][column] == tile) return;
+    state.tiles[row][column] = tile;
     resetTilesSrcDst();
   }
 
@@ -117,7 +117,7 @@ class IsometricActions with IsometricScope {
   void resetTilesSrcDst() {
     print("isometric.actions.resetTilesSrcDst()");
 
-    final tiles = game.tiles;
+    final tiles = state.tiles;
     final tileSize = modules.isometric.constants.tileSize;
     final tileSizeHalf = tileSize / 2;
     final List<RSTransform> tileTransforms = [];

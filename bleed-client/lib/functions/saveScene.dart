@@ -22,7 +22,7 @@ String mapCompileGameToJson() {
 Json compileGameToJson() {
   return {
     "collectables": game.collectables,
-    "tiles": _compileTiles(game.tiles),
+    "tiles": _compileTiles(isometric.state.tiles),
     "crates": _compileCrates(game.crates),
     "environment": _compileEnvironmentObjects(isometric.state.environmentObjects),
     'characters': compileCharactersToJson(editor.state.characters),
