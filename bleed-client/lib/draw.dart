@@ -62,7 +62,7 @@ double getTileWorldY(int row, int column){
 Vector2 getTilePosition({required int row, required int column}){
   return Vector2(
     getTileWorldX(row, column),
-    getTileWorldX(row, column),
+    getTileWorldY(row, column),
   );
 }
 
