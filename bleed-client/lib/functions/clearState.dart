@@ -2,8 +2,6 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/modules/core/enums.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/render/state/paths.dart';
-import 'package:bleed_client/render/state/tileRects.dart';
-import 'package:bleed_client/render/state/tileTransforms.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:lemon_engine/engine.dart';
@@ -51,6 +49,5 @@ void clearCompileGameState() {
 }
 
 void clearRender() {
-  tileTransforms.clear();
   paths.clear();
 }

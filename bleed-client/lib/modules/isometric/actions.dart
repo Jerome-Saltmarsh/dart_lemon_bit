@@ -11,8 +11,6 @@ import 'package:bleed_client/modules/isometric/state.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/functions/emitLight.dart';
-import 'package:bleed_client/render/state/tileRects.dart';
-import 'package:bleed_client/render/state/tileTransforms.dart';
 import 'package:bleed_client/state/game.dart';
 
 class IsometricActions {
@@ -20,15 +18,15 @@ class IsometricActions {
   IsometricState get state => modules.isometric.state;
 
   void applyDynamicShadeToTileSrc() {
-    final _size = 48.0;
+    final tileSize = modules.isometric.constants.tileSize;
     int i = 0;
     final state = modules.isometric.state;
     final dynamicShading = state.dynamicShading;
     for (int row = 0; row < game.totalRows; row++) {
       for (int column = 0; column < game.totalColumns; column++) {
         Shade shade = dynamicShading[row][column];
-        state.tilesSrc[i + 1] = atlas.tiles.y + shade.index * _size; // top
-        state.tilesSrc[i + 3] = state.tilesSrc[i + 1] + _size; // bottom
+        state.tilesSrc[i + 1] = atlas.tiles.y + shade.index * tileSize; // top
+        state.tilesSrc[i + 3] = state.tilesSrc[i + 1] + tileSize; // bottom
         i += 4;
       }
     }
@@ -110,8 +108,8 @@ class IsometricActions {
     final tiles = game.tiles;
     final tileSize = modules.isometric.constants.tileSize;
     final tileSizeHalf = tileSize / 2;
+    final List<RSTransform> tileTransforms = [];
 
-    tileTransforms.clear();
     for (int x = 0; x < tiles.length; x++) {
       for (int y = 0; y < tiles[0].length; y++) {
         tileTransforms.add(
