@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:lemon_math/golden_ratio.dart';
+import 'package:golden_ratio/constants.dart';
 
 import '../../styles.dart';
 
@@ -13,7 +13,7 @@ class StyleGuide {
 class _Slot {
 
   double width = 120;
-  double height = 120 * goldenRatioInverse;
+  double height = 120 * goldenRatio_0381;
 
   BoxDecoration boxDecoration = BoxDecoration(
       borderRadius: borderRadius4,

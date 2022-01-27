@@ -13,8 +13,8 @@ import 'package:bleed_client/ui/compose/buildTextBox.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_math/pi2.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:lemon_watch/watch_builder.dart';
@@ -186,7 +186,7 @@ Widget _buildViewRespawn() {
       children: [
         Container(
             padding: padding16,
-            width: max(engine.state.screen.width * goldenRatioInverseB, 480),
+            width: max(engine.state.screen.width * goldenRatio_0381, 480),
             decoration: BoxDecoration(
                 borderRadius: borderRadius4, color: Colors.black38),
             child: SingleChildScrollView(

@@ -243,18 +243,18 @@ packages:
     source: path
     version: "0.3.03"
   lemon_math:
-    dependency: "direct main"
+    dependency: transitive
     description:
-      name: lemon_math
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "C:\\Users\\Jerome\\github\\dart-lemon-math"
+      relative: false
+    source: path
     version: "1.1.5"
   lemon_watch:
-    dependency: "direct main"
+    dependency: transitive
     description:
-      name: lemon_watch
-      url: "https://pub.dartlang.org"
-    source: hosted
+      path: "C:\\Users\\Jerome\\github\\dart-lemon-watch"
+      relative: false
+    source: path
     version: "1.0.5"
   matcher:
     dependency: transitive

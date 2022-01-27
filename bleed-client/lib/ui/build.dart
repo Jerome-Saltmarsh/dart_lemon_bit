@@ -15,8 +15,8 @@ import 'package:bleed_client/ui/state/decorationImages.dart';
 import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import 'compose/hudUI.dart';
@@ -318,10 +318,10 @@ class _Build {
   Widget magicBar() {
     double width = 200;
     double height = width *
-        goldenRatioInverse *
-        goldenRatioInverse *
-        goldenRatioInverse *
-        goldenRatioInverse;
+        goldenRatio_0381 *
+        goldenRatio_0381 *
+        goldenRatio_0381 *
+        goldenRatio_0381;
 
     return WatchBuilder(game.player.magic, (double magic) {
       double percentage = magic / game.player.maxMagic.value;
@@ -362,10 +362,10 @@ class _Build {
   Widget healthBar() {
     double width = 200;
     double height = width *
-        goldenRatioInverse *
-        goldenRatioInverse *
-        goldenRatioInverse *
-        goldenRatioInverse;
+        goldenRatio_0381 *
+        goldenRatio_0381 *
+        goldenRatio_0381 *
+        goldenRatio_0381;
 
     return WatchBuilder(game.player.health, (double health) {
       double percentage = health / game.player.maxHealth;
@@ -406,10 +406,10 @@ class _Build {
   Widget experienceBar() {
     double levelBarWidth = 200;
     double levelBarHeight = levelBarWidth *
-        goldenRatioInverse *
-        goldenRatioInverse *
-        goldenRatioInverse *
-        goldenRatioInverse;
+        goldenRatio_0381 *
+        goldenRatio_0381 *
+        goldenRatio_0381 *
+        goldenRatio_0381;
 
     return WatchBuilder(game.player.experiencePercentage, (double percentage) {
       return Container(

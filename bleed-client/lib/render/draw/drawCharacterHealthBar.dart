@@ -5,12 +5,12 @@ import 'dart:ui';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:flutter/material.dart';
+import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_math/golden_ratio.dart';
 
 const _width = 35.0;
 const _widthHalf = _width * 0.5;
-const _height = _width * goldenRatioInverse * goldenRatioInverse * goldenRatioInverse;
+const _height = _width * goldenRatio_0381 * goldenRatio_0381 * goldenRatio_0381;
 const _marginBottom = 50;
 
 void drawCharacterHealthBar(Character character){

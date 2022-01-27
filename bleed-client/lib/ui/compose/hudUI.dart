@@ -23,7 +23,6 @@ import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../widgets.dart';
@@ -334,7 +333,7 @@ Widget buildSlot({required String title}) {
       ],
     ),
     width: 120,
-    height: 120 * goldenRatioInverse,
+    height: 120 * goldenRatio_0381,
     alignment: Alignment.center,
     decoration: styleGuide.slot.boxDecoration,
   );
@@ -472,7 +471,7 @@ Widget buildWeaponSlot(WeaponType weaponType) {
   return mouseOver(builder: (BuildContext context, bool mouseOver) {
     return Container(
       width: 120,
-      height: 120 * goldenRatioInverse,
+      height: 120 * goldenRatio_0381,
       alignment: Alignment.center,
       decoration: BoxDecoration(
         image: mapWeaponTypeToImage[weaponType],

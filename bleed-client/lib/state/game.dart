@@ -65,7 +65,6 @@ class _Game {
   List<Projectile> projectiles = [];
   List<Vector2> bulletHoles = [];
   int bulletHoleIndex = 0;
-  List<Particle> particles = [];
   List<ParticleEmitter> particleEmitters = [];
   List<double> grenades = [];
   int id = -1;

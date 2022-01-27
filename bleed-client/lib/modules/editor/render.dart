@@ -12,7 +12,7 @@ class EditorRender {
 
   void render(Canvas canvas, Size size) {
     isometric.render.tiles();
-    isometric.render.drawSprites();
+    isometric.render.sprites();
     _drawSelectedObject();
     _drawCharacters();
   }

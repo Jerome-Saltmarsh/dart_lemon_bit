@@ -2,6 +2,7 @@
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
+import 'package:bleed_client/modules/isometric/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
@@ -11,7 +12,7 @@ import 'package:bleed_client/render/draw/drawParticle.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/engine.dart';
 
-class IsometricRender {
+class IsometricRender with IsometricScope {
 
   void tiles() {
     engine.actions.setPaintColorWhite();
@@ -21,7 +22,7 @@ class IsometricRender {
     );
   }
 
-  void drawSprites() {
+  void sprites() {
     engine.actions.setPaintColorWhite();
     int indexHuman = 0;
     int indexEnv = 0;
@@ -58,10 +59,10 @@ class IsometricRender {
         double humanY = game.humans[indexHuman].y;
 
         if (!environmentRemaining ||
-            humanY < modules.isometric.state.environmentObjects[indexEnv].y) {
+            humanY < state.environmentObjects[indexEnv].y) {
           if (!particlesRemaining ||
-              humanY < game.particles[indexParticle].y &&
-                  game.particles[indexParticle].type != ParticleType.Blood) {
+              humanY < state.particles[indexParticle].y &&
+                  state.particles[indexParticle].type != ParticleType.Blood) {
             if (!zombiesRemaining || humanY < game.zombies[indexZombie].y) {
               if (!npcsRemaining || humanY < game.interactableNpcs[indexNpc].y) {
                 drawCharacter(game.humans[indexHuman]);
@@ -74,11 +75,11 @@ class IsometricRender {
       }
 
       if (environmentRemaining) {
-        final env = modules.isometric.state.environmentObjects[indexEnv];
+        final env = state.environmentObjects[indexEnv];
         if (env.top > engine.state.screen.bottom) return;
         if (!particlesRemaining ||
-            env.y < game.particles[indexParticle].y &&
-                game.particles[indexParticle].type != ParticleType.Blood) {
+            env.y < isometric.state.particles[indexParticle].y &&
+                isometric.state.particles[indexParticle].type != ParticleType.Blood) {
           if (!zombiesRemaining || env.y < game.zombies[indexZombie].y) {
             if (!npcsRemaining || env.y < game.interactableNpcs[indexNpc].y) {
               drawEnvironmentObject(modules.isometric.state.environmentObjects[indexEnv]);
@@ -90,7 +91,7 @@ class IsometricRender {
       }
 
       if (particlesRemaining) {
-        Particle particle = game.particles[indexParticle];
+        Particle particle = isometric.state.particles[indexParticle];
 
         if (particle.type == ParticleType.Blood) {
           if (onScreen(particle.x, particle.y)) {

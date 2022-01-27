@@ -1,5 +1,6 @@
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
 
 void spawnParticle({
@@ -40,11 +41,11 @@ void spawnParticle({
 }
 
 Particle getAvailableParticle() {
-  for (Particle particle in game.particles) {
+  for (Particle particle in isometric.state.particles) {
     if (particle.active) continue;
     return particle;
   }
   Particle particle = Particle();
-  game.particles.add(particle);
+  isometric.state.particles.add(particle);
   return particle;
 }

@@ -70,7 +70,7 @@ void renderGame(Canvas canvas, Size size) {
   }
 
   engine.actions.setPaintColorWhite();
-  isometric.render.drawSprites();
+  isometric.render.sprites();
   drawEffects();
   drawItems();
   // drawCrates();
@@ -270,16 +270,16 @@ int compareParticles(Particle a, Particle b) {
 
 void sortParticles() {
   insertionSort(
-      list: game.particles,
+      list: isometric.state.particles,
       compare: compareParticles,
       start: 0,
-      end: game.particles.length);
+      end: isometric.state.particles.length);
 }
 
 int getTotalActiveParticles() {
   int totalParticles = 0;
-  for (int i = 0; i < game.particles.length; i++) {
-    if (game.particles[i].active) {
+  for (int i = 0; i < isometric.state.particles.length; i++) {
+    if (isometric.state.particles[i].active) {
       totalParticles++;
     }
   }

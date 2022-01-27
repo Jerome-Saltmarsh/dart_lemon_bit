@@ -17,13 +17,11 @@ import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_math/golden_ratio.dart';
 import 'package:lemon_math/random.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../actions.dart';
 import '../styles.dart';
-import '../toString.dart';
 import 'compose/hudUI.dart';
 
 final closeDialogButton = button("close", setDialogGames, borderColor: colours.none);
@@ -301,49 +299,6 @@ class _Buttons {
     return onPressed(
         callback: actions.toggleAudio,
         child: border(child: text(audio ? "Audio On" : "Audio Off")));
-  });
-
-  final Widget region = WatchBuilder(core.state.region, (Region region) {
-    return onHover((bool hovering){
-
-      final currentRegion  =   button(
-        text(enumString(region), size: 20),
-        (){},
-        width: style.buttonWidth,
-        height: style.buttonHeight * goldenRatioInverse,
-        borderWidth: 1,
-        borderRadius: borderRadius2,
-        borderColor: colours.none,
-      );
-
-
-      if (!hovering){
-        return currentRegion;
-      }
-
-      return Container(
-        color: colours.black20,
-        child: Column(
-          children: [
-            ...selectableRegions.map((value) {
-              final bool selected = region == value;
-
-            return button(text(enumString(value), weight: selected ? bold : FontWeight.normal), (){
-              core.state.region.value = value;
-            },
-              fillColorMouseOver: selected ? colours.green : colours.none,
-              fillColor: selected ? colours.green : colours.white05,
-              width: style.buttonWidth,
-              height: style.buttonHeight,
-              borderRadius: borderRadius0,
-            );
-          }).toList(),
-            currentRegion,
-          ],
-        ),
-      );
-
-    });
   });
 }
 
