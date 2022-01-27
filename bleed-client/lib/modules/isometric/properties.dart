@@ -2,11 +2,9 @@
 
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
-import 'package:bleed_client/maps.dart';
 import 'package:bleed_client/modules/isometric/enums.dart';
 import 'package:bleed_client/modules/isometric/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/state/game.dart';
 
 import '../../draw.dart';
 
@@ -28,5 +26,15 @@ class IsometricProperties with IsometricScope {
 
   Phase get phase {
      return modules.isometric.map.hourToPhase(modules.isometric.state.hour.value);
+  }
+
+  int get totalActiveParticles {
+    int totalParticles = 0;
+    for (int i = 0; i < isometric.state.particles.length; i++) {
+      if (isometric.state.particles[i].active) {
+        totalParticles++;
+      }
+    }
+    return totalParticles;
   }
 }

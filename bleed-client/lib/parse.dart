@@ -31,11 +31,10 @@ import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/utils/list_util.dart';
-import 'package:bleed_client/watches/compiledGame.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_engine/enums.dart';
+import 'package:lemon_math/Vector2.dart';
 
 import 'common/GameEventType.dart';
 import 'common/PlayerEvent.dart';

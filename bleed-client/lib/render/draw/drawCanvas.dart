@@ -7,7 +7,6 @@ import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Projectile.dart';
-import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CommonSettings.dart';
 import 'package:bleed_client/common/GameType.dart';
@@ -26,7 +25,6 @@ import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/constants/charWidth.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/draw/drawBullets.dart';
-import 'package:bleed_client/render/draw/drawCharacter.dart';
 import 'package:bleed_client/render/draw/drawPlayerText.dart';
 import 'package:bleed_client/render/functions/applyLightingToCharacters.dart';
 import 'package:bleed_client/render/functions/emitLight.dart';
@@ -46,8 +44,6 @@ import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/opposite.dart';
 
 import '../../draw.dart';
-import 'drawInteractableNpcs.dart';
-import 'drawParticle.dart';
 
 final double _nameRadius = 100;
 const animationFrameRate = 7; // frames per change;
@@ -274,16 +270,6 @@ void sortParticles() {
       compare: compareParticles,
       start: 0,
       end: isometric.state.particles.length);
-}
-
-int getTotalActiveParticles() {
-  int totalParticles = 0;
-  for (int i = 0; i < isometric.state.particles.length; i++) {
-    if (isometric.state.particles[i].active) {
-      totalParticles++;
-    }
-  }
-  return totalParticles;
 }
 
 bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {

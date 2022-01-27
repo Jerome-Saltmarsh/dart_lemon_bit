@@ -10,7 +10,6 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/update/updateParticles.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_engine/game.dart';
 import 'package:lemon_math/randomInt.dart';
 
 import 'common/GameStatus.dart';

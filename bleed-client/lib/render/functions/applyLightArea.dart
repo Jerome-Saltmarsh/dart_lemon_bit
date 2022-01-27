@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/functions/applyShade.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/state/game.dart';
 
 void applyLightArea(List<List<Shade>> shader, int column, int row, int size, Shade shade) {
 

@@ -29,8 +29,8 @@ class IsometricRender with IsometricScope {
     int indexParticle = 0;
     int indexZombie = 0;
     int indexNpc = 0;
-    final totalParticles = getTotalActiveParticles();
-    final totalEnvironment = modules.isometric.state.environmentObjects.length;
+    final totalParticles = properties.totalActiveParticles;
+    final totalEnvironment = state.environmentObjects.length;
 
     if (totalParticles > 0) {
       sortParticles();
