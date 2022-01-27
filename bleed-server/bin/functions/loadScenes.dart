@@ -30,10 +30,10 @@ Future<Scene> loadScene(String name) async {
   final File fortressFile = File('$dir/scenes/$name.json');
   final String text = await fortressFile.readAsString();
   final Json sceneJson = jsonDecode(text);
-  return mapJsonToScene(sceneJson);
+  return parseJsonToScene(sceneJson);
 }
 
-Scene mapJsonToScene(Json json) {
+Scene parseJsonToScene(Json json) {
 
   List<Vector2> playerSpawnPoints = [];
   if (json.containsKey('player-spawn-points')) {
@@ -107,6 +107,11 @@ Scene mapJsonToScene(Json json) {
       final y = (characterJson['y'] as int).toDouble();
       characters.add(Character(type: type, x: x, y: y, health: 100, speed: 1));
     }
+  }
+
+
+  if (json.containsKey('start-time')){
+     final startTime = json['start-time'];
   }
 
   return Scene(

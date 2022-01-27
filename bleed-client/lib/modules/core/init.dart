@@ -129,7 +129,7 @@ void initializeEventListeners() {
 void _onEventReceivedFromServer(dynamic value) {
   game.lag = game.framesSinceEvent;
   game.framesSinceEvent = 0;
-  compiledGame = value;
+  event = value;
   parseState();
   engine.actions.redrawCanvas();
 }

@@ -1982,15 +1982,21 @@ Character? getClosestEnemy({
   return closest;
 }
 
-
 class CustomGame extends Game {
   final String mapId;
+  int timeInSeconds = 0;
+  int secondsPerFrame = 1;
 
   CustomGame(Scene scene, this.mapId) : super(scene);
 
   @override
+  void update(){
+    timeInSeconds = (timeInSeconds + secondsPerFrame) % secondsPerDay;
+  }
+
+  @override
   int getTime() {
-    return calculateTime(hour: 12);
+    return timeInSeconds;
   }
 
   Player playerJoin() {

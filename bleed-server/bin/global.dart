@@ -98,6 +98,6 @@ Future<CustomGame> findOrCreateCustomGame(String mapId) async {
     return customGame;
   }
   final customMapJson = await firestoreService.loadMap(mapId);
-  final scene = mapJsonToScene(customMapJson);
+  final scene = parseJsonToScene(customMapJson);
   return CustomGame(scene, mapId);
 }

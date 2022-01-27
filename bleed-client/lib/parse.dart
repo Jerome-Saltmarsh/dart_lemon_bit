@@ -55,14 +55,14 @@ const String _comma = ",";
 const List<ServerResponse> serverResponses = ServerResponse.values;
 const List<GameEventType> gameEventTypes = GameEventType.values;
 
-String compiledGame = "";
+String event = "";
 
 String get _currentCharacter {
   // debug mode
   // if (_index >= compiledGame.length){
   //   throw Exception("parser exceeded length while parsing $_currentServerResponse");
   // }
-  return compiledGame[_index];
+  return event[_index];
 }
 
 late ServerResponse _currentServerResponse;
@@ -70,8 +70,8 @@ late ServerResponse _currentServerResponse;
 // functions
 void parseState() {
   _index = 0;
-  compiledGame = compiledGame.trim();
-  while (_index < compiledGame.length) {
+  event = event.trim();
+  while (_index < event.length) {
     _currentServerResponse = _consumeServerResponse();
     switch (_currentServerResponse) {
       case ServerResponse.Tiles:
@@ -294,7 +294,7 @@ void parseState() {
         return;
     }
 
-    while (_index < compiledGame.length) {
+    while (_index < event.length) {
       if (_currentCharacter == _space) {
         _index++;
         continue;
@@ -567,7 +567,7 @@ ServerResponse _consumeServerResponse() {
 String _consumeString() {
   _consumeSpace();
   StringBuffer buffer = StringBuffer();
-  while (_index < compiledGame.length && _currentCharacter != _space) {
+  while (_index < event.length && _currentCharacter != _space) {
     buffer.write(_currentCharacter);
     _index++;
   }

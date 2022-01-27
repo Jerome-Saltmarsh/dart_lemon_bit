@@ -24,3 +24,4 @@ class EditorState {
   final mapNameController = TextEditingController();
   List<Character> characters = [];
 }
+

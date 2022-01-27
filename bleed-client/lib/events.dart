@@ -102,8 +102,8 @@ class Events {
         return;
       case GameError.InvalidArguments:
         actions.disconnect();
-        if (compiledGame.length > 4) {
-          String message = compiledGame.substring(4, compiledGame.length);
+        if (event.length > 4) {
+          String message = event.substring(4, event.length);
           actions.showErrorMessage("Invalid Arguments: $message");
           return;
         }
