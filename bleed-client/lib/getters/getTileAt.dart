@@ -1,6 +1,5 @@
 import 'package:bleed_client/common/Tile.dart';
-import 'package:bleed_client/draw.dart';
-import 'package:bleed_client/rects.dart';
+import 'package:bleed_client/modules/isometric/utilities.dart';
 import 'package:lemon_engine/engine.dart';
 
 Tile getTileAt(double x, double y){

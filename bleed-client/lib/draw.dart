@@ -1,37 +1,18 @@
-import 'dart:math';
 
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/getters/inDarkness.dart';
-import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/render/state/paths.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
 
-import 'common/Tile.dart';
-import 'rects.dart';
 import 'utils.dart';
+
+
 
 void drawCharacterCircle(double x, double y, Color color) {
   engine.draw.circle(x, y, 10, color);
-}
-
-RSTransform rsTransform({
-  required double x,
-  required double y,
-  required double anchorX,
-  required double anchorY,
-  double scale = 1
-}) {
-  return RSTransform.fromComponents(
-    rotation: 0.0,
-    scale: scale,
-    anchorX: anchorX,
-    anchorY: anchorY,
-    translateX: x,
-    translateY: y,
-  );
 }
 
 void drawPaths() {
@@ -51,58 +32,6 @@ void drawDebugNpcs(List<NpcDebug> values){
   }
 }
 
-double getTileWorldX(int row, int column){
-  return perspectiveProjectX(row * halfTileSize, column * halfTileSize);
-}
-
-double getTileWorldY(int row, int column){
-  return perspectiveProjectY(row * halfTileSize, column * halfTileSize);
-}
-
-Vector2 getTilePosition({required int row, required int column}){
-  return Vector2(
-    getTileWorldX(row, column),
-    getTileWorldY(row, column),
-  );
-}
-
-double perspectiveProjectX(double x, double y) {
-  return -y + x;
-}
-
-double perspectiveProjectY(double x, double y) {
-  return x + y;
-}
-
-double projectedToWorldX(double x, double y) {
-  return y - x;
-}
-
-double projectedToWorldY(double x, double y) {
-  return x + y;
-}
-
-double get mouseUnprojectPositionX =>
-    projectedToWorldX(mouseWorldX, mouseWorldY);
-
-double get mouseUnprojectPositionY =>
-    projectedToWorldY(mouseWorldX, mouseWorldY);
-
-int get mouseColumn {
-  return mouseUnprojectPositionX ~/ tileSize;
-}
-
-int get mouseRow {
-  return mouseUnprojectPositionY ~/ tileSize;
-}
-
-Tile getTile(int row, int column){
-  if (row < 0) return Tile.Boundary;
-  if (column < 0) return Tile.Boundary;
-  if (row >= modules.isometric.state.totalRows.value) return Tile.Boundary;
-  if (column >= modules.isometric.state.totalColumns.value) return Tile.Boundary;
-  return isometric.state.tiles[row][column];
-}
 
 void drawBulletHoles(List<Vector2> bulletHoles) {
   for (Vector2 bulletHole in bulletHoles) {
@@ -111,12 +40,4 @@ void drawBulletHoles(List<Vector2> bulletHoles) {
     if (inDarkness(bulletHole.x, bulletHole.y)) continue;
     engine.draw.circle(bulletHole.x, bulletHole.y, 2, Colors.black);
   }
-}
-
-double shiftHeight(double z) {
-  return -z * 20;
-}
-
-double shiftScale(double z) {
-  return 1 + (z * 0.15);
 }

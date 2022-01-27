@@ -7,6 +7,7 @@ import 'package:bleed_client/modules/isometric/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
 
 import '../../draw.dart';
+import 'utilities.dart';
 
 class IsometricProperties with IsometricScope {
 

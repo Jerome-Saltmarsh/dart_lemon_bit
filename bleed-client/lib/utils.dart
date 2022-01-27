@@ -12,6 +12,7 @@ import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/pi2.dart';
 
 import 'common/Tile.dart';
+import 'modules/isometric/utilities.dart';
 
 double getMouseRotation() {
   return angleBetween(game.player.x, game.player.y, mouseWorldX, mouseWorldY);
