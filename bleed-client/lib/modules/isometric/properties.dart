@@ -1,4 +1,4 @@
-
+import 'package:lemon_math/Vector2.dart';
 
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
@@ -26,6 +26,12 @@ class IsometricProperties with IsometricScope {
 
   Phase get phase {
      return modules.isometric.map.hourToPhase(modules.isometric.state.hour.value);
+  }
+
+  Vector2 get mapCenter {
+    final row = state.totalRows.value ~/ 2;
+    final column = state.totalColumns.value ~/ 2;
+    return getTilePosition(row: row, column: column);
   }
 
   int get totalActiveParticles {

@@ -74,7 +74,6 @@ void updateZoom() {
 void emitAmbientMyst() {
   if (emitPart++ % 3 != 0) return;
   Particle particle = getAvailableParticle();
-  if (particle == null) return;
   int row = getRandomRow();
   int column = getRandomColumn();
   particle.x = getTileWorldX(row, column);

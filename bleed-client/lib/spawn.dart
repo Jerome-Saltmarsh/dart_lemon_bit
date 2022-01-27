@@ -46,7 +46,6 @@ void spawnExplosion(double x, double y) {
   for (int i = 0; i < randomInt(4, 10); i++) {
     spawnFireYellow(x, y);
   }
-  double r = 0.2;
   // repeat(() {
   //   spawnSmoke(x, y, 0.01, xv: giveOrTake(r), yv: giveOrTake(r));
   // }, 5, 50);

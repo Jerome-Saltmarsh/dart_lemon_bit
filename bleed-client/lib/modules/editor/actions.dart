@@ -6,7 +6,7 @@ import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/functions/saveScene.dart';
 import 'package:bleed_client/modules/core/enums.dart';
-import 'package:bleed_client/modules/editor/mixin.dart';
+import 'package:bleed_client/modules/editor/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
@@ -73,6 +73,10 @@ class EditorActions with EditorScope {
     isometric.state.totalColumns.value = columns;
     isometric.state.tiles.clear();
     editor.state.playerSpawnPoints.clear();
+    editor.state.playerSpawnPoints.add(
+       isometric.properties.mapCenter
+    );
+
     editor.state.timeSpeed.value = TimeSpeed.Normal;
     isometric.state.time.value = config.defaultStartTime;
     editor.state.characters.clear();

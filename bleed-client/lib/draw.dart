@@ -59,6 +59,13 @@ double getTileWorldY(int row, int column){
   return perspectiveProjectY(row * halfTileSize, column * halfTileSize);
 }
 
+Vector2 getTilePosition({required int row, required int column}){
+  return Vector2(
+    getTileWorldX(row, column),
+    getTileWorldX(row, column),
+  );
+}
+
 double perspectiveProjectX(double x, double y) {
   return -y + x;
 }
@@ -96,30 +103,6 @@ Tile getTile(int row, int column){
   if (column >= modules.isometric.state.totalColumns.value) return Tile.Boundary;
   return isometric.state.tiles[row][column];
 }
-
-void drawCircleOutline({
-  required double radius,
-  required double x,
-  required double y,
-  required Color color,
-  int sides = 6
-}) {
-  double r = (pi * 2) / sides;
-  List<Offset> points = [];
-  Offset z = Offset(x, y);
-  engine.actions.setPaintColor(color);
-
-  engine.state.paint.strokeWidth = 3;
-
-  for (int i = 0; i <= sides; i++) {
-    double a1 = i * r;
-    points.add(Offset(cos(a1) * radius, sin(a1) * radius));
-  }
-  for (int i = 0; i < points.length - 1; i++) {
-    engine.state.canvas.drawLine(points[i] + z, points[i + 1] + z, engine.state.paint);
-  }
-}
-
 
 void drawBulletHoles(List<Vector2> bulletHoles) {
   for (Vector2 bulletHole in bulletHoles) {

@@ -280,8 +280,6 @@ class Scene {
       indices[index2] = polygon.vertex2;
     }
 
-    List<Int32List> colors = [];
-
     for(int i = 0; i < renderMesh.positions.length / 2; i++){
       // colors.add(Colors.red.);
     }

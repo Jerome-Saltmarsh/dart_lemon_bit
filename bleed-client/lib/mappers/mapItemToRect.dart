@@ -35,7 +35,6 @@ final List<Rect> _handgun = _itemFrames([5]);
 final List<Rect> _shotgun = _itemFrames([6]);
 final List<Rect> _sniper = _itemFrames([7]);
 final List<Rect> _health = _itemFrames([8]);
-final int _healthFrames = _health.length;
 
 List<Rect> _itemFrames(List<int> indexes) {
   return indexes.map(_itemFrame).toList();

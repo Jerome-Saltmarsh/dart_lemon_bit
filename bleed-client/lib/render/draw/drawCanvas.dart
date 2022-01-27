@@ -129,7 +129,7 @@ void drawItems() {
 }
 
 void drawItem(Item item) {
-  drawCircleOutline(radius: commonSettings.itemRadius, x: item.x, y: item.y, color: white);
+  engine.draw.drawCircleOutline(radius: commonSettings.itemRadius, x: item.x, y: item.y, color: white);
   drawAtlas(
       dst: buildDst(item, translateX: -32, translateY: -32),
       src: srcLoop(
@@ -140,7 +140,7 @@ void drawItem(Item item) {
 }
 
 void drawRoyalPerimeter() {
-  drawCircleOutline(sides: 50, radius: game.royal.radius, x: game.royal.mapCenter.x, y: game.royal.mapCenter.y, color: Colors.red);
+  engine.draw.drawCircleOutline(sides: 50, radius: game.royal.radius, x: game.royal.mapCenter.x, y: game.royal.mapCenter.y, color: Colors.red);
 }
 
 void drawEffects() {
@@ -154,7 +154,7 @@ void drawEffects() {
     if (effect.type == EffectType.FreezeCircle) {
       double p = effect.duration / effect.maxDuration;
       double maxRadius = 75;
-      drawCircleOutline(
+      engine.draw.drawCircleOutline(
           sides: 16,
           radius: maxRadius * p,
           x: effect.x,
@@ -179,7 +179,7 @@ void drawMouseAim2() {
 
 void drawAbility() {
   if (game.player.ability.value == AbilityType.None) {
-    drawCircleOutline(
+    engine.draw.drawCircleOutline(
         sides: 24,
         radius: game.player.attackRange,
         x: game.player.x,
@@ -190,7 +190,7 @@ void drawAbility() {
 
   drawMouseAim2();
 
-  drawCircleOutline(
+  engine.draw.drawCircleOutline(
       sides: 24,
       radius: game.player.abilityRange,
       x: game.player.x,
@@ -198,7 +198,7 @@ void drawAbility() {
       color: Colors.white);
 
   if (game.player.abilityRadius != 0){
-    drawCircleOutline(
+    engine.draw.drawCircleOutline(
         sides: 12,
         radius: game.player.abilityRadius,
         x: mouseWorldX,

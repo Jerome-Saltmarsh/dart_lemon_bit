@@ -16,7 +16,6 @@ import 'package:bleed_client/events.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/parse.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/ui/state/hud.dart';
@@ -116,19 +115,10 @@ void initializeEventListeners() {
   });
 
   game.settings.audioMuted.onChanged((value) {
-    if (sharedPreferences == null) return;
     sharedPreferences.setBool('audioMuted', value);
   });
 
   game.player.weaponType.onChanged(onPlayerWeaponChanged);
-}
-
-void _onEventReceivedFromServer(dynamic value) {
-  game.lag = game.framesSinceEvent;
-  game.framesSinceEvent = 0;
-  event = value;
-  parseState();
-  engine.actions.redrawCanvas();
 }
 
 Future loadSharedPreferences() async {
