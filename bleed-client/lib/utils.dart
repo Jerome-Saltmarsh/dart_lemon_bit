@@ -2,13 +2,10 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:bleed_client/common/enums/Direction.dart';
-import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/angle_between.dart';
-import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/pi2.dart';
 
 import 'common/Tile.dart';
@@ -72,12 +69,4 @@ void cameraCenter(double x, double y) {
 
 void setTileAtMouse(Tile tile) {
   isometric.actions.setTile(row: mouseRow, column: mouseColumn, tile: tile);
-}
-
-double distanceFromMouse(double x, double y) {
-  return distanceBetween(mouseWorldX, mouseWorldY, x, y);
-}
-
-T closestToMouse<T extends Vector2>(List<T> values){
-  return findClosest(values, mouseWorldX, mouseWorldY);
 }
