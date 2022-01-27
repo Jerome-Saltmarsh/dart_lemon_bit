@@ -52,6 +52,5 @@ void clearCompileGameState() {
 
 void clearRender() {
   tileTransforms.clear();
-  tileRects.clear();
   paths.clear();
 }

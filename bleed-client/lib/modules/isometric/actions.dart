@@ -126,29 +126,29 @@ class IsometricActions {
       }
     }
 
-    tileRects.clear();
+    final List<double> tileLeft = [];
+    tileLeft.clear();
     for (int row = 0; row < tiles.length; row++) {
       for (int column = 0; column < tiles[0].length; column++) {
-        tileRects.add(mapTileToSrcRect(tiles[row][column]));
+        tileLeft.add(mapTileToSrc(tiles[row][column]));
       }
     }
 
-    final total = tileRects.length * 4;
+    final total = tileLeft.length * 4;
     final tilesDst = Float32List(total);
     final tilesSrc = Float32List(total);
 
-    for (int i = 0; i < tileRects.length; ++i) {
+    for (int i = 0; i < tileLeft.length; ++i) {
       final int index0 = i * 4;
       final int index1 = index0 + 1;
       final int index2 = index0 + 2;
       final int index3 = index0 + 3;
       final RSTransform rstTransform = tileTransforms[i];
-      final Rect rect = tileRects[i];
       tilesDst[index0] = rstTransform.scos;
       tilesDst[index1] = rstTransform.ssin;
       tilesDst[index2] = rstTransform.tx;
       tilesDst[index3] = rstTransform.ty + tileSizeHalf;
-      tilesSrc[index0] = atlas.tiles.x + rect.left;
+      tilesSrc[index0] = atlas.tiles.x + tileLeft[i];
       tilesSrc[index1] = atlas.tiles.y;
       tilesSrc[index2] = tilesSrc[index0] + tileSize;
       tilesSrc[index3] = tilesSrc[index1] + tileSize;
