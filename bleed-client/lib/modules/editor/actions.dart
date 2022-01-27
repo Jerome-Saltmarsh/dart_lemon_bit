@@ -8,7 +8,6 @@ import 'package:bleed_client/functions/saveScene.dart';
 import 'package:bleed_client/modules/core/enums.dart';
 import 'package:bleed_client/modules/editor/mixin.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:lemon_engine/engine.dart';
@@ -56,8 +55,12 @@ class EditorActions with EditorScope {
   void moveSelectedToMouse(){
     final selected = state.selected.value;
     if (selected == null) return;
-    selected.x = mouseWorldX;
-    selected.y = mouseWorldY;
+    if (selected is EnvironmentObject){
+      selected.move(mouseWorldX, mouseWorldY);
+    } else{
+      selected.x = mouseWorldX;
+      selected.y = mouseWorldY;
+    }
   }
 
   void newScene({

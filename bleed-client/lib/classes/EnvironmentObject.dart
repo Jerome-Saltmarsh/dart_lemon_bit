@@ -12,7 +12,7 @@ class EnvironmentObject extends Vector2 {
   final ObjectType type;
   final bool generated;
 
-  late final Float32List dst;
+  final dst = Float32List(4);
 
   late double _top;
   late double _right;
@@ -28,6 +28,9 @@ class EnvironmentObject extends Vector2 {
   double get bottom => _bottom;
   double get left => _left;
 
+  double get anchorX => _width * 0.5;
+  double get anchorY => height * 0.6666;
+
   EnvironmentObject({
     required double x,
     required double y,
@@ -38,15 +41,20 @@ class EnvironmentObject extends Vector2 {
     _width = environmentObjectWidth[type]!;
     height = environmentObjectHeight[type]!;
     final double widthHalf = _width * 0.5;
-    _top = y - height * 0.666;
+    _top = y - anchorY;
     _right = x + widthHalf;
     _bottom = y + height * 0.333;
     _left = x - widthHalf;
-    dst = Float32List(4);
     dst[0] = 1;
     dst[1] = 0;
-    dst[2] = x - (_width * 0.5);
-    dst[3] = y - (height * 0.6666);
+    move(x, y);
+  }
+
+  void move(double x, double y){
+    this.x = x;
+    this.y = y;
+    dst[2] = x - anchorX;
+    dst[3] = y - anchorY;
     row = getRow(x, y);
     column = getColumn(x, y);
   }

@@ -82,6 +82,11 @@ class IsometricActions with IsometricScope {
     }
   }
 
+  void updateEnvironmentObjectDst(EnvironmentObject value){
+    value.dst[2] = value.x - value.anchorX;
+    value.dst[3] = value.y -  value.anchorY;
+  }
+
   void resetDynamicShadesToBakeMap() {
     final dynamicShading = modules.isometric.state.dynamicShading;
     for (int row = 0; row < dynamicShading.length; row++) {
