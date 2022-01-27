@@ -15,6 +15,7 @@ enum Tile {
   Block,
   Block_Horizontal,
   Block_Vertical,
+  Crate,
   Concrete_Horizontal,
   Concrete_Vertical,
   Bridge,
