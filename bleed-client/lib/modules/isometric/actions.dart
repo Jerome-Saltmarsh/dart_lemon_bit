@@ -51,7 +51,6 @@ class IsometricActions {
         _baked.add(state.ambient.value);
       }
     }
-
     applyEnvironmentObjectsToBakeMapping();
   }
 
@@ -85,7 +84,6 @@ class IsometricActions {
     }
   }
 
-
   void resetDynamicShadesToBakeMap() {
     final dynamicShading = modules.isometric.state.dynamicShading;
     for (int row = 0; row < dynamicShading.length; row++) {
@@ -102,6 +100,22 @@ class IsometricActions {
     resetTilesSrcDst();
   }
 
+  /// Expensive
+  void setTile({
+    required int row,
+    required int column,
+    required Tile tile,
+  }) {
+    if (row < 0) return;
+    if (column < 0) return;
+    if (row >= game.totalRows) return;
+    if (column >= game.totalColumns) return;
+    if (game.tiles[row][column] == tile) return;
+    game.tiles[row][column] = tile;
+    resetTilesSrcDst();
+  }
+
+  /// Expensive
   void resetTilesSrcDst() {
     print("isometric.actions.resetTilesSrcDst()");
 
@@ -153,19 +167,5 @@ class IsometricActions {
     }
     modules.isometric.state.tilesDst = tilesDst;
     modules.isometric.state.tilesSrc = tilesSrc;
-  }
-
-  void setTile({
-    required int row,
-    required int column,
-    required Tile tile,
-  }) {
-    if (row < 0) return;
-    if (column < 0) return;
-    if (row >= game.totalRows) return;
-    if (column >= game.totalColumns) return;
-    if (game.tiles[row][column] == tile) return;
-    game.tiles[row][column] = tile;
-    modules.isometric.actions.resetTilesSrcDst();
   }
 }
