@@ -108,10 +108,21 @@ class IsometricActions {
     print("isometric.actions.resetTilesSrcDst()");
 
     final tiles = game.tiles;
+    final tileSize = modules.isometric.constants.tileSize;
+    final tileSizeHalf = tileSize / 2;
+
     tileTransforms.clear();
     for (int x = 0; x < tiles.length; x++) {
       for (int y = 0; y < tiles[0].length; y++) {
-        tileTransforms.add(_buildTileRSTransform(x, y));
+        tileTransforms.add(
+            RSTransform.fromComponents(
+            rotation: 0.0,
+            scale: 1.0,
+            anchorX: tileSizeHalf,
+            anchorY: tileSize,
+            translateX: getTileWorldX(x, y),
+            translateY: getTileWorldY(x, y))
+        );
       }
     }
 
@@ -125,8 +136,6 @@ class IsometricActions {
     final total = tileRects.length * 4;
     final tilesDst = Float32List(total);
     final tilesSrc = Float32List(total);
-    final tileSize = 48;
-    final tileSizeHalf = tileSize / 2;
 
     for (int i = 0; i < tileRects.length; ++i) {
       final int index0 = i * 4;
@@ -146,16 +155,6 @@ class IsometricActions {
     }
     modules.isometric.state.tilesDst = tilesDst;
     modules.isometric.state.tilesSrc = tilesSrc;
-  }
-
-  RSTransform _buildTileRSTransform(int x, int y) {
-    return RSTransform.fromComponents(
-        rotation: 0.0,
-        scale: 1.0,
-        anchorX: modules.isometric.constants.halfTileSize,
-        anchorY: modules.isometric.constants.tileSize,
-        translateX: getTileWorldX(x, y),
-        translateY: getTileWorldY(x, y));
   }
 
   void setTile({
