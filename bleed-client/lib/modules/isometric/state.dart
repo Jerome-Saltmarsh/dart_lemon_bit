@@ -10,8 +10,8 @@ import 'package:lemon_watch/watch.dart';
 class IsometricState {
   bool eventsRegistered = false;
   List<List<Tile>> tiles = [];
-  late Float32List tilesDst;
-  late Float32List tilesSrc;
+  Float32List tilesDst = Float32List(0);
+  Float32List tilesSrc = Float32List(0);
   final List<EnvironmentObject> environmentObjects = [];
   final List<List<Shade>> dynamicShading = [];
   final List<List<Shade>> bakeMap = [];
