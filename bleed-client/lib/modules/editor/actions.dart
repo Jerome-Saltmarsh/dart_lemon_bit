@@ -72,6 +72,9 @@ class EditorActions with EditorScope {
     isometric.state.totalRows.value = rows;
     isometric.state.totalColumns.value = columns;
     isometric.state.tiles.clear();
+    editor.state.playerSpawnPoints.clear();
+    editor.state.timeSpeed.value = TimeSpeed.Normal;
+    isometric.state.time.value = config.defaultStartTime;
     editor.state.characters.clear();
     for (int row = 0; row < rows; row++) {
       List<Tile> columnTiles = [];

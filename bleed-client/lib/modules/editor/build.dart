@@ -163,7 +163,7 @@ class EditorBuild {
         button("+", modules.editor.actions.timeSpeedIncrease),
       ],),
 
-      
+
     ];
   }
 

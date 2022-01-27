@@ -14,6 +14,6 @@ class EditorModule {
   final build = EditorBuild();
   final events = EditorEvents();
   final config = EditorConfig();
+  final render = EditorRender();
   final update = updateEditor;
-  final render = renderEditor;
 }

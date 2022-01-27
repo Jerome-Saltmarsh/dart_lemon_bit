@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 class EditorConfig {
   final _Keys keys = _Keys();
+  final int defaultStartTime = 12;
 }
 
 class _Keys {

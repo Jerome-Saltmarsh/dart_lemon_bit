@@ -14,6 +14,7 @@ class EditorState {
   int selectedCollectable = -1;
   bool panning = false;
   bool mouseDragging = false;
+  final List<Vector2> playerSpawnPoints = [];
   final Watch<TimeSpeed> timeSpeed = Watch(TimeSpeed.Normal);
   final Watch<String> process = Watch("");
   final Watch<Vector2?> selected = Watch(null);

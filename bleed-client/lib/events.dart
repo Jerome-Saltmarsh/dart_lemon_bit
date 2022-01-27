@@ -182,7 +182,7 @@ class Events {
     engine.state.drawCanvas = null;
     engine.actions.clearCallbacks();
     if (mode == Mode.Edit) {
-      engine.state.drawCanvas = editor.render;
+      engine.state.drawCanvas = editor.render.render;
       modules.editor.events.onActivated();
       removeGeneratedEnvironmentObjects();
       deregisterPlayKeyboardHandler();
