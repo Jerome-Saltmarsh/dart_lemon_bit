@@ -103,40 +103,46 @@ class EditorBuild {
   }
 
   List<Widget> _tabMisc() {
+
+    final _textWidth = 150.0;
+
     return [
       // button("Copy to Clipboard", copyCompiledGameToClipboard, width: _width),
       Row(
         children: [
-          WatchBuilder(modules.isometric.state.totalRows, (int total){
-            return text("Rows $total");
-          }),
+          Container(
+            width: _textWidth,
+            child: WatchBuilder(modules.isometric.state.totalRows, (int total){
+              return text("Rows $total");
+            }),
+          ),
           button("-", isometric.actions.removeRow),
           button("+", isometric.actions.addRow)
         ],
       ),
       Row(
         children: [
-            WatchBuilder(modules.isometric.state.totalColumns, (int total){
-               return text("Columns $total");
-            }),
+            Container(
+              width: _textWidth,
+              child: WatchBuilder(modules.isometric.state.totalColumns, (int total){
+                 return text("Columns $total");
+              }),
+            ),
             button("-", isometric.actions.removeColumn),
             button("+", isometric.actions.addColumn)
         ],
       ),
       Row(children: [
-         text("Start Hour:"),
-          width8,
-          WatchBuilder(modules.isometric.state.time, (int value){
-            return text(modules.game.properties.timeInHours);
-          }),
+          Container(
+            width: _textWidth,
+            child: WatchBuilder(modules.isometric.state.time, (int value){
+              return text("Time ${modules.game.properties.timeInHours}");
+            }),
+          ),
         width8,
-        button("-", (){
-          modules.isometric.state.time.value -= (60 * 60);
-        }),
+        button("-", modules.isometric.actions.detractHour),
         width8,
-        button("+", (){
-          modules.isometric.state.time.value += (60 * 60);
-        }),
+        button("+", modules.isometric.actions.addHour),
       ],)
     ];
   }

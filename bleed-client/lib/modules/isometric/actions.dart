@@ -5,6 +5,7 @@ import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:bleed_client/constants.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
 import 'package:bleed_client/modules/isometric/scope.dart';
@@ -203,5 +204,19 @@ class IsometricActions with IsometricScope {
     }
     refreshTileSize();
     resetTilesSrcDst();
+  }
+
+  void detractHour(){
+    print("isometric.actions.detractHour()");
+    final amount = modules.isometric.state.time.value - secondsPerHour;
+    if (amount > 0) {
+      modules.isometric.state.time.value = amount;
+    } else {
+      modules.isometric.state.time.value = secondsPerDay + amount;
+    }
+  }
+
+  void addHour(){
+    modules.isometric.state.time.value += secondsPerHour;
   }
 }
