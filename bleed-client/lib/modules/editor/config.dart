@@ -8,4 +8,5 @@ class EditorConfig {
 class _Keys {
   final selectTileType = LogicalKeyboardKey.keyQ;
   final pan = LogicalKeyboardKey.space;
+  final move = LogicalKeyboardKey.keyG;
 }

@@ -58,6 +58,8 @@ class EditorBuild {
       right: 16,
       child: Row(
             children: [
+              _buttonPlay(),
+              width16,
               _buttonClear(),
               width16,
               _buttonLoad(),
@@ -151,6 +153,8 @@ class EditorBuild {
       ],)
     ];
   }
+
+  Widget _buttonPlay() => text("Play", onPressed: editor.actions.play);
 
   Widget _buttonClear() => text("Clear", onPressed: editor.actions.clear);
 
@@ -292,7 +296,7 @@ class EditorBuild {
                 crossAxisAlignment: axis.cross.start,
                 children: mapNames.map((name){
                   return button(name, () async {
-                    editor.actions.loadMapFromFirestore(name);
+                    editor.actions.loadMap(name);
                   },
                     borderColor: none,
                     borderColorMouseOver: colours.white80,

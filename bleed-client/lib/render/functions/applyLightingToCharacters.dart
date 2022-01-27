@@ -5,9 +5,8 @@ import 'package:bleed_client/state/game.dart';
 
 void applyCharacterLightEmission(List<Character> characters) {
   for(Character character in characters){
-    if (character.team == game.player.team){
-      emitLightHigh(isometric.state.dynamicShading, character.x, character.y);
-    }
+    if (character.team != game.player.team) continue;
+    emitLightHigh(isometric.state.dynamicShading, character.x, character.y);
   }
 }
 

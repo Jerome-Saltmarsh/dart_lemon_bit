@@ -8,6 +8,7 @@ import 'package:bleed_client/functions/saveScene.dart';
 import 'package:bleed_client/modules/core/enums.dart';
 import 'package:bleed_client/modules/editor/mixin.dart';
 import 'package:bleed_client/modules/modules.dart';
+import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:lemon_engine/engine.dart';
@@ -46,6 +47,17 @@ class EditorActions with EditorScope {
         rows: isometric.state.totalRows.value,
         columns: isometric.state.totalColumns.value
     );
+  }
+
+  void play(){
+    website.actions.connectToCustomGame(state.mapNameController.text);
+  }
+
+  void moveSelectedToMouse(){
+    final selected = state.selected.value;
+    if (selected == null) return;
+    selected.x = mouseWorldX;
+    selected.y = mouseWorldY;
   }
 
   void newScene({
@@ -119,8 +131,9 @@ class EditorActions with EditorScope {
     ).whenComplete(core.actions.operationCompleted);
   }
 
-  void loadMapFromFirestore(String name) async {
+  void loadMap(String name) async {
     closeDialog();
+    state.mapNameController.text = name;
     core.state.operationStatus.value = OperationStatus.Loading_Map;
     final mapJson = await firestoreService
         .loadMap(name)

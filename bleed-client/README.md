@@ -91,8 +91,11 @@
 [ ] Break Crates
 [ ] Weapon UI
 [EDITOR]
-[ ] Save
-[ ] Add Units
+[ ] Time Speed
+[ ] Play button
+[ ] Flames spawn in tile center
+[x] Save
+[x] Add Units
 [COMPLETED]
 [x] Fix melee attack
 [x] Sign in with Facebook

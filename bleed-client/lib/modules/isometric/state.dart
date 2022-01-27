@@ -7,22 +7,18 @@ import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:lemon_watch/watch.dart';
 
-import 'enums.dart';
-
 class IsometricState {
-  Watch<int> totalColumns = Watch(0);
-  Watch<int> totalRows = Watch(0);
   bool eventsRegistered = false;
-  final Watch<int> hour = Watch(0);
-  final List<EnvironmentObject> environmentObjects = [];
-  final Watch<Shade> ambient = Watch(Shade.VeryDark);
-  final List<List<Shade>> dynamicShading = [];
-  final List<List<Shade>> bakeMap = [];
-  final Watch<int> time = Watch(0);
-  // final Watch<Phase> phase = Watch(Phase.Day);
   List<List<Tile>> tiles = [];
   late Float32List tilesDst;
   late Float32List tilesSrc;
-  /// Used by caves and inside to control ambient light
+  final List<EnvironmentObject> environmentObjects = [];
+  final List<List<Shade>> dynamicShading = [];
+  final List<List<Shade>> bakeMap = [];
+  final Watch<int> totalColumns = Watch(0);
+  final Watch<int> totalRows = Watch(0);
+  final Watch<int> hour = Watch(0);
+  final Watch<int> time = Watch(0);
+  final Watch<Shade> ambient = Watch(Shade.Bright);
   final Watch<Shade> maxAmbientBrightness = Watch(Shade.Bright);
 }

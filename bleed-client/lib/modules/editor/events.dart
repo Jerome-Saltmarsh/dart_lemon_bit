@@ -5,6 +5,7 @@ import 'dart:ui';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
+import 'package:bleed_client/getters/getTileAt.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/modules/core/enums.dart';
 import 'package:bleed_client/modules/editor/mixin.dart';
@@ -39,8 +40,11 @@ class EditorEvents with EditorScope {
   }
 
   void onKeyPressed(LogicalKeyboardKey key){
-    if (key == editor.config.keys.pan){
+    if (key == config.keys.pan){
       state.panning = true;
+    }
+    if (key == config.keys.move && state.selected.isNotNull && !boundaryAtMouse){
+      editor.actions.moveSelectedToMouse();
     }
   }
 
