@@ -84,11 +84,11 @@ void emitAmbientMyst() {
 }
 
 int getRandomColumn(){
-  return randomInt(0, modules.isometric.state.totalColumns);
+  return randomInt(0, modules.isometric.state.totalColumns.value);
 }
 
 int getRandomRow(){
- return randomInt(0, modules.isometric.state.totalRows);
+ return randomInt(0, modules.isometric.state.totalRows.value);
 }
 
 void updateParticleEmitters() {

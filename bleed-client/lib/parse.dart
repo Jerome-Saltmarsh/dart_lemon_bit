@@ -395,12 +395,12 @@ void _parsePaths() {
 }
 
 void _parseTiles() {
-  modules.isometric.state.totalRows = consumeInt();
-  modules.isometric.state.totalColumns = consumeInt();
+  modules.isometric.state.totalRows.value = consumeInt();
+  modules.isometric.state.totalColumns.value = consumeInt();
   isometric.state.tiles.clear();
-  for (int row = 0; row < modules.isometric.state.totalRows; row++) {
+  for (int row = 0; row < modules.isometric.state.totalRows.value; row++) {
     List<Tile> column = [];
-    for (int columnIndex = 0; columnIndex < modules.isometric.state.totalColumns; columnIndex++) {
+    for (int columnIndex = 0; columnIndex < modules.isometric.state.totalColumns.value; columnIndex++) {
       column.add(_consumeTile());
     }
     isometric.state.tiles.add(column);

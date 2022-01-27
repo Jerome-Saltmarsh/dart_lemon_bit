@@ -10,10 +10,10 @@ Shade getShadeAtPosition(double x, double y){
 Shade getShade(int row, int column){
   if (row < 0) return Shade.VeryDark;
   if (column < 0) return Shade.VeryDark;
-  if (row >= modules.isometric.state.totalRows){
+  if (row >= modules.isometric.state.totalRows.value){
     return Shade.VeryDark;
   }
-  if (column >= modules.isometric.state.totalColumns){
+  if (column >= modules.isometric.state.totalColumns.value){
     return Shade.VeryDark;
   }
   return modules.isometric.state.dynamicShading[row][column];

@@ -94,8 +94,8 @@ int get mouseRow {
 Tile getTile(int row, int column){
   if (row < 0) return Tile.Boundary;
   if (column < 0) return Tile.Boundary;
-  if (row >= modules.isometric.state.totalRows) return Tile.Boundary;
-  if (column >= modules.isometric.state.totalColumns) return Tile.Boundary;
+  if (row >= modules.isometric.state.totalRows.value) return Tile.Boundary;
+  if (column >= modules.isometric.state.totalColumns.value) return Tile.Boundary;
   return isometric.state.tiles[row][column];
 }
 

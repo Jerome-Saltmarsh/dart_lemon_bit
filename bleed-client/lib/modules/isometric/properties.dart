@@ -15,8 +15,8 @@ class IsometricProperties with IsometricScope {
   Tile get tileAtMouse {
     if (mouseRow < 0) return Tile.Boundary;
     if (mouseColumn < 0) return Tile.Boundary;
-    if (mouseRow >= state.totalRows) return Tile.Boundary;
-    if (mouseColumn >= state.totalColumns) return Tile.Boundary;
+    if (mouseRow >= state.totalRows.value) return Tile.Boundary;
+    if (mouseColumn >= state.totalColumns.value) return Tile.Boundary;
     return state.tiles[mouseRow][mouseColumn];
   }
 

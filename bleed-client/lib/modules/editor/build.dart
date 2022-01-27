@@ -6,9 +6,7 @@ import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/flutterkit.dart';
-import 'package:bleed_client/functions/saveScene.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/styles.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
@@ -105,37 +103,26 @@ class EditorBuild {
   }
 
   List<Widget> _tabMisc() {
-    final _width = 200.0;
-    final tiles = modules.isometric.state.tiles;
     return [
       // button("Copy to Clipboard", copyCompiledGameToClipboard, width: _width),
-      button("Tiles.X++", () {
-        for (List<Tile> row in tiles) {
-          row.add(Tile.Grass);
-        }
-        modules.isometric.actions.resetTilesSrcDst();
-      }, width: _width, alignment: Alignment.centerLeft),
-      button("Tiles.Y++", () {
-        List<Tile> row = [];
-        for (int i = 0; i < tiles[0].length; i++) {
-          row.add(Tile.Grass);
-        }
-        tiles.add(row);
-        modules.isometric.actions.resetTilesSrcDst();
-      }, width: _width, alignment: Alignment.centerLeft),
-      if (tiles.length > 2)
-        button("Tiles.X--", () {
-          tiles.removeLast();
-          modules.isometric.actions.resetTilesSrcDst();
-        }, width: _width, alignment: Alignment.centerLeft),
-      if (tiles[0].length > 2)
-        button("Tiles.Y--", () {
-          for (int i = 0; i < tiles.length; i++) {
-            tiles[i].removeLast();
-          }
-          modules.isometric.actions.resetTilesSrcDst();
-        }, width: _width, alignment: Alignment.centerLeft),
-
+      Row(
+        children: [
+          WatchBuilder(modules.isometric.state.totalRows, (int total){
+            return text("Rows $total");
+          }),
+          button("-", editor.actions.removeRow),
+          button("+", editor.actions.addRow)
+        ],
+      ),
+      Row(
+        children: [
+            WatchBuilder(modules.isometric.state.totalColumns, (int total){
+               return text("Columns $total");
+            }),
+            button("-", editor.actions.removeColumn),
+            button("+", editor.actions.addColumn)
+        ],
+      ),
       Row(children: [
          text("Start Hour:"),
           width8,

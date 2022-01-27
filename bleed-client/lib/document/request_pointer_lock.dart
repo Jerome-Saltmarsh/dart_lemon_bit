@@ -7,7 +7,6 @@ void requestPointerLock() {
   }
 }
 
-
 void setDocumentTitle(String value){
   document.title = value;
 }
