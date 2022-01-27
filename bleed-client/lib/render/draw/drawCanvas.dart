@@ -57,7 +57,7 @@ final Scene scene = Scene();
 void renderGame(Canvas canvas, Size size) {
   applyEmissionsToDynamicShadeMap();
   modules.isometric.actions.applyDynamicShadeToTileSrc();
-  drawTiles();
+  isometric.render.drawTiles();
   drawProjectiles(game.projectiles);
   drawBulletHoles(game.bulletHoles);
 

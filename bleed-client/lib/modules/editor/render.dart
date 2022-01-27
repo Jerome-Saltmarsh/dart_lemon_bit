@@ -11,7 +11,7 @@ import 'package:lemon_math/Vector2.dart';
 class EditorRender {
 
   void render(Canvas canvas, Size size) {
-    drawTiles();
+    isometric.render.drawTiles();
     drawSprites();
     _drawSelectedObject();
     _drawCharacters();

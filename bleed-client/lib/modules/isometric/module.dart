@@ -5,6 +5,7 @@ import 'package:bleed_client/modules/isometric/constants.dart';
 import 'package:bleed_client/modules/isometric/events.dart';
 import 'package:bleed_client/modules/isometric/maps.dart';
 import 'package:bleed_client/modules/isometric/properties.dart';
+import 'package:bleed_client/modules/isometric/render.dart';
 import 'package:bleed_client/modules/isometric/state.dart';
 import 'package:bleed_client/modules/isometric/subscriptions.dart';
 
@@ -16,9 +17,5 @@ class IsometricModule {
   final properties = IsometricProperties();
   final constants = IsometricConstants();
   final map = IsometricMaps();
-
-  IsometricModule(){
-     state.hour.value = 0;
-     state.hour.value = 12;
-  }
+  final render = IsometricRender();
 }

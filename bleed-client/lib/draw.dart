@@ -122,13 +122,6 @@ void drawCircleOutline({
   }
 }
 
-void drawTiles() {
-  engine.actions.setPaintColorWhite();
-  drawAtlas(
-      dst: modules.isometric.state.tilesDst,
-      src: modules.isometric.state.tilesSrc,
-  );
-}
 
 void drawBulletHoles(List<Vector2> bulletHoles) {
   for (Vector2 bulletHole in bulletHoles) {
