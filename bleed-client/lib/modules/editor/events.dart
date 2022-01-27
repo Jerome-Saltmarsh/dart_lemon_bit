@@ -5,7 +5,6 @@ import 'dart:ui';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
-import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/modules/editor/mixin.dart';
 import 'package:bleed_client/modules/modules.dart';
@@ -105,17 +104,11 @@ class EditorEvents with EditorScope {
         setTileAtMouse(editor.state.tile.value);
         break;
       case ToolTab.Objects:
-        modules.isometric.state.environmentObjects.add(EnvironmentObject(
+        modules.editor.actions.addEnvironmentObject(
+          type:  editor.state.objectType.value,
           x: mouseWorldX,
           y: mouseWorldY,
-          type: editor.state.objectType.value,
-          radius: 0,
-        ));
-
-        if (editor.state.objectType.value == ObjectType.Torch){
-          isometric.actions.resetLighting();
-        }
-
+        );
         break;
       case ToolTab.All:
         break;

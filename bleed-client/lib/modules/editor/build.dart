@@ -105,14 +105,15 @@ class EditorBuild {
   }
 
   List<Widget> _tabMisc() {
+    final _width = 200.0;
     return [
-      button("Copy to Clipboard", copyCompiledGameToClipboard),
+      // button("Copy to Clipboard", copyCompiledGameToClipboard, width: _width),
       button("Tiles.X++", () {
         for (List<Tile> row in game.tiles) {
           row.add(Tile.Grass);
         }
         modules.isometric.actions.mapTilesToSrcAndDst();
-      }),
+      }, width: _width, alignment: Alignment.centerLeft),
       button("Tiles.Y++", () {
         List<Tile> row = [];
         for (int i = 0; i < game.tiles[0].length; i++) {
@@ -120,19 +121,19 @@ class EditorBuild {
         }
         game.tiles.add(row);
         modules.isometric.actions.mapTilesToSrcAndDst();
-      }),
+      }, width: _width, alignment: Alignment.centerLeft),
       if (game.tiles.length > 2)
         button("Tiles.X--", () {
           game.tiles.removeLast();
           modules.isometric.actions.mapTilesToSrcAndDst();
-        }),
+        }, width: _width, alignment: Alignment.centerLeft),
       if (game.tiles[0].length > 2)
         button("Tiles.Y--", () {
           for (int i = 0; i < game.tiles.length; i++) {
             game.tiles[i].removeLast();
           }
           modules.isometric.actions.mapTilesToSrcAndDst();
-        }),
+        }, width: _width, alignment: Alignment.centerLeft),
 
       Row(children: [
          text("Start Hour:"),

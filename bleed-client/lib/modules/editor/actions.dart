@@ -18,6 +18,22 @@ import 'enums.dart';
 
 class EditorActions with EditorScope {
 
+  void addEnvironmentObject ({
+    required ObjectType type,
+    required double x,
+    required double y,
+  }){
+    modules.isometric.state.environmentObjects.add(EnvironmentObject(
+      x: x,
+      y: y,
+      type: type,
+      radius: 0,
+    ));
+    if (type == ObjectType.Torch) {
+      isometric.actions.resetLighting();
+    }
+  }
+
   void deleteSelected() {
     if (state.selected.value == null) return;
     modules.isometric.state.environmentObjects.remove(state.selected.value);
