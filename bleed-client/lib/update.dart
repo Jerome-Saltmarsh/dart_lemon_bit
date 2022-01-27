@@ -69,7 +69,7 @@ void updateZoom() {
   double sY = screenCenterWorldY;
   double zoomDiff = targetZoom - engine.state.zoom;
   engine.state.zoom += zoomDiff * game.settings.zoomFollowSpeed;
-  cameraCenter(sX, sY);
+  engine.actions.cameraCenter(sX, sY);
 }
 
 void emitAmbientMyst() {

@@ -179,10 +179,10 @@ void parseState() {
         double y = consumeDouble();
         player.x = x;
         player.y = y;
-        cameraCenter(x, y);
+        engine.actions.cameraCenter(x, y);
 
         Future.delayed(Duration(milliseconds: 150), () {
-          cameraCenter(x, y);
+          engine.actions.cameraCenter(x, y);
         });
         for (Particle particle in isometric.state.particles) {
           particle.active = false;

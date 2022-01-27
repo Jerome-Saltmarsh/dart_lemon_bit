@@ -62,11 +62,6 @@ Direction convertAngleToDirection(double angle) {
   return Direction.Up;
 }
 
-void cameraCenter(double x, double y) {
-  engine.state.camera.x = x - (screenCenterX / engine.state.zoom);
-  engine.state.camera.y = y - (screenCenterY / engine.state.zoom);
-}
-
 void setTileAtMouse(Tile tile) {
   isometric.actions.setTile(row: mouseRow, column: mouseColumn, tile: tile);
 }

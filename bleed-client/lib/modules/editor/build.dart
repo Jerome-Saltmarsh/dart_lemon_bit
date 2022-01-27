@@ -96,7 +96,7 @@ class EditorBuild {
               (Vector2? selected) {
             return button(enumString(env.type), () {
               editor.state.selected.value = env;
-              cameraCenter(env.x, env.y);
+              engine.actions.cameraCenter(env.x, env.y);
               engine.actions.redrawCanvas();
             }, fillColor: env == selected ? _highlight : colours.transparent,
               width: style.buttonWidth,
