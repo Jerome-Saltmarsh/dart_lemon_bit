@@ -112,7 +112,7 @@ class EditorBuild {
         for (List<Tile> row in game.tiles) {
           row.add(Tile.Grass);
         }
-        modules.isometric.actions.mapTilesToSrcAndDst();
+        modules.isometric.actions.resetTilesSrcDst();
       }, width: _width, alignment: Alignment.centerLeft),
       button("Tiles.Y++", () {
         List<Tile> row = [];
@@ -120,19 +120,19 @@ class EditorBuild {
           row.add(Tile.Grass);
         }
         game.tiles.add(row);
-        modules.isometric.actions.mapTilesToSrcAndDst();
+        modules.isometric.actions.resetTilesSrcDst();
       }, width: _width, alignment: Alignment.centerLeft),
       if (game.tiles.length > 2)
         button("Tiles.X--", () {
           game.tiles.removeLast();
-          modules.isometric.actions.mapTilesToSrcAndDst();
+          modules.isometric.actions.resetTilesSrcDst();
         }, width: _width, alignment: Alignment.centerLeft),
       if (game.tiles[0].length > 2)
         button("Tiles.Y--", () {
           for (int i = 0; i < game.tiles.length; i++) {
             game.tiles[i].removeLast();
           }
-          modules.isometric.actions.mapTilesToSrcAndDst();
+          modules.isometric.actions.resetTilesSrcDst();
         }, width: _width, alignment: Alignment.centerLeft),
 
       Row(children: [

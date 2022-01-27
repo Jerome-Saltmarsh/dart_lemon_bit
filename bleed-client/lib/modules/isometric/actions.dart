@@ -19,7 +19,6 @@ class IsometricActions {
 
   IsometricState get state => modules.isometric.state;
 
-
   void applyDynamicShadeToTileSrc() {
     final _size = 48.0;
     int i = 0;
@@ -102,13 +101,26 @@ class IsometricActions {
     print("actions.updateTileRender()");
     resetBakeMap();
     resetDynamicMap();
-    mapTilesToSrcAndDst();
+    resetTilesSrcDst();
   }
 
-  void mapTilesToSrcAndDst() {
-    print("mapTilesToSrcAndDst()");
-    _processTileTransforms();
-    _loadTileRects();
+  void resetTilesSrcDst() {
+    print("isometric.actions.resetTilesSrcDst()");
+
+    final tiles = game.tiles;
+    tileTransforms.clear();
+    for (int x = 0; x < tiles.length; x++) {
+      for (int y = 0; y < tiles[0].length; y++) {
+        tileTransforms.add(_buildTileRSTransform(x, y));
+      }
+    }
+
+    tileRects.clear();
+    for (int row = 0; row < tiles.length; row++) {
+      for (int column = 0; column < tiles[0].length; column++) {
+        tileRects.add(mapTileToSrcRect(tiles[row][column]));
+      }
+    }
 
     final total = tileRects.length * 4;
     final tilesDst = Float32List(total);
@@ -136,16 +148,6 @@ class IsometricActions {
     modules.isometric.state.tilesSrc = tilesSrc;
   }
 
-  void _processTileTransforms() {
-    final tiles = game.tiles;
-    tileTransforms.clear();
-    for (int x = 0; x < tiles.length; x++) {
-      for (int y = 0; y < tiles[0].length; y++) {
-        tileTransforms.add(_buildTileRSTransform(x, y));
-      }
-    }
-  }
-
   RSTransform _buildTileRSTransform(int x, int y) {
     return RSTransform.fromComponents(
         rotation: 0.0,
@@ -154,17 +156,6 @@ class IsometricActions {
         anchorY: modules.isometric.constants.tileSize,
         translateX: getTileWorldX(x, y),
         translateY: getTileWorldY(x, y));
-  }
-
-
-  void _loadTileRects() {
-    final tiles = game.tiles;
-    tileRects.clear();
-    for (int row = 0; row < tiles.length; row++) {
-      for (int column = 0; column < tiles[0].length; column++) {
-        tileRects.add(mapTileToSrcRect(tiles[row][column]));
-      }
-    }
   }
 
   void setTile({
@@ -178,6 +169,6 @@ class IsometricActions {
     if (column >= game.totalColumns) return;
     if (game.tiles[row][column] == tile) return;
     game.tiles[row][column] = tile;
-    modules.isometric.actions.mapTilesToSrcAndDst();
+    modules.isometric.actions.resetTilesSrcDst();
   }
 }
