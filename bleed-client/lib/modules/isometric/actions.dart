@@ -22,8 +22,8 @@ class IsometricActions {
     int i = 0;
     final state = modules.isometric.state;
     final dynamicShading = state.dynamicShading;
-    for (int row = 0; row < game.totalRows; row++) {
-      for (int column = 0; column < game.totalColumns; column++) {
+    for (int row = 0; row < modules.isometric.state.totalRows; row++) {
+      for (int column = 0; column < modules.isometric.state.totalColumns; column++) {
         Shade shade = dynamicShading[row][column];
         state.tilesSrc[i + 1] = atlas.tiles.y + shade.index * tileSize; // top
         state.tilesSrc[i + 3] = state.tilesSrc[i + 1] + tileSize; // bottom
@@ -44,10 +44,10 @@ class IsometricActions {
   void resetBakeMap(){
     print("isometric.actions.resetBakeMap()");
     state.bakeMap.clear();
-    for (int row = 0; row < game.totalRows; row++) {
+    for (int row = 0; row < modules.isometric.state.totalRows; row++) {
       final List<Shade> _baked = [];
       state.bakeMap.add(_baked);
-      for (int column = 0; column < game.totalColumns; column++) {
+      for (int column = 0; column < modules.isometric.state.totalColumns; column++) {
         _baked.add(state.ambient.value);
       }
     }
@@ -58,10 +58,10 @@ class IsometricActions {
   void resetDynamicMap(){
     print("isometric.actions.resetDynamicMap()");
     modules.isometric.state.dynamicShading.clear();
-    for (int row = 0; row < game.totalRows; row++) {
+    for (int row = 0; row < modules.isometric.state.totalRows; row++) {
       final List<Shade> _dynamic = [];
       modules.isometric.state.dynamicShading.add(_dynamic);
-      for (int column = 0; column < game.totalColumns; column++) {
+      for (int column = 0; column < modules.isometric.state.totalColumns; column++) {
         _dynamic.add(modules.isometric.state.ambient.value);
       }
     }
@@ -108,8 +108,8 @@ class IsometricActions {
   }) {
     if (row < 0) return;
     if (column < 0) return;
-    if (row >= game.totalRows) return;
-    if (column >= game.totalColumns) return;
+    if (row >= state.totalRows) return;
+    if (column >= state.totalColumns) return;
     if (game.tiles[row][column] == tile) return;
     game.tiles[row][column] = tile;
     resetTilesSrcDst();

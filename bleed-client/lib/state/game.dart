@@ -55,8 +55,6 @@ class _Game {
   int cratesTotal = 0;
   List<EnvironmentObject> torches = [];
   List<List<Tile>> tiles = [];
-  int totalColumns = 0;
-  int totalRows = 0;
   List<NpcDebug> npcDebug = [];
   final List<Character> humans = [];
   final List<Zombie> zombies = [];

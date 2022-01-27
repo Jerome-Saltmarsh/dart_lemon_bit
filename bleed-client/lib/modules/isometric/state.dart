@@ -9,6 +9,8 @@ import 'package:lemon_watch/watch.dart';
 import 'enums.dart';
 
 class IsometricState {
+  int totalColumns = 0;
+  int totalRows = 0;
   bool eventsRegistered = false;
   final Watch<int> hour = Watch(0);
   final List<EnvironmentObject> environmentObjects = [];

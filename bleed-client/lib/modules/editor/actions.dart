@@ -42,7 +42,10 @@ class EditorActions with EditorScope {
   }
 
   void clear() {
-    newScene(rows: game.totalRows, columns: game.totalColumns);
+    newScene(
+        rows: modules.isometric.state.totalRows,
+        columns: modules.isometric.state.totalColumns
+    );
   }
 
   void newScene({
@@ -50,8 +53,9 @@ class EditorActions with EditorScope {
     int columns = 40,
     Tile tile = Tile.Grass,
   }){
-    game.totalRows = rows;
-    game.totalColumns = columns;
+    print("editor.actions.newScene()");
+    modules.isometric.state.totalRows = rows;
+    modules.isometric.state.totalColumns = columns;
     game.tiles.clear();
     editor.state.characters.clear();
     for (int row = 0; row < rows; row++) {
