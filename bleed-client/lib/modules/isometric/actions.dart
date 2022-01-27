@@ -7,15 +7,13 @@ import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
-import 'package:bleed_client/modules/isometric/state.dart';
+import 'package:bleed_client/modules/isometric/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/render/constants/atlas.dart';
 import 'package:bleed_client/render/functions/emitLight.dart';
 import 'package:bleed_client/state/game.dart';
 
-class IsometricActions {
-
-  IsometricState get state => modules.isometric.state;
+class IsometricActions with IsometricScope {
 
   void applyDynamicShadeToTileSrc() {
     final tileSize = modules.isometric.constants.tileSize;
