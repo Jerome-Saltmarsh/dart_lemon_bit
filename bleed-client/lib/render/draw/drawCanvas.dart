@@ -9,6 +9,7 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CommonSettings.dart';
+import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
@@ -53,6 +54,9 @@ final Scene scene = Scene();
 void renderGame(Canvas canvas, Size size) {
 
   if (game.player.uuid.value.isEmpty) {
+    return;
+  }
+  if (game.status.value == GameStatus.Awaiting_Players){
     return;
   }
 

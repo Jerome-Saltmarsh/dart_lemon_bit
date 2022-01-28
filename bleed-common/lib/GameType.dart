@@ -29,4 +29,5 @@ final Map<GameType, String> gameTypeNames = {
 final List<GameType> freeToPlay = [
     GameType.MMO,
     GameType.Moba,
+    GameType.BATTLE_ROYAL,
 ];

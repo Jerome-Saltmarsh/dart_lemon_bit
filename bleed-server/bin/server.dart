@@ -468,6 +468,13 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
 
           final GameType gameType = gameTypes[gameTypeIndex];
+
+          if (!freeToPlay.contains(gameType)){
+            if (arguments.length < 3) {
+              return error(GameError.PlayerId_Required);
+            }
+          }
+
           switch (gameType) {
             case GameType.None:
               break;
@@ -480,7 +487,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 if (account == null) {
                   return errorAccountNotFound();
                 }
-                joinGameMMO(playerName: generateName());
+                joinGameMMO(playerName: account.publicName);
               });
               break;
             case GameType.Moba:

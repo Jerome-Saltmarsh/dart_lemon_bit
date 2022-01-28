@@ -10,11 +10,6 @@ class Cave extends Game {
   Cave() : super(scenes.cave, shadeMax: Shade_VeryDark);
 
   @override
-  void onKilledBy(Character target, Character by) {
-    // TODO: implement onKilledBy
-  }
-
-  @override
   void update() {
     // TODO: implement update
   }
