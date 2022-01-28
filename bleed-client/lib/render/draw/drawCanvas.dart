@@ -24,7 +24,6 @@ import 'package:bleed_client/maps.dart';
 import 'package:bleed_client/modules/isometric/utilities.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
-import 'package:bleed_client/render/constants/charWidth.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/draw/drawBullets.dart';
 import 'package:bleed_client/render/draw/drawPlayerText.dart';
@@ -305,7 +304,7 @@ void _drawPlayerNames() {
     if (diff(mouseWorldX, player.x) > _nameRadius) continue;
     if (diff(mouseWorldY, player.y) > _nameRadius) continue;
 
-    engine.draw.text(player.name, player.x - charWidth * player.name.length, player.y, style: _playerNameTextStyle);
+    engine.draw.text(player.name, player.x - isometric.constants.charWidth * player.name.length, player.y, style: _playerNameTextStyle);
   }
 }
 

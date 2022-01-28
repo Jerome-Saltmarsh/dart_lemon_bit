@@ -1,1 +1,0 @@
-final double charWidth = 4.5;
