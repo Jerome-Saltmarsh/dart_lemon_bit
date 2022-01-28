@@ -5,7 +5,7 @@ import 'dart:typed_data';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/getters/getShading.dart';
-import 'package:bleed_client/render/constants/atlas.dart';
+import 'package:bleed_client/modules/isometric/atlas.dart';
 
 final Float32List _src = Float32List(4);
 

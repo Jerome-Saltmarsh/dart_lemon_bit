@@ -6,7 +6,7 @@ import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/render/constants/atlas.dart';
+import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:lemon_math/Vector2.dart';
 
 final Map<ObjectType, double> environmentObjectWidth = {

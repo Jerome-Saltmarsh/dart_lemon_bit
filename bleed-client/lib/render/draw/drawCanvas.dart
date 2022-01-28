@@ -23,7 +23,7 @@ import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:bleed_client/maps.dart';
 import 'package:bleed_client/modules/isometric/utilities.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/render/constants/atlas.dart';
+import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/render/constants/charWidth.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/draw/drawBullets.dart';

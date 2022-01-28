@@ -1,6 +1,6 @@
 
 
-import 'package:bleed_client/render/constants/atlas.dart';
+import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/mappers/mapDst.dart';
 import 'package:bleed_client/render/mappers/mapSrc.dart';

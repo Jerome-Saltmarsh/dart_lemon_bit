@@ -3,8 +3,8 @@ import 'dart:typed_data';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
-import 'package:bleed_client/render/constants/animations.dart';
-import 'package:bleed_client/render/constants/atlas.dart';
+import 'package:bleed_client/modules/isometric/animations.dart';
+import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/render/mappers/animate.dart';
 import 'package:lemon_math/Vector2.dart';
 

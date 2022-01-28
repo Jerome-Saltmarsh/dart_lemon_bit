@@ -6,7 +6,7 @@ import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/render/constants/atlas.dart';
+import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/state/particleSettings.dart';
 import 'package:bleed_client/utils.dart';
 

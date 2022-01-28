@@ -8,7 +8,7 @@ import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
 import 'package:bleed_client/modules/isometric/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/render/constants/atlas.dart';
+import 'package:bleed_client/modules/isometric/atlas.dart';
 
 import 'utilities.dart';
 
