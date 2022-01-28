@@ -215,6 +215,7 @@ class _Build {
   }
 
   Widget title(){
+
     final child = Row(
       children: [
         text("GAME",
@@ -227,23 +228,8 @@ class _Build {
             color: colours.red,
             family: assets.fonts.libreBarcode39Text,
         ),
-        // text("A",
-        //   size: 60,
-        //   color: colours.redDark,
-        //   family: assets.fonts.libreBarcode39Text,
-        // ),
-        // text("M",
-        //   size: 60,
-        //   color: colours.redDark,
-        //   family: assets.fonts.libreBarcode39Text,
-        // )
       ],
     );
-    // final _text = text("GAMESTREAM",
-    //     size: 60,
-    //     color: Colors.white,
-    //     family: assets.fonts.libreBarcode39Text
-    // );
 
     return onPressed(
       callback: (){

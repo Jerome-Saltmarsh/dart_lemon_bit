@@ -36,6 +36,9 @@ class _Colors {
   final Color redDarkest = Color.fromRGBO(66, 21, 46, 1);
   final Color redDark1 = Color.fromRGBO(92, 30, 55, 1);
   final Color redDark = Color.fromRGBO(179, 56, 49, 1);
+  // final Color redWhite = Color.fromRGBO(244, 166, 154, 1.0);
+  // final Color redWhite = Color.fromRGBO(242, 155, 172, 1.0);
+  final Color redWhite = Color.fromRGBO(255, 192, 171, 1.0);
   final Color red = Color.fromRGBO(234, 79, 54, 1.0);
   final Color orange = Color.fromRGBO(247, 150, 23, 1);
   final Color green = Color.fromRGBO(30, 188, 115 , 1);
