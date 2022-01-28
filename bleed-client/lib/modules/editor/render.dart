@@ -1,6 +1,5 @@
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/constants/colours.dart';
-import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/modules/editor/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/render/draw/drawCharacter.dart';

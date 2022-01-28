@@ -10,10 +10,6 @@ double mapTileToSrc(Tile tile) {
       return _concrete;
     case Tile.Grass:
       return _grass;
-    case Tile.Fortress:
-      return _playerSpawn;
-    case Tile.PlayerSpawn:
-      return _playerSpawn;
     case Tile.ZombieSpawn:
       return _zombieSpawn;
     case Tile.RandomItemSpawn:
@@ -49,7 +45,6 @@ double mapTileToSrc(Tile tile) {
     case Tile.Boundary:
       throw Exception("Boundary has no rect");
   }
-  throw Exception("could not find rect for tile $tile");
 }
 
 // abstraction
@@ -61,7 +56,7 @@ final _concrete = _frame(4);
 final _concreteHorizontal = _concrete;
 final _concreteVertical =  _concrete;
 final _water = _frame(5);
-final _playerSpawn = _frame(6);
+final _rune = _frame(6);
 final _zombieSpawn = _frame(7);
 final _flowers = _longGrass;
 final rectSrcDarkness = _frame(8);
@@ -70,6 +65,5 @@ final _woodenFloor = _frame(10);
 final _rock = _frame(11);
 final _black = _frame(12);
 final _rockWall = _frame(13);
-
 
 double _frame(int index) => (index - 1) * tileCanvasWidth.toDouble();

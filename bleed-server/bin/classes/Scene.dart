@@ -41,7 +41,6 @@ class Scene {
   final List<Vector2> crates;
   final List<EnvironmentObject> environment;
   final String name;
-  late Vector2 fortressPosition;
 
   late final List<List<TileNode>> tileNodes;
   late final int rows;
@@ -49,6 +48,7 @@ class Scene {
 
   int? startHour;
   int? secondsPerFrames;
+  List<Vector2> playerSpawnPoints = [];
 
   Scene({
     required this.tiles,
@@ -112,11 +112,6 @@ class Scene {
                 halfTileSize;
         node.position = Vector2(px, py);
         nodeRow.add(node);
-
-        // TODO Does not belong
-        if (tiles[row][column] == Tile.Fortress) {
-          fortressPosition = node.position;
-        }
       }
       tileNodes.add(nodeRow);
     }

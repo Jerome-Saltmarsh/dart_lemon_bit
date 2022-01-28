@@ -10,7 +10,6 @@ const Map<Tile, bool> _walkableTiles = {
   Tile.Concrete: true,
   Tile.Concrete_Vertical: true,
   Tile.Concrete_Horizontal: true,
-  Tile.PlayerSpawn: true,
   Tile.Bridge: true,
   Tile.Wooden_Floor: true,
   Tile.Rock: true,

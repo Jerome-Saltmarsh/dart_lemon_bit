@@ -65,7 +65,7 @@ class Player extends Character with Entity {
   int magicRegen = 1;
   int healthRegen = 1;
 
-  Tile currentTile = Tile.PlayerSpawn;
+  Tile currentTile = Tile.Grass;
   CharacterState characterState = CharacterState.Idle;
 
   Ability ability1 = Ability(type: AbilityType.None, level: 0, cost: 0, range: 0, cooldown: 0);

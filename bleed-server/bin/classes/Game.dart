@@ -108,7 +108,6 @@ abstract class Game {
   bool cratesDirty = false;
 
   final List<Collider> colliders = [];
-  final List<Vector2> playerSpawnPoints = [];
   final List<Item> items = [];
   int spawnPointIndex = 0;
   final List<Vector2> zombieSpawnPoints = [];
@@ -234,9 +233,6 @@ abstract class Game {
         switch (scene.tiles[row][column]) {
           case Tile.ZombieSpawn:
             zombieSpawnPoints.add(getTilePosition(row, column));
-            break;
-          case Tile.PlayerSpawn:
-            playerSpawnPoints.add(getTilePosition(row, column));
             break;
           case Tile.RandomItemSpawn:
             Vector2 tilePosition = getTilePosition(row, column);
@@ -1704,28 +1700,22 @@ extension GameFunctions on Game {
       character.magic = character.maxMagic;
     }
 
-    if (playerSpawnPoints.isEmpty) {
-      character.x = giveOrTake(settings.playerStartRadius);
-      character.y = tilesLeftY + giveOrTake(settings.playerStartRadius);
-    } else {
-      Vector2 spawnPoint = getNextSpawnPoint();
-      character.x = spawnPoint.x;
-      character.y = spawnPoint.y;
-    }
-
+    Vector2 spawnPoint = getNextSpawnPoint();
+    character.x = spawnPoint.x;
+    character.y = spawnPoint.y;
     character.collidable = true;
   }
 
   Vector2 randomPlayerSpawnPoint() {
-    return playerSpawnPoints[randomInt(0, playerSpawnPoints.length)];
+    return randomItem(scene.playerSpawnPoints);
   }
 
   Vector2 getNextSpawnPoint() {
-    if (playerSpawnPoints.isEmpty){
+    if (scene.playerSpawnPoints.isEmpty){
       throw Exception("player spawn points is empty (scene: '${scene.name}')");
     }
-    spawnPointIndex = (spawnPointIndex + 1) % playerSpawnPoints.length;
-    return playerSpawnPoints[spawnPointIndex];
+    spawnPointIndex = (spawnPointIndex + 1) % scene.playerSpawnPoints.length;
+    return scene.playerSpawnPoints[spawnPointIndex];
   }
 
   void npcSetRandomDestination(Npc npc) {

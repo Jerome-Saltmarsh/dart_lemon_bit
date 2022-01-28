@@ -38,17 +38,20 @@ Future<Scene> loadSceneFromFireStore(String name) async {
   return parseJsonToScene(sceneJson, name);
 }
 
-Scene parseJsonToScene(Json json, String name) {
-
-  List<Vector2> playerSpawnPoints = [];
-  if (json.containsKey('player-spawn-points')) {
-    List playerSpawnPointsInts = json['player-spawn-points'];
-    for (int i = 0; i < playerSpawnPointsInts.length; i += 2) {
-      int x = playerSpawnPointsInts[i];
-      int y = playerSpawnPointsInts[i + 1];
-      playerSpawnPoints.add(Vector2(x.toDouble(), y.toDouble()));
-    }
+List<Vector2> compileIntListToVector2List(List values){
+  if (values.length % 2 != 0){
+    throw Exception("compileIntListToVector2List values.length cannot be odd");
   }
+  final List<Vector2> vector2s = [];
+  for (int i = 0; i < values.length; i += 2) {
+    final x = (values[i]).toDouble();
+    final y = (values[i + 1]).toDouble();
+    vector2s.add(Vector2(x, y.toDouble()));
+  }
+  return vector2s;
+}
+
+Scene parseJsonToScene(Json json, String name) {
 
   final List<Vector2> zombieSpawnPoints = [];
 
@@ -127,6 +130,9 @@ Scene parseJsonToScene(Json json, String name) {
   }
   if (json.containsKey(sceneFieldNames.secondsPerFrame)){
     scene.secondsPerFrames = json[sceneFieldNames.secondsPerFrame];
+  }
+  if (json.containsKey(sceneFieldNames.playerSpawnPoints)) {
+    scene.playerSpawnPoints = compileIntListToVector2List(json[sceneFieldNames.playerSpawnPoints]);
   }
 
   return scene;

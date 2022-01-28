@@ -90,6 +90,7 @@
 [ ] Body Armor
 [ ] Break Crates
 [ ] Weapon UI
+[ ] FIX Zoom Scroll
 [EDITOR]
 [ ] Play button
 [ ] Time Speed

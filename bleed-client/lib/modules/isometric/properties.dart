@@ -1,12 +1,10 @@
-import 'package:lemon_math/Vector2.dart';
-
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/modules/isometric/enums.dart';
 import 'package:bleed_client/modules/isometric/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
+import 'package:lemon_math/Vector2.dart';
 
-import '../../draw.dart';
 import 'utilities.dart';
 
 class IsometricProperties with IsometricScope {

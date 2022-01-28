@@ -9,13 +9,8 @@ import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/toString.dart';
-import 'package:clipboard/clipboard.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:typedef/json.dart';
-
-void copyCompiledGameToClipboard() {
-  FlutterClipboard.copy(mapCompileGameToJson());
-}
 
 String mapCompileGameToJson() {
   return jsonEncode(compileGameToJson());
@@ -28,16 +23,20 @@ Json compileGameToJson() {
     "crates": _compileCrates(game.crates),
     "environment": _compileEnvironmentObjects(isometric.state.environmentObjects),
     'characters': compileCharactersToJson(editor.state.characters),
-    "misc" : _compileMisc(),
+    sceneFieldNames.startTime: modules.isometric.state.time.value * secondsPerHour,
+    sceneFieldNames.secondsPerFrame: modules.editor.state.timeSpeed.value.index,
+    sceneFieldNames.playerSpawnPoints: compileVector2ListToIntList(editor.state.playerSpawnPoints),
   };
 }
 
-Json _compileMisc(){
-  return {
-    sceneFieldNames.startTime: modules.isometric.state.time.value * secondsPerHour,
-    sceneFieldNames.secondsPerFrame: modules.editor.state.timeSpeed.value.index
-  };
+List<int> compileVector2ListToIntList(List<Vector2> values){
+  return values.fold<List<int>>([], (intList, vector2){
+    intList.add(vector2.x.toInt());
+    intList.add(vector2.y.toInt());
+    return intList;
+  });
 }
+
 
 List<dynamic> compileCharactersToJson(List<Character> characters){
   return characters.map(compileCharacterToJson).toList();

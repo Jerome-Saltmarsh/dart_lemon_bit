@@ -29,7 +29,6 @@ import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/parser/parseCubePlayers.dart';
 import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/utils/list_util.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';

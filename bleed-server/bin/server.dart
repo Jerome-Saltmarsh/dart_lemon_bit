@@ -641,8 +641,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
 
           player.type = CharacterType.Human;
-          player.x = player.game.playerSpawnPoints[0].x;
-          player.y = player.game.playerSpawnPoints[0].y;
+          final spawnPoint = player.game.getNextSpawnPoint();
+          player.x = spawnPoint.x;
+          player.y = spawnPoint.y;
           break;
 
         case ClientRequest.Upgrade_Ability:
