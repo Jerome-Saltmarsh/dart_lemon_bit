@@ -7,7 +7,7 @@ import '../values/world.dart';
 import 'world.dart';
 
 class Cave extends Game {
-  Cave() : super(scenes.cave, shadeMax: Shade.VeryDark);
+  Cave() : super(scenes.cave, shadeMax: Shade_VeryDark);
 
   @override
   void onKilledBy(Character target, Character by) {

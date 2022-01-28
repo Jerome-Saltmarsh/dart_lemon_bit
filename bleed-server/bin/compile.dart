@@ -62,7 +62,7 @@ void compileGame(Game game) {
 
 
   _write(buffer, ServerResponse.Scene_Shade_Max.index);
-  _write(buffer, game.shadeMax.index);
+  _write(buffer, game.shadeMax);
 
   compileGameStatus(buffer, game.status);
 

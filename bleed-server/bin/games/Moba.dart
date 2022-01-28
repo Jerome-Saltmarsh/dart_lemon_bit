@@ -41,7 +41,7 @@ class GameMoba extends Game {
   ) {
     creepWestObjectives = [right, top, left];
     creepEastObjectives = [left, top, right];
-    teamSize = 2;
+    teamSize = 1;
     numberOfTeams = 2;
   }
 

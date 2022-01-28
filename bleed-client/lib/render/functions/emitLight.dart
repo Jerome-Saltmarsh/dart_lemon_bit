@@ -3,8 +3,14 @@ import 'package:bleed_client/functions/applyShade.dart';
 import 'package:bleed_client/getters/getTileAt.dart';
 
 void emitLightLow(List<List<int>> shader, double x, double y) {
-  int column = getColumn(x, y);
-  int row = getRow(x, y);
+  final column = getColumn(x, y);
+  final row = getRow(x, y);
+
+  if (row < 0) return;
+  if (column < 0) return;
+  if (row >= shader.length) return;
+  if (column >= shader[0].length) return;
+
   applyShade(shader, row, column, Shade_Medium);
   applyShadeRing(shader, row, column, 1, Shade_Medium);
   applyShadeRing(shader, row, column, 2, Shade_Dark);
@@ -12,8 +18,14 @@ void emitLightLow(List<List<int>> shader, double x, double y) {
 }
 
 void emitLightMedium(List<List<int>> shader, double x, double y) {
-  int column = getColumn(x, y);
-  int row = getRow(x, y);
+  final column = getColumn(x, y);
+  final row = getRow(x, y);
+
+  if (row < 0) return;
+  if (column < 0) return;
+  if (row >= shader.length) return;
+  if (column >= shader[0].length) return;
+
   applyShade(shader, row, column, Shade_Bright);
   applyShadeRing(shader, row, column, 1, Shade_Medium);
   applyShadeRing(shader, row, column, 2, Shade_Medium);
@@ -22,15 +34,13 @@ void emitLightMedium(List<List<int>> shader, double x, double y) {
 }
 
 void emitLightHigh(List<List<int>> shader, double x, double y) {
-  int column = getColumn(x, y);
-  int row = getRow(x, y);
+  final column = getColumn(x, y);
+  final row = getRow(x, y);
 
-  if (row >= shader.length){
-    throw Exception();
-  }
-  if (column >= shader[0].length){
-    throw Exception();
-  }
+  if (row < 0) return;
+  if (column < 0) return;
+  if (row >= shader.length) return;
+  if (column >= shader[0].length) return;
 
   applyShade(shader, row, column, Shade_Bright);
   applyShadeRing(shader, row, column, 1, Shade_Bright);
@@ -40,8 +50,14 @@ void emitLightHigh(List<List<int>> shader, double x, double y) {
 }
 
 void emitLightBrightSmall(List<List<int>> shader, double x, double y) {
-  int column = getColumn(x, y);
-  int row = getRow(x, y);
+  final column = getColumn(x, y);
+  final row = getRow(x, y);
+
+  if (row < 0) return;
+  if (column < 0) return;
+  if (row >= shader.length) return;
+  if (column >= shader[0].length) return;
+
   applyShade(shader, row, column, Shade_Bright);
   applyShadeRing(shader, row, column, 1, Shade_Medium);
   applyShadeRing(shader, row, column, 2, Shade_Dark);
