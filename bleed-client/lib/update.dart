@@ -8,7 +8,6 @@ import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/update/updateParticles.dart';
-import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/randomInt.dart';
 
 import 'common/GameStatus.dart';
@@ -18,7 +17,6 @@ import 'update/updateCharacters.dart';
 import 'webSocket.dart';
 
 int emitPart = 0;
-// double targetZoom = 1;
 
 void updatePlayMode() {
   if (!webSocket.connected) return;
