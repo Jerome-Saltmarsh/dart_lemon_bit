@@ -492,7 +492,7 @@ Widget buildTopMessage(){
       if (account.subscriptionActive) {
         return margin(
           top: 10,
-          child: text("Premium Subscription Active",
+          child: text("Premium",
               color: colours.green,
               size: 18,
               onPressed: actions.showDialogAccount),

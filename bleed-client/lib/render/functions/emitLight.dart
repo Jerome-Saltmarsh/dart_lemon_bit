@@ -24,6 +24,14 @@ void emitLightMedium(List<List<int>> shader, double x, double y) {
 void emitLightHigh(List<List<int>> shader, double x, double y) {
   int column = getColumn(x, y);
   int row = getRow(x, y);
+
+  if (row >= shader.length){
+    throw Exception();
+  }
+  if (column >= shader[0].length){
+    throw Exception();
+  }
+
   applyShade(shader, row, column, Shade_Bright);
   applyShadeRing(shader, row, column, 1, Shade_Bright);
   applyShadeRing(shader, row, column, 2, Shade_Medium);

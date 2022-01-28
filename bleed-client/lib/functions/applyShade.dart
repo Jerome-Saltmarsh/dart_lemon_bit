@@ -1,5 +1,5 @@
 import 'package:bleed_client/common/enums/Shade.dart';
-import 'package:bleed_client/getters/outOfBounds.dart';
+import 'package:bleed_client/modules/isometric/utilities.dart';
 import 'package:bleed_client/modules/modules.dart';
 
 final _state = modules.isometric.state;
@@ -31,7 +31,7 @@ void applyShadeDark(List<List<int>> shader, int row, int column) {
 
 void applyShadeRing(List<List<int>> shader, int row, int column, int size, int shade) {
 
-  if (shade >= modules.isometric.state.ambient.value) return;
+  if (shade >= _state.ambient.value) return;
 
   int rStart = row - size;
   int rEnd = row + size;

@@ -5,7 +5,6 @@ import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/constants.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
-import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
 import 'package:bleed_client/modules/isometric/scope.dart';
 import 'package:bleed_client/modules/modules.dart';

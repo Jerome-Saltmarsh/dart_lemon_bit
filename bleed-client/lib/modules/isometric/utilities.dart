@@ -6,6 +6,8 @@ import 'package:lemon_math/Vector2.dart';
 final tileSize = isometric.constants.tileSize;
 final halfTileSize = isometric.constants.halfTileSize;
 
+final _state = modules.isometric.state;
+
 double perspectiveProjectX(double x, double y) {
   return -y + x;
 }
@@ -50,18 +52,23 @@ int get mouseRow {
   return mouseUnprojectPositionY ~/ isometric.constants.tileSize;
 }
 
-Tile getTile(int row, int column){
-  if (row < 0) return Tile.Boundary;
-  if (column < 0) return Tile.Boundary;
-  if (row >= modules.isometric.state.totalRows.value) return Tile.Boundary;
-  if (column >= modules.isometric.state.totalColumns.value) return Tile.Boundary;
-  return isometric.state.tiles[row][column];
-}
-
 double shiftHeight(double z) {
   return -z * 20;
 }
 
 double shiftScale(double z) {
   return 1 + (z * 0.15);
+}
+
+Tile getTile(int row, int column){
+  if (outOfBounds(row, column)) return Tile.Boundary;
+  return _state.tiles[row][column];
+}
+
+bool outOfBounds(int row, int column){
+  if (row < 0) return true;
+  if (column < 0) return true;
+  if (row >= _state.totalRowsInt) return true;
+  if (column >= _state.totalColumnsInt) return true;
+  return false;
 }

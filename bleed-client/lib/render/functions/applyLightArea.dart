@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/functions/applyShade.dart';
 import 'package:bleed_client/modules/modules.dart';
 

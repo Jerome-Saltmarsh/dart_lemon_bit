@@ -1,4 +1,3 @@
-import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/events/onShadeMaxChanged.dart';
 import 'package:bleed_client/modules/isometric/scope.dart';
 import 'package:bleed_client/modules/modules.dart';

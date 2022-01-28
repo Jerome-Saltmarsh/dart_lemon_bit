@@ -303,7 +303,7 @@ Map<LogicalKeyboardKey, Function> _keyReleasedHandlers = {
 };
 
 void onMouseScroll(double amount) {
-  targetZoom -= amount * game.settings.zoomSpeed;
+  engine.state.targetZoom -= amount * game.settings.zoomSpeed;
 }
 
 void stopRunLeft() {

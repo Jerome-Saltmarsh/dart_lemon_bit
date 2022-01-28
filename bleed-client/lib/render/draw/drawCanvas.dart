@@ -51,6 +51,11 @@ const animationFrameRate = 7; // frames per change;
 final Scene scene = Scene();
 
 void renderGame(Canvas canvas, Size size) {
+
+  if (game.player.uuid.value.isEmpty) {
+    return;
+  }
+
   applyEmissionsToDynamicShadeMap();
   modules.isometric.actions.applyDynamicShadeToTileSrc();
   isometric.render.tiles();

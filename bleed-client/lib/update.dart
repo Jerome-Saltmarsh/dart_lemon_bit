@@ -18,7 +18,7 @@ import 'update/updateCharacters.dart';
 import 'webSocket.dart';
 
 int emitPart = 0;
-double targetZoom = 1;
+// double targetZoom = 1;
 
 void updatePlayMode() {
   if (!webSocket.connected) return;
@@ -51,7 +51,6 @@ void _updateBleed(){
   if (game.status.value == GameStatus.Finished) return;
 
   game.framesSinceEvent++;
-  updateZoom();
   readPlayerInput();
   updateParticles();
   updateDeadCharacterBlood();
@@ -60,14 +59,6 @@ void _updateBleed(){
   }
   updateParticleEmitters();
   sendRequestUpdatePlayer();
-}
-
-void updateZoom() {
-  double sX = screenCenterWorldX;
-  double sY = screenCenterWorldY;
-  double zoomDiff = targetZoom - engine.state.zoom;
-  engine.state.zoom += zoomDiff * game.settings.zoomFollowSpeed;
-  engine.actions.cameraCenter(sX, sY);
 }
 
 void emitAmbientMyst() {

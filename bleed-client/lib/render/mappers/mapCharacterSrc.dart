@@ -4,7 +4,6 @@ import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
-import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/render/mappers/mapArcherToSrc.dart';
 import 'package:bleed_client/render/mappers/mapKnightToSrc.dart';
 import 'package:bleed_client/render/mappers/mapSrcHuman.dart';
