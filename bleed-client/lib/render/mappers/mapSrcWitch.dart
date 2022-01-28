@@ -28,7 +28,7 @@ Float32List mapSrcWitch({
       return srcLoop(
           atlas: atlas.witch.idle,
           direction: direction,
-          shade: Shade.Bright,
+          shade: Shade_Bright,
           size: 64,
           framesPerDirection: 1,
           frame: frame);
@@ -36,7 +36,7 @@ Float32List mapSrcWitch({
       return srcLoop(
           atlas: atlas.witch.running,
           direction: direction,
-          shade: Shade.Bright,
+          shade: Shade_Bright,
           size: 64,
           framesPerDirection: 4,
           frame: frame);
@@ -54,7 +54,7 @@ Float32List mapSrcWitch({
           animation: animations.witch.attacking,
           atlas: atlas.witch.striking,
           direction: direction,
-          shade: Shade.Bright,
+          shade: Shade_Bright,
           size: 64,
           framesPerDirection: 2,
           frame: frame);
@@ -63,7 +63,7 @@ Float32List mapSrcWitch({
           animation: animations.witch.attacking,
           atlas: atlas.witch.striking,
           direction: direction,
-          shade: Shade.Bright,
+          shade: Shade_Bright,
           size: 64,
           framesPerDirection: 2,
           frame: frame);
@@ -71,7 +71,7 @@ Float32List mapSrcWitch({
       return srcLoop(
           atlas: atlas.witch.running,
           direction: direction,
-          shade: Shade.Bright,
+          shade: Shade_Bright,
           size: 64,
           framesPerDirection: 4,
           frame: frame);

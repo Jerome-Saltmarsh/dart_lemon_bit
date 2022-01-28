@@ -145,8 +145,8 @@ class EditorBuild {
         width8,
         button("+", modules.isometric.actions.addHour),
         width8,
-        WatchBuilder(modules.isometric.state.ambient, (Shade ambient){
-          return text(ambient.name);
+        WatchBuilder(modules.isometric.state.ambient, (int ambient){
+          return text(shadeName(ambient));
         })
       ],),
       Row(children: [

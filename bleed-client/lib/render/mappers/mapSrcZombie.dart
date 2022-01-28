@@ -13,7 +13,7 @@ import 'loop.dart';
 Float32List mapSrcZombie({
   required CharacterState state,
   required Direction direction,
-  required Shade shade,
+  required int shade,
   required int frame
 }) {
   switch (state) {

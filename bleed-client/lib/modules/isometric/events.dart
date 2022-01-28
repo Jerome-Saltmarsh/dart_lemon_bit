@@ -36,11 +36,11 @@ class IsometricEvents with IsometricScope {
     final phase = modules.isometric.map.hourToPhase(hour);
     final phaseBrightness = modules.isometric.map.phaseToShade(phase);
     final maxAmbientBrightness = modules.isometric.state.maxAmbientBrightness.value;
-    if (maxAmbientBrightness.isDarkerThan(phaseBrightness)) return;
+    if (maxAmbientBrightness > phaseBrightness) return;
     modules.isometric.state.ambient.value = phaseBrightness;
   }
 
-  void onAmbientChanged(Shade value){
+  void onAmbientChanged(int value){
     print("isometric.events.onAmbientChanged($value)");
     modules.isometric.actions.resetLighting();
   }

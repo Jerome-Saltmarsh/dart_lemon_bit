@@ -75,10 +75,10 @@ final double _torchHeight = environmentObjectHeight[ObjectType.Torch]!;
 final Float32List _src = Float32List(4);
 
 Float32List mapEnvironmentObjectToSrc(EnvironmentObject env){
-  Shade shade = getShade(env.row, env.column);
+  final shade = getShade(env.row, env.column);
   ObjectType type = env.type;
 
-  if (shade == Shade.PitchBlack){
+  if (shade == Shade_PitchBlack){
     clearSrc(_src);
     return _src;
   }
@@ -92,9 +92,9 @@ Float32List mapEnvironmentObjectToSrc(EnvironmentObject env){
   double height = environmentObjectHeight[type]!;
   double left = index * width + translation.x;
   double right = left + width;
-  double top = shade.index * height + translation.y;
+  double top = shade * height + translation.y;
 
-  if (type == ObjectType.Torch && modules.isometric.state.ambient.value.isDarkerThan(Shade.Bright)){
+  if (type == ObjectType.Torch && modules.isometric.state.ambient.value > (Shade_Bright)){
     top = _translations.torches.y + ((core.state.timeline.frame % 4) * _torchHeight) + _torchHeight;
   }
 

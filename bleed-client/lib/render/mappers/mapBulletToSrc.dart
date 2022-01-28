@@ -10,12 +10,13 @@ import 'package:bleed_client/render/constants/atlas.dart';
 
 final Float32List _src = Float32List(4);
 
+// TODO Refactor
 Float32List mapProjectileToSrc(Projectile projectile) {
   switch(projectile.type){
     case ProjectileType.Bullet:
-      Shade shade = getShadeAtPosition(projectile.x, projectile.y);
+      int shade = getShadeAtPosition(projectile.x, projectile.y);
       _src[0] = atlas.particles.shell.x + (projectile.direction.index * 32.0);
-      _src[1] = atlas.particles.shell.y + shade.index * 32.0;
+      _src[1] = atlas.particles.shell.y + shade * 32.0;
       _src[2] = _src[0] + 32;
       _src[3] = _src[1] + 32;
       return _src;

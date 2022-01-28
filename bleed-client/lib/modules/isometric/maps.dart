@@ -17,17 +17,17 @@ class IsometricMaps {
     });
   }
 
-  final Map<Phase, Shade> _phaseShade = {
-    Phase.EarlyMorning: Shade.Dark,
-    Phase.Morning: Shade.Medium,
-    Phase.Day: Shade.Bright,
-    Phase.EarlyEvening: Shade.Medium,
-    Phase.Evening: Shade.Dark,
-    Phase.Night: Shade.VeryDark,
-    Phase.MidNight: Shade.PitchBlack ,
+  final Map<Phase, int> _phaseShade = {
+    Phase.EarlyMorning: Shade_Dark,
+    Phase.Morning: Shade_Medium,
+    Phase.Day: Shade_Bright,
+    Phase.EarlyEvening: Shade_Medium,
+    Phase.Evening: Shade_Dark,
+    Phase.Night: Shade_VeryDark,
+    Phase.MidNight: Shade_PitchBlack ,
   };
 
-  Shade phaseToShade(Phase phase){
+  int phaseToShade(Phase phase){
     return _phaseShade[phase]!;
   }
 

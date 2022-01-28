@@ -5,33 +5,33 @@ import 'package:bleed_client/modules/modules.dart';
 final _state = modules.isometric.state;
 
 void applyShade(
-    List<List<Shade>> shader, int row, int column, Shade value) {
+    List<List<int>> shader, int row, int column, int value) {
   if (outOfBounds(row, column)) return;
-  if (shader[row][column].index <= value.index) return;
+  if (shader[row][column] <= value) return;
   shader[row][column] = value;
 }
 
 void applyShadeUnchecked(
-    List<List<Shade>> shader, int row, int column, Shade value) {
-  if (shader[row][column].index <= value.index) return;
+    List<List<int>> shader, int row, int column, int value) {
+  if (shader[row][column] <= value) return;
   shader[row][column] = value;
 }
 
-void applyShadeBright(List<List<Shade>> shader, int row, int column) {
-  applyShade(shader, row, column, Shade.Bright);
+void applyShadeBright(List<List<int>> shader, int row, int column) {
+  applyShade(shader, row, column, Shade_Bright);
 }
 
-void applyShadeMedium(List<List<Shade>> shader, int row, int column) {
-  applyShade(shader, row, column, Shade.Medium);
+void applyShadeMedium(List<List<int>> shader, int row, int column) {
+  applyShade(shader, row, column, Shade_Medium);
 }
 
-void applyShadeDark(List<List<Shade>> shader, int row, int column) {
-  applyShade(shader, row, column, Shade.Dark);
+void applyShadeDark(List<List<int>> shader, int row, int column) {
+  applyShade(shader, row, column, Shade_Dark);
 }
 
-void applyShadeRing(List<List<Shade>> shader, int row, int column, int size, Shade shade) {
+void applyShadeRing(List<List<int>> shader, int row, int column, int size, int shade) {
 
-  if (shade.index >= modules.isometric.state.ambient.value.index) return;
+  if (shade >= modules.isometric.state.ambient.value) return;
 
   int rStart = row - size;
   int rEnd = row + size;

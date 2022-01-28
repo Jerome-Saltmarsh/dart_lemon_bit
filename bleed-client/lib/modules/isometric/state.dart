@@ -15,14 +15,14 @@ class IsometricState {
   Float32List tilesSrc = Float32List(0);
   List<Particle> particles = [];
   final List<EnvironmentObject> environmentObjects = [];
-  final List<List<Shade>> dynamicShading = [];
-  final List<List<Shade>> bakeMap = [];
+  final List<List<int>> dynamicShading = [];
+  final List<List<int>> bakeMap = [];
   final Watch<int> totalColumns = Watch(0);
   final Watch<int> totalRows = Watch(0);
   int totalColumnsInt = 0;
   int totalRowsInt = 0;
   final Watch<int> hour = Watch(0);
   final Watch<int> time = Watch(0);
-  final Watch<Shade> ambient = Watch(Shade.Bright);
-  final Watch<Shade> maxAmbientBrightness = Watch(Shade.Bright);
+  final Watch<int> ambient = Watch(Shade_Bright);
+  final Watch<int> maxAmbientBrightness = Watch(Shade_Bright);
 }

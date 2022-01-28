@@ -9,7 +9,7 @@ import 'utilities.dart';
 
 class IsometricProperties with IsometricScope {
 
-  bool get dayTime => state.ambient.value.index == Shade.Bright.index;
+  bool get dayTime => state.ambient.value == Shade_Bright;
 
   Tile get tileAtMouse {
     if (mouseRow < 0) return Tile.Boundary;
@@ -19,7 +19,7 @@ class IsometricProperties with IsometricScope {
     return state.tiles[mouseRow][mouseColumn];
   }
 
-  Shade get currentPhaseShade {
+  int get currentPhaseShade {
     return modules.isometric.map.phaseToShade(phase);
   }
 

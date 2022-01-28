@@ -11,7 +11,7 @@ Float32List srcAnimate({
   required List<int> animation,
   required Direction direction,
   required int frame,
-  Shade shade = Shade.Bright,
+  int shade = Shade_Bright,
   double size = 64,
   int framesPerDirection = 4,
 }){
@@ -20,7 +20,7 @@ Float32List srcAnimate({
   final double _f = (animation[animationFrame] % framesPerDirection) * size;
   return mapSrc(
       x: atlas.x + _s + _f,
-      y: atlas.y + (shade.index * size),
+      y: atlas.y + (shade * size),
       width: size,
       height: size,
   );

@@ -58,24 +58,5 @@ class _Colors {
   final Color skinCaucasian03 = Color.fromRGBO(142, 96, 98, 1.0);
   final Color skinCaucasian04 = Color.fromRGBO(85, 56, 58, 1.0);
   final Color pitchBlack = Color.fromRGBO(28, 27, 23, 1.0);
-
-
-
   Color get blood => redDark;
-}
-
-
-Color getColorSkin(Shade shading){
-  switch (shading){
-    case Shade.Bright:
-      return colours.skinCaucasian01;
-    case Shade.Medium:
-      return colours.skinCaucasian02;
-    case Shade.Dark:
-      return colours.skinCaucasian03;
-    case Shade.VeryDark:
-      return colours.skinCaucasian04;
-    case Shade.PitchBlack:
-      return colours.pitchBlack;
-  }
 }

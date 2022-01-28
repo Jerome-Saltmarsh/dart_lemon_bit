@@ -23,8 +23,8 @@ class IsometricActions with IsometricScope {
     final dynamicShading = state.dynamicShading;
     for (int row = 0; row < modules.isometric.state.totalRows.value; row++) {
       for (int column = 0; column < modules.isometric.state.totalColumns.value; column++) {
-        Shade shade = dynamicShading[row][column];
-        state.tilesSrc[i + 1] = atlas.tiles.y + shade.index * tileSize; // top
+        final shade = dynamicShading[row][column];
+        state.tilesSrc[i + 1] = atlas.tiles.y + shade * tileSize; // top
         state.tilesSrc[i + 3] = state.tilesSrc[i + 1] + tileSize; // bottom
         i += 4;
       }
@@ -44,7 +44,7 @@ class IsometricActions with IsometricScope {
     print("isometric.actions.resetBakeMap()");
     state.bakeMap.clear();
     for (int row = 0; row < modules.isometric.state.totalRows.value; row++) {
-      final List<Shade> _baked = [];
+      final List<int> _baked = [];
       state.bakeMap.add(_baked);
       for (int column = 0; column < modules.isometric.state.totalColumns.value; column++) {
         _baked.add(state.ambient.value);
@@ -58,7 +58,7 @@ class IsometricActions with IsometricScope {
     print("isometric.actions.resetDynamicMap()");
     modules.isometric.state.dynamicShading.clear();
     for (int row = 0; row < modules.isometric.state.totalRows.value; row++) {
-      final List<Shade> _dynamic = [];
+      final List<int> _dynamic = [];
       modules.isometric.state.dynamicShading.add(_dynamic);
       for (int column = 0; column < modules.isometric.state.totalColumns.value; column++) {
         _dynamic.add(modules.isometric.state.ambient.value);

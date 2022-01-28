@@ -9,7 +9,7 @@ Float32List srcLoop({
   required Vector2 atlas,
   required Direction direction,
   required int frame,
-  Shade shade = Shade.Bright,
+  int shade = Shade_Bright,
   double size = 64,
   int framesPerDirection = 4,
 }){
@@ -17,7 +17,7 @@ Float32List srcLoop({
   final double _f = (frame % framesPerDirection) * size;
   return mapSrc(
       x: atlas.x + _s + _f,
-      y: atlas.y + (shade.index * size),
+      y: atlas.y + (shade * size),
       width: size,
       height: size);
 }
@@ -25,12 +25,12 @@ Float32List srcLoop({
 Float32List srcSingle({
   required Vector2 atlas,
   required Direction direction,
-  Shade shade = Shade.Bright,
+  int shade = Shade_Bright,
   double size = 64,
 }){
   return mapSrc(
       x: atlas.x + direction.index * size,
-      y: atlas.y + (shade.index * size),
+      y: atlas.y + (shade * size),
       width: size,
       height: size);
 }

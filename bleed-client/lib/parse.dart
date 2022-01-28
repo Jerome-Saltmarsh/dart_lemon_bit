@@ -741,7 +741,7 @@ void _consumeInteractableNpc(Character interactableNpc) {
   interactableNpc.name = _consumeString();
 }
 
-Shade _consumeShade() {
-  return shades[consumeInt()];
+int _consumeShade() {
+  return consumeInt();
 }
 

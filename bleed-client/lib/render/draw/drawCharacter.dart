@@ -12,10 +12,9 @@ import 'package:lemon_engine/engine.dart';
 void drawCharacter(Character character) {
   if (!onScreen(character.x, character.y)) return;
   if (!character.alive) return;
-  // if (isWaterAt(character.x, character.y)) return;
 
-  Shade shade = getShadeAtPosition(character.x, character.y);
-  if (shade.isDarkerThan(Shade.Dark)) return;
+  final shade = getShadeAtPosition(character.x, character.y);
+  if (shade > (Shade_Dark)) return;
 
   final src = mapCharacterSrc(
     type: character.type,

@@ -17,7 +17,7 @@ Float32List mapCharacterSrc({
   required WeaponType weapon,
   required Direction direction,
   required int frame,
-  required Shade shade,
+  required int shade,
 }) {
   switch (type) {
     case CharacterType.Human:

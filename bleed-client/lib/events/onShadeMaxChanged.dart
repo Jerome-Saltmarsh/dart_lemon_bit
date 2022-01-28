@@ -2,12 +2,12 @@
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/modules/modules.dart';
 
-void onMaxAmbientBrightnessChanged(Shade maxShade){
+void onMaxAmbientBrightnessChanged(int maxShade){
   print("onShadeMaxChanged($maxShade)");
   final ambient = modules.isometric.state.ambient.value;
   if (maxShade == ambient) return;
 
-  if (maxShade.isDarkerThan(ambient)){
+  if (maxShade > ambient){
     modules.isometric.state.ambient.value = maxShade;
     return;
   }

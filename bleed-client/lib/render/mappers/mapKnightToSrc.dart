@@ -28,7 +28,7 @@ Float32List mapSrcKnight({
       return srcLoop(
           atlas: atlas.knight.idle,
           direction: direction,
-          shade: Shade.Bright,
+          shade: Shade_Bright,
           size: 64,
           framesPerDirection: 1,
           frame: frame);
@@ -36,7 +36,7 @@ Float32List mapSrcKnight({
       return srcLoop(
           atlas: atlas.knight.running,
           direction: direction,
-          shade: Shade.Bright,
+          shade: Shade_Bright,
           size: 64,
           framesPerDirection: 4,
           frame: frame);
@@ -54,7 +54,7 @@ Float32List mapSrcKnight({
           animation: animations.knight.striking,
           atlas: atlas.knight.striking,
           direction: direction,
-          shade: Shade.Bright,
+          shade: Shade_Bright,
           size: 64,
           framesPerDirection: 3,
           frame: frame);
@@ -63,7 +63,7 @@ Float32List mapSrcKnight({
           animation: animations.knight.striking,
           atlas: atlas.knight.striking,
           direction: direction,
-          shade: Shade.Bright,
+          shade: Shade_Bright,
           size: 64,
           framesPerDirection: 3,
           frame: frame);
@@ -71,7 +71,7 @@ Float32List mapSrcKnight({
       return srcLoop(
           atlas: atlas.knight.running,
           direction: direction,
-          shade: Shade.Bright,
+          shade: Shade_Bright,
           size: 64,
           framesPerDirection: 4,
           frame: frame);

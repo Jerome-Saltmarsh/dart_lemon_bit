@@ -32,7 +32,7 @@ final Float32List _src = Float32List(4);
 const pixelSize = 6;
 
 Float32List mapParticleToSrc(Particle particle){
-  Shade shade = getShadeAtPosition(particle.x, particle.y);
+  final shade = getShadeAtPosition(particle.x, particle.y);
 
   switch(particle.type){
     case ParticleType.Pixel:
@@ -46,7 +46,7 @@ Float32List mapParticleToSrc(Particle particle){
     case ParticleType.Leg:
       Direction direction = convertAngleToDirection(particle.rotation);
       _src[0] = atlas.particles.zombieLeg.x + (direction.index * 64.0);
-      _src[1] = atlas.particles.zombieLeg.y + shade.index * 64.0;
+      _src[1] = atlas.particles.zombieLeg.y + shade * 64.0;
       _src[2] = _src[0] + 64;
       _src[3] = _src[1] + 64;
       return _src;
@@ -54,7 +54,7 @@ Float32List mapParticleToSrc(Particle particle){
     case ParticleType.Arm:
       Direction direction = convertAngleToDirection(particle.rotation);
       _src[0] = atlas.particles.zombieArm.x + (direction.index * 64.0);
-      _src[1] = atlas.particles.zombieArm.y + shade.index * 64.0;
+      _src[1] = atlas.particles.zombieArm.y + shade * 64.0;
       _src[2] = _src[0] + 64;
       _src[3] = _src[1] + 64;
       return _src;
@@ -62,7 +62,7 @@ Float32List mapParticleToSrc(Particle particle){
     case ParticleType.Organ:
       Direction direction = convertAngleToDirection(particle.rotation);
       _src[0] = atlas.particles.zombieTorso.x + (direction.index * 64.0);
-      _src[1] = atlas.particles.zombieTorso.y + shade.index * 64.0;
+      _src[1] = atlas.particles.zombieTorso.y + shade * 64.0;
       _src[2] = _src[0] + 64;
       _src[3] = _src[1] + 64;
       return _src;
@@ -70,21 +70,21 @@ Float32List mapParticleToSrc(Particle particle){
     case ParticleType.Shell:
       Direction direction = convertAngleToDirection(particle.rotation);
       _src[0] = atlas.particles.shell.x + (direction.index * 32.0);
-      _src[1] = atlas.particles.shell.y + shade.index * 32.0;
+      _src[1] = atlas.particles.shell.y + shade * 32.0;
       _src[2] = _src[0] + 32;
       _src[3] = _src[1] + 32;
       return _src;
 
     case ParticleType.Blood:
       _src[0] = atlas.particles.blood.x;
-      _src[1] = atlas.particles.blood.y + shade.index * 32.0;
+      _src[1] = atlas.particles.blood.y + shade * 32.0;
       _src[2] = _src[0] + 32;
       _src[3] = _src[1] + 32;
       return _src;
 
     case ParticleType.Human_Head:
       _src[0] = atlas.particles.zombieHead.x;
-      _src[1] = atlas.particles.zombieHead.y + shade.index * 32.0;
+      _src[1] = atlas.particles.zombieHead.y + shade * 32.0;
       _src[2] = _src[0] + 32;
       _src[3] = _src[1] + 32;
       return _src;
@@ -92,7 +92,7 @@ Float32List mapParticleToSrc(Particle particle){
     case ParticleType.Zombie_Head:
       Direction direction = convertAngleToDirection(particle.rotation);
       _src[0] = atlas.particles.zombieHead.x + (direction.index * 64.0);
-      _src[1] = atlas.particles.zombieHead.y + shade.index * 64.0;
+      _src[1] = atlas.particles.zombieHead.y + shade * 64.0;
       _src[2] = _src[0] + 64;
       _src[3] = _src[1] + 64;
       return _src;

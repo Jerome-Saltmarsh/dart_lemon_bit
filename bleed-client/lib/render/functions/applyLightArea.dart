@@ -4,7 +4,7 @@ import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/functions/applyShade.dart';
 import 'package:bleed_client/modules/modules.dart';
 
-void applyLightArea(List<List<Shade>> shader, int column, int row, int size, Shade shade) {
+void applyLightArea(List<List<int>> shader, int column, int row, int size, int shade) {
 
   int columnStart = max(column - size, 0);
   int columnEnd = min(column + size, modules.isometric.state.totalColumns.value - 1);

@@ -9,7 +9,7 @@ import 'package:lemon_engine/engine.dart';
 
 void drawParticle(Particle particle){
   if (!onScreen(particle.x, particle.y)) return;
-  Shade shade = getShadeAtPosition(particle.x, particle.y);
+  int shade = getShadeAtPosition(particle.x, particle.y);
   if (equalOrDarkerToVeryDark(shade)) return;
   drawAtlas(
       dst: mapParticleToDst(particle),
