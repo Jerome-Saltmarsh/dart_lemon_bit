@@ -98,6 +98,7 @@
 [ ] Unit Team
 [ ] Unit Health / Damage / Type
 [ ] Load Royal Map from cloud
+[ ] Atlas Buffer 64
 [x] Save
 [x] Add Units
 [COMPLETED]

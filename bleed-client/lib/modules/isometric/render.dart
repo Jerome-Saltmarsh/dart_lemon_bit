@@ -1,7 +1,9 @@
 
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Zombie.dart';
+import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
+import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/modules/isometric/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
@@ -9,6 +11,8 @@ import 'package:bleed_client/render/draw/drawCanvas.dart';
 import 'package:bleed_client/render/draw/drawCharacter.dart';
 import 'package:bleed_client/render/draw/drawInteractableNpcs.dart';
 import 'package:bleed_client/render/draw/drawParticle.dart';
+import 'package:bleed_client/render/mappers/mapParticleToDst.dart';
+import 'package:bleed_client/render/mappers/mapParticleToSrc.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -95,7 +99,7 @@ class IsometricRender with IsometricScope {
 
         if (particle.type == ParticleType.Blood) {
           if (onScreen(particle.x, particle.y)) {
-            drawParticle(particle);
+            _drawParticle(particle);
           }
           indexParticle++;
           continue;
@@ -104,7 +108,7 @@ class IsometricRender with IsometricScope {
         if (!zombiesRemaining || particle.y < game.zombies[indexZombie].y) {
           if (!npcsRemaining || particle.y < game.interactableNpcs[indexNpc].y) {
             if (onScreen(particle.x, particle.y)) {
-              drawParticle(particle);
+              _drawParticle(particle);
             }
             indexParticle++;
             continue;
@@ -125,5 +129,14 @@ class IsometricRender with IsometricScope {
       drawInteractableNpc(game.interactableNpcs[indexNpc]);
       indexNpc++;
     }
+  }
+
+  void _drawParticle(Particle value){
+    if (!onScreen(value.x, value.y)) return;
+    final shade = getShadeAtPosition(value.x, value.y);
+    if (shade >= Shade_VeryDark) return;
+    mapParticleToDst(value);
+    mapParticleToSrc(value);
+    engine.actions.renderAtlas();
   }
 }

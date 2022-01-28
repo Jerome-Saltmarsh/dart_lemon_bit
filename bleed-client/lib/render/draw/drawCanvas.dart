@@ -28,8 +28,6 @@ import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/draw/drawBullets.dart';
 import 'package:bleed_client/render/draw/drawPlayerText.dart';
 import 'package:bleed_client/render/mappers/loop.dart';
-import 'package:bleed_client/render/mappers/mapDst.dart';
-import 'package:bleed_client/render/mappers/mapSrc.dart';
 import 'package:bleed_client/render/state/floatingText.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
@@ -125,8 +123,10 @@ void drawCrates() {
   }
 }
 
-void draw({required Vector2 dst, required Vector2 src, double size = 64}){
-  drawAtlas(dst: buildDst(dst, translateY: -size / 2, translateX: -size / 2), src: buildSrc(src));
+void draw({required Vector2 dst, required Vector2 src, double size = 64, double scale = 1}){
+  engine.actions.mapDst(x: dst.x -size / 2, y: dst.y - -size / 2, scale: scale);
+  engine.actions.mapSrc(x: src.x, y: src.y, width: size, height: size);
+  engine.actions.renderAtlas();
 }
 
 void drawItems() {
@@ -136,14 +136,15 @@ void drawItems() {
 }
 
 void drawItem(Item item) {
+  final _anchor = 32;
   engine.draw.drawCircleOutline(radius: commonSettings.itemRadius, x: item.x, y: item.y, color: white);
-  drawAtlas(
-      dst: buildDst(item, translateX: -32, translateY: -32),
-      src: srcLoop(
-          atlas: maps.itemAtlas[item.type]!,
-          direction: Direction.Down,
-          frame: core.state.timeline.frame,
-          framesPerDirection: 8));
+  srcLoop(
+      atlas: maps.itemAtlas[item.type]!,
+      direction: Direction.Down,
+      frame: core.state.timeline.frame,
+      framesPerDirection: 8);
+  engine.actions.mapDst(x: item.x - _anchor, y: item.y - _anchor,);
+  engine.actions.renderAtlas();
 }
 
 void drawRoyalPerimeter() {

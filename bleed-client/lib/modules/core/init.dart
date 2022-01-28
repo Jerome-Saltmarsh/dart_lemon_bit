@@ -32,10 +32,11 @@ Future init() async {
   Events();
   await images.load();
   await loadSharedPreferences();
+  engine.state.image = images.atlas;
   initializeGameInstances();
   initializeEventListeners();
   initAudioPlayers();
-  initCube();
+  // initCube();
   if (isLocalHost) {
     print("Environment: Localhost");
   } else {

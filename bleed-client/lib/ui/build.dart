@@ -244,6 +244,7 @@ class _Build {
         height: style.buttonHeight,
         radius: borderRadius2,
         child: child,
+        color: none,
         borderWidth: 2,
       ),
     );

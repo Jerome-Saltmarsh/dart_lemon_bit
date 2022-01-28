@@ -10,7 +10,7 @@ import 'package:bleed_client/render/mappers/mapSrcHuman.dart';
 import 'package:bleed_client/render/mappers/mapSrcWitch.dart';
 import 'package:bleed_client/render/mappers/mapSrcZombie.dart';
 
-Float32List mapCharacterSrc({
+void mapCharacterSrc({
   required CharacterType type,
   required CharacterState state,
   required WeaponType weapon,

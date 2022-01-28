@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
-import 'package:bleed_client/render/mappers/mapDst.dart';
+import 'package:lemon_engine/engine.dart';
 
 const double _32 = 32.0;
 const double _64 = 32.0;
@@ -23,12 +23,12 @@ final Map<ParticleType, double> _particleTypeSize = {
   ParticleType.Pixel: 8,
 };
 
-Float32List mapParticleToDst(Particle particle){
-  double size = _particleTypeSize[particle.type]!;
-  double renderScale = (1 + (particle.z * zToHeightRatio)) * particle.scale;
-  double sizeHalf = size * renderScale * 0.5;
+void mapParticleToDst(Particle particle){
+  final size = _particleTypeSize[particle.type]!;
+  final renderScale = (1 + (particle.z * zToHeightRatio)) * particle.scale;
+  final sizeHalf = size * renderScale * 0.5;
 
-  return mapDst(
+  return engine.actions.mapDst(
     scale: renderScale,
     rotation: 0,
     x: particle.x - sizeHalf,

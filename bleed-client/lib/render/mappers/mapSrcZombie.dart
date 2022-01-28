@@ -9,7 +9,7 @@ import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'loop.dart';
 
 
-Float32List mapSrcZombie({
+void mapSrcZombie({
   required CharacterState state,
   required Direction direction,
   required int shade,

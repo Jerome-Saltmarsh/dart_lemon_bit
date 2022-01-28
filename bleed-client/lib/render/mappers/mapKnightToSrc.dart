@@ -10,20 +10,12 @@ import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'animate.dart';
 import 'loop.dart';
 
-final Float32List _src = Float32List(4);
-
-Float32List mapSrcKnight({
+void mapSrcKnight({
   required CharacterState state,
   required Direction direction,
   required int frame
 }) {
   switch (state) {
-    case CharacterState.Dead:
-      _src[0] = 1;
-      _src[1] = 1;
-      _src[2] = 2;
-      _src[3] = 2;
-      return _src;
     case CharacterState.Idle:
       return srcLoop(
           atlas: atlas.knight.idle,
@@ -40,15 +32,6 @@ Float32List mapSrcKnight({
           size: 64,
           framesPerDirection: 4,
           frame: frame);
-    case CharacterState.Dead:
-    // TODO: Handle this case.
-      break;
-    case CharacterState.Aiming:
-    // TODO: Handle this case.
-      break;
-    case CharacterState.Firing:
-    // TODO: Handle this case.
-      break;
     case CharacterState.Striking:
       return srcAnimate(
           animation: animations.knight.striking,
@@ -75,15 +58,8 @@ Float32List mapSrcKnight({
           size: 64,
           framesPerDirection: 4,
           frame: frame);
-    case CharacterState.Reloading:
-    // TODO: Handle this case.
-      break;
-    case CharacterState.ChangingWeapon:
-    // TODO: Handle this case.
-      break;
+    default:
+      throw Exception("Could not map knight src");
   }
 
-  _src[2] = _src[0] + 64;
-  _src[3] = _src[1] + 64;
-  return _src;
 }

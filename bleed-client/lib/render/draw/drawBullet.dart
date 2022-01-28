@@ -10,7 +10,6 @@ import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/mappers/mapBulletToSrc.dart';
-import 'package:bleed_client/render/mappers/mapDst.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
@@ -19,17 +18,17 @@ const _scale = 0.33;
 const _size = 32;
 const renderSizeHalf = _scale * _size * 0.5;
 
+void mapDstProjectile(Projectile projectile){
+  engine.actions.mapDst(x: projectile.x - renderSizeHalf, y: projectile.y - renderSizeHalf, scale: 0.25);
+}
+
 void drawProjectile(Projectile projectile) {
   switch (projectile.type) {
     case ProjectileType.Bullet:
       if (inDarkness(projectile.x, projectile.y)) return;
-      drawAtlas(
-          dst: mapDst(
-              x: projectile.x - renderSizeHalf,
-              y: projectile.y - renderSizeHalf,
-              scale: 0.25),
-          src: mapProjectileToSrc(projectile)
-      );
+      mapDstProjectile(projectile);
+      mapProjectileToSrc(projectile);
+      engine.actions.renderAtlas();
       break;
     case ProjectileType.Fireball:
       drawFireball(projectile.x, projectile.y, projectile.direction);

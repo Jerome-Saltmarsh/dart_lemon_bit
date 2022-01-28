@@ -6,12 +6,3 @@ import 'package:bleed_client/render/mappers/mapParticleToDst.dart';
 import 'package:bleed_client/render/mappers/mapParticleToSrc.dart';
 import 'package:lemon_engine/engine.dart';
 
-void drawParticle(Particle particle){
-  if (!onScreen(particle.x, particle.y)) return;
-  int shade = getShadeAtPosition(particle.x, particle.y);
-  if (shade >= Shade_VeryDark) return;
-  drawAtlas(
-      dst: mapParticleToDst(particle),
-      src: mapParticleToSrc(particle)
-  );
-}

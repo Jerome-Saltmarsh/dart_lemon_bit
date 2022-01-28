@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/WeaponType.dart';
@@ -10,7 +9,7 @@ import 'package:lemon_math/Vector2.dart';
 
 import 'loop.dart';
 
-Float32List mapSrcHuman({
+void mapSrcHuman({
     required WeaponType weaponType,
     required CharacterState characterState,
     required Direction direction,

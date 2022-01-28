@@ -6,19 +6,19 @@ import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
-
-final Float32List _src = Float32List(4);
+import 'package:lemon_engine/engine.dart';
 
 // TODO Refactor
-Float32List mapProjectileToSrc(Projectile projectile) {
+void mapProjectileToSrc(Projectile projectile) {
   switch(projectile.type){
     case ProjectileType.Bullet:
-      int shade = getShadeAtPosition(projectile.x, projectile.y);
-      _src[0] = atlas.particles.shell.x + (projectile.direction.index * 32.0);
-      _src[1] = atlas.particles.shell.y + shade * 32.0;
-      _src[2] = _src[0] + 32;
-      _src[3] = _src[1] + 32;
-      return _src;
+      final shade = getShadeAtPosition(projectile.x, projectile.y);
+      return engine.actions.mapSrc(
+          x: atlas.particles.shell.x + (projectile.direction.index * 32.0),
+          y: atlas.particles.shell.y + shade * 32.0,
+          width: 32,
+          height: 32
+      );
     case ProjectileType.Fireball:
       throw Exception();
   }

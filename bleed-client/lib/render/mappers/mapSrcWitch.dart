@@ -9,21 +9,13 @@ import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'animate.dart';
 import 'loop.dart';
 
-final Float32List _src = Float32List(4);
-
-Float32List mapSrcWitch({
+void mapSrcWitch({
   required CharacterState state,
   required Direction direction,
   required int frame
 }) {
 
   switch (state) {
-    case CharacterState.Dead:
-      _src[0] = 1;
-      _src[1] = 1;
-      _src[2] = 2;
-      _src[3] = 2;
-      return _src;
     case CharacterState.Idle:
       return srcLoop(
           atlas: atlas.witch.idle,
@@ -86,7 +78,5 @@ Float32List mapSrcWitch({
       break;
   }
 
-  _src[2] = _src[0] + 64;
-  _src[3] = _src[1] + 64;
-  return _src;
+  throw Exception("could not map src witch");
 }

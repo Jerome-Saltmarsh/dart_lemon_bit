@@ -16,7 +16,7 @@ void drawCharacter(Character character) {
   final shade = getShadeAtPosition(character.x, character.y);
   if (shade > (Shade_Dark)) return;
 
-  final src = mapCharacterSrc(
+  mapCharacterSrc(
     type: character.type,
     state: character.state,
     weapon: character.weapon,
@@ -25,10 +25,8 @@ void drawCharacter(Character character) {
     shade: shade,
   );
 
-  drawAtlas(
-    dst: mapCharacterDst(character, character.type, src),
-    src: src,
-  );
+  mapCharacterDst(character, character.type);
+  engine.actions.renderAtlas();
 
   if (
     character.type == CharacterType.Witch ||

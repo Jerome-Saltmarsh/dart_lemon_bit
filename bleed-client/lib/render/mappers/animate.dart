@@ -1,12 +1,11 @@
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
-import 'package:bleed_client/render/mappers/mapSrc.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
 
-Float32List srcAnimate({
+void srcAnimate({
   required Vector2 atlas,
   required List<int> animation,
   required Direction direction,
@@ -18,7 +17,7 @@ Float32List srcAnimate({
   final int animationFrame = min(frame, animation.length - 1);
   final double _s = direction.index * size * framesPerDirection;
   final double _f = (animation[animationFrame] % framesPerDirection) * size;
-  return mapSrc(
+  engine.actions.mapSrc(
       x: atlas.x + _s + _f,
       y: atlas.y + (shade * size),
       width: size,

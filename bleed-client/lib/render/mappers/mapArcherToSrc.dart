@@ -9,7 +9,7 @@ import 'package:bleed_client/render/mappers/animate.dart';
 
 import 'loop.dart';
 
-Float32List mapSrcArcher({
+void mapSrcArcher({
   required CharacterState state,
   required Direction direction,
   required int frame
