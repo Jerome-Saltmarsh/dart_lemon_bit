@@ -2,9 +2,17 @@ import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/getters/outOfBounds.dart';
 import 'package:bleed_client/modules/modules.dart';
 
+final _state = modules.isometric.state;
+
 void applyShade(
     List<List<Shade>> shader, int row, int column, Shade value) {
   if (outOfBounds(row, column)) return;
+  if (shader[row][column].index <= value.index) return;
+  shader[row][column] = value;
+}
+
+void applyShadeUnchecked(
+    List<List<Shade>> shader, int row, int column, Shade value) {
   if (shader[row][column].index <= value.index) return;
   shader[row][column] = value;
 }
@@ -30,12 +38,36 @@ void applyShadeRing(List<List<Shade>> shader, int row, int column, int size, Sha
   int cStart = column - size;
   int cEnd = column + size;
 
+  if (rStart < 0) {
+    rStart = 0;
+  } else if (rStart >= _state.totalRowsInt) {
+    return;
+  }
+
+  if (rEnd >= _state.totalRowsInt){
+    rEnd = _state.totalRowsInt - 1;
+  } else if(rEnd < 0) {
+    return;
+  }
+
+  if (cStart < 0) {
+    cStart = 0;
+  } else if (cStart >= _state.totalColumnsInt) {
+    return;
+  }
+
+  if (cEnd >= _state.totalColumnsInt){
+    cEnd = _state.totalColumnsInt - 1;
+  } else if(cEnd < 0) {
+    return;
+  }
+
   for (int r = rStart; r <= rEnd; r++) {
-    applyShade(shader, r, cStart, shade);
-    applyShade(shader, r, cEnd, shade);
+    applyShadeUnchecked(shader, r, cStart, shade);
+    applyShadeUnchecked(shader, r, cEnd, shade);
   }
   for (int c = cStart; c <= cEnd; c++) {
-    applyShade(shader, rStart, c, shade);
-    applyShade(shader, rEnd, c, shade);
+    applyShadeUnchecked(shader, rStart, c, shade);
+    applyShadeUnchecked(shader, rEnd, c, shade);
   }
 }
