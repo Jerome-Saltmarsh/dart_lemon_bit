@@ -1,8 +1,9 @@
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/events/onShadeMaxChanged.dart';
+import 'package:bleed_client/modules/isometric/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
 
-class IsometricEvents {
+class IsometricEvents with IsometricScope {
 
   void register(){
     if (isometric.state.eventsRegistered) return;
@@ -12,6 +13,16 @@ class IsometricEvents {
     isometric.state.time.onChanged(onTimeChanged);
     isometric.state.maxAmbientBrightness.onChanged(onMaxAmbientBrightnessChanged);
     isometric.state.hour.onChanged(onHourChanged);
+    isometric.state.totalColumns.onChanged(onTotalColumnsChanged);
+    isometric.state.totalRows.onChanged(onTotalRowsChanged);
+  }
+
+  void onTotalColumnsChanged(int value){
+    state.totalColumnsInt = value;
+  }
+
+  void onTotalRowsChanged(int value){
+    state.totalRowsInt = value;
   }
 
   void onTimeChanged(int timeInSeconds) {

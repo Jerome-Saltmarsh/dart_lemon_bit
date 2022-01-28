@@ -19,6 +19,8 @@ class IsometricState {
   final List<List<Shade>> bakeMap = [];
   final Watch<int> totalColumns = Watch(0);
   final Watch<int> totalRows = Watch(0);
+  int totalColumnsInt = 0;
+  int totalRowsInt = 0;
   final Watch<int> hour = Watch(0);
   final Watch<int> time = Watch(0);
   final Watch<Shade> ambient = Watch(Shade.Bright);
