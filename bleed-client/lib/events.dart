@@ -61,7 +61,7 @@ class Events {
   Future _onLoginException(LoginException error) async {
     print("onLoginException()");
 
-    actions.logout();
+    core.actions.logout();
 
     Future.delayed(Duration(seconds: 1), (){
       // game.dialog.value = Dialogs.Login_Error;

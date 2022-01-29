@@ -281,7 +281,7 @@ class _Buttons {
     );
   }
 
-  final Widget buttonLogout = buildMenuButton("Logout", actions.logout);
+  final Widget buttonLogout = buildMenuButton("Logout", core.actions.logout);
   final Widget buttonAccount = buildMenuButton("Account", actions.showDialogAccount);
   final Widget buttonGames = buildMenuButton("Games", actions.showDialogGames);
 

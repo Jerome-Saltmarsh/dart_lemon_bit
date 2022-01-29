@@ -23,21 +23,6 @@ final _Actions actions = _Actions();
 
 class _Actions {
 
-  void logout() {
-    print("actions.logout()");
-    core.state.operationStatus.value = OperationStatus.Logging_Out;
-
-    firebaseAuth.signOut().catchError(print);
-    googleSignIn.signOut().catchError((error){
-      print(error);
-    });
-
-    storage.forgetAuthorization();
-    core.state.account.value = null;
-    Future.delayed(Duration(seconds: 1), (){
-      core.state.operationStatus.value = OperationStatus.None;
-    });
-  }
 
   void showDialogAccount(){
     website.state.dialog.value = WebsiteDialog.Account;
