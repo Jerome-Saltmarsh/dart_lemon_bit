@@ -1,14 +1,12 @@
 
-import 'dart:typed_data';
-
 import 'package:bleed_client/classes/Particle.dart';
-import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/state/particleSettings.dart';
 import 'package:bleed_client/utils.dart';
+import 'package:lemon_engine/engine.dart';
 
 final int _a = particleSettings.mystDuration - 25;
 final int _b = particleSettings.mystDuration - 50;
@@ -26,106 +24,89 @@ const _mystIndex40 = 5;
 const _mystIndex50 = 6;
 const _particleSize = 64.0;
 
-final Float32List _src = Float32List(4);
 
-const pixelSize = 6;
+const pixelSize = 6.0;
 
-Float32List mapParticleToSrc(Particle particle){
+void mapParticleToSrc(Particle particle){
   final shade = getShadeAtPosition(particle.x, particle.y);
 
-  switch(particle.type){
+  switch(particle.type) {
     case ParticleType.Pixel:
-      double x = atlas.pixels.x + (particle.hue * 8);
-      double y = atlas.pixels.y + (3 * 8);
-      _src[0] = x;
-      _src[1] = y;
-      _src[2] = _src[0] + pixelSize;
-      _src[3] = _src[1] + pixelSize;
-      return _src;
+      final x = atlas.pixels.x + (particle.hue * 8);
+      final y = atlas.pixels.y + (3 * 8);
+      engine.actions.mapSrc(x: x, y: y, width: pixelSize, height: pixelSize);
+      return;
+
     case ParticleType.Leg:
-      Direction direction = convertAngleToDirection(particle.rotation);
-      _src[0] = atlas.particles.zombieLeg.x + (direction.index * 64.0);
-      _src[1] = atlas.particles.zombieLeg.y + shade * 64.0;
-      _src[2] = _src[0] + 64;
-      _src[3] = _src[1] + 64;
-      return _src;
+      final direction = convertAngleToDirection(particle.rotation);
+      final x = atlas.particles.zombieLeg.x + (direction.index * 64.0);
+      final y = atlas.particles.zombieLeg.y + shade * 64.0;
+      engine.actions.mapSrc(x: x, y: y, width: 64, height: 64);
+      return;
 
     case ParticleType.Arm:
-      Direction direction = convertAngleToDirection(particle.rotation);
-      _src[0] = atlas.particles.zombieArm.x + (direction.index * 64.0);
-      _src[1] = atlas.particles.zombieArm.y + shade * 64.0;
-      _src[2] = _src[0] + 64;
-      _src[3] = _src[1] + 64;
-      return _src;
+      final direction = convertAngleToDirection(particle.rotation);
+      final x = atlas.particles.zombieArm.x + (direction.index * 64.0);
+      final y = atlas.particles.zombieArm.y + shade * 64.0;
+      engine.actions.mapSrc(x: x, y: y, width: 64, height: 64);
+      return;
 
     case ParticleType.Organ:
-      Direction direction = convertAngleToDirection(particle.rotation);
-      _src[0] = atlas.particles.zombieTorso.x + (direction.index * 64.0);
-      _src[1] = atlas.particles.zombieTorso.y + shade * 64.0;
-      _src[2] = _src[0] + 64;
-      _src[3] = _src[1] + 64;
-      return _src;
+      final direction = convertAngleToDirection(particle.rotation);
+      final x = atlas.particles.zombieTorso.x + (direction.index * 64.0);
+      final y = atlas.particles.zombieTorso.y + shade * 64.0;
+      engine.actions.mapSrc(x: x, y: y, width: 64, height: 64);
+      return;
 
     case ParticleType.Shell:
-      Direction direction = convertAngleToDirection(particle.rotation);
-      _src[0] = atlas.particles.shell.x + (direction.index * 32.0);
-      _src[1] = atlas.particles.shell.y + shade * 32.0;
-      _src[2] = _src[0] + 32;
-      _src[3] = _src[1] + 32;
-      return _src;
+      final direction = convertAngleToDirection(particle.rotation);
+      final x = atlas.particles.shell.x + (direction.index * 32.0);
+      final y = atlas.particles.shell.y + shade * 32.0;
+      engine.actions.mapSrc(x: x, y: y, width: 32, height: 32);
+      return;
 
     case ParticleType.Blood:
-      _src[0] = atlas.particles.blood.x;
-      _src[1] = atlas.particles.blood.y + shade * 32.0;
-      _src[2] = _src[0] + 32;
-      _src[3] = _src[1] + 32;
-      return _src;
+      final x = atlas.particles.blood.x;
+      final y = atlas.particles.blood.y + shade * 32.0;
+      engine.actions.mapSrc(x: x, y: y, width: 32, height: 32);
+      return;
 
     case ParticleType.Human_Head:
-      _src[0] = atlas.particles.zombieHead.x;
-      _src[1] = atlas.particles.zombieHead.y + shade * 32.0;
-      _src[2] = _src[0] + 32;
-      _src[3] = _src[1] + 32;
-      return _src;
+      final direction = convertAngleToDirection(particle.rotation);
+      final x = atlas.particles.shell.x + (direction.index * 64.0);
+      final y = atlas.particles.shell.y + shade * 64.0;
+      engine.actions.mapSrc(x: x, y: y, width: 64, height: 64);
+      return;
 
     case ParticleType.Zombie_Head:
-      Direction direction = convertAngleToDirection(particle.rotation);
-      _src[0] = atlas.particles.zombieHead.x + (direction.index * 64.0);
-      _src[1] = atlas.particles.zombieHead.y + shade * 64.0;
-      _src[2] = _src[0] + 64;
-      _src[3] = _src[1] + 64;
-      return _src;
+      final direction = convertAngleToDirection(particle.rotation);
+      final x = atlas.particles.shell.x + (direction.index * 64.0);
+      final y = atlas.particles.shell.y + shade * 64.0;
+      engine.actions.mapSrc(x: x, y: y, width: 64, height: 64);
+      return;
 
     case ParticleType.Myst:
-      int index = _mapMystDurationToIndex(particle.duration);
-      _src[0] = atlas.myst.x;
-      _src[1] = atlas.myst.y + (index * _particleSize);
+      final index = _mapMystDurationToIndex(particle.duration);
+      final x = atlas.myst.x;
+      final y = atlas.myst.y + (index * _particleSize);
+      engine.actions.mapSrc(x: x, y: y, width: 64, height: 64);
       break;
 
     case ParticleType.FireYellow:
-      _src[0] = atlas.particles.flame.x;
-      _src[1] = atlas.particles.flame.y + ((core.state.timeline.frame % 4) * 24);
-      _src[2] = _src[0] + 25;
-      _src[3] = _src[1] + 24;
-      return _src;
+      final x = atlas.particles.flame.x;
+      final y = atlas.particles.flame.y + ((core.state.timeline.frame % 4) * 24);
+      engine.actions.mapSrc(x: x, y: y, width: 25, height: 24);
+      return;
 
     case ParticleType.Shrapnel:
-      _src[0] = atlas.particles.circleBlackSmall.x;
-      _src[1] = atlas.particles.circleBlackSmall.y;
-      _src[2] = _src[0] + 7;
-      _src[3] = _src[1] + 7;
-      return _src;
+      final x = atlas.particles.circleBlackSmall.x;
+      final y = atlas.particles.circleBlackSmall.y;
+      engine.actions.mapSrc(x: x, y: y, width: 7, height: 7);
+      return;
 
     default:
-      _src[0] = atlas.particles.circle32.x;
-      _src[1] = atlas.particles.circle32.y;
-      _src[2] = _src[0] + 64;
-      _src[3] = _src[1] + 64;
-      return _src;
+      throw Exception("Could not map particle to src");
   }
-  _src[2] = _src[0] + _particleSize;
-  _src[3] = _src[1] + _particleSize;
-  return _src;
 }
 
 int _mapMystDurationToIndex(int duration){

@@ -27,8 +27,8 @@ void srcSingle({
   int shade = Shade_Bright,
   double size = 64,
 }){
-  return engine.actions.mapSrc(
-      x: atlas.x + direction.index * size,
+  engine.actions.mapSrc(
+      x: atlas.x + (direction.index * size),
       y: atlas.y + (shade * size),
       width: size,
       height: size);

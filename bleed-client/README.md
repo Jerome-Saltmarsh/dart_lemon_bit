@@ -98,10 +98,12 @@
 [ ] Unit Team
 [ ] Unit Health / Damage / Type
 [ ] Load Royal Map from cloud
+[ENGINE]
 [ ] Atlas Buffer 64
+[ ] Auto cull render calls
+[COMPLETED]
 [x] Save
 [x] Add Units
-[COMPLETED]
 [x] Fix melee attack
 [x] Sign in with Facebook
 [x] Fix Change Public Name Dialog Error

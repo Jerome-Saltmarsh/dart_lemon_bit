@@ -150,12 +150,12 @@ void applyShadeRing(List<List<int>> shader, int row, int column, int size, int s
 
 void emitLightLow(List<List<int>> shader, double x, double y) {
   final column = getColumn(x, y);
-  final row = getRow(x, y);
-
-  if (row < 0) return;
   if (column < 0) return;
-  if (row >= shader.length) return;
   if (column >= shader[0].length) return;
+  final row = getRow(x, y);
+  if (row < 0) return;
+  if (row >= shader.length) return;
+
 
   applyShade(shader, row, column, Shade_Medium);
   applyShadeRing(shader, row, column, 1, Shade_Medium);
