@@ -75,11 +75,16 @@ class CoreEvents {
 
       case Mode.Website:
         engine.state.drawCanvas = null;
+        engine.state.drawCanvasAfterUpdate = false;
         break;
+
       case Mode.Player:
         engine.state.drawCanvas = modules.game.render.render;
+        engine.state.drawCanvasAfterUpdate = false;
         break;
+
       case Mode.Editor:
+        engine.state.drawCanvasAfterUpdate = true;
         engine.state.drawCanvas = editor.render.render;
         modules.editor.events.onActivated();
         removeGeneratedEnvironmentObjects();
@@ -100,7 +105,6 @@ class CoreEvents {
     switch(connection){
       case Connection.Connected:
         engine.state.drawCanvas = modules.game.render.render;
-        engine.state.drawCanvasAfterUpdate = false;
         core.state.mode.value = Mode.Player;
         if (game.type.value == GameType.Custom){
           final account = core.state.account.value;
