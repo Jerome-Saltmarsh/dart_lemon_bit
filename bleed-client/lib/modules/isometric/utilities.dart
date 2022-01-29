@@ -141,7 +141,7 @@ void applyShadeRing(List<List<int>> shader, int row, int column, int size, int s
     applyShadeUnchecked(shader, r, cStart, shade);
     applyShadeUnchecked(shader, r, cEnd, shade);
   }
-  for (int c = cStart; c <= cEnd; c++) {
+  for (int c = cStart + 1; c < cEnd; c++) {
     applyShadeUnchecked(shader, rStart, c, shade);
     applyShadeUnchecked(shader, rEnd, c, shade);
   }
