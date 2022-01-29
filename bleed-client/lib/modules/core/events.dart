@@ -18,8 +18,6 @@ import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
 
-import '../../events.dart';
-
 class CoreEvents {
 
   late final CoreState state;
@@ -39,7 +37,7 @@ class CoreEvents {
 
     Future.delayed(Duration(seconds: 1), (){
       // game.dialog.value = Dialogs.Login_Error;
-      core.state.error.value = error.cause.toString();
+      state.error.value = error.cause.toString();
     });
   }
 
@@ -52,6 +50,7 @@ class CoreEvents {
       final storedSubscriptionStatusString = storage.get<String>(flag);
       final storedSubscriptionStatus = parseSubscriptionStatus(storedSubscriptionStatusString);
       if (storedSubscriptionStatus != account.subscriptionStatus){
+        // TODO Illegal reference
         website.actions.showDialogSubscriptionStatusChanged();
       }
     }
