@@ -81,10 +81,6 @@ Widget buildSkillsButton() {
   });
 }
 
-void toggleSkillTreeVisible() {
-  hud.skillTreeVisible.value = !hud.skillTreeVisible.value;
-}
-
 Widget buildTotalZombies() {
   return WatchBuilder(game.totalZombies, (int value) {
     return text('Zombies: $value');

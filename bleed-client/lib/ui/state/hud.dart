@@ -2,13 +2,11 @@
 
 import 'dart:math';
 
-import 'package:bleed_client/Bool.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/ui/compose/buildSkillTree.dart';
 import 'package:bleed_client/ui/compose/buildTextBox.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
@@ -28,7 +26,6 @@ final _Hud hud = _Hud();
 final _BuildHud buildHud = _BuildHud();
 
 class _Hud {
-  final Bool skillTreeVisible = Bool(false);
   final _State state = _State();
   final _FocusNodes focusNodes = _FocusNodes();
   final _TextEditingControllers textEditingControllers = _TextEditingControllers();
@@ -78,7 +75,6 @@ Widget _buildHudAbilities(){
         if (!alive && hud.state.observeMode) _buildRespawnLight(),
         _buildServerText(),
         buildTopRight(),
-        buildSkillTree(),
         buildNumberOfPlayersRequiredDialog(),
         // bottomLeft(child: fps),
       ],
