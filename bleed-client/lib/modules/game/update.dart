@@ -1,0 +1,7 @@
+
+class GameUpdate {
+
+  void update(){
+
+  }
+}

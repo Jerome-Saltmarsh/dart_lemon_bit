@@ -15,7 +15,7 @@ class CoreEvents {
 
     switch(connection){
       case Connection.Connected:
-        engine.state.drawCanvas = modules.game.render;
+        engine.state.drawCanvas = modules.game.render.render;
         engine.state.drawCanvasAfterUpdate = false;
         if (game.type.value == GameType.Custom){
           final account = core.state.account.value;
