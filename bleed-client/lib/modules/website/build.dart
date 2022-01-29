@@ -68,7 +68,7 @@ class WebsiteBuild {
   }
 
   Widget buttonEditor(){
-    return buildMenuButton("Map Editor", actions.openMapEditor);
+    return buildMenuButton("Map Editor", core.actions.openMapEditor);
   }
 
 

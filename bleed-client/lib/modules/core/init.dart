@@ -135,7 +135,7 @@ void _loadStateFromSharedPreferences(){
   }
 
   if (storage.authorizationRemembered) {
-    actions.login(storage.recallAuthorization());
+    core.actions.login(storage.recallAuthorization());
   }
 
   // userService.getVersion().then((version) {

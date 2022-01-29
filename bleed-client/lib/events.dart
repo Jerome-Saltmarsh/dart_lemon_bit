@@ -36,7 +36,7 @@ class Events {
     core.state.account.onChanged(_onAccountChanged);
     website.state.dialog.onChanged(_onGameDialogChanged);
     game.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
-    core.state.errorMessage.onChanged(_onErrorMessageChanged);
+    core.state.error.onChanged(_onErrorMessageChanged);
     sub(_onGameError);
     sub(_onLoginException);
   }
@@ -65,7 +65,7 @@ class Events {
 
     Future.delayed(Duration(seconds: 1), (){
       // game.dialog.value = Dialogs.Login_Error;
-      core.state.errorMessage.value = error.cause.toString();
+      core.state.error.value = error.cause.toString();
     });
   }
 
@@ -80,37 +80,37 @@ class Events {
          website.actions.showDialogSubscriptionStatusChanged();
        }
     }
-    actions.store(flag, enumString(account.subscriptionStatus));
-    actions.showDialogGames();
+    core.actions.store(flag, enumString(account.subscriptionStatus));
+    website.actions.showDialogGames();
   }
 
   Future _onGameError(GameError error) async {
     print("events.onGameEvent('$error'");
     switch (error) {
       case GameError.PlayerId_Required:
-        actions.disconnect();
-        actions.showDialogLogin();
+        core.actions.disconnect();
+        website.actions.showDialogLogin();
         return;
       case GameError.Subscription_Required:
-        actions.disconnect();
+        core.actions.disconnect();
         website.actions.showDialogSubscriptionRequired();
         return;
       case GameError.GameNotFound:
-        actions.disconnect();
-        actions.showErrorMessage("game could not be found");
+        core.actions.disconnect();
+        core.actions.setError("game could not be found");
         return;
       case GameError.InvalidArguments:
-        actions.disconnect();
+        core.actions.disconnect();
         if (event.length > 4) {
           String message = event.substring(4, event.length);
-          actions.showErrorMessage("Invalid Arguments: $message");
+          core.actions.setError("Invalid Arguments: $message");
           return;
         }
-        actions.showErrorMessage("game could not be found");
+        core.actions.setError("game could not be found");
         return;
       case GameError.PlayerNotFound:
-        actions.disconnect();
-        actions.showErrorMessage("Player could not be found");
+        core.actions.disconnect();
+        core.actions.setError("Player could not be found");
         break;
       default:
         break;
@@ -119,7 +119,7 @@ class Events {
 
   void _onGameTypeChanged(GameType type) {
     print('events.onGameTypeChanged($type)');
-    actions.clearSession();
+    core.actions.clearSession();
     engine.state.camera.x = 0;
     engine.state.camera.y = 0;
     engine.state.zoom = 1;

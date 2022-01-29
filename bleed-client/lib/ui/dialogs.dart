@@ -22,7 +22,7 @@ Widget buildDialogAccount(){
     if (account == null) {
       return layout(
         bottomLeft: buttons.login,
-        bottomRight: button("Close", actions.showDialogGames),
+        bottomRight: button("Close", website.actions.showDialogGames),
         child: dialog(
             child: Column(
               crossAxisAlignment: axis.cross.start,
@@ -96,7 +96,7 @@ Widget _buildSubscriptionPanel(Account account){
               child: onHover((hovering) {
                 return text("Cancel",
                     color: hovering ? colours.orange : colours.white80,
-                    onPressed: actions.showDialogConfirmCancelSubscription,
+                    onPressed: website.actions.showDialogConfirmCancelSubscription,
                 );
               }),
             ),
@@ -227,8 +227,8 @@ Widget buildDialogSubscriptionCancelled(){
 
 Widget buildDialogPremiumAccountRequired(){
   return buildDialogMessage("Premium subscription required", bottomRight: buildButton("okay", (){
-    actions.deselectGameType();
-    actions.showDialogGames();
+    core.actions.deselectGameType();
+    website.actions.showDialogGames();
   }));
 }
 
@@ -281,10 +281,10 @@ Widget buildDialogWelcome2(){
               )),
         ],
       ),
-      bottomRight: button(text("PREMIUM MEMBERSHIP", color: green), actions.openStripeCheckout, fillColor: none, borderColor: green),
+      bottomRight: button(text("PREMIUM MEMBERSHIP", color: green), core.actions.openStripeCheckout, fillColor: none, borderColor: green),
       bottomLeft: Container(
           padding: padding8,
-          child: text("Perhaps Later", onPressed: actions.showDialogGames, color: colours.white80)),
+          child: text("Perhaps Later", onPressed: website.actions.showDialogGames, color: colours.white80)),
   );
 }
 

@@ -9,7 +9,7 @@ import 'enums.dart';
 
 class CoreState {
   final Watch<OperationStatus> operationStatus = Watch(OperationStatus.None);
-  final Watch<String?> errorMessage = Watch(null);
+  final Watch<String?> error = Watch(null);
   final Watch<Account?> account = Watch(null);
   final Watch<Mode> mode = Watch(Mode.Play);
   final Watch<Region> region = Watch(Region.Australia);

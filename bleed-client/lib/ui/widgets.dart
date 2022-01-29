@@ -93,7 +93,7 @@ class _Widgets {
 
   final textUpgrade = button(
     text("PURCHASE", color: green, bold: true),
-    actions.openStripeCheckout,
+    core.actions.openStripeCheckout,
     fillColor: none,
     borderColor: green,
     borderColorMouseOver: green,
@@ -102,17 +102,17 @@ class _Widgets {
 
   final textReactivateSubscription = button(
     text("Activate", color: green, underline: true),
-    actions.openStripeCheckout,
+    core.actions.openStripeCheckout,
     fillColor: none,
     borderColorMouseOver: green,
     borderColor: none,
   );
 
-  final buttonClose = buildButton("Close", actions.showDialogGames);
-  final buttonOkay = buildButton("Okay", actions.showDialogGames);
-  final buttonGreat = buildButton("Great", actions.showDialogGames);
+  final buttonClose = buildButton("Close", website.actions.showDialogGames);
+  final buttonOkay = buildButton("Okay", website.actions.showDialogGames);
+  final buttonGreat = buildButton("Great", website.actions.showDialogGames);
 
-  final buttonNo = button(text("No", color: colours.white80), actions.showDialogGames, fillColor: colours.none,
+  final buttonNo = button(text("No", color: colours.white80), website.actions.showDialogGames, fillColor: colours.none,
     fillColorMouseOver: none,
     borderColor: colours.none,
     width: 100,
@@ -129,7 +129,7 @@ class _Widgets {
           width4,
         ],
       ),
-      actions.openStripeCheckout,
+      core.actions.openStripeCheckout,
       fillColor: colours.green,
       borderColor: colours.none,
       fillColorMouseOver: colours.green);
@@ -179,7 +179,7 @@ class _Buttons {
 
   final Widget spawnRandomUser = button("Random User", (){
     final userId = 'random_${random.nextInt(9999999)}';
-    actions.login(Authentication(userId: userId, name: userId, email: "$userId@email.com"));
+    core.actions.login(Authentication(userId: userId, name: userId, email: "$userId@email.com"));
   });
 
   final Widget showDialogSubscribed = button("Sub Success", website.actions.showDialogSubscriptionSuccessful);
@@ -217,7 +217,7 @@ class _Buttons {
         text("Continue", color: Colors.black),
       ],
     ),
-  ), actions.loginWithGoogle,
+  ), core.actions.loginWithGoogle,
     borderColor: colours.black618,
     borderColorMouseOver: colours.black618,
     fillColor: Colors.white,
@@ -283,20 +283,20 @@ class _Buttons {
 
   final Widget buttonLogout = buildMenuButton("Logout", core.actions.logout);
   final Widget buttonAccount = buildMenuButton("Account", website.actions.showDialogAccount);
-  final Widget buttonGames = buildMenuButton("Games", actions.showDialogGames);
+  final Widget buttonGames = buildMenuButton("Games", website.actions.showDialogGames);
 
 
   final Widget debug = button("Debug", toggleDebugMode);
-  final Widget exit = button('Exit', actions.exitGame);
-  final Widget edit = button("Edit", actions.toggleEditMode);
-  final Widget editor = button("Editor", actions.openMapEditor);
-  final Widget register = button("Register", actions.openMapEditor);
+  final Widget exit = button('Exit', core.actions.exitGame);
+  final Widget edit = button("Edit", core.actions.toggleEditMode);
+  final Widget editor = button("Editor", core.actions.openMapEditor);
+  final Widget register = button("Register", core.actions.openMapEditor);
   final Widget changeCharacter = button("Change Hero", () {
     sendClientRequest(ClientRequest.Reset_Character_Type);
   });
   final Widget audio = WatchBuilder(game.settings.audioMuted, (bool audio) {
     return onPressed(
-        callback: actions.toggleAudio,
+        callback: core.actions.toggleAudio,
         child: border(child: text(audio ? "Audio On" : "Audio Off")));
   });
 }
@@ -326,7 +326,7 @@ Widget buildToggleFullscreen() {
 
 Widget _buildFakeLoginButton(String userId, String text){
   return button('$userId $text', (){
-     actions.login(Authentication(userId: userId, name: userId, email: "$userId@email.com"));
+     core.actions.login(Authentication(userId: userId, name: userId, email: "$userId@email.com"));
   });
 }
 

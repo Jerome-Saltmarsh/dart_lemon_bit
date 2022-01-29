@@ -174,7 +174,7 @@ class EditorBuild {
 
   Widget _buttonSave() => text("Save", onPressed: editor.actions.showDialogSave);
 
-  Widget _buttonExit() => text("Exit", onPressed: actions.setModePlay);
+  Widget _buttonExit() => text("Exit", onPressed: core.actions.setModePlay);
 
   Widget _buildEditorDialog(){
     return WatchBuilder(editor.state.dialog, (EditorDialog dialog){
@@ -291,7 +291,7 @@ class EditorBuild {
           return buildDialogMessage("Loading Maps");
         }
         if (response.hasError){
-          editor.actions.showErrorMessage(response.error.toString());
+          core.actions.setError(response.error.toString());
           editor.actions.closeDialog();
           return empty;
         }

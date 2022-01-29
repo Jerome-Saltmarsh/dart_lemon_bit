@@ -130,7 +130,7 @@ class EditorActions with EditorScope {
     print("editor.actions.saveMapToFirestore()");
     final mapId = editor.state.mapNameController.text;
     if (mapId.isEmpty) {
-      actions.showErrorMessage("map id cannot be empty");
+      core.actions.setError("map id cannot be empty");
       return;
     }
     closeDialog();
@@ -174,10 +174,6 @@ class EditorActions with EditorScope {
     editor.state.characters = characters;
     isometric.actions.updateTileRender();
     engine.actions.redrawCanvas();
-  }
-
-  void showErrorMessage(String message) {
-    actions.showErrorMessage(message);
   }
 
   void timeSpeedIncrease() {

@@ -238,7 +238,7 @@ class _Build {
         if (website.state.dialog.value == WebsiteDialog.Games){
           website.actions.showDialogAccount();
         }else{
-          actions.showDialogGames();
+          website.actions.showDialogGames();
         }
       },
       child: border(

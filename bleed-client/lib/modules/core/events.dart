@@ -21,13 +21,13 @@ class CoreEvents {
         if (game.type.value == GameType.Custom){
           final account = core.state.account.value;
           if (account == null){
-            actions.showErrorMessage("Account required to play custom map");
+            core.actions.setError("Account required to play custom map");
             return;
           }
           final mapName = game.customGameName;
           if (mapName == null){
-            actions.showErrorMessage("No custom map chosen");
-            actions.disconnect();
+            core.actions.setError("No custom map chosen");
+            core.actions.disconnect();
             return;
           }
           sendRequestJoinCustomGame(mapName: mapName, playerId: account.userId);
@@ -38,7 +38,7 @@ class CoreEvents {
         break;
       case Connection.Done:
         engine.actions.fullScreenExit();
-        actions.clearSession();
+        core.actions.clearSession();
         engine.actions.clearCallbacks();
         engine.state.drawCanvas = null;
         engine.state.drawCanvasAfterUpdate = true;

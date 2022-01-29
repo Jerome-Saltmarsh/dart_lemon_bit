@@ -64,7 +64,7 @@ Widget buildDialogLogin() {
 }
 
 Widget buildWatchErrorMessage(){
-  return NullableWatchBuilder<String?>(core.state.errorMessage, (String? message){
+  return NullableWatchBuilder<String?>(core.state.error, (String? message){
     if (message == null) return empty;
     return buildErrorDialog(message);
   });
@@ -86,7 +86,7 @@ Widget buildErrorDialog(String message, {Widget? bottomRight}){
                 padding: padding16,
                 child: text(message, color: colours.white),),
           ),
-          bottomRight: bottomRight ?? text("okay", onPressed: actions.closeErrorMessage)
+          bottomRight: bottomRight ?? text("okay", onPressed: core.actions.clearError)
       )
   );
 }
@@ -237,9 +237,9 @@ Widget buildDialogGameTypeSelected(GameType gameType) {
         width: style.dialogWidthMedium,
         child: layout(
             topRight: website.build.buttonRegion(),
-            bottomLeft: buildButtonPrimary("PLAY", actions.connectToSelectedGame),
+            bottomLeft: buildButtonPrimary("PLAY", core.actions.connectToSelectedGame),
             bottomRight:
-            buildButton("back", actions.deselectGameType),
+            buildButton("back", core.actions.deselectGameType),
             child: Column(
               crossAxisAlignment: axis.cross.start,
               children: [
@@ -343,7 +343,7 @@ class _BuildView {
           text(connectionMessage[value], size: 25),
           height16,
           button("Cancel", () {
-            actions.exitGame();
+            core.actions.exitGame();
             webSocket.disconnect();
           }, width: 100)
         ],
@@ -481,8 +481,8 @@ Widget buildTopMessage(){
             top: 10,
             child: Row(
               children: [
-                text("Sign in and subscribe", color: colours.green, underline: hovering, onPressed: actions.showDialogLogin),
-                text(" to unlock all games", color: colours.white618, onPressed: actions.showDialogLogin, underline: hovering),
+                text("Sign in and subscribe", color: colours.green, underline: hovering, onPressed: website.actions.showDialogLogin),
+                text(" to unlock all games", color: colours.white618, onPressed: website.actions.showDialogLogin, underline: hovering),
               ],
             ),
           );
@@ -507,10 +507,10 @@ Widget buildTopMessage(){
                 onPressed(
                     child: text(" for \$9.99 per month to unlock all games",
                         color: colours.white80, size: 20),
-                    callback: actions.openStripeCheckout),
+                    callback: core.actions.openStripeCheckout),
               ],
             ),
-            actions.openStripeCheckout,
+            core.actions.openStripeCheckout,
             fillColorMouseOver: none,
             borderColor: none,
             borderColorMouseOver: colours.white80);
@@ -520,13 +520,13 @@ Widget buildTopMessage(){
         return Row(
           children: [
             onPressed(
-              callback: actions.openStripeCheckout,
+              callback: core.actions.openStripeCheckout,
               child: text(
                   "Your subscription expired on ${formatDate(account.subscriptionEndDate!)}",
                   color: colours.red),
             ),
             width16,
-            button(text("Renew", color: green), actions.openStripeCheckout,
+            button(text("Renew", color: green), core.actions.openStripeCheckout,
                 borderColor: colours.green),
           ],
         );
@@ -555,7 +555,7 @@ Widget buildLayoutLobby() {
   return buildDialog(
     width: style.dialogWidthMedium,
     height: style.dialogHeightLarge,
-    bottomRight: buildButton('Cancel', actions.leaveLobby),
+    bottomRight: buildButton('Cancel', core.actions.leaveLobby),
     child: Column(
       crossAxisAlignment: axis.cross.stretch,
       children: [
@@ -644,7 +644,7 @@ Widget buildLayoutLobby() {
 }
 
 Widget buildDialogGameFinished(){
-  return buildDialogMedium(child: Center(child: text("Game Finished")), bottomRight: buildButton("Exit", actions.exitGame));
+  return buildDialogMedium(child: Center(child: text("Game Finished")), bottomRight: buildButton("Exit", core.actions.exitGame));
 }
 
 bool isAccountName(String publicName){

@@ -13,6 +13,10 @@ class WebsiteActions {
     website.state.dialog.value = WebsiteDialog.Change_Public_Name;
   }
 
+  void showDialogConfirmCancelSubscription() {
+    website.state.dialog.value = WebsiteDialog.Confirm_Cancel_Subscription;
+  }
+
   void showDialogAccount(){
     website.state.dialog.value = WebsiteDialog.Account;
   }
@@ -56,4 +60,17 @@ class WebsiteActions {
   void showDialogChangeRegion(){
     website.state.dialog.value = WebsiteDialog.Change_Region;
   }
+
+  void showDialogSubscription(){
+    website.state.dialog.value = WebsiteDialog.Account;
+  }
+
+  void showDialogLogin(){
+    website.state.dialog.value = WebsiteDialog.Login;
+  }
+
+  void showDialogGames(){
+    website.state.dialog.value = WebsiteDialog.Games;
+  }
 }
+
