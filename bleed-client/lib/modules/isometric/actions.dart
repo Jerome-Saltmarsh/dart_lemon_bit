@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/EnvironmentObject.dart';
+import 'package:bleed_client/common/ObjectType.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/constants.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
@@ -228,5 +229,9 @@ class IsometricActions with IsometricScope {
   void setHour(int hour) {
     print("isometric.actions.setHour($hour)");
     state.time.value = hour * secondsPerHour;
+  }
+
+  void removeGeneratedEnvironmentObjects(){
+    modules.isometric.state.environmentObjects.removeWhere((env) => isGeneratedAtBuild(env.type));
   }
 }

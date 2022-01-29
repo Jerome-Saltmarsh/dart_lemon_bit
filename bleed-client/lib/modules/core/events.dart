@@ -2,7 +2,6 @@
 
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/enums/Region.dart';
-import 'package:bleed_client/functions/removeGeneratedEnvironmentObjects.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/modules/core/enums.dart';
 import 'package:bleed_client/modules/core/state.dart';
@@ -51,7 +50,6 @@ class CoreEvents {
       final storedSubscriptionStatusString = storage.get<String>(flag);
       final storedSubscriptionStatus = parseSubscriptionStatus(storedSubscriptionStatusString);
       if (storedSubscriptionStatus != account.subscriptionStatus){
-        // TODO Illegal reference
         website.actions.showDialogSubscriptionStatusChanged();
       }
     }
@@ -86,8 +84,8 @@ class CoreEvents {
       case Mode.Editor:
         engine.state.drawCanvasAfterUpdate = true;
         engine.state.drawCanvas = editor.render.render;
-        modules.editor.events.onActivated();
-        removeGeneratedEnvironmentObjects();
+        editor.events.onActivated();
+        isometric.actions.removeGeneratedEnvironmentObjects();
         deregisterPlayKeyboardHandler();
         game.totalZombies.value = 0;
         game.totalProjectiles = 0;
