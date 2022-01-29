@@ -1,14 +1,17 @@
 
-
+import 'package:lemon_math/Vector2.dart';
 import 'dart:typed_data';
 
 import 'package:bleed_client/classes/EnvironmentObject.dart';
+import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:lemon_watch/watch.dart';
 
 class IsometricState {
+  List<List<Vector2>> paths = [];
+  List<FloatingText> floatingText = [];
   bool eventsRegistered = false;
   List<List<Tile>> tiles = [];
   Float32List tilesDst = Float32List(0);

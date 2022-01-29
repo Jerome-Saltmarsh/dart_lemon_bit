@@ -1,16 +1,12 @@
 import 'dart:math';
 
-import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/Explosion.dart';
-import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CommonSettings.dart';
-import 'package:bleed_client/common/GameStatus.dart';
-import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
@@ -23,14 +19,10 @@ import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:bleed_client/maps.dart';
+import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/modules/isometric/utilities.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/modules/isometric/atlas.dart';
-import 'package:bleed_client/render/draw/drawAtlas.dart';
-import 'package:bleed_client/render/draw/drawBullets.dart';
-import 'package:bleed_client/render/draw/drawPlayerText.dart';
 import 'package:bleed_client/render/mappers/loop.dart';
-import 'package:bleed_client/render/state/floatingText.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
@@ -38,11 +30,8 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/angle_between.dart';
-import 'package:lemon_math/diff.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/opposite.dart';
-
-import '../../draw.dart';
 
 const animationFrameRate = 7; // frames per change;
 

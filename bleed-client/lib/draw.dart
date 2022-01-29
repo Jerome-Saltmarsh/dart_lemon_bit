@@ -2,11 +2,11 @@
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/getters/inDarkness.dart';
-import 'package:bleed_client/render/state/paths.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
 
+import 'modules/modules.dart';
 import 'utils.dart';
 
 
@@ -17,7 +17,7 @@ void drawCharacterCircle(double x, double y, Color color) {
 
 void drawPaths() {
   engine.actions.setPaintColor(colours.blue);
-  for (List<Vector2> path in paths) {
+  for (List<Vector2> path in isometric.state.paths) {
     for (int i = 0; i < path.length - 1; i++) {
       drawLine(path[i].x, path[i].y, path[i + 1].x, path[i + 1].y);
     }

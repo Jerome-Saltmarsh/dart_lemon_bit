@@ -1,10 +1,8 @@
 
-import 'dart:ui';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/render/draw/drawPlayerText.dart';
-import 'package:bleed_client/render/state/floatingText.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
@@ -68,7 +66,7 @@ class GameRender {
   }
 
   void _drawFloatingTexts() {
-    for (FloatingText floatingText in floatingText) {
+    for (FloatingText floatingText in isometric.state.floatingText) {
       if (floatingText.duration == 0) continue;
       floatingText.duration--;
       floatingText.y -= 0.5;

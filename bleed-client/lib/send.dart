@@ -3,7 +3,7 @@ import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/Modify_Game.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/input.dart';
-import 'package:bleed_client/render/state/paths.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:vector_math/vector_math_64.dart';
@@ -111,7 +111,7 @@ void sendRequestUpdatePlayer() {
 }
 
 void sendRequestSetCompilePaths(bool value) {
-  paths.clear();
+  isometric.state.paths.clear();
   webSocket.send('${ClientRequest.SetCompilePaths.index} $session ${value ? 1 : 0}');
 }
 

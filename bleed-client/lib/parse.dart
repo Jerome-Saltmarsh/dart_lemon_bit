@@ -26,7 +26,6 @@ import 'package:bleed_client/functions/emit/emitMyst.dart';
 import 'package:bleed_client/functions/emitSmoke.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/parser/parseCubePlayers.dart';
-import 'package:bleed_client/render/state/paths.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils/list_util.dart';
 import 'package:lemon_dispatch/instance.dart';
@@ -383,10 +382,10 @@ double environmentObjectY(EnvironmentObject environmentObject) {
 }
 
 void _parsePaths() {
-  paths.clear();
+  isometric.state.paths.clear();
   while (!_simiColonConsumed()) {
     final List<Vector2> path = [];
-    paths.add(path);
+    isometric.state.paths.add(path);
     while (!_commaConsumed()) {
       path.add(_consumeVector2());
     }

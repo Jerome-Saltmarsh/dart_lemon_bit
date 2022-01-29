@@ -2,12 +2,12 @@ import 'package:bleed_client/classes/Explosion.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/functions/spawners/spawnFireYellow.dart';
 import 'package:bleed_client/functions/spawners/spawnShrapnel.dart';
-import 'package:bleed_client/render/state/floatingText.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_math/randomInt.dart';
 
 import 'audio.dart';
 import 'functions/spawnBulletHole.dart';
+import 'modules/modules.dart';
 
 int get shrapnelCount => randomInt(4, 15);
 
@@ -59,7 +59,7 @@ void spawnFreezeCircle({
 }
 
 void spawnFloatingText(double x, double y, dynamic value) {
-  for (FloatingText text in floatingText) {
+  for (FloatingText text in isometric.state.floatingText) {
     if (text.duration > 0) continue;
     text.duration = game.settings.floatingTextDuration;
     text.x = x;
@@ -67,7 +67,7 @@ void spawnFloatingText(double x, double y, dynamic value) {
     text.value = value.toString();
     return;
   }
-  floatingText.add(FloatingText(
+  isometric.state.floatingText.add(FloatingText(
       x: x,
       y: y,
       value: value.toString(),
