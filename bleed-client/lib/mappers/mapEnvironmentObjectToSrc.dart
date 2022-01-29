@@ -7,6 +7,7 @@ import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/images.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
+import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
 
 final Map<ObjectType, double> environmentObjectWidth = {
@@ -72,38 +73,25 @@ final Map<ObjectType, Vector2> objectTypeSrcPosition = {
 
 final double _torchHeight = environmentObjectHeight[ObjectType.Torch]!;
 
-final Float32List _src = Float32List(4);
-
-Float32List mapEnvironmentObjectToSrc(EnvironmentObject env){
+void mapEnvironmentObjectToSrc(EnvironmentObject env){
   final shade = getShade(env.row, env.column);
   ObjectType type = env.type;
-
-  if (shade == Shade_PitchBlack){
-    clearSrc(_src);
-    return _src;
-  }
 
   Vector2? translation = objectTypeSrcPosition[type];
   if (translation == null){
     throw Exception(type);
   }
-  int index =  environmentObjectIndex[type]!;
-  double width = environmentObjectWidth[type]!;
-  double height = environmentObjectHeight[type]!;
-  double left = index * width + translation.x;
-  double right = left + width;
-  double top = shade * height + translation.y;
+  final index =  environmentObjectIndex[type]!;
+  final width = environmentObjectWidth[type]!;
+  final height = environmentObjectHeight[type]!;
+  final left = index * width + translation.x;
+  var top = shade * height + translation.y;
+  // double right = left + width;
 
   if (type == ObjectType.Torch && modules.isometric.state.ambient.value > (Shade_Bright)){
     top = _translations.torches.y + ((core.state.timeline.frame % 4) * _torchHeight) + _torchHeight;
   }
-
-  double bottom = top + height;
-  _src[0] = left;
-  _src[1] = top;
-  _src[2] = right;
-  _src[3] = bottom;
-  return _src;
+  engine.actions.mapSrc(x: left, y: top, width: width, height: height);
 }
 
 void clearSrc(Float32List src){

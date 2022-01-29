@@ -14,11 +14,13 @@ import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
+import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/constants/colors/white.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/cube/scene.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
+import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:bleed_client/maps.dart';
 import 'package:bleed_client/modules/isometric/utilities.dart';
@@ -290,10 +292,19 @@ bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {
 
 void drawEnvironmentObject(EnvironmentObject env) {
   if (!environmentObjectOnScreenScreen(env)) return;
-  drawAtlas(
-    dst: env.dst,
-    src: mapEnvironmentObjectToSrc(env),
-  );
+
+  final shade = getShade(env.row, env.column);
+  if (shade == Shade_PitchBlack) return;
+
+  mapEnvironmentObjectToSrc(env);
+  engine.actions.mapDst(x: env.dst[2], y: env.dst[3]);
+  // engine.actions.mapDst(x: env.dst[0], y: env[1], )
+  engine.actions.renderAtlas();
+
+  // drawAtlas(
+  //   dst: env.dst,
+  //   src: mapEnvironmentObjectToSrc(env),
+  // );
 }
 
 final _playerNameTextStyle = TextStyle(color: Colors.white);
