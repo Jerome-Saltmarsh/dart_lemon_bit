@@ -1,7 +1,7 @@
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/GameType.dart';
-import 'package:bleed_client/debug.dart';
 import 'package:bleed_client/enums/Region.dart';
+import 'package:bleed_client/modules/core/init.dart';
 import 'package:bleed_client/webSocket.dart';
 
 void connectToWebSocketServer(Region server, GameType gameType) {
@@ -25,7 +25,7 @@ void _connectToServer(String uri){
 final List<Region> serverTypes = Region.values;
 
 final List<Region> selectableServerTypes =
-    serverTypes.where((type) => (debug || type != Region.LocalHost)
+    serverTypes.where((type) => (isLocalHost || type != Region.LocalHost)
     ).toList();
 
 const String _default = "https://gamestream-ws-sydney-4-osbmaezptq-ts.a.run.app";

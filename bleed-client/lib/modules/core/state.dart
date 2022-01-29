@@ -16,4 +16,5 @@ class CoreState {
   final String title = "GAMESTREAM";
   final Watch<double> download = Watch(0);
   final Timeline timeline = Timeline();
+  final debug = true;
 }

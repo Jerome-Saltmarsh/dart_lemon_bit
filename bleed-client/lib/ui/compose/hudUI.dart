@@ -7,7 +7,6 @@ import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/cube/camera3d.dart';
-import 'package:bleed_client/debug.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/mappers/mapWeaponToDecorationImage.dart';
@@ -301,9 +300,9 @@ Widget buildMenu() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        if (debug) buttons.debug,
-        if (debug) width8,
-        if (debug) buttons.edit,
+        if (core.state.debug) buttons.debug,
+        if (core.state.debug) width8,
+        if (core.state.debug) buttons.edit,
         buttons.exit,
         buttons.changeCharacter,
         buttons.audio,
