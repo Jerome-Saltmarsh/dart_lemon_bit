@@ -2,7 +2,6 @@
 import 'package:bleed_client/classes/Authentication.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/servers.dart';
-import 'package:bleed_client/exceptions.dart';
 import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/modules/core/enums.dart';
 import 'package:bleed_client/modules/core/state.dart';
@@ -18,6 +17,8 @@ import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/webSocket.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_dispatch/instance.dart';
+
+import 'exceptions.dart';
 
 class CoreActions {
 

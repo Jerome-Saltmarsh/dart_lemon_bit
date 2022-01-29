@@ -2,7 +2,6 @@
 
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/enums/Region.dart';
-import 'package:bleed_client/exceptions.dart';
 import 'package:bleed_client/functions/removeGeneratedEnvironmentObjects.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/modules/core/enums.dart';
@@ -17,6 +16,8 @@ import 'package:bleed_client/webSocket.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
+
+import 'exceptions.dart';
 
 class CoreEvents {
 
