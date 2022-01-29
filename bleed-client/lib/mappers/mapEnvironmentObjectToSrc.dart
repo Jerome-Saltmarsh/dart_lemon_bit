@@ -4,7 +4,6 @@ import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/getters/getShading.dart';
-import 'package:bleed_client/images.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:lemon_engine/engine.dart';
@@ -100,3 +99,20 @@ void clearSrc(Float32List src){
   src[2] = 0;
   src[3] = 0;
 }
+
+final Map<ObjectType, int> environmentObjectIndex = {
+  ObjectType.Rock: 0,
+  ObjectType.Grave: 1,
+  ObjectType.Tree_Stump: 2,
+  ObjectType.Rock_Small: 3,
+  ObjectType.LongGrass: 4,
+  ObjectType.Torch: 0,
+  ObjectType.Tree01: 0,
+  ObjectType.House01: 0,
+  ObjectType.House02: 1,
+  ObjectType.Palisade: 0,
+  ObjectType.Palisade_H: 1,
+  ObjectType.Palisade_V: 2,
+  ObjectType.MystEmitter: 0,
+  ObjectType.Rock_Wall: 0,
+};

@@ -7,6 +7,7 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CommonSettings.dart';
+import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
@@ -18,7 +19,6 @@ import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/functions/insertionSort.dart';
 import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
-import 'package:bleed_client/maps.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/modules/isometric/utilities.dart';
 import 'package:bleed_client/modules/modules.dart';
@@ -88,7 +88,7 @@ void drawItem(Item item) {
   final _anchor = 32;
   engine.draw.drawCircleOutline(radius: commonSettings.itemRadius, x: item.x, y: item.y, color: white);
   srcLoop(
-      atlas: maps.itemAtlas[item.type]!,
+      atlas: itemAtlas[item.type]!,
       direction: Direction.Down,
       frame: core.state.timeline.frame,
       framesPerDirection: 8);
@@ -289,3 +289,9 @@ void _drawLine(Offset a, Offset b, Color color) {
   engine.state.canvas.drawLine(a, b, engine.state.paint);
 }
 
+final Map<ItemType, Vector2> itemAtlas = {
+  ItemType.Handgun: atlas.items.handgun,
+  ItemType.Shotgun: atlas.items.shotgun,
+  ItemType.Armour: atlas.items.armour,
+  ItemType.Health: atlas.items.health,
+};

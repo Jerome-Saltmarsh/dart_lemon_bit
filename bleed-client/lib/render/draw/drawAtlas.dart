@@ -2,7 +2,6 @@
 
 import 'dart:typed_data';
 
-import 'package:bleed_client/images.dart';
 import 'package:bleed_client/modules/modules.dart';
 
 import 'drawRawAtlas.dart';
