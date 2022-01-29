@@ -236,7 +236,7 @@ class _Build {
       callback: (){
         game.type.value = GameType.None;
         if (website.state.dialog.value == WebsiteDialog.Games){
-          actions.showDialogAccount();
+          website.actions.showDialogAccount();
         }else{
           actions.showDialogGames();
         }

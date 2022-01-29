@@ -16,7 +16,7 @@ class CoreActions {
 
   void cancelSubscription() async {
     print("actions.cancelSubscription()");
-    actions.showDialogAccount();
+    website.actions.showDialogAccount();
     final account = core.state.account.value;
     if (account == null) {
       actions.showErrorMessage('Account is null');

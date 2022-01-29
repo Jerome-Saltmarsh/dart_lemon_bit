@@ -305,7 +305,7 @@ Widget? buildMenuDebug() {
               buttons.loginTestUser03,
               buttons.spawnRandomUser,
               buttons.editor,
-              button("Show Dialog - Welcome", actions.showDialogWelcome),
+              button("Show Dialog - Welcome", website.actions.showDialogWelcome),
             ],
             border(child: "Debug")
           ],
@@ -495,7 +495,7 @@ Widget buildTopMessage(){
           child: text("Premium",
               color: colours.green,
               size: 18,
-              onPressed: actions.showDialogAccount),
+              onPressed: website.actions.showDialogAccount),
         );
       }
 
@@ -538,7 +538,7 @@ Widget buildTopMessage(){
           return margin(
             top: 10,
               child:                   text("Premium subscription cancelled : ends ${formatDate(subscriptionEndDate)}", color: colours.white618,
-                  onPressed: actions.showDialogAccount
+                  onPressed: website.actions.showDialogAccount
               ));
         }
       }

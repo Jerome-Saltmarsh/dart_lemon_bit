@@ -182,7 +182,7 @@ class _Buttons {
     actions.login(Authentication(userId: userId, name: userId, email: "$userId@email.com"));
   });
 
-  final Widget showDialogSubscribed = button("Sub Success", actions.showDialogSubscriptionSuccessful);
+  final Widget showDialogSubscribed = button("Sub Success", website.actions.showDialogSubscriptionSuccessful);
 
 
   final Widget signInWithFacebookButton = button(
@@ -282,7 +282,7 @@ class _Buttons {
   }
 
   final Widget buttonLogout = buildMenuButton("Logout", core.actions.logout);
-  final Widget buttonAccount = buildMenuButton("Account", actions.showDialogAccount);
+  final Widget buttonAccount = buildMenuButton("Account", website.actions.showDialogAccount);
   final Widget buttonGames = buildMenuButton("Games", actions.showDialogGames);
 
 

@@ -24,29 +24,6 @@ final _Actions actions = _Actions();
 class _Actions {
 
 
-  void showDialogAccount(){
-    website.state.dialog.value = WebsiteDialog.Account;
-  }
-
-  void showDialogWelcome(){
-    website.state.dialog.value = WebsiteDialog.Account_Created;
-  }
-
-  void showDialogWelcome2(){
-    website.state.dialog.value = WebsiteDialog.Welcome_2;
-  }
-
-  void showDialogSubscriptionSuccessful(){
-    website.state.dialog.value = WebsiteDialog.Subscription_Successful;
-  }
-
-  void showDialogSubscriptionStatusChanged(){
-    website.state.dialog.value = WebsiteDialog.Subscription_Status_Changed;
-  }
-
-  void showDialogSubscriptionRequired(){
-    website.state.dialog.value = WebsiteDialog.Subscription_Required;
-  }
 
   void loginWithGoogle() async {
     print("actions.loginWithGoogle()");
@@ -214,7 +191,7 @@ class _Actions {
     switch (response) {
       case ChangeNameStatus.Success:
         core.actions.updateAccount();
-        showDialogAccount();
+        website.actions.showDialogAccount();
         showErrorMessage("Name Changed successfully");
         break;
       case ChangeNameStatus.Taken:

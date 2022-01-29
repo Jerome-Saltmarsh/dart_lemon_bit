@@ -77,7 +77,7 @@ class Events {
        final storedSubscriptionStatusString = storage.get<String>(flag);
        final storedSubscriptionStatus = parseSubscriptionStatus(storedSubscriptionStatusString);
        if (storedSubscriptionStatus != account.subscriptionStatus){
-         actions.showDialogSubscriptionStatusChanged();
+         website.actions.showDialogSubscriptionStatusChanged();
        }
     }
     actions.store(flag, enumString(account.subscriptionStatus));
@@ -93,7 +93,7 @@ class Events {
         return;
       case GameError.Subscription_Required:
         actions.disconnect();
-        actions.showDialogSubscriptionRequired();
+        website.actions.showDialogSubscriptionRequired();
         return;
       case GameError.GameNotFound:
         actions.disconnect();

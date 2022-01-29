@@ -309,7 +309,7 @@ Widget buildDialogChangePublicName() {
     bottomLeft: buildButtonPrimary("Save", (){
       actions.changeAccountPublicName(_nameController.text);
     },),
-    bottomRight: buildButton('back', actions.showDialogAccount),
+    bottomRight: buildButton('back', website.actions.showDialogAccount),
       child: TextField(
         controller: _nameController,
         autofocus: true,
@@ -349,7 +349,7 @@ Widget buildDialogConfirmCancelSubscription(){
     height: style.dialogHeightSmall,
     child: Center(child: text("Cancel premium subscription?", color: colours.white90)),
     bottomLeft: button(text("YES", color: colours.red, bold: false), core.actions.cancelSubscription, fillColor: none, borderColor: colours.none, width: 100),
-    bottomRight: button(text("NO", color: colours.green, bold: true), actions.showDialogAccount, fillColor: none, borderColor: colours.green, width: 100, borderWidth: 2),
+    bottomRight: button(text("NO", color: colours.green, bold: true), website.actions.showDialogAccount, fillColor: none, borderColor: colours.green, width: 100, borderWidth: 2),
   );
 }
 
