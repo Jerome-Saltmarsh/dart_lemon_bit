@@ -5,8 +5,6 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/hud.dart';
-import 'package:bleed_client/update.dart';
-import 'package:bleed_client/variables/lantern.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -174,7 +172,6 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.speakLetsGreeting: sayGreeting,
   keys.waitASecond: sayWaitASecond,
   keys.text: toggleMessageBox,
-  keys.toggleLantern: toggleLantern,
   keys.hourForwards: skipHour,
   keys.hourBackwards: reverseHour,
   keys.teleport: teleportToMouse,
@@ -270,10 +267,6 @@ void selectAbility4() {
 
 void teleportToMouse() {
   sendRequestTeleport(mouseWorldX, mouseWorldY);
-}
-
-void toggleLantern() {
-  lantern = lanternModes[(lantern.index + 1) % lanternModes.length];
 }
 
 void toggleMessageBox() {

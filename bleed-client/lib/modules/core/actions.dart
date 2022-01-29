@@ -1,5 +1,4 @@
 
-import 'package:bleed_client/authentication.dart';
 import 'package:bleed_client/classes/Authentication.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/servers.dart';
@@ -10,6 +9,7 @@ import 'package:bleed_client/modules/core/state.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/modules/website/enums.dart';
 import 'package:bleed_client/server/server.dart';
+import 'package:bleed_client/services/authService.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/stripe.dart';
