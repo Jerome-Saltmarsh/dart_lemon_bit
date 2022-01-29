@@ -25,7 +25,6 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../assets.dart';
-import '../getters.dart';
 import '../styles.dart';
 import '../webSocket.dart';
 import 'build.dart';
@@ -223,7 +222,7 @@ Widget buildDialogGames() {
 Widget buildDialogGameTypeSelected(GameType gameType) {
   return watchAccount((Account? account){
     final isFreeToPlay = freeToPlay.contains(gameType);
-    final canPlay = isFreeToPlay || getters.premiumAccountAuthenticated;
+    final canPlay = isFreeToPlay || core.properties.premiumAccountAuthenticated;
     if (!canPlay){
       return buildDialogPremiumAccountRequired();
     }

@@ -1,14 +1,14 @@
 
-import 'modules/modules.dart';
+import 'package:bleed_client/modules/core/state.dart';
 
+class CoreProperties {
 
-final _Getters getters = _Getters();
+  final CoreState state;
 
-class _Getters {
-  bool get authenticated => core.state.account.isNotNull;
+  CoreProperties(this.state);
 
   bool get premiumAccountAuthenticated {
-    final account = core.state.account.value;
+    final account = state.account.value;
     if (account == null){
       return false;
     }
@@ -18,4 +18,5 @@ class _Getters {
     }
     return subscriptionEndDate.isAfter(DateTime.now());
   }
+
 }
