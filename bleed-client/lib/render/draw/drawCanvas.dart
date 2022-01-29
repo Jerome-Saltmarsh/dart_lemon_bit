@@ -298,13 +298,7 @@ void drawEnvironmentObject(EnvironmentObject env) {
 
   mapEnvironmentObjectToSrc(env);
   engine.actions.mapDst(x: env.dst[2], y: env.dst[3]);
-  // engine.actions.mapDst(x: env.dst[0], y: env[1], )
   engine.actions.renderAtlas();
-
-  // drawAtlas(
-  //   dst: env.dst,
-  //   src: mapEnvironmentObjectToSrc(env),
-  // );
 }
 
 final _playerNameTextStyle = TextStyle(color: Colors.white);
