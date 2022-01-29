@@ -1,6 +1,7 @@
 
 
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/functions/removeGeneratedEnvironmentObjects.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/modules/core/enums.dart';
@@ -8,6 +9,7 @@ import 'package:bleed_client/modules/core/state.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/webSocket.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
@@ -18,6 +20,13 @@ class CoreEvents {
 
   CoreEvents(this.state){
     state.mode.onChanged(onModeChanged);
+    state.region.onChanged(_onServerTypeChanged);
+    webSocket.connection.onChanged(onConnectionChanged);
+  }
+
+  void _onServerTypeChanged(Region serverType) {
+    print('events.onServerTypeChanged($serverType)');
+    storage.saveServerType(serverType);
   }
 
   void onModeChanged(Mode mode){

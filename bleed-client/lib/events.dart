@@ -21,36 +21,21 @@ import 'common/GameType.dart';
 import 'enums/Region.dart';
 import 'modules/core/enums.dart';
 
+// TODO REMOVE THIS WHOLE FILE
 class Events {
 
   Events() {
     print("Events()");
-    webSocket.connection.onChanged(core.events.onConnectionChanged);
     game.type.onChanged(_onGameTypeChanged);
-    core.state.region.onChanged(_onServerTypeChanged);
     game.player.uuid.onChanged(_onPlayerUuidChanged);
     game.player.alive.onChanged(_onPlayerAliveChanged);
     game.status.onChanged(_onGameStatusChanged);
     core.state.account.onChanged(_onAccountChanged);
     website.state.dialog.onChanged(_onGameDialogChanged);
-    game.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
-    core.state.error.onChanged(_onErrorMessageChanged);
     sub(_onGameError);
     sub(_onLoginException);
   }
 
-  void _onErrorMessageChanged(String? message){
-    print("onErrorMessageChanged('$message')");
-  }
-
-  void _onPlayerCharacterTypeChanged(CharacterType characterType){
-    print("events.onCharacterTypeChanged($characterType)");
-    if (characterType == CharacterType.Human){
-      engine.state.cursorType.value = CursorType.Precise;
-    }else{
-      engine.state.cursorType.value = CursorType.Basic;
-    }
-  }
 
   void _onGameDialogChanged(WebsiteDialog value){
     print("onGameDialogChanged(${enumString(value)})");
@@ -141,10 +126,6 @@ class Events {
     }
   }
 
-  void _onServerTypeChanged(Region serverType) {
-    print('events.onServerTypeChanged($serverType)');
-    storage.saveServerType(serverType);
-  }
 
   void _onPlayerUuidChanged(String uuid) {
     print("events.onPlayerUuidChanged($uuid)");
