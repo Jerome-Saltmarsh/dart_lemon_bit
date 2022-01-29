@@ -23,20 +23,6 @@ final _Actions actions = _Actions();
 
 class _Actions {
 
-  void cancelSubscription() async {
-    print("actions.cancelSubscription()");
-    actions.showDialogAccount();
-    final account = core.state.account.value;
-    if (account == null) {
-      actions.showErrorMessage('Account is null');
-      return;
-    }
-    core.state.operationStatus.value = OperationStatus.Cancelling_Subscription;
-    await firestoreService.cancelSubscription(account.userId);
-    await updateAccount();
-    core.state.operationStatus.value = OperationStatus.None;
-  }
-
   void logout() {
     print("actions.logout()");
     core.state.operationStatus.value = OperationStatus.Logging_Out;
@@ -242,7 +228,7 @@ class _Actions {
 
     switch (response) {
       case ChangeNameStatus.Success:
-        updateAccount();
+        core.actions.updateAccount();
         showDialogAccount();
         showErrorMessage("Name Changed successfully");
         break;
@@ -259,21 +245,6 @@ class _Actions {
         showErrorMessage("Something went wrong");
         break;
     }
-  }
-
-  Future updateAccount() async {
-    print("refreshAccountDetails()");
-    final account = core.state.account.value;
-    if (account == null){
-      return;
-    }
-
-    core.state.operationStatus.value = OperationStatus.Updating_Account;
-    core.state.account.value = await firestoreService.findUserById(account.userId).catchError((error){
-      pub(LoginException(error));
-      return null;
-    });
-    core.state.operationStatus.value = OperationStatus.None;
   }
 
   Future signInOrCreateAccount({

@@ -97,7 +97,10 @@
 [ ] Flames spawn in tile center
 [ ] Unit Team
 [ ] Unit Health / Damage / Type
-[ ] Load Royal Map from cloud
+[ ] Team Size
+[ ] Number of Teams
+[ ] Team spawn points
+[x] Load Royal Map from cloud
 [ENGINE]
 [ ] Atlas Buffer 64
 [ ] Auto cull render calls

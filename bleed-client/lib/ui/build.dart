@@ -231,6 +231,7 @@ class _Build {
       ],
     );
 
+
     return onPressed(
       callback: (){
         game.type.value = GameType.None;
@@ -247,16 +248,6 @@ class _Build {
         color: none,
         borderWidth: 2,
       ),
-    );
-  }
-
-  Widget titleStandard(){
-    return border(
-        child: text("GAMESTREAM.ONLINE",
-          size: 30,
-        ),
-        borderWidth: 6,
-        radius: const BorderRadius.only(topLeft: radius4, bottomLeft: radius4)
     );
   }
 
