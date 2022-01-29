@@ -1,4 +1,5 @@
 
+import 'package:bleed_client/modules/game/actions.dart';
 import 'package:bleed_client/modules/game/build.dart';
 import 'package:bleed_client/modules/game/events.dart';
 import 'package:bleed_client/modules/game/properties.dart';
@@ -9,14 +10,16 @@ import 'package:bleed_client/modules/game/update.dart';
 
 class GameModule {
   final state = GameState();
-  final events = GameEvents();
   final build = GameBuild();
   final properties = GameProperties();
   final update = GameUpdate();
   final style = GameStyle();
+  final actions = GameActions();
   late final render;
+  late final events;
 
   GameModule(){
     render = GameRender(style);
+    events = GameEvents(actions);
   }
 }

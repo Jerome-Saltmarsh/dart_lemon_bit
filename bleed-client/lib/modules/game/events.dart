@@ -4,8 +4,8 @@ import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameError.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
-import 'package:bleed_client/functions/cameraCenterPlayer.dart';
 import 'package:bleed_client/input.dart';
+import 'package:bleed_client/modules/game/actions.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/parse.dart';
 import 'package:bleed_client/state/game.dart';
@@ -15,6 +15,11 @@ import 'package:lemon_engine/enums.dart';
 
 
 class GameEvents {
+
+  final GameActions actions;
+
+  GameEvents(this.actions);
+
   void register(){
     print("modules.game.events.register()");
     engine.callbacks.onLeftClicked = performPrimaryAction;
@@ -33,7 +38,7 @@ class GameEvents {
   void _onPlayerAliveChanged(bool value) {
     print("events.onPlayerAliveChanged($value)");
     if (value) {
-      cameraCenterPlayer();
+      actions.cameraCenterPlayer();
     }
   }
 
@@ -91,7 +96,7 @@ class GameEvents {
   void _onPlayerUuidChanged(String uuid) {
     print("events.onPlayerUuidChanged($uuid)");
     if (uuid.isNotEmpty) {
-      cameraCenterPlayer();
+      actions.cameraCenterPlayer();
     }
   }
 
