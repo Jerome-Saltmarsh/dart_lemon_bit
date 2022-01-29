@@ -5,6 +5,7 @@ import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/getters/inDarkness.dart';
+import 'package:bleed_client/modules/game/style.dart';
 import 'package:bleed_client/render/draw/drawPlayerText.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
@@ -19,9 +20,9 @@ import 'package:bleed_client/state/game.dart';
 
 class GameRender {
 
-  final _floatingTextStyle = TextStyle(color: Colors.white);
-  final double _nameRadius = 100;
-  final _playerNameTextStyle = TextStyle(color: Colors.white);
+  final GameStyle style;
+
+  GameRender(this.style);
 
   void render(Canvas canvas, Size size) {
 
@@ -81,7 +82,7 @@ class GameRender {
       if (floatingText.duration == 0) continue;
       floatingText.duration--;
       floatingText.y -= 0.5;
-      engine.draw.text(floatingText.value, floatingText.x, floatingText.y, style: _floatingTextStyle);
+      engine.draw.text(floatingText.value, floatingText.x, floatingText.y, style: style.floatingTextStyle);
     }
   }
 
@@ -89,10 +90,10 @@ class GameRender {
     for (int i = 0; i < game.totalHumans; i++) {
       Character player = game.humans[i];
       if (player.x == game.player.x) continue;
-      if (diff(mouseWorldX, player.x) > _nameRadius) continue;
-      if (diff(mouseWorldY, player.y) > _nameRadius) continue;
+      if (diff(mouseWorldX, player.x) > style.nameRadius) continue;
+      if (diff(mouseWorldY, player.y) > style.nameRadius) continue;
 
-      engine.draw.text(player.name, player.x - isometric.constants.charWidth * player.name.length, player.y, style: _playerNameTextStyle);
+      engine.draw.text(player.name, player.x - isometric.constants.charWidth * player.name.length, player.y, style: style.playerNameTextStyle);
     }
   }
 
