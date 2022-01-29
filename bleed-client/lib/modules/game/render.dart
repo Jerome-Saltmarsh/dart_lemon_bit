@@ -1,14 +1,17 @@
 
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
+import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/constants/colours.dart';
+import 'package:bleed_client/getters/inDarkness.dart';
 import 'package:bleed_client/render/draw/drawPlayerText.dart';
+import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/diff.dart';
 import 'package:bleed_client/common/GameStatus.dart';
-import 'package:bleed_client/draw.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/render/draw/drawBullets.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
@@ -65,6 +68,14 @@ class GameRender {
     engine.actions.setPaintColorWhite();
   }
 
+  void drawDebugNpcs(List<NpcDebug> values){
+    engine.actions.setPaintColor(Colors.yellow);
+
+    for (NpcDebug npc in values) {
+      drawLine(npc.x, npc.y, npc.targetX, npc.targetY);
+    }
+  }
+
   void _drawFloatingTexts() {
     for (FloatingText floatingText in isometric.state.floatingText) {
       if (floatingText.duration == 0) continue;
@@ -82,6 +93,24 @@ class GameRender {
       if (diff(mouseWorldY, player.y) > _nameRadius) continue;
 
       engine.draw.text(player.name, player.x - isometric.constants.charWidth * player.name.length, player.y, style: _playerNameTextStyle);
+    }
+  }
+
+  void drawPaths() {
+    engine.actions.setPaintColor(colours.blue);
+    for (List<Vector2> path in isometric.state.paths) {
+      for (int i = 0; i < path.length - 1; i++) {
+        drawLine(path[i].x, path[i].y, path[i + 1].x, path[i + 1].y);
+      }
+    }
+  }
+
+  void drawBulletHoles(List<Vector2> bulletHoles) {
+    for (Vector2 bulletHole in bulletHoles) {
+      if (bulletHole.x == 0) return;
+      if (!onScreen(bulletHole.x, bulletHole.y)) continue;
+      if (inDarkness(bulletHole.x, bulletHole.y)) continue;
+      engine.draw.circle(bulletHole.x, bulletHole.y, 2, Colors.black);
     }
   }
 }
