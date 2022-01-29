@@ -245,17 +245,17 @@ class CoreActions {
   }
 
   void toggleEditMode() {
-    core.state.mode.value = core.state.mode.value == Mode.Play ? Mode.Edit : Mode.Play;
+    core.state.mode.value = core.state.mode.value == Mode.Player ? Mode.Editor : Mode.Player;
   }
 
   void setModePlay() {
     print("actions.setModePlay()");
-    core.state.mode.value = core.state.mode.value = Mode.Play;
+    core.state.mode.value = core.state.mode.value = Mode.Player;
   }
 
   void openMapEditor(){
     editor.actions.newScene();
-    core.state.mode.value = Mode.Edit;
+    core.state.mode.value = Mode.Editor;
   }
 
   void exitGame(){

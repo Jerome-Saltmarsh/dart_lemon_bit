@@ -13,7 +13,7 @@ void clearState() {
   clearRender();
   engine.state.zoom = 1;
   game.gameEvents.clear();
-  core.state.mode.value = Mode.Play;
+  core.state.mode.value = Mode.Player;
   refreshUI();
   engine.actions.redrawCanvas();
 }

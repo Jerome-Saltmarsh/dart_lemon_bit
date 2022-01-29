@@ -12,6 +12,7 @@ enum OperationStatus {
 }
 
 enum Mode {
-  Play,
-  Edit,
+  Website,
+  Player,
+  Editor,
 }

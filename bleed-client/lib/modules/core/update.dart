@@ -1,12 +1,18 @@
+import 'package:bleed_client/modules/core/enums.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/update.dart';
-import 'package:bleed_client/watches/mode.dart';
 
 void update() {
   core.state.timeline.update();
-  if (playMode) {
-    updatePlayMode();
-  } else {
-    editor.update();
+  switch(core.state.mode.value){
+    case Mode.Website:
+      // TODO: Handle this case.
+      break;
+    case Mode.Player:
+      updatePlayMode();
+      break;
+    case Mode.Editor:
+      editor.update();
+      break;
   }
 }

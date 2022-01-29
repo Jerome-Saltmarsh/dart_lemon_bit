@@ -11,7 +11,7 @@ class CoreState {
   final Watch<OperationStatus> operationStatus = Watch(OperationStatus.None);
   final Watch<String?> error = Watch(null);
   final Watch<Account?> account = Watch(null);
-  final Watch<Mode> mode = Watch(Mode.Play);
+  final Watch<Mode> mode = Watch(Mode.Website);
   final Watch<Region> region = Watch(Region.Australia);
   final String title = "GAMESTREAM";
   final Watch<double> download = Watch(0);

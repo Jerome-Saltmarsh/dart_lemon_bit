@@ -2,6 +2,7 @@
 
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/input.dart';
+import 'package:bleed_client/modules/core/enums.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
@@ -17,6 +18,7 @@ class CoreEvents {
       case Connection.Connected:
         engine.state.drawCanvas = modules.game.render.render;
         engine.state.drawCanvasAfterUpdate = false;
+        core.state.mode.value = Mode.Player;
         if (game.type.value == GameType.Custom){
           final account = core.state.account.value;
           if (account == null){
@@ -36,6 +38,7 @@ class CoreEvents {
         modules.game.events.register();
         break;
       case Connection.Done:
+        core.state.mode.value = Mode.Website;
         engine.actions.fullScreenExit();
         core.actions.clearSession();
         engine.actions.clearCallbacks();
