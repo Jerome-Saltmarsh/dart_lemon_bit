@@ -2,6 +2,7 @@
 
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/enums/Region.dart';
+import 'package:bleed_client/exceptions.dart';
 import 'package:bleed_client/functions/removeGeneratedEnvironmentObjects.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/modules/core/enums.dart';
@@ -10,9 +11,14 @@ import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
+import 'package:bleed_client/toString.dart';
+import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/webSocket.dart';
+import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
+
+import '../../events.dart';
 
 class CoreEvents {
 
@@ -21,8 +27,39 @@ class CoreEvents {
   CoreEvents(this.state){
     state.mode.onChanged(onModeChanged);
     state.region.onChanged(_onServerTypeChanged);
+    state.account.onChanged(_onAccountChanged);
     webSocket.connection.onChanged(onConnectionChanged);
+    sub(_onLoginException);
   }
+
+  Future _onLoginException(LoginException error) async {
+    print("onLoginException()");
+
+    core.actions.logout();
+
+    Future.delayed(Duration(seconds: 1), (){
+      // game.dialog.value = Dialogs.Login_Error;
+      core.state.error.value = error.cause.toString();
+    });
+  }
+
+
+  void _onAccountChanged(Account? account) {
+    print("events.onAccountChanged($account)");
+    if (account == null) return;
+    final flag = 'subscription_status_${account.userId}';
+    if (storage.contains(flag)){
+      final storedSubscriptionStatusString = storage.get<String>(flag);
+      final storedSubscriptionStatus = parseSubscriptionStatus(storedSubscriptionStatusString);
+      if (storedSubscriptionStatus != account.subscriptionStatus){
+        website.actions.showDialogSubscriptionStatusChanged();
+      }
+    }
+    core.actions.store(flag, enumString(account.subscriptionStatus));
+    website.actions.showDialogGames();
+  }
+
+
 
   void _onServerTypeChanged(Region serverType) {
     print('events.onServerTypeChanged($serverType)');
