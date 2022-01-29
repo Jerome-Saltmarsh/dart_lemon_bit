@@ -1,4 +1,6 @@
 
+import 'dart:ui';
+
 import 'package:lemon_math/Vector2.dart';
 import 'dart:typed_data';
 
@@ -10,6 +12,7 @@ import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:lemon_watch/watch.dart';
 
 class IsometricState {
+  late Image image;
   List<List<Vector2>> paths = [];
   List<FloatingText> floatingText = [];
   bool eventsRegistered = false;

@@ -11,7 +11,6 @@ import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
-import 'package:bleed_client/images.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
@@ -26,13 +25,12 @@ import 'package:shared_preferences/shared_preferences.dart';
 final isLocalHost = Uri.base.host == 'localhost';
 
 Future init() async {
-  await images.load();
   await loadSharedPreferences();
-  engine.state.image = images.atlas;
+  isometric.state.image = await loadImage('images/atlas.png');
+  engine.state.image = isometric.state.image;
   initializeGameInstances();
   initializeEventListeners();
   initAudioPlayers();
-  // initCube();
   if (isLocalHost) {
     print("Environment: Localhost");
   } else {

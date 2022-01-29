@@ -59,7 +59,7 @@ void drawFireball(double x, double y, Direction direction) {
       atlas.projectiles.fireball.size, atlas.projectiles.fireball.size);
 
   // TODO use atlas instead
-  engine.state.canvas.drawAtlas(images.atlas, [rsTransform],
+  engine.state.canvas.drawAtlas(isometric.state.image, [rsTransform],
       [rect], null, null, null, engine.state.paint);
 }
 
@@ -74,5 +74,5 @@ void drawArrow(double x, double y, double angle) {
       translateX: x,
       translateY: y);
   engine.state.canvas.drawAtlas(
-      images.atlas, [rsTransform], [_rectArrow], null, null, null, engine.state.paint);
+      isometric.state.image, [rsTransform], [_rectArrow], null, null, null, engine.state.paint);
 }
