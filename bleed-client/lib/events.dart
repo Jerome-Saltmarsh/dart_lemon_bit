@@ -31,7 +31,6 @@ class Events {
     game.player.uuid.onChanged(_onPlayerUuidChanged);
     game.player.alive.onChanged(_onPlayerAliveChanged);
     game.status.onChanged(_onGameStatusChanged);
-    core.state.mode.onChanged(_onGameModeChanged);
     core.state.account.onChanged(_onAccountChanged);
     website.state.dialog.onChanged(_onGameDialogChanged);
     game.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
@@ -173,33 +172,6 @@ class Events {
         engine.actions.fullScreenExit();
         break;
     }
-  }
-
-  void _onGameModeChanged(Mode mode){
-    print("_onGameModeChanged($mode)");
-    engine.state.drawCanvas = null;
-    engine.actions.clearCallbacks();
-
-    switch(mode){
-
-      case Mode.Website:
-        engine.state.drawCanvas = null;
-        break;
-      case Mode.Player:
-        engine.state.drawCanvas = modules.game.render.render;
-        break;
-      case Mode.Editor:
-        engine.state.drawCanvas = editor.render.render;
-        modules.editor.events.onActivated();
-        removeGeneratedEnvironmentObjects();
-        deregisterPlayKeyboardHandler();
-        game.totalZombies.value = 0;
-        game.totalProjectiles = 0;
-        game.totalNpcs = 0;
-        break;
-    }
-
-    engine.actions.redrawCanvas();
   }
 }
 

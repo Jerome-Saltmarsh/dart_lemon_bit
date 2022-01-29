@@ -1,8 +1,10 @@
 
 
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/functions/removeGeneratedEnvironmentObjects.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/modules/core/enums.dart';
+import 'package:bleed_client/modules/core/state.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
@@ -11,6 +13,41 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
 
 class CoreEvents {
+
+  late final CoreState state;
+
+  CoreEvents(this.state){
+    state.mode.onChanged(onModeChanged);
+  }
+
+  void onModeChanged(Mode mode){
+    print("_onGameModeChanged($mode)");
+    engine.state.drawCanvas = null;
+    engine.actions.clearCallbacks();
+
+    switch(mode){
+
+      case Mode.Website:
+        engine.state.drawCanvas = null;
+        break;
+      case Mode.Player:
+        engine.state.drawCanvas = modules.game.render.render;
+        break;
+      case Mode.Editor:
+        engine.state.drawCanvas = editor.render.render;
+        modules.editor.events.onActivated();
+        removeGeneratedEnvironmentObjects();
+        deregisterPlayKeyboardHandler();
+        game.totalZombies.value = 0;
+        game.totalProjectiles = 0;
+        game.totalNpcs = 0;
+        break;
+    }
+
+    engine.actions.redrawCanvas();
+  }
+
+
   void onConnectionChanged(Connection connection) {
     print("events.onConnectionChanged($connection)");
 

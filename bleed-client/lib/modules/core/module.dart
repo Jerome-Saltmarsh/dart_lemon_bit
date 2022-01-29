@@ -8,6 +8,10 @@ import 'package:bleed_client/modules/core/state.dart';
 class CoreModule {
   final state = CoreState();
   final build = CoreBuild();
-  final events = CoreEvents();
+  late final events;
   final actions = CoreActions();
+
+  CoreModule(){
+    events = CoreEvents(state);
+  }
 }
