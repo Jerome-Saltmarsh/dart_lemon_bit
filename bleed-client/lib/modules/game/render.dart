@@ -21,7 +21,7 @@ class GameRender {
   final _floatingTextStyle = TextStyle(color: Colors.white);
   final double _nameRadius = 100;
   final _playerNameTextStyle = TextStyle(color: Colors.white);
-  
+
   void render(Canvas canvas, Size size) {
 
     if (game.player.uuid.value.isEmpty) {

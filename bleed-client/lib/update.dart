@@ -7,13 +7,11 @@ import 'package:bleed_client/modules/isometric/utilities.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/update/updateParticles.dart';
 import 'package:lemon_math/randomInt.dart';
 
 import 'common/GameStatus.dart';
 import 'functions/emit/emitMyst.dart';
 import 'input.dart';
-import 'update/updateCharacters.dart';
 import 'webSocket.dart';
 
 int emitPart = 0;
@@ -50,8 +48,8 @@ void _updateBleed(){
 
   game.framesSinceEvent++;
   readPlayerInput();
-  updateParticles();
-  updateDeadCharacterBlood();
+  isometric.update.updateParticles();
+  isometric.update.deadZombieBlood();
   if (!panningCamera && game.player.alive.value) {
     cameraFollowPlayer();
   }

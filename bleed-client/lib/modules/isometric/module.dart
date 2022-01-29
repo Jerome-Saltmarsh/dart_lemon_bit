@@ -8,6 +8,7 @@ import 'package:bleed_client/modules/isometric/properties.dart';
 import 'package:bleed_client/modules/isometric/render.dart';
 import 'package:bleed_client/modules/isometric/state.dart';
 import 'package:bleed_client/modules/isometric/subscriptions.dart';
+import 'package:bleed_client/modules/isometric/update.dart';
 
 class IsometricModule {
   final state = IsometricState();
@@ -18,4 +19,5 @@ class IsometricModule {
   final constants = IsometricConstants();
   final map = IsometricMaps();
   final render = IsometricRender();
+  final update = IsometricUpdate();
 }

@@ -10,7 +10,6 @@ import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
 import 'package:bleed_client/render/draw/drawCharacter.dart';
 import 'package:bleed_client/render/draw/drawInteractableNpcs.dart';
-import 'package:bleed_client/render/draw/drawParticle.dart';
 import 'package:bleed_client/render/mappers/mapParticleToDst.dart';
 import 'package:bleed_client/render/mappers/mapParticleToSrc.dart';
 import 'package:bleed_client/state/game.dart';
