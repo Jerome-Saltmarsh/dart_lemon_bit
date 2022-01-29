@@ -307,7 +307,7 @@ Widget buildDialogChangePublicName() {
     width: style.dialogWidthMedium,
     height: style.dialogHeightSmall,
     bottomLeft: buildButtonPrimary("Save", (){
-      actions.changeAccountPublicName(_nameController.text);
+      core.actions.changeAccountPublicName(_nameController.text);
     },),
     bottomRight: buildButton('back', website.actions.showDialogAccount),
       child: TextField(
