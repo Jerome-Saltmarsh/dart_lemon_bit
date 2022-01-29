@@ -16,46 +16,6 @@ import 'webSocket.dart';
 
 int emitPart = 0;
 
-void updatePlayMode() {
-  if (!webSocket.connected) return;
-  if (game.player.uuid.value.isEmpty) return;
-
-  switch(game.type.value){
-    case GameType.None:
-      break;
-    case GameType.Custom:
-      _updateBleed();
-      break;
-    case GameType.MMO:
-      _updateBleed();
-      break;
-    case GameType.Moba:
-      _updateBleed();
-      break;
-    case GameType.BATTLE_ROYAL:
-      _updateBleed();
-      break;
-    case GameType.CUBE3D:
-      sendRequestUpdateCube3D();
-      break;
-    default:
-      throw Exception("No update for ${game.type.value}");
-  }
-}
-
-void _updateBleed(){
-  if (game.status.value == GameStatus.Finished) return;
-
-  game.framesSinceEvent++;
-  readPlayerInput();
-  isometric.update.updateParticles();
-  isometric.update.deadZombieBlood();
-  if (!panningCamera && game.player.alive.value) {
-    cameraFollowPlayer();
-  }
-  updateParticleEmitters();
-  sendRequestUpdatePlayer();
-}
 
 void emitAmbientMyst() {
   if (emitPart++ % 3 != 0) return;
