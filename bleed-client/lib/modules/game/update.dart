@@ -1,12 +1,13 @@
 
+import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/functions/cameraFollowPlayer.dart';
+import 'package:bleed_client/functions/spawners/spawnParticle.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/update.dart';
 import 'package:bleed_client/webSocket.dart';
 
 class GameUpdate {
@@ -50,5 +51,17 @@ class GameUpdate {
     }
     updateParticleEmitters();
     sendRequestUpdatePlayer();
+  }
+
+  void updateParticleEmitters() {
+    for (ParticleEmitter emitter in game.particleEmitters) {
+      if (emitter.next-- > 0) continue;
+      emitter.next = emitter.rate;
+      final particle = getAvailableParticle();
+      particle.active = true;
+      particle.x = emitter.x;
+      particle.y = emitter.y;
+      emitter.emit(particle);
+    }
   }
 }
