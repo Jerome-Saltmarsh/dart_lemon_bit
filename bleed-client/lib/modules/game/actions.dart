@@ -24,11 +24,11 @@ class GameActions {
     game.bulletHoleIndex = (game.bulletHoleIndex + 1) % game.settings.maxBulletHoles;
   }
 
-  void performPrimaryAction() {
+  void playerPerform() {
     setCharacterAction(CharacterAction.Perform);
   }
 
-  void sendRequestInteract(){
+  void playerInteract(){
     webSocket.send('${ClientRequest.Interact.index} $session');
   }
 
@@ -78,5 +78,33 @@ class GameActions {
 
   void reverseHour(){
     webSocket.send(ClientRequest.ReverseHour.index.toString());
+  }
+
+  void selectAbility1() {
+    sendRequestSelectAbility(1);
+  }
+
+  void selectAbility2() {
+    sendRequestSelectAbility(2);
+  }
+
+  void selectAbility3() {
+    sendRequestSelectAbility(3);
+  }
+
+  void selectAbility4() {
+    sendRequestSelectAbility(4);
+  }
+
+  void sendRequestCastFireball(){
+    // send('${ClientRequest.CasteFireball.index} $session $aim');
+  }
+
+  void playerEquip(int index) {
+    webSocket.send('${ClientRequest.Equip.index} $session ${index - 1}');
+  }
+
+  void playerDeselectAbility() {
+    webSocket.send('${ClientRequest.DeselectAbility.index} $session');
   }
 }

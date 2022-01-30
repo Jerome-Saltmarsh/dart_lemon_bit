@@ -15,8 +15,8 @@ class GameMap {
 
   GameMap(this.state, this.actions){
     keyPressedHandlers = {
-      state.keyMap.interact: actions.sendRequestInteract,
-      state.keyMap.perform: actions.performPrimaryAction,
+      state.keyMap.interact: actions.playerInteract,
+      state.keyMap.perform: actions.playerPerform,
       state.keyMap.speakLetsGo: actions.sayLetsGo,
       state.keyMap.speakLetsGreeting: actions.sayGreeting,
       state.keyMap.waitASecond: actions.sayWaitASecond,
@@ -24,33 +24,33 @@ class GameMap {
       state.keyMap.hourForwards: actions.skipHour,
       state.keyMap.hourBackwards: actions.reverseHour,
       state.keyMap.teleport: actions.teleportToMouse,
-      state.keyMap.casteFireball: sendRequestCastFireball,
+      state.keyMap.casteFireball: actions.sendRequestCastFireball,
       state.keyMap.equip1: (){
         if (game.player.isHuman){
-          sendRequestEquip(1);
+          actions.playerEquip(1);
         }else{
-          selectAbility1();
+          actions.selectAbility1();
         }
       },
       state.keyMap.equip2: (){
         if (game.player.isHuman){
-          sendRequestEquip(2);
+          actions.playerEquip(2);
         }else{
-          selectAbility2();
+          actions.selectAbility2();
         }
       },
       state.keyMap.equip3: (){
         if (game.player.isHuman){
-          sendRequestEquip(3);
+          actions.playerEquip(3);
         }else{
-          selectAbility3();
+          actions.selectAbility3();
         }
       },
       state.keyMap.equip4: (){
         if (game.player.isHuman){
-          sendRequestEquip(4);
+          actions.playerEquip(4);
         }else{
-          selectAbility4();
+          actions.selectAbility4();
         }
       },
       state.keyMap.equip5: (){
@@ -58,16 +58,16 @@ class GameMap {
           // sendRequestEquip(index)
         }
       },
-      state.keyMap.equip1B: selectAbility1,
-      state.keyMap.equip2B: selectAbility2,
+      state.keyMap.equip1B: actions.selectAbility1,
+      state.keyMap.equip2B: actions.selectAbility2,
       state.keyMap.equip3B: (){
         if (game.player.isHuman){
 
         }else{
-          selectAbility3();
+          actions.selectAbility3();
         }
       },
-      state.keyMap.equip4B: selectAbility4,
+      state.keyMap.equip4B: actions.selectAbility4,
     };
   }
 }

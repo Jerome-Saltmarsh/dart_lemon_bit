@@ -36,18 +36,6 @@ void sendRequestTeleport(double x, double y){
   webSocket.send('${ClientRequest.Teleport.index} $session ${x.toInt()} ${y.toInt()} ');
 }
 
-void sendRequestCastFireball(){
-  // send('${ClientRequest.CasteFireball.index} $session $aim');
-}
-
-void sendRequestEquip(int index) {
-  webSocket.send('${ClientRequest.Equip.index} $session ${index - 1}');
-}
-
-void sendRequestDeselectAbility() {
-  webSocket.send('${ClientRequest.DeselectAbility.index} $session');
-}
-
 void sendRequestSelectAbility(int index) {
   if (index < 1 || index > 4){
     throw Exception("sendRequestSelectAbility(index: $index) - index must be between 1 and 4 inclusive");

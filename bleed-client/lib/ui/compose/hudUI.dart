@@ -366,7 +366,7 @@ Widget buildEquipWeaponSlot(Weapon weapon, int index) {
             onPressed(
                 child: buildWeaponSlot(weapon.type),
                 callback: () {
-                  sendRequestEquip(index);
+                  modules.game.actions.playerEquip(index);
                 }),
             if (weapon.type != WeaponType.Unarmed) buildTag(weapon.rounds),
           ],

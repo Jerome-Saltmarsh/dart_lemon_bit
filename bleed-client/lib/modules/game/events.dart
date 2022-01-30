@@ -40,9 +40,9 @@ class GameEvents {
 
   void register(){
     print("modules.game.events.register()");
-    engine.callbacks.onLeftClicked = actions.performPrimaryAction;
-    engine.callbacks.onPanStarted = actions.performPrimaryAction;
-    engine.callbacks.onLongLeftClicked = actions.performPrimaryAction;
+    engine.callbacks.onLeftClicked = actions.playerPerform;
+    engine.callbacks.onPanStarted = actions.playerPerform;
+    engine.callbacks.onLongLeftClicked = actions.playerPerform;
     engine.callbacks.onKeyPressed = onKeyPressed;
     registerPlayKeyboardHandler();
 
@@ -56,7 +56,7 @@ class GameEvents {
 
   void onKeyPressed(LogicalKeyboardKey key){
      if (key == state.keyMap.perform){
-        actions.performPrimaryAction();
+        actions.playerPerform();
         return;
      }
 
