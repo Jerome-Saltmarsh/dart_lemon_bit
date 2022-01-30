@@ -29,47 +29,27 @@ class EditorEvents with EditorScope {
     print("editor.events.register()");
     engine.callbacks.onLeftClicked = onMouseLeftClicked;
     engine.callbacks.onMouseDragging = onMouseDragging;
-    engine.callbacks.onMouseMoved = onMouseMoved;
-    // engine.callbacks.onKeyPressed = onKeyPressed;
-    // engine.callbacks.onKeyReleased = onKeyReleased;
 
     engine.state.keyPressedHandlers = {
-      config.keys.pan: () => state.panning = true
+      config.keys.pan: () => engine.callbacks.onMouseMoved = onMouseMoved
     };
 
     engine.state.keyReleasedHandlers = {
-      config.keys.pan: () => state.panning = false
+      config.keys.pan: () =>  engine.callbacks.onMouseMoved = null
     };
 
     editor.state.selected.onChanged(onSelectedObjectChanged);
   }
 
-  void onKeyPressed(LogicalKeyboardKey key){
-    if (key == config.keys.pan){
-      state.panning = true;
-    }
-    if (key == config.keys.move && state.selected.isNotNull && !boundaryAtMouse){
-      editor.actions.moveSelectedToMouse();
-    }
-  }
-
-  void onKeyReleased(LogicalKeyboardKey key){
-    if (key == editor.config.keys.pan){
-      state.panning = false;
-    }
-  }
-
-  void onMouseMoved(Offset position, Offset previous){
-    if (state.panning) {
-      final positionX = screenToWorldX(position.dx);
-      final positionY = screenToWorldY(position.dy);
-      final previousX = screenToWorldX(previous.dx);
-      final previousY = screenToWorldY(previous.dy);
-      final diffX = previousX - positionX;
-      final diffY = previousY - positionY;
-      engine.state.camera.x += diffX * engine.state.zoom;
-      engine.state.camera.y += diffY * engine.state.zoom;
-    }
+  void onMouseMoved(Offset position, Offset previous) {
+    final positionX = screenToWorldX(position.dx);
+    final positionY = screenToWorldY(position.dy);
+    final previousX = screenToWorldX(previous.dx);
+    final previousY = screenToWorldY(previous.dy);
+    final diffX = previousX - positionX;
+    final diffY = previousY - positionY;
+    engine.state.camera.x += diffX * engine.state.zoom;
+    engine.state.camera.y += diffY * engine.state.zoom;
   }
 
   void onMouseDragging(){
