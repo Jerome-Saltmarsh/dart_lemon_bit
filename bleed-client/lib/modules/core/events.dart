@@ -90,7 +90,6 @@ class CoreEvents {
         modules.isometric.events.register();
         editor.events.onActivated();
         isometric.actions.removeGeneratedEnvironmentObjects();
-        modules.game.actions.deregisterPlayKeyboardHandler();
         game.totalZombies.value = 0;
         game.totalProjectiles = 0;
         game.totalNpcs = 0;
@@ -134,7 +133,6 @@ class CoreEvents {
         engine.state.drawCanvas = null;
         engine.state.drawCanvasAfterUpdate = true;
         engine.state.cursorType.value = CursorType.Basic;
-        modules.game.actions.deregisterPlayKeyboardHandler();
         break;
       default:
         break;

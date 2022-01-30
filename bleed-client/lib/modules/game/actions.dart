@@ -1,4 +1,5 @@
 
+import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/logic/showTextBox.dart';
@@ -34,7 +35,6 @@ class GameActions {
   void playerInteract(){
     webSocket.send('${ClientRequest.Interact.index} $session');
   }
-
 
   void cameraCenterPlayer(){
     engine.actions.cameraCenter(game.player.x, game.player.y);
@@ -109,63 +109,5 @@ class GameActions {
 
   void playerDeselectAbility() {
     webSocket.send('${ClientRequest.DeselectAbility.index} $session');
-  }
-
-  void registerPlayKeyboardHandler() {
-    print("registerPlayKeyboardHandler()");
-    // RawKeyboard.instance.addListener(_keyboardEventHandlerPlayMode);
-  }
-
-  void registerTextBoxKeyboardHandler(){
-    RawKeyboard.instance.addListener(_handleKeyboardEventTextBox);
-  }
-
-  void deregisterTextBoxKeyboardHandler(){
-    RawKeyboard.instance.removeListener(_handleKeyboardEventTextBox);
-  }
-
-  void deregisterPlayKeyboardHandler() {
-    print("deregisterPlayKeyboardHandler()");
-    RawKeyboard.instance.removeListener(_keyboardEventHandlerPlayMode);
-  }
-
-
-  void _keyboardEventHandlerPlayMode(RawKeyEvent event) {
-    if (event is RawKeyUpEvent) {
-      _handleKeyUpEventPlayMode(event);
-    } else if (event is RawKeyDownEvent) {
-      _handleKeyDownEventPlayMode(event);
-    }
-  }
-
-  void _handleKeyboardEventTextBox(RawKeyEvent event) {
-    if (event is RawKeyDownEvent) {
-      if (event.logicalKey == LogicalKeyboardKey.enter) {
-        sendAndCloseTextBox();
-      } else if (event.logicalKey == LogicalKeyboardKey.escape) {
-        hideTextBox();
-      }
-    }
-  }
-
-  void _handleKeyDownEventPlayMode(RawKeyDownEvent event) {
-    LogicalKeyboardKey key = event.logicalKey;
-
-    if (key == LogicalKeyboardKey.enter){
-      if (hud.state.textBoxVisible.value){
-        sendAndCloseTextBox();
-      }
-    }
-
-    // // on key pressed
-    // if (modules.game.map.keyPressedHandlers.containsKey(key)) {
-    //   modules.game.map.keyPressedHandlers[key]?.call();
-    // }
-  }
-
-  void _handleKeyUpEventPlayMode(RawKeyUpEvent event) {
-    LogicalKeyboardKey key = event.logicalKey;
-
-    if (hud.state.textBoxVisible.value) return;
   }
 }

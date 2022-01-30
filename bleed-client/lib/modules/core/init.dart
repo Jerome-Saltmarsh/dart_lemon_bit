@@ -96,11 +96,9 @@ void initializeEventListeners() {
 
   hud.focusNodes.textFieldMessage.addListener(() {
     if (hud.textBoxFocused){
-      modules.game.actions.deregisterPlayKeyboardHandler();
-      modules.game.actions.registerTextBoxKeyboardHandler();
+
     }else{
-      modules.game.actions.registerPlayKeyboardHandler();
-      modules.game.actions.deregisterTextBoxKeyboardHandler();
+
     }
   });
 
