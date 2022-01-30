@@ -45,10 +45,13 @@ class EditorBuild {
       return layout(
           topLeft: _toolTabs(),
           topRight: _mainMenu(),
+          bottomRight: _buildSelected(),
           child: _buildEditorDialog()
       );
     });
   }
+
+
 
   Widget _mainMenu() {
     return margin(
@@ -320,6 +323,24 @@ class EditorBuild {
         );
       },
     );
+  }
+
+  Widget _buildSelected() {
+    return NullableWatchBuilder<Vector2?>(state.selected, (Vector2? selected){
+        if (selected == null) return empty;
+
+        return Container(
+            color: colours.white618,
+            width: style.dialogHeightMedium,
+            height: style.dialogWidthSmall,
+            padding: padding16,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+              text("Position ${selected.x.toInt()} ${selected.y.toInt()}")
+            ],),
+        );
+    });
   }
 }
 
