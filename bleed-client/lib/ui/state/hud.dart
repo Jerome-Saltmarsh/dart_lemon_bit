@@ -41,9 +41,6 @@ extension HudProperties on _Hud {
 class _BuildHud {
   Widget playerCharacterType() {
     return WatchBuilder(modules.game.state.player.characterType, (CharacterType value) {
-      // if (value == CharacterType.None) {
-      //   return buildHudDialog.selectCharacterType();
-      // }
       if (value == CharacterType.Human) {
         return _buildHudWeapons();
       }
@@ -59,9 +56,13 @@ Widget _buildHudWeapons(){
       topLeft: buildTime(),
       topRight: buttons.exit,
       bottomLeft: buildWeaponMenu(),
+      bottomRight: Refresh((){
+        return text("zoom ${engine.state.zoom}, target: ${engine.state.targetZoom}");
+      })
     );
   });
 }
+
 
 Widget _buildHudAbilities(){
   return WatchBuilder(modules.game.state.player.alive, (bool alive) {
