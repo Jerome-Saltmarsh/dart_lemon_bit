@@ -340,7 +340,7 @@ void _parseEnvironmentObjects() {
         break;
       case ObjectType.MystEmitter:
         addParticleEmitter(
-            ParticleEmitter(x: x, y: y, rate: 20, emit: emitMyst));
+            ParticleEmitter(x: x, y: y, rate: 20, emit: modules.game.factories.emitMyst));
         break;
       case ObjectType.Torch:
         // addParticleEmitter(ParticleEmitter(x: x, y: y - 40, rate: 75, emit: emitPixel));
