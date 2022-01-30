@@ -17,6 +17,11 @@ class GameActions {
     game.bulletHoleIndex = (game.bulletHoleIndex + 1) % game.settings.maxBulletHoles;
   }
 
+  void performPrimaryAction() {
+    setCharacterAction(CharacterAction.Perform);
+  }
+
+
   void cameraCenterPlayer(){
     engine.actions.cameraCenter(game.player.x, game.player.y);
   }

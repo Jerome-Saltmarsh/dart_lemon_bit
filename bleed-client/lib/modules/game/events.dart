@@ -36,9 +36,9 @@ class GameEvents {
 
   void register(){
     print("modules.game.events.register()");
-    engine.callbacks.onLeftClicked = performPrimaryAction;
-    engine.callbacks.onPanStarted = performPrimaryAction;
-    engine.callbacks.onLongLeftClicked = performPrimaryAction;
+    engine.callbacks.onLeftClicked = actions.performPrimaryAction;
+    engine.callbacks.onPanStarted = actions.performPrimaryAction;
+    engine.callbacks.onLongLeftClicked = actions.performPrimaryAction;
     modules.isometric.events.register();
     registerPlayKeyboardHandler();
     game.player.characterType.onChanged(_onPlayerCharacterTypeChanged);

@@ -6,8 +6,6 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/hud.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/randomItem.dart';
@@ -20,10 +18,6 @@ import 'ui/logic/showTextBox.dart';
 bool get keyPressedPan => keyPressed(LogicalKeyboardKey.keyE);
 bool panningCamera = false;
 final RawKeyboard rawKeyboard = RawKeyboard.instance;
-
-void performPrimaryAction() {
-  modules.game.actions.setCharacterAction(CharacterAction.Perform);
-}
 
 void registerPlayKeyboardHandler() {
   print("registerPlayKeyboardHandler()");
@@ -160,9 +154,9 @@ final List<String> greetings = [
 final List<String> waitASecond = ['Wait a second', 'Just a moment'];
 
 // triggered the first frame a key is down
-Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
+final Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.interact: sendRequestInteract,
-  keys.perform: performPrimaryAction,
+  keys.perform: modules.game.actions.performPrimaryAction,
   keys.speakLetsGo: sayLetsGo,
   keys.speakLetsGreeting: sayGreeting,
   keys.waitASecond: sayWaitASecond,
@@ -208,7 +202,7 @@ Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   keys.equip2B: selectAbility2,
   keys.equip3B: (){
     if (game.player.isHuman){
-      melee();
+
     }else{
       selectAbility3();
     }
@@ -298,13 +292,6 @@ void stopRunLeft() {
   modules.game.actions.setCharacterActionRun();
   setCharacterDirection(Direction.Left);
 }
-
-void melee() {
-  // characterController.action.value = CharacterAction.
-  // characterController.direction = convertAngleToDirection(characterController.requestAim);
-  // sendRequestMe
-}
-
 
 void _handleKeyDownEventPlayMode(RawKeyDownEvent event) {
   LogicalKeyboardKey key = event.logicalKey;
