@@ -81,6 +81,7 @@ class CoreEvents {
         modules.isometric.events.register();
         modules.game.events.register();
         engine.registerZoomCameraOnMouseScroll();
+        engine.state.keyPressedHandlers = modules.game.map.keyPressedHandlers;
         break;
 
       case Mode.Editor:

@@ -13,7 +13,7 @@ import 'webSocket.dart';
 
 final StringBuffer _buffer = StringBuffer();
 final gameUpdateIndex = ClientRequest.Update.index;
-const String _space = " ";
+const _space = " ";
 
 final _SendRequestToServer sendRequest = _SendRequestToServer();
 

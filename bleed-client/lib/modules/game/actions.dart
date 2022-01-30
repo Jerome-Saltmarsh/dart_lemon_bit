@@ -113,7 +113,7 @@ class GameActions {
 
   void registerPlayKeyboardHandler() {
     print("registerPlayKeyboardHandler()");
-    RawKeyboard.instance.addListener(_keyboardEventHandlerPlayMode);
+    // RawKeyboard.instance.addListener(_keyboardEventHandlerPlayMode);
   }
 
   void registerTextBoxKeyboardHandler(){
@@ -157,10 +157,10 @@ class GameActions {
       }
     }
 
-    // on key pressed
-    if (modules.game.map.keyPressedHandlers.containsKey(key)) {
-      modules.game.map.keyPressedHandlers[key]?.call();
-    }
+    // // on key pressed
+    // if (modules.game.map.keyPressedHandlers.containsKey(key)) {
+    //   modules.game.map.keyPressedHandlers[key]?.call();
+    // }
   }
 
   void _handleKeyUpEventPlayMode(RawKeyUpEvent event) {

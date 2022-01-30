@@ -104,6 +104,8 @@
 [ENGINE]
 [ ] Atlas Buffer 64
 [ ] Auto cull render calls
+[ ] Key handler state to engine
+[ ] Fix Zoom
 [COMPLETED]
 [x] Save
 [x] Add Units
