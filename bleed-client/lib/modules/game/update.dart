@@ -2,13 +2,13 @@
 import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
-import 'package:bleed_client/functions/cameraFollowPlayer.dart';
 import 'package:bleed_client/functions/spawners/spawnParticle.dart';
 import 'package:bleed_client/input.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/webSocket.dart';
+import 'package:lemon_engine/engine.dart';
 
 class GameUpdate {
 
@@ -63,5 +63,9 @@ class GameUpdate {
       particle.y = emitter.y;
       emitter.emit(particle);
     }
+  }
+
+  void cameraFollowPlayer() {
+    engine.actions.cameraFollow(game.player.x, game.player.y, engine.state.cameraFollowSpeed);
   }
 }
