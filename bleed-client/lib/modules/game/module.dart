@@ -3,6 +3,7 @@ import 'package:bleed_client/modules/game/actions.dart';
 import 'package:bleed_client/modules/game/build.dart';
 import 'package:bleed_client/modules/game/events.dart';
 import 'package:bleed_client/modules/game/factories.dart';
+import 'package:bleed_client/modules/game/map.dart';
 import 'package:bleed_client/modules/game/properties.dart';
 import 'package:bleed_client/modules/game/render.dart';
 import 'package:bleed_client/modules/game/state.dart';
@@ -19,6 +20,7 @@ class GameModule {
   late final GameRender render;
   late final GameEvents events;
   late final GameUpdate update;
+  late final GameMap map;
 
   GameModule(){
     state = GameState();
@@ -26,5 +28,6 @@ class GameModule {
     render = GameRender(style);
     events = GameEvents(actions, state);
     update = GameUpdate(state);
+    map = GameMap(state, actions);
   }
 }

@@ -119,87 +119,87 @@ final List<String> greetings = [
 final List<String> waitASecond = ['Wait a second', 'Just a moment'];
 
 // triggered the first frame a key is down
-final Map<LogicalKeyboardKey, Function> keyPressedHandlers = {
-  modules.game.state.keyMap.interact: modules.game.actions.sendRequestInteract,
-  // modules.game.state.keyMap.perform: modules.game.actions.performPrimaryAction,
-  modules.game.state.keyMap.speakLetsGo: sayLetsGo,
-  modules.game.state.keyMap.speakLetsGreeting: sayGreeting,
-  modules.game.state.keyMap.waitASecond: sayWaitASecond,
-  modules.game.state.keyMap.text: toggleMessageBox,
-  modules.game.state.keyMap.hourForwards: skipHour,
-  modules.game.state.keyMap.hourBackwards: reverseHour,
-  // modules.game.state.keyMap.teleport: teleportToMouse,
-  modules.game.state.keyMap.casteFireball: sendRequestCastFireball,
-  key.digit1: (){
-    if (game.player.isHuman){
-      sendRequestEquip(1);
-    }else{
-      selectAbility1();
-    }
-  },
-  key.digit2: (){
-    if (game.player.isHuman){
-      sendRequestEquip(2);
-    }else{
-      selectAbility2();
-    }
-  },
-  modules.game.state.keyMap.equip3: (){
-    if (game.player.isHuman){
-      sendRequestEquip(3);
-    }else{
-      selectAbility3();
-    }
-  },
-  modules.game.state.keyMap.equip4: (){
-    if (game.player.isHuman){
-      sendRequestEquip(4);
-    }else{
-      selectAbility4();
-    }
-  },
-  modules.game.state.keyMap.equip5: (){
-    if (game.player.isHuman){
-       // sendRequestEquip(index)
-    }
-  },
-  modules.game.state.keyMap.equip1B: selectAbility1,
-  modules.game.state.keyMap.equip2B: selectAbility2,
-  modules.game.state.keyMap.equip3B: (){
-    if (game.player.isHuman){
-
-    }else{
-      selectAbility3();
-    }
-  },
-  modules.game.state.keyMap.equip4B: selectAbility4,
-  modules.game.state.keyMap.cubeFace0: (){
-    // storage.
-    camera3D.target.x = storage.get('target.x');
-    camera3D.target.y = storage.get('target.y');
-    camera3D.target.z = storage.get('target.z');
-    camera3D.position.x = storage.get('position.x');
-    camera3D.position.y = storage.get('position.y');
-    camera3D.position.z = storage.get('position.z');
-  },
-  modules.game.state.keyMap.cubeFaceI: (){
-    storage.put('target.x', camera3D.target.x);
-    storage.put('target.y', camera3D.target.y);
-    storage.put('target.z', camera3D.target.z);
-    storage.put('position.x', camera3D.position.x);
-    storage.put('position.y', camera3D.position.y);
-    storage.put('position.z', camera3D.position.z);
-  },
-  key.arrowDown: (){
-  },
-  key.arrowRight: sendRequest.hourIncrease,
-  key.arrowLeft: sendRequest.hourDecrease,
-  key.u: (){
-    engine.state.camera.x = 0;
-    engine.state.camera.y = 0;
-    engine.state.zoom = 1;
-  },
-};
+// final Map<LogicalKeyboardKey, Function> keyPressedHandlers = {
+//   modules.game.state.keyMap.interact: modules.game.actions.sendRequestInteract,
+//   // modules.game.state.keyMap.perform: modules.game.actions.performPrimaryAction,
+//   modules.game.state.keyMap.speakLetsGo: sayLetsGo,
+//   modules.game.state.keyMap.speakLetsGreeting: sayGreeting,
+//   modules.game.state.keyMap.waitASecond: sayWaitASecond,
+//   modules.game.state.keyMap.text: toggleMessageBox,
+//   modules.game.state.keyMap.hourForwards: skipHour,
+//   modules.game.state.keyMap.hourBackwards: reverseHour,
+//   // modules.game.state.keyMap.teleport: teleportToMouse,
+//   modules.game.state.keyMap.casteFireball: sendRequestCastFireball,
+//   key.digit1: (){
+//     if (game.player.isHuman){
+//       sendRequestEquip(1);
+//     }else{
+//       selectAbility1();
+//     }
+//   },
+//   key.digit2: (){
+//     if (game.player.isHuman){
+//       sendRequestEquip(2);
+//     }else{
+//       selectAbility2();
+//     }
+//   },
+//   modules.game.state.keyMap.equip3: (){
+//     if (game.player.isHuman){
+//       sendRequestEquip(3);
+//     }else{
+//       selectAbility3();
+//     }
+//   },
+//   modules.game.state.keyMap.equip4: (){
+//     if (game.player.isHuman){
+//       sendRequestEquip(4);
+//     }else{
+//       selectAbility4();
+//     }
+//   },
+//   modules.game.state.keyMap.equip5: (){
+//     if (game.player.isHuman){
+//        // sendRequestEquip(index)
+//     }
+//   },
+//   modules.game.state.keyMap.equip1B: selectAbility1,
+//   modules.game.state.keyMap.equip2B: selectAbility2,
+//   modules.game.state.keyMap.equip3B: (){
+//     if (game.player.isHuman){
+//
+//     }else{
+//       selectAbility3();
+//     }
+//   },
+//   modules.game.state.keyMap.equip4B: selectAbility4,
+//   modules.game.state.keyMap.cubeFace0: (){
+//     // storage.
+//     camera3D.target.x = storage.get('target.x');
+//     camera3D.target.y = storage.get('target.y');
+//     camera3D.target.z = storage.get('target.z');
+//     camera3D.position.x = storage.get('position.x');
+//     camera3D.position.y = storage.get('position.y');
+//     camera3D.position.z = storage.get('position.z');
+//   },
+//   modules.game.state.keyMap.cubeFaceI: (){
+//     storage.put('target.x', camera3D.target.x);
+//     storage.put('target.y', camera3D.target.y);
+//     storage.put('target.z', camera3D.target.z);
+//     storage.put('position.x', camera3D.position.x);
+//     storage.put('position.y', camera3D.position.y);
+//     storage.put('position.z', camera3D.position.z);
+//   },
+//   key.arrowDown: (){
+//   },
+//   key.arrowRight: sendRequest.hourIncrease,
+//   key.arrowLeft: sendRequest.hourDecrease,
+//   key.u: (){
+//     engine.state.camera.x = 0;
+//     engine.state.camera.y = 0;
+//     engine.state.zoom = 1;
+//   },
+// };
 
 
 
@@ -265,8 +265,8 @@ void _handleKeyDownEventPlayMode(RawKeyDownEvent event) {
 
   if (!_keyDownState.containsKey(key)) {
     _keyDownState[key] = true;
-    if (keyPressedHandlers.containsKey(key)) {
-      keyPressedHandlers[key]?.call();
+    if (modules.game.map.keyPressedHandlers.containsKey(key)) {
+      modules.game.map.keyPressedHandlers[key]?.call();
     }
     return;
   }
@@ -281,8 +281,8 @@ void _handleKeyDownEventPlayMode(RawKeyDownEvent event) {
 
   // on key pressed
   _keyDownState[key] = true;
-  if (keyPressedHandlers.containsKey(key)) {
-    keyPressedHandlers[key]?.call();
+  if (modules.game.map.keyPressedHandlers.containsKey(key)) {
+    modules.game.map.keyPressedHandlers[key]?.call();
   }
 }
 
