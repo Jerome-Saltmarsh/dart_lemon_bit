@@ -1,8 +1,8 @@
-
+import 'package:bleed_client/classes/Particle.dart';
+import 'package:lemon_math/Vector2.dart';
 import 'package:bleed_client/classes/Authentication.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/servers.dart';
-import 'package:bleed_client/functions/clearState.dart';
 import 'package:bleed_client/modules/core/enums.dart';
 import 'package:bleed_client/modules/core/state.dart';
 import 'package:bleed_client/modules/modules.dart';
@@ -13,10 +13,12 @@ import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/stripe.dart';
 import 'package:bleed_client/ui/actions/signInWithFacebook.dart';
+import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:bleed_client/webSocket.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_dispatch/instance.dart';
+import 'package:lemon_engine/engine.dart';
 
 import 'exceptions.dart';
 
@@ -160,6 +162,47 @@ class CoreActions {
     clearState();
     webSocket.disconnect();
   }
+
+  void clearState() {
+    print('clearState()');
+    clearCompileGameState();
+    isometric.state.paths.clear();
+    engine.state.zoom = 1;
+    game.gameEvents.clear();
+    core.state.mode.value = Mode.Player;
+    refreshUI();
+    engine.actions.redrawCanvas();
+  }
+
+  void clearCompileGameState() {
+    game.player.id = -1;
+    game.id = -1;
+    game.player.uuid.value = "";
+    game.player.x = -1;
+    game.player.y = -1;
+    game.totalZombies.value = 0;
+    game.totalHumans = 0;
+    game.totalProjectiles = 0;
+    game.grenades.clear();
+    game.collectables.clear();
+    game.particleEmitters.clear();
+
+    for (Vector2 bullet in game.bulletHoles) {
+      bullet.x = 0;
+      bullet.y = 0;
+    }
+
+    for (Particle particle in isometric.state.particles) {
+      particle.active = false;
+    }
+
+    for (Vector2 bullet in game.bulletHoles) {
+      bullet.x = 0;
+      bullet.y = 0;
+    }
+    game.bulletHoleIndex = 0;
+  }
+
 
   Future signInOrCreateAccount({
     required String userId,
