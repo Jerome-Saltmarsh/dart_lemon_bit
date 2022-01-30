@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:bleed_client/common/ItemType.dart';
-import 'package:bleed_client/rects.dart';
 
 // interface
 Rect mapItemToRect(ItemType item) {
@@ -42,5 +41,9 @@ List<Rect> _itemFrames(List<int> indexes) {
 
 Rect _itemFrame(int index) {
   return rect(index, _frameWidth, _frameHeight);
+}
+
+Rect rect(int index, double width, double height){
+    return Rect.fromLTWH(width * (index - 1), 0, width, height);
 }
 

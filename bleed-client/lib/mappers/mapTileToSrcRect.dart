@@ -1,8 +1,6 @@
 
 import 'package:bleed_client/common/Tile.dart';
 
-import '../rects.dart';
-
 // interface
 double mapTileToSrc(Tile tile) {
   switch (tile) {
@@ -66,4 +64,5 @@ final _rock = _frame(11);
 final _black = _frame(12);
 final _rockWall = _frame(13);
 
+const int tileCanvasWidth = 48;
 double _frame(int index) => (index - 1) * tileCanvasWidth.toDouble();
