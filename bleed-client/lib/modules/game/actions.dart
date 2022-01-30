@@ -5,6 +5,12 @@ import 'package:lemon_engine/engine.dart';
 
 class GameActions {
 
+  void spawnBulletHole(double x, double y){
+    game.bulletHoles[game.bulletHoleIndex].x = x;
+    game.bulletHoles[game.bulletHoleIndex].y = y;
+    game.bulletHoleIndex = (game.bulletHoleIndex + 1) % game.settings.maxBulletHoles;
+  }
+
   void cameraCenterPlayer(){
     engine.actions.cameraCenter(game.player.x, game.player.y);
   }

@@ -6,7 +6,6 @@ import 'package:bleed_client/state/game.dart';
 import 'package:lemon_math/randomInt.dart';
 
 import 'audio.dart';
-import 'functions/spawnBulletHole.dart';
 import 'modules/modules.dart';
 
 int get shrapnelCount => randomInt(4, 15);
@@ -39,7 +38,7 @@ void spawnEffect({
 void spawnExplosion(double x, double y) {
   spawnEffect(x: x, y: y, type: EffectType.Explosion, duration: 30);
   playAudioExplosion(x, y);
-  spawnBulletHole(x, y);
+  modules.game.actions.spawnBulletHole(x, y);
   for (int i = 0; i < randomInt(4, 10); i++) {
     spawnShrapnel(x, y);
   }

@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
-
+import "dart:html" as html;
+import 'package:universal_html/html.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
@@ -69,4 +70,12 @@ void setTileAtMouse(Tile tile) {
 
 void copy(String value){
   FlutterClipboard.copy(value);
+}
+
+void openLink(String value, {bool newTab = true}){
+  html.window.open(value, 'new tab');
+}
+
+void refreshPage(){
+  document.window!.location.href = document.domain!;
 }

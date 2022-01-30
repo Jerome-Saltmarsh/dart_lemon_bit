@@ -1,6 +1,5 @@
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/common/GameEventType.dart';
-import 'package:bleed_client/functions/spawnBulletHole.dart';
 import 'package:bleed_client/functions/spawners/spawnArm.dart';
 import 'package:bleed_client/functions/spawners/spawnBlood.dart';
 import 'package:bleed_client/functions/spawners/spawnOrgan.dart';
@@ -212,7 +211,7 @@ class GameEvents {
         playAudioZombieTargetAcquired(x, y);
         break;
       case GameEventType.Bullet_Hole:
-        spawnBulletHole(x.toDouble(), y.toDouble());
+        actions.spawnBulletHole(x.toDouble(), y.toDouble());
         break;
       case GameEventType.Zombie_Strike:
         playAudioZombieBite(x, y);
