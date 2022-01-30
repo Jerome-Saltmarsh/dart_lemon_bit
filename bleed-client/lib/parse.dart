@@ -340,7 +340,7 @@ void _parseEnvironmentObjects() {
     switch (type) {
       case ObjectType.SmokeEmitter:
         addParticleEmitter(
-            ParticleEmitter(x: x, y: y, rate: 20, emit: emitSmoke));
+            ParticleEmitter(x: x, y: y, rate: 20, emit: buildParticleSmoke));
         break;
       case ObjectType.MystEmitter:
         addParticleEmitter(
@@ -652,7 +652,7 @@ void _consumeEvents() {
     double yv = consumeDouble();
     if (!game.gameEvents.containsKey(id)) {
       game.gameEvents[id] = true;
-      onGameEvent(type, x, y, xv, yv);
+      modules.game.events.onGameEvent(type, x, y, xv, yv);
     }
   }
   if (events == 0) {

@@ -5,7 +5,7 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:lemon_math/random_between.dart';
 
-void emitSmoke(Particle particle){
+void buildParticleSmoke(Particle particle){
   particle.type = ParticleType.Smoke;
   particle.duration = randomBetween(100, 150).toInt();
   particle.z = 0;

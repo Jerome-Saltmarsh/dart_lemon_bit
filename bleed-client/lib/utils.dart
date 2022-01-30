@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:clipboard/clipboard.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/pi2.dart';
@@ -64,4 +65,8 @@ Direction convertAngleToDirection(double angle) {
 
 void setTileAtMouse(Tile tile) {
   isometric.actions.setTile(row: mouseRow, column: mouseColumn, tile: tile);
+}
+
+void copy(String value){
+  FlutterClipboard.copy(value);
 }
