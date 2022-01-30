@@ -120,7 +120,7 @@ final List<String> waitASecond = ['Wait a second', 'Just a moment'];
 
 // triggered the first frame a key is down
 final Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
-  modules.game.state.keyMap.interact: sendRequestInteract,
+  modules.game.state.keyMap.interact: modules.game.actions.sendRequestInteract,
   modules.game.state.keyMap.perform: modules.game.actions.performPrimaryAction,
   modules.game.state.keyMap.speakLetsGo: sayLetsGo,
   modules.game.state.keyMap.speakLetsGreeting: sayGreeting,
@@ -241,7 +241,7 @@ void sayWaitASecond() {
 
 // triggered after a key is held longer than one frame
 Map<LogicalKeyboardKey, Function> _keyHeldHandlers = {
-  modules.game.state.keyMap.interact: sendRequestInteract,
+  modules.game.state.keyMap.interact: modules.game.actions.sendRequestInteract,
   key.arrowUp: sendRequest.spawnZombie,
 };
 

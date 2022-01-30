@@ -24,10 +24,6 @@ void speak(String message){
   webSocket.send('${ClientRequest.Speak.index} $session $message');
 }
 
-void sendRequestInteract(){
-  webSocket.send('${ClientRequest.Interact.index} $session');
-}
-
 void sendRequestPing(){
   webSocket.sinkMessage(ClientRequest.Ping.index.toString());
 }

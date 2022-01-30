@@ -1,8 +1,11 @@
 
 import 'package:bleed_client/common/CharacterAction.dart';
+import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/functions/emit/emitPixel.dart';
 import 'package:bleed_client/modules/game/state.dart';
+import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:bleed_client/webSocket.dart';
 import 'package:lemon_engine/engine.dart';
 
 class GameActions {
@@ -19,6 +22,10 @@ class GameActions {
 
   void performPrimaryAction() {
     setCharacterAction(CharacterAction.Perform);
+  }
+
+  void sendRequestInteract(){
+    webSocket.send('${ClientRequest.Interact.index} $session');
   }
 
 
