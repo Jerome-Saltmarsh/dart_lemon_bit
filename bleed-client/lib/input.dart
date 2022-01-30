@@ -119,7 +119,7 @@ final List<String> greetings = [
 final List<String> waitASecond = ['Wait a second', 'Just a moment'];
 
 // triggered the first frame a key is down
-final Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
+final Map<LogicalKeyboardKey, Function> keyPressedHandlers = {
   modules.game.state.keyMap.interact: modules.game.actions.sendRequestInteract,
   // modules.game.state.keyMap.perform: modules.game.actions.performPrimaryAction,
   modules.game.state.keyMap.speakLetsGo: sayLetsGo,
@@ -128,7 +128,7 @@ final Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
   modules.game.state.keyMap.text: toggleMessageBox,
   modules.game.state.keyMap.hourForwards: skipHour,
   modules.game.state.keyMap.hourBackwards: reverseHour,
-  modules.game.state.keyMap.teleport: teleportToMouse,
+  // modules.game.state.keyMap.teleport: teleportToMouse,
   modules.game.state.keyMap.casteFireball: sendRequestCastFireball,
   key.digit1: (){
     if (game.player.isHuman){
@@ -219,10 +219,6 @@ void selectAbility4() {
   sendRequestSelectAbility(4);
 }
 
-void teleportToMouse() {
-  sendRequestTeleport(mouseWorldX, mouseWorldY);
-}
-
 void toggleMessageBox() {
   hud.state.textBoxVisible.value ? sendAndCloseTextBox() : showTextBox();
 }
@@ -269,8 +265,8 @@ void _handleKeyDownEventPlayMode(RawKeyDownEvent event) {
 
   if (!_keyDownState.containsKey(key)) {
     _keyDownState[key] = true;
-    if (_keyPressedHandlers.containsKey(key)) {
-      _keyPressedHandlers[key]?.call();
+    if (keyPressedHandlers.containsKey(key)) {
+      keyPressedHandlers[key]?.call();
     }
     return;
   }
@@ -285,8 +281,8 @@ void _handleKeyDownEventPlayMode(RawKeyDownEvent event) {
 
   // on key pressed
   _keyDownState[key] = true;
-  if (_keyPressedHandlers.containsKey(key)) {
-    _keyPressedHandlers[key]?.call();
+  if (keyPressedHandlers.containsKey(key)) {
+    keyPressedHandlers[key]?.call();
   }
 }
 

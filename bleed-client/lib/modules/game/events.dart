@@ -59,6 +59,10 @@ class GameEvents {
         actions.performPrimaryAction();
         return;
      }
+
+     if (key == state.keyMap.teleport){
+        actions.teleportToMouse();
+     }
   }
 
   void _onPlayerAliveChanged(bool value) {

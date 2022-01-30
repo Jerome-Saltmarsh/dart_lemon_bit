@@ -48,4 +48,7 @@ class GameActions {
     setCharacterAction(CharacterAction.Run);
   }
 
+  void teleportToMouse() {
+    sendRequestTeleport(mouseWorldX, mouseWorldY);
+  }
 }
