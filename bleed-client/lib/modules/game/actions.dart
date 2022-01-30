@@ -72,7 +72,7 @@ class GameActions {
   }
 
   void toggleMessageBox() {
-    hud.state.textBoxVisible.value ? sendAndCloseTextBox() : showTextBox();
+    state.textMode.value = !state.textMode.value;
   }
 
   void skipHour(){
@@ -112,19 +112,16 @@ class GameActions {
   }
 
   void showTextBox(){
-    hud.state.textBoxVisible.value = true;
-    modules.game.state.textFieldMessage.requestFocus();
+    state.textMode.value = true;
   }
 
   void hideTextBox(){
-    modules.game.state.textFieldMessage.unfocus();
-    hud.state.textBoxVisible.value = false;
-    hud.textEditingControllers.speak.text = "";
+    state.textMode.value = false;
   }
 
   void sendAndCloseTextBox(){
     print("sendAndCloseTextBox()");
-    speak(hud.textEditingControllers.speak.text);
+    speak(state.textEditingControllerMessage.text);
     hideTextBox();
   }
 }

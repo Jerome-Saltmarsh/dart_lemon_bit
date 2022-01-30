@@ -44,8 +44,6 @@ class GameEvents {
     engine.callbacks.onLeftClicked = actions.playerPerform;
     engine.callbacks.onPanStarted = actions.playerPerform;
     engine.callbacks.onLongLeftClicked = actions.playerPerform;
-    engine.callbacks.onKeyPressed = onKeyPressed;
-
     game.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
     game.type.onChanged(_onGameTypeChanged);
     game.player.uuid.onChanged(_onPlayerUuidChanged);
@@ -53,7 +51,17 @@ class GameEvents {
     game.status.onChanged(_onGameStatusChanged);
     game.player.state.onChanged(onPlayerCharacterStateChanged);
     game.settings.audioMuted.onChanged(onAudioMutedChanged);
+    state.textMode.onChanged(onTextModeChanged);
     sub(_onGameError);
+  }
+
+  void onTextModeChanged(bool textMode){
+    if (textMode){
+      state.textFieldMessage.requestFocus();
+    }else{
+      state.textFieldMessage.unfocus();
+      state.textEditingControllerMessage.text = "";
+    }
   }
 
   void onAudioMutedChanged(bool value){
@@ -62,17 +70,6 @@ class GameEvents {
 
   void onPlayerCharacterStateChanged(CharacterState characterState){
     game.player.alive.value = characterState != CharacterState.Dead;
-  }
-
-  void onKeyPressed(LogicalKeyboardKey key){
-     if (key == state.keyMap.perform){
-        actions.playerPerform();
-        return;
-     }
-
-     if (key == state.keyMap.teleport){
-        actions.teleportToMouse();
-     }
   }
 
   void _onPlayerAliveChanged(bool value) {

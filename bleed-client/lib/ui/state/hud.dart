@@ -88,7 +88,6 @@ final Widget fps = WatchBuilder(engine.state.fps, (int fps){
 
 class _State {
   int tipIndex = 0;
-  Watch<bool> textBoxVisible = Watch(false);
   bool observeMode = false;
   bool showServers = false;
   bool expandScore = false;
@@ -100,7 +99,7 @@ class _Properties {
 }
 
 class _TextEditingControllers {
-  final TextEditingController speak = TextEditingController();
+  // final TextEditingController speak = TextEditingController();
   final TextEditingController playerName = TextEditingController();
 }
 

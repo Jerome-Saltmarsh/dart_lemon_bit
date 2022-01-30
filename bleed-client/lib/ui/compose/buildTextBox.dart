@@ -10,8 +10,8 @@ import 'package:lemon_watch/watch_builder.dart';
 import '../../flutterkit.dart';
 
 Widget buildTextBox() {
-  return WatchBuilder(hud.state.textBoxVisible, (bool value){
-    if (!value) return blank;
+  return WatchBuilder(modules.game.state.textMode, (bool textMode){
+    if (!textMode) return blank;
 
     return Positioned(
         bottom: 100,
@@ -44,7 +44,7 @@ Widget buildTextBox() {
                         ),
                       ),
                       focusNode: modules.game.state.textFieldMessage,
-                      controller: hud.textEditingControllers.speak,
+                      controller: modules.game.state.textEditingControllerMessage,
                       maxLength: 50,
                       style: TextStyle(color: Colors.white),
                     )),

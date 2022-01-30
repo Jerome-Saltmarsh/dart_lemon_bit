@@ -3,6 +3,7 @@ import 'package:lemon_watch/watch.dart';
 import 'classes.dart';
 
 class GameState {
+  final TextEditingController textEditingControllerMessage = TextEditingController();
   FocusNode textFieldMessage = FocusNode();
   final CharacterController characterController = CharacterController();
   bool panningCamera = false;
