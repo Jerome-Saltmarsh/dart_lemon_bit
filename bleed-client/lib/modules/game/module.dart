@@ -24,7 +24,7 @@ class GameModule {
     state = GameState();
     actions = GameActions(state);
     render = GameRender(style);
-    events = GameEvents(actions);
+    events = GameEvents(actions, state);
     update = GameUpdate(state);
   }
 }

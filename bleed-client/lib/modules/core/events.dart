@@ -79,11 +79,14 @@ class CoreEvents {
       case Mode.Player:
         engine.state.drawCanvas = modules.game.render.render;
         engine.state.drawCanvasAfterUpdate = false;
+        modules.isometric.events.register();
+        modules.game.events.register();
         break;
 
       case Mode.Editor:
         engine.state.drawCanvasAfterUpdate = true;
         engine.state.drawCanvas = editor.render.render;
+        modules.isometric.events.register();
         editor.events.onActivated();
         isometric.actions.removeGeneratedEnvironmentObjects();
         deregisterPlayKeyboardHandler();
@@ -120,7 +123,6 @@ class CoreEvents {
         }else{
           sendRequestJoinGame(game.type.value, playerId: core.state.account.value?.userId);
         }
-        modules.game.events.register();
         break;
       case Connection.Done:
         core.state.mode.value = Mode.Website;

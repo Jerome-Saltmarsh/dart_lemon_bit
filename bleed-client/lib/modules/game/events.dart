@@ -9,6 +9,7 @@ import 'package:bleed_client/functions/spawners/spawnShrapnel.dart';
 import 'package:bleed_client/functions/spawners/spawnZombieHead.dart';
 import 'package:bleed_client/functions/spawners/spawnZombieLeg.dart';
 import 'package:bleed_client/spawn.dart';
+import 'package:flutter/services.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/randomBool.dart';
 import 'package:lemon_math/randomInt.dart';
@@ -27,26 +28,37 @@ import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
 
+import 'state.dart';
+
 
 class GameEvents {
 
   final GameActions actions;
+  final GameState state;
 
-  GameEvents(this.actions);
+  GameEvents(this.actions, this.state);
 
   void register(){
     print("modules.game.events.register()");
     engine.callbacks.onLeftClicked = actions.performPrimaryAction;
     engine.callbacks.onPanStarted = actions.performPrimaryAction;
     engine.callbacks.onLongLeftClicked = actions.performPrimaryAction;
-    modules.isometric.events.register();
+    engine.callbacks.onKeyPressed = onKeyPressed;
     registerPlayKeyboardHandler();
+
     game.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
     game.type.onChanged(_onGameTypeChanged);
     game.player.uuid.onChanged(_onPlayerUuidChanged);
     game.player.alive.onChanged(_onPlayerAliveChanged);
     game.status.onChanged(_onGameStatusChanged);
     sub(_onGameError);
+  }
+
+  void onKeyPressed(LogicalKeyboardKey key){
+     if (key == state.keyMap.perform){
+        actions.performPrimaryAction();
+        return;
+     }
   }
 
   void _onPlayerAliveChanged(bool value) {
