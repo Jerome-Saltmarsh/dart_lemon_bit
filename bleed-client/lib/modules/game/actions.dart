@@ -1,4 +1,7 @@
 
+import 'package:bleed_client/ui/logic/hudLogic.dart';
+import 'package:bleed_client/ui/logic/showTextBox.dart';
+import 'package:bleed_client/ui/state/hud.dart';
 import 'package:lemon_math/randomItem.dart';
 import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
@@ -63,5 +66,9 @@ class GameActions {
 
   void sayWaitASecond() {
     speak(randomItem(state.waitASecond));
+  }
+
+  void toggleMessageBox() {
+    hud.state.textBoxVisible.value ? sendAndCloseTextBox() : showTextBox();
   }
 }

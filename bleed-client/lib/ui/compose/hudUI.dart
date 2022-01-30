@@ -8,7 +8,6 @@ import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/cube/camera3d.dart';
 import 'package:bleed_client/flutterkit.dart';
-import 'package:bleed_client/input.dart';
 import 'package:bleed_client/mappers/mapWeaponToDecorationImage.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/send.dart';
@@ -108,7 +107,7 @@ Widget buildBottomRight() {
 Widget buildMessageBoxIcon() {
   return onPressed(
       hint: "Press Enter",
-      callback: toggleMessageBox,
+      callback: modules.game.actions.toggleMessageBox,
       child: border(
         child: text("Say"),
       ));

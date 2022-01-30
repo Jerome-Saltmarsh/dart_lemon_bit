@@ -203,9 +203,6 @@ void selectAbility4() {
   sendRequestSelectAbility(4);
 }
 
-void toggleMessageBox() {
-  hud.state.textBoxVisible.value ? sendAndCloseTextBox() : showTextBox();
-}
 
 // triggered after a key is held longer than one frame
 Map<LogicalKeyboardKey, Function> _keyHeldHandlers = {
