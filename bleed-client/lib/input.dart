@@ -1,5 +1,3 @@
-import 'package:bleed_client/common/AbilityType.dart';
-import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/cube/camera3d.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
@@ -9,14 +7,11 @@ import 'package:bleed_client/ui/state/hud.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/randomItem.dart';
-import 'package:lemon_watch/watch.dart';
 
 import '../send.dart';
 import 'common/enums/Direction.dart';
 import 'ui/logic/showTextBox.dart';
 
-bool get keyPressedPan => keyPressed(LogicalKeyboardKey.keyE);
-bool panningCamera = false;
 final RawKeyboard rawKeyboard = RawKeyboard.instance;
 
 void registerPlayKeyboardHandler() {
@@ -63,8 +58,6 @@ void _handleKeyboardEventTextBox(RawKeyEvent event) {
   }
 }
 
-final _Keys keys = _Keys();
-
 final _Key key = _Key();
 
 class _Key {
@@ -107,35 +100,7 @@ class _Key {
   final LogicalKeyboardKey digit5 = LogicalKeyboardKey.digit5;
 }
 
-class _Keys {
-  LogicalKeyboardKey perform = key.space;
-  LogicalKeyboardKey interact = key.e;
-  LogicalKeyboardKey runUp = key.w;
-  LogicalKeyboardKey runRight = key.d;
-  LogicalKeyboardKey runDown = key.s;
-  LogicalKeyboardKey runLeft = key.a;
-  LogicalKeyboardKey throwGrenade = key.g;
-  LogicalKeyboardKey equip1 = key.digit1;
-  LogicalKeyboardKey equip2 = LogicalKeyboardKey.digit2;
-  LogicalKeyboardKey equip3 = LogicalKeyboardKey.digit3;
-  LogicalKeyboardKey equip4 = LogicalKeyboardKey.digit4;
-  LogicalKeyboardKey equip5 = LogicalKeyboardKey.digit5;
-  LogicalKeyboardKey equip1B = LogicalKeyboardKey.keyQ;
-  LogicalKeyboardKey equip2B = LogicalKeyboardKey.keyE;
-  LogicalKeyboardKey equip3B = LogicalKeyboardKey.keyF;
-  LogicalKeyboardKey equip4B = LogicalKeyboardKey.keyC;
-  LogicalKeyboardKey speakLetsGo = LogicalKeyboardKey.digit9;
-  LogicalKeyboardKey speakLetsGreeting = LogicalKeyboardKey.digit8;
-  LogicalKeyboardKey waitASecond = LogicalKeyboardKey.digit0;
-  LogicalKeyboardKey text = LogicalKeyboardKey.enter;
-  LogicalKeyboardKey toggleLantern = LogicalKeyboardKey.keyL;
-  LogicalKeyboardKey hourForwards = LogicalKeyboardKey.arrowRight;
-  LogicalKeyboardKey hourBackwards = LogicalKeyboardKey.arrowLeft;
-  LogicalKeyboardKey teleport = LogicalKeyboardKey.keyG;
-  LogicalKeyboardKey casteFireball = LogicalKeyboardKey.keyZ;
-  LogicalKeyboardKey cubeFace0 = LogicalKeyboardKey.keyO;
-  LogicalKeyboardKey cubeFaceI = LogicalKeyboardKey.keyI;
-}
+
 
 Map<LogicalKeyboardKey, bool> _keyDownState = {};
 
@@ -155,16 +120,16 @@ final List<String> waitASecond = ['Wait a second', 'Just a moment'];
 
 // triggered the first frame a key is down
 final Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
-  keys.interact: sendRequestInteract,
-  keys.perform: modules.game.actions.performPrimaryAction,
-  keys.speakLetsGo: sayLetsGo,
-  keys.speakLetsGreeting: sayGreeting,
-  keys.waitASecond: sayWaitASecond,
-  keys.text: toggleMessageBox,
-  keys.hourForwards: skipHour,
-  keys.hourBackwards: reverseHour,
-  keys.teleport: teleportToMouse,
-  keys.casteFireball: sendRequestCastFireball,
+  modules.game.state.keyMap.interact: sendRequestInteract,
+  modules.game.state.keyMap.perform: modules.game.actions.performPrimaryAction,
+  modules.game.state.keyMap.speakLetsGo: sayLetsGo,
+  modules.game.state.keyMap.speakLetsGreeting: sayGreeting,
+  modules.game.state.keyMap.waitASecond: sayWaitASecond,
+  modules.game.state.keyMap.text: toggleMessageBox,
+  modules.game.state.keyMap.hourForwards: skipHour,
+  modules.game.state.keyMap.hourBackwards: reverseHour,
+  modules.game.state.keyMap.teleport: teleportToMouse,
+  modules.game.state.keyMap.casteFireball: sendRequestCastFireball,
   key.digit1: (){
     if (game.player.isHuman){
       sendRequestEquip(1);
@@ -179,36 +144,36 @@ final Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
       selectAbility2();
     }
   },
-  keys.equip3: (){
+  modules.game.state.keyMap.equip3: (){
     if (game.player.isHuman){
       sendRequestEquip(3);
     }else{
       selectAbility3();
     }
   },
-  keys.equip4: (){
+  modules.game.state.keyMap.equip4: (){
     if (game.player.isHuman){
       sendRequestEquip(4);
     }else{
       selectAbility4();
     }
   },
-  keys.equip5: (){
+  modules.game.state.keyMap.equip5: (){
     if (game.player.isHuman){
        // sendRequestEquip(index)
     }
   },
-  keys.equip1B: selectAbility1,
-  keys.equip2B: selectAbility2,
-  keys.equip3B: (){
+  modules.game.state.keyMap.equip1B: selectAbility1,
+  modules.game.state.keyMap.equip2B: selectAbility2,
+  modules.game.state.keyMap.equip3B: (){
     if (game.player.isHuman){
 
     }else{
       selectAbility3();
     }
   },
-  keys.equip4B: selectAbility4,
-  keys.cubeFace0: (){
+  modules.game.state.keyMap.equip4B: selectAbility4,
+  modules.game.state.keyMap.cubeFace0: (){
     // storage.
     camera3D.target.x = storage.get('target.x');
     camera3D.target.y = storage.get('target.y');
@@ -217,7 +182,7 @@ final Map<LogicalKeyboardKey, Function> _keyPressedHandlers = {
     camera3D.position.y = storage.get('position.y');
     camera3D.position.z = storage.get('position.z');
   },
-  keys.cubeFaceI: (){
+  modules.game.state.keyMap.cubeFaceI: (){
     storage.put('target.x', camera3D.target.x);
     storage.put('target.y', camera3D.target.y);
     storage.put('target.z', camera3D.target.z);
@@ -276,7 +241,7 @@ void sayWaitASecond() {
 
 // triggered after a key is held longer than one frame
 Map<LogicalKeyboardKey, Function> _keyHeldHandlers = {
-  keys.interact: sendRequestInteract,
+  modules.game.state.keyMap.interact: sendRequestInteract,
   key.arrowUp: sendRequest.spawnZombie,
 };
 
@@ -337,12 +302,6 @@ void _handleKeyUpEventPlayMode(RawKeyUpEvent event) {
   }
 
   _keyDownState[key] = false;
-}
-
-class CharacterController {
-  Direction direction = Direction.Down;
-  final Watch<CharacterAction> action = Watch(CharacterAction.Idle);
-  AbilityType ability = AbilityType.None;
 }
 
 
