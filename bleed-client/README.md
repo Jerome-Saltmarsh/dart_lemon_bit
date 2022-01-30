@@ -104,9 +104,9 @@
 [ENGINE]
 [ ] Atlas Buffer 64
 [ ] Auto cull render calls
-[ ] Key handler state to engine
-[ ] Fix Zoom
 [COMPLETED]
+[x] Key handler state to engine
+[x] Fix Zoom
 [x] Save
 [x] Add Units
 [x] Fix melee attack

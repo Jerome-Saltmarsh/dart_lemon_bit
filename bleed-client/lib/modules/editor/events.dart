@@ -30,8 +30,17 @@ class EditorEvents with EditorScope {
     engine.callbacks.onLeftClicked = onMouseLeftClicked;
     engine.callbacks.onMouseDragging = onMouseDragging;
     engine.callbacks.onMouseMoved = onMouseMoved;
-    engine.callbacks.onKeyPressed = onKeyPressed;
-    engine.callbacks.onKeyReleased = onKeyReleased;
+    // engine.callbacks.onKeyPressed = onKeyPressed;
+    // engine.callbacks.onKeyReleased = onKeyReleased;
+
+    engine.state.keyPressedHandlers = {
+      config.keys.pan: () => state.panning = true
+    };
+
+    engine.state.keyReleasedHandlers = {
+      config.keys.pan: () => state.panning = false
+    };
+
     editor.state.selected.onChanged(onSelectedObjectChanged);
   }
 
