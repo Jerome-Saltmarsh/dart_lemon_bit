@@ -5,7 +5,6 @@ import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
-import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
@@ -92,7 +91,7 @@ void onPlayerWeaponChanged(WeaponType weapon) {
 void initializeEventListeners() {
   engine.callbacks.onMouseScroll = engine.events.onMouseScroll;
 
-  hud.focusNodes.textFieldMessage.addListener(() {
+  modules.game.state.textFieldMessage.addListener(() {
     if (hud.textBoxFocused){
         modules.game.state.textMode.value = true;
     }else{
@@ -100,9 +99,7 @@ void initializeEventListeners() {
     }
   });
 
-  game.settings.audioMuted.onChanged((value) {
-    sharedPreferences.setBool('audioMuted', value);
-  });
+
 
   game.player.weaponType.onChanged(onPlayerWeaponChanged);
 }

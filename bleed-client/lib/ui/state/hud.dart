@@ -6,6 +6,7 @@ import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/flutterkit.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/compose/buildTextBox.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
@@ -27,15 +28,14 @@ final _BuildHud buildHud = _BuildHud();
 
 class _Hud {
   final _State state = _State();
-  final _FocusNodes focusNodes = _FocusNodes();
   final _TextEditingControllers textEditingControllers = _TextEditingControllers();
   final _Properties properties = _Properties();
 }
 
 extension HudProperties on _Hud {
-  bool get textBoxFocused => focusNodes.textFieldMessage.hasFocus;
+  bool get textBoxFocused => modules.game.state.textFieldMessage.hasFocus;
   String get currentTip => tips[hud.state.tipIndex];
-  bool get textFieldFocused => hud.focusNodes.textFieldMessage.hasPrimaryFocus;
+  bool get textFieldFocused => modules.game.state.textFieldMessage.hasPrimaryFocus;
 }
 
 class _BuildHud {
@@ -102,10 +102,6 @@ class _Properties {
 class _TextEditingControllers {
   final TextEditingController speak = TextEditingController();
   final TextEditingController playerName = TextEditingController();
-}
-
-class _FocusNodes {
-  FocusNode textFieldMessage = FocusNode();
 }
 
 class Ring {

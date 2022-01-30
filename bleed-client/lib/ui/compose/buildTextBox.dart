@@ -1,3 +1,4 @@
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/styles.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/logic/showTextBox.dart';
@@ -42,7 +43,7 @@ Widget buildTextBox() {
                           borderSide: BorderSide(color: Colors.white60),
                         ),
                       ),
-                      focusNode: hud.focusNodes.textFieldMessage,
+                      focusNode: modules.game.state.textFieldMessage,
                       controller: hud.textEditingControllers.speak,
                       maxLength: 50,
                       style: TextStyle(color: Colors.white),
@@ -51,9 +52,9 @@ Widget buildTextBox() {
                   margin: EdgeInsets.only(left: 8, bottom: 16),
                   child: Row(
                     children: [
-                      onPressed(callback: sendAndCloseTextBox, child: border(child: text("Send")), hint: "(Press Enter)"),
+                      onPressed(callback: modules.game.actions.sendAndCloseTextBox, child: border(child: text("Send")), hint: "(Press Enter)"),
                       width16,
-                      onPressed(callback: hideTextBox, child: text("Cancel", decoration: TextDecoration.underline), hint: ("(Press Escape")),
+                      onPressed(callback: modules.game.actions.hideTextBox, child: text("Cancel", decoration: TextDecoration.underline), hint: ("(Press Escape")),
                     ],
                   ),
                 )

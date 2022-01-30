@@ -11,12 +11,6 @@ void refreshUI() {
   hud.state.showServers = false;
 }
 
-void sendAndCloseTextBox(){
-  print("sendAndCloseTextBox()");
-  speak(hud.textEditingControllers.speak.text);
-  hideTextBox();
-}
-
 void nextTip() {
   hud.state.tipIndex = (hud.state.tipIndex + 1) % tips.length;
 }

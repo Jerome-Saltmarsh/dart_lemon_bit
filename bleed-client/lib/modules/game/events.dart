@@ -10,6 +10,7 @@ import 'package:bleed_client/functions/spawners/spawnShrapnel.dart';
 import 'package:bleed_client/functions/spawners/spawnZombieHead.dart';
 import 'package:bleed_client/functions/spawners/spawnZombieLeg.dart';
 import 'package:bleed_client/spawn.dart';
+import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/randomBool.dart';
@@ -51,7 +52,12 @@ class GameEvents {
     game.player.alive.onChanged(_onPlayerAliveChanged);
     game.status.onChanged(_onGameStatusChanged);
     game.player.state.onChanged(onPlayerCharacterStateChanged);
+    game.settings.audioMuted.onChanged(onAudioMutedChanged);
     sub(_onGameError);
+  }
+
+  void onAudioMutedChanged(bool value){
+    sharedPreferences.setBool('audioMuted', value);
   }
 
   void onPlayerCharacterStateChanged(CharacterState characterState){

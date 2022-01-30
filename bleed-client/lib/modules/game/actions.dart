@@ -110,4 +110,21 @@ class GameActions {
   void playerDeselectAbility() {
     webSocket.send('${ClientRequest.DeselectAbility.index} $session');
   }
+
+  void showTextBox(){
+    hud.state.textBoxVisible.value = true;
+    modules.game.state.textFieldMessage.requestFocus();
+  }
+
+  void hideTextBox(){
+    modules.game.state.textFieldMessage.unfocus();
+    hud.state.textBoxVisible.value = false;
+    hud.textEditingControllers.speak.text = "";
+  }
+
+  void sendAndCloseTextBox(){
+    print("sendAndCloseTextBox()");
+    speak(hud.textEditingControllers.speak.text);
+    hideTextBox();
+  }
 }
