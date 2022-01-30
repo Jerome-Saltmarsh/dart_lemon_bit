@@ -1,4 +1,5 @@
 
+import 'package:lemon_math/randomItem.dart';
 import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/functions/emit/emitPixel.dart';
@@ -50,5 +51,17 @@ class GameActions {
 
   void teleportToMouse() {
     sendRequestTeleport(mouseWorldX, mouseWorldY);
+  }
+
+  void sayGreeting() {
+    speak(randomItem(state.greetings));
+  }
+
+  void sayLetsGo() {
+    speak(randomItem(state.letsGo));
+  }
+
+  void sayWaitASecond() {
+    speak(randomItem(state.waitASecond));
   }
 }

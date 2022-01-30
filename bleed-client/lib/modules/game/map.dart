@@ -1,6 +1,5 @@
 
 import 'package:bleed_client/input.dart';
-import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:flutter/services.dart';
@@ -18,9 +17,9 @@ class GameMap {
     keyPressedHandlers = {
       state.keyMap.interact: actions.sendRequestInteract,
       state.keyMap.perform: actions.performPrimaryAction,
-      state.keyMap.speakLetsGo: sayLetsGo,
-      state.keyMap.speakLetsGreeting: sayGreeting,
-      state.keyMap.waitASecond: sayWaitASecond,
+      state.keyMap.speakLetsGo: actions.sayLetsGo,
+      state.keyMap.speakLetsGreeting: actions.sayGreeting,
+      state.keyMap.waitASecond: actions.sayWaitASecond,
       state.keyMap.text: toggleMessageBox,
       state.keyMap.hourForwards: skipHour,
       state.keyMap.hourBackwards: reverseHour,

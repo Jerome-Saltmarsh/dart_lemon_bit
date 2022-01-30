@@ -1,12 +1,9 @@
-import 'package:bleed_client/cube/camera3d.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/state/hud.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_math/randomItem.dart';
 
 import '../send.dart';
 import 'common/enums/Direction.dart';
@@ -104,19 +101,6 @@ class _Key {
 
 Map<LogicalKeyboardKey, bool> _keyDownState = {};
 
-final List<String> letsGo = [
-  "Come on!",
-  "Let's go!",
-  'Follow me!',
-];
-
-final List<String> greetings = [
-  'Hello',
-  'Hi',
-  'Greetings',
-];
-
-final List<String> waitASecond = ['Wait a second', 'Just a moment'];
 
 // triggered the first frame a key is down
 // final Map<LogicalKeyboardKey, Function> keyPressedHandlers = {
@@ -221,18 +205,6 @@ void selectAbility4() {
 
 void toggleMessageBox() {
   hud.state.textBoxVisible.value ? sendAndCloseTextBox() : showTextBox();
-}
-
-void sayGreeting() {
-  speak(randomItem(greetings));
-}
-
-void sayLetsGo() {
-  speak(randomItem(letsGo));
-}
-
-void sayWaitASecond() {
-  speak(randomItem(waitASecond));
 }
 
 // triggered after a key is held longer than one frame
