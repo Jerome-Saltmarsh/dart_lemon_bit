@@ -12,10 +12,6 @@ import 'package:bleed_client/toString.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:typedef/json.dart';
 
-String mapCompileGameToJson() {
-  return jsonEncode(compileGameToJson());
-}
-
 Json compileGameToJson() {
   return {
     "collectables": game.collectables,

@@ -15,14 +15,9 @@ import 'package:lemon_watch/watch.dart';
 import '../send.dart';
 import 'common/enums/Direction.dart';
 import 'ui/logic/showTextBox.dart';
-import 'utils.dart';
 
 bool get keyPressedPan => keyPressed(LogicalKeyboardKey.keyE);
-
 bool panningCamera = false;
-
-Offset _mouseWorldStart = Offset(0, 0);
-
 final _CharacterController characterController = _CharacterController();
 final RawKeyboard rawKeyboard = RawKeyboard.instance;
 
@@ -376,56 +371,3 @@ void setCharacterDirection(Direction value){
   characterController.direction = value;
 }
 
-void readPlayerInput() {
-  // TODO This should be reactive
-  if (!playerAssigned) return;
-
-  if (hud.textBoxFocused) return;
-
-  // if (characterController.action.value == CharacterAction.Perform) return;
-
-  if (keyPressedPan && !panningCamera) {
-    panningCamera = true;
-    _mouseWorldStart = mouseWorld;
-  }
-
-  if (panningCamera && !keyPressedPan) {
-    panningCamera = false;
-  }
-
-  if (panningCamera) {
-    Offset mouseWorldDiff = _mouseWorldStart - mouseWorld;
-    engine.state.camera.y += mouseWorldDiff.dy * engine.state.zoom;
-    engine.state.camera.x += mouseWorldDiff.dx * engine.state.zoom;
-  }
-  final Direction? direction = getKeyDirection();
-  if (direction != null){
-    characterController.direction = direction;
-    setCharacterActionRun();
-  }
-}
-
-Direction? getKeyDirection() {
-  if (keyPressed(keys.runUp)) {
-    if (keyPressed(keys.runRight)) {
-      return Direction.UpRight;
-    } else if (keyPressed(keys.runLeft)) {
-      return Direction.UpLeft;
-    } else {
-      return Direction.Up;
-    }
-  } else if (keyPressed(keys.runDown)) {
-    if (keyPressed(keys.runRight)) {
-      return Direction.DownRight;
-    } else if (keyPressed(keys.runLeft)) {
-      return Direction.DownLeft;
-    } else {
-      return Direction.Down;
-    }
-  } else if (keyPressed(keys.runLeft)) {
-    return Direction.Left;
-  } else if (keyPressed(keys.runRight)) {
-    return Direction.Right;
-  }
-  return null;
-}
