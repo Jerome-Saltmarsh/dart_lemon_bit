@@ -19,7 +19,6 @@ import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameError.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
-import 'package:bleed_client/input.dart';
 import 'package:bleed_client/modules/game/actions.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/parse.dart';

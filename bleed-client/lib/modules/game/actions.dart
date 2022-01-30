@@ -1,5 +1,4 @@
 
-import 'package:bleed_client/input.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
 import 'package:bleed_client/ui/logic/showTextBox.dart';
@@ -114,20 +113,20 @@ class GameActions {
 
   void registerPlayKeyboardHandler() {
     print("registerPlayKeyboardHandler()");
-    registerKeyboardHandler(_keyboardEventHandlerPlayMode);
+    RawKeyboard.instance.addListener(_keyboardEventHandlerPlayMode);
   }
 
   void registerTextBoxKeyboardHandler(){
-    registerKeyboardHandler(_handleKeyboardEventTextBox);
+    RawKeyboard.instance.addListener(_handleKeyboardEventTextBox);
   }
 
   void deregisterTextBoxKeyboardHandler(){
-    deregisterKeyboardHandler(_handleKeyboardEventTextBox);
+    RawKeyboard.instance.removeListener(_handleKeyboardEventTextBox);
   }
 
   void deregisterPlayKeyboardHandler() {
     print("deregisterPlayKeyboardHandler()");
-    deregisterKeyboardHandler(_keyboardEventHandlerPlayMode);
+    RawKeyboard.instance.removeListener(_keyboardEventHandlerPlayMode);
   }
 
 
