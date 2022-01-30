@@ -23,7 +23,6 @@ import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/functions/emit/emitMyst.dart';
-import 'package:bleed_client/functions/emitSmoke.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/parser/parseCubePlayers.dart';
 import 'package:bleed_client/state/game.dart';
