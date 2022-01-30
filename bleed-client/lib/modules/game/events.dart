@@ -1,4 +1,5 @@
 import 'package:bleed_client/audio.dart';
+import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/GameEventType.dart';
 import 'package:bleed_client/functions/spawners/spawnArm.dart';
 import 'package:bleed_client/functions/spawners/spawnBlood.dart';
@@ -49,7 +50,12 @@ class GameEvents {
     game.player.uuid.onChanged(_onPlayerUuidChanged);
     game.player.alive.onChanged(_onPlayerAliveChanged);
     game.status.onChanged(_onGameStatusChanged);
+    game.player.state.onChanged(onPlayerCharacterStateChanged);
     sub(_onGameError);
+  }
+
+  void onPlayerCharacterStateChanged(CharacterState characterState){
+    game.player.alive.value = characterState != CharacterState.Dead;
   }
 
   void onKeyPressed(LogicalKeyboardKey key){

@@ -91,19 +91,13 @@ void onPlayerWeaponChanged(WeaponType weapon) {
 
 void initializeEventListeners() {
   engine.callbacks.onMouseScroll = engine.events.onMouseScroll;
-  // webSocket.eventStream.stream.listen(_onEventReceivedFromServer);
-  // observeCompiledGame(onCompiledGameChanged);
 
   hud.focusNodes.textFieldMessage.addListener(() {
     if (hud.textBoxFocused){
-
+        modules.game.state.textMode.value = true;
     }else{
-
+      modules.game.state.textMode.value = false;
     }
-  });
-
-  game.player.state.onChanged((CharacterState state) {
-    game.player.alive.value = state != CharacterState.Dead;
   });
 
   game.settings.audioMuted.onChanged((value) {
