@@ -212,7 +212,7 @@ void emitLightBrightSmall(List<List<int>> shader, double x, double y) {
 
 void applyCharacterLightEmission(List<Character> characters) {
   for(Character character in characters){
-    if (character.team != game.player.team) continue;
+    if (character.team != modules.game.state.player.team) continue;
     emitLightHigh(isometric.state.dynamicShading, character.x, character.y);
   }
 }

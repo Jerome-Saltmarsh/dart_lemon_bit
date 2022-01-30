@@ -128,7 +128,7 @@ class _SendRequestToServer {
 
 void sendRequestUpdateCube3D(){
   _write(ClientRequest.Update_Cube3D.index);
-  _write(game.player.uuid.value);
+  _write(modules.game.state.player.uuid.value);
   _writeVector3(camera3D.position);
   _writeVector3(camera3D.rotation);
   _sendAndClearBuffer();

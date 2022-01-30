@@ -14,10 +14,10 @@ import 'common/Tile.dart';
 import 'modules/isometric/utilities.dart';
 
 double getMouseRotation() {
-  return angleBetween(game.player.x, game.player.y, mouseWorldX, mouseWorldY);
+  return angleBetween(modules.game.state.player.x, modules.game.state.player.y, mouseWorldX, mouseWorldY);
 }
 
-bool get playerAssigned => game.player.id >= 0;
+bool get playerAssigned => modules.game.state.player.id >= 0;
 
 void drawLine(double x1, double y1, double x2, double y2) {
   engine.state.canvas.drawLine(offset(x1, y1), offset(x2, y2), engine.state.paint);

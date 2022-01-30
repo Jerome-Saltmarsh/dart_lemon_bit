@@ -34,7 +34,7 @@ void drawCharacter(Character character) {
     character.type == CharacterType.Swordsman ||
     character.type == CharacterType.Archer
   ) {
-    if (character.team == game.player.team){
+    if (character.team == modules.game.state.player.team){
       drawCharacterMagicBar(character);
     }
   }

@@ -101,7 +101,7 @@ void initializeEventListeners() {
 
 
 
-  game.player.weaponType.onChanged(onPlayerWeaponChanged);
+   modules.game.state.player.weaponType.onChanged(onPlayerWeaponChanged);
 }
 
 Future loadSharedPreferences() async {

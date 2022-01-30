@@ -20,7 +20,7 @@ class GameBuild {
   GameBuild(this.state);
 
   Widget buildUIGame() {
-    return WatchBuilder(game.player.uuid, (String uuid) {
+    return WatchBuilder(state.player.uuid, (String uuid) {
       if (uuid.isEmpty) {
         return buildLayoutLoadingGame();
       }

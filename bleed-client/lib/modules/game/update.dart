@@ -27,7 +27,7 @@ class GameUpdate {
 
   void update() {
     if (!webSocket.connected) return;
-    if (game.player.uuid.value.isEmpty) return;
+    if (state.player.uuid.value.isEmpty) return;
 
     switch(game.type.value){
       case GameType.None:
@@ -59,7 +59,7 @@ class GameUpdate {
     readPlayerInput();
     isometric.update.updateParticles();
     isometric.update.deadZombieBlood();
-    if (!state.panningCamera && game.player.alive.value) {
+    if (!state.panningCamera && modules.game.state.player.alive.value) {
       cameraFollowPlayer();
     }
     updateParticleEmitters();
@@ -79,7 +79,7 @@ class GameUpdate {
   }
 
   void cameraFollowPlayer() {
-    engine.actions.cameraFollow(game.player.x, game.player.y, engine.state.cameraFollowSpeed);
+    engine.actions.cameraFollow(modules.game.state.player.x, modules.game.state.player.y, engine.state.cameraFollowSpeed);
   }
 
   void readPlayerInput() {

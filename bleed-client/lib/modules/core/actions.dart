@@ -175,11 +175,11 @@ class CoreActions {
   }
 
   void clearCompileGameState() {
-    game.player.id = -1;
+    modules.game.state.player.id = -1;
     game.id = -1;
-    game.player.uuid.value = "";
-    game.player.x = -1;
-    game.player.y = -1;
+    modules.game.state.player.uuid.value = "";
+    modules.game.state.player.x = -1;
+    modules.game.state.player.y = -1;
     game.totalZombies.value = 0;
     game.totalHumans = 0;
     game.totalProjectiles = 0;
@@ -317,6 +317,6 @@ class CoreActions {
 
   void clearSession(){
     print("logic.clearSession()");
-    game.player.uuid.value = "";
+    modules.game.state.player.uuid.value = "";
   }
 }

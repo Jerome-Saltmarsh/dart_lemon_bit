@@ -31,7 +31,7 @@ class _Build {
       return Column(
         mainAxisAlignment: axis.main.end,
         children: [
-          WatchBuilder(game.player.skillPoints, (int points) {
+          WatchBuilder(modules.game.state.player.skillPoints, (int points) {
             if (points == 0) return emptyContainer;
 
             return onPressed(
@@ -159,13 +159,13 @@ class _Build {
       child: Row(
         crossAxisAlignment: axis.cross.end,
         children: [
-          buildAbility(game.player.ability1),
+          buildAbility(modules.game.state.player.ability1),
           width4,
-          buildAbility(game.player.ability2),
+          buildAbility(modules.game.state.player.ability2),
           width4,
-          buildAbility(game.player.ability3),
+          buildAbility(modules.game.state.player.ability3),
           width4,
-          buildAbility(game.player.ability4),
+          buildAbility(modules.game.state.player.ability4),
         ],
       ),
     );
@@ -324,8 +324,8 @@ class _Build {
         goldenRatio_0381 *
         goldenRatio_0381;
 
-    return WatchBuilder(game.player.magic, (double magic) {
-      double percentage = magic / game.player.maxMagic.value;
+    return WatchBuilder(modules.game.state.player.magic, (double magic) {
+      double percentage = magic / modules.game.state.player.maxMagic.value;
       return Container(
         width: width,
         height: height,
@@ -352,7 +352,7 @@ class _Build {
               width: width,
               height: height,
               alignment: Alignment.center,
-              child: text('${magic.toInt()} / ${game.player.maxMagic.value}'),
+              child: text('${magic.toInt()} / ${modules.game.state.player.maxMagic.value}'),
             ),
           ],
         ),
@@ -368,8 +368,8 @@ class _Build {
         goldenRatio_0381 *
         goldenRatio_0381;
 
-    return WatchBuilder(game.player.health, (double health) {
-      double percentage = health / game.player.maxHealth;
+    return WatchBuilder(modules.game.state.player.health, (double health) {
+      double percentage = health / modules.game.state.player.maxHealth;
       return Container(
         width: width,
         height: height,
@@ -396,7 +396,7 @@ class _Build {
               width: width,
               height: height,
               alignment: Alignment.center,
-              child: text('${health.toInt()} / ${game.player.maxHealth}'),
+              child: text('${health.toInt()} / ${modules.game.state.player.maxHealth}'),
             ),
           ],
         ),
@@ -412,7 +412,7 @@ class _Build {
         goldenRatio_0381 *
         goldenRatio_0381;
 
-    return WatchBuilder(game.player.experiencePercentage, (double percentage) {
+    return WatchBuilder(modules.game.state.player.experiencePercentage, (double percentage) {
       return Container(
         width: levelBarWidth,
         height: levelBarHeight,
@@ -439,7 +439,7 @@ class _Build {
               width: levelBarWidth,
               height: levelBarHeight,
               alignment: Alignment.center,
-              child: text('Level ${game.player.level.value}'),
+              child: text('Level ${modules.game.state.player.level.value}'),
             ),
           ],
         ),

@@ -127,20 +127,20 @@ void drawMouseAim2() {
   engine.actions.setPaintColorWhite();
     double angle = getAngleBetweenMouseAndPlayer();
     double mouseDistance = getDistanceBetweenMouseAndPlayer();
-    double d = min(mouseDistance, game.player.attackRange);
+    double d = min(mouseDistance, modules.game.state.player.attackRange);
     double vX = adjacent(angle, d);
     double vY = opposite(angle, d);
-    drawLine(game.player.x, game.player.y, game.player.x + vX, game.player.y + vY);
+    drawLine(modules.game.state.player.x, modules.game.state.player.y, modules.game.state.player.x + vX, modules.game.state.player.y + vY);
   // }
 }
 
 void drawAbility() {
-  if (game.player.ability.value == AbilityType.None) {
+  if (modules.game.state.player.ability.value == AbilityType.None) {
     engine.draw.drawCircleOutline(
         sides: 24,
-        radius: game.player.attackRange,
-        x: game.player.x,
-        y: game.player.y,
+        radius: modules.game.state.player.attackRange,
+        x: modules.game.state.player.x,
+        y: modules.game.state.player.y,
         color: Colors.white24);
     return;
   }
@@ -149,15 +149,15 @@ void drawAbility() {
 
   engine.draw.drawCircleOutline(
       sides: 24,
-      radius: game.player.abilityRange,
-      x: game.player.x,
-      y: game.player.y,
+      radius: modules.game.state.player.abilityRange,
+      x: modules.game.state.player.x,
+      y: modules.game.state.player.y,
       color: Colors.white);
 
-  if (game.player.abilityRadius != 0){
+  if (modules.game.state.player.abilityRadius != 0){
     engine.draw.drawCircleOutline(
         sides: 12,
-        radius: game.player.abilityRadius,
+        radius: modules.game.state.player.abilityRadius,
         x: mouseWorldX,
         y: mouseWorldY,
         color: Colors.white);
@@ -256,24 +256,24 @@ double mapWeaponAimLength(WeaponType weapon) {
 }
 
 double getAngleBetweenMouseAndPlayer(){
-  return angleBetween(game.player.x, game.player.y, mouseWorldX, mouseWorldY);
+  return angleBetween(modules.game.state.player.x, modules.game.state.player.y, mouseWorldX, mouseWorldY);
 }
 
 double getDistanceBetweenMouseAndPlayer(){
-  return distanceBetween(mouseWorldX, mouseWorldY, game.player.x, game.player.y);
+  return distanceBetween(mouseWorldX, mouseWorldY, modules.game.state.player.x, modules.game.state.player.y);
 }
 
 void _drawMouseAim() {
-  if (game.player.dead) return;
+  if (modules.game.state.player.dead) return;
 
   engine.state.paint.strokeWidth = 3;
   double angle =
-      angleBetween(mouseWorldX, mouseWorldY, game.player.x, game.player.y);
+      angleBetween(mouseWorldX, mouseWorldY, modules.game.state.player.x, modules.game.state.player.y);
 
   double mouseDistance =
-      distanceBetween(mouseWorldX, mouseWorldY, game.player.x, game.player.y);
+      distanceBetween(mouseWorldX, mouseWorldY, modules.game.state.player.x, modules.game.state.player.y);
 
-  double scope = mapWeaponAimLength(game.player.weaponType.value);
+  double scope = mapWeaponAimLength(modules.game.state.player.weaponType.value);
   double d = min(mouseDistance, scope);
 
   double vX = adjacent(angle, d);

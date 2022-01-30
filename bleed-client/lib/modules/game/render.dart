@@ -28,7 +28,7 @@ class GameRender {
 
   void render(Canvas canvas, Size size) {
 
-    if (game.player.uuid.value.isEmpty) {
+    if (modules.game.state.player.uuid.value.isEmpty) {
       return;
     }
     if (state.status.value == GameStatus.Awaiting_Players){
@@ -41,9 +41,9 @@ class GameRender {
     drawProjectiles(game.projectiles);
     drawBulletHoles(game.bulletHoles);
 
-    if (!game.player.isHuman){
+    if (!modules.game.state.player.isHuman){
       drawAbility();
-      final Vector2 attackTarget = game.player.attackTarget;
+      final Vector2 attackTarget = state.player.attackTarget;
       if (attackTarget.x != 0 && attackTarget.y != 0){
         engine.draw.circle(attackTarget.x, attackTarget.y, 20, Colors.white24);
       }
@@ -91,7 +91,7 @@ class GameRender {
   void _drawPlayerNames() {
     for (int i = 0; i < game.totalHumans; i++) {
       Character player = game.humans[i];
-      if (player.x == game.player.x) continue;
+      if (player.x == state.player.x) continue;
       if (diff(mouseWorldX, player.x) > style.nameRadius) continue;
       if (diff(mouseWorldY, player.y) > style.nameRadius) continue;
 

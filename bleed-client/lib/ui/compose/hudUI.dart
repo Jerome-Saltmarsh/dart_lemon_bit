@@ -66,7 +66,7 @@ Widget buildTopLeft() {
 
 
 Widget buildSkillsButton() {
-  return WatchBuilder(game.player.skillPoints, (int value) {
+  return WatchBuilder(modules.game.state.player.skillPoints, (int value) {
     if (value == 0) return emptyContainer;
     return Container(
         height: 103,
@@ -86,13 +86,13 @@ Widget buildTotalZombies() {
 }
 
 Widget buildPlayerLevel() {
-  return WatchBuilder(game.player.level, (int value) {
+  return WatchBuilder(modules.game.state.player.level, (int value) {
     return text('Level $value');
   });
 }
 
 Widget buildBottomRight() {
-  return WatchBuilder(game.player.characterType, (CharacterType type) {
+  return WatchBuilder(modules.game.state.player.characterType, (CharacterType type) {
     return Positioned(
         bottom: _padding,
         right: _padding,
@@ -248,14 +248,14 @@ Positioned buildCharacterAction() {
 }
 
 bool shotgunUnlocked() {
-  for (Weapon weapon in game.player.weapons) {
+  for (Weapon weapon in modules.game.state.player.weapons) {
     if (weapon.type == WeaponType.Shotgun) return true;
   }
   return false;
 }
 
 bool unlockedFirebolt() {
-  for (Weapon weapon in game.player.weapons) {
+  for (Weapon weapon in modules.game.state.player.weapons) {
     if (weapon.type == WeaponType.Shotgun) return true;
   }
   return false;
@@ -315,7 +315,7 @@ Widget buildMenu() {
 }
 
 void clearPlayerMessage() {
-  game.player.message.value = "";
+  modules.game.state.player.message.value = "";
 }
 
 Widget buildSlot({required String title}) {
@@ -399,9 +399,9 @@ String mapWeaponTypeToString(WeaponType weaponType) {
 
 Widget buildEquippedWeaponSlot() {
 
-  return WatchBuilder(game.player.weaponType, (WeaponType weaponType){
-      return WatchBuilder(game.player.weaponCapacity, (int weaponCapacity){
-          return WatchBuilder(game.player.weaponRounds, (int weaponRounds){
+  return WatchBuilder(modules.game.state.player.weaponType, (WeaponType weaponType){
+      return WatchBuilder(modules.game.state.player.weaponCapacity, (int weaponCapacity){
+          return WatchBuilder(modules.game.state.player.weaponRounds, (int weaponRounds){
             return Column(
               children: [
                 Stack(
@@ -551,7 +551,7 @@ Widget buildExpandedWeapons() {
   int index = -1;
   return Column(
     crossAxisAlignment: axis.cross.start,
-    children: game.player.weapons.map((weapon) {
+    children: modules.game.state.player.weapons.map((weapon) {
       index++;
       return Container(
         child: buildEquipWeaponSlot(weapon, index),
@@ -619,7 +619,7 @@ Widget buildLowAmmo() {
                 padding: EdgeInsets.all(10),
                 color: Colors.black26,
                 child: text(
-                    game.player.weaponRounds.value == 0
+                    modules.game.state.player.weaponRounds.value == 0
                         ? "Empty"
                         : "Low Ammo",
                     size: 20)),

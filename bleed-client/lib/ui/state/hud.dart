@@ -40,7 +40,7 @@ extension HudProperties on _Hud {
 
 class _BuildHud {
   Widget playerCharacterType() {
-    return WatchBuilder(game.player.characterType, (CharacterType value) {
+    return WatchBuilder(modules.game.state.player.characterType, (CharacterType value) {
       // if (value == CharacterType.None) {
       //   return buildHudDialog.selectCharacterType();
       // }
@@ -53,7 +53,7 @@ class _BuildHud {
 }
 
 Widget _buildHudWeapons(){
-  return WatchBuilder(game.player.weaponType, (WeaponType weaponType){
+  return WatchBuilder(modules.game.state.player.weaponType, (WeaponType weaponType){
     return layout(
       padding: 16,
       topLeft: buildTime(),
@@ -64,7 +64,7 @@ Widget _buildHudWeapons(){
 }
 
 Widget _buildHudAbilities(){
-  return WatchBuilder(game.player.alive, (bool alive) {
+  return WatchBuilder(modules.game.state.player.alive, (bool alive) {
     return Stack(
       children: [
         buildTextBox(),
@@ -142,7 +142,7 @@ Positioned _buildRespawnLight() {
 }
 
 Widget _buildServerText() {
-  return WatchBuilder(game.player.message, (String value) {
+  return WatchBuilder(modules.game.state.player.message, (String value) {
     if (value.isEmpty) return blank;
 
     return Positioned(
@@ -155,7 +155,7 @@ Widget _buildServerText() {
             padding: padding16,
             child: Column(
               children: [
-                text(game.player.message.value),
+                text(modules.game.state.player.message.value),
                 height16,
                 button("Next", clearPlayerMessage),
               ],

@@ -1,4 +1,5 @@
 
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:flutter/services.dart';
 
@@ -25,42 +26,42 @@ class GameMap {
       state.keyMap.teleport: actions.teleportToMouse,
       state.keyMap.casteFireball: actions.sendRequestCastFireball,
       state.keyMap.equip1: (){
-        if (game.player.isHuman){
+        if (state.player.isHuman){
           actions.playerEquip(1);
         }else{
           actions.selectAbility1();
         }
       },
       state.keyMap.equip2: (){
-        if (game.player.isHuman){
+        if (modules.game.state.player.isHuman){
           actions.playerEquip(2);
         }else{
           actions.selectAbility2();
         }
       },
       state.keyMap.equip3: (){
-        if (game.player.isHuman){
+        if (modules.game.state.player.isHuman){
           actions.playerEquip(3);
         }else{
           actions.selectAbility3();
         }
       },
       state.keyMap.equip4: (){
-        if (game.player.isHuman){
+        if (state.player.isHuman){
           actions.playerEquip(4);
         }else{
           actions.selectAbility4();
         }
       },
       state.keyMap.equip5: (){
-        if (game.player.isHuman){
+        if (state.player.isHuman){
           // sendRequestEquip(index)
         }
       },
       state.keyMap.equip1B: actions.selectAbility1,
       state.keyMap.equip2B: actions.selectAbility2,
       state.keyMap.equip3B: (){
-        if (game.player.isHuman){
+        if (state.player.isHuman){
 
         }else{
           actions.selectAbility3();

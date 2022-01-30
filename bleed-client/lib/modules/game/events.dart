@@ -43,11 +43,11 @@ class GameEvents {
     engine.callbacks.onLeftClicked = actions.playerPerform;
     engine.callbacks.onPanStarted = actions.playerPerform;
     engine.callbacks.onLongLeftClicked = actions.playerPerform;
-    game.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
+    state.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
     game.type.onChanged(_onGameTypeChanged);
-    game.player.uuid.onChanged(_onPlayerUuidChanged);
-    game.player.alive.onChanged(_onPlayerAliveChanged);
-    game.player.state.onChanged(onPlayerCharacterStateChanged);
+    state.player.uuid.onChanged(_onPlayerUuidChanged);
+    state.player.alive.onChanged(_onPlayerAliveChanged);
+    state.player.state.onChanged(onPlayerCharacterStateChanged);
     game.settings.audioMuted.onChanged(onAudioMutedChanged);
     state.status.onChanged(_onGameStatusChanged);
     state.textMode.onChanged(onTextModeChanged);
@@ -68,7 +68,7 @@ class GameEvents {
   }
 
   void onPlayerCharacterStateChanged(CharacterState characterState){
-    game.player.alive.value = characterState != CharacterState.Dead;
+    modules.game.state.player.alive.value = characterState != CharacterState.Dead;
   }
 
   void _onPlayerAliveChanged(bool value) {

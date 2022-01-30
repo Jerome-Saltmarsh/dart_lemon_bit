@@ -100,11 +100,11 @@ void parseState() {
         break;
 
       case ServerResponse.Player_Attack_Target:
-        player.attackTarget.x = consumeDouble();
-        player.attackTarget.y = consumeDouble();
+        modules.game.state.player.attackTarget.x = consumeDouble();
+        modules.game.state.player.attackTarget.y = consumeDouble();
 
-        if (player.attackTarget.x != 0 &&
-            player.attackTarget.y != 0) {
+        if (modules.game.state.player.attackTarget.x != 0 &&
+            modules.game.state.player.attackTarget.y != 0) {
           engine.state.cursorType.value = CursorType.Click;
         } else {
           engine.state.cursorType.value = CursorType.Basic;
@@ -112,10 +112,10 @@ void parseState() {
         break;
 
       case ServerResponse.Player_Abilities:
-        _consumeAbility(player.ability1);
-        _consumeAbility(player.ability2);
-        _consumeAbility(player.ability3);
-        _consumeAbility(player.ability4);
+        _consumeAbility(modules.game.state.player.ability1);
+        _consumeAbility(modules.game.state.player.ability2);
+        _consumeAbility(modules.game.state.player.ability3);
+        _consumeAbility(modules.game.state.player.ability4);
         break;
 
       case ServerResponse.Team_Lives_Remaining:
@@ -129,16 +129,16 @@ void parseState() {
         break;
 
       case ServerResponse.Player_Weapon:
-        player.weaponType.value = _consumeWeaponType();
-        player.weaponRounds.value = consumeInt();
-        player.weaponCapacity.value = consumeInt();
+        modules.game.state.player.weaponType.value = _consumeWeaponType();
+        modules.game.state.player.weaponRounds.value = consumeInt();
+        modules.game.state.player.weaponCapacity.value = consumeInt();
         break;
 
       case ServerResponse.Weapons:
-        player.weapons.clear();
+        modules.game.state.player.weapons.clear();
         int length = _consumeIntUnsafe();
         for (int i = 0; i < length; i++) {
-          player.weapons.add(_consumeWeapon());
+          modules.game.state.player.weapons.add(_consumeWeapon());
         }
         break;
 
@@ -171,8 +171,8 @@ void parseState() {
         print("ServerResponse.Scene_Changed");
         double x = consumeDouble();
         double y = consumeDouble();
-        player.x = x;
-        player.y = y;
+        modules.game.state.player.x = x;
+        modules.game.state.player.y = y;
         engine.actions.cameraCenter(x, y);
 
         Future.delayed(Duration(milliseconds: 150), () {
@@ -202,7 +202,7 @@ void parseState() {
           message += _consumeString();
           message += " ";
         }
-        player.message.value = message.trim();
+        modules.game.state.player.message.value = message.trim();
         break;
 
       case ServerResponse.Items:
@@ -233,7 +233,7 @@ void parseState() {
         break;
 
       case ServerResponse.Cube_Joined:
-        player.uuid.value = _consumeString();
+        modules.game.state.player.uuid.value = _consumeString();
         break;
 
       case ServerResponse.Cube_Players:
@@ -402,6 +402,7 @@ void _parseTiles() {
 }
 
 void _parsePlayer() {
+  final player = modules.game.state.player;
   player.x = consumeDouble();
   player.y = consumeDouble();
   player.health.value = consumeDouble();
@@ -423,9 +424,9 @@ void _parsePlayer() {
 }
 
 void _parsePlayerAbility(){
-  player.ability.value = _consumeAbilityType();
-  player.abilityRange = consumeDouble();
-  player.abilityRadius = consumeDouble();
+  modules.game.state.player.ability.value = _consumeAbilityType();
+  modules.game.state.player.abilityRange = consumeDouble();
+  modules.game.state.player.abilityRadius = consumeDouble();
 }
 
 AbilityType _consumeAbilityType() {
@@ -442,14 +443,14 @@ void _parsePlayerEvents() {
     PlayerEvent event = _consumePlayerEventType();
     switch (event) {
       case PlayerEvent.Level_Up:
-        modules.game.actions.emitPixelExplosion(player.x, player.y, amount: 10);
-        playAudioBuff1(player.x, player.y);
+        modules.game.actions.emitPixelExplosion(modules.game.state.player.x, modules.game.state.player.y, amount: 10);
+        playAudioBuff1(modules.game.state.player.x, modules.game.state.player.y);
         break;
       case PlayerEvent.Skill_Upgraded:
-        playAudio.unlock(player.x, player.y);
+        playAudio.unlock(modules.game.state.player.x, modules.game.state.player.y);
         break;
       case PlayerEvent.Dash_Activated:
-        playAudio.buff11(player.x, player.y);
+        playAudio.buff11(modules.game.state.player.x, modules.game.state.player.y);
         break;
     }
   }
@@ -475,13 +476,13 @@ void _parseGrenades() {
 }
 
 void _parseGameJoined() {
-  player.id = consumeInt();
-  player.uuid.value = _consumeString();
-  player.x = consumeDouble();
-  player.y = consumeDouble();
+  modules.game.state.player.id = consumeInt();
+  modules.game.state.player.uuid.value = _consumeString();
+  modules.game.state.player.x = consumeDouble();
+  modules.game.state.player.y = consumeDouble();
   game.id = consumeInt();
-  player.squad = consumeInt();
-  print(      "ServerResponse.Game_Joined: playerId: ${player.id} gameId: ${game.id}");
+  modules.game.state.player.squad = consumeInt();
+  print(      "ServerResponse.Game_Joined: playerId: ${modules.game.state.player.id} gameId: ${game.id}");
 }
 
 ObjectType _consumeEnvironmentObjectType() {

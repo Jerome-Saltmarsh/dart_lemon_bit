@@ -37,7 +37,7 @@ class GameActions {
   }
 
   void cameraCenterPlayer(){
-    engine.actions.cameraCenter(game.player.x, game.player.y);
+    engine.actions.cameraCenter(modules.game.state.player.x, modules.game.state.player.y);
   }
 
   void emitPixelExplosion(double x, double y, {int amount = 10}) {
