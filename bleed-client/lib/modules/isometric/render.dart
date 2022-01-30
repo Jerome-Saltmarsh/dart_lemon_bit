@@ -132,7 +132,7 @@ class IsometricRender with IsometricScope {
 
   void _drawParticle(Particle value){
     if (!onScreen(value.x, value.y)) return;
-    final shade = getShadeAtPosition(value.x, value.y);
+    final shade = isometric.properties.getShadeAtPosition(value.x, value.y);
     if (shade >= Shade_VeryDark) return;
     mapParticleToDst(value);
     mapParticleToSrc(value);

@@ -1,7 +1,5 @@
 
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/getters/getShading.dart';
+import 'package:bleed_client/modules/modules.dart';
 
-bool inDarkness(double x, double y){
-  return getShadeAtPosition(x, y) >= Shade_VeryDark;
-}

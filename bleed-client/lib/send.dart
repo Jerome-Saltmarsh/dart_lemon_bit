@@ -112,10 +112,6 @@ class _SendRequestToServer {
     modifyGame(ModifyGame.Spawn_Zombie);
   }
 
-  removeZombie(){
-    modifyGame(ModifyGame.Remove_Zombie);
-  }
-
   hourIncrease(){
     modifyGame(ModifyGame.Hour_Increase);
   }

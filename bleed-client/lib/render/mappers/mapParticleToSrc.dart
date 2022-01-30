@@ -28,7 +28,7 @@ const _particleSize = 64.0;
 const pixelSize = 6.0;
 
 void mapParticleToSrc(Particle particle){
-  final shade = getShadeAtPosition(particle.x, particle.y);
+  final shade = isometric.properties.getShadeAtPosition(particle.x, particle.y);
 
   switch(particle.type) {
     case ParticleType.Pixel:

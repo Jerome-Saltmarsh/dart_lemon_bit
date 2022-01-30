@@ -230,7 +230,7 @@ bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {
 void drawEnvironmentObject(EnvironmentObject env) {
   if (!environmentObjectOnScreenScreen(env)) return;
 
-  final shade = getShade(env.row, env.column);
+  final shade = isometric.properties.getShade(env.row, env.column);
   if (shade == Shade_PitchBlack) return;
 
   mapEnvironmentObjectToSrc(env);

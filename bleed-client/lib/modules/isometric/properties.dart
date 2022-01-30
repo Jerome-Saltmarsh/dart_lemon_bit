@@ -1,5 +1,6 @@
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:bleed_client/getters/getTileAt.dart';
 import 'package:bleed_client/modules/isometric/enums.dart';
 import 'package:bleed_client/modules/isometric/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
@@ -41,5 +42,25 @@ class IsometricProperties with IsometricScope {
       }
     }
     return totalParticles;
+  }
+
+  int getShadeAtPosition(double x, double y){
+    return getShade(getRow(x, y), getColumn(x, y));
+  }
+
+  int getShade(int row, int column){
+    if (row < 0) return Shade_VeryDark;
+    if (column < 0) return Shade_VeryDark;
+    if (row >= modules.isometric.state.totalRows.value){
+      return Shade_VeryDark;
+    }
+    if (column >= modules.isometric.state.totalColumns.value){
+      return Shade_VeryDark;
+    }
+    return modules.isometric.state.dynamicShading[row][column];
+  }
+
+  bool inDarkness(double x, double y){
+    return isometric.properties.getShadeAtPosition(x, y) >= Shade_VeryDark;
   }
 }

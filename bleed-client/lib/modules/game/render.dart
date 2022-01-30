@@ -4,7 +4,6 @@ import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/colours.dart';
-import 'package:bleed_client/getters/inDarkness.dart';
 import 'package:bleed_client/modules/game/style.dart';
 import 'package:bleed_client/render/draw/drawPlayerText.dart';
 import 'package:bleed_client/utils.dart';
@@ -110,7 +109,7 @@ class GameRender {
     for (Vector2 bulletHole in bulletHoles) {
       if (bulletHole.x == 0) return;
       if (!onScreen(bulletHole.x, bulletHole.y)) continue;
-      if (inDarkness(bulletHole.x, bulletHole.y)) continue;
+      if (isometric.properties.inDarkness(bulletHole.x, bulletHole.y)) continue;
       engine.draw.circle(bulletHole.x, bulletHole.y, 2, Colors.black);
     }
   }

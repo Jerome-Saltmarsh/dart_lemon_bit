@@ -23,7 +23,7 @@ void mapDstProjectile(Projectile projectile){
 void drawProjectile(Projectile projectile) {
   switch (projectile.type) {
     case ProjectileType.Bullet:
-      if (inDarkness(projectile.x, projectile.y)) return;
+      if (isometric.properties.inDarkness(projectile.x, projectile.y)) return;
       mapDstProjectile(projectile);
       mapProjectileToSrc(projectile);
       engine.actions.renderAtlas();
