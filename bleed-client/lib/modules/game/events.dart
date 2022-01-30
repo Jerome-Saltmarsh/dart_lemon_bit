@@ -1,6 +1,5 @@
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/common/GameEventType.dart';
-import 'package:bleed_client/functions/onGameEvent.dart';
 import 'package:bleed_client/functions/spawnBulletHole.dart';
 import 'package:bleed_client/functions/spawners/spawnArm.dart';
 import 'package:bleed_client/functions/spawners/spawnBlood.dart';
@@ -228,7 +227,7 @@ class GameEvents {
         break;
       case GameEventType.Player_Death:
       // playAudioPlayerDeath(x, y);
-        emitPixelExplosion(x, y);
+        actions.emitPixelExplosion(x, y);
         break;
       case GameEventType.Explosion:
         spawnExplosion(x, y);
@@ -237,17 +236,17 @@ class GameEvents {
         spawnFreezeCircle(x: x, y: y,);
         break;
       case GameEventType.Teleported:
-        emitPixelExplosion(x, y);
+        actions.emitPixelExplosion(x, y);
         playAudioMagicalSwoosh18(x, y);
         break;
       case GameEventType.Blue_Orb_Fired:
         playAudio.sciFiBlaster1(x, y);
         break;
       case GameEventType.Objective_Reached:
-        emitPixelExplosion(x, y);
+        actions.emitPixelExplosion(x, y);
         break;
       case GameEventType.EnemyTargeted:
-        emitPixelExplosion(x, y);
+        actions.emitPixelExplosion(x, y);
         break;
       case GameEventType.Arrow_Fired:
         playAudio.arrowFlyingPast6(x, y);

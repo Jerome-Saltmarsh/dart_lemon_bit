@@ -38,7 +38,6 @@ import 'common/PlayerEvent.dart';
 import 'common/Tile.dart';
 import 'common/WeaponType.dart';
 import 'common/enums/ObjectType.dart';
-import 'functions/onGameEvent.dart';
 
 // state
 int _index = 0;
@@ -220,8 +219,6 @@ void parseState() {
         break;
 
       case ServerResponse.Pong:
-        // connected = true;
-        // connecting = false;
         break;
 
       case ServerResponse.Game_Joined:
@@ -340,7 +337,7 @@ void _parseEnvironmentObjects() {
     switch (type) {
       case ObjectType.SmokeEmitter:
         addParticleEmitter(
-            ParticleEmitter(x: x, y: y, rate: 20, emit: buildParticleSmoke));
+            ParticleEmitter(x: x, y: y, rate: 20, emit: modules.game.factories.buildParticleSmoke));
         break;
       case ObjectType.MystEmitter:
         addParticleEmitter(
@@ -447,7 +444,7 @@ void _parsePlayerEvents() {
     PlayerEvent event = _consumePlayerEventType();
     switch (event) {
       case PlayerEvent.Level_Up:
-        emitPixelExplosion(player.x, player.y, amount: 10);
+        modules.game.actions.emitPixelExplosion(player.x, player.y, amount: 10);
         playAudioBuff1(player.x, player.y);
         break;
       case PlayerEvent.Skill_Upgraded:
