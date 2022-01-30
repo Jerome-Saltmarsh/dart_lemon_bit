@@ -81,6 +81,7 @@ class CoreEvents {
         engine.state.drawCanvasAfterUpdate = false;
         modules.isometric.events.register();
         modules.game.events.register();
+        engine.registerZoomCameraOnMouseScroll();
         break;
 
       case Mode.Editor:
@@ -93,6 +94,7 @@ class CoreEvents {
         game.totalZombies.value = 0;
         game.totalProjectiles = 0;
         game.totalNpcs = 0;
+        engine.registerZoomCameraOnMouseScroll();
         break;
     }
 

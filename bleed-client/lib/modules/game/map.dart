@@ -21,18 +21,18 @@ class GameMap {
       state.keyMap.speakLetsGreeting: actions.sayGreeting,
       state.keyMap.waitASecond: actions.sayWaitASecond,
       state.keyMap.text: actions.toggleMessageBox,
-      state.keyMap.hourForwards: skipHour,
-      state.keyMap.hourBackwards: reverseHour,
+      state.keyMap.hourForwards: actions.skipHour,
+      state.keyMap.hourBackwards: actions.reverseHour,
       state.keyMap.teleport: actions.teleportToMouse,
       state.keyMap.casteFireball: sendRequestCastFireball,
-      key.digit1: (){
+      state.keyMap.equip1: (){
         if (game.player.isHuman){
           sendRequestEquip(1);
         }else{
           selectAbility1();
         }
       },
-      key.digit2: (){
+      state.keyMap.equip2: (){
         if (game.player.isHuman){
           sendRequestEquip(2);
         }else{
@@ -68,8 +68,6 @@ class GameMap {
         }
       },
       state.keyMap.equip4B: selectAbility4,
-      key.arrowRight: sendRequest.hourIncrease,
-      key.arrowLeft: sendRequest.hourDecrease,
-    };    
+    };
   }
 }

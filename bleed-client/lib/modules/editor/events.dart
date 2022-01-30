@@ -31,7 +31,6 @@ class EditorEvents with EditorScope {
     engine.callbacks.onLeftClicked = onMouseLeftClicked;
     engine.callbacks.onMouseDragging = onMouseDragging;
     engine.callbacks.onMouseMoved = onMouseMoved;
-    engine.callbacks.onMouseScroll = onMouseScroll;
     engine.callbacks.onKeyPressed = onKeyPressed;
     engine.callbacks.onKeyReleased = onKeyReleased;
     editor.state.selected.onChanged(onSelectedObjectChanged);

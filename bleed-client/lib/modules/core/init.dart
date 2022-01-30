@@ -91,7 +91,7 @@ void onPlayerWeaponChanged(WeaponType weapon) {
 }
 
 void initializeEventListeners() {
-  engine.callbacks.onMouseScroll = onMouseScroll;
+  engine.callbacks.onMouseScroll = engine.events.onMouseScroll;
   // webSocket.eventStream.stream.listen(_onEventReceivedFromServer);
   // observeCompiledGame(onCompiledGameChanged);
 

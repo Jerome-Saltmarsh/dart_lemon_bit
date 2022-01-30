@@ -55,15 +55,6 @@ void sendRequestSelectAbility(int index) {
   webSocket.send('${ClientRequest.SelectAbility.index} $session $index');
 }
 
-void skipHour(){
-  webSocket.send(ClientRequest.SkipHour.index.toString());
-}
-
-void reverseHour(){
-  webSocket.send(ClientRequest.ReverseHour.index.toString());
-}
-
-
 void requestThrowGrenade(double strength) {
   // send('${ClientRequest.Grenade.index} $session ${strength.toStringAsFixed(1)} $aim');
 }

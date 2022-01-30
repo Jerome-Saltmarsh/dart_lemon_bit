@@ -71,4 +71,12 @@ class GameActions {
   void toggleMessageBox() {
     hud.state.textBoxVisible.value ? sendAndCloseTextBox() : showTextBox();
   }
+
+  void skipHour(){
+    webSocket.send(ClientRequest.SkipHour.index.toString());
+  }
+
+  void reverseHour(){
+    webSocket.send(ClientRequest.ReverseHour.index.toString());
+  }
 }
