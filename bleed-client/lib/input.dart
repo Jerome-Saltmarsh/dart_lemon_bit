@@ -22,7 +22,7 @@ bool panningCamera = false;
 final RawKeyboard rawKeyboard = RawKeyboard.instance;
 
 void performPrimaryAction() {
-  setCharacterAction(CharacterAction.Perform);
+  modules.game.actions.setCharacterAction(CharacterAction.Perform);
 }
 
 void registerPlayKeyboardHandler() {
@@ -295,7 +295,7 @@ void onMouseScroll(double amount) {
 }
 
 void stopRunLeft() {
-  setCharacterActionRun();
+  modules.game.actions.setCharacterActionRun();
   setCharacterDirection(Direction.Left);
 }
 
@@ -358,14 +358,6 @@ class CharacterController {
   AbilityType ability = AbilityType.None;
 }
 
-void setCharacterAction(CharacterAction value){
-  if (value.index < modules.game.state.characterController.action.value.index) return;
-  modules.game.state.characterController.action.value = value;
-}
-
-void setCharacterActionRun(){
-  setCharacterAction(CharacterAction.Run);
-}
 
 void setCharacterDirection(Direction value){
   modules.game.state.characterController.direction = value;

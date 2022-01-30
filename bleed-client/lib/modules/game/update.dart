@@ -105,7 +105,7 @@ class GameUpdate {
     final Direction? direction = getKeyDirection();
     if (direction != null){
       modules.game.state.characterController.direction = direction;
-      setCharacterActionRun();
+      modules.game.actions.setCharacterActionRun();
     }
   }
 

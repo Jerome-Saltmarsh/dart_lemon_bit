@@ -1,9 +1,15 @@
 
+import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/functions/emit/emitPixel.dart';
+import 'package:bleed_client/modules/game/state.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/engine.dart';
 
 class GameActions {
+
+  final GameState state;
+
+  GameActions(this.state);
 
   void spawnBulletHole(double x, double y){
     game.bulletHoles[game.bulletHoleIndex].x = x;
@@ -20,4 +26,14 @@ class GameActions {
       emitPixel(x: x, y: y);
     }
   }
+
+  void setCharacterAction(CharacterAction value){
+    if (value.index < state.characterController.action.value.index) return;
+    state.characterController.action.value = value;
+  }
+
+  void setCharacterActionRun(){
+    setCharacterAction(CharacterAction.Run);
+  }
+
 }
