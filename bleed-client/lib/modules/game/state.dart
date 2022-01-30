@@ -2,6 +2,8 @@
 
 
 
+import 'package:bleed_client/input.dart';
+
 class GameState {
-  /// In seconds
+  final CharacterController characterController = CharacterController();
 }

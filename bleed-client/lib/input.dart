@@ -1,6 +1,7 @@
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/cube/camera3d.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:bleed_client/ui/logic/hudLogic.dart';
@@ -18,7 +19,6 @@ import 'ui/logic/showTextBox.dart';
 
 bool get keyPressedPan => keyPressed(LogicalKeyboardKey.keyE);
 bool panningCamera = false;
-final _CharacterController characterController = _CharacterController();
 final RawKeyboard rawKeyboard = RawKeyboard.instance;
 
 void performPrimaryAction() {
@@ -352,15 +352,15 @@ void _handleKeyUpEventPlayMode(RawKeyUpEvent event) {
   _keyDownState[key] = false;
 }
 
-class _CharacterController {
+class CharacterController {
   Direction direction = Direction.Down;
   final Watch<CharacterAction> action = Watch(CharacterAction.Idle);
   AbilityType ability = AbilityType.None;
 }
 
 void setCharacterAction(CharacterAction value){
-  if (value.index < characterController.action.value.index) return;
-  characterController.action.value = value;
+  if (value.index < modules.game.state.characterController.action.value.index) return;
+  modules.game.state.characterController.action.value = value;
 }
 
 void setCharacterActionRun(){
@@ -368,6 +368,6 @@ void setCharacterActionRun(){
 }
 
 void setCharacterDirection(Direction value){
-  characterController.direction = value;
+  modules.game.state.characterController.direction = value;
 }
 

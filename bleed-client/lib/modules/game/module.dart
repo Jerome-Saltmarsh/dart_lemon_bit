@@ -13,15 +13,16 @@ class GameModule {
   final state = GameState();
   final build = GameBuild();
   final properties = GameProperties();
-  final update = GameUpdate();
   final style = GameStyle();
   final actions = GameActions();
   final factories = GameFactories();
   late final render;
   late final events;
+  late final GameUpdate update;
 
   GameModule(){
     render = GameRender(style);
     events = GameEvents(actions);
+    update = GameUpdate(state);
   }
 }

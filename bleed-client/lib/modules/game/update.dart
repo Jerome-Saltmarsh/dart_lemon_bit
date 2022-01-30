@@ -15,7 +15,13 @@ import 'package:bleed_client/utils.dart';
 import 'package:bleed_client/webSocket.dart';
 import 'package:lemon_engine/engine.dart';
 
+import 'state.dart';
+
 class GameUpdate {
+
+  final GameState state;
+
+  GameUpdate(this.state);
 
   Offset _mouseWorldStart = Offset(0, 0);
 
@@ -98,7 +104,7 @@ class GameUpdate {
     }
     final Direction? direction = getKeyDirection();
     if (direction != null){
-      characterController.direction = direction;
+      modules.game.state.characterController.direction = direction;
       setCharacterActionRun();
     }
   }
