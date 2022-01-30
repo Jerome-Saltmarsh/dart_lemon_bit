@@ -4,7 +4,6 @@ import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/colours.dart';
-import 'package:bleed_client/modules/game/style.dart';
 import 'package:bleed_client/render/draw/drawPlayerText.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
@@ -17,18 +16,22 @@ import 'package:bleed_client/render/draw/drawBullets.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
 import 'package:bleed_client/state/game.dart';
 
+import 'state.dart';
+import 'style.dart';
+
 class GameRender {
 
+  final GameState state;
   final GameStyle style;
 
-  GameRender(this.style);
+  GameRender(this.state, this.style);
 
   void render(Canvas canvas, Size size) {
 
     if (game.player.uuid.value.isEmpty) {
       return;
     }
-    if (game.status.value == GameStatus.Awaiting_Players){
+    if (state.status.value == GameStatus.Awaiting_Players){
       return;
     }
 

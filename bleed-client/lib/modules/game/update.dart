@@ -53,7 +53,7 @@ class GameUpdate {
   }
 
   void _updateBleed(){
-    if (game.status.value == GameStatus.Finished) return;
+    if (state.status.value == GameStatus.Finished) return;
 
     game.framesSinceEvent++;
     readPlayerInput();

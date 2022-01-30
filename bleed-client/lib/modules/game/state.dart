@@ -1,8 +1,10 @@
+import 'package:bleed_client/common/GameStatus.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_watch/watch.dart';
 import 'classes.dart';
 
 class GameState {
+  final Watch<GameStatus> status = Watch(GameStatus.Awaiting_Players);
   final TextEditingController textEditingControllerMessage = TextEditingController();
   FocusNode textFieldMessage = FocusNode();
   final CharacterController characterController = CharacterController();

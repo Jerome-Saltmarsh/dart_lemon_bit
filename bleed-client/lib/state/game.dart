@@ -45,7 +45,6 @@ class _Game {
   final Watch<int> teamLivesEast = Watch(-1);
   final Watch<GameType> type = Watch(GameType.None);
   String? customGameName = "";
-  final Watch<GameStatus> status = Watch(GameStatus.Awaiting_Players);
   final _Lobby lobby = _Lobby();
   final Watch<int> teamSize = Watch(0);
   final Watch<int> numberOfTeams = Watch(0);

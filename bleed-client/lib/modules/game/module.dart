@@ -11,10 +11,10 @@ import 'package:bleed_client/modules/game/style.dart';
 import 'package:bleed_client/modules/game/update.dart';
 
 class GameModule {
-  final build = GameBuild();
   final properties = GameProperties();
   final style = GameStyle();
   final factories = GameFactories();
+  late final GameBuild build;
   late final GameState state;
   late final GameActions actions;
   late final GameRender render;
@@ -25,9 +25,10 @@ class GameModule {
   GameModule(){
     state = GameState();
     actions = GameActions(state);
-    render = GameRender(style);
+    render = GameRender(state, style);
     events = GameEvents(actions, state);
     update = GameUpdate(state);
     map = GameMap(state, actions);
+    build = GameBuild(state);
   }
 }

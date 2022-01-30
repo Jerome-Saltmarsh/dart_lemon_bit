@@ -12,14 +12,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../../toString.dart';
+import 'state.dart';
 
 class GameBuild {
+
+  final GameState state;
+  GameBuild(this.state);
+
   Widget buildUIGame() {
     return WatchBuilder(game.player.uuid, (String uuid) {
       if (uuid.isEmpty) {
         return buildLayoutLoadingGame();
       }
-      return WatchBuilder(game.status, (GameStatus gameStatus) {
+      return WatchBuilder(state.status, (GameStatus gameStatus) {
         switch (gameStatus) {
           case GameStatus.Counting_Down:
             return buildDialog(

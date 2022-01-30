@@ -11,7 +11,6 @@ import 'package:bleed_client/functions/spawners/spawnZombieHead.dart';
 import 'package:bleed_client/functions/spawners/spawnZombieLeg.dart';
 import 'package:bleed_client/spawn.dart';
 import 'package:bleed_client/state/sharedPreferences.dart';
-import 'package:flutter/services.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/randomBool.dart';
 import 'package:lemon_math/randomInt.dart';
@@ -48,9 +47,9 @@ class GameEvents {
     game.type.onChanged(_onGameTypeChanged);
     game.player.uuid.onChanged(_onPlayerUuidChanged);
     game.player.alive.onChanged(_onPlayerAliveChanged);
-    game.status.onChanged(_onGameStatusChanged);
     game.player.state.onChanged(onPlayerCharacterStateChanged);
     game.settings.audioMuted.onChanged(onAudioMutedChanged);
+    state.status.onChanged(_onGameStatusChanged);
     state.textMode.onChanged(onTextModeChanged);
     sub(_onGameError);
   }

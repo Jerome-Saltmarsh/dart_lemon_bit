@@ -229,7 +229,7 @@ void parseState() {
         break;
 
       case ServerResponse.Game_Status:
-        game.status.value = gameStatuses[consumeInt()];
+        modules.game.state.status.value = gameStatuses[consumeInt()];
         break;
 
       case ServerResponse.Cube_Joined:
