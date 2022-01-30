@@ -44,7 +44,7 @@ class GameEvents {
     engine.callbacks.onPanStarted = actions.playerPerform;
     engine.callbacks.onLongLeftClicked = actions.playerPerform;
     engine.callbacks.onKeyPressed = onKeyPressed;
-    registerPlayKeyboardHandler();
+    modules.game.actions.registerPlayKeyboardHandler();
 
     game.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
     game.type.onChanged(_onGameTypeChanged);
