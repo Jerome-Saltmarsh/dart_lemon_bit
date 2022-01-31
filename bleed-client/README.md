@@ -83,14 +83,6 @@
 [ ] Show youtube video of game in preview  
 [ ] Stripe Webhooks, Catch save subscription errors
 [ ] Popup Auto suggest sign in
-[ROYAL]
-[ ] Implement game over dialog
-[ ] Design Map  
-[ ] Score  
-[ ] Body Armor
-[ ] Break Crates
-[ ] Weapon UI
-[ ] Spawn Item Locations
 [EDITOR]
 [ ] Play button
 [ ] Time Speed
@@ -104,6 +96,15 @@
 [ENGINE]
 [ ] Atlas Buffer 64
 [ ] Auto cull render calls
+[ROYAL]
+[ ] Implement game over dialog
+[ ] Design Map  
+[ ] Score  
+[ ] Body Armor
+[ ] Break Crates
+[ ] Weapon UI
+[ ] Spawn Item Locations
+[CORE]
 [ ] FIX Google Login
 [COMPLETED]
 [x] Key handler state to engine

@@ -3,6 +3,7 @@ enum ToolTab {
   Objects,
   All,
   Units,
+  Items,
   Misc
 }
 

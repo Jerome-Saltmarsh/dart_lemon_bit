@@ -1,7 +1,9 @@
 
 
 import 'package:bleed_client/classes/Character.dart';
+import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/common/CharacterType.dart';
+import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
@@ -239,7 +241,21 @@ class EditorBuild {
         return _tabMisc();
       case ToolTab.Units:
         return _tabUnits();
+      case ToolTab.Items:
+        return _tabItems();
     }
+  }
+
+  List<Widget> _tabItems(){
+     return itemTypes.map((itemType){
+       return WatchBuilder(state.itemType, (selectedItemType){
+         return tabButton(
+            enumString(itemType), (){
+              state.itemType.value = itemType;
+         }, itemType == selectedItemType
+         );
+       });
+     }).toList();
   }
 
   List<Widget> _tabUnits() {
@@ -253,6 +269,13 @@ class EditorBuild {
             fillColor: selected == unit ? _highlight : colours.transparent);
       });
     }).toList();
+  }
+
+  Widget tabButton(String value, Function callback, bool selected){
+    return button(value, callback,
+        width: _buttonWidth,
+        alignment: Alignment.centerLeft,
+        fillColor: selected ? _highlight : colours.transparent);
   }
 
   Widget buildEnvironmentType(ObjectType type) {
