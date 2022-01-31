@@ -1,7 +1,6 @@
 
 
 import 'package:bleed_client/common/GameType.dart';
-import 'package:bleed_client/enums/Region.dart';
 import 'package:bleed_client/modules/core/enums.dart';
 import 'package:bleed_client/modules/core/state.dart';
 import 'package:bleed_client/modules/modules.dart';

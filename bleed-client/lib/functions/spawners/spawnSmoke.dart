@@ -1,5 +1,5 @@
-import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/functions/spawners/spawnParticle.dart';
+import 'package:bleed_client/modules/isometric/enums.dart';
 
 void spawnSmoke(double x, double y, double z, {double xv = 0, double yv = 0}) {
   spawnParticle(

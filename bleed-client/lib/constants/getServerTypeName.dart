@@ -1,4 +1,4 @@
-import 'package:bleed_client/enums/Region.dart';
+import 'package:bleed_client/modules/core/enums.dart';
 
 String getRegionName(Region server) {
   return _regionNames[server]!;

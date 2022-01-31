@@ -1,8 +1,8 @@
 
 import 'package:bleed_client/classes/Particle.dart';
-import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/functions/spawners/spawnBlood.dart';
 import 'package:bleed_client/getters/isWalkable.dart';
+import 'package:bleed_client/modules/isometric/enums.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
 
