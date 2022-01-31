@@ -7,7 +7,6 @@ import 'package:bleed_client/common/SceneJson.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/constants.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
-import 'package:bleed_client/compile.dart';
 import 'package:bleed_client/modules/core/enums.dart';
 import 'package:bleed_client/modules/editor/compile.dart';
 import 'package:bleed_client/modules/editor/scope.dart';

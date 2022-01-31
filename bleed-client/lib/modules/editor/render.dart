@@ -1,5 +1,6 @@
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/constants/colours.dart';
+import 'package:bleed_client/modules/editor/enums.dart';
 import 'package:bleed_client/modules/editor/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
@@ -17,6 +18,10 @@ class EditorRender with EditorScope {
     _drawCharacters();
 
     state.items.forEach(drawItem);
+
+    if (state.tab.value == ToolTab.Tiles){
+       // isometric.properties.in
+    }
 
     for (final playerSpawnPosition in state.teamSpawnPoints){
       engine.draw.drawCircleOutline(
