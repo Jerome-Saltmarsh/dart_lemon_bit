@@ -1,4 +1,3 @@
-import 'package:bleed_client/events/onShadeMaxChanged.dart';
 import 'package:bleed_client/modules/isometric/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
 
@@ -15,6 +14,19 @@ class IsometricEvents with IsometricScope {
     isometric.state.totalColumns.onChanged(onTotalColumnsChanged);
     isometric.state.totalRows.onChanged(onTotalRowsChanged);
   }
+
+  void onMaxAmbientBrightnessChanged(int maxShade){
+    print("onShadeMaxChanged($maxShade)");
+    final ambient = state.ambient.value;
+    if (maxShade == ambient) return;
+
+    if (maxShade > ambient){
+      state.ambient.value = maxShade;
+      return;
+    }
+    state.ambient.value = properties.currentPhaseShade;
+  }
+
 
   void onTotalColumnsChanged(int value){
     state.totalColumnsInt = value;
