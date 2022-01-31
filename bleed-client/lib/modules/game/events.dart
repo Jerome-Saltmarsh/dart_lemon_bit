@@ -85,6 +85,7 @@ class GameEvents {
       case GameError.PlayerId_Required:
         core.actions.disconnect();
         website.actions.showDialogLogin();
+        core.actions.setError("Account is null");
         return;
       case GameError.Subscription_Required:
         core.actions.disconnect();
@@ -140,11 +141,9 @@ class GameEvents {
     print('events.onGameStatusChanged($value)');
     switch(value){
       case GameStatus.In_Progress:
-      // engine.state.drawCanvas = modules.game.render;
         engine.actions.fullScreenEnter();
         break;
       default:
-        engine.state.drawCanvas = null;
         engine.actions.fullScreenExit();
         break;
     }

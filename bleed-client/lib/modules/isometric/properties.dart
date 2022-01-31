@@ -24,6 +24,10 @@ class IsometricProperties with IsometricScope {
     return modules.isometric.map.phaseToShade(phase);
   }
 
+  String get currentAmbientShadeName {
+    return shadeName(currentPhaseShade);
+  }
+
   Phase get phase {
      return modules.isometric.map.hourToPhase(modules.isometric.state.hour.value);
   }

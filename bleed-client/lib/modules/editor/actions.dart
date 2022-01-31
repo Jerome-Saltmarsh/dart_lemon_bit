@@ -102,7 +102,7 @@ class EditorActions with EditorScope {
     game.particleEmitters.clear();
     isometric.state.environmentObjects.clear();
     game.collectables.clear();
-    game.items.clear();
+    game.itemsTotal = 0;
     isometric.actions.updateTileRender();
   }
 

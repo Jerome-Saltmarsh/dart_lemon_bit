@@ -27,6 +27,11 @@ class CoreEvents {
     state.account.onChanged(_onAccountChanged);
     webSocket.connection.onChanged(onConnectionChanged);
     sub(_onLoginException);
+    engine.state.drawCanvas.onChanged(onDrawCanvasChanged);
+  }
+
+  void onDrawCanvasChanged(DrawCanvas? method){
+    print("core.events.onDrawCanvasChanged($method)");
   }
 
   Future _onLoginException(LoginException error) async {
@@ -59,24 +64,23 @@ class CoreEvents {
 
 
   void _onServerTypeChanged(Region serverType) {
-    print('events.onServerTypeChanged($serverType)');
+    print('core.events.onServerTypeChanged($serverType)');
     storage.saveServerType(serverType);
   }
 
   void onModeChanged(Mode mode){
-    print("_onGameModeChanged($mode)");
-    engine.state.drawCanvas = null;
+    print("core.events.onGameModeChanged($mode)");
     engine.actions.clearCallbacks();
 
     switch(mode){
 
       case Mode.Website:
-        engine.state.drawCanvas = null;
+        engine.state.drawCanvas.value = null;
         engine.state.drawCanvasAfterUpdate = false;
         break;
 
       case Mode.Player:
-        engine.state.drawCanvas = modules.game.render.render;
+        engine.state.drawCanvas.value = modules.game.render.render;
         engine.state.drawCanvasAfterUpdate = false;
         modules.isometric.events.register();
         modules.game.events.register();
@@ -85,8 +89,8 @@ class CoreEvents {
         break;
 
       case Mode.Editor:
+        engine.state.drawCanvas.value = editor.render.render;
         engine.state.drawCanvasAfterUpdate = true;
-        engine.state.drawCanvas = editor.render.render;
         modules.isometric.events.register();
         editor.events.onActivated();
         isometric.actions.removeGeneratedEnvironmentObjects();
@@ -107,7 +111,7 @@ class CoreEvents {
 
     switch(connection){
       case Connection.Connected:
-        engine.state.drawCanvas = modules.game.render.render;
+        engine.state.drawCanvas.value = modules.game.render.render;
         core.state.mode.value = Mode.Player;
         if (game.type.value == GameType.Custom){
           final account = core.state.account.value;
@@ -131,7 +135,6 @@ class CoreEvents {
         engine.actions.fullScreenExit();
         core.actions.clearSession();
         engine.actions.clearCallbacks();
-        engine.state.drawCanvas = null;
         engine.state.drawCanvasAfterUpdate = true;
         engine.state.cursorType.value = CursorType.Basic;
         break;

@@ -37,9 +37,6 @@ const animationFrameRate = 7; // frames per change;
 
 final Scene scene = Scene();
 
-void renderGame(Canvas canvas, Size size) {
-
-}
 
 void applyEmissionsToDynamicShadeMap() {
   if (modules.isometric.properties.dayTime) return;
