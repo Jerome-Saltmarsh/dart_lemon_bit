@@ -118,10 +118,14 @@ class CoreActions {
     print("actions.logout()");
     core.state.operationStatus.value = OperationStatus.Logging_Out;
 
-    firebaseAuth.signOut().catchError(print);
-    googleSignIn.signOut().catchError((error){
-      print(error);
-    });
+    try {
+      firebaseAuth.signOut().catchError(print);
+      googleSignIn.signOut().catchError((error) {
+        print(error);
+      });
+    }catch(e){
+      print(e);
+    }
 
     storage.forgetAuthorization();
     core.state.account.value = null;

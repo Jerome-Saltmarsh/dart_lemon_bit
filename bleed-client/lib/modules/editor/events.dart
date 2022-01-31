@@ -37,6 +37,7 @@ class EditorEvents with EditorScope {
     engine.state.keyPressedHandlers = {
       config.keys.pan: actions.panModeActivate,
       config.keys.delete: actions.deleteSelected,
+      config.keys.move: actions.moveSelectedToMouse,
     };
 
     engine.state.keyReleasedHandlers = {

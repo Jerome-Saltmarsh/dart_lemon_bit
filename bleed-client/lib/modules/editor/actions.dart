@@ -1,7 +1,9 @@
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/CharacterType.dart';
+import 'package:bleed_client/common/SceneJson.dart';
 import 'package:bleed_client/common/Tile.dart';
+import 'package:bleed_client/common/constants.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/compile.dart';
 import 'package:bleed_client/modules/core/enums.dart';
@@ -155,8 +157,7 @@ class EditorActions with EditorScope {
       isometric.state.environmentObjects.add(EnvironmentObject(x: x, y: y, type: type, radius: 25));
     }
 
-    final jsonMisc = mapJson['misc'];
-    isometric.state.time.value = jsonMisc['start-hour'] ?? 12;
+    isometric.state.time.value = mapJson[sceneFieldNames.startTime] / secondsPerHour;
 
     List<Character> characters = [];
     for(Json json in mapJson['characters']){
