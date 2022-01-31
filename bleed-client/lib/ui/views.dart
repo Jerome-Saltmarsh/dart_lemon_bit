@@ -279,6 +279,7 @@ Widget buildDialogChangeRegion() {
                         : colours.white05,
                     borderColor: colours.none,
                     fillColorMouseOver: colours.green,
+                    borderColorMouseOver: colours.green,
                     margin: const EdgeInsets.only(bottom: 8));
               }).toList()
             ],
