@@ -35,6 +35,10 @@ void mapParticleToSrc(Particle particle){
       engine.actions.mapSrc(x: x, y: y, width: pixelSize, height: pixelSize);
       return;
 
+    case ParticleType.Smoke:
+      engine.actions.mapSrc(x: atlas.circle.x, y: atlas.circle.y);
+      return;
+
     case ParticleType.Leg:
       final direction = convertAngleToDirection(particle.rotation);
       final x = atlas.particles.zombieLeg.x + (direction.index * 64.0);

@@ -11,7 +11,7 @@ class _Atlas {
   final Vector2 star = Vector2(560, 515);
   final Vector2 starSize = Vector2(128, 128);
   final Vector2 myst = Vector2(2410, 1);
-  final Vector2 circle = Vector2(2410, 513);
+  final Vector2  circle = Vector2(2410, 513);
   final _Zombie zombie = _Zombie();
   final _Particles particles = _Particles();
   final _Pixels pixels = _Pixels();
