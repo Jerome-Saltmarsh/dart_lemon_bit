@@ -2,6 +2,7 @@ import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/modules/editor/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
+import 'package:bleed_client/render/draw/drawCanvas.dart';
 import 'package:bleed_client/render/draw/drawCharacter.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
@@ -14,6 +15,8 @@ class EditorRender with EditorScope {
     isometric.render.sprites();
     _drawSelectedObject();
     _drawCharacters();
+
+    state.items.forEach(drawItem);
 
     for (final playerSpawnPosition in state.teamSpawnPoints){
       engine.draw.drawCircleOutline(

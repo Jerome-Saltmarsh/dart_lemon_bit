@@ -4,6 +4,7 @@ import 'dart:ui';
 
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
+import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/modules/editor/actions.dart';
 import 'package:bleed_client/modules/editor/scope.dart';
@@ -115,6 +116,11 @@ class EditorEvents with EditorScope {
       case ToolTab.All:
         break;
       case ToolTab.Misc:
+        break;
+      case ToolTab.Items:
+        state.items.add(
+            Item(type: state.itemType.value, x: mouseWorldX, y: mouseWorldY)
+        );
         break;
     }
 

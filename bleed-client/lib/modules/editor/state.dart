@@ -1,5 +1,6 @@
 
 import 'package:bleed_client/classes/Character.dart';
+import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/Tile.dart';
@@ -30,5 +31,6 @@ class EditorState {
   final mapNameController = TextEditingController();
   final Watch<String> error = Watch("");
   List<Character> characters = [];
+  final List<Item> items = [];
 }
 
