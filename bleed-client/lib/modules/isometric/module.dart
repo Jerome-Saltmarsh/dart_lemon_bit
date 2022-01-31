@@ -15,15 +15,16 @@ class IsometricModule {
   final state = IsometricState();
   final actions = IsometricActions();
   final subscriptions = IsometricSubscriptions();
-  final events = IsometricEvents();
   final properties = IsometricProperties();
   final constants = IsometricConstants();
   final map = IsometricMaps();
   final render = IsometricRender();
   final update = IsometricUpdate();
   late final IsometricInstances instances;
+  late final IsometricEvents events;
 
   IsometricModule(){
     instances = IsometricInstances(state);
+    events = IsometricEvents(state, actions);
   }
 }

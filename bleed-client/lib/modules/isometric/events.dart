@@ -1,18 +1,24 @@
+import 'package:bleed_client/modules/isometric/actions.dart';
 import 'package:bleed_client/modules/isometric/scope.dart';
+import 'package:bleed_client/modules/isometric/state.dart';
 import 'package:bleed_client/modules/modules.dart';
 
 class IsometricEvents with IsometricScope {
+  
+  final IsometricState state;
+  final IsometricActions actions;
+  IsometricEvents(this.state, this.actions);
 
   void register(){
-    if (isometric.state.eventsRegistered) return;
+    if (state.eventsRegistered) return;
     print("isometric.events.register()");
-    isometric.state.eventsRegistered = true;
-    isometric.subscriptions.onAmbientChanged = isometric.state.ambient.onChanged(onAmbientChanged);
-    isometric.state.time.onChanged(onTimeChanged);
-    isometric.state.maxAmbientBrightness.onChanged(onMaxAmbientBrightnessChanged);
-    isometric.state.hour.onChanged(onHourChanged);
-    isometric.state.totalColumns.onChanged(onTotalColumnsChanged);
-    isometric.state.totalRows.onChanged(onTotalRowsChanged);
+    state.eventsRegistered = true;
+    isometric.subscriptions.onAmbientChanged = state.ambient.onChanged(onAmbientChanged);
+    state.time.onChanged(onTimeChanged);
+    state.maxAmbientBrightness.onChanged(onMaxAmbientBrightnessChanged);
+    state.hour.onChanged(onHourChanged);
+    state.totalColumns.onChanged(onTotalColumnsChanged);
+    state.totalRows.onChanged(onTotalRowsChanged);
   }
 
   void onMaxAmbientBrightnessChanged(int maxShade){
@@ -39,20 +45,20 @@ class IsometricEvents with IsometricScope {
   void onTimeChanged(int timeInSeconds) {
     final timeInMinutes = timeInSeconds / 60;
     final timeInHours = timeInMinutes / 60;
-    modules.isometric.state.hour.value = timeInHours.toInt();
+    state.hour.value = timeInHours.toInt();
   }
 
   void onHourChanged(int hour){
     print("isometric.events.onHourChanged($hour)");
     final phase = modules.isometric.map.hourToPhase(hour);
     final phaseBrightness = modules.isometric.map.phaseToShade(phase);
-    final maxAmbientBrightness = modules.isometric.state.maxAmbientBrightness.value;
+    final maxAmbientBrightness = state.maxAmbientBrightness.value;
     if (maxAmbientBrightness > phaseBrightness) return;
-    modules.isometric.state.ambient.value = phaseBrightness;
+    state.ambient.value = phaseBrightness;
   }
 
   void onAmbientChanged(int value){
     print("isometric.events.onAmbientChanged($value)");
-    modules.isometric.actions.resetLighting();
+    actions.resetLighting();
   }
 }
