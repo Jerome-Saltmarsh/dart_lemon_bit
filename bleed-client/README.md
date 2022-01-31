@@ -90,7 +90,7 @@
 [ ] Body Armor
 [ ] Break Crates
 [ ] Weapon UI
-[ ] FIX Zoom Scroll
+[ ] Spawn Item Locations
 [EDITOR]
 [ ] Play button
 [ ] Time Speed

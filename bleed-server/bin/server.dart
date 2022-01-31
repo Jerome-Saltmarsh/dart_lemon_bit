@@ -868,17 +868,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 message: "arg4, weapon-index: $weaponIndex integer expected");
             return;
           }
-          if (weaponIndex < 0) {
-            error(GameError.InvalidArguments,
-                message:
-                "arg4, weapon-index: $weaponIndex must be greater than 0, got ");
-          }
-          if (weaponIndex >= player.weapons.length) {
-            error(GameError.InvalidArguments,
-                message:
-                "arg4, weapon-index: $weaponIndex cannot be greater than player.weapons.length: ${player.weapons.length}");
-          }
-
           changeWeapon(player, weaponIndex);
           return;
 

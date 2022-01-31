@@ -10,6 +10,7 @@ enum GameError {
   PlayerStillAlive,
   PlayerDead,
   InvalidArguments,
+  InvalidWeaponIndex,
   LobbyNotFound,
   LobbyUserNotFound,
   GameFull,
