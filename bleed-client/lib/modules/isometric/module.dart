@@ -1,15 +1,16 @@
 
 
-import 'package:bleed_client/modules/isometric/actions.dart';
-import 'package:bleed_client/modules/isometric/constants.dart';
-import 'package:bleed_client/modules/isometric/events.dart';
-import 'package:bleed_client/modules/isometric/instances.dart';
-import 'package:bleed_client/modules/isometric/maps.dart';
-import 'package:bleed_client/modules/isometric/properties.dart';
-import 'package:bleed_client/modules/isometric/render.dart';
-import 'package:bleed_client/modules/isometric/state.dart';
-import 'package:bleed_client/modules/isometric/subscriptions.dart';
-import 'package:bleed_client/modules/isometric/update.dart';
+import 'actions.dart';
+import 'constants.dart';
+import 'events.dart';
+import 'instances.dart';
+import 'maps.dart';
+import 'properties.dart';
+import 'queries.dart';
+import 'render.dart';
+import 'subscriptions.dart';
+import 'update.dart';
+import 'state.dart';
 
 class IsometricModule {
   final state = IsometricState();
@@ -22,9 +23,11 @@ class IsometricModule {
   final update = IsometricUpdate();
   late final IsometricInstances instances;
   late final IsometricEvents events;
+  late final IsometricQueries queries;
 
   IsometricModule(){
     instances = IsometricInstances(state);
     events = IsometricEvents(state, actions);
+    queries = IsometricQueries(state);
   }
 }

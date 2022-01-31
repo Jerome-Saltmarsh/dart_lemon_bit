@@ -67,4 +67,6 @@ class IsometricProperties with IsometricScope {
   bool inDarkness(double x, double y){
     return isometric.properties.getShadeAtPosition(x, y) >= Shade_VeryDark;
   }
+
+
 }
