@@ -21,7 +21,7 @@ Json compileGameToJson() {
     'characters': compileCharactersToJson(editor.state.characters),
     sceneFieldNames.startTime: modules.isometric.state.time.value * secondsPerHour,
     sceneFieldNames.secondsPerFrame: modules.editor.state.timeSpeed.value.index,
-    sceneFieldNames.playerSpawnPoints: compileVector2ListToIntList(editor.state.playerSpawnPoints),
+    sceneFieldNames.playerSpawnPoints: compileVector2ListToIntList(editor.state.teamSpawnPoints),
   };
 }
 

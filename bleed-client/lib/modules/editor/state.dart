@@ -9,12 +9,14 @@ import 'package:lemon_watch/watch.dart';
 
 import 'enums.dart';
 
+
 class EditorState {
+  final Watch<TeamType> teamType = Watch(TeamType.Solo);
+  final Watch<int> teamSize = Watch(1);
+  final Watch<int> numberOfTeams= Watch(4);
   int selectedCollectable = -1;
-  bool mouseDragging = false;
-  final List<Vector2> playerSpawnPoints = [];
+  final List<Vector2> teamSpawnPoints = [];
   final Watch<TimeSpeed> timeSpeed = Watch(TimeSpeed.Normal);
-  final Watch<String> process = Watch("");
   final Watch<Vector2?> selected = Watch(null);
   final Watch<ToolTab> tab = Watch(ToolTab.Tiles);
   final Watch<Tile> tile = Watch(Tile.Grass);

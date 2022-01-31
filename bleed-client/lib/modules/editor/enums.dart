@@ -26,3 +26,9 @@ enum TimeSpeed {
 }
 
 final List<TimeSpeed> timeSpeeds = TimeSpeed.values;
+
+
+enum TeamType {
+  Teams,
+  Solo,
+}

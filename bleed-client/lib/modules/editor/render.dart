@@ -15,7 +15,7 @@ class EditorRender with EditorScope {
     _drawSelectedObject();
     _drawCharacters();
 
-    for (final playerSpawnPosition in state.playerSpawnPoints){
+    for (final playerSpawnPosition in state.teamSpawnPoints){
       engine.draw.drawCircleOutline(
            radius: 25,
            x: playerSpawnPosition.x,

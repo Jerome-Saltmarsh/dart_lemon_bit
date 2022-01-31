@@ -1,5 +1,6 @@
 
 
+import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
@@ -32,23 +33,12 @@ class EditorBuild {
 
   Widget buildEditorUI() {
     print('editor.build.buildEditorUI()');
-
-    return WatchBuilder(editor.state.process, (String process){
-      if (process.isNotEmpty){
-        return buildDialog(
-            width: style.dialogWidthMedium,
-            height: style.dialogHeightMedium,
-            child: Center(child: text(process))
-        );
-      }
-
-      return layout(
-          topLeft: _toolTabs(),
-          topRight: _mainMenu(),
-          bottomRight: _buildSelected(),
-          child: _buildEditorDialog()
-      );
-    });
+    return layout(
+        topLeft: _toolTabs(),
+        topRight: _mainMenu(),
+        bottomRight: _buildSelected(),
+        child: _buildEditorDialog()
+    );
   }
 
 
@@ -337,10 +327,20 @@ class EditorBuild {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-              text("Position ${selected.x.toInt()} ${selected.y.toInt()}")
+                text("Position ${selected.x.toInt()} ${selected.y.toInt()}"),
+                ...buildSelectedFields(selected),
             ],),
         );
     });
+  }
+
+  List<Widget> buildSelectedFields(Vector2 selected){
+     if (selected is Character){
+        return [
+           text("Team: ${selected.team}"),
+        ];
+     }
+    return [];
   }
 }
 

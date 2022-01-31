@@ -71,8 +71,8 @@ class EditorActions with EditorScope {
     isometric.state.totalRows.value = rows;
     isometric.state.totalColumns.value = columns;
     isometric.state.tiles.clear();
-    editor.state.playerSpawnPoints.clear();
-    editor.state.playerSpawnPoints.add(
+    editor.state.teamSpawnPoints.clear();
+    editor.state.teamSpawnPoints.add(
        isometric.properties.mapCenter
     );
 
@@ -92,21 +92,6 @@ class EditorActions with EditorScope {
     game.collectables.clear();
     game.items.clear();
     isometric.actions.updateTileRender();
-  }
-
-  void startProcess(String value){
-    print("editor.actions.startProcess('$value')");
-    editor.state.process.value = value;
-  }
-
-  void endProcess(){
-    print("editor.actions.processFinished('${editor.state.process.value}')");
-    editor.state.process.value = "";
-  }
-
-  void endProcessAndCloseDialogs(){
-    endProcess();
-    closeDialog();
   }
 
   void closeDialog(){
