@@ -1,20 +1,13 @@
 
-import 'package:bleed_client/common/enums/Direction.dart';
-import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/ui/logic/hudLogic.dart';
-import 'package:bleed_client/ui/logic/showTextBox.dart';
-import 'package:bleed_client/ui/state/hud.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
-import 'package:lemon_math/randomItem.dart';
 import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
-import 'package:bleed_client/functions/emit/emitPixel.dart';
 import 'package:bleed_client/modules/game/state.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/webSocket.dart';
 import 'package:lemon_engine/engine.dart';
+import 'package:lemon_math/randomItem.dart';
 
 class GameActions {
 
@@ -42,7 +35,7 @@ class GameActions {
 
   void emitPixelExplosion(double x, double y, {int amount = 10}) {
     for (int i = 0; i < amount; i++) {
-      emitPixel(x: x, y: y);
+      modules.game.factories.emitPixel(x: x, y: y);
     }
   }
 
