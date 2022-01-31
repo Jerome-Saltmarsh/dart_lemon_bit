@@ -12,8 +12,12 @@ class EditorModule {
   final state = EditorState();
   final actions = EditorActions();
   final build = EditorBuild();
-  final events = EditorEvents();
   final config = EditorConfig();
   final render = EditorRender();
   final update = updateEditor;
+  late final EditorEvents events;
+
+  EditorModule(){
+     events = EditorEvents(actions);
+  }
 }

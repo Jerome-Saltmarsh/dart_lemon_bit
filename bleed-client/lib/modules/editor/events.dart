@@ -6,6 +6,7 @@ import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/getters/getTileAt.dart';
+import 'package:bleed_client/modules/editor/actions.dart';
 import 'package:bleed_client/modules/editor/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
@@ -19,6 +20,9 @@ import 'enums.dart';
 
 class EditorEvents with EditorScope {
 
+  final EditorActions actions;
+  EditorEvents(this.actions);
+
   onActivated(){
     print("editor.events.onActivated()");
     modules.isometric.actions.setHour(12);
@@ -31,14 +35,16 @@ class EditorEvents with EditorScope {
     engine.callbacks.onMouseDragging = onMouseDragging;
 
     engine.state.keyPressedHandlers = {
-      config.keys.pan: () => engine.callbacks.onMouseMoved = onMouseMoved
+      config.keys.pan: actions.panModeActivate,
+      config.keys.delete: actions.deleteSelected,
     };
 
     engine.state.keyReleasedHandlers = {
-      config.keys.pan: () =>  engine.callbacks.onMouseMoved = null
+      config.keys.pan:  actions.panModeDeactivate,
     };
 
     editor.state.selected.onChanged(onSelectedObjectChanged);
+
   }
 
   void onMouseMoved(Offset position, Offset previous) {

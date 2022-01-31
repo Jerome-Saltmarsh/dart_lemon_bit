@@ -390,6 +390,7 @@ void _parsePaths() {
 void _parseTiles() {
   modules.isometric.state.totalRows.value = consumeInt();
   modules.isometric.state.totalColumns.value = consumeInt();
+  print("parse.tiles(rows: ${modules.isometric.state.totalRows.value}, columns: ${modules.isometric.state.totalColumns.value})");
   isometric.state.tiles.clear();
   for (int row = 0; row < modules.isometric.state.totalRows.value; row++) {
     List<Tile> column = [];

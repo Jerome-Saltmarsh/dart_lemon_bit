@@ -11,6 +11,7 @@ import 'enums.dart';
 
 
 class EditorState {
+  final Watch<bool> waitForPlayersToJoin = Watch(true);
   final Watch<int> numberOfPlayers = Watch(8);
   final Watch<TeamType> teamType = Watch(TeamType.Solo);
   final Watch<int> teamSize = Watch(1);

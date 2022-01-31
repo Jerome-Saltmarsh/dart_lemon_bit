@@ -104,6 +104,7 @@
 [ENGINE]
 [ ] Atlas Buffer 64
 [ ] Auto cull render calls
+[ ] FIX Google Login
 [COMPLETED]
 [x] Key handler state to engine
 [x] Fix Zoom

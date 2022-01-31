@@ -40,6 +40,16 @@ class EditorActions with EditorScope {
     engine.actions.redrawCanvas();
   }
 
+  void panModeActivate(){
+    engine.callbacks.onMouseMoved = events.onMouseMoved;
+  }
+
+  void panModeDeactivate(){
+    if (engine.callbacks.onMouseMoved == events.onMouseMoved){
+      engine.callbacks.onMouseMoved = null;
+    }
+  }
+
   void clear() {
     newScene(
         rows: isometric.state.totalRows.value,

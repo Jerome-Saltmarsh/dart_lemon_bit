@@ -158,19 +158,25 @@ class EditorBuild {
       WatchBuilder(state.teamType, (TeamType teamType) {
         return Row(
           children: [
-            Container(
-                color: colours.purple,
-                width: 100,
-                alignment: Alignment.center,
-                height: 100 * goldenRatio_0381,
-                child: text(TeamType.Solo.name)
+            onPressed(
+              callback: () => state.teamType.value = TeamType.Solo,
+              child: Container(
+                  color: teamType == TeamType.Solo ? colours.purpleDarkest : colours.purple,
+                  width: 100,
+                  alignment: Alignment.center,
+                  height: 100 * goldenRatio_0381,
+                  child: text(TeamType.Solo.name)
+              ),
             ),
-            Container(
-                color: colours.purple,
-                width: 100,
-                alignment: Alignment.center,
-                height: 100 * goldenRatio_0381,
-                child: text(TeamType.Teams.name)
+            onPressed(
+              callback: () => state.teamType.value = TeamType.Teams,
+              child: Container(
+                  color: teamType == TeamType.Teams ? colours.purpleDarkest : colours.purple,
+                  width: 100,
+                  alignment: Alignment.center,
+                  height: 100 * goldenRatio_0381,
+                  child: text(TeamType.Teams.name)
+              ),
             )
           ],
         );
