@@ -170,7 +170,7 @@ class IsometricActions with IsometricScope {
         final tile = tiles[row][column];
 
         final tileAboveLeft = row > 0 && tiles[row - 1][column] != Tile.Water;
-        final tileAboveRight = column + 1 < tiles[0].length && tiles[row][column + 1] != Tile.Water;
+        final tileAboveRight = column > 0 && tiles[row][column - 1] != Tile.Water;
 
 
         if (tile == Tile.Water){
