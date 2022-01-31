@@ -16,6 +16,7 @@ import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/views.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
 import 'package:flutter/material.dart';
+import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_watch/watch_builder.dart';
@@ -152,9 +153,28 @@ class EditorBuild {
         button("-", modules.editor.actions.timeSpeedDecrease),
         width8,
         button("+", modules.editor.actions.timeSpeedIncrease),
-      ],),
-
-
+        ],
+      ),
+      WatchBuilder(state.teamType, (TeamType teamType) {
+        return Row(
+          children: [
+            Container(
+                color: colours.purple,
+                width: 100,
+                alignment: Alignment.center,
+                height: 100 * goldenRatio_0381,
+                child: text(TeamType.Solo.name)
+            ),
+            Container(
+                color: colours.purple,
+                width: 100,
+                alignment: Alignment.center,
+                height: 100 * goldenRatio_0381,
+                child: text(TeamType.Teams.name)
+            )
+          ],
+        );
+      }),
     ];
   }
 

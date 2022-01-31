@@ -94,6 +94,7 @@ class CoreEvents {
         game.totalProjectiles = 0;
         game.totalNpcs = 0;
         engine.registerZoomCameraOnMouseScroll();
+        isometric.actions.cameraCenterMap();
         break;
     }
 

@@ -10,6 +10,7 @@ import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
 import 'package:bleed_client/modules/isometric/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
+import 'package:lemon_engine/engine.dart';
 
 import 'utilities.dart';
 
@@ -233,5 +234,9 @@ class IsometricActions with IsometricScope {
 
   void removeGeneratedEnvironmentObjects(){
     modules.isometric.state.environmentObjects.removeWhere((env) => isGeneratedAtBuild(env.type));
+  }
+
+  void cameraCenterMap(){
+    engine.actions.cameraCenter(properties.mapCenter.x, properties.mapCenter.y);
   }
 }
