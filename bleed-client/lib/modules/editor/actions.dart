@@ -7,6 +7,7 @@ import 'package:bleed_client/common/constants.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/compile.dart';
 import 'package:bleed_client/modules/core/enums.dart';
+import 'package:bleed_client/modules/editor/compile.dart';
 import 'package:bleed_client/modules/editor/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
@@ -18,6 +19,9 @@ import 'enums.dart';
 
 
 class EditorActions with EditorScope {
+
+  final EditorCompile compile;
+  EditorActions(this.compile);
 
   void addEnvironmentObject ({
     required ObjectType type,
@@ -133,7 +137,7 @@ class EditorActions with EditorScope {
     core.state.operationStatus.value = OperationStatus.Saving_Map;
     firestoreService.createMap(
         mapId: mapId,
-        map: compileGameToJson()
+        map: compile.compileGameToJson()
     ).whenComplete(core.actions.operationCompleted);
   }
 

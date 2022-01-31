@@ -1,4 +1,5 @@
 
+import 'package:bleed_client/modules/editor/compile.dart';
 import 'package:bleed_client/modules/editor/render.dart';
 
 import 'actions.dart';
@@ -10,14 +11,17 @@ import 'update.dart';
 
 class EditorModule {
   final state = EditorState();
-  final actions = EditorActions();
   final build = EditorBuild();
   final config = EditorConfig();
   final render = EditorRender();
   final update = updateEditor;
+  late final EditorActions actions;
   late final EditorEvents events;
+  late final EditorCompile compile;
 
-  EditorModule(){
-     events = EditorEvents(actions);
+  EditorModule() {
+    compile = EditorCompile(state);
+    actions = EditorActions(compile);
+    events = EditorEvents(actions);
   }
 }
