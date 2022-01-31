@@ -1,8 +1,8 @@
 
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
-import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/particleSettings.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:lemon_engine/engine.dart';

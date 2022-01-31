@@ -3,7 +3,6 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
-import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/modules/isometric/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/render/draw/drawAtlas.dart';

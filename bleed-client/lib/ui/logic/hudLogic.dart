@@ -1,9 +1,6 @@
 
-import 'package:bleed_client/send.dart';
 import 'package:bleed_client/ui/state/hud.dart';
 import 'package:bleed_client/ui/state/tips.dart';
-
-import 'showTextBox.dart';
 
 void refreshUI() {
   hud.state.observeMode = false;

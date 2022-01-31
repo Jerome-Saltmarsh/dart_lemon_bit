@@ -1,13 +1,12 @@
 
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/state/game.dart';
 import 'package:flutter/services.dart';
 
 import 'actions.dart';
 import 'state.dart';
 
 class GameMap {
-  
+
   final GameState state;
   final GameActions actions;
   late final Map<LogicalKeyboardKey, Function> keyPressedHandlers;

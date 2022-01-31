@@ -1,13 +1,10 @@
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
-import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/render/draw/drawAtlas.dart';
 import 'package:bleed_client/render/draw/drawCharacterHealthBar.dart';
 import 'package:bleed_client/render/mappers/mapCharacterDst.dart';
 import 'package:bleed_client/render/mappers/mapCharacterSrc.dart';
-import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/engine.dart';
 
 void drawCharacter(Character character) {

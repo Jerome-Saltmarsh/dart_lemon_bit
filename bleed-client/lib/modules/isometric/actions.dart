@@ -7,9 +7,9 @@ import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/constants.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
+import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/modules/isometric/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'utilities.dart';

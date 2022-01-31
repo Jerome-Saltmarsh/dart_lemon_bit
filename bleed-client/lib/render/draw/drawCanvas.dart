@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:lemon_math/math.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/Explosion.dart';
 import 'package:bleed_client/classes/Item.dart';
@@ -17,7 +16,6 @@ import 'package:bleed_client/constants/colors/white.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/cube/scene.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
-import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/modules/isometric/utilities.dart';
@@ -31,6 +29,7 @@ import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/distance_between.dart';
+import 'package:lemon_math/math.dart';
 import 'package:lemon_math/opposite.dart';
 
 const animationFrameRate = 7; // frames per change;

@@ -5,7 +5,6 @@ import 'dart:ui';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
-import 'package:bleed_client/getters/getTileAt.dart';
 import 'package:bleed_client/modules/editor/actions.dart';
 import 'package:bleed_client/modules/editor/scope.dart';
 import 'package:bleed_client/modules/modules.dart';

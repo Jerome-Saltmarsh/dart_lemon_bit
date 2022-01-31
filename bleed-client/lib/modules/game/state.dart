@@ -1,16 +1,16 @@
 import 'package:bleed_client/classes/Ability.dart';
+import 'package:bleed_client/classes/Weapon.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
-import 'package:bleed_client/common/Tile.dart';
-import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/state/game.dart';
-import 'package:lemon_math/Vector2.dart';
-import 'package:bleed_client/classes/Weapon.dart';
 import 'package:bleed_client/common/GameStatus.dart';
+import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/WeaponType.dart';
+import 'package:bleed_client/modules/modules.dart';
 import 'package:flutter/material.dart';
+import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_watch/watch.dart';
+
 import 'classes.dart';
 
 class GameState {

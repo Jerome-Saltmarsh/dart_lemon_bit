@@ -1,6 +1,5 @@
 
 
-import 'dart:typed_data';
 
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/enums/Direction.dart';

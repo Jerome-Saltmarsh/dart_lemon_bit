@@ -2,19 +2,19 @@
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
+import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/colours.dart';
+import 'package:bleed_client/modules/modules.dart';
+import 'package:bleed_client/render/draw/drawBullets.dart';
+import 'package:bleed_client/render/draw/drawCanvas.dart';
 import 'package:bleed_client/render/draw/drawPlayerText.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/diff.dart';
-import 'package:bleed_client/common/GameStatus.dart';
-import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/render/draw/drawBullets.dart';
-import 'package:bleed_client/render/draw/drawCanvas.dart';
-import 'package:bleed_client/state/game.dart';
 
 import 'state.dart';
 import 'style.dart';

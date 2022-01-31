@@ -1,14 +1,14 @@
+import "dart:html" as html;
 import 'dart:math';
 import 'dart:ui';
-import "dart:html" as html;
-import 'package:universal_html/html.dart';
+
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/state/game.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/pi2.dart';
+import 'package:universal_html/html.dart';
 
 import 'common/Tile.dart';
 import 'modules/isometric/utilities.dart';
