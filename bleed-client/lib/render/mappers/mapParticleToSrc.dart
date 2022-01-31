@@ -1,7 +1,6 @@
 
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
-import 'package:bleed_client/getters/getShading.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/state/particleSettings.dart';
@@ -23,8 +22,6 @@ const _mystIndex30 = 4;
 const _mystIndex40 = 5;
 const _mystIndex50 = 6;
 const _particleSize = 64.0;
-
-
 const pixelSize = 6.0;
 
 void mapParticleToSrc(Particle particle){
@@ -105,7 +102,7 @@ void mapParticleToSrc(Particle particle){
       return;
 
     default:
-      throw Exception("Could not map particle to src");
+      throw Exception("Could not map particle '${particle.type.name}' to src");
   }
 }
 
