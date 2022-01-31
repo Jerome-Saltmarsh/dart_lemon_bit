@@ -36,31 +36,6 @@ const animationFrameRate = 7; // frames per change;
 
 final Scene scene = Scene();
 
-
-void applyEmissionsToDynamicShadeMap() {
-  if (modules.isometric.properties.dayTime) return;
-  modules.isometric.actions.resetDynamicShadesToBakeMap();
-  applyCharacterLightEmission(game.humans);
-  applyCharacterLightEmission(game.zombies);
-  applyProjectileLighting();
-  applyNpcLightEmission(game.interactableNpcs);
-  final dynamicShading = modules.isometric.state.dynamicShading;
-
-  for (Effect effect in game.effects) {
-    if (!effect.enabled) continue;
-    double p = effect.duration / effect.maxDuration;
-    if (p < 0.33) {
-      emitLightHigh(dynamicShading, effect.x, effect.y);
-      break;
-    }
-    if (p < 0.66) {
-      emitLightMedium(dynamicShading, effect.x, effect.y);
-      break;
-    }
-    emitLightLow(dynamicShading, effect.x, effect.y);
-  }
-}
-
 void drawCrates() {
   for(Vector2 crate in game.crates) {
     engine.draw.circle(crate.x, crate.y, 30, colours.red);
@@ -184,14 +159,6 @@ void drawDebugEnvironmentObjects() {
   }
 }
 
-void applyProjectileLighting() {
-  for (int i = 0; i < game.totalProjectiles; i++) {
-    Projectile projectile = game.projectiles[i];
-    if (projectile.type == ProjectileType.Fireball) {
-      emitLightBrightSmall(modules.isometric.state.dynamicShading, projectile.x, projectile.y);
-    }
-  }
-}
 
 
 int compareParticles(Particle a, Particle b) {

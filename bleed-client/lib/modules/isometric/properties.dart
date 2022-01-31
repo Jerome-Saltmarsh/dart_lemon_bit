@@ -1,6 +1,5 @@
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
-import 'package:bleed_client/getters/getTileAt.dart';
 import 'package:bleed_client/modules/isometric/enums.dart';
 import 'package:bleed_client/modules/isometric/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
@@ -68,5 +67,6 @@ class IsometricProperties with IsometricScope {
     return isometric.properties.getShadeAtPosition(x, y) >= Shade_VeryDark;
   }
 
+  bool get boundaryAtMouse => tileAtMouse == Tile.Boundary;
 
 }

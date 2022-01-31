@@ -1,12 +1,15 @@
 
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/functions/spawners/spawnBlood.dart';
-import 'package:bleed_client/getters/isWalkable.dart';
 import 'package:bleed_client/modules/isometric/enums.dart';
+import 'package:bleed_client/modules/isometric/queries.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
 
 class IsometricUpdate {
+
+  final IsometricQueries queries;
+  IsometricUpdate(this.queries);
 
   void deadZombieBlood() {
     if (core.state.timeline.frame % 2 == 0) return;
@@ -43,7 +46,7 @@ class IsometricUpdate {
 
     if (bounce) {
 
-      if (!tileIsWalkable(particle.x, particle.y)){
+      if (!queries.tileIsWalkable(particle.x, particle.y)){
         particle.active = false;
         return;
       }
@@ -62,7 +65,7 @@ class IsometricUpdate {
       particle.yv *= floorFriction;
       particle.rotationV *= rotationFriction;
 
-      if (!tileIsWalkable(particle.x, particle.y)){
+      if (!queries.tileIsWalkable(particle.x, particle.y)){
         particle.active = false;
         return;
       }

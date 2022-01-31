@@ -14,20 +14,23 @@ import 'state.dart';
 
 class IsometricModule {
   final state = IsometricState();
-  final actions = IsometricActions();
-  final subscriptions = IsometricSubscriptions();
   final properties = IsometricProperties();
   final constants = IsometricConstants();
+  final subscriptions = IsometricSubscriptions();
   final map = IsometricMaps();
   final render = IsometricRender();
-  final update = IsometricUpdate();
+  late final IsometricActions actions;
+  late final IsometricUpdate update;
   late final IsometricInstances instances;
   late final IsometricEvents events;
   late final IsometricQueries queries;
 
   IsometricModule(){
     instances = IsometricInstances(state);
-    events = IsometricEvents(state, actions);
     queries = IsometricQueries(state);
+    actions = IsometricActions(queries);
+    events = IsometricEvents(state, actions);
+    update = IsometricUpdate(queries);
+
   }
 }
