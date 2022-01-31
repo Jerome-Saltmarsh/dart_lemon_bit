@@ -8,7 +8,6 @@ import 'package:lemon_math/diff_over.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/hypotenuse.dart';
-import 'package:lemon_math/randomInt.dart';
 import 'package:lemon_math/randomItem.dart';
 
 import '../bleed/zombie_health.dart';
@@ -31,7 +30,6 @@ import '../constants.dart';
 import '../constants/no_squad.dart';
 import '../enums.dart';
 import '../enums/npc_mode.dart';
-import '../exceptions/ZombieSpawnPointsEmptyException.dart';
 import '../functions/applyForce.dart';
 import '../functions/withinRadius.dart';
 import '../games/world.dart';
@@ -2001,4 +1999,8 @@ class CustomGame extends Game {
   Player playerJoin() {
     return Player(game: this, type: CharacterType.Human, y: 500);
   }
+}
+
+class ZombieSpawnPointsEmptyException implements Exception {
+
 }

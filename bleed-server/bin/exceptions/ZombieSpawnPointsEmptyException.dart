@@ -1,4 +1,0 @@
-
-class ZombieSpawnPointsEmptyException implements Exception {
-
-}
