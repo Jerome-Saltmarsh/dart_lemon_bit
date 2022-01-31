@@ -104,6 +104,7 @@
 [ ] Break Crates
 [ ] Weapon UI
 [ ] Spawn Item Locations
+[ ] Dynamic Objects (objects which move around the map and can be removed and added)
 [CORE]
 [ ] FIX Google Login
 [COMPLETED]

@@ -167,7 +167,27 @@ class IsometricActions with IsometricScope {
     tileLeft.clear();
     for (int row = 0; row < tiles.length; row++) {
       for (int column = 0; column < tiles[0].length; column++) {
-        tileLeft.add(mapTileToSrcLeft(tiles[row][column]));
+        final tile = tiles[row][column];
+
+        final tileAboveLeft = row > 0 && tiles[row - 1][column] != Tile.Water;
+        final tileAboveRight = column + 1 < tiles[0].length && tiles[row][column + 1] != Tile.Water;
+
+
+        if (tile == Tile.Water){
+          if (!tileAboveLeft && !tileAboveRight){
+            tileLeft.add(water);
+          }else if (tileAboveLeft){
+            if (tileAboveRight){
+              tileLeft.add(waterCorner3);
+            }else{
+              tileLeft.add(waterCorner1);
+            }
+          }else{
+            tileLeft.add(waterCorner2);
+          }
+        } else {
+          tileLeft.add(mapTileToSrcLeft(tile));
+        }
       }
     }
 
