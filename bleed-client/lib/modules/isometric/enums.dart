@@ -1,8 +1,8 @@
 enum Phase {
-  EarlyMorning,
+  Early_Morning,
   Morning, // 5 - 9
   Day, // 9 - 5
-  EarlyEvening,
+  Early_Evening,
   Evening, // 5 - 9
   Night, // 9
   MidNight, // - 5
