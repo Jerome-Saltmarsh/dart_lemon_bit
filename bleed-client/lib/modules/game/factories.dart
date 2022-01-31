@@ -1,3 +1,4 @@
+import 'package:bleed_client/modules/modules.dart';
 import 'package:lemon_math/randomInt.dart';
 import 'package:bleed_client/functions/spawners/spawnParticle.dart';
 import 'package:lemon_math/give_or_take.dart';
@@ -36,7 +37,7 @@ class GameFactories {
     required double x,
     required double y
   }) {
-    Particle particle = getAvailableParticle();
+    Particle particle = isometric.instances.getAvailableParticle();
     particle.x = x;
     particle.y = y;
     particle.active = true;

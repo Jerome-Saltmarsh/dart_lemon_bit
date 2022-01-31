@@ -3,6 +3,7 @@
 import 'package:bleed_client/modules/isometric/actions.dart';
 import 'package:bleed_client/modules/isometric/constants.dart';
 import 'package:bleed_client/modules/isometric/events.dart';
+import 'package:bleed_client/modules/isometric/instances.dart';
 import 'package:bleed_client/modules/isometric/maps.dart';
 import 'package:bleed_client/modules/isometric/properties.dart';
 import 'package:bleed_client/modules/isometric/render.dart';
@@ -20,4 +21,9 @@ class IsometricModule {
   final map = IsometricMaps();
   final render = IsometricRender();
   final update = IsometricUpdate();
+  late final IsometricInstances instances;
+
+  IsometricModule(){
+    instances = IsometricInstances(state);
+  }
 }

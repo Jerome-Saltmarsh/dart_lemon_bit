@@ -70,7 +70,7 @@ class GameUpdate {
     for (ParticleEmitter emitter in game.particleEmitters) {
       if (emitter.next-- > 0) continue;
       emitter.next = emitter.rate;
-      final particle = getAvailableParticle();
+      final particle = isometric.instances.getAvailableParticle();
       particle.active = true;
       particle.x = emitter.x;
       particle.y = emitter.y;

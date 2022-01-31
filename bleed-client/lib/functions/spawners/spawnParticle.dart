@@ -20,7 +20,7 @@ void spawnParticle({
     double airFriction = 0.98
 }) {
 
-  Particle particle = getAvailableParticle();
+  Particle particle = isometric.instances.getAvailableParticle();
   particle.type = type;
   particle.x = x;
   particle.y = y;
@@ -39,12 +39,3 @@ void spawnParticle({
   particle.airFriction = airFriction;
 }
 
-Particle getAvailableParticle() {
-  for (Particle particle in isometric.state.particles) {
-    if (particle.active) continue;
-    return particle;
-  }
-  Particle particle = Particle();
-  isometric.state.particles.add(particle);
-  return particle;
-}
