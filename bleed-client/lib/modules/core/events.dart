@@ -88,9 +88,10 @@ class CoreEvents {
         break;
 
       case Mode.Editor:
+        modules.isometric.events.register();
+        editor.actions.newScene();
         engine.state.drawCanvas.value = editor.render.render;
         engine.state.drawCanvasAfterUpdate = true;
-        modules.isometric.events.register();
         editor.events.onActivated();
         isometric.actions.removeGeneratedEnvironmentObjects();
         game.totalZombies.value = 0;

@@ -33,12 +33,13 @@ class IsometricEvents with IsometricScope {
     state.ambient.value = properties.currentPhaseShade;
   }
 
-
   void onTotalColumnsChanged(int value){
+    print("isometric.events.onTotalColumnsChanged($value)");
     state.totalColumnsInt = value;
   }
 
   void onTotalRowsChanged(int value){
+    print("isometric.events.onTotalRowsChanged($value)");
     state.totalRowsInt = value;
   }
 

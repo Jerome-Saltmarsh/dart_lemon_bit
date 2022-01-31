@@ -28,7 +28,7 @@ class IsometricModule {
   IsometricModule(){
     instances = IsometricInstances(state);
     queries = IsometricQueries(state);
-    actions = IsometricActions(queries);
+    actions = IsometricActions(queries, constants);
     events = IsometricEvents(state, actions);
     update = IsometricUpdate(queries);
 

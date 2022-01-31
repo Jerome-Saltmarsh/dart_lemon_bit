@@ -2,7 +2,7 @@
 import 'package:bleed_client/common/Tile.dart';
 
 // interface
-double mapTileToSrc(Tile tile) {
+double mapTileToSrcLeft(Tile tile) {
   switch (tile) {
     case Tile.Concrete:
       return _concrete;

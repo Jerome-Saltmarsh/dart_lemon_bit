@@ -14,6 +14,7 @@ import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
+import 'package:bleed_client/modules/isometric/constants.dart';
 import 'package:bleed_client/modules/isometric/queries.dart';
 import 'package:bleed_client/modules/isometric/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
@@ -25,7 +26,9 @@ import 'utilities.dart';
 class IsometricActions with IsometricScope {
 
   final IsometricQueries queries;
-  IsometricActions(this.queries);
+  final IsometricConstants constants;
+
+  IsometricActions(this.queries, this.constants);
 
   void applyDynamicShadeToTileSrc() {
     final tileSize = modules.isometric.constants.tileSize;
@@ -142,7 +145,7 @@ class IsometricActions with IsometricScope {
     print("isometric.actions.resetTilesSrcDst()");
 
     final tiles = state.tiles;
-    final tileSize = modules.isometric.constants.tileSize;
+    final tileSize = constants.tileSize;
     final tileSizeHalf = tileSize / 2;
     final List<RSTransform> tileTransforms = [];
 
@@ -164,7 +167,7 @@ class IsometricActions with IsometricScope {
     tileLeft.clear();
     for (int row = 0; row < tiles.length; row++) {
       for (int column = 0; column < tiles[0].length; column++) {
-        tileLeft.add(mapTileToSrc(tiles[row][column]));
+        tileLeft.add(mapTileToSrcLeft(tiles[row][column]));
       }
     }
 

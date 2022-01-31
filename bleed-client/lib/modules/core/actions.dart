@@ -302,7 +302,6 @@ class CoreActions {
   }
 
   void openMapEditor(){
-    editor.actions.newScene();
     core.state.mode.value = Mode.Editor;
   }
 

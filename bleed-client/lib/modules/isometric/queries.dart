@@ -1,6 +1,7 @@
 import 'package:bleed_client/common/Tile.dart';
 import 'package:lemon_engine/engine.dart';
 
+import '../modules.dart';
 import 'state.dart';
 import 'utilities.dart';
 
@@ -21,6 +22,10 @@ class IsometricQueries {
     if (row >= state.totalRowsInt) return true;
     if (column >= state.totalColumnsInt) return true;
     return false;
+  }
+
+  bool mouseOutOfBounds(){
+    return outOfBounds(mouseRow, mouseColumn);
   }
 
   Tile getTileAt(double x, double y){
