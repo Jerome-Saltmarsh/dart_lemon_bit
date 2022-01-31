@@ -1,6 +1,8 @@
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
+import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/common/CharacterType.dart';
+import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/SceneJson.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/constants.dart';
@@ -163,13 +165,25 @@ class EditorActions with EditorScope {
 
     isometric.state.time.value = mapJson[sceneFieldNames.startTime] / secondsPerHour;
 
-    List<Character> characters = [];
+    final List<Character> characters = [];
     for(Json json in mapJson['characters']){
       final x = (json['x'] as int).toDouble();
       final y = (json['y'] as int).toDouble();
       final type = parseCharacterType(json['type']);
       characters.add(Character(type: type, x: x, y: y));
     }
+
+    state.items.clear();
+    final List items = mapJson[sceneFieldNames.items];
+    for(int i = 0; i < items.length; i += 3){
+      state.items.add(
+          Item(
+              type: itemTypes[items[i]],
+              x: items[i + 1].toDouble(),
+              y: items[i + 2].toDouble())
+      );
+    }
+
     editor.state.characters = characters;
     isometric.actions.updateTileRender();
     engine.actions.redrawCanvas();
