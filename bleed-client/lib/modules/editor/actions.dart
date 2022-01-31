@@ -174,14 +174,16 @@ class EditorActions with EditorScope {
     }
 
     state.items.clear();
-    final List items = mapJson[sceneFieldNames.items];
-    for(int i = 0; i < items.length; i += 3){
-      state.items.add(
-          Item(
-              type: itemTypes[items[i]],
-              x: items[i + 1].toDouble(),
-              y: items[i + 2].toDouble())
-      );
+    if (mapJson.containsKey(sceneFieldNames.items)){
+      final List items = mapJson[sceneFieldNames.items];
+      for(int i = 0; i < items.length; i += 3){
+        state.items.add(
+            Item(
+                type: itemTypes[items[i]],
+                x: items[i + 1].toDouble(),
+                y: items[i + 2].toDouble())
+        );
+      }
     }
 
     editor.state.characters = characters;
