@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/modules/modules.dart';
+import 'package:bleed_client/render/mappers/mapParticleToSrc.dart';
 import 'package:bleed_client/state/particleSettings.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/randomInt.dart';
@@ -15,6 +16,8 @@ class GameFactories {
   static const _initialVelocityMax = 0.25;
   static const _minDuration = 50;
   static const _maxDuration = 150;
+  static const  mystMaxVelocity = 0.1;
+  static const  mystPositionRange = 50;
 
   void buildParticleSmoke(Particle particle){
     particle.type = ParticleType.Smoke;
@@ -60,9 +63,9 @@ class GameFactories {
   void emitMyst(Particle particle) {
     particle.active = true;
     particle.type = ParticleType.Myst;
-    particle.duration = particleSettings.mystDuration;
-    particle.x += giveOrTake(particleSettings.mystPositionRange);
-    particle.y += giveOrTake(particleSettings.mystPositionRange);
+    particle.duration = mystDuration;
+    particle.x += giveOrTake(mystPositionRange);
+    particle.y += giveOrTake(mystPositionRange);
     particle.z = 0.25;
     particle.weight = 0;
     particle.scale = 1;
@@ -71,8 +74,8 @@ class GameFactories {
     particle.rotationV = 0;
     particle.bounciness = 0;
     particle.airFriction = 1.0;
-    particle.xv = giveOrTake(pi * particleSettings.mystMaxVelocity);
-    particle.yv = giveOrTake(pi * particleSettings.mystMaxVelocity);
+    particle.xv = giveOrTake(pi * mystMaxVelocity);
+    particle.yv = giveOrTake(pi * mystMaxVelocity);
     particle.zv = 0.0;
   }
 

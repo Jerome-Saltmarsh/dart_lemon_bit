@@ -3,16 +3,17 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/enums/ParticleType.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/state/particleSettings.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:lemon_engine/engine.dart';
 
-final int _a = particleSettings.mystDuration - 25;
-final int _b = particleSettings.mystDuration - 50;
-final int _c = particleSettings.mystDuration - 75;
-final int _d = particleSettings.mystDuration - 100;
-final int _e = particleSettings.mystDuration - 150;
-final int _f = particleSettings.mystDuration - 200;
+const  mystDuration = 700;
+
+final int _a = mystDuration - 25;
+final int _b = mystDuration - 50;
+final int _c = mystDuration - 75;
+final int _d = mystDuration - 100;
+final int _e = mystDuration - 150;
+final int _f = mystDuration - 200;
 
 const _mystIndex02 = 0;
 const _mystIndex05 = 1;
