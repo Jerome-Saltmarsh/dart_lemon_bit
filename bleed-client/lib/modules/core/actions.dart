@@ -146,8 +146,9 @@ class CoreActions {
         return;
       }
       setError(error.toString());
+    }).whenComplete((){
+      core.state.operationStatus.value = OperationStatus.None;
     });
-    core.state.operationStatus.value = OperationStatus.None;
   }
 
   Future login(Authentication authentication){
