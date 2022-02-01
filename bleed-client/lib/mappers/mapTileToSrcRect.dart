@@ -67,6 +67,7 @@ final _rockWall = _frame(13);
 final waterCorner1 = _frame(14);
 final waterCorner2 = _frame(15);
 final waterCorner3 = _frame(16);
+final waterCorner4 = _frame(17);
 
 const int tileCanvasWidth = 48;
 double _frame(int index) => (index - 1) * tileCanvasWidth.toDouble();
