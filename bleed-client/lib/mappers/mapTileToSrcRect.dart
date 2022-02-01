@@ -54,20 +54,19 @@ final _concrete = _frame(4);
 final _concreteHorizontal = _concrete;
 final _concreteVertical =  _concrete;
 final water = _frame(5);
-final _rune = _frame(6);
 final _zombieSpawn = _frame(7);
 final _flowers = _longGrass;
-final rectSrcDarkness = _frame(8);
 final _bridge = _frame(9);
 final _woodenFloor = _frame(10);
 final _rock = _frame(11);
 final _black = _frame(12);
 final _rockWall = _frame(13);
-
 final waterCorner1 = _frame(14);
 final waterCorner2 = _frame(15);
 final waterCorner3 = _frame(16);
 final waterCorner4 = _frame(17);
+final waterHor = _frame(18);
+final waterVer = _frame(19);
 
 const int tileCanvasWidth = 48;
 double _frame(int index) => (index - 1) * tileCanvasWidth.toDouble();

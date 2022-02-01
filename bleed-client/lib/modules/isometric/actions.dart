@@ -171,14 +171,14 @@ class IsometricActions with IsometricScope {
 
         final tileAboveLeft = row > 0 && tiles[row - 1][column] != Tile.Water;
         final tileAboveRight = column > 0 && tiles[row][column - 1] != Tile.Water;
-
+        final tileAbove = row > 0 &&
+            column > 0 &&
+            tiles[row - 1][column - 1] != Tile.Water;
 
         if (tile == Tile.Water){
           if (!tileAboveLeft && !tileAboveRight){
 
-            final tileAbove = row > 0 &&
-                column > 0 &&
-                tiles[row - 1][column - 1] != Tile.Water;
+
 
             if (tileAbove){
               tileLeft.add(waterCorner4);
@@ -189,7 +189,12 @@ class IsometricActions with IsometricScope {
             if (tileAboveRight){
               tileLeft.add(waterCorner3);
             }else{
-              tileLeft.add(waterCorner1);
+              if (tileAbove){
+                  tileLeft.add(waterHor);
+              }else{
+                tileLeft.add(waterCorner1);
+              }
+
             }
           }else{
             tileLeft.add(waterCorner2);
