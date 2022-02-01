@@ -194,10 +194,13 @@ class IsometricActions with IsometricScope {
               }else{
                 tileLeft.add(waterCorner1);
               }
-
             }
           }else{
-            tileLeft.add(waterCorner2);
+            if (tileAbove){
+              tileLeft.add(waterVer);
+            }else{
+              tileLeft.add(waterCorner2);
+            }
           }
         } else {
           tileLeft.add(mapTileToSrcLeft(tile));
