@@ -135,7 +135,7 @@ class CoreActions {
   }
 
   void loginWithGoogle() async {
-    print("actions.loginWithGoogle()");
+    print("core.actions.loginWithGoogle()");
     core.state.operationStatus.value = OperationStatus.Authenticating;
     await getGoogleAuthentication().then(login).catchError((error){
       if (error is PlatformException){
