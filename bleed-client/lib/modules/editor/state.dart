@@ -13,6 +13,7 @@ import 'enums.dart';
 
 
 class EditorState {
+  final Vector2 defaultSpawnPosition = Vector2(0,0);
   final Watch<bool> waitForPlayersToJoin = Watch(true);
   final Watch<int> numberOfPlayers = Watch(8);
   final Watch<TeamType> teamType = Watch(TeamType.Solo);

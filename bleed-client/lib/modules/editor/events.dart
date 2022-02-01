@@ -77,22 +77,20 @@ class EditorEvents with EditorScope {
   void onMouseLeftClicked() {
     state.selected.value = null;
     final double selectRadius = 25;
-    if (modules.isometric.state.environmentObjects.isNotEmpty) {
-      EnvironmentObject closest = closestToMouse(modules.isometric.state.environmentObjects);
-      double closestDistance = distanceFromMouse(closest.x, closest.y);
+
+    final closest = getClosest(mouseX, mouseY, [
+      modules.isometric.state.environmentObjects,
+      state.teamSpawnPoints,
+      state.items,
+      state.characters,
+    ]);
+
+    if (closest != null){
+      final closestDistance = distanceFromMouse(closest.x, closest.y);
       if (closestDistance <= selectRadius) {
         state.selected.value = closest;
         return;
       }
-    }
-
-    if (state.characters.isNotEmpty){
-       final closest = closestToMouse(state.characters);
-       double closestDistance = distanceFromMouse(closest.x, closest.y);
-       if (closestDistance <= selectRadius) {
-         state.selected.value = closest;
-         return;
-       }
     }
 
     if (modules.isometric.properties.tileAtMouse == Tile.Boundary){

@@ -1,6 +1,7 @@
 import "dart:html" as html;
 import 'dart:math';
 import 'dart:ui';
+import 'package:lemon_math/Vector2.dart';
 
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/modules/modules.dart';
@@ -79,3 +80,4 @@ void openLink(String value, {bool newTab = true}){
 void refreshPage(){
   document.window!.location.href = document.domain!;
 }
+
