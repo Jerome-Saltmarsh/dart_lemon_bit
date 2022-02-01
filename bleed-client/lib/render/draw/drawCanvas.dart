@@ -4,13 +4,11 @@ import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/Explosion.dart';
 import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Particle.dart';
-import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CommonSettings.dart';
 import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
-import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/constants/colors/white.dart';
 import 'package:bleed_client/constants/colours.dart';
@@ -18,7 +16,6 @@ import 'package:bleed_client/cube/scene.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/modules/isometric/enums.dart';
-import 'package:bleed_client/modules/isometric/utilities.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/render/mappers/loop.dart';
 import 'package:bleed_client/state/game.dart';
@@ -56,10 +53,9 @@ void drawItems() {
 }
 
 void drawItem(Item item) {
-  final _anchor = 32;
-
   if (!itemAtlas.containsKey(item.type)) return;
 
+  final _anchor = 32;
   engine.draw.drawCircleOutline(radius: commonSettings.itemRadius, x: item.x, y: item.y, color: white);
   srcLoop(
       atlas: itemAtlas[item.type]!,
