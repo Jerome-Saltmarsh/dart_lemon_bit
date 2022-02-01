@@ -156,7 +156,7 @@ class IsometricActions with IsometricScope {
             rotation: 0.0,
             scale: 1.0,
             anchorX: tileSizeHalf,
-            anchorY: tileSize,
+            anchorY: 0,
             translateX: getTileWorldX(x, y),
             translateY: getTileWorldY(x, y))
         );
@@ -164,7 +164,6 @@ class IsometricActions with IsometricScope {
     }
 
     final List<double> tileLeft = [];
-    tileLeft.clear();
     for (int row = 0; row < tiles.length; row++) {
       for (int column = 0; column < tiles[0].length; column++) {
         final tile = tiles[row][column];
@@ -177,9 +176,6 @@ class IsometricActions with IsometricScope {
 
         if (tile == Tile.Water){
           if (!tileAboveLeft && !tileAboveRight){
-
-
-
             if (tileAbove){
               tileLeft.add(waterCorner4);
             }else{
@@ -221,7 +217,7 @@ class IsometricActions with IsometricScope {
       tilesDst[index0] = rstTransform.scos;
       tilesDst[index1] = rstTransform.ssin;
       tilesDst[index2] = rstTransform.tx;
-      tilesDst[index3] = rstTransform.ty + tileSizeHalf;
+      tilesDst[index3] = rstTransform.ty;
       tilesSrc[index0] = atlas.tiles.x + tileLeft[i];
       tilesSrc[index1] = atlas.tiles.y;
       tilesSrc[index2] = tilesSrc[index0] + tileSize;
