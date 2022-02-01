@@ -57,6 +57,9 @@ void drawItems() {
 
 void drawItem(Item item) {
   final _anchor = 32;
+
+  if (!itemAtlas.containsKey(item.type)) return;
+
   engine.draw.drawCircleOutline(radius: commonSettings.itemRadius, x: item.x, y: item.y, color: white);
   srcLoop(
       atlas: itemAtlas[item.type]!,

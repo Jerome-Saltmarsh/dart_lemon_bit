@@ -105,8 +105,9 @@
 [ ] Weapon UI
 [ ] Spawn Item Locations
 [ ] Dynamic Objects (objects which move around the map and can be removed and added)
+[ ] Chests
 [CORE]
-[ ] FIX Google Login
+[x] FIX Google Login
 [COMPLETED]
 [x] Key handler state to engine
 [x] Fix Zoom

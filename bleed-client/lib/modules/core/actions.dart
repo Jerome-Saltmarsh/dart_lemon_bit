@@ -161,7 +161,6 @@ class CoreActions {
     );
   }
 
-
   void disconnect(){
     print("actions.disconnect()");
     clearState();
@@ -174,7 +173,6 @@ class CoreActions {
     isometric.state.paths.clear();
     engine.state.zoom = 1;
     game.gameEvents.clear();
-    core.state.mode.value = Mode.Player;
     refreshUI();
     engine.actions.redrawCanvas();
   }
