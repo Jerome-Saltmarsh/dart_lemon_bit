@@ -13,6 +13,7 @@ import 'package:bleed_client/modules/editor/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/user-service-client/firestoreService.dart';
+import 'package:bleed_client/utils.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:typedef/json.dart';
 
@@ -24,20 +25,20 @@ class EditorActions with EditorScope {
   final EditorCompile compile;
   EditorActions(this.compile);
 
-  void addEnvironmentObject ({
-    required ObjectType type,
-    required double x,
-    required double y,
-  }){
+  void addEnvironmentObject (){
     isometric.state.environmentObjects.add(EnvironmentObject(
-      x: x,
-      y: y,
-      type: type,
+      x: mouseX,
+      y: mouseY,
+      type: state.objectType.value,
       radius: 0,
     ));
-    if (type == ObjectType.Torch) {
+    if (state.objectType.value == ObjectType.Torch) {
       isometric.actions.resetLighting();
     }
+  }
+
+  void setTile(){
+    setTileAtMouse(state.tile.value);
   }
 
   void deleteSelected() {

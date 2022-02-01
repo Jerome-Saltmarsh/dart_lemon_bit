@@ -3,7 +3,6 @@
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Character.dart';
-import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/modules/editor/actions.dart';
@@ -75,10 +74,8 @@ class EditorEvents with EditorScope {
   }
 
   void onMouseLeftClicked() {
-    state.selected.value = null;
-    final double selectRadius = 25;
 
-    final closest = getClosest(mouseX, mouseY, [
+    final closest = getClosest(mouseWorldX, mouseWorldY, [
       modules.isometric.state.environmentObjects,
       state.teamSpawnPoints,
       state.items,
@@ -87,11 +84,14 @@ class EditorEvents with EditorScope {
 
     if (closest != null){
       final closestDistance = distanceFromMouse(closest.x, closest.y);
+      final double selectRadius = 25;
       if (closestDistance <= selectRadius) {
         state.selected.value = closest;
         return;
       }
     }
+
+    state.selected.value = null;
 
     if (modules.isometric.properties.tileAtMouse == Tile.Boundary){
       return;
@@ -102,14 +102,10 @@ class EditorEvents with EditorScope {
         state.characters.add(Character(type: editor.state.characterType.value, x: mouseWorldX, y: mouseWorldY));
         break;
       case ToolTab.Tiles:
-        setTileAtMouse(editor.state.tile.value);
+        actions.setTile();
         break;
       case ToolTab.Objects:
-        modules.editor.actions.addEnvironmentObject(
-          type:  editor.state.objectType.value,
-          x: mouseWorldX,
-          y: mouseWorldY,
-        );
+        actions.addEnvironmentObject();
         break;
       case ToolTab.All:
         break;
