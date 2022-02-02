@@ -212,6 +212,12 @@ class EditorActions with EditorScope {
     }
   }
 
+  void refreshSelected(){
+    final sel = state.selected.value;
+    state.selected.value = null;
+    state.selected.value = sel;
+  }
+
   void timeSpeedDecrease() {
     int currentIndex = state.timeSpeed.value.index;
     if (currentIndex > 0){

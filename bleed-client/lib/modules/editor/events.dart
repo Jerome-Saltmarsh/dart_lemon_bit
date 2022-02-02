@@ -69,11 +69,12 @@ class EditorEvents with EditorScope {
   }
 
   void onSelectedObjectChanged(Vector2? value) {
-    print("editor._onSelectedObjectChanged($value)");
+    print("editor.events.onSelectedObjectChanged($value)");
     engine.actions.redrawCanvas();
   }
 
   void onMouseLeftClicked() {
+    print("editor.events.onMouseLeftClicked()");
 
     final closest =  getClosest(mouseWorldX, mouseWorldY, [
       state.environmentObjects,

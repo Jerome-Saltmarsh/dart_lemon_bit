@@ -106,6 +106,7 @@
 [ ] Spawn Item Locations
 [ ] Dynamic Objects (objects which move around the map and can be removed and added)
 [ ] Chests
+[ ] Zombies don't attack
 [CORE]
 [x] FIX Google Login
 [COMPLETED]

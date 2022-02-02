@@ -1,7 +1,6 @@
 
 
 import 'package:bleed_client/classes/Character.dart';
-import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/Tile.dart';
@@ -157,27 +156,28 @@ class EditorBuild {
         button("+", modules.editor.actions.timeSpeedIncrease),
         ],
       ),
+      height8,
       WatchBuilder(state.teamType, (TeamType teamType) {
         return Row(
           children: [
             onPressed(
               callback: () => state.teamType.value = TeamType.Solo,
               child: Container(
-                  color: teamType == TeamType.Solo ? colours.purpleDarkest : colours.purple,
-                  width: 100,
+                  color: teamType == TeamType.Solo ? colours.purple : colours.purpleDarkest,
+                  width: 120,
                   alignment: Alignment.center,
                   height: 100 * goldenRatio_0381,
-                  child: text(TeamType.Solo.name)
+                  child: text(TeamType.Solo.name, color: teamType == TeamType.Solo ? colours.white : colours.white618)
               ),
             ),
             onPressed(
               callback: () => state.teamType.value = TeamType.Teams,
               child: Container(
-                  color: teamType == TeamType.Teams ? colours.purpleDarkest : colours.purple,
-                  width: 100,
+                  color: teamType == TeamType.Teams ? colours.purple : colours.purpleDarkest,
+                  width: 120,
                   alignment: Alignment.center,
                   height: 100 * goldenRatio_0381,
-                  child: text(TeamType.Teams.name)
+                  child: text(TeamType.Teams.name, color: teamType == TeamType.Teams ? colours.white : colours.white618)
               ),
             )
           ],
@@ -386,7 +386,19 @@ class EditorBuild {
   List<Widget> buildSelectedFields(Vector2 selected){
      if (selected is Character){
         return [
-           text("Team: ${selected.team}"),
+           Row(
+             children: [
+               text("Team: ${selected.team}"),
+               button("-", (){
+                 selected.team--;
+                 editor.actions.refreshSelected();
+               }),
+               button("+", (){
+                 selected.team++;
+                 editor.actions.refreshSelected();
+               })
+             ],
+           ),
         ];
      }
     return [];
