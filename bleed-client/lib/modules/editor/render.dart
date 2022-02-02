@@ -20,9 +20,9 @@ class EditorRender with EditorScope {
     isometric.render.tiles();
 
     // renderTilePreview();
-    isometric.render.sprites();
     _drawSelectedObject();
     _drawCharacters();
+    _drawEnvironmentObjects();
 
     state.items.forEach(drawItem);
 
@@ -33,6 +33,12 @@ class EditorRender with EditorScope {
            y: playerSpawnPosition.y,
            color: colours.blue
        );
+    }
+  }
+
+  void _drawEnvironmentObjects() {
+    for(final env in state.environmentObjects){
+       drawEnvironmentObject(env);
     }
   }
 

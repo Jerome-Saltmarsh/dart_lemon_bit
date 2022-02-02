@@ -26,12 +26,15 @@ class EditorActions with EditorScope {
   EditorActions(this.compile);
 
   void addEnvironmentObject (){
-    isometric.state.environmentObjects.add(EnvironmentObject(
-      x: mouseX,
-      y: mouseY,
-      type: state.objectType.value,
-      radius: 0,
-    ));
+    print("editor.actions.addEnvironmentObject()");
+    state.environmentObjects.add(
+        EnvironmentObject(
+          x: mouseWorldX,
+          y: mouseWorldY,
+          type: state.objectType.value,
+          radius: 0,
+        )
+    );
     if (state.objectType.value == ObjectType.Torch) {
       isometric.actions.resetLighting();
     }
@@ -155,12 +158,12 @@ class EditorActions with EditorScope {
     isometric.state.tiles = mapJsonToTiles(jsonRows);
 
     final jsonEnvironment = mapJson['environment'];
-    isometric.state.environmentObjects.clear();
-    for(Json envJson in jsonEnvironment){
+    state.environmentObjects.clear();
+    for (Json envJson in jsonEnvironment) {
       final x = (envJson['x'] as int).toDouble();
       final y = (envJson['y'] as int).toDouble();
       final type = parseObjectTypeFromString(envJson['type']);
-      isometric.state.environmentObjects.add(EnvironmentObject(x: x, y: y, type: type, radius: 25));
+      state.environmentObjects.add(EnvironmentObject(x: x, y: y, type: type, radius: 25));
     }
 
     isometric.state.time.value = mapJson[sceneFieldNames.startTime] / secondsPerHour;

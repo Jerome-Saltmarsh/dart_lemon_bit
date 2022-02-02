@@ -1,5 +1,6 @@
 
 import 'package:bleed_client/classes/Character.dart';
+import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/ItemType.dart';
@@ -13,6 +14,7 @@ import 'enums.dart';
 
 
 class EditorState {
+  final List<EnvironmentObject> environmentObjects = [];
   final Watch<bool> waitForPlayersToJoin = Watch(true);
   final Watch<int> numberOfPlayers = Watch(8);
   final Watch<TeamType> teamType = Watch(TeamType.Solo);
