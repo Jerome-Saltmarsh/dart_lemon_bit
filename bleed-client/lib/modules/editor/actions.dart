@@ -157,7 +157,7 @@ class EditorActions with EditorScope {
     ;
     final jsonRows = mapJson['tiles'];
     isometric.state.tiles = mapJsonToTiles(jsonRows);
-
+    isometric.actions.refreshTileSize();
     final jsonEnvironment = mapJson['environment'];
     state.environmentObjects.clear();
     for (Json json in jsonEnvironment) {
