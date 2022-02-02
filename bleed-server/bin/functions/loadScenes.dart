@@ -111,8 +111,8 @@ Scene parseJsonToScene(Json json, String name) {
     List characterJson = json['characters'];
     for (Json characterJson in characterJson) {
       final type = parseCharacterType(characterJson['type']);
-      final x = (characterJson['x'] as int).toDouble();
-      final y = (characterJson['y'] as int).toDouble();
+      final x = characterJson.getDouble('x');
+      final y = characterJson.getDouble('y');
       characters.add(Character(type: type, x: x, y: y, health: 100, speed: 1));
     }
   }
