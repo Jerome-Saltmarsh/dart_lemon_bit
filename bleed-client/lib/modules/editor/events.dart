@@ -75,7 +75,7 @@ class EditorEvents with EditorScope {
 
   void onMouseLeftClicked() {
 
-    final closest = getClosest(mouseWorldX, mouseWorldY, [
+    final closest =  getClosest(mouseWorldX, mouseWorldY, [
       state.environmentObjects,
       state.teamSpawnPoints,
       state.items,
