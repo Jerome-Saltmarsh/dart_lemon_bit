@@ -5,6 +5,7 @@ import '../classes/Character.dart';
 import '../classes/Crate.dart';
 import '../classes/Game.dart';
 import '../classes/Item.dart';
+import '../classes/Npc.dart';
 import '../classes/Player.dart';
 import '../classes/Weapon.dart';
 import '../common/CharacterType.dart';
@@ -36,8 +37,7 @@ class GameRoyal extends Game {
     numberOfTeams = 2;
     boundaryCenter = getSceneCenter();
 
-
-    for(Character zombie in zombies){
+    for (Character zombie in zombies) {
       zombie.team = 1;
     }
 
@@ -68,6 +68,11 @@ class GameRoyal extends Game {
   }
 
   int get playersRequired => teamSize * numberOfTeams;
+
+  @override
+  void onNpcKilled(Npc npc, Character src){
+     items.add(Item(type: ItemType.Orb_Emerald, x: npc.x, y: npc.y));
+  }
 
   @override
   bool onPlayerItemCollision(Player player, Item item){
@@ -117,7 +122,7 @@ class GameRoyal extends Game {
       case WeaponType.HandGun:
         return 5;
       case WeaponType.Shotgun:
-        return 3;
+        return 20;
       case WeaponType.SniperRifle:
         return 20;
       case WeaponType.AssaultRifle:

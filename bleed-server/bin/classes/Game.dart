@@ -88,6 +88,11 @@ abstract class Game {
     countDownFramesRemaining = 0;
   }
 
+  void onNpcKilled(Npc npc, Character src){
+
+  }
+
+
   /// Used to constrain the brightness of a level
   /// For example a cave which is very dark even during day time
   /// or a dark forest
@@ -415,6 +420,7 @@ extension GameFunctions on Game {
     if (target.alive) return;
     if (target is Npc) {
       target.active = false;
+      onNpcKilled(target, src);
     }
     if (src is Player && target is Npc) {
       playerGainExperience(src, target.experience);
