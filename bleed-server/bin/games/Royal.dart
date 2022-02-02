@@ -1,6 +1,7 @@
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/give_or_take.dart';
 
+import '../classes/Character.dart';
 import '../classes/Crate.dart';
 import '../classes/Game.dart';
 import '../classes/Item.dart';
@@ -34,6 +35,11 @@ class GameRoyal extends Game {
     teamSize = 1;
     numberOfTeams = 2;
     boundaryCenter = getSceneCenter();
+
+
+    for(Character zombie in zombies){
+      zombie.team = 1;
+    }
 
     for (int i = 0; i < 10; i++) {
       final crate = Crate(

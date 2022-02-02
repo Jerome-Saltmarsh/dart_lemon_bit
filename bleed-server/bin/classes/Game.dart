@@ -201,7 +201,7 @@ abstract class Game {
 
     for(Character character in scene.characters){
       if (character.type == CharacterType.Zombie){
-        zombies.add(Npc(type: CharacterType.Zombie, x: character.x, y: character.y, health: 100));
+        zombies.add(Npc(type: CharacterType.Zombie, x: character.x, y: character.y, health: 100, weapon: Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0)));
       }else{
         npcs.add(InteractableNpc(
             name: "Bob",
