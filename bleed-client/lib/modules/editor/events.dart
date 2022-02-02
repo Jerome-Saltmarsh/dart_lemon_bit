@@ -91,7 +91,10 @@ class EditorEvents with EditorScope {
       }
     }
 
-    state.selected.value = null;
+    if (state.selected.isNotNull){
+      actions.deleteSelected();
+      return;
+    }
 
     if (modules.isometric.properties.tileAtMouse == Tile.Boundary){
       return;

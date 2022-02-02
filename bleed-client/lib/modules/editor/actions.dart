@@ -1,3 +1,4 @@
+import 'package:lemon_math/Vector2.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/Item.dart';
@@ -159,10 +160,10 @@ class EditorActions with EditorScope {
 
     final jsonEnvironment = mapJson['environment'];
     state.environmentObjects.clear();
-    for (Json envJson in jsonEnvironment) {
-      final x = (envJson['x'] as int).toDouble();
-      final y = (envJson['y'] as int).toDouble();
-      final type = parseObjectTypeFromString(envJson['type']);
+    for (Json json in jsonEnvironment) {
+      final x = json.getDouble('x');
+      final y = json.getDouble('y');
+      final type = parseObjectTypeFromString(json['type']);
       state.environmentObjects.add(EnvironmentObject(x: x, y: y, type: type, radius: 25));
     }
 
@@ -170,8 +171,8 @@ class EditorActions with EditorScope {
 
     final List<Character> characters = [];
     for(Json json in mapJson['characters']){
-      final x = (json['x'] as int).toDouble();
-      final y = (json['y'] as int).toDouble();
+      final x = json.getDouble('x');
+      final y = json.getDouble('y');
       final type = parseCharacterType(json['type']);
       characters.add(Character(type: type, x: x, y: y));
     }
@@ -189,7 +190,17 @@ class EditorActions with EditorScope {
       }
     }
 
-    editor.state.characters = characters;
+    if (mapJson.containsKey(sceneFieldNames.playerSpawnPoints)){
+      final List spawnPoints = mapJson[sceneFieldNames.playerSpawnPoints];
+      state.teamSpawnPoints.clear();
+      for(int i = 0; i < spawnPoints.length; i += 2){
+         final x = (spawnPoints[i] as int).toDouble();
+         final y = (spawnPoints[i + 1] as int).toDouble();
+         state.teamSpawnPoints.add(Vector2(x, y));
+      }
+    }
+
+    state.characters = characters;
     isometric.actions.updateTileRender();
     engine.actions.redrawCanvas();
   }

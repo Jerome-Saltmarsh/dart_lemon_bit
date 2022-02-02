@@ -20,7 +20,7 @@ class EditorCompile {
       "collectables": game.collectables,
       "tiles": compileTiles(isometric.state.tiles),
       "crates": compileCrates(game.crates),
-      "environment": compileEnvironmentObjects(isometric.state.environmentObjects),
+      "environment": compileEnvironmentObjects(state.environmentObjects),
       'characters': compileCharactersToJson(state.characters),
       sceneFieldNames.startTime: modules.isometric.state.time.value * secondsPerHour,
       sceneFieldNames.secondsPerFrame: state.timeSpeed.value.index,
