@@ -106,7 +106,8 @@
 [ ] Spawn Item Locations
 [ ] Dynamic Objects (objects which move around the map and can be removed and added)
 [ ] Chests
-[ ] Zombies don't attack
+[ ] Slot machine concept
+[x] Zombies don't attack
 [CORE]
 [x] FIX Google Login
 [COMPLETED]
@@ -596,3 +597,29 @@ mega-gamex.com
 # Home page
 Games
 Network
+
+#DESIGN
+When a player kills a zombie,
+
+the player earns money, experience and a random slot
+Combinations of outcomes are used to craft items
+Due to the luck element this determines the kind of build that the player will make, causing
+each game to be completely unique and preventing the player from simply spamming a single strategy.
+
+The slot machine aspect of it also causes the game to have an addictive quality to it.
+
+When a zombie is killed, it drops a random slot.
+
+Orbs
+- Powder
+- Gold
+- Silver
+- Bronze
+- Ruby
+
+When a player gains a level they can choose an attribute to improve
+- Max Health
+- Max Mana
+- Magic Damage
+- Physical Damage
+

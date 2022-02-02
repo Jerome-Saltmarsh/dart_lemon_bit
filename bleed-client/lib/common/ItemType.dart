@@ -18,6 +18,9 @@ enum ItemType {
   Shotgun,
   SniperRifle,
   Assault_Rifle,
+  Orb_Emerald,
+  Orb_Ruby,
+  Orb_Topaz,
 }
 
 final List<ItemType> itemTypes = ItemType.values;

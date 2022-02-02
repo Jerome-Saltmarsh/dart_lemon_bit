@@ -29,7 +29,6 @@ class _Atlas {
   final _Fish fish = _Fish();
 
   final _Items items = _Items();
-
 }
 
 class _Items {
@@ -38,6 +37,9 @@ class _Items {
   final Vector2 armour = Vector2(1, 1634);
   final Vector2 health = Vector2(1, 1698);
   final Vector2 crate = Vector2(1, 1763);
+  final Vector2 emerald = Vector2(2, 1836);
+  final Vector2 orbRed = Vector2(2, 1901);
+  final Vector2 orbTopaz = Vector2(2, 1966);
 }
 
 class _Fish {

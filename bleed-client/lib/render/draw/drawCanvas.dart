@@ -56,7 +56,7 @@ void drawItem(Item item) {
   if (!itemAtlas.containsKey(item.type)) return;
 
   final _anchor = 32;
-  engine.draw.drawCircleOutline(radius: commonSettings.itemRadius, x: item.x, y: item.y, color: white);
+  // engine.draw.drawCircleOutline(radius: commonSettings.itemRadius, x: item.x, y: item.y, color: white);
   srcLoop(
       atlas: itemAtlas[item.type]!,
       direction: Direction.Down,
@@ -256,4 +256,7 @@ final Map<ItemType, Vector2> itemAtlas = {
   ItemType.Shotgun: atlas.items.shotgun,
   ItemType.Armour: atlas.items.armour,
   ItemType.Health: atlas.items.health,
+  ItemType.Orb_Emerald: atlas.items.emerald,
+  ItemType.Orb_Ruby: atlas.items.orbRed,
+  ItemType.Orb_Topaz: atlas.items.orbTopaz,
 };
