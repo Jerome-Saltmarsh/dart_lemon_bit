@@ -14,8 +14,10 @@ import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_watch/watch.dart';
 
 import 'classes.dart';
+import 'enums.dart';
 
 class GameState {
+  final Watch<StoreTab> storeTab = Watch(storeTabs[0]);
   final _Player player = _Player();
   final Watch<GameStatus> status = Watch(GameStatus.Awaiting_Players);
   final TextEditingController textEditingControllerMessage = TextEditingController();

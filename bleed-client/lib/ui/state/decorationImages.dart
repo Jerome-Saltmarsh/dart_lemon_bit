@@ -20,6 +20,9 @@ class _DecorationImages {
   final orbTopaz = _png('icons/icon-orb-topaz');
   final orbEmerald = _png('icons/icon-orb-emerald');
   final orbRuby = _png('icons/icon-orb-ruby');
+  final sword = _png('icons/icon-sword');
+  final shield = _png('icons/icon-shield');
+  final book = _png('icons/icon-book');
   final edit = _png('icons/icon-edit');
   final play = _png('icons/icon-play');
   final fullscreen = _png('icon fullscreen');

@@ -333,28 +333,6 @@ Widget buildSlot({required String title}) {
   );
 }
 
-Widget buildDecorationImage({
-  required DecorationImage image,
-  double width = 150,
-  double height = 50,
-  double borderWidth = 1,
-  Color color = Colors.white,
-  Color borderColor = Colors.white,
-}) {
-  return Container(
-    width: width,
-    height: height,
-    alignment: Alignment.center,
-    decoration: BoxDecoration(
-      image: image,
-      color: color,
-      border: borderWidth > 0
-          ? Border.all(color: borderColor, width: borderWidth)
-          : null,
-      borderRadius: borderRadius4,
-    ),
-  );
-}
 
 Widget buildEquipWeaponSlot(Weapon weapon, int index) {
   return mouseOver(builder: (BuildContext context, bool mouseOver) {

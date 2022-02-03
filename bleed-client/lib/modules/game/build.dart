@@ -1,8 +1,3 @@
-import 'package:bleed_client/modules/game/actions.dart';
-import 'package:bleed_client/resources.dart';
-import 'package:bleed_client/ui/state/decorationImages.dart';
-import 'package:bleed_client/widgets.dart';
-import 'package:lemon_watch/watch.dart';
 import 'dart:math';
 
 import 'package:bleed_client/common/CharacterType.dart';
@@ -12,7 +7,10 @@ import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/flutterkit.dart';
+import 'package:bleed_client/modules/game/actions.dart';
+import 'package:bleed_client/modules/game/enums.dart';
 import 'package:bleed_client/modules/modules.dart';
+import 'package:bleed_client/resources.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/styles.dart';
@@ -24,10 +22,12 @@ import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/views.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
+import 'package:bleed_client/widgets.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
+import 'package:lemon_watch/watch.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../../toString.dart';
@@ -151,30 +151,34 @@ class GameBuild {
           Positioned(
               right: 16,
               top: 50,
-              child: Container(
-              width: 200,
-              height: 500,
-              padding: padding8,
-              color: colours.brownDark,
-                child: Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(vertical: 8),
-                        color: colours.brownLight,
-                        child: rowOrbs()),
-                    height16,
-                    Container(
-                        color: colours.brownLight,
-                        child: columnStore()),
-                    height16,
-                    Container(
-                        color: colours.brownLight,
-                        child: columnPlayerSlots())
-                  ],
-                ),
-          )),
+              child: panelMagicStore()),
         ],
     );
+  }
+
+  Container panelMagicStore() {
+    return Container(
+            width: 200,
+            height: 500,
+            padding: padding8,
+            color: colours.brownDark,
+              child: Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: 8),
+                      color: colours.brownLight,
+                      child: rowOrbs()),
+                  height16,
+                  Container(
+                      color: colours.brownLight,
+                      child: columnStore()),
+                  height16,
+                  Container(
+                      color: colours.brownLight,
+                      child: columnPlayerSlots())
+                ],
+              ),
+        );
   }
 
   Column columnPlayerSlots() {
@@ -188,14 +192,36 @@ class GameBuild {
     );
   }
 
-  Column columnStore() {
-    return Column(
-      children: SlotType.values.map((slotType){
-        return button(slotType.name, () {
-          actions.purchaseSlotType(slotType);
-        });
-      }).toList(),
-    );
+  Widget mapStoreTabToIcon(StoreTab value){
+    switch(value){
+      case StoreTab.Weapons:
+        return resources.icons.sword;
+      case StoreTab.Armor:
+        return resources.icons.shield;
+      case StoreTab.Items:
+        return resources.icons.book;
+    }
+  }
+
+  Widget columnStore() {
+    return WatchBuilder(state.storeTab, (StoreTab activeStoreTab){
+      return Column(
+        children: [
+          Row(
+            children: storeTabs.map((storeTab) => button(
+                mapStoreTabToIcon(storeTab),
+                    () => state.storeTab.value = activeStoreTab)).toList(),
+          ),
+          Column(
+            children: SlotType.values.map((slotType){
+              return button(slotType.name, () {
+                actions.purchaseSlotType(slotType);
+              });
+            }).toList(),
+          ),
+        ],
+      );
+    });
   }
 
   Widget rowOrbs(){
