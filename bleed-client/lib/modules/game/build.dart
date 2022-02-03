@@ -222,10 +222,12 @@ class GameBuild {
             )).toList(),
           ),
           Column(
-            children: SlotType.values.map((slotType){
-              return button(slotType.name, () {
-                actions.purchaseSlotType(slotType);
-              },
+            children: mapStoreTabSlotTypes(activeStoreTab).map((slotType) {
+              return button(
+                slotType,
+                () {
+                  actions.purchaseSlotType(slotType);
+                },
               );
             }).toList(),
           ),
@@ -477,5 +479,16 @@ class GameBuild {
     return WatchBuilder(slot, (SlotType slotType) {
           return text(slotType.name);
     });
+  }
+}
+
+List<SlotType> mapStoreTabSlotTypes(StoreTab storeTab){
+  switch(storeTab){
+    case StoreTab.Weapons:
+      return slotTypes.weapons;
+    case StoreTab.Armor:
+      return slotTypes.armour;
+    case StoreTab.Items:
+      return slotTypes.items;
   }
 }

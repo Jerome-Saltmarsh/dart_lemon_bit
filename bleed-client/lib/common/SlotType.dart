@@ -1,7 +1,7 @@
 enum SlotType {
   Empty,
-  Pendant,
-  Amulet,
+  Silver_Pendant,
+  Frogs_Amulet,
   Brace,
   Dagger,
   Short_Sword,
@@ -11,14 +11,25 @@ enum SlotType {
   Guards_Helmet
 }
 
-final List<SlotType> slotTypeWeapons = [
-  SlotType.Short_Sword,
-  SlotType.Forest_Bow,
-];
+final List<SlotType> slotTypesAll = SlotType.values;
+final _SlotTypes slotTypes = _SlotTypes();
 
-final List<SlotType> slotTypeArmour = [
-  SlotType.Leather_Cap,
-  SlotType.Guards_Helmet,
-];
+class _SlotTypes {
 
-final List<SlotType> slotTypes = SlotType.values;
+  final List<SlotType> all = SlotType.values;
+
+  final List<SlotType> weapons = [
+    SlotType.Short_Sword,
+    SlotType.Forest_Bow,
+  ];
+
+  final List<SlotType> armour = [
+    SlotType.Leather_Cap,
+    SlotType.Guards_Helmet,
+  ];
+
+  final List<SlotType> items = [
+    SlotType.Silver_Pendant,
+    SlotType.Frogs_Amulet,
+  ];
+}
