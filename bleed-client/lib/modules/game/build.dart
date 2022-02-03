@@ -150,7 +150,7 @@ class GameBuild {
           bottomCenter(child: healthBar(), padding: 8),
           Positioned(
               right: 16,
-              top: 50,
+              bottom: 16,
               child: panelMagicStore()),
         ],
     );
@@ -159,7 +159,7 @@ class GameBuild {
   Container panelMagicStore() {
     return Container(
             width: 200,
-            height: 500,
+            // height: 650,
             padding: padding8,
             color: colours.brownDark,
               child: Column(
@@ -175,19 +175,30 @@ class GameBuild {
                   height16,
                   Container(
                       color: colours.brownLight,
-                      child: columnPlayerSlots())
+                      child: columnInventory())
                 ],
               ),
         );
   }
 
-  Column columnPlayerSlots() {
-    return Column(
+  Widget columnInventory() {
+    final slots = state.player.slots;
+    return Row(
       children: [
-        text("INVENTORY"),
         Column(
-                        children: state.player.slots.list.map(playerSlot).toList(),
-                      ),
+          children: [
+            playerSlot(slots.slot1),
+            playerSlot(slots.slot2),
+            playerSlot(slots.slot3),
+          ],
+        ),
+        Column(
+          children: [
+            playerSlot(slots.slot4),
+            playerSlot(slots.slot5),
+            playerSlot(slots.slot6),
+          ],
+        )
       ],
     );
   }
@@ -478,10 +489,12 @@ class GameBuild {
             )));
   }
 
-
   Widget playerSlot(Watch<SlotType> slot){
-    return WatchBuilder(slot, (SlotType slotType) {
-          return text(slotType.name);
+    return WatchBuilder(slot, (SlotType slotType){
+      return Container(
+          width: 50,
+          height: 50,
+          child: getSlotTypeImage(slotType));
     });
   }
 }
