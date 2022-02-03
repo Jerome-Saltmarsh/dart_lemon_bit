@@ -338,11 +338,11 @@ Widget dialog({
 
 Widget buildDecorationImage({
   required DecorationImage image,
-  double width = 150,
-  double height = 50,
+  double? width,
+  double? height,
   double borderWidth = 1,
-  Color color = Colors.white,
-  Color borderColor = Colors.white,
+  Color? color,
+  Color? borderColor,
 }) {
   return Container(
     width: width,
@@ -351,7 +351,7 @@ Widget buildDecorationImage({
     decoration: BoxDecoration(
       image: image,
       color: color,
-      border: borderWidth > 0
+      border: borderWidth > 0 && borderColor != null
           ? Border.all(color: borderColor, width: borderWidth)
           : null,
       borderRadius: borderRadius4,

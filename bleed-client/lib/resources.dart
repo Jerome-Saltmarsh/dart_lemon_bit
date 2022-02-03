@@ -1,20 +1,55 @@
+import 'package:flutter/cupertino.dart';
 
-import 'package:bleed_client/constants/colours.dart';
-import 'package:bleed_client/ui/state/decorationImages.dart';
+// Constants
+const _orbSize = 20.0;
 
-import 'flutterkit.dart';
+// Instance
+final resources = _Resources();
 
-final _Resources resources = _Resources();
-
+// Classes
 class _Resources {
   final _Icons icons = _Icons();
+  final _Directories directories = _Directories();
+}
+
+class _Directories {
+  final images = "images";
+  final icons = "images/icons";
 }
 
 class _Icons {
-  final topaz = buildDecorationImage(image: decorationImages.orbTopaz, width: 18, height: 22, color: none, borderColor: none);
-  final emerald = buildDecorationImage(image: decorationImages.orbEmerald, width: 14, height: 19, color: none, borderColor: none);
-  final ruby = buildDecorationImage(image: decorationImages.orbRuby, width: 14, height: 19, color: none, borderColor: none);
-  final sword = buildDecorationImage(image: decorationImages.sword, width: 25, height: 25, color: none, borderColor: none);
-  final shield = buildDecorationImage(image: decorationImages.shield, width: 22, height: 26, color: none, borderColor: none);
-  final book = buildDecorationImage(image: decorationImages.book, width: 26, height: 26, color: none, borderColor: none);
+  final topaz = _image("orb-topaz", width: _orbSize, height: _orbSize);
+  final emerald = _image("orb-emerald", width: _orbSize, height: _orbSize);
+  final ruby = _image("orb-ruby", width: _orbSize, height: _orbSize);
+  final sword = _image("sword");
+  final shield = _image("shield");
+  final book = _image("book");
+  final woodenSword = _image("wooden-sword");
+  final ironSword = _image("iron-sword");
+}
+
+// Functions
+Widget _image(String fileName, {
+  double? width,
+  double? height,
+  double borderWidth = 1,
+  Color? color,
+  Color? borderColor,
+  BorderRadius? borderRadius,
+}) {
+  return Container(
+    width: width,
+    height: height,
+    alignment: Alignment.center,
+    decoration: BoxDecoration(
+      image: DecorationImage(
+        image: AssetImage('images/icons/icon-$fileName.png'),
+      ),
+      color: color,
+      border: borderWidth > 0 && borderColor != null
+          ? Border.all(color: borderColor, width: borderWidth)
+          : null,
+      borderRadius: borderRadius,
+    ),
+  );
 }
