@@ -22,6 +22,8 @@ enum GameError {
   WeaponNotAcquired,
   WeaponAlreadyAcquired,
   InsufficientSkillPoints,
+  InsufficientOrbs,
+  Inventory_Full,
   InsufficientMana,
   Cooldown_Remaining,
   SkillLocked,

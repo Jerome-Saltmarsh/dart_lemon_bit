@@ -141,7 +141,7 @@ class GameBuild {
   Widget layoutRoyal(){
     return layout(
         children: [
-          bottomCenter(child: healthBar(), padding: 16),
+          bottomCenter(child: healthBar(), padding: 8),
           Positioned(
               right: 16,
               top: 50,

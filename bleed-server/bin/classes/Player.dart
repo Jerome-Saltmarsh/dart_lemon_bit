@@ -3,6 +3,7 @@ import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
 import '../common/PlayerEvent.dart';
 import '../common/Quests.dart';
+import '../common/StoreItem.dart';
 import '../common/WeaponType.dart';
 import '../constants/no_squad.dart';
 import '../common/Tile.dart';
@@ -32,6 +33,8 @@ class Player extends Character with Entity {
   int level = 1;
   int abilityPoints = 0;
   int _magic = 0;
+
+  final slots = _PlayerSlots();
 
   final orbs = _Orbs();
 
@@ -97,6 +100,65 @@ class Player extends Character with Entity {
             speed: settings.playerSpeed,
             team: team){
     global.onPlayerCreated(this);
+  }
+}
+
+class _PlayerSlots {
+  SlotType slot1 = SlotType.Empty;
+  SlotType slot2 = SlotType.Empty;
+  SlotType slot3 = SlotType.Empty;
+  SlotType slot4 = SlotType.Empty;
+  SlotType slot5 = SlotType.Empty;
+  SlotType slot6 = SlotType.Empty;
+  SlotType slot7 = SlotType.Empty;
+  SlotType slot8 = SlotType.Empty;
+
+  bool get emptySlotAvailable {
+     if(slot1 == SlotType.Empty) return true;
+     if(slot2 == SlotType.Empty) return true;
+     if(slot3 == SlotType.Empty) return true;
+     if(slot4 == SlotType.Empty) return true;
+     if(slot5 == SlotType.Empty) return true;
+     if(slot6 == SlotType.Empty) return true;
+     if(slot7 == SlotType.Empty) return true;
+     if(slot8 == SlotType.Empty) return true;
+     return false;
+  }
+
+  void assignToEmpty(SlotType type){
+    if(slot1 == SlotType.Empty) {
+      slot1 = type;
+      return;
+    }
+    if(slot2 == SlotType.Empty) {
+      slot2 = type;
+      return;
+    }
+    if(slot3 == SlotType.Empty) {
+      slot3 = type;
+      return;
+    }
+    if(slot4 == SlotType.Empty) {
+      slot4 = type;
+      return;
+    }
+    if(slot5 == SlotType.Empty) {
+      slot5 = type;
+      return;
+    }
+    if(slot6 == SlotType.Empty) {
+      slot6 = type;
+      return;
+    }
+    if(slot7 == SlotType.Empty) {
+      slot7 = type;
+      return;
+    }
+    if(slot8 == SlotType.Empty) {
+      slot8 = type;
+      return;
+    }
+    throw Exception("could not assign item, not empty slots");
   }
 }
 

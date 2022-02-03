@@ -21,6 +21,7 @@ import 'common/GameType.dart';
 import 'common/Modify_Game.dart';
 import 'common/PlayerEvent.dart';
 import 'common/ServerResponse.dart';
+import 'common/StoreItem.dart';
 import 'common/WeaponType.dart';
 import 'common/enums/Direction.dart';
 import 'common/version.dart';
@@ -218,6 +219,14 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
     void errorInsufficientSkillPoints() {
       error(GameError.InsufficientSkillPoints);
+    }
+
+    void errorInsufficientOrbs() {
+      error(GameError.InsufficientOrbs);
+    }
+
+    void errorInventoryFull() {
+      error(GameError.Inventory_Full);
     }
 
     void onEvent(requestD) {
@@ -872,6 +881,54 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           return;
 
         case ClientRequest.Purchase:
+          if (arguments.length < 3) {
+            return error(GameError.InvalidArguments,
+                message:
+                "ClientRequest.Purchase Error: Expected 2 args but got ${arguments.length}");
+          }
+
+          final player = findPlayerByUuid(arguments[1]);
+          if (player == null) {
+            return errorPlayerNotFound();
+          }
+
+          final slotItemIndexString = arguments[2];
+          final slotItemIndex = int.tryParse(slotItemIndexString);
+          if (slotItemIndex == null){
+            return error(GameError.InvalidArguments,
+                message:
+                "ClientRequest.Purchase Error: could not parse argument 2 to int");
+          }
+
+          if (slotItemIndex < 0 || slotItemIndex >= slotTypes.length){
+            return error(GameError.InvalidArguments,
+                message:
+                "$slotItemIndex is not a valid slot type index");
+          }
+
+          final slotType = slotTypes[slotItemIndex];
+
+          switch(slotType){
+            case SlotType.Empty:
+              break;
+            case SlotType.Pendant:
+              if (player.orbs.ruby < 0){
+                return errorInsufficientOrbs();
+              }
+              if (!player.slots.emptySlotAvailable){
+                return errorInventoryFull();
+              }
+              player.slots.assignToEmpty(SlotType.Pendant);
+              player.orbs.ruby--;
+              break;
+            case SlotType.Amulet:
+              // TODO: Handle this case.
+              break;
+            case SlotType.Brace:
+              // TODO: Handle this case.
+              break;
+          }
+
           return;
 
         case ClientRequest.SetCompilePaths:

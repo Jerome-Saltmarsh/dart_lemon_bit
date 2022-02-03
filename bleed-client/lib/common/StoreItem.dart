@@ -6,3 +6,5 @@ enum SlotType {
   Amulet,
   Brace,
 }
+
+final List<SlotType> slotTypes = SlotType.values;
