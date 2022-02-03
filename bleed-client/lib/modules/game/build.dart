@@ -208,15 +208,19 @@ class GameBuild {
       return Column(
         children: [
           Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: storeTabs.map((storeTab) => button(
                 mapStoreTabToIcon(storeTab),
-                    () => state.storeTab.value = activeStoreTab)).toList(),
+                    () => state.storeTab.value = activeStoreTab,
+                borderColor: activeStoreTab == storeTab ? colours.white618 : none
+            )).toList(),
           ),
           Column(
             children: SlotType.values.map((slotType){
               return button(slotType.name, () {
                 actions.purchaseSlotType(slotType);
-              });
+              },
+              );
             }).toList(),
           ),
         ],
