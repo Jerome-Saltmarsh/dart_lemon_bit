@@ -73,6 +73,21 @@ class Town extends Game {
     spawnRandomOrb(npc.x, npc.y);
   }
 
+  @override
+  bool onPlayerItemCollision(Player player, Item item){
+    if (item.type == ItemType.Orb_Emerald){
+      player.orbs.emerald++;
+    }
+    if (item.type == ItemType.Orb_Topaz){
+      player.orbs.topaz++;
+    }
+    if (item.type == ItemType.Orb_Ruby){
+      player.orbs.ruby++;
+    }
+    return true;
+  }
+
+
   void _onGuardInteractedWith(Player player) {}
 
   void _onNpcInteractedWithMain(Player player) {
