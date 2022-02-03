@@ -1,5 +1,7 @@
 import 'package:bleed_client/modules/game/actions.dart';
+import 'package:bleed_client/resources.dart';
 import 'package:bleed_client/ui/state/decorationImages.dart';
+import 'package:bleed_client/widgets.dart';
 import 'package:lemon_watch/watch.dart';
 import 'dart:math';
 
@@ -150,15 +152,16 @@ class GameBuild {
               right: 16,
               top: 50,
               child: Container(
-              width: 180,
+              width: 200,
               height: 500,
               padding: padding8,
               color: colours.brownDark,
                 child: Column(
                   children: [
                     Container(
+                      padding: EdgeInsets.symmetric(vertical: 8),
                         color: colours.brownLight,
-                        child: columnOrbs()),
+                        child: rowOrbs()),
                     height16,
                     Container(
                         color: colours.brownLight,
@@ -195,25 +198,33 @@ class GameBuild {
     );
   }
 
-  Widget columnOrbs(){
-    return Column(
+  Widget rowOrbs(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Row(
           children: [
-            buildDecorationImage(image: decorationImages.orbTopaz, width: 32, height: 64, color: none, borderColor: none),
-            WatchBuilder(state.player.orbs.emerald, (int emeralds){
-              return text(emeralds);
-            }),
+            resources.icons.topaz,
+            width4,
+            textWatch(state.player.orbs.topaz),
           ],
         ),
         width8,
-        WatchBuilder(state.player.orbs.topaz, (int topaz){
-          return text("Topaz $topaz");
-        }),
+        Row(
+          children: [
+            resources.icons.ruby,
+            width4,
+            textWatch(state.player.orbs.ruby),
+          ],
+        ),
         width8,
-        WatchBuilder(state.player.orbs.ruby, (int rubies){
-          return text("Rubies $rubies");
-        }),
+        Row(
+          children: [
+            resources.icons.emerald,
+            width4,
+            textWatch(state.player.orbs.emerald),
+          ],
+        ),
       ],
     );
   }
