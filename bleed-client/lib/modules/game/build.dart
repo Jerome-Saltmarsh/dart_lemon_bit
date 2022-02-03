@@ -166,7 +166,7 @@ class GameBuild {
                 children: [
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 8),
-                      color: colours.brownLight,
+                      // color: colours.brownLight,
                       child: rowOrbs()),
                   height16,
                   Container(
@@ -224,7 +224,7 @@ class GameBuild {
                 mapStoreTabToIcon(storeTab),
                     () => state.storeTab.value = storeTab,
                 borderColor: none,
-               fillColor: activeStoreTab == storeTab ? colours.white618 : colours.white05,
+               fillColor: activeStoreTab == storeTab ? colours.white618 : colours.white10,
               borderColorMouseOver: none,
               fillColorMouseOver: activeStoreTab == storeTab ? colours.white618 : colours.black618,
               borderWidth: 0,
