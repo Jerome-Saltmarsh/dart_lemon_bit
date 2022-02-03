@@ -97,10 +97,8 @@ class GameBuild {
   }
 
   Widget healthBar() {
-    final width = 200.0;
+    final width = 250.0;
     final height = width *
-        goldenRatio_0381 *
-        goldenRatio_0381 *
         goldenRatio_0381 *
         goldenRatio_0381;
 
