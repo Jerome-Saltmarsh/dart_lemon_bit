@@ -1,4 +1,5 @@
 
+import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:flutter/services.dart';
 
@@ -71,3 +72,4 @@ class GameMap {
     };
   }
 }
+
