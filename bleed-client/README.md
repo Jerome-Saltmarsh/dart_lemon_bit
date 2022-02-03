@@ -105,7 +105,7 @@
 [ ] Weapon UI
 [ ] Spawn Item Locations
 [ ] Dynamic Objects (objects which move around the map and can be removed and added)
-[ ] Chests
+[ ] Chests (drop 3 random gems)
 [ ] Slot machine concept
 [ ] Crafting System
 [ ] FIX Zombies stop rendering

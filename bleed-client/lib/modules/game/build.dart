@@ -1,9 +1,10 @@
-
+import 'package:lemon_watch/watch.dart';
 import 'dart:math';
 
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/common/StoreItem.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/flutterkit.dart';
@@ -53,7 +54,8 @@ class GameBuild {
           case GameStatus.In_Progress:
             switch (game.type.value) {
               case GameType.MMO:
-                return playerCharacterType();
+                // return playerCharacterType();
+                return layoutRoyal();
               case GameType.Custom:
                 return playerCharacterType();
               case GameType.Moba:
@@ -96,19 +98,62 @@ class GameBuild {
 
   Widget layoutRoyal(){
     return layout(
-        bottomRight: Row(
-          children: [
-            WatchBuilder(state.player.orbs.emerald, (int emeralds){
-                return text("Emeralds $emeralds");
-            }),
-            WatchBuilder(state.player.orbs.topaz, (int topaz){
-              return text("Topaz $topaz");
-            }),
-            WatchBuilder(state.player.orbs.ruby, (int rubies){
-              return text("Rubies $rubies");
-            }),
-          ],
-        )
+        children: [
+          Positioned(
+              right: 16,
+              top: 50,
+              child: Container(
+              width: 150,
+              height: 300,
+              color: colours.red,
+                child: Column(
+                  children: [
+                    columnOrbs(),
+                    columnStore(),
+                    height16,
+                    columnPlayerSlots()
+                  ],
+                ),
+          )),
+        ],
+    );
+  }
+
+  Column columnPlayerSlots() {
+    return Column(
+                    children: state.player.slots.list.map(playerSlot).toList(),
+                  );
+  }
+
+  Column columnStore() {
+    return Column(
+      children: [
+        button("Pendant", () {
+          if (state.player.orbs.ruby.value <= 0) return;
+          final emptySlot = state.player.slots.emptySlot;
+          if (emptySlot == null) return;
+          state.player.orbs.ruby.value--;
+          emptySlot.value = SlotType.Pendant;
+        }),
+      ],
+    );
+  }
+
+  Widget columnOrbs(){
+    return Column(
+      children: [
+        WatchBuilder(state.player.orbs.emerald, (int emeralds){
+          return text("Emeralds $emeralds");
+        }),
+        width8,
+        WatchBuilder(state.player.orbs.topaz, (int topaz){
+          return text("Topaz $topaz");
+        }),
+        width8,
+        WatchBuilder(state.player.orbs.ruby, (int rubies){
+          return text("Rubies $rubies");
+        }),
+      ],
     );
   }
 
@@ -320,4 +365,9 @@ class GameBuild {
   }
 
 
+  Widget playerSlot(Watch<SlotType> slot){
+    return WatchBuilder(slot, (SlotType slotType) {
+          return text(slotType.name);
+    });
+  }
 }

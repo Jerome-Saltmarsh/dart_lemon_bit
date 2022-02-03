@@ -4,6 +4,7 @@ import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameStatus.dart';
+import 'package:bleed_client/common/StoreItem.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/modules/modules.dart';
@@ -44,11 +45,52 @@ class _PlayerOrbs {
   final Watch<int> emerald = Watch(0);
 }
 
+class _PlayerSlots {
+  final Watch<SlotType> slot1 = Watch(SlotType.Empty);
+  final Watch<SlotType> slot2 = Watch(SlotType.Empty);
+  final Watch<SlotType> slot3 = Watch(SlotType.Empty);
+  final Watch<SlotType> slot4 = Watch(SlotType.Empty);
+  final Watch<SlotType> slot5 = Watch(SlotType.Empty);
+  final Watch<SlotType> slot6 = Watch(SlotType.Empty);
+
+  List<Watch<SlotType>> get list => [
+    slot1,
+    slot2,
+    slot3,
+    slot4,
+    slot5,
+    slot6,
+  ];
+
+  Watch<SlotType>? get emptySlot {
+     if (slot1.value == SlotType.Empty){
+       return slot1;
+     }
+     if (slot2.value == SlotType.Empty){
+       return slot2;
+     }
+     if (slot3.value == SlotType.Empty){
+       return slot3;
+     }
+     if (slot4.value == SlotType.Empty){
+       return slot4;
+     }
+     if (slot5.value == SlotType.Empty){
+       return slot5;
+     }
+     if (slot6.value == SlotType.Empty){
+       return slot6;
+     }
+     return null;
+  }
+}
+
 class _Player {
   int id = -1;
   double x = -1;
   double y = -1;
   final orbs = _PlayerOrbs();
+  final slots = _PlayerSlots();
   final Watch<String> uuid = Watch("");
   final Watch<WeaponType> weaponType = Watch(WeaponType.Unarmed);
   final List<Weapon> weapons = [];
