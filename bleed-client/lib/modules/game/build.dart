@@ -1,4 +1,5 @@
 import 'package:bleed_client/modules/game/actions.dart';
+import 'package:bleed_client/ui/state/decorationImages.dart';
 import 'package:lemon_watch/watch.dart';
 import 'dart:math';
 
@@ -152,19 +153,19 @@ class GameBuild {
               width: 180,
               height: 500,
               padding: padding8,
-              color: colours.red,
+              color: colours.brownDark,
                 child: Column(
                   children: [
                     Container(
-                        color: colours.black05,
+                        color: colours.brownLight,
                         child: columnOrbs()),
                     height16,
                     Container(
-                        color: colours.black05,
+                        color: colours.brownLight,
                         child: columnStore()),
                     height16,
                     Container(
-                        color: colours.black05,
+                        color: colours.brownLight,
                         child: columnPlayerSlots())
                   ],
                 ),
@@ -197,9 +198,14 @@ class GameBuild {
   Widget columnOrbs(){
     return Column(
       children: [
-        WatchBuilder(state.player.orbs.emerald, (int emeralds){
-          return text("Emeralds $emeralds");
-        }),
+        Row(
+          children: [
+            buildDecorationImage(image: decorationImages.orbTopaz, width: 32, height: 64, color: none, borderColor: none),
+            WatchBuilder(state.player.orbs.emerald, (int emeralds){
+              return text(emeralds);
+            }),
+          ],
+        ),
         width8,
         WatchBuilder(state.player.orbs.topaz, (int topaz){
           return text("Topaz $topaz");

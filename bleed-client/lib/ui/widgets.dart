@@ -118,20 +118,6 @@ class _Widgets {
   );
 
   final buttonChangeDisplayName = button(text("Change Public Name", color: colours.green), website.actions.showDialogChangePublicName, borderColor: colours.green);
-
-  final subscribeButton = button(
-      Row(
-        children: [
-          icons.creditCard,
-          width4,
-          text("SUBSCRIBE", bold: true),
-          width4,
-        ],
-      ),
-      core.actions.openStripeCheckout,
-      fillColor: colours.green,
-      borderColor: colours.none,
-      fillColorMouseOver: colours.green);
 }
 
 final authenticationRequired = Exception("Authentication Required");
@@ -339,9 +325,7 @@ final backButton = button(text("Back", color: colours.white618), () {
 final icons = _Icons();
 
 class _Icons {
-  final creditCard = buildDecorationImage(image: decorationImages.creditCard, color: none, width: 32, height: 32, borderColor: none);
-  final cherries = buildDecorationImage(image: decorationImages.cherries, color: none, width: 32, height: 32, borderColor: none);
-  final mail = buildDecorationImage(image: decorationImages.mail, color: none, width: 48, height: 48, borderColor: none);
+  final orbTopaz = buildDecorationImage(image: decorationImages.orbTopaz, color: none, width: 32, height: 32, borderColor: none);
 }
 
 

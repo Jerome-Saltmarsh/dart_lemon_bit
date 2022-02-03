@@ -12,6 +12,8 @@ class _Colors {
 
   final Color facebook = Color.fromRGBO(66, 103, 178, 1);
   final Color black = Color.fromRGBO(24, 21, 26, 1.0);
+  final Color brownDark = Color.fromRGBO(36, 33, 38, 1);
+  final Color brownLight = Color.fromRGBO(48, 48, 48, 1.0);
   final Color black05 = Colors.black.withOpacity(0.05);
   final Color black10 = Colors.black.withOpacity(0.1);
   final Color black15 = Colors.black.withOpacity(0.15);
