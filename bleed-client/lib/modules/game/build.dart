@@ -211,8 +211,14 @@ class GameBuild {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: storeTabs.map((storeTab) => button(
                 mapStoreTabToIcon(storeTab),
-                    () => state.storeTab.value = activeStoreTab,
-                borderColor: activeStoreTab == storeTab ? colours.white618 : none
+                    () => state.storeTab.value = storeTab,
+                borderColor: none,
+               fillColor: activeStoreTab == storeTab ? colours.white618 : none,
+              borderColorMouseOver: none,
+              fillColorMouseOver: activeStoreTab == storeTab ? colours.white618 : colours.black618,
+              width: 60,
+              height: 50,
+              borderRadius: borderRadius2,
             )).toList(),
           ),
           Column(
