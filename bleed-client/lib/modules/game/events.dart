@@ -18,7 +18,6 @@ import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/parse.dart';
 import 'package:bleed_client/spawn.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/state/sharedPreferences.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';

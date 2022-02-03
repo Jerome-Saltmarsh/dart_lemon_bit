@@ -11,8 +11,13 @@ class Cache<T> extends Watch<T> {
 
     SharedPreferences.getInstance().then((shared){
       if (shared.containsKey(key)){
-        value = shared.getAny(key);
-        print("cache loaded {key: $key, value: $value}");
+        final cachedValue = shared.getAny(key);
+        if (cachedValue is T){
+          value = cachedValue;
+          print("cache loaded {key: $key, value: $value}");
+          return;
+        }
+        print("Invalid cached value type $cachedValue");
       }
     });
   }
