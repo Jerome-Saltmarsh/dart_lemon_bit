@@ -4,7 +4,9 @@ import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/constants/colours.dart';
+import 'package:bleed_client/modules/isometric/utilities.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/render/draw/drawBullets.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
@@ -36,6 +38,11 @@ class GameRender {
     }
 
     isometric.actions.applyEmissionsToDynamicShadeMap();
+
+    for(final item in game.items) {
+      isometric.actions.applyShadeDynamicPosition(item.x, item.y, Shade_Bright);
+    }
+
     isometric.actions.applyDynamicShadeToTileSrc();
     isometric.render.tiles();
     drawProjectiles(game.projectiles);

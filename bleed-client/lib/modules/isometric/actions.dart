@@ -287,6 +287,16 @@ class IsometricActions with IsometricScope {
     engine.actions.cameraCenter(properties.mapCenter.x, properties.mapCenter.y);
   }
 
+  void applyShadeDynamic(int row, int column, int value) {
+    applyShade(state.dynamicShading, row, column, value);
+  }
+
+  void applyShadeDynamicPosition(double x, double y, int value) {
+    final row = getRow(x,  y);
+    final column = getColumn(x, y);
+    applyShade(state.dynamicShading, row, column, value);
+  }
+
   void applyShade(
       List<List<int>> shader, int row, int column, int value) {
     if (queries.outOfBounds(row, column)) return;
@@ -454,6 +464,7 @@ class IsometricActions with IsometricScope {
     applyCharacterLightEmission(game.zombies);
     applyProjectileLighting();
     applyNpcLightEmission(game.interactableNpcs);
+
     final dynamicShading = modules.isometric.state.dynamicShading;
 
     for (Effect effect in game.effects) {

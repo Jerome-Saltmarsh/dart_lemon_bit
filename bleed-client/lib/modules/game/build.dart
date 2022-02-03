@@ -96,15 +96,61 @@ class GameBuild {
     });
   }
 
+  Widget healthBar() {
+    final width = 200.0;
+    final height = width *
+        goldenRatio_0381 *
+        goldenRatio_0381 *
+        goldenRatio_0381 *
+        goldenRatio_0381;
+
+    return WatchBuilder(state.player.health, (double health) {
+      final percentage = health / state.player.maxHealth;
+      return Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.white, width: 2),
+            borderRadius: borderRadius4),
+        alignment: Alignment.centerLeft,
+        padding: EdgeInsets.all(2),
+        child: Stack(
+          alignment: Alignment.centerLeft,
+          children: [
+            Container(
+              color: colours.redDarkest,
+              width: width,
+              height: height,
+            ),
+            Container(
+              color: colours.red,
+              width: width * percentage,
+              height: height,
+            ),
+            Container(
+              color: Colors.transparent,
+              width: width,
+              height: height,
+              alignment: Alignment.center,
+              child: text('${health.toInt()} / ${state.player.maxHealth}'),
+            ),
+          ],
+        ),
+      );
+    });
+  }
+
   Widget layoutRoyal(){
     return layout(
         children: [
+          bottomCenter(child: healthBar(), padding: 16),
           Positioned(
               right: 16,
               top: 50,
               child: Container(
-              width: 150,
-              height: 300,
+              width: 180,
+              height: 500,
+              padding: padding8,
               color: colours.red,
                 child: Column(
                   children: [
@@ -128,15 +174,21 @@ class GameBuild {
 
   Column columnPlayerSlots() {
     return Column(
-                    children: state.player.slots.list.map(playerSlot).toList(),
-                  );
+      children: [
+        text("INVENTORY"),
+        Column(
+                        children: state.player.slots.list.map(playerSlot).toList(),
+                      ),
+      ],
+    );
   }
 
   Column columnStore() {
     return Column(
       children: [
+        text("STORE"),
         button("Pendant", () {
-          if (state.player.orbs.ruby.value <= 0) return;
+          // if (state.player.orbs.ruby.value <= 0) return;
           final emptySlot = state.player.slots.emptySlot;
           if (emptySlot == null) return;
           state.player.orbs.ruby.value--;
@@ -171,7 +223,7 @@ class GameBuild {
           buildTextBox(),
           if (alive) buildBottomRight(),
           buildTopLeft(),
-          if (alive) buildBottomCenter(),
+          if (alive) characterStatistics(),
           if (!hud.state.observeMode && !alive) _buildViewRespawn(),
           if (!alive && hud.state.observeMode) _buildRespawnLight(),
           _buildServerText(),

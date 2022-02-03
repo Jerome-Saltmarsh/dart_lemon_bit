@@ -134,7 +134,7 @@ String padZero(num value) {
   return '0$t';
 }
 
-Widget buildBottomCenter() {
+Widget characterStatistics() {
   return Positioned(
       bottom: _padding,
       child: Container(
