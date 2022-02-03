@@ -1,9 +1,10 @@
 import '../common/AbilityType.dart';
+
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
 import '../common/PlayerEvent.dart';
 import '../common/Quests.dart';
-import '../common/StoreItem.dart';
+import '../common/SlotType.dart';
 import '../common/WeaponType.dart';
 import '../constants/no_squad.dart';
 import '../common/Tile.dart';
@@ -110,8 +111,6 @@ class _PlayerSlots {
   SlotType slot4 = SlotType.Empty;
   SlotType slot5 = SlotType.Empty;
   SlotType slot6 = SlotType.Empty;
-  SlotType slot7 = SlotType.Empty;
-  SlotType slot8 = SlotType.Empty;
 
   bool get emptySlotAvailable {
      if(slot1 == SlotType.Empty) return true;
@@ -120,8 +119,6 @@ class _PlayerSlots {
      if(slot4 == SlotType.Empty) return true;
      if(slot5 == SlotType.Empty) return true;
      if(slot6 == SlotType.Empty) return true;
-     if(slot7 == SlotType.Empty) return true;
-     if(slot8 == SlotType.Empty) return true;
      return false;
   }
 
@@ -148,14 +145,6 @@ class _PlayerSlots {
     }
     if(slot6 == SlotType.Empty) {
       slot6 = type;
-      return;
-    }
-    if(slot7 == SlotType.Empty) {
-      slot7 = type;
-      return;
-    }
-    if(slot8 == SlotType.Empty) {
-      slot8 = type;
       return;
     }
     throw Exception("could not assign item, not empty slots");

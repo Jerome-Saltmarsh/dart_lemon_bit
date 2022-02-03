@@ -19,6 +19,7 @@ import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/PlayerEvent.dart';
 import 'package:bleed_client/common/ServerResponse.dart';
+import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
@@ -88,6 +89,16 @@ void parseState() {
         orbs.ruby.value = consumeInt();
         orbs.topaz.value = consumeInt();
         orbs.emerald.value = consumeInt();
+        break;
+
+      case ServerResponse.Player_Slot_Types:
+        final slots = modules.game.state.player.slots;
+        slots.slot1.value = consumeSlotType();
+        slots.slot2.value = consumeSlotType();
+        slots.slot3.value = consumeSlotType();
+        slots.slot4.value = consumeSlotType();
+        slots.slot5.value = consumeSlotType();
+        slots.slot6.value = consumeSlotType();
         break;
 
       case ServerResponse.NpcsDebug:
@@ -522,6 +533,10 @@ int consumeInt() {
     throw Exception("could not parse $string to int");
   }
   return value;
+}
+
+SlotType consumeSlotType(){
+   return slotTypes[_consumeIntUnsafe()];
 }
 
 int _consumeIntUnsafe() {

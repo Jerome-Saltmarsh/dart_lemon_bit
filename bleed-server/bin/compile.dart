@@ -256,6 +256,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   }
 
   compilePlayerOrbs(buffer, player);
+  compilePlayerSlotTypes(buffer, player);
 
   if (player.weaponsDirty) {
     player.weaponsDirty = false;
@@ -276,6 +277,16 @@ void compilePlayerOrbs(StringBuffer buffer, Player player) {
   _write(buffer, player.orbs.ruby);
   _write(buffer, player.orbs.topaz);
   _write(buffer, player.orbs.emerald);
+}
+
+void compilePlayerSlotTypes(StringBuffer buffer, Player player) {
+  _write(buffer, ServerResponse.Player_Slot_Types.index);
+  _write(buffer, player.slots.slot1.index);
+  _write(buffer, player.slots.slot2.index);
+  _write(buffer, player.slots.slot3.index);
+  _write(buffer, player.slots.slot4.index);
+  _write(buffer, player.slots.slot5.index);
+  _write(buffer, player.slots.slot6.index);
 }
 
 void _compilePlayerAbility(StringBuffer buffer, Player player){

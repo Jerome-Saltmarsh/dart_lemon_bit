@@ -42,4 +42,5 @@ enum ServerResponse {
   Subscription_Required,
   Lobby_CountDown,
   Player_Orbs,
+  Player_Slot_Types,
 }

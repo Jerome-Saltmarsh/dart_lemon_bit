@@ -21,7 +21,7 @@ import 'common/GameType.dart';
 import 'common/Modify_Game.dart';
 import 'common/PlayerEvent.dart';
 import 'common/ServerResponse.dart';
-import 'common/StoreItem.dart';
+import 'common/SlotType.dart';
 import 'common/WeaponType.dart';
 import 'common/enums/Direction.dart';
 import 'common/version.dart';
