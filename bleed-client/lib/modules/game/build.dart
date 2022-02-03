@@ -108,10 +108,17 @@ class GameBuild {
               color: colours.red,
                 child: Column(
                   children: [
-                    columnOrbs(),
-                    columnStore(),
+                    Container(
+                        color: colours.black05,
+                        child: columnOrbs()),
                     height16,
-                    columnPlayerSlots()
+                    Container(
+                        color: colours.black05,
+                        child: columnStore()),
+                    height16,
+                    Container(
+                        color: colours.black05,
+                        child: columnPlayerSlots())
                   ],
                 ),
           )),
