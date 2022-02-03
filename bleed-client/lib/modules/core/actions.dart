@@ -287,10 +287,6 @@ class CoreActions {
     game.type.value = GameType.None;
   }
 
-  void toggleAudio() {
-    game.settings.audioMuted.value = !game.settings.audioMuted.value;
-  }
-
   void toggleEditMode() {
     core.state.mode.value = core.state.mode.value == Mode.Player ? Mode.Editor : Mode.Player;
   }

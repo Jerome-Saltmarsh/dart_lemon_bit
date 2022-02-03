@@ -293,9 +293,9 @@ class _Buttons {
   final Widget changeCharacter = button("Change Hero", () {
     sendClientRequest(ClientRequest.Reset_Character_Type);
   });
-  final Widget audio = WatchBuilder(game.settings.audioMuted, (bool audio) {
+  final Widget audio = WatchBuilder(modules.game.state.audioMuted, (bool audio) {
     return onPressed(
-        callback: core.actions.toggleAudio,
+        callback: modules.game.actions.toggleAudio,
         child: border(child: text(audio ? "Audio On" : "Audio Off")));
   });
 }

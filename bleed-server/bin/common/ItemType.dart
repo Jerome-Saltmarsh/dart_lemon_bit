@@ -25,6 +25,12 @@ enum ItemType {
 
 final List<ItemType> itemTypes = ItemType.values;
 
+final List<ItemType> orbTypes = [
+  ItemType.Orb_Ruby,
+  ItemType.Orb_Topaz,
+  ItemType.Orb_Emerald,
+];
+
 
 extension ItemTypeExtension on ItemType {
   bool get isWeapon {
@@ -35,3 +41,4 @@ extension ItemTypeExtension on ItemType {
     return _itemTypeWeaponType[this];
   }
 }
+

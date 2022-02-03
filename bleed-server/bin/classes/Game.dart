@@ -261,6 +261,10 @@ const characterMaxFrames = 99;
 
 extension GameFunctions on Game {
 
+  void spawnRandomOrb(double x, double y){
+    items.add(Item(type: randomItem(orbTypes), x: x, y: y));
+  }
+
   Vector2 getSceneCenter() => getTilePosition(scene.rows ~/ 2, scene.columns ~/ 2);
 
   int getFirstAliveZombieEnemyIndex(int team) {

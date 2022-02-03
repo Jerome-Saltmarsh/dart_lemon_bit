@@ -4,17 +4,13 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/randomItem.dart';
 
+import 'modules/modules.dart';
+
 // interface
 void initAudioPlayers() {
   for (int i = 0; i < _totalAudioPlayers; i++) {
     _audioPlayers.add(AudioPlayer());
   }
-}
-
-void playAudioButtonHover() {
-  if (game.settings.audioMuted.value) return;
-  _getAudioPlayer()
-      .play('assets/audio/button-hover.mp3', isLocal: true, volume: 1);
 }
 
 void playAudioSniperShot(double x, double y) {
@@ -213,7 +209,7 @@ AudioPlayer _getAudioPlayer() {
 }
 
 void _playAudio(String name, double x, double y) {
-  if (game.settings.audioMuted.value) return;
+  if (modules.game.state.audioMuted.value) return;
   double volume = _calculateVolume(x, y);
   _getAudioPlayer()
       .play('assets/audio/$name', isLocal: true, volume: volume)

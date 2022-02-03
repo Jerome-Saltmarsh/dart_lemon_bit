@@ -1,8 +1,14 @@
+import 'package:lemon_math/randomItem.dart';
+
+import '../classes/Character.dart';
 import '../classes/Crate.dart';
 import '../classes/Game.dart';
 import '../classes/InteractableNpc.dart';
+import '../classes/Item.dart';
+import '../classes/Npc.dart';
 import '../classes/Player.dart';
 import '../classes/Weapon.dart';
+import '../common/ItemType.dart';
 import '../common/Quests.dart';
 import '../common/WeaponType.dart';
 import '../enums/npc_mode.dart';
@@ -60,6 +66,11 @@ class Town extends Game {
         health: 100,weapon: Weapon(type: WeaponType.SniperRifle, damage: 5, capacity: 0));
     guard2.mode = NpcMode.Stand_Ground;
     npcs.add(guard2);
+  }
+
+  @override
+  void onNpcKilled(Npc npc, Character src){
+    spawnRandomOrb(npc.x, npc.y);
   }
 
   void _onGuardInteractedWith(Player player) {}

@@ -20,6 +20,7 @@ class GameMap {
       state.keyMap.speakLetsGreeting: actions.sayGreeting,
       state.keyMap.waitASecond: actions.sayWaitASecond,
       state.keyMap.text: actions.toggleMessageBox,
+      state.keyMap.toggleAudio: actions.toggleAudio,
       state.keyMap.hourForwards: actions.skipHour,
       state.keyMap.hourBackwards: actions.reverseHour,
       state.keyMap.teleport: actions.teleportToMouse,

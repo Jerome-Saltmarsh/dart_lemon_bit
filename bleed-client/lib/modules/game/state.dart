@@ -1,3 +1,4 @@
+import 'package:bleed_client/Cache.dart';
 import 'package:bleed_client/classes/Ability.dart';
 import 'package:bleed_client/classes/Weapon.dart';
 import 'package:bleed_client/common/AbilityType.dart';
@@ -18,11 +19,12 @@ class GameState {
   final _Player player = _Player();
   final Watch<GameStatus> status = Watch(GameStatus.Awaiting_Players);
   final TextEditingController textEditingControllerMessage = TextEditingController();
-  FocusNode textFieldMessage = FocusNode();
   final CharacterController characterController = CharacterController();
-  bool panningCamera = false;
   final KeyMap keyMap = KeyMap();
   final Watch<bool> textMode = Watch(false);
+  final Cache<bool> audioMuted = Cache(key: 'audio-muted', value: false);
+  bool panningCamera = false;
+  final FocusNode textFieldMessage = FocusNode();
 
   final List<String> letsGo = [
     "Come on!",

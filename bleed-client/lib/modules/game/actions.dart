@@ -68,6 +68,11 @@ class GameActions {
     state.textMode.value = !state.textMode.value;
   }
 
+  void toggleAudio(){
+    print("game.actions.toggleAudio()");
+    state.audioMuted.value = !state.audioMuted.value;
+  }
+
   void skipHour(){
     webSocket.send(ClientRequest.SkipHour.index.toString());
   }

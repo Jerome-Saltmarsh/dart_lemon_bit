@@ -94,7 +94,6 @@ class _Lobby {
 
 
 class _Settings {
-  Watch<bool> audioMuted = Watch(false);
   double zoomFollowSpeed = 0.1;
   double zoomSpeed = 0.0005;
   double maxZoom = 0.1;

@@ -33,6 +33,7 @@ class KeyMap {
   LogicalKeyboardKey waitASecond = LogicalKeyboardKey.digit0;
   LogicalKeyboardKey text = LogicalKeyboardKey.enter;
   LogicalKeyboardKey toggleLantern = LogicalKeyboardKey.keyL;
+  LogicalKeyboardKey toggleAudio = LogicalKeyboardKey.keyM;
   LogicalKeyboardKey hourForwards = LogicalKeyboardKey.arrowRight;
   LogicalKeyboardKey hourBackwards = LogicalKeyboardKey.arrowLeft;
   LogicalKeyboardKey teleport = LogicalKeyboardKey.keyG;

@@ -47,7 +47,6 @@ class GameEvents {
     state.player.uuid.onChanged(_onPlayerUuidChanged);
     state.player.alive.onChanged(_onPlayerAliveChanged);
     state.player.state.onChanged(onPlayerCharacterStateChanged);
-    game.settings.audioMuted.onChanged(onAudioMutedChanged);
     state.status.onChanged(_onGameStatusChanged);
     state.textMode.onChanged(onTextModeChanged);
     sub(_onGameError);
@@ -60,10 +59,6 @@ class GameEvents {
       state.textFieldMessage.unfocus();
       state.textEditingControllerMessage.text = "";
     }
-  }
-
-  void onAudioMutedChanged(bool value){
-    sharedPreferences.setBool('audioMuted', value);
   }
 
   void onPlayerCharacterStateChanged(CharacterState characterState){
