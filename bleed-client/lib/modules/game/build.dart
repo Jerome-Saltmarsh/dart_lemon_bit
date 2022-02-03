@@ -166,7 +166,6 @@ class GameBuild {
                 children: [
                   Container(
                     padding: EdgeInsets.symmetric(vertical: 8),
-                      // color: colours.brownLight,
                       child: rowOrbs()),
                   height16,
                   Container(
@@ -184,6 +183,7 @@ class GameBuild {
   Widget columnInventory() {
     final slots = state.player.slots;
     return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Column(
           children: [
