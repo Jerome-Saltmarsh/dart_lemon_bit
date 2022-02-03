@@ -29,6 +29,6 @@ class GameModule {
     events = GameEvents(actions, state);
     update = GameUpdate(state);
     map = GameMap(state, actions);
-    build = GameBuild(state);
+    build = GameBuild(state, actions);
   }
 }

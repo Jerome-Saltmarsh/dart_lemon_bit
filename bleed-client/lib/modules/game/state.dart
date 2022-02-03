@@ -5,7 +5,7 @@ import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameStatus.dart';
-import 'package:bleed_client/common/StoreItem.dart';
+import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/modules/modules.dart';

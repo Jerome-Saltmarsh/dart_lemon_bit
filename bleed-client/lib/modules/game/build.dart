@@ -1,10 +1,11 @@
+import 'package:bleed_client/modules/game/actions.dart';
 import 'package:lemon_watch/watch.dart';
 import 'dart:math';
 
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
-import 'package:bleed_client/common/StoreItem.dart';
+import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/flutterkit.dart';
@@ -32,7 +33,9 @@ import 'state.dart';
 class GameBuild {
 
   final GameState state;
-  GameBuild(this.state);
+  final GameActions actions;
+
+  GameBuild(this.state, this.actions);
 
   Widget buildUIGame() {
     return WatchBuilder(state.player.uuid, (String uuid) {
@@ -183,16 +186,11 @@ class GameBuild {
 
   Column columnStore() {
     return Column(
-      children: [
-        text("STORE"),
-        button("Pendant", () {
-          // if (state.player.orbs.ruby.value <= 0) return;
-          final emptySlot = state.player.slots.emptySlot;
-          if (emptySlot == null) return;
-          state.player.orbs.ruby.value--;
-          emptySlot.value = SlotType.Pendant;
-        }),
-      ],
+      children: SlotType.values.map((slotType){
+        return button(slotType.name, () {
+          actions.purchaseSlotType(slotType);
+        });
+      }).toList(),
     );
   }
 

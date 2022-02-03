@@ -1,6 +1,7 @@
 
 import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
+import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/modules/game/state.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/send.dart';
@@ -99,6 +100,10 @@ class GameActions {
 
   void sendRequestCastFireball(){
     // send('${ClientRequest.CasteFireball.index} $session $aim');
+  }
+
+  void purchaseSlotType(SlotType slotType){
+    webSocket.send('${ClientRequest.Purchase.index} $session ${slotType.index}');
   }
 
   void playerEquip(int index) {
