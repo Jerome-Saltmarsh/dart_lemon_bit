@@ -38,10 +38,17 @@ class GameState {
   final List<String> waitASecond = ['Wait a second', 'Just a moment'];
 }
 
+class _PlayerOrbs {
+  final Watch<int> ruby = Watch(0);
+  final Watch<int> topaz = Watch(0);
+  final Watch<int> emerald = Watch(0);
+}
+
 class _Player {
   int id = -1;
   double x = -1;
   double y = -1;
+  final orbs = _PlayerOrbs();
   final Watch<String> uuid = Watch("");
   final Watch<WeaponType> weaponType = Watch(WeaponType.Unarmed);
   final List<Weapon> weapons = [];

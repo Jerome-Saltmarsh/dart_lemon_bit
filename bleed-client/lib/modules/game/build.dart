@@ -59,7 +59,7 @@ class GameBuild {
               case GameType.Moba:
                 return playerCharacterType();
               case GameType.BATTLE_ROYAL:
-                return playerCharacterType();
+                return layoutRoyal();
               case GameType.CUBE3D:
                 return buildUI3DCube();
               default:
@@ -94,6 +94,23 @@ class GameBuild {
     });
   }
 
+  Widget layoutRoyal(){
+    return layout(
+        bottomRight: Row(
+          children: [
+            WatchBuilder(state.player.orbs.emerald, (int emeralds){
+                return text("Emeralds $emeralds");
+            }),
+            WatchBuilder(state.player.orbs.topaz, (int topaz){
+              return text("Topaz $topaz");
+            }),
+            WatchBuilder(state.player.orbs.ruby, (int rubies){
+              return text("Rubies $rubies");
+            }),
+          ],
+        )
+    );
+  }
 
   Widget _buildHudAbilities(){
     return WatchBuilder(modules.game.state.player.alive, (bool alive) {

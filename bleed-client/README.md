@@ -107,6 +107,8 @@
 [ ] Dynamic Objects (objects which move around the map and can be removed and added)
 [ ] Chests
 [ ] Slot machine concept
+[ ] Crafting System
+[ ] FIX Zombies stop rendering
 [x] Zombies don't attack
 [CORE]
 [x] FIX Google Login

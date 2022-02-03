@@ -16,7 +16,6 @@ import 'Entity.dart';
 import 'Game.dart';
 import 'Weapon.dart';
 
-
 class Player extends Character with Entity {
   String name = generateName();
   int lastUpdateFrame = 0;
@@ -33,6 +32,8 @@ class Player extends Character with Entity {
   int level = 1;
   int abilityPoints = 0;
   int _magic = 0;
+
+  final orbs = _Orbs();
 
   Character? _aimTarget; // the currently highlighted character
 
@@ -97,6 +98,12 @@ class Player extends Character with Entity {
             team: team){
     global.onPlayerCreated(this);
   }
+}
+
+class _Orbs {
+  int topaz = 0;
+  int ruby = 0;
+  int emerald = 0;
 }
 
 extension PlayerProperties on Player {

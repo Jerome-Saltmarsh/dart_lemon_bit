@@ -255,6 +255,8 @@ void compilePlayer(StringBuffer buffer, Player player) {
     _compilePlayerAbilities(buffer, player);
   }
 
+  compilePlayerOrbs(buffer, player);
+
   if (player.weaponsDirty) {
     player.weaponsDirty = false;
     compilePlayerWeapons(buffer, player);
@@ -267,6 +269,13 @@ void compilePlayer(StringBuffer buffer, Player player) {
   }
 
   _compilePlayerEvents(buffer, player);
+}
+
+void compilePlayerOrbs(StringBuffer buffer, Player player) {
+  _write(buffer, ServerResponse.Player_Orbs.index);
+  _write(buffer, player.orbs.ruby);
+  _write(buffer, player.orbs.topaz);
+  _write(buffer, player.orbs.emerald);
 }
 
 void _compilePlayerAbility(StringBuffer buffer, Player player){

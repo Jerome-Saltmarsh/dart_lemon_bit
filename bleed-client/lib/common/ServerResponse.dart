@@ -41,4 +41,5 @@ enum ServerResponse {
   Game_Royal,
   Subscription_Required,
   Lobby_CountDown,
+  Player_Orbs,
 }

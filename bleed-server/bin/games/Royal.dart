@@ -95,6 +95,16 @@ class GameRoyal extends Game {
       return true;
     }
 
+    if (item.type == ItemType.Orb_Emerald){
+      player.orbs.emerald++;
+    }
+    if (item.type == ItemType.Orb_Topaz){
+      player.orbs.topaz++;
+    }
+    if (item.type == ItemType.Orb_Ruby){
+      player.orbs.ruby++;
+    }
+
     if (item.type == ItemType.Armour) {
       player.armour = player.maxArmour;
     }
