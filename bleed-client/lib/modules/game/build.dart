@@ -97,7 +97,7 @@ class GameBuild {
   }
 
   Widget healthBar() {
-    final width = 250.0;
+    final width = 280.0;
     final height = width *
         goldenRatio_0381 *
         goldenRatio_0381;
@@ -108,10 +108,10 @@ class GameBuild {
         width: width,
         height: height,
         decoration: BoxDecoration(
-            border: Border.all(color: Colors.white, width: 2),
+            border: Border.all(color: colours.none, width: 2),
             borderRadius: borderRadius4),
         alignment: Alignment.centerLeft,
-        padding: EdgeInsets.all(2),
+        // padding: EdgeInsets.all(2),
         child: Stack(
           alignment: Alignment.centerLeft,
           children: [
