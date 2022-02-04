@@ -7,8 +7,9 @@ enum SlotType {
   Sword_Wooden,
   Sword_Short,
   Sword_Long,
-  Bow_Basic,
-  Forest_Bow,
+  Bow_Wooden,
+  Bow_Green,
+  Bow_Gold,
   Wooden_Staff,
   Leather_Cap,
   Guards_Helmet
@@ -23,7 +24,7 @@ class _SlotTypes {
 
   final List<SlotType> weapons = [
     SlotType.Sword_Short,
-    SlotType.Forest_Bow,
+    SlotType.Bow_Wooden,
     SlotType.Sword_Wooden,
   ];
 

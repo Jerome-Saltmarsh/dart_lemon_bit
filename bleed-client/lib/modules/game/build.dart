@@ -289,9 +289,9 @@ class GameBuild {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  _storeSlot(SlotType.Bow_Basic),
-                  _storeSlot(SlotType.Bow_Basic),
-                  _storeSlot(SlotType.Bow_Basic),
+                  _storeSlot(SlotType.Bow_Wooden),
+                  _storeSlot(SlotType.Bow_Green),
+                  _storeSlot(SlotType.Bow_Gold),
                 ],
               )
             ],

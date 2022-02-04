@@ -15,13 +15,27 @@ final Map<SlotType, _SlotTypeCost> slotTypeCosts = {
     rubies: 15,
     emeralds: 15,
   ),
+  SlotType.Bow_Wooden: _SlotTypeCost(
+    rubies: 15,
+    emeralds: 15,
+  ),
+  SlotType.Bow_Green: _SlotTypeCost(
+    rubies: 15,
+    emeralds: 15,
+  ),
+  SlotType.Bow_Gold: _SlotTypeCost(
+    rubies: 15,
+    emeralds: 15,
+  ),
 };
 
 final Map<SlotType, String> slotTypeNames = {
   SlotType.Sword_Wooden: "Wooden Sword",
   SlotType.Sword_Short: "Steel Sword",
   SlotType.Sword_Long: "Iron Sword",
-
+  SlotType.Bow_Wooden: "Wooden Bow",
+  SlotType.Bow_Gold: "Golden Bow",
+  SlotType.Bow_Green: "Forest Bow",
 };
 
 class _SlotTypeCost {
