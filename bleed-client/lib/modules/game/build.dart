@@ -568,25 +568,27 @@ class GameBuild {
         onRightClick: (){
           actions.sellSlotItem(index);
         },
-        child: Container(
-            width: 60,
-            height: 60,
-            decoration: state.player.equippedWeaponSlotIndex.value != index
-                ? null
-                : BoxDecoration(
-                borderRadius: borderRadius0,
-                border:  Border.all(color: colours.white382, width: 2)
-            ),
-            child: Stack(
-              children: [
-                Container(
-                  width: 50,
-                  height: 50,
-                  child: getSlotTypeImage(slotType),
-                ),
-                Positioned(child: text(index, size: 14, color: colours.white618), bottom: 5, right: 5,)
-              ],
-            )),
+        child: WatchBuilder(state.player.equippedWeaponSlotIndex, (int equippedWeaponSlotIndex){
+          return Container(
+              width: 60,
+              height: 60,
+              decoration: state.player.equippedWeaponSlotIndex.value != index
+                  ? null
+                  : BoxDecoration(
+                  borderRadius: borderRadius0,
+                  border:  Border.all(color: colours.white382, width: 2)
+              ),
+              child: Stack(
+                children: [
+                  Container(
+                    width: 50,
+                    height: 50,
+                    child: getSlotTypeImage(slotType),
+                  ),
+                  Positioned(child: text(index, size: 14, color: colours.white618), bottom: 5, right: 5,)
+                ],
+              ));
+        }),
       );
     });
   }

@@ -113,6 +113,7 @@ class Player extends Character with Entity {
       if (index < 0) return;
       if (index > 6) return;
       final slot = slots.getSlotTypeAtIndex(index);
+      if (slot == SlotType.Empty) return;
       final slotIsWeapon = slotTypes.weapons.contains(slot);
       if (slotIsWeapon){
           equippedWeaponSlotIndex = index;
