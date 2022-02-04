@@ -18,6 +18,7 @@ void drawCharacter(Character character) {
   final shade = isometric.properties.getShadeAtPosition(character.x, character.y);
   if (shade > (Shade_Dark)) return;
 
+
   mapCharacterSrc(
     type: character.type,
     state: character.state,
@@ -28,14 +29,22 @@ void drawCharacter(Character character) {
   );
 
   mapCharacterDst(character, character.type);
+
   engine.actions.renderAtlas();
 
-  if (character.equippedSlotType == SlotType.Sword_Wooden){
-    if (character.state == CharacterState.Idle){
-      srcSingle(atlas: atlas.swordIdle, direction: character.direction);
+
+
+  if (character.state == CharacterState.Idle){
+    if (character.equippedSlotType == SlotType.Sword_Wooden){
+      srcSingle(atlas: atlas.weapons.swordWooden.idle, direction: character.direction);
+      engine.actions.renderAtlas();
+    }
+    if (character.equippedSlotType == SlotType.Sword_Short){
+      srcSingle(atlas: atlas.weapons.swordSteel.idle, direction: character.direction);
       engine.actions.renderAtlas();
     }
   }
+
 
   if (
     character.type == CharacterType.Witch ||

@@ -22,14 +22,25 @@ class _Atlas {
   final _Archer archer = _Archer();
   final _Knight knight = _Knight();
   final _Projectiles projectiles = _Projectiles();
-
-  final swordIdle = Vector2(2,  883);
-
   final Vector2 cloud = Vector2(2,  4044);
   final Vector2 cloudSize = Vector2(43, 29);
   final _Fish fish = _Fish();
 
   final _Items items = _Items();
+  final _Weapons weapons = _Weapons();
+}
+
+class _Weapons {
+  final _SwordSteel swordSteel = _SwordSteel();
+  final _SwordWooden swordWooden = _SwordWooden();
+}
+
+class  _SwordSteel {
+  final Vector2 idle = Vector2(2,  883);
+}
+
+class _SwordWooden {
+  final Vector2 idle = Vector2(2, 948);
 }
 
 class _Items {
