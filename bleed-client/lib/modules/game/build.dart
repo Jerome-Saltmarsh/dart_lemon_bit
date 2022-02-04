@@ -217,13 +217,13 @@ class GameBuild {
                   height16,
                   Container(
                       color: colours.brownLight,
-                      child: columnInventory())
+                      child: _panelInventory())
                 ],
               ),
         );
   }
 
-  Widget columnInventory() {
+  Widget _panelInventory() {
     final slots = state.player.slots;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -231,18 +231,18 @@ class GameBuild {
         Column(
           children: [
             playerSlot(slots.slot1, 1),
-            playerSlot(slots.slot2, 2),
-          ],
-        ),
-        Column(
-          children: [
-            playerSlot(slots.slot3, 3),
             playerSlot(slots.slot4, 4),
           ],
         ),
         Column(
           children: [
+            playerSlot(slots.slot2, 2),
             playerSlot(slots.slot5, 5),
+          ],
+        ),
+        Column(
+          children: [
+            playerSlot(slots.slot3, 3),
              playerSlot(slots.slot6, 6),
           ],
         ),
