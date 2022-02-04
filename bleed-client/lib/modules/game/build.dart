@@ -572,11 +572,9 @@ class GameBuild {
           return Container(
               width: 60,
               height: 60,
-              decoration: state.player.equippedWeaponSlotIndex.value != index
-                  ? null
-                  : BoxDecoration(
+              decoration: BoxDecoration(
                   borderRadius: borderRadius0,
-                  border:  Border.all(color: colours.white382, width: 2)
+                  border:  Border.all(color: state.player.equippedWeaponSlotIndex.value == index ? colours.white382 : none, width: 2)
               ),
               child: Stack(
                 children: [
