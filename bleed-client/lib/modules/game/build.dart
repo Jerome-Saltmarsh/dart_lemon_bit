@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/common/RoyalCost.dart';
 import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
@@ -101,7 +102,7 @@ class GameBuild {
     });
   }
 
-  Widget healthBar() {
+  Widget _healthBar() {
     final width = 280.0;
     final height = width *
         goldenRatio_0381 *
@@ -146,26 +147,58 @@ class GameBuild {
   Widget layoutRoyal(){
     return layout(
         children: [
-          bottomCenter(child: healthBar(), padding: 8),
+          bottomCenter(child: _healthBar(), padding: 8),
           Positioned(
-              right: 16,
-              bottom: 16,
-              child: panelMagicStore()),
-      WatchBuilder(state.highLightSlotType, (SlotType child) {
-        if (child == SlotType.Empty) return empty;
-        return Positioned(
-          child: Container(
-            color: colours.brownDark,
-            child: text(child)
-          ),
-          right: (engine.state.screen.width - mouseX) + 50,
-          top: mouseY,
-        );
-      }),
+              right: 8,
+              bottom: 8,
+              child: _panelMagicStore()),
+      _highlightedSlotType(),
     ]);
   }
 
-  Container panelMagicStore() {
+  WatchBuilder<SlotType> _highlightedSlotType() {
+    return WatchBuilder(state.highLightSlotType, (SlotType slotType) {
+      if (slotType == SlotType.Empty) return empty;
+
+      final cost = slotTypeCosts[slotType];
+      if (cost == null){
+        throw Exception("no cast found for $slotType");
+      }
+
+      return Positioned(
+        child: Container(
+          color: colours.brownDark,
+          child: Column(
+            children: [
+              text(slotType.name),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  if (cost.topaz > 0)
+                    Row(
+                      children: [resources.icons.topaz, text(cost.topaz)],
+                    ),
+                  if (cost.rubies > 0)
+                    Row(
+                      children: [resources.icons.ruby, text(cost.rubies)],
+                    ),
+                  if (cost.emeralds > 0)
+                    Row(
+                      children: [resources.icons.emerald, text(cost.emeralds)],
+                    )
+                ],
+              ),
+
+            ],
+          )
+        ),
+        right: (engine.state.screen.width - mouseX) + 50,
+        top: mouseY,
+      );
+    });
+  }
+
+  Container _panelMagicStore() {
     return Container(
             width: 200,
             // height: 650,
@@ -250,18 +283,6 @@ class GameBuild {
                   _storeSlot(SlotType.Sword_Wooden),
                   _storeSlot(SlotType.Sword_Short),
                   _storeSlot(SlotType.Sword_Long),
-                  //   mouseOver(onEnter: () {
-                  //     state.highLightSlotType.value = SlotType.Sword_Wooden;
-                  // }, onExit: () {
-                  //     if (state.highLightSlotType.value == SlotType.Sword_Wooden){
-                  //       state.highLightSlotType.value = SlotType.Empty;
-                  //     }
-                  // }, builder: (context, isOver) {
-                  //   return Container(
-                  //       width: 50,
-                  //       height: 50,
-                  //       child: getSlotTypeImage(SlotType.Sword_Wooden));
-                  // }),
                 ],
               ),
 
