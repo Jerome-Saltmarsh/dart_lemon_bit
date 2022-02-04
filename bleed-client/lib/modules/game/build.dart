@@ -241,15 +241,15 @@ class GameBuild {
                     Container(
                         width: 50,
                         height: 50,
-                        child: getSlotTypeImage(SlotType.Wooden_Sword)),
+                        child: getSlotTypeImage(SlotType.Sword_Wooden)),
                   Container(
                       width: 50,
                       height: 50,
-                      child: getSlotTypeImage(SlotType.Short_Sword)),
+                      child: getSlotTypeImage(SlotType.Sword_Short)),
                   Container(
                       width: 50,
                       height: 50,
-                      child: getSlotTypeImage(SlotType.Long_Sword))
+                      child: getSlotTypeImage(SlotType.Sword_Long))
                 ],
               ),
 
@@ -529,6 +529,7 @@ Widget getSlotTypeImage(SlotType value){
 
 // ui maps
 final Map<SlotType, Widget> _slotTypeImages = {
-  SlotType.Short_Sword : resources.icons.sword,
-  SlotType.Wooden_Sword : resources.icons.swordWooden,
+  SlotType.Sword_Short : resources.icons.sword,
+  SlotType.Sword_Wooden : resources.icons.swordWooden,
+  SlotType.Sword_Long : resources.icons.swordIron,
 };

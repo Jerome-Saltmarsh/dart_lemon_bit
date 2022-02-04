@@ -4,9 +4,9 @@ enum SlotType {
   Frogs_Amulet,
   Brace,
   Dagger,
-  Wooden_Sword,
-  Short_Sword,
-  Long_Sword,
+  Sword_Wooden,
+  Sword_Short,
+  Sword_Long,
   Forest_Bow,
   Wooden_Staff,
   Leather_Cap,
@@ -21,9 +21,9 @@ class _SlotTypes {
   final List<SlotType> all = SlotType.values;
 
   final List<SlotType> weapons = [
-    SlotType.Short_Sword,
+    SlotType.Sword_Short,
     SlotType.Forest_Bow,
-    SlotType.Wooden_Sword,
+    SlotType.Sword_Wooden,
   ];
 
   final List<SlotType> armour = [
