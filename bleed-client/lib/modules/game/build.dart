@@ -569,9 +569,18 @@ class GameBuild {
           actions.sellSlotItem(index);
         },
         child: Container(
-            width: 50,
-            height: 50,
-            child: getSlotTypeImage(slotType)),
+            width: 60,
+            height: 60,
+            child: Stack(
+              children: [
+                Container(
+                  width: 50,
+                  height: 50,
+                  child: getSlotTypeImage(slotType),
+                ),
+                Positioned(child: text(index, size: 14, color: colours.white618), bottom: 5, right: 5,)
+              ],
+            )),
       );
     });
   }
