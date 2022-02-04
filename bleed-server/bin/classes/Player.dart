@@ -35,6 +35,8 @@ class Player extends Character with Entity {
   int abilityPoints = 0;
   int _magic = 0;
 
+  int equippedWeaponSlotIndex = 0;
+
   final slots = _PlayerSlots();
 
   final orbs = _Orbs();
@@ -108,6 +110,10 @@ class Player extends Character with Entity {
       if (index < 0) return;
       if (index > 6) return;
       final slot = slots.getSlotTypeAtIndex(index);
+      final slotIsWeapon = slotTypes.weapons.contains(slot);
+      if (slotIsWeapon){
+          equippedWeaponSlotIndex = index;
+      }
   }
 }
 

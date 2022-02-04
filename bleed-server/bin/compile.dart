@@ -436,8 +436,8 @@ void _compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.name);
   _write(buffer, player.text);
   _write(buffer, _comma);
-  _write(buffer, (player.health / player.maxHealth) * 100);
-  _write(buffer, (player.magic / player.maxMagic) * 100);
+  _writeInt(buffer, (player.health / player.maxHealth) * 100);
+  _writeInt(buffer, (player.magic / player.maxMagic) * 100);
   _write(buffer, player.isHuman ? player.weapon.type.index : WeaponType.Unarmed.index);
 }
 
