@@ -232,16 +232,20 @@ class GameBuild {
           children: [
             playerSlot(slots.slot1, 1),
             playerSlot(slots.slot2, 2),
-            playerSlot(slots.slot3, 3),
           ],
         ),
         Column(
           children: [
+            playerSlot(slots.slot3, 3),
             playerSlot(slots.slot4, 4),
-            playerSlot(slots.slot5, 5),
-            playerSlot(slots.slot6, 6),
           ],
-        )
+        ),
+        Column(
+          children: [
+            playerSlot(slots.slot5, 5),
+             playerSlot(slots.slot6, 6),
+          ],
+        ),
       ],
     );
   }
