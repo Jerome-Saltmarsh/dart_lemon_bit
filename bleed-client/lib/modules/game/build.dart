@@ -234,17 +234,26 @@ class GameBuild {
             )).toList(),
           ),
           Column(
-            children: mapStoreTabSlotTypes(activeStoreTab).map((slotType) {
-              return button(
-                getSlotTypeImage(slotType),
-                () {
-                  actions.purchaseSlotType(slotType);
-                },
-                borderColor: none,
-                width: 50,
-                height: 50
-              );
-            }).toList(),
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                    Container(
+                        width: 50,
+                        height: 50,
+                        child: getSlotTypeImage(SlotType.Wooden_Sword)),
+                  Container(
+                      width: 50,
+                      height: 50,
+                      child: getSlotTypeImage(SlotType.Short_Sword)),
+                  Container(
+                      width: 50,
+                      height: 50,
+                      child: getSlotTypeImage(SlotType.Long_Sword))
+                ],
+              ),
+
+            ],
           ),
         ],
       );
@@ -521,5 +530,5 @@ Widget getSlotTypeImage(SlotType value){
 // ui maps
 final Map<SlotType, Widget> _slotTypeImages = {
   SlotType.Short_Sword : resources.icons.sword,
-  SlotType.Wooden_Sword : resources.icons.woodenSword,
+  SlotType.Wooden_Sword : resources.icons.swordWooden,
 };
