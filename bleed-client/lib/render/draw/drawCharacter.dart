@@ -2,6 +2,7 @@ import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/SlotType.dart';
+import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/modules/modules.dart';
@@ -18,32 +19,15 @@ void drawCharacter(Character character) {
   final shade = isometric.properties.getShadeAtPosition(character.x, character.y);
   if (shade > (Shade_Dark)) return;
 
-
-  mapCharacterSrc(
-    type: character.type,
-    state: character.state,
-    weapon: character.weapon,
-    direction: character.direction,
-    frame: character.frame,
-    shade: shade,
-  );
-
-  mapCharacterDst(character, character.type);
-
-  engine.actions.renderAtlas();
-
-
-
-  if (character.state == CharacterState.Idle){
-    if (character.equippedSlotType == SlotType.Sword_Wooden){
-      srcSingle(atlas: atlas.weapons.swordWooden.idle, direction: character.direction);
-      engine.actions.renderAtlas();
-    }
-    if (character.equippedSlotType == SlotType.Sword_Short){
-      srcSingle(atlas: atlas.weapons.swordSteel.idle, direction: character.direction);
-      engine.actions.renderAtlas();
-    }
+  if (character.direction.index > Direction.Right.index){
+    _renderCharacterWeapon(character);
+    _renderCharacter(character, shade);
+  } else {
+    _renderCharacter(character, shade);
+    _renderCharacterWeapon(character);
   }
+
+
 
 
   if (
@@ -57,4 +41,33 @@ void drawCharacter(Character character) {
   }
 
   drawCharacterHealthBar(character);
+}
+
+void _renderCharacter(Character character, int shade) {
+   mapCharacterSrc(
+    type: character.type,
+    state: character.state,
+    weapon: character.weapon,
+    direction: character.direction,
+    frame: character.frame,
+    shade: shade,
+  );
+  mapCharacterDst(character, character.type);
+  engine.actions.renderAtlas();
+}
+
+void _renderCharacterWeapon(Character character) {
+  
+  if (character.equippedSlotType == SlotType.Empty) return;
+
+  if (character.equippedSlotType == SlotType.Sword_Wooden){
+    srcSingle(atlas: atlas.weapons.swordWooden.idle, direction: character.direction);
+    mapCharacterDst(character, character.type);
+    engine.actions.renderAtlas();
+  }
+  if (character.equippedSlotType == SlotType.Sword_Short){
+    srcSingle(atlas: atlas.weapons.swordSteel.idle, direction: character.direction);
+    mapCharacterDst(character, character.type);
+    engine.actions.renderAtlas();
+  }
 }
