@@ -26,6 +26,7 @@ class _Icons {
   final book = _image("book");
   final swordWooden = _image("sword-wooden");
   final swordIron = _image("sword-iron");
+  final bowBasic = _image("bow-basic");
   final unknown = _image("unknown");
 }
 

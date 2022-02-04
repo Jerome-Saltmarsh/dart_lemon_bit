@@ -51,6 +51,7 @@ class GameState {
     SlotType.Sword_Short : resources.icons.sword,
     SlotType.Sword_Wooden : resources.icons.swordWooden,
     SlotType.Sword_Long : resources.icons.swordIron,
+    SlotType.Bow_Basic : resources.icons.bowBasic,
   };
 
 }

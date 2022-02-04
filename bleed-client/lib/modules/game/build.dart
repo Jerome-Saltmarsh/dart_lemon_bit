@@ -286,7 +286,14 @@ class GameBuild {
                   _storeSlot(SlotType.Sword_Long),
                 ],
               ),
-
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _storeSlot(SlotType.Bow_Basic),
+                  _storeSlot(SlotType.Bow_Basic),
+                  _storeSlot(SlotType.Bow_Basic),
+                ],
+              )
             ],
           ),
         ],

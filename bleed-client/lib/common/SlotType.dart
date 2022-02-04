@@ -7,6 +7,7 @@ enum SlotType {
   Sword_Wooden,
   Sword_Short,
   Sword_Long,
+  Bow_Basic,
   Forest_Bow,
   Wooden_Staff,
   Leather_Cap,
