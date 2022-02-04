@@ -127,7 +127,19 @@ class GameActions {
 
   void sellSlotItem(int index){
     print("game.actions.sellSlotItem($index)");
-    if (index <= 0 || index > 6) throw Exception("Slot item must between 1 and 6 inclusive");
+    _verifyValidSlotIndex(index);
     sendClientRequest(ClientRequest.Sell_Slot, index);
+  }
+
+  /// valid between 1 and 6 inclusive
+  void equipSlot(int index){
+    print("game.actions.equipSlot($index)");
+    _verifyValidSlotIndex(index);
+    sendClientRequest(ClientRequest.Equip_Slot, index);
+  }
+
+  void _verifyValidSlotIndex(int index){
+      if (index <= 0 || index > 6)
+        throw Exception("Slot item index must between 1 and 6 inclusive. (received $index)");
   }
 }

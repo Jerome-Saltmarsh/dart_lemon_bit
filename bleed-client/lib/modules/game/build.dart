@@ -563,7 +563,7 @@ class GameBuild {
     return WatchBuilder(slot, (SlotType slotType){
       return onPressed(
         callback: (){
-          // TODO show context menu
+          actions.equipSlot(index);
         },
         onRightClick: (){
           actions.sellSlotItem(index);

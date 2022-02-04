@@ -590,6 +590,28 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           selectCharacterType(player, characterTypes[characterTypeIndex]);
           break;
 
+        case ClientRequest.Equip_Slot:
+          if (arguments.length != 3) {
+            return errorArgsExpected(3, arguments);
+          }
+
+          Player? player = findPlayerByUuid(arguments[1]);
+          if (player == null) {
+            return errorPlayerNotFound();
+          }
+
+          int? inventoryIndex = int.tryParse(arguments[2]);
+          if (inventoryIndex == null){
+            return errorIntegerExpected(2, arguments[2]);
+          }
+          if (inventoryIndex < 1 || inventoryIndex > 6) {
+            return errorInvalidArg('inventory index out of bounds');
+          }
+
+          player.useSlot(inventoryIndex);
+
+          break;
+
         case ClientRequest.Sell_Slot:
           if (arguments.length != 3) {
             return errorArgsExpected(3, arguments);

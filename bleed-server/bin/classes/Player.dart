@@ -102,6 +102,13 @@ class Player extends Character with Entity {
             team: team){
     global.onPlayerCreated(this);
   }
+
+  void useSlot(int index) {
+      if (deadOrBusy) return;
+      if (index < 0) return;
+      if (index > 6) return;
+      final slot = slots.getSlotTypeAtIndex(index);
+  }
 }
 
 class _PlayerSlots {
@@ -111,6 +118,25 @@ class _PlayerSlots {
   SlotType slot4 = SlotType.Empty;
   SlotType slot5 = SlotType.Empty;
   SlotType slot6 = SlotType.Empty;
+
+  SlotType getSlotTypeAtIndex(int index){
+      switch(index){
+        case 1:
+          return slot1;
+        case 2:
+          return slot2;
+        case 3:
+          return slot3;
+        case 4:
+          return slot4;
+        case 5:
+          return slot5;
+        case 6:
+          return slot6;
+        default:
+          throw Exception("$index is not a valid slot index (1 - 6 inclusive)");
+      }
+  }
 
   void assignSlotAtIndex(int index, SlotType value){
     switch(index){
