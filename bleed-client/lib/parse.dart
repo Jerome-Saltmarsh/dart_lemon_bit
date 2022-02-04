@@ -737,6 +737,7 @@ void _consumeHuman(Character character) {
   character.health = _consumePercentage();
   character.magic = _consumePercentage();
   character.weapon = _consumeWeaponType();
+  character.equippedSlotType = consumeSlotType();
 }
 
 void _consumeZombie(Zombie zombie) {

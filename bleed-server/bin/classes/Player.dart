@@ -35,7 +35,10 @@ class Player extends Character with Entity {
   int abilityPoints = 0;
   int _magic = 0;
 
-  int equippedWeaponSlotIndex = 0;
+  /// this refers to the inventory slots ranging from 1 to 6
+  int equippedWeaponSlotIndex = 1;
+  /// This refers to the enum index of the Slot Type value at the equipped slot type index
+  SlotType get equippedWeaponSlotType => slots.getSlotTypeAtIndex(equippedWeaponSlotIndex);
 
   final slots = _PlayerSlots();
 

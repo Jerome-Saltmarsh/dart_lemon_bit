@@ -1,5 +1,6 @@
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
+import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:lemon_math/Vector2.dart';
@@ -10,6 +11,7 @@ class Character extends Vector2{
   Direction direction;
   int frame;
   WeaponType weapon;
+  SlotType equippedSlotType = SlotType.Empty;
   int team;
   String name;
   String text;
