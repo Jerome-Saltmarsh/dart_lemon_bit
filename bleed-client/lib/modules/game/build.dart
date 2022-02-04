@@ -167,10 +167,11 @@ class GameBuild {
 
       return Positioned(
         child: Container(
+          padding: padding8,
           color: colours.brownDark,
           child: Column(
             children: [
-              text(slotType.name),
+              text(slotTypeNames[slotType]),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -551,6 +552,7 @@ class GameBuild {
       return Container(
           width: 50,
           height: 50,
+          color: isOver ? colours.black382 : none,
           child: getSlotTypeImage(slotType));
     });
   }

@@ -17,6 +17,13 @@ final Map<SlotType, _SlotTypeCost> slotTypeCosts = {
   ),
 };
 
+final Map<SlotType, String> slotTypeNames = {
+  SlotType.Sword_Wooden: "Wooden Sword",
+  SlotType.Sword_Short: "Steel Sword",
+  SlotType.Sword_Long: "Iron Sword",
+
+};
+
 class _SlotTypeCost {
   final int topaz;
   final int rubies;
