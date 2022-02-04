@@ -60,19 +60,18 @@ class _Human {
 
 class _Unarmed {
   final Vector2 idle = Vector2(1538, 1);
-  final Vector2 walking = Vector2(1, 1222);
   final Vector2 running = Vector2(0, 2206);
 }
 
 class _Handgun {
-  final Vector2 idle = Vector2(1026, 258);
-  final Vector2 walking = Vector2(1, 708);
-  final Vector2 firing = Vector2(1, 258);
+  final Vector2 idle = Vector2(1538, 66);
+  final Vector2 walking = Vector2(1, 195);
+  final Vector2 firing = Vector2(1, 66 );
 }
 
 class _Shotgun {
-  final Vector2 idle = Vector2(1539, 258);
-  final Vector2 walking = Vector2(1, 965);
+  final Vector2 idle = Vector2(1538, 130);
+  final Vector2 walking = Vector2(1, 260);
   final Vector2 firing = Vector2(1, 1);
 }
 
@@ -97,7 +96,7 @@ class  _Knight {
 class _Zombie {
   final Vector2 striking = Vector2(1, 2463);
   final Vector2 idle  = Vector2(1026, 2463);
-  final Vector2 walking  = Vector2(1, 2720);
+  final Vector2 running  = Vector2(1, 2720);
 }
 
 class _Projectiles {

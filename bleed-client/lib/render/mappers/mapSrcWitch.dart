@@ -23,14 +23,6 @@ void mapSrcWitch({
           size: 64,
           framesPerDirection: 1,
           frame: frame);
-    case CharacterState.Walking:
-      return srcLoop(
-          atlas: atlas.witch.running,
-          direction: direction,
-          shade: Shade_Bright,
-          size: 64,
-          framesPerDirection: 4,
-          frame: frame);
     case CharacterState.Dead:
     // TODO: Handle this case.
       break;

@@ -21,12 +21,6 @@ void mapSrcArcher({
           framesPerDirection: 1,
           frame: frame
       );
-    case CharacterState.Walking:
-      return srcLoop(
-          atlas: atlas.archer.running,
-          direction: direction,
-          frame: frame
-      );
     case CharacterState.Striking:
       return srcAnimate(
           animation: animations.archer.firing,

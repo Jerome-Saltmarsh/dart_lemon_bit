@@ -1,6 +1,5 @@
 enum CharacterState {
   Idle,
-  Walking,
   Dead,
   Aiming,
   Firing,

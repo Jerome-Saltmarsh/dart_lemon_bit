@@ -517,7 +517,7 @@ extension GameFunctions on Game {
         if (npc.path.length <= 1 &&
             !targetWithinStrikingRange(npc, npc.target)) {
           characterFaceV2(npc, npc.target);
-          setCharacterState(npc, CharacterState.Walking);
+          setCharacterState(npc, CharacterState.Running);
           return;
         }
       }
@@ -535,7 +535,7 @@ extension GameFunctions on Game {
       }
       // @on npc going to path
       characterFace(npc, npc.path[0].x, npc.path[0].y);
-      npc.state = CharacterState.Walking;
+      npc.state = CharacterState.Running;
       return;
     }
     npc.state = CharacterState.Idle;
@@ -935,7 +935,7 @@ extension GameFunctions on Game {
     }
 
     switch (player.state) {
-      case CharacterState.Walking:
+      case CharacterState.Running:
         if (player.lastUpdateFrame > 5) {
           setCharacterStateIdle(player);
         }
@@ -1134,7 +1134,7 @@ extension GameFunctions on Game {
           character.accuracy -= 0.005;
         }
         break;
-      case CharacterState.Walking:
+      case CharacterState.Running:
         switch (character.direction) {
           case Direction.Up:
             character.y -= character.speed;

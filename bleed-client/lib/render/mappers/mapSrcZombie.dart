@@ -24,9 +24,9 @@ void mapSrcZombie({
             frame: frame
         );
 
-    case CharacterState.Walking:
+    case CharacterState.Running:
       return srcLoop(
-          atlas: atlas.zombie.walking,
+          atlas: atlas.zombie.running,
           direction: direction,
           shade: shade,
           framesPerDirection: 4,

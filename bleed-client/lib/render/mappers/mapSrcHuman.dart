@@ -22,29 +22,6 @@ void mapSrcHuman({
         atlas: _idleWeaponTypeVector2[weaponType] ?? _idleWeaponTypeVector2[WeaponType.Unarmed]!,
         direction: direction,
       );
-    case CharacterState.Walking:
-      switch (weaponType) {
-        case WeaponType.Unarmed:
-          return srcLoop(
-              atlas: atlas.human.unarmed.walking,
-              direction: direction,
-              frame: frame
-          );
-        case WeaponType.HandGun:
-          return srcLoop(
-            atlas: atlas.human.handgun.walking,
-            direction: direction,
-            frame: frame
-          );
-        case WeaponType.Shotgun:
-          return srcLoop(
-              atlas: atlas.human.shotgun.walking,
-              direction: direction,
-              frame: frame
-          );
-        default:
-          return srcLoop(atlas: atlas.human.unarmed.walking, direction: direction, frame: frame);
-      }
 
     case CharacterState.Dead:
       return srcSingle(atlas: atlas.human.dying, direction: direction);
