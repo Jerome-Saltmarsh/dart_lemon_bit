@@ -549,11 +549,16 @@ class GameBuild {
         state.highLightSlotType.value = SlotType.Empty;
       }
     }, builder: (context, isOver) {
-      return Container(
-          width: 50,
-          height: 50,
-          color: isOver ? colours.black382 : none,
-          child: getSlotTypeImage(slotType));
+      return onPressed(
+        callback: (){
+          actions.purchaseSlotType(slotType);
+        },
+        child: Container(
+            width: 50,
+            height: 50,
+            color: isOver ? colours.black382 : none,
+            child: getSlotTypeImage(slotType)),
+      );
     });
   }
 

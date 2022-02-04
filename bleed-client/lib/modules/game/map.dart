@@ -25,7 +25,6 @@ class GameMap {
       state.keyMap.hourForwards: actions.skipHour,
       state.keyMap.hourBackwards: actions.reverseHour,
       state.keyMap.teleport: actions.teleportToMouse,
-      state.keyMap.casteFireball: actions.sendRequestCastFireball,
       state.keyMap.equip1: (){
         if (state.player.isHuman){
           actions.playerEquip(1);

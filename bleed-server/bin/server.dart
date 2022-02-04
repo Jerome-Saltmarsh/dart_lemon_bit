@@ -169,6 +169,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       clearBuffer();
       Player player = spawnPlayerInTown();
       player.name = playerName;
+
+      player.orbs.emerald = 10;
+      player.orbs.topaz = 10;
+      player.orbs.ruby = 10;
+
       compilePlayer(_buffer, player);
       write(
           '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player.x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.team}');
@@ -907,27 +912,27 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
 
           final slotType = slotTypes.all[slotItemIndex];
-
-          switch(slotType){
-            case SlotType.Empty:
-              break;
-            case SlotType.Silver_Pendant:
-              if (player.orbs.ruby < 0){
-                return errorInsufficientOrbs();
-              }
-              if (!player.slots.emptySlotAvailable){
-                return errorInventoryFull();
-              }
-              player.slots.assignToEmpty(SlotType.Silver_Pendant);
-              player.orbs.ruby--;
-              break;
-            case SlotType.Frogs_Amulet:
-              // TODO: Handle this case.
-              break;
-            case SlotType.Brace:
-              // TODO: Handle this case.
-              break;
-          }
+          player.slots.assignToEmpty(slotType);
+          // switch(slotType){
+          //   case SlotType.Empty:
+          //     break;
+          //   case SlotType.Silver_Pendant:
+          //     if (player.orbs.ruby < 0){
+          //       return errorInsufficientOrbs();
+          //     }
+          //     if (!player.slots.emptySlotAvailable){
+          //       return errorInventoryFull();
+          //     }
+          //     player.slots.assignToEmpty(SlotType.Silver_Pendant);
+          //     player.orbs.ruby--;
+          //     break;
+          //   case SlotType.Frogs_Amulet:
+          //     // TODO: Handle this case.
+          //     break;
+          //   case SlotType.Brace:
+          //     // TODO: Handle this case.
+          //     break;
+          // }
 
           return;
 

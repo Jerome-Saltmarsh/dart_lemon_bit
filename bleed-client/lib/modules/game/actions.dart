@@ -98,11 +98,8 @@ class GameActions {
     sendRequestSelectAbility(4);
   }
 
-  void sendRequestCastFireball(){
-    // send('${ClientRequest.CasteFireball.index} $session $aim');
-  }
-
   void purchaseSlotType(SlotType slotType){
+    print("game.actions.purchaseSlotType('${slotType.name}')");
     webSocket.send('${ClientRequest.Purchase.index} $session ${slotType.index}');
   }
 

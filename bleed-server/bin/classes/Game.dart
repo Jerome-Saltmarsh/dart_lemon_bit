@@ -1721,10 +1721,6 @@ extension GameFunctions on Game {
     character.collidable = true;
   }
 
-  Vector2 randomPlayerSpawnPoint() {
-    return randomItem(scene.playerSpawnPoints);
-  }
-
   Vector2 getNextSpawnPoint() {
     if (scene.playerSpawnPoints.isEmpty){
       throw Exception("player spawn points is empty (scene: '${scene.name}')");
