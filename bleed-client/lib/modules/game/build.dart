@@ -230,20 +230,20 @@ class GameBuild {
       children: [
         Column(
           children: [
-            playerSlot(slots.slot1, 1),
-            playerSlot(slots.slot4, 4),
+            _inventorySlot(slots.slot1, 1),
+            _inventorySlot(slots.slot4, 4),
           ],
         ),
         Column(
           children: [
-            playerSlot(slots.slot2, 2),
-            playerSlot(slots.slot5, 5),
+            _inventorySlot(slots.slot2, 2),
+            _inventorySlot(slots.slot5, 5),
           ],
         ),
         Column(
           children: [
-            playerSlot(slots.slot3, 3),
-             playerSlot(slots.slot6, 6),
+            _inventorySlot(slots.slot3, 3),
+             _inventorySlot(slots.slot6, 6),
           ],
         ),
       ],
@@ -559,7 +559,7 @@ class GameBuild {
             )));
   }
 
-  Widget playerSlot(Watch<SlotType> slot, int index){
+  Widget _inventorySlot(Watch<SlotType> slot, int index){
     return WatchBuilder(slot, (SlotType slotType){
       return onPressed(
         callback: (){
@@ -571,6 +571,12 @@ class GameBuild {
         child: Container(
             width: 60,
             height: 60,
+            decoration: state.player.equippedWeaponSlotIndex.value != index
+                ? null
+                : BoxDecoration(
+                borderRadius: borderRadius0,
+                border:  Border.all(color: colours.white382, width: 2)
+            ),
             child: Stack(
               children: [
                 Container(
