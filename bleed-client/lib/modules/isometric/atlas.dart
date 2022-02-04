@@ -4,7 +4,7 @@ import 'package:lemon_math/Vector2.dart';
 final _Atlas atlas = _Atlas();
 
 const _shadesX = 1.0;
-const _shadesY = 534.0;
+const _shadesY = 1.0;
 const _pixelSize = 8.0;
 
 class _Atlas {
@@ -14,10 +14,9 @@ class _Atlas {
   final Vector2  circle = Vector2(2410, 513);
   final _Zombie zombie = _Zombie();
   final _Particles particles = _Particles();
-  final _Pixels pixels = _Pixels();
+  final _Shades shades = _Shades();
   final Vector2 tiles = Vector2(1, 2977);
   final Vector2 rockWall = Vector2(2217, 1222);
-  final Vector2 arrow = Vector2(517, 534);
   final _Human human = _Human();
   final _Witch witch = _Witch();
   final _Archer archer = _Archer();
@@ -52,27 +51,27 @@ class _Human {
   final _Shotgun shotgun = _Shotgun();
   final Vector2 striking = Vector2(631, 2977);
   final Vector2 firingBow = Vector2(1, 3218);
-  final Vector2 changing = Vector2(1, 1479);
+  final Vector2 changing = Vector2(1, 131);
   final Vector2 dying = Vector2(1, 1736);
-  final Vector2 punching  = Vector2(1, 66);
+  final Vector2 punching  = Vector2(1, 196);
 
 }
 
 class _Unarmed {
   final Vector2 idle = Vector2(1538, 1);
-  final Vector2 running = Vector2(0, 2206);
+  final Vector2 running = Vector2(1, 391);
 }
 
 class _Handgun {
-  final Vector2 idle = Vector2(1538, 66);
-  final Vector2 walking = Vector2(1, 195);
-  final Vector2 firing = Vector2(1, 66 );
+  final Vector2 idle = Vector2(1538, 65);
+  final Vector2 running = Vector2(1, 521);
+  final Vector2 firing = Vector2(1, 66);
 }
 
 class _Shotgun {
   final Vector2 idle = Vector2(1538, 130);
-  final Vector2 walking = Vector2(1, 260);
-  final Vector2 firing = Vector2(1, 1);
+  final Vector2 running = Vector2(1, 456);
+  final Vector2 firing = Vector2(1, 753);
 }
 
 class  _Witch {
@@ -101,6 +100,7 @@ class _Zombie {
 
 class _Projectiles {
   final _Item fireball = _Item(2324, 1193, 32, 4);
+  final Vector2 arrow = Vector2(2295, 1306);
 }
 
 class _Particles {
@@ -115,9 +115,9 @@ class _Particles {
   final Vector2 circleBlackSmall  = Vector2(2316, 1193);
 }
 
-class _Pixels {
-  final double x = 1 ;
-  final double y = 534;
+class _Shades {
+  final double x = _shadesX;
+  final double y = _shadesY;
   final Vector2 red1 = Vector2(_shadesX + (11 * _pixelSize), _shadesY + (3 * _pixelSize));
   final Vector2 white1 = Vector2(_shadesX + (9 * _pixelSize), _shadesY + (3 * _pixelSize));
   final Vector2 yellow1 = Vector2(_shadesX + (23 * _pixelSize), _shadesY + (3 * _pixelSize));

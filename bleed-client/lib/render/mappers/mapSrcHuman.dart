@@ -78,25 +78,25 @@ void mapSrcHuman({
       switch (weaponType) {
         case WeaponType.HandGun:
           return srcLoop(
-              atlas: atlas.human.handgun.walking,
+              atlas: atlas.human.handgun.running,
               direction: direction,
               frame: frame
           );
         case WeaponType.Shotgun:
           return srcLoop(
-              atlas: atlas.human.shotgun.walking,
+              atlas: atlas.human.shotgun.running,
               direction: direction,
               frame: frame
           );
         case WeaponType.SniperRifle:
           return srcLoop(
-              atlas: atlas.human.shotgun.walking,
+              atlas: atlas.human.shotgun.running,
               direction: direction,
               frame: frame
           );
         case WeaponType.AssaultRifle:
           return srcLoop(
-              atlas: atlas.human.shotgun.walking,
+              atlas: atlas.human.shotgun.running,
               direction: direction,
               frame: frame
           );

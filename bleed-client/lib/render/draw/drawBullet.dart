@@ -60,7 +60,7 @@ void drawFireball(double x, double y, Direction direction) {
       [rect], null, null, null, engine.state.paint);
 }
 
-Rect _rectArrow = Rect.fromLTWH(atlas.arrow.x, atlas.arrow.y, 18, 51);
+Rect _rectArrow = Rect.fromLTWH(atlas.projectiles.arrow.x, atlas.projectiles.arrow.y, 18, 51);
 
 void drawArrow(double x, double y, double angle) {
   RSTransform rsTransform = RSTransform.fromComponents(

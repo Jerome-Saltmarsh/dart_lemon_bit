@@ -30,8 +30,8 @@ void mapParticleToSrc(Particle particle){
 
   switch(particle.type) {
     case ParticleType.Pixel:
-      final x = atlas.pixels.x + (particle.hue * 8);
-      final y = atlas.pixels.y + (3 * 8);
+      final x = atlas.shades.x + (particle.hue * 8);
+      final y = atlas.shades.y + (3 * 8);
       engine.actions.mapSrc(x: x, y: y, width: pixelSize, height: pixelSize);
       return;
 
