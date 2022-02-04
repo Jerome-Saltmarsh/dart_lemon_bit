@@ -10,7 +10,9 @@ enum SlotType {
   Bow_Wooden,
   Bow_Green,
   Bow_Gold,
-  Wooden_Staff,
+  Staff_Wooden,
+  Staff_Blue,
+  Staff_Golden,
   Leather_Cap,
   Guards_Helmet
 }

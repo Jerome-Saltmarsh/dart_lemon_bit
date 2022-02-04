@@ -29,6 +29,9 @@ class _Icons {
   final bowWooden = _image("bow-wooden");
   final bowGreen = _image("bow-green");
   final bowGold = _image("bow-gold");
+  final staffWooden = _image("staff-wooden");
+  final staffBlue = _image("staff-blue");
+  final staffGolden = _image("staff-golden");
   final unknown = _image("unknown");
 }
 

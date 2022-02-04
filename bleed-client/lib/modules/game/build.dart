@@ -297,12 +297,28 @@ class GameBuild {
                   _storeSlot(SlotType.Bow_Green),
                   _storeSlot(SlotType.Bow_Gold),
                 ],
+              ),
+              shopSlotRow(
+                  SlotType.Staff_Wooden,
+                  SlotType.Staff_Blue,
+                  SlotType.Staff_Golden
               )
             ],
           ),
         ],
       );
     });
+  }
+
+  Widget shopSlotRow(SlotType a, SlotType b, SlotType c){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        _storeSlot(a),
+        _storeSlot(b),
+        _storeSlot(c),
+      ],
+    );
   }
 
   Widget rowOrbs(){
