@@ -239,6 +239,8 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _writeInt(buffer, player.attackRange);
   _write(buffer, player.team);
 
+  _write(buffer, player.equippedWeaponSlotIndex);
+
   Character? aimTarget = player.aimTarget;
   if (aimTarget != null) {
     _write(buffer, ServerResponse.Player_Attack_Target.index);

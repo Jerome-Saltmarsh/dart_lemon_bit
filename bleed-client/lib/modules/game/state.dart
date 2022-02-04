@@ -142,6 +142,8 @@ class _Player {
   final Ability ability3 = Ability(3);
   final Ability ability4 = Ability(4);
 
+  final Watch<int> equippedWeaponSlotIndex = Watch(1);
+
   _Player() {
     magic.onChanged((double value) {
       ability1.canAfford.value = value >= ability1.magicCost.value;

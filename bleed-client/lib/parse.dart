@@ -440,6 +440,7 @@ void _parsePlayer() {
   player.maxMagic.value = consumeDouble();
   player.attackRange = consumeDouble();
   player.team = consumeInt();
+  player.equippedWeaponSlotIndex.value = consumeInt();
 }
 
 void _parsePlayerAbility(){
