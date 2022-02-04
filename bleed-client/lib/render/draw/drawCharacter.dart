@@ -1,8 +1,12 @@
 import 'package:bleed_client/classes/Character.dart';
+import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
+import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/render/draw/drawCharacterHealthBar.dart';
+import 'package:bleed_client/render/mappers/loop.dart';
 import 'package:bleed_client/render/mappers/mapCharacterDst.dart';
 import 'package:bleed_client/render/mappers/mapCharacterSrc.dart';
 import 'package:lemon_engine/engine.dart';
@@ -25,6 +29,13 @@ void drawCharacter(Character character) {
 
   mapCharacterDst(character, character.type);
   engine.actions.renderAtlas();
+
+  if (character.equippedSlotType == SlotType.Sword_Wooden){
+    if (character.state == CharacterState.Idle){
+      srcSingle(atlas: atlas.swordIdle, direction: character.direction);
+      engine.actions.renderAtlas();
+    }
+  }
 
   if (
     character.type == CharacterType.Witch ||

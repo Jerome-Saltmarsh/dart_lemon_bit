@@ -15,7 +15,7 @@ class _Atlas {
   final _Zombie zombie = _Zombie();
   final _Particles particles = _Particles();
   final _Shades shades = _Shades();
-  final Vector2 tiles = Vector2(1, 2977);
+  final Vector2 tiles = Vector2(2,  2977);
   final Vector2 rockWall = Vector2(2217, 1222);
   final _Human human = _Human();
   final _Witch witch = _Witch();
@@ -23,7 +23,9 @@ class _Atlas {
   final _Knight knight = _Knight();
   final _Projectiles projectiles = _Projectiles();
 
-  final Vector2 cloud = Vector2(1, 4044);
+  final swordIdle = Vector2(2,  883);
+
+  final Vector2 cloud = Vector2(2,  4044);
   final Vector2 cloudSize = Vector2(43, 29);
   final _Fish fish = _Fish();
 
@@ -31,18 +33,18 @@ class _Atlas {
 }
 
 class _Items {
-  final Vector2 handgun = Vector2(1, 567);
-  final Vector2 shotgun = Vector2(1, 632);
-  final Vector2 armour = Vector2(1, 1634);
-  final Vector2 health = Vector2(1, 1698);
-  final Vector2 crate = Vector2(1, 1763);
+  final Vector2 handgun = Vector2(2,  567);
+  final Vector2 shotgun = Vector2(2,  632);
+  final Vector2 armour = Vector2(2,  1634);
+  final Vector2 health = Vector2(2,  1698);
+  final Vector2 crate = Vector2(2,  1763);
   final Vector2 emerald = Vector2(2, 1836);
   final Vector2 orbRed = Vector2(2, 1901);
   final Vector2 orbTopaz = Vector2(2, 1966);
 }
 
 class _Fish {
-  final Vector2 swimming = Vector2(1, 1544);
+  final Vector2 swimming = Vector2(2,  1544);
 }
 
 class _Human {
@@ -50,52 +52,52 @@ class _Human {
   final _Handgun handgun = _Handgun();
   final _Shotgun shotgun = _Shotgun();
   final Vector2 striking = Vector2(631, 2977);
-  final Vector2 firingBow = Vector2(1, 3218);
-  final Vector2 changing = Vector2(1, 131);
-  final Vector2 dying = Vector2(1, 1736);
-  final Vector2 punching  = Vector2(1, 196);
+  final Vector2 firingBow = Vector2(2,  3218);
+  final Vector2 changing = Vector2(2,  131);
+  final Vector2 dying = Vector2(2,  1736);
+  final Vector2 punching  = Vector2(2,  196);
 
 }
 
 class _Unarmed {
   final Vector2 idle = Vector2(1538, 1);
-  final Vector2 running = Vector2(1, 391);
+  final Vector2 running = Vector2(2,  391);
 }
 
 class _Handgun {
   final Vector2 idle = Vector2(1538, 65);
-  final Vector2 running = Vector2(1, 521);
-  final Vector2 firing = Vector2(1, 66);
+  final Vector2 running = Vector2(2,  521);
+  final Vector2 firing = Vector2(2,  66);
 }
 
 class _Shotgun {
   final Vector2 idle = Vector2(1538, 130);
-  final Vector2 running = Vector2(1, 456);
-  final Vector2 firing = Vector2(1, 753);
+  final Vector2 running = Vector2(2,  456);
+  final Vector2 firing = Vector2(2,  753);
 }
 
 class  _Witch {
-  final Vector2 idle = Vector2(1, 3459);
-  final Vector2 running = Vector2(1, 3524);
-  final Vector2 striking = Vector2(1, 3589);
+  final Vector2 idle = Vector2(2,  3459);
+  final Vector2 running = Vector2(2,  3524);
+  final Vector2 striking = Vector2(2,  3589);
 }
 
 class  _Archer {
-  final Vector2 idle = Vector2(1, 3654);
-  final Vector2 running = Vector2(1, 3719);
-  final Vector2 firing = Vector2(1, 3784);
+  final Vector2 idle = Vector2(2,  3654);
+  final Vector2 running = Vector2(2,  3719);
+  final Vector2 firing = Vector2(2,  3784);
 }
 
 class  _Knight {
-  final Vector2 idle = Vector2(1, 3849);
-  final Vector2 running = Vector2(1, 3914);
-  final Vector2 striking = Vector2(1, 3979);
+  final Vector2 idle = Vector2(2,  3849);
+  final Vector2 running = Vector2(2,  3914);
+  final Vector2 striking = Vector2(2,  3979);
 }
 
 class _Zombie {
-  final Vector2 striking = Vector2(1, 2463);
+  final Vector2 striking = Vector2(2,  2463);
   final Vector2 idle  = Vector2(1026, 2463);
-  final Vector2 running  = Vector2(1, 2720);
+  final Vector2 running  = Vector2(2,  2720);
 }
 
 class _Projectiles {
