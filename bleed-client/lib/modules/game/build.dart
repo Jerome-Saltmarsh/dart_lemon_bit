@@ -1,6 +1,5 @@
 import 'dart:math';
-import 'package:bleed_client/common/RoyalCost.dart';
-import 'package:lemon_watch/watch_builder.dart';
+
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
@@ -153,11 +152,14 @@ class GameBuild {
               right: 16,
               bottom: 16,
               child: panelMagicStore()),
-      NullableWatchBuilder<Widget?>(state.panel, (Widget? child) {
-        if (child == null) return empty;
+      WatchBuilder(state.highLightSlotType, (SlotType child) {
+        if (child == SlotType.Empty) return empty;
         return Positioned(
-          child: child,
-          left: mouseX,
+          child: Container(
+            color: colours.brownDark,
+            child: text(child)
+          ),
+          right: (engine.state.screen.width - mouseX) + 50,
           top: mouseY,
         );
       }),
@@ -247,16 +249,12 @@ class GameBuild {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                     mouseOver(onEnter: () {
-                    state.panel.value = Container(child: Column(
-                      children: [
-                        text("Damage 10"),
-                        text("Cost 10"),
-                      ],
-                    ));
+                      state.highLightSlotType.value = SlotType.Sword_Wooden;
                   }, onExit: () {
-                    state.panel.value = null;
+                      if (state.highLightSlotType.value == SlotType.Sword_Wooden){
+                        state.highLightSlotType.value = SlotType.Empty;
+                      }
                   }, builder: (context, isOver) {
-                      // final slotCost = slotTypeCosts[SlotType.Sword_Wooden];
                     return Container(
                         width: 50,
                         height: 50,

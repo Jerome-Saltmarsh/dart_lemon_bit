@@ -900,28 +900,28 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 "ClientRequest.Purchase Error: could not parse argument 2 to int");
           }
 
-          if (slotItemIndex < 0 || slotItemIndex >= slotTypes.length){
+          if (slotItemIndex < 0 || slotItemIndex >= slotTypes.all.length){
             return error(GameError.InvalidArguments,
                 message:
                 "$slotItemIndex is not a valid slot type index");
           }
 
-          final slotType = slotTypes[slotItemIndex];
+          final slotType = slotTypes.all[slotItemIndex];
 
           switch(slotType){
             case SlotType.Empty:
               break;
-            case SlotType.Pendant:
+            case SlotType.Silver_Pendant:
               if (player.orbs.ruby < 0){
                 return errorInsufficientOrbs();
               }
               if (!player.slots.emptySlotAvailable){
                 return errorInventoryFull();
               }
-              player.slots.assignToEmpty(SlotType.Pendant);
+              player.slots.assignToEmpty(SlotType.Silver_Pendant);
               player.orbs.ruby--;
               break;
-            case SlotType.Amulet:
+            case SlotType.Frogs_Amulet:
               // TODO: Handle this case.
               break;
             case SlotType.Brace:

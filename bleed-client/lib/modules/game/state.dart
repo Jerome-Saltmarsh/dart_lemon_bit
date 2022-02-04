@@ -30,7 +30,7 @@ class GameState {
   final Cache<bool> audioMuted = Cache(key: 'audio-muted', value: true);
   bool panningCamera = false;
   final FocusNode textFieldMessage = FocusNode();
-  final Watch<Widget?> panel = Watch(null);
+  final Watch<SlotType> highLightSlotType = Watch(SlotType.Empty);
 
   final List<String> letsGo = [
     "Come on!",
