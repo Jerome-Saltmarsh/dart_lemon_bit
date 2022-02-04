@@ -23,7 +23,6 @@ import 'package:bleed_client/ui/views.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
 import 'package:bleed_client/widgets.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
@@ -180,7 +179,7 @@ class GameBuild {
                   height16,
                   Container(
                       color: colours.brownLight,
-                      child: columnStore()),
+                      child: panelStore()),
                   height16,
                   Container(
                       color: colours.brownLight,
@@ -224,7 +223,7 @@ class GameBuild {
     }
   }
 
-  Widget columnStore() {
+  Widget panelStore() {
     return WatchBuilder(state.storeTab, (StoreTab activeStoreTab){
       return Column(
         children: [
@@ -248,26 +247,21 @@ class GameBuild {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                    mouseOver(onEnter: () {
-                      state.highLightSlotType.value = SlotType.Sword_Wooden;
-                  }, onExit: () {
-                      if (state.highLightSlotType.value == SlotType.Sword_Wooden){
-                        state.highLightSlotType.value = SlotType.Empty;
-                      }
-                  }, builder: (context, isOver) {
-                    return Container(
-                        width: 50,
-                        height: 50,
-                        child: getSlotTypeImage(SlotType.Sword_Wooden));
-                  }),
-                  Container(
-                      width: 50,
-                      height: 50,
-                      child: getSlotTypeImage(SlotType.Sword_Short)),
-                  Container(
-                      width: 50,
-                      height: 50,
-                      child: getSlotTypeImage(SlotType.Sword_Long))
+                  _storeSlot(SlotType.Sword_Wooden),
+                  _storeSlot(SlotType.Sword_Short),
+                  _storeSlot(SlotType.Sword_Long),
+                  //   mouseOver(onEnter: () {
+                  //     state.highLightSlotType.value = SlotType.Sword_Wooden;
+                  // }, onExit: () {
+                  //     if (state.highLightSlotType.value == SlotType.Sword_Wooden){
+                  //       state.highLightSlotType.value = SlotType.Empty;
+                  //     }
+                  // }, builder: (context, isOver) {
+                  //   return Container(
+                  //       width: 50,
+                  //       height: 50,
+                  //       child: getSlotTypeImage(SlotType.Sword_Wooden));
+                  // }),
                 ],
               ),
 
@@ -524,6 +518,28 @@ class GameBuild {
           child: getSlotTypeImage(slotType));
     });
   }
+
+  Widget _storeSlot(SlotType slotType){
+    return mouseOver(onEnter: () {
+      state.highLightSlotType.value = slotType;
+    }, onExit: () {
+      if (state.highLightSlotType.value == slotType){
+        state.highLightSlotType.value = SlotType.Empty;
+      }
+    }, builder: (context, isOver) {
+      return Container(
+          width: 50,
+          height: 50,
+          child: getSlotTypeImage(slotType));
+    });
+  }
+
+  Widget getSlotTypeImage(SlotType value){
+    if (state.slotTypeImages.containsKey(value)){
+      return state.slotTypeImages[value]!;
+    }
+    return resources.icons.unknown;
+  }
 }
 
 List<SlotType> mapStoreTabSlotTypes(StoreTab storeTab){
@@ -535,19 +551,6 @@ List<SlotType> mapStoreTabSlotTypes(StoreTab storeTab){
     case StoreTab.Items:
       return slotTypes.items;
   }
+
 }
 
-// mapper
-Widget getSlotTypeImage(SlotType value){
-  if (_slotTypeImages.containsKey(value)){
-    return _slotTypeImages[value]!;
-  }
-  return resources.icons.unknown;
-}
-
-// ui maps
-final Map<SlotType, Widget> _slotTypeImages = {
-  SlotType.Sword_Short : resources.icons.sword,
-  SlotType.Sword_Wooden : resources.icons.swordWooden,
-  SlotType.Sword_Long : resources.icons.swordIron,
-};

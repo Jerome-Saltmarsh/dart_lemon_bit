@@ -9,6 +9,7 @@ import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/modules/modules.dart';
+import 'package:bleed_client/resources.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_watch/watch.dart';
@@ -45,6 +46,13 @@ class GameState {
   ];
 
   final List<String> waitASecond = ['Wait a second', 'Just a moment'];
+
+  final Map<SlotType, Widget> slotTypeImages = {
+    SlotType.Sword_Short : resources.icons.sword,
+    SlotType.Sword_Wooden : resources.icons.swordWooden,
+    SlotType.Sword_Long : resources.icons.swordIron,
+  };
+
 }
 
 class _PlayerOrbs {
@@ -176,5 +184,7 @@ extension PlayerExtentions on _Player {
     }
     return false;
   }
+
+
 }
 
