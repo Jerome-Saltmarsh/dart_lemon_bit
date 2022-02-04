@@ -957,6 +957,14 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           if (!player.slots.emptySlotAvailable) return;
           final slotType = slotTypes.all[slotItemIndex];
           player.slots.assignToEmpty(slotType);
+
+          if (!player.deadOrBusy){
+            final slotIsWeapon = slotTypes.weapons.contains(slotType);
+            if (slotIsWeapon){
+                player.game.setCharacterState(player, CharacterState.ChangingWeapon);
+            }
+          }
+          
           // switch(slotType){
           //   case SlotType.Empty:
           //     break;
