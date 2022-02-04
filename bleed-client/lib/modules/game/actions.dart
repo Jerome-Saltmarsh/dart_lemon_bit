@@ -124,4 +124,10 @@ class GameActions {
     speak(state.textEditingControllerMessage.text);
     hideTextBox();
   }
+
+  void sellSlotItem(int index){
+    print("game.actions.sellSlotItem($index)");
+    if (index <= 0 || index > 6) throw Exception("Slot item must between 1 and 6 inclusive");
+    sendClientRequest(ClientRequest.Sell_Slot, index);
+  }
 }

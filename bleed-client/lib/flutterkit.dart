@@ -138,7 +138,8 @@ Widget pressed({
 Widget onPressed({
     required Widget child,
     required Function? callback,
-    dynamic hint
+    Function? onRightClick,
+    dynamic hint,
 }) {
   final Widget widget = MouseRegion(
       cursor: callback != null
@@ -146,6 +147,9 @@ Widget onPressed({
           : SystemMouseCursors.forbidden,
       child: GestureDetector(
           child: child,
+          onSecondaryTap: onRightClick != null ? (){
+            onRightClick.call();
+          } : null,
           onTap: (){
             if (callback == null) return;
             callback();

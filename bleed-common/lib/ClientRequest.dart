@@ -25,4 +25,5 @@ enum ClientRequest {
   Reset_Character_Type,
   Leave_Lobby,
   Modify_Game,
+  Sell_Slot
 }

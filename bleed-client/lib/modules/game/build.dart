@@ -230,16 +230,16 @@ class GameBuild {
       children: [
         Column(
           children: [
-            playerSlot(slots.slot1),
-            playerSlot(slots.slot2),
-            playerSlot(slots.slot3),
+            playerSlot(slots.slot1, 1),
+            playerSlot(slots.slot2, 2),
+            playerSlot(slots.slot3, 3),
           ],
         ),
         Column(
           children: [
-            playerSlot(slots.slot4),
-            playerSlot(slots.slot5),
-            playerSlot(slots.slot6),
+            playerSlot(slots.slot4, 4),
+            playerSlot(slots.slot5, 5),
+            playerSlot(slots.slot6, 6),
           ],
         )
       ],
@@ -532,12 +532,20 @@ class GameBuild {
             )));
   }
 
-  Widget playerSlot(Watch<SlotType> slot){
+  Widget playerSlot(Watch<SlotType> slot, int index){
     return WatchBuilder(slot, (SlotType slotType){
-      return Container(
-          width: 50,
-          height: 50,
-          child: getSlotTypeImage(slotType));
+      return onPressed(
+        callback: (){
+          // TODO show context menu
+        },
+        onRightClick: (){
+          actions.sellSlotItem(index);
+        },
+        child: Container(
+            width: 50,
+            height: 50,
+            child: getSlotTypeImage(slotType)),
+      );
     });
   }
 

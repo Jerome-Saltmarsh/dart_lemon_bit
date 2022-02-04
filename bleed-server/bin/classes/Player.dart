@@ -112,6 +112,32 @@ class _PlayerSlots {
   SlotType slot5 = SlotType.Empty;
   SlotType slot6 = SlotType.Empty;
 
+  void assignSlotAtIndex(int index, SlotType value){
+    switch(index){
+      case 1:
+        slot1 = value;
+        break;
+      case 2:
+        slot2 = value;
+        break;
+      case 3:
+        slot3 = value;
+        break;
+      case 4:
+        slot4 = value;
+        break;
+      case 5:
+        slot5 = value;
+        break;
+      case 6:
+        slot6 = value;
+        break;
+      default:
+        throw Exception("cannot assign slot $index it out of bounds");
+    }
+
+  }
+
   bool get emptySlotAvailable {
      if(slot1 == SlotType.Empty) return true;
      if(slot2 == SlotType.Empty) return true;

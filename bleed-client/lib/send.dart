@@ -89,7 +89,7 @@ void sendRequestSetCompilePaths(bool value) {
   webSocket.send('${ClientRequest.SetCompilePaths.index} $session ${value ? 1 : 0}');
 }
 
-void sendClientRequest(ClientRequest request, {dynamic message = ""}) {
+void sendClientRequest(ClientRequest request, [dynamic message = ""]) {
   webSocket.send('${request.index} $session $message');
 }
 
@@ -105,7 +105,7 @@ void request(ClientRequest request, String value) {
 class _SendRequestToServer {
   upgradeAbility(int index){
     print("sendRequest.upgradeAbility(index: $index)");
-    sendClientRequest(ClientRequest.Upgrade_Ability, message: index);
+    sendClientRequest(ClientRequest.Upgrade_Ability, index);
   }
 
   spawnZombie(){
@@ -122,7 +122,7 @@ class _SendRequestToServer {
 
   modifyGame(ModifyGame request){
     print("sendRequest.modifyGame($request)");
-    sendClientRequest(ClientRequest.Modify_Game, message: request.index);
+    sendClientRequest(ClientRequest.Modify_Game, request.index);
   }
 }
 
