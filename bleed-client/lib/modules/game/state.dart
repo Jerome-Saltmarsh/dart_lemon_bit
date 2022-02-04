@@ -16,6 +16,9 @@ import 'package:lemon_watch/watch.dart';
 import 'classes.dart';
 import 'enums.dart';
 
+
+typedef BasicWidgetBuilder = Widget Function();
+
 class GameState {
   final Watch<StoreTab> storeTab = Watch(storeTabs[0]);
   final _Player player = _Player();
@@ -24,9 +27,10 @@ class GameState {
   final CharacterController characterController = CharacterController();
   final KeyMap keyMap = KeyMap();
   final Watch<bool> textMode = Watch(false);
-  final Cache<bool> audioMuted = Cache(key: 'audio-muted', value: false);
+  final Cache<bool> audioMuted = Cache(key: 'audio-muted', value: true);
   bool panningCamera = false;
   final FocusNode textFieldMessage = FocusNode();
+  final Watch<Widget?> panel = Watch(null);
 
   final List<String> letsGo = [
     "Come on!",

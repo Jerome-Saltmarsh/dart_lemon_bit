@@ -1,5 +1,6 @@
 import 'dart:math';
-
+import 'package:bleed_client/common/RoyalCost.dart';
+import 'package:lemon_watch/watch_builder.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
@@ -152,8 +153,15 @@ class GameBuild {
               right: 16,
               bottom: 16,
               child: panelMagicStore()),
-        ],
-    );
+      NullableWatchBuilder<Widget?>(state.panel, (Widget? child) {
+        if (child == null) return empty;
+        return Positioned(
+          child: child,
+          left: mouseX,
+          top: mouseY,
+        );
+      }),
+    ]);
   }
 
   Container panelMagicStore() {
@@ -238,10 +246,22 @@ class GameBuild {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                    Container(
+                    mouseOver(onEnter: () {
+                    state.panel.value = Container(child: Column(
+                      children: [
+                        text("Damage 10"),
+                        text("Cost 10"),
+                      ],
+                    ));
+                  }, onExit: () {
+                    state.panel.value = null;
+                  }, builder: (context, isOver) {
+                      // final slotCost = slotTypeCosts[SlotType.Sword_Wooden];
+                    return Container(
                         width: 50,
                         height: 50,
-                        child: getSlotTypeImage(SlotType.Sword_Wooden)),
+                        child: getSlotTypeImage(SlotType.Sword_Wooden));
+                  }),
                   Container(
                       width: 50,
                       height: 50,
