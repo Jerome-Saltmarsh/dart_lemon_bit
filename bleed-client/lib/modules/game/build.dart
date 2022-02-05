@@ -162,7 +162,7 @@ class GameBuild {
 
       final cost = slotTypeCosts[slotType];
       if (cost == null){
-        throw Exception("no cast found for $slotType");
+        throw Exception("No SlotTypeCost found for $slotType");
       }
 
       return Positioned(
@@ -171,7 +171,7 @@ class GameBuild {
           color: colours.brownDark,
           child: Column(
             children: [
-              text(slotTypeNames[slotType]),
+              text(slotTypeNames[slotType] ?? slotType.name),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -343,7 +343,7 @@ class GameBuild {
     return Column(
       children: [
         shopSlotRow(
-          SlotType.Silver_Pendant,
+          SlotType.Spell_Tome_Fireball,
           SlotType.Frogs_Amulet,
           SlotType.Silver_Pendant,
         ),

@@ -57,6 +57,7 @@ class GameState {
     SlotType.Staff_Wooden : resources.icons.staffWooden,
     SlotType.Staff_Blue : resources.icons.staffBlue,
     SlotType.Staff_Golden : resources.icons.staffGolden,
+    SlotType.Spell_Tome_Fireball : resources.icons.bookRed,
   };
 }
 

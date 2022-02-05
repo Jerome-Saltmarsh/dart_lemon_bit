@@ -19,6 +19,7 @@ enum SlotType {
   Shotgun,
   SniperRifle,
   AssaultRifle,
+  Spell_Tome_Fireball
 }
 
 final List<SlotType> slotTypesAll = SlotType.values;

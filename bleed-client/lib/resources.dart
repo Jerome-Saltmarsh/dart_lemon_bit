@@ -32,6 +32,7 @@ class _Icons {
   final staffWooden = _image("staff-wooden");
   final staffBlue = _image("staff-blue");
   final staffGolden = _image("staff-golden");
+  final bookRed = _image("book-red");
   final unknown = _image("unknown");
 }
 
