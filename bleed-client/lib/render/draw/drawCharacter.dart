@@ -120,6 +120,7 @@ void _renderCharacterWeapon(Character character) {
   }
 
   if (character.equippedSlotType == SlotType.Bow_Wooden){
+
     if (character.state == CharacterState.Idle){
       srcSingle(
           atlas: atlas.weapons.bowWooden.idle,
@@ -135,6 +136,16 @@ void _renderCharacterWeapon(Character character) {
           direction: character.direction,
           frame: character.frame,
           animation: animations.bow.firing, framesPerDirection: 2
+      );
+      mapCharacterDst(character, character.type);
+      engine.actions.renderAtlas();
+    }
+
+    if (character.state == CharacterState.Running){
+      srcLoop(
+          atlas: atlas.weapons.bowWooden.running,
+          direction: character.direction,
+          frame: character.frame
       );
       mapCharacterDst(character, character.type);
       engine.actions.renderAtlas();
