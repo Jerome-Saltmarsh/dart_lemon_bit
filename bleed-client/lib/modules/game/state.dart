@@ -135,7 +135,6 @@ class _Player {
   Vector2 abilityTarget = Vector2(0, 0);
   double abilityRange = 0;
   double abilityRadius = 0;
-  int squad = -1;
   double maxHealth = 0;
   Tile tile = Tile.Grass;
   double attackRange = 0;
@@ -181,7 +180,6 @@ class _Player {
 
   // Properties
   bool get dead => !alive.value;
-  bool get canPurchase => false;
   bool get isHuman => characterType.value == CharacterType.Human;
 }
 

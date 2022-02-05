@@ -242,8 +242,7 @@ void parseState() {
         break;
 
       case ServerResponse.Game_Type:
-        // game.type.value = gameTypes[_consumeInt()];
-        var type = gameTypes[consumeInt()];
+        final type = gameTypes[consumeInt()];
         break;
 
       case ServerResponse.Game_Status:
@@ -501,8 +500,8 @@ void _parseGameJoined() {
   modules.game.state.player.x = consumeDouble();
   modules.game.state.player.y = consumeDouble();
   game.id = consumeInt();
-  modules.game.state.player.squad = consumeInt();
-  print(      "ServerResponse.Game_Joined: playerId: ${modules.game.state.player.id} gameId: ${game.id}");
+  modules.game.state.player.team = consumeInt();
+  print("ServerResponse.Game_Joined: playerId: ${modules.game.state.player.id} gameId: ${game.id}");
 }
 
 ObjectType _consumeEnvironmentObjectType() {

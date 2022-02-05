@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
@@ -148,6 +149,12 @@ class GameBuild {
     return layout(
         children: [
           bottomCenter(child: _healthBar(), padding: 8),
+          Positioned(
+              left: 8,
+              bottom: 8,
+              child: WatchBuilder(state.player.ability, (AbilityType abilityType){
+                return text(abilityType.name);
+              })),
           Positioned(
               right: 8,
               bottom: 8,
