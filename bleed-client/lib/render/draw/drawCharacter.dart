@@ -99,8 +99,8 @@ void _renderCharacterTorso(Character character){
       break;
     case CharacterState.ChangingWeapon:
       srcAnimate(
-        atlas: atlas.plain.torso.striking,
-        animation: animations.human.strikingSword,
+        atlas: atlas.plain.torso.changing,
+        animation: animations.human.changing,
         direction: character.direction,
         frame: character.frame,
         framesPerDirection: 2,

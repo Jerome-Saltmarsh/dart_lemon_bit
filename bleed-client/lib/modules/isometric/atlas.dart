@@ -47,6 +47,7 @@ class _PlainTorso {
   final Vector2 idle = Vector2(0,  4085);
   final Vector2 running = Vector2(0,  4150 );
   final Vector2 striking = Vector2(0,  4215);
+  final Vector2 changing = Vector2(0,  4280);
 }
 
 class _Weapons {
