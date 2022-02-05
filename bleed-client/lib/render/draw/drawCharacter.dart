@@ -81,6 +81,16 @@ void _renderCharacterWeapon(Character character) {
       mapCharacterDst(character, character.type);
       engine.actions.renderAtlas();
     }
+
+    if (character.state == CharacterState.Running){
+      srcLoop(
+          atlas: atlas.weapons.swordWooden.running,
+          direction: character.direction,
+          frame: character.frame
+      );
+      mapCharacterDst(character, character.type);
+      engine.actions.renderAtlas();
+    }
   }
   if (character.equippedSlotType == SlotType.Sword_Short){
     if (character.state == CharacterState.Striking){
