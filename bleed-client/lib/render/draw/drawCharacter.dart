@@ -83,8 +83,21 @@ void _renderCharacterWeapon(Character character) {
     }
   }
   if (character.equippedSlotType == SlotType.Sword_Short){
-    srcSingle(atlas: atlas.weapons.swordSteel.idle, direction: character.direction);
-    mapCharacterDst(character, character.type);
-    engine.actions.renderAtlas();
+    if (character.state == CharacterState.Striking){
+      srcAnimate(
+        atlas: atlas.weapons.swordSteel.striking,
+        animation: animations.human.strikingSword,
+        direction: character.direction,
+        frame: character.frame,
+        framesPerDirection: 2,
+      );
+      mapCharacterDst(character, character.type);
+      engine.actions.renderAtlas();
+    }
+    if (character.state == CharacterState.Idle){
+      srcSingle(atlas: atlas.weapons.swordSteel.idle, direction: character.direction);
+      mapCharacterDst(character, character.type);
+      engine.actions.renderAtlas();
+    }
   }
 }
