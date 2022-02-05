@@ -16,7 +16,6 @@ import 'common/CharacterState.dart';
 import 'common/CharacterType.dart';
 import 'common/ClientRequest.dart';
 import 'common/GameError.dart';
-import 'common/GameStatus.dart';
 import 'common/GameType.dart';
 import 'common/Modify_Game.dart';
 import 'common/PlayerEvent.dart';
@@ -236,7 +235,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
     void onEvent(requestD) {
       final String requestString = requestD;
-      final List<String> arguments = requestString.split(_space);
+      final arguments = requestString.split(_space);
 
       if (arguments.isEmpty) {
         error(GameError.ClientRequestArgumentsEmpty);
@@ -249,37 +248,19 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
         return;
       }
 
+      if (clientRequestInt < 0) {
+        error(GameError.UnrecognizedClientRequest);
+        return;
+      }
+
       if (clientRequestInt >= clientRequestsLength) {
         error(GameError.UnrecognizedClientRequest);
         return;
       }
 
-      final ClientRequest request = clientRequests[clientRequestInt];
-
-      switch (request) {
-        case ClientRequest.Update_Cube3D:
-          final String playerUUid = arguments[1];
-          CubePlayer? player = findCubePlayer(playerUUid);
-
-          if (player == null) {
-            return;
-          }
-
-          player.position.x = double.parse(arguments[2]);
-          player.position.y = double.parse(arguments[3]);
-          player.position.z = double.parse(arguments[4]);
-          player.rotation.x = double.parse(arguments[5]);
-          player.rotation.y = double.parse(arguments[6]);
-          player.rotation.z = double.parse(arguments[7]);
-
-          StringBuffer buffer = StringBuffer();
-          compileCubePlayers(buffer, cubeGame.cubes);
-          compileGameStatus(buffer, GameStatus.In_Progress);
-          sendToClient(buffer.toString());
-          break;
-
+      final clientRequest = clientRequests[clientRequestInt];
+      switch (clientRequest) {
         case ClientRequest.Update:
-
           if (arguments.length < 2){
             errorInvalidArg("player id required");
             return;
