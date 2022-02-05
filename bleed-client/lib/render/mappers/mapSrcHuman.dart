@@ -57,13 +57,25 @@ void mapSrcHuman({
           );
       }
     case CharacterState.Striking:
-      return srcAnimate(
-        atlas: atlas.human.striking,
-        animation: animations.human.strikingSword,
-        direction: direction,
-        frame: frame,
-        framesPerDirection: 2,
-      );
+      if (slotType == SlotType.Bow_Wooden){
+        return srcAnimate(
+          atlas: atlas.human.striking,
+          animation: animations.human.firingBow,
+          direction: direction,
+          frame: frame,
+          framesPerDirection: 2,
+        );
+      }else{
+        return srcAnimate(
+          atlas: atlas.human.striking,
+          animation: animations.human.strikingSword,
+          direction: direction,
+          frame: frame,
+          framesPerDirection: 2,
+        );
+      }
+
+
     case CharacterState.Running:
       switch (slotType) {
         case SlotType.Handgun:

@@ -73,7 +73,6 @@ class _Human {
   final _Handgun handgun = _Handgun();
   final _Shotgun shotgun = _Shotgun();
   final Vector2 striking = Vector2(2, 196);
-  final Vector2 firingBow = Vector2(2,  3218);
   final Vector2 changing = Vector2(2,  131);
   final Vector2 dying = Vector2(2,  1736);
 }
