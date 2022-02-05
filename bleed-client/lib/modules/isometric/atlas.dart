@@ -35,6 +35,12 @@ class _Atlas {
 
 class _Plain {
   final torso = _PlainTorso();
+  final legs = _PlainLegs();
+}
+
+class _PlainLegs {
+  final Vector2 idle = Vector2(0,  4345);
+  final Vector2 running = Vector2(0,  4410);
 }
 
 class _PlainTorso {

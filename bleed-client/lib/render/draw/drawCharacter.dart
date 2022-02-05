@@ -51,8 +51,24 @@ void _renderCharacter(Character character, int shade) {
   //   shade: shade,
   // );
   mapCharacterDst(character, character.type);
+  _renderCharacterLegs(character);
   _renderCharacterTorso(character);
-  // engine.actions.renderAtlas();
+}
+
+void _renderCharacterLegs(Character character){
+  switch(character.state){
+    case CharacterState.Running:
+      srcLoop(
+          atlas: atlas.plain.legs.running,
+          direction: character.direction,
+          frame: character.frame
+      );
+      break;
+    default:
+      srcSingle(atlas: atlas.plain.legs.idle, direction: character.direction);
+      break;
+  }
+  engine.actions.renderAtlas();
 }
 
 void _renderCharacterTorso(Character character){
