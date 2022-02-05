@@ -95,7 +95,19 @@ void _renderCharacterWeapon(Character character) {
       engine.actions.renderAtlas();
     }
     if (character.state == CharacterState.Idle){
-      srcSingle(atlas: atlas.weapons.swordSteel.idle, direction: character.direction);
+      srcSingle(
+          atlas: atlas.weapons.swordSteel.idle,
+          direction: character.direction
+      );
+      mapCharacterDst(character, character.type);
+      engine.actions.renderAtlas();
+    }
+    if (character.state == CharacterState.Running){
+      srcLoop(
+          atlas: atlas.weapons.swordSteel.running,
+          direction: character.direction,
+          frame: character.frame
+      );
       mapCharacterDst(character, character.type);
       engine.actions.renderAtlas();
     }
