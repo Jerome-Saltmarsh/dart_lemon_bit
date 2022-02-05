@@ -112,13 +112,16 @@ class Player extends Character with Entity {
       if (deadOrBusy) return;
       if (index < 0) return;
       if (index > 6) return;
-      if (equippedWeaponSlotIndex == index) return;
+
       final slot = slots.getSlotTypeAtIndex(index);
       if (slot == SlotType.Empty) return;
       final slotIsWeapon = slotTypes.weapons.contains(slot);
       if (slotIsWeapon){
-          equippedWeaponSlotIndex = index;
-          game.setCharacterState(this, CharacterState.ChangingWeapon);
+        if (equippedWeaponSlotIndex == index) return;
+        equippedWeaponSlotIndex = index;
+        game.setCharacterState(this, CharacterState.ChangingWeapon);
+      }else if (slot == SlotType.Spell_Tome_Fireball){
+         ability = Ability(type: AbilityType.Fireball, level: 1, cost: 5, range: 50, cooldown: 100);
       }
   }
 }
