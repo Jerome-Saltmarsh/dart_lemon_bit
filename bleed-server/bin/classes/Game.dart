@@ -11,6 +11,7 @@ import 'package:lemon_math/hypotenuse.dart';
 import 'package:lemon_math/randomItem.dart';
 
 import '../bleed/zombie_health.dart';
+import '../common/AbilityMode.dart';
 import '../common/AbilityType.dart';
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
@@ -1881,13 +1882,16 @@ void selectCharacterType(Player player, CharacterType value) {
         range: 200,
         cooldown: 15,
         radius: settings.radius.explosion,
+        mode: AbilityMode.Area,
       );
       player.ability2 = Ability(
           type: AbilityType.Blink,
           level: 0,
           cost: 10,
           range: 200,
-          cooldown: 10);
+          cooldown: 10,
+          mode: AbilityMode.Directed,
+      );
       player.ability3 = Ability(
         type: AbilityType.FreezeCircle,
         level: 0,
@@ -1895,13 +1899,16 @@ void selectCharacterType(Player player, CharacterType value) {
         range: 200,
         cooldown: 15,
         radius: settings.radius.explosion,
+        mode: AbilityMode.Area,
       );
       player.ability4 = Ability(
           type: AbilityType.Fireball,
           level: 0,
           cost: 10,
           range: 200,
-          cooldown: 25);
+          cooldown: 25,
+          mode: AbilityMode.Directed,
+      );
       break;
     case CharacterType.Swordsman:
       player.attackRange = 50;
@@ -1911,20 +1918,26 @@ void selectCharacterType(Player player, CharacterType value) {
           level: 0,
           cost: 10,
           range: player.attackRange,
-          cooldown: 15);
+          cooldown: 15,
+          mode: AbilityMode.Targeted,
+      );
       player.ability2 = IronShield(player);
       player.ability3 = Ability(
           type: AbilityType.Death_Strike,
           level: 0,
           cost: 10,
           range: player.attackRange,
-          cooldown: 15);
+          cooldown: 15,
+          mode: AbilityMode.Activated,
+      );
       player.ability4 = Ability(
           type: AbilityType.Explosion,
           level: 0,
           cost: 10,
           range: 200,
-          cooldown: 15);
+          cooldown: 15,
+          mode: AbilityMode.Area,
+      );
       break;
     case CharacterType.Archer:
       player.attackRange = 210;
@@ -1935,20 +1948,26 @@ void selectCharacterType(Player player, CharacterType value) {
           level: 0,
           cost: 40,
           range: 200,
-          cooldown: 10);
+          cooldown: 10,
+          mode: AbilityMode.Directed,
+      );
       player.ability2 = Dash(player);
       player.ability3 = Ability(
           type: AbilityType.Long_Shot,
           level: 0,
           cost: 40,
           range: 250,
-          cooldown: 15);
+          cooldown: 15,
+          mode: AbilityMode.Targeted,
+      );
       player.ability4 = Ability(
           type: AbilityType.Fireball,
           level: 0,
           cost: 70,
           range: 200,
-          cooldown: 25);
+          cooldown: 25,
+          mode: AbilityMode.Directed,
+          );
       break;
   }
 

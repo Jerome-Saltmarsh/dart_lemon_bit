@@ -1,3 +1,4 @@
+import '../common/AbilityMode.dart';
 import '../common/AbilityType.dart';
 
 import '../common/CharacterState.dart';
@@ -78,10 +79,10 @@ class Player extends Character with Entity {
   Tile currentTile = Tile.Grass;
   CharacterState characterState = CharacterState.Idle;
 
-  Ability ability1 = Ability(type: AbilityType.None, level: 0, cost: 0, range: 0, cooldown: 0);
-  Ability ability2 = Ability(type: AbilityType.None, level: 0, cost: 0, range: 0, cooldown: 0);
-  Ability ability3 = Ability(type: AbilityType.None, level: 0, cost: 0, range: 0, cooldown: 0);
-  Ability ability4 = Ability(type: AbilityType.None, level: 0, cost: 0, range: 0, cooldown: 0);
+  Ability ability1 = Ability(type: AbilityType.None, level: 0, cost: 0, range: 0, cooldown: 0, mode: AbilityMode.None);
+  Ability ability2 = Ability(type: AbilityType.None, level: 0, cost: 0, range: 0, cooldown: 0, mode: AbilityMode.None);
+  Ability ability3 = Ability(type: AbilityType.None, level: 0, cost: 0, range: 0, cooldown: 0, mode: AbilityMode.None);
+  Ability ability4 = Ability(type: AbilityType.None, level: 0, cost: 0, range: 0, cooldown: 0, mode: AbilityMode.None);
   bool abilitiesDirty = true;
 
   final List<PlayerEvent> events = [];
@@ -121,7 +122,7 @@ class Player extends Character with Entity {
         equippedWeaponSlotIndex = index;
         game.setCharacterState(this, CharacterState.ChangingWeapon);
       }else if (slot == SlotType.Spell_Tome_Fireball){
-         ability = Ability(type: AbilityType.Fireball, level: 1, cost: 5, range: 250, cooldown: 100);
+         ability = Ability(type: AbilityType.Fireball, level: 1, cost: 5, range: 250, cooldown: 100, mode: AbilityMode.Directed);
       }
   }
 }
