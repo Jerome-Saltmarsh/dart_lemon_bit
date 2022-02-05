@@ -2,11 +2,11 @@ import '../classes/Game.dart';
 import '../classes/Player.dart';
 import '../classes/SpawnPoint.dart';
 import 'cave.dart';
-import 'wilderness_east.dart';
-import 'wilderness_west_01.dart';
 import 'tavern.dart';
 import 'town.dart';
+import 'wilderness_east.dart';
 import 'wilderness_north_01.dart';
+import 'wilderness_west_01.dart';
 
 
 Map<String, Player> playerMap = {};

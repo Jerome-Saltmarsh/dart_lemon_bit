@@ -6,7 +6,6 @@ import '../classes/Weapon.dart';
 import '../common/WeaponType.dart';
 import '../enums/npc_mode.dart';
 import '../instances/scenes.dart';
-import '../values/world.dart';
 import 'world.dart';
 
 class Tavern extends Game {

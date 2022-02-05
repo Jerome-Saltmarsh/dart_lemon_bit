@@ -109,8 +109,6 @@ void mapSrcHuman({
             frame: frame,
           );
       }
-    case CharacterState.Reloading:
-      throw Exception("Not Implemented");
     case CharacterState.ChangingWeapon:
       return srcAnimate(
         atlas: atlas.human.changing,

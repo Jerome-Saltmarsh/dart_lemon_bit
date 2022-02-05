@@ -1,14 +1,13 @@
 import '../common/AbilityMode.dart';
 import '../common/AbilityType.dart';
-
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
 import '../common/PlayerEvent.dart';
 import '../common/Quests.dart';
 import '../common/SlotType.dart';
+import '../common/Tile.dart';
 import '../common/WeaponType.dart';
 import '../constants/no_squad.dart';
-import '../common/Tile.dart';
 import '../functions/generateName.dart';
 import '../global.dart';
 import '../settings.dart';

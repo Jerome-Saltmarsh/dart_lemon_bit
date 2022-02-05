@@ -2,7 +2,6 @@
 import '../classes/Character.dart';
 import '../classes/Game.dart';
 import '../instances/scenes.dart';
-import '../values/world.dart';
 import 'world.dart';
 
 class WildernessEast extends Game {

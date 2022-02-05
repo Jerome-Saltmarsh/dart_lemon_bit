@@ -55,9 +55,6 @@ void mapSrcWitch({
           size: 64,
           framesPerDirection: 4,
           frame: frame);
-    case CharacterState.Reloading:
-    // TODO: Handle this case.
-      break;
     case CharacterState.ChangingWeapon:
     // TODO: Handle this case.
       break;

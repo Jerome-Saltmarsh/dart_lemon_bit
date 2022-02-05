@@ -1,4 +1,3 @@
-import 'package:lemon_math/randomItem.dart';
 
 import '../classes/Character.dart';
 import '../classes/Crate.dart';

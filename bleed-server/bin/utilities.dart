@@ -3,13 +3,12 @@ import 'package:lemon_math/diff.dart';
 import 'package:lemon_math/diff_over.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/give_or_take.dart';
-import 'package:lemon_math/randomItem.dart';
 
-import 'classes/Player.dart';
-import 'classes/Projectile.dart';
 import 'classes/Character.dart';
 import 'classes/GameObject.dart';
 import 'classes/Npc.dart';
+import 'classes/Player.dart';
+import 'classes/Projectile.dart';
 import 'common/WeaponType.dart';
 import 'common/enums/Direction.dart';
 import 'constants.dart';

@@ -4,7 +4,6 @@ enum CharacterState {
   Firing,
   Striking,
   Running,
-  Reloading,
   ChangingWeapon,
   Performing,
 }

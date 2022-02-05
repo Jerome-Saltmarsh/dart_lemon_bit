@@ -6,11 +6,11 @@ import 'package:lemon_math/Vector2.dart';
 import 'package:typedef/json.dart';
 
 import '../classes/Character.dart';
+import '../classes/EnvironmentObject.dart';
 import '../classes/Scene.dart';
 import '../common/CharacterType.dart';
 import '../common/SceneJson.dart';
 import '../common/Tile.dart';
-import '../classes/EnvironmentObject.dart';
 import '../common/enums/ObjectType.dart';
 import '../instances/scenes.dart';
 

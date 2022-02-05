@@ -8,7 +8,6 @@ import '../common/Quests.dart';
 import '../common/WeaponType.dart';
 import '../instances/scenes.dart';
 import '../state.dart';
-import '../values/world.dart';
 import 'world.dart';
 
 const int _framesPerZombieSpawn = 10;
