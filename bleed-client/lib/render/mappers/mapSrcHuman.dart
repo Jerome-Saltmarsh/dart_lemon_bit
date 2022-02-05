@@ -127,8 +127,6 @@ void mapSrcHuman({
         framesPerDirection: 2,
       );
   }
-
-  throw Exception("Could not map src to human");
 }
 
 final Map<SlotType, Vector2> _idleWeaponTypeVector2 = {

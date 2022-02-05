@@ -55,6 +55,10 @@ final Map<SlotType, _SlotTypeCost> slotTypeCosts = {
     rubies: 15,
     emeralds: 15,
   ),
+  SlotType.Armour_Standard: _SlotTypeCost(
+    rubies: 15,
+    emeralds: 15,
+  ),
 };
 
 final Map<SlotType, String> slotTypeNames = {

@@ -322,12 +322,6 @@ final backButton = button(text("Back", color: colours.white618), () {
   borderColor: colours.none,
 );
 
-final icons = _Icons();
-
-class _Icons {
-  final orbTopaz = buildDecorationImage(image: decorationImages.orbTopaz, color: none, width: 32, height: 32, borderColor: none);
-}
-
 
 Widget buildInfo({required Widget child}){
   return border(

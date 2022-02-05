@@ -49,15 +49,16 @@ class GameState {
 
   final Map<SlotType, Widget> slotTypeImages = {
     SlotType.Sword_Short : resources.icons.sword,
-    SlotType.Sword_Wooden : resources.icons.swordWooden,
-    SlotType.Sword_Long : resources.icons.swordIron,
-    SlotType.Bow_Wooden : resources.icons.bowWooden,
-    SlotType.Bow_Green : resources.icons.bowGreen,
-    SlotType.Bow_Gold : resources.icons.bowGold,
+    SlotType.Sword_Wooden : resources.icons.swords.wooden,
+    SlotType.Sword_Long : resources.icons.swords.iron,
+    SlotType.Bow_Wooden : resources.icons.bows.wooden,
+    SlotType.Bow_Green : resources.icons.bows.green,
+    SlotType.Bow_Gold : resources.icons.bows.gold,
     SlotType.Staff_Wooden : resources.icons.staffWooden,
     SlotType.Staff_Blue : resources.icons.staffBlue,
     SlotType.Staff_Golden : resources.icons.staffGolden,
     SlotType.Spell_Tome_Fireball : resources.icons.bookRed,
+    SlotType.Armour_Standard : resources.icons.armourStandard,
   };
 }
 

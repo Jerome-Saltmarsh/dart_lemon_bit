@@ -9,12 +9,6 @@ final resources = _Resources();
 // Classes
 class _Resources {
   final _Icons icons = _Icons();
-  final _Directories directories = _Directories();
-}
-
-class _Directories {
-  final images = "images";
-  final icons = "images/icons";
 }
 
 class _Icons {
@@ -24,16 +18,25 @@ class _Icons {
   final sword = _image("sword");
   final shield = _image("shield");
   final book = _image("book");
-  final swordWooden = _image("sword-wooden");
-  final swordIron = _image("sword-iron");
-  final bowWooden = _image("bow-wooden");
-  final bowGreen = _image("bow-green");
-  final bowGold = _image("bow-gold");
   final staffWooden = _image("staff-wooden");
   final staffBlue = _image("staff-blue");
   final staffGolden = _image("staff-golden");
   final bookRed = _image("book-red");
   final unknown = _image("unknown");
+  final armourStandard = _image("armour-standard");
+  final _SwordIcons swords = _SwordIcons();
+  final _BowIcons bows = _BowIcons();
+}
+
+class _SwordIcons {
+  final wooden = _image("sword-wooden");
+  final iron = _image("sword-iron");
+}
+
+class _BowIcons {
+  final wooden = _image("bow-wooden");
+  final green = _image("bow-green");
+  final gold = _image("bow-gold");
 }
 
 // Functions
