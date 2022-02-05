@@ -26,17 +26,6 @@ void mapSrcHuman({
     case CharacterState.Dead:
       return srcSingle(atlas: atlas.human.dying, direction: direction);
 
-    case CharacterState.Aiming:
-      switch (weaponType) {
-        case WeaponType.HandGun:
-          return srcSingle(atlas: atlas.human.handgun.firing, direction: direction);
-
-        case WeaponType.Shotgun:
-          return srcSingle(atlas: atlas.human.shotgun.firing, direction: direction);
-
-        default:
-          throw Exception("Cannot aim unarmed");
-      }
     case CharacterState.Firing:
       switch (weaponType) {
         case WeaponType.HandGun:

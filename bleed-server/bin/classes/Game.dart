@@ -733,9 +733,6 @@ extension GameFunctions on Game {
       case CharacterState.ChangingWeapon:
         character.stateDuration = 10;
         break;
-      case CharacterState.Aiming:
-        character.accuracy = 0;
-        break;
       case CharacterState.Firing:
         // @on character firing weapon
         if (character.weapon == WeaponType.Unarmed) {
@@ -1130,11 +1127,6 @@ extension GameFunctions on Game {
     }
 
     switch (character.state) {
-      case CharacterState.Aiming:
-        if (character.accuracy > 0.05) {
-          character.accuracy -= 0.005;
-        }
-        break;
       case CharacterState.Running:
         switch (character.direction) {
           case Direction.Up:

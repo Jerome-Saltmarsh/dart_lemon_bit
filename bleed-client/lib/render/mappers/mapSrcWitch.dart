@@ -26,9 +26,6 @@ void mapSrcWitch({
     case CharacterState.Dead:
     // TODO: Handle this case.
       break;
-    case CharacterState.Aiming:
-    // TODO: Handle this case.
-      break;
     case CharacterState.Firing:
     // TODO: Handle this case.
       break;
