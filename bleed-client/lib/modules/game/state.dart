@@ -138,6 +138,9 @@ class _Player {
   int squad = -1;
   double maxHealth = 0;
   Tile tile = Tile.Grass;
+  double attackRange = 0;
+  int team = 0;
+  Vector2 attackTarget = Vector2(0, 0);
   final orbs = _PlayerOrbs();
   final slots = _PlayerSlots();
   final Watch<String> uuid = Watch("");
@@ -158,7 +161,6 @@ class _Player {
   final Ability ability2 = Ability(2);
   final Ability ability3 = Ability(3);
   final Ability ability4 = Ability(4);
-
   final Watch<int> equippedWeaponSlotIndex = Watch(1);
 
   _Player() {
@@ -177,14 +179,9 @@ class _Player {
     });
   }
 
+  // Properties
   bool get dead => !alive.value;
-
-  // bool get canPurchase => tile == Tile.PlayerSpawn;
   bool get canPurchase => false;
-
-  double attackRange = 0;
-  int team = 0;
   bool get isHuman => characterType.value == CharacterType.Human;
-  Vector2 attackTarget = Vector2(0, 0);
 }
 
