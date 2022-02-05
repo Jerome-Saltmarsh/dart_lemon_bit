@@ -265,50 +265,102 @@ class GameBuild {
     return WatchBuilder(state.storeTab, (StoreTab activeStoreTab){
       return Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: storeTabs.map((storeTab) => button(
-                mapStoreTabToIcon(storeTab),
-                    () => state.storeTab.value = storeTab,
-                borderColor: none,
-               fillColor: activeStoreTab == storeTab ? colours.white618 : colours.white10,
-              borderColorMouseOver: none,
-              fillColorMouseOver: activeStoreTab == storeTab ? colours.white618 : colours.black618,
-              borderWidth: 0,
-              width: 60,
-              height: 50,
-              borderRadius: borderRadius2,
-            )).toList(),
-          ),
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _storeSlot(SlotType.Sword_Wooden),
-                  _storeSlot(SlotType.Sword_Short),
-                  _storeSlot(SlotType.Sword_Long),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _storeSlot(SlotType.Bow_Wooden),
-                  _storeSlot(SlotType.Bow_Green),
-                  _storeSlot(SlotType.Bow_Gold),
-                ],
-              ),
-              shopSlotRow(
-                  SlotType.Staff_Wooden,
-                  SlotType.Staff_Blue,
-                  SlotType.Staff_Golden
-              )
-            ],
-          ),
+          _storeTabs(activeStoreTab),
+          if (activeStoreTab == StoreTab.Weapons)
+          _storeTabWeapons(),
+          if (activeStoreTab == StoreTab.Armor)
+            _storeTabArmour(),
+          if (activeStoreTab == StoreTab.Items)
+            _storeTabItems(),
         ],
       );
     });
   }
+
+  Widget _storeTabs(StoreTab activeStoreTab) {
+    return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: storeTabs.map((storeTab) => button(
+              mapStoreTabToIcon(storeTab),
+                  () => state.storeTab.value = storeTab,
+              borderColor: none,
+             fillColor: activeStoreTab == storeTab ? colours.white618 : colours.white10,
+            borderColorMouseOver: none,
+            fillColorMouseOver: activeStoreTab == storeTab ? colours.white618 : colours.black618,
+            borderWidth: 0,
+            width: 60,
+            height: 50,
+            borderRadius: borderRadius2,
+          )).toList(),
+        );
+  }
+
+  Widget _storeTabWeapons() {
+    return Column(
+          children: [
+            shopSlotRow(
+                SlotType.Sword_Wooden,
+                SlotType.Sword_Short,
+                SlotType.Sword_Long
+            ),
+            shopSlotRow(
+                SlotType.Bow_Wooden,
+                SlotType.Bow_Green,
+                SlotType.Bow_Gold
+            ),
+            shopSlotRow(
+                SlotType.Staff_Wooden,
+                SlotType.Staff_Blue,
+                SlotType.Staff_Golden
+            )
+          ],
+        );
+  }
+
+  Column _storeTabArmour() {
+    return Column(
+      children: [
+        shopSlotRow(
+            SlotType.Guards_Helmet,
+            SlotType.Guards_Helmet,
+            SlotType.Guards_Helmet,
+        ),
+        shopSlotRow(
+          SlotType.Guards_Helmet,
+          SlotType.Guards_Helmet,
+          SlotType.Guards_Helmet,
+        ),
+        shopSlotRow(
+          SlotType.Empty,
+          SlotType.Empty,
+          SlotType.Empty,
+        )
+      ],
+    );
+  }
+
+  Column _storeTabItems() {
+    return Column(
+      children: [
+        shopSlotRow(
+          SlotType.Silver_Pendant,
+          SlotType.Frogs_Amulet,
+          SlotType.Silver_Pendant,
+        ),
+        shopSlotRow(
+          SlotType.Guards_Helmet,
+          SlotType.Guards_Helmet,
+          SlotType.Guards_Helmet,
+        ),
+        shopSlotRow(
+          SlotType.Empty,
+          SlotType.Empty,
+          SlotType.Empty,
+        )
+      ],
+    );
+  }
+
 
   Widget shopSlotRow(SlotType a, SlotType b, SlotType c){
     return Row(
