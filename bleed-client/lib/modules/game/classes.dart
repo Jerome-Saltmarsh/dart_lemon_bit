@@ -24,6 +24,7 @@ class KeyMap {
   LogicalKeyboardKey equip3 = LogicalKeyboardKey.digit3;
   LogicalKeyboardKey equip4 = LogicalKeyboardKey.digit4;
   LogicalKeyboardKey equip5 = LogicalKeyboardKey.digit5;
+  LogicalKeyboardKey equip6 = LogicalKeyboardKey.digit6;
   LogicalKeyboardKey equip1B = LogicalKeyboardKey.keyQ;
   LogicalKeyboardKey equip2B = LogicalKeyboardKey.keyE;
   LogicalKeyboardKey equip3B = LogicalKeyboardKey.keyF;
