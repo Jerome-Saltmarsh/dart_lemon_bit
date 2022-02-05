@@ -1,6 +1,7 @@
 
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
+import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/render/mappers/mapArcherToSrc.dart';
@@ -12,7 +13,7 @@ import 'package:bleed_client/render/mappers/mapSrcZombie.dart';
 void mapCharacterSrc({
   required CharacterType type,
   required CharacterState state,
-  required WeaponType weapon,
+  required SlotType slotType,
   required Direction direction,
   required int frame,
   required int shade,
@@ -20,7 +21,7 @@ void mapCharacterSrc({
   switch (type) {
     case CharacterType.Human:
       return mapSrcHuman(
-          weaponType: weapon,
+          slotType: slotType,
           characterState: state,
           direction: direction,
           frame: frame

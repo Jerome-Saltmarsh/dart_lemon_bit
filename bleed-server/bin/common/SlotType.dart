@@ -14,7 +14,11 @@ enum SlotType {
   Staff_Blue,
   Staff_Golden,
   Leather_Cap,
-  Guards_Helmet
+  Guards_Helmet,
+  Handgun,
+  Shotgun,
+  SniperRifle,
+  AssaultRifle,
 }
 
 final List<SlotType> slotTypesAll = SlotType.values;

@@ -1,6 +1,6 @@
 
 import 'package:bleed_client/common/CharacterState.dart';
-import 'package:bleed_client/common/WeaponType.dart';
+import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/modules/isometric/animations.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
@@ -10,7 +10,7 @@ import 'package:lemon_math/Vector2.dart';
 import 'loop.dart';
 
 void mapSrcHuman({
-    required WeaponType weaponType,
+    required SlotType slotType,
     required CharacterState characterState,
     required Direction direction,
     required int frame
@@ -18,8 +18,9 @@ void mapSrcHuman({
 
   switch (characterState) {
     case CharacterState.Idle:
+
       return srcSingle(
-        atlas: _idleWeaponTypeVector2[weaponType] ?? _idleWeaponTypeVector2[WeaponType.Unarmed]!,
+        atlas: _idleWeaponTypeVector2[slotType] ?? atlas.human.unarmed.idle,
         direction: direction,
       );
 
@@ -27,8 +28,8 @@ void mapSrcHuman({
       return srcSingle(atlas: atlas.human.dying, direction: direction);
 
     case CharacterState.Firing:
-      switch (weaponType) {
-        case WeaponType.HandGun:
+      switch (slotType) {
+        case SlotType.Handgun:
           return srcAnimate(
               atlas: atlas.human.handgun.firing,
               animation: animations.human.firingHandgun,
@@ -37,7 +38,7 @@ void mapSrcHuman({
               framesPerDirection: 2,
           );
 
-        case WeaponType.Shotgun:
+        case SlotType.Shotgun:
           return srcAnimate(
             atlas: atlas.human.shotgun.firing,
             animation: animations.human.firingShotgun,
@@ -64,26 +65,26 @@ void mapSrcHuman({
         framesPerDirection: 2,
       );
     case CharacterState.Running:
-      switch (weaponType) {
-        case WeaponType.HandGun:
+      switch (slotType) {
+        case SlotType.Handgun:
           return srcLoop(
               atlas: atlas.human.handgun.running,
               direction: direction,
               frame: frame
           );
-        case WeaponType.Shotgun:
+        case SlotType.Shotgun:
           return srcLoop(
               atlas: atlas.human.shotgun.running,
               direction: direction,
               frame: frame
           );
-        case WeaponType.SniperRifle:
+        case SlotType.SniperRifle:
           return srcLoop(
               atlas: atlas.human.shotgun.running,
               direction: direction,
               frame: frame
           );
-        case WeaponType.AssaultRifle:
+        case SlotType.AssaultRifle:
           return srcLoop(
               atlas: atlas.human.shotgun.running,
               direction: direction,
@@ -111,10 +112,7 @@ void mapSrcHuman({
   throw Exception("Could not map src to human");
 }
 
-final Map<WeaponType, Vector2> _idleWeaponTypeVector2 = {
-  WeaponType.HandGun: atlas.human.handgun.idle,
-  WeaponType.Shotgun: atlas.human.shotgun.idle,
-  WeaponType.SniperRifle: atlas.human.shotgun.idle,
-  WeaponType.AssaultRifle: atlas.human.shotgun.idle,
-  WeaponType.Unarmed: atlas.human.unarmed.idle,
+final Map<SlotType, Vector2> _idleWeaponTypeVector2 = {
+  SlotType.Handgun: atlas.human.handgun.idle,
+  SlotType.Shotgun: atlas.human.shotgun.idle,
 };

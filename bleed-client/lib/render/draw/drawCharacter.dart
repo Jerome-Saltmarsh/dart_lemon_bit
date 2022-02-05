@@ -29,9 +29,6 @@ void drawCharacter(Character character) {
     _renderCharacterWeapon(character);
   }
 
-
-
-
   if (
     character.type == CharacterType.Witch ||
     character.type == CharacterType.Swordsman ||
@@ -41,7 +38,6 @@ void drawCharacter(Character character) {
       drawCharacterMagicBar(character);
     }
   }
-
   drawCharacterHealthBar(character);
 }
 
@@ -49,7 +45,7 @@ void _renderCharacter(Character character, int shade) {
    mapCharacterSrc(
     type: character.type,
     state: character.state,
-    weapon: character.weapon,
+    slotType: character.equippedSlotType,
     direction: character.direction,
     frame: character.frame,
     shade: shade,
