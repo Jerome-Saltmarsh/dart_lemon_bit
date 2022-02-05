@@ -42,15 +42,59 @@ void drawCharacter(Character character) {
 }
 
 void _renderCharacter(Character character, int shade) {
-   mapCharacterSrc(
-    type: character.type,
-    state: character.state,
-    slotType: character.equippedSlotType,
-    direction: character.direction,
-    frame: character.frame,
-    shade: shade,
-  );
+  //  mapCharacterSrc(
+  //   type: character.type,
+  //   state: character.state,
+  //   slotType: character.equippedSlotType,
+  //   direction: character.direction,
+  //   frame: character.frame,
+  //   shade: shade,
+  // );
   mapCharacterDst(character, character.type);
+  _renderCharacterTorso(character);
+  // engine.actions.renderAtlas();
+}
+
+void _renderCharacterTorso(Character character){
+  switch(character.state){
+    case CharacterState.Idle:
+      srcSingle(atlas: atlas.plain.torso.idle, direction: character.direction);
+      break;
+    case CharacterState.Striking:
+      srcAnimate(
+        atlas: atlas.plain.torso.striking,
+        animation: animations.human.strikingSword,
+        direction: character.direction,
+        frame: character.frame,
+        framesPerDirection: 2,
+      );
+      break;
+    case CharacterState.Running:
+      srcLoop(
+          atlas: atlas.plain.torso.running,
+          direction: character.direction,
+          frame: character.frame
+      );
+      break;
+    case CharacterState.ChangingWeapon:
+      srcAnimate(
+        atlas: atlas.plain.torso.striking,
+        animation: animations.human.strikingSword,
+        direction: character.direction,
+        frame: character.frame,
+        framesPerDirection: 2,
+      );
+      break;
+    case CharacterState.Performing:
+      srcAnimate(
+        atlas: atlas.plain.torso.striking,
+        animation: animations.human.strikingSword,
+        direction: character.direction,
+        frame: character.frame,
+        framesPerDirection: 2,
+      );
+      break;
+  }
   engine.actions.renderAtlas();
 }
 
