@@ -68,7 +68,7 @@ void mapSrcHuman({
       }
     case CharacterState.Striking:
       return srcAnimate(
-        atlas: atlas.human.punching,
+        atlas: atlas.human.striking,
         animation: animations.human.strikingSword,
         direction: direction,
         frame: frame,

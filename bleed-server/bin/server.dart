@@ -940,6 +940,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return errorPlayerNotFound();
           }
 
+          if (player.dead){
+            return errorPlayerDead();
+          }
+
           final slotItemIndexString = arguments[2];
           final slotItemIndex = int.tryParse(slotItemIndexString);
           if (slotItemIndex == null){
@@ -958,13 +962,13 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           final slotType = slotTypes.all[slotItemIndex];
           player.slots.assignToEmpty(slotType);
 
-          if (!player.deadOrBusy){
+          if (!player.busy){
             final slotIsWeapon = slotTypes.weapons.contains(slotType);
             if (slotIsWeapon){
                 player.game.setCharacterState(player, CharacterState.ChangingWeapon);
             }
           }
-          
+
           // switch(slotType){
           //   case SlotType.Empty:
           //     break;

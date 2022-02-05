@@ -1,11 +1,14 @@
 import 'package:bleed_client/classes/Character.dart';
+import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:bleed_client/modules/isometric/animations.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/render/draw/drawCharacterHealthBar.dart';
+import 'package:bleed_client/render/mappers/animate.dart';
 import 'package:bleed_client/render/mappers/loop.dart';
 import 'package:bleed_client/render/mappers/mapCharacterDst.dart';
 import 'package:bleed_client/render/mappers/mapCharacterSrc.dart';
@@ -60,9 +63,24 @@ void _renderCharacterWeapon(Character character) {
   if (character.equippedSlotType == SlotType.Empty) return;
 
   if (character.equippedSlotType == SlotType.Sword_Wooden){
-    srcSingle(atlas: atlas.weapons.swordWooden.idle, direction: character.direction);
-    mapCharacterDst(character, character.type);
-    engine.actions.renderAtlas();
+
+    if (character.state == CharacterState.Striking){
+      srcAnimate(
+          atlas: atlas.weapons.swordWooden.striking,
+          animation: animations.human.strikingSword,
+          direction: character.direction,
+          frame: character.frame,
+          framesPerDirection: 2,
+      );
+      mapCharacterDst(character, character.type);
+      engine.actions.renderAtlas();
+    }
+
+    if (character.state == CharacterState.Idle){
+      srcSingle(atlas: atlas.weapons.swordWooden.idle, direction: character.direction);
+      mapCharacterDst(character, character.type);
+      engine.actions.renderAtlas();
+    }
   }
   if (character.equippedSlotType == SlotType.Sword_Short){
     srcSingle(atlas: atlas.weapons.swordSteel.idle, direction: character.direction);
