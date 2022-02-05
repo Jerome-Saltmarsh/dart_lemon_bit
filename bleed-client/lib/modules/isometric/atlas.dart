@@ -33,12 +33,17 @@ class _Atlas {
 class _Weapons {
   final _SwordSteel swordSteel = _SwordSteel();
   final _SwordWooden swordWooden = _SwordWooden();
+  final _BowWooden bowWooden = _BowWooden();
 }
 
-class  _SwordSteel {
+class _SwordSteel {
   final Vector2 idle = Vector2(2,  883);
   final Vector2 striking = Vector2(515,  883);
   final Vector2 running = Vector2(2,  1013);
+}
+
+class _BowWooden {
+  final Vector2 idle = Vector2(2, 1143);
 }
 
 class _SwordWooden {

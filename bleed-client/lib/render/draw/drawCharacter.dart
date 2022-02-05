@@ -122,4 +122,15 @@ void _renderCharacterWeapon(Character character) {
       engine.actions.renderAtlas();
     }
   }
+
+  if (character.equippedSlotType == SlotType.Bow_Wooden){
+    if (character.state == CharacterState.Idle){
+      srcSingle(
+          atlas: atlas.weapons.bowWooden.idle,
+          direction: character.direction
+      );
+      mapCharacterDst(character, character.type);
+      engine.actions.renderAtlas();
+    }
+  }
 }
