@@ -117,6 +117,15 @@ void mapSrcHuman({
         frame: frame,
         framesPerDirection: 2,
       );
+
+    case CharacterState.Performing:
+      return srcAnimate(
+        atlas: atlas.human.striking,
+        animation: animations.human.strikingSword,
+        direction: direction,
+        frame: frame,
+        framesPerDirection: 2,
+      );
   }
 
   throw Exception("Could not map src to human");

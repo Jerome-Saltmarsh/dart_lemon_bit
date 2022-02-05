@@ -58,9 +58,6 @@ void mapSrcWitch({
     case CharacterState.ChangingWeapon:
     // TODO: Handle this case.
       break;
-    case CharacterState.Performing:
-    // TODO: Handle this case.
-      break;
   }
 
   throw Exception("could not map src witch");
