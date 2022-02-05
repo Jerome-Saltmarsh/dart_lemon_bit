@@ -312,15 +312,15 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          if (player.busy || player.dead) {
+          if (player.deadOrBusy) {
             sendCompiledPlayerState(game, player);
             return;
           }
 
-          final int actionIndex = int.parse(arguments[2]);
-          final CharacterAction action = characterActions[actionIndex];
-          final double mouseX = double.parse(arguments[4]);
-          final double mouseY = double.parse(arguments[5]);
+          final actionIndex = int.parse(arguments[2]);
+          final action = characterActions[actionIndex];
+          final mouseX = double.parse(arguments[4]);
+          final mouseY = double.parse(arguments[5]);
 
           if (!player.isHuman) {
             Character? closestEnemy =
@@ -343,7 +343,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               game.setCharacterState(player, CharacterState.Idle);
               break;
             case CharacterAction.Perform:
-              if (player.isHuman) {
+              if (player.isSoldier) {
                 characterFace(player, mouseX, mouseY);
                 if (player.weapon.type == WeaponType.Unarmed){
                   game.setCharacterState(player, CharacterState.Striking);
@@ -352,12 +352,13 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 }
                 break;
               }
-              Ability? ability = player.ability;
+              final ability = player.ability;
               player.attackTarget = player.aimTarget;
               playerSetAbilityTarget(player, mouseX, mouseY);
 
               if (ability == null) {
                 if (player.type == CharacterType.Swordsman ||
+                    player.type == CharacterType.Human ||
                     player.attackTarget != null) {
                   characterAimAt(player, mouseX, mouseY);
                   game.setCharacterState(player, CharacterState.Striking);

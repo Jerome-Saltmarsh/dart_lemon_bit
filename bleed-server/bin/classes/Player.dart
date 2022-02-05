@@ -121,7 +121,7 @@ class Player extends Character with Entity {
         equippedWeaponSlotIndex = index;
         game.setCharacterState(this, CharacterState.ChangingWeapon);
       }else if (slot == SlotType.Spell_Tome_Fireball){
-         ability = Ability(type: AbilityType.Fireball, level: 1, cost: 5, range: 50, cooldown: 100);
+         ability = Ability(type: AbilityType.Fireball, level: 1, cost: 5, range: 250, cooldown: 100);
       }
   }
 }
@@ -227,6 +227,7 @@ class _Orbs {
 extension PlayerProperties on Player {
 
   bool get isHuman => type == CharacterType.Human;
+  bool get isSoldier => type == CharacterType.Soldier;
 
   bool get unarmed {
     for(Weapon weapon in weapons){
