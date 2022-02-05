@@ -44,6 +44,7 @@ class _SwordSteel {
 
 class _BowWooden {
   final Vector2 idle = Vector2(2, 1143);
+  final Vector2 firing = Vector2(2, 1208);
 }
 
 class _SwordWooden {

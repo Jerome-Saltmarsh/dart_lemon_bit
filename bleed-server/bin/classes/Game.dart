@@ -19,6 +19,7 @@ import '../common/GameStatus.dart';
 import '../common/GameType.dart';
 import '../common/ItemType.dart';
 import '../common/PlayerEvent.dart';
+import '../common/SlotType.dart';
 import '../common/Tile.dart';
 import '../common/WeaponType.dart';
 import '../common/enums/Direction.dart';
@@ -1276,6 +1277,17 @@ extension GameFunctions on Game {
         }
         break;
       case CharacterState.Striking:
+
+        if (character is Player){
+          if (character.equippedWeaponSlotType == SlotType.Bow_Wooden){
+            if (character.stateDuration == 3) {
+              spawnArrow(character, damage: character.damage);
+              character.attackTarget = null;
+              return;
+            }
+          }
+        }
+
         switch (character.type) {
           case CharacterType.Witch:
             if (character.stateDuration == 3 &&

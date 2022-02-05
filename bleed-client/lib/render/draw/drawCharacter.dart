@@ -66,11 +66,11 @@ void _renderCharacterWeapon(Character character) {
 
     if (character.state == CharacterState.Striking){
       srcAnimate(
-          atlas: atlas.weapons.swordWooden.striking,
-          animation: animations.human.strikingSword,
-          direction: character.direction,
-          frame: character.frame,
-          framesPerDirection: 2,
+        atlas: atlas.weapons.swordWooden.striking,
+        animation: animations.human.strikingSword,
+        direction: character.direction,
+        frame: character.frame,
+        framesPerDirection: 2,
       );
       mapCharacterDst(character, character.type);
       engine.actions.renderAtlas();
@@ -128,6 +128,17 @@ void _renderCharacterWeapon(Character character) {
       srcSingle(
           atlas: atlas.weapons.bowWooden.idle,
           direction: character.direction
+      );
+      mapCharacterDst(character, character.type);
+      engine.actions.renderAtlas();
+    }
+
+    if (character.state == CharacterState.Striking){
+      srcAnimate(
+          atlas: atlas.weapons.bowWooden.firing,
+          direction: character.direction,
+          frame: character.frame,
+          animation: animations.bow.firing, framesPerDirection: 2
       );
       mapCharacterDst(character, character.type);
       engine.actions.renderAtlas();
