@@ -42,15 +42,20 @@ void drawCharacter(Character character) {
 }
 
 void _renderCharacter(Character character, int shade) {
-  //  mapCharacterSrc(
-  //   type: character.type,
-  //   state: character.state,
-  //   slotType: character.equippedSlotType,
-  //   direction: character.direction,
-  //   frame: character.frame,
-  //   shade: shade,
-  // );
   mapCharacterDst(character, character.type);
+  if (character.type != CharacterType.Human){
+     mapCharacterSrc(
+      type: character.type,
+      state: character.state,
+      slotType: character.equippedSlotType,
+      direction: character.direction,
+      frame: character.frame,
+      shade: shade,
+    );
+     engine.actions.renderAtlas();
+     return;
+  }
+
   _renderCharacterLegs(character);
   _renderCharacterTorso(character);
 }
