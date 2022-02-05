@@ -48,13 +48,13 @@ class GameRender {
     drawProjectiles(game.projectiles);
     drawBulletHoles(game.bulletHoles);
 
-    if (!modules.game.state.player.isHuman){
+    // if (!modules.game.state.player.isHuman){
       drawAbility();
       final Vector2 attackTarget = state.player.attackTarget;
       if (attackTarget.x != 0 && attackTarget.y != 0){
         engine.draw.circle(attackTarget.x, attackTarget.y, 20, Colors.white24);
       }
-    }
+    // }
 
     engine.actions.setPaintColorWhite();
     isometric.render.sprites();

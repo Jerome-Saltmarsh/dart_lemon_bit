@@ -235,7 +235,7 @@ void _drawMouseAim() {
   double mouseDistance =
       distanceBetween(mouseWorldX, mouseWorldY, modules.game.state.player.x, modules.game.state.player.y);
 
-  double scope = mapWeaponAimLength(modules.game.state.player.weaponType.value);
+  double scope = mapWeaponAimLength(modules.game.state.soldier.weaponType.value);
   double d = min(mouseDistance, scope);
 
   double vX = adjacent(angle, d);

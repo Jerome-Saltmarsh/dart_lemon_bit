@@ -147,16 +147,16 @@ void parseState() {
         break;
 
       case ServerResponse.Player_Weapon:
-        modules.game.state.player.weaponType.value = _consumeWeaponType();
-        modules.game.state.player.weaponRounds.value = consumeInt();
-        modules.game.state.player.weaponCapacity.value = consumeInt();
+        modules.game.state.soldier.weaponType.value = _consumeWeaponType();
+        modules.game.state.soldier.weaponRounds.value = consumeInt();
+        modules.game.state.soldier.weaponCapacity.value = consumeInt();
         break;
 
       case ServerResponse.Weapons:
-        modules.game.state.player.weapons.clear();
+        modules.game.state.soldier.weapons.clear();
         int length = _consumeIntUnsafe();
         for (int i = 0; i < length; i++) {
-          modules.game.state.player.weapons.add(_consumeWeapon());
+          modules.game.state.soldier.weapons.add(_consumeWeapon());
         }
         break;
 

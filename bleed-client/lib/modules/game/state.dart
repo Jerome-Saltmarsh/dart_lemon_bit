@@ -8,7 +8,6 @@ import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/WeaponType.dart';
-import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/resources.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_math/Vector2.dart';
@@ -23,6 +22,7 @@ typedef BasicWidgetBuilder = Widget Function();
 class GameState {
   final Watch<StoreTab> storeTab = Watch(storeTabs[0]);
   final _Player player = _Player();
+  final _Soldier soldier = _Soldier();
   final Watch<GameStatus> status = Watch(GameStatus.Awaiting_Players);
   final TextEditingController textEditingControllerMessage = TextEditingController();
   final CharacterController characterController = CharacterController();
@@ -107,6 +107,27 @@ class _PlayerSlots {
   }
 }
 
+class _Soldier {
+  final Watch<WeaponType> weaponType = Watch(WeaponType.Unarmed);
+  final List<Weapon> weapons = [];
+  final Watch<int> weaponRounds = Watch(0);
+  final Watch<int> weaponCapacity = Watch(0);
+
+  bool weaponUnlocked(WeaponType weaponType) {
+    for (Weapon weapon in weapons) {
+      if (weapon.type == weaponType) return true;
+    }
+    return false;
+  }
+
+  bool get shotgunUnlocked {
+    for (Weapon weapon in weapons) {
+      if (weapon.type == WeaponType.Shotgun) return true;
+    }
+    return false;
+  }
+}
+
 class _Player {
   int id = -1;
   double x = -1;
@@ -120,10 +141,6 @@ class _Player {
   final orbs = _PlayerOrbs();
   final slots = _PlayerSlots();
   final Watch<String> uuid = Watch("");
-  final Watch<WeaponType> weaponType = Watch(WeaponType.Unarmed);
-  final List<Weapon> weapons = [];
-  final Watch<int> weaponRounds = Watch(0);
-  final Watch<int> weaponCapacity = Watch(0);
   final Watch<CharacterType> characterType = Watch(CharacterType.Human);
   final Watch<double> health = Watch(0.0);
   final Watch<int> experience = Watch(0);
@@ -134,7 +151,6 @@ class _Player {
   final Watch<String> message = Watch("");
   final Watch<CharacterState> state = Watch(CharacterState.Idle);
   final Watch<bool> alive = Watch(true);
-  final _Unlocked unlocked = _Unlocked();
   final Watch<AbilityType> ability = Watch(AbilityType.None);
   final Watch<double> magic = Watch(0);
   final Watch<double> maxMagic = Watch(0);
@@ -170,29 +186,5 @@ class _Player {
   int team = 0;
   bool get isHuman => characterType.value == CharacterType.Human;
   Vector2 attackTarget = Vector2(0, 0);
-}
-
-class _Unlocked {
-  bool get handgun => modules.game.state.player.weaponUnlocked(WeaponType.HandGun);
-
-  bool get shotgun => modules.game.state.player.weaponUnlocked(WeaponType.Shotgun);
-}
-
-extension PlayerExtentions on _Player {
-  bool weaponUnlocked(WeaponType weaponType) {
-    for (Weapon weapon in weapons) {
-      if (weapon.type == weaponType) return true;
-    }
-    return false;
-  }
-
-  bool get shotgunUnlocked {
-    for (Weapon weapon in weapons) {
-      if (weapon.type == WeaponType.Shotgun) return true;
-    }
-    return false;
-  }
-
-
 }
 

@@ -99,9 +99,7 @@ void initializeEventListeners() {
     }
   });
 
-
-
-   modules.game.state.player.weaponType.onChanged(onPlayerWeaponChanged);
+   modules.game.state.soldier.weaponType.onChanged(onPlayerWeaponChanged);
 }
 
 Future loadSharedPreferences() async {

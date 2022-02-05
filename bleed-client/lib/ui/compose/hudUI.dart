@@ -248,14 +248,14 @@ Positioned buildCharacterAction() {
 }
 
 bool shotgunUnlocked() {
-  for (Weapon weapon in modules.game.state.player.weapons) {
+  for (Weapon weapon in modules.game.state.soldier.weapons) {
     if (weapon.type == WeaponType.Shotgun) return true;
   }
   return false;
 }
 
 bool unlockedFirebolt() {
-  for (Weapon weapon in modules.game.state.player.weapons) {
+  for (Weapon weapon in modules.game.state.soldier.weapons) {
     if (weapon.type == WeaponType.Shotgun) return true;
   }
   return false;
@@ -377,9 +377,9 @@ String mapWeaponTypeToString(WeaponType weaponType) {
 
 Widget buildEquippedWeaponSlot() {
 
-  return WatchBuilder(modules.game.state.player.weaponType, (WeaponType weaponType){
-      return WatchBuilder(modules.game.state.player.weaponCapacity, (int weaponCapacity){
-          return WatchBuilder(modules.game.state.player.weaponRounds, (int weaponRounds){
+  return WatchBuilder(modules.game.state.soldier.weaponType, (WeaponType weaponType){
+      return WatchBuilder(modules.game.state.soldier.weaponCapacity, (int weaponCapacity){
+          return WatchBuilder(modules.game.state.soldier.weaponRounds, (int weaponRounds){
             return Column(
               children: [
                 Stack(
@@ -529,7 +529,7 @@ Widget buildExpandedWeapons() {
   int index = -1;
   return Column(
     crossAxisAlignment: axis.cross.start,
-    children: modules.game.state.player.weapons.map((weapon) {
+    children: modules.game.state.soldier.weapons.map((weapon) {
       index++;
       return Container(
         child: buildEquipWeaponSlot(weapon, index),
@@ -597,7 +597,7 @@ Widget buildLowAmmo() {
                 padding: EdgeInsets.all(10),
                 color: Colors.black26,
                 child: text(
-                    modules.game.state.player.weaponRounds.value == 0
+                    modules.game.state.soldier.weaponRounds.value == 0
                         ? "Empty"
                         : "Low Ammo",
                     size: 20)),

@@ -92,7 +92,7 @@ class GameBuild {
   }
 
   Widget _buildHudWeapons(){
-    return WatchBuilder(modules.game.state.player.weaponType, (WeaponType weaponType){
+    return WatchBuilder(modules.game.state.soldier.weaponType, (WeaponType weaponType){
       return layout(
           padding: 16,
           topLeft: buildTime(),
