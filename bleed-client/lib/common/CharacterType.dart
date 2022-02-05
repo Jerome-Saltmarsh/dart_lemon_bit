@@ -1,5 +1,7 @@
 enum CharacterType {
   Human,
+  Template,
+  Soldier,
   Zombie,
   Witch,
   Swordsman,

@@ -150,7 +150,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       player.name = playerName;
       compileWholeGame(royal);
       compilePlayerJoined(_buffer, player);
-      compilePlayerWeapon(_buffer, player);
+      compilePlayerWeaponValues(_buffer, player);
       compilePlayerWeapons(_buffer, player);
       compileGameStatus(_buffer, royal.status);
       compileGameMeta(_buffer, royal);

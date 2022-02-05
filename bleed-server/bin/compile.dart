@@ -1,6 +1,8 @@
+import 'dart:convert';
+
 import 'package:bleed_server/CubeGame.dart';
 import 'package:lemon_math/Vector2.dart';
-import 'dart:convert';
+
 import 'bleed/zombie_health.dart';
 import 'classes/Ability.dart';
 import 'classes/Character.dart';
@@ -260,13 +262,12 @@ void compilePlayer(StringBuffer buffer, Player player) {
   compilePlayerOrbs(buffer, player);
   compilePlayerSlotTypes(buffer, player);
 
-  if (player.weaponsDirty) {
-    player.weaponsDirty = false;
-    compilePlayerWeapons(buffer, player);
-  }
-
-  if (player.type == CharacterType.Human){
-    compilePlayerWeapon(buffer, player);
+  if (player.type == CharacterType.Soldier){
+    if (player.weaponsDirty) {
+      player.weaponsDirty = false;
+      compilePlayerWeapons(buffer, player);
+    }
+    compilePlayerWeaponValues(buffer, player);
   } else {
     _compilePlayerAbility(buffer, player);
   }
@@ -305,7 +306,7 @@ void _compilePlayerAbility(StringBuffer buffer, Player player){
   }
 }
 
-void compilePlayerWeapon(StringBuffer buffer, Player player){
+void compilePlayerWeaponValues(StringBuffer buffer, Player player){
   _write(buffer, ServerResponse.Player_Weapon.index);
   _write(buffer, player.weapon.type.index);
   _write(buffer, player.weapon.rounds);
