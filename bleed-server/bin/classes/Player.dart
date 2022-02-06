@@ -5,6 +5,7 @@ import '../common/CharacterType.dart';
 import '../common/PlayerEvent.dart';
 import '../common/Quests.dart';
 import '../common/SlotType.dart';
+import '../common/SlotTypeCategory.dart';
 import '../common/Tile.dart';
 import '../common/WeaponType.dart';
 import '../constants/no_squad.dart';
@@ -171,6 +172,26 @@ class _PlayerSlots {
         default:
           throw Exception("$index is not a valid slot index (1 - 6 inclusive)");
       }
+  }
+
+  void unequip(SlotTypeCategory slotTypeCategory){
+    if (!emptySlotAvailable) return;
+    switch(slotTypeCategory){
+      case SlotTypeCategory.Weapon:
+        if (weapon.isEmpty) return;
+        assignToEmpty(weapon);
+        weapon = SlotType.Empty;
+        break;
+      case SlotTypeCategory.Armour:
+        if (armour.isEmpty) return;
+        assignToEmpty(armour);
+        armour = SlotType.Empty;
+        break;
+      case SlotTypeCategory.Helm:
+        break;
+      case SlotTypeCategory.Pants:
+        break;
+    }
   }
 
   void assignSlotAtIndex(int index, SlotType value){

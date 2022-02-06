@@ -1,6 +1,7 @@
 import 'package:bleed_server/CubeGame.dart';
 import 'package:bleed_server/system.dart';
 import 'package:bleed_server/user-service-client/firestoreService.dart';
+import 'package:http/http.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -21,6 +22,7 @@ import 'common/Modify_Game.dart';
 import 'common/PlayerEvent.dart';
 import 'common/ServerResponse.dart';
 import 'common/SlotType.dart';
+import 'common/SlotTypeCategory.dart';
 import 'common/WeaponType.dart';
 import 'common/enums/Direction.dart';
 import 'common/version.dart';
@@ -572,6 +574,28 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           selectCharacterType(player, characterTypes[characterTypeIndex]);
           break;
 
+        case ClientRequest.Unequip_Slot:
+          if (arguments.length != 3) {
+            return errorArgsExpected(3, arguments);
+          }
+
+          Player? player = findPlayerByUuid(arguments[1]);
+          if (player == null) {
+            return errorPlayerNotFound();
+          }
+
+          int? slotTypeCategoryIndex = int.tryParse(arguments[2]);
+          if (slotTypeCategoryIndex == null){
+            return errorIntegerExpected(2, arguments[2]);
+          }
+          if (slotTypeCategoryIndex < 0 || slotTypeCategoryIndex >= slotTypeCategories.length) {
+            return errorInvalidArg('inventory index out of bounds: $slotTypeCategoryIndex');
+          }
+
+          final slotTypeCategory = slotTypeCategories[slotTypeCategoryIndex];
+          player.slots.unequip(slotTypeCategory);
+          break;
+
         case ClientRequest.Equip_Slot:
           if (arguments.length != 3) {
             return errorArgsExpected(3, arguments);
@@ -591,7 +615,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
 
           player.useSlot(inventoryIndex);
-
           break;
 
         case ClientRequest.Sell_Slot:

@@ -2,6 +2,7 @@
 import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/SlotType.dart';
+import 'package:bleed_client/common/SlotTypeCategory.dart';
 import 'package:bleed_client/modules/game/state.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/send.dart';
@@ -136,6 +137,19 @@ class GameActions {
     print("game.actions.equipSlot($index)");
     _verifyValidSlotIndex(index);
     sendClientRequest(ClientRequest.Equip_Slot, index);
+  }
+
+  void unequipWeapon(){
+    unequip(SlotTypeCategory.Weapon);
+  }
+
+  void unequipArmour(){
+    unequip(SlotTypeCategory.Armour);
+  }
+
+  void unequip(SlotTypeCategory value){
+    print("game.actions.unequip(${value.name})");
+    sendClientRequest(ClientRequest.Unequip_Slot, value.index);
   }
 
   void _verifyValidSlotIndex(int index){

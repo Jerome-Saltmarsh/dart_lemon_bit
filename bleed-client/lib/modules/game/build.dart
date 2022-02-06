@@ -6,6 +6,7 @@ import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/RoyalCost.dart';
 import 'package:bleed_client/common/SlotType.dart';
+import 'package:bleed_client/common/SlotTypeCategory.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/flutterkit.dart';
@@ -631,10 +632,14 @@ class GameBuild {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               WatchBuilder(state.player.slots.weapon, (SlotType weapon){
-                return slot(slotType: weapon, color: colours.white382);
+                return onPressed(
+                    callback: actions.unequipWeapon,
+                    child: slot(slotType: weapon, color: colours.white382));
               }),
               WatchBuilder(state.player.slots.armour, (SlotType slotType){
-                return slot(slotType: slotType, color: colours.white382);
+                return onPressed(
+                    callback: actions.unequipArmour,
+                    child: slot(slotType: slotType, color: colours.white382));
               }),
             ],
           )
