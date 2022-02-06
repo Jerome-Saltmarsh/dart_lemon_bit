@@ -5,7 +5,7 @@ import '../instances/scenes.dart';
 import 'world.dart';
 
 class Cave extends Game {
-  Cave() : super(scenes.cave, shadeMax: Shade_VeryDark);
+  Cave() : super(scenes.cave, shadeMax: Shade.Very_Dark);
 
   @override
   void update() {

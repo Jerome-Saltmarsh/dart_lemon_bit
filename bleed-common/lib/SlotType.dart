@@ -39,8 +39,7 @@ class _SlotTypes {
   ];
 
   final List<SlotType> armour = [
-    SlotType.Leather_Cap,
-    SlotType.Guards_Helmet,
+    SlotType.Armour_Standard,
   ];
 
   final List<SlotType> items = [

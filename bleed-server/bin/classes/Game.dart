@@ -98,7 +98,7 @@ abstract class Game {
   /// Used to constrain the brightness of a level
   /// For example a cave which is very dark even during day time
   /// or a dark forest
-  int shadeMax = Shade_Bright;
+  int shadeMax = Shade.Bright;
   int duration = 0;
   int teamSize = 1;
   int numberOfTeams = 2;
@@ -197,7 +197,7 @@ abstract class Game {
 
   Game(this.scene, {
       this.gameType = GameType.MMO,
-      this.shadeMax = Shade_Bright,
+      this.shadeMax = Shade.Bright,
       this.status = GameStatus.In_Progress}) {
     this.crates.clear();
     global.onGameCreated(this);
