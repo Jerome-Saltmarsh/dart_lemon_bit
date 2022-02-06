@@ -626,3 +626,7 @@ When a player gains a level they can choose an attribute to improve
 - Magic Damage
 - Physical Damage
 
+[ ] Fire Crystal
+[ ] Water Crystal
+[ ] Air Crystal
+[ ] Grass Crystal

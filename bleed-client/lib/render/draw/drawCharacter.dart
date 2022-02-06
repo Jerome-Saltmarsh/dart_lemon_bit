@@ -57,9 +57,47 @@ void _renderCharacter(Character character, int shade) {
      return;
   }
 
+  _renderCharacterShadow(character);
   _renderCharacterLegs(character);
   _renderCharacterTorso(character);
   _renderCharacterHead(character);
+}
+
+void _renderCharacterShadow(Character character){
+  switch(character.state){
+    case CharacterState.Idle:
+      srcSingle(atlas: atlas.shadow.idle, direction: character.direction);
+      break;
+    case CharacterState.Striking:
+      srcAnimate(
+        atlas: atlas.shadow.striking,
+        animation: animations.human.strikingSword,
+        direction: character.direction,
+        frame: character.frame,
+        framesPerDirection: 2,
+      );
+      break;
+    case CharacterState.Running:
+      srcLoop(
+          atlas: atlas.shadow.running,
+          direction: character.direction,
+          frame: character.frame
+      );
+      break;
+    case CharacterState.ChangingWeapon:
+      srcSingle(atlas: atlas.shadow.idle, direction: character.direction);
+      break;
+    case CharacterState.Performing:
+      srcAnimate(
+        atlas: atlas.shadow.striking,
+        animation: animations.human.strikingSword,
+        direction: character.direction,
+        frame: character.frame,
+        framesPerDirection: 2,
+      );
+      break;
+  }
+  engine.actions.renderAtlas();
 }
 
 void _renderCharacterLegs(Character character){
