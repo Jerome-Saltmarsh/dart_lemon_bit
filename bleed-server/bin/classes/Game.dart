@@ -1272,7 +1272,7 @@ extension GameFunctions on Game {
       case CharacterState.Striking:
 
         if (character is Player){
-          if (character.equippedWeaponSlotType == SlotType.Bow_Wooden){
+          if (character.slots.weapon == SlotType.Bow_Wooden){
             if (character.stateDuration == 3) {
               spawnArrow(character, damage: character.damage);
               character.attackTarget = null;

@@ -71,6 +71,9 @@ class _PlayerOrbs {
 }
 
 class _PlayerSlots {
+  final Watch<SlotType> weapon = Watch(SlotType.Empty);
+  final Watch<SlotType> armour = Watch(SlotType.Empty);
+
   final Watch<SlotType> slot1 = Watch(SlotType.Empty);
   final Watch<SlotType> slot2 = Watch(SlotType.Empty);
   final Watch<SlotType> slot3 = Watch(SlotType.Empty);
@@ -163,7 +166,6 @@ class _Player {
   final Ability ability2 = Ability(2);
   final Ability ability3 = Ability(3);
   final Ability ability4 = Ability(4);
-  final Watch<int> equippedWeaponSlotIndex = Watch(1);
 
   _Player() {
     magic.onChanged((double value) {

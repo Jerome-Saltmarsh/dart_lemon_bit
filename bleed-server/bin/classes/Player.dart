@@ -35,12 +35,11 @@ class Player extends Character with Entity {
   int abilityPoints = 0;
   int _magic = 0;
 
-  /// this refers to the inventory slots ranging from 1 to 6
-  int equippedWeaponSlotIndex = 1;
-  SlotType equippedArmourSlot = SlotType.Empty;
-
-  /// This refers to the enum index of the Slot Type value at the equipped slot type index
-  SlotType get equippedWeaponSlotType => slots.getSlotTypeAtIndex(equippedWeaponSlotIndex);
+  // /// this refers to the inventory slots ranging from 1 to 6
+  // int equippedWeaponSlotIndex = 1;
+  // SlotType equippedArmourSlot = SlotType.Empty;
+  // /// This refers to the enum index of the Slot Type value at the equipped slot type index
+  // SlotType get equippedWeaponSlotType => slots.getSlotTypeAtIndex(equippedWeaponSlotIndex);
 
   final slots = _PlayerSlots();
 
@@ -119,18 +118,24 @@ class Player extends Character with Entity {
       if (slot == SlotType.Empty) return;
       final slotIsWeapon = slotTypes.weapons.contains(slot);
       if (slotIsWeapon){
-        if (equippedWeaponSlotIndex == index) return;
-        equippedWeaponSlotIndex = index;
+        if (slot == slots.weapon) return;
+        final currentWeapon = slots.weapon;
+        slots.weapon = slot;
+        slots.assignSlotAtIndex(index, currentWeapon);
         game.setCharacterState(this, CharacterState.ChangingWeapon);
       }else if (slot == SlotType.Spell_Tome_Fireball){
          ability = Ability(type: AbilityType.Fireball, level: 1, cost: 5, range: 250, cooldown: 100, mode: AbilityMode.Directed);
       } else if (slot == SlotType.Armour_Standard){
-        equippedArmourSlot = SlotType.Armour_Standard;
+        slots.armour = SlotType.Armour_Standard;
       }
   }
 }
 
 class _PlayerSlots {
+  SlotType weapon = SlotType.Empty;
+  SlotType armour = SlotType.Empty;
+
+
   SlotType slot1 = SlotType.Empty;
   SlotType slot2 = SlotType.Empty;
   SlotType slot3 = SlotType.Empty;

@@ -241,7 +241,8 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _writeInt(buffer, player.attackRange);
   _write(buffer, player.team);
 
-  _write(buffer, player.equippedWeaponSlotIndex);
+  _write(buffer, player.slots.weapon.index);
+  _write(buffer, player.slots.armour.index);
 
   Character? aimTarget = player.aimTarget;
   if (aimTarget != null) {
@@ -442,8 +443,8 @@ void _compilePlayer(StringBuffer buffer, Player player) {
   _writeInt(buffer, (player.health / player.maxHealth) * 100);
   _writeInt(buffer, (player.magic / player.maxMagic) * 100);
   _write(buffer, player.isHuman ? player.weapon.type.index : WeaponType.Unarmed.index);
-  _write(buffer, player.equippedWeaponSlotType.index);
-  _write(buffer, player.equippedArmourSlot.index);
+  _write(buffer, player.slots.weapon.index);
+  _write(buffer, player.slots.armour.index);
 }
 
 void compileString(StringBuffer buffer, String text){
