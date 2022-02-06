@@ -1,6 +1,8 @@
-
+import 'package:lemon_math/Vector2.dart';
+import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 
+import 'atlas.dart';
 import 'enums.dart';
 
 class IsometricMaps {
@@ -41,5 +43,16 @@ class IsometricMaps {
     if (hour < 20) return Phase.Evening;
     return Phase.Night;
   }
+
+  final Map<ItemType, Vector2> itemAtlas = {
+    ItemType.Handgun: atlas.items.handgun,
+    ItemType.Shotgun: atlas.items.shotgun,
+    ItemType.Armour: atlas.items.armour,
+    ItemType.Health: atlas.items.health,
+    ItemType.Orb_Emerald: atlas.items.emerald,
+    ItemType.Orb_Ruby: atlas.items.orbRed,
+    ItemType.Orb_Topaz: atlas.items.orbTopaz,
+  };
+
 
 }

@@ -12,10 +12,10 @@ import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:bleed_client/modules/isometric/animations.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/modules/isometric/enums.dart';
+import 'package:bleed_client/modules/isometric/maps.dart';
 import 'package:bleed_client/modules/isometric/properties.dart';
 import 'package:bleed_client/modules/isometric/queries.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/render/draw/drawCanvas.dart';
 import 'package:bleed_client/render/draw/drawCharacterHealthBar.dart';
 import 'package:bleed_client/render/draw/drawInteractableNpcs.dart';
 import 'package:bleed_client/render/mappers/animate.dart';
@@ -34,7 +34,8 @@ class IsometricRender {
   final IsometricState state;
   final IsometricProperties properties;
   final IsometricQueries queries;
-  IsometricRender(this.state, this.properties, this.queries);
+  final IsometricMaps maps;
+  IsometricRender(this.state, this.properties, this.queries, this.maps);
 
   void tiles() {
     engine.actions.setPaintColorWhite();
@@ -158,11 +159,11 @@ class IsometricRender {
   }
 
   void renderItem(Item item) {
-    if (!itemAtlas.containsKey(item.type)) return;
+    if (!maps.itemAtlas.containsKey(item.type)) return;
 
     final _anchor = 32;
     srcLoop(
-        atlas: itemAtlas[item.type]!,
+        atlas: maps.itemAtlas[item.type]!,
         direction: Direction.Down,
         frame: core.state.timeline.frame,
         framesPerDirection: 8);

@@ -265,15 +265,13 @@ class GameRender {
   }
 
   void drawMouseAim2() {
-    // if (game.player.characterType.value == CharacterType.Swordsman){
     engine.actions.setPaintColorWhite();
     double angle = queries.getAngleBetweenMouseAndPlayer();
-    double mouseDistance = getDistanceBetweenMouseAndPlayer();
+    double mouseDistance = queries.getDistanceBetweenMouseAndPlayer();
     double d = min(mouseDistance, modules.game.state.player.attackRange);
     double vX = adjacent(angle, d);
     double vY = opposite(angle, d);
     drawLine(modules.game.state.player.x, modules.game.state.player.y, modules.game.state.player.x + vX, modules.game.state.player.y + vY);
-    // }
   }
 
   void drawDebugEnvironmentObjects() {
