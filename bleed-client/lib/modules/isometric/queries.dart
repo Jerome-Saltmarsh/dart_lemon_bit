@@ -1,5 +1,6 @@
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
+import 'package:bleed_client/common/WeaponType.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'state.dart';
@@ -56,4 +57,20 @@ class IsometricQueries {
     return true;
   }
 
+  double mapWeaponAimLength(WeaponType weapon) {
+    switch (weapon) {
+      case WeaponType.Unarmed:
+        return 20;
+      case WeaponType.HandGun:
+        return 20;
+      case WeaponType.Shotgun:
+        return 25;
+      case WeaponType.SniperRifle:
+        return 150;
+      case WeaponType.AssaultRifle:
+        return 50;
+      default:
+        return 10;
+    }
+  }
 }

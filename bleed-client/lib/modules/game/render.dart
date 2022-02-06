@@ -15,6 +15,7 @@ import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/mappers/mapDirectionToAngle.dart';
+import 'package:bleed_client/modules/game/queries.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
@@ -34,10 +35,11 @@ import 'style.dart';
 
 class GameRender {
 
+  final GameQueries queries;
   final GameState state;
   final GameStyle style;
 
-  GameRender(this.state, this.style);
+  GameRender(this.state, this.style, this.queries);
 
   void render(Canvas canvas, Size size) {
 
@@ -265,7 +267,7 @@ class GameRender {
   void drawMouseAim2() {
     // if (game.player.characterType.value == CharacterType.Swordsman){
     engine.actions.setPaintColorWhite();
-    double angle = getAngleBetweenMouseAndPlayer();
+    double angle = queries.getAngleBetweenMouseAndPlayer();
     double mouseDistance = getDistanceBetweenMouseAndPlayer();
     double d = min(mouseDistance, modules.game.state.player.attackRange);
     double vX = adjacent(angle, d);
@@ -286,5 +288,27 @@ class GameRender {
     for (EnvironmentObject env in modules.isometric.state.environmentObjects) {
       engine.draw.circle(env.x, env.y, env.radius, Colors.blue);
     }
+  }
+
+
+  void _drawMouseAim() {
+    // if (modules.game.state.player.dead) return;
+    //
+    // engine.state.paint.strokeWidth = 3;
+    // double angle =
+    // angleBetween(mouseWorldX, mouseWorldY, modules.game.state.player.x, modules.game.state.player.y);
+    //
+    // double mouseDistance =
+    // distanceBetween(mouseWorldX, mouseWorldY, modules.game.state.player.x, modules.game.state.player.y);
+    //
+    // double scope = queries.mapWeaponAimLength(modules.game.state.soldier.weaponType.value);
+    // double d = min(mouseDistance, scope);
+    //
+    // double vX = adjacent(angle, d);
+    // double vY = opposite(angle, d);
+    // Offset mouseOffset = Offset(mouseWorldX, mouseWorldY);
+    // Offset aimOffset = Offset(mouseWorldX + vX, mouseWorldY + vY);
+    // _drawLine(mouseOffset, aimOffset, Colors.transparent);
+    // engine.actions.setPaintColorWhite();
   }
 }
