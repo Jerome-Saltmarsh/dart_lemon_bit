@@ -443,6 +443,7 @@ void _compilePlayer(StringBuffer buffer, Player player) {
   _writeInt(buffer, (player.magic / player.maxMagic) * 100);
   _write(buffer, player.isHuman ? player.weapon.type.index : WeaponType.Unarmed.index);
   _write(buffer, player.equippedWeaponSlotType.index);
+  _write(buffer, player.equippedArmourSlot.index);
 }
 
 void compileString(StringBuffer buffer, String text){

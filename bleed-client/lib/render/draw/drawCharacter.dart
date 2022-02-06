@@ -81,41 +81,99 @@ void _renderCharacterLegs(Character character){
 void _renderCharacterTorso(Character character){
   switch(character.state){
     case CharacterState.Idle:
-      srcSingle(atlas: atlas.plain.torso.idle, direction: character.direction);
+      switch(character.equippedArmour){
+        case SlotType.Armour_Standard:
+          srcSingle(atlas: atlas.blueTorso.idle, direction: character.direction);
+          break;
+        default:
+          srcSingle(atlas: atlas.plain.torso.idle, direction: character.direction);
+          break;
+      }
+
       break;
     case CharacterState.Striking:
-      srcAnimate(
-        atlas: atlas.plain.torso.striking,
-        animation: animations.human.strikingSword,
-        direction: character.direction,
-        frame: character.frame,
-        framesPerDirection: 2,
-      );
+      switch (character.equippedArmour) {
+        case SlotType.Armour_Standard:
+          srcAnimate(
+            atlas: atlas.blueTorso.striking,
+            animation: animations.human.strikingSword,
+            direction: character.direction,
+            frame: character.frame,
+            framesPerDirection: 2,
+          );
+          break;
+        default:
+          srcAnimate(
+            atlas: atlas.plain.torso.striking,
+            animation: animations.human.strikingSword,
+            direction: character.direction,
+            frame: character.frame,
+            framesPerDirection: 2,
+          );
+          break;
+      }
       break;
     case CharacterState.Running:
-      srcLoop(
-          atlas: atlas.plain.torso.running,
-          direction: character.direction,
-          frame: character.frame
-      );
+      switch (character.equippedArmour) {
+        case SlotType.Armour_Standard:
+          srcLoop(
+              atlas: atlas.blueTorso.running,
+              direction: character.direction,
+              frame: character.frame
+          );
+          break;
+        default:
+          srcLoop(
+              atlas: atlas.plain.torso.running,
+              direction: character.direction,
+              frame: character.frame
+          );
+          break;
+      }
       break;
     case CharacterState.ChangingWeapon:
-      srcAnimate(
-        atlas: atlas.plain.torso.changing,
-        animation: animations.human.changing,
-        direction: character.direction,
-        frame: character.frame,
-        framesPerDirection: 2,
-      );
+      switch (character.equippedArmour) {
+        case SlotType.Armour_Standard:
+          srcAnimate(
+            atlas: atlas.blueTorso.changing,
+            animation: animations.human.changing,
+            direction: character.direction,
+            frame: character.frame,
+            framesPerDirection: 2,
+          );
+          break;
+        default:
+          srcAnimate(
+            atlas: atlas.plain.torso.changing,
+            animation: animations.human.changing,
+            direction: character.direction,
+            frame: character.frame,
+            framesPerDirection: 2,
+          );
+          break;
+      }
       break;
     case CharacterState.Performing:
-      srcAnimate(
-        atlas: atlas.plain.torso.striking,
-        animation: animations.human.strikingSword,
-        direction: character.direction,
-        frame: character.frame,
-        framesPerDirection: 2,
-      );
+      switch (character.equippedArmour) {
+        case SlotType.Armour_Standard:
+          srcAnimate(
+            atlas: atlas.blueTorso.striking,
+            animation: animations.human.strikingSword,
+            direction: character.direction,
+            frame: character.frame,
+            framesPerDirection: 2,
+          );
+          break;
+        default:
+          srcAnimate(
+            atlas: atlas.plain.torso.striking,
+            animation: animations.human.strikingSword,
+            direction: character.direction,
+            frame: character.frame,
+            framesPerDirection: 2,
+          );
+          break;
+      }
       break;
   }
   engine.actions.renderAtlas();
@@ -257,3 +315,5 @@ void _renderCharacterWeapon(Character character) {
     }
   }
 }
+
+

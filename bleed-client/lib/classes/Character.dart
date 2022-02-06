@@ -12,6 +12,7 @@ class Character extends Vector2{
   int frame;
   WeaponType weapon;
   SlotType equippedSlotType = SlotType.Empty;
+  SlotType equippedArmour = SlotType.Empty;
   int team;
   String name;
   String text;

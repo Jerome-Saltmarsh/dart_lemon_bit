@@ -31,6 +31,8 @@ class _Atlas {
 
   final _Items items = _Items();
   final _Weapons weapons = _Weapons();
+
+  final _BlueTorso blueTorso = _BlueTorso();
 }
 
 class _Plain {
@@ -49,6 +51,13 @@ class _PlainTorso {
   final Vector2 running = Vector2(0,  4150 );
   final Vector2 striking = Vector2(0,  4215);
   final Vector2 changing = Vector2(0,  4280);
+}
+
+class _BlueTorso {
+  final Vector2 idle = Vector2(0,  4670);
+  final Vector2 running = Vector2(0,  4735 );
+  final Vector2 striking = Vector2(0,  4800);
+  final Vector2 changing = Vector2(0,  4865);
 }
 
 class _PlainHead {
