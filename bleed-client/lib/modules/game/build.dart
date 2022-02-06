@@ -630,9 +630,12 @@ class GameBuild {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              slot(slotType: SlotType.Empty, color: colours.white382),
-              slot(slotType: SlotType.Spell_Tome_Fireball, color: colours.white382),
-              slot(slotType: SlotType.Bow_Wooden, color: colours.white382),
+              WatchBuilder(state.player.slots.weapon, (SlotType weapon){
+                return slot(slotType: weapon, color: colours.white382);
+              }),
+              WatchBuilder(state.player.slots.armour, (SlotType slotType){
+                return slot(slotType: slotType, color: colours.white382);
+              }),
             ],
           )
         ],

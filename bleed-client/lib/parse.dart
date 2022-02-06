@@ -444,9 +444,10 @@ void _parsePlayer() {
 }
 
 void _parsePlayerAbility(){
-  modules.game.state.player.ability.value = _consumeAbilityType();
-  modules.game.state.player.abilityRange = consumeDouble();
-  modules.game.state.player.abilityRadius = consumeDouble();
+  final player = modules.game.state.player;
+  player.ability.value = _consumeAbilityType();
+  player.abilityRange = consumeDouble();
+  player.abilityRadius = consumeDouble();
 }
 
 AbilityType _consumeAbilityType() {
