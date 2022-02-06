@@ -20,7 +20,6 @@ import 'package:bleed_client/modules/isometric/maps.dart';
 import 'package:bleed_client/modules/isometric/properties.dart';
 import 'package:bleed_client/modules/isometric/queries.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/render/mapCharacterDst.dart';
 import 'package:bleed_client/render/mapCharacterSrc.dart';
 import 'package:bleed_client/render/mapParticleToDst.dart';
 import 'package:bleed_client/render/mapParticleToSrc.dart';
@@ -30,6 +29,10 @@ import 'package:lemon_engine/engine.dart';
 
 import 'functions.dart';
 import 'state.dart';
+
+final _size = 64;
+final _anchorX = _size * 0.5;
+final _anchorY = _size * 0.75;
 
 class IsometricRender {
 
@@ -551,6 +554,19 @@ class IsometricRender {
     if (diffOver(npc.x, mouseWorldX, 50)) return;
     if (diffOver(npc.y, mouseWorldY, 50)) return;
     engine.draw.text(npc.name, npc.x - isometric.constants.charWidth * npc.name.length, npc.y, style: state.nameTextStyle);
+  }
+
+  void mapCharacterDst(
+      Character character,
+      CharacterType type,
+      ) {
+    return engine.actions.mapDst(
+      scale: goldenRatio_0618,
+      x: character.x,
+      y: character.y,
+      anchorX: _anchorX,
+      anchorY: _anchorY,
+    );
   }
 }
 
