@@ -18,7 +18,6 @@ import 'package:bleed_client/mappers/mapDirectionToAngle.dart';
 import 'package:bleed_client/modules/game/queries.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/render/draw/drawCanvas.dart';
 import 'package:bleed_client/render/draw/drawPlayerText.dart';
 import 'package:bleed_client/render/mappers/mapBulletToSrc.dart';
 import 'package:bleed_client/state/game.dart';

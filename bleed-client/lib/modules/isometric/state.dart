@@ -1,17 +1,18 @@
 
 import 'dart:typed_data';
-import 'dart:ui';
+import 'dart:ui' as ui;
 
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:flutter/material.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_watch/watch.dart';
 
 class IsometricState {
-  late Image image;
+  late ui.Image image;
   List<List<Vector2>> paths = [];
   List<FloatingText> floatingText = [];
   bool eventsRegistered = false;
@@ -30,4 +31,6 @@ class IsometricState {
   final Watch<int> time = Watch(0);
   final Watch<int> ambient = Watch(Shade_Bright);
   final Watch<int> maxAmbientBrightness = Watch(Shade_Bright);
+  final nameTextStyle = TextStyle(color: Colors.white);
+
 }

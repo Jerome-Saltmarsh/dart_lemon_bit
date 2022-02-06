@@ -1,3 +1,6 @@
+import 'dart:ui';
+
+import 'package:lemon_math/diff_over.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/Item.dart';
@@ -8,6 +11,7 @@ import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:bleed_client/modules/isometric/animations.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
@@ -16,8 +20,6 @@ import 'package:bleed_client/modules/isometric/maps.dart';
 import 'package:bleed_client/modules/isometric/properties.dart';
 import 'package:bleed_client/modules/isometric/queries.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/render/draw/drawCharacterHealthBar.dart';
-import 'package:bleed_client/render/draw/drawInteractableNpcs.dart';
 import 'package:bleed_client/render/mappers/animate.dart';
 import 'package:bleed_client/render/mappers/loop.dart';
 import 'package:bleed_client/render/mappers/mapCharacterDst.dart';
@@ -25,6 +27,7 @@ import 'package:bleed_client/render/mappers/mapCharacterSrc.dart';
 import 'package:bleed_client/render/mappers/mapParticleToDst.dart';
 import 'package:bleed_client/render/mappers/mapParticleToSrc.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'state.dart';
@@ -521,6 +524,34 @@ class IsometricRender {
         engine.actions.renderAtlas();
       }
     }
+  }
+
+
+  final _width = 35.0;
+  final _widthHalf = 35.0 * 0.5;
+  final _height = 35.0 * goldenRatio_0381 * goldenRatio_0381 * goldenRatio_0381;
+  final _marginBottom = 50;
+
+
+  void drawCharacterHealthBar(Character character){
+    engine.actions.setPaintColorWhite();
+    engine.state.canvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom, _width, _height), engine.state.paint);
+    engine.actions.setPaintColor(colours.red);
+    engine.state.canvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom, _width * character.health, _height), engine.state.paint);
+  }
+
+  void drawCharacterMagicBar(Character character){
+    engine.actions.setPaintColorWhite();
+    engine.state.canvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom + _height, _width, _height), engine.state.paint);
+    engine.actions.setPaintColor(colours.blue);
+    engine.state.canvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom + _height, _width * character.magic, _height), engine.state.paint);
+  }
+
+  void drawInteractableNpc(Character npc) {
+    isometric.render.drawCharacter(npc);
+    if (diffOver(npc.x, mouseWorldX, 50)) return;
+    if (diffOver(npc.y, mouseWorldY, 50)) return;
+    engine.draw.text(npc.name, npc.x - isometric.constants.charWidth * npc.name.length, npc.y, style: state.nameTextStyle);
   }
 }
 
