@@ -37,8 +37,8 @@ class IsometricActions {
     final tileSize = modules.isometric.constants.tileSize;
     int i = 0;
     final dynamicShading = state.dynamicShading;
-    for (int row = 0; row < modules.isometric.state.totalRows.value; row++) {
-      for (int column = 0; column < modules.isometric.state.totalColumns.value; column++) {
+    for (int row = 0; row < state.totalRows.value; row++) {
+      for (int column = 0; column < state.totalColumns.value; column++) {
         final shade = dynamicShading[row][column];
         state.tilesSrc[i + 1] = atlas.tiles.y + shade * tileSize; // top
         state.tilesSrc[i + 3] = state.tilesSrc[i + 1] + tileSize; // bottom
@@ -59,41 +59,40 @@ class IsometricActions {
   void resetBakeMap(){
     print("isometric.actions.resetBakeMap()");
     state.bakeMap.clear();
-    for (int row = 0; row < modules.isometric.state.totalRows.value; row++) {
+    for (int row = 0; row < state.totalRows.value; row++) {
       final List<int> _baked = [];
       state.bakeMap.add(_baked);
-      for (int column = 0; column < modules.isometric.state.totalColumns.value; column++) {
+      for (int column = 0; column < state.totalColumns.value; column++) {
         _baked.add(state.ambient.value);
       }
     }
     applyEnvironmentObjectsToBakeMapping();
   }
 
-
   void resetDynamicMap(){
     print("isometric.actions.resetDynamicMap()");
-    modules.isometric.state.dynamicShading.clear();
-    for (int row = 0; row < modules.isometric.state.totalRows.value; row++) {
+    state.dynamicShading.clear();
+    for (int row = 0; row < state.totalRows.value; row++) {
       final List<int> _dynamic = [];
-      modules.isometric.state.dynamicShading.add(_dynamic);
-      for (int column = 0; column < modules.isometric.state.totalColumns.value; column++) {
-        _dynamic.add(modules.isometric.state.ambient.value);
+      state.dynamicShading.add(_dynamic);
+      for (int column = 0; column < state.totalColumns.value; column++) {
+        _dynamic.add(state.ambient.value);
       }
     }
   }
 
   void applyEnvironmentObjectsToBakeMapping(){
-    for (EnvironmentObject env in modules.isometric.state.environmentObjects){
+    for (EnvironmentObject env in state.environmentObjects){
       if (env.type == ObjectType.Torch){
-        emitLightHigh(modules.isometric.state.bakeMap, env.x, env.y);
+        emitLightHigh(state.bakeMap, env.x, env.y);
         continue;
       }
       if (env.type == ObjectType.House01){
-        emitLightLow(modules.isometric.state.bakeMap, env.x, env.y);
+        emitLightLow(state.bakeMap, env.x, env.y);
         continue;
       }
       if (env.type == ObjectType.House02){
-        emitLightLow(modules.isometric.state.bakeMap, env.x, env.y);
+        emitLightLow(state.bakeMap, env.x, env.y);
         continue;
       }
     }
@@ -105,10 +104,10 @@ class IsometricActions {
   }
 
   void resetDynamicShadesToBakeMap() {
-    final dynamicShading = modules.isometric.state.dynamicShading;
+    final dynamicShading = state.dynamicShading;
     for (int row = 0; row < dynamicShading.length; row++) {
       for (int column = 0; column < dynamicShading[0].length; column++) {
-        dynamicShading[row][column] = modules.isometric.state.bakeMap[row][column];
+        dynamicShading[row][column] = state.bakeMap[row][column];
       }
     }
   }
@@ -264,16 +263,16 @@ class IsometricActions {
 
   void detractHour(){
     print("isometric.actions.detractHour()");
-    final amount = modules.isometric.state.time.value - secondsPerHour;
+    final amount = state.time.value - secondsPerHour;
     if (amount > 0) {
-      modules.isometric.state.time.value = amount;
+      state.time.value = amount;
     } else {
-      modules.isometric.state.time.value = secondsPerDay + amount;
+      state.time.value = secondsPerDay + amount;
     }
   }
 
   void addHour(){
-    modules.isometric.state.time.value += secondsPerHour;
+    state.time.value += secondsPerHour;
   }
 
   void setHour(int hour) {
@@ -282,7 +281,7 @@ class IsometricActions {
   }
 
   void removeGeneratedEnvironmentObjects(){
-    modules.isometric.state.environmentObjects.removeWhere((env) => isGeneratedAtBuild(env.type));
+    state.environmentObjects.removeWhere((env) => isGeneratedAtBuild(env.type));
   }
 
   void cameraCenterMap(){
@@ -428,12 +427,12 @@ class IsometricActions {
   void applyCharacterLightEmission(List<Character> characters) {
     for(Character character in characters) {
       if (character.team != modules.game.state.player.team) continue;
-      emitLightHigh(isometric.state.dynamicShading, character.x, character.y);
+      emitLightHigh(state.dynamicShading, character.x, character.y);
     }
   }
 
   void applyNpcLightEmission(List<Character> characters) {
-    final dynamicShading = isometric.state.dynamicShading;
+    final dynamicShading = state.dynamicShading;
     for (Character character in characters) {
       emitLightMedium(dynamicShading, character.x, character.y);
     }
@@ -442,9 +441,9 @@ class IsometricActions {
   void applyLightArea(List<List<int>> shader, int column, int row, int size, int shade) {
 
     int columnStart = max(column - size, 0);
-    int columnEnd = min(column + size, modules.isometric.state.totalColumns.value - 1);
+    int columnEnd = min(column + size, state.totalColumns.value - 1);
     int rowStart = max(row - size, 0);
-    int rowEnd = min(row + size, modules.isometric.state.totalRows.value - 1);
+    int rowEnd = min(row + size, state.totalRows.value - 1);
 
     for (int c = columnStart; c < columnEnd; c++) {
       for (int r = rowStart; r < rowEnd; r++) {
@@ -467,7 +466,7 @@ class IsometricActions {
     applyProjectileLighting();
     applyNpcLightEmission(game.interactableNpcs);
 
-    final dynamicShading = modules.isometric.state.dynamicShading;
+    final dynamicShading = state.dynamicShading;
 
     for (Effect effect in game.effects) {
       if (!effect.enabled) continue;
@@ -488,7 +487,7 @@ class IsometricActions {
     for (int i = 0; i < game.totalProjectiles; i++) {
       Projectile projectile = game.projectiles[i];
       if (projectile.type == ProjectileType.Fireball) {
-        emitLightBrightSmall(modules.isometric.state.dynamicShading, projectile.x, projectile.y);
+        emitLightBrightSmall(state.dynamicShading, projectile.x, projectile.y);
       }
     }
   }
