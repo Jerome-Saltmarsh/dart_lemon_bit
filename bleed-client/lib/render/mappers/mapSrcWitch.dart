@@ -4,9 +4,7 @@ import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/modules/isometric/animations.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
-
-import 'animate.dart';
-import 'loop.dart';
+import 'package:bleed_client/modules/isometric/functions.dart';
 
 void mapSrcWitch({
   required CharacterState state,

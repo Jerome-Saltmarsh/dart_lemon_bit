@@ -4,10 +4,8 @@ import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/modules/isometric/animations.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
-import 'package:bleed_client/render/mappers/animate.dart';
+import 'package:bleed_client/modules/isometric/functions.dart';
 import 'package:lemon_math/Vector2.dart';
-
-import 'loop.dart';
 
 void mapSrcHuman({
     required SlotType slotType,

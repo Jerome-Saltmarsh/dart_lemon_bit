@@ -33,6 +33,8 @@ class GameState {
   final FocusNode textFieldMessage = FocusNode();
   final Watch<SlotType> highLightSlotType = Watch(SlotType.Empty);
 
+  final playerTextStyle = TextStyle(color: Colors.white);
+
   final List<String> letsGo = [
     "Come on!",
     "Let's go!",

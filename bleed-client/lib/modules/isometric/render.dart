@@ -20,8 +20,6 @@ import 'package:bleed_client/modules/isometric/maps.dart';
 import 'package:bleed_client/modules/isometric/properties.dart';
 import 'package:bleed_client/modules/isometric/queries.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/render/mappers/animate.dart';
-import 'package:bleed_client/render/mappers/loop.dart';
 import 'package:bleed_client/render/mappers/mapCharacterDst.dart';
 import 'package:bleed_client/render/mappers/mapCharacterSrc.dart';
 import 'package:bleed_client/render/mappers/mapParticleToDst.dart';
@@ -30,6 +28,7 @@ import 'package:bleed_client/state/game.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
 
+import 'functions.dart';
 import 'state.dart';
 
 class IsometricRender {

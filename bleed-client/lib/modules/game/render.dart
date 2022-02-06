@@ -18,7 +18,6 @@ import 'package:bleed_client/mappers/mapDirectionToAngle.dart';
 import 'package:bleed_client/modules/game/queries.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/render/draw/drawPlayerText.dart';
 import 'package:bleed_client/render/mappers/mapBulletToSrc.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
@@ -308,4 +307,16 @@ class GameRender {
     // _drawLine(mouseOffset, aimOffset, Colors.transparent);
     // engine.actions.setPaintColorWhite();
   }
+
+  void drawPlayerText() {
+    for (int i = 0; i < game.totalHumans; i++) {
+      Character human = game.humans[i];
+      if (human.text.isEmpty) continue;
+      double width = isometric.constants.charWidth * human.text.length;
+      double left = human.x - width;
+      double y = human.y - 50;
+      engine.draw.text(human.text, left, y, style: state.playerTextStyle);
+    }
+  }
+
 }
