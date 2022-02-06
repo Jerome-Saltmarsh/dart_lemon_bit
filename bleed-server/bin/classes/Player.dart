@@ -110,6 +110,32 @@ class Player extends Character with Entity {
     global.onPlayerCreated(this);
   }
 
+  void setStateChangingWeapons(){
+    game.setCharacterState(this, CharacterState.ChangingWeapon);
+  }
+
+  void unequip(SlotTypeCategory slotTypeCategory){
+    if (!slots.emptySlotAvailable) return;
+    switch(slotTypeCategory){
+      case SlotTypeCategory.Weapon:
+        if (slots.weapon.isEmpty) return;
+        slots.assignToEmpty(slots.weapon);
+        slots.weapon = SlotType.Empty;
+        setStateChangingWeapons();
+        break;
+      case SlotTypeCategory.Armour:
+        if (slots.armour.isEmpty) return;
+        slots.assignToEmpty(slots.armour);
+        slots.armour = SlotType.Empty;
+        setStateChangingWeapons();
+        break;
+      case SlotTypeCategory.Helm:
+        break;
+      case SlotTypeCategory.Pants:
+        break;
+    }
+  }
+
   void useSlot(int index) {
       if (deadOrBusy) return;
       if (index < 0) return;
@@ -118,12 +144,13 @@ class Player extends Character with Entity {
       final slot = slots.getSlotTypeAtIndex(index);
       if (slot.isEmpty) return;
 
+
       if (slot.isWeapon){
         if (slot == slots.weapon) return;
         final currentWeapon = slots.weapon;
         slots.weapon = slot;
         slots.assignSlotAtIndex(index, currentWeapon);
-        game.setCharacterState(this, CharacterState.ChangingWeapon);
+        setStateChangingWeapons();
         return;
       }
 
@@ -138,7 +165,10 @@ class Player extends Character with Entity {
       }
 
       if (slot == SlotType.Armour_Standard){
-        slots.armour = SlotType.Armour_Standard;
+        final previousArmour = slots.armour;
+        slots.armour = slot;
+        slots.assignSlotAtIndex(index, previousArmour);
+        setStateChangingWeapons();
       }
   }
 }
@@ -146,8 +176,6 @@ class Player extends Character with Entity {
 class _PlayerSlots {
   SlotType weapon = SlotType.Empty;
   SlotType armour = SlotType.Empty;
-
-
   SlotType slot1 = SlotType.Empty;
   SlotType slot2 = SlotType.Empty;
   SlotType slot3 = SlotType.Empty;
@@ -172,26 +200,6 @@ class _PlayerSlots {
         default:
           throw Exception("$index is not a valid slot index (1 - 6 inclusive)");
       }
-  }
-
-  void unequip(SlotTypeCategory slotTypeCategory){
-    if (!emptySlotAvailable) return;
-    switch(slotTypeCategory){
-      case SlotTypeCategory.Weapon:
-        if (weapon.isEmpty) return;
-        assignToEmpty(weapon);
-        weapon = SlotType.Empty;
-        break;
-      case SlotTypeCategory.Armour:
-        if (armour.isEmpty) return;
-        assignToEmpty(armour);
-        armour = SlotType.Empty;
-        break;
-      case SlotTypeCategory.Helm:
-        break;
-      case SlotTypeCategory.Pants:
-        break;
-    }
   }
 
   void assignSlotAtIndex(int index, SlotType value){

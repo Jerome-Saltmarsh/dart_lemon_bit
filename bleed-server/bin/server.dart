@@ -593,7 +593,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
 
           final slotTypeCategory = slotTypeCategories[slotTypeCategoryIndex];
-          player.slots.unequip(slotTypeCategory);
+          player.unequip(slotTypeCategory);
           break;
 
         case ClientRequest.Equip_Slot:
