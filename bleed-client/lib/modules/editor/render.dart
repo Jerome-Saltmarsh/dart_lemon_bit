@@ -65,7 +65,7 @@ class EditorRender with EditorScope {
   }
 
   void _characters() {
-    state.characters.forEach(drawCharacter);
+    state.characters.forEach(isometric.render.drawCharacter);
   }
 
   void _drawSelectedObject() {
