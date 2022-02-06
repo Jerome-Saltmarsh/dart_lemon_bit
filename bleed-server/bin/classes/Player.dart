@@ -115,17 +115,28 @@ class Player extends Character with Entity {
       if (index > 6) return;
 
       final slot = slots.getSlotTypeAtIndex(index);
-      if (slot == SlotType.Empty) return;
-      final slotIsWeapon = slotTypes.weapons.contains(slot);
-      if (slotIsWeapon){
+      if (slot.isEmpty) return;
+
+      if (slot.isWeapon){
         if (slot == slots.weapon) return;
         final currentWeapon = slots.weapon;
         slots.weapon = slot;
         slots.assignSlotAtIndex(index, currentWeapon);
         game.setCharacterState(this, CharacterState.ChangingWeapon);
-      }else if (slot == SlotType.Spell_Tome_Fireball){
-         ability = Ability(type: AbilityType.Fireball, level: 1, cost: 5, range: 250, cooldown: 100, mode: AbilityMode.Directed);
-      } else if (slot == SlotType.Armour_Standard){
+        return;
+      }
+
+      if (slot == SlotType.Spell_Tome_Fireball) {
+        ability = Ability(type: AbilityType.Fireball,
+            level: 1,
+            cost: 5,
+            range: 250,
+            cooldown: 100,
+            mode: AbilityMode.Directed);
+        return;
+      }
+
+      if (slot == SlotType.Armour_Standard){
         slots.armour = SlotType.Armour_Standard;
       }
   }

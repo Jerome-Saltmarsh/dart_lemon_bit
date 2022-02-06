@@ -1,3 +1,5 @@
+import 'WeaponType.dart';
+
 enum SlotType {
   Empty,
   Silver_Pendant,
@@ -45,4 +47,11 @@ class _SlotTypes {
     SlotType.Silver_Pendant,
     SlotType.Frogs_Amulet,
   ];
+}
+
+extension SlotTypeProperties on SlotType {
+  bool get isEmpty => this == SlotType.Empty;
+  bool get isWeapon => slotTypes.weapons.contains(this);
+  bool get isArmour => slotTypes.armour.contains(this);
+  bool get isItem => slotTypes.items.contains(this);
 }
