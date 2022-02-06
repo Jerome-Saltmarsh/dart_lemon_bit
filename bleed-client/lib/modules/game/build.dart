@@ -39,6 +39,8 @@ class GameBuild {
   final GameState state;
   final GameActions actions;
 
+  final double slotSize = 50;
+
   GameBuild(this.state, this.actions);
 
   Widget buildUIGame() {
@@ -218,16 +220,20 @@ class GameBuild {
                     padding: EdgeInsets.symmetric(vertical: 8),
                       child: rowOrbs()),
                   height16,
-                  Container(
-                      color: colours.brownLight,
-                      child: panelStore()),
+                  panel(child: _panelStore()),
                   height16,
-                  Container(
-                      color: colours.brownLight,
-                      child: _panelInventory())
+                  panel(child: _panelEquipped()),
+                  height16,
+                  panel(child: _panelInventory())
                 ],
               ),
         );
+  }
+
+  Widget panel({required Widget child}){
+    return Container(
+        color: colours.brownLight,
+        child: child);
   }
 
   Widget _panelInventory() {
@@ -268,7 +274,7 @@ class GameBuild {
     }
   }
 
-  Widget panelStore() {
+  Widget _panelStore() {
     return WatchBuilder(state.storeTab, (StoreTab activeStoreTab){
       return Column(
         children: [
@@ -618,6 +624,21 @@ class GameBuild {
             )));
   }
 
+  Widget _panelEquipped(){
+      return Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              slot(slotType: SlotType.Empty, color: colours.white382),
+              slot(slotType: SlotType.Spell_Tome_Fireball, color: colours.white382),
+              slot(slotType: SlotType.Bow_Wooden, color: colours.white382),
+            ],
+          )
+        ],
+      );
+  }
+
   Widget _inventorySlot(Watch<SlotType> slot, int index){
     return WatchBuilder(slot, (SlotType slotType){
       return onPressed(
@@ -663,12 +684,20 @@ class GameBuild {
           actions.purchaseSlotType(slotType);
         },
         child: Container(
-            width: 50,
-            height: 50,
+            width: slotSize,
+            height: slotSize,
             color: isOver ? colours.black382 : none,
             child: getSlotTypeImage(slotType)),
       );
     });
+  }
+
+  Widget slot({required SlotType slotType, required Color color}){
+    return Container(
+        width: 50,
+        height: 50,
+        color: color,
+        child: getSlotTypeImage(slotType));
   }
 
   Widget getSlotTypeImage(SlotType value){

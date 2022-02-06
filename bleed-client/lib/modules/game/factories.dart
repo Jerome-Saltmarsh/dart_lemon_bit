@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/modules/isometric/enums.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/render/mappers/mapParticleToSrc.dart';
+import 'package:bleed_client/render/mapParticleToSrc.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/randomInt.dart';
 import 'package:lemon_math/random_between.dart';
