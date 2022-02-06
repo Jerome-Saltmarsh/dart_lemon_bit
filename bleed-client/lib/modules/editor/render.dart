@@ -47,7 +47,7 @@ class EditorRender with EditorScope {
     engine.actions.renderAtlas();
   }
 
-  void srcTile(Tile tile, {int shade = Shade_Bright}){
+  void srcTile(Tile tile, {int shade = Shade.Bright}){
     engine.actions.mapSrc(
         x: atlas.tiles.x + mapTileToSrcLeft(tile),
         y: atlas.tiles.y + (isometric.constants.tileSize * shade)

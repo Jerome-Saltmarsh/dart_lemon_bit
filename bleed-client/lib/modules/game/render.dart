@@ -51,7 +51,7 @@ class GameRender {
     isometric.actions.applyEmissionsToDynamicShadeMap();
 
     for(final item in game.items) {
-      isometric.actions.applyShadeDynamicPosition(item.x, item.y, Shade_Bright);
+      isometric.actions.applyShadeDynamicPosition(item.x, item.y, Shade.Bright);
     }
 
     isometric.actions.applyDynamicShadeToTileSrc();

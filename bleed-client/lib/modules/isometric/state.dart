@@ -29,8 +29,8 @@ class IsometricState {
   int totalRowsInt = 0;
   final Watch<int> hour = Watch(0);
   final Watch<int> time = Watch(0);
-  final Watch<int> ambient = Watch(Shade_Bright);
-  final Watch<int> maxAmbientBrightness = Watch(Shade_Bright);
+  final Watch<int> ambient = Watch(Shade.Bright);
+  final Watch<int> maxAmbientBrightness = Watch(Shade.Bright);
   final nameTextStyle = TextStyle(color: Colors.white);
 
 }

@@ -20,13 +20,13 @@ class IsometricMaps {
   }
 
   final Map<Phase, int> _phaseShade = {
-    Phase.Early_Morning: Shade_Dark,
-    Phase.Morning: Shade_Medium,
-    Phase.Day: Shade_Bright,
-    Phase.Early_Evening: Shade_Medium,
-    Phase.Evening: Shade_Dark,
-    Phase.Night: Shade_VeryDark,
-    Phase.MidNight: Shade_PitchBlack ,
+    Phase.Early_Morning: Shade.Dark,
+    Phase.Morning: Shade.Medium,
+    Phase.Day: Shade.Bright,
+    Phase.Early_Evening: Shade.Medium,
+    Phase.Evening: Shade.Dark,
+    Phase.Night: Shade.Very_Dark,
+    Phase.MidNight: Shade.Pitch_Black ,
   };
 
   int phaseToShade(Phase phase){

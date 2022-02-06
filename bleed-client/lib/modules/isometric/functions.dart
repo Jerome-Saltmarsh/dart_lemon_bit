@@ -10,7 +10,7 @@ void srcAnimate({
   required List<int> animation,
   required Direction direction,
   required int frame,
-  int shade = Shade_Bright,
+  int shade = Shade.Bright,
   double size = 64,
   int framesPerDirection = 4,
 }){
@@ -30,7 +30,7 @@ void srcLoop({
   required Vector2 atlas,
   required Direction direction,
   required int frame,
-  int shade = Shade_Bright,
+  int shade = Shade.Bright,
   double size = 64,
   int framesPerDirection = 4,
 }){
@@ -47,7 +47,7 @@ void srcLoop({
 void srcSingle({
   required Vector2 atlas,
   required Direction direction,
-  int shade = Shade_Bright,
+  int shade = Shade.Bright,
   double size = 64,
 }){
   engine.actions.mapSrc(

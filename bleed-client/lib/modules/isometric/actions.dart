@@ -314,24 +314,24 @@ class IsometricActions {
     if (row >= shader.length) return;
 
 
-    applyShade(shader, row, column, Shade_Medium);
-    applyShadeRing(shader, row, column, 1, Shade_Medium);
-    applyShadeRing(shader, row, column, 2, Shade_Dark);
-    applyShadeRing(shader, row, column, 3, Shade_VeryDark);
+    applyShade(shader, row, column, Shade.Medium);
+    applyShadeRing(shader, row, column, 1, Shade.Medium);
+    applyShadeRing(shader, row, column, 2, Shade.Dark);
+    applyShadeRing(shader, row, column, 3, Shade.Very_Dark);
   }
 
 
 
   void applyShadeBright(List<List<int>> shader, int row, int column) {
-    applyShade(shader, row, column, Shade_Bright);
+    applyShade(shader, row, column, Shade.Bright);
   }
 
   void applyShadeMedium(List<List<int>> shader, int row, int column) {
-    applyShade(shader, row, column, Shade_Medium);
+    applyShade(shader, row, column, Shade.Medium);
   }
 
   void applyShadeDark(List<List<int>> shader, int row, int column) {
-    applyShade(shader, row, column, Shade_Dark);
+    applyShade(shader, row, column, Shade.Dark);
   }
 
   void applyShadeRing(List<List<int>> shader, int row, int column, int size, int shade) {
@@ -386,11 +386,11 @@ class IsometricActions {
     if (row >= shader.length) return;
     if (column >= shader[0].length) return;
 
-    applyShade(shader, row, column, Shade_Bright);
-    applyShadeRing(shader, row, column, 1, Shade_Medium);
-    applyShadeRing(shader, row, column, 2, Shade_Medium);
-    applyShadeRing(shader, row, column, 3, Shade_VeryDark);
-    applyShadeRing(shader, row, column, 4, Shade_VeryDark);
+    applyShade(shader, row, column, Shade.Bright);
+    applyShadeRing(shader, row, column, 1, Shade.Medium);
+    applyShadeRing(shader, row, column, 2, Shade.Medium);
+    applyShadeRing(shader, row, column, 3, Shade.Very_Dark);
+    applyShadeRing(shader, row, column, 4, Shade.Very_Dark);
   }
 
   void emitLightHigh(List<List<int>> shader, double x, double y) {
@@ -402,11 +402,11 @@ class IsometricActions {
     if (row >= shader.length) return;
     if (column >= shader[0].length) return;
 
-    applyShade(shader, row, column, Shade_Bright);
-    applyShadeRing(shader, row, column, 1, Shade_Bright);
-    applyShadeRing(shader, row, column, 2, Shade_Medium);
-    applyShadeRing(shader, row, column, 3, Shade_Dark);
-    applyShadeRing(shader, row, column, 4, Shade_VeryDark);
+    applyShade(shader, row, column, Shade.Bright);
+    applyShadeRing(shader, row, column, 1, Shade.Bright);
+    applyShadeRing(shader, row, column, 2, Shade.Medium);
+    applyShadeRing(shader, row, column, 3, Shade.Dark);
+    applyShadeRing(shader, row, column, 4, Shade.Very_Dark);
   }
 
   void emitLightBrightSmall(List<List<int>> shader, double x, double y) {
@@ -418,10 +418,10 @@ class IsometricActions {
     if (row >= shader.length) return;
     if (column >= shader[0].length) return;
 
-    applyShade(shader, row, column, Shade_Bright);
-    applyShadeRing(shader, row, column, 1, Shade_Medium);
-    applyShadeRing(shader, row, column, 2, Shade_Dark);
-    applyShadeRing(shader, row, column, 3, Shade_VeryDark);
+    applyShade(shader, row, column, Shade.Bright);
+    applyShadeRing(shader, row, column, 1, Shade.Medium);
+    applyShadeRing(shader, row, column, 2, Shade.Dark);
+    applyShadeRing(shader, row, column, 3, Shade.Very_Dark);
   }
 
   void applyCharacterLightEmission(List<Character> characters) {

@@ -11,13 +11,12 @@ void mapSrcWitch({
   required Direction direction,
   required int frame
 }) {
-
   switch (state) {
     case CharacterState.Idle:
       return srcLoop(
           atlas: atlas.witch.idle,
           direction: direction,
-          shade: Shade_Bright,
+          shade: Shade.Bright,
           size: 64,
           framesPerDirection: 1,
           frame: frame);
@@ -32,7 +31,7 @@ void mapSrcWitch({
           animation: animations.witch.attacking,
           atlas: atlas.witch.striking,
           direction: direction,
-          shade: Shade_Bright,
+          shade: Shade.Bright,
           size: 64,
           framesPerDirection: 2,
           frame: frame);
@@ -41,7 +40,7 @@ void mapSrcWitch({
           animation: animations.witch.attacking,
           atlas: atlas.witch.striking,
           direction: direction,
-          shade: Shade_Bright,
+          shade: Shade.Bright,
           size: 64,
           framesPerDirection: 2,
           frame: frame);
@@ -49,7 +48,7 @@ void mapSrcWitch({
       return srcLoop(
           atlas: atlas.witch.running,
           direction: direction,
-          shade: Shade_Bright,
+          shade: Shade.Bright,
           size: 64,
           framesPerDirection: 4,
           frame: frame);

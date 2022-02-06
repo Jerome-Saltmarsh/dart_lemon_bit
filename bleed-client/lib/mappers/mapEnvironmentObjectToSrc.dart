@@ -86,7 +86,7 @@ void mapEnvironmentObjectToSrc(EnvironmentObject env){
   var top = shade * height + translation.y;
   // double right = left + width;
 
-  if (type == ObjectType.Torch && modules.isometric.state.ambient.value > (Shade_Bright)){
+  if (type == ObjectType.Torch && modules.isometric.state.ambient.value > (Shade.Bright)){
     top = _translations.torches.y + ((core.state.timeline.frame % 4) * _torchHeight) + _torchHeight;
   }
   engine.actions.mapSrc(x: left, y: top, width: width, height: height);

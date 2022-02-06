@@ -1,20 +1,22 @@
-const Shade_Bright = 0;
-const Shade_Medium = 1;
-const Shade_Dark = 2;
-const Shade_VeryDark = 3;
-const Shade_PitchBlack = 4;
+class Shade {
+  static const Bright = 0;
+  static const Medium = 1;
+  static const Dark = 2;
+  static const Very_Dark = 3;
+  static const Pitch_Black = 4;
+}
 
 String shadeName(int shade){
   switch(shade){
-    case Shade_Bright:
+    case Shade.Bright:
       return "Bright";
-    case Shade_Medium:
+    case Shade.Medium:
       return "Medium";
-    case Shade_Dark:
+    case Shade.Dark:
       return "Dark";
-    case Shade_VeryDark:
+    case Shade.Very_Dark:
       return "Very Dark";
-    case Shade_PitchBlack:
+    case Shade.Pitch_Black:
       return "Pitch Black";
     default:
       throw Exception("could not parse shade $shade to string");

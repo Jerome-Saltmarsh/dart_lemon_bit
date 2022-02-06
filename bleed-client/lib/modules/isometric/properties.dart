@@ -11,7 +11,7 @@ class IsometricProperties {
   final IsometricState state;
   IsometricProperties(this.state);
 
-  bool get dayTime => state.ambient.value == Shade_Bright;
+  bool get dayTime => state.ambient.value == Shade.Bright;
 
   Tile get tileAtMouse {
     if (mouseRow < 0) return Tile.Boundary;
@@ -54,19 +54,19 @@ class IsometricProperties {
   }
 
   int getShade(int row, int column){
-    if (row < 0) return Shade_VeryDark;
-    if (column < 0) return Shade_VeryDark;
+    if (row < 0) return Shade.Very_Dark;
+    if (column < 0) return Shade.Very_Dark;
     if (row >= modules.isometric.state.totalRows.value){
-      return Shade_VeryDark;
+      return Shade.Very_Dark;
     }
     if (column >= modules.isometric.state.totalColumns.value){
-      return Shade_VeryDark;
+      return Shade.Very_Dark;
     }
     return modules.isometric.state.dynamicShading[row][column];
   }
 
   bool inDarkness(double x, double y){
-    return isometric.properties.getShadeAtPosition(x, y) >= Shade_VeryDark;
+    return isometric.properties.getShadeAtPosition(x, y) >= Shade.Very_Dark;
   }
 
   bool get boundaryAtMouse => tileAtMouse == Tile.Boundary;

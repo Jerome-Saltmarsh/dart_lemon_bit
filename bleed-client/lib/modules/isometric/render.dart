@@ -154,7 +154,7 @@ class IsometricRender {
   void _drawParticle(Particle value){
     if (!onScreen(value.x, value.y)) return;
     final shade = properties.getShadeAtPosition(value.x, value.y);
-    if (shade >= Shade_VeryDark) return;
+    if (shade >= Shade.Very_Dark) return;
     mapParticleToDst(value);
     mapParticleToSrc(value);
     engine.actions.renderAtlas();
@@ -177,7 +177,7 @@ class IsometricRender {
     if (!queries.environmentObjectOnScreenScreen(value)) return;
 
     final shade = isometric.properties.getShade(value.row, value.column);
-    if (shade == Shade_PitchBlack) return;
+    if (shade == Shade.Pitch_Black) return;
 
     mapEnvironmentObjectToSrc(value);
     engine.actions.mapDst(x: value.dst[2], y: value.dst[3]);
@@ -190,7 +190,7 @@ class IsometricRender {
     if (!character.alive) return;
 
     final shade = isometric.properties.getShadeAtPosition(character.x, character.y);
-    if (shade > (Shade_Dark)) return;
+    if (shade > (Shade.Dark)) return;
 
     if (character.direction.index > Direction.Right.index){
       _renderCharacterWeapon(character);
