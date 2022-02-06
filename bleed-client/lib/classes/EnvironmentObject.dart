@@ -11,24 +11,17 @@ class EnvironmentObject extends Vector2 {
   final ObjectType type;
   final bool generated;
 
-  // final dst = Float32List(4);
-
-  late double _top;
-  late double _right;
-  late double _bottom;
-  late double _left;
-
-  late double _width;
+  late double top;
+  late double right;
+  late double bottom;
+  late double left;
+  late double width;
   late double height;
   late double radius;
+  late double anchorX;
+  late double anchorY;
 
-  double get top => _top;
-  double get right => _right;
-  double get bottom => _bottom;
-  double get left => _left;
-
-  double get anchorX => _width * 0.5;
-  double get anchorY => height * 0.6666;
+  static const _anchorYRatio = 0.66666;
 
   EnvironmentObject({
     required double x,
@@ -37,12 +30,14 @@ class EnvironmentObject extends Vector2 {
     required this.radius,
     this.generated = false,
   }) :super(x, y) {
-    _width = environmentObjectWidth[type]!;
+    width = environmentObjectWidth[type]!;
     height = environmentObjectHeight[type]!;
-    _top = y - anchorY;
-    _right = x + anchorX;
-    _bottom = y + (height - anchorY);
-    _left = x - anchorX;
+    anchorX = width * 0.5;
+    anchorY = height * _anchorYRatio;
+    top = y - anchorY;
+    right = x + anchorX;
+    bottom = y + (height - anchorY);
+    left = x - anchorX;
     move(x, y);
   }
 
