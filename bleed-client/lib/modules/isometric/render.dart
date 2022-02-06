@@ -172,7 +172,7 @@ class IsometricRender {
         direction: Direction.Down,
         frame: core.state.timeline.frame,
         framesPerDirection: 8);
-    engine.actions.mapDst(x: item.x - _anchor, y: item.y - _anchor,);
+    engine.state.mapDst(x: item.x - _anchor, y: item.y - _anchor,);
     engine.actions.renderAtlas();
   }
 
@@ -183,7 +183,7 @@ class IsometricRender {
     if (shade == Shade.Pitch_Black) return;
 
     mapEnvironmentObjectToSrc(value);
-    engine.actions.mapDst(x: value.dst[2], y: value.dst[3]);
+    engine.state.mapDst(x: value.dst[2], y: value.dst[3]);
     engine.actions.renderAtlas();
   }
 
@@ -560,7 +560,7 @@ class IsometricRender {
       Character character,
       CharacterType type,
       ) {
-    return engine.actions.mapDst(
+    return engine.state.mapDst(
       scale: goldenRatio_0618,
       x: character.x,
       y: character.y,

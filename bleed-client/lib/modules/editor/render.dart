@@ -48,7 +48,7 @@ class EditorRender with EditorScope {
   }
 
   void srcTile(Tile tile, {int shade = Shade.Bright}){
-    engine.actions.mapSrc(
+    engine.state.mapSrc(
         x: atlas.tiles.x + mapTileToSrcLeft(tile),
         y: atlas.tiles.y + (isometric.constants.tileSize * shade)
     );
@@ -59,7 +59,7 @@ class EditorRender with EditorScope {
     int column = getColumn(x, y);
     double x2 = getTileWorldX(row, column);
     double y2 = getTileWorldY(row, column);
-    engine.actions.mapDst(x: x2, y: y2);
+    engine.state.mapDst(x: x2, y: y2);
   }
 
   void _characters() {

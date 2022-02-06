@@ -17,7 +17,7 @@ void srcAnimate({
   final int animationFrame = min(frame, animation.length - 1);
   final double _s = direction.index * size * framesPerDirection;
   final double _f = (animation[animationFrame] % framesPerDirection) * size;
-  engine.actions.mapSrc(
+  engine.state.mapSrc(
     x: atlas.x + _s + _f,
     y: atlas.y + (shade * size),
     width: size,
@@ -36,7 +36,7 @@ void srcLoop({
 }){
   final _s = direction.index * size * framesPerDirection;
   final _f = (frame % framesPerDirection) * size;
-  engine.actions.mapSrc(
+  engine.state.mapSrc(
       x: atlas.x + _s + _f,
       y: atlas.y + (shade * size),
       width: size,
@@ -50,7 +50,7 @@ void srcSingle({
   int shade = Shade.Bright,
   double size = 64,
 }){
-  engine.actions.mapSrc(
+  engine.state.mapSrc(
       x: atlas.x + (direction.index * size),
       y: atlas.y + (shade * size),
       width: size,

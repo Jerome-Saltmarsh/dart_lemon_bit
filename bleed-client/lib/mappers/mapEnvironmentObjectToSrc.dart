@@ -89,7 +89,7 @@ void mapEnvironmentObjectToSrc(EnvironmentObject env){
   if (type == ObjectType.Torch && modules.isometric.state.ambient.value > (Shade.Bright)){
     top = _translations.torches.y + ((core.state.timeline.frame % 4) * _torchHeight) + _torchHeight;
   }
-  engine.actions.mapSrc(x: left, y: top, width: width, height: height);
+  engine.state.mapSrc(x: left, y: top, width: width, height: height);
 }
 
 void clearSrc(Float32List src){
