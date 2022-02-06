@@ -1,13 +1,14 @@
 import 'package:bleed_client/modules/isometric/actions.dart';
-import 'package:bleed_client/modules/isometric/scope.dart';
+import 'package:bleed_client/modules/isometric/properties.dart';
 import 'package:bleed_client/modules/isometric/state.dart';
 import 'package:bleed_client/modules/modules.dart';
 
-class IsometricEvents with IsometricScope {
+class IsometricEvents {
   
   final IsometricState state;
   final IsometricActions actions;
-  IsometricEvents(this.state, this.actions);
+  final IsometricProperties properties;
+  IsometricEvents(this.state, this.actions, this.properties);
 
   void register(){
     if (state.eventsRegistered) return;

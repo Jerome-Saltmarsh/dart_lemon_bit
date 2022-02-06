@@ -12,29 +12,30 @@ import 'package:bleed_client/common/constants.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
-import 'package:bleed_client/functions.dart';
 import 'package:bleed_client/mappers/mapTileToSrcRect.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/modules/isometric/constants.dart';
+import 'package:bleed_client/modules/isometric/properties.dart';
 import 'package:bleed_client/modules/isometric/queries.dart';
-import 'package:bleed_client/modules/isometric/scope.dart';
+import 'package:bleed_client/modules/isometric/state.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'utilities.dart';
 
-class IsometricActions with IsometricScope {
+class IsometricActions {
 
+  final IsometricState state;
   final IsometricQueries queries;
   final IsometricConstants constants;
+  final IsometricProperties properties;
 
-  IsometricActions(this.queries, this.constants);
+  IsometricActions(this.state, this.queries, this.constants, this.properties);
 
   void applyDynamicShadeToTileSrc() {
     final tileSize = modules.isometric.constants.tileSize;
     int i = 0;
-    final state = modules.isometric.state;
     final dynamicShading = state.dynamicShading;
     for (int row = 0; row < modules.isometric.state.totalRows.value; row++) {
       for (int column = 0; column < modules.isometric.state.totalColumns.value; column++) {
