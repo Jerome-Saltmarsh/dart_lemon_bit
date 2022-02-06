@@ -1,8 +1,10 @@
+import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:bleed_client/modules/isometric/enums.dart';
 import 'package:bleed_client/modules/isometric/properties.dart';
 import 'package:bleed_client/modules/modules.dart';
@@ -90,7 +92,7 @@ class IsometricRender {
                 state.particles[indexParticle].type != ParticleType.Blood) {
           if (!zombiesRemaining || env.y < game.zombies[indexZombie].y) {
             if (!npcsRemaining || env.y < game.interactableNpcs[indexNpc].y) {
-              drawEnvironmentObject(state.environmentObjects[indexEnv]);
+              environmentObject(state.environmentObjects[indexEnv]);
               indexEnv++;
               continue;
             }
@@ -156,5 +158,17 @@ class IsometricRender {
     engine.actions.mapDst(x: item.x - _anchor, y: item.y - _anchor,);
     engine.actions.renderAtlas();
   }
+
+  void environmentObject(EnvironmentObject value) {
+    if (!environmentObjectOnScreenScreen(value)) return;
+
+    final shade = isometric.properties.getShade(value.row, value.column);
+    if (shade == Shade_PitchBlack) return;
+
+    mapEnvironmentObjectToSrc(value);
+    engine.actions.mapDst(x: value.dst[2], y: value.dst[3]);
+    engine.actions.renderAtlas();
+  }
+
 }
 

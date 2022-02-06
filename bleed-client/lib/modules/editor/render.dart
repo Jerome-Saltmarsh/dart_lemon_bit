@@ -21,8 +21,8 @@ class EditorRender with EditorScope {
 
     // renderTilePreview();
     _drawSelectedObject();
-    _drawCharacters();
-    _drawEnvironmentObjects();
+    _characters();
+    _environmentObjects();
 
     state.items.forEach(isometric.render.renderItem);
 
@@ -36,10 +36,8 @@ class EditorRender with EditorScope {
     }
   }
 
-  void _drawEnvironmentObjects() {
-    for(final env in state.environmentObjects){
-       drawEnvironmentObject(env);
-    }
+  void _environmentObjects() {
+    state.environmentObjects.forEach(isometric.render.environmentObject);
   }
 
   void renderTilePreview() {
@@ -66,14 +64,12 @@ class EditorRender with EditorScope {
     engine.actions.mapDst(x: x2, y: y2);
   }
 
-  void _drawCharacters() {
-    for (Character character in editor.state.characters){
-      drawCharacter(character);
-    }
+  void _characters() {
+    state.characters.forEach(drawCharacter);
   }
 
   void _drawSelectedObject() {
-    final Vector2? selectedObject = editor.state.selected.value;
+    final Vector2? selectedObject = state.selected.value;
     if (selectedObject == null) return;
 
     engine.draw.drawCircleOutline(x: selectedObject.x, y: selectedObject.y, radius: 50, color: Colors.white, sides: 10);

@@ -15,25 +15,12 @@ import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/opposite.dart';
 
-const animationFrameRate = 7; // frames per change;i
-
 bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {
   if (environmentObject.top > engine.state.screen.bottom) return false;
   if (environmentObject.right < engine.state.screen.left) return false;
   if (environmentObject.left > engine.state.screen.right) return false;
   if (environmentObject.bottom < engine.state.screen.top) return false;
   return true;
-}
-
-void drawEnvironmentObject(EnvironmentObject env) {
-  if (!environmentObjectOnScreenScreen(env)) return;
-
-  final shade = isometric.properties.getShade(env.row, env.column);
-  if (shade == Shade_PitchBlack) return;
-
-  mapEnvironmentObjectToSrc(env);
-  engine.actions.mapDst(x: env.dst[2], y: env.dst[3]);
-  engine.actions.renderAtlas();
 }
 
 double mapWeaponAimLength(WeaponType weapon) {
