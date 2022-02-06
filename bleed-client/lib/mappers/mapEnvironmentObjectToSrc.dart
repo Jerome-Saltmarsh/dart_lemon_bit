@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
@@ -84,19 +83,10 @@ void mapEnvironmentObjectToSrc(EnvironmentObject env){
   final height = environmentObjectHeight[type]!;
   final left = index * width + translation.x;
   var top = shade * height + translation.y;
-  // double right = left + width;
-
-  if (type == ObjectType.Torch && modules.isometric.state.ambient.value > (Shade.Bright)){
+  if (type == ObjectType.Torch && modules.isometric.state.ambient.value > Shade.Bright){
     top = _translations.torches.y + ((core.state.timeline.frame % 4) * _torchHeight) + _torchHeight;
   }
   engine.state.mapSrc(x: left, y: top, width: width, height: height);
-}
-
-void clearSrc(Float32List src){
-  src[0] = 0;
-  src[1] = 0;
-  src[2] = 0;
-  src[3] = 0;
 }
 
 final Map<ObjectType, int> environmentObjectIndex = {

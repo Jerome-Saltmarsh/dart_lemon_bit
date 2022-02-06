@@ -183,7 +183,12 @@ class IsometricRender {
     if (shade == Shade.Pitch_Black) return;
 
     mapEnvironmentObjectToSrc(value);
-    engine.state.mapDst(x: value.dst[2], y: value.dst[3]);
+    engine.state.mapDst(
+        x: value.x,
+        y: value.y,
+        anchorX: value.anchorX,
+        anchorY: value.anchorY
+    );
     engine.actions.renderAtlas();
   }
 

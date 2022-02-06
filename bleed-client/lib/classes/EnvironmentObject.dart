@@ -12,7 +12,7 @@ class EnvironmentObject extends Vector2 {
   final ObjectType type;
   final bool generated;
 
-  final dst = Float32List(4);
+  // final dst = Float32List(4);
 
   late double _top;
   late double _right;
@@ -45,16 +45,12 @@ class EnvironmentObject extends Vector2 {
     _right = x + widthHalf;
     _bottom = y + height * 0.333;
     _left = x - widthHalf;
-    dst[0] = 1;
-    dst[1] = 0;
     move(x, y);
   }
 
   void move(double x, double y){
     this.x = x;
     this.y = y;
-    dst[2] = x - anchorX;
-    dst[3] = y - anchorY;
     row = getRow(x, y);
     column = getColumn(x, y);
   }
