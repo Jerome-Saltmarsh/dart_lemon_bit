@@ -31,40 +31,7 @@ import 'package:lemon_math/opposite.dart';
 
 const animationFrameRate = 7; // frames per change;
 
-final Scene scene = Scene();
 
-void drawCrates() {
-  for(Vector2 crate in game.crates) {
-    engine.draw.circle(crate.x, crate.y, 30, colours.red);
-    draw(dst: crate, src: atlas.items.crate);
-  }
-}
-
-void draw({required Vector2 dst, required Vector2 src, double size = 64, double scale = 1}){
-  engine.actions.mapDst(x: dst.x -size / 2, y: dst.y - -size / 2, scale: scale);
-  engine.actions.mapSrc(x: src.x, y: src.y, width: size, height: size);
-  engine.actions.renderAtlas();
-}
-
-void drawItems() {
-  for (int i = 0; i < game.itemsTotal; i++){
-    drawItem(game.items[i]);
-  }
-}
-
-void drawItem(Item item) {
-  if (!itemAtlas.containsKey(item.type)) return;
-
-  final _anchor = 32;
-  // engine.draw.drawCircleOutline(radius: commonSettings.itemRadius, x: item.x, y: item.y, color: white);
-  srcLoop(
-      atlas: itemAtlas[item.type]!,
-      direction: Direction.Down,
-      frame: core.state.timeline.frame,
-      framesPerDirection: 8);
-  engine.actions.mapDst(x: item.x - _anchor, y: item.y - _anchor,);
-  engine.actions.renderAtlas();
-}
 
 void drawRoyalPerimeter() {
   engine.draw.drawCircleOutline(sides: 50, radius: game.royal.radius, x: game.royal.mapCenter.x, y: game.royal.mapCenter.y, color: Colors.red);

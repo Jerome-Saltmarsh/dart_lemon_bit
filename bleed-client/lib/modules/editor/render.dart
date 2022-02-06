@@ -24,7 +24,7 @@ class EditorRender with EditorScope {
     _drawCharacters();
     _drawEnvironmentObjects();
 
-    state.items.forEach(drawItem);
+    state.items.forEach(isometric.render.renderItem);
 
     for (final playerSpawnPosition in state.teamSpawnPoints){
       engine.draw.drawCircleOutline(

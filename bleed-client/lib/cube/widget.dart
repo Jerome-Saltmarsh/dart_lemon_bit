@@ -70,7 +70,6 @@ class _CubePainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     // globalPaint.color = Colors.red;
-    scene.render(canvas, size);
     // canvas.drawCircle(Offset(100, 100), 100, globalPaint);
   }
 
