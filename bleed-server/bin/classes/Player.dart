@@ -136,6 +136,26 @@ class Player extends Character with Entity {
     }
   }
 
+  void acquire(SlotType slotType){
+    if (!slots.emptySlotAvailable) return;
+    setStateChangingWeapons();
+
+    if (slotType.isWeapon){
+      if (slots.weapon.isEmpty){
+        slots.weapon = slotType;
+        return;
+      }
+    }
+
+    if (slotType.isArmour){
+      if (slots.armour.isEmpty){
+        slots.armour = slotType;
+        return;
+      }
+    }
+    slots.assignToEmpty(slotType);
+  }
+
   void useSlot(int index) {
       if (deadOrBusy) return;
       if (index < 0) return;

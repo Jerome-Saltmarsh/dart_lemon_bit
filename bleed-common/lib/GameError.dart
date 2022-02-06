@@ -9,6 +9,7 @@ enum GameError {
   ClientRequestArgumentsEmpty,
   PlayerStillAlive,
   PlayerDead,
+  PlayerBusy,
   InvalidArguments,
   InvalidWeaponIndex,
   LobbyNotFound,

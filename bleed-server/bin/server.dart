@@ -223,6 +223,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       error(GameError.PlayerDead);
     }
 
+    void errorPlayerBusy() {
+      error(GameError.PlayerBusy);
+    }
+
     void errorInsufficientSkillPoints() {
       error(GameError.InsufficientSkillPoints);
     }
@@ -949,6 +953,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return errorPlayerDead();
           }
 
+          if (player.busy){
+            return errorPlayerBusy();
+          }
+
           final slotItemIndexString = arguments[2];
           final slotItemIndex = int.tryParse(slotItemIndexString);
           if (slotItemIndex == null){
@@ -963,38 +971,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 "$slotItemIndex is not a valid slot type index");
           }
 
-          if (!player.slots.emptySlotAvailable) return;
           final slotType = slotTypes.all[slotItemIndex];
-          player.slots.assignToEmpty(slotType);
-
-          if (!player.busy){
-            final slotIsWeapon = slotTypes.weapons.contains(slotType);
-            if (slotIsWeapon){
-                player.game.setCharacterState(player, CharacterState.ChangingWeapon);
-            }
-          }
-
-          // switch(slotType){
-          //   case SlotType.Empty:
-          //     break;
-          //   case SlotType.Silver_Pendant:
-          //     if (player.orbs.ruby < 0){
-          //       return errorInsufficientOrbs();
-          //     }
-          //     if (!player.slots.emptySlotAvailable){
-          //       return errorInventoryFull();
-          //     }
-          //     player.slots.assignToEmpty(SlotType.Silver_Pendant);
-          //     player.orbs.ruby--;
-          //     break;
-          //   case SlotType.Frogs_Amulet:
-          //     // TODO: Handle this case.
-          //     break;
-          //   case SlotType.Brace:
-          //     // TODO: Handle this case.
-          //     break;
-          // }
-
+          player.acquire(slotType);
           return;
 
         case ClientRequest.SetCompilePaths:
