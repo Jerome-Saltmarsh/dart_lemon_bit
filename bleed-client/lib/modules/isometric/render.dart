@@ -3,25 +3,36 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
-import 'package:bleed_client/functions.dart';
 import 'package:bleed_client/modules/isometric/enums.dart';
-import 'package:bleed_client/modules/isometric/scope.dart';
+import 'package:bleed_client/modules/isometric/properties.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
 import 'package:bleed_client/render/draw/drawCharacter.dart';
 import 'package:bleed_client/render/draw/drawInteractableNpcs.dart';
-import 'package:bleed_client/render/draw/drawRawAtlas.dart';
 import 'package:bleed_client/render/mappers/loop.dart';
 import 'package:bleed_client/render/mappers/mapParticleToDst.dart';
 import 'package:bleed_client/render/mappers/mapParticleToSrc.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/engine.dart';
 
-class IsometricRender with IsometricScope {
+import 'state.dart';
+
+class IsometricRender {
+
+  final IsometricState state;
+  final IsometricProperties properties;
+  IsometricRender(this.state, this.properties);
 
   void tiles() {
     engine.actions.setPaintColorWhite();
-    drawRawAtlas(isometric.state.image, modules.isometric.state.tilesDst, modules.isometric.state.tilesSrc);
+    engine.state.canvas.drawRawAtlas(
+        state.image,
+        state.tilesDst,
+        state.tilesSrc,
+        null,
+        null,
+        null,
+        engine.state.paint);
   }
 
   void sprites() {
@@ -75,11 +86,11 @@ class IsometricRender with IsometricScope {
         final env = state.environmentObjects[indexEnv];
         if (env.top > engine.state.screen.bottom) return;
         if (!particlesRemaining ||
-            env.y < isometric.state.particles[indexParticle].y &&
-                isometric.state.particles[indexParticle].type != ParticleType.Blood) {
+            env.y < state.particles[indexParticle].y &&
+                state.particles[indexParticle].type != ParticleType.Blood) {
           if (!zombiesRemaining || env.y < game.zombies[indexZombie].y) {
             if (!npcsRemaining || env.y < game.interactableNpcs[indexNpc].y) {
-              drawEnvironmentObject(modules.isometric.state.environmentObjects[indexEnv]);
+              drawEnvironmentObject(state.environmentObjects[indexEnv]);
               indexEnv++;
               continue;
             }
@@ -88,7 +99,7 @@ class IsometricRender with IsometricScope {
       }
 
       if (particlesRemaining) {
-        Particle particle = isometric.state.particles[indexParticle];
+        Particle particle = state.particles[indexParticle];
 
         if (particle.type == ParticleType.Blood) {
           if (onScreen(particle.x, particle.y)) {
@@ -126,7 +137,7 @@ class IsometricRender with IsometricScope {
 
   void _drawParticle(Particle value){
     if (!onScreen(value.x, value.y)) return;
-    final shade = isometric.properties.getShadeAtPosition(value.x, value.y);
+    final shade = properties.getShadeAtPosition(value.x, value.y);
     if (shade >= Shade_VeryDark) return;
     mapParticleToDst(value);
     mapParticleToSrc(value);
