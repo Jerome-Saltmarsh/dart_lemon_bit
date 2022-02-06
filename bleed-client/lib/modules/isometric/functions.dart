@@ -47,12 +47,12 @@ void srcLoop({
 void srcSingle({
   required Vector2 atlas,
   required Direction direction,
-  int shade = Shade.Bright,
+  int column = 0,
   double size = 64,
 }){
   engine.state.mapSrc(
       x: atlas.x + (direction.index * size),
-      y: atlas.y + (shade * size),
+      y: atlas.y + (column * size),
       width: size,
       height: size);
 }
