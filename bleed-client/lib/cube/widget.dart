@@ -2,7 +2,6 @@ import 'package:bleed_client/cube/cube.dart';
 import 'package:bleed_client/cube/v3.dart';
 import 'package:bleed_client/document/request_pointer_lock.dart';
 import 'package:bleed_client/flutterkit.dart';
-import 'package:bleed_client/render/draw/drawCanvas.dart';
 import 'package:bleed_client/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';

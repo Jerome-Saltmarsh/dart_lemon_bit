@@ -4,7 +4,6 @@ import 'dart:typed_data';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:bleed_client/modules/isometric/utilities.dart';
-import 'package:bleed_client/modules/modules.dart';
 import 'package:lemon_math/Vector2.dart';
 
 class EnvironmentObject extends Vector2 {

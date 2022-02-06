@@ -8,9 +8,9 @@ import 'maps.dart';
 import 'properties.dart';
 import 'queries.dart';
 import 'render.dart';
+import 'state.dart';
 import 'subscriptions.dart';
 import 'update.dart';
-import 'state.dart';
 
 class IsometricModule {
   final state = IsometricState();

@@ -1,7 +1,8 @@
 
-import 'package:lemon_watch/watch.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:lemon_watch/watch.dart';
 import 'package:lemon_watch/watch_builder.dart';
+
 import 'flutterkit.dart';
 
 /// builds a basic watch builder presenting the value as a text
