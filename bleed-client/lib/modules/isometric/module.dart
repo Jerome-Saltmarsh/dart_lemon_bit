@@ -27,11 +27,11 @@ class IsometricModule {
 
   IsometricModule(){
     instances = IsometricInstances(state);
+    properties = IsometricProperties(state);
     queries = IsometricQueries(state);
     actions = IsometricActions(state, queries, constants, properties);
     events = IsometricEvents(state, actions, properties);
     update = IsometricUpdate(queries);
-    properties = IsometricProperties(state);
     render = IsometricRender(state, properties);
   }
 }
