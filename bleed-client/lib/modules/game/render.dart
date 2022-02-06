@@ -172,7 +172,7 @@ class GameRender {
   }
 
   void mapDstProjectile(Projectile projectile){
-    engine.actions.mapDst(x: projectile.x - 16, y: projectile.y - 16, scale: 0.25);
+    engine.actions.mapDst(x: projectile.x, y: projectile.y, scale: 0.25, anchorX: 16, anchorY: 16);
   }
 
   void drawProjectile(Projectile projectile) {

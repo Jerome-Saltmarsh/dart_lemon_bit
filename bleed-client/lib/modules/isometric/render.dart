@@ -190,7 +190,7 @@ class IsometricRender {
     if (!character.alive) return;
 
     final shade = isometric.properties.getShadeAtPosition(character.x, character.y);
-    if (shade > (Shade.Dark)) return;
+    if (shade > Shade.Dark) return;
 
     if (character.direction.index > Direction.Right.index){
       _renderCharacterWeapon(character);
