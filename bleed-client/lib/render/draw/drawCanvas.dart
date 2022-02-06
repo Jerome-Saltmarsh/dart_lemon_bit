@@ -1,152 +1,21 @@
 import 'dart:math';
 
 import 'package:bleed_client/classes/EnvironmentObject.dart';
-import 'package:bleed_client/classes/Explosion.dart';
-import 'package:bleed_client/classes/Item.dart';
-import 'package:bleed_client/classes/Particle.dart';
-import 'package:bleed_client/common/AbilityType.dart';
-import 'package:bleed_client/common/CommonSettings.dart';
 import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
-import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
-import 'package:bleed_client/constants/colors/white.dart';
-import 'package:bleed_client/constants/colours.dart';
-import 'package:bleed_client/cube/scene.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
-import 'package:bleed_client/modules/isometric/enums.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/render/mappers/loop.dart';
-import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/distance_between.dart';
-import 'package:lemon_math/math.dart';
 import 'package:lemon_math/opposite.dart';
 
-const animationFrameRate = 7; // frames per change;
-
-
-
-void drawRoyalPerimeter() {
-  engine.draw.drawCircleOutline(sides: 50, radius: game.royal.radius, x: game.royal.mapCenter.x, y: game.royal.mapCenter.y, color: Colors.red);
-}
-
-void drawEffects() {
-  for (Effect effect in game.effects) {
-    if (!effect.enabled) continue;
-    if (effect.duration++ > effect.maxDuration) {
-      effect.enabled = false;
-      break;
-    }
-
-    if (effect.type == EffectType.FreezeCircle) {
-      double p = effect.duration / effect.maxDuration;
-      double maxRadius = 75;
-      engine.draw.drawCircleOutline(
-          sides: 16,
-          radius: maxRadius * p,
-          x: effect.x,
-          y: effect.y,
-          color: colours.blue
-      );
-    }
-  }
-}
-
-void drawMouseAim2() {
-  // if (game.player.characterType.value == CharacterType.Swordsman){
-  engine.actions.setPaintColorWhite();
-    double angle = getAngleBetweenMouseAndPlayer();
-    double mouseDistance = getDistanceBetweenMouseAndPlayer();
-    double d = min(mouseDistance, modules.game.state.player.attackRange);
-    double vX = adjacent(angle, d);
-    double vY = opposite(angle, d);
-    drawLine(modules.game.state.player.x, modules.game.state.player.y, modules.game.state.player.x + vX, modules.game.state.player.y + vY);
-  // }
-}
-
-void drawAbility() {
-  if (modules.game.state.player.ability.value == AbilityType.None) {
-    engine.draw.drawCircleOutline(
-        sides: 24,
-        radius: modules.game.state.player.attackRange,
-        x: modules.game.state.player.x,
-        y: modules.game.state.player.y,
-        color: Colors.white24);
-    return;
-  }
-
-  drawMouseAim2();
-
-  engine.draw.drawCircleOutline(
-      sides: 24,
-      radius: modules.game.state.player.abilityRange,
-      x: modules.game.state.player.x,
-      y: modules.game.state.player.y,
-      color: Colors.white);
-
-  if (modules.game.state.player.abilityRadius != 0){
-    engine.draw.drawCircleOutline(
-        sides: 12,
-        radius: modules.game.state.player.abilityRadius,
-        x: mouseWorldX,
-        y: mouseWorldY,
-        color: Colors.white);
-  }
-}
-
-void drawDebugCharacters() {
-  for (int i = 0; i < game.totalHumans; i++) {
-    engine.draw.circle(game.humans[i].x, game.humans[i].y, 10, Colors.white24);
-  }
-  for (int i = 0; i < game.totalNpcs; i++) {
-    engine.draw.circle(game.interactableNpcs[i].x, game.interactableNpcs[i].y, 10,
-        Colors.white24);
-  }
-}
-
-void drawDebugEnvironmentObjects() {
-  engine.state.paint.color = Colors.red;
-  for (EnvironmentObject env in modules.isometric.state.environmentObjects) {
-    drawLine(env.left, env.top, env.right, env.top); // top left to top right
-    drawLine(
-        env.right, env.top, env.right, env.bottom); // top left to bottom right
-    drawLine(env.right, env.bottom, env.left, env.bottom);
-    drawLine(env.left, env.top, env.left, env.bottom);
-  }
-  for (EnvironmentObject env in modules.isometric.state.environmentObjects) {
-    engine.draw.circle(env.x, env.y, env.radius, Colors.blue);
-  }
-}
-
-
-
-int compareParticles(Particle a, Particle b) {
-  if (!a.active) {
-    return 1;
-  }
-  if (!b.active) {
-    return -1;
-  }
-  if (a.type == ParticleType.Blood) return -1;
-  if (b.type == ParticleType.Blood) return 1;
-
-  return a.y > b.y ? 1 : -1;
-}
-
-void sortParticles() {
-  insertionSort(
-      list: isometric.state.particles,
-      compare: compareParticles,
-      start: 0,
-      end: isometric.state.particles.length);
-}
+const animationFrameRate = 7; // frames per change;i
 
 bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {
   if (environmentObject.top > engine.state.screen.bottom) return false;

@@ -1,9 +1,9 @@
-
 import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:bleed_client/functions.dart';
 import 'package:bleed_client/modules/isometric/enums.dart';
 import 'package:bleed_client/modules/isometric/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
@@ -35,7 +35,7 @@ class IsometricRender with IsometricScope {
     final totalEnvironment = state.environmentObjects.length;
 
     if (totalParticles > 0) {
-      sortParticles();
+      _sortParticles();
     }
 
     bool zombiesRemaining = indexZombie < game.totalZombies.value;
@@ -150,4 +150,13 @@ class IsometricRender with IsometricScope {
     engine.actions.mapDst(x: item.x - _anchor, y: item.y - _anchor,);
     engine.actions.renderAtlas();
   }
+
+  void _sortParticles() {
+    insertionSort(
+        isometric.state.particles,
+        compare: compareParticles,
+        start: 0,
+        end: isometric.state.particles.length);
+  }
 }
+

@@ -1,9 +1,13 @@
 
+import 'dart:math';
+
 import 'package:bleed_client/classes/Character.dart';
+import 'package:bleed_client/classes/EnvironmentObject.dart';
+import 'package:bleed_client/classes/Explosion.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
-import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/classes/Projectile.dart';
+import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
@@ -13,17 +17,17 @@ import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/mappers/mapDirectionToAngle.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/render/draw/drawBullet.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
 import 'package:bleed_client/render/draw/drawPlayerText.dart';
-import 'package:bleed_client/render/mappers/loop.dart';
 import 'package:bleed_client/render/mappers/mapBulletToSrc.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/diff.dart';
+import 'package:lemon_math/opposite.dart';
 
 import 'state.dart';
 import 'style.dart';
@@ -85,6 +89,36 @@ class GameRender {
     engine.actions.setPaintColorWhite();
   }
 
+  void drawAbility() {
+    if (modules.game.state.player.ability.value == AbilityType.None) {
+      engine.draw.drawCircleOutline(
+          sides: 24,
+          radius: modules.game.state.player.attackRange,
+          x: modules.game.state.player.x,
+          y: modules.game.state.player.y,
+          color: Colors.white24);
+      return;
+    }
+
+    drawMouseAim2();
+
+    engine.draw.drawCircleOutline(
+        sides: 24,
+        radius: modules.game.state.player.abilityRange,
+        x: modules.game.state.player.x,
+        y: modules.game.state.player.y,
+        color: Colors.white);
+
+    if (modules.game.state.player.abilityRadius != 0){
+      engine.draw.drawCircleOutline(
+          sides: 12,
+          radius: modules.game.state.player.abilityRadius,
+          x: mouseWorldX,
+          y: mouseWorldY,
+          color: Colors.white);
+    }
+  }
+
   void drawDebugNpcs(List<NpcDebug> values){
     engine.actions.setPaintColor(Colors.yellow);
 
@@ -138,7 +172,7 @@ class GameRender {
   }
 
   void mapDstProjectile(Projectile projectile){
-    engine.actions.mapDst(x: projectile.x - renderSizeHalf, y: projectile.y - renderSizeHalf, scale: 0.25);
+    engine.actions.mapDst(x: projectile.x - 16, y: projectile.y - 16, scale: 0.25);
   }
 
   void drawProjectile(Projectile projectile) {
@@ -199,6 +233,58 @@ class GameRender {
   void drawItems() {
     for (int i = 0; i < game.itemsTotal; i++){
       isometric.render.renderItem(game.items[i]);
+    }
+  }
+
+  void drawEffects() {
+    for (Effect effect in game.effects) {
+      if (!effect.enabled) continue;
+      if (effect.duration++ > effect.maxDuration) {
+        effect.enabled = false;
+        break;
+      }
+
+      if (effect.type == EffectType.FreezeCircle) {
+        double p = effect.duration / effect.maxDuration;
+        double maxRadius = 75;
+        engine.draw.drawCircleOutline(
+            sides: 16,
+            radius: maxRadius * p,
+            x: effect.x,
+            y: effect.y,
+            color: colours.blue
+        );
+      }
+    }
+  }
+
+  void drawRoyalPerimeter() {
+    engine.draw.drawCircleOutline(sides: 50, radius: game.royal.radius, x: game.royal.mapCenter.x, y: game.royal.mapCenter.y, color: Colors.red);
+  }
+
+  void drawMouseAim2() {
+    // if (game.player.characterType.value == CharacterType.Swordsman){
+    engine.actions.setPaintColorWhite();
+    double angle = getAngleBetweenMouseAndPlayer();
+    double mouseDistance = getDistanceBetweenMouseAndPlayer();
+    double d = min(mouseDistance, modules.game.state.player.attackRange);
+    double vX = adjacent(angle, d);
+    double vY = opposite(angle, d);
+    drawLine(modules.game.state.player.x, modules.game.state.player.y, modules.game.state.player.x + vX, modules.game.state.player.y + vY);
+    // }
+  }
+
+  void drawDebugEnvironmentObjects() {
+    engine.state.paint.color = Colors.red;
+    for (EnvironmentObject env in modules.isometric.state.environmentObjects) {
+      drawLine(env.left, env.top, env.right, env.top); // top left to top right
+      drawLine(
+          env.right, env.top, env.right, env.bottom); // top left to bottom right
+      drawLine(env.right, env.bottom, env.left, env.bottom);
+      drawLine(env.left, env.top, env.left, env.bottom);
+    }
+    for (EnvironmentObject env in modules.isometric.state.environmentObjects) {
+      engine.draw.circle(env.x, env.y, env.radius, Colors.blue);
     }
   }
 }
