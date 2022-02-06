@@ -43,6 +43,7 @@ void drawCharacter(Character character) {
 
 void _renderCharacter(Character character, int shade) {
   mapCharacterDst(character, character.type);
+
   if (character.type != CharacterType.Human){
      mapCharacterSrc(
       type: character.type,
@@ -58,6 +59,7 @@ void _renderCharacter(Character character, int shade) {
 
   _renderCharacterLegs(character);
   _renderCharacterTorso(character);
+  _renderCharacterHead(character);
 }
 
 void _renderCharacterLegs(Character character){
@@ -115,6 +117,44 @@ void _renderCharacterTorso(Character character){
         framesPerDirection: 2,
       );
       break;
+  }
+  engine.actions.renderAtlas();
+}
+
+void _renderCharacterHead(Character character){
+  switch(character.state){
+    case CharacterState.Idle:
+      srcSingle(atlas: atlas.plain.head.idle, direction: character.direction);
+      break;
+    case CharacterState.Striking:
+      srcAnimate(
+        atlas: atlas.plain.head.striking,
+        animation: animations.human.strikingSword,
+        direction: character.direction,
+        frame: character.frame,
+        framesPerDirection: 2,
+      );
+      break;
+    case CharacterState.Running:
+      srcLoop(
+          atlas: atlas.plain.head.running,
+          direction: character.direction,
+          frame: character.frame
+      );
+      break;
+    case CharacterState.Performing:
+      srcAnimate(
+        atlas: atlas.plain.head.striking,
+        animation: animations.human.strikingSword,
+        direction: character.direction,
+        frame: character.frame,
+        framesPerDirection: 2,
+      );
+      break;
+    default:
+      srcSingle(atlas: atlas.plain.head.idle, direction: character.direction);
+      break;
+
   }
   engine.actions.renderAtlas();
 }

@@ -36,6 +36,7 @@ class _Atlas {
 class _Plain {
   final torso = _PlainTorso();
   final legs = _PlainLegs();
+  final head = _PlainHead();
 }
 
 class _PlainLegs {
@@ -48,6 +49,12 @@ class _PlainTorso {
   final Vector2 running = Vector2(0,  4150 );
   final Vector2 striking = Vector2(0,  4215);
   final Vector2 changing = Vector2(0,  4280);
+}
+
+class _PlainHead {
+  final Vector2 idle = Vector2(0,  4475);
+  final Vector2 running  = Vector2(0,  4540);
+  final Vector2 striking  = Vector2(0,  4605);
 }
 
 class _Weapons {
