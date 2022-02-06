@@ -33,11 +33,6 @@ class IsometricRender with IsometricScope {
     int indexNpc = 0;
     final totalParticles = properties.totalActiveParticles;
     final totalEnvironment = state.environmentObjects.length;
-
-    if (totalParticles > 0) {
-      _sortParticles();
-    }
-
     bool zombiesRemaining = indexZombie < game.totalZombies.value;
     bool humansRemaining = indexHuman < game.totalHumans;
     bool npcsRemaining = indexHuman < game.totalNpcs;
@@ -149,14 +144,6 @@ class IsometricRender with IsometricScope {
         framesPerDirection: 8);
     engine.actions.mapDst(x: item.x - _anchor, y: item.y - _anchor,);
     engine.actions.renderAtlas();
-  }
-
-  void _sortParticles() {
-    insertionSort(
-        isometric.state.particles,
-        compare: compareParticles,
-        start: 0,
-        end: isometric.state.particles.length);
   }
 }
 

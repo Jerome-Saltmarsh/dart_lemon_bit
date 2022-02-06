@@ -1,5 +1,6 @@
 
 import 'package:bleed_client/classes/Particle.dart';
+import 'package:bleed_client/functions.dart';
 import 'package:bleed_client/functions/spawners/spawnBlood.dart';
 import 'package:bleed_client/modules/isometric/enums.dart';
 import 'package:bleed_client/modules/isometric/queries.dart';
@@ -25,7 +26,13 @@ class IsometricUpdate {
       if (!particle.active) continue;
       updateParticle(particle);
     }
+    insertionSort(
+        isometric.state.particles,
+        compare: compareParticles,
+        start: 0,
+        end: isometric.state.particles.length);
   }
+
 
   void updateParticle(Particle particle){
     final _spawnBloodRate = 8;
