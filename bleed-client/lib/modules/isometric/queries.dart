@@ -1,3 +1,4 @@
+import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:lemon_engine/engine.dart';
 
@@ -46,4 +47,13 @@ class IsometricQueries {
   bool isWaterAt(double x, double y){
     return isWater(getTileAt(x, y));
   }
+
+  bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {
+    if (environmentObject.top > engine.state.screen.bottom) return false;
+    if (environmentObject.right < engine.state.screen.left) return false;
+    if (environmentObject.left > engine.state.screen.right) return false;
+    if (environmentObject.bottom < engine.state.screen.top) return false;
+    return true;
+  }
+
 }

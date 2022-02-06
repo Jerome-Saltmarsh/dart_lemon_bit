@@ -13,9 +13,9 @@ import 'package:bleed_client/modules/isometric/animations.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/modules/isometric/enums.dart';
 import 'package:bleed_client/modules/isometric/properties.dart';
+import 'package:bleed_client/modules/isometric/queries.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/render/draw/drawCanvas.dart';
-import 'package:bleed_client/render/draw/drawCharacter.dart';
 import 'package:bleed_client/render/draw/drawCharacterHealthBar.dart';
 import 'package:bleed_client/render/draw/drawInteractableNpcs.dart';
 import 'package:bleed_client/render/mappers/animate.dart';
@@ -33,7 +33,8 @@ class IsometricRender {
 
   final IsometricState state;
   final IsometricProperties properties;
-  IsometricRender(this.state, this.properties);
+  final IsometricQueries queries;
+  IsometricRender(this.state, this.properties, this.queries);
 
   void tiles() {
     engine.actions.setPaintColorWhite();
@@ -170,7 +171,7 @@ class IsometricRender {
   }
 
   void environmentObject(EnvironmentObject value) {
-    if (!environmentObjectOnScreenScreen(value)) return;
+    if (!queries.environmentObjectOnScreenScreen(value)) return;
 
     final shade = isometric.properties.getShade(value.row, value.column);
     if (shade == Shade_PitchBlack) return;

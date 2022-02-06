@@ -15,14 +15,6 @@ import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/opposite.dart';
 
-bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {
-  if (environmentObject.top > engine.state.screen.bottom) return false;
-  if (environmentObject.right < engine.state.screen.left) return false;
-  if (environmentObject.left > engine.state.screen.right) return false;
-  if (environmentObject.bottom < engine.state.screen.top) return false;
-  return true;
-}
-
 double mapWeaponAimLength(WeaponType weapon) {
   switch (weapon) {
     case WeaponType.Unarmed:
