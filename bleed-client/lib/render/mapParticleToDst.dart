@@ -25,12 +25,14 @@ final Map<ParticleType, double> _particleTypeSize = {
 void mapParticleToDst(Particle particle){
   final size = _particleTypeSize[particle.type]!;
   final renderScale = (1 + (particle.z * zToHeightRatio)) * particle.scale;
-  final sizeHalf = size * renderScale * 0.5;
+  final sizeHalf = size * 0.5;
 
   return engine.actions.mapDst(
     scale: renderScale,
     rotation: 0,
     x: particle.x - sizeHalf,
-    y: particle.y - (particle.z * 20) - sizeHalf
+    y: particle.y - (particle.z * 20),
+    anchorX: sizeHalf,
+    anchorY: sizeHalf
   );
 }
