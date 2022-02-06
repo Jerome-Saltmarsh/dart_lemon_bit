@@ -1,5 +1,4 @@
 
-import 'dart:typed_data';
 
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/mappers/mapEnvironmentObjectToSrc.dart';
@@ -40,11 +39,10 @@ class EnvironmentObject extends Vector2 {
   }) :super(x, y) {
     _width = environmentObjectWidth[type]!;
     height = environmentObjectHeight[type]!;
-    final double widthHalf = _width * 0.5;
     _top = y - anchorY;
-    _right = x + widthHalf;
-    _bottom = y + height * 0.333;
-    _left = x - widthHalf;
+    _right = x + anchorX;
+    _bottom = y + (height - anchorY);
+    _left = x - anchorX;
     move(x, y);
   }
 
