@@ -2,6 +2,7 @@
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:bleed_client/assets.dart';
+import 'package:bleed_client/common/Settings.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/modules/core/enums.dart';
@@ -30,7 +31,7 @@ class CoreBuild {
       backgroundColor: colours.black,
       buildLoadingScreen: buildLoadingScreen,
       themeData: themes.jetbrains,
-      framesPerSecond: 30,
+      framesPerSecond: targetFPS,
     );
   }
 

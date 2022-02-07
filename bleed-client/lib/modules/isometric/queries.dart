@@ -30,23 +30,22 @@ class IsometricQueries {
   }
 
   Tile getTileAt(double x, double y){
-    double pX = projectedToWorldX(x, y);
-    double pY = projectedToWorldY(x, y);
-    int column = pX ~/ tileSize;
-    int row = pY ~/ tileSize;
-    return getTile(row, column);
+    return getTile(
+        projectedToWorldY(x, y) ~/ tileSize,
+        projectedToWorldY(x, y) ~/ tileSize,
+    );
   }
 
   bool tileIsWalkable(double x, double y){
-    Tile tile = getTileAt(x, y);
+    final tile = getTileAt(x, y);
     if (tile == Tile.Boundary) return false;
-    if (isWater(tile)) return false;
-    if (isBlock(tile)) return false;
+    if (tile.isWater) return false;
+    // if (isBlock(tile)) return false;
     return true;
   }
 
   bool isWaterAt(double x, double y){
-    return isWater(getTileAt(x, y));
+    return getTileAt(x, y).isWater;
   }
 
   bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {

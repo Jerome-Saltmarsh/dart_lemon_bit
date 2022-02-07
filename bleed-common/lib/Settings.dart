@@ -1,0 +1,1 @@
+const targetFPS = 60;

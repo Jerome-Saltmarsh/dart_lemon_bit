@@ -5,6 +5,7 @@ import 'package:lemon_math/hypotenuse.dart';
 import 'classes/Game.dart';
 import 'classes/GameObject.dart';
 import 'classes/Npc.dart';
+import 'common/Settings.dart';
 import 'games/world.dart';
 import 'global.dart';
 import 'language.dart';
@@ -12,7 +13,7 @@ import 'maths.dart';
 import 'state.dart';
 
 const msPerSecond = 1000;
-const framesPerSecond = 30;
+const framesPerSecond = targetFPS;
 const msPerFrame = msPerSecond ~/ framesPerSecond;
 const msPerUpdateNpcTarget = 500;
 const secondsPerRemoveDisconnectedPlayers = 4;
