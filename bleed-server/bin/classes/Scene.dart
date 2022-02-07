@@ -312,21 +312,17 @@ extension SceneFunctions on Scene {
   }
 
   Tile tileAt(double x, double y) {
-    double projectedX = projectedToWorldX(x, y);
+    final projectedX = y - x; // projectedToWorldX(x, y);
     if (projectedX < 0) return Tile.Boundary;
-
-    double projectedY = projectedToWorldY(x, y);
+    final projectedY = x + y; // projectedToWorldY(x, y);
     if (projectedY < 0) return Tile.Boundary;
-
-    double tileX = projectedX / _tileSize;
-    int tileXInt = tileX.toInt();
-    if (tileX > columns) return Tile.Boundary;
-
+    final tileX = projectedX ~/ _tileSize;
+    // int tileXInt = tileX.toInt();
+    if (tileX >= columns) return Tile.Boundary;
     double tileY = projectedY / _tileSize;
     int tileYInt = tileY.toInt();
-    if (tileY > rows) return Tile.Boundary;
-
-    return this.tiles[tileYInt][tileXInt];
+    if (tileY >= rows) return Tile.Boundary;
+    return this.tiles[tileYInt][tileX];
   }
 
   TileNode tileNodeAt(double x, double y) {
