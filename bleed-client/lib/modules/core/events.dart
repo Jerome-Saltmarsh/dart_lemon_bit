@@ -80,7 +80,7 @@ class CoreEvents {
 
       case Mode.Player:
         engine.state.drawCanvas.value = modules.game.render.render;
-        engine.state.drawCanvasAfterUpdate = false;
+        engine.state.drawCanvasAfterUpdate = true;
         modules.isometric.events.register();
         modules.game.events.register();
         engine.registerZoomCameraOnMouseScroll();

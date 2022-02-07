@@ -55,7 +55,7 @@ class _WebSocket {
     }
     event = _response;
     parseState();
-    engine.actions.redrawCanvas();
+    // engine.actions.redrawCanvas();
   }
 
   void _onError(dynamic value) {
