@@ -104,11 +104,6 @@ class GameRoyal extends Game {
     if (item.type == ItemType.Orb_Ruby){
       player.orbs.ruby++;
     }
-
-    if (item.type == ItemType.Armour) {
-      player.armour = player.maxArmour;
-    }
-
     if (item.type == ItemType.Health){
       player.health += 10;
     }

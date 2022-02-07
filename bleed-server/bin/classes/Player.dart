@@ -175,7 +175,6 @@ class Player extends Character with Entity {
       final slot = slots.getSlotTypeAtIndex(index);
       if (slot.isEmpty) return;
 
-
       if (slot.isWeapon){
         if (slot == slots.weapon) return;
         final currentWeapon = slots.weapon;

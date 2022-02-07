@@ -425,10 +425,6 @@ extension GameFunctions on Game {
     if (target.dead) return;
     if (target.invincible) return;
 
-    if (target.armour > 0) {
-
-    }
-
     changeCharacterHealth(target, -amount);
     if (target.alive) return;
     if (target is Npc) {
@@ -1274,8 +1270,8 @@ extension GameFunctions on Game {
         if (character is Player){
           if (character.slots.weapon == SlotType.Bow_Wooden){
             if (character.stateDuration == 3) {
-              spawnArrow(character, damage: character.damage);
-              character.attackTarget = null;
+              spawnArrow(character, damage: character.slots.weapon.damage);
+              character.attackTarget = character.attackTarget;
               return;
             }
           }

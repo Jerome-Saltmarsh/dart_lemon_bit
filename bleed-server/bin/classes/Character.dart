@@ -53,14 +53,6 @@ class Character extends GameObject implements HasSquad {
   Vector2 abilityTarget = Vector2(0, 0);
 
   late int _health;
-  int _armour = 0;
-  int maxArmour = 100;
-
-  int get armour => _armour;
-
-  set armour(int value){
-    _armour = clampInt(value, 0, maxArmour);
-  }
 
   int get health => _health;
 

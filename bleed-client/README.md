@@ -100,16 +100,13 @@
 [ ] Implement game over dialog
 [ ] Design Map  
 [ ] Score  
-[ ] Body Armor
-[ ] Break Crates
-[ ] Weapon UI
-[ ] Spawn Item Locations
-[ ] Dynamic Objects (objects which move around the map and can be removed and added)
 [ ] Chests (drop 3 random gems)
 [ ] Dynamic Clothing Engine
 [ ] Slot machine concept
 [ ] Crafting System
-[ ] FIX Zombies stop rendering
+[ ] Server Strike Damage Calculation
+[ ] FIX Particle blood renders as shell
+[x] FIX Zombies stop rendering
 [x] Zombies don't attack
 [CORE]
 [x] FIX Google Login
