@@ -377,19 +377,8 @@ extension GameFunctions on Game {
     _updateNpcs();
     _updateGameEvents();
     _updateSpawnPointCollisions();
-
-    for(int i = 0; i < items.length; i++){
-      final item = items[i];
-      item.duration--;
-      if (item.duration > 0) continue;
-      items.removeAt(i);
-    }
-
-    if (frame % characterFramesChange == 0) {
-      updateFrames(players);
-      updateFrames(zombies);
-      updateFrames(npcs);
-    }
+    _updateItems();
+    _updateCharacterFrames();
     compileGame(this);
   }
 
@@ -1761,10 +1750,20 @@ extension GameFunctions on Game {
     }
   }
 
-  void _updateCrates() {
-    for (Crate crate in crates) {
-      if (crate.active) continue;
-      crate.deactiveDuration--;
+  void _updateCharacterFrames() {
+    if (frame % characterFramesChange == 0) {
+      updateFrames(players);
+      updateFrames(zombies);
+      updateFrames(npcs);
+    }
+  }
+
+  void _updateItems() {
+    for(int i = 0; i < items.length; i++){
+      final item = items[i];
+      item.duration--;
+      if (item.duration > 0) continue;
+      items.removeAt(i);
     }
   }
 }

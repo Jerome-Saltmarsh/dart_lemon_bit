@@ -21,29 +21,14 @@ enum Tile {
   Rock_Wall
 }
 
-final List<Tile> tiles = Tile.values;
+extension TileExtension on Tile {
+  bool get isWater => this == Tile.Water;
+}
 
+const List<Tile> tiles = Tile.values;
 
 String parseTileToString(Tile tile){
   return tile.toString().replaceAll("Tile.", "");
-}
-
-List<Tile> _blocks = [
-  Tile.Block,
-  Tile.Block_Horizontal,
-  Tile.Block_Vertical,
-];
-
-List<Tile> _water = [
-  Tile.Water,
-];
-
-bool isBlock(Tile tile){
-  return _blocks.contains(tile);
-}
-
-bool isWater(Tile tile){
-  return _water.contains(tile);
 }
 
 List<List<Tile>> mapJsonToTiles(dynamic json){

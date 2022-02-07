@@ -101,7 +101,7 @@ class Scene {
     for (int row = 0; row < rows; row++) {
       List<TileNode> nodeRow = [];
       for (int column = 0; column < columns; column++) {
-        TileNode node = TileNode(isWalkable(tiles[row][column]));
+        final node = TileNode(isWalkable(tiles[row][column]));
         node.y = column;
         node.x = row;
         double halfTileSize = 24;
@@ -303,9 +303,8 @@ extension SceneFunctions on Scene {
   }
 
   bool waterAt(double x, double y) {
-    return isWater(tileAt(x, y));
+    return tileAt(x, y).isWater;
   }
-
 
   bool tileWalkableAt(double x, double y){
     return isWalkable(tileAt(x, y));
