@@ -221,9 +221,9 @@ class IsometricRender {
   }
 
   void _renderCharacter(Character character, int shade) {
+    mapCharacterDst(character, character.type);
 
     if (character.type != CharacterType.Human){
-      mapCharacterDst(character, character.type);
       mapCharacterSrc(
         type: character.type,
         state: character.state,
@@ -236,17 +236,21 @@ class IsometricRender {
       return;
     }
 
-    mapCharacterDst(character, character.type);
-    _renderCharacterShadow(character);
-    mapCharacterDst(character, character.type);
-    _renderCharacterLegs(character);
-    mapCharacterDst(character, character.type);
-    _renderCharacterTorso(character);
-    mapCharacterDst(character, character.type);
+    // mapCharacterDst(character, character.type);
+    _mapCharacterSrcShadow(character);
+    engine.actions.renderAtlas();
+    // mapCharacterDst(character, character.type);
+    _mapCharacterSrcLegs(character);
+    engine.actions.renderAtlas();
+    // mapCharacterDst(character, character.type);
+    _mapCharacterSrcArmour(character);
+    engine.actions.renderAtlas();
+    // mapCharacterDst(character, character.type);
     _renderCharacterHead(character);
+    engine.actions.renderAtlas();
   }
 
-  void _renderCharacterShadow(Character character){
+  void _mapCharacterSrcShadow(Character character){
     switch(character.state){
       case CharacterState.Idle:
         srcSingle(atlas: atlas.shadow.idle, direction: character.direction);
@@ -280,10 +284,9 @@ class IsometricRender {
         );
         break;
     }
-    engine.actions.renderAtlas();
   }
 
-  void _renderCharacterLegs(Character character){
+  void _mapCharacterSrcLegs(Character character){
     switch(character.state){
       case CharacterState.Running:
         srcLoop(
@@ -296,10 +299,9 @@ class IsometricRender {
         srcSingle(atlas: atlas.plain.legs.idle, direction: character.direction);
         break;
     }
-    engine.actions.renderAtlas();
   }
 
-  void _renderCharacterTorso(Character character){
+  void _mapCharacterSrcArmour(Character character){
     switch(character.state){
       case CharacterState.Idle:
         switch(character.equippedArmour){
@@ -397,40 +399,6 @@ class IsometricRender {
         }
         break;
     }
-    engine.actions.renderAtlas();
-  }
-
-  void _renderCharacterAtlas(Character character, Vector2 atlas){
-    switch(character.state){
-      case CharacterState.Striking:
-        srcAnimate(
-          atlas: atlas,
-          animation: animations.human.strikingSword,
-          direction: character.direction,
-          frame: character.frame,
-          framesPerDirection: 2,
-        );
-        break;
-      case CharacterState.Running:
-        srcLoop(
-            atlas: atlas,
-            direction: character.direction,
-            frame: character.frame
-        );
-        break;
-      case CharacterState.Performing:
-          srcAnimate(
-            atlas: atlas,
-            animation: animations.human.performing,
-            direction: character.direction,
-            frame: character.frame,
-            framesPerDirection: 2,
-          );
-        break;
-      default:
-        srcSingle(atlas: atlas, direction: character.direction);
-    }
-    engine.actions.renderAtlas();
   }
 
   void _renderCharacterHead(Character character){
