@@ -140,7 +140,10 @@ class Town extends Game {
   void update() {
     if (frame % _framesPerZombieSpawn != 0) return;
     if (zombieCount >= _maxZombies) return;
-    spawnRandomZombieLevel(0);
+    spawnRandomZombie(
+        health: 5,
+        experience: 1
+    );
   }
 
   @override
