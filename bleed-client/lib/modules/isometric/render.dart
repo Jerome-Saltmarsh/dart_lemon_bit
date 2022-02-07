@@ -221,9 +221,9 @@ class IsometricRender {
   }
 
   void _renderCharacter(Character character, int shade) {
-    mapCharacterDst(character, character.type);
 
     if (character.type != CharacterType.Human){
+      mapCharacterDst(character, character.type);
       mapCharacterSrc(
         type: character.type,
         state: character.state,
@@ -236,9 +236,13 @@ class IsometricRender {
       return;
     }
 
+    mapCharacterDst(character, character.type);
     _renderCharacterShadow(character);
+    mapCharacterDst(character, character.type);
     _renderCharacterLegs(character);
+    mapCharacterDst(character, character.type);
     _renderCharacterTorso(character);
+    mapCharacterDst(character, character.type);
     _renderCharacterHead(character);
   }
 
@@ -392,6 +396,39 @@ class IsometricRender {
             break;
         }
         break;
+    }
+    engine.actions.renderAtlas();
+  }
+
+  void _renderCharacterAtlas(Character character, Vector2 atlas){
+    switch(character.state){
+      case CharacterState.Striking:
+        srcAnimate(
+          atlas: atlas,
+          animation: animations.human.strikingSword,
+          direction: character.direction,
+          frame: character.frame,
+          framesPerDirection: 2,
+        );
+        break;
+      case CharacterState.Running:
+        srcLoop(
+            atlas: atlas,
+            direction: character.direction,
+            frame: character.frame
+        );
+        break;
+      case CharacterState.Performing:
+          srcAnimate(
+            atlas: atlas,
+            animation: animations.human.performing,
+            direction: character.direction,
+            frame: character.frame,
+            framesPerDirection: 2,
+          );
+        break;
+      default:
+        srcSingle(atlas: atlas, direction: character.direction);
     }
     engine.actions.renderAtlas();
   }
@@ -595,6 +632,7 @@ class IsometricRender {
       ) {
     return engine.state.mapDst(
       scale: goldenRatio_0618,
+      // scale: 1.0,
       x: character.x,
       y: character.y,
       anchorX: _anchorX,
