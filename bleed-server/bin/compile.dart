@@ -243,6 +243,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
 
   _write(buffer, player.slots.weapon.index);
   _write(buffer, player.slots.armour.index);
+  _write(buffer, player.slots.helm.index);
 
   Character? aimTarget = player.aimTarget;
   if (aimTarget != null) {
@@ -445,6 +446,7 @@ void _compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.isHuman ? player.weapon.type.index : WeaponType.Unarmed.index);
   _write(buffer, player.slots.weapon.index);
   _write(buffer, player.slots.armour.index);
+  _write(buffer, player.slots.helm.index);
 }
 
 void compileString(StringBuffer buffer, String text){

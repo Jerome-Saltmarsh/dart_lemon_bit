@@ -174,6 +174,20 @@ class Player extends Character with Entity {
         return;
       }
 
+      if (slot.isArmour){
+        final previousArmour = slots.armour;
+        slots.armour = slot;
+        slots.assignSlotAtIndex(index, previousArmour);
+        setStateChangingWeapons();
+      }
+
+      if (slot.isArmour){
+        final previous = slots.helm;
+        slots.helm = slot;
+        slots.assignSlotAtIndex(index, previous);
+        setStateChangingWeapons();
+      }
+
       if (slot == SlotType.Spell_Tome_Fireball) {
         ability = Ability(type: AbilityType.Fireball,
             level: 1,
@@ -184,18 +198,14 @@ class Player extends Character with Entity {
         return;
       }
 
-      if (slot == SlotType.Armour_Standard){
-        final previousArmour = slots.armour;
-        slots.armour = slot;
-        slots.assignSlotAtIndex(index, previousArmour);
-        setStateChangingWeapons();
-      }
   }
 }
 
 class _PlayerSlots {
   SlotType weapon = SlotType.Empty;
   SlotType armour = SlotType.Empty;
+  SlotType helm = SlotType.Empty;
+
   SlotType slot1 = SlotType.Empty;
   SlotType slot2 = SlotType.Empty;
   SlotType slot3 = SlotType.Empty;

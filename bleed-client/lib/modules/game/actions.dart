@@ -147,6 +147,10 @@ class GameActions {
     unequip(SlotTypeCategory.Armour);
   }
 
+  void unequipHelm(){
+    unequip(SlotTypeCategory.Helm);
+  }
+
   void unequip(SlotTypeCategory value){
     print("game.actions.unequip(${value.name})");
     sendClientRequest(ClientRequest.Unequip_Slot, value.index);

@@ -441,6 +441,7 @@ void _parsePlayer() {
   player.team = consumeInt();
   player.slots.weapon.value = consumeSlotType();
   player.slots.armour.value = consumeSlotType();
+  player.slots.helm.value = consumeSlotType();
 }
 
 void _parsePlayerAbility(){
@@ -741,6 +742,7 @@ void _consumeHuman(Character character) {
   character.weapon = _consumeWeaponType();
   character.equippedSlotType = consumeSlotType();
   character.equippedArmour = consumeSlotType();
+  character.equippedHead = consumeSlotType();
 }
 
 void _consumeZombie(Zombie zombie) {

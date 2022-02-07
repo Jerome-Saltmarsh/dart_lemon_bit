@@ -42,6 +42,11 @@ class _SlotTypes {
     SlotType.Armour_Standard,
   ];
 
+  final List<SlotType> helms = [
+    SlotType.Steel_Helmet,
+    SlotType.Leather_Cap,
+  ];
+
   final List<SlotType> items = [
     SlotType.Silver_Pendant,
     SlotType.Frogs_Amulet,
@@ -52,5 +57,6 @@ extension SlotTypeProperties on SlotType {
   bool get isEmpty => this == SlotType.Empty;
   bool get isWeapon => slotTypes.weapons.contains(this);
   bool get isArmour => slotTypes.armour.contains(this);
+  bool get isHelm => slotTypes.helms.contains(this);
   bool get isItem => slotTypes.items.contains(this);
 }

@@ -362,9 +362,9 @@ class GameBuild {
           SlotType.Silver_Pendant,
         ),
         shopSlotRow(
-          SlotType.Steel_Helmet,
-          SlotType.Steel_Helmet,
-          SlotType.Steel_Helmet,
+          SlotType.Empty,
+          SlotType.Empty,
+          SlotType.Empty,
         ),
         shopSlotRow(
           SlotType.Empty,
@@ -637,6 +637,11 @@ class GameBuild {
                     child: slot(slotType: weapon, color: colours.white382));
               }),
               WatchBuilder(state.player.slots.armour, (SlotType slotType){
+                return onPressed(
+                    callback: actions.unequipArmour,
+                    child: slot(slotType: slotType, color: colours.white382));
+              }),
+              WatchBuilder(state.player.slots.helm, (SlotType slotType){
                 return onPressed(
                     callback: actions.unequipArmour,
                     child: slot(slotType: slotType, color: colours.white382));
