@@ -187,7 +187,10 @@ class Player extends Character with Entity {
 
       if (slot.isArmour){
         final previousArmour = slots.armour;
+        maxHealth -= previousArmour.health;
         slots.armour = slot;
+        maxHealth += slot.health;
+        health = clampInt(health, 1, maxHealth);
         slots.assignSlotAtIndex(index, previousArmour);
         setStateChangingWeapons();
       }
