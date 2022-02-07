@@ -316,13 +316,11 @@ extension SceneFunctions on Scene {
     if (projectedX < 0) return Tile.Boundary;
     final projectedY = x + y; // projectedToWorldY(x, y);
     if (projectedY < 0) return Tile.Boundary;
-    final tileX = projectedX ~/ _tileSize;
-    // int tileXInt = tileX.toInt();
-    if (tileX >= columns) return Tile.Boundary;
-    double tileY = projectedY / _tileSize;
-    int tileYInt = tileY.toInt();
-    if (tileY >= rows) return Tile.Boundary;
-    return this.tiles[tileYInt][tileX];
+    final column = projectedX ~/ _tileSize;
+    if (column >= columns) return Tile.Boundary;
+    final row = projectedY ~/ _tileSize;
+    if (row >= rows) return Tile.Boundary;
+    return this.tiles[row][column];
   }
 
   TileNode tileNodeAt(double x, double y) {
