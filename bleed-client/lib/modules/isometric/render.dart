@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/diff_over.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
