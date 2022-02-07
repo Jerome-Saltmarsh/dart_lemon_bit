@@ -398,43 +398,66 @@ class IsometricRender {
 
   void _renderCharacterHead(Character character){
     switch(character.state){
-      case CharacterState.Idle:
+      case CharacterState.Striking:
         if (character.equippedHead == SlotType.Steel_Helmet){
-          srcSingle(atlas: atlas.headSteel.idle, direction: character.direction);
+          srcAnimate(
+            atlas: atlas.headSteel.striking,
+            animation: animations.human.strikingSword,
+            direction: character.direction,
+            frame: character.frame,
+            framesPerDirection: 2,
+          );
         }else{
-          srcSingle(atlas: atlas.plain.head.idle, direction: character.direction);
+          srcAnimate(
+            atlas: atlas.plain.head.striking,
+            animation: animations.human.strikingSword,
+            direction: character.direction,
+            frame: character.frame,
+            framesPerDirection: 2,
+          );
+        }
+        break;
+      case CharacterState.Running:
+        if (character.equippedHead == SlotType.Steel_Helmet){
+          srcLoop(
+              atlas: atlas.headSteel.running,
+              direction: character.direction,
+              frame: character.frame
+          );
+        }else{
+          srcLoop(
+              atlas: atlas.plain.head.running,
+              direction: character.direction,
+              frame: character.frame
+          );
         }
 
         break;
-      case CharacterState.Striking:
-        srcAnimate(
-          atlas: atlas.plain.head.striking,
-          animation: animations.human.strikingSword,
-          direction: character.direction,
-          frame: character.frame,
-          framesPerDirection: 2,
-        );
-        break;
-      case CharacterState.Running:
-        srcLoop(
-            atlas: atlas.plain.head.running,
-            direction: character.direction,
-            frame: character.frame
-        );
-        break;
       case CharacterState.Performing:
-        srcAnimate(
-          atlas: atlas.plain.head.striking,
-          animation: animations.human.strikingSword,
-          direction: character.direction,
-          frame: character.frame,
-          framesPerDirection: 2,
-        );
+        if (character.equippedHead == SlotType.Steel_Helmet){
+          srcAnimate(
+            atlas: atlas.headSteel.striking,
+            animation: animations.human.strikingSword,
+            direction: character.direction,
+            frame: character.frame,
+            framesPerDirection: 2,
+          );
+        }else{
+          srcAnimate(
+            atlas: atlas.plain.head.striking,
+            animation: animations.human.strikingSword,
+            direction: character.direction,
+            frame: character.frame,
+            framesPerDirection: 2,
+          );
+        }
         break;
       default:
-        srcSingle(atlas: atlas.plain.head.idle, direction: character.direction);
-        break;
-
+        if (character.equippedHead == SlotType.Steel_Helmet){
+          srcSingle(atlas: atlas.headSteel.idle, direction: character.direction);
+        } else {
+          srcSingle(atlas: atlas.plain.head.idle, direction: character.direction);
+        }
     }
     engine.actions.renderAtlas();
   }
