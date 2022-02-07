@@ -207,7 +207,6 @@ class Player extends Character with Entity {
             mode: AbilityMode.Directed);
         return;
       }
-
   }
 }
 

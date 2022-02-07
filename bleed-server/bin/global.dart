@@ -79,7 +79,7 @@ class _Global {
           break;
 
         case GameStatus.In_Progress:
-          game.updateAndCompile();
+          game.updateInProgress();
           break;
 
         case GameStatus.Finished:

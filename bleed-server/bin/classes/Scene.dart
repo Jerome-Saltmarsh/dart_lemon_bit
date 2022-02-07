@@ -359,4 +359,25 @@ extension SceneFunctions on Scene {
   double projectedToWorldY(double x, double y) {
     return x + y;
   }
+
+  void resolveCharacterTileCollision(Character character) {
+    if (!tileWalkableAt(character.left, character.top)) {
+      character.x += 3;
+      character.y += 3;
+    } else
+    if (!tileWalkableAt(character.right, character.bottom)) {
+      character.x -= 3;
+      character.y -= 3;
+    }
+
+    if (!tileWalkableAt(character.right, character.top)) {
+      character.x -= 3;
+      character.y += 3;
+    } else
+    if (!tileWalkableAt(character.left, character.bottom)) {
+      character.x += 3;
+      character.y -= 3;
+    }
+
+  }
 }

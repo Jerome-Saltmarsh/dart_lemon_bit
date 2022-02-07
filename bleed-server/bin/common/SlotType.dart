@@ -36,6 +36,19 @@ class _SlotTypes {
     SlotType.Sword_Wooden,
   ];
 
+  final List<SlotType> bows = [
+    SlotType.Bow_Wooden,
+    SlotType.Bow_Green,
+    SlotType.Bow_Gold,
+  ];
+
+  final List<SlotType> melee = [
+    SlotType.Empty,
+    SlotType.Sword_Wooden,
+    SlotType.Sword_Short,
+    SlotType.Sword_Long,
+  ];
+
   final List<SlotType> armour = [
     SlotType.Armour_Standard,
   ];
@@ -57,6 +70,8 @@ extension SlotTypeProperties on SlotType {
   bool get isArmour => slotTypes.armour.contains(this);
   bool get isHelm => slotTypes.helms.contains(this);
   bool get isItem => slotTypes.items.contains(this);
+  bool get isBow => slotTypes.bows.contains(this);
+  bool get isMelee => slotTypes.melee.contains(this);
 
   int get damage {
     return slotTypeDamage[this] ?? 0;
@@ -72,11 +87,12 @@ extension SlotTypeProperties on SlotType {
 }
 
 const Map<SlotType, int> slotTypeDamage = {
-  SlotType.Sword_Wooden: 1,
-  SlotType.Sword_Short: 2,
-  SlotType.Sword_Long: 5,
-  SlotType.Bow_Wooden: 1,
-  SlotType.Bow_Green: 2,
+  SlotType.Empty: 1,
+  SlotType.Sword_Wooden: 2,
+  SlotType.Sword_Short: 4,
+  SlotType.Sword_Long: 8,
+  SlotType.Bow_Wooden: 2,
+  SlotType.Bow_Green: 4,
   SlotType.Bow_Gold: 5,
   SlotType.Staff_Wooden: 1,
   SlotType.Staff_Blue: 2,

@@ -367,9 +367,7 @@ extension GameFunctions on Game {
     return zombieDistance < playerDistance ? zombie : player;
   }
 
-  /// Gets called while the game is in progress
-  void updateAndCompile() {
-    // @on update game
+  void updateInProgress() {
     duration++;
     update();
     _updatePlayersAndNpcs();
@@ -1080,6 +1078,111 @@ extension GameFunctions on Game {
     return pi2 - diff;
   }
 
+  void updateCharacterPerforming(Character character){
+    final ability = character.performing;
+    if (ability == null) return;
+    switch (ability.type) {
+      case AbilityType.Explosion:
+        final int castFrame = 3;
+        if (character.stateDuration == castFrame) {
+          spawnExplosion(
+              src: character,
+              x: character.abilityTarget.x,
+              y: character.abilityTarget.y);
+          character.performing = null;
+        }
+        break;
+      case AbilityType.Blink:
+        if (character.stateDuration == 3) {
+          dispatch(GameEventType.Teleported, character.x, character.y);
+          character.x = character.abilityTarget.x;
+          character.y = character.abilityTarget.y;
+          dispatch(GameEventType.Teleported, character.x, character.y);
+          character.performing = null;
+          character.attackTarget = null;
+        }
+        break;
+      case AbilityType.FreezeCircle:
+        final int castFrame = 3;
+        if (character.stateDuration == castFrame) {
+          spawnFreezeCircle(
+              x: character.abilityTarget.x, y: character.abilityTarget.y);
+          character.performing = null;
+          character.attackTarget = null;
+        }
+        break;
+      case AbilityType.Fireball:
+        final int castFrame = 3;
+        if (character.stateDuration == castFrame) {
+          spawnFireball(character);
+          character.performing = null;
+          character.attackTarget = null;
+        }
+        break;
+      case AbilityType.Split_Arrow:
+        final int castFrame = 3;
+        if (character.stateDuration == castFrame) {
+          Projectile arrow1 =
+          spawnArrow(character, damage: character.damage);
+          double angle = piSixteenth;
+          arrow1.target = null;
+          setProjectilAngle(arrow1, character.aimAngle - angle);
+          Projectile arrow2 =
+          spawnArrow(character, damage: character.damage);
+          arrow2.target = null;
+          Projectile arrow3 =
+          spawnArrow(character, damage: character.damage);
+          arrow3.target = null;
+          setProjectilAngle(arrow3, character.aimAngle + angle);
+          character.performing = null;
+          character.attackTarget = null;
+        }
+        break;
+
+      case AbilityType.Long_Shot:
+        final int castFrame = 3;
+        if (character.stateDuration == castFrame) {
+          final int damageMultiplier = 3;
+          spawnArrow(character, damage: character.damage * damageMultiplier)
+              .range = ability.range;
+          character.attackTarget = null;
+          character.performing = null;
+        }
+        break;
+
+      case AbilityType.Brutal_Strike:
+        final int castFrame = 8;
+        if (character.stateDuration == castFrame) {
+          character.performing = null;
+          const damageMultiplier = 2;
+          for (Npc zombie in zombies) {
+            if (distanceV2(zombie, character) < character.attackRange) {
+              applyStrike(
+                  character, zombie, character.damage * damageMultiplier);
+            }
+          }
+          character.attackTarget = null;
+          character.performing = null;
+        }
+        break;
+      case AbilityType.Death_Strike:
+        final int castFrame = 8;
+        const damageMultiplier = 3;
+        if (character.stateDuration == castFrame) {
+          Character? attackTarget = character.attackTarget;
+          if (attackTarget != null) {
+            applyStrike(character, attackTarget,
+                character.damage * damageMultiplier);
+          }
+          character.attackTarget = null;
+          character.performing = null;
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
   void updateCharacter(Character character) {
     if (!character.active) return;
 
@@ -1106,172 +1209,30 @@ extension GameFunctions on Game {
       }
     }
 
-    if (!scene.tileWalkableAt(character.left, character.top)) {
-      character.x += 3;
-      character.y += 3;
-    }
-    if (!scene.tileWalkableAt(character.right, character.top)) {
-      character.x -= 3;
-      character.y += 3;
-    }
-    if (!scene.tileWalkableAt(character.left, character.bottom)) {
-      character.x += 3;
-      character.y -= 3;
-    }
-    if (!scene.tileWalkableAt(character.right, character.bottom)) {
-      character.x -= 3;
-      character.y -= 3;
-    }
+    scene.resolveCharacterTileCollision(character);
 
     switch (character.state) {
       case CharacterState.Running:
-        switch (character.direction) {
-          case Direction.Up:
-            character.y -= character.speed;
-            break;
-          case Direction.UpRight:
-            character.x += velX(piQuarter, character.speed);
-            character.y += velY(piQuarter, character.speed);
-            break;
-          case Direction.Right:
-            character.x += character.speed;
-            break;
-          case Direction.DownRight:
-            character.x += velX(piQuarter, character.speed);
-            character.y -= velY(piQuarter, character.speed);
-            break;
-          case Direction.Down:
-            character.y += character.speed;
-            break;
-          case Direction.DownLeft:
-            character.x -= velX(piQuarter, character.speed);
-            character.y -= velY(piQuarter, character.speed);
-            break;
-          case Direction.Left:
-            character.x -= character.speed;
-            break;
-          case Direction.UpLeft:
-            character.x -= velX(piQuarter, character.speed);
-            character.y += velY(piQuarter, character.speed);
-            break;
-        }
+        updateCharacterRunning(character);
         break;
       case CharacterState.Performing:
-        Ability? ability = character.performing;
-
-        if (ability == null) {
-          return;
-        }
-
-        switch (ability.type) {
-          // @on performing
-          case AbilityType.Explosion:
-            final int castFrame = 3;
-            if (character.stateDuration == castFrame) {
-              spawnExplosion(
-                  src: character,
-                  x: character.abilityTarget.x,
-                  y: character.abilityTarget.y);
-              character.performing = null;
-            }
-            break;
-          case AbilityType.Blink:
-            if (character.stateDuration == 3) {
-              dispatch(GameEventType.Teleported, character.x, character.y);
-              character.x = character.abilityTarget.x;
-              character.y = character.abilityTarget.y;
-              dispatch(GameEventType.Teleported, character.x, character.y);
-              character.performing = null;
-              character.attackTarget = null;
-            }
-            break;
-          case AbilityType.FreezeCircle:
-            final int castFrame = 3;
-            if (character.stateDuration == castFrame) {
-              spawnFreezeCircle(
-                  x: character.abilityTarget.x, y: character.abilityTarget.y);
-              character.performing = null;
-              character.attackTarget = null;
-            }
-            break;
-          case AbilityType.Fireball:
-            final int castFrame = 3;
-            if (character.stateDuration == castFrame) {
-              spawnFireball(character);
-              character.performing = null;
-              character.attackTarget = null;
-            }
-            break;
-          case AbilityType.Split_Arrow:
-            final int castFrame = 3;
-            if (character.stateDuration == castFrame) {
-              Projectile arrow1 =
-                  spawnArrow(character, damage: character.damage);
-              double angle = piSixteenth;
-              arrow1.target = null;
-              setProjectilAngle(arrow1, character.aimAngle - angle);
-              Projectile arrow2 =
-                  spawnArrow(character, damage: character.damage);
-              arrow2.target = null;
-              Projectile arrow3 =
-                  spawnArrow(character, damage: character.damage);
-              arrow3.target = null;
-              setProjectilAngle(arrow3, character.aimAngle + angle);
-              character.performing = null;
-              character.attackTarget = null;
-            }
-            break;
-
-          case AbilityType.Long_Shot:
-            final int castFrame = 3;
-            if (character.stateDuration == castFrame) {
-              final int damageMultiplier = 3;
-              spawnArrow(character, damage: character.damage * damageMultiplier)
-                  .range = ability.range;
-              character.attackTarget = null;
-              character.performing = null;
-            }
-            break;
-
-          case AbilityType.Brutal_Strike:
-            final int castFrame = 8;
-            if (character.stateDuration == castFrame) {
-              character.performing = null;
-              const damageMultiplier = 2;
-              for (Npc zombie in zombies) {
-                if (distanceV2(zombie, character) < character.attackRange) {
-                  applyStrike(
-                      character, zombie, character.damage * damageMultiplier);
-                }
-              }
-              character.attackTarget = null;
-              character.performing = null;
-            }
-            break;
-          case AbilityType.Death_Strike:
-            final int castFrame = 8;
-            const damageMultiplier = 3;
-            if (character.stateDuration == castFrame) {
-              Character? attackTarget = character.attackTarget;
-              if (attackTarget != null) {
-                applyStrike(character, attackTarget,
-                    character.damage * damageMultiplier);
-              }
-              character.attackTarget = null;
-              character.performing = null;
-            }
-            break;
-          default:
-            break;
-        }
+        updateCharacterPerforming(character);
         break;
       case CharacterState.Striking:
-
         if (character is Player){
-          if (character.slots.weapon == SlotType.Bow_Wooden){
-            if (character.stateDuration == 3) {
+          if (character.stateDuration == framePerformStrike) {
+            if (character.slots.weapon.isBow) {
               spawnArrow(character, damage: character.slots.weapon.damage);
               character.attackTarget = character.attackTarget;
+              return;
+            }
+            if (character.slots.weapon.isMelee) {
+              final attackTarget = character.attackTarget;
+              if (attackTarget != null) {
+                applyStrike(character, attackTarget, character.damage);
+                return;
+              }
+              /// TODO raycast hit
               return;
             }
           }
@@ -1373,6 +1334,26 @@ extension GameFunctions on Game {
       character.stateFrameCount = 0;
     }
   }
+
+  void updateCharacterTileCollision(Character character) {
+    if (!scene.tileWalkableAt(character.left, character.top)) {
+      character.x += 3;
+      character.y += 3;
+    }
+    if (!scene.tileWalkableAt(character.right, character.top)) {
+      character.x -= 3;
+      character.y += 3;
+    }
+    if (!scene.tileWalkableAt(character.left, character.bottom)) {
+      character.x += 3;
+      character.y -= 3;
+    }
+    if (!scene.tileWalkableAt(character.right, character.bottom)) {
+      character.x -= 3;
+      character.y -= 3;
+    }
+  }
+
 
   void throwGrenade(Player player, double angle, double strength) {
     double speed = settings.grenadeSpeed * strength;
@@ -1788,6 +1769,40 @@ extension GameFunctions on Game {
   }
 }
 
+
+void updateCharacterRunning(Character character) {
+  switch (character.direction) {
+    case Direction.Up:
+      character.y -= character.speed;
+      break;
+    case Direction.UpRight:
+      character.x += velX(piQuarter, character.speed);
+      character.y += velY(piQuarter, character.speed);
+      break;
+    case Direction.Right:
+      character.x += character.speed;
+      break;
+    case Direction.DownRight:
+      character.x += velX(piQuarter, character.speed);
+      character.y -= velY(piQuarter, character.speed);
+      break;
+    case Direction.Down:
+      character.y += character.speed;
+      break;
+    case Direction.DownLeft:
+      character.x -= velX(piQuarter, character.speed);
+      character.y -= velY(piQuarter, character.speed);
+      break;
+    case Direction.Left:
+      character.x -= character.speed;
+      break;
+    case Direction.UpLeft:
+      character.x -= velX(piQuarter, character.speed);
+      character.y += velY(piQuarter, character.speed);
+      break;
+  }
+}
+
 void applyCratePhysics(Crate crate, List<Character> characters) {
   for (Character character in characters) {
     if (!character.active) continue;
@@ -2036,3 +2051,4 @@ class CustomGame extends Game {
 class ZombieSpawnPointsEmptyException implements Exception {
 
 }
+
