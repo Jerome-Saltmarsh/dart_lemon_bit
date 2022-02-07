@@ -2,7 +2,7 @@
 
 import 'SlotType.dart';
 
-final Map<SlotType, _SlotTypeCost> slotTypeCosts = {
+const Map<SlotType, _SlotTypeCost> slotTypeCosts = {
   SlotType.Sword_Wooden: _SlotTypeCost(
       rubies: 1,
       emeralds: 1,
@@ -61,7 +61,7 @@ final Map<SlotType, _SlotTypeCost> slotTypeCosts = {
   ),
 };
 
-final Map<SlotType, String> slotTypeNames = {
+const Map<SlotType, String> slotTypeNames = {
   SlotType.Sword_Wooden: "Wooden Sword",
   SlotType.Sword_Short: "Steel Sword",
   SlotType.Sword_Long: "Iron Sword",
@@ -72,14 +72,15 @@ final Map<SlotType, String> slotTypeNames = {
   SlotType.Staff_Blue: "Sapphire Staff",
   SlotType.Staff_Golden: "Golden Staff",
   SlotType.Spell_Tome_Fireball: "Spell: Fireball lvl 1",
-  SlotType.Steel_Helmet: "Guards Helm",
+  SlotType.Steel_Helmet: "Knight's Helm",
+  SlotType.Armour_Standard: "Steel Tunic",
 };
 
 class _SlotTypeCost {
   final int topaz;
   final int rubies;
   final int emeralds;
-  _SlotTypeCost({
+  const _SlotTypeCost({
     this.topaz = 0,
     this.rubies = 0,
     this.emeralds = 0

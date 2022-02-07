@@ -50,6 +50,7 @@ class GameState {
   final List<String> waitASecond = ['Wait a second', 'Just a moment'];
 
   final Map<SlotType, Widget> slotTypeImages = {
+    SlotType.Empty: resources.icons.empty,
     SlotType.Sword_Short : resources.icons.sword,
     SlotType.Sword_Wooden : resources.icons.swords.wooden,
     SlotType.Sword_Long : resources.icons.swords.iron,

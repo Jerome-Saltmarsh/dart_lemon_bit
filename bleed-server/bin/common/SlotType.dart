@@ -1,5 +1,3 @@
-import 'WeaponType.dart';
-
 enum SlotType {
   Empty,
   Silver_Pendant,
