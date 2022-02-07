@@ -217,7 +217,11 @@ class IsometricRender {
         drawCharacterMagicBar(character);
       }
     }
-    drawCharacterHealthBar(character);
+
+    if (shade <= Shade.Medium) {
+      drawCharacterHealthBar(character);
+    }
+
   }
 
   void _renderCharacter(Character character, int shade) {
