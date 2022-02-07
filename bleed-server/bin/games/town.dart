@@ -142,7 +142,8 @@ class Town extends Game {
     if (zombieCount >= _maxZombies) return;
     spawnRandomZombie(
         health: 5,
-        experience: 1
+        experience: 1,
+        damage: 1,
     );
   }
 

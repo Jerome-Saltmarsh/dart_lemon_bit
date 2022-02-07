@@ -673,7 +673,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           final ModifyGame modifyGame = gameModifications[modifyGameIndex];
           switch(modifyGame){
             case ModifyGame.Spawn_Zombie:
-              player.game.spawnRandomZombie();
+              player.game.spawnRandomZombie(
+                damage: 1,
+                health: 5
+              );
               break;
             case ModifyGame.Remove_Zombie:
             // TODO: Handle this case.

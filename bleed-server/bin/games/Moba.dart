@@ -58,7 +58,9 @@ class GameMoba extends Game {
           health: 100,
           experience: 10,
           objectives: copy(creepWestObjectives),
-          team: teams.west);
+          team: teams.west,
+          damage: 5
+      );
 
       spawnZombie(
         creepSpawnEast.x,
@@ -67,6 +69,7 @@ class GameMoba extends Game {
         experience: 10,
         objectives: copy(creepEastObjectives),
         team: teams.east,
+        damage: 5
       );
     }
   }

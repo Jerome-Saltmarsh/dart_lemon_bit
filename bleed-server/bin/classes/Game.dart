@@ -1449,9 +1449,11 @@ extension GameFunctions on Game {
     required int health,
     required int experience,
     required int team,
+    required int damage,
     List<Vector2>? objectives,
   }) {
     Npc zombie = _getAvailableZombie();
+    zombie.damage = damage;
     zombie.team = team;
     zombie.active = true;
     zombie.experience = experience;
@@ -1496,6 +1498,7 @@ extension GameFunctions on Game {
 
   Npc spawnRandomZombieLevel(int level) {
     return spawnRandomZombie(
+        damage: level,
         health: zombieHealth[clampInt(
           level,
           0,
@@ -1508,11 +1511,21 @@ extension GameFunctions on Game {
         )]);
   }
 
-  Npc spawnRandomZombie({int health = 25, int experience = 1}) {
+  Npc spawnRandomZombie({
+    required int health,
+    required int damage,
+    int experience = 1
+  }) {
     if (zombieSpawnPoints.isEmpty) throw ZombieSpawnPointsEmptyException();
-    Vector2 spawnPoint = randomItem(zombieSpawnPoints);
-    return spawnZombie(spawnPoint.x, spawnPoint.y,
-        team: teams.east, health: health, experience: experience);
+    final spawnPoint = randomItem(zombieSpawnPoints);
+    return spawnZombie(
+        spawnPoint.x,
+        spawnPoint.y,
+        team: teams.east,
+        health: health,
+        experience: experience,
+        damage: damage
+    );
   }
 
   int get zombieCount {
