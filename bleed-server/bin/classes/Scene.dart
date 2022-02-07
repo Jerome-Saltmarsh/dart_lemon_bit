@@ -330,21 +330,15 @@ extension SceneFunctions on Scene {
   }
 
   TileNode tileNodeAt(double x, double y) {
-    double projectedX = projectedToWorldX(x, y);
+    final projectedX = y - x; // projectedToWorldX(x, y)
     if (projectedX < 0) return _boundary;
-
-    double projectedY = projectedToWorldY(x, y);
+    final projectedY = x + y; // projectedToWorldY(x, y)
     if (projectedY < 0) return _boundary;
 
-    double tileX = projectedX / _tileSize;
-    double tileY = projectedY / _tileSize;
-
-    int row = tileY.toInt();
-    int column = tileX.toInt();
-
-    if (column >= columns) return _boundary;
+    final row = projectedX ~/ _tileSize;
     if (row >= rows) return _boundary;
-
+    final column = projectedY ~/ _tileSize;
+    if (column >= columns) return _boundary;
     return tileNodes[row][column];
   }
 
