@@ -643,7 +643,7 @@ class GameBuild {
               }),
               WatchBuilder(state.player.slots.helm, (SlotType slotType){
                 return onPressed(
-                    callback: actions.unequipArmour,
+                    callback: actions.unequipHelm,
                     child: slot(slotType: slotType, color: colours.white382));
               }),
             ],

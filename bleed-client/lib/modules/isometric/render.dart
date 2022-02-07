@@ -399,7 +399,12 @@ class IsometricRender {
   void _renderCharacterHead(Character character){
     switch(character.state){
       case CharacterState.Idle:
-        srcSingle(atlas: atlas.plain.head.idle, direction: character.direction);
+        if (character.equippedHead == SlotType.Steel_Helmet){
+          srcSingle(atlas: atlas.headSteel.idle, direction: character.direction);
+        }else{
+          srcSingle(atlas: atlas.plain.head.idle, direction: character.direction);
+        }
+
         break;
       case CharacterState.Striking:
         srcAnimate(

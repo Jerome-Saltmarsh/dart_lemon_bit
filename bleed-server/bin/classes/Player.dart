@@ -130,6 +130,10 @@ class Player extends Character with Entity {
         setStateChangingWeapons();
         break;
       case SlotTypeCategory.Helm:
+        if (slots.helm.isEmpty) return;
+        slots.assignToEmpty(slots.helm);
+        slots.helm = SlotType.Empty;
+        setStateChangingWeapons();
         break;
       case SlotTypeCategory.Pants:
         break;
@@ -150,6 +154,13 @@ class Player extends Character with Entity {
     if (slotType.isArmour){
       if (slots.armour.isEmpty){
         slots.armour = slotType;
+        return;
+      }
+    }
+
+    if (slotType.isHelm){
+      if (slots.helm.isEmpty){
+        slots.helm = slotType;
         return;
       }
     }
@@ -181,7 +192,7 @@ class Player extends Character with Entity {
         setStateChangingWeapons();
       }
 
-      if (slot.isArmour){
+      if (slot.isHelm){
         final previous = slots.helm;
         slots.helm = slot;
         slots.assignSlotAtIndex(index, previous);
