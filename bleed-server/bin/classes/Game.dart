@@ -206,10 +206,10 @@ abstract class Game {
       crates.add(Crate(x: crate.x, y: crate.y));
     }
 
-    for(Character character in scene.characters){
-      if (character.type == CharacterType.Zombie){
+    for(Character character in scene.characters) {
+      if (character.type == CharacterType.Zombie) {
         zombies.add(Npc(type: CharacterType.Zombie, x: character.x, y: character.y, health: 100, weapon: Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0)));
-      }else{
+      } else {
         npcs.add(InteractableNpc(
             name: "Bob",
             onInteractedWith: (Player player){},
@@ -228,8 +228,11 @@ abstract class Game {
 
     for (EnvironmentObject environmentObject in scene.environment) {
       if (environmentObject.radius > 0) {
-        colliders.add(Collider(environmentObject.x, environmentObject.y,
-            environmentObject.radius));
+        colliders.add(Collider(
+            environmentObject.x,
+            environmentObject.y,
+            environmentObject.radius)
+        );
       }
     }
 
@@ -240,7 +243,6 @@ abstract class Game {
             zombieSpawnPoints.add(getTilePosition(row, column));
             break;
           case Tile.RandomItemSpawn:
-            Vector2 tilePosition = getTilePosition(row, column);
             break;
           default:
             break;
@@ -255,9 +257,7 @@ const minutesPerHour = 60;
 const hoursPerDay = 24;
 const secondsPerDay = secondsPerMinute * minutesPerHour * hoursPerDay;
 const secondsPerFrame = 5;
-
 const secondsPerHour = secondsPerMinute * minutesPerHour;
-
 const characterFramesChange = 4;
 const characterMaxFrames = 99;
 

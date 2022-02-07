@@ -79,7 +79,9 @@ Player spawnPlayerInTown() {
       x: 0,
       y: 1750,
       team: teams.west,
-      type: CharacterType.Human);
+      type: CharacterType.Human,
+      health: 10,
+  );
 }
 
 void compileWholeGame(Game game) {
@@ -168,9 +170,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
     void joinGameMMO({required String playerName}) {
       clearBuffer();
-      Player player = spawnPlayerInTown();
+      final player = spawnPlayerInTown();
       player.name = playerName;
-
       player.orbs.emerald = 10;
       player.orbs.topaz = 10;
       player.orbs.ruby = 10;
@@ -469,7 +470,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          final GameType gameType = gameTypes[gameTypeIndex];
+          final gameType = gameTypes[gameTypeIndex];
 
           if (!freeToPlay.contains(gameType)){
             if (arguments.length < 3) {

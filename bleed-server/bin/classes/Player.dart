@@ -99,12 +99,13 @@ class Player extends Character with Entity {
     double x = 0,
     double y = 0,
     int team = noSquad,
-    CharacterType type = CharacterType.Human
+    CharacterType type = CharacterType.Human,
+    int health = 10,
   }) : super(
             type: type,
             x: x,
             y: y,
-            health: settings.health.player,
+            health: health,
             speed: settings.playerSpeed,
             team: team){
     global.onPlayerCreated(this);
