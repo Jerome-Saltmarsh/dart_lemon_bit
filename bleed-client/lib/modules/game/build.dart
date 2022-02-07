@@ -162,11 +162,11 @@ class GameBuild {
               right: 8,
               bottom: 8,
               child: _panelMagicStore()),
-      _highlightedSlotType(),
+      _panelHighlightedSlot(),
     ]);
   }
 
-  WatchBuilder<SlotType> _highlightedSlotType() {
+  WatchBuilder<SlotType> _panelHighlightedSlot() {
     return WatchBuilder(state.highLightSlotType, (SlotType slotType) {
       if (slotType == SlotType.Empty) return empty;
 
@@ -181,7 +181,8 @@ class GameBuild {
           color: colours.brownDark,
           child: Column(
             children: [
-              text(slotTypeNames[slotType] ?? slotType.name),
+              panel(child: text(slotTypeNames[slotType] ?? slotType.name)),
+              height8,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -199,6 +200,8 @@ class GameBuild {
                     )
                 ],
               ),
+              if (slotType.isWeapon)
+                margin(top: 8, child: text("Damage: ${slotType.damage}")),
 
             ],
           )

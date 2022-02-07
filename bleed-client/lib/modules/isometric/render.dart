@@ -599,7 +599,7 @@ class IsometricRender {
       CharacterType type,
       ) {
     return engine.state.mapDst(
-      scale: goldenRatio_0618,
+      scale: 0.7,
       // scale: 1.0,
       x: character.x,
       y: character.y,

@@ -59,4 +59,20 @@ extension SlotTypeProperties on SlotType {
   bool get isArmour => slotTypes.armour.contains(this);
   bool get isHelm => slotTypes.helms.contains(this);
   bool get isItem => slotTypes.items.contains(this);
+
+  int get damage {
+    return slotWeaponDamage[this] ?? 0;
+  }
 }
+
+const Map<SlotType, int> slotWeaponDamage = {
+  SlotType.Sword_Wooden: 1,
+  SlotType.Sword_Short: 2,
+  SlotType.Sword_Long: 5,
+  SlotType.Bow_Wooden: 1,
+  SlotType.Bow_Green: 2,
+  SlotType.Bow_Gold: 5,
+  SlotType.Staff_Wooden: 1,
+  SlotType.Staff_Blue: 2,
+  SlotType.Staff_Golden: 5,
+};
