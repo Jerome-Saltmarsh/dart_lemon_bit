@@ -25,15 +25,19 @@ class _Atlas {
   final Vector2 cloud = Vector2(2,  4044);
   final Vector2 cloudSize = Vector2(43, 29);
   final _Fish fish = _Fish();
-
   final _Plain plain = _Plain();
-
-
   final _Items items = _Items();
   final _Weapons weapons = _Weapons();
-
   final _BlueTorso blueTorso = _BlueTorso();
   final _Shadow shadow = _Shadow();
+  final headSteel = _HeadSteel();
+}
+
+class _HeadSteel {
+  final idle = Vector2(0, 5125);
+  final running = Vector2(0, 5190);
+  final striking = Vector2(0, 5255);
+  final changing = Vector2(0, 5320);
 }
 
 class _Plain {

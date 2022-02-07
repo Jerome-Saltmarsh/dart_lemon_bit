@@ -24,6 +24,7 @@ class _Icons {
   final bookRed = _image("book-red");
   final unknown = _image("unknown");
   final armourStandard = _image("armour-standard");
+  final helmetSteel = _image("helmet-steel");
   final _SwordIcons swords = _SwordIcons();
   final _BowIcons bows = _BowIcons();
 }

@@ -336,13 +336,13 @@ class GameBuild {
       children: [
         shopSlotRow(
             SlotType.Armour_Standard,
-            SlotType.Guards_Helmet,
-            SlotType.Guards_Helmet,
+            SlotType.Steel_Helmet,
+            SlotType.Empty,
         ),
         shopSlotRow(
-          SlotType.Guards_Helmet,
-          SlotType.Guards_Helmet,
-          SlotType.Guards_Helmet,
+          SlotType.Empty,
+          SlotType.Empty,
+          SlotType.Empty,
         ),
         shopSlotRow(
           SlotType.Empty,
@@ -362,9 +362,9 @@ class GameBuild {
           SlotType.Silver_Pendant,
         ),
         shopSlotRow(
-          SlotType.Guards_Helmet,
-          SlotType.Guards_Helmet,
-          SlotType.Guards_Helmet,
+          SlotType.Steel_Helmet,
+          SlotType.Steel_Helmet,
+          SlotType.Steel_Helmet,
         ),
         shopSlotRow(
           SlotType.Empty,

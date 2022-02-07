@@ -16,7 +16,7 @@ enum SlotType {
   Staff_Blue,
   Staff_Golden,
   Leather_Cap,
-  Guards_Helmet,
+  Steel_Helmet,
   Handgun,
   Shotgun,
   SniperRifle,
