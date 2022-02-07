@@ -117,22 +117,27 @@ class Player extends Character with Entity {
 
   void unequip(SlotTypeCategory slotTypeCategory){
     if (!slots.emptySlotAvailable) return;
+
     switch(slotTypeCategory){
       case SlotTypeCategory.Weapon:
         if (slots.weapon.isEmpty) return;
         slots.assignToEmpty(slots.weapon);
+        onUnequipped(slots.weapon);
         slots.weapon = SlotType.Empty;
         setStateChangingWeapons();
         break;
       case SlotTypeCategory.Armour:
-        if (slots.armour.isEmpty) return;
-        slots.assignToEmpty(slots.armour);
+        final previousArmour = slots.armour;
+        if (previousArmour.isEmpty) return;
+        slots.assignToEmpty(previousArmour);
+        onUnequipped(slots.armour);
         slots.armour = SlotType.Empty;
         setStateChangingWeapons();
         break;
       case SlotTypeCategory.Helm:
         if (slots.helm.isEmpty) return;
         slots.assignToEmpty(slots.helm);
+        onUnequipped(slots.helm);
         slots.helm = SlotType.Empty;
         setStateChangingWeapons();
         break;
@@ -148,6 +153,7 @@ class Player extends Character with Entity {
     if (slotType.isWeapon){
       if (slots.weapon.isEmpty){
         slots.weapon = slotType;
+        onEquipped(slotType);
         return;
       }
     }
@@ -155,6 +161,7 @@ class Player extends Character with Entity {
     if (slotType.isArmour){
       if (slots.armour.isEmpty){
         slots.armour = slotType;
+        onEquipped(slotType);
         return;
       }
     }
@@ -162,6 +169,7 @@ class Player extends Character with Entity {
     if (slotType.isHelm){
       if (slots.helm.isEmpty){
         slots.helm = slotType;
+        onEquipped(slotType);
         return;
       }
     }
@@ -187,10 +195,9 @@ class Player extends Character with Entity {
 
       if (slot.isArmour){
         final previousArmour = slots.armour;
-        maxHealth -= previousArmour.health;
         slots.armour = slot;
-        maxHealth += slot.health;
-        health = clampInt(health, 1, maxHealth);
+        onEquipped(slot);
+        onUnequipped(previousArmour);
         slots.assignSlotAtIndex(index, previousArmour);
         setStateChangingWeapons();
       }
@@ -342,5 +349,15 @@ extension PlayerProperties on Player {
       default:
         throw Exception("could not get ability at index $index");
     }
+  }
+
+  void onEquipped(SlotType slotType){
+    maxHealth += slotType.health;
+    health = clampInt(health + slotType.health, 1, maxHealth);
+  }
+
+  void onUnequipped(SlotType slotType){
+    maxHealth -= slotType.health;
+    health = clampInt(health - slotType.health, 1, maxHealth);
   }
 }
