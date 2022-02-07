@@ -480,7 +480,7 @@ extension GameFunctions on Game {
           // @on npc target within striking range
           characterFaceV2(npc, npc.target);
           setCharacterState(npc, CharacterState.Striking);
-          applyDamage(npc, npc.target, settings.damage.zombieStrike);
+          applyDamage(npc, npc.target, npc.damage);
           double speed = 0.2;
           dispatch(GameEventType.Zombie_Strike, npc.target.x, npc.target.y,
               velX(npc.aimAngle, speed), velY(npc.aimAngle, speed));
@@ -531,9 +531,6 @@ extension GameFunctions on Game {
 
     for (Player player in players) {
       if (player.dead) continue;
-      player.magic += player.magicRegen;
-      player.health += player.healthRegen;
-
       player.ability1.update();
       player.ability2.update();
       player.ability3.update();
