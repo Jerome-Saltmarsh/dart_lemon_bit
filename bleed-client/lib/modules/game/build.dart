@@ -177,11 +177,13 @@ class GameBuild {
 
       return Positioned(
         child: Container(
-          padding: padding8,
+          padding: padding16,
           color: colours.brownDark,
+          width: 200,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              panel(child: text(slotTypeNames[slotType] ?? slotType.name)),
+              Center(child: text(slotTypeNames[slotType] ?? slotType.name, color: colours.white80, bold: true, size: 20)),
               height8,
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -200,9 +202,17 @@ class GameBuild {
                     )
                 ],
               ),
-              if (slotType.isWeapon)
-                margin(top: 8, child: text("Damage: ${slotType.damage}")),
-
+              height8,
+              Column(
+                children: [
+                  if (slotType.damage > 0)
+                    _itemSlotStatRow("Damage", slotType.damage),
+                  if (slotType.health > 0)
+                    _itemSlotStatRow("Health", slotType.health),
+                  if (slotType.magic > 0)
+                    _itemSlotStatRow("Magic", slotType.magic),
+                ],
+              )
             ],
           )
         ),
@@ -234,10 +244,29 @@ class GameBuild {
         );
   }
 
-  Widget panel({required Widget child}){
+  Widget panel({required Widget child, Alignment? alignment, EdgeInsets? padding}){
     return Container(
         color: colours.brownLight,
-        child: child);
+        child: child,
+        alignment: alignment,
+        padding: padding,
+    );
+  }
+
+  Widget _itemSlotStatRow(String name, dynamic value) {
+    return margin(
+      top: 8,
+      child: panel(
+        padding: padding8,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            text(name),
+            text("+$value"),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _panelInventory() {
@@ -727,6 +756,4 @@ List<SlotType> mapStoreTabSlotTypes(StoreTab storeTab){
     case StoreTab.Items:
       return slotTypes.items;
   }
-
 }
-
