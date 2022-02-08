@@ -107,6 +107,7 @@
 [ ] Server Strike Damage Calculation
 [ ] FIX Particle blood renders as shell
 [ ] Arrow Capacity (Auto regenerates)
+[ ] FIX Mouse should be hand on attack
 [x] FIX Zombies stop rendering
 [x] Zombies don't attack
 [CORE]

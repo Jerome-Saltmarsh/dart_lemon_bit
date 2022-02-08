@@ -54,14 +54,14 @@ class GameUpdate {
   void _updateBleed(){
     if (state.status.value == GameStatus.Finished) return;
 
-    game.framesSinceEvent++;
     readPlayerInput();
-    isometric.update.updateParticles();
-    isometric.update.deadZombieBlood();
-    isometric.update.updateParticleEmitters();
+    isometric.update.call();
     if (!state.panningCamera && modules.game.state.player.alive.value) {
       cameraFollowPlayer();
     }
+
+    // if (state.player.tar)
+
     sendRequestUpdatePlayer();
   }
 

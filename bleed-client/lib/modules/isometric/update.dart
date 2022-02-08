@@ -15,7 +15,13 @@ class IsometricUpdate {
   final IsometricQueries queries;
   IsometricUpdate(this.state, this.queries);
 
-  void deadZombieBlood() {
+  void call(){
+    _deadZombieBlood();
+    _updateParticles();
+    _updateParticleEmitters();
+  }
+
+  void _deadZombieBlood() {
     if (core.state.timeline.frame % 2 == 0) return;
 
     for (int i = 0; i < game.totalZombies.value; i++) {
@@ -24,7 +30,7 @@ class IsometricUpdate {
     }
   }
 
-  void updateParticles() {
+  void _updateParticles() {
     for (Particle particle in isometric.state.particles) {
       if (!particle.active) continue;
       updateParticle(particle);
@@ -100,7 +106,7 @@ class IsometricUpdate {
     }
   }
 
-  void updateParticleEmitters() {
+  void _updateParticleEmitters() {
     for (ParticleEmitter emitter in state.particleEmitters) {
       if (emitter.next-- > 0) continue;
       emitter.next = emitter.rate;

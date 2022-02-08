@@ -329,7 +329,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           final mouseX = double.parse(arguments[4]);
           final mouseY = double.parse(arguments[5]);
 
-          if (!player.isHuman) {
+          if (!player.isSoldier) {
             Character? closestEnemy =
             game.getClosestEnemy(mouseX, mouseY, player.team);
 

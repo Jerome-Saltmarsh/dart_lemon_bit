@@ -7,14 +7,12 @@ import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/modules/website/enums.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_watch/watch.dart';
 
 final _Game game = _Game();
 
 class _Game {
-  int framesSinceEvent = 0;
   int lag = 0;
   final Map<int, bool> gameEvents = Map();
   final Watch<int> countDownFramesRemaining = Watch(0);
