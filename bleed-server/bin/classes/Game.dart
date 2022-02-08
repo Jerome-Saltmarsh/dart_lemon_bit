@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/abs.dart';
-import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/diff.dart';
 import 'package:lemon_math/diff_over.dart';
 import 'package:lemon_math/distance_between.dart';
@@ -1032,10 +1031,11 @@ extension GameFunctions on Game {
   void applyStrike(Character src, Character target, int damage) {
     if (target.dead) return;
     applyDamage(src, target, damage);
-    double a = radiansBetween2(src, target.x, target.y);
+    double angleBetweenSrcAndTarget = radiansBetween2(src, target.x, target.y);
 
     /// calculate force by dividing damage by target's max health
-    applyForce(target, a, 5);
+    final healthPercentage = damage / target.maxHealth;
+    applyForce(target, angleBetweenSrcAndTarget, healthPercentage);
     if (target is Npc == false) return;
 
     if (target.dead) {
