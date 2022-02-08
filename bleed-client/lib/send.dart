@@ -28,10 +28,6 @@ void sendRequestPing(){
   webSocket.sinkMessage(ClientRequest.Ping.index.toString());
 }
 
-void sendRequestRevive() {
-  webSocket.send('${ClientRequest.Revive.index} $session');
-}
-
 void sendRequestTeleport(double x, double y){
   webSocket.send('${ClientRequest.Teleport.index} $session ${x.toInt()} ${y.toInt()} ');
 }
@@ -106,23 +102,6 @@ class _SendRequestToServer {
   upgradeAbility(int index){
     print("sendRequest.upgradeAbility(index: $index)");
     sendClientRequest(ClientRequest.Upgrade_Ability, index);
-  }
-
-  spawnZombie(){
-    modifyGame(ModifyGame.Spawn_Zombie);
-  }
-
-  hourIncrease(){
-    modifyGame(ModifyGame.Hour_Increase);
-  }
-
-  hourDecrease(){
-    modifyGame(ModifyGame.Hour_Decrease);
-  }
-
-  modifyGame(ModifyGame request){
-    print("sendRequest.modifyGame($request)");
-    sendClientRequest(ClientRequest.Modify_Game, request.index);
   }
 }
 

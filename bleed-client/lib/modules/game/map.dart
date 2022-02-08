@@ -24,6 +24,8 @@ class GameMap {
       state.keyMap.hourForwards: actions.skipHour,
       state.keyMap.hourBackwards: actions.reverseHour,
       state.keyMap.teleport: actions.teleportToMouse,
+      state.keyMap.spawnZombie: actions.spawnZombie,
+      state.keyMap.respawn: actions.respawn,
       state.keyMap.equip1: (){
         if (state.player.isHuman){
           // actions.playerEquip(1);

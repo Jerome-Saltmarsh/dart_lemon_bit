@@ -1,6 +1,7 @@
 
 import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
+import 'package:bleed_client/common/Modify_Game.dart';
 import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/SlotTypeCategory.dart';
 import 'package:bleed_client/modules/game/state.dart';
@@ -166,4 +167,18 @@ class GameActions {
     state.compilePaths.value = !state.compilePaths.value;
     sendRequestSetCompilePaths(!state.compilePaths.value);
   }
+
+  spawnZombie(){
+    modifyGame(ModifyGame.Spawn_Zombie);
+  }
+
+  modifyGame(ModifyGame request){
+    print("sendRequest.modifyGame($request)");
+    sendClientRequest(ClientRequest.Modify_Game, request.index);
+  }
+
+  void respawn() {
+    webSocket.send('${ClientRequest.Revive.index} $session');
+  }
+
 }

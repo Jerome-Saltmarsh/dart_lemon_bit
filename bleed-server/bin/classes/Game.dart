@@ -1671,7 +1671,7 @@ extension GameFunctions on Game {
             applyStrike(character, attackTarget, character.damage);
             return;
           }
-          final hit = raycastHit(character, zombies);
+          final hit = raycastHit(character, zombies, range: character.slots.weapon.range);
           if (hit != null){
             applyStrike(character, hit, character.damage);
           }
@@ -1700,7 +1700,7 @@ extension GameFunctions on Game {
           Character? attackTarget = character.attackTarget;
 
           if (attackTarget == null) {
-            attackTarget = raycastHit(character, zombies);
+            attackTarget = raycastHit(character, zombies, range: 50);
           }
 
           if (attackTarget != null) {

@@ -82,7 +82,11 @@ extension SlotTypeProperties on SlotType {
   }
 
   int get magic {
-    return slotTypeHealth[this] ?? 0;
+    return slotTypeMagic[this] ?? 0;
+  }
+
+  double get range {
+    return slotTypeRange[this] ?? 0;
   }
 }
 
@@ -107,4 +111,10 @@ const Map<SlotType, int> slotTypeHealth = {
 const Map<SlotType, int> slotTypeMagic = {
   SlotType.Steel_Helmet: 5,
   SlotType.Armour_Standard: 10,
+};
+
+const Map<SlotType, double> slotTypeRange = {
+  SlotType.Sword_Wooden: 50,
+  SlotType.Sword_Short: 60,
+  SlotType.Sword_Long: 70,
 };

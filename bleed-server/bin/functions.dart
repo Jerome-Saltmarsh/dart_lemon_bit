@@ -7,7 +7,13 @@ import 'classes/Character.dart';
 import 'constants.dart';
 import 'maths.dart';
 
-Character? raycastHit(Character character, List<Character> characters, {double angleRange = pi}) {
+Character? raycastHit(
+    Character character,
+    List<Character> characters,
+    {
+      double angleRange = pi,
+      required double range,
+    }) {
   double targetDistance = 0;
   double radiusTop = character.y - character.attackRange;
   double radiusBottom = character.y + character.attackRange;
@@ -25,7 +31,7 @@ Character? raycastHit(Character character, List<Character> characters, {double a
     calculateAngleDifference(angle, character.aimAngle);
     if (angleDiff > angleRange) continue;
     final charDistance = distanceV2(char, character);
-    if (charDistance > character.attackRange) continue;
+    if (charDistance > range) continue;
     if (target == null || charDistance < targetDistance) {
       target = char;
       targetDistance = charDistance;

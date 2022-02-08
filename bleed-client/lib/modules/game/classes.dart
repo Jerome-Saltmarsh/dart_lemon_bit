@@ -38,6 +38,8 @@ class KeyMap {
   LogicalKeyboardKey hourForwards = LogicalKeyboardKey.arrowRight;
   LogicalKeyboardKey hourBackwards = LogicalKeyboardKey.arrowLeft;
   LogicalKeyboardKey teleport = LogicalKeyboardKey.keyG;
+  LogicalKeyboardKey spawnZombie = LogicalKeyboardKey.arrowUp;
+  LogicalKeyboardKey respawn = LogicalKeyboardKey.keyN;
   LogicalKeyboardKey casteFireball = LogicalKeyboardKey.keyZ;
   LogicalKeyboardKey cubeFace0 = LogicalKeyboardKey.keyO;
   LogicalKeyboardKey cubeFaceI = LogicalKeyboardKey.keyI;

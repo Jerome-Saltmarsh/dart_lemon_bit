@@ -591,7 +591,7 @@ class GameBuild {
                                     color: Colors.white,
                                     borderWidth: 1,
                                     fillColor: mouseOver ? black54 : black26),
-                                callback: sendRequestRevive,
+                                callback: actions.respawn,
                                 hint: "Click to respawn",
                               );
                             })
@@ -641,7 +641,7 @@ class GameBuild {
                 Row(mainAxisAlignment: axis.main.center, children: [
                   onPressed(
                       callback: () {
-                        sendRequestRevive();
+                        actions.respawn();
                         hud.state.observeMode = false;
                       },
                       child: border(
