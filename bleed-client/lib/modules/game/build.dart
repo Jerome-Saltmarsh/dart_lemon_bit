@@ -745,7 +745,9 @@ class GameBuild {
   }
 
   Widget toggleDebugMode(){
-    return button("Debug Mode", actions.enableDebugNpc);
+    return WatchBuilder(state.compilePaths, (bool compilePaths){
+      return button("Debug Mode: $compilePaths", actions.toggleDebugPaths);
+    });
   }
 }
 

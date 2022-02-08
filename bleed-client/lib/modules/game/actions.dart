@@ -161,8 +161,9 @@ class GameActions {
         throw Exception("Slot item index must between 1 and 6 inclusive. (received $index)");
   }
 
-  void enableDebugNpc() {
+  void toggleDebugPaths() {
     print("game.actions.enableDebugNpc()");
-    sendRequestSetCompilePaths(true);
+    state.compilePaths.value = !state.compilePaths.value;
+    sendRequestSetCompilePaths(!state.compilePaths.value);
   }
 }

@@ -271,7 +271,6 @@ class _Buttons {
   final Widget buttonGames = buildMenuButton("Games", website.actions.showDialogGames);
 
 
-  final Widget debug = button("Debug", toggleDebugMode);
   final Widget exit = button('Exit', core.actions.exitGame);
   final Widget edit = button("Edit", core.actions.toggleEditMode);
   final Widget editor = button("Editor", core.actions.openMapEditor);

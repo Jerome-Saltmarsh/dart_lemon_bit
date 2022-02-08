@@ -281,12 +281,6 @@ final playIcon = buildDecorationImage(
     color: colours.none,
     image: decorationImages.play, width: 60, height: 60, borderWidth: 0);
 
-
-void toggleDebugMode() {
-  game.settings.compilePaths = !game.settings.compilePaths;
-  sendRequestSetCompilePaths(game.settings.compilePaths);
-}
-
 Widget buildMenu() {
   return mouseOver(builder: (BuildContext context, bool mouseOver){
 
@@ -299,7 +293,6 @@ Widget buildMenu() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        if (core.state.debug) buttons.debug,
         if (core.state.debug) width8,
         if (core.state.debug) buttons.edit,
         buttons.exit,

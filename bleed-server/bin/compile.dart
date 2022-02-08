@@ -62,7 +62,6 @@ void compileGame(Game game) {
     _compileNpcDebug(buffer, game.npcs);
   }
 
-
   _write(buffer, ServerResponse.Scene_Shade_Max.index);
   _write(buffer, game.shadeMax);
 

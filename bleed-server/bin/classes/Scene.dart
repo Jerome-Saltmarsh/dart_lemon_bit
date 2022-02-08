@@ -315,10 +315,10 @@ extension SceneFunctions on Scene {
     if (projectedX < 0) return Tile.Boundary;
     final projectedY = x + y; // projectedToWorldY(x, y);
     if (projectedY < 0) return Tile.Boundary;
-    final column = projectedX ~/ _tileSize;
-    if (column >= columns) return Tile.Boundary;
     final row = projectedY ~/ _tileSize;
     if (row >= rows) return Tile.Boundary;
+    final column = projectedX ~/ _tileSize;
+    if (column >= columns) return Tile.Boundary;
     return this.tiles[row][column];
   }
 
@@ -328,9 +328,9 @@ extension SceneFunctions on Scene {
     final projectedY = x + y; // projectedToWorldY(x, y)
     if (projectedY < 0) return _boundary;
 
-    final row = projectedX ~/ _tileSize;
+    final row = projectedY ~/ _tileSize;
     if (row >= rows) return _boundary;
-    final column = projectedY ~/ _tileSize;
+    final column = projectedX ~/ _tileSize;
     if (column >= columns) return _boundary;
     return tileNodes[row][column];
   }

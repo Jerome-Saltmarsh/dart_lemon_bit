@@ -20,6 +20,7 @@ import 'enums.dart';
 typedef BasicWidgetBuilder = Widget Function();
 
 class GameState {
+  final Watch<bool> compilePaths = Watch(false);
   final Watch<StoreTab> storeTab = Watch(storeTabs[0]);
   final _Player player = _Player();
   final _Soldier soldier = _Soldier();
