@@ -202,9 +202,9 @@ extension SceneFunctions on Scene {
   Vector2 getCenterPosition() => getTilePosition(rows ~/ 2, columns ~/ 2);
 
   List<Vector2> findPath(double x1, double y1, double x2, double y2) {
-    TileNode startNode = tileNodeAt(x1, y1);
+    final startNode = tileNodeAt(x1, y1);
     if (!startNode.open) return _emptyPath;
-    TileNode endNode = tileNodeAt(x2, y2);
+    final endNode = tileNodeAt(x2, y2);
     if (!endNode.open) return _emptyPath;
     return findPathNodes(startNode, endNode);
   }
@@ -243,7 +243,7 @@ extension SceneFunctions on Scene {
         index = i;
       }
 
-      if (closest.tileNode == endNode) {
+      if (closest.travelled > 10 ||  closest.tileNode == endNode) {
         List<Vector2> nodes =
         List.filled(closest.travelled, _vector2Zero, growable: true);
         int index = closest.travelled - 1;

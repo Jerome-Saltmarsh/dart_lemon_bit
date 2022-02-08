@@ -1671,7 +1671,10 @@ extension GameFunctions on Game {
             applyStrike(character, attackTarget, character.damage);
             return;
           }
-          /// TODO raycast hit
+          final hit = raycastHit(character, zombies);
+          if (hit != null){
+            applyStrike(character, hit, character.damage);
+          }
           return;
         }
       }

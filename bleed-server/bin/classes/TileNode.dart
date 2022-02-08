@@ -1,6 +1,7 @@
 import 'package:lemon_math/Vector2.dart';
 
 class TileNodeVisit {
+  bool available = true;
   TileNodeVisit? previous;
   late int travelled;
   int remaining;
