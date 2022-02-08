@@ -32,6 +32,7 @@ import '../constants.dart';
 import '../constants/no_squad.dart';
 import '../enums.dart';
 import '../enums/npc_mode.dart';
+import '../functions.dart';
 import '../functions/applyForce.dart';
 import '../functions/withinRadius.dart';
 import '../games/world.dart';
@@ -1049,15 +1050,6 @@ extension GameFunctions on Game {
           velY(src.aimAngle, settings.knifeHitAcceleration * 2));
     }
   }
-
-  double calculateAngleDifference(double angleA, double angleB) {
-    double diff = abs(angleA - angleB).toDouble();
-    if (diff < pi) {
-      return diff;
-    }
-    return pi2 - diff;
-  }
-
   void updateCharacterPerforming(Character character){
     final ability = character.performing;
     if (ability == null) return;
@@ -1199,113 +1191,7 @@ extension GameFunctions on Game {
         updateCharacterPerforming(character);
         break;
       case CharacterState.Striking:
-        if (character is Player){
-          if (character.stateDuration == framePerformStrike) {
-            if (character.slots.weapon.isBow) {
-              spawnArrow(character, damage: character.slots.weapon.damage);
-              character.attackTarget = character.attackTarget;
-              return;
-            }
-            if (character.slots.weapon.isMelee) {
-              final attackTarget = character.attackTarget;
-              if (attackTarget != null) {
-                applyStrike(character, attackTarget, character.damage);
-                return;
-              }
-              /// TODO raycast hit
-              return;
-            }
-          }
-        }
-
-        switch (character.type) {
-          case CharacterType.Witch:
-            if (character.stateDuration == 3 &&
-                character.attackTarget != null) {
-              spawnBlueOrb(character);
-              character.attackTarget = null;
-            }
-            break;
-          case CharacterType.Archer:
-            if (character.stateDuration == 3 &&
-                character.attackTarget != null) {
-              spawnArrow(character, damage: character.damage);
-              character.attackTarget = null;
-            }
-            break;
-          case CharacterType.Swordsman:
-            if (character.stateDuration == 6) {
-              Character? attackTarget = character.attackTarget;
-
-              // otherwise do a raycast hit
-              if (attackTarget == null) {
-                Character? target = null;
-                double targetDistance = 0;
-                double radiusTop = character.y - character.attackRange;
-                double radiusBottom = character.y + character.attackRange;
-                double radiusLeft = character.x - character.attackRange;
-                double radiusRight = character.x + character.attackRange;
-                for (Npc zombie in zombies) {
-                  if (zombie.bottom < radiusTop) continue;
-                  if (zombie.top > radiusBottom) break;
-                  if (zombie.right < radiusLeft) continue;
-                  if (zombie.left > radiusRight) continue;
-                  double angle = angleBetween(
-                      character.x, character.y, zombie.x, zombie.y);
-                  double angleDiff =
-                      calculateAngleDifference(angle, character.aimAngle);
-                  if (angleDiff > pi) continue;
-                  double zombieDistance = distanceV2(zombie, character);
-                  if (zombieDistance > character.attackRange) continue;
-                  if (target == null || zombieDistance < targetDistance) {
-                    target = zombie;
-                    targetDistance = zombieDistance;
-                  }
-                }
-                attackTarget = target;
-              }
-
-              if (attackTarget != null) {
-                applyStrike(character, attackTarget, character.damage);
-              }
-            }
-            break;
-          default:
-            break;
-        }
-        break;
-      case CharacterState.Running:
-        double runRatio = character.speed * (1.0 + goldenRatioInverse);
-        switch (character.direction) {
-          case Direction.Up:
-            character.y -= runRatio;
-            break;
-          case Direction.UpRight:
-            character.x += velX(piQuarter, runRatio);
-            character.y += velY(piQuarter, runRatio);
-            break;
-          case Direction.Right:
-            character.x += runRatio;
-            break;
-          case Direction.DownRight:
-            character.x += velX(piQuarter, runRatio);
-            character.y -= velY(piQuarter, runRatio);
-            break;
-          case Direction.Down:
-            character.y += runRatio;
-            break;
-          case Direction.DownLeft:
-            character.x -= velX(piQuarter, runRatio);
-            character.y -= velY(piQuarter, runRatio);
-            break;
-          case Direction.Left:
-            character.x -= runRatio;
-            break;
-          case Direction.UpLeft:
-            character.x -= velX(piQuarter, runRatio);
-            character.y += velY(piQuarter, runRatio);
-            break;
-        }
+        updateCharacterStriking(character);
         break;
     }
 
@@ -1770,7 +1656,61 @@ extension GameFunctions on Game {
       items.removeAt(i);
     }
   }
+
+  void updateCharacterStriking(Character character) {
+    if (character is Player){
+      if (character.stateDuration == framePerformStrike) {
+        if (character.slots.weapon.isBow) {
+          spawnArrow(character, damage: character.slots.weapon.damage);
+          character.attackTarget = character.attackTarget;
+          return;
+        }
+        if (character.slots.weapon.isMelee) {
+          final attackTarget = character.attackTarget;
+          if (attackTarget != null) {
+            applyStrike(character, attackTarget, character.damage);
+            return;
+          }
+          /// TODO raycast hit
+          return;
+        }
+      }
+    }
+
+    switch (character.type) {
+      case CharacterType.Witch:
+        if (character.stateDuration == 3 &&
+            character.attackTarget != null) {
+          spawnBlueOrb(character);
+          character.attackTarget = null;
+        }
+        break;
+      case CharacterType.Archer:
+        if (character.stateDuration == 3 &&
+            character.attackTarget != null) {
+          spawnArrow(character, damage: character.damage);
+          character.attackTarget = null;
+        }
+        break;
+      case CharacterType.Swordsman:
+        if (character.stateDuration == 6) {
+          Character? attackTarget = character.attackTarget;
+
+          if (attackTarget == null) {
+            attackTarget = raycastHit(character, zombies);
+          }
+
+          if (attackTarget != null) {
+            applyStrike(character, attackTarget, character.damage);
+          }
+        }
+        break;
+      default:
+        break;
+    }
+  }
 }
+
 
 
 void updateCharacterRunning(Character character) {
@@ -2054,4 +1994,6 @@ class CustomGame extends Game {
 class ZombieSpawnPointsEmptyException implements Exception {
 
 }
+
+
 
