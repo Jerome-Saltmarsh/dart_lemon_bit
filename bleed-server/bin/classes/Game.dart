@@ -906,53 +906,55 @@ extension GameFunctions on Game {
       }
     }
 
+    if (player.lastUpdateFrame > 5) {
+      setCharacterStateIdle(player);
+    }
+
     switch (player.state) {
       case CharacterState.Running:
-        if (player.lastUpdateFrame > 5) {
-          setCharacterStateIdle(player);
-        }
+
         break;
-      case CharacterState.Striking:
-        // @on player striking
-        // @on character striking
-        if (player.type != CharacterType.Human) return;
-
-        if (player.stateDuration == 10) {
-          dispatch(GameEventType.Knife_Strike, player.x, player.y);
-        }
-
-        if (player.stateDuration == 8) {
-          double frontX =
-              player.x + velX(player.aimAngle, settings.range.knife);
-          double frontY =
-              player.y + velY(player.aimAngle, settings.range.knife);
-
-          for (Npc npc in zombies) {
-            // @on zombie struck by player
-            if (!npc.alive) continue;
-            if (!npc.active) continue;
-            if (diffOver(npc.x, frontX, radius.character)) continue;
-            if (diffOver(npc.y, frontY, radius.character)) continue;
-            npc.xv += velX(player.aimAngle, settings.knifeHitAcceleration);
-            npc.yv += velY(player.aimAngle, settings.knifeHitAcceleration);
-            applyDamage(player, npc, settings.damage.knife);
-            double a = angleBetween(player.x, player.y, npc.x, npc.y);
-            applyForce(npc, a, 5);
-
-            if (npc.dead) {
-              dispatch(GameEventType.Zombie_killed_Explosion, npc.x, npc.y,
-                  npc.xv, npc.yv);
-            } else {
-              dispatch(
-                  GameEventType.Zombie_Hit,
-                  npc.x,
-                  npc.y,
-                  velX(player.aimAngle, settings.knifeHitAcceleration * 2),
-                  velY(player.aimAngle, settings.knifeHitAcceleration * 2));
-            }
-            return;
-          }
-        }
+      // case CharacterState.Striking:
+      //   // @on player striking
+      //   // @on character striking
+      //   if (player.type != CharacterType.Human) return;
+      //
+      //   if (player.stateDuration == 10) {
+      //     dispatch(GameEventType.Knife_Strike, player.x, player.y);
+      //   }
+      //
+      //   if (player.stateDuration == 8) {
+      //     double frontX =
+      //         player.x + velX(player.aimAngle, settings.range.knife);
+      //     double frontY =
+      //         player.y + velY(player.aimAngle, settings.range.knife);
+      //
+      //     for (Npc npc in zombies) {
+      //       // @on zombie struck by player
+      //       if (!npc.alive) continue;
+      //       if (!npc.active) continue;
+      //       if (diffOver(npc.x, frontX, radius.character)) continue;
+      //       if (diffOver(npc.y, frontY, radius.character)) continue;
+      //       npc.xv += velX(player.aimAngle, settings.knifeHitAcceleration);
+      //       npc.yv += velY(player.aimAngle, settings.knifeHitAcceleration);
+      //       applyDamage(player, npc, settings.damage.knife);
+      //       double a = angleBetween(player.x, player.y, npc.x, npc.y);
+      //       applyForce(npc, a, 5);
+      //
+      //       if (npc.dead) {
+      //         dispatch(GameEventType.Zombie_killed_Explosion, npc.x, npc.y,
+      //             npc.xv, npc.yv);
+      //       } else {
+      //         dispatch(
+      //             GameEventType.Zombie_Hit,
+      //             npc.x,
+      //             npc.y,
+      //             velX(player.aimAngle, settings.knifeHitAcceleration * 2),
+      //             velY(player.aimAngle, settings.knifeHitAcceleration * 2));
+      //       }
+      //       return;
+      //     }
+      //   }
     }
   }
 
