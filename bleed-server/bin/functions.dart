@@ -8,9 +8,10 @@ import 'constants.dart';
 import 'maths.dart';
 
 Character? raycastHit(
-    Character character,
-    List<Character> characters,
     {
+    required Character character,
+    required List<Character> characters,
+
       double angleRange = pi,
       required double range,
     }) {

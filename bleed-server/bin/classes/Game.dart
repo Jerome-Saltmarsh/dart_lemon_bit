@@ -1671,8 +1671,12 @@ extension GameFunctions on Game {
             applyStrike(character, attackTarget, character.damage);
             return;
           }
-          final hit = raycastHit(character, zombies, range: character.slots.weapon.range);
-          if (hit != null){
+          final hit = raycastHit(
+              character: character,
+              characters: zombies,
+              range: character.slots.weapon.range
+          );
+          if (hit != null) {
             applyStrike(character, hit, character.damage);
           }
           return;
@@ -1697,12 +1701,10 @@ extension GameFunctions on Game {
         break;
       case CharacterType.Swordsman:
         if (character.stateDuration == 6) {
-          Character? attackTarget = character.attackTarget;
-
+          final attackTarget = character.attackTarget;
           if (attackTarget == null) {
-            attackTarget = raycastHit(character, zombies, range: 50);
-          }
 
+          }
           if (attackTarget != null) {
             applyStrike(character, attackTarget, character.damage);
           }
