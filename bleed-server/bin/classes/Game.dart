@@ -115,7 +115,7 @@ abstract class Game {
   String compiled = "";
   String compiledTiles = "";
   String compiledEnvironmentObjects = "";
-  bool compilePaths = true;
+  bool compilePaths = false;
   Map<int, StringBuffer> compiledTeamText = {};
   int countDownFramesRemaining = framesPerSecond * 3;
 
@@ -954,7 +954,6 @@ extension GameFunctions on Game {
           }
         }
     }
-    player.currentTile = scene.tileAt(player.x, player.y);
   }
 
   void _updateGrenades() {

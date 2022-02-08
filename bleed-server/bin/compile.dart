@@ -222,7 +222,6 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.health);
   _write(buffer, player.maxHealth);
   _write(buffer, player.state.index);
-  _write(buffer, player.currentTile.index);
   _write(buffer, player.experience);
   _write(buffer, player.level);
   _write(buffer, player.abilityPoints);

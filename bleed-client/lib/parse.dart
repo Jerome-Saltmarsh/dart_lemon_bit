@@ -426,7 +426,6 @@ void _parsePlayer() {
   player.health.value = consumeDouble();
   player.maxHealth = consumeDouble();
   player.state.value = _consumeCharacterState();
-  player.tile = _consumeTile();
   player.experience.value = consumeInt();
   player.level.value = consumeInt();
   player.skillPoints.value = consumeInt();

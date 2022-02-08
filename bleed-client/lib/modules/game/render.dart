@@ -73,11 +73,11 @@ class GameRender {
     drawItems();
     // drawCrates();
 
-    // if (state.compilePaths.value) {
+    if (state.compilePaths.value) {
       // drawDebugEnvironmentObjects();
       drawPaths();
       drawDebugNpcs(game.npcDebug);
-    // }
+    }
 
     if (game.type.value == GameType.BATTLE_ROYAL){
       drawRoyalPerimeter();
