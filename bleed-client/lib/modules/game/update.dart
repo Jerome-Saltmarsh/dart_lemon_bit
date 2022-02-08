@@ -58,23 +58,11 @@ class GameUpdate {
     readPlayerInput();
     isometric.update.updateParticles();
     isometric.update.deadZombieBlood();
+    isometric.update.updateParticleEmitters();
     if (!state.panningCamera && modules.game.state.player.alive.value) {
       cameraFollowPlayer();
     }
-    updateParticleEmitters();
     sendRequestUpdatePlayer();
-  }
-
-  void updateParticleEmitters() {
-    for (ParticleEmitter emitter in game.particleEmitters) {
-      if (emitter.next-- > 0) continue;
-      emitter.next = emitter.rate;
-      final particle = isometric.instances.getAvailableParticle();
-      particle.active = true;
-      particle.x = emitter.x;
-      particle.y = emitter.y;
-      emitter.emit(particle);
-    }
   }
 
   void cameraFollowPlayer() {

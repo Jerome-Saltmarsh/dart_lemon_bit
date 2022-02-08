@@ -52,7 +52,6 @@ class _Game {
   List<Projectile> projectiles = [];
   List<Vector2> bulletHoles = [];
   int bulletHoleIndex = 0;
-  List<ParticleEmitter> particleEmitters = [];
   List<double> grenades = [];
   int id = -1;
   int totalProjectiles = 0;

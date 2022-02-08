@@ -106,6 +106,7 @@
 [ ] Crafting System
 [ ] Server Strike Damage Calculation
 [ ] FIX Particle blood renders as shell
+[ ] Arrow Capacity (Auto regenerates)
 [x] FIX Zombies stop rendering
 [x] Zombies don't attack
 [CORE]

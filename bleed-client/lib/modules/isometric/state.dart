@@ -5,6 +5,7 @@ import 'dart:ui' as ui;
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/Particle.dart';
+import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_watch/watch.dart';
 
 class IsometricState {
+  List<ParticleEmitter> particleEmitters = [];
   late ui.Image image;
   List<List<Vector2>> paths = [];
   List<FloatingText> floatingText = [];

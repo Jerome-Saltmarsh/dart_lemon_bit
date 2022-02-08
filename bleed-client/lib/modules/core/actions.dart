@@ -188,7 +188,6 @@ class CoreActions {
     game.totalProjectiles = 0;
     game.grenades.clear();
     game.collectables.clear();
-    game.particleEmitters.clear();
 
     for (Vector2 bullet in game.bulletHoles) {
       bullet.x = 0;

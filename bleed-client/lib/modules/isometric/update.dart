@@ -1,16 +1,19 @@
 
 import 'package:bleed_client/classes/Particle.dart';
+import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/functions.dart';
 import 'package:bleed_client/functions/spawners/spawnBlood.dart';
 import 'package:bleed_client/modules/isometric/enums.dart';
 import 'package:bleed_client/modules/isometric/queries.dart';
+import 'package:bleed_client/modules/isometric/state.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
 
 class IsometricUpdate {
 
+  final IsometricState state;
   final IsometricQueries queries;
-  IsometricUpdate(this.queries);
+  IsometricUpdate(this.state, this.queries);
 
   void deadZombieBlood() {
     if (core.state.timeline.frame % 2 == 0) return;
@@ -94,6 +97,18 @@ class IsometricUpdate {
     }
     if (particle.duration-- < 0) {
       particle.active = false;
+    }
+  }
+
+  void updateParticleEmitters() {
+    for (ParticleEmitter emitter in state.particleEmitters) {
+      if (emitter.next-- > 0) continue;
+      emitter.next = emitter.rate;
+      final particle = isometric.instances.getAvailableParticle();
+      particle.active = true;
+      particle.x = emitter.x;
+      particle.y = emitter.y;
+      emitter.emit(particle);
     }
   }
 }

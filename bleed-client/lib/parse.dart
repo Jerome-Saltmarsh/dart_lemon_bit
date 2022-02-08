@@ -202,7 +202,7 @@ void parseState() {
         break;
 
       case ServerResponse.EnvironmentObjects:
-        game.particleEmitters.clear();
+        isometric.state.particleEmitters.clear();
         _parseEnvironmentObjects();
         break;
 
@@ -386,7 +386,7 @@ void _parseEnvironmentObjects() {
 }
 
 void addParticleEmitter(ParticleEmitter value) {
-  game.particleEmitters.add(value);
+  isometric.state.particleEmitters.add(value);
 }
 
 double environmentObjectY(EnvironmentObject environmentObject) {

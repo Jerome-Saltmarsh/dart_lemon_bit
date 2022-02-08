@@ -109,7 +109,7 @@ class EditorActions with EditorScope {
       isometric.state.tiles.add(columnTiles);
     }
     game.crates.clear();
-    game.particleEmitters.clear();
+    isometric.state.particleEmitters.clear();
     isometric.state.environmentObjects.clear();
     game.collectables.clear();
     game.itemsTotal = 0;
