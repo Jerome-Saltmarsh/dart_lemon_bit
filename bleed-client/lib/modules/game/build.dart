@@ -392,7 +392,7 @@ class GameBuild {
           SlotType.Silver_Pendant,
         ),
         shopSlotRow(
-          SlotType.Empty,
+          SlotType.Potion_Red,
           SlotType.Empty,
           SlotType.Empty,
         ),

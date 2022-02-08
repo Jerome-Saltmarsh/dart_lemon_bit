@@ -28,6 +28,11 @@ class _Icons {
   final empty = _image("slot-empty");
   final _SwordIcons swords = _SwordIcons();
   final _BowIcons bows = _BowIcons();
+  final _PotionIcons potions = _PotionIcons();
+}
+
+class _PotionIcons {
+  final red = _image('potion-red');
 }
 
 class _SwordIcons {

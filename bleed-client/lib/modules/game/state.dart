@@ -64,6 +64,7 @@ class GameState {
     SlotType.Spell_Tome_Fireball : resources.icons.bookRed,
     SlotType.Armour_Standard : resources.icons.armourStandard,
     SlotType.Steel_Helmet : resources.icons.helmetSteel,
+    SlotType.Potion_Red : resources.icons.potions.red,
   };
 }
 

@@ -21,6 +21,7 @@ enum SlotType {
   AssaultRifle,
   Spell_Tome_Fireball,
   Armour_Standard,
+  Potion_Red,
 }
 
 final List<SlotType> slotTypesAll = SlotType.values;

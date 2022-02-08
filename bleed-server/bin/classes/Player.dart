@@ -218,6 +218,12 @@ class Player extends Character with Entity {
             mode: AbilityMode.Directed);
         return;
       }
+
+      if (slot == SlotType.Potion_Red) {
+        health = maxHealth;
+        slots.assignSlotAtIndex(index, SlotType.Empty);
+        setStateChangingWeapons();
+      }
   }
 }
 
