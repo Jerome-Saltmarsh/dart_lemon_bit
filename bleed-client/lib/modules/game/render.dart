@@ -10,6 +10,7 @@ import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
@@ -82,7 +83,14 @@ class GameRender {
     if (game.type.value == GameType.BATTLE_ROYAL){
       drawRoyalPerimeter();
     }
-
+    engine.draw.drawCircleOutline(
+      radius: state.player.slots.weapon.value.range,
+      x: state.player.x,
+      y: state.player.y,
+      color: colours.white80,
+      sides: 10
+    );
+    engine.actions.setPaintColorWhite();
     _drawFloatingTexts();
     _drawPlayerNames();
     drawPlayerText();

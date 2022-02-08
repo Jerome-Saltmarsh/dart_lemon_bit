@@ -114,7 +114,8 @@ const Map<SlotType, int> slotTypeMagic = {
 };
 
 const Map<SlotType, double> slotTypeRange = {
-  SlotType.Sword_Wooden: 50,
+  SlotType.Empty: 25,
+  SlotType.Sword_Wooden: 35,
   SlotType.Sword_Short: 60,
   SlotType.Sword_Long: 70,
 };
