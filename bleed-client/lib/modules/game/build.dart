@@ -155,9 +155,7 @@ class GameBuild {
           Positioned(
               left: 8,
               bottom: 8,
-              child: WatchBuilder(state.player.ability, (AbilityType abilityType){
-                return text(abilityType.name);
-              })),
+              child: toggleDebugMode()),
           Positioned(
               right: 8,
               bottom: 8,
@@ -744,6 +742,10 @@ class GameBuild {
       return state.slotTypeImages[value]!;
     }
     return resources.icons.unknown;
+  }
+
+  Widget toggleDebugMode(){
+    return button("Debug Mode", actions.enableDebugNpc);
   }
 }
 

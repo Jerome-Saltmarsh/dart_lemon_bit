@@ -99,7 +99,7 @@ class Scene {
     }
 
     for (int row = 0; row < rows; row++) {
-      List<TileNode> nodeRow = [];
+      final List<TileNode> nodeRow = [];
       for (int column = 0; column < columns; column++) {
         final node = TileNode(isWalkable(tiles[row][column]));
         node.y = column;

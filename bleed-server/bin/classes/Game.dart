@@ -95,9 +95,9 @@ abstract class Game {
   }
 
 
-  /// Used to constrain the brightness of a level
-  /// For example a cave which is very dark even during day time
-  /// or a dark forest
+  final List<Collider> colliders = [];
+  final List<Item> items = [];
+  final List<Vector2> zombieSpawnPoints = [];
   int shadeMax = Shade.Bright;
   int duration = 0;
   int teamSize = 1;
@@ -111,20 +111,13 @@ abstract class Game {
   List<GameEvent> gameEvents = [];
   List<Crate> crates = [];
   bool cratesDirty = false;
-
-  final List<Collider> colliders = [];
-  final List<Item> items = [];
   int spawnPointIndex = 0;
-  final List<Vector2> zombieSpawnPoints = [];
   String compiled = "";
   String compiledTiles = "";
   String compiledEnvironmentObjects = "";
-  bool compilePaths = false;
-
+  bool compilePaths = true;
   Map<int, StringBuffer> compiledTeamText = {};
-
   int countDownFramesRemaining = framesPerSecond * 3;
-
 
   int getTime();
 

@@ -160,4 +160,9 @@ class GameActions {
       if (index <= 0 || index > 6)
         throw Exception("Slot item index must between 1 and 6 inclusive. (received $index)");
   }
+
+  void enableDebugNpc() {
+    print("game.actions.enableDebugNpc()");
+    sendRequestSetCompilePaths(true);
+  }
 }

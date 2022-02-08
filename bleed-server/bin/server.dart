@@ -980,19 +980,18 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           return;
 
         case ClientRequest.SetCompilePaths:
-          if (arguments.length != 2) {
-            errorArgsExpected(2, arguments);
+          if (arguments.length != 3) {
+            errorArgsExpected(3, arguments);
             return;
           }
 
-          Player? player = findPlayerByUuid(arguments[1]);
+          final player = findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;
           }
 
-          // type gameId playerId playerUuid value
-          int value = int.parse(arguments[4]);
+          final value = int.parse(arguments[2]);
           player.game.compilePaths = value == 1;
           print("game.compilePaths = ${player.game.compilePaths}");
           break;

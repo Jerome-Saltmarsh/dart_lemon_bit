@@ -1,1 +1,1 @@
-const targetFPS = 60;
+const targetFPS = 30;

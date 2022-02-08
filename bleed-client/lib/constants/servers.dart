@@ -22,15 +22,15 @@ void _connectToServer(String uri){
   webSocket.connect(uri: uri, message: ClientRequest.Ping.index.toString());
 }
 
-final List<Region> serverTypes = Region.values;
+const List<Region> serverTypes = Region.values;
 
 final List<Region> selectableServerTypes =
     serverTypes.where((type) => (isLocalHost || type != Region.LocalHost)
     ).toList();
 
-const String _default = "https://gamestream-ws-sydney-4-osbmaezptq-ts.a.run.app";
-const String sydneyMoba = "https://gamestream-ws-sydney-4-osbmaezptq-ts.a.run.app";
-const String sydneyMMO = "https://gamestream-ws-sydney-4-osbmaezptq-ts.a.run.app";
+const String _default = "https://gamestream-ws-10-osbmaezptq-ts.a.run.app";
+const String sydneyMoba = "https://gamestream-ws-10-osbmaezptq-ts.a.run.app";
+const String sydneyMMO = "https://gamestream-ws-10-osbmaezptq-ts.a.run.app";
 
 String parseHttpToWebSocket(String url) {
   return url.replaceAll("https", "wss") + "/:8080";
