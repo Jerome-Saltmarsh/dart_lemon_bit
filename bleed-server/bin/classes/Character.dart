@@ -14,6 +14,7 @@ import 'Weapon.dart';
 
 const _notFound = -1;
 
+
 class Character extends GameObject implements HasSquad {
   late CharacterType type;
   Ability? ability = null;

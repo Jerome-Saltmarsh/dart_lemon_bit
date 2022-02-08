@@ -1,7 +1,6 @@
 import 'package:bleed_server/CubeGame.dart';
 import 'package:bleed_server/system.dart';
 import 'package:bleed_server/user-service-client/firestoreService.dart';
-import 'package:http/http.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
