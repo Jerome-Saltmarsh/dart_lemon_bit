@@ -22,7 +22,11 @@ import 'package:lemon_watch/watch_builder.dart';
 import '../styles.dart';
 import 'compose/hudUI.dart';
 
-final closeDialogButton = button("close", setDialogGames, borderColor: colours.none);
+final closeDialogButton = button(
+    "close",
+    modules.website.actions.showDialogGames,
+    borderColor: colours.none
+);
 
 final _Widgets widgets = _Widgets();
 final _Buttons buttons = _Buttons();

@@ -3,7 +3,6 @@ import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/Explosion.dart';
 import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
-import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/GameType.dart';
@@ -13,14 +12,6 @@ import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_watch/watch.dart';
 
 final _Game game = _Game();
-
-void setDialog(WebsiteDialog value){
-  website.state.dialog.value = value;
-}
-
-void setDialogGames(){
-  setDialog(WebsiteDialog.Games);
-}
 
 class _Game {
   int framesSinceEvent = 0;

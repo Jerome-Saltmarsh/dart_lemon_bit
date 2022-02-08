@@ -272,7 +272,7 @@ Widget buildDialogChangeRegion() {
               ...selectableRegions.map((region) {
                 return button(enumString(region), () {
                   core.state.region.value = region;
-                  setDialogGames();
+                  modules.website.actions.showDialogGames();
                 },
                     fillColor: region == core.state.region.value
                         ? colours.black20
