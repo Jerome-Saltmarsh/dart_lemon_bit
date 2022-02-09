@@ -14,7 +14,6 @@ enum ClientRequest {
   SkipHour,
   ReverseHour,
   Teleport,
-  CasteFireball,
   AcquireAbility,
   SelectCharacterType,
   PerformAbility,

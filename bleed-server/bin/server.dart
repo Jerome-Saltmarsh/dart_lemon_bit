@@ -534,23 +534,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.game.revive(player);
           return;
 
-        case ClientRequest.CasteFireball:
-          Player? player = global.findPlayerByUuid(arguments[1]);
-          if (player == null) {
-            errorPlayerNotFound();
-            return;
-          }
-          if (player.dead) {
-            errorPlayerDead();
-            return;
-          }
-          if (player.busy) {
-            return;
-          }
-          player.aimAngle = double.parse(arguments[2]);
-          player.game.spawnFireball(player);
-          return;
-
         case ClientRequest.SelectCharacterType:
           if (arguments.length != 3) {
             errorArgsExpected(3, arguments);
