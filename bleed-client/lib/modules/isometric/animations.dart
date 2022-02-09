@@ -24,7 +24,7 @@ class _Man {
 }
 
 class _Bow {
-  final List<int> firing = [0, 0, 1, 1];
+  final List<int> firing = [0, 0, 0, 0];
 }
 
 class _Witch {

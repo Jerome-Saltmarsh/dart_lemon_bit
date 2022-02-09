@@ -743,7 +743,7 @@ void _consumeHuman(Character character) {
   character.health = _consumePercentage();
   character.magic = _consumePercentage();
   character.weapon = _consumeWeaponType();
-  character.equippedSlotType = consumeSlotType();
+  character.equippedWeapon = consumeSlotType();
   character.equippedArmour = consumeSlotType();
   character.equippedHead = consumeSlotType();
 }

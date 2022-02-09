@@ -11,7 +11,7 @@ class Character extends Vector2 {
   Direction direction;
   int frame;
   WeaponType weapon;
-  SlotType equippedSlotType = SlotType.Empty;
+  SlotType equippedWeapon = SlotType.Empty;
   SlotType equippedArmour = SlotType.Empty;
   SlotType equippedHead = SlotType.Empty;
   int team;

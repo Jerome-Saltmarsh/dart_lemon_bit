@@ -230,7 +230,7 @@ class IsometricRender {
       mapCharacterSrc(
         type: character.type,
         state: character.state,
-        slotType: character.equippedSlotType,
+        slotType: character.equippedWeapon,
         direction: character.direction,
         frame: character.frame,
         shade: shade,
@@ -322,7 +322,7 @@ class IsometricRender {
           case SlotType.Armour_Standard:
             srcAnimate(
               atlas: atlas.blueTorso.striking,
-              animation: animations.human.strikingSword,
+              animation: character.equippedWeapon.isBow ? animations.human.firingBow : animations.human.strikingSword,
               direction: character.direction,
               frame: character.frame,
               framesPerDirection: 2,
@@ -331,7 +331,7 @@ class IsometricRender {
           default:
             srcAnimate(
               atlas: atlas.plain.torso.striking,
-              animation: animations.human.strikingSword,
+              animation: character.equippedWeapon.isBow ? animations.human.firingBow : animations.human.strikingSword,
               direction: character.direction,
               frame: character.frame,
               framesPerDirection: 2,
@@ -410,7 +410,7 @@ class IsometricRender {
         if (character.equippedHead == SlotType.Steel_Helmet){
           srcAnimate(
             atlas: atlas.headSteel.striking,
-            animation: animations.human.strikingSword,
+            animation: character.equippedWeapon.isBow ? animations.human.firingBow : animations.human.strikingSword,
             direction: character.direction,
             frame: character.frame,
             framesPerDirection: 2,
@@ -418,7 +418,7 @@ class IsometricRender {
         }else{
           srcAnimate(
             atlas: atlas.plain.head.striking,
-            animation: animations.human.strikingSword,
+            animation: character.equippedWeapon.isBow ? animations.human.firingBow : animations.human.strikingSword,
             direction: character.direction,
             frame: character.frame,
             framesPerDirection: 2,
@@ -472,9 +472,9 @@ class IsometricRender {
 
   void _renderCharacterWeapon(Character character) {
 
-    if (character.equippedSlotType == SlotType.Empty) return;
+    if (character.equippedWeapon == SlotType.Empty) return;
 
-    if (character.equippedSlotType == SlotType.Sword_Wooden){
+    if (character.equippedWeapon == SlotType.Sword_Wooden){
 
       if (character.state == CharacterState.Striking){
         srcAnimate(
@@ -504,7 +504,7 @@ class IsometricRender {
         engine.actions.renderAtlas();
       }
     }
-    if (character.equippedSlotType == SlotType.Sword_Short){
+    if (character.equippedWeapon == SlotType.Sword_Short){
       if (character.state == CharacterState.Striking){
         srcAnimate(
           atlas: atlas.weapons.swordSteel.striking,
@@ -535,36 +535,38 @@ class IsometricRender {
       }
     }
 
-    if (character.equippedSlotType == SlotType.Bow_Wooden){
+    if (character.equippedWeapon.isBow){
 
-      if (character.state == CharacterState.Idle){
-        srcSingle(
-            atlas: atlas.weapons.bowWooden.idle,
-            direction: character.direction
-        );
-        mapCharacterDst(character, character.type);
-        engine.actions.renderAtlas();
-      }
+      switch(character.state){
+        case CharacterState.Striking:
+          srcAnimate(
+              atlas: atlas.weapons.bowWooden.firing,
+              direction: character.direction,
+              frame: character.frame,
+              animation: animations.bow.firing, framesPerDirection: 2
+          );
+          mapCharacterDst(character, character.type);
+          engine.actions.renderAtlas();
+          break;
 
-      if (character.state == CharacterState.Striking){
-        srcAnimate(
-            atlas: atlas.weapons.bowWooden.firing,
-            direction: character.direction,
-            frame: character.frame,
-            animation: animations.bow.firing, framesPerDirection: 2
-        );
-        mapCharacterDst(character, character.type);
-        engine.actions.renderAtlas();
-      }
+        case CharacterState.Running:
+          srcLoop(
+              atlas: atlas.weapons.bowWooden.running,
+              direction: character.direction,
+              frame: character.frame
+          );
+          mapCharacterDst(character, character.type);
+          engine.actions.renderAtlas();
+          break;
 
-      if (character.state == CharacterState.Running){
-        srcLoop(
-            atlas: atlas.weapons.bowWooden.running,
-            direction: character.direction,
-            frame: character.frame
-        );
-        mapCharacterDst(character, character.type);
-        engine.actions.renderAtlas();
+        default:
+          srcSingle(
+              atlas: atlas.weapons.bowWooden.idle,
+              direction: character.direction
+          );
+          mapCharacterDst(character, character.type);
+          engine.actions.renderAtlas();
+          break;
       }
     }
   }
