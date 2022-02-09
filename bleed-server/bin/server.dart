@@ -79,7 +79,7 @@ Player spawnPlayerInTown() {
 }
 
 void compileWholeGame(Game game) {
-  compileGame(game);
+  compile.game(game);
   write(game.compiledTiles);
   write(game.compiledEnvironmentObjects);
   write(game.compiled);

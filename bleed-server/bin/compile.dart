@@ -39,66 +39,71 @@ const String _space = ' ';
 const String _semiColon = '; ';
 const String _comma = ', ';
 
+final compile = _Compile();
+
+class _Compile {
+  void game(Game game) {
+    final StringBuffer buffer = StringBuffer();
+    _compilePlayers(buffer, game.players);
+    _compileZombies(buffer, game.zombies);
+    _compileInteractableNpcs(buffer, game.npcs);
+    _compileProjectiles(buffer, game.projectiles);
+    _compileGameEvents(buffer, game.gameEvents);
+
+    _write(buffer, ServerResponse.Debug_Mode.index);
+    _write(buffer, game.debugMode ? 1 : 0);
+
+    _write(buffer, ServerResponse.Game_Time.index);
+    _write(buffer, game.getTime());
+
+    if (game.debugMode) {
+      _compilePaths(buffer, game.zombies);
+      _compileNpcDebug(buffer, game.npcs);
+      _compileNpcDebug(buffer, game.zombies);
+    }
+
+    _write(buffer, ServerResponse.Scene_Shade_Max.index);
+    _write(buffer, game.shadeMax);
+
+    compileGameStatus(buffer, game.status);
+
+    if (game is GameRoyal) {
+      compileRoyal(buffer, game);
+    }
+
+    compileItems(buffer, game.items);
+    compileCrates(buffer, game.crates);
+
+    game.compiled = buffer.toString();
+    /// GAME COMPILATION FINISHED
+
+    game.compiledTeamText.clear();
+
+    for (Player player in game.players) {
+      if (!game.compiledTeamText.containsKey(player.team)) {
+        StringBuffer buffer = StringBuffer();
+        buffer.write(ServerResponse.Player_Text.index);
+        buffer.write(_space);
+        game.compiledTeamText[player.team] = buffer;
+        buffer.write(_space);
+      }
+      game.compiledTeamText[player.team]?.write(player.x.toInt());
+      buffer.write(_space);
+      game.compiledTeamText[player.team]?.write(player.y.toInt());
+      buffer.write(_space);
+      game.compiledTeamText[player.team]?.write(player.text);
+      buffer.write(_space);
+      game.compiledTeamText[player.team]?.write(_comma);
+      buffer.write(_space);
+    }
+  }
+
+}
+
 void compilePlayerJoined(StringBuffer buffer, Player player) {
   _write(buffer,
       '${ServerResponse.Game_Joined.index} ${player.id} ${player.uuid} ${player
           .x.toInt()} ${player.y.toInt()} ${player.game.id} ${player.team} ');
-}
-
-void compileGame(Game game) {
-  final StringBuffer buffer = StringBuffer();
-  _compilePlayers(buffer, game.players);
-  _compileZombies(buffer, game.zombies);
-  _compileInteractableNpcs(buffer, game.npcs);
-  _compileProjectiles(buffer, game.projectiles);
-  _compileGameEvents(buffer, game.gameEvents);
-
-  _write(buffer, ServerResponse.Debug_Mode.index);
-  _write(buffer, game.debugMode ? 1 : 0);
-
-  _write(buffer, ServerResponse.Game_Time.index);
-  _write(buffer, game.getTime());
-
-  if (game.debugMode) {
-    _compilePaths(buffer, game.zombies);
-    _compileNpcDebug(buffer, game.npcs);
-    _compileNpcDebug(buffer, game.zombies);
-  }
-
-  _write(buffer, ServerResponse.Scene_Shade_Max.index);
-  _write(buffer, game.shadeMax);
-
-  compileGameStatus(buffer, game.status);
-
-  if (game is GameRoyal) {
-    compileRoyal(buffer, game);
-  }
-
-  compileItems(buffer, game.items);
-  compileCrates(buffer, game.crates);
-
-  game.compiled = buffer.toString();
-  /// GAME COMPILATION FINISHED
-
-  game.compiledTeamText.clear();
-
-  for (Player player in game.players) {
-    if (!game.compiledTeamText.containsKey(player.team)) {
-      StringBuffer buffer = StringBuffer();
-      buffer.write(ServerResponse.Player_Text.index);
-      buffer.write(_space);
-      game.compiledTeamText[player.team] = buffer;
-      buffer.write(_space);
-    }
-    game.compiledTeamText[player.team]?.write(player.x.toInt());
-    buffer.write(_space);
-    game.compiledTeamText[player.team]?.write(player.y.toInt());
-    buffer.write(_space);
-    game.compiledTeamText[player.team]?.write(player.text);
-    buffer.write(_space);
-    game.compiledTeamText[player.team]?.write(_comma);
-    buffer.write(_space);
-  }
 }
 
 void compileCrates(StringBuffer buffer, List<Crate> crates) {

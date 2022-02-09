@@ -1,10 +1,8 @@
 import 'dart:async';
 
 import 'package:bleed_server/user-service-client/firestoreService.dart';
-import 'package:lemon_math/hypotenuse.dart';
 
 import 'classes/Game.dart';
-import 'classes/GameObject.dart';
 import 'classes/Player.dart';
 import 'common/GameStatus.dart';
 import 'common/Settings.dart';
@@ -126,7 +124,7 @@ class _Engine {
   // This method is called by the game constructor automatically
   // and should not be called again
   void onGameCreated(Game game) {
-    compileGame(game);
+    compile.game(game);
     game.compiledTiles = compileTiles(game.scene.tiles);
     game.compiledEnvironmentObjects =
         compileEnvironmentObjects(game.scene.environment);
@@ -165,14 +163,13 @@ class _Engine {
 
         case GameStatus.In_Progress:
           game.updateInProgress();
-          compileGame(game);
+          compile.game(game);
           break;
 
         case GameStatus.Finished:
           break;
       }
     }
-
   }
 
   Future<CustomGame> findOrCreateCustomGame(String mapId) async {
