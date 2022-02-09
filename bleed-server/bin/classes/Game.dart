@@ -365,7 +365,7 @@ extension GameFunctions on Game {
     _updateCollisions();
     _updateProjectiles();
     _updateProjectiles(); // called twice to fix collision detection
-    _updateNpcs();
+    _updateAI();
     _updateGameEvents();
     _updateSpawnPointCollisions();
     _updateItems();
@@ -437,7 +437,7 @@ extension GameFunctions on Game {
     }
   }
 
-  void updateCharacterAI(Character character) {
+  void _updateCharacterAI(Character character) {
     if (character.dead) return;
     if (character.busy) return;
     if (character.inactive) return;
@@ -880,14 +880,9 @@ extension GameFunctions on Game {
     return a.team == b.team;
   }
 
-  void _updateNpcs() {
-    for (final zombie in zombies) {
-      updateCharacterAI(zombie);
-    }
-
-    for (InteractableNpc interactableNpc in npcs) {
-      updateCharacterAI(interactableNpc);
-    }
+  void _updateAI() {
+    zombies.forEach(_updateCharacterAI);
+    npcs.forEach(_updateCharacterAI);
   }
 
   void updatePlayer(Player player) {
