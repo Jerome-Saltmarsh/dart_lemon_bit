@@ -443,6 +443,11 @@ extension GameFunctions on Game {
     character.attackTarget = target;
   }
 
+  void _characterRunAt(Character character, Vector2 target){
+    characterFaceV2(character, target);
+    setCharacterState(character, CharacterState.Running);
+  }
+
   void _updateCharacterAI(Character character) {
     if (character.dead) return;
     if (character.busy) return;
@@ -466,11 +471,16 @@ extension GameFunctions on Game {
     if (target != null) {
       switch (character.weapon.type) {
         case WeaponType.Unarmed:
-
-          if (!targetWithinStrikingRange(character, target)) return;
-
-          _characterStrike(character, target);
-          return;
+          if (targetWithinStrikingRange(character, target)){
+            _characterStrike(character, target);
+            return;
+          }
+          final dis = cheapDistance(character, target);
+          if (dis < 100) {
+            _characterRunAt(character, target);
+            return;
+          }
+          break;
         default:
           if (!targetWithinFiringRange(character, target)) break;
           if (!isVisibleBetween(character, target)) break;
