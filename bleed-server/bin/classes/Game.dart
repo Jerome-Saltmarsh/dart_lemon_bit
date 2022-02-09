@@ -1582,6 +1582,16 @@ extension GameFunctions on Game {
   }
 
   void npcSetPathToTileNode(AI ai, TileNode node) {
+    if (ai.path.isNotEmpty){
+      final last = ai.path.last;
+      final xDiff = diff(node.position.x, last.x);
+      if (xDiff < 10){
+        final yDiff = diff(node.position.y, last.y);
+        if (yDiff < 10){
+          return;
+        }
+      }
+    }
     ai.path = scene.findPathNodes(scene.tileNodeAt(ai.character.x, ai.character.y), node);
   }
 
