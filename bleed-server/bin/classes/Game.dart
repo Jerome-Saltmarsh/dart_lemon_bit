@@ -700,7 +700,7 @@ extension GameFunctions on Game {
       case CharacterState.Dead:
         setCharacterStateDead(character);
         return;
-      case CharacterState.ChangingWeapon:
+      case CharacterState.Changing:
         character.stateDuration = 10;
         break;
       case CharacterState.Firing:
@@ -1754,7 +1754,7 @@ void changeWeapon(Player player, int index) {
   if (index == player.equippedIndex) return;
   if (index >= player.weapons.length) return;
   player.equippedIndex = index;
-  player.game.setCharacterState(player, CharacterState.ChangingWeapon);
+  player.game.setCharacterState(player, CharacterState.Changing);
 }
 
 void playerSetAbilityTarget(Player player, double x, double y) {

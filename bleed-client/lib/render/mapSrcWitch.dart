@@ -52,7 +52,7 @@ void mapSrcWitch({
           size: 64,
           framesPerDirection: 4,
           frame: frame);
-    case CharacterState.ChangingWeapon:
+    case CharacterState.Changing:
     // TODO: Handle this case.
       break;
   }

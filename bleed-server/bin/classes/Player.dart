@@ -112,7 +112,7 @@ class Player extends Character with Entity {
   }
 
   void setStateChangingWeapons(){
-    game.setCharacterState(this, CharacterState.ChangingWeapon);
+    game.setCharacterState(this, CharacterState.Changing);
   }
 
   void unequip(SlotTypeCategory slotTypeCategory){

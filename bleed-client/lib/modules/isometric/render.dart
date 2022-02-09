@@ -274,7 +274,7 @@ class IsometricRender {
             frame: character.frame
         );
         break;
-      case CharacterState.ChangingWeapon:
+      case CharacterState.Changing:
         srcSingle(atlas: atlas.shadow.idle, direction: character.direction);
         break;
       case CharacterState.Performing:
@@ -357,7 +357,7 @@ class IsometricRender {
             break;
         }
         break;
-      case CharacterState.ChangingWeapon:
+      case CharacterState.Changing:
         switch (character.equippedArmour) {
           case SlotType.Armour_Standard:
             srcAnimate(

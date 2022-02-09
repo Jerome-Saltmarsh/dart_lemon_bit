@@ -107,7 +107,7 @@ void mapSrcHuman({
             frame: frame,
           );
       }
-    case CharacterState.ChangingWeapon:
+    case CharacterState.Changing:
       return srcAnimate(
         atlas: atlas.human.changing,
         animation: animations.human.changing,
