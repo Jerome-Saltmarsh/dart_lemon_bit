@@ -17,7 +17,6 @@ enum ClientRequest {
   CasteFireball,
   AcquireAbility,
   SelectCharacterType,
-  PerformPrimaryAttack,
   PerformAbility,
   SelectAbility,
   DeselectAbility,
