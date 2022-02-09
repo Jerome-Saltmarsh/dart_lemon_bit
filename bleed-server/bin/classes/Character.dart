@@ -14,9 +14,14 @@ import 'Weapon.dart';
 
 const _notFound = -1;
 
+class AI {
+  final Character character;
+  AI(this.character);
+}
 
 class Character extends GameObject implements HasSquad {
   late CharacterType type;
+  AI? ai;
   Ability? ability = null;
   Ability? performing = null;
   CharacterState state = CharacterState.Idle;
