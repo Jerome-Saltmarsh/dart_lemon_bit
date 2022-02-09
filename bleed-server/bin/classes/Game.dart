@@ -1416,24 +1416,24 @@ extension GameFunctions on Game {
           zombieAI.target = null;
       }
 
-      var targetDistance = 9999999.0;
+      num targetDistance = 9999999.0;
 
       for (final otherZombie in zombies) {
         if (otherZombie.dead) continue;
         if (zombie.team == otherZombie.team) continue;
         if (!withinViewRange(zombieAI, otherZombie)) continue;
-        final npcDistance = distanceV2(zombie, otherZombie);
+        final npcDistance = cheapDistance(zombie, otherZombie);
         if (npcDistance >= targetDistance) continue;
         if (!isVisibleBetween(zombie, otherZombie)) continue;
         setNpcTarget(zombieAI, otherZombie);
         targetDistance = npcDistance;
       }
 
-      for (Player player in players) {
+      for (final player in players) {
         if (player.dead) continue;
         if (zombie.team == player.team) continue;
         if (!withinViewRange(zombieAI, player)) continue;
-        final npcDistance = distanceV2(zombie, player);
+        final npcDistance = cheapDistance(zombie, player);
         if (npcDistance >= targetDistance) continue;
         if (!isVisibleBetween(zombie, player)) continue;
         setNpcTarget(zombieAI, player);
