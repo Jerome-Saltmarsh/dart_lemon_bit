@@ -10,7 +10,6 @@ import 'package:bleed_client/cube/camera3d.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/mappers/mapWeaponToDecorationImage.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/styles.dart';
 import 'package:bleed_client/ui/state/decorationImages.dart';

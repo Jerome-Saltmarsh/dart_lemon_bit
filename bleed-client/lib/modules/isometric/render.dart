@@ -1,11 +1,9 @@
 import 'dart:ui';
-import 'package:lemon_math/Vector2.dart';
-import 'package:lemon_math/diff_over.dart';
+
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Particle.dart';
-import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/SlotType.dart';
@@ -26,6 +24,7 @@ import 'package:bleed_client/render/mapParticleToSrc.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';
+import 'package:lemon_math/diff_over.dart';
 
 import 'functions.dart';
 import 'state.dart';
@@ -140,7 +139,7 @@ class IsometricRender {
       }
 
       if (zombiesRemaining) {
-        Zombie zombie = game.zombies[indexZombie];
+        final zombie = game.zombies[indexZombie];
 
         if (!npcsRemaining || zombie.y < game.interactableNpcs[indexNpc].y) {
           drawCharacter(game.zombies[indexZombie]);

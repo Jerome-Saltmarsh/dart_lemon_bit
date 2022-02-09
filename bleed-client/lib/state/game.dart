@@ -4,7 +4,6 @@ import 'package:bleed_client/classes/Explosion.dart';
 import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/classes/Projectile.dart';
-import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:lemon_math/Vector2.dart';
@@ -32,7 +31,7 @@ class _Game {
   List<EnvironmentObject> torches = [];
   List<NpcDebug> npcDebug = [];
   final List<Character> humans = [];
-  final List<Zombie> zombies = [];
+  final List<Character> zombies = [];
   final List<Character> interactableNpcs = [];
   final Watch<int> totalZombies = Watch(0);
   int totalNpcs = 0;

@@ -60,8 +60,6 @@ class CoreEvents {
     website.actions.showDialogGames();
   }
 
-
-
   void _onServerTypeChanged(Region serverType) {
     print('core.events.onServerTypeChanged($serverType)');
     storage.saveServerType(serverType);

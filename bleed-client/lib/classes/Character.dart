@@ -5,7 +5,7 @@ import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:lemon_math/Vector2.dart';
 
-class Character extends Vector2{
+class Character extends Vector2 {
   CharacterType type;
   CharacterState state;
   Direction direction;

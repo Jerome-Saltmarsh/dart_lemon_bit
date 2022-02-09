@@ -4,7 +4,6 @@ import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Projectile.dart';
-import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
@@ -55,7 +54,7 @@ void initializeGameInstances() {
 
   game.zombies.clear();
   for (int i = 0; i < 2500; i++) {
-    game.zombies.add(Zombie());
+    game.zombies.add(Character(type: CharacterType.Zombie));
   }
 
   game.interactableNpcs.clear();

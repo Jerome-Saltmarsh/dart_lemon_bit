@@ -164,7 +164,6 @@ class GameActions {
 
   void toggleDebugPaths() {
     print("game.actions.enableDebugNpc()");
-    state.compilePaths.value = !state.compilePaths.value;
     sendRequestSetCompilePaths(!state.compilePaths.value);
   }
 

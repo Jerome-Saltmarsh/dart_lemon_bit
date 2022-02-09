@@ -114,7 +114,7 @@ abstract class Game {
   String compiled = "";
   String compiledTiles = "";
   String compiledEnvironmentObjects = "";
-  bool compilePaths = false;
+  bool debugMode = false;
   Map<int, StringBuffer> compiledTeamText = {};
   int countDownFramesRemaining = framesPerSecond * 3;
 

@@ -1,6 +1,6 @@
-import 'package:lemon_math/Vector2.dart';
 import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
+import 'package:lemon_math/Vector2.dart';
 
 import 'atlas.dart';
 import 'enums.dart';

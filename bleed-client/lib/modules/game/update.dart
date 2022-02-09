@@ -1,7 +1,6 @@
 
 import 'dart:ui';
 
-import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';

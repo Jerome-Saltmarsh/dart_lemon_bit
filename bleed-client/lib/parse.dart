@@ -9,7 +9,6 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/classes/Weapon.dart';
-import 'package:bleed_client/classes/Zombie.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
@@ -221,6 +220,11 @@ void parseState() {
           message += " ";
         }
         modules.game.state.player.message.value = message.trim();
+        break;
+
+      case ServerResponse.Debug_Mode:
+        final debugInt = _consumeSingleDigitInt();
+        modules.game.state.compilePaths.value = debugInt == 1;
         break;
 
       case ServerResponse.Items:
@@ -744,7 +748,7 @@ void _consumeHuman(Character character) {
   character.equippedHead = consumeSlotType();
 }
 
-void _consumeZombie(Zombie zombie) {
+void _consumeZombie(Character zombie) {
   zombie.state = _consumeCharacterState();
   zombie.direction = _consumeDirection();
   zombie.x = _consumeDoubleUnsafe();

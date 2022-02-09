@@ -43,4 +43,5 @@ enum ServerResponse {
   Lobby_CountDown,
   Player_Orbs,
   Player_Slot_Types,
+  Debug_Mode,
 }

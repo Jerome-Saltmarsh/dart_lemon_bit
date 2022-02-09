@@ -991,8 +991,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
 
           final value = int.parse(arguments[2]);
-          player.game.compilePaths = value == 1;
-          print("game.compilePaths = ${player.game.compilePaths}");
+          player.game.debugMode = value == 1;
+          print("game.compilePaths = ${player.game.debugMode}");
           break;
 
         case ClientRequest.Version:

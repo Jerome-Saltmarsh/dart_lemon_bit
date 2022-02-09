@@ -7,7 +7,6 @@ import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/modules/website/enums.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/server/server.dart';
-import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/ui/actions/signInWithFacebook.dart';
 import 'package:bleed_client/ui/build.dart';
 import 'package:bleed_client/ui/dialogs.dart';
@@ -20,7 +19,6 @@ import 'package:lemon_math/random.dart';
 import 'package:lemon_watch/watch_builder.dart';
 
 import '../styles.dart';
-import 'compose/hudUI.dart';
 
 final closeDialogButton = button(
     "close",

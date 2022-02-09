@@ -1,6 +1,5 @@
 import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
-import 'package:bleed_client/common/Modify_Game.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';

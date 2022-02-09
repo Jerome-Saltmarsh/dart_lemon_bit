@@ -53,10 +53,13 @@ void compileGame(Game game) {
   _compileProjectiles(buffer, game.projectiles);
   _compileGameEvents(buffer, game.gameEvents);
 
+  _write(buffer, ServerResponse.Debug_Mode.index);
+  _write(buffer, game.debugMode ? 1 : 0);
+
   _write(buffer, ServerResponse.Game_Time.index);
   _write(buffer, game.getTime());
 
-  if (game.compilePaths) {
+  if (game.debugMode) {
     _compilePaths(buffer, game.zombies);
     _compileNpcDebug(buffer, game.npcs);
   }
@@ -499,11 +502,6 @@ void _writeVector2Int(StringBuffer buffer, Vector2 vector2){
 }
 
 void _write(StringBuffer buffer, dynamic value) {
-  if (value is num) {
-    if (value.isNaN) {
-      throw Exception();
-    }
-  }
   buffer.write(value);
   buffer.write(_space);
 }

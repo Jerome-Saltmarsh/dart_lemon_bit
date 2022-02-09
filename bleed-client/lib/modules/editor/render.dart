@@ -1,4 +1,3 @@
-import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/constants/colours.dart';

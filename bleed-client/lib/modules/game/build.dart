@@ -1,12 +1,10 @@
 import 'dart:math';
 
-import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/RoyalCost.dart';
 import 'package:bleed_client/common/SlotType.dart';
-import 'package:bleed_client/common/SlotTypeCategory.dart';
 import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/flutterkit.dart';
@@ -14,7 +12,6 @@ import 'package:bleed_client/modules/game/actions.dart';
 import 'package:bleed_client/modules/game/enums.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/resources.dart';
-import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/styles.dart';
 import 'package:bleed_client/ui/compose/buildTextBox.dart';
