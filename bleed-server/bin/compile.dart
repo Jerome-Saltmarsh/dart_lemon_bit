@@ -346,11 +346,13 @@ void _compileGameEvents(StringBuffer buffer, List<GameEvent> gameEvents) {
   buffer.write(_semiColon);
 }
 
-void _compilePaths(StringBuffer buffer, List<Npc> npcs) {
+void _compilePaths(StringBuffer buffer, List<Character> characters) {
   _write(buffer, ServerResponse.Paths.index);
-  for (Npc npc in npcs) {
-    if (npc.path.isEmpty) continue;
-    for (Vector2 p in npc.path) {
+  for (final character in characters) {
+    final ai = character.ai;
+    if (ai == null) continue;
+    if (ai.path.isEmpty) continue;
+    for (final p in ai.path) {
       _writeInt(buffer, p.x);
       _writeInt(buffer, p.y);
     }
@@ -359,14 +361,17 @@ void _compilePaths(StringBuffer buffer, List<Npc> npcs) {
   buffer.write(_semiColon);
 }
 
-void _compileNpcDebug(StringBuffer buffer, List<Npc> npcs) {
+void _compileNpcDebug(StringBuffer buffer, List<Character> characters) {
   _write(buffer, ServerResponse.NpcsDebug.index);
-  for (Npc npc in npcs) {
-    if (!npc.targetSet) continue;
-    _writeInt(buffer, npc.x);
-    _writeInt(buffer, npc.y);
-    _writeInt(buffer, npc.target.x);
-    _writeInt(buffer, npc.target.y);
+  for (final character in characters) {
+    final ai = character.ai;
+    if (ai == null) continue;
+    final target = ai.target;
+    if (target == null) continue;
+    _writeInt(buffer, character.x);
+    _writeInt(buffer, character.y);
+    _writeInt(buffer, target.x);
+    _writeInt(buffer, target.y);
   }
   buffer.write(_semiColon);
 }
@@ -390,16 +395,16 @@ void _compilePlayers(StringBuffer buffer, List<Player> players) {
   }
 }
 
-void _compileZombies(StringBuffer buffer, List<Npc> npcs) {
+void _compileZombies(StringBuffer buffer, List<Character> characters) {
   _write(buffer, _indexZombies);
   int total = 0;
-  for (Npc npc in npcs) {
-    if (npc.active) total++;
+  for (final character in characters) {
+    if (character.active) total++;
   }
   _write(buffer, total);
-  for (Npc npc in npcs) {
-    if (!npc.active) continue;
-    _compileNpc(buffer, npc);
+  for (final character in characters) {
+    if (!character.active) continue;
+    _compileNpc(buffer, character);
   }
 }
 
@@ -456,14 +461,14 @@ void compileString(StringBuffer buffer, String text){
   }
 }
 
-void _compileNpc(StringBuffer buffer, Npc npc) {
-  _write(buffer, npc.state.index);
-  _write(buffer, npc.direction.index);
-  _writeInt(buffer, npc.x);
-  _writeInt(buffer, npc.y);
-  _write(buffer, npc.stateFrameCount);
-  _writeInt(buffer, (npc.health / npc.maxHealth) * 100);
-  _write(buffer, npc.team);
+void _compileNpc(StringBuffer buffer, Character character) {
+  _write(buffer, character.state.index);
+  _write(buffer, character.direction.index);
+  _writeInt(buffer, character.x);
+  _writeInt(buffer, character.y);
+  _write(buffer, character.stateFrameCount);
+  _writeInt(buffer, (character.health / character.maxHealth) * 100);
+  _write(buffer, character.team);
 }
 
 void _compileInteractableNpc(StringBuffer buffer, InteractableNpc npc) {

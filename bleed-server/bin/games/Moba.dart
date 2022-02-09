@@ -1,6 +1,7 @@
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/give_or_take.dart';
 
+import '../classes/Character.dart';
 import '../classes/Game.dart';
 import '../classes/Npc.dart';
 import '../classes/Player.dart';
@@ -73,11 +74,11 @@ class GameMoba extends Game {
   }
 
   @override
-  onNpcObjectivesCompleted(Npc npc) {
+  onNpcObjectivesCompleted(Character character) {
     if (!inProgress) return;
-    setCharacterStateDead(npc);
-    dispatch(GameEventType.Objective_Reached, npc.x, npc.y);
-    if (npc.team == teams.west) {
+    setCharacterStateDead(character);
+    dispatch(GameEventType.Objective_Reached, character.x, character.y);
+    if (character.team == teams.west) {
       teamLivesEast--;
       if (teamLivesEast <= 0) {
         status = GameStatus.Finished;

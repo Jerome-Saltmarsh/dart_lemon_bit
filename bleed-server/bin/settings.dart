@@ -212,8 +212,6 @@ class _ProjectileSpeed {
 
 class _NpcSettings {
   final double destinationRadius = 15.0;
-  final double viewRange = 300;
-  final double chaseRange = 600;
 }
 
 class _Health {

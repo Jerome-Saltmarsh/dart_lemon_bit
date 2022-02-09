@@ -47,19 +47,21 @@ void removeDisconnectedPlayers(Timer timer) {
 }
 
 void updateNpcObjective(Timer timer) {
-  for (Game game in global.games) {
-    for (Npc npc in game.zombies) {
+  for (final game in global.games) {
+    for (final npc in game.zombies) {
       if (npc.inactive) continue;
       if (npc.busy) continue;
       if (npc.dead) continue;
-      if (npc.targetSet) continue;
-      if (npc.pathSet) continue;
-      game.updateNpcObjective(npc);
-
-      if (npc.objectives.isEmpty) {
-        game.npcSetRandomDestination(npc);
+      final ai = npc.ai;
+      if (ai == null) continue;
+      if (ai.target != null) continue;
+      if (ai.path.isNotEmpty) continue;
+      game.updateNpcObjective(ai);
+      if (ai.objectives.isEmpty) {
+        game.npcSetRandomDestination(ai);
       } else {
-        game.npcSetPathTo(npc, npc.objective.x, npc.objective.y);
+        final objective = ai.objectives.last;
+        game.npcSetPathTo(ai, objective.x, objective.y);
       }
     }
   }

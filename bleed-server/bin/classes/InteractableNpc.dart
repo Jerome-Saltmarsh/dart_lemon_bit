@@ -1,9 +1,10 @@
 import '../common/CharacterType.dart';
+import 'Character.dart';
 import 'Npc.dart';
 import 'Player.dart';
 import 'Weapon.dart';
 
-class InteractableNpc extends Npc {
+class InteractableNpc extends Character {
   final String name;
 
   Function(Player player) onInteractedWith;
@@ -21,6 +22,6 @@ class InteractableNpc extends Npc {
             x: x,
             y: y,
             health: health,
-            weapon: weapon
+            weapons: [weapon]
   );
 }

@@ -47,13 +47,13 @@ void setDirection(Character character, Direction direction) {
   character.direction = direction;
 }
 
-bool withinViewRange(Npc npc, GameObject target) {
-  return distanceV2(npc, target) < settings.npc.viewRange;
+bool withinViewRange(AI ai, GameObject target) {
+  return distanceV2(ai.character, target) < ai.viewRange;
 }
 
-bool arrivedAtPath(Npc npc) {
-  if (diffOver(npc.x, npc.path[0].x, settings.npc.destinationRadius)) return false;
-  if (diffOver(npc.y, npc.path[0].y, settings.npc.destinationRadius)) return false;
+bool arrivedAtPath(AI npc) {
+  if (diffOver(npc.character.x, npc.path[0].x, settings.npc.destinationRadius)) return false;
+  if (diffOver(npc.character.y, npc.path[0].y, settings.npc.destinationRadius)) return false;
   return true;
 }
 

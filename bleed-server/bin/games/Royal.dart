@@ -70,8 +70,8 @@ class GameRoyal extends Game {
   int get playersRequired => teamSize * numberOfTeams;
 
   @override
-  void onNpcKilled(Npc npc, Character src){
-     items.add(Item(type: ItemType.Orb_Emerald, x: npc.x, y: npc.y));
+  void onNpcKilled(Character character, Character src){
+     items.add(Item(type: ItemType.Orb_Emerald, x: character.x, y: character.y));
   }
 
   @override

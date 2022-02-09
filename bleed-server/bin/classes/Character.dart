@@ -5,6 +5,7 @@ import '../common/CharacterType.dart';
 import '../common/WeaponType.dart';
 import '../common/enums/Direction.dart';
 import '../constants/no_squad.dart';
+import '../enums/npc_mode.dart';
 import '../interfaces/HasSquad.dart';
 import '../settings.dart';
 import '../utilities.dart';
@@ -14,10 +15,35 @@ import 'Weapon.dart';
 
 const _notFound = -1;
 
+const _defaultMode = NpcMode.Defensive;
+const _defaultViewRange = 300.0;
+
 class AI {
   final Character character;
-  AI(this.character);
+  Character? target;
+  List<Vector2> path = [];
+  List<Vector2> objectives = [];
+  NpcMode mode = NpcMode.Aggressive;
+
+  double viewRange = 200;
+  double chaseRange = 500;
+
+  AI(this.character, {
+    this.mode = _defaultMode,
+    this.viewRange = _defaultViewRange,
+  });
+
+  void clearTarget(){
+    target = null;
+  }
+
+  void clearTargetIf(Character value){
+    if (target != value) return;
+    target = null;
+  }
 }
+
+const _defaultCharacterSpeed = 3.0;
 
 class Character extends GameObject implements HasSquad {
   late CharacterType type;
@@ -89,8 +115,9 @@ class Character extends GameObject implements HasSquad {
     required double x,
     required double y,
     required int health,
-    required double speed,
+    double speed = _defaultCharacterSpeed,
     this.team = noSquad,
+    this.ai,
     List<Weapon>? weapons,
   }) : super(x, y, radius: settings.radius.character) {
     maxHealth = health;

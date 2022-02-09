@@ -15,12 +15,12 @@ const int _maxZombies = 20;
 
 class WildernessWest01 extends Game {
 
-  late Npc boss;
+  late Character boss;
 
   WildernessWest01() : super(scenes.wildernessWest01){
-    boss = Npc(
+    boss = Character(
         type: CharacterType.Zombie,
-        x: 0, y: 300, health: 100, weapon: Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0));
+        x: 0, y: 300, health: 100, weapons: [Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0)]);
     // zombies.add(boss);
   }
 
