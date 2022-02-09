@@ -26,9 +26,9 @@ import '../common/enums/Direction.dart';
 import '../common/enums/ObjectType.dart';
 import '../common/enums/ProjectileType.dart';
 import '../common/enums/Shade.dart';
-import '../compile.dart';
 import '../constants.dart';
 import '../constants/no_squad.dart';
+import '../engine.dart';
 import '../enums.dart';
 import '../enums/npc_mode.dart';
 import '../functions.dart';
@@ -39,7 +39,6 @@ import '../language.dart';
 import '../maths.dart';
 import '../physics.dart';
 import '../settings.dart';
-import '../engine.dart';
 import '../utilities.dart';
 import 'Ability.dart';
 import 'Character.dart';
@@ -166,7 +165,7 @@ abstract class Game {
     return playersRemaining;
   }
 
-  void _update() {}
+  void update() {}
 
   void onPlayerDisconnected(Player player) {}
 
@@ -360,7 +359,7 @@ extension GameFunctions on Game {
 
   void updateInProgress() {
     duration++;
-    _update();
+    update();
     _updatePlayersAndNpcs();
     _updateCollisions();
     _updateProjectiles();
@@ -461,12 +460,10 @@ extension GameFunctions on Game {
       switch (character.weapon.type) {
         case WeaponType.Unarmed:
           if (!targetWithinStrikingRange(character, target)) break;
-
-          // @on npc target within striking range
           characterFaceV2(character, target);
           setCharacterState(character, CharacterState.Striking);
           applyDamage(character, target, character.damage);
-          double speed = 0.2;
+          final speed = 0.2;
           dispatch(GameEventType.Zombie_Strike, target.x, target.y,
               velX(character.aimAngle, speed), velY(character.aimAngle, speed));
           return;
@@ -1943,7 +1940,7 @@ class CustomGame extends Game {
   }
 
   @override
-  void _update() {
+  void update() {
     timeInSeconds = (timeInSeconds + secondsPerFrame) % secondsPerDay;
   }
 

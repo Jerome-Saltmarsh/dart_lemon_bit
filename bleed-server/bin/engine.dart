@@ -42,8 +42,40 @@ class _Engine {
   }
 
   void fixedUpdate(Timer timer) {
-    updateOpenWorldTime();
-    update();
+    worldTime = (worldTime + secondsPerFrame) % secondsPerDay;
+    frame++;
+
+    for (final game in games) {
+      switch(game.status) {
+        case GameStatus.Awaiting_Players:
+          for (int i = 0; i < game.players.length; i++) {
+            final player = game.players[i];
+            player.lastUpdateFrame++;
+            if (player.lastUpdateFrame > settings.framesUntilPlayerDisconnected) {
+              game.players.removeAt(i);
+              deregisterPlayer(player);
+              i--;
+            }
+          }
+          break;
+
+        case GameStatus.Counting_Down:
+          game.countDownFramesRemaining--;
+          if (game.countDownFramesRemaining <= 0) {
+            game.status = GameStatus.In_Progress;
+            game.onGameStarted();
+          }
+          break;
+
+        case GameStatus.In_Progress:
+          game.updateInProgress();
+          compile.game(game);
+          break;
+
+        case GameStatus.Finished:
+          break;
+      }
+    }
   }
 
   void updateNpcTargets(Timer timer) {
@@ -51,10 +83,6 @@ class _Engine {
       game.updateInteractableNpcTargets();
       game.updateZombieTargets();
     }
-  }
-
-  void updateOpenWorldTime() {
-    worldTime = (worldTime + secondsPerFrame) % secondsPerDay;
   }
 
   void removeDisconnectedPlayers(Timer timer) {
@@ -134,42 +162,6 @@ class _Engine {
   void onPlayerCreated(Player player){
     player.game.players.add(player);
     registerPlayer(player);
-  }
-
-  void update() {
-    frame++;
-
-    for (final game in games) {
-      switch(game.status) {
-        case GameStatus.Awaiting_Players:
-          for (int i = 0; i < game.players.length; i++) {
-            final player = game.players[i];
-            player.lastUpdateFrame++;
-            if (player.lastUpdateFrame > settings.framesUntilPlayerDisconnected) {
-              game.players.removeAt(i);
-              deregisterPlayer(player);
-              i--;
-            }
-          }
-          break;
-
-        case GameStatus.Counting_Down:
-          game.countDownFramesRemaining--;
-          if (game.countDownFramesRemaining <= 0) {
-            game.status = GameStatus.In_Progress;
-            game.onGameStarted();
-          }
-          break;
-
-        case GameStatus.In_Progress:
-          game.updateInProgress();
-          compile.game(game);
-          break;
-
-        case GameStatus.Finished:
-          break;
-      }
-    }
   }
 
   Future<CustomGame> findOrCreateCustomGame(String mapId) async {

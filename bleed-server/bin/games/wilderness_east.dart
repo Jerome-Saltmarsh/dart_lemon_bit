@@ -13,7 +13,7 @@ class WildernessEast extends Game {
   }
 
   @override
-  void _update() {
+  void update() {
     // TODO: implement update
   }
 

@@ -46,7 +46,7 @@ class GameMoba extends Game {
   }
 
   @override
-  void _update() {
+  void update() {
     if (duration % _framesPerCreepSpawn == 0) {
       spawnCreeps();
     }
