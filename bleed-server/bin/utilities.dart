@@ -133,6 +133,15 @@ bool targetWithinStrikingRange(GameObject source, GameObject target) {
   return true;
 }
 
+bool targetWithinDistanceCheap(GameObject source, GameObject target, double distance) {
+  return
+    diff(source.x, target.x) < distance
+        &&
+    diff(source.y, target.y) < distance
+  ;
+}
+
+
 bool targetWithinFiringRange(Character character, GameObject target){
   double range = getWeaponRange(character.weapon.type);
   if (diffOver(character.x, target.x, range)) return false;

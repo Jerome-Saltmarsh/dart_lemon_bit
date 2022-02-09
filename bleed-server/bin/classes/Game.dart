@@ -436,6 +436,13 @@ extension GameFunctions on Game {
     }
   }
 
+  void _characterStrike(Character character, Character target){
+    if (!targetWithinStrikingRange(character, target)) return;
+    characterFaceV2(character, target);
+    setCharacterStateStriking(character);
+    character.attackTarget = target;
+  }
+
   void _updateCharacterAI(Character character) {
     if (character.dead) return;
     if (character.busy) return;
@@ -459,14 +466,10 @@ extension GameFunctions on Game {
     if (target != null) {
       switch (character.weapon.type) {
         case WeaponType.Unarmed:
-          if (!targetWithinStrikingRange(character, target)) break;
-          characterFaceV2(character, target);
-          setCharacterStateStriking(character);
-          character.attackTarget = target;
-          // applyDamage(character, target, character.damage);
-          // final speed = 0.2;
-          // dispatch(GameEventType.Zombie_Strike, target.x, target.y,
-          //     velX(character.aimAngle, speed), velY(character.aimAngle, speed));
+
+          if (!targetWithinStrikingRange(character, target)) return;
+
+          _characterStrike(character, target);
           return;
         default:
           if (!targetWithinFiringRange(character, target)) break;
