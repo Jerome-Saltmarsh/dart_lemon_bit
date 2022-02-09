@@ -559,7 +559,7 @@ class IsometricRender {
           engine.actions.renderAtlas();
           break;
 
-        default:
+        case CharacterState.Idle:
           srcSingle(
               atlas: atlas.weapons.bowWooden.idle,
               direction: character.direction
