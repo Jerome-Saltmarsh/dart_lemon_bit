@@ -461,11 +461,12 @@ extension GameFunctions on Game {
         case WeaponType.Unarmed:
           if (!targetWithinStrikingRange(character, target)) break;
           characterFaceV2(character, target);
-          setCharacterState(character, CharacterState.Striking);
-          applyDamage(character, target, character.damage);
-          final speed = 0.2;
-          dispatch(GameEventType.Zombie_Strike, target.x, target.y,
-              velX(character.aimAngle, speed), velY(character.aimAngle, speed));
+          setCharacterStateStriking(character);
+          character.attackTarget = target;
+          // applyDamage(character, target, character.damage);
+          // final speed = 0.2;
+          // dispatch(GameEventType.Zombie_Strike, target.x, target.y,
+          //     velX(character.aimAngle, speed), velY(character.aimAngle, speed));
           return;
         default:
           if (!targetWithinFiringRange(character, target)) break;
@@ -683,6 +684,10 @@ extension GameFunctions on Game {
       if (player.attackTarget != character) continue;
       player.attackTarget = null;
     }
+  }
+
+  void setCharacterStateStriking(Character character){
+    setCharacterState(character, CharacterState.Striking);
   }
 
   void setCharacterState(Character character, CharacterState value) {
@@ -1033,7 +1038,7 @@ extension GameFunctions on Game {
     }
   }
 
-  void updateCharacterPerforming(Character character) {
+  void updateCharacterStatePerforming(Character character) {
     final ability = character.performing;
     if (ability == null) return;
     switch (ability.type) {
@@ -1165,19 +1170,52 @@ extension GameFunctions on Game {
 
     switch (character.state) {
       case CharacterState.Running:
-        updateCharacterRunning(character);
+        _updateCharacterStateRunning(character);
         break;
       case CharacterState.Performing:
-        updateCharacterPerforming(character);
+        updateCharacterStatePerforming(character);
         break;
       case CharacterState.Striking:
-        updateCharacterStriking(character);
+        _updateCharacterStateStriking(character);
         break;
     }
 
     if (character.previousState != character.state) {
       character.previousState = character.state;
       character.stateFrameCount = 0;
+    }
+  }
+
+  void _updateCharacterStateRunning(Character character) {
+    switch (character.direction) {
+      case Direction.Up:
+        character.y -= character.speed;
+        break;
+      case Direction.UpRight:
+        character.x += velX(piQuarter, character.speed);
+        character.y += velY(piQuarter, character.speed);
+        break;
+      case Direction.Right:
+        character.x += character.speed;
+        break;
+      case Direction.DownRight:
+        character.x += velX(piQuarter, character.speed);
+        character.y -= velY(piQuarter, character.speed);
+        break;
+      case Direction.Down:
+        character.y += character.speed;
+        break;
+      case Direction.DownLeft:
+        character.x -= velX(piQuarter, character.speed);
+        character.y -= velY(piQuarter, character.speed);
+        break;
+      case Direction.Left:
+        character.x -= character.speed;
+        break;
+      case Direction.UpLeft:
+        character.x -= velX(piQuarter, character.speed);
+        character.y += velY(piQuarter, character.speed);
+        break;
     }
   }
 
@@ -1642,7 +1680,20 @@ extension GameFunctions on Game {
     }
   }
 
-  void updateCharacterStriking(Character character) {
+  void _updateCharacterStateStriking(Character character) {
+    if (character.type == CharacterType.Zombie){
+        if (character.stateDuration == engine.framePerformStrike){
+          final attackTarget = character.attackTarget;
+          if (attackTarget != null){
+            applyStrike(character, attackTarget, character.damage);
+            character.attackTarget = null;
+            final speed = 0.2;
+            dispatch(GameEventType.Zombie_Strike, attackTarget.x, attackTarget.y,
+                velX(character.aimAngle, speed), velY(character.aimAngle, speed));
+          }
+        }
+    }
+
     if (character is Player) {
       if (character.stateDuration == engine.framePerformStrike) {
         if (character.slots.weapon.isBow) {
@@ -1693,39 +1744,6 @@ extension GameFunctions on Game {
       default:
         break;
     }
-  }
-}
-
-void updateCharacterRunning(Character character) {
-  switch (character.direction) {
-    case Direction.Up:
-      character.y -= character.speed;
-      break;
-    case Direction.UpRight:
-      character.x += velX(piQuarter, character.speed);
-      character.y += velY(piQuarter, character.speed);
-      break;
-    case Direction.Right:
-      character.x += character.speed;
-      break;
-    case Direction.DownRight:
-      character.x += velX(piQuarter, character.speed);
-      character.y -= velY(piQuarter, character.speed);
-      break;
-    case Direction.Down:
-      character.y += character.speed;
-      break;
-    case Direction.DownLeft:
-      character.x -= velX(piQuarter, character.speed);
-      character.y -= velY(piQuarter, character.speed);
-      break;
-    case Direction.Left:
-      character.x -= character.speed;
-      break;
-    case Direction.UpLeft:
-      character.x -= velX(piQuarter, character.speed);
-      character.y += velY(piQuarter, character.speed);
-      break;
   }
 }
 

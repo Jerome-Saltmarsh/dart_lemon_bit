@@ -107,6 +107,8 @@
 [ ] Server Strike Damage Calculation
 [ ] FIX Particle blood renders as shell
 [ ] Arrow Capacity (Auto regenerates)
+[ ] Spell Cooldown
+[ ] Spell use magic
 [ ] Zombie Pause after attack
 [x] FIX Mouse should be hand on attack
 [x] FIX Zombies stop rendering
