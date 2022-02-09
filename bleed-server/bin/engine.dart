@@ -37,43 +37,41 @@ class _Engine {
     updateOpenWorldTime();
     global.update();
   }
-}
 
-
-
-void updateNpcTargets(Timer timer) {
-  for (final game in global.games) {
-    game.updateInteractableNpcTargets();
-    game.updateZombieTargets();
+  void updateNpcTargets(Timer timer) {
+    for (final game in global.games) {
+      game.updateInteractableNpcTargets();
+      game.updateZombieTargets();
+    }
   }
-}
 
-void updateOpenWorldTime() {
-  worldTime = (worldTime + secondsPerFrame) % secondsPerDay;
-}
-
-void removeDisconnectedPlayers(Timer timer) {
-  for (Game game in global.games) {
-    game.removeDisconnectedPlayers();
+  void updateOpenWorldTime() {
+    worldTime = (worldTime + secondsPerFrame) % secondsPerDay;
   }
-}
 
-void updateNpcObjective(Timer timer) {
-  for (final game in global.games) {
-    for (final zombie in game.zombies) {
-      if (zombie.inactive) continue;
-      if (zombie.busy) continue;
-      if (zombie.dead) continue;
-      final ai = zombie.ai;
-      if (ai == null) continue;
-      if (ai.target != null) continue;
-      if (ai.path.isNotEmpty) continue;
-      game.updateNpcObjective(ai);
-      if (ai.objectives.isEmpty) {
-        game.npcSetRandomDestination(ai);
-      } else {
-        final objective = ai.objectives.last;
-        game.npcSetPathTo(ai, objective.x, objective.y);
+  void removeDisconnectedPlayers(Timer timer) {
+    for (Game game in global.games) {
+      game.removeDisconnectedPlayers();
+    }
+  }
+
+  void updateNpcObjective(Timer timer) {
+    for (final game in global.games) {
+      for (final zombie in game.zombies) {
+        if (zombie.inactive) continue;
+        if (zombie.busy) continue;
+        if (zombie.dead) continue;
+        final ai = zombie.ai;
+        if (ai == null) continue;
+        if (ai.target != null) continue;
+        if (ai.path.isNotEmpty) continue;
+        game.updateNpcObjective(ai);
+        if (ai.objectives.isEmpty) {
+          game.npcSetRandomDestination(ai);
+        } else {
+          final objective = ai.objectives.last;
+          game.npcSetPathTo(ai, objective.x, objective.y);
+        }
       }
     }
   }
