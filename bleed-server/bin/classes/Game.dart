@@ -34,14 +34,11 @@ import '../enums/npc_mode.dart';
 import '../functions.dart';
 import '../functions/applyForce.dart';
 import '../functions/withinRadius.dart';
-import '../games/world.dart';
-import '../global.dart';
 import '../interfaces/HasSquad.dart';
 import '../language.dart';
 import '../maths.dart';
 import '../physics.dart';
 import '../settings.dart';
-import '../state.dart';
 import '../engine.dart';
 import '../utilities.dart';
 import 'Ability.dart';
@@ -186,12 +183,13 @@ abstract class Game {
     return empty;
   }
 
-  Game(this.scene,
-      {this.gameType = GameType.MMO,
+  Game(this.scene, {
+      this.gameType = GameType.MMO,
       this.shadeMax = Shade.Bright,
-      this.status = GameStatus.In_Progress}) {
+      this.status = GameStatus.In_Progress
+  }) {
     this.crates.clear();
-    global.onGameCreated(this);
+    engine.onGameCreated(this);
 
     for (Vector2 crate in scene.crates) {
       crates.add(Crate(x: crate.x, y: crate.y));
@@ -1533,7 +1531,7 @@ extension GameFunctions on Game {
       }
       player.active = false;
       players.removeAt(i);
-      global.playerMap.remove(player.uuid);
+      engine.deregisterPlayer(player);
       i--;
 
       if (status == GameStatus.Awaiting_Players) {
@@ -1648,7 +1646,7 @@ extension GameFunctions on Game {
             applyStrike(character, attackTarget, character.damage);
             return;
           }
-          final hit = raycastHit(
+          final hit = physics.raycastHit(
               character: character,
               characters: zombies,
               range: character.slots.weapon.range);

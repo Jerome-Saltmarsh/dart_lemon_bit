@@ -6,11 +6,10 @@ import '../common/PlayerEvent.dart';
 import '../common/Quests.dart';
 import '../common/SlotType.dart';
 import '../common/SlotTypeCategory.dart';
-import '../common/Tile.dart';
 import '../common/WeaponType.dart';
 import '../constants/no_squad.dart';
+import '../engine.dart';
 import '../functions/generateName.dart';
-import '../global.dart';
 import '../settings.dart';
 import '../utilities.dart';
 import 'Ability.dart';
@@ -108,7 +107,7 @@ class Player extends Character with Entity {
             health: health,
             speed: settings.playerSpeed,
             team: team){
-    global.onPlayerCreated(this);
+    engine.onPlayerCreated(this);
   }
 
   void setStateChangingWeapons(){
