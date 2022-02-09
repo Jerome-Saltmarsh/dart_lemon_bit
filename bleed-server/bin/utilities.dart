@@ -11,6 +11,7 @@ import 'classes/Projectile.dart';
 import 'common/WeaponType.dart';
 import 'common/enums/Direction.dart';
 import 'constants.dart';
+import 'functions/withinRadius.dart';
 import 'maths.dart';
 import 'settings.dart';
 
@@ -128,19 +129,8 @@ void applyFriction(GameObject gameObject, double value) {
 }
 
 bool targetWithinStrikingRange(GameObject source, GameObject target) {
-  if (diff(source.x, target.x) > settings.range.zombieStrike) return false;
-  if (diff(source.y, target.y) > settings.range.zombieStrike) return false;
-  return true;
+  return withinRadius(source, target, settings.range.zombieStrike);
 }
-
-bool targetWithinDistanceCheap(GameObject source, GameObject target, double distance) {
-  return
-    diff(source.x, target.x) < distance
-        &&
-    diff(source.y, target.y) < distance
-  ;
-}
-
 
 bool targetWithinFiringRange(Character character, GameObject target){
   double range = getWeaponRange(character.weapon.type);
