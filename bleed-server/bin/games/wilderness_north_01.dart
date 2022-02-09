@@ -8,7 +8,7 @@ class WildernessNorth01 extends Game {
   WildernessNorth01() : super(scenes.wildernessNorth01);
 
   @override
-  void update() {
+  void _update() {
     // TODO: implement update
   }
 

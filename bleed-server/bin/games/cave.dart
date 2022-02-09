@@ -8,7 +8,7 @@ class Cave extends Game {
   Cave() : super(scenes.cave, shadeMax: Shade.Very_Dark);
 
   @override
-  void update() {
+  void _update() {
     // TODO: implement update
   }
 

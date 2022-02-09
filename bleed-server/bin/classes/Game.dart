@@ -166,7 +166,7 @@ abstract class Game {
     return playersRemaining;
   }
 
-  void update() {}
+  void _update() {}
 
   void onPlayerDisconnected(Player player) {}
 
@@ -360,7 +360,7 @@ extension GameFunctions on Game {
 
   void updateInProgress() {
     duration++;
-    update();
+    _update();
     _updatePlayersAndNpcs();
     _updateCollisions();
     _updateProjectiles();
@@ -370,7 +370,6 @@ extension GameFunctions on Game {
     _updateSpawnPointCollisions();
     _updateItems();
     _updateCharacterFrames();
-    compileGame(this);
   }
 
   void updateFrames(List<Character> character) {
@@ -1949,7 +1948,7 @@ class CustomGame extends Game {
   }
 
   @override
-  void update() {
+  void _update() {
     timeInSeconds = (timeInSeconds + secondsPerFrame) % secondsPerDay;
   }
 

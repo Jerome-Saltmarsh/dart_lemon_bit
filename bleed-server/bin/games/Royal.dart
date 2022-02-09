@@ -206,7 +206,7 @@ class GameRoyal extends Game {
   }
 
   @override
-  void update(){
+  void _update(){
     boundaryRadius -= boundaryRadiusShrinkRate;
     _killPlayersOutsideBoundary();
 

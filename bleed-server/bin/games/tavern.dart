@@ -29,7 +29,7 @@ class Tavern extends Game {
   }
 
   @override
-  void update() {
+  void _update() {
 
   }
 

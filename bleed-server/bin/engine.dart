@@ -165,12 +165,14 @@ class _Engine {
 
         case GameStatus.In_Progress:
           game.updateInProgress();
+          compileGame(game);
           break;
 
         case GameStatus.Finished:
           break;
       }
     }
+
   }
 
   Future<CustomGame> findOrCreateCustomGame(String mapId) async {

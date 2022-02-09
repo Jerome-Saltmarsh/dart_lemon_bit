@@ -137,7 +137,7 @@ class Town extends Game {
   }
 
   @override
-  void update() {
+  void _update() {
     if (engine.frame % _framesPerZombieSpawn != 0) return;
     if (zombieCount >= _maxZombies) return;
     spawnRandomZombie(
