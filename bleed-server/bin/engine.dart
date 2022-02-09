@@ -25,10 +25,13 @@ const secondsPerUpdateNpcObjective = 4;
 final _Engine engine = _Engine();
 
 class _Engine {
-
+  // state
   final Map<String, Player> playerMap = {};
   final List<Game> games = [];
   int frame = 0;
+
+  // config
+  final framePerformStrike = 3;
 
   void init() {
     // @on init jobs

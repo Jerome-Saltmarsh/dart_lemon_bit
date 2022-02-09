@@ -1634,7 +1634,7 @@ extension GameFunctions on Game {
 
   void updateCharacterStriking(Character character) {
     if (character is Player) {
-      if (character.stateDuration == framePerformStrike) {
+      if (character.stateDuration == engine.framePerformStrike) {
         if (character.slots.weapon.isBow) {
           spawnArrow(character, damage: character.slots.weapon.damage);
           character.attackTarget = character.attackTarget;
