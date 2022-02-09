@@ -68,9 +68,7 @@ class _Global {
 
   void update() {
     for (final game in games) {
-
       switch(game.status) {
-
         case GameStatus.Awaiting_Players:
           for (int i = 0; i < game.players.length; i++) {
             final player = game.players[i];
@@ -100,16 +98,16 @@ class _Global {
       }
     }
   }
-}
 
-Future<CustomGame> findOrCreateCustomGame(String mapId) async {
-  for(Game game in global.games){
-    if (game is CustomGame == false) continue;
-    final customGame = game as CustomGame;
-    if (customGame.scene.name != mapId) continue;
-    return customGame;
+  Future<CustomGame> findOrCreateCustomGame(String mapId) async {
+    for(Game game in global.games){
+      if (game is CustomGame == false) continue;
+      final customGame = game as CustomGame;
+      if (customGame.scene.name != mapId) continue;
+      return customGame;
+    }
+    final customMapJson = await firestoreService.loadMap(mapId);
+    final scene = parseJsonToScene(customMapJson, mapId);
+    return CustomGame(scene);
   }
-  final customMapJson = await firestoreService.loadMap(mapId);
-  final scene = parseJsonToScene(customMapJson, mapId);
-  return CustomGame(scene);
 }

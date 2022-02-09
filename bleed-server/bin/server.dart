@@ -437,7 +437,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             }
 
             final mapId = arguments[indexMapId];
-            final customGame = await findOrCreateCustomGame(mapId);
+            final customGame = await global.findOrCreateCustomGame(mapId);
             final Player player = customGame.playerJoin();
             compileWholeGame(customGame);
             compilePlayerJoined(_buffer, player);
