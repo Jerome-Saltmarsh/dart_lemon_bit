@@ -62,6 +62,7 @@ void compileGame(Game game) {
   if (game.debugMode) {
     _compilePaths(buffer, game.zombies);
     _compileNpcDebug(buffer, game.npcs);
+    _compileNpcDebug(buffer, game.zombies);
   }
 
   _write(buffer, ServerResponse.Scene_Shade_Max.index);
