@@ -411,9 +411,6 @@ extension GameFunctions on Game {
       target.active = false;
       onNpcKilled(target, src);
     }
-    if (src is Player && target is Npc) {
-      playerGainExperience(src, target.experience);
-    }
 
     if (target is Npc && target.alive) {
       if (!target.targetSet) {
@@ -1324,7 +1321,6 @@ extension GameFunctions on Game {
     double x,
     double y, {
     required int health,
-    required int experience,
     required int team,
     required int damage,
     List<Vector2>? objectives,
@@ -1333,7 +1329,6 @@ extension GameFunctions on Game {
     zombie.damage = damage;
     zombie.team = team;
     zombie.active = true;
-    zombie.experience = experience;
     zombie.state = CharacterState.Idle;
     zombie.stateDuration = 0;
     zombie.previousState = CharacterState.Idle;
@@ -1400,7 +1395,6 @@ extension GameFunctions on Game {
         spawnPoint.y,
         team: teams.east,
         health: health,
-        experience: experience,
         damage: damage
     );
   }

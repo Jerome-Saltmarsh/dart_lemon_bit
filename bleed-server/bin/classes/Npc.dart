@@ -23,8 +23,6 @@ class Npc extends Character {
   List<Vector2> path = [];
   List<Vector2> objectives = [];
   NpcMode mode = NpcMode.Aggressive;
-  bool followingPath = false;
-  int experience;
 
   Npc({
     required CharacterType type,
@@ -32,7 +30,6 @@ class Npc extends Character {
     required double y,
     required int health,
     Weapon? weapon,
-    this.experience = 0,
   })
       : super(
       type: type,
