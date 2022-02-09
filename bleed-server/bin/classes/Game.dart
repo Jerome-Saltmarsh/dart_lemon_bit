@@ -878,7 +878,11 @@ extension GameFunctions on Game {
   }
 
   void _updateAI() {
-    zombies.forEach(_updateCharacterAI);
+    for(final zombie in zombies){
+      _updateCharacterAI(zombie);
+    }
+
+    // zombies.forEach(_updateCharacterAI);
     npcs.forEach(_updateCharacterAI);
   }
 
@@ -1429,6 +1433,11 @@ extension GameFunctions on Game {
         setNpcTarget(zombieAI, player);
         targetDistance = npcDistance;
         break;
+      }
+
+      final target = zombieAI.target;
+      if (target != null){
+        npcSetPathTo(zombieAI, target.x, target.y);
       }
     }
   }

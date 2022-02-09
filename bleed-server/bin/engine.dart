@@ -35,7 +35,7 @@ class _Engine {
     // @on init jobs
     Future.delayed(Duration(seconds: 3), () {
       periodic(fixedUpdate, ms: msPerFrame);
-      periodic(updateNpcObjective, seconds: secondsPerUpdateNpcObjective);
+      periodic(updateNpcPathAndObjective, seconds: secondsPerUpdateNpcObjective);
       periodic(removeDisconnectedPlayers, seconds: secondsPerRemoveDisconnectedPlayers);
       periodic(updateNpcTargets, ms: msPerUpdateNpcTarget);
     });
@@ -91,7 +91,7 @@ class _Engine {
     }
   }
 
-  void updateNpcObjective(Timer timer) {
+  void updateNpcPathAndObjective(Timer timer) {
     for (final game in games) {
       for (final zombie in game.zombies) {
         if (zombie.inactive) continue;
