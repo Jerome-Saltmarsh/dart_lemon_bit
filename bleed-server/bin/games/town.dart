@@ -12,6 +12,7 @@ import '../common/WeaponType.dart';
 import '../enums/npc_mode.dart';
 import '../instances/scenes.dart';
 import '../state.dart';
+import '../engine.dart';
 import 'world.dart';
 
 class Town extends Game {
@@ -137,7 +138,7 @@ class Town extends Game {
 
   @override
   void update() {
-    if (frame % _framesPerZombieSpawn != 0) return;
+    if (engine.frame % _framesPerZombieSpawn != 0) return;
     if (zombieCount >= _maxZombies) return;
     spawnRandomZombie(
         health: 5,

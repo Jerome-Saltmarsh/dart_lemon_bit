@@ -7,6 +7,7 @@ import '../common/Quests.dart';
 import '../common/WeaponType.dart';
 import '../instances/scenes.dart';
 import '../state.dart';
+import '../engine.dart';
 import 'world.dart';
 
 const int _framesPerZombieSpawn = 10;
@@ -25,7 +26,7 @@ class WildernessWest01 extends Game {
 
   @override
   void update() {
-    if (frame % _framesPerZombieSpawn != 0) return;
+    if (engine.frame % _framesPerZombieSpawn != 0) return;
     if (zombieCount > _maxZombies) return;
     spawnRandomZombieLevel(1);
   }

@@ -41,7 +41,7 @@ import '../language.dart';
 import '../maths.dart';
 import '../settings.dart';
 import '../state.dart';
-import '../update.dart';
+import '../engine.dart';
 import '../utilities.dart';
 import 'Ability.dart';
 import 'Character.dart';
@@ -375,7 +375,7 @@ extension GameFunctions on Game {
   }
 
   void updateFrames(List<Character> character) {
-    for (Character character in character) {
+    for (final character in character) {
       character.stateFrameCount =
           (character.stateFrameCount + 1) % characterMaxFrames;
     }
@@ -483,7 +483,7 @@ extension GameFunctions on Game {
 
       // @on npc update find
       if (ai.mode == NpcMode.Aggressive) {
-        if (frame % 30 == 0) {
+        if (engine.frame % 30 == 0) {
           ai.path =
               scene.findPath(character.x, character.y, target.x, target.y);
         }
@@ -1617,7 +1617,7 @@ extension GameFunctions on Game {
   }
 
   void _updateCharacterFrames() {
-    if (frame % characterFramesChange == 0) {
+    if (engine.frame % characterFramesChange == 0) {
       updateFrames(players);
       updateFrames(zombies);
       updateFrames(npcs);

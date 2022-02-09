@@ -34,7 +34,7 @@ import 'games/Royal.dart';
 import 'games/world.dart';
 import 'global.dart';
 import 'settings.dart';
-import 'update.dart';
+import 'engine.dart';
 import 'utilities.dart';
 import 'values/world.dart';
 
@@ -50,9 +50,6 @@ void write(dynamic value) {
   _buffer.write(_space);
 }
 
-
-
-
 void main() {
   print('gamestream.online server starting');
   if (isLocalMachine){
@@ -60,7 +57,7 @@ void main() {
   }else{
     print("Environment Detected: Google Cloud Machine");
   }
-  initUpdateLoop();
+  engine.init();
   loadScenes();
 
   var handler = webSocketHandler(buildWebSocketHandler,);
@@ -94,7 +91,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     totalConnections++;
     print("New connection established. Total Connections $totalConnections");
 
-    void sendToClient(String response) {
+    void reply(String response) {
       webSocket.sink.add(response);
     }
 
@@ -103,7 +100,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     }
 
     void sendAndClearBuffer() {
-      sendToClient(_buffer.toString());
+      reply(_buffer.toString());
       clearBuffer();
     }
 
@@ -162,7 +159,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       final CubePlayer cubePlayer =
       CubePlayer(position: Vector3(), rotation: Vector3());
       cubeGame.cubes.add(cubePlayer);
-      sendToClient('${ServerResponse.Cube_Joined.index} ${cubePlayer.uuid}');
+      reply('${ServerResponse.Cube_Joined.index} ${cubePlayer.uuid}');
     }
 
     void joinGameMMO({required String playerName}) {
@@ -184,11 +181,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     }
 
     void error(GameError error, {String message = ""}) {
-      sendToClient('$errorIndex ${error.index} $message');
+      reply('$errorIndex ${error.index} $message');
     }
 
     void errorInvalidArg(String message) {
-      sendToClient('$errorIndex ${GameError.InvalidArguments.index} $message');
+      reply('$errorIndex ${GameError.InvalidArguments.index} $message');
     }
 
     void errorArgsExpected(int expected, List arguments) {
@@ -298,7 +295,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             if (game is GameMoba) {
               compileTeamLivesRemaining(_buffer, game);
             }
-            sendToClient(_buffer.toString());
+            reply(_buffer.toString());
             return;
           }
 
@@ -312,7 +309,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             _buffer.write(game.compiledTiles);
             _buffer.write(game.compiledEnvironmentObjects);
             _buffer.write(game.compiled);
-            sendToClient(_buffer.toString());
+            reply(_buffer.toString());
             return;
           }
 
@@ -517,11 +514,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Ping:
-          sendToClient(ServerResponse.Pong.index.toString());
+          reply(ServerResponse.Pong.index.toString());
           break;
 
         case ClientRequest.Revive:
-          Player? player = global.findPlayerByUuid(arguments[1]);
+          final player = global.findPlayerByUuid(arguments[1]);
 
           if (player == null) {
             errorPlayerNotFound();
@@ -977,7 +974,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Version:
-          sendToClient('${ServerResponse.Version.index} $version');
+          reply('${ServerResponse.Version.index} $version');
           break;
 
         case ClientRequest.SkipHour:
