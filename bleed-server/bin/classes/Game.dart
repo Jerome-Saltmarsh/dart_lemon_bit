@@ -665,6 +665,8 @@ extension GameFunctions on Game {
     character.state = CharacterState.Dead;
     character.collidable = false;
     character.stateFrameCount = duration;
+    character.ai?.onDeath();
+
     if (character is Player) {
       dispatch(GameEventType.Player_Death, character.x, character.y);
       onPlayerDeath(character);
@@ -676,8 +678,6 @@ extension GameFunctions on Game {
       if (npcAI.target != character) continue;
       npcAI.target = null;
     }
-
-    character.ai?.clearTarget();
 
     for (final projectile in projectiles) {
       if (projectile.target != character) continue;
@@ -1532,7 +1532,7 @@ extension GameFunctions on Game {
       }
       player.active = false;
       players.removeAt(i);
-      playerMap.remove(player.uuid);
+      global.playerMap.remove(player.uuid);
       i--;
 
       if (status == GameStatus.Awaiting_Players) {

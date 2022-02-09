@@ -50,9 +50,7 @@ void write(dynamic value) {
   _buffer.write(_space);
 }
 
-Player? findPlayerByUuid(String uuid) {
-  return playerMap[uuid];
-}
+
 
 
 void main() {
@@ -273,7 +271,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
 
           final playerId = arguments[1];
-          final Player? player = findPlayerByUuid(playerId);
+          final Player? player = global.findPlayerByUuid(playerId);
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -523,7 +521,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Revive:
-          Player? player = findPlayerByUuid(arguments[1]);
+          Player? player = global.findPlayerByUuid(arguments[1]);
 
           if (player == null) {
             errorPlayerNotFound();
@@ -537,7 +535,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           return;
 
         case ClientRequest.CasteFireball:
-          Player? player = findPlayerByUuid(arguments[1]);
+          Player? player = global.findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -559,7 +557,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          Player? player = findPlayerByUuid(arguments[1]);
+          Player? player = global.findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -583,7 +581,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return errorArgsExpected(3, arguments);
           }
 
-          Player? player = findPlayerByUuid(arguments[1]);
+          Player? player = global.findPlayerByUuid(arguments[1]);
           if (player == null) {
             return errorPlayerNotFound();
           }
@@ -605,7 +603,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return errorArgsExpected(3, arguments);
           }
 
-          Player? player = findPlayerByUuid(arguments[1]);
+          Player? player = global.findPlayerByUuid(arguments[1]);
           if (player == null) {
             return errorPlayerNotFound();
           }
@@ -626,7 +624,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return errorArgsExpected(3, arguments);
           }
 
-          Player? player = findPlayerByUuid(arguments[1]);
+          Player? player = global.findPlayerByUuid(arguments[1]);
           if (player == null) {
             return errorPlayerNotFound();
           }
@@ -649,7 +647,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          Player? player = findPlayerByUuid(arguments[1]);
+          Player? player =global.findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -695,7 +693,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          Player? player = findPlayerByUuid(arguments[1]);
+          final player = global.findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -710,7 +708,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          Player? player = findPlayerByUuid(arguments[1]);
+          Player? player =global.findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -728,7 +726,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          Player? player = findPlayerByUuid(arguments[1]);
+          Player? player =global.findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -767,7 +765,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          Player? player = findPlayerByUuid(arguments[1]);
+          Player? player =global.findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -781,7 +779,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          Player? player = findPlayerByUuid(arguments[1]);
+          Player? player =global.findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -852,7 +850,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             errorArgsExpected(3, arguments);
             return;
           }
-          Player? player = findPlayerByUuid(arguments[1]);
+          Player? player =global.findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -906,7 +904,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Teleport:
-          Player? player = findPlayerByUuid(arguments[1]);
+          Player? player =global.findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -925,7 +923,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          Player? player = findPlayerByUuid(arguments[1]);
+          Player? player =global.findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -947,7 +945,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 "ClientRequest.Purchase Error: Expected 2 args but got ${arguments.length}");
           }
 
-          final player = findPlayerByUuid(arguments[1]);
+          final player =global.findPlayerByUuid(arguments[1]);
           if (player == null) {
             return errorPlayerNotFound();
           }
@@ -984,7 +982,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          final player = findPlayerByUuid(arguments[1]);
+          final player =global.findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -1008,7 +1006,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Speak:
-          Player? player = findPlayerByUuid(arguments[1]);
+          Player? player =global.findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -1021,7 +1019,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           break;
 
         case ClientRequest.Interact:
-          Player? player = findPlayerByUuid(arguments[1]);
+          Player? player =global.findPlayerByUuid(arguments[1]);
 
           if (player == null) {
             errorPlayerNotFound();

@@ -41,6 +41,12 @@ class AI {
     if (target != value) return;
     target = null;
   }
+
+  void onDeath(){
+    target = null;
+    path.clear();
+    objectives.clear();
+  }
 }
 
 const _defaultCharacterSpeed = 3.0;

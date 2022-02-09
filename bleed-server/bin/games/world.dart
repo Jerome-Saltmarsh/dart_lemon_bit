@@ -8,13 +8,6 @@ import 'wilderness_east.dart';
 import 'wilderness_north_01.dart';
 import 'wilderness_west_01.dart';
 
-
-Map<String, Player> playerMap = {};
-
-void registerPlayer(Player player){
-  playerMap[player.uuid] = player;
-}
-
 int worldTime = 0;
 
 class World {

@@ -13,7 +13,16 @@ import 'settings.dart';
 final _Global global = _Global();
 
 class _Global {
+  final Map<String, Player> playerMap = {};
   final List<Game> games = [];
+
+  Player? findPlayerByUuid(String uuid) {
+    return playerMap[uuid];
+  }
+
+  void registerPlayer(Player player){
+    playerMap[player.uuid] = player;
+  }
 
   GameMoba findPendingMobaGame() {
     for (Game game in global.games) {
