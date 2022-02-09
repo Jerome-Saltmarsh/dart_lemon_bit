@@ -7,7 +7,6 @@ import 'compile.dart';
 import 'functions/loadScenes.dart';
 import 'games/Moba.dart';
 import 'games/Royal.dart';
-import 'games/world.dart';
 import 'settings.dart';
 
 final _Global global = _Global();
@@ -22,6 +21,10 @@ class _Global {
 
   void registerPlayer(Player player){
     playerMap[player.uuid] = player;
+  }
+
+  void deregisterPlayer(Player player){
+    playerMap.remove(player.uuid);
   }
 
   GameMoba findPendingMobaGame() {
@@ -70,10 +73,11 @@ class _Global {
 
         case GameStatus.Awaiting_Players:
           for (int i = 0; i < game.players.length; i++) {
-            Player player = game.players[i];
+            final player = game.players[i];
             player.lastUpdateFrame++;
             if (player.lastUpdateFrame > settings.framesUntilPlayerDisconnected) {
               game.players.removeAt(i);
+              deregisterPlayer(player);
               i--;
             }
           }
