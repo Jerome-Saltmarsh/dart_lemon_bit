@@ -3,7 +3,6 @@ import 'package:lemon_math/give_or_take.dart';
 
 import '../classes/Character.dart';
 import '../classes/Game.dart';
-import '../classes/Npc.dart';
 import '../classes/Player.dart';
 import '../common/CharacterType.dart';
 import '../common/GameEventType.dart';

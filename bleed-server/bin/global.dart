@@ -55,7 +55,7 @@ class _Global {
   }
 
   void update() {
-    for (Game game in games) {
+    for (final game in games) {
 
       switch(game.status) {
 

@@ -4,7 +4,6 @@ import 'package:lemon_math/hypotenuse.dart';
 
 import 'classes/Game.dart';
 import 'classes/GameObject.dart';
-import 'classes/Npc.dart';
 import 'common/Settings.dart';
 import 'games/world.dart';
 import 'global.dart';

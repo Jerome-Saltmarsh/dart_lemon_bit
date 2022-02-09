@@ -5,7 +5,6 @@ import '../classes/Character.dart';
 import '../classes/Crate.dart';
 import '../classes/Game.dart';
 import '../classes/Item.dart';
-import '../classes/Npc.dart';
 import '../classes/Player.dart';
 import '../classes/Weapon.dart';
 import '../common/CharacterType.dart';

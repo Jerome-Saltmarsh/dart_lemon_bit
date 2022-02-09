@@ -557,15 +557,15 @@ extension GameFunctions on Game {
       updateCharacter(npcs[i]);
     }
 
-    for (Character character in players) {
-      for (Collider collider in colliders) {
-        double combinedRadius = character.radius + collider.radius;
+    for (final character in players) {
+      for (final collider in colliders) {
+        final combinedRadius = character.radius + collider.radius;
         if (diffOver(character.x, collider.x, combinedRadius)) continue;
         if (diffOver(character.y, collider.y, combinedRadius)) continue;
-        double _distance = distanceV2(character, collider);
+        final _distance = distanceV2(character, collider);
         if (_distance > combinedRadius) continue;
-        double overlap = combinedRadius - _distance;
-        double r = radiansV2(character, collider);
+        final overlap = combinedRadius - _distance;
+        final r = radiansV2(character, collider);
         character.x -= adj(r, overlap);
         character.y -= opp(r, overlap);
       }

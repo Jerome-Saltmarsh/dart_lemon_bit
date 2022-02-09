@@ -13,7 +13,6 @@ import 'classes/GameEvent.dart';
 import 'classes/Grenade.dart';
 import 'classes/InteractableNpc.dart';
 import 'classes/Item.dart';
-import 'classes/Npc.dart';
 import 'classes/Player.dart';
 import 'classes/Projectile.dart';
 import 'classes/Weapon.dart';

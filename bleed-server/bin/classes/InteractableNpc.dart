@@ -1,6 +1,5 @@
 import '../common/CharacterType.dart';
 import 'Character.dart';
-import 'Npc.dart';
 import 'Player.dart';
 import 'Weapon.dart';
 

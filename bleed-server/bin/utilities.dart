@@ -6,7 +6,6 @@ import 'package:lemon_math/give_or_take.dart';
 
 import 'classes/Character.dart';
 import 'classes/GameObject.dart';
-import 'classes/Npc.dart';
 import 'classes/Player.dart';
 import 'classes/Projectile.dart';
 import 'common/WeaponType.dart';
@@ -19,8 +18,6 @@ const double tileSize = 48.0;
 const double halfTileSize = 24;
 const secondsPerMinute = 60;
 const minutesPerHour = 60;
-const _minusOne = -1;
-const _one = 1;
 
 double tilesLeftY = 0;
 
