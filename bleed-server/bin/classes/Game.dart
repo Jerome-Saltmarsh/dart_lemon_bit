@@ -1408,37 +1408,35 @@ extension GameFunctions on Game {
       if (zombie.dead) {
         continue;
       }
-      final ai = zombie.ai;
-      if (ai == null) continue;
-      final target = ai.target;
-      if (target == null) continue;
-      if (target.dead || !withinChaseRange(ai, target)) {
-          ai.target = null;
+      final zombieAI = zombie.ai;
+      if (zombieAI == null) continue;
+      final zombieAITarget = zombieAI.target;
+      if (zombieAITarget != null &&
+          (zombieAITarget.dead || !withinChaseRange(zombieAI, zombieAITarget))) {
+          zombieAI.target = null;
       }
 
-      var targetDistance = distanceV2(zombie, target);
+      var targetDistance = 9999999.0;
 
-      for (final npc in zombies) {
-        if (npc.dead) continue;
-        if (zombie.team == npc.team) continue;
-        if (!withinViewRange(ai, npc)) continue;
-        double npcDistance = distanceV2(zombie, npc);
+      for (final otherZombie in zombies) {
+        if (otherZombie.dead) continue;
+        if (zombie.team == otherZombie.team) continue;
+        if (!withinViewRange(zombieAI, otherZombie)) continue;
+        final npcDistance = distanceV2(zombie, otherZombie);
         if (npcDistance >= targetDistance) continue;
-        if (!isVisibleBetween(zombie, npc)) continue;
-        setNpcTarget(ai, npc);
+        if (!isVisibleBetween(zombie, otherZombie)) continue;
+        setNpcTarget(zombieAI, otherZombie);
         targetDistance = npcDistance;
       }
-
-      if (ai.target != null) continue;
 
       for (Player player in players) {
         if (player.dead) continue;
         if (zombie.team == player.team) continue;
-        if (!withinViewRange(ai, player)) continue;
-        double npcDistance = distanceV2(zombie, player);
+        if (!withinViewRange(zombieAI, player)) continue;
+        final npcDistance = distanceV2(zombie, player);
         if (npcDistance >= targetDistance) continue;
         if (!isVisibleBetween(zombie, player)) continue;
-        setNpcTarget(ai, player);
+        setNpcTarget(zombieAI, player);
         targetDistance = npcDistance;
         break;
       }

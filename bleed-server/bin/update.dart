@@ -29,7 +29,7 @@ void initUpdateLoop() {
 }
 
 void updateNpcTargets(Timer timer) {
-  for (Game game in global.games) {
+  for (final game in global.games) {
     game.updateInteractableNpcTargets();
     game.updateZombieTargets();
   }

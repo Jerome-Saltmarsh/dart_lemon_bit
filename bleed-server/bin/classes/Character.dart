@@ -47,6 +47,8 @@ const _defaultCharacterSpeed = 3.0;
 
 class Character extends GameObject implements HasSquad {
   late CharacterType type;
+  late int maxHealth;
+  late double _speed;
   AI? ai;
   Ability? ability = null;
   Ability? performing = null;
@@ -58,8 +60,6 @@ class Character extends GameObject implements HasSquad {
   double accuracy = 0;
   int stateDuration = 0;
   int stateFrameCount = 0;
-  late int maxHealth;
-  late double _speed;
   bool frozen = false;
   int frozenDuration = 0;
   double attackRange = 50;
