@@ -79,9 +79,9 @@ class IsometricActions {
   }
 
   void applyEnvironmentObjectsToBakeMapping(){
-    for (EnvironmentObject env in state.environmentObjects){
+    for (final env in state.environmentObjects){
       if (env.type == ObjectType.Torch){
-        emitLightHigh(state.bakeMap, env.x, env.y);
+        emitLightBakeHigh(env.x, env.y);
         continue;
       }
       if (env.type == ObjectType.House01){
@@ -293,17 +293,17 @@ class IsometricActions {
     applyShadeUnchecked(state.dynamicShading, getRow(x,  y), getColumn(x, y), value);
   }
 
-  void applyShade(
-      List<List<int>> shader, int row, int column, int value) {
-
-    if (row < state.minRow) return;
-    if (row > state.maxRow) return;
-    if (column < state.minColumn) return;
-    if (column > state.maxColumn) return;
+  void applyShade(List<List<int>> shader, int row, int column, int value) {
     if (queries.outOfBounds(row, column)) return;
     if (shader[row][column] <= value) return;
     shader[row][column] = value;
   }
+
+  void bakeShade(int row, int column, int value) {
+    if (state.bakeMap[row][column] <= value) return;
+    state.bakeMap[row][column] = value;
+  }
+
 
   void emitLightLow(List<List<int>> shader, double x, double y) {
     final column = getColumn(x, y);
@@ -377,6 +377,50 @@ class IsometricActions {
     }
   }
 
+  void bakeShadeRing(int row, int column, int size, int shade) {
+
+    if (shade >= state.ambient.value) return;
+
+    int rStart = row - size;
+    int rEnd = row + size;
+    int cStart = column - size;
+    int cEnd = column + size;
+
+    if (rStart < 0) {
+      rStart = 0;
+    } else if (rStart >= state.totalRowsInt) {
+      return;
+    }
+
+    if (rEnd >= state.totalRowsInt){
+      rEnd = state.totalRowsInt - 1;
+    } else if(rEnd < 0) {
+      return;
+    }
+
+    if (cStart < 0) {
+      cStart = 0;
+    } else if (cStart >= state.totalColumnsInt) {
+      return;
+    }
+
+    if (cEnd >= state.totalColumnsInt){
+      cEnd = state.totalColumnsInt - 1;
+    } else if(cEnd < 0) {
+      return;
+    }
+
+    for (int r = rStart; r <= rEnd; r++) {
+      bakeShade(r, cStart, shade);
+      bakeShade(r, cEnd, shade);
+    }
+    for (int c = cStart + 1; c < cEnd; c++) {
+      bakeShade(rStart, c, shade);
+      bakeShade(rEnd, c, shade);
+    }
+  }
+
+
   void emitLightMedium(List<List<int>> shader, double x, double y) {
     final column = getColumn(x, y);
     final row = getRow(x, y);
@@ -399,6 +443,18 @@ class IsometricActions {
     applyShadeRing(shader, row, column, 2, Shade.Medium);
     applyShadeRing(shader, row, column, 3, Shade.Dark);
     applyShadeRing(shader, row, column, 4, Shade.Very_Dark);
+  }
+
+  void emitLightBakeHigh(double x, double y) {
+    final column = getColumn(x, y);
+    final row = getRow(x, y);
+    if (queries.outOfBounds(row, column)) return;
+
+    bakeShade(row, column, Shade.Bright);
+    bakeShadeRing(row, column, 1, Shade.Bright);
+    bakeShadeRing(row, column, 2, Shade.Medium);
+    bakeShadeRing(row, column, 3, Shade.Dark);
+    bakeShadeRing(row, column, 4, Shade.Very_Dark);
   }
 
   void emitLightBrightSmall(List<List<int>> shader, double x, double y) {
