@@ -79,7 +79,7 @@ class GameRender {
       drawDebugNpcs(game.npcDebug);
     }
 
-    _renderCharacterHealthBars();
+    // _renderCharacterHealthBars();
 
     if (game.type.value == GameType.BATTLE_ROYAL){
       drawRoyalPerimeter();
