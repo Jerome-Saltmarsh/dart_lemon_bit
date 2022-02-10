@@ -110,11 +110,6 @@ class IsometricRender {
     int indexNpc = 0;
 
     final environmentObjects = state.environmentObjects;
-
-    for(final env in environmentObjects){
-      env.rendered = false;
-    }
-
     final particles = state.particles;
     final totalParticles = properties.totalActiveParticles;
     final totalEnvironment = environmentObjects.length;
@@ -234,14 +229,7 @@ class IsometricRender {
   }
 
   void environmentObject(EnvironmentObject value) {
-
-    if (value.rendered){
-      throw Exception("already rendered");
-    }
-    value.rendered = true;
-
     if (!queries.environmentObjectOnScreenScreen(value)) return;
-
     final shade = isometric.properties.getShade(value.row, value.column);
     if (shade == Shade.Pitch_Black) return;
 

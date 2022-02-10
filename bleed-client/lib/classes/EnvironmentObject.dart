@@ -23,8 +23,6 @@ class EnvironmentObject extends Vector2 {
 
   static const _anchorYRatio = 0.66666;
 
-  bool rendered = false;
-
   EnvironmentObject({
     required double x,
     required double y,

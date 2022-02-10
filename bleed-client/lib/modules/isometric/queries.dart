@@ -40,7 +40,6 @@ class IsometricQueries {
     final tile = getTileAt(x, y);
     if (tile == Tile.Boundary) return false;
     if (tile.isWater) return false;
-    // if (isBlock(tile)) return false;
     return true;
   }
 
