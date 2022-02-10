@@ -343,7 +343,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               game.setCharacterState(player, CharacterState.Idle);
               break;
             case CharacterAction.Perform:
-              if (player.isSoldier) {
+              if (player.type.isSoldier) {
                 characterFace(player, mouseX, mouseY);
                 if (player.weapon.type == WeaponType.Unarmed){
                   game.setCharacterState(player, CharacterState.Striking);
@@ -357,9 +357,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               playerSetAbilityTarget(player, mouseX, mouseY);
 
               if (ability == null) {
-                if (player.type == CharacterType.Swordsman ||
-                    player.type == CharacterType.Human ||
-                    player.attackTarget != null) {
+                if (player.type.isSoldier ||
+                    player.type.isHuman ||
+                    player.type.isTemplate ||
+                    player.attackTarget != null
+                ) {
                   characterAimAt(player, mouseX, mouseY);
                   game.setCharacterState(player, CharacterState.Striking);
                 }

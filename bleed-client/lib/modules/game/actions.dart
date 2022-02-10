@@ -25,6 +25,7 @@ class GameActions {
   }
 
   void playerPerform() {
+    print("game.actions.playerPerform()");
     setCharacterAction(CharacterAction.Perform);
   }
 

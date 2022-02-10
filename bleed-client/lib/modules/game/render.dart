@@ -55,7 +55,6 @@ class GameRender {
     drawProjectiles(game.projectiles);
     drawBulletHoles(game.bulletHoles);
 
-
     engine.draw.drawCircleOutline(
         radius: state.player.slots.weapon.value.range,
         x: state.player.x,
@@ -64,25 +63,23 @@ class GameRender {
         sides: 10
     );
 
-    // if (!modules.game.state.player.isHuman){
-      drawAbility();
-      final Vector2 attackTarget = state.player.attackTarget;
-      if (attackTarget.x != 0 && attackTarget.y != 0){
-        engine.draw.circle(attackTarget.x, attackTarget.y, 20, Colors.white24);
-      }
-    // }
+    drawAbility();
+    final Vector2 attackTarget = state.player.attackTarget;
+    if (attackTarget.x != 0 && attackTarget.y != 0) {
+      engine.draw.circle(attackTarget.x, attackTarget.y, 20, Colors.white24);
+    }
 
     engine.actions.setPaintColorWhite();
     isometric.render.sprites();
     drawEffects();
     drawItems();
-    // drawCrates();
 
     if (state.compilePaths.value) {
-      // drawDebugEnvironmentObjects();
       drawPaths();
       drawDebugNpcs(game.npcDebug);
     }
+
+    _renderCharacterHealthBars();
 
     if (game.type.value == GameType.BATTLE_ROYAL){
       drawRoyalPerimeter();
@@ -91,7 +88,13 @@ class GameRender {
     _drawFloatingTexts();
     _drawPlayerNames();
     drawPlayerText();
+
     engine.actions.setPaintColorWhite();
+  }
+
+  void _renderCharacterHealthBars() {
+    game.zombies.forEach(isometric.render.drawCharacterHealthBar);
+    game.humans.forEach(isometric.render.drawCharacterHealthBar);
   }
 
   void drawAbility() {

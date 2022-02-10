@@ -8,6 +8,12 @@ enum CharacterType {
   Archer,
 }
 
+extension CharacterTypeExtensions on CharacterType {
+  bool get isTemplate => this == CharacterType.Template;
+  bool get isSoldier => this == CharacterType.Soldier;
+  bool get isHuman => this == CharacterType.Human;
+}
+
 const characterTypes = CharacterType.values;
 
 final List<CharacterType> playableCharacterTypes = [
