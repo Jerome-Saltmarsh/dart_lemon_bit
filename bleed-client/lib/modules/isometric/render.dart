@@ -342,7 +342,7 @@ class IsometricRender {
       case CharacterState.Running:
         final animation = animations.running;
         final animationFrame = character.frame % animation.length;
-        final frame = animation[animationFrame] + 1;
+        final frame = animation[animationFrame] - 1;
         return (direction * _framesPerDirection * _sizeD) + (frame * _sizeD);
 
       default:
