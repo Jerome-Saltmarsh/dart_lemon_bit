@@ -68,13 +68,12 @@ final Map<ObjectType, Vector2> objectTypeSrcPosition = {
   ObjectType.Rock_Wall: atlas.rockWall,
 };
 
-final double _torchHeight = environmentObjectHeight[ObjectType.Torch]!;
+final _torchHeight = environmentObjectHeight[ObjectType.Torch]!;
 
 void mapEnvironmentObjectToSrc(EnvironmentObject env){
   final shade = isometric.properties.getShade(env.row, env.column);
-  ObjectType type = env.type;
-
-  Vector2? translation = objectTypeSrcPosition[type];
+  final type = env.type;
+  final translation = objectTypeSrcPosition[type];
   if (translation == null){
     throw Exception(type);
   }

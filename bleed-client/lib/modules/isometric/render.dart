@@ -99,6 +99,8 @@ class IsometricRender {
         engine.actions.renderAtlas();
       }
     }
+
+    engine.actions.flushRenderBuffer();
   }
 
   void sprites() {
@@ -157,12 +159,12 @@ class IsometricRender {
 
       if (environmentRemaining) {
         final env = environmentObjects[indexEnv];
-        if (env.top > screenBottom) return;
         if (!particlesRemaining ||
             env.y < particles[indexParticle].y &&
                 particles[indexParticle].type != ParticleType.Blood) {
           if (!zombiesRemaining || env.y < zombies[indexZombie].y) {
             if (!npcsRemaining || env.y < interactableNpcs[indexNpc].y) {
+              if (env.top > screenBottom) return;
               environmentObject(env);
               indexEnv++;
               continue;
