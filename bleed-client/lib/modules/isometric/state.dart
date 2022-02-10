@@ -37,4 +37,8 @@ class IsometricState {
   final Watch<int> maxAmbientBrightness = Watch(Shade.Bright);
   final nameTextStyle = TextStyle(color: Colors.white);
 
+  int minRow = 0;
+  int maxRow = 0;
+  int minColumn = 0;
+  int maxColumn = 0;
 }

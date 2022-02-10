@@ -10,6 +10,7 @@ import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/modules/game/actions.dart';
 import 'package:bleed_client/modules/game/enums.dart';
+import 'package:bleed_client/modules/isometric/utilities.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/resources.dart';
 import 'package:bleed_client/state/game.dart';
@@ -149,6 +150,10 @@ class GameBuild {
     return layout(
         children: [
           bottomCenter(child: _healthBar(), padding: 8),
+          Positioned(
+              left: 8,
+              top: 8,
+              child: mouseRowColumn()),
           Positioned(
               left: 8,
               bottom: 8,
@@ -739,6 +744,12 @@ class GameBuild {
       return state.slotTypeImages[value]!;
     }
     return resources.icons.unknown;
+  }
+
+  Widget mouseRowColumn(){
+    return Refresh((){
+      return text("Mouse row:$mouseRow, column $mouseColumn");
+    });
   }
 
   Widget toggleDebugMode(){

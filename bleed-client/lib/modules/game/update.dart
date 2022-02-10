@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
+import 'package:bleed_client/modules/isometric/utilities.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/send.dart';
 import 'package:bleed_client/state/game.dart';
@@ -53,13 +54,11 @@ class GameUpdate {
   void _updateBleed(){
     if (state.status.value == GameStatus.Finished) return;
 
-    readPlayerInput();
     isometric.update.call();
+    readPlayerInput();
     if (!state.panningCamera && modules.game.state.player.alive.value) {
       cameraFollowPlayer();
     }
-
-    // if (state.player.tar)
 
     sendRequestUpdatePlayer();
   }

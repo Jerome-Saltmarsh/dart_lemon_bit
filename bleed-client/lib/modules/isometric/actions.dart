@@ -3,8 +3,6 @@ import 'dart:ui';
 
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
-import 'package:bleed_client/classes/Explosion.dart';
-import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/common/ObjectType.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/constants.dart';
@@ -286,18 +284,17 @@ class IsometricActions {
     applyShade(state.dynamicShading, row, column, value);
   }
 
-  void applyShadeDynamicPosition(double x, double y, int value) {
-    final row = getRow(x,  y);
-    final column = getColumn(x, y);
-    applyShade(state.dynamicShading, row, column, value);
-  }
-
   void applyShadeDynamicPositionUnchecked(double x, double y, int value) {
     applyShadeUnchecked(state.dynamicShading, getRow(x,  y), getColumn(x, y), value);
   }
 
   void applyShade(
       List<List<int>> shader, int row, int column, int value) {
+
+    if (row < state.minRow) return;
+    if (row > state.maxRow) return;
+    if (column < state.minColumn) return;
+    if (column > state.maxColumn) return;
     if (queries.outOfBounds(row, column)) return;
     if (shader[row][column] <= value) return;
     shader[row][column] = value;
@@ -379,10 +376,6 @@ class IsometricActions {
     final column = getColumn(x, y);
     final row = getRow(x, y);
     if (queries.outOfBounds(row, column)) return;
-    // if (row < 0) return;
-    // if (column < 0) return;
-    // if (row >= shader.length) return;
-    // if (column >= shader[0].length) return;
 
     applyShade(shader, row, column, Shade.Bright);
     applyShadeRing(shader, row, column, 1, Shade.Medium);
@@ -440,6 +433,10 @@ class IsometricActions {
 
   void applyShadeUnchecked(
       List<List<int>> shader, int row, int column, int value) {
+    if (row < state.minRow) return;
+    if (row > state.maxRow) return;
+    if (column < state.minColumn) return;
+    if (column > state.maxColumn) return;
     if (shader[row][column] <= value) return;
     shader[row][column] = value;
   }

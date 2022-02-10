@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/functions.dart';
@@ -6,8 +8,10 @@ import 'package:bleed_client/functions/spawners/spawnBlood.dart';
 import 'package:bleed_client/modules/isometric/enums.dart';
 import 'package:bleed_client/modules/isometric/queries.dart';
 import 'package:bleed_client/modules/isometric/state.dart';
+import 'package:bleed_client/modules/isometric/utilities.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:lemon_engine/engine.dart';
 
 class IsometricUpdate {
 
@@ -16,6 +20,11 @@ class IsometricUpdate {
   IsometricUpdate(this.state, this.queries);
 
   void call(){
+    final screen = engine.state.screen;
+    state.minRow = max(0, getRow(screen.left, screen.top));
+    state.maxRow = min(state.totalRowsInt, getRow(screen.right, screen.bottom));
+    state.minColumn = max(0, getColumn(screen.right, screen.top));
+    state.maxColumn = min(state.totalColumnsInt, getColumn(screen.left, screen.bottom));
     _deadZombieBlood();
     _updateParticles();
     _updateParticleEmitters();
