@@ -2,7 +2,6 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:bleed_client/classes/Character.dart';
-import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/ObjectType.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/constants.dart';
@@ -338,34 +337,14 @@ class IsometricActions {
 
     if (shade >= state.ambient.value) return;
 
-    int rStart = row - size;
-    int rEnd = row + size;
-    int cStart = column - size;
-    int cEnd = column + size;
-
-    if (rStart < 0) {
-      rStart = 0;
-    } else if (rStart >= state.totalRowsInt) {
-      return;
-    }
-
-    if (rEnd >= state.totalRowsInt){
-      rEnd = state.totalRowsInt - 1;
-    } else if(rEnd < 0) {
-      return;
-    }
-
-    if (cStart < 0) {
-      cStart = 0;
-    } else if (cStart >= state.totalColumnsInt) {
-      return;
-    }
-
-    if (cEnd >= state.totalColumnsInt){
-      cEnd = state.totalColumnsInt - 1;
-    } else if(cEnd < 0) {
-      return;
-    }
+    final rStart = row - size;
+    if (rStart > state.maxRow) return;
+    final rEnd = row + size;
+    if (rEnd < state.minRow) return;
+    final cStart = column - size;
+    if (cStart > state.maxColumn) return;
+    final cEnd = column + size;
+    if (cEnd < state.minColumn) return;
 
     for (int r = rStart; r <= rEnd; r++) {
       applyShadeUnchecked(shader, r, cStart, shade);
@@ -490,10 +469,6 @@ class IsometricActions {
 
   void applyShadeUnchecked(
       List<List<int>> shader, int row, int column, int value) {
-    if (row < state.minRow) return;
-    if (row > state.maxRow) return;
-    if (column < state.minColumn) return;
-    if (column > state.maxColumn) return;
     if (shader[row][column] <= value) return;
     shader[row][column] = value;
   }
