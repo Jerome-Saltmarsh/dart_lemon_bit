@@ -30,11 +30,27 @@ import 'package:lemon_math/diff_over.dart';
 import 'functions.dart';
 import 'state.dart';
 
-final _size = 64;
-final _sizeD = 64.0;
-final _sizeDHalf = 32.0;
-final _anchorX = _size * 0.5;
-final _anchorY = _size * 0.75;
+const _size = 64;
+const _sizeD = 64.0;
+const _sizeDHalf = 32.0;
+const _anchorX = _size * 0.5;
+const _anchorY = _size * 0.75;
+const _framesPerDirection = 9;
+
+const _indexIdle = 0;
+const _indexChanging = 1;
+
+final _Indexes indexes = _Indexes();
+
+class _Indexes {
+  final swordWooden = 1;
+  final swordSteel = 2;
+  final legsBlue = 3;
+  final bodyBlue = 4;
+  final bodyCyan = 5;
+  final headPlain = 6;
+  final headSteel = 7;
+}
 
 class IsometricRender {
 
@@ -242,19 +258,6 @@ class IsometricRender {
       return;
     }
 
-    // // mapCharacterDst(character, character.type);
-    // _mapCharacterSrcShadow(character);
-    // engine.actions.renderAtlas();
-    // // mapCharacterDst(character, character.type);
-    // _mapCharacterSrcLegs(character);
-    // engine.actions.renderAtlas();
-    // // mapCharacterDst(character, character.type);
-    // _mapCharacterSrcArmour(character);
-    // engine.actions.renderAtlas();
-    // // mapCharacterDst(character, character.type);
-    // _renderCharacterHead(character);
-    // engine.actions.renderAtlas();
-
     renderCharacterPartLegs(character);
     renderCharacterPartBody(character);
     renderCharacterPartHead(character);
@@ -287,252 +290,12 @@ class IsometricRender {
     engine.actions.renderAtlas();
   }
 
-  double getCharacterSrcYHead(Character character){
-    return getIndexY(getSpriteIndexHead(character));
-  }
-
-  double getCharacterSrcYBody(Character character){
-    return getIndexY(getSpriteIndexBody(character));
-  }
-
-  double getIndexY(int index){
-    return atlas.parts.y + (index * _sizeD);
-  }
-
-  void mapCharacterDst2(Character character){
-    engine.state.mapDst(
-        x: character.x,
-        y: character.y,
-        anchorX: _sizeDHalf,
-        anchorY: _sizeDHalf
-    );
-  }
-
-  void _mapCharacterSrcShadow(Character character){
-    switch(character.state){
-      case CharacterState.Idle:
-        srcSingle(atlas: atlas.shadow.idle, direction: character.direction);
-        break;
-      case CharacterState.Striking:
-        srcAnimate(
-          atlas: atlas.shadow.striking,
-          animation: animations.human.strikingSword,
-          direction: character.direction,
-          frame: character.frame,
-          framesPerDirection: 2,
-        );
-        break;
-      case CharacterState.Running:
-        srcLoop(
-            atlas: atlas.shadow.running,
-            direction: character.direction,
-            frame: character.frame
-        );
-        break;
-      case CharacterState.Changing:
-        srcSingle(atlas: atlas.shadow.idle, direction: character.direction);
-        break;
-      case CharacterState.Performing:
-        srcAnimate(
-          atlas: atlas.shadow.striking,
-          animation: animations.human.strikingSword,
-          direction: character.direction,
-          frame: character.frame,
-          framesPerDirection: 2,
-        );
-        break;
-    }
-  }
-
-  void _mapCharacterSrcLegs(Character character){
-    switch(character.state){
-      case CharacterState.Running:
-        srcLoop(
-            atlas: atlas.plain.legs.running,
-            direction: character.direction,
-            frame: character.frame
-        );
-        break;
-      default:
-        srcSingle(atlas: atlas.plain.legs.idle, direction: character.direction);
-        break;
-    }
-  }
-
-  void _mapCharacterSrcArmour(Character character){
-    switch(character.state){
-      case CharacterState.Idle:
-        switch(character.equippedArmour){
-          case SlotType.Body_Blue:
-            srcSingle(atlas: atlas.blueTorso.idle, direction: character.direction);
-            break;
-          default:
-            srcSingle(atlas: atlas.plain.torso.idle, direction: character.direction);
-            break;
-        }
-
-        break;
-      case CharacterState.Striking:
-        switch (character.equippedArmour) {
-          case SlotType.Body_Blue:
-            srcAnimate(
-              atlas: atlas.blueTorso.striking,
-              animation: character.equippedWeapon.isBow ? animations.human.firingBow : animations.human.strikingSword,
-              direction: character.direction,
-              frame: character.frame,
-              framesPerDirection: 2,
-            );
-            break;
-          default:
-            srcAnimate(
-              atlas: atlas.plain.torso.striking,
-              animation: character.equippedWeapon.isBow ? animations.human.firingBow : animations.human.strikingSword,
-              direction: character.direction,
-              frame: character.frame,
-              framesPerDirection: 2,
-            );
-            break;
-        }
-        break;
-      case CharacterState.Running:
-        switch (character.equippedArmour) {
-          case SlotType.Body_Blue:
-            srcLoop(
-                atlas: atlas.blueTorso.running,
-                direction: character.direction,
-                frame: character.frame
-            );
-            break;
-          default:
-            srcLoop(
-                atlas: atlas.plain.torso.running,
-                direction: character.direction,
-                frame: character.frame
-            );
-            break;
-        }
-        break;
-      case CharacterState.Changing:
-        switch (character.equippedArmour) {
-          case SlotType.Body_Blue:
-            srcAnimate(
-              atlas: atlas.blueTorso.changing,
-              animation: animations.human.changing,
-              direction: character.direction,
-              frame: character.frame,
-              framesPerDirection: 2,
-            );
-            break;
-          default:
-            srcAnimate(
-              atlas: atlas.plain.torso.changing,
-              animation: animations.human.changing,
-              direction: character.direction,
-              frame: character.frame,
-              framesPerDirection: 2,
-            );
-            break;
-        }
-        break;
-      case CharacterState.Performing:
-        switch (character.equippedArmour) {
-          case SlotType.Body_Blue:
-            srcAnimate(
-              atlas: atlas.blueTorso.striking,
-              animation: animations.human.strikingSword,
-              direction: character.direction,
-              frame: character.frame,
-              framesPerDirection: 2,
-            );
-            break;
-          default:
-            srcAnimate(
-              atlas: atlas.plain.torso.striking,
-              animation: animations.human.strikingSword,
-              direction: character.direction,
-              frame: character.frame,
-              framesPerDirection: 2,
-            );
-            break;
-        }
-        break;
-    }
-  }
-
-  void _renderCharacterHead(Character character){
-    switch(character.state){
-      case CharacterState.Striking:
-        if (character.equippedHead == SlotType.Steel_Helmet){
-          srcAnimate(
-            atlas: atlas.headSteel.striking,
-            animation: character.equippedWeapon.isBow ? animations.human.firingBow : animations.human.strikingSword,
-            direction: character.direction,
-            frame: character.frame,
-            framesPerDirection: 2,
-          );
-        }else{
-          srcAnimate(
-            atlas: atlas.plain.head.striking,
-            animation: character.equippedWeapon.isBow ? animations.human.firingBow : animations.human.strikingSword,
-            direction: character.direction,
-            frame: character.frame,
-            framesPerDirection: 2,
-          );
-        }
-        break;
-      case CharacterState.Running:
-        if (character.equippedHead == SlotType.Steel_Helmet){
-          srcLoop(
-              atlas: atlas.headSteel.running,
-              direction: character.direction,
-              frame: character.frame
-          );
-        }else{
-          srcLoop(
-              atlas: atlas.plain.head.running,
-              direction: character.direction,
-              frame: character.frame
-          );
-        }
-
-        break;
-      case CharacterState.Performing:
-        if (character.equippedHead == SlotType.Steel_Helmet){
-          srcAnimate(
-            atlas: atlas.headSteel.striking,
-            animation: animations.human.strikingSword,
-            direction: character.direction,
-            frame: character.frame,
-            framesPerDirection: 2,
-          );
-        }else{
-          srcAnimate(
-            atlas: atlas.plain.head.striking,
-            animation: animations.human.strikingSword,
-            direction: character.direction,
-            frame: character.frame,
-            framesPerDirection: 2,
-          );
-        }
-        break;
-      default:
-        if (character.equippedHead == SlotType.Steel_Helmet){
-          srcSingle(atlas: atlas.headSteel.idle, direction: character.direction);
-        } else {
-          srcSingle(atlas: atlas.plain.head.idle, direction: character.direction);
-        }
-    }
-    engine.actions.renderAtlas();
-  }
-
-  final framesPerDirection = 9;
-
   int getSpriteIndexHead(Character character){
     switch(character.equippedHead){
       case SlotType.Empty:
-        return 6;
+        return indexes.headPlain;
       case SlotType.Steel_Helmet:
-        return 7;
+        return indexes.headSteel;
       default:
         throw Exception("cannot render head ${character.equippedHead.name}");
     }
@@ -541,112 +304,42 @@ class IsometricRender {
   int getSpriteIndexBody(Character character){
     switch(character.equippedArmour){
       case SlotType.Empty:
-        return 5;
+        return indexes.bodyCyan;
       case SlotType.Body_Blue:
-        return 4;
+        return indexes.bodyBlue;
       default:
         throw Exception("cannot render body ${character.equippedHead.name}");
     }
   }
 
   int getSpriteIndexLegs(Character character){
-    return 3;
+    return indexes.legsBlue;
   }
-
-  final indexIdle = 0;
-  final indexChanging = 1;
-  final indexPrepareBow = 2;
-  final indexPrepareAttack = 3;
-  final indexReleaseAttack = 4;
-  final indexRun = 5;
-
-  void renderCharacterBody(Character character){
-
-    final y = atlas.parts.y + (getSpriteIndexBody(character) * _sizeD);
-
-    switch(character.state){
-      case CharacterState.Idle:
-        final x = ((character.direction.index * framesPerDirection) + indexIdle) * _sizeD;
-        engine.state.mapSrc(
-          x: x,
-          y: y,
-        );
-        break;
-      case CharacterState.Changing:
-        final x = ((character.direction.index * framesPerDirection) + indexChanging) * _sizeD;
-        engine.state.mapSrc(
-          x: x,
-          y: y,
-        );
-        break;
-      case CharacterState.Striking:
-        final animation = character.equippedWeapon.isBow ? animations.firingBow : animations.strikingSword;
-        final animationFrame = min(character.frame, animation.length - 1);
-        final frame = animation[animationFrame];
-        final x = (character.direction.index * framesPerDirection * _sizeD) + (frame * _sizeD);
-        engine.state.mapSrc(
-          x: x,
-          y: y,
-        );
-        break;
-
-      case CharacterState.Running:
-        final animation = animations.running;
-        final animationFrame = character.frame % animation.length;
-        final frame = animation[animationFrame];
-        final x = (character.direction.index * framesPerDirection * _sizeD) + (frame * _sizeD);
-        engine.state.mapSrc(
-          x: x,
-          y: y,
-        );
-        break;
-    }
-
-    engine.actions.renderAtlas();
-    engine.state.mapDst(
-        x: character.x,
-        y: character.y,
-        anchorX: _sizeDHalf,
-        anchorY: _sizeDHalf
-    );
-  }
-
 
   double getCharacterSrcX(Character character){
 
     switch(character.state){
       case CharacterState.Idle:
-        return ((character.direction.index * framesPerDirection) + indexIdle) * _sizeD;
+        return ((character.direction.index * _framesPerDirection) + _indexIdle) * _sizeD;
 
       case CharacterState.Changing:
-        return ((character.direction.index * framesPerDirection) + indexChanging) * _sizeD;
+        return ((character.direction.index * _framesPerDirection) + _indexChanging) * _sizeD;
 
       case CharacterState.Striking:
         final animation = character.equippedWeapon.isBow ? animations.firingBow : animations.strikingSword;
         final animationFrame = min(character.frame, animation.length - 1);
         final frame = animation[animationFrame];
-        return (character.direction.index * framesPerDirection * _sizeD) + (frame * _sizeD);
+        return (character.direction.index * _framesPerDirection * _sizeD) + (frame * _sizeD);
 
       case CharacterState.Running:
         final animation = animations.running;
         final animationFrame = character.frame % animation.length;
-        final frame = animation[animationFrame];
-        return (character.direction.index * framesPerDirection * _sizeD) + (frame * _sizeD);
+        final frame = animation[animationFrame] + 1;
+        return (character.direction.index * _framesPerDirection * _sizeD) + (frame * _sizeD);
 
       default:
-        throw Exception("cannot get body x");
+        throw Exception("getCharacterSrcX cannot get body x for state ${character.state.name}");
     }
-  }
-
-  void renderSlotType(SlotType slot, CharacterState characterState, Direction direction, int frame, double x, double y){
-     if (characterState == CharacterState.Idle){
-       int slotIndex = 5;
-       engine.state.mapSrc(
-           x: direction.index * framesPerDirection * _sizeD,
-           y: atlas.parts.y + (slotIndex * _sizeD));
-       engine.state.mapDst(x: x, y: y, anchorX: _sizeDHalf, anchorY: _sizeDHalf);
-       engine.actions.renderAtlas();
-     }
   }
 
   void _renderCharacterWeapon(Character character) {
@@ -784,7 +477,6 @@ class IsometricRender {
       ) {
     return engine.state.mapDst(
       scale: 0.7,
-      // scale: 1.0,
       x: character.x,
       y: character.y,
       anchorX: _anchorX,
