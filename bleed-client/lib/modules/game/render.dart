@@ -51,8 +51,6 @@ class GameRender {
 
     isometric.actions.applyEmissionsToDynamicShadeMap();
 
-
-
     isometric.actions.applyDynamicShadeToTileSrc();
     isometric.render.tiles();
     drawProjectiles(game.projectiles);

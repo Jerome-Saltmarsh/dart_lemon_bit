@@ -32,14 +32,14 @@ class IsometricActions {
 
   void applyDynamicShadeToTileSrc() {
     final tileSize = modules.isometric.constants.tileSize;
-    int i = 0;
+    final atlasY = atlas.tiles.y;
     final dynamicShading = state.dynamicShading;
-    for (int row = 0; row < state.totalRows.value; row++) {
-      for (int column = 0; column < state.totalColumns.value; column++) {
+    for (int row = state.minRow; row < state.maxRow; row++) {
+      for (int column = state.minColumn; column < state.maxColumn; column++) {
         final shade = dynamicShading[row][column];
-        state.tilesSrc[i + 1] = atlas.tiles.y + shade * tileSize; // top
+        final i = row * state.totalColumnsInt * 4 + (column * 4);
+        state.tilesSrc[i + 1] = atlasY + shade * tileSize; // top
         state.tilesSrc[i + 3] = state.tilesSrc[i + 1] + tileSize; // bottom
-        i += 4;
       }
     }
   }
@@ -388,10 +388,6 @@ class IsometricActions {
     final column = getColumn(x, y);
     final row = getRow(x, y);
     if (queries.outOfBounds(row, column)) return;
-    // if (row < 0) return;
-    // if (column < 0) return;
-    // if (row >= shader.length) return;
-    // if (column >= shader[0].length) return;
 
     applyShade(shader, row, column, Shade.Bright);
     applyShadeRing(shader, row, column, 1, Shade.Bright);
