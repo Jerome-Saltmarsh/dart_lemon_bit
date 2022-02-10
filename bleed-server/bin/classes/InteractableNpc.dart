@@ -8,13 +8,13 @@ class InteractableNpc extends Character {
 
   Function(Player player) onInteractedWith;
 
-  InteractableNpc(
-      {required this.name,
+  InteractableNpc({
+      required this.name,
       required this.onInteractedWith,
       required double x,
       required double y,
       required int health,
-        CharacterType type = CharacterType.Human,
+        CharacterType type = CharacterType.Soldier,
       required Weapon weapon})
       : super(
             type: type,

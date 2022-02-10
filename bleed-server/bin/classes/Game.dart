@@ -194,7 +194,7 @@ abstract class Game {
       crates.add(Crate(x: crate.x, y: crate.y));
     }
 
-    for (Character character in scene.characters) {
+    for (final character in scene.characters) {
       if (character.type == CharacterType.Zombie) {
         zombies.add(Character(
             type: CharacterType.Zombie,
@@ -220,7 +220,7 @@ abstract class Game {
       }
     }
 
-    for (EnvironmentObject environmentObject in scene.environment) {
+    for (final environmentObject in scene.environment) {
       if (environmentObject.radius > 0) {
         colliders.add(Collider(environmentObject.x, environmentObject.y,
             environmentObject.radius));

@@ -59,12 +59,12 @@ void initializeGameInstances() {
 
   game.interactableNpcs.clear();
   for (int i = 0; i < 200; i++) {
-    game.interactableNpcs.add(Character(type: CharacterType.Human));
+    game.interactableNpcs.add(Character(type: CharacterType.Soldier));
   }
 
   game.humans.clear();
   for (int i = 0; i < 500; i++) {
-    game.humans.add(Character(type: CharacterType.Human));
+    game.humans.add(Character(type: CharacterType.Template));
   }
 }
 

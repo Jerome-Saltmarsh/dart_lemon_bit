@@ -273,7 +273,7 @@ class IsometricRender {
 
   void _renderCharacter(Character character, int shade) {
 
-    if (character.type != CharacterType.Human){
+    if (character.type != CharacterType.Template){
       mapCharacterDst(character, character.type);
       mapCharacterSrc(
         type: character.type,

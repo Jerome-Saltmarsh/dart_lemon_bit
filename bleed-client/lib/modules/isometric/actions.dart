@@ -317,7 +317,6 @@ class IsometricActions {
   }
 
   void applyShadeRing(List<List<int>> shader, int row, int column, int size, int shade) {
-
     if (shade >= state.ambient.value) return;
     final rStart = max(row - size, state.minRow);
     if (rStart > state.maxRow) return;
