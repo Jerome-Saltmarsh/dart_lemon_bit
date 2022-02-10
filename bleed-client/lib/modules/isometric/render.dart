@@ -18,6 +18,7 @@ import 'package:bleed_client/modules/isometric/enums.dart';
 import 'package:bleed_client/modules/isometric/maps.dart';
 import 'package:bleed_client/modules/isometric/properties.dart';
 import 'package:bleed_client/modules/isometric/queries.dart';
+import 'package:bleed_client/modules/isometric/utilities.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/render/mapCharacterSrc.dart';
 import 'package:bleed_client/render/mapParticleToDst.dart';
@@ -64,14 +65,35 @@ class IsometricRender {
 
   void tiles() {
     engine.actions.setPaintColorWhite();
-    engine.state.canvas.drawRawAtlas(
-        state.image,
-        state.tilesDst,
-        state.tilesSrc,
-        null,
-        null,
-        null,
-        engine.state.paint);
+    // engine.state.canvas.drawRawAtlas(
+    //     state.image,
+    //     state.tilesDst,
+    //     state.tilesSrc,
+    //     null,
+    //     null,
+    //     null,
+    //     engine.state.paint);
+
+    final minRow = state.minRow;
+    final maxRow = state.maxRow;
+    final minColumn = state.minColumn;
+    final maxColumn = state.maxColumn;
+    final engineState = engine.state;
+    final atlasY = atlas.tiles.y;
+    for (int row = minRow; row < maxRow; row++){
+      for(int column = minColumn; column < maxColumn; column++){
+        engineState.mapDst(
+           x: getTileWorldX(row, column),
+           y: getTileWorldY(row, column),
+         );
+        final i = row * state.totalColumnsInt * 4 + (column * 4);
+        final shade = state.dynamicShading[row][column];
+        final top = atlasY + shade * tileSize; // top
+        final left = state.tilesSrc[i];
+        engineState.mapSrc(x: left, y: top, width: tileSize, height: tileSize);
+        engine.actions.renderAtlas();
+      }
+    }
   }
 
   void sprites() {
