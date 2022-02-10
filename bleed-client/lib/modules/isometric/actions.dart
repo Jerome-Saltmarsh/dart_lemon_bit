@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 
@@ -379,11 +378,11 @@ class IsometricActions {
   void emitLightMedium(List<List<int>> shader, double x, double y) {
     final column = getColumn(x, y);
     final row = getRow(x, y);
-
-    if (row < 0) return;
-    if (column < 0) return;
-    if (row >= shader.length) return;
-    if (column >= shader[0].length) return;
+    if (queries.outOfBounds(row, column)) return;
+    // if (row < 0) return;
+    // if (column < 0) return;
+    // if (row >= shader.length) return;
+    // if (column >= shader[0].length) return;
 
     applyShade(shader, row, column, Shade.Bright);
     applyShadeRing(shader, row, column, 1, Shade.Medium);
@@ -395,11 +394,11 @@ class IsometricActions {
   void emitLightHigh(List<List<int>> shader, double x, double y) {
     final column = getColumn(x, y);
     final row = getRow(x, y);
-
-    if (row < 0) return;
-    if (column < 0) return;
-    if (row >= shader.length) return;
-    if (column >= shader[0].length) return;
+    if (queries.outOfBounds(row, column)) return;
+    // if (row < 0) return;
+    // if (column < 0) return;
+    // if (row >= shader.length) return;
+    // if (column >= shader[0].length) return;
 
     applyShade(shader, row, column, Shade.Bright);
     applyShadeRing(shader, row, column, 1, Shade.Bright);
@@ -411,11 +410,11 @@ class IsometricActions {
   void emitLightBrightSmall(List<List<int>> shader, double x, double y) {
     final column = getColumn(x, y);
     final row = getRow(x, y);
-
-    if (row < 0) return;
-    if (column < 0) return;
-    if (row >= shader.length) return;
-    if (column >= shader[0].length) return;
+    if (queries.outOfBounds(row, column)) return;
+    // if (row < 0) return;
+    // if (column < 0) return;
+    // if (row >= shader.length) return;
+    // if (column >= shader[0].length) return;
 
     applyShade(shader, row, column, Shade.Bright);
     applyShadeRing(shader, row, column, 1, Shade.Medium);
@@ -459,9 +458,9 @@ class IsometricActions {
 
     final dynamicShading = state.dynamicShading;
 
-    for (Effect effect in game.effects) {
+    for (final effect in game.effects) {
       if (!effect.enabled) continue;
-      double p = effect.duration / effect.maxDuration;
+      final p = effect.duration / effect.maxDuration;
       if (p < 0.33) {
         emitLightHigh(dynamicShading, effect.x, effect.y);
         break;
@@ -476,7 +475,7 @@ class IsometricActions {
 
   void applyProjectileLighting() {
     for (int i = 0; i < game.totalProjectiles; i++) {
-      Projectile projectile = game.projectiles[i];
+      final projectile = game.projectiles[i];
       if (projectile.type == ProjectileType.Fireball) {
         emitLightBrightSmall(state.dynamicShading, projectile.x, projectile.y);
       }
