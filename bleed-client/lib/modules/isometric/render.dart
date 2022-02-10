@@ -317,25 +317,26 @@ class IsometricRender {
   }
 
   double getCharacterSrcX(Character character){
+    final direction = character.direction.index;
 
     switch(character.state){
       case CharacterState.Idle:
-        return ((character.direction.index * _framesPerDirection) + _indexIdle) * _sizeD;
+        return ((direction * _framesPerDirection) + _indexIdle) * _sizeD;
 
       case CharacterState.Changing:
-        return ((character.direction.index * _framesPerDirection) + _indexChanging) * _sizeD;
+        return ((direction * _framesPerDirection) + _indexChanging) * _sizeD;
 
       case CharacterState.Striking:
         final animation = character.equippedWeapon.isBow ? animations.firingBow : animations.strikingSword;
         final animationFrame = min(character.frame, animation.length - 1);
         final frame = animation[animationFrame];
-        return (character.direction.index * _framesPerDirection * _sizeD) + (frame * _sizeD);
+        return (direction * _framesPerDirection * _sizeD) + (frame * _sizeD);
 
       case CharacterState.Running:
         final animation = animations.running;
         final animationFrame = character.frame % animation.length;
         final frame = animation[animationFrame] + 1;
-        return (character.direction.index * _framesPerDirection * _sizeD) + (frame * _sizeD);
+        return (direction * _framesPerDirection * _sizeD) + (frame * _sizeD);
 
       default:
         throw Exception("getCharacterSrcX cannot get body x for state ${character.state.name}");
