@@ -72,7 +72,7 @@ Player spawnPlayerInTown() {
       x: 0,
       y: 1750,
       team: teams.west,
-      type: CharacterType.Human,
+      type: CharacterType.Template,
       health: 10,
   );
 }
