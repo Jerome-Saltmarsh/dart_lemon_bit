@@ -293,6 +293,10 @@ class IsometricActions {
     applyShade(state.dynamicShading, row, column, value);
   }
 
+  void applyShadeDynamicPositionUnchecked(double x, double y, int value) {
+    applyShadeUnchecked(state.dynamicShading, getRow(x,  y), getColumn(x, y), value);
+  }
+
   void applyShade(
       List<List<int>> shader, int row, int column, int value) {
     if (queries.outOfBounds(row, column)) return;
@@ -420,30 +424,18 @@ class IsometricActions {
   }
 
   void applyCharacterLightEmission(List<Character> characters) {
-    for(Character character in characters) {
-      if (character.team != modules.game.state.player.team) continue;
-      emitLightHigh(state.dynamicShading, character.x, character.y);
+    final shading = state.dynamicShading;
+    final playerTeam = modules.game.state.player.team;
+    for(final character in characters) {
+      if (character.team != playerTeam) continue;
+      emitLightHigh(shading, character.x, character.y);
     }
   }
 
   void applyNpcLightEmission(List<Character> characters) {
     final dynamicShading = state.dynamicShading;
-    for (Character character in characters) {
+    for (final character in characters) {
       emitLightMedium(dynamicShading, character.x, character.y);
-    }
-  }
-
-  void applyLightArea(List<List<int>> shader, int column, int row, int size, int shade) {
-
-    int columnStart = max(column - size, 0);
-    int columnEnd = min(column + size, state.totalColumns.value - 1);
-    int rowStart = max(row - size, 0);
-    int rowEnd = min(row + size, state.totalRows.value - 1);
-
-    for (int c = columnStart; c < columnEnd; c++) {
-      for (int r = rowStart; r < rowEnd; r++) {
-        applyShade(shader, r, c, shade);
-      }
     }
   }
 
@@ -462,7 +454,7 @@ class IsometricActions {
     applyNpcLightEmission(game.interactableNpcs);
 
     for (final item in state.items) {
-      applyShadeDynamicPosition(item.x, item.y, Shade.Bright);
+      applyShadeDynamicPositionUnchecked(item.x, item.y, Shade.Bright);
     }
 
     final dynamicShading = state.dynamicShading;

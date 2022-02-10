@@ -58,11 +58,13 @@ double shiftScale(double z) {
 }
 
 int getRow(double x, double y){
-  return projectedToWorldY(x, y) ~/ tileSize;
+  return (x + y) ~/ tileSize;
+  // return projectedToWorldY(x, y) ~/ tileSize;
 }
 
 int getColumn(double x, double y){
-  return projectedToWorldX(x, y) ~/ tileSize;
+  return (y - x) ~/ tileSize;
+  // return projectedToWorldX(x, y) ~/ tileSize;
 }
 
 
