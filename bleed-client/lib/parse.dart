@@ -3,7 +3,6 @@ import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/classes/Ability.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
-import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
