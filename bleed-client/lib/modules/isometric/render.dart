@@ -247,13 +247,7 @@ class IsometricRender {
     final shade = isometric.properties.getShadeAtPosition(character.x, character.y);
     if (shade > Shade.Dark) return;
 
-    if (character.direction.index > Direction.Right.index){
-      _renderCharacterWeapon(character);
-      _renderCharacter(character, shade);
-    } else {
-      _renderCharacter(character, shade);
-      _renderCharacterWeapon(character);
-    }
+    _renderCharacter(character, shade);
 
     if (
     character.type == CharacterType.Witch ||
@@ -274,19 +268,33 @@ class IsometricRender {
   void _renderCharacter(Character character, int shade) {
 
     if (character.type != CharacterType.Template){
-      mapCharacterDst(character, character.type);
-      mapCharacterSrc(
-        type: character.type,
-        state: character.state,
-        slotType: character.equippedWeapon,
-        direction: character.direction,
-        frame: character.frame,
-        shade: shade,
-      );
-      engine.actions.renderAtlas();
+      _renderCharacterStandard(character, shade);
       return;
     }
 
+    if (character.direction.index > Direction.Right.index){
+      _renderCharacterTemplateWeapon(character);
+      _renderCharacterTemplate(character);
+    } else {
+      _renderCharacterTemplate(character);
+      _renderCharacterTemplateWeapon(character);
+    }
+  }
+
+  void _renderCharacterStandard(Character character, int shade) {
+     mapCharacterDst(character, character.type);
+    mapCharacterSrc(
+      type: character.type,
+      state: character.state,
+      slotType: character.equippedWeapon,
+      direction: character.direction,
+      frame: character.frame,
+      shade: shade,
+    );
+    engine.actions.renderAtlas();
+  }
+
+  void _renderCharacterTemplate(Character character) {
     _renderCharacterShadow(character);
     _renderCharacterPartLegs(character);
     _renderCharacterPartBody(character);
@@ -390,7 +398,7 @@ class IsometricRender {
      }
   }
 
-  void _renderCharacterWeapon(Character character) {
+  void _renderCharacterTemplateWeapon(Character character) {
     if (character.equippedWeapon == SlotType.Empty) return;
     _renderCharacterPart(character, mapEquippedWeaponToSpriteIndex(character));
   }
