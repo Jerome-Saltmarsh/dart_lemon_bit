@@ -137,7 +137,7 @@ class IsometricRender {
           !npcsRemaining) return;
 
       if (humansRemaining) {
-        double humanY = game.humans[indexHuman].y;
+        final humanY = game.humans[indexHuman].y;
 
         if (!environmentRemaining ||
             humanY < environmentObjects[indexEnv].y) {
@@ -163,7 +163,7 @@ class IsometricRender {
                 particles[indexParticle].type != ParticleType.Blood) {
           if (!zombiesRemaining || env.y < zombies[indexZombie].y) {
             if (!npcsRemaining || env.y < interactableNpcs[indexNpc].y) {
-              environmentObject(environmentObjects[indexEnv]);
+              environmentObject(env);
               indexEnv++;
               continue;
             }
@@ -172,21 +172,17 @@ class IsometricRender {
       }
 
       if (particlesRemaining) {
-        Particle particle = particles[indexParticle];
+        final particle = particles[indexParticle];
 
         if (particle.type == ParticleType.Blood) {
-          if (onScreen(particle.x, particle.y)) {
-            _drawParticle(particle);
-          }
+          _drawParticle(particle);
           indexParticle++;
           continue;
         }
 
         if (!zombiesRemaining || particle.y < zombies[indexZombie].y) {
           if (!npcsRemaining || particle.y < interactableNpcs[indexNpc].y) {
-            if (onScreen(particle.x, particle.y)) {
-              _drawParticle(particle);
-            }
+            _drawParticle(particle);
             indexParticle++;
             continue;
           }
