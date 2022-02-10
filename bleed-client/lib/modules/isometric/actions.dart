@@ -96,10 +96,15 @@ class IsometricActions {
   }
 
   void resetDynamicShadesToBakeMap() {
+    final minRow = state.minRow;
+    final maxRow = state.maxRow;
+    final minColumn = state.minColumn;
+    final maxColumn = state.maxColumn;
     final dynamicShading = state.dynamicShading;
-    for (int row = 0; row < dynamicShading.length; row++) {
-      for (int column = 0; column < dynamicShading[0].length; column++) {
-        dynamicShading[row][column] = state.bakeMap[row][column];
+    final bakeMap = state.bakeMap;
+    for (int row = minRow; row < maxRow; row++) {
+      for (int column = minColumn; column < maxColumn; column++) {
+        dynamicShading[row][column] = bakeMap[row][column];
       }
     }
   }
