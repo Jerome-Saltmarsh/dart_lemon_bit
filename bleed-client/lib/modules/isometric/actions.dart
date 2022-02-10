@@ -432,7 +432,7 @@ class IsometricActions {
     applyShadeRing(shader, row, column, 3, Shade.Very_Dark);
   }
 
-  void applyCharacterLightEmission(List<Character> characters) {
+  void applyEmissionFromChractersBright(List<Character> characters) {
     final shading = state.dynamicShading;
     final playerTeam = modules.game.state.player.team;
     for(final character in characters) {
@@ -441,7 +441,7 @@ class IsometricActions {
     }
   }
 
-  void applyNpcLightEmission(List<Character> characters) {
+  void applyEmissionFromCharactersMedium(List<Character> characters) {
     final dynamicShading = state.dynamicShading;
     for (final character in characters) {
       emitLightMedium(dynamicShading, character.x, character.y);
@@ -451,17 +451,16 @@ class IsometricActions {
   void applyEmissionsToDynamicShadeMap() {
     if (modules.isometric.properties.dayTime) return;
     modules.isometric.actions.resetDynamicShadesToBakeMap();
-    applyCharacterLightEmission(game.humans);
-    applyCharacterLightEmission(game.zombies);
-    applyProjectileLighting();
-    applyNpcLightEmission(game.interactableNpcs);
+    applyEmissionFromChractersBright(game.humans);
+    applyEmissionFromCharactersMedium(game.zombies);
+    applyEmissionFromCharactersMedium(game.interactableNpcs);
+    applyEmissionFromProjectiles();
+    applyEmissionFromItems();
+    applyEmissionFromEffects();
+  }
 
-    for (final item in state.items) {
-      applyShadeDynamicPositionUnchecked(item.x, item.y, Shade.Bright);
-    }
-
+  void applyEmissionFromEffects() {
     final dynamicShading = state.dynamicShading;
-
     for (final effect in game.effects) {
       if (!effect.enabled) continue;
       final p = effect.duration / effect.maxDuration;
@@ -477,7 +476,13 @@ class IsometricActions {
     }
   }
 
-  void applyProjectileLighting() {
+  void applyEmissionFromItems() {
+    for (final item in state.items) {
+      applyShadeDynamicPositionUnchecked(item.x, item.y, Shade.Bright);
+    }
+  }
+
+  void applyEmissionFromProjectiles() {
     for (int i = 0; i < game.totalProjectiles; i++) {
       final projectile = game.projectiles[i];
       if (projectile.type == ProjectileType.Fireball) {
