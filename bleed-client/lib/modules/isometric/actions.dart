@@ -284,22 +284,21 @@ class IsometricActions {
     engine.actions.cameraCenter(properties.mapCenter.x, properties.mapCenter.y);
   }
 
-  void applyShadeDynamic(int row, int column, int value) {
+  void applyShadeDynamicPositionUnchecked(double x, double y, int value) {
+    shadeDynamic(getRow(x,  y), getColumn(x, y), value);
+  }
+
+  void shadeDynamic(int row, int column, int value) {
     applyShade(state.dynamicShading, row, column, value);
   }
 
-  void applyShadeDynamicPositionUnchecked(double x, double y, int value) {
-    applyShadeUnchecked(state.dynamicShading, getRow(x,  y), getColumn(x, y), value);
+  void shadeBake(int row, int column, int value) {
+    applyShade(state.bakeMap, row, column, value);
   }
 
   void applyShade(List<List<int>> shader, int row, int column, int value) {
     if (shader[row][column] <= value) return;
     shader[row][column] = value;
-  }
-
-  void bakeShade(int row, int column, int value) {
-    if (state.bakeMap[row][column] <= value) return;
-    state.bakeMap[row][column] = value;
   }
 
   void emitLightLow(List<List<int>> shader, double x, double y) {
@@ -319,7 +318,6 @@ class IsometricActions {
   void applyShadeRing(List<List<int>> shader, int row, int column, int size, int shade) {
 
     if (shade >= state.ambient.value) return;
-
     final rStart = row - size;
     if (rStart > state.maxRow) return;
     final rEnd = row + size;
@@ -330,12 +328,12 @@ class IsometricActions {
     if (cEnd < state.minColumn) return;
 
     for (int r = rStart; r <= rEnd; r++) {
-      applyShadeUnchecked(shader, r, cStart, shade);
-      applyShadeUnchecked(shader, r, cEnd, shade);
+      applyShade(shader, r, cStart, shade);
+      applyShade(shader, r, cEnd, shade);
     }
     for (int c = cStart + 1; c < cEnd; c++) {
-      applyShadeUnchecked(shader, rStart, c, shade);
-      applyShadeUnchecked(shader, rEnd, c, shade);
+      applyShade(shader, rStart, c, shade);
+      applyShade(shader, rEnd, c, shade);
     }
   }
 
@@ -373,12 +371,12 @@ class IsometricActions {
     }
 
     for (int r = rStart; r <= rEnd; r++) {
-      bakeShade(r, cStart, shade);
-      bakeShade(r, cEnd, shade);
+      shadeBake(r, cStart, shade);
+      shadeBake(r, cEnd, shade);
     }
     for (int c = cStart + 1; c < cEnd; c++) {
-      bakeShade(rStart, c, shade);
-      bakeShade(rEnd, c, shade);
+      shadeBake(rStart, c, shade);
+      shadeBake(rEnd, c, shade);
     }
   }
 
@@ -412,7 +410,7 @@ class IsometricActions {
     final row = getRow(x, y);
     if (queries.outOfBounds(row, column)) return;
 
-    bakeShade(row, column, Shade.Bright);
+    shadeBake(row, column, Shade.Bright);
     bakeShadeRing(row, column, 1, Shade.Bright);
     bakeShadeRing(row, column, 2, Shade.Medium);
     bakeShadeRing(row, column, 3, Shade.Dark);
@@ -448,12 +446,6 @@ class IsometricActions {
     for (final character in characters) {
       emitLightMedium(dynamicShading, character.x, character.y);
     }
-  }
-
-  void applyShadeUnchecked(
-      List<List<int>> shader, int row, int column, int value) {
-    if (shader[row][column] <= value) return;
-    shader[row][column] = value;
   }
 
   void applyEmissionsToDynamicShadeMap() {
