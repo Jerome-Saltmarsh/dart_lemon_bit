@@ -293,7 +293,6 @@ class IsometricActions {
   }
 
   void applyShade(List<List<int>> shader, int row, int column, int value) {
-    if (queries.outOfBounds(row, column)) return;
     if (shader[row][column] <= value) return;
     shader[row][column] = value;
   }
@@ -303,7 +302,6 @@ class IsometricActions {
     state.bakeMap[row][column] = value;
   }
 
-
   void emitLightLow(List<List<int>> shader, double x, double y) {
     final column = getColumn(x, y);
     if (column < 0) return;
@@ -312,25 +310,10 @@ class IsometricActions {
     if (row < 0) return;
     if (row >= shader.length) return;
 
-
     applyShade(shader, row, column, Shade.Medium);
     applyShadeRing(shader, row, column, 1, Shade.Medium);
     applyShadeRing(shader, row, column, 2, Shade.Dark);
     applyShadeRing(shader, row, column, 3, Shade.Very_Dark);
-  }
-
-
-
-  void applyShadeBright(List<List<int>> shader, int row, int column) {
-    applyShade(shader, row, column, Shade.Bright);
-  }
-
-  void applyShadeMedium(List<List<int>> shader, int row, int column) {
-    applyShade(shader, row, column, Shade.Medium);
-  }
-
-  void applyShadeDark(List<List<int>> shader, int row, int column) {
-    applyShade(shader, row, column, Shade.Dark);
   }
 
   void applyShadeRing(List<List<int>> shader, int row, int column, int size, int shade) {
