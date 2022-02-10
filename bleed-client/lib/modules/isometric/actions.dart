@@ -461,6 +461,10 @@ class IsometricActions {
     applyProjectileLighting();
     applyNpcLightEmission(game.interactableNpcs);
 
+    for (final item in state.items) {
+      applyShadeDynamicPosition(item.x, item.y, Shade.Bright);
+    }
+
     final dynamicShading = state.dynamicShading;
 
     for (Effect effect in game.effects) {

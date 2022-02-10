@@ -4,6 +4,7 @@ import 'dart:ui' as ui;
 
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
+import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/common/Tile.dart';
@@ -25,6 +26,7 @@ class IsometricState {
   final List<EnvironmentObject> environmentObjects = [];
   final List<List<int>> dynamicShading = [];
   final List<List<int>> bakeMap = [];
+  final List<Item> items = [];
   final Watch<int> totalColumns = Watch(0);
   final Watch<int> totalRows = Watch(0);
   int totalColumnsInt = 0;

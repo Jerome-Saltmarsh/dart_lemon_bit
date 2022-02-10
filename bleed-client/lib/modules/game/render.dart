@@ -51,9 +51,7 @@ class GameRender {
 
     isometric.actions.applyEmissionsToDynamicShadeMap();
 
-    for(final item in game.items) {
-      isometric.actions.applyShadeDynamicPosition(item.x, item.y, Shade.Bright);
-    }
+
 
     isometric.actions.applyDynamicShadeToTileSrc();
     isometric.render.tiles();
@@ -239,8 +237,9 @@ class GameRender {
   }
 
   void drawItems() {
+    final isoState = isometric.state;
     for (int i = 0; i < game.itemsTotal; i++){
-      isometric.render.renderItem(game.items[i]);
+      isometric.render.renderItem(isoState.items[i]);
     }
   }
 

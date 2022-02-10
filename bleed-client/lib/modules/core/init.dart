@@ -41,7 +41,7 @@ void initializeGameInstances() {
   for (int i = 0; i < 5000; i++) {
     game.projectiles
         .add(Projectile(0, 0, ProjectileType.Bullet, Direction.DownLeft));
-    game.items.add(Item(type: ItemType.None, x: 0, y: 0));
+    isometric.state.items.add(Item(type: ItemType.None, x: 0, y: 0));
   }
 
   for (int i = 0; i < 1000; i++) {

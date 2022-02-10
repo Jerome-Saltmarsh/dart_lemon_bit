@@ -43,7 +43,6 @@ class _Game {
   List<double> grenades = [];
   int id = -1;
   int totalProjectiles = 0;
-  List<Item> items = [];
   int itemsTotal = 0;
 
   final _Royal royal = _Royal();

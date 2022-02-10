@@ -293,15 +293,6 @@ void parseState() {
         _parsePlayer();
         break;
 
-      case ServerResponse.Items:
-        game.itemsTotal = consumeInt();
-        for (int i = 0; i < game.itemsTotal; i++) {
-          Item item = game.items[i];
-          item.type = _consumeItemType();
-          item.x = consumeDouble();
-          item.y = consumeDouble();
-        }
-        break;
       default:
         return;
     }
@@ -326,8 +317,9 @@ void parseGameTime() {
 
 void parseItems() {
   game.itemsTotal = consumeInt();
-  for(int i = 0; i < game.itemsTotal; i++){
-    final item = game.items[i];
+  final items = isometric.state.items;
+  for (int i = 0; i < game.itemsTotal; i++) {
+    final item = items[i];
     item.type = _consumeItemType();
     item.x = consumeDouble();
     item.y = consumeDouble();
