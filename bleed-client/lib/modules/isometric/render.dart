@@ -260,28 +260,29 @@ class IsometricRender {
     renderCharacterPartHead(character);
   }
 
-  void renderCharacterPartLegs(Character character) {
-    renderCharacterPart(character, getCharacterSrcYLegs(character));
-  }
-
   void renderCharacterPartHead(Character character) {
-    renderCharacterPart(character, getCharacterSrcYHead(character));
+    renderCharacterPart(character, getSpriteIndexHead(character));
   }
 
   void renderCharacterPartBody(Character character) {
-    renderCharacterPart(character, getCharacterSrcYBody(character));
+    renderCharacterPart(character, getSpriteIndexBody(character));
   }
 
-  void renderCharacterPart(Character character, double srcY) {
+  void renderCharacterPartLegs(Character character) {
+    renderCharacterPart(character, getSpriteIndexLegs(character));
+  }
+
+  void renderCharacterPart(Character character, int index, {double scale = 0.7}) {
     engine.state.mapDst(
         x: character.x,
         y: character.y,
         anchorX: _sizeDHalf,
-        anchorY: _sizeDHalf
+        anchorY: _sizeDHalf,
+        scale: scale
     );
     engine.state.mapSrc(
         x: getCharacterSrcX(character),
-        y: srcY
+        y: atlas.parts.y + (index * _sizeD)
     );
     engine.actions.renderAtlas();
   }
@@ -292,10 +293,6 @@ class IsometricRender {
 
   double getCharacterSrcYBody(Character character){
     return getIndexY(getSpriteIndexBody(character));
-  }
-
-  double getCharacterSrcYLegs(Character character){
-    return getIndexY(getSpriteIndexLegs(character));
   }
 
   double getIndexY(int index){
