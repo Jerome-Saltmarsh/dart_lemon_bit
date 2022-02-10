@@ -369,6 +369,7 @@ extension GameFunctions on Game {
     _updateSpawnPointCollisions();
     _updateItems();
     _updateCharacterFrames();
+    sortGameObjects();
   }
 
   void updateFrames(List<Character> character) {
@@ -608,6 +609,7 @@ extension GameFunctions on Game {
     sortVertically(players);
     sortVertically(npcs);
     sortVertically(items);
+    sortVertically(projectiles);
   }
 
   Player? findPlayerById(int id) {

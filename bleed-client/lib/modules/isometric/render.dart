@@ -88,13 +88,13 @@ class IsometricRender {
     for (int row = minRow; row < maxRow; row++){
       for(int column = minColumn; column < maxColumn; column++){
         final i = row * totalColumnsInt * 4 + (column * 4);
-        final shade = dynamicShade[row][column];
-        final top = atlasY + shade * tileSize; // top
-        final left = tilesSrc[i];
         engineState.mapDstCheap(
           x: tilesDst[i + 2],
           y: tilesDst[i + 3],
         );
+        final shade = dynamicShade[row][column];
+        final top = atlasY + shade * tileSize; // top
+        final left = tilesSrc[i];
         engineState.mapSrc(x: left, y: top, width: tileSize, height: tileSize);
         engine.actions.renderAtlas();
       }
@@ -108,7 +108,13 @@ class IsometricRender {
     int indexParticle = 0;
     int indexZombie = 0;
     int indexNpc = 0;
+
     final environmentObjects = state.environmentObjects;
+
+    for(final env in environmentObjects){
+      env.rendered = false;
+    }
+
     final particles = state.particles;
     final totalParticles = properties.totalActiveParticles;
     final totalEnvironment = environmentObjects.length;
@@ -228,6 +234,12 @@ class IsometricRender {
   }
 
   void environmentObject(EnvironmentObject value) {
+
+    if (value.rendered){
+      throw Exception("already rendered");
+    }
+    value.rendered = true;
+
     if (!queries.environmentObjectOnScreenScreen(value)) return;
 
     final shade = isometric.properties.getShade(value.row, value.column);
@@ -253,19 +265,19 @@ class IsometricRender {
 
     _renderCharacter(character, shade);
 
-    if (
-    character.type == CharacterType.Witch ||
-        character.type == CharacterType.Swordsman ||
-        character.type == CharacterType.Archer
-    ) {
-      if (character.team == modules.game.state.player.team){
-        drawCharacterMagicBar(character);
-      }
-    }
-
-    if (shade <= Shade.Medium) {
-      drawCharacterHealthBar(character);
-    }
+    // if (
+    // character.type == CharacterType.Witch ||
+    //     character.type == CharacterType.Swordsman ||
+    //     character.type == CharacterType.Archer
+    // ) {
+    //   if (character.team == modules.game.state.player.team){
+    //     drawCharacterMagicBar(character);
+    //   }
+    // }
+    //
+    // if (shade <= Shade.Medium) {
+    //   drawCharacterHealthBar(character);
+    // }
 
   }
 

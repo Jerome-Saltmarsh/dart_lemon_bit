@@ -55,6 +55,15 @@ class GameRender {
     drawProjectiles(game.projectiles);
     drawBulletHoles(game.bulletHoles);
 
+
+    engine.draw.drawCircleOutline(
+        radius: state.player.slots.weapon.value.range,
+        x: state.player.x,
+        y: state.player.y,
+        color: colours.white80,
+        sides: 10
+    );
+
     // if (!modules.game.state.player.isHuman){
       drawAbility();
       final Vector2 attackTarget = state.player.attackTarget;
@@ -78,13 +87,6 @@ class GameRender {
     if (game.type.value == GameType.BATTLE_ROYAL){
       drawRoyalPerimeter();
     }
-    engine.draw.drawCircleOutline(
-      radius: state.player.slots.weapon.value.range,
-      x: state.player.x,
-      y: state.player.y,
-      color: colours.white80,
-      sides: 10
-    );
     engine.actions.setPaintColorWhite();
     _drawFloatingTexts();
     _drawPlayerNames();
@@ -93,15 +95,8 @@ class GameRender {
   }
 
   void drawAbility() {
-    if (modules.game.state.player.ability.value == AbilityType.None) {
-      engine.draw.drawCircleOutline(
-          sides: 24,
-          radius: modules.game.state.player.attackRange,
-          x: modules.game.state.player.x,
-          y: modules.game.state.player.y,
-          color: Colors.white24);
-      return;
-    }
+
+    if (state.player.ability.value == AbilityType.None) return;
 
     drawMouseAim2();
 
