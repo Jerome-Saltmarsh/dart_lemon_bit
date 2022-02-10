@@ -24,7 +24,7 @@ class IsometricState {
   Float32List tilesSrc = Float32List(0);
   List<Particle> particles = [];
   final List<EnvironmentObject> environmentObjects = [];
-  final List<List<int>> dynamicShading = [];
+  final List<List<int>> dynamicShade = [];
   final List<List<int>> bakeMap = [];
   final List<Item> items = [];
   final Watch<int> totalColumns = Watch(0);

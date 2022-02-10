@@ -62,7 +62,7 @@ class IsometricProperties {
     if (column >= modules.isometric.state.totalColumns.value){
       return Shade.Very_Dark;
     }
-    return modules.isometric.state.dynamicShading[row][column];
+    return modules.isometric.state.dynamicShade[row][column];
   }
 
   bool inDarkness(double x, double y){

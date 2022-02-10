@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 
@@ -32,7 +33,7 @@ class IsometricActions {
   void applyDynamicShadeToTileSrc() {
     final tileSize = modules.isometric.constants.tileSize;
     final atlasY = atlas.tiles.y;
-    final dynamicShading = state.dynamicShading;
+    final dynamicShading = state.dynamicShade;
     for (int row = state.minRow; row < state.maxRow; row++) {
       for (int column = state.minColumn; column < state.maxColumn; column++) {
         final shade = dynamicShading[row][column];
@@ -67,10 +68,10 @@ class IsometricActions {
 
   void resetDynamicMap(){
     print("isometric.actions.resetDynamicMap()");
-    state.dynamicShading.clear();
+    state.dynamicShade.clear();
     for (int row = 0; row < state.totalRows.value; row++) {
       final List<int> _dynamic = [];
-      state.dynamicShading.add(_dynamic);
+      state.dynamicShade.add(_dynamic);
       for (int column = 0; column < state.totalColumns.value; column++) {
         _dynamic.add(state.ambient.value);
       }
@@ -99,7 +100,7 @@ class IsometricActions {
     final maxRow = state.maxRow;
     final minColumn = state.minColumn;
     final maxColumn = state.maxColumn;
-    final dynamicShading = state.dynamicShading;
+    final dynamicShading = state.dynamicShade;
     final bakeMap = state.bakeMap;
     for (int row = minRow; row < maxRow; row++) {
       for (int column = minColumn; column < maxColumn; column++) {
@@ -289,7 +290,7 @@ class IsometricActions {
   }
 
   void shadeDynamic(int row, int column, int value) {
-    applyShade(state.dynamicShading, row, column, value);
+    applyShade(state.dynamicShade, row, column, value);
   }
 
   void shadeBake(int row, int column, int value) {
@@ -318,13 +319,13 @@ class IsometricActions {
   void applyShadeRing(List<List<int>> shader, int row, int column, int size, int shade) {
 
     if (shade >= state.ambient.value) return;
-    final rStart = row - size;
+    final rStart = max(row - size, state.minRow);
     if (rStart > state.maxRow) return;
-    final rEnd = row + size;
+    final rEnd = min(row + size, state.maxRow);
     if (rEnd < state.minRow) return;
-    final cStart = column - size;
+    final cStart = max(column - size, state.minColumn);
     if (cStart > state.maxColumn) return;
-    final cEnd = column + size;
+    final cEnd = min(column + size, state.maxColumn);
     if (cEnd < state.minColumn) return;
 
     for (int r = rStart; r <= rEnd; r++) {
@@ -433,7 +434,7 @@ class IsometricActions {
   }
 
   void applyEmissionFromChractersBright(List<Character> characters) {
-    final shading = state.dynamicShading;
+    final shading = state.dynamicShade;
     final playerTeam = modules.game.state.player.team;
     for(final character in characters) {
       if (character.team != playerTeam) continue;
@@ -442,7 +443,7 @@ class IsometricActions {
   }
 
   void applyEmissionFromCharactersMedium(List<Character> characters) {
-    final dynamicShading = state.dynamicShading;
+    final dynamicShading = state.dynamicShade;
     for (final character in characters) {
       emitLightMedium(dynamicShading, character.x, character.y);
     }
@@ -460,7 +461,7 @@ class IsometricActions {
   }
 
   void applyEmissionFromEffects() {
-    final dynamicShading = state.dynamicShading;
+    final dynamicShading = state.dynamicShade;
     for (final effect in game.effects) {
       if (!effect.enabled) continue;
       final p = effect.duration / effect.maxDuration;
@@ -486,7 +487,7 @@ class IsometricActions {
     for (int i = 0; i < game.totalProjectiles; i++) {
       final projectile = game.projectiles[i];
       if (projectile.type == ProjectileType.Fireball) {
-        emitLightBrightSmall(state.dynamicShading, projectile.x, projectile.y);
+        emitLightBrightSmall(state.dynamicShade, projectile.x, projectile.y);
       }
     }
   }

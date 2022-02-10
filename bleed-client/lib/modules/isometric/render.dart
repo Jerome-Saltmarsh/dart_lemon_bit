@@ -80,16 +80,21 @@ class IsometricRender {
     final maxColumn = state.maxColumn;
     final engineState = engine.state;
     final atlasY = atlas.tiles.y;
+    final dynamicShade = state.dynamicShade;
+    final totalColumnsInt = state.totalColumnsInt;
+    final tilesSrc = state.tilesSrc;
+    final tilesDst = state.tilesDst;
+
     for (int row = minRow; row < maxRow; row++){
       for(int column = minColumn; column < maxColumn; column++){
-        engineState.mapDst(
-           x: getTileWorldX(row, column),
-           y: getTileWorldY(row, column),
-         );
-        final i = row * state.totalColumnsInt * 4 + (column * 4);
-        final shade = state.dynamicShading[row][column];
+        final i = row * totalColumnsInt * 4 + (column * 4);
+        final shade = dynamicShade[row][column];
         final top = atlasY + shade * tileSize; // top
-        final left = state.tilesSrc[i];
+        final left = tilesSrc[i];
+        engineState.mapDstCheap(
+          x: tilesDst[i + 2],
+          y: tilesDst[i + 3],
+        );
         engineState.mapSrc(x: left, y: top, width: tileSize, height: tileSize);
         engine.actions.renderAtlas();
       }
