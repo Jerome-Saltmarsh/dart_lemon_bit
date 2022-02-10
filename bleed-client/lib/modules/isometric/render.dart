@@ -108,13 +108,19 @@ class IsometricRender {
     int indexParticle = 0;
     int indexZombie = 0;
     int indexNpc = 0;
+    final environmentObjects = state.environmentObjects;
+    final particles = state.particles;
     final totalParticles = properties.totalActiveParticles;
-    final totalEnvironment = state.environmentObjects.length;
+    final totalEnvironment = environmentObjects.length;
+    final zombies = game.zombies;
+    final interactableNpcs = game.interactableNpcs;
     bool zombiesRemaining = indexZombie < game.totalZombies.value;
     bool humansRemaining = indexHuman < game.totalHumans;
     bool npcsRemaining = indexHuman < game.totalNpcs;
     bool environmentRemaining = indexEnv < totalEnvironment;
     bool particlesRemaining = indexParticle < totalParticles;
+    final screenBottom = engine.state.screen.bottom;
+
 
     while (true) {
       humansRemaining = indexHuman < game.totalHumans;
@@ -133,12 +139,12 @@ class IsometricRender {
         double humanY = game.humans[indexHuman].y;
 
         if (!environmentRemaining ||
-            humanY < state.environmentObjects[indexEnv].y) {
+            humanY < environmentObjects[indexEnv].y) {
           if (!particlesRemaining ||
-              humanY < state.particles[indexParticle].y &&
-                  state.particles[indexParticle].type != ParticleType.Blood) {
-            if (!zombiesRemaining || humanY < game.zombies[indexZombie].y) {
-              if (!npcsRemaining || humanY < game.interactableNpcs[indexNpc].y) {
+              humanY < particles[indexParticle].y &&
+                  particles[indexParticle].type != ParticleType.Blood) {
+            if (!zombiesRemaining || humanY < zombies[indexZombie].y) {
+              if (!npcsRemaining || humanY < interactableNpcs[indexNpc].y) {
                 drawCharacter(game.humans[indexHuman]);
                 indexHuman++;
                 continue;
@@ -149,14 +155,14 @@ class IsometricRender {
       }
 
       if (environmentRemaining) {
-        final env = state.environmentObjects[indexEnv];
-        if (env.top > engine.state.screen.bottom) return;
+        final env = environmentObjects[indexEnv];
+        if (env.top > screenBottom) return;
         if (!particlesRemaining ||
-            env.y < state.particles[indexParticle].y &&
-                state.particles[indexParticle].type != ParticleType.Blood) {
-          if (!zombiesRemaining || env.y < game.zombies[indexZombie].y) {
-            if (!npcsRemaining || env.y < game.interactableNpcs[indexNpc].y) {
-              environmentObject(state.environmentObjects[indexEnv]);
+            env.y < particles[indexParticle].y &&
+                particles[indexParticle].type != ParticleType.Blood) {
+          if (!zombiesRemaining || env.y < zombies[indexZombie].y) {
+            if (!npcsRemaining || env.y < interactableNpcs[indexNpc].y) {
+              environmentObject(environmentObjects[indexEnv]);
               indexEnv++;
               continue;
             }
@@ -165,7 +171,7 @@ class IsometricRender {
       }
 
       if (particlesRemaining) {
-        Particle particle = state.particles[indexParticle];
+        Particle particle = particles[indexParticle];
 
         if (particle.type == ParticleType.Blood) {
           if (onScreen(particle.x, particle.y)) {
@@ -175,8 +181,8 @@ class IsometricRender {
           continue;
         }
 
-        if (!zombiesRemaining || particle.y < game.zombies[indexZombie].y) {
-          if (!npcsRemaining || particle.y < game.interactableNpcs[indexNpc].y) {
+        if (!zombiesRemaining || particle.y < zombies[indexZombie].y) {
+          if (!npcsRemaining || particle.y < interactableNpcs[indexNpc].y) {
             if (onScreen(particle.x, particle.y)) {
               _drawParticle(particle);
             }
@@ -187,16 +193,14 @@ class IsometricRender {
       }
 
       if (zombiesRemaining) {
-        final zombie = game.zombies[indexZombie];
-
-        if (!npcsRemaining || zombie.y < game.interactableNpcs[indexNpc].y) {
-          drawCharacter(game.zombies[indexZombie]);
+        final zombie = zombies[indexZombie];
+        if (!npcsRemaining || zombie.y < interactableNpcs[indexNpc].y) {
+          drawCharacter(zombies[indexZombie]);
           indexZombie++;
           continue;
         }
       }
-
-      drawInteractableNpc(game.interactableNpcs[indexNpc]);
+      drawInteractableNpc(interactableNpcs[indexNpc]);
       indexNpc++;
     }
   }

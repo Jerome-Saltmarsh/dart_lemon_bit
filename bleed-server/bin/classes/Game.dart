@@ -1485,10 +1485,11 @@ extension GameFunctions on Game {
         targetDistance = npcDistance;
         break;
       }
-
       final target = zombieAI.target;
       if (target != null){
-        npcSetPathTo(zombieAI, target.x, target.y);
+        if (targetDistance > 100) {
+          npcSetPathTo(zombieAI, target.x, target.y);
+        }
       }
     }
   }
