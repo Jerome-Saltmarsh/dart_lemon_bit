@@ -31,6 +31,7 @@ class _Atlas {
   final _BlueTorso blueTorso = _BlueTorso();
   final _Shadow shadow = _Shadow();
   final headSteel = _HeadSteel();
+  final parts = Vector2(0, 5385);
 }
 
 class _HeadSteel {

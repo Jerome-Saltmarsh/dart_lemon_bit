@@ -362,7 +362,7 @@ class GameBuild {
     return Column(
       children: [
         shopSlotRow(
-            SlotType.Armour_Standard,
+            SlotType.Body_Blue,
             SlotType.Steel_Helmet,
             SlotType.Empty,
         ),

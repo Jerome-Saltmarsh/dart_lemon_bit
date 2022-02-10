@@ -7,6 +7,7 @@ enum SlotType {
   Sword_Wooden,
   Sword_Short,
   Sword_Long,
+  Pants_Blue,
   Bow_Wooden,
   Bow_Green,
   Bow_Gold,
@@ -20,7 +21,7 @@ enum SlotType {
   SniperRifle,
   AssaultRifle,
   Spell_Tome_Fireball,
-  Armour_Standard,
+  Body_Blue,
   Potion_Red,
 }
 
@@ -51,7 +52,7 @@ class _SlotTypes {
   ];
 
   final List<SlotType> armour = [
-    SlotType.Armour_Standard,
+    SlotType.Body_Blue,
   ];
 
   final List<SlotType> helms = [
@@ -106,12 +107,12 @@ const Map<SlotType, int> slotTypeDamage = {
 
 const Map<SlotType, int> slotTypeHealth = {
   SlotType.Steel_Helmet: 5,
-  SlotType.Armour_Standard: 10,
+  SlotType.Body_Blue: 10,
 };
 
 const Map<SlotType, int> slotTypeMagic = {
   SlotType.Steel_Helmet: 5,
-  SlotType.Armour_Standard: 10,
+  SlotType.Body_Blue: 10,
 };
 
 const Map<SlotType, double> slotTypeRange = {
