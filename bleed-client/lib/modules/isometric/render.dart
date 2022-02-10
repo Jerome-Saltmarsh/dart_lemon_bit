@@ -43,13 +43,15 @@ const _indexChanging = 1;
 final _Indexes indexes = _Indexes();
 
 class _Indexes {
-  final swordWooden = 1;
-  final swordSteel = 2;
-  final legsBlue = 3;
-  final bodyBlue = 4;
-  final bodyCyan = 5;
-  final headPlain = 6;
-  final headSteel = 7;
+  final shadow = 1;
+  final bowWooden = 2;
+  final swordWooden = 3;
+  final swordSteel = 4;
+  final legsBlue = 5;
+  final bodyBlue = 6;
+  final bodyCyan = 7;
+  final headPlain = 8;
+  final headSteel = 9;
 }
 
 class IsometricRender {
@@ -243,9 +245,9 @@ class IsometricRender {
   }
 
   void _renderCharacter(Character character, int shade) {
-    mapCharacterDst(character, character.type);
 
     if (character.type != CharacterType.Human){
+      mapCharacterDst(character, character.type);
       mapCharacterSrc(
         type: character.type,
         state: character.state,
@@ -258,24 +260,29 @@ class IsometricRender {
       return;
     }
 
-    renderCharacterPartLegs(character);
-    renderCharacterPartBody(character);
-    renderCharacterPartHead(character);
+    _renderCharacterShadow(character);
+    _renderCharacterPartLegs(character);
+    _renderCharacterPartBody(character);
+    _renderCharacterPartHead(character);
   }
 
-  void renderCharacterPartHead(Character character) {
-    renderCharacterPart(character, getSpriteIndexHead(character));
+  void _renderCharacterShadow(Character character){
+    _renderCharacterPart(character, indexes.shadow);
   }
 
-  void renderCharacterPartBody(Character character) {
-    renderCharacterPart(character, getSpriteIndexBody(character));
+  void _renderCharacterPartHead(Character character) {
+    _renderCharacterPart(character, getSpriteIndexHead(character));
   }
 
-  void renderCharacterPartLegs(Character character) {
-    renderCharacterPart(character, getSpriteIndexLegs(character));
+  void _renderCharacterPartBody(Character character) {
+    _renderCharacterPart(character, getSpriteIndexBody(character));
   }
 
-  void renderCharacterPart(Character character, int index, {double scale = 0.7}) {
+  void _renderCharacterPartLegs(Character character) {
+    _renderCharacterPart(character, getSpriteIndexLegs(character));
+  }
+
+  void _renderCharacterPart(Character character, int index, {double scale = 0.7}) {
     engine.state.mapDst(
         x: character.x,
         y: character.y,
