@@ -350,107 +350,23 @@ class IsometricRender {
     }
   }
 
-  void _renderCharacterWeapon(Character character) {
-
-    if (character.equippedWeapon == SlotType.Empty) return;
-
-    if (character.equippedWeapon == SlotType.Sword_Wooden){
-
-      if (character.state == CharacterState.Striking){
-        srcAnimate(
-          atlas: atlas.weapons.swordWooden.striking,
-          animation: animations.human.strikingSword,
-          direction: character.direction,
-          frame: character.frame,
-          framesPerDirection: 2,
-        );
-        mapCharacterDst(character, character.type);
-        engine.actions.renderAtlas();
-      }
-
-      if (character.state == CharacterState.Idle){
-        srcSingle(atlas: atlas.weapons.swordWooden.idle, direction: character.direction);
-        mapCharacterDst(character, character.type);
-        engine.actions.renderAtlas();
-      }
-
-      if (character.state == CharacterState.Running){
-        srcLoop(
-            atlas: atlas.weapons.swordWooden.running,
-            direction: character.direction,
-            frame: character.frame
-        );
-        mapCharacterDst(character, character.type);
-        engine.actions.renderAtlas();
-      }
-    }
-    if (character.equippedWeapon == SlotType.Sword_Short){
-      if (character.state == CharacterState.Striking){
-        srcAnimate(
-          atlas: atlas.weapons.swordSteel.striking,
-          animation: animations.human.strikingSword,
-          direction: character.direction,
-          frame: character.frame,
-          framesPerDirection: 2,
-        );
-        mapCharacterDst(character, character.type);
-        engine.actions.renderAtlas();
-      }
-      if (character.state == CharacterState.Idle){
-        srcSingle(
-            atlas: atlas.weapons.swordSteel.idle,
-            direction: character.direction
-        );
-        mapCharacterDst(character, character.type);
-        engine.actions.renderAtlas();
-      }
-      if (character.state == CharacterState.Running){
-        srcLoop(
-            atlas: atlas.weapons.swordSteel.running,
-            direction: character.direction,
-            frame: character.frame
-        );
-        mapCharacterDst(character, character.type);
-        engine.actions.renderAtlas();
-      }
-    }
-
-    if (character.equippedWeapon.isBow){
-
-      switch(character.state){
-        case CharacterState.Striking:
-          srcAnimate(
-              atlas: atlas.weapons.bowWooden.firing,
-              direction: character.direction,
-              frame: character.frame,
-              animation: animations.bow.firing, framesPerDirection: 2
-          );
-          mapCharacterDst(character, character.type);
-          engine.actions.renderAtlas();
-          break;
-
-        case CharacterState.Running:
-          srcLoop(
-              atlas: atlas.weapons.bowWooden.running,
-              direction: character.direction,
-              frame: character.frame
-          );
-          mapCharacterDst(character, character.type);
-          engine.actions.renderAtlas();
-          break;
-
-        case CharacterState.Idle:
-          srcSingle(
-              atlas: atlas.weapons.bowWooden.idle,
-              direction: character.direction
-          );
-          mapCharacterDst(character, character.type);
-          engine.actions.renderAtlas();
-          break;
-      }
-    }
+  int mapEquippedWeaponToSpriteIndex(Character character){
+     switch(character.equippedWeapon){
+       case SlotType.Sword_Wooden:
+         return indexes.swordWooden;
+       case SlotType.Sword_Short:
+         return indexes.swordSteel;
+       case SlotType.Bow_Wooden:
+         return indexes.bowWooden;
+       default:
+         throw Exception("cannot map ${character.equippedWeapon} to sprite index");
+     }
   }
 
+  void _renderCharacterWeapon(Character character) {
+    if (character.equippedWeapon == SlotType.Empty) return;
+    _renderCharacterPart(character, mapEquippedWeaponToSpriteIndex(character));
+  }
 
   final _width = 35.0;
   final _widthHalf = 35.0 * 0.5;
