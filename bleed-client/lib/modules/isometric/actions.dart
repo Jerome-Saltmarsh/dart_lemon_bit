@@ -448,9 +448,9 @@ class IsometricActions {
     }
   }
 
-  void applyEmissionsToDynamicShadeMap() {
-    if (modules.isometric.properties.dayTime) return;
-    modules.isometric.actions.resetDynamicShadesToBakeMap();
+  void applyDynamicEmissions() {
+    if (properties.dayTime) return;
+    resetDynamicShadesToBakeMap();
     applyEmissionFromChractersBright(game.humans);
     applyEmissionFromCharactersMedium(game.zombies);
     applyEmissionFromCharactersMedium(game.interactableNpcs);
