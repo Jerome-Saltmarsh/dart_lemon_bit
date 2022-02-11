@@ -740,6 +740,23 @@ class GameBuild {
 
   Widget _inventorySlot(Watch<SlotType> slot, int index){
     return WatchBuilder(slot, (SlotType slotType){
+
+      final child = Container(
+          width: 60,
+          height: 60,
+          child: Stack(
+            children: [
+              Container(
+                width: 50,
+                height: 50,
+                child: getSlotTypeImage(slotType),
+              ),
+              Positioned(child: text(index, size: 14, color: colours.white618), bottom: 5, right: 5,)
+            ],
+          ));
+
+      if (slotType.isEmpty) return child;
+
       return onPressed(
         callback: (){
           actions.equipSlot(index);
@@ -747,24 +764,20 @@ class GameBuild {
         onRightClick: (){
           actions.sellSlotItem(index);
         },
-        child: Container(
-            width: 60,
-            height: 60,
-            child: Stack(
-              children: [
-                Container(
-                  width: 50,
-                  height: 50,
-                  child: getSlotTypeImage(slotType),
-                ),
-                Positioned(child: text(index, size: 14, color: colours.white618), bottom: 5, right: 5,)
-              ],
-            )),
+        child: child,
       );
     });
   }
 
   Widget _storeSlot(SlotType slotType){
+
+    if (slotType.isEmpty){
+      return Container(
+          width: slotSize,
+          height: slotSize,
+          child: getSlotTypeImage(slotType));
+    }
+
     return mouseOver(onEnter: () {
       state.highLightSlotType.value = slotType;
     }, onExit: () {
@@ -779,7 +792,7 @@ class GameBuild {
         child: Container(
             width: slotSize,
             height: slotSize,
-            color: isOver ? colours.black382 : none,
+            color: isOver && !slotType.isEmpty ? colours.black382 : none,
             child: getSlotTypeImage(slotType)),
       );
     });
