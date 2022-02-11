@@ -11,14 +11,11 @@ import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/SlotType.dart';
-import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/constants/colours.dart';
-import 'package:bleed_client/mappers/mapDirectionToAngle.dart';
 import 'package:bleed_client/modules/game/queries.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/render/mapBulletToSrc.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
@@ -187,7 +184,7 @@ class GameRender {
         drawFireball(value.x, value.y, value.angle);
         break;
       case ProjectileType.Arrow:
-        drawArrow(value.x, value.y, value.angle);
+        arrow(value.x, value.y, value.angle);
         break;
       case ProjectileType.Blue_Orb:
         engine.draw.circle(value.x, value.y, 5, colours.blue);
@@ -212,9 +209,13 @@ class GameRender {
         [rect], null, null, null, engine.state.paint);
   }
 
-  void drawArrow(double x, double y, double angle) {
+  void arrow(double x, double y, double angle) {
     engine.state.mapSrc(x: atlas.projectiles.arrow.x, y: atlas.projectiles.arrow.y, width: 13, height: 47);
     engine.state.mapDst(x: x, y: y, rotation: angle, anchorX: 6.5, anchorY: 30, scale: 0.5);
+    engine.actions.renderAtlas();
+
+    engine.state.mapSrc(x: atlas.projectiles.arrowShadow.x, y: atlas.projectiles.arrowShadow.y, width: 13, height: 47);
+    engine.state.mapDst(x: x, y: y + 20, rotation: angle, anchorX: 6.5, anchorY: 30, scale: 0.5);
     engine.actions.renderAtlas();
   }
 
