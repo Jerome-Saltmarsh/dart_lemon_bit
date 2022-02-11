@@ -33,7 +33,7 @@ class IsometricUpdate {
 
     for (int i = 0; i < game.totalZombies.value; i++) {
       if (game.zombies[i].alive) continue;
-      isometric.spawn.spawnBlood(game.zombies[i].x, game.zombies[i].y, 0);
+      isometric.spawn.blood(game.zombies[i].x, game.zombies[i].y, 0);
     }
   }
 
@@ -100,13 +100,13 @@ class IsometricUpdate {
       particle.z = 0;
     }
     if (particle.type == ParticleType.Human_Head && particle.duration % _spawnBloodRate == 0) {
-      isometric.spawn.spawnBlood(particle.x, particle.y, particle.z);
+      isometric.spawn.blood(particle.x, particle.y, particle.z);
     }
     if (particle.type == ParticleType.Arm && particle.duration % _spawnBloodRate == 0) {
-      isometric.spawn.spawnBlood(particle.x, particle.y, particle.z);
+      isometric.spawn.blood(particle.x, particle.y, particle.z);
     }
     if (particle.type == ParticleType.Organ && particle.duration % _spawnBloodRate == 0) {
-      isometric.spawn.spawnBlood(particle.x, particle.y, particle.z);
+      isometric.spawn.blood(particle.x, particle.y, particle.z);
     }
     if (particle.duration-- < 0) {
       particle.active = false;

@@ -38,10 +38,10 @@ void spawnExplosion(double x, double y) {
   playAudioExplosion(x, y);
   modules.game.actions.spawnBulletHole(x, y);
   for (int i = 0; i < randomInt(4, 10); i++) {
-    isometric.spawn.spawnShrapnel(x, y);
+    isometric.spawn.shrapnel(x, y);
   }
   for (int i = 0; i < randomInt(4, 10); i++) {
-    isometric.spawn.spawnFireYellow(x, y);
+    isometric.spawn.fireYellow(x, y);
   }
 }
 

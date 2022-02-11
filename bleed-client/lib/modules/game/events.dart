@@ -138,20 +138,20 @@ class GameEvents {
     switch (type) {
       case GameEventType.Handgun_Fired:
         playAudioHandgunShot(x, y);
-        isometric.spawn.spawnShell(x, y);
+        isometric.spawn.shell(x, y);
         break;
       case GameEventType.Shotgun_Fired:
         playAudioShotgunShot(x, y);
-        isometric.spawn.spawnShell(x, y);
-        isometric.spawn.spawnShotSmoke(x, y, xv, yv);
+        isometric.spawn.shell(x, y);
+        isometric.spawn.shotSmoke(x, y, xv, yv);
         break;
       case GameEventType.SniperRifle_Fired:
         playAudioSniperShot(x, y);
-        isometric.spawn.spawnShell(x, y);
+        isometric.spawn.shell(x, y);
         break;
       case GameEventType.MachineGun_Fired:
         playAudioAssaultRifleShot(x, y);
-        isometric.spawn.spawnShell(x, y);
+        isometric.spawn.shell(x, y);
         break;
       case GameEventType.Zombie_Hit:
         if (randomBool()) {
@@ -160,7 +160,7 @@ class GameEvents {
         double s = 0.1;
         double r = 1;
         for (int i = 0; i < randomInt(2, 5); i++) {
-          isometric.spawn.spawnBlood(x, y, 0.3,
+          isometric.spawn.blood(x, y, 0.3,
               xv: xv * s + giveOrTake(r),
               yv: yv * s + giveOrTake(r),
               zv: randomBetween(0, 0.07));
@@ -173,7 +173,7 @@ class GameEvents {
         double s = 0.1;
         double r = 1;
         for (int i = 0; i < randomInt(2, 5); i++) {
-          isometric.spawn.spawnBlood(x, y, 0.3,
+          isometric.spawn.blood(x, y, 0.3,
               xv: xv * s + giveOrTake(r),
               yv: yv * s + giveOrTake(r),
               zv: randomBetween(0, 0.07));
@@ -184,32 +184,32 @@ class GameEvents {
         double s = 0.15;
         double r = 1;
         for (int i = 0; i < randomInt(2, 5); i++) {
-          isometric.spawn.spawnBlood(x, y, 0.3,
+          isometric.spawn.blood(x, y, 0.3,
               xv: xv * s + giveOrTake(r),
               yv: yv * s + giveOrTake(r),
               zv: randomBetween(0, 0.07));
         }
         break;
       case GameEventType.Zombie_killed_Explosion:
-        double s = 0.15;
-        double r = 1;
+        final s = 0.15;
+        final r = 1;
         for (int i = 0; i < randomInt(2, 5); i++) {
-          isometric.spawn.spawnBlood(x, y, 0.3,
+          isometric.spawn.blood(x, y, 0.3,
               xv: xv * s + giveOrTake(r),
               yv: yv * s + giveOrTake(r),
               zv: randomBetween(0, 0.07));
         }
-        isometric.spawn.spawnZombieHead(x, y, 0.5,
+        isometric.spawn.headZombie(x, y, 0.5,
             xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
-        isometric.spawn.spawnArm(x, y, 0.3,
+        isometric.spawn.arm(x, y, 0.3,
             xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
-        isometric.spawn.spawnArm(x, y, 0.3,
+        isometric.spawn.arm(x, y, 0.3,
             xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
-        isometric.spawn.spawnZombieLeg(x, y, 0.2,
+        isometric.spawn.legZombie(x, y, 0.2,
             xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
-        isometric.spawn.spawnZombieLeg(x, y, 0.2,
+        isometric.spawn.legZombie(x, y, 0.2,
             xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
-        isometric.spawn.spawnOrgan(x, y, 0.3,
+        isometric.spawn.organ(x, y, 0.3,
             xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
         playAudioZombieDeath(x, y);
         break;
@@ -224,7 +224,7 @@ class GameEvents {
         double r = 1;
         double s = 0.15;
         for (int i = 0; i < randomInt(2, 4); i++) {
-          isometric.spawn.spawnBlood(x, y, 0.3,
+          isometric.spawn.blood(x, y, 0.3,
               xv: xv * s + giveOrTake(r),
               yv: yv * s + giveOrTake(r),
               zv: randomBetween(0, 0.07));
@@ -279,7 +279,7 @@ class GameEvents {
         break;
       case GameEventType.Crate_Breaking:
         for (int i = 0; i < randomInt(4, 10); i++) {
-          isometric.spawn.spawnShrapnel(x, y);
+          isometric.spawn.shrapnel(x, y);
         }
         playAudioCrateBreaking(x, y);
         break;

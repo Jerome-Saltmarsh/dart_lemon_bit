@@ -27,7 +27,7 @@ class IsometricSpawn {
     return instance;
   }
 
-  void spawnParticle({
+  void _particle({
     required ParticleType type,
     required double x,
     required double y,
@@ -44,8 +44,7 @@ class IsometricSpawn {
     bounciness = 0.5,
     double airFriction = 0.98
   }) {
-
-    Particle particle = getAvailableParticle();
+    final particle = getAvailableParticle();
     particle.type = type;
     particle.x = x;
     particle.y = y;
@@ -64,8 +63,8 @@ class IsometricSpawn {
     particle.airFriction = airFriction;
   }
 
-  void spawnArm(double x, double y, double z, {double xv = 0, double yv = 0}) {
-    spawnParticle(
+  void arm(double x, double y, double z, {double xv = 0, double yv = 0}) {
+    _particle(
         type: ParticleType.Arm,
         x: x,
         y: y,
@@ -81,9 +80,9 @@ class IsometricSpawn {
         scaleV: 0);
   }
 
-  void spawnBlood(double x, double y, double z,
+  void blood(double x, double y, double z,
       {double xv = 0, double yv = 0, double zv = 0}) {
-    spawnParticle(
+    _particle(
         type: ParticleType.Blood,
         x: x,
         y: y,
@@ -100,8 +99,8 @@ class IsometricSpawn {
         bounciness: 0);
   }
 
-  void spawnFireYellow(double x, double y){
-    spawnParticle(
+  void fireYellow(double x, double y){
+    _particle(
         type: ParticleType.FireYellow,
         x: x,
         y: y,
@@ -115,8 +114,8 @@ class IsometricSpawn {
     );
   }
 
-  void spawnHead(double x, double y, double z, {double xv = 0, double yv = 0}) {
-    spawnParticle(
+  void headHuman(double x, double y, double z, {double xv = 0, double yv = 0}) {
+    _particle(
       type: ParticleType.Human_Head,
       x: x,
       y: y,
@@ -133,8 +132,8 @@ class IsometricSpawn {
     );
   }
 
-  void spawnOrgan(double x, double y, double z, {double xv = 0, double yv = 0}) {
-    spawnParticle(
+  void organ(double x, double y, double z, {double xv = 0, double yv = 0}) {
+    _particle(
         type: ParticleType.Organ,
         x: x,
         y: y,
@@ -150,12 +149,12 @@ class IsometricSpawn {
         scaleV: 0);
   }
 
-  void spawnShell(double x, double y) {
+  void shell(double x, double y) {
 
-    double xv = giveOrTake(pi) * 0.5;
-    double yv = giveOrTake(pi) * 0.5;
-    double rotation = angle(xv, yv) + piHalf;
-    spawnParticle(
+    final xv = giveOrTake(pi) * 0.5;
+    final yv = giveOrTake(pi) * 0.5;
+    final rotation = angle(xv, yv) + piHalf;
+    _particle(
       type: ParticleType.Shell,
       x: x,
       y: y,
@@ -171,13 +170,13 @@ class IsometricSpawn {
     );
   }
 
-  void spawnShotSmoke(double x, double y, double xv, double yv) {
+  void shotSmoke(double x, double y, double xv, double yv) {
     for (int i = 0; i < 4; i++) {
       double speed = 0.5 + giveOrTake(0.2);
       double cx = clampMagnitudeX(xv, yv, speed) + giveOrTake(0.3);
       double cy = clampMagnitudeY(xv, yv, speed) + giveOrTake(0.3);
 
-      spawnParticle(
+      _particle(
           type: ParticleType.Smoke,
           x: x,
           y: y,
@@ -194,8 +193,8 @@ class IsometricSpawn {
     }
   }
 
-  void spawnShrapnel(double x, double y) {
-    spawnParticle(
+  void shrapnel(double x, double y) {
+    _particle(
         type: ParticleType.Shrapnel,
         x: x,
         y: y,
@@ -208,8 +207,9 @@ class IsometricSpawn {
         scale: randomBetween(0.6, 1.25),
         scaleV: 0);
   }
-  void spawnSmoke(double x, double y, double z, {double xv = 0, double yv = 0}) {
-    spawnParticle(
+
+  void smoke(double x, double y, double z, {double xv = 0, double yv = 0}) {
+    _particle(
         type: ParticleType.Smoke,
         x: x,
         y: y,
@@ -225,8 +225,8 @@ class IsometricSpawn {
         scaleV: 0.005);
   }
 
-  void spawnZombieHead(double x, double y, double z, {double xv = 0, double yv = 0}) {
-    spawnParticle(
+  void headZombie(double x, double y, double z, {double xv = 0, double yv = 0}) {
+    _particle(
       type: ParticleType.Zombie_Head,
       x: x,
       y: y,
@@ -243,8 +243,8 @@ class IsometricSpawn {
     );
   }
 
-  void spawnZombieLeg(double x, double y, double z, {double xv = 0, double yv = 0}) {
-    spawnParticle(
+  void legZombie(double x, double y, double z, {double xv = 0, double yv = 0}) {
+    _particle(
         type: ParticleType.Leg,
         x: x,
         y: y,
