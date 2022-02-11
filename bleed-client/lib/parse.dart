@@ -691,7 +691,7 @@ void _parseProjectiles() {
     projectile.x = consumeDouble();
     projectile.y = consumeDouble();
     projectile.type = _consumeProjectileType();
-    projectile.direction = _consumeDirection();
+    projectile.angle = consumeDouble();
     game.totalProjectiles++;
   }
 }

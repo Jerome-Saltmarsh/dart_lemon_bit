@@ -167,7 +167,7 @@ class GameRender {
 
   void drawProjectiles(List<Projectile> projectiles) {
     for (int i = 0; i < game.totalProjectiles; i++) {
-      drawProjectile(game.projectiles[i]);
+      projectile(game.projectiles[i]);
     }
   }
 
@@ -175,29 +175,27 @@ class GameRender {
     engine.state.mapDst(x: projectile.x, y: projectile.y, scale: 0.25, anchorX: 16, anchorY: 16);
   }
 
-  void drawProjectile(Projectile projectile) {
-    switch (projectile.type) {
-      case ProjectileType.Bullet:
-        if (isometric.properties.inDarkness(projectile.x, projectile.y)) return;
-        mapDstProjectile(projectile);
-        mapProjectileToSrc(projectile);
-        engine.actions.renderAtlas();
-        break;
+  void projectile(Projectile value) {
+    switch (value.type) {
+      // case ProjectileType.Bullet:
+      //   if (isometric.properties.inDarkness(value.x, value.y)) return;
+      //   mapDstProjectile(value);
+      //   mapProjectileToSrc(value);
+      //   engine.actions.renderAtlas();
+      //   break;
       case ProjectileType.Fireball:
-        drawFireball(projectile.x, projectile.y, projectile.direction);
+        drawFireball(value.x, value.y, value.angle);
         break;
       case ProjectileType.Arrow:
-        drawArrow(projectile.x, projectile.y,
-            convertDirectionToAngle(projectile.direction));
+        drawArrow(value.x, value.y, value.angle);
         break;
       case ProjectileType.Blue_Orb:
-        engine.draw.circle(projectile.x, projectile.y, 5, colours.blue);
+        engine.draw.circle(value.x, value.y, 5, colours.blue);
         break;
     }
   }
 
-  void drawFireball(double x, double y, Direction direction) {
-    double angle = mapDirectionToAngle[direction]!;
+  void drawFireball(double x, double y, double angle) {
     RSTransform rsTransform = RSTransform.fromComponents(
         rotation: angle,
         scale: 1,
@@ -205,9 +203,7 @@ class GameRender {
         anchorY: 16,
         translateX: x,
         translateY: y);
-
     int frame = core.state.timeline.frame % 4;
-
     Rect rect = Rect.fromLTWH(atlas.projectiles.fireball.x, atlas.projectiles.fireball.y + (frame * atlas.projectiles.fireball.size),
         atlas.projectiles.fireball.size, atlas.projectiles.fireball.size);
 

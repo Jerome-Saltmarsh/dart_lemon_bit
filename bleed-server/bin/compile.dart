@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:bleed_server/CubeGame.dart';
 import 'package:lemon_math/Vector2.dart';
@@ -438,7 +439,7 @@ void _compileProjectile(StringBuffer buffer, Projectile projectile) {
   _write(buffer, projectile.x.toInt());
   _write(buffer, projectile.y.toInt());
   _write(buffer, projectile.type.index);
-  _write(buffer, projectile.direction.index);
+  _write(buffer, atan2(projectile.xv, projectile.yv).toStringAsFixed(1));
 }
 
 void _compilePlayer(StringBuffer buffer, Player player) {

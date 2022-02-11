@@ -1,8 +1,10 @@
 import 'dart:math';
 
+import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/angle_between.dart';
 
 import 'classes/Character.dart';
+import 'classes/GameObject.dart';
 import 'functions.dart';
 import 'maths.dart';
 
@@ -42,3 +44,8 @@ class _Physics {
   }
 }
 
+void setVelocityTowards(GameObject gameObject, Vector2 target, double speed){
+  final angle = radiansV2(gameObject, target);
+  gameObject.xv = adj(angle, speed);
+  gameObject.yv = opp(angle, speed);
+}

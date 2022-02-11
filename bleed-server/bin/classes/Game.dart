@@ -784,9 +784,7 @@ extension GameFunctions on Game {
       projectile.y += projectile.yv;
       final target = projectile.target;
       if (target != null) {
-        final angle = radiansV2(projectile, target);
-        projectile.xv = adj(angle, projectile.speed);
-        projectile.yv = opp(angle, projectile.speed);
+        setVelocityTowards(projectile, target, projectile.speed);
       } else if (projectileDistanceTravelled(projectile) > projectile.range) {
         deactivateProjectile(projectile);
       }
@@ -1011,12 +1009,12 @@ extension GameFunctions on Game {
           Projectile arrow1 = spawnArrow(character, damage: character.damage);
           double angle = piSixteenth;
           arrow1.target = null;
-          setProjectilAngle(arrow1, character.aimAngle - angle);
+          setProjectileAngle(arrow1, character.aimAngle - angle);
           Projectile arrow2 = spawnArrow(character, damage: character.damage);
           arrow2.target = null;
           Projectile arrow3 = spawnArrow(character, damage: character.damage);
           arrow3.target = null;
-          setProjectilAngle(arrow3, character.aimAngle + angle);
+          setProjectileAngle(arrow3, character.aimAngle + angle);
           character.performing = null;
           character.attackTarget = null;
         }
@@ -1248,7 +1246,6 @@ extension GameFunctions on Game {
     projectile.owner = character;
     projectile.range = range;
     projectile.damage = damage;
-    projectile.direction = convertAngleToDirection(character.aimAngle);
     projectile.type = type;
     return projectile;
   }

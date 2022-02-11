@@ -7,7 +7,7 @@ class Projectile {
   double x;
   double y;
   ProjectileType type;
-  Direction direction;
+  double angle;
 
-  Projectile(this.x, this.y, this.type, this.direction);
+  Projectile(this.x, this.y, this.type, this.angle);
 }
