@@ -60,6 +60,7 @@ class _SlotTypes {
   final List<SlotType> helms = [
     SlotType.Steel_Helmet,
     SlotType.Leather_Cap,
+    SlotType.Magic_Hat,
   ];
 
   final List<SlotType> items = [
