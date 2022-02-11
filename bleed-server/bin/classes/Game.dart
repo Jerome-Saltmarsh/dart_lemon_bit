@@ -1008,9 +1008,7 @@ extension GameFunctions on Game {
     character.yv += projectile.yv * settings.bulletImpactVelocityTransfer;
 
     if (enemies(projectile, character)) {
-      // @on zombie hit by bullet
       applyDamage(projectile.owner, character, projectile.damage);
-
       if (character is Player) {
         dispatch(GameEventType.Player_Hit, character.x, character.y,
             projectile.xv, projectile.yv);
@@ -1022,7 +1020,6 @@ extension GameFunctions on Game {
       dispatch(GameEventType.Zombie_Hit, character.x, character.y,
           projectile.xv, projectile.yv);
     } else {
-      // @on zombie killed by player
       projectile.owner.ai?.clearTarget();
       character.ai?.clearTarget();
       character.active = false;

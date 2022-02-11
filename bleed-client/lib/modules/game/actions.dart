@@ -134,6 +134,30 @@ class GameActions {
     sendClientRequest(ClientRequest.Sell_Slot, index);
   }
 
+  void equipSlot1(){
+    equipSlot(1);
+  }
+
+  void equipSlot2(){
+    equipSlot(2);
+  }
+
+  void equipSlot3(){
+    equipSlot(3);
+  }
+
+  void equipSlot4(){
+    equipSlot(4);
+  }
+
+  void equipSlot5(){
+    equipSlot(5);
+  }
+
+  void equipSlot6(){
+    equipSlot(6);
+  }
+
   /// valid between 1 and 6 inclusive
   void equipSlot(int index){
     print("game.actions.equipSlot($index)");

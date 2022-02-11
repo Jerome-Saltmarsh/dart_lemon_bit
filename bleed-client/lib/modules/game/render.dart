@@ -13,7 +13,6 @@ import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
-import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/mappers/mapDirectionToAngle.dart';
 import 'package:bleed_client/modules/game/queries.dart';

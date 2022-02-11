@@ -110,7 +110,7 @@
 [ ] Spell Cooldown
 [ ] Spell use magic
 [ ] Zombie Pause after attack
-[ ] Fix Fire Bow Animation
+[x] Fix Fire Bow Animation
 [x] FIX Mouse should be hand on attack
 [x] FIX Zombies stop rendering
 [x] Zombies don't attack

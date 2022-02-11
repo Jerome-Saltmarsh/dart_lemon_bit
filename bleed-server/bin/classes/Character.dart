@@ -24,7 +24,6 @@ class AI {
   List<Vector2> path = [];
   List<Vector2> objectives = [];
   NpcMode mode = NpcMode.Aggressive;
-
   double viewRange = 200;
   double chaseRange = 500;
 
