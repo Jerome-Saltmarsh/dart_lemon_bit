@@ -104,6 +104,47 @@ class GameBuild {
     });
   }
 
+  Widget _magicBar() {
+    final width = 280.0;
+    final height = width *
+        goldenRatio_0381 *
+        goldenRatio_0381;
+
+    return WatchBuilder(state.player.magic, (double magic) {
+      final percentage = magic / state.player.maxMagic.value;
+      return Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+            border: Border.all(color: colours.none, width: 2),
+            borderRadius: borderRadius4),
+        alignment: Alignment.centerLeft,
+        child: Stack(
+          alignment: Alignment.centerLeft,
+          children: [
+            Container(
+              color: colours.blueDarkest,
+              width: width,
+              height: height,
+            ),
+            Container(
+              color: colours.blue,
+              width: width * percentage,
+              height: height,
+            ),
+            Container(
+              color: Colors.transparent,
+              width: width,
+              height: height,
+              alignment: Alignment.center,
+              child: text('${magic.toInt()} / ${state.player.maxMagic.value}'),
+            ),
+          ],
+        ),
+      );
+    });
+  }
+
   Widget _healthBar() {
     final width = 280.0;
     final height = width *
@@ -156,7 +197,12 @@ class GameBuild {
   Widget layoutRoyal(){
     return layout(
         children: [
-          bottomCenter(child: _healthBar(), padding: 8),
+          bottomCenter(child: Column(
+            children: [
+              _magicBar(),
+              _healthBar(),
+            ],
+          ), padding: 8),
           Positioned(
               left: 8,
               top: 8,

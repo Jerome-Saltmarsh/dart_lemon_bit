@@ -18,6 +18,8 @@ import 'Entity.dart';
 import 'Game.dart';
 import 'Weapon.dart';
 
+const _defaultMaxMagic = 10;
+
 class Player extends Character with Entity {
   String name = generateName();
   int lastUpdateFrame = 0;
@@ -34,12 +36,16 @@ class Player extends Character with Entity {
   int level = 1;
   int abilityPoints = 0;
   int _magic = 0;
-
-  // /// this refers to the inventory slots ranging from 1 to 6
-  // int equippedWeaponSlotIndex = 1;
-  // SlotType equippedArmourSlot = SlotType.Empty;
-  // /// This refers to the enum index of the Slot Type value at the equipped slot type index
-  // SlotType get equippedWeaponSlotType => slots.getSlotTypeAtIndex(equippedWeaponSlotIndex);
+  int maxMagic = 100;
+  int magicRegen = 1;
+  int healthRegen = 1;
+  final List<PlayerEvent> events = [];
+  CharacterState characterState = CharacterState.Idle;
+  Ability ability1 = Ability(type: AbilityType.None, level: 0, cost: 0, range: 0, cooldown: 0, mode: AbilityMode.None);
+  Ability ability2 = Ability(type: AbilityType.None, level: 0, cost: 0, range: 0, cooldown: 0, mode: AbilityMode.None);
+  Ability ability3 = Ability(type: AbilityType.None, level: 0, cost: 0, range: 0, cooldown: 0, mode: AbilityMode.None);
+  Ability ability4 = Ability(type: AbilityType.None, level: 0, cost: 0, range: 0, cooldown: 0, mode: AbilityMode.None);
+  bool abilitiesDirty = true;
 
   final slots = _PlayerSlots();
 
@@ -72,26 +78,9 @@ class Player extends Character with Entity {
     _magic = clampInt(value, 0, maxMagic);
   }
 
-  int maxMagic = 100;
-  int magicRegen = 1;
-  int healthRegen = 1;
-
-  // Tile currentTile = Tile.Grass;
-  CharacterState characterState = CharacterState.Idle;
-
-  Ability ability1 = Ability(type: AbilityType.None, level: 0, cost: 0, range: 0, cooldown: 0, mode: AbilityMode.None);
-  Ability ability2 = Ability(type: AbilityType.None, level: 0, cost: 0, range: 0, cooldown: 0, mode: AbilityMode.None);
-  Ability ability3 = Ability(type: AbilityType.None, level: 0, cost: 0, range: 0, cooldown: 0, mode: AbilityMode.None);
-  Ability ability4 = Ability(type: AbilityType.None, level: 0, cost: 0, range: 0, cooldown: 0, mode: AbilityMode.None);
-  bool abilitiesDirty = true;
-
-  final List<PlayerEvent> events = [];
-
-
   void dispatch(PlayerEvent event){
     events.add(event);
   }
-
 
   Player({
     required this.game,
@@ -99,6 +88,7 @@ class Player extends Character with Entity {
     double y = 0,
     int team = noSquad,
     CharacterType type = CharacterType.Human,
+    int magic = _defaultMaxMagic,
     int health = 10,
   }) : super(
             type: type,
@@ -107,6 +97,8 @@ class Player extends Character with Entity {
             health: health,
             speed: settings.playerSpeed,
             team: team){
+    maxMagic = magic;
+    _magic = maxMagic;
     engine.onPlayerCreated(this);
   }
 

@@ -14,9 +14,9 @@ import 'GameObject.dart';
 import 'Weapon.dart';
 
 const _notFound = -1;
-
 const _defaultMode = NpcMode.Defensive;
 const _defaultViewRange = 300.0;
+const _defaultCharacterSpeed = 3.0;
 
 class AI {
   final Character character;
@@ -47,8 +47,6 @@ class AI {
     objectives.clear();
   }
 }
-
-const _defaultCharacterSpeed = 3.0;
 
 class Character extends GameObject implements HasSquad {
   late CharacterType type;
