@@ -40,9 +40,11 @@ class IsometricProperties {
   }
 
   int get totalActiveParticles {
-    int totalParticles = 0;
-    for (int i = 0; i < isometric.state.particles.length; i++) {
-      if (isometric.state.particles[i].active) {
+    var totalParticles = 0;
+    final particles = isometric.state.particles;
+    final length = particles.length;
+    for (int i = 0; i < length; i++) {
+      if (particles[i].active) {
         totalParticles++;
       }
     }
