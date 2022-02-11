@@ -44,18 +44,18 @@ class EditorEvents with EditorScope {
     };
 
     editor.state.selected.onChanged(onSelectedObjectChanged);
-
   }
 
-  void onMouseMoved(Offset position, Offset previous) {
-    final positionX = screenToWorldX(position.dx);
-    final positionY = screenToWorldY(position.dy);
-    final previousX = screenToWorldX(previous.dx);
-    final previousY = screenToWorldY(previous.dy);
+  void onMouseMoved(Vector2 position, Vector2 previous) {
+    final positionX = screenToWorldX(position.x);
+    final positionY = screenToWorldY(position.y);
+    final previousX = screenToWorldX(previous.x);
+    final previousY = screenToWorldY(previous.y);
     final diffX = previousX - positionX;
     final diffY = previousY - positionY;
-    engine.state.camera.x += diffX * engine.state.zoom;
-    engine.state.camera.y += diffY * engine.state.zoom;
+    final zoom = engine.state.zoom;
+    engine.state.camera.x += diffX * zoom;
+    engine.state.camera.y += diffY * zoom;
   }
 
   void onMouseDragging(){
