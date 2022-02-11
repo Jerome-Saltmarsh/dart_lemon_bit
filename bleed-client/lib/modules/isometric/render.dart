@@ -331,7 +331,7 @@ class IsometricRender {
     );
     engine.state.mapSrc(
         x: getCharacterSrcX(character),
-        y: atlas.parts.y + ((layer.index - 1) * _sizeD)
+        y: atlas.parts.y + ((layer.index) * _sizeD)
     );
     engine.actions.renderAtlas();
   }
