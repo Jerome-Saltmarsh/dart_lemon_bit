@@ -717,20 +717,26 @@ class GameBuild {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              WatchBuilder(state.player.slots.weapon, (SlotType weapon){
+              WatchBuilder(state.player.slots.weapon, (SlotType slotType){
+                final child = slot(slotType: slotType, color: colours.white382);
+                if (slotType.isEmpty) return child;
                 return onPressed(
                     callback: actions.unequipWeapon,
-                    child: slot(slotType: weapon, color: colours.white382));
+                    child: child);
               }),
               WatchBuilder(state.player.slots.armour, (SlotType slotType){
+                final child = slot(slotType: slotType, color: colours.white382);
+                if (slotType.isEmpty) return child;
                 return onPressed(
                     callback: actions.unequipArmour,
-                    child: slot(slotType: slotType, color: colours.white382));
+                    child: child);
               }),
               WatchBuilder(state.player.slots.helm, (SlotType slotType){
+                final child = slot(slotType: slotType, color: colours.white382);
+                if (slotType.isEmpty) return child;
                 return onPressed(
                     callback: actions.unequipHelm,
-                    child: slot(slotType: slotType, color: colours.white382));
+                    child: child);
               }),
             ],
           )
