@@ -328,7 +328,7 @@ class IsometricRender {
         x: character.x,
         y: character.y,
         anchorX: _sizeDHalf,
-        anchorY: _sizeDHalf,
+        anchorY: _anchorY,
         scale: scale
     );
     engine.state.mapSrc(
