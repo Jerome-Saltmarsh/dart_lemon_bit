@@ -34,12 +34,16 @@ class IsometricActions {
     final tileSize = modules.isometric.constants.tileSize;
     final atlasY = atlas.tiles.y;
     final dynamicShading = state.dynamicShade;
-    for (int row = state.minRow; row < state.maxRow; row++) {
-      for (int column = state.minColumn; column < state.maxColumn; column++) {
+    final tilesSrc = state.tilesSrc;
+    final maxRow = state.maxRow;
+    final maxColumn =  state.maxRow;
+    final totalColumnsInt = state.totalColumnsInt;
+    for (int row = state.minRow; row < maxRow; row++) {
+      for (int column = state.minColumn; column < maxColumn; column++) {
         final shade = dynamicShading[row][column];
-        final i = row * state.totalColumnsInt * 4 + (column * 4);
-        state.tilesSrc[i + 1] = atlasY + shade * tileSize; // top
-        state.tilesSrc[i + 3] = state.tilesSrc[i + 1] + tileSize; // bottom
+        final i = row * totalColumnsInt * 4 + (column * 4);
+        tilesSrc[i + 1] = atlasY + shade * tileSize; // top
+        tilesSrc[i + 3] = tilesSrc[i + 1] + tileSize; // bottom
       }
     }
   }

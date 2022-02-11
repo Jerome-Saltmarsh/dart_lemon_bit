@@ -30,7 +30,7 @@ class IsometricProperties {
   }
 
   Phase get phase {
-     return modules.isometric.map.hourToPhase(modules.isometric.state.hour.value);
+     return modules.isometric.map.hourToPhase(state.hour.value);
   }
 
   Vector2 get mapCenter {
@@ -58,17 +58,17 @@ class IsometricProperties {
   int getShade(int row, int column){
     if (row < 0) return Shade.Very_Dark;
     if (column < 0) return Shade.Very_Dark;
-    if (row >= modules.isometric.state.totalRows.value){
+    if (row >= state.totalRows.value){
       return Shade.Very_Dark;
     }
-    if (column >= modules.isometric.state.totalColumns.value){
+    if (column >= state.totalColumns.value){
       return Shade.Very_Dark;
     }
-    return modules.isometric.state.dynamicShade[row][column];
+    return state.dynamicShade[row][column];
   }
 
   bool inDarkness(double x, double y){
-    return isometric.properties.getShadeAtPosition(x, y) >= Shade.Very_Dark;
+    return getShadeAtPosition(x, y) >= Shade.Very_Dark;
   }
 
   bool get boundaryAtMouse => tileAtMouse == Tile.Boundary;
