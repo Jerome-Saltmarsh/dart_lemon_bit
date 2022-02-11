@@ -180,17 +180,6 @@ class GameEvents {
         }
         break;
       case GameEventType.Zombie_Killed:
-        playAudioZombieDeath(x, y);
-        double s = 0.15;
-        double r = 1;
-        for (int i = 0; i < randomInt(2, 5); i++) {
-          isometric.spawn.blood(x, y, 0.3,
-              xv: xv * s + giveOrTake(r),
-              yv: yv * s + giveOrTake(r),
-              zv: randomBetween(0, 0.07));
-        }
-        break;
-      case GameEventType.Zombie_killed_Explosion:
         final s = 0.15;
         final r = 1;
         for (int i = 0; i < randomInt(2, 5); i++) {
@@ -213,6 +202,7 @@ class GameEvents {
             xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
         playAudioZombieDeath(x, y);
         break;
+
       case GameEventType.Zombie_Target_Acquired:
         playAudioZombieTargetAcquired(x, y);
         break;

@@ -777,31 +777,26 @@ extension GameFunctions on Game {
   }
 
   void _updateProjectiles() {
-    // @on update bullet
     for (int i = 0; i < projectiles.length; i++) {
-      if (!projectiles[i].active) continue;
-      Projectile projectile = projectiles[i];
+      final projectile = projectiles[i];
+      if (!projectile.active) continue;
       projectile.x += projectile.xv;
       projectile.y += projectile.yv;
-
-      Character? target = projectile.target;
+      final target = projectile.target;
       if (target != null) {
-        final double rot = radiansV2(projectile, target);
-        projectile.xv = adj(rot, projectile.speed);
-        projectile.yv = opp(rot, projectile.speed);
-        if (distanceBetween(projectile.x, projectile.y, target.x, target.y) <
-            settings.radius.character) {
-          handleProjectileHit(projectile, target);
-        }
+        final angle = radiansV2(projectile, target);
+        projectile.xv = adj(angle, projectile.speed);
+        projectile.yv = opp(angle, projectile.speed);
       } else if (projectileDistanceTravelled(projectile) > projectile.range) {
         deactivateProjectile(projectile);
       }
     }
 
     for (int i = 0; i < projectiles.length; i++) {
-      if (!projectiles[i].collideWithEnvironment) continue;
-      if (scene.bulletCollisionAt(projectiles[i].x, projectiles[i].y)) {
-        deactivateProjectile(projectiles[i]);
+      final projectile = projectiles[i];
+      if (projectile.collideWithEnvironment) continue;
+      if (scene.bulletCollisionAt(projectile.x, projectile.y)) {
+        deactivateProjectile(projectile);
       }
     }
 
@@ -866,15 +861,7 @@ extension GameFunctions on Game {
       applyForce(zombie, rotation + pi, magnitude);
 
       if (zombie.dead) continue;
-
       applyDamage(src, zombie, settings.damage.grenade);
-
-      if (zombie.dead) {
-        double forceX = clampMagnitudeX(zombie.x - x, zombie.y - y, magnitude);
-        double forceY = clampMagnitudeY(zombie.x - x, zombie.y - y, magnitude);
-        dispatch(GameEventType.Zombie_killed_Explosion, zombie.x, zombie.y,
-            forceX, forceY);
-      }
     }
 
     for (Player player in players) {
@@ -923,73 +910,23 @@ extension GameFunctions on Game {
     switch (player.state) {
       case CharacterState.Running:
         break;
-      // case CharacterState.Striking:
-      //   // @on player striking
-      //   // @on character striking
-      //   if (player.type != CharacterType.Human) return;
-      //
-      //   if (player.stateDuration == 10) {
-      //     dispatch(GameEventType.Knife_Strike, player.x, player.y);
-      //   }
-      //
-      //   if (player.stateDuration == 8) {
-      //     double frontX =
-      //         player.x + velX(player.aimAngle, settings.range.knife);
-      //     double frontY =
-      //         player.y + velY(player.aimAngle, settings.range.knife);
-      //
-      //     for (Npc npc in zombies) {
-      //       // @on zombie struck by player
-      //       if (!npc.alive) continue;
-      //       if (!npc.active) continue;
-      //       if (diffOver(npc.x, frontX, radius.character)) continue;
-      //       if (diffOver(npc.y, frontY, radius.character)) continue;
-      //       npc.xv += velX(player.aimAngle, settings.knifeHitAcceleration);
-      //       npc.yv += velY(player.aimAngle, settings.knifeHitAcceleration);
-      //       applyDamage(player, npc, settings.damage.knife);
-      //       double a = angleBetween(player.x, player.y, npc.x, npc.y);
-      //       applyForce(npc, a, 5);
-      //
-      //       if (npc.dead) {
-      //         dispatch(GameEventType.Zombie_killed_Explosion, npc.x, npc.y,
-      //             npc.xv, npc.yv);
-      //       } else {
-      //         dispatch(
-      //             GameEventType.Zombie_Hit,
-      //             npc.x,
-      //             npc.y,
-      //             velX(player.aimAngle, settings.knifeHitAcceleration * 2),
-      //             velY(player.aimAngle, settings.knifeHitAcceleration * 2));
-      //       }
-      //       return;
-      //     }
-      //   }
-    }
-  }
-
-  void _updateGrenades() {
-    for (Grenade grenade in grenades) {
-      applyMovement(grenade);
-      applyFriction(grenade, settings.grenadeFriction);
-      grenade.zv -= settings.grenadeGravity;
-
-      if (grenade.z < 0) {
-        grenade.z = 0;
-        grenade.zv = -grenade.zv * 0.5;
-      }
     }
   }
 
   void checkProjectileCollision(List<Character> characters) {
     int s = 0;
     for (int i = 0; i < projectiles.length; i++) {
-      Projectile projectile = projectiles[i];
+      final projectile = projectiles[i];
       if (!projectile.active) continue;
-      if (projectile.target != null) {
-        continue;
+      final target = projectile.target;
+      if (target != null) {
+        if (withinRadius(projectile, target, settings.radius.character)){
+          handleProjectileHit(projectile, target);
+          return;
+        }
       }
       for (int j = s; j < characters.length; j++) {
-        Character character = characters[j];
+        final character = characters[j];
         if (!character.active) continue;
         if (character.dead) continue;
         if (character.left > projectile.right) continue;
@@ -1004,41 +941,18 @@ extension GameFunctions on Game {
 
   void handleProjectileHit(Projectile projectile, Character character) {
     deactivateProjectile(projectile);
-    character.xv += projectile.xv * settings.bulletImpactVelocityTransfer;
-    character.yv += projectile.yv * settings.bulletImpactVelocityTransfer;
-
-    if (enemies(projectile, character)) {
-      applyDamage(projectile.owner, character, projectile.damage);
-      if (character is Player) {
-        dispatch(GameEventType.Player_Hit, character.x, character.y,
-            projectile.xv, projectile.yv);
-        return;
-      }
-    }
-
-    if (character.alive) {
-      dispatch(GameEventType.Zombie_Hit, character.x, character.y,
-          projectile.xv, projectile.yv);
-    } else {
-      projectile.owner.ai?.clearTarget();
-      character.ai?.clearTarget();
-      character.active = false;
-      dispatch(GameEventType.Zombie_killed_Explosion, character.x, character.y,
-          projectile.xv, projectile.yv);
-    }
+    applyStrike(projectile.owner, character, projectile.damage);
   }
 
   void applyStrike(Character src, Character target, int damage) {
+    if (!enemies(src, target)) return;
     if (target.dead) return;
     applyDamage(src, target, damage);
-    double angleBetweenSrcAndTarget = radiansBetween2(src, target.x, target.y);
-
-    /// calculate force by dividing damage by target's max health
+    final angleBetweenSrcAndTarget = radiansBetween2(src, target.x, target.y);
     final healthPercentage = damage / target.maxHealth;
     applyForce(target, angleBetweenSrcAndTarget, healthPercentage);
-
     if (target.dead) {
-      dispatch(GameEventType.Zombie_killed_Explosion, target.x, target.y,
+      dispatch(GameEventType.Zombie_Killed, target.x, target.y,
           target.xv, target.yv);
     } else {
       dispatch(
