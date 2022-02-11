@@ -41,18 +41,16 @@ const _framesPerDirection = 9;
 const _indexIdle = 0;
 const _indexChanging = 1;
 
-final _Indexes indexes = _Indexes();
-
-class _Indexes {
-  final shadow = 1;
-  final bowWooden = 2;
-  final swordWooden = 3;
-  final swordSteel = 4;
-  final legsBlue = 5;
-  final bodyBlue = 6;
-  final bodyCyan = 7;
-  final headPlain = 8;
-  final headSteel = 9;
+enum SpriteLayer {
+  Shadow,
+  Bow_Wooden,
+  Sword_Wooden,
+  Sword_Steel,
+  Legs_Blue,
+  Body_Blue,
+  Body_Cyan,
+  Head_Plain,
+  Head_Steel,
 }
 
 class IsometricRender {
@@ -308,7 +306,7 @@ class IsometricRender {
   }
 
   void _renderCharacterShadow(Character character){
-    _renderCharacterPart(character, indexes.shadow);
+    _renderCharacterPart(character, SpriteLayer.Shadow);
   }
 
   void _renderCharacterPartHead(Character character) {
@@ -323,7 +321,7 @@ class IsometricRender {
     _renderCharacterPart(character, getSpriteIndexLegs(character));
   }
 
-  void _renderCharacterPart(Character character, int index, {double scale = 0.7}) {
+  void _renderCharacterPart(Character character, SpriteLayer layer, {double scale = 0.7}) {
     engine.state.mapDst(
         x: character.x,
         y: character.y,
@@ -333,35 +331,35 @@ class IsometricRender {
     );
     engine.state.mapSrc(
         x: getCharacterSrcX(character),
-        y: atlas.parts.y + ((index - 1) * _sizeD)
+        y: atlas.parts.y + ((layer.index - 1) * _sizeD)
     );
     engine.actions.renderAtlas();
   }
 
-  int getSpriteIndexHead(Character character){
+  SpriteLayer getSpriteIndexHead(Character character){
     switch(character.equippedHead){
       case SlotType.Empty:
-        return indexes.headPlain;
+        return SpriteLayer.Head_Plain;
       case SlotType.Steel_Helmet:
-        return indexes.headSteel;
+        return SpriteLayer.Head_Steel;
       default:
         throw Exception("cannot render head ${character.equippedHead.name}");
     }
   }
 
-  int getSpriteIndexBody(Character character){
+  SpriteLayer getSpriteIndexBody(Character character){
     switch(character.equippedArmour){
       case SlotType.Empty:
-        return indexes.bodyCyan;
+        return SpriteLayer.Body_Cyan;
       case SlotType.Body_Blue:
-        return indexes.bodyBlue;
+        return SpriteLayer.Body_Blue;
       default:
         throw Exception("cannot render body ${character.equippedHead.name}");
     }
   }
 
-  int getSpriteIndexLegs(Character character){
-    return indexes.legsBlue;
+  SpriteLayer getSpriteIndexLegs(Character character){
+    return SpriteLayer.Legs_Blue;
   }
 
   double getCharacterSrcX(Character character){
@@ -397,14 +395,14 @@ class IsometricRender {
     }
   }
 
-  int mapEquippedWeaponToSpriteIndex(Character character){
+  SpriteLayer mapEquippedWeaponToSpriteIndex(Character character){
      switch(character.equippedWeapon){
        case SlotType.Sword_Wooden:
-         return indexes.swordWooden;
+         return SpriteLayer.Sword_Wooden;
        case SlotType.Sword_Short:
-         return indexes.swordSteel;
+         return SpriteLayer.Sword_Steel;
        case SlotType.Bow_Wooden:
-         return indexes.bowWooden;
+         return SpriteLayer.Bow_Wooden;
        default:
          throw Exception("cannot map ${character.equippedWeapon} to sprite index");
      }
