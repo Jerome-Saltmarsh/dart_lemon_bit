@@ -227,11 +227,10 @@ class IsometricRender {
 
   void environmentObject(EnvironmentObject value) {
     if (!queries.environmentObjectOnScreenScreen(value)) return;
-    final shade = isometric.properties.getShade(value.row, value.column);
+    final shade = properties.getShade(value.row, value.column);
     if (shade == Shade.Pitch_Black) return;
 
     mapEnvironmentObjectToSrc(value);
-    try {
       engine.state.mapDst(
           x: value.x,
           y: value.y,
@@ -239,9 +238,6 @@ class IsometricRender {
           anchorY: value.anchorY
       );
       engine.actions.renderAtlas();
-    }catch(e){
-
-    }
   }
 
 
@@ -249,7 +245,7 @@ class IsometricRender {
     if (!onScreen(character.x, character.y)) return;
     if (!character.alive) return;
 
-    final shade = isometric.properties.getShadeAtPosition(character.x, character.y);
+    final shade = properties.getShadeAtPosition(character.x, character.y);
     if (shade > Shade.Dark) return;
 
     _renderCharacter(character, shade);
@@ -437,7 +433,7 @@ class IsometricRender {
   }
 
   void drawInteractableNpc(Character npc) {
-    isometric.render.drawCharacter(npc);
+    drawCharacter(npc);
     if (diffOver(npc.x, mouseWorldX, 50)) return;
     if (diffOver(npc.y, mouseWorldY, 50)) return;
     engine.draw.text(npc.name, npc.x - isometric.constants.charWidth * npc.name.length, npc.y, style: state.nameTextStyle);
