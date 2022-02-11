@@ -16,6 +16,7 @@ enum SlotType {
   Staff_Golden,
   Leather_Cap,
   Steel_Helmet,
+  Magic_Hat,
   Handgun,
   Shotgun,
   SniperRifle,
@@ -23,6 +24,7 @@ enum SlotType {
   Spell_Tome_Fireball,
   Body_Blue,
   Potion_Red,
+  Potion_Blue,
 }
 
 final List<SlotType> slotTypesAll = SlotType.values;

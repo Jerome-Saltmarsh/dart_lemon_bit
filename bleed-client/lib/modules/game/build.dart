@@ -423,7 +423,7 @@ class GameBuild {
         shopSlotRow(
             SlotType.Body_Blue,
             SlotType.Steel_Helmet,
-            SlotType.Empty,
+            SlotType.Magic_Hat,
         ),
         shopSlotRow(
           SlotType.Empty,
@@ -449,8 +449,8 @@ class GameBuild {
         ),
         shopSlotRow(
           SlotType.Potion_Red,
-          SlotType.Empty,
-          SlotType.Empty,
+          SlotType.Potion_Blue,
+          SlotType.Magic_Hat,
         ),
         shopSlotRow(
           SlotType.Empty,

@@ -24,15 +24,21 @@ class _Icons {
   final bookRed = _image("book-red");
   final unknown = _image("unknown");
   final armourStandard = _image("armour-standard");
-  final helmetSteel = _image("helmet-steel");
   final empty = _image("slot-empty");
   final _SwordIcons swords = _SwordIcons();
   final _BowIcons bows = _BowIcons();
   final _PotionIcons potions = _PotionIcons();
+  final _HeadIcons heads = _HeadIcons();
+}
+
+class _HeadIcons {
+  final steel = _image("helmet-steel");
+  final magic = _image("magic-hat");
 }
 
 class _PotionIcons {
   final red = _image('potion-red');
+  final blue = _image('potion-blue');
 }
 
 class _SwordIcons {

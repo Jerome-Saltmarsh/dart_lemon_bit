@@ -215,6 +215,12 @@ class Player extends Character with Entity {
         slots.assignSlotAtIndex(index, SlotType.Empty);
         setStateChangingWeapons();
       }
+
+      if (slot == SlotType.Potion_Blue) {
+        magic = maxMagic;
+        slots.assignSlotAtIndex(index, SlotType.Empty);
+        setStateChangingWeapons();
+      }
   }
 }
 
