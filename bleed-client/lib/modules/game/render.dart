@@ -210,12 +210,12 @@ class GameRender {
   }
 
   void arrow(double x, double y, double angle) {
-    engine.state.mapSrc(x: atlas.projectiles.arrow.x, y: atlas.projectiles.arrow.y, width: 13, height: 47);
-    engine.state.mapDst(x: x, y: y, rotation: angle, anchorX: 6.5, anchorY: 30, scale: 0.5);
+    final engineState = engine.state;
+    engineState.mapSrc(x: atlas.projectiles.arrow.x, y: atlas.projectiles.arrow.y, width: 13, height: 47);
+    engineState.mapDst(x: x, y: y, rotation: angle, anchorX: 6.5, anchorY: 30, scale: 0.5);
     engine.actions.renderAtlas();
-
-    engine.state.mapSrc(x: atlas.projectiles.arrowShadow.x, y: atlas.projectiles.arrowShadow.y, width: 13, height: 47);
-    engine.state.mapDst(x: x, y: y + 20, rotation: angle, anchorX: 6.5, anchorY: 30, scale: 0.5);
+    engineState.mapSrc(x: atlas.projectiles.arrowShadow.x, y: atlas.projectiles.arrowShadow.y, width: 13, height: 47);
+    engineState.mapDst(x: x, y: y + 20, rotation: angle, anchorX: 6.5, anchorY: 30, scale: 0.5);
     engine.actions.renderAtlas();
   }
 
@@ -235,8 +235,8 @@ class GameRender {
       }
 
       if (effect.type == EffectType.FreezeCircle) {
-        double p = effect.duration / effect.maxDuration;
-        double maxRadius = 75;
+        final p = effect.duration / effect.maxDuration;
+        final maxRadius = 75;
         engine.draw.drawCircleOutline(
             sides: 16,
             radius: maxRadius * p,
