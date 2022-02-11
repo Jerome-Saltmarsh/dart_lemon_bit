@@ -22,7 +22,7 @@ class GameUpdate {
 
   GameUpdate(this.state);
 
-  Offset _mouseWorldStart = Offset(0, 0);
+  // Vector2 _mouseWorldStart = Offset(0, 0);
 
   void update() {
     if (!webSocket.connected) return;
@@ -74,7 +74,6 @@ class GameUpdate {
 
     if (keyPressed(LogicalKeyboardKey.keyE) && !state.panningCamera) {
       state.panningCamera = true;
-      _mouseWorldStart = mouseWorld;
     }
 
     if (state.panningCamera && !keyPressed(LogicalKeyboardKey.keyE)) {
@@ -82,9 +81,9 @@ class GameUpdate {
     }
 
     if (state.panningCamera) {
-      Offset mouseWorldDiff = _mouseWorldStart - mouseWorld;
-      engine.state.camera.y += mouseWorldDiff.dy * engine.state.zoom;
-      engine.state.camera.x += mouseWorldDiff.dx * engine.state.zoom;
+      // Offset mouseWorldDiff = _mouseWorldStart - mouseWorld;
+      // engine.state.camera.y += mouseWorldDiff.dy * engine.state.zoom;
+      // engine.state.camera.x += mouseWorldDiff.dx * engine.state.zoom;
     }
     final Direction? direction = getKeyDirection();
     if (direction != null){

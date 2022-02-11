@@ -270,8 +270,8 @@ class GameBuild {
             ],
           )
         ),
-        right: (engine.state.screen.width - mouseX) + 50,
-        top: mouseY,
+        right: (engine.state.screen.width - engine.state.mousePosition.x) + 50,
+        top: engine.state.mousePosition.y,
       );
     });
   }
