@@ -107,10 +107,12 @@ class GameActions {
   }
 
   void playerEquip(int index) {
+    print("game.actions.playerEquip(index: $index)");
     webSocket.send('${ClientRequest.Equip.index} $session ${index - 1}');
   }
 
-  void playerDeselectAbility() {
+  void deselectAbility() {
+    print("game.actions.deselectAbility()");
     webSocket.send('${ClientRequest.DeselectAbility.index} $session');
   }
 

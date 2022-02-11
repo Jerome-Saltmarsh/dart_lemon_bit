@@ -41,6 +41,7 @@ class GameEvents {
     engine.callbacks.onLeftClicked = actions.playerPerform;
     engine.callbacks.onPanStarted = actions.playerPerform;
     engine.callbacks.onLongLeftClicked = actions.playerPerform;
+    engine.callbacks.onRightClicked = actions.deselectAbility;
     state.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
     game.type.onChanged(_onGameTypeChanged);
     state.player.uuid.onChanged(_onPlayerUuidChanged);
