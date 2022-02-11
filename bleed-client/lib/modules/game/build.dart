@@ -146,6 +146,13 @@ class GameBuild {
     });
   }
 
+  Widget respawnButton(){
+    return WatchBuilder(state.player.alive, (bool alive){
+      if (alive) return empty;
+      return button("Respawn", actions.respawn);
+    });
+  }
+
   Widget layoutRoyal(){
     return layout(
         children: [
@@ -162,6 +169,7 @@ class GameBuild {
               right: 8,
               bottom: 8,
               child: _panelMagicStore()),
+          respawnButton(),
       _panelHighlightedSlot(),
     ]);
   }
