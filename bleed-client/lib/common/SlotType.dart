@@ -120,4 +120,7 @@ const Map<SlotType, double> slotTypeRange = {
   SlotType.Sword_Wooden: 35,
   SlotType.Sword_Short: 60,
   SlotType.Sword_Long: 70,
+  SlotType.Bow_Wooden: 300,
+  SlotType.Bow_Green: 500,
+  SlotType.Bow_Gold: 600,
 };

@@ -323,13 +323,17 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           final mouseY = double.parse(arguments[5]);
 
           if (!player.isSoldier) {
-            Character? closestEnemy =
-            game.getClosestEnemy(mouseX, mouseY, player.team);
-
+            final closestEnemy = game.getClosestEnemy(mouseX, mouseY, player.team);
             player.aimTarget = null;
             if (closestEnemy != null) {
               if (withinDistance(
                   closestEnemy, mouseX, mouseY, settings.radius.cursor)) {
+
+                if (player.isTemplate){
+                  if (withinDistance(closestEnemy, player.x, player.y, player.slots.weapon.range)) {
+                    player.aimTarget = closestEnemy;
+                  }
+                } else
                 if (withinDistance(
                     closestEnemy, player.x, player.y, player.attackRange)) {
                   player.aimTarget = closestEnemy;

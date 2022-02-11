@@ -332,6 +332,7 @@ extension PlayerProperties on Player {
 
   bool get isHuman => type == CharacterType.Human;
   bool get isSoldier => type == CharacterType.Soldier;
+  bool get isTemplate => type == CharacterType.Template;
 
   bool get unarmed {
     for(Weapon weapon in weapons){
