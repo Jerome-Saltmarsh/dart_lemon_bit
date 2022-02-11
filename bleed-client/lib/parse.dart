@@ -34,6 +34,7 @@ import 'common/GameEventType.dart';
 import 'common/PlayerEvent.dart';
 import 'common/Tile.dart';
 import 'common/WeaponType.dart';
+import 'common/constants.dart';
 import 'common/enums/ObjectType.dart';
 
 // state
@@ -691,7 +692,7 @@ void _parseProjectiles() {
     projectile.x = consumeDouble();
     projectile.y = consumeDouble();
     projectile.type = _consumeProjectileType();
-    projectile.angle = consumeDouble();
+    projectile.angle = consumeDouble() * degreesToRadians;
     game.totalProjectiles++;
   }
 }

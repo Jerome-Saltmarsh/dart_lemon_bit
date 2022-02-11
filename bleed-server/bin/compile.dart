@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:bleed_server/CubeGame.dart';
 import 'package:lemon_math/Vector2.dart';
+import 'package:lemon_math/angle.dart';
 
 import 'bleed/zombie_health.dart';
 import 'classes/Ability.dart';
@@ -24,6 +25,7 @@ import 'common/PlayerEvent.dart';
 import 'common/ServerResponse.dart';
 import 'common/Tile.dart';
 import 'common/WeaponType.dart';
+import 'common/constants.dart';
 import 'games/Moba.dart';
 import 'games/Royal.dart';
 
@@ -439,7 +441,8 @@ void _compileProjectile(StringBuffer buffer, Projectile projectile) {
   _write(buffer, projectile.x.toInt());
   _write(buffer, projectile.y.toInt());
   _write(buffer, projectile.type.index);
-  _write(buffer, atan2(projectile.xv, projectile.yv).toStringAsFixed(1));
+  final degrees = angle(projectile.xv, projectile.yv) * radiansToDegrees;
+  _write(buffer, degrees.toInt());
 }
 
 void _compilePlayer(StringBuffer buffer, Player player) {
