@@ -9,7 +9,7 @@ import 'package:bleed_client/modules/core/init.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/modules/website/enums.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/state/sharedPreferences.dart';
+import 'package:bleed_client/sharedPreferences.dart';
 import 'package:bleed_client/toString.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:bleed_client/ui/constants.dart';

@@ -1,6 +1,6 @@
 
 
-import 'package:bleed_client/state/sharedPreferences.dart';
+import 'package:bleed_client/sharedPreferences.dart';
 import 'package:lemon_watch/watch.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

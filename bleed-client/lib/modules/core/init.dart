@@ -11,7 +11,7 @@ import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:bleed_client/state/sharedPreferences.dart';
+import 'package:bleed_client/sharedPreferences.dart';
 import 'package:bleed_client/ui/state/hud.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
