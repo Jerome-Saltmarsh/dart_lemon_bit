@@ -116,6 +116,7 @@ const Map<SlotType, int> slotTypeHealth = {
 const Map<SlotType, int> slotTypeMagic = {
   SlotType.Steel_Helmet: 5,
   SlotType.Body_Blue: 10,
+  SlotType.Magic_Hat: 10,
 };
 
 const Map<SlotType, double> slotTypeRange = {

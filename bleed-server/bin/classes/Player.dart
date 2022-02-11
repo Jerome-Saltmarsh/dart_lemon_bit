@@ -358,10 +358,14 @@ extension PlayerProperties on Player {
   void onEquipped(SlotType slotType){
     maxHealth += slotType.health;
     health = clampInt(health + slotType.health, 1, maxHealth);
+    maxMagic += slotType.magic;
+    magic = clampInt(magic + slotType.magic, 1, maxMagic);
   }
 
   void onUnequipped(SlotType slotType){
     maxHealth -= slotType.health;
     health = clampInt(health - slotType.health, 1, maxHealth);
+    maxMagic -= slotType.magic;
+    magic = clampInt(magic - slotType.magic, 1, maxMagic);
   }
 }
