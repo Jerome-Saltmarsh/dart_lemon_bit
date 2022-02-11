@@ -380,6 +380,12 @@ class IsometricRender {
         final frame = animation[animationFrame] - 1;
         return (direction * _framesPerDirection * _sizeD) + (frame * _sizeD);
 
+      case CharacterState.Performing:
+        final animation = character.equippedWeapon.isBow ? animations.firingBow : animations.strikingSword;
+        final animationFrame = min(character.frame, animation.length - 1);
+        final frame = animation[animationFrame] - 1;
+        return (direction * _framesPerDirection * _sizeD) + (frame * _sizeD);
+
       case CharacterState.Running:
         final animation = animations.running;
         final animationFrame = character.frame % animation.length;
