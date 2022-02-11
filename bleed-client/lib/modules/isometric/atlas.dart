@@ -170,7 +170,7 @@ class _Zombie {
 
 class _Projectiles {
   final _Item fireball = _Item(2324, 1193, 32, 4);
-  final Vector2 arrow = Vector2(2295, 1306);
+  final Vector2 arrow = Vector2(2297, 1308);
 }
 
 class _Particles {

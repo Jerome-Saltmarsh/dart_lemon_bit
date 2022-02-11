@@ -216,18 +216,10 @@ class GameRender {
         [rect], null, null, null, engine.state.paint);
   }
 
-  Rect _rectArrow = Rect.fromLTWH(atlas.projectiles.arrow.x, atlas.projectiles.arrow.y, 18, 51);
-
   void drawArrow(double x, double y, double angle) {
-    RSTransform rsTransform = RSTransform.fromComponents(
-        rotation: angle,
-        scale: 0.5,
-        anchorX: 25,
-        anchorY: 9,
-        translateX: x,
-        translateY: y);
-    engine.state.canvas.drawAtlas(
-        isometric.state.image, [rsTransform], [_rectArrow], null, null, null, engine.state.paint);
+    engine.state.mapSrc(x: atlas.projectiles.arrow.x, y: atlas.projectiles.arrow.y, width: 13, height: 47);
+    engine.state.mapDst(x: x, y: y, rotation: angle, anchorX: 6.5, anchorY: 30, scale: 0.5);
+    engine.actions.renderAtlas();
   }
 
   void drawItems() {
