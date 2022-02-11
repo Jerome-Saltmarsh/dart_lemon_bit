@@ -1,7 +1,5 @@
 import 'package:bleed_client/classes/Explosion.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
-import 'package:bleed_client/functions/spawners/spawnFireYellow.dart';
-import 'package:bleed_client/functions/spawners/spawnShrapnel.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_math/randomInt.dart';
 
@@ -40,14 +38,11 @@ void spawnExplosion(double x, double y) {
   playAudioExplosion(x, y);
   modules.game.actions.spawnBulletHole(x, y);
   for (int i = 0; i < randomInt(4, 10); i++) {
-    spawnShrapnel(x, y);
+    isometric.spawn.spawnShrapnel(x, y);
   }
   for (int i = 0; i < randomInt(4, 10); i++) {
-    spawnFireYellow(x, y);
+    isometric.spawn.spawnFireYellow(x, y);
   }
-  // repeat(() {
-  //   spawnSmoke(x, y, 0.01, xv: giveOrTake(r), yv: giveOrTake(r));
-  // }, 5, 50);
 }
 
 void spawnFreezeCircle({

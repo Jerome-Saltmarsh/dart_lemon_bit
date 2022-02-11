@@ -1,9 +1,10 @@
 
 
+import 'package:bleed_client/modules/isometric/spawn.dart';
+
 import 'actions.dart';
 import 'constants.dart';
 import 'events.dart';
-import 'instances.dart';
 import 'maps.dart';
 import 'properties.dart';
 import 'queries.dart';
@@ -21,12 +22,12 @@ class IsometricModule {
   late final IsometricRender render;
   late final IsometricActions actions;
   late final IsometricUpdate update;
-  late final IsometricInstances instances;
+  late final IsometricSpawn spawn;
   late final IsometricEvents events;
   late final IsometricQueries queries;
 
   IsometricModule(){
-    instances = IsometricInstances(state);
+    spawn = IsometricSpawn(state);
     properties = IsometricProperties(state);
     queries = IsometricQueries(state);
     actions = IsometricActions(state, queries, constants, properties);

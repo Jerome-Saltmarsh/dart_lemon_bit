@@ -5,14 +5,6 @@ import 'package:bleed_client/common/GameError.dart';
 import 'package:bleed_client/common/GameEventType.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
-import 'package:bleed_client/functions/spawners/spawnArm.dart';
-import 'package:bleed_client/functions/spawners/spawnBlood.dart';
-import 'package:bleed_client/functions/spawners/spawnOrgan.dart';
-import 'package:bleed_client/functions/spawners/spawnShell.dart';
-import 'package:bleed_client/functions/spawners/spawnShotSmoke.dart';
-import 'package:bleed_client/functions/spawners/spawnShrapnel.dart';
-import 'package:bleed_client/functions/spawners/spawnZombieHead.dart';
-import 'package:bleed_client/functions/spawners/spawnZombieLeg.dart';
 import 'package:bleed_client/modules/game/actions.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/parse.dart';
@@ -146,20 +138,20 @@ class GameEvents {
     switch (type) {
       case GameEventType.Handgun_Fired:
         playAudioHandgunShot(x, y);
-        spawnShell(x, y);
+        isometric.spawn.spawnShell(x, y);
         break;
       case GameEventType.Shotgun_Fired:
         playAudioShotgunShot(x, y);
-        spawnShell(x, y);
-        spawnShotSmoke(x, y, xv, yv);
+        isometric.spawn.spawnShell(x, y);
+        isometric.spawn.spawnShotSmoke(x, y, xv, yv);
         break;
       case GameEventType.SniperRifle_Fired:
         playAudioSniperShot(x, y);
-        spawnShell(x, y);
+        isometric.spawn.spawnShell(x, y);
         break;
       case GameEventType.MachineGun_Fired:
         playAudioAssaultRifleShot(x, y);
-        spawnShell(x, y);
+        isometric.spawn.spawnShell(x, y);
         break;
       case GameEventType.Zombie_Hit:
         if (randomBool()) {
@@ -168,7 +160,7 @@ class GameEvents {
         double s = 0.1;
         double r = 1;
         for (int i = 0; i < randomInt(2, 5); i++) {
-          spawnBlood(x, y, 0.3,
+          isometric.spawn.spawnBlood(x, y, 0.3,
               xv: xv * s + giveOrTake(r),
               yv: yv * s + giveOrTake(r),
               zv: randomBetween(0, 0.07));
@@ -181,7 +173,7 @@ class GameEvents {
         double s = 0.1;
         double r = 1;
         for (int i = 0; i < randomInt(2, 5); i++) {
-          spawnBlood(x, y, 0.3,
+          isometric.spawn.spawnBlood(x, y, 0.3,
               xv: xv * s + giveOrTake(r),
               yv: yv * s + giveOrTake(r),
               zv: randomBetween(0, 0.07));
@@ -192,7 +184,7 @@ class GameEvents {
         double s = 0.15;
         double r = 1;
         for (int i = 0; i < randomInt(2, 5); i++) {
-          spawnBlood(x, y, 0.3,
+          isometric.spawn.spawnBlood(x, y, 0.3,
               xv: xv * s + giveOrTake(r),
               yv: yv * s + giveOrTake(r),
               zv: randomBetween(0, 0.07));
@@ -202,22 +194,22 @@ class GameEvents {
         double s = 0.15;
         double r = 1;
         for (int i = 0; i < randomInt(2, 5); i++) {
-          spawnBlood(x, y, 0.3,
+          isometric.spawn.spawnBlood(x, y, 0.3,
               xv: xv * s + giveOrTake(r),
               yv: yv * s + giveOrTake(r),
               zv: randomBetween(0, 0.07));
         }
-        spawnZombieHead(x, y, 0.5,
+        isometric.spawn.spawnZombieHead(x, y, 0.5,
             xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
-        spawnArm(x, y, 0.3,
+        isometric.spawn.spawnArm(x, y, 0.3,
             xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
-        spawnArm(x, y, 0.3,
+        isometric.spawn.spawnArm(x, y, 0.3,
             xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
-        spawnZombieLeg(x, y, 0.2,
+        isometric.spawn.spawnZombieLeg(x, y, 0.2,
             xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
-        spawnZombieLeg(x, y, 0.2,
+        isometric.spawn.spawnZombieLeg(x, y, 0.2,
             xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
-        spawnOrgan(x, y, 0.3,
+        isometric.spawn.spawnOrgan(x, y, 0.3,
             xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
         playAudioZombieDeath(x, y);
         break;
@@ -232,7 +224,7 @@ class GameEvents {
         double r = 1;
         double s = 0.15;
         for (int i = 0; i < randomInt(2, 4); i++) {
-          spawnBlood(x, y, 0.3,
+          isometric.spawn.spawnBlood(x, y, 0.3,
               xv: xv * s + giveOrTake(r),
               yv: yv * s + giveOrTake(r),
               zv: randomBetween(0, 0.07));
@@ -287,7 +279,7 @@ class GameEvents {
         break;
       case GameEventType.Crate_Breaking:
         for (int i = 0; i < randomInt(4, 10); i++) {
-          spawnShrapnel(x, y);
+          isometric.spawn.spawnShrapnel(x, y);
         }
         playAudioCrateBreaking(x, y);
         break;

@@ -1,5 +1,6 @@
 import 'dart:math';
 
+
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/modules/isometric/enums.dart';
 import 'package:bleed_client/modules/modules.dart';
@@ -38,7 +39,7 @@ class GameFactories {
     required double x,
     required double y
   }) {
-    Particle particle = isometric.instances.getAvailableParticle();
+    Particle particle = isometric.spawn.getAvailableParticle();
     particle.x = x;
     particle.y = y;
     particle.active = true;

@@ -2,9 +2,7 @@
 import 'dart:math';
 
 import 'package:bleed_client/classes/Particle.dart';
-import 'package:bleed_client/classes/ParticleEmitter.dart';
 import 'package:bleed_client/functions.dart';
-import 'package:bleed_client/functions/spawners/spawnBlood.dart';
 import 'package:bleed_client/modules/isometric/enums.dart';
 import 'package:bleed_client/modules/isometric/queries.dart';
 import 'package:bleed_client/modules/isometric/state.dart';
@@ -35,7 +33,7 @@ class IsometricUpdate {
 
     for (int i = 0; i < game.totalZombies.value; i++) {
       if (game.zombies[i].alive) continue;
-      spawnBlood(game.zombies[i].x, game.zombies[i].y, 0);
+      isometric.spawn.spawnBlood(game.zombies[i].x, game.zombies[i].y, 0);
     }
   }
 
@@ -102,13 +100,13 @@ class IsometricUpdate {
       particle.z = 0;
     }
     if (particle.type == ParticleType.Human_Head && particle.duration % _spawnBloodRate == 0) {
-      spawnBlood(particle.x, particle.y, particle.z);
+      isometric.spawn.spawnBlood(particle.x, particle.y, particle.z);
     }
     if (particle.type == ParticleType.Arm && particle.duration % _spawnBloodRate == 0) {
-      spawnBlood(particle.x, particle.y, particle.z);
+      isometric.spawn.spawnBlood(particle.x, particle.y, particle.z);
     }
     if (particle.type == ParticleType.Organ && particle.duration % _spawnBloodRate == 0) {
-      spawnBlood(particle.x, particle.y, particle.z);
+      isometric.spawn.spawnBlood(particle.x, particle.y, particle.z);
     }
     if (particle.duration-- < 0) {
       particle.active = false;
@@ -116,10 +114,10 @@ class IsometricUpdate {
   }
 
   void _updateParticleEmitters() {
-    for (ParticleEmitter emitter in state.particleEmitters) {
+    for (final emitter in state.particleEmitters) {
       if (emitter.next-- > 0) continue;
       emitter.next = emitter.rate;
-      final particle = isometric.instances.getAvailableParticle();
+      final particle = isometric.spawn.getAvailableParticle();
       particle.active = true;
       particle.x = emitter.x;
       particle.y = emitter.y;

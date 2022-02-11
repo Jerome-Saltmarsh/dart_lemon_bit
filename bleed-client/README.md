@@ -105,11 +105,14 @@
 [ ] Slot machine concept
 [ ] Crafting System
 [ ] Server Strike Damage Calculation
-[ ] FIX Particle blood renders as shell
 [ ] Arrow Capacity (Auto regenerates)
-[ ] Spell Cooldown
-[ ] Spell use magic
 [ ] Zombie Pause after attack
+[ ] Spell Cooldown
+[ ] Efficient Health Bars
+[ ] Weapon Staff
+[ ] Primary Hook
+[ ] FIX Particle blood renders as shell
+[x] Spell use magic
 [x] Fix Fire Bow Animation
 [x] FIX Mouse should be hand on attack
 [x] FIX Zombies stop rendering
