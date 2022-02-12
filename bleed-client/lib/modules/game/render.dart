@@ -51,19 +51,10 @@ class GameRender {
     drawProjectiles(game.projectiles);
     drawBulletHoles(game.bulletHoles);
 
-    engine.draw.drawCircleOutline(
-        radius: state.player.slots.weapon.value.range,
-        x: state.player.x,
-        y: state.player.y,
-        color: colours.white80,
-        sides: 10
-    );
+    // weaponRangeCircle();
 
     drawAbility();
-    final Vector2 attackTarget = state.player.attackTarget;
-    if (attackTarget.x != 0 && attackTarget.y != 0) {
-      engine.draw.circle(attackTarget.x, attackTarget.y, 20, Colors.white24);
-    }
+    attackTargetCircle();
 
     engine.actions.setPaintColorWhite();
     isometric.render.sprites();
@@ -88,12 +79,29 @@ class GameRender {
     engine.actions.setPaintColorWhite();
   }
 
-  void _renderCharacterHealthBars() {
-    for(int i = 0; i < game.totalZombies.value; i++){
-      isometric.render.drawCharacterHealthBar(game.zombies[i]);
+  void weaponRangeCircle() {
+    engine.draw.drawCircleOutline(
+        radius: state.player.slots.weapon.value.range,
+        x: state.player.x,
+        y: state.player.y,
+        color: colours.white80,
+        sides: 10
+    );
+  }
+
+  void attackTargetCircle() {
+    final Vector2 attackTarget = state.player.attackTarget;
+    if (attackTarget.x != 0 && attackTarget.y != 0) {
+      engine.draw.circle(attackTarget.x, attackTarget.y, 20, Colors.white24);
     }
-    for(int i = 0; i < game.totalHumans; i++){
+  }
+
+  void _renderCharacterHealthBars() {
+    for(int i = 0; i < game.totalHumans; i++) {
       isometric.render.drawCharacterHealthBar(game.humans[i]);
+    }
+    for(int i = 0; i < game.totalZombies.value; i++) {
+      isometric.render.drawCharacterHealthBar(game.zombies[i]);
     }
   }
 
