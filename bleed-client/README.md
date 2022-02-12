@@ -110,8 +110,9 @@
 [ ] Spell Cooldown
 [ ] Efficient Health Bars
 [ ] Weapon Staff
-[ ] Primary Hook
 [ ] FIX Particle blood renders as shell
+[ ] Primary Hook
+[ ] Earn Gem Audio
 [x] Spell use magic
 [x] Fix Fire Bow Animation
 [x] FIX Mouse should be hand on attack
