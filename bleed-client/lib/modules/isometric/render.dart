@@ -423,7 +423,7 @@ class IsometricRender {
     // engine.state.mapDst(x: character.x - _widthHalf, y: character.y - _marginBottom, scale: 10);
     // engine.actions.renderAtlas();
     if (!onScreen(character.x, character.y)) return;
-    engine.actions.setPaintColorWhite();
+    engine.actions.setPaintColor(colours.redDarkest);
     engine.state.canvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom, _width, _height), engine.state.paint);
     engine.actions.setPaintColor(colours.red);
     engine.state.canvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom, _width * character.health, _height), engine.state.paint);
