@@ -421,9 +421,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               game.setCharacterState(player, CharacterState.Performing);
               break;
             case CharacterAction.Run:
-              Direction direction = directions[int.parse(arguments[3])];
+              final direction = directions[int.parse(arguments[3])];
               setDirection(player, direction);
-              game.setCharacterState(player, CharacterState.Running);
+              game.setCharacterStateRunning(player);
+              player.target = null;
               break;
           }
           sendCompiledPlayerState(game, player);
