@@ -35,6 +35,10 @@ class GameState {
   final FocusNode textFieldMessage = FocusNode();
   final Watch<SlotType> highLightSlotType = Watch(SlotType.Empty);
 
+  int smoothed = 3;
+
+  final Watch<bool> frameSmoothing = Watch(true);
+
   final playerTextStyle = TextStyle(color: Colors.white);
 
   final List<String> letsGo = [

@@ -196,10 +196,10 @@ class GameBuild {
               _healthBar(),
             ],
           ), padding: 8),
-          // Positioned(
-          //     left: 8,
-          //     top: 8,
-          //     child: mouseRowColumn()),
+          Positioned(
+              left: 8,
+              top: 8,
+              child: frameSmoothing()),
           Positioned(
               left: 8,
               bottom: 8,
@@ -815,6 +815,14 @@ class GameBuild {
   Widget mouseRowColumn(){
     return Refresh((){
       return text("Mouse row:$mouseRow, column $mouseColumn");
+    });
+  }
+
+  Widget frameSmoothing(){
+    return WatchBuilder(state.frameSmoothing, (bool frameSmoothing){
+       return text("Frame Smoothing: $frameSmoothing", onPressed: (){
+         state.frameSmoothing.value = !state.frameSmoothing.value;
+       });
     });
   }
 

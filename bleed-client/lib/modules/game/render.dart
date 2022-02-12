@@ -1,6 +1,7 @@
 
 import 'dart:math';
-
+import 'package:lemon_math/adjacent.dart';
+import 'package:lemon_math/opposite.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/Explosion.dart';
@@ -8,6 +9,7 @@ import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/common/AbilityType.dart';
+import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/SlotType.dart';
@@ -38,7 +40,19 @@ class GameRender {
 
   void render(Canvas canvas, Size size) {
 
-    if (modules.game.state.player.uuid.value.isEmpty) {
+    if (state.frameSmoothing.value && state.smoothed > 0){
+      state.smoothed--;
+      for(final character in game.humans){
+        if (character.state == CharacterState.Running) {
+          final angle = convertDirectionToAngle(character.direction);
+          final speed = 0.5;
+          character.x += adjacent(angle, speed);
+          character.y += opposite(angle, speed);
+        }
+      }
+    }
+
+    if (state.player.uuid.value.isEmpty) {
       return;
     }
     if (state.status.value == GameStatus.Awaiting_Players){

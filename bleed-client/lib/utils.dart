@@ -23,13 +23,12 @@ void drawLine(double x1, double y1, double x2, double y2) {
   engine.state.canvas.drawLine(offset(x1, y1), offset(x2, y2), engine.state.paint);
 }
 
-
 Offset offset(double x, double y) {
   return Offset(x, y);
 }
 
-const double _piEighth = pi / 8.0;
-const double _piQuarter = pi / 4.0;
+const _piEighth = pi / 8.0;
+const _piQuarter = pi / 4.0;
 
 double convertDirectionToAngle(Direction direction){
   return -direction.index * _piQuarter;

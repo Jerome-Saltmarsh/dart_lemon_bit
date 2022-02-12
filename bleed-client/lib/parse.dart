@@ -64,6 +64,7 @@ late ServerResponse _currentServerResponse;
 void parseState() {
   _index = 0;
   event = event.trim();
+  modules.game.state.smoothed = 5;
   while (_index < event.length) {
     _currentServerResponse = _consumeServerResponse();
     switch (_currentServerResponse) {
