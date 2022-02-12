@@ -146,11 +146,11 @@ class GameEvents {
         isometric.spawn.shotSmoke(x, y, xv, yv);
         break;
       case GameEventType.SniperRifle_Fired:
-        playAudioSniperShot(x, y);
+        audio.sniperShot(x, y);
         isometric.spawn.shell(x, y);
         break;
       case GameEventType.MachineGun_Fired:
-        playAudioAssaultRifleShot(x, y);
+        audio.assaultRifleShot(x, y);
         isometric.spawn.shell(x, y);
         break;
       case GameEventType.Zombie_Hit:
@@ -274,7 +274,7 @@ class GameEvents {
         playAudioCrateBreaking(x, y);
         break;
       case GameEventType.Ammo_Acquired:
-        playAudioGunPickup(x, y);
+        audio.gunPickup(x, y);
         break;
       case GameEventType.Credits_Acquired:
         playAudioCollectStar(x, y);

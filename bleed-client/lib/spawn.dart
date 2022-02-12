@@ -35,7 +35,7 @@ void spawnEffect({
 
 void spawnExplosion(double x, double y) {
   spawnEffect(x: x, y: y, type: EffectType.Explosion, duration: 30);
-  playAudioExplosion(x, y);
+  audio.explosion(x, y);
   modules.game.actions.spawnBulletHole(x, y);
   for (int i = 0; i < randomInt(4, 10); i++) {
     isometric.spawn.shrapnel(x, y);

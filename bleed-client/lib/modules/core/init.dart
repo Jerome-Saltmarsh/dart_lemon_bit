@@ -71,16 +71,16 @@ void initializeGameInstances() {
 void onPlayerWeaponChanged(WeaponType weapon) {
   switch (weapon) {
     case WeaponType.HandGun:
-      playAudioReload(screenCenterWorldX, screenCenterWorldY);
+      audio.reload(screenCenterWorldX, screenCenterWorldY);
       break;
     case WeaponType.Shotgun:
       playAudioCockShotgun(screenCenterWorldX, screenCenterWorldY);
       break;
     case WeaponType.SniperRifle:
-      playAudioSniperEquipped(screenCenterWorldX, screenCenterWorldY);
+      audio.sniperEquipped(screenCenterWorldX, screenCenterWorldY);
       break;
     case WeaponType.AssaultRifle:
-      playAudioReload(screenCenterWorldX, screenCenterWorldY);
+      audio.reload(screenCenterWorldX, screenCenterWorldY);
       break;
     default:
       break;

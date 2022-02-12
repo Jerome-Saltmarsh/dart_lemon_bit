@@ -6,34 +6,38 @@ import 'package:lemon_math/randomItem.dart';
 import 'modules/modules.dart';
 
 // interface
+final audio = _Audio();
+
+class _Audio {
+  void sniperShot(double x, double y) {
+    _playAudio('sniper-shot-04.mp3', x, y);
+  }
+
+  void assaultRifleShot(double x, double y) {
+    _playAudio('assault-rifle-shot.mp3', x, y);
+  }
+
+  void explosion(double x, double y) {
+    _playRandom(_grenadeExplosions, x, y);
+  }
+
+  void sniperEquipped(double x, double y) {
+    gunPickup(x, y);
+  }
+
+  void gunPickup(double x, double y) {
+    _playAudio("gun-pickup-01.mp3", x, y);
+  }
+
+  void reload(double x, double y) {
+    _playAudio('reload-06.mp3', x, y);
+  }
+}
+
 void initAudioPlayers() {
   for (int i = 0; i < _totalAudioPlayers; i++) {
     _audioPlayers.add(AudioPlayer());
   }
-}
-
-void playAudioSniperShot(double x, double y) {
-  _playAudio('sniper-shot-04.mp3', x, y);
-}
-
-void playAudioAssaultRifleShot(double x, double y) {
-  _playAudio('assault-rifle-shot.mp3', x, y);
-}
-
-void playAudioExplosion(double x, double y) {
-  _playRandom(_grenadeExplosions, x, y);
-}
-
-void playAudioSniperEquipped(double x, double y) {
-  playAudioGunPickup(x, y);
-}
-
-void playAudioGunPickup(double x, double y) {
-  _playAudio("gun-pickup-01.mp3", x, y);
-}
-
-void playAudioReload(double x, double y) {
-  _playAudio('reload-06.mp3', x, y);
 }
 
 void playAudioCockShotgun(double x, double y) {
@@ -218,7 +222,7 @@ void _playAudio(String name, double x, double y) {
 }
 
 double _calculateVolume(double x, double y) {
-  double d = distanceBetween(x, y, screenCenterWorldX, screenCenterWorldY);
-  double v = 1.0 / ((d * _audioDistanceFade) + 1);
+  final distance = distanceBetween(x, y, screenCenterWorldX, screenCenterWorldY);
+  final v = 1.0 / ((distance * _audioDistanceFade) + 1);
   return v * v;
 }
