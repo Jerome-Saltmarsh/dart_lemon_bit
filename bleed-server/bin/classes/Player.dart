@@ -90,13 +90,16 @@ class Player extends Character with Entity {
     CharacterType type = CharacterType.Human,
     int magic = _defaultMaxMagic,
     int health = 10,
+    AI? ai,
   }) : super(
             type: type,
             x: x,
             y: y,
             health: health,
             speed: settings.playerSpeed,
-            team: team){
+            team: team,
+            ai: ai,
+  ){
     maxMagic = magic;
     _magic = maxMagic;
     engine.onPlayerCreated(this);

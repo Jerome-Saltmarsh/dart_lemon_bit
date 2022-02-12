@@ -31,8 +31,8 @@ class Town extends Game {
         x: -100,
         y: 1650,
         health: 100,
+        ai: AI(mode: NpcMode.Ignore),
         weapon: Weapon(type: WeaponType.Unarmed, damage: 0, capacity: 0));
-    npcDavis.ai = AI(npcDavis, mode: NpcMode.Ignore);
     npcs.add(npcDavis);
 
     crates.add(Crate(x: 0, y: 300));
@@ -44,7 +44,7 @@ class Town extends Game {
         y: 1950,
         health: 100,
         weapon: Weapon(type: WeaponType.Unarmed, damage: 0, capacity: 0));
-    npcSmith.ai = AI(npcSmith, mode: NpcMode.Ignore);
+    npcSmith.ai = AI(mode: NpcMode.Ignore);
     npcs.add(npcSmith);
 
     guard1 = InteractableNpc(
@@ -53,8 +53,8 @@ class Town extends Game {
         x: 180,
         y: 2000,
         health: 100,
+        ai: AI(mode: NpcMode.Stand_Ground),
         weapon: Weapon(type: WeaponType.AssaultRifle, damage: 1, capacity: 0));
-    guard1.ai = AI(guard1, mode: NpcMode.Stand_Ground);
     npcs.add(guard1);
 
     guard2 = InteractableNpc(
@@ -62,8 +62,8 @@ class Town extends Game {
         onInteractedWith: _onGuardInteractedWith,
         x: 215,
         y: 1970,
+        ai: AI(mode: NpcMode.Stand_Ground),
         health: 100,weapon: Weapon(type: WeaponType.SniperRifle, damage: 5, capacity: 0));
-    guard2.ai = AI(guard2, mode: NpcMode.Stand_Ground);
     npcs.add(guard2);
   }
 

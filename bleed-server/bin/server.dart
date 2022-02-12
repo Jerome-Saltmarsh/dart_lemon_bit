@@ -1,6 +1,7 @@
 import 'package:bleed_server/CubeGame.dart';
 import 'package:bleed_server/system.dart';
 import 'package:bleed_server/user-service-client/firestoreService.dart';
+import 'package:lemon_math/Vector2.dart';
 import 'package:shelf/shelf_io.dart' as shelf_io;
 import 'package:shelf_web_socket/shelf_web_socket.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -74,6 +75,7 @@ Player spawnPlayerInTown() {
       team: teams.west,
       type: CharacterType.Template,
       health: 10,
+      ai: AI()
   );
 }
 
@@ -330,9 +332,9 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                   closestEnemy, mouseX, mouseY, settings.radius.cursor)) {
 
                 if (player.isTemplate){
-                  if (withinDistance(closestEnemy, player.x, player.y, player.slots.weapon.range)) {
+                  // if (withinDistance(closestEnemy, player.x, player.y, player.slots.weapon.range)) {
                     player.aimTarget = closestEnemy;
-                  }
+                  // }
                 } else
                 if (withinDistance(
                     closestEnemy, player.x, player.y, player.attackRange)) {
@@ -357,17 +359,25 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 break;
               }
               final ability = player.ability;
+              final aimTarget = player.aimTarget;
               player.attackTarget = player.aimTarget;
               playerSetAbilityTarget(player, mouseX, mouseY);
 
               if (ability == null) {
                 if (player.type.isSoldier ||
                     player.type.isHuman ||
-                    player.type.isTemplate ||
-                    player.attackTarget != null
+                    player.type.isTemplate
+                    // || player.attackTarget != null
                 ) {
                   characterAimAt(player, mouseX, mouseY);
-                  game.setCharacterState(player, CharacterState.Striking);
+
+                  if (aimTarget != null) {
+                    if (withinDistance(aimTarget, player.x, player.y, player.slots.weapon.range)){
+                      game.setCharacterState(player, CharacterState.Striking);
+                    }
+                  }else{
+                      // run and attack the aim target
+                  }
                 }
                 break;
               }
@@ -700,7 +710,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
 
           player.type = CharacterType.Human;
-          final spawnPoint = player.game.getNextSpawnPoint();
+          final spawnPoint = player.game.getNextSpawnPoint() ?? Vector2(0, 200);
           player.x = spawnPoint.x;
           player.y = spawnPoint.y;
           break;

@@ -19,7 +19,7 @@ const _defaultViewRange = 300.0;
 const _defaultCharacterSpeed = 3.0;
 
 class AI {
-  final Character character;
+  late Character character;
   Character? target;
   List<Vector2> path = [];
   List<Vector2> objectives = [];
@@ -27,7 +27,7 @@ class AI {
   double viewRange = 200;
   double chaseRange = 500;
 
-  AI(this.character, {
+  AI({
     this.mode = _defaultMode,
     this.viewRange = _defaultViewRange,
   });
@@ -52,7 +52,7 @@ class Character extends GameObject implements HasSquad {
   late CharacterType type;
   late int maxHealth;
   late double _speed;
-  AI? ai;
+  late AI? ai;
   Ability? ability = null;
   Ability? performing = null;
   CharacterState state = CharacterState.Idle;
@@ -129,6 +129,10 @@ class Character extends GameObject implements HasSquad {
     this.weapons = weapons ?? [
       Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0)
     ];
+
+    if (ai != null){
+      ai!.character = this;
+    }
   }
 
   @override

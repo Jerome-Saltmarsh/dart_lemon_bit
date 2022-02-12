@@ -1304,13 +1304,13 @@ extension GameFunctions on Game {
         type: CharacterType.Zombie,
         x: 0,
         y: 0,
+        ai: AI(),
         health: settings.health.zombie,
         weapons: [Weapon(
           type: WeaponType.Unarmed,
           damage: 0,
           capacity: 0,
         )]);
-    zombie.ai = AI(zombie);
     zombies.add(zombie);
     return zombie;
   }
@@ -1508,18 +1508,21 @@ extension GameFunctions on Game {
   void revive(Character character) {
     character.state = CharacterState.Idle;
     character.health = character.maxHealth;
+    character.active = true;
+    character.collidable = true;
 
     if (character is Player) {
       character.magic = character.maxMagic;
     }
 
-    Vector2 spawnPoint = getNextSpawnPoint();
-    character.x = spawnPoint.x;
-    character.y = spawnPoint.y;
-    character.collidable = true;
+    final spawnPoint = getNextSpawnPoint();
+    if (spawnPoint != null){
+      character.x = spawnPoint.x;
+      character.y = spawnPoint.y;
+    }
   }
 
-  Vector2 getNextSpawnPoint() {
+  Vector2? getNextSpawnPoint() {
     if (scene.playerSpawnPoints.isEmpty) {
       throw Exception("player spawn points is empty (scene: '${scene.name}')");
     }
