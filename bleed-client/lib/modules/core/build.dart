@@ -31,7 +31,7 @@ class CoreBuild {
       backgroundColor: colours.black,
       buildLoadingScreen: buildLoadingScreen,
       themeData: themes.jetbrains,
-      framesPerSecond: targetFPS,
+      framesPerSecond: targetFPS * 2,
     );
   }
 
