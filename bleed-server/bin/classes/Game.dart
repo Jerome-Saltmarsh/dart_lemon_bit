@@ -1280,9 +1280,9 @@ extension GameFunctions on Game {
     return projectile;
   }
 
-  Character spawnZombie(
-    double x,
-    double y, {
+  Character spawnZombie({
+    required double x,
+    required double y,
     required int health,
     required int team,
     required int damage,
@@ -1350,12 +1350,20 @@ extension GameFunctions on Game {
         )]);
   }
 
-  Character spawnRandomZombie(
-      {required int health, required int damage, int experience = 1}) {
+  Character spawnRandomZombie({
+    required int health,
+    required int damage,
+    int experience = 1
+  }) {
     if (zombieSpawnPoints.isEmpty) throw ZombieSpawnPointsEmptyException();
     final spawnPoint = randomItem(zombieSpawnPoints);
-    return spawnZombie(spawnPoint.x, spawnPoint.y,
-        team: teams.east, health: health, damage: damage);
+    return spawnZombie(
+        x: spawnPoint.x,
+        y: spawnPoint.y,
+        team: teams.east,
+        health: health,
+        damage: damage
+    );
   }
 
   int get zombieCount {

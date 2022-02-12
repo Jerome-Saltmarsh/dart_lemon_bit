@@ -390,7 +390,7 @@ class IsometricActions {
     final row = getRow(x, y);
     if (queries.outOfBounds(row, column)) return;
 
-    applyShade(shader, row, column, Shade.Bright);
+    applyShade(shader, row, column, Shade.Medium);
     applyShadeRing(shader, row, column, 1, Shade.Medium);
     applyShadeRing(shader, row, column, 2, Shade.Medium);
     applyShadeRing(shader, row, column, 3, Shade.Very_Dark);

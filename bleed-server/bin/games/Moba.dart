@@ -54,7 +54,9 @@ class GameMoba extends Game {
 
   void spawnCreeps() {
     for (int i = 0; i < _creepsPerSpawn; i++) {
-      spawnZombie(creepSpawn1.x, creepSpawn1.y,
+      spawnZombie(
+          x: creepSpawn1.x,
+          y: creepSpawn1.y,
           health: 100,
           objectives: copy(creepWestObjectives),
           team: teams.west,
@@ -62,8 +64,8 @@ class GameMoba extends Game {
       );
 
       spawnZombie(
-        creepSpawnEast.x,
-        creepSpawnEast.y,
+        x: creepSpawnEast.x,
+        y: creepSpawnEast.y,
         health: 100,
         objectives: copy(creepEastObjectives),
         team: teams.east,

@@ -323,7 +323,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           final action = characterActions[actionIndex];
           final mouseX = double.parse(arguments[4]);
           final mouseY = double.parse(arguments[5]);
-          final ai = player.ai;
+          player.mouseX = mouseX;
+          player.mouseY = mouseY;
 
           if (!player.isSoldier) {
             final closestEnemy = game.getClosestEnemy(mouseX, mouseY, player.team);
@@ -658,9 +659,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           final ModifyGame modifyGame = gameModifications[modifyGameIndex];
           switch(modifyGame){
             case ModifyGame.Spawn_Zombie:
-              player.game.spawnRandomZombie(
+              player.game.spawnZombie(
+                x: player.mouseX,
+                y: player.mouseY,
                 damage: 1,
-                health: 5
+                health: 5,
+                team: -1,
               );
               break;
             case ModifyGame.Remove_Zombie:

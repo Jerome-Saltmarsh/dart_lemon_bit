@@ -41,6 +41,10 @@ class Player extends Character with Entity {
   int maxMagic = 100;
   int magicRegen = 1;
   int healthRegen = 1;
+
+  double mouseX = 0;
+  double mouseY = 0;
+
   final List<PlayerEvent> events = [];
   CharacterState characterState = CharacterState.Idle;
   Ability ability1 = Ability(type: AbilityType.None, level: 0, cost: 0, range: 0, cooldown: 0, mode: AbilityMode.None);

@@ -196,10 +196,10 @@ class GameBuild {
               _healthBar(),
             ],
           ), padding: 8),
-          Positioned(
-              left: 8,
-              top: 8,
-              child: mouseRowColumn()),
+          // Positioned(
+          //     left: 8,
+          //     top: 8,
+          //     child: mouseRowColumn()),
           Positioned(
               left: 8,
               bottom: 8,
