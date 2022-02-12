@@ -75,7 +75,7 @@ class GameRender {
       drawDebugNpcs(game.npcDebug);
     }
 
-    // _renderCharacterHealthBars();
+    _renderCharacterHealthBars();
 
     if (game.type.value == GameType.BATTLE_ROYAL){
       drawRoyalPerimeter();
@@ -89,8 +89,12 @@ class GameRender {
   }
 
   void _renderCharacterHealthBars() {
-    game.zombies.forEach(isometric.render.drawCharacterHealthBar);
-    game.humans.forEach(isometric.render.drawCharacterHealthBar);
+    for(int i = 0; i < game.totalZombies.value; i++){
+      isometric.render.drawCharacterHealthBar(game.zombies[i]);
+    }
+    for(int i = 0; i < game.totalHumans; i++){
+      isometric.render.drawCharacterHealthBar(game.humans[i]);
+    }
   }
 
   void drawAbility() {

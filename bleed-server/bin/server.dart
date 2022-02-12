@@ -323,6 +323,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           final action = characterActions[actionIndex];
           final mouseX = double.parse(arguments[4]);
           final mouseY = double.parse(arguments[5]);
+          final ai = player.ai;
 
           if (!player.isSoldier) {
             final closestEnemy = game.getClosestEnemy(mouseX, mouseY, player.team);
@@ -330,16 +331,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             if (closestEnemy != null) {
               if (withinDistance(
                   closestEnemy, mouseX, mouseY, settings.radius.cursor)) {
-
-                if (player.isTemplate){
-                  // if (withinDistance(closestEnemy, player.x, player.y, player.slots.weapon.range)) {
-                    player.aimTarget = closestEnemy;
-                  // }
-                } else
-                if (withinDistance(
-                    closestEnemy, player.x, player.y, player.attackRange)) {
-                  player.aimTarget = closestEnemy;
-                }
+                player.aimTarget = closestEnemy;
               }
             }
           }
@@ -370,16 +362,16 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                     // || player.attackTarget != null
                 ) {
                   characterAimAt(player, mouseX, mouseY);
-
+                if (ai != null) {
                   if (aimTarget != null) {
-                    if (withinDistance(aimTarget, player.x, player.y, player.slots.weapon.range)){
-                      game.setCharacterState(player, CharacterState.Striking);
-                    }
-                  }else{
-                      // run and attack the aim target
+                    ai.target = aimTarget;
+                    game.npcSetPathTo(ai, aimTarget.x, aimTarget.y);
+                  } else {
+                    game.npcSetPathTo(ai, mouseX, mouseY);
                   }
                 }
-                break;
+              }
+              break;
               }
 
               if (player.magic < ability.cost) {

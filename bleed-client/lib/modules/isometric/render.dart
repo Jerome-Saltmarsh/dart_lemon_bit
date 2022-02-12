@@ -414,11 +414,15 @@ class IsometricRender {
 
   final _width = 35.0;
   final _widthHalf = 35.0 * 0.5;
-  final _height = 35.0 * goldenRatio_0381 * goldenRatio_0381 * goldenRatio_0381;
+  final _height = 35.0 * goldenRatio_0381 * goldenRatio_0381;
   final _marginBottom = 50;
 
 
   void drawCharacterHealthBar(Character character){
+    // engine.state.mapSrc(x : atlas.shades.white1.x, y: atlas.shades.white1.y, width: 8, height: 2);
+    // engine.state.mapDst(x: character.x - _widthHalf, y: character.y - _marginBottom, scale: 10);
+    // engine.actions.renderAtlas();
+    if (!onScreen(character.x, character.y)) return;
     engine.actions.setPaintColorWhite();
     engine.state.canvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom, _width, _height), engine.state.paint);
     engine.actions.setPaintColor(colours.red);

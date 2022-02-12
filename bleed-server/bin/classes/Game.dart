@@ -364,7 +364,7 @@ extension GameFunctions on Game {
     _updateCollisions();
     _updateProjectiles();
     _updateProjectiles(); // called twice to fix collision detection
-    _updateAI();
+    // _updateAI();
     _updateGameEvents();
     _updateSpawnPointCollisions();
     _updateItems();
@@ -882,14 +882,14 @@ extension GameFunctions on Game {
     return a.team == b.team;
   }
 
-  void _updateAI() {
-    for(final zombie in zombies){
-      _updateCharacterAI(zombie);
-    }
-
-    // zombies.forEach(_updateCharacterAI);
-    npcs.forEach(_updateCharacterAI);
-  }
+  // void _updateAI() {
+  //   for(final zombie in zombies){
+  //     _updateCharacterAI(zombie);
+  //   }
+  //
+  //   // zombies.forEach(_updateCharacterAI);
+  //   npcs.forEach(_updateCharacterAI);
+  // }
 
   void updatePlayer(Player player) {
     player.lastUpdateFrame++;
@@ -1067,6 +1067,8 @@ extension GameFunctions on Game {
   void updateCharacter(Character character) {
     if (!character.active) return;
 
+    _updateCharacterAI(character);
+
     if (abs(character.xv) > settings.minVelocity) {
       character.x += character.xv;
       character.y += character.yv;
@@ -1074,14 +1076,14 @@ extension GameFunctions on Game {
       character.yv *= settings.velocityFriction;
     }
 
+    if (character.dead) return;
+
     if (character.frozenDuration > 0) {
       character.frozenDuration--;
       if (character.frozenDuration == 0) {
         character.frozen = false;
       }
     }
-
-    if (character.dead) return;
 
     if (character.stateDuration > 0) {
       character.stateDuration--;
