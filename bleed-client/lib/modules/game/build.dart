@@ -115,9 +115,6 @@ class GameBuild {
       return Container(
         width: width,
         height: height,
-        decoration: BoxDecoration(
-            border: Border.all(color: colours.none, width: 2),
-            borderRadius: borderRadius4),
         alignment: Alignment.centerLeft,
         child: Stack(
           alignment: Alignment.centerLeft,
@@ -156,11 +153,7 @@ class GameBuild {
       return Container(
         width: width,
         height: height,
-        decoration: BoxDecoration(
-            border: Border.all(color: colours.none, width: 2),
-            borderRadius: borderRadius4),
         alignment: Alignment.centerLeft,
-        // padding: EdgeInsets.all(2),
         child: Stack(
           alignment: Alignment.centerLeft,
           children: [
