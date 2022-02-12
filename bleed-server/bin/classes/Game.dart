@@ -670,6 +670,10 @@ extension GameFunctions on Game {
     }
   }
 
+  void setCharacterStateRunning(Character character) {
+    setCharacterState(character, CharacterState.Running);
+  }
+
   // kill character
   void setCharacterStateDead(Character character) {
     if (character.dead) return;
@@ -905,9 +909,17 @@ extension GameFunctions on Game {
       setCharacterStateIdle(player);
     }
 
-    switch (player.state) {
-      case CharacterState.Running:
-        break;
+    final target = player.target;
+    if (target == null) return;
+    if (target.dead) {
+      player.target = null;
+      return;
+    }
+    characterFaceV2(player, target);
+    if (withinAttackRadius(player, target)) {
+      setCharacterStateStriking(player);
+    } else {
+      setCharacterStateRunning(player);
     }
   }
 

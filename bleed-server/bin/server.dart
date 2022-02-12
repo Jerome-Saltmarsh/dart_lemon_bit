@@ -75,7 +75,7 @@ Player spawnPlayerInTown() {
       team: teams.west,
       type: CharacterType.Template,
       health: 10,
-      ai: AI()
+      // ai: AI()
   );
 }
 
@@ -264,19 +264,19 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
       switch (clientRequest) {
         case ClientRequest.Update:
           if (arguments.length < 2){
-            errorInvalidArg("player id required");
+            errorInvalidArg("player uuid required");
             return;
           }
 
           final playerId = arguments[1];
-          final Player? player = engine.findPlayerByUuid(playerId);
+          final player = engine.findPlayerByUuid(playerId);
           if (player == null) {
             errorPlayerNotFound();
             return;
           }
 
           player.lastUpdateFrame = 0;
-          final Game game = player.game;
+          final game = player.game;
           compileGameStatus(_buffer, game.status);
 
           if (game.awaitingPlayers) {
@@ -362,6 +362,13 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                     // || player.attackTarget != null
                 ) {
                   characterAimAt(player, mouseX, mouseY);
+
+                  if (aimTarget != null) {
+                    player.target = aimTarget;
+                  } else {
+                    player.target = null;
+                  }
+
                 if (ai != null) {
                   if (aimTarget != null) {
                     ai.target = aimTarget;

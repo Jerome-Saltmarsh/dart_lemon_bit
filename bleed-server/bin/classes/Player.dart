@@ -55,6 +55,8 @@ class Player extends Character with Entity {
 
   Character? get aimTarget => _aimTarget;
 
+  Character? target;
+
   set aimTarget(Character? value){
     if (value == null){
       _aimTarget = null;
