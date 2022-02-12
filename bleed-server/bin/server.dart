@@ -366,17 +366,17 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                   if (aimTarget != null) {
                     player.target = aimTarget;
                   } else {
-                    player.target = null;
+                    player.target = Vector2(mouseX, mouseY);
                   }
 
-                if (ai != null) {
-                  if (aimTarget != null) {
-                    ai.target = aimTarget;
-                    game.npcSetPathTo(ai, aimTarget.x, aimTarget.y);
-                  } else {
-                    game.npcSetPathTo(ai, mouseX, mouseY);
-                  }
-                }
+                // if (ai != null) {
+                //   if (aimTarget != null) {
+                //     ai.target = aimTarget;
+                //     game.npcSetPathTo(ai, aimTarget.x, aimTarget.y);
+                //   } else {
+                //     game.npcSetPathTo(ai, mouseX, mouseY);
+                //   }
+                // }
               }
               break;
               }

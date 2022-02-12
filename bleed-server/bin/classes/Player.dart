@@ -1,3 +1,5 @@
+import 'package:lemon_math/Vector2.dart';
+
 import '../common/AbilityMode.dart';
 import '../common/AbilityType.dart';
 import '../common/CharacterState.dart';
@@ -55,7 +57,7 @@ class Player extends Character with Entity {
 
   Character? get aimTarget => _aimTarget;
 
-  Character? target;
+  Vector2? target;
 
   set aimTarget(Character? value){
     if (value == null){

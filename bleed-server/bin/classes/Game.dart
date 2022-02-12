@@ -911,16 +911,22 @@ extension GameFunctions on Game {
 
     final target = player.target;
     if (target == null) return;
-    if (target.dead) {
-      player.target = null;
-      return;
-    }
     characterFaceV2(player, target);
-    if (withinAttackRadius(player, target)) {
-      setCharacterStateStriking(player);
-    } else {
-      setCharacterStateRunning(player);
+
+    if (target is Character){
+      if (target.dead) {
+        player.target = null;
+        return;
+      }
+      if (withinAttackRadius(player, target)) {
+        setCharacterStateStriking(player);
+        return;
+      }
+    } else if (withinRadius(player, target, player.speed)){
+        player.target = null;
+        return;
     }
+    setCharacterStateRunning(player);
   }
 
   void checkProjectileCollision(List<Character> characters) {
