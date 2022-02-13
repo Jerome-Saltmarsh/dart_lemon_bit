@@ -462,13 +462,13 @@ void _parsePlayerEvents() {
     switch (event) {
       case PlayerEvent.Level_Up:
         modules.game.actions.emitPixelExplosion(modules.game.state.player.x, modules.game.state.player.y, amount: 10);
-        playAudioBuff1(modules.game.state.player.x, modules.game.state.player.y);
+        audio.buff(modules.game.state.player.x, modules.game.state.player.y);
         break;
       case PlayerEvent.Skill_Upgraded:
-        playAudio.unlock(modules.game.state.player.x, modules.game.state.player.y);
+        audio.unlock(modules.game.state.player.x, modules.game.state.player.y);
         break;
       case PlayerEvent.Dash_Activated:
-        playAudio.buff11(modules.game.state.player.x, modules.game.state.player.y);
+        audio.buff11(modules.game.state.player.x, modules.game.state.player.y);
         break;
       case PlayerEvent.Item_Purchased:
         audio.itemPurchased(screenCenterWorldX, screenCenterWorldY);

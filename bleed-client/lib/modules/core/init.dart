@@ -27,7 +27,7 @@ Future init() async {
   engine.state.image = isometric.state.image;
   initializeGameInstances();
   initializeEventListeners();
-  initAudioPlayers();
+  audio.init();
   if (isLocalHost) {
     print("Environment: Localhost");
   } else {
@@ -74,7 +74,7 @@ void onPlayerWeaponChanged(WeaponType weapon) {
       audio.reload(screenCenterWorldX, screenCenterWorldY);
       break;
     case WeaponType.Shotgun:
-      playAudioCockShotgun(screenCenterWorldX, screenCenterWorldY);
+      audio.cockShotgun(screenCenterWorldX, screenCenterWorldY);
       break;
     case WeaponType.SniperRifle:
       audio.sniperEquipped(screenCenterWorldX, screenCenterWorldY);

@@ -137,11 +137,11 @@ class GameEvents {
   void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
     switch (type) {
       case GameEventType.Handgun_Fired:
-        playAudioHandgunShot(x, y);
+        audio.playAudioHandgunShot(x, y);
         isometric.spawn.shell(x, y);
         break;
       case GameEventType.Shotgun_Fired:
-        playAudioShotgunShot(x, y);
+        audio.shotgunShot(x, y);
         isometric.spawn.shell(x, y);
         isometric.spawn.shotSmoke(x, y, xv, yv);
         break;
@@ -168,7 +168,7 @@ class GameEvents {
         break;
       case GameEventType.Player_Hit:
         if (randomBool()) {
-          playAudioPlayerHurt(x, y);
+          audio.humanHurt(x, y);
         }
         double s = 0.1;
         double r = 1;
@@ -200,17 +200,17 @@ class GameEvents {
             xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
         isometric.spawn.organ(x, y, 0.3,
             xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
-        playAudioZombieDeath(x, y);
+        audio.playAudioZombieDeath(x, y);
         break;
 
       case GameEventType.Zombie_Target_Acquired:
-        playAudioZombieTargetAcquired(x, y);
+        audio.playAudioZombieTargetAcquired(x, y);
         break;
       case GameEventType.Bullet_Hole:
         actions.spawnBulletHole(x.toDouble(), y.toDouble());
         break;
       case GameEventType.Zombie_Strike:
-        playAudioZombieBite(x, y);
+        audio.zombieBite(x, y);
         double r = 1;
         double s = 0.15;
         for (int i = 0; i < randomInt(2, 4); i++) {
@@ -232,10 +232,10 @@ class GameEvents {
         break;
       case GameEventType.Teleported:
         actions.emitPixelExplosion(x, y);
-        playAudioMagicalSwoosh18(x, y);
+        audio.magicalSwoosh(x, y);
         break;
       case GameEventType.Blue_Orb_Fired:
-        playAudio.sciFiBlaster1(x, y);
+        audio.sciFiBlaster1(x, y);
         break;
       case GameEventType.Arrow_Hit:
         audio.arrowImpact(x, y);
@@ -256,40 +256,40 @@ class GameEvents {
         actions.emitPixelExplosion(x, y);
         break;
       case GameEventType.Arrow_Fired:
-        playAudio.arrowFlyingPast6(x, y);
+        audio.arrowFlyingPast6(x, y);
         break;
       case GameEventType.Clip_Empty:
-        playAudioClipEmpty(x, y);
+        audio.dryShot2(x, y);
         return;
       case GameEventType.Reloaded:
-        playAudioReloadHandgun(x, y);
+        audio.magIn2(x, y);
         return;
       case GameEventType.Use_MedKit:
-        playAudioUseMedkit(x, y);
+        audio.medkit(x, y);
         break;
       case GameEventType.Throw_Grenade:
-        playAudioThrowGrenade(x, y);
+        audio.playAudioThrowGrenade(x, y);
         break;
       case GameEventType.Item_Acquired:
         audio.itemEquipped(x, y);
         break;
       case GameEventType.Knife_Strike:
-        playAudioKnifeStrike(x, y);
+        audio.playAudioKnifeStrike(x, y);
         break;
       case GameEventType.Health_Acquired:
-        playAudioHeal(x, y);
+        audio.playAudioHeal(x, y);
         break;
       case GameEventType.Crate_Breaking:
         for (int i = 0; i < randomInt(4, 10); i++) {
           isometric.spawn.shrapnel(x, y);
         }
-        playAudioCrateBreaking(x, y);
+        audio.playAudioCrateBreaking(x, y);
         break;
       case GameEventType.Ammo_Acquired:
         audio.gunPickup(x, y);
         break;
       case GameEventType.Credits_Acquired:
-        playAudioCollectStar(x, y);
+        audio.playAudioCollectStar(x, y);
         break;
     }
   }

@@ -70,6 +70,69 @@ class _Audio {
     play('item-purchase-3.mp3', x, y);
   }
 
+
+  void cockShotgun(double x, double y) {
+    audio.play('cock-shotgun-03.mp3', x, y);
+  }
+
+  void maleScream(double x, double y) {
+    _playRandom(_maleScreams, x, y);
+  }
+
+  void magIn2(double x, double y) {
+    audio.play('mag-in-02.mp3', x, y);
+  }
+
+  void dryShot2(double x, double y) {
+    audio.play('dry-shot-02.mp3', x, y);
+  }
+
+  void zombieBite(double x, double y) {
+    _playRandom(_zombieBite, x, y);
+  }
+
+  void playAudioZombieTargetAcquired(double x, double y) {
+    _playRandom(_zombieTalking, x, y);
+  }
+
+  void playAudioZombieDeath(double x, double y) {
+    _playRandom(_zombieDeath, x, y);
+  }
+
+  void playAudioZombieHit(double x, double y) {
+    _playRandom(_zombieHits, x, y);
+  }
+
+  void humanHurt(double x, double y) {
+    _playRandom(_humanHurt, x, y);
+  }
+
+  void shotgunShot(double x, double y) {
+    audio.play('shotgun-shot.mp3', x, y);
+  }
+
+  void playAudioHandgunShot(double x, double y) {
+    _playRandom(_pistolShot, x, y);
+  }
+
+  void medkit(double x, double y) {
+    audio.play('medkit.mp3', x, y);
+  }
+
+  void buff(double x, double y) {
+    audio.play('buff-1.mp3', x, y);
+  }
+
+  void magicalSwoosh(double x, double y) {
+    audio.play('magical-swoosh-18.mp3', x, y);
+  }
+
+  void init() {
+    for (int i = 0; i < _totalAudioPlayers; i++) {
+      _audioPlayers.add(AudioPlayer());
+    }
+  }
+
   void play(String name, double x, double y) {
     if (!enabled.value) return;
     try {
@@ -81,73 +144,23 @@ class _Audio {
       print("failed to play audio $name");
     }
   }
-}
 
-void initAudioPlayers() {
-  for (int i = 0; i < _totalAudioPlayers; i++) {
-    _audioPlayers.add(AudioPlayer());
+  void playAudioHeal(double x, double y) {
+    audio.play('revive-heal-1.mp3', x, y);
   }
-}
 
-void playAudioCockShotgun(double x, double y) {
-  audio.play('cock-shotgun-03.mp3', x, y);
-}
+  void playAudioKnifeStrike(double x, double y) {
+    _playRandom(_knifeStrikes, x, y);
+  }
 
-void playAudioPlayerDeath(double x, double y) {
-  _playRandom(_maleScreams, x, y);
-}
+  void playAudioThrowGrenade(double x, double y) {
+    audio.play('throw.mp3', x, y);
+  }
 
-void playAudioReloadHandgun(double x, double y) {
-  audio.play('mag-in-02.mp3', x, y);
-}
+  void playAudioCrateBreaking(double x, double y) {
+    audio.play('crate-breaking.mp3', x, y);
+  }
 
-void playAudioClipEmpty(double x, double y) {
-  audio.play('dry-shot-02.mp3', x, y);
-}
-
-void playAudioZombieBite(double x, double y) {
-  _playRandom(_zombieBite, x, y);
-}
-
-void playAudioZombieTargetAcquired(double x, double y) {
-  _playRandom(_zombieTalking, x, y);
-}
-
-void playAudioZombieDeath(double x, double y) {
-  _playRandom(_zombieDeath, x, y);
-}
-
-void playAudioZombieHit(double x, double y) {
-  _playRandom(_zombieHits, x, y);
-}
-
-void playAudioPlayerHurt(double x, double y) {
-  _playRandom(_humanHurt, x, y);
-}
-
-void playAudioShotgunShot(double x, double y) {
-  audio.play('shotgun-shot.mp3', x, y);
-}
-
-void playAudioHandgunShot(double x, double y) {
-  _playRandom(_pistolShot, x, y);
-}
-
-void playAudioUseMedkit(double x, double y) {
-  audio.play('medkit.mp3', x, y);
-}
-
-void playAudioBuff1(double x, double y) {
-  audio.play('buff-1.mp3', x, y);
-}
-
-void playAudioMagicalSwoosh18(double x, double y) {
-  audio.play('magical-swoosh-18.mp3', x, y);
-}
-
-final _PlayAudio playAudio = _PlayAudio();
-
-class _PlayAudio {
   void unlock(double x, double y) {
     audio.play('unlock.mp3', x, y);
   }
@@ -163,27 +176,15 @@ class _PlayAudio {
   void sciFiBlaster1(double x, double y) {
     audio.play('sci-fi-blaster-1.mp3', x, y);
   }
+
+  void playAudioCollectStar(double x, double y) {
+    audio.play('collect-star-4.mp3', x, y);
+  }
+
 }
 
-void playAudioCollectStar(double x, double y) {
-  audio.play('collect-star-4.mp3', x, y);
-}
 
-void playAudioHeal(double x, double y) {
-  audio.play('revive-heal-1.mp3', x, y);
-}
 
-void playAudioKnifeStrike(double x, double y) {
-  _playRandom(_knifeStrikes, x, y);
-}
-
-void playAudioThrowGrenade(double x, double y) {
-  audio.play('throw.mp3', x, y);
-}
-
-void playAudioCrateBreaking(double x, double y) {
-  audio.play('crate-breaking.mp3', x, y);
-}
 
 // abstraction
 int _index = 0;
