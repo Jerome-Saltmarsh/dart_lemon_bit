@@ -57,7 +57,7 @@ class Character extends GameObject implements HasSquad {
   Ability? performing = null;
   CharacterState state = CharacterState.Idle;
   CharacterState previousState = CharacterState.Idle;
-  Direction direction = Direction.Down;
+  double angle = 0;
   int equippedIndex = 0;
   double aimAngle = 0;
   double accuracy = 0;
@@ -67,6 +67,8 @@ class Character extends GameObject implements HasSquad {
   int frozenDuration = 0;
   double attackRange = 50;
   int damage = 1;
+
+  Direction get direction => convertAngleToDirection(angle);
 
   /// the character that was highlighted when the player clicked
   Character? attackTarget;

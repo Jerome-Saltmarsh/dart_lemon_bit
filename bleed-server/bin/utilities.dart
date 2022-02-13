@@ -38,11 +38,11 @@ int clampInt(int value, int min, int max) {
   return value;
 }
 
-// TODO impertinent logic
-void setDirection(Character character, Direction direction) {
+// TODO floating logic
+void setAngle(Character character, double value) {
   if (character.dead) return;
   if (character.busy) return;
-  character.direction = direction;
+  character.angle = value;
 }
 
 bool withinViewRange(AI ai, GameObject target) {
@@ -74,7 +74,7 @@ void characterAimAt(Character character, double x, double y){
 
 void characterFaceAngle(Character character, double angle){
   character.aimAngle = angle;
-  setDirection(character, convertAngleToDirection(angle));
+  setAngle(character, angle);
 }
 
 void characterFaceV2(Character character, Vector2 target) {
@@ -86,35 +86,7 @@ double getShotAngle(Character character) {
 }
 
 void faceAimDirection(Character character) {
-  setDirection(character, convertAngleToDirection(character.aimAngle));
-}
-
-Direction convertAngleToDirection(double angle) {
-  if (angle < piEighth) {
-    return Direction.Up;
-  }
-  if (angle < piEighth + (piQuarter)) {
-    return Direction.UpRight;
-  }
-  if (angle < piEighth + (piQuarter * 2)) {
-    return Direction.Right;
-  }
-  if (angle < piEighth + (piQuarter * 3)) {
-    return Direction.DownRight;
-  }
-  if (angle < piEighth + (piQuarter * 4)) {
-    return Direction.Down;
-  }
-  if (angle < piEighth + (piQuarter * 5)) {
-    return Direction.DownLeft;
-  }
-  if (angle < piEighth + (piQuarter * 6)) {
-    return Direction.Left;
-  }
-  if (angle < piEighth + (piQuarter * 7)) {
-    return Direction.UpLeft;
-  }
-  return Direction.Up;
+  setAngle(character, character.aimAngle);
 }
 
 void applyMovement(GameObject gameObject) {

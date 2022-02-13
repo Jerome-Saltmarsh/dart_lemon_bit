@@ -415,7 +415,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               break;
             case CharacterAction.Run:
               final direction = directions[int.parse(arguments[3])];
-              setDirection(player, direction);
+              setAngle(player, convertDirectionToAngle(direction));
               game.setCharacterStateRunning(player);
               player.target = null;
               break;

@@ -1131,36 +1131,8 @@ extension GameFunctions on Game {
   }
 
   void _updateCharacterStateRunning(Character character) {
-    switch (character.direction) {
-      case Direction.Up:
-        character.y -= character.speed;
-        break;
-      case Direction.UpRight:
-        character.x += velX(piQuarter, character.speed);
-        character.y += velY(piQuarter, character.speed);
-        break;
-      case Direction.Right:
-        character.x += character.speed;
-        break;
-      case Direction.DownRight:
-        character.x += velX(piQuarter, character.speed);
-        character.y -= velY(piQuarter, character.speed);
-        break;
-      case Direction.Down:
-        character.y += character.speed;
-        break;
-      case Direction.DownLeft:
-        character.x -= velX(piQuarter, character.speed);
-        character.y -= velY(piQuarter, character.speed);
-        break;
-      case Direction.Left:
-        character.x -= character.speed;
-        break;
-      case Direction.UpLeft:
-        character.x -= velX(piQuarter, character.speed);
-        character.y += velY(piQuarter, character.speed);
-        break;
-    }
+    character.x += adj(character.angle, character.speed);
+    character.y += opp(character.angle, character.speed);
   }
 
   void updateCharacterTileCollision(Character character) {
