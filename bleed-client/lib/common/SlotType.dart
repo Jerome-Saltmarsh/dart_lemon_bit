@@ -38,6 +38,7 @@ class _SlotTypes {
     SlotType.Sword_Short,
     SlotType.Bow_Wooden,
     SlotType.Sword_Wooden,
+    SlotType.Staff_Wooden,
   ];
 
   final List<SlotType> bows = [

@@ -46,6 +46,7 @@ enum SpriteLayer {
   Bow_Wooden,
   Sword_Wooden,
   Sword_Steel,
+  Staff_Wooden,
   Legs_Blue,
   Body_Blue,
   Body_Cyan,
@@ -402,6 +403,8 @@ class IsometricRender {
          return SpriteLayer.Sword_Steel;
        case SlotType.Bow_Wooden:
          return SpriteLayer.Bow_Wooden;
+       case SlotType.Staff_Wooden:
+         return SpriteLayer.Staff_Wooden;
        default:
          throw Exception("cannot map ${character.equippedWeapon} to sprite index");
      }
