@@ -51,10 +51,6 @@ const List<GameEventType> gameEventTypes = GameEventType.values;
 String event = "";
 
 String get _currentCharacter {
-  // debug mode
-  // if (_index >= compiledGame.length){
-  //   throw Exception("parser exceeded length while parsing $_currentServerResponse");
-  // }
   return event[_index];
 }
 

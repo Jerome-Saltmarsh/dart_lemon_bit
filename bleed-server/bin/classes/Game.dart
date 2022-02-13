@@ -61,9 +61,15 @@ const _none = -1;
 
 final _Teams teams = _Teams();
 
+typedef void OnKilled(Game game, Character src, Character by, int damage);
+
 class _Teams {
   final west = 0;
   final east = 1;
+}
+
+class _GameEvents {
+  List<OnKilled> onKilled = [];
 }
 
 // This should be OpenWorldScene
@@ -75,6 +81,8 @@ abstract class Game {
   // late bool started;
   late GameStatus status;
   GameType gameType;
+
+  final _GameEvents events = _GameEvents();
 
   bool get countingDown => status == GameStatus.Counting_Down;
 
@@ -254,7 +262,7 @@ const characterMaxFrames = 99;
 
 extension GameFunctions on Game {
   void spawnRandomOrb(double x, double y) {
-    items.add(Item(type: randomItem(orbTypes), x: x, y: y));
+    items.add(Item(type: randomItem(orbItemTypes), x: x, y: y));
   }
 
   Vector2 getSceneCenter() =>
@@ -278,16 +286,16 @@ extension GameFunctions on Game {
     return -1;
   }
 
-  Character? getClosestEnemyZombie(
-      {required double x,
+  Character? getClosestEnemyZombie({
+      required double x,
       required double y,
       required int team,
-      required double radius}) {
-    double top = y - radius - settings.radius.character;
-    double bottom = y + radius + settings.radius.character;
-    double left = x - radius - settings.radius.character;
-    double right = x + radius + settings.radius.character;
-
+      required double radius
+  }) {
+    final top = y - radius - settings.radius.character;
+    final bottom = y + radius + settings.radius.character;
+    final left = x - radius - settings.radius.character;
+    final right = x + radius + settings.radius.character;
     Character? closest = null;
     double distance = -1;
     for (Character zombie in zombies) {
@@ -298,8 +306,7 @@ extension GameFunctions on Game {
       if (zombie.team == team) continue;
       if (zombie.dead) continue;
       if (!zombie.active) continue;
-
-      double zombieDistance = distanceV2From(zombie, x, y);
+      final zombieDistance = distanceV2From(zombie, x, y);
       if (closest == null || zombieDistance < distance) {
         closest = zombie;
         distance = zombieDistance;
@@ -404,11 +411,16 @@ extension GameFunctions on Game {
 
     changeCharacterHealth(target, -amount);
     if (target.alive) return;
+    // @on target killed
     final targetAI = target.ai;
     if (targetAI != null) {
       target.active = false;
       onNpcKilled(target, src);
     }
+
+    events.onKilled.forEach((onKilledHandler) {
+      onKilledHandler(this, src, target, amount);
+    });
 
     if (target.alive && targetAI != null) {
       if (targetAI.target == null) {
@@ -737,9 +749,6 @@ extension GameFunctions on Game {
           if (character.slots.weapon.isBow) {
             dispatch(GameEventType.Draw_Bow, character.x, character.y);
           }
-          // if (character.slots.weapon.isSword){
-          //   dispatch(GameEventType.Sword_Woosh, character.x, character.y);
-          // }
         }
         break;
       case CharacterState.Performing:
@@ -892,15 +901,6 @@ extension GameFunctions on Game {
     if (b.team == noSquad) return false;
     return a.team == b.team;
   }
-
-  // void _updateAI() {
-  //   for(final zombie in zombies){
-  //     _updateCharacterAI(zombie);
-  //   }
-  //
-  //   // zombies.forEach(_updateCharacterAI);
-  //   npcs.forEach(_updateCharacterAI);
-  // }
 
   void updatePlayer(Player player) {
     player.lastUpdateFrame++;

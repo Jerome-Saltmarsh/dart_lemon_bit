@@ -3,9 +3,13 @@ import 'dart:math';
 import 'package:lemon_math/abs.dart';
 import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/hypotenuse.dart';
+import 'package:lemon_math/randomItem.dart';
 
 import 'classes/Character.dart';
 import 'classes/GameObject.dart';
+import 'classes/Player.dart';
+import 'common/ItemType.dart';
+import 'common/OrbType.dart';
 import 'constants.dart';
 import 'maths.dart';
 
@@ -97,4 +101,21 @@ void resolveCollisionBetween(List<GameObject> gameObjectsA,
 }
 
 typedef void CollisionResolver(GameObject a, GameObject b);
+
+void playerEarnRandomOrb(Player player){
+  final orbs = player.orbs;
+  switch(randomItem(orbTypes)) {
+    case OrbType.Topaz:
+      orbs.topaz++;
+      return;
+    case OrbType.Ruby:
+      orbs.ruby++;
+      return;
+    case OrbType.Emerald:
+      orbs.emerald++;
+      return;
+  }
+}
+
+
 

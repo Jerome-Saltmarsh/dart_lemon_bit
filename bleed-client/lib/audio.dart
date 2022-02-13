@@ -115,6 +115,14 @@ class _Audio {
     _playRandom(_pistolShot, x, y);
   }
 
+  void changeCloths(double x, double y){
+    audio.play('change-cloths.mp3', x, y);
+  }
+
+  void drawSword(double x, double y){
+    audio.play('draw-sword.mp3', x, y);
+  }
+
   void medkit(double x, double y) {
     audio.play('medkit.mp3', x, y);
   }

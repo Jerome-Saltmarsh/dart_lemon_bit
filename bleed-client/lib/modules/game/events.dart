@@ -5,10 +5,10 @@ import 'package:bleed_client/common/GameError.dart';
 import 'package:bleed_client/common/GameEventType.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/modules/game/actions.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/parse.dart';
-import 'package:bleed_client/spawn.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
@@ -41,8 +41,50 @@ class GameEvents {
     state.player.state.onChanged(onPlayerCharacterStateChanged);
     state.status.onChanged(_onGameStatusChanged);
     state.textMode.onChanged(onTextModeChanged);
+
+    state.player.orbs.emerald.listen(onEmeraldsChanged);
+    state.player.orbs.ruby.listen(onEmeraldsChanged);
+    state.player.orbs.topaz.listen(onEmeraldsChanged);
+    state.player.slots.weapon.onChanged(onPlayerWeaponChanged);
+    state.player.slots.armour.onChanged(onPlayerArmourChanged);
+    state.player.slots.helm.onChanged(onPlayerHelmChanged);
     sub(_onGameError);
   }
+
+  void onPlayerWeaponChanged(SlotType value){
+    print("game.events.onPlayerArmourChanged($value)");
+    if (value.isSword && value.isMetal) {
+      audio.drawSword(screenCenterWorldX, screenCenterWorldY);
+    } else {
+      audio.changeCloths(screenCenterWorldX, screenCenterWorldY);
+    }
+  }
+
+  void onPlayerArmourChanged(SlotType armour){
+    print("game.events.onPlayerArmourChanged($armour)");
+    audio.changeCloths(screenCenterWorldX, screenCenterWorldY);
+  }
+
+  void onPlayerHelmChanged(SlotType value){
+    print("game.events.onPlayerHelmChanged($value)");
+    audio.changeCloths(screenCenterWorldX, screenCenterWorldY);
+  }
+
+  void onEmeraldsChanged(int current, int previous){
+    print('onEmeraldsChanged(current: $current, previous: $previous)');
+    if (current > previous) {
+      // audio.
+    }
+  }
+
+  void onRubiesChanged(int current){
+    print('onRubiesChanged(current: $current)');
+  }
+
+  void onTopazChanged(int current){
+    print('onTopazChanged(current: $current)');
+  }
+
 
   void onTextModeChanged(bool textMode){
     if (textMode){

@@ -25,7 +25,7 @@ enum ItemType {
 
 final List<ItemType> itemTypes = ItemType.values;
 
-final List<ItemType> orbTypes = [
+final List<ItemType> orbItemTypes = [
   ItemType.Orb_Ruby,
   ItemType.Orb_Topaz,
   ItemType.Orb_Emerald,

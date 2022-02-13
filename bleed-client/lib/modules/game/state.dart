@@ -1,6 +1,4 @@
-import 'package:bleed_client/Cache.dart';
 import 'package:bleed_client/classes/Ability.dart';
-import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Weapon.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterState.dart';
@@ -13,6 +11,7 @@ import 'package:bleed_client/resources.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_watch/watch.dart';
+import 'package:lemon_watch/advanced_watch.dart';
 
 import 'classes.dart';
 import 'enums.dart';
@@ -77,9 +76,9 @@ class GameState {
 }
 
 class _PlayerOrbs {
-  final Watch<int> ruby = Watch(0);
-  final Watch<int> topaz = Watch(0);
-  final Watch<int> emerald = Watch(0);
+  final AdvancedWatch<int> ruby = AdvancedWatch(0);
+  final AdvancedWatch<int> topaz = AdvancedWatch(0);
+  final AdvancedWatch<int> emerald = AdvancedWatch(0);
 }
 
 class _PlayerSlots {

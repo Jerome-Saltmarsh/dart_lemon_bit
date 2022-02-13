@@ -96,23 +96,27 @@
 [ENGINE]
 [ ] Atlas Buffer 64
 [ ] Auto cull render calls
+[ ] Optimize AI Pathfinding
 [ROYAL]
 [ ] Implement game over dialog
 [ ] Design Map  
 [ ] Score  
 [ ] Chests (drop 3 random gems)
-[ ] Dynamic Clothing Engine
-[ ] Slot machine concept
-[ ] Crafting System
 [ ] Server Strike Damage Calculation
 [ ] Arrow Capacity (Auto regenerates)
 [ ] Zombie Pause after attack
 [ ] Spell Cooldown
-[ ] Efficient Health Bars
-[ ] Weapon Staff
+[ ] Fix Batch Rendering glitches
 [ ] FIX Particle blood renders as shell
-[ ] Primary Hook
+[Primary Hook]
+[ ] Finish Inventory
+[ ] Dynamic Clothing Engine
+[ ] Slot machine concept
+[ ] Crafting System
 [ ] Earn Gem Audio
+[ ] On Kill earn reward
+[x] Weapon Staff
+[x] Efficient Health Bars
 [x] Spell use magic
 [x] Fix Fire Bow Animation
 [x] FIX Mouse should be hand on attack

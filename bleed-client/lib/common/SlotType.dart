@@ -61,6 +61,11 @@ class _SlotTypes {
     SlotType.Sword_Long,
   ];
 
+  final List<SlotType> metal = [
+    SlotType.Sword_Short,
+    SlotType.Sword_Long,
+  ];
+
   final List<SlotType> armour = [
     SlotType.Body_Blue,
   ];
@@ -87,6 +92,7 @@ extension SlotTypeProperties on SlotType {
   bool get isBow => slotTypes.bows.contains(this);
   bool get isMelee => slotTypes.melee.contains(this);
   bool get isSword => slotTypes.swords.contains(this);
+  bool get isMetal => slotTypes.metal.contains(this);
 
   int get damage {
     return slotTypeDamage[this] ?? 0;

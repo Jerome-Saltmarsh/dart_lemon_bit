@@ -481,7 +481,9 @@ class GameBuild {
           children: [
             resources.icons.topaz,
             width4,
-            textWatch(state.player.orbs.topaz),
+            AdvancedWatchBuilder(state.player.orbs.topaz, (int value, int previous){
+              return text(value);
+            }),
           ],
         ),
         width8,
@@ -489,7 +491,9 @@ class GameBuild {
           children: [
             resources.icons.ruby,
             width4,
-            textWatch(state.player.orbs.ruby),
+            AdvancedWatchBuilder(state.player.orbs.ruby, (int value, int previous){
+              return text(value);
+            }),
           ],
         ),
         width8,
@@ -497,7 +501,9 @@ class GameBuild {
           children: [
             resources.icons.emerald,
             width4,
-            textWatch(state.player.orbs.emerald),
+            AdvancedWatchBuilder(state.player.orbs.emerald, (int value, int previous){
+              return text(value);
+            }),
           ],
         ),
       ],

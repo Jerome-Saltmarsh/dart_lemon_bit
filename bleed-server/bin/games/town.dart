@@ -13,6 +13,7 @@ import '../enums/npc_mode.dart';
 import '../instances/scenes.dart';
 import '../state.dart';
 import '../engine.dart';
+import '../handlers.dart';
 import 'world.dart';
 
 class Town extends Game {
@@ -35,7 +36,7 @@ class Town extends Game {
         weapon: Weapon(type: WeaponType.Unarmed, damage: 0, capacity: 0));
     npcs.add(npcDavis);
 
-    crates.add(Crate(x: 0, y: 300));
+    events.onKilled.add(handlers.onKilledEarnOrb);
 
     npcSmith = InteractableNpc(
         name: "Smith",

@@ -1,8 +1,4 @@
-import 'dart:math';
-
 import 'package:lemon_math/normlize.dart';
-
-const double piQuarter = pi * 0.25;
 
 double normalizeX(double x, double y){
   return normalize(x, y) * x;
