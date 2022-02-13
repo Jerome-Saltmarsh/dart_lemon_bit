@@ -51,7 +51,7 @@ class IsometricUpdate {
 
 
   void updateParticle(Particle particle){
-    final _spawnBloodRate = 8;
+    final _spawnBloodRate = 10;
     double gravity = 0.04;
     double bounceFriction = 0.99;
     double rotationFriction = 0.93;

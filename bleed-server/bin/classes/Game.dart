@@ -1667,6 +1667,9 @@ extension GameFunctions on Game {
           character.attackTarget = character.attackTarget;
           return;
         }
+        if (character.slots.weapon.isMelee){
+          dispatch(GameEventType.Sword_Woosh, character.x, character.y);
+        }
         if (character.slots.weapon.isMelee) {
           final attackTarget = character.attackTarget;
           if (attackTarget != null) {

@@ -30,4 +30,5 @@ enum GameEventType {
   Arrow_Hit,
   Draw_Bow,
   Release_Bow,
+  Sword_Woosh
 }

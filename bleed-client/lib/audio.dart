@@ -50,6 +50,10 @@ class _Audio {
     play('release-bow.mp3', x, y);
   }
 
+  void swordWoosh(double x, double y) {
+    play('sword-woosh.mp3', x, y);
+  }
+
   void reload(double x, double y) {
     play('reload-06.mp3', x, y);
   }
