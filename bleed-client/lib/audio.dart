@@ -46,6 +46,10 @@ class _Audio {
     play("draw-bow.mp3", x, y);
   }
 
+  void releaseBow(double x, double y) {
+    play('release-bow.mp3', x, y);
+  }
+
   void reload(double x, double y) {
     play('reload-06.mp3', x, y);
   }

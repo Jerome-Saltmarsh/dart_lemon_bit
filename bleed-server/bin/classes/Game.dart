@@ -1662,6 +1662,7 @@ extension GameFunctions on Game {
     if (character is Player) {
       if (character.stateDuration == engine.framePerformStrike) {
         if (character.slots.weapon.isBow) {
+          dispatch(GameEventType.Release_Bow, character.x, character.y);
           spawnArrow(character, damage: character.slots.weapon.damage);
           character.attackTarget = character.attackTarget;
           return;

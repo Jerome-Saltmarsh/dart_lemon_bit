@@ -29,4 +29,5 @@ enum GameEventType {
   Objective_Reached,
   Arrow_Hit,
   Draw_Bow,
+  Release_Bow,
 }

@@ -243,6 +243,9 @@ class GameEvents {
       case GameEventType.Draw_Bow:
         audio.drawBow(x, y);
         break;
+      case GameEventType.Release_Bow:
+        audio.releaseBow(x, y);
+        break;
       case GameEventType.Objective_Reached:
         actions.emitPixelExplosion(x, y);
         break;
