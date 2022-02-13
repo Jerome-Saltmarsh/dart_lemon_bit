@@ -426,7 +426,7 @@ class GameBuild {
           SlotType.Empty,
         ),
         shopSlotRow(
-          SlotType.Empty,
+          SlotType.Rogue_Hood,
           SlotType.Steel_Helmet,
           SlotType.Magic_Hat,
         ),

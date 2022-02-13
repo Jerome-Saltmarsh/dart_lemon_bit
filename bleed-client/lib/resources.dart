@@ -39,6 +39,7 @@ class _Trinkets {
 class _HeadIcons {
   final steel = _image("helmet-steel");
   final magic = _image("magic-hat");
+  final rogue = _image("hat-rogue");
 }
 
 class _PotionIcons {

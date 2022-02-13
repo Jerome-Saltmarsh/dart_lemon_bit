@@ -68,6 +68,10 @@ const Map<SlotType, _SlotTypeCost> slotTypeCosts = {
     rubies: 1,
     emeralds: 1,
   ),
+  SlotType.Rogue_Hood: _SlotTypeCost(
+    rubies: 1,
+    emeralds: 1,
+  ),
   SlotType.Magic_Hat: _SlotTypeCost(
     rubies: 1,
     emeralds: 1,
@@ -75,6 +79,7 @@ const Map<SlotType, _SlotTypeCost> slotTypeCosts = {
 };
 
 const Map<SlotType, String> slotTypeNames = {
+  SlotType.Golden_Necklace: "King's Necklace",
   SlotType.Sword_Wooden: "Wooden Sword",
   SlotType.Sword_Short: "Steel Sword",
   SlotType.Sword_Long: "Iron Sword",
@@ -88,6 +93,7 @@ const Map<SlotType, String> slotTypeNames = {
   SlotType.Steel_Helmet: "Knight's Helm",
   SlotType.Body_Blue: "Steel Tunic",
   SlotType.Potion_Red: "Health Potion",
+  SlotType.Rogue_Hood: "Rogue's Hood",
   SlotType.Potion_Blue: "Magic Potion",
   SlotType.Magic_Hat: "Wizards Hat",
 };

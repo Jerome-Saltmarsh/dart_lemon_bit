@@ -70,6 +70,7 @@ class GameState {
     SlotType.Body_Blue : resources.icons.armourStandard,
     SlotType.Steel_Helmet : resources.icons.heads.steel,
     SlotType.Magic_Hat : resources.icons.heads.magic,
+    SlotType.Rogue_Hood : resources.icons.heads.rogue,
     SlotType.Potion_Red : resources.icons.potions.red,
     SlotType.Potion_Blue : resources.icons.potions.blue,
   };

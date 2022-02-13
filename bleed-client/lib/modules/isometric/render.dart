@@ -50,6 +50,7 @@ enum SpriteLayer {
   Legs_Blue,
   Body_Blue,
   Body_Cyan,
+  Head_Rogue,
   Head_Plain,
   Head_Steel,
   Head_Magic,
@@ -342,6 +343,8 @@ class IsometricRender {
         return SpriteLayer.Head_Steel;
       case SlotType.Magic_Hat:
         return SpriteLayer.Head_Magic;
+      case SlotType.Rogue_Hood:
+        return SpriteLayer.Head_Rogue;
       default:
         throw Exception("cannot render head ${character.equippedHead.name}");
     }

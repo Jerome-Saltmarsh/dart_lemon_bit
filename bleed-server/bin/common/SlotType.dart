@@ -25,6 +25,7 @@ enum SlotType {
   Body_Blue,
   Potion_Red,
   Potion_Blue,
+  Rogue_Hood,
 }
 
 final List<SlotType> slotTypesAll = SlotType.values;
@@ -62,6 +63,7 @@ class _SlotTypes {
     SlotType.Steel_Helmet,
     SlotType.Leather_Cap,
     SlotType.Magic_Hat,
+    SlotType.Rogue_Hood,
   ];
 
   final List<SlotType> items = [
@@ -112,6 +114,7 @@ const Map<SlotType, int> slotTypeDamage = {
 const Map<SlotType, int> slotTypeHealth = {
   SlotType.Steel_Helmet: 5,
   SlotType.Body_Blue: 10,
+  SlotType.Golden_Necklace: 4,
 };
 
 const Map<SlotType, int> slotTypeMagic = {
@@ -121,6 +124,7 @@ const Map<SlotType, int> slotTypeMagic = {
   SlotType.Staff_Wooden: 10,
   SlotType.Staff_Blue: 15,
   SlotType.Staff_Golden: 20,
+  SlotType.Golden_Necklace: 4,
 };
 
 const Map<SlotType, double> slotTypeRange = {
