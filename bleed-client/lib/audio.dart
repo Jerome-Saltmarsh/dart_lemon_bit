@@ -38,6 +38,10 @@ class _Audio {
     play("gun-pickup-01.mp3", x, y);
   }
 
+  void arrowImpact(double x, double y) {
+    play("arrow-impact.mp3", x, y);
+  }
+
   void reload(double x, double y) {
     play('reload-06.mp3', x, y);
   }
