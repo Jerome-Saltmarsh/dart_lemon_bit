@@ -1,6 +1,5 @@
 
 import '../classes/Character.dart';
-import '../classes/Crate.dart';
 import '../classes/Game.dart';
 import '../classes/InteractableNpc.dart';
 import '../classes/Item.dart';
@@ -11,7 +10,6 @@ import '../common/Quests.dart';
 import '../common/WeaponType.dart';
 import '../enums/npc_mode.dart';
 import '../instances/scenes.dart';
-import '../state.dart';
 import '../engine.dart';
 import '../handlers.dart';
 import 'world.dart';
@@ -66,11 +64,6 @@ class Town extends Game {
         ai: AI(mode: NpcMode.Stand_Ground),
         health: 100,weapon: Weapon(type: WeaponType.SniperRifle, damage: 5, capacity: 0));
     npcs.add(guard2);
-  }
-
-  @override
-  void onNpcKilled(Character npc, Character src){
-    spawnRandomOrb(npc.x, npc.y);
   }
 
   @override

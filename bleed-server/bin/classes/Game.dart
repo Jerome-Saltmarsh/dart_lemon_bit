@@ -345,9 +345,9 @@ extension GameFunctions on Game {
   }
 
   Character? getClosestEnemy(double x, double y, int team) {
-    Character? zombie = getClosestEnemyZombie(
+    final zombie = getClosestEnemyZombie(
         x: x, y: y, team: team, radius: settings.radius.cursor);
-    Character? player = getClosestEnemyPlayer(x, y, team);
+    final player = getClosestEnemyPlayer(x, y, team);
 
     if (zombie == null) {
       if (player == null) {
@@ -359,8 +359,8 @@ extension GameFunctions on Game {
       return zombie;
     }
 
-    double zombieDistance = distanceV2From(zombie, x, y);
-    double playerDistance = distanceV2From(player, x, y);
+    final zombieDistance = distanceV2From(zombie, x, y);
+    final playerDistance = distanceV2From(player, x, y);
     return zombieDistance < playerDistance ? zombie : player;
   }
 
@@ -371,7 +371,6 @@ extension GameFunctions on Game {
     _updateCollisions();
     _updateProjectiles();
     _updateProjectiles(); // called twice to fix collision detection
-    // _updateAI();
     _updateGameEvents();
     _updateSpawnPointCollisions();
     _updateItems();
@@ -832,18 +831,6 @@ extension GameFunctions on Game {
         break;
       }
     }
-  }
-
-  void breakCrate(Crate crate) {
-    // @on break crate
-    if (!crate.active) return;
-    spawnRandomItem(crate.x, crate.y);
-    crate.deactiveDuration = settings.crateDeactiveDuration;
-    dispatch(GameEventType.Crate_Breaking, crate.x, crate.y);
-  }
-
-  void spawnRandomItem(double x, double y) {
-    items.add(Item(type: randomItem(itemTypes), x: x, y: y));
   }
 
   void spawnFreezeCircle({required double x, required double y}) {
