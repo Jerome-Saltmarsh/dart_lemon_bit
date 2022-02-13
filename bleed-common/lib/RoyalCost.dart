@@ -28,8 +28,8 @@ const Map<SlotType, _SlotTypeCost> slotTypeCosts = {
     emeralds: 15,
   ),
   SlotType.Staff_Wooden: _SlotTypeCost(
-    rubies: 3,
-    emeralds: 3,
+    rubies: 15,
+    emeralds: 15,
   ),
   SlotType.Staff_Blue: _SlotTypeCost(
     rubies: 15,
@@ -40,12 +40,13 @@ const Map<SlotType, _SlotTypeCost> slotTypeCosts = {
     emeralds: 15,
   ),
   SlotType.Spell_Tome_Fireball: _SlotTypeCost(
-    rubies: 15,
-    emeralds: 15,
+    rubies: 5,
+    emeralds: 3,
   ),
-  SlotType.Frogs_Amulet: _SlotTypeCost(
-    rubies: 15,
-    emeralds: 15,
+  SlotType.Golden_Necklace: _SlotTypeCost(
+    rubies: 3,
+    emeralds: 1,
+    topaz: 4,
   ),
   SlotType.Silver_Pendant: _SlotTypeCost(
     rubies: 15,

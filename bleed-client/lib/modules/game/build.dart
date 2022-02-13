@@ -444,7 +444,7 @@ class GameBuild {
       children: [
         shopSlotRow(
           SlotType.Spell_Tome_Fireball,
-          SlotType.Frogs_Amulet,
+          SlotType.Golden_Necklace,
           SlotType.Silver_Pendant,
         ),
         shopSlotRow(

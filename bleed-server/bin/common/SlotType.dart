@@ -1,7 +1,7 @@
 enum SlotType {
   Empty,
   Silver_Pendant,
-  Frogs_Amulet,
+  Golden_Necklace,
   Brace,
   Dagger,
   Sword_Wooden,
@@ -66,7 +66,7 @@ class _SlotTypes {
 
   final List<SlotType> items = [
     SlotType.Silver_Pendant,
-    SlotType.Frogs_Amulet,
+    SlotType.Golden_Necklace,
   ];
 }
 

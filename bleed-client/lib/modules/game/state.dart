@@ -58,6 +58,7 @@ class GameState {
     SlotType.Empty: resources.icons.empty,
     SlotType.Sword_Short : resources.icons.sword,
     SlotType.Sword_Wooden : resources.icons.swords.wooden,
+    SlotType.Golden_Necklace : resources.icons.trinkets.goldenNecklace,
     SlotType.Sword_Long : resources.icons.swords.iron,
     SlotType.Bow_Wooden : resources.icons.bows.wooden,
     SlotType.Bow_Green : resources.icons.bows.green,

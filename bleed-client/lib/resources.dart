@@ -29,6 +29,11 @@ class _Icons {
   final _BowIcons bows = _BowIcons();
   final _PotionIcons potions = _PotionIcons();
   final _HeadIcons heads = _HeadIcons();
+  final _Trinkets trinkets = _Trinkets();
+}
+
+class _Trinkets {
+  final goldenNecklace = _image('necklace');
 }
 
 class _HeadIcons {
