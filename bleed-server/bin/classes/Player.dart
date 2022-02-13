@@ -120,6 +120,7 @@ class Player extends Character with Entity {
 
   void unequip(SlotTypeCategory slotTypeCategory){
     if (!slots.emptySlotAvailable) return;
+    dispatch(PlayerEvent.Item_Equipped);
 
     switch(slotTypeCategory){
       case SlotTypeCategory.Weapon:
