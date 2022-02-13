@@ -471,7 +471,10 @@ void _parsePlayerEvents() {
         playAudio.buff11(modules.game.state.player.x, modules.game.state.player.y);
         break;
       case PlayerEvent.Item_Purchased:
-        audio.itemAcquired(screenCenterWorldX, screenCenterWorldY);
+        audio.itemPurchased(screenCenterWorldX, screenCenterWorldY);
+        break;
+      case PlayerEvent.Item_Equipped:
+        audio.itemEquipped(screenCenterWorldX, screenCenterWorldY);
         break;
     }
   }

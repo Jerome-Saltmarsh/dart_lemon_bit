@@ -19,11 +19,11 @@ class _Audio {
   }
 
   void sniperShot(double x, double y) {
-    _playAudio('sniper-shot-04.mp3', x, y);
+    play('sniper-shot-04.mp3', x, y);
   }
 
   void assaultRifleShot(double x, double y) {
-    _playAudio('assault-rifle-shot.mp3', x, y);
+    play('assault-rifle-shot.mp3', x, y);
   }
 
   void explosion(double x, double y) {
@@ -35,15 +35,31 @@ class _Audio {
   }
 
   void gunPickup(double x, double y) {
-    _playAudio("gun-pickup-01.mp3", x, y);
+    play("gun-pickup-01.mp3", x, y);
   }
 
   void reload(double x, double y) {
-    _playAudio('reload-06.mp3', x, y);
+    play('reload-06.mp3', x, y);
   }
 
-  void itemAcquired(double x, double y) {
-    _playAudio('item-acquired.mp3', x, y);
+  void itemEquipped(double x, double y) {
+    play('item-acquired.mp3', x, y);
+  }
+
+  void itemPurchased(double x, double y) {
+    play('item-purchase-3.mp3', x, y);
+  }
+
+  void play(String name, double x, double y) {
+    if (!enabled.value) return;
+    try {
+      _getAudioPlayer().play('assets/audio/$name',
+          isLocal: true,
+          volume: _calculateVolume(x, y))
+          .catchError((error) {});
+    }catch(e){
+      print("failed to play audio $name");
+    }
   }
 }
 
@@ -54,7 +70,7 @@ void initAudioPlayers() {
 }
 
 void playAudioCockShotgun(double x, double y) {
-  _playAudio('cock-shotgun-03.mp3', x, y);
+  audio.play('cock-shotgun-03.mp3', x, y);
 }
 
 void playAudioPlayerDeath(double x, double y) {
@@ -62,11 +78,11 @@ void playAudioPlayerDeath(double x, double y) {
 }
 
 void playAudioReloadHandgun(double x, double y) {
-  _playAudio('mag-in-02.mp3', x, y);
+  audio.play('mag-in-02.mp3', x, y);
 }
 
 void playAudioClipEmpty(double x, double y) {
-  _playAudio('dry-shot-02.mp3', x, y);
+  audio.play('dry-shot-02.mp3', x, y);
 }
 
 void playAudioZombieBite(double x, double y) {
@@ -90,7 +106,7 @@ void playAudioPlayerHurt(double x, double y) {
 }
 
 void playAudioShotgunShot(double x, double y) {
-  _playAudio('shotgun-shot.mp3', x, y);
+  audio.play('shotgun-shot.mp3', x, y);
 }
 
 void playAudioHandgunShot(double x, double y) {
@@ -98,43 +114,43 @@ void playAudioHandgunShot(double x, double y) {
 }
 
 void playAudioUseMedkit(double x, double y) {
-  _playAudio('medkit.mp3', x, y);
+  audio.play('medkit.mp3', x, y);
 }
 
 void playAudioBuff1(double x, double y) {
-  _playAudio('buff-1.mp3', x, y);
+  audio.play('buff-1.mp3', x, y);
 }
 
 void playAudioMagicalSwoosh18(double x, double y) {
-  _playAudio('magical-swoosh-18.mp3', x, y);
+  audio.play('magical-swoosh-18.mp3', x, y);
 }
 
 final _PlayAudio playAudio = _PlayAudio();
 
 class _PlayAudio {
   void unlock(double x, double y) {
-    _playAudio('unlock.mp3', x, y);
+    audio.play('unlock.mp3', x, y);
   }
 
   void buff11(double x, double y) {
-    _playAudio('buff-11.mp3', x, y);
+    audio.play('buff-11.mp3', x, y);
   }
 
   void arrowFlyingPast6(double x, double y) {
-    _playAudio('arrow-flying-past-6.mp3', x, y);
+    audio.play('arrow-flying-past-6.mp3', x, y);
   }
 
   void sciFiBlaster1(double x, double y) {
-    _playAudio('sci-fi-blaster-1.mp3', x, y);
+    audio.play('sci-fi-blaster-1.mp3', x, y);
   }
 }
 
 void playAudioCollectStar(double x, double y) {
-  _playAudio('collect-star-4.mp3', x, y);
+  audio.play('collect-star-4.mp3', x, y);
 }
 
 void playAudioHeal(double x, double y) {
-  _playAudio('revive-heal-1.mp3', x, y);
+  audio.play('revive-heal-1.mp3', x, y);
 }
 
 void playAudioKnifeStrike(double x, double y) {
@@ -142,11 +158,11 @@ void playAudioKnifeStrike(double x, double y) {
 }
 
 void playAudioThrowGrenade(double x, double y) {
-  _playAudio('throw.mp3', x, y);
+  audio.play('throw.mp3', x, y);
 }
 
 void playAudioCrateBreaking(double x, double y) {
-  _playAudio('crate-breaking.mp3', x, y);
+  audio.play('crate-breaking.mp3', x, y);
 }
 
 // abstraction
@@ -212,22 +228,12 @@ const _knifeStrikes = [
 ];
 
 void _playRandom(List<String> values, double x, double y) {
-  _playAudio(randomItem(values), x, y);
+  audio.play(randomItem(values), x, y);
 }
 
 AudioPlayer _getAudioPlayer() {
   _index = (_index + 1) % _audioPlayers.length;
   return _audioPlayers[_index];
-}
-
-void _playAudio(String name, double x, double y) {
-  if (!audio.enabled.value) return;
-  double volume = _calculateVolume(x, y);
-  _getAudioPlayer()
-      .play('assets/audio/$name', isLocal: true, volume: volume)
-      .catchError((error) {
-    // innocuous
-  });
 }
 
 double _calculateVolume(double x, double y) {

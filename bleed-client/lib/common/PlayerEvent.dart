@@ -5,6 +5,7 @@ enum PlayerEvent {
   Teleported,
   Dash_Activated,
   Item_Purchased,
+  Item_Equipped,
 }
 
 final List<PlayerEvent> playerEvents = PlayerEvent.values;
