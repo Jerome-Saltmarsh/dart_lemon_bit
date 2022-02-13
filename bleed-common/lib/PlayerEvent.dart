@@ -7,6 +7,7 @@ enum PlayerEvent {
   Item_Purchased,
   Item_Equipped,
   Item_Sold,
+  Drink_Potion,
 }
 
 final List<PlayerEvent> playerEvents = PlayerEvent.values;

@@ -475,6 +475,9 @@ void _parsePlayerEvents() {
       case PlayerEvent.Item_Sold:
         audio.coins(screenCenterWorldX, screenCenterWorldY);
         break;
+      case PlayerEvent.Drink_Potion:
+        audio.bottle(screenCenterWorldX, screenCenterWorldY);
+        break;
     }
   }
 }
