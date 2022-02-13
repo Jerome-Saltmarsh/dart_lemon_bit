@@ -28,4 +28,5 @@ enum GameEventType {
   Blue_Orb_Fired,
   Objective_Reached,
   Arrow_Hit,
+  Draw_Bow,
 }

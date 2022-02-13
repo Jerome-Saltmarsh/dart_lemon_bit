@@ -240,6 +240,9 @@ class GameEvents {
       case GameEventType.Arrow_Hit:
         audio.arrowImpact(x, y);
         break;
+      case GameEventType.Draw_Bow:
+        audio.drawBow(x, y);
+        break;
       case GameEventType.Objective_Reached:
         actions.emitPixelExplosion(x, y);
         break;

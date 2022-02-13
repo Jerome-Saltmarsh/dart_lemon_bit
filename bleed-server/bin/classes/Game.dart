@@ -731,9 +731,13 @@ extension GameFunctions on Game {
         _characterAttack(character);
         break;
       case CharacterState.Striking:
-        // @on character striking
         faceAimDirection(character);
         character.stateDuration = settings.duration.strike;
+        if (character is Player) {
+          if (character.slots.weapon.isBow) {
+            dispatch(GameEventType.Draw_Bow, character.x, character.y);
+          }
+        }
         break;
       case CharacterState.Performing:
         // TODO
