@@ -225,10 +225,10 @@ class GameEvents {
         actions.emitPixelExplosion(x, y);
         break;
       case GameEventType.Explosion:
-        spawnExplosion(x, y);
+        isometric.spawn.explosion(x, y);
         break;
       case GameEventType.FreezeCircle:
-        spawnFreezeCircle(x: x, y: y,);
+        isometric.spawn.freezeCircle(x: x, y: y,);
         break;
       case GameEventType.Teleported:
         actions.emitPixelExplosion(x, y);

@@ -1,8 +1,13 @@
 
 import 'dart:math';
 
+import 'package:bleed_client/audio.dart';
+import 'package:bleed_client/classes/Explosion.dart';
+import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/maths.dart';
+import 'package:bleed_client/modules/modules.dart';
+import 'package:bleed_client/state/game.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/randomInt.dart';
 import 'package:lemon_math/random_between.dart';
@@ -258,5 +263,65 @@ class IsometricSpawn {
         rotationV: giveOrTake(0.25),
         scale: 0.75,
         scaleV: 0);
+  }
+
+  Effect getEffect(){
+    for(final effect in game.effects){
+      if (!effect.enabled) continue;
+      return effect;
+    }
+    Effect effect = Effect();
+    game.effects.add(effect);
+    return effect;
+  }
+
+  void spawnEffect({
+    required double x,
+    required double y,
+    required EffectType type,
+    required int duration,
+  }){
+    Effect effect = getEffect();
+    effect.x = x;
+    effect.y = y;
+    effect.type = type;
+    effect.maxDuration = duration;
+    effect.duration = 0;
+    effect.enabled = true;
+  }
+
+  void explosion(double x, double y) {
+    spawnEffect(x: x, y: y, type: EffectType.Explosion, duration: 30);
+    audio.explosion(x, y);
+    modules.game.actions.spawnBulletHole(x, y);
+    for (int i = 0; i < randomInt(4, 10); i++) {
+      shrapnel(x, y);
+    }
+    for (int i = 0; i < randomInt(4, 10); i++) {
+      fireYellow(x, y);
+    }
+  }
+
+  void freezeCircle({
+    required double x,
+    required double y
+  }){
+    spawnEffect(x: x, y: y, type: EffectType.FreezeCircle, duration: 30);
+  }
+
+  void spawnFloatingText(double x, double y, dynamic value) {
+    for (final text in isometric.state.floatingText) {
+      if (text.duration > 0) continue;
+      text.duration = game.settings.floatingTextDuration;
+      text.x = x;
+      text.y = y;
+      text.value = value.toString();
+      return;
+    }
+    isometric.state.floatingText.add(FloatingText(
+        x: x,
+        y: y,
+        value: value.toString(),
+        duration: game.settings.floatingTextDuration));
   }
 }
