@@ -737,6 +737,9 @@ extension GameFunctions on Game {
           if (character.slots.weapon.isBow) {
             dispatch(GameEventType.Draw_Bow, character.x, character.y);
           }
+          // if (character.slots.weapon.isSword){
+          //   dispatch(GameEventType.Sword_Woosh, character.x, character.y);
+          // }
         }
         break;
       case CharacterState.Performing:
@@ -1660,15 +1663,19 @@ extension GameFunctions on Game {
     }
 
     if (character is Player) {
+
+      if (character.stateDuration == 1){
+        if (character.slots.weapon.isSword){
+          dispatch(GameEventType.Sword_Woosh, character.x, character.y);
+        }
+      }
+
       if (character.stateDuration == engine.framePerformStrike) {
         if (character.slots.weapon.isBow) {
           dispatch(GameEventType.Release_Bow, character.x, character.y);
           spawnArrow(character, damage: character.slots.weapon.damage);
           character.attackTarget = character.attackTarget;
           return;
-        }
-        if (character.slots.weapon.isMelee){
-          dispatch(GameEventType.Sword_Woosh, character.x, character.y);
         }
         if (character.slots.weapon.isMelee) {
           final attackTarget = character.attackTarget;
