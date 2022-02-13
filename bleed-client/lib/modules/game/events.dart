@@ -155,7 +155,7 @@ class GameEvents {
         break;
       case GameEventType.Zombie_Hit:
         if (randomBool()) {
-          playAudioZombieHit(x, y);
+          audio.bloodyImpact(x, y);
         }
         double s = 0.1;
         double r = 1;
