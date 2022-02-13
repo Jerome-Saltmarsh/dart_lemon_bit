@@ -239,6 +239,15 @@ class Player extends Character with Entity {
         setStateChangingWeapons();
       }
   }
+
+  void sellSlot(int index){
+    if (index < 1) return;
+    if (index > 6) return;
+    final slotAtIndex = slots.getSlotTypeAtIndex(index);
+    if (slotAtIndex.isEmpty) return;
+    slots.assignSlotAtIndex(index, SlotType.Empty);
+    dispatch(PlayerEvent.Item_Sold);
+  }
 }
 
 class _PlayerSlots {

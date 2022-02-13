@@ -70,6 +70,9 @@ class _Audio {
     play('item-purchase-3.mp3', x, y);
   }
 
+  void coins(double x, double y){
+    play('coins.mp3', x, y);
+  }
 
   void cockShotgun(double x, double y) {
     audio.play('cock-shotgun-03.mp3', x, y);

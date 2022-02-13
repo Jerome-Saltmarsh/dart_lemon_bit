@@ -611,21 +611,19 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           if (arguments.length != 3) {
             return errorArgsExpected(3, arguments);
           }
-
-          Player? player = engine.findPlayerByUuid(arguments[1]);
+          final player = engine.findPlayerByUuid(arguments[1]);
           if (player == null) {
             return errorPlayerNotFound();
           }
 
-          int? inventoryIndex = int.tryParse(arguments[2]);
+          final inventoryIndex = int.tryParse(arguments[2]);
           if (inventoryIndex == null){
             return errorIntegerExpected(2, arguments[2]);
           }
           if (inventoryIndex < 1 || inventoryIndex > 6) {
             return errorInvalidArg('inventory index out of bounds');
           }
-          // TODO move business logic to game
-          player.slots.assignSlotAtIndex(inventoryIndex, SlotType.Empty);
+          player.sellSlot(inventoryIndex);
           break;
 
         case ClientRequest.Modify_Game:

@@ -472,6 +472,9 @@ void _parsePlayerEvents() {
       case PlayerEvent.Item_Equipped:
         audio.itemEquipped(screenCenterWorldX, screenCenterWorldY);
         break;
+      case PlayerEvent.Item_Sold:
+        audio.coins(screenCenterWorldX, screenCenterWorldY);
+        break;
     }
   }
 }
