@@ -296,7 +296,6 @@ Widget buildMenu() {
         if (core.state.debug) buttons.edit,
         buttons.exit,
         buttons.changeCharacter,
-        buttons.audio,
         width8,
         buildToggleFullscreen(),
         width8,

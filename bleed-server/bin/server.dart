@@ -596,7 +596,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return errorPlayerNotFound();
           }
 
-          int? inventoryIndex = int.tryParse(arguments[2]);
+          final inventoryIndex = int.tryParse(arguments[2]);
           if (inventoryIndex == null){
             return errorIntegerExpected(2, arguments[2]);
           }

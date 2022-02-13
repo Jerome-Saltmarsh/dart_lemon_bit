@@ -3,12 +3,21 @@ import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/randomItem.dart';
 
-import 'modules/modules.dart';
+import 'Cache.dart';
 
 // interface
 final audio = _Audio();
 
 class _Audio {
+
+  final Cache<bool> enabled = Cache(key: 'audio-enabled', value: true);
+
+  void toggle(){
+    print("audio.toggle()");
+    enabled.value = !enabled.value;
+    print("audio.enabled: ${enabled.value}");
+  }
+
   void sniperShot(double x, double y) {
     _playAudio('sniper-shot-04.mp3', x, y);
   }
@@ -31,6 +40,10 @@ class _Audio {
 
   void reload(double x, double y) {
     _playAudio('reload-06.mp3', x, y);
+  }
+
+  void itemAcquired(double x, double y) {
+    _playAudio('item-acquired.mp3', x, y);
   }
 }
 
@@ -86,10 +99,6 @@ void playAudioHandgunShot(double x, double y) {
 
 void playAudioUseMedkit(double x, double y) {
   _playAudio('medkit.mp3', x, y);
-}
-
-void playAudioAcquireItem(double x, double y) {
-  _playAudio('item-acquired.mp3', x, y);
 }
 
 void playAudioBuff1(double x, double y) {
@@ -212,7 +221,7 @@ AudioPlayer _getAudioPlayer() {
 }
 
 void _playAudio(String name, double x, double y) {
-  if (modules.game.state.audioMuted.value) return;
+  if (!audio.enabled.value) return;
   double volume = _calculateVolume(x, y);
   _getAudioPlayer()
       .play('assets/audio/$name', isLocal: true, volume: volume)

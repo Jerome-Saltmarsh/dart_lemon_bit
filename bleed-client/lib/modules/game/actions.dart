@@ -1,4 +1,5 @@
 
+import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/common/CharacterAction.dart';
 import 'package:bleed_client/common/ClientRequest.dart';
 import 'package:bleed_client/common/Modify_Game.dart';
@@ -70,11 +71,6 @@ class GameActions {
 
   void toggleMessageBox() {
     state.textMode.value = !state.textMode.value;
-  }
-
-  void toggleAudio(){
-    print("game.actions.toggleAudio()");
-    state.audioMuted.value = !state.audioMuted.value;
   }
 
   void skipHour(){

@@ -259,7 +259,7 @@ class GameEvents {
         playAudioThrowGrenade(x, y);
         break;
       case GameEventType.Item_Acquired:
-        playAudioAcquireItem(x, y);
+        audio.itemAcquired(x, y);
         break;
       case GameEventType.Knife_Strike:
         playAudioKnifeStrike(x, y);

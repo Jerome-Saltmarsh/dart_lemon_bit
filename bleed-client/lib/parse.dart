@@ -470,6 +470,9 @@ void _parsePlayerEvents() {
       case PlayerEvent.Dash_Activated:
         playAudio.buff11(modules.game.state.player.x, modules.game.state.player.y);
         break;
+      case PlayerEvent.Item_Purchased:
+        audio.itemAcquired(screenCenterWorldX, screenCenterWorldY);
+        break;
     }
   }
 }

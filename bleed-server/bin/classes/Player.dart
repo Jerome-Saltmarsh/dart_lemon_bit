@@ -151,6 +151,7 @@ class Player extends Character with Entity {
 
   void acquire(SlotType slotType){
     if (!slots.emptySlotAvailable) return;
+    dispatch(PlayerEvent.Item_Purchased);
     setStateChangingWeapons();
 
     if (slotType.isWeapon){
@@ -193,6 +194,7 @@ class Player extends Character with Entity {
         slots.weapon = slot;
         slots.assignSlotAtIndex(index, currentWeapon);
         setStateChangingWeapons();
+        dispatch(PlayerEvent.Item_Purchased);
         return;
       }
 
@@ -203,6 +205,7 @@ class Player extends Character with Entity {
         onUnequipped(previousArmour);
         slots.assignSlotAtIndex(index, previousArmour);
         setStateChangingWeapons();
+        dispatch(PlayerEvent.Item_Purchased);
       }
 
       if (slot.isHelm){
@@ -210,6 +213,7 @@ class Player extends Character with Entity {
         slots.helm = slot;
         slots.assignSlotAtIndex(index, previous);
         setStateChangingWeapons();
+        dispatch(PlayerEvent.Item_Purchased);
       }
 
       if (slot == SlotType.Spell_Tome_Fireball) {

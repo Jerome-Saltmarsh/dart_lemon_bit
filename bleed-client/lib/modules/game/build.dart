@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
@@ -188,6 +189,7 @@ class GameBuild {
   }
 
   Widget layoutRoyal(){
+    final _pad = 8.0;
     return layout(
         children: [
           bottomCenter(child: Column(
@@ -195,19 +197,24 @@ class GameBuild {
               _magicBar(),
               _healthBar(),
             ],
-          ), padding: 8),
+          ), padding: _pad),
           Positioned(
-              left: 8,
-              top: 8,
+              left: _pad,
+              top: _pad,
               child: frameSmoothing()),
           Positioned(
-              left: 8,
-              bottom: 8,
+              left: _pad,
+              bottom: _pad,
               child: toggleDebugMode()),
           Positioned(
-              right: 8,
-              bottom: 8,
+              right: _pad,
+              bottom: _pad,
               child: _panelMagicStore()),
+          Positioned(
+              child: toggleAudioEnabled(),
+              right: _pad,
+              top: _pad,
+          ),
           respawnButton(),
       _panelHighlightedSlot(),
     ]);
@@ -829,6 +836,12 @@ class GameBuild {
   Widget toggleDebugMode(){
     return WatchBuilder(state.compilePaths, (bool compilePaths){
       return button("Debug Mode: $compilePaths", actions.toggleDebugPaths);
+    });
+  }
+
+  Widget toggleAudioEnabled(){
+    return WatchBuilder(audio.enabled, (bool enabled){
+      return button("Audio: $enabled", audio.toggle);
     });
   }
 }

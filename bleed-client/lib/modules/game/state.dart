@@ -30,7 +30,6 @@ class GameState {
   final CharacterController characterController = CharacterController();
   final KeyMap keyMap = KeyMap();
   final Watch<bool> textMode = Watch(false);
-  final Cache<bool> audioMuted = Cache(key: 'audio-muted', value: true);
   bool panningCamera = false;
   final FocusNode textFieldMessage = FocusNode();
   final Watch<SlotType> highLightSlotType = Watch(SlotType.Empty);
