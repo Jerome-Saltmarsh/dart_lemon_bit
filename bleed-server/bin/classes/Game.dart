@@ -971,6 +971,8 @@ extension GameFunctions on Game {
     final angleBetweenSrcAndTarget = radiansBetween2(src, target.x, target.y);
     final healthPercentage = damage / target.maxHealth;
     applyForce(target, angleBetweenSrcAndTarget, healthPercentage);
+
+
     if (target.dead) {
       dispatch(GameEventType.Zombie_Killed, target.x, target.y,
           target.xv, target.yv);

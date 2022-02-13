@@ -195,7 +195,7 @@ class _Range {
   final double shotgun = 180;
   final double sniperRifle = 600;
   final double assaultRifle = 450;
-  final double zombieStrike = 20;
+  final double zombieStrike = 25;
   final double firebolt = 200;
   final double arrow = 300;
   final double slowingCircle = 150;

@@ -28,8 +28,8 @@ const Map<SlotType, _SlotTypeCost> slotTypeCosts = {
     emeralds: 15,
   ),
   SlotType.Staff_Wooden: _SlotTypeCost(
-    rubies: 15,
-    emeralds: 15,
+    rubies: 3,
+    emeralds: 3,
   ),
   SlotType.Staff_Blue: _SlotTypeCost(
     rubies: 15,
