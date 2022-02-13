@@ -962,6 +962,7 @@ extension GameFunctions on Game {
   void handleProjectileHit(Projectile projectile, Character character) {
     deactivateProjectile(projectile);
     applyStrike(projectile.owner, character, projectile.damage);
+    dispatch(GameEventType.Arrow_Hit, character.x, character.y);
   }
 
   void applyStrike(Character src, Character target, int damage) {
@@ -971,7 +972,6 @@ extension GameFunctions on Game {
     final angleBetweenSrcAndTarget = radiansBetween2(src, target.x, target.y);
     final healthPercentage = damage / target.maxHealth;
     applyForce(target, angleBetweenSrcAndTarget, healthPercentage);
-
 
     if (target.dead) {
       dispatch(GameEventType.Zombie_Killed, target.x, target.y,

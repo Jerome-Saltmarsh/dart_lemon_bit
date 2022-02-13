@@ -237,6 +237,9 @@ class GameEvents {
       case GameEventType.Blue_Orb_Fired:
         playAudio.sciFiBlaster1(x, y);
         break;
+      case GameEventType.Arrow_Hit:
+        audio.arrowImpact(x, y);
+        break;
       case GameEventType.Objective_Reached:
         actions.emitPixelExplosion(x, y);
         break;
