@@ -977,16 +977,16 @@ extension GameFunctions on Game {
     final healthPercentage = damage / target.maxHealth;
     applyForce(target, angleBetweenSrcAndTarget, healthPercentage);
 
+    dispatch(
+        GameEventType.Zombie_Hit,
+        target.x,
+        target.y,
+        velX(src.aimAngle, settings.knifeHitAcceleration * 2),
+        velY(src.aimAngle, settings.knifeHitAcceleration * 2));
+
     if (target.dead) {
       dispatch(GameEventType.Zombie_Killed, target.x, target.y,
           target.xv, target.yv);
-    } else {
-      dispatch(
-          GameEventType.Zombie_Hit,
-          target.x,
-          target.y,
-          velX(src.aimAngle, settings.knifeHitAcceleration * 2),
-          velY(src.aimAngle, settings.knifeHitAcceleration * 2));
     }
   }
 

@@ -182,12 +182,12 @@ class GameEvents {
       case GameEventType.Zombie_Killed:
         final s = 0.15;
         final r = 1;
-        for (int i = 0; i < randomInt(2, 5); i++) {
-          isometric.spawn.blood(x, y, 0.3,
-              xv: xv * s + giveOrTake(r),
-              yv: yv * s + giveOrTake(r),
-              zv: randomBetween(0, 0.07));
-        }
+        // for (int i = 0; i < randomInt(2, 5); i++) {
+        //   isometric.spawn.blood(x, y, 0.3,
+        //       xv: xv * s + giveOrTake(r),
+        //       yv: yv * s + giveOrTake(r),
+        //       zv: randomBetween(0, 0.07));
+        // }
         isometric.spawn.headZombie(x, y, 0.5,
             xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
         isometric.spawn.arm(x, y, 0.3,
