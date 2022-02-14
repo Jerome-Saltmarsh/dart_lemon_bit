@@ -273,7 +273,7 @@ class IsometricSpawn {
       if (!effect.enabled) continue;
       return effect;
     }
-    Effect effect = Effect();
+    final effect = Effect();
     game.effects.add(effect);
     return effect;
   }
@@ -284,7 +284,7 @@ class IsometricSpawn {
     required EffectType type,
     required int duration,
   }){
-    Effect effect = getEffect();
+    final effect = getEffect();
     effect.x = x;
     effect.y = y;
     effect.type = type;
