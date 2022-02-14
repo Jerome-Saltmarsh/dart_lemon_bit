@@ -85,8 +85,11 @@ class IsometricSpawn {
         scaleV: 0);
   }
 
-  void blood(double x, double y, double z,
-      {double xv = 0, double yv = 0, double zv = 0}) {
+  void blood(double x, double y, double z, {
+    double xv = 0,
+    double yv = 0,
+    double zv = 0,
+  }) {
     _particle(
         type: ParticleType.Blood,
         x: x,
@@ -95,7 +98,7 @@ class IsometricSpawn {
         xv: xv,
         yv: yv,
         zv: zv,
-        weight: 0.125,
+        weight: 0.135,
         duration: 200 + giveOrTake(50).toInt(),
         rotation: 0,
         rotationV: 0,
