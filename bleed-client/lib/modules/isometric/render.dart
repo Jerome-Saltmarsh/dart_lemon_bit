@@ -34,12 +34,10 @@ import 'state.dart';
 const _size32 = 32.0;
 const _size48 = 48.0;
 const _size64 = 64.0;
-const _scaleZombie = 0.7;
 
-const _humanFramesPerDirection = 9.0;
-const _zombieFramesPerDirection = 7.0;
-const _indexIdle = 0;
-const _indexChanging = 1;
+const _scaleZombie = 0.7;
+const _framesPerDirectionHuman = 9;
+const _framesPerDirectionZombie = 7;
 
 
 enum SpriteLayer {
@@ -283,7 +281,7 @@ class IsometricRender {
         return single(
             frame: 1,
             direction: character.direction.index,
-            framesPerDirection: _zombieFramesPerDirection
+            framesPerDirection: _framesPerDirectionZombie
         );
 
       case CharacterState.Striking:
@@ -291,13 +289,13 @@ class IsometricRender {
             animation: animations.zombie.striking,
             character: character,
             framesPerDirection:
-            _zombieFramesPerDirection
+            _framesPerDirectionZombie
         );
       case CharacterState.Running:
         return loop(
             animation: animations.zombie.running,
             character: character,
-            framesPerDirection: _zombieFramesPerDirection
+            framesPerDirection: _framesPerDirectionZombie
         );
       default:
         throw Exception("Render zombie invalid state ${character.state}");
@@ -307,7 +305,7 @@ class IsometricRender {
   double single({
     required frame,
     required num direction,
-    required num framesPerDirection,
+    required int framesPerDirection,
     num size = _size64
   }){
     return ((direction * framesPerDirection) + (frame - 1)) * _size64;
@@ -316,7 +314,7 @@ class IsometricRender {
   double loop({
     required List<int> animation,
     required Character character,
-    required num framesPerDirection,
+    required int framesPerDirection,
     double size = _size64
   }){
     final animationFrame = character.frame % animation.length;
@@ -327,8 +325,8 @@ class IsometricRender {
   double animate({
         required List<int> animation,
         required Character character,
-        required double framesPerDirection,
-        num size = 64.0
+        required int framesPerDirection,
+        double size = 64.0
       }){
     final animationFrame = min(character.frame, animation.length - 1);
     final frame = animation[animationFrame] - 1;
@@ -422,35 +420,35 @@ class IsometricRender {
         return single(
             frame: 1,
             direction: character.direction.index,
-            framesPerDirection: _humanFramesPerDirection
+            framesPerDirection: _framesPerDirectionHuman
         );
 
       case CharacterState.Changing:
         return single(
             frame: 2,
             direction: character.direction.index,
-            framesPerDirection: _humanFramesPerDirection
+            framesPerDirection: _framesPerDirectionHuman
         );
 
       case CharacterState.Striking:
         return animate(
             animation: character.equippedWeapon.isBow ? animations.firingBow : animations.strikingSword,
             character: character,
-            framesPerDirection: _humanFramesPerDirection
+            framesPerDirection: _framesPerDirectionHuman
         );
 
       case CharacterState.Performing:
         return animate(
             animation: character.equippedWeapon.isBow ? animations.firingBow : animations.strikingSword,
             character: character,
-            framesPerDirection: _humanFramesPerDirection
+            framesPerDirection: _framesPerDirectionHuman
         );
 
       case CharacterState.Running:
         return loop(
             animation: animations.running,
             character: character,
-            framesPerDirection: _humanFramesPerDirection
+            framesPerDirection: _framesPerDirectionHuman
         );
 
       default:
