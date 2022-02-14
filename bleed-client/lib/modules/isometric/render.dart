@@ -269,31 +269,21 @@ class IsometricRender {
   }
 
   void _renderZombie(Character character, int shade) {
-    final size = 64.0;
     final x = mapZombieSrcX(character, shade);
+    final size = 64.0;
     final y = atlas.zombieY + (shade * size);
     engine.state.mapSrc(x: x, y: y);
-    engine.state.mapDst(x: character.x, y: character.y, anchorX: 32, anchorY: 32);
+    engine.state.mapDst(x: character.x, y: character.y, anchorX: 32, anchorY: 45, scale: 0.7);
     engine.actions.renderAtlas();
   }
 
   double mapZombieSrcX(Character character, int shade){
-    final framesPerDirection = 7.0;
-
     switch(character.state){
       case CharacterState.Idle:
-        return character.direction.index * framesPerDirection;
+        return character.direction.index * 7.0;
       case CharacterState.Striking:
-        // final animation = animations.zombie.striking;
-        // final animationFrame = min(character.frame, animation.length - 1);
-        // final frame = animation[animationFrame] - 1;
-        // return (direction * framesPerDirection * size) + (frame * size);
         return animate(animation: animations.zombie.striking, character: character, framesPerDirection: 7);
       case CharacterState.Running:
-        // final animation = animations.zombie.running;
-        // final animationFrame = character.frame % animation.length;
-        // final frame = animation[animationFrame] - 1;
-        // return (direction * framesPerDirection * size) + (frame * size);
         return loop(animation: animations.zombie.running, character: character, framesPerDirection: 7);
       default:
         throw Exception("Render zombie invalid state ${character.state}");
