@@ -8,7 +8,7 @@ import 'package:bleed_client/modules/isometric/functions.dart';
 
 void mapSrcZombie({
   required CharacterState state,
-  required Direction direction,
+  required int direction,
   required int shade,
   required int frame
 }) {

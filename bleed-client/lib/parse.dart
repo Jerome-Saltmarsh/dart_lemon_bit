@@ -728,7 +728,7 @@ void _parseNpcs() {
 void _consumeHuman(Character character) {
   character.type = _consumeCharacterType();
   character.state = _consumeCharacterState();
-  character.direction = _consumeDirection();
+  character.direction = _consumeSingleDigitInt();
   character.x = consumeDouble();
   character.y = consumeDouble();
   character.frame = consumeInt();
@@ -751,7 +751,7 @@ void _consumeHuman(Character character) {
 
 void _consumeZombie(Character zombie) {
   zombie.state = _consumeCharacterState();
-  zombie.direction = _consumeDirection();
+  zombie.direction = _consumeSingleDigitInt();
   zombie.x = _consumeDoubleUnsafe();
   zombie.y = _consumeDoubleUnsafe();
   zombie.frame = _consumeIntUnsafe();
@@ -761,7 +761,7 @@ void _consumeZombie(Character zombie) {
 
 void _consumeInteractableNpc(Character interactableNpc) {
   interactableNpc.state = _consumeCharacterState();
-  interactableNpc.direction = _consumeDirection();
+  interactableNpc.direction = _consumeSingleDigitInt();
   interactableNpc.x = consumeDouble();
   interactableNpc.y = consumeDouble();
   interactableNpc.frame = consumeInt();

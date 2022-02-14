@@ -219,7 +219,7 @@ class IsometricRender {
     final _anchor = 32;
     srcLoop(
         atlas: maps.itemAtlas[item.type]!,
-        direction: Direction.Down,
+        direction: Direction.Down.index,
         frame: core.state.timeline.frame,
         framesPerDirection: 8);
     engine.state.mapDst(x: item.x - _anchor, y: item.y - _anchor,);
@@ -258,7 +258,7 @@ class IsometricRender {
       return;
     }
 
-    if (character.direction.index > Direction.Right.index) {
+    if (character.direction > directionRightIndex) {
       _renderCharacterTemplateWeapon(character);
       _renderCharacterTemplate(character);
       return;
@@ -280,7 +280,7 @@ class IsometricRender {
       case CharacterState.Idle:
         return single(
             frame: 1,
-            direction: character.direction.index,
+            direction: character.direction,
             framesPerDirection: _framesPerDirectionZombie
         );
 
@@ -319,7 +319,7 @@ class IsometricRender {
   }){
     final animationFrame = character.frame % animation.length;
     final frame = animation[animationFrame] - 1;
-    return (character.direction.index * framesPerDirection * size) + (frame * size);
+    return (character.direction * framesPerDirection * size) + (frame * size);
   }
 
   double animate({
@@ -330,7 +330,7 @@ class IsometricRender {
       }){
     final animationFrame = min(character.frame, animation.length - 1);
     final frame = animation[animationFrame] - 1;
-    return (character.direction.index * framesPerDirection * size) + (frame * size);
+    return (character.direction * framesPerDirection * size) + (frame * size);
   }
 
   void _renderCharacterStandard(Character character, int shade) {
@@ -419,14 +419,14 @@ class IsometricRender {
       case CharacterState.Idle:
         return single(
             frame: 1,
-            direction: character.direction.index,
+            direction: character.direction,
             framesPerDirection: _framesPerDirectionHuman
         );
 
       case CharacterState.Changing:
         return single(
             frame: 2,
-            direction: character.direction.index,
+            direction: character.direction,
             framesPerDirection: _framesPerDirectionHuman
         );
 

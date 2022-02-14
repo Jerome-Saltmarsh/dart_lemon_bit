@@ -8,7 +8,7 @@ import 'package:bleed_client/modules/isometric/functions.dart';
 
 void mapSrcArcher({
   required CharacterState state,
-  required Direction direction,
+  required int direction,
   required int frame
 }) {
   switch (state) {

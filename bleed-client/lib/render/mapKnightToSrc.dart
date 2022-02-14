@@ -9,7 +9,7 @@ import 'package:bleed_client/modules/isometric/functions.dart';
 
 void mapSrcKnight({
   required CharacterState state,
-  required Direction direction,
+  required int direction,
   required int frame
 }) {
   switch (state) {

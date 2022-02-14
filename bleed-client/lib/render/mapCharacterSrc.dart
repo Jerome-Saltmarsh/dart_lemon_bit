@@ -13,7 +13,7 @@ void mapCharacterSrc({
   required CharacterType type,
   required CharacterState state,
   required SlotType slotType,
-  required Direction direction,
+  required int direction,
   required int frame,
   required int shade,
 }) {

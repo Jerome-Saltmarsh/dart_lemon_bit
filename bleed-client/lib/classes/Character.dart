@@ -5,10 +5,12 @@ import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:lemon_math/Vector2.dart';
 
+import '../maths.dart';
+
 class Character extends Vector2 {
   CharacterType type;
   CharacterState state;
-  Direction direction;
+  int direction;
   int frame;
   WeaponType weapon;
   SlotType equippedWeapon = SlotType.Empty;
@@ -23,10 +25,12 @@ class Character extends Vector2 {
   bool get dead => state == CharacterState.Dead;
   bool get alive => state != CharacterState.Dead;
 
+  double get angle => direction * piQuarter;
+
   Character({
     required this.type,
     this.state = CharacterState.Idle,
-    this.direction = Direction.Down,
+    this.direction = 0,
     double x = 0,
     double y = 0,
     this.frame = 0,

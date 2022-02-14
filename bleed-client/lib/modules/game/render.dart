@@ -1,5 +1,6 @@
 
 import 'dart:math';
+import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/opposite.dart';
 import 'package:bleed_client/classes/Character.dart';
@@ -44,7 +45,7 @@ class GameRender {
       state.smoothed--;
       for(final character in game.humans){
         if (character.state == CharacterState.Running) {
-          final angle = convertDirectionToAngle(character.direction);
+          final angle = character.angle;
           final speed = 0.5;
           character.x += adjacent(angle, speed);
           character.y += opposite(angle, speed);

@@ -10,7 +10,7 @@ import 'package:lemon_math/Vector2.dart';
 void mapSrcHuman({
     required SlotType slotType,
     required CharacterState characterState,
-    required Direction direction,
+    required int direction,
     required int frame
 }) {
 

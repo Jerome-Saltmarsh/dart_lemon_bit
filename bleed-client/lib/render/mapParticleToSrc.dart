@@ -1,5 +1,6 @@
 
 import 'package:bleed_client/classes/Particle.dart';
+import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
 import 'package:bleed_client/modules/isometric/enums.dart';
 import 'package:bleed_client/modules/modules.dart';
@@ -40,8 +41,8 @@ void mapParticleToSrc(Particle particle){
       return;
 
     case ParticleType.Leg:
-      final direction = convertAngleToDirection(particle.rotation);
-      final x = atlas.particles.zombieLeg.x + (direction.index * 64.0);
+      final direction = convertAngleToDirectionInt(particle.rotation);
+      final x = atlas.particles.zombieLeg.x + (direction * 64.0);
       final y = atlas.particles.zombieLeg.y + shade * 64.0;
       engine.state.mapSrc(x: x, y: y, width: 64, height: 64);
       return;
