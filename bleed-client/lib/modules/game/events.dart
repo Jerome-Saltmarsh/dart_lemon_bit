@@ -206,7 +206,7 @@ class GameEvents {
       case GameEventType.Character_Struck:
         audio.bloodyImpact(x, y);
         final speed = 5.0;
-        final total = randomInt(3, 6);
+        final total = randomInt(5, 10);
         for (int i = 0; i < total; i++) {
           final rotation = angle + giveOrTake(0.2);
           final vel = speed + giveOrTake(2);

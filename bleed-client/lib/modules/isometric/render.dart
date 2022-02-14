@@ -215,12 +215,14 @@ class IsometricRender {
     engine.renderAtlas();
 
     if (value.type == ParticleType.Blood) {
+      if (value.z < 0.1) return;
       mapShadeShadow();
       engine.mapDst(
           x: value.x,
           y: value.y,
           anchorX: _size4,
-          anchorY: _size4
+          anchorY: _size4,
+          scale: value.z,
       );
       engine.renderAtlas();
     }
