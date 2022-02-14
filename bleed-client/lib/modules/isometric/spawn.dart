@@ -96,7 +96,7 @@ class IsometricSpawn {
         yv: yv,
         zv: zv,
         weight: 0.1,
-        duration: 200,
+        duration: 300,
         rotation: 0,
         rotationV: 0,
         scale: 0.6,

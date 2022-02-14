@@ -667,10 +667,8 @@ GameError _consumeError() {
 }
 
 void _consumeGameEvents() {
-  int events = 0;
   final gameEvents = game.gameEvents;
   while (!_simiColonConsumed()) {
-    events++;
     final id = consumeInt();
     final type = _consumeEventType();
     final x = consumeDouble();
@@ -679,10 +677,6 @@ void _consumeGameEvents() {
     if (gameEvents.containsKey(id)) continue;
     gameEvents[id] = true;
     modules.game.events.onGameEvent(type, x, y, angle);
-  }
-
-  if (events == 0) {
-    gameEvents.clear(); // free up memory
   }
 }
 

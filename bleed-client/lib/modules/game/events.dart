@@ -206,12 +206,14 @@ class GameEvents {
       case GameEventType.Character_Struck:
         audio.bloodyImpact(x, y);
         final speed = 5.0;
-        for (int i = 0; i < randomInt(3, 6); i++) {
+        final total = randomInt(3, 6);
+        for (int i = 0; i < total; i++) {
+          final rotation = angle + giveOrTake(0.2);
+          final vel = speed + giveOrTake(2);
           isometric.spawn.blood(x, y, 0.3,
-              xv: adjacent(angle, speed),
-              yv: opposite(angle, speed),
+              xv: adjacent(rotation, vel),
+              yv: opposite(rotation, vel),
               zv: 0.05,
-              // zv: randomBetween(0, 0.07)
           );
         }
         break;
