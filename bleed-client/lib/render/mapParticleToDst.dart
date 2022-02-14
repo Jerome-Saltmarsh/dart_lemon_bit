@@ -12,7 +12,7 @@ const half = 0.5;
 const one = 1;
 
 final Map<ParticleType, double> _particleTypeSize = {
-  ParticleType.Zombie_Head: _32,
+  ParticleType.Zombie_Head: 64.0,
   ParticleType.Blood: 8.0,
   ParticleType.Human_Head: _32,
   ParticleType.Myst: _64,

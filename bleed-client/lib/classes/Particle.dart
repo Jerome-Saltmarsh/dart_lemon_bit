@@ -14,10 +14,11 @@ class Particle {
   double rotationV = 0;
   double scale = 0;
   double scaleV = 0;
-  ParticleType type = ParticleType.None;
+  ParticleType type = ParticleType.Zombie_Head;
   double bounciness = 0;
   double airFriction = 0.98;
   bool foreground = false;
   int hue = 0;
+  bool hasShadow = false;
 }
 

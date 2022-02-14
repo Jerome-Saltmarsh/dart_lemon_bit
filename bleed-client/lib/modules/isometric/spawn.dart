@@ -47,10 +47,12 @@ class IsometricSpawn {
     double rotation = 0,
     double rotationV = 0,
     bounciness = 0.5,
-    double airFriction = 0.98
+    double airFriction = 0.98,
+    bool hasShadow = false,
   }) {
     final particle = getAvailableParticle();
     particle.type = type;
+    particle.hasShadow = hasShadow;
     particle.x = x;
     particle.y = y;
     particle.z = z;
@@ -82,7 +84,9 @@ class IsometricSpawn {
         rotation: giveOrTake(pi),
         rotationV: giveOrTake(0.25),
         scale: 0.75,
-        scaleV: 0);
+        scaleV: 0,
+        hasShadow: true,
+    );
   }
 
   void blood(double x, double y, double z, {
@@ -104,7 +108,9 @@ class IsometricSpawn {
         rotationV: 0,
         scale: 0.6,
         scaleV: 0,
-        bounciness: 0);
+        bounciness: 0,
+        hasShadow: true,
+    );
   }
 
   void fireYellow(double x, double y){
@@ -243,11 +249,12 @@ class IsometricSpawn {
       yv: yv,
       zv: 0.06,
       weight: 0.15,
-      duration: 300,
+      duration: 350,
       rotation: 0,
       rotationV: 0.05,
       scale: 0.75,
       scaleV: 0,
+      hasShadow: true
     );
   }
 

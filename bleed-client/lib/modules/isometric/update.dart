@@ -5,6 +5,7 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/functions.dart';
 import 'package:bleed_client/modules/isometric/enums.dart';
 import 'package:bleed_client/modules/isometric/queries.dart';
+import 'package:bleed_client/modules/isometric/spawn.dart';
 import 'package:bleed_client/modules/isometric/state.dart';
 import 'package:bleed_client/modules/isometric/utilities.dart';
 import 'package:bleed_client/modules/modules.dart';
@@ -15,7 +16,8 @@ class IsometricUpdate {
 
   final IsometricState state;
   final IsometricQueries queries;
-  IsometricUpdate(this.state, this.queries);
+  final IsometricSpawn spawn;
+  IsometricUpdate(this.state, this.queries, this.spawn);
 
   void call(){
     final screen = engine.screen;
@@ -23,35 +25,33 @@ class IsometricUpdate {
     state.maxRow = min(state.totalRowsInt, getRow(screen.right, screen.bottom));
     state.minColumn = max(0, getColumn(screen.right, screen.top));
     state.maxColumn = min(state.totalColumnsInt, getColumn(screen.left, screen.bottom));
-    _deadZombieBlood();
     _updateParticles();
     _updateParticleEmitters();
   }
 
-  void _deadZombieBlood() {
-    if (core.state.timeline.frame % 2 == 0) return;
-
-    for (int i = 0; i < game.totalZombies.value; i++) {
-      if (game.zombies[i].alive) continue;
-      isometric.spawn.blood(game.zombies[i].x, game.zombies[i].y, 0);
-    }
-  }
-
   void _updateParticles() {
-    for (Particle particle in isometric.state.particles) {
+    final particles = isometric.state.particles;
+    for (final particle in particles) {
       if (!particle.active) continue;
       updateParticle(particle);
     }
     insertionSort(
-        isometric.state.particles,
+        particles,
         compare: compareParticles,
         start: 0,
-        end: isometric.state.particles.length);
+        end: particles.length);
+
+    if (engine.drawFrame.value % 4 == 0){
+      for (final particle in particles){
+        if (!particle.active) continue;
+        if (particle.type != ParticleType.Zombie_Head) continue;
+        spawn.blood(particle.x, particle.y, particle.z);
+      }
+    }
   }
 
 
   void updateParticle(Particle particle){
-    final _spawnBloodRate = 10;
     double gravity = 0.04;
     double bounceFriction = 0.99;
     double rotationFriction = 0.93;
@@ -98,15 +98,6 @@ class IsometricUpdate {
     }
     if (particle.z <= 0) {
       particle.z = 0;
-    }
-    if (particle.type == ParticleType.Human_Head && particle.duration % _spawnBloodRate == 0) {
-      isometric.spawn.blood(particle.x, particle.y, particle.z);
-    }
-    if (particle.type == ParticleType.Arm && particle.duration % _spawnBloodRate == 0) {
-      isometric.spawn.blood(particle.x, particle.y, particle.z);
-    }
-    if (particle.type == ParticleType.Organ && particle.duration % _spawnBloodRate == 0) {
-      isometric.spawn.blood(particle.x, particle.y, particle.z);
     }
     if (particle.duration-- < 0) {
       particle.active = false;

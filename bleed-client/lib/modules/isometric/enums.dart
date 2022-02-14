@@ -11,7 +11,6 @@ enum Phase {
 final List<Phase> phases = Phase.values;
 
 enum ParticleType {
-  None,
   Smoke,
   Human_Head,
   Zombie_Head,

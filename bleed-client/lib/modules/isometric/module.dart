@@ -32,7 +32,7 @@ class IsometricModule {
     queries = IsometricQueries(state);
     actions = IsometricActions(state, queries, constants, properties);
     events = IsometricEvents(state, actions, properties);
-    update = IsometricUpdate(state, queries);
+    update = IsometricUpdate(state, queries, spawn);
     render = IsometricRender(state, properties, queries, map);
   }
 }
