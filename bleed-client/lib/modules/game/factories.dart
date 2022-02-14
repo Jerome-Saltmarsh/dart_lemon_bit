@@ -1,6 +1,5 @@
 import 'dart:math';
 
-
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/modules/isometric/enums.dart';
 import 'package:bleed_client/modules/modules.dart';

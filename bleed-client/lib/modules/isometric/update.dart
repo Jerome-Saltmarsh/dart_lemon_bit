@@ -9,7 +9,6 @@ import 'package:bleed_client/modules/isometric/spawn.dart';
 import 'package:bleed_client/modules/isometric/state.dart';
 import 'package:bleed_client/modules/isometric/utilities.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/state/game.dart';
 import 'package:lemon_engine/engine.dart';
 
 class IsometricUpdate {

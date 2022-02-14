@@ -20,5 +20,6 @@ class Particle {
   bool foreground = false;
   int hue = 0;
   bool hasShadow = false;
+  double size = 0;
 }
 

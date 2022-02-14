@@ -1,6 +1,5 @@
 
 
-import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 
 class Projectile {

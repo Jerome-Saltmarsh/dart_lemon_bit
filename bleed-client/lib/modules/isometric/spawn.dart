@@ -8,14 +8,30 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:lemon_math/angle.dart';
 import 'package:lemon_math/give_or_take.dart';
+import 'package:lemon_math/piHalf.dart';
 import 'package:lemon_math/randomInt.dart';
 import 'package:lemon_math/random_between.dart';
-import 'package:lemon_math/angle.dart';
-import 'package:lemon_math/piHalf.dart';
 
 import 'enums.dart';
 import 'state.dart';
+
+
+const Map<ParticleType, double> _particleTypeSize = {
+  ParticleType.Zombie_Head: 64.0,
+  ParticleType.Blood: 8.0,
+  ParticleType.Human_Head: 64.0,
+  ParticleType.Myst: 64.0,
+  ParticleType.Smoke: 32.0,
+  ParticleType.Shrapnel: 32.0,
+  ParticleType.Shell: 32.0,
+  ParticleType.Organ: 64,
+  ParticleType.FireYellow: 32.0,
+  ParticleType.Arm: 64,
+  ParticleType.Leg: 64,
+  ParticleType.Pixel: 8,
+};
 
 class IsometricSpawn {
 
@@ -51,6 +67,7 @@ class IsometricSpawn {
     bool hasShadow = false,
   }) {
     final particle = getAvailableParticle();
+    particle.size = _particleTypeSize[type] ?? 0;
     particle.type = type;
     particle.hasShadow = hasShadow;
     particle.x = x;

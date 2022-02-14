@@ -24,7 +24,6 @@ import 'package:bleed_client/ui/style.dart';
 import 'package:bleed_client/ui/views.dart';
 import 'package:bleed_client/ui/widgets.dart';
 import 'package:bleed_client/utils/widget_utils.dart';
-import 'package:bleed_client/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:golden_ratio/constants.dart';
 import 'package:lemon_engine/engine.dart';

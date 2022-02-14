@@ -1,6 +1,4 @@
 import 'package:bleed_client/audio.dart';
-import 'package:lemon_math/adjacent.dart';
-import 'package:lemon_math/opposite.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameError.dart';
@@ -15,7 +13,9 @@ import 'package:bleed_client/state/game.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
+import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/give_or_take.dart';
+import 'package:lemon_math/opposite.dart';
 import 'package:lemon_math/randomBool.dart';
 import 'package:lemon_math/randomInt.dart';
 

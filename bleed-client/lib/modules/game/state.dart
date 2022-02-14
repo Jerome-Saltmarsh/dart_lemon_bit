@@ -10,8 +10,8 @@ import 'package:bleed_client/common/WeaponType.dart';
 import 'package:bleed_client/resources.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_math/Vector2.dart';
-import 'package:lemon_watch/watch.dart';
 import 'package:lemon_watch/advanced_watch.dart';
+import 'package:lemon_watch/watch.dart';
 
 import 'classes.dart';
 import 'enums.dart';

@@ -1,11 +1,7 @@
 
 
 
-import 'package:bleed_client/classes/Projectile.dart';
-import 'package:bleed_client/common/enums/ProjectileType.dart';
-import 'package:bleed_client/modules/isometric/atlas.dart';
-import 'package:bleed_client/modules/modules.dart';
-import 'package:lemon_engine/engine.dart';
+
 
 // TODO Refactor
 // void mapProjectileToSrc(Projectile projectile) {

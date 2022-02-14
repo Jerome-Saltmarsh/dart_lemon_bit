@@ -1,7 +1,6 @@
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/Explosion.dart';
-import 'package:bleed_client/classes/Item.dart';
 import 'package:bleed_client/classes/NpcDebug.dart';
 import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/common/GameType.dart';

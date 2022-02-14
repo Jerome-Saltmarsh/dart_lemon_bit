@@ -1,6 +1,5 @@
 
 
-import 'dart:ui';
 
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/Item.dart';
@@ -10,7 +9,6 @@ import 'package:bleed_client/modules/editor/scope.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/utils.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';

@@ -2,7 +2,6 @@
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/SlotType.dart';
-import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/render/mapArcherToSrc.dart';
 import 'package:bleed_client/render/mapKnightToSrc.dart';
 import 'package:bleed_client/render/mapSrcHuman.dart';
