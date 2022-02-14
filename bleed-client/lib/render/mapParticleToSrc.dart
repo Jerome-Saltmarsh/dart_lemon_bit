@@ -73,9 +73,9 @@ void mapParticleToSrc(Particle particle){
       return;
 
     case ParticleType.Blood:
-      final x = _particles.blood.x;
-      final y = _particles.blood.y + shade * _size32;
-      engine.state.mapSrc(x: x, y: y, width: _size32, height: _size32);
+      final x = atlas.blood.x;
+      final y = atlas.blood.y - (shade * 8);
+      engine.state.mapSrc(x: x, y: y, width: 8, height: 8);
       return;
 
     case ParticleType.Human_Head:
