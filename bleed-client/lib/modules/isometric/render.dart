@@ -246,54 +246,92 @@ class IsometricRender {
   void drawCharacter(Character character) {
     if (!onScreen(character.x, character.y)) return;
     if (!character.alive) return;
-
     final shade = properties.getShadeAtPosition(character.x, character.y);
     if (shade > Shade.Dark) return;
 
-    _renderCharacter(character, shade);
+    if (character.type == CharacterType.Zombie){
+      _renderZombie(character, shade);
+      return;
+    }
 
-    // if (
-    // character.type == CharacterType.Witch ||
-    //     character.type == CharacterType.Swordsman ||
-    //     character.type == CharacterType.Archer
-    // ) {
-    //   if (character.team == modules.game.state.player.team){
-    //     drawCharacterMagicBar(character);
-    //   }
-    // }
-    //
-    // if (shade <= Shade.Medium) {
-    //   drawCharacterHealthBar(character);
-    // }
-
-  }
-
-  void _renderCharacter(Character character, int shade) {
-
-    if (character.type != CharacterType.Template){
+    if (character.type != CharacterType.Template) {
       _renderCharacterStandard(character, shade);
       return;
     }
 
-    if (character.direction.index > Direction.Right.index){
+    if (character.direction.index > Direction.Right.index) {
       _renderCharacterTemplateWeapon(character);
       _renderCharacterTemplate(character);
-    } else {
-      _renderCharacterTemplate(character);
-      _renderCharacterTemplateWeapon(character);
+      return;
+    }
+    _renderCharacterTemplate(character);
+    _renderCharacterTemplateWeapon(character);
+  }
+
+  void _renderZombie(Character character, int shade) {
+    final size = 64.0;
+    final x = mapZombieSrcX(character, shade);
+    final y = atlas.zombieY + (shade * size);
+    engine.state.mapSrc(x: x, y: y);
+    engine.state.mapDst(x: character.x, y: character.y, anchorX: 32, anchorY: 32);
+    engine.actions.renderAtlas();
+  }
+
+  double mapZombieSrcX(Character character, int shade){
+    final framesPerDirection = 7.0;
+
+    switch(character.state){
+      case CharacterState.Idle:
+        return character.direction.index * framesPerDirection;
+      case CharacterState.Striking:
+        // final animation = animations.zombie.striking;
+        // final animationFrame = min(character.frame, animation.length - 1);
+        // final frame = animation[animationFrame] - 1;
+        // return (direction * framesPerDirection * size) + (frame * size);
+        return animate(animation: animations.zombie.striking, character: character, framesPerDirection: 7);
+      case CharacterState.Running:
+        // final animation = animations.zombie.running;
+        // final animationFrame = character.frame % animation.length;
+        // final frame = animation[animationFrame] - 1;
+        // return (direction * framesPerDirection * size) + (frame * size);
+        return loop(animation: animations.zombie.running, character: character, framesPerDirection: 7);
+      default:
+        throw Exception("Render zombie invalid state ${character.state}");
     }
   }
 
+  double loop({
+    required List<int> animation,
+    required Character character,
+    required int framesPerDirection,
+    double size = 64.0
+  }){
+    final animationFrame = character.frame % animation.length;
+    final frame = animation[animationFrame] - 1;
+    return (character.direction.index * framesPerDirection * size) + (frame * size);
+  }
+
+  double animate({
+        required List<int> animation,
+        required Character character,
+        required int framesPerDirection,
+        double size = 64.0
+      }){
+    final animationFrame = min(character.frame, animation.length - 1);
+    final frame = animation[animationFrame] - 1;
+    return (character.direction.index * framesPerDirection * size) + (frame * size);
+  }
+
   void _renderCharacterStandard(Character character, int shade) {
-     mapCharacterDst(character, character.type);
-    mapCharacterSrc(
-      type: character.type,
-      state: character.state,
-      slotType: character.equippedWeapon,
-      direction: character.direction,
-      frame: character.frame,
-      shade: shade,
-    );
+      mapCharacterDst(character, character.type);
+      mapCharacterSrc(
+        type: character.type,
+        state: character.state,
+        slotType: character.equippedWeapon,
+        direction: character.direction,
+        frame: character.frame,
+        shade: shade,
+      );
     engine.actions.renderAtlas();
   }
 
@@ -425,9 +463,6 @@ class IsometricRender {
 
 
   void drawCharacterHealthBar(Character character){
-    // engine.state.mapSrc(x : atlas.shades.white1.x, y: atlas.shades.white1.y, width: 8, height: 2);
-    // engine.state.mapDst(x: character.x - _widthHalf, y: character.y - _marginBottom, scale: 10);
-    // engine.actions.renderAtlas();
     if (!onScreen(character.x, character.y)) return;
     engine.actions.setPaintColor(colours.redDarkest);
     engine.state.canvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom, _width, _height), engine.state.paint);
