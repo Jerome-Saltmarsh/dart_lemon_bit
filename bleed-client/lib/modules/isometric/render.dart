@@ -31,17 +31,16 @@ import 'package:lemon_math/diff_over.dart';
 import 'functions.dart';
 import 'state.dart';
 
-const _size = 64;
-const _sizeD = 64.0;
-const _sizeDHalf = 32.0;
-const _anchorX = _size * 0.5;
-const _anchorY = _size * 0.75;
-const _framesPerDirection = 9;
+const _size32 = 32.0;
+const _size48 = 48.0;
+const _size64 = 64.0;
+const _scaleZombie = 0.7;
 
+const _humanFramesPerDirection = 9.0;
 const _zombieFramesPerDirection = 7.0;
-
 const _indexIdle = 0;
 const _indexChanging = 1;
+
 
 enum SpriteLayer {
   Shadow,
@@ -272,10 +271,9 @@ class IsometricRender {
 
   void _renderZombie(Character character, int shade) {
     final x = mapZombieSrcX(character, shade);
-    final size = 64.0;
-    final y = atlas.zombieY + (shade * size);
+    final y = atlas.zombieY + (shade * _size64);
     engine.state.mapSrc(x: x, y: y);
-    engine.state.mapDst(x: character.x, y: character.y, anchorX: 32, anchorY: 45, scale: 0.7);
+    engine.state.mapDst(x: character.x, y: character.y, anchorX: _size32, anchorY: _size48, scale: _scaleZombie);
     engine.actions.renderAtlas();
   }
 
@@ -305,7 +303,7 @@ class IsometricRender {
     required List<int> animation,
     required Character character,
     required num framesPerDirection,
-    double size = 64.0
+    double size = _size64
   }){
     final animationFrame = character.frame % animation.length;
     final frame = animation[animationFrame] - 1;
@@ -363,13 +361,13 @@ class IsometricRender {
     engine.state.mapDst(
         x: character.x,
         y: character.y,
-        anchorX: _sizeDHalf,
-        anchorY: _anchorY,
+        anchorX: _size32,
+        anchorY: _size48,
         scale: scale
     );
     engine.state.mapSrc(
         x: getCharacterSrcX(character),
-        y: atlas.parts.y + ((layer.index) * _sizeD)
+        y: atlas.parts.y + ((layer.index) * _size64)
     );
     engine.actions.renderAtlas();
   }
@@ -409,28 +407,29 @@ class IsometricRender {
 
     switch(character.state){
       case CharacterState.Idle:
-        return ((direction * _framesPerDirection) + _indexIdle) * _sizeD;
+        return ((direction * _humanFramesPerDirection) + _indexIdle) * _size64;
 
       case CharacterState.Changing:
-        return ((direction * _framesPerDirection) + _indexChanging) * _sizeD;
+        return ((direction * _humanFramesPerDirection) + _indexChanging) * _size64;
 
       case CharacterState.Striking:
         final animation = character.equippedWeapon.isBow ? animations.firingBow : animations.strikingSword;
         final animationFrame = min(character.frame, animation.length - 1);
         final frame = animation[animationFrame] - 1;
-        return (direction * _framesPerDirection * _sizeD) + (frame * _sizeD);
+        return (direction * _humanFramesPerDirection * _size64) + (frame * _size64);
 
       case CharacterState.Performing:
         final animation = character.equippedWeapon.isBow ? animations.firingBow : animations.strikingSword;
         final animationFrame = min(character.frame, animation.length - 1);
         final frame = animation[animationFrame] - 1;
-        return (direction * _framesPerDirection * _sizeD) + (frame * _sizeD);
+        return (direction * _humanFramesPerDirection * _size64) + (frame * _size64);
 
       case CharacterState.Running:
-        final animation = animations.running;
-        final animationFrame = character.frame % animation.length;
-        final frame = animation[animationFrame] - 1;
-        return (direction * _framesPerDirection * _sizeD) + (frame * _sizeD);
+        // final animation = animations.running;
+        // final animationFrame = character.frame % animation.length;
+        // final frame = animation[animationFrame] - 1;
+        // return (direction * _humanFramesPerDirection * _size64) + (frame * _size64);
+        return loop(animation: animations.running, character: character, framesPerDirection: _humanFramesPerDirection);
 
       default:
         throw Exception("getCharacterSrcX cannot get body x for state ${character.state.name}");
@@ -493,8 +492,8 @@ class IsometricRender {
       scale: 0.7,
       x: character.x,
       y: character.y,
-      anchorX: _anchorX,
-      anchorY: _anchorY,
+      anchorX: _size32,
+      anchorY: _size48,
     );
   }
 }
