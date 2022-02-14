@@ -38,6 +38,8 @@ const _anchorX = _size * 0.5;
 const _anchorY = _size * 0.75;
 const _framesPerDirection = 9;
 
+const _zombieFramesPerDirection = 7.0;
+
 const _indexIdle = 0;
 const _indexChanging = 1;
 
@@ -280,11 +282,20 @@ class IsometricRender {
   double mapZombieSrcX(Character character, int shade){
     switch(character.state){
       case CharacterState.Idle:
-        return character.direction.index * 7.0;
+        return character.direction.index * _zombieFramesPerDirection;
       case CharacterState.Striking:
-        return animate(animation: animations.zombie.striking, character: character, framesPerDirection: 7);
+        return animate(
+            animation: animations.zombie.striking,
+            character: character,
+            framesPerDirection:
+            _zombieFramesPerDirection
+        );
       case CharacterState.Running:
-        return loop(animation: animations.zombie.running, character: character, framesPerDirection: 7);
+        return loop(
+            animation: animations.zombie.running,
+            character: character,
+            framesPerDirection: _zombieFramesPerDirection
+        );
       default:
         throw Exception("Render zombie invalid state ${character.state}");
     }
@@ -293,7 +304,7 @@ class IsometricRender {
   double loop({
     required List<int> animation,
     required Character character,
-    required int framesPerDirection,
+    required num framesPerDirection,
     double size = 64.0
   }){
     final animationFrame = character.frame % animation.length;
@@ -304,8 +315,8 @@ class IsometricRender {
   double animate({
         required List<int> animation,
         required Character character,
-        required int framesPerDirection,
-        double size = 64.0
+        required double framesPerDirection,
+        num size = 64.0
       }){
     final animationFrame = min(character.frame, animation.length - 1);
     final frame = animation[animationFrame] - 1;

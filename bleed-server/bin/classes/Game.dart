@@ -22,7 +22,6 @@ import '../common/PlayerEvent.dart';
 import '../common/SlotType.dart';
 import '../common/Tile.dart';
 import '../common/WeaponType.dart';
-import '../common/enums/Direction.dart';
 import '../common/enums/ObjectType.dart';
 import '../common/enums/ProjectileType.dart';
 import '../common/enums/Shade.dart';
