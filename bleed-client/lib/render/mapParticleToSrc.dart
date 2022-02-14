@@ -28,6 +28,8 @@ const pixelSize = 6.0;
 const _size32 = 64.0;
 const _size64 = 64.0;
 
+final _particles = atlas.particles;
+
 void mapParticleToSrc(Particle particle){
   final shade = isometric.properties.getShadeAtPosition(particle.x, particle.y);
 
@@ -44,48 +46,48 @@ void mapParticleToSrc(Particle particle){
 
     case ParticleType.Leg:
       final direction = convertAngleToDirectionInt(particle.rotation);
-      final x = atlas.particles.zombieLeg.x + (direction * _size64);
-      final y = atlas.particles.zombieLeg.y + shade * _size64;
+      final x = _particles.zombieLeg.x + (direction * _size64);
+      final y = _particles.zombieLeg.y + shade * _size64;
       engine.state.mapSrc(x: x, y: y, width: _size64, height: _size64);
       return;
 
     case ParticleType.Arm:
-      final direction = convertAngleToDirection(particle.rotation);
-      final x = atlas.particles.zombieArm.x + (direction.index * _size64);
-      final y = atlas.particles.zombieArm.y + shade * _size64;
+      final direction = convertAngleToDirectionInt(particle.rotation);
+      final x = _particles.zombieArm.x + (direction * _size64);
+      final y = _particles.zombieArm.y + shade * _size64;
       engine.state.mapSrc(x: x, y: y, width: _size64, height: _size64);
       return;
 
     case ParticleType.Organ:
-      final direction = convertAngleToDirection(particle.rotation);
-      final x = atlas.particles.zombieTorso.x + (direction.index * _size64);
-      final y = atlas.particles.zombieTorso.y + shade * _size64;
+      final direction = convertAngleToDirectionInt(particle.rotation);
+      final x = _particles.zombieTorso.x + (direction * _size64);
+      final y = _particles.zombieTorso.y + shade * _size64;
       engine.state.mapSrc(x: x, y: y, width: _size64, height: _size64);
       return;
 
     case ParticleType.Shell:
-      final direction = convertAngleToDirection(particle.rotation);
-      final x = atlas.particles.shell.x + (direction.index * _size32);
-      final y = atlas.particles.shell.y + shade * _size32;
+      final direction = convertAngleToDirectionInt(particle.rotation);
+      final x = _particles.shell.x + (direction * _size32);
+      final y = _particles.shell.y + shade * _size32;
       engine.state.mapSrc(x: x, y: y, width: _size32, height: _size32);
       return;
 
     case ParticleType.Blood:
-      final x = atlas.particles.blood.x;
-      final y = atlas.particles.blood.y + shade * _size32;
+      final x = _particles.blood.x;
+      final y = _particles.blood.y + shade * _size32;
       engine.state.mapSrc(x: x, y: y, width: _size32, height: _size32);
       return;
 
     case ParticleType.Human_Head:
-      final direction = convertAngleToDirection(particle.rotation);
-      final x = atlas.particles.shell.x + (direction.index * _size64);
+      final direction = convertAngleToDirectionInt(particle.rotation);
+      final x = atlas.particles.shell.x + (direction * _size64);
       final y = atlas.particles.shell.y + shade * _size64;
       engine.state.mapSrc(x: x, y: y, width: _size64, height: _size64);
       return;
 
     case ParticleType.Zombie_Head:
-      final direction = convertAngleToDirection(particle.rotation);
-      final x = atlas.particles.shell.x + (direction.index * _size64);
+      final direction = convertAngleToDirectionInt(particle.rotation);
+      final x = atlas.particles.shell.x + (direction * _size64);
       final y = atlas.particles.shell.y + shade * _size64;
       engine.state.mapSrc(x: x, y: y, width: _size64, height: _size64);
       return;
