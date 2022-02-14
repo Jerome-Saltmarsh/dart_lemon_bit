@@ -207,7 +207,7 @@ void parseState() {
         break;
 
       case ServerResponse.Game_Events:
-        _consumeEvents();
+        _consumeGameEvents();
         break;
 
       case ServerResponse.NpcMessage:
@@ -666,23 +666,24 @@ GameError _consumeError() {
   return GameError.values[consumeInt()];
 }
 
-void _consumeEvents() {
+void _consumeGameEvents() {
   int events = 0;
+  final gameEvents = game.gameEvents;
   while (!_simiColonConsumed()) {
     events++;
-    int id = consumeInt();
-    GameEventType type = _consumeEventType();
-    double x = consumeDouble();
-    double y = consumeDouble();
-    double xv = consumeDouble();
-    double yv = consumeDouble();
-    if (!game.gameEvents.containsKey(id)) {
-      game.gameEvents[id] = true;
-      modules.game.events.onGameEvent(type, x, y, xv, yv);
-    }
+    final id = consumeInt();
+    final type = _consumeEventType();
+    final x = consumeDouble();
+    final y = consumeDouble();
+    final xv = consumeDouble();
+    final yv = consumeDouble();
+    if (gameEvents.containsKey(id)) continue;
+    gameEvents[id] = true;
+    modules.game.events.onGameEvent(type, x, y, xv, yv);
   }
+
   if (events == 0) {
-    game.gameEvents.clear(); // free up memory
+    gameEvents.clear(); // free up memory
   }
 }
 

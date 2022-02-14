@@ -1,10 +1,24 @@
-import '../common/GameEventType.dart';
-import 'GameObject.dart';
+import 'package:lemon_math/Vector2.dart';
 
-class GameEvent extends GameObject {
+import '../common/GameEventType.dart';
+
+class GameEvent extends Vector2 {
+
+  static int idGen = 0;
+
+  int id = idGen++;
   GameEventType type;
   int frameDuration = 2;
+  double angle = 0;
 
-  GameEvent(this.type, double x, double y, double xv, double yv)
-      : super(x, y, xv: xv, yv: yv);
+  GameEvent({
+    required this.type,
+    required double x,
+    required double y,
+    double angle = 0}): super(x, y);
+
+  void assignNewId(){
+    idGen++;
+    id = idGen;
+  }
 }

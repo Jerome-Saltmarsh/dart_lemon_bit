@@ -4,7 +4,7 @@ enum GameEventType {
   Shotgun_Fired,
   SniperRifle_Fired,
   MachineGun_Fired,
-  Zombie_Hit,
+  Character_Struck,
   Zombie_Killed,
   Zombie_Target_Acquired,
   Bullet_Hole,

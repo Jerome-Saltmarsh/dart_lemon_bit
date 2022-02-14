@@ -184,7 +184,11 @@ abstract class Game {
         return gameEvent;
       }
     }
-    GameEvent empty = GameEvent(GameEventType.Credits_Acquired, 0, 0, 0, 0);
+    final empty = GameEvent(
+      type: GameEventType.Sword_Woosh,
+      x: 0,
+      y: 0,
+    );
     gameEvents.add(empty);
     return empty;
   }
@@ -638,7 +642,7 @@ extension GameFunctions on Game {
       if (character.weapon.type != WeaponType.Unarmed &&
           character.weapon.rounds <= 0) {
         character.stateDuration = settings.coolDown.clipEmpty;
-        dispatch(GameEventType.Clip_Empty, character.x, character.y, 0, 0);
+        dispatch(GameEventType.Clip_Empty, character.x, character.y);
         return;
       }
     }
@@ -653,7 +657,7 @@ extension GameFunctions on Game {
       case WeaponType.HandGun:
         Projectile bullet = spawnBullet(character);
         character.stateDuration = coolDown.handgun;
-        dispatch(GameEventType.Handgun_Fired, x, y, bullet.xv, bullet.yv);
+        dispatch(GameEventType.Handgun_Fired, x, y);
         break;
       case WeaponType.Shotgun:
         character.xv += velX(character.aimAngle + pi, 1);
@@ -663,17 +667,17 @@ extension GameFunctions on Game {
         }
         Projectile bullet = projectiles.last;
         character.stateDuration = coolDown.shotgun;
-        dispatch(GameEventType.Shotgun_Fired, x, y, bullet.xv, bullet.yv);
+        dispatch(GameEventType.Shotgun_Fired, x, y);
         break;
       case WeaponType.SniperRifle:
         Projectile bullet = spawnBullet(character);
         character.stateDuration = coolDown.sniperRifle;
-        dispatch(GameEventType.SniperRifle_Fired, x, y, bullet.xv, bullet.yv);
+        dispatch(GameEventType.SniperRifle_Fired, x, y);
         break;
       case WeaponType.AssaultRifle:
         Projectile bullet = spawnBullet(character);
         character.stateDuration = coolDown.assaultRifle;
-        dispatch(GameEventType.MachineGun_Fired, x, y, bullet.xv, bullet.yv);
+        dispatch(GameEventType.MachineGun_Fired, x, y);
         break;
       default:
         break;
@@ -784,7 +788,7 @@ extension GameFunctions on Game {
     if (scene.waterAt(projectile.x, projectile.y)) return;
     switch (projectile.type) {
       case ProjectileType.Bullet:
-        dispatch(GameEventType.Bullet_Hole, projectile.x, projectile.y, 0, 0);
+        dispatch(GameEventType.Bullet_Hole, projectile.x, projectile.y);
         break;
       case ProjectileType.Fireball:
         spawnExplosion(src: projectile.owner, x: projectile.x, y: projectile.y);
@@ -835,7 +839,7 @@ extension GameFunctions on Game {
   void spawnFreezeCircle({required double x, required double y}) {
     applyFreezeTo(x: x, y: y, characters: zombies);
     applyFreezeTo(x: x, y: y, characters: players);
-    dispatch(GameEventType.FreezeCircle, x, y, 0, 0);
+    dispatch(GameEventType.FreezeCircle, x, y);
   }
 
   void applyFreezeTo(
@@ -856,7 +860,7 @@ extension GameFunctions on Game {
 
   void spawnExplosion(
       {required Character src, required double x, required double y}) {
-    dispatch(GameEventType.Explosion, x, y, 0, 0);
+    dispatch(GameEventType.Explosion, x, y);
 
     for (Character zombie in zombies) {
       if (!withinDistance(zombie, x, y, settings.radius.explosion)) continue;
@@ -962,18 +966,24 @@ extension GameFunctions on Game {
     applyDamage(src, target, damage);
     final angleBetweenSrcAndTarget = radiansBetween2(src, target.x, target.y);
     final healthPercentage = damage / target.maxHealth;
-    applyForce(target, angleBetweenSrcAndTarget, healthPercentage);
+    applyForce(target, angleBetweenSrcAndTarget, healthPercentage * 1.5);
 
     dispatch(
-        GameEventType.Zombie_Hit,
+        GameEventType.Character_Struck,
         target.x,
         target.y,
-        velX(src.aimAngle, settings.knifeHitAcceleration * 2),
-        velY(src.aimAngle, settings.knifeHitAcceleration * 2));
+        src.aimAngle
+    );
 
     if (target.dead) {
-      dispatch(GameEventType.Zombie_Killed, target.x, target.y,
-          target.xv, target.yv);
+      if (target.type.isZombie){
+        dispatch(
+            GameEventType.Zombie_Killed,
+            target.x,
+            target.y,
+            src.aimAngle
+        );
+      }
     }
   }
 
@@ -1345,14 +1355,13 @@ extension GameFunctions on Game {
   }
 
   void dispatch(GameEventType type, double x, double y,
-      [double xv = 0, double yv = 0]) {
-    GameEvent gameEvent = _getAvailableGameEvent();
-    gameEvent.type = type;
-    gameEvent.x = x;
-    gameEvent.y = y;
-    gameEvent.xv = xv;
-    gameEvent.yv = yv;
-    gameEvent.frameDuration = 2;
+      [double angle = 0]) {
+    final event = _getAvailableGameEvent();
+    event.type = type;
+    event.x = x;
+    event.y = y;
+    event.angle = angle;
+    event.frameDuration = 2;
   }
 
   void updateZombieTargets() {
@@ -1611,9 +1620,7 @@ extension GameFunctions on Game {
           if (attackTarget != null){
             applyStrike(character, attackTarget, character.damage);
             character.attackTarget = null;
-            final speed = 0.2;
-            dispatch(GameEventType.Zombie_Strike, attackTarget.x, attackTarget.y,
-                velX(character.aimAngle, speed), velY(character.aimAngle, speed));
+            // dispatch(GameEventType.Zombie_Strike, attackTarget.x, attackTarget.y);
           }
         }
     }

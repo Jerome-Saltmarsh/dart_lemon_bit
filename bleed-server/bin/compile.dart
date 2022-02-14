@@ -352,8 +352,7 @@ void _compileGameEvents(StringBuffer buffer, List<GameEvent> gameEvents) {
     _write(buffer, gameEvent.type.index);
     _writeInt(buffer, gameEvent.x);
     _writeInt(buffer, gameEvent.y);
-    _write(buffer, gameEvent.xv.toStringAsFixed(1));
-    _write(buffer, gameEvent.yv.toStringAsFixed(1));
+    _write(buffer, gameEvent.angle.toStringAsFixed(1));
   }
   buffer.write(_semiColon);
 }

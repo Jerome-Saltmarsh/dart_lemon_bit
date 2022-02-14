@@ -12,6 +12,7 @@ extension CharacterTypeExtensions on CharacterType {
   bool get isTemplate => this == CharacterType.Template;
   bool get isSoldier => this == CharacterType.Soldier;
   bool get isHuman => this == CharacterType.Human;
+  bool get isZombie => this == CharacterType.Zombie;
 }
 
 const characterTypes = CharacterType.values;

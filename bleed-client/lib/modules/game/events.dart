@@ -201,13 +201,12 @@ class GameEvents {
         audio.assaultRifleShot(x, y);
         isometric.spawn.shell(x, y);
         break;
-      case GameEventType.Zombie_Hit:
-        if (randomBool()) {
-          audio.bloodyImpact(x, y);
-        }
-        double s = 0.1;
-        double r = 1;
+      case GameEventType.Character_Struck:
+        audio.bloodyImpact(x, y);
+        final s = 0.1;
+        final r = 1.5;
         for (int i = 0; i < randomInt(2, 5); i++) {
+
           isometric.spawn.blood(x, y, 0.3,
               xv: xv * s + giveOrTake(r),
               yv: yv * s + giveOrTake(r),
