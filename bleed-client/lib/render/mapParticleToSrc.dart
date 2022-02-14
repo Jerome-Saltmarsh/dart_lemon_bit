@@ -88,8 +88,8 @@ void mapParticleToSrc(Particle particle){
 
     case ParticleType.Zombie_Head:
       final direction = convertAngleToDirectionInt(particle.rotation);
-      final x = atlas.particles.shell.x + (direction * _size64);
-      final y = atlas.particles.shell.y + shade * _size64;
+      final x = atlas.particles.zombieHead.x + (direction * _size64);
+      final y = atlas.particles.zombieHead.y + shade * _size64;
       engine.mapSrc(x: x, y: y, width: _size64, height: _size64);
       return;
 

@@ -18,7 +18,6 @@ import 'package:lemon_engine/enums.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/randomBool.dart';
 import 'package:lemon_math/randomInt.dart';
-import 'package:lemon_math/random_between.dart';
 
 import 'state.dart';
 
@@ -224,13 +223,10 @@ class GameEvents {
         }
         break;
       case GameEventType.Zombie_Killed:
-        final s = 0.15;
-        final r = 1;
         final speed = 4.0;
         final xv = adjacent(angle, speed);
         final yv = opposite(angle, speed);
-        isometric.spawn.headZombie(x, y, 0.5,
-            xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
+        isometric.spawn.headZombie(x, y, 0.5, xv: xv, yv: yv);
         // isometric.spawn.arm(x, y, 0.3,
         //     xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
         // isometric.spawn.arm(x, y, 0.3,

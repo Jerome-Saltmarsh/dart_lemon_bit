@@ -23,7 +23,7 @@ class IsometricSpawn {
   IsometricSpawn(this.state);
 
   Particle getAvailableParticle() {
-    for (Particle particle in state.particles) {
+    for (final particle in state.particles) {
       if (particle.active) continue;
       return particle;
     }
@@ -243,7 +243,7 @@ class IsometricSpawn {
       yv: yv,
       zv: 0.06,
       weight: 0.15,
-      duration: 200,
+      duration: 300,
       rotation: 0,
       rotationV: 0.05,
       scale: 0.75,

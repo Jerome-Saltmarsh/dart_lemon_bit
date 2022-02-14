@@ -237,7 +237,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.abilityPoints);
   int experienceRequired = levelExperience[player.level];
   _write(buffer, experienceRequired);
-  double perc = player.experience / experienceRequired * 100;
+  final perc = player.experience / experienceRequired * 100;
   _writeInt(buffer, perc); // todo make sure player is not max level
 
   _write(buffer, player.type.index);
@@ -327,7 +327,7 @@ void _compilePlayerEvents(StringBuffer buffer, Player player) {
   if (player.events.isEmpty) return;
   _write(buffer, ServerResponse.Player_Events.index);
   _write(buffer, player.events.length);
-  for (PlayerEvent event in player.events) {
+  for (final event in player.events) {
     _write(buffer, event.index);
   }
   player.events.clear();
@@ -344,7 +344,7 @@ void compileScore(StringBuffer buffer, List<Player> players) {
 
 void _compileGameEvents(StringBuffer buffer, List<GameEvent> gameEvents) {
   _write(buffer, ServerResponse.Game_Events.index);
-  for (GameEvent gameEvent in gameEvents) {
+  for (final gameEvent in gameEvents) {
     if (gameEvent.frameDuration <= 0) continue;
     _write(buffer, gameEvent.id);
     _write(buffer, gameEvent.type.index);
