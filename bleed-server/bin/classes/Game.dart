@@ -915,9 +915,9 @@ extension GameFunctions on Game {
       if (withinAttackRadius(player, target)) {
         player.attackTarget = target;
         setCharacterStateStriking(player);
-        if (player.slots.weapon.isBow){
+        // if (player.slots.weapon.isBow){
           player.target = null;
-        }
+        // }
         return;
       }
     } else if (withinRadius(player, target, player.speed)){
