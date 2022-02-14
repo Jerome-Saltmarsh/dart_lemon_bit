@@ -88,19 +88,19 @@ class IsometricRender {
     for (int row = minRow; row < maxRow; row++){
       for(int column = minColumn; column < maxColumn; column++){
         final i = row * totalColumnsInt * 4 + (column * 4);
-        engineState.mapDstCheap(
+        engine.mapDstCheap(
           x: tilesDst[i + 2],
           y: tilesDst[i + 3],
         );
         final shade = dynamicShade[row][column];
         final top = atlasY + shade * tileSize; // top
         final left = tilesSrc[i];
-        engineState.mapSrc(x: left, y: top, width: tileSize, height: tileSize);
-        engine.actions.renderAtlas();
+        engine.mapSrc(x: left, y: top, width: tileSize, height: tileSize);
+        engine.renderAtlas();
       }
     }
 
-    engine.actions.flushRenderBuffer();
+    engine.flushRenderBuffer();
   }
 
   void sprites() {
@@ -210,7 +210,7 @@ class IsometricRender {
     if (shade >= Shade.Very_Dark) return;
     mapParticleToDst(value);
     mapParticleToSrc(value);
-    engine.actions.renderAtlas();
+    engine.renderAtlas();
   }
 
   void renderItem(Item item) {
@@ -222,8 +222,8 @@ class IsometricRender {
         direction: Direction.Down.index,
         frame: core.state.timeline.frame,
         framesPerDirection: 8);
-    engine.state.mapDst(x: item.x - _anchor, y: item.y - _anchor,);
-    engine.actions.renderAtlas();
+    engine.mapDst(x: item.x - _anchor, y: item.y - _anchor,);
+    engine.renderAtlas();
   }
 
   void environmentObject(EnvironmentObject value) {
@@ -232,13 +232,13 @@ class IsometricRender {
     if (shade == Shade.Pitch_Black) return;
 
     mapEnvironmentObjectToSrc(value);
-      engine.state.mapDst(
+      engine.mapDst(
           x: value.x,
           y: value.y,
           anchorX: value.anchorX,
           anchorY: value.anchorY
       );
-      engine.actions.renderAtlas();
+      engine.renderAtlas();
   }
 
 
@@ -270,9 +270,9 @@ class IsometricRender {
   void _renderZombie(Character character, int shade) {
     final x = mapZombieSrcX(character, shade);
     final y = atlas.zombieY + (shade * _size64);
-    engine.state.mapSrc(x: x, y: y);
-    engine.state.mapDst(x: character.x, y: character.y, anchorX: _size32, anchorY: _size48, scale: _scaleZombie);
-    engine.actions.renderAtlas();
+    engine.mapSrc(x: x, y: y);
+    engine.mapDst(x: character.x, y: character.y, anchorX: _size32, anchorY: _size48, scale: _scaleZombie);
+    engine.renderAtlas();
   }
 
   double mapZombieSrcX(Character character, int shade){
@@ -343,7 +343,7 @@ class IsometricRender {
         frame: character.frame,
         shade: shade,
       );
-    engine.actions.renderAtlas();
+    engine.renderAtlas();
   }
 
   void _renderCharacterTemplate(Character character) {
@@ -370,18 +370,18 @@ class IsometricRender {
   }
 
   void _renderCharacterPart(Character character, SpriteLayer layer, {double scale = 0.7}) {
-    engine.state.mapDst(
+    engine.mapDst(
         x: character.x,
         y: character.y,
         anchorX: _size32,
         anchorY: _size48,
         scale: scale
     );
-    engine.state.mapSrc(
+    engine.mapSrc(
         x: getCharacterSrcX(character),
         y: atlas.parts.y + ((layer.index) * _size64)
     );
-    engine.actions.renderAtlas();
+    engine.renderAtlas();
   }
 
   SpriteLayer getSpriteIndexHead(Character character){
@@ -508,7 +508,7 @@ class IsometricRender {
       Character character,
       CharacterType type,
       ) {
-    return engine.state.mapDst(
+    return engine.mapDst(
       scale: 0.7,
       x: character.x,
       y: character.y,

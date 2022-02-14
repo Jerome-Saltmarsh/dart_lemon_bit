@@ -43,11 +43,11 @@ class EditorRender with EditorScope {
 
     srcTile(state.tile.value);
     dstTile(state.tile.value, mouseWorldX, mouseWorldY);
-    engine.actions.renderAtlas();
+    engine.renderAtlas();
   }
 
   void srcTile(Tile tile, {int shade = Shade.Bright}){
-    engine.state.mapSrc(
+    engine.mapSrc(
         x: atlas.tiles.x + mapTileToSrcLeft(tile),
         y: atlas.tiles.y + (isometric.constants.tileSize * shade)
     );
@@ -58,7 +58,7 @@ class EditorRender with EditorScope {
     int column = getColumn(x, y);
     double x2 = getTileWorldX(row, column);
     double y2 = getTileWorldY(row, column);
-    engine.state.mapDst(x: x2, y: y2);
+    engine.mapDst(x: x2, y: y2);
   }
 
   void _characters() {

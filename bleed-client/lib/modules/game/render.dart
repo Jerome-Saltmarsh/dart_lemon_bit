@@ -196,7 +196,7 @@ class GameRender {
   }
 
   void mapDstProjectile(Projectile projectile){
-    engine.state.mapDst(x: projectile.x, y: projectile.y, scale: 0.25, anchorX: 16, anchorY: 16);
+    engine.mapDst(x: projectile.x, y: projectile.y, scale: 0.25, anchorX: 16, anchorY: 16);
   }
 
   void projectile(Projectile value) {
@@ -237,13 +237,12 @@ class GameRender {
   }
 
   void arrow(double x, double y, double angle) {
-    final engineState = engine.state;
-    engineState.mapSrc(x: atlas.projectiles.arrow.x, y: atlas.projectiles.arrow.y, width: 13, height: 47);
-    engineState.mapDst(x: x, y: y - 20, rotation: angle, anchorX: 6.5, anchorY: 30, scale: 0.5);
-    engine.actions.renderAtlas();
-    engineState.mapSrc(x: atlas.projectiles.arrowShadow.x, y: atlas.projectiles.arrowShadow.y, width: 13, height: 47);
-    engineState.mapDst(x: x, y: y, rotation: angle, anchorX: 6.5, anchorY: 30, scale: 0.5);
-    engine.actions.renderAtlas();
+    engine.mapSrc(x: atlas.projectiles.arrow.x, y: atlas.projectiles.arrow.y, width: 13, height: 47);
+    engine.mapDst(x: x, y: y - 20, rotation: angle, anchorX: 6.5, anchorY: 30, scale: 0.5);
+    engine.renderAtlas();
+    engine.mapSrc(x: atlas.projectiles.arrowShadow.x, y: atlas.projectiles.arrowShadow.y, width: 13, height: 47);
+    engine.mapDst(x: x, y: y, rotation: angle, anchorX: 6.5, anchorY: 30, scale: 0.5);
+    engine.renderAtlas();
   }
 
   void drawItems() {

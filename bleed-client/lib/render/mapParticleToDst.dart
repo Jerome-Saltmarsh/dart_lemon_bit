@@ -27,7 +27,7 @@ void mapParticleToDst(Particle particle){
   final renderScale = (1 + (particle.z * zToHeightRatio)) * particle.scale;
   final sizeHalf = size * 0.5;
 
-  return engine.state.mapDst(
+  return engine.mapDst(
     scale: renderScale,
     rotation: 0,
     x: particle.x - sizeHalf,

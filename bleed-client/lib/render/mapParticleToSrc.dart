@@ -37,78 +37,78 @@ void mapParticleToSrc(Particle particle){
     case ParticleType.Pixel:
       final x = atlas.shades.x + (particle.hue * 8);
       final y = atlas.shades.y + (3 * 8);
-      engine.state.mapSrc(x: x, y: y, width: pixelSize, height: pixelSize);
+      engine.mapSrc(x: x, y: y, width: pixelSize, height: pixelSize);
       return;
 
     case ParticleType.Smoke:
-      engine.state.mapSrc(x: atlas.circle.x, y: atlas.circle.y);
+      engine.mapSrc(x: atlas.circle.x, y: atlas.circle.y);
       return;
 
     case ParticleType.Leg:
       final direction = convertAngleToDirectionInt(particle.rotation);
       final x = _particles.zombieLeg.x + (direction * _size64);
       final y = _particles.zombieLeg.y + shade * _size64;
-      engine.state.mapSrc(x: x, y: y, width: _size64, height: _size64);
+      engine.mapSrc(x: x, y: y, width: _size64, height: _size64);
       return;
 
     case ParticleType.Arm:
       final direction = convertAngleToDirectionInt(particle.rotation);
       final x = _particles.zombieArm.x + (direction * _size64);
       final y = _particles.zombieArm.y + shade * _size64;
-      engine.state.mapSrc(x: x, y: y, width: _size64, height: _size64);
+      engine.mapSrc(x: x, y: y, width: _size64, height: _size64);
       return;
 
     case ParticleType.Organ:
       final direction = convertAngleToDirectionInt(particle.rotation);
       final x = _particles.zombieTorso.x + (direction * _size64);
       final y = _particles.zombieTorso.y + shade * _size64;
-      engine.state.mapSrc(x: x, y: y, width: _size64, height: _size64);
+      engine.mapSrc(x: x, y: y, width: _size64, height: _size64);
       return;
 
     case ParticleType.Shell:
       final direction = convertAngleToDirectionInt(particle.rotation);
       final x = _particles.shell.x + (direction * _size32);
       final y = _particles.shell.y + shade * _size32;
-      engine.state.mapSrc(x: x, y: y, width: _size32, height: _size32);
+      engine.mapSrc(x: x, y: y, width: _size32, height: _size32);
       return;
 
     case ParticleType.Blood:
       final x = atlas.blood.x;
       final y = atlas.blood.y - (shade * 8);
-      engine.state.mapSrc(x: x, y: y, width: 8, height: 8);
+      engine.mapSrc(x: x, y: y, width: 8, height: 8);
       return;
 
     case ParticleType.Human_Head:
       final direction = convertAngleToDirectionInt(particle.rotation);
       final x = atlas.particles.shell.x + (direction * _size64);
       final y = atlas.particles.shell.y + shade * _size64;
-      engine.state.mapSrc(x: x, y: y, width: _size64, height: _size64);
+      engine.mapSrc(x: x, y: y, width: _size64, height: _size64);
       return;
 
     case ParticleType.Zombie_Head:
       final direction = convertAngleToDirectionInt(particle.rotation);
       final x = atlas.particles.shell.x + (direction * _size64);
       final y = atlas.particles.shell.y + shade * _size64;
-      engine.state.mapSrc(x: x, y: y, width: _size64, height: _size64);
+      engine.mapSrc(x: x, y: y, width: _size64, height: _size64);
       return;
 
     case ParticleType.Myst:
       final index = _mapMystDurationToIndex(particle.duration);
       final x = atlas.myst.x;
       final y = atlas.myst.y + (index * _particleSize);
-      engine.state.mapSrc(x: x, y: y, width: _size64, height: _size64);
+      engine.mapSrc(x: x, y: y, width: _size64, height: _size64);
       break;
 
     case ParticleType.FireYellow:
       final x = atlas.particles.flame.x;
       final y = atlas.particles.flame.y + ((core.state.timeline.frame % 4) * 24);
-      engine.state.mapSrc(x: x, y: y, width: 25, height: 24);
+      engine.mapSrc(x: x, y: y, width: 25, height: 24);
       return;
 
     case ParticleType.Shrapnel:
       final x = atlas.particles.circleBlackSmall.x;
       final y = atlas.particles.circleBlackSmall.y;
-      engine.state.mapSrc(x: x, y: y, width: 7, height: 7);
+      engine.mapSrc(x: x, y: y, width: 7, height: 7);
       return;
 
     default:
