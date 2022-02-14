@@ -213,7 +213,7 @@ class GameEvents {
           isometric.spawn.blood(x, y, 0.3,
               xv: adjacent(rotation, vel),
               yv: opposite(rotation, vel),
-              zv: 0.05,
+              zv: 0.07,
           );
         }
         break;
