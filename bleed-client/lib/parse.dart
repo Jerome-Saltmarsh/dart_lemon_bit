@@ -675,11 +675,10 @@ void _consumeGameEvents() {
     final type = _consumeEventType();
     final x = consumeDouble();
     final y = consumeDouble();
-    final xv = consumeDouble();
-    final yv = consumeDouble();
+    final angle = consumeDouble();
     if (gameEvents.containsKey(id)) continue;
     gameEvents[id] = true;
-    modules.game.events.onGameEvent(type, x, y, xv, yv);
+    modules.game.events.onGameEvent(type, x, y, angle);
   }
 
   if (events == 0) {

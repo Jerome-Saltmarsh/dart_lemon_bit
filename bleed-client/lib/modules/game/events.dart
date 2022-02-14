@@ -1,4 +1,6 @@
 import 'package:bleed_client/audio.dart';
+import 'package:lemon_math/adjacent.dart';
+import 'package:lemon_math/opposite.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameError.dart';
@@ -182,7 +184,7 @@ class GameEvents {
     }
   }
 
-  void onGameEvent(GameEventType type, double x, double y, double xv, double yv) {
+  void onGameEvent(GameEventType type, double x, double y, double angle) {
     switch (type) {
       case GameEventType.Handgun_Fired:
         audio.playAudioHandgunShot(x, y);
@@ -191,7 +193,7 @@ class GameEvents {
       case GameEventType.Shotgun_Fired:
         audio.shotgunShot(x, y);
         isometric.spawn.shell(x, y);
-        isometric.spawn.shotSmoke(x, y, xv, yv);
+        // isometric.spawn.shotSmoke(x, y, xv, yv);
         break;
       case GameEventType.SniperRifle_Fired:
         audio.sniperShot(x, y);
@@ -203,38 +205,27 @@ class GameEvents {
         break;
       case GameEventType.Character_Struck:
         audio.bloodyImpact(x, y);
-        final s = 0.1;
-        final r = 1.5;
-        for (int i = 0; i < randomInt(2, 5); i++) {
-
+        final speed = 5.0;
+        for (int i = 0; i < randomInt(3, 6); i++) {
           isometric.spawn.blood(x, y, 0.3,
-              xv: xv * s + giveOrTake(r),
-              yv: yv * s + giveOrTake(r),
-              zv: randomBetween(0, 0.07));
+              xv: adjacent(angle, speed),
+              yv: opposite(angle, speed),
+              zv: 0.05,
+              // zv: randomBetween(0, 0.07)
+          );
         }
         break;
       case GameEventType.Player_Hit:
         if (randomBool()) {
           audio.humanHurt(x, y);
         }
-        double s = 0.1;
-        double r = 1;
-        for (int i = 0; i < randomInt(2, 5); i++) {
-          isometric.spawn.blood(x, y, 0.3,
-              xv: xv * s + giveOrTake(r),
-              yv: yv * s + giveOrTake(r),
-              zv: randomBetween(0, 0.07));
-        }
         break;
       case GameEventType.Zombie_Killed:
         final s = 0.15;
         final r = 1;
-        // for (int i = 0; i < randomInt(2, 5); i++) {
-        //   isometric.spawn.blood(x, y, 0.3,
-        //       xv: xv * s + giveOrTake(r),
-        //       yv: yv * s + giveOrTake(r),
-        //       zv: randomBetween(0, 0.07));
-        // }
+        final speed = 4.0;
+        final xv = adjacent(angle, speed);
+        final yv = opposite(angle, speed);
         isometric.spawn.headZombie(x, y, 0.5,
             xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
         isometric.spawn.arm(x, y, 0.3,
@@ -247,25 +238,25 @@ class GameEvents {
             xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
         isometric.spawn.organ(x, y, 0.3,
             xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
-        audio.playAudioZombieDeath(x, y);
+        audio.zombieDeath(x, y);
         break;
 
       case GameEventType.Zombie_Target_Acquired:
-        audio.playAudioZombieTargetAcquired(x, y);
+        audio.zombieTargetAcquired(x, y);
         break;
       case GameEventType.Bullet_Hole:
         actions.spawnBulletHole(x.toDouble(), y.toDouble());
         break;
       case GameEventType.Zombie_Strike:
         audio.zombieBite(x, y);
-        double r = 1;
-        double s = 0.15;
-        for (int i = 0; i < randomInt(2, 4); i++) {
-          isometric.spawn.blood(x, y, 0.3,
-              xv: xv * s + giveOrTake(r),
-              yv: yv * s + giveOrTake(r),
-              zv: randomBetween(0, 0.07));
-        }
+        // double r = 1;
+        // double s = 0.15;
+        // for (int i = 0; i < randomInt(2, 4); i++) {
+        //   isometric.spawn.blood(x, y, 0.3,
+        //       xv: xv * s + giveOrTake(r),
+        //       yv: yv * s + giveOrTake(r),
+        //       zv: randomBetween(0, 0.07));
+        // }
         break;
       case GameEventType.Player_Death:
       // playAudioPlayerDeath(x, y);

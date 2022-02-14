@@ -98,11 +98,11 @@ class _Audio {
     _playRandom(_zombieBite, x, y);
   }
 
-  void playAudioZombieTargetAcquired(double x, double y) {
+  void zombieTargetAcquired(double x, double y) {
     _playRandom(_zombieTalking, x, y);
   }
 
-  void playAudioZombieDeath(double x, double y) {
+  void zombieDeath(double x, double y) {
     _playRandom(_zombieDeath, x, y);
   }
 

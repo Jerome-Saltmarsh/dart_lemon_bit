@@ -96,10 +96,10 @@ class IsometricSpawn {
         yv: yv,
         zv: zv,
         weight: 0.1,
-        duration: randomInt(90, 170),
+        duration: 200,
         rotation: 0,
         rotationV: 0,
-        scale: 0.4,
+        scale: 0.8,
         scaleV: 0,
         bounciness: 0);
   }
