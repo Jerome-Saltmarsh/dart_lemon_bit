@@ -228,16 +228,16 @@ class GameEvents {
         final yv = opposite(angle, speed);
         isometric.spawn.headZombie(x, y, 0.5,
             xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
-        isometric.spawn.arm(x, y, 0.3,
-            xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
-        isometric.spawn.arm(x, y, 0.3,
-            xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
-        isometric.spawn.legZombie(x, y, 0.2,
-            xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
-        isometric.spawn.legZombie(x, y, 0.2,
-            xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
-        isometric.spawn.organ(x, y, 0.3,
-            xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
+        // isometric.spawn.arm(x, y, 0.3,
+        //     xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
+        // isometric.spawn.arm(x, y, 0.3,
+        //     xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
+        // isometric.spawn.legZombie(x, y, 0.2,
+        //     xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
+        // isometric.spawn.legZombie(x, y, 0.2,
+        //     xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
+        // isometric.spawn.organ(x, y, 0.3,
+        //     xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
         audio.zombieDeath(x, y);
         break;
 

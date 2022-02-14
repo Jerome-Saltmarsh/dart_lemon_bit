@@ -1,7 +1,7 @@
 import 'package:bleed_client/modules/isometric/enums.dart';
 
 class Particle {
-  bool active = false;
+  bool active = true;
   double x = 0;
   double y = 0;
   double z = 0;
