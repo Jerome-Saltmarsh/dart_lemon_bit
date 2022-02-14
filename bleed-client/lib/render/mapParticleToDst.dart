@@ -13,7 +13,7 @@ const one = 1;
 
 final Map<ParticleType, double> _particleTypeSize = {
   ParticleType.Zombie_Head: _32,
-  ParticleType.Blood: _32,
+  ParticleType.Blood: 8.0,
   ParticleType.Human_Head: _32,
   ParticleType.Myst: _64,
   ParticleType.Smoke: _32,
@@ -37,6 +37,6 @@ void mapParticleToDst(Particle particle){
     x: particle.x,
     y: particle.y,
     anchorX: sizeHalf,
-    anchorY: sizeHalf - (particle.z * zToHeightRatio)
+    anchorY: sizeHalf + (particle.z * zToHeightRatio)
   );
 }

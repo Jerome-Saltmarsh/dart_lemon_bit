@@ -8,6 +8,7 @@ const _shadesY = 1.0;
 const _pixelSize = 8.0;
 
 class _Atlas {
+  final shadow = Vector2(1, 34);
   final blood = Vector2(89, 25);
   final star = Vector2(560, 515);
   final starSize = Vector2(128, 128);
@@ -27,82 +28,8 @@ class _Atlas {
   final cloud = Vector2(2,  4044);
   final cloudSize = Vector2(43, 29);
   final fish = _Fish();
-  final plain = _Plain();
   final items = _Items();
-  final weapons = _Weapons();
-  final blueTorso = _BlueTorso();
-  final shadow = _Shadow();
-  final headSteel = _HeadSteel();
   final parts = Vector2(0, 5385);
-}
-
-class _HeadSteel {
-  final idle = Vector2(0, 5125);
-  final running = Vector2(0, 5190);
-  final striking = Vector2(0, 5255);
-  final changing = Vector2(0, 5320);
-}
-
-class _Plain {
-  final torso = _PlainTorso();
-  final legs = _PlainLegs();
-  final head = _PlainHead();
-}
-
-class _PlainLegs {
-  final Vector2 idle = Vector2(0,  4345);
-  final Vector2 running = Vector2(0,  4410);
-}
-
-class _Shadow {
-  final Vector2 idle = Vector2(0,  4930);
-  final Vector2 running = Vector2(0,  4995  );
-  final Vector2 striking = Vector2(0,  5061);
-  final Vector2 changing = Vector2(0,  4930);
-}
-
-class _PlainTorso {
-  final Vector2 idle = Vector2(0,  4085);
-  final Vector2 running = Vector2(0,  4150 );
-  final Vector2 striking = Vector2(0,  4215);
-  final Vector2 changing = Vector2(0,  4280);
-}
-
-class _BlueTorso {
-  final Vector2 idle = Vector2(0,  4670);
-  final Vector2 running = Vector2(0,  4735 );
-  final Vector2 striking = Vector2(0,  4800);
-  final Vector2 changing = Vector2(0,  4865);
-}
-
-class _PlainHead {
-  final Vector2 idle = Vector2(0,  4475);
-  final Vector2 running  = Vector2(0,  4540);
-  final Vector2 striking  = Vector2(0,  4605);
-}
-
-class _Weapons {
-  final _SwordSteel swordSteel = _SwordSteel();
-  final _SwordWooden swordWooden = _SwordWooden();
-  final _BowWooden bowWooden = _BowWooden();
-}
-
-class _SwordSteel {
-  final Vector2 idle = Vector2(2,  883);
-  final Vector2 striking = Vector2(515,  883);
-  final Vector2 running = Vector2(2,  1013);
-}
-
-class _BowWooden {
-  final Vector2 idle = Vector2(2, 1143);
-  final Vector2 firing = Vector2(2, 1208);
-  final Vector2 running = Vector2(2, 1273 );
-}
-
-class _SwordWooden {
-  final Vector2 idle = Vector2(2, 948);
-  final Vector2 striking = Vector2(515, 948);
-  final Vector2 running = Vector2(1, 1078);
 }
 
 class _Items {
@@ -146,7 +73,7 @@ class _Shotgun {
   final Vector2 firing = Vector2(2,  753);
 }
 
-class  _Witch {
+class _Witch {
   final Vector2 idle = Vector2(2,  3459);
   final Vector2 running = Vector2(2,  3524);
   final Vector2 striking = Vector2(2,  3589);
@@ -158,7 +85,7 @@ class  _Archer {
   final Vector2 firing = Vector2(2,  3784);
 }
 
-class  _Knight {
+class _Knight {
   final Vector2 idle = Vector2(2,  3849);
   final Vector2 running = Vector2(2,  3914);
   final Vector2 striking = Vector2(2,  3979);

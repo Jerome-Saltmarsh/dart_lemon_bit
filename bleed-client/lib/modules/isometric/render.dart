@@ -215,7 +215,7 @@ class IsometricRender {
     engine.renderAtlas();
 
     if (value.type == ParticleType.Blood) {
-      mapShadeBlack();
+      mapShadeShadow();
       engine.mapDst(
           x: value.x,
           y: value.y,
@@ -226,8 +226,8 @@ class IsometricRender {
     }
   }
 
-  void mapShadeBlack(){
-    engine.mapSrc(x: atlas.shades.x, y: atlas.shades.y, width: _size8, height: _size8);
+  void mapShadeShadow(){
+    engine.mapSrc(x: atlas.shadow.x, y: atlas.shadow.y, width: _size8, height: _size8);
   }
 
   void renderItem(Item item) {
