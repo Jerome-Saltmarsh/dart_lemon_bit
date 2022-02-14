@@ -182,19 +182,19 @@ class _Build {
           crossAxisAlignment: axis.cross.start,
           children: [
             button("PressStart2P", (){
-              engine.state.themeData.value = themes.pressStart2P;
+              engine.themeData.value = themes.pressStart2P;
             }, width: _width, borderRadius: borderRadius0, fillColorMouseOver: colours.green),
             button("Gugi", (){
-              engine.state.themeData.value = themes.gugi;
+              engine.themeData.value = themes.gugi;
             }, width: _width, borderRadius: borderRadius0, fillColorMouseOver: colours.green),
             button("GermanioOne", (){
-              engine.state.themeData.value = themes.germaniaOne;
+              engine.themeData.value = themes.germaniaOne;
             }, width: _width, borderRadius: borderRadius0, fillColorMouseOver: colours.green),
             button("Slackey", (){
-              engine.state.themeData.value = themes.slackey;
+              engine.themeData.value = themes.slackey;
             }, width: _width, borderRadius: borderRadius0, fillColorMouseOver: colours.green),
             button("Standard", (){
-              engine.state.themeData.value = null;
+              engine.themeData.value = null;
             }, width: _width, borderRadius: borderRadius0, fillColorMouseOver: colours.green),
             theme
           ],

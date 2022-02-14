@@ -119,9 +119,9 @@ void parseState() {
 
         if (modules.game.state.player.attackTarget.x != 0 &&
             modules.game.state.player.attackTarget.y != 0) {
-          engine.state.cursorType.value = CursorType.Click;
+          engine.cursorType.value = CursorType.Click;
         } else {
-          engine.state.cursorType.value = CursorType.Basic;
+          engine.cursorType.value = CursorType.Basic;
         }
         break;
 
@@ -187,10 +187,10 @@ void parseState() {
         double y = consumeDouble();
         modules.game.state.player.x = x;
         modules.game.state.player.y = y;
-        engine.actions.cameraCenter(x, y);
+        engine.cameraCenter(x, y);
 
         Future.delayed(Duration(milliseconds: 150), () {
-          engine.actions.cameraCenter(x, y);
+          engine.cameraCenter(x, y);
         });
         for (Particle particle in isometric.state.particles) {
           particle.active = false;

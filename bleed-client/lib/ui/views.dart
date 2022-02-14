@@ -114,7 +114,7 @@ Widget buildViewConnectionNone() {
       expand: true,
       topLeft: widgets.title,
       top:  Container(
-          width: engine.state.screen.width,
+          width: engine.screen.width,
           margin: EdgeInsets.only(top: 20),
           child: Row(
               mainAxisAlignment: axis.main.center,
@@ -296,7 +296,7 @@ Widget? buildMenuDebug() {
             if (hovering) ...[
               widgets.theme,
               button("Font Jetbrains", (){
-                engine.state.themeData.value = themes.jetbrains;
+                engine.themeData.value = themes.jetbrains;
               }, width: 200, borderRadius: borderRadius0, fillColorMouseOver: colours.green),
               buttons.showDialogSubscribed,
               buttons.loginTestUser01,

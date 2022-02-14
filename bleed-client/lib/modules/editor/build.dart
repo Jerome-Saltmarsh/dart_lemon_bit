@@ -89,8 +89,8 @@ class EditorBuild {
               (Vector2? selected) {
             return button(enumString(env.type), () {
               editor.state.selected.value = env;
-              engine.actions.cameraCenter(env.x, env.y);
-              engine.actions.redrawCanvas();
+              engine.cameraCenter(env.x, env.y);
+              engine.redrawCanvas();
             }, fillColor: env == selected ? _highlight : colours.transparent,
               width: style.buttonWidth,
             );
@@ -310,7 +310,7 @@ class EditorBuild {
             _buildTabs(tab),
             height8,
             Container(
-              height: engine.state.screen.height - 100,
+              height: engine.screen.height - 100,
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: axis.cross.start,

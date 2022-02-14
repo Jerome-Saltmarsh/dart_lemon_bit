@@ -286,9 +286,9 @@ Widget buildToggleFullscreen() {
   return onPressed(
     callback: () {
       if (fullScreenActive) {
-        engine.actions.fullScreenExit();
+        engine.fullScreenExit();
       } else {
-        engine.actions.fullScreenEnter();
+        engine.fullScreenEnter();
       }
     },
     hint: "F11",

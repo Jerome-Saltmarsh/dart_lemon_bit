@@ -270,8 +270,8 @@ class GameBuild {
             ],
           )
         ),
-        right: (engine.state.screen.width - engine.state.mousePosition.x) + 50,
-        top: engine.state.mousePosition.y,
+        right: (engine.screen.width - engine.mousePosition.x) + 50,
+        top: engine.mousePosition.y,
       );
     });
   }
@@ -532,15 +532,15 @@ class GameBuild {
   Widget _buildViewRespawn() {
     print("buildViewRespawn()");
     return Container(
-      width: engine.state.screen.width,
-      height: engine.state.screen.height,
+      width: engine.screen.width,
+      height: engine.screen.height,
       child: Row(
         mainAxisAlignment: axis.main.center,
         crossAxisAlignment: axis.cross.center,
         children: [
           Container(
               padding: padding16,
-              width: max(engine.state.screen.width * goldenRatio_0381, 480),
+              width: max(engine.screen.width * goldenRatio_0381, 480),
               decoration: BoxDecoration(
                   borderRadius: borderRadius4, color: Colors.black38),
               child: SingleChildScrollView(
@@ -673,7 +673,7 @@ class GameBuild {
 
       return Positioned(
           child: Container(
-            width: engine.state.screen.width,
+            width: engine.screen.width,
             alignment: Alignment.center,
             child: Container(
               width: 300,
@@ -696,7 +696,7 @@ class GameBuild {
     return Positioned(
         top: 30,
         child: Container(
-            width: engine.state.screen.width,
+            width: engine.screen.width,
             child: Column(
               crossAxisAlignment: axis.cross.center,
               children: [

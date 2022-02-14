@@ -1,13 +1,9 @@
-import "dart:html" as html;
-import 'dart:math';
 import 'dart:ui';
 
-import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:clipboard/clipboard.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/angle_between.dart';
-import 'package:lemon_math/pi2.dart';
 import 'package:universal_html/html.dart';
 
 import 'common/Tile.dart';
@@ -20,7 +16,7 @@ double getMouseRotation() {
 bool get playerAssigned => modules.game.state.player.id >= 0;
 
 void drawLine(double x1, double y1, double x2, double y2) {
-  engine.state.canvas.drawLine(offset(x1, y1), offset(x2, y2), engine.state.paint);
+  engine.canvas.drawLine(offset(x1, y1), offset(x2, y2), engine.paint);
 }
 
 Offset offset(double x, double y) {
@@ -72,7 +68,7 @@ void copy(String value){
 }
 
 void openLink(String value, {bool newTab = true}){
-  html.window.open(value, 'new tab');
+  // html.window.open(value, 'new tab');
 }
 
 void refreshPage(){

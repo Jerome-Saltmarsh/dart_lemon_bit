@@ -137,7 +137,7 @@ Widget characterStatistics() {
   return Positioned(
       bottom: _padding,
       child: Container(
-        width: engine.state.screen.width,
+        width: engine.screen.width,
         child: Row(
           mainAxisAlignment: axis.main.center,
           crossAxisAlignment: axis.cross.end,
@@ -218,10 +218,10 @@ Widget buildUI3DCube() {
       }),
       Refresh(() {
         return text(
-            'camera.position: { x: ${engine.state.camera.x.toInt()}, y: ${engine.state.camera.y.toInt()}}');
+            'camera.position: { x: ${engine.camera.x.toInt()}, y: ${engine.camera.y.toInt()}}');
       }),
       Refresh(() {
-        return text('camera.zoom: ${engine.state.zoom}');
+        return text('camera.zoom: ${engine.zoom}');
       }),
     ],
   );
@@ -580,7 +580,7 @@ Widget buildLowAmmo() {
   return Positioned(
       bottom: 80,
       child: Container(
-        width: engine.state.screen.width,
+        width: engine.screen.width,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -609,7 +609,7 @@ Widget buildMessageBox(String message) {
   return Positioned(
       bottom: 120,
       child: Container(
-        width: engine.state.screen.width,
+        width: engine.screen.width,
         child: Row(
           mainAxisAlignment: axis.main.center,
           children: [

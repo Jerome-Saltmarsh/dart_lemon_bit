@@ -63,7 +63,7 @@ class GameUpdate {
   }
 
   void cameraFollowPlayer() {
-    engine.actions.cameraFollow(modules.game.state.player.x, modules.game.state.player.y, engine.state.cameraFollowSpeed);
+    engine.cameraFollow(modules.game.state.player.x, modules.game.state.player.y, engine.cameraFollowSpeed);
   }
 
   void readPlayerInput() {

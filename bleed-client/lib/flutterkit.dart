@@ -301,7 +301,7 @@ Widget bottomCenter({required Widget child, double padding = 0}){
   return Positioned(
       bottom: padding,
       child: Container(
-        width: engine.state.screen.width,
+        width: engine.screen.width,
         child: Row(
           mainAxisAlignment: axis.main.center,
           crossAxisAlignment: axis.cross.end,
@@ -323,8 +323,8 @@ Widget dialog({
   EdgeInsets margin = EdgeInsets.zero,
 }) {
   return Container(
-    width: engine.state.screen.width,
-    height: engine.state.screen.height,
+    width: engine.screen.width,
+    height: engine.screen.height,
     alignment: alignment,
     child: Container(
       margin: margin,

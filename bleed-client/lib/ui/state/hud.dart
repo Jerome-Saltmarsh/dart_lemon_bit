@@ -26,7 +26,7 @@ extension HudProperties on _Hud {
 }
 
 
-final Widget fps = WatchBuilder(engine.state.fps, (int fps){
+final Widget fps = WatchBuilder(engine.fps, (int fps){
   return text("fps $fps");
 });
 

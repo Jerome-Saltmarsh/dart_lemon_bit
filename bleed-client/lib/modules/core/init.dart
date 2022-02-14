@@ -24,7 +24,7 @@ final isLocalHost = Uri.base.host == 'localhost';
 Future init() async {
   await loadSharedPreferences();
   isometric.state.image = await loadImage('images/atlas.png');
-  engine.state.image = isometric.state.image;
+  engine.image = isometric.state.image;
   initializeGameInstances();
   initializeEventListeners();
   audio.init();
@@ -34,7 +34,7 @@ Future init() async {
     print("Environment: Production");
   }
 
-  engine.state.cursorType.value = CursorType.Basic;
+  engine.cursorType.value = CursorType.Basic;
 }
 
 void initializeGameInstances() {

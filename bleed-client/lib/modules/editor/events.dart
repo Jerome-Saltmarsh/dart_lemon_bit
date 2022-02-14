@@ -33,13 +33,13 @@ class EditorEvents with EditorScope {
     engine.callbacks.onLeftClicked = onMouseLeftClicked;
     engine.callbacks.onMouseDragging = onMouseDragging;
 
-    engine.state.keyPressedHandlers = {
+    engine.keyPressedHandlers = {
       config.keys.pan: actions.panModeActivate,
       config.keys.delete: actions.deleteSelected,
       config.keys.move: actions.moveSelectedToMouse,
     };
 
-    engine.state.keyReleasedHandlers = {
+    engine.keyReleasedHandlers = {
       config.keys.pan:  actions.panModeDeactivate,
     };
 
@@ -53,9 +53,9 @@ class EditorEvents with EditorScope {
     final previousY = screenToWorldY(previous.y);
     final diffX = previousX - positionX;
     final diffY = previousY - positionY;
-    final zoom = engine.state.zoom;
-    engine.state.camera.x += diffX * zoom;
-    engine.state.camera.y += diffY * zoom;
+    final zoom = engine.zoom;
+    engine.camera.x += diffX * zoom;
+    engine.camera.y += diffY * zoom;
   }
 
   void onMouseDragging(){
@@ -70,7 +70,7 @@ class EditorEvents with EditorScope {
 
   void onSelectedObjectChanged(Vector2? value) {
     print("editor.events.onSelectedObjectChanged($value)");
-    engine.actions.redrawCanvas();
+    engine.redrawCanvas();
   }
 
   void onMouseLeftClicked() {
@@ -122,7 +122,7 @@ class EditorEvents with EditorScope {
         break;
     }
 
-    engine.actions.redrawCanvas();
+    engine.redrawCanvas();
   }
 
   void onTorchAdded(){
@@ -138,7 +138,7 @@ class EditorEvents with EditorScope {
       for (Vector2 position in game.crates) {
         position.x = mouseWorldX;
         position.y = mouseWorldY;
-        engine.actions.redrawCanvas();
+        engine.redrawCanvas();
         return;
       }
     }

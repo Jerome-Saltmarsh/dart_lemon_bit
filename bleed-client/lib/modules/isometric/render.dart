@@ -64,7 +64,7 @@ class IsometricRender {
   IsometricRender(this.state, this.properties, this.queries, this.maps);
 
   void tiles() {
-    engine.actions.setPaintColorWhite();
+    engine.setPaintColorWhite();
     // engine.state.canvas.drawRawAtlas(
     //     state.image,
     //     state.tilesDst,
@@ -78,7 +78,6 @@ class IsometricRender {
     final maxRow = state.maxRow;
     final minColumn = state.minColumn;
     final maxColumn = state.maxColumn;
-    final engineState = engine.state;
     final atlasY = atlas.tiles.y;
     final dynamicShade = state.dynamicShade;
     final totalColumnsInt = state.totalColumnsInt;
@@ -104,7 +103,7 @@ class IsometricRender {
   }
 
   void sprites() {
-    engine.actions.setPaintColorWhite();
+    engine.setPaintColorWhite();
     int indexHuman = 0;
     int indexEnv = 0;
     int indexParticle = 0;
@@ -122,7 +121,7 @@ class IsometricRender {
     bool npcsRemaining = indexHuman < game.totalNpcs;
     bool environmentRemaining = indexEnv < totalEnvironment;
     bool particlesRemaining = indexParticle < totalParticles;
-    final screenBottom = engine.state.screen.bottom;
+    final screenBottom = engine.screen.bottom;
 
 
     while (true) {
@@ -484,17 +483,17 @@ class IsometricRender {
 
   void drawCharacterHealthBar(Character character){
     if (!onScreen(character.x, character.y)) return;
-    engine.actions.setPaintColor(colours.redDarkest);
-    engine.state.canvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom, _width, _height), engine.state.paint);
-    engine.actions.setPaintColor(colours.red);
-    engine.state.canvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom, _width * character.health, _height), engine.state.paint);
+    engine.setPaintColor(colours.redDarkest);
+    engine.canvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom, _width, _height), engine.paint);
+    engine.setPaintColor(colours.red);
+    engine.canvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom, _width * character.health, _height), engine.paint);
   }
 
   void drawCharacterMagicBar(Character character){
-    engine.actions.setPaintColorWhite();
-    engine.state.canvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom + _height, _width, _height), engine.state.paint);
-    engine.actions.setPaintColor(colours.blue);
-    engine.state.canvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom + _height, _width * character.magic, _height), engine.state.paint);
+    engine.setPaintColorWhite();
+    engine.canvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom + _height, _width, _height), engine.paint);
+    engine.setPaintColor(colours.blue);
+    engine.canvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom + _height, _width * character.magic, _height), engine.paint);
   }
 
   void drawInteractableNpc(Character npc) {

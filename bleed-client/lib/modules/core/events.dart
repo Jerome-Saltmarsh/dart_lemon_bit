@@ -26,7 +26,7 @@ class CoreEvents {
     state.account.onChanged(_onAccountChanged);
     webSocket.connection.onChanged(onConnectionChanged);
     sub(_onLoginException);
-    engine.state.drawCanvas.onChanged(onDrawCanvasChanged);
+    engine.drawCanvas.onChanged(onDrawCanvasChanged);
   }
 
   void onDrawCanvasChanged(DrawCanvas? method){
@@ -67,29 +67,29 @@ class CoreEvents {
 
   void onModeChanged(Mode mode){
     print("core.events.onGameModeChanged($mode)");
-    engine.actions.clearCallbacks();
+    engine.clearCallbacks();
 
     switch(mode){
 
       case Mode.Website:
-        engine.state.drawCanvas.value = null;
-        engine.state.drawCanvasAfterUpdate = false;
+        engine.drawCanvas.value = null;
+        engine.drawCanvasAfterUpdate = false;
         break;
 
       case Mode.Player:
-        engine.state.drawCanvas.value = modules.game.render.render;
-        engine.state.drawCanvasAfterUpdate = true;
+        engine.drawCanvas.value = modules.game.render.render;
+        engine.drawCanvasAfterUpdate = true;
         modules.isometric.events.register();
         modules.game.events.register();
         engine.registerZoomCameraOnMouseScroll();
-        engine.state.keyPressedHandlers = modules.game.map.keyPressedHandlers;
+        engine.keyPressedHandlers = modules.game.map.keyPressedHandlers;
         break;
 
       case Mode.Editor:
         modules.isometric.events.register();
         editor.actions.newScene();
-        engine.state.drawCanvas.value = editor.render.render;
-        engine.state.drawCanvasAfterUpdate = true;
+        engine.drawCanvas.value = editor.render.render;
+        engine.drawCanvasAfterUpdate = true;
         editor.events.onActivated();
         isometric.actions.removeGeneratedEnvironmentObjects();
         game.totalZombies.value = 0;
@@ -100,7 +100,7 @@ class CoreEvents {
         break;
     }
 
-    engine.actions.redrawCanvas();
+    engine.redrawCanvas();
   }
 
 
@@ -109,7 +109,7 @@ class CoreEvents {
 
     switch(connection){
       case Connection.Connected:
-        engine.state.drawCanvas.value = modules.game.render.render;
+        engine.drawCanvas.value = modules.game.render.render;
         core.state.mode.value = Mode.Player;
         if (game.type.value == GameType.Custom){
           final account = core.state.account.value;
@@ -130,11 +130,11 @@ class CoreEvents {
         break;
       case Connection.Done:
         core.state.mode.value = Mode.Website;
-        engine.actions.fullScreenExit();
+        engine.fullScreenExit();
         core.actions.clearSession();
-        engine.actions.clearCallbacks();
-        engine.state.drawCanvasAfterUpdate = true;
-        engine.state.cursorType.value = CursorType.Basic;
+        engine.clearCallbacks();
+        engine.drawCanvasAfterUpdate = true;
+        engine.cursorType.value = CursorType.Basic;
         break;
       default:
         break;

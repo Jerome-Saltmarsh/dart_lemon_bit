@@ -49,7 +49,7 @@ class EditorActions with EditorScope {
     if (state.selected.value == null) return;
     isometric.state.environmentObjects.remove(state.selected.value);
     state.selected.value = null;
-    engine.actions.redrawCanvas();
+    engine.redrawCanvas();
   }
 
   void panModeActivate(){
@@ -202,7 +202,7 @@ class EditorActions with EditorScope {
 
     state.characters = characters;
     isometric.actions.updateTileRender();
-    engine.actions.redrawCanvas();
+    engine.redrawCanvas();
   }
 
   void timeSpeedIncrease() {

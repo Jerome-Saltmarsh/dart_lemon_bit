@@ -61,7 +61,7 @@ Widget buildCube3D() {
   );
 }
 
-Paint get globalPaint => engine.state.paint;
+Paint get globalPaint => engine.paint;
 
 class _CubePainter extends CustomPainter {
   const _CubePainter(Listenable repaint) : super(repaint: repaint);

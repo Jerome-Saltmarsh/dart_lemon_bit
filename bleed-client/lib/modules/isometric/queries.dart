@@ -48,10 +48,10 @@ class IsometricQueries {
   }
 
   bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {
-    if (environmentObject.top > engine.state.screen.bottom) return false;
-    if (environmentObject.right < engine.state.screen.left) return false;
-    if (environmentObject.left > engine.state.screen.right) return false;
-    if (environmentObject.bottom < engine.state.screen.top) return false;
+    if (environmentObject.top > engine.screen.bottom) return false;
+    if (environmentObject.right < engine.screen.left) return false;
+    if (environmentObject.left > engine.screen.right) return false;
+    if (environmentObject.bottom < engine.screen.top) return false;
     return true;
   }
 

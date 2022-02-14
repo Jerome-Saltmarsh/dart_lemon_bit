@@ -286,7 +286,7 @@ class IsometricActions {
   }
 
   void cameraCenterMap(){
-    engine.actions.cameraCenter(properties.mapCenter.x, properties.mapCenter.y);
+    engine.cameraCenter(properties.mapCenter.x, properties.mapCenter.y);
   }
 
   void applyShadeDynamicPositionUnchecked(double x, double y, int value) {

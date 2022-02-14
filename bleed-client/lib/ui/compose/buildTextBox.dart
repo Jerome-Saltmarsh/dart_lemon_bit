@@ -13,7 +13,7 @@ Widget buildTextBox() {
     return Positioned(
         bottom: 100,
         child: Container(
-          width: engine.state.screen.width,
+          width: engine.screen.width,
           alignment: Alignment.center,
           child: Container(
             width: 400,

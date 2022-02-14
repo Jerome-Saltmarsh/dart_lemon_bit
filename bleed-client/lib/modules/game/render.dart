@@ -71,7 +71,7 @@ class GameRender {
     drawAbility();
     attackTargetCircle();
 
-    engine.actions.setPaintColorWhite();
+    engine.setPaintColorWhite();
     isometric.render.sprites();
     drawEffects();
     drawItems();
@@ -86,12 +86,12 @@ class GameRender {
     if (game.type.value == GameType.BATTLE_ROYAL){
       drawRoyalPerimeter();
     }
-    engine.actions.setPaintColorWhite();
+    engine.setPaintColorWhite();
     _drawFloatingTexts();
     _drawPlayerNames();
     drawPlayerText();
 
-    engine.actions.setPaintColorWhite();
+    engine.setPaintColorWhite();
   }
 
   void weaponRangeCircle() {
@@ -144,7 +144,7 @@ class GameRender {
   }
 
   void drawDebugNpcs(List<NpcDebug> values){
-    engine.actions.setPaintColor(Colors.yellow);
+    engine.setPaintColor(Colors.yellow);
 
     for (NpcDebug npc in values) {
       drawLine(npc.x, npc.y, npc.targetX, npc.targetY);
@@ -172,7 +172,7 @@ class GameRender {
   }
 
   void drawPaths() {
-    engine.actions.setPaintColor(colours.blue);
+    engine.setPaintColor(colours.blue);
     for (List<Vector2> path in isometric.state.paths) {
       for (int i = 0; i < path.length - 1; i++) {
         drawLine(path[i].x, path[i].y, path[i + 1].x, path[i + 1].y);
@@ -232,8 +232,8 @@ class GameRender {
         atlas.projectiles.fireball.size, atlas.projectiles.fireball.size);
 
     // TODO use atlas instead
-    engine.state.canvas.drawAtlas(isometric.state.image, [rsTransform],
-        [rect], null, null, null, engine.state.paint);
+    engine.canvas.drawAtlas(isometric.state.image, [rsTransform],
+        [rect], null, null, null, engine.paint);
   }
 
   void arrow(double x, double y, double angle) {
@@ -279,7 +279,7 @@ class GameRender {
   }
 
   void drawMouseAim2() {
-    engine.actions.setPaintColorWhite();
+    engine.setPaintColorWhite();
     double angle = queries.getAngleBetweenMouseAndPlayer();
     double mouseDistance = queries.getDistanceBetweenMouseAndPlayer();
     double d = min(mouseDistance, modules.game.state.player.attackRange);
@@ -289,7 +289,7 @@ class GameRender {
   }
 
   void drawDebugEnvironmentObjects() {
-    engine.state.paint.color = Colors.red;
+    engine.paint.color = Colors.red;
     for (EnvironmentObject env in modules.isometric.state.environmentObjects) {
       drawLine(env.left, env.top, env.right, env.top); // top left to top right
       drawLine(

@@ -149,18 +149,18 @@ class GameEvents {
   void _onPlayerCharacterTypeChanged(CharacterType characterType){
     print("events.onCharacterTypeChanged($characterType)");
     if (characterType == CharacterType.Human){
-      engine.state.cursorType.value = CursorType.Precise;
+      engine.cursorType.value = CursorType.Precise;
     }else{
-      engine.state.cursorType.value = CursorType.Basic;
+      engine.cursorType.value = CursorType.Basic;
     }
   }
 
   void _onGameTypeChanged(GameType type) {
     print('events.onGameTypeChanged($type)');
     core.actions.clearSession();
-    engine.state.camera.x = 0;
-    engine.state.camera.y = 0;
-    engine.state.zoom = 1;
+    engine.camera.x = 0;
+    engine.camera.y = 0;
+    engine.zoom = 1;
   }
 
   void _onPlayerUuidChanged(String uuid) {
@@ -174,10 +174,10 @@ class GameEvents {
     print('events.onGameStatusChanged($value)');
     switch(value){
       case GameStatus.In_Progress:
-        engine.actions.fullScreenEnter();
+        engine.fullScreenEnter();
         break;
       default:
-        engine.actions.fullScreenExit();
+        engine.fullScreenExit();
         break;
     }
   }
