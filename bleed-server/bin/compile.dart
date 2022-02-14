@@ -449,7 +449,7 @@ void _compileProjectile(StringBuffer buffer, Projectile projectile) {
 void _compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.type.index);
   _write(buffer, player.state.index);
-  _write(buffer, player.direction.index);
+  _write(buffer, player.direction);
   _writeInt(buffer, player.x);
   _writeInt(buffer, player.y);
   _write(buffer, player.stateFrameCount);
@@ -476,7 +476,7 @@ void compileString(StringBuffer buffer, String text){
 
 void _compileNpc(StringBuffer buffer, Character character) {
   _write(buffer, character.state.index);
-  _write(buffer, character.direction.index);
+  _write(buffer, character.direction);
   _writeInt(buffer, character.x);
   _writeInt(buffer, character.y);
   _write(buffer, character.stateFrameCount);
@@ -486,7 +486,7 @@ void _compileNpc(StringBuffer buffer, Character character) {
 
 void _compileInteractableNpc(StringBuffer buffer, InteractableNpc npc) {
   _write(buffer, npc.state.index);
-  _write(buffer, npc.direction.index);
+  _write(buffer, npc.direction);
   _writeInt(buffer, npc.x);
   _writeInt(buffer, npc.y);
   _write(buffer, npc.stateFrameCount);

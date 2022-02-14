@@ -4,6 +4,7 @@ import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
 import '../common/WeaponType.dart';
 import '../common/enums/Direction.dart';
+import '../constants.dart';
 import '../constants/no_squad.dart';
 import '../enums/npc_mode.dart';
 import '../interfaces/HasSquad.dart';
@@ -68,7 +69,7 @@ class Character extends GameObject implements HasSquad {
   double attackRange = 50;
   int damage = 1;
 
-  Direction get direction => convertAngleToDirection(angle);
+  int get direction => angle ~/ piQuarter;
 
   /// the character that was highlighted when the player clicked
   Character? attackTarget;
