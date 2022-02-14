@@ -280,7 +280,12 @@ class IsometricRender {
   double mapZombieSrcX(Character character, int shade){
     switch(character.state){
       case CharacterState.Idle:
-        return character.direction.index * _zombieFramesPerDirection;
+        return single(
+            frame: 1,
+            direction: character.direction.index,
+            framesPerDirection: _zombieFramesPerDirection
+        );
+
       case CharacterState.Striking:
         return animate(
             animation: animations.zombie.striking,
@@ -297,6 +302,15 @@ class IsometricRender {
       default:
         throw Exception("Render zombie invalid state ${character.state}");
     }
+  }
+
+  double single({
+    required frame,
+    required num direction,
+    required num framesPerDirection,
+    num size = _size64
+  }){
+    return ((direction * framesPerDirection) + (frame - 1)) * _size64;
   }
 
   double loop({
@@ -403,33 +417,41 @@ class IsometricRender {
   }
 
   double getCharacterSrcX(Character character){
-    final direction = character.direction.index;
-
     switch(character.state){
       case CharacterState.Idle:
-        return ((direction * _humanFramesPerDirection) + _indexIdle) * _size64;
+        return single(
+            frame: 1,
+            direction: character.direction.index,
+            framesPerDirection: _humanFramesPerDirection
+        );
 
       case CharacterState.Changing:
-        return ((direction * _humanFramesPerDirection) + _indexChanging) * _size64;
+        return single(
+            frame: 2,
+            direction: character.direction.index,
+            framesPerDirection: _humanFramesPerDirection
+        );
 
       case CharacterState.Striking:
-        final animation = character.equippedWeapon.isBow ? animations.firingBow : animations.strikingSword;
-        final animationFrame = min(character.frame, animation.length - 1);
-        final frame = animation[animationFrame] - 1;
-        return (direction * _humanFramesPerDirection * _size64) + (frame * _size64);
+        return animate(
+            animation: character.equippedWeapon.isBow ? animations.firingBow : animations.strikingSword,
+            character: character,
+            framesPerDirection: _humanFramesPerDirection
+        );
 
       case CharacterState.Performing:
-        final animation = character.equippedWeapon.isBow ? animations.firingBow : animations.strikingSword;
-        final animationFrame = min(character.frame, animation.length - 1);
-        final frame = animation[animationFrame] - 1;
-        return (direction * _humanFramesPerDirection * _size64) + (frame * _size64);
+        return animate(
+            animation: character.equippedWeapon.isBow ? animations.firingBow : animations.strikingSword,
+            character: character,
+            framesPerDirection: _humanFramesPerDirection
+        );
 
       case CharacterState.Running:
-        // final animation = animations.running;
-        // final animationFrame = character.frame % animation.length;
-        // final frame = animation[animationFrame] - 1;
-        // return (direction * _humanFramesPerDirection * _size64) + (frame * _size64);
-        return loop(animation: animations.running, character: character, framesPerDirection: _humanFramesPerDirection);
+        return loop(
+            animation: animations.running,
+            character: character,
+            framesPerDirection: _humanFramesPerDirection
+        );
 
       default:
         throw Exception("getCharacterSrcX cannot get body x for state ${character.state.name}");
