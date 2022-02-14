@@ -1,14 +1,22 @@
 import 'dart:math';
 
 enum Direction {
-  Down,
-  DownRight,
-  Right,
-  UpRight,
+  // Down,
+  // DownRight,
+  // Right,
+  // UpRight,
+  // Up,
+  // UpLeft,
+  // Left,
+  // DownLeft,
   Up,
-  UpLeft,
-  Left,
+  UpRight,
+  Right,
+  DownRight,
+  Down,
   DownLeft,
+  Left,
+  UpLeft,
 }
 
 const List<Direction> directions = Direction.values;
@@ -18,7 +26,7 @@ const double _piEighth = pi / 8.0;
 const double piQuarter = pi / 4.0;
 
 double convertDirectionToAngle(Direction direction){
-  return direction.index * _piEighth;
+  return direction.index * piQuarter;
 }
 
 Direction convertAngleToDirection(double angle) {

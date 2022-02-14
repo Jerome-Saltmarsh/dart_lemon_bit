@@ -85,7 +85,7 @@ class GameUpdate {
       // engine.state.camera.y += mouseWorldDiff.dy * engine.state.zoom;
       // engine.state.camera.x += mouseWorldDiff.dx * engine.state.zoom;
     }
-    final Direction? direction = getKeyDirection();
+    final direction = getKeyDirection();
     if (direction != null){
       modules.game.state.characterController.direction = direction;
       modules.game.actions.setCharacterActionRun();
