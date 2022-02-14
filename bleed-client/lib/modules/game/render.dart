@@ -1,6 +1,5 @@
 
 import 'dart:math';
-import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/opposite.dart';
 import 'package:bleed_client/classes/Character.dart';
@@ -24,10 +23,7 @@ import 'package:bleed_client/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
-import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/diff.dart';
-import 'package:lemon_math/opposite.dart';
-
 import 'state.dart';
 import 'style.dart';
 

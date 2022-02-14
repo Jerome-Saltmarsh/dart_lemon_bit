@@ -25,6 +25,7 @@ const _mystIndex50 = 6;
 const _particleSize = 64.0;
 const pixelSize = 6.0;
 
+const _size8 = 8.0;
 const _size32 = 64.0;
 const _size64 = 64.0;
 
@@ -74,8 +75,8 @@ void mapParticleToSrc(Particle particle){
 
     case ParticleType.Blood:
       final x = atlas.blood.x;
-      final y = atlas.blood.y - (shade * 8);
-      engine.mapSrc(x: x, y: y, width: 8, height: 8);
+      final y = atlas.blood.y - (shade * _size8);
+      engine.mapSrc(x: x, y: y, width: _size8, height: _size8);
       return;
 
     case ParticleType.Human_Head:

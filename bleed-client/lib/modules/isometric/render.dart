@@ -31,6 +31,8 @@ import 'package:lemon_math/diff_over.dart';
 import 'functions.dart';
 import 'state.dart';
 
+const _size4 = 4.0;
+const _size8 = 8.0;
 const _size32 = 32.0;
 const _size48 = 48.0;
 const _size64 = 64.0;
@@ -176,14 +178,14 @@ class IsometricRender {
         final particle = particles[indexParticle];
 
         if (particle.type == ParticleType.Blood) {
-          _drawParticle(particle);
+          _renderParticle(particle);
           indexParticle++;
           continue;
         }
 
         if (!zombiesRemaining || particle.y < zombies[indexZombie].y) {
           if (!npcsRemaining || particle.y < interactableNpcs[indexNpc].y) {
-            _drawParticle(particle);
+            _renderParticle(particle);
             indexParticle++;
             continue;
           }
@@ -203,13 +205,29 @@ class IsometricRender {
     }
   }
 
-  void _drawParticle(Particle value){
+  void _renderParticle(Particle value){
     if (!onScreen(value.x, value.y)) return;
     final shade = properties.getShadeAtPosition(value.x, value.y);
     if (shade >= Shade.Very_Dark) return;
+
     mapParticleToDst(value);
     mapParticleToSrc(value);
     engine.renderAtlas();
+
+    if (value.type == ParticleType.Blood) {
+      mapShadeBlack();
+      engine.mapDst(
+          x: value.x,
+          y: value.y,
+          anchorX: _size4,
+          anchorY: _size4
+      );
+      engine.renderAtlas();
+    }
+  }
+
+  void mapShadeBlack(){
+    engine.mapSrc(x: atlas.shades.x, y: atlas.shades.y, width: _size8, height: _size8);
   }
 
   void renderItem(Item item) {

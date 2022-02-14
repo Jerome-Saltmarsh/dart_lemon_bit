@@ -5,7 +5,11 @@ import 'package:lemon_engine/engine.dart';
 
 const double _32 = 32.0;
 const double _64 = 32.0;
-const zToHeightRatio = 0.4;
+const zToScaleRatio = 0.4;
+const zToHeightRatio = 20;
+const zero = 0.0;
+const half = 0.5;
+const one = 1;
 
 final Map<ParticleType, double> _particleTypeSize = {
   ParticleType.Zombie_Head: _32,
@@ -24,15 +28,15 @@ final Map<ParticleType, double> _particleTypeSize = {
 
 void mapParticleToDst(Particle particle){
   final size = _particleTypeSize[particle.type]!;
-  final renderScale = (1 + (particle.z * zToHeightRatio)) * particle.scale;
-  final sizeHalf = size * 0.5;
+  final renderScale = (one + (particle.z * zToScaleRatio)) * particle.scale;
+  final sizeHalf = size * half;
 
   return engine.mapDst(
     scale: renderScale,
-    rotation: 0,
-    x: particle.x - sizeHalf,
-    y: particle.y - (particle.z * 20),
+    rotation: zero,
+    x: particle.x,
+    y: particle.y,
     anchorX: sizeHalf,
-    anchorY: sizeHalf
+    anchorY: sizeHalf - (particle.z * zToHeightRatio)
   );
 }
