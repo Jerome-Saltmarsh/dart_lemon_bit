@@ -43,17 +43,17 @@ const _indexChanging = 1;
 
 enum SpriteLayer {
   Shadow,
-  Bow_Wooden,
   Sword_Wooden,
   Sword_Steel,
   Staff_Wooden,
+  Bow_Wooden,
   Legs_Blue,
-  Body_Blue,
   Body_Cyan,
+  Body_Blue,
+  Head_Magic,
   Head_Rogue,
   Head_Plain,
   Head_Steel,
-  Head_Magic,
 }
 
 class IsometricRender {
