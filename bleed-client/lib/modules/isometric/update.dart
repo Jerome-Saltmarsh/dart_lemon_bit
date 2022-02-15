@@ -46,7 +46,7 @@ class IsometricUpdate {
       for (final particle in particles) {
         if (!particle.active) continue;
         if (particle.type != ParticleType.Zombie_Head) continue;
-        if (particle.xv + particle.yv < 0.01) continue;
+        if (particle.xv + particle.yv < 0.005) continue;
         spawn.blood(x: particle.x, y: particle.y, z: particle.z, zv: 0, angle: 0, speed: 0);
       }
     }
