@@ -361,13 +361,12 @@ class IsometricSpawn {
         duration: randomInt(90, 150),
         rotation: giveOrTake(pi),
         rotationV: giveOrTake(0.25),
-        scale: 0.75,
-        scaleV: 0);
+        scale: 0.75);
   }
 
   Effect getEffect(){
     for(final effect in game.effects){
-      if (!effect.enabled) continue;
+      if (effect.enabled) continue;
       return effect;
     }
     final effect = Effect();
