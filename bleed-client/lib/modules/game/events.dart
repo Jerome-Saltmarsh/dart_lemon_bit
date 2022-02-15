@@ -227,8 +227,8 @@ class GameEvents {
         isometric.spawn.headZombie(x: x, y: y, z: 0.5, angle: angle, speed: 4.0);
         isometric.spawn.arm(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
         isometric.spawn.arm(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
-        // isometric.spawn.legZombie(x, y, 0.2,
-        //     xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
+        isometric.spawn.legZombie(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
+        isometric.spawn.legZombie(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
         // isometric.spawn.legZombie(x, y, 0.2,
         //     xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
         // isometric.spawn.organ(x, y, 0.3,
