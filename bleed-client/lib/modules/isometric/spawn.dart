@@ -1,16 +1,15 @@
-import 'package:lemon_math/adjacent.dart';
-import 'package:lemon_math/opposite.dart';
 import 'dart:math';
 
 import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/classes/Explosion.dart';
 import 'package:bleed_client/classes/FloatingText.dart';
 import 'package:bleed_client/classes/Particle.dart';
-import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
+import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/angle.dart' as getAngle;
 import 'package:lemon_math/give_or_take.dart';
+import 'package:lemon_math/opposite.dart';
 import 'package:lemon_math/piHalf.dart';
 import 'package:lemon_math/randomInt.dart';
 import 'package:lemon_math/random_between.dart';

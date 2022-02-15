@@ -11,6 +11,8 @@ import 'package:bleed_client/modules/isometric/utilities.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 
+const pi2 = pi + pi;
+
 class IsometricUpdate {
 
   final IsometricState state;
@@ -58,11 +60,12 @@ class IsometricUpdate {
     final airBorn = particle.z > 0.01;
     final falling = particle.zv < 0;
     final bounce = falling && airBorn && particle.z <= 0;
-
     particle.z += particle.zv;
     particle.x += particle.xv;
     particle.y += particle.yv;
-    particle.rotation += particle.rotationV;
+    if (particle.rotationV != 0){
+      particle.rotation = (particle.rotation + particle.rotationV) % pi2;
+    }
     particle.scale += particle.scaleV;
 
     if (bounce) {

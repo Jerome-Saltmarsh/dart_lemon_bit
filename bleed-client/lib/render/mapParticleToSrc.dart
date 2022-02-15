@@ -56,7 +56,7 @@ void mapParticleToSrc(Particle particle){
       final direction = convertAngleToDirectionInt(particle.rotation);
       final x = _particles.zombieArm.x + (direction * _size64);
       final y = _particles.zombieArm.y + shade * _size64;
-      engine.mapSrc(x: x, y: y, width: _size64, height: _size64);
+      engine.mapSrc(x: x, y: y);
       return;
 
     case ParticleType.Organ:
