@@ -90,6 +90,10 @@ class _Audio {
     audio.play('mag-in-02.mp3', x, y);
   }
 
+  void footstep(double x, double y) {
+    audio.play('footstep.mp3', x, y);
+  }
+
   void dryShot2(double x, double y) {
     audio.play('dry-shot-02.mp3', x, y);
   }

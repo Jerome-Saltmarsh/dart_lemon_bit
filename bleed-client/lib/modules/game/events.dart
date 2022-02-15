@@ -187,20 +187,20 @@ class GameEvents {
     switch (type) {
       case GameEventType.Handgun_Fired:
         audio.playAudioHandgunShot(x, y);
-        isometric.spawn.shell(x, y);
+        isometric.spawn.shell(x: x, y: y, z: 0.2, zv: 0.1, angle: angle, speed: 0.1);
         break;
       case GameEventType.Shotgun_Fired:
         audio.shotgunShot(x, y);
-        isometric.spawn.shell(x, y);
+        isometric.spawn.shell(x: x, y: y, z: 0.2, zv: 0.1, angle: angle, speed: 0.1);
         // isometric.spawn.shotSmoke(x, y, xv, yv);
         break;
       case GameEventType.SniperRifle_Fired:
         audio.sniperShot(x, y);
-        isometric.spawn.shell(x, y);
+        isometric.spawn.shell(x: x, y: y, z: 0.2, zv: 0.1, angle: angle, speed: 0.1);
         break;
       case GameEventType.MachineGun_Fired:
         audio.assaultRifleShot(x, y);
-        isometric.spawn.shell(x, y);
+        isometric.spawn.shell(x: x, y: y, z: 0.2, zv: 0.1, angle: angle, speed: 0.1);
         break;
       case GameEventType.Character_Struck:
         audio.bloodyImpact(x, y);
@@ -208,12 +208,13 @@ class GameEvents {
         final speedVariation = 2;
         final total = randomInt(5, 10);
         for (int i = 0; i < total; i++) {
-          final rotation = angle + giveOrTake(0.2);
-          final vel = speed + giveOrTake(speedVariation);
-          isometric.spawn.blood(x, y, 0.3,
-              xv: adjacent(rotation, vel),
-              yv: opposite(rotation, vel),
-              zv: 0.07 + giveOrTake(0.01),
+          isometric.spawn.blood(
+            x: x,
+            y: y,
+            z: 0.3,
+            angle: angle + giveOrTake(0.2),
+            speed: speed + giveOrTake(speedVariation),
+            zv: 0.07 + giveOrTake(0.01),
           );
         }
         break;
@@ -223,14 +224,9 @@ class GameEvents {
         }
         break;
       case GameEventType.Zombie_Killed:
-        final speed = 4.0;
-        final xv = adjacent(angle, speed);
-        final yv = opposite(angle, speed);
-        isometric.spawn.headZombie(x, y, 0.5, xv: xv, yv: yv);
-        // isometric.spawn.arm(x, y, 0.3,
-        //     xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
-        // isometric.spawn.arm(x, y, 0.3,
-        //     xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
+        isometric.spawn.headZombie(x: x, y: y, z: 0.5, angle: angle, speed: 4.0);
+        isometric.spawn.arm(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
+        isometric.spawn.arm(x: x, y: y, z: 0.5, angle: angle + giveOrTake(0.5), speed: 4.0 + giveOrTake(0.5));
         // isometric.spawn.legZombie(x, y, 0.2,
         //     xv: xv * s + giveOrTake(r), yv: yv * s + giveOrTake(r));
         // isometric.spawn.legZombie(x, y, 0.2,
@@ -317,9 +313,6 @@ class GameEvents {
         audio.playAudioHeal(x, y);
         break;
       case GameEventType.Crate_Breaking:
-        for (int i = 0; i < randomInt(4, 10); i++) {
-          isometric.spawn.shrapnel(x, y);
-        }
         audio.playAudioCrateBreaking(x, y);
         break;
       case GameEventType.Ammo_Acquired:

@@ -1,5 +1,7 @@
 
 
+import 'package:bleed_client/audio.dart';
+import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/enums/Direction.dart';
@@ -56,6 +58,12 @@ class GameUpdate {
     if (!state.panningCamera && modules.game.state.player.alive.value) {
       cameraFollowPlayer();
     }
+
+    // for (final character in game.humans) {
+    //    if(!character.state.running) continue;
+    //    if (character.frame % 4 != 0) continue;
+    //    audio.footstep(character.x, character.y);
+    // }
 
     sendRequestUpdatePlayer();
   }

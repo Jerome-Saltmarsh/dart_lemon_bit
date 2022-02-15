@@ -1,4 +1,5 @@
-
+import 'package:lemon_math/adjacent.dart';
+import 'package:lemon_math/opposite.dart';
 import 'dart:math';
 
 import 'package:bleed_client/audio.dart';
@@ -8,7 +9,7 @@ import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/maths.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/state/game.dart';
-import 'package:lemon_math/angle.dart';
+import 'package:lemon_math/angle.dart' as getAngle;
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/piHalf.dart';
 import 'package:lemon_math/randomInt.dart';
@@ -52,9 +53,9 @@ class IsometricSpawn {
     required ParticleType type,
     required double x,
     required double y,
+    required double angle,
+    required double speed,
     double z = 0,
-    double xv = 0,
-    double yv = 0,
     double zv = 0,
     double weight = 1,
     int duration = 100,
@@ -73,8 +74,15 @@ class IsometricSpawn {
     particle.x = x;
     particle.y = y;
     particle.z = z;
-    particle.xv = xv;
-    particle.yv = yv;
+
+    if (speed > 0){
+      particle.xv = adjacent(angle, speed);
+      particle.yv = opposite(angle, speed);
+    } else {
+      particle.xv = 0;
+      particle.yv = 0;
+    }
+
     particle.zv = zv;
     particle.weight = weight;
     particle.duration = duration;
@@ -87,14 +95,20 @@ class IsometricSpawn {
     particle.airFriction = airFriction;
   }
 
-  void arm(double x, double y, double z, {double xv = 0, double yv = 0}) {
+  void arm({
+    required double x,
+    required double y,
+    required double z,
+    required double angle,
+    required double speed
+  }) {
     _particle(
         type: ParticleType.Arm,
         x: x,
         y: y,
         z: z,
-        xv: xv,
-        yv: yv,
+        angle: angle,
+        speed: speed,
         zv: randomBetween(0.04, 0.06),
         weight: 0.25,
         duration: randomInt(90, 150),
@@ -106,19 +120,22 @@ class IsometricSpawn {
     );
   }
 
-  void blood(double x, double y, double z, {
-    double xv = 0,
-    double yv = 0,
-    double zv = 0,
+  void blood({
+    required double x,
+    required double y,
+    required double z,
+    required double zv,
+    required double angle,
+    required double speed
   }) {
     _particle(
         type: ParticleType.Blood,
         x: x,
         y: y,
         z: z,
-        xv: xv,
-        yv: yv,
         zv: zv,
+        angle: angle,
+        speed: speed,
         weight: 0.135,
         duration: 200 + giveOrTake(50).toInt(),
         rotation: 0,
@@ -130,14 +147,21 @@ class IsometricSpawn {
     );
   }
 
-  void fireYellow(double x, double y){
+  void fireYellow({
+    required double x,
+    required double y,
+    required double z,
+    required double zv,
+    required double angle,
+    required double speed
+}){
     _particle(
         type: ParticleType.FireYellow,
         x: x,
         y: y,
         z: 0,
-        xv: giveOrTake(2),
-        yv: giveOrTake(2),
+        angle: angle,
+        speed: speed,
         weight: 0,
         duration: randomInt(10, 25),
         scale: 1,
@@ -145,14 +169,21 @@ class IsometricSpawn {
     );
   }
 
-  void headHuman(double x, double y, double z, {double xv = 0, double yv = 0}) {
+  void headHuman({
+        required double x,
+        required double y,
+        required double z,
+        required double zv,
+        required double angle,
+        required double speed
+      }) {
     _particle(
       type: ParticleType.Human_Head,
       x: x,
       y: y,
       z: z,
-      xv: xv,
-      yv: yv,
+      angle: angle,
+      speed: speed,
       zv: randomBetween(0, 0.03),
       weight: 0.25,
       duration: randomInt(90, 150),
@@ -163,14 +194,21 @@ class IsometricSpawn {
     );
   }
 
-  void organ(double x, double y, double z, {double xv = 0, double yv = 0}) {
+  void organ({
+    required double x,
+    required double y,
+    required double z,
+    required double zv,
+    required double angle,
+    required double speed
+  }) {
     _particle(
         type: ParticleType.Organ,
         x: x,
         y: y,
         z: z,
-        xv: xv,
-        yv: yv,
+        angle: angle,
+        speed: speed,
         zv: randomBetween(0.04, 0.06),
         weight: 0.25,
         duration: randomInt(90, 150),
@@ -180,18 +218,24 @@ class IsometricSpawn {
         scaleV: 0);
   }
 
-  void shell(double x, double y) {
-
+  void shell({
+    required double x,
+    required double y,
+    required double z,
+    required double zv,
+    required double angle,
+    required double speed
+  }) {
     final xv = giveOrTake(pi) * 0.5;
     final yv = giveOrTake(pi) * 0.5;
-    final rotation = angle(xv, yv) + piHalf;
+    final rotation = getAngle.angle(xv, yv) + piHalf;
     _particle(
       type: ParticleType.Shell,
       x: x,
       y: y,
       z: 0.4,
-      xv: xv,
-      yv: yv,
+      angle: angle,
+      speed: speed,
       zv: 0.05,
       weight: 0.2,
       duration: 100,
@@ -201,19 +245,22 @@ class IsometricSpawn {
     );
   }
 
-  void shotSmoke(double x, double y, double xv, double yv) {
+  void shotSmoke({
+    required double x,
+    required double y,
+    required double z,
+    required double zv,
+    required double angle,
+    required double speed
+  }) {
     for (int i = 0; i < 4; i++) {
-      double speed = 0.5 + giveOrTake(0.2);
-      double cx = clampMagnitudeX(xv, yv, speed) + giveOrTake(0.3);
-      double cy = clampMagnitudeY(xv, yv, speed) + giveOrTake(0.3);
-
       _particle(
           type: ParticleType.Smoke,
           x: x,
           y: y,
           z: 0.3,
-          xv: cx,
-          yv: cy,
+          angle: angle,
+          speed: speed,
           zv: 0.0075,
           weight: 0.0,
           duration: 120,
@@ -224,14 +271,21 @@ class IsometricSpawn {
     }
   }
 
-  void shrapnel(double x, double y) {
+  void shrapnel({
+    required double x,
+    required double y,
+    required double z,
+    required double zv,
+    required double angle,
+    required double speed
+  }) {
     _particle(
         type: ParticleType.Shrapnel,
         x: x,
         y: y,
         z: 0,
-        xv: giveOrTake(2),
-        yv: giveOrTake(2),
+        angle: angle,
+        speed: speed,
         zv: randomBetween(0.1, 0.4),
         weight: 0.5,
         duration: randomInt(150, 200),
@@ -239,14 +293,21 @@ class IsometricSpawn {
         scaleV: 0);
   }
 
-  void smoke(double x, double y, double z, {double xv = 0, double yv = 0}) {
+  void smoke({
+    required double x,
+    required double y,
+    required double z,
+    required double zv,
+    required double angle,
+    required double speed
+  }) {
     _particle(
         type: ParticleType.Smoke,
         x: x,
         y: y,
         z: z,
-        xv: xv,
-        yv: yv,
+        angle: angle,
+        speed: speed,
         zv: 0.015,
         weight: 0.0,
         duration: 120,
@@ -256,14 +317,20 @@ class IsometricSpawn {
         scaleV: 0.005);
   }
 
-  void headZombie(double x, double y, double z, {double xv = 0, double yv = 0}) {
+  void headZombie({
+    required double x,
+    required double y,
+    required double z,
+    required double angle,
+    required double speed
+  }) {
     _particle(
       type: ParticleType.Zombie_Head,
       x: x,
       y: y,
       z: z,
-      xv: xv,
-      yv: yv,
+      angle: angle,
+      speed: speed,
       zv: 0.06,
       weight: 0.15,
       duration: 350,
@@ -275,14 +342,20 @@ class IsometricSpawn {
     );
   }
 
-  void legZombie(double x, double y, double z, {double xv = 0, double yv = 0}) {
+  void legZombie({
+  required double x,
+  required double y,
+  required double z,
+  required double angle,
+  required double speed
+  }) {
     _particle(
         type: ParticleType.Leg,
         x: x,
         y: y,
         z: z,
-        xv: xv,
-        yv: yv,
+        angle: angle,
+        speed: speed,
         zv: randomBetween(0, 0.03),
         weight: 0.25,
         duration: randomInt(90, 150),
@@ -322,10 +395,10 @@ class IsometricSpawn {
     audio.explosion(x, y);
     modules.game.actions.spawnBulletHole(x, y);
     for (int i = 0; i < randomInt(4, 10); i++) {
-      shrapnel(x, y);
+      shrapnel(x: x, y: y, z: 0.3, zv: 1, angle: 1, speed: 1);
     }
     for (int i = 0; i < randomInt(4, 10); i++) {
-      fireYellow(x, y);
+      // fireYellow(x, y);
     }
   }
 

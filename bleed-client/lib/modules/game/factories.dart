@@ -38,7 +38,7 @@ class GameFactories {
     required double x,
     required double y
   }) {
-    Particle particle = isometric.spawn.getAvailableParticle();
+    final particle = isometric.spawn.getAvailableParticle();
     particle.x = x;
     particle.y = y;
     particle.active = true;

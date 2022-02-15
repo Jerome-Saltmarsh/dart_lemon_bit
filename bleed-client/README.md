@@ -115,6 +115,7 @@
 [ ] Crafting System
 [ ] Earn Gem Audio
 [ ] On Kill earn reward
+[ ] Zombie Death Animation Particles
 [x] Weapon Staff
 [x] Efficient Health Bars
 [x] Spell use magic

@@ -252,8 +252,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.slots.weapon.index);
   _write(buffer, player.slots.armour.index);
   _write(buffer, player.slots.helm.index);
-
-  Character? aimTarget = player.aimTarget;
+  final aimTarget = player.aimTarget;
   if (aimTarget != null) {
     _write(buffer, ServerResponse.Player_Attack_Target.index);
     _writeInt(buffer, aimTarget.x);

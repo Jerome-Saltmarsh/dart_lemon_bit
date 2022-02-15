@@ -40,31 +40,30 @@ class IsometricUpdate {
         start: 0,
         end: particles.length);
 
-    if (engine.drawFrame.value % 4 == 0){
-      for (final particle in particles){
+    if (engine.frame % 4 == 0) {
+      for (final particle in particles) {
         if (!particle.active) continue;
         if (particle.type != ParticleType.Zombie_Head) continue;
-        spawn.blood(particle.x, particle.y, particle.z);
+        if (particle.xv + particle.yv < 0.01) continue;
+        spawn.blood(x: particle.x, y: particle.y, z: particle.z, zv: 0, angle: 0, speed: 0);
       }
     }
   }
 
-
   void updateParticle(Particle particle){
-    double gravity = 0.04;
-    double bounceFriction = 0.99;
-    double rotationFriction = 0.93;
-    double floorFriction = 0.9;
-    bool airBorn = particle.z > 0.01;
-    bool falling = particle.zv < 0;
+    final gravity = 0.04;
+    final bounceFriction = 0.99;
+    final rotationFriction = 0.93;
+    final floorFriction = 0.9;
+    final airBorn = particle.z > 0.01;
+    final falling = particle.zv < 0;
+    final bounce = falling && airBorn && particle.z <= 0;
 
     particle.z += particle.zv;
     particle.x += particle.xv;
     particle.y += particle.yv;
     particle.rotation += particle.rotationV;
     particle.scale += particle.scaleV;
-
-    bool bounce = falling && airBorn && particle.z <= 0;
 
     if (bounce) {
 

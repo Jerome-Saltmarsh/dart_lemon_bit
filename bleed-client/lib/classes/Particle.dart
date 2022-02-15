@@ -1,4 +1,6 @@
 import 'package:bleed_client/modules/isometric/enums.dart';
+import 'package:lemon_math/adjacent.dart';
+import 'package:lemon_math/opposite.dart';
 
 class Particle {
   bool active = true;
@@ -21,5 +23,10 @@ class Particle {
   int hue = 0;
   bool hasShadow = false;
   double size = 0;
+
+  void setAngle({required double value, required double speed}){
+    xv = adjacent(value, speed);
+    yv = opposite(value, speed);
+  }
 }
 
