@@ -74,21 +74,21 @@ class GameEvents {
   void onEmeraldsChanged(int current, int previous){
     print('onEmeraldsChanged(current: $current, previous: $previous)');
     if (current > previous) {
-       audio.coins(screenCenterWorldX, screenCenterWorldY);
+      audio.coins24(screenCenterWorldX, screenCenterWorldY);
     }
   }
 
   void onRubiesChanged(int current, int previous){
     print('onRubiesChanged(current: $current)');
     if (current > previous) {
-      audio.coins(screenCenterWorldX, screenCenterWorldY);
+      audio.coins24(screenCenterWorldX, screenCenterWorldY);
     }
   }
 
   void onTopazChanged(int current, int previous){
     print('onTopazChanged(current: $current)');
     if (current > previous) {
-      audio.coins(screenCenterWorldX, screenCenterWorldY);
+      audio.coins24(screenCenterWorldX, screenCenterWorldY);
     }
   }
 

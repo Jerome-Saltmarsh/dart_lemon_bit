@@ -74,6 +74,10 @@ class _Audio {
     play('coins.mp3', x, y);
   }
 
+  void coins24(double x, double y){
+    play('coins-24.mp3', x, y);
+  }
+
   void bottle(double x, double y){
     play('bottle.mp3', x, y);
   }

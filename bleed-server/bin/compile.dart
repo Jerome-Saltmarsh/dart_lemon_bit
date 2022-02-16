@@ -235,7 +235,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.experience);
   _write(buffer, player.level);
   _write(buffer, player.abilityPoints);
-  int experienceRequired = levelExperience[player.level];
+  final experienceRequired = levelExperience[player.level];
   _write(buffer, experienceRequired);
   final perc = player.experience / experienceRequired * 100;
   _writeInt(buffer, perc); // todo make sure player is not max level
