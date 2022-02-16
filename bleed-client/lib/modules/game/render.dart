@@ -91,12 +91,25 @@ class GameRender {
 
     engine.setPaintColorWhite();
 
-    engine.render(
+    final framesSinceOrbAcquired = state.framesSinceOrbAcquired;
+    if (framesSinceOrbAcquired < 100) {
+      double y = 0;
+      final max = 50.0;
+      if (framesSinceOrbAcquired < 33){
+        y = framesSinceOrbAcquired / 33 * max;
+      } else if (framesSinceOrbAcquired < 66){
+        y = max;
+      } else {
+        y = (100 - framesSinceOrbAcquired) / 33 * max;
+      }
+
+      engine.render(
         dstX: state.player.x,
-        dstY: state.player.y - 50,
+        dstY: state.player.y - y,
         srcX: atlas.items.orbTopaz.x,
         srcY: atlas.items.orbTopaz.y,
-    );
+      );
+    }
   }
 
   void weaponRangeCircle() {

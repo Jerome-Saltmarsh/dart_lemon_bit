@@ -5,6 +5,7 @@ import 'package:bleed_client/common/GameError.dart';
 import 'package:bleed_client/common/GameEventType.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/common/OrbType.dart';
 import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/modules/game/actions.dart';
 import 'package:bleed_client/modules/modules.dart';
@@ -71,6 +72,8 @@ class GameEvents {
   void onEmeraldsChanged(int current, int previous){
     print('onEmeraldsChanged(current: $current, previous: $previous)');
     if (current > previous) {
+      state.framesSinceOrbAcquired = 0;
+      state.lastOrbAcquired = OrbType.Emerald;
       audio.coins24(screenCenterWorldX, screenCenterWorldY);
     }
   }
@@ -78,6 +81,8 @@ class GameEvents {
   void onRubiesChanged(int current, int previous){
     print('onRubiesChanged(current: $current)');
     if (current > previous) {
+      state.framesSinceOrbAcquired = 0;
+      state.lastOrbAcquired = OrbType.Ruby;
       audio.coins24(screenCenterWorldX, screenCenterWorldY);
     }
   }
@@ -85,6 +90,8 @@ class GameEvents {
   void onTopazChanged(int current, int previous){
     print('onTopazChanged(current: $current)');
     if (current > previous) {
+      state.framesSinceOrbAcquired = 0;
+      state.lastOrbAcquired = OrbType.Topaz;
       audio.coins24(screenCenterWorldX, screenCenterWorldY);
     }
   }

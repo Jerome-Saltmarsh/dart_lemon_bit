@@ -59,6 +59,8 @@ class GameUpdate {
       cameraFollowPlayer();
     }
 
+    state.framesSinceOrbAcquired++;
+
     // for (final character in game.humans) {
     //    if(!character.state.running) continue;
     //    if (character.frame % 4 != 0) continue;

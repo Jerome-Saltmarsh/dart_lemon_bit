@@ -4,6 +4,7 @@ import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameStatus.dart';
+import 'package:bleed_client/common/OrbType.dart';
 import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/Tile.dart';
 import 'package:bleed_client/common/WeaponType.dart';
@@ -20,24 +21,23 @@ import 'enums.dart';
 typedef BasicWidgetBuilder = Widget Function();
 
 class GameState {
-  final Watch<bool> compilePaths = Watch(false);
-  final Watch<StoreTab> storeTab = Watch(storeTabs[0]);
   final _Player player = _Player();
   final _Soldier soldier = _Soldier();
-  final Watch<GameStatus> status = Watch(GameStatus.Awaiting_Players);
   final TextEditingController textEditingControllerMessage = TextEditingController();
   final CharacterController characterController = CharacterController();
   final KeyMap keyMap = KeyMap();
-  final Watch<bool> textMode = Watch(false);
-  bool panningCamera = false;
   final FocusNode textFieldMessage = FocusNode();
+  final Watch<bool> compilePaths = Watch(false);
+  final Watch<StoreTab> storeTab = Watch(storeTabs[0]);
+  final Watch<bool> textMode = Watch(false);
+  final Watch<GameStatus> status = Watch(GameStatus.Awaiting_Players);
   final Watch<SlotType> highLightSlotType = Watch(SlotType.Empty);
-
-  int smoothed = 3;
-
   final Watch<bool> frameSmoothing = Watch(true);
-
   final playerTextStyle = TextStyle(color: Colors.white);
+  var panningCamera = false;
+  var framesSinceOrbAcquired = 999;
+  var lastOrbAcquired = OrbType.Emerald;
+  var smoothed = 3;
 
   final List<String> letsGo = [
     "Come on!",
