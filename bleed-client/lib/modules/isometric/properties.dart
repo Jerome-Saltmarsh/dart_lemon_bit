@@ -44,9 +44,8 @@ class IsometricProperties {
     final particles = isometric.state.particles;
     final length = particles.length;
     for (int i = 0; i < length; i++) {
-      if (particles[i].active) {
-        totalParticles++;
-      }
+      if (!particles[i].active) continue;
+      totalParticles++;
     }
     return totalParticles;
   }

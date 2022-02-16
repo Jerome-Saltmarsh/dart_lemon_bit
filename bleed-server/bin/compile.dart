@@ -239,16 +239,13 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, experienceRequired);
   final perc = player.experience / experienceRequired * 100;
   _writeInt(buffer, perc); // todo make sure player is not max level
-
   _write(buffer, player.type.index);
   _writeInt(buffer, player.abilityTarget.x);
   _writeInt(buffer, player.abilityTarget.y);
-
   _write(buffer, player.magic);
   _write(buffer, player.maxMagic);
   _writeInt(buffer, player.attackRange);
   _write(buffer, player.team);
-
   _write(buffer, player.slots.weapon.index);
   _write(buffer, player.slots.armour.index);
   _write(buffer, player.slots.helm.index);
@@ -280,7 +277,6 @@ void compilePlayer(StringBuffer buffer, Player player) {
   } else {
     _compilePlayerAbility(buffer, player);
   }
-
   _compilePlayerEvents(buffer, player);
 }
 

@@ -13,9 +13,7 @@ import 'package:bleed_client/state/game.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_engine/enums.dart';
-import 'package:lemon_math/adjacent.dart';
 import 'package:lemon_math/give_or_take.dart';
-import 'package:lemon_math/opposite.dart';
 import 'package:lemon_math/randomBool.dart';
 import 'package:lemon_math/randomInt.dart';
 
@@ -42,7 +40,6 @@ class GameEvents {
     state.player.state.onChanged(onPlayerCharacterStateChanged);
     state.status.onChanged(_onGameStatusChanged);
     state.textMode.onChanged(onTextModeChanged);
-
     state.player.orbs.emerald.listen(onEmeraldsChanged);
     state.player.orbs.ruby.listen(onEmeraldsChanged);
     state.player.orbs.topaz.listen(onEmeraldsChanged);

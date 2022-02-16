@@ -90,6 +90,13 @@ class GameRender {
     drawPlayerText();
 
     engine.setPaintColorWhite();
+
+    engine.render(
+        dstX: state.player.x,
+        dstY: state.player.y,
+        srcX: atlas.items.orbTopaz.x,
+        srcY: atlas.items.orbTopaz.y - 50,
+    );
   }
 
   void weaponRangeCircle() {
