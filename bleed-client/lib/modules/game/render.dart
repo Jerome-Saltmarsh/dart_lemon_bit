@@ -93,9 +93,9 @@ class GameRender {
 
     engine.render(
         dstX: state.player.x,
-        dstY: state.player.y,
+        dstY: state.player.y - 50,
         srcX: atlas.items.orbTopaz.x,
-        srcY: atlas.items.orbTopaz.y - 50,
+        srcY: atlas.items.orbTopaz.y,
     );
   }
 
