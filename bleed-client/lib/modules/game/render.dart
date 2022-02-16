@@ -91,21 +91,25 @@ class GameRender {
 
     engine.setPaintColorWhite();
 
+    final totalFrames = 50;
+    final totalFramesThird = ((totalFrames) * 0.33).toInt();
+    final totalFramesTwoThirds = totalFramesThird + totalFramesThird;
     final framesSinceOrbAcquired = state.framesSinceOrbAcquired;
-    if (framesSinceOrbAcquired < 100) {
+
+    if (framesSinceOrbAcquired < totalFrames) {
       double y = 0;
-      final max = 50.0;
-      if (framesSinceOrbAcquired < 33){
-        y = framesSinceOrbAcquired / 33 * max;
-      } else if (framesSinceOrbAcquired < 66){
+      final max = 40.0;
+      if (framesSinceOrbAcquired < totalFramesThird){
+        y = framesSinceOrbAcquired / totalFramesThird * max;
+      } else if (framesSinceOrbAcquired < totalFramesTwoThirds){
         y = max;
       } else {
-        y = (100 - framesSinceOrbAcquired) / 33 * max;
+        y = (totalFrames - framesSinceOrbAcquired) / totalFramesThird * max;
       }
 
       engine.render(
         dstX: state.player.x,
-        dstY: state.player.y - y,
+        dstY: state.player.y - y - 10,
         srcX: atlas.items.orbTopaz.x,
         srcY: atlas.items.orbTopaz.y,
       );
