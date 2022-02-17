@@ -491,6 +491,10 @@ class IsometricRender {
          return SpriteLayer.Bow_Wooden;
        case SlotType.Staff_Wooden:
          return SpriteLayer.Staff_Wooden;
+       case SlotType.Staff_Blue:
+         return SpriteLayer.Staff_Wooden;
+       case SlotType.Staff_Golden:
+         return SpriteLayer.Staff_Wooden;
        default:
          throw Exception("cannot map ${character.equippedWeapon} to sprite index");
      }
