@@ -851,13 +851,3 @@ class GameBuild {
   }
 }
 
-List<SlotType> mapStoreTabSlotTypes(StoreTab storeTab){
-  switch(storeTab){
-    case StoreTab.Weapons:
-      return slotTypes.weapons;
-    case StoreTab.Armor:
-      return slotTypes.armour;
-    case StoreTab.Items:
-      return slotTypes.items;
-  }
-}

@@ -483,6 +483,10 @@ class IsometricRender {
          return SpriteLayer.Sword_Steel;
        case SlotType.Bow_Wooden:
          return SpriteLayer.Bow_Wooden;
+       case SlotType.Bow_Green:
+         return SpriteLayer.Bow_Wooden;
+       case SlotType.Bow_Gold:
+         return SpriteLayer.Bow_Wooden;
        case SlotType.Staff_Wooden:
          return SpriteLayer.Staff_Wooden;
        default:

@@ -36,8 +36,9 @@ class _SlotTypes {
   final List<SlotType> all = SlotType.values;
 
   final List<SlotType> weapons = [
-    SlotType.Sword_Short,
     SlotType.Bow_Wooden,
+    SlotType.Bow_Green,
+    SlotType.Sword_Short,
     SlotType.Sword_Wooden,
     SlotType.Staff_Wooden,
   ];
@@ -60,6 +61,14 @@ class _SlotTypes {
     SlotType.Sword_Short,
     SlotType.Sword_Long,
   ];
+
+  final List<SlotType> staffs = [
+    SlotType.Staff_Wooden,
+    SlotType.Staff_Golden,
+    SlotType.Staff_Blue,
+  ];
+
+
 
   final List<SlotType> metal = [
     SlotType.Sword_Short,
@@ -85,13 +94,14 @@ class _SlotTypes {
 
 extension SlotTypeProperties on SlotType {
   bool get isEmpty => this == SlotType.Empty;
-  bool get isWeapon => slotTypes.weapons.contains(this);
+  bool get isWeapon => isBow || isSword || isStaff;
   bool get isArmour => slotTypes.armour.contains(this);
   bool get isHelm => slotTypes.helms.contains(this);
   bool get isItem => slotTypes.items.contains(this);
   bool get isBow => slotTypes.bows.contains(this);
   bool get isMelee => slotTypes.melee.contains(this);
   bool get isSword => slotTypes.swords.contains(this);
+  bool get isStaff => slotTypes.staffs.contains(this);
   bool get isMetal => slotTypes.metal.contains(this);
 
   int get damage {
