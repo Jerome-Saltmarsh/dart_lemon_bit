@@ -113,7 +113,7 @@
 [ ] Dynamic Clothing Engine
 [ ] Slot machine concept
 [ ] Crafting System
-[ ] Earn Gem Audio
+[x] Earn Gem Audio
 [x] Zombie Death Animation Particles
 [x] Weapon Staff
 [x] Efficient Health Bars

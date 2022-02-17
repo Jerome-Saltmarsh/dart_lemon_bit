@@ -30,6 +30,9 @@ class _Atlas {
   final fish = _Fish();
   final items = _Items();
   final parts = Vector2(0, 5385);
+  final orbRuby = Vector2(2306, 0);
+  final orbEmerald = Vector2(2306 + 24, 0);
+  final orbTopaz = Vector2(2306 + 48, 0);
 }
 
 class _Items {
@@ -107,7 +110,7 @@ class _Particles {
   final Vector2 blood = Vector2(2366, 633);
   final Vector2 zombieHead = Vector2(770, 3218);
   final Vector2 shell  = Vector2(2072, 1623);
-  final Vector2  zombieArm  = Vector2(1052, 1479);
+  final Vector2 zombieArm  = Vector2(1052, 1479);
   final Vector2 zombieLeg  = Vector2(1539, 2463);
   final Vector2 zombieTorso  = Vector2(1538, 1736);
   final Vector2 circle32 = Vector2(2410, 515);

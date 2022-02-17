@@ -11,6 +11,7 @@ import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
+import 'package:bleed_client/common/OrbType.dart';
 import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/constants/colours.dart';
@@ -91,27 +92,30 @@ class GameRender {
 
     engine.setPaintColorWhite();
 
-    final totalFrames = 50;
-    final totalFramesThird = ((totalFrames) * 0.33).toInt();
-    final totalFramesTwoThirds = totalFramesThird + totalFramesThird;
+    final totalFrames = 60;
+    final totalFramesHalf = ((totalFrames) * 0.5).toInt();
     final framesSinceOrbAcquired = state.framesSinceOrbAcquired;
 
     if (framesSinceOrbAcquired < totalFrames) {
       double y = 0;
-      final max = 40.0;
-      if (framesSinceOrbAcquired < totalFramesThird){
-        y = framesSinceOrbAcquired / totalFramesThird * max;
-      } else if (framesSinceOrbAcquired < totalFramesTwoThirds){
-        y = max;
+      final max = 30.0;
+      if (framesSinceOrbAcquired < totalFramesHalf){
+        y = framesSinceOrbAcquired / totalFramesHalf * max;
       } else {
-        y = (totalFrames - framesSinceOrbAcquired) / totalFramesThird * max;
+        y = (totalFrames - framesSinceOrbAcquired) / totalFramesHalf * max;
       }
 
       engine.render(
         dstX: state.player.x,
-        dstY: state.player.y - y - 10,
-        srcX: atlas.items.orbTopaz.x,
-        srcY: atlas.items.orbTopaz.y,
+        dstY: state.player.y - y - 30,
+        srcX: state.lastOrbAcquired == OrbType.Emerald ? atlas.orbEmerald.x
+              :
+              state.lastOrbAcquired == OrbType.Ruby ? atlas.orbRuby.x
+              :
+              atlas.orbTopaz.x,
+        srcY: atlas.orbTopaz.y,
+        srcSize: 24,
+        scale: 0.7
       );
     }
   }
