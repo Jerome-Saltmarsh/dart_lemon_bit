@@ -591,7 +591,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return errorArgsExpected(3, arguments);
           }
 
-          Player? player = engine.findPlayerByUuid(arguments[1]);
+          final player = engine.findPlayerByUuid(arguments[1]);
           if (player == null) {
             return errorPlayerNotFound();
           }

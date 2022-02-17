@@ -40,17 +40,7 @@ class GameRender {
 
   void render(Canvas canvas, Size size) {
 
-    if (state.frameSmoothing.value && state.smoothed > 0){
-      state.smoothed--;
-      for(final character in game.humans){
-        if (character.state == CharacterState.Running) {
-          final angle = character.angle;
-          final speed = 0.5;
-          character.x += adjacent(angle, speed);
-          character.y += opposite(angle, speed);
-        }
-      }
-    }
+    applyFrameSmoothing();
 
     if (state.player.uuid.value.isEmpty) {
       return;
@@ -64,8 +54,6 @@ class GameRender {
     isometric.render.tiles();
     drawProjectiles(game.projectiles);
     drawBulletHoles(game.bulletHoles);
-
-    // weaponRangeCircle();
 
     drawAbility();
     attackTargetCircle();
@@ -120,6 +108,20 @@ class GameRender {
     }
   }
 
+  void applyFrameSmoothing() {
+    if (!state.frameSmoothing.value) return;
+    if (state.smoothed >= 0) return;
+      state.smoothed--;
+      for(final character in game.humans) {
+        if (character.state.running) {
+          final angle = character.angle;
+          final speed = 0.5;
+          character.x += adjacent(angle, speed);
+          character.y += opposite(angle, speed);
+        }
+      }
+  }
+
   void weaponRangeCircle() {
     engine.draw.drawCircleOutline(
         radius: state.player.slots.weapon.value.range,
@@ -138,10 +140,10 @@ class GameRender {
   }
 
   void _renderCharacterHealthBars() {
-    for(int i = 0; i < game.totalHumans; i++) {
+    for (int i = 0; i < game.totalHumans; i++) {
       isometric.render.drawCharacterHealthBar(game.humans[i]);
     }
-    for(int i = 0; i < game.totalZombies.value; i++) {
+    for (int i = 0; i < game.totalZombies.value; i++) {
       isometric.render.drawCharacterHealthBar(game.zombies[i]);
     }
   }

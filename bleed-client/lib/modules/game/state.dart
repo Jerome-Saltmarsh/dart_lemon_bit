@@ -62,16 +62,17 @@ class GameState {
     SlotType.Bow_Wooden : resources.icons.bows.wooden,
     SlotType.Bow_Green : resources.icons.bows.green,
     SlotType.Bow_Gold : resources.icons.bows.gold,
-    SlotType.Staff_Wooden : resources.icons.staffWooden,
-    SlotType.Staff_Blue : resources.icons.staffBlue,
-    SlotType.Staff_Golden : resources.icons.staffGolden,
+    SlotType.Staff_Wooden : resources.icons.staffs.wooden,
+    SlotType.Staff_Blue : resources.icons.staffs.blue,
+    SlotType.Staff_Golden : resources.icons.staffs.golden,
     SlotType.Spell_Tome_Fireball : resources.icons.bookRed,
-    SlotType.Body_Blue : resources.icons.armourStandard,
+    SlotType.Body_Blue : resources.icons.armour.standard,
     SlotType.Steel_Helmet : resources.icons.heads.steel,
     SlotType.Magic_Hat : resources.icons.heads.magic,
     SlotType.Rogue_Hood : resources.icons.heads.rogue,
     SlotType.Potion_Red : resources.icons.potions.red,
     SlotType.Potion_Blue : resources.icons.potions.blue,
+    SlotType.Armour_Padded : resources.icons.potions.blue,
   };
 }
 

@@ -1,5 +1,6 @@
 enum SlotType {
   Empty,
+  Armour_Padded,
   Silver_Pendant,
   Golden_Necklace,
   Brace,
@@ -55,6 +56,7 @@ const List<SlotType> _metal = [
 
 const List<SlotType> _armour = [
   SlotType.Body_Blue,
+  SlotType.Armour_Padded,
 ];
 
 const List<SlotType> _helms = [

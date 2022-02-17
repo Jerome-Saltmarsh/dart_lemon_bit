@@ -421,16 +421,16 @@ class GameBuild {
       children: [
         shopSlotRow(
           SlotType.Body_Blue,
-          SlotType.Empty,
+          SlotType.Armour_Padded,
           SlotType.Empty,
         ),
         shopSlotRow(
           SlotType.Rogue_Hood,
           SlotType.Steel_Helmet,
-          SlotType.Magic_Hat,
+          SlotType.Empty,
         ),
         shopSlotRow(
-          SlotType.Empty,
+          SlotType.Magic_Hat,
           SlotType.Empty,
           SlotType.Empty,
         )

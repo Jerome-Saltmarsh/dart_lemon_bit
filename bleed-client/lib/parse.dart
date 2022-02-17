@@ -543,7 +543,7 @@ int consumeInt() {
 }
 
 SlotType consumeSlotType(){
-   return slotTypesAll[_consumeIntUnsafe()];
+   return slotTypes[_consumeIntUnsafe()];
 }
 
 int _consumeIntUnsafe() {

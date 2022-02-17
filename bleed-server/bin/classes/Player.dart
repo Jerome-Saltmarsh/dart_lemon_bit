@@ -122,7 +122,7 @@ class Player extends Character with Entity {
     if (!slots.emptySlotAvailable) return;
     dispatch(PlayerEvent.Item_Equipped);
 
-    switch(slotTypeCategory){
+    switch(slotTypeCategory) {
       case SlotTypeCategory.Weapon:
         if (slots.weapon.isEmpty) return;
         slots.assignToEmpty(slots.weapon);
@@ -150,35 +150,35 @@ class Player extends Character with Entity {
     }
   }
 
-  void acquire(SlotType slotType){
+  void acquire(SlotType slotType) {
     if (!slots.emptySlotAvailable) return;
     dispatch(PlayerEvent.Item_Purchased);
     setStateChangingWeapons();
-
-    if (slotType.isWeapon){
+    if (slotType.isWeapon) {
       if (slots.weapon.isEmpty){
         slots.weapon = slotType;
         onEquipped(slotType);
         return;
       }
     }
-
-    if (slotType.isArmour){
-      if (slots.armour.isEmpty){
+    if (slotType.isArmour) {
+      if (slots.armour.isEmpty) {
         slots.armour = slotType;
         onEquipped(slotType);
         return;
       }
     }
-
-    if (slotType.isHelm){
-      if (slots.helm.isEmpty){
+    if (slotType.isHelm) {
+      if (slots.helm.isEmpty) {
         slots.helm = slotType;
         onEquipped(slotType);
         return;
       }
     }
     slots.assignToEmpty(slotType);
+    if (slotType.isItem){
+      onEquipped(slotType);
+    }
   }
 
   void useSlot(int index) {

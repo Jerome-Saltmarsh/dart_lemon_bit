@@ -18,18 +18,27 @@ class _Icons {
   final sword = _image("sword");
   final shield = _image("shield");
   final book = _image("book");
-  final staffWooden = _image("staff-wooden");
-  final staffBlue = _image("staff-blue");
-  final staffGolden = _image("staff-golden");
   final bookRed = _image("book-red");
   final unknown = _image("unknown");
-  final armourStandard = _image("armour-standard");
   final empty = _image("slot-empty");
-  final _SwordIcons swords = _SwordIcons();
-  final _BowIcons bows = _BowIcons();
-  final _PotionIcons potions = _PotionIcons();
-  final _HeadIcons heads = _HeadIcons();
-  final _Trinkets trinkets = _Trinkets();
+  final armour = _ArmourIcons();
+  final swords = _SwordIcons();
+  final bows = _BowIcons();
+  final potions = _PotionIcons();
+  final heads = _HeadIcons();
+  final trinkets = _Trinkets();
+  final staffs = _StaffIcons();
+}
+
+class _StaffIcons {
+  final wooden = _image("staff-wooden");
+  final blue = _image("staff-blue");
+  final golden = _image("staff-golden");
+}
+
+class _ArmourIcons {
+  final padded = _image('armour-padded');
+  final standard = _image("armour-standard");
 }
 
 class _Trinkets {
