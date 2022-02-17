@@ -1,14 +1,10 @@
-import 'dart:math';
 
 import 'package:lemon_math/abs.dart';
-import 'package:lemon_math/angle_between.dart';
 import 'package:lemon_math/hypotenuse.dart';
 import 'package:lemon_math/randomItem.dart';
 
-import 'classes/Character.dart';
 import 'classes/GameObject.dart';
 import 'classes/Player.dart';
-import 'common/ItemType.dart';
 import 'common/OrbType.dart';
 import 'constants.dart';
 import 'maths.dart';

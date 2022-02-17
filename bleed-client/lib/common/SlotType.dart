@@ -28,100 +28,77 @@ enum SlotType {
   Rogue_Hood,
 }
 
-final List<SlotType> slotTypesAll = SlotType.values;
-final _SlotTypes slotTypes = _SlotTypes();
+final List<SlotType> slotTypes = SlotType.values;
 
-class _SlotTypes {
+const List<SlotType> _bows = [
+  SlotType.Bow_Wooden,
+  SlotType.Bow_Green,
+  SlotType.Bow_Gold,
+];
 
-  final List<SlotType> all = SlotType.values;
+const List<SlotType> _swords = [
+  SlotType.Sword_Wooden,
+  SlotType.Sword_Short,
+  SlotType.Sword_Long,
+];
 
-  final List<SlotType> weapons = [
-    SlotType.Bow_Wooden,
-    SlotType.Bow_Green,
-    SlotType.Sword_Short,
-    SlotType.Sword_Wooden,
-    SlotType.Staff_Wooden,
-  ];
+const List<SlotType> _staffs = [
+  SlotType.Staff_Wooden,
+  SlotType.Staff_Golden,
+  SlotType.Staff_Blue,
+];
 
-  final List<SlotType> bows = [
-    SlotType.Bow_Wooden,
-    SlotType.Bow_Green,
-    SlotType.Bow_Gold,
-  ];
+const List<SlotType> _metal = [
+  SlotType.Sword_Short,
+  SlotType.Sword_Long,
+];
 
-  final List<SlotType> melee = [
-    SlotType.Empty,
-    SlotType.Sword_Wooden,
-    SlotType.Sword_Short,
-    SlotType.Sword_Long,
-  ];
+const List<SlotType> _armour = [
+  SlotType.Body_Blue,
+];
 
-  final List<SlotType> swords = [
-    SlotType.Sword_Wooden,
-    SlotType.Sword_Short,
-    SlotType.Sword_Long,
-  ];
+const List<SlotType> _helms = [
+  SlotType.Steel_Helmet,
+  SlotType.Leather_Cap,
+  SlotType.Magic_Hat,
+  SlotType.Rogue_Hood,
+];
 
-  final List<SlotType> staffs = [
-    SlotType.Staff_Wooden,
-    SlotType.Staff_Golden,
-    SlotType.Staff_Blue,
-  ];
-
-
-
-  final List<SlotType> metal = [
-    SlotType.Sword_Short,
-    SlotType.Sword_Long,
-  ];
-
-  final List<SlotType> armour = [
-    SlotType.Body_Blue,
-  ];
-
-  final List<SlotType> helms = [
-    SlotType.Steel_Helmet,
-    SlotType.Leather_Cap,
-    SlotType.Magic_Hat,
-    SlotType.Rogue_Hood,
-  ];
-
-  final List<SlotType> items = [
-    SlotType.Silver_Pendant,
-    SlotType.Golden_Necklace,
-  ];
-}
+const List<SlotType> _items = [
+  SlotType.Silver_Pendant,
+  SlotType.Golden_Necklace,
+];
 
 extension SlotTypeProperties on SlotType {
   bool get isEmpty => this == SlotType.Empty;
   bool get isWeapon => isBow || isSword || isStaff;
-  bool get isArmour => slotTypes.armour.contains(this);
-  bool get isHelm => slotTypes.helms.contains(this);
-  bool get isItem => slotTypes.items.contains(this);
-  bool get isBow => slotTypes.bows.contains(this);
-  bool get isMelee => slotTypes.melee.contains(this);
-  bool get isSword => slotTypes.swords.contains(this);
-  bool get isStaff => slotTypes.staffs.contains(this);
-  bool get isMetal => slotTypes.metal.contains(this);
+  bool get isMelee => isEmpty || isSword || isStaff;
+  bool get isArmour => _armour.contains(this);
+  bool get isHelm => _helms.contains(this);
+  bool get isItem => _items.contains(this);
+  bool get isBow => _bows.contains(this);
+  bool get isSword => _swords.contains(this);
+  bool get isStaff => _staffs.contains(this);
+  bool get isMetal => _metal.contains(this);
 
   int get damage {
-    return slotTypeDamage[this] ?? 0;
+    return _slotTypeDamage[this] ?? 0;
   }
 
   int get health {
-    return slotTypeHealth[this] ?? 0;
+    return _slotTypeHealth[this] ?? 0;
   }
 
   int get magic {
-    return slotTypeMagic[this] ?? 0;
+    return _slotTypeMagic[this] ?? 0;
   }
 
   double get range {
-    return slotTypeRange[this] ?? 0;
+    return _slotTypeRange[this] ?? 0;
   }
 }
 
-const Map<SlotType, int> slotTypeDamage = {
+const Map<SlotType, int> _slotTypeDamage = {
   SlotType.Empty: 1,
   SlotType.Sword_Wooden: 2,
   SlotType.Sword_Short: 4,
@@ -134,13 +111,13 @@ const Map<SlotType, int> slotTypeDamage = {
   SlotType.Staff_Golden: 6,
 };
 
-const Map<SlotType, int> slotTypeHealth = {
+const Map<SlotType, int> _slotTypeHealth = {
   SlotType.Steel_Helmet: 5,
   SlotType.Body_Blue: 10,
   SlotType.Golden_Necklace: 4,
 };
 
-const Map<SlotType, int> slotTypeMagic = {
+const Map<SlotType, int> _slotTypeMagic = {
   SlotType.Steel_Helmet: 5,
   SlotType.Body_Blue: 10,
   SlotType.Magic_Hat: 10,
@@ -150,7 +127,7 @@ const Map<SlotType, int> slotTypeMagic = {
   SlotType.Golden_Necklace: 4,
 };
 
-const Map<SlotType, double> slotTypeRange = {
+const Map<SlotType, double> _slotTypeRange = {
   SlotType.Empty: 25,
   SlotType.Sword_Wooden: 35,
   SlotType.Sword_Short: 60,
@@ -158,4 +135,7 @@ const Map<SlotType, double> slotTypeRange = {
   SlotType.Bow_Wooden: 300,
   SlotType.Bow_Green: 500,
   SlotType.Bow_Gold: 600,
+  SlotType.Staff_Wooden: 45,
+  SlotType.Staff_Blue: 45,
+  SlotType.Staff_Golden: 45,
 };

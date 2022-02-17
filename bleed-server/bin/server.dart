@@ -955,13 +955,13 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 "ClientRequest.Purchase Error: could not parse argument 2 to int");
           }
 
-          if (slotItemIndex < 0 || slotItemIndex >= slotTypes.all.length){
+          if (slotItemIndex < 0 || slotItemIndex >= slotTypes.length){
             return error(GameError.InvalidArguments,
                 message:
                 "$slotItemIndex is not a valid slot type index");
           }
 
-          final slotType = slotTypes.all[slotItemIndex];
+          final slotType = slotTypes[slotItemIndex];
           player.acquire(slotType);
           return;
 

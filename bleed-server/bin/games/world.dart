@@ -1,5 +1,4 @@
 import '../classes/Game.dart';
-import '../classes/Player.dart';
 import '../classes/SpawnPoint.dart';
 import 'cave.dart';
 import 'tavern.dart';

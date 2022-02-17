@@ -3,7 +3,6 @@ import 'package:lemon_math/Vector2.dart';
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
 import '../common/WeaponType.dart';
-import '../common/enums/Direction.dart';
 import '../constants.dart';
 import '../constants/no_squad.dart';
 import '../enums/npc_mode.dart';
