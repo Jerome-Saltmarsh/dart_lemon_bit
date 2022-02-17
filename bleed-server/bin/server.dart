@@ -318,6 +318,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
+          if (arguments.length < 6){
+            errorInvalidArg("Insufficient Arguments. 6 Required");
+            return;
+          }
+
           final actionIndex = int.parse(arguments[2]);
           final action = characterActions[actionIndex];
           final mouseX = double.parse(arguments[4]);
@@ -361,7 +366,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                     player.type.isTemplate
                     // || player.attackTarget != null
                 ) {
-                  characterAimAt(player, mouseX, mouseY);
+                  // characterAimAt(player, mouseX, mouseY);
 
                   if (aimTarget != null) {
                     player.target = aimTarget;
@@ -388,6 +393,14 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 case AbilityMode.None:
                   return;
                 case AbilityMode.Targeted:
+                  if (aimTarget != null) {
+                    player.target = aimTarget;
+                  } else {
+                    player.runTarget.x = mouseX;
+                    player.runTarget.y = mouseY;
+                    player.target = player.runTarget;
+                  }
+
                   if (player.attackTarget == null) {
                     return;
                   }
