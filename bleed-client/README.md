@@ -113,6 +113,8 @@
 [ ] Dynamic Clothing Engine
 [ ] Slot machine concept
 [ ] Crafting System
+[ ] Drag inventory slots to change position
+[ ] Fix Caste spell ai
 [x] Earn Gem Audio
 [x] Zombie Death Animation Particles
 [x] Weapon Staff

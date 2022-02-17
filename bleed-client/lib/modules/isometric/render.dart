@@ -517,6 +517,8 @@ class IsometricRender {
 
   void drawCharacterHealthBar(Character character){
     if (!onScreen(character.x, character.y)) return;
+    final shade = properties.getShadeAtPosition(character.x, character.y);
+    if (shade >= Shade.Dark) return;
     engine.setPaintColor(colours.redDarkest);
     engine.canvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom, _width, _height), engine.paint);
     engine.setPaintColor(colours.red);

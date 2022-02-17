@@ -55,13 +55,13 @@ class IsometricProperties {
   }
 
   int getShade(int row, int column){
-    if (row < 0) return Shade.Very_Dark;
-    if (column < 0) return Shade.Very_Dark;
-    if (row >= state.totalRows.value){
-      return Shade.Very_Dark;
+    if (row < 0) return Shade.Pitch_Black;
+    if (column < 0) return Shade.Pitch_Black;
+    if (row >= state.totalRowsInt){
+      return Shade.Pitch_Black;
     }
-    if (column >= state.totalColumns.value){
-      return Shade.Very_Dark;
+    if (column >= state.totalColumnsInt){
+      return Shade.Pitch_Black;
     }
     return state.dynamicShade[row][column];
   }
