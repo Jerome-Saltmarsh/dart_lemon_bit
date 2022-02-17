@@ -13,6 +13,8 @@ import 'package:flutter/material.dart';
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_watch/watch.dart';
 
+import 'utilities.dart';
+
 class IsometricState {
   List<ParticleEmitter> particleEmitters = [];
   late ui.Image image;
@@ -29,16 +31,37 @@ class IsometricState {
   final List<Item> items = [];
   final Watch<int> totalColumns = Watch(0);
   final Watch<int> totalRows = Watch(0);
-  int totalColumnsInt = 0;
-  int totalRowsInt = 0;
   final Watch<int> hour = Watch(0);
   final Watch<int> time = Watch(0);
   final Watch<int> ambient = Watch(Shade.Bright);
   final Watch<int> maxAmbientBrightness = Watch(Shade.Bright);
   final nameTextStyle = TextStyle(color: Colors.white);
 
+  int totalColumnsInt = 0;
+  int totalRowsInt = 0;
   int minRow = 0;
   int maxRow = 0;
   int minColumn = 0;
   int maxColumn = 0;
+
+  // properties
+  int getShade(int row, int column){
+    if (row < 0) return Shade.Pitch_Black;
+    if (column < 0) return Shade.Pitch_Black;
+    if (row >= totalRowsInt){
+      return Shade.Pitch_Black;
+    }
+    if (column >= totalColumnsInt){
+      return Shade.Pitch_Black;
+    }
+    return dynamicShade[row][column];
+  }
+
+  int getShadeAtPosition(double x, double y){
+    return getShade(getRow(x, y), getColumn(x, y));
+  }
+
+  bool inDarkness(double x, double y){
+    return getShadeAtPosition(x, y) >= Shade.Very_Dark;
+  }
 }

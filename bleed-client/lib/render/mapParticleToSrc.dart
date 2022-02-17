@@ -32,7 +32,7 @@ const _size64 = 64.0;
 final _particles = atlas.particles;
 
 void mapParticleToSrc(Particle particle){
-  final shade = isometric.properties.getShadeAtPosition(particle.x, particle.y);
+  final shade = isometric.state.getShadeAtPosition(particle.x, particle.y);
 
   switch(particle.type) {
     case ParticleType.Pixel:

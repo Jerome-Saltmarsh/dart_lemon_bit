@@ -71,7 +71,7 @@ final Map<ObjectType, Vector2> objectTypeSrcPosition = {
 final _torchHeight = environmentObjectHeight[ObjectType.Torch]!;
 
 void mapEnvironmentObjectToSrc(EnvironmentObject env){
-  final shade = isometric.properties.getShade(env.row, env.column);
+  final shade = isometric.state.getShade(env.row, env.column);
   final type = env.type;
   final translation = objectTypeSrcPosition[type];
   if (translation == null){

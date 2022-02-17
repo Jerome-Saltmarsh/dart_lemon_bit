@@ -212,7 +212,7 @@ class GameRender {
     for (Vector2 bulletHole in bulletHoles) {
       if (bulletHole.x == 0) return;
       if (!onScreen(bulletHole.x, bulletHole.y)) continue;
-      if (isometric.properties.inDarkness(bulletHole.x, bulletHole.y)) continue;
+      if (isometric.state.inDarkness(bulletHole.x, bulletHole.y)) continue;
       engine.draw.circle(bulletHole.x, bulletHole.y, 2, Colors.black);
     }
   }

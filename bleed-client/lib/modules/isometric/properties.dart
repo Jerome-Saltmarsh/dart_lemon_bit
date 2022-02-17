@@ -50,25 +50,19 @@ class IsometricProperties {
     return totalParticles;
   }
 
-  int getShadeAtPosition(double x, double y){
-    return getShade(getRow(x, y), getColumn(x, y));
-  }
 
-  int getShade(int row, int column){
-    if (row < 0) return Shade.Pitch_Black;
-    if (column < 0) return Shade.Pitch_Black;
-    if (row >= state.totalRowsInt){
-      return Shade.Pitch_Black;
-    }
-    if (column >= state.totalColumnsInt){
-      return Shade.Pitch_Black;
-    }
-    return state.dynamicShade[row][column];
-  }
+  // int getShade(int row, int column){
+  //   if (row < 0) return Shade.Pitch_Black;
+  //   if (column < 0) return Shade.Pitch_Black;
+  //   if (row >= state.totalRowsInt){
+  //     return Shade.Pitch_Black;
+  //   }
+  //   if (column >= state.totalColumnsInt){
+  //     return Shade.Pitch_Black;
+  //   }
+  //   return state.dynamicShade[row][column];
+  // }
 
-  bool inDarkness(double x, double y){
-    return getShadeAtPosition(x, y) >= Shade.Very_Dark;
-  }
 
   bool get boundaryAtMouse => tileAtMouse == Tile.Boundary;
 

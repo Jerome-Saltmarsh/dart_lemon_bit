@@ -207,7 +207,7 @@ class IsometricRender {
 
   void _renderParticle(Particle value){
     if (!onScreen(value.x, value.y)) return;
-    final shade = properties.getShadeAtPosition(value.x, value.y);
+    final shade = state.getShadeAtPosition(value.x, value.y);
     if (shade >= Shade.Very_Dark) return;
 
     mapParticleToDst(value);
@@ -247,7 +247,7 @@ class IsometricRender {
 
   void environmentObject(EnvironmentObject value) {
     if (!queries.environmentObjectOnScreenScreen(value)) return;
-    final shade = properties.getShade(value.row, value.column);
+    final shade = state.getShade(value.row, value.column);
     if (shade == Shade.Pitch_Black) return;
 
     mapEnvironmentObjectToSrc(value);
@@ -264,7 +264,7 @@ class IsometricRender {
   void drawCharacter(Character character) {
     if (!onScreen(character.x, character.y)) return;
     if (!character.alive) return;
-    final shade = properties.getShadeAtPosition(character.x, character.y);
+    final shade = state.getShadeAtPosition(character.x, character.y);
     if (shade > Shade.Dark) return;
 
     if (character.type == CharacterType.Zombie){
@@ -517,7 +517,7 @@ class IsometricRender {
 
   void drawCharacterHealthBar(Character character){
     if (!onScreen(character.x, character.y)) return;
-    final shade = properties.getShadeAtPosition(character.x, character.y);
+    final shade = state.getShadeAtPosition(character.x, character.y);
     if (shade >= Shade.Dark) return;
     engine.setPaintColor(colours.redDarkest);
     engine.canvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom, _width, _height), engine.paint);
