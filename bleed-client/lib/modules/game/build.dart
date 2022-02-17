@@ -288,7 +288,7 @@ class GameBuild {
                       child: rowOrbs()),
                   height16,
                   panel(child: _panelStore()),
-                  height16,
+                  height64,
                   panel(child: _panelEquipped()),
                   height16,
                   panel(child: _panelInventory())
@@ -422,15 +422,15 @@ class GameBuild {
         shopSlotRow(
           SlotType.Body_Blue,
           SlotType.Armour_Padded,
-          SlotType.Empty,
+          SlotType.Magic_Robes,
         ),
         shopSlotRow(
           SlotType.Rogue_Hood,
           SlotType.Steel_Helmet,
-          SlotType.Empty,
+          SlotType.Magic_Hat,
         ),
         shopSlotRow(
-          SlotType.Magic_Hat,
+          SlotType.Empty,
           SlotType.Empty,
           SlotType.Empty,
         )

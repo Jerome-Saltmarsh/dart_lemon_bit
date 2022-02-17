@@ -87,13 +87,13 @@ void mapSrcHuman({
               direction: direction,
               frame: frame
           );
-        case SlotType.SniperRifle:
+        case SlotType.Sniper_Rifle:
           return srcLoop(
               atlas: atlas.human.shotgun.running,
               direction: direction,
               frame: frame
           );
-        case SlotType.AssaultRifle:
+        case SlotType.Assault_Rifle:
           return srcLoop(
               atlas: atlas.human.shotgun.running,
               direction: direction,

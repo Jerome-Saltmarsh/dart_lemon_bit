@@ -18,15 +18,16 @@ enum SlotType {
   Leather_Cap,
   Steel_Helmet,
   Magic_Hat,
-  Handgun,
-  Shotgun,
-  SniperRifle,
-  AssaultRifle,
   Spell_Tome_Fireball,
   Body_Blue,
   Potion_Red,
   Potion_Blue,
   Rogue_Hood,
+  Magic_Robes,
+  Handgun,
+  Shotgun,
+  Sniper_Rifle,
+  Assault_Rifle,
 }
 
 final List<SlotType> slotTypes = SlotType.values;
@@ -57,6 +58,7 @@ const List<SlotType> _metal = [
 const List<SlotType> _armour = [
   SlotType.Body_Blue,
   SlotType.Armour_Padded,
+  SlotType.Magic_Robes,
 ];
 
 const List<SlotType> _helms = [

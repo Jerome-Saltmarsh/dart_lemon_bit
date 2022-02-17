@@ -39,6 +39,7 @@ class _StaffIcons {
 class _ArmourIcons {
   final padded = _image('armour-padded');
   final standard = _image("armour-standard");
+  final magic = _image("armour-magic");
 }
 
 class _Trinkets {
