@@ -424,6 +424,8 @@ class IsometricRender {
         return SpriteLayer.Body_Cyan;
       case SlotType.Body_Blue:
         return SpriteLayer.Body_Blue;
+      case SlotType.Armour_Padded:
+        return SpriteLayer.Body_Blue;
       default:
         throw Exception("cannot render body ${character.equippedHead.name}");
     }
