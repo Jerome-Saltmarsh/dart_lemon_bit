@@ -6,11 +6,9 @@ import 'package:lemon_math/hypotenuse.dart';
 
 import 'constants.dart';
 
-const double _0 = 0;
-const double half = 0.5;
-const double _1 = 1.0;
-const double goldenRatio = 1.61803398875;
-const double goldenRatioInverse = _1 / goldenRatio;
+const _0 = 0.0;
+const half = 0.5;
+const _1 = 1.0;
 
 double distanceV2(Vector2 a, Vector2 b) {
   return distanceBetween(a.x, a.y, b.x, b.y);

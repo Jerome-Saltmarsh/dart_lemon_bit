@@ -82,7 +82,6 @@ class Settings {
   final int crateDeactiveDuration = 1000;
   final double knifeHitAcceleration = 3;
   final double itemCollectRadius = 10;
-  final double chanceOfDropItem = goldenRatioInverse;
   final int itemDuration = 500;
   final double grenadeGravity = 0.06;
   final int maxZombies = 2500;

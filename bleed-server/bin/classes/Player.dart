@@ -223,7 +223,7 @@ class Player extends Character with Entity {
             cost: 5,
             range: 250,
             cooldown: 100,
-            mode: AbilityMode.Directed);
+            mode: AbilityMode.Targeted);
         return;
       }
 

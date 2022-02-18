@@ -723,6 +723,10 @@ extension GameFunctions on Game {
     setCharacterState(character, CharacterState.Striking);
   }
 
+  void setCharacterStatePerforming(Character character){
+    setCharacterState(character, CharacterState.Performing);
+  }
+
   void setCharacterState(Character character, CharacterState value) {
     // @on character set state
     if (character.dead) return;
@@ -915,6 +919,20 @@ extension GameFunctions on Game {
         player.target = null;
         return;
       }
+
+      final ability = player.ability;
+
+      if (ability != null){
+         if (withinRadius(player, target, ability.range)){
+           player.attackTarget = target;
+           setCharacterStatePerforming(player);
+           player.target = null;
+           return;
+         }
+         setCharacterStateRunning(player);
+         return;
+      }
+
       if (withinAttackRadius(player, target)) {
         player.attackTarget = target;
         setCharacterStateStriking(player);

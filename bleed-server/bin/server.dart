@@ -364,10 +364,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 if (player.type.isSoldier ||
                     player.type.isHuman ||
                     player.type.isTemplate
-                    // || player.attackTarget != null
                 ) {
-                  // characterAimAt(player, mouseX, mouseY);
-
                   if (aimTarget != null) {
                     player.target = aimTarget;
                   } else {
@@ -375,7 +372,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                     player.runTarget.y = mouseY;
                     player.target = player.runTarget;
                   }
-              }
+                }
               break;
               }
 
@@ -395,16 +392,13 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 case AbilityMode.Targeted:
                   if (aimTarget != null) {
                     player.target = aimTarget;
+                    return;
                   } else {
                     player.runTarget.x = mouseX;
                     player.runTarget.y = mouseY;
                     player.target = player.runTarget;
-                  }
-
-                  if (player.attackTarget == null) {
                     return;
                   }
-                  break;
                 case AbilityMode.Activated:
                 // TODO: Handle this case.
                   break;
