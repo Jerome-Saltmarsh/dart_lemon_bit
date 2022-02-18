@@ -725,6 +725,7 @@ extension GameFunctions on Game {
 
   void setCharacterStatePerforming(Character character){
     character.performing = character.ability;
+    character.ability = null;
     setCharacterState(character, CharacterState.Performing);
   }
 
