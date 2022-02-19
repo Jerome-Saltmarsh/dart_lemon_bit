@@ -115,6 +115,7 @@
 [ ] Crafting System
 [ ] Drag inventory slots to change position
 [ ] Fix Caste spell ai
+[ ] Fireball should heat seek enemy
 [ ] FIX Can't shoot while running
 [x] Earn Gem Audio
 [x] Zombie Death Animation Particles

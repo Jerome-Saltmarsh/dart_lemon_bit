@@ -11,13 +11,13 @@ import 'TileNode.dart';
 
 // constants
 const List<Vector2> _emptyPath = [];
-const int _tileSize = 48;
-const double _tileSizeHalf = _tileSize * 0.5;
-final Vector2 _vector2Zero = Vector2(0, 0);
-final Vector2 _vector2 = Vector2(0, 0);
-final TileNode _boundary = TileNode(false);
-// state
-int _search = 0;
+const _tileSize = 48;
+const _tileSizeHalf = _tileSize * 0.5;
+final _vector2Zero = Vector2(0, 0);
+final _vector2 = Vector2(0, 0);
+final _boundary = TileNode(false);
+// variables
+var _search = 0;
 
 double mapTilePositionX(int row, int column) {
   return perspectiveProjectX(row * _tileSizeHalf, column * _tileSizeHalf);
@@ -214,7 +214,7 @@ extension SceneFunctions on Scene {
     if (!tileNode.open) return;
     if (tileNode.search == _search) return;
 
-    int remaining =
+    final remaining =
         diffInt(tileNode.x, endNode.x) + diffInt(tileNode.y, endNode.y);
     TileNodeVisit tileNodeVisit = TileNodeVisit(previous, remaining, tileNode);
     visits.add(tileNodeVisit);
@@ -227,15 +227,15 @@ extension SceneFunctions on Scene {
 
     _search++;
 
-    int remaining =
+    final remaining =
         diffInt(startNode.x, endNode.x) + diffInt(startNode.y, endNode.y);
 
     List<TileNodeVisit> visits = [TileNodeVisit(null, remaining, startNode)];
     startNode.search = _search;
 
     while (visits.isNotEmpty) {
-      TileNodeVisit closest = visits[0];
-      int index = 0;
+      var closest = visits[0];
+      var index = 0;
 
       for(int i = 1; i < visits.length; i++){
         if (closest.isCloserThan(visits[i])) continue;
@@ -257,27 +257,29 @@ extension SceneFunctions on Scene {
       }
 
       visits.removeAt(index);
+      
+      final closestNode = closest.tileNode;
 
-      if (closest.tileNode.up.open) {
-        visit(closest.tileNode.up, closest, visits, endNode);
-        if (closest.tileNode.right.open) {
-          visit(closest.tileNode.upRight, closest, visits, endNode);
+      if (closestNode.up.open) {
+        visit(closestNode.up, closest, visits, endNode);
+        if (closestNode.right.open) {
+          visit(closestNode.upRight, closest, visits, endNode);
         }
-        if (closest.tileNode.left.open) {
-          visit(closest.tileNode.upRight, closest, visits, endNode);
-        }
-      }
-      if (closest.tileNode.down.open) {
-        visit(closest.tileNode.down, closest, visits, endNode);
-        if (closest.tileNode.right.open) {
-          visit(closest.tileNode.rightDown, closest, visits, endNode);
-        }
-        if (closest.tileNode.left.open) {
-          visit(closest.tileNode.downLeft, closest, visits, endNode);
+        if (closestNode.left.open) {
+          visit(closestNode.upRight, closest, visits, endNode);
         }
       }
-      visit(closest.tileNode.right, closest, visits, endNode);
-      visit(closest.tileNode.left, closest, visits, endNode);
+      if (closestNode.down.open) {
+        visit(closestNode.down, closest, visits, endNode);
+        if (closestNode.right.open) {
+          visit(closestNode.rightDown, closest, visits, endNode);
+        }
+        if (closestNode.left.open) {
+          visit(closestNode.downLeft, closest, visits, endNode);
+        }
+      }
+      visit(closestNode.right, closest, visits, endNode);
+      visit(closestNode.left, closest, visits, endNode);
     }
     return _emptyPath;
   }
