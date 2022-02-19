@@ -330,6 +330,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.mouseX = mouseX;
           player.mouseY = mouseY;
 
+          // TODO move this to game update
           if (!player.isSoldier) {
             final closestEnemy = game.getClosestEnemy(mouseX, mouseY, player.team);
             player.aimTarget = null;
@@ -357,7 +358,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               }
               final ability = player.ability;
               final aimTarget = player.aimTarget;
-              player.attackTarget = player.aimTarget;
+              player.attackTarget = aimTarget;
               playerSetAbilityTarget(player, mouseX, mouseY);
 
               if (ability == null) {
@@ -367,6 +368,13 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 ) {
                   if (aimTarget != null) {
                     player.target = aimTarget;
+
+                    if (player.type.isTemplate){
+                      if (withinRadius(player, aimTarget, player.slots.weapon.range)){
+                        characterFaceV2(player, aimTarget);
+                        game.setCharacterStateStriking(player);
+                      }
+                    }
                   } else {
                     player.runTarget.x = mouseX;
                     player.runTarget.y = mouseY;

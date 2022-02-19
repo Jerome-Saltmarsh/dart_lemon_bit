@@ -4,7 +4,6 @@ import '../common/Tile.dart';
 import '../common/enums/ObjectType.dart';
 import '../enums.dart';
 import '../maths.dart';
-import '../utilities.dart';
 import 'Character.dart';
 import 'EnvironmentObject.dart';
 import 'TileNode.dart';
@@ -177,7 +176,7 @@ class Scene {
   }
 }
 
-const _findPathMaxDistance = 100;
+const _findPathMaxDistance = 10;
 
 extension SceneFunctions on Scene {
 

@@ -1744,10 +1744,10 @@ void changeWeapon(Player player, int index) {
 }
 
 void playerSetAbilityTarget(Player player, double x, double y) {
-  Ability? ability = player.ability;
+  final ability = player.ability;
   if (ability == null) return;
 
-  double distance = distanceBetween(player.x, player.y, x, y);
+  final distance = distanceBetween(player.x, player.y, x, y);
 
   if (distance > ability.range) {
     double rotation = pi2 - angle2(player.x - x, player.y - y);
