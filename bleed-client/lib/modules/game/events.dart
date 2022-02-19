@@ -1,4 +1,5 @@
 import 'package:bleed_client/audio.dart';
+import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameError.dart';
@@ -33,7 +34,13 @@ class GameEvents {
     engine.callbacks.onLeftClicked = actions.playerPerform;
     engine.callbacks.onPanStarted = actions.playerPerform;
     engine.callbacks.onLongLeftClicked = actions.playerPerform;
-    engine.callbacks.onRightClicked = actions.deselectAbility;
+    engine.callbacks.onRightClicked = (){
+      if (state.player.ability.value == AbilityType.None) {
+        actions.spawnZombie();
+      } else {
+        actions.deselectAbility();
+      }
+    };
     state.player.characterType.onChanged(_onPlayerCharacterTypeChanged);
     game.type.onChanged(_onGameTypeChanged);
     state.player.uuid.onChanged(_onPlayerUuidChanged);

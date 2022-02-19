@@ -9,8 +9,8 @@ void connectToWebSocketServer(Region server, GameType gameType) {
     _connectLocalHost();
     return;
   }
-  final String httpsConnectionString = getHttpsConnectionString(server, gameType);
-  final String wsConnectionString = parseHttpToWebSocket(httpsConnectionString);
+  final httpsConnectionString = getHttpsConnectionString(server, gameType);
+  final wsConnectionString = parseHttpToWebSocket(httpsConnectionString);
   _connectToServer(wsConnectionString);
 }
 
@@ -27,8 +27,6 @@ const List<Region> serverTypes = Region.values;
 final List<Region> selectableServerTypes =
     serverTypes.where((type) => (isLocalHost || type != Region.LocalHost)
     ).toList();
-
-
 
 class _Servers {
   static const sydney = "https://gamestream-ws-sydney-10-osbmaezptq-ts.a.run.app";
