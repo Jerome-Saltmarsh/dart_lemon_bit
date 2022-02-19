@@ -190,7 +190,7 @@ class GameRender {
 
   void _drawPlayerNames() {
     for (int i = 0; i < game.totalHumans; i++) {
-      Character player = game.humans[i];
+      final player = game.humans[i];
       if (player.x == state.player.x) continue;
       if (diff(mouseWorldX, player.x) > style.nameRadius) continue;
       if (diff(mouseWorldY, player.y) > style.nameRadius) continue;
@@ -201,7 +201,8 @@ class GameRender {
 
   void drawPaths() {
     engine.setPaintColor(colours.blue);
-    for (List<Vector2> path in isometric.state.paths) {
+    engine.paint.strokeWidth = 4.0;
+    for (final path in isometric.state.paths) {
       for (int i = 0; i < path.length - 1; i++) {
         drawLine(path[i].x, path[i].y, path[i + 1].x, path[i + 1].y);
       }
@@ -209,7 +210,7 @@ class GameRender {
   }
 
   void drawBulletHoles(List<Vector2> bulletHoles) {
-    for (Vector2 bulletHole in bulletHoles) {
+    for (final bulletHole in bulletHoles) {
       if (bulletHole.x == 0) return;
       if (!onScreen(bulletHole.x, bulletHole.y)) continue;
       if (isometric.state.inDarkness(bulletHole.x, bulletHole.y)) continue;

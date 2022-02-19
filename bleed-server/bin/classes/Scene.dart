@@ -177,29 +177,9 @@ class Scene {
   }
 }
 
-int sortTileNodeVisits(TileNodeVisit a, TileNodeVisit b) {
-  if (a.score < b.score) return 1;
-  if (a.score > b.score) return -1;
-  if (a.remaining < b.remaining) return 1;
-  if (a.remaining > b.remaining) return -1;
-  if (a.travelled < b.travelled) return 1;
-  if (a.travelled > b.travelled) return -1;
-  return 0;
-}
-
-bool isCloser(TileNodeVisit a, TileNodeVisit b) {
-  if (a.score < b.score) return true;
-  if (a.score > b.score) return false;
-  if (a.remaining < b.remaining) return true;
-  if (a.remaining > b.remaining) return false;
-  if (a.travelled < b.travelled) return true;
-  if (a.travelled > b.travelled) return false;
-  return true;
-}
+const _findPathMaxDistance = 100;
 
 extension SceneFunctions on Scene {
-
-  Vector2 getCenterPosition() => getTilePosition(rows ~/ 2, columns ~/ 2);
 
   List<Vector2> findPath(double x1, double y1, double x2, double y2) {
     final startNode = tileNodeAt(x1, y1);
@@ -214,9 +194,8 @@ extension SceneFunctions on Scene {
     if (!tileNode.open) return;
     if (tileNode.search == _search) return;
 
-    final remaining =
-        diffInt(tileNode.x, endNode.x) + diffInt(tileNode.y, endNode.y);
-    TileNodeVisit tileNodeVisit = TileNodeVisit(previous, remaining, tileNode);
+    final remaining = diffInt(tileNode.x, endNode.x) + diffInt(tileNode.y, endNode.y);
+    final tileNodeVisit = TileNodeVisit(previous, remaining, tileNode);
     visits.add(tileNodeVisit);
     tileNode.search = _search;
   }
@@ -243,7 +222,7 @@ extension SceneFunctions on Scene {
         index = i;
       }
 
-      if (closest.travelled > 10 ||  closest.tileNode == endNode) {
+      if (closest.travelled > _findPathMaxDistance || closest.tileNode == endNode) {
         List<Vector2> nodes =
         List.filled(closest.travelled, _vector2Zero, growable: true);
         int index = closest.travelled - 1;

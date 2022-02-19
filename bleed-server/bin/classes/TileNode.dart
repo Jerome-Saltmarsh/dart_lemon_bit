@@ -1,14 +1,12 @@
 import 'package:lemon_math/Vector2.dart';
 
 class TileNodeVisit {
-  bool available = true;
   TileNodeVisit? previous;
   late int travelled;
-  int remaining;
   late int score;
   TileNode tileNode;
 
-  TileNodeVisit(this.previous, this.remaining, this.tileNode) {
+  TileNodeVisit(this.previous, int remaining, this.tileNode) {
     if (previous != null) {
       travelled = previous!.travelled + 1;
     } else {
@@ -18,13 +16,7 @@ class TileNodeVisit {
   }
 
   bool isCloserThan(TileNodeVisit that) {
-    if (this.score < that.score) return true;
-    if (this.score > that.score) return false;
-    if (this.remaining < that.remaining) return true;
-    if (this.remaining > that.remaining) return false;
-    if (this.travelled < that.travelled) return true;
-    if (this.travelled > that.travelled) return false;
-    return true;
+    return this.score < that.score;
   }
 }
 
