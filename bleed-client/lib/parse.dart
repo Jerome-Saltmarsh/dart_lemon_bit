@@ -38,17 +38,13 @@ import 'common/constants.dart';
 import 'common/enums/ObjectType.dart';
 
 // state
+String event = "";
 int _index = 0;
 // constants
-const String _space = " ";
-const String _semiColon = ";";
-const String _comma = ",";
-
-// enums
-const List<ServerResponse> serverResponses = ServerResponse.values;
-const List<GameEventType> gameEventTypes = GameEventType.values;
-
-String event = "";
+const _space = " ";
+const _semiColon = ";";
+const _comma = ",";
+final _consumer = StringBuffer();
 
 String get _currentCharacter {
   return event[_index];
@@ -182,8 +178,8 @@ void parseState() {
 
       case ServerResponse.Scene_Changed:
         print("ServerResponse.Scene_Changed");
-        double x = consumeDouble();
-        double y = consumeDouble();
+        final x = consumeDouble();
+        final y = consumeDouble();
         modules.game.state.player.x = x;
         modules.game.state.player.y = y;
         engine.cameraCenter(x, y);
@@ -336,10 +332,10 @@ void _parseEnvironmentObjects() {
   game.torches.clear();
 
   while (!_simiColonConsumed()) {
-    double x = consumeDouble();
-    double y = consumeDouble();
-    double radius = consumeDouble();
-    ObjectType type = _consumeEnvironmentObjectType();
+    final x = consumeDouble();
+    final y = consumeDouble();
+    final radius = consumeDouble();
+    final type = _consumeEnvironmentObjectType();
 
     switch (type) {
       case ObjectType.SmokeEmitter:
@@ -358,7 +354,7 @@ void _parseEnvironmentObjects() {
         break;
     }
 
-    final EnvironmentObject env = EnvironmentObject(
+    final env = EnvironmentObject(
         x: x,
         y: y,
         type: type,
@@ -413,23 +409,23 @@ void _parseTiles() {
 
 void _parsePlayer() {
   final player = modules.game.state.player;
-  player.x = consumeDouble();
-  player.y = consumeDouble();
-  player.health.value = consumeDouble();
-  player.maxHealth = consumeDouble();
+  player.x = _consumeDoubleUnsafe();
+  player.y = _consumeDoubleUnsafe();
+  player.health.value = _consumeDoubleUnsafe();
+  player.maxHealth = _consumeDoubleUnsafe();
   player.state.value = _consumeCharacterState();
-  player.experience.value = consumeInt();
-  player.level.value = consumeInt();
-  player.skillPoints.value = consumeInt();
-  player.nextLevelExperience.value = consumeInt();
+  player.experience.value = _consumeIntUnsafe();
+  player.level.value = _consumeIntUnsafe();
+  player.skillPoints.value = _consumeIntUnsafe();
+  player.nextLevelExperience.value = _consumeIntUnsafe();
   player.experiencePercentage.value = _consumePercentage();
   player.characterType.value = _consumeCharacterType();
-  player.abilityTarget.x = consumeDouble();
-  player.abilityTarget.y = consumeDouble();
-  player.magic.value = consumeDouble();
-  player.maxMagic.value = consumeDouble();
-  player.attackRange = consumeDouble();
-  player.team = consumeInt();
+  player.abilityTarget.x = _consumeDoubleUnsafe();
+  player.abilityTarget.y = _consumeDoubleUnsafe();
+  player.magic.value = _consumeDoubleUnsafe();
+  player.maxMagic.value = _consumeDoubleUnsafe();
+  player.attackRange = _consumeDoubleUnsafe();
+  player.team = _consumeIntUnsafe();
   player.slots.weapon.value = consumeSlotType();
   player.slots.armour.value = consumeSlotType();
   player.slots.helm.value = consumeSlotType();
@@ -533,10 +529,10 @@ void _consumeAbility(Ability ability) {
 }
 
 int consumeInt() {
-  final String string = _consumeString();
-  final int? value = int.tryParse(string);
+  final valueString = _consumeString();
+  final value = int.tryParse(valueString);
   if (value == null) {
-    throw Exception("could not parse $string to int");
+    throw Exception("could not parse $valueString to int");
   }
   return value;
 }
@@ -558,10 +554,10 @@ WeaponType _consumeWeaponType() {
 }
 
 Weapon _consumeWeapon() {
-  WeaponType type = _consumeWeaponType();
-  int rounds = _consumeIntUnsafe();
-  int capacity = _consumeIntUnsafe();
-  int damage = consumeInt();
+  final type = _consumeWeaponType();
+  final rounds = _consumeIntUnsafe();
+  final capacity = _consumeIntUnsafe();
+  final damage = consumeInt();
   return Weapon(type: type, rounds: rounds, capacity: capacity, damage: damage);
 }
 
@@ -569,14 +565,9 @@ CharacterState _consumeCharacterState() {
   return characterStates[_consumeSingleDigitInt()];
 }
 
-Direction _consumeDirection() {
-  return directions[_consumeSingleDigitInt()];
-}
-
 Tile _consumeTile() {
   return tiles[consumeInt()];
 }
-
 
 ServerResponse _consumeServerResponse() {
   final responseInt = consumeInt();
@@ -588,7 +579,7 @@ ServerResponse _consumeServerResponse() {
 
 String _consumeString() {
   _consumeSpace();
-  StringBuffer buffer = StringBuffer();
+  final buffer = StringBuffer();
   while (_index < event.length && _currentCharacter != _space) {
     buffer.write(_currentCharacter);
     _index++;
@@ -596,8 +587,6 @@ String _consumeString() {
   _index++;
   return buffer.toString();
 }
-
-final StringBuffer _consumer = StringBuffer();
 
 /// This is an optimized version of consume string
 /// It has all error checking removed

@@ -32,3 +32,5 @@ enum GameEventType {
   Release_Bow,
   Sword_Woosh
 }
+
+const List<GameEventType> gameEventTypes = GameEventType.values;
