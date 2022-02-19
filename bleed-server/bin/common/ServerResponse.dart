@@ -45,3 +45,6 @@ enum ServerResponse {
   Player_Slot_Types,
   Debug_Mode,
 }
+
+final serverResponses = ServerResponse.values;
+final serverResponsesLength = serverResponses.length;

@@ -28,25 +28,27 @@ final List<Region> selectableServerTypes =
     serverTypes.where((type) => (isLocalHost || type != Region.LocalHost)
     ).toList();
 
-const String _default = "https://gamestream-ws-sydney-2-osbmaezptq-ts.a.run.app";
-const String sydneyMoba = "https://gamestream-ws-sydney-2-osbmaezptq-ts.a.run.app";
-const String sydneyMMO = "https://gamestream-ws-sydney-2-osbmaezptq-ts.a.run.app";
+
+
+class _Servers {
+  static const sydney = "https://gamestream-ws-sydney-10-osbmaezptq-ts.a.run.app";
+}
 
 String parseHttpToWebSocket(String url) {
   return url.replaceAll("https", "wss") + "/:8080";
 }
 
 String getHttpsConnectionString(Region server, GameType gameType) {
-  print("etHttpsConnectionString(server: $server)");
+  print("HttpsConnectionString(server: $server)");
   switch (server) {
     case Region.Australia:
       switch (gameType) {
         case GameType.MMO:
-          return sydneyMMO;
+          return _Servers.sydney;
         case GameType.Moba:
-          return sydneyMoba;
+          return _Servers.sydney;
         default:
-          return _default;
+          return _Servers.sydney;
       }
     default:
       throw Exception();

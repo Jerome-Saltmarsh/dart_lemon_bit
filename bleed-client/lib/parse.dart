@@ -59,8 +59,7 @@ late ServerResponse _currentServerResponse;
 // functions
 void parseState() {
   _index = 0;
-  event = event.trim();
-  modules.game.state.smoothed = 5;
+  modules.game.state.smoothed = 10;
   while (_index < event.length) {
     _currentServerResponse = _consumeServerResponse();
     switch (_currentServerResponse) {
@@ -578,9 +577,10 @@ Tile _consumeTile() {
   return tiles[consumeInt()];
 }
 
+
 ServerResponse _consumeServerResponse() {
-  int responseInt = consumeInt();
-  if (responseInt >= ServerResponse.values.length) {
+  final responseInt = consumeInt();
+  if (responseInt >= serverResponsesLength) {
     throw Exception('$responseInt is not a valid server response');
   }
   return serverResponses[responseInt];
