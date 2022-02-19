@@ -18,7 +18,6 @@ import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/PlayerEvent.dart';
 import 'package:bleed_client/common/ServerResponse.dart';
 import 'package:bleed_client/common/SlotType.dart';
-import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/modules/modules.dart';
@@ -44,7 +43,9 @@ int _index = 0;
 const _space = " ";
 const _semiColon = ";";
 const _comma = ",";
+const _onePercent = 0.01;
 final _consumer = StringBuffer();
+final _stringBuffer = StringBuffer();
 
 String get _currentCharacter {
   return event[_index];
@@ -579,13 +580,13 @@ ServerResponse _consumeServerResponse() {
 
 String _consumeString() {
   _consumeSpace();
-  final buffer = StringBuffer();
+  _stringBuffer.clear();
   while (_index < event.length && _currentCharacter != _space) {
-    buffer.write(_currentCharacter);
+    _stringBuffer.write(_currentCharacter);
     _index++;
   }
   _index++;
-  return buffer.toString();
+  return _stringBuffer.toString();
 }
 
 /// This is an optimized version of consume string
@@ -613,7 +614,7 @@ double consumeDouble() {
 }
 
 double _consumePercentage() {
-  return consumeDouble() * 0.01;
+  return consumeDouble() * _onePercent;
 }
 
 double _consumeDoubleUnsafe() {
