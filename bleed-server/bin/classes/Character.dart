@@ -30,7 +30,7 @@ class AI {
   double chaseRange = 500;
   Float32List paths = Float32List(1000);
   int pathLength = 0;
-  int pathIndex = 0;
+  int pathIndex = -1;
 
   double get x => character.x;
   double get y => character.y;

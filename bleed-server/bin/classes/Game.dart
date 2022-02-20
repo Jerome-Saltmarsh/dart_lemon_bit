@@ -471,17 +471,17 @@ extension GameFunctions on Game {
     final ai = character.ai;
     if (ai == null) return;
 
-    if (ai.objectives.isNotEmpty) {
-      if (withinRadius(character, ai.objectives.last, 100)) {
-        ai.objectives.removeLast();
-        if (ai.objectives.isNotEmpty) {
-          final next = ai.objectives.last;
-          npcSetPathTo(ai, next.x, next.y);
-        } else {
-          onNpcObjectivesCompleted(character);
-        }
-      }
-    }
+    // if (ai.objectives.isNotEmpty) {
+    //   if (withinRadius(character, ai.objectives.last, 100)) {
+    //     ai.objectives.removeLast();
+    //     if (ai.objectives.isNotEmpty) {
+    //       final next = ai.objectives.last;
+    //       npcSetPathTo(ai, next.x, next.y);
+    //     } else {
+    //       onNpcObjectivesCompleted(character);
+    //     }
+    //   }
+    // }
 
     final target = ai.target;
     if (target != null) {
@@ -509,9 +509,7 @@ extension GameFunctions on Game {
       // @on npc update find
       if (ai.mode == NpcMode.Aggressive) {
         if (engine.frame % 30 == 0) {
-          pathFindAI = ai;
-          pathFindDestination = scene.tileNodeAt(target.x, target.y);
-          scene.visitNode(node: scene.tileNodeAt(character.x, character.y));
+          npcSetPathTo(ai, target.x, target.y);
         }
         // if (ai.path.length <= 1 &&
         //     !targetWithinStrikingRange(character, target)) {
@@ -539,37 +537,37 @@ extension GameFunctions on Game {
     character.state = CharacterState.Idle;
   }
 
-  void _updatePlayersPerSecond() {
-    if (duration % framesPerSecond != 0) return;
-
-    for (Player player in players) {
-      if (player.dead) continue;
-      player.ability1.update();
-      player.ability2.update();
-      player.ability3.update();
-      player.ability4.update();
-
-      if (player.ability1.cooldownRemaining > 0) {
-        player.ability1.cooldownRemaining--;
-        player.abilitiesDirty = true;
-      }
-      if (player.ability2.cooldownRemaining > 0) {
-        player.ability2.cooldownRemaining--;
-        player.abilitiesDirty = true;
-      }
-      if (player.ability3.cooldownRemaining > 0) {
-        player.ability3.cooldownRemaining--;
-        player.abilitiesDirty = true;
-      }
-      if (player.ability4.cooldownRemaining > 0) {
-        player.ability4.cooldownRemaining--;
-        player.abilitiesDirty = true;
-      }
-    }
-  }
+  // void _updatePlayersPerSecond() {
+  //   if (duration % framesPerSecond != 0) return;
+  //
+  //   for (final player in players) {
+  //     if (player.dead) continue;
+  //     player.ability1.update();
+  //     player.ability2.update();
+  //     player.ability3.update();
+  //     player.ability4.update();
+  //
+  //     if (player.ability1.cooldownRemaining > 0) {
+  //       player.ability1.cooldownRemaining--;
+  //       player.abilitiesDirty = true;
+  //     }
+  //     if (player.ability2.cooldownRemaining > 0) {
+  //       player.ability2.cooldownRemaining--;
+  //       player.abilitiesDirty = true;
+  //     }
+  //     if (player.ability3.cooldownRemaining > 0) {
+  //       player.ability3.cooldownRemaining--;
+  //       player.abilitiesDirty = true;
+  //     }
+  //     if (player.ability4.cooldownRemaining > 0) {
+  //       player.ability4.cooldownRemaining--;
+  //       player.abilitiesDirty = true;
+  //     }
+  //   }
+  // }
 
   void _updatePlayersAndNpcs() {
-    _updatePlayersPerSecond();
+    // _updatePlayersPerSecond();
 
     for (int i = 0; i < players.length; i++) {
       updatePlayer(players[i]);
