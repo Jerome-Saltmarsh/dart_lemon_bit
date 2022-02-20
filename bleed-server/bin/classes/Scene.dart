@@ -302,25 +302,8 @@ extension SceneFunctions on Scene {
              return true;
            }
          }
-      } else if (distanceColumns < 0) { // down left
-        if (node.down.open || node.left.open) {
-          if (visitNode(node: node.downLeft)) {
-            return true;
-          }
-          if (visitNode(node: node.left)) {
-            return true;
-          }
-          if (visitNode(node: node.down)) {
-            return true;
-          }
-        }
-      } else if (visitNode(node: node.left)) {
-        return true;
-      }
-    } else if (distanceRows > 0) { // otherwise look right
-
-      if (distanceColumns > 0) {
-        if (node.up.open || node.right.open){
+      } else if (distanceColumns > 0) {
+        if (node.up.open || node.right.open) {
           if (visitNode(node: node.upRight)) {
             return true;
           }
@@ -328,6 +311,23 @@ extension SceneFunctions on Scene {
             return true;
           }
           if (visitNode(node: node.up)) {
+            return true;
+          }
+        }
+      } else if (visitNode(node: node.up)) {
+        return true;
+      }
+    } else if (distanceRows > 0) { // look down
+
+      if (distanceColumns < 0) {
+        if (node.down.open || node.left.open){
+          if (visitNode(node: node.downLeft)) {
+            return true;
+          }
+          if (visitNode(node: node.left)) {
+            return true;
+          }
+          if (visitNode(node: node.down)) {
             return true;
           }
         }
@@ -347,15 +347,13 @@ extension SceneFunctions on Scene {
         return true;
       }
     } else {
-      // distanceX is zero
       if (distanceColumns < 0){
          if (visitNode(node: node.left)){
            return true;
          }
-      }
-       if (visitNode(node: node.right)){
+      } else if (visitNode(node: node.right)) {
           return true;
-       }
+      }
     }
 
     if (visitNode(node: node.up)){
