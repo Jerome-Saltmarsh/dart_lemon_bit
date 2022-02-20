@@ -182,7 +182,7 @@ extension SceneFunctions on Scene {
     int depth = 0,
   }){
 
-    if (depth > 30) {
+    if (depth > 20) {
       return false;
     }
 
