@@ -1508,9 +1508,8 @@ extension GameFunctions on Game {
     return scene.playerSpawnPoints[spawnPointIndex];
   }
 
-  void npcSetRandomDestination(AI ai) {
+  void npcSetRandomDestination(AI ai, {int radius = 10}) {
     final node = scene.tileNodeAt(ai.x, ai.y);
-    final radius = 10;
     final minColumn = max(0, node.column - radius);
     final maxColumn = min(scene.columns, node.column + radius);
     final minRow = max(0, node.row - radius);
