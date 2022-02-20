@@ -29,7 +29,7 @@ final List<Region> selectableServerTypes =
     ).toList();
 
 class _Servers {
-  static const sydney = "https://gamestream-ws-sydney-10-osbmaezptq-ts.a.run.app";
+  static const sydney = "https://gamestream-ws-5-osbmaezptq-ts.a.run.app";
 }
 
 String parseHttpToWebSocket(String url) {
