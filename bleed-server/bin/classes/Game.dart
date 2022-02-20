@@ -1520,14 +1520,6 @@ extension GameFunctions on Game {
     npcSetPathToTileNode(ai, randomTile);
   }
 
-  TileNode getRandomOpenTileNode() {
-    while (true) {
-      final node = randomItem(randomItem(scene.tileNodes));
-      if (!node.open) continue;
-      return node;
-    }
-  }
-
   void npcSetPathTo(AI ai, double x, double y) {
     npcSetPathToTileNode(ai, scene.tileNodeAt(x, y));
   }

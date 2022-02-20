@@ -192,8 +192,10 @@ extension SceneFunctions on Scene {
       while (current != null) {
         pathFindAI.pathX[index] = current.position.x;
         pathFindAI.pathY[index] = current.position.y;
-        index++;
         current = current.previous;
+        if (current != null){
+          index++;
+        }
       }
       pathFindAI.pathIndex = index;
       return true;
