@@ -1323,7 +1323,9 @@ extension GameFunctions on Game {
         type: CharacterType.Zombie,
         x: 0,
         y: 0,
-        ai: AI(),
+        ai: AI(
+          mode: NpcMode.Aggressive,
+        ),
         health: settings.health.zombie,
         weapons: [Weapon(
           type: WeaponType.Unarmed,
@@ -1562,7 +1564,7 @@ extension GameFunctions on Game {
 
   TileNode getRandomOpenTileNode() {
     while (true) {
-      TileNode node = randomItem(randomItem(scene.tileNodes));
+      final node = randomItem(randomItem(scene.tileNodes));
       if (!node.open) continue;
       return node;
     }
