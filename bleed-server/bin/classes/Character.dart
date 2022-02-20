@@ -19,6 +19,8 @@ const _notFound = -1;
 const _defaultMode = NpcMode.Defensive;
 const _defaultViewRange = 300.0;
 const _defaultCharacterSpeed = 3.0;
+const maxAIPathLength = 80;
+const maxAIPathLengthMinusOne = maxAIPathLength - 3;
 
 class AI {
   late Character character;
@@ -28,8 +30,8 @@ class AI {
   NpcMode mode = NpcMode.Aggressive;
   double viewRange = 200;
   double chaseRange = 500;
-  Float32List pathX = Float32List(150);
-  Float32List pathY = Float32List(150);
+  Float32List pathX = Float32List(maxAIPathLength);
+  Float32List pathY = Float32List(maxAIPathLength);
   int pathIndex = -1;
 
   double get x => character.x;
@@ -54,8 +56,7 @@ class AI {
 
   void onDeath(){
     target = null;
-    // path.clear();
-    pathIndex = 0;
+    pathIndex = -1;
     objectives.clear();
   }
 }

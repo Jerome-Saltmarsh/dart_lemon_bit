@@ -58,15 +58,17 @@ class GameRender {
     drawAbility();
     attackTargetCircle();
 
+    if (state.compilePaths.value) {
+      drawPaths();
+      drawDebugNpcs(game.npcDebug);
+    }
+
     engine.setPaintColorWhite();
     isometric.render.sprites();
     drawEffects();
     drawItems();
 
-    if (state.compilePaths.value) {
-      drawPaths();
-      drawDebugNpcs(game.npcDebug);
-    }
+
 
     _renderCharacterHealthBars();
 

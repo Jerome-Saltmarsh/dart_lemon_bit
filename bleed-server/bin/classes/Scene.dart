@@ -179,6 +179,7 @@ extension SceneFunctions on Scene {
 
   bool visitNode({
     required TileNode node,
+    int depth = 0,
   }){
     if (!node.open) return false;
     if (node.search == pathFindSearch) return false;
@@ -186,7 +187,7 @@ extension SceneFunctions on Scene {
     node.previous = pathFindPrevious;
     pathFindPrevious = node;
 
-    if (node == pathFindDestination) {
+    if (node == pathFindDestination || depth == maxAIPathLengthMinusOne) {
       TileNode? current = node;
       var index = 0;
       while (current != null) {
@@ -203,84 +204,95 @@ extension SceneFunctions on Scene {
 
     final distanceRows = pathFindDestination.row - node.row;
     final distanceColumns = pathFindDestination.column - node.column;
+    final nextDepth = depth + 1;
 
     if (distanceRows < 0) {
       if (distanceColumns < 0) {
          if (node.up.open || node.left.open){
-           if (visitNode(node: node.upLeft)) {
+           if (visitNode(node: node.upLeft, depth: nextDepth)) {
              return true;
            }
-           if (visitNode(node: node.left)) {
+           if (visitNode(node: node.left, depth: nextDepth)) {
              return true;
            }
-           if (visitNode(node: node.up)) {
+           if (visitNode(node: node.up, depth: nextDepth)) {
              return true;
            }
          }
       } else if (distanceColumns > 0) {
         if (node.up.open || node.right.open) {
-          if (visitNode(node: node.upRight)) {
+          if (visitNode(node: node.upRight, depth: nextDepth)) {
             return true;
           }
-          if (visitNode(node: node.right)) {
+          if (visitNode(node: node.right, depth: nextDepth)) {
             return true;
           }
-          if (visitNode(node: node.up)) {
+          if (visitNode(node: node.up, depth: nextDepth)) {
             return true;
           }
         }
-      } else if (visitNode(node: node.up)) {
+      } else if (visitNode(node: node.up, depth: nextDepth)) {
         return true;
       }
     } else if (distanceRows > 0) { // look down
 
       if (distanceColumns < 0) {
         if (node.down.open || node.left.open){
-          if (visitNode(node: node.downLeft)) {
+          if (visitNode(node: node.downLeft, depth: nextDepth)) {
             return true;
           }
-          if (visitNode(node: node.left)) {
+          if (visitNode(node: node.left, depth: nextDepth)) {
             return true;
           }
-          if (visitNode(node: node.down)) {
+          if (visitNode(node: node.down, depth: nextDepth)) {
             return true;
           }
         }
       } else if (distanceColumns > 0) {
         if (node.down.open || node.right.open) {
-          if (visitNode(node: node.downRight)) {
+          if (visitNode(node: node.downRight, depth: nextDepth)) {
             return true;
           }
-          if (visitNode(node: node.right)) {
+          if (visitNode(node: node.right, depth: nextDepth)) {
             return true;
           }
-          if (visitNode(node: node.down)) {
+          if (visitNode(node: node.down, depth: nextDepth)) {
             return true;
           }
         }
-      } else if (visitNode(node: node.down)) { // down
+      } else if (visitNode(node: node.down, depth: nextDepth)) { // down
+        return true;
+      } else if (visitNode(node: node.right, depth: nextDepth)) { // down
+        return true;
+      } else if (visitNode(node: node.left, depth: nextDepth)) { // down
         return true;
       }
     } else {
       if (distanceColumns < 0){
-         if (visitNode(node: node.left)){
+         if (visitNode(node: node.left, depth: nextDepth)){
            return true;
          }
-      } else if (visitNode(node: node.right)) {
+      } else if (visitNode(node: node.right, depth: nextDepth)) {
           return true;
       }
     }
 
-    // if (visitNode(node: node.up)){
+    final previous = pathFindPrevious;
+    if (previous != null){
+      final diffRows = previous.row - node.row;
+      final diffCols = previous.column - node.column;
+    }
+
+    // if (visitNode(node: node.up, depth: nextDepth)){
     //   return true;
     // }
-    // if (visitNode(node: node.right)){
+    // if (visitNode(node: node.right, depth: nextDepth)){
     //   return true;
     // }
-    // if (visitNode(node: node.down)){
+    // if (visitNode(node: node.down, depth: nextDepth)){
     //   return true;
     // }
-    // if (visitNode(node: node.left)){
+    // if (visitNode(node: node.left, depth: nextDepth)){
     //   return true;
     // }
     return false;
