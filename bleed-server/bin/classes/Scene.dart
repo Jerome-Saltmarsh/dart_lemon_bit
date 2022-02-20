@@ -275,18 +275,16 @@ extension SceneFunctions on Scene {
     node.search = _search;
 
     if (node == pathFindDestination){
-      // finished;
       node.previous = previous;
       TileNode n = node;
-      int index = 0;
-      pathFindAI.pathLength = 0;
+      var index = 0;
       while (n.previous != null) {
-        pathFindAI.paths[index] = n.position.x;
-        pathFindAI.paths[index + 1] = n.position.y;
-        index += 2;
-        pathFindAI.pathLength++;
+        pathFindAI.pathX[index] = n.position.x;
+        pathFindAI.pathY[index] = n.position.y;
+        index++;
         n = n.previous!;
       }
+      pathFindAI.pathIndex = index;
       return true;
     }
 

@@ -28,12 +28,15 @@ class AI {
   NpcMode mode = NpcMode.Aggressive;
   double viewRange = 200;
   double chaseRange = 500;
-  Float32List paths = Float32List(1000);
-  int pathLength = 0;
+  Float32List pathX = Float32List(150);
+  Float32List pathY = Float32List(150);
   int pathIndex = -1;
 
   double get x => character.x;
   double get y => character.y;
+
+  double get destX => pathX[pathIndex];
+  double get destY => pathY[pathIndex];
 
   AI({
     this.mode = _defaultMode,
@@ -53,7 +56,6 @@ class AI {
     target = null;
     // path.clear();
     pathIndex = 0;
-    pathLength = 0;
     objectives.clear();
   }
 }

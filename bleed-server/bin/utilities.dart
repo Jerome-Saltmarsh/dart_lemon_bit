@@ -50,8 +50,8 @@ bool withinViewRange(AI ai, GameObject target) {
 }
 
 bool arrivedAtPath(AI npc) {
-  if (diffOver(npc.character.x, npc.paths[npc.pathIndex], settings.npc.destinationRadius)) return false;
-  if (diffOver(npc.character.y, npc.paths[npc.pathIndex + 1], settings.npc.destinationRadius)) return false;
+  if (diffOver(npc.character.x, npc.destX, settings.npc.destinationRadius)) return false;
+  if (diffOver(npc.character.y, npc.destY, settings.npc.destinationRadius)) return false;
   return true;
 }
 

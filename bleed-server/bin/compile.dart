@@ -351,18 +351,18 @@ void _compileGameEvents(StringBuffer buffer, List<GameEvent> gameEvents) {
 }
 
 void _compilePaths(StringBuffer buffer, List<Character> characters) {
-  // _write(buffer, ServerResponse.Paths.index);
-  // for (final character in characters) {
-  //   final ai = character.ai;
-  //   if (ai == null) continue;
-  //   if (ai.path.isEmpty) continue;
-  //   for (final p in ai.path) {
-  //     _writeInt(buffer, p.x);
-  //     _writeInt(buffer, p.y);
-  //   }
-  //   _write(buffer, _comma);
-  // }
-  // buffer.write(_semiColon);
+  _write(buffer, ServerResponse.Paths.index);
+  for (final character in characters) {
+    final ai = character.ai;
+    if (ai == null) continue;
+    if (ai.pathIndex < 0) continue;
+    for (int i = ai.pathIndex; i >= 0; i--) {
+      _writeInt(buffer, ai.pathX[i]);
+      _writeInt(buffer, ai.pathY[i]);
+    }
+    _write(buffer, _comma);
+  }
+  buffer.write(_semiColon);
 }
 
 void _compileNpcDebug(StringBuffer buffer, List<Character> characters) {

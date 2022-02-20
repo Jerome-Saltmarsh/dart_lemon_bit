@@ -522,7 +522,6 @@ extension GameFunctions on Game {
 
     if (ai.pathIndex >= 0) {
       if (arrivedAtPath(ai)) {
-        // ai.path.removeAt(0);
         ai.pathIndex--;
         if (ai.pathIndex < 0) {
           character.state = CharacterState.Idle;
@@ -530,7 +529,7 @@ extension GameFunctions on Game {
         }
       }
       // @on npc going to path
-      characterFace(character, ai.paths[ai.pathIndex], ai.paths[ai.pathIndex + 1]);
+      characterFace(character, ai.destX, ai.destY);
       character.state = CharacterState.Running;
       return;
     }
