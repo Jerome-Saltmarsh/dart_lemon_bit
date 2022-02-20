@@ -21,13 +21,21 @@ class TileNodeVisit {
 }
 
 class TileNode {
+  /// row - 1
   late TileNode up;
+  /// row - 1, column + 1
   late TileNode upRight;
+  /// column + 1
   late TileNode right;
+  /// row + 1, column + 1
   late TileNode downRight;
+  /// row + 1
   late TileNode down;
+  /// row + 1, column - 1
   late TileNode downLeft;
+  /// column - 1
   late TileNode left;
+  /// row - 1, column - 1
   late TileNode upLeft;
   late int row;
   late int column;

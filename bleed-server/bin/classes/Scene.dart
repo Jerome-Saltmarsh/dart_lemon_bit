@@ -181,13 +181,17 @@ extension SceneFunctions on Scene {
     required TileNode node,
     int depth = 0,
   }){
+
+    if (depth > 30) {
+      return false;
+    }
+
     if (!node.open) return false;
     if (node.search == pathFindSearch) return false;
     node.search = pathFindSearch;
     node.previous = pathFindPrevious;
     pathFindPrevious = node;
-
-    if (node == pathFindDestination || depth == maxAIPathLengthMinusOne) {
+    if (node == pathFindDestination) {
       TileNode? current = node;
       var index = 0;
       while (current != null) {
@@ -206,18 +210,18 @@ extension SceneFunctions on Scene {
     final distanceColumns = pathFindDestination.column - node.column;
     final nextDepth = depth + 1;
 
-    if (distanceRows < 0) {
-      if (distanceColumns < 0) {
+    if (distanceRows < 0) { // above
+      if (distanceColumns < 0) { // left
          if (node.up.open || node.left.open){
            if (visitNode(node: node.upLeft, depth: nextDepth)) {
              return true;
            }
-           if (visitNode(node: node.left, depth: nextDepth)) {
-             return true;
-           }
-           if (visitNode(node: node.up, depth: nextDepth)) {
-             return true;
-           }
+         }
+         if (visitNode(node: node.left, depth: nextDepth)) {
+           return true;
+         }
+         if (visitNode(node: node.up, depth: nextDepth)) {
+           return true;
          }
       } else if (distanceColumns > 0) {
         if (node.up.open || node.right.open) {
@@ -233,8 +237,13 @@ extension SceneFunctions on Scene {
         }
       } else if (visitNode(node: node.up, depth: nextDepth)) {
         return true;
+      } else if (visitNode(node: node.left, depth: nextDepth)) {
+        return true;
+      } else if (visitNode(node: node.right, depth: nextDepth)) {
+        return true;
       }
-    } else if (distanceRows > 0) { // look down
+
+    } else if (distanceRows > 0) { // below
 
       if (distanceColumns < 0) {
         if (node.down.open || node.left.open){
@@ -267,7 +276,7 @@ extension SceneFunctions on Scene {
       } else if (visitNode(node: node.left, depth: nextDepth)) { // down
         return true;
       }
-    } else {
+    } else { // rows == 0
       if (distanceColumns < 0){
          if (visitNode(node: node.left, depth: nextDepth)){
            return true;
@@ -277,24 +286,6 @@ extension SceneFunctions on Scene {
       }
     }
 
-    final previous = pathFindPrevious;
-    if (previous != null){
-      final diffRows = previous.row - node.row;
-      final diffCols = previous.column - node.column;
-    }
-
-    // if (visitNode(node: node.up, depth: nextDepth)){
-    //   return true;
-    // }
-    // if (visitNode(node: node.right, depth: nextDepth)){
-    //   return true;
-    // }
-    // if (visitNode(node: node.down, depth: nextDepth)){
-    //   return true;
-    // }
-    // if (visitNode(node: node.left, depth: nextDepth)){
-    //   return true;
-    // }
     return false;
   }
 

@@ -200,7 +200,7 @@ class GameBuild {
           Positioned(
               left: _pad,
               top: _pad,
-              child: frameSmoothing()),
+              child: mouseRowColumn()),
           Positioned(
               left: _pad,
               bottom: _pad,

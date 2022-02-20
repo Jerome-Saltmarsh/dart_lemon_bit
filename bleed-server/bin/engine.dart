@@ -100,7 +100,9 @@ class _Engine {
         final ai = zombie.ai;
         if (ai == null) continue;
         if (ai.target != null) continue;
-        game.npcSetRandomDestination(ai);
+        // game.npcSetRandomDestination(ai);
+
+
         // if (ai.path.isNotEmpty) continue;
         // game.updateNpcObjective(ai);
         // if (ai.objectives.isEmpty) {
