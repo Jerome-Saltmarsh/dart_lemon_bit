@@ -289,32 +289,12 @@ extension SceneFunctions on Scene {
     return false;
   }
 
-  // Vector2 getLeft(double x1, double y1, double x2, double y2) {
-  //   double middleX = (x2 - x1) * 0.5;
-  //   double middleY = (y2 - y1) * 0.5;
-  //   double perpendicularX = middleY;
-  //   double perpendicularY = -middleX;
-  //   _vector2.x = x1 + middleX + perpendicularX;
-  //   _vector2.y = y1 + middleY + perpendicularY;
-  //   return _vector2;
-  // }
-  //
-  // Vector2 getRight(double x1, double y1, double x2, double y2) {
-  //   double middleX = (x2 - x1) * 0.5;
-  //   double middleY = (y2 - y1) * 0.5;
-  //   double perpendicularX = -middleY;
-  //   double perpendicularY = middleX;
-  //   _vector2.x = x1 + middleX + perpendicularX;
-  //   _vector2.y = y1 + middleY + perpendicularY;
-  //   return _vector2;
-  // }
-
   bool waterAt(double x, double y) {
     return tileAt(x, y).isWater;
   }
 
   bool tileWalkableAt(double x, double y){
-    return isWalkable(tileAt(x, y));
+    return tileNodeAt(x, y).open;
   }
 
   Tile tileAt(double x, double y) {
