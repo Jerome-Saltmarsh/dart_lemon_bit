@@ -1578,6 +1578,7 @@ extension GameFunctions on Game {
     pathFindDestination = node;
     pathFindAI = ai;
     pathFindPrevious = null;
+    pathFindSearch++;
     scene.visitNode(node: scene.tileNodeAt(ai.x, ai.y));
   }
 

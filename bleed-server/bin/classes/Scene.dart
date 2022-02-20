@@ -15,7 +15,6 @@ final _vector2Zero = Vector2(0, 0);
 final _vector2 = Vector2(0, 0);
 final _boundary = TileNode(false);
 // variables
-var _search = 0;
 
 double mapTilePositionX(int row, int column) {
   return perspectiveProjectX(row * _tileSizeHalf, column * _tileSizeHalf);
@@ -180,6 +179,7 @@ class Scene {
 late AI pathFindAI;
 late TileNode pathFindDestination;
 TileNode? pathFindPrevious = null;
+var pathFindSearch = 0;
 
 extension SceneFunctions on Scene {
 
@@ -268,8 +268,8 @@ extension SceneFunctions on Scene {
     required TileNode node,
   }){
     if (!node.open) return false;
-    if (node.search == _search) return false;
-    node.search = _search;
+    if (node.search == pathFindSearch) return false;
+    node.search = pathFindSearch;
     node.previous = pathFindPrevious;
     pathFindPrevious = node;
 
