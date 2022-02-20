@@ -100,14 +100,14 @@ class _Engine {
         final ai = zombie.ai;
         if (ai == null) continue;
         if (ai.target != null) continue;
-        if (ai.path.isNotEmpty) continue;
-        game.updateNpcObjective(ai);
-        if (ai.objectives.isEmpty) {
-          game.npcSetRandomDestination(ai);
-        } else {
-          final objective = ai.objectives.last;
-          game.npcSetPathTo(ai, objective.x, objective.y);
-        }
+        // if (ai.path.isNotEmpty) continue;
+        // game.updateNpcObjective(ai);
+        // if (ai.objectives.isEmpty) {
+        //   game.npcSetRandomDestination(ai);
+        // } else {
+        //   final objective = ai.objectives.last;
+        //   game.npcSetPathTo(ai, objective.x, objective.y);
+        // }
       }
     }
   }

@@ -14,8 +14,8 @@ class InteractableNpc extends Character {
       required double x,
       required double y,
       required int health,
-        CharacterType type = CharacterType.Soldier,
-      AI? ai,
+      required AI ai,
+      CharacterType type = CharacterType.Soldier,
       required Weapon weapon})
       : super(
             type: type,

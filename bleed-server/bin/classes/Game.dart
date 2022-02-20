@@ -222,6 +222,7 @@ abstract class Game {
             x: character.x,
             y: character.y,
             health: 100,
+            ai: AI(),
             weapon: Weapon(
               type: WeaponType.HandGun,
               rounds: 10,
@@ -508,28 +509,30 @@ extension GameFunctions on Game {
       // @on npc update find
       if (ai.mode == NpcMode.Aggressive) {
         if (engine.frame % 30 == 0) {
-          ai.path =
-              scene.findPath(character.x, character.y, target.x, target.y);
+          pathFindAI = ai;
+          pathFindDestination = scene.tileNodeAt(target.x, target.y);
+          scene.visitNode(node: scene.tileNodeAt(character.x, character.y));
         }
-        if (ai.path.length <= 1 &&
-            !targetWithinStrikingRange(character, target)) {
-          characterFaceV2(character, target);
-          setCharacterState(character, CharacterState.Running);
-          return;
-        }
+        // if (ai.path.length <= 1 &&
+        //     !targetWithinStrikingRange(character, target)) {
+        //   characterFaceV2(character, target);
+        //   setCharacterState(character, CharacterState.Running);
+        //   return;
+        // }
       }
     }
 
-    if (ai.path.isNotEmpty) {
+    if (ai.pathIndex >= 0) {
       if (arrivedAtPath(ai)) {
-        ai.path.removeAt(0);
-        if (ai.path.isEmpty) {
+        // ai.path.removeAt(0);
+        ai.pathIndex--;
+        if (ai.pathIndex < 0) {
           character.state = CharacterState.Idle;
           return;
         }
       }
       // @on npc going to path
-      characterFace(character, ai.path[0].x, ai.path[0].y);
+      characterFace(character, ai.paths[ai.pathIndex], ai.paths[ai.pathIndex + 1]);
       character.state = CharacterState.Running;
       return;
     }
@@ -1573,17 +1576,20 @@ extension GameFunctions on Game {
   }
 
   void npcSetPathToTileNode(AI ai, TileNode node) {
-    if (ai.path.isNotEmpty){
-      final last = ai.path.last;
-      final xDiff = diff(node.position.x, last.x);
-      if (xDiff < 10){
-        final yDiff = diff(node.position.y, last.y);
-        if (yDiff < 10){
-          return;
-        }
-      }
-    }
-    ai.path = scene.findPathNodes(scene.tileNodeAt(ai.character.x, ai.character.y), node);
+    // if (ai.path.isNotEmpty){
+    //   final last = ai.path.last;
+    //   final xDiff = diff(node.position.x, last.x);
+    //   if (xDiff < 10){
+    //     final yDiff = diff(node.position.y, last.y);
+    //     if (yDiff < 10){
+    //       return;
+    //     }
+    //   }
+    // }
+    // ai.path = scene.findPathNodes(scene.tileNodeAt(ai.character.x, ai.character.y), node);
+    pathFindDestination = node;
+    pathFindAI = ai;
+    scene.visitNode(node: scene.tileNodeAt(ai.x, ai.y));
   }
 
   void _updateGameEvents() {

@@ -24,16 +24,18 @@ class TileNode {
   late TileNode up;
   late TileNode upRight;
   late TileNode right;
-  late TileNode rightDown;
+  late TileNode downRight;
   late TileNode down;
   late TileNode downLeft;
   late TileNode left;
-  late TileNode leftUp;
+  late TileNode upLeft;
   late int x;
   late int y;
   late Vector2 position;
   bool open;
   int search = -1;
+  TileNode? previous;
+  int score = 0;
 
   TileNode(this.open);
 }

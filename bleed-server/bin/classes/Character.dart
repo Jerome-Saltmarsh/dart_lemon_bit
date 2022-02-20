@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:lemon_math/Vector2.dart';
 
 import '../common/CharacterState.dart';
@@ -21,11 +23,17 @@ const _defaultCharacterSpeed = 3.0;
 class AI {
   late Character character;
   Character? target;
-  List<Vector2> path = [];
+  // List<Vector2> path = [];
   List<Vector2> objectives = [];
   NpcMode mode = NpcMode.Aggressive;
   double viewRange = 200;
   double chaseRange = 500;
+  Float32List paths = Float32List(1000);
+  int pathLength = 0;
+  int pathIndex = 0;
+
+  double get x => character.x;
+  double get y => character.y;
 
   AI({
     this.mode = _defaultMode,
@@ -43,7 +51,9 @@ class AI {
 
   void onDeath(){
     target = null;
-    path.clear();
+    // path.clear();
+    pathIndex = 0;
+    pathLength = 0;
     objectives.clear();
   }
 }
@@ -131,10 +141,7 @@ class Character extends GameObject implements HasSquad {
     this.weapons = weapons ?? [
       Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0)
     ];
-
-    if (ai != null){
-      ai!.character = this;
-    }
+    ai?.character = this;
   }
 
   @override

@@ -42,8 +42,8 @@ class Town extends Game {
         x: -300,
         y: 1950,
         health: 100,
+        ai: AI(mode: NpcMode.Ignore),
         weapon: Weapon(type: WeaponType.Unarmed, damage: 0, capacity: 0));
-    npcSmith.ai = AI(mode: NpcMode.Ignore);
     npcs.add(npcSmith);
 
     guard1 = InteractableNpc(

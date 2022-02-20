@@ -125,9 +125,9 @@ class Scene {
         if (canUp) {
           tileNodes[row][column].up = tileNodes[row - 1][column];
           if (canLeft) {
-            tileNodes[row][column].leftUp = tileNodes[row - 1][column - 1];
+            tileNodes[row][column].upLeft = tileNodes[row - 1][column - 1];
           } else {
-            tileNodes[row][column].leftUp = _boundary;
+            tileNodes[row][column].upLeft = _boundary;
           }
           if (canRight) {
             tileNodes[row][column].upRight = tileNodes[row - 1][column + 1];
@@ -137,16 +137,16 @@ class Scene {
         } else {
           tileNodes[row][column].up = _boundary;
           tileNodes[row][column].upRight = _boundary;
-          tileNodes[row][column].leftUp = _boundary;
+          tileNodes[row][column].upLeft = _boundary;
         }
 
         if (canDown) {
           tileNodes[row][column].down = tileNodes[row + 1][column];
 
           if (canRight) {
-            tileNodes[row][column].rightDown = tileNodes[row + 1][column + 1];
+            tileNodes[row][column].downRight = tileNodes[row + 1][column + 1];
           } else {
-            tileNodes[row][column].rightDown = _boundary;
+            tileNodes[row][column].downRight = _boundary;
           }
 
           if (canLeft) {
@@ -156,7 +156,7 @@ class Scene {
           }
         } else {
           tileNodes[row][column].down = _boundary;
-          tileNodes[row][column].rightDown = _boundary;
+          tileNodes[row][column].downRight = _boundary;
           tileNodes[row][column].downLeft = _boundary;
         }
 
@@ -177,6 +177,9 @@ class Scene {
 }
 
 const _findPathMaxDistance = 10;
+
+late AI pathFindAI;
+late TileNode pathFindDestination;
 
 extension SceneFunctions on Scene {
 
@@ -244,13 +247,13 @@ extension SceneFunctions on Scene {
           visit(closestNode.upRight, closest, visits, endNode);
         }
         if (closestNode.left.open) {
-          visit(closestNode.upRight, closest, visits, endNode);
+          visit(closestNode.upLeft, closest, visits, endNode);
         }
       }
       if (closestNode.down.open) {
         visit(closestNode.down, closest, visits, endNode);
         if (closestNode.right.open) {
-          visit(closestNode.rightDown, closest, visits, endNode);
+          visit(closestNode.downRight, closest, visits, endNode);
         }
         if (closestNode.left.open) {
           visit(closestNode.downLeft, closest, visits, endNode);
@@ -260,6 +263,119 @@ extension SceneFunctions on Scene {
       visit(closestNode.left, closest, visits, endNode);
     }
     return _emptyPath;
+  }
+
+  bool visitNode({
+    required TileNode node,
+    TileNode? previous,
+  }){
+
+    if (!node.open) return false;
+    if (node.search == _search) return false;
+    node.search = _search;
+
+    if (node == pathFindDestination){
+      // finished;
+      node.previous = previous;
+      TileNode n = node;
+      int index = 0;
+      pathFindAI.pathLength = 0;
+      while (n.previous != null) {
+        pathFindAI.paths[index] = n.position.x;
+        pathFindAI.paths[index + 1] = n.position.y;
+        index += 2;
+        pathFindAI.pathLength++;
+        n = n.previous!;
+      }
+      return true;
+    }
+
+    node.previous = previous;
+    final distanceX = pathFindDestination.x - node.x;
+    final distanceY = pathFindDestination.y - node.y;
+
+    if (distanceX < 0) {
+      if (distanceY < 0) {
+         if (node.up.open || node.left.open){
+           if (visitNode(node: node.upLeft)) {
+             return true;
+           }
+           if (visitNode(node: node.left)) {
+             return true;
+           }
+           if (visitNode(node: node.up)) {
+             return true;
+           }
+         }
+      } else if (distanceY > 0) { // down left
+        if (node.down.open || node.left.open) {
+          if (visitNode(node: node.downLeft)) {
+            return true;
+          }
+          if (visitNode(node: node.left)) {
+            return true;
+          }
+          if (visitNode(node: node.down)) {
+            return true;
+          }
+        }
+      } else if (visitNode(node: node.left)) {
+        return true;
+      }
+    } else if (distanceX > 0) { // otherwise look right
+
+      if (distanceY < 0) {
+        if (node.up.open || node.right.open){
+          if (visitNode(node: node.upRight)) {
+            return true;
+          }
+          if (visitNode(node: node.right)) {
+            return true;
+          }
+          if (visitNode(node: node.up)) {
+            return true;
+          }
+        }
+      } else if (distanceY > 0) { // down left
+        if (node.down.open || node.right.open) {
+          if (visitNode(node: node.downRight)) {
+            return true;
+          }
+          if (visitNode(node: node.right)) {
+            return true;
+          }
+          if (visitNode(node: node.down)) {
+            return true;
+          }
+        }
+      } else if (visitNode(node: node.right)) {
+        return true;
+      }
+    } else {
+      // distanceX is zero
+      if (distanceY < 0){
+         if (visitNode(node: node.up)){
+           return true;
+         }
+      }
+       if (visitNode(node: node.down)){
+          return true;
+       }
+    }
+
+    if (visitNode(node: node.up)){
+      return true;
+    }
+    if (visitNode(node: node.right)){
+      return true;
+    }
+    if (visitNode(node: node.down)){
+      return true;
+    }
+    if (visitNode(node: node.left)){
+      return true;
+    }
+    return false;
   }
 
   Vector2 getLeft(double x1, double y1, double x2, double y2) {
@@ -291,9 +407,9 @@ extension SceneFunctions on Scene {
   }
 
   Tile tileAt(double x, double y) {
-    final projectedX = y - x; // projectedToWorldX(x, y);
+    final projectedX = y - x;
     if (projectedX < 0) return Tile.Boundary;
-    final projectedY = x + y; // projectedToWorldY(x, y);
+    final projectedY = x + y;
     if (projectedY < 0) return Tile.Boundary;
     final row = projectedY ~/ _tileSize;
     if (row >= rows) return Tile.Boundary;
@@ -307,7 +423,6 @@ extension SceneFunctions on Scene {
     if (projectedX < 0) return _boundary;
     final projectedY = x + y; // projectedToWorldY(x, y)
     if (projectedY < 0) return _boundary;
-
     final row = projectedY ~/ _tileSize;
     if (row >= rows) return _boundary;
     final column = projectedX ~/ _tileSize;
