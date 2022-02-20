@@ -7,6 +7,7 @@ import 'package:lemon_math/diff_over.dart';
 import 'package:lemon_math/distance_between.dart';
 import 'package:lemon_math/give_or_take.dart';
 import 'package:lemon_math/hypotenuse.dart';
+import 'package:lemon_math/randomInt.dart';
 import 'package:lemon_math/randomItem.dart';
 
 import '../bleed/zombie_health.dart';
@@ -471,18 +472,6 @@ extension GameFunctions on Game {
     final ai = character.ai;
     if (ai == null) return;
 
-    // if (ai.objectives.isNotEmpty) {
-    //   if (withinRadius(character, ai.objectives.last, 100)) {
-    //     ai.objectives.removeLast();
-    //     if (ai.objectives.isNotEmpty) {
-    //       final next = ai.objectives.last;
-    //       npcSetPathTo(ai, next.x, next.y);
-    //     } else {
-    //       onNpcObjectivesCompleted(character);
-    //     }
-    //   }
-    // }
-
     final target = ai.target;
     if (target != null) {
       switch (character.weapon.type) {
@@ -511,12 +500,6 @@ extension GameFunctions on Game {
         if (engine.frame % 30 == 0) {
           npcSetPathTo(ai, target.x, target.y);
         }
-        // if (ai.path.length <= 1 &&
-        //     !targetWithinStrikingRange(character, target)) {
-        //   characterFaceV2(character, target);
-        //   setCharacterState(character, CharacterState.Running);
-        //   return;
-        // }
       }
     }
 
@@ -535,35 +518,6 @@ extension GameFunctions on Game {
     }
     character.state = CharacterState.Idle;
   }
-
-  // void _updatePlayersPerSecond() {
-  //   if (duration % framesPerSecond != 0) return;
-  //
-  //   for (final player in players) {
-  //     if (player.dead) continue;
-  //     player.ability1.update();
-  //     player.ability2.update();
-  //     player.ability3.update();
-  //     player.ability4.update();
-  //
-  //     if (player.ability1.cooldownRemaining > 0) {
-  //       player.ability1.cooldownRemaining--;
-  //       player.abilitiesDirty = true;
-  //     }
-  //     if (player.ability2.cooldownRemaining > 0) {
-  //       player.ability2.cooldownRemaining--;
-  //       player.abilitiesDirty = true;
-  //     }
-  //     if (player.ability3.cooldownRemaining > 0) {
-  //       player.ability3.cooldownRemaining--;
-  //       player.abilitiesDirty = true;
-  //     }
-  //     if (player.ability4.cooldownRemaining > 0) {
-  //       player.ability4.cooldownRemaining--;
-  //       player.abilitiesDirty = true;
-  //     }
-  //   }
-  // }
 
   void _updatePlayersAndNpcs() {
     // _updatePlayersPerSecond();
@@ -1505,10 +1459,6 @@ extension GameFunctions on Game {
     ai.target = value;
   }
 
-  void updateNpcObjective(AI ai) {
-    npcSetRandomDestination(ai);
-  }
-
   void removeDisconnectedPlayers() {
     for (int i = 0; i < players.length; i++) {
       if (players[i].lastUpdateFrame < settings.framesUntilPlayerDisconnected)
@@ -1559,7 +1509,16 @@ extension GameFunctions on Game {
   }
 
   void npcSetRandomDestination(AI ai) {
-    npcSetPathToTileNode(ai, getRandomOpenTileNode());
+    final node = scene.tileNodeAt(ai.x, ai.y);
+    final radius = 10;
+    final minColumn = max(0, node.column - radius);
+    final maxColumn = min(scene.columns, node.column + radius);
+    final minRow = max(0, node.row - radius);
+    final maxRow = min(scene.rows, node.row + radius);
+    final randomColumn = randomInt(minColumn, maxColumn);
+    final randomRow = randomInt(minRow, maxRow);
+    final randomTile = scene.tileNodes[randomRow][randomColumn];
+    npcSetPathToTileNode(ai, randomTile);
   }
 
   TileNode getRandomOpenTileNode() {
@@ -1579,6 +1538,7 @@ extension GameFunctions on Game {
     pathFindAI = ai;
     pathFindPrevious = null;
     pathFindSearch++;
+    ai.pathIndex = -1;
     scene.visitNode(node: scene.tileNodeAt(ai.x, ai.y));
   }
 

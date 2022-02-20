@@ -8,13 +8,9 @@ import 'EnvironmentObject.dart';
 import 'TileNode.dart';
 
 // constants
-const List<Vector2> _emptyPath = [];
 const _tileSize = 48;
 const _tileSizeHalf = _tileSize * 0.5;
-final _vector2Zero = Vector2(0, 0);
-final _vector2 = Vector2(0, 0);
 final _boundary = TileNode(false);
-// variables
 
 double mapTilePositionX(int row, int column) {
   return perspectiveProjectX(row * _tileSizeHalf, column * _tileSizeHalf);
@@ -174,95 +170,12 @@ class Scene {
   }
 }
 
-// const _findPathMaxDistance = 10;
-
 late AI pathFindAI;
 late TileNode pathFindDestination;
 TileNode? pathFindPrevious = null;
 var pathFindSearch = 0;
 
 extension SceneFunctions on Scene {
-
-  // List<Vector2> findPath(double x1, double y1, double x2, double y2) {
-  //   final startNode = tileNodeAt(x1, y1);
-  //   if (!startNode.open) return _emptyPath;
-  //   final endNode = tileNodeAt(x2, y2);
-  //   if (!endNode.open) return _emptyPath;
-  //   return findPathNodes(startNode, endNode);
-  // }
-
-  // void visit(TileNode tileNode, TileNodeVisit previous,
-  //     List<TileNodeVisit> visits, TileNode endNode) {
-  //   if (!tileNode.open) return;
-  //   if (tileNode.search == _search) return;
-  //   final remaining = diffInt(tileNode.x, endNode.x) + diffInt(tileNode.y, endNode.y);
-  //   final tileNodeVisit = TileNodeVisit(previous, remaining, tileNode);
-  //   visits.add(tileNodeVisit);
-  //   tileNode.search = _search;
-  // }
-
-  // List<Vector2> findPathNodes(TileNode startNode, TileNode endNode) {
-  //   if (!startNode.open) return _emptyPath;
-  //   if (!endNode.open) return _emptyPath;
-  //
-  //   _search++;
-  //
-  //   final remaining =
-  //       diffInt(startNode.x, endNode.x) + diffInt(startNode.y, endNode.y);
-  //
-  //   List<TileNodeVisit> visits = [TileNodeVisit(null, remaining, startNode)];
-  //   startNode.search = _search;
-  //
-  //   while (visits.isNotEmpty) {
-  //     var closest = visits[0];
-  //     var index = 0;
-  //
-  //     for(int i = 1; i < visits.length; i++){
-  //       if (closest.isCloserThan(visits[i])) continue;
-  //       closest = visits[i];
-  //       index = i;
-  //     }
-  //
-  //     if (closest.travelled > _findPathMaxDistance || closest.tileNode == endNode) {
-  //       List<Vector2> nodes =
-  //       List.filled(closest.travelled, _vector2Zero, growable: true);
-  //       int index = closest.travelled - 1;
-  //       while (closest.previous != null) {
-  //         nodes[index] = closest.tileNode.position;
-  //         index--;
-  //         closest = closest.previous!;
-  //       }
-  //       visits.clear();
-  //       return nodes;
-  //     }
-  //
-  //     visits.removeAt(index);
-  //
-  //     final closestNode = closest.tileNode;
-  //
-  //     if (closestNode.up.open) {
-  //       visit(closestNode.up, closest, visits, endNode);
-  //       if (closestNode.right.open) {
-  //         visit(closestNode.upRight, closest, visits, endNode);
-  //       }
-  //       if (closestNode.left.open) {
-  //         visit(closestNode.upLeft, closest, visits, endNode);
-  //       }
-  //     }
-  //     if (closestNode.down.open) {
-  //       visit(closestNode.down, closest, visits, endNode);
-  //       if (closestNode.right.open) {
-  //         visit(closestNode.downRight, closest, visits, endNode);
-  //       }
-  //       if (closestNode.left.open) {
-  //         visit(closestNode.downLeft, closest, visits, endNode);
-  //       }
-  //     }
-  //     visit(closestNode.right, closest, visits, endNode);
-  //     visit(closestNode.left, closest, visits, endNode);
-  //   }
-  //   return _emptyPath;
-  // }
 
   bool visitNode({
     required TileNode node,
@@ -356,18 +269,18 @@ extension SceneFunctions on Scene {
       }
     }
 
-    if (visitNode(node: node.up)){
-      return true;
-    }
-    if (visitNode(node: node.right)){
-      return true;
-    }
-    if (visitNode(node: node.down)){
-      return true;
-    }
-    if (visitNode(node: node.left)){
-      return true;
-    }
+    // if (visitNode(node: node.up)){
+    //   return true;
+    // }
+    // if (visitNode(node: node.right)){
+    //   return true;
+    // }
+    // if (visitNode(node: node.down)){
+    //   return true;
+    // }
+    // if (visitNode(node: node.left)){
+    //   return true;
+    // }
     return false;
   }
 
