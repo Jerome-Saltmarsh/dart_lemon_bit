@@ -29,8 +29,8 @@ class TileNode {
   late TileNode downLeft;
   late TileNode left;
   late TileNode upLeft;
-  late int x;
-  late int y;
+  late int row;
+  late int column;
   late Vector2 position;
   bool open;
   int search = -1;

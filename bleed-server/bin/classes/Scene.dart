@@ -96,17 +96,17 @@ class Scene {
       }
     }
 
-    for (int row = 0; row < rows; row++) {
+    for (var row = 0; row < rows; row++) {
       final List<TileNode> nodeRow = [];
-      for (int column = 0; column < columns; column++) {
+      for (var column = 0; column < columns; column++) {
         final node = TileNode(isWalkable(tiles[row][column]));
-        node.y = column;
-        node.x = row;
-        double halfTileSize = 24;
-        double px =
-            perspectiveProjectX(node.x * halfTileSize, node.y * halfTileSize);
-        double py =
-            perspectiveProjectY(node.x * halfTileSize, node.y * halfTileSize) +
+        node.row = row;
+        node.column = column;
+        final halfTileSize = 24.0;
+        final px =
+            perspectiveProjectX(node.row * halfTileSize, node.column * halfTileSize);
+        final py =
+            perspectiveProjectY(node.row * halfTileSize, node.column * halfTileSize) +
                 halfTileSize;
         node.position = Vector2(px, py);
         nodeRow.add(node);
@@ -114,8 +114,8 @@ class Scene {
       tileNodes.add(nodeRow);
     }
 
-    for (int row = 0; row < rows; row++) {
-      for (int column = 0; column < columns; column++) {
+    for (var row = 0; row < rows; row++) {
+      for (var column = 0; column < columns; column++) {
         bool canLeft = column > 0;
         bool canRight = column < columns - 1;
         bool canUp = row > 0;
@@ -179,6 +179,7 @@ class Scene {
 
 late AI pathFindAI;
 late TileNode pathFindDestination;
+TileNode? pathFindPrevious = null;
 
 extension SceneFunctions on Scene {
 
@@ -265,34 +266,31 @@ extension SceneFunctions on Scene {
 
   bool visitNode({
     required TileNode node,
-    TileNode? previous,
   }){
-
     if (!node.open) return false;
     if (node.search == _search) return false;
     node.search = _search;
+    node.previous = pathFindPrevious;
+    pathFindPrevious = node;
 
-    if (node == pathFindDestination){
-      // finished;
-      node.previous = previous;
-      TileNode n = node;
+    if (node == pathFindDestination) {
+      TileNode? current = node;
       var index = 0;
-      while (n.previous != null) {
-        pathFindAI.pathX[index] = n.position.x;
-        pathFindAI.pathY[index] = n.position.y;
+      while (current != null) {
+        pathFindAI.pathX[index] = current.position.x;
+        pathFindAI.pathY[index] = current.position.y;
         index++;
-        n = n.previous!;
+        current = current.previous;
       }
       pathFindAI.pathIndex = index;
       return true;
     }
 
-    node.previous = previous;
-    final distanceX = pathFindDestination.x - node.x;
-    final distanceY = pathFindDestination.y - node.y;
+    final distanceRows = pathFindDestination.row - node.row;
+    final distanceColumns = pathFindDestination.column - node.column;
 
-    if (distanceX < 0) {
-      if (distanceY < 0) {
+    if (distanceRows < 0) {
+      if (distanceColumns < 0) {
          if (node.up.open || node.left.open){
            if (visitNode(node: node.upLeft)) {
              return true;
@@ -304,7 +302,7 @@ extension SceneFunctions on Scene {
              return true;
            }
          }
-      } else if (distanceY > 0) { // down left
+      } else if (distanceColumns < 0) { // down left
         if (node.down.open || node.left.open) {
           if (visitNode(node: node.downLeft)) {
             return true;
@@ -319,9 +317,9 @@ extension SceneFunctions on Scene {
       } else if (visitNode(node: node.left)) {
         return true;
       }
-    } else if (distanceX > 0) { // otherwise look right
+    } else if (distanceRows > 0) { // otherwise look right
 
-      if (distanceY < 0) {
+      if (distanceColumns > 0) {
         if (node.up.open || node.right.open){
           if (visitNode(node: node.upRight)) {
             return true;
@@ -333,7 +331,7 @@ extension SceneFunctions on Scene {
             return true;
           }
         }
-      } else if (distanceY > 0) { // down left
+      } else if (distanceColumns > 0) {
         if (node.down.open || node.right.open) {
           if (visitNode(node: node.downRight)) {
             return true;
@@ -345,17 +343,17 @@ extension SceneFunctions on Scene {
             return true;
           }
         }
-      } else if (visitNode(node: node.right)) {
+      } else if (visitNode(node: node.down)) { // down
         return true;
       }
     } else {
       // distanceX is zero
-      if (distanceY < 0){
-         if (visitNode(node: node.up)){
+      if (distanceColumns < 0){
+         if (visitNode(node: node.left)){
            return true;
          }
       }
-       if (visitNode(node: node.down)){
+       if (visitNode(node: node.right)){
           return true;
        }
     }
