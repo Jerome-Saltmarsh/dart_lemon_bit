@@ -218,9 +218,11 @@ class Player extends Character with Entity {
       }
 
       if (slot == SlotType.Spell_Tome_Fireball) {
+        final cost = 5;
+        if (magic < cost) return;
         ability = Ability(type: AbilityType.Fireball,
             level: 1,
-            cost: 5,
+            cost: cost,
             range: 250,
             cooldown: 100,
             mode: AbilityMode.Targeted);
