@@ -72,6 +72,10 @@ class _GameEvents {
   List<OnKilled> onKilled = [];
 }
 
+// constants
+final castFrame = 3;
+final tileCollisionResolve = 3;
+
 // This should be OpenWorldScene
 abstract class Game {
   static int _id = 0;
@@ -81,6 +85,7 @@ abstract class Game {
   // late bool started;
   late GameStatus status;
   GameType gameType;
+
 
   final _GameEvents events = _GameEvents();
 
@@ -520,7 +525,6 @@ extension GameFunctions on Game {
   }
 
   void _updatePlayersAndNpcs() {
-    // _updatePlayersPerSecond();
 
     for (int i = 0; i < players.length; i++) {
       updatePlayer(players[i]);
@@ -714,8 +718,17 @@ extension GameFunctions on Game {
         }
         break;
       case CharacterState.Performing:
-        // TODO
         character.stateDuration = settings.duration.strike;
+        if (character is Player){
+          final ability = character.performing;
+          if (ability == null) break;
+          if (character.magic < ability.cost) {
+            character.ability = null;
+            character.attackTarget = null;
+            return;
+          }
+          character.magic -= ability.cost;
+        }
         break;
       default:
         break;
@@ -879,7 +892,7 @@ extension GameFunctions on Game {
       final ability = player.ability;
 
       if (ability != null){
-         if (withinRadius(player, target, ability.range)){
+         if (withinRadius(player, target, ability.range)) {
            player.attackTarget = target;
            setCharacterStatePerforming(player);
            player.target = null;
@@ -966,7 +979,6 @@ extension GameFunctions on Game {
     if (ability == null) return;
     switch (ability.type) {
       case AbilityType.Explosion:
-        final int castFrame = 3;
         if (character.stateDuration == castFrame) {
           spawnExplosion(
               src: character,
@@ -976,7 +988,7 @@ extension GameFunctions on Game {
         }
         break;
       case AbilityType.Blink:
-        if (character.stateDuration == 3) {
+        if (character.stateDuration == castFrame) {
           dispatch(GameEventType.Teleported, character.x, character.y);
           character.x = character.abilityTarget.x;
           character.y = character.abilityTarget.y;
@@ -986,7 +998,6 @@ extension GameFunctions on Game {
         }
         break;
       case AbilityType.FreezeCircle:
-        final int castFrame = 3;
         if (character.stateDuration == castFrame) {
           spawnFreezeCircle(
               x: character.abilityTarget.x, y: character.abilityTarget.y);
@@ -995,7 +1006,6 @@ extension GameFunctions on Game {
         }
         break;
       case AbilityType.Fireball:
-        final int castFrame = 3;
         if (character.stateDuration == castFrame) {
           spawnFireball(character);
           character.performing = null;
@@ -1003,7 +1013,6 @@ extension GameFunctions on Game {
         }
         break;
       case AbilityType.Split_Arrow:
-        final int castFrame = 3;
         if (character.stateDuration == castFrame) {
           Projectile arrow1 = spawnArrow(character, damage: character.damage);
           double angle = piSixteenth;
@@ -1020,7 +1029,6 @@ extension GameFunctions on Game {
         break;
 
       case AbilityType.Long_Shot:
-        final int castFrame = 3;
         if (character.stateDuration == castFrame) {
           final int damageMultiplier = 3;
           spawnArrow(character, damage: character.damage * damageMultiplier)
@@ -1112,38 +1120,28 @@ extension GameFunctions on Game {
   }
 
   void _updateCharacterStateRunning(Character character) {
-    character.x += adj(character.angle, character.speed);
-    character.y += opp(character.angle, character.speed);
+    final speed = character.speed;
+    character.x += adj(character.angle, speed);
+    character.y += opp(character.angle, speed);
   }
 
   void updateCharacterTileCollision(Character character) {
     if (!scene.tileWalkableAt(character.left, character.top)) {
-      character.x += 3;
-      character.y += 3;
+      character.x += tileCollisionResolve;
+      character.y += tileCollisionResolve;
     }
     if (!scene.tileWalkableAt(character.right, character.top)) {
-      character.x -= 3;
-      character.y += 3;
+      character.x -= tileCollisionResolve;
+      character.y += tileCollisionResolve;
     }
     if (!scene.tileWalkableAt(character.left, character.bottom)) {
-      character.x += 3;
-      character.y -= 3;
+      character.x += tileCollisionResolve;
+      character.y -= tileCollisionResolve;
     }
     if (!scene.tileWalkableAt(character.right, character.bottom)) {
-      character.x -= 3;
-      character.y -= 3;
+      character.x -= tileCollisionResolve;
+      character.y -= tileCollisionResolve;
     }
-  }
-
-  void throwGrenade(Player player, double angle, double strength) {
-    double speed = settings.grenadeSpeed * strength;
-    Grenade grenade =
-        Grenade(player, adj(angle, speed), opp(angle, speed), 0.8 * strength);
-    grenades.add(grenade);
-    delayed(() {
-      grenades.remove(grenade);
-      spawnExplosion(src: player, x: grenade.x, y: grenade.y);
-    }, ms: settings.grenadeDuration);
   }
 
   Projectile spawnBullet(Character character) {
