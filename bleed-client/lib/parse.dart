@@ -665,6 +665,7 @@ void _consumeGameEvents() {
     final y = consumeDouble();
     final angle = consumeDouble();
     if (gameEvents.containsKey(id)) continue;
+    print("new game event $type");
     gameEvents[id] = true;
     modules.game.events.onGameEvent(type, x, y, angle);
   }

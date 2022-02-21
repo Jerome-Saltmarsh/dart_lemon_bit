@@ -4,6 +4,7 @@ import '../common/AbilityMode.dart';
 import '../common/AbilityType.dart';
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
+import '../common/GameEventType.dart';
 import '../common/PlayerEvent.dart';
 import '../common/Quests.dart';
 import '../common/SlotType.dart';
@@ -232,12 +233,9 @@ class Player extends Character with Entity {
       if (slot == SlotType.Spell_Tome_Ice_Ring) {
         final cost = 5;
         if (magic < cost) return;
-        ability = Ability(type: AbilityType.Ice_Ring,
-            level: 1,
-            cost: cost,
-            range: 250,
-            cooldown: 100,
-            mode: AbilityMode.Targeted);
+        magic -= cost;
+        game.dispatch(GameEventType.FreezeCircle, x, y);
+        setStateChangingWeapons();
         return;
       }
 

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 Map<AbilityType, DecorationImage> mapAbilityTypeToDecorationImage = {
   AbilityType.Fireball: spellIcon("fireball"),
-  AbilityType.FreezeCircle: spellIcon("freeze"),
+  AbilityType.Ice_Ring: spellIcon("freeze"),
   AbilityType.Blink: spellIcon("flash"),
   AbilityType.Explosion: spellIcon("explode"),
   AbilityType.Dash: spellIcon("dash"),
