@@ -41,7 +41,7 @@ class TileNode {
   late int column;
   late Vector2 position;
   bool open;
-  int search = -1;
+  int searchId = -1;
   TileNode? previous;
   int score = 0;
 

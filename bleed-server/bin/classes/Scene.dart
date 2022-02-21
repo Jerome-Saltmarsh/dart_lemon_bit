@@ -173,7 +173,9 @@ class Scene {
 late AI pathFindAI;
 late TileNode pathFindDestination;
 TileNode? pathFindPrevious = null;
-var pathFindSearch = 0;
+var pathFindSearchID = 0;
+
+const _maxSearchDepth = 20;
 
 extension SceneFunctions on Scene {
 
@@ -182,17 +184,17 @@ extension SceneFunctions on Scene {
     int depth = 0,
   }){
 
-    if (depth > 20) {
+    if (depth > _maxSearchDepth) {
       return false;
     }
 
     if (!node.open) return false;
-    if (node.search == pathFindSearch) return false;
-    node.search = pathFindSearch;
+    if (node.searchId == pathFindSearchID) return false;
+    node.searchId = pathFindSearchID;
     node.previous = pathFindPrevious;
     pathFindPrevious = node;
     if (node == pathFindDestination) {
-      TileNode? current = node;
+      TileNode? current = node.previous;
       var index = 0;
       while (current != null) {
         pathFindAI.pathX[index] = current.position.x;

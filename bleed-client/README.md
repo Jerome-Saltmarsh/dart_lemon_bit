@@ -107,13 +107,15 @@
 [ ] Spell Cooldown
 [ ] Fix Batch Rendering glitches
 [x] FIX Particle blood renders as shell
-[Primary Hook]
+[RELEASE]
 [ ] Finish Inventory
 [ ] Dynamic Clothing Engine
 [ ] Slot machine concept
 [ ] Crafting System
 [ ] Drag inventory slots to change position
+[ ] Hover inventory context menu
 [ ] Gem should fly out of enemy when killed
+[ ] Remaining Spells and items
 [ ] Fix fireball explosion
 [x] Fireball should heat seek enemy
 [x] Optimize AI Pathfinding
