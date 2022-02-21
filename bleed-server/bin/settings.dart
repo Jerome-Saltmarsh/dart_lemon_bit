@@ -1,6 +1,5 @@
 
 import '../bin/common/WeaponType.dart';
-import 'maths.dart';
 
 final Settings settings = Settings();
 

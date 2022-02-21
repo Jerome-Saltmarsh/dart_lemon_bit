@@ -34,11 +34,6 @@ class Tavern extends Game {
   }
 
   @override
-  void onKilledBy(Character target, Character by) {
-    // TODO: implement onKilledBy
-  }
-
-  @override
   int getTime() {
     return worldTime;
   }

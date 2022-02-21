@@ -8,10 +8,10 @@ import '../classes/Weapon.dart';
 import '../common/ItemType.dart';
 import '../common/Quests.dart';
 import '../common/WeaponType.dart';
-import '../enums/npc_mode.dart';
-import '../instances/scenes.dart';
 import '../engine.dart';
+import '../enums/npc_mode.dart';
 import '../handlers.dart';
+import '../instances/scenes.dart';
 import 'world.dart';
 
 class Town extends Game {

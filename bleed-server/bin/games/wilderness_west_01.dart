@@ -5,9 +5,8 @@ import '../classes/Weapon.dart';
 import '../common/CharacterType.dart';
 import '../common/Quests.dart';
 import '../common/WeaponType.dart';
-import '../instances/scenes.dart';
-import '../state.dart';
 import '../engine.dart';
+import '../instances/scenes.dart';
 import 'world.dart';
 
 const int _framesPerZombieSpawn = 10;
@@ -29,14 +28,6 @@ class WildernessWest01 extends Game {
     if (engine.frame % _framesPerZombieSpawn != 0) return;
     if (zombieCount > _maxZombies) return;
     spawnRandomZombieLevel(1);
-  }
-
-  @override
-  void onKilledBy(Character target, Character by) {
-    if (target != boss) return;
-    if (by is Player){
-      _onBossKilledBy(by);
-    }
   }
 
   void _onBossKilledBy(Player player){

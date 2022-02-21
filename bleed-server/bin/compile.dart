@@ -20,7 +20,6 @@ import 'classes/Weapon.dart';
 import 'common/AbilityType.dart';
 import 'common/CharacterType.dart';
 import 'common/GameStatus.dart';
-import 'common/PlayerEvent.dart';
 import 'common/ServerResponse.dart';
 import 'common/Tile.dart';
 import 'common/WeaponType.dart';
@@ -289,12 +288,13 @@ void compilePlayerOrbs(StringBuffer buffer, Player player) {
 
 void compilePlayerSlotTypes(StringBuffer buffer, Player player) {
   _write(buffer, ServerResponse.Player_Slot_Types.index);
-  _write(buffer, player.slots.slot1.index);
-  _write(buffer, player.slots.slot2.index);
-  _write(buffer, player.slots.slot3.index);
-  _write(buffer, player.slots.slot4.index);
-  _write(buffer, player.slots.slot5.index);
-  _write(buffer, player.slots.slot6.index);
+  final slots = player.slots;
+  _write(buffer, slots.slot1.index);
+  _write(buffer, slots.slot2.index);
+  _write(buffer, slots.slot3.index);
+  _write(buffer, slots.slot4.index);
+  _write(buffer, slots.slot5.index);
+  _write(buffer, slots.slot6.index);
 }
 
 void _compilePlayerAbility(StringBuffer buffer, Player player){

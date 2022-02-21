@@ -1,6 +1,4 @@
-import 'package:lemon_math/Vector2.dart';
 
-import '../common/enums/Direction.dart';
 import '../common/enums/ProjectileType.dart';
 import '../interfaces/HasSquad.dart';
 import '../maths.dart';
