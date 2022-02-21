@@ -19,6 +19,7 @@ enum SlotType {
   Steel_Helmet,
   Magic_Hat,
   Spell_Tome_Fireball,
+  Spell_Tome_Ice_Ring,
   Body_Blue,
   Potion_Red,
   Potion_Blue,

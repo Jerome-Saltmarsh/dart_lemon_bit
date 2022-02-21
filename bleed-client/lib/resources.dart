@@ -17,8 +17,6 @@ class _Icons {
   final ruby = _image("orb-ruby", width: _orbSize, height: _orbSize);
   final sword = _image("sword");
   final shield = _image("shield");
-  final book = _image("book");
-  final bookRed = _image("book-red");
   final unknown = _image("unknown");
   final empty = _image("slot-empty");
   final armour = _ArmourIcons();
@@ -28,6 +26,13 @@ class _Icons {
   final heads = _HeadIcons();
   final trinkets = _Trinkets();
   final staffs = _StaffIcons();
+  final books = _IconsBooks();
+}
+
+class _IconsBooks {
+  final grey = _image("book-red");
+  final red = _image("book-red");
+  final blue = _image("book-blue");
 }
 
 class _StaffIcons {

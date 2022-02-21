@@ -356,7 +356,7 @@ class GameBuild {
       case StoreTab.Armor:
         return resources.icons.shield;
       case StoreTab.Items:
-        return resources.icons.book;
+        return resources.icons.books.grey;
     }
   }
 
@@ -443,8 +443,8 @@ class GameBuild {
       children: [
         shopSlotRow(
           SlotType.Spell_Tome_Fireball,
-          SlotType.Golden_Necklace,
-          SlotType.Silver_Pendant,
+          SlotType.Spell_Tome_Ice_Ring,
+          SlotType.Empty,
         ),
         shopSlotRow(
           SlotType.Potion_Red,
@@ -452,8 +452,8 @@ class GameBuild {
           SlotType.Empty,
         ),
         shopSlotRow(
-          SlotType.Empty,
-          SlotType.Empty,
+          SlotType.Golden_Necklace,
+          SlotType.Silver_Pendant,
           SlotType.Empty,
         )
       ],
