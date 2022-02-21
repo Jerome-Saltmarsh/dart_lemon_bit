@@ -30,6 +30,9 @@ import 'package:lemon_math/opposite.dart';
 import 'state.dart';
 import 'style.dart';
 
+
+const _freezeRingRadius = 75;
+
 class GameRender {
 
   final GameQueries queries;
@@ -233,12 +236,6 @@ class GameRender {
 
   void projectile(Projectile value) {
     switch (value.type) {
-      // case ProjectileType.Bullet:
-      //   if (isometric.properties.inDarkness(value.x, value.y)) return;
-      //   mapDstProjectile(value);
-      //   mapProjectileToSrc(value);
-      //   engine.actions.renderAtlas();
-      //   break;
       case ProjectileType.Fireball:
         drawFireball(value.x, value.y, value.angle);
         break;
@@ -285,22 +282,22 @@ class GameRender {
   }
 
   void drawEffects() {
-    for (Effect effect in game.effects) {
+    for (final effect in game.effects) {
       if (!effect.enabled) continue;
-      if (effect.duration++ > effect.maxDuration) {
+      if (effect.duration++ >= effect.maxDuration) {
         effect.enabled = false;
         break;
       }
 
       if (effect.type == EffectType.FreezeCircle) {
-        final p = effect.duration / effect.maxDuration;
-        final maxRadius = 75;
+        final percentage = effect.duration / effect.maxDuration;
         engine.draw.drawCircleOutline(
             sides: 16,
-            radius: maxRadius * p,
+            radius: _freezeRingRadius * percentage,
             x: effect.x,
             y: effect.y,
-            color: colours.blue
+            width: 10,
+            color: colours.blue.withOpacity(1.0 - percentage)
         );
       }
     }

@@ -404,7 +404,7 @@ class IsometricSpawn {
     required double x,
     required double y
   }){
-    spawnEffect(x: x, y: y, type: EffectType.FreezeCircle, duration: 30);
+    spawnEffect(x: x, y: y, type: EffectType.FreezeCircle, duration: 45);
   }
 
   void spawnFloatingText(double x, double y, dynamic value) {
