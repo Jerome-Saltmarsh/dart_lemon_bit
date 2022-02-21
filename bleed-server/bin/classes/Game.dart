@@ -996,7 +996,7 @@ extension GameFunctions on Game {
           character.attackTarget = null;
         }
         break;
-      case AbilityType.FreezeCircle:
+      case AbilityType.Ice_Ring:
         if (character.stateDuration == castFrame) {
           spawnFreezeCircle(
               x: character.abilityTarget.x, y: character.abilityTarget.y);
@@ -1753,7 +1753,7 @@ void selectCharacterType(Player player, CharacterType value) {
         mode: AbilityMode.Directed,
       );
       player.ability3 = Ability(
-        type: AbilityType.FreezeCircle,
+        type: AbilityType.Ice_Ring,
         level: 0,
         cost: 10,
         range: 200,

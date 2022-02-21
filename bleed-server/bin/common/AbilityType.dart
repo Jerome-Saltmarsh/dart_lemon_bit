@@ -1,6 +1,6 @@
 enum AbilityType {
   None,
-  FreezeCircle,
+  Ice_Ring,
   Blink,
   Explosion,
   Dash,

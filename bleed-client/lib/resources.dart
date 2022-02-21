@@ -30,7 +30,7 @@ class _Icons {
 }
 
 class _IconsBooks {
-  final grey = _image("book-red");
+  final grey = _image("book-grey");
   final red = _image("book-red");
   final blue = _image("book-blue");
 }

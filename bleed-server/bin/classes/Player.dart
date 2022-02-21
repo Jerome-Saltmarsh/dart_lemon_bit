@@ -229,6 +229,18 @@ class Player extends Character with Entity {
         return;
       }
 
+      if (slot == SlotType.Spell_Tome_Ice_Ring) {
+        final cost = 5;
+        if (magic < cost) return;
+        ability = Ability(type: AbilityType.Ice_Ring,
+            level: 1,
+            cost: cost,
+            range: 250,
+            cooldown: 100,
+            mode: AbilityMode.Targeted);
+        return;
+      }
+
       if (slot == SlotType.Potion_Red) {
         health = maxHealth;
         slots.assignSlotAtIndex(index, SlotType.Empty);
