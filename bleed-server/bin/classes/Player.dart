@@ -234,7 +234,7 @@ class Player extends Character with Entity {
         final cost = 5;
         if (magic < cost) return;
         magic -= cost;
-        game.dispatch(GameEventType.FreezeCircle, x, y);
+        game.spawnFreezeRing(src: this);
         setStateChangingWeapons();
         return;
       }

@@ -23,11 +23,11 @@ import '../common/PlayerEvent.dart';
 import '../common/SlotType.dart';
 import '../common/Tile.dart';
 import '../common/WeaponType.dart';
+import '../common/configuration.dart';
 import '../common/enums/ObjectType.dart';
 import '../common/enums/ProjectileType.dart';
 import '../common/enums/Shade.dart';
 import '../constants.dart';
-import '../constants/no_squad.dart';
 import '../engine.dart';
 import '../enums.dart';
 import '../enums/npc_mode.dart';
@@ -830,38 +830,43 @@ extension GameFunctions on Game {
     character.frozenDuration = settings.duration.frozen;
   }
 
-  void spawnExplosion(
-      {required Character src, required double x, required double y}) {
-    dispatch(GameEventType.Explosion, x, y);
+  void spawnFreezeRing({required Character src}){
+    dispatch(GameEventType.FreezeCircle, src.x, src.y);
+    for (final zombie in zombies) {
+      if (!zombie.alive) continue;
+      if (!withinDistance(zombie, src.x, src.y, SpellRadius.Freeze_Ring)) continue;
+      applyStrike(src, zombie, 1);
+      src.frozenDuration = 100;
+    }
+  }
 
-    for (Character zombie in zombies) {
+  void spawnExplosion({
+    required Character src,
+    required double x,
+    required double y
+  }) {
+    dispatch(GameEventType.Explosion, x, y);
+    for (final zombie in zombies) {
       if (!withinDistance(zombie, x, y, settings.radius.explosion)) continue;
-      double rotation = radiansBetween2(zombie, x, y);
-      double magnitude = 10;
+      final rotation = radiansBetween2(zombie, x, y);
+      final magnitude = 10.0;
       applyForce(zombie, rotation + pi, magnitude);
 
       if (zombie.dead) continue;
       applyDamage(src, zombie, settings.damage.grenade);
     }
 
-    for (Player player in players) {
+    for (final player in players) {
       if (objectDistanceFrom(player, x, y) > settings.radius.explosion)
         continue;
-      double rotation = radiansBetween2(player, x, y);
-      double magnitude = 10;
+      final rotation = radiansBetween2(player, x, y);
+      final magnitude = 10.0;
       applyForce(player, rotation + pi, magnitude);
 
       if (player.alive) {
         changeCharacterHealth(player, -settings.damage.grenade);
       }
     }
-  }
-
-  bool sameTeam(Player a, Player b) {
-    if (a == b) return true;
-    if (a.team == noSquad) return false;
-    if (b.team == noSquad) return false;
-    return a.team == b.team;
   }
 
   void updatePlayer(Player player) {

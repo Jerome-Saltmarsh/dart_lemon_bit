@@ -14,4 +14,6 @@ class Effect {
   EffectType type = EffectType.None;
   bool enabled = false;
   int maxDuration = 0;
+
+  double get percentage => duration / maxDuration;
 }

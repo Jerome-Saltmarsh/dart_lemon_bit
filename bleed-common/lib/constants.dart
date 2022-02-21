@@ -9,3 +9,4 @@ const secondsPerDay = secondsPerHour * hoursPerDay;
 
 const degreesToRadians = 0.0174533;
 const radiansToDegrees = 57.2958;
+

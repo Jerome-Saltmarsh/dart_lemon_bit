@@ -12,6 +12,7 @@ import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/OrbType.dart';
+import 'package:bleed_client/common/configuration.dart';
 import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/constants/colours.dart';
@@ -30,8 +31,6 @@ import 'package:lemon_math/opposite.dart';
 import 'state.dart';
 import 'style.dart';
 
-
-const _freezeRingRadius = 75;
 
 class GameRender {
 
@@ -293,7 +292,7 @@ class GameRender {
         final percentage = effect.duration / effect.maxDuration;
         engine.draw.drawCircleOutline(
             sides: 16,
-            radius: _freezeRingRadius * percentage,
+            radius: SpellRadius.Freeze_Ring * percentage,
             x: effect.x,
             y: effect.y,
             width: 10,

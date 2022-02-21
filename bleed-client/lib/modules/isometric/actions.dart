@@ -467,12 +467,12 @@ class IsometricActions {
     final dynamicShading = state.dynamicShade;
     for (final effect in game.effects) {
       if (!effect.enabled) continue;
-      final p = effect.duration / effect.maxDuration;
-      if (p < 0.33) {
+      final percentage = effect.percentage;
+      if (percentage < 0.33) {
         emitLightHigh(dynamicShading, effect.x, effect.y);
         break;
       }
-      if (p < 0.66) {
+      if (percentage < 0.66) {
         emitLightMedium(dynamicShading, effect.x, effect.y);
         break;
       }
