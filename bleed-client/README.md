@@ -106,7 +106,7 @@
 [ ] Zombie Pause after attack
 [ ] Spell Cooldown
 [ ] Fix Batch Rendering glitches
-[ ] FIX Particle blood renders as shell
+[x] FIX Particle blood renders as shell
 [Primary Hook]
 [ ] Finish Inventory
 [ ] Dynamic Clothing Engine
@@ -114,7 +114,8 @@
 [ ] Crafting System
 [ ] Drag inventory slots to change position
 [ ] Gem should fly out of enemy when killed
-[ ] Fireball should heat seek enemy
+[ ] Fix fireball explosion
+[x] Fireball should heat seek enemy
 [x] Optimize AI Pathfinding
 [x] Fix Caste spell ai
 [x] FIX Can't shoot while running

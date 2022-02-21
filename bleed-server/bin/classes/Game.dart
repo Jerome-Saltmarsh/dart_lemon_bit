@@ -59,7 +59,7 @@ import 'Weapon.dart';
 
 const _none = -1;
 
-final _Teams teams = _Teams();
+final teams = _Teams();
 
 typedef void OnKilled(Game game, Character src, Character by, int damage);
 
@@ -1203,8 +1203,8 @@ extension GameFunctions on Game {
     required ProjectileType type,
     Character? target,
   }) {
-    double spawnDistance = character.radius + 20;
-    Projectile projectile = getAvailableProjectile();
+    final spawnDistance = character.radius + 20;
+    final projectile = getAvailableProjectile();
     if (target != null && target.alive && target.active) {
       projectile.target = target;
     } else {
@@ -1226,11 +1226,11 @@ extension GameFunctions on Game {
   }
 
   Projectile getAvailableProjectile() {
-    for (int i = 0; i < projectiles.length; i++) {
+    for (var i = 0; i < projectiles.length; i++) {
       if (projectiles[i].active) continue;
       return projectiles[i];
     }
-    Projectile projectile = Projectile();
+    final projectile = Projectile();
     projectiles.add(projectile);
     return projectile;
   }
