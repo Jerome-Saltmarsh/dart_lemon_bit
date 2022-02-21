@@ -152,21 +152,22 @@ class GameRender {
 
   void drawAbility() {
 
-    if (state.player.ability.value == AbilityType.None) return;
+    final player = state.player;
+    if (player.ability.value == AbilityType.None) return;
 
-    drawMouseAim2();
+    // drawMouseAim2();
 
     engine.draw.drawCircleOutline(
         sides: 24,
-        radius: modules.game.state.player.abilityRange,
-        x: modules.game.state.player.x,
-        y: modules.game.state.player.y,
+        radius: player.abilityRange,
+        x: player.x,
+        y: player.y,
         color: Colors.white);
 
-    if (modules.game.state.player.abilityRadius != 0){
+    if (player.abilityRadius != 0){
       engine.draw.drawCircleOutline(
           sides: 12,
-          radius: modules.game.state.player.abilityRadius,
+          radius: player.abilityRadius,
           x: mouseWorldX,
           y: mouseWorldY,
           color: Colors.white);
