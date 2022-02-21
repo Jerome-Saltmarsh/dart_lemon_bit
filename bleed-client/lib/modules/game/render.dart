@@ -70,21 +70,20 @@ class GameRender {
     drawEffects();
     drawItems();
 
-
-
-    _renderCharacterHealthBars();
-
-    if (game.type.value == GameType.BATTLE_ROYAL){
-      drawRoyalPerimeter();
-    }
+    // _renderCharacterHealthBars();
+    // if (game.type.value == GameType.BATTLE_ROYAL){
+    //   drawRoyalPerimeter();
+    // }
+    // engine.setPaintColorWhite();
+    // _drawFloatingTexts();
+    // _drawPlayerNames();
+    // drawPlayerText();
     engine.setPaintColorWhite();
-    _drawFloatingTexts();
-    _drawPlayerNames();
-    drawPlayerText();
+    // collectedOrbImage();
+  }
 
-    engine.setPaintColorWhite();
-
-    final totalFrames = 60;
+  void collectedOrbImage() {
+     final totalFrames = 60;
     final totalFramesHalf = ((totalFrames) * 0.5).toInt();
     final framesSinceOrbAcquired = state.framesSinceOrbAcquired;
 

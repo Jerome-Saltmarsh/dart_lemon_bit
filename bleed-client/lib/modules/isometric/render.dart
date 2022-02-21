@@ -522,6 +522,7 @@ class IsometricRender {
     if (!onScreen(character.x, character.y)) return;
     final shade = state.getShadeAtPosition(character.x, character.y);
     if (shade >= Shade.Dark) return;
+    // engine.render(dstX: character.x , dstY: character.y, srcX: atlas.shades.red1.x, srcY: atlas.shades.red1.y, anchorX: _widthHalf);
     engine.setPaintColor(colours.redDarkest);
     engine.canvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom, _width, _height), engine.paint);
     engine.setPaintColor(colours.red);
