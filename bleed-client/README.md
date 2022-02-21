@@ -117,6 +117,8 @@
 [ ] Gem should fly out of enemy when killed
 [ ] Remaining Spells and items
 [ ] Fix fireball explosion
+[ ] Spell Frost ring
+[ ] Spell Shield 
 [x] Fireball should heat seek enemy
 [x] Optimize AI Pathfinding
 [x] Fix Caste spell ai

@@ -28,17 +28,16 @@ import 'games/Moba.dart';
 import 'games/Royal.dart';
 
 // constants
-final int _collectablesIndex = ServerResponse.Collectables.index;
-final int _playersIndex = ServerResponse.Players.index;
-final int _playerIndex = ServerResponse.Player.index;
-final int _indexZombies = ServerResponse.Zombies.index;
-final int _indexNpcs = ServerResponse.Npcs.index;
-final int _indexBullets = ServerResponse.Bullets.index;
-final int _indexNpcMessage = ServerResponse.NpcMessage.index;
+final _playersIndex = ServerResponse.Players.index;
+final _playerIndex = ServerResponse.Player.index;
+final _indexZombies = ServerResponse.Zombies.index;
+final _indexNpcs = ServerResponse.Npcs.index;
+final _indexBullets = ServerResponse.Bullets.index;
+final _indexNpcMessage = ServerResponse.NpcMessage.index;
 
-const String _space = ' ';
-const String _semiColon = '; ';
-const String _comma = ', ';
+const _space = ' ';
+const _semiColon = '; ';
+const _comma = ', ';
 
 final compile = _Compile();
 
@@ -380,28 +379,17 @@ void _compileNpcDebug(StringBuffer buffer, List<Character> characters) {
   buffer.write(_semiColon);
 }
 
-void _compileGrenades(StringBuffer buffer, List<Grenade> grenades) {
-  buffer.write(ServerResponse.Grenades.index);
-  buffer.write(_space);
-  for (Grenade grenade in grenades) {
-    _write(buffer, grenade.x.toInt());
-    _write(buffer, grenade.y.toInt());
-    _write(buffer, grenade.z.toStringAsFixed(1));
-  }
-  buffer.write(_semiColon);
-}
-
 void _compilePlayers(StringBuffer buffer, List<Player> players) {
   _write(buffer, _playersIndex);
   _write(buffer, players.length);
-  for (Player player in players) {
+  for (final player in players) {
     _compilePlayer(buffer, player);
   }
 }
 
 void _compileZombies(StringBuffer buffer, List<Character> characters) {
   _write(buffer, _indexZombies);
-  int total = 0;
+  var total = 0;
   for (final character in characters) {
     if (character.active) total++;
   }
@@ -421,11 +409,11 @@ void _compileInteractableNpcs(StringBuffer buffer, List<InteractableNpc> npcs) {
   buffer.write(_semiColon);
 }
 
-void _compileProjectiles(StringBuffer buffer, List<Projectile> bullets) {
+void _compileProjectiles(StringBuffer buffer, List<Projectile> projectiles) {
   _write(buffer, _indexBullets);
-  for (Projectile bullet in bullets) {
-    if (!bullet.active) continue;
-    _compileProjectile(buffer, bullet);
+  for (final projectile in projectiles) {
+    if (!projectile.active) continue;
+    _compileProjectile(buffer, projectile);
   }
   buffer.write(_semiColon);
 }
