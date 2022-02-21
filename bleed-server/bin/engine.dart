@@ -7,6 +7,7 @@ import 'classes/Player.dart';
 import 'common/GameStatus.dart';
 import 'common/Settings.dart';
 import 'compile.dart';
+import 'enums/npc_mode.dart';
 import 'functions/loadScenes.dart';
 import 'games/Moba.dart';
 import 'games/Royal.dart';
@@ -100,17 +101,8 @@ class _Engine {
         final ai = zombie.ai;
         if (ai == null) continue;
         if (ai.target != null) continue;
-        // game.npcSetRandomDestination(ai);
-
-
-        // if (ai.path.isNotEmpty) continue;
-        // game.updateNpcObjective(ai);
-        // if (ai.objectives.isEmpty) {
-        //   game.npcSetRandomDestination(ai);
-        // } else {
-        //   final objective = ai.objectives.last;
-        //   game.npcSetPathTo(ai, objective.x, objective.y);
-        // }
+        if (ai.mode != NpcMode.Aggressive) continue;
+        game.npcSetRandomDestination(ai);
       }
     }
   }

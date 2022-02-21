@@ -400,6 +400,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 case AbilityMode.Targeted:
                   if (aimTarget != null) {
                     player.target = aimTarget;
+                    player.attackTarget = aimTarget;
                     return;
                   } else {
                     player.runTarget.x = mouseX;

@@ -96,7 +96,6 @@
 [ENGINE]
 [ ] Atlas Buffer 64
 [ ] Auto cull render calls
-[ ] Optimize AI Pathfinding
 [ROYAL]
 [ ] Implement game over dialog
 [ ] Design Map  
@@ -114,8 +113,10 @@
 [ ] Slot machine concept
 [ ] Crafting System
 [ ] Drag inventory slots to change position
-[ ] Fix Caste spell ai
+[ ] Gem should fly out of enemy when killed
 [ ] Fireball should heat seek enemy
+[x] Optimize AI Pathfinding
+[x] Fix Caste spell ai
 [x] FIX Can't shoot while running
 [x] Earn Gem Audio
 [x] Zombie Death Animation Particles

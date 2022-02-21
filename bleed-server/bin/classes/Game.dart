@@ -1163,7 +1163,9 @@ extension GameFunctions on Game {
         speed: settings.projectileSpeed.fireball,
         damage: 100,
         range: settings.range.firebolt,
-        type: ProjectileType.Fireball);
+        type: ProjectileType.Fireball,
+        target: character.attackTarget,
+    );
   }
 
   Projectile spawnBlueOrb(Character character) {
