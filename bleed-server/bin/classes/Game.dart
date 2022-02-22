@@ -806,35 +806,13 @@ extension GameFunctions on Game {
     }
   }
 
-  void spawnFreezeCircle({required double x, required double y}) {
-    applyFreezeTo(x: x, y: y, characters: zombies);
-    applyFreezeTo(x: x, y: y, characters: players);
-    dispatch(GameEventType.FreezeCircle, x, y);
-  }
-
-  void applyFreezeTo(
-      {required double x,
-      required double y,
-      required List<Character> characters}) {
-    for (Character character in characters) {
-      if (!withinDistance(character, x, y, settings.radius.freezeCircle))
-        continue;
-      freeze(character);
-    }
-  }
-
-  void freeze(Character character) {
-    character.frozen = true;
-    character.frozenDuration = settings.duration.frozen;
-  }
-
-  void spawnFreezeRing({required Character src}){
-    dispatch(GameEventType.FreezeCircle, src.x, src.y);
+  void spawnFreezeRing({required Character src, int duration = 100, int damage = 1}){
+    dispatchV2(GameEventType.FreezeCircle, src);
     for (final zombie in zombies) {
-      if (!zombie.alive) continue;
-      if (!withinDistance(zombie, src.x, src.y, SpellRadius.Freeze_Ring)) continue;
-      applyStrike(src, zombie, 1);
-      src.frozenDuration = 100;
+      if (zombie.dead) continue;
+      if (!withinRadius(zombie, src, SpellRadius.Freeze_Ring)) continue;
+      applyStrike(src, zombie, damage);
+      zombie.frozenDuration += duration;
     }
   }
 
@@ -1003,14 +981,6 @@ extension GameFunctions on Game {
           character.attackTarget = null;
         }
         break;
-      case AbilityType.Ice_Ring:
-        if (character.stateDuration == castFrame) {
-          spawnFreezeCircle(
-              x: character.abilityTarget.x, y: character.abilityTarget.y);
-          character.performing = null;
-          character.attackTarget = null;
-        }
-        break;
       case AbilityType.Fireball:
         if (character.stateDuration == castFrame) {
           spawnFireball(character);
@@ -1093,9 +1063,6 @@ extension GameFunctions on Game {
 
     if (character.frozenDuration > 0) {
       character.frozenDuration--;
-      if (character.frozenDuration == 0) {
-        character.frozen = false;
-      }
     }
 
     if (character.stateDuration > 0) {
@@ -1114,9 +1081,6 @@ extension GameFunctions on Game {
       case CharacterState.Performing:
         updateCharacterStatePerforming(character);
         break;
-      // case CharacterState.Striking:
-      //   _updateCharacterStateStriking(character);
-      //   break;
     }
 
     if (character.previousState != character.state) {
@@ -1334,6 +1298,10 @@ extension GameFunctions on Game {
       count++;
     }
     return count;
+  }
+
+  void dispatchV2(GameEventType type, Vector2 position){
+    dispatch(type, position.x, position.y);
   }
 
   void dispatch(GameEventType type, double x, double y,

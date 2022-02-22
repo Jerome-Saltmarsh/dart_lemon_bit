@@ -4,7 +4,6 @@ import '../common/AbilityMode.dart';
 import '../common/AbilityType.dart';
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
-import '../common/GameEventType.dart';
 import '../common/PlayerEvent.dart';
 import '../common/Quests.dart';
 import '../common/SlotType.dart';

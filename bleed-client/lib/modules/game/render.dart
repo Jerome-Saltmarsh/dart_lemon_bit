@@ -10,7 +10,6 @@ import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/GameStatus.dart';
-import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/OrbType.dart';
 import 'package:bleed_client/common/configuration.dart';
 import 'package:bleed_client/common/SlotType.dart';
@@ -148,24 +147,10 @@ class GameRender {
     }
   }
 
-  void _renderCharacterHealthBars() {
-    final players = game.humans;
-    for (int i = 0; i < game.totalHumans; i++) {
-      renderCharacterHealthBar(players[i]);
-    }
-    final zombies = game.zombies;
-    for (int i = 0; i < game.totalZombies.value; i++) {
-      renderCharacterHealthBar(zombies[i]);
-    }
-  }
-
   void drawAbility() {
-
     final player = state.player;
     if (player.ability.value == AbilityType.None) return;
-
     // drawMouseAim2();
-
     engine.draw.drawCircleOutline(
         sides: 24,
         radius: player.abilityRange,
@@ -215,7 +200,7 @@ class GameRender {
     engine.setPaintColor(colours.blue);
     engine.paint.strokeWidth = 4.0;
     for (final path in isometric.state.paths) {
-      for (int i = 0; i < path.length - 1; i++) {
+      for (var i = 0; i < path.length - 1; i++) {
         drawLine(path[i].x, path[i].y, path[i + 1].x, path[i + 1].y);
       }
     }
@@ -231,7 +216,7 @@ class GameRender {
   }
 
   void drawProjectiles(List<Projectile> projectiles) {
-    for (int i = 0; i < game.totalProjectiles; i++) {
+    for (var i = 0; i < game.totalProjectiles; i++) {
       projectile(game.projectiles[i]);
     }
   }

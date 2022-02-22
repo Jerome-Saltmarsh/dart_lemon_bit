@@ -63,6 +63,7 @@ class AI {
 
 class Character extends GameObject implements HasSquad {
   late CharacterType type;
+  late int _health;
   late int maxHealth;
   late double _speed;
   late AI? ai;
@@ -75,16 +76,24 @@ class Character extends GameObject implements HasSquad {
   double aimAngle = 0;
   double accuracy = 0;
   int stateDuration = 0;
+  /// The number of frames the character has had the current character state for
   int stateFrameCount = 0;
-  bool frozen = false;
   int frozenDuration = 0;
   double attackRange = 50;
   int damage = 1;
-
-  int get direction => (((angle + piEighth) % pi2) ~/ piQuarter) % 8;
-
   /// the character that was highlighted when the player clicked
   Character? attackTarget;
+  double speedModifier = 0;
+  bool invincible = false;
+  int team;
+  List<Weapon> weapons = [];
+  bool weaponsDirty = false;
+  Vector2 abilityTarget = Vector2(0, 0);
+
+
+  // properties
+  int get direction => (((angle + piEighth) % pi2) ~/ piQuarter) % 8;
+  bool get frozen => frozenDuration > 0;
 
   double get speed {
     if (frozen) {
@@ -92,17 +101,6 @@ class Character extends GameObject implements HasSquad {
     }
     return (_speed + speedModifier);
   }
-
-  double speedModifier = 0;
-  bool invincible = false;
-
-  int team;
-  List<Weapon> weapons = [];
-  bool weaponsDirty = false;
-
-  Vector2 abilityTarget = Vector2(0, 0);
-
-  late int _health;
 
   int get health => _health;
 

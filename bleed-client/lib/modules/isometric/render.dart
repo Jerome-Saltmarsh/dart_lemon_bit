@@ -264,10 +264,8 @@ class IsometricRender {
 
   void drawCharacter(Character character) {
     if (!onScreen(character.x, character.y)) return;
-    if (!character.alive) return;
     final shade = state.getShadeAtPosition(character.x, character.y);
     if (shade > Shade.Dark) return;
-
     renderCharacterHealthBar(character);
 
     if (character.type == CharacterType.Zombie){
