@@ -932,7 +932,7 @@ extension GameFunctions on Game {
     if (!enemies(src, target)) return;
     if (target.dead) return;
     applyDamage(src, target, damage);
-    final angleBetweenSrcAndTarget = radiansBetween2(src, target.x, target.y);
+    final angleBetweenSrcAndTarget = radiansV2(src, target);
     final healthPercentage = damage / target.maxHealth;
     applyForce(target, angleBetweenSrcAndTarget, healthPercentage * 1.5);
 
@@ -940,7 +940,7 @@ extension GameFunctions on Game {
         GameEventType.Character_Struck,
         target.x,
         target.y,
-        src.aimAngle
+        angleBetweenSrcAndTarget
     );
 
     if (target.dead) {

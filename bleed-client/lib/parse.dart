@@ -665,7 +665,10 @@ void _consumeGameEvents() {
     final x = consumeDouble();
     final y = consumeDouble();
     final angle = consumeDouble();
-    if (gameEvents.containsKey(id)) continue;
+    if (gameEvents.containsKey(id)) {
+      print("Game event ignored $type");
+      continue;
+    }
     print("new game event $type");
     gameEvents[id] = true;
     modules.game.events.onGameEvent(type, x, y, angle);

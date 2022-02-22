@@ -263,6 +263,9 @@ class IsometricRender {
 
 
   void drawCharacter(Character character) {
+    assert(character.direction >= 0);
+    assert(character.direction < directionsLength);
+
     if (!onScreen(character.x, character.y)) return;
     final shade = state.getShadeAtPosition(character.x, character.y);
     if (shade > Shade.Dark) return;

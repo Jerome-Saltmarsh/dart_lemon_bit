@@ -12,9 +12,8 @@ enum Direction {
 }
 
 final directionRightIndex = Direction.Right.index;
-
-const List<Direction> directions = Direction.values;
-final int directionsLength = directions.length;
+const directions = Direction.values;
+final directionsLength = directions.length;
 const _piQuarter = pi / 4.0;
 
 double convertDirectionToAngle(Direction direction){
