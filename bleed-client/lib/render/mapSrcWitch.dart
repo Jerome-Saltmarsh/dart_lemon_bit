@@ -25,15 +25,6 @@ void mapSrcWitch({
     case CharacterState.Firing:
     // TODO: Handle this case.
       break;
-    case CharacterState.Striking:
-      return srcAnimate(
-          animation: animations.witch.attacking,
-          atlas: atlas.witch.striking,
-          direction: direction,
-          shade: Shade.Bright,
-          size: 64,
-          framesPerDirection: 2,
-          frame: frame);
     case CharacterState.Performing:
       return srcAnimate(
           animation: animations.witch.attacking,

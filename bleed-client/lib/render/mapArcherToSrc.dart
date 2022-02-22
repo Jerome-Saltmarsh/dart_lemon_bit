@@ -18,13 +18,6 @@ void mapSrcArcher({
           framesPerDirection: 1,
           frame: frame
       );
-    case CharacterState.Striking:
-      return srcAnimate(
-          animation: animations.archer.firing,
-          atlas: atlas.archer.firing,
-          direction: direction,
-          frame: frame
-      );
     case CharacterState.Performing:
       return srcAnimate(
           animation: animations.archer.firing,

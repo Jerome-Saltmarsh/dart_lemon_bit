@@ -30,7 +30,7 @@ void mapSrcZombie({
           frame: frame
       );
 
-    case CharacterState.Striking:
+    case CharacterState.Performing:
       return srcLoop(
           atlas: atlas.zombie.striking,
           direction: direction,

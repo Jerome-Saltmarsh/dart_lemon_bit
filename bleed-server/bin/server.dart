@@ -350,7 +350,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               if (player.type.isSoldier) {
                 characterFace(player, mouseX, mouseY);
                 if (player.weapon.type == WeaponType.Unarmed){
-                  game.setCharacterState(player, CharacterState.Striking);
+                  // game.setCharacterState(player, CharacterState.Striking);
                 } else {
                   game.setCharacterState(player, CharacterState.Firing);
                 }
@@ -372,7 +372,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                     if (player.type.isTemplate){
                       if (withinRadius(player, aimTarget, player.slots.weapon.range)){
                         characterFaceV2(player, aimTarget);
-                        game.setCharacterStateStriking(player);
+                        game.setCharacterStatePerforming(player);
                       }
                     }
                   } else {

@@ -122,8 +122,6 @@ class Character extends GameObject implements HasSquad {
 
   bool get idling => state == CharacterState.Idle;
 
-  bool get striking => state == CharacterState.Striking;
-
   bool get busy => stateDuration > 0;
 
   bool get deadOrBusy => dead || busy;

@@ -53,7 +53,7 @@ void mapSrcHuman({
             framesPerDirection: 3,
           );
       }
-    case CharacterState.Striking:
+    case CharacterState.Performing:
       if (slotType == SlotType.Bow_Wooden){
         return srcAnimate(
           atlas: atlas.human.striking,
@@ -110,15 +110,6 @@ void mapSrcHuman({
       return srcAnimate(
         atlas: atlas.human.changing,
         animation: animations.human.changing,
-        direction: direction,
-        frame: frame,
-        framesPerDirection: 2,
-      );
-
-    case CharacterState.Performing:
-      return srcAnimate(
-        atlas: atlas.human.striking,
-        animation: animations.human.strikingSword,
         direction: direction,
         frame: frame,
         framesPerDirection: 2,

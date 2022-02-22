@@ -306,7 +306,7 @@ class IsometricRender {
             framesPerDirection: _framesPerDirectionZombie
         );
 
-      case CharacterState.Striking:
+      case CharacterState.Performing:
         return animate(
             animation: animations.zombie.striking,
             character: character,
@@ -453,13 +453,6 @@ class IsometricRender {
         return single(
             frame: 2,
             direction: character.direction,
-            framesPerDirection: _framesPerDirectionHuman
-        );
-
-      case CharacterState.Striking:
-        return animate(
-            animation: character.equippedWeapon.isBow ? animations.firingBow : animations.strikingSword,
-            character: character,
             framesPerDirection: _framesPerDirectionHuman
         );
 

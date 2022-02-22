@@ -20,15 +20,6 @@ void mapSrcKnight({
           size: 64,
           framesPerDirection: 1,
           frame: frame);
-    case CharacterState.Striking:
-      return srcAnimate(
-          animation: animations.knight.striking,
-          atlas: atlas.knight.striking,
-          direction: direction,
-          shade: Shade.Bright,
-          size: 64,
-          framesPerDirection: 3,
-          frame: frame);
     case CharacterState.Performing:
       return srcAnimate(
           animation: animations.knight.striking,

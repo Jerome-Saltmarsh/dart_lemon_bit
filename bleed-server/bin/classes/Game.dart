@@ -461,7 +461,8 @@ extension GameFunctions on Game {
   void _characterStrike(Character character, Character target){
     if (!targetWithinStrikingRange(character, target)) return;
     characterFaceV2(character, target);
-    setCharacterStateStriking(character);
+    // todo set performing to strike action
+    setCharacterStatePerforming(character);
     character.attackTarget = target;
   }
 
@@ -677,10 +678,6 @@ extension GameFunctions on Game {
     }
   }
 
-  void setCharacterStateStriking(Character character){
-    setCharacterState(character, CharacterState.Striking);
-  }
-
   void setCharacterStatePerforming(Character character){
     character.performing = character.ability;
     character.ability = null;
@@ -703,20 +700,20 @@ extension GameFunctions on Game {
       case CharacterState.Firing:
         // @on character firing weapon
         if (character.weapon == WeaponType.Unarmed) {
-          setCharacterState(character, CharacterState.Striking);
+          // setCh(character, CharacterState.Striking);
           return;
         }
         _characterAttack(character);
         break;
-      case CharacterState.Striking:
-        faceAimDirection(character);
-        character.stateDuration = settings.duration.strike;
-        if (character is Player) {
-          if (character.slots.weapon.isBow) {
-            dispatch(GameEventType.Draw_Bow, character.x, character.y);
-          }
-        }
-        break;
+      // case CharacterState.Striking:
+      //   faceAimDirection(character);
+      //   character.stateDuration = settings.duration.strike;
+      //   if (character is Player) {
+      //     if (character.slots.weapon.isBow) {
+      //       dispatch(GameEventType.Draw_Bow, character.x, character.y);
+      //     }
+      //   }
+      //   break;
       case CharacterState.Performing:
         character.stateDuration = settings.duration.strike;
         if (character is Player){
@@ -909,7 +906,8 @@ extension GameFunctions on Game {
 
       if (withinAttackRadius(player, target)) {
         player.attackTarget = target;
-        setCharacterStateStriking(player);
+        // set performing to strike
+        setCharacterStatePerforming(player);
         player.target = null;
         return;
       }
@@ -981,7 +979,10 @@ extension GameFunctions on Game {
 
   void updateCharacterStatePerforming(Character character) {
     final ability = character.performing;
-    if (ability == null) return;
+    if (ability == null) {
+      _updateCharacterStateStriking(character);
+      return;
+    }
     switch (ability.type) {
       case AbilityType.Explosion:
         if (character.stateDuration == castFrame) {
@@ -1113,9 +1114,9 @@ extension GameFunctions on Game {
       case CharacterState.Performing:
         updateCharacterStatePerforming(character);
         break;
-      case CharacterState.Striking:
-        _updateCharacterStateStriking(character);
-        break;
+      // case CharacterState.Striking:
+      //   _updateCharacterStateStriking(character);
+      //   break;
     }
 
     if (character.previousState != character.state) {
