@@ -82,7 +82,7 @@ class Character extends GameObject implements HasSquad {
   double attackRange = 50;
   int damage = 1;
 
-  int get direction => ((angle + piEighth) % pi2) ~/ piQuarter % 7;
+  int get direction => (((angle + piEighth) % pi2) ~/ piQuarter) % 8;
 
   /// the character that was highlighted when the player clicked
   Character? attackTarget;
