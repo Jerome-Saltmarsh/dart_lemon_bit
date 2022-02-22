@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:lemon_math/Vector2.dart';
@@ -81,7 +82,7 @@ class Character extends GameObject implements HasSquad {
   double attackRange = 50;
   int damage = 1;
 
-  int get direction => (angle + piEighth) ~/ piQuarter;
+  int get direction => ((angle + piEighth) % pi2) ~/ piQuarter % 7;
 
   /// the character that was highlighted when the player clicked
   Character? attackTarget;

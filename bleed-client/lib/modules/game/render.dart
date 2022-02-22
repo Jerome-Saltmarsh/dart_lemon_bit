@@ -60,11 +60,11 @@ class GameRender {
     drawAbility();
     attackTargetCircle();
 
-
-    for(int i = 0; i < game.totalHumans; i++){
-      final human = game.humans[i];
-      engine.render(dstX: human.x, dstY: human.y, srcX: atlas.circle.x, srcY: atlas.circle.y, srcSize: 64.0);
-    }
+    //
+    // for(int i = 0; i < game.totalHumans; i++){
+    //   final human = game.humans[i];
+    //   engine.render(dstX: human.x, dstY: human.y, srcX: atlas.circle.x, srcY: atlas.circle.y, srcSize: 64.0);
+    // }
 
     if (state.compilePaths.value) {
       drawPaths();

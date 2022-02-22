@@ -18,6 +18,7 @@ import 'package:bleed_client/common/ItemType.dart';
 import 'package:bleed_client/common/PlayerEvent.dart';
 import 'package:bleed_client/common/ServerResponse.dart';
 import 'package:bleed_client/common/SlotType.dart';
+import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:bleed_client/common/enums/ObjectType.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
 import 'package:bleed_client/modules/modules.dart';
@@ -714,6 +715,11 @@ void _consumeHuman(Character character) {
   character.type = _consumeCharacterType();
   character.state = _consumeCharacterState();
   character.direction = _consumeSingleDigitInt();
+
+  if (character.direction < 0 || character.direction >= directions.length){
+     throw Exception();
+  }
+
   character.x = consumeDouble();
   character.y = consumeDouble();
   character.frame = consumeInt();
@@ -737,6 +743,9 @@ void _consumeHuman(Character character) {
 void _consumeZombie(Character zombie) {
   zombie.state = _consumeCharacterState();
   zombie.direction = _consumeSingleDigitInt();
+  if (zombie.direction < 0 || zombie.direction >= directions.length){
+    throw Exception();
+  }
   zombie.x = _consumeDoubleUnsafe();
   zombie.y = _consumeDoubleUnsafe();
   zombie.frame = _consumeIntUnsafe();
