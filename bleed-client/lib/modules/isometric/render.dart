@@ -66,18 +66,16 @@ class IsometricRender {
   IsometricRender(this.state, this.properties, this.queries, this.maps);
 
   void tiles() {
-    if (engine.buffers == 1){
-      engine.setPaintColorWhite();
-      engine.canvas.drawRawAtlas(
-          state.image,
-          state.tilesDst,
-          state.tilesSrc,
-          null,
-          null,
-          null,
-          engine.paint);
-      return;
-    }
+      // engine.setPaintColorWhite();
+      // engine.canvas.drawRawAtlas(
+      //     state.image,
+      //     state.tilesDst,
+      //     state.tilesSrc,
+      //     null,
+      //     null,
+      //     null,
+      //     engine.paint);
+      // return;
 
     final minRow = state.minRow;
     final maxRow = state.maxRow;

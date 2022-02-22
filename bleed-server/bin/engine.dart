@@ -18,6 +18,7 @@ import 'settings.dart';
 const framesPerSecond = targetFPS;
 const msPerFrame = Duration.millisecondsPerSecond ~/ framesPerSecond;
 const msPerUpdateNpcTarget = 500;
+const msPerRegen = 5000;
 const secondsPerRemoveDisconnectedPlayers = 4;
 const secondsPerUpdateNpcObjective = 4;
 
@@ -39,6 +40,7 @@ class _Engine {
       periodic(updateNpcPathAndObjective, seconds: secondsPerUpdateNpcObjective);
       periodic(removeDisconnectedPlayers, seconds: secondsPerRemoveDisconnectedPlayers);
       periodic(updateNpcTargets, ms: msPerUpdateNpcTarget);
+      periodic(regenCharacters, ms: msPerRegen);
     });
   }
 
@@ -86,8 +88,17 @@ class _Engine {
     }
   }
 
+  void regenCharacters(Timer timer){
+    for (final game in games) {
+      for(final player in game.players){
+        player.health++;
+        player.magic++;
+      }
+    }
+  }
+
   void removeDisconnectedPlayers(Timer timer) {
-    for (Game game in games) {
+    for (final game in games) {
       game.removeDisconnectedPlayers();
     }
   }
