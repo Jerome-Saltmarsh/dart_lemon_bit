@@ -41,6 +41,8 @@ const _scaleZombie = 0.7;
 const _framesPerDirectionHuman = 9;
 const _framesPerDirectionZombie = 7;
 
+final _partsY = atlas.parts.y;
+
 
 enum SpriteLayer {
   Shadow,
@@ -261,7 +263,6 @@ class IsometricRender {
       engine.renderAtlas();
   }
 
-
   void drawCharacter(Character character) {
     assert(character.direction >= 0);
     assert(character.direction < directionsLength);
@@ -402,7 +403,7 @@ class IsometricRender {
     );
     engine.mapSrc(
         x: getCharacterSrcX(character),
-        y: atlas.parts.y + ((layer.index) * _size64)
+        y: _partsY + (layer.index * _size64)
     );
     engine.renderAtlas();
   }
