@@ -280,13 +280,13 @@ class IsometricRender {
       return;
     }
 
-    if (character.direction > directionRightIndex) {
-      _renderCharacterTemplateWeapon(character);
+    if (character.direction >= directionRightIndex && character.direction <= Direction.DownLeft.index) {
       _renderCharacterTemplate(character);
+      _renderCharacterTemplateWeapon(character);
       return;
     }
-    _renderCharacterTemplate(character);
     _renderCharacterTemplateWeapon(character);
+    _renderCharacterTemplate(character);
   }
 
   void _renderZombie(Character character, int shade) {

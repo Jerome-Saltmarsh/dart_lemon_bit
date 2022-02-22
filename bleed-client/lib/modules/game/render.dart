@@ -337,7 +337,6 @@ class GameRender {
     }
   }
 
-
   void _drawMouseAim() {
     // if (modules.game.state.player.dead) return;
     //

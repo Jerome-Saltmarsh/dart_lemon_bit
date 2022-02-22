@@ -92,6 +92,7 @@
 [ ] Team Size
 [ ] Number of Teams
 [ ] Team spawn points
+[ ] Base Building Module
 [x] Load Royal Map from cloud
 [ENGINE]
 [ ] Atlas Buffer 64
@@ -114,11 +115,13 @@
 [ ] Crafting System
 [ ] Drag inventory slots to change position
 [ ] Hover inventory context menu
-[ ] Gem should fly out of enemy when killed
 [ ] Remaining Spells and items
 [ ] Fix fireball explosion
 [ ] Spell Frost ring
-[ ] Spell Shield 
+[ ] Spell Shield
+[ ] Item Blink Ring
+[ ] Gem should fly out of enemy when killed
+[ ] Sword Render Order
 [x] Fireball should heat seek enemy
 [x] Optimize AI Pathfinding
 [x] Fix Caste spell ai

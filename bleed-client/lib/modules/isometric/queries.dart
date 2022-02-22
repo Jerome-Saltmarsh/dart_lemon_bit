@@ -1,6 +1,5 @@
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/common/Tile.dart';
-import 'package:bleed_client/common/WeaponType.dart';
 import 'package:lemon_engine/engine.dart';
 
 import 'state.dart';
