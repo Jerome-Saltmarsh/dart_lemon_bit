@@ -12,9 +12,9 @@ const _pixelSize = 8.0;
 const _healthX = 2400.0;
 const _healthY = 0.0;
 const _healthBackgroundY = _healthY + _healthHeight;
-const _healthWidth = 100.0;
+const _healthWidth = 52.0;
 const _healthWidthHalf = _healthWidth * 0.5;
-const _healthHeight = 16.0;
+const _healthHeight = 8.0;
 
 void renderCharacterHealthBar(Character character){
   engine.mapSrc(x: _healthX, y: _healthBackgroundY, width: _healthWidth, height: _healthHeight);
