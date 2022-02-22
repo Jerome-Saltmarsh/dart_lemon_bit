@@ -72,8 +72,9 @@ class _GameEvents {
 }
 
 // constants
-final castFrame = 3;
-final tileCollisionResolve = 3;
+const castFrame = 3;
+const tileCollisionResolve = 3;
+const framePerformStrike = 3;
 
 // This should be OpenWorldScene
 abstract class Game {
@@ -1586,12 +1587,11 @@ extension GameFunctions on Game {
 
   void _updateCharacterStateStriking(Character character) {
     if (character.type == CharacterType.Zombie){
-        if (character.stateDuration == engine.framePerformStrike){
+        if (character.stateDuration != framePerformStrike){
           final attackTarget = character.attackTarget;
           if (attackTarget != null){
             applyStrike(character, attackTarget, character.damage);
             character.attackTarget = null;
-            // dispatch(GameEventType.Zombie_Strike, attackTarget.x, attackTarget.y);
           }
         }
     }
@@ -1604,7 +1604,7 @@ extension GameFunctions on Game {
         }
       }
 
-      if (character.stateDuration == engine.framePerformStrike) {
+      if (character.stateDuration == framePerformStrike) {
         if (character.slots.weapon.isBow) {
           dispatch(GameEventType.Release_Bow, character.x, character.y);
           spawnArrow(character, damage: character.slots.weapon.damage);

@@ -30,11 +30,8 @@ class _Engine {
   final List<Game> games = [];
   int frame = 0;
 
-  // config
-  final framePerformStrike = 3;
 
   void init() {
-    // @on init jobs
     Future.delayed(Duration(seconds: 3), () {
       periodic(fixedUpdate, ms: msPerFrame);
       periodic(updateNpcPathAndObjective, seconds: secondsPerUpdateNpcObjective);
@@ -132,7 +129,7 @@ class _Engine {
   }
 
   GameMoba findPendingMobaGame() {
-    for (Game game in games) {
+    for (final game in games) {
       if (game is GameMoba) {
         if (game.awaitingPlayers) {
           return game;
@@ -147,7 +144,7 @@ class _Engine {
   }
 
   T? findGameAwaitingPlayers<T extends Game>() {
-    for (Game game in games) {
+    for (final game in games) {
       if (game is T == false) continue;
       if (!game.awaitingPlayers) continue;
       return game as T;
