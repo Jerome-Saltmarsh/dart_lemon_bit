@@ -280,7 +280,7 @@ class IsometricRender {
       return;
     }
 
-    if (character.direction >= directionRightIndex && character.direction <= Direction.DownLeft.index) {
+    if (character.direction >= Direction.UpRight.index && character.direction <= Direction.Down.index) {
       _renderCharacterTemplate(character);
       _renderCharacterTemplateWeapon(character);
       return;
