@@ -67,6 +67,7 @@ class GameState {
     SlotType.Staff_Golden : resources.icons.staffs.golden,
     SlotType.Spell_Tome_Fireball : resources.icons.books.red,
     SlotType.Spell_Tome_Ice_Ring : resources.icons.books.blue,
+    SlotType.Spell_Tome_Split_Arrow : resources.icons.books.blue,
     SlotType.Body_Blue : resources.icons.armour.standard,
     SlotType.Steel_Helmet : resources.icons.heads.steel,
     SlotType.Magic_Hat : resources.icons.heads.magic,

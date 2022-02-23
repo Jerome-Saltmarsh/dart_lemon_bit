@@ -20,6 +20,7 @@ enum SlotType {
   Magic_Hat,
   Spell_Tome_Fireball,
   Spell_Tome_Ice_Ring,
+  Spell_Tome_Split_Arrow,
   Body_Blue,
   Potion_Red,
   Potion_Blue,

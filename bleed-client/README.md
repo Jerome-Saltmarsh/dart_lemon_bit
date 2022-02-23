@@ -127,7 +127,7 @@
 [ ] Bow Spells, Charged shot
 [ ] Bow Spells, 
 [ ] Sword Spells, Strong Swing
-[ ] Hold mouse left
+[x] Hold mouse left to move
 [x] Spell Frost ring character slow
 [x] Inventory Slot: indicate insufficient mana to use slot
 [x] Sword Render Order

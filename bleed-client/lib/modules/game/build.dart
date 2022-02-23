@@ -444,7 +444,7 @@ class GameBuild {
         shopSlotRow(
           SlotType.Spell_Tome_Fireball,
           SlotType.Spell_Tome_Ice_Ring,
-          SlotType.Empty,
+          SlotType.Spell_Tome_Split_Arrow,
         ),
         shopSlotRow(
           SlotType.Potion_Red,
