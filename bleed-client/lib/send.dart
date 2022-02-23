@@ -67,13 +67,15 @@ void sendRequestAcquireAbility(WeaponType type) {
   webSocket.send('${ClientRequest.AcquireAbility.index} $session ${type.index}');
 }
 
+final _characterController = modules.game.state.characterController;
+
 void sendRequestUpdatePlayer() {
   _buffer.clear();
   _write(gameUpdateIndex);
   _write(session);
-  _write(modules.game.state.characterController.action.value.index);
-  modules.game.state.characterController.action.value = CharacterAction.Idle;
-  _write(modules.game.state.characterController.direction.index);
+  _write(_characterController.action.value.index);
+  _characterController.action.value = CharacterAction.Idle;
+  _write(_characterController.angle.toStringAsFixed(1));
   _write(mouseWorldX.toInt());
   _write(mouseWorldY.toInt());
   webSocket.send(_buffer.toString());

@@ -200,7 +200,7 @@ class GameBuild {
           Positioned(
               left: _pad,
               top: _pad,
-              child: mouseRowColumn()),
+              child: mouseDownState()),
           Positioned(
               left: _pad,
               bottom: _pad,
@@ -822,6 +822,12 @@ class GameBuild {
       return state.slotTypeImages[value]!;
     }
     return resources.icons.unknown;
+  }
+
+  Widget mouseDownState(){
+    return WatchBuilder(engine.mouseLeftDown, (bool down){
+      return text("Mouse Down: $down");
+    });
   }
 
   Widget mouseRowColumn(){

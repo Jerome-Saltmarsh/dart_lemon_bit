@@ -110,17 +110,26 @@
 [x] FIX Particle blood renders as shell
 [RELEASE]
 [ ] Finish Inventory
-[ ] Dynamic Clothing Engine
-[ ] Slot machine concept
-[ ] Crafting System
 [ ] Drag inventory slots to change position
 [ ] Hover inventory context menu
 [ ] Remaining Spells and items
-[ ] Fix fireball explosion
+[ ] Weapon Handgun
+[ ] Weapon Shotgun
+[ ] Weapon Crossbow
 [ ] Spell Shield
 [ ] Item Blink Ring
-[ ] Gem should fly out of enemy when killed
-[ ] Spell Frost ring character slow
+[ ] Slot Capacity
+[ ] Boots of sprint
+[ ] Slot Cooldown
+[ ] Gem flies out of killed enemy then the particles come to you
+[ ] Fix fireball explosion
+[ ] Spell Lightening Bolt
+[ ] Bow Spells, Charged shot
+[ ] Bow Spells, 
+[ ] Sword Spells, Strong Swing
+[ ] Hold mouse left
+[x] Spell Frost ring character slow
+[x] Inventory Slot: indicate insufficient mana to use slot
 [x] Sword Render Order
 [x] Fireball should heat seek enemy
 [x] Optimize AI Pathfinding

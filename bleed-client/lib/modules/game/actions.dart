@@ -29,6 +29,11 @@ class GameActions {
     setCharacterAction(CharacterAction.Perform);
   }
 
+  void playerRun() {
+    print("game.actions.playerRun()");
+    setCharacterAction(CharacterAction.Run);
+  }
+
   void playerInteract(){
     webSocket.send('${ClientRequest.Interact.index} $session');
   }
@@ -50,6 +55,10 @@ class GameActions {
 
   void setCharacterActionRun(){
     setCharacterAction(CharacterAction.Run);
+  }
+
+  void setCharacterActionPerform(){
+    setCharacterAction(CharacterAction.Perform);
   }
 
   void teleportToMouse() {

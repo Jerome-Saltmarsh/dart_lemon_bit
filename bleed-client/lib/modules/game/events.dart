@@ -33,7 +33,7 @@ class GameEvents {
     print("modules.game.events.register()");
     engine.callbacks.onLeftClicked = actions.playerPerform;
     engine.callbacks.onPanStarted = actions.playerPerform;
-    engine.callbacks.onLongLeftClicked = actions.playerPerform;
+    engine.callbacks.onLongLeftClicked = actions.playerRun;
     engine.callbacks.onRightClicked = (){
       if (state.player.ability.value == AbilityType.None) {
         actions.spawnZombie();

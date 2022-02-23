@@ -93,8 +93,13 @@ class GameUpdate {
     }
     final direction = getKeyDirection();
     if (direction != null){
-      modules.game.state.characterController.direction = direction;
+      modules.game.state.characterController.angle = convertDirectionToAngle(direction);
       modules.game.actions.setCharacterActionRun();
+      return;
+    }
+
+    if (engine.mouseLeftDown.value){
+      modules.game.actions.setCharacterActionPerform();
     }
   }
 

@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:lemon_watch/watch.dart';
 
 class CharacterController {
-  Direction direction = Direction.Down;
+  double angle = 0;
   final Watch<CharacterAction> action = Watch(CharacterAction.Idle);
   AbilityType ability = AbilityType.None;
 }
