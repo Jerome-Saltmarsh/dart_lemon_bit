@@ -200,7 +200,7 @@ class GameBuild {
           Positioned(
               left: _pad,
               top: _pad,
-              child: mouseDownState()),
+              child: mousePosition()),
           Positioned(
               left: _pad,
               bottom: _pad,
@@ -822,6 +822,12 @@ class GameBuild {
       return state.slotTypeImages[value]!;
     }
     return resources.icons.unknown;
+  }
+
+  Widget mousePosition(){
+    return Refresh((){
+      return text("Mouse Screen: x: ${engine.mousePosition.x}, y: ${engine.mousePosition.y}");
+    });
   }
 
   Widget mouseDownState(){
