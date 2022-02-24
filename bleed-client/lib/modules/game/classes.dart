@@ -1,7 +1,6 @@
 
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterAction.dart';
-import 'package:bleed_client/common/enums/Direction.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_watch/watch.dart';
 

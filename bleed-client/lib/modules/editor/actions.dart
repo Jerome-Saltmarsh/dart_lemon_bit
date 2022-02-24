@@ -204,6 +204,7 @@ class EditorActions with EditorScope {
 
     state.characters = characters;
     isometric.actions.updateTileRender();
+    isometric.actions.refreshTileSize();
     engine.redrawCanvas();
   }
 

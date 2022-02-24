@@ -21,13 +21,17 @@ class IsometricUpdate {
   IsometricUpdate(this.state, this.queries, this.spawn);
 
   void call(){
+    updateVisibleTiles();
+    _updateParticles();
+    _updateParticleEmitters();
+  }
+
+  void updateVisibleTiles() {
     final screen = engine.screen;
     state.minRow = max(0, getRow(screen.left, screen.top));
     state.maxRow = min(state.totalRowsInt, getRow(screen.right, screen.bottom));
     state.minColumn = max(0, getColumn(screen.right, screen.top));
     state.maxColumn = min(state.totalColumnsInt, getColumn(screen.left, screen.bottom));
-    _updateParticles();
-    _updateParticleEmitters();
   }
 
   void _updateParticles() {

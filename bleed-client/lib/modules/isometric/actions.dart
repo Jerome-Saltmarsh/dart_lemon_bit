@@ -106,8 +106,8 @@ class IsometricActions {
     final maxColumn = state.maxColumn;
     final dynamicShading = state.dynamicShade;
     final bakeMap = state.bakeMap;
-    for (int row = minRow; row < maxRow; row++) {
-      for (int column = minColumn; column < maxColumn; column++) {
+    for (var row = minRow; row < maxRow; row++) {
+      for (var column = minColumn; column < maxColumn; column++) {
         dynamicShading[row][column] = bakeMap[row][column];
       }
     }
@@ -136,8 +136,8 @@ class IsometricActions {
   }
 
   void refreshTileSize(){
-    state.totalRows.value = state.tiles.length;
-    state.totalColumns.value = state.tiles.isEmpty
+      state.totalRows.value = state.tiles.length;
+      state.totalColumns.value = state.tiles.isEmpty
         ? 0
         : state.tiles[0].length;
   }
