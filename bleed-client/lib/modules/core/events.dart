@@ -74,8 +74,7 @@ class CoreEvents {
 
       case Mode.Website:
         engine.drawCanvas.value = null;
-        engine.redrawCanvas();
-        engine.drawCanvasAfterUpdate = false;
+        engine.drawCanvasAfterUpdate = true;
         break;
 
       case Mode.Player:

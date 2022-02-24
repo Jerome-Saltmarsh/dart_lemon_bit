@@ -207,7 +207,7 @@ abstract class Game {
     this.crates.clear();
     engine.onGameCreated(this);
 
-    for (Vector2 crate in scene.crates) {
+    for (final crate in scene.crates) {
       crates.add(Crate(x: crate.x, y: crate.y));
     }
 

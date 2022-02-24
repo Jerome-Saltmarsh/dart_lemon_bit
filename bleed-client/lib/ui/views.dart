@@ -554,7 +554,14 @@ Widget buildWaitingForGame(){
   return buildDialog(
       width: style.dialogWidthMedium,
       height: style.dialogHeightMedium,
-      child: Center(child: text("Finding Game..")));
+      bottomRight: text("Cancel", color: colours.white382, onPressed: core.actions.disconnect),
+      child: Center(child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          text("FINDING GAME", size: 20),
+        ],
+      )));
 }
 
 Widget buildLayoutLobby() {
