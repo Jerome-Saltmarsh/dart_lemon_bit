@@ -46,7 +46,7 @@ class GameEvents {
     state.player.uuid.onChanged(_onPlayerUuidChanged);
     state.player.alive.onChanged(_onPlayerAliveChanged);
     state.player.state.onChanged(onPlayerCharacterStateChanged);
-    state.status.onChanged(_onGameStatusChanged);
+    core.state.status.onChanged(_onGameStatusChanged);
     state.textMode.onChanged(onTextModeChanged);
     state.player.orbs.emerald.listen(onEmeraldsChanged);
     state.player.orbs.ruby.listen(onEmeraldsChanged);
@@ -186,7 +186,7 @@ class GameEvents {
     print('events.onGameStatusChanged(value: $value)');
     switch(value){
       case GameStatus.In_Progress:
-        if (state.statusPrevious.value == GameStatus.Awaiting_Players){
+        if (core.state.statusPrevious.value == GameStatus.Awaiting_Players){
           audio.gong();
         }
         engine.fullScreenEnter();
@@ -195,7 +195,7 @@ class GameEvents {
         engine.fullScreenExit();
         break;
     }
-    state.statusPrevious.value = value;
+    core.state.statusPrevious.value = value;
   }
 
   void onGameEvent(GameEventType type, double x, double y, double angle) {

@@ -47,7 +47,7 @@ class GameRender {
     if (state.player.uuid.value.isEmpty) {
       return;
     }
-    if (state.status.value == GameStatus.Awaiting_Players){
+    if (core.state.status.value == GameStatus.Awaiting_Players){
       return;
     }
 

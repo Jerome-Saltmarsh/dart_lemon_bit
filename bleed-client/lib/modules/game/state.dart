@@ -30,8 +30,6 @@ class GameState {
   final Watch<bool> compilePaths = Watch(false);
   final Watch<StoreTab> storeTab = Watch(storeTabs[0]);
   final Watch<bool> textMode = Watch(false);
-  final Watch<GameStatus> status = Watch(GameStatus.None);
-  final Watch<GameStatus> statusPrevious = Watch(GameStatus.None);
   final Watch<SlotType> highLightSlotType = Watch(SlotType.Empty);
   final Watch<bool> frameSmoothing = Watch(true);
   final playerTextStyle = TextStyle(color: Colors.white);

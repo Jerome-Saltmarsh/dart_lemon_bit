@@ -48,7 +48,7 @@ class GameBuild {
       if (uuid.isEmpty) {
         return buildLayoutLoadingGame();
       }
-      return WatchBuilder(state.status, (GameStatus gameStatus) {
+      return WatchBuilder(core.state.status, (GameStatus gameStatus) {
         switch (gameStatus) {
           case GameStatus.Counting_Down:
             return buildDialog(
