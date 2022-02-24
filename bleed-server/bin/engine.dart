@@ -168,7 +168,7 @@ class _Engine {
   }
 
   Future<CustomGame> findOrCreateCustomGame(String mapId) async {
-    for(Game game in games){
+    for(final game in games){
       if (game is CustomGame == false) continue;
       final customGame = game as CustomGame;
       if (customGame.scene.name != mapId) continue;

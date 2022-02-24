@@ -36,34 +36,18 @@ class GameRoyal extends Game {
     numberOfTeams = 2;
     boundaryCenter = getSceneCenter();
 
-    for (Character zombie in zombies) {
+    for (final zombie in zombies) {
       zombie.team = 1;
     }
+    // for (int i = 0; i < 10; i++) {
+    //   final crate = Crate(
+    //       x: randomX,
+    //       y: randomY,
+    //   );
+    //   crates.add(crate);
+    //   cratesDirty = true;
+    // }
 
-    for (int i = 0; i < 10; i++) {
-      final crate = Crate(
-          x: randomX,
-          y: randomY,
-      );
-      crates.add(crate);
-      cratesDirty = true;
-    }
-
-    for (int i = 0; i < 5; i++){
-      items.add(Item(type: ItemType.Handgun, x:  randomX, y: randomY));
-    }
-    for (int i = 0; i < 5; i++){
-      items.add(Item(type: ItemType.Shotgun, x:  randomX, y: randomY));
-    }
-    for (int i = 0; i < 5; i++){
-      items.add(Item(type: ItemType.Armour, x:  randomX, y: randomY));
-    }
-    for (int i = 0; i < 5; i++){
-      items.add(Item(type: ItemType.Health, x:  randomX, y: randomY));
-    }
-
-    sortVertically(items);
-    sortVertically(crates);
   }
 
   int get playersRequired => teamSize * numberOfTeams;

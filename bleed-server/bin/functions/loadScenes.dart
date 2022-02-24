@@ -34,7 +34,7 @@ Future<Scene> loadSceneFromFile(String name) async {
 }
 
 Future<Scene> loadSceneFromFireStore(String name) async {
-  final Json sceneJson = await firestoreService.loadMap(name);
+  final sceneJson = await firestoreService.loadMap(name);
   return parseJsonToScene(sceneJson, name);
 }
 
@@ -57,7 +57,7 @@ Scene parseJsonToScene(Json json, String name) {
 
   if (json.containsKey('zombie-spawn-points')) {
     final List zombieSpawnPointsInts = json['zombie-spawn-points'];
-    for (int i = 0; i < zombieSpawnPointsInts.length; i += 2) {
+    for (var i = 0; i < zombieSpawnPointsInts.length; i += 2) {
       final int x = zombieSpawnPointsInts[i];
       final int y = zombieSpawnPointsInts[i + 1];
       zombieSpawnPoints.add(Vector2(x.toDouble(), y.toDouble()));
@@ -81,25 +81,25 @@ Scene parseJsonToScene(Json json, String name) {
     }
   }
 
-  List<Vector2> crates = [];
+  // final List<Vector2> crates = [];
+  //
+  // if (json.containsKey('crates')){
+  //   List cratesJson = json['crates'];
+  //   for (int i = 0; i < cratesJson.length; i += 2) {
+  //     int x = cratesJson[i];
+  //     int y = cratesJson[i + 1];
+  //     crates.add(Vector2(x.toDouble(), y.toDouble()));
+  //   }
+  // }
 
-  if (json.containsKey('crates')){
-    List cratesJson = json['crates'];
-    for (int i = 0; i < cratesJson.length; i += 2) {
-      int x = cratesJson[i];
-      int y = cratesJson[i + 1];
-      crates.add(Vector2(x.toDouble(), y.toDouble()));
-    }
-  }
+  final List compiledTiles = json['tiles'];
+  final List<List<Tile>> tiles = [];
 
-  List compiledTiles = json['tiles'];
-  List<List<Tile>> tiles = [];
-
-  for(int row = 0; row < compiledTiles.length; row++){
-    List<Tile> _row = [];
-    for(int column = 0; column < compiledTiles[0].length; column++){
-      String tileName = compiledTiles[row][column];
-      Tile tile = parseStringToTile(tileName);
+  for(var row = 0; row < compiledTiles.length; row++){
+    final List<Tile> _row = [];
+    for(var column = 0; column < compiledTiles[0].length; column++){
+      final String tileName = compiledTiles[row][column];
+      final tile = parseStringToTile(tileName);
       _row.add(tile);
     }
     tiles.add(_row);
@@ -108,8 +108,8 @@ Scene parseJsonToScene(Json json, String name) {
   final List<Character> characters = [];
 
   if (json.containsKey('characters')){
-    List characterJson = json['characters'];
-    for (Json characterJson in characterJson) {
+    final List characterJson = json['characters'];
+    for (final Json characterJson in characterJson) {
       final type = parseCharacterType(characterJson['type']);
       final x = characterJson.getDouble('x');
       final y = characterJson.getDouble('y');
@@ -119,7 +119,7 @@ Scene parseJsonToScene(Json json, String name) {
 
   final scene = Scene(
     tiles: tiles,
-    crates: crates,
+    crates: [],
     environment: environment,
     characters: characters,
     name: name
