@@ -8,7 +8,7 @@ import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:flutter/material.dart';
 
 
-class Widgets {
+class UIWidgets {
   final title = Row(
     children: [
       text("GAME",

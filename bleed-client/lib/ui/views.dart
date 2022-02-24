@@ -98,7 +98,8 @@ WatchBuilder<Connection> buildWatchConnection(Account? account) {
   return WatchBuilder(webSocket.connection, (Connection connection) {
     switch (connection) {
       case Connection.Connecting:
-        return _views.connecting;
+        return ui.layouts.waitingForGame();
+        // return _views.connecting;
       case Connection.Connected:
         return modules.game.build.buildUIGame();
       case Connection.None:

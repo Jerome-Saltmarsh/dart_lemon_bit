@@ -59,7 +59,7 @@ class GameBuild {
                   return Center(child: text("Starting in $seconds seconds"));
                 }));
           case GameStatus.Awaiting_Players:
-            return buildWaitingForGame();
+            return ui.layouts.waitingForGame();
           case GameStatus.In_Progress:
             switch (game.type.value) {
               case GameType.MMO:
@@ -83,23 +83,6 @@ class GameBuild {
         }
       });
     });
-  }
-
-  Widget buildWaitingForGame(){
-    return layout(
-      padding: ui.style.layoutPadding,
-      topLeft: ui.widgets.title,
-      child: Center(child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          height16,
-          text("FINDING GAME...", size: 20),
-          height16,
-          text("CANCEL", size: 20, color: colours.white382, onPressed: core.actions.disconnect),
-        ],
-      )),
-    );
   }
 
   Widget playerCharacterType() {
