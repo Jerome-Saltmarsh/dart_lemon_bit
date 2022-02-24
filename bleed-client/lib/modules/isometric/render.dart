@@ -109,8 +109,7 @@ class IsometricRender {
         engine.renderAtlas();
       }
     }
-
-    engine.flushRenderBuffer();
+    // engine.flushRenderBuffer();
   }
 
   void sprites() {
