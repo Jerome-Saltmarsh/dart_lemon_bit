@@ -19,6 +19,7 @@ import 'common/GameError.dart';
 import 'common/GameType.dart';
 import 'common/Modify_Game.dart';
 import 'common/PlayerEvent.dart';
+import 'common/RoyalCost.dart';
 import 'common/ServerResponse.dart';
 import 'common/SlotType.dart';
 import 'common/SlotTypeCategory.dart';
@@ -978,6 +979,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           }
 
           final slotType = slotTypes[slotItemIndex];
+          final cost = slotTypeCosts[slotType];
+          if (cost != null) {
+              if (cost.topaz > player.orbs.topaz) return;
+              if (cost.rubies > player.orbs.ruby) return;
+              if (cost.emeralds > player.orbs.emerald) return;
+          }
           player.acquire(slotType);
           return;
 
