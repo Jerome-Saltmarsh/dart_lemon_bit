@@ -12,17 +12,17 @@ final List<GameType> gameTypes = GameType.values;
 
 final List<GameType> selectableGameTypes = [
     GameType.MMO,
-    GameType.Moba,
     GameType.BATTLE_ROYAL,
-    GameType.CUBE3D,
-    GameType.DeathMatch,
+    // GameType.Moba,
+    // GameType.CUBE3D,
+    // GameType.DeathMatch,
 ];
 
 final Map<GameType, String> gameTypeNames = {
-    GameType.Moba: "HEROES MOBA",
-    GameType.MMO: "BLEED MMO",
+    GameType.MMO: "SANDBOX",
+    GameType.BATTLE_ROYAL: "ROYAL",
     GameType.CUBE3D: "CUBE 3D",
-    GameType.BATTLE_ROYAL: "ZOMBIE ROYAL",
+    GameType.Moba: "HEROES MOBA",
     GameType.DeathMatch: "COUNTER STRIKE",
 };
 

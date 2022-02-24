@@ -10,6 +10,7 @@ import 'package:bleed_client/classes/Projectile.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/GameStatus.dart';
+import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/OrbType.dart';
 import 'package:bleed_client/common/configuration.dart';
 import 'package:bleed_client/common/SlotType.dart';
@@ -59,12 +60,6 @@ class GameRender {
     drawAbility();
     attackTargetCircle();
 
-    //
-    // for(int i = 0; i < game.totalHumans; i++){
-    //   final human = game.humans[i];
-    //   engine.render(dstX: human.x, dstY: human.y, srcX: atlas.circle.x, srcY: atlas.circle.y, srcSize: 64.0);
-    // }
-
     if (state.compilePaths.value) {
       drawPaths();
       drawDebugNpcs(game.npcDebug);
@@ -73,12 +68,11 @@ class GameRender {
     engine.setPaintColorWhite();
     isometric.render.sprites();
     drawEffects();
-    drawItems();
+    // drawItems();
 
-    // _renderCharacterHealthBars();
-    // if (game.type.value == GameType.BATTLE_ROYAL){
-    //   drawRoyalPerimeter();
-    // }
+    if (game.type.value == GameType.BATTLE_ROYAL){
+      drawRoyalPerimeter();
+    }
     // engine.setPaintColorWhite();
     // _drawFloatingTexts();
     // _drawPlayerNames();
