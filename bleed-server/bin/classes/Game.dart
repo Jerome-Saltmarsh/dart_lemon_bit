@@ -218,7 +218,7 @@ abstract class Game {
             x: character.x,
             y: character.y,
             health: 100,
-            ai: AI(),
+            ai: AI(mode: NpcMode.Aggressive),
             weapons: [
               Weapon(type: WeaponType.Unarmed, damage: 1, capacity: 0)
             ]));

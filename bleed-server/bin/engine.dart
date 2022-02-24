@@ -34,7 +34,7 @@ class _Engine {
   void init() {
     Future.delayed(Duration(seconds: 3), () {
       periodic(fixedUpdate, ms: msPerFrame);
-      periodic(updateNpcPathAndObjective, seconds: secondsPerUpdateNpcObjective);
+      periodic(updateZombieWander, seconds: secondsPerUpdateNpcObjective);
       periodic(removeDisconnectedPlayers, seconds: secondsPerRemoveDisconnectedPlayers);
       periodic(updateNpcTargets, ms: msPerUpdateNpcTarget);
       periodic(regenCharacters, ms: msPerRegen);
@@ -100,7 +100,7 @@ class _Engine {
     }
   }
 
-  void updateNpcPathAndObjective(Timer timer) {
+  void updateZombieWander(Timer timer) {
     for (final game in games) {
       for (final zombie in game.zombies) {
         if (zombie.inactive) continue;
