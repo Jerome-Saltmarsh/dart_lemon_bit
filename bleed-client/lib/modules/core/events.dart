@@ -1,5 +1,7 @@
 
 
+import 'package:bleed_client/audio.dart';
+import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/modules/core/enums.dart';
 import 'package:bleed_client/modules/core/state.dart';
@@ -24,9 +26,26 @@ class CoreEvents {
     state.mode.onChanged(onModeChanged);
     state.region.onChanged(_onServerTypeChanged);
     state.account.onChanged(_onAccountChanged);
+    state.status.onChanged(_onGameStatusChanged);
     webSocket.connection.onChanged(onConnectionChanged);
     sub(_onLoginException);
     engine.drawCanvas.onChanged(onDrawCanvasChanged);
+  }
+
+  void _onGameStatusChanged(GameStatus value){
+    print('events.onGameStatusChanged(value: $value)');
+    switch(value){
+      case GameStatus.In_Progress:
+        if (state.statusPrevious.value == GameStatus.Awaiting_Players){
+          audio.gong();
+        }
+        engine.fullScreenEnter();
+        break;
+      default:
+        engine.fullScreenExit();
+        break;
+    }
+    core.state.statusPrevious.value = value;
   }
 
   void onDrawCanvasChanged(DrawCanvas? method){
