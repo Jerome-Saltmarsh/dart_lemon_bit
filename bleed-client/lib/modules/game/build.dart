@@ -13,6 +13,7 @@ import 'package:bleed_client/modules/game/actions.dart';
 import 'package:bleed_client/modules/game/enums.dart';
 import 'package:bleed_client/modules/isometric/utilities.dart';
 import 'package:bleed_client/modules/modules.dart';
+import 'package:bleed_client/modules/ui/module.dart';
 import 'package:bleed_client/resources.dart';
 import 'package:bleed_client/state/game.dart';
 import 'package:bleed_client/styles.dart';
@@ -82,6 +83,23 @@ class GameBuild {
         }
       });
     });
+  }
+
+  Widget buildWaitingForGame(){
+    return layout(
+      padding: ui.style.layoutPadding,
+      topLeft: ui.widgets.title,
+      child: Center(child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          height16,
+          text("FINDING GAME...", size: 20),
+          height16,
+          text("CANCEL", size: 20, color: colours.white382, onPressed: core.actions.disconnect),
+        ],
+      )),
+    );
   }
 
   Widget playerCharacterType() {
@@ -210,7 +228,13 @@ class GameBuild {
               bottom: _pad,
               child: _panelMagicStore()),
           Positioned(
-              child: toggleAudioEnabled(),
+              child: Row(
+                children: [
+                  toggleAudioEnabled(),
+                  width8,
+                  button("Exit", core.actions.disconnect),
+                ],
+              ),
               right: _pad,
               top: _pad,
           ),

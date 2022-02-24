@@ -214,7 +214,6 @@ class _Build {
   }
 
   Widget title(){
-
     final child = Row(
       children: [
         text("GAME",

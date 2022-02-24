@@ -7,6 +7,7 @@ import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/modules/core/enums.dart';
 import 'package:bleed_client/modules/core/init.dart';
 import 'package:bleed_client/modules/modules.dart';
+import 'package:bleed_client/modules/ui/module.dart';
 import 'package:bleed_client/modules/website/enums.dart';
 import 'package:bleed_client/sharedPreferences.dart';
 import 'package:bleed_client/state/game.dart';
@@ -549,20 +550,6 @@ Widget buildTopMessage(){
 
 
 final _textWaiting = text("- waiting", color: colours.white382);
-
-Widget buildWaitingForGame(){
-  return buildDialog(
-      width: style.dialogWidthMedium,
-      height: style.dialogHeightMedium,
-      bottomRight: text("Cancel", color: colours.white382, onPressed: core.actions.disconnect),
-      child: Center(child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          text("FINDING GAME", size: 20),
-        ],
-      )));
-}
 
 Widget buildLayoutLobby() {
   return buildDialog(
