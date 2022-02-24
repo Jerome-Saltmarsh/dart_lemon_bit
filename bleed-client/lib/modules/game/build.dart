@@ -115,7 +115,6 @@ class GameBuild {
     return WatchBuilder(modules.game.state.soldier.weaponType, (WeaponType weaponType){
       return layout(
           padding: 16,
-          topLeft: buildTime(),
           topRight: buttons.exit,
           bottomLeft: buildWeaponMenu(),
       );
@@ -215,10 +214,10 @@ class GameBuild {
               _healthBar(),
             ],
           ), padding: _pad),
-          // Positioned(
-          //     left: _pad,
-          //     top: _pad,
-          //     child: mousePosition()),
+          Positioned(
+              left: _pad,
+              top: _pad,
+              child: ui.widgets.time),
           Positioned(
               left: _pad,
               bottom: _pad,

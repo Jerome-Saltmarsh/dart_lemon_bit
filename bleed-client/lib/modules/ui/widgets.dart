@@ -1,7 +1,10 @@
 
+import 'package:lemon_watch/watch_builder.dart';
 import 'package:bleed_client/assets.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/flutterkit.dart';
+import 'package:bleed_client/modules/modules.dart';
+import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:flutter/material.dart';
 
 
@@ -20,4 +23,12 @@ class Widgets {
       ),
     ],
   );
+
+  final time = Tooltip(
+    message: "Time",
+    child: WatchBuilder(isometric.state.time, (int value) {
+      return text("${padZero(modules.game.properties.timeInHours)} : ${padZero(modules.game.properties.timeInMinutes % 60)} ${isometric.properties.phase.name}");
+    }),
+  );
+
 }

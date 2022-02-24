@@ -36,7 +36,6 @@ Widget buildTopLeft() {
         children: [
           Row(
             children: [
-              buildTime(),
               width8,
               WatchBuilder(game.type, (GameType value) {
                 if (value == GameType.Moba) {
@@ -110,15 +109,6 @@ Widget buildMessageBoxIcon() {
       child: border(
         child: text("Say"),
       ));
-}
-
-Widget buildTime() {
-  return Tooltip(
-    message: "Time",
-    child: WatchBuilder(isometric.state.time, (int value) {
-      return text("${padZero(modules.game.properties.timeInHours)} : ${padZero(modules.game.properties.timeInMinutes % 60)} ${isometric.properties.phase.name}");
-    }),
-  );
 }
 
 Widget buildMouseWorldPosition() {

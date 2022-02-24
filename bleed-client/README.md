@@ -127,7 +127,8 @@
 [ ] Bow Spells, Charged shot
 [ ] Bow Spells, 
 [ ] Sword Spells, Strong Swing
-[ ] Fix editor
+[ ] FIX BUG Initial lighting incorrect
+[x] Fix editor
 [x] Hold mouse left to move
 [x] Spell Frost ring character slow
 [x] Inventory Slot: indicate insufficient mana to use slot
