@@ -21,14 +21,17 @@ class GameRoyal extends Game {
 
   final List<Player> score = [];
   final boundaryRadiusShrinkRate = 0.05;
-  double boundaryRadius = 1000;
   Vector2 boundaryCenter = Vector2(0, 0);
+  var boundaryRadius = 2000.0;
+
 
   final time = calculateTime(hour: 9);
 
   get _randomSpawnRadius => 500;
   double get randomX => boundaryCenter.x + giveOrTake(_randomSpawnRadius);
   double get randomY => boundaryCenter.y + giveOrTake(_randomSpawnRadius);
+
+  static const _zombieTeam = -2;
 
   GameRoyal() : super(scenes.royal, gameType: GameType.BATTLE_ROYAL) {
     status = GameStatus.Awaiting_Players;
@@ -37,7 +40,7 @@ class GameRoyal extends Game {
     boundaryCenter = getSceneCenter();
 
     for (final zombie in zombies) {
-      zombie.team = 1;
+      zombie.team = _zombieTeam;
     }
     // for (int i = 0; i < 10; i++) {
     //   final crate = Crate(
@@ -47,7 +50,6 @@ class GameRoyal extends Game {
     //   crates.add(crate);
     //   cratesDirty = true;
     // }
-
   }
 
   int get playersRequired => teamSize * numberOfTeams;
