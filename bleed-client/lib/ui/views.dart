@@ -643,7 +643,12 @@ Widget buildLayoutLobby() {
 }
 
 Widget buildDialogGameFinished(){
-  return buildDialogMedium(child: Center(child: text("Game Finished")), bottomRight: buildButton("Exit", core.actions.exitGame));
+  return buildDialogMedium(
+      child: Center(
+          child: text("Game Finished")),
+          bottomRight: buildButton("Exit", core.actions.exitGame),
+          bottomLeft: buildButton("New Game", core.actions.connectToSelectedGame),
+  );
 }
 
 bool isAccountName(String publicName){
