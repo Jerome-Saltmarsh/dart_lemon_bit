@@ -92,6 +92,8 @@ class EditorActions with EditorScope {
     print("editor.actions.newScene()");
     isometric.state.totalRows.value = rows;
     isometric.state.totalColumns.value = columns;
+    isometric.state.maxColumn = columns;
+    isometric.state.maxRow = rows;
     isometric.state.tiles.clear();
     editor.state.teamSpawnPoints.clear();
     editor.state.teamSpawnPoints.add(

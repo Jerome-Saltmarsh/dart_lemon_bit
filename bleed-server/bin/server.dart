@@ -132,8 +132,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     }
 
     void joinGameMoba() {
-      final GameMoba moba = engine.findPendingMobaGame();
-      final Player player = moba.playerJoin();
+      final moba = engine.findPendingMobaGame();
+      final player = moba.playerJoin();
       compileWholeGame(moba);
       compilePlayerJoined(_buffer, player);
       compileGameMeta(_buffer, moba);
@@ -142,8 +142,8 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
     void joinBattleRoyal(String playerName) {
       print('$playerName joining battle royal');
-      final GameRoyal royal = engine.findPendingRoyalGames();
-      final Player player = royal.playerJoin();
+      final royal = engine.findPendingRoyalGames();
+      final player = royal.playerJoin();
       player.name = playerName;
       compileWholeGame(royal);
       compilePlayerJoined(_buffer, player);
@@ -490,11 +490,11 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
 
           final gameType = gameTypes[gameTypeIndex];
 
-          if (!freeToPlay.contains(gameType)){
-            if (arguments.length < 3) {
-              return error(GameError.PlayerId_Required);
-            }
-          }
+          // if (!freeToPlay.contains(gameType)){
+          //   if (arguments.length < 3) {
+          //     return error(GameError.PlayerId_Required);
+          //   }
+          // }
 
           switch (gameType) {
             case GameType.None:
@@ -519,7 +519,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               break;
             case GameType.BATTLE_ROYAL:
               if (arguments.length < 3) {
-                return error(GameError.PlayerId_Required);
+                return joinBattleRoyal(generateName());
               }
 
               final playerId = arguments[2];

@@ -15,7 +15,6 @@ class EditorRender with EditorScope {
 
   void render(Canvas canvas, Size size) {
     isometric.render.tiles();
-
     // renderTilePreview();
     _drawSelectedObject();
     _characters();

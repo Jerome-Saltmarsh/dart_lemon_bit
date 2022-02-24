@@ -122,7 +122,7 @@ class GameMoba extends Game {
   }
 
   Player playerJoin() {
-    final Player player = Player(
+    final player = Player(
       x: 0,
       y: 600,
       game: this,

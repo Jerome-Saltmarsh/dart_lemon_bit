@@ -233,6 +233,11 @@ class Player extends Character with Entity {
         final cost = 5;
         if (magic < cost) return;
         magic -= cost;
+        if (!slots.weapon.isStaff) {
+          final index = slots.getSlotIndexWhere(isStaff);
+          if (index == null) return;
+          useSlot(index);
+        }
         game.spawnFreezeRing(src: this);
         setStateChangingWeapons();
         return;

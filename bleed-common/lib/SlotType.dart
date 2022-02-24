@@ -2,6 +2,10 @@ bool isBow(SlotType slotType){
   return _bows.contains(slotType);
 }
 
+bool isStaff(SlotType slotType){
+  return _staffs.contains(slotType);
+}
+
 enum SlotType {
   Empty,
   Armour_Padded,
