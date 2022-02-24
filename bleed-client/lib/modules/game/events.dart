@@ -183,15 +183,19 @@ class GameEvents {
   }
 
   void _onGameStatusChanged(GameStatus value){
-    print('events.onGameStatusChanged($value)');
+    print('events.onGameStatusChanged(value: $value)');
     switch(value){
       case GameStatus.In_Progress:
+        if (state.statusPrevious.value == GameStatus.Awaiting_Players){
+          audio.gong();
+        }
         engine.fullScreenEnter();
         break;
       default:
         engine.fullScreenExit();
         break;
     }
+    state.statusPrevious.value = value;
   }
 
   void onGameEvent(GameEventType type, double x, double y, double angle) {

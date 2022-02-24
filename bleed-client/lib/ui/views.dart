@@ -550,6 +550,13 @@ Widget buildTopMessage(){
 
 final Widget _textWaiting = text("- waiting", color: colours.white382);
 
+Widget buildWaitingForGame(){
+  return buildDialog(
+      width: style.dialogWidthMedium,
+      height: style.dialogHeightMedium,
+      child: Center(child: text("Finding Game..")));
+}
+
 Widget buildLayoutLobby() {
   return buildDialog(
     width: style.dialogWidthMedium,

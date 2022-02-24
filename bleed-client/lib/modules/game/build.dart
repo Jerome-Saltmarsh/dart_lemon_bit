@@ -58,7 +58,7 @@ class GameBuild {
                   return Center(child: text("Starting in $seconds seconds"));
                 }));
           case GameStatus.Awaiting_Players:
-            return buildLayoutLobby() ;
+            return buildWaitingForGame();
           case GameStatus.In_Progress:
             switch (game.type.value) {
               case GameType.MMO:

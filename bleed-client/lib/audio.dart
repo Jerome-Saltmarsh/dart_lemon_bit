@@ -19,11 +19,15 @@ class _Audio {
   }
 
   void sniperShot(double x, double y) {
-    play('sniper-shot-04.mp3', x, y);
+    _playPositioned('sniper-shot-04.mp3', x, y);
+  }
+
+  void gong() {
+    _play('gong.mp3');
   }
 
   void assaultRifleShot(double x, double y) {
-    play('assault-rifle-shot.mp3', x, y);
+    _playPositioned('assault-rifle-shot.mp3', x, y);
   }
 
   void explosion(double x, double y) {
@@ -35,55 +39,55 @@ class _Audio {
   }
 
   void gunPickup(double x, double y) {
-    play("gun-pickup-01.mp3", x, y);
+    _playPositioned("gun-pickup-01.mp3", x, y);
   }
 
   void arrowImpact(double x, double y) {
-    play("arrow-impact.mp3", x, y);
+    _playPositioned("arrow-impact.mp3", x, y);
   }
 
   void drawBow(double x, double y) {
-    play("draw-bow.mp3", x, y);
+    _playPositioned("draw-bow.mp3", x, y);
   }
 
   void releaseBow(double x, double y) {
-    play('release-bow.mp3', x, y);
+    _playPositioned('release-bow.mp3', x, y);
   }
 
   void swordWoosh(double x, double y) {
-    play('sword-woosh.mp3', x, y);
+    _playPositioned('sword-woosh.mp3', x, y);
   }
 
   void bloodyImpact(double x, double y) {
-    play('bloody-impact.mp3', x, y);
+    _playPositioned('bloody-impact.mp3', x, y);
   }
 
   void reload(double x, double y) {
-    play('reload-06.mp3', x, y);
+    _playPositioned('reload-06.mp3', x, y);
   }
 
   void itemEquipped(double x, double y) {
-    play('item-acquired.mp3', x, y);
+    _playPositioned('item-acquired.mp3', x, y);
   }
 
   void itemPurchased(double x, double y) {
-    play('item-purchase-3.mp3', x, y);
+    _playPositioned('item-purchase-3.mp3', x, y);
   }
 
   void coins(double x, double y){
-    play('coins.mp3', x, y);
+    _playPositioned('coins.mp3', x, y);
   }
 
   void coins24(double x, double y){
-    play('coins-24.mp3', x, y);
+    _playPositioned('coins-24.mp3', x, y);
   }
 
   void bottle(double x, double y){
-    play('bottle.mp3', x, y);
+    _playPositioned('bottle.mp3', x, y);
   }
 
   void cockShotgun(double x, double y) {
-    audio.play('cock-shotgun-03.mp3', x, y);
+    audio._playPositioned('cock-shotgun-03.mp3', x, y);
   }
 
   void maleScream(double x, double y) {
@@ -91,15 +95,15 @@ class _Audio {
   }
 
   void magIn2(double x, double y) {
-    audio.play('mag-in-02.mp3', x, y);
+    audio._playPositioned('mag-in-02.mp3', x, y);
   }
 
   void footstep(double x, double y) {
-    audio.play('footstep.mp3', x, y);
+    audio._playPositioned('footstep.mp3', x, y);
   }
 
   void dryShot2(double x, double y) {
-    audio.play('dry-shot-02.mp3', x, y);
+    audio._playPositioned('dry-shot-02.mp3', x, y);
   }
 
   void zombieBite(double x, double y) {
@@ -123,7 +127,7 @@ class _Audio {
   }
 
   void shotgunShot(double x, double y) {
-    audio.play('shotgun-shot.mp3', x, y);
+    audio._playPositioned('shotgun-shot.mp3', x, y);
   }
 
   void playAudioHandgunShot(double x, double y) {
@@ -131,23 +135,23 @@ class _Audio {
   }
 
   void changeCloths(double x, double y){
-    audio.play('change-cloths.mp3', x, y);
+    audio._playPositioned('change-cloths.mp3', x, y);
   }
 
   void drawSword(double x, double y){
-    audio.play('draw-sword.mp3', x, y);
+    audio._playPositioned('draw-sword.mp3', x, y);
   }
 
   void medkit(double x, double y) {
-    audio.play('medkit.mp3', x, y);
+    audio._playPositioned('medkit.mp3', x, y);
   }
 
   void buff(double x, double y) {
-    audio.play('buff-1.mp3', x, y);
+    audio._playPositioned('buff-1.mp3', x, y);
   }
 
   void magicalSwoosh(double x, double y) {
-    audio.play('magical-swoosh-18.mp3', x, y);
+    audio._playPositioned('magical-swoosh-18.mp3', x, y);
   }
 
   void init() {
@@ -156,20 +160,21 @@ class _Audio {
     }
   }
 
-  void play(String name, double x, double y) {
+  void _playPositioned(String name, double x, double y) {
     if (!enabled.value) return;
-    try {
-      _getAudioPlayer().play('assets/audio/$name',
-          isLocal: true,
-          volume: _calculateVolume(x, y))
-          .catchError((error) {});
-    }catch(e){
-      print("failed to play audio $name");
-    }
+    _play(name, volume: _calculateVolume(x, y));
   }
 
+  void _play(String name, {double volume = 1}){
+    _getAudioPlayer().play('assets/audio/$name',
+        isLocal: true,
+        volume: volume)
+        .catchError((error) {});
+  }
+
+
   void playAudioHeal(double x, double y) {
-    audio.play('revive-heal-1.mp3', x, y);
+    audio._playPositioned('revive-heal-1.mp3', x, y);
   }
 
   void playAudioKnifeStrike(double x, double y) {
@@ -177,31 +182,31 @@ class _Audio {
   }
 
   void playAudioThrowGrenade(double x, double y) {
-    audio.play('throw.mp3', x, y);
+    audio._playPositioned('throw.mp3', x, y);
   }
 
   void playAudioCrateBreaking(double x, double y) {
-    audio.play('crate-breaking.mp3', x, y);
+    audio._playPositioned('crate-breaking.mp3', x, y);
   }
 
   void unlock(double x, double y) {
-    audio.play('unlock.mp3', x, y);
+    audio._playPositioned('unlock.mp3', x, y);
   }
 
   void buff11(double x, double y) {
-    audio.play('buff-11.mp3', x, y);
+    audio._playPositioned('buff-11.mp3', x, y);
   }
 
   void arrowFlyingPast6(double x, double y) {
-    audio.play('arrow-flying-past-6.mp3', x, y);
+    audio._playPositioned('arrow-flying-past-6.mp3', x, y);
   }
 
   void sciFiBlaster1(double x, double y) {
-    audio.play('sci-fi-blaster-1.mp3', x, y);
+    audio._playPositioned('sci-fi-blaster-1.mp3', x, y);
   }
 
   void playAudioCollectStar(double x, double y) {
-    audio.play('collect-star-4.mp3', x, y);
+    audio._playPositioned('collect-star-4.mp3', x, y);
   }
 
 }
@@ -272,7 +277,7 @@ const _knifeStrikes = [
 ];
 
 void _playRandom(List<String> values, double x, double y) {
-  audio.play(randomItem(values), x, y);
+  audio._playPositioned(randomItem(values), x, y);
 }
 
 AudioPlayer _getAudioPlayer() {
