@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:bleed_client/classes/Authentication.dart';
 import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/common/GameType.dart';
@@ -174,6 +176,10 @@ class CoreActions {
     engine.zoom = 1;
     game.gameEvents.clear();
     refreshUI();
+    isometric.actions.state.tiles.clear();
+    isometric.actions.state.tilesDst = Float32List(0);
+    isometric.actions.state.tilesSrc = Float32List(0);
+    isometric.actions.refreshTileSize();
     engine.redrawCanvas();
   }
 

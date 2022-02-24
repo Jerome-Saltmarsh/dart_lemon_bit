@@ -68,11 +68,13 @@ class CoreEvents {
   void onModeChanged(Mode mode){
     print("core.events.onGameModeChanged($mode)");
     engine.clearCallbacks();
+    core.actions.clearState();
 
     switch(mode){
 
       case Mode.Website:
         engine.drawCanvas.value = null;
+        engine.redrawCanvas();
         engine.drawCanvasAfterUpdate = false;
         break;
 
