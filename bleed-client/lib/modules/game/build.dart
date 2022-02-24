@@ -46,7 +46,8 @@ class GameBuild {
   Widget buildUIGame() {
     return WatchBuilder(state.player.uuid, (String uuid) {
       if (uuid.isEmpty) {
-        return buildLayoutLoadingGame();
+        // return buildLayoutLoadingGame();
+        return ui.layouts.waitingForGame();
       }
       return WatchBuilder(core.state.status, (GameStatus gameStatus) {
         switch (gameStatus) {

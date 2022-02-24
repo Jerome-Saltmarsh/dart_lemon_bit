@@ -4,6 +4,7 @@ import '../common/AbilityMode.dart';
 import '../common/AbilityType.dart';
 import '../common/CharacterState.dart';
 import '../common/CharacterType.dart';
+import '../common/OrbType.dart';
 import '../common/PlayerEvent.dart';
 import '../common/Quests.dart';
 import '../common/SlotType.dart';
@@ -63,6 +64,21 @@ class Player extends Character with Entity {
 
   Vector2? target;
   Vector2 runTarget = Vector2(0, 0);
+
+  void attainOrb(OrbType orb){
+    switch(orb) {
+      case OrbType.Topaz:
+        orbs.topaz++;
+        dispatch(PlayerEvent.Orb_Earned_Topaz);
+        return;
+      case OrbType.Ruby:
+        orbs.ruby++;
+        return;
+      case OrbType.Emerald:
+        orbs.emerald++;
+        return;
+    }
+  }
 
   set aimTarget(Character? value){
     if (value == null){

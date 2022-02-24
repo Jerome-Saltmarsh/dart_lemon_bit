@@ -1,5 +1,6 @@
 import 'package:lemon_math/Vector2.dart';
 import 'package:lemon_math/give_or_take.dart';
+import 'package:lemon_math/randomItem.dart';
 
 import '../classes/Character.dart';
 import '../classes/Crate.dart';
@@ -12,6 +13,8 @@ import '../common/GameEventType.dart';
 import '../common/GameStatus.dart';
 import '../common/GameType.dart';
 import '../common/ItemType.dart';
+import '../common/OrbType.dart';
+import '../common/PlayerEvent.dart';
 import '../common/WeaponType.dart';
 import '../functions/withinRadius.dart';
 import '../instances/scenes.dart';
@@ -38,27 +41,20 @@ class GameRoyal extends Game {
     teamSize = 1;
     numberOfTeams = 2;
     boundaryCenter = getSceneCenter();
-
     for (final zombie in zombies) {
       zombie.team = _zombieTeam;
-      zombie.maxHealth = 5;
-      zombie.health = 5;
+      zombie.maxHealth = 3;
+      zombie.health = 3;
     }
-    // for (int i = 0; i < 10; i++) {
-    //   final crate = Crate(
-    //       x: randomX,
-    //       y: randomY,
-    //   );
-    //   crates.add(crate);
-    //   cratesDirty = true;
-    // }
   }
 
   int get playersRequired => teamSize * numberOfTeams;
 
   @override
-  void onNpcKilled(Character character, Character src){
-     items.add(Item(type: ItemType.Orb_Emerald, x: character.x, y: character.y));
+  void onNpcKilled(Character character, Character src) {
+    if (src is Player) {
+      src.attainOrb(randomItem(orbTypes));
+    }
   }
 
   @override
