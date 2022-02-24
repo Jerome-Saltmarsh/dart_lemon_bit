@@ -238,6 +238,24 @@ class Player extends Character with Entity {
         return;
       }
 
+      if (slot == SlotType.Spell_Tome_Split_Arrow) {
+        final cost = 5;
+        if (magic < cost) return;
+        if (!slots.weapon.isBow){
+           final bowIndex = slots.getSlotIndexWhere(isBow);
+           if (bowIndex == null) return;
+           useSlot(bowIndex);
+        }
+
+        ability = Ability(type: AbilityType.Split_Arrow,
+            level: 1,
+            cost: cost,
+            range: 250,
+            cooldown: 100,
+            mode: AbilityMode.Directed);
+        return;
+      }
+
       if (slot == SlotType.Potion_Red) {
         health = maxHealth;
         slots.assignSlotAtIndex(index, SlotType.Empty);
@@ -274,6 +292,16 @@ class _PlayerSlots {
   SlotType slot4 = SlotType.Empty;
   SlotType slot5 = SlotType.Empty;
   SlotType slot6 = SlotType.Empty;
+
+  int? getSlotIndexWhere(bool Function(SlotType slotType) where){
+     if(where(slot1)) return 1;
+     if(where(slot2)) return 2;
+     if(where(slot3)) return 3;
+     if(where(slot4)) return 4;
+     if(where(slot5)) return 5;
+     if(where(slot6)) return 6;
+     return null;
+  }
 
   SlotType getSlotTypeAtIndex(int index){
       switch(index){

@@ -1,3 +1,7 @@
+bool isBow(SlotType slotType){
+  return _bows.contains(slotType);
+}
+
 enum SlotType {
   Empty,
   Armour_Padded,

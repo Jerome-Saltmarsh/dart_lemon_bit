@@ -647,7 +647,6 @@ extension GameFunctions on Game {
     setCharacterState(character, CharacterState.Running);
   }
 
-  // kill character
   void setCharacterStateDead(Character character) {
     if (character.dead) return;
     character.state = CharacterState.Dead;
@@ -685,7 +684,6 @@ extension GameFunctions on Game {
   }
 
   void setCharacterState(Character character, CharacterState value) {
-    // @on character set state
     if (character.dead) return;
     if (character.state == value) return;
     if (value != CharacterState.Dead && character.busy) return;
@@ -698,22 +696,8 @@ extension GameFunctions on Game {
         character.stateDuration = 10;
         break;
       case CharacterState.Firing:
-        // @on character firing weapon
-        if (character.weapon == WeaponType.Unarmed) {
-          // setCh(character, CharacterState.Striking);
-          return;
-        }
         _characterAttack(character);
         break;
-      // case CharacterState.Striking:
-      //   faceAimDirection(character);
-      //   character.stateDuration = settings.duration.strike;
-      //   if (character is Player) {
-      //     if (character.slots.weapon.isBow) {
-      //       dispatch(GameEventType.Draw_Bow, character.x, character.y);
-      //     }
-      //   }
-      //   break;
       case CharacterState.Performing:
         character.stateDuration = settings.duration.strike;
         if (character is Player){
