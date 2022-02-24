@@ -31,4 +31,6 @@ class Widgets {
     }),
   );
 
+  final exit = button("Exit", core.actions.disconnect);
+
 }

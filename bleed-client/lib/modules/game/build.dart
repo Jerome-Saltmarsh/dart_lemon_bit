@@ -231,7 +231,7 @@ class GameBuild {
                 children: [
                   toggleAudioEnabled(),
                   width8,
-                  button("Exit", core.actions.disconnect),
+                  ui.widgets.exit,
                 ],
               ),
               right: _pad,
