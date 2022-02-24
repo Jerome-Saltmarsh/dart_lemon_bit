@@ -32,10 +32,10 @@ void updateCollisionBetween(List<GameObject> gameObjects) {
 }
 
 void resolveCollisionA(GameObject a, GameObject b) {
-  double overlap = collisionOverlap(a, b);
+  final overlap = collisionOverlap(a, b);
   if (overlap < 0) return;
-  double xDiff = a.x - b.x;
-  double yDiff = a.y - b.y;
+  var xDiff = a.x - b.x;
+  var yDiff = a.y - b.y;
 
   if (xDiff == 0 && yDiff == 0) {
     a.x -= 5;
@@ -43,13 +43,13 @@ void resolveCollisionA(GameObject a, GameObject b) {
     xDiff = 10;
   }
 
-  double halfOverlap = overlap * 0.5;
-  double mag = hypotenuse(xDiff, yDiff);
-  double ratio = 1.0 / mag;
-  double xDiffNormalized = xDiff * ratio;
-  double yDiffNormalized = yDiff * ratio;
-  double targetX = xDiffNormalized * halfOverlap;
-  double targetY = yDiffNormalized * halfOverlap;
+  final halfOverlap = overlap * 0.5;
+  final mag = hypotenuse(xDiff, yDiff);
+  final ratio = 1.0 / mag;
+  final xDiffNormalized = xDiff * ratio;
+  final yDiffNormalized = yDiff * ratio;
+  final targetX = xDiffNormalized * halfOverlap;
+  final targetY = yDiffNormalized * halfOverlap;
   a.x += targetX;
   a.y += targetY;
   b.x -= targetX;
@@ -77,11 +77,13 @@ double collisionOverlap(GameObject a, GameObject b) {
 
 void resolveCollisionBetween(List<GameObject> gameObjectsA,
     List<GameObject> gameObjectsB, CollisionResolver resolve) {
-  int minJ = 0;
-  for (int i = 0; i < gameObjectsA.length; i++) {
+  var minJ = 0;
+  final aLength = gameObjectsA.length;
+  final bLength = gameObjectsB.length;
+  for (var i = 0; i < aLength; i++) {
     final a = gameObjectsA[i];
     if (!a.collidable) continue;
-    for (int j = minJ; j < gameObjectsB.length; j++) {
+    for (var j = minJ; j < bLength; j++) {
       final b = gameObjectsB[j];
       if (!b.collidable) continue;
       if (a.bottom < b.top) {

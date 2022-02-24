@@ -41,6 +41,8 @@ class GameRoyal extends Game {
 
     for (final zombie in zombies) {
       zombie.team = _zombieTeam;
+      zombie.maxHealth = 5;
+      zombie.health = 5;
     }
     // for (int i = 0; i < 10; i++) {
     //   final crate = Crate(

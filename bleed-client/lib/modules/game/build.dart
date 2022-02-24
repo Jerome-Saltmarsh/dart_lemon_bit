@@ -201,10 +201,10 @@ class GameBuild {
           //     left: _pad,
           //     top: _pad,
           //     child: mousePosition()),
-          // Positioned(
-          //     left: _pad,
-          //     bottom: _pad,
-          //     child: toggleDebugMode()),
+          Positioned(
+              left: _pad,
+              bottom: _pad,
+              child: toggleDebugMode()),
           Positioned(
               right: _pad,
               bottom: _pad,
