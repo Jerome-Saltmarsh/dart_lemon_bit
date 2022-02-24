@@ -36,6 +36,7 @@ class CoreEvents {
     print('events.onGameStatusChanged(value: $value)');
     switch(value){
       case GameStatus.In_Progress:
+        engine.drawCanvas.value = modules.game.render.render;
         if (state.statusPrevious.value == GameStatus.Awaiting_Players){
           audio.gong();
         }
@@ -129,7 +130,6 @@ class CoreEvents {
 
     switch(connection){
       case Connection.Connected:
-        engine.drawCanvas.value = modules.game.render.render;
         core.state.mode.value = Mode.Player;
         if (game.type.value == GameType.Custom){
           final account = core.state.account.value;
