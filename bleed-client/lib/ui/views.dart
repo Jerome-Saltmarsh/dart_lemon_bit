@@ -548,7 +548,7 @@ Widget buildTopMessage(){
 }
 
 
-final Widget _textWaiting = text("- waiting", color: colours.white382);
+final _textWaiting = text("- waiting", color: colours.white382);
 
 Widget buildWaitingForGame(){
   return buildDialog(
