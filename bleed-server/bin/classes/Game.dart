@@ -531,16 +531,16 @@ extension GameFunctions on Game {
 
   void _updatePlayersAndNpcs() {
 
-    for (int i = 0; i < players.length; i++) {
+    for (var i = 0; i < players.length; i++) {
       updatePlayer(players[i]);
       updateCharacter(players[i]);
     }
 
-    for (int i = 0; i < zombies.length; i++) {
+    for (var i = 0; i < zombies.length; i++) {
       updateCharacter(zombies[i]);
     }
 
-    for (int i = 0; i < npcs.length; i++) {
+    for (var i = 0; i < npcs.length; i++) {
       updateCharacter(npcs[i]);
     }
 
@@ -566,8 +566,8 @@ extension GameFunctions on Game {
     resolveCollisionBetween(zombies, players, resolveCollisionA);
     resolveCollisionBetween(players, npcs, resolveCollisionB);
 
-    for (Player player in players) {
-      for (int i = 0; i < items.length; i++) {
+    for (final player in players) {
+      for (var i = 0; i < items.length; i++) {
         final item = items[i];
         if (item.top > player.bottom) break;
         if (item.bottom < player.top) continue;
@@ -587,13 +587,6 @@ extension GameFunctions on Game {
     sortVertically(npcs);
     sortVertically(items);
     sortVertically(projectiles);
-  }
-
-  Player? findPlayerById(int id) {
-    for (Player player in players) {
-      if (player.id == id) return player;
-    }
-    return null;
   }
 
   void _fireWeapon(Character character) {

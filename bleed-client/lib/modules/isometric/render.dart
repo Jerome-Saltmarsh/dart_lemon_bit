@@ -37,16 +37,18 @@ const _size32 = 32.0;
 const _size48 = 48.0;
 const _size64 = 64.0;
 
-const _scaleZombie = 0.7;
+const _characterScale = 0.7;
+const templateY = 6200.0;
 const _framesPerDirectionHuman = 12;
 const _framesPerDirectionZombie = 8;
 
+const _healthBarWidth = 35.0;
+const _healthBarWidthHalf = _healthBarWidth * 0.5;
+const _healthBarHeight = _healthBarWidth * goldenRatio_0381 * goldenRatio_0381;
+const _healthBarMargin = 50;
+
 final _partsY = atlas.parts.y;
-
-
 final _zombieY = atlas.zombieY;
-
-const templateY = 6200.0;
 
 enum SpriteLayer {
   Shadow,
@@ -74,17 +76,6 @@ class IsometricRender {
   IsometricRender(this.state, this.properties, this.queries, this.maps);
 
   void tiles() {
-      // engine.setPaintColorWhite();
-      // engine.canvas.drawRawAtlas(
-      //     state.image,
-      //     state.tilesDst,
-      //     state.tilesSrc,
-      //     null,
-      //     null,
-      //     null,
-      //     engine.paint);
-      // return;
-
     final screen = engine.screen;
     state.minRow = max(0, getRow(screen.left, screen.top));
     state.maxRow = min(state.totalRowsInt, getRow(screen.right, screen.bottom));
@@ -308,7 +299,7 @@ class IsometricRender {
     // final y = _zombieY + (shade * _size64);
     final y = _zombieY;
     engine.mapSrc(x: x, y: y);
-    engine.mapDst(x: character.x, y: character.y, anchorX: _size32, anchorY: _size48, scale: _scaleZombie);
+    engine.mapDst(x: character.x, y: character.y, anchorX: _size32, anchorY: _size48, scale: _characterScale);
     engine.renderAtlas();
   }
 
@@ -436,7 +427,7 @@ class IsometricRender {
         y: character.y,
         anchorX: _size32,
         anchorY: _size48,
-        scale: _scaleZombie,
+        scale: _characterScale,
     );
     engine.renderAtlas();
 
@@ -594,28 +585,22 @@ class IsometricRender {
     _renderCharacterPart(character, mapEquippedWeaponToSpriteIndex(character));
   }
 
-  final _width = 35.0;
-  final _widthHalf = 35.0 * 0.5;
-  final _height = 35.0 * goldenRatio_0381 * goldenRatio_0381;
-  final _marginBottom = 50;
-
-
   void drawCharacterHealthBar(Character character){
     if (!onScreen(character.x, character.y)) return;
     final shade = state.getShadeAtPosition(character.x, character.y);
     if (shade >= Shade.Dark) return;
     // engine.render(dstX: character.x , dstY: character.y, srcX: atlas.shades.red1.x, srcY: atlas.shades.red1.y, anchorX: _widthHalf);
     engine.setPaintColor(colours.redDarkest);
-    engine.canvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom, _width, _height), engine.paint);
+    engine.canvas.drawRect(Rect.fromLTWH(character.x - _healthBarWidthHalf, character.y - _healthBarMargin, _healthBarWidth, _healthBarHeight), engine.paint);
     engine.setPaintColor(colours.red);
-    engine.canvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom, _width * character.health, _height), engine.paint);
+    engine.canvas.drawRect(Rect.fromLTWH(character.x - _healthBarWidthHalf, character.y - _healthBarMargin, _healthBarWidth * character.health, _healthBarHeight), engine.paint);
   }
 
   void drawCharacterMagicBar(Character character){
     engine.setPaintColorWhite();
-    engine.canvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom + _height, _width, _height), engine.paint);
+    engine.canvas.drawRect(Rect.fromLTWH(character.x - _healthBarWidthHalf, character.y - _healthBarMargin + _healthBarHeight, _healthBarWidth, _healthBarHeight), engine.paint);
     engine.setPaintColor(colours.blue);
-    engine.canvas.drawRect(Rect.fromLTWH(character.x - _widthHalf, character.y - _marginBottom + _height, _width * character.magic, _height), engine.paint);
+    engine.canvas.drawRect(Rect.fromLTWH(character.x - _healthBarWidthHalf, character.y - _healthBarMargin + _healthBarHeight, _healthBarWidth * character.magic, _healthBarHeight), engine.paint);
   }
 
   void drawInteractableNpc(Character npc) {
