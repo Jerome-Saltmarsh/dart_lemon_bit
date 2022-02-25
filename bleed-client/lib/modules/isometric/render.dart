@@ -311,40 +311,39 @@ class IsometricRender {
   }
 
   double mapTemplateSrcX(Character character, int shade){
+
     switch(character.state){
       case CharacterState.Idle:
         return single(
             frame: 1,
             direction: character.direction,
-            framesPerDirection: _framesPerDirectionZombie
+            framesPerDirection: _framesPerDirectionHuman
         );
 
       case CharacterState.Hurt:
         return single(
             frame: 2,
             direction: character.direction,
-            framesPerDirection: _framesPerDirectionZombie
+            framesPerDirection: _framesPerDirectionHuman
         );
 
       case CharacterState.Performing:
         return animate(
-            animation: animations.zombie.striking,
+            animation: animations.human.strikingSword,
             character: character,
-            framesPerDirection:
-            _framesPerDirectionZombie
+            framesPerDirection: _framesPerDirectionHuman
         );
 
       case CharacterState.Running:
         return loop(
             animation: animations.zombie.running,
             character: character,
-            framesPerDirection: _framesPerDirectionZombie
+            framesPerDirection: _framesPerDirectionHuman
         );
       default:
-        throw Exception("Render zombie invalid state ${character.state}");
+        throw Exception("Render human invalid state ${character.state}");
     }
   }
-
 
   double mapZombieSrcX(Character character, int shade){
     switch(character.state){
@@ -425,10 +424,18 @@ class IsometricRender {
   }
 
   void _renderCharacterTemplate(Character character) {
-    final x = mapTemplateSrcX(character, 0);
     // final y = templateY + (shade * _size64);
-    engine.mapSrc(x: x, y: templateY);
-    engine.mapDst(x: character.x, y: character.y, anchorX: _size32, anchorY: _size48, scale: _scaleZombie);
+    engine.mapSrc(
+        x: getCharacterSrcX(character),
+        y: templateY,
+    );
+    engine.mapDst(
+        x: character.x,
+        y: character.y,
+        anchorX: _size32,
+        anchorY: _size48,
+        scale: _scaleZombie,
+    );
     engine.renderAtlas();
 
     // _renderCharacterShadow(character);

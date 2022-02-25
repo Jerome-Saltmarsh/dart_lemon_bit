@@ -596,7 +596,7 @@ extension GameFunctions on Game {
     return null;
   }
 
-  void _characterAttack(Character character) {
+  void _fireWeapon(Character character) {
     if (character.dead) return;
     if (character.busy) return;
     faceAimDirection(character);
@@ -709,7 +709,7 @@ extension GameFunctions on Game {
         character.stateDuration = 10;
         break;
       case CharacterState.Firing:
-        _characterAttack(character);
+        _fireWeapon(character);
         break;
       case CharacterState.Performing:
         character.stateDuration = settings.duration.strike;
