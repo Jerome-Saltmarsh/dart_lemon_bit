@@ -22,7 +22,6 @@ import '../utilities.dart';
 
 class GameRoyal extends Game {
 
-  final List<Player> score = [];
   final boundaryRadiusShrinkRate = 0.05;
   Vector2 boundaryCenter = Vector2(0, 0);
   var boundaryRadius = 2000.0;
@@ -178,9 +177,8 @@ class GameRoyal extends Game {
 
   @override
   void onPlayerDeath(Player player) {
-    score.add(player);
     if (numberOfAlivePlayers == 1) {
-      status = GameStatus.Finished;
+      // status = GameStatus.Finished;
     }
   }
 

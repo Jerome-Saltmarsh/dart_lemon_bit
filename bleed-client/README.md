@@ -121,13 +121,13 @@
 [ ] Slot Capacity
 [ ] Boots of sprint
 [ ] Slot Cooldown
-[ ] Gem flies out of killed enemy then the particles come to you
 [ ] Fix fireball explosion
 [ ] Spell Lightening Bolt
 [ ] Bow Spells, Charged shot
 [ ] Bow Spells, 
 [ ] Sword Spells, Strong Swing
 [ ] FIX BUG Initial lighting incorrect
+[ ] Gem flies out of killed enemy then the particles come to you
 [x] Fix editor
 [x] Hold mouse left to move
 [x] Spell Frost ring character slow

@@ -2,46 +2,40 @@
 
 import 'SlotType.dart';
 
+/// Staff  - Topaz
+/// Swords  - Rubies
+/// Bows    - Emeralds
 const Map<SlotType, _SlotTypeCost> slotTypeCosts = {
   SlotType.Sword_Wooden: _SlotTypeCost(
-      rubies: 1,
-      emeralds: 1,
+      rubies: 3,
   ),
   SlotType.Sword_Short: _SlotTypeCost(
-    rubies: 4,
-    emeralds: 4,
+    rubies: 10,
   ),
   SlotType.Sword_Long: _SlotTypeCost(
-    rubies: 15,
-    emeralds: 15,
+    rubies: 25,
   ),
   SlotType.Bow_Wooden: _SlotTypeCost(
-    rubies: 15,
-    emeralds: 15,
+    emeralds: 3,
   ),
   SlotType.Bow_Green: _SlotTypeCost(
-    rubies: 15,
-    emeralds: 15,
+    emeralds: 10,
   ),
   SlotType.Bow_Gold: _SlotTypeCost(
-    rubies: 15,
-    emeralds: 15,
+    emeralds: 25,
   ),
   SlotType.Staff_Wooden: _SlotTypeCost(
-    rubies: 15,
-    emeralds: 15,
+    topaz: 5,
   ),
   SlotType.Staff_Blue: _SlotTypeCost(
-    rubies: 15,
-    emeralds: 15,
+    topaz: 12,
   ),
   SlotType.Staff_Golden: _SlotTypeCost(
-    rubies: 15,
-    emeralds: 15,
+    topaz: 30,
   ),
   SlotType.Spell_Tome_Fireball: _SlotTypeCost(
-    rubies: 5,
-    emeralds: 3,
+    topaz: 5,
+    rubies: 3,
   ),
   SlotType.Spell_Tome_Ice_Ring: _SlotTypeCost(
     rubies: 5,
