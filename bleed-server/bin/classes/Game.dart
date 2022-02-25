@@ -690,16 +690,22 @@ extension GameFunctions on Game {
   void setCharacterState(Character character, CharacterState value) {
     if (character.dead) return;
     if (character.state == value) return;
-    if (value != CharacterState.Dead && character.busy) return;
+
+    if (value == CharacterState.Dead){
+      setCharacterStateDead(character);
+      return;
+    }
+
+    if (value == CharacterState.Hurt){
+      character.stateDuration = 10;
+      character.state = value;
+      return;
+    }
+
+    if (character.busy) return;
 
     switch (value) {
-      case CharacterState.Dead:
-        setCharacterStateDead(character);
-        return;
       case CharacterState.Changing:
-        character.stateDuration = 10;
-        break;
-      case CharacterState.Hurt:
         character.stateDuration = 10;
         break;
       case CharacterState.Firing:
