@@ -925,6 +925,7 @@ extension GameFunctions on Game {
     applyDamage(src, target, damage);
     final angleBetweenSrcAndTarget = radiansV2(src, target);
     final healthPercentage = damage / target.maxHealth;
+    characterFaceV2(target, src);
     applyForce(target, angleBetweenSrcAndTarget, healthPercentage * 1.5);
 
     dispatch(

@@ -33,7 +33,7 @@ class _Atlas {
   final starSize = Vector2(128, 128);
   final myst = Vector2(2410, 1);
   final circle = Vector2(2410, 513);
-  final zombieY = 4532;
+  final zombieY = 2106.0;
   final zombie = _Zombie();
   final particles = _Particles();
   final shades = _Shades();

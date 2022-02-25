@@ -39,9 +39,12 @@ const _size64 = 64.0;
 
 const _scaleZombie = 0.7;
 const _framesPerDirectionHuman = 9;
-const _framesPerDirectionZombie = 7;
+const _framesPerDirectionZombie = 8;
 
 final _partsY = atlas.parts.y;
+
+
+final _zombieY = atlas.zombieY;
 
 
 enum SpriteLayer {
@@ -300,7 +303,8 @@ class IsometricRender {
 
   void _renderZombie(Character character, int shade) {
     final x = mapZombieSrcX(character, shade);
-    final y = atlas.zombieY + (shade * _size64);
+    // final y = _zombieY + (shade * _size64);
+    final y = _zombieY;
     engine.mapSrc(x: x, y: y);
     engine.mapDst(x: character.x, y: character.y, anchorX: _size32, anchorY: _size48, scale: _scaleZombie);
     engine.renderAtlas();
@@ -311,6 +315,13 @@ class IsometricRender {
       case CharacterState.Idle:
         return single(
             frame: 1,
+            direction: character.direction,
+            framesPerDirection: _framesPerDirectionZombie
+        );
+
+      case CharacterState.Hurt:
+        return single(
+            frame: 2,
             direction: character.direction,
             framesPerDirection: _framesPerDirectionZombie
         );

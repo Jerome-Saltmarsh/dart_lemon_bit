@@ -15,9 +15,8 @@ class _Animations {
 }
 
 class _Zombie {
-
-  final List<int> striking = [6, 6, 7, 7];
-  final List<int> running = [2, 3, 4, 5];
+  final List<int> striking = [7, 7, 8, 8];
+  final List<int> running = [3, 4, 5, 6];
 }
 
 class _Man {
