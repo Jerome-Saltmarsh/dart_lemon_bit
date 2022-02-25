@@ -1587,6 +1587,16 @@ extension GameFunctions on Game {
           }
           return;
         }
+        if (character.slots.weapon.isHandgun) {
+          dispatch(GameEventType.Handgun_Fired, character.x, character.y);
+          spawnProjectile(
+              character: character,
+              accuracy: 0,
+              speed: 12.0,
+              range: character.slots.weapon.range,
+              damage: character.slots.weapon.damage,
+              type: ProjectileType.Bullet);
+        }
       }
     }
 
