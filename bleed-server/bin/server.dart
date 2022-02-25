@@ -977,13 +977,16 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
                 message:
                 "$slotItemIndex is not a valid slot type index");
           }
-
+          if (!player.slots.emptySlotAvailable) return;
           final slotType = slotTypes[slotItemIndex];
           final cost = slotTypeCosts[slotType];
           if (cost != null) {
               if (cost.topaz > player.orbs.topaz) return;
               if (cost.rubies > player.orbs.ruby) return;
               if (cost.emeralds > player.orbs.emerald) return;
+              player.orbs.topaz -= cost.topaz;
+              player.orbs.ruby -= cost.rubies;
+              player.orbs.emerald -= cost.emeralds;
           }
           player.acquire(slotType);
           return;

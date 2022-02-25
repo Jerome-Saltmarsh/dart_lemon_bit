@@ -194,21 +194,21 @@ class CoreActions {
     game.totalProjectiles = 0;
     game.grenades.clear();
     game.collectables.clear();
+    game.bulletHoleIndex = 0;
 
-    for (Vector2 bullet in game.bulletHoles) {
+    for (final bullet in game.bulletHoles) {
       bullet.x = 0;
       bullet.y = 0;
     }
 
-    for (Particle particle in isometric.state.particles) {
+    for (final particle in isometric.state.particles) {
       particle.active = false;
     }
 
-    for (Vector2 bullet in game.bulletHoles) {
+    for (final bullet in game.bulletHoles) {
       bullet.x = 0;
       bullet.y = 0;
     }
-    game.bulletHoleIndex = 0;
   }
 
 
