@@ -135,7 +135,7 @@ const Map<SlotType, int> _slotTypeDamage = {
   SlotType.Staff_Wooden: 2,
   SlotType.Staff_Blue: 4,
   SlotType.Staff_Golden: 6,
-  SlotType.Handgun: 6,
+  SlotType.Handgun: 2,
   SlotType.Shotgun: 6,
 };
 
