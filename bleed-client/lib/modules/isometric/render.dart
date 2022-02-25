@@ -61,6 +61,8 @@ enum SpriteLayer {
   Head_Rogue,
   Head_Plain,
   Head_Steel,
+  Handgun,
+  Shotgun,
 }
 
 class IsometricRender {
@@ -578,6 +580,10 @@ class IsometricRender {
          return SpriteLayer.Staff_Wooden;
        case SlotType.Staff_Golden:
          return SpriteLayer.Staff_Wooden;
+       case SlotType.Handgun:
+         return SpriteLayer.Handgun;
+       case SlotType.Shotgun:
+         return SpriteLayer.Shotgun;
        default:
          throw Exception("cannot map ${character.equippedWeapon} to sprite index");
      }

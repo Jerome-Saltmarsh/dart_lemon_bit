@@ -456,11 +456,11 @@ class GameBuild {
         shopSlotRow(
           SlotType.Potion_Red,
           SlotType.Potion_Blue,
-          SlotType.Empty,
+          SlotType.Golden_Necklace,
         ),
         shopSlotRow(
-          SlotType.Golden_Necklace,
           SlotType.Silver_Pendant,
+          SlotType.Handgun,
           SlotType.Empty,
         )
       ],

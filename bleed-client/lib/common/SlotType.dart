@@ -94,7 +94,7 @@ const List<SlotType> _items = [
 
 extension SlotTypeProperties on SlotType {
   bool get isEmpty => this == SlotType.Empty;
-  bool get isWeapon => isBow || isSword || isStaff;
+  bool get isWeapon => isBow || isSword || isStaff || isFirearm;
   bool get isMelee => isEmpty || isSword || isStaff;
   bool get isArmour => _armour.contains(this);
   bool get isHelm => _helms.contains(this);

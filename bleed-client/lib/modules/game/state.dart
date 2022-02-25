@@ -75,6 +75,8 @@ class GameState {
     SlotType.Potion_Blue : resources.icons.potions.blue,
     SlotType.Armour_Padded : resources.icons.armour.padded,
     SlotType.Magic_Robes : resources.icons.armour.magic,
+    SlotType.Handgun : resources.icons.firearms.handgun,
+    SlotType.Shotgun : resources.icons.firearms.handgun,
   };
 }
 

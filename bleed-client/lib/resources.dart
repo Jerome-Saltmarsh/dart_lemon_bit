@@ -27,6 +27,11 @@ class _Icons {
   final trinkets = _Trinkets();
   final staffs = _StaffIcons();
   final books = _IconsBooks();
+  final firearms = _IconsFirearms();
+}
+
+class _IconsFirearms {
+  final handgun = _image("handgun");
 }
 
 class _IconsBooks {
