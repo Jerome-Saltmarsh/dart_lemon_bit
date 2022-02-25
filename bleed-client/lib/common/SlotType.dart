@@ -6,6 +6,10 @@ bool isStaff(SlotType slotType){
   return _staffs.contains(slotType);
 }
 
+bool isFirearm(SlotType slotType){
+  return _firearms.contains(slotType);
+}
+
 enum SlotType {
   Empty,
   Armour_Padded,
@@ -46,6 +50,11 @@ const List<SlotType> _bows = [
   SlotType.Bow_Wooden,
   SlotType.Bow_Green,
   SlotType.Bow_Gold,
+];
+
+const List<SlotType> _firearms = [
+  SlotType.Handgun,
+  SlotType.Shotgun,
 ];
 
 const List<SlotType> _swords = [
@@ -91,6 +100,9 @@ extension SlotTypeProperties on SlotType {
   bool get isHelm => _helms.contains(this);
   bool get isItem => _items.contains(this);
   bool get isBow => _bows.contains(this);
+  bool get isShotgun => this == SlotType.Shotgun;
+  bool get isHandgun => this == SlotType.Handgun;
+  bool get isFirearm => _firearms.contains(this);
   bool get isSword => _swords.contains(this);
   bool get isStaff => _staffs.contains(this);
   bool get isMetal => _metal.contains(this);

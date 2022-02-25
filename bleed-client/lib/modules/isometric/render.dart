@@ -38,7 +38,7 @@ const _size48 = 48.0;
 const _size64 = 64.0;
 
 const _scaleZombie = 0.7;
-const _framesPerDirectionHuman = 9;
+const _framesPerDirectionHuman = 12;
 const _framesPerDirectionZombie = 8;
 
 final _partsY = atlas.parts.y;
@@ -46,6 +46,7 @@ final _partsY = atlas.parts.y;
 
 final _zombieY = atlas.zombieY;
 
+const templateY = 6200.0;
 
 enum SpriteLayer {
   Shadow,
@@ -112,16 +113,10 @@ class IsometricRender {
         engine.renderAtlas();
       }
     }
-    // engine.flushRenderBuffer();
   }
 
   void sprites() {
     engine.setPaintColorWhite();
-    int indexHuman = 0;
-    int indexEnv = 0;
-    int indexParticle = 0;
-    int indexZombie = 0;
-    int indexNpc = 0;
 
     final environmentObjects = state.environmentObjects;
     final particles = state.particles;
@@ -129,13 +124,18 @@ class IsometricRender {
     final totalEnvironment = environmentObjects.length;
     final zombies = game.zombies;
     final interactableNpcs = game.interactableNpcs;
-    bool zombiesRemaining = indexZombie < game.totalZombies.value;
-    bool humansRemaining = indexHuman < game.totalHumans;
-    bool npcsRemaining = indexHuman < game.totalNpcs;
-    bool environmentRemaining = indexEnv < totalEnvironment;
-    bool particlesRemaining = indexParticle < totalParticles;
     final screenBottom = engine.screen.bottom;
 
+    var indexHuman = 0;
+    var indexEnv = 0;
+    var indexParticle = 0;
+    var indexZombie = 0;
+    var indexNpc = 0;
+    var zombiesRemaining = indexZombie < game.totalZombies.value;
+    var humansRemaining = indexHuman < game.totalHumans;
+    var npcsRemaining = indexHuman < game.totalNpcs;
+    var environmentRemaining = indexEnv < totalEnvironment;
+    var particlesRemaining = indexParticle < totalParticles;
 
     while (true) {
       humansRemaining = indexHuman < game.totalHumans;
@@ -310,6 +310,42 @@ class IsometricRender {
     engine.renderAtlas();
   }
 
+  double mapTemplateSrcX(Character character, int shade){
+    switch(character.state){
+      case CharacterState.Idle:
+        return single(
+            frame: 1,
+            direction: character.direction,
+            framesPerDirection: _framesPerDirectionZombie
+        );
+
+      case CharacterState.Hurt:
+        return single(
+            frame: 2,
+            direction: character.direction,
+            framesPerDirection: _framesPerDirectionZombie
+        );
+
+      case CharacterState.Performing:
+        return animate(
+            animation: animations.zombie.striking,
+            character: character,
+            framesPerDirection:
+            _framesPerDirectionZombie
+        );
+
+      case CharacterState.Running:
+        return loop(
+            animation: animations.zombie.running,
+            character: character,
+            framesPerDirection: _framesPerDirectionZombie
+        );
+      default:
+        throw Exception("Render zombie invalid state ${character.state}");
+    }
+  }
+
+
   double mapZombieSrcX(Character character, int shade){
     switch(character.state){
       case CharacterState.Idle:
@@ -389,10 +425,16 @@ class IsometricRender {
   }
 
   void _renderCharacterTemplate(Character character) {
-    _renderCharacterShadow(character);
-    _renderCharacterPartLegs(character);
-    _renderCharacterPartBody(character);
-    _renderCharacterPartHead(character);
+    final x = mapTemplateSrcX(character, 0);
+    // final y = templateY + (shade * _size64);
+    engine.mapSrc(x: x, y: templateY);
+    engine.mapDst(x: character.x, y: character.y, anchorX: _size32, anchorY: _size48, scale: _scaleZombie);
+    engine.renderAtlas();
+
+    // _renderCharacterShadow(character);
+    // _renderCharacterPartLegs(character);
+    // _renderCharacterPartBody(character);
+    // _renderCharacterPartHead(character);
   }
 
   void _renderCharacterShadow(Character character){
@@ -469,16 +511,30 @@ class IsometricRender {
             framesPerDirection: _framesPerDirectionHuman
         );
 
-      case CharacterState.Changing:
+      case CharacterState.Hurt:
         return single(
             frame: 2,
             direction: character.direction,
             framesPerDirection: _framesPerDirectionHuman
         );
 
+      case CharacterState.Changing:
+        return single(
+            frame: 3,
+            direction: character.direction,
+            framesPerDirection: _framesPerDirectionHuman
+        );
+
       case CharacterState.Performing:
+        final weapon = character.equippedWeapon;
         return animate(
-            animation: character.equippedWeapon.isBow ? animations.firingBow : animations.strikingSword,
+            animation: weapon.isBow
+                ? animations.firingBow
+                : weapon.isHandgun
+                ? animations.firingHandgun
+                : weapon.isShotgun
+                ? animations.firingShotgun
+                : animations.strikingSword,
             character: character,
             framesPerDirection: _framesPerDirectionHuman
         );
