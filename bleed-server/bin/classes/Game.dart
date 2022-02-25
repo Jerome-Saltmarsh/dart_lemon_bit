@@ -420,7 +420,10 @@ extension GameFunctions on Game {
     if (target.invincible) return;
 
     changeCharacterHealth(target, -amount);
-    if (target.alive) return;
+    if (target.alive) {
+      setCharacterState(target, CharacterState.Hurt);
+      return;
+    }
     // @on target killed
     final targetAI = target.ai;
     if (targetAI != null) {
@@ -694,6 +697,9 @@ extension GameFunctions on Game {
         setCharacterStateDead(character);
         return;
       case CharacterState.Changing:
+        character.stateDuration = 10;
+        break;
+      case CharacterState.Hurt:
         character.stateDuration = 10;
         break;
       case CharacterState.Firing:
@@ -1063,6 +1069,7 @@ extension GameFunctions on Game {
       case CharacterState.Running:
         _updateCharacterStateRunning(character);
         break;
+
       case CharacterState.Performing:
         updateCharacterStatePerforming(character);
         break;
