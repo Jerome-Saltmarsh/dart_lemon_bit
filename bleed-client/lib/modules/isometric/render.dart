@@ -345,7 +345,7 @@ class IsometricRender {
   }
 
   double single({
-    required frame,
+    required int frame,
     required num direction,
     required int framesPerDirection,
     num size = _size64
