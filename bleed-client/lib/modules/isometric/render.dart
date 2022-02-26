@@ -38,7 +38,7 @@ const _size48 = 48.0;
 const _size64 = 64.0;
 
 const _characterScale = 0.7;
-const templateY = 6200.0;
+const _templateY = 6266.0;
 const _framesPerDirectionHuman = 12;
 const _framesPerDirectionZombie = 8;
 
@@ -51,17 +51,17 @@ final _partsY = atlas.parts.y;
 final _zombieY = atlas.zombieY;
 
 enum SpriteLayer {
+  Head_Plain,
+  Body_Cyan,
+  Legs_Blue,
   Shadow,
   Sword_Wooden,
   Sword_Steel,
   Staff_Wooden,
   Bow_Wooden,
-  Legs_Blue,
-  Body_Cyan,
   Body_Blue,
   Head_Magic,
   Head_Rogue,
-  Head_Plain,
   Head_Steel,
   Handgun,
   Shotgun,
@@ -287,10 +287,10 @@ class IsometricRender {
 
     if (character.direction >= Direction.UpRight.index && character.direction <= Direction.Down.index) {
       _renderCharacterTemplate(character);
-      _renderCharacterTemplateWeapon(character);
+      // _renderCharacterTemplateWeapon(character);
       return;
     }
-    _renderCharacterTemplateWeapon(character);
+    // _renderCharacterTemplateWeapon(character);
     _renderCharacterTemplate(character);
   }
 
@@ -301,41 +301,6 @@ class IsometricRender {
     engine.mapSrc(x: x, y: y);
     engine.mapDst(x: character.x, y: character.y, anchorX: _size32, anchorY: _size48, scale: _characterScale);
     engine.renderAtlas();
-  }
-
-  double mapTemplateSrcX(Character character, int shade){
-
-    switch(character.state){
-      case CharacterState.Idle:
-        return single(
-            frame: 1,
-            direction: character.direction,
-            framesPerDirection: _framesPerDirectionHuman
-        );
-
-      case CharacterState.Hurt:
-        return single(
-            frame: 2,
-            direction: character.direction,
-            framesPerDirection: _framesPerDirectionHuman
-        );
-
-      case CharacterState.Performing:
-        return animate(
-            animation: animations.human.strikingSword,
-            character: character,
-            framesPerDirection: _framesPerDirectionHuman
-        );
-
-      case CharacterState.Running:
-        return loop(
-            animation: animations.zombie.running,
-            character: character,
-            framesPerDirection: _framesPerDirectionHuman
-        );
-      default:
-        throw Exception("Render human invalid state ${character.state}");
-    }
   }
 
   double mapZombieSrcX(Character character, int shade){
@@ -418,23 +383,23 @@ class IsometricRender {
 
   void _renderCharacterTemplate(Character character) {
     // final y = templateY + (shade * _size64);
-    engine.mapSrc(
-        x: getCharacterSrcX(character),
-        y: templateY,
-    );
-    engine.mapDst(
-        x: character.x,
-        y: character.y,
-        anchorX: _size32,
-        anchorY: _size48,
-        scale: _characterScale,
-    );
-    engine.renderAtlas();
+    // engine.mapSrc(
+    //     x: getTemplateSrcX(character),
+    //     y: templateY,
+    // );
+    // engine.mapDst(
+    //     x: character.x,
+    //     y: character.y,
+    //     anchorX: _size32,
+    //     anchorY: _size48,
+    //     scale: _characterScale,
+    // );
+    // engine.renderAtlas();
 
     // _renderCharacterShadow(character);
-    // _renderCharacterPartLegs(character);
-    // _renderCharacterPartBody(character);
-    // _renderCharacterPartHead(character);
+    _renderCharacterPartLegs(character);
+    _renderCharacterPartBody(character);
+    _renderCharacterPartHead(character);
   }
 
   void _renderCharacterShadow(Character character){
@@ -462,8 +427,8 @@ class IsometricRender {
         scale: scale
     );
     engine.mapSrc(
-        x: getCharacterSrcX(character),
-        y: _partsY + (layer.index * _size64)
+        x: getTemplateSrcX(character),
+        y: _templateY + (layer.index * _size64)
     );
     engine.renderAtlas();
   }
@@ -502,7 +467,7 @@ class IsometricRender {
     return SpriteLayer.Legs_Blue;
   }
 
-  double getCharacterSrcX(Character character){
+  double getTemplateSrcX(Character character){
     switch(character.state){
       case CharacterState.Idle:
         return single(
