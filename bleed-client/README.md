@@ -129,7 +129,7 @@
 [ ] FIX BUG Initial lighting incorrect
 [ ] Gem flies out of killed enemy then the particles come to you
 [ ] Destructible Items to collect gems
-[ ] Character State - Hurt
+[x] Character State - Hurt
 [x] Fix editor
 [x] Hold mouse left to move
 [x] Spell Frost ring character slow

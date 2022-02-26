@@ -420,7 +420,7 @@ extension GameFunctions on Game {
     if (target.invincible) return;
 
     changeCharacterHealth(target, -amount);
-    if (target.alive) {
+    if (target.alive && target.type.isZombie) {
       setCharacterState(target, CharacterState.Hurt);
       return;
     }
@@ -924,7 +924,9 @@ extension GameFunctions on Game {
     applyDamage(src, target, damage);
     final angleBetweenSrcAndTarget = radiansV2(src, target);
     final healthPercentage = damage / target.maxHealth;
-    characterFaceV2(target, src);
+    // if (target.type.isZombie){
+    //   target.angle = radiansV2(target, src);
+    // }
     applyForce(target, angleBetweenSrcAndTarget, healthPercentage * 1.5);
 
     dispatch(
