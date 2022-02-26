@@ -434,7 +434,7 @@ void _compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.direction);
   _writeInt(buffer, player.x);
   _writeInt(buffer, player.y);
-  _write(buffer, player.stateFrameCount);
+  _write(buffer, player.animationFrame);
   _write(buffer, player.team);
   _write(buffer, player.name);
   _write(buffer, player.text);
@@ -461,7 +461,7 @@ void _compileNpc(StringBuffer buffer, Character character) {
   _write(buffer, character.direction);
   _writeInt(buffer, character.x);
   _writeInt(buffer, character.y);
-  _write(buffer, character.stateFrameCount);
+  _write(buffer, character.animationFrame);
   _writeInt(buffer, (character.health / character.maxHealth) * 100);
   _write(buffer, character.team);
 }
@@ -471,7 +471,7 @@ void _compileInteractableNpc(StringBuffer buffer, InteractableNpc npc) {
   _write(buffer, npc.direction);
   _writeInt(buffer, npc.x);
   _writeInt(buffer, npc.y);
-  _write(buffer, npc.stateFrameCount);
+  _write(buffer, npc.animationFrame);
   _write(buffer, npc.name);
 }
 

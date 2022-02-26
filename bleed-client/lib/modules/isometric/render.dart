@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'dart:ui';
 
+import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/Item.dart';
@@ -296,7 +297,6 @@ class IsometricRender {
   void _renderZombie(Character character, int shade) {
     final x = mapZombieSrcX(character, shade);
     final y = _zombieY + (shade * _size64);
-    // final y = _zombieY;
     engine.mapSrc(x: x, y: y);
     engine.mapDst(x: character.x, y: character.y, anchorX: _size32, anchorY: _size48, scale: _characterScale);
     engine.renderAtlas();
@@ -403,7 +403,7 @@ class IsometricRender {
     _renderCharacterPart(character, getSpriteIndexLegs(character));
   }
 
-  void _renderCharacterPart(Character character, SpriteLayer layer, {double scale = 0.7}) {
+  void _renderCharacterPart(Character character, SpriteLayer layer, {double scale = 0.8}) {
     engine.mapDst(
         x: character.x,
         y: character.y,
@@ -533,6 +533,13 @@ class IsometricRender {
   void _renderCharacterTemplateWeapon(Character character) {
     if (character.equippedWeapon == SlotType.Empty) return;
     _renderCharacterPart(character, mapEquippedWeaponToSpriteIndex(character));
+    // if (character.state.performing){
+    //    if (character.frame == 0){
+    //       if (character.equippedWeapon.isHandgun){
+    //          audio.handgunShot(character.x, character.y);
+    //       }
+    //    }
+    // }
   }
 
   void drawCharacterHealthBar(Character character){

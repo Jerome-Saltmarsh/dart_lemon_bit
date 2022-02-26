@@ -184,7 +184,7 @@ class GameEvents {
   void onGameEvent(GameEventType type, double x, double y, double angle) {
     switch (type) {
       case GameEventType.Handgun_Fired:
-        audio.playAudioHandgunShot(x, y);
+        audio.handgunShot(x, y);
         isometric.spawn.shell(x: x, y: y, z: 0.2, zv: 0.1, angle: angle, speed: 0.1);
         break;
       case GameEventType.Shotgun_Fired:

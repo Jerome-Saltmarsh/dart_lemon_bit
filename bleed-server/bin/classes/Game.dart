@@ -75,6 +75,7 @@ class _GameEvents {
 const castFrame = 3;
 const tileCollisionResolve = 3;
 const framePerformStrike = 3;
+const gameEventDuration = 4;
 
 // This should be OpenWorldScene
 abstract class Game {
@@ -183,9 +184,9 @@ abstract class Game {
   void onPlayerDisconnected(Player player) {}
 
   GameEvent _getAvailableGameEvent() {
-    for (GameEvent gameEvent in gameEvents) {
+    for (final gameEvent in gameEvents) {
       if (gameEvent.frameDuration <= 0) {
-        gameEvent.frameDuration = 2;
+        gameEvent.frameDuration = gameEventDuration;
         gameEvent.assignNewId();
         return gameEvent;
       }
@@ -391,8 +392,8 @@ extension GameFunctions on Game {
 
   void updateFrames(List<Character> character) {
     for (final character in character) {
-      character.stateFrameCount =
-          (character.stateFrameCount + 1) % characterMaxFrames;
+      character.animationFrame =
+          (character.animationFrame + 1) % characterMaxFrames;
     }
   }
 
@@ -597,7 +598,7 @@ extension GameFunctions on Game {
     if (character is Player) {
       if (character.weapon.type != WeaponType.Unarmed &&
           character.weapon.rounds <= 0) {
-        character.stateDuration = settings.coolDown.clipEmpty;
+        character.stateDurationRemaining = settings.coolDown.clipEmpty;
         dispatch(GameEventType.Clip_Empty, character.x, character.y);
         return;
       }
@@ -612,7 +613,7 @@ extension GameFunctions on Game {
     switch (character.weapon.type) {
       case WeaponType.HandGun:
         Projectile bullet = spawnBullet(character);
-        character.stateDuration = coolDown.handgun;
+        character.stateDurationRemaining = coolDown.handgun;
         dispatch(GameEventType.Handgun_Fired, x, y);
         break;
       case WeaponType.Shotgun:
@@ -622,17 +623,17 @@ extension GameFunctions on Game {
           spawnBullet(character);
         }
         Projectile bullet = projectiles.last;
-        character.stateDuration = coolDown.shotgun;
+        character.stateDurationRemaining = coolDown.shotgun;
         dispatch(GameEventType.Shotgun_Fired, x, y);
         break;
       case WeaponType.SniperRifle:
         Projectile bullet = spawnBullet(character);
-        character.stateDuration = coolDown.sniperRifle;
+        character.stateDurationRemaining = coolDown.sniperRifle;
         dispatch(GameEventType.SniperRifle_Fired, x, y);
         break;
       case WeaponType.AssaultRifle:
         Projectile bullet = spawnBullet(character);
-        character.stateDuration = coolDown.assaultRifle;
+        character.stateDurationRemaining = coolDown.assaultRifle;
         dispatch(GameEventType.MachineGun_Fired, x, y);
         break;
       default:
@@ -648,11 +649,10 @@ extension GameFunctions on Game {
     if (character.dead) return;
     character.state = CharacterState.Dead;
     character.collidable = false;
-    character.stateFrameCount = duration;
     character.ai?.onDeath();
 
     if (character is Player) {
-      dispatch(GameEventType.Player_Death, character.x, character.y);
+      dispatchV2(GameEventType.Player_Death, character);
       onPlayerDeath(character);
     }
 
@@ -690,7 +690,7 @@ extension GameFunctions on Game {
     }
 
     if (value == CharacterState.Hurt){
-      character.stateDuration = 10;
+      character.stateDurationRemaining = 10;
       character.state = value;
       return;
     }
@@ -699,13 +699,13 @@ extension GameFunctions on Game {
 
     switch (value) {
       case CharacterState.Changing:
-        character.stateDuration = 10;
+        character.stateDurationRemaining = 10;
         break;
       case CharacterState.Firing:
         _fireWeapon(character);
         break;
       case CharacterState.Performing:
-        character.stateDuration = settings.duration.strike;
+        character.stateDurationRemaining = settings.duration.strike;
         if (character is Player){
           final ability = character.performing;
           if (ability == null) break;
@@ -951,12 +951,12 @@ extension GameFunctions on Game {
   void updateCharacterStatePerforming(Character character) {
     final ability = character.performing;
     if (ability == null) {
-      _updateCharacterStateStriking(character);
+      _updateCharacterStateAttacking(character);
       return;
     }
     switch (ability.type) {
       case AbilityType.Explosion:
-        if (character.stateDuration == castFrame) {
+        if (character.stateDurationRemaining == castFrame) {
           spawnExplosion(
               src: character,
               x: character.abilityTarget.x,
@@ -965,7 +965,7 @@ extension GameFunctions on Game {
         }
         break;
       case AbilityType.Blink:
-        if (character.stateDuration == castFrame) {
+        if (character.stateDurationRemaining == castFrame) {
           dispatch(GameEventType.Teleported, character.x, character.y);
           character.x = character.abilityTarget.x;
           character.y = character.abilityTarget.y;
@@ -975,14 +975,14 @@ extension GameFunctions on Game {
         }
         break;
       case AbilityType.Fireball:
-        if (character.stateDuration == castFrame) {
+        if (character.stateDurationRemaining == castFrame) {
           spawnFireball(character);
           character.performing = null;
           character.attackTarget = null;
         }
         break;
       case AbilityType.Split_Arrow:
-        if (character.stateDuration == castFrame) {
+        if (character.stateDurationRemaining == castFrame) {
           Projectile arrow1 = spawnArrow(character, damage: character.damage);
           double angle = piSixteenth;
           arrow1.target = null;
@@ -998,7 +998,7 @@ extension GameFunctions on Game {
         break;
 
       case AbilityType.Long_Shot:
-        if (character.stateDuration == castFrame) {
+        if (character.stateDurationRemaining == castFrame) {
           final int damageMultiplier = 3;
           spawnArrow(character, damage: character.damage * damageMultiplier)
               .range = ability.range;
@@ -1009,7 +1009,7 @@ extension GameFunctions on Game {
 
       case AbilityType.Brutal_Strike:
         final int castFrame = 8;
-        if (character.stateDuration == castFrame) {
+        if (character.stateDurationRemaining == castFrame) {
           character.performing = null;
           const damageMultiplier = 2;
           for (final zombie in zombies) {
@@ -1025,7 +1025,7 @@ extension GameFunctions on Game {
       case AbilityType.Death_Strike:
         final int castFrame = 8;
         const damageMultiplier = 3;
-        if (character.stateDuration == castFrame) {
+        if (character.stateDurationRemaining == castFrame) {
           Character? attackTarget = character.attackTarget;
           if (attackTarget != null) {
             applyStrike(
@@ -1054,13 +1054,15 @@ extension GameFunctions on Game {
 
     if (character.dead) return;
 
+    character.stateDuration++;
+
     if (character.frozenDuration > 0) {
       character.frozenDuration--;
     }
 
-    if (character.stateDuration > 0) {
-      character.stateDuration--;
-      if (character.stateDuration == 0) {
+    if (character.stateDurationRemaining > 0) {
+      character.stateDurationRemaining--;
+      if (character.stateDurationRemaining == 0) {
         setCharacterState(character, CharacterState.Idle);
       }
     }
@@ -1079,7 +1081,8 @@ extension GameFunctions on Game {
 
     if (character.previousState != character.state) {
       character.previousState = character.state;
-      character.stateFrameCount = 0;
+      character.animationFrame = 0;
+      character.stateDuration = 0;
     }
   }
 
@@ -1210,7 +1213,7 @@ extension GameFunctions on Game {
     zombie.team = team;
     zombie.active = true;
     zombie.state = CharacterState.Idle;
-    zombie.stateDuration = 0;
+    zombie.stateDurationRemaining = 0;
     zombie.previousState = CharacterState.Idle;
     zombie.maxHealth = health;
     zombie.health = health;
@@ -1305,7 +1308,7 @@ extension GameFunctions on Game {
     event.x = x;
     event.y = y;
     event.angle = angle;
-    event.frameDuration = 2;
+    event.frameDuration = gameEventDuration;
   }
 
   void updateZombieTargets() {
@@ -1548,9 +1551,11 @@ extension GameFunctions on Game {
     }
   }
 
-  void _updateCharacterStateStriking(Character character) {
+  void _updateCharacterStateAttacking(Character character) {
+    final stateDuration = character.stateDuration;
+
     if (character.type == CharacterType.Zombie){
-        if (character.stateDuration != framePerformStrike){
+        if (stateDuration != framePerformStrike){
           final attackTarget = character.attackTarget;
           if (attackTarget != null){
             applyStrike(character, attackTarget, character.damage);
@@ -1560,21 +1565,52 @@ extension GameFunctions on Game {
     }
 
     if (character is Player) {
+      final weapon = character.slots.weapon;
 
-      if (character.stateDuration == 1){
-        if (character.slots.weapon.isSword){
-          dispatch(GameEventType.Sword_Woosh, character.x, character.y);
+      if (weapon.isSword){
+        if (stateDuration == 1){
+          dispatchV2(GameEventType.Sword_Woosh, character);
         }
       }
 
-      if (character.stateDuration == framePerformStrike) {
-        if (character.slots.weapon.isBow) {
-          dispatch(GameEventType.Release_Bow, character.x, character.y);
-          spawnArrow(character, damage: character.slots.weapon.damage);
+      if (weapon.isHandgun) {
+        if (stateDuration == 1){
+          dispatchV2(GameEventType.Handgun_Fired, character);
+          return;
+        }
+        if (stateDuration == 2){
+          spawnProjectile(
+              character: character,
+              accuracy: 0,
+              speed: 12.0,
+              range: weapon.range,
+              damage: weapon.damage,
+              type: ProjectileType.Bullet);
+          return;
+        }
+      }
+
+      if (weapon.isShotgun) {
+        if (stateDuration == 1){
+          dispatchV2(GameEventType.Shotgun_Fired, character);
+          spawnProjectile(
+              character: character,
+              accuracy: 0,
+              speed: 12.0,
+              range: weapon.range,
+              damage: weapon.damage,
+              type: ProjectileType.Bullet);
+        }
+      }
+
+      if (character.stateDurationRemaining == framePerformStrike) {
+        if (weapon.isBow) {
+          dispatchV2(GameEventType.Release_Bow, character);
+          spawnArrow(character, damage: weapon.damage);
           character.attackTarget = character.attackTarget;
           return;
         }
-        if (character.slots.weapon.isMelee) {
+        if (weapon.isMelee) {
           final attackTarget = character.attackTarget;
           if (attackTarget != null) {
             applyStrike(character, attackTarget, character.damage);
@@ -1583,61 +1619,40 @@ extension GameFunctions on Game {
           final hit = physics.raycastHit(
               character: character,
               characters: zombies,
-              range: character.slots.weapon.range);
+              range: weapon.range);
           if (hit != null) {
             applyStrike(character, hit, character.damage);
           }
           return;
         }
-        if (character.slots.weapon.isHandgun) {
-          dispatch(GameEventType.Handgun_Fired, character.x, character.y);
-          spawnProjectile(
-              character: character,
-              accuracy: 0,
-              speed: 12.0,
-              range: character.slots.weapon.range,
-              damage: character.slots.weapon.damage,
-              type: ProjectileType.Bullet);
-          return;
-        }
-        if (character.slots.weapon.isShotgun) {
-          dispatch(GameEventType.Shotgun_Fired, character.x, character.y);
-          spawnProjectile(
-              character: character,
-              accuracy: 0,
-              speed: 12.0,
-              range: character.slots.weapon.range,
-              damage: character.slots.weapon.damage,
-              type: ProjectileType.Bullet);
-        }
       }
     }
 
-    switch (character.type) {
-      case CharacterType.Witch:
-        if (character.stateDuration == 3 && character.attackTarget != null) {
-          spawnBlueOrb(character);
-          character.attackTarget = null;
-        }
-        break;
-      case CharacterType.Archer:
-        if (character.stateDuration == 3 && character.attackTarget != null) {
-          spawnArrow(character, damage: character.damage);
-          character.attackTarget = null;
-        }
-        break;
-      case CharacterType.Swordsman:
-        if (character.stateDuration == 6) {
-          final attackTarget = character.attackTarget;
-          if (attackTarget == null) {}
-          if (attackTarget != null) {
-            applyStrike(character, attackTarget, character.damage);
-          }
-        }
-        break;
-      default:
-        break;
-    }
+    // switch (character.type) {
+    //   case CharacterType.Witch:
+    //     if (character.stateDurationRemaining == 3 && character.attackTarget != null) {
+    //       spawnBlueOrb(character);
+    //       character.attackTarget = null;
+    //     }
+    //     break;
+    //   case CharacterType.Archer:
+    //     if (character.stateDurationRemaining == 3 && character.attackTarget != null) {
+    //       spawnArrow(character, damage: character.damage);
+    //       character.attackTarget = null;
+    //     }
+    //     break;
+    //   case CharacterType.Swordsman:
+    //     if (character.stateDurationRemaining == 6) {
+    //       final attackTarget = character.attackTarget;
+    //       if (attackTarget == null) {}
+    //       if (attackTarget != null) {
+    //         applyStrike(character, attackTarget, character.damage);
+    //       }
+    //     }
+    //     break;
+    //   default:
+    //     break;
+    // }
   }
 }
 

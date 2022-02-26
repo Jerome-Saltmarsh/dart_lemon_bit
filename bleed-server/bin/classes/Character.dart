@@ -75,9 +75,10 @@ class Character extends GameObject implements HasSquad {
   int equippedIndex = 0;
   double aimAngle = 0;
   double accuracy = 0;
+  int stateDurationRemaining = 0;
   int stateDuration = 0;
-  /// The number of frames the character has had the current character state for
-  int stateFrameCount = 0;
+  /// This is updated every
+  int animationFrame = 0;
   int frozenDuration = 0;
   double attackRange = 50;
   int damage = 1;
@@ -120,7 +121,7 @@ class Character extends GameObject implements HasSquad {
 
   bool get idling => state == CharacterState.Idle;
 
-  bool get busy => stateDuration > 0;
+  bool get busy => stateDurationRemaining > 0;
 
   bool get deadOrBusy => dead || busy;
 

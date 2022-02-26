@@ -10,7 +10,7 @@ class _Animations {
   final _Bow bow = _Bow();
 
   final List<int> firingBow = [4, 4, 5, 7];
-  final List<int> firingHandgun = [5, 5, 6, 6];
+  final List<int> firingHandgun = [5, 6, 5];
   final List<int> firingShotgun = [5, 6, 5, 4];
   final List<int> strikingSword = [4, 4, 5, 5];
   final List<int> running = [9, 10, 11, 12];

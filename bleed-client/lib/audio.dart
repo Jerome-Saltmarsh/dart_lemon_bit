@@ -130,7 +130,7 @@ class _Audio {
     audio._playPositioned('shotgun-shot.mp3', x, y);
   }
 
-  void playAudioHandgunShot(double x, double y) {
+  void handgunShot(double x, double y) {
     _playRandom(_pistolShot, x, y);
   }
 
