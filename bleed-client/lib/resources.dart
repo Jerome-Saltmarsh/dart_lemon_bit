@@ -32,6 +32,7 @@ class _Icons {
 
 class _IconsFirearms {
   final handgun = _image("handgun");
+  final shotgun = _image("shotgun");
 }
 
 class _IconsBooks {

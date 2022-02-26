@@ -461,7 +461,7 @@ class GameBuild {
         shopSlotRow(
           SlotType.Silver_Pendant,
           SlotType.Handgun,
-          SlotType.Empty,
+          SlotType.Shotgun,
         )
       ],
     );
