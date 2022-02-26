@@ -47,13 +47,13 @@ const _healthBarWidthHalf = _healthBarWidth * 0.5;
 const _healthBarHeight = _healthBarWidth * goldenRatio_0381 * goldenRatio_0381;
 const _healthBarMargin = 50;
 
-final _partsY = atlas.parts.y;
 final _zombieY = atlas.zombieY;
 
 enum SpriteLayer {
   Head_Plain,
   Body_Cyan,
   Legs_Blue,
+  Handgun,
   Shadow,
   Sword_Wooden,
   Sword_Steel,
@@ -63,7 +63,6 @@ enum SpriteLayer {
   Head_Magic,
   Head_Rogue,
   Head_Steel,
-  Handgun,
   Shotgun,
 }
 
@@ -287,10 +286,10 @@ class IsometricRender {
 
     if (character.direction >= Direction.UpRight.index && character.direction <= Direction.Down.index) {
       _renderCharacterTemplate(character);
-      // _renderCharacterTemplateWeapon(character);
+      _renderCharacterTemplateWeapon(character);
       return;
     }
-    // _renderCharacterTemplateWeapon(character);
+    _renderCharacterTemplateWeapon(character);
     _renderCharacterTemplate(character);
   }
 
@@ -382,20 +381,6 @@ class IsometricRender {
   }
 
   void _renderCharacterTemplate(Character character) {
-    // final y = templateY + (shade * _size64);
-    // engine.mapSrc(
-    //     x: getTemplateSrcX(character),
-    //     y: templateY,
-    // );
-    // engine.mapDst(
-    //     x: character.x,
-    //     y: character.y,
-    //     anchorX: _size32,
-    //     anchorY: _size48,
-    //     scale: _characterScale,
-    // );
-    // engine.renderAtlas();
-
     // _renderCharacterShadow(character);
     _renderCharacterPartLegs(character);
     _renderCharacterPartBody(character);
