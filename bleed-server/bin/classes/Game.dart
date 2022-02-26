@@ -1596,6 +1596,17 @@ extension GameFunctions on Game {
               range: character.slots.weapon.range,
               damage: character.slots.weapon.damage,
               type: ProjectileType.Bullet);
+          return;
+        }
+        if (character.slots.weapon.isShotgun) {
+          dispatch(GameEventType.Shotgun_Fired, character.x, character.y);
+          spawnProjectile(
+              character: character,
+              accuracy: 0,
+              speed: 12.0,
+              range: character.slots.weapon.range,
+              damage: character.slots.weapon.damage,
+              type: ProjectileType.Bullet);
         }
       }
     }

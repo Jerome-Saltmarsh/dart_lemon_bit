@@ -296,8 +296,8 @@ class IsometricRender {
 
   void _renderZombie(Character character, int shade) {
     final x = mapZombieSrcX(character, shade);
-    // final y = _zombieY + (shade * _size64);
-    final y = _zombieY;
+    final y = _zombieY + (shade * _size64);
+    // final y = _zombieY;
     engine.mapSrc(x: x, y: y);
     engine.mapDst(x: character.x, y: character.y, anchorX: _size32, anchorY: _size48, scale: _characterScale);
     engine.renderAtlas();
