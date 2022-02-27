@@ -15,6 +15,7 @@ import 'package:bleed_client/common/OrbType.dart';
 import 'package:bleed_client/common/configuration.dart';
 import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/enums/ProjectileType.dart';
+import 'package:bleed_client/common/enums/Shade.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/modules/game/queries.dart';
 import 'package:bleed_client/modules/isometric/atlas.dart';
@@ -137,6 +138,8 @@ class GameRender {
   void attackTargetCircle() {
     final attackTarget = state.player.attackTarget;
     if (attackTarget.x == 0 && attackTarget.y == 0) return;
+    final shade = isometric.state.getShadeAtPosition(attackTarget.x, attackTarget.y);
+    if (shade >= Shade.Very_Dark) return;
     engine.render(dstX: attackTarget.x, dstY: attackTarget.y, srcX: 2420, srcY: 57, srcSize: 37);
   }
 
