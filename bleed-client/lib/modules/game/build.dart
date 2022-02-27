@@ -46,7 +46,6 @@ class GameBuild {
   Widget buildUIGame() {
     return WatchBuilder(state.player.uuid, (String uuid) {
       if (uuid.isEmpty) {
-        // return buildLayoutLoadingGame();
         return ui.layouts.waitingForGame();
       }
       return WatchBuilder(core.state.status, (GameStatus gameStatus) {
@@ -201,7 +200,9 @@ class GameBuild {
           Positioned(
               left: _pad,
               top: _pad,
-              child: ui.widgets.time),
+              child: WatchBuilder(state.debugPanelVisible, (bool visible){
+                return visible ? debugContainer() : ui.widgets.time;
+              })),
           Positioned(
               left: _pad,
               bottom: _pad,
@@ -867,6 +868,17 @@ class GameBuild {
     return WatchBuilder(audio.enabled, (bool enabled){
       return button("Audio: $enabled", audio.toggle);
     });
+  }
+
+  Widget debugContainer(){
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+          ui.widgets.time,
+          buildTotalZombies(),
+          mouseRowColumn(),
+      ],
+    );
   }
 }
 

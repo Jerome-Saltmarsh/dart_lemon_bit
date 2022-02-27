@@ -32,6 +32,7 @@ class GameMap {
       state.keyMap.equip4: actions.equipSlot4,
       state.keyMap.equip5: actions.equipSlot5,
       state.keyMap.equip6: actions.equipSlot6,
+      state.keyMap.debug: actions.toggleDebugPanel,
     };
   }
 }

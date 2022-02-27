@@ -27,6 +27,7 @@ class GameState {
   final CharacterController characterController = CharacterController();
   final KeyMap keyMap = KeyMap();
   final FocusNode textFieldMessage = FocusNode();
+  final Watch<bool> debugPanelVisible = Watch(false);
   final Watch<bool> compilePaths = Watch(false);
   final Watch<StoreTab> storeTab = Watch(storeTabs[0]);
   final Watch<bool> textMode = Watch(false);
@@ -162,7 +163,7 @@ class _Player {
   Tile tile = Tile.Grass;
   double attackRange = 0;
   int team = 0;
-  Vector2 attackTarget = Vector2(0, 0);
+  final Vector2 attackTarget = Vector2(0, 0);
   final orbs = _PlayerOrbs();
   final slots = _PlayerSlots();
   final Watch<String> uuid = Watch("");

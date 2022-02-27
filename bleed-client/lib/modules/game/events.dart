@@ -4,7 +4,6 @@ import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
 import 'package:bleed_client/common/GameError.dart';
 import 'package:bleed_client/common/GameEventType.dart';
-import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/OrbType.dart';
 import 'package:bleed_client/common/SlotType.dart';

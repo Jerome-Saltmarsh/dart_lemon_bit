@@ -135,10 +135,9 @@ class GameRender {
   }
 
   void attackTargetCircle() {
-    final Vector2 attackTarget = state.player.attackTarget;
-    if (attackTarget.x != 0 && attackTarget.y != 0) {
-      engine.draw.circle(attackTarget.x, attackTarget.y, 20, Colors.white24);
-    }
+    final attackTarget = state.player.attackTarget;
+    if (attackTarget.x == 0 && attackTarget.y == 0) return;
+    engine.render(dstX: attackTarget.x, dstY: attackTarget.y, srcX: 2420, srcY: 57, srcSize: 37);
   }
 
   void drawAbility() {

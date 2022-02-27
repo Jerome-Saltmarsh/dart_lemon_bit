@@ -164,6 +164,11 @@ class GameActions {
     equipSlot(6);
   }
 
+  void toggleDebugPanel(){
+    print("game.actions.toggleDebugPanel()");
+    state.debugPanelVisible.value = !state.debugPanelVisible.value;
+  }
+
   /// valid between 1 and 6 inclusive
   void equipSlot(int index){
     print("game.actions.equipSlot($index)");
