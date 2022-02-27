@@ -21,6 +21,8 @@ class EnvironmentObject extends Vector2 {
   late double anchorX;
   late double anchorY;
 
+  late double srcX;
+
   static const _anchorYRatio = 0.66666;
 
   EnvironmentObject({
@@ -39,6 +41,10 @@ class EnvironmentObject extends Vector2 {
     bottom = y + (height - anchorY);
     left = x - anchorX;
     move(x, y);
+
+    final translation = objectTypeSrcPosition[type]!;
+    final index =  environmentObjectIndex[type]!;
+    srcX = index * width + translation.x;
   }
 
   void move(double x, double y){
