@@ -80,7 +80,7 @@ class _Settings {
   double zoomSpeed = 0.0005;
   double maxZoom = 0.1;
   int floatingTextDuration = 100;
-  int maxBulletHoles = 50;
+  final maxBulletHoles = 50;
   int maxParticlesMinusOne = 299;
   double interactRadius = 60;
   double manRenderSize = 40.0;

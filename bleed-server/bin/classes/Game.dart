@@ -913,7 +913,7 @@ extension GameFunctions on Game {
   }
 
   void handleProjectileHit(Projectile projectile, Character character) {
-    deactivateProjectile(projectile);
+    projectile.active = false;
     applyStrike(projectile.owner, character, projectile.damage);
     dispatch(GameEventType.Arrow_Hit, character.x, character.y);
   }
