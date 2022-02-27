@@ -18,24 +18,20 @@ void mapCharacterSrc({
 }) {
   switch (type) {
     case CharacterType.Soldier:
-      return mapSrcHuman(
-          slotType: slotType,
-          characterState: state,
-          direction: direction,
-          frame: frame
-      );
+      // return mapSrcHuman(
+      //     slotType: slotType,
+      //     characterState: state,
+      //     direction: direction,
+      //     frame: frame
+      // );
 
     case CharacterType.Human:
-      return mapSrcHuman(
-          slotType: slotType,
-          characterState: state,
-          direction: direction,
-          frame: frame
-      );
-    case CharacterType.Zombie:
-      return mapSrcZombie(
-          state: state, direction: direction, frame: frame, shade: shade
-      );
+      // return mapSrcHuman(
+      //     slotType: slotType,
+      //     characterState: state,
+      //     direction: direction,
+      //     frame: frame
+      // );
     case CharacterType.Witch:
       return mapSrcWitch(state: state, direction: direction, frame: frame);
     case CharacterType.Archer:

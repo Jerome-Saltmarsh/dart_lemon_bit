@@ -29,24 +29,18 @@ void renderCharacterHealthBar(Character character){
 class _Atlas {
   final shadow = Vector2(1, 34);
   final blood = Vector2(89, 25);
-  final star = Vector2(560, 515);
-  final starSize = Vector2(128, 128);
   final myst = Vector2(2410, 1);
   final circle = Vector2(2410, 513);
-  final zombieY = 2106.0;
-  final zombie = _Zombie();
   final particles = _Particles();
   final shades = _Shades();
-  final tiles = Vector2(2,  2977);
-  final rockWall = Vector2(2217, 1222);
-  final human = _Human();
+  final tiles = Vector2(4543,  1);
+  final rockWall = Vector2(1265, 1);
   final witch = _Witch();
   final archer = _Archer();
   final knight = _Knight();
   final projectiles = _Projectiles();
   final cloud = Vector2(2,  4044);
   final cloudSize = Vector2(43, 29);
-  final fish = _Fish();
   final items = _Items();
   final parts = Vector2(0, 5385);
   final orbRuby = Vector2(2306, 0);
@@ -63,36 +57,6 @@ class _Items {
   final Vector2 emerald = Vector2(2, 1836);
   final Vector2 orbRed = Vector2(2, 1901);
   final Vector2 orbTopaz = Vector2(2, 1966);
-}
-
-class _Fish {
-  final Vector2 swimming = Vector2(2,  1544);
-}
-
-class _Human {
-  final _Unarmed unarmed = _Unarmed();
-  final _Handgun handgun = _Handgun();
-  final _Shotgun shotgun = _Shotgun();
-  final Vector2 striking = Vector2(2, 196);
-  final Vector2 changing = Vector2(2,  131);
-  final Vector2 dying = Vector2(2,  1736);
-}
-
-class _Unarmed {
-  final Vector2 idle = Vector2(1538, 1);
-  final Vector2 running = Vector2(2,  391);
-}
-
-class _Handgun {
-  final Vector2 idle = Vector2(1538, 65);
-  final Vector2 running = Vector2(2,  521);
-  final Vector2 firing = Vector2(2,  66);
-}
-
-class _Shotgun {
-  final Vector2 idle = Vector2(1538, 130);
-  final Vector2 running = Vector2(2,  456);
-  final Vector2 firing = Vector2(2,  753);
 }
 
 class _Witch {
@@ -113,16 +77,10 @@ class _Knight {
   final Vector2 striking = Vector2(2,  3979);
 }
 
-class _Zombie {
-  final Vector2 striking = Vector2(2,  2463);
-  final Vector2 idle  = Vector2(1026, 2463);
-  final Vector2 running  = Vector2(2,  2720);
-}
-
 class _Projectiles {
-  final _Item fireball = _Item(2324, 1193, 32, 4);
-  final Vector2 arrow = Vector2(2297, 1308);
-  final Vector2 arrowShadow = Vector2(2279, 1310);
+  final _Item fireball = _Item(975, 1, 32, 4);
+  final Vector2 arrow = Vector2(2182, 1);
+  final Vector2 arrowShadow = Vector2(2172, 1 );
 }
 
 class _Particles {

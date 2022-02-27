@@ -7,7 +7,11 @@ import 'package:bleed_client/modules/modules.dart';
 import 'package:lemon_engine/engine.dart';
 import 'package:lemon_math/Vector2.dart';
 
-final Map<ObjectType, double> environmentObjectWidth = {
+
+final _translations = _Translations();
+final _torchHeight = environmentObjectHeight[ObjectType.Torch]!;
+
+const Map<ObjectType, double> environmentObjectWidth = {
   ObjectType.Palisade: 48,
   ObjectType.Palisade_H: 48,
   ObjectType.Palisade_V: 48,
@@ -24,7 +28,7 @@ final Map<ObjectType, double> environmentObjectWidth = {
   ObjectType.MystEmitter: 48
 };
 
-final Map<ObjectType, double> environmentObjectHeight = {
+const Map<ObjectType, double> environmentObjectHeight = {
   ObjectType.Palisade: 100,
   ObjectType.Palisade_H: 100,
   ObjectType.Palisade_V: 100,
@@ -41,14 +45,29 @@ final Map<ObjectType, double> environmentObjectHeight = {
   ObjectType.MystEmitter: 48
 };
 
-final _Translations _translations = _Translations();
+const Map<ObjectType, int> environmentObjectIndex = {
+  ObjectType.Rock: 0,
+  ObjectType.Grave: 1,
+  ObjectType.Tree_Stump: 2,
+  ObjectType.Rock_Small: 3,
+  ObjectType.LongGrass: 4,
+  ObjectType.Torch: 0,
+  ObjectType.Tree01: 0,
+  ObjectType.House01: 0,
+  ObjectType.House02: 1,
+  ObjectType.Palisade: 0,
+  ObjectType.Palisade_H: 1,
+  ObjectType.Palisade_V: 2,
+  ObjectType.MystEmitter: 0,
+  ObjectType.Rock_Wall: 0,
+};
 
 class _Translations {
-  final Vector2 objects48 = Vector2(2056, 994);
-  final Vector2 objects96  = Vector2(2051, 1);
-  final Vector2 objects150  = Vector2(2056, 393);
-  final Vector2 palisades  = Vector2(2072, 1222);
-  final Vector2 torches = Vector2(2272, 0);
+  final Vector2 objects48 = Vector2(1459, 1);
+  final Vector2 trees  = Vector2(2049, 1);
+  final Vector2 objects150  = Vector2(1748, 1);
+  final Vector2 palisades  = Vector2(1314, 1);
+  final Vector2 torches = Vector2(2146, 1 );
 }
 
 final Map<ObjectType, Vector2> objectTypeSrcPosition = {
@@ -58,7 +77,7 @@ final Map<ObjectType, Vector2> objectTypeSrcPosition = {
   ObjectType.Rock_Small: _translations.objects48,
   ObjectType.LongGrass: _translations.objects48,
   ObjectType.Torch: _translations.torches,
-  ObjectType.Tree01: _translations.objects96,
+  ObjectType.Tree01: _translations.trees,
   ObjectType.House01: _translations.objects150,
   ObjectType.House02: _translations.objects150,
   ObjectType.Palisade: _translations.palisades,
@@ -67,8 +86,6 @@ final Map<ObjectType, Vector2> objectTypeSrcPosition = {
   ObjectType.MystEmitter: atlas.circle,
   ObjectType.Rock_Wall: atlas.rockWall,
 };
-
-final _torchHeight = environmentObjectHeight[ObjectType.Torch]!;
 
 void mapEnvironmentObjectToSrc(EnvironmentObject env){
   final shade = isometric.state.getShade(env.row, env.column);
@@ -87,20 +104,3 @@ void mapEnvironmentObjectToSrc(EnvironmentObject env){
   }
   engine.mapSrc(x: left, y: top, width: width, height: height);
 }
-
-final Map<ObjectType, int> environmentObjectIndex = {
-  ObjectType.Rock: 0,
-  ObjectType.Grave: 1,
-  ObjectType.Tree_Stump: 2,
-  ObjectType.Rock_Small: 3,
-  ObjectType.LongGrass: 4,
-  ObjectType.Torch: 0,
-  ObjectType.Tree01: 0,
-  ObjectType.House01: 0,
-  ObjectType.House02: 1,
-  ObjectType.Palisade: 0,
-  ObjectType.Palisade_H: 1,
-  ObjectType.Palisade_V: 2,
-  ObjectType.MystEmitter: 0,
-  ObjectType.Rock_Wall: 0,
-};

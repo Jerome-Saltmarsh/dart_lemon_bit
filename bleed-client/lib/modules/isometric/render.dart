@@ -20,7 +20,6 @@ import 'package:bleed_client/modules/isometric/properties.dart';
 import 'package:bleed_client/modules/isometric/queries.dart';
 import 'package:bleed_client/modules/isometric/utilities.dart';
 import 'package:bleed_client/modules/modules.dart';
-import 'package:bleed_client/render/mapCharacterSrc.dart';
 import 'package:bleed_client/render/mapParticleToDst.dart';
 import 'package:bleed_client/render/mapParticleToSrc.dart';
 import 'package:bleed_client/state/game.dart';
@@ -47,7 +46,7 @@ const _healthBarWidthHalf = _healthBarWidth * 0.5;
 const _healthBarHeight = _healthBarWidth * goldenRatio_0381 * goldenRatio_0381;
 const _healthBarMargin = 50;
 
-final _zombieY = atlas.zombieY;
+const _zombieY = 789.0;
 
 enum SpriteLayer {
   Head_Plain,
@@ -143,7 +142,8 @@ class IsometricRender {
           !npcsRemaining) return;
 
       if (humansRemaining) {
-        final humanY = game.humans[indexHuman].y;
+        final human = game.humans[indexHuman];
+        final humanY = human.y;
 
         if (!environmentRemaining ||
             humanY < environmentObjects[indexEnv].y) {
@@ -152,7 +152,7 @@ class IsometricRender {
                   particles[indexParticle].type != ParticleType.Blood) {
             if (!zombiesRemaining || humanY < zombies[indexZombie].y) {
               if (!npcsRemaining || humanY < interactableNpcs[indexNpc].y) {
-                drawCharacter(game.humans[indexHuman]);
+                renderCharacter(human);
                 indexHuman++;
                 continue;
               }
@@ -198,7 +198,7 @@ class IsometricRender {
       if (zombiesRemaining) {
         final zombie = zombies[indexZombie];
         if (!npcsRemaining || zombie.y < interactableNpcs[indexNpc].y) {
-          drawCharacter(zombies[indexZombie]);
+          renderCharacter(zombies[indexZombie]);
           indexZombie++;
           continue;
         }
@@ -263,7 +263,7 @@ class IsometricRender {
       engine.renderAtlas();
   }
 
-  void drawCharacter(Character character) {
+  void renderCharacter(Character character) {
     assert(character.direction >= 0);
     assert(character.direction < directionsLength);
 
@@ -276,11 +276,6 @@ class IsometricRender {
 
     if (character.type == CharacterType.Zombie){
       _renderZombie(character, shade);
-      return;
-    }
-
-    if (character.type != CharacterType.Template) {
-      _renderCharacterStandard(character, shade);
       return;
     }
 
@@ -364,19 +359,6 @@ class IsometricRender {
     final animationFrame = min(character.frame, animation.length - 1);
     final frame = animation[animationFrame] - 1;
     return (character.direction * framesPerDirection * size) + (frame * size);
-  }
-
-  void _renderCharacterStandard(Character character, int shade) {
-      mapCharacterDst(character, character.type);
-      mapCharacterSrc(
-        type: character.type,
-        state: character.state,
-        slotType: character.equippedWeapon,
-        direction: character.direction,
-        frame: character.frame,
-        shade: shade,
-      );
-    engine.renderAtlas();
   }
 
   void _renderCharacterTemplate(Character character) {
@@ -560,7 +542,7 @@ class IsometricRender {
   }
 
   void drawInteractableNpc(Character npc) {
-    drawCharacter(npc);
+    renderCharacter(npc);
     if (diffOver(npc.x, mouseWorldX, 50)) return;
     if (diffOver(npc.y, mouseWorldY, 50)) return;
     engine.draw.text(npc.name, npc.x - isometric.constants.charWidth * npc.name.length, npc.y, style: state.nameTextStyle);
