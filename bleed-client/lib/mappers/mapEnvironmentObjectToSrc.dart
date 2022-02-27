@@ -90,14 +90,6 @@ final Map<ObjectType, Vector2> objectTypeSrcPosition = {
 void mapEnvironmentObjectToSrc(EnvironmentObject env){
   final shade = isometric.state.getShade(env.row, env.column);
   final type = env.type;
-  // final translation = objectTypeSrcPosition[type]; // TODO CACHE THIS
-  // if (translation == null){
-  //   throw Exception(type);
-  // }
-  // final index =  environmentObjectIndex[type]!;
-  // final width = environmentObjectWidth[type]!;
-  // final height = environmentObjectHeight[type]!;
-  // final left = index * width + translation.x;
   var top = shade * env.height + 1;
   if (type == ObjectType.Torch && modules.isometric.state.ambient.value > Shade.Bright){
     top = _translations.torches.y + ((core.state.timeline.frame % 4) * _torchHeight) + _torchHeight;

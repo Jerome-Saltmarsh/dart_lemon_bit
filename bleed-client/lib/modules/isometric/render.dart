@@ -37,7 +37,8 @@ const _size48 = 48.0;
 const _size64 = 64.0;
 
 const _characterScale = 0.7;
-const _templateY = 6266.0;
+const _zombieY = 789.0;
+const _spritesY = 1051.0;
 const _framesPerDirectionHuman = 12;
 const _framesPerDirectionZombie = 8;
 
@@ -46,14 +47,13 @@ const _healthBarWidthHalf = _healthBarWidth * 0.5;
 const _healthBarHeight = _healthBarWidth * goldenRatio_0381 * goldenRatio_0381;
 const _healthBarMargin = 50;
 
-const _zombieY = 789.0;
 
 enum SpriteLayer {
-  Head_Plain,
-  Body_Cyan,
   Legs_Blue,
+  Weapon_Shotgun,
+  Body_Cyan,
+  Head_Plain,
   Handgun,
-  Shotgun,
   Shadow,
   Sword_Wooden,
   Sword_Steel,
@@ -394,7 +394,7 @@ class IsometricRender {
     );
     engine.mapSrc(
         x: getTemplateSrcX(character),
-        y: _templateY + (layer.index * _size64)
+        y: _spritesY + (layer.index * _size64)
     );
     engine.renderAtlas();
   }
@@ -505,7 +505,7 @@ class IsometricRender {
        case SlotType.Handgun:
          return SpriteLayer.Handgun;
        case SlotType.Shotgun:
-         return SpriteLayer.Shotgun;
+         return SpriteLayer.Weapon_Shotgun;
        default:
          throw Exception("cannot map ${character.equippedWeapon} to sprite index");
      }
