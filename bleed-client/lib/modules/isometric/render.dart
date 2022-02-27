@@ -39,7 +39,7 @@ const _size64 = 64.0;
 const _characterScale = 0.7;
 const _zombieY = 789.0;
 const _spritesY = 1051.0;
-const _framesPerDirectionHuman = 12;
+const _framesPerDirectionHuman = 19;
 const _framesPerDirectionZombie = 8;
 
 const _healthBarWidth = 35.0;
