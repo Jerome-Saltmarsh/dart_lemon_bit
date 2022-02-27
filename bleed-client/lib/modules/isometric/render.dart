@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:bleed_client/audio.dart';
 import 'package:bleed_client/classes/Character.dart';
 import 'package:bleed_client/classes/EnvironmentObject.dart';
 import 'package:bleed_client/classes/Item.dart';
@@ -55,6 +54,7 @@ enum SpriteLayer {
   Body_Cyan,
   Legs_Blue,
   Handgun,
+  Shotgun,
   Shadow,
   Sword_Wooden,
   Sword_Steel,
@@ -64,7 +64,6 @@ enum SpriteLayer {
   Head_Magic,
   Head_Rogue,
   Head_Steel,
-  Shotgun,
 }
 
 class IsometricRender {

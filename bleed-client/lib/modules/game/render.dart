@@ -205,7 +205,13 @@ class GameRender {
       if (bulletHole.x == 0) return;
       if (!onScreen(bulletHole.x, bulletHole.y)) continue;
       if (isometric.state.inDarkness(bulletHole.x, bulletHole.y)) continue;
-      engine.draw.circle(bulletHole.x, bulletHole.y, 2, Colors.black);
+      engine.render(
+          dstX: bulletHole.x,
+          dstY: bulletHole.y,
+          srcX: 1,
+          srcY: 1,
+          srcSize: 4,
+      );
     }
   }
 
