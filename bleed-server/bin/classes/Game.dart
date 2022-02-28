@@ -928,7 +928,8 @@ extension GameFunctions on Game {
     // if (target.type.isZombie){
     //   target.angle = radiansV2(target, src);
     // }
-    applyForce(target, angleBetweenSrcAndTarget, healthPercentage * 1.5);
+    final forceMultiplier = 3.0;
+    applyForce(target, angleBetweenSrcAndTarget, healthPercentage * forceMultiplier);
 
     dispatch(
         GameEventType.Character_Struck,
