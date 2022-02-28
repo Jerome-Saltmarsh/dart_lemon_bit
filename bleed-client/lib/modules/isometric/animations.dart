@@ -11,7 +11,7 @@ class _Animations {
   final List<int> firingBow = [4, 7, 9];
   final List<int> firingHandgun = [8, 9, 8];
   final List<int> firingShotgun = [6, 7, 6, 6, 6, 8, 8, 6];
-  final List<int> strikingSword = [4, 4, 5, 5];
+  final List<int> strikingSword = [10, 10, 11, 11];
 }
 
 class _Zombie {
