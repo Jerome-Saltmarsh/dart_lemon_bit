@@ -74,7 +74,7 @@ class _GameEvents {
 // constants
 const castFrame = 3;
 const tileCollisionResolve = 3;
-const framePerformStrike = 3;
+const framePerformStrike = 10;
 const gameEventDuration = 4;
 
 // This should be OpenWorldScene
@@ -1594,13 +1594,16 @@ extension GameFunctions on Game {
       if (weapon.isShotgun) {
         if (stateDuration == 1){
           dispatchV2(GameEventType.Shotgun_Fired, character);
-          spawnProjectile(
-              character: character,
-              accuracy: 0,
-              speed: 12.0,
-              range: weapon.range,
-              damage: weapon.damage,
-              type: ProjectileType.Bullet);
+          final totalBullets = 4;
+          for (int i = 0; i < totalBullets; i++){
+            spawnProjectile(
+                character: character,
+                accuracy: 0.1,
+                speed: 12.0,
+                range: weapon.range,
+                damage: weapon.damage,
+                type: ProjectileType.Bullet);
+          }
         }
       }
 
@@ -1610,7 +1613,7 @@ extension GameFunctions on Game {
         }
       }
 
-      if (character.stateDurationRemaining == framePerformStrike) {
+      if (character.stateDuration == framePerformStrike) {
         if (weapon.isBow) {
           dispatchV2(GameEventType.Release_Bow, character);
           spawnArrow(character, damage: weapon.damage);
@@ -1634,32 +1637,6 @@ extension GameFunctions on Game {
         }
       }
     }
-
-    // switch (character.type) {
-    //   case CharacterType.Witch:
-    //     if (character.stateDurationRemaining == 3 && character.attackTarget != null) {
-    //       spawnBlueOrb(character);
-    //       character.attackTarget = null;
-    //     }
-    //     break;
-    //   case CharacterType.Archer:
-    //     if (character.stateDurationRemaining == 3 && character.attackTarget != null) {
-    //       spawnArrow(character, damage: character.damage);
-    //       character.attackTarget = null;
-    //     }
-    //     break;
-    //   case CharacterType.Swordsman:
-    //     if (character.stateDurationRemaining == 6) {
-    //       final attackTarget = character.attackTarget;
-    //       if (attackTarget == null) {}
-    //       if (attackTarget != null) {
-    //         applyStrike(character, attackTarget, character.damage);
-    //       }
-    //     }
-    //     break;
-    //   default:
-    //     break;
-    // }
   }
 }
 
