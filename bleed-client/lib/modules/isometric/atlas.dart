@@ -84,12 +84,11 @@ class _Projectiles {
 }
 
 class _Particles {
-  final Vector2 blood = Vector2(2366, 633);
   final Vector2 zombieHead = Vector2(770, 3218);
   final Vector2 shell  = Vector2(2072, 1623);
-  final Vector2 zombieArm  = Vector2(1052, 1479);
-  final Vector2 zombieLeg  = Vector2(1539, 2463);
-  final Vector2 zombieTorso  = Vector2(1538, 1736);
+  final Vector2 zombieLeg  = Vector2(2491, 1);
+  final Vector2 zombieArm  = Vector2(3004, 1);
+  final Vector2 zombieTorso  = Vector2(3517 , 1);
   final Vector2 circle32 = Vector2(2410, 515);
   final Vector2 flame  = Vector2(2290, 1193);
   final Vector2 circleBlackSmall  = Vector2(2316, 1193);

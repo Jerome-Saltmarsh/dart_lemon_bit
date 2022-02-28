@@ -281,7 +281,9 @@ class IsometricRender {
       return;
     }
 
-    if (character.direction >= Direction.UpRight.index && character.direction <= Direction.Down.index) {
+    final maxDirection = character.equippedWeapon.isShotgun ? Direction.Right : Direction.UpRight;
+
+    if (character.direction >= maxDirection.index && character.direction <= Direction.Down.index) {
       _renderCharacterTemplate(character);
       _renderCharacterTemplateWeapon(character);
       return;
@@ -394,19 +396,6 @@ class IsometricRender {
         anchorY: _size48,
         scale: _scaleTemplate
     );
-
-    final srcX = getTemplateSrcX(character);
-    final srcY = _atlasSpritesY + (layer.index * _size64);
-
-    // assert(srcX >= 0);
-    // assert(srcX <= 9344);
-
-    if (srcX >= 9344){
-      final x = getTemplateSrcX(character);
-    }
-
-    assert(srcY >= 0);
-    assert(srcY <= 1400);
 
     engine.mapSrc(
         x: getTemplateSrcX(character),
