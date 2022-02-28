@@ -37,10 +37,10 @@ const _size48 = 48.0;
 const _size64 = 64.0;
 
 const _scaleZombie = 0.7;
-const _scaleTemplate = 0.8;
+const _scaleTemplate = 0.75;
 const _atlasZombieY = 789.0;
 const _atlasSpritesY = 1051.0;
-const _framesPerDirectionHuman = 18;
+const _framesPerDirectionHuman = 19;
 const _framesPerDirectionZombie = 8;
 
 const _healthBarWidth = 35.0;
@@ -394,6 +394,25 @@ class IsometricRender {
         anchorY: _size48,
         scale: _scaleTemplate
     );
+
+    final srcX = getTemplateSrcX(character);
+    final srcY = _atlasSpritesY + (layer.index * _size64);
+
+    // assert(srcX >= 0);
+    // assert(srcX <= 9344);
+
+    if (srcX >= 9344){
+      final x = getTemplateSrcX(character);
+    }
+
+    assert(srcY >= 0);
+    assert(srcY <= 1400);
+
+    engine.mapSrc(
+        x: getTemplateSrcX(character),
+        y: _atlasSpritesY + (layer.index * _size64)
+    );
+
     engine.mapSrc(
         x: getTemplateSrcX(character),
         y: _atlasSpritesY + (layer.index * _size64)
@@ -474,7 +493,7 @@ class IsometricRender {
 
       case CharacterState.Running:
         return loop(
-            animation:  character.equippedWeapon.isShotgun ? _animationRunning2 : _animationRunning,
+            animation: character.equippedWeapon.isShotgun ? _animationRunning2 : _animationRunning,
             character: character,
             framesPerDirection: _framesPerDirectionHuman
         );
