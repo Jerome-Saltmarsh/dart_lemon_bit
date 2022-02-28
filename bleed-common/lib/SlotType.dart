@@ -122,6 +122,10 @@ extension SlotTypeProperties on SlotType {
   double get range {
     return _slotTypeRange[this] ?? 0;
   }
+
+  int get duration {
+    return _slotTypeDuration[this] ?? 30;
+  }
 }
 
 const Map<SlotType, int> _slotTypeDamage = {
@@ -156,6 +160,17 @@ const Map<SlotType, int> _slotTypeMagic = {
   SlotType.Staff_Golden: 20,
   SlotType.Golden_Necklace: 4,
   SlotType.Magic_Robes: 15,
+};
+
+const Map<SlotType, int> _slotTypeDuration = {
+  SlotType.Sword_Wooden: 20,
+  SlotType.Sword_Short: 25,
+  SlotType.Sword_Long: 30,
+  SlotType.Shotgun: 45,
+  SlotType.Handgun: 20,
+  SlotType.Bow_Wooden: 20,
+  SlotType.Bow_Green: 20,
+  SlotType.Bow_Gold: 20,
 };
 
 const Map<SlotType, double> _slotTypeRange = {
