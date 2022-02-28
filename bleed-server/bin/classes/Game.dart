@@ -711,7 +711,7 @@ extension GameFunctions on Game {
               character.stateDurationRemaining = 30;
             }
             if (character.slots.weapon.isBow){
-              character.stateDurationRemaining = 30;
+              character.stateDurationRemaining = 20;
             }
             break;
           }
@@ -1606,6 +1606,12 @@ extension GameFunctions on Game {
               range: weapon.range,
               damage: weapon.damage,
               type: ProjectileType.Bullet);
+        }
+      }
+
+      if (weapon.isBow){
+        if (character.stateDuration == 1){
+          dispatchV2(GameEventType.Draw_Bow, character);
         }
       }
 
