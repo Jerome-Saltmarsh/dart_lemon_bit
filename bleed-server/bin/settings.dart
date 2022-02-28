@@ -117,7 +117,7 @@ class Settings {
 }
 
 class _Duration {
-  final int strike = 15;
+  final int strike = 20;
   final int frozen = 60;
 }
 
