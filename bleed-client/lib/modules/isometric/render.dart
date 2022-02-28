@@ -281,9 +281,10 @@ class IsometricRender {
       return;
     }
 
-    final isShotgun = character.equippedWeapon.isShotgun;
-    final maxDirection = isShotgun ? Direction.Right : Direction.UpRight;
-    final minDirection = isShotgun ? Direction.DownLeft : Direction.Down;
+    final weapon = character.equippedWeapon;
+    final variation = weapon.isShotgun || weapon.isBow;
+    final maxDirection = variation ? Direction.Right : Direction.UpRight;
+    final minDirection = variation ? Direction.DownLeft : Direction.Down;
 
     if ( character.direction <= minDirection.index && character.direction >= maxDirection.index) {
       _renderCharacterTemplate(character);
