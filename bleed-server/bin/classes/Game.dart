@@ -708,7 +708,12 @@ extension GameFunctions on Game {
         character.stateDurationRemaining = settings.duration.strike;
         if (character is Player){
           final ability = character.performing;
-          if (ability == null) break;
+          if (ability == null) {
+            if (character.slots.weapon.isShotgun){
+              character.stateDurationRemaining = 30;
+            }
+            break;
+          }
           if (character.magic < ability.cost) {
             character.ability = null;
             character.attackTarget = null;
