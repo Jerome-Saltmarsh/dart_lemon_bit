@@ -401,7 +401,6 @@ class IsometricActions {
     final column = getColumn(x, y);
     final row = getRow(x, y);
     if (queries.outOfBounds(row, column)) return;
-
     applyShade(shader, row, column, Shade.Bright);
     applyShadeRing(shader, row, column, 1, Shade.Bright);
     applyShadeRing(shader, row, column, 2, Shade.Medium);
@@ -436,7 +435,7 @@ class IsometricActions {
     applyShadeRing(shader, row, column, 3, Shade.Very_Dark);
   }
 
-  void applyEmissionFromChractersBright(List<Character> characters) {
+  void applyEmissionFromCharactersBright(List<Character> characters) {
     final shading = state.dynamicShade;
     final playerTeam = modules.game.state.player.team;
     for(final character in characters) {
@@ -455,7 +454,7 @@ class IsometricActions {
   void applyDynamicEmissions() {
     if (properties.dayTime) return;
     resetDynamicShadesToBakeMap();
-    applyEmissionFromChractersBright(game.humans);
+    applyEmissionFromCharactersBright(game.humans);
     // applyEmissionFromCharactersMedium(game.zombies);
     applyEmissionFromCharactersMedium(game.interactableNpcs);
     applyEmissionFromProjectiles();

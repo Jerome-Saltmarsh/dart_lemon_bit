@@ -7,6 +7,9 @@ import 'utilities.dart';
 
 class IsometricQueries {
   final IsometricState state;
+
+  final _screen = engine.screen;
+
   IsometricQueries(this.state);
 
   Tile get tileAtMouse => getTileAt(mouseWorldX, mouseWorldY);
@@ -43,10 +46,10 @@ class IsometricQueries {
   }
 
   bool environmentObjectOnScreenScreen(EnvironmentObject environmentObject) {
-    if (environmentObject.top > engine.screen.bottom) return false;
-    if (environmentObject.right < engine.screen.left) return false;
-    if (environmentObject.left > engine.screen.right) return false;
-    if (environmentObject.bottom < engine.screen.top) return false;
+    if (environmentObject.top > _screen.bottom) return false;
+    if (environmentObject.right < _screen.left) return false;
+    if (environmentObject.left > _screen.right) return false;
+    if (environmentObject.bottom < _screen.top) return false;
     return true;
   }
 }
