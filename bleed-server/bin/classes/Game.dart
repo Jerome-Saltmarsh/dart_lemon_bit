@@ -309,8 +309,8 @@ extension GameFunctions on Game {
     final left = x - radius - settings.radius.character;
     final right = x + radius + settings.radius.character;
     Character? closest = null;
-    double distance = -1;
-    for (Character zombie in zombies) {
+    var distance = -1.0;
+    for (final zombie in zombies) {
       if (zombie.y < top) continue;
       if (zombie.y > bottom) break;
       if (zombie.x < left) continue;
@@ -329,29 +329,27 @@ extension GameFunctions on Game {
   }
 
   Character? getClosestEnemyPlayer(double x, double y, int team) {
-    int i = getFirstAlivePlayerEnemyIndex(team);
-    if (i == -1) return null;
+    final aliveEnemyIndex = getFirstAlivePlayerEnemyIndex(team);
+    if (aliveEnemyIndex == -1) return null;
 
-    double top = y - settings.radius.cursor - settings.radius.character;
-    double bottom = x + settings.radius.cursor + settings.radius.character;
-
-    Character closest = players[i];
-    num closestX = diff(x, closest.x);
-    num closestY = diff(y, closest.y);
-    num close = min(closestX, closestY);
+    final top = y - settings.radius.cursor - settings.radius.character;
+    final bottom = x + settings.radius.cursor + settings.radius.character;
+    Character closest = players[aliveEnemyIndex];
+    var closestX = diff(x, closest.x);
+    var closestY = diff(y, closest.y);
+    var close = min(closestX, closestY);
     for (Character player in players) {
       if (player.team == team) continue;
       if (player.dead) continue;
       if (!player.active) continue;
       if (player.y < top) continue;
       if (player.y > bottom) break;
-      num closestX2 = diff(x, player.x);
-      num closestY2 = diff(y, player.y);
-      num closes2 = min(closestX2, closestY2);
-      if (closes2 < close) {
-        closest = player;
-        close = closes2;
-      }
+      var closestX2 = diff(x, player.x);
+      var closestY2 = diff(y, player.y);
+      var closes2 = min(closestX2, closestY2);
+      if (closes2 >= close) continue;
+      closest = player;
+      close = closes2;
     }
     return closest;
   }

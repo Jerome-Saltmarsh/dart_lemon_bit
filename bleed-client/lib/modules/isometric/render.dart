@@ -54,13 +54,13 @@ enum SpriteLayer {
   Legs_Blue,
   Weapon_Shotgun,
   Weapon_Handgun,
+  Bow_Wooden,
   Body_Cyan,
   Head_Plain,
   Shadow,
   Sword_Wooden,
   Sword_Steel,
   Staff_Wooden,
-  Bow_Wooden,
   Body_Blue,
   Head_Magic,
   Head_Rogue,
@@ -446,10 +446,13 @@ class IsometricRender {
   }
 
   double getTemplateSrcX(Character character){
+    final weapon = character.equippedWeapon;
+    final variation = weapon.isShotgun || weapon.isBow;
+
     switch(character.state){
       case CharacterState.Idle:
         return single(
-            frame: character.equippedWeapon.isShotgun ? 1 : 2,
+            frame: variation ? 1 : 2,
             direction: character.direction,
             framesPerDirection: _framesPerDirectionHuman
         );
@@ -484,7 +487,7 @@ class IsometricRender {
 
       case CharacterState.Running:
         return loop(
-            animation: character.equippedWeapon.isShotgun ? _animationRunning2 : _animationRunning,
+            animation: variation ? _animationRunning2 : _animationRunning,
             character: character,
             framesPerDirection: _framesPerDirectionHuman
         );
