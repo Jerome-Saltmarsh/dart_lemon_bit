@@ -52,13 +52,13 @@ const _animationRunning2 = [16, 17, 18, 19];
 
 enum SpriteLayer {
   Legs_Blue,
+  Sword_Wooden,
   Weapon_Shotgun,
   Weapon_Handgun,
   Bow_Wooden,
   Body_Cyan,
   Head_Plain,
   Shadow,
-  Sword_Wooden,
   Sword_Steel,
   Staff_Wooden,
   Body_Blue,

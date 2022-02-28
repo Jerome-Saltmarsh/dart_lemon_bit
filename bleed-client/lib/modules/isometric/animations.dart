@@ -1,5 +1,5 @@
 
-final _Animations animations = _Animations();
+final animations = _Animations();
 
 class _Animations {
   final _Man human = _Man();
@@ -7,7 +7,6 @@ class _Animations {
   final _Archer archer = _Archer();
   final _Knight knight = _Knight();
   final _Zombie zombie = _Zombie();
-  final _Bow bow = _Bow();
 
   final List<int> firingBow = [4, 7, 9];
   final List<int> firingHandgun = [8, 9, 8];
@@ -29,9 +28,6 @@ class _Man {
   final List<int> firingBow = [0];
 }
 
-class _Bow {
-  final List<int> firing = [0, 0, 0, 0];
-}
 
 class _Witch {
   final List<int> attacking = [0, 0, 1, 1];
