@@ -51,6 +51,7 @@ const _animationRunning = [12, 13, 14, 15];
 const _animationRunning2 = [16, 17, 18, 19];
 
 enum SpriteLayer {
+  Shadow,
   Legs_Blue,
   Sword_Wooden,
   Sword_Steel,
@@ -59,7 +60,6 @@ enum SpriteLayer {
   Bow_Wooden,
   Body_Cyan,
   Head_Plain,
-  Shadow,
   Staff_Wooden,
   Body_Blue,
   Head_Magic,
@@ -369,7 +369,7 @@ class IsometricRender {
   }
 
   void _renderCharacterTemplate(Character character) {
-    // _renderCharacterShadow(character);
+    _renderCharacterShadow(character);
     _renderCharacterPartLegs(character);
     _renderCharacterPartBody(character);
     _renderCharacterPartHead(character);
