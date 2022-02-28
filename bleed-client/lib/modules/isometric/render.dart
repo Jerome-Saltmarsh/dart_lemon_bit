@@ -53,9 +53,9 @@ const _animationRunning2 = [16, 17, 18, 19];
 enum SpriteLayer {
   Legs_Blue,
   Weapon_Shotgun,
+  Weapon_Handgun,
   Body_Cyan,
   Head_Plain,
-  Handgun,
   Shadow,
   Sword_Wooden,
   Sword_Steel,
@@ -515,7 +515,7 @@ class IsometricRender {
        case SlotType.Staff_Golden:
          return SpriteLayer.Staff_Wooden;
        case SlotType.Handgun:
-         return SpriteLayer.Handgun;
+         return SpriteLayer.Weapon_Handgun;
        case SlotType.Shotgun:
          return SpriteLayer.Weapon_Shotgun;
        default:

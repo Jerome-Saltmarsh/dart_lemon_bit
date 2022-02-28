@@ -137,10 +137,12 @@ class GameRender {
 
   void attackTargetCircle() {
     final attackTarget = state.player.attackTarget;
-    if (attackTarget.x == 0 && attackTarget.y == 0) return;
-    final shade = isometric.state.getShadeAtPosition(attackTarget.x, attackTarget.y);
+    final x = attackTarget.x;
+    final y = attackTarget.y;
+    if (x == 0 && y == 0) return;
+    final shade = isometric.state.getShadeAtPosition(x, y);
     if (shade >= Shade.Very_Dark) return;
-    engine.render(dstX: attackTarget.x, dstY: attackTarget.y, srcX: 2420, srcY: 57, srcSize: 37);
+    engine.render(dstX: x, dstY: y, srcX: 2420, srcY: 57, srcSize: 37);
   }
 
   void drawAbility() {
@@ -166,14 +168,13 @@ class GameRender {
 
   void drawDebugNpcs(List<NpcDebug> values){
     engine.setPaintColor(Colors.yellow);
-
-    for (NpcDebug npc in values) {
+    for (final npc in values) {
       drawLine(npc.x, npc.y, npc.targetX, npc.targetY);
     }
   }
 
   void _drawFloatingTexts() {
-    for (FloatingText floatingText in isometric.state.floatingText) {
+    for (final floatingText in isometric.state.floatingText) {
       if (floatingText.duration == 0) continue;
       floatingText.duration--;
       floatingText.y -= 0.5;
@@ -182,12 +183,11 @@ class GameRender {
   }
 
   void _drawPlayerNames() {
-    for (int i = 0; i < game.totalHumans; i++) {
+    for (var i = 0; i < game.totalHumans; i++) {
       final player = game.humans[i];
       if (player.x == state.player.x) continue;
       if (diff(mouseWorldX, player.x) > style.nameRadius) continue;
       if (diff(mouseWorldY, player.y) > style.nameRadius) continue;
-
       engine.draw.text(player.name, player.x - isometric.constants.charWidth * player.name.length, player.y, style: style.playerNameTextStyle);
     }
   }
