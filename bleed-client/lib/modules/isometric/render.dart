@@ -36,17 +36,19 @@ const _size32 = 32.0;
 const _size48 = 48.0;
 const _size64 = 64.0;
 
-const _characterScale = 0.7;
-const _zombieY = 789.0;
-const _spritesY = 1051.0;
-const _framesPerDirectionHuman = 19;
+const _scaleZombie = 0.7;
+const _scaleTemplate = 0.8;
+const _atlasZombieY = 789.0;
+const _atlasSpritesY = 1051.0;
+const _framesPerDirectionHuman = 18;
 const _framesPerDirectionZombie = 8;
 
 const _healthBarWidth = 35.0;
 const _healthBarWidthHalf = _healthBarWidth * 0.5;
 const _healthBarHeight = _healthBarWidth * goldenRatio_0381 * goldenRatio_0381;
 const _healthBarMargin = 50;
-
+const _animationRunning = [12, 13, 14, 15];
+const _animationRunning2 = [16, 17, 18, 19];
 
 enum SpriteLayer {
   Legs_Blue,
@@ -290,9 +292,9 @@ class IsometricRender {
 
   void _renderZombie(Character character, int shade) {
     final x = mapZombieSrcX(character, shade);
-    final y = _zombieY + (shade * _size64);
+    final y = _atlasZombieY + (shade * _size64);
     engine.mapSrc(x: x, y: y);
-    engine.mapDst(x: character.x, y: character.y, anchorX: _size32, anchorY: _size48, scale: _characterScale);
+    engine.mapDst(x: character.x, y: character.y, anchorX: _size32, anchorY: _size48, scale: _scaleZombie);
     engine.renderAtlas();
   }
 
@@ -384,17 +386,17 @@ class IsometricRender {
     _renderCharacterPart(character, getSpriteIndexLegs(character));
   }
 
-  void _renderCharacterPart(Character character, SpriteLayer layer, {double scale = 0.8}) {
+  void _renderCharacterPart(Character character, SpriteLayer layer) {
     engine.mapDst(
         x: character.x,
         y: character.y,
         anchorX: _size32,
         anchorY: _size48,
-        scale: scale
+        scale: _scaleTemplate
     );
     engine.mapSrc(
         x: getTemplateSrcX(character),
-        y: _spritesY + (layer.index * _size64)
+        y: _atlasSpritesY + (layer.index * _size64)
     );
     engine.renderAtlas();
   }
@@ -437,21 +439,21 @@ class IsometricRender {
     switch(character.state){
       case CharacterState.Idle:
         return single(
-            frame: 1,
+            frame: character.equippedWeapon.isShotgun ? 1 : 2,
             direction: character.direction,
             framesPerDirection: _framesPerDirectionHuman
         );
 
       case CharacterState.Hurt:
         return single(
-            frame: 2,
+            frame: 3,
             direction: character.direction,
             framesPerDirection: _framesPerDirectionHuman
         );
 
       case CharacterState.Changing:
         return single(
-            frame: 3,
+            frame: 4,
             direction: character.direction,
             framesPerDirection: _framesPerDirectionHuman
         );
@@ -472,7 +474,7 @@ class IsometricRender {
 
       case CharacterState.Running:
         return loop(
-            animation: animations.running,
+            animation:  character.equippedWeapon.isShotgun ? _animationRunning2 : _animationRunning,
             character: character,
             framesPerDirection: _framesPerDirectionHuman
         );
@@ -514,13 +516,6 @@ class IsometricRender {
   void _renderCharacterTemplateWeapon(Character character) {
     if (character.equippedWeapon == SlotType.Empty) return;
     _renderCharacterPart(character, mapEquippedWeaponToSpriteIndex(character));
-    // if (character.state.performing){
-    //    if (character.frame == 0){
-    //       if (character.equippedWeapon.isHandgun){
-    //          audio.handgunShot(character.x, character.y);
-    //       }
-    //    }
-    // }
   }
 
   void drawCharacterHealthBar(Character character){
