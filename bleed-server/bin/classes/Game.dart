@@ -1036,20 +1036,14 @@ extension GameFunctions on Game {
   }
 
   void updateCharacterTileCollision(Character character) {
-    if (!scene.tileWalkableAt(character.left, character.top)) {
+    if (!scene.tileWalkableAt(character.left, character.y)) {
       character.x += tileCollisionResolve;
-      character.y += tileCollisionResolve;
-    }
-    if (!scene.tileWalkableAt(character.right, character.top)) {
+    } else if (!scene.tileWalkableAt(character.right, character.y)){
       character.x -= tileCollisionResolve;
+    }
+    if (!scene.tileWalkableAt(character.x, character.top)) {
       character.y += tileCollisionResolve;
-    }
-    if (!scene.tileWalkableAt(character.left, character.bottom)) {
-      character.x += tileCollisionResolve;
-      character.y -= tileCollisionResolve;
-    }
-    if (!scene.tileWalkableAt(character.right, character.bottom)) {
-      character.x -= tileCollisionResolve;
+    } else if (!scene.tileWalkableAt(character.x, character.bottom)){
       character.y -= tileCollisionResolve;
     }
   }
