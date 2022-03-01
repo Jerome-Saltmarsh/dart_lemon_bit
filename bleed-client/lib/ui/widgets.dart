@@ -85,7 +85,6 @@ class _Widgets {
   final Widget experienceBar = build.experienceBar();
   final Widget healthBar = build.healthBar();
   final Widget magicBar = build.magicBar();
-  final Widget abilities = build.abilities();
   final Widget title = build.title();
   final Widget totalZombies = build.totalZombies();
   final Widget timeZone = build.timeZone();

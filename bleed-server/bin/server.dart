@@ -402,7 +402,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               player.magic -= ability.cost;
               player.performing = ability;
               ability.cooldownRemaining = ability.cooldown;
-              player.abilitiesDirty = true;
               player.ability = null;
 
               characterAimAt(player, mouseX, mouseY);
@@ -735,12 +734,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          Ability ability = player.getAbilityByIndex(upgradeIndex);
-          ability.level++;
-          player.abilityPoints--;
-          print("player.abilitiesDirty = true;");
-          player.abilitiesDirty = true;
-          player.dispatch(PlayerEvent.Skill_Upgraded);
           break;
 
         case ClientRequest.DeselectAbility:
@@ -749,7 +742,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          Player? player =engine.findPlayerByUuid(arguments[1]);
+          final player =engine.findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -763,7 +756,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             return;
           }
 
-          Player? player =engine.findPlayerByUuid(arguments[1]);
+          final player =engine.findPlayerByUuid(arguments[1]);
           if (player == null) {
             errorPlayerNotFound();
             return;
@@ -785,48 +778,6 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
             errorInvalidArg('arg[2] $abilityIndex must be less than 5');
             return;
           }
-
-          Ability ability = player.getAbilityByIndex(abilityIndex);
-
-          if (ability.level < 1) {
-            player.ability = null;
-            error(GameError.SkillLocked);
-            return;
-          }
-
-          Ability? playerAbility = player.ability;
-
-          if (playerAbility != null && playerAbility.type == ability.type) {
-            player.ability = null;
-            return;
-          }
-
-          if (ability.cost > player.magic) {
-            error(GameError.InsufficientMana);
-            return;
-          }
-
-          if (ability.cooldownRemaining > 0) {
-            error(GameError.Cooldown_Remaining);
-            return;
-          }
-
-          if (ability is Dash) {
-            ability.cooldownRemaining = ability.cooldown;
-            ability.durationRemaining = ability.duration;
-            player.speedModifier += dashSpeed;
-            player.dispatch(PlayerEvent.Dash_Activated);
-            break;
-          }
-
-          if (ability is IronShield) {
-            ability.cooldownRemaining = ability.cooldown;
-            ability.durationRemaining = ability.duration;
-            player.invincible = true;
-            break;
-          }
-
-          player.ability = ability;
           break;
 
         case ClientRequest.AcquireAbility:

@@ -122,13 +122,6 @@ void parseState() {
         }
         break;
 
-      case ServerResponse.Player_Abilities:
-        _consumeAbility(modules.game.state.player.ability1);
-        _consumeAbility(modules.game.state.player.ability2);
-        _consumeAbility(modules.game.state.player.ability3);
-        _consumeAbility(modules.game.state.player.ability4);
-        break;
-
       case ServerResponse.Team_Lives_Remaining:
         game.teamLivesWest.value = consumeInt();
         game.teamLivesEast.value = consumeInt();

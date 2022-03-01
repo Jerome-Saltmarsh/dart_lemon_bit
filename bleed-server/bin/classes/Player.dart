@@ -48,22 +48,16 @@ class Player extends Character with Entity {
 
   final List<PlayerEvent> events = [];
   CharacterState characterState = CharacterState.Idle;
-  Ability ability1 = Ability(type: AbilityType.None, level: 0, cost: 0, range: 0, cooldown: 0, mode: AbilityMode.None);
-  Ability ability2 = Ability(type: AbilityType.None, level: 0, cost: 0, range: 0, cooldown: 0, mode: AbilityMode.None);
-  Ability ability3 = Ability(type: AbilityType.None, level: 0, cost: 0, range: 0, cooldown: 0, mode: AbilityMode.None);
-  Ability ability4 = Ability(type: AbilityType.None, level: 0, cost: 0, range: 0, cooldown: 0, mode: AbilityMode.None);
-  bool abilitiesDirty = true;
 
   final slots = _PlayerSlots();
 
   final orbs = _Orbs();
 
   Character? _aimTarget; // the currently highlighted character
-
-  Character? get aimTarget => _aimTarget;
-
   Vector2? target;
   Vector2 runTarget = Vector2(0, 0);
+
+  Character? get aimTarget => _aimTarget;
 
   void attainOrb(OrbType orb){
     switch(orb) {
@@ -420,21 +414,6 @@ extension PlayerProperties on Player {
   bool get isHuman => type == CharacterType.Human;
 
   bool get unarmed => weapon.isEmpty;
-
-  Ability getAbilityByIndex(int index){
-    switch(index){
-      case 1:
-        return ability1;
-      case 2:
-        return ability2;
-      case 3:
-        return ability3;
-      case 4:
-        return ability4;
-      default:
-        throw Exception("could not get ability at index $index");
-    }
-  }
 
   void onEquipped(SlotType slotType){
     maxHealth += slotType.health;

@@ -27,7 +27,6 @@ enum ServerResponse {
   Weapons,
   Player_Weapon,
   Player_Ability,
-  Player_Abilities,
   Player_Attack_Target,
   Waiting_For_More_Players,
   Player_Text,

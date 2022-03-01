@@ -153,24 +153,6 @@ class _Build {
     });
   }
 
-
-  Widget abilities() {
-    return Container(
-      child: Row(
-        crossAxisAlignment: axis.cross.end,
-        children: [
-          buildAbility(modules.game.state.player.ability1),
-          width4,
-          buildAbility(modules.game.state.player.ability2),
-          width4,
-          buildAbility(modules.game.state.player.ability3),
-          width4,
-          buildAbility(modules.game.state.player.ability4),
-        ],
-      ),
-    );
-  }
-
   Widget theme(){
     return onHover((bool hovering){
       const _width = 150.0;

@@ -814,7 +814,6 @@ extension GameFunctions on Game {
 
       if (withinAttackRadius(player, target)) {
         player.attackTarget = target;
-        // set performing to strike
         setCharacterStatePerforming(player);
         player.target = null;
         return;
@@ -1613,9 +1612,7 @@ double angle2(double adjacent, double opposite) {
 }
 
 void selectCharacterType(Player player, CharacterType value) {
-  // @on set character type
   player.type = value;
-  player.abilitiesDirty = true;
   player.level = 1;
   player.abilityPoints = 1;
   player.magic = player.maxMagic;

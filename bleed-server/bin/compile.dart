@@ -207,14 +207,6 @@ void compileWeapon(StringBuffer buffer, Weapon weapon) {
   _write(buffer, weapon.damage);
 }
 
-void _compilePlayerAbilities(StringBuffer buffer, Player player) {
-  _write(buffer, ServerResponse.Player_Abilities.index);
-  _compileAbility(buffer, player.ability1);
-  _compileAbility(buffer, player.ability2);
-  _compileAbility(buffer, player.ability3);
-  _compileAbility(buffer, player.ability4);
-}
-
 void _compileAbility(StringBuffer buffer, Ability ability) {
   _write(buffer, ability.type.index);
   _write(buffer, ability.level);
@@ -256,11 +248,6 @@ void compilePlayer(StringBuffer buffer, Player player) {
     _write(buffer, ServerResponse.Player_Attack_Target.index);
     _writeInt(buffer, 0);
     _writeInt(buffer, 0);
-  }
-
-  if (player.abilitiesDirty) {
-    player.abilitiesDirty = false;
-    _compilePlayerAbilities(buffer, player);
   }
 
   compilePlayerOrbs(buffer, player);

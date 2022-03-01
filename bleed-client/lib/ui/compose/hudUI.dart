@@ -143,8 +143,6 @@ Widget characterStatistics() {
               ],
             ),
             width8,
-            widgets.abilities,
-            width8,
             Container(
               width: 200,
             )
