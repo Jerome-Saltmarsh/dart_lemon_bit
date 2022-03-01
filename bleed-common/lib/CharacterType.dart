@@ -1,16 +1,9 @@
 enum CharacterType {
   Human,
-  Template,
-  Soldier,
   Zombie,
-  Witch,
-  Swordsman,
-  Archer,
 }
 
 extension CharacterTypeExtensions on CharacterType {
-  bool get isTemplate => this == CharacterType.Template;
-  bool get isSoldier => this == CharacterType.Soldier;
   bool get isHuman => this == CharacterType.Human;
   bool get isZombie => this == CharacterType.Zombie;
 }
@@ -18,9 +11,6 @@ extension CharacterTypeExtensions on CharacterType {
 const characterTypes = CharacterType.values;
 
 final List<CharacterType> playableCharacterTypes = [
-  CharacterType.Witch,
-  CharacterType.Swordsman,
-  CharacterType.Archer,
   CharacterType.Human,
 ];
 

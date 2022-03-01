@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:bleed_client/classes/Authentication.dart';
-import 'package:bleed_client/classes/Particle.dart';
 import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/modules/core/enums.dart';
@@ -20,7 +19,6 @@ import 'package:bleed_client/webSocket.dart';
 import 'package:flutter/services.dart';
 import 'package:lemon_dispatch/instance.dart';
 import 'package:lemon_engine/engine.dart';
-import 'package:lemon_math/Vector2.dart';
 
 import 'exceptions.dart';
 

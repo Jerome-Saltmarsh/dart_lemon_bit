@@ -1,9 +1,7 @@
 
 
 
-import 'package:bleed_client/common/CharacterState.dart';
-import 'package:bleed_client/modules/isometric/atlas.dart';
-import 'package:bleed_client/modules/isometric/functions.dart';
+
 
 // void mapSrcZombie({
 //   required CharacterState state,

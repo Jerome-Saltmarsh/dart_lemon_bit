@@ -115,8 +115,6 @@ class Character extends GameObject implements HasSquad {
 
   bool get dead => state == CharacterState.Dead;
 
-  bool get firing => state == CharacterState.Firing;
-
   bool get running => state == CharacterState.Running;
 
   bool get idling => state == CharacterState.Idle;

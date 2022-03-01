@@ -22,9 +22,6 @@ void mapSrcWitch({
     case CharacterState.Dead:
     // TODO: Handle this case.
       break;
-    case CharacterState.Firing:
-    // TODO: Handle this case.
-      break;
     case CharacterState.Performing:
       return srcAnimate(
           animation: animations.witch.attacking,

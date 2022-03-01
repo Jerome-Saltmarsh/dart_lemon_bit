@@ -32,14 +32,12 @@ Future init() async {
   } else {
     print("Environment: Production");
   }
-
   engine.cursorType.value = CursorType.Basic;
 }
 
 void initializeGameInstances() {
-  for (int i = 0; i < 5000; i++) {
-    game.projectiles
-        .add(Projectile(0, 0, ProjectileType.Bullet, 0));
+  for (int i = 0; i < 1000; i++) {
+    game.projectiles.add(Projectile(0, 0, ProjectileType.Bullet, 0));
     isometric.state.items.add(Item(type: ItemType.None, x: 0, y: 0));
   }
 
@@ -58,12 +56,12 @@ void initializeGameInstances() {
 
   game.interactableNpcs.clear();
   for (int i = 0; i < 200; i++) {
-    game.interactableNpcs.add(Character(type: CharacterType.Soldier));
+    game.interactableNpcs.add(Character(type: CharacterType.Human));
   }
 
   game.humans.clear();
   for (int i = 0; i < 500; i++) {
-    game.humans.add(Character(type: CharacterType.Template));
+    game.humans.add(Character(type: CharacterType.Human));
   }
 }
 

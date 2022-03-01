@@ -157,7 +157,6 @@ class GameRoyal extends Game {
       x: spawnPoint.x,
       y: spawnPoint.y,
       team: -1,
-      type: CharacterType.Template,
     );
     if (players.length >= playersRequired) {
       status = GameStatus.Counting_Down;

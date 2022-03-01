@@ -112,12 +112,11 @@ class Player extends Character with Entity {
     double x = 0,
     double y = 0,
     int team = noSquad,
-    CharacterType type = CharacterType.Human,
     int magic = _defaultMaxMagic,
     int health = 10,
     AI? ai,
   }) : super(
-            type: type,
+            type: CharacterType.Human,
             x: x,
             y: y,
             health: health,
@@ -417,8 +416,6 @@ class _Orbs {
 extension PlayerProperties on Player {
 
   bool get isHuman => type == CharacterType.Human;
-  bool get isSoldier => type == CharacterType.Soldier;
-  bool get isTemplate => type == CharacterType.Template;
 
   bool get unarmed {
     for(Weapon weapon in weapons){

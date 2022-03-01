@@ -1,11 +1,11 @@
 
-import 'package:lemon_watch/watch_builder.dart';
 import 'package:bleed_client/assets.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/modules/modules.dart';
 import 'package:bleed_client/ui/compose/hudUI.dart';
 import 'package:flutter/material.dart';
+import 'package:lemon_watch/watch_builder.dart';
 
 
 class UIWidgets {

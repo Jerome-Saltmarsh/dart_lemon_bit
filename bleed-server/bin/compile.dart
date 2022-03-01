@@ -267,16 +267,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
 
   compilePlayerOrbs(buffer, player);
   compilePlayerSlotTypes(buffer, player);
-
-  if (player.type == CharacterType.Soldier){
-    if (player.weaponsDirty) {
-      player.weaponsDirty = false;
-      compilePlayerWeapons(buffer, player);
-    }
-    compilePlayerWeaponValues(buffer, player);
-  } else {
-    _compilePlayerAbility(buffer, player);
-  }
+  _compilePlayerAbility(buffer, player);
   _compilePlayerEvents(buffer, player);
 }
 
@@ -300,7 +291,7 @@ void compilePlayerSlotTypes(StringBuffer buffer, Player player) {
 
 void _compilePlayerAbility(StringBuffer buffer, Player player){
   _write(buffer, ServerResponse.Player_Ability.index);
-  final Ability? ability = player.ability;
+  final ability = player.ability;
   if (ability != null) {
     _write(buffer, ability.type.index);
     _write(buffer, ability.range);

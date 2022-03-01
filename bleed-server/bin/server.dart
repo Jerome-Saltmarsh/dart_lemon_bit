@@ -73,9 +73,7 @@ Player spawnPlayerInTown() {
       x: 0,
       y: 1750,
       team: teams.west,
-      type: CharacterType.Template,
       health: 10,
-      // ai: AI()
   );
 }
 
@@ -331,15 +329,12 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
           player.mouseX = mouseX;
           player.mouseY = mouseY;
 
-          // TODO move this to game update
-          if (!player.isSoldier) {
-            final closestEnemy = game.getClosestEnemy(mouseX, mouseY, player.team);
-            player.aimTarget = null;
-            if (closestEnemy != null) {
-              if (withinDistance(
-                  closestEnemy, mouseX, mouseY, settings.radius.cursor)) {
-                player.aimTarget = closestEnemy;
-              }
+          player.aimTarget = null;
+          final closestEnemy = game.getClosestEnemy(mouseX, mouseY, player.team);
+          if (closestEnemy != null) {
+            if (withinDistance(
+                closestEnemy, mouseX, mouseY, settings.radius.cursor)) {
+              player.aimTarget = closestEnemy;
             }
           }
 
@@ -348,39 +343,21 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               game.setCharacterState(player, CharacterState.Idle);
               break;
             case CharacterAction.Perform:
-              if (player.type.isSoldier) {
-                characterFace(player, mouseX, mouseY);
-                if (player.weapon.type == WeaponType.Unarmed){
-                  // game.setCharacterState(player, CharacterState.Striking);
-                } else {
-                  game.setCharacterState(player, CharacterState.Firing);
-                }
-                break;
-              }
               final ability = player.ability;
               final aimTarget = player.aimTarget;
               player.attackTarget = aimTarget;
               playerSetAbilityTarget(player, mouseX, mouseY);
-
               if (ability == null) {
-                if (player.type.isSoldier ||
-                    player.type.isHuman ||
-                    player.type.isTemplate
-                ) {
-                  if (aimTarget != null) {
-                    player.target = aimTarget;
-
-                    if (player.type.isTemplate){
-                      if (withinRadius(player, aimTarget, player.slots.weapon.range)){
-                        characterFaceV2(player, aimTarget);
-                        game.setCharacterStatePerforming(player);
-                      }
-                    }
-                  } else {
-                    player.runTarget.x = mouseX;
-                    player.runTarget.y = mouseY;
-                    player.target = player.runTarget;
+                if (aimTarget != null) {
+                  player.target = aimTarget;
+                  if (withinRadius(player, aimTarget, player.slots.weapon.range)){
+                    characterFaceV2(player, aimTarget);
+                    game.setCharacterStatePerforming(player);
                   }
+                } else {
+                  player.runTarget.x = mouseX;
+                  player.runTarget.y = mouseY;
+                  player.target = player.runTarget;
                 }
               break;
               }

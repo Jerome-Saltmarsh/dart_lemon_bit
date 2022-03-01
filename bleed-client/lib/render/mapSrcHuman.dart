@@ -1,10 +1,5 @@
 
-import 'package:bleed_client/common/CharacterState.dart';
-import 'package:bleed_client/common/SlotType.dart';
-import 'package:bleed_client/modules/isometric/animations.dart';
-import 'package:bleed_client/modules/isometric/atlas.dart';
-import 'package:bleed_client/modules/isometric/functions.dart';
-import 'package:lemon_math/Vector2.dart';
+
 
 // void mapSrcHuman({
 //     required SlotType slotType,

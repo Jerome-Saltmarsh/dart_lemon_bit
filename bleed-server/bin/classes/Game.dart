@@ -500,7 +500,7 @@ extension GameFunctions on Game {
           if (!isVisibleBetween(character, target)) break;
 
           characterAimAt(character, target.x, target.y);
-          setCharacterState(character, CharacterState.Firing);
+          setCharacterState(character, CharacterState.Performing);
           return;
       }
 
@@ -605,7 +605,7 @@ extension GameFunctions on Game {
     double d = 15;
     double x = character.x + adj(character.aimAngle, d);
     double y = character.y + opp(character.aimAngle, d) - 5;
-    character.state = CharacterState.Firing;
+    character.state = CharacterState.Performing;
     character.weapon.rounds--;
 
     switch (character.weapon.type) {
@@ -699,9 +699,9 @@ extension GameFunctions on Game {
       case CharacterState.Changing:
         character.stateDurationRemaining = 10;
         break;
-      case CharacterState.Firing:
-        _fireWeapon(character);
-        break;
+      // case CharacterState.Firing:
+      //   _fireWeapon(character);
+      //   break;
       case CharacterState.Performing:
         character.stateDurationRemaining = settings.duration.strike;
         if (character is Player){
@@ -1720,104 +1720,6 @@ void selectCharacterType(Player player, CharacterType value) {
       break;
     case CharacterType.Zombie:
       break;
-    case CharacterType.Witch:
-      player.attackRange = 170;
-      player.maxMagic = 100;
-      player.magic = player.maxMagic;
-      player.ability1 = Ability(
-        type: AbilityType.Explosion,
-        level: 0,
-        cost: 60,
-        range: 200,
-        cooldown: 15,
-        radius: settings.radius.explosion,
-        mode: AbilityMode.Area,
-      );
-      player.ability2 = Ability(
-        type: AbilityType.Blink,
-        level: 0,
-        cost: 10,
-        range: 200,
-        cooldown: 10,
-        mode: AbilityMode.Directed,
-      );
-      player.ability3 = Ability(
-        type: AbilityType.Ice_Ring,
-        level: 0,
-        cost: 10,
-        range: 200,
-        cooldown: 15,
-        radius: settings.radius.explosion,
-        mode: AbilityMode.Area,
-      );
-      player.ability4 = Ability(
-        type: AbilityType.Fireball,
-        level: 0,
-        cost: 10,
-        range: 200,
-        cooldown: 25,
-        mode: AbilityMode.Directed,
-      );
-      break;
-    case CharacterType.Swordsman:
-      player.attackRange = 50;
-      player.maxMagic = 100;
-      player.ability1 = Ability(
-        type: AbilityType.Brutal_Strike,
-        level: 0,
-        cost: 10,
-        range: player.attackRange,
-        cooldown: 15,
-        mode: AbilityMode.Targeted,
-      );
-      player.ability2 = IronShield(player);
-      player.ability3 = Ability(
-        type: AbilityType.Death_Strike,
-        level: 0,
-        cost: 10,
-        range: player.attackRange,
-        cooldown: 15,
-        mode: AbilityMode.Activated,
-      );
-      player.ability4 = Ability(
-        type: AbilityType.Explosion,
-        level: 0,
-        cost: 10,
-        range: 200,
-        cooldown: 15,
-        mode: AbilityMode.Area,
-      );
-      break;
-    case CharacterType.Archer:
-      player.attackRange = 210;
-      player.damage = 18;
-      player.maxMagic = 100;
-      player.ability1 = Ability(
-        type: AbilityType.Split_Arrow,
-        level: 0,
-        cost: 40,
-        range: 200,
-        cooldown: 10,
-        mode: AbilityMode.Directed,
-      );
-      player.ability2 = Dash(player);
-      player.ability3 = Ability(
-        type: AbilityType.Long_Shot,
-        level: 0,
-        cost: 40,
-        range: 250,
-        cooldown: 15,
-        mode: AbilityMode.Targeted,
-      );
-      player.ability4 = Ability(
-        type: AbilityType.Fireball,
-        level: 0,
-        cost: 70,
-        range: 200,
-        cooldown: 25,
-        mode: AbilityMode.Directed,
-      );
-      break;
   }
 
   player.magic = player.maxMagic;
@@ -1881,7 +1783,7 @@ class CustomGame extends Game {
   }
 
   Player playerJoin() {
-    return Player(game: this, type: CharacterType.Human, y: 500);
+    return Player(game: this, y: 500);
   }
 }
 

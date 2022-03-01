@@ -127,7 +127,6 @@ class GameMoba extends Game {
       y: 600,
       game: this,
       team: getJoinTeam(),
-      type: CharacterType.Human,
     );
     if (players.length == totalPlayersRequired){
       status = GameStatus.In_Progress;

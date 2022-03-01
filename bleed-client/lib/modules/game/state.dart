@@ -3,7 +3,6 @@ import 'package:bleed_client/classes/Weapon.dart';
 import 'package:bleed_client/common/AbilityType.dart';
 import 'package:bleed_client/common/CharacterState.dart';
 import 'package:bleed_client/common/CharacterType.dart';
-import 'package:bleed_client/common/GameStatus.dart';
 import 'package:bleed_client/common/OrbType.dart';
 import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/Tile.dart';
