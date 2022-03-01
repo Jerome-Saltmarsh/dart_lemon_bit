@@ -85,8 +85,10 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
     totalConnections++;
     print("New connection established. Total Connections $totalConnections");
 
+    final sink = webSocket.sink;
+
     void reply(String response) {
-      webSocket.sink.add(response);
+      sink.add(response);
     }
 
     void clearBuffer() {

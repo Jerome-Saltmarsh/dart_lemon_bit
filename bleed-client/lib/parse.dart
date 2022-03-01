@@ -182,7 +182,7 @@ void parseState() {
         Future.delayed(Duration(milliseconds: 150), () {
           engine.cameraCenter(x, y);
         });
-        for (Particle particle in isometric.state.particles) {
+        for (final particle in isometric.state.particles) {
           particle.active = false;
         }
         break;
@@ -442,9 +442,9 @@ CharacterType _consumeCharacterType() {
 }
 
 void _parsePlayerEvents() {
-  int total = consumeInt();
-  for (int i = 0; i < total; i++) {
-    PlayerEvent event = _consumePlayerEventType();
+  final total = consumeInt();
+  for (var i = 0; i < total; i++) {
+    final event = _consumePlayerEventType();
     switch (event) {
       case PlayerEvent.Level_Up:
         modules.game.actions.emitPixelExplosion(modules.game.state.player.x, modules.game.state.player.y, amount: 10);
@@ -587,7 +587,7 @@ String _consumeString() {
 /// It has all error checking removed
 String _consumeStringUnsafe() {
   _consumer.clear();
-  String char = _currentCharacter;
+  var char = _currentCharacter;
   while (char != _space) {
     _consumer.write(char);
     _index++;
@@ -598,7 +598,7 @@ String _consumeStringUnsafe() {
 }
 
 String _consumeSingleCharacter() {
-  String char = _currentCharacter;
+  var char = _currentCharacter;
   _index += 2;
   return char;
 }
@@ -677,7 +677,7 @@ ItemType _consumeItemType() {
 void _parseProjectiles() {
   game.totalProjectiles = 0;
   while (!_simiColonConsumed()) {
-    Projectile projectile = game.projectiles[game.totalProjectiles];
+    final projectile = game.projectiles[game.totalProjectiles];
     projectile.x = consumeDouble();
     projectile.y = consumeDouble();
     projectile.type = _consumeProjectileType();
@@ -736,9 +736,6 @@ void _consumeHuman(Character character) {
 void _consumeZombie(Character zombie) {
   zombie.state = _consumeCharacterState();
   zombie.direction = _consumeSingleDigitInt();
-  if (zombie.direction < 0 || zombie.direction >= directions.length){
-    throw Exception();
-  }
   zombie.x = _consumeDoubleUnsafe();
   zombie.y = _consumeDoubleUnsafe();
   zombie.frame = _consumeIntUnsafe();
