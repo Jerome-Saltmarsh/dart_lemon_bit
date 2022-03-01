@@ -26,5 +26,5 @@ double magnitude(num adjacent, num opposite){
 }
 
 bool withinAttackRadius(Player player, Vector2 target){
-  return withinRadius(player, target, player.slots.weapon.range);
+  return withinRadius(player, target, player.weapon.range);
 }

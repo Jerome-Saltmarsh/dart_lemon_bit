@@ -351,7 +351,7 @@ void buildWebSocketHandler(WebSocketChannel webSocket) {
               if (ability == null) {
                 if (aimTarget != null) {
                   player.target = aimTarget;
-                  if (withinRadius(player, aimTarget, player.slots.weapon.range)){
+                  if (withinRadius(player, aimTarget, player.weapon.range)){
                     characterFaceV2(player, aimTarget);
                     game.setCharacterStatePerforming(player);
                   }

@@ -141,10 +141,10 @@ class Player extends Character with Entity {
 
     switch(slotTypeCategory) {
       case SlotTypeCategory.Weapon:
-        if (slots.weapon.isEmpty) return;
-        slots.assignToEmpty(slots.weapon);
-        onUnequipped(slots.weapon);
-        slots.weapon = SlotType.Empty;
+        if (weapon.isEmpty) return;
+        slots.assignToEmpty(weapon);
+        onUnequipped(weapon);
+        weapon = SlotType.Empty;
         setStateChangingWeapons();
         break;
       case SlotTypeCategory.Armour:
@@ -172,8 +172,8 @@ class Player extends Character with Entity {
     dispatch(PlayerEvent.Item_Purchased);
     setStateChangingWeapons();
     if (slotType.isWeapon) {
-      if (slots.weapon.isEmpty){
-        slots.weapon = slotType;
+      if (weapon.isEmpty){
+        weapon = slotType;
         onEquipped(slotType);
         return;
       }
@@ -207,9 +207,9 @@ class Player extends Character with Entity {
       if (slot.isEmpty) return;
 
       if (slot.isWeapon){
-        if (slot == slots.weapon) return;
-        final currentWeapon = slots.weapon;
-        slots.weapon = slot;
+        if (slot == weapon) return;
+        final currentWeapon = weapon;
+        weapon = slot;
         slots.assignSlotAtIndex(index, currentWeapon);
         setStateChangingWeapons();
         dispatch(PlayerEvent.Item_Equipped);
@@ -250,7 +250,7 @@ class Player extends Character with Entity {
         final cost = 5;
         if (magic < cost) return;
         magic -= cost;
-        if (!slots.weapon.isStaff) {
+        if (!weapon.isStaff) {
           final index = slots.getSlotIndexWhere(isStaff);
           if (index == null) return;
           useSlot(index);
@@ -263,7 +263,7 @@ class Player extends Character with Entity {
       if (slot == SlotType.Spell_Tome_Split_Arrow) {
         final cost = 5;
         if (magic < cost) return;
-        if (!slots.weapon.isBow){
+        if (!weapon.isBow){
            final bowIndex = slots.getSlotIndexWhere(isBow);
            if (bowIndex == null) return;
            useSlot(bowIndex);
@@ -304,7 +304,7 @@ class Player extends Character with Entity {
 }
 
 class _PlayerSlots {
-  SlotType weapon = SlotType.Empty;
+  // SlotType weapon = SlotType.Empty;
   SlotType armour = SlotType.Empty;
   SlotType helm = SlotType.Empty;
 

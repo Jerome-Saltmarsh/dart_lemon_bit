@@ -244,7 +244,7 @@ void compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.maxMagic);
   _writeInt(buffer, player.attackRange);
   _write(buffer, player.team);
-  _write(buffer, player.slots.weapon.index);
+  _write(buffer, player.weapon.index);
   _write(buffer, player.slots.armour.index);
   _write(buffer, player.slots.helm.index);
   final aimTarget = player.aimTarget;
@@ -430,7 +430,7 @@ void _compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, _comma);
   _writeInt(buffer, (player.health / player.maxHealth) * 100);
   _writeInt(buffer, (player.magic / player.maxMagic) * 100);
-  _write(buffer, player.slots.weapon.index);
+  _write(buffer, player.weapon.index);
   _write(buffer, player.slots.armour.index);
   _write(buffer, player.slots.helm.index);
 }

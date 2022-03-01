@@ -646,7 +646,7 @@ extension GameFunctions on Game {
         if (character is Player){
           final ability = character.performing;
           if (ability == null) {
-            character.stateDurationRemaining = character.slots.weapon.duration;
+            character.stateDurationRemaining = character.weapon.duration;
             break;
           }
           if (character.magic < ability.cost) {
@@ -1486,8 +1486,8 @@ extension GameFunctions on Game {
         }
     }
 
-    if (character is Player) {
-      final weapon = character.slots.weapon;
+    // if (character is Player) {
+      final weapon = character.weapon;
 
       if (weapon.isSword){
         if (stateDuration == 1){
@@ -1557,7 +1557,7 @@ extension GameFunctions on Game {
           return;
         }
       }
-    }
+    // }
   }
 }
 
