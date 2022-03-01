@@ -455,10 +455,9 @@ extension GameFunctions on Game {
     }
   }
 
-  void _characterStrike(Character character, Character target){
+  void _characterAttack(Character character, Character target){
     if (!targetWithinAttackRange(character, target)) return;
     characterFaceV2(character, target);
-    // todo set performing to strike action
     setCharacterStatePerforming(character);
     character.attackTarget = target;
   }
@@ -479,7 +478,7 @@ extension GameFunctions on Game {
     if (target != null) {
       if (character.type.isZombie) {
         if (targetWithinAttackRange(character, target)){
-          _characterStrike(character, target);
+          _characterAttack(character, target);
           return;
         }
         if (cheapDistance(character, target) < 100) {
@@ -487,11 +486,10 @@ extension GameFunctions on Game {
           return;
         }
       } else { // not zombie
-
         if (!targetWithinAttackRange(character, target)) return;
         if (!isVisibleBetween(character, target)) return;
-        characterAimAt(character, target.x, target.y);
-        setCharacterState(character, CharacterState.Performing);
+        _characterAttack(character, target);
+        return;
       }
 
 
