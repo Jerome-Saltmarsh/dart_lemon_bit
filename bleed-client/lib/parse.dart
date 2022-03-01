@@ -709,11 +709,6 @@ void _consumeHuman(Character character) {
   character.type = _consumeCharacterType();
   character.state = _consumeCharacterState();
   character.direction = _consumeSingleDigitInt();
-
-  if (character.direction < 0 || character.direction >= directions.length){
-     throw Exception();
-  }
-
   character.x = consumeDouble();
   character.y = consumeDouble();
   character.frame = consumeInt();
