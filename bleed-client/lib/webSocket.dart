@@ -19,6 +19,7 @@ class _WebSocket {
   bool get connected => connection.value == Connection.Connected;
   bool get connecting => connection.value == Connection.Connecting;
   String connectionUri = "";
+  late WebSocketSink sink;
 
   // interface
   void connect({required String uri, required dynamic message}) {
@@ -26,13 +27,14 @@ class _WebSocket {
     connection.value = Connection.Connecting;
     webSocketChannel = WebSocketChannel.connect(Uri.parse(uri));
     webSocketChannel.stream.listen(_onEvent, onError: _onError, onDone: _onDone);
+    sink = webSocketChannel.sink;
     connectionUri = uri;
     sinkMessage(message);
   }
 
   void disconnect() {
     print('network.disconnect()');
-    webSocketChannel.sink.close();
+    sink.close();
     connection.value = Connection.None;
   }
 
@@ -45,7 +47,7 @@ class _WebSocket {
   }
 
   void sinkMessage(String message) {
-    webSocketChannel.sink.add(message);
+    sink.add(message);
   }
 
   void _onEvent(dynamic _response) {
@@ -68,7 +70,7 @@ class _WebSocket {
     } else {
       connection.value = Connection.Done;
     }
-    webSocketChannel.sink.close();
+    sink.close();
   }
 }
 
