@@ -31,7 +31,7 @@ class IsometricActions {
   IsometricActions(this.state, this.queries, this.constants, this.properties);
 
   void applyDynamicShadeToTileSrc() {
-    final tileSize = modules.isometric.constants.tileSize;
+    final tileSize = constants.tileSize;
     final atlasY = atlas.tiles.y;
     final dynamic = state.dynamic;
     final tilesSrc = state.tilesSrc;
