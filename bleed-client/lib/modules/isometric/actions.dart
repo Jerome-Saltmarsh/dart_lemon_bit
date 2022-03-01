@@ -123,9 +123,8 @@ class IsometricActions {
 
   void updateTileRender(){
     print("actions.updateTileRender()");
-    resetBakeMap();
-    resetDynamicMap();
     resetTilesSrcDst();
+    resetLighting();
   }
 
   /// Expensive
