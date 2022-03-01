@@ -17,7 +17,6 @@ import 'classes/Player.dart';
 import 'classes/Projectile.dart';
 import 'classes/Weapon.dart';
 import 'common/AbilityType.dart';
-import 'common/CharacterType.dart';
 import 'common/GameStatus.dart';
 import 'common/ServerResponse.dart';
 import 'common/Tile.dart';
@@ -42,7 +41,7 @@ final compile = _Compile();
 
 class _Compile {
 
-  final StringBuffer _gameBuffer = StringBuffer();
+  final _gameBuffer = StringBuffer();
 
   void game(Game game) {
     _gameBuffer.clear();
@@ -83,7 +82,7 @@ class _Compile {
 
     for (final player in game.players) {
       if (!game.compiledTeamText.containsKey(player.team)) {
-        StringBuffer buffer = StringBuffer();
+        final buffer = StringBuffer();
         buffer.write(ServerResponse.Player_Text.index);
         buffer.write(_space);
         game.compiledTeamText[player.team] = buffer;
@@ -99,7 +98,6 @@ class _Compile {
       _gameBuffer.write(_space);
     }
   }
-
 }
 
 void compilePlayerJoined(StringBuffer buffer, Player player) {
@@ -119,7 +117,7 @@ void compileCrates(StringBuffer buffer, List<Crate> crates) {
 void compileItems(StringBuffer buffer, List<Item> items) {
   _write(buffer, ServerResponse.Items.index);
   _write(buffer, items.length);
-  for (Item item in items) {
+  for (final item in items) {
     _write(buffer, item.type.index);
     _writeVector2Int(buffer, item);
   }
@@ -164,9 +162,9 @@ void compileLobby(StringBuffer buffer, Game game) {
 }
 
 String compileEnvironmentObjects(List<EnvironmentObject> environmentObjects) {
-  StringBuffer buffer = StringBuffer();
+  final buffer = StringBuffer();
   _write(buffer, ServerResponse.EnvironmentObjects.index);
-  for (EnvironmentObject environmentObject in environmentObjects) {
+  for (final environmentObject in environmentObjects) {
     _writeInt(buffer, environmentObject.x);
     _writeInt(buffer, environmentObject.y);
     _writeInt(buffer, environmentObject.radius);
@@ -177,15 +175,15 @@ String compileEnvironmentObjects(List<EnvironmentObject> environmentObjects) {
 }
 
 String compileTiles(List<List<Tile>> tiles) {
-  StringBuffer buffer = StringBuffer();
+  final buffer = StringBuffer();
   buffer.write(ServerResponse.Tiles.index);
   buffer.write(_space);
   buffer.write(tiles.length);
   buffer.write(_space);
   buffer.write(tiles[0].length);
   buffer.write(_space);
-  for (int x = 0; x < tiles.length; x++) {
-    for (int y = 0; y < tiles[0].length; y++) {
+  for (var x = 0; x < tiles.length; x++) {
+    for (var y = 0; y < tiles[0].length; y++) {
       buffer.write(tiles[x][y].index);
       buffer.write(_space);
     }
@@ -197,7 +195,7 @@ String compileTiles(List<List<Tile>> tiles) {
 void compilePlayerWeapons(StringBuffer buffer, Player player) {
   _write(buffer, ServerResponse.Weapons.index);
   _write(buffer, player.weapons.length);
-  for (Weapon weapon in player.weapons) {
+  for (final weapon in player.weapons) {
     compileWeapon(buffer, weapon);
   }
 }
@@ -322,7 +320,7 @@ void _compilePlayerEvents(StringBuffer buffer, Player player) {
 
 void compileScore(StringBuffer buffer, List<Player> players) {
   _write(buffer, ServerResponse.Score.index);
-  for (Player player in players) {
+  for (final player in players) {
     _write(buffer, player.name);
     _write(buffer, player.pointsRecord);
   }
@@ -395,7 +393,7 @@ void _compileZombies(StringBuffer buffer, List<Character> characters) {
 
 void _compileInteractableNpcs(StringBuffer buffer, List<InteractableNpc> npcs) {
   _write(buffer, _indexNpcs);
-  for (InteractableNpc npc in npcs) {
+  for (final npc in npcs) {
     if (!npc.active) continue;
     _compileInteractableNpc(buffer, npc);
   }
@@ -436,15 +434,6 @@ void _compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.slots.weapon.index);
   _write(buffer, player.slots.armour.index);
   _write(buffer, player.slots.helm.index);
-}
-
-void compileString(StringBuffer buffer, String text){
-  // text
-  final encoded = utf8.encode(text);
-  _write(buffer, encoded.length);
-  for(int coded in encoded){
-    _write(buffer, coded);
-  }
 }
 
 void _compileNpc(StringBuffer buffer, Character character) {
