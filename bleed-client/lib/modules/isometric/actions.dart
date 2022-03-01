@@ -40,7 +40,6 @@ class IsometricActions {
     final rowIndex16 = state.totalColumnsInt * 16;
     final minRow = state.minRow;
     final minColumn = state.minColumn;
-
     for (var rowIndex = minRow; rowIndex < maxRow; rowIndex++) {
       final row = dynamic[rowIndex];
       for (var columnIndex = minColumn; columnIndex < maxColumn; columnIndex++) {

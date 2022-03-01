@@ -385,18 +385,25 @@ void _parsePaths() {
 }
 
 void _parseTiles() {
-  modules.isometric.state.totalRows.value = consumeInt();
-  modules.isometric.state.totalColumns.value = consumeInt();
-  print("parse.tiles(rows: ${modules.isometric.state.totalRows.value}, columns: ${modules.isometric.state.totalColumns.value})");
-  isometric.state.tiles.clear();
-  for (int row = 0; row < modules.isometric.state.totalRows.value; row++) {
-    List<Tile> column = [];
-    for (int columnIndex = 0; columnIndex < modules.isometric.state.totalColumns.value; columnIndex++) {
+  print("parse.tiles()");
+  final isometric = modules.isometric;
+  final isometricState = isometric.state;
+  final rows = consumeInt();
+  final columns = consumeInt();
+  isometricState.totalRowsInt = rows;
+  isometricState.totalColumnsInt = columns;
+  isometricState.totalRows.value = rows;
+  isometricState.totalColumns.value = columns;
+  final tiles = isometricState.tiles;
+  isometricState.tiles.clear();
+  for (var row = 0; row < rows; row++) {
+    final List<Tile> column = [];
+    for (var columnIndex = 0; columnIndex < columns; columnIndex++) {
       column.add(_consumeTile());
     }
-    isometric.state.tiles.add(column);
+    tiles.add(column);
   }
-  modules.isometric.actions.updateTileRender();
+  isometric.actions.updateTileRender();
 }
 
 void _parsePlayer() {
