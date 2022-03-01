@@ -47,9 +47,10 @@ bool withinViewRange(AI ai, GameObject target) {
   return distanceV2(ai.character, target) < ai.viewRange;
 }
 
-bool arrivedAtPath(AI npc) {
-  if (diffOver(npc.character.x, npc.destX, settings.npc.destinationRadius)) return false;
-  if (diffOver(npc.character.y, npc.destY, settings.npc.destinationRadius)) return false;
+const dstRadius = 15;
+bool arrivedAtPath(AI ai) {
+  if (diffOver(ai.character.x, ai.destX, dstRadius)) return false;
+  if (diffOver(ai.character.y, ai.destY, dstRadius)) return false;
   return true;
 }
 
