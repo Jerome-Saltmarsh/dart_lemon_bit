@@ -38,15 +38,15 @@ class IsometricActions {
     final maxRow = state.maxRow;
     final maxColumn =  state.maxRow;
     final totalColumnsInt = state.totalColumnsInt;
+    final totalColumnInt4 = totalColumnsInt * 4;
     final minRow = state.minRow;
     final minColumn = state.minColumn;
-    
+
     for (var rowIndex = minRow; rowIndex < maxRow; rowIndex++) {
       final row = dynamic[rowIndex];
       for (var columnIndex = minColumn; columnIndex < maxColumn; columnIndex++) {
-        final shade = row[columnIndex];
-        final i = rowIndex * totalColumnsInt * 4 + (columnIndex * 4);
-        tilesSrc[i + 1] = atlasY + shade * tileSize; // top
+        final i = rowIndex * totalColumnInt4 + (columnIndex * 4);
+        tilesSrc[i + 1] = atlasY + row[columnIndex] * tileSize; // top
         tilesSrc[i + 3] = tilesSrc[i + 1] + tileSize; // bottom
       }
     }
