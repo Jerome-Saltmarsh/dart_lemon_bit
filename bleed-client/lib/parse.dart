@@ -753,13 +753,14 @@ void _consumeZombie(Character zombie) {
   zombie.team = consumeInt();
 }
 
-void _consumeInteractableNpc(Character interactableNpc) {
-  interactableNpc.state = _consumeCharacterState();
-  interactableNpc.direction = _consumeSingleDigitInt();
-  interactableNpc.x = consumeDouble();
-  interactableNpc.y = consumeDouble();
-  interactableNpc.frame = consumeInt();
-  interactableNpc.name = _consumeString();
+void _consumeInteractableNpc(Character character) {
+  character.state = _consumeCharacterState();
+  character.direction = _consumeSingleDigitInt();
+  character.x = consumeDouble();
+  character.y = consumeDouble();
+  character.frame = consumeInt();
+  character.equippedWeapon = consumeSlotType();
+  character.name = _consumeString();
 }
 
 int _consumeShade() {

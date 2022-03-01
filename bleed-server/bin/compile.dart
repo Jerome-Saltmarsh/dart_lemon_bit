@@ -451,6 +451,7 @@ void _compileInteractableNpc(StringBuffer buffer, InteractableNpc npc) {
   _writeInt(buffer, npc.x);
   _writeInt(buffer, npc.y);
   _write(buffer, npc.animationFrame);
+  _write(buffer, npc.weapon.index);
   _write(buffer, npc.name);
 }
 

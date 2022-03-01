@@ -10,7 +10,6 @@ import '../common/Quests.dart';
 import '../common/SlotType.dart';
 import '../common/WeaponType.dart';
 import '../engine.dart';
-import '../enums/npc_mode.dart';
 import '../handlers.dart';
 import '../instances/scenes.dart';
 import 'world.dart';
