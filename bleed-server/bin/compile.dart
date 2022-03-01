@@ -413,8 +413,6 @@ void _compilePlayer(StringBuffer buffer, Player player) {
   _write(buffer, player.animationFrame);
   _write(buffer, player.team);
   _write(buffer, player.name);
-  _write(buffer, player.text);
-  _write(buffer, _comma);
   _writeInt(buffer, (player.health / player.maxHealth) * 100);
   _writeInt(buffer, (player.magic / player.maxMagic) * 100);
   _write(buffer, player.weapon.index);

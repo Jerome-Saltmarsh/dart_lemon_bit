@@ -7,6 +7,7 @@ import 'package:bleed_client/common/GameType.dart';
 import 'package:bleed_client/common/RoyalCost.dart';
 import 'package:bleed_client/common/SlotType.dart';
 import 'package:bleed_client/common/WeaponType.dart';
+import 'package:bleed_client/common/version.dart';
 import 'package:bleed_client/constants/colours.dart';
 import 'package:bleed_client/flutterkit.dart';
 import 'package:bleed_client/modules/game/actions.dart';
@@ -850,6 +851,10 @@ class GameBuild {
     });
   }
 
+  Widget version(){
+    return text("v-0.1.0");
+  }
+
   Widget frameSmoothing(){
     return WatchBuilder(state.frameSmoothing, (bool frameSmoothing){
        return text("Frame Smoothing: $frameSmoothing", onPressed: (){
@@ -877,6 +882,7 @@ class GameBuild {
           ui.widgets.time,
           buildTotalZombies(),
           mouseRowColumn(),
+          version(),
       ],
     );
   }

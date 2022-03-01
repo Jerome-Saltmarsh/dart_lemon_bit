@@ -22,10 +22,8 @@ void _connectToServer(String uri){
   webSocket.connect(uri: uri, message: ClientRequest.Ping.index.toString());
 }
 
-const List<Region> serverTypes = Region.values;
-
 final List<Region> selectableServerTypes =
-    serverTypes.where((type) => (isLocalHost || type != Region.LocalHost)
+    regions.where((type) => (isLocalHost || type != Region.LocalHost)
     ).toList();
 
 class _Servers {

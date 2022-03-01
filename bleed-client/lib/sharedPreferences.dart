@@ -1,18 +1,17 @@
 
 import 'package:bleed_client/classes/Authentication.dart';
-import 'package:bleed_client/constants/servers.dart';
 import 'package:bleed_client/modules/core/enums.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 late SharedPreferences sharedPreferences;
 
-final _Storage storage = _Storage();
-final _Keys _keys = _Keys();
+final storage = _Storage();
+final _keys = _Keys();
 
 class _Storage {
   bool get serverSaved => sharedPreferences.containsKey(_keys.server);
   int? get _serverIndex => sharedPreferences.getInt(_keys.server);
-  Region get serverType => serverTypes[_serverIndex ?? Region.Australia.index];
+  Region get serverType => regions[_serverIndex ?? Region.Australia.index];
 
   void saveServerType(Region value){
     print("storage.saveServerType($value)");

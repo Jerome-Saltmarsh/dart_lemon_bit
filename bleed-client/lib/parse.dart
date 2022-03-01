@@ -719,13 +719,6 @@ void _consumeHuman(Character character) {
   character.frame = consumeInt();
   character.team = consumeInt();
   character.name = _consumeString();
-
-  StringBuffer textBuffer = StringBuffer();
-  while (!_commaConsumed()) {
-    textBuffer.write(_consumeString());
-    textBuffer.write(_space);
-  }
-  character.text = textBuffer.toString().trim();
   character.health = _consumePercentage();
   character.magic = _consumePercentage();
   character.equippedWeapon = consumeSlotType();
