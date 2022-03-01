@@ -38,13 +38,12 @@ class IsometricActions {
     final maxRow = state.maxRow;
     final maxColumn =  state.maxRow;
     final totalColumnsInt = state.totalColumnsInt;
-    final totalColumnInt4 = totalColumnsInt * 4;
+    final rowIndex4 = totalColumnsInt * 16;
     final minRow = state.minRow;
     final minColumn = state.minColumn;
 
     for (var rowIndex = minRow; rowIndex < maxRow; rowIndex++) {
       final row = dynamic[rowIndex];
-      final rowIndex4 = totalColumnInt4 * 4;
       for (var columnIndex = minColumn; columnIndex < maxColumn; columnIndex++) {
         final i = rowIndex4 + (columnIndex * 4);
         final top = atlasY + row[columnIndex] * tileSize;
